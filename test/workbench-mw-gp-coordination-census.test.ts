@@ -1,7 +1,11 @@
 /**
  * wb-e66.5 (MW-GRAPH-POLICY-COORDINATION-R10, program-triage-2026-10-18), the GP-coordination adoption census, hardened by
  * wb-5esj (the landing-542 verdict's F1-F3: R-COORDINATED named with its pinned quiet row Q7; the means reader reads a
- * wrapped literal; the admission judge reads a receipt's rendered view and the record's path as a whole path).
+ * wrapped literal; the admission judge reads a receipt's rendered view and the record's path as a whole path) and by
+ * wb-5esj cut #2 (its refusal #1: U1, an entry ends at a heading of level 1 or 2 at any depth and at a block holding an
+ * HTML <h1> or <h2> start tag, every rule of the rendered view stated below pinned by a B1 or B2 control; the riders F1, a
+ * launcher's or a require's callee read through its wrappers and the comma form, and F2, a version probe's list read
+ * through its wrappers).
  * Statement (bead title, verbatim): "Pi shall adopt no GP-conditioned coordination at runtime (no GP scoring in any
  * scheduling, assignment or control path) before the eight README.md:23@4b8b974ca72b acceptance terms are recorded and a
  * shadow-mode adapter plus opt-in canary with rollback exist; until then one census pins zero
@@ -49,10 +53,16 @@
  *   whose first argument (a string literal, a template's literal head, or a same-file const bound to a string literal)
  *   names gp or mp as its program (the file argument's last path segment, or a shell line's first word, lower-cased, a
  *   Windows launcher extension dropped) or names the vocabulary. Each of those literals, a require's or import()'s
- *   specifier and a const's binding is read through its wrappers, parentheses and the as, satisfies, angle-bracket and
- *   non-null assertions (wb-5esj F2: ("gp"), "gp" as string and a const bound to "gp" as const or to "gp" satisfies string
- *   each name gp). A VERSION PROBE is gp or mp with the one argument --version (the whole argument list, or the whole
- *   shell line).
+ *   specifier, a const's binding and (wb-5esj cut #2, refusal #1 F1) a launcher's or a require's callee is read through
+ *   its wrappers: parentheses, the as, satisfies, angle-bracket and non-null assertions, and a comma expression's last
+ *   operand (wb-5esj F2: ("gp"), "gp" as string and a const bound to "gp" as const or to "gp" satisfies string each name
+ *   gp; cut #2: (spawn)(...), spawn!(...), (cp.spawn as typeof cp.spawn)(...), (execFileSync satisfies typeof
+ *   execFileSync)(...), (<typeof spawn>spawn)(...), (require)(...) and a CommonJS emit's (0, cp.spawn)(...) are the call
+ *   they wrap). A VERSION PROBE is gp or mp with the one argument --version: a shell line whose words after the program
+ *   are exactly --version, or a file-form call whose second argument is an array literal of exactly one element, the
+ *   string --version, the list and the element each read through the same wrappers (cut #2, refusal #1 F2:
+ *   (["--version"]) and ["--version"] as const are probes); an argument list bound to a name, a spread or a second
+ *   element is no probe.
  * - THE SRC LEG (rows A and S): every file git would commit under src/ (tracked or untracked, never ignored; equal to a
  *   filesystem walk that follows no link, less git's ignored set): any vocabulary word anywhere in the text, and every
  *   means, is a finding. A version probe is a finding here: any gp or mp launch is adoption.
@@ -74,29 +84,54 @@
  *   test/workbench-traceability-freeze.test.ts reds every edit), and a dated record lands as a "## YYYY-MM-DD ..." entry of
  *   docs/workbench/receipts/<bead>.md (rule 15's shape), so a receipt path outside receipts/ is refused (receipt-route). A
  *   file with findings and no admitted adoption keeps its findings; an adoption of a path that carries nothing is stale;
- *   two adoptions of one path are refused. THE RENDERED VIEW (wb-5esj F3): the record is read from the receipt as marked's
- *   lexer renders it, never from its raw text. HTML (a comment, block or inline, or a tag) and a code block (fenced or
- *   indented) show no text, so a record, a path or a reference that only they hold is not read; an entry opens at a
- *   level-2 ATX heading in the first column whose rendered text starts with a real date and runs to the next level-1 or
- *   level-2 heading; and a record names the adoption's path only as a whole path (a run of letters, digits and _ . / ~ + -,
- *   its closing dots dropped, equal to the path), so src/workbench/gp-shadow.tsx names no src/workbench/gp-shadow.ts.
+ *   two adoptions of one path are refused. THE RENDERED VIEW (wb-5esj F3; cut #2 states every rule and pins each by a B1
+ *   or B2 control): the record is read from marked's token tree of the receipt (marked.lexer), never from its raw lines,
+ *   by these rules. WHAT SHOWS: an HTML token (a comment, an HTML block of any kind, an inline tag with its attributes)
+ *   shows no text, and an HTML block is hidden whole (text after a comment's close on its last line too); a code block
+ *   (fenced, an unclosed fence, or indented) shows no text; an image shows no text (its alt is not read); a link shows its
+ *   text, never its target or title, and an autolink's text is its URL; a link reference definition, a thematic break and
+ *   blank space show nothing; any other inline token shows its text as written (a code span's too; a character reference
+ *   such as &#95; is never decoded) and a token with children shows what they show (a comment inside emphasis stays
+ *   hidden); a block quote and a list item show their blocks; a table row is one line, its cells joined by ' | '.
+ *   Enclosing elements and attributes are not read, so markdown marked reads outside an HTML token shows even where a
+ *   browser would hide it (a list after a blank line inside <details> or <div hidden>). A LINE is one line of a block's
+ *   shown text: a soft or a hard line break ends it. WHERE AN ENTRY OPENS: only at a top-level heading whose source
+ *   starts, in the first column, with '## ' (two number signs and a space), that holds no HTML heading tag, and whose
+ *   shown text begins with a real calendar date YYYY-MM-DD followed by whitespace or the text's end (so no entry opens at
+ *   '##' and a tab, an indented or a setext heading, an escaped one, one nested in a block quote or a list item,
+ *   '2026-11-02:', a leading space a removed comment leaves, or 2026-02-29; 2028-02-29 and an emphasized date open one).
+ *   WHERE IT ENDS (cut #2, refusal #1 U1): at the next bound, which is a heading of level 1 or 2 at any depth (ATX or
+ *   setext; top-level, or nested in a block quote or a list item at any nesting; a nested one opens nothing), or a block
+ *   whose HTML holds, outside its comments, the text <h1 or <h2 followed by whitespace, / or > (an HTML block, or a
+ *   paragraph, a list item, a heading or a table holding it inline; inside an attribute value too, which fails closed);
+ *   the entry ends before that block, so none of its text is the record's. A heading of level 3 to 6, an <h3> to <h6>, a
+ *   lone </h2>, a thematic break, a code block, a task item's text and HTML without such a tag end nothing. An entry's
+ *   text is its heading's line ('## ' and the shown text) and the shown lines up to the bound. A PATH: a record names the
+ *   adoption's path only as a whole path (a run of ASCII letters, digits and _ . / ~ + -, its closing dots dropped, equal
+ *   to the path), so src/workbench/gp-shadow.tsx names no src/workbench/gp-shadow.ts, while a character outside the run
+ *   right after the path (an accented letter, a comma, #) leaves the path whole.
  *
  * ROWS. A, the acceptance's first clause: A1 this file is the one vitest census, collected by the default tier (the shared
  * vitest config's include, never its exclude list); A2 the grep at 0 (the live src leg, its listing against the walk, a
  * planted file judged after the tracked ones, and the filing pin); A3 the suite names this bead and its requirement id.
  * B, the second clause: B1 the dated record (the route, the receipt, the record, and the rendered view: a record inside
- * an HTML comment, a fenced or an indented code block or after an unclosed comment, a path only a comment names, a longer
- * path, a hidden copy); B2 each of the eight terms, one per dropped term, an unreferenced term line, one line naming every
- * term and references only comments carry; B3 the shadow-mode run and its two zero phrases, its reference in a comment;
+ * an HTML comment, a fenced or an indented code block or after an unclosed comment (cut #2: or an unclosed fence), a path
+ * only a comment names, a longer path, a hidden copy, a path followed by a character outside the run; cut #2: OPENING,
+ * each opening rule's controls, and BETWEEN, each bound form and each form that ends nothing, placed between the
+ * record's heading and its citations, with the calendar, the entry-text and the bound-before checks); B2 each of the eight terms, one per dropped term, an unreferenced term
+ * line, one line naming every term and references only comments carry (cut #2: SHOWN, each WHAT SHOWS and LINE rule on
+ * the first term's citation); B3 the shadow-mode run and its two zero phrases, its reference in a comment;
  * B4 the allowlist (live empty and equal to the src findings, unadmitted, admitted, stale, duplicate, another leg's
  * adoption). C, the third clause: C1 the canary's rollback path, its reference in a comment. S, the statement's census
  * slice: S1 the vocabulary reader on its controls; S2 the src leg's means reader on its controls (the wrapped literals
- * among them); S3 the live test leg, its listing, its version probes, its wrapped-literal plants and a scratch git
- * repository proving the listing (untracked files read, ignored files never). Q, the residuals' pinned quiet rows.
+ * and, cut #2, the wrapped callees among them); S3 the live test leg, its listing, its version probes, its wrapped-literal,
+ * wrapped-callee and wrapped version-probe plants and a scratch git repository proving the listing (untracked files read,
+ * ignored files never). Q, the residuals' pinned quiet rows.
  * RESIDUALS (named families, each member a pinned quiet row; a reader that starts reading a member reds its row):
  * R-COMPOSED (Q1, a word composed at run time, escaped, or split by a no-break space), R-COMPUTED-LAUNCH (Q2, a computed
- * program, an environment value, a let binding, or a launcher reached through an alias, an element access or
- * Function.prototype.call), R-WRAPPED-LAUNCH (Q3, gp anywhere but a shell line's bare first word: a later command, an env
+ * program, an environment value, a let binding, a const bound to another const, or a launcher reached through an alias,
+ * an element access, Function.prototype.call, .apply or .bind, or Reflect.apply; cut #2 adds the const chain and the last
+ * three), R-WRAPPED-LAUNCH (Q3, gp anywhere but a shell line's bare first word: a later command, an env
  * prefix, a quoted or grouped program word, another program's argument), R-OTHER-LAUNCHER (Q4, a launch or a load outside the seven child_process launchers and the five import
  * forms: a worker, another process library, a createRequire loader), R-TEST-MENTION (Q5, a test file
  * naming the vocabulary as text or a name), R-LOCAL-SCORER (Q6, scoring or assignment code that names no word and
@@ -251,13 +286,111 @@ interface Recipe {
   readonly rollback?: "cited" | "missing" | "unreferenced";
   /**
    * wb-5esj F3 adds a longer and a prefixed path, a path that only an inline HTML comment names, the path in a code span at
-   * a sentence's end, and the dated heading as a setext heading, inside a block quote, or escaped into paragraph text.
+   * a sentence's end, and the dated heading as a setext heading, inside a block quote, or escaped into paragraph text;
+   * cut #2 adds the path followed by an accented letter (a character outside the path run).
    */
-  readonly heading?: "dated" | "undated" | "other-path" | "longer-path" | "prefixed-path" | "path-in-comment" | "path-quoted" | "setext" | "quoted" | "escaped";
+  readonly heading?: "dated" | "undated" | "other-path" | "longer-path" | "prefixed-path" | "path-in-comment" | "path-quoted" | "path-accented" | "setext" | "quoted" | "escaped";
   readonly records?: number;
-  /** wb-5esj F3: the record where the rendered view shows nothing, a hidden copy beside it, or references only comments carry. */
-  readonly hide?: "comment" | "fence" | "indented" | "unclosed-comment" | "copy" | "term-references" | "shadow-reference" | "rollback-reference";
+  /** wb-5esj F3: the record where the rendered view shows nothing (cut #2 adds after an unclosed fence), a hidden copy beside it, or references only comments carry. */
+  readonly hide?: "comment" | "fence" | "indented" | "unclosed-comment" | "unclosed-fence" | "copy" | "term-references" | "shadow-reference" | "rollback-reference";
+  /** wb-5esj cut #2: the record's heading in an OPENING form (a key of OPENING). */
+  readonly opening?: string;
+  /** wb-5esj cut #2 (refusal #1 U1): a BETWEEN block, placed between the record's heading and its citations. */
+  readonly between?: string;
+  /** wb-5esj cut #2: the first term's citation in a SHOWN form (a key of SHOWN). */
+  readonly firstTerm?: string;
 }
+
+/**
+ * wb-5esj cut #2, where an entry opens: the planted record's heading in another form (its date, path and kind kept), and
+ * whether the rendered view opens the record there. Only a top-level '## ' heading opens one, holding no HTML heading tag,
+ * whose shown text begins with a real calendar date and then whitespace or the text's end.
+ */
+const OPENING: Readonly<Record<string, { readonly heading: (rest: string) => string; readonly opens: boolean }>> = {
+  "a dated heading in a list item": { heading: rest => `- ## 2026-11-02 ${rest}`, opens: false },
+  "a dated heading indented one space": { heading: rest => ` ## 2026-11-02 ${rest}`, opens: false },
+  "a dated heading with a tab after its number signs": { heading: rest => `##\t2026-11-02 ${rest}`, opens: false },
+  "a date joined to a colon": { heading: rest => `## 2026-11-02: ${rest}`, opens: false },
+  "a comment and a space before the date": { heading: rest => `## <!-- draft --> 2026-11-02 ${rest}`, opens: false },
+  "a dated heading holding an HTML heading tag": { heading: rest => `## 2026-11-02 ${rest} <h2>x</h2>`, opens: false },
+  "a day the calendar lacks (2026-02-29)": { heading: rest => `## 2026-02-29 ${rest}`, opens: false },
+  "a leap day (2028-02-29)": { heading: rest => `## 2028-02-29 ${rest}`, opens: true },
+  "an emphasized date": { heading: rest => `## *2026-11-02* ${rest}`, opens: true },
+};
+
+/**
+ * wb-5esj cut #2 (refusal #1 U1; the landing-542 respin gate's B1-B3 and their top-level twins T1-T3 among them): a block
+ * between the record's heading and its citations, and whether it bounds the entry (ends it, so no citation after it is
+ * the record's). A heading of level 1 or 2 bounds it at any depth, ATX or setext, top-level or nested in a block quote or a
+ * list item at any nesting, and so does a block whose HTML, comments removed, holds an <h1> or <h2> start tag; nothing
+ * else does.
+ */
+const BETWEEN: Readonly<Record<string, { readonly block: string; readonly bound: boolean }>> = {
+  "a level-2 heading in a block quote (U1 B1)": { block: "> ## 2026-11-03 another entry", bound: true },
+  "a level-2 heading in a list item (U1 B2)": { block: "- ## 2026-11-03 another entry", bound: true },
+  "a level-1 heading in a block quote (U1 B3)": { block: "> # another document", bound: true },
+  "a level-2 heading (T1)": { block: "## 2026-11-03 another entry", bound: true },
+  "a setext level-2 heading (T2)": { block: "2026-11-03 another entry\n---", bound: true },
+  "a level-1 heading (T3)": { block: "# another document", bound: true },
+  "a setext level-1 heading": { block: "another document\n===", bound: true },
+  "a level-2 heading indented three spaces": { block: "   ## another entry", bound: true },
+  "a level-2 heading with a tab after its number signs": { block: "##\tanother entry", bound: true },
+  "a level-2 heading in an ordered list item": { block: "1. ## another entry", bound: true },
+  "a level-2 heading in a list item in a block quote": { block: "> - ## another entry", bound: true },
+  "a level-2 heading in a block quote in a list item": { block: "- > ## another entry", bound: true },
+  "a level-2 heading in a nested block quote": { block: "> > ## another entry", bound: true },
+  "a level-2 heading in a nested list item": { block: "- an item\n  - ## another entry", bound: true },
+  "a setext level-2 heading in a block quote": { block: "> another entry\n> ---", bound: true },
+  "a setext level-1 heading in a list item": { block: "- another document\n  ===", bound: true },
+  "a level-2 heading as a loose list item's second block": { block: "- an item\n\n  ## another entry", bound: true },
+  "an HTML level-2 heading": { block: "<h2>another entry</h2>", bound: true },
+  "an HTML level-1 heading, upper case, with an attribute": { block: '<H1 class="title">another document</H1>', bound: true },
+  "an inline HTML level-2 heading in a paragraph": { block: "see <h2>another entry</h2> below", bound: true },
+  "an HTML level-2 heading in a list item": { block: "- <h2>another entry</h2>", bound: true },
+  "an inline HTML level-2 heading in a table cell": { block: "| heading |\n| --- |\n| <h2>another entry</h2> |", bound: true },
+  "an inline HTML level-2 heading inside emphasis": { block: "see *<h2>another entry</h2>* below", bound: true },
+  "an inline HTML level-2 heading in a level-3 heading": { block: "### a subsection <h2>another entry</h2>", bound: true },
+  "an HTML level-2 heading in a block quote": { block: "> <h2>another entry</h2>", bound: true },
+  "a level-2 heading tag in an HTML attribute value (fail closed)": { block: '<div title="<h2>">a note</div>', bound: true },
+  "a level-3 heading (the section-bound control)": { block: "### a subsection", bound: false },
+  "a level-3 heading in a block quote": { block: "> ### a subsection", bound: false },
+  "a level-3 heading in a list item": { block: "- ### a subsection", bound: false },
+  "a level-6 heading": { block: "###### a minor heading", bound: false },
+  "an HTML level-3 heading": { block: "<h3>a subsection</h3>", bound: false },
+  "an HTML level-6 heading": { block: "<h6>a minor heading</h6>", bound: false },
+  "a comment holding an HTML level-2 heading": { block: "<!-- <h2>an old heading</h2> -->", bound: false },
+  "a level-2 heading's end tag alone": { block: "</h2>", bound: false },
+  "a level-2 heading tag in a code span": { block: "the `<h2>` tag is quoted", bound: false },
+  "a heading line in a fenced block": { block: "```\n## not a heading\n```", bound: false },
+  "a heading line in an HTML block": { block: "<div>\n## not a heading\n</div>", bound: false },
+  "a heading line as a task item's text": { block: "- [ ] ## not a heading", bound: false },
+  "a thematic break": { block: "---", bound: false },
+};
+
+/** A citation form: the first term's list line in that form, a block of its own after the list, or both (no line: its list line is dropped). */
+interface CitationForm {
+  readonly line?: (term: string, reference: string) => string;
+  readonly block?: (term: string, reference: string) => string;
+  readonly cited: boolean;
+}
+/** wb-5esj cut #2 (the class-level guard's what-shows half): the first term's citation in another form, and whether the rendered view still cites it. */
+const SHOWN: Readonly<Record<string, CitationForm>> = {
+  "a reference only a tag's attribute carries": { line: (term, reference) => `- <span title="${reference}">${term}</span>`, cited: false },
+  "a reference only an image's alt text carries": { line: (term, reference) => `- ${term} ![${reference}](receipt.png)`, cited: false },
+  "a reference only a link's target carries": { line: term => `- [${term}](https://example.invalid/cmd_0123456789a0)`, cited: false },
+  "a reference only a link's title carries": { line: term => `- [${term}](https://example.invalid/receipt "cmd_0123456789a0")`, cited: false },
+  "a reference only a link reference definition carries": { line: term => `- [${term}][r]`, block: term => `[r]: https://example.invalid/cmd_0123456789a0 "${term}"`, cited: false },
+  "a reference after a hard line break": { line: (term, reference) => `- ${term}:\\\n  ${reference}`, cited: false },
+  "a reference after a soft line break": { line: (term, reference) => `- ${term}:\n  ${reference}`, cited: false },
+  "a reference in a comment inside emphasis": { line: (term, reference) => `- *${term} <!-- ${reference} -->*`, cited: false },
+  "a citation after a comment's close on an HTML block's line": { block: (term, reference) => `<!-- a note --> ${term}: ${reference}`, cited: false },
+  "a reference spelled with a character reference": { line: term => `- ${term}: cmd&#95;0123456789a0`, cited: false },
+  "a reference in a code span": { line: (term, reference) => `- ${term}: \`${reference}\``, cited: true },
+  "an autolink's URL": { line: term => `- ${term}: <https://example.invalid/cmd_0123456789a0>`, cited: true },
+  "a table row": { block: (term, reference) => `| term | receipt |\n| --- | --- |\n| ${term} | ${reference} |`, cited: true },
+  "a block quote": { block: (term, reference) => `> - ${term}: ${reference}`, cited: true },
+  "a list after a blank line inside <details>": { block: (term, reference) => `<details>\n\n- ${term}: ${reference}\n\n</details>`, cited: true },
+};
 
 /** The receipt's entry ahead of a hidden record: dated, naming no path, so a record the rendered view hides is no record. */
 const UNRELATED = "## 2026-11-01 an unrelated entry";
@@ -272,20 +405,28 @@ function receiptText(recipe: Recipe): string {
     : recipe.heading === "prefixed-path" ? `lib/${PLANT.path}`
     : PLANT.path;
   const named = recipe.heading === "path-in-comment" ? `<!-- ${subject} -->` : subject;
+  const opening = recipe.opening === undefined ? undefined : OPENING[recipe.opening];
   const heading =
-    recipe.heading === "undated" ? `## GP adoption of ${named} (${kind})`
+    opening !== undefined ? opening.heading(`GP adoption of ${named} (${kind})`)
+    : recipe.heading === "undated" ? `## GP adoption of ${named} (${kind})`
     : recipe.heading === "path-quoted" ? `## 2026-11-02 GP adoption (${kind}) of \`${subject}\`.`
+    : recipe.heading === "path-accented" ? `## 2026-11-02 GP adoption of ${subject}${String.fromCodePoint(0xe9)} (${kind})`
     : recipe.heading === "setext" ? `2026-11-02 GP adoption of ${named} (${kind})\n---`
     : recipe.heading === "quoted" ? `> ## 2026-11-02 GP adoption of ${named} (${kind})`
     : recipe.heading === "escaped" ? `\\## 2026-11-02 GP adoption of ${named} (${kind})`
     : `## 2026-11-02 GP adoption of ${named} (${kind})`;
   /** A line and its reference as the rendered view shows them, or the reference only an HTML comment carries. */
   const cite = (text: string, separator: string, reference: string, hidden: boolean): string => (hidden ? `${text} <!-- ${reference} -->` : `${text}${separator}${reference}`);
-  const lines = recipe.oneLine
-    ? [`- ${TERMS.join("; ")}: MechanicalWorkflows@1a2b3c40 (cmd_0123456789a0)`]
-    : TERMS.filter(term => term !== recipe.dropTerm).map((term, index) =>
-        term === recipe.unreferencedTerm ? `- ${term}: recorded` : cite(`- ${term}`, ": ", `MechanicalWorkflows@1a2b3c4${index} (cmd_0123456789a${index})`, hide === "term-references"),
-      );
+  const reference = (index: number): string => `MechanicalWorkflows@1a2b3c4${index} (cmd_0123456789a${index})`;
+  const form = recipe.firstTerm === undefined ? undefined : SHOWN[recipe.firstTerm];
+  /** A term's list line: the first term's in the recipe's SHOWN form when it names one (no line when the form is a block of its own). */
+  const termLines = (term: string, index: number): string[] => {
+    if (index === 0 && form !== undefined) return form.line === undefined ? [] : [form.line(term, reference(index))];
+    return [term === recipe.unreferencedTerm ? `- ${term}: recorded` : cite(`- ${term}`, ": ", reference(index), hide === "term-references")];
+  };
+  const lines = recipe.oneLine ? [`- ${TERMS.join("; ")}: MechanicalWorkflows@1a2b3c40 (cmd_0123456789a0)`] : TERMS.filter(term => term !== recipe.dropTerm).flatMap(termLines);
+  const block = form?.block;
+  const blocks = block === undefined ? [] : TERMS.slice(0, 1).map(term => block(term, reference(0)));
   const shadow = recipe.shadow ?? "cited";
   if (shadow === "cited") lines.push(cite("- shadow-mode run: zero control decisions issued, zero native verbs reached", " ", "(cmd_ba9876543210)", hide === "shadow-reference"));
   if (shadow === "no-decisions") lines.push("- shadow-mode run: zero native verbs reached (cmd_ba9876543210)");
@@ -294,7 +435,7 @@ function receiptText(recipe: Recipe): string {
   const rollback = recipe.rollback ?? "cited";
   if (rollback === "cited") lines.push(cite("- rollback path: revert the canary flag", " ", "(docs/workbench/receipts/wb-zz1.md@5e6f7a8b)", hide === "rollback-reference"));
   if (rollback === "unreferenced") lines.push("- rollback path: revert the canary flag");
-  const record = [heading, "", ...lines, ""].join("\n");
+  const record = [heading, "", ...(recipe.between === undefined ? [] : [recipe.between, ""]), ...lines, ...blocks.flatMap(text => ["", text]), ""].join("\n");
   const records = Array.from({ length: recipe.records ?? 1 }, () => record);
   const indented = (text: string): string => text.split("\n").map(line => (line === "" ? "" : `    ${line}`)).join("\n");
   const body =
@@ -302,6 +443,7 @@ function receiptText(recipe: Recipe): string {
     : hide === "fence" ? [UNRELATED, "", "```text", ...records, "```", ""]
     : hide === "indented" ? [UNRELATED, "", ...records.map(indented)]
     : hide === "unclosed-comment" ? [UNRELATED, "", "<!-- a draft, never closed", ...records]
+    : hide === "unclosed-fence" ? [UNRELATED, "", "```text", ...records]
     : hide === "copy" ? [...records, "<!--", ...records, "-->", ""]
     : records;
   return ["# wb-zz1: planted adoption receipt", "", ...body].join("\n");
@@ -312,6 +454,10 @@ function plantFindings(adoptions: readonly Adoption[], receipt: string | undefin
   return legFindings("src", [PLANT], adoptions, path => (path === PLANT_RECEIPT ? receipt : undefined));
 }
 const adoption = (kind: "shadow" | "canary", receipt = PLANT_RECEIPT): Adoption => ({ path: PLANT.path, kind, receipt });
+/** The planted module's findings when its receipt holds no record of it. */
+const RECORD_MISSING = [...PLANT_OWN, `src/workbench/gp-shadow.ts: record-missing ${PLANT_RECEIPT}`];
+/** The planted module's findings when its record holds no citation: every term and the shadow-mode run uncited. */
+const UNCITED = [...PLANT_OWN, ...TERMS.map(term => `src/workbench/gp-shadow.ts: term-uncited ${term}`), "src/workbench/gp-shadow.ts: shadow-run-uncited"];
 
 // ---- the controls of the readers ----
 
@@ -355,6 +501,18 @@ const SRC_MEANS: Readonly<Record<string, string>> = {
   "an angle-bracket-asserted program": 'execFileSync(<string>"gp", ["eval"]);\n',
   "a non-null-asserted program": 'spawn("gp"!, ["sample"]);\n',
   "a parenthesized require": 'const gp = require(("gp"));\n',
+  // wb-5esj cut #2 (refusal #1 F1): a launcher or a require callee read through its wrappers and the comma form (the
+  // landing-542 respin gate's W1-W5, W16 and W21-W23), and a program in the comma form.
+  "a parenthesized launcher (W1)": '(spawn)("gp", ["sample"]);\n',
+  "a non-null-asserted launcher (W2)": 'spawn!("gp", ["sample"]);\n',
+  "an as-asserted member launcher (W3)": '(cp.spawn as typeof cp.spawn)("gp", ["sample"]);\n',
+  "a comma-form member launcher (W4)": '(0, cp.spawn)("gp", ["sample"]);\n',
+  "a parenthesized require callee (W5)": 'const gp = (require)("gp");\n',
+  "the CommonJS emit's comma form (W16)": '(0, import_node_child_process.spawn)("gp", ["sample"]);\n',
+  "a satisfies-wrapped launcher (W21)": '(execFileSync satisfies typeof execFileSync)("gp", ["eval"]);\n',
+  "an angle-bracket-asserted launcher (W22)": '(<typeof spawn>spawn)("gp", ["sample"]);\n',
+  "a parenthesized member shell launcher (W23)": '(cp.execSync)("gp rpc --stdio");\n',
+  "a comma-form program": 'spawn((0, "gp"), ["sample"]);\n',
   "git (quiet)": 'spawn("git", ["status"]);\n',
   "gpg (quiet)": 'spawn("gpg", ["--verify"]);\n',
   "mpv (quiet)": 'execSync("mpv video.mkv");\n',
@@ -373,9 +531,30 @@ const TEST_MEANS: Readonly<Record<string, string>> = {
   "a parenthesized program": 'spawn(("gp"), ["sample"]);\n',
   "an as-asserted program": 'spawnSync("gp" as string, ["sample"]);\n',
   "a const bound to a satisfies program": 'const GP = "gp" satisfies string;\nspawn(GP, ["sample"]);\n',
+  // wb-5esj cut #2 (refusal #1 F1, F2): a wrapped launcher is a finding here too; a version probe's argument list and its
+  // element are read through their wrappers (W18, W19); a list bound to a name is no version probe.
+  "a parenthesized launcher (W1)": '(spawn)("gp", ["sample"]);\n',
+  "a comma-form member launcher (W4)": '(0, cp.spawn)("gp", ["sample"]);\n',
+  "a version probe, wrapped program and list (W19)": 'execFileSync(("gp"), (["--version"]));\n',
+  "a version probe, as const list (W18)": 'execFileSync("gp", ["--version"] as const);\n',
+  "a version probe, wrapped element": 'execFileSync("gp", [("--version")]);\n',
+  "a version probe through a parenthesized launcher": '(execFileSync)("gp", ["--version"]);\n',
+  "a version probe with a name-bound list": 'const ARGS = ["--version"];\nexecFileSync("gp", ARGS);\n',
 };
 /** The wrapped-literal labels of SRC_MEANS and TEST_MEANS (wb-5esj F2): each names gp through its wrappers. */
 const WRAPPED: readonly string[] = ["a const bound to an as const program", "a parenthesized program", "an as-asserted program", "a const bound to a satisfies program"];
+/** wb-5esj cut #2 (refusal #1 F1): the wrapped-callee labels of SRC_MEANS, each a launch of gp. */
+const WRAPPED_CALLEES: readonly string[] = [
+  "a parenthesized launcher (W1)",
+  "a non-null-asserted launcher (W2)",
+  "an as-asserted member launcher (W3)",
+  "a comma-form member launcher (W4)",
+  "the CommonJS emit's comma form (W16)",
+  "a satisfies-wrapped launcher (W21)",
+  "an angle-bracket-asserted launcher (W22)",
+];
+/** wb-5esj cut #2 (refusal #1 F2): the TEST_MEANS version probes read through their wrappers, none a finding. */
+const WRAPPED_PROBES: readonly string[] = ["a version probe, wrapped program and list (W19)", "a version probe, as const list (W18)", "a version probe, wrapped element", "a version probe through a parenthesized launcher"];
 
 // ---- the outside anchors as one reading, and R-COORDINATED (wb-5esj F1) ----
 
@@ -557,6 +736,7 @@ const IMPL: Readonly<Record<string, (context: TestContext) => Json>> = {
       "a record inside a fenced block": plantFindings([adoption("shadow")], receiptText({ hide: "fence" })),
       "a record inside an indented code block": plantFindings([adoption("shadow")], receiptText({ hide: "indented" })),
       "a record after an unclosed comment": plantFindings([adoption("shadow")], receiptText({ hide: "unclosed-comment" })),
+      "a record after an unclosed fence": plantFindings([adoption("shadow")], receiptText({ hide: "unclosed-fence" })),
       "a record whose path only a comment names": plantFindings([adoption("shadow")], receiptText({ heading: "path-in-comment" })),
       "a record of a longer path": plantFindings([adoption("shadow")], receiptText({ heading: "longer-path" })),
       "a record of a prefixed path": plantFindings([adoption("shadow")], receiptText({ heading: "prefixed-path" })),
@@ -565,6 +745,10 @@ const IMPL: Readonly<Record<string, (context: TestContext) => Json>> = {
       "a record under an escaped heading": plantFindings([adoption("shadow")], receiptText({ heading: "escaped" })),
       "a record and its hidden copy": plantFindings([adoption("shadow")], receiptText({ hide: "copy" })),
       "a record quoting the path at a sentence's end": plantFindings([adoption("shadow")], receiptText({ heading: "path-quoted" })),
+      "a record of the path followed by an accented letter": plantFindings([adoption("shadow")], receiptText({ heading: "path-accented" })),
+      // wb-5esj cut #2 (refusal #1 U1): where an entry opens, and where it ends.
+      opening: Object.fromEntries(Object.keys(OPENING).map(label => [label, plantFindings([adoption("shadow")], receiptText({ opening: label }))])),
+      between: Object.fromEntries(Object.entries(BETWEEN).map(([label, { block }]) => [label, plantFindings([adoption("shadow")], receiptText({ between: block }))])),
     };
     expect(witness["no adoption"], "no adoption: the module keeps its findings").toEqual(PLANT_OWN);
     expect(witness["a TRACEABILITY.md receipt"], "TRACEABILITY.md is never the route").toEqual([...PLANT_OWN, "src/workbench/gp-shadow.ts: receipt-route docs/workbench/TRACEABILITY.md"]);
@@ -577,6 +761,7 @@ const IMPL: Readonly<Record<string, (context: TestContext) => Json>> = {
       "a record inside a fenced block",
       "a record inside an indented code block",
       "a record after an unclosed comment",
+      "a record after an unclosed fence",
       "a record whose path only a comment names",
       "a record of a longer path",
       "a record of a prefixed path",
@@ -588,7 +773,24 @@ const IMPL: Readonly<Record<string, (context: TestContext) => Json>> = {
     }
     expect(witness["a record and its hidden copy"], "wb-5esj F3: a hidden copy is no second record").toEqual([]);
     expect(witness["a record quoting the path at a sentence's end"], "a code span and a closing dot keep the whole path").toEqual([]);
+    expect(witness["a record of the path followed by an accented letter"], "wb-5esj cut #2: a character outside the run (ASCII letters, digits and _ . / ~ + -) ends the run, so the path stays whole").toEqual([]);
     expect(datedEntries("<!--\n## 2026-11-02 hidden\n-->\n\n## 2026-11-03 shown\n").map(entry => entry.date), "wb-5esj F3: datedEntries reads the rendered view").toEqual(["2026-11-03"]);
+    for (const [label, { opens }] of Object.entries(OPENING)) {
+      expect(witness.opening[label], `wb-5esj cut #2: ${label} ${opens ? "opens the record" : "opens no entry"}`).toEqual(opens ? [] : RECORD_MISSING);
+    }
+    for (const [label, { bound }] of Object.entries(BETWEEN)) {
+      expect(witness.between[label], `wb-5esj cut #2 (U1): ${label} between the heading and the citations ${bound ? "ends the entry" : "ends nothing"}`).toEqual(bound ? UNCITED : []);
+    }
+    expect(
+      datedEntries("## 2026-02-29 a\n## 2026-04-31 b\n## 2026-01-00 c\n## 2028-02-29 d\n## 2026-12-31 e\n## 0099-12-31 f\n## 2026-11-02\n").map(entry => entry.date),
+      "wb-5esj cut #2: a real calendar date (any four-digit year), then whitespace or the text's end",
+    ).toEqual(["2028-02-29", "2026-12-31", "0099-12-31", "2026-11-02"]);
+    expect(datedEntries("## 2026-11-02 a\n\nshown\n\n> before\n> ## nested\n> after\n\nlater\n"), "wb-5esj cut #2 (U1): an entry's text is its heading's line and the shown lines up to the bound, a nested one too").toEqual([
+      { date: "2026-11-02", text: "## 2026-11-02 a\nshown\nbefore" },
+    ]);
+    expect(datedEntries("## 2026-11-02 a\n\nshown\n\nheld <h2>x</h2> back\n\nlater\n"), "wb-5esj cut #2 (U1): a block holding an HTML heading tag is a bound before it, so none of its text is the entry's").toEqual([
+      { date: "2026-11-02", text: "## 2026-11-02 a\nshown" },
+    ]);
     return witness;
   },
   B2: () => {
@@ -600,7 +802,12 @@ const IMPL: Readonly<Record<string, (context: TestContext) => Json>> = {
     expect(unreferenced, "a term line without a reference cites nothing").toEqual([...PLANT_OWN, `src/workbench/gp-shadow.ts: term-uncited ${TERMS[2]}`]);
     expect(oneLine, "one line naming every term is no term's own receipt").toEqual([...PLANT_OWN, ...TERMS.map(term => `src/workbench/gp-shadow.ts: term-uncited ${term}`)]);
     expect(hidden, "wb-5esj F3: a reference only an HTML comment carries cites nothing").toEqual([...PLANT_OWN, ...TERMS.map(term => `src/workbench/gp-shadow.ts: term-uncited ${term}`)]);
-    return { dropped, unreferenced, oneLine, hidden, terms: TERMS.length };
+    // wb-5esj cut #2: what the rendered view shows, each rule on the first term's citation.
+    const shown = Object.fromEntries(Object.keys(SHOWN).map(label => [label, plantFindings([adoption("shadow")], receiptText({ firstTerm: label }))]));
+    for (const [label, { cited }] of Object.entries(SHOWN)) {
+      expect(shown[label], `wb-5esj cut #2: ${label} ${cited ? "cites" : "does not cite"} the first term`).toEqual(cited ? [] : [...PLANT_OWN, `src/workbench/gp-shadow.ts: term-uncited ${TERMS[0]}`]);
+    }
+    return { dropped, unreferenced, oneLine, hidden, shown, terms: TERMS.length };
   },
   B3: () => {
     const witness = {
@@ -667,10 +874,13 @@ const IMPL: Readonly<Record<string, (context: TestContext) => Json>> = {
       else expect(findings.length, `${label} is a finding`).toBeGreaterThan(0);
     }
     expect(witness["a version probe in src"], "src: a version probe is adoption too").toEqual(["src/workbench/zz.ts: launches gp"]);
-    for (const label of [...WRAPPED, "an angle-bracket-asserted program", "a non-null-asserted program"]) {
+    for (const label of [...WRAPPED, "an angle-bracket-asserted program", "a non-null-asserted program", "a comma-form program"]) {
       expect(witness[label], `wb-5esj F2: ${label} names gp through its wrappers`).toEqual(["src/workbench/zz.ts: launches gp"]);
     }
     expect(witness["a parenthesized require"], "wb-5esj F2: a wrapped specifier").toEqual(["src/workbench/zz.ts: imports gp"]);
+    for (const label of WRAPPED_CALLEES) expect(witness[label], `wb-5esj cut #2 (F1): ${label} is read through its wrappers`).toEqual(["src/workbench/zz.ts: launches gp"]);
+    expect(witness["a parenthesized require callee (W5)"], "wb-5esj cut #2 (F1): a wrapped require callee").toEqual(["src/workbench/zz.ts: imports gp"]);
+    expect(witness["a parenthesized member shell launcher (W23)"], "wb-5esj cut #2 (F1): a wrapped shell launcher reads its line").toEqual(["src/workbench/zz.ts: launches gp rpc --stdio"]);
     expect(PROGRAMS, "the two binaries").toEqual(["gp", "mp"]);
     return witness;
   },
@@ -684,6 +894,10 @@ const IMPL: Readonly<Record<string, (context: TestContext) => Json>> = {
     expect(listingMatchesWalk("test"), "git's test listing equals the walk less what git ignores").toBe(true);
     const plants = Object.fromEntries(Object.entries(TEST_MEANS).map(([label, text]) => [label, fileFindings("test", "test/zz.test.ts", text)]));
     for (const label of WRAPPED) expect(plants[label], `wb-5esj F2: ${label} is a finding in a test file`).toEqual(["test/zz.test.ts: launches gp"]);
+    for (const label of ["a parenthesized launcher (W1)", "a comma-form member launcher (W4)", "a version probe with a name-bound list"]) {
+      expect(plants[label], `wb-5esj cut #2: ${label} is a finding in a test file`).toEqual(["test/zz.test.ts: launches gp"]);
+    }
+    for (const label of WRAPPED_PROBES) expect(plants[label], `wb-5esj cut #2 (F2): ${label} is a version probe`).toEqual([]);
     const scratch = makeScratch("wb-e665-listing-");
     let listing: Json = null;
     try {
@@ -749,8 +963,9 @@ describe(SUITE, () => {
 
   it("rule 16: the rows, the residual families, the vocabulary, the terms and the allowlist are frozen at their measured shape", () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:4", "C:1", "S:3", "Q:7"]);
-    expect(Object.entries(FAMILY_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:4", "Q2:6", "Q3:5", "Q4:3", "Q5:2", "Q6:1", "Q7:8"]);
+    expect(Object.entries(FAMILY_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:4", "Q2:10", "Q3:5", "Q4:3", "Q5:2", "Q6:1", "Q7:8"]);
     expect([COORDINATED.length, SEEN.length], "R-COORDINATED: its members and Q7's seen controls").toEqual([8, 9]);
+    expect([Object.keys(OPENING).length, Object.keys(BETWEEN).length, Object.keys(SHOWN).length], "wb-5esj cut #2: the opening, bound and shown-text controls").toEqual([9, 39, 15]);
     expect(Object.keys(QUOTES), "one quote per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
     expect(VOCABULARY.map(word => `${word.id}:${word.spelling}`)).toEqual(["V1:GraphPolicy", "V2:GraphDataIR", "V3:MicroPolicy", "V4:mw.training-export"]);
     expect(TERMS).toEqual([

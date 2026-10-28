@@ -6,7 +6,10 @@
  * starts gp or mp, fakes a GraphPolicyCLI binary, adds a dependency or implements an adapter: the planted modules and
  * receipts are text handed to the judges. wb-5esj (the landing-542 verdict's F2 and F3): the means reader reads a program,
  * a const's binding and a require or import() specifier through its wrappers, and the admission judge reads a receipt's
- * rendered view and matches the record's path as a whole path.
+ * rendered view and matches the record's path as a whole path. wb-5esj cut #2 (its refusal #1): an entry ends at a heading
+ * of level 1 or 2 at any depth, or at a block holding an HTML <h1> or <h2> start tag (U1), and opens only on a real
+ * calendar date; a launcher's or a require's callee and a version probe's argument list are read through their wrappers
+ * and the comma form (F1, F2).
  */
 import { execFileSync, spawnSync } from "node:child_process";
 import { lstatSync, readdirSync } from "node:fs";
@@ -73,11 +76,18 @@ export function programOf(launcher: string, argument: string): string {
   return segment.toLowerCase().replace(/\.(?:exe|cmd|bat|ps1)$/, "");
 }
 
-/** A version probe: `gp --version` as the whole argv (the file form's one-element argument list, or the whole shell line). */
+/**
+ * A version probe: `gp --version` as the whole argv. The shell form: the line's words after the program are exactly
+ * --version. The file form: the second argument is an array literal of exactly one element, the string --version, the
+ * list and the element each read through their wrappers (wb-5esj cut #2, refusal #1 F2: (["--version"]), ["--version"] as
+ * const and [("--version")] are probes); a list bound to a name, a spread or a second element is no probe.
+ */
 function isVersionProbe(launcher: string, call: ts.CallExpression, argument: string): boolean {
   if (SHELL_LAUNCHERS.has(launcher)) return argument.trim().split(/\s+/).slice(1).join(" ") === "--version";
-  const list = call.arguments[1];
-  return list !== undefined && ts.isArrayLiteralExpression(list) && list.elements.length === 1 && ts.isStringLiteralLike(list.elements[0] as ts.Expression) && (list.elements[0] as ts.StringLiteralLike).text === "--version";
+  const list = call.arguments[1] === undefined ? undefined : unwrapped(call.arguments[1]);
+  if (list === undefined || !ts.isArrayLiteralExpression(list) || list.elements.length !== 1) return false;
+  const only = unwrapped(list.elements[0] as ts.Expression);
+  return ts.isStringLiteralLike(only) && only.text === "--version";
 }
 
 export interface Means {
@@ -87,14 +97,19 @@ export interface Means {
   readonly versionProbe: boolean;
 }
 
+/** A comma expression (a, b): its value is its last operand. */
+const isCommaExpression = (node: ts.Expression): node is ts.BinaryExpression => ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.CommaToken;
+
 /**
- * An expression read through its wrappers: parentheses and the as, satisfies, angle-bracket and non-null assertions, none
- * of which changes the value (wb-5esj F2: "gp" as const, ("gp"), "gp" as string and "gp" satisfies string are "gp").
+ * An expression read through its wrappers: parentheses, the as, satisfies, angle-bracket and non-null assertions, and a
+ * comma expression's last operand, none of which changes the value (wb-5esj F2: "gp" as const, ("gp"), "gp" as string and
+ * "gp" satisfies string are "gp"; cut #2, refusal #1 F1: (spawn), spawn!, (cp.spawn as typeof cp.spawn) and the comma
+ * form (0, cp.spawn) of a CommonJS emit are the launcher they wrap).
  */
 function unwrapped(node: ts.Expression): ts.Expression {
   let current = node;
-  while (ts.isParenthesizedExpression(current) || ts.isAsExpression(current) || ts.isSatisfiesExpression(current) || ts.isTypeAssertionExpression(current) || ts.isNonNullExpression(current)) {
-    current = current.expression;
+  while (ts.isParenthesizedExpression(current) || ts.isAsExpression(current) || ts.isSatisfiesExpression(current) || ts.isTypeAssertionExpression(current) || ts.isNonNullExpression(current) || isCommaExpression(current)) {
+    current = isCommaExpression(current) ? current.right : current.expression;
   }
   return current;
 }
@@ -144,7 +159,8 @@ export function meansOf(path: string, text: string): Means[] {
     if (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) specifier(node.moduleSpecifier);
     else if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference)) specifier(node.moduleReference.expression);
     else if (ts.isCallExpression(node)) {
-      const callee = node.expression;
+      // wb-5esj cut #2 (refusal #1 F1): the callee is read through its wrappers and the comma form too.
+      const callee = unwrapped(node.expression);
       if (callee.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(callee) && callee.text === "require")) specifier(node.arguments[0]);
       const name = ts.isIdentifier(callee) ? callee.text : ts.isPropertyAccessExpression(callee) ? callee.name.text : "";
       if (LAUNCHERS.includes(name)) {
@@ -209,7 +225,7 @@ export interface DatedEntry {
   readonly text: string;
 }
 
-// ---- the rendered view of a receipt (wb-5esj F3: marked's lexer, the docs censuses' binding) ----
+// ---- the rendered view of a receipt (wb-5esj F3: marked's token tree, the docs censuses' binding; cut #2: its bounds) ----
 
 const tokenText = (token: Token): string => {
   const value: unknown = (token as { text?: unknown }).text;
@@ -223,7 +239,12 @@ const isHeading = (token: Token): token is Tokens.Heading => token.type === "hea
 const isList = (token: Token): token is Tokens.List => token.type === "list";
 const isTable = (token: Token): token is Tokens.Table => token.type === "table";
 
-/** What a reader sees of inline tokens: HTML (a comment or a tag) and an image show no text; every other token its text. */
+/**
+ * What a reader sees of inline tokens: HTML (a comment, or a tag with its attributes) and an image (its alt text too) show
+ * no text; a hard line break ends a line; a token with children shows what its children show (a link its text, never its
+ * target or title; an emphasis, so a comment inside it stays hidden); every other token shows its text (a code span's, an
+ * autolink's URL, an escaped character).
+ */
 function shownInline(tokens: readonly Token[]): string {
   let out = "";
   for (const token of tokens) {
@@ -235,24 +256,78 @@ function shownInline(tokens: readonly Token[]): string {
   return out;
 }
 
-/** What a reader sees of block tokens, one line per shown line: HTML blocks and code blocks (fenced or indented) show no record text. */
-function shownLines(tokens: readonly Token[]): string[] {
-  const lines: string[] = [];
+/** An HTML start tag of a level-1 or level-2 heading: <h1 or <h2, in any case, then whitespace, a slash or >. */
+const HEADING_TAG = /<h[12](?=[\s/>])/i;
+/** HTML comments, closed or running to the end of the text. */
+const COMMENTS = /<!--[\s\S]*?(?:-->|$)/g;
+/** Whether raw HTML holds a level-1 or level-2 heading start tag outside its comments. */
+const holdsHeadingTag = (html: string): boolean => HEADING_TAG.test(html.replace(COMMENTS, ""));
+/** Whether inline tokens hold, at any depth, inline HTML with a level-1 or level-2 heading start tag outside its comments. */
+const inlineHoldsHeadingTag = (tokens: readonly Token[]): boolean => tokens.some(token => (token.type === "html" && holdsHeadingTag(token.raw)) || inlineHoldsHeadingTag(tokenChildren(token)));
+
+/**
+ * The date an entry opens with: the heading's source starts, in the first column, with '## ' (two number signs and a
+ * space), and its shown text begins with a real calendar date YYYY-MM-DD (2026-02-29 is none, 2028-02-29 is one) followed
+ * by whitespace or the text's end.
+ */
+function openingDate(raw: string, shown: string): string | undefined {
+  if (!raw.startsWith("## ")) return undefined;
+  const match = /^(\d{4})-(\d{2})-(\d{2})(?:\s|$)/.exec(shown);
+  if (match === null) return undefined;
+  const [year, month, day] = [Number(match[1]), Number(match[2]), Number(match[3])];
+  const calendar = new Date(0);
+  calendar.setUTCFullYear(year, month - 1, day);
+  const real = calendar.getUTCFullYear() === year && calendar.getUTCMonth() === month - 1 && calendar.getUTCDate() === day;
+  return real ? `${match[1]}-${match[2]}-${match[3]}` : undefined;
+}
+
+/** One step of a receipt's rendered view, in document order: a shown line, or a bound (the open entry ends; a dated heading opens the next). */
+type ViewStep = { readonly kind: "line"; readonly text: string } | { readonly kind: "bound"; readonly opens: { readonly date: string; readonly line: string } | undefined };
+
+/**
+ * The rendered view's steps over block tokens (wb-5esj cut #2, refusal #1 U1: a bound at any depth). Code (fenced, an
+ * unclosed fence or indented), blank space, a thematic break and a link reference definition show nothing. An HTML block
+ * shows nothing, whole (text after a comment's close on its last line too), and is a bound when it holds a level-1 or
+ * level-2 heading start tag outside its comments. A block quote and a list item show their blocks, at any nesting. A
+ * table row is one line, its cells joined by ' | '. A heading of level 1 or 2 is a bound at any depth, ATX or setext,
+ * top-level or nested; only a top-level one holding no heading tag can open an entry (openingDate). Any other block
+ * holding an inline heading tag is a bound before it, so none of its text joins the entry it ends; a block's shown text
+ * is one line per line, a soft or a hard line break ending each.
+ */
+function* viewSteps(tokens: readonly Token[], top: boolean): Generator<ViewStep> {
   for (const token of tokens) {
-    if (token.type === "html" || token.type === "code" || token.type === "space" || token.type === "hr" || token.type === "def") continue;
-    if (isList(token)) for (const item of token.items) lines.push(...shownLines(item.tokens));
-    else if (isTable(token)) for (const cells of [token.header, ...token.rows]) lines.push(cells.map(cell => shownInline(cell.tokens)).join(" | "));
-    else if (token.type === "blockquote") lines.push(...shownLines(tokenChildren(token)));
-    else lines.push(...(tokenChildren(token).length > 0 ? shownInline(tokenChildren(token)) : tokenText(token)).split("\n"));
+    if (token.type === "code" || token.type === "space" || token.type === "hr" || token.type === "def") continue;
+    if (token.type === "html") {
+      if (holdsHeadingTag(token.raw)) yield { kind: "bound", opens: undefined };
+    } else if (isList(token)) {
+      for (const item of token.items) yield* viewSteps(item.tokens, false);
+    } else if (token.type === "blockquote") {
+      yield* viewSteps(tokenChildren(token), false);
+    } else if (isTable(token)) {
+      const rows = [token.header, ...token.rows];
+      if (rows.some(cells => cells.some(cell => inlineHoldsHeadingTag(cell.tokens)))) yield { kind: "bound", opens: undefined };
+      for (const cells of rows) yield { kind: "line", text: cells.map(cell => shownInline(cell.tokens)).join(" | ") };
+    } else {
+      const inline = tokenChildren(token);
+      const tagged = inlineHoldsHeadingTag(inline);
+      if (isHeading(token) && token.depth <= 2) {
+        const shown = shownInline(token.tokens);
+        const date = top && !tagged ? openingDate(token.raw, shown) : undefined;
+        yield { kind: "bound", opens: date === undefined ? undefined : { date, line: `## ${shown}` } };
+      } else {
+        if (tagged) yield { kind: "bound", opens: undefined };
+        for (const text of (inline.length > 0 ? shownInline(inline) : tokenText(token)).split("\n")) yield { kind: "line", text };
+      }
+    }
   }
-  return lines;
 }
 
 /**
- * A receipt's dated entries, read from its rendered view (marked's lexer; wb-5esj F3): an entry opens at a level-2 ATX
- * heading in the first column whose shown text starts with a real date (a real month and day) and runs to the next
- * level-1 or level-2 heading; its text is that heading's line and the shown lines of the blocks after it, so what HTML or
- * a code block holds is never part of a record.
+ * A receipt's dated entries, read from its rendered view (marked's token tree; wb-5esj F3 and cut #2): an entry opens at a
+ * top-level '## ' heading whose shown text begins with a real date (openingDate) and runs to the next bound (viewSteps: a
+ * heading of level 1 or 2 at any depth, or a block holding an HTML <h1> or <h2> start tag); its text is its heading's line
+ * ('## ' and the shown text) and the shown lines up to that bound, so what HTML or a code block holds is never part of a
+ * record.
  */
 export function datedEntries(text: string): DatedEntry[] {
   const entries: DatedEntry[] = [];
@@ -261,23 +336,21 @@ export function datedEntries(text: string): DatedEntry[] {
     if (current !== undefined) entries.push({ date: current.date, text: current.lines.join("\n") });
     current = undefined;
   };
-  for (const token of marked.lexer(text)) {
-    if (isHeading(token) && token.depth <= 2) {
+  for (const step of viewSteps(marked.lexer(text), true)) {
+    if (step.kind === "line") current?.lines.push(step.text);
+    else {
       close();
-      const line = `${"#".repeat(token.depth)} ${shownInline(token.tokens)}`;
-      const match = token.raw.startsWith("## ") ? /^## (\d{4})-(\d{2})-(\d{2})(?:\s|$)/.exec(line) : null;
-      const month = Number(match?.[2]);
-      const day = Number(match?.[3]);
-      if (match !== null && month >= 1 && month <= 12 && day >= 1 && day <= 31) current = { date: `${match[1]}-${match[2]}-${match[3]}`, lines: [line] };
-      continue;
+      if (step.opens !== undefined) current = { date: step.opens.date, lines: [step.opens.line] };
     }
-    current?.lines.push(...shownLines([token]));
   }
   close();
   return entries;
 }
 
-/** A path's characters: a record names a path only as a whole run of them, its closing dots (a sentence's end) dropped. */
+/**
+ * A path's characters (ASCII letters, digits and _ . / ~ + -): a record names a path only as a whole run of them, its
+ * closing dots (a sentence's end) dropped, so a character outside the run (é, a comma, #, @) ends a run.
+ */
 const PATH_RUN = /[A-Za-z0-9_./~+-]+/g;
 /** Whether a text names a path as a whole path (wb-5esj F3: src/workbench/gp-shadow.tsx names no src/workbench/gp-shadow.ts). */
 export function namesPath(text: string, path: string): boolean {
@@ -495,8 +568,9 @@ export const RESIDUALS: Readonly<Record<string, readonly { readonly leg: Leg; re
     { leg: "src", path: "src/workbench/q1-codes.ts", text: 'export const NAME = String.fromCharCode(71, 114, 97, 112, 104) + "Policy";\n' },
     { leg: "src", path: "src/workbench/q1-nbsp.ts", text: `export const NAME = "Graph${String.fromCodePoint(0xa0)}Policy";\n` },
   ],
-  // A launch whose program is computed (a joined name, an environment value, a let binding) or whose launcher is reached
-  // indirectly (an alias, an element access, Function.prototype.call).
+  // A launch whose program is computed (a joined name, an environment value, a let binding, a const bound to another
+  // const) or whose launcher is reached indirectly (an alias, an element access, Function.prototype.call, .apply or .bind,
+  // Reflect.apply); wb-5esj cut #2 adds the const chain (the landing-542 respin gate's W6) and the last three.
   Q2: [
     { leg: "src", path: "src/workbench/q2-joined.ts", text: 'import { spawn } from "node:child_process";\nconst bin = ["g", "p"].join("");\nspawn(bin, ["sample"]);\n' },
     { leg: "src", path: "src/workbench/q2-env.ts", text: 'import { spawn } from "node:child_process";\nspawn(process.env.SCORER ?? "", ["sample"]);\n' },
@@ -504,6 +578,10 @@ export const RESIDUALS: Readonly<Record<string, readonly { readonly leg: Leg; re
     { leg: "src", path: "src/workbench/q2-let.ts", text: 'import { spawn } from "node:child_process";\nlet bin = "gp";\nspawn(bin, ["sample"]);\n' },
     { leg: "src", path: "src/workbench/q2-element.ts", text: 'import * as cp from "node:child_process";\ncp["spawn"]("gp", ["sample"]);\n' },
     { leg: "src", path: "src/workbench/q2-call.ts", text: 'import * as cp from "node:child_process";\ncp.spawnSync.call(undefined, "gp", ["sample"]);\n' },
+    { leg: "src", path: "src/workbench/q2-const-chain.ts", text: 'import { spawn } from "node:child_process";\nconst A = "gp";\nconst B = A;\nspawn(B, ["sample"]);\n' },
+    { leg: "src", path: "src/workbench/q2-apply.ts", text: 'import * as cp from "node:child_process";\ncp.spawn.apply(undefined, ["gp", ["sample"]]);\n' },
+    { leg: "src", path: "src/workbench/q2-bind.ts", text: 'import * as cp from "node:child_process";\ncp.spawn.bind(undefined)("gp", ["sample"]);\n' },
+    { leg: "src", path: "src/workbench/q2-reflect.ts", text: 'import * as cp from "node:child_process";\nReflect.apply(cp.spawn, undefined, ["gp", ["sample"]]);\n' },
   ],
   // gp anywhere but a shell line's bare first word: a later command, an env prefix, a quoted or grouped program word, or
   // an argument of another program.
