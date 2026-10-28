@@ -1,0 +1,649 @@
+{
+ "bead": "wb-km7q.8",
+ "rows": [
+  {
+   "id": "A",
+   "label": "adoption-time falsifier that an UNKNOWN->TRUE flip alone produces zero model calls",
+   "pins": [
+    {
+     "id": "A1",
+     "phrase": "adoption-time falsifier"
+    },
+    {
+     "id": "A2",
+     "phrase": "that an UNKNOWN->TRUE flip alone"
+    },
+    {
+     "id": "A3",
+     "phrase": "produces zero model calls"
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "and that a model request receipt retains the QueryView source witness as typed provenance",
+   "pins": [
+    {
+     "id": "B1",
+     "phrase": "and that a model request receipt"
+    },
+    {
+     "id": "B2",
+     "phrase": "retains the QueryView source witness as typed provenance"
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "If Pi ever composes ReactiveQuerySDK evidence with ReactiveInferenceSDK-mediated execution (gated INF-RQ1..INF-RQ5)",
+   "pins": [
+    {
+     "id": "C1",
+     "phrase": "If Pi ever composes ReactiveQuerySDK evidence with ReactiveInferenceSDK-mediated execution"
+    },
+    {
+     "id": "C2",
+     "phrase": "(gated INF-RQ1..INF-RQ5)"
+    }
+   ]
+  }
+ ],
+ "frozenShape": [
+  "A:3",
+  "B:2",
+  "C:2"
+ ],
+ "settleMs": 150,
+ "producer": {
+  "repo": "ReactiveInferenceSDK",
+  "pin": "52c9271ed485",
+  "probe": "e361471d0b5c",
+  "charter": {
+   "path": "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md",
+   "blob": "6252a3f6ffcc",
+   "lines": [
+    {
+     "line": 3,
+     "sha256": "632b5059fa9c17b4588eee6acbefa67411d693b997e71e003f20a31271230318",
+     "text": "**Date:** 2026-10-17. **Status:** design only. **Branch:** master. **Program:** [Adaptive Computation and Control](https://github.com/jehalladay/FiberOpticsResearch/tree/main/docs/research/foa/programs/adaptive-computation-and-control-2026-10-17). **Work packages:** AC-01, AC-06, AC-15."
+    },
+    {
+     "line": 35,
+     "sha256": "bc57b43b55006462f42a08a9f8fe770fdd6547c58ac375f8bbd1df7307d0f419",
+     "text": "ReactiveQuerySDK was created as a separate pure maintained evidence/query engine (https://github.com/jehalladay/ReactiveQuerySDK/tree/main/docs/program). It does not change ReactiveInferenceSDK's provider-neutral model execution, capability, cancellation and token/usage authority. A query result can be *conditioning data* in a context/agent request, but query recomputation or a change from UNKNOWN to TRUE never directly calls a model from ReactiveInferenceSDK."
+    },
+    {
+     "line": 37,
+     "sha256": "88ff01a3e58c067782c7bae4f6612a72b4ab37b600f607c70a2c7d5aac83fc14",
+     "text": "Keep the existing source/gen/capability/usage receipts for actual admitted inference. Speculative inference remains disabled by default; query evidence proof is not a license for a speculative model operation. If a host includes QueryView source witness in model context basis, the existing model request identifier/receipt should retain it as typed provenance, without inventing a query engine inside the inference SDK."
+    },
+    {
+     "line": 39,
+     "sha256": "7fda4bd34ab435bb2e8747f4f9193073a053d3ba6b3dc76076fafe8c8690c726",
+     "text": "Acceptance INF-RQ1 ordinary inference API import/run unaffected without QuerySDK, INF-RQ2 query-view changes alone produce no network calls, INF-RQ3 exact provider usage/cancel disposition preserved, INF-RQ4 generation-fenced inferences cannot publish stale output into newer evidence snapshot, INF-RQ5 DevTools and QuerySDK remain optional dependencies and local Forge/installed source gates remain binding."
+    }
+   ]
+  },
+  "witness": {
+   "path": "src/reactive_inference/execution.py",
+   "blob": "60043a7be048",
+   "lines": [
+    {
+     "line": 432,
+     "sha256": "e1087ceca27548d50168b2c26a540f485f7e80a138aad459473e5590215888da",
+     "text": "class SourceWitness:"
+    },
+    {
+     "line": 435,
+     "sha256": "ec9ce8c5b46388aaf5275d49cc817f002d2bdea6c1e95d79d7bf004f3caf4990",
+     "text": "    request from (a QueryView witness travels here, as typed provenance and nothing more), ``trace_id`` the host's"
+    },
+    {
+     "line": 437,
+     "sha256": "3dbfb0035ea0bdc4e088fcdf0ee111f62fda1189a400faaa55ca7d66da9d5ff1",
+     "text": "    basis, and no query engine enters this package.\"\"\""
+    },
+    {
+     "line": 439,
+     "sha256": "aa3c561b532bff242e333d8f870e8435045eecd241b1f2fa4f836194f5f7e87e",
+     "text": "    host_epoch: int | None = None"
+    },
+    {
+     "line": 440,
+     "sha256": "3f44e91e70a791c1b99b66607889fdbf7a896d0020b233c0289e2108fcf94143",
+     "text": "    generation: int | None = None"
+    },
+    {
+     "line": 441,
+     "sha256": "337f0083b6e63d0c3dff59f40cc8a2d6dc647d4c913862fd72d0ed52bf33250c",
+     "text": "    source_digest: str | None = None"
+    },
+    {
+     "line": 442,
+     "sha256": "9c325736bea0f6e50c23d674f75b21fe1c25b611844cfb032b5ef42eacf880fb",
+     "text": "    trace_id: str | None = None"
+    }
+   ]
+  },
+  "receipt": {
+   "path": "src/reactive_inference/usage_receipt.py",
+   "blob": "994a0dd15474",
+   "lines": [
+    {
+     "line": 119,
+     "sha256": "ada2cf2025f600be54956685b748a3ac0d03107302ad5790add80a1af1445959",
+     "text": "SCHEMA_VERSION: Final = \"reactive_inference.usage_receipt/1\""
+    },
+    {
+     "line": 734,
+     "sha256": "161938114384c1aefa23fd2867621ca19f0234d04741aa23c9b4a8b61e93ba2f",
+     "text": "    witness: SourceWitness | None"
+    }
+   ]
+  }
+ },
+ "residuals": [
+  "R-LATE",
+  "R-OTHER-SEAM",
+  "R-OBSERVER-PATH",
+  "R-EXPLICIT",
+  "R-OTHER-RECORD",
+  "R-SAME-VALUE",
+  "R-OUTSIDE-ROOTS",
+  "R-COMPOSED",
+  "R-LOOKALIKE",
+  "R-RF-INTERNAL"
+ ],
+ "unclaimed": [
+  "the title's last clause, no query engine is expected inside the inference SDK: a producer-side duty (execution.py:437 'no query engine enters this package'); Pi expects nothing of the SDK while it composes nothing",
+  "the title's two armed duties on an actual composition and receipt (no query recomputation or UNKNOWN->TRUE change directly calls a model; a QueryView source witness entering a model context basis is retained as typed provenance on the existing request identifier/receipt): they bind when C1 reads PRESENT, and the adopting cut runs falsify() over its composition and witnessViolations() over its receipt",
+  "the producer's INF-RQ1..INF-RQ5 tests themselves: C2 reads their gate state from the charter, never re-runs them",
+  "wb-km7q.7 (R19): whether a Pi model-call site is reachable from an evidence path beyond the projection module, and the speculative-inference opt-in checklist"
+ ],
+ "witnesses": {
+  "A1": {
+   "mutants": {
+    "demand-on-flip": {
+     "calls": 2,
+     "late": 0,
+     "otherSeam": 0,
+     "violations": [
+      "call-on:refresh:flip",
+      "call-on:ingest:flip"
+     ]
+    },
+    "direct-on-recompute": {
+     "calls": 2,
+     "late": 0,
+     "otherSeam": 0,
+     "violations": [
+      "call-on:refresh:recompute",
+      "call-on:ingest:recompute"
+     ]
+    },
+    "deferred-on-flip": {
+     "calls": 2,
+     "late": 0,
+     "otherSeam": 0,
+     "violations": [
+      "deferred:2"
+     ]
+    },
+    "wrapped-refresh": {
+     "calls": 1,
+     "late": 0,
+     "otherSeam": 0,
+     "violations": [
+      "call-on:refresh:flip"
+     ]
+    },
+    "resolve-unknown": {
+     "calls": 2,
+     "late": 0,
+     "otherSeam": 0,
+     "violations": [
+      "call-on:refresh:unknown",
+      "call-on:ingest:unknown"
+     ]
+    }
+   },
+   "quiet": {
+    "read-only": {
+     "calls": 0,
+     "late": 0,
+     "otherSeam": 0,
+     "violations": []
+    },
+    "R-LATE": {
+     "calls": 0,
+     "late": 2,
+     "otherSeam": 0,
+     "violations": []
+    },
+    "R-OTHER-SEAM": {
+     "calls": 0,
+     "late": 0,
+     "otherSeam": 2,
+     "violations": []
+    }
+   }
+  },
+  "A2": {
+   "steps": [
+    {
+     "arm": "refresh",
+     "name": "unknown",
+     "applied": "applied",
+     "before": null,
+     "after": {
+      "statusText": "UNKNOWN",
+      "statusTone": "unknown",
+      "freshness": "unknown",
+      "completeness": "unknown"
+     }
+    },
+    {
+     "arm": "refresh",
+     "name": "flip",
+     "applied": "applied",
+     "before": {
+      "statusText": "UNKNOWN",
+      "statusTone": "unknown",
+      "freshness": "unknown",
+      "completeness": "unknown"
+     },
+     "after": {
+      "statusText": "TRUE",
+      "statusTone": "success",
+      "freshness": "current",
+      "completeness": "complete"
+     }
+    },
+    {
+     "arm": "refresh",
+     "name": "recompute",
+     "applied": "applied",
+     "before": {
+      "statusText": "TRUE",
+      "statusTone": "success",
+      "freshness": "current",
+      "completeness": "complete"
+     },
+     "after": {
+      "statusText": "TRUE",
+      "statusTone": "success",
+      "freshness": "current",
+      "completeness": "complete"
+     }
+    },
+    {
+     "arm": "ingest",
+     "name": "unknown",
+     "applied": "applied",
+     "before": null,
+     "after": {
+      "statusText": "UNKNOWN",
+      "statusTone": "unknown",
+      "freshness": "unknown",
+      "completeness": "unknown"
+     }
+    },
+    {
+     "arm": "ingest",
+     "name": "flip",
+     "applied": "applied",
+     "before": {
+      "statusText": "UNKNOWN",
+      "statusTone": "unknown",
+      "freshness": "unknown",
+      "completeness": "unknown"
+     },
+     "after": {
+      "statusText": "TRUE",
+      "statusTone": "success",
+      "freshness": "unknown",
+      "completeness": "unknown"
+     }
+    },
+    {
+     "arm": "ingest",
+     "name": "recompute",
+     "applied": "applied",
+     "before": {
+      "statusText": "TRUE",
+      "statusTone": "success",
+      "freshness": "unknown",
+      "completeness": "unknown"
+     },
+     "after": {
+      "statusText": "TRUE",
+      "statusTone": "success",
+      "freshness": "unknown",
+      "completeness": "unknown"
+     }
+    }
+   ],
+   "closure": {
+    "modules": [
+     "src/workbench/observation.ts"
+    ],
+    "packages": [],
+    "unread": []
+   },
+   "modelCallModules": [
+    "src/agent-runner.ts",
+    "src/mention-clone.ts",
+    "src/workbench/claude-host.ts"
+   ],
+   "controls": {
+    "chained": [
+     "@anthropic-ai/claude-agent-sdk",
+     "src/workbench/claude-host.ts"
+    ],
+    "dynamic": [
+     "@anthropic-ai/claude-agent-sdk"
+    ],
+    "reexport": [
+     "@anthropic-ai/claude-agent-sdk"
+    ],
+    "session": [
+     "@earendil-works/pi-coding-agent"
+    ],
+    "typeOnly": [],
+    "R-OBSERVER-PATH": [],
+    "aliasedEntry": [
+     "@anthropic-ai/claude-agent-sdk:query"
+    ],
+    "namespaceEntry": [
+     "@anthropic-ai/claude-agent-sdk:*"
+    ],
+    "toolEntryOnly": [],
+    "typeEntryOnly": []
+   }
+  },
+  "A3": {
+   "today": {
+    "calls": 0,
+    "late": 0,
+    "otherSeam": 0,
+    "violations": []
+   },
+   "demand": {
+    "calls": 1,
+    "prompt": "explicit demand: the operator asks, the refresh predicate reads TRUE",
+    "status": "completed",
+    "agentCount": 1,
+    "value": {
+     "answer": "fixture answer"
+    }
+   },
+   "R-EXPLICIT": {
+    "violations": [],
+    "conditionedOn": "TRUE"
+   }
+  },
+  "B1": {
+   "declared": {
+    "ClaudeCallIdentity": [
+     "agentId",
+     "index",
+     "label"
+    ],
+    "WorkflowSpawnRequest": [
+     "agentId",
+     "index",
+     "prompt",
+     "label",
+     "agentType",
+     "model",
+     "effort",
+     "isolation",
+     "onResolved",
+     "schema",
+     "phaseIndex",
+     "phaseTitle",
+     "gate"
+    ],
+    "WorkflowSpawnResult": [
+     "ok",
+     "sessionId",
+     "text",
+     "error",
+     "skipped",
+     "tokens",
+     "outputTokens",
+     "structuredRetried",
+     "toolCalls",
+     "cwd",
+     "gate"
+    ],
+    "WorkflowJournalEntry": [
+     "index",
+     "key",
+     "ok",
+     "text",
+     "resumed",
+     "kind",
+     "capabilityId",
+     "effectClass",
+     "basis",
+     "nativeRefs",
+     "dispatched",
+     "reconcile"
+    ]
+   },
+   "witnessMembers": [],
+   "runtime": {
+    "call": [
+     "agentId",
+     "agentType",
+     "index",
+     "label",
+     "onResolved",
+     "prompt"
+    ],
+    "result": [
+     "ok",
+     "sessionId",
+     "text"
+    ],
+    "journal": [
+     "basis",
+     "index",
+     "key",
+     "ok",
+     "text"
+    ]
+   },
+   "basis": {
+    "isHostReplayBasis": true,
+    "items": 8
+   },
+   "reading": "NO-WITNESS-SEAM",
+   "controls": {
+    "witness": [
+     "witness"
+    ],
+    "sourceWitness": [
+     "sourceWitness"
+    ],
+    "provenance": [
+     "provenance"
+    ],
+    "sourceDigest": [
+     "sourceDigest",
+     "source_digest"
+    ],
+    "hostEpoch": [
+     "hostEpoch",
+     "trace_id",
+     "generation"
+    ],
+    "queryView": [
+     "queryViewRef"
+    ],
+    "quiet": [],
+    "R-OTHER-RECORD": []
+   }
+  },
+  "B2": {
+   "member": "witness",
+   "fields": [
+    "host_epoch:int",
+    "generation:int",
+    "source_digest:str",
+    "trace_id:str"
+   ],
+   "readings": {
+    "retained": [],
+    "dropped": [
+     "missing"
+    ],
+    "nulled": [
+     "null"
+    ],
+    "stringified": [
+     "not-object"
+    ],
+    "folded": [
+     "missing"
+    ],
+    "array": [
+     "not-object"
+    ],
+    "renamed": [
+     "field-extra:hostEpoch",
+     "field-missing:host_epoch"
+    ],
+    "retyped": [
+     "field-type:generation"
+    ],
+    "changed": [
+     "field-mismatch:source_digest"
+    ],
+    "partial": [
+     "field-missing:generation",
+     "field-missing:host_epoch",
+     "field-missing:trace_id"
+    ],
+    "extra": [
+     "field-extra:query"
+    ],
+    "notObject": [
+     "receipt-not-object"
+    ],
+    "R-SAME-VALUE": []
+   }
+  },
+  "C1": {
+   "vocabulary": [
+    "inference sdk: inference",
+    "query sdk: query",
+    "query view: query",
+    "reactive inference: inference",
+    "reactive query: query"
+   ],
+   "findings": [],
+   "reading": "ABSENT",
+   "plants": {
+    "importSpecifier": [
+     "src/plant.ts:1 query"
+    ],
+    "identifier": [
+     "src/plant.ts:1 inference"
+    ],
+    "comment": [
+     "src/plant.ts:1 query"
+    ],
+    "fused": [
+     "src/plant.ts:1 query"
+    ],
+    "snake": [
+     "src/plant.ts:1 inference"
+    ],
+    "inferenceSdk": [
+     "src/plant.ts:1 inference"
+    ],
+    "splitLine": [
+     "src/plant.ts:1 query"
+    ],
+    "splitBlock": [
+     "src/plant.ts:2 inference"
+    ],
+    "manifest": [
+     "package.json:dependencies:@acme/reactive-query query",
+     "package.json:devDependencies:reactive-inference-sdk inference"
+    ]
+   },
+   "quiet": {
+    "projectionQuery": [],
+    "typeInference": [],
+    "sdkQuery": [],
+    "operatorJoin": [],
+    "observeQuery": [],
+    "R-COMPOSED": [],
+    "R-LOOKALIKE": [],
+    "R-RF-INTERNAL": [],
+    "R-OUTSIDE-ROOTS": []
+   },
+   "roles": {
+    "titleNames": [
+     "reactive query sdk: query",
+     "reactive inference sdk: inference",
+     "query view: query"
+    ],
+    "line35": [
+     "inference",
+     "query"
+    ],
+    "line37": [
+     "inference",
+     "query"
+    ]
+   }
+  },
+  "C2": {
+   "repo": "ReactiveInferenceSDK",
+   "pin": "52c9271ed485",
+   "probe": "e361471d0b5c",
+   "vendored": [
+    "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:3 ok",
+    "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:35 ok",
+    "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:37 ok",
+    "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:39 ok",
+    "src/reactive_inference/execution.py:432 ok",
+    "src/reactive_inference/execution.py:435 ok",
+    "src/reactive_inference/execution.py:437 ok",
+    "src/reactive_inference/execution.py:439 ok",
+    "src/reactive_inference/execution.py:440 ok",
+    "src/reactive_inference/execution.py:441 ok",
+    "src/reactive_inference/execution.py:442 ok",
+    "src/reactive_inference/usage_receipt.py:119 ok",
+    "src/reactive_inference/usage_receipt.py:734 ok"
+   ],
+   "ids": [
+    "INF-RQ1",
+    "INF-RQ2",
+    "INF-RQ3",
+    "INF-RQ4",
+    "INF-RQ5"
+   ],
+   "cited": [
+    ":35@52c9271ed485",
+    ":37@52c9271ed485",
+    ":39@52c9271ed485"
+   ],
+   "gate": "NOT-PASSED",
+   "live": "CLOSED",
+   "nearMisses": {
+    "shipped": "PASSED",
+    "fourGates": "NOT-PASSED",
+    "noStatusLine": "NOT-PASSED",
+    "noAcceptanceLine": "NOT-PASSED",
+    "noIds": "NOT-PASSED",
+    "adoptedBeforeGate": "ADOPTED-BEFORE-GATE",
+    "adoptedAfterGate": "ADOPTED-FALSIFIER-OWED"
+   }
+  }
+ }
+}
