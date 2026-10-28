@@ -50,6 +50,9 @@
  * they do at the filing's Pi d75b68d (git grep, case-sensitive); the acronym reads 113 whole-word lines, all in holders but the bound
  * sentence; the lines of package.json and the lock that spell the library word number 0 and 3 (the lock's 1703, 3473 and 3475, the
  * filing's own count and lines), each naming the filing's one package.
+ * MEASURED FOR wb-8ccl AT 8d458c6 (trunk tip at claim time, landing 586): the two-word member written with a tab and with a no-break
+ * space in place of its space, planted in one src file of the live tree, reads quiet (25 of 25, the gate's landing-579 F2 escape), so
+ * both are R-SPELLING members, which its quiet row now plants with every other white-space character (RESIDUALS below).
  *
  * READINGS. A tree is walked from the repository root by directory entries: a regular file is read, a directory recursed (hidden
  * entries included), anything else (a symlink, a socket) is UNREAD and recorded. Every file is read as latin1 bytes, so the ASCII
@@ -118,8 +121,10 @@
  * .agents, vendor) is not walked; R-ALIAS a Library or program package, provider or evidence read under a name that carries no
  * judged segment escapes the name readings; R-VERSION a schema member under another version suffix is another identifier and
  * escapes the exact-name reading. With the extension, R-SPELLING also plants the upper case and the two-word member's other
- * separators (underscore, hyphen, two spaces, a line break), and R-ENCODED reads the one extension member whose text spells a base
- * member through that member: encoded, it is still read (as the member it spells), so it is no escape.
+ * separators (underscore, hyphen, two spaces and, since wb-8ccl, each other white-space character: the engine's \s class over the BMP,
+ * 24 characters with a line break, the tab and the no-break space U+00A0 among them, pinned by code point in SPACE_SEPARATOR_POINTS
+ * and derived at run time in WHITE_SPACE), and R-ENCODED reads the one extension member whose text spells a base member through that
+ * member: encoded, it is still read (as the member it spells), so it is no escape.
  * Gate behaviour: the day a source owner publishes an exported package or an adapter with a recorded adoption gate, the artifact is
  * triaged as its own program-triage epic and the cut that lands its adoption owes this census's update; until then it stays empty by
  * design. Display paths added: none. Test-only: synthetic trees live in makeScratch scratch with the leak guard installed; src, the
@@ -895,6 +900,15 @@ const IMPL: Readonly<Record<string, () => Json>> = {
 };
 
 // --- residual quiet rows ----------------------------------------------------------------------------------------------------------------
+/** A text's code points, hex, joined by "+" (the separator reading prints invisibles this way, never raw). */
+const points = (text: string): string => [...text].map(char => (char.codePointAt(0) ?? 0).toString(16).padStart(4, "0")).join("+");
+/** R-SPELLING's separators for the one member a space joins (the extension's two-word status), by code point and in planting order: an
+ * underscore, a hyphen, two spaces, then each other white-space character in code point order - the ECMAScript \s class over the BMP,
+ * 24 characters, a line break, the tab and the no-break space U+00A0 among them (wb-8ccl, the R694 lead from landing 579). */
+const SPACE_SEPARATOR_POINTS: readonly string[] = ["005f", "002d", "0020+0020", "0009", "000a", "000b", "000c", "000d", "00a0", "1680", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "200a", "2028", "2029", "202f", "205f", "3000", "feff"];
+/** The white-space characters other than the space, derived at run time from the engine's \s class over the BMP - an anchor outside
+ * this census's literals, so SPACE_SEPARATOR_POINTS losing a member (or the derivation losing one) reds R-SPELLING. */
+const WHITE_SPACE: readonly string[] = Array.from({ length: 0x10000 }, (_, point) => String.fromCodePoint(point)).filter(char => char !== " " && /\s/.test(char));
 const swaps = (text: string): string[] =>
   [
     text.toLowerCase(),
@@ -902,10 +916,7 @@ const swaps = (text: string): string[] =>
     text.replaceAll("_", "-"),
     text.replaceAll("-", "_"),
     text.replaceAll("-", " "),
-    text.replaceAll(" ", "_"),
-    text.replaceAll(" ", "-"),
-    text.replaceAll(" ", "  "),
-    text.replaceAll(" ", "\n"),
+    ...["_", "-", "  ", ...WHITE_SPACE].map(separator => text.replaceAll(" ", separator)),
   ].filter(variant => variant !== text);
 const QUIET: Readonly<Record<string, () => void>> = {
   "R-SIBLING": () => {
@@ -929,6 +940,13 @@ const QUIET: Readonly<Record<string, () => void>> = {
   "R-SPELLING": () => {
     const variants = NEEDLES.flatMap(needle => swaps(needle.text)).filter(variant => !NEEDLES.some(needle => needle.text === variant));
     expect(variants.length, "every needle has another spelling").toBeGreaterThanOrEqual(NEEDLES.length);
+    const joined = NEEDLES.filter(needle => needle.text.includes(" "));
+    const [head = "", tail = ""] = joined[0]?.text.split(" ") ?? [];
+    const separators = variants.filter(variant => variant.startsWith(head) && variant.endsWith(tail)).map(variant => points(variant.slice(head.length, variant.length - tail.length)));
+    expect(
+      [joined.map(member => `${member.source}:${member.family}`), separators],
+      "the one member a space joins, the extension's two-word status, is planted with each other separator, the tab and the no-break space among them",
+    ).toEqual([["extension:status"], SPACE_SEPARATOR_POINTS]);
     const needle = NEEDLES[0]?.text ?? "";
     withTree(root => {
       write(root, "src/plant.ts", variants.map(code).join(""));
