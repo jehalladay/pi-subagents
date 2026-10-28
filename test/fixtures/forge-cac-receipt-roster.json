@@ -16,7 +16,8 @@
    "id": "R-COMPOSED",
    "quietPin": "A2",
    "quiet": [
-    "composed"
+    "composed",
+    "escaped"
    ],
    "twin": [
     "composedTwin"
@@ -61,6 +62,19 @@
    ],
    "twin": [
     "title"
+   ]
+  },
+  {
+   "id": "R-OTHER-SEPARATOR",
+   "quietPin": "A2",
+   "quiet": [
+    "hyphenBullet",
+    "minusSign",
+    "middleDot",
+    "brailleBlank"
+   ],
+   "twin": [
+    "pd2010"
    ]
   },
   {
@@ -113,7 +127,8 @@
        "dist/zz-plant-receipt-big.d.ts"
       ],
       "word": [
-       "dist/zz-plant-receipt.d.ts"
+       "dist/zz-plant-receipt.d.ts",
+       "dist/zz-plant-hyphen.d.ts"
       ],
       "receiptShaped": [
        "dist/zz-plant-receipt.d.ts"
@@ -132,7 +147,8 @@
       "planted": {
        "named": "gating=1 word=1 receiptShaped=1 dist/zz-plant-receipt.d.ts",
        "pathOnly": "gating=1 word=0 receiptShaped=0 dist/ForgeCACReceiptV0.d.ts",
-       "otherName": "gating=0 word=0 receiptShaped=0 dist/zz-plant-other.d.ts"
+       "otherName": "gating=0 word=0 receiptShaped=0 dist/zz-plant-other.d.ts",
+       "hyphen": "gating=0 word=1 receiptShaped=0 dist/zz-plant-hyphen.d.ts"
       }
      }
     },
@@ -162,15 +178,35 @@
         "cyrillic": "word=0 plain=0 display=0 V\\u{415}\\u{420}IFI\\u{415}D_HISTORICAL",
         "passed": "word=0 plain=0 display=0 historically passed",
         "atSnapshot": "word=0 plain=0 display=0 verified at the declared snapshot",
-        "gating": "word=0 plain=0 display=0 ForgeCACReceiptV0"
+        "gating": "word=0 plain=0 display=0 ForgeCACReceiptV0",
+        "pd58a": "word=1 plain=1 display=1 VERIFIED\\u{58a}HISTORICAL",
+        "pd1400": "word=1 plain=1 display=1 VERIFIED\\u{1400}HISTORICAL",
+        "pd1806": "word=1 plain=1 display=1 VERIFIED\\u{1806}HISTORICAL",
+        "pd2010": "word=1 plain=1 display=1 VERIFIED\\u{2010}HISTORICAL",
+        "pd2011": "word=1 plain=1 display=1 VERIFIED\\u{2011}HISTORICAL",
+        "pd2e17": "word=1 plain=1 display=1 VERIFIED\\u{2e17}HISTORICAL",
+        "pd2e1a": "word=1 plain=1 display=1 VERIFIED\\u{2e1a}HISTORICAL",
+        "pd2e40": "word=1 plain=1 display=1 VERIFIED\\u{2e40}HISTORICAL",
+        "pd2e5d": "word=1 plain=1 display=1 VERIFIED\\u{2e5d}HISTORICAL",
+        "pd30a0": "word=1 plain=1 display=1 VERIFIED\\u{30a0}HISTORICAL",
+        "pd10ead": "word=1 plain=1 display=1 VERIFIED\\u{10ead}HISTORICAL",
+        "hyphenBullet": "word=0 plain=0 display=0 VERIFIED\\u{2043}HISTORICAL",
+        "minusSign": "word=0 plain=0 display=0 VERIFIED\\u{2212}HISTORICAL",
+        "middleDot": "word=0 plain=0 display=0 VERIFIED\\u{b7}HISTORICAL",
+        "brailleBlank": "word=0 plain=0 display=0 VERIFIED\\u{2800}HISTORICAL"
        },
        "modules": {
         "literal": "hits=1 export const shown = \"VERIFIED_HISTORICAL\";\n",
         "comment": "hits=1 // a full-field receipt renders VERIFIED_HISTORICAL\nexport const shown = 1;\n",
         "identifier": "hits=1 export const VerifiedHistorical = 1;\n",
         "composed": "hits=0 export const shown = \"VERIFIED_\" + \"HISTORICAL\";\n",
+        "escaped": "hits=0 export const shown = \"VERIFIED\\u005fHISTORICAL\";\n",
         "composedTwin": "hits=1 export const shown = \"VERIFIED_HISTORICAL\";\n"
        }
+      },
+      "separators": {
+       "floorMet": true,
+       "unread": []
       },
       "walk": {
        "judgedEqualsListedPlusPlants": true,

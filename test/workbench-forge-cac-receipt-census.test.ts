@@ -17,17 +17,24 @@
  *     from vendor/forge-sdk-0.1.0.tgz) is read file by file, by path and by content: no file spells the gating artifact (the
  *     title's ForgeCACReceiptV0), none spells WORD's family (below), and none is receipt-shaped (spells both "predicate" and
  *     "checker", the title's own field words, case-insensitive). The content reading is proven live by the release's own
- *     CancelReceipt and source_snapshot_id files, and three planted release files ride last (a named receipt type, a file longer
- *     than every release file with the name at its end, and a file whose path alone spells it): the reader finds exactly the
- *     plants. The witness carries the release's name, version and file count, so any re-vendor reds A1 with OWED: if the
+ *     CancelReceipt and source_snapshot_id files, and four planted release files ride last (a named receipt type, a file longer
+ *     than every release file with the name at its end, a file whose path alone spells it, and a file spelling WORD with U+2010
+ *     HYPHEN between its two words, which A1 reads through A2's family) beside R-OTHER-NAME's quiet row: the reader finds
+ *     exactly the four plants. The witness carries the release's name, version and file count, so any re-vendor reds A1 with OWED: if the
  *     artifact shipped, the acceptance on landing is owed (A's and B's not-due spans, their fixtures replacing A1 and A2); if it
  *     did not, the roster's release reading is re-measured.
- *   A2 the "only" half of the title's rule, standing: while no receipt is read, no Pi surface renders the word. WORD is the
- *     title's VERIFIED_HISTORICAL read as a family: its two words in either order (the second may read HISTORICALLY), separated
- *     by any run of whitespace, hyphens or underscores or by nothing, case-insensitive, with no letter or digit just before or
- *     after, in two readings of a text (the text and Pi's label display of it, sanitizeWorkbenchText's label layout with no
- *     length bound, each after NFKC; a text holds the word when either reading does). The witness carries the judge's planted
- *     texts with their readings (the residual table is checked against them). The src walk reads the whole text (literals,
+ *   A2 the "only" half of the title's rule, standing: while no receipt is read, no Pi surface renders a member of WORD's
+ *     family. WORD is the title's spelling, VERIFIED_HISTORICAL; its family is its two words in either order (the second may
+ *     read HISTORICALLY), separated by nothing or by any run of whitespace (\s), underscores and dash punctuation (general
+ *     category Pd in the runtime's Unicode data: the hyphen-minus, U+2010 HYPHEN, U+2011 NON-BREAKING HYPHEN and every other Pd
+ *     hyphen or dash), case-insensitive, with no letter or digit just before or after, in two readings of a text (the text and
+ *     Pi's label display of it, sanitizeWorkbenchText's label layout with no length bound, each after NFKC; a text holds the
+ *     word when either reading does). The separator classes are held to the runtime's Unicode tables, not to a list here: the
+ *     separator scan plants every code point the runtime files under \s or Pd between the two words, in both orders, and the
+ *     witness records the ones that read quiet (none) and that the scan met its floor (25 whitespace and 27 Pd points, the
+ *     counts this cut measured on Node 24.20.0 with Unicode 17.0); a character outside the three classes is
+ *     R-OTHER-SEPARATOR's. The witness carries the judge's planted texts with their readings (among them, one at a time, the
+ *     eleven Pd hyphens cut #1's gate found unread), and the residual table is checked against them. The src walk reads the whole text (literals,
  *     identifiers and comments) of every src/**\/*.ts module git lists (tracked or untracked, never ignored) plus two planted
  *     modules last: a short literal plant, and one longer than every real module with the word in a comment on its last line.
  *     The judged list equals the listing plus the plants, a filesystem walk lists the same modules, no symlink sits under src,
@@ -45,17 +52,18 @@
  *     earns no pass and dropping a field loses none; the witness lists each cell's planted leaf paths (read off the input) and
  *     both bases' tones. The R-UNPLANTED-SPELLING quiet row (a receipt under other spellings) reads identical too; its twin (a
  *     key the adapter does read, authoritative_current true flat on the historical row) reads differing, so the compare is live.
- *   B2 never a pass, standing. (a) Demotion: the measured historical row and six variants (authoritative_current absent, the
- *     string "true", null, a quoted CURRENT freshness, a full-field receipt claiming the word nested and flat) render the
- *     workspace and the package with tone unknown and coverage partial, the package text keeps "(historical;" and the
- *     forge-operation evidence keeps "(historical; not current verification)". (b) Quoted data only: the word planted in each of
- *     six producer text fields (source.status, source.envelope.verdict, source.envelope.reason_code, the package's ref,
- *     last_result and unverified_reason) over both bases obeys the substitution law for forgeGateTopology and
- *     readForgeOperationEvidence: the output with the word equals, byte for byte, the output with NEUTRAL (same byte length, in
- *     no decision vocabulary) after replacing NEUTRAL by the word; the witness carries each cell's planted path, tones and every
- *     string the word shows in (marked {W}). A last_result_state freshness of the word serializes exactly as NEUTRAL's (basis
- *     UNKNOWN, the word never shown). (c) nativeEvidence keeps a status of the word verbatim as domainStatus, and
- *     layoutWorkflowCard draws that done node with NEUTRAL's glyph, never the tick a producer-stated "verified" gets.
+ *   B2 never a pass, standing; it plants WORD itself (the title's spelling), never another member of its family. (a) Demotion:
+ *     the measured historical row and six variants (authoritative_current absent, the string "true", null, a quoted CURRENT
+ *     freshness, a full-field receipt claiming WORD nested and flat) render the workspace and the package with tone unknown and
+ *     coverage partial, the package text keeps "(historical;" and the forge-operation evidence keeps "(historical; not current
+ *     verification)". (b) Quoted data only: WORD planted in each of six producer text fields (source.status,
+ *     source.envelope.verdict, source.envelope.reason_code, the package's ref, last_result and unverified_reason) over both
+ *     bases obeys the substitution law for forgeGateTopology and readForgeOperationEvidence: the output with WORD equals, byte
+ *     for byte, the output with NEUTRAL (same byte length, in no decision vocabulary) after replacing NEUTRAL by WORD; the
+ *     witness carries each cell's planted path, tones and every string WORD shows in (marked {W}). A last_result_state
+ *     freshness of WORD serializes exactly as NEUTRAL's (basis UNKNOWN, WORD never shown). (c) nativeEvidence keeps a status of
+ *     WORD verbatim as domainStatus, and layoutWorkflowCard draws that done node with NEUTRAL's glyph, never the tick a
+ *     producer-stated "verified" gets.
  * - C, "the existing gate.status and forge-operation evidence adapters stay byte-identical".
  *   C1 forgeGateTopology and readForgeOperationEvidence over READINGS (ten mutations of the measured Forge package row of
  *     test/helpers/forge-last-result-state.ts, never hand-rolled rows) equal the roster's frozen outputs, value for value.
@@ -65,50 +73,78 @@
  * variant and field keys, the fixture tags and digest) beside its readings, so serving one pin with another pin's case changes
  * the witness and reds the compare.
  *
- * OUTSIDE ANCHOR: the wb-b9n.1 row of the tracked bead export (.beads/issues.jsonl): its title (the gating artifact, the word and
- * the three receipt fields are parsed from it) and the first "Acceptance: <lead> <em dash> <clauses>." span of its notes, nothing
- * else of it, so appended notes and status writes do not move it. The span's three clauses are the row labels; every pin's quote
- * is a substring of its row label.
- * PIN MEMBERSHIP (the wb-530q F1 reading, against the export's clause text, never the row labels): each pin's quote sits in its
- * clause exactly once at word boundaries, the pins of a row leave unquoted exactly the row's NOT_DUE spans (A: the echo rule; B:
- * the UNKNOWN-with-a-diagnostic rendering; C: none), and every pin is load-bearing (without it a word of its clause goes
- * unquoted). A pin removed from ROWS, IMPL, the frozen shape and the roster together leaves its words unquoted, so the clause
- * reds it, and so does a quote shortened inside its span.
+ * OUTSIDE ANCHORS: the wb-b9n.1 row of the tracked bead export (.beads/issues.jsonl), three parts of it and nothing else, so
+ * appended notes and status writes do not move them: its title (the gating artifact, the word and the three receipt fields are
+ * parsed from it); the first "Acceptance: <lead> <em dash> <clauses>." span of its notes (the three clauses are the row labels,
+ * and every pin's quote is a substring of its row label); and the first PARK paragraph of its notes (the rule 21(1) park of the
+ * external remainder), read for two things only: the pin ids its "It pins:" list names, in order, and the quotes its "EXTERNAL
+ * REMAINDER PARKED" line parks (the filing's first clause whole, and the half of its second that names a field).
+ * PIN MEMBERSHIP (the wb-530q F1 reading, held to the export, never to the row labels alone). Against the clause text: each
+ * pin's quote sits in its clause exactly once at word boundaries, no word is covered by two quotes, the pins of a row leave
+ * unquoted exactly the row's NOT_DUE runs (A: the echo rule; B: the UNKNOWN-with-a-diagnostic rendering; C: none), and every pin
+ * is load-bearing (without it a word of its clause goes unquoted). Against the PARK paragraph: the pins are exactly the ones its
+ * list names, in its order; each parked quote sits in exactly one clause; of the three clauses only A is parked whole; and in a
+ * clause not parked whole the not-due runs, a trailing comma aside, are exactly the parked quotes that sit in it (B: the second
+ * quote; C: none). So a pin removed from ROWS, IMPL, the frozen shape and the roster together reds the PARK pin list, whatever
+ * quote or not-due run is widened over its words; the not-due runs of B and C are fixed (the parked quotes fix what they may
+ * read, and the clause's own words, "field," with its comma, fix the rest), so no re-tiling of B's or C's quotes around a
+ * changed run stays green; and a quote shortened in place, with every other quote and run unchanged, leaves a word unquoted,
+ * so the clause reds it. What none of this binds is a LIMIT (below).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal and NOT_DUE pins `${id}:${unquoted words}` as
  * another; rows, constants, residuals, the not-due spans and every pin's witness are held to the out-of-file roster
  * test/fixtures/forge-cac-receipt-roster.json. SELF-READ: the judged set parses this file's IMPL and requires that no pin body
- * names ROSTER (direct identifiers only; a helper that reads the roster on a pin's behalf is not detected), and the roster is
+ * names ROSTER or ROSTER_FILE or holds a string literal or template piece spelling the roster's file name (direct reads only; a
+ * helper that reads the roster on a pin's behalf, or a path a pin composes from pieces, is not detected), with the parse proven
+ * live on A1's own identifiers and strings, and the roster is
  * deep-frozen when it is loaded, so no case can rewrite a witness it is compared with. The records case reads that every
  * registered pin ran to its compare and re-compares each witness it produced with its roster witness by sha-256/16 (key order
  * included), so a pin case whose own compare is removed still reds there.
  * RESIDUALS (named; each has a pinned quiet row and a live twin among the planted inputs of the pin named):
- *   R-COMPOSED (A2) the word assembled at run time from pieces no module text spells whole (quiet: "VERIFIED_" + "HISTORICAL";
- *     twin: one literal). The rendered outputs see such a word only from the renderers they drive.
+ *   R-COMPOSED (A2) the word as a value no module text spells whole: assembled at run time from pieces, or written through an
+ *     escape sequence only the cooked string spells it in (quiet: "VERIFIED_" + "HISTORICAL", and a literal spelling the
+ *     underscore as the six-character escape backslash-u005f; twin: one literal). The rendered outputs see such a word only
+ *     from the renderers they drive.
  *   R-EMBEDDED (A2) the word glued after a letter or digit (quiet: isVerifiedHistorical; twin: VerifiedHistorical).
  *   R-LOOKALIKE (A2) confusable letters NFKC does not fold (quiet: Cyrillic lookalikes; twin: fullwidth letters, which it folds).
  *   R-PARAPHRASE (A2) another wording of a historical verification (quiet: "historically passed", "verified at the declared
  *     snapshot"; twin: "historically verified").
  *   R-SIBLING (A2) the consumer rule's other word, VERIFIED_CURRENT, is not this bead's and is not judged (quiet: VERIFIED_CURRENT;
  *     twin: the title's word).
+ *   R-OTHER-SEPARATOR (A2) the two words parted by a character outside whitespace, underscores and Pd, which neither reading
+ *     turns into one of them (quiet: U+2043 HYPHEN BULLET, U+2212 MINUS SIGN, U+00B7 MIDDLE DOT and U+2800 BRAILLE PATTERN
+ *     BLANK between the words; twin: U+2010 HYPHEN, which Pd holds).
  *   R-OTHER-NAME (A1) a receipt type the release ships under another name, without the word and without both field words
  *     (quiet: a ForgeVerificationRecord declaration; twin: a declaration named after the artifact).
  *   R-UNPLANTED-SPELLING (B1) a receipt under spellings no cell plants is not claimed by B1; its quiet row (one such record)
  *     reads identical, its twin (a read key) reads differing.
  * The judged set binds the table to the planted inputs: every planted text, module and release file A1 and A2 read quiet is a
- * named non-claim (NON_CLAIMS: the bare words and today's own labels) or exactly one residual's quiet row, so a residual dropped
+ * named non-claim (NON_CLAIMS: the bare words, today's own labels and the gating artifact's name) or exactly one residual's
+ * quiet row, so a residual dropped
  * from the table (and its literals) leaves its quiet row unaccounted for.
- * LIMITS (stated, not residuals): a pin rewritten to return its roster witness through a helper is not detected by the
- * SELF-READ; a residual removed together with its planted inputs and their roster readings is not detected (residuals are this
- * census's own reading and have no anchor outside it); C freezes the adapters over READINGS only; A1 reads the installed release,
+ * LIMITS (stated, not residuals): a pin rewritten to return its roster witness through a helper, or through a path it composes
+ * from pieces, is not detected by the SELF-READ; a residual removed together with its planted inputs and their roster readings
+ * is not detected (residuals are this census's own reading and have no anchor outside it); the separator classes, the scan and
+ * its floors are this census's own reading too, held only to the runtime's Unicode tables and the roster's readings (narrowed
+ * together with the floors and those readings, they are not detected); which of a row's pins carries which quote, where two
+ * adjacent quotes of a row meet (A1|A2, C1|C2), and in row A (parked whole, so no parked quote binds its split) where its
+ * quotes meet its not-due run, are this census's own reading: changed in every literal together (two pins' quotes swapped, or a
+ * quote shortened and its neighbour or A's not-due run widened over the freed words, with the word-count literal and the
+ * roster in step), the change is not detected; it relabels words and drops no pin; C freezes the adapters over READINGS only;
+ * A1 reads the installed release,
  * never Forge's tree or the installed forge executable, and a receipt Forge serves only as new gate.status payload keys with no
  * client release spelling it does not fire A1 (B1 shows such keys unread today).
  *
- * MEASURED AT THE CUT (seat records, read-only, not assertions): trunk 061c2ac, 2026-10-28. src holds 116 modules and 0 lines of
- * WORD's family; at that base test, qa and docs held 0 as well (this cut's census and roster now spell it, as their own data).
- * Forge origin/main a2ab95fa933b (2026-10-28T09:01:20Z) spells
- * ForgeCACReceiptV0 and VERIFIED_HISTORICAL only in docs/programs/cac-evidence-assurance-2026-10-18/01-contract-qa.md (design
- * only); the installed forge 0.2.1 (rev a2ab95fa933b) site-packages spell neither; the installed @forge/sdk 0.1.0 holds 49
- * files, spells neither, and no file of it spells "predicate" or "checker". The label census of wb-b9n.3
+ * MEASURED AT THE CUT (seat records, read-only, not assertions): cut #1 at trunk 061c2ac; this cut (#2, the respin curing cut
+ * #1's refusal items U1 and U2) at trunk 5fbe25e (e81d2b0 at the claim, the moved tip merged in during the cut), 2026-10-28.
+ * src holds 117 modules and 0 hits of WORD's family as A2 reads it
+ * now; at cut #1's base test, qa and docs held 0 lines of the family as well (the census and roster spell it, as their own
+ * data). Forge origin/main d248b17bd91f (2026-10-28T17:07:14Z) spells ForgeCACReceiptV0 only in
+ * docs/programs/cac-evidence-assurance-2026-10-18/01-contract-qa.md (its section heading :3 reads 'Proposed read-only export
+ * (not shipped)'), and WORD's family only in docs: that file and docs/package-views/11-sdk-cli-and-developer-experience.md:16
+ * ('verified historical result/refusal', a design view present at cut #1's a2ab95fa933b too); the installed forge 0.2.1 (rev
+ * a2ab95fa933b) site-packages spell neither (6778 files); both by a case-insensitive PCRE grep for the family's two orders with
+ * \s, underscore and Pd runs (plain text only, no NFKC or label reading). The installed @forge/sdk 0.1.0 holds 49 files and
+ * spells neither (A1's own reading), and no file of it spells "predicate" or "checker". The label census of wb-b9n.3
  * (test/workbench-forge-cac-label-census.test.ts) holds the 'CAC verified' label and the src-side name trigger; this census
  * holds the receipt reader's word, the release-side trigger, the receipt cells and the byte-identical adapters.
  *
@@ -170,6 +206,11 @@ const ROSTER = deepFreeze(JSON.parse(readFileSync(join(REPO, ROSTER_FILE), "utf8
 const NEUTRAL = "XQZ_NEUTRAL_CONTROL";
 /** A floor under the git listing: an emptied or misdirected listing reds; the judged set is every module git lists. */
 const SRC_FLOOR = 100;
+/** The separator scan's floors: the runtime's counts of \s and of Pd code points at this cut (Node 24.20.0, Unicode 17.0). */
+const SPACE_FLOOR = 25;
+const DASH_FLOOR = 27;
+/** The roster's file name, which no pin body may spell (the SELF-READ). */
+const ROSTER_NAME = ROSTER_FILE.slice(ROSTER_FILE.lastIndexOf("/") + 1).replace(/\.json$/u, "");
 
 const ROWS: readonly Row[] = [
   {
@@ -218,8 +259,20 @@ function acceptanceOf(notes: string): { lead: string; clauses: string[] } {
   const match = new RegExp(`Acceptance: (.+?) ${String.fromCodePoint(0x2014)} (.+?)\\.(?:\\n|$)`, "su").exec(notes);
   return { lead: match?.[1] ?? "", clauses: match?.[2] === undefined ? [] : match[2].split("; ") };
 }
+/**
+ * The notes' first PARK paragraph (the rule 21(1) park of the external remainder): the pin ids its "It pins:" list names, in
+ * order, and the quotes its EXTERNAL REMAINDER PARKED line parks. Later notes never move the first paragraph.
+ */
+function parkOf(notes: string): { pins: string[]; parked: string[] } {
+  const match = /(?:^|\n)PARK \(standing rule 24[^\n]*? It pins: ([^\n]+)\nEXTERNAL REMAINDER PARKED \(rule 21\(1\), relayed\): ([^\n]+?) wait for the external target/u.exec(notes);
+  return {
+    pins: [...(match?.[1] ?? "").matchAll(/\b[A-Z]\d\b/gu)].map(found => found[0]),
+    parked: [...(match?.[2] ?? "").matchAll(/"([^"]+)"/gu)].map(found => found[1] ?? ""),
+  };
+}
 const ROW = beadRow();
 const ACCEPTANCE = acceptanceOf(ROW.notes);
+const PARK = parkOf(ROW.notes);
 const GATING = /When Forge ships (\S+) \(gating artifact/.exec(ROW.title)?.[1] ?? "";
 const WORD = /shall render (\S+) only for a receipt/.exec(ROW.title)?.[1] ?? "";
 const FIELDS = (/\(([^()]+) all present\)/.exec(ROW.title)?.[1] ?? "").split(", ");
@@ -241,10 +294,10 @@ function quoteStarts(body: string, quote: string): number[] {
   }
   return starts;
 }
-/** One clause read against its row's quotes: the maximal runs of words no quote covers, and every quote not sitting in it exactly once. */
-function unquoted(clause: string, quotes: readonly string[]): { runs: string[]; misplaced: string[] } {
+/** One clause read against its row's quotes: the maximal runs of words no quote covers, every quote not sitting in it exactly once, and every word two quotes cover. */
+function unquoted(clause: string, quotes: readonly string[]): { runs: string[]; misplaced: string[]; overlapping: string[] } {
   const words = [...clause.matchAll(/\S+/g)].map(match => ({ start: match.index, end: match.index + match[0].length }));
-  const quoted = words.map(() => false);
+  const covers = words.map(() => 0);
   const misplaced: string[] = [];
   for (const quote of quotes) {
     const starts = quoteStarts(clause, quote);
@@ -253,25 +306,26 @@ function unquoted(clause: string, quotes: readonly string[]): { runs: string[]; 
       misplaced.push(quote);
       continue;
     }
-    for (const [index, word] of words.entries()) if (word.start < start + quote.length && word.end > start) quoted[index] = true;
+    for (const [index, word] of words.entries()) if (word.start < start + quote.length && word.end > start) covers[index] = (covers[index] ?? 0) + 1;
   }
   const runs: string[] = [];
   let open: number | undefined;
   for (const [index, word] of words.entries()) {
-    if (!quoted[index]) open ??= word.start;
+    if ((covers[index] ?? 0) === 0) open ??= word.start;
     else if (open !== undefined) {
       runs.push(clause.slice(open, words[index - 1]?.end));
       open = undefined;
     }
   }
   if (open !== undefined) runs.push(clause.slice(open, words.at(-1)?.end));
-  return { runs, misplaced };
+  const overlapping = words.flatMap((word, index) => ((covers[index] ?? 0) > 1 ? [clause.slice(word.start, word.end)] : []));
+  return { runs, misplaced, overlapping };
 }
 
 // ----------------------------------------------------------------------------------------------------------- the word judge
 const [HEAD = "", TAIL = ""] = WORD.split("_");
-/** The title word's family: its two words in either order (the second may read ...LY), any run of whitespace, hyphens or underscores (or none) between. */
-const FAMILY = `(?<![\\p{L}\\p{N}])(?:${HEAD}[\\s_-]*${TAIL}(?:LY)?|${TAIL}(?:LY)?[\\s_-]*${HEAD})(?![\\p{L}\\p{N}])`;
+/** The title word's family: its two words in either order (the second may read ...LY), any run of whitespace, underscores or Pd dash punctuation (or none) between. */
+const FAMILY = `(?<![\\p{L}\\p{N}])(?:${HEAD}[\\s_\\p{Pd}]*${TAIL}(?:LY)?|${TAIL}(?:LY)?[\\s_\\p{Pd}]*${HEAD})(?![\\p{L}\\p{N}])`;
 const FAMILY_ONE = new RegExp(FAMILY, "iu");
 const FAMILY_ALL = new RegExp(FAMILY, "giu");
 /** The two readings of a text: itself and Pi's label display of it (no length bound), each after NFKC. */
@@ -288,6 +342,24 @@ function stringsOf(value: unknown): string[] {
 const fromCodePoints = (...points: number[]): string => String.fromCodePoint(...points);
 /** The separator the workflow card and the Forge readers put between fields. */
 const MIDDLE_DOT = fromCodePoints(0xb7);
+const SPACE_CLASS = /\s/u;
+const DASH_CLASS = /\p{Pd}/u;
+/** The separator scan: every code point the runtime files under \s or Pd, planted between the two words in both orders. */
+function separatorScan(): { floorMet: boolean; unread: string[] } {
+  const space: number[] = [];
+  const dash: number[] = [];
+  for (let point = 0; point <= 0x10ffff; point += 1) {
+    if (point >= 0xd800 && point <= 0xdfff) continue;
+    const unit = fromCodePoints(point);
+    if (SPACE_CLASS.test(unit)) space.push(point);
+    if (DASH_CLASS.test(unit)) dash.push(point);
+  }
+  const reads = (point: number): boolean => [`${HEAD}${fromCodePoints(point)}${TAIL}`, `${TAIL}${fromCodePoints(point)}${HEAD}`].every(isWord);
+  const unread = [...space, ...dash].filter(point => !reads(point)).map(point => `U+${point.toString(16).toUpperCase().padStart(4, "0")}`);
+  return { floorMet: space.length >= SPACE_FLOOR && dash.length >= DASH_FLOOR, unread };
+}
+/** The eleven Pd hyphens cut #1's gate planted one at a time in a src comment and found unread (refusal U2). */
+const UNREAD_AT_CUT_ONE: readonly number[] = [0x58a, 0x1400, 0x1806, 0x2010, 0x2011, 0x2e17, 0x2e1a, 0x2e40, 0x2e5d, 0x30a0, 0x10ead];
 /** A planted input as a witness carries it: ASCII only, every other code point as \u{hex}. */
 const shownText = (text: string): string => [...text].map(unit => ((unit.codePointAt(0) ?? 0) < 0x80 ? unit : `\\u{${(unit.codePointAt(0) ?? 0).toString(16)}}`)).join("");
 /** A2's planted texts: claims the judge must read, the named non-claims, and each residual's quiet row and twin. */
@@ -313,12 +385,18 @@ const PLANTED_TEXTS: Readonly<Record<string, string>> = {
   passed: "historically passed",
   atSnapshot: "verified at the declared snapshot",
   gating: GATING,
+  ...Object.fromEntries(UNREAD_AT_CUT_ONE.map(point => [`pd${point.toString(16)}`, `${HEAD}${fromCodePoints(point)}${TAIL}`])),
+  hyphenBullet: `${HEAD}${fromCodePoints(0x2043)}${TAIL}`,
+  minusSign: `${HEAD}${fromCodePoints(0x2212)}${TAIL}`,
+  middleDot: `${HEAD}${fromCodePoints(0xb7)}${TAIL}`,
+  brailleBlank: `${HEAD}${fromCodePoints(0x2800)}${TAIL}`,
 };
 const PLANTED_MODULES: Readonly<Record<string, string>> = {
   literal: `export const shown = "${WORD}";\n`,
   comment: `// a full-field receipt renders ${WORD}\nexport const shown = 1;\n`,
   identifier: "export const VerifiedHistorical = 1;\n",
   composed: 'export const shown = "VERIFIED_" + "HISTORICAL";\n',
+  escaped: 'export const shown = "VERIFIED\\u005fHISTORICAL";\n',
   composedTwin: 'export const shown = "VERIFIED_HISTORICAL";\n',
 };
 const PLANT = "src/workbench/forge-cac-receipt-plant.ts";
@@ -398,6 +476,7 @@ const PLANTED_RELEASE: Readonly<Record<string, TextFile>> = {
   named: { path: "dist/zz-plant-receipt.d.ts", text: `export interface ${GATING} { readonly interpretation: "${WORD}"; readonly predicate: string; readonly checker: string }\n` },
   pathOnly: { path: `dist/${GATING}.d.ts`, text: "export {};\n" },
   otherName: { path: "dist/zz-plant-other.d.ts", text: "export interface ForgeVerificationRecord { readonly verdict: string; readonly subject: string }\n" },
+  hyphen: { path: "dist/zz-plant-hyphen.d.ts", text: `// ${HEAD}${fromCodePoints(0x2010)}${TAIL}\nexport {};\n` },
 };
 const RELEASE_BIG = "dist/zz-plant-receipt-big.d.ts";
 const OWED = `ARMED (${BEAD}): the installed @forge/sdk differs from the release this census measured. If ${GATING} shipped in it, the acceptance on landing is owed: ${ROWS[0]?.label ?? ""}; ${ROWS[1]?.label ?? ""} (fixtures replacing A1 and A2). If it did not, re-measure the roster's release reading and say so.`;
@@ -635,6 +714,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const control = stringsOf({ [WORD]: [`${NEUTRAL} - ${WORD}`] }).filter(isWord).length;
     return {
       judge: { texts, modules },
+      separators: separatorScan(),
       walk: {
         judgedEqualsListedPlusPlants: JSON.stringify(walk.judged) === JSON.stringify([...listed, PLANT, PLANT_BIG]),
         bigPlantLongest: big.text.length > Math.max(0, ...real.map(module => module.text.length)),
@@ -728,22 +808,24 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
 };
 
-/** The SELF-READ: each IMPL member's direct identifiers, parsed from this file. */
-function implIdentifiers(): Record<string, string[]> {
+/** The SELF-READ: each IMPL member's direct identifiers and string texts (literals and template pieces), parsed from this file. */
+function implReads(): Record<string, { names: string[]; texts: string[] }> {
   const text = readFileSync(join(REPO, SELF), "utf8");
   const source = ts.createSourceFile(SELF, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-  const found: Record<string, string[]> = {};
+  const found: Record<string, { names: string[]; texts: string[] }> = {};
   const visit = (node: ts.Node): void => {
     if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === "IMPL" && node.initializer !== undefined && ts.isObjectLiteralExpression(node.initializer)) {
       for (const property of node.initializer.properties) {
         const name = property.name !== undefined && (ts.isIdentifier(property.name) || ts.isStringLiteral(property.name)) ? property.name.text : "?";
         const names = new Set<string>();
+        const texts = new Set<string>();
         const collect = (inner: ts.Node): void => {
           if (ts.isIdentifier(inner)) names.add(inner.text);
+          if (ts.isStringLiteralLike(inner) || ts.isTemplateHead(inner) || ts.isTemplateMiddle(inner) || ts.isTemplateTail(inner)) texts.add(inner.text);
           ts.forEachChild(inner, collect);
         };
         collect(property);
-        found[name] = [...names].sort(byName);
+        found[name] = { names: [...names].sort(byName), texts: [...texts].sort(byName) };
       }
     }
     ts.forEachChild(node, visit);
@@ -751,15 +833,16 @@ function implIdentifiers(): Record<string, string[]> {
   visit(source);
   return found;
 }
-/** A2's planted texts that read quiet and are no residual's: the bare words and today's own labels, which hold no claim. */
+/** A2's planted texts that read quiet and are no residual's: the bare words, today's own labels and the gating artifact's name, which hold no claim. */
 const NON_CLAIMS: readonly string[] = ["bareVerified", "bareHistorical", "todayLabel", "todayEvidence", "gating"];
 /** Each residual's quiet rows and twins are planted inputs of the pin that reads them. */
 const RESIDUALS: readonly Residual[] = [
-  { id: "R-COMPOSED", quietPin: "A2", quiet: ["composed"], twin: ["composedTwin"] },
+  { id: "R-COMPOSED", quietPin: "A2", quiet: ["composed", "escaped"], twin: ["composedTwin"] },
   { id: "R-EMBEDDED", quietPin: "A2", quiet: ["embedded"], twin: ["glued"] },
   { id: "R-LOOKALIKE", quietPin: "A2", quiet: ["cyrillic"], twin: ["fullwidth"] },
   { id: "R-PARAPHRASE", quietPin: "A2", quiet: ["passed", "atSnapshot"], twin: ["adverb"] },
   { id: "R-SIBLING", quietPin: "A2", quiet: ["current"], twin: ["title"] },
+  { id: "R-OTHER-SEPARATOR", quietPin: "A2", quiet: ["hyphenBullet", "minusSign", "middleDot", "brailleBlank"], twin: ["pd2010"] },
   { id: "R-OTHER-NAME", quietPin: "A1", quiet: ["otherName"], twin: ["named"] },
   { id: "R-UNPLANTED-SPELLING", quietPin: "B1", quiet: ["otherSpelling"], twin: ["readKey"] },
 ];
@@ -775,12 +858,23 @@ describe("wb-b9n.1 Forge CAC receipt census (FORGE-CAC-EVIDENCE-ASSURANCE-R2)", 
     expect(ACCEPTANCE.clauses).toHaveLength(3);
     expect(ROWS.map(row => row.label)).toEqual(ACCEPTANCE.clauses);
     expect(ROWS.flatMap(row => row.pins.filter(pin => !row.label.includes(pin.quote)).map(pin => pin.id))).toEqual([]);
-    // Pin membership against the export's clause text: each quote once at word boundaries, exactly the not-due spans unquoted,
-    // and every pin load-bearing (without it, a word of its clause goes unquoted).
+    // Pin membership against the export's clause text: each quote once at word boundaries, no word under two quotes, exactly
+    // the not-due spans unquoted, and every pin load-bearing (without it, a word of its clause goes unquoted).
     const quotesOf = (row: Row, skip?: Pin): string[] => row.pins.filter(pin => pin !== skip).map(pin => pin.quote);
     const readings = ROWS.map((row, index) => unquoted(ACCEPTANCE.clauses[index] ?? "", quotesOf(row)));
     expect(ROWS.flatMap((row, index) => (readings[index]?.misplaced ?? []).map(quote => `${row.id}:${quote}`))).toEqual([]);
+    expect(ROWS.flatMap((row, index) => (readings[index]?.overlapping ?? []).map(word => `${row.id}:${word}`))).toEqual([]);
     expect(Object.fromEntries(ROWS.map((row, index) => [row.id, readings[index]?.runs]))).toEqual(NOT_DUE);
+    // Outside anchor two, the PARK paragraph: its pin list is exactly this census's pins in order, each parked quote sits in
+    // exactly one clause, only clause A is parked whole, and in every other clause the not-due runs (a trailing comma aside) are
+    // exactly the parked quotes that sit in it.
+    expect(PARK.pins).toEqual(ROWS.flatMap(row => row.pins.map(pin => pin.id)));
+    const parkedIn = ACCEPTANCE.clauses.map(clause => PARK.parked.filter(quote => quoteStarts(clause, quote).length === 1));
+    expect(PARK.parked.filter(quote => parkedIn.filter(quotes => quotes.includes(quote)).length !== 1)).toEqual([]);
+    const parkedWhole = ROWS.flatMap((row, index) => ((parkedIn[index] ?? []).includes(ACCEPTANCE.clauses[index] ?? "") ? [row.id] : []));
+    expect(parkedWhole).toEqual(["A"]);
+    const trimmed = (run: string): string => run.replace(/[,;.]$/u, "");
+    expect(ROWS.filter((row, index) => !parkedWhole.includes(row.id) && JSON.stringify((NOT_DUE[row.id] ?? []).map(trimmed)) !== JSON.stringify(parkedIn[index] ?? [])).map(row => row.id)).toEqual([]);
     const idle = (row: Row, index: number, pin: Pin): boolean => JSON.stringify(unquoted(ACCEPTANCE.clauses[index] ?? "", quotesOf(row, pin)).runs) === JSON.stringify(NOT_DUE[row.id]);
     expect(ROWS.flatMap((row, index) => row.pins.filter(pin => idle(row, index, pin)).map(pin => pin.id))).toEqual([]);
     expect(ROSTER.notDue).toEqual(NOT_DUE);
@@ -788,7 +882,7 @@ describe("wb-b9n.1 Forge CAC receipt census (FORGE-CAC-EVIDENCE-ASSURANCE-R2)", 
     // The title's word is read by the family and its gating artifact is not; the neutral word is the word's byte length and read by none.
     expect([isWord(WORD), isWord(GATING), GATING.length > 0, WORD.includes("_"), Buffer.byteLength(NEUTRAL) === Buffer.byteLength(WORD), isWord(NEUTRAL)]).toEqual([true, false, true, true, true, false]);
     expect(Object.keys(FIELD_KEYS)).toEqual(FIELDS);
-    expect(RESIDUALS.map(residual => residual.id)).toEqual(["R-COMPOSED", "R-EMBEDDED", "R-LOOKALIKE", "R-PARAPHRASE", "R-SIBLING", "R-OTHER-NAME", "R-UNPLANTED-SPELLING"]);
+    expect(RESIDUALS.map(residual => residual.id)).toEqual(["R-COMPOSED", "R-EMBEDDED", "R-LOOKALIKE", "R-PARAPHRASE", "R-SIBLING", "R-OTHER-SEPARATOR", "R-OTHER-NAME", "R-UNPLANTED-SPELLING"]);
     expect(ROSTER.residuals).toEqual(RESIDUALS);
     const plantedOf: Readonly<Record<string, readonly string[]>> = {
       A1: Object.keys(PLANTED_RELEASE), A2: [...Object.keys(PLANTED_TEXTS), ...Object.keys(PLANTED_MODULES)], B1: Object.keys(UNPLANTED),
@@ -806,10 +900,13 @@ describe("wb-b9n.1 Forge CAC receipt census (FORGE-CAC-EVIDENCE-ASSURANCE-R2)", 
     expect([...quietTexts, ...quietModules].sort(byName)).toEqual([...NON_CLAIMS, ...quietOf("A2")].sort(byName));
     expect(quietRelease).toEqual(quietOf("A1"));
     expect(NON_CLAIMS.filter(id => quietOf("A2").includes(id))).toEqual([]);
-    // SELF-READ: no pin body names the roster, and the roster cannot be rewritten in memory.
-    const identifiers = implIdentifiers();
-    expect(Object.keys(identifiers).sort(byName)).toEqual(Object.keys(IMPL).sort(byName));
-    expect(Object.entries(identifiers).filter(([, names]) => names.includes("ROSTER")).map(([id]) => id)).toEqual([]);
+    // SELF-READ: no pin body names the roster or its file or spells its file name (the parse proven live on A1's own reads),
+    // and the roster cannot be rewritten in memory.
+    const reads = implReads();
+    expect(Object.keys(reads).sort(byName)).toEqual(Object.keys(IMPL).sort(byName));
+    expect([reads.A1?.names.includes("RELEASE"), reads.A1?.texts.includes("package.json")]).toEqual([true, true]);
+    const rosterReaders = Object.entries(reads).filter(([, read]) => read.names.includes("ROSTER") || read.names.includes("ROSTER_FILE") || read.texts.some(text => text.includes(ROSTER_NAME)));
+    expect(rosterReaders.map(([id]) => id)).toEqual([]);
     expect([Object.isFrozen(ROSTER), Object.isFrozen(ROSTER.rows), ROSTER.rows.every(row => row.pins.every(pin => Object.isFrozen(pin)))]).toEqual([true, true, true]);
   });
   for (const row of ROWS) {
