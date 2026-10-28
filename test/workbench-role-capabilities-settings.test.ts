@@ -53,6 +53,10 @@ it("rejects wildcard role capabilities",()=>{
 // source in a settingSources array, so the page's file now sets no settingSources and names no install target in a Pi
 // loader root; Pi hands its sessions settingSources [] and the worker reads the recipe at the installed skill's path with
 // its Read tool, which R4a, R5 and R7 measure.
+// The wb-3jun cut (the R694 follow-up of landing 578: F1 leads, F2 to F5 ride) keeps all of that: the rendered leg
+// decodes each run of letters, digits and underscores closed by ";" that marked passes to the page as written as the
+// tokenizer decodes it (F1), and a second enumeration case names F2 and F3's families as residuals and pins F4 and F5's
+// members of four named cures widened to their stated scopes, anchored in the roster's followUpResidualRows.
 // ---------------------------------------------------------------------------------------------
 installScratchLeakGuard();
 
@@ -321,9 +325,14 @@ const servedLeafSentences = (base: string, dir: string): string[] =>
 // 1 to 6 hexadecimal digits, or a name of 2 to 32 letters and digits), decodes, a numeric one by numericReference (the
 // HTML tokenizer's numeric end state: U+0000, a surrogate or a value past U+10FFFF reads U+FFFD, and a C1 code point in
 // C1_REMAP reads as its windows-1252 character; marked passes such a reference to the page as written) and a named one by
-// NAMED_REFERENCES, while any other "&" stays as written (marked escapes an unterminated reference, the gate's P01m; the
-// forms it passes as written, a name that opens with a digit, has one letter or runs past 32, either stay as written for a
-// reader or decode only a legacy name glued to the rest of its run, which completes no leaf word); in raw HTML a
+// NAMED_REFERENCES, while any other "&" stays as written (marked escapes an unterminated reference, the gate's P01m),
+// except a run of letters, digits and underscores closed by ";" that is no reference of that form (a name that opens
+// with a digit or an underscore, has one letter, runs past 32 or holds an underscore): marked's escape keeps "&" before
+// \w+;, so the run reaches the page as written, and it decodes as the tokenizer decodes it, by the longest legacy name it
+// opens with (LEGACY_REFERENCES), the rest of the run as written (wb-3jun F1, the gate's N01: vi&eacutew_list; reads vi,
+// an e acute and w_list;, which folds to the leaf view_list), while a run that opens with no legacy name stays as
+// written, and in a markdown image's alt text, an attribute value, such a legacy name decodes only when no letter or
+// digit follows it (the tokenizer's attribute clause); in raw HTML a
 // numeric reference with or
 // without its semicolon and of any length decodes by numericReference, and a letters-and-digits run that is no closed name
 // of 2 to 32 decodes by the longest legacy name it opens with (LEGACY_REFERENCES, the 106 names the tokenizer's table also
@@ -357,9 +366,12 @@ const servedLeafSentences = (base: string, dir: string): string[] =>
 // rendering section (script), of an element carrying hidden, or (cut #5, the gate's P07) of an element whose inline style
 // declares display:none or visibility:hidden, glued between the leaf words (cure: drop that content); R-LEAF-SPELLING,
 // the leaf words run together, in camel case, or joined by a slash or a colon ("graph/impact", "graphImpact"; cure: read
-// those spellings as the leaf); R-CONFUSABLE, a letter of another script that renders like a Latin one and that NFKD
-// keeps, such as a Cyrillic or Greek a, e, o, p, c, i, x or y or (cut #5, the gate's P09) an Armenian o (cure: read it as
-// that Latin letter, by CONFUSABLE); R-ELLIPSIS, the served word opening a later sentence whose subject the sentence before
+// those spellings as the leaf); R-CONFUSABLE, a character outside ASCII that renders like a letter of a leaf word in its
+// place and that NFKD keeps: a letter of another script, such as a Cyrillic or Greek a, e, o, p, c, i, x or y, (cut #5,
+// the gate's P09) an Armenian o or (wb-3jun F5, the gate's N23) a Cyrillic shha for the h of graph, or (wb-3jun F4, the
+// gate's N05) a Latin letter outside ASCII, such as U+0261 LATIN SMALL LETTER SCRIPT G for its g (cure: read any
+// character outside ASCII in a leaf letter's place as that letter, by CONFUSABLE_LEAF); R-ELLIPSIS, the served word
+// opening a later sentence whose subject the sentence before
 // names ("The rf graph impact leaf. Served by this build."; cure: read a sentence that opens with the served word after
 // the sentence before it). Cut #5's residuals (refusal #4; the enumeration case): R-RAW-ALT-TEXT, the alt text of a raw
 // HTML img, which the leg reads as white space although it reads a markdown image's alt text, the same rendered view
@@ -370,6 +382,22 @@ const servedLeafSentences = (base: string, dir: string): string[] =>
 // Quotation_Mark characters and white space), such as an arrow ("leaf... -> is served" with a U+2192 arrow) or a count
 // ("leaf... 2 builds serve it")
 // (cure: read past every mark and digit before the continuation's first letter).
+// wb-3jun's residuals (the R694 follow-up of landing 578; its enumeration case): R-SPLIT-HTML-ROW, an HTML table row
+// whose cells sit in two HTML blocks a blank line separates, which a reader sees as one row while the leg judges each
+// HTML block whole (the gate's N04; cure: read an HTML block that opens with a row or cell tag as one block with the HTML
+// block before it); R-BLANK-GLYPH, U+2800 BRAILLE PATTERN BLANK between the leaf words, which renders as a blank cell
+// but is no white space, Cf or Cc, so the folded key keeps it (the gate's N02; cure: read it as white space);
+// R-CONTROL-VALUE, the value or placeholder attribute of a raw input, which a reader sees inside the control while the
+// leg reads the input as white space (the gate's N03b, and the placeholder beside it; cure: read a raw input as its
+// value, or as its placeholder while the value is empty). wb-3jun F5 also reads four named cures over their whole
+// stated scopes, whose members the gate's N20 to N24, with a reversed guillemet pair and a noscript beside them, are
+// quiet rows of that case: R-ENCLOSED-STOP's
+// (an open punctuation mark, Ps, other than a low-9 quotation mark is open until as many close ones, Pe, follow, and
+// each kind of quotation mark, straight double, straight single, curly or low-9 double, curly or low-9 single, double
+// guillemets and single guillemets, is open while its count is odd, so a quotation reads in either direction);
+// R-HIDDEN-CONTENT's (a dialog without open, which the rendering section displays as none, and a noscript, which a
+// reader whose browser runs scripts never sees, join the elements whose content it drops); R-CONFUSABLE's (above); and R-RAW-ALT-TEXT's (a raw img is read to its first ">" outside a quoted
+// attribute value, so a ">" inside its src value no longer hides its alt text).
 const at = (code: number): string => String.fromCodePoint(code);
 /** The names the rendered leg decodes in a reference closed by ";"; any other closed named reference is recorded as unreadable. */
 const NAMED_REFERENCES: ReadonlyMap<string, string> = new Map([
@@ -401,7 +429,7 @@ const NAMED_REFERENCES: ReadonlyMap<string, string> = new Map([
   ["colon", ":"],
   ["semi", ";"],
 ]);
-const REFERENCE = /&(?:#(\d{1,7})|#[xX]([0-9a-fA-F]{1,6})|([A-Za-z][A-Za-z0-9]{1,31}));/g;
+const REFERENCE = /&(?:#(\d{1,7})|#[xX]([0-9a-fA-F]{1,6})|([A-Za-z][A-Za-z0-9]{1,31})|(\w+));/g;
 /** The C1 code points the HTML tokenizer's numeric end state remaps, each to its windows-1252 character (&#150; an en dash). */
 const C1_REMAP: ReadonlyMap<number, number> = new Map([
   [0x80, 0x20ac],
@@ -510,11 +538,22 @@ const renderHtml = (raw: string): string =>
   raw.replace(HTML_MARKUP, (_markup: string, tag?: string) => (tag !== undefined && BREAK_ELEMENTS.has(tag.toLowerCase()) ? " " : ""));
 const MARKDOWN_PAGE = /\.(?:md|markdown)$/i;
 
-/** Markdown text with each reference of CommonMark's form decoded (numericReference, NAMED_REFERENCES); any other closed named reference stays as written and is recorded in `unknown`. */
-function decodeReferences(text: string, unknown: string[]): string {
-  return text.replace(REFERENCE, (whole: string, decimal?: string, hex?: string, name?: string) => {
+/**
+ * Markdown text with each reference of CommonMark's form decoded (numericReference, NAMED_REFERENCES), any other closed
+ * named reference left as written and recorded in `unknown`; and (wb-3jun F1) each other run of letters, digits and
+ * underscores closed by ";", which marked passes to the page as written, decoded as the tokenizer decodes it: by the
+ * longest legacy name it opens with, the rest of the run as written, except that in an attribute value (`attribute`, a
+ * markdown image's alt text) a legacy name a letter or digit follows stays as written.
+ */
+function decodeReferences(text: string, unknown: string[], attribute = false): string {
+  return text.replace(REFERENCE, (whole: string, decimal?: string, hex?: string, name?: string, passed?: string) => {
     const code = decimal !== undefined ? Number.parseInt(decimal, 10) : hex !== undefined ? Number.parseInt(hex, 16) : undefined;
     if (code !== undefined) return numericReference(code);
+    if (passed !== undefined) {
+      const legacy = legacyPrefix(passed);
+      if (legacy === undefined || (attribute && /[A-Za-z0-9]/.test(passed.charAt(legacy.length)))) return whole;
+      return `${LEGACY_REFERENCES.get(legacy) ?? ""}${passed.slice(legacy.length)};`;
+    }
     const value = NAMED_REFERENCES.get(name ?? "");
     if (value === undefined) unknown.push(whole);
     return value ?? whole;
@@ -556,16 +595,16 @@ const tokenChildren = (token: Token): readonly Token[] => {
 const isListToken = (token: Token): token is Tokens.List => token.type === "list";
 const isTableToken = (token: Token): token is Tokens.Table => token.type === "table";
 
-/** What a reader sees of inline tokens (see the RENDERED LEG); a link destination or title is never read. */
-function inlineText(tokens: readonly Token[], unknown: string[]): string {
+/** What a reader sees of inline tokens (see the RENDERED LEG); a link destination or title is never read, and an image's alt text is read as an attribute value. */
+function inlineText(tokens: readonly Token[], unknown: string[], attribute = false): string {
   let out = "";
   for (const token of tokens) {
     if (token.type === "checkbox") continue;
     if (token.type === "html") out += decodeRawHtmlReferences(renderHtml(token.raw), unknown);
     else if (token.type === "br") out += " ";
     else if (token.type === "codespan" || token.type === "escape") out += tokenText(token);
-    else if (tokenChildren(token).length > 0) out += inlineText(tokenChildren(token), unknown);
-    else out += decodeReferences(tokenText(token), unknown);
+    else if (tokenChildren(token).length > 0) out += inlineText(tokenChildren(token), unknown, attribute || token.type === "image");
+    else out += decodeReferences(tokenText(token), unknown, attribute || token.type === "image");
   }
   return out;
 }
@@ -637,17 +676,18 @@ function plantRoot(prefix: string): string {
 // Cut #4 residual cures (refusal #3, rule 19(c)): the named cure of each residual family the enumeration case pins, read
 // over its quiet rows only; neither leg applies one.
 type ResidualCure = (sentences: readonly string[], page: string) => boolean;
+/**
+ * The kinds of quotation mark R-ENCLOSED-STOP's cure reads (wb-3jun F5), each open while its count is odd, so either
+ * direction reads: straight double, straight single, curly or low-9 double, curly or low-9 single, double guillemets and
+ * single guillemets.
+ */
+const QUOTATION_KINDS: readonly RegExp[] = [/"/g, /'/g, /[\u{201c}-\u{201f}]/gu, /[\u{2018}-\u{201b}]/gu, /[\u{ab}\u{bb}]/gu, /[\u{2039}\u{203a}]/gu];
 /** Whether a parenthesis, bracket or quotation opened in `text` is still open (an apostrophe inside a word is no quotation mark). */
 function enclosureOpen(text: string): boolean {
   const bare = text.replace(/(?<=\p{L})['\u{2019}](?=\p{L})/gu, "");
   const count = (pattern: RegExp): number => bare.match(pattern)?.length ?? 0;
-  return (
-    count(/[([{]/g) > count(/[)\]}]/g) ||
-    count(/"/g) % 2 === 1 ||
-    count(/'/g) % 2 === 1 ||
-    count(/[\u{201c}\u{00ab}]/gu) > count(/[\u{201d}\u{00bb}]/gu) ||
-    count(/\u{2018}/gu) > count(/\u{2019}/gu)
-  );
+  // An open punctuation mark (Ps) other than a low-9 quotation mark against a close one (Pe), and each kind of quotation mark.
+  return count(/(?![\u{201a}\u{201e}])\p{Ps}/gu) > count(/\p{Pe}/gu) || QUOTATION_KINDS.some(kind => count(kind) % 2 === 1);
 }
 /** R-ENCLOSED-STOP: the sentences re-joined while an enclosure opened before a split is still open. */
 const enclosedCure: ResidualCure = sentences => {
@@ -677,46 +717,59 @@ const containerLeadInCure: ResidualCure = sentences =>
  * (cut #5) one whose inline style declares display:none or visibility:hidden.
  */
 const HIDDEN_CONTENT =
-  /<(script|style|template|title|head|noembed|noframes|datalist|rp)\b[^>]*>[\s\S]*?<\/\1\s*>|<([A-Za-z][\w-]*)\b[^>]*\shidden\b[^>]*>[\s\S]*?<\/\2\s*>|<([A-Za-z][\w-]*)\b[^>]*\sstyle\s*=\s*(?:"[^"]*\b(?:display\s*:\s*none|visibility\s*:\s*hidden)\b[^"]*"|'[^']*\b(?:display\s*:\s*none|visibility\s*:\s*hidden)\b[^']*')[^>]*>[\s\S]*?<\/\3\s*>/gi;
+  /<dialog\b(?![^>]*\sopen\b)[^>]*>[\s\S]*?<\/dialog\s*>|<(script|style|template|title|head|noembed|noframes|noscript|datalist|rp)\b[^>]*>[\s\S]*?<\/\1\s*>|<([A-Za-z][\w-]*)\b[^>]*\shidden\b[^>]*>[\s\S]*?<\/\2\s*>|<([A-Za-z][\w-]*)\b[^>]*\sstyle\s*=\s*(?:"[^"]*\b(?:display\s*:\s*none|visibility\s*:\s*hidden)\b[^"]*"|'[^']*\b(?:display\s*:\s*none|visibility\s*:\s*hidden)\b[^']*')[^>]*>[\s\S]*?<\/\3\s*>/gi;
 /** R-HIDDEN-CONTENT: the page with that content dropped, then read by the leg. */
 const hiddenContentCure: ResidualCure = (_sentences, page) => blockUnits(marked.lexer(page.replace(HIDDEN_CONTENT, "")), []).some(servedLeaf);
 /** The leaf words run together, in camel case, or joined by a slash or a colon. */
 const LEAF_SPELLING = /\b(?:graph[/:]?(?:impact|candidate)|(?:optic|view)[/:]?list)\b/i;
 /** R-LEAF-SPELLING: a reading naming the leaf in one of those spellings and a served word. */
 const leafSpellingCure: ResidualCure = sentences => sentences.some(sentence => LEAF_SPELLING.test(sentence) && SERVED_WORD.test(sentence));
-/** Letters of another script that render like a Latin one, which NFKD keeps, by the Latin letter: Cyrillic, Greek and (cut #5) Armenian. */
-const CONFUSABLE: ReadonlyMap<string, string> = new Map([
-  [at(0x430), "a"],
-  [at(0x435), "e"],
-  [at(0x43e), "o"],
-  [at(0x440), "p"],
-  [at(0x441), "c"],
-  [at(0x443), "y"],
-  [at(0x445), "x"],
-  [at(0x456), "i"],
-  [at(0x3b1), "a"],
-  [at(0x3bf), "o"],
-  [at(0x585), "o"],
-]);
-/** R-CONFUSABLE: each reading with those letters read as their Latin letter. */
-const confusableCure: ResidualCure = sentences => sentences.some(sentence => servedLeaf([...sentence].map(letter => CONFUSABLE.get(letter) ?? letter).join("")));
+/** The four leaves' words with each letter widened to any character outside ASCII (wb-3jun F4 and F5), between word boundaries. */
+const CONFUSABLE_LEAF = new RegExp(
+  `(?<![\\p{L}\\p{N}_])(?:${["graph impact", "graph candidate", "optic list", "view list"]
+    .map(leaf => [...leaf].map(letter => (letter === " " ? "[ ._-]" : `[${letter}\\P{ASCII}]`)).join(""))
+    .join("|")})(?![\\p{L}\\p{N}_])`,
+  "iu",
+);
+/** R-CONFUSABLE: a reading that names a leaf with a character outside ASCII in a letter's place, read as that letter, and a served word. */
+const confusableCure: ResidualCure = sentences => sentences.some(sentence => CONFUSABLE_LEAF.test(sentence) && SERVED_WORD.test(sentence));
 /** A reading that opens with the served word. */
 const SERVED_OPENING = /^serv(?:e|es|ed|ing)\b/i;
 /** R-ELLIPSIS: a reading that opens with the served word read after the reading before it. */
 const ellipsisCure: ResidualCure = sentences =>
   sentences.some((sentence, index) => index > 0 && SERVED_OPENING.test(sentence) && servedLeaf(`${sentences[index - 1]} ${sentence}`));
 // Cut #5 residual cures (refusal #4, rule 19(c)), read over their quiet rows only, like cut #4's; neither leg applies one.
-/** A raw img tag that carries an alt attribute, its value double-quoted, single-quoted or bare. */
-const RAW_ALT_TAG = /<img\b[^>]*?\salt\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+))[^>]*>/gi;
+/** A raw start tag named `name`, to its first ">" outside an attribute value its quotation mark closes, as HTML_MARKUP reads a tag. */
+const rawStartTag = (name: string): RegExp => new RegExp(`<${name}\\b(?:\\s*=\\s*(?:"[^"]*"|'[^']*')|[^>])*>`, "gi");
+/** The value of the attribute `name` that a raw start tag carries, double-quoted, single-quoted or bare, or undefined. */
+function attributeValue(tag: string, name: string): string | undefined {
+  for (const [, attribute, double, single, bare] of tag.matchAll(/\s([^\s"'>/=]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g)) {
+    if (attribute?.toLowerCase() === name) return double ?? single ?? bare ?? "";
+  }
+  return undefined;
+}
 /** R-RAW-ALT-TEXT: the page with each raw img read as its alt text, as the leg reads a markdown image, then read by the leg. */
 const rawAltTextCure: ResidualCure = (_sentences, page) =>
-  blockUnits(marked.lexer(page.replace(RAW_ALT_TAG, (_tag: string, double?: string, single?: string, bare?: string) => double ?? single ?? bare ?? "")), []).some(
-    servedLeaf,
-  );
+  blockUnits(marked.lexer(page.replace(rawStartTag("img"), tag => attributeValue(tag, "alt") ?? tag)), []).some(servedLeaf);
 /** R-MARK-IN-NAME: the page's rendered text re-split with `name` (a name that ends in a mark, such as Yahoo!) added to ABBREVIATIONS. */
 const markInNameCure = (name: string): ResidualCure => abbreviationCure(name);
 /** R-MARKED-CONTINUATION: the page's rendered text re-split reading past every mark and digit before a continuation's first letter. */
 const markedContinuationCure: ResidualCure = sentences => splitSentences(sentences.join(" "), ABBREVIATION_END, /^[^\p{L}]*\p{Ll}/u).some(servedLeaf);
+// wb-3jun residual cures (the R694 follow-up of landing 578, F2 and F3), read over their quiet rows only, like cut #4's
+// and cut #5's; neither leg applies one.
+/** R-SPLIT-HTML-ROW: the page with each HTML block that opens with a row or cell tag read as one block with the HTML block before it, then read by the leg. */
+const splitHtmlRowCure: ResidualCure = (_sentences, page) =>
+  blockUnits(marked.lexer(page.replace(/\n[ \t]*\n(?=[ \t]*<\/?(?:tr|td|th)\b)/gi, "\n")), []).some(servedLeaf);
+/** R-BLANK-GLYPH: each reading with U+2800 BRAILLE PATTERN BLANK read as white space. */
+const blankGlyphCure: ResidualCure = sentences => sentences.some(sentence => servedLeaf(sentence.replaceAll(at(0x2800), " ")));
+/** What a reader sees inside a raw input: its value, or its placeholder while the value is empty; undefined when it carries neither. */
+function controlText(tag: string): string | undefined {
+  const value = attributeValue(tag, "value");
+  return value === undefined || value === "" ? (attributeValue(tag, "placeholder") ?? value) : value;
+}
+/** R-CONTROL-VALUE: the page with each raw input read as what a reader sees inside it, then read by the leg. */
+const controlValueCure: ResidualCure = (_sentences, page) =>
+  blockUnits(marked.lexer(page.replace(rawStartTag("input"), tag => controlText(tag) ?? tag)), []).some(servedLeaf);
 /** The out-of-file roster whose residualRows anchor the residual enumeration's row list (refusal #4 F7). */
 const RESIDUAL_ROSTER = "test/fixtures/docs19-scg-worker-role-roster.json";
 /** Every residual family (R-...) a text names, once each, sorted. */
@@ -1430,5 +1483,155 @@ describe(NEGATIVES_SUITE, () => {
     expect(familiesNamed(ROWS.map(([family]) => family).join(" "))).toEqual(familiesNamed(task.name));
     const residualTitles = (task.suite?.tasks ?? []).map(sibling => sibling.name).filter(name => /\bresiduals?\b/.test(name));
     expect(familiesNamed(renderedLegComment())).toEqual(familiesNamed(residualTitles.join(" ")));
+  });
+
+  it("SCG-R15 negative, wb-3jun cures (the R694 follow-up of landing 578, F1): the 3 pinned served plants red (in markdown text a legacy named reference glued to an underscore run, which marked passes to the page as written and the HTML tokenizer decodes by longest match, and in a markdown image's alt text one an underscore follows), the 5 pinned quiet plants stay quiet, and 10 pinned runs read as the tokenizer reads them, as text and as an attribute value", () => {
+    const base = plantRoot("scg-r15-3jun-cures-");
+    // F1 (w01 and w02 are the gate's N01 and N01b): marked's escape keeps "&" before \w+; and \w holds "_", so a run of
+    // letters, digits and underscores closed by ";" reaches the page as written, and the HTML tokenizer decodes the longest
+    // legacy name it opens with (vi&eacutew_list; reads vi, an e acute and w_list;, which folds to the leaf view_list).
+    // w03: in a markdown image's alt text, an attribute value, the tokenizer decodes such a name when no letter or digit
+    // follows it (&shy reads a soft hyphen, which the folded key drops).
+    plantFile(base, "docs/w01-underscore-run.md", "The rf vi&eacutew_list; leaf is served by this build.\n");
+    plantFile(base, "docs/w02-underscore-run-opening.md", "The rf &oumlptic_list; leaf is served by this build.\n");
+    plantFile(base, "docs/w03-image-alt-underscore.md", "The rf ![view&shy_list;](x.png) leaf is served by this build.\n");
+    // Quiet: runs the tokenizer leaves as written (one that opens with a digit, one that opens with no legacy name, a single
+    // letter), a run past 32 that decodes only its legacy name, and, in an image's alt text, a legacy name a letter follows,
+    // which the attribute leaves as written.
+    plantFile(base, "docs/wq1-digit-run.md", "The rf graph&1_impact; leaf is served by this build.\n");
+    plantFile(base, "docs/wq2-no-legacy-run.md", "The rf graph&zz_impact; leaf is served by this build.\n");
+    plantFile(base, "docs/wq3-one-letter.md", "The rf graph&a; impact leaf is served by this build.\n");
+    plantFile(base, "docs/wq4-run-past-32.md", `The rf gr&aacute${"x".repeat(30)}; leaf is served by this build.\n`);
+    plantFile(base, "docs/wq5-image-alt-letter.md", "The rf ![vi&eacutew_list;](x.png) leaf is served by this build.\n");
+    const unknown: string[] = [];
+    expect(renderedServedLeafSentences(base, "docs", unknown)).toEqual([
+      "docs/w01-underscore-run.md: The rf view_list; leaf is served by this build.",
+      "docs/w02-underscore-run-opening.md: The rf optic_list; leaf is served by this build.",
+      "docs/w03-image-alt-underscore.md: The rf view_list; leaf is served by this build.",
+    ]);
+    expect(unknown).toEqual([]);
+    // The quiet pages are read: each renders exactly these readings.
+    const read = renderedSentencesBelow(base, "docs", []);
+    const readingsOfPage = (path: string): string[] => read.filter(([page]) => page === path).map(([, sentence]) => sentence);
+    expect(["wq1-digit-run", "wq2-no-legacy-run", "wq3-one-letter", "wq4-run-past-32", "wq5-image-alt-letter"].map(name => readingsOfPage(`docs/${name}.md`))).toEqual([
+      ["The rf graph&1_impact; leaf is served by this build."],
+      ["The rf graph&zz_impact; leaf is served by this build."],
+      ["The rf graph&a; impact leaf is served by this build."],
+      [`The rf gra${"x".repeat(30)}; leaf is served by this build.`],
+      ["The rf vi&eacutew_list; leaf is served by this build."],
+    ]);
+    // The source leg reads every reference as the source spells it, so it flags none of these plants.
+    expect(servedLeafSentences(base, "docs")).toEqual([]);
+    // The tokenizer's readings of the runs marked passes as written: as text (Python's html.unescape, the HTML5 named
+    // character reference algorithm, measured 2026-10-28) and as an attribute value (the named character reference state's
+    // attribute clause: a legacy name that "=" or a letter or digit follows is flushed as written).
+    const RUNS = ["&1abc;", "&_abc;", "&a;", "&abc_def;", "&eacutew_list;", "&oumlptic_list;", "&notin_x;", "&amp_x;", "&shy_list;", `&aacute${"x".repeat(30)};`];
+    expect(RUNS.map(run => decodeReferences(run, []))).toEqual([
+      "&1abc;",
+      "&_abc;",
+      "&a;",
+      "&abc_def;",
+      `${at(0xe9)}w_list;`,
+      `${at(0xf6)}ptic_list;`,
+      `${at(0xac)}in_x;`,
+      "&_x;",
+      `${at(0xad)}_list;`,
+      `${at(0xe1)}${"x".repeat(30)};`,
+    ]);
+    expect(RUNS.map(run => decodeReferences(run, [], true))).toEqual([
+      "&1abc;",
+      "&_abc;",
+      "&a;",
+      "&abc_def;",
+      "&eacutew_list;",
+      "&oumlptic_list;",
+      "&notin_x;",
+      "&_x;",
+      `${at(0xad)}_list;`,
+      `&aacute${"x".repeat(30)};`,
+    ]);
+  });
+
+  it("SCG-R15 negative, wb-3jun residuals (the R694 follow-up of landing 578, F2 to F5): R-SPLIT-HTML-ROW, R-BLANK-GLYPH and R-CONTROL-VALUE, and members of R-ENCLOSED-STOP, R-HIDDEN-CONTENT, R-CONFUSABLE (its scope widened) and R-RAW-ALT-TEXT whose named cures now read their whole scopes, are read and stay quiet, each named cure flags its quiet rows, and the out-of-file roster and this title anchor the row list", ({ task }) => {
+    const base = plantRoot("scg-r15-3jun-residual-");
+    // [family, page path, page text, the page's rendered sentences, the family's named cure]
+    const ROWS: ReadonlyArray<readonly [string, string, string, readonly string[], ResidualCure]> = [
+      // F2 (the gate's N04): an HTML table row whose cells sit in two HTML blocks a blank line separates.
+      [
+        "R-SPLIT-HTML-ROW",
+        "docs/r-split-html-row.md",
+        "<table>\n<tr><td>The graph impact leaf.</td>\n\n<td>Served by this build.</td></tr>\n</table>",
+        ["The graph impact leaf.", "Served by this build."],
+        splitHtmlRowCure,
+      ],
+      // F3 (the gate's N02 and N03b): U+2800 between the leaf words, and a raw input whose value names the leaf (and,
+      // beside N03b, one whose placeholder does).
+      ["R-BLANK-GLYPH", "docs/r-blank-glyph.md", `The rf graph${at(0x2800)}impact leaf is served by this build.`, [`The rf graph${at(0x2800)}impact leaf is served by this build.`], blankGlyphCure],
+      ["R-CONTROL-VALUE", "docs/r-control-value.md", 'The rf <input value="graph&#32;impact"> leaf is served by this build.', ["The rf leaf is served by this build."], controlValueCure],
+      ["R-CONTROL-VALUE", "docs/r-control-placeholder.md", 'The rf <input placeholder="graph&#32;impact"> leaf is served by this build.', ["The rf leaf is served by this build."], controlValueCure],
+      // F4 (the gate's N05): U+0261 LATIN SMALL LETTER SCRIPT G, a Latin letter outside ASCII, for the g of graph.
+      ["R-CONFUSABLE", "docs/r-confusable-script-g.md", `The rf ${at(0x261)}raph impact leaf is served by this build.`, [`The rf ${at(0x261)}raph impact leaf is served by this build.`], confusableCure],
+      // F5 (the gate's N20 to N24): low-9 double quotes closed by a left double quote, single guillemets and double
+      // guillemets in the reversed direction; a closed dialog (and, beside N22, a noscript); a Cyrillic shha for the h of
+      // graph; and an img whose src value holds a quoted ">".
+      [
+        "R-ENCLOSED-STOP",
+        "docs/r-enclosed-low-quote.md",
+        `The rf graph impact leaf, which the plan calls ${at(0x201e)}Phase 2. Final${at(0x201c)}, is served.`,
+        [`The rf graph impact leaf, which the plan calls ${at(0x201e)}Phase 2.`, `Final${at(0x201c)}, is served.`],
+        enclosedCure,
+      ],
+      [
+        "R-ENCLOSED-STOP",
+        "docs/r-enclosed-single-guillemet.md",
+        `The rf optic list leaf, which the plan calls ${at(0x2039)}Phase 2. Final${at(0x203a)}, is served.`,
+        [`The rf optic list leaf, which the plan calls ${at(0x2039)}Phase 2.`, `Final${at(0x203a)}, is served.`],
+        enclosedCure,
+      ],
+      [
+        "R-ENCLOSED-STOP",
+        "docs/r-enclosed-reversed-guillemet.md",
+        `The rf view list leaf, which the plan calls ${at(0xbb)}Phase 2. Final${at(0xab)}, is served.`,
+        [`The rf view list leaf, which the plan calls ${at(0xbb)}Phase 2.`, `Final${at(0xab)}, is served.`],
+        enclosedCure,
+      ],
+      ["R-HIDDEN-CONTENT", "docs/r-hidden-dialog.md", "The rf graph<dialog>x</dialog> impact leaf is served by this build.", ["The rf graph x impact leaf is served by this build."], hiddenContentCure],
+      ["R-HIDDEN-CONTENT", "docs/r-hidden-noscript.md", "The rf graph<noscript>x</noscript> impact leaf is served by this build.", ["The rf graphx impact leaf is served by this build."], hiddenContentCure],
+      ["R-CONFUSABLE", "docs/r-confusable-cyrillic-h.md", `The rf grap${at(0x4bb)} impact leaf is served by this build.`, [`The rf grap${at(0x4bb)} impact leaf is served by this build.`], confusableCure],
+      ["R-RAW-ALT-TEXT", "docs/r-raw-alt-quoted-gt.md", 'The rf graph <img src="a>b.png" alt="impact"> leaf is served by this build.', ["The rf graph leaf is served by this build."], rawAltTextCure],
+    ];
+    for (const [, path, page] of ROWS) plantFile(base, path, `${page}\n`);
+    plantFile(base, "docs/control.md", "The rf graph impact leaf is served.\n");
+    // The enumeration, row by row: the families and their quiet pages, frozen at the cut.
+    expect(ROWS.map(([family, path]) => `${family} ${path}`)).toEqual([
+      "R-SPLIT-HTML-ROW docs/r-split-html-row.md",
+      "R-BLANK-GLYPH docs/r-blank-glyph.md",
+      "R-CONTROL-VALUE docs/r-control-value.md",
+      "R-CONTROL-VALUE docs/r-control-placeholder.md",
+      "R-CONFUSABLE docs/r-confusable-script-g.md",
+      "R-ENCLOSED-STOP docs/r-enclosed-low-quote.md",
+      "R-ENCLOSED-STOP docs/r-enclosed-single-guillemet.md",
+      "R-ENCLOSED-STOP docs/r-enclosed-reversed-guillemet.md",
+      "R-HIDDEN-CONTENT docs/r-hidden-dialog.md",
+      "R-HIDDEN-CONTENT docs/r-hidden-noscript.md",
+      "R-CONFUSABLE docs/r-confusable-cyrillic-h.md",
+      "R-RAW-ALT-TEXT docs/r-raw-alt-quoted-gt.md",
+    ]);
+    // Each quiet row's page is read (it renders exactly its pinned sentences), and only the control reds, on both legs.
+    const read = renderedSentencesBelow(base, "docs", []);
+    const sentencesOfPage = (path: string): string[] => read.filter(([page]) => page === path).map(([, sentence]) => sentence);
+    expect(ROWS.map(([, path]) => sentencesOfPage(path))).toEqual(ROWS.map(([, , , sentences]) => [...sentences]));
+    expect(renderedServedLeafSentences(base, "docs")).toEqual(["docs/control.md: The rf graph impact leaf is served."]);
+    expect(servedLeafSentences(base, "docs")).toEqual(["docs/control.md: The rf graph impact leaf is served."]);
+    // Each family's named cure flags every quiet row of its family (the quiet inputs are members), and the leg flags none.
+    expect(ROWS.map(([family, path, page, , cure]) => `${family} ${path}:${cure(sentencesOfPage(path), page)}`)).toEqual(ROWS.map(([family, path]) => `${family} ${path}:true`));
+    expect(ROWS.map(([family, path]) => `${family} ${path}:${sentencesOfPage(path).some(servedLeaf)}`)).toEqual(ROWS.map(([family, path]) => `${family} ${path}:false`));
+    // The row list's anchors outside this case's literals (the rule 16 CT5/CT6 kill shape, as in the enumeration case
+    // above): the out-of-file roster's followUpResidualRows equal it row for row, and the families this title names are
+    // exactly its families; the RENDERED LEG comment's families are held to every residual case's title by that case.
+    const roster: unknown = JSON.parse(readFileSync(join(ROOT, RESIDUAL_ROSTER), "utf8"));
+    const rosterRows: unknown = roster !== null && typeof roster === "object" && "followUpResidualRows" in roster ? roster.followUpResidualRows : undefined;
+    expect(ROWS.map(([family, path]) => `${family} ${path}`), `${RESIDUAL_ROSTER} followUpResidualRows, the anchor outside this file`).toEqual(rosterRows);
+    expect(familiesNamed(ROWS.map(([family]) => family).join(" "))).toEqual(familiesNamed(task.name));
   });
 });
