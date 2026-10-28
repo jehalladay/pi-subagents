@@ -47,7 +47,14 @@
  *    operator, an optional, rest or named tuple member, a call or construction argument, a conditional branch, a ?? || && operand,
  *    an arrow body, a value returned from an arrow or function expression (a method or accessor names its own key), an await, a
  *    spread (its members join the object they are spread into) and a JSX attribute's value (the attribute names the key), each
- *    with its control; and it pinned the fused reading's over-read (the wb-yg70 gate's F3, OVER-READ below);
+ *    with its control; and it pinned the fused reading's over-read (the wb-yg70 gate's F3, OVER-READ below). wb-50dt widened
+ *    (iii) to the wb-rgov gate's F2 survivors: the key path also runs through a function or construct type's return type, an
+ *    arrow's or a function expression's return type, the last operand of a comma, a yielded value (it continues as a returned
+ *    value does), a value returned or yielded from a function declaration nested in a function (it continues from the function
+ *    that holds the declaration: the strict direction, whether that value is then returned is not read), an assignment's right
+ *    side (a member target - a property or element access through the wrappers, written by =, ??=, ||= or &&= - names the keys
+ *    itself, by its chain past the head), a template literal's or a tagged template's substitution and both branches of a
+ *    conditional type, each with its control;
  *    A2 the rf roster, selected by id prefix, reactivefiber:
  *    permission or rf@ contractSource, stays the preview alone (native and injected registrations, RECONCILE_EVIDENCE_READS);
  *    A3 the native provider refuses a federation record printed by rf as an unrecognized envelope, in one spawn of the render argv;
@@ -109,12 +116,29 @@
  * a test context, and so are its aliases (through wrappers, to a fixed point) and its rest bindings - a skip read on one (a
  * member, a literal element key or a destructured key) reds, as do a computed member and any other use (an argument, an
  * assignment, a return, a shorthand: a context escape); and an assignment to a task's mode or fails member anywhere in the
- * module reds. Non-claims: a registrar or hook reached through any other value (an object holding it, a helper it is handed
- * to, a reflective read) and a reflective or computed-key write (Reflect.set, Object.assign, task[flag] = ...) are not read;
- * their controls read no mode. wb-yg70's two residuals are held to the receipt's cut-2 table, after the first entry's residual
+ * module reds. wb-50dt (the wb-rgov gate's F1) widened it again: a task write is any write of a mode or fails member (a
+ * property or a literal element key, through the wrappers) - the target of an assignment of any operator or of a for-in or
+ * for-of head, each target inside a destructuring pattern included (nested, wrapped, defaulted or rest), the operand of an
+ * increment or a decrement, or the operand of a delete; a rest parameter, and a function's or method's own arguments object
+ * read outside a nested function that has its own, is a context escape; a task bound from a context (a destructured task key,
+ * a task member, an alias of either, the rest of a task pattern) carries the context back through its context member (a
+ * property or a literal element key) and a context key destructured from it, each read as a context; a namespace's registrar
+ * or hook member and a test hook are read through a literal element key too, a computed namespace member reds, a name bound to
+ * a namespace or to the rest of a namespace pattern is a namespace, and a namespace's or a registrar chain's destructured
+ * member binds as a registrar or a hook (a namespace's registrar members and either's hook members by key, every other member
+ * of a chain as a chain), while a computed key there reds; a spread argument's array literal is read in place and any other
+ * spread reads unread wherever it stands; and an extend call on a registrar chain has its fixtures read, each inline function
+ * (or a fixture tuple's first element) a callback whose first parameter alone is the context, while a fixture or a fixture set
+ * held elsewhere reads unread. Non-claims: a registrar or hook reached through any other value (an object holding it, a helper
+ * it is handed to, a reflective read) and a reflective or computed-key write (Reflect.set, Object.assign, task[flag] = ...) are
+ * not read; their controls read no mode. wb-50dt adds: a task's other uses (an argument, a comparison, a value held in another
+ * value) are not followed, and nothing is bound through a nested pattern on a namespace, a registrar chain or a task; their
+ * control reads no mode. wb-yg70's two residuals are held to the receipt's cut-2 table, after the first entry's residual
  * table. wb-rgov (the wb-yg70 gate's F4): A1 records every control it reads (group, name, reading and the sha256/16 of its text,
  * the walk's planted tree included) and the hook every registration-mode control (name, modes and text sha256/16); both
- * records are held to the receipt's cut-3 tables, so a control removed together with its reading, or rewritten, reds.
+ * records are held to the receipt's cut-3 tables, so a control removed together with its reading, or rewritten, reds. wb-50dt:
+ * the cut-4 controls join both records after the cut-3 ones, each record held to its cut-3 table followed by its cut-4
+ * additions table.
  * RESIDUALS (named, each with a pinned quiet row): R-UNLISTED the note names at most four distinct not-observed words, so a fifth
  * one and beyond is the marker … and two renders differing only there share a note, while the count and every reading still
  * carry each row (Q1); R-TONE-CLASS the snapshot node's coverage, tone and statusText are Pi presentation classes, so PENDING and
@@ -132,9 +156,11 @@
  * matched_counter) without a dictionary (A1's fused-split and compound controls stay 0); R-SPLIT-PATH (wb-yg70) a path whose
  * links are joined only through a local binding, a key bound elsewhere or a variable's own name
  * (const { publication: p } = record; p.state, record[KEY].state, const publication = { state }), or (wb-rgov, the wb-yg70
- * gate's F6) through an interface's or a type alias's own name or a mapped-type key, reads quiet to A1, which joins a path's
- * links only within one access chain or one nested pattern, literal or type (A1's aliased, keyed, bound, interface-name,
- * type-name and mapped-key controls stay 0). OVER-READ (named and pinned, the false-red direction; wb-rgov, the wb-yg70 gate's
+ * gate's F6) through an interface's or a type alias's own name or a mapped-type key, or (wb-50dt) through a module-level
+ * function declaration's own name, a plain name written or a member written through a key bound elsewhere, reads quiet to A1,
+ * which joins a path's links only within one access chain, one member write or one nested pattern, literal or type (A1's
+ * aliased, keyed, bound, interface-name, type-name and mapped-key controls and its declared-function, name-assignment and
+ * keyed-assignment controls stay 0). OVER-READ (named and pinned, the false-red direction; wb-rgov, the wb-yg70 gate's
  * F3): the fused reading takes a single word that holds a matcher's fused words anywhere inside it, so an English compound
  * written as one word (publicstatement, MATCHEDCOUNTER, a confederation, where the fused federat loses its word start) reads as
  * a federation field: A1's over-read controls read 1, a src word spelling one reds A1 by design, and narrowing the reading would
@@ -188,6 +214,10 @@ const RECEIPT_CUT_2 = "2026-10-25 the typed-status echo census judged set, cut 2
  * registration-mode control by name, reading and text. */
 const RECEIPT_CUT_3 =
   "2026-10-27 the typed-status echo census judged set, cut 3: the registration read through wrappers, branches, held values, aliases and hooks, A1's key paths through more nodes, the fused over-read pinned and every control anchored (wb-rgov, the wb-yg70 gate's F1-F4)";
+/** wb-50dt (the wb-rgov gate's F1 and F2): the entry its cut appended, whose two tables add the cut-4 A1 controls and
+ * registration-mode controls after the cut-3 tables' rows. */
+const RECEIPT_CUT_4 =
+  "2026-10-27 the typed-status echo census judged set, cut 4: every write of a task's run flags, the context's other ways in, the registration read through literal keys, destructures, spreads and fixtures, and A1's key paths through nine more nodes (wb-50dt, the wb-rgov gate's F1 and F2)";
 /** The table sections, the entry each sits under and the header row each must keep. */
 const RECEIPT_TABLES = {
   pins: { entry: RECEIPT_ENTRY, heading: "Judged pins, wb-d8io cut 1", header: ["Row", "Pin"] },
@@ -197,6 +227,8 @@ const RECEIPT_TABLES = {
   residualAdditions: { entry: RECEIPT_CUT_2, heading: "Residual additions, wb-d8io cut 2", header: ["Residual", "Quiet row"] },
   readingControls: { entry: RECEIPT_CUT_3, heading: "A1 controls, wb-d8io cut 3", header: ["Group", "Control", "Reads", "Text sha256/16"] },
   registrationControls: { entry: RECEIPT_CUT_3, heading: "Registration-mode controls, wb-d8io cut 3", header: ["Control", "Modes", "Text sha256/16"] },
+  readingControlAdditions: { entry: RECEIPT_CUT_4, heading: "A1 control additions, wb-d8io cut 4", header: ["Group", "Control", "Reads", "Text sha256/16"] },
+  registrationControlAdditions: { entry: RECEIPT_CUT_4, heading: "Registration-mode control additions, wb-d8io cut 4", header: ["Control", "Modes", "Text sha256/16"] },
 } as const;
 const ROOT = process.cwd();
 const PREVIEW_ID = "reactivefiber.render.preview";
@@ -901,6 +933,28 @@ function literalKey(node: ts.Expression): string | undefined {
   const key = unwrapped(node);
   return ts.isStringLiteralLike(key) || ts.isNumericLiteral(key) ? key.text : undefined;
 }
+/** The member an access reads (wb-50dt): a property's name or a literal element key's text; a computed key reads none. */
+function accessName(node: ts.PropertyAccessExpression | ts.ElementAccessExpression): string | undefined {
+  return ts.isPropertyAccessExpression(node) ? node.name.text : literalKey(node.argumentExpression);
+}
+/** The members a write target names (wb-50dt, the wb-rgov gate's F1): a property or literal element key through the wrappers
+ * and, where `patterns` holds (an assignment's or a for-in or for-of head's target), every target inside an array or object
+ * destructuring pattern, nested, wrapped or rest. A defaulted target is an assignment of its own and is read as one. */
+function writtenMembers(target: ts.Expression, patterns: boolean): string[] {
+  const at = unwrapped(target);
+  if (ts.isPropertyAccessExpression(at) || ts.isElementAccessExpression(at)) {
+    const member = accessName(at);
+    return member === undefined ? [] : [member];
+  }
+  if (!patterns) return [];
+  if (ts.isArrayLiteralExpression(at)) return at.elements.flatMap(element => writtenMembers(ts.isSpreadElement(element) ? element.expression : element, true));
+  if (ts.isObjectLiteralExpression(at)) {
+    return at.properties.flatMap(property =>
+      ts.isPropertyAssignment(property) ? writtenMembers(property.initializer, true) : ts.isSpreadAssignment(property) ? writtenMembers(property.expression, true) : [],
+    );
+  }
+  return [];
+}
 /** The key of a member of an object pattern, object literal, type literal, interface or class; a rest element has none. */
 function memberKey(node: ts.Node): string | undefined {
   if (ts.isBindingElement(node)) return ts.isObjectBindingPattern(node.parent) && node.dotDotDotToken === undefined ? keyText(node.propertyName ?? node.name) : undefined;
@@ -913,16 +967,41 @@ function memberKey(node: ts.Node): string | undefined {
 /** The logical operators whose either operand can be the expression's value: a key path runs through both (A1) and the
  * registration read takes both (wb-rgov). */
 const LOGICAL_OPERATORS: readonly ts.SyntaxKind[] = [ts.SyntaxKind.QuestionQuestionToken, ts.SyntaxKind.BarBarToken, ts.SyntaxKind.AmpersandAmpersandToken];
+/** The assignment operators whose value is their right side (wb-50dt, the wb-rgov gate's F2 o06/o07): =, ??=, ||= and &&=. */
+const VALUE_ASSIGNMENTS: readonly ts.SyntaxKind[] = [
+  ts.SyntaxKind.EqualsToken,
+  ts.SyntaxKind.QuestionQuestionEqualsToken,
+  ts.SyntaxKind.BarBarEqualsToken,
+  ts.SyntaxKind.AmpersandAmpersandEqualsToken,
+];
+/** The member an assignment writes (wb-50dt): its target through the wrappers when that is a property or element access. */
+function memberTarget(node: ts.BinaryExpression): ts.PropertyAccessExpression | ts.ElementAccessExpression | undefined {
+  const target = unwrapped(node.left);
+  return ts.isPropertyAccessExpression(target) || ts.isElementAccessExpression(target) ? target : undefined;
+}
 /** The nodes a nested object sits in without a key of its own, reached from `child`: array patterns and their elements, array
  * literals, the expression wrappers, and array, tuple, union, intersection, parenthesized and generic types; wb-rgov (the wb-yg70
  * gate's F2) adds type operators (readonly), optional, rest and named tuple members, a call's or construction's arguments, a
- * conditional's branches, a logical operand, an arrow function's body, an await, a spread and a JSX attribute's expression. */
+ * conditional's branches, a logical operand, an arrow function's body, an await, a spread and a JSX attribute's expression;
+ * wb-50dt (the wb-rgov gate's F2) adds a comma's last operand (o02), an assignment's right side when its target is no member
+ * (a member target names the keys itself, in enclosingKeys), an arrow's or a function expression's return type (o08), a
+ * function or construct type's return type (o01), both branches of a conditional type (the o05 boundary), and a template
+ * literal's or a tagged template's substitutions (o09, o10). */
 function passesThrough(node: ts.Node, child: ts.Node): boolean {
   if (ts.isConditionalExpression(node)) return child !== node.condition;
-  if (ts.isBinaryExpression(node)) return LOGICAL_OPERATORS.includes(node.operatorToken.kind);
+  if (ts.isBinaryExpression(node)) {
+    if (LOGICAL_OPERATORS.includes(node.operatorToken.kind)) return true;
+    if (child !== node.right) return false;
+    return node.operatorToken.kind === ts.SyntaxKind.CommaToken || (VALUE_ASSIGNMENTS.includes(node.operatorToken.kind) && memberTarget(node) === undefined);
+  }
   if (ts.isCallExpression(node) || ts.isNewExpression(node)) return child !== node.expression;
-  if (ts.isArrowFunction(node)) return child === node.body;
+  if (ts.isArrowFunction(node)) return child === node.body || child === node.type;
+  if (ts.isFunctionExpression(node) || ts.isFunctionTypeNode(node) || ts.isConstructorTypeNode(node)) return child === node.type;
+  if (ts.isConditionalTypeNode(node)) return child === node.trueType || child === node.falseType;
+  if (ts.isTemplateSpan(node)) return child === node.expression;
+  if (ts.isTaggedTemplateExpression(node)) return child === node.template;
   return (
+    ts.isTemplateExpression(node) ||
     ts.isTypeOperatorNode(node) ||
     ts.isOptionalTypeNode(node) ||
     ts.isRestTypeNode(node) ||
@@ -951,13 +1030,22 @@ function passesThrough(node: ts.Node, child: ts.Node): boolean {
  * value or type of, that member's own enclosing keys, and so on, through the pass-through nodes. wb-rgov (the wb-yg70 gate's F2):
  * a spread's members join the object literal they are spread into, and a returned value continues from the arrow function or
  * function expression it returns from (a method or accessor is itself the member). A variable or parameter name is no key
- * (R-SPLIT-PATH). */
+ * (R-SPLIT-PATH). wb-50dt (the wb-rgov gate's F2): a yielded value continues as a returned one does (o03); a function
+ * declaration nested in a function hands its returned or yielded value on to the function that holds it (o04, the strict
+ * direction: whether the declaration's value is then returned is not read), while one at module level, whose own name is no
+ * key, ends the path (R-SPLIT-PATH); and a member written by an assignment or a logical assignment (o06, o07) is named by its
+ * target's chain past the head (chainNames), the head being a variable's own name. */
 function enclosingKeys(container: ts.Node): string[] {
   let child: ts.Node = container;
   let at: ts.Node | undefined = container.parent;
   while (at !== undefined) {
-    if (ts.isReturnStatement(at)) {
-      const returnedFrom: ts.Node | undefined = ts.findAncestor(at.parent, ts.isFunctionLike);
+    if (ts.isReturnStatement(at) || ts.isYieldExpression(at)) {
+      let returnedFrom: ts.Node | undefined = ts.findAncestor(at.parent, ts.isFunctionLike);
+      while (returnedFrom !== undefined && ts.isFunctionDeclaration(returnedFrom)) {
+        const holder: ts.Node | undefined = ts.findAncestor(returnedFrom.parent, ts.isFunctionLike);
+        if (holder === undefined) break;
+        returnedFrom = holder;
+      }
       if (returnedFrom === undefined || !(ts.isArrowFunction(returnedFrom) || ts.isFunctionExpression(returnedFrom))) {
         at = returnedFrom;
         break;
@@ -969,6 +1057,10 @@ function enclosingKeys(container: ts.Node): string[] {
     if (!(ts.isObjectLiteralExpression(at) && ts.isSpreadAssignment(child)) && !passesThrough(at, child)) break;
     child = at;
     at = at.parent;
+  }
+  if (at !== undefined && ts.isBinaryExpression(at) && child === at.right && VALUE_ASSIGNMENTS.includes(at.operatorToken.kind)) {
+    const target = memberTarget(at);
+    if (target !== undefined) return chainNames(target).slice(1);
   }
   const key = at === undefined ? undefined : memberKey(at);
   return at === undefined || key === undefined ? [] : [...enclosingKeys(at.parent), key];
@@ -1091,6 +1183,37 @@ function battery(): { name: string; source: JsonObject }[] {
     { name: "refusal", source: deniedRefusal() },
   ];
 }
+
+/** wb-50dt (the wb-rgov gate's F2): A1's cut-4 key-path controls, each caught by exactly one matcher once the key path runs
+ * through its node: a function or construct type's return type (o01), the last operand of a comma (o02), a yielded value (o03),
+ * a value returned from a function declaration nested in a member's function (o04), both branches of a conditional type (the
+ * o05 boundary), a member written by an assignment (o06) or a logical assignment (o07), an arrow's or a function expression's
+ * return type (o08), a tagged template's substitution (o09) and a template literal's (o10), with same-class siblings. */
+const KEY_PATH_ADDITIONS: Readonly<Record<string, string>> = {
+  functionType: "type Rec = { publication: () => { state: string } };",
+  constructType: "type Rec = { publication: new () => { state: string } };",
+  comma: 'const record = { publication: (0, { state: "FAILED" }) };',
+  yielded: 'const record = { publication: function* () {\n  yield { state: "FAILED" };\n} };',
+  yieldedMethod: 'const record = { *publication() {\n  yield { state: "FAILED" };\n} };',
+  innerDeclaration: 'const record = { publication: () => {\n  function inner() {\n    return { state: "FAILED" };\n  }\n  return inner();\n} };',
+  conditionalType: "type Rec<T> = { publication: T extends string ? { state: string } : never };",
+  conditionalTypeElse: "type Rec<T> = { publication: T extends string ? never : { state: string } };",
+  memberAssignment: 'record.publication = { state: "FAILED" };',
+  logicalAssignment: 'record.publication ??= { state: "FAILED" };',
+  elementAssignment: 'record["publication"] = { state: "FAILED" };',
+  assignedValue: 'const record = { publication: (cache = { state: "FAILED" }) };',
+  returnType: "const record = { publication: (): { state: string } => load() };",
+  functionReturnType: "const record = { publication: function (): { state: string } {\n  return load();\n} };",
+  taggedTemplate: `const record = { publication: tag\`\${{ state: "FAILED" }}\` };`,
+  templateLiteral: `const record = { publication: \`\${{ state: "FAILED" }}\` };`,
+};
+/** wb-50dt: R-SPLIT-PATH's twins at the new readings' borders, each quiet: a function declaration's own name, a plain name
+ * written, and a member written through a key bound elsewhere. */
+const SPLIT_PATH_ADDITIONS: Readonly<Record<string, string>> = {
+  declaredFunction: 'function publication() {\n  return { state: "FAILED" };\n}',
+  nameAssignment: 'publication = { state: "FAILED" };',
+  keyedAssignment: 'const KEY = "publication";\nrecord[KEY] = { state: "FAILED" };',
+};
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
@@ -1296,7 +1419,22 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     for (const [file, count] of Object.entries(walk.files)) ledger.push(["walk.files", file, String(count), shaOf(textOf(join(plantRoot, file)))]);
     for (const entry of walk.others) ledger.push(["walk.others", entry, "listed", "-"]);
     for (const [extension, kind] of Object.entries(walk.kinds)) ledger.push(["walk.kinds", extension, kind, "-"]);
-    expect(ledger, "A1's controls (group, name, reading, text) stand in the receipt's A1 control table").toStrictEqual(receiptTable(RECEIPT_TABLES.readingControls));
+    // wb-50dt (the wb-rgov gate's F2): the key path also runs through nine more nodes, each control caught by exactly one matcher,
+    // and R-SPLIT-PATH's twins at those readings' borders stay quiet; both groups join the record after the walk, so the cut-3
+    // table stays the record's head and the cut-4 additions table its tail.
+    const keyPaths = group("widened.keyPaths", KEY_PATH_ADDITIONS);
+    expect(
+      Object.entries(keyPaths)
+        .filter(([, count]) => count !== 1)
+        .map(([key]) => key),
+      "a cut-4 key-path control is not caught by exactly one matcher",
+    ).toEqual([]);
+    const splitPath = group("quiet.splitPath", SPLIT_PATH_ADDITIONS);
+    expect(Object.values(splitPath).every(count => count === 0), "an R-SPLIT-PATH twin reads as a key path").toBe(true);
+    expect(ledger, "A1's controls (group, name, reading, text) stand in the receipt's A1 control table, then in its cut-4 additions").toStrictEqual([
+      ...receiptTable(RECEIPT_TABLES.readingControls),
+      ...receiptTable(RECEIPT_TABLES.readingControlAdditions),
+    ]);
     return {
       floorMet,
       unitsFloorMet,
@@ -1310,6 +1448,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       quiet,
       overread,
       walk,
+      keyPaths,
+      splitPath,
     };
   },
   A2: async () => {
@@ -1714,6 +1854,72 @@ const REGISTRATION_CONTROLS: readonly (readonly [string, string, readonly string
     'import { afterAll } from "vitest";\ninstallGuard(afterAll);\nReflect.set(task, "mode", "skip");\nObject.assign(task, { mode: "skip" });\ntask[flag] = "skip";',
     [],
   ],
+  // wb-50dt (the wb-rgov gate's F1): every write of a task's run flags - a target of a destructuring assignment's array or object
+  // pattern (nested, wrapped, defaulted or rest) or of a for-in or for-of head, an increment or decrement, a delete (K3-K6); a
+  // rest parameter and a function's arguments object (K7, K8); the task's back-reference to its context (K9); a namespace's hook
+  // and registrar through literal element keys (K10, K11), a computed namespace member, a namespace alias, rest and destructure, a
+  // registrar chain's destructured member and hook, a test hook through a literal key; a spread argument (K19); and an extend
+  // call's fixtures (K30). Then the run forms these readings must leave alone, and the cut's non-claims.
+  ["an array-pattern write", '[t.mode] = ["skip"];', ["task write"]],
+  ["an object-pattern write", '({ m: t.mode } = { m: "skip" });', ["task write"]],
+  ["a for-of write", 'for (t.mode of ["skip"]);', ["task write"]],
+  ["a for-in write", `for (${dot("t", "fails")} in { on: 1 });`, ["task write"]],
+  ["a nested pattern write", `[{ m: [${dot("t", "fails")}] }] = [{ m: [true] }];`, ["task write"]],
+  ["a defaulted pattern write", '({ m: t.mode = "skip" } = {});', ["task write"]],
+  ["a rest pattern write", `[...${dot("t", "fails")}] = [true];`, ["task write"]],
+  ["an object rest write", "({ ...t.mode } = {});", ["task write"]],
+  ["a for-of pattern write", 'for ([t.mode] of [["skip"]]);', ["task write"]],
+  ["a wrapped pattern write", '[(t.mode)] = ["skip"];', ["task write"]],
+  ["an increment", `${dot("t", "fails")}++;`, ["task write"]],
+  ["a prefix decrement", '--t["fails"];', ["task write"]],
+  ["a delete", "delete t.mode;", ["task write"]],
+  ["a rest parameter", `it("judge", (...args) => {\n  ${dot("args[0]", "skip")}();\n});`, ["context escape"]],
+  ["the arguments object", `it("judge", function () {\n  ${dot("arguments[0]", "skip")}();\n});`, ["context escape"]],
+  ["a nested function's own arguments", 'it("judge", function () {\n  const count = function () {\n    return arguments.length;\n  };\n  count();\n});', []],
+  ["a task back-reference", `it("judge", ({ task }) => {\n  ${dot(dot("task", "context"), "skip")}();\n});`, ["context skip"]],
+  ["a context's task back-reference", `it("judge", (context) => {\n  ${dot(dot(dot("context", "task"), "context"), "skip")}();\n});`, ["context skip"]],
+  ["a destructured back-reference", `it("judge", ({ task }) => {\n  const { context } = task;\n  ${dot("context", "skip")}();\n});`, ["context skip"]],
+  ["a held back-reference", `it("judge", ({ task }) => {\n  const current = task.context;\n  ${dot("current", "skip")}();\n});`, ["context skip"]],
+  ["a task alias", `it("judge", (context) => {\n  const current = context.task;\n  ${dot(dot("current", "context"), "skip")}();\n});`, ["context skip"]],
+  ["a bound task key", `it("judge", (context) => {\n  const { task } = context;\n  ${dot(dot("task", "context"), "skip")}();\n});`, ["context skip"]],
+  ["a task pattern's rest", `it("judge", ({ task }) => {\n  const { ...copy } = task;\n  ${dot(dot("copy", "context"), "skip")}();\n});`, ["context skip"]],
+  ["a back-reference by a literal key", `it("judge", ({ task }) => {\n  ${dot('task["context"]', "skip")}();\n});`, ["context skip"]],
+  ["a task member by a literal key", `it("judge", (context) => {\n  ${dot('context["task"].context', "skip")}();\n});`, ["context skip"]],
+  ["a back-reference escape", 'it("judge", ({ task }) => {\n  hide(task.context);\n});', ["context escape"]],
+  ["a namespace hook by a literal key", 'import * as vitest from "vitest";\nvitest["beforeEach"](({ skip }) => {\n  skip();\n});', ["context skip"]],
+  ["a namespace registrar by literal keys", 'import * as vitest from "vitest";\nvitest["it"]["skip"]("judge", () => {});', ["skip"]],
+  ["a namespace registrar by a literal key", `import * as vitest from "vitest";\n${dot('vitest["test"]', "todo")}("judge");`, ["todo"]],
+  ["a wrapped namespace", `import * as vitest from "vitest";\n${dot(dot("(vitest as typeof vitest)", "it"), "skip")}("judge", () => {});`, ["skip"]],
+  ["a computed namespace member", 'import * as vitest from "vitest";\nvitest[member]("judge", () => {});', ["computed member"]],
+  ["a namespace alias", `import * as vitest from "vitest";\nconst api = vitest;\n${dot(dot("api", "it"), "skip")}("judge", () => {});`, ["skip"]],
+  ["a destructured namespace registrar", `import * as vitest from "vitest";\nconst { it: check } = vitest;\n${dot("check", "only")}("judge", () => {});`, ["only"]],
+  ["a destructured namespace hook", `import * as vitest from "vitest";\nconst { afterEach: after } = vitest;\nafter((context) => {\n  ${dot("context", "skip")}();\n});`, ["context skip"]],
+  ["a namespace rest", `import * as vitest from "vitest";\nconst { ...api } = vitest;\n${dot(dot("api", "it"), "skip")}("judge", () => {});`, ["skip"]],
+  ["a namespace rest's other member", `import * as vitest from "vitest";\nconst { ...api } = vitest;\n${dot(dot("api", "vi"), "skip")}();`, []],
+  ["a destructured chain member", `const { concurrent: parallel } = it;\n${dot("parallel", "skip")}("judge", () => {});`, ["skip"]],
+  ["a destructured registrar hook", `const { beforeEach: setup } = it;\nsetup((context) => {\n  ${dot("context", "skip")}();\n});`, ["context skip"]],
+  ["a computed destructure", "const { [mode]: run } = it;", ["computed member"]],
+  ["a computed namespace destructure", 'import * as vitest from "vitest";\nconst { [name]: run } = vitest;', ["computed member"]],
+  ["a test hook by a literal key", `it("judge", (context) => {\n  context["onTestFailed"]((failed) => ${dot("failed", "skip")}());\n});`, ["context skip"]],
+  ["a spread argument", 'it(...["judge", { skip: true }], () => {});', ["options skip"]],
+  ["a nested spread argument", 'it(...[...["judge", { todo: true }]], () => {});', ["options todo"]],
+  ["a held spread argument", "it(...cases);", ["argument unread"]],
+  ["an auto fixture", "const check = it.extend({\n  guard: [\n    async ({ skip }, use) => {\n      skip();\n      await use(1);\n    },\n    { auto: true },\n  ],\n});", ["context skip"]],
+  ["a fixture function", `const check = test.extend({\n  guard: async (context, use) => {\n    ${dot("context", "skip")}();\n    await use(1);\n  },\n});`, ["context skip"]],
+  ["a fixture method", "const check = it.extend({\n  async guard({ skip }, use) {\n    skip();\n    await use(1);\n  },\n});", ["context skip"]],
+  ["a held fixture", "const check = it.extend({ guard: makeGuard });", ["argument unread"]],
+  ["held fixtures", "const check = it.extend(FIXTURES);", ["argument unread"]],
+  ["a fixture's rest parameter", "const check = it.extend({\n  guard: async (...args) => {\n    await args[1](1);\n  },\n});", ["context escape"]],
+  [
+    "the cut-4 run forms",
+    'const { mode } = options;\n({ mode } = options);\nfor (const name of names) {}\nfor (name of names) {}\ndelete cache.entry;\ncount++;\nit("judge", ({ task }) => {\n  task.name;\n});\nit(...["judge"], () => {});\nconst check = it.extend({\n  port: 3000,\n  config: { retries: 2 },\n  guard: [\n    async ({ task }, use) => {\n      await use(task.name);\n    },\n    { auto: true },\n  ],\n});',
+    [],
+  ],
+  [
+    "the cut-4 non-claims",
+    'import * as vitest from "vitest";\nit("judge", ({ task }) => {\n  hide(task);\n});\nconst { it: { skip: nested } } = vitest;\nnested("judge", () => {});',
+    [],
+  ],
 ];
 
 /** vitest 4.1.10's hooks, as the module imports them or as a member of a registrar chain (wb-rgov, the wb-yg70 gate's F1): each
@@ -1755,25 +1961,49 @@ function registrationModes(fileName: string, text: string): string[] {
       }
     }
   }
+  /** A namespace import of vitest through the wrappers, or (wb-50dt) a name bound to one or to the rest of one. */
+  const isNamespace = (node: ts.Expression): boolean => {
+    const at = unwrapped(node);
+    return ts.isIdentifier(at) && namespaces.has(at.text);
+  };
   const rooted = (node: ts.Expression): boolean => {
     const at = unwrapped(node);
     if (ts.isIdentifier(at)) return registrars.has(at.text);
-    if (ts.isPropertyAccessExpression(at)) return (ts.isIdentifier(at.expression) && namespaces.has(at.expression.text) && REGISTRARS.includes(at.name.text)) || rooted(at.expression);
-    if (ts.isElementAccessExpression(at) || ts.isCallExpression(at)) return rooted(at.expression);
+    // wb-50dt (the wb-rgov gate's F1 K11): a namespace's registrar member is read through a literal element key too.
+    if (ts.isPropertyAccessExpression(at) || ts.isElementAccessExpression(at)) {
+      const member = accessName(at);
+      return (isNamespace(at.expression) && member !== undefined && REGISTRARS.includes(member)) || rooted(at.expression);
+    }
+    if (ts.isCallExpression(at)) return rooted(at.expression);
     if (ts.isConditionalExpression(at)) return rooted(at.whenTrue) || rooted(at.whenFalse);
     return false;
   };
-  /** A hook: an imported hook or an alias of one, a namespace's hook member, or a hook member of a registrar chain. */
+  /** A hook: an imported hook or an alias of one, a namespace's hook member, or a hook member of a registrar chain; wb-50dt (the
+   * wb-rgov gate's F1 K10): a member read through a literal element key too. */
   const isHook = (node: ts.Expression): boolean => {
     const at = unwrapped(node);
     if (ts.isIdentifier(at)) return hooks.has(at.text);
-    if (ts.isPropertyAccessExpression(at)) return HOOKS.includes(at.name.text) && ((ts.isIdentifier(at.expression) && namespaces.has(at.expression.text)) || rooted(at.expression));
+    if (ts.isPropertyAccessExpression(at) || ts.isElementAccessExpression(at)) {
+      const member = accessName(at);
+      return member !== undefined && HOOKS.includes(member) && (isNamespace(at.expression) || rooted(at.expression));
+    }
     return false;
   };
-  /** A test-context hook, by name: a bare onTestFailed or onTestFinished, or a member so named. */
+  /** A test-context hook, by name: a bare onTestFailed or onTestFinished, or a member so named (wb-50dt: through a literal element
+   * key too). */
   const isTestHook = (node: ts.Expression): boolean => {
     const at = unwrapped(node);
-    return (ts.isIdentifier(at) && TEST_HOOKS.includes(at.text)) || (ts.isPropertyAccessExpression(at) && TEST_HOOKS.includes(at.name.text));
+    if (ts.isIdentifier(at)) return TEST_HOOKS.includes(at.text);
+    if (ts.isPropertyAccessExpression(at) || ts.isElementAccessExpression(at)) {
+      const member = accessName(at);
+      return member !== undefined && TEST_HOOKS.includes(member);
+    }
+    return false;
+  };
+  /** wb-50dt (the wb-rgov gate's F1 K30): an extend member of a registrar chain, whose call defines fixtures. */
+  const isExtend = (node: ts.Expression): boolean => {
+    const at = unwrapped(node);
+    return (ts.isPropertyAccessExpression(at) || ts.isElementAccessExpression(at)) && accessName(at) === "extend" && rooted(at.expression);
   };
   const declarations: ts.VariableDeclaration[] = [];
   const collect = (node: ts.Node): void => {
@@ -1782,19 +2012,44 @@ function registrationModes(fileName: string, text: string): string[] {
   };
   collect(source);
   // A variable bound to a registrar chain is a registrar too, and one bound to a hook a hook (an alias of an alias included):
-  // read to a fixed point.
+  // read to a fixed point. wb-50dt (the wb-rgov gate's F1): one bound to a namespace is a namespace; an object pattern on a
+  // namespace binds its registrar members as registrars, its hook members as hooks and its rest as a namespace, and one on a
+  // registrar chain binds its hook members as hooks and every other member and its rest as registrar chains. A nested pattern
+  // binds nothing here (a non-claim).
+  const bind = (set: Set<string>, name: string): boolean => {
+    if (set.has(name)) return false;
+    set.add(name);
+    return true;
+  };
   for (let grew = true; grew; ) {
     grew = false;
     for (const declaration of declarations) {
       const name = declaration.name;
-      if (!ts.isIdentifier(name) || declaration.initializer === undefined) continue;
-      if (!registrars.has(name.text) && rooted(declaration.initializer)) {
-        registrars.add(name.text);
-        grew = true;
+      const initializer = declaration.initializer;
+      if (initializer === undefined) continue;
+      if (ts.isIdentifier(name)) {
+        if (rooted(initializer) && bind(registrars, name.text)) grew = true;
+        if (isHook(initializer) && bind(hooks, name.text)) grew = true;
+        if (isNamespace(initializer) && bind(namespaces, name.text)) grew = true;
+        continue;
       }
-      if (!hooks.has(name.text) && isHook(declaration.initializer)) {
-        hooks.add(name.text);
-        grew = true;
+      if (!ts.isObjectBindingPattern(name)) continue;
+      const fromNamespace = isNamespace(initializer);
+      if (!fromNamespace && !rooted(initializer)) continue;
+      for (const element of name.elements) {
+        if (!ts.isIdentifier(element.name)) continue;
+        const key = element.dotDotDotToken === undefined ? keyText(element.propertyName ?? element.name) : undefined;
+        const into =
+          element.dotDotDotToken !== undefined
+            ? fromNamespace
+              ? namespaces
+              : registrars
+            : key !== undefined && HOOKS.includes(key)
+              ? hooks
+              : key !== undefined && (!fromNamespace || REGISTRARS.includes(key))
+                ? registrars
+                : undefined;
+        if (into !== undefined && bind(into, element.name.text)) grew = true;
       }
     }
   }
@@ -1826,12 +2081,21 @@ function registrationModes(fileName: string, text: string): string[] {
     }
   };
   /** The context skips one inline callback reads: its parameters are contexts, and so is each name bound to one or to the rest of
-   * one, to a fixed point; every use of a context but a member read or a binding of it is read. */
-  const contextModes = (callback: ts.ArrowFunction | ts.FunctionExpression): void => {
+   * one, to a fixed point; every use of a context but a member read or a binding of it is read. wb-50dt (the wb-rgov gate's F1):
+   * only the first `count` parameters are contexts (a fixture's first one); a rest parameter (K7), and a use of a function's or a
+   * method's own arguments object outside a nested function that has its own (K8), reads as a context escape; and a task bound
+   * from a context - a destructured task key, a task member, an alias of either or the rest of a task pattern - carries the
+   * context back (K9): its context member (a property or a literal element key), a context key destructured from it and their
+   * aliases are contexts. A task's other uses are not followed (a non-claim). */
+  const contextModes = (callback: ts.ArrowFunction | ts.FunctionExpression | ts.MethodDeclaration, count = callback.parameters.length): void => {
+    const body = callback.body;
+    if (body === undefined) return;
     const contexts = new Set<string>();
+    const tasks = new Set<string>();
     const patterns: ts.ObjectBindingPattern[] = [];
-    for (const parameter of callback.parameters) {
-      if (ts.isIdentifier(parameter.name)) contexts.add(parameter.name.text);
+    for (const parameter of callback.parameters.slice(0, count)) {
+      if (parameter.dotDotDotToken !== undefined) modes.push("context escape");
+      else if (ts.isIdentifier(parameter.name)) contexts.add(parameter.name.text);
       else if (ts.isObjectBindingPattern(parameter.name)) patterns.push(parameter.name);
       else modes.push("context escape");
     }
@@ -1840,24 +2104,57 @@ function registrationModes(fileName: string, text: string): string[] {
       if (ts.isVariableDeclaration(node) && node.initializer !== undefined) bound.push(node);
       ts.forEachChild(node, collectBound);
     };
-    collectBound(callback.body);
+    collectBound(body);
+    /** A task: a name bound to one, or a task member of a context. */
+    const isTask = (node: ts.Expression): boolean => {
+      const at = unwrapped(node);
+      if (ts.isIdentifier(at)) return tasks.has(at.text);
+      return (ts.isPropertyAccessExpression(at) || ts.isElementAccessExpression(at)) && accessName(at) === "task" && isContext(at.expression);
+    };
+    /** A context: a name bound to one, or a task's context member. */
     const isContext = (node: ts.Expression): boolean => {
       const at = unwrapped(node);
-      return ts.isIdentifier(at) && contexts.has(at.text);
+      if (ts.isIdentifier(at)) return contexts.has(at.text);
+      return (ts.isPropertyAccessExpression(at) || ts.isElementAccessExpression(at)) && accessName(at) === "context" && isTask(at.expression);
     };
     const restOf = (pattern: ts.ObjectBindingPattern): string[] =>
       pattern.elements.flatMap(element => (element.dotDotDotToken !== undefined && ts.isIdentifier(element.name) ? [element.name.text] : []));
-    for (const pattern of patterns) for (const name of restOf(pattern)) contexts.add(name);
+    /** The names an object pattern binds to one key, each an identifier (a nested pattern binds none here). */
+    const keyed = (pattern: ts.ObjectBindingPattern, key: string): string[] =>
+      pattern.elements.flatMap(element =>
+        element.dotDotDotToken === undefined && ts.isIdentifier(element.name) && keyText(element.propertyName ?? element.name) === key ? [element.name.text] : [],
+      );
+    for (const pattern of patterns) {
+      for (const name of restOf(pattern)) contexts.add(name);
+      for (const name of keyed(pattern, "task")) tasks.add(name);
+    }
     const boundPatterns = new Set<ts.ObjectBindingPattern>();
     for (let grew = true; grew; ) {
       grew = false;
       for (const declaration of bound) {
-        if (declaration.initializer === undefined || !isContext(declaration.initializer)) continue;
+        if (declaration.initializer === undefined) continue;
+        const fromContext = isContext(declaration.initializer);
+        if (!fromContext && !isTask(declaration.initializer)) continue;
         const name = declaration.name;
-        const added = ts.isIdentifier(name) ? [name.text] : ts.isObjectBindingPattern(name) ? restOf(name) : [];
-        if (ts.isObjectBindingPattern(name)) boundPatterns.add(name);
-        for (const alias of added.filter(alias => !contexts.has(alias))) {
+        let addedContexts: string[] = [];
+        let addedTasks: string[] = [];
+        if (ts.isIdentifier(name)) {
+          if (fromContext) addedContexts = [name.text];
+          else addedTasks = [name.text];
+        } else if (ts.isObjectBindingPattern(name) && fromContext) {
+          boundPatterns.add(name);
+          addedContexts = restOf(name);
+          addedTasks = keyed(name, "task");
+        } else if (ts.isObjectBindingPattern(name)) {
+          addedContexts = keyed(name, "context");
+          addedTasks = restOf(name);
+        }
+        for (const alias of addedContexts.filter(alias => !contexts.has(alias))) {
           contexts.add(alias);
+          grew = true;
+        }
+        for (const alias of addedTasks.filter(alias => !tasks.has(alias))) {
+          tasks.add(alias);
           grew = true;
         }
       }
@@ -1880,7 +2177,10 @@ function registrationModes(fileName: string, text: string): string[] {
       return ts.findAncestor(id, ts.isTypeNode) === undefined;
     };
     const scan = (node: ts.Node): void => {
-      if (ts.isIdentifier(node) && contexts.has(node.text) && isUse(node)) {
+      const reached =
+        (ts.isIdentifier(node) && contexts.has(node.text) && isUse(node)) ||
+        ((ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) && accessName(node) === "context" && isTask(node.expression));
+      if (reached) {
         let use: ts.Node = node;
         while (
           (ts.isParenthesizedExpression(use.parent) || ts.isNonNullExpression(use.parent) || ts.isAsExpression(use.parent) || ts.isSatisfiesExpression(use.parent) || ts.isTypeAssertionExpression(use.parent)) &&
@@ -1901,17 +2201,67 @@ function registrationModes(fileName: string, text: string): string[] {
       }
       ts.forEachChild(node, scan);
     };
-    scan(callback.body);
+    scan(body);
+    /** Whether a node reads the callback's own arguments object: a use of the name outside a nested function that has its own. */
+    const readsArguments = (node: ts.Node): boolean => {
+      if (ts.isIdentifier(node)) return node.text === "arguments" && isUse(node);
+      if (ts.isFunctionLike(node) && !ts.isArrowFunction(node)) return false;
+      return ts.forEachChild(node, child => (readsArguments(child) ? true : undefined)) === true;
+    };
+    if (!ts.isArrowFunction(callback) && readsArguments(body)) modes.push("context escape");
   };
-  /** One registration or hook call's arguments, read from `from` on for a value held elsewhere (a registration's name aside). */
+  /** A call's arguments in order, each spread of an array literal read in place as its elements (wb-50dt, the wb-rgov gate's F1
+   * K19); a spread of anything else stays a spread. */
+  const spreadArguments = (list: readonly ts.Expression[]): ts.Expression[] =>
+    list.flatMap(argument => {
+      if (!ts.isSpreadElement(argument)) return [argument];
+      const spread = unwrapped(argument.expression);
+      return ts.isArrayLiteralExpression(spread) ? spreadArguments(spread.elements) : [argument];
+    });
+  /** One registration or hook call's arguments, read from `from` on for a value held elsewhere (a registration's name aside);
+   * wb-50dt: a spread left by spreadArguments can carry any argument, the name's place included, so it reads unread wherever it
+   * stands. */
   const argumentModes = (call: ts.CallExpression, from: number): void => {
-    call.arguments.forEach((argument, index) => {
+    spreadArguments(call.arguments).forEach((argument, index) => {
+      if (ts.isSpreadElement(argument)) {
+        modes.push("argument unread");
+        return;
+      }
       for (const value of valuesOf(argument)) {
         if (ts.isObjectLiteralExpression(value)) optionModes(value);
         else if (ts.isArrowFunction(value) || ts.isFunctionExpression(value)) contextModes(value);
         else if (index >= from && !isPlain(value)) modes.push("argument unread");
       }
     });
+  };
+  /** wb-50dt (the wb-rgov gate's F1 K30): an extend call's fixtures. Each member of an object-literal argument is a fixture: an
+   * inline function (an arrow, a function expression or a method) is a callback whose first parameter is the test context, a
+   * tuple (an array literal) is read by its first element the same way, and a plain literal or an object literal is a static
+   * value; a fixture or a fixture set held elsewhere (a name, a member read, a call, a shorthand or spread member, an accessor, a
+   * spread argument) reads unread. */
+  const fixtureModes = (call: ts.CallExpression): void => {
+    const fixtureValue = (initializer: ts.Expression): void => {
+      for (const value of valuesOf(initializer)) {
+        if (ts.isArrowFunction(value) || ts.isFunctionExpression(value)) contextModes(value, 1);
+        else if (ts.isArrayLiteralExpression(value)) {
+          const first = value.elements[0];
+          if (first !== undefined) fixtureValue(first);
+        } else if (!ts.isObjectLiteralExpression(value) && !isPlain(value)) modes.push("argument unread");
+      }
+    };
+    for (const argument of spreadArguments(call.arguments)) {
+      for (const value of valuesOf(argument)) {
+        if (!ts.isObjectLiteralExpression(value)) {
+          if (!isPlain(value)) modes.push("argument unread");
+          continue;
+        }
+        for (const property of value.properties) {
+          if (ts.isPropertyAssignment(property)) fixtureValue(property.initializer);
+          else if (ts.isMethodDeclaration(property)) contextModes(property, 1);
+          else modes.push("argument unread");
+        }
+      }
+    }
   };
   const visit = (node: ts.Node): void => {
     if (ts.isPropertyAccessExpression(node) && SKIP_MODES.includes(node.name.text) && rooted(node.expression)) modes.push(node.name.text);
@@ -1920,21 +2270,39 @@ function registrationModes(fileName: string, text: string): string[] {
       if (member === undefined) modes.push("computed member");
       else if (SKIP_MODES.includes(member)) modes.push(member);
     }
-    if (ts.isVariableDeclaration(node) && ts.isObjectBindingPattern(node.name) && node.initializer !== undefined && rooted(node.initializer)) {
-      for (const element of node.name.elements) {
-        const member = keyText(element.propertyName ?? element.name);
-        if (member !== undefined && SKIP_MODES.includes(member)) modes.push(member);
+    // wb-50dt: a computed member of a namespace may be any of its registrars or hooks.
+    if (ts.isElementAccessExpression(node) && isNamespace(node.expression) && literalKey(node.argumentExpression) === undefined) modes.push("computed member");
+    if (ts.isVariableDeclaration(node) && ts.isObjectBindingPattern(node.name) && node.initializer !== undefined) {
+      const fromChain = rooted(node.initializer);
+      if (fromChain || isNamespace(node.initializer)) {
+        for (const element of node.name.elements) {
+          const member = keyText(element.propertyName ?? element.name);
+          // wb-50dt: a computed key of a pattern on a registrar chain or a namespace may bind any member.
+          if (member === undefined) modes.push("computed member");
+          else if (fromChain && SKIP_MODES.includes(member)) modes.push(member);
+        }
       }
     }
     if (ts.isCallExpression(node)) {
       if (isHook(node.expression) || isTestHook(node.expression)) argumentModes(node, 0);
+      else if (isExtend(node.expression)) fixtureModes(node);
       else if (rooted(node.expression)) argumentModes(node, 1);
     }
-    if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment) {
-      const target = unwrapped(node.left);
-      const member = ts.isPropertyAccessExpression(target) ? target.name.text : ts.isElementAccessExpression(target) ? literalKey(target.argumentExpression) : undefined;
-      if (member !== undefined && TASK_FLAGS.includes(member)) modes.push("task write");
-    }
+    // wb-50dt (the wb-rgov gate's F1 K3-K6): a task write is any write of a TASK_FLAGS member - the target of an assignment of any
+    // operator or of a for-in or for-of head (each target inside a destructuring pattern included), the operand of an increment or
+    // a decrement, or the operand of a delete.
+    const isAssignment = ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment;
+    const isStep = (ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && (node.operator === ts.SyntaxKind.PlusPlusToken || node.operator === ts.SyntaxKind.MinusMinusToken);
+    const written = isAssignment
+      ? writtenMembers(node.left, true)
+      : (ts.isForOfStatement(node) || ts.isForInStatement(node)) && !ts.isVariableDeclarationList(node.initializer)
+        ? writtenMembers(node.initializer, true)
+        : isStep
+          ? writtenMembers(node.operand, false)
+          : ts.isDeleteExpression(node)
+            ? writtenMembers(node.expression, false)
+            : [];
+    for (const member of written) if (TASK_FLAGS.includes(member)) modes.push("task write");
     ts.forEachChild(node, visit);
   };
   visit(source);
@@ -2053,8 +2421,10 @@ afterAll(() => {
   // wb-rgov (the wb-yg70 gate's F4): every control, by name, modes and the sha256/16 of its text, stands in the receipt's
   // registration-control table, so a reading removed together with its control, or a control rewritten, reds here.
   const anchored = REGISTRATION_CONTROLS.map(([name, text, modes]) => [name, modes.length === 0 ? "none" : modes.join(", "), shaOf(text)]);
-  if (JSON.stringify(anchored) !== JSON.stringify(receiptTable(RECEIPT_TABLES.registrationControls))) {
-    throw new Error("the registration-mode controls (name, modes, text) do not stand in the receipt's registration-control table");
+  // wb-50dt: the cut-4 controls follow the cut-3 ones, held to the cut-4 additions table after the cut-3 table.
+  const tabled = [...receiptTable(RECEIPT_TABLES.registrationControls), ...receiptTable(RECEIPT_TABLES.registrationControlAdditions)];
+  if (JSON.stringify(anchored) !== JSON.stringify(tabled)) {
+    throw new Error("the registration-mode controls (name, modes, text) do not stand in the receipt's registration-control table, then in its cut-4 additions");
   }
   const modes = registrationModes(SELF, readFileSync(SELF, "utf8"));
   if (modes.length > 0) throw new Error(`this census registers a case with a skip mode, which no run of it vouches for: ${modes.join(", ")}`);

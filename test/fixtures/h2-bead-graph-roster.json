@@ -508,7 +508,12 @@
   "endElsewhere": [
    "F2",
    "F3"
-  ]
+  ],
+  "harnessCompares": {
+   "JUDGED_SET": 24,
+   "DRIVE_RECORD": 4,
+   "CLOSING": 4
+  }
  },
  "rows": [
   {

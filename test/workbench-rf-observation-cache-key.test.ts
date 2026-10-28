@@ -76,11 +76,24 @@
  * and the members from the latest tables (the middle pin - B5 at cut 1 - and the pin before it; the last field - the tsx_sdk
  * note). The re-base case holds every control's reading over five receipts a later cut leaves: both tables restated (the
  * gate's L2-b), either table alone restated, the designed escape - the middle pin dropped with its removal named (the gate's
- * L2-f) - and its slice twin, the last field dropped with its removal named. A later cut table therefore owes the anchor case
- * no edit. The earlier tables stand because the receipt is append-only (standing rule 15: the lane and the gate's IDENTIFY step
- * refuse a removed receipt line). Non-claim: the chain is the cut tables of the one file RECEIPT_PATH names (its "What binds
- * here" line names this census back); a pointer moved to another receipt file is an edit of that literal, which this anchor
- * does not see.
+ * L2-f) - and its slice twin, the last field dropped with its removal named. Over those five a later cut table owes the
+ * anchor case no edit; that is not claimed for every table the grammar admits (wb-jusi, the wb-fed7 gate's F2: this sentence
+ * and the re-base case's title claimed it, and admitted worlds red the case). The plants need rows to draw and drop each drawn
+ * member by value, so a later table that leaves too few rows to draw, or lists a dropped member twice, reds the case: the
+ * LANDER OBLIGATIONS below. The earlier tables stand because the receipt is append-only (standing rule 15: the lane and the
+ * gate's IDENTIFY step refuse a removed receipt line). Non-claim: the chain is the cut tables of the one file RECEIPT_PATH
+ * names (its "What binds here" line names this census back); a pointer moved to another receipt file is an edit of that
+ * literal, which this anchor does not see.
+ * LANDER OBLIGATIONS (wb-jusi: the wb-fed7 gate's worlds X1-X3 and X3's slice twin, measured by this cut; the lander
+ * obligations case builds each as a later receipt the grammar admits, re-based as the re-base case's are, and pins how it
+ * reds the receipt-anchor case beside its nearest admitted receipt, over which every control reads as live; a cut that
+ * writes such a table re-bases the plants in the same commit): L1 THIN-PINS a latest pin table of fewer than two rows (X1:
+ * one pin kept, every other removal named) and L2 EMPTY-SLICE an empty latest slice table (X2: every field's removal named)
+ * leave the plants too few rows - each throws "the latest tables hold too few rows to plant from" (two pins, or one field,
+ * read as live); L3 TWICE-MIDDLE a latest pin table whose middle row - the pin the plants drop - appears twice (X3: B5 listed
+ * twice) and L4 TWICE-LAST a latest slice table whose last row - the field the plants drop - appears twice: the drop takes
+ * both copies, so the case reds (pinned: the copy right after its member, every control reading as live and the kept rows
+ * two short of the table); a copy of the first pin, or of the first field, reads as live.
  * RESIDUALS (named, each with a pinned quiet row): R-UNSHIPPED-FIELDS rf states no sensitivity and no coverage digest at the pin,
  * so Pi has none to read or key on (Q1); R-ALIASED-PAYLOAD a payload bound to a local name before it is hashed or keyed is
  * invisible to the B3/B4 text-of-argument scans (Q2). Its backstop is bounded (wb-l4q7 narrows it, the o4h0.1 gate's F1): B2's
@@ -94,7 +107,8 @@
  * table, so such a heading can neither re-point the anchor nor hide a drop (the receipt-anchor case's quiet controls each read
  * ok and bind the latest pin table whole; its closed control, the pointer moved to the cut such a heading renders, reads latest).
  *
- * Display paths added: none. Test-only: no scratch, no spawn; src, the fixtures and the store export are only read.
+ * Display paths added: none. Test-only: no scratch, no spawn; src, the fixtures, the store export and this file's own header
+ * are only read.
  */
 import { type Dirent, readdirSync, readFileSync } from "node:fs";
 import { basename, dirname, join, relative } from "node:path";
@@ -660,7 +674,7 @@ type CutRefusal = (typeof CUT_REFUSALS)[number];
 /** A family's verdict over one receipt text: the rows of the table the census binds, or the refusal. */
 type CutVerdict = { readonly ok: true; readonly rows: readonly (readonly string[])[] } | { readonly ok: false; readonly code: CutRefusal; readonly why: string };
 const BEAD_TOKEN = RECEIPT_BEAD.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-/** A heading that names a cut of this receipt, in any spelling: each one must be a cut table the census binds. */
+/** A heading whose text reads the bead token, then only non-word characters, then "cut", in any case: each must spell a cut table the census binds, or the chain refuses it (a cut named any other way is R-CUT-SPELLING). */
 const CUT_MENTION = new RegExp(`${BEAD_TOKEN}\\W*cut`, "i");
 const CUT_HEADING = new RegExp(`^(.+?)( removed)?, ${BEAD_TOKEN} cut ([1-9][0-9]*)$`);
 interface CutTable {
@@ -810,8 +824,9 @@ function boundRows(world: AnchorWorld, family: ReceiptFamily): readonly (readonl
  * cut would write; nothing is written. wb-fed7 (the wb-bqnj gate's F2, a forward contact: the plants hard-coded cut 2, cut 3
  * and the cut-1 parents): every plant re-bases on the receipt it is planted on. Each family's next cut numbers and the planted
  * entry's parents come from its latest cut, the renumbered heading from its first, and the members from the latest tables
- * (the middle pin - B5 at cut 1 - and the pin before it; the last field - the tsx_sdk note at cut 1), so a later cut table the
- * grammar admits owes these controls no edit.
+ * (the middle pin - B5 at cut 1 - and the pin before it; the last field - the tsx_sdk note at cut 1), so a later cut table
+ * owes these controls no edit unless it leaves too few rows to draw or lists a dropped member twice (wb-jusi: the header's
+ * LANDER OBLIGATIONS, pinned by the lander obligations case).
  */
 function anchorControls(world: AnchorWorld): AnchorReading {
   const real = world.receipt;
@@ -957,6 +972,72 @@ function laterWorlds(live: AnchorWorld): readonly (readonly [string, AnchorWorld
     ["L2-f: the middle pin dropped, its removal named with a reason, every field restated", { receipt: later(pinTable(pins.filter(row => !same(row, middle))), removal(PIN_FAMILY, pinCut, middle), sliceTable(fields)), ...both }],
     ["the last field dropped, its removal named with a reason, every pin restated", { receipt: later(pinTable(pins), sliceTable(fields.filter(row => !same(row, lastField))), removal(SLICE_FAMILY, sliceCut, lastField)), ...both }],
   ];
+}
+
+/** Spelled counts for the re-base case's title (wb-jusi): the title counts the later receipts the case builds. */
+const COUNT_WORDS: readonly string[] = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+type Rows = readonly (readonly string[])[];
+/**
+ * wb-jusi (the wb-fed7 gate's F2): a lander obligation of the receipt-anchor case - a later receipt the grammar admits that
+ * reds the case, how it reds, and the nearest admitted receipt over which every control still reads as it reads live.
+ */
+interface LanderObligation {
+  readonly id: string;
+  readonly red: AnchorWorld;
+  /** The plants find too few rows to draw from, or the drop takes both copies of its member and a kept-row length falls short. */
+  readonly reds: "too few rows" | "kept pins" | "kept fields";
+  readonly edge: AnchorWorld;
+}
+/**
+ * wb-jusi (the wb-fed7 gate's F2, its worlds X1-X3, and X3's slice twin, measured by this cut): the header's LANDER
+ * OBLIGATIONS, in order. Each receipt is built as laterWorlds builds its own - the next cuts and their parents from the live
+ * receipt's latest cuts, the rows from its latest tables - and its moved pointer binds the receipt's latest table.
+ */
+function landerObligations(live: AnchorWorld): readonly LanderObligation[] {
+  const pins = boundRows(live, live.pins);
+  const fields = boundRows(live, live.slices);
+  const latestPin = lastOf(spelledCuts(live.receipt, PIN_FAMILY), `the receipt's "${PIN_FAMILY.stem}" cut tables`);
+  const latestSlice = lastOf(spelledCuts(live.receipt, SLICE_FAMILY), `the receipt's "${SLICE_FAMILY.stem}" cut tables`);
+  const [title = ""] = latestPin.parents;
+  const entry = "a later cut of this receipt";
+  const pinCut = latestPin.cut + 1;
+  const sliceCut = latestSlice.cut + 1;
+  const later = (...sections: readonly string[]): string => withEntries(live.receipt, receiptEntry(entry, ...sections));
+  const removals = (family: ReceiptFamily, cut: number, rows: Rows): string =>
+    receiptSection(cutHeading(family, cut, true), receiptGrid(removalHeader(family), rows.map(row => [...row, "a later cut drops it"])));
+  const pinWorld = (rows: Rows, ...extra: readonly string[]): AnchorWorld => ({
+    receipt: later(receiptSection(cutHeading(PIN_FAMILY, pinCut), receiptGrid(PIN_HEADER, rows)), ...extra),
+    pins: { ...PIN_FAMILY, bound: cutHeading(PIN_FAMILY, pinCut), parents: [title, entry] },
+    slices: live.slices,
+  });
+  const sliceWorld = (rows: Rows, ...extra: readonly string[]): AnchorWorld => ({
+    receipt: later(receiptSection(cutHeading(SLICE_FAMILY, sliceCut), receiptGrid(SLICE_HEADER, rows)), ...extra),
+    pins: live.pins,
+    slices: { ...SLICE_FAMILY, bound: cutHeading(SLICE_FAMILY, sliceCut), parents: [title, entry] },
+  });
+  // The row at `at` listed twice, its copy right after it, so a middle row keeps the middle position at either parity.
+  const twice = (rows: Rows, at: number): Rows => [...rows.slice(0, at + 1), ...rows.slice(at, at + 1), ...rows.slice(at + 1)];
+  return [
+    { id: "L1 THIN-PINS", red: pinWorld(pins.slice(0, 1), removals(PIN_FAMILY, pinCut, pins.slice(1))), reds: "too few rows", edge: pinWorld(pins.slice(0, 2), removals(PIN_FAMILY, pinCut, pins.slice(2))) },
+    { id: "L2 EMPTY-SLICE", red: sliceWorld([], removals(SLICE_FAMILY, sliceCut, fields)), reds: "too few rows", edge: sliceWorld(fields.slice(0, 1), removals(SLICE_FAMILY, sliceCut, fields.slice(1))) },
+    { id: "L3 TWICE-MIDDLE", red: pinWorld(twice(pins, Math.floor(pins.length / 2))), reds: "kept pins", edge: pinWorld(twice(pins, 0)) },
+    { id: "L4 TWICE-LAST", red: sliceWorld(twice(fields, fields.length - 1)), reds: "kept fields", edge: sliceWorld(twice(fields, 0)) },
+  ];
+}
+/**
+ * This file's own LANDER OBLIGATIONS, as `L<n> <NAME>` in order: read from its header comment only (never from code that
+ * spells the list's opening), between that opening and the RESIDUALS list, comment line breaks read as spaces.
+ */
+function headerObligations(): string[] {
+  const text = readFileSync(fileURLToPath(import.meta.url), "utf8");
+  const close = text.indexOf("*/");
+  if (close < 0) throw new Error("this file has no header comment");
+  const header = text.slice(0, close);
+  const start = header.indexOf(" * LANDER OBLIGATIONS (");
+  const end = header.indexOf(" * RESIDUALS (", start);
+  if (start < 0 || end < 0) throw new Error("this file's header holds no LANDER OBLIGATIONS list before its RESIDUALS");
+  const block = header.slice(start, end).replace(/\n \*\s*/g, " ");
+  return [...block.matchAll(/\bL(\d+) ([A-Z]+(?:-[A-Z]+)+)\b/g)].map(match => `L${match[1]} ${match[2]}`);
 }
 
 /** The parts of the projections that differ: snapshot keys, the relations, the diagnostics, the native evidence. */
@@ -1680,9 +1761,12 @@ describe("wb-o4h0.1 rf observation cache-key census (RF-FEDERATED-WORKSPACES-R1)
     expectAnchor(anchorControls(liveWorld()), "the live receipt");
   });
 
-  it("the receipt anchor re-bases (wb-fed7, the wb-bqnj gate's F2): over each receipt a later cut the grammar admits leaves, every planted control reads as it reads over the live receipt", () => {
+  it("the receipt anchor re-bases (wb-fed7, the wb-bqnj gate's F2): over each of five later receipts - both tables restated, either table alone, the middle pin or the last field dropped with its removal named - every planted control reads as it reads over the live receipt", ({ task }) => {
     const live = liveWorld();
     const worlds = laterWorlds(live);
+    // wb-jusi (the wb-fed7 gate's F2): the title claims the receipts built here, never every receipt the grammar admits; the
+    // admitted receipts that red the case are the lander obligations (the next case).
+    expect(task.name, "the title counts the later receipts this case builds").toContain(`over each of ${COUNT_WORDS[worlds.length] ?? String(worlds.length)} later receipts`);
     // Each later receipt is one the grammar admits: its latest cuts climb past the live ones, and its moved pointers bind its
     // latest tables, read whole or less the named pin.
     const cutOfLatest = (world: AnchorWorld, family: ReceiptFamily): number => lastOf(spelledCuts(world.receipt, family), family.stem).cut;
@@ -1707,6 +1791,42 @@ describe("wb-o4h0.1 rf observation cache-key census (RF-FEDERATED-WORKSPACES-R1)
       [pins, fields.filter(row => !same(row, lastField))],
     ]);
     for (const [name, world] of worlds) expectAnchor(anchorControls(world), name);
+  });
+
+  it("the receipt anchor's lander obligations (wb-jusi, the wb-fed7 gate's F2): each later receipt the grammar admits that reds the case reds it as the header says, beside its nearest admitted receipt that reads as live, and the header names exactly these", { timeout: 60_000 }, () => {
+    const live = liveWorld();
+    const pins = boundRows(live, live.pins);
+    const fields = boundRows(live, live.slices);
+    const obligations = landerObligations(live);
+    // Each receipt is one the grammar admits: both pointers bind, the moved one the obligation's latest table (pins/fields read).
+    const sizes = (world: AnchorWorld): string => `${boundRows(world, world.pins).length}/${boundRows(world, world.slices).length}`;
+    expect(obligations.map(({ id, red, edge }) => [id, sizes(red), sizes(edge)])).toStrictEqual([
+      ["L1 THIN-PINS", `1/${fields.length}`, `2/${fields.length}`],
+      ["L2 EMPTY-SLICE", `${pins.length}/0`, `${pins.length}/1`],
+      ["L3 TWICE-MIDDLE", `${pins.length + 1}/${fields.length}`, `${pins.length + 1}/${fields.length}`],
+      ["L4 TWICE-LAST", `${pins.length}/${fields.length + 1}`, `${pins.length}/${fields.length + 1}`],
+    ]);
+    const middle = pins[Math.floor(pins.length / 2)];
+    const lastField = fields[fields.length - 1];
+    for (const { id, red, reds, edge } of obligations) {
+      // The nearest admitted receipt: the case holds over it whole.
+      expectAnchor(anchorControls(edge), `${id}, the nearest admitted receipt`);
+      if (reds === "too few rows") {
+        expect(() => anchorControls(red), id).toThrow("the latest tables hold too few rows to plant from");
+        continue;
+      }
+      // Every control still reads as live, but the drop is by value: it takes both copies of the planted member, so the kept
+      // rows fall two short of the table and the case reds at its kept-row length.
+      const reading = anchorControls(red);
+      expect(reading.controls.map(([name, , verdict]) => `${name}: ${verdict.ok ? "ok" : verdict.code}`), id).toEqual([...ANCHOR_READINGS]);
+      const pinDrop = reds === "kept pins";
+      const table = pinDrop ? reading.pins : reading.fields;
+      const kept = pinDrop ? reading.keptPins : reading.keptFields;
+      expect(table.filter(row => same(row, pinDrop ? middle : lastField)), `${id}: the planted member is listed twice`).toHaveLength(2);
+      expect(kept, id).toHaveLength(table.length - 2);
+      expect(() => expectAnchor(reading, id), id).toThrow(`to have a length of ${table.length - 1} but got ${table.length - 2}`);
+    }
+    expect(headerObligations(), "the header's LANDER OBLIGATIONS: exactly these, in order").toStrictEqual(obligations.map(({ id }) => id));
   });
 
   for (const row of ROWS) {

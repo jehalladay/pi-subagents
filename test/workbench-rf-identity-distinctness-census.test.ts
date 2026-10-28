@@ -69,37 +69,49 @@
  * viewReaders, viewDetached, recordReadOnly and viewNarrowedInPlace (the view, its clone, its digest and its record);
  * walkNarrowed, listingNarrowed, srcListingNarrowed, newRoot and rootDropped (the walk's anchor); and, in the records case
  * after every judge recorded, a constructed empty view recorded as its own digest and not A1's (the view record itself).
- * THE GUARDS' SWEEPS (wb-yvoa F1: each guard's constructed controls above exercise one representative - one module, one
- * reading field - so a guard hollowed partially past them, beside the shared-site edit it hides, survived): each of the three
- * guards is also held to every module of A1's view by its sweep, each module alone and every module at once. walkSweep (the
- * walk anchor): every walked module left out of the walk is unwalked and left out of Git's listing is unlisted, every root file
- * of the tsconfig.json program left out of the walk is programUnwalked, every walk root held unjudged is an outside root, and an
+ * THE GUARDS' SWEEPS (wb-yvoa F1: each guard's constructed controls above exercise one representative - one module, one reading
+ * field - so a guard hollowed partially past them, beside the shared-site edit it hides, survived): each of the three guards is
+ * also held to every module of A1's view by its sweep, each module alone and every module at once. walkSweep (the walk anchor):
+ * every walked module left out of the walk is unwalked and left out of Git's listing is unlisted, every root file of the
+ * tsconfig.json program left out of the walk is programUnwalked, every walk root held unjudged is an outside root, and an
  * emptied walk or listing reads every module. anchorSweep (A1's judged anchor, over one-module trees and over the whole view):
- * every module left out of a view is unjudged, read from another text is misread, altered in any one reading field is reread,
- * and misstated in its READER standing is in the readers finding. digestSweep (the view digest): every module's one-module view
- * digests apart from the empty view, under another key, with any one reading field altered and as a readers entry, and the
- * whole view digests apart with any one reading field altered in every module. Every reading field is swept: FIELD_ALTERATIONS
- * gives each field of ModuleReading an alteration (its mapped type names every field, so a field added without one does not
- * type-check), and each swept reading's own keys are held to READING_FIELDS. A1 holds every sweep empty, so a guard blind,
- * whatever its input, to one reading field (for every module or below one directory) or to the modules below one directory
- * reds alone - wb-yvoa F1's partial hollows: the digest blind to members, to literals or below src/workbench/hosts, the reread
- * comparing identifiers only, and the walk anchor blind below src/workbench/hosts. Each sweep's own constructed controls keep
- * it live: run against a partial guard - the gate's measured shapes, constructed - it finds it: a digest blind to members
- * (digestMembersBlind) or to literals (digestLiteralsBlind), an anchor rereading identifiers only (anchorIdentifiersOnly), and
- * a digest, a judged anchor and a walk anchor blind below RUNTIME's directory (digestDirectoryBlind, anchorDirectoryBlind,
- * walkDirectoryBlind); each control sweeps a sample of A1's view (the modules below RUNTIME's directory, the READERS and the
- * first module of each walk root), the walk controls a sample walk of those modules with Git's listing and the program held to
- * them.
- * THE F1 CLASS, ENUMERATED (wb-mzoc cut #3, the rule 19(c) enumerate-the-resolvable form; wb-yvoa adds the guards' sweeps): a
- * judged module set narrowed, or a judged module misread, while the floors hold. PINNED, and nothing broader: the walk held to
- * Git's listing and the tsconfig.json program (A1 walk); A1's view held to the walk, to Git's blob ids, to the compiler's own
- * readings and to its own READER reading (A1 judged); every tree judge's view, as it stands at the end of its case, held to A1's
- * anchored view (A4, B1, C1 and D1 viewHeld; the record's view digests); and each of those three guards held, by its sweep, to
- * every module of A1's view and every reading field, one module at a time and every module at once (A1 sweeps), so a guard
- * blind, whatever its input, to a reading field or to the modules below a directory reds alone, with or without the shared-site
- * edit it would hide (a guard blind only on inputs no sweep builds is R-GUARD-CONDITIONED).
+ * every module left out of a view is unjudged, read from another text is misread, altered in any one reading field or with any
+ * one list field's first entry substituted is reread, and misstated in its READER standing is in the readers finding.
+ * digestSweep (the view digest): every module's one-module view digests apart from the empty view, under another key, with any
+ * one reading field altered, with any one list field's first entry substituted and as a readers entry, and the whole view
+ * digests apart with any one reading field altered, or any one list field's first entry substituted, in every module. Every
+ * reading field is swept: FIELD_ALTERATIONS gives each field of ModuleReading an alteration (its mapped type names every field,
+ * so a field added without one does not type-check), and each swept reading's own keys are held to READING_FIELDS. Every list
+ * field is swept at its cardinality too (wb-iy1n F1: each alteration appends to a list or raises a count, so a digest and a
+ * reread reading only how many entries each list holds - the gate's H-DIGEST-CARDINALITY and H-REREAD-CARDINALITY, beside a
+ * shared-site edit swapping one literal for another - moved with every alteration and survived): FIELD_SUBSTITUTIONS replaces
+ * each list field's first entry with the entry its alteration appends, the list's length kept (an empty list gains it), and its
+ * mapped type names every list field of ModuleReading (LIST_FIELDS), so a list field added without one does not type-check. A1
+ * holds every sweep empty, so a guard blind, whatever its input, to one reading field or to a list field's first entry (for
+ * every module or below one directory) or to the modules below one directory reds alone - wb-yvoa F1's partial hollows: the
+ * digest blind to members, to literals or below src/workbench/hosts, the reread comparing identifiers only, and the walk anchor
+ * blind below src/workbench/hosts; and wb-iy1n F1's digest and reread reading each list's cardinality only. Each sweep's own
+ * constructed controls keep it live: run against a partial guard - the gate's measured shapes, constructed - it finds it: a
+ * digest blind to members (digestMembersBlind) or to literals (digestLiteralsBlind), an anchor rereading identifiers only
+ * (anchorIdentifiersOnly), a digest, a judged anchor and a walk anchor blind below RUNTIME's directory (digestDirectoryBlind,
+ * anchorDirectoryBlind, walkDirectoryBlind), and a digest and a judged anchor reading each list's cardinality only
+ * (digestCardinalityOnly, anchorCardinalityOnly); each control sweeps a sample of A1's view (the modules below RUNTIME's
+ * directory, the READERS and the first module of each walk root), the walk controls a sample walk of those modules with Git's
+ * listing and the program held to them.
+ * THE F1 CLASS, ENUMERATED (wb-mzoc cut #3, the rule 19(c) enumerate-the-resolvable form; wb-yvoa adds the guards' sweeps,
+ * wb-iy1n their same-cardinality substitutions): a judged module set narrowed, or a judged module misread, while the floors
+ * hold. PINNED, and nothing broader: the walk held to Git's listing and the tsconfig.json program (A1 walk); A1's view held to
+ * the walk, to Git's blob ids, to the compiler's own readings and to its own READER reading (A1 judged); every tree judge's
+ * view, as it stands at the end of its case, held to A1's anchored view (A4, B1, C1 and D1 viewHeld; the record's view
+ * digests); and each of those three guards held, by its sweep, to every module of A1's view and every reading field, each list
+ * field's first entry substituted as well as appended to, one module at a time and every module at once (A1 sweeps), so a guard
+ * blind, whatever its input, to a reading field, to a list field's first entry or to the modules below a directory reds alone,
+ * with or without the shared-site edit it would hide. A guard blind only on inputs no sweep builds is not claimed found: its
+ * named shapes are the residuals R-GUARD-CONDITIONED (an input shape), R-GUARD-CONTENT (a word), R-GUARD-ENTRY (an entry past a
+ * list's first, or one part of an entry) and R-GUARD-TIMED (a time its sweep does not run at).
  * RESIDUALS of the class, each a named family with pinned quiet rows (see RESIDUALS): R-PIN-LOCAL, R-CO-NARROWED, R-ROOT-MOVED,
- * R-GUARD-CONDITIONED and R-ANCHOR-SOURCE. No other member of the class is claimed absent.
+ * R-GUARD-CONDITIONED, R-GUARD-CONTENT, R-GUARD-ENTRY, R-GUARD-TIMED and R-ANCHOR-SOURCE. No other member of the class is
+ * claimed absent.
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label):
  *  A, acceptance (a) and the first posture fact. A1 the readers' identity table: which rf identity names each READER spells
  *    (exactly the measured sets; the filing's "Pi's own render_id / transaction_id / bundle_revision_id reads" among them),
@@ -150,12 +162,16 @@
  * of 1 or more, a non-empty list, a ratio with a read) - so a positive control zeroed in this file and the roster together
  * still reds (X-WITNESS).
  * FROZEN VOCABULARIES (wb-yvoa F2: the shared site splicing render_ref out of RENDER_MEMBERS on its second call hid a
- * render_ref member from C1, whose controls spelled four of the five members): every module-scope constant a judge reads - the
- * walk's and the anchors' vocabularies, the identity vocabularies and patterns, the residual and quiet-row tables, ROWS, ROSTER,
- * VOCABULARY and the sweeps' field table - is frozen deep where it is bound (FROZEN; the judged-set case holds each one frozen
- * and their names to the roster's scan.frozen), so a run-time edit of one throws where it runs; and C1's positive controls
- * declare every RENDER_MEMBERS spelling, render_ref included (referenceMember), their spellings held to the roster's
- * renderMembers, so a spelling dropped at run time also reds its own control.
+ * render_ref member from C1, whose controls spelled four of the five members): the constants FROZEN names - the walk's and the
+ * anchors' vocabularies, the identity vocabularies and patterns, the residual and quiet-row tables, the fixture host context
+ * HOST and operation reference OPERATION_REF (wb-iy1n F2: A2-A4, B2, C2 and D2 read them, and they were left unfrozen),
+ * VALUE_NAMES, ROWS, ROSTER, VOCABULARY, the sweeps' field tables and the cases table IMPL - are frozen deep where they are
+ * bound (the judged-set case holds each one frozen and their names to the roster's scan.frozen), so a run-time edit of one
+ * throws where it runs. Every other module-scope constant holding a list, a record or a pattern is one of the run's own
+ * records, written as the cases run (VIEWS, each entry once and read-only; REACHED, MEASURED and COUNTED; the stub list), or
+ * FROZEN itself, frozen shallow; and C1's positive controls declare every RENDER_MEMBERS spelling, render_ref included
+ * (referenceMember), their spellings held to the roster's renderMembers, so a spelling dropped at run time also reds its own
+ * control.
  * RESIDUALS (named families, each with pinned quiet rows: QUIET_ROWS for the controls, the judged-set case for R-PIN-HOLLOW):
  * R-COMPOSED a name, prefix or pattern composed at run time (A1 composedName, B1 composedField, D1 composedPrefix); R-COMMENT a
  * comment naming one (A1, B1, D1 comment); R-ALIAS document text read through an alias of the output object outside the
@@ -181,7 +197,24 @@
  * modules are off (the digest: on a view of two or more modules) - the shape of a narrowing below one directory, since each
  * sweep reads one module or all of them (quiet rows A1.digestConditioned, A1.anchorConditioned and A1.walkConditioned: each
  * sweep, run against such a guard, finds nothing, beside the positive digestDirectoryBlind, anchorDirectoryBlind and
- * walkDirectoryBlind: the same guards unconditioned are found); R-ANCHOR-SOURCE (wb-yvoa) an outside anchor's own source served
+ * walkDirectoryBlind: the same guards unconditioned are found); R-GUARD-CONTENT (wb-iy1n F1, the gate's L3 and L4) a guard
+ * partial only on content no sweep writes and no module holds - blind to the entries or the paths that spell one word: the
+ * render prefix, a (b)-family name, a plant's path - since every sweep writes ALTERED and walks the modules present, never a
+ * plant's own content (quiet rows A1.digestContentConditioned, A1.anchorContentConditioned and A1.walkContentConditioned: each
+ * sweep, run against a digest dropping the literals that spell the render prefix, a judged anchor dropping before its reread
+ * the literals that spell a (b)-family name, or a walk anchor dropping a plant's path, finds nothing, beside the positive
+ * contentConditionedBlind: each of the three is blind to its plant); R-GUARD-ENTRY (wb-iy1n) a guard partial only on an entry
+ * no sweep alters alone - an entry past a list's first (a substitution replaces the first, an alteration only appends) or one
+ * part of an entry (a text read's use, a read's null comparison) (quiet rows A1.digestEntryConditioned and
+ * A1.anchorEntryConditioned: a digest and a reread reading each list's cardinality and first entry, A1.digestPartConditioned: a
+ * digest blind to each text read's use, A1.anchorPartConditioned: a reread blind to each read's null comparison; each sweep
+ * finds nothing, beside the positive entryConditionedBlind: each of the four is blind to its plant); R-GUARD-TIMED (wb-iy1n F1,
+ * the gate's L6) a guard partial only while its sweep is not running - the shared site, on a later call, narrowing what later
+ * judges read and rebinding a primitive the guard calls (JSON.stringify, so a narrowed view stringifies as the full one), or a
+ * guard partial on A1's own call and honest for its sweep's - since each sweep holds a guard at the time it runs (quiet rows
+ * A1.digestTimed, A1.anchorTimed and A1.walkTimed: each sweep, run against a guard honest while it sweeps and partial below
+ * RUNTIME's directory otherwise, finds nothing, beside the positive timedBlind: outside its sweep each of the three is blind);
+ * R-ANCHOR-SOURCE (wb-yvoa) an outside anchor's own source served
  * from the shared site - the compiler's second read (ownReadings, or the TypeScript compiler itself) or Git's blob ids - since
  * a guard and its sweep hold a reading to whatever its source returns, never to where it came from (quiet rows A1.sourceReread
  * and A1.sourceBlobs: the judged anchor fed the shared site's reading as its second read, or the reading's own blob id as
@@ -315,6 +348,9 @@ const QUIET_ROWS: Readonly<Record<string, readonly string[]>> = frozen({
   "R-ROOT-MOVED": ["A1.rootMoved"],
   "R-GUARD-CONDITIONED": ["A1.digestConditioned", "A1.anchorConditioned", "A1.walkConditioned"],
   "R-ANCHOR-SOURCE": ["A1.sourceReread", "A1.sourceBlobs"],
+  "R-GUARD-CONTENT": ["A1.digestContentConditioned", "A1.anchorContentConditioned", "A1.walkContentConditioned"],
+  "R-GUARD-ENTRY": ["A1.digestEntryConditioned", "A1.anchorEntryConditioned", "A1.digestPartConditioned", "A1.anchorPartConditioned"],
+  "R-GUARD-TIMED": ["A1.digestTimed", "A1.anchorTimed", "A1.walkTimed"],
 });
 /** The one quiet control that is no residual: a form the judge accepts (D1's sha256 digest of the document text). */
 const ACCEPTED_FORMS: readonly string[] = frozen(["D1.textDigest"]);
@@ -333,12 +369,13 @@ const ROOT = "/fixture/rf-workspace";
 const PI_ROOT = "/fixture/pi-workspace";
 const RF_ROOT = "/fixture/rf-root";
 const PRINCIPAL = "user:fixture";
-const HOST: ReactiveFiberTopologyContext = {
+/** The host context every topology call of the cases reads, frozen deep (wb-iy1n F2), so a run-time edit of it throws. */
+const HOST: ReactiveFiberTopologyContext = frozen({
   scope: { workspace: ROOT, principal: PRINCIPAL },
   seam: "rf-cli",
   capturedAt: "2026-10-23T00:00:00Z",
   observedAt: "2026-10-23T00:00:01Z",
-};
+});
 /** One obviously fake value per identity, each in its producer grammar and none a substring of another. */
 const body = (fill: string): string => fill.repeat(26);
 const OPERATION = `rfo_${body("o")}`;
@@ -360,7 +397,8 @@ const INSTANCE = `${CHILD}:main`;
 const FIRST_OCCURRENCE = `${INSTANCE}::required`;
 const SECOND_OCCURRENCE = `${FIRST_OCCURRENCE}::2`;
 const INVOCATION = "inv-fixture-1";
-const OPERATION_REF = { provider: "workflow", type: "node-call", id: "call-fixture-1", scope: ROOT };
+/** The invoking operation C2's host context names, frozen deep (wb-iy1n F2). */
+const OPERATION_REF = frozen({ provider: "workflow", type: "node-call", id: "call-fixture-1", scope: ROOT });
 /** Every fixture value by name, so a witness names the value it located instead of spelling it. */
 const VALUE_NAMES: Readonly<Record<string, string>> = frozen({
   OPERATION,
@@ -1023,6 +1061,24 @@ const FIELD_ALTERATIONS: { readonly [Field in keyof ModuleReading]: (reading: Mo
 });
 /** Every reading field the sweeps alter, in a reading's own key order; each swept reading's keys are held to it. */
 const READING_FIELDS: readonly (keyof ModuleReading)[] = frozen(Object.keys(FIELD_ALTERATIONS) as (keyof ModuleReading)[]);
+/** The list fields of a reading: every field whose value is a list (wb-iy1n F1). */
+type ListField = { readonly [Field in keyof ModuleReading]: ModuleReading[Field] extends readonly unknown[] ? Field : never }[keyof ModuleReading];
+/** One same-cardinality substitution per list field (wb-iy1n F1, the gate's L1 and L2): the list's first entry replaced by the
+ * entry FIELD_ALTERATIONS appends, its length kept (an empty list gains the entry), so a guard reading only how many entries
+ * each list holds - H-DIGEST-CARDINALITY, H-REREAD-CARDINALITY - moves under none of them and is found, where every alteration
+ * above changes a count. Its mapped type names every list field of ModuleReading, so a list field added without one does not
+ * type-check. */
+const FIELD_SUBSTITUTIONS: { readonly [Field in ListField]: (reading: ModuleReading) => ModuleReading } = frozen({
+  identifiers: reading => ({ ...reading, identifiers: [ALTERED, ...reading.identifiers.slice(1)] }),
+  literals: reading => ({ ...reading, literals: [ALTERED, ...reading.literals.slice(1)] }),
+  regexes: reading => ({ ...reading, regexes: [ALTERED, ...reading.regexes.slice(1)] }),
+  reads: reading => ({ ...reading, reads: [{ name: ALTERED, nullCompared: false }, ...reading.reads.slice(1)] }),
+  members: reading => ({ ...reading, members: [ALTERED, ...reading.members.slice(1)] }),
+  nullTypedMembers: reading => ({ ...reading, nullTypedMembers: [ALTERED, ...reading.nullTypedMembers.slice(1)] }),
+  textReads: reading => ({ ...reading, textReads: [{ object: ALTERED, use: "other" }, ...reading.textReads.slice(1)] }),
+});
+/** Every list field the sweeps substitute, in a reading's own key order. */
+const LIST_FIELDS: readonly ListField[] = frozen(Object.keys(FIELD_SUBSTITUTIONS) as ListField[]);
 /** A guard as its sweep runs it (wb-yvoa F1): the view digest, A1's judged anchor and the walk anchor, or a constructed partial
  * one (the sweeps' own controls). */
 type DigestGuard = (view: JudgedView) => string;
@@ -1032,8 +1088,9 @@ type WalkGuard = (tree: Pick<TreeReading, "walk" | "listing" | "program">, roots
 const samePaths = (found: readonly string[], expected: readonly string[]): boolean => JSON.stringify([...found].sort()) === JSON.stringify([...expected].sort());
 /** The digest's sweep (wb-yvoa F1): what a digest does not move with over every module of a view - alone, as a one-module view:
  * its keys not READING_FIELDS, its digest the empty view's, the same under another key, the same with any one reading field
- * altered, and the same as a readers entry - and over the whole view: the same with any one reading field altered in every
- * module at once. Empty for viewDigest; its own controls run it against partial digests. */
+ * altered or any one list field's first entry substituted (wb-iy1n F1), and the same as a readers entry - and over the whole
+ * view: the same with any one reading field altered, or any one list field's first entry substituted, in every module at once.
+ * Empty for viewDigest; its own controls run it against partial digests. */
 const digestSweep = (view: JudgedView, digest: DigestGuard = viewDigest): string[] => {
   const none = digest({ modules: new Map(), readers: [] });
   const one = (path: string, reading: ModuleReading): string => digest({ modules: new Map([[path, reading]]), readers: [] });
@@ -1047,16 +1104,19 @@ const digestSweep = (view: JudgedView, digest: DigestGuard = viewDigest): string
         ...(alone === none ? [`${path}: module`] : []),
         ...(one(`${path}/${ALTERED}`, reading) === alone ? [`${path}: key`] : []),
         ...READING_FIELDS.filter(field => one(path, FIELD_ALTERATIONS[field](reading)) === alone).map(field => `${path}: ${field}`),
+        ...LIST_FIELDS.filter(field => one(path, FIELD_SUBSTITUTIONS[field](reading)) === alone).map(field => `${path}: ${field} substituted`),
         ...(digest({ modules: new Map(), readers: [path] }) === none ? [`${path}: readers`] : []),
       ];
     }),
     ...READING_FIELDS.filter(field => digest(everyModule(FIELD_ALTERATIONS[field])) === whole).map(field => `every module: ${field}`),
+    ...LIST_FIELDS.filter(field => digest(everyModule(FIELD_SUBSTITUTIONS[field])) === whole).map(field => `every module: ${field} substituted`),
   ];
 };
 /** The judged anchor's sweep (wb-yvoa F1): what an anchor does not find over every module of a view - alone, as a one-module
  * tree, and every module at once: the modules left out of an empty view (unjudged), their blob ids another text's (misread),
- * any one reading field altered (reread), and their READER standing misstated - every non-reader listed, every reader left out
- * (readers). Empty for judgedAnchor; its own controls run it against partial anchors. */
+ * any one reading field altered or any one list field's first entry substituted (reread; wb-iy1n F1), and their READER
+ * standing misstated - every non-reader listed, every reader left out (readers). Empty for judgedAnchor; its own controls run
+ * it against partial anchors. */
 const anchorSweep = (tree: Pick<TreeReading, "walk" | "blobs">, view: JudgedView, own: ReadonlyMap<string, ModuleReading>, anchor: AnchorGuard = judgedAnchor): string[] => {
   const ownReader = (path: string): boolean => own.get(path)?.literals.includes(RENDER_COMMAND) === true;
   const on = (paths: readonly string[]): Pick<TreeReading, "walk" | "blobs"> => ({ ...tree, walk: { ...tree.walk, modules: [...paths] } });
@@ -1065,6 +1125,7 @@ const anchorSweep = (tree: Pick<TreeReading, "walk" | "blobs">, view: JudgedView
     ...(samePaths(anchor(on(paths), { modules: new Map(), readers: [] }, own).unjudged, paths) ? [] : [`${label}: unjudged`]),
     ...(samePaths(anchor(on(paths), altered(paths, FIELD_ALTERATIONS.textBlob), own).misread, paths) ? [] : [`${label}: misread`]),
     ...READING_FIELDS.filter(field => !samePaths(anchor(on(paths), altered(paths, FIELD_ALTERATIONS[field]), own).reread, paths)).map(field => `${label}: ${field}`),
+    ...LIST_FIELDS.filter(field => !samePaths(anchor(on(paths), altered(paths, FIELD_SUBSTITUTIONS[field]), own).reread, paths)).map(field => `${label}: ${field} substituted`),
     ...(samePaths(anchor(on(paths), { modules: new Map(paths.map(path => [path, readingOf(view, path)])), readers: paths.filter(path => !ownReader(path)) }, own).readers, paths) ? [] : [`${label}: readers`]),
   ];
   const paths = [...view.modules.keys()];
@@ -1323,8 +1384,9 @@ function registeredTests(current: Readonly<RunnerTestCase>): Registered[] {
   return walked;
 }
 
-/** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
-const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
+/** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. Frozen (wb-iy1n F2), so a case
+ * replaced at run time throws where it is replaced. */
+const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = frozen({
   A1: () => {
     const tree = liveTree();
     const view = viewOf(tree);
@@ -1466,6 +1528,100 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       // R-ANCHOR-SOURCE (wb-yvoa): the judged anchor fed the shared site's altered reading as its own second read, or a reading's
       // own blob id as Git's, finds nothing - beside alteredReading and otherText, where the real sources find them.
       const sharedReading = new Map([[RUNTIME, { ...runtimeReading, identifiers: [] }]]);
+      // wb-iy1n F1 (the gate's L1 and L2): a digest and a judged anchor reading each list's cardinality only - every entry
+      // blanked, its length, the counts and the blob id kept - move with every appending alteration, so only the sweeps'
+      // same-cardinality substitutions find them (digestCardinalityOnly, anchorCardinalityOnly).
+      const cardinalities = (reading: ModuleReading): ModuleReading => ({
+        ...reading,
+        identifiers: reading.identifiers.map(() => ""),
+        literals: reading.literals.map(() => ""),
+        regexes: reading.regexes.map(() => ""),
+        reads: reading.reads.map((): KeyRead => ({ name: "", nullCompared: false })),
+        members: reading.members.map(() => ""),
+        nullTypedMembers: reading.nullTypedMembers.map(() => ""),
+        textReads: reading.textReads.map((): TextRead => ({ object: "", use: "other" })),
+      });
+      const rereadBy =
+        (part: (reading: ModuleReading) => ModuleReading): AnchorGuard =>
+        (on, seen, readings) => ({
+          ...judgedAnchor(on, seen, readings),
+          reread: [...seen.modules]
+            .filter(([path, reading]) => {
+              const read = readings.get(path);
+              return read === undefined || JSON.stringify(part(reading)) !== JSON.stringify(part(read));
+            })
+            .map(([path]) => path),
+        });
+      const onRuntime = { ...tree, walk: { ...tree.walk, modules: [RUNTIME] } };
+      const onPlant = { ...tree, walk: { ...tree.walk, modules: [plant] } };
+      const viewOfOne = (path: string, reading: ModuleReading): JudgedView => ({ modules: new Map([[path, reading]]), readers: [] });
+      // R-GUARD-CONTENT (wb-iy1n F1, the gate's L3 and L4): a guard dropping the entries or paths that spell one word no module
+      // holds and no sweep writes - the render prefix, a (b)-family name, the plant's path - reads every sweep honest, and is
+      // blind to its plant (contentConditionedBlind).
+      const prefixDropped = fieldBlind(reading => ({ ...reading, literals: reading.literals.filter(value => !value.includes(RENDER_PREFIX)) }));
+      const bFamilyDropped = rereadBy(reading => ({ ...reading, literals: reading.literals.filter(value => !B_WORD.test(value)) }));
+      const plantDropped = walkNarrowedBy(paths => paths.filter(path => path !== plant));
+      const withLiteral = (reading: ModuleReading, value: string): ModuleReading => ({ ...reading, literals: [...reading.literals, value] });
+      const contentBlind = {
+        digest: prefixDropped(viewOfOne(RUNTIME, withLiteral(runtimeReading, RENDER_PREFIX))) === prefixDropped(runtimeView),
+        anchor: bFamilyDropped(onRuntime, viewOfOne(RUNTIME, withLiteral(runtimeReading, "result.blocks[0].candidate_key")), own).reread.length === 0,
+        walk: walkFinds(plantDropped(reshaped(walked, [...tree.listing, plant], tree.program))) === 0,
+      };
+      // R-GUARD-ENTRY (wb-iy1n): a guard blind to an entry no sweep alters alone - every entry past a list's first, or one part
+      // of an entry (a text read's use, a read's null comparison) - reads every sweep honest, and is blind to its plant
+      // (entryConditionedBlind).
+      const firstEntries = (reading: ModuleReading): ModuleReading => {
+        const blank = cardinalities(reading);
+        const first = <Entry>(values: readonly Entry[], blanked: readonly Entry[]): Entry[] => [...values.slice(0, 1), ...blanked.slice(1)];
+        return {
+          ...reading,
+          identifiers: first(reading.identifiers, blank.identifiers),
+          literals: first(reading.literals, blank.literals),
+          regexes: first(reading.regexes, blank.regexes),
+          reads: first(reading.reads, blank.reads),
+          members: first(reading.members, blank.members),
+          nullTypedMembers: first(reading.nullTypedMembers, blank.nullTypedMembers),
+          textReads: first(reading.textReads, blank.textReads),
+        };
+      };
+      const useBlind = fieldBlind(reading => ({ ...reading, textReads: reading.textReads.map((read): TextRead => ({ object: read.object, use: "other" })) }));
+      const nullBlind = rereadBy(reading => ({ ...reading, reads: reading.reads.map((read): KeyRead => ({ name: read.name, nullCompared: false })) }));
+      const lastReplaced: ModuleReading = { ...runtimeReading, literals: [...runtimeReading.literals.slice(0, -1), ALTERED] };
+      const textSnippet = snippet("const parts = output.text.split(marker);\n");
+      const nullSnippet = snippet("if (result.render_id !== null) throw refused();\n");
+      const entryBlind = {
+        digestEntry: fieldBlind(firstEntries)(viewOfOne(RUNTIME, lastReplaced)) === fieldBlind(firstEntries)(runtimeView),
+        anchorEntry: rereadBy(firstEntries)(onRuntime, viewOfOne(RUNTIME, lastReplaced), own).reread.length === 0,
+        digestPart:
+          useBlind(viewOfOne(plant, { ...textSnippet, textReads: textSnippet.textReads.map((read): TextRead => ({ ...read, use: "typeof" })) })) === useBlind(viewOfOne(plant, textSnippet)),
+        anchorPart:
+          nullBlind(onPlant, viewOfOne(plant, { ...nullSnippet, reads: nullSnippet.reads.map((read): KeyRead => ({ ...read, nullCompared: !read.nullCompared })) }), new Map([[plant, nullSnippet]])).reread
+            .length === 0,
+      };
+      // R-GUARD-TIMED (wb-iy1n F1, the gate's L6): a guard honest only while its sweep runs - partial below RUNTIME's directory
+      // outside it, as the rebinding of JSON.stringify at the shared site's second call made the view digest for every later
+      // judge - reads every sweep honest, and outside the sweep is blind (timedBlind).
+      let sweeping = false;
+      const whileSwept = (sweep: () => string[]): string[] => {
+        sweeping = true;
+        try {
+          return sweep();
+        } finally {
+          sweeping = false;
+        }
+      };
+      const timedDigest: DigestGuard = seen => (sweeping ? viewDigest(seen) : directoryBlind(seen));
+      const timedAnchor: AnchorGuard = (on, seen, readings) => (sweeping ? judgedAnchor(on, seen, readings) : anchorNarrowed(outsideDirectory)(on, seen, readings));
+      const timedWalk: WalkGuard = (on, roots) => (sweeping ? walkAnchor(on, roots) : walkNarrowedBy(outsideDirectory)(on, roots));
+      const timedBlindness = {
+        digest: timedDigest({ modules: new Map([...sample.modules].filter(([path]) => !inDirectory(path))), readers: sample.readers }) === timedDigest(sample),
+        anchor: timedAnchor(onRuntime, { modules: new Map(), readers: [] }, own).unjudged.length === 0,
+        walk: walkFinds(timedWalk(reshaped(drop(walked, RUNTIME), tree.listing, tree.program))) === 0,
+      };
+      const blindGuards = (blind: { readonly [guard: string]: boolean }): string[] =>
+        Object.entries(blind)
+          .filter(([, isBlind]) => isBlind)
+          .map(([guard]) => guard);
       const controls = {
         propertyRead: ratio("const id = result.render_id;\n", "render_id"),
         nullCompare: ratio("if (result.render_id !== null) throw refused();\n", "render_id"),
@@ -1526,6 +1682,21 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
         sourceReread: judgedAnchor({ ...tree, walk: { ...tree.walk, modules: [RUNTIME] } }, { modules: sharedReading, readers: [] }, sharedReading).reread.length,
         sourceBlobs: judgedAnchor({ ...tree, walk: { ...tree.walk, modules: [RUNTIME] }, blobs: new Map([[RUNTIME, gitBlobOf("")]]) }, { modules: new Map([[RUNTIME, readModule(scriptKindOf(RUNTIME), "")]]), readers: [] })
           .misread.length,
+        digestCardinalityOnly: finds(digestSweep(sample, fieldBlind(cardinalities))),
+        anchorCardinalityOnly: finds(anchorSweep(sampleTree, sample, own, rereadBy(cardinalities))),
+        digestContentConditioned: finds(digestSweep(sample, prefixDropped)),
+        anchorContentConditioned: finds(anchorSweep(sampleTree, sample, own, bFamilyDropped)),
+        walkContentConditioned: finds(walkSweep(sampleWalk, plantDropped)),
+        contentConditionedBlind: blindGuards(contentBlind),
+        digestEntryConditioned: finds(digestSweep(sample, fieldBlind(firstEntries))),
+        anchorEntryConditioned: finds(anchorSweep(sampleTree, sample, own, rereadBy(firstEntries))),
+        digestPartConditioned: finds(digestSweep(sample, useBlind)),
+        anchorPartConditioned: finds(anchorSweep(sampleTree, sample, own, nullBlind)),
+        entryConditionedBlind: blindGuards(entryBlind),
+        digestTimed: finds(whileSwept(() => digestSweep(sample, timedDigest))),
+        anchorTimed: finds(whileSwept(() => anchorSweep(sampleTree, sample, own, timedAnchor))),
+        walkTimed: finds(whileSwept(() => walkSweep(sampleWalk, timedWalk))),
+        timedBlind: blindGuards(timedBlindness),
       };
       return done("A1", { modulesFloorMet, walk: json(walk), judged: json(judged), sweeps, readers: [...view.readers], table, nullOnly, nullTyped, prefixes, typedPrefixes, outside, shippedSpelled, controls });
     } finally {
@@ -1849,7 +2020,7 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     expect({ digestOnly, evidenceEqual }, "the payload reference is the digest of exactly the prose, and the evidence is unchanged").toStrictEqual({ digestOnly: true, evidenceEqual: true });
     return done("D2", { grammarMatch, delta, surfaced, digestOnly, evidenceEqual });
   },
-};
+});
 
 /** A4's static judge: 1 when a READER spells session_id. */
 function sessionInReadersOf(reading: ModuleReading): number {
@@ -1866,9 +2037,11 @@ function renderSpellingsOf(reading: ModuleReading): { identifiers: number; liter
   return { identifiers: reading.identifiers.filter(name => name === "render_id" || name === "renderId").length, literals: reading.literals.filter(value => word.test(value)).length };
 }
 
-/** Every module-scope constant a judge reads, by name (wb-yvoa F2): each is frozen deep where it is bound; the judged-set case
- * holds each one frozen and the names to the roster's scan.frozen. The map itself is frozen shallow, so the check reads each
- * binding's own freeze (a deep freeze here would freeze every member whatever its binding did). */
+/** The module-scope vocabularies, patterns, tables and fixture objects the cases read, and the cases table, by name (wb-yvoa F2;
+ * HOST, OPERATION_REF, FIELD_SUBSTITUTIONS, LIST_FIELDS and IMPL wb-iy1n): each is frozen deep where it is bound; the
+ * judged-set case holds each one frozen and the names to the roster's scan.frozen. The run's own records (VIEWS, REACHED,
+ * MEASURED, COUNTED, the stub list) are not named: the cases write them. The map itself is frozen shallow, so the check reads
+ * each binding's own freeze (a deep freeze here would freeze every member whatever its binding did). */
 const FROZEN: Readonly<Record<string, unknown>> = Object.freeze({
   WALK_ROOTS,
   MODULE_EXTENSIONS,
@@ -1890,6 +2063,8 @@ const FROZEN: Readonly<Record<string, unknown>> = Object.freeze({
   RESIDUAL_FAMILIES,
   TREE_JUDGES,
   RENDER_MEMBERS,
+  HOST,
+  OPERATION_REF,
   VALUE_NAMES,
   ROWS,
   ROSTER,
@@ -1901,6 +2076,9 @@ const FROZEN: Readonly<Record<string, unknown>> = Object.freeze({
   EQUALITY,
   FIELD_ALTERATIONS,
   READING_FIELDS,
+  FIELD_SUBSTITUTIONS,
+  LIST_FIELDS,
+  IMPL,
 });
 
 describe("wb-hs2j.7 rf typed identity distinctness census (RF-REACTIVE-CONTEXT-ASSEMBLY-R8)", () => {
@@ -1963,6 +2141,7 @@ describe("wb-hs2j.7 rf typed identity distinctness census (RF-REACTIVE-CONTEXT-A
         pinHollowMembers: PIN_HOLLOW_MEMBERS,
         treeJudges: TREE_JUDGES,
         readingFields: READING_FIELDS,
+        listFields: LIST_FIELDS,
         frozen: Object.keys(FROZEN),
         renderCommand: RENDER_COMMAND,
         capability: CAPABILITY,

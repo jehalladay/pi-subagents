@@ -60,7 +60,7 @@
     {
       "table": "TOUCHPOINTS",
       "id": "T-IDENTITIES",
-      "label": "gp's whole-document identity read as identities.graph: a member chain, an optional chain, an element access, a binding or assignment pattern, or a path string, slashed or dotted, as the whole string or at the start, inside or at the end of a longer path",
+      "label": "gp's whole-document identity read as identities.graph: a member chain, an optional chain, an element access, a binding or assignment pattern, or a path string, slashed or dotted, as the whole string or at the start, inside or at the end of a longer path, or a path in a template head, middle or tail or a template without substitutions",
       "pins": [
         "be2276f26ef75edcf7f7d06516a09f17da76f67e96188834a4f20298fbcbf2a5",
         "e1b04bff0ba7d1a5fc30848f4fc799d77e8f14c5521ce83b37102540f2631530",
@@ -75,7 +75,11 @@
         "4abaac6db7cb7b3f88d3d19d5a08d87b07b2eb677e34c09bff9b4bb5c6e4c2b6",
         "f82329cefe7bb9620115c7bdc7ccf728234514aa981ad69f6ec17a1adb6e2b45",
         "57719efdc296d88cb4b60d9dceb79e5d75a8a5f1cb07778e7c4f9b4a91a2b111",
-        "f3e4ef15a8f09eea4bf24363c62d632d4594153236170c9779a48a3f34dc66e5"
+        "f3e4ef15a8f09eea4bf24363c62d632d4594153236170c9779a48a3f34dc66e5",
+        "5cdf869c66c36547cd6ec9416fe027e910e65b893ed5b646d56f9de5e30ca001",
+        "160dd59e67a5c72e207d6a83739645f79aec3f32e9a1ddbbe6a8a3315921bccd",
+        "111c5279e4488c9e46a448b80c54006b869672f09438140e606ea48ecd5a9a94",
+        "60e8842daf8efed518ca486b7d53ad284b29bf4fc6bd9cca57548c2711530e35"
       ],
       "test": "TOUCHPOINTS T-IDENTITIES"
     },
@@ -93,13 +97,17 @@
     {
       "table": "TOUCHPOINTS",
       "id": "T-SHARED",
-      "label": "snapshotDigest, the name gp's journal and observation records give the join value, or its snake-case mirror, as a member, a private name, a binding or a string, whole or inside a dotted path",
+      "label": "snapshotDigest, the name gp's journal and observation records give the join value, or its snake-case mirror, as a member, a private name, a binding or a string, whole or inside a dotted path, or in a template head, middle or tail or a template without substitutions",
       "pins": [
         "27e50baccfdb108e66bb27f312cd7e58a978ae92ca02c34ae1512db6552a9d4d",
         "b06b070c233ac961512ead2cfac6f6aa62327de823ae8023ee06955d16fd0e87",
         "72c91c5ed5b417907ec504b5e134387dcd7e8221efb97abbdbc64e608f62e6a1",
         "e81f6fe954767e84e17fe004503aabc03b21119c8ae2b9c8a6d75039a49f25df",
-        "0b088c88cd964ce5850698c0cc0b1be4c008404c004ca6be2e8ff32e1b924d88"
+        "0b088c88cd964ce5850698c0cc0b1be4c008404c004ca6be2e8ff32e1b924d88",
+        "734bbb4be8feed12283681eabb99cecd154b9b965b502b7de272275b7735eeff",
+        "cf987a307b814be531f14c4a62ae65b4023548271ff95168a1bc8b10fd1c107e",
+        "08d494a3ec6c3de872ff0df633a0ca432ddeef8bb45bc1dc2e0c5aca566922d5",
+        "39e4df6d756b33087861337fd35e55434ef458b8f174eacc691c60ad5808fe78"
       ],
       "test": "TOUCHPOINTS T-SHARED"
     },
@@ -127,6 +135,34 @@
         "4baa2485baa84697e0c23b1f18ed3f0098a6bd43037937f50878e77f0ce487d4"
       ],
       "test": "CLEAN C-NEAR-NAMES"
+    },
+    {
+      "table": "CLEAN",
+      "id": "C-LONGER-NAMES",
+      "label": "a field or the shared name in text only inside a longer name: one ASCII word character of each class (a lower-case letter, an upper-case letter, a digit, _ and $) directly before it or directly after it, the other side a dot, so no occurrence stands as a whole word",
+      "pins": [
+        "0e5b1ecfd45163a257efea2d9b354a3c62ef8d646301c488d0532ee8fead4697",
+        "c64a1a924b2aa872028e0f2255f81073ed01e584c130199b4071e560014f949a",
+        "0175ed7fdc91b63d95d0578211c153df314e14fde1a460883687038ec1f8b591",
+        "f0b945989a67475c9868bb8e21c19ebde58b3cbc7985b54c38e787a78ef60a47",
+        "61e4429202fdc945c37bff30b6e311f5065dbf6ef4e802f309b2bc76e6a0798b",
+        "e3ff9a879047918153eb39848067a3058c2dc30cdc84c2346076eb584ca72767",
+        "27baaf9b797596b4f38d9b787980f8bbe054f3e17d80366b7780a7eb29a8b041",
+        "de3441a68ea2e174d4bcd9131905efc5f4177e50b17d09a3d40c1ecd15e9ed38",
+        "7b5401d151a60c8a4bd1d516d0d6ceb5f14cc2422f07361b906f1bdb6a6e884e",
+        "83b0d84b3c5f2c0a7feace0616daa8f5ca4d588a8e548ae8ad3587717cd11110",
+        "bb2dcf4f5e0beac25731bd955c9b08f926e11aa459458080fadd88be8230bbdd",
+        "f36a41bfba8c91b870556ddfa8435899493d35c621a7cd97c4fd6b8d8aa10231",
+        "14f754dbfdfed40b6bc0c443e9f561281987dc1738b906a0ff4138690fbd3cc5",
+        "950d9d78ffdc935d061f42e94c0d89f6c8257805e8e23c3badc9ad5a30cb62e9",
+        "40edc4c6d8dd82ee3019eea3aeffc05840cd0d48bdcacc8f9f07e6fc5242422a",
+        "0db83f52f72e34d89b5760306b7f01ba069cce7196a4fe3e3510de0fa9aa6711",
+        "09b711b6b7dd34408de9b244c2cb4c744ed49e0fc629daa03035bfe322e449ba",
+        "0ed894206bf8a09ae6a5f7e9e2c3b9370d2777e7703873377267df637c84c33d",
+        "ccf7c2e7007352d8b2996c1e6fe7c432ea80fe64e8afd938f927e6fb388114f7",
+        "c9f9903d0b650bce0d60c2b9f05aa90cf59a200efec73d6bcda3c427654e1a79"
+      ],
+      "test": "CLEAN C-LONGER-NAMES"
     },
     {
       "table": "CLEAN",
@@ -1023,6 +1059,7 @@
     "TOUCHPOINTS T-SHARED",
     "CLEAN C-PI-OWN",
     "CLEAN C-NEAR-NAMES",
+    "CLEAN C-LONGER-NAMES",
     "CLEAN C-COMMENT",
     "RESIDUALS R-COMPUTED",
     "RESIDUALS R-ALIASED",
