@@ -1,0 +1,802 @@
+{
+ "bead": "wb-pyel.3",
+ "rows": [
+  {
+   "id": "T",
+   "label": "If Pi-subagents adopts EDC context assembly",
+   "pins": [
+    "T1",
+    "T2"
+   ]
+  },
+  {
+   "id": "S1",
+   "label": "Pi as host shall carry demand ownership",
+   "pins": [
+    "S1a",
+    "S1b"
+   ]
+  },
+  {
+   "id": "S2",
+   "label": "treat assembly as pure context assembly only",
+   "pins": [
+    "S2a",
+    "S2b"
+   ]
+  },
+  {
+   "id": "S3",
+   "label": "never expecting or wiring the assembler to query providers, mint coverage or admit work",
+   "pins": [
+    "S3a",
+    "S3b",
+    "S3c"
+   ]
+  },
+  {
+   "id": "S4",
+   "label": "honoring the split: QuerySDK evaluates evidence, Lenses supplies source, Fiber publishes, Agents owns verification/inference, host owns demand",
+   "pins": [
+    "S4a",
+    "S4b",
+    "S4c",
+    "S4d",
+    "S4e",
+    "S4f"
+   ]
+  },
+  {
+   "id": "N",
+   "label": "a Pi EDC context-assembly consumer (none exists)",
+   "pins": [
+    "N1",
+    "N2"
+   ]
+  },
+  {
+   "id": "A1",
+   "label": "at adoption, docs/03 gains the EDC authority rows bound by the docs-census pattern",
+   "pins": [
+    "A1a",
+    "A1b",
+    "A1c"
+   ]
+  },
+  {
+   "id": "A2",
+   "label": "a falsifier shows the assembler seam performs no provider query, coverage mint or work admission",
+   "pins": [
+    "A2a",
+    "A2b"
+   ]
+  },
+  {
+   "id": "D1",
+   "label": "HyperUnix owns query completeness/coverage/bounds",
+   "pins": [
+    "D1"
+   ]
+  },
+  {
+   "id": "D2",
+   "label": "ReactiveFiberCLI owns context rendering/necessity/provenance",
+   "pins": [
+    "D2"
+   ]
+  },
+  {
+   "id": "D3",
+   "label": "a derived lens over native state, never a competing execution authority",
+   "pins": [
+    "D3"
+   ]
+  },
+  {
+   "id": "D4",
+   "label": "carries no EDC assembler/demand row",
+   "pins": [
+    "D4"
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the named residual families, each member a pinned quiet row",
+   "pins": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7"
+   ]
+  }
+ ],
+ "quotes": {
+  "T1": "If Pi-subagents adopts",
+  "T2": "EDC context assembly",
+  "S1a": "Pi as host shall carry",
+  "S1b": "demand ownership",
+  "S2a": "treat assembly as pure",
+  "S2b": "context assembly only",
+  "S3a": "never expecting",
+  "S3b": "or wiring the assembler",
+  "S3c": "to query providers, mint coverage or admit work",
+  "S4a": "honoring the split",
+  "S4b": "QuerySDK evaluates evidence",
+  "S4c": "Lenses supplies source",
+  "S4d": "Fiber publishes",
+  "S4e": "Agents owns verification/inference",
+  "S4f": "host owns demand",
+  "N1": "a Pi EDC context-assembly consumer",
+  "N2": "none exists",
+  "A1a": "at adoption",
+  "A1b": "docs/03 gains the EDC authority rows",
+  "A1c": "bound by the docs-census pattern",
+  "A2a": "a falsifier shows the assembler seam performs",
+  "A2b": "no provider query, coverage mint or work admission",
+  "D1": "HyperUnix owns query completeness/coverage/bounds",
+  "D2": "ReactiveFiberCLI owns context rendering/necessity/provenance",
+  "D3": "a derived lens over native state, never a competing execution authority",
+  "D4": "carries no EDC assembler/demand row",
+  "Q1": "R-SHARED-WORD",
+  "Q2": "R-COMPOSED",
+  "Q3": "R-COMMENT",
+  "Q4": "R-UNNAMED-SEAM",
+  "Q5": "R-UNMODELED-EFFECT",
+  "Q6": "R-OUTSIDE-SRC",
+  "Q7": "R-COORDINATED"
+ },
+ "cases": [
+  "C1=blocks=s1,s2;unmet=-",
+  "C2=blocks=s1;unmet=s3",
+  "C3=blocks=-;unmet=s4",
+  "C4=blocks=s5;unmet=-",
+  "C5=blocks=s1;unmet=-",
+  "C6=blocks=s2,s1;unmet=-",
+  "C7=blocks=s7;unmet=-",
+  "C8=blocks=-;unmet=-",
+  "C9=blocks=-;unmet=s8"
+ ],
+ "mutants": [
+  "M01:wire-provider-query:K-WIRING",
+  "M02:wire-coverage-mint:K-WIRING",
+  "M03:wire-work-admission:K-WIRING",
+  "M04:wire-publication:K-WIRING",
+  "M05:wire-verification:K-WIRING",
+  "M06:query-missing-evidence:K-EFFECT+K-SPLIT",
+  "M07:query-through-wired-port:K-WIRING+K-EFFECT+K-SPLIT",
+  "M08:mint-coverage:K-EFFECT",
+  "M09:admit-unmet-work:K-EFFECT",
+  "M10:publish-document:K-EFFECT",
+  "M11:verify-unknown:K-EFFECT+K-SPLIT",
+  "M12:widen-demand:K-DEMAND",
+  "M13:drop-unmet:K-DEMAND",
+  "M14:demand-from-evidence:K-DEMAND",
+  "M15:demand-owner-assembler:K-DEMAND",
+  "M16:evidence-order:K-DEMAND",
+  "M17:alternate-order:K-PURE",
+  "M18:mutate-input:K-PURE",
+  "M19:re-evaluate-unknown:K-SPLIT",
+  "M20:fabricate-source:K-SPLIT",
+  "M21:drop-provenance:K-SPLIT",
+  "M22:first-evidence-only:K-SPLIT",
+  "M23:every-subject-unmet:K-SPLIT",
+  "M24:empty-document:K-DEMAND+K-SPLIT"
+ ],
+ "residuals": {
+  "Q1": [
+   "assemble-reply",
+   "assembly-program",
+   "on-demand",
+   "coverage",
+   "admission",
+   "minted",
+   "provider-query"
+  ],
+  "Q2": [
+   "concatenation",
+   "joined-at-run-time",
+   "template-substitution",
+   "operator-split",
+   "homoglyph"
+  ],
+  "Q3": [
+   "line-comment",
+   "block-comment",
+   "doc-comment"
+  ],
+  "Q4": [
+   "unnamed-seam"
+  ],
+  "Q5": [
+   "outside-provider-call"
+  ],
+  "Q6": [
+   "test/workbench-edc-assembly-split-census.test.ts",
+   "test/fixtures/edc-assembly-split-roster.json",
+   "docs/workbench/03-architecture-and-ownership.md"
+  ],
+  "Q7": [
+   "pin",
+   "case",
+   "mutant",
+   "residual-member",
+   "control"
+  ]
+ },
+ "witnesses": {
+  "T1": {
+   "floor": true,
+   "unread": [],
+   "anchor": true,
+   "naming": [],
+   "gate": "CLOSED",
+   "planted": "OPEN",
+   "registered": "OPEN"
+  },
+  "T2": {
+   "camel identifier": [
+    "EDC",
+    "assembler"
+   ],
+   "acronym call": [
+    "EDC"
+   ],
+   "plural acronym": [
+    "EDC"
+   ],
+   "kebab string": [
+    "evidence directed"
+   ],
+   "upper snake": [
+    "evidence directed"
+   ],
+   "template part": [
+    "assembler"
+   ],
+   "full-width letters": [
+    "EDC"
+   ],
+   "format character inside": [
+    "EDC"
+   ],
+   "camel demand owner": [
+    "demand owner"
+   ],
+   "demand ownership": [
+    "demand owner"
+   ],
+   "regular expression": [
+    "assembler"
+   ],
+   "private name": [
+    "assembler"
+   ],
+   "module path": [
+    "EDC"
+   ],
+   "import specifier": [
+    "evidence directed"
+   ],
+   "near miss embedded": [],
+   "near miss reassembler": [],
+   "near miss assembly": [],
+   "near miss on demand": []
+  },
+  "S1a": {
+   "C1": "host:s1,s2",
+   "C2": "host:s1,s3",
+   "C3": "host:s4",
+   "C4": "host:s5",
+   "C5": "host:s1",
+   "C6": "host:s2,s1",
+   "C7": "host:s7",
+   "C8": "host:",
+   "C9": "host:s8"
+  },
+  "S1b": {
+   "reference": [],
+   "M12": [
+    "C5=demand:placed+order",
+    "C8=demand:placed+order"
+   ],
+   "M13": [
+    "C2=demand:placed",
+    "C3=demand:placed",
+    "C9=demand:placed"
+   ],
+   "M16": [
+    "C6=demand:order"
+   ]
+  },
+  "S2a": {
+   "reference": [],
+   "M17": [
+    "C1=impure:repeat",
+    "C6=impure:repeat"
+   ],
+   "M18": [
+    "C1=impure:input",
+    "C2=impure:input",
+    "C5=impure:input",
+    "C6=impure:input"
+   ]
+  },
+  "S2b": {
+   "documents": {
+    "C1": "blocks=s1,s2;unmet=-",
+    "C2": "blocks=s1;unmet=s3",
+    "C3": "blocks=-;unmet=s4",
+    "C4": "blocks=s5;unmet=-",
+    "C5": "blocks=s1;unmet=-",
+    "C6": "blocks=s2,s1;unmet=-",
+    "C7": "blocks=s7;unmet=-",
+    "C8": "blocks=-;unmet=-",
+    "C9": "blocks=-;unmet=s8"
+   },
+   "split": []
+  },
+  "S3a": {
+   "K-EFFECT": {
+    "C1": "ok",
+    "C2": "ok",
+    "C3": "ok",
+    "C4": "ok",
+    "C5": "ok",
+    "C6": "ok",
+    "C7": "ok",
+    "C8": "ok",
+    "C9": "ok"
+   },
+   "effects": {
+    "C1": "0",
+    "C2": "0",
+    "C3": "0",
+    "C4": "0",
+    "C5": "0",
+    "C6": "0",
+    "C7": "0",
+    "C8": "0",
+    "C9": "0"
+   }
+  },
+  "S3b": {
+   "K-WIRING": {
+    "C1": "ok",
+    "C2": "ok",
+    "C3": "ok",
+    "C4": "ok",
+    "C5": "ok",
+    "C6": "ok",
+    "C7": "ok",
+    "C8": "ok",
+    "C9": "ok"
+   },
+   "handles": {
+    "C1": "0",
+    "C2": "0",
+    "C3": "0",
+    "C4": "0",
+    "C5": "0",
+    "C6": "0",
+    "C7": "0",
+    "C8": "0",
+    "C9": "0"
+   }
+  },
+  "S3c": {
+   "provider-query": {
+    "M01": [
+     "K-WIRING"
+    ],
+    "M06": [
+     "K-EFFECT",
+     "K-SPLIT"
+    ],
+    "M07": [
+     "K-WIRING",
+     "K-EFFECT",
+     "K-SPLIT"
+    ]
+   },
+   "coverage-mint": {
+    "M02": [
+     "K-WIRING"
+    ],
+    "M08": [
+     "K-EFFECT"
+    ]
+   },
+   "work-admission": {
+    "M03": [
+     "K-WIRING"
+    ],
+    "M09": [
+     "K-EFFECT"
+    ]
+   }
+  },
+  "S4a": {
+   "title": [
+    "QuerySDK evaluates evidence",
+    "Lenses supplies source",
+    "Fiber publishes",
+    "Agents owns verification/inference",
+    "host owns demand"
+   ],
+   "producer": [
+    "QuerySDK evaluates evidence",
+    "Lenses supplies source",
+    "Fiber publishes",
+    "Agents owns verification/inference",
+    "host owns demand"
+   ],
+   "constant": [
+    "QuerySDK evaluates evidence",
+    "Lenses supplies source",
+    "Fiber publishes",
+    "Agents owns verification/inference",
+    "host owns demand"
+   ]
+  },
+  "S4b": {
+   "carried": [
+    [
+     "s5:unknown:QuerySDK"
+    ]
+   ],
+   "M19": [
+    "K-SPLIT"
+   ],
+   "M21": [
+    "K-SPLIT"
+   ],
+   "M22": [
+    "K-SPLIT"
+   ]
+  },
+  "S4c": {
+   "sourceless": "blocks=-;unmet=s4",
+   "M20": [
+    "K-SPLIT"
+   ]
+  },
+  "S4d": {
+   "M04": [
+    "K-WIRING"
+   ],
+   "M10": [
+    "K-EFFECT"
+   ]
+  },
+  "S4e": {
+   "M05": [
+    "K-WIRING"
+   ],
+   "M11": [
+    "K-EFFECT",
+    "K-SPLIT"
+   ]
+  },
+  "S4f": {
+   "M14": [
+    "K-DEMAND"
+   ],
+   "M15": [
+    "K-DEMAND"
+   ]
+  },
+  "N1": {
+   "unregistered": [
+    "src/workbench/zz-edc-host.ts: names EDC, assembler, no SITES registration"
+   ],
+   "registered": [],
+   "stale": [
+    "src/workbench/zz-quiet.ts: registered, names no vocabulary word (stale)"
+   ],
+   "missing": [
+    "src/workbench/zz-gone.ts: registered, names no vocabulary word (stale)"
+   ],
+   "duplicate": [
+    "src/workbench/zz-edc-host.ts: registered twice"
+   ],
+   "judged": [
+    "reference",
+    "src/workbench/zz-edc-host.ts"
+   ]
+  },
+  "N2": {
+   "sites": [],
+   "findings": [],
+   "judged": [
+    "reference"
+   ]
+  },
+  "A1a": {
+   "gate": "CLOSED",
+   "live": [],
+   "closed": [],
+   "open": [
+    "docs/03 owes the evidence authority row",
+    "docs/03 owes the source authority row",
+    "docs/03 owes the publication authority row",
+    "docs/03 owes the verification authority row",
+    "docs/03 owes the demand authority row",
+    "docs/03 owes the assembly authority row"
+   ]
+  },
+  "A1b": {
+   "complete": [],
+   "dropped": {
+    "evidence": [
+     "docs/03 owes the evidence authority row"
+    ],
+    "source": [
+     "docs/03 owes the source authority row"
+    ],
+    "publication": [
+     "docs/03 owes the publication authority row"
+    ],
+    "verification": [
+     "docs/03 owes the verification authority row"
+    ],
+    "demand": [
+     "docs/03 owes the demand authority row"
+    ],
+    "assembly": [
+     "docs/03 owes the assembly authority row"
+    ]
+   },
+   "ownersOnly": [
+    "docs/03 owes the evidence authority row",
+    "docs/03 owes the source authority row",
+    "docs/03 owes the publication authority row",
+    "docs/03 owes the verification authority row",
+    "docs/03 owes the demand authority row",
+    "docs/03 owes the assembly authority row"
+   ],
+   "closedComplete": []
+  },
+  "A1c": {
+   "found": true,
+   "header": [
+    "Concern",
+    "Authoritative owner",
+    "Workbench may do"
+   ],
+   "floor": true,
+   "owners": [
+    1,
+    1,
+    1
+   ],
+   "planted": [],
+   "fenced": false,
+   "otherHeading": false,
+   "afterNextHeading": false
+  },
+  "A2a": {
+   "reference": [],
+   "recorded": [
+    "provider-query:probe",
+    "coverage-mint:probe",
+    "work-admission:probe",
+    "publication:probe",
+    "verification:probe"
+   ],
+   "caught": [
+    "M06",
+    "M07",
+    "M08",
+    "M09",
+    "M10",
+    "M11"
+   ]
+  },
+  "A2b": {
+   "ports": [
+    "provider-query",
+    "coverage-mint",
+    "work-admission"
+   ],
+   "provider-query": {
+    "effect": "effect:provider-query:s3",
+    "wired": "wired:provider-query"
+   },
+   "coverage-mint": {
+    "effect": "effect:coverage-mint:s1+coverage-mint:s2",
+    "wired": "wired:coverage-mint"
+   },
+   "work-admission": {
+    "effect": "effect:work-admission:s3",
+    "wired": "wired:work-admission"
+   }
+  },
+  "D1": {
+   "owner": "HyperUnix",
+   "duties": [
+    "query completeness",
+    "coverage",
+    "bounds"
+   ],
+   "concern": "Hypergraph query completeness, coverage and bounds",
+   "held": [
+    true,
+    true,
+    true
+   ]
+  },
+  "D2": {
+   "owner": "ReactiveFiberCLI",
+   "duties": [
+    "context rendering",
+    "necessity",
+    "provenance"
+   ],
+   "concern": "Context rendering, necessity and provenance",
+   "held": [
+    true,
+    true,
+    true
+   ]
+  },
+  "D3": {
+   "page": "docs/workbench/01-product-vision-and-user-journeys.md",
+   "line": 5,
+   "held": true
+  },
+  "D4": {
+   "floor": true,
+   "naming": [],
+   "planted": [
+    "Pi (host)",
+    "EDC assembler"
+   ]
+  },
+  "Q1": {
+   "name": "R-SHARED-WORD",
+   "members": [
+    "assemble-reply",
+    "assembly-program",
+    "on-demand",
+    "coverage",
+    "admission",
+    "minted",
+    "provider-query"
+   ],
+   "findings": [],
+   "gate": "CLOSED"
+  },
+  "Q2": {
+   "name": "R-COMPOSED",
+   "members": [
+    "concatenation",
+    "joined-at-run-time",
+    "template-substitution",
+    "operator-split",
+    "homoglyph"
+   ],
+   "findings": [],
+   "gate": "CLOSED"
+  },
+  "Q3": {
+   "name": "R-COMMENT",
+   "members": [
+    "line-comment",
+    "block-comment",
+    "doc-comment"
+   ],
+   "findings": [],
+   "gate": "CLOSED"
+  },
+  "Q4": {
+   "name": "R-UNNAMED-SEAM",
+   "members": [
+    "unnamed-seam"
+   ],
+   "findings": [],
+   "gate": "CLOSED"
+  },
+  "Q5": {
+   "refused": [],
+   "outsideCalls": true
+  },
+  "Q6": {
+   "outside": [],
+   "listedMembers": [],
+   "naming": [
+    "test/workbench-edc-assembly-split-census.test.ts",
+    "test/fixtures/edc-assembly-split-roster.json"
+   ]
+  },
+  "Q7": {
+   "live": [],
+   "reported": [
+    "T1",
+    "T2",
+    "S1a",
+    "S1b",
+    "S2a",
+    "S2b",
+    "S3a",
+    "S3b",
+    "S3c",
+    "S4a",
+    "S4b",
+    "S4c",
+    "S4d",
+    "S4e",
+    "S4f",
+    "N1",
+    "N2",
+    "A1a",
+    "A1b",
+    "A1c",
+    "A2a",
+    "A2b",
+    "D1",
+    "D2",
+    "D3",
+    "D4"
+   ],
+   "quiet": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7"
+   ]
+  }
+ },
+ "tests": [
+  "T1: If Pi-subagents adopts",
+  "T2: EDC context assembly",
+  "S1a: Pi as host shall carry",
+  "S1b: demand ownership",
+  "S2a: treat assembly as pure",
+  "S2b: context assembly only",
+  "S3a: never expecting",
+  "S3b: or wiring the assembler",
+  "S3c: to query providers, mint coverage or admit work",
+  "S4a: honoring the split",
+  "S4b: QuerySDK evaluates evidence",
+  "S4c: Lenses supplies source",
+  "S4d: Fiber publishes",
+  "S4e: Agents owns verification/inference",
+  "S4f: host owns demand",
+  "N1: a Pi EDC context-assembly consumer",
+  "N2: none exists",
+  "A1a: at adoption",
+  "A1b: docs/03 gains the EDC authority rows",
+  "A1c: bound by the docs-census pattern",
+  "A2a: a falsifier shows the assembler seam performs",
+  "A2b: no provider query, coverage mint or work admission",
+  "D1: HyperUnix owns query completeness/coverage/bounds",
+  "D2: ReactiveFiberCLI owns context rendering/necessity/provenance",
+  "D3: a derived lens over native state, never a competing execution authority",
+  "D4: carries no EDC assembler/demand row",
+  "Q1: R-SHARED-WORD",
+  "Q2: R-COMPOSED",
+  "Q3: R-COMMENT",
+  "Q4: R-UNNAMED-SEAM",
+  "Q5: R-UNMODELED-EFFECT",
+  "Q6: R-OUTSIDE-SRC",
+  "Q7: R-COORDINATED",
+  "rule 16: the rows, the tables, the vocabulary and the authority rows are frozen at their measured shape",
+  "mutant battery: the reference and every registered site meet every check and answer every case, each mutant is refused by exactly its declared checks, and every check refuses a mutant alone",
+  "the outside anchors: the bead's own row binds the rows, the pin quotes, the split, the ports, the vocabulary, the docs citation and the producer block",
+  "roster: the judged rows, the quotes, the cases, the mutants, the residual members and the registered tests equal test/fixtures/edc-assembly-split-roster.json, in order and both ways; every pin reached its witness compare"
+ ],
+ "producer": {
+  "repository": "ReactiveComponentsSDK",
+  "pin": "44b72145b1756908585c94da2327ab8809a3ca9a",
+  "path": "docs/programs/evidence-directed-computation-2026-10-18.md",
+  "blob": "de04229d9cdad063e4704d732f3cbcee1f001e68",
+  "line": 29,
+  "text": "Pure context assembly only. QuerySDK evaluates evidence; Lenses supplies source; Fiber publishes; Agents owns verification/inference and host owns demand. Forge-local plus clean installed consumer acceptance. APIs only after two clear independent use cases."
+ }
+}
