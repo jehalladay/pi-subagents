@@ -25,11 +25,18 @@
  *   report is faked).
  * - RECORD (row B): recordedComparison reads the frozen TRACEABILITY page and the receipts directory for a comparison row of this
  *   bead; none exists, and none is owed while the gate reads ABSENT.
- * - POLICY (rows B and C): policyOf(source) parses the provider module with the TypeScript compiler and reads every setTimeout
- *   whose callback stops with the deadline reason (an arrow or function expression, a call that builds the callback, or a name
- *   the module declares as a function or binds, every declaration of that name read; its delay, constant-folded through const
- *   bindings) and every if whose comparison guards a call passing a stream reason (its bound, folded the same way). An unfoldable
- *   value reads null, never a guess: a let or var binding is never folded.
+ * - POLICY (rows B and C): policyOf(source) parses the provider module with the TypeScript compiler as a program of its own, whose
+ *   binder resolves each name at its use to the declarations its own scope sees, and reads every deadline timer's delay and every
+ *   if whose comparison guards a call passing a stream reason (its operator and its bound). A deadline timer is a setTimeout call
+ *   that passes the deadline reason in an argument after its delay, or whose callback stops with it, that is passes it to some
+ *   call, whatever the callee: an arrow or function expression, or a call that builds the callback (stop.bind(null, reason)),
+ *   parenthesized or not, is read itself; a name is read through every value its own declaration binds it to (a function
+ *   declaration's body, a binding's initializer, each assignment to it with =, ||=, &&= or ??=, the property assignment of the
+ *   object literal it is destructured from, under its own name or a renamed one), and a value that is itself a name is resolved
+ *   again (an alias). A reason is a string literal or a template without substitutions, parenthesized or not, or a name bound by
+ *   const to one. A delay or a bound is constant-folded through the const bindings its names resolve to (an inner binding of a
+ *   name governs it beside an outer one, a fixed-module fact). An unfoldable value reads null, never a guess: a binding that is
+ *   not const (a let binding, the FAIL-CLOSED rows) is never folded.
  * - SCAN (rows B and C): liveEntries() reads every file git lists (tracked or untracked, never ignored) below docs/, src/, qa/,
  *   examples/ and .agents/, and the repository root's .md pages, as UTF-8; a symlink or a file holding a NUL is refused.
  *   scanEntries cuts each text into sentences (after ".", "!", "?" or ";" before white space, at a blank line, before a line
@@ -51,16 +58,24 @@
  *  B1 no comparison row is recorded (TRACEABILITY names neither this bead nor the report, and no receipt of this bead exists),
  *    and none is owed; B2 neither alternative exists: the filing's own note form, given the subject, reads as a finding, the live
  *    pass finds none, and the policy is unchanged.
- *  C1 the provider's deadline and caps equal the statement's 60 s and 256 KiB, read by AST (planted variants of the live source
- *    each read as changed: another delay, another bound on one stream or on the shared binding, an inclusive comparison, a second
- *    or duplicate deadline timer, a second one whose callback is passed by name, by a shadowed name or built by a call, an
- *    unfoldable delay; a renamed binding, under a name the module never spells, and a timer that kills without the deadline reason
- *    under a name, beside a function or a binding that does stop with it, read unchanged; REFACTORS that keep the numerics (the
- *    deadline bound in its function or at module scope, to the name the variant takes or another, the deadline callback replaced by
- *    a name bound or declared to stop with the deadline reason) each read unchanged and leave every variant reading as it reads on
- *    the live source; the FAIL-CLOSED pair (a let cap binding, a stream reason passed to an unrelated call under a comparison)
- *    reads changed, with its reading pinned); C2 the live scan finds nothing beyond its known positives, and every
- *    family spelling, claim inflection, marker, cut rule and walk rule reads as pinned; C3 the guard is
+ *  C1 the provider's deadline and caps equal the statement's 60 s and 256 KiB, read by AST. VARIANTS planted on the live source
+ *    each read as pinned: changed for another delay, another bound on the stdout cap or on the binding it names, an inclusive
+ *    comparison, an unfoldable delay, a second or duplicate deadline timer, and a second one whose callback is passed by name, by
+ *    a shadowed name, by an alias, by a name assigned with =, ||=, &&= or ??=, or by a name destructured from an object literal
+ *    (its own or a renamed one), is parenthesized, is built by a call, is given the reason by the timer, or stops with a template,
+ *    a parenthesized or a const-bound reason; unchanged for a renamed binding, under a name the module never spells, and for a
+ *    timer that kills without the deadline reason under a name beside a function or a binding that does stop with it, under a
+ *    block name shadowing such a function, under a name a call passes beside the deadline reason, or given another reason by the
+ *    timer. Every census-owned plant text is held to the roster (FORMS). REFACTORS that keep the numerics (the deadline bound in
+ *    its function or at module scope, to the variant's name or another; the callback bound, declared, aliased, assigned or
+ *    destructured under a name; the reason bound by const to a literal or a template, or passed by the timer; a cap on its own
+ *    binding or through an alias, for either stream or both; the caps inlined) each read unchanged and leave every variant's
+ *    reading and every FAIL-CLOSED reading exactly as on the live module; each holds its planted form, found where it was planted
+ *    and by the binder, never by the policy reader. The FAIL-CLOSED rows read changed with their readings pinned: the stdout cap's
+ *    bound read through a let binding of its own (that cap alone reads null), the deadline read through a let binding (null), a
+ *    stream reason passed to an unrelated call under a comparison (a third cap), and the deadline reason passed to an unrelated
+ *    call in a timer's callback, inline or named (a second deadline). C2 the live scan finds nothing beyond its known positives,
+ *    and every family spelling, claim inflection, marker, cut rule and walk rule reads as pinned; C3 the guard is
  *    armed at the pin and reports nothing, reports a planted change while armed, and stands down on a listing that holds the report.
  * OUTSIDE ANCHOR: the owner filing's row of wb-693.8 in the tracked bead export (.beads/issues.jsonl), its description only (its
  * notes are later seats' records). Its ACCEPTANCE items are the labels of rows A-C verbatim and in order, and each row's pin quotes
@@ -78,9 +93,13 @@
  *   ABSENT; R-NON-TREE (A1) a report outside the repository tree (a redirected bench directory, a release asset) is never listed,
  *   and the ignored bench directory keeps a bench run's own report out of the tree; R-SCHEMA-SLICE (A2) only the vendored slices
  *   are read, so a value of the wrong type, pattern or enum outside the graph kinds reads valid; R-OTHER-KILL-PATH (C1) a timer
- *   that ends the child without the deadline reason is not read; R-INDIRECT-DEADLINE (C1) a timer whose callback reaches the
- *   deadline reason only through another function it calls or a member it names (a wrapper ()=>onLate(), handlers.deadline) is
- *   not read; R-UNANCHORED (C2) a claim about the policy or a cost that names no TSX anchor; R-MARKER-ANYWHERE (C2) a marker
+ *   that ends the child without the deadline reason is not read; R-INDIRECT-DEADLINE (C1) a timer whose callback the reader does
+ *   not resolve: a wrapper that calls another function (()=>onLate()), a member (handlers.deadline), a parameter (a helper that
+ *   sets the timer for a callback it is passed), a name destructured from an array or from a name; R-OTHER-TIMER (C1) a timer set
+ *   through any call but a bare setTimeout (globalThis.setTimeout, an aliased node:timers import, setInterval); R-COMPUTED-REASON
+ *   (C1) a reason spelled otherwise (a spread, a concatenation, an asserted literal, a let-bound name). The last three forms each
+ *   read unchanged as a second timer, and the live timer refactored into any of them reads no deadline, so the census reds
+ *   (fail-closed); R-UNANCHORED (C2) a claim about the policy or a cost that names no TSX anchor; R-MARKER-ANYWHERE (C2) a marker
  *   anywhere in a sentence admits it, whatever it qualifies; R-SPLIT (C2) a claim and its subject in different sentences;
  *   R-PARAPHRASE (C2) a claim outside the claim words; R-LOOKALIKE (C2) a look-alike letter or an inserted invisible inside a claim
  *   word; R-JOINED (C2) an anchor, family or claim word joined to its neighbour inside an identifier (snake_case tsx_cost,
@@ -90,18 +109,20 @@
  * and every marker but the three gating words) removed from the vocabulary and the roster together; a scan root beyond docs/
  * (the filing's docs/receipt clause) removed from the walk and the roster together.
  *
- * wb-q1a0 (the R694 follow-up the wb-693.8 gate routed at landing 538, gate cmd_9dd9399ce5bc: F1 leads, F2-F6 ride). F1 the
- * renamed-binding variant binds a name the module never spells (freshName), so a refactor that itself names the deadline after
- * the variant, in its function or at module scope, reads unchanged and leaves every variant reading as it was (C1 REFACTORS).
- * F3 a deadline callback passed by name, by a shadowed name or built by a call is read as the deadline timer, and a name resolves to
- * its own declarations only: the refactor to that form reads unchanged, and a second deadline timer in any of those forms, which
- * read unchanged on the landed reader, reads changed. Every planted refactor and variant assumes only the deadline timer and the
- * shared cap binding the landed variants already plant on. The let cap binding and the stream reason in an unrelated call stay
- * FAIL-CLOSED by design and are pinned with their readings (folding a let would admit a reassignment the reader cannot see, and
- * reading caps through one stop function only would let a cap stopped by another escape). F2 and the indirect deadline callback
- * are named residuals (R-JOINED, R-INDIRECT-DEADLINE).
- * F4 the scratch walk refuses a NUL-holding file beside the symlink. F5 it skips a root non-.md file, and R-OUTSIDE-ROOTS's quiet
- * row probes one. F6 the judged set runs on the pins' explicit 120 s budget, read from this file (SELF-READ).
+ * wb-q1a0 (the R694 follow-up the wb-693.8 gate routed at landing 538, gate cmd_9dd9399ce5bc: F1 leads, F2-F6 ride; cut 2 answers
+ * refusal 1, its U1 and U2 and its F3-F5 riders). F1 the renamed-binding variant binds a name the module never spells, so a
+ * refactor that itself names the deadline after the variant reads unchanged (C1 REFACTORS). F3 a deadline callback passed by name,
+ * by a shadowed name or built by a call is read as the deadline timer. F2 is the named residual R-JOINED. F4 the scratch walk
+ * refuses a NUL-holding file beside the symlink. F5 it skips a root non-.md file, and R-OUTSIDE-ROOTS's quiet row probes one. F6
+ * the judged set runs on the pins' explicit 120 s budget, read from this file (SELF-READ).
+ * Refusal 1: U1 the let row of cut 1 pinned a reading that held only while one binding served both caps, so a stream split that
+ * keeps the numerics read red; the let row now reads the stdout cap through a let binding of its own (that cap alone moves), and
+ * every variant's and FAIL-CLOSED reading must survive the REFACTORS, which now split, alias and inline the caps. U2 the by-name
+ * claim missed an alias, an assigned name, a destructured name and a reason the timer passes; each is now read and pinned as a
+ * variant. Riders: F3 every C1 plant holds its form (FORMS, and each refactor's planted site), and a name a call passes beside the
+ * deadline reason is not read as a declaration of it; F4 names resolve by the binder's scopes, so a block name shadowing a deadline
+ * function is read as the block's; F5 a template or const-bound reason is read, the forms still unread are the named residuals
+ * R-INDIRECT-DEADLINE, R-OTHER-TIMER and R-COMPUTED-REASON, and the over-reads are pinned FAIL-CLOSED rows.
  *
  * Display paths added: none. Test-only: every plant is an in-memory text, listing or report, except C2's one scratch git repository
  * per run, made with makeScratch under the leak guard and removed in the same case; src, docs, the roster and the bead export are
@@ -184,8 +205,8 @@ const ROSTER = JSON.parse(readFileSync(join(REPO, ROSTER_FILE), "utf8")) as Rost
 /** The functions that read the subject; every IMPL entry names one directly (SELF-READ). */
 const READERS: readonly string[] = ["gateOf", "guardOf", "instanceAxes", "liveEntries", "policyOf", "recordedComparison", "scanEntries", "validateReport"];
 const RESIDUALS: readonly string[] = [
-  "R-RENAMED", "R-NON-TREE", "R-SCHEMA-SLICE", "R-OTHER-KILL-PATH", "R-INDIRECT-DEADLINE", "R-UNANCHORED", "R-MARKER-ANYWHERE", "R-SPLIT", "R-PARAPHRASE",
-  "R-LOOKALIKE", "R-JOINED", "R-OUTSIDE-ROOTS",
+  "R-RENAMED", "R-NON-TREE", "R-SCHEMA-SLICE", "R-OTHER-KILL-PATH", "R-INDIRECT-DEADLINE", "R-OTHER-TIMER", "R-COMPUTED-REASON", "R-UNANCHORED",
+  "R-MARKER-ANYWHERE", "R-SPLIT", "R-PARAPHRASE", "R-LOOKALIKE", "R-JOINED", "R-OUTSIDE-ROOTS",
 ];
 /** The vendored spans, by the site they were read at. */
 const IGNORE_SITE = ".gitignore:52-53";
@@ -428,57 +449,140 @@ const readRepo = (path: string): string => readFileSync(join(REPO, path), "utf8"
 
 // --- C1: the policy, read by AST ---------------------------------------------------------------------------------------------------
 const parse = (source: string): ts.SourceFile => ts.createSourceFile(PROVIDER, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-/** The string literals passed to any call inside a node. */
-function reasonsIn(node: ts.Node): string[] {
+/** A module parsed and bound: its checker resolves each name at its use to the declarations its own scope sees. */
+interface Module {
+  readonly file: ts.SourceFile;
+  readonly checker: ts.TypeChecker;
+}
+/** The module alone as a TypeScript program (no lib, no module resolution, nothing emitted), so its checker binds its names
+ * (wb-q1a0 F4: a scope-blind name read a timer by another scope's declaration). */
+function moduleOf(source: string): Module {
+  const file = parse(source);
+  const host: ts.CompilerHost = {
+    getSourceFile: (name) => (name === PROVIDER ? file : undefined),
+    getDefaultLibFileName: () => "lib.d.ts",
+    writeFile: () => undefined,
+    getCurrentDirectory: () => "",
+    getCanonicalFileName: (name) => name,
+    useCaseSensitiveFileNames: () => true,
+    getNewLine: () => "\n",
+    fileExists: (name) => name === PROVIDER,
+    readFile: (name) => (name === PROVIDER ? source : undefined),
+  };
+  const program = ts.createProgram({ rootNames: [PROVIDER], options: { noLib: true, noResolve: true, types: [], noEmit: true }, host });
+  if (program.getSourceFile(PROVIDER) !== file) throw new Error(`${PROVIDER}: the program did not bind the source it was given`);
+  return { file, checker: program.getTypeChecker() };
+}
+/** The declarations a name resolves to at its use (none for a name its module never declares, such as a global). */
+const declarationsOf = (module: Module, name: ts.Identifier): readonly ts.Declaration[] => module.checker.getSymbolAtLocation(name)?.declarations ?? [];
+/** A const binding's value; undefined for any other declaration (a let or var binding, a parameter, a destructured name). */
+function constValue(declaration: ts.Declaration | undefined): ts.Expression | undefined {
+  if (declaration === undefined || !ts.isVariableDeclaration(declaration) || !ts.isIdentifier(declaration.name)) return undefined;
+  return ts.isVariableDeclarationList(declaration.parent) && (declaration.parent.flags & ts.NodeFlags.Const) !== 0 ? declaration.initializer : undefined;
+}
+/** The value of the one const binding a name resolves to; undefined when it resolves to none, to another kind or to two. */
+function soleConst(module: Module, name: ts.Identifier): ts.Expression | undefined {
+  const declarations = declarationsOf(module, name);
+  return declarations.length === 1 ? constValue(declarations[0]) : undefined;
+}
+/** A reason spelled as a literal: a string literal or a template without substitutions, parenthesized or not, or a name bound by
+ * const to one (wb-q1a0 F5: a template or const-bound reason was never read). */
+function literalOf(module: Module, node: ts.Expression, depth = 0): string | undefined {
+  if (depth > 8) return undefined;
+  if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) return node.text;
+  if (ts.isParenthesizedExpression(node)) return literalOf(module, node.expression, depth + 1);
+  const value = ts.isIdentifier(node) ? soleConst(module, node) : undefined;
+  return value === undefined ? undefined : literalOf(module, value, depth + 1);
+}
+/** The literal reasons passed to any call inside a node. */
+function reasonsIn(module: Module, node: ts.Node): string[] {
   const out: string[] = [];
   const visit = (inner: ts.Node): void => {
-    if (ts.isCallExpression(inner)) for (const arg of inner.arguments) if (ts.isStringLiteral(arg)) out.push(arg.text);
+    if (ts.isCallExpression(inner)) {
+      for (const arg of inner.arguments) {
+        const reason = literalOf(module, arg);
+        if (reason !== undefined) out.push(reason);
+      }
+    }
     ts.forEachChild(inner, visit);
   };
   visit(node);
   return out;
 }
-/** What a timer's callback runs: the callback itself (an arrow or function expression, or a call that builds it, such as
- * stop.bind(null, reason)), or, for a name, every declaration of it in the module: a function declaration's body or a binding's
- * initializer, at any depth (wb-q1a0 F3: a callback passed by name was never read). */
-function callbackBodies(callback: ts.Expression): ts.Node[] {
-  if (!ts.isIdentifier(callback)) return [callback];
+/** The operators that bind a name to the value on their right. */
+const ASSIGNS: readonly ts.SyntaxKind[] = [
+  ts.SyntaxKind.EqualsToken,
+  ts.SyntaxKind.BarBarEqualsToken,
+  ts.SyntaxKind.AmpersandAmpersandEqualsToken,
+  ts.SyntaxKind.QuestionQuestionEqualsToken,
+];
+/** For a name destructured from an object literal, that literal's property assignment of the name; undefined otherwise. */
+function destructuredValue(element: ts.BindingElement): ts.Expression | undefined {
+  const pattern = element.parent;
+  const declaration = pattern.parent;
+  const key = element.propertyName ?? element.name;
+  if (!ts.isObjectBindingPattern(pattern) || !ts.isVariableDeclaration(declaration) || !ts.isIdentifier(key)) return undefined;
+  const literal = declaration.initializer;
+  if (literal === undefined || !ts.isObjectLiteralExpression(literal)) return undefined;
+  const property = literal.properties.find((item): item is ts.PropertyAssignment => ts.isPropertyAssignment(item) && ts.isIdentifier(item.name) && item.name.text === key.text);
+  return property?.initializer;
+}
+/** What a timer's callback runs, resolved at its use: an arrow or function expression, or a call that builds the callback (such as
+ * stop.bind(null, reason)), is read itself; a name is read through every value its own declaration binds it to (a function
+ * declaration's body, a binding's initializer, the value of each assignment to it, the property an object literal it is destructured
+ * from holds), and a value that is itself a name is resolved again (an alias). Nothing else is followed: a member, a parameter, a
+ * wrapper's inner call, a name destructured from an array or from anything but an object literal (R-INDIRECT-DEADLINE). */
+function callbackValues(module: Module, callback: ts.Expression, seen: Set<ts.Node> = new Set()): ts.Node[] {
+  if (ts.isParenthesizedExpression(callback)) return callbackValues(module, callback.expression, seen);
+  if (!ts.isIdentifier(callback)) return ts.isArrowFunction(callback) || ts.isFunctionExpression(callback) || ts.isCallExpression(callback) ? [callback] : [];
+  const symbol = module.checker.getSymbolAtLocation(callback);
+  if (symbol === undefined) return [];
   const bodies: ts.Node[] = [];
-  const visit = (node: ts.Node): void => {
-    if (ts.isFunctionDeclaration(node) && node.name?.text === callback.text && node.body !== undefined) bodies.push(node.body);
-    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === callback.text && node.initializer !== undefined) bodies.push(node.initializer);
-    ts.forEachChild(node, visit);
+  const values: ts.Expression[] = [];
+  for (const declaration of symbol.declarations ?? []) {
+    if (seen.has(declaration)) continue;
+    seen.add(declaration);
+    if (ts.isFunctionDeclaration(declaration) && declaration.body !== undefined) bodies.push(declaration.body);
+    if (ts.isVariableDeclaration(declaration) && declaration.initializer !== undefined) values.push(declaration.initializer);
+    const destructured = ts.isBindingElement(declaration) ? destructuredValue(declaration) : undefined;
+    if (destructured !== undefined) values.push(destructured);
+  }
+  const assigned = (node: ts.Node): void => {
+    if (ts.isBinaryExpression(node) && ASSIGNS.includes(node.operatorToken.kind) && ts.isIdentifier(node.left) && !seen.has(node) && module.checker.getSymbolAtLocation(node.left) === symbol) {
+      seen.add(node);
+      values.push(node.right);
+    }
+    ts.forEachChild(node, assigned);
   };
-  visit(callback.getSourceFile());
+  assigned(module.file);
+  for (const value of values) bodies.push(...(ts.isIdentifier(value) || ts.isParenthesizedExpression(value) ? callbackValues(module, value, seen) : [value]));
   return bodies;
 }
-function isDeadlineTimer(node: ts.Node): node is ts.CallExpression {
+/** A setTimeout whose callback stops with the deadline reason, or that passes the deadline reason to its callback (an argument after
+ * the delay; wb-q1a0 U2, setTimeout(stop, ms, "deadline")). */
+function isDeadlineTimer(module: Module, node: ts.Node): node is ts.CallExpression {
   if (!ts.isCallExpression(node) || !ts.isIdentifier(node.expression) || node.expression.text !== "setTimeout") return false;
-  const callback = node.arguments[0];
-  return callback !== undefined && callbackBodies(callback).some((body) => reasonsIn(body).includes(DEADLINE_REASON));
+  const [callback, , ...passed] = node.arguments;
+  if (callback === undefined) return false;
+  if (passed.some((arg) => literalOf(module, arg) === DEADLINE_REASON)) return true;
+  return callbackValues(module, callback).some((value) => reasonsIn(module, value).includes(DEADLINE_REASON));
 }
-function capStreams(node: ts.Node): string[] {
+/** The stream reasons an if passes to a call in its then branch, when its condition is a comparison. */
+function capStreams(module: Module, node: ts.Node): string[] {
   if (!ts.isIfStatement(node) || !ts.isBinaryExpression(node.expression)) return [];
-  return reasonsIn(node.thenStatement).filter((reason) => STREAMS.includes(reason));
+  return reasonsIn(module, node.thenStatement).filter((reason) => STREAMS.includes(reason));
 }
-/** Every deadline timer's delay and every stream cap's bound, constant-folded through const bindings; null when not foldable. */
+/** Every deadline timer's delay and every stream cap's bound, constant-folded through the const bindings their names resolve to;
+ * null when not foldable. */
 function policyOf(source: string): Policy {
-  const file = parse(source);
-  const consts = new Map<string, ts.Expression[]>();
-  const collect = (node: ts.Node): void => {
-    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer && ts.isVariableDeclarationList(node.parent) && (node.parent.flags & ts.NodeFlags.Const) !== 0) {
-      consts.set(node.name.text, [...(consts.get(node.name.text) ?? []), node.initializer]);
-    }
-    ts.forEachChild(node, collect);
-  };
-  collect(file);
+  const module = moduleOf(source);
   const fold = (node: ts.Expression, depth: number): number | null => {
     if (depth > 8) return null;
     if (ts.isNumericLiteral(node)) return Number(node.text);
     if (ts.isParenthesizedExpression(node)) return fold(node.expression, depth + 1);
     if (ts.isIdentifier(node)) {
-      const bound = consts.get(node.text) ?? [];
-      return bound.length === 1 && bound[0] !== undefined ? fold(bound[0], depth + 1) : null;
+      const value = soleConst(module, node);
+      return value === undefined ? null : fold(value, depth + 1);
     }
     if (ts.isBinaryExpression(node)) {
       const left = fold(node.left, depth + 1);
@@ -493,17 +597,17 @@ function policyOf(source: string): Policy {
   const deadlines: (number | null)[] = [];
   const caps: Cap[] = [];
   const visit = (node: ts.Node): void => {
-    if (isDeadlineTimer(node)) {
+    if (isDeadlineTimer(module, node)) {
       const delay = node.arguments[1];
       deadlines.push(delay === undefined ? null : fold(delay, 0));
     }
     if (ts.isIfStatement(node) && ts.isBinaryExpression(node.expression)) {
       const comparison = node.expression;
-      for (const stream of capStreams(node)) caps.push({ stream, operator: ts.tokenToString(comparison.operatorToken.kind) ?? "?", bound: fold(comparison.right, 0) });
+      for (const stream of capStreams(module, node)) caps.push({ stream, operator: ts.tokenToString(comparison.operatorToken.kind) ?? "?", bound: fold(comparison.right, 0) });
     }
     ts.forEachChild(node, visit);
   };
-  visit(file);
+  visit(module.file);
   return { deadlines, caps: caps.sort((left, right) => left.stream.localeCompare(right.stream)) };
 }
 /** The policy the statement names, in the reader's shape. */
@@ -512,139 +616,386 @@ function statedShape(): Policy {
   return { deadlines: [deadlineMs], caps: STREAMS.map((stream) => ({ stream, operator: ">", bound: capBytes })) };
 }
 const samePolicy = (policy: Policy): boolean => JSON.stringify(policy) === JSON.stringify(statedShape());
-/** The first node `pick` selects, depth first from the module itself. */
-function firstNode(file: ts.SourceFile, pick: (node: ts.Node) => boolean): ts.Node | undefined {
-  let found: ts.Node | undefined;
+/** The first node `pick` selects, depth first from `root` itself. */
+function firstOf<T extends ts.Node>(root: ts.Node, pick: (node: ts.Node) => node is T): T | undefined {
+  let found: T | undefined;
   const visit = (node: ts.Node): void => {
     if (found !== undefined) return;
     if (pick(node)) found = node;
     else ts.forEachChild(node, visit);
   };
-  visit(file);
+  visit(root);
   return found;
 }
-/** The live source with the first node `pick` selects replaced by `text` (an in-memory variant; the module is never written). */
-function plantAt(source: string, pick: (node: ts.Node) => boolean, text: string): string {
-  const file = parse(source);
-  const found = firstNode(file, pick);
-  if (found === undefined) throw new Error("the planted site is missing from the provider module");
-  return source.slice(0, found.getStart(file)) + text + source.slice(found.getEnd());
-}
-/** A node's parent; the source file itself has none at run time, whatever the declared type says. */
-const parentOf = (node: ts.Node): ts.Node | undefined => (node.kind === ts.SyntaxKind.SourceFile ? undefined : node.parent);
-function isDeadlineDelay(node: ts.Node): boolean {
-  const parent = parentOf(node);
-  return parent !== undefined && isDeadlineTimer(parent) && parent.arguments[1] === node;
-}
-function isStdoutBound(node: ts.Node): boolean {
-  const parent = parentOf(node);
-  const statement = parent === undefined ? undefined : parentOf(parent);
-  return parent !== undefined && ts.isBinaryExpression(parent) && parent.right === node && statement !== undefined && capStreams(statement).includes("stdout");
-}
-/** The comparison operator of the stdout cap. */
-function isStdoutOperator(node: ts.Node): boolean {
-  const parent = parentOf(node);
-  const statement = parent === undefined ? undefined : parentOf(parent);
-  return parent !== undefined && ts.isBinaryExpression(parent) && parent.operatorToken === node && statement !== undefined && capStreams(statement).includes("stdout");
-}
-/** The const declaration the stdout cap's bound names. */
-function isStdoutBinding(source: string): (node: ts.Node) => boolean {
-  let name = "";
-  const visit = (node: ts.Node): void => {
-    if (name === "" && isStdoutBound(node) && ts.isIdentifier(node)) name = node.text;
-    else ts.forEachChild(node, visit);
-  };
-  visit(parse(source));
-  return (node) => {
-    const parent = parentOf(node);
-    return parent !== undefined && ts.isVariableDeclaration(parent) && parent.initializer === node && ts.isIdentifier(parent.name) && parent.name.text === name;
-  };
-}
+type CapIf = ts.IfStatement & { readonly expression: ts.BinaryExpression };
+const deadlineTimerOf = (module: Module): ts.CallExpression | undefined => firstOf(module.file, (node): node is ts.CallExpression => isDeadlineTimer(module, node));
+const capOf = (module: Module, stream: string): CapIf | undefined => firstOf(module.file, (node): node is CapIf => capStreams(module, node).includes(stream));
 /** The statement that holds a node: its ancestor whose parent is a block or the module itself. */
 function statementOf(node: ts.Node): ts.Node {
   let at = node;
-  for (let parent = parentOf(at); parent !== undefined && !ts.isBlock(parent) && !ts.isSourceFile(parent); parent = parentOf(at)) at = parent;
+  while (at.kind !== ts.SyntaxKind.SourceFile && !ts.isBlock(at.parent) && !ts.isSourceFile(at.parent)) at = at.parent;
   return at;
 }
-/** A name the module never spells, at any depth: the base, or the base with the first free numeric suffix, so a binding planted
- * under it can neither double nor shadow a live one (wb-q1a0 F1: a hard-coded variant name collided with a refactor that took it). */
-function freshName(source: string, base: string): string {
+/** The sites the C1 variants plant on, each found by the reader itself on the module it plants on (no source text is assumed). */
+type Site = "deadline delay" | "stdout bound" | "stdout operator" | "stdout binding";
+function siteOf(module: Module, site: Site): ts.Node | undefined {
+  const cap = capOf(module, "stdout");
+  if (site === "deadline delay") return deadlineTimerOf(module)?.arguments[1];
+  if (site === "stdout operator") return cap?.expression.operatorToken;
+  const bound = cap?.expression.right;
+  if (site === "stdout bound" || bound === undefined) return bound;
+  // The const binding the stdout cap's bound names; the bound itself when it names none (an inline bound).
+  return (ts.isIdentifier(bound) ? soleConst(module, bound) : undefined) ?? bound;
+}
+/** The source with a site replaced by `text` (an in-memory variant; the module is never written). */
+function plantAt(source: string, module: Module, site: Site, text: string): string {
+  const node = siteOf(module, site);
+  if (node === undefined) throw new Error(`the planted site is missing from the provider module: ${site}`);
+  return source.slice(0, node.getStart(module.file)) + text + source.slice(node.getEnd());
+}
+/** A plant that inserts `inserted` at `at` and replaces [from, to) with `text` (at <= from), and where each original offset moved. */
+interface Spliced {
+  readonly planted: string;
+  readonly moved: (offset: number) => number;
+}
+function splice(source: string, at: number, inserted: string, from: number, to: number, text: string): Spliced {
+  if (at > from) throw new Error("a plant inserts after the span it replaces");
+  const planted = `${source.slice(0, at)}${inserted}${source.slice(at, from)}${text}${source.slice(to)}`;
+  return { planted, moved: (offset) => (offset < at ? offset : offset < to ? offset + inserted.length : offset + inserted.length + text.length - (to - from)) };
+}
+/** The node of a kind that starts at `start` in a module: a planted site, found where it was planted, never by the reader. */
+const nameAt = (module: Module, start: number): ts.Identifier | undefined => firstOf(module.file, (node): node is ts.Identifier => ts.isIdentifier(node) && node.getStart(module.file) === start);
+const timerAt = (module: Module, start: number): ts.CallExpression | undefined =>
+  firstOf(module.file, (node): node is ts.CallExpression => ts.isCallExpression(node) && node.getStart(module.file) === start && ts.isIdentifier(node.expression) && node.expression.text === "setTimeout");
+/** The one declaration a name resolves to, by the binder alone. */
+function soleDeclaration(module: Module, name: ts.Identifier | undefined): ts.Declaration | undefined {
+  const declarations = name === undefined ? [] : declarationsOf(module, name);
+  return declarations.length === 1 ? declarations[0] : undefined;
+}
+/** A planted text whose form the census holds (wb-q1a0 F3: a plant hollowed to a weaker form read the same): `holds` reads the
+ * planted module by where it planted and the binder, never by the policy reader, and the plant is refused unless it still has the
+ * form it names. */
+function heldForm(planted: string, form: string, holds: (module: Module) => boolean): string {
+  if (!holds(moduleOf(planted))) throw new Error(`the planted ${form} lost its form`);
+  return planted;
+}
+/** The names the module spells, at any depth. */
+function spelledIn(source: string): Set<string> {
   const spelled = new Set<string>();
   const visit = (node: ts.Node): void => {
     if (ts.isIdentifier(node)) spelled.add(node.text);
     ts.forEachChild(node, visit);
   };
   visit(parse(source));
-  let name = base;
-  for (let suffix = 1; spelled.has(name); suffix += 1) name = `${base}_${suffix}`;
-  return name;
+  return spelled;
 }
-/** The base of the renamed-binding variant's name: the name a refactor that binds the deadline would most likely take. */
-const RENAMED_BASE = "DEADLINE_MS";
-/** A REFACTOR that keeps the numerics: the deadline timer's delay moved under `name`, bound at module scope or just before the
- * statement that holds the timer (the delay's own text moves into the binding). */
-function namedDeadline(source: string, name: string, scope: "function" | "module"): string {
-  const file = parse(source);
-  const delay = firstNode(file, isDeadlineDelay);
-  if (delay === undefined) throw new Error("the provider module holds no deadline delay to name");
-  const at = scope === "module" ? 0 : statementOf(delay).getStart(file);
-  return `${source.slice(0, at)}const ${name}=${delay.getText(file)};\n${source.slice(at, delay.getStart(file))}${name}${source.slice(delay.getEnd())}`;
-}
-/** A REFACTOR that keeps the numerics: the deadline timer's callback, whatever its form, replaced by `name`, which a const arrow
- * binding or a function declaration just before the statement that holds the timer stops with the deadline reason. It assumes
- * only the deadline timer the policy reads, so a module whose own callback is already named reads the same way. */
-function namedCallback(source: string, name: string, form: "binding" | "declaration"): string {
-  const file = parse(source);
-  const timer = firstNode(file, isDeadlineTimer);
-  const callback = timer !== undefined && ts.isCallExpression(timer) ? timer.arguments[0] : undefined;
-  if (timer === undefined || callback === undefined) throw new Error("the provider module holds no deadline timer");
-  const stops = `stop(${JSON.stringify(DEADLINE_REASON)})`;
-  const declared = form === "binding" ? `const ${name}=()=>${stops};` : `function ${name}(){${stops};}`;
-  const at = statementOf(timer).getStart(file);
-  return `${source.slice(0, at)}${declared}\n${source.slice(at, callback.getStart(file))}${name}${source.slice(callback.getEnd())}`;
-}
-/** A FAIL-CLOSED refactor: the stdout cap's binding declared with let, which the reader never folds. */
-function letCapBinding(source: string): string {
-  const file = parse(source);
-  const initializer = firstNode(file, isStdoutBinding(source));
-  const declaration = initializer === undefined ? undefined : parentOf(initializer);
-  const list = declaration === undefined ? undefined : parentOf(declaration);
-  if (list === undefined || !ts.isVariableDeclarationList(list) || !list.getText(file).startsWith("const ")) throw new Error("the stdout cap's binding is no const declaration");
-  const at = list.getStart(file);
-  return `${source.slice(0, at)}let${source.slice(at + "const".length)}`;
-}
-/** The C1 variants of a module: each changes a reading of the policy, except three that read unchanged: the renamed binding, which
- * moves the deadline under another name, and a timer that kills without the deadline reason under a name, beside a function or a
- * binding that does stop with it (a callback name resolves to its own declarations only). Every planted name is fresh. */
-function variantsOf(source: string): Record<string, string> {
-  const binding = isStdoutBinding(source);
-  const renamed = freshName(source, RENAMED_BASE);
-  const late = freshName(source, "onLateDeadline");
-  const shadowed = freshName(source, "onShadowedDeadline");
-  const decoy = freshName(source, "onDecoyDeadline");
-  const quiet = freshName(source, "onQuietKill");
-  return {
-    "other timer by name beside a deadline function": `${source}\nfunction ${decoy}(){stop("deadline");}\nfunction ${quiet}(){child.kill("SIGKILL");}\nsetTimeout(${quiet},500);\n`,
-    "other timer bound to a name beside a deadline binding": `${source}\nconst ${decoy}=()=>stop("deadline");\nconst ${quiet}=()=>child.kill("SIGKILL");\nsetTimeout(${quiet},500);\n`,
-    "deadline 30 s": plantAt(source, isDeadlineDelay, "30_000"),
-    "stdout cap 512 KiB": plantAt(source, isStdoutBound, "512*1024"),
-    "stdout cap inclusive": plantAt(source, isStdoutOperator, ">="),
-    "shared cap 128 KiB": plantAt(source, binding, "128*1024"),
-    "second deadline timer": `${source}\nsetTimeout(()=>stop("deadline"),5_000);\n`,
-    "second deadline timer by name": `${source}\nfunction ${late}(){stop("deadline");}\nsetTimeout(${late},5_000);\n`,
-    "second deadline timer by a shadowed name": `${source}\nfunction ${shadowed}(){}\n{const ${shadowed}=()=>stop("deadline");setTimeout(${shadowed},5_000);}\n`,
-    "second deadline timer by call": `${source}\nsetTimeout(stop.bind(null,"deadline"),5_000);\n`,
-    "duplicate deadline timer": `${source}\nsetTimeout(()=>stop("deadline"),60_000);\n`,
-    "runtime deadline": plantAt(source, isDeadlineDelay, "Date.now()"),
-    "renamed deadline binding": `const ${renamed}=60_000;\n${plantAt(source, isDeadlineDelay, renamed)}`,
+/** A namer of names the module never spells: the base, or the base with the first free numeric suffix, so a binding planted under
+ * it can neither double nor shadow a live one (wb-q1a0 F1: a hard-coded variant name collided with a refactor that took it). */
+function freshNamer(source: string): (base: string) => string {
+  const spelled = spelledIn(source);
+  return (base) => {
+    let name = base;
+    for (let suffix = 1; spelled.has(name); suffix += 1) name = `${base}_${suffix}`;
+    return name;
   };
 }
-/** Whether each variant of a module reads as a changed policy. */
-const changedOf = (source: string): Record<string, boolean> =>
-  Object.fromEntries(Object.entries(variantsOf(source)).map(([name, text]) => [name, !samePolicy(policyOf(text))]));
+const freshName = (source: string, base: string): string => freshNamer(source)(base);
+/** The base of the renamed-binding variant's name: the name a refactor that binds the deadline would most likely take. */
+const RENAMED_BASE = "DEADLINE_MS";
+/** The stated cap as a bound's text. */
+const statedCapText = (): string => `${statedPolicy().capBytes / 1024}*1024`;
+const QUOTED_REASON = JSON.stringify(DEADLINE_REASON);
+const STOPS = `()=>stop(${QUOTED_REASON})`;
+/** A plant that moves the deadline timer's delay under `name`, bound by `keyword` just before the statement that holds the timer (the
+ * delay's own text moves into the binding) or at module scope (the stated deadline, since the delay's text may name a binding that
+ * module scope cannot see): with const a REFACTOR that keeps the numerics, with let FAIL-CLOSED. */
+function namedDeadline(source: string, name: string, scope: "function" | "module", keyword: "const" | "let"): string {
+  const module = moduleOf(source);
+  const timer = deadlineTimerOf(module);
+  const delay = timer?.arguments[1];
+  if (timer === undefined || delay === undefined) throw new Error("the provider module holds no deadline delay to name");
+  const text = scope === "module" ? String(statedPolicy().deadlineMs) : delay.getText(module.file);
+  const at = scope === "module" ? 0 : statementOf(timer).getStart(module.file);
+  const { planted, moved } = splice(source, at, `${keyword} ${name}=${text};\n`, delay.getStart(module.file), delay.getEnd(), name);
+  return heldForm(planted, `deadline bound by ${keyword} (${scope} scope)`, (read) => {
+    const used = nameAt(read, moved(delay.getStart(module.file)));
+    const declaration = used?.text === name ? soleDeclaration(read, used) : undefined;
+    if (used === undefined || declaration === undefined || !ts.isVariableDeclaration(declaration) || declaration.initializer?.getText(read.file) !== text) return false;
+    const flag = keyword === "const" ? ts.NodeFlags.Const : ts.NodeFlags.Let;
+    return (declaration.parent.flags & flag) !== 0 && statementOf(declaration).parent === (scope === "module" ? read.file : statementOf(used).parent);
+  });
+}
+/** The forms a REFACTOR gives the deadline callback under a fresh name, each declared just before the statement that holds the timer. */
+type CallbackForm = "binding" | "declaration" | "alias" | "assignment" | "destructured";
+function callbackDeclared(form: CallbackForm, name: string, target: string): string {
+  if (form === "binding") return `const ${name}=${STOPS};`;
+  if (form === "declaration") return `function ${name}(){stop(${QUOTED_REASON});}`;
+  if (form === "alias") return `const ${target}=${STOPS};\nconst ${name}=${target};`;
+  if (form === "assignment") return `let ${name}:()=>void;\n${name}=${STOPS};`;
+  return `const {${name}}={${name}:${STOPS}};`;
+}
+/** Whether a callback name's one declaration has the form planted (read by syntax and the binder alone). */
+function declaredAs(declaration: ts.Declaration, form: CallbackForm, target: string): boolean {
+  if (form === "declaration") return ts.isFunctionDeclaration(declaration);
+  if (form === "destructured") return ts.isBindingElement(declaration) && ts.isObjectBindingPattern(declaration.parent);
+  if (!ts.isVariableDeclaration(declaration)) return false;
+  const value = declaration.initializer;
+  if (form === "assignment") return value === undefined && (declaration.parent.flags & ts.NodeFlags.Let) !== 0;
+  if (constValue(declaration) === undefined || value === undefined) return false;
+  return form === "alias" ? ts.isIdentifier(value) && value.text === target : ts.isArrowFunction(value);
+}
+/** A REFACTOR that keeps the numerics: the deadline timer's callback, whatever its form, replaced by a fresh name declared in `form`. */
+function namedCallback(source: string, form: CallbackForm): string {
+  const module = moduleOf(source);
+  const fresh = freshNamer(source);
+  const timer = deadlineTimerOf(module);
+  const callback = timer?.arguments[0];
+  if (timer === undefined || callback === undefined) throw new Error("the provider module holds no deadline timer");
+  const name = fresh("onDeadline");
+  const target = fresh("onDeadlineTarget");
+  const at = statementOf(timer).getStart(module.file);
+  const { planted, moved } = splice(source, at, `${callbackDeclared(form, name, target)}\n`, callback.getStart(module.file), callback.getEnd(), name);
+  return heldForm(planted, `deadline callback (${form})`, (read) => {
+    const used = nameAt(read, moved(callback.getStart(module.file)));
+    const declaration = used?.text === name ? soleDeclaration(read, used) : undefined;
+    return used !== undefined && declaration !== undefined && declaredAs(declaration, form, target) && statementOf(declaration).parent === statementOf(used).parent;
+  });
+}
+/** Where the deadline timer spells its deadline reason, in any form the reader reads: an argument it passes after the delay, else the
+ * first call argument inside what its callback runs (a literal, a template or a const-bound name). */
+function reasonSiteOf(module: Module, timer: ts.CallExpression): { readonly node: ts.Expression; readonly passed: boolean } | undefined {
+  const [callback, , ...passed] = timer.arguments;
+  const byTimer = passed.find((arg) => literalOf(module, arg) === DEADLINE_REASON);
+  if (byTimer !== undefined) return { node: byTimer, passed: true };
+  for (const value of callback === undefined ? [] : callbackValues(module, callback)) {
+    const isReason = (arg: ts.Expression): boolean => literalOf(module, arg) === DEADLINE_REASON;
+    const found = firstOf(value, (node): node is ts.CallExpression => ts.isCallExpression(node) && node.arguments.some(isReason))?.arguments.find(isReason);
+    if (found !== undefined) return { node: found, passed: false };
+  }
+  return undefined;
+}
+/** A REFACTOR that keeps the numerics: the deadline reason, in whatever spelling it has, moved under a fresh const name bound to a
+ * string literal or to a template (two forms that never coincide), or passed by the timer itself (an argument after the delay) to a
+ * fresh callback that forwards its parameter. */
+function reasonRefactor(source: string, form: "const" | "template" | "argument"): string {
+  const module = moduleOf(source);
+  const timer = deadlineTimerOf(module);
+  const site = timer === undefined ? undefined : reasonSiteOf(module, timer);
+  const callback = timer?.arguments[0];
+  const delay = timer?.arguments[1];
+  if (timer === undefined || site === undefined || callback === undefined || delay === undefined) throw new Error("the provider module holds no deadline reason to move");
+  const fresh = freshNamer(source);
+  const from = site.node.getStart(module.file);
+  if (form !== "argument") {
+    const name = fresh(form === "template" ? "DEADLINE_TEMPLATE" : "DEADLINE_REASON");
+    const value = form === "template" ? `\`${DEADLINE_REASON}\`` : QUOTED_REASON;
+    const { planted, moved } = splice(source, statementOf(site.node).getStart(module.file), `const ${name}=${value};\n`, from, site.node.getEnd(), name);
+    return heldForm(planted, `deadline reason bound by const (${form})`, (read) => {
+      const used = nameAt(read, moved(from));
+      const declaration = used?.text === name ? soleDeclaration(read, used) : undefined;
+      return constValue(declaration)?.getText(read.file) === value;
+    });
+  }
+  const name = fresh("onDeadlineReason");
+  const forward = "(reason:string)=>stop(reason)";
+  const first = splice(source, statementOf(timer).getStart(module.file), `const ${name}=${forward};\n`, callback.getStart(module.file), callback.getEnd(), name);
+  const after = first.moved(delay.getEnd());
+  const planted = site.passed ? first.planted : `${first.planted.slice(0, after)},${QUOTED_REASON}${first.planted.slice(after)}`;
+  const reason = site.passed ? site.node.getText(module.file) : QUOTED_REASON;
+  return heldForm(planted, "deadline reason passed by the timer", (read) => {
+    const used = nameAt(read, first.moved(callback.getStart(module.file)));
+    const declaration = used?.text === name ? soleDeclaration(read, used) : undefined;
+    const call = timerAt(read, first.moved(timer.getStart(module.file)));
+    return constValue(declaration)?.getText(read.file) === forward && call !== undefined && call.arguments.slice(2).some((arg) => arg.getText(read.file) === reason);
+  });
+}
+/** A REFACTOR that keeps the numerics: a cap's bound replaced by a fresh name, bound by const just before the statement that holds the
+ * cap, to the bound's own text (an alias) or to the stated cap (a binding of its own; wb-q1a0 U1, the gate's L28, L29, L34, L35). */
+function namedCap(source: string, stream: string, base: string, value: "alias" | "own"): string {
+  const module = moduleOf(source);
+  const cap = capOf(module, stream);
+  if (cap === undefined) throw new Error(`the provider module holds no ${stream} cap`);
+  const bound = cap.expression.right;
+  const name = freshName(source, base);
+  const text = value === "alias" ? bound.getText(module.file) : statedCapText();
+  const { planted, moved } = splice(source, statementOf(cap).getStart(module.file), `const ${name}=${text};\n`, bound.getStart(module.file), bound.getEnd(), name);
+  return heldForm(planted, `${stream} cap on a binding (${value})`, (read) => {
+    const used = nameAt(read, moved(bound.getStart(module.file)));
+    const declaration = used?.text === name ? soleDeclaration(read, used) : undefined;
+    return used !== undefined && declaration !== undefined && constValue(declaration)?.getText(read.file) === text && statementOf(declaration).parent === statementOf(used).parent;
+  });
+}
+/** A REFACTOR that keeps the numerics: every cap's bound replaced by the stated cap as a numeric text, no binding left to resolve
+ * (256*1024, or 262144 where the bound already reads 256*1024, so the refactor never leaves a module as it was). */
+function inlinedCaps(source: string): string {
+  const module = moduleOf(source);
+  const bounds = STREAMS.map((stream) => capOf(module, stream)?.expression.right).filter((bound): bound is ts.Expression => bound !== undefined);
+  if (bounds.length !== STREAMS.length) throw new Error("the provider module lacks a stream cap to inline");
+  const spelled = (bound: ts.Expression): string => (bound.getText(module.file) === statedCapText() ? String(statedPolicy().capBytes) : statedCapText());
+  const spans = bounds.map((bound) => ({ from: bound.getStart(module.file), to: bound.getEnd(), text: spelled(bound) })).sort((left, right) => right.from - left.from);
+  let planted = source;
+  for (const { from, to, text } of spans) planted = planted.slice(0, from) + text + planted.slice(to);
+  const ordered = [...spans].reverse();
+  const starts = ordered.map(({ from, text }, index) => ({ start: from + ordered.slice(0, index).reduce((sum, span) => sum + span.text.length - (span.to - span.from), 0), text }));
+  return heldForm(planted, "inlined caps", (read) =>
+    starts.every(({ start, text }) => firstOf(read.file, (node): node is ts.Expression => (ts.isBinaryExpression(node) || ts.isNumericLiteral(node)) && node.getStart(read.file) === start && node.getText(read.file) === text) !== undefined),
+  );
+}
+/** A FAIL-CLOSED plant: the stdout cap's bound read through a let binding of its own (a fresh name, declared just before the statement
+ * that holds the cap, with the bound's own text), which the reader never folds; only that cap's reading moves, whatever binding the
+ * provider shares between its caps (wb-q1a0 U1: the let pin of cut 1 held only while one binding served both streams). */
+function letCap(source: string): string {
+  const module = moduleOf(source);
+  const cap = capOf(module, "stdout");
+  if (cap === undefined) throw new Error("the provider module holds no stdout cap");
+  const bound = cap.expression.right;
+  const name = freshName(source, "STDOUT_LIMIT");
+  const text = bound.getText(module.file);
+  const { planted, moved } = splice(source, statementOf(cap).getStart(module.file), `let ${name}=${text};\n`, bound.getStart(module.file), bound.getEnd(), name);
+  return heldForm(planted, "stdout cap read through a let binding", (read) => {
+    const used = nameAt(read, moved(bound.getStart(module.file)));
+    const declaration = used?.text === name ? soleDeclaration(read, used) : undefined;
+    return declaration !== undefined && ts.isVariableDeclaration(declaration) && (declaration.parent.flags & ts.NodeFlags.Let) !== 0 && declaration.initializer?.getText(read.file) === text;
+  });
+}
 /** A policy as a witness value. */
 const policyJson = (policy: Policy): JsonObject => ({ deadlines: [...policy.deadlines], caps: policy.caps.map((cap) => ({ ...cap })) });
-
+/** A census-owned plant text: `names` maps each name base to the name it plants under. */
+type Plant = (names: (base: string) => string) => string;
+interface Variant {
+  readonly text: string;
+  /** The plant's own text, under its bases: held to the roster, so a plant cannot be hollowed to a weaker form that reads the same. */
+  readonly form: string;
+}
+/** The variants appended after the module's last line, in the order the C1 map reads them. */
+const APPENDED: readonly (readonly [string, Plant])[] = [
+  ["other timer by name beside a deadline function", (n) => `function ${n("onDecoyDeadline")}(){stop("deadline");}\nfunction ${n("onQuietKill")}(){child.kill("SIGKILL");}\nsetTimeout(${n("onQuietKill")},500);`],
+  ["other timer bound to a name beside a deadline binding", (n) => `const ${n("onDecoyDeadline")}=()=>stop("deadline");\nconst ${n("onQuietKill")}=()=>child.kill("SIGKILL");\nsetTimeout(${n("onQuietKill")},500);`],
+  ["other timer by a block name shadowing a deadline function", (n) => `function ${n("onShadowedKill")}(){stop("deadline");}\n{const ${n("onShadowedKill")}=()=>child.kill("SIGKILL");setTimeout(${n("onShadowedKill")},500);}`],
+  ["other timer by a name used beside the deadline reason", (n) => `const ${n("onUsedKill")}=()=>child.kill("SIGKILL");\nrecord(${n("onUsedKill")},"deadline");\nsetTimeout(${n("onUsedKill")},500);`],
+  ["other timer passing another reason", () => `setTimeout(stop,500,"stdout");`],
+  ["second deadline timer", () => `setTimeout(()=>stop("deadline"),5_000);`],
+  ["second deadline timer by name", (n) => `function ${n("onLateDeadline")}(){stop("deadline");}\nsetTimeout(${n("onLateDeadline")},5_000);`],
+  ["second deadline timer by a shadowed name", (n) => `function ${n("onShadowedDeadline")}(){}\n{const ${n("onShadowedDeadline")}=()=>stop("deadline");setTimeout(${n("onShadowedDeadline")},5_000);}`],
+  ["second deadline timer by call", () => `setTimeout(stop.bind(null,"deadline"),5_000);`],
+  ["second deadline timer by an alias", (n) => `const ${n("onLateTarget")}=()=>stop("deadline");\nconst ${n("onLateAlias")}=${n("onLateTarget")};\nsetTimeout(${n("onLateAlias")},5_000);`],
+  ["second deadline timer by an assigned name", (n) => `let ${n("onLateAssigned")}:()=>void;\n${n("onLateAssigned")}=()=>stop("deadline");\nsetTimeout(${n("onLateAssigned")},5_000);`],
+  ["second deadline timer by a name assigned with ||=", (n) => `let ${n("onLateOr")}:(()=>void)|undefined;\n${n("onLateOr")}||=()=>stop("deadline");\nsetTimeout(${n("onLateOr")},5_000);`],
+  ["second deadline timer by a name assigned with &&=", (n) => `let ${n("onLateAnd")}:()=>void=()=>{};\n${n("onLateAnd")}&&=()=>stop("deadline");\nsetTimeout(${n("onLateAnd")},5_000);`],
+  ["second deadline timer by a name assigned with ??=", (n) => `let ${n("onLateNullish")}:(()=>void)|undefined;\n${n("onLateNullish")}??=()=>stop("deadline");\nsetTimeout(${n("onLateNullish")},5_000);`],
+  ["second deadline timer by a destructured name", (n) => `const {${n("onLateDestructured")}}={${n("onLateDestructured")}:()=>stop("deadline")};\nsetTimeout(${n("onLateDestructured")},5_000);`],
+  ["second deadline timer by a renamed destructured name", (n) => `const {late:${n("onLateRenamed")}}={late:()=>stop("deadline")};\nsetTimeout(${n("onLateRenamed")},5_000);`],
+  ["second deadline timer by a parenthesized callback", () => `setTimeout((()=>stop("deadline")),5_000);`],
+  ["second deadline timer passing the reason", () => `setTimeout(stop,5_000,"deadline");`],
+  ["second deadline timer with a template reason", () => "setTimeout(()=>stop(`deadline`),5_000);"],
+  ["second deadline timer with a parenthesized reason", () => `setTimeout(()=>stop(("deadline")),5_000);`],
+  ["second deadline timer with a const-bound reason", (n) => `const ${n("LATE_REASON")}="deadline";\nsetTimeout(()=>stop(${n("LATE_REASON")}),5_000);`],
+  ["duplicate deadline timer", () => `setTimeout(()=>stop("deadline"),60_000);`],
+];
+/** The variants planted on a site the reader finds: the site and the text that replaces it. */
+const SITED: readonly (readonly [string, Site, string])[] = [
+  ["deadline 30 s", "deadline delay", "30_000"],
+  ["stdout cap 512 KiB", "stdout bound", "512*1024"],
+  ["stdout cap inclusive", "stdout operator", ">="],
+  ["shared cap 128 KiB", "stdout binding", "128*1024"],
+  ["runtime deadline", "deadline delay", "Date.now()"],
+];
+/** The C1 variants of a module, by name: each changes a reading of the policy, except the renamed binding and the other timers, which
+ * read unchanged. Every planted name is fresh. */
+function variantsOf(source: string): Record<string, Variant> {
+  const module = moduleOf(source);
+  const fresh = freshNamer(source);
+  const out: Record<string, Variant> = {};
+  for (const [name, site, text] of SITED) out[name] = { text: plantAt(source, module, site, text), form: text };
+  for (const [name, plant] of APPENDED) out[name] = { text: `${source}\n${plant(fresh)}\n`, form: plant((base) => base) };
+  const renamed = fresh(RENAMED_BASE);
+  out["renamed deadline binding"] = { text: `const ${renamed}=60_000;\n${plantAt(source, module, "deadline delay", renamed)}`, form: `const ${RENAMED_BASE}=60_000; ${RENAMED_BASE}` };
+  return out;
+}
+/** The FAIL-CLOSED readings of a module: each plant keeps the numerics, or adds an unrelated call, yet reads changed, by design (a
+ * let binding is never folded; a stream or deadline reason passed to any call is read as a stop, whatever the callee). */
+function failClosedOf(source: string): Record<string, { readonly text: string; readonly form: string }> {
+  const named: Plant = (n) => `function ${n("onSlowWarning")}(){console.debug("deadline");}\nsetTimeout(${n("onSlowWarning")},50_000);`;
+  return {
+    "stdout cap read through a let binding": { text: letCap(source), form: "let STDOUT_LIMIT" },
+    "deadline read through a let binding": { text: namedDeadline(source, freshName(source, "DEADLINE_LIMIT"), "function", "let"), form: "let DEADLINE_LIMIT" },
+    "stream reason in an unrelated call under a comparison": { text: `${source}\nif(n>0) console.debug("stdout");\n`, form: `if(n>0) console.debug("stdout");` },
+    "deadline reason in an unrelated call inside a timer": { text: `${source}\nsetTimeout(()=>console.debug("deadline"),50_000);\n`, form: `setTimeout(()=>console.debug("deadline"),50_000);` },
+    "deadline reason in an unrelated call inside a named timer callback": { text: `${source}\n${named(freshNamer(source))}\n`, form: named((base) => base) },
+  };
+}
+/** The C1 residuals' quiet rows: each plant is a form the reader does not read, so each reads unchanged. */
+const RESIDUAL_ROWS: readonly (readonly [string, string, "prepend" | "append", Plant])[] = [
+  ["R-OTHER-KILL-PATH", "a kill timer", "prepend", () => `setTimeout(()=>child.kill("SIGKILL"),30_000);`],
+  ["R-INDIRECT-DEADLINE", "a wrapper", "append", (n) => `const ${n("onLate")}=()=>stop("deadline");\nsetTimeout(()=>${n("onLate")}(),5_000);`],
+  ["R-INDIRECT-DEADLINE", "a member", "append", (n) => `const ${n("handlers")}={deadline:()=>stop("deadline")};\nsetTimeout(${n("handlers")}.deadline,5_000);`],
+  ["R-INDIRECT-DEADLINE", "a parameter", "append", (n) => `function ${n("armLate")}(${n("onArmed")}:()=>void){setTimeout(${n("onArmed")},5_000);}\n${n("armLate")}(()=>stop("deadline"));`],
+  ["R-INDIRECT-DEADLINE", "an array destructuring", "append", (n) => `const [${n("onLateItem")}]=[()=>stop("deadline")];\nsetTimeout(${n("onLateItem")},5_000);`],
+  ["R-INDIRECT-DEADLINE", "a destructuring of a name", "append", (n) => `const ${n("lateHandlers")}={${n("onLateKey")}:()=>stop("deadline")};\nconst {${n("onLateKey")}}=${n("lateHandlers")};\nsetTimeout(${n("onLateKey")},5_000);`],
+  ["R-OTHER-TIMER", "globalThis.setTimeout", "append", () => `globalThis.setTimeout(()=>stop("deadline"),5_000);`],
+  ["R-OTHER-TIMER", "an aliased timers import", "append", (n) => `import { setTimeout as ${n("later")} } from "node:timers";\n${n("later")}(()=>stop("deadline"),5_000);`],
+  ["R-OTHER-TIMER", "setInterval", "append", () => `setInterval(()=>stop("deadline"),5_000);`],
+  ["R-COMPUTED-REASON", "a spread", "append", () => `setTimeout(()=>stop(...["deadline"]),5_000);`],
+  ["R-COMPUTED-REASON", "a concatenation", "append", () => `setTimeout(()=>stop("dead"+"line"),5_000);`],
+  ["R-COMPUTED-REASON", "an assertion", "append", () => `setTimeout(()=>stop("deadline" as const),5_000);`],
+  ["R-COMPUTED-REASON", "a let-bound name", "append", (n) => `let ${n("LATE_LET_REASON")}="deadline";\nsetTimeout(()=>stop(${n("LATE_LET_REASON")}),5_000);`],
+];
+/** Every shape-independent reading C1 pins, of one module: the variants' changed flags, every census-owned plant's form, the
+ * FAIL-CLOSED readings and the residuals' quiet rows. A REFACTOR that keeps the numerics must leave the variants' and the FAIL-CLOSED
+ * readings as on the live module (wb-q1a0 class guard: no pin or variant may turn a numerics-preserving refactor into a red). */
+function readingsOf(source: string): { changed: Record<string, boolean>; forms: Record<string, string>; failClosed: Record<string, JsonObject>; residuals: Record<string, Record<string, string>> } {
+  const fresh = freshNamer(source);
+  const variants = variantsOf(source);
+  const closed = failClosedOf(source);
+  const residuals: Record<string, Record<string, string>> = {};
+  const forms: Record<string, string> = Object.fromEntries(Object.entries(variants).map(([name, variant]) => [name, variant.form]));
+  for (const [name, plant] of Object.entries(closed)) forms[name] = plant.form;
+  for (const [id, label, end, plant] of RESIDUAL_ROWS) {
+    const text = end === "prepend" ? `${plant(fresh)}\n${source}` : `${source}\n${plant(fresh)}\n`;
+    residuals[id] = { ...residuals[id], [label]: samePolicy(policyOf(text)) ? "unchanged" : "read" };
+    forms[`${id} ${label}`] = plant((base) => base);
+  }
+  return {
+    changed: Object.fromEntries(Object.entries(variants).map(([name, variant]) => [name, !samePolicy(policyOf(variant.text))])),
+    forms,
+    failClosed: Object.fromEntries(Object.entries(closed).map(([name, plant]) => [name, policyJson(policyOf(plant.text))])),
+    residuals,
+  };
+}
+/** The REFACTORS of a module, by name: each keeps the numerics (wb-q1a0 F1, F3, F5 and U1, U2). */
+function refactorsOf(source: string): Record<string, string> {
+  const renamed = freshName(source, RENAMED_BASE);
+  return {
+    "deadline bound in its function to the variant's name": namedDeadline(source, renamed, "function", "const"),
+    "deadline bound at module scope to the variant's name": namedDeadline(source, renamed, "module", "const"),
+    "deadline bound in its function to another name": namedDeadline(source, freshName(source, "PREVIEW_DEADLINE_MS"), "function", "const"),
+    "deadline callback bound to a name": namedCallback(source, "binding"),
+    "deadline callback declared as a function": namedCallback(source, "declaration"),
+    "deadline callback through an alias": namedCallback(source, "alias"),
+    "deadline callback assigned to a name": namedCallback(source, "assignment"),
+    "deadline callback destructured from an object literal": namedCallback(source, "destructured"),
+    "deadline reason bound by const": reasonRefactor(source, "const"),
+    "deadline reason bound by const to a template": reasonRefactor(source, "template"),
+    "deadline reason passed by the timer": reasonRefactor(source, "argument"),
+    "stderr cap on its own binding": namedCap(source, "stderr", "STDERR_MAX_BYTES", "own"),
+    "stdout cap on its own binding": namedCap(source, "stdout", "STDOUT_MAX_BYTES", "own"),
+    "stdout cap through an alias binding": namedCap(source, "stdout", "STDOUT_MAX", "alias"),
+    "stderr cap through an alias binding": namedCap(source, "stderr", "STDERR_MAX", "alias"),
+    "both caps on their own bindings": namedCap(namedCap(source, "stdout", "STDOUT_MAX_BYTES", "own"), "stderr", "STDERR_MAX_BYTES", "own"),
+    "both caps inlined": inlinedCaps(source),
+  };
+}
+/** The readings of a refactored module that differ from the live module's, as section:name. The forms and the residuals' quiet rows
+ * are census-owned texts appended under fresh names, the same on every module that reads unchanged, so they are pinned in the
+ * witness instead. */
+function driftOf(readings: ReturnType<typeof readingsOf>, live: ReturnType<typeof readingsOf>): string[] {
+  const out: string[] = [];
+  for (const section of ["changed", "failClosed"] as const) {
+    const names = new Set([...Object.keys(readings[section]), ...Object.keys(live[section])]);
+    for (const name of names) if (JSON.stringify(readings[section][name]) !== JSON.stringify(live[section][name])) out.push(`${section}:${name}`);
+  }
+  return out;
+}
 // --- C2: the scan ------------------------------------------------------------------------------------------------------------------
 const DATA_EXTENSIONS: readonly string[] = [".json", ".jsonl", ".yaml", ".yml", ".toml"];
 /** A file's sentences, each with the line it starts on. */
@@ -960,68 +1311,69 @@ const IMPL: Record<string, () => Json> = {
     const source = readRepo(PROVIDER);
     const policy = policyOf(source);
     expect(policy).toEqual(statedShape());
-    const changed = changedOf(source);
-    expect(changed).toEqual({
-      "other timer by name beside a deadline function": false,
-      "other timer bound to a name beside a deadline binding": false,
+    const live = readingsOf(source);
+    expect(live.changed).toEqual({
       "deadline 30 s": true,
       "stdout cap 512 KiB": true,
       "stdout cap inclusive": true,
       "shared cap 128 KiB": true,
+      "runtime deadline": true,
+      "other timer by name beside a deadline function": false,
+      "other timer bound to a name beside a deadline binding": false,
+      "other timer by a block name shadowing a deadline function": false,
+      "other timer by a name used beside the deadline reason": false,
+      "other timer passing another reason": false,
       "second deadline timer": true,
       "second deadline timer by name": true,
       "second deadline timer by a shadowed name": true,
       "second deadline timer by call": true,
+      "second deadline timer by an alias": true,
+      "second deadline timer by an assigned name": true,
+      "second deadline timer by a name assigned with ||=": true,
+      "second deadline timer by a name assigned with &&=": true,
+      "second deadline timer by a name assigned with ??=": true,
+      "second deadline timer by a destructured name": true,
+      "second deadline timer by a renamed destructured name": true,
+      "second deadline timer by a parenthesized callback": true,
+      "second deadline timer passing the reason": true,
+      "second deadline timer with a template reason": true,
+      "second deadline timer with a parenthesized reason": true,
+      "second deadline timer with a const-bound reason": true,
       "duplicate deadline timer": true,
-      "runtime deadline": true,
       "renamed deadline binding": false,
     });
-    // REFACTORS (wb-q1a0 F1, F3): each keeps the numerics, so it reads unchanged, and no variant reads otherwise over it. The first
-    // two bind the deadline to the very name the renamed variant takes on the live module (the gate's L17 and L17c).
-    const renamed = freshName(source, RENAMED_BASE);
-    const refactors: Record<string, string> = {
-      "deadline bound in its function to the variant's name": namedDeadline(source, renamed, "function"),
-      "deadline bound at module scope to the variant's name": namedDeadline(source, renamed, "module"),
-      "deadline bound in its function to another name": namedDeadline(source, freshName(source, "PREVIEW_DEADLINE_MS"), "function"),
-      "deadline callback bound to a name": namedCallback(source, freshName(source, "onDeadline"), "binding"),
-      "deadline callback declared as a function": namedCallback(source, freshName(source, "onDeadline"), "declaration"),
-    };
+    // FAIL-CLOSED (by design): each keeps the numerics, or adds an unrelated call, yet reads changed; each reading is pinned.
+    expect(Object.values(live.failClosed).map((reading) => JSON.stringify(reading) === JSON.stringify(statedShape()))).toEqual([false, false, false, false, false]);
+    expect(live.residuals).toEqual({
+      "R-OTHER-KILL-PATH": { "a kill timer": "unchanged" },
+      "R-INDIRECT-DEADLINE": { "a wrapper": "unchanged", "a member": "unchanged", "a parameter": "unchanged", "an array destructuring": "unchanged", "a destructuring of a name": "unchanged" },
+      "R-OTHER-TIMER": { "globalThis.setTimeout": "unchanged", "an aliased timers import": "unchanged", setInterval: "unchanged" },
+      "R-COMPUTED-REASON": { "a spread": "unchanged", "a concatenation": "unchanged", "an assertion": "unchanged", "a let-bound name": "unchanged" },
+    });
+    // REFACTORS (wb-q1a0 F1, F3, F5, U1, U2): each keeps the numerics, so it reads unchanged, and leaves every variant's reading and
+    // every FAIL-CLOSED reading exactly as on the live module.
+    const refactors = refactorsOf(source);
     expect(new Set([source, ...Object.values(refactors)]).size).toBe(Object.keys(refactors).length + 1);
-    const refactored = Object.fromEntries(
-      Object.entries(refactors).map(([name, text]) => {
-        const readings = changedOf(text);
-        return [name, { unchanged: samePolicy(policyOf(text)), drift: Object.keys(changed).filter((variant) => readings[variant] !== changed[variant]) }];
-      }),
-    );
+    const refactored = Object.fromEntries(Object.entries(refactors).map(([name, text]) => [name, { unchanged: samePolicy(policyOf(text)), drift: driftOf(readingsOf(text), live) }]));
     expect(refactored).toEqual(Object.fromEntries(Object.keys(refactors).map((name) => [name, { unchanged: true, drift: [] }])));
-    // FAIL-CLOSED (wb-q1a0 F3, by design): each keeps the numerics yet reads changed; the reading itself is pinned.
-    const failClosed = {
-      "cap binding declared with let": policyJson(policyOf(letCapBinding(source))),
-      "stream reason in an unrelated call under a comparison": policyJson(policyOf(`${source}\nif(n>0) console.debug("stdout");\n`)),
-    };
-    expect(Object.values(failClosed).map((reading) => JSON.stringify(reading) === JSON.stringify(statedShape()))).toEqual([false, false]);
     const fresh = { free: freshName("const B=1;", "A"), nested: freshName("const A=1;\nfunction f(){const A_1=2;}", "A") };
     expect(fresh).toEqual({ free: "A", nested: "A_2" });
-    const otherKill = samePolicy(policyOf(`setTimeout(()=>child.kill("SIGKILL"),30_000);\n${source}`));
-    expect(otherKill).toBe(true);
-    const wrapper = freshName(source, "onLate");
-    const handlers = freshName(source, "handlers");
-    const indirect = [
-      `${source}\nconst ${wrapper}=()=>stop("deadline");\nsetTimeout(()=>${wrapper}(),5_000);\n`,
-      `${source}\nconst ${handlers}={deadline:()=>stop("deadline")};\nsetTimeout(${handlers}.deadline,5_000);\n`,
-    ].map((text) => (samePolicy(policyOf(text)) ? "unchanged" : "read"));
-    expect(indirect).toEqual(["unchanged", "unchanged"]);
+    // The binder's scopes on a fixed module: an inner binding of a delay's name governs it, beside an outer binding of that name.
+    const scoped = [...policyOf(`const LIMIT=1;\nfunction arm(){const LIMIT=60_000;setTimeout(()=>stop("deadline"),LIMIT);}`).deadlines];
+    expect(scoped).toEqual([60_000]);
     JUDGED.add("C1");
     return {
       claim: claim("C1"),
       module: PROVIDER,
       policy: policyJson(policy),
       stated: { deadlineMs: statedPolicy().deadlineMs, capBytes: statedPolicy().capBytes },
-      changed,
+      changed: live.changed,
+      forms: live.forms,
       refactored,
-      failClosed,
+      failClosed: live.failClosed,
       fresh,
-      residuals: { "R-OTHER-KILL-PATH": otherKill ? "unchanged" : "read", "R-INDIRECT-DEADLINE": indirect },
+      scoped,
+      residuals: live.residuals,
     };
   },
   C2: () => {
@@ -1086,7 +1438,7 @@ const IMPL: Record<string, () => Json> = {
     const source = readRepo(PROVIDER);
     const live = guardOf(pinGate(), policyOf(source), scanEntries(liveEntries().entries));
     expect(live).toEqual({ state: "armed", violations: [] });
-    const changed = policyOf(plantAt(source, isDeadlineDelay, "30_000"));
+    const changed = policyOf(plantAt(source, moduleOf(source), "deadline delay", "30_000"));
     const claimed = probe("The 60 s deadline is adequate for TSX costs.");
     const armed = guardOf("ABSENT", changed, claimed);
     expect(armed.violations).toHaveLength(2);
