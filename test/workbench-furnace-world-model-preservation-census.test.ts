@@ -9,90 +9,113 @@
  * privacy/security and causal ordering'); "Gating artifact: source_revision/capture_completeness/redaction_hash on a released
  * surface."; and the acceptance shape (ACCEPTANCE below, verbatim).
  *
- * MEASURED (read-only, by the cutting seat, 2026-10-28, at base 7a0ab7f, and again at 1bb7b05, whose landings 631-635 touched
- * no src file, vendored SDK or docs/12 and changed this bead's export row only in its claim fields). Producer (Furnace's own
- * tree, read with git show at the filing pin 0f791db71b9d and again at Furnace main 0d41031, 2026-10-26: the same three blobs;
- * this census never reads it): docs/programs/world-model-trace-adapter-2026-10-18/README.md (blob 8649ef6e) reads "DESIGN ONLY,
- * not a new executor, scheduler or live trace exporter." at :2 and "Redact secret-bearing logs" at :6; 01-architecture.md (blob
- * f2f3f1c6) holds FRN-WM-003 at :7 and the "Proposed records:" line at :11 (PROPOSED_RECORDS below, verbatim). The installed
- * @furnace/sdk is 0.1.0 from vendor/furnace-sdk-0.1.0.tgz (sha256 aaa57dcfb1c205ec...; 128 files, whose 28 .d.ts files hold 389
- * named declarations with 1425 members, read through the TypeScript AST as THE READERS below do): no declaration is named for a
- * proposed record, no member name reads as one of the three FRN-WM-003 fields, and no file spells a record, a field or the
- * world-model words by path or content (no file spells "redact" either). Its nearest members are what Pi's Furnace observer
- * reads today: RunDto.furnace_version and RunDto.binary_revision (version provenance), LogsReadDto.complete and
- * LogsReadDto.lossy (a log read's missing-fields status) and AttemptDto.ordinal (order). Pi: no src file spells a proposed
- * record's identifier or an FRN-WM-003 wire name (git grep rc 1 over 116 files). Two wider readings cannot be used in src: Pi's
- * own NativeSnapshot field is the camelCase sourceRevision, and the export files two other programs' world-model requirement
- * families (HX-PREDICTIVE-WORLD-MODEL-ADAPTERS, RF-PREDICTIVE-WORLD-MODEL-CONTEXT) whose Pi children cite their ids in src
- * comments (the queued wb-gwr.2 cut adds one to src/workbench/hyperunix-observer.ts). So no world-model record has shipped and
+ * MEASURED (read-only). By the cutting seat, 2026-10-28, at base 7a0ab7f and again at 1bb7b05; by the respin seat (cut #2,
+ * after the PREP F refusal of cut #1), 2026-10-28, at trunk 5fbe25e. Producer (Furnace's own tree, read with git show at the
+ * filing pin 0f791db71b9d and again at Furnace main 0d41031, 2026-10-26: the same three blobs; this census never reads it):
+ * docs/programs/world-model-trace-adapter-2026-10-18/README.md (blob 8649ef6e) reads "DESIGN ONLY, not a new executor,
+ * scheduler or live trace exporter." at :2 and "Redact secret-bearing logs" at :6; 01-architecture.md (blob f2f3f1c6) holds
+ * FRN-WM-003 at :7 and the "Proposed records:" line at :11 (PROPOSED_RECORDS below, verbatim). The installed @furnace/sdk is
+ * 0.1.0 from vendor/furnace-sdk-0.1.0.tgz (sha256 aaa57dcfb1c205ec...; 128 files: 28 .d.ts, 28 .js, 28 .map, 43 .json and the
+ * README, no .d.mts or .d.cts file). Read through the TypeScript AST as THE READERS below do, its 28 declaration files hold 602
+ * named declarations (237 interfaces, 101 type aliases, 51 classes, 130 functions, 83 variables) with 1715 members: no
+ * declaration is named for a proposed record, no member name reads as one of the three FRN-WM-003 fields, and no file spells a
+ * record, a field or the world-model words by path or content, as written or escape-decoded (no file spells "redact" either).
+ * Its nearest members are what Pi's Furnace observer reads today: RunDto.furnace_version and RunDto.binary_revision (version
+ * provenance), LogsReadDto.complete and LogsReadDto.lossy (a log read's missing-fields status) and AttemptDto.ordinal (order).
+ * Pi (117 src files at 5fbe25e): no src file spells a proposed record's identifier or an FRN-WM-003 wire name, in any case,
+ * inside a longer name or through an escape. Two wider readings cannot be used in src: Pi's own NativeSnapshot field is the
+ * camelCase sourceRevision, and the export files two other programs' world-model requirement families
+ * (HX-PREDICTIVE-WORLD-MODEL-ADAPTERS, RF-PREDICTIVE-WORLD-MODEL-CONTEXT) whose Pi children cite their ids in src comments:
+ * landing 646 (wb-gwr.2) cites HX-PREDICTIVE-WORLD-MODEL-ADAPTERS-R2 at src/workbench/hyperunix-observer.ts:291, the one src
+ * file that spells the world-model words. So T3 reads neither wider form (R-SRC-NARROW), no world-model record has shipped and
  * no Pi reader of one exists. No src, docs or tracker text is edited by this cut.
  *
- * THE READERS. The release reader reads every regular file under the installed package: each .d.ts file through the TypeScript
- * AST (every interface, type alias, class and enum declaration with every member signature, property, method and enum member
- * nested in it at any depth, so a field reaches the reading through any heritage, alias, generic wrapper or nesting; comments
- * never counting), and every file's package-relative path and raw content. A record is read by its words after the "Furnace"
- * prefix, a field by its two words and the world-model pair by "world" and "model", each pair with any run of non-alphanumeric
- * characters (or none) between its words, in any case. The src reader reads every regular file under src/ as raw text for each
- * record's exact identifier and each field's exact snake-case wire name, as whole words (a reader of the records reads their
- * JSON keys).
+ * THE READERS. The release reader reads every regular file under the installed package: each declaration file (.d.ts, .d.mts
+ * or .d.cts) through the TypeScript AST (every interface, type alias, class, enum, function and variable declaration with every
+ * member signature, property, method and enum member nested in it at any depth, a function's or a variable's type literal
+ * included, so a field reaches the reading through any heritage, alias, generic wrapper or nesting; the AST reads an escaped
+ * identifier or a quoted name as the name it spells, and comments never count), and every file's package-relative path and
+ * content, each as written and with its JavaScript escape sequences (\uXXXX, \u{X}, \xXX) decoded. A record is read by its
+ * words after the "Furnace" prefix, a field by its two words and the world-model pair by "world" and "model", each with any run
+ * of non-alphanumeric characters (or none) between its words, in any case, anywhere in a name or text. The src reader reads
+ * every regular file under src/ as text, as written and escape-decoded, for each record's exact identifier and each field's
+ * exact snake-case wire name, in any case and anywhere in the text, a longer name holding it included (a reader of the records
+ * reads their JSON keys; FurnaceObservedTransitionDto and native_source_revision read).
  *
  * CASES (each test title opens with its id and the ROWS it holds). T1 (ARMED) the installed release declares no record and no
- * field and spells none of RELEASE_WORDS, while the same reader finds the observer's analog members and, by content, the
- * release's own binary_revision (liveness): when a re-vendor brings a record, T1 reds naming the acceptance as owed. T2 the
- * same readers find every record, field and word in a planted release (through a quoted member, a type alias, a class and a
- * comment), and every field declared on a type-alias parent, behind a generic wrapper or nested under an unrelated member. T3
- * (ARMED) no src file spells SRC_WORDS while the reader finds the schema literal in src/workbench/identity.ts only and finds
- * each planted identifier and wire name: when a Pi reader of the records lands, T3 reds naming the acceptance as owed. Q1 the
- * three named residuals, each a pinned quiet row re-judged here (RESIDUALS). J1 the acceptance's per-field round-trip judge: an
- * identity reader passes, and a reader that drops a judged field, strips or reverses redaction_hash, or reorders the records
- * reds with exactly its findings. R1 FurnaceObservedTransition-shaped records (PROPOSED_RECORDS' fields, HYPOTHETICAL values)
- * survive the furnace_observe reply's sanitizer byte for byte, per field, key order and record order included; each CORPUS
- * class planted in a record's free text is redacted while every other field survives, and the same line as a producer that
- * already redacted it writes it (HELD: its value replaced by the marker) stays redacted. O1 the observer's analogs survive its
- * reading, its Run snapshot, its topology, an ObservationProjection fed that topology, and the reply: furnace_version and
- * binary_revision as producer version and revision on every snapshot and every projected node (an absent binary_revision is
- * stated nowhere, never guessed), each INCOMPLETE fact as "partial" everywhere, and the Attempt page's order in the items,
- * snapshots, edges, evidence refs and projected nodes, with ownership edges only; a doctored output set, one label changed per
- * surface, proves the label reader reads every surface and the reply's text. O2 log lines, FRN-WM-003-shaped members the
- * release does not publish and secret-bearing members, planted on the Run status, its failed rows, every Attempt row and the
- * log read, change no output and reach none. E1 the log evidence presentation keeps every HELD line redacted and redacts every
- * CORPUS class. S1 the furnace_observe tool body, read through the AST of src/index.ts, replies with
- * textResult(sanitizeWorkbenchJsonText(reading)) for the reading its FurnaceObserver returned and refreshes the projection with
- * that reading's Run snapshot, so R1 and O1 read the reply the tool returns. A1 the outside anchors: the export title's
- * clauses, snake-case fields and requirement id; the export notes' FRN-WM-003 phrases, per-field acceptance list, citation,
- * gating artifact and ACCEPTANCE; docs/12's redaction-floor sentence (CORPUS); the observer source's incompleteness operands
- * (INCOMPLETE); every ROWS field among PROPOSED_RECORDS' fields; and the two reasons for R-SRC-NARROW: Pi's NativeSnapshot
- * declaring exactly one ROWS field in camelCase (src/workbench/observation.ts) and the export filing world-model requirement
- * families other than this bead's. F1 the frozen shape. J2 the judged set: each row's pins are exactly the cases whose titles
- * name it, and every case is registered once.
+ * field and spells none of RELEASE_WORDS, in any form THE READERS read, while the same reader finds the observer's analog
+ * members and, by content, the release's own binary_revision (liveness): when a re-vendor brings a record or a field in such a
+ * form, T1 reds naming the acceptance as owed (RESIDUALS names the forms no reader reads). T2 the same readers find every
+ * record, field and word in a planted release (through a quoted member, a type alias, a class and a comment), every field
+ * declared on a type-alias parent, behind a generic wrapper or nested under an unrelated member, each escaped spelling the cut
+ * #1 refusal planted (a computed key over an escaped literal, a variable's and a function's type literal, a .d.mts declaration
+ * of an escaped record), a .d.cts declaration, and each escape form in plain content. T3 (ARMED) no src file spells SRC_WORDS in
+ * any form THE READERS read, while the reader finds the schema literal in src/workbench/identity.ts only and finds each planted
+ * identifier and wire name, the escaped, affixed and re-cased ones included: when a Pi reader spelling a record identifier or a
+ * wire name in such a form lands, T3 reds naming the acceptance as owed. T3 reads neither the world-model words nor camelCase
+ * (R-SRC-NARROW; A1 holds why). Q1 the four named residuals, each a pinned quiet row re-judged here (RESIDUALS). J1 the
+ * acceptance's per-field round-trip judge: an identity reader passes, and a reader that drops a judged field, strips or
+ * reverses redaction_hash, retypes a field while keeping its text, or reorders the records reds with exactly its findings. R1
+ * FurnaceObservedTransition-shaped records (PROPOSED_RECORDS' fields, HYPOTHETICAL values) survive the furnace_observe reply's
+ * sanitizer byte for byte, per field, key order and record order included; each CORPUS class planted in each text field in
+ * turn is redacted there while every other field survives, and the same line as a producer that already redacted it writes it
+ * (HELD: its value replaced by the marker) stays redacted. O1 in every RunState the installed release declares (STATES), the
+ * observer's analogs survive its reading (its last reading and observe()'s first yield equal it, and every yield and the last
+ * reading after close() keep its source and page), its Run snapshot, its topology, an ObservationProjection fed that
+ * topology, and the reply: furnace_version and binary_revision as producer version and revision on every snapshot and every
+ * projected node (an absent binary_revision is stated nowhere, never guessed), each INCOMPLETE fact as "partial" everywhere,
+ * and the Attempt page's order in the items, snapshots, edges, evidence refs and projected nodes, with ownership edges only; a
+ * doctored output set, one label changed per surface, proves the label reader reads every surface and the reply's text. O2
+ * log lines, FRN-WM-003-shaped members the release does not publish and secret-bearing members, planted on the Run status, its
+ * failed and active rows, every Attempt row and the log read, in every RunState, change no output of a successful read (the
+ * reading, the last reading before and after close(), every observe() yield, the Run snapshot, the topology, the projection
+ * and the reply) and reach none. E1 the log evidence presentation of either stream (STREAMS) keeps every HELD line redacted
+ * and redacts every CORPUS class. S1 the furnace_observe tool body, read
+ * through the AST of src/index.ts, replies with textResult(sanitizeWorkbenchJsonText(reading)) for the reading its
+ * FurnaceObserver returned, names that reading in no other call and writes none of it, makes no other reply than its two
+ * literal refusals and its sanitized error text, and refreshes the projection with that reading's Run snapshot, so R1 and O1
+ * read the reply the tool returns. A1 the outside anchors: the export title's clauses, snake-case fields and requirement id;
+ * the export notes' FRN-WM-003 phrases, per-field acceptance list, citation, gating artifact and ACCEPTANCE; docs/12's
+ * redaction-floor sentence, read as one whole sentence of a rendered paragraph of its '## Current diagnostic protections'
+ * section, bound once under the page title and carrying no HTML (CORPUS); the observer source's incompleteness operands
+ * (INCOMPLETE); the installed release's RunState and OutputStream unions (STATES, STREAMS); every ROWS field among
+ * PROPOSED_RECORDS' fields; and the two reasons for R-SRC-NARROW: Pi's NativeSnapshot declaring exactly one ROWS field in
+ * camelCase (src/workbench/observation.ts) and the export filing world-model requirement families other than this bead's. F1
+ * the frozen shape. J2 the judged set: each row's pins are exactly the cases whose titles name it, and every case is
+ * registered once.
  *
- * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}`, and INCOMPLETE, CORPUS, RESIDUALS, RECORDS and the
- * transition fields are pinned as literals. ROWS, INCOMPLETE and CORPUS are each also held to an anchor outside this file (A1);
- * RECORDS and the transition fields are read from PROPOSED_RECORDS, the producer line quoted verbatim, and only the three ROWS
- * fields among them are anchored outside it (the export title and gating artifact); of RESIDUALS, R-SRC-NARROW is anchored
- * outside (observation.ts and the export) and R-RENAMED and R-COMPUTED are pinned by their quiet rows and the literal only.
+ * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}`, and INCOMPLETE, CORPUS, STATES, STREAMS, RESIDUALS,
+ * RECORDS and the transition fields are pinned as literals. ROWS, INCOMPLETE, CORPUS, STATES and STREAMS are each also held to
+ * an anchor outside this file (A1); RECORDS and the transition fields are read from PROPOSED_RECORDS, the producer line quoted
+ * verbatim, and only the three ROWS fields among them are anchored outside it (the export title and gating artifact); of
+ * RESIDUALS, R-SRC-NARROW is anchored outside (observation.ts and the export) and R-RENAMED, R-COMPUTED and R-ENCODED are
+ * pinned by their quiet rows and the literal only.
  *
  * RESIDUALS (named families, each with its pinned quiet row in Q1): R-RENAMED, a record shipped under names that spell no
  * reading escapes T1; R-COMPUTED, a field whose name the release assembles at type level (a mapped type over a template-literal
  * key that splits the field's words) escapes T1, since neither the member reading nor the content reading sees the words;
- * R-SRC-NARROW, a Pi reader spelling the records or fields only in camelCase, prose or keys assembled from parts escapes T3.
+ * R-ENCODED, a record, a field or the world-model words spelled only through an encoding other than a JavaScript escape
+ * (character codes, an HTML character reference) escapes T1 and T3; R-SRC-NARROW, a Pi reader spelling the fields only in
+ * camelCase, or a record or a field only in prose or in keys assembled from parts, escapes T3.
  *
  * PARKED (the external remainder, a Furnace release): the acceptance itself - a round-trip preservation test per field through
  * a real reader's projection and tool reply - needs the records in a released @furnace/sdk and a Pi reader of them. T1 or T3
- * reds when either arrives, and J1's judge is the one that test runs.
+ * reds when either arrives in a form THE READERS read (RESIDUALS names the forms they do not), and J1's judge is the one that
+ * test runs.
  */
 import { createHash } from "node:crypto";
 import { readdirSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
-import type { AttemptDto, AttemptListDto, LogsReadDto, Response, ResponseKind, RunStatusDto } from "@furnace/sdk";
+import type { AttemptDto, AttemptListDto, LogsReadDto, Response, ResponseKind, RunState, RunStatusDto } from "@furnace/sdk";
 import ts from "typescript";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { readFurnaceAttemptLogEvidence } from "../src/workbench/furnace-evidence.js";
 import { FurnaceObserver, type FurnaceObserverClient, type FurnaceProjectionTopology, type FurnaceReading } from "../src/workbench/furnace-observer.js";
 import { type NativeSnapshot, ObservationProjection, type ObservedNode } from "../src/workbench/observation.js";
 import { sanitizeWorkbenchJsonText } from "../src/workbench/redaction.js";
+import { docsSection } from "./helpers/census.js";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BEAD = "wb-b04.2";
@@ -117,7 +140,7 @@ const ACCEPTANCE =
 const GATING = "Gating artifact: source_revision/capture_completeness/redaction_hash on a released surface.";
 const CITATION = `01-architecture.md:7@${PRODUCER_PIN}`;
 const OWED_RELEASE = `ARMED (${BEAD}): the installed @furnace/sdk now declares or spells a Furnace world-model record, an FRN-WM-003 field or the world-model words. If the records shipped, a Pi reader of them owes the acceptance: ${ACCEPTANCE} If they did not, re-measure against the new release and say so.`;
-const OWED_READER = `ARMED (${BEAD}): a Pi src file now spells a world-model record, the world-model words or an FRN-WM-003 wire name, so a Pi reader of the records exists and owes the acceptance: ${ACCEPTANCE}`;
+const OWED_READER = `ARMED (${BEAD}): a Pi src file now spells a proposed record's identifier or an FRN-WM-003 wire name (in any case, inside a longer name or through an escape), so a Pi reader of the records may exist. If one does, it owes the acceptance: ${ACCEPTANCE} If none does, re-measure the src tree and say so.`;
 
 interface Row {
   /** The clause's own name. */
@@ -173,27 +196,33 @@ interface Case {
 const CASES = {
   T1: {
     rows: ["trigger", "provenance", "completeness", "redaction"],
-    title: "(ARMED) the installed release declares no world-model record or FRN-WM-003 field and spells none of them, nor the world-model words",
+    title: "(ARMED) the installed release declares no world-model record or FRN-WM-003 field and spells none of them, nor the world-model words, in any form the readers read",
   },
-  T2: { rows: ["trigger"], title: "the same readers find every record, field and word in a planted release" },
-  T3: { rows: ["trigger"], title: "(ARMED) no Pi src file spells a world-model record, the world-model words or an FRN-WM-003 wire name" },
+  T2: { rows: ["trigger"], title: "the same readers find every record, field and word in a planted release, escaped spellings included" },
+  T3: { rows: ["trigger"], title: "(ARMED) no Pi src file spells a proposed record's identifier or an FRN-WM-003 wire name, in any case, affixed or escaped" },
   Q1: { rows: ["trigger"], title: "each named residual is a pinned quiet row: its probe is read and found quiet" },
   J1: {
     rows: ["provenance", "completeness", "redaction", "ordering"],
-    title: "the per-field round-trip judge passes an identity reader and reds a reader that drops, strips, reverses or reorders",
+    title: "the per-field round-trip judge passes an identity reader and reds a reader that drops, strips, reverses, retypes or reorders",
   },
   R1: {
     rows: ["provenance", "completeness", "redaction", "privacy", "ordering", "surfaces"],
-    title: "record-shaped values survive the tool reply's sanitizer per field and in order, and the docs/12 corpus in them stays redacted",
+    title: "record-shaped values survive the tool reply's sanitizer per field and in order, and the docs/12 corpus in any text field stays redacted",
   },
   O1: {
     rows: ["provenance", "completeness", "ordering", "surfaces"],
-    title: "the observer's analogs survive reading, topology, projection and reply: version provenance, each missing-fields fact, page order",
+    title: "in every RunState the observer's analogs survive its readings, topology, projection and reply: version provenance, each missing-fields fact, page order",
   },
-  O2: { rows: ["redaction", "privacy"], title: "no log line, unpublished FRN-WM-003-shaped member or secret-bearing member reaches any observer output" },
-  E1: { rows: ["redaction", "privacy"], title: "the log evidence presentation keeps a producer's redaction redacted and redacts every corpus class" },
-  S1: { rows: ["surfaces"], title: "the furnace_observe tool replies with sanitizeWorkbenchJsonText(reading) and projects that reading's Run snapshot" },
-  A1: { rows: [], title: "outside anchors: the export title and notes, docs/12's floor sentence, the observer's operands and NativeSnapshot" },
+  O2: {
+    rows: ["redaction", "privacy"],
+    title: "in every RunState no log line, unpublished FRN-WM-003-shaped member or secret-bearing member reaches any output of a successful observer read",
+  },
+  E1: { rows: ["redaction", "privacy"], title: "the log evidence presentation of either stream keeps a producer's redaction redacted and redacts every corpus class" },
+  S1: {
+    rows: ["surfaces"],
+    title: "the furnace_observe tool replies with sanitizeWorkbenchJsonText(reading), untouched, as its only data reply and projects that reading's Run snapshot",
+  },
+  A1: { rows: [], title: "outside anchors: the export title and notes, docs/12's floor sentence, the observer's operands, NativeSnapshot, RunState and OutputStream" },
   F1: { rows: [], title: "FROZEN SHAPE (standing rule 16): the rows' pin counts and every table's ids" },
   J2: { rows: [], title: "the judged set: each row's pins are exactly the cases naming it, and every case is registered once" },
 } as const satisfies Readonly<Record<string, Case>>;
@@ -217,9 +246,25 @@ const WORLD_MODEL = words("world", "model");
 const FIELDS: readonly string[] = ROWS.flatMap(row => (row.field !== undefined ? [row.field] : []));
 /** What the release reader spells for: the world-model pair, each record and each field. */
 const RELEASE_WORDS: readonly RegExp[] = [WORLD_MODEL, ...RECORDS.map(recordReading), ...FIELDS.map(fieldReading)];
-/** What the src reader spells for: each record's exact identifier and each field's exact snake-case wire name, as whole words
- * (the wider readings are R-SRC-NARROW's: Pi's own camelCase sourceRevision and other programs' world-model ids, A1). */
-const SRC_WORDS: readonly RegExp[] = [...RECORDS, ...FIELDS].map(name => new RegExp(`\\b${name}\\b`));
+/** What the src reader spells for: each record's exact identifier and each field's exact snake-case wire name, in any case and
+ * anywhere in the text, a longer name holding it included (the wider readings are R-SRC-NARROW's: Pi's own camelCase
+ * sourceRevision and other programs' world-model ids, A1). */
+const SRC_WORDS: readonly RegExp[] = [...RECORDS, ...FIELDS].map(name => new RegExp(name, "i"));
+/** A text with its JavaScript escape sequences (\uXXXX, \u{X}, \xXX) decoded, so an escape-spelled name reads as the name it spells. */
+function decoded(text: string): string {
+  return text.replace(/\\u\{([0-9a-fA-F]+)\}|\\u([0-9a-fA-F]{4})|\\x([0-9a-fA-F]{2})/g, (sequence: string, braced?: string, four?: string, two?: string) => {
+    const code = Number.parseInt(braced ?? four ?? two ?? "", 16);
+    return code <= 0x10ffff ? String.fromCodePoint(code) : sequence;
+  });
+}
+/** A text in every form THE READERS read it: as written and escape-decoded. */
+const forms = (text: string): readonly string[] => [text, decoded(text)];
+/** A name with one character written as a JavaScript escape of one form (the cut #1 refusal's U2 spellings, built, never typed). */
+function escapeAt(name: string, at: number, form: "four" | "braced" | "two"): string {
+  const hex = (name.codePointAt(at) ?? 0).toString(16);
+  const sequence = form === "four" ? `\\u${hex.padStart(4, "0")}` : form === "braced" ? `\\u{${hex}}` : `\\x${hex.padStart(2, "0")}`;
+  return `${name.slice(0, at)}${sequence}${name.slice(at + 1)}`;
+}
 /** The members the observer reads for each analog today: the member reader's liveness anchor in the release it judges. */
 const ANALOGS: readonly string[] = ["RunDto.furnace_version", "RunDto.binary_revision", "LogsReadDto.complete", "LogsReadDto.lossy", "AttemptDto.ordinal"];
 
@@ -230,14 +275,26 @@ interface Declared {
 function memberName(name: ts.PropertyName, source: ts.SourceFile): string {
   return ts.isComputedPropertyName(name) ? name.getText(source) : name.text;
 }
-/** Every named interface, type alias, class and enum of one declaration file with the members nested in it (AST only). */
+/** The name a declaration opens: an interface, type alias, class, enum or function by its name, a variable by its identifier. */
+function declared(node: ts.Node): string | undefined {
+  if (
+    (ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node) || ts.isClassDeclaration(node) || ts.isEnumDeclaration(node) || ts.isFunctionDeclaration(node)) &&
+    node.name !== undefined
+  ) {
+    return node.name.text;
+  }
+  return ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) ? node.name.text : undefined;
+}
+/** Every named interface, type alias, class, enum, function and variable of one declaration file with the members nested in it
+ * (a function's or a variable's type literal included; AST only). */
 function declarations(file: string, text: string): Declared[] {
   const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
   const found: { name: string; members: string[] }[] = [];
   const visit = (node: ts.Node, owner: { name: string; members: string[] } | undefined): void => {
     let next = owner;
-    if ((ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node) || ts.isClassDeclaration(node) || ts.isEnumDeclaration(node)) && node.name !== undefined) {
-      next = { name: node.name.text, members: [] };
+    const name = declared(node);
+    if (name !== undefined) {
+      next = { name, members: [] };
       found.push(next);
     } else if (
       owner !== undefined &&
@@ -260,31 +317,62 @@ interface Release {
   readonly files: readonly { readonly path: string; readonly text: string }[];
   readonly found: readonly Declared[];
 }
-/** A release as its files' package-relative paths and texts, with every declaration of its .d.ts files. */
+/** A TypeScript declaration file of any module kind. */
+const DECLARATION_FILE = /\.d\.[cm]?ts$/;
+/** A release as its files' package-relative paths and texts, with every declaration of its declaration files. */
 function release(files: readonly { readonly path: string; readonly text: string }[]): Release {
-  return { files, found: files.filter(file => file.path.endsWith(".d.ts")).flatMap(file => declarations(file.path, file.text)) };
+  return { files, found: files.filter(file => DECLARATION_FILE.test(file.path)).flatMap(file => declarations(file.path, file.text)) };
 }
 function installedRelease(): Release {
   return release(regularFiles(SDK_ROOT).map(file => ({ path: relative(SDK_ROOT, file), text: readFileSync(file, "utf8") })));
+}
+/** Per name, the string members of each type alias of that name in the installed release's declaration files, in declared order
+ * (AST only; each file parsed once). */
+function releaseUnions(names: readonly string[]): ReadonlyMap<string, readonly string[][]> {
+  const unions = new Map<string, string[][]>(names.map(name => [name, []]));
+  for (const file of regularFiles(SDK_ROOT).filter(path => DECLARATION_FILE.test(path))) {
+    const source = ts.createSourceFile(file, readFileSync(file, "utf8"), ts.ScriptTarget.Latest, true);
+    const visit = (node: ts.Node): void => {
+      const found = ts.isTypeAliasDeclaration(node) ? unions.get(node.name.text) : undefined;
+      if (found !== undefined && ts.isTypeAliasDeclaration(node)) {
+        const members: readonly ts.TypeNode[] = ts.isUnionTypeNode(node.type) ? node.type.types : [node.type];
+        found.push(members.map(member => (ts.isLiteralTypeNode(member) && ts.isStringLiteral(member.literal) ? member.literal.text : `<${member.getText(source)}>`)));
+      }
+      ts.forEachChild(node, visit);
+    };
+    visit(source);
+  }
+  return unions;
 }
 interface Findings {
   readonly records: readonly string[];
   readonly fields: Readonly<Record<string, readonly string[]>>;
   readonly spellings: readonly string[];
 }
-/** What the release reader finds: declarations named for a record, members per field, and files spelling RELEASE_WORDS. */
+/** What the release reader finds: declarations named for a record, members per field, and files whose path or content, as
+ * written or escape-decoded, spells RELEASE_WORDS. */
 function findings(read: Release): Findings {
   const members = qualified(read.found);
   return {
     records: read.found.map(item => item.name).filter(name => RECORDS.some(record => recordReading(record).test(name))),
     fields: Object.fromEntries(FIELDS.map(field => [field, members.filter(member => fieldReading(field).test(member.slice(member.indexOf(".") + 1)))])),
-    spellings: read.files.filter(file => RELEASE_WORDS.some(reading => reading.test(file.path) || reading.test(file.text))).map(file => file.path),
+    spellings: read.files
+      .filter(file => {
+        const texts = [...forms(file.path), ...forms(file.text)];
+        return RELEASE_WORDS.some(reading => texts.some(form => reading.test(form)));
+      })
+      .map(file => file.path),
   };
 }
 const QUIET: Findings = { records: [], fields: Object.fromEntries(FIELDS.map(field => [field, []])), spellings: [] };
-/** Every src path (repository-relative) whose raw text spells one of the readings. */
+/** Every src path (repository-relative) whose text, as written or escape-decoded, spells one of the readings. */
 function srcSpellings(files: readonly { readonly path: string; readonly text: string }[], readings: readonly RegExp[]): string[] {
-  return files.filter(file => readings.some(reading => reading.test(file.text))).map(file => file.path);
+  return files
+    .filter(file => {
+      const texts = forms(file.text);
+      return readings.some(reading => texts.some(form => reading.test(form)));
+    })
+    .map(file => file.path);
 }
 function srcFiles(): { path: string; text: string }[] {
   return regularFiles(join(REPO, "src")).map(file => ({ path: relative(REPO, file), text: readFileSync(file, "utf8") }));
@@ -426,6 +514,22 @@ const HELD: readonly { readonly line: string; readonly shown: string }[] = CORPU
 /** docs/workbench/12-security.md's redaction-floor sentence, which names CORPUS's classes (A1). */
 const FLOOR_SENTENCE =
   "Native exception previews are bounded and redact recognized bearer/basic credentials, common API-token prefixes and sensitive plain or JSON-quoted key/value fields before worker/UI display.";
+/** docs/12's page title and the section holding its redaction floor (the title's em dash spelled by code point, so this file
+ * stays ASCII). */
+const DOCS12_TITLE = `12 ${String.fromCodePoint(0x2014)} Trust model, authorization, isolation and sensitive data`;
+const DOCS12_SECTION = "Current diagnostic protections";
+/**
+ * The redaction-floor sentences a reader of docs/12 reads: the section binds through the landed docsSection reading
+ * (test/helpers/census.ts: the heading exactly once in the rendered view, under the page title, bounded at the next level-1 or
+ * level-2 heading or EOF), carries no HTML (a comment can hide what its source says), and each rendered paragraph is split into
+ * whole sentences; a sentence counts only when it is FLOOR_SENTENCE exactly, so a hidden, relocated, prefixed or merged copy
+ * reads as none.
+ */
+function floorSentences(markdown: string): string[] {
+  const section = docsSection(markdown, DOCS12_SECTION, 2, [DOCS12_TITLE]);
+  if (!section.ok || section.hasHtml) return [];
+  return section.blocks.flatMap(block => (block.kind === "paragraph" ? block.text.split(/(?<=\.) +(?=[A-Z])/) : [])).filter(sentence => sentence === FLOOR_SENTENCE);
+}
 
 const CLOCK = "2026-10-28T15:30:00.000Z";
 const WORKSPACE = "/srv/furnace-world-model-ws";
@@ -512,8 +616,15 @@ interface Fixture {
   readonly log: LogsReadDto;
 }
 const BASE: Fixture = { status: STATUS, list: LIST, log: LOG };
+/** Every RunState the installed release declares, in its declared order (A1 holds it to the release's RunState union). */
+const STATES: readonly RunState[] = ["created", "active", "paused", "needs_attention", "completed", "stopped", "failed"];
+/** Both log streams the installed release declares (A1 holds it to the release's OutputStream union). */
+const STREAMS: readonly LogsReadDto["stream"][] = ["stdout", "stderr"];
+/** A fixture whose Run is in the given state, every other read unchanged. */
+const inState = (fixture: Fixture, state: RunState): Fixture => ({ ...fixture, status: { ...fixture.status, state } });
 const UNREADABLE = { path: "attempts/frn-atm-wm-x.json", class: "unreadable", detail: "HYPOTHETICAL-unreadable" };
-/** One missing-fields fact per operand of the observer's completeness reading (A1 holds `reads` to the source). */
+/** One missing-fields fact per leaf operand of the observer's `incomplete` initializer (A1 holds `reads` to the source); O1
+ * reads each in every RunState. */
 interface IncompleteFact {
   readonly id: string;
   readonly reads: string;
@@ -571,6 +682,12 @@ function client(fixture: Fixture): FurnaceObserverClient {
 }
 interface Outputs {
   readonly reading: FurnaceReading;
+  /** The observer's last reading, read right after the snapshot (outputs() holds it equal to the reading). */
+  readonly last: FurnaceReading | undefined;
+  /** Every reading observe() yields at the census's one-poll budget (outputs() holds the first equal to the reading). */
+  readonly observed: readonly FurnaceReading[];
+  /** The observer's last reading after close() (outputs() holds it to the reading's source and page). */
+  readonly closed: FurnaceReading | undefined;
   readonly snapshot: NativeSnapshot;
   readonly topology: FurnaceProjectionTopology;
   /** The projection's nodes after it refreshed every topology snapshot and related every edge. */
@@ -582,6 +699,8 @@ interface Outputs {
 async function outputs(fixture: Fixture): Promise<Outputs> {
   const observer = new FurnaceObserver(client(fixture), { workspaceRoot: WORKSPACE, runId: RUN_ID, scope: SCOPE, limits: LIMITS });
   const reading = await observer.snapshot();
+  const last = observer.last;
+  expect(last, "the last reading is the reading").toStrictEqual(reading);
   const snapshot = observer.projectionSnapshot(reading);
   const topology = observer.projectionTopology(reading);
   const projection = new ObservationProjection();
@@ -589,8 +708,20 @@ async function outputs(fixture: Fixture): Promise<Outputs> {
   for (const relation of topology.relations) projection.relate(relation);
   const nodes = projection.query({ scope: SCOPE, limit: 20 }).nodes;
   const order = projection.query({ scope: SCOPE, invocationId: RUN_ID, limit: 20 }).nodes.map(node => node.nativeRef.id);
+  const observed: FurnaceReading[] = [];
+  for await (const item of observer.observe()) observed.push(item);
+  expect(observed[0], "observe() first yields the reading").toStrictEqual(reading);
+  expect(
+    observed.map(item => [item.source, item.attempts.items]),
+    "every yield keeps the reading's source and page",
+  ).toStrictEqual(observed.map(() => [reading.source, reading.attempts.items]));
   observer.close();
-  return { reading, snapshot, topology, nodes, order, reply: sanitizeWorkbenchJsonText(reading) };
+  const closed = observer.last;
+  expect([closed?.source, closed?.attempts.items], "the last reading after close() keeps the reading's source and page").toStrictEqual([
+    reading.source,
+    reading.attempts.items,
+  ]);
+  return { reading, last, observed, closed, snapshot, topology, nodes, order, reply: sanitizeWorkbenchJsonText(reading) };
 }
 /** Every completeness label one output set states, reading first, then each snapshot, each node and the reply's own text. */
 function completenessOf(out: Outputs): unknown[] {
@@ -625,8 +756,24 @@ const RESIDUALS: readonly Residual[] = [
     quiet: QUIET,
   },
   {
+    id: "R-ENCODED",
+    family:
+      "a record, a field or the world-model words spelled only through an encoding other than a JavaScript escape (character codes, an HTML character reference) escapes T1 and T3",
+    probe: () => {
+      const codes = (name: string): string => [...name].map(char => char.codePointAt(0)).join(", ");
+      const text = [
+        `export const RECORD = String.fromCharCode(${codes("FurnaceObservedTransition")});`,
+        `export const FIELD = String.fromCharCode(${codes("source_revision")});`,
+        "<p>capture&#95;completeness, redaction&#x5f;hash, a world&#32;model</p>",
+      ].join("\n");
+      return [findings(release([{ path: "dist/src/encoded.js", text }])), srcSpellings([{ path: "src/workbench/zz-encoded-probe.ts", text }], SRC_WORDS)];
+    },
+    quiet: [QUIET, []],
+  },
+  {
     id: "R-SRC-NARROW",
-    family: "a Pi reader spelling the records or fields only in camelCase, prose or assembled keys (sourceRevision, a world model) escapes T3",
+    family:
+      "a Pi reader spelling the fields only in camelCase (sourceRevision), or a record or a field only in prose or in keys assembled from parts (a world model, ['capture', 'completeness'].join('_')), escapes T3",
     probe: () =>
       srcSpellings(
         [
@@ -641,9 +788,21 @@ const RESIDUALS: readonly Residual[] = [
   },
 ];
 
-/** The call texts (whitespace removed) and variable initializers of the named tool's execute body in src/index.ts. */
-function toolBody(name: string): { calls: string[]; bindings: string[] } | undefined {
-  const source = ts.createSourceFile(INDEX_SOURCE, readFileSync(join(REPO, INDEX_SOURCE), "utf8"), ts.ScriptTarget.Latest, true);
+/** A tool body as the S1 reader reads it (whitespace removed). */
+interface ToolBody {
+  /** Every call and new expression. */
+  readonly calls: string[];
+  /** Every variable initializer, as `name=initializer`. */
+  readonly bindings: string[];
+  /** Every textResult reply's shape: a string-literal argument reads "<literal>", a call reads as its callee with each argument
+   * read as "reading" when it is that identifier and "..." otherwise. */
+  readonly replies: string[];
+  /** The target of every assignment, increment, decrement and delete. */
+  readonly writes: string[];
+}
+/** The named tool's execute body in src/index.ts (or in a planted source), read through the AST. */
+function toolBody(name: string, text = readFileSync(join(REPO, INDEX_SOURCE), "utf8")): ToolBody | undefined {
+  const source = ts.createSourceFile(INDEX_SOURCE, text, ts.ScriptTarget.Latest, true);
   const squeeze = (node: ts.Node): string => node.getText(source).replace(/\s+/g, "");
   let body: ts.Node | undefined;
   const visit = (node: ts.Node): void => {
@@ -660,13 +819,26 @@ function toolBody(name: string): { calls: string[]; bindings: string[] } | undef
   if (body === undefined) return undefined;
   const calls: string[] = [];
   const bindings: string[] = [];
+  const replies: string[] = [];
+  const writes: string[] = [];
+  const shape = (argument: ts.Expression): string => {
+    if (ts.isStringLiteralLike(argument)) return '"<literal>"';
+    if (!ts.isCallExpression(argument)) return squeeze(argument);
+    const inner = argument.arguments.map(item => (ts.isIdentifier(item) && item.text === "reading" ? "reading" : "..."));
+    return `${squeeze(argument.expression)}(${inner.join(",")})`;
+  };
+  const updates: readonly ts.SyntaxKind[] = [ts.SyntaxKind.PlusPlusToken, ts.SyntaxKind.MinusMinusToken];
   const collect = (node: ts.Node): void => {
     if (ts.isCallExpression(node) || ts.isNewExpression(node)) calls.push(squeeze(node));
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "textResult") replies.push(`textResult(${node.arguments.map(shape).join(",")})`);
     if (ts.isVariableDeclaration(node) && node.initializer !== undefined) bindings.push(`${squeeze(node.name)}=${squeeze(node.initializer)}`);
+    if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment) writes.push(squeeze(node.left));
+    if ((ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && updates.includes(node.operator)) writes.push(squeeze(node.operand));
+    if (ts.isDeleteExpression(node)) writes.push(squeeze(node.expression));
     ts.forEachChild(node, collect);
   };
   collect(body);
-  return { calls, bindings };
+  return { calls, bindings, replies, writes };
 }
 /** The leaf operands of the `||` chains in the observer's `incomplete` initializer: an operand holding a chain is read through
  * to that chain only (the callback of logs.some contributes its two operands, its callee and parameter nothing). */
@@ -750,6 +922,40 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
       capture_completeness: ["CaptureRefs.capture_completeness"],
       redaction_hash: ["StatusExtra.redaction_hash"],
     });
+    // The cut #1 refusal's escaped spellings (U2), each read through the AST or the escape-decoded content and never raw.
+    const one = (path: string, lines: readonly string[]): Findings => findings(release([{ path, text: lines.join("\n") }]));
+    const fields = (field: string, members: readonly string[]): Findings["fields"] => ({ ...QUIET.fields, [field]: members });
+    const computed = [`declare const K1: "${escapeAt("source_revision", 6, "four")}";`, "export interface RunDto {", "    [K1]?: string;", "}"];
+    expect(one("dist/src/protocol.d.ts", computed), "a computed key over an escaped literal").toStrictEqual({ ...QUIET, spellings: ["dist/src/protocol.d.ts"] });
+    const variable = ["export declare const transitionShape: {", `    ${escapeAt("capture_completeness", 7, "four")}: string;`, "};"];
+    expect(one("dist/src/protocol.d.ts", variable), "a variable's type literal").toStrictEqual({
+      ...QUIET,
+      fields: fields("capture_completeness", ["transitionShape.capture_completeness"]),
+      spellings: ["dist/src/protocol.d.ts"],
+    });
+    const fn = ["export declare function readTransition(): {", `    ${escapeAt("redaction_hash", 9, "four")}: string;`, "};"];
+    expect(one("dist/src/protocol.d.ts", fn), "a function's type literal").toStrictEqual({
+      ...QUIET,
+      fields: fields("redaction_hash", ["readTransition.redaction_hash"]),
+      spellings: ["dist/src/protocol.d.ts"],
+    });
+    const mts = [`export interface ${escapeAt("FurnaceObservedTransition", 7, "four")} {`, `    ${escapeAt("source_revision", 6, "four")}: string;`, "}"];
+    expect(one("dist/src/trace.d.mts", mts), "a .d.mts declaration of an escaped record").toStrictEqual({
+      records: ["FurnaceObservedTransition"],
+      fields: fields("source_revision", ["FurnaceObservedTransition.source_revision"]),
+      spellings: ["dist/src/trace.d.mts"],
+    });
+    expect(one("dist/src/trace.d.cts", ["export interface SyntheticAttemptState { readonly queue: number }"]), "a .d.cts declaration").toStrictEqual({
+      ...QUIET,
+      records: ["SyntheticAttemptState"],
+      spellings: ["dist/src/trace.d.cts"],
+    });
+    const escapes = ["four", "braced", "two"] as const;
+    expect(
+      escapes.map(form => one("dist/src/index.js", [`export const KEY = "${escapeAt("capture_completeness", 7, form)}";`]).spellings),
+      "each escape form in content the AST never declares",
+    ).toStrictEqual(escapes.map(() => ["dist/src/index.js"]));
+    expect(one("README.md", [`Exports ${escapeAt("world model", 5, "two")} traces.`]).spellings, "and the world-model words").toStrictEqual(["README.md"]);
   });
 
   pinned("T3", () => {
@@ -757,7 +963,23 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
     expect(files.length, "the src tree was read").toBeGreaterThan(0);
     expect(srcSpellings(files, [/workflow-script\/v1/]), "the src reader is live: the schema literal lives in identity.ts only").toStrictEqual(["src/workbench/identity.ts"]);
     expect(srcSpellings(files, SRC_WORDS), OWED_READER).toStrictEqual([]);
-    const plants = ["const key = 'source_revision';", "row.capture_completeness", "{ redaction_hash: digest }", "type Row = FurnaceObservedTransition;", "new CounterfactualCandidate()", "SyntheticAttemptState[]"];
+    const plants = [
+      "const key = 'source_revision';",
+      "row.capture_completeness",
+      "{ redaction_hash: digest }",
+      "type Row = FurnaceObservedTransition;",
+      "new CounterfactualCandidate()",
+      "SyntheticAttemptState[]",
+      // The cut #1 refusal's src plants (U2): an escaped wire name and a *Dto-suffixed record identifier.
+      `export const FIELD = "${escapeAt("source_revision", 6, "four")}";`,
+      "export interface FurnaceObservedTransitionDto { readonly run_id: string }",
+      // A longer snake-case name, a re-cased constant, a prefixed identifier and the other two escape forms.
+      "const native_capture_completeness = row.native_capture_completeness;",
+      "const REDACTION_HASH = 'x';",
+      "interface ISyntheticAttemptState { queue: number }",
+      `type Row = ${escapeAt("CounterfactualCandidate", 0, "braced")};`,
+      `row["${escapeAt("redaction_hash", 9, "two")}"]`,
+    ];
     expect(plants.map(text => srcSpellings([{ path: "src/zz-plant.ts", text }], SRC_WORDS).length), "each planted reader spelling is found").toStrictEqual(plants.map(() => 1));
   });
 
@@ -778,6 +1000,10 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
     expect(roundTrip(TRANSITIONS, rewrite(() => ""), identity, TRANSITION_FIELDS), "a reader stripping redaction_hash").toStrictEqual(changed);
     expect(roundTrip(TRANSITIONS, rewrite(value => [...value].reverse().join("")), identity, TRANSITION_FIELDS), "a reader reversing it").toStrictEqual(changed);
     expect(roundTrip(TRANSITIONS, [TRANSITIONS[1], TRANSITIONS[0], TRANSITIONS[2]], identity, TRANSITION_FIELDS), "a reader reordering").toStrictEqual(["reordered"]);
+    const retyped = TRANSITIONS.map(row => ({ ...row, exit_status: String(row.exit_status) }));
+    expect(roundTrip(TRANSITIONS, retyped, identity, TRANSITION_FIELDS), "a reader retyping exit_status, its text kept").toStrictEqual(
+      TRANSITIONS.map(row => `changed:${String(row[identity])}.exit_status`),
+    );
     expect(roundTrip(TRANSITIONS, TRANSITIONS.slice(0, 2), identity, ["redaction_hash"]), "a reader discarding a record").toStrictEqual([
       "reordered",
       `dropped:${String(TRANSITIONS[2][identity])}.redaction_hash`,
@@ -790,13 +1016,18 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
     const presented = listAt(replyOf(value), "transitions");
     expect(roundTrip(TRANSITIONS, presented, "event_ref", TRANSITION_FIELDS), "every field of every record survives, in order").toStrictEqual([]);
     expect(presented.map(row => (isRec(row) ? Object.keys(row) : [])), "each record keeps its key order").toStrictEqual(TRANSITIONS.map(row => Object.keys(row)));
-    for (const entry of [...CORPUS, ...HELD]) {
-      const handed = [{ ...TRANSITIONS[0], reason: entry.line }];
-      const shown = listAt(replyOf({ transitions: handed }), "transitions");
-      const others = TRANSITION_FIELDS.filter(field => field !== "reason");
-      expect(roundTrip(handed, shown, "event_ref", others), `${entry.line}: every other field survives`).toStrictEqual([]);
-      expect(shown.map(row => (isRec(row) ? row.reason : undefined)), `${entry.line}: the free text stays or becomes redacted`).toStrictEqual([entry.shown]);
-      expect(JSON.stringify(shown).includes(FAKE), `${entry.line}: no fake value reaches the reply`).toBe(false);
+    const textFields = TRANSITION_FIELDS.filter(field => typeof TRANSITIONS[0][field] === "string");
+    expect(TRANSITION_FIELDS.filter(field => !textFields.includes(field)), "every proposed field but exit_status carries text").toStrictEqual(["exit_status"]);
+    for (const field of textFields) {
+      const identity = field === "event_ref" ? "before_ref" : "event_ref";
+      const others = TRANSITION_FIELDS.filter(other => other !== field);
+      for (const entry of [...CORPUS, ...HELD]) {
+        const handed = [{ ...TRANSITIONS[0], [field]: entry.line }];
+        const shown = listAt(replyOf({ transitions: handed }), "transitions");
+        expect(roundTrip(handed, shown, identity, others), `${field} <- ${entry.line}: every other field survives`).toStrictEqual([]);
+        expect(shown.map(row => (isRec(row) ? row[field] : undefined)), `${field} <- ${entry.line}: the text stays or becomes redacted`).toStrictEqual([entry.shown]);
+        expect(JSON.stringify(shown).includes(FAKE), `${field} <- ${entry.line}: no fake value reaches the reply`).toBe(false);
+      }
     }
   });
 
@@ -810,13 +1041,9 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
     });
 
     pinned("O1", async () => {
-      const out = await outputs(BASE);
       const every = <T>(value: T, count: number): T[] => Array.from({ length: count }, () => value);
-      expect([out.reading.source.producerVersion, out.reading.source.producerRevision], "the reading names the producer version and revision").toStrictEqual([VERSION, REVISION]);
-      expect([out.snapshot.sourceRevision, ...out.topology.snapshots.map(item => item.sourceRevision)], "every snapshot carries the revision").toStrictEqual(every(REVISION, 5));
-      expect(out.nodes.map(node => node.sourceVersion), "every projected node carries it").toStrictEqual(every(REVISION, 4));
-      expect(completenessOf(out), "a complete read is complete everywhere").toStrictEqual(every("complete", 11));
       // The label reader is live: one label changed on each surface shows at its own position, the reply's read from its text.
+      const out = await outputs(BASE);
       const doctored: Outputs = {
         ...out,
         snapshot: { ...out.snapshot, coverage: "unknown" },
@@ -837,55 +1064,74 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
         "unknown",
         "partial",
       ]);
-      expect(out.reading.attempts.items.map(item => [item.id, item.ordinal]), "the items keep the page order").toStrictEqual(PAGE.map(item => [item.attempt_id, item.ordinal]));
-      expect(out.topology.snapshots.slice(1).map(item => item.source.id), "so do the Attempt snapshots").toStrictEqual(PAGE_IDS);
-      expect(out.topology.relations.map(relation => [relation.kind, relation.to.id]), "and the edges, ownership only").toStrictEqual(PAGE_IDS.map(id => ["ownership", id]));
-      expect([out.snapshot.evidenceRefs, out.order], "and the evidence refs and the projected Attempt nodes").toStrictEqual([PAGE_IDS, PAGE_IDS]);
-      expect(out.reply, "the reply is the reading, byte for byte").toBe(JSON.stringify(out.reading));
-      for (const fact of INCOMPLETE) {
-        const partial = await outputs(fact.plant(BASE));
-        expect(completenessOf(partial), `${fact.id}: partial everywhere`).toStrictEqual(every("partial", 11));
-        expect(partial.reply, `${fact.id}: the reply is the reading`).toBe(JSON.stringify(partial.reading));
+      for (const state of STATES) {
+        const at = await outputs(inState(BASE, state));
+        expect([at.reading.run.state, at.reading.source.producerVersion, at.reading.source.producerRevision], `${state}: the reading names the producer version and revision`).toStrictEqual([
+          state,
+          VERSION,
+          REVISION,
+        ]);
+        expect([at.snapshot.sourceRevision, ...at.topology.snapshots.map(item => item.sourceRevision)], `${state}: every snapshot carries the revision`).toStrictEqual(every(REVISION, 5));
+        expect(at.nodes.map(node => node.sourceVersion), `${state}: every projected node carries it`).toStrictEqual(every(REVISION, 4));
+        expect(completenessOf(at), `${state}: a complete read is complete everywhere`).toStrictEqual(every("complete", 11));
+        expect(at.reading.attempts.items.map(item => [item.id, item.ordinal]), `${state}: the items keep the page order`).toStrictEqual(PAGE.map(item => [item.attempt_id, item.ordinal]));
+        expect(at.topology.snapshots.slice(1).map(item => item.source.id), `${state}: so do the Attempt snapshots`).toStrictEqual(PAGE_IDS);
+        expect(at.topology.relations.map(relation => [relation.kind, relation.to.id]), `${state}: and the edges, ownership only`).toStrictEqual(PAGE_IDS.map(id => ["ownership", id]));
+        expect([at.snapshot.evidenceRefs, at.order], `${state}: and the evidence refs and the projected Attempt nodes`).toStrictEqual([PAGE_IDS, PAGE_IDS]);
+        expect(at.reply, `${state}: the reply is the reading, byte for byte`).toBe(JSON.stringify(at.reading));
+        for (const fact of INCOMPLETE) {
+          const partial = await outputs(fact.plant(inState(BASE, state)));
+          expect(completenessOf(partial), `${state} ${fact.id}: partial everywhere`).toStrictEqual(every("partial", 11));
+          expect(partial.reply, `${state} ${fact.id}: the reply is the reading`).toBe(JSON.stringify(partial.reading));
+        }
+        const { binary_revision, ...unrevised } = inState(BASE, state).status;
+        expect(binary_revision, `${state}: the base carries the revision the unrevised fixture drops`).toBe(REVISION);
+        const bare = await outputs({ ...BASE, status: unrevised });
+        const stated = [bare.reading.source.producerRevision, bare.snapshot.sourceRevision, ...bare.topology.snapshots.map(item => item.sourceRevision), ...bare.nodes.map(node => node.sourceVersion)];
+        expect(stated, `${state}: an absent revision is stated nowhere`).toStrictEqual(every(undefined, 10));
+        expect(bare.reply.includes(REVISION), `${state}: nor in the reply`).toBe(false);
       }
-      const { binary_revision, ...unrevised } = STATUS;
-      expect(binary_revision, "the base carries the revision the unrevised fixture drops").toBe(REVISION);
-      const bare = await outputs({ ...BASE, status: unrevised });
-      const stated = [bare.reading.source.producerRevision, bare.snapshot.sourceRevision, ...bare.topology.snapshots.map(item => item.sourceRevision), ...bare.nodes.map(node => node.sourceVersion)];
-      expect(stated, "an absent revision is stated nowhere").toStrictEqual(every(undefined, 10));
-      expect(bare.reply.includes(REVISION), "nor in the reply").toBe(false);
     });
 
     pinned("O2", async () => {
-      const base = await outputs(BASE);
-      const planted = await outputs(PLANTED);
-      expect(planted, "unpublished, secret-bearing and log-line plants change no output").toStrictEqual(base);
-      const text = JSON.stringify(planted);
-      expect(PLANT_MARKS.filter(mark => text.includes(mark)), "and reach none").toStrictEqual([]);
-      expect(planted.reading.logs, "the reading keeps only the log read's counts and flags").toStrictEqual([
-        { attemptId: PAGE_IDS[2], stream: "stdout", complete: true, lossy: false, returned: LOG_LINES.length, nextCursor: null },
-      ]);
+      for (const state of STATES) {
+        const base = await outputs(inState(BASE, state));
+        const planted = await outputs(inState(PLANTED, state));
+        expect(planted, `${state}: unpublished, secret-bearing and log-line plants change no output`).toStrictEqual(base);
+        const text = JSON.stringify(planted);
+        expect(PLANT_MARKS.filter(mark => text.includes(mark)), `${state}: and reach none`).toStrictEqual([]);
+        expect(planted.reading.logs, `${state}: the reading keeps only the log read's counts and flags`).toStrictEqual([
+          { attemptId: PAGE_IDS[2], stream: "stdout", complete: true, lossy: false, returned: LOG_LINES.length, nextCursor: null },
+        ]);
+      }
     });
   });
 
   pinned("E1", async () => {
     const lines = ["step 1 done", ...HELD.map(entry => entry.line), ...CORPUS.map(entry => entry.line)];
-    const content = await readFurnaceAttemptLogEvidence({
-      client: { logs: { read: async () => respond("logs_read", "req-evidence-wm", { ...LOG, lines, returned: lines.length }) } },
-      runId: RUN_ID,
-      workspaceRoot: WORKSPACE,
-      owningRunNode: { nativeRef: { provider: "furnace", type: "run", id: RUN_ID, scope: WORKSPACE }, evidenceRefs: PAGE_IDS },
-      attemptId: PAGE_IDS[2],
-      stream: "stdout",
-      maxBytes: 512,
-      maxLines: 50,
-      timeoutMs: 2000,
-      signal: new AbortController().signal,
-      capturedAt: () => CLOCK,
-    });
-    expect(content.preview).toStrictEqual(["step 1 done", ...HELD.map(entry => entry.shown), ...CORPUS.map(entry => entry.shown)]);
-    expect(content.preview.filter(row => row !== "step 1 done" && !row.includes(MARKER)), "every corpus row shows the marker").toStrictEqual([]);
-    expect([content.lineCount, content.truncated], "every line is shown and counted").toStrictEqual([lines.length, false]);
-    expect(JSON.stringify(content).includes(FAKE), "no fake value reaches the evidence").toBe(false);
+    for (const stream of STREAMS) {
+      const content = await readFurnaceAttemptLogEvidence({
+        client: { logs: { read: async () => respond("logs_read", "req-evidence-wm", { ...LOG, stream, lines, returned: lines.length }) } },
+        runId: RUN_ID,
+        workspaceRoot: WORKSPACE,
+        owningRunNode: { nativeRef: { provider: "furnace", type: "run", id: RUN_ID, scope: WORKSPACE }, evidenceRefs: PAGE_IDS },
+        attemptId: PAGE_IDS[2],
+        stream,
+        maxBytes: 512,
+        maxLines: 50,
+        timeoutMs: 2000,
+        signal: new AbortController().signal,
+        capturedAt: () => CLOCK,
+      });
+      expect(content.preview, `${stream}: a HELD line stays redacted and a corpus line is redacted`).toStrictEqual([
+        "step 1 done",
+        ...HELD.map(entry => entry.shown),
+        ...CORPUS.map(entry => entry.shown),
+      ]);
+      expect(content.preview.filter(row => row !== "step 1 done" && !row.includes(MARKER)), `${stream}: every corpus row shows the marker`).toStrictEqual([]);
+      expect([content.lineCount, content.truncated], `${stream}: every line is shown and counted`).toStrictEqual([lines.length, false]);
+      expect(JSON.stringify(content).includes(FAKE), `${stream}: no fake value reaches the evidence`).toBe(false);
+    }
   });
 
   pinned("S1", () => {
@@ -901,8 +1147,31 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
     expect(tool?.calls.filter(call => call.startsWith("textResult(") && call.includes("reading")), "the reply is that reading through the sanitizer").toStrictEqual([
       "textResult(sanitizeWorkbenchJsonText(reading))",
     ]);
+    expect(tool?.replies, "its replies: two literal refusals, the sanitized reading and the sanitized error text").toStrictEqual([
+      'textResult("<literal>")',
+      'textResult("<literal>")',
+      "textResult(sanitizeWorkbenchJsonText(reading))",
+      "textResult(sanitizeWorkbenchText(...))",
+    ]);
+    expect(tool?.calls.filter(call => /\breading\b/.test(call)), "the reading reaches no call but its Run snapshot and its sanitized reply").toStrictEqual([
+      "projection.refresh(observer.projectionSnapshot(reading))",
+      "observer.projectionSnapshot(reading)",
+      "textResult(sanitizeWorkbenchJsonText(reading))",
+      "sanitizeWorkbenchJsonText(reading)",
+    ]);
+    expect(tool?.writes.filter(target => /^reading\b/.test(target)), "and nothing writes any of it").toStrictEqual([]);
     expect(toolBody("zz-no-such-tool"), "the reader finds no body for an unregistered name").toBeUndefined();
     expect(toolBody("workflow_observe")?.calls.length ?? 0, "and finds another tool's body").toBeGreaterThan(0);
+    // The reply, reading-call and write readers are live on a planted body.
+    const plant = toolBody(
+      "zz-plant",
+      'tools.push({ name: "zz-plant", execute: async () => { reading.native = 1; delete reading.extra; reading.count++; Object.assign(reading, {}); return textResult(JSON.stringify(reading)); } });',
+    );
+    expect([plant?.replies, plant?.writes, plant?.calls.filter(call => /\breading\b/.test(call))], "a planted body's replies, writes and reading calls are read").toStrictEqual([
+      ["textResult(JSON.stringify(reading))"],
+      ["reading.native", "reading.extra", "reading.count"],
+      ["Object.assign(reading,{})", "textResult(JSON.stringify(reading))", "JSON.stringify(reading)"],
+    ]);
   });
 
   pinned("A1", () => {
@@ -921,10 +1190,20 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
     expect(/Gating artifact: ([a-z_/]+) on a released surface\./.exec(GATING)?.[1]?.split("/"), "the gating artifact names ROWS' fields").toStrictEqual([...FIELDS]);
     expect(FIELDS.filter(field => !TRANSITION_FIELDS.includes(field)), "every field is a proposed transition field").toStrictEqual([]);
     const docs12 = readFileSync(join(REPO, DOCS12), "utf8");
-    expect(docs12.split("\n").some(line => line.includes(FLOOR_SENTENCE)), "docs/12 holds the redaction-floor sentence").toBe(true);
+    expect(floorSentences(docs12), "docs/12's bound section renders the redaction-floor sentence once, whole").toStrictEqual([FLOOR_SENTENCE]);
+    const lowered = `${FLOOR_SENTENCE.charAt(0).toLowerCase()}${FLOOR_SENTENCE.slice(1)}`;
+    const pages = [
+      docs12.replace(FLOOR_SENTENCE, `<!-- ${FLOOR_SENTENCE} -->`),
+      `${docs12.replace(FLOOR_SENTENCE, "")}\n## Withdrawn protections\n\n${FLOOR_SENTENCE}\n`,
+      docs12.replace(FLOOR_SENTENCE, `It is not the case that ${lowered}`),
+    ];
+    expect(pages.map(floorSentences), "the reading is live: a hidden, a relocated and a prefixed copy each read as none").toStrictEqual([[], [], []]);
     const floor = /redact recognized (.+) credentials, common (.+) prefixes and sensitive (.+) key\/value fields/.exec(FLOOR_SENTENCE);
     expect(floor === null ? [] : [...floor[1].split("/"), floor[2], ...floor[3].split(" or ")], "its classes are CORPUS's words").toStrictEqual(CORPUS.map(entry => entry.word));
     expect(incompleteOperands(), "the observer's incompleteness operands are INCOMPLETE's").toStrictEqual(INCOMPLETE.map(fact => fact.reads));
+    const unions = releaseUnions(["RunState", "OutputStream"]);
+    expect(unions.get("RunState"), "the installed release declares RunState once, as exactly STATES").toStrictEqual([[...STATES]]);
+    expect(unions.get("OutputStream"), "and OutputStream once, as exactly STREAMS").toStrictEqual([[...STREAMS]]);
     const snapshot = declarations("src/workbench/observation.ts", readFileSync(join(REPO, "src/workbench/observation.ts"), "utf8"))
       .filter(item => item.name === "NativeSnapshot")
       .flatMap(item => item.members);
@@ -933,7 +1212,11 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
     const families = new Set(exportTitles().flatMap(title => /^\[([A-Z0-9-]*WORLD-MODEL[A-Z0-9-]*)-R\d+\]/.exec(title)?.slice(1) ?? []));
     families.delete(REQUIREMENT.replace(/-R\d+$/, ""));
     expect(families.size, "the export files other programs' world-model requirement families").toBeGreaterThan(0);
-    expect(SRC_WORDS.filter(reading => reading.test("sourceRevision") || reading.test("a world model")), "so the src reader reads neither form").toStrictEqual([]);
+    const wider = ["sourceRevision", "a world model", "HX-PREDICTIVE-WORLD-MODEL-ADAPTERS-R2"];
+    expect(
+      SRC_WORDS.filter(reading => wider.some(form => forms(form).some(text => reading.test(text)))),
+      "so the src reader reads none of those forms",
+    ).toStrictEqual([]);
     expect(RESIDUALS.map(residual => residual.id).filter(id => id === "R-SRC-NARROW"), "and its narrowing is a named residual").toStrictEqual(["R-SRC-NARROW"]);
   });
 
@@ -958,7 +1241,9 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
       "log-lossy",
     ]);
     expect(CORPUS.map(entry => entry.id)).toStrictEqual(["bearer", "basic", "token-prefix", "plain-key-value", "json-key-value"]);
-    expect(RESIDUALS.map(residual => residual.id)).toStrictEqual(["R-RENAMED", "R-COMPUTED", "R-SRC-NARROW"]);
+    expect(STATES).toStrictEqual(["created", "active", "paused", "needs_attention", "completed", "stopped", "failed"]);
+    expect(STREAMS).toStrictEqual(["stdout", "stderr"]);
+    expect(RESIDUALS.map(residual => residual.id)).toStrictEqual(["R-RENAMED", "R-COMPUTED", "R-ENCODED", "R-SRC-NARROW"]);
     expect(RECORDS).toStrictEqual(["FurnaceObservedTransition", "CounterfactualCandidate", "SyntheticAttemptState"]);
     expect(TRANSITION_FIELDS).toStrictEqual([
       "source_revision",
