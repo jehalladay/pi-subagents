@@ -68,6 +68,15 @@
    ]
   }
  ],
+ "notDue": {
+  "A": [],
+  "B": [
+   "fixtures with checker identity+version AND source-version evidence may surface the producer's label with those fields cited beside it, while fixtures missing either render FAIL/UNKNOWN with the label refused and a diagnostic naming the missing evidence"
+  ],
+  "C": [
+   "or receipt"
+  ]
+ },
  "rows": [
   {
    "id": "A",
@@ -95,7 +104,10 @@
        "certified": "label=0 word=1 CAC certified",
        "verifiedBy": "label=0 word=1 verified by CAC",
        "cyrillic": "label=0 word=0 \\u{421}\\u{410}\\u{421} verified",
-       "embedded": "label=0 word=0 isCACVerified"
+       "embedded": "label=0 word=0 isCACVerified",
+       "zeroWidth": "label=1 word=1 C\\u{200b}AC verified",
+       "softHyphen": "label=1 word=1 CA\\u{ad}C verified",
+       "wordJoiner": "label=1 word=1 CAC\\u{2060}verified"
       },
       "modules": {
        "composed": "label=0 word=0 export const shown = \"CA\" + \"C verified\";\n",
@@ -103,8 +115,10 @@
        "name": "label=0 word=0 export const LABELS = { CACVerified: true } as const;\nexport const shown = Object.keys(LABELS)[0];\n",
        "nameTwin": "label=1 word=1 export const LABELS = { \"CAC verified\": true } as const;\n",
        "comment": "label=0 word=0 // a CAC verified label is never shown\nexport const shown = 1;\n",
-       "template": "label=1 word=1 export const shown = (state: string) => `CAC verified: ${state}`;\n"
-      }
+       "template": "label=1 word=1 export const shown = (state: string) => `CAC verified: ${state}`;\n",
+       "zeroWidthLiteral": "label=1 word=1 export const shown = \"C\\u{200b}AC verified\";\n"
+      },
+      "beyondBound": "label=1 word=1 after 2000 units"
      }
     },
     {

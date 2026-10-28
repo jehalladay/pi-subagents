@@ -1212,7 +1212,8 @@
        "R-KIND": [],
        "R-ORDER": [],
        "R-REBIND": [],
-       "R-UNMEASURED": []
+       "R-UNMEASURED": [],
+       "R-RUNTIME": []
       },
       "rebind": [
        "mutant: defaulting an absent model revision",
@@ -1231,6 +1232,32 @@
   "MEASURED[pin] = witness;",
   "expect(witness).toStrictEqual(rosterWitness(pin));",
   "REACHED.push(`${pin}:${expect.getState().assertionCalls}`);"
+ ],
+ "record": {
+  "context": "{ task }",
+  "statements": [
+   "const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];",
+   "const walk = (tasks: typeof task.file.tasks): void => { for (const child of tasks) { if (child.type === \"test\") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === task }); else if (child.type === \"suite\") walk(child.tasks); } };",
+   "walk(task.file.tasks);",
+   "const titles = walked.map(entry => entry.name);",
+   "expect(titles, \"every registered test of this file (vitest task tree), exactly and in roster order\").toEqual([...ROSTER.tests]);",
+   "expect(titles, \"the judged title, one test per pin in row order, then this record\").toEqual([JUDGED_TITLE, ...ROWS.flatMap(entry => entry.pins.map(pin => pin.id)), RECORD_TITLE]);",
+   "const here = walked.findIndex(entry => entry.self);",
+   "expect(here, \"this case finds itself by task identity, registered last\").toBe(walked.length - 1);",
+   "const ran = (state: string | undefined): boolean => state === \"pass\" || state === \"fail\";",
+   "const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? \"+fails\" : \"\"} | ${ran(entry.state) ? \"ran\" : (entry.state ?? \"no result\")}`;",
+   "expect(walked.filter((entry, index) => index !== here && (entry.mode !== \"run\" || entry.fails || !ran(entry.state))).map(read), \"every other test is in run mode, not inverted, and ran before this case\").toEqual([]);",
+   "const rosterWitnesses = Object.fromEntries(ROSTER.rows.flatMap(entry => entry.pins.map(pin => [pin.id, pin.witness])));",
+   "expect(MEASURED, \"every pin's witness, compared against the roster a second time\").toStrictEqual(rosterWitnesses);",
+   "const texts = Object.entries(MEASURED).map(([pin, value]) => [pin, JSON.stringify(value)] as const);",
+   "const shared = texts.filter(([pin, value]) => texts.some(([other, again]) => other !== pin && again === value)).map(([pin]) => pin);",
+   "expect(shared, \"no two pins share one witness (a case moved under another pin's id, its witness rewritten to match)\").toEqual([]);",
+   "expect(REACHED, \"every pin reached its end, in row order, with its pinned assertion count\").toEqual([...ROSTER.reached]);"
+  ]
+ },
+ "hooks": [
+  "installScratchLeakGuard(afterAll);",
+  "afterEach(() => { process.env.PATH = oldPath; removeScratch(...scratches.splice(0)); });"
  ],
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster, the bead export's acceptance clauses and the cases agree",
