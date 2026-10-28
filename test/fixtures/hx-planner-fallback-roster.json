@@ -755,15 +755,21 @@
       "reads": [
        "batch_id",
        "binarySha256",
+       "code",
        "contract",
        "coverage",
        "coverage_summary",
+       "diagnostics",
        "digest",
+       "evidence",
        "execution_status",
+       "incomplete_regions",
        "kind",
        "licenses_absence",
        "operation",
        "provider",
+       "provider_versions",
+       "providers",
        "representation",
        "rows",
        "rows_retained",
@@ -772,6 +778,7 @@
        "source",
        "target",
        "version",
+       "view",
        "workspaceRoot"
       ],
       "slots": [
@@ -790,7 +797,11 @@
        "support_ids",
        "view"
       ],
-      "carriersRead": [],
+      "carriersRead": [
+       "diagnostics",
+       "incomplete_regions",
+       "view"
+      ],
       "familyRead": [],
       "projectedMissing": [],
       "controls": {
