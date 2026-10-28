@@ -29,6 +29,18 @@
  * foreignScope, R-RENDERED-TEXT, the A2 replica); the rest of that family named in R-MARKER-ANYWHERE (svg character data, canvas,
  * object, meter and progress content); NOT CLAIMED restated to the reader-dependent readings, its prose-only families named as
  * R-TREE-CONSTRUCTION (B3).
+ * FOLLOW-UP wb-lhlc (the R694 carry of landing 575's PASS-WITH-FINDING, gate cmd_ec3318b2690b; additions only, on cut #4's frozen
+ * shape, in its enumerate-the-resolvable form): F1 misnested formatting pinned in R-TREE-CONSTRUCTION - a quiet row and a live twin for
+ * each page the gate's paired instrument measured (R1-R6, R9-R17, R19, R20) and its over-read U9 (B3 overRead); F2 never-rendered
+ * foreign content named in R-MARKER-ANYWHERE, each member with a quiet row and a live twin (the paired instrument's semantics, maction,
+ * mphantom, defs, switch, symbol, clipPath, mask, pattern and marker pages); F3 a
+ * block-level start tag breaking out of a math annotation or svg metadata, or closing a media element with its paragraph, pinned in
+ * R-TREE-CONSTRUCTION (FB1, FB2, FB5); F4 the reader behaviours gate mutants G01, G05, G08 and G12 turned fail-open, pinned (EQ1 in B3
+ * rendered, EQ3 in B3 crossBlock, EQ4 and EQ5 in B5 hiddenMarkers); and the residual readings made literal (B3: every
+ * R-TREE-CONSTRUCTION quiet row quiet, every live twin and over-read a finding; B5: every R-MARKER-ANYWHERE quiet row quiet and its
+ * twin a finding, every hidden-marker page a finding). Its new entries are self-anchored, as FROZEN SHAPE names the members of these
+ * tables: one removed with its roster entry stays green (measured for one entry of each table it extends), and the literals red a reader
+ * change that reaches a named member, never a removed entry.
  *
  * THE ARTIFACT AT THE PIN (the roster's `producer` block, measured read-only by the cutting seat on 2026-10-26 from a shallow
  * clone of the Furnace repository at 6502737d9e96, removed after the read; this census is hermetic and never re-reads it):
@@ -193,7 +205,8 @@
  *   named, never claimed as anchored. The same holds for a member of CROSS_BLOCK, SAME_HTML_GROUPS, TREE_CONSTRUCTION,
  *   OVER_READ, FOREIGN_SCOPE and the pinned lists of B3 and B5 removed with its roster entry; what reds such a hollow is a
  *   literal guard, never the roster: B3's twins and same-HTML literals for a page whose reading stops matching its own marked
- *   HTML, and A2's replica literal for the reader behaviours refusal #3 cures (its five plants).
+ *   HTML, A2's replica literal for the reader behaviours refusal #3 cures (its five plants), and wb-lhlc's residual readings literal
+ *   (B3, B5) for a reader change that reaches a named member or a hidden form.
  * RESIDUALS (named; each has a pinned quiet row): R-OUTSIDE-ROOTS (B1) a claim in src/, test/, qa/, examples/, the dot
  *   directories, vendor/ or another tracked directory outside docs/, or in a root file that is not a .md page, is not read;
  *   R-STATUS-OTHER-CELL (B2) a GP name only in a feature-matrix Evidence or Caveats cell, or in a status-ledger cell other
@@ -216,7 +229,11 @@
  *   styling is not read), a marker in svg character data outside a text element, which the SVG rendering never draws, a marker
  *   in canvas or object fallback content (reader-dependent: shown to a reader without scripting, or when the object fails to
  *   load) and a marker in a meter or progress element's content, which a renderer draws as a widget (refusal #3 U2's family,
- *   named); each member has a live twin, the claim alone, which is a finding (B5 twins); R-PARAPHRASE (B5)
+ *   named), and a marker in never-rendered foreign content beyond B5's pinned hidden forms - a MathML semantics or maction
+ *   element's children after the first, an mphantom, svg text inside defs, symbol, clipPath, mask, pattern or marker, and an svg
+ *   switch's children after the first (wb-lhlc F2; the tree measured by parse5, visibility reasoned from SVG 2's never-rendered
+ *   elements and MathML Core's UA stylesheet, not measured in a browser); each member has a live twin, the claim alone, which is a
+ *   finding (B5 twins); R-PARAPHRASE (B5)
  *   a served claim outside the served words (up, ready, in place, working, running; the -ing forms other than serving and
  *   shipping, and the inflections the served words leave out, such as invoked, deploys, implements and releases; the verbs
  *   calls, runs and uses, which docs spell as nouns too: bd calls; and the base verbs wire and host, which these docs spell
@@ -230,12 +247,18 @@
  *   reference outside NAMED_REFERENCES; each quiet row has a live twin, the same claim shown, which is a finding (B5 twins);
  *   R-TREE-CONSTRUCTION (B3; refusal #3, named out of NOT CLAIMED) the HTML standard's tree construction and tokenizer states
  *   beyond MARKUP and encloses are not read - the census reads tags in the order they come, so an end implied by a later start
- *   tag (a block-level start tag closing an open p and a hidden phrasing element in it, a cell or row start closing an open
- *   cell), foster parenting, misnested formatting and the head and frameset elements read as written, a textarea's RCDATA is read
- *   as markup (a hidden tag inside one hides what a reader sees as text), and a script's escape states end at its first </script>
- *   (B3 overRead, an over-read); each quiet row has a live twin, the same claim with no hiding element, which is a finding (B3
- *   residualTwins), and a block element opened in a paragraph and ended in the next one reads joined to the text after it (B3
- *   crossBlock XB13, an over-read).
+ *   tag (a block-level start tag closing an open p and a hidden phrasing element or a media element in it, or breaking out of a
+ *   math annotation or svg metadata, which pops the annotation and its root: wb-lhlc F3; a cell or row start closing an open
+ *   cell), foster parenting, misnested formatting (a formatting element carrying the hidden attribute that one block leaves open,
+ *   which the tree construction rebuilds in the next block - the reconstruction of the active formatting elements - so a marker
+ *   after the block boundary is hidden while the claim is shown: wb-lhlc F1, a quiet row for b, a, s, font, nobr, code, small,
+ *   big, tt, u, strike and i across a paragraph, i across list items, em from a block quote, strong from a heading, and b from a
+ *   list item and into a loose list's next item; and, its over-read, a claim in that next block read as shown though the rebuilt
+ *   element hides it: B3 overRead) and the head and frameset elements read as written, a textarea's RCDATA is read as markup (a
+ *   hidden tag inside one hides what a reader sees as text), and a script's escape states end at its first </script> (B3
+ *   overRead, an over-read); each quiet row has a live twin, the same claim with no hiding element, which is a finding (B3
+ *   residualTwins; a misnested-formatting row's twin is the page as a reader is shown it), and a block element opened in a
+ *   paragraph and ended in the next one reads joined to the text after it (B3 crossBlock XB13, an over-read).
  * NOT CLAIMED (refusal #3 restates it to the reader-dependent readings, each with its reason, and pointers to named residuals):
  *   styling - a style attribute, a class or a stylesheet can hide or show any text, and the census reads markup unstyled
  *   (R-MARKER-ANYWHERE pins the marker side); the tree construction beyond MARKUP (R-TREE-CONSTRUCTION); a reader without
@@ -1435,6 +1458,8 @@ const RENDERED_FORMS: readonly string[] = [
   "Status <span hidden>hidden</span> shown.",
   // Refusal #3 U1: a paragraph's own p is open in the run, so a stray </p> is met only where no p is open, as in an HTML block.
   "<div>\nThe gp seam is</p>served.\n</div>",
+  // wb-lhlc F4 (gate mutant G01, the end tag matched case-sensitively): a raw-text element's end tag ends it in any case (EQ1).
+  "Intro <script>x</SCRIPT> The gp seam is served.",
 ];
 /** B3's judged pages: the cutters through the whole judgment (path, text). */
 const JUDGED_PAGES: readonly (readonly [string, string])[] = [
@@ -1534,6 +1559,10 @@ const HIDDEN_MARKERS: readonly string[] = [
   "The gp seam is served <math><semantics><mi>x</mi><annotation-xml> not</annotation-xml></semantics></math>.",
   'The gp seam is served <video><source src="x.mp4"> not</video>.',
   "The gp seam is served <svg><title>not</title></svg>.",
+  // wb-lhlc F4 (gate mutants G08 and G12): a self-closing slash on a media element outside foreign content opens it, as the standard
+  // ignores the slash there (EQ4), and an element of the hidden element's own name nested in it keeps it open to its own end tag (EQ5).
+  "The gp seam is served <video/>not</video>.",
+  "The gp seam is served <span hidden><span>x</span> not</span>.",
 ];
 /** B5's foreign scope (refusal #3 U2): desc is unshown only inside an open svg element - outside one it is an element a reader sees, so a
  * marker in it counts - and a self-closing tag inside foreign content (or a self-closing svg root) closes at once, so a self-closing desc
@@ -1598,6 +1627,20 @@ const MARKED_ANYWHERE: readonly (readonly [string, string])[] = [
   ['The gp seam is served<object data="x.svg" type="image/svg+xml"> not</object>.', "The gp seam is served."],
   ["The gp seam is served<progress> not</progress>.", "The gp seam is served."],
   ["The gp seam is served<meter> not</meter>.", "The gp seam is served."],
+  // wb-lhlc F2 (gate cmd_ec3318b2690b's paired instrument, its ten pages in its order; the tree measured by
+  // parse5, visibility reasoned from SVG 2's never-rendered elements and MathML Core's UA stylesheet): never-rendered foreign content
+  // beyond B5's pinned desc, metadata, title, annotation and annotation-xml is read as shown - a semantics or maction element's children
+  // after the first, an mphantom, svg text inside defs, symbol, clipPath, mask, pattern or marker, and a switch's children after the first.
+  ["The gp seam is served <math><semantics><mi>x</mi><mtext> not</mtext></semantics></math>.", "The gp seam is served."],
+  ['The gp seam is served <math><maction actiontype="toggle"><mi>x</mi><mtext> not</mtext></maction></math>.', "The gp seam is served."],
+  ["The gp seam is served <math><mphantom><mtext>not</mtext></mphantom></math>.", "The gp seam is served."],
+  ["The gp seam is served <svg><defs><text>not</text></defs></svg>.", "The gp seam is served."],
+  ["The gp seam is served <svg><switch><text>x</text><text> not</text></switch></svg>.", "The gp seam is served."],
+  ["The gp seam is served <svg><symbol><text>not</text></symbol></svg>.", "The gp seam is served."],
+  ["The gp seam is served <svg><clipPath><text>not</text></clipPath></svg>.", "The gp seam is served."],
+  ["The gp seam is served <svg><mask><text>not</text></mask></svg>.", "The gp seam is served."],
+  ["The gp seam is served <svg><pattern><text>not</text></pattern></svg>.", "The gp seam is served."],
+  ["The gp seam is served <svg><marker><text>not</text></marker></svg>.", "The gp seam is served."],
 ];
 /** R-LOOKALIKE (B4): each member beside its live twin, the same sentence in plain letters. */
 const LOOKALIKES: readonly (readonly [string, string])[] = [
@@ -1651,6 +1694,9 @@ const CROSS_BLOCK: readonly string[] = [
   "Intro <video>x\n\nnot</video> the gp seam is served.",
   "| | gp seam is served |\n| --- | --- |",
   "- [ ] The gp seam is served.\n- [x] Done.",
+  // wb-lhlc F4 (gate mutant G05, the block quote's tags dropped from the run): a block-level hidden element a block quote's paragraph
+  // opens ends with the block quote, so the claim after it is shown (EQ3).
+  "> Intro <div hidden>x\n\nThe gp seam is served.",
 ];
 /** B3's same-HTML groups (refusal #3 U1, CLASS-LEVEL GUARD): each group's pages have identical marked HTML (asserted), and every page of a
  * group reads as its first. GP1-GP10 are the refusal's pairs, in its order (GP9 and GP10 a Markdown page beside its single-block HTML
@@ -1673,14 +1719,45 @@ const SAME_HTML_GROUPS: readonly (readonly string[])[] = [
 ];
 /** R-TREE-CONSTRUCTION (B3; refusal #3's restated NOT CLAIMED, named): the HTML standard's tree construction and tokenizer states beyond
  * MARKUP and encloses, each member beside its live twin, the same claim with no hiding element - a block-level start tag inside a hidden
- * phrasing element closes it with the paragraph, so a reader sees what follows, and a textarea shows the tags it holds as text. */
+ * phrasing element closes it with the paragraph, so a reader sees what follows, and a textarea shows the tags it holds as text; wb-lhlc
+ * adds misnested formatting (F1) and a block-level start tag's breakout from foreign content and a media element (F3). */
 const TREE_CONSTRUCTION: readonly (readonly [string, string])[] = [
   ["Intro <span hidden>x<div>The gp seam is served.</div></span>", "Intro <span>x<div>The gp seam is served.</div></span>"],
   ["<textarea><b hidden>The gp seam is served.</b></textarea>", "<textarea>The gp seam is served.</textarea>"],
+  // wb-lhlc F1 (gate cmd_ec3318b2690b's paired instrument, R1-R6, R9-R17, R19 and R20 in its order): misnested formatting - a formatting
+  // element carrying the hidden attribute that one block leaves open is rebuilt by the tree construction in the next block (the HTML
+  // standard's reconstruction of the active formatting elements, its misnested-tags case), so a marker after the block boundary is hidden
+  // while the claim is shown; the census ends the element with its block (encloses) and reads the marker. Each live twin is the page as a
+  // reader is shown it, the hidden text dropped.
+  ["Intro <b hidden>x\n\nnot</b> the gp seam is served.", "Intro\n\nthe gp seam is served."],
+  ["- Intro <i hidden>x\n- not</i> the gp seam is served.", "- Intro\n- the gp seam is served."],
+  ["> Intro <em hidden>x\n\nnot</em> the gp seam is served.", "> Intro\n\nthe gp seam is served."],
+  ["# Intro <strong hidden>x\n\nnot</strong> the gp seam is served.", "# Intro\n\nthe gp seam is served."],
+  ["Intro <a hidden>x\n\nnot</a> the gp seam is served.", "Intro\n\nthe gp seam is served."],
+  ["Intro <s hidden>x\n\nnot</s> the gp seam is served.", "Intro\n\nthe gp seam is served."],
+  ["Intro <font hidden>x\n\nnot</font> the gp seam is served.", "Intro\n\nthe gp seam is served."],
+  ["Intro <nobr hidden>x\n\nnot</nobr> the gp seam is served.", "Intro\n\nthe gp seam is served."],
+  ["Intro <code hidden>x\n\nnot</code> the gp seam is served.", "Intro\n\nthe gp seam is served."],
+  ["Intro <small hidden>x\n\nnot</small> the gp seam is served.", "Intro\n\nthe gp seam is served."],
+  ["Intro <big hidden>x\n\nnot</big> the gp seam is served.", "Intro\n\nthe gp seam is served."],
+  ["Intro <tt hidden>x\n\nnot</tt> the gp seam is served.", "Intro\n\nthe gp seam is served."],
+  ["Intro <u hidden>x\n\nnot</u> the gp seam is served.", "Intro\n\nthe gp seam is served."],
+  ["Intro <strike hidden>x\n\nnot</strike> the gp seam is served.", "Intro\n\nthe gp seam is served."],
+  ["Intro <i hidden>x\n\nnot</i> the gp seam is served.", "Intro\n\nthe gp seam is served."],
+  ["- Intro <b hidden>x\n\nnot</b> the gp seam is served.", "- Intro\n\nthe gp seam is served."],
+  ["- Intro <b hidden>x\n\n- not</b> the gp seam is served.", "- Intro\n\n- the gp seam is served."],
+  // wb-lhlc F3 (the paired instrument's FB1, FB2 and FB5): a block-level start tag inside a math annotation or svg metadata breaks out of
+  // foreign content (the tree construction pops the annotation and its root), and inside a media element closes it with the paragraph, as
+  // row 1's hidden phrasing element, so a reader sees the claim the census hides to the element's end tag. Each live twin drops the
+  // hiding element.
+  ["Intro <math><annotation>x<div>The gp seam is served.</div></annotation></math>", "Intro <math>x<div>The gp seam is served.</div></math>"],
+  ["Intro <svg><metadata>x<div>The gp seam is served.</div></metadata></svg>", "Intro <svg>x<div>The gp seam is served.</div></svg>"],
+  ["Intro <video>x<div>The gp seam is served.</div></video>", "Intro x<div>The gp seam is served.</div>"],
 ];
-/** R-TREE-CONSTRUCTION's over-read (B3): a script's escape states, which the census ends at the first </script>, so text a reader is never
- * shown reads as a claim. */
-const OVER_READ: readonly string[] = ["<script><!--<script></script>The gp seam is served.--></script>"];
+/** R-TREE-CONSTRUCTION's over-reads (B3): a script's escape states, which the census ends at the first </script>, so text a reader is never
+ * shown reads as a claim; and (wb-lhlc F1, the paired instrument's U9) misnested formatting's other side - the rebuilt hidden formatting
+ * element hides the next block's claim, which the census, ending the element with its block, reads as shown. */
+const OVER_READ: readonly string[] = ["<script><!--<script></script>The gp seam is served.--></script>", "Intro <b hidden>x\n\nThe gp seam is served."];
 /** B5's default-ignorable code points beyond Cf, each inside a served word and a seam word (FOLD drops them; the Hangul fillers some fonts
  * draw as a blank, an over-read). */
 const IGNORABLES: readonly number[] = [0x034f, 0x115f, 0x1160, 0x17b4, 0x180b, 0x180e, 0x3164, 0xfe00, 0xfe0f, 0xffa0, 0xe0041, 0xe0100];
@@ -1933,6 +2010,11 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "B3").map(residual => residual.id));
     const residualTwins = { "R-TREE-CONSTRUCTION": TREE_CONSTRUCTION.map(([, twin]) => judgeText("docs/x.md", twin)) };
     const overRead = OVER_READ.map(page => judgeText("docs/x.md", page));
+    // wb-lhlc (literal, never only the roster): every R-TREE-CONSTRUCTION quiet row reads quiet and every live twin and over-read a
+    // finding, so a reader change that reaches a named member reds here whatever a regenerated roster holds.
+    expect(quiet["R-TREE-CONSTRUCTION"].map(found => found.length)).toEqual(TREE_CONSTRUCTION.map(() => 0));
+    expect(residualTwins["R-TREE-CONSTRUCTION"].map(found => found.length > 0)).toEqual(TREE_CONSTRUCTION.map(() => true));
+    expect(overRead.map(found => found.length > 0)).toEqual(OVER_READ.map(() => true));
     return {
       raw,
       rendered,
@@ -2025,6 +2107,11 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     };
     expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "B5").map(residual => residual.id));
     const twins = { "R-MARKER-ANYWHERE": MARKED_ANYWHERE.map(([, alone]) => judgeText("docs/x.md", alone)), "R-RENDERED-TEXT": UNRENDERED.map(([, shown]) => judgeText("docs/x.md", shown)) };
+    // wb-lhlc (literal, never only the roster): every R-MARKER-ANYWHERE quiet row reads quiet and its twin a finding, and every hidden-marker
+    // page reads its claim, so a reader change that reaches a named member or a hidden form reds here whatever a regenerated roster holds.
+    expect(quiet["R-MARKER-ANYWHERE"].map(found => found.length)).toEqual(MARKED_ANYWHERE.map(() => 0));
+    expect(twins["R-MARKER-ANYWHERE"].map(found => found.length > 0)).toEqual(MARKED_ANYWHERE.map(() => true));
+    expect(hiddenMarkers.map(found => found.length > 0)).toEqual(HIDDEN_MARKERS.map(() => true));
     return { served, bare, pi, formats, ignorables, forms, asWritten, hiddenMarkers, foreignScope, markers, notMarkers, bounded, quiet, twins };
   },
 };

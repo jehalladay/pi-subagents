@@ -47,8 +47,11 @@
  *    the same holds for scenario triggers, the shipped speculative and notice keys among them. Since wb-grmo.1 landed its
  *    speculative tripwire in that diff (speculativeMarkers in test/helpers/rf-render-fixture.ts, landing 545), the diff also
  *    names those two members as speculative, and T3's live diff pins both readings. T4: the bead names the file the
- *    owed cases land in, test/workbench-reactivefiber-observer.test.ts, and today it spells no epistemic word, so "those cases"
- *    do not exist yet.
+ *    owed cases land in, test/workbench-reactivefiber-observer.test.ts, and today its code spells no epistemic word, so "those
+ *    cases" do not exist yet. T4 reads that suite parse-aware (wb-yght, the wb-grmo.2 gate's F5) through codeTexts, the reader Z1
+ *    uses: every literal case title, identifier, string, template and regex counts, and no comment does. A comment that names the
+ *    word with no case (G10a) reads quiet, where the raw-text reading flipped on it, and an owed case titled with the word, or one
+ *    whose body alone spells it, flips T4 (its controls).
  *  D, the filing's second clause. D1: the docs/09 § Reader adapters section renders SENTENCE exactly once, with no HTML. The
  *    docs09 census quotes it as half RA6/f and freezes that half's pins as exactly this file's T2, Z1 and Z2, each by its
  *    describe path and title, so the sentence is census-bound (and those three pins are anchored there). D2: the sentence opens with
@@ -72,7 +75,10 @@
  *    tripwire landed: the diff names them at any depth, and Q1 pins that reading beside the quiet one. Q2 R-VALUE: an
  *    uncertified word carried as the value of a roster key passes unseen, since the roster lists keys.
  *    Q3 R-VOCABULARY: a key outside the vocabulary that carries the same meaning reads quiet on T2 and T3. Q4 R-SHARED-WORD:
- *    Z1 does not take hypothesis, which src code spells for its own relation kind.
+ *    Z1 does not take hypothesis, which src code spells for its own relation kind. Q5 R-SCENARIO-CASE (wb-yght, the wb-grmo.2 gate's
+ *    F5): T4 takes the epistemic word only, so an owed uncertified-scenario case that never spells it (G10b) reads quiet there; that
+ *    half of the owed set rests on T3 at the roster and on Z1 and Z2 in src. Measured at the cut (trunk bda6c2a): the observer suite's
+ *    code spells no scenario, uncertified or speculative word, so the gap hides no live case today.
  *
  * FREEZE AND FLIP. This cut is the frozen form. A re-captured roster that names a trigger reds T2 or T3 with the owed
  * acceptance named. The owed cases reaching the observer suite red T4, and an adapter that reads the word reds Z1 and Z2. The
@@ -84,8 +90,16 @@
  * removed from every literal of this file at once still reds against it. Rows T and D and their pins are also held to the
  * owner's text (F1), and half RA6/f of the docs09 census pins T2, Z1 and Z2 by file, describe path and title (D1). Measured on
  * throwaway copies with the roster regenerated alongside: T3 removed from both still reds F1, and Z1 removed from both still
- * reds D1. Not claimed: a Q pin removed from this file and its roster together. The residual rows have no owner text outside
- * both files to anchor them, and that hollow was measured green.
+ * reds D1. The residual rows have no owner text outside both files; their anchor is the run pin below.
+ * THE RUN PIN (wb-yght, the wb-grmo.2 gate's F4: the record skipped, G17a, or returning early after its title checks, G17b, stayed
+ * green, since the record was pinned only inside this file): test/workbench-rf-census-run-pins.census.ts judges every title of this
+ * file in the census tier from the gate's own test report - collected once, passed, asserting - with the titles frozen there,
+ * outside this file and its roster. The record reads the task tree inline (no task handed to a call or placed in a literal, which
+ * that judge cannot follow) and asserts ONCE, as its last statement, so an exit anywhere before that assertion leaves the case
+ * without one (--expect.requireAssertions here, no-assertion there), and a record taken out of run mode reads so in the report
+ * there. The run pin's own CENSUSES table is anchored here (the wb-56od shape): the judged-set case reads that table back as a
+ * syntax tree and requires this file there exactly once, so a cut of this census from the census tier reds here too. A pin
+ * removed from this file and its roster together, a Q pin included, reds there, absent from the report.
  * SCOPE: this file and its roster are test-only; the cut also adds one docs/09 sentence and the docs09 census half that binds
  * it. Nothing is spawned or written; the repository files read are only read.
  *
@@ -101,6 +115,7 @@ import { nativeEvidence } from "../src/workbench/native-evidence.js";
 import { type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
 import { docsSection } from "./helpers/census.js";
 import { srcFiles } from "./helpers/gp-fallback-census.js";
+import { RUN_PIN_FILE, runPinnedFiles } from "./helpers/rf-census-run-pins.js";
 import { diffAgainstRoster, fullShapeRf, type Json, type RfResultRoster, readRfResultRoster } from "./helpers/rf-render-fixture.js";
 
 type JsonObject = { [key: string]: Json };
@@ -184,7 +199,7 @@ const ROWS: readonly Row[] = [
   },
   { id: "Z", label: "until then Pi claims nothing", pins: ["Z1", "Z2"] },
   { id: "F", label: "the owner filing in the tracked bead export tiles rows T and D pin by pin and its title holds row Z", pins: ["F1"] },
-  { id: "Q", label: "the named residuals, each with a pinned quiet row", pins: ["Q1", "Q2", "Q3", "Q4"] },
+  { id: "Q", label: "the named residuals, each with a pinned quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5"] },
 ];
 /** The part of its row's clause each pin of rows T and D evidences, verbatim; F1 holds them to the owner's text. */
 const QUOTES: Readonly<Record<string, string>> = {
@@ -201,7 +216,7 @@ const PIN_TITLES: Readonly<Record<string, string>> = {
   T1: "T1 reads the SCG-R11 fixture roster: test/fixtures/rf-result-keys.json parses through readRfResultRoster as the captured, exhaustive roster, each key list at its floor",
   T2: "T2 fails when a captured envelope names epistemic_status (ARMED): no key of the roster's four lists spells an epistemic form, and the roster diff reds a result-level one",
   T3: "T3 or a scenario key (ARMED): no roster key spells scenario, uncertified or speculative or is the shipped notice key, and the roster diff reds a result-level one",
-  T4: "T4 before those cases exist (freeze-and-flip): the observer suite the owed cases land in spells no epistemic word, so this census stands in its frozen form",
+  T4: "T4 before those cases exist (freeze-and-flip): the code of the observer suite the owed cases land in, read parse-aware (case titles, identifiers, strings; never a comment), spells no epistemic word, so this census stands in its frozen form",
   D1: "D1 docs/workbench/09 § Reader adapters gains one census-bound sentence: it renders there exactly once and the docs09 census binds it as half RA6/f",
   D2: "D2 that an RF prediction renders as unverified context: the sentence opens with the owner's words verbatim",
   D3: "D3 (fold into wb-973.17 if it lands first): wb-973.17 landed first, and the sentence closes the RF bullet that carries its clauses",
@@ -212,6 +227,7 @@ const PIN_TITLES: Readonly<Record<string, string>> = {
   Q2: "Q2 R-VALUE: an uncertified word carried as the value of a roster key passes the roster diff unseen",
   Q3: "Q3 R-VOCABULARY: a key outside the vocabulary that carries the same meaning (belief_state, what_if_view) reads quiet on T2 and T3",
   Q4: "Q4 R-SHARED-WORD: Z1 does not take hypothesis, which src code spells for Pi's own relation kind",
+  Q5: "Q5 R-SCENARIO-CASE: an owed uncertified-scenario case that never spells epistemic reads quiet on T4, whose reader takes the epistemic word only",
 };
 const JUDGED_TITLE = "the judged set: the frozen shape, the out-of-file roster and the cases agree";
 const RECORD_TITLE = "the record: every registered test is in run mode and ran, and every pin reached its seams as the roster pins";
@@ -240,7 +256,7 @@ const rosterWitness = (pin: string): Json => {
   throw new Error(`the roster holds no witness for ${pin}`);
 };
 /** The named residual families and the quiet row that pins each. */
-const RESIDUALS: Readonly<Record<string, string>> = { "R-NESTED": "Q1", "R-VALUE": "Q2", "R-VOCABULARY": "Q3", "R-SHARED-WORD": "Q4" };
+const RESIDUALS: Readonly<Record<string, string>> = { "R-NESTED": "Q1", "R-VALUE": "Q2", "R-VOCABULARY": "Q3", "R-SHARED-WORD": "Q4", "R-SCENARIO-CASE": "Q5" };
 
 // ---- the reached record: each seam a case reads through counts one read for the running pin ----
 
@@ -313,6 +329,13 @@ function srcCode(): { readonly file: string; readonly code: readonly string[] }[
     .map(file => ({ file, code: codeTexts(file, readFileSync(join(REPO, file), "utf8")) }));
 }
 const codeHits = (file: string, text: string, word: RegExp): string[] => codeTexts(file, text).filter(part => word.test(part));
+/** T4's reading of the observer suite (wb-yght, the wb-grmo.2 gate's F5): its code parts that spell an epistemic word, read parse-aware
+ * through codeTexts, so every literal case title, identifier, string, template and regex counts and no comment does. */
+const suiteEpistemic = (text: string): string[] => codeHits(OBSERVER_SUITE, text, EPISTEMIC_KEY);
+/** The observer suite's text with one line appended, the way a later cut adds a case at its end. */
+const plantedSuite = (text: string, line: string): string => `${text}\n${line}\n`;
+/** The owed scenario case the wb-grmo.2 gate planted (G10b): its title names an uncertified scenario and never spells epistemic. */
+const OWED_SCENARIO_CASE = "an uncertified scenario status projects partial";
 
 /** The rendered RF bullet of docs/09 § Reader adapters and its sentences; the section must bind and carry no HTML. */
 function rfBullet(): { readonly items: readonly string[]; readonly text: string; readonly hasHtml: boolean; readonly sentences: readonly string[] } {
@@ -424,13 +447,21 @@ const IMPL: Readonly<Record<string, () => Json>> = {
   },
   T4: () => {
     const text = textOf(OBSERVER_SUITE, "suite");
+    const code = codeTexts(OBSERVER_SUITE, text);
     const witness = {
       suite: OBSERVER_SUITE,
-      observerSuite: text.includes("reactivefiberTopology") && text.includes("R1: a clean noncommitted preview projects one snapshot"),
-      epistemicMentions: text.split(/epistemic/iu).length - 1,
+      observerSuite: code.includes("reactivefiberTopology") && code.some(part => part.startsWith("R1: a clean noncommitted preview projects one snapshot")),
+      epistemicCode: suiteEpistemic(text),
+      // The reader is live, each control a line appended to the suite: a comment naming the word with no case (G10a) reads quiet, and
+      // an owed case titled with the word, or one whose body alone spells it, flips.
+      controls: {
+        comment: suiteEpistemic(plantedSuite(text, "// the owed epistemic_status cases land below")).length,
+        title: suiteEpistemic(plantedSuite(text, 'it("R12 an epistemic_status hypothesis projects partial", () => {});')).length,
+        body: suiteEpistemic(plantedSuite(text, 'it("R12 a marked envelope projects partial", () => { const key = "epistemic_status"; });')).length,
+      },
     };
-    expect(witness.epistemicMentions, `the owed RF-WM-001 cases now reach ${OBSERVER_SUITE}: flip this census in the same commit`).toBe(0);
-    expect(witness).toStrictEqual({ suite: OBSERVER_SUITE, observerSuite: true, epistemicMentions: 0 });
+    expect(witness.epistemicCode, `the owed RF-WM-001 cases now reach ${OBSERVER_SUITE}: flip this census in the same commit`).toEqual([]);
+    expect(witness).toStrictEqual({ suite: OBSERVER_SUITE, observerSuite: true, epistemicCode: [], controls: { comment: 0, title: 1, body: 1 } });
     return witness;
   },
   D1: () => {
@@ -573,11 +604,21 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect(witness).toStrictEqual({ snippetHits: 0, srcSpellsHypothesis: true });
     return witness;
   },
+  Q5: () => {
+    const text = textOf(OBSERVER_SUITE, "suite");
+    const page = plantedSuite(text, `it(${JSON.stringify(OWED_SCENARIO_CASE)}, () => {});`);
+    const scenarioParts = (source: string): number => codeHits(OBSERVER_SUITE, source, SCENARIO_KEY).length;
+    // Both readings are the plant's own contribution, the page against the suite it extends. The quiet reading: the plant adds nothing
+    // to T4's reading. The plant is real: it adds one code part that spells a scenario word, the owed case's title.
+    const witness = { plant: OWED_SCENARIO_CASE, t4: suiteEpistemic(page).length - suiteEpistemic(text).length, planted: scenarioParts(page) - scenarioParts(text) };
+    expect(witness).toStrictEqual({ plant: OWED_SCENARIO_CASE, t4: 0, planted: 1 });
+    return witness;
+  },
 };
 
 describe("wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2)", () => {
   it(JUDGED_TITLE, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:4", "D:3", "Z:2", "F:1", "Q:4"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:4", "D:3", "Z:2", "F:1", "Q:5"]);
     expect(ROSTER.bead).toBe(BEAD);
     expect(
       ROWS.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => ({ id: pin, title: PIN_TITLES[pin] ?? "", quote: QUOTES[pin] ?? null })) })),
@@ -589,6 +630,9 @@ describe("wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WO
     expect(Object.values(RESIDUALS)).toEqual(ROWS.find(row => row.id === "Q")?.pins);
     for (const row of ROWS) for (const pin of row.pins) expect(PIN_TITLES[pin]?.startsWith(`${pin} `), pin).toBe(true);
     for (const [family, pin] of Object.entries(RESIDUALS)) expect(PIN_TITLES[pin]?.startsWith(`${pin} ${family}: `), family).toBe(true);
+    // The anchor outside the census tier's run pin (wb-yght, the wb-56od shape): its CENSUSES table, read as a syntax tree, names this
+    // file exactly once, so a cut of this census from that table reds here, in the test tier, and not only there.
+    expect(runPinnedFiles(readFileSync(join(REPO, RUN_PIN_FILE), "utf8")).filter(file => file === SELF), `${RUN_PIN_FILE} names this census once`).toEqual([SELF]);
   });
 
   for (const row of ROWS) {
@@ -607,27 +651,52 @@ describe("wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WO
   }
 
   it(RECORD_TITLE, ({ task }) => {
-    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
-    const walk = (tasks: typeof task.file.tasks): void => {
-      for (const child of tasks) {
-        if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === task });
-        else if (child.type === "suite") walk(child.tasks);
+    // The file's registrations read INLINE (wb-yght, the wb-vu3i record shape), so the census tier's judge can follow the test context:
+    // no task is handed to a call or placed in a literal, each is read into primitives, at the three levels this file nests (its
+    // describe; the judged set, a row's describe and this record; that row's pins). A suite nested deeper is recorded by its name, so
+    // the title read below reds on it rather than miss what it holds.
+    const outer: string[] = [];
+    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string; readonly self: boolean }[] = [];
+    for (const top of task.file.tasks) {
+      outer.push(`${top.name}`);
+      if (top.type !== "suite") {
+        walked.push({ name: `${top.name}`, mode: `${top.mode}`, fails: top.fails === true, state: `${top.result?.state ?? "no result"}`, self: top.id === task.id });
+        continue;
       }
-    };
-    walk(task.file.tasks);
-    expect(task.file.tasks.map(child => child.name), "one outer describe, named SUITE (the docs09 census binds its path)").toEqual([SUITE]);
+      for (const middle of top.tasks) {
+        if (middle.type !== "suite") {
+          walked.push({ name: `${middle.name}`, mode: `${middle.mode}`, fails: middle.fails === true, state: `${middle.result?.state ?? "no result"}`, self: middle.id === task.id });
+          continue;
+        }
+        for (const leaf of middle.tasks) {
+          walked.push({
+            name: leaf.type === "suite" ? `suite ${leaf.name}` : `${leaf.name}`,
+            mode: `${leaf.mode}`,
+            fails: leaf.type === "suite" ? false : leaf.fails === true,
+            state: `${leaf.result?.state ?? "no result"}`,
+            self: leaf.id === task.id,
+          });
+        }
+      }
+    }
     const titles = walked.map(entry => entry.name);
-    expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual(ROSTER.tests);
-    expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice").toEqual([]);
     const here = walked.findIndex(entry => entry.self);
-    expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
-    const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
-    expect(
-      walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(entry => `${entry.name} | ${entry.mode} | ${entry.state ?? "no result"}`),
-      "every other test is in run mode, not inverted, and ran before this case",
-    ).toEqual([]);
+    const ran = (state: string): boolean => state === "pass" || state === "fail";
+    const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : entry.state}`;
     const pins = ROWS.flatMap(row => row.pins);
-    expect(pins.filter(pin => Object.keys(reached[pin] ?? {}).length === 0), "a pin that read nothing through its seams").toEqual([]);
-    expect(reached, "each pin's seam reads equal the roster's").toStrictEqual(ROSTER.reached);
+    // ONE assertion, this case's last statement (the G17b class): an exit anywhere before it leaves the case without an assertion, which
+    // --expect.requireAssertions fails in this tier and the census tier's judge reads as no-assertion.
+    expect(
+      {
+        outer,
+        titles,
+        twice: titles.filter((name, index) => titles.indexOf(name) !== index),
+        here,
+        irregular: walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read),
+        unreached: pins.filter(pin => Object.keys(reached[pin] ?? {}).length === 0),
+        reached,
+      },
+      "the record: one outer describe, named SUITE (the docs09 census binds its path); every registered test of this file (vitest task tree), exactly and in roster order, none registered twice; this case found by task identity, registered last; every other test in run mode, not inverted, and run before this case; and every pin read through its seams exactly as the roster pins",
+    ).toStrictEqual({ outer: [SUITE], titles: [...ROSTER.tests], twice: [], here: walked.length - 1, irregular: [], unreached: [], reached: ROSTER.reached });
   });
 });

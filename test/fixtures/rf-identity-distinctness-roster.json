@@ -1,5 +1,5 @@
 {
-  "provenance": "wb-hs2j.7 census roster (test/workbench-rf-identity-distinctness-census.test.ts). statement, quote, citation, mergedQuote, mergedCitation, identities, shippedReads and posture are the owner filing's (bead row wb-hs2j.7 in .beads/issues.jsonl: its Full statement line, its Source line and the Merged clause of that line, the parenthesized identity list of the statement, the Shipped sentence of its Gating artifact line and the two facts of its Not P0 line), re-read at ReactiveFiberCLI 6a251bf73af5 with git show on 2026-10-23 (02-swarm-usage-and-command-grammar.md:86, README.md:73, 03-host-conformance-performance-and-acceptance.md:78). producer is MEASURED read-only on 2026-10-23: rfVersion and rfCommit are `rf --json --version` result.version and result.provenance.commit_id of the installed rf (2618c211be0d, a descendant of the program pin by git merge-base --is-ancestor); prefixKinds is domain/ids.py PREFIX_KINDS; grammar holds the packaged schemas/cli/context.render.schema.json patterns ($defs render_id, operation_id, transaction_id, workspace.properties.id and digest; result.session_id; $defs component_id; result.effects items component_instance_id) and domain/ids.py CANDIDATE_KEY_RE (Python named groups, compiled by the census as JavaScript ones); recordFields are the sorted item properties of result.blocks, components, effects and necessity; digests are the sha256 of both files, each byte-identical at the program pin and in the installed rf. The C-08 records the census plants are CONSTRUCTED from recordFields and the grammar, never captured. Every witness is the expected outcome of its pin's case at this cut. wb-mzoc (the R694 follow-up of landing 292) adds scan.listing, nonScriptForms, unjudgedRoots, programConfig, quietRows, acceptedForms and pinHollowMembers, the R-PIN-HOLLOW residual, A1's walk witness (the walked set against Git's own listing and the tsconfig.json program, measured at trunk 44f305c) and counted, each pin's assertion count at its witness compare, measured from a run with counted unfilled. wb-mzoc respin #1 (refusal #1 unmet U1, the judged-reading guard) adds scan.hashObject and parseName, A1's judged witness (the judged map's keys, each reading's parsed-text blob id against Git's hash-object of the listed file, and each reading against the compiler's own reading of the file, measured at trunk 63c8a04) and A1's three anchor controls (narrowedMap, otherText, alteredReading); counted is re-measured from a run with counted unfilled. wb-mzoc respin #2 (refusal #2: unmet U2, the judged-reading guard at class level, and the rule 19(c) loop-cap form) adds scan.treeJudges (the five judges that read the shared tree), the F1 class's residual families R-PIN-LOCAL, R-CO-NARROWED and R-ROOT-MOVED with their quiet rows in scan.quietRows and residuals, A1's judged.readers witness (the readers list against each judged module's own compiler READER reading), A1's anchor, view and walk controls (unlistedReader, listedNonReader, unreadReader, viewKeys, viewBlob, viewReading, viewReaders, viewDetached, recordReadOnly, viewNarrowedInPlace, walkNarrowed, listingNarrowed, srcListingNarrowed, newRoot, rootDropped) beside the quiet rows (caseNarrowed, helperNarrowed, coNarrowedQa, coNarrowedExamples, coNarrowedSrc, rootMoved), and the viewHeld witness of A4, B1, C1 and D1 (each tree judge's view at the end of its case is A1's anchored view), measured at trunk 6c0605b; counted is re-measured from a run with counted unfilled. wb-yvoa (the R694 follow-up of landing 430: F1 the three guards' partial hollows, F2 the RENDER_MEMBERS splice, F3 the view controls' comment) adds scan.readingFields (FIELD_ALTERATIONS' keys: every field of a module reading, each altered by the sweeps) and scan.frozen (the module-scope constants a judge reads, each frozen deep), the R-GUARD-CONDITIONED and R-ANCHOR-SOURCE residuals with their quiet rows in scan.quietRows and residuals, A1's sweeps witness (the walk anchor, the judged anchor and the view digest swept over every module of A1's view and every reading field, one module at a time and every module at once: nothing unfound) and its sweep controls (digestMembersBlind, digestLiteralsBlind, digestDirectoryBlind, anchorIdentifiersOnly, anchorDirectoryBlind and walkDirectoryBlind beside the quiet rows digestConditioned, anchorConditioned and walkConditioned) and the R-ANCHOR-SOURCE quiet rows sourceReread and sourceBlobs, and C1's controlSpellings witness and referenceMember control (render_ref), measured at trunk fced7bf; counted is re-measured from a run with counted unfilled.",
+  "provenance": "wb-hs2j.7 census roster (test/workbench-rf-identity-distinctness-census.test.ts). statement, quote, citation, mergedQuote, mergedCitation, identities, shippedReads and posture are the owner filing's (bead row wb-hs2j.7 in .beads/issues.jsonl: its Full statement line, its Source line and the Merged clause of that line, the parenthesized identity list of the statement, the Shipped sentence of its Gating artifact line and the two facts of its Not P0 line), re-read at ReactiveFiberCLI 6a251bf73af5 with git show on 2026-10-23 (02-swarm-usage-and-command-grammar.md:86, README.md:73, 03-host-conformance-performance-and-acceptance.md:78). producer is MEASURED read-only on 2026-10-23: rfVersion and rfCommit are `rf --json --version` result.version and result.provenance.commit_id of the installed rf (2618c211be0d, a descendant of the program pin by git merge-base --is-ancestor); prefixKinds is domain/ids.py PREFIX_KINDS; grammar holds the packaged schemas/cli/context.render.schema.json patterns ($defs render_id, operation_id, transaction_id, workspace.properties.id and digest; result.session_id; $defs component_id; result.effects items component_instance_id) and domain/ids.py CANDIDATE_KEY_RE (Python named groups, compiled by the census as JavaScript ones); recordFields are the sorted item properties of result.blocks, components, effects and necessity; digests are the sha256 of both files, each byte-identical at the program pin and in the installed rf. The C-08 records the census plants are CONSTRUCTED from recordFields and the grammar, never captured. Every witness is the expected outcome of its pin's case at this cut. wb-mzoc (the R694 follow-up of landing 292) adds scan.listing, nonScriptForms, unjudgedRoots, programConfig, quietRows, acceptedForms and pinHollowMembers, the R-PIN-HOLLOW residual, A1's walk witness (the walked set against Git's own listing and the tsconfig.json program, measured at trunk 44f305c) and counted, each pin's assertion count at its witness compare, measured from a run with counted unfilled. wb-mzoc respin #1 (refusal #1 unmet U1, the judged-reading guard) adds scan.hashObject and parseName, A1's judged witness (the judged map's keys, each reading's parsed-text blob id against Git's hash-object of the listed file, and each reading against the compiler's own reading of the file, measured at trunk 63c8a04) and A1's three anchor controls (narrowedMap, otherText, alteredReading); counted is re-measured from a run with counted unfilled. wb-mzoc respin #2 (refusal #2: unmet U2, the judged-reading guard at class level, and the rule 19(c) loop-cap form) adds scan.treeJudges (the five judges that read the shared tree), the F1 class's residual families R-PIN-LOCAL, R-CO-NARROWED and R-ROOT-MOVED with their quiet rows in scan.quietRows and residuals, A1's judged.readers witness (the readers list against each judged module's own compiler READER reading), A1's anchor, view and walk controls (unlistedReader, listedNonReader, unreadReader, viewKeys, viewBlob, viewReading, viewReaders, viewDetached, recordReadOnly, viewNarrowedInPlace, walkNarrowed, listingNarrowed, srcListingNarrowed, newRoot, rootDropped) beside the quiet rows (caseNarrowed, helperNarrowed, coNarrowedQa, coNarrowedExamples, coNarrowedSrc, rootMoved), and the viewHeld witness of A4, B1, C1 and D1 (each tree judge's view at the end of its case is A1's anchored view), measured at trunk 6c0605b; counted is re-measured from a run with counted unfilled. wb-yvoa (the R694 follow-up of landing 430: F1 the three guards' partial hollows, F2 the RENDER_MEMBERS splice, F3 the view controls' comment) adds scan.readingFields (FIELD_ALTERATIONS' keys: every field of a module reading, each altered by the sweeps) and scan.frozen (the module-scope constants a judge reads, each frozen deep), the R-GUARD-CONDITIONED and R-ANCHOR-SOURCE residuals with their quiet rows in scan.quietRows and residuals, A1's sweeps witness (the walk anchor, the judged anchor and the view digest swept over every module of A1's view and every reading field, one module at a time and every module at once: nothing unfound) and its sweep controls (digestMembersBlind, digestLiteralsBlind, digestDirectoryBlind, anchorIdentifiersOnly, anchorDirectoryBlind and walkDirectoryBlind beside the quiet rows digestConditioned, anchorConditioned and walkConditioned) and the R-ANCHOR-SOURCE quiet rows sourceReread and sourceBlobs, and C1's controlSpellings witness and referenceMember control (render_ref), measured at trunk fced7bf; counted is re-measured from a run with counted unfilled. wb-iy1n (the R694 follow-up of landing 530: F1 the guards' partial hollows past the sweeps, F2 the frozen-set claim) adds scan.listFields (FIELD_SUBSTITUTIONS' keys: every list field of a module reading, its first entry substituted by the sweeps with the list's length kept), freezes HOST, OPERATION_REF and IMPL (scan.frozen with FIELD_SUBSTITUTIONS and LIST_FIELDS), the R-GUARD-CONTENT, R-GUARD-ENTRY and R-GUARD-TIMED residuals with their quiet rows in scan.quietRows and residuals, and A1's sweep controls digestCardinalityOnly and anchorCardinalityOnly (a digest and a judged anchor reading each list's cardinality only) beside the new quiet rows and their positives contentConditionedBlind, entryConditionedBlind and timedBlind, measured at trunk b92d7a1; counted is unchanged (A1's case runs no new assertion).",
   "bead": "wb-hs2j.7",
   "statement": "[RF-REACTIVE-CONTEXT-ASSEMBLY-R8] Pi shall carry rf's typed identity vocabulary distinctly (component_id, component_instance_id, occurrence_id, graph_revision_id, render_id, transaction_id, session_id, workspace_id), with inter-agent handoffs carrying an explicit render_id copied from an rf envelope, and no Pi surface shall collapse one identity into another or reconstruct a render identity from model output text (no gate: the identities are shipped envelope vocabulary) - pin docs/programs/reactive-context-assembly-2026-10-18/02-swarm-usage-and-command-grammar.md:86@6a251bf73af5",
   "quote": "Repeatedly visible IDs are first-class typed objects: `component_id`, `component_instance_id`, `occurrence_id`, `graph_revision_id`, `render_id`, `transaction_id`, `session_id`, `workspace_id`. Do not collapse these.",
@@ -196,6 +196,22 @@
       "R-ANCHOR-SOURCE": [
         "A1.sourceReread",
         "A1.sourceBlobs"
+      ],
+      "R-GUARD-CONTENT": [
+        "A1.digestContentConditioned",
+        "A1.anchorContentConditioned",
+        "A1.walkContentConditioned"
+      ],
+      "R-GUARD-ENTRY": [
+        "A1.digestEntryConditioned",
+        "A1.anchorEntryConditioned",
+        "A1.digestPartConditioned",
+        "A1.anchorPartConditioned"
+      ],
+      "R-GUARD-TIMED": [
+        "A1.digestTimed",
+        "A1.anchorTimed",
+        "A1.walkTimed"
       ]
     },
     "acceptedForms": [
@@ -232,6 +248,15 @@
       "nativeEvidenceCalls",
       "textBlob"
     ],
+    "listFields": [
+      "identifiers",
+      "literals",
+      "regexes",
+      "reads",
+      "members",
+      "nullTypedMembers",
+      "textReads"
+    ],
     "frozen": [
       "WALK_ROOTS",
       "MODULE_EXTENSIONS",
@@ -253,6 +278,8 @@
       "RESIDUAL_FAMILIES",
       "TREE_JUDGES",
       "RENDER_MEMBERS",
+      "HOST",
+      "OPERATION_REF",
       "VALUE_NAMES",
       "ROWS",
       "ROSTER",
@@ -263,7 +290,10 @@
       "COMPILER_FORMS",
       "EQUALITY",
       "FIELD_ALTERATIONS",
-      "READING_FIELDS"
+      "READING_FIELDS",
+      "FIELD_SUBSTITUTIONS",
+      "LIST_FIELDS",
+      "IMPL"
     ],
     "renderCommand": "context.render",
     "capability": "reactivefiber.render.preview",
@@ -373,6 +403,9 @@
     "R-ROOT-MOVED",
     "R-GUARD-CONDITIONED",
     "R-ANCHOR-SOURCE",
+    "R-GUARD-CONTENT",
+    "R-GUARD-ENTRY",
+    "R-GUARD-TIMED",
     "R-PIN-HOLLOW"
   ],
   "rows": [
@@ -526,7 +559,35 @@
               "walkDirectoryBlind": 1,
               "walkConditioned": 0,
               "sourceReread": 0,
-              "sourceBlobs": 0
+              "sourceBlobs": 0,
+              "digestCardinalityOnly": 1,
+              "anchorCardinalityOnly": 1,
+              "digestContentConditioned": 0,
+              "anchorContentConditioned": 0,
+              "walkContentConditioned": 0,
+              "contentConditionedBlind": [
+                "digest",
+                "anchor",
+                "walk"
+              ],
+              "digestEntryConditioned": 0,
+              "anchorEntryConditioned": 0,
+              "digestPartConditioned": 0,
+              "anchorPartConditioned": 0,
+              "entryConditionedBlind": [
+                "digestEntry",
+                "anchorEntry",
+                "digestPart",
+                "anchorPart"
+              ],
+              "digestTimed": 0,
+              "anchorTimed": 0,
+              "walkTimed": 0,
+              "timedBlind": [
+                "digest",
+                "anchor",
+                "walk"
+              ]
             }
           }
         },

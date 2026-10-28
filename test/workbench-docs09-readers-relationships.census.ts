@@ -1200,10 +1200,12 @@ describe("wb-752.15 record honesty: each unpinned half names who holds its pin f
  *   whole sentence behind (CT6), each red against the document.
  * NOT CLAIMED (each pinned by a quiet row below): which pins evidence which clause has no anchor outside this file - the
  * docs state clauses, never pins, and judge() reads only that a pinned case passed - so a pin dropped, swapped or moved
- * between halves in every literal of this file at once (ROWS, FROZEN_ROWS, FROZEN_HALF_SHAPE, DISTINCT_PINS), or two
- * halves' clauses swapped there with their pins left in place, stays quiet; and the two UNBOUND_LEADS sentences are
- * bound by no row (each is the lead-in that closes the paragraph opening its section's bullet list, and the anchor
- * forgives no other text).
+ * between halves in every literal of this file at once (ROWS, FROZEN_ROWS, FROZEN_HALF_SHAPE, DISTINCT_PINS) stays
+ * quiet; and the two UNBOUND_LEADS sentences are bound by no row (each is the lead-in that closes the paragraph opening
+ * its section's bullet list, and the anchor forgives no other text). Two halves' clauses swapped there with their pins
+ * left in place, and words moved across the boundary of two neighbouring halves, were quiet here too (gate F4 and F3 of
+ * the wb-vm71 landing 570); wb-kw2r's SPAN BINDING at the end of this file reds both where the document marks the
+ * boundary and names the rest as residuals with their own quiet rows.
  */
 const FROZEN_ROWS: readonly string[] = [
   "RA1/a | clause | Every supported provider offers at least a read-current-snapshot function where its SDK supports it.",
@@ -1518,6 +1520,423 @@ describe("wb-vm71 every row is anchored like RA6: the table's identity is frozen
 
     it("pins never move the anchor: the pin-stripped fixture tiles exactly as the fixture does", () => {
       expect(tableAnchor(fixture, stripPins(FIXTURE_ROWS))).toEqual(tableAnchor(fixture, FIXTURE_ROWS));
+    });
+  });
+});
+
+// ---- wb-kw2r (R694 follow-up of wb-vm71 landing 570, gate cmd_e01fc0d25b31: F3 leads, F4 rides): each half bound to its own span ----
+
+/**
+ * wb-kw2r (the R694 follow-up of wb-vm71 landing 570, gate cmd_e01fc0d25b31: F3 leads, F4 rides). The TABLE ANCHOR above
+ * reads WHICH words a section's clauses cover, never WHERE one half's clause ends and its neighbour's begins, so words
+ * moved from one half's clause to its neighbour's inside one rendered sentence, coordinated with every identity literal of
+ * this file, still tiled the live document (F3): the gate's resid-ra6-shift (", and the projection's freshness" from RA6/e
+ * into RA6/d), resid-ra4-shift (at its base RA4/b read "build revision and gate axes"; since wb-4ap.17 split RA4 in three
+ * its form here is "gate" moved from the unpinned RA4/c into the pinned RA4/b) and resid-rl5-shift ("without one" from
+ * RL5/b into RL5/a) read red=0, and so did two halves' clauses swapped with their pins left in place, the named
+ * clause-swap residual that had no quiet row of its own (resid-ra3-swap, F4). SPAN BINDING reads the LIVE document again,
+ * never this file's docs mirrors, and binds each half to its own rendered span:
+ * - JOIN LEG: inside each rendered sentence the bound clauses follow one another with nothing between two neighbours but
+ *   one of the sentence's own clause separators (CLAUSE_SEPARATORS, read longest first and never overlapping, so only the
+ *   comma or only the "and" of a ", and" is not one), and the sentence opens with its first clause and closes with its
+ *   last, a full stop at most after it. A boundary moved inside a span leaves two neighbours meeting at a bare space,
+ *   which no separator is: resid-ra6-shift and the RA4 form are red against the document.
+ * - ORDER LEG: the table's halves, read in table order, render in document order, and each row's halves are lettered a,
+ *   b, c in table order. Two halves' clauses swapped render out of order (resid-ra3-swap is red); put back into document
+ *   order the halves are lettered out of table order (red); relettered as well, the clauses are the frozen table's and
+ *   only the pins have moved between halves - the NOT CLAIMED pin family above, which reads quiet here too.
+ * NAMED RESIDUALS (each a named family with its pinned quiet row below; the document marks no separator to bind them by):
+ * - R-UNMARKED-JOIN: a sentence docs/09 renders with no clause separator at all marks no span boundary, so its halves
+ *   meet at a bare space and a boundary moved inside it stays quiet. UNMARKED_JOINS is that set at this cut: RL5/a+RL5/b
+ *   only, where resid-rl5-shift stays quiet, and UNMARKED_PAGE_READINGS its nine boundary moves: eight quiet, and "owner"
+ *   alone red only through the one-sentence counts, as it also renders inside "ownership" (RL1/c). The row also shows the
+ *   same move red once the document marks the join.
+ * - R-WHOLE-SPAN: the boundary of two neighbours moved to another clause separator inside their span - a whole span
+ *   crossing the join - leaves every join a separator and stays quiet. WHOLE_SPAN_JOINS is that set at this cut
+ *   (RA6/d+RA6/e, RA7/a+RA7/b, RA8/a+RA8/b, RA9/a+RA9/b, RL2/a+RL3/a), and WHOLE_SPAN_PAGES its ten moves; the row reads
+ *   every one of them quiet.
+ * Neither set is this file's own word: SPAN BINDING and the page builder derive both from the live document and the
+ * table, and the rows hold each to its literal, so a docs edit that marks, unmarks or splits a join reds until it is
+ * re-measured.
+ */
+
+/** The clause separators docs/09 renders between neighbouring halves of one sentence, longest first. */
+const CLAUSE_SEPARATORS: readonly string[] = [", and ", ", ", "; ", " and "];
+/** R-UNMARKED-JOIN at this cut: the joins of a sentence the live document renders with no clause separator. */
+const UNMARKED_JOINS: readonly string[] = ["RL5/a+RL5/b"];
+/** R-WHOLE-SPAN at this cut: the marked joins of two neighbours whose span carries another clause separator. */
+const WHOLE_SPAN_JOINS: readonly string[] = ["RA6/d+RA6/e", "RA7/a+RA7/b", "RA8/a+RA8/b", "RA9/a+RA9/b", "RL2/a+RL3/a"];
+/** R-WHOLE-SPAN's pages at this cut, one per other clause separator inside a whole-span join's span, as that join. */
+const WHOLE_SPAN_PAGES: readonly string[] = [
+  "RA6/d+RA6/e",
+  "RA6/d+RA6/e",
+  "RA7/a+RA7/b",
+  "RA8/a+RA8/b",
+  "RA9/a+RA9/b",
+  "RA9/a+RA9/b",
+  "RA9/a+RA9/b",
+  "RA9/a+RA9/b",
+  "RA9/a+RA9/b",
+  "RL2/a+RL3/a",
+];
+/** R-UNMARKED-JOIN's pages at this cut, each as "left clause | right clause | what the two instruments add". */
+const UNMARKED_PAGE_READINGS: readonly string[] = [
+  "Shared | nodes may have multiple causal readers without one cancellation owner | anchor +0 | binding +0",
+  "Shared nodes | may have multiple causal readers without one cancellation owner | anchor +0 | binding +0",
+  "Shared nodes may | have multiple causal readers without one cancellation owner | anchor +0 | binding +0",
+  "Shared nodes may have | multiple causal readers without one cancellation owner | anchor +0 | binding +0",
+  "Shared nodes may have multiple | causal readers without one cancellation owner | anchor +0 | binding +0",
+  "Shared nodes may have multiple causal | readers without one cancellation owner | anchor +0 | binding +0",
+  "Shared nodes may have multiple causal readers without | one cancellation owner | anchor +0 | binding +0",
+  "Shared nodes may have multiple causal readers without one | cancellation owner | anchor +0 | binding +0",
+  "Shared nodes may have multiple causal readers without one cancellation | owner | anchor +1 | binding +2",
+];
+/** The letters a row's halves carry, in table order. */
+const HALF_LETTERS = "abcdefghijklmnopqrstuvwxyz";
+
+/** What the span binding reads: one line per broken span, and the joins it reads as each named residual's members. */
+interface SpanBinding {
+  /** One line per broken span, naming the row, the half pair or the section. */
+  readonly failures: readonly string[];
+  /** Joins at a bare space in a sentence that renders no clause separator (R-UNMARKED-JOIN), as "left+right". */
+  readonly unmarked: readonly string[];
+  /** Separator joins whose two clauses' span carries another clause separator (R-WHOLE-SPAN), as "left+right". */
+  readonly movable: readonly string[];
+}
+
+/** Where a half's clause renders: the one sentence of its section holding it, and its offset there. */
+interface PlacedHalf {
+  readonly key: string;
+  readonly clause: string;
+  readonly sentence: number;
+  readonly at: number;
+}
+
+/** Every offset at which needle occurs in text, overlapping occurrences included (an empty needle occurs at each offset). */
+function offsetsOf(text: string, needle: string): number[] {
+  if (needle === "") return Array.from({ length: text.length + 1 }, (_, at) => at);
+  const out: number[] = [];
+  for (let at = text.indexOf(needle); at !== -1; at = text.indexOf(needle, at + 1)) out.push(at);
+  return out;
+}
+
+/** The clause separators a text renders, as [offset, separator]: the longest at each offset, never two overlapping. */
+function separatorMarks(text: string): (readonly [number, string])[] {
+  const marks: (readonly [number, string])[] = [];
+  let at = 0;
+  while (at < text.length) {
+    const separator = CLAUSE_SEPARATORS.find(entry => text.startsWith(entry, at));
+    if (separator === undefined) {
+      at += 1;
+    } else {
+      marks.push([at, separator]);
+      at += separator.length;
+    }
+  }
+  return marks;
+}
+
+/**
+ * The span binding over a docs/09 markdown text and a table: each half's clause renders exactly once in its section;
+ * read in table order the halves render in document order, each row lettered a, b, c; and inside each sentence its bound
+ * clauses tile it as clause, separator, clause ... clause (a full stop at most after the last), each separator one of the
+ * sentence's own clause separators, except that a sentence rendering none joins two clauses at a bare space.
+ */
+function spanBinding(markdown: string, rows: readonly Row[]): SpanBinding {
+  const failures: string[] = [];
+  const unmarked: string[] = [];
+  const movable: string[] = [];
+  for (const row of rows) {
+    const letters = row.halves.map(half => half.id).join(", ");
+    const expected = [...HALF_LETTERS.slice(0, row.halves.length)].join(", ");
+    if (letters !== expected) failures.push(`row ${row.id}: its halves are lettered ${letters} in table order; the span binding needs ${expected}`);
+  }
+  for (const heading of [READERS, RELATIONS]) {
+    const found = docsSection(markdown, heading, 2, [DOCS_PARENT]);
+    if (!found.ok) {
+      failures.push(`${DOCS_FILE} § ${heading}: the section is refused: ${found.why}`);
+      continue;
+    }
+    const sentences = liveSentences(found.blocks);
+    const placed: PlacedHalf[] = [];
+    for (const row of rows.filter(entry => entry.section === heading)) {
+      for (const half of row.halves) {
+        const key = halfKey(row, half);
+        const homes = sentences.flatMap((sentence, index) => offsetsOf(sentence.text, half.clause).map(at => ({ sentence: index, at })));
+        const home = homes[0];
+        if (homes.length === 1 && home !== undefined) placed.push({ key, clause: half.clause, ...home });
+        else failures.push(`row ${key}: its clause ${JSON.stringify(half.clause)} renders ${homes.length} times in the live ${DOCS_FILE} § ${heading}; the span binding needs exactly one`);
+      }
+    }
+    for (const [index, half] of placed.entries()) {
+      const before = placed[index - 1];
+      if (before !== undefined && (half.sentence < before.sentence || (half.sentence === before.sentence && half.at < before.at))) {
+        failures.push(`row ${half.key}: its clause renders before ${before.key}'s in the live ${DOCS_FILE} § ${heading}, against table order`);
+      }
+    }
+    for (const [index, sentence] of sentences.entries()) {
+      const spans = placed.filter(half => half.sentence === index).sort((left, right) => left.at - right.at);
+      const first = spans[0];
+      const last = spans[spans.length - 1];
+      if (first === undefined || last === undefined) continue;
+      const where = `${DOCS_FILE} § ${heading}: the live sentence ${JSON.stringify(sentence.text)}`;
+      if (first.at > 0) failures.push(`${where} opens with ${JSON.stringify(sentence.text.slice(0, first.at))} before ${first.key}'s clause`);
+      const tail = sentence.text.slice(last.at + last.clause.length);
+      if (tail !== "" && tail !== ".") failures.push(`${where} closes with ${JSON.stringify(tail)} after ${last.key}'s clause`);
+      const marks = separatorMarks(sentence.text);
+      for (const [at, right] of spans.entries()) {
+        const left = spans[at - 1];
+        if (left === undefined) continue;
+        const end = left.at + left.clause.length;
+        if (right.at < end) {
+          failures.push(`${where} renders ${left.key} and ${right.key} overlapping`);
+          continue;
+        }
+        const join = sentence.text.slice(end, right.at);
+        const pair = `${left.key}+${right.key}`;
+        if (marks.some(([offset, separator]) => offset === end && offset + separator.length === right.at)) {
+          if (marks.some(([offset, separator]) => offset !== end && offset >= left.at && offset + separator.length <= right.at + right.clause.length)) movable.push(pair);
+        } else if (marks.length === 0 && join === " ") {
+          unmarked.push(pair);
+        } else {
+          failures.push(`${where} joins ${left.key} and ${right.key} at ${JSON.stringify(join)}, which is not one of its clause separators`);
+        }
+      }
+    }
+  }
+  return { failures, unmarked, movable };
+}
+
+/** Each half's clause by its key ("RA6/d"). */
+const clausesByKey = (rows: readonly Row[]): Map<string, string> => new Map(rows.flatMap(row => row.halves.map((half): [string, string] => [halfKey(row, half), half.clause])));
+/** The keys whose clause a copy of the table changed against the frozen table: what a probe page carries. */
+function changedHalves(rows: readonly Row[]): string[] {
+  const frozen = clausesByKey(ROWS);
+  return [...clausesByKey(rows)].filter(([key, clause]) => frozen.get(key) !== clause).map(([key]) => key);
+}
+/** A copy of the table with the clauses of two neighbouring halves replaced: one boundary move. */
+const withJoin = (rows: readonly Row[], left: string, leftClause: string, right: string, rightClause: string): Row[] => withClause(withClause(rows, left, leftClause), right, rightClause);
+
+/** R-WHOLE-SPAN's pages: each whole-span join's two clauses re-cut at every other clause separator of their live span. */
+function wholeSpanPages(markdown: string): { readonly join: string; readonly rows: Row[] }[] {
+  const clauses = clausesByKey(ROWS);
+  return WHOLE_SPAN_JOINS.flatMap(join => {
+    const [left = "", right = ""] = join.split("+");
+    const leftClause = clauses.get(left) ?? "";
+    const rightClause = clauses.get(right) ?? "";
+    const separator = CLAUSE_SEPARATORS.find(entry => markdown.includes(`${leftClause}${entry}${rightClause}`));
+    if (separator === undefined) return [];
+    const span = `${leftClause}${separator}${rightClause}`;
+    return separatorMarks(span)
+      .filter(([at]) => at !== leftClause.length)
+      .map(([at, mark]) => ({ join, rows: withJoin(ROWS, left, span.slice(0, at), right, span.slice(at + mark.length)) }));
+  });
+}
+
+/** R-UNMARKED-JOIN's pages: each unmarked join's two clauses re-cut at every other bare space of their live span. */
+function unmarkedPages(): { readonly join: string; readonly rows: Row[] }[] {
+  const clauses = clausesByKey(ROWS);
+  return UNMARKED_JOINS.flatMap(join => {
+    const [left = "", right = ""] = join.split("+");
+    const leftClause = clauses.get(left) ?? "";
+    const span = `${leftClause} ${clauses.get(right) ?? ""}`;
+    return offsetsOf(span, " ")
+      .filter(at => at !== leftClause.length)
+      .map(at => ({ join, rows: withJoin(ROWS, left, span.slice(0, at), right, span.slice(at + 1)) }));
+  });
+}
+
+describe("wb-kw2r each half is bound to its own rendered span: neighbouring clauses meet only at one of their sentence's clause separators, in table order (R694 follow-up of wb-vm71 landing 570: F3 leads, F4 rides)", () => {
+  const live = (): string => readRepo(DOCS_FILE);
+  /** The failures a changed copy of the table adds to the frozen table's span binding (a differential, as `added` above). */
+  const addedSpans = (rows: readonly Row[]): string[] => {
+    const base = spanBinding(live(), ROWS).failures;
+    return spanBinding(live(), rows).failures.filter(line => !base.includes(line));
+  };
+
+  it("SPAN BINDING: every half binds its own span of the LIVE docs/09 sections, read from the document and never from this file's docs mirrors; its unmarked and whole-span joins are exactly the named residuals' sets, and pins never move it", () => {
+    const binding = spanBinding(live(), ROWS);
+    expect(binding.failures).toEqual([]);
+    expect(binding.unmarked).toEqual(UNMARKED_JOINS);
+    expect(binding.movable).toEqual(WHOLE_SPAN_JOINS);
+    expect(spanBinding(live(), stripPins(ROWS))).toEqual(binding);
+    expect(spanBinding(live(), withoutPin(ROWS, "RA10/a", IDLE_CANCEL.title))).toEqual(binding);
+  });
+
+  describe("the gate's boundary and swap probes now red against the LIVE document: the TABLE ANCHOR reads each exactly as the frozen table (the finding, reproduced) and SPAN BINDING adds exactly its own failure", () => {
+    it("resid-ra6-shift (F3): ', and the projection's freshness' moved from RA6/e into RA6/d joins the two at a bare space inside a sentence that marks its clauses", () => {
+      const page = withJoin(
+        ROWS,
+        "RA6/d",
+        "Reused, replayed or non-observed observation rows demote an RF preview to partial, and the projection's freshness",
+        "RA6/e",
+        "is the host's reading witness, never a currentness claim about the rows",
+      );
+      expect(changedHalves(page)).toEqual(["RA6/d", "RA6/e"]);
+      expect(tableAnchor(live(), page)).toEqual(tableAnchor(live(), ROWS));
+      const lines = addedSpans(page);
+      expect(lines).toHaveLength(1);
+      expect(lines[0]).toContain(`${DOCS_FILE} § ${READERS}: the live sentence "Reused, replayed or non-observed observation rows`);
+      expect(lines[0]).toContain('joins RA6/d and RA6/e at " ", which is not one of its clause separators');
+    });
+
+    it("resid-ra4-shift (F3) in today's table (wb-4ap.17 split RA4 in three): 'gate' moved from the unpinned RA4/c into the pinned RA4/b joins the two at a bare space", () => {
+      const page = withJoin(ROWS, "RA4/b", "build revision and gate", "RA4/c", "axes");
+      expect(changedHalves(page)).toEqual(["RA4/b", "RA4/c"]);
+      expect(tableAnchor(live(), page)).toEqual(tableAnchor(live(), ROWS));
+      expect(addedSpans(page)).toEqual([
+        `${DOCS_FILE} § ${READERS}: the live sentence "native operation/verdict/artifact evidence, build revision and gate axes." joins RA4/b and RA4/c at " ", which is not one of its clause separators`,
+      ]);
+    });
+
+    it("resid-ra3-swap (F4): RA3's two clauses swapped with their pins left in place render out of table order; put back into document order its halves are lettered out of table order; relettered as well, only the pins have moved (the NOT CLAIMED pin family)", () => {
+      const swapped = withJoin(ROWS, "RA3/a", "possible descendant references", "RA3/b", "native Run status/event stream");
+      expect(changedHalves(swapped)).toEqual(["RA3/a", "RA3/b"]);
+      expect(tableAnchor(live(), swapped)).toEqual(tableAnchor(live(), ROWS));
+      expect(addedSpans(swapped)).toEqual([`row RA3/b: its clause renders before RA3/a's in the live ${DOCS_FILE} § ${READERS}, against table order`]);
+      const reordered = swapped.map(row => (row.id === "RA3" ? { ...row, halves: [...row.halves].reverse() } : row));
+      expect(addedSpans(reordered)).toEqual(["row RA3: its halves are lettered b, a in table order; the span binding needs a, b"]);
+      const relettered = reordered.map(row => (row.id === "RA3" ? { ...row, halves: row.halves.map((half, at) => ({ ...half, id: HALF_LETTERS.charAt(at) })) } : row));
+      expect(changedHalves(relettered)).toEqual([]);
+      expect(relettered.find(row => row.id === "RA3")?.halves.map(half => half.pins.length)).toEqual([1, 2]);
+      expect(ROWS.find(row => row.id === "RA3")?.halves.map(half => half.pins.length)).toEqual([2, 1]);
+      expect(spanBinding(live(), relettered)).toEqual(spanBinding(live(), ROWS));
+    });
+  });
+
+  describe("NAMED RESIDUALS, pinned quiet: the moves the LIVE document marks no separator to bind (each page carries its move, so a silenced page reds its row)", () => {
+    it("RESIDUAL R-UNMARKED-JOIN: RL5's sentence renders no clause separator, so 'without one' moved from RL5/b into RL5/a (resid-rl5-shift) binds as the frozen table does, every other bare-space boundary of its span reads as UNMARKED_PAGE_READINGS, and once the document marks the join the same move is red and the frozen table binds", () => {
+      const page = withJoin(ROWS, "RL5/a", "Shared nodes may have multiple causal readers without one", "RL5/b", "cancellation owner");
+      expect(changedHalves(page)).toEqual(["RL5/a", "RL5/b"]);
+      expect(tableAnchor(live(), page)).toEqual(tableAnchor(live(), ROWS));
+      expect(spanBinding(live(), page)).toEqual(spanBinding(live(), ROWS));
+      // Every other bare-space boundary of the unmarked span, read through both instruments: the family at this cut. Only
+      // "owner" alone reads red, and only because it also renders inside "ownership" (RL1/c): a one-sentence count, no span.
+      const readings = unmarkedPages().map(({ join, rows }) => {
+        const [left = "", right = ""] = join.split("+");
+        const anchor = tableAnchor(live(), rows).failures.filter(line => !tableAnchor(live(), ROWS).failures.includes(line)).length;
+        const clauses = clausesByKey(rows);
+        return `${clauses.get(left)} | ${clauses.get(right)} | anchor +${anchor} | binding +${addedSpans(rows).length}`;
+      });
+      expect(readings).toEqual(UNMARKED_PAGE_READINGS);
+      const marked = live().replace("multiple causal readers without one cancellation owner.", "multiple causal readers, without one cancellation owner.");
+      expect(marked).not.toBe(live());
+      expect(spanBinding(marked, ROWS)).toEqual({ failures: [], unmarked: [], movable: WHOLE_SPAN_JOINS });
+      const moved = spanBinding(marked, withJoin(ROWS, "RL5/a", "Shared nodes may have multiple causal readers, without one", "RL5/b", "cancellation owner"));
+      expect(moved.failures).toHaveLength(1);
+      expect(moved.failures[0]).toContain('joins RL5/a and RL5/b at " ", which is not one of its clause separators');
+    });
+
+    it("RESIDUAL R-WHOLE-SPAN: every move of a whole-span join's boundary to another clause separator of its live span (WHOLE_SPAN_PAGES, ten pages) binds and tiles as the frozen table does", () => {
+      const pages = wholeSpanPages(live());
+      expect(pages.map(page => page.join)).toEqual(WHOLE_SPAN_PAGES);
+      for (const page of pages) {
+        expect(changedHalves(page.rows), page.join).toEqual(page.join.split("+"));
+        expect(tableAnchor(live(), page.rows), page.join).toEqual(tableAnchor(live(), ROWS));
+        expect(spanBinding(live(), page.rows), page.join).toEqual(spanBinding(live(), ROWS));
+      }
+    });
+  });
+
+  describe("the binding names its true cause, over an independent fixture (its own two sections and table, never this file's docs mirror or ROWS)", () => {
+    const fixtureHalf = (id: string, clause: string): PinnedHalf => pinned(id, clause, "fixture", [pin("test/fixture.test.ts", `fixture: ${clause}`)]);
+    const SPAN_ROWS: readonly Row[] = [
+      { id: "K1", section: READERS, halves: [fixtureHalf("a", "Every fixture provider offers a snapshot read.")] },
+      { id: "K2", section: READERS, halves: [fixtureHalf("a", "north gate"), fixtureHalf("b", "south door"), fixtureHalf("c", "east wall")] },
+      { id: "K3", section: READERS, halves: [fixtureHalf("a", "red lamp and blue lamp"), fixtureHalf("b", "green lamp")] },
+      { id: "K4", section: READERS, halves: [fixtureHalf("a", "first bell"), fixtureHalf("b", "second bell")] },
+      { id: "K5", section: READERS, halves: [fixtureHalf("a", "Seventh duty holds"), fixtureHalf("b", "without one owner")] },
+      { id: "K6", section: RELATIONS, halves: [fixtureHalf("a", "eighth edge")] },
+      { id: "K7", section: RELATIONS, halves: [fixtureHalf("a", "Ninth rule holds"), fixtureHalf("b", "tenth rule stands")] },
+    ];
+    const fixture = [
+      `# ${DOCS_PARENT}`,
+      "",
+      `## ${READERS}`,
+      "",
+      "Every fixture provider offers a snapshot read. Fixture lead:",
+      "- Alpha: north gate, south door and east wall.",
+      "- Beta: red lamp and blue lamp; green lamp.",
+      "- Gamma: first bell, and second bell.",
+      "",
+      "Seventh duty holds without one owner.",
+      "",
+      `## ${RELATIONS}`,
+      "",
+      "Edge lead:",
+      "- eighth edge",
+      "",
+      "Ninth rule holds; tenth rule stands.",
+      "",
+    ].join("\n");
+    const CONTROL: SpanBinding = { failures: [], unmarked: ["K5/a+K5/b"], movable: ["K3/a+K3/b"] };
+    const joinsAt = (heading: string, sentence: string, left: string, right: string, join: string): string =>
+      `${DOCS_FILE} § ${heading}: the live sentence ${JSON.stringify(sentence)} joins ${left} and ${right} at ${JSON.stringify(join)}, which is not one of its clause separators`;
+
+    it("control: the fixture binds with no failure, its unmarked and whole-span joins read as built, and the TABLE ANCHOR tiles it with its two lead-ins, so every red below is its own edit", () => {
+      expect(spanBinding(fixture, SPAN_ROWS)).toEqual(CONTROL);
+      expect(tableAnchor(fixture, SPAN_ROWS)).toEqual({ failures: [], leads: [`${READERS} | Fixture lead:`, `${RELATIONS} | Edge lead:`] });
+    });
+
+    it("a boundary moved inside a span, which the TABLE ANCHOR reads as the fixture, joins its two halves at a bare space", () => {
+      const moved = withJoin(SPAN_ROWS, "K2/b", "south", "K2/c", "door and east wall");
+      expect(tableAnchor(fixture, moved).failures).toEqual([]);
+      expect(spanBinding(fixture, moved).failures).toEqual([joinsAt(READERS, "north gate, south door and east wall.", "K2/b", "K2/c", " ")]);
+    });
+
+    it("a boundary inside a ', and' (only its comma, or only its 'and', crossing the join) is not one of the sentence's clause separators", () => {
+      const comma = withJoin(SPAN_ROWS, "K4/a", "first bell,", "K4/b", "second bell");
+      const and = withJoin(SPAN_ROWS, "K4/a", "first bell", "K4/b", "and second bell");
+      expect(tableAnchor(fixture, comma).failures).toEqual([]);
+      expect(tableAnchor(fixture, and).failures).toEqual([]);
+      expect(spanBinding(fixture, comma).failures).toEqual([joinsAt(READERS, "first bell, and second bell.", "K4/a", "K4/b", " and ")]);
+      expect(spanBinding(fixture, and).failures).toEqual([joinsAt(READERS, "first bell, and second bell.", "K4/a", "K4/b", ", ")]);
+    });
+
+    it("two clauses swapped render out of table order, and halves put back into document order are lettered out of table order", () => {
+      const swapped = withJoin(SPAN_ROWS, "K7/a", "tenth rule stands", "K7/b", "Ninth rule holds");
+      expect(tableAnchor(fixture, swapped).failures).toEqual([]);
+      expect(spanBinding(fixture, swapped).failures).toEqual([`row K7/b: its clause renders before K7/a's in the live ${DOCS_FILE} § ${RELATIONS}, against table order`]);
+      const reordered = swapped.map(row => (row.id === "K7" ? { ...row, halves: [...row.halves].reverse() } : row));
+      expect(spanBinding(fixture, reordered).failures).toEqual(["row K7: its halves are lettered b, a in table order; the span binding needs a, b"]);
+    });
+
+    it("a sentence that opens or closes with words no clause binds is named by its sentence and the words", () => {
+      expect(spanBinding(fixture, withClause(SPAN_ROWS, "K1/a", "fixture provider offers a snapshot read.")).failures).toEqual([
+        `${DOCS_FILE} § ${READERS}: the live sentence "Every fixture provider offers a snapshot read." opens with "Every " before K1/a's clause`,
+      ]);
+      expect(spanBinding(fixture, withClause(SPAN_ROWS, "K1/a", "Every fixture provider offers a snapshot")).failures).toEqual([
+        `${DOCS_FILE} § ${READERS}: the live sentence "Every fixture provider offers a snapshot read." closes with " read." after K1/a's clause`,
+      ]);
+    });
+
+    it("overlapping clauses are named as overlapping, and a clause that renders twice names its row", () => {
+      expect(spanBinding(fixture, withClause(SPAN_ROWS, "K2/b", "south door and east")).failures).toEqual([
+        `${DOCS_FILE} § ${READERS}: the live sentence "north gate, south door and east wall." renders K2/b and K2/c overlapping`,
+      ]);
+      const twice = spanBinding(fixture.replace("- Gamma: first bell, and second bell.", "- Gamma: first bell, and second bell; green lamp."), SPAN_ROWS).failures;
+      expect(namedRows(twice)).toEqual(["K3/b"]);
+      expect(twice).toContain(`row K3/b: its clause "green lamp" renders 2 times in the live ${DOCS_FILE} § ${READERS}; the span binding needs exactly one`);
+    });
+
+    it("an unmarked sentence joins at a bare space and a move inside it stays quiet (R-UNMARKED-JOIN), and once a separator marks it a bare-space join is red", () => {
+      expect(spanBinding(fixture, withJoin(SPAN_ROWS, "K5/a", "Seventh duty holds without", "K5/b", "one owner"))).toEqual(CONTROL);
+      const marked = fixture.replace("Seventh duty holds without one owner.", "Seventh duty holds, without one owner.");
+      expect(marked).not.toBe(fixture);
+      expect(spanBinding(marked, SPAN_ROWS)).toEqual({ failures: [], unmarked: [], movable: ["K3/a+K3/b"] });
+      expect(spanBinding(marked, withJoin(SPAN_ROWS, "K5/a", "Seventh duty holds, without", "K5/b", "one owner")).failures).toEqual([
+        joinsAt(READERS, "Seventh duty holds, without one owner.", "K5/a", "K5/b", " "),
+      ]);
+    });
+
+    it("a whole span moved across a marked join stays quiet and its join stays a whole-span join (R-WHOLE-SPAN)", () => {
+      expect(spanBinding(fixture, withJoin(SPAN_ROWS, "K3/a", "red lamp", "K3/b", "blue lamp; green lamp"))).toEqual(CONTROL);
+    });
+
+    it("a refused section is a failure naming it, never a silent pass", () => {
+      const binding = spanBinding(fixture.replace(`## ${RELATIONS}`, "## Edge notes"), SPAN_ROWS);
+      expect(binding.failures).toHaveLength(1);
+      expect(binding.failures[0]).toContain(`${DOCS_FILE} § ${RELATIONS}: the section is refused`);
     });
   });
 });

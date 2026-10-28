@@ -37,6 +37,7 @@
   "constants": {
     "scope": "docs/workbench",
     "receipts": "docs/workbench/receipts/",
+    "sentenceFloor": 4000,
     "status": [
       {
         "id": "l1",
@@ -203,7 +204,7 @@
   },
   "tests": [
     "the judged set: the frozen shape, the out-of-file roster and the cases agree",
-    "the outside anchors: the bead's own row binds the rows, the pin quotes, the status literals, the spellings and the vocabulary; the producer block carries the program's lines",
+    "the outside anchors: the bead's own row binds the rows, the pin quotes, the status literals, the spellings, the vocabulary and the residual families' quiet rows; the producer block carries the program's lines",
     "A1",
     "A2",
     "A3",
@@ -234,14 +235,14 @@
     "the registered tests and the reached pins equal the roster, in order and both ways"
   ],
   "reached": [
-    "A1:8",
+    "A1:14",
     "A2:33",
     "A3:24",
     "A4:12",
     "A5:9",
     "B1:16",
     "B2:11",
-    "B3:8",
+    "B3:11",
     "C1:7",
     "C2:11",
     "D1:4",
@@ -296,7 +297,43 @@
               "docs/workbench/zz-wb-e66.6-plant.md:7 rendered:unbound",
               "docs/workbench/zz-wb-e66.6-plant.md:7 rendered:unlabelled-number",
               "docs/workbench/zz-wb-e66.6-plant.md:7 rendered:live-coordination"
-            ]
+            ],
+            "armPlants": {
+              "bothWays": {
+                "walkOnly": [
+                  "docs/workbench/plain/.git/page.md"
+                ],
+                "gitOnly": [
+                  "docs/workbench/link.md"
+                ]
+              },
+              "trackedFloor": {
+                "atCount": [],
+                "oneMore": [
+                  "2 < 3"
+                ]
+              },
+              "directoryFloor": {
+                "absent": [],
+                "empty": [
+                  "docs/workbench/receipts"
+                ]
+              },
+              "markdownOnly": [
+                "docs/workbench/notes.txt"
+              ],
+              "openingLines": [
+                "docs/workbench/b.md",
+                "docs/workbench/receipts/wb-b.md"
+              ],
+              "sentenceFloor": {
+                "short": [
+                  "raw 3999 < 4000",
+                  "rendered 3999 < 4000"
+                ],
+                "atFloor": []
+              }
+            }
           }
         },
         {
@@ -1110,6 +1147,24 @@
               },
               {
                 "id": "link-target",
+                "causes": [
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "struck",
+                "causes": [
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "element",
+                "causes": [
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "comment",
                 "causes": [
                   "rendered:unlabelled-number"
                 ]
