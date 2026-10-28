@@ -12,16 +12,19 @@
  * returned a result with no such key (cut #1 and cut #2); the key lives on the persisted pin only
  * (schemas/workspace/render-pin.schema.json requires it; schemas/workspace/render.schema.json holds it with the five other
  * optional pin keys under dependentRequired: present together or absent together). At cut #3 and cut #4 the same release and
- * commit are installed, and those three schema files hold 0, 3 and 8 hits. R11's fixture record (test/fixtures/rf-result-keys.json,
- * rf 0.1.784, source captured) names it in no key list. So this census lands the acceptance's until-then half and its trigger; the
- * 'Armed on landing' clauses become the trigger's checks (ARMED), never observer behaviour.
+ * commit are installed, and those three schema files hold 0, 3 and 8 hits; at the wb-rqfx cut (2026-10-27) the same release is
+ * installed at provenance commit 7e6ed89a09f6, and the three files still hold 0, 3 and 8. R11's fixture record
+ * (test/fixtures/rf-result-keys.json, rf 0.1.784, source captured) names it in no key list. So this census lands the acceptance's
+ * until-then half and its trigger; the 'Armed on landing' clauses become the trigger's checks (ARMED), never observer behaviour.
  *
  * FORM (standing rule 19(c), engaged at this bead's refusal #3): enumerate-the-resolvable. The pinned set is the cut #3 baseline
- * (22 pins in four rows), no pin of it removed, narrowed or re-scoped, plus the residual pins A15-A19; the frozen shape counts
- * them all. The header claims exactly that set: REACHED states what the records prove of a case's inputs and lists, as not
- * proven, the rewrites of the census itself that its records do not see; every escape family known at the cut (a page or
- * sentence a reader reads as a claim while the census reads none, or a key nested where the trigger cannot see it) is a named
- * residual (RESIDUALS) with a pinned quiet row, its named cure and its live twin. A residual's quiet row pins the members it
+ * (22 pins in four rows), no pin of it removed, narrowed or re-scoped, plus the residual pins A15-A19 and A20 (wb-rqfx, the
+ * landing-572 follow-up, which keeps that set, carries each planted page's path in its witness, cures the identifier spelling in
+ * the judge and adds A20 and five family members); the frozen shape counts them all, and docs/14 holds each residual pin outside
+ * the census (RESIDUAL ANCHOR). The header claims exactly that set: REACHED states what the records prove of a case's inputs and
+ * lists, as not proven, the rewrites of the census itself that its records do not see; every escape family known at the cut (a
+ * page or sentence a reader reads as a claim while the census reads none, or a key nested where the trigger cannot see it) is a
+ * named residual (RESIDUALS) with a pinned quiet row, its named cure and its live twin. A residual's quiet row pins the members it
  * lists; the census claims nothing for a family member its cure does not flag (another word for the preview or the head, say).
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row):
@@ -39,9 +42,10 @@
  *      id) is the only preview spelling of at least one claim ('no commit', two words, is R-NO-COMMIT's residual). The head is
  *      spelled published head or heads, in any case, the two words joined by a run of these eleven separators: white space, '_',
  *      '-', '*', a backtick, an ASCII apostrophe, an ASCII double quote and the curly quotes U+2018, U+2019, U+201C and U+201D;
- *      each separator is needed by at least one claim (a head term without it misses that claim). The negated, preview-free and
- *      head-free sentences are quiet.
- *    A3-A6 and A12-A19 the residuals' quiet rows (RESIDUALS): each quiet input is quiet under today's judge and flagged by its
+ *      each separator is needed by at least one claim (a head term without it misses that claim). No letter or digit may follow
+ *      the head, but an underscore may, so it runs on into a snake_case identifier ('the published_head_manifest'), which one
+ *      claim needs. The negated, preview-free and head-free sentences are quiet.
+ *    A3-A6 and A12-A20 the residuals' quiet rows (RESIDUALS): each quiet input is quiet under today's judge and flagged by its
  *      residual's named cure, beside its live twin, which today's judge flags.
  *    A7 inline markup renders into the sentence it splits: emphasis, strong, strikethrough, a link's text, a code span, an inline
  *      tag, a backslash escape, a heading's and an HTML block's text, a named or numeric character reference, a format code point
@@ -104,50 +108,69 @@
  * the export for every check the census runs; where a row clause, an ARMED clause or a witness spells one of them as an expected
  * value, the judged set or the pin's own comparison holds that spelling to the value read from the export, so a respelled value
  * reds. The trigger's key lists are held to the record's own array-valued fields, and A1's walk to git's listing.
+ * RESIDUAL ANCHOR (wb-rqfx; rule 16 CT6 at pin level): docs/workbench/14-qa-and-benchmarks.md's section 'RF definition-source
+ * census residuals' holds one table row per residual family: its quiet row, the family's name and the seam its named cure takes
+ * (judge, splitter, scope, page cure or names rule). The anchor test reads that table (one marked lex of the page; the one level-2
+ * heading of that text, bounded at the next level-1 or level-2 heading and holding exactly one table of those three columns) and
+ * holds it, in both directions, to the families the pins' calls lists name ('judge <family>', a scan's 'split <family>' or 'scope
+ * <family>', 'judge page <family>', a trigger's 'names container (<family>)'), so a residual pin removed with its case, its count
+ * and every census mention of its family reds through the docs row.
  * CALLS: while a pin's case runs, every call it makes to a recorded seam is recorded, in call order, as `<seam>` or `<seam> <what
  * the call was handed>`: the docs walk and git's listing their root; a direct sentence judgement the judge by name (census, or the
  * residual whose cure it is); a scan, as one call, its judge, splitter and scope by name (a scan's own sentence judgements are its
  * own work, never calls of the case); a page cure its residual's name; a src read the module's path, or planted for a planted
  * text; a reader projection the reader's name; a roster read; and a trigger call, as one call, the record it was handed (R11 for
- * an object the roster seam returned that equals an independent readRfResultRoster read; R11, changed, for such an object that no
- * longer equals it; the record's derivation from R11's, each clearing and each key put in a list, for a record the census built;
- * unbuilt for any other), the reader's name and the names rule's name. A pin's calls list must equal that record as a list, in
- * order and with every count: a run of identical calls is written once, followed by ` x<count>` when it repeats (a lossless
- * spelling of the same list). The trigger's armed checks run only once a list names the key, and their own calls and field reads
- * are never recorded, so a case's records never depend on what the record names (the FLIP holds).
+ * an object the roster seam returned that equals an independent readRfResultRoster read, and R11, changed, for such an object that
+ * no longer equals it; for a record the census built, its derivation from R11's, each clearing and each key put in a list, each
+ * step named from its base's name when the step was taken (a base changed before a step names it 'R11, changed, ...'), then ',
+ * changed' when the built record no longer equals what its step built; unbuilt for any other), the reader's name and the names
+ * rule's name. A pin's calls list must equal that record as a list, in order and with every count: a run of identical calls is
+ * written once, followed by ` x<count>` when it repeats (a lossless spelling of the same list). The trigger's armed checks run
+ * only once a list names the key, and their own calls and field reads are never recorded, so a case's records never depend on what
+ * the record names (the FLIP holds).
  * FIELDS: each field of the tracked export a running case reads, itself or through a seam or helper (never through the trigger's
  * armed checks, whose reads are the trigger's own), is recorded once; a pin's fields list must equal that set. The judged set and
  * the module's set-up read the export unrecorded.
  * REACHED (what these records prove of a case's inputs; nothing beyond it is claimed): each pin's case reads through the seams it
- * declares, and (1) its witness carries, as literals, the inputs it plants: each planted sentence, page text and path, module,
- * note and word, each built reading's stated word (C1) or its contract and stated key (B2), and each planted record's named lists
- * (T4's container key too); A11's dashes come from the engine's Unicode tables, and its witness holds instead that each planted
- * page carries its own dash, that the minus sign was planted and that at least DASH_FLOOR were planted. So a planted input
- * changed at its one site reds the pin. (2) Its CALLS record holds every recorded call in order with what it was handed, so a
- * case one of whose calls is handed another root, judge, splitter, scope, page cure, src module, reader, record or names rule
- * reds, whether or not another call of the same case is handed that input (a residual's twin handed its own row's cure reds); so
- * does a case that makes a recorded call more or fewer times or in another order, and a case swapped for another pin's case. (3)
- * Its FIELDS record holds each export field it reads, so a case that stops reading a field its list names reds. A1's walk is also
- * held to git's listing, and the listing to DOCS_FLOOR. Each residual's quiet input is also read by its named cure, which must
- * flag it, so a quiet input swapped for one its cure does not flag reds, even when the witness's copy of the input is edited to
- * match. What this does not prove: (a) a case rewritten together with its whole witness and its calls and fields lists (an input,
- * its copy, its readings and its records), or a pin removed together with its case and its count in the frozen shape (a pin's
- * count is held only by the census's own literal; rows and ARMED clauses are held to the export); (b) a case rewritten to return
- * its pinned witness as a constant while still making its recorded calls and reads; (c) a seam's own implementation rewritten
- * (the walk, the listing, the rendered view, a judge, splitter, scope or cure, the src read, the reading fixture, a reader or
- * stand-in, the roster read, a record's derivation, the trigger, A11's dash enumeration (narrowed by at most two Pd code points,
- * which DASH_FLOOR admits), or the CALLS and FIELDS records themselves), for example the walk and the listing both made to skip
- * the same pages, which DOCS_FLOOR bounds to two pages at the cut; (d) a census constant edited at its definition when no witness
- * or list spells the edited value (the readings' workspace root and host context, a floor lowered, a NAMED_REFERENCES entry no
- * pin exercises), which moves every case that reads it together, or a literal written at one read site of an export field the
- * case still reads at another (FIELDS is per field, never per read site). Those are rewrites of the census, not swaps of a case's
- * inputs. The last test holds every registered test to run mode and a pass.
+ * declares, and (1) its witness carries, as literals, the inputs it plants: each planted sentence; each planted page's text and
+ * path, read from the page its readings were handed (a page is planted once, at one site, for all of its readings, so no reading
+ * sits on a page of its own that the witness does not carry); each module, note and word; each built reading's stated word (C1) or
+ * its contract and stated key (B2); and each planted record's named lists (T4's container key too). A11's dashes come from the
+ * engine's Unicode tables, and its witness holds instead that each planted page carries its own dash, that the minus sign was
+ * planted and that at least DASH_FLOOR were planted. So a planted input changed at its one site reds the pin, a page's path moved
+ * out of the walked scope or within it included. (2) Its CALLS record holds every recorded call in order with what it was handed,
+ * so a case one of whose calls is handed another root, judge, splitter, scope, page cure, src module, reader, record (a record
+ * built from a base changed before the step, or changed after its step built it, is another record) or names rule reds, whether or
+ * not another call of the same case is handed that input (a residual's twin handed its own row's cure reds); so does a case that
+ * makes a recorded call more or fewer times or in another order, and a case swapped for another pin's case. (3) Its FIELDS record
+ * holds each export field it reads, so a case that stops reading a field its list names reds. A1's walk is also held to git's
+ * listing, and the listing to DOCS_FLOOR. Each residual's quiet input is also read by its named cure, which must flag it, so a
+ * quiet input swapped for one its cure does not flag reds, even when the witness's copy of the input is edited to match; and each
+ * residual pin, its family and its cure seam are held to docs/14's residual table (RESIDUAL ANCHOR). What this does not prove: (a)
+ * a case rewritten together with its whole witness and its calls and fields lists (an input, its copy, its readings and its
+ * records), or a pin that is not a residual pin removed together with its case and its count in the frozen shape (such a pin's
+ * count is held only by the census's own literal; rows and ARMED clauses are held to the export, and each residual pin to
+ * docs/14's residual table); (b) a case whose witness is not the product of the inputs its recorded calls were handed, while it
+ * still makes its recorded calls and reads: one rewritten to return its pinned witness, or a part of it, as a constant; to compute
+ * it out of the record (inside quietly(), say, through another judge, splitter, scope or cure, as A3's twin valued by
+ * R-PARAPHRASE's cure would be); or to hand a recorded call a page planted at a site of its own while the witness carries another;
+ * (c) a seam's own implementation rewritten (the walk, the listing, the rendered view, a judge, splitter, scope or cure, the src
+ * read, the reading fixture, a reader or stand-in, the roster read, a record's derivation, the trigger, A11's dash enumeration
+ * (narrowed by at most two Pd code points, which DASH_FLOOR admits), or the CALLS and FIELDS records themselves), for example the
+ * walk and the listing both made to skip the same pages, which DOCS_FLOOR bounds to two pages at the cut; (d) a census constant
+ * edited at its definition when no witness or list spells the edited value (the readings' workspace root and host context, a floor
+ * lowered, a NAMED_REFERENCES entry no pin exercises), which moves every case that reads it together, or a literal written at one
+ * read site of an export field the case still reads at another (FIELDS is per field, never per read site). Those are rewrites of
+ * the census, not swaps of a case's inputs. The last test holds every registered test to run mode and a pass.
  * RESIDUALS (named families, each with a pinned quiet row, its named cure and its live twin):
  *  R-PARAPHRASE (A3) a claim naming the head in other words than 'published head' is not judged: the store-resident head's
- *    manifest, or a word between published and head ('the published graph head'); cure: the head term also reads
- *    'store-resident head' and 'published <word> head'.
- *  R-ANAPHORA (A4) a claim whose preview stands in an earlier sentence ('The preview is noncommitted. It reads the published
- *    head.') is not judged; cure: a sentence opening with It, This or That joins the sentence before it.
+ *    manifest, a word between published and head ('the published graph head'), that word set off by punctuation ('the published
+ *    (current) head', 'the published, signed head'), or the head named before published ('the head that was published'); cure:
+ *    the head term also reads 'store-resident head', 'published <word> head' with any punctuation around the word, and 'head
+ *    that (or which) was (were, is, are) published'.
+ *  R-ANAPHORA (A4) a claim whose preview stands in an earlier sentence, after a period or a ';' ('The preview is noncommitted.
+ *    It reads the published head.', 'Previewing is noncommitted; it reads the published head.'), is not judged; cure: a sentence
+ *    opening with it, this or that, in any case, joins the sentence before it.
  *  R-NEGATION-SCOPE (A5) a negation in a clause before the head's own (set off by ',', ':' or ';') that governs another phrase
  *    reads the sentence as negated ('The preview, not the committed render, reads the published head.', 'No longer
  *    experimental, the preview reads the published head.', 'The preview never fails: it reads the published head.'); cure: only
@@ -161,9 +184,10 @@
  *  R-PREVIEW-WORDS (A13) a claim naming the preview in other words is not judged ('The ephemeral render reads the published
  *    head.', 'A dry-run render ...', 'A non-committing render ...'); cure: the preview term also reads ephemeral, dry-run and
  *    non-committing.
- *  R-FOOTNOTE (A14) a superscript footnote marker (an inline <sup> element) between published and head hides the head ('The preview
- *    reads the published<sup>1</sup> head.' renders as 'published1 head'); cure: an inline <sup> element renders nothing (the
- *    markdown footnote reference is R-FOOTNOTE-REFERENCE's).
+ *  R-FOOTNOTE (A14) a superscript footnote marker between published and head hides the head: an inline <sup> element ('The
+ *    preview reads the published<sup>1</sup> head.' renders as 'published1 head') or a superscript digit (U+00B9 written after
+ *    published); cure: an inline <sup> element and a superscript digit (U+00B9, U+00B2, U+00B3, U+2070, U+2074-U+2079) render
+ *    nothing (the markdown footnote reference is R-FOOTNOTE-REFERENCE's, and a run of <sub> and <sup> is R-MARKER-RUN's).
  *  R-FOOTNOTE-REFERENCE (A15) a markdown footnote reference between published and head stays as written and hides the head ('The
  *    preview reads the published[^1] head.' renders as 'published[^1] head'); cure: a footnote reference ([^label] not followed by
  *    ':') renders nothing.
@@ -179,6 +203,10 @@
  *  R-NEGATION-PHRASE (A19) a negation inside the head's own clause that governs another phrase reads the sentence as negated
  *    ('The preview makes no change and reads the published head.', 'The preview without a commit reads the published head.');
  *    cure: only the three words before the head are read for a negation.
+ *  R-MARKER-RUN (A20) a run of inline markers of two kinds between published and head, a <sub> element then a <sup> element, hides
+ *    the head ('The preview reads the published<sub>1</sub><sup>2</sup> head.' renders as 'published12 head'); R-FOOTNOTE's and
+ *    R-SUBSCRIPT's cures each leave the other kind, so neither flags it; cure: every inline <sub> and <sup> element renders
+ *    nothing.
  *  R-NESTED (T4) the trigger sees only the record's key lists, so the key nested in a result object no list names (a pin
  *    container, or provenance beyond its floor keys) stays invisible until a roster cut names the key itself; cure: a list naming
  *    the container counts as naming the key.
@@ -232,6 +260,7 @@ type KeyList = (typeof LISTS)[number];
 const CATEGORIES: readonly CapabilityErrorCategory[] = ["validation", "authorization", "unavailable", "transport", "uncertain-effect"];
 const JUDGED_TITLE = "the judged set: the frozen shape, the cases and the tracked bead export agree";
 const RECORD_TITLE = "the record: every registered test is in run mode and passed";
+const RESIDUAL_TITLE = "the residual anchor: the docs/14 residual table names exactly the residual pins, their families and their cure seams";
 
 const isObject = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null && !Array.isArray(value);
 const isJsonObject = (value: Json | undefined): value is JsonObject => typeof value === "object" && value !== null && !Array.isArray(value);
@@ -539,8 +568,9 @@ function renderedPage(markdown: string): { readonly units: readonly Unit[]; read
  * R-NO-COMMIT's residual). */
 const PREVIEW_TERM = /\bpre[\s_-]?view(?:s|ing|ed)?\b|\b(?:non|un)[\s_-]?committed\b|(?:--|\b)no[_-]?commit\b/i;
 /** The head: published head or heads, the words joined by white space, '_', '-', '*', a backtick or a quote mark (a rendered
- * escape or quote between them never hides it). */
-const HEAD_TERM = /\bpublished[\s_*'"`\u2018\u2019\u201C\u201D-]+heads?\b/i;
+ * escape or quote between them never hides it), with no letter or digit right after the head: an underscore may follow, so the
+ * head runs on into a snake_case identifier (published_head_manifest). */
+const HEAD_TERM = /\bpublished[\s_*'"`\u2018\u2019\u201C\u201D-]+heads?(?![^\W_])/i;
 /** A negation word; the 'no' of --no-commit, no-commit, no_commit or nocommit is a flag, never a negation. */
 const NEGATION = /\b(?:never|not|nor|without|cannot)\b|n't\b|(?<![-\w])no\b(?!-)/i;
 interface Judge {
@@ -552,8 +582,13 @@ interface Judge {
   readonly window: (before: string) => string;
 }
 const JUDGE: Judge = { head: HEAD_TERM, window: before => before };
-/** R-PARAPHRASE's cure: the head term also reads the store-resident head and a word between published and head. */
-const PARAPHRASE_CURE: Judge = { head: new RegExp(`${HEAD_TERM.source}|\\bstore-resident[\\s_-]+heads?\\b|\\bpublished[\\s_-]+\\w+[\\s_-]+heads?\\b`, "i"), window: before => before };
+/** R-PARAPHRASE's cure: the head term also reads the store-resident head, a word between published and head with any punctuation
+ * around it (the published graph head, the published (current) head, the published, signed head), and the head that was
+ * published. */
+const PARAPHRASE_CURE: Judge = {
+  head: new RegExp(`${HEAD_TERM.source}|\\bstore-resident[\\s_-]+heads?\\b|\\bpublished[\\W_]+\\w+[\\W_]+heads?\\b|\\bheads?\\s+(?:that|which)\\s+(?:was|were|is|are)\\s+published\\b`, "i"),
+  window: before => before,
+};
 /** R-NEGATION-SCOPE's cure: only the clause nearest the head (after the last ',', ':' or ';' before it) is read for a negation. */
 const NEGATION_SCOPE_CURE: Judge = { head: HEAD_TERM, window: before => before.split(/[,:;]/).pop() ?? "" };
 /** R-PREVIEW-WORDS' cure: the preview term also reads ephemeral, dry-run and non-committing. */
@@ -581,12 +616,12 @@ function claimsWith(judge: Judge, sentence: string): boolean {
 }
 const claimsHead = (sentence: string): boolean => claimsWith(JUDGE, sentence);
 const sentencesOf = (text: string): string[] => text.split(/(?<=[.!?;])\s+/).filter(part => part.trim().length > 0);
-/** R-ANAPHORA's cure: a sentence opening with It, This or That joins the sentence before it. */
+/** R-ANAPHORA's cure: a sentence opening with it, this or that, in any case, joins the sentence before it. */
 function anaphoraJoined(text: string): string[] {
   const joined: string[] = [];
   for (const part of sentencesOf(text)) {
     const last = joined.length - 1;
-    if (/^(?:It|This|That)\b/.test(part) && last >= 0) joined[last] = `${joined[last] ?? ""} ${part}`;
+    if (/^(?:it|this|that)\b/i.test(part) && last >= 0) joined[last] = `${joined[last] ?? ""} ${part}`;
     else joined.push(part);
   }
   return joined;
@@ -661,12 +696,13 @@ function judgedPages(files: readonly DocFile[], judge: Judge, split: (text: stri
 const claimCount = (files: readonly DocFile[], options?: ScanOptions): number => scan(files, options).claims.length;
 const planted = (text: string, path = `${DOCS_ROOT}/planted.md`): DocFile => ({ path, text });
 const PLANTED_CLAIM = "The preview reads the published head.";
-/** R-FOOTNOTE's cure: an inline <sup> element (a footnote marker) renders nothing; it is stripped from the page before the view
- * renders it. */
+/** R-FOOTNOTE's cure: a footnote marker renders nothing, an inline <sup> element or a superscript digit (U+00B9, U+00B2, U+00B3,
+ * U+2070 and U+2074-U+2079); each is stripped from the page before the view renders it. */
 const SUPERSCRIPT = /<sup\b[^<>]*>[\s\S]*?<\/sup>/gi;
+const SUPERSCRIPT_DIGIT = /[\u00B9\u00B2\u00B3\u2070\u2074-\u2079]/g;
 function footnoteCured(file: DocFile): DocFile {
   touch("judge", "page R-FOOTNOTE");
-  return { path: file.path, text: file.text.replace(SUPERSCRIPT, "") };
+  return { path: file.path, text: file.text.replace(SUPERSCRIPT, "").replace(SUPERSCRIPT_DIGIT, "") };
 }
 /** R-FOOTNOTE-REFERENCE's cure: a markdown footnote reference ([^label] not followed by ':') renders nothing. */
 const FOOTNOTE_REFERENCE = /\[\^[^\]\s]+\](?!:)/g;
@@ -686,6 +722,11 @@ const SUBSCRIPT = /<sub\b[^<>]*>[\s\S]*?<\/sub>/gi;
 function subscriptCured(file: DocFile): DocFile {
   touch("judge", "page R-SUBSCRIPT");
   return { path: file.path, text: file.text.replace(SUBSCRIPT, "") };
+}
+/** R-MARKER-RUN's cure: every inline <sub> and <sup> element renders nothing, so a run of both kinds of marker is undone at once. */
+function markerRunCured(file: DocFile): DocFile {
+  touch("judge", "page R-MARKER-RUN");
+  return { path: file.path, text: file.text.replace(SUBSCRIPT, "").replace(SUPERSCRIPT, "") };
 }
 /** A1's planted claim page: its claim a soft-wrapped second sentence, scanned with the walked pages in one call. */
 const PLANTED_PAGE: DocFile = planted("# Planted page\n\nFixture text is never real context. The rf preview reads the\npublished head.\n", `${DOCS_ROOT}/zz-wb-973-13-planted.md`);
@@ -847,35 +888,44 @@ const READERS: ReadonlyMap<Reader, string> = new Map<Reader, string>([
 function readerName(reader: Reader): string {
   return READERS.get(trackedBase.get(reader) ?? reader) ?? "unnamed";
 }
-/** How each record the census holds was derived from R11's own: R11, then each clearing and each key put in a list, in order. */
-const derivations = new WeakMap<RfResultRoster, string>();
-const derivationOf = (record: RfResultRoster): string => derivations.get(record) ?? "unbuilt";
+/** How each record the census holds was derived from R11's own: R11, then each clearing and each key put in a list, in order,
+ * each step named from its base's name when the step was taken. */
+interface Derivation {
+  readonly name: string;
+  /** What the step built, copied when it built it; R11 itself is held to an independent read instead. */
+  readonly built?: RfResultRoster;
+}
+const derivations = new WeakMap<RfResultRoster, Derivation>();
 /** R11's fixture record, read through its own reader. */
 function roster(): RfResultRoster {
   touch("roster");
   const record = readRfResultRoster();
-  derivations.set(record, "R11");
+  derivations.set(record, { name: "R11" });
   return record;
 }
-/** The record the trigger was handed: R11 for an object the roster seam returned that equals an independent read, otherwise its
- * derivation. */
+/** A record's name: its derivation, followed by ', changed' once it no longer equals what it was (an independent read for R11, what
+ * its step built for a built record); unbuilt for a record the census neither read nor built. */
 function recordName(record: RfResultRoster): string {
-  const derivation = derivationOf(record);
-  return derivation === "R11" && !isDeepStrictEqual(record, readRfResultRoster()) ? "R11, changed" : derivation;
+  const derivation = derivations.get(record);
+  if (derivation === undefined) return "unbuilt";
+  return isDeepStrictEqual(record, derivation.built ?? readRfResultRoster()) ? derivation.name : `${derivation.name}, changed`;
+}
+/** A step the census took: the record it built, named from its base's name when the step was taken, beside a copy of what it built. */
+function built(copy: RfResultRoster, name: string): RfResultRoster {
+  derivations.set(copy, { name, built: structuredClone(copy) });
+  return copy;
 }
 /** The record with the key removed from every key list: the base T2-T4 plant onto. */
 function cleared(record: RfResultRoster): RfResultRoster {
   const copy = { ...record };
   for (const list of LISTS) copy[list] = record[list].filter(key => key !== EXPORTED.key);
-  derivations.set(copy, `${derivationOf(record)}, cleared`);
-  return copy;
+  return built(copy, `${recordName(record)}, cleared`);
 }
 /** The record with `key` appended to one key list. */
 function withKey(record: RfResultRoster, list: KeyList, key: string): RfResultRoster {
   const copy = { ...record };
   copy[list] = [...record[list], key];
-  derivations.set(copy, `${derivationOf(record)}, ${key} in ${list}`);
-  return copy;
+  return built(copy, `${recordName(record)}, ${key} in ${list}`);
 }
 /** Whether one key list of a record names the key. */
 type Names = (record: RfResultRoster, list: KeyList) => boolean;
@@ -946,7 +996,7 @@ const ROWS: readonly Row[] = [
       {
         id: "A2",
         seams: ["judge"],
-        calls: ["judge census x34"],
+        calls: ["judge census x35"],
         fields: [],
         witness: [
           { sentence: "The preview reads the published head.", claims: true },
@@ -979,6 +1029,7 @@ const ROWS: readonly Row[] = [
           { sentence: "The un_committed render reads the published head.", claims: true },
           { sentence: "A no_commit render reads the published head.", claims: true },
           { sentence: "A nocommit render reads the published head.", claims: true },
+          { sentence: "The preview reads the published_head_manifest.", claims: true },
           { sentence: "The noncommitted preview never reads the published head.", claims: false },
           { sentence: "The preview does not read the published head.", claims: false },
           { sentence: "rf graph publish promotes a candidate to the published head.", claims: false },
@@ -988,12 +1039,15 @@ const ROWS: readonly Row[] = [
       {
         id: "A3",
         seams: ["judge"],
-        calls: ["judge census", "judge R-PARAPHRASE", "judge census", "judge R-PARAPHRASE", "judge census"],
+        calls: ["judge census", "judge R-PARAPHRASE", "judge census", "judge R-PARAPHRASE", "judge census", "judge R-PARAPHRASE", "judge census", "judge R-PARAPHRASE", "judge census", "judge R-PARAPHRASE", "judge census"],
         fields: [],
         witness: {
           quiet: [
             { sentence: "The preview reads the store-resident head's manifest.", judged: false, cured: true },
             { sentence: "The preview reads the published graph head.", judged: false, cured: true },
+            { sentence: "The preview reads the published (current) head.", judged: false, cured: true },
+            { sentence: "The preview reads the published, signed head.", judged: false, cured: true },
+            { sentence: "The preview reads the head that was published.", judged: false, cured: true },
           ],
           twin: { sentence: "The preview reads the published head's manifest.", judged: true },
         },
@@ -1001,11 +1055,20 @@ const ROWS: readonly Row[] = [
       {
         id: "A4",
         seams: ["judge"],
-        calls: ["judge scan census; split census; scope census", "judge scan census; split R-ANAPHORA; scope census", "judge scan census; split census; scope census"],
+        calls: [
+          "judge scan census; split census; scope census",
+          "judge scan census; split R-ANAPHORA; scope census",
+          "judge scan census; split census; scope census",
+          "judge scan census; split R-ANAPHORA; scope census",
+          "judge scan census; split census; scope census",
+        ],
         fields: [],
         witness: {
-          quiet: { text: "The preview is noncommitted. It reads the published head.", claims: 0, cured: 1 },
-          twin: { text: "The preview is noncommitted and reads the published head.", claims: 1 },
+          quiet: [
+            { text: "The preview is noncommitted. It reads the published head.", path: "docs/workbench/planted.md", claims: 0, cured: 1 },
+            { text: "Previewing is noncommitted; it reads the published head.", path: "docs/workbench/planted.md", claims: 0, cured: 1 },
+          ],
+          twin: { text: "The preview is noncommitted and reads the published head.", path: "docs/workbench/planted.md", claims: 1 },
         },
       },
       {
@@ -1042,25 +1105,25 @@ const ROWS: readonly Row[] = [
         calls: ["judge scan census; split census; scope census x19"],
         fields: [],
         witness: [
-          { text: "The preview reads the *published* head.", claims: 1 },
-          { text: "The preview reads the **published head**.", claims: 1 },
-          { text: "The preview reads the published [head](#pins).", claims: 1 },
-          { text: "The `--no-commit` render reads the published head.", claims: 1 },
-          { text: "The preview reads the <em>published</em> head.", claims: 1 },
-          { text: "<p>The preview reads the published head.</p>", claims: 1 },
-          { text: "The preview reads the published&nbsp;head.", claims: 1 },
-          { text: "The preview reads the published&#160;head.", claims: 1 },
-          { text: "The preview reads the published&ZeroWidthSpace; head.", claims: 1 },
-          { text: "The preview reads the ~~published~~ head.", claims: 1 },
-          { text: "The preview reads the \\*published\\* head.", claims: 1 },
-          { text: "## The preview reads the published head", claims: 1 },
-          { text: "The preview reads the published<br>head.", claims: 1 },
-          { text: "The preview reads the published<br/>head.", claims: 1 },
-          { text: "The preview reads the published<BR />head.", claims: 1 },
-          { text: 'The preview reads the published<br class="x">head.', claims: 1 },
-          { text: "The preview reads the published&hyphen;head.", claims: 1 },
-          { text: "The preview reads the published&minus;head.", claims: 1 },
-          { text: "The preview reads the published&#8208;head.", claims: 1 },
+          { text: "The preview reads the *published* head.", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "The preview reads the **published head**.", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "The preview reads the published [head](#pins).", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "The `--no-commit` render reads the published head.", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "The preview reads the <em>published</em> head.", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "<p>The preview reads the published head.</p>", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "The preview reads the published&nbsp;head.", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "The preview reads the published&#160;head.", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "The preview reads the published&ZeroWidthSpace; head.", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "The preview reads the ~~published~~ head.", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "The preview reads the \\*published\\* head.", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "## The preview reads the published head", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "The preview reads the published<br>head.", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "The preview reads the published<br/>head.", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "The preview reads the published<BR />head.", path: "docs/workbench/planted.md", claims: 1 },
+          { text: 'The preview reads the published<br class="x">head.', path: "docs/workbench/planted.md", claims: 1 },
+          { text: "The preview reads the published&hyphen;head.", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "The preview reads the published&minus;head.", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "The preview reads the published&#8208;head.", path: "docs/workbench/planted.md", claims: 1 },
         ],
       },
       {
@@ -1069,17 +1132,17 @@ const ROWS: readonly Row[] = [
         calls: ["judge scan census; split census; scope census x11"],
         fields: [],
         witness: [
-          { text: "The preview reads the\npublished head.", claims: 1 },
-          { text: "The preview\nreads the published head.", claims: 1 },
-          { text: "The --no-commit render keeps the working tree out of the store and,\nunlike the committed render, reads the published head.", claims: 1 },
-          { text: "The preview reads the  \npublished head.", claims: 1 },
-          { text: "- The preview reads the\n  published head.", claims: 1 },
-          { text: "> The preview reads the\n> published head.", claims: 1 },
-          { text: "| The preview | reads the published head. |\n| --- | --- |", claims: 1 },
-          { text: "- [ ] The preview reads the\n  published head.", claims: 1 },
-          { text: "The --no-commit preview reads the working tree; the committed render reads the published head.", claims: 0 },
-          { text: "The preview is noncommitted! The committed render reads the published head.", claims: 0 },
-          { text: "Is the preview noncommitted? The committed render reads the published head.", claims: 0 },
+          { text: "The preview reads the\npublished head.", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "The preview\nreads the published head.", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "The --no-commit render keeps the working tree out of the store and,\nunlike the committed render, reads the published head.", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "The preview reads the  \npublished head.", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "- The preview reads the\n  published head.", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "> The preview reads the\n> published head.", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "| The preview | reads the published head. |\n| --- | --- |", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "- [ ] The preview reads the\n  published head.", path: "docs/workbench/planted.md", claims: 1 },
+          { text: "The --no-commit preview reads the working tree; the committed render reads the published head.", path: "docs/workbench/planted.md", claims: 0 },
+          { text: "The preview is noncommitted! The committed render reads the published head.", path: "docs/workbench/planted.md", claims: 0 },
+          { text: "Is the preview noncommitted? The committed render reads the published head.", path: "docs/workbench/planted.md", claims: 0 },
         ],
       },
       {
@@ -1088,15 +1151,15 @@ const ROWS: readonly Row[] = [
         calls: ["judge scan census; split census; scope census x18"],
         fields: [],
         witness: [
-          { hidden: "<!-- The preview reads the published head. -->", claims: 0, shown: "The preview reads the published head.", shownClaims: 1 },
-          { hidden: "```\nThe preview reads the published head.\n```", claims: 0, shown: "The preview reads the published head.", shownClaims: 1 },
-          { hidden: "Intro.\n\n    The preview reads the published head.", claims: 0, shown: "Intro.\n\nThe preview reads the published head.", shownClaims: 1 },
-          { hidden: "The preview reads the <!-- published head --> working tree.", claims: 0, shown: "The preview reads the published head working tree.", shownClaims: 1 },
-          { hidden: "The preview reads [the docs](#published-head).", claims: 0, shown: "The preview reads [the published head](#docs).", shownClaims: 1 },
-          { hidden: "<!-- The preview reads the published head.", claims: 0, shown: "The preview reads the published head.", shownClaims: 1 },
-          { hidden: 'The preview reads [the docs](#x "the published head").', claims: 0, shown: 'The preview reads [the published head](#x "the docs").', shownClaims: 1 },
-          { hidden: '[preview]: #x "The preview reads the published head."\n\nSee the docs.', claims: 0, shown: "The preview reads the published head.\n\nSee the docs.", shownClaims: 1 },
-          { hidden: "The preview reads the `published&nbsp;head`.", claims: 0, shown: "The preview reads the `published head`.", shownClaims: 1 },
+          { hidden: { text: "<!-- The preview reads the published head. -->", path: "docs/workbench/planted.md", claims: 0 }, shown: { text: "The preview reads the published head.", path: "docs/workbench/planted.md", claims: 1 } },
+          { hidden: { text: "```\nThe preview reads the published head.\n```", path: "docs/workbench/planted.md", claims: 0 }, shown: { text: "The preview reads the published head.", path: "docs/workbench/planted.md", claims: 1 } },
+          { hidden: { text: "Intro.\n\n    The preview reads the published head.", path: "docs/workbench/planted.md", claims: 0 }, shown: { text: "Intro.\n\nThe preview reads the published head.", path: "docs/workbench/planted.md", claims: 1 } },
+          { hidden: { text: "The preview reads the <!-- published head --> working tree.", path: "docs/workbench/planted.md", claims: 0 }, shown: { text: "The preview reads the published head working tree.", path: "docs/workbench/planted.md", claims: 1 } },
+          { hidden: { text: "The preview reads [the docs](#published-head).", path: "docs/workbench/planted.md", claims: 0 }, shown: { text: "The preview reads [the published head](#docs).", path: "docs/workbench/planted.md", claims: 1 } },
+          { hidden: { text: "<!-- The preview reads the published head.", path: "docs/workbench/planted.md", claims: 0 }, shown: { text: "The preview reads the published head.", path: "docs/workbench/planted.md", claims: 1 } },
+          { hidden: { text: 'The preview reads [the docs](#x "the published head").', path: "docs/workbench/planted.md", claims: 0 }, shown: { text: 'The preview reads [the published head](#x "the docs").', path: "docs/workbench/planted.md", claims: 1 } },
+          { hidden: { text: '[preview]: #x "The preview reads the published head."\n\nSee the docs.', path: "docs/workbench/planted.md", claims: 0 }, shown: { text: "The preview reads the published head.\n\nSee the docs.", path: "docs/workbench/planted.md", claims: 1 } },
+          { hidden: { text: "The preview reads the `published&nbsp;head`.", path: "docs/workbench/planted.md", claims: 0 }, shown: { text: "The preview reads the `published head`.", path: "docs/workbench/planted.md", claims: 1 } },
         ],
       },
       {
@@ -1105,8 +1168,8 @@ const ROWS: readonly Row[] = [
         calls: ["judge scan census; split census; scope census x2"],
         fields: [],
         witness: {
-          unknown: { text: "The preview reads the published&emsp13;head.", unreadable: ["docs/workbench/planted.md &emsp13;"], claims: 0 },
-          known: { text: "The preview reads the published&emsp;head.", unreadable: [], claims: 1 },
+          unknown: { text: "The preview reads the published&emsp13;head.", path: "docs/workbench/planted.md", unreadable: ["docs/workbench/planted.md &emsp13;"], claims: 0 },
+          known: { text: "The preview reads the published&emsp;head.", path: "docs/workbench/planted.md", unreadable: [], claims: 1 },
         },
       },
       {
@@ -1123,12 +1186,12 @@ const ROWS: readonly Row[] = [
         fields: [],
         witness: {
           quiet: [
-            { text: "The preview reads, i.e. resolves, the published head.", claims: 0, cured: 1 },
-            { text: "The preview reads, e.g. resolves, the published head.", claims: 0, cured: 1 },
-            { text: "The preview (cf. the docs) reads the published head.", claims: 0, cured: 1 },
-            { text: "Previews (vs. commits) read the published head.", claims: 0, cured: 1 },
+            { text: "The preview reads, i.e. resolves, the published head.", path: "docs/workbench/planted.md", claims: 0, cured: 1 },
+            { text: "The preview reads, e.g. resolves, the published head.", path: "docs/workbench/planted.md", claims: 0, cured: 1 },
+            { text: "The preview (cf. the docs) reads the published head.", path: "docs/workbench/planted.md", claims: 0, cured: 1 },
+            { text: "Previews (vs. commits) read the published head.", path: "docs/workbench/planted.md", claims: 0, cured: 1 },
           ],
-          twin: { text: "The preview reads, that is resolves, the published head.", claims: 1 },
+          twin: { text: "The preview reads, that is resolves, the published head.", path: "docs/workbench/planted.md", claims: 1 },
         },
       },
       {
@@ -1148,11 +1211,20 @@ const ROWS: readonly Row[] = [
       {
         id: "A14",
         seams: ["judge"],
-        calls: ["judge scan census; split census; scope census", "judge page R-FOOTNOTE", "judge scan census; split census; scope census x2"],
+        calls: [
+          "judge scan census; split census; scope census",
+          "judge page R-FOOTNOTE",
+          "judge scan census; split census; scope census x2",
+          "judge page R-FOOTNOTE",
+          "judge scan census; split census; scope census x2",
+        ],
         fields: [],
         witness: {
-          quiet: { text: "The preview reads the published<sup>1</sup> head.", claims: 0, cured: 1 },
-          twin: { text: "The preview reads the published head.<sup>1</sup>", claims: 1 },
+          quiet: [
+            { text: "The preview reads the published<sup>1</sup> head.", path: "docs/workbench/planted.md", claims: 0, cured: 1 },
+            { text: `The preview reads the published${at(0xb9)} head.`, path: "docs/workbench/planted.md", claims: 0, cured: 1 },
+          ],
+          twin: { text: "The preview reads the published head.<sup>1</sup>", path: "docs/workbench/planted.md", claims: 1 },
         },
       },
       {
@@ -1161,8 +1233,8 @@ const ROWS: readonly Row[] = [
         calls: ["judge scan census; split census; scope census", "judge page R-FOOTNOTE-REFERENCE", "judge scan census; split census; scope census x2"],
         fields: [],
         witness: {
-          quiet: { text: "The preview reads the published[^1] head.\n\n[^1]: A note.", claims: 0, cured: 1 },
-          twin: { text: "The preview reads the published head.[^1]\n\n[^1]: A note.", claims: 1 },
+          quiet: { text: "The preview reads the published[^1] head.\n\n[^1]: A note.", path: "docs/workbench/planted.md", claims: 0, cured: 1 },
+          twin: { text: "The preview reads the published head.[^1]\n\n[^1]: A note.", path: "docs/workbench/planted.md", claims: 1 },
         },
       },
       {
@@ -1171,8 +1243,8 @@ const ROWS: readonly Row[] = [
         calls: ["judge scan census; split census; scope census", "judge page R-FOOTNOTE-DEFINITION", "judge scan census; split census; scope census x2"],
         fields: [],
         witness: {
-          quiet: { text: "Intro.[^1]\n\n[^1]: https://example.com 'The preview reads the published head.'", claims: 0, cured: 1 },
-          twin: { text: "Intro.[^1]\n\n[^1]: The preview reads the published head.", claims: 1 },
+          quiet: { text: "Intro.[^1]\n\n[^1]: https://example.com 'The preview reads the published head.'", path: "docs/workbench/planted.md", claims: 0, cured: 1 },
+          twin: { text: "Intro.[^1]\n\n[^1]: The preview reads the published head.", path: "docs/workbench/planted.md", claims: 1 },
         },
       },
       {
@@ -1181,8 +1253,8 @@ const ROWS: readonly Row[] = [
         calls: ["judge scan census; split census; scope census", "judge page R-SUBSCRIPT", "judge scan census; split census; scope census x2"],
         fields: [],
         witness: {
-          quiet: { text: "The preview reads the published<sub>1</sub> head.", claims: 0, cured: 1 },
-          twin: { text: "The preview reads the published head.<sub>1</sub>", claims: 1 },
+          quiet: { text: "The preview reads the published<sub>1</sub> head.", path: "docs/workbench/planted.md", claims: 0, cured: 1 },
+          twin: { text: "The preview reads the published head.<sub>1</sub>", path: "docs/workbench/planted.md", claims: 1 },
         },
       },
       {
@@ -1209,6 +1281,16 @@ const ROWS: readonly Row[] = [
             { sentence: "The preview without a commit reads the published head.", judged: false, cured: true },
           ],
           twin: { sentence: "The preview makes a change and reads the published head.", judged: true },
+        },
+      },
+      {
+        id: "A20",
+        seams: ["judge"],
+        calls: ["judge scan census; split census; scope census", "judge page R-MARKER-RUN", "judge scan census; split census; scope census x2"],
+        fields: [],
+        witness: {
+          quiet: { text: "The preview reads the published<sub>1</sub><sup>2</sup> head.", path: "docs/workbench/planted.md", claims: 0, cured: 1 },
+          twin: { text: "The preview reads the published head.<sub>1</sub><sup>2</sup>", path: "docs/workbench/planted.md", claims: 1 },
         },
       },
     ],
@@ -1396,6 +1478,7 @@ const SENTENCES = [
   "The un_committed render reads the published head.",
   "A no_commit render reads the published head.",
   "A nocommit render reads the published head.",
+  "The preview reads the published_head_manifest.",
   "The noncommitted preview never reads the published head.",
   "The preview does not read the published head.",
   "rf graph publish promotes a candidate to the published head.",
@@ -1473,12 +1556,24 @@ const ABBREVIATED = [
   "Previews (vs. commits) read the published head.",
 ];
 const ABBREVIATION_TWIN = "The preview reads, that is resolves, the published head.";
+/** A4's quiet pages (R-ANAPHORA): the preview in the sentence before, after a period and (in lowercase) after a ';'. */
+const ANAPHORAS = ["The preview is noncommitted. It reads the published head.", "Previewing is noncommitted; it reads the published head."];
+/** A14's quiet pages (R-FOOTNOTE): a <sup> footnote marker and a superscript digit between published and head. */
+const FOOTNOTE_MARKED = ["The preview reads the published<sup>1</sup> head.", `The preview reads the published${at(0xb9)} head.`];
 const judgedWith = (judge: Judge) => (sentence: string) => ({ sentence, judged: claimsHead(sentence), cured: claimsWith(judge, sentence) });
 const twinOf = (sentence: string): Json => ({ sentence, judged: claimsHead(sentence) });
 const scanned = (file: DocFile): Json => {
   const result = scan([file]);
-  return { text: file.text, unreadable: [...result.unreadable], claims: result.claims.length };
+  return { text: file.text, path: file.path, unreadable: [...result.unreadable], claims: result.claims.length };
 };
+/** A planted page's census reading, beside the page's own text and path (the page the scan was handed). */
+const pageReading = (file: DocFile): Json => ({ text: file.text, path: file.path, claims: claimCount([file]) });
+/** A residual's quiet page, planted once for both readings: the census's reading, then its cure's (run second, so the calls keep that
+ * order), beside the page's own text and path. */
+function quietReading(file: DocFile, cure: (file: DocFile) => number): Json {
+  const claims = claimCount([file]);
+  return { text: file.text, path: file.path, claims, cured: cure(file) };
+}
 
 /** Each pin's case: it reads through the seams its pin declares and returns the witness its pin holds. */
 const IMPL: Readonly<Record<string, () => Json>> = {
@@ -1498,17 +1593,19 @@ const IMPL: Readonly<Record<string, () => Json>> = {
   A2: () => SENTENCES.map(sentence => ({ sentence, claims: claimsHead(sentence) })),
   // R-PARAPHRASE: the head named in other words; its cure reads them.
   A3: () => ({
-    quiet: ["The preview reads the store-resident head's manifest.", "The preview reads the published graph head."].map(judgedWith(PARAPHRASE_CURE)),
+    quiet: [
+      "The preview reads the store-resident head's manifest.",
+      "The preview reads the published graph head.",
+      "The preview reads the published (current) head.",
+      "The preview reads the published, signed head.",
+      "The preview reads the head that was published.",
+    ].map(judgedWith(PARAPHRASE_CURE)),
     twin: twinOf("The preview reads the published head's manifest."),
   }),
   // R-ANAPHORA: the preview stands in the sentence before the one that names the head; its cure joins them.
   A4: () => {
-    const quiet = "The preview is noncommitted. It reads the published head.";
-    const twin = "The preview is noncommitted and reads the published head.";
-    return {
-      quiet: { text: quiet, claims: claimCount([planted(quiet)]), cured: claimCount([planted(quiet)], { sentences: anaphoraJoined }) },
-      twin: { text: twin, claims: claimCount([planted(twin)]) },
-    };
+    const twin = planted("The preview is noncommitted and reads the published head.");
+    return { quiet: ANAPHORAS.map(text => quietReading(planted(text), page => claimCount([page], { sentences: anaphoraJoined }))), twin: pageReading(twin) };
   },
   // R-NEGATION-SCOPE: each negation before the head governs another phrase; its cure reads only the clause nearest the head.
   A5: () => ({
@@ -1529,9 +1626,9 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       twin: { paths: twin.map(file => file.path), claims: claimCount(twin) },
     };
   },
-  A7: () => MARKUP.map(text => ({ text, claims: claimCount([planted(text)]) })),
-  A8: () => JOINS.map(text => ({ text, claims: claimCount([planted(text)]) })),
-  A9: () => HIDDEN.map(([hidden, shown]) => ({ hidden, claims: claimCount([planted(hidden)]), shown, shownClaims: claimCount([planted(shown)]) })),
+  A7: () => MARKUP.map(text => pageReading(planted(text))),
+  A8: () => JOINS.map(text => pageReading(planted(text))),
+  A9: () => HIDDEN.map(([hidden, shown]) => ({ hidden: pageReading(planted(hidden)), shown: pageReading(planted(shown)) })),
   A10: () => ({ unknown: scanned(planted("The preview reads the published&emsp13;head.")), known: scanned(planted("The preview reads the published&emsp;head.")) }),
   // Every planted page is scanned in one call, each at its own path, so the case's calls never depend on the engine's tables.
   A11: () => {
@@ -1547,10 +1644,10 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     };
   },
   // R-ABBREVIATION: a period after an abbreviation ends the sentence it splits; its cure keeps the sentence open.
-  A12: () => ({
-    quiet: ABBREVIATED.map(text => ({ text, claims: claimCount([planted(text)]), cured: claimCount([planted(text)], { sentences: abbreviationJoined }) })),
-    twin: { text: ABBREVIATION_TWIN, claims: claimCount([planted(ABBREVIATION_TWIN)]) },
-  }),
+  A12: () => {
+    const twin = planted(ABBREVIATION_TWIN);
+    return { quiet: ABBREVIATED.map(text => quietReading(planted(text), page => claimCount([page], { sentences: abbreviationJoined }))), twin: pageReading(twin) };
+  },
   // R-PREVIEW-WORDS: the preview named in other words; its cure reads them.
   A13: () => ({
     quiet: ["The ephemeral render reads the published head.", "A dry-run render reads the published head.", "A non-committing render reads the published head."].map(judgedWith(PREVIEW_WORDS_CURE)),
@@ -1558,27 +1655,26 @@ const IMPL: Readonly<Record<string, () => Json>> = {
   }),
   // R-FOOTNOTE: a footnote marker between published and head; its cure renders the marker as nothing.
   A14: () => {
-    const quiet = planted("The preview reads the published<sup>1</sup> head.");
     const twin = planted("The preview reads the published head.<sup>1</sup>");
-    return { quiet: { text: quiet.text, claims: claimCount([quiet]), cured: claimCount([footnoteCured(quiet)]) }, twin: { text: twin.text, claims: claimCount([twin]) } };
+    return { quiet: FOOTNOTE_MARKED.map(text => quietReading(planted(text), page => claimCount([footnoteCured(page)]))), twin: pageReading(twin) };
   },
   // R-FOOTNOTE-REFERENCE: a markdown footnote reference between published and head; its cure renders the reference as nothing.
   A15: () => {
     const reference = planted("The preview reads the published[^1] head.\n\n[^1]: A note.");
     const trailing = planted("The preview reads the published head.[^1]\n\n[^1]: A note.");
-    return { quiet: { text: reference.text, claims: claimCount([reference]), cured: claimCount([footnoteReferenceCured(reference)]) }, twin: { text: trailing.text, claims: claimCount([trailing]) } };
+    return { quiet: quietReading(reference, page => claimCount([footnoteReferenceCured(page)])), twin: pageReading(trailing) };
   },
   // R-FOOTNOTE-DEFINITION: a footnote definition lexed as a link reference definition; its cure renders the definition's text.
   A16: () => {
     const titled = planted("Intro.[^1]\n\n[^1]: https://example.com 'The preview reads the published head.'");
     const plain = planted("Intro.[^1]\n\n[^1]: The preview reads the published head.");
-    return { quiet: { text: titled.text, claims: claimCount([titled]), cured: claimCount([footnoteDefinitionCured(titled)]) }, twin: { text: plain.text, claims: claimCount([plain]) } };
+    return { quiet: quietReading(titled, page => claimCount([footnoteDefinitionCured(page)])), twin: pageReading(plain) };
   },
   // R-SUBSCRIPT: an inline <sub> element between published and head; its cure renders the element as nothing.
   A17: () => {
     const lowered = planted("The preview reads the published<sub>1</sub> head.");
     const after = planted("The preview reads the published head.<sub>1</sub>");
-    return { quiet: { text: lowered.text, claims: claimCount([lowered]), cured: claimCount([subscriptCured(lowered)]) }, twin: { text: after.text, claims: claimCount([after]) } };
+    return { quiet: quietReading(lowered, page => claimCount([subscriptCured(page)])), twin: pageReading(after) };
   },
   // R-NO-COMMIT: the preview written as the two words no commit; its cure reads them as the preview and never as a negation.
   A18: () => ({
@@ -1590,6 +1686,12 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     quiet: ["The preview makes no change and reads the published head.", "The preview without a commit reads the published head."].map(judgedWith(NEGATION_PHRASE_CURE)),
     twin: twinOf("The preview makes a change and reads the published head."),
   }),
+  // R-MARKER-RUN: a <sub> element then a <sup> element between published and head; its cure renders both kinds as nothing.
+  A20: () => {
+    const run = planted("The preview reads the published<sub>1</sub><sup>2</sup> head.");
+    const after = planted("The preview reads the published head.<sub>1</sub><sup>2</sup>");
+    return { quiet: quietReading(run, page => claimCount([markerRunCured(page)])), twin: pageReading(after) };
+  },
   B1: () => {
     const file = EXPORTED.srcSurfaces[0] ?? "";
     const phrase = EXPORTED.anchorPhrase;
@@ -1643,6 +1745,53 @@ const IMPL: Readonly<Record<string, () => Json>> = {
   T5: () => Object.fromEntries(Object.entries(PARTIAL).map(([id, read]) => [id, trigger(withKey(cleared(roster()), "resultKeys", EXPORTED.key), tracked(read))])),
 };
 
+/** The page and section that anchor the residual roster outside the census (RESIDUAL ANCHOR in the header). */
+const RESIDUAL_DOC = "docs/workbench/14-qa-and-benchmarks.md";
+const RESIDUAL_HEADING = "RF definition-source census residuals";
+const RESIDUAL_COLUMNS = ["Quiet row", "Residual family", "Cure seam"];
+const isHeading = (token: Token): token is Tokens.Heading => token.type === "heading";
+/** docs/14's residual table: one `<quiet row> | <family> | <cure seam>` entry per row, sorted. The section is the page's one
+ * level-2 heading of that text, bounded at the next level-1 or level-2 heading, and it holds exactly one table of those columns. */
+function residualTable(): string[] {
+  const tokens = marked.lexer(readFileSync(join(REPO, RESIDUAL_DOC), "utf8"));
+  const starts = tokens.flatMap((token, index) => (isHeading(token) && token.depth === 2 && token.text === RESIDUAL_HEADING ? [index] : []));
+  const start = starts[0];
+  if (starts.length !== 1 || start === undefined) throw new Error(`${RESIDUAL_DOC} must hold exactly one level-2 heading '${RESIDUAL_HEADING}'`);
+  const after = tokens.slice(start + 1);
+  const end = after.findIndex(token => isHeading(token) && token.depth <= 2);
+  const tables = (end < 0 ? after : after.slice(0, end)).filter(isTable);
+  const table = tables[0];
+  if (tables.length !== 1 || table === undefined) throw new Error(`the '${RESIDUAL_HEADING}' section must hold exactly one table`);
+  const columns = table.header.map(cell => cell.text.trim());
+  if (!isDeepStrictEqual(columns, RESIDUAL_COLUMNS)) throw new Error(`the '${RESIDUAL_HEADING}' table's columns must be ${RESIDUAL_COLUMNS.join(", ")}, not ${columns.join(", ")}`);
+  return table.rows.map(row => row.map(cell => cell.text.trim()).join(" | ")).sort();
+}
+/** A cure named in a pin's calls and the seam it takes: a sentence judge, a scan's splitter or scope, a page cure, or the trigger's
+ * names rule. */
+const CURE_SEAMS: readonly (readonly [RegExp, string])[] = [
+  [/^judge (R-[A-Z-]+)$/, "judge"],
+  [/; split (R-[A-Z-]+);/, "splitter"],
+  [/; scope (R-[A-Z-]+)$/, "scope"],
+  [/^judge page (R-[A-Z-]+)$/, "page cure"],
+  [/; names container \((R-[A-Z-]+)\)$/, "names rule"],
+];
+/** The residual families the pins name: one `<pin> | <family> | <cure seam>` entry for each cure a pin's calls list names, sorted. */
+function residualPins(): string[] {
+  const named = new Set<string>();
+  for (const row of ROWS) {
+    for (const pin of row.pins) {
+      for (const call of pin.calls) {
+        const entry = call.replace(/ x\d+$/, "");
+        for (const [pattern, seam] of CURE_SEAMS) {
+          const family = pattern.exec(entry)?.[1];
+          if (family !== undefined) named.add(`${pin.id} | ${family} | ${seam}`);
+        }
+      }
+    }
+  }
+  return [...named].sort();
+}
+
 type Registered = { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean };
 /** Every test this file registered (the vitest task tree), in order, with its collected mode and, once it ran, its state. */
 function registered(task: TestContext["task"]): Registered[] {
@@ -1659,7 +1808,7 @@ function registered(task: TestContext["task"]): Registered[] {
 
 describe("wb-973.13 rf definition-source census (SWARM-CONTEXT-GRAPH-R13, the until-then leg and its trigger)", () => {
   it(JUDGED_TITLE, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:19", "B:2", "C:1", "T:5"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:20", "B:2", "C:1", "T:5"]);
     expect(Object.keys(IMPL).sort(), "a pin without a case, or a case without a pin").toEqual(ROWS.flatMap(row => row.pins.map(pin => pin.id)).sort());
     const cited: Clause[] = [...ROWS.map(({ source, clause }) => ({ source, clause })), ...ARMED.map(({ clause }) => ({ source: ARMED_SOURCE, clause }))];
     expect(sortedClauses(cited), "the judged clauses against the tracked export's testable clauses").toStrictEqual(sortedClauses(EXPORTED.clauses));
@@ -1675,6 +1824,10 @@ describe("wb-973.13 rf definition-source census (SWARM-CONTEXT-GRAPH-R13, the un
     ).toEqual([...LISTS]);
     expect(EXPORTED.docsSurfaces.length > 0 && EXPORTED.srcSurfaces.length === 1, "the export's SURFACES line names the docs and the one observer module").toBe(true);
     expect(Object.keys(PARTIAL), "T5's partial stand-ins against the armed clauses").toEqual([...ARMED.map(({ id }) => id), "untyped"]);
+  });
+
+  it(RESIDUAL_TITLE, () => {
+    expect(residualPins(), "the residual pins, their families and their cure seams, against the docs/14 residual table").toStrictEqual(residualTable());
   });
 
   for (const row of ROWS) {
@@ -1710,7 +1863,7 @@ describe("wb-973.13 rf definition-source census (SWARM-CONTEXT-GRAPH-R13, the un
     expect(
       others.map(entry => entry.name),
       "the registered tests",
-    ).toEqual([JUDGED_TITLE, ...ROWS.flatMap(row => row.pins.map(pin => pin.id))]);
+    ).toEqual([JUDGED_TITLE, RESIDUAL_TITLE, ...ROWS.flatMap(row => row.pins.map(pin => pin.id))]);
     expect(
       others.filter(entry => entry.mode !== "run" || entry.fails || entry.state !== "pass").map(entry => `${entry.name}: ${entry.mode}${entry.fails ? "+fails" : ""} ${entry.state ?? "unrun"}`),
       "a registered test skipped, inverted or not passed",
