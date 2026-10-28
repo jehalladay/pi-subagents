@@ -348,7 +348,7 @@
               "docs03": true
             },
             "findings": [],
-            "unrendered": [],
+            "unplaced": [],
             "frozen": {
               "revision": "dc72a6d6d21b",
               "ancestor": true,
@@ -357,7 +357,7 @@
               "named": 3,
               "findings": [],
               "quieted": [],
-              "unrendered": []
+              "unplaced": []
             },
             "cuts": [
               [
@@ -409,7 +409,7 @@
               [],
               []
             ],
-            "rendered": {
+            "comments": {
               "hiddenMarker": [
                 [
                   "docs/plant.md:1 acquire"
@@ -461,15 +461,36 @@
                   "docs/plant.md:1 acquire"
                 ]
               ],
-              "unplaced": {
-                "findings": [],
-                "quieted": [
-                  "docs/plant.md:3 marker:never"
+              "containers": [
+                [],
+                [],
+                [
+                  "docs/plant.md:1 acquire"
                 ],
-                "unrendered": [
-                  "docs/plant.md \"<!-- never | x -->\""
+                [
+                  "docs/plant.md:1 acquire"
                 ]
-              }
+              ],
+              "unplaced": [
+                {
+                  "findings": [],
+                  "quieted": [
+                    "docs/plant.md:3 marker:never"
+                  ],
+                  "unplaced": [
+                    "docs/plant.md \"<!-- never | x -->\""
+                  ]
+                },
+                {
+                  "findings": [],
+                  "quieted": [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  "unplaced": [
+                    "docs/plant.md \"<!-- never -->\""
+                  ]
+                }
+              ]
             },
             "quiet": {
               "R-OUTSIDE-ROOTS": {
@@ -520,7 +541,77 @@
                 [],
                 [],
                 []
-              ]
+              ],
+              "R-SOURCE-AS-WRITTEN": {
+                "markers": [
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:none"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ]
+                ],
+                "claims": [
+                  [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  [
+                    "docs/plant.md:1 acquire"
+                  ]
+                ],
+                "words": [
+                  [],
+                  [],
+                  [
+                    "docs/plant.md:1 acquire"
+                  ]
+                ]
+              }
             }
           }
         },
@@ -1041,6 +1132,10 @@
     },
     {
       "id": "R-COMMENT-HIDDEN",
+      "quietPin": "A3"
+    },
+    {
+      "id": "R-SOURCE-AS-WRITTEN",
       "quietPin": "A3"
     },
     {
