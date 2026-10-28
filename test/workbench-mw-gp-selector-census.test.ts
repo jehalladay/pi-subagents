@@ -1,125 +1,168 @@
 /**
  * wb-e66.2 (MW-GRAPH-POLICY-COORDINATION-R3, program-triage-2026-10-18), the named recorded selector census.
- * Statement (bead title, verbatim; the tracker export holds each of its two dashes as the six-character text \u2014, which
- * this file reads as DASH): "Gate as R1. The Pi host shall select through a named recorded selector \u2014 a capacity-aware
- * deterministic matching resolver, or a documented joint/autoregressive sampler over the R2 support recording the JOINT
- * behavior log probability \u2014 and shall refuse independent per-pair argmax/logit selection for a multi-task assignment
- * as not capacity-feasible; selector name and probability travel with the receipt."
- * Acceptance (owner filing, verbatim; the labels of rows A1-A4): "a falsifier fixture in which per-pair argmax exceeds one
- * agent's capacity proves the selector never emits that set; the deterministic resolver run twice on identical input
- * yields an identical assignment set; the sampler path records a log probability over the actual support count, and a
- * decision lacking selector name or probability is a typed validation refusal." The filing's next sentence, "Zero Pi
- * change until the gate; file conjoined with R2.", gives rows G and C.
+ * Statement (bead title, verbatim; the tracker export holds each of its two dashes as the six-character text \u2014,
+ * which this file reads as DASH): "Gate as R1. The Pi host shall select through a named recorded selector \u2014 a
+ * capacity-aware deterministic matching resolver, or a documented joint/autoregressive sampler over the R2 support
+ * recording the JOINT behavior log probability \u2014 and shall refuse independent per-pair argmax/logit selection for
+ * a multi-task assignment as not capacity-feasible; selector name and probability travel with the receipt."
+ * Acceptance (owner filing, verbatim; the labels of rows A1-A4): "a falsifier fixture in which per-pair argmax exceeds
+ * one agent's capacity proves the selector never emits that set; the deterministic resolver run twice on identical
+ * input yields an identical assignment set; the sampler path records a log probability over the actual support count,
+ * and a decision lacking selector name or probability is a typed validation refusal." The filing's next sentence, "Zero
+ * Pi change until the gate; file conjoined with R2.", gives rows G and C.
  *
- * MEASURED (read-only, by the cutting seat, 2026-10-28, at this census's base df37dac). Producer (the local
- * MechanicalWorkflows checkout, git show at the bead's pin 4b8b974ca72bf2ed36b99e315e45857c6181fbe8; the roster's producer
- * block holds the four cited lines and their blobs, and this census never re-reads the producer):
- * docs/programs/graph-policy-coordination-2026-10-18.md (blob 01ff00d480ec) :14 reads "4. A recorded distribution samples
- * only from actual eligible support, or a deterministic optimizer converts scores into a globally valid set of
+ * MEASURED (read-only, by the seat of cut #2, 2026-10-28, at this cut's base 5fbe25e, landing 649, and the same at
+ * e81d2b0; cut #1 read the same at df37dac, with 116 src files then). Producer (the local MechanicalWorkflows checkout,
+ * git show at the bead's pin 4b8b974ca72bf2ed36b99e315e45857c6181fbe8; the roster's producer block holds the four cited
+ * lines and their blobs, and this census never re-reads the producer):
+ * docs/programs/graph-policy-coordination-2026-10-18.md (blob 01ff00d480ec) :14 reads "4. A recorded distribution
+ * samples only from actual eligible support, or a deterministic optimizer converts scores into a globally valid set of
  * assignments; independent per-pair argmax is not sufficient for capacity constraints."; its README.md (blob
  * 0dbff582a14c) :9 carries "a named selector samples with actual behavior log probability or selects deterministic
  * proposal" in the host's flow, :11 reads "Independent pair logits are not globally capacity feasible. For a multi-task
- * assignment choose either a capacity-aware deterministic matching resolver or a documented joint/autoregressive sampler
- * recording *joint* behavior probability." and :23 holds the acceptance term "original behavior probability". Pi: git's
- * src listing holds 116 files, all .ts, and the vocabulary reader below reads none of them. The shared words are Pi's own
- * words with other meanings at this base (git grep -l -i, read once, never pinned): "selector" in 15 src files (the
- * ObservationProjection view selectors of src/workbench/observe-query.ts among them), "matching" in 25, "resolver" in 11,
- * "assignment" in 6. docs/workbench/03:22 is the same whole line at the filing pin 758ec18187a5 and at the base (the
- * workbench "does not invent a second Furnace durable scheduler"). The R2 bead wb-e66.1 is in flight (in_progress in the
- * export at the base; its census is queued, not landed): this census reads its export row only, never its files, and
- * models the R2 support itself. No src module names the vocabulary: the gate has not fired.
+ * assignment choose either a capacity-aware deterministic matching resolver or a documented joint/autoregressive
+ * sampler recording *joint* behavior probability." and :23 holds the acceptance term "original behavior probability".
+ * Pi: git's src listing holds 117 files, all .ts, and the vocabulary reader below reads none of them. The shared words
+ * are Pi's own words with other meanings at this base (git grep -l -i, read once, never pinned): "selector" in 15 src
+ * files (the ObservationProjection view selectors of src/workbench/observe-query.ts among them), "matching" in 25,
+ * "resolver" in 11, "assignment" in 6. docs/workbench/03:22 is, at the filing pin 758ec18187a5 and at the base, the
+ * source of one rendered paragraph of the page's "Reference architecture" section, the same rendered text at both (the
+ * workbench "does not invent a second Furnace durable scheduler"). The R2 bead wb-e66.1 is not closed in the export at
+ * the base (its census is in flight, not landed): this census reads its export row only, never its files, and models
+ * the R2 support itself. No src module names the vocabulary: the gate has not fired.
  *
  * READINGS.
- * - THE MODEL (this file; test-only, src untouched): an R2 support (a basis revision, agents with a hard known capacity,
- *   tasks with a load, the legal pairs in support order, and GP's score of each pair as a logit keyed agent/task: each
- *   fixture pair's logit is the natural log of its weight), a selector (a name, a kind, and a select over a support and a
- *   chooser, the selector's only source of randomness), its decision (selector name, basis revision, support count,
- *   assignment, draw steps, log probability) and a host (its two named selectors, an admission, a validation and a
- *   receipt). The host's selection admits the selector, takes its decision, validates it and carries its receipt.
+ * - THE MODEL (this file; test-only, src untouched): an R2 support (a basis revision, agents with a hard known
+ *   capacity, tasks with a load, the legal pairs in support order, and GP's score of each pair as a logit keyed
+ *   agent/task: each fixture pair's logit is the natural log of its weight), a selector (a name, a kind, and a select
+ *   over a support and a chooser, the selector's only source of randomness), its decision (selector name, basis
+ *   revision, support count, assignment, draw steps, log probability) and a host (its two named selectors, an
+ *   admission, a validation and a receipt). The host's selection admits the selector, takes its decision, validates it
+ *   and carries its receipt.
  * - THE REFERENCE host: the resolver capacity-matching-resolver (kind deterministic-resolver) walks the support's pairs
  *   highest logit first (ties in support order) and takes a pair when its task is free and its load fits its agent's
  *   remaining capacity; it draws nothing and records log probability 0 (a deterministic proposal, probability 1). The
- *   sampler joint-autoregressive-sampler (kind joint-sampler) presents, at each step, exactly the eligible support (pairs
- *   whose task is free and whose load fits the remaining capacity) at its softmax probabilities, draws one through the
- *   chooser and records the pair, the candidate count and the step's log probability, until no pair is eligible; the
- *   decision's log probability is the steps' sum, the JOINT behavior log probability of the draw sequence, and its
- *   support count is the support's pair count. The admission refuses a blank name as { ok: false, code:
- *   "unnamed-selector" }, an unknown kind as "unknown-selector", and the independent per-pair kinds per-pair-argmax and
- *   per-pair-logit for a multi-task support as "not-capacity-feasible". The validation refuses a decision lacking a
- *   selector name (absent, not a string, blank) or a probability (absent, not a number, not finite, above 0 as a log) as
- *   { ok: false, code: "decision-validation", missing }, and an assignment that is not capacity-feasible (a task twice,
- *   an agent over its capacity, a pair naming no support agent or task) as { ok: false, code: "not-capacity-feasible",
- *   selector }. The receipt carries the decision's selector name, log probability, basis revision and assignment.
+ *   sampler joint-autoregressive-sampler (kind joint-sampler) presents, at each step, exactly the eligible support
+ *   (pairs whose task is free and whose load fits the remaining capacity) at its softmax probabilities, draws one
+ *   through the chooser and records the pair, the candidate count and the step's log probability, until no pair is
+ *   eligible; the decision's log probability is the steps' sum, the JOINT behavior log probability of the draw
+ *   sequence, and its support count is the support's pair count. The admission refuses a blank name (empty, or
+ *   whitespace and format characters only) as { ok: false, code: "unnamed-selector" }, a kind outside its two as
+ *   "unknown-selector", and the independent per-pair kinds per-pair-argmax and per-pair-logit, whatever the selector's
+ *   name, for a multi-task support as "not-capacity-feasible". The validation refuses a decision lacking a selector
+ *   name (absent, not a string, blank as above) or a probability (absent, not a number, not finite, above 0 as a log)
+ *   as { ok: false, code: "decision-validation", missing }, and an assignment that is not capacity-feasible (a task
+ *   twice, an agent over its capacity, a pair naming no support agent or task) as { ok: false, code:
+ *   "not-capacity-feasible", selector }. The receipt carries the decision's selector name, log probability, basis
+ *   revision and assignment.
  * - THE CHECKS (judged by value, each on a whole host; the checks keep their own capacity, eligibility and probability
- *   readings apart from the reference's, and every sampler is walked over its whole path tree by a chooser that records
- *   what each draw was presented): K-NAMED (both selectors admitted on every case, the two unnamed controls and the
- *   unknown kind refused typed, each decision naming its own selector, two distinct names), K-FEASIBLE (every assignment
+ *   readings apart from the reference's, the admission and validation controls carry their expected refusals as data,
+ *   and every sampler is walked over its whole path tree by a chooser that records what each draw was presented):
+ *   K-NAMED (both selectors admitted on every case; six admission controls - four unnamed: empty, three spaces, one
+ *   format character, two format characters around a space; two named, of two unknown kinds - each refused with its
+ *   declared typed code; each decision naming its own selector, two distinct names), K-FEASIBLE (every assignment
  *   either selector emits is capacity-feasible and never a case's overloaded per-pair argmax set), K-DETERMINISTIC (the
  *   resolver run twice, on two copies of each support under a first-candidate and a last-candidate chooser, yields one
- *   assignment set, with no draw and log probability 0), K-JOINT (each path records its drawn pairs in draw order, each
- *   step's log probability of what it was presented and their sum, and the paths' probabilities sum to 1), K-COUNT (each
- *   step presents exactly the actual eligible support at its softmax probabilities and records its candidate count; each
- *   decision records the support's pair count), K-VALIDATE (ten malformed decisions, each on a resolver base and a
- *   sampler base, are the typed validation refusal naming what they lack; every reference decision is accepted),
- *   K-INDEPENDENT (both independent kinds refused typed on every multi-task case; each case's overloaded argmax set,
- *   carried under the resolver's name, refused typed as not capacity-feasible), K-RECEIPT (every reference decision's
- *   receipt, read back from its JSON, carries its selector name and log probability unchanged) and K-SUPPORT (every
- *   emitted pair is a pair of the support read, and every decision carries its basis revision). MUTANTS: 38 hosts, each
- *   refused by exactly its declared checks, and every check refuses one alone.
- * - THE HAND-AUTHORED ANCHORS (computed outside this file by the cutting seat's exact-fraction model, archived with the
- *   cut's evidence): each case's per-pair argmax set and the agents it overloads, the resolver's assignment, the sampler's
+ *   assignment set, calls neither chooser, and records no draw step and log probability 0), K-JOINT (each path records
+ *   its drawn pairs in draw order, each step's log probability of what it was presented and their sum, and the paths'
+ *   probabilities sum to 1), K-COUNT (each step presents exactly the actual eligible support at its softmax
+ *   probabilities and records its candidate count; each decision records the support's pair count), K-VALIDATE (eleven
+ *   malformed decisions, each on a resolver base and a sampler base, are the typed validation refusal naming what they
+ *   lack; every reference decision is accepted), K-INDEPENDENT (both independent kinds, under their kind names and
+ *   under two other names, refused typed on every multi-task case; each case's overloaded argmax set, and four
+ *   capacity-infeasible decisions on the spare fixture - a task twice, an agent over its capacity, a pair naming no
+ *   support agent, a pair naming no support task, each infeasible on one clause - carried under the resolver's name,
+ *   refused typed as not capacity-feasible), K-RECEIPT (every reference decision's receipt, read back from its JSON,
+ *   carries its selector name and log probability unchanged) and K-SUPPORT (every emitted pair is a pair of the support
+ *   read, and every decision carries its basis revision). MUTANTS: 46 hosts, each refused by exactly its declared
+ *   checks, and every check refuses one alone.
+ * - THE HAND-AUTHORED ANCHORS (computed outside this file by cut #1's exact-fraction model, archived with that cut's
+ *   evidence): each case's per-pair argmax set and the agents it overloads, the resolver's assignment, the sampler's
  *   path count, distinct sets and step-count sequences, seven path probabilities as fractions, and the probability that
  *   independent per-pair logit selection puts on capacity-infeasible sets, per case.
- * - THE ARMED REGISTRATIONS (SITES, empty today): a src module that names the vocabulary must register its host there, and
- *   every check then judges it beside the reference; an unregistered naming module, a stale registration and a duplicate
- *   are findings.
- * - THE SRC READING (row G): every path git lists under src/ (tracked, plus untracked files git does not ignore), each a
- *   regular file read as text; a listed path that is not a regular file is a finding, never skipped. A vocabulary word
- *   (argmax, logits, optimizer, log probability, sampler, autoregressive, logit) is read case-insensitively anywhere in the
- *   path or the text, with any run of whitespace, dot, underscore, hyphen or format character (Cf) between its parts
- *   (separators and camel humps: logProbability is log, probability).
+ * - THE ARMED REGISTRATIONS (SITES, empty today): a src module that names the vocabulary must register its host there,
+ *   and every check then judges it beside the reference; an unregistered naming module, a stale registration and a
+ *   duplicate are findings.
+ * - THE SRC READING (row G): every path git lists under src/ (tracked, plus untracked files git does not ignore), each
+ *   a regular file read as text; a listed path that is not a regular file is a finding, never skipped. A vocabulary
+ *   word (argmax, logits, optimizer, log probability, sampler, autoregressive, logit) is read case-insensitively
+ *   anywhere in the path or the text, with any run of characters that are neither letters nor digits between its parts
+ *   (whitespace, a comment line wrap, punctuation, dashes, symbols, format characters; camel humps split parts:
+ *   logProbability is log, probability), and with any run of format characters between two letters of a part (auto, a
+ *   soft hyphen, regressive reads autoregressive); a part's final y also reads ies (log probabilities) and its z also
+ *   reads s (optimiser).
+ * - THE DOCS READING (row S): docs/workbench/03 through the landed docs binding (docsSection of
+ *   test/helpers/census.ts): its "Reference architecture" section, bound once in the rendered view under the page's
+ *   level-1 title and bounded at the next level-1 or level-2 heading; a refused binding, or a section carrying HTML,
+ *   reads no paragraph. At the filing pin, line 22 holds the cited text and is the source of a rendered paragraph of
+ *   the section that holds it too (the line indented into the pinned page's diagram reads no pin); live, the bound
+ *   section renders a paragraph whose rendered text equals that paragraph's (never an includes over the page). Thirteen
+ *   in-memory plants of the live page (DOCS_PLANTS) pin it: the line deleted, edited, wrapped in an HTML comment block,
+ *   moved into a trailing section, fenced, indented into the diagram's code block or followed by an inline comment, and
+ *   the heading duplicated or re-homed under another level-1 title, each read no paragraph; the page as it is, the
+ *   emphasis respelled, a comment in another section and the paragraph rewrapped onto two lines each read it.
  *
  * ROWS. A1-A4, the acceptance's four clauses; A5 and A6, the statement's last two clauses; N and D, its first two (the
  * named recorded selector, and the two selector forms between its dashes); C and G, the filing's closing sentence (file
- * conjoined with R2: wb-e66.1 is R2 under this bead's own epic, and every emitted pair is a pair of the R2 support; zero
- * Pi change until the gate: the src reading and its listing proof); S, the filing's posture sentence (docs/workbench/03:22
- * read at the filing pin and found whole in the live page; the duty binds only when a src module hosts GP-conditioned
- * assignment: the armed registrations); Q, the residuals' pinned quiet rows.
+ * conjoined with R2: wb-e66.1 is R2 under this bead's own epic, and every emitted pair is a pair of the R2 support;
+ * zero Pi change until the gate: the src reading and its listing proof); S, the filing's posture sentence
+ * (docs/workbench/03:22 read at the filing pin and rendered in its section live; the duty binds only when a src module
+ * hosts GP-conditioned assignment: the armed registrations); Q, the residuals' pinned quiet rows (this census's own
+ * enumeration: see OUTSIDE ANCHORS for what binds it).
  * RESIDUALS (named families, each member a pinned quiet row; a reading that starts reading a member, or a check that
- * starts refusing one, reds its row): R-COMPOSED (Q1: a word split by an operator and quotes, split inside a one-part
- * word, escaped, spelled with a homoglyph, abbreviated, hyphenated inside a one-part word, or joined at run time),
- * R-SHARED-WORD (Q2: the filing's search words "selector" and "matching" and the statement's "resolver" and
- * "assignment", Pi words with other meanings), R-UNNAMED-SELECTOR (Q3: scoring or picking code whose path and text name
- * no vocabulary word: what a selector means without the words is outside a text reading), R-SCORE-BLIND (Q4: a
- * deterministic, capacity-aware resolver that ignores the scores meets every check: the census does not judge how a
- * resolver uses the scores), R-DECLARED-KIND (Q5: the host refuses an independent per-pair selector by its declared kind
- * and an infeasible decision by its value, so an independent selector declared under an admitted name and kind whose
- * decision is capacity-feasible is admitted at run time; what a selector computes is judged only for a registered host)
- * and R-SINGLE-TASK (Q6: the statement refuses independent per-pair selection for a multi-task assignment; on a
- * single-task support the reference admits both independent kinds and their decisions validate).
+ * starts refusing one, reds its row): R-COMPOSED (Q1: a one-part word split by an operator and quotes, by an
+ * underscore, by a hyphen or by a space, escaped, spelled with a homoglyph, or abbreviated; a two-part word joined at
+ * run time from parts written out of order), R-SHARED-WORD (Q2: the filing's search words "selector" and "matching" and
+ * the statement's "resolver" and "assignment", Pi words with other meanings), R-UNNAMED-SELECTOR (Q3: scoring or
+ * picking code whose path and text name no vocabulary word: what a selector means without the words is outside a text
+ * reading), R-SCORE-BLIND (Q4: a deterministic, capacity-aware resolver that ignores the scores meets every check: the
+ * census does not judge how a resolver uses the scores), R-DECLARED-KIND (Q5: the host refuses an independent per-pair
+ * selector by its declared kind and an infeasible decision by its value, so an independent selector declared under an
+ * admitted name and kind whose decision is capacity-feasible is admitted at run time; what a selector computes is
+ * judged only for a registered host), R-SINGLE-TASK (Q6: the statement refuses independent per-pair selection for a
+ * multi-task assignment; on a single-task support the reference admits both independent kinds and their decisions
+ * validate), R-STATEFUL (Q7: a resolver whose hidden state changes once, outside the two runs K-DETERMINISTIC pairs -
+ * before a judge, or between two of its checks - meets every check: K-DETERMINISTIC compares the runs it pairs, never a
+ * host's whole call history; the pinned member changes before the judge) and R-LIVENESS (Q8: every check is a safety
+ * reading, so a host that selects less - a resolver assigning nothing or one task per agent, a sampler that never draws
+ * or stops after one draw - meets every check).
  * NOT CLAIMED: which selector form the host uses once the gate fires (the statement allows either); an optimal or
  * score-maximal resolver (R-SCORE-BLIND); the production chooser and its randomness (the census's chooser is its own
- * walk); that a registered sampler draws until the eligible support is empty (the reference does, and D2's hand-authored
- * path counts pin it for the reference only); GP's scoring, the GraphDataIR schema and the R2 enumeration itself
- * (wb-e66.1's); MechanicalWorkflows reconcile after selection; that a producer line reads the same past the pin; a case, a
- * mutant or a residual member removed from its table and from every literal of this file and the roster together while
- * every check keeps a sole witness (the rows, the vocabulary and the shared words are export-anchored).
- * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and the shape of every table
- * as literals; the judged set (every row's id, label and pins, every pin's quote and witness, the residual members, the
- * mutants and their declared checks, every registered test title) is held to the out-of-file roster
+ * walk; a resolver drawing randomness from outside the chooser is judged only by its paired runs); that a registered
+ * sampler draws until the eligible support is empty (R-LIVENESS; the reference does, and D2's hand-authored path counts
+ * pin it for the reference only); GP's scoring, the GraphDataIR schema and the R2 enumeration itself (wb-e66.1's);
+ * MechanicalWorkflows reconcile after selection; that a producer line reads the same past the pin; and every
+ * coordinated edit that OUTSIDE ANCHORS does not name, each made in every literal of this file and the roster together:
+ * (a) row Q - its label, any of its eight pins with its family, any residual member outside Q2 - removed or edited; (b)
+ * a row's pin partition, so the row's quotes still tile its label: the boundary between two neighbouring quotes moved,
+ * or a pin merged into a neighbouring pin of its row (its quote re-homed into the neighbour's, its case dropped), and
+ * with a merge whatever the dropped case alone reads (for instance A3b's hand-authored step-count sequences, or S2's
+ * stale and duplicate registration findings); (c) a case, a mutant, a docs plant, a vocabulary control, an infeasible
+ * decision, an admission or validation control, a hand-authored anchor or a registered test title removed from its
+ * table; a producer line's blob, or its text outside its quote, edited.
+ * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and the shape of every
+ * table as literals; the judged set (every row's id, label and pins, every pin's quote and witness, the residual
+ * members, the mutants and their declared checks, every registered test title) is held to the out-of-file roster
  * test/fixtures/mw-gp-selector-roster.json, in order and both ways.
- * OUTSIDE ANCHORS (their own registered case): the bead's own row in the tracker export (.beads/issues.jsonl) - the title
- * is exactly the requirement id and the gate, rows N and D between its two dashes, then rows A5 and A6; the acceptance
- * line is exactly rows A1-A4, then rows G and C; row S is the filing's posture sentence; each row's pin quotes tile its
- * label with nothing but separators; the docs line and the filing pin are the posture sentence's citation; the filing's
- * search words are the first two shared words then V1-V4, in order, V5 is the filing's "no selector, sampler or matching
- * code", V6, V7 and the last two shared words are the statement's, and the filing names every vocabulary word; the
- * producer block's paths, lines and pin are the source citations', and each cited line carries its quote or paraphrase.
- * So a pin, a row, a word or a label removed from every literal of this file and the roster together still reds. The last
- * case reads the vitest task tree (every registered test, in roster order, in run mode, ran before it) and REACHED (every
- * pin reached its witness compare, and each compare's own result).
+ * OUTSIDE ANCHORS (their own registered case; what binds outside this file and the roster, and nothing else): the
+ * bead's own row in the tracker export (.beads/issues.jsonl) - the title is exactly the requirement id and the gate,
+ * rows N and D between its two dashes, then rows A5 and A6; the acceptance line is exactly rows A1-A4, then rows G and
+ * C; row S is the filing's posture sentence; the quotes of each of those eleven rows tile its label, in order, with
+ * nothing but separators (what the quotes tile together is bound; where one quote ends and the next begins, and how
+ * many pins tile a label, are not); the docs line and the filing pin are the posture sentence's citation; the filing's
+ * search words are the first two shared words then V1-V4, in order, V5 is the filing's "no selector, sampler or
+ * matching code", V6, V7 and the last two shared words are the statement's, the filing names every vocabulary word, and
+ * Q2's residual members are the shared words; the producer block's paths, lines and pin are the source citations', and
+ * each cited line carries its quote or paraphrase. So one of rows A1-S removed or its label edited, one of their pin
+ * quotes edited so its row's quotes no longer tile the label (a word changed, dropped or added) or removed without
+ * re-homing its text, a vocabulary or shared word removed, the docs citation's path, line or pin edited, a producer
+ * line's path or line edited or its text edited so it no longer carries its quote - each in every literal of this file
+ * and the roster together - still reds; NOT CLAIMED (a)-(c) name what does not. The last case reads the vitest task
+ * tree (every registered test, in roster order, in run mode, ran before it) and REACHED (every pin reached its witness
+ * compare, and each compare's own result).
  *
- * Display paths added: none. Test-only: no src change, no GraphPolicyCLI adapter, selector, sampler, seam or fake binary.
+ * Display paths added: none. Test-only: no src change, no GraphPolicyCLI adapter, selector, sampler, seam or fake
+ * binary.
  */
 import { execFileSync } from "node:child_process";
 import { lstatSync, mkdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
@@ -127,6 +170,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 import { afterAll, describe, expect, it } from "vitest";
+import { docsSection } from "./helpers/census.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 installScratchLeakGuard(afterAll);
@@ -144,6 +188,10 @@ const DOCS_03 = "docs/workbench/03-architecture-and-ownership.md";
 /** The filing's docs/workbench/03 citation: its line, and the text of it the authority row needs. */
 const DOCS_LINE = 22;
 const DOCS_TEXT = "does not invent a second Furnace durable scheduler";
+/** docs/workbench/03's level-1 title (its dash is U+2014, written by code point: this file is ASCII), the one parent
+ * heading of the section the cited line renders in, and that level-2 section's heading. */
+const DOCS_TITLE = `03 ${String.fromCodePoint(0x2014)} High-level architecture, module ownership and dataflow`;
+const DOCS_HEADING = "Reference architecture";
 /** The conjoined requirement (the filing: "file conjoined with R2"): R2 is wb-e66.1, a child of the same epic. */
 const EPIC = "wb-e66";
 const R2_BEAD = "wb-e66.1";
@@ -160,6 +208,11 @@ const LIVE_BUDGET_MS = 60_000;
 const TOLERANCE = 1e-12;
 /** A selector's whole path tree sums to probability 1 within this. */
 const PATH_SUM_TOLERANCE = 1e-9;
+/** A format character (Cf) and a Cyrillic letter, written by code point (this file is ASCII). */
+const FORMAT_CHARACTER = String.fromCodePoint(0x200b);
+const CYRILLIC_A = String.fromCodePoint(0x430);
+/** A text's code points as U+XXXX, so a frozen literal of a name made of format characters stays ASCII. */
+const codePoints = (text: string): string => [...text].map(character => `U+${(character.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")}`).join(" ");
 
 // ---- the model ----
 
@@ -560,42 +613,60 @@ function samplerWith(parts: Partial<SamplerParts> = {}, name = SAMPLER_NAME, kin
 }
 const REFERENCE_SAMPLER = samplerWith();
 
-/** The reference's own capacity reading (the checks keep theirs apart): each task once, each agent's load within its
- * capacity, every pair naming a support agent and task. */
-function withinCapacity(support: Support, assignment: readonly Pair[]): boolean {
+/** The reference's capacity clauses, each a flag so a mutant can drop one. */
+interface CapacityRule {
+  /** A task assigned twice is refused. */
+  readonly taskOnce: boolean;
+  /** A pair naming no support agent or no support task is refused. */
+  readonly supportNames: boolean;
+}
+/** The reference's own capacity reading (the checks keep theirs apart): every pair naming a support agent and task, each
+ * task once, each agent's load within its capacity (a pair naming no support task costs nothing when its clause is
+ * off, so each clause alone refuses its shape). */
+function withinCapacity(support: Support, assignment: readonly Pair[], rule: CapacityRule): boolean {
   const capacity = new Map(support.agents.map(agent => [agent.id, agent.capacity] as const));
   const load = new Map(support.tasks.map(task => [task.id, task.load] as const));
   const used = new Map<string, number>();
   const tasks = new Set<string>();
   for (const pair of assignment) {
     const need = load.get(pair.task);
-    if (need === undefined || !capacity.has(pair.agent) || tasks.has(pair.task)) return false;
+    if (rule.supportNames && (need === undefined || !capacity.has(pair.agent))) return false;
+    if (rule.taskOnce && tasks.has(pair.task)) return false;
     tasks.add(pair.task);
-    used.set(pair.agent, (used.get(pair.agent) ?? 0) + need);
+    used.set(pair.agent, (used.get(pair.agent) ?? 0) + (need ?? 0));
   }
   return [...used].every(([agent, total]) => total <= (capacity.get(agent) ?? 0));
 }
+/** The reference's blank name: empty, or whitespace and format characters only (trim alone keeps format characters, so
+ * the trim-only reading is the mutants' flag). */
+const blankName = (name: string, formatCharacters: boolean): boolean => (formatCharacters ? /^[\s\p{Cf}]*$/u.test(name) : name.trim() === "");
 interface AdmitRule {
   readonly name: boolean;
+  /** A name of format characters only is blank. */
+  readonly formatCharacters: boolean;
   readonly independent: "refuse" | "admit" | "untyped";
-  readonly known: boolean;
+  /** Which kinds outside the admitted two are refused: every one, only the literal kind "unknown-kind", or none. */
+  readonly known: "every" | "literal" | "none";
 }
-const ADMIT: AdmitRule = { name: true, independent: "refuse", known: true };
+const ADMIT: AdmitRule = { name: true, formatCharacters: true, independent: "refuse", known: "every" };
 /** The host's admission: a named selector of an admitted kind is admitted; an unnamed one, an unknown kind, and an
- * independent per-pair kind for a multi-task assignment are typed refusals. */
+ * independent per-pair kind (whatever the selector's name) for a multi-task assignment are typed refusals. */
 const admitWith =
   (rule: AdmitRule) =>
   (descriptor: Descriptor, support: Support): Outcome => {
-    if (rule.name && descriptor.name.trim() === "") return { ok: false, code: "unnamed-selector", selector: descriptor.name };
+    if (rule.name && blankName(descriptor.name, rule.formatCharacters)) return { ok: false, code: "unnamed-selector", selector: descriptor.name };
     if (INDEPENDENT_KINDS.includes(descriptor.kind)) {
       if (support.tasks.length <= 1 || rule.independent === "admit") return { ok: true };
       return { ok: false, code: rule.independent === "untyped" ? "refused" : "not-capacity-feasible", selector: descriptor.name };
     }
-    if (rule.known && !ADMITTED_KINDS.includes(descriptor.kind)) return { ok: false, code: "unknown-selector", selector: descriptor.name };
+    const unknown = rule.known === "every" ? !ADMITTED_KINDS.includes(descriptor.kind) : rule.known === "literal" && descriptor.kind === "unknown-kind";
+    if (unknown) return { ok: false, code: "unknown-selector", selector: descriptor.name };
     return { ok: true };
   };
-interface ValidateRule {
+interface ValidateRule extends CapacityRule {
   readonly name: boolean;
+  /** A selector name of format characters only is blank. */
+  readonly formatCharacters: boolean;
   readonly probability: boolean;
   readonly atMostOne: boolean;
   readonly typed: boolean;
@@ -603,19 +674,19 @@ interface ValidateRule {
   /** An empty assignment (nothing was selectable) is a well-formed decision. */
   readonly empty: boolean;
 }
-const VALIDATE: ValidateRule = { name: true, probability: true, atMostOne: true, typed: true, capacity: true, empty: true };
+const VALIDATE: ValidateRule = { name: true, formatCharacters: true, probability: true, atMostOne: true, typed: true, capacity: true, taskOnce: true, supportNames: true, empty: true };
 /** The host's validation: a decision lacking selector name or probability is the typed validation refusal naming
  * what it lacks; a capacity-infeasible assignment is the typed not-capacity-feasible refusal. */
 const validateWith =
   (rule: ValidateRule) =>
   (decision: Unvalidated, support: Support): Outcome => {
     const missing: string[] = [];
-    if (rule.name && (typeof decision.selector !== "string" || decision.selector.trim() === "")) missing.push("selector");
+    if (rule.name && (typeof decision.selector !== "string" || blankName(decision.selector, rule.formatCharacters))) missing.push("selector");
     const value = decision.logProbability;
     if (rule.probability && (typeof value !== "number" || !Number.isFinite(value) || (rule.atMostOne && value > 0))) missing.push("probability");
     if (missing.length > 0) return rule.typed ? { ok: false, code: "decision-validation", missing } : { ok: false };
     if (!rule.empty && decision.assignment.length === 0) return { ok: false, code: "not-capacity-feasible", selector: decision.selector };
-    if (rule.capacity && !withinCapacity(support, decision.assignment)) return { ok: false, code: "not-capacity-feasible", selector: decision.selector };
+    if (rule.capacity && !withinCapacity(support, decision.assignment, rule)) return { ok: false, code: "not-capacity-feasible", selector: decision.selector };
     return { ok: true };
   };
 /** The receipt: the decision's selector name and probability, its basis revision and its assignment. */
@@ -684,11 +755,42 @@ function perPairLogitSelector(name: string, kind: string): Selector {
 const PER_PAIR_ARGMAX = perPairArgmaxSelector("per-pair-argmax", "per-pair-argmax");
 const PER_PAIR_LOGIT = perPairLogitSelector("per-pair-logit", "per-pair-logit");
 const INDEPENDENT: readonly Selector[] = [PER_PAIR_ARGMAX, PER_PAIR_LOGIT];
-/** The admission controls: two unnamed selectors of admitted kinds and a named selector of an unknown kind. */
-const UNNAMED: readonly Descriptor[] = [
-  { name: "", kind: "deterministic-resolver" },
-  { name: "   ", kind: "joint-sampler" },
-  { name: "mystery-selector", kind: "unknown-kind" },
+/** The independent kinds again under names that are not their kinds: an admission keyed on the selector's name, not its
+ * declared kind, refuses the first two and admits these. */
+const RENAMED: readonly Selector[] = [perPairArgmaxSelector("fast-argmax", "per-pair-argmax"), perPairLogitSelector("fast-logit", "per-pair-logit")];
+/** The admission controls, each with the typed refusal it must meet (data, so the check's expectation never shares the
+ * reference's blank reading): four unnamed selectors of admitted kinds (empty, three spaces, one format character, two
+ * format characters around a space) and two named selectors of two unknown kinds. */
+const UNNAMED: readonly (Descriptor & { readonly code: string })[] = [
+  { name: "", kind: "deterministic-resolver", code: "unnamed-selector" },
+  { name: "   ", kind: "joint-sampler", code: "unnamed-selector" },
+  { name: FORMAT_CHARACTER, kind: "deterministic-resolver", code: "unnamed-selector" },
+  { name: `${FORMAT_CHARACTER} ${FORMAT_CHARACTER}`, kind: "joint-sampler", code: "unnamed-selector" },
+  { name: "mystery-selector", kind: "unknown-kind", code: "unknown-selector" },
+  { name: "greedy", kind: "random-kind", code: "unknown-selector" },
+];
+/** The infeasible decisions' fixture: two agents of capacity 1, two tasks of load 1 and one of load 0 (a load-0 task
+ * overloads no capacity, so on it only the task-once or the support-name clause refuses). No pair is scored: the
+ * validation reads no logit. */
+const SPARE: Fixture = {
+  id: "spare",
+  capacities: [
+    ["a-one", 1],
+    ["a-two", 1],
+  ],
+  loads: [
+    ["t-one", 1],
+    ["t-two", 1],
+    ["t-zero", 0],
+  ],
+  weights: [],
+};
+/** Capacity-infeasible decisions on SPARE, each infeasible on exactly one clause of a capacity reading. */
+const INFEASIBLE: readonly { readonly id: string; readonly assignment: readonly string[] }[] = [
+  { id: "task-twice", assignment: ["a-one/t-zero", "a-two/t-zero"] },
+  { id: "agent-over-capacity", assignment: ["a-one/t-one", "a-one/t-two"] },
+  { id: "no-support-agent", assignment: ["a-ghost/t-zero"] },
+  { id: "no-support-task", assignment: ["a-one/t-ghost"] },
 ];
 
 // ---- the harness ----
@@ -819,10 +921,10 @@ function namedFindings(host: Host): string[] {
       const admission = host.admit(selector, support);
       if (!isDeepStrictEqual(admission, { ok: true })) findings.push(`${entry.id}: ${selector.name || "(blank)"} is not admitted: ${JSON.stringify(admission)}`);
     }
-    for (const descriptor of UNNAMED) {
-      const expected = descriptor.name.trim() === "" ? { ok: false, code: "unnamed-selector", selector: descriptor.name } : { ok: false, code: "unknown-selector", selector: descriptor.name };
+    for (const control of UNNAMED) {
+      const descriptor: Descriptor = { name: control.name, kind: control.kind };
       const admission = host.admit(descriptor, support);
-      if (!isDeepStrictEqual(admission, expected)) findings.push(`${entry.id}: ${JSON.stringify(descriptor)} is admitted as ${JSON.stringify(admission)}`);
+      if (!isDeepStrictEqual(admission, { ok: false, code: control.code, selector: control.name })) findings.push(`${entry.id}: ${JSON.stringify(descriptor)} is admitted as ${JSON.stringify(admission)}`);
     }
     const { decisions, fault } = decisionsOf(host, support);
     if (fault !== null) findings.push(`${entry.id}: ${fault}`);
@@ -850,14 +952,23 @@ function feasibleFindings(host: Host): string[] {
   return findings;
 }
 /** K-DETERMINISTIC: the resolver run twice on identical input (two copies, two different choosers) yields an
- * identical assignment set, and each run records the deterministic proposal: no draw and log probability 0. */
+ * identical assignment set, calls neither chooser, and each run records the deterministic proposal: no draw step and
+ * log probability 0. */
 function deterministicFindings(host: Host): string[] {
   const findings: string[] = [];
   for (const entry of CASES) {
     const support = supportOf(entry);
-    const first = host.resolver.select(copyOf(support), firstChooser);
-    const second = host.resolver.select(copyOf(support), lastChooser);
+    let draws = 0;
+    const counted =
+      (chooser: Chooser): Chooser =>
+      candidates => {
+        draws += 1;
+        return chooser(candidates);
+      };
+    const first = host.resolver.select(copyOf(support), counted(firstChooser));
+    const second = host.resolver.select(copyOf(support), counted(lastChooser));
     if (!sameSet(first.assignment, second.assignment)) findings.push(`${entry.id}: the two runs assign ${setOf(first.assignment).join(",")} and ${setOf(second.assignment).join(",")}`);
+    if (draws !== 0) findings.push(`${entry.id}: the resolver called its chooser ${draws} times`);
     for (const decision of [first, second]) {
       if (decision.logProbability !== 0) findings.push(`${entry.id}: a deterministic proposal records log probability ${decision.logProbability}, not 0`);
       if (decision.steps.length !== 0) findings.push(`${entry.id}: a deterministic proposal records ${decision.steps.length} draws`);
@@ -933,6 +1044,7 @@ const VALIDATION_CASES: readonly ValidationCase[] = [
   { id: "selector-empty", missing: ["selector"], alter: decision => ({ ...decision, selector: "" }) },
   { id: "selector-blank", missing: ["selector"], alter: decision => ({ ...decision, selector: "   " }) },
   { id: "selector-number", missing: ["selector"], alter: decision => ({ ...decision, selector: 7 }) },
+  { id: "selector-format-only", missing: ["selector"], alter: decision => ({ ...decision, selector: FORMAT_CHARACTER }) },
   { id: "probability-absent", missing: ["probability"], alter: decision => dropField(decision, "logProbability") },
   { id: "probability-nan", missing: ["probability"], alter: decision => ({ ...decision, logProbability: Number.NaN }) },
   { id: "probability-infinite", missing: ["probability"], alter: decision => ({ ...decision, logProbability: Number.NEGATIVE_INFINITY }) },
@@ -978,15 +1090,15 @@ function validateFindings(host: Host): string[] {
   }
   return findings;
 }
-/** K-INDEPENDENT: the host refuses both independent per-pair kinds for every multi-task case as the typed
- * not-capacity-feasible refusal, and refuses each case's overloaded per-pair argmax set, whatever selector name it
- * carries, as the same refusal. */
+/** K-INDEPENDENT: the host refuses both independent per-pair kinds, under their kind names and under two other names,
+ * for every multi-task case as the typed not-capacity-feasible refusal, and refuses each case's overloaded per-pair
+ * argmax set and each infeasible decision on SPARE, carried under the resolver's name, as the same refusal. */
 function independentFindings(host: Host): string[] {
   const findings: string[] = [];
   for (const entry of CASES) {
     const support = supportOf(entry);
     if (support.tasks.length > 1) {
-      for (const selector of INDEPENDENT) {
+      for (const selector of [...INDEPENDENT, ...RENAMED]) {
         const admission = host.admit(selector, support);
         if (!isDeepStrictEqual(admission, { ok: false, code: "not-capacity-feasible", selector: selector.name })) findings.push(`${entry.id}: ${selector.name} is admitted as ${JSON.stringify(admission)}`);
       }
@@ -996,6 +1108,12 @@ function independentFindings(host: Host): string[] {
       const outcome = host.validate(decision, support);
       if (!isDeepStrictEqual(outcome, { ok: false, code: "not-capacity-feasible", selector: RESOLVER_NAME })) findings.push(`${entry.id}: the argmax set validates as ${JSON.stringify(outcome)}`);
     }
+  }
+  const spare = supportOf(SPARE);
+  for (const shape of INFEASIBLE) {
+    const decision: Decision = { selector: RESOLVER_NAME, basisRevision: spare.basisRevision, supportCount: spare.pairs.length, assignment: shape.assignment.map(pairOf), steps: [], logProbability: 0 };
+    const outcome = host.validate(decision, spare);
+    if (!isDeepStrictEqual(outcome, { ok: false, code: "not-capacity-feasible", selector: RESOLVER_NAME })) findings.push(`spare ${shape.id}: validates as ${JSON.stringify(outcome)}`);
   }
   return findings;
 }
@@ -1075,6 +1193,20 @@ const chooserConsulted = resolverWith((support, chooser) => {
   const first = order[chooser(order.map(pair => ({ pair, probability: 1 / order.length })))];
   return matchFrom(support, first === undefined ? order : [first, ...order.filter(pair => pair !== first)]);
 });
+/** A resolver that asks the chooser which ranked pair to take first, over the ranked pairs with the top pair repeated
+ * last, so the first and the last candidate agree: a first-candidate and a last-candidate chooser read one set. */
+const palindromeConsulted = resolverWith((support, chooser) => {
+  const order = ranked(support);
+  if (order.length < 2) return matchFrom(support, order);
+  const options = [...order, ...order.slice(0, 1)];
+  const first = options[chooser(options.map(pair => ({ pair, probability: 1 / options.length })))];
+  return matchFrom(support, first === undefined ? order : [first, ...order.filter(pair => pair !== first)]);
+});
+/** A resolver that draws through its chooser and ignores the draw (it records no step). */
+const ignoredDraw = resolverWith((support, chooser) => {
+  if (support.pairs.length > 0) chooser(support.pairs.map(pair => ({ pair, probability: 1 / support.pairs.length })));
+  return matchFrom(support, ranked(support));
+});
 /** A resolver with hidden state: every second call rotates its ranked order by one. */
 function callCounter(): Selector {
   let calls = 0;
@@ -1141,7 +1273,7 @@ const MUTANTS: readonly Mutant[] = [
   { id: "M23", name: "independent-untyped", refusedBy: ["K-INDEPENDENT"], host: hostWith({ admit: admitWith({ ...ADMIT, independent: "untyped" }) }) },
   { id: "M24", name: "capacity-unvalidated", refusedBy: ["K-INDEPENDENT"], host: hostWith({ validate: validateWith({ ...VALIDATE, capacity: false }) }) },
   { id: "M25", name: "unnamed-admitted", refusedBy: ["K-NAMED"], host: hostWith({ admit: admitWith({ ...ADMIT, name: false }) }) },
-  { id: "M26", name: "unknown-kind-admitted", refusedBy: ["K-NAMED"], host: hostWith({ admit: admitWith({ ...ADMIT, known: false }) }) },
+  { id: "M26", name: "unknown-kind-admitted", refusedBy: ["K-NAMED"], host: hostWith({ admit: admitWith({ ...ADMIT, known: "none" }) }) },
   { id: "M27", name: "decision-misnamed", refusedBy: ["K-NAMED"], host: hostWith({ resolver: reshaped(REFERENCE_RESOLVER, decision => ({ ...decision, selector: "selector" })) }) },
   { id: "M28", name: "receipt-without-selector", refusedBy: ["K-RECEIPT"], host: hostWith({ receipt: receiptWith(receipt => ({ ...receipt, selector: undefined })) }) },
   { id: "M29", name: "receipt-probability-one", refusedBy: ["K-RECEIPT"], host: hostWith({ receipt: receiptWith(receipt => ({ ...receipt, logProbability: 0 })) }) },
@@ -1175,6 +1307,19 @@ const MUTANTS: readonly Mutant[] = [
       }),
     }),
   },
+  {
+    id: "M39",
+    name: "independent-refused-by-name",
+    refusedBy: ["K-INDEPENDENT"],
+    host: hostWith({ admit: (descriptor, support) => (INDEPENDENT_KINDS.includes(descriptor.kind) && !INDEPENDENT_KINDS.includes(descriptor.name) ? { ok: true } : REFERENCE.admit(descriptor, support)) }),
+  },
+  { id: "M40", name: "palindrome-chooser-resolver", refusedBy: ["K-DETERMINISTIC"], host: hostWith({ resolver: palindromeConsulted }) },
+  { id: "M41", name: "ignored-draw-resolver", refusedBy: ["K-DETERMINISTIC"], host: hostWith({ resolver: ignoredDraw }) },
+  { id: "M42", name: "task-twice-validated", refusedBy: ["K-INDEPENDENT"], host: hostWith({ validate: validateWith({ ...VALIDATE, taskOnce: false }) }) },
+  { id: "M43", name: "support-names-unvalidated", refusedBy: ["K-INDEPENDENT"], host: hostWith({ validate: validateWith({ ...VALIDATE, supportNames: false }) }) },
+  { id: "M44", name: "format-name-admitted", refusedBy: ["K-NAMED"], host: hostWith({ admit: admitWith({ ...ADMIT, formatCharacters: false }) }) },
+  { id: "M45", name: "format-selector-validated", refusedBy: ["K-VALIDATE"], host: hostWith({ validate: validateWith({ ...VALIDATE, formatCharacters: false }) }) },
+  { id: "M46", name: "single-unknown-kind", refusedBy: ["K-NAMED"], host: hostWith({ admit: admitWith({ ...ADMIT, known: "literal" }) }) },
 ];
 const mutantOf = (id: string): Mutant => {
   const found = MUTANTS.find(mutant => mutant.id === id);
@@ -1228,9 +1373,20 @@ const SHARED_WORDS: readonly string[] = ["selector", "matching", "resolver", "as
 /** A spelling's parts: split at whitespace, dots, underscores and hyphens, then at camel humps. */
 const partsOf = (spelling: string): string[] => spelling.split(/[\s._-]+/).flatMap(word => word.match(/[A-Z]+(?![a-z])|[A-Z]?[a-z]+|\d+/g) ?? []);
 const escapeRegex = (text: string): string => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-/** A word's reading: its parts in order, any case, with any run of whitespace, dot, underscore, hyphen or format
- * character between them. */
-const readerOf = (word: Word): RegExp => new RegExp(partsOf(word.spelling).map(escapeRegex).join("[\\s._\\-\\p{Cf}]*"), "iu");
+/** A letter's reading: a z also read as s (a British spelling: optimiser), a part's final y also read as ies (an
+ * inflected plural: probabilities). */
+const letterReader = (letter: string, last: boolean): string => {
+  if (/z/i.test(letter)) return "[sz]";
+  if (last && /y/i.test(letter)) return "(?:y|ies)";
+  return escapeRegex(letter);
+};
+/** A part's reading: its letters in order, with any run of format characters (Cf) between two of them (an invisible
+ * inside a word reads as the word: auto, a soft hyphen, regressive is autoregressive). */
+const partReader = (part: string): string => [...part].map((letter, index, letters) => letterReader(letter, index === letters.length - 1)).join("\\p{Cf}*");
+/** A word's reading: its parts in order, any case, with any run of characters that are neither letters nor digits
+ * between them (whitespace and a comment line wrap, dots, underscores, hyphens and every other dash, slashes,
+ * parentheses, quotes, symbols, format characters). */
+const readerOf = (word: Word): RegExp => new RegExp(partsOf(word.spelling).map(partReader).join("[^\\p{L}\\p{N}]*"), "iu");
 const READERS = VOCABULARY.map(word => ({ word, reader: readerOf(word) }));
 /** The vocabulary words a text names, in vocabulary order. */
 const namedWords = (text: string): string[] => READERS.filter(({ reader }) => reader.test(text)).map(({ word }) => word.spelling);
@@ -1287,30 +1443,45 @@ function liveSrc(): { readonly entries: readonly Entry[]; readonly unread: reado
   if (liveCache === undefined) liveCache = entriesOf(ROOT, gitList(ROOT, "src"));
   return liveCache;
 }
-const FORMAT_CHARACTER = String.fromCodePoint(0x200b);
-const CYRILLIC_A = String.fromCodePoint(0x430);
-/** The reading's controls: each label with its text, read for the words it names. */
-const VOCABULARY_CONTROLS: readonly (readonly [string, string])[] = [
-  ["argmax", "the per-pair argmax"],
-  ["argmax camel", "ArgMax"],
-  ["logits", "pair logits"],
-  ["logit alone", "one logit"],
-  ["logit upper", "LOGIT"],
-  ["optimizer", "a deterministic optimizer"],
-  ["optimizer camel", "scoreOptimizer"],
-  ["log probability spaced", "the behavior log probability"],
-  ["log probability camel", "logProbability"],
-  ["log probability snake", "log_probability"],
-  ["log probability upper kebab", "LOG-PROBABILITY"],
-  ["log probability dotted", "log.probability"],
-  ["log probability joined", "logprobability"],
-  ["log probability format characters", `log${FORMAT_CHARACTER}probability`],
-  ["sampler", "a joint sampler"],
-  ["sampler inside a longer name", "resampler"],
-  ["autoregressive", "autoregressive draws"],
-  ["autoregressive camel", "AutoRegressive"],
-  ["every word", "argmax logits optimizer log probability sampler autoregressive"],
-  ["shared words", "selector matching resolver assignment"],
+const DASH_HYPHEN = String.fromCodePoint(0x2010);
+const MIDDLE_DOT = String.fromCodePoint(0xb7);
+const SOFT_HYPHEN = String.fromCodePoint(0xad);
+/** The reading's controls: each label with its text and the words the reading must read in it, in vocabulary order. */
+const VOCABULARY_CONTROLS: readonly (readonly [string, string, readonly string[]])[] = [
+  ["argmax", "the per-pair argmax", ["argmax"]],
+  ["argmax camel", "ArgMax", ["argmax"]],
+  ["logits", "pair logits", ["logits", "logit"]],
+  ["logit alone", "one logit", ["logit"]],
+  ["logit upper", "LOGIT", ["logit"]],
+  ["optimizer", "a deterministic optimizer", ["optimizer"]],
+  ["optimizer camel", "scoreOptimizer", ["optimizer"]],
+  ["optimizer british", "a deterministic optimiser", ["optimizer"]],
+  ["optimizer british plural", "OPTIMISERS", ["optimizer"]],
+  ["log probability spaced", "the behavior log probability", ["log probability"]],
+  ["log probability camel", "logProbability", ["log probability"]],
+  ["log probability snake", "log_probability", ["log probability"]],
+  ["log probability upper kebab", "LOG-PROBABILITY", ["log probability"]],
+  ["log probability dotted", "log.probability", ["log probability"]],
+  ["log probability joined", "logprobability", ["log probability"]],
+  ["log probability format characters", `log${FORMAT_CHARACTER}probability`, ["log probability"]],
+  ["log probability plural camel", "logProbabilities", ["log probability"]],
+  ["log probability plural spaced", "the behavior log probabilities", ["log probability"]],
+  ["log probability plural kebab", "log-probabilities", ["log probability"]],
+  ["log probability comment wrap", "// log\n// probability", ["log probability"]],
+  ["log probability slash", "log/probability", ["log probability"]],
+  ["log probability parenthesised", "log (probability)", ["log probability"]],
+  ["log probability dash punctuation", `log${DASH_HYPHEN}probability`, ["log probability"]],
+  ["log probability middle dot", `log${MIDDLE_DOT}probability`, ["log probability"]],
+  ["log probability symbol", "log+probability", ["log probability"]],
+  ["log probability quoted list", '["log", "probability"]', ["log probability"]],
+  ["sampler", "a joint sampler", ["sampler"]],
+  ["sampler inside a longer name", "resampler", ["sampler"]],
+  ["autoregressive", "autoregressive draws", ["autoregressive"]],
+  ["autoregressive camel", "AutoRegressive", ["autoregressive"]],
+  ["autoregressive soft hyphen inside", `auto${SOFT_HYPHEN}regressive`, ["autoregressive"]],
+  ["argmax format character inside", `arg${FORMAT_CHARACTER}max`, ["argmax"]],
+  ["every word", "argmax logits optimizer log probability sampler autoregressive", ["argmax", "logits", "optimizer", "log probability", "sampler", "autoregressive", "logit"]],
+  ["shared words", "selector matching resolver assignment", []],
 ];
 
 // ---- the docs, the export and the roster ----
@@ -1326,12 +1497,49 @@ interface DocAnchor {
   readonly pin: boolean;
   readonly head: boolean;
 }
-/** An anchor read over a pinned page and a live page: the pinned page's line holds the text, and the same whole line
- * stands in the live page. */
+interface Paragraph {
+  /** What a reader sees (inline markup and HTML removed, whitespace collapsed). */
+  readonly text: string;
+  /** The paragraph's source, whitespace collapsed. */
+  readonly markdown: string;
+}
+/** The rendered paragraphs of a page's bound docs section, through the landed docs binding (docsSection of
+ * test/helpers/census.ts: DOCS_HEADING exactly once in the rendered view, under DOCS_TITLE, bounded at the next level-1 or
+ * level-2 heading); a refused binding, or a section carrying HTML (a comment or a tag), reads none. A code block or an
+ * HTML block is never a paragraph. */
+function sectionParagraphs(page: string): readonly Paragraph[] {
+  const section = docsSection(page, DOCS_HEADING, 2, [DOCS_TITLE]);
+  if (!section.ok || section.hasHtml) return [];
+  return section.blocks.flatMap(block => (block.kind === "paragraph" ? [{ text: block.text, markdown: block.markdown }] : []));
+}
+/** An anchor read over a pinned page and a live page, both rendered: the pinned page's line holds the text and is the
+ * source of a paragraph of the bound section whose rendered text holds the text too; the live page's bound section
+ * renders a paragraph whose rendered text equals that paragraph's (equality within the section, never an includes over
+ * the page). */
 function anchorIn(line: number, text: string, pinned: string, live: string): DocAnchor {
   const at = pinned.split("\n")[line - 1] ?? "";
-  return { line, pin: text !== "" && at.includes(text), head: at !== "" && live.split("\n").includes(at) };
+  const source = at.replace(/\s+/g, " ").trim();
+  const rendered = source === "" ? "" : (sectionParagraphs(pinned).find(paragraph => paragraph.markdown === source)?.text ?? "");
+  return { line, pin: text !== "" && at.includes(text) && rendered.includes(text), head: rendered !== "" && sectionParagraphs(live).some(paragraph => paragraph.text === rendered) };
 }
+const FENCE = "```";
+/** In-memory plants of the live page, each edited around the cited line and read with the anchor: whether the bound
+ * section still renders the cited paragraph. */
+const DOCS_PLANTS: readonly { readonly id: string; readonly head: boolean; readonly edit: (live: string, line: string) => string }[] = [
+  { id: "as-is", head: true, edit: live => live },
+  { id: "line-deleted", head: false, edit: (live, line) => live.split("\n").filter(entry => entry !== line).join("\n") },
+  { id: "line-edited", head: false, edit: (live, line) => live.replace(line, `${line} (edited)`) },
+  { id: "comment-wrapped", head: false, edit: (live, line) => live.replace(line, `<!--\n${line}\n-->`) },
+  { id: "moved-to-a-trailing-section", head: false, edit: (live, line) => `${live.replace(`${line}\n`, "")}\n## Withdrawn architecture claims (not enforced)\n\n${line}\n` },
+  { id: "fenced", head: false, edit: (live, line) => live.replace(line, `${FENCE}\n${line}\n${FENCE}`) },
+  { id: "indented-into-the-diagram", head: false, edit: (live, line) => live.replace(line, `    ${line}`) },
+  { id: "inline-comment", head: false, edit: (live, line) => live.replace(line, `${line} <!-- withdrawn -->`) },
+  { id: "heading-duplicated", head: false, edit: live => `${live}\n## ${DOCS_HEADING}\n\nA second section of the same heading.\n` },
+  { id: "rehomed-under-another-title", head: false, edit: live => live.replace(`## ${DOCS_HEADING}\n`, `# Appendix\n\n## ${DOCS_HEADING}\n`) },
+  { id: "emphasis-respelled", head: true, edit: (live, line) => live.replace(line, line.replace("*calls*", "_calls_")) },
+  { id: "comment-in-another-section", head: true, edit: live => live.replace("## Ownership boundaries\n", "## Ownership boundaries\n\n<!-- a reviewer note -->\n") },
+  { id: "rewrapped", head: true, edit: (live, line) => live.replace(line, line.replace(" but does not invent", "\nbut does not invent")) },
+];
 interface BeadRow {
   readonly title: string;
   readonly notes: string;
@@ -1408,7 +1616,7 @@ const ROWS: readonly Row[] = [
     label: "docs/workbench/03-architecture-and-ownership.md:22@758ec18187a5 keeps Pi from inventing a second scheduler, so the duty binds only if Pi hosts GP-conditioned assignment",
     pins: ["S1", "S2"],
   },
-  { id: "Q", label: "the named residual families, each member a pinned quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6"] },
+  { id: "Q", label: "the named residual families, each member a pinned quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8"] },
 ];
 /** Each pin's quote: a row's quotes tile its label. Q's pins name their residual families. */
 const QUOTES: Readonly<Record<string, string>> = {
@@ -1439,6 +1647,8 @@ const QUOTES: Readonly<Record<string, string>> = {
   Q4: "R-SCORE-BLIND",
   Q5: "R-DECLARED-KIND",
   Q6: "R-SINGLE-TASK",
+  Q7: "R-STATEFUL",
+  Q8: "R-LIVENESS",
 };
 
 interface Residual {
@@ -1454,11 +1664,12 @@ const RESIDUALS: readonly Residual[] = [
     members: [
       { id: "concatenated", text: 'export const name = "arg" + "max";\n' },
       { id: "split-one-part-word", text: "export const arg_max = 1;\n" },
+      { id: "spaced", text: 'export const name = "arg max";\n' },
       { id: "escaped", text: 'export const name = "\\u0061rgmax";\n' },
       { id: "homoglyph", text: `export const name = "${CYRILLIC_A}rgmax";\n` },
       { id: "abbreviated", text: "export const logProb = 0;\n" },
       { id: "hyphenated", text: "// an auto-regressive draw\n" },
-      { id: "joined", text: 'export const name = ["log", "probability"].join(" ");\n' },
+      { id: "joined", text: 'export const name = ["probability", "log"].reverse().join(" ");\n' },
     ],
   },
   {
@@ -1518,12 +1729,46 @@ const DECLARED: readonly { readonly id: string; readonly selector: Selector; rea
   { id: "argmax-declared-resolver", selector: perPairArgmaxSelector(RESOLVER_NAME, "deterministic-resolver"), chooser: firstChooser },
   { id: "logit-declared-sampler", selector: perPairLogitSelector(SAMPLER_NAME, "joint-sampler"), chooser: scripted([0, 1]) },
 ];
+/** Q7's member: a resolver whose first call matches in rank order and every later call in reverse rank order (its hidden
+ * state changes once, after its first call). */
+function lateSwitch(): Selector {
+  let calls = 0;
+  return resolverWith(support => {
+    calls += 1;
+    const order = ranked(support);
+    return matchFrom(support, calls > 1 ? [...order].reverse() : order);
+  });
+}
+/** A sampler that never draws: an empty assignment, no step, log probability 0. */
+const silentSampler: Selector = {
+  name: SAMPLER_NAME,
+  kind: "joint-sampler",
+  select: support => ({ selector: SAMPLER_NAME, basisRevision: support.basisRevision, supportCount: support.pairs.length, assignment: [], steps: [], logProbability: 0 }),
+};
+/** A capacity-aware resolver that gives each agent at most one task. */
+const oneTaskPerAgent = resolverWith(support => {
+  const seen = new Set<string>();
+  return matchFrom(support, ranked(support)).filter(pair => {
+    if (seen.has(pair.agent)) return false;
+    seen.add(pair.agent);
+    return true;
+  });
+});
+/** Q8's members: hosts that select less than the reference, each changing one selector. */
+const LIVENESS: readonly { readonly id: string; readonly role: "resolver" | "sampler"; readonly host: Host }[] = [
+  { id: "empty-resolver", role: "resolver", host: hostWith({ resolver: resolverWith(() => []) }) },
+  { id: "one-task-per-agent-resolver", role: "resolver", host: hostWith({ resolver: oneTaskPerAgent }) },
+  { id: "silent-sampler", role: "sampler", host: hostWith({ sampler: silentSampler }) },
+  { id: "one-draw-sampler", role: "sampler", host: hostWith({ sampler: samplerWith({ eligible: (support, chosen) => (chosen.length > 0 ? [] : eligibleOf(support, chosen)) }) }) },
+];
 /** Every residual family's member ids. */
 const RESIDUAL_MEMBERS: Readonly<Record<string, readonly string[]>> = {
   ...Object.fromEntries(RESIDUALS.map(family => [family.id, family.members.map(member => member.id)])),
   Q4: ["score-blind"],
   Q5: DECLARED.map(member => member.id),
   Q6: INDEPENDENT.map(selector => selector.name),
+  Q7: ["late-switch-resolver"],
+  Q8: LIVENESS.map(member => member.id),
 };
 
 interface Roster {
@@ -1636,7 +1881,7 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       const value = record.logProbability;
       return {
         id: entry.id,
-        selectorUsable: typeof selector === "string" && selector.trim() !== "",
+        selectorUsable: typeof selector === "string" && [...selector].some(character => !/[\s\p{Cf}]/u.test(character)),
         probabilityUsable: typeof value === "number" && Number.isFinite(value) && value <= 0,
         keys: Object.keys(record).filter(name => name === "selector" || name === "logProbability"),
       };
@@ -1655,9 +1900,10 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
   },
   A5a: () => {
     const reading = checkReading("K-INDEPENDENT");
-    const admissions = Object.fromEntries(CASES.map(entry => [entry.id, INDEPENDENT.map(selector => REFERENCE.admit(selector, supportOf(entry)))]));
+    const independent = [...INDEPENDENT, ...RENAMED];
+    const admissions = Object.fromEntries(CASES.map(entry => [entry.id, independent.map(selector => REFERENCE.admit(selector, supportOf(entry)))]));
     for (const entry of CASES) {
-      expect(admissions[entry.id], `${entry.id}: both independent kinds are refused for a multi-task assignment`).toEqual(INDEPENDENT.map(selector => ({ ok: false, code: "not-capacity-feasible", selector: selector.name })));
+      expect(admissions[entry.id], `${entry.id}: both independent kinds, under either name, are refused for a multi-task assignment`).toEqual(independent.map(selector => ({ ok: false, code: "not-capacity-feasible", selector: selector.name })));
     }
     return { ...reading, admissions };
   },
@@ -1681,7 +1927,17 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       const [numerator, denominator] = INDEPENDENT_MASS[entry.id] ?? [-1, 1];
       expect(close(mass[entry.id] ?? -1, numerator / denominator, 1e-11), `${entry.id}: independent per-pair logit selection puts ${numerator}/${denominator} on capacity-infeasible sets`).toBe(true);
     }
-    return { refusals, mass };
+    const spare = supportOf(SPARE);
+    const infeasible = INFEASIBLE.map(shape => {
+      const assignment = shape.assignment.map(pairOf);
+      const decision: Decision = { selector: RESOLVER_NAME, basisRevision: spare.basisRevision, supportCount: spare.pairs.length, assignment, steps: [], logProbability: 0 };
+      return { id: shape.id, findings: capacityFindings(spare, assignment), outcome: REFERENCE.validate(decision, spare) };
+    });
+    for (const shape of infeasible) {
+      expect(shape.findings.length, `${shape.id}: the check's own capacity reading finds it infeasible on one clause`).toBe(1);
+      expect(shape.outcome, `${shape.id}: the reference refuses it as not capacity-feasible`).toEqual({ ok: false, code: "not-capacity-feasible", selector: RESOLVER_NAME });
+    }
+    return { refusals, mass, infeasible };
   },
   A6a: () => {
     const carried = Object.fromEntries(
@@ -1719,7 +1975,7 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
     const reading = checkReading("K-NAMED");
     const support = falsifierSupport();
     const names = { resolver: REFERENCE.resolver.name, sampler: REFERENCE.sampler.name };
-    const controls = UNNAMED.map(descriptor => [descriptor.name, descriptor.kind, REFERENCE.admit(descriptor, support)] as const);
+    const controls = UNNAMED.map(control => [codePoints(control.name), control.kind, REFERENCE.admit({ name: control.name, kind: control.kind }, support)] as const);
     const flow = {
       resolver: hostSelect(REFERENCE, REFERENCE.resolver, support, firstChooser),
       sampler: hostSelect(REFERENCE, REFERENCE.sampler, support, firstChooser),
@@ -1795,6 +2051,7 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
   },
   G2: () => {
     const controls = Object.fromEntries(VOCABULARY_CONTROLS.map(([label, text]) => [label, namedWords(text)]));
+    expect(controls, "each control reads exactly its declared words").toEqual(Object.fromEntries(VOCABULARY_CONTROLS.map(([label, , words]) => [label, [...words]])));
     const scratch = makeScratch("wb-e662-listing-");
     let listing: unknown = null;
     try {
@@ -1822,15 +2079,19 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
     const pinned = pinDoc();
     const live = textOf(DOCS_03);
     const doc = anchorIn(DOCS_LINE, DOCS_TEXT, pinned, live);
-    expect(doc, "docs/workbench/03:22 at the filing pin, the same whole line live").toEqual({ line: DOCS_LINE, pin: true, head: true });
+    expect(doc, "docs/workbench/03:22 at the filing pin is a rendered paragraph of its section, and that section renders it live").toEqual({ line: DOCS_LINE, pin: true, head: true });
     const line = pinned.split("\n")[DOCS_LINE - 1] ?? "";
+    const unedited = DOCS_PLANTS.filter(plant => plant.id !== "as-is" && plant.edit(live, line) === live).map(plant => plant.id);
+    expect(unedited, "every plant but the page as it is edits the live page").toEqual([]);
+    const plants = DOCS_PLANTS.map(plant => [plant.id, anchorIn(DOCS_LINE, DOCS_TEXT, pinned, plant.edit(live, line)).head] as const);
+    expect(plants, "each plant of the live page reads its declared paragraph").toEqual(DOCS_PLANTS.map(plant => [plant.id, plant.head]));
     const anchorControls = {
-      liveWithoutTheLine: anchorIn(DOCS_LINE, DOCS_TEXT, pinned, live.split("\n").filter(entry => entry !== line).join("\n")).head,
-      liveLineEdited: anchorIn(DOCS_LINE, DOCS_TEXT, pinned, live.replace(line, `${line} (edited)`)).head,
       textAtAnotherLine: anchorIn(DOCS_LINE + 1, DOCS_TEXT, pinned, live).pin,
+      textAbsent: anchorIn(DOCS_LINE, "a third Furnace durable scheduler", pinned, live).pin,
+      pinnedLineIndented: anchorIn(DOCS_LINE, DOCS_TEXT, pinned.replace(line, `    ${line}`), live).pin,
     };
-    expect(anchorControls, "the anchor reads the live page and the pinned line, never a constant").toEqual({ liveWithoutTheLine: false, liveLineEdited: false, textAtAnotherLine: false });
-    return { doc, anchorControls };
+    expect(anchorControls, "the anchor reads the pinned line, its text and its rendered paragraph, never a constant").toEqual({ textAtAnotherLine: false, textAbsent: false, pinnedLineIndented: false });
+    return { doc, plants, anchorControls };
   },
   S2: () => {
     const plant: Entry = { path: "src/workbench/gp-selection.ts", text: "export const scorePairs = (logits: readonly number[]) => logits;\n" };
@@ -1879,6 +2140,27 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
     expect(outcomes, "R-SINGLE-TASK: independent selection for a single-task assignment is admitted").toEqual(INDEPENDENT.map(selector => [selector.name, true, true]));
     return { members: RESIDUAL_MEMBERS.Q6, outcomes };
   },
+  Q7: () => {
+    const resolver = lateSwitch();
+    const support = falsifierSupport();
+    const first = setOf(resolver.select(copyOf(support), firstChooser).assignment);
+    const later = setOf(resolver.select(copyOf(support), firstChooser).assignment);
+    expect(isDeepStrictEqual(first, later), "its first call and its later calls assign different sets on identical input").toBe(false);
+    const refused = refusing(judge(hostWith({ resolver })));
+    expect(refused, "R-STATEFUL: a resolver whose state changed before the judge meets every check").toEqual([]);
+    return { members: RESIDUAL_MEMBERS.Q7, first, later, refused };
+  },
+  Q8: () => {
+    const support = falsifierSupport();
+    const largest = (selector: Selector): number => Math.max(...walkOf(selector, support).paths.map(path => path.decision.assignment.length));
+    const reference = { resolver: largest(REFERENCE.resolver), sampler: largest(REFERENCE.sampler) };
+    const members = LIVENESS.map(member => {
+      const selector = member.role === "resolver" ? member.host.resolver : member.host.sampler;
+      return { id: member.id, refused: refusing(judge(member.host)), largest: largest(selector), less: largest(selector) < reference[member.role] };
+    });
+    expect(members.map(member => [member.id, member.refused, member.less]), "R-LIVENESS: each host that selects less than the reference meets every check").toEqual(LIVENESS.map(member => [member.id, [], true]));
+    return { members: RESIDUAL_MEMBERS.Q8, reference, readings: members };
+  },
 };
 /** A text residual's quiet row: every member reads no word, alone and planted as a src module. */
 function quietText(id: string): unknown {
@@ -1910,7 +2192,7 @@ describe(SUITE, () => {
   }
 
   it("rule 16: the rows, the tables and the vocabulary are frozen at their measured shape", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A1:2", "A2:2", "A3:2", "A4:2", "A5:2", "A6:2", "N:1", "D:3", "C:1", "G:2", "S:2", "Q:6"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A1:2", "A2:2", "A3:2", "A4:2", "A5:2", "A6:2", "N:1", "D:3", "C:1", "G:2", "S:2", "Q:8"]);
     expect(Object.keys(QUOTES), "one quote per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
     expect(Object.keys(IMPL), "one case per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
     expect(CASES.map(entry => `${entry.id}:${entry.capacities.map(([id, capacity]) => `${id}=${capacity}`).join(",")}:${entry.loads.map(([id, load]) => `${id}=${load}`).join(",")}`)).toEqual([
@@ -1941,6 +2223,7 @@ describe(SUITE, () => {
       "selector-empty:selector",
       "selector-blank:selector",
       "selector-number:selector",
+      "selector-format-only:selector",
       "probability-absent:probability",
       "probability-nan:probability",
       "probability-infinite:probability",
@@ -1948,13 +2231,46 @@ describe(SUITE, () => {
       "probability-text:probability",
       "both-absent:selector+probability",
     ]);
-    expect(UNNAMED.map(descriptor => `${JSON.stringify(descriptor.name)}:${descriptor.kind}`)).toEqual(['"":deterministic-resolver', '"   ":joint-sampler', '"mystery-selector":unknown-kind']);
-    expect([REFERENCE.resolver, REFERENCE.sampler, ...INDEPENDENT].map(selector => `${selector.name}:${selector.kind}`)).toEqual([
+    const shown = (name: string): string => ([...name].every(character => character >= " " && character <= "~") ? JSON.stringify(name) : codePoints(name));
+    expect(UNNAMED.map(control => `${shown(control.name)}:${control.kind}:${control.code}`)).toEqual([
+      '"":deterministic-resolver:unnamed-selector',
+      '"   ":joint-sampler:unnamed-selector',
+      "U+200B:deterministic-resolver:unnamed-selector",
+      "U+200B U+0020 U+200B:joint-sampler:unnamed-selector",
+      '"mystery-selector":unknown-kind:unknown-selector',
+      '"greedy":random-kind:unknown-selector',
+    ]);
+    expect([REFERENCE.resolver, REFERENCE.sampler, ...INDEPENDENT, ...RENAMED].map(selector => `${selector.name}:${selector.kind}`)).toEqual([
       "capacity-matching-resolver:deterministic-resolver",
       "joint-autoregressive-sampler:joint-sampler",
       "per-pair-argmax:per-pair-argmax",
       "per-pair-logit:per-pair-logit",
+      "fast-argmax:per-pair-argmax",
+      "fast-logit:per-pair-logit",
     ]);
+    expect(`${SPARE.id}:${SPARE.capacities.map(([id, capacity]) => `${id}=${capacity}`).join(",")}:${SPARE.loads.map(([id, load]) => `${id}=${load}`).join(",")}:${SPARE.weights.length}`).toBe("spare:a-one=1,a-two=1:t-one=1,t-two=1,t-zero=0:0");
+    expect(INFEASIBLE.map(shape => `${shape.id}:${shape.assignment.join("+")}`)).toEqual([
+      "task-twice:a-one/t-zero+a-two/t-zero",
+      "agent-over-capacity:a-one/t-one+a-one/t-two",
+      "no-support-agent:a-ghost/t-zero",
+      "no-support-task:a-one/t-ghost",
+    ]);
+    expect(DOCS_PLANTS.map(plant => `${plant.id}:${plant.head}`)).toEqual([
+      "as-is:true",
+      "line-deleted:false",
+      "line-edited:false",
+      "comment-wrapped:false",
+      "moved-to-a-trailing-section:false",
+      "fenced:false",
+      "indented-into-the-diagram:false",
+      "inline-comment:false",
+      "heading-duplicated:false",
+      "rehomed-under-another-title:false",
+      "emphasis-respelled:true",
+      "comment-in-another-section:true",
+      "rewrapped:true",
+    ]);
+    expect([DOCS_TITLE.length, codePoints(DOCS_TITLE.slice(3, 4)), DOCS_HEADING]).toEqual([59, "U+2014", "Reference architecture"]);
     expect([...ADMITTED_KINDS, ...INDEPENDENT_KINDS]).toEqual(["deterministic-resolver", "joint-sampler", "per-pair-argmax", "per-pair-logit"]);
     expect(CHECKS).toEqual(["K-NAMED", "K-FEASIBLE", "K-DETERMINISTIC", "K-JOINT", "K-COUNT", "K-VALIDATE", "K-INDEPENDENT", "K-RECEIPT", "K-SUPPORT"]);
     expect(MUTANTS.map(mutantLine)).toEqual([
@@ -1996,8 +2312,53 @@ describe(SUITE, () => {
       "M36:one-name-for-both:K-NAMED",
       "M37:unbounded-sampler:K-NAMED+K-FEASIBLE+K-JOINT+K-COUNT+K-SUPPORT",
       "M38:ghost-agent-resolver:K-FEASIBLE+K-SUPPORT",
+      "M39:independent-refused-by-name:K-INDEPENDENT",
+      "M40:palindrome-chooser-resolver:K-DETERMINISTIC",
+      "M41:ignored-draw-resolver:K-DETERMINISTIC",
+      "M42:task-twice-validated:K-INDEPENDENT",
+      "M43:support-names-unvalidated:K-INDEPENDENT",
+      "M44:format-name-admitted:K-NAMED",
+      "M45:format-selector-validated:K-VALIDATE",
+      "M46:single-unknown-kind:K-NAMED",
     ]);
-    expect(Object.entries(RESIDUAL_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:7", "Q2:4", "Q3:2", "Q4:1", "Q5:2", "Q6:2"]);
+    expect(Object.entries(RESIDUAL_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:8", "Q2:4", "Q3:2", "Q4:1", "Q5:2", "Q6:2", "Q7:1", "Q8:4"]);
+    expect(LIVENESS.map(member => `${member.id}:${member.role}`)).toEqual(["empty-resolver:resolver", "one-task-per-agent-resolver:resolver", "silent-sampler:sampler", "one-draw-sampler:sampler"]);
+    expect(VOCABULARY_CONTROLS.map(([label, , words]) => `${label}:${words.length}`)).toEqual([
+      "argmax:1",
+      "argmax camel:1",
+      "logits:2",
+      "logit alone:1",
+      "logit upper:1",
+      "optimizer:1",
+      "optimizer camel:1",
+      "optimizer british:1",
+      "optimizer british plural:1",
+      "log probability spaced:1",
+      "log probability camel:1",
+      "log probability snake:1",
+      "log probability upper kebab:1",
+      "log probability dotted:1",
+      "log probability joined:1",
+      "log probability format characters:1",
+      "log probability plural camel:1",
+      "log probability plural spaced:1",
+      "log probability plural kebab:1",
+      "log probability comment wrap:1",
+      "log probability slash:1",
+      "log probability parenthesised:1",
+      "log probability dash punctuation:1",
+      "log probability middle dot:1",
+      "log probability symbol:1",
+      "log probability quoted list:1",
+      "sampler:1",
+      "sampler inside a longer name:1",
+      "autoregressive:1",
+      "autoregressive camel:1",
+      "autoregressive soft hyphen inside:1",
+      "argmax format character inside:1",
+      "every word:7",
+      "shared words:0",
+    ]);
     expect(RESIDUALS.map(family => `${family.id}:${family.name}`)).toEqual(["Q1:R-COMPOSED", "Q2:R-SHARED-WORD", "Q3:R-UNNAMED-SELECTOR"]);
     expect([DISJOINT, ONE_TASK].map(fixture => `${fixture.id}:${fixture.capacities.length}:${fixture.loads.length}:${fixture.weights.map(([pair, weight]) => `${pair}=${weight}`).join(",")}`)).toEqual([
       "disjoint:2:2:a-left/t-left=4,a-left/t-right=1,a-right/t-left=1,a-right/t-right=4",
@@ -2020,7 +2381,7 @@ describe(SUITE, () => {
     }
   });
 
-  it("the outside anchors: the bead's own row binds the rows, the pin quotes, the docs citation, the vocabulary and the producer block", { timeout: LIVE_BUDGET_MS }, () => {
+  it("the outside anchors: the bead's own row binds the labels of rows A1-S and what their pin quotes tile (never row Q or a row's pin partition), the docs citation, the vocabulary and the shared words (Q2's members among them) and the producer block", { timeout: LIVE_BUDGET_MS }, () => {
     const row = beadRow(BEAD);
     expect(row, `${BEAD}'s row was read from the tracker export`).toBeDefined();
     const title = row?.title ?? "";
@@ -2044,6 +2405,7 @@ describe(SUITE, () => {
     expect(title.includes(`joint/${VOCABULARY[5]?.spelling ?? "-"} sampler`), "V6 is the statement's").toBe(true);
     expect(title.includes(`${VOCABULARY[0]?.spelling ?? "-"}/${VOCABULARY[6]?.spelling ?? "-"} selection`), "V7 is the statement's").toBe(true);
     expect([title.includes(`matching ${SHARED_WORDS[2]}`), title.includes(`multi-task ${SHARED_WORDS[3]}`)], "the last two shared words are the statement's").toEqual([true, true]);
+    expect(RESIDUAL_MEMBERS.Q2, "Q2's residual members are the shared words").toEqual(SHARED_WORDS);
     for (const word of VOCABULARY) expect(namedWords(`${title} ${notes}`), `the filing names ${word.spelling}`).toContain(word.spelling);
     const source = /Source: (docs\/programs\/[^:]+)\.md:(\d+) \('(.+?)'\) @([0-9a-f]{12}); README\.md:(\d+) \((.+?)\), :(\d+) \('(.+?)'\) and :(\d+) acceptance term '(.+?)' @([0-9a-f]{12})\./.exec(notes);
     expect(source, "the source citations parse").not.toBeNull();

@@ -98,7 +98,9 @@
         "Q3",
         "Q4",
         "Q5",
-        "Q6"
+        "Q6",
+        "Q7",
+        "Q8"
       ]
     }
   ],
@@ -129,12 +131,15 @@
     "Q3": "R-UNNAMED-SELECTOR",
     "Q4": "R-SCORE-BLIND",
     "Q5": "R-DECLARED-KIND",
-    "Q6": "R-SINGLE-TASK"
+    "Q6": "R-SINGLE-TASK",
+    "Q7": "R-STATEFUL",
+    "Q8": "R-LIVENESS"
   },
   "residuals": {
     "Q1": [
       "concatenated",
       "split-one-part-word",
+      "spaced",
       "escaped",
       "homoglyph",
       "abbreviated",
@@ -161,6 +166,15 @@
     "Q6": [
       "per-pair-argmax",
       "per-pair-logit"
+    ],
+    "Q7": [
+      "late-switch-resolver"
+    ],
+    "Q8": [
+      "empty-resolver",
+      "one-task-per-agent-resolver",
+      "silent-sampler",
+      "one-draw-sampler"
     ]
   },
   "mutants": [
@@ -201,7 +215,15 @@
     "M35:steps-truncated:K-JOINT",
     "M36:one-name-for-both:K-NAMED",
     "M37:unbounded-sampler:K-NAMED+K-FEASIBLE+K-JOINT+K-COUNT+K-SUPPORT",
-    "M38:ghost-agent-resolver:K-FEASIBLE+K-SUPPORT"
+    "M38:ghost-agent-resolver:K-FEASIBLE+K-SUPPORT",
+    "M39:independent-refused-by-name:K-INDEPENDENT",
+    "M40:palindrome-chooser-resolver:K-DETERMINISTIC",
+    "M41:ignored-draw-resolver:K-DETERMINISTIC",
+    "M42:task-twice-validated:K-INDEPENDENT",
+    "M43:support-names-unvalidated:K-INDEPENDENT",
+    "M44:format-name-admitted:K-NAMED",
+    "M45:format-selector-validated:K-VALIDATE",
+    "M46:single-unknown-kind:K-NAMED"
   ],
   "witnesses": {
     "A1a": {
@@ -356,7 +378,7 @@
       "mutants": [
         [
           "M07",
-          2
+          6
         ],
         [
           "M08",
@@ -369,6 +391,14 @@
         [
           "M33",
           8
+        ],
+        [
+          "M40",
+          4
+        ],
+        [
+          "M41",
+          4
         ]
       ],
       "sets": {
@@ -542,6 +572,12 @@
           ]
         ],
         [
+          "selector-format-only",
+          [
+            "selector"
+          ]
+        ],
+        [
           "probability-absent",
           [
             "probability"
@@ -616,6 +652,15 @@
           ]
         },
         {
+          "id": "selector-format-only",
+          "selectorUsable": false,
+          "probabilityUsable": true,
+          "keys": [
+            "selector",
+            "logProbability"
+          ]
+        },
+        {
           "id": "probability-absent",
           "selectorUsable": true,
           "probabilityUsable": false,
@@ -674,7 +719,7 @@
       "mutants": [
         [
           "M18",
-          10
+          12
         ],
         [
           "M19",
@@ -682,7 +727,7 @@
         ],
         [
           "M20",
-          20
+          22
         ],
         [
           "M21",
@@ -690,6 +735,10 @@
         ],
         [
           "M31",
+          2
+        ],
+        [
+          "M45",
           2
         ]
       ],
@@ -727,6 +776,16 @@
           ],
           [
             "selector-number",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "selector"
+              ]
+            }
+          ],
+          [
+            "selector-format-only",
             {
               "ok": false,
               "code": "decision-validation",
@@ -839,6 +898,16 @@
             }
           ],
           [
+            "selector-format-only",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "selector"
+              ]
+            }
+          ],
+          [
             "probability-absent",
             {
               "ok": false,
@@ -909,15 +978,27 @@
       "mutants": [
         [
           "M22",
-          10
+          20
         ],
         [
           "M23",
-          10
+          20
         ],
         [
           "M24",
-          4
+          8
+        ],
+        [
+          "M39",
+          10
+        ],
+        [
+          "M42",
+          1
+        ],
+        [
+          "M43",
+          2
         ]
       ],
       "admissions": {
@@ -931,6 +1012,16 @@
             "ok": false,
             "code": "not-capacity-feasible",
             "selector": "per-pair-logit"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "fast-argmax"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "fast-logit"
           }
         ],
         "loads": [
@@ -943,6 +1034,16 @@
             "ok": false,
             "code": "not-capacity-feasible",
             "selector": "per-pair-logit"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "fast-argmax"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "fast-logit"
           }
         ],
         "ties": [
@@ -955,6 +1056,16 @@
             "ok": false,
             "code": "not-capacity-feasible",
             "selector": "per-pair-logit"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "fast-argmax"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "fast-logit"
           }
         ],
         "partial": [
@@ -967,6 +1078,16 @@
             "ok": false,
             "code": "not-capacity-feasible",
             "selector": "per-pair-logit"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "fast-argmax"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "fast-logit"
           }
         ],
         "empty": [
@@ -979,6 +1100,16 @@
             "ok": false,
             "code": "not-capacity-feasible",
             "selector": "per-pair-logit"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "fast-argmax"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "fast-logit"
           }
         ]
       }
@@ -1012,7 +1143,53 @@
         "ties": 0.5,
         "partial": 1,
         "empty": 0
-      }
+      },
+      "infeasible": [
+        {
+          "id": "task-twice",
+          "findings": [
+            "t-zero assigned twice"
+          ],
+          "outcome": {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "capacity-matching-resolver"
+          }
+        },
+        {
+          "id": "agent-over-capacity",
+          "findings": [
+            "a-one carries 2 over capacity 1"
+          ],
+          "outcome": {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "capacity-matching-resolver"
+          }
+        },
+        {
+          "id": "no-support-agent",
+          "findings": [
+            "a-ghost/t-zero names no support agent or task"
+          ],
+          "outcome": {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "capacity-matching-resolver"
+          }
+        },
+        {
+          "id": "no-support-task",
+          "findings": [
+            "a-one/t-ghost names no support agent or task"
+          ],
+          "outcome": {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "capacity-matching-resolver"
+          }
+        }
+      ]
     },
     "A6a": {
       "carried": {
@@ -1131,11 +1308,11 @@
       "mutants": [
         [
           "M25",
-          10
+          20
         ],
         [
           "M26",
-          5
+          10
         ],
         [
           "M27",
@@ -1143,7 +1320,7 @@
         ],
         [
           "M32",
-          10
+          15
         ],
         [
           "M36",
@@ -1152,6 +1329,14 @@
         [
           "M37",
           4
+        ],
+        [
+          "M44",
+          10
+        ],
+        [
+          "M46",
+          5
         ]
       ],
       "names": {
@@ -1169,7 +1354,7 @@
           }
         ],
         [
-          "   ",
+          "U+0020 U+0020 U+0020",
           "joint-sampler",
           {
             "ok": false,
@@ -1178,12 +1363,39 @@
           }
         ],
         [
-          "mystery-selector",
+          "U+200B",
+          "deterministic-resolver",
+          {
+            "ok": false,
+            "code": "unnamed-selector",
+            "selector": "\u200b"
+          }
+        ],
+        [
+          "U+200B U+0020 U+200B",
+          "joint-sampler",
+          {
+            "ok": false,
+            "code": "unnamed-selector",
+            "selector": "\u200b \u200b"
+          }
+        ],
+        [
+          "U+006D U+0079 U+0073 U+0074 U+0065 U+0072 U+0079 U+002D U+0073 U+0065 U+006C U+0065 U+0063 U+0074 U+006F U+0072",
           "unknown-kind",
           {
             "ok": false,
             "code": "unknown-selector",
             "selector": "mystery-selector"
+          }
+        ],
+        [
+          "U+0067 U+0072 U+0065 U+0065 U+0064 U+0079",
+          "random-kind",
+          {
+            "ok": false,
+            "code": "unknown-selector",
+            "selector": "greedy"
           }
         ]
       ],
@@ -1443,6 +1655,12 @@
         "optimizer camel": [
           "optimizer"
         ],
+        "optimizer british": [
+          "optimizer"
+        ],
+        "optimizer british plural": [
+          "optimizer"
+        ],
         "log probability spaced": [
           "log probability"
         ],
@@ -1464,6 +1682,36 @@
         "log probability format characters": [
           "log probability"
         ],
+        "log probability plural camel": [
+          "log probability"
+        ],
+        "log probability plural spaced": [
+          "log probability"
+        ],
+        "log probability plural kebab": [
+          "log probability"
+        ],
+        "log probability comment wrap": [
+          "log probability"
+        ],
+        "log probability slash": [
+          "log probability"
+        ],
+        "log probability parenthesised": [
+          "log probability"
+        ],
+        "log probability dash punctuation": [
+          "log probability"
+        ],
+        "log probability middle dot": [
+          "log probability"
+        ],
+        "log probability symbol": [
+          "log probability"
+        ],
+        "log probability quoted list": [
+          "log probability"
+        ],
         "sampler": [
           "sampler"
         ],
@@ -1475,6 +1723,12 @@
         ],
         "autoregressive camel": [
           "autoregressive"
+        ],
+        "autoregressive soft hyphen inside": [
+          "autoregressive"
+        ],
+        "argmax format character inside": [
+          "argmax"
         ],
         "every word": [
           "argmax",
@@ -1507,10 +1761,64 @@
         "pin": true,
         "head": true
       },
+      "plants": [
+        [
+          "as-is",
+          true
+        ],
+        [
+          "line-deleted",
+          false
+        ],
+        [
+          "line-edited",
+          false
+        ],
+        [
+          "comment-wrapped",
+          false
+        ],
+        [
+          "moved-to-a-trailing-section",
+          false
+        ],
+        [
+          "fenced",
+          false
+        ],
+        [
+          "indented-into-the-diagram",
+          false
+        ],
+        [
+          "inline-comment",
+          false
+        ],
+        [
+          "heading-duplicated",
+          false
+        ],
+        [
+          "rehomed-under-another-title",
+          false
+        ],
+        [
+          "emphasis-respelled",
+          true
+        ],
+        [
+          "comment-in-another-section",
+          true
+        ],
+        [
+          "rewrapped",
+          true
+        ]
+      ],
       "anchorControls": {
-        "liveWithoutTheLine": false,
-        "liveLineEdited": false,
-        "textAtAnotherLine": false
+        "textAtAnotherLine": false,
+        "textAbsent": false,
+        "pinnedLineIndented": false
       }
     },
     "S2": {
@@ -1537,6 +1845,7 @@
       "members": [
         "concatenated",
         "split-one-part-word",
+        "spaced",
         "escaped",
         "homoglyph",
         "abbreviated",
@@ -1603,6 +1912,60 @@
           true
         ]
       ]
+    },
+    "Q7": {
+      "members": [
+        "late-switch-resolver"
+      ],
+      "first": [
+        "a-strong/t1",
+        "a-strong/t2",
+        "a-weak/t3"
+      ],
+      "later": [
+        "a-strong/t1",
+        "a-weak/t2",
+        "a-weak/t3"
+      ],
+      "refused": []
+    },
+    "Q8": {
+      "members": [
+        "empty-resolver",
+        "one-task-per-agent-resolver",
+        "silent-sampler",
+        "one-draw-sampler"
+      ],
+      "reference": {
+        "resolver": 3,
+        "sampler": 3
+      },
+      "readings": [
+        {
+          "id": "empty-resolver",
+          "refused": [],
+          "largest": 0,
+          "less": true
+        },
+        {
+          "id": "one-task-per-agent-resolver",
+          "refused": [],
+          "largest": 2,
+          "less": true
+        },
+        {
+          "id": "silent-sampler",
+          "refused": [],
+          "largest": 0,
+          "less": true
+        },
+        {
+          "id": "one-draw-sampler",
+          "refused": [],
+          "largest": 1,
+          "less": true
+        }
+      ]
     }
   },
   "tests": [
@@ -1633,9 +1996,11 @@
     "Q4: R-SCORE-BLIND",
     "Q5: R-DECLARED-KIND",
     "Q6: R-SINGLE-TASK",
+    "Q7: R-STATEFUL",
+    "Q8: R-LIVENESS",
     "rule 16: the rows, the tables and the vocabulary are frozen at their measured shape",
     "mutant battery: the reference meets every check, each mutant is refused by exactly its declared checks, and every check refuses a mutant alone",
-    "the outside anchors: the bead's own row binds the rows, the pin quotes, the docs citation, the vocabulary and the producer block",
+    "the outside anchors: the bead's own row binds the labels of rows A1-S and what their pin quotes tile (never row Q or a row's pin partition), the docs citation, the vocabulary and the shared words (Q2's members among them) and the producer block",
     "roster: the judged rows, the quotes, the residual members, the mutants and the registered tests equal test/fixtures/mw-gp-selector-roster.json, in order and both ways; every pin reached its witness compare"
   ],
   "producer": {
