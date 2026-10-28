@@ -111,18 +111,28 @@
  *    file one branch of federationScoped scopes alone, through one spelling, beside its twin (that spelling NEUTRAL) that neither
  *    branch scopes; in every pin the guard scopes each control and hits its mint, the independent scope reading scopes each
  *    control, and neither scopes a twin. S1 S-TEXT-WINDOW (F1's class): the text branch reading one contiguous window of the text -
- *    of its lines, characters or words, from either end or between two points, F1's first line among them - drops line-two (the
- *    bead's shape, the scope word on line 2), deep-head (the scope word after more lines, characters and words than any real src
- *    file holds) or deep-tail (the scope word before as many); the depth is built from src at each run and read back against each
- *    real src file, so a window that keeps all three reads every real src file whole. S2 S-TEXT-CONTEXT: the text branch reading
+ *    of its lines, characters or words, from either end or between two points, each bound a count or a fraction of the text taken
+ *    from one end, F1's first line and the smallest margins at either end among them - drops line-two (the bead's shape, the scope
+ *    word on line 2), deep-head (the scope word after more lines, characters and words than any real src file holds), deep-tail
+ *    (the scope word before as many), opening (the scope word opening the text, its first character, word and line, before as
+ *    many) or closing (the scope word closing the text, its last character, word and line, with no trailing newline, after as
+ *    many, and spelled watermark, a whole member, so no character of it is slack; opening and closing: wb-1no5 respin 1, U1); the
+ *    depth is built from src at each run and read back against each real src file, and each control's edges and slack are read
+ *    back, so a window that keeps all five opens at the start of every real src file and closes at its end, reading it whole.
+ *    S2 S-TEXT-CONTEXT: the text branch reading
  *    only some lexical contexts (comments, code, string literals, identifiers), or skipping one kind of comment (line, block, doc),
  *    of string (double-quoted, single-quoted, template) or plain prose, drops the control whose spelling sits there (contextOf
  *    reads each control's context back). S3 S-SPELLING: a branch accepting only some FEDERATION_WORDS members, or reading a row M
  *    spelling otherwise than membersHitting does, drops a text-alone or a path-alone control (every SCOPE_SPELLINGS spelling, each
  *    branch). S4 S-PATH-WINDOW: the path branch reading only part of the path - its basename, its directories, its extension or
- *    the path without it, or one contiguous run of its segments, characters or words from either end or between two points -
- *    drops the basename, extension, deep-path-head or deep-path-tail control (the depth built and read back as S1's, against each
- *    real src path). S5 S-FILE-GATE: a branch consulted only for some files - by extension (.ts, .md, .json, .mjs, extensionless,
+ *    the path without it, or one contiguous run of its segments, characters or words from either end or between two points, each
+ *    bound a count or a fraction of the path taken from one end, the smallest margins at either end among them - drops the
+ *    basename, extension, deep-path-head, deep-path-tail (the scope word opening the path right after its src/ prefix) or closing
+ *    (the scope word closing the path, its last character and word, an extensionless basename spelled watermark, a whole member,
+ *    so no character of it is slack: wb-1no5 respin 1, U2) control (the depth built and read back as S1's, against each real src
+ *    path, and each control's edges and slack read back); a window opening inside the src/ prefix is no narrowing (the prefix
+ *    spells no member, and the guard tests it apart), so a window that keeps deep-path-tail and closing reads every real src
+ *    path's members whole. S5 S-FILE-GATE: a branch consulted only for some files - by extension (.ts, .md, .json, .mjs, extensionless,
  *    dot-named), by directory (each FLOORS directory, one below the deepest, a dot-named one) or by size (a one-line file, or one
  *    past every real src file) - or the src/ prefix narrowed, drops a control of the kind it skips (each branch alone at each; the
  *    controls of one branch share no word but src). S6 S-BRANCH: a branch dropped, or the two joined by and, drops its control.
@@ -140,12 +150,15 @@
  * filesBelow and floorReadings, the independent enumeration beside srcFiles, the independent reading and its verdict beside
  * scanRead - a second, narrowed scan taken beside scanRead's own together with a narrowed or removed independent verdict
  * included -, the independent scope reading beside the guard's scope - the same narrowing made in both, or independentScoped
- * rebuilt from the guard's own code, together with every row S control that narrowing drops -, a row S control's depth, context or
- * twin beside the check that reads it back, MIS_ECHOES beside echoFailuresOf: each control lives in this file); a walk or reading
+ * rebuilt from the guard's own code, together with every row S control that narrowing drops -, a row S control's depth, edges,
+ * slack, context or twin beside the check that reads it back, or removed together with its read-back and its roster entry,
+ * MIS_ECHOES beside echoFailuresOf: each control lives in this file); a walk or reading
  * narrowing that keeps every WALK_PLANT shape reads a src tree holding no other shape exactly as the intact one does (at base
  * 6e0c3d2: 116 regular files, all .ts, no dot-named entry, no extensionless file, no symlink), and reds through the enumeration
  * or the independent reading once src holds a file of a shape it drops; a scope narrowing that keeps every scope control - outside
- * row S's classes: a text window skipping interior lines or reading a non-contiguous set of them, a lexical context S2 does not
+ * row S's classes: a text or path window skipping interior lines, words, characters or segments, or reading a non-contiguous
+ * set of them, or bounded otherwise than by a count or a fraction taken from one end (a bound found by searching the text or the
+ * path, or a margin that shrinks as the file grows), a lexical context S2 does not
  * name (a regular expression literal, an HTML comment in markdown), a spelling row M does not list, a gate S5 does not vary (one
  * skipping files that spell a word no control of the branch spells, an extension or a directory no control names, two file
  * properties paired) - reads today's src exactly as the intact scope does, since no src file is scoped, and reds C2 only through
@@ -174,7 +187,14 @@
  * text branch kept every PLANTED and WALK_PLANT shape, each carrying its scope word on line 1) is S1's member: line-two and
  * deep-head red it on today's tree, and the independent scope reading reds it beside a real src file; the criterion is row S's
  * six classes, each cured at its own controls, and outside them the independent scope reading holds a narrowing made alone; a
- * later survivor outside S1-S6 is record-only unless it contradicts a pinned claim. The ROWS shape gains row S (S:6).
+ * later survivor outside S1-S6 is record-only unless it contradicts a pinned claim. The ROWS shape gains row S (S:6). Respin 1
+ * (refusal #1 of cut 1, U1 in S1 and U2 in S4: the small-margin windows text.slice(1), text.slice(3), text.slice(0, -3),
+ * text.slice(0, -7), every word but the last and path.slice(0, -3) kept every S1 and S4 control, since each text control's scope
+ * word sat 3 or more characters after the text's start and a word and 8 or more characters before its end, and each path
+ * control's either ended 3 or more characters before the path's end or was federation, whose last 3 characters are slack): S1
+ * gains opening and closing and S4 gains closing, each past the real src depth with its edges and slack read back, so a window
+ * trimming the text's first or last characters, words or lines, or the path's last characters or words, reds at its own class
+ * pin; the ROWS shape is unchanged.
  *
  * Display paths added: none. Test-only: nothing is spawned; C2 writes WALK_PLANT under one makeScratch root (leak guard
  * installed) and removes it in the same case; src, the bead export and this roster are only read.
@@ -1077,12 +1097,26 @@ function pathPastEvery(part: string, files: readonly SourceFile[]): boolean {
   const count = words(part).length;
   return files.length > 0 && files.every(file => segments > file.path.split("/").length && part.length > file.path.length && count > words(file.path).length);
 }
-/** S1 (S-TEXT-WINDOW, F1's class): the bead's own shape (the scope word on line 2) and two depth controls, the scope word after
- * `filler` (deep-head) and before it (deep-tail). */
+/** How many trailing characters of a spelling a trim may drop while the guard's matcher still catches it: 3 for federation
+ * (federat is its member's prefix), 0 for watermark (a whole member), so a closing control spelled with no slack is dropped by a
+ * trim of the text's or the path's last character (wb-1no5 respin 1). */
+function endSlackOf(spelling: string): number {
+  let slack = 0;
+  while (slack < spelling.length && membersHitting(spelling.slice(0, spelling.length - slack - 1)).length > 0) {
+    slack += 1;
+  }
+  return slack;
+}
+/** S1 (S-TEXT-WINDOW, F1's class): the bead's own shape (the scope word on line 2), two depth controls, the scope word after
+ * `filler` (deep-head) and before it (deep-tail), and two edge controls past the same depth (wb-1no5 respin 1, U1): the scope
+ * word opening the text, its first character, word and line (opening), and closing it, its last character, word and line with no
+ * trailing newline, spelled as a whole member so no character of it is slack (closing). */
 const textWindowControls = (filler: string): ScopeControl[] => [
   textAlone("line-two", "src/workflow/relay-note.ts", "export const relayNote = 1;\n// a federation relay note renders current\n", "federation"),
   textAlone("deep-head", "src/workbench/deep-head.ts", `${filler}// a federation ledger never renders current\n`, "federation"),
   textAlone("deep-tail", "src/workbench/deep-tail.ts", `// a federation journal never renders current\n${filler}`, "federation"),
+  textAlone("opening", "src/workbench/opening.ts", `federation peers never render current\n${filler}`, "federation"),
+  textAlone("closing", "src/workbench/closing.ts", `${filler}// a peer view never renders current; it reads the watermark`, "watermark"),
 ];
 /** S2 (S-TEXT-CONTEXT): the scope word in one lexical context each. */
 const textContextControls = (): ScopeControl[] => [
@@ -1115,13 +1149,16 @@ const spellingControls = (): ScopeControl[] =>
       pathAlone(`path:MS${member + 1}:${at + 1}`, `src/workbench/${spelling}.ts`, MINT_LINE, spelling),
     ]),
   );
-/** S4 (S-PATH-WINDOW): the scope word in the basename alone and in the extension alone, and two depth controls, the scope word
- * after `levels` (deep-path-head) and before them (deep-path-tail). */
+/** S4 (S-PATH-WINDOW): the scope word in the basename alone and in the extension alone, two depth controls, the scope word after
+ * `levels` (deep-path-head) and before them, opening the path right after its src/ prefix (deep-path-tail), and one edge control
+ * past the same depth (wb-1no5 respin 1, U2): the scope word closing the path, its last character and word, an extensionless
+ * basename spelled as a whole member so no character of it is slack (closing). */
 const pathWindowControls = (levels: string): ScopeControl[] => [
   pathAlone("basename", "src/workbench/federation-basename.ts", MINT_LINE, "federation"),
   pathAlone("extension", "src/workbench/peer.federation", MINT_LINE, "federation"),
   pathAlone("deep-path-head", `src/${levels}/federation-head.ts`, MINT_LINE, "federation"),
   pathAlone("deep-path-tail", `src/federation-tail/${levels}/peer.ts`, MINT_LINE, "federation"),
+  pathAlone("closing", `src/${levels}/watermark`, MINT_LINE, "watermark"),
 ];
 /** S5 (S-FILE-GATE): each branch alone at every walk-plant extension (.ts, .md, .json, .mjs, extensionless, dot-named), in every
  * FLOORS directory, below the deepest one and in a dot-named one, at one line and past the real src extent (`filler`), the
@@ -1695,20 +1732,26 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const entries = controls.map(control => {
       const at = control.file.text.indexOf(control.spelling);
       const before = control.file.text.slice(0, at);
+      const after = control.file.text.slice(at + control.spelling.length);
       return {
         ...entryOf(control),
         belowLineOne: before.includes("\n"),
         pastStart: textPastEvery(before, files),
-        pastEnd: textPastEvery(control.file.text.slice(at + control.spelling.length), files),
+        pastEnd: textPastEvery(after, files),
+        opens: before === "",
+        closes: after === "",
+        endSlack: endSlackOf(control.spelling),
       };
     });
     expect(
-      entries.map(({ shape, belowLineOne, pastStart, pastEnd }) => ({ shape, belowLineOne, pastStart, pastEnd })),
-      "S-TEXT-WINDOW: line-two's spelling sits below line 1, deep-head's after and deep-tail's before more lines, characters and words than the longest real src file holds",
+      entries.map(({ shape, belowLineOne, pastStart, pastEnd, opens, closes, endSlack }) => ({ shape, belowLineOne, pastStart, pastEnd, opens, closes, endSlack })),
+      "S-TEXT-WINDOW: line-two's spelling sits below line 1, deep-head's after and deep-tail's before more lines, characters and words than the longest real src file holds, opening's opens the text before as many and closing's closes it after as many, with no character slack",
     ).toStrictEqual([
-      { shape: "line-two", belowLineOne: true, pastStart: false, pastEnd: false },
-      { shape: "deep-head", belowLineOne: true, pastStart: true, pastEnd: false },
-      { shape: "deep-tail", belowLineOne: false, pastStart: false, pastEnd: true },
+      { shape: "line-two", belowLineOne: true, pastStart: false, pastEnd: false, opens: false, closes: false, endSlack: 3 },
+      { shape: "deep-head", belowLineOne: true, pastStart: true, pastEnd: false, opens: false, closes: false, endSlack: 3 },
+      { shape: "deep-tail", belowLineOne: false, pastStart: false, pastEnd: true, opens: false, closes: false, endSlack: 3 },
+      { shape: "opening", belowLineOne: false, pastStart: false, pastEnd: true, opens: true, closes: false, endSlack: 3 },
+      { shape: "closing", belowLineOne: true, pastStart: true, pastEnd: false, opens: false, closes: true, endSlack: 0 },
     ]);
     return { name: scopeClassName("S1"), controls: entries, ...readScope("S1", controls) };
   },
@@ -1744,16 +1787,20 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         inExtension: before.slice(before.lastIndexOf("/") + 1).includes("."),
         pastStart: pathPastEvery(before, files),
         pastEnd: pathPastEvery(after, files),
+        opens: before === "src/",
+        closes: after === "",
+        endSlack: endSlackOf(control.spelling),
       };
     });
     expect(
-      entries.map(({ shape, inBasename, inExtension, pastStart, pastEnd }) => ({ shape, inBasename, inExtension, pastStart, pastEnd })),
-      "S-PATH-WINDOW: the basename and extension controls' spelling sits in the basename, deep-path-head's after and deep-path-tail's before more segments, characters and words than the deepest and longest real src path holds",
+      entries.map(({ shape, inBasename, inExtension, pastStart, pastEnd, opens, closes, endSlack }) => ({ shape, inBasename, inExtension, pastStart, pastEnd, opens, closes, endSlack })),
+      "S-PATH-WINDOW: the basename and extension controls' spelling sits in the basename, deep-path-head's after and deep-path-tail's before more segments, characters and words than the deepest and longest real src path holds, deep-path-tail's right after the src/ prefix, and closing's closes the path after as many, with no character slack",
     ).toStrictEqual([
-      { shape: "basename", inBasename: true, inExtension: false, pastStart: false, pastEnd: false },
-      { shape: "extension", inBasename: true, inExtension: true, pastStart: false, pastEnd: false },
-      { shape: "deep-path-head", inBasename: true, inExtension: false, pastStart: true, pastEnd: false },
-      { shape: "deep-path-tail", inBasename: false, inExtension: false, pastStart: false, pastEnd: true },
+      { shape: "basename", inBasename: true, inExtension: false, pastStart: false, pastEnd: false, opens: false, closes: false, endSlack: 3 },
+      { shape: "extension", inBasename: true, inExtension: true, pastStart: false, pastEnd: false, opens: false, closes: true, endSlack: 3 },
+      { shape: "deep-path-head", inBasename: true, inExtension: false, pastStart: true, pastEnd: false, opens: false, closes: false, endSlack: 3 },
+      { shape: "deep-path-tail", inBasename: false, inExtension: false, pastStart: false, pastEnd: true, opens: true, closes: false, endSlack: 3 },
+      { shape: "closing", inBasename: true, inExtension: false, pastStart: true, pastEnd: false, opens: false, closes: true, endSlack: 0 },
     ]);
     return { name: scopeClassName("S4"), controls: entries, ...readScope("S4", controls) };
   },

@@ -1057,7 +1057,10 @@
         "spelling": "federation",
         "belowLineOne": true,
         "pastStart": false,
-        "pastEnd": false
+        "pastEnd": false,
+        "opens": false,
+        "closes": false,
+        "endSlack": 3
        },
        {
         "branch": "text",
@@ -1066,7 +1069,10 @@
         "spelling": "federation",
         "belowLineOne": true,
         "pastStart": true,
-        "pastEnd": false
+        "pastEnd": false,
+        "opens": false,
+        "closes": false,
+        "endSlack": 3
        },
        {
         "branch": "text",
@@ -1075,12 +1081,39 @@
         "spelling": "federation",
         "belowLineOne": false,
         "pastStart": false,
-        "pastEnd": true
+        "pastEnd": true,
+        "opens": false,
+        "closes": false,
+        "endSlack": 3
+       },
+       {
+        "branch": "text",
+        "shape": "opening",
+        "path": "src/workbench/opening.ts",
+        "spelling": "federation",
+        "belowLineOne": false,
+        "pastStart": false,
+        "pastEnd": true,
+        "opens": true,
+        "closes": false,
+        "endSlack": 3
+       },
+       {
+        "branch": "text",
+        "shape": "closing",
+        "path": "src/workbench/closing.ts",
+        "spelling": "watermark",
+        "belowLineOne": true,
+        "pastStart": true,
+        "pastEnd": false,
+        "opens": false,
+        "closes": true,
+        "endSlack": 0
        }
       ],
-      "scoped": 3,
-      "independent": 3,
-      "unscopedTwins": 3
+      "scoped": 5,
+      "independent": 5,
+      "unscopedTwins": 5
      }
     },
     {
@@ -1182,7 +1215,10 @@
         "inBasename": true,
         "inExtension": false,
         "pastStart": false,
-        "pastEnd": false
+        "pastEnd": false,
+        "opens": false,
+        "closes": false,
+        "endSlack": 3
        },
        {
         "branch": "path",
@@ -1192,7 +1228,10 @@
         "inBasename": true,
         "inExtension": true,
         "pastStart": false,
-        "pastEnd": false
+        "pastEnd": false,
+        "opens": false,
+        "closes": true,
+        "endSlack": 3
        },
        {
         "branch": "path",
@@ -1202,7 +1241,10 @@
         "inBasename": true,
         "inExtension": false,
         "pastStart": true,
-        "pastEnd": false
+        "pastEnd": false,
+        "opens": false,
+        "closes": false,
+        "endSlack": 3
        },
        {
         "branch": "path",
@@ -1212,12 +1254,28 @@
         "inBasename": false,
         "inExtension": false,
         "pastStart": false,
-        "pastEnd": true
+        "pastEnd": true,
+        "opens": true,
+        "closes": false,
+        "endSlack": 3
+       },
+       {
+        "branch": "path",
+        "shape": "closing",
+        "path": "src/<levels>/watermark",
+        "spelling": "watermark",
+        "inBasename": true,
+        "inExtension": false,
+        "pastStart": true,
+        "pastEnd": false,
+        "opens": false,
+        "closes": true,
+        "endSlack": 0
        }
       ],
-      "scoped": 4,
-      "independent": 4,
-      "unscopedTwins": 4
+      "scoped": 5,
+      "independent": 5,
+      "unscopedTwins": 5
      }
     },
     {
