@@ -258,11 +258,32 @@
     "head",
     "tail"
    ]
+  },
+  "anchor": {
+   "bead": "wb-xfkx",
+   "receipt": "docs/workbench/receipts/wb-xfkx.md",
+   "tables": [
+    [
+     "Row",
+     "Pins",
+     "Label sha-256"
+    ],
+    [
+     "Pin",
+     "Quote sha-256"
+    ],
+    [
+     "Quiet row",
+     "Residual family",
+     "Witness sha-256"
+    ]
+   ]
   }
  },
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster and the cases agree",
   "the outside anchors: the bead's own row binds the rows, the pin quotes, the needles, the program, the records, the gradings, the subjects, the scopes, the labels and the predicate words; the producer block carries the filing's status lines",
+  "the receipt anchor: the wb-xfkx receipt's last dated entry records every row's pins and label, every judged pin's quote and every residual family with its quiet row and witness, in order and both ways",
   "A1",
   "A2",
   "A3",
@@ -307,6 +328,11 @@
   "Q13",
   "Q14",
   "the registered tests and the reached pins equal the roster, in order and both ways"
+ ],
+ "ends": [
+  "judged-set:75",
+  "outside-anchors:136",
+  "receipt-anchor:8"
  ],
  "rows": [
   {
