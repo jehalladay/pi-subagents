@@ -1,0 +1,790 @@
+{
+ "bead": "wb-ts6.2",
+ "basis": "The out-of-file roster of test/workbench-hx-mutation-verified-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the constants (controls, probes, residual families, the undelivered armed clauses) and the registered test titles, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Witnesses measured by the cutting seat ws-04 (run g10-work-s125, 2026-10-28) on trunk 061c2ac with the vendored @hyperunix/sdk 0.1.0 (node_modules/@hyperunix/sdk/dist, installed by npm ci from vendor/hyperunix-sdk-0.1.0.tgz) and reviewed by hand against the shipped declarations and src.",
+ "constants": {
+  "sdk": "@hyperunix/sdk",
+  "sdkDist": "node_modules/@hyperunix/sdk/dist",
+  "mutationModules": [
+   "./mutation.ts",
+   "./protocol/mutation.ts"
+  ],
+  "mutationFiles": [
+   "mutation.d.ts",
+   "protocol/mutation.d.ts"
+  ],
+  "mutationPrefix": "mutation-",
+  "guard": "test/workbench-hyperunix-effect-class-census.test.ts",
+  "guardBead": "wb-tz2.8",
+  "producer": "hyperunix",
+  "srcFloor": 100,
+  "evidenceModule": "src/workbench/native-evidence.ts",
+  "launchNames": [
+   "exec",
+   "execFile",
+   "execFileSync",
+   "execSync",
+   "fork",
+   "spawn",
+   "spawnSync"
+  ],
+  "launchFloor": [
+   "forge",
+   "git",
+   "rf"
+  ],
+  "workspace": "/hx-mutation-verified-census/workspace",
+  "binary": "5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f",
+  "context": {
+   "scope": {
+    "workspace": "/hx-mutation-verified-census/workspace",
+    "principal": "local-operator:census"
+   },
+   "target": {
+    "kind": "hx.fs/regular-file",
+    "root": "src"
+   },
+   "capturedAt": "2026-10-28T00:00:00Z",
+   "observedAt": "2026-10-28T00:00:01Z"
+  },
+  "receiptSource": {
+   "representation": "hyperunix.result/1",
+   "state": "Verified",
+   "verified": true,
+   "verification": {
+    "outcome": "verified"
+   },
+   "execution_status": {
+    "kind": "verified"
+   },
+   "execution_id": "census-execution"
+  },
+  "notDelivered": [
+   "a reconcile unit test where a mutation receipt carrying a filesystem Verified postcondition yields a typed filesystem-only reading and no build/semantic-success claim until an independent Forge/import recheck result is cited",
+   "a falsifier reddens any surfaced string mapping Verified to semantic or build success"
+  ],
+  "clauseControls": {
+   "title": "[X] One clause; two clause; the last clause stays.",
+   "notes": "Filing.\n\nToday the class is unreachable: a holds and b holds, so nothing reaches it; the rest. Acceptance shape when armed: first; second; third.\nAppended later. Today the class is unreachable: x, so appended; Acceptance shape when armed: late; later.\n"
+  },
+  "readerControls": {
+   "result": "export type ExecutionStatus = (StatusBase & {\n    readonly kind: \"complete\";\n}) | (StatusBase & {\n    readonly kind: \"mutation-verified\";\n    readonly extra: \"not-a-kind\";\n});",
+   "index": "export { a, type B } from \"./mutation.ts\";\nexport { c } from \"./query.ts\";\nexport { d as e } from \"./protocol/mutation.ts\";\nexport * from \"./mutation.ts\";",
+   "protocol": "export interface VerificationEvidence {\n    readonly outcome: \"verified\" | \"torn\";\n}\nexport interface RecoveryClassification {\n    /** The token as printed (Verified, Torn, ...), or null. */\n    readonly journalStatus: string | null;\n}\nexport interface MutationReceipt {\n    /** Only on re-observation. */\n    readonly verified: boolean;\n}",
+   "mutation": "export type MutationOperation = \"create\" | \"touch\";\nexport declare class MutationPlan {\n    preview(): Promise<MutationPreview>;\n    apply(options?: ApplyOptions): Promise<MutationReceipt>;\n    replay(): Promise<MutationReceipt>;\n}",
+   "titles": "describe(\"suite one\", () => { it(\"case one\", () => {}); test(\"case two\", () => {}); it(`case three`, () => {}); it(TITLE, () => {}); });",
+   "evidence": "export function nativeEvidence(id: string) { switch (id) { case \"a.read\": break; case \"hyperunix.apply\": break; default: } }\nfunction other(id: string) { switch (id) { case \"z.read\": break; } }",
+   "glyph": "const lit = node.domainStatus === \"verified\" || \"complete\" == entry.domainStatus || node.state === \"done\" || node.domainStatus !== \"failed\";",
+   "registration": "registerHyperUnixFind(registry, reader, root);\nhyperunix.registerNativeHyperUnixFind(registry, root);\nregisterOther(registry);"
+  },
+  "siteControls": {
+   "read-named": "import { Bounds, HyperUnix } from \"@hyperunix/sdk\";",
+   "named-mutation": "import { receiptFromJson } from \"@hyperunix/sdk\";",
+   "type-mutation": "import type { MutationReceipt } from \"@hyperunix/sdk\";",
+   "aliased-mutation": "import { Mutations as M } from \"@hyperunix/sdk\";",
+   "namespace": "import * as sdk from \"@hyperunix/sdk\";",
+   "side-effect": "import \"@hyperunix/sdk\";",
+   "subpath": "import { runHx } from \"@hyperunix/sdk/raw\";",
+   "export-star": "export * from \"@hyperunix/sdk\";",
+   "export-named": "export { MutationPlan } from \"@hyperunix/sdk\";",
+   "dynamic": "export const load = () => import('@hyperunix/sdk');",
+   "require": "const sdk = require(\"@hyperunix/sdk\");",
+   "import-type": "type R = import(\"@hyperunix/sdk\").MutationReceipt;",
+   "resolve": "const path = import.meta.resolve(\"@hyperunix/sdk\");"
+  },
+  "memberControls": {
+   "member": "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const read = HyperUnix.open(\"/r\").mutations;\n",
+   "destructured": "import { HyperUnix } from \"@hyperunix/sdk\";\nconst { mutations } = HyperUnix.open(\"/r\");\nexport { mutations };\n",
+   "element-literal": "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const read = HyperUnix.open(\"/r\")[\"mutations\"];\n",
+   "const-key": "import { HyperUnix } from \"@hyperunix/sdk\";\nconst KEY = \"mutations\";\nexport const read = HyperUnix.open(\"/r\")[KEY];\n",
+   "namespace": "import * as sdk from \"@hyperunix/sdk\";\nexport const decode = sdk.receiptFromJson;\n",
+   "raw": "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const run = HyperUnix.open(\"/r\").raw([\"apply\", \"plan\"]);\n",
+   "flowed-open": "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const open = () => HyperUnix.open(\"/r\");\n",
+   "flowed": "import { open } from \"./flowed-open.js\";\nexport const read = open().mutations;\n"
+  },
+  "computedKeyProbes": {
+   "composed": "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const read = HyperUnix.open(\"/r\")[\"mut\" + \"ations\"];\n",
+   "reflected": "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const read = Reflect.get(HyperUnix.open(\"/r\"), \"mutations\");\n"
+  },
+  "castProbe": "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const read = (HyperUnix.open(\"/r\") as unknown as { mutations: unknown }).mutations;\n",
+  "composedSpecifierProbe": "const name = \"@hyperunix/\" + \"sdk\";\nexport const load = () => import(name);\nexport const loadTemplate = () => import(`@hyperunix/${\"sdk\"}`);\n",
+  "launchControls": {
+   "literal": "spawn(\"hx\", [\"apply\", \"plan\"]);",
+   "shell": "exec(\"hx apply plan\");",
+   "path": "execFileSync(\"/usr/local/bin/hx\", [\"apply\"]);",
+   "member": "pi.exec(\"hx\", [\"mutation\", \"recover\", \"id\"]);"
+  },
+  "boundLaunchProbe": "const HX = \"hx\";\nspawn(HX, [\"apply\", \"plan\"]);\nexecFile(binaryPath, [\"apply\"]);\n",
+  "piTextProbe": "export const NOTE = \"HX Verified: the build passed and the refactor is semantically safe\";\n",
+  "residuals": {
+   "R-COMPUTED-KEY": [
+    "Q1"
+   ],
+   "R-CAST-AWAY": [
+    "Q2"
+   ],
+   "R-INJECTED-READER": [
+    "Q3"
+   ],
+   "R-COMPOSED-SPECIFIER": [
+    "Q4"
+   ],
+   "R-BOUND-LAUNCH": [
+    "Q5"
+   ],
+   "R-OUTSIDE-SRC": [
+    "Q6"
+   ],
+   "R-PI-TEXT": [
+    "Q7"
+   ]
+  }
+ },
+ "rows": [
+  {
+   "id": "A",
+   "label": "the read adapter's refusal of mutation outcomes stays until then",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "declared": [
+       "complete",
+       "complete-empty",
+       "incomplete",
+       "budget-exhausted",
+       "cancelled",
+       "view-invalidated",
+       "provider-failed",
+       "schema-failed",
+       "internal-failed",
+       "protocol-failed",
+       "usage-error",
+       "mutation-rejected",
+       "mutation-partial"
+      ],
+      "mutationOutcomes": [
+       "mutation-rejected",
+       "mutation-partial"
+      ],
+      "readings": [
+       "complete|false|projected:partial:unknown",
+       "complete|true|projected:complete:success",
+       "complete-empty|false|projected:partial:unknown",
+       "complete-empty|true|projected:complete:success",
+       "incomplete|false|projected:partial:unknown",
+       "incomplete|true|projected:partial:unknown",
+       "budget-exhausted|false|projected:partial:unknown",
+       "budget-exhausted|true|projected:partial:unknown",
+       "cancelled|false|projected:partial:unknown",
+       "cancelled|true|projected:partial:unknown",
+       "view-invalidated|false|projected:partial:unknown",
+       "view-invalidated|true|projected:partial:unknown",
+       "provider-failed|false|projected:unknown:failure",
+       "provider-failed|true|projected:unknown:failure",
+       "schema-failed|false|projected:unknown:failure",
+       "schema-failed|true|projected:unknown:failure",
+       "internal-failed|false|projected:unknown:failure",
+       "internal-failed|true|projected:unknown:failure",
+       "protocol-failed|false|projected:unknown:failure",
+       "protocol-failed|true|projected:unknown:failure",
+       "usage-error|false|projected:unknown:failure",
+       "usage-error|true|projected:unknown:failure",
+       "mutation-rejected|false|refused:validation:HyperUnix topology refused: mutation-rejected is a mutation outcome and this read adapter refuses mutation outcomes.",
+       "mutation-rejected|true|refused:validation:HyperUnix topology refused: mutation-rejected is a mutation outcome and this read adapter refuses mutation outcomes.",
+       "mutation-partial|false|refused:validation:HyperUnix topology refused: mutation-partial is a mutation outcome and this read adapter refuses mutation outcomes.",
+       "mutation-partial|true|refused:validation:HyperUnix topology refused: mutation-partial is a mutation outcome and this read adapter refuses mutation outcomes."
+      ],
+      "control": [
+       "complete",
+       "mutation-verified"
+      ]
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "readings": [
+       "complete|false|holds:none:absence-not-licensed",
+       "complete|true|holds:none:absence-licensed",
+       "complete-empty|false|holds:none:absence-not-licensed",
+       "complete-empty|true|holds:none:absence-licensed",
+       "incomplete|false|holds:none:absence-not-licensed",
+       "incomplete|true|breaks:licence-without-complete-kind:absence-not-licensed",
+       "budget-exhausted|false|holds:none:absence-not-licensed",
+       "budget-exhausted|true|breaks:licence-without-complete-kind:absence-not-licensed",
+       "cancelled|false|holds:none:absence-not-licensed",
+       "cancelled|true|breaks:licence-without-complete-kind:absence-not-licensed",
+       "view-invalidated|false|holds:none:absence-not-licensed",
+       "view-invalidated|true|breaks:licence-without-complete-kind:absence-not-licensed",
+       "provider-failed|false|holds:none:absence-not-licensed",
+       "provider-failed|true|breaks:licence-without-complete-kind:absence-not-licensed",
+       "schema-failed|false|holds:none:absence-not-licensed",
+       "schema-failed|true|breaks:licence-without-complete-kind:absence-not-licensed",
+       "internal-failed|false|holds:none:absence-not-licensed",
+       "internal-failed|true|breaks:licence-without-complete-kind:absence-not-licensed",
+       "protocol-failed|false|holds:none:absence-not-licensed",
+       "protocol-failed|true|breaks:licence-without-complete-kind:absence-not-licensed",
+       "usage-error|false|holds:none:absence-not-licensed",
+       "usage-error|true|breaks:licence-without-complete-kind:absence-not-licensed",
+       "mutation-rejected|false|breaks:read-outcome:absence-not-licensed",
+       "mutation-rejected|true|breaks:read-outcome+licence-without-complete-kind:absence-not-licensed",
+       "mutation-partial|false|breaks:read-outcome:absence-not-licensed",
+       "mutation-partial|true|breaks:read-outcome+licence-without-complete-kind:absence-not-licensed"
+      ],
+      "readOutcomeBreaks": [
+       "mutation-rejected",
+       "mutation-partial"
+      ]
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "outcomes": [
+       "verified",
+       "incomplete",
+       "not-run",
+       "failed"
+      ],
+      "stateTokens": [
+       "Verified",
+       "RejectedBeforeApply"
+      ],
+      "verifiedDoc": "True only on coherent runtime evidence of successful re-observation/postcondition verification.",
+      "readings": [
+       "verified|undeclared|refused:validation:HyperUnix topology refused: source.execution_status.kind is not a vendored SDK ExecutionStatusKind.|breaks:execution-kind:absence-not-licensed",
+       "incomplete|declared|projected:partial:unknown|holds:none:absence-not-licensed",
+       "not-run|undeclared|refused:validation:HyperUnix topology refused: source.execution_status.kind is not a vendored SDK ExecutionStatusKind.|breaks:execution-kind:absence-not-licensed",
+       "failed|undeclared|refused:validation:HyperUnix topology refused: source.execution_status.kind is not a vendored SDK ExecutionStatusKind.|breaks:execution-kind:absence-not-licensed",
+       "Verified|undeclared|refused:validation:HyperUnix topology refused: source.execution_status.kind is not a vendored SDK ExecutionStatusKind.|breaks:execution-kind:absence-not-licensed",
+       "RejectedBeforeApply|undeclared|refused:validation:HyperUnix topology refused: source.execution_status.kind is not a vendored SDK ExecutionStatusKind.|breaks:execution-kind:absence-not-licensed"
+      ],
+      "control": {
+       "outcomes": [
+        "verified",
+        "torn"
+       ],
+       "stateTokens": [
+        "Verified",
+        "Torn"
+       ],
+       "verifiedDoc": "Only on re-observation."
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "the wb-tz2.8 effect-class census remains the until-then standing guard",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "path": "test/workbench-hyperunix-effect-class-census.test.ts",
+      "sha256": "29e7269a45c4d59e136a1c4137e324eab0f85d01ebbc74a103bf54d3fd0a19b7",
+      "namesBead": true,
+      "suites": [
+       "hyperunix effect-class census (wb-tz2.8 R8, standing leg)"
+      ],
+      "cases": [
+       "every descriptor registered through the native provider registration declares effectClass read",
+       "every descriptor registered through the injected-reader registration declares effectClass read",
+       "the combined roster is non-empty: at least two descriptors are found, and an empty roster fails",
+       "the roster check names a descriptor that declares another effect class",
+       "the provider source carries at least two descriptor literals and each one is effectClass read",
+       "the source scan reports a flipped literal and an empty source"
+      ],
+      "control": {
+       "suites": [
+        "suite one"
+       ],
+       "cases": [
+        "case one",
+        "case two",
+        "case three"
+       ]
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "native": [
+       "hyperunix.find|read"
+      ],
+      "injected": [
+       "hyperunix.find|read"
+      ],
+      "armed": [],
+      "controls": {
+       "hyperunix-write": [
+        "hyperunix.apply"
+       ],
+       "hyperunix-external": [
+        "hyperunix-mutation.apply"
+       ],
+       "hyperunix-read": [],
+       "other-producer-write": []
+      },
+      "providerExports": [
+       "HYPERUNIX_FIND_CONTRACT",
+       "nativeHyperUnixFind",
+       "registerHyperUnixFind",
+       "registerNativeHyperUnixFind"
+      ],
+      "registrationCalls": [
+       "src/workbench/hosts/local-detached.ts|registerNativeHyperUnixFind",
+       "src/workbench/native-modules.ts|hyperunix.registerNativeHyperUnixFind"
+      ],
+      "callControl": [
+       "control|registerHyperUnixFind",
+       "control|hyperunix.registerNativeHyperUnixFind"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "no Pi path can represent Verified at all",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "mutationSurface": [
+       "MutationPlan",
+       "MutationPlanRefusedError",
+       "Mutations",
+       "mutationArgv",
+       "ApplyCancellationPolicy",
+       "ApplyOptions",
+       "MoveRequest",
+       "MutationBackend",
+       "MutationOperation",
+       "RenameRequest",
+       "assembleReceipt",
+       "decodeJournalFrames",
+       "decodePlanFrames",
+       "decodeRecoveryFrames",
+       "intOf",
+       "PREVIEW_DIMENSIONS",
+       "previewOf",
+       "receiptFromJson",
+       "receiptToJson",
+       "AuthorizationRequirements",
+       "CancellationRecord",
+       "CommitGroupGuarantee",
+       "DecodedJournal",
+       "DecodedPlan",
+       "Digest",
+       "GuaranteeVector",
+       "IntentPolicy",
+       "JournalEvent",
+       "JsonRecord",
+       "MutationPreview",
+       "MutationReceipt",
+       "PhysicalAction",
+       "Precondition",
+       "PreviewDimension",
+       "ProviderGuarantee",
+       "RecoveryClassification",
+       "RecoveryGuarantees",
+       "SafetyWarning",
+       "VerificationEvidence"
+      ],
+      "surfaceControl": [
+       "a",
+       "B",
+       "e"
+      ],
+      "src": {
+       "sites": [
+        "src/index.ts|literal:ArrayLiteralExpression|@hyperunix/sdk|",
+        "src/workbench/hosts/local-detached.ts|import-meta-resolve|@hyperunix/sdk|",
+        "src/workbench/providers/hyperunix.ts|import|@hyperunix/sdk|Bounds,type ClaimBody,HyperUnix,type QueryResult,resultToJson"
+       ],
+       "violations": []
+      },
+      "controls": {
+       "read-named": {
+        "sites": [
+         "control:read-named|import|@hyperunix/sdk|Bounds,HyperUnix"
+        ],
+        "violations": []
+       },
+       "named-mutation": {
+        "sites": [
+         "control:named-mutation|import|@hyperunix/sdk|receiptFromJson"
+        ],
+        "violations": [
+         "control:named-mutation|import|@hyperunix/sdk|receiptFromJson"
+        ]
+       },
+       "type-mutation": {
+        "sites": [
+         "control:type-mutation|import|@hyperunix/sdk|type MutationReceipt"
+        ],
+        "violations": [
+         "control:type-mutation|import|@hyperunix/sdk|type MutationReceipt"
+        ]
+       },
+       "aliased-mutation": {
+        "sites": [
+         "control:aliased-mutation|import|@hyperunix/sdk|Mutations"
+        ],
+        "violations": [
+         "control:aliased-mutation|import|@hyperunix/sdk|Mutations"
+        ]
+       },
+       "namespace": {
+        "sites": [
+         "control:namespace|import|@hyperunix/sdk||opaque"
+        ],
+        "violations": [
+         "control:namespace|import|@hyperunix/sdk||opaque"
+        ]
+       },
+       "side-effect": {
+        "sites": [
+         "control:side-effect|import|@hyperunix/sdk||opaque"
+        ],
+        "violations": [
+         "control:side-effect|import|@hyperunix/sdk||opaque"
+        ]
+       },
+       "subpath": {
+        "sites": [
+         "control:subpath|import|@hyperunix/sdk/raw|runHx|opaque"
+        ],
+        "violations": [
+         "control:subpath|import|@hyperunix/sdk/raw|runHx|opaque"
+        ]
+       },
+       "export-star": {
+        "sites": [
+         "control:export-star|export|@hyperunix/sdk||opaque"
+        ],
+        "violations": [
+         "control:export-star|export|@hyperunix/sdk||opaque"
+        ]
+       },
+       "export-named": {
+        "sites": [
+         "control:export-named|export|@hyperunix/sdk|MutationPlan"
+        ],
+        "violations": [
+         "control:export-named|export|@hyperunix/sdk|MutationPlan"
+        ]
+       },
+       "dynamic": {
+        "sites": [
+         "control:dynamic|dynamic-import|@hyperunix/sdk||opaque"
+        ],
+        "violations": [
+         "control:dynamic|dynamic-import|@hyperunix/sdk||opaque"
+        ]
+       },
+       "require": {
+        "sites": [
+         "control:require|require|@hyperunix/sdk||opaque"
+        ],
+        "violations": [
+         "control:require|require|@hyperunix/sdk||opaque"
+        ]
+       },
+       "import-type": {
+        "sites": [
+         "control:import-type|import-type|@hyperunix/sdk|MutationReceipt"
+        ],
+        "violations": [
+         "control:import-type|import-type|@hyperunix/sdk|MutationReceipt"
+        ]
+       },
+       "resolve": {
+        "sites": [
+         "control:resolve|import-meta-resolve|@hyperunix/sdk|"
+        ],
+        "violations": []
+       }
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "src": {
+       "references": [
+        "src/workbench/providers/hyperunix.ts|member|create|bounds.d.ts",
+        "src/workbench/providers/hyperunix.ts|member|open|client.d.ts",
+        "src/workbench/providers/hyperunix.ts|member|client|client.d.ts",
+        "src/workbench/providers/hyperunix.ts|member|dispose|client.d.ts",
+        "src/workbench/providers/hyperunix.ts|member|runtime|client.d.ts",
+        "src/workbench/providers/hyperunix.ts|member|find|client.d.ts",
+        "src/workbench/providers/hyperunix.ts|member|create|bounds.d.ts",
+        "src/workbench/providers/hyperunix.ts|member|version|client.d.ts",
+        "src/workbench/providers/hyperunix.ts|member|binarySha256|client.d.ts",
+        "src/workbench/providers/hyperunix.ts|member|close|client.d.ts"
+       ],
+       "violations": []
+      },
+      "controls": {
+       "member": {
+        "references": [
+         "control:member|member|mutations|client.d.ts|mutation",
+         "control:member|member|open|client.d.ts"
+        ],
+        "violations": [
+         "control:member|member|mutations|client.d.ts|mutation"
+        ]
+       },
+       "destructured": {
+        "references": [
+         "control:destructured|destructure|mutations|client.d.ts|mutation",
+         "control:destructured|member|open|client.d.ts"
+        ],
+        "violations": [
+         "control:destructured|destructure|mutations|client.d.ts|mutation"
+        ]
+       },
+       "element-literal": {
+        "references": [
+         "control:element-literal|element|mutations|client.d.ts|mutation",
+         "control:element-literal|member|open|client.d.ts"
+        ],
+        "violations": [
+         "control:element-literal|element|mutations|client.d.ts|mutation"
+        ]
+       },
+       "const-key": {
+        "references": [
+         "control:const-key|element|mutations|client.d.ts|mutation",
+         "control:const-key|member|open|client.d.ts"
+        ],
+        "violations": [
+         "control:const-key|element|mutations|client.d.ts|mutation"
+        ]
+       },
+       "namespace": {
+        "references": [
+         "control:namespace|member|receiptFromJson|protocol/mutation.d.ts|mutation"
+        ],
+        "violations": [
+         "control:namespace|member|receiptFromJson|protocol/mutation.d.ts|mutation"
+        ]
+       },
+       "raw": {
+        "references": [
+         "control:raw|member|raw|client.d.ts|argv",
+         "control:raw|member|open|client.d.ts"
+        ],
+        "violations": [
+         "control:raw|member|raw|client.d.ts|argv"
+        ]
+       },
+       "flowed-open": {
+        "references": [
+         "control:flowed-open|member|open|client.d.ts"
+        ],
+        "violations": []
+       },
+       "flowed": {
+        "references": [
+         "control:flowed|member|mutations|client.d.ts|mutation"
+        ],
+        "violations": [
+         "control:flowed|member|mutations|client.d.ts|mutation"
+        ]
+       }
+      }
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "cases": [
+       "forge.gate.status",
+       "hyperunix.find",
+       "furnace.run.inspect",
+       "reactivefiber.render.preview"
+      ],
+      "hyperunixCases": [
+       "hyperunix.find"
+      ],
+      "caseControl": [
+       "a.read",
+       "hyperunix.apply"
+      ],
+      "findStatus": [
+       "complete|complete",
+       "complete-empty|complete-empty",
+       "incomplete|incomplete",
+       "budget-exhausted|budget-exhausted",
+       "cancelled|cancelled",
+       "view-invalidated|view-invalidated",
+       "provider-failed|provider-failed",
+       "schema-failed|schema-failed",
+       "internal-failed|internal-failed",
+       "protocol-failed|protocol-failed",
+       "usage-error|usage-error",
+       "mutation-rejected|mutation-rejected",
+       "mutation-partial|mutation-partial"
+      ],
+      "verbs": [
+       "create",
+       "rename",
+       "move",
+       "remove",
+       "apply"
+      ],
+      "verbControl": [
+       "create",
+       "touch",
+       "apply",
+       "replay"
+      ],
+      "receipts": [
+       "hyperunix.create|{}",
+       "hyperunix.rename|{}",
+       "hyperunix.move|{}",
+       "hyperunix.remove|{}",
+       "hyperunix.apply|{}"
+      ],
+      "glyphTriggers": [
+       "src/ui/workflow-card.ts|verified",
+       "src/ui/workflow-dialog.ts|verified"
+      ],
+      "glyphControl": [
+       "control|verified",
+       "control|complete"
+      ],
+      "kindsLightingGlyph": []
+     }
+    },
+    {
+     "id": "C4",
+     "witness": {
+      "floor": [
+       "forge",
+       "git",
+       "rf"
+      ],
+      "hx": [],
+      "controls": {
+       "literal": [
+        "control:literal|spawn|hx"
+       ],
+       "shell": [
+        "control:shell|exec|hx apply plan"
+       ],
+       "path": [
+        "control:path|execFileSync|/usr/local/bin/hx"
+       ],
+       "member": [
+        "control:member|exec|hx"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the residuals: each named family pinned by its quiet row",
+   "pins": [
+    {
+     "id": "Q1",
+     "witness": {
+      "composed": {
+       "references": [
+        "control:q1-composed|member|open|client.d.ts"
+       ],
+       "violations": []
+      },
+      "reflected": {
+       "references": [
+        "control:q1-reflected|member|open|client.d.ts"
+       ],
+       "violations": []
+      }
+     }
+    },
+    {
+     "id": "Q2",
+     "witness": {
+      "cast": {
+       "references": [
+        "control:q2-cast|member|open|client.d.ts"
+       ],
+       "violations": []
+      }
+     }
+    },
+    {
+     "id": "Q3",
+     "witness": {
+      "domainStatus": "verified",
+      "topology": "refused:validation:HyperUnix topology refused: source.execution_status.kind is not a vendored SDK ExecutionStatusKind.",
+      "invariant": "breaks:execution-kind:absence-not-licensed",
+      "injectedCalls": []
+     }
+    },
+    {
+     "id": "Q4",
+     "witness": {
+      "sites": [],
+      "violations": []
+     }
+    },
+    {
+     "id": "Q5",
+     "witness": {
+      "launches": [],
+      "hx": []
+     }
+    },
+    {
+     "id": "Q6",
+     "witness": {
+      "walkOutsideSrc": 0,
+      "programOutsideSrc": 0
+     }
+    },
+    {
+     "id": "Q7",
+     "witness": {
+      "sites": {
+       "sites": [],
+       "violations": []
+      },
+      "references": {
+       "references": [],
+       "violations": []
+      },
+      "launches": []
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the bead's own text and the cases agree",
+  "A1",
+  "A2",
+  "A3",
+  "B1",
+  "B2",
+  "C1",
+  "C2",
+  "C3",
+  "C4",
+  "Q1",
+  "Q2",
+  "Q3",
+  "Q4",
+  "Q5",
+  "Q6",
+  "Q7",
+  "the registered tests and the reached pins equal the roster, in order and both ways"
+ ]
+}
