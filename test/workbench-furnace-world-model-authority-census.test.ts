@@ -20,8 +20,12 @@
  * native_receipt, capture_completeness, redaction_hash}; CounterfactualCandidate {base_snapshot, intervention,
  * predicted_distribution, scenario_id, authority=none}; SyntheticAttemptState for an exact micro-gym only). No released
  * surface carries them: the installed @furnace/sdk release (128 files, the copy npm ci extracts from
- * vendor/furnace-sdk-0.1.0.tgz) and the 116 src modules spell none of their names or stems. Pi's Beads and Furnace readers
- * take their native clients as parameters, the seams this census drives: the Beads work reader (src/workbench/beads-observer.ts,
+ * vendor/furnace-sdk-0.1.0.tgz) and the 116 src modules spell none of their names or stems. RE-MEASURED by the respin seat
+ * ws-03 (run g10-work-s130) on trunk 5fbe25e: the release is unchanged (128 files) and no code token of the 117 src modules
+ * spells one; one doc comment does, in prose: src/workbench/hyperunix-observer.ts cites wb-gwr.2's HX bead tag
+ * HX-PREDICTIVE-WORLD-MODEL-ADAPTERS-R2 (landing 646), whose fold holds the stem worldmodel (R-COMMENT-OR-SPLIT, Q6). Pi's
+ * Beads and Furnace readers take their native clients as parameters, the seams this census drives: the Beads work reader
+ * (src/workbench/beads-observer.ts,
  * seam BeadsReadClient: show) and the program readiness reader (src/workbench/beads-program-readiness.ts, seam
  * BeadsProgramClient: show and dependents), whose own texts name the argv a host runs for each call (`bd show <id> --json`;
  * dep list <id> --direction=up --json); the Furnace run reader (src/workbench/furnace-observer.ts, FurnaceObserverClient: run
@@ -68,10 +72,14 @@
  *    and each splice is refused as a malformed answer (unavailable, or the program read as STORE_UNREACHABLE), never read as
  *    state.
  *  Z, "released world-model record surface alongside live Beads/Furnace state" (the gating artifact). Z1 until it is released
- *    no Pi reader of the records exists: no src module and no file of the installed @furnace/sdk release names one, read as
- *    the NFKC fold of each file (lower-cased, every character outside a-z and 0-9 removed) holding a STEMS member, with
- *    floors, and a planted spelling of each stem found. ARMED: when a release or a src module names one, Z1 reds: the reader
- *    that arrives joins the spies of A, B and C before the census is re-measured.
+ *    no Pi reader of the records exists: no file of the installed @furnace/sdk release names one, read as the NFKC fold of
+ *    the file's whole text (lower-cased, every character outside a-z and 0-9 removed) holding a STEMS member, and no src
+ *    module's code names one, read as the same fold of each code token alone (every identifier, private name included, and
+ *    every string, template and regular-expression literal of the parsed module; comments are never read, so prose citing
+ *    the program, such as a bead tag, is no reader), with floors; a planted spelling of each stem is found as an identifier,
+ *    a private name, a string, a template and a regular-expression literal by the src arm, and inside a comment by the
+ *    release arm. ARMED: when a release file or a src module's code names one, Z1 reds: the reader that arrives joins the
+ *    spies of A, B and C before the census is re-measured.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and
  * pins, every pin's quote and subjects, the constants and every pin's witness - is held to the out-of-file roster
@@ -80,7 +88,8 @@
  * OUTSIDE ANCHORS (their own registered case): the bead's own export row - rows A, B and C's labels tile the acceptance after
  * its mark with nothing but separators (whitespace, comma, semicolon, colon, period, parentheses) and the connector "and"
  * between them, row Z's label tiles the gating artifact sentence, and each judged row's pin quotes tile its label the same
- * way, so a row or a pin removed from ROWS, the literal, IMPL and the roster together still reds; the records' names are the
+ * way, so a judged row or pin removed from ROWS, the literal, IMPL and the roster together still reds unless its label or
+ * quote is re-homed into a neighbour's (NOT CLAIMED); the records' names are the
  * title's tokens between "from a " and " (or any model-predicted) record", each planted and each a STEMS member's fold; the
  * seam roster - every exported interface or type alias of src/workbench whose name holds Beads or Furnace and ends in Client
  * - equals the subjects the pins name plus SCOPED_SEAMS exactly, so a new seam reds; each Beads seam's argv is the
@@ -94,18 +103,27 @@
  * other member name is not exercised: a leaking reader keyed to "forecast" stays quiet under every plant and is caught once a
  * plant spells the key (Q4); R-UNNAMED-SEAM the seam roster reads exported names that end in Client, so a reader whose client
  * is a slice or an alias of a named seam is not listed: the log evidence reader's FurnaceEvidenceRequest.client, a Pick of
- * FurnaceObserverClient, is found by reading src and driven by name, while the roster holds no entry for its module (Q5).
+ * FurnaceObserverClient, is found by reading src and driven by name, while the roster holds no entry for its module (Q5);
+ * R-COMMENT-OR-SPLIT Z1's src arm folds each code token alone, so a name carried only by a comment (prose: the trunk doc
+ * comment of src/workbench/hyperunix-observer.ts citing the HX bead tag HX-PREDICTIVE-WORLD-MODEL-ADAPTERS-R2, or a comment
+ * naming a record) or split across two tokens (a concatenation, a member chain, a template and its substitution) is not
+ * read: each such plant stays quiet under the src arm while the whole-text fold finds it (Q6).
  * NOT CLAIMED (edits of this file and the roster together): a pin's case and its roster witness re-authored together; a
- * plant placement, plant key or record field removed from its table and the roster together (no outside anchor names the
- * placements; the record names are anchored to the title); a floor lowered with the roster; a residual row removed from ROWS,
- * the literal, IMPL, RESIDUALS and the roster (no outside anchor names the residual families).
+ * judged row or pin merged into its neighbour, its label or quote re-homed into the neighbour's (C3's quote into C2's as
+ * "leaves Beads work nodes and run/attempt supervision state", or A2's into A1's as row A's whole label), its case dropped
+ * and any seam only it named moved to the neighbour, since no outside anchor binds the acceptance's partition into rows or
+ * a label's into pins; a plant placement, plant key, planted spelling or record field removed from its table and the roster
+ * together (no outside anchor names the placements or spellings; the record names are anchored to the title); a floor
+ * lowered with the roster; a residual row removed from ROWS, the literal, IMPL, RESIDUALS and the roster (no outside anchor
+ * names the residual families).
  * SCOPE: the census judges the readers Pi has, through their seams; a host that binds a seam (the open wb-752.12 bd client)
  * is not judged until it lands, when its launch argv is the frozen argv A2 maps each call to (and wb-kku9.3's census already
  * holds the work reader's seam to show alone). The furnace-hosted execution host (FurnaceHostedClient, runs.start on an
  * operator's request) is no reader and is not driven (SCOPED_SEAMS). The log evidence reader's content is the attempt's log
  * text, never supervision state, so C3 does not compare it (B1 holds its reads, Q2 its relay). The projection core cannot tell a
  * reader that states a prediction as a snapshot or an ownership relation: Z1 holds that no such reader exists, C1 holds the
- * hypothesis channel.
+ * hypothesis channel. Z1's src arm reads a string literal whatever it says, so a src message or label that cites the program
+ * by name (a bead tag inside a string) reds Z1 as an arriving reader would, and is re-measured the same way.
  *
  * Display paths added: none. Test-only: no scratch is allocated; src, the installed release and .beads are only read.
  */
@@ -548,6 +566,41 @@ function predictedStatements() {
 // ---- Z1's fold ----
 const fold = (value: string): string => value.normalize("NFKC").toLowerCase().replace(/[^a-z0-9]/g, "");
 const stemsIn = (value: string): readonly string[] => STEMS.filter(stem => fold(value).includes(stem));
+/** A parsed module's code tokens: every identifier (private names included) and every string, template and
+ * regular-expression literal. Comments are trivia the walk never visits (forEachChild reaches no JSDoc node). */
+function codeTokens(file: string, value: string): readonly string[] {
+  const tokens: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node) || ts.isStringLiteralLike(node) || ts.isTemplateLiteralToken(node) || ts.isRegularExpressionLiteral(node)) tokens.push(node.text);
+    ts.forEachChild(node, visit);
+  };
+  visit(ts.createSourceFile(file, value, ts.ScriptTarget.Latest, false));
+  return tokens;
+}
+/** The src arm's reading of a module: the STEMS members its code tokens hold, each token folded alone. */
+function codeStems(file: string, value: string): readonly string[] {
+  const folded = codeTokens(file, value).map(fold);
+  return STEMS.filter(stem => folded.some(token => token.includes(stem)));
+}
+/** Z1's reading by arm: a src module's code tokens, a release file's whole text (prose included). */
+const z1Stems = (subject: "src" | "@furnace/sdk", file: string, value: string): readonly string[] => (subject === "src" ? codeStems(file, value) : stemsIn(value));
+/** The planted spellings, one per stem in STEMS order: as written (a string, a template, a comment) and as an identifier. */
+const SPELLINGS = ["FurnaceObservedTransition", "counterfactual_candidate", "Synthetic Attempt State", "world-model", "predicted_distribution"] as const;
+const IDENTIFIER_SPELLINGS = ["FurnaceObservedTransition", "CounterfactualCandidate", "SyntheticAttemptState", "WorldModel", "predicted_distribution"] as const;
+/** Each stem split across two code tokens: a concatenation, a member chain, a template and its substitution. */
+const SPLIT_PLANTS = [
+  'export const plant = "FurnaceObserved" + "Transition";',
+  'export const plant = "counter" + "factual_candidate";',
+  "export const plant = synthetic.attemptState;",
+  "export const plant = world.model;",
+  `export const plant = \`predicted_\${"distribution"}\`;`,
+] as const;
+/** The bead-tag citation of the trunk doc comment of src/workbench/hyperunix-observer.ts (wb-gwr.2, landing 646): its first
+ * line verbatim, closed. */
+const BEAD_TAG_PROSE = "/** One field of the HX result relayed verbatim as its own facet (wb-gwr.2, HX-PREDICTIVE-WORLD-MODEL-ADAPTERS-R2; HX WM-002 names */";
+/** The name each planted module is parsed under (no file is written). */
+const PLANT_FILE = "world-model-plant.ts";
+const plantModule = (line: string): string => `${line}\nexport const plant = 1;\n`;
 function filesUnder(dir: string, keep: (name: string) => boolean): readonly string[] {
   return readdirSync(dir, { recursive: true, withFileTypes: true })
     .filter(entry => entry.isFile() && keep(entry.name))
@@ -784,19 +837,25 @@ const IMPL: Readonly<Record<string, (live: Live) => Promise<Json>>> = {
       ["@furnace/sdk", sdk],
     ] as const) {
       for (const file of files) {
-        const found = stemsIn(readFileSync(file, "utf8"));
+        const found = z1Stems(subject, file, readFileSync(file, "utf8"));
         live.touch(subject);
         if (found.length > 0) mentions.push(`${relative(REPO, file)}: ${found.join(",")}`);
       }
     }
     const version: unknown = JSON.parse(readFileSync(join(sdkRoot, "package.json"), "utf8"));
-    const plants = ["FurnaceObservedTransition", "counterfactual_candidate", "Synthetic Attempt State", "world-model", "predicted_distribution"];
     expect(mentions, "ARMED: a release or src module names a world-model record; drive its reader through A, B and C, then re-measure").toEqual([]);
     return {
       floors: { src: src.length >= SRC_FLOOR, sdk: sdk.length >= SDK_FLOOR },
       release: isObject(version) && typeof version.name === "string" ? version.name : null,
       mentions,
-      plants: plants.map(plant => stemsIn(plant)),
+      plants: {
+        identifier: IDENTIFIER_SPELLINGS.map(name => z1Stems("src", PLANT_FILE, `export interface ${name} {\n  readonly id: string;\n}\n`)),
+        privateName: IDENTIFIER_SPELLINGS.map(name => z1Stems("src", PLANT_FILE, `export class Plant {\n  #${name} = 1;\n}\n`)),
+        string: SPELLINGS.map(spelling => z1Stems("src", PLANT_FILE, `export const plant = ${JSON.stringify(spelling)};\n`)),
+        template: SPELLINGS.map(spelling => z1Stems("src", PLANT_FILE, `export const plant = (id: string): string => \`\${id} ${spelling}\`;\n`)),
+        regex: SPELLINGS.map(spelling => z1Stems("src", PLANT_FILE, `export const plant = /${spelling}/;\n`)),
+        releaseComment: SPELLINGS.map(spelling => z1Stems("@furnace/sdk", PLANT_FILE, plantModule(`// ${spelling}\n/** ${spelling} */`))),
+      },
     };
   },
   async Q1(live) {
@@ -859,6 +918,19 @@ const IMPL: Readonly<Record<string, (live: Live) => Promise<Json>>> = {
     const clientType = member && ts.isPropertySignature(member) ? (member.type?.getText(source) ?? null) : null;
     return { module: file, clientType, rosterEntries: seamRoster().filter(entry => entry.startsWith(`${file}:`)).length };
   },
+  async Q6(live) {
+    // A name only a comment carries (the trunk bead-tag citation, each spelling in a line and a block comment), or one split
+    // across two code tokens, is not read by the src arm; the whole-text fold finds every one, so each plant names a stem.
+    live.touch("tokens");
+    const prose = [BEAD_TAG_PROSE, ...SPELLINGS.map(spelling => `// ${spelling}`), ...SPELLINGS.map(spelling => `/** ${spelling} */`)].map(plantModule);
+    const split = SPLIT_PLANTS.map(line => `${line}\n`);
+    const reading = (plants: readonly string[]) => ({
+      planted: plants.length,
+      quiet: plants.filter(plant => z1Stems("src", PLANT_FILE, plant).length === 0).length,
+      foundByWholeText: plants.filter(plant => stemsIn(plant).length > 0).length,
+    });
+    return { prose: reading(prose), split: reading(split), stems: STEMS.filter(stem => [...prose, ...split].some(plant => stemsIn(plant).includes(stem))) };
+  },
 };
 
 // ---- the judged set ----
@@ -910,6 +982,7 @@ const ROWS: readonly Row[] = [
       { id: "Q3", quote: "R-VOCABULARY", subjects: ["fold"] },
       { id: "Q4", quote: "R-UNPLANTED-KEY", subjects: ["BeadsReadClient"] },
       { id: "Q5", quote: "R-UNNAMED-SEAM", subjects: ["src"] },
+      { id: "Q6", quote: "R-COMMENT-OR-SPLIT", subjects: ["tokens"] },
     ],
   },
 ];
@@ -920,6 +993,7 @@ const RESIDUALS: Readonly<Record<string, string>> = {
   "R-VOCABULARY": "Q3",
   "R-UNPLANTED-KEY": "Q4",
   "R-UNNAMED-SEAM": "Q5",
+  "R-COMMENT-OR-SPLIT": "Q6",
 };
 const JUDGED = ["A", "B", "C", "Z"];
 
@@ -1004,7 +1078,7 @@ const ARGV_PHRASES: Readonly<Record<string, string>> = {
 
 describe("wb-b04.1 world-model authority census (FURNACE-WORLD-MODEL-TRACE-ADAPTER-R4)", () => {
   it("S: the census tables keep their frozen shape and are the roster's judged set (rule 16)", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:1", "C:4", "Z:1", "Q:5"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:1", "C:4", "Z:1", "Q:6"]);
     expect(ROSTER.bead).toBe(BEAD);
     expect(ROSTER.rows).toEqual(ROWS);
     expect(ROSTER.constants).toEqual(CONSTANTS);

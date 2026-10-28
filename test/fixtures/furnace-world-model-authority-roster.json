@@ -131,6 +131,13 @@
      "subjects": [
       "src"
      ]
+    },
+    {
+     "id": "Q6",
+     "quote": "R-COMMENT-OR-SPLIT",
+     "subjects": [
+      "tokens"
+     ]
     }
    ]
   }
@@ -227,7 +234,8 @@
    "R-NATIVE-RELAY:Q2",
    "R-VOCABULARY:Q3",
    "R-UNPLANTED-KEY:Q4",
-   "R-UNNAMED-SEAM:Q5"
+   "R-UNNAMED-SEAM:Q5",
+   "R-COMMENT-OR-SPLIT:Q6"
   ],
   "floors": {
    "src": 100,
@@ -483,23 +491,110 @@
    },
    "release": "@furnace/sdk",
    "mentions": [],
-   "plants": [
-    [
-     "observedtransition"
+   "plants": {
+    "identifier": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
     ],
-    [
-     "counterfactual"
+    "privateName": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
     ],
-    [
-     "syntheticattempt"
+    "string": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
     ],
-    [
-     "worldmodel"
+    "template": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
     ],
-    [
-     "predicteddistribution"
+    "regex": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
+    "releaseComment": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
     ]
-   ]
+   }
   },
   "Q1": {
    "nativeStatus": {
@@ -542,6 +637,25 @@
    "module": "src/workbench/furnace-evidence.ts",
    "clientType": "Pick<FurnaceObserverClient, \"logs\">",
    "rosterEntries": 0
+  },
+  "Q6": {
+   "prose": {
+    "planted": 11,
+    "quiet": 11,
+    "foundByWholeText": 11
+   },
+   "split": {
+    "planted": 5,
+    "quiet": 5,
+    "foundByWholeText": 5
+   },
+   "stems": [
+    "observedtransition",
+    "counterfactual",
+    "syntheticattempt",
+    "worldmodel",
+    "predicteddistribution"
+   ]
   }
  }
 }
