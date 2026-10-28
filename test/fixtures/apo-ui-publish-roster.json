@@ -1,0 +1,664 @@
+{
+  "comment": "wb-021.4 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R5): the OUT-OF-FILE anchor of test/workbench-apo-ui-publish-census.test.ts (the hk9l/5jha roster pattern). rows: every judged row of test/helpers/apo-ui-publish-census.ts in census order (L, R, G, A, F, Q) - id, label and, per pin, its id and the SHA-256 of the pin as written (its JSON: a live pin's expected values; a plant's planted files, entry and expected findings, roles and inventories; a reading pin's texts and readings). tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its rows, its registered tests (vitest task tree, run modes) and its residual families against this file at test time, in order and both ways.",
+  "rows": [
+    {
+      "id": "L",
+      "label": "No Pi workbench UI interaction shall silently publish an APO graph manifest or checkpoint:",
+      "pins": [
+        {
+          "id": "L1-entry",
+          "digest": "397c976ec8c457cbc6c1b52dc176f9f17e5885b6b78700fd20aa36ed4e00e47e"
+        },
+        {
+          "id": "L2-paths",
+          "digest": "828ee8f79d11797175f3d464276f31d052567060084a7af9373fa23b4b4afa12"
+        },
+        {
+          "id": "L3-roles",
+          "digest": "73e575b3724147d6898af14dcec702f92158c37cb56bd3d1430639ef3cd02319"
+        }
+      ]
+    },
+    {
+      "id": "R",
+      "label": "a view click, refresh, or keybinding never publishes ('No UI click silently publishes a graph');",
+      "pins": [
+        {
+          "id": "R0-kinds",
+          "digest": "6f42301cda05ffffa0135b6fbfdee246c9f7c64b5cd9eada8fe78500a0357710"
+        },
+        {
+          "id": "R0-click-words",
+          "digest": "4deb24cd55c4a6ddd7ef9829f470bbee0bd1f2584117314f4f82d2fb174f3800"
+        },
+        {
+          "id": "R0-click-name",
+          "digest": "d441f5926922c37e5dc6ef1b6c397593af85676fcf47a9fa3e614bc0e58063f1"
+        },
+        {
+          "id": "R0-click-literal",
+          "digest": "fa88f6d26a7c07758aeceddc2883b245df812ed6d8aee6559d5683df531e8a01"
+        },
+        {
+          "id": "R-src/index.ts",
+          "digest": "3684c2b89485ff896be78d740c4ca2860d5958b24eaf835c77893751cf3d51ff"
+        },
+        {
+          "id": "R-src/ui/conversation-viewer.ts",
+          "digest": "87dfebacf38215a606592c11bc666199a27fd3da9772c633d5630acddd4b20a4"
+        },
+        {
+          "id": "R-src/ui/fleet-list.ts",
+          "digest": "f1d217cbfcab29cc342c13872f15a19bf60de83c353066986bc682a9888adfb6"
+        },
+        {
+          "id": "R-src/ui/schedule-menu.ts",
+          "digest": "30326aaa6f1ce1d40cea39ec50fd1bf9676bcf9541ba756ff1b09d2765db2037"
+        },
+        {
+          "id": "R-src/ui/select-item.ts",
+          "digest": "1f4159adb4c74d14a728e002f3abc0efad6b8b4efae2d0cff7312b71ee79a6fb"
+        },
+        {
+          "id": "R-src/ui/viewer-keys.ts",
+          "digest": "12ce17b627b1f173baff53f02d2e31680b83aa302c49294365f31d971ba497f0"
+        },
+        {
+          "id": "R-src/ui/workflow-dialog.ts",
+          "digest": "14eef02beaaed8b2d565ff0ba37c7bd1be91b1953ef8438ba2a63bb0cc2f200d"
+        },
+        {
+          "id": "R-src/ui/workflow-inspector.ts",
+          "digest": "c80353b1dafe1bb29b4a5f7bb9f0c816747ff4fba5a9972b9dc1f947fb6a00ef"
+        },
+        {
+          "id": "R-src/ui/workflow-menu.ts",
+          "digest": "c272e54633a293ba19167ff0cd45263c1eaaf9d175a05b6e05abc8d04de8f5f3"
+        }
+      ]
+    },
+    {
+      "id": "G",
+      "label": "if a publish/promotion affordance ever appears it is an explicit, confirmed, governed operation outside the view surface, delegating to the owner's revision-guarded CAS promotion ('publication is governed').",
+      "pins": [
+        {
+          "id": "G1-surface",
+          "digest": "7496a3025c4c59e5d3bcd382c18ded4780704f73e9e03c24b8b879620d7be765"
+        },
+        {
+          "id": "G2-offer",
+          "digest": "b837c21ed9d0ced7845425359635d9b8142c07212883c5cfcd83a9aafaabceed"
+        },
+        {
+          "id": "G3-outside",
+          "digest": "cc8a1586596570eed0d969ae60581b252cbaa48dfe6f25c2106aaa39796237d1"
+        }
+      ]
+    },
+    {
+      "id": "A",
+      "label": "UI-affordance census",
+      "pins": [
+        {
+          "id": "A-src/index.ts",
+          "digest": "9fd07398dc3d97010fd6f34888eafe4e79e7e2338fd7f533ba4fbbe4e04bfb40"
+        },
+        {
+          "id": "A-src/ui/conversation-viewer.ts",
+          "digest": "bd22ed20800202bd1fc1ed6bfe6d5b91499351d054024bb492324d248a54193d"
+        },
+        {
+          "id": "A-src/ui/fleet-list.ts",
+          "digest": "295310073f76f39beea37fb64c09d7f750d53384298643282a8209ae7bc89b86"
+        },
+        {
+          "id": "A-src/ui/schedule-menu.ts",
+          "digest": "ba1e763b6421bcc25fde1c6de25dde43e4604c2d48f692e78b08ffa9a1ed31a5"
+        },
+        {
+          "id": "A-src/ui/select-item.ts",
+          "digest": "3830b0b76d9f7acccf5f6acf6f5f50095f7a465b3bc4cf01f4ae8fa0e665d119"
+        },
+        {
+          "id": "A-src/ui/viewer-keys.ts",
+          "digest": "4dc0d9827b67b4ca1f774eea6795911b4ed6f4583244b35da5d186f69114a4be"
+        },
+        {
+          "id": "A-src/ui/workflow-dialog.ts",
+          "digest": "781ffabc7c29e407bf90f063c0afb3d6d5dcf29fdddc38d9335305ea8e0890d5"
+        },
+        {
+          "id": "A-src/ui/workflow-inspector.ts",
+          "digest": "7e537eb9e6af719315be73ff279bf68307339dce3491e5e0cb3799fc8fa7ac40"
+        },
+        {
+          "id": "A-src/ui/workflow-menu.ts",
+          "digest": "add9f0249b2181de1598e65ccabe23ba7240331e45c24047cbd0b5b143480047"
+        },
+        {
+          "id": "A-readers",
+          "digest": "942b4aaa7bf11346689e98a4492f2846a36950c4cdde8488f7af68f2c5cfee3a"
+        },
+        {
+          "id": "A-unclassified",
+          "digest": "af31cf4982eea06c510a5668137270078ed4e785e764b5dcd7273567022a338c"
+        },
+        {
+          "id": "A-handler-kinds",
+          "digest": "2cd4f4825536d36f2ab02171924404eac4f66efccf94e17e28cc0b090d036b25"
+        },
+        {
+          "id": "A-handle-forms",
+          "digest": "9a1844950a4c1fb9a7f807cf756323508d4b735b05491992aa071a7d6cad5e01"
+        },
+        {
+          "id": "A-stored-alias",
+          "digest": "2c2e1ceb84a65ee494bad8c136f0285b69bbfe7eac94c5c8b68595d4e0a8f3f7"
+        },
+        {
+          "id": "A-escaped-names",
+          "digest": "02c152d06d9965998fcbc4b187c2675a3208540dce0bfcfde4faa134f1df32b1"
+        },
+        {
+          "id": "A-pi-collapse",
+          "digest": "7dff7dcb535d42236d35426ca159e65686a3fb647c8bb9a8e8fb59b446f9c53b"
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "label": "plus a falsifier that no APO view handler reaches any publish/promotion path.",
+      "pins": [
+        {
+          "id": "F-static",
+          "digest": "7398390006393dff1f315b6fd240a28a0ff238854632ddb5b641932a13d08768"
+        },
+        {
+          "id": "F-reexport-star",
+          "digest": "40fd48661e00b1bd326f5f7547b6139778de5406c529f8c65df3df9de195d5b9"
+        },
+        {
+          "id": "F-reexport-named",
+          "digest": "7180c0cba72e35b574754c5fb03b7cba34e9ca3b54598af1f974f6b71dcb5b4d"
+        },
+        {
+          "id": "F-dynamic",
+          "digest": "69488184d4530c868f0dfe214639bd49469f21ce1418d9fdb2242b82c9bbff5f"
+        },
+        {
+          "id": "F-template-specifier",
+          "digest": "26237fefd165cc0b23e345f760f87f37490dfafb3029047c8d83cc9707dc34db"
+        },
+        {
+          "id": "F-require",
+          "digest": "f36063a8918b6bf8e15b52741a937a9450a9fa53da50604fa5468c4a864e8657"
+        },
+        {
+          "id": "F-require-wrapped",
+          "digest": "d36bca548228383dd9d446f8e5bbffdfa50c85de1ab9a761262f77ed169fb3d3"
+        },
+        {
+          "id": "F-require-escaped",
+          "digest": "c9e9c6bbca3b73140f84c637c64151833c3c0e699c7896fb8ef9d85493019e7a"
+        },
+        {
+          "id": "F-import-equals",
+          "digest": "e8eb03192e8961905434ce28455b43a884afaf8ee6869782a9be0b9ba73e8c75"
+        },
+        {
+          "id": "F-side-effect",
+          "digest": "ce604c0496ea21d2212bf34d40e0305c45c5ece16b6e6137cb4030fe0bb04998"
+        },
+        {
+          "id": "F-transitive",
+          "digest": "822e9f97c762da20f706d333d25210646979fa7ace685dcad8bf18682153296f"
+        },
+        {
+          "id": "F-local",
+          "digest": "e59f5edf6fccfeae9f0c44089d511ea099e5012a4c0bf90b86855224e6559461"
+        },
+        {
+          "id": "F-computed-import",
+          "digest": "6faed209f87f1c154450f48bef374ebdd4beaa135d30edbfc49f7d837de24de6"
+        },
+        {
+          "id": "F-computed-require",
+          "digest": "cf27cd5ccd05833c55e950f9db657f0ab5800d1a767bd609864bd692ec06b84f"
+        },
+        {
+          "id": "F-missing",
+          "digest": "cc30b74ae608667636a723faf2f0fc40e01cf231cd5f0f1869b363f61b654291"
+        },
+        {
+          "id": "F-bare-paths",
+          "digest": "0a92ff00baac01ebc76a1087c79e377b7257d0c955e9ada858800e464802c3a2"
+        },
+        {
+          "id": "F-unreadable",
+          "digest": "b183e931d57e512389d2650a1ea84a1784066e641868a7d97590021ad6491239"
+        },
+        {
+          "id": "F-missing-entry",
+          "digest": "7a188d6a092df8b11903c092fba6997c12fc6b972e04f4ef9cc4cff523c6a641"
+        },
+        {
+          "id": "F-package-path",
+          "digest": "37f281992e234649a7a0932906987f8b796103342fc01805bd23260bbc3ff27b"
+        },
+        {
+          "id": "F-package-role",
+          "digest": "dff03ccfcbcb22d3992b5c52b7eb79b5f76682725cfb2e71bbd9ccb233edfb26"
+        },
+        {
+          "id": "F-word-publish",
+          "digest": "4bd30e65536aa0b5da41cdd2915056063123110a1226a544acdda77169df7081"
+        },
+        {
+          "id": "F-word-publishes",
+          "digest": "8231fcc514ff853051dc38f1f8307ee868e93b8ba45c23f08f130c83e3c818cd"
+        },
+        {
+          "id": "F-word-publication",
+          "digest": "41c1ae8de42d0f32470a94977f2ca70e16bb70bccd6a640e89dbab431aff87f2"
+        },
+        {
+          "id": "F-word-promotion",
+          "digest": "613775334e15283024cea00ca58bf9508959a4ed86eef3d7a5d779cc5666eb51"
+        },
+        {
+          "id": "F-folded",
+          "digest": "728339480b9e7ef105a9e1a6fe084f901d61c58afc4b0efadcb5114574b3617d"
+        },
+        {
+          "id": "F-template-head",
+          "digest": "f9a400f34b79fc6179b46f519dfcc86e4d04b4e3ffc72ca42e27198a464ae046"
+        },
+        {
+          "id": "F-template-middle",
+          "digest": "e9567479a5da12a06020d5943e503cf72e0be2d16099797a7609b02034560e2a"
+        },
+        {
+          "id": "F-template-tail",
+          "digest": "5e037336cf9266f86abd18d526bc4fac7a2b34da3fe1c4b1c03130820c808cd0"
+        },
+        {
+          "id": "F-regex",
+          "digest": "5fa199f3d7e7dc3d9b7bb3cdde5e528d3d344475510145962bce2d2afb618112"
+        },
+        {
+          "id": "F-escaped-4digit",
+          "digest": "019c458472d900399e5dafe7bb812ad6b7d1a116ad55a7866611400d995e3ce6"
+        },
+        {
+          "id": "F-escaped-braced",
+          "digest": "48a2e5f6cb2bee407d129626dec0845c752323b85496503364e64ca807078943"
+        },
+        {
+          "id": "F-escaped-scanner",
+          "digest": "1a6dd8976b244a68b5cfe61223c2295f246455782e688eadb90bf88f64905a3a"
+        },
+        {
+          "id": "F-escaped-scanner-braced",
+          "digest": "6941782a18523283d53e9ba68645be27e2d5089353a5355eb4c2e585043ee9cb"
+        },
+        {
+          "id": "F-escaped-private",
+          "digest": "c73459143fb2322f06dd670ded81f3bd396cf634579825c5cd0aef5770cd5fa0"
+        },
+        {
+          "id": "F-escaped-padded",
+          "digest": "3976da925150e0e01573a3942e5b6264233cceacc92d06a658ce578c96e64e6e"
+        },
+        {
+          "id": "F-escaped-padded-long",
+          "digest": "18003009df9b3e2428e5c8a7f4cf3f40b8ae25cb2b6c244f63067dc4be672954"
+        },
+        {
+          "id": "F-escaped-astral",
+          "digest": "b9c9018d6826b63ad6e881c2e8821d9a40b1dd438e0659048ff34af13f5c23b9"
+        },
+        {
+          "id": "F-escapes-runtime",
+          "digest": "c5f3fde46b3ed79325977daed738eb1d8b7312c245fd4762802113a556b4c7be"
+        },
+        {
+          "id": "F-escapes-runtime-padded",
+          "digest": "af526f36999818b92cc222d6c32d2cb4d4cbc299f827aec57b0c35aef60a34dd"
+        },
+        {
+          "id": "F-escapes-runtime-astral",
+          "digest": "bfaf6d52494a0623ded93d627d0e25f9de2b0a9ff22e13c54d731e4e762e1199"
+        },
+        {
+          "id": "F-digit-split",
+          "digest": "91272a6f971e57f7fb5753d275520bf302c3e7f5a303430d7234882ea856d627"
+        },
+        {
+          "id": "F-acronym-split",
+          "digest": "031eee746080fbcd797dbbc4d3606fb441c4cd5c622c6e9f7a144fea62385ce5"
+        },
+        {
+          "id": "F-private-name",
+          "digest": "4a640ee65f5a7e1a0a35486bbfacf4f9b4ab8b0c7335b3ee9a9ff8e1cb0f2346"
+        },
+        {
+          "id": "F-nosub-template",
+          "digest": "9e472994f3612c2bd9419906331f89540391ad3acd7c77409ce52d1a9619fddb"
+        },
+        {
+          "id": "F-folded-parens",
+          "digest": "8ee3a8bb51f97dce48619b648f36b8aa568504e04212607ba80760847ff094cc"
+        },
+        {
+          "id": "F-literal-escape",
+          "digest": "7fdd0f5ba74c7a7039902c07da26df144b6b9d740b838debb8b8c1f4f4d77b4d"
+        },
+        {
+          "id": "F-nosub-escape",
+          "digest": "364ed8aac25f643c5108d4fab57e6cb00f87571b65a68fe96df64b6c308d0fee"
+        },
+        {
+          "id": "F-template-escape",
+          "digest": "08fe1742a738aaac2c24686009db986e486037138b9a05978ef476beb142e879"
+        },
+        {
+          "id": "F-ignorable",
+          "digest": "e8bb1d355759f4a2d25764da32ae52a1abb969ed57fcc9cd8325f36de1ec722e"
+        },
+        {
+          "id": "F-mark",
+          "digest": "1cc03c58ae874e58e0c750f85cb6714816d36fecc95f41a88106370ded2c458a"
+        },
+        {
+          "id": "F-width",
+          "digest": "2f613c473ac489853b1b1d954f25dc01aa4167d98eac454a2ce507c1c4d53af4"
+        },
+        {
+          "id": "F-slug",
+          "digest": "dc4c1a3676dcac603af3b781d40c2f5e0bd72918a04511a94265473ea2c7ffe2"
+        },
+        {
+          "id": "F-slug-name",
+          "digest": "71680c19360db0245202861bdb00add5ec87f0275580dd8dc1a05e2f983140cd"
+        },
+        {
+          "id": "F-role-literal",
+          "digest": "0ed96cbe1a6ed060a97b567b7a3d730ee7285c85490cc27a2d643c2d64930ce9"
+        },
+        {
+          "id": "F-role-name",
+          "digest": "16fed110a09f60edb6f701baaa7e1eded2494ee1ff31e86fb97ead0eea5664af"
+        },
+        {
+          "id": "F-lists-publish",
+          "digest": "390ee97505a4ca60e9846c55b8758b92f228748a6c38daa1e908776a2e04de78"
+        },
+        {
+          "id": "F-lists-promote",
+          "digest": "ca92804c6d57836ab9eb3d9f7f6a84a09cad195ccfe5d55a8b487ba90ea1b9b1"
+        },
+        {
+          "id": "F-lists-object",
+          "digest": "4146ee9be803c252ea6ce32e8e2cc7b012b96b4fd60744b1152c3bb07254617c"
+        },
+        {
+          "id": "F-lists-role",
+          "digest": "8ee4507f436eee5472367595b3a686ea7e46b27f49d714b33dbae60b52b031fa"
+        },
+        {
+          "id": "F-lists-case",
+          "digest": "0e2fefc497db355c7f165bdfcc9db8a4b02cdbe3e164204518e0c75ff6ccedb8"
+        },
+        {
+          "id": "F-lists-near",
+          "digest": "8c3df5a2973c55cc07eaae731542beaac716f31cd10c0785a442b222f022883e"
+        },
+        {
+          "id": "F-quiet-type-only",
+          "digest": "6df636ce2f822cbad1a63495cf8d21fbe7358fe4355ef0f4134e70babf5485b8"
+        },
+        {
+          "id": "F-quiet-type-specifiers",
+          "digest": "de136eefeb065a92dde458f3bbff7eef2c8bc3bde29b4814cb5544b5af65247f"
+        },
+        {
+          "id": "F-quiet-type-export",
+          "digest": "1c2a58a5a2d75eb584df307118fd29882dbfbe61b8cbd051475eb46517e979b5"
+        },
+        {
+          "id": "F-quiet-type-import-equals",
+          "digest": "691a0f5d9a0e8128f06de99944a22162b39cfc19cffbf718553ea40b0f5fef3a"
+        },
+        {
+          "id": "F-quiet-comment",
+          "digest": "a542b11770105232f21a29e7a30166d16fa904877b7c56a4b3955d3d67af7394"
+        },
+        {
+          "id": "F-quiet-near-name",
+          "digest": "ba3fd97c17d45a4ec656edcbfd89beeea0c4e363fa2912c7a306da92ca7b2103"
+        },
+        {
+          "id": "F-quiet-unreached",
+          "digest": "bcda5a32b3739d35e8d1c0b43e981322edfe693f7858cc016b26bc250069ff54"
+        },
+        {
+          "id": "F-quiet-read-only-view",
+          "digest": "b8832dc6ef24b0bc7b436f2b9563c05bd9ffb8443274a4312a79f8aa3588f4ad"
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "named residuals, each a family with its pinned quiet row (outside the bead's text)",
+      "pins": [
+        {
+          "id": "R-COMPUTED-TEXT",
+          "digest": "bedf20dc6dd8eb9be64f77e979acf5138813b206101ba583fd03bf28a5b66c2b"
+        },
+        {
+          "id": "R-LOOKALIKE",
+          "digest": "ff7f072aa0521f87101373c2f0d3ff3399958c5ec8f78cf1542e676f6e8571df"
+        },
+        {
+          "id": "R-UNNAMED-PATH",
+          "digest": "f7dfea98e07bba0d5b3970f827d98ff7640e47fe18723cd894d542966d46e2e8"
+        },
+        {
+          "id": "R-PACKAGE",
+          "digest": "0e510030e8436dc28662298e78ada34b969e09e6fcd5b935fc21fe842438a8e0"
+        },
+        {
+          "id": "R-HELPER-KEY",
+          "digest": "d6354508f8fddbbb7b72d30278f4b8b8e275006b31082ff7481997108783bd1f"
+        },
+        {
+          "id": "R-RUNTIME-LOAD",
+          "digest": "b076ae8cb3bc7114c126dbc4d9e17779923b5b17bada66cb53118507b616aa83"
+        },
+        {
+          "id": "R-HOST-ALIAS",
+          "digest": "d527802a1e66e9037aef8330cdeee4cb34427a2bfc3af0db533243387444fb9a"
+        },
+        {
+          "id": "R-PI-ALIAS",
+          "digest": "b6f1112caa7e44ed83287a916ed54f2c5bce94ad85d6c9386a792f56c7dbd418"
+        },
+        {
+          "id": "R-HANDLER-FORM",
+          "digest": "74a38622dd7e69d90562012872747b86316881cb23f58fcf001feffa399f1aa8"
+        },
+        {
+          "id": "R-HANDLER-SETTER",
+          "digest": "01e0ef0bafa1c86b62215c61f4ae51c5626a002fc21fef9ab42ee2195c18f66c"
+        },
+        {
+          "id": "R-FOLD-WRAPPED",
+          "digest": "a4564fc040868d88630927e402a5c4d0a59206402b4e7b53e92f9f46dfeec5fd"
+        },
+        {
+          "id": "R-REGEX-ESCAPE",
+          "digest": "bf899580299eacea82727b5b36f9cc2148ad9c593cecd9950cad939fa8c7ce8a"
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "L L1-entry",
+    "L L2-paths",
+    "L L3-roles",
+    "R R0-kinds",
+    "R R0-click-words",
+    "R R0-click-name",
+    "R R0-click-literal",
+    "R R-src/index.ts",
+    "R R-src/ui/conversation-viewer.ts",
+    "R R-src/ui/fleet-list.ts",
+    "R R-src/ui/schedule-menu.ts",
+    "R R-src/ui/select-item.ts",
+    "R R-src/ui/viewer-keys.ts",
+    "R R-src/ui/workflow-dialog.ts",
+    "R R-src/ui/workflow-inspector.ts",
+    "R R-src/ui/workflow-menu.ts",
+    "G G1-surface",
+    "G G2-offer",
+    "G G3-outside",
+    "A A-src/index.ts",
+    "A A-src/ui/conversation-viewer.ts",
+    "A A-src/ui/fleet-list.ts",
+    "A A-src/ui/schedule-menu.ts",
+    "A A-src/ui/select-item.ts",
+    "A A-src/ui/viewer-keys.ts",
+    "A A-src/ui/workflow-dialog.ts",
+    "A A-src/ui/workflow-inspector.ts",
+    "A A-src/ui/workflow-menu.ts",
+    "A A-readers",
+    "A A-unclassified",
+    "A A-handler-kinds",
+    "A A-handle-forms",
+    "A A-stored-alias",
+    "A A-escaped-names",
+    "A A-pi-collapse",
+    "F F-static",
+    "F F-reexport-star",
+    "F F-reexport-named",
+    "F F-dynamic",
+    "F F-template-specifier",
+    "F F-require",
+    "F F-require-wrapped",
+    "F F-require-escaped",
+    "F F-import-equals",
+    "F F-side-effect",
+    "F F-transitive",
+    "F F-local",
+    "F F-computed-import",
+    "F F-computed-require",
+    "F F-missing",
+    "F F-bare-paths",
+    "F F-unreadable",
+    "F F-missing-entry",
+    "F F-package-path",
+    "F F-package-role",
+    "F F-word-publish",
+    "F F-word-publishes",
+    "F F-word-publication",
+    "F F-word-promotion",
+    "F F-folded",
+    "F F-template-head",
+    "F F-template-middle",
+    "F F-template-tail",
+    "F F-regex",
+    "F F-escaped-4digit",
+    "F F-escaped-braced",
+    "F F-escaped-scanner",
+    "F F-escaped-scanner-braced",
+    "F F-escaped-private",
+    "F F-escaped-padded",
+    "F F-escaped-padded-long",
+    "F F-escaped-astral",
+    "F F-escapes-runtime",
+    "F F-escapes-runtime-padded",
+    "F F-escapes-runtime-astral",
+    "F F-digit-split",
+    "F F-acronym-split",
+    "F F-private-name",
+    "F F-nosub-template",
+    "F F-folded-parens",
+    "F F-literal-escape",
+    "F F-nosub-escape",
+    "F F-template-escape",
+    "F F-ignorable",
+    "F F-mark",
+    "F F-width",
+    "F F-slug",
+    "F F-slug-name",
+    "F F-role-literal",
+    "F F-role-name",
+    "F F-lists-publish",
+    "F F-lists-promote",
+    "F F-lists-object",
+    "F F-lists-role",
+    "F F-lists-case",
+    "F F-lists-near",
+    "F F-quiet-type-only",
+    "F F-quiet-type-specifiers",
+    "F F-quiet-type-export",
+    "F F-quiet-type-import-equals",
+    "F F-quiet-comment",
+    "F F-quiet-near-name",
+    "F F-quiet-unreached",
+    "F F-quiet-read-only-view",
+    "Q R-COMPUTED-TEXT",
+    "Q R-LOOKALIKE",
+    "Q R-UNNAMED-PATH",
+    "Q R-PACKAGE",
+    "Q R-HELPER-KEY",
+    "Q R-RUNTIME-LOAD",
+    "Q R-HOST-ALIAS",
+    "Q R-PI-ALIAS",
+    "Q R-HANDLER-FORM",
+    "Q R-HANDLER-SETTER",
+    "Q R-FOLD-WRAPPED",
+    "Q R-REGEX-ESCAPE",
+    "outside anchors: the export row, the title's vocabulary, the package.json entry, the shared reader's edge kinds and the live affordance set",
+    "rule 16: every judged row and the residual families are frozen at their measured shape",
+    "roster: the judged rows, the registered tests and the residual families equal test/fixtures/apo-ui-publish-roster.json, in order and both ways"
+  ],
+  "residuals": {
+    "R-COMPUTED-TEXT": [
+      "Q R-COMPUTED-TEXT"
+    ],
+    "R-LOOKALIKE": [
+      "Q R-LOOKALIKE"
+    ],
+    "R-UNNAMED-PATH": [
+      "Q R-UNNAMED-PATH"
+    ],
+    "R-PACKAGE": [
+      "Q R-PACKAGE"
+    ],
+    "R-HELPER-KEY": [
+      "Q R-HELPER-KEY"
+    ],
+    "R-RUNTIME-LOAD": [
+      "Q R-RUNTIME-LOAD"
+    ],
+    "R-HOST-ALIAS": [
+      "Q R-HOST-ALIAS"
+    ],
+    "R-PI-ALIAS": [
+      "Q R-PI-ALIAS"
+    ],
+    "R-HANDLER-FORM": [
+      "Q R-HANDLER-FORM"
+    ],
+    "R-HANDLER-SETTER": [
+      "Q R-HANDLER-SETTER"
+    ],
+    "R-FOLD-WRAPPED": [
+      "Q R-FOLD-WRAPPED"
+    ],
+    "R-REGEX-ESCAPE": [
+      "Q R-REGEX-ESCAPE"
+    ]
+  }
+}

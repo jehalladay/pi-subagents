@@ -38,14 +38,29 @@
  * and its class). Row B is held to the pinned maps: the B pin naming each map's epic witnessed that map's ready line as the
  * reader read it, and one B pin the maps' union, so a B body that only reaches its witness (the gate's B2 liveness-only witness)
  * reds, and so does removing B4.
+ * WB-52TH (the R694 follow-up of wb-k888's landing 498: F1 leads in the h2 bead-graph census; F2 and F3 ride here). F2: three
+ * GM33-class plants of the landing gate escaped D3's reach scan, and each is now a row of REACH_PLANTS with the reach it must
+ * read. The scan resolves every name through the TypeScript binder over the module alone, so a parameter that shadows a built-in
+ * hides only the reads inside its own function (L2-M33sh: a free globalThis read beside a parameter named globalThis, which the
+ * file-wide declared set hid; L2-M33sh-quiet, the shadow alone, reads nothing); the name `constructor` spelled anywhere in the
+ * code is a constructor read - dotted, by a literal key, as a destructured key or as a string handed to a descriptor or reflect
+ * read (L2-M33p: Object.getOwnPropertyDescriptor with a 'constructor' argument; L2-M33d2: {constructor: door} =
+ * Object.getPrototypeOf(() => 0)); a class's extends clause is a value read although TypeScript parses it as a type node (GM33f,
+ * a class member this cut found: class Door extends Function reached the Function constructor unseen); and an import-require
+ * declaration counts as an import() (GM33g: the binder binds the name it declares, which the file-wide scan had read as a free
+ * name), while a shorthand property such as {globalThis} still reads the name (GM33h: the binder alone binds it to the property
+ * it declares). The table's ids are pinned as a literal, and every L2 reach plant id the filing's first F2 bullet names in the tracked
+ * export is one of its rows. F3: an abort before a seam call reaches no seam - aborted before the first call the read calls bd
+ * never, and a read aborted as the gated child's work reading answers never reads the gate (L2-M27p: dropping seam()'s pre-call
+ * abort check kept the transport category and called bd).
  * NAMED RESIDUALS (row R; each pin is the residual's quiet row, its quiet set derived from the run and pinned as its witness):
  *  R1 R-SHARED-SUBCLAUSE where pins share one acceptance sub-clause and none holds a pinned map or the maps' union, removing one
  *    from every literal at once (its pin, its ROWS entry, the frozen count) leaves the structural holds green. The quiet set is
  *    derived from the bead's acceptance text, so a pin whose only partner is gone leaves it: removing A3, A4, A5, A6, C1 or C3
  *    reds R1 through that text, while B5 (beside the four map-held B pins) and D1, D2 and D3 (one sub-clause, three pins) stay
  *    quiet.
- *  R2 R-REFLECTIVE-REACH a member read keyed by a name bound to a composed string (the Function constructor reached as
- *    Object[door]) is no reach to the scan.
+ *  R2 R-REFLECTIVE-REACH a member or descriptor read keyed by a name bound to a composed string (the Function constructor
+ *    reached as Object[door], or as Object.getOwnPropertyDescriptor(prototype, door)) is no reach to the scan.
  *  R3 R-WITNESS-ECHO outside row B's map hold no witnessed value has an anchor outside this file: a body swapped for a case that
  *    still reaches its witness stays green.
  * The gate form G08 stays this census's pin of R-NEGATED-PROSE.
@@ -408,11 +423,12 @@ function gatedStore(map: ProgramMap, packet: string, label: string, form: GateFo
 /** The language built-ins the reader's code names today; none reaches the host (no process, file system, network or evaluator). */
 const ALLOWED_GLOBALS: readonly string[] = ['Array', 'JSON', 'Map', 'Number', 'Object', 'RegExp', 'Set', 'undefined'];
 interface Reach {
-  /** Every free value name the code reads (a name it never declares), sorted. */
+  /** Every free value name the code reads (no declaration in the file binds it where it is read), sorted. */
   globals: string[];
-  /** import() calls and import.meta reads. */
+  /** import() calls, import.meta reads and import-require declarations. */
   dynamicImports: number;
-  /** Member reads named `constructor`, dotted or by a literal key: the door to the Function constructor. */
+  /** The name `constructor` spelled in the code (wb-52th F2): a member read dotted or by a literal key, a destructured key, or a
+   * string anywhere, a descriptor or reflect read's argument included - the door to the Function constructor. */
   constructorReads: number;
   /** Member reads whose key is computed from anything but a literal or a name. */
   computedKeys: number;
@@ -447,28 +463,42 @@ function keysMember(node: ts.Identifier): boolean {
     ts.isBreakOrContinueStatement(parent)
   );
 }
+/** The free-read test for one module, from the TypeScript binder over that file alone (no lib, nothing resolved; wb-52th F2): a
+ * name is free where no declaration in the file is its symbol's, so a parameter that shadows a built-in binds only the reads
+ * inside its own function, never a read elsewhere in the file (the L2-M33sh door of a file-wide declared set). */
+function freeReads(file: ts.SourceFile): (node: ts.Identifier) => boolean {
+  const options: ts.CompilerOptions = {noLib: true, noResolve: true, types: [], target: ts.ScriptTarget.Latest};
+  const host = ts.createCompilerHost(options);
+  host.getSourceFile = (name) => (name === file.fileName ? file : undefined);
+  const checker = ts.createProgram([file.fileName], options, host).getTypeChecker();
+  return (node) => {
+    const parent = node.parent;
+    // A shorthand property's name is the property's own declaration; the value it reads is the name's symbol (GM33h).
+    const symbol = ts.isShorthandPropertyAssignment(parent) && parent.name === node ? checker.getShorthandAssignmentValueSymbol(parent) : checker.getSymbolAtLocation(node);
+    return (symbol?.declarations ?? []).every((declaration) => declaration.getSourceFile() !== file);
+  };
+}
+/** A class's extends clause: TypeScript parses it as a type node, but the class evaluates it (wb-52th GM33f). */
+const extendsValue = (node: ts.Node): boolean =>
+  ts.isExpressionWithTypeArguments(node) && ts.isHeritageClause(node.parent) && node.parent.token === ts.SyntaxKind.ExtendsKeyword && ts.isClassLike(node.parent.parent);
 function reachOf(source: string): Reach {
   const file = ts.createSourceFile('reader.ts', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-  const declared = new Set<string>();
+  const free = freeReads(file);
   const used = new Set<string>();
   const reach = {dynamicImports: 0, constructorReads: 0, computedKeys: 0};
   const visit = (node: ts.Node): void => {
-    if (ts.isTypeNode(node) || ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node)) return;
-    if (ts.isIdentifier(node)) {
-      if (declaresName(node)) declared.add(node.text);
-      else if (!keysMember(node)) used.add(node.text);
-    }
-    if ((ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword) || ts.isMetaProperty(node)) reach.dynamicImports += 1;
-    if (ts.isPropertyAccessExpression(node) && node.name.text === 'constructor') reach.constructorReads += 1;
+    if ((ts.isTypeNode(node) && !extendsValue(node)) || ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node)) return;
+    if (ts.isIdentifier(node) && !declaresName(node) && !keysMember(node) && free(node)) used.add(node.text);
+    if ((ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword) || ts.isMetaProperty(node) || ts.isExternalModuleReference(node)) reach.dynamicImports += 1;
+    if ((ts.isIdentifier(node) || ts.isStringLiteralLike(node)) && node.text === 'constructor') reach.constructorReads += 1;
     if (ts.isElementAccessExpression(node)) {
       const key = node.argumentExpression;
-      if (ts.isStringLiteralLike(key) && key.text === 'constructor') reach.constructorReads += 1;
-      else if (!ts.isStringLiteralLike(key) && !ts.isNumericLiteral(key) && !ts.isIdentifier(key)) reach.computedKeys += 1;
+      if (!ts.isStringLiteralLike(key) && !ts.isNumericLiteral(key) && !ts.isIdentifier(key)) reach.computedKeys += 1;
     }
     ts.forEachChild(node, visit);
   };
   visit(file);
-  return {globals: [...used].filter((name) => !declared.has(name)).sort(), ...reach};
+  return {globals: [...used].sort(), ...reach};
 }
 /** The reach a code text has beyond the allowed built-ins, one entry per kind. */
 function reachViolations(reach: Reach): string[] {
@@ -481,9 +511,17 @@ function reachViolations(reach: Reach): string[] {
 }
 /** A plant as a module of its own (an exported function holding the code), so each control judges the scan alone. */
 const planted = (code: string): string => `export async function plantedReach(): Promise<void> {\n${code}}\n`;
+interface ReachPlant {
+  id: string;
+  code: string;
+  reads: string;
+  /** The code is a whole module (a declaration only the top level admits), never wrapped. */
+  module?: true;
+}
+const plantText = (plant: ReachPlant): string => (plant.module === true ? plant.code : planted(plant.code));
 /** The gate's GM33 (wb-4nut.5 cut #1, landing-381 F17) and the class members this cut found, each with the reach it must read;
  * GM34 is the gate's control the text bans already killed. Every plant discards its result: the scan reads reach, not use. */
-const REACH_PLANTS: readonly {id: string; code: string; reads: string}[] = [
+const REACH_PLANTS: readonly ReachPlant[] = [
   {
     id: 'GM33',
     code: "  try {\n    const host = (globalThis as {process?: {getBuiltinModule?: (id: string) => Record<string, (path: string) => unknown> | undefined}}).process;\n    host?.getBuiltinModule?.(['f', 's'].join(''))?.[['read', 'File', 'Sync'].join('')]?.('package.json');\n  } catch {}\n",
@@ -493,10 +531,33 @@ const REACH_PLANTS: readonly {id: string; code: string; reads: string}[] = [
   {id: 'GM33c', code: "  try {\n    void new Function(['return ', 'glob', 'alThis'].join(''))();\n  } catch {}\n", reads: 'global Function'},
   {id: 'GM33d', code: "  try {\n    void ([] as unknown as {constructor: {constructor: (code: string) => () => unknown}}).constructor.constructor('return this')();\n  } catch {}\n", reads: 'constructor read x2'},
   {id: 'GM33e', code: "  await import(['node', 'fs'].join(':')).catch(() => undefined);\n", reads: 'import() x1'},
+  // wb-52th (F2): the landing gate's three plants, the shadow alone (a quiet control: a parameter is no read), the class member
+  // this cut found, the import-require declaration the binder binds and a shorthand property, which reads its name.
+  {
+    id: 'L2-M33p',
+    code: "  try {\n    void (Object.getOwnPropertyDescriptor(Object.getPrototypeOf(() => 0), 'constructor')?.value as ((code: string) => () => unknown) | undefined)?.('return this')();\n  } catch {}\n",
+    reads: 'constructor read x1',
+  },
+  {id: 'L2-M33d2', code: "  try {\n    const {constructor: door} = Object.getPrototypeOf(() => 0) as {constructor: (code: string) => () => unknown};\n    void door('return this')();\n  } catch {}\n", reads: 'constructor read x1'},
+  {id: 'L2-M33sh', code: '  const shadow = (globalThis: {process?: unknown}): unknown => globalThis.process;\n  void shadow({});\n  void (globalThis as {process?: {env?: unknown}}).process?.env;\n', reads: 'global globalThis'},
+  {id: 'L2-M33sh-quiet', code: '  const shadow = (globalThis: {process?: unknown}): unknown => globalThis.process;\n  void shadow({});\n', reads: ''},
+  {id: 'GM33f', code: "  try {\n    class Door extends Function {}\n    void new Door('return this')();\n  } catch {}\n", reads: 'global Function'},
+  {id: 'GM33g', code: "import door = require('node:os');\nexport const home = (): unknown => door;\n", reads: 'import() x1', module: true},
+  {id: 'GM33h', code: '  void {globalThis};\n', reads: 'global globalThis'},
   {id: 'GM34', code: "  await import('node:fs').catch(() => undefined);\n", reads: 'import() x1'},
 ];
+/** The bead whose filing names the L2 reach plants (wb-k888's landing-498 R694 follow-up). */
+const FOLLOW_UP = 'wb-52th';
+/** The L2 reach plants the follow-up's filing names: the L2-M33 ids of the first F2 bullet in its notes in the tracked export. */
+function filedReachPlants(): string[] {
+  const bullet = /^\[rides\] - F2 (.*)$/m.exec(notesOf(FOLLOW_UP))?.[1] ?? '';
+  return [...new Set(bullet.match(/(?<![\w-])L2-M33\w*(?![\w-])/g) ?? [])];
+}
 /** R2's quiet row: a member read keyed by a name bound to a composed string reads no reach (R-REFLECTIVE-REACH). */
 const REFLECTIVE_DOOR = "  try {\n    const door = ['constr', 'uctor'].join('');\n    void (Object as unknown as Record<string, (code: string) => () => unknown>)[door]('return this')();\n  } catch {}\n";
+/** R2's second door (wb-52th F2): the same composed name handed to a descriptor read, now that a 'constructor' string is a read. */
+const DESCRIPTOR_DOOR =
+  "  try {\n    const door = ['constr', 'uctor'].join('');\n    void (Object.getOwnPropertyDescriptor(Object.getPrototypeOf(() => 0), door)?.value as ((code: string) => () => unknown) | undefined)?.('return this')();\n  } catch {}\n";
 
 // ---------------------------------------------------------------------------------------------------------------------------
 // The judged set: rows A-D quote the bead's acceptance; every pin covers one of its sub-clauses and is registered exactly once.
@@ -922,7 +983,12 @@ describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-H
     const code = readFileSync(MODULE, 'utf8');
     expect(reachOf(code)).toEqual({globals: [...ALLOWED_GLOBALS], dynamicImports: 0, constructorReads: 0, computedKeys: 0});
     // ... and each GM33-class plant reads as the reach it has: the scan's kill controls.
-    expect(REACH_PLANTS.map((plant) => `${plant.id}: ${reachViolations(reachOf(planted(plant.code))).join(', ')}`)).toEqual(REACH_PLANTS.map((plant) => `${plant.id}: ${plant.reads}`));
+    expect(REACH_PLANTS.map((plant) => `${plant.id}: ${reachViolations(reachOf(plantText(plant))).join(', ')}`)).toEqual(REACH_PLANTS.map((plant) => `${plant.id}: ${plant.reads}`));
+    // wb-52th (F2): the plant table's frozen shape, and every L2 reach plant the follow-up's filing names is one of its rows.
+    expect(REACH_PLANTS.map((plant) => plant.id)).toEqual(['GM33', 'GM33b', 'GM33c', 'GM33d', 'GM33e', 'L2-M33p', 'L2-M33d2', 'L2-M33sh', 'L2-M33sh-quiet', 'GM33f', 'GM33g', 'GM33h', 'GM34']);
+    const filed = filedReachPlants();
+    expect(filed, `the L2 reach plants ${FOLLOW_UP}'s filing names`).toEqual(['L2-M33p', 'L2-M33d2', 'L2-M33sh']);
+    expect(filed.filter((id) => !REACH_PLANTS.some((plant) => plant.id === id))).toEqual([]);
     // No Beads reader is imported in any form: the work reader arrives injected (the wb-kku9.3 claim re-check census contract).
     witness('D3', specifiers, ['./capability-registry.js', './observation.js']);
     for (const banned of [/node:/, /readFile|readdir|existsSync/, /BEADS-|\.md\b/, /child_process|spawn|exec\(/, /\bbd ready\b/]) expect(source).not.toMatch(banned);
@@ -945,8 +1011,12 @@ describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-H
     witness('R1', acceptanceRows().flatMap((row) => row.pins.map((entry) => entry.id)).filter(stillHolds), ['A3', 'A4', 'A5', 'A6', 'B5', 'C1', 'C3', 'D1', 'D2', 'D3']);
   });
 
-  pin('R2', `${R_REFLECTIVE}: a member read keyed by a name bound to a composed string reaches past the reach scan; that door, planted, reads no reach`, () => {
-    witness('R2', reachViolations(reachOf(planted(REFLECTIVE_DOOR))), []);
+  pin('R2', `${R_REFLECTIVE}: a member or descriptor read keyed by a name bound to a composed string reaches past the reach scan; each door, planted, reads no reach`, () => {
+    witness(
+      'R2',
+      [REFLECTIVE_DOOR, DESCRIPTOR_DOOR].map((door) => reachViolations(reachOf(planted(door)))),
+      [[], []],
+    );
   });
 
   pin('R3', `${R_ECHO}: outside row B's map hold no pin's witnessed value has an anchor outside this file, so a body swapped for a case that still reaches its witness stays green; the unheld pins are derived from the hold`, () => {
@@ -989,7 +1059,10 @@ describe('wb-4nut.5 reader hygiene', () => {
   it('an aborted signal is transport, before the first call and between calls', async () => {
     const before = new AbortController();
     before.abort();
-    expect(await category(read(bd(modelStore([H2])), programOf(H2), {signal: before.signal}))).toBe('transport');
+    // wb-52th (F3, L2-M27p): aborted before the first call, the read reaches no seam - bd is never called.
+    const untouched = bd(modelStore([H2]));
+    expect(await category(read(untouched, programOf(H2), {signal: before.signal}))).toBe('transport');
+    expect(untouched.seen).toEqual([]);
     const between = new AbortController();
     const store = modelStore([H2]);
     const inner = bd(store);
@@ -1126,6 +1199,26 @@ describe('wb-4nut.5 reader hygiene', () => {
       expect(await category(read(client, programOf(H2, {gates: {'TSX-H2-01': 'rftsx-xgate'}}), {signal: controller.signal})), during ? 'aborted while the gate show runs' : 'aborted as the gate show answers').toBe('transport');
       expect(inner.seen.filter((entry) => entry.id === 'rftsx-xgate')).toHaveLength(1);
     }
+  });
+
+  it('an abort as the gated child is read reaches no later seam call: the gate is never read and the read is transport (wb-52th F3, L2-M27p)', async () => {
+    const {store} = gatedStore(H2, 'TSX-H2-01', 'wp:tsx-h2-01', GATE_FORMS[1] as GateForm);
+    // A gate bead outside the program, so its show is the gate read alone: the seam call right after the child's work reading.
+    store.set('rftsx-xgate', {id: 'rftsx-xgate', title: 'outside gate', status: 'closed', issueType: 'decision', priority: 2, labels: [], related: [], blocks: [], notes: 'ruled ADOPT'});
+    const program = programOf(H2, {gates: {'TSX-H2-01': 'rftsx-xgate'}});
+    // The control: unaborted, the read reads that gate once.
+    const calm = bd(store);
+    expect(child(await read(calm, program), 'TSX-H2-01')).toMatchObject({gate: {id: 'rftsx-xgate', verdict: 'ADOPT'}});
+    expect(calm.seen.filter((entry) => entry.id === 'rftsx-xgate')).toHaveLength(1);
+    const controller = new AbortController();
+    const inner = bd(store);
+    const aborting: BeadsProgramWorkReader = async (seam, request) => {
+      const work = await readBeadsWork(seam, request);
+      if (request.workId === 'TSX-H2-01') controller.abort();
+      return work;
+    };
+    expect(await category(read(inner, program, {signal: controller.signal, readWork: aborting}))).toBe('transport');
+    expect(inner.seen.filter((entry) => entry.id === 'rftsx-xgate')).toEqual([]);
   });
 
   it('an abort as the last seam call answers is transport: an epic with no dependents', async () => {
