@@ -1,0 +1,1021 @@
+{
+  "comment": "wb-e66.1 (MW-GRAPH-POLICY-COORDINATION-R2): the out-of-file roster of test/workbench-mw-gp-support-census.test.ts (standing rule 16). It holds every judged row (id, label, pins), every pin's quote and witness, the residual members, the mutants with their declared checks and every registered test title, in order; the census judges itself against it both ways. The producer block holds the four MechanicalWorkflows lines the filing cites, read with git show at the bead's pin from the local MechanicalWorkflows checkout by the cutting seat on 2026-10-28; the census never re-reads the producer.",
+  "bead": "wb-e66.1",
+  "rows": [
+    {
+      "id": "A1",
+      "label": "a fixture with N agents, per-agent capacity and grants yields a support set equal to exactly the legal (agent, task) pairs",
+      "pins": [
+        "A1a",
+        "A1b"
+      ]
+    },
+    {
+      "id": "A2",
+      "label": "a fixture that feeds an admission/reconcile record as the support goes red with a typed refusal",
+      "pins": [
+        "A2a",
+        "A2b"
+      ]
+    },
+    {
+      "id": "A3",
+      "label": "the exported IR carries the support's basis revision and count",
+      "pins": [
+        "A3a",
+        "A3b"
+      ]
+    },
+    {
+      "id": "A4",
+      "label": "test-only until the gate, src untouched",
+      "pins": [
+        "A4a",
+        "A4b"
+      ]
+    },
+    {
+      "id": "A5",
+      "label": "a candidate outside the support is a typed refusal",
+      "pins": [
+        "A5a",
+        "A5b"
+      ]
+    },
+    {
+      "id": "S",
+      "label": "the registry authorizes, effectClass is a routing hint, a read-only agent cannot invoke a write capability",
+      "pins": [
+        "S1",
+        "S2",
+        "S3"
+      ]
+    },
+    {
+      "id": "P",
+      "label": "the parity rule that surface allowlists only narrow a registry decision (closed wb-6hb.4)",
+      "pins": [
+        "P1",
+        "P2"
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the named residual families, each member a pinned quiet row",
+      "pins": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4"
+      ]
+    }
+  ],
+  "quotes": {
+    "A1a": "a fixture with N agents, per-agent capacity and grants",
+    "A1b": "yields a support set equal to exactly the legal (agent, task) pairs",
+    "A2a": "a fixture that feeds an admission/reconcile record as the support",
+    "A2b": "goes red with a typed refusal",
+    "A3a": "the exported IR carries the support's basis revision",
+    "A3b": "and count",
+    "A4a": "test-only until the gate",
+    "A4b": "src untouched",
+    "A5a": "a candidate outside the support",
+    "A5b": "is a typed refusal",
+    "S1": "the registry authorizes",
+    "S2": "effectClass is a routing hint",
+    "S3": "a read-only agent cannot invoke a write capability",
+    "P1": "the parity rule that surface allowlists only narrow a registry decision",
+    "P2": "closed wb-6hb.4",
+    "Q1": "R-COMPOSED",
+    "Q2": "R-SHARED-WORD",
+    "Q3": "R-UNNAMED-ADAPTER",
+    "Q4": "R-JOINT-CAPACITY"
+  },
+  "residuals": {
+    "Q1": [
+      "concatenated",
+      "commented",
+      "escaped",
+      "homoglyph",
+      "joined"
+    ],
+    "Q2": [
+      "capacity",
+      "eligible"
+    ],
+    "Q3": [
+      "unnamed"
+    ],
+    "Q4": [
+      "joint-capacity"
+    ]
+  },
+  "mutants": [
+    "M01:capacity-ignored:K-LEGAL",
+    "M02:unknown-capacity-unbounded:K-LEGAL",
+    "M03:any-number-capacity:K-LEGAL",
+    "M04:grant-blind:K-LEGAL",
+    "M05:read-effect-ungated:K-LEGAL",
+    "M06:discover-grant-invokes:K-LEGAL",
+    "M07:unregistered-permitted:K-LEGAL",
+    "M08:any-one-permission:K-LEGAL",
+    "M09:pair-twice:K-LEGAL",
+    "M10:legal-pair-dropped:K-LEGAL",
+    "M11:strict-load:K-LEGAL",
+    "M12:training-export-as-support:K-SOURCE",
+    "M13:reconcile-verdict-as-support:K-SOURCE",
+    "M14:untyped-source-refusal:K-SOURCE",
+    "M15:source-unnamed:K-SOURCE",
+    "M16:revision-dropped:K-IR",
+    "M17:count-of-the-grid:K-IR",
+    "M18:admit-every-candidate:K-OUTSIDE",
+    "M19:untyped-outside-refusal:K-OUTSIDE",
+    "M20:refuse-every-source:K-LEGAL+K-IR+K-OUTSIDE"
+  ],
+  "witnesses": {
+    "A1a": {
+      "shapes": [
+        {
+          "id": "five-agents",
+          "agents": [
+            "a-reader:known:3",
+            "a-writer:known:2",
+            "a-operator:known:2",
+            "a-unknown:unknown:3",
+            "a-idle:zero:1"
+          ]
+        },
+        {
+          "id": "one-agent",
+          "agents": [
+            "a-solo:known:3"
+          ]
+        },
+        {
+          "id": "bounds",
+          "agents": [
+            "a-unbounded:unbounded:2",
+            "a-fraction:fraction:1",
+            "a-negative:negative:1",
+            "a-partial:known:1"
+          ]
+        },
+        {
+          "id": "empty-support",
+          "agents": [
+            "a-ungranted:known:0",
+            "a-unmeasured:unknown:3"
+          ]
+        }
+      ],
+      "kinds": [
+        "fraction",
+        "known",
+        "negative",
+        "unbounded",
+        "unknown",
+        "zero"
+      ]
+    },
+    "A1b": {
+      "support": {
+        "five-agents": [
+          "a-reader/t-read",
+          "a-writer/t-read",
+          "a-writer/t-write",
+          "a-writer/t-dual",
+          "a-operator/t-open"
+        ],
+        "one-agent": [
+          "a-solo/t-read",
+          "a-solo/t-write",
+          "a-solo/t-open"
+        ],
+        "bounds": [
+          "a-partial/t-read"
+        ],
+        "empty-support": []
+      },
+      "judged": {
+        "reference": []
+      },
+      "mutants": [
+        [
+          "M01",
+          [
+            "five-agents: holds a-operator/t-write, outside the legal pairs",
+            "five-agents: holds a-unknown/t-read, outside the legal pairs",
+            "five-agents: holds a-unknown/t-write, outside the legal pairs",
+            "five-agents: holds a-unknown/t-open, outside the legal pairs",
+            "five-agents: holds a-unknown/t-dual, outside the legal pairs",
+            "five-agents: holds a-idle/t-read, outside the legal pairs",
+            "one-agent: holds a-solo/t-dual, outside the legal pairs",
+            "bounds: holds a-unbounded/t-read, outside the legal pairs",
+            "bounds: holds a-unbounded/t-write, outside the legal pairs",
+            "bounds: holds a-unbounded/t-dual, outside the legal pairs",
+            "bounds: holds a-fraction/t-read, outside the legal pairs",
+            "bounds: holds a-negative/t-read, outside the legal pairs",
+            "empty-support: holds a-unmeasured/t-read, outside the legal pairs",
+            "empty-support: holds a-unmeasured/t-write, outside the legal pairs",
+            "empty-support: holds a-unmeasured/t-open, outside the legal pairs",
+            "empty-support: holds a-unmeasured/t-dual, outside the legal pairs"
+          ]
+        ],
+        [
+          "M02",
+          [
+            "five-agents: holds a-unknown/t-read, outside the legal pairs",
+            "five-agents: holds a-unknown/t-write, outside the legal pairs",
+            "five-agents: holds a-unknown/t-open, outside the legal pairs",
+            "five-agents: holds a-unknown/t-dual, outside the legal pairs",
+            "empty-support: holds a-unmeasured/t-read, outside the legal pairs",
+            "empty-support: holds a-unmeasured/t-write, outside the legal pairs",
+            "empty-support: holds a-unmeasured/t-open, outside the legal pairs",
+            "empty-support: holds a-unmeasured/t-dual, outside the legal pairs"
+          ]
+        ],
+        [
+          "M03",
+          [
+            "bounds: holds a-unbounded/t-read, outside the legal pairs",
+            "bounds: holds a-unbounded/t-write, outside the legal pairs",
+            "bounds: holds a-unbounded/t-dual, outside the legal pairs",
+            "bounds: holds a-fraction/t-read, outside the legal pairs"
+          ]
+        ],
+        [
+          "M04",
+          [
+            "five-agents: holds a-reader/t-write, outside the legal pairs",
+            "five-agents: holds a-reader/t-open, outside the legal pairs",
+            "five-agents: holds a-writer/t-open, outside the legal pairs",
+            "five-agents: holds a-operator/t-read, outside the legal pairs",
+            "bounds: holds a-partial/t-write, outside the legal pairs",
+            "bounds: holds a-partial/t-open, outside the legal pairs",
+            "bounds: holds a-partial/t-dual, outside the legal pairs",
+            "empty-support: holds a-ungranted/t-read, outside the legal pairs",
+            "empty-support: holds a-ungranted/t-write, outside the legal pairs",
+            "empty-support: holds a-ungranted/t-open, outside the legal pairs",
+            "empty-support: holds a-ungranted/t-dual, outside the legal pairs"
+          ]
+        ],
+        [
+          "M05",
+          [
+            "five-agents: holds a-reader/t-open, outside the legal pairs",
+            "five-agents: holds a-writer/t-open, outside the legal pairs",
+            "five-agents: holds a-operator/t-read, outside the legal pairs",
+            "bounds: holds a-partial/t-open, outside the legal pairs",
+            "empty-support: holds a-ungranted/t-read, outside the legal pairs",
+            "empty-support: holds a-ungranted/t-open, outside the legal pairs"
+          ]
+        ],
+        [
+          "M06",
+          [
+            "five-agents: holds a-reader/t-write, outside the legal pairs",
+            "five-agents: holds a-reader/t-open, outside the legal pairs"
+          ]
+        ],
+        [
+          "M07",
+          [
+            "five-agents: holds a-reader/t-missing, outside the legal pairs",
+            "five-agents: holds a-writer/t-missing, outside the legal pairs",
+            "five-agents: holds a-operator/t-missing, outside the legal pairs",
+            "one-agent: holds a-solo/t-missing, outside the legal pairs",
+            "bounds: holds a-partial/t-missing, outside the legal pairs",
+            "empty-support: holds a-ungranted/t-missing, outside the legal pairs"
+          ]
+        ],
+        [
+          "M08",
+          [
+            "bounds: holds a-partial/t-dual, outside the legal pairs"
+          ]
+        ],
+        [
+          "M09",
+          [
+            "five-agents: holds a-reader/t-read twice",
+            "one-agent: holds a-solo/t-read twice",
+            "bounds: holds a-partial/t-read twice"
+          ]
+        ],
+        [
+          "M10",
+          [
+            "five-agents: misses a-operator/t-open",
+            "one-agent: misses a-solo/t-open",
+            "bounds: misses a-partial/t-read"
+          ]
+        ],
+        [
+          "M11",
+          [
+            "five-agents: misses a-writer/t-dual",
+            "five-agents: misses a-operator/t-open",
+            "one-agent: misses a-solo/t-write"
+          ]
+        ],
+        [
+          "M20",
+          [
+            "five-agents: refused (support-source)",
+            "one-agent: refused (support-source)",
+            "bounds: refused (support-source)",
+            "empty-support: refused (support-source)"
+          ]
+        ]
+      ]
+    },
+    "A2a": {
+      "records": [
+        {
+          "id": "training-export-admission",
+          "kind": "mw.training-export.v1",
+          "admitted": [
+            "a-reader/t-write",
+            "a-writer/t-read"
+          ]
+        },
+        {
+          "id": "reconcile-verdict",
+          "kind": "reconcile-verdict",
+          "admitted": [
+            "a-operator/t-write"
+          ]
+        }
+      ],
+      "outside": [
+        [
+          "training-export-admission",
+          [
+            "a-reader/t-write"
+          ]
+        ],
+        [
+          "reconcile-verdict",
+          [
+            "a-operator/t-write"
+          ]
+        ]
+      ]
+    },
+    "A2b": {
+      "outcomes": {
+        "training-export-admission": {
+          "ok": false,
+          "code": "support-source",
+          "source": "mw.training-export.v1"
+        },
+        "reconcile-verdict": {
+          "ok": false,
+          "code": "support-source",
+          "source": "reconcile-verdict"
+        }
+      },
+      "judged": {
+        "reference": []
+      },
+      "mutants": [
+        [
+          "M12",
+          [
+            "training-export-admission: yields a support of 2 pairs"
+          ]
+        ],
+        [
+          "M13",
+          [
+            "reconcile-verdict: yields a support of 1 pair"
+          ]
+        ],
+        [
+          "M14",
+          [
+            "training-export-admission: refused untyped {\"ok\":false,\"code\":\"refused\",\"source\":\"mw.training-export.v1\"}",
+            "reconcile-verdict: refused untyped {\"ok\":false,\"code\":\"refused\",\"source\":\"reconcile-verdict\"}"
+          ]
+        ],
+        [
+          "M15",
+          [
+            "training-export-admission: refused untyped {\"ok\":false,\"code\":\"support-source\",\"source\":\"\"}",
+            "reconcile-verdict: refused untyped {\"ok\":false,\"code\":\"support-source\",\"source\":\"\"}"
+          ]
+        ]
+      ]
+    },
+    "A3a": {
+      "revisions": [
+        {
+          "id": "five-agents",
+          "carried": "rev-five-agents",
+          "basis": "rev-five-agents"
+        },
+        {
+          "id": "one-agent",
+          "carried": "rev-one-agent",
+          "basis": "rev-one-agent"
+        },
+        {
+          "id": "bounds",
+          "carried": "rev-bounds",
+          "basis": "rev-bounds"
+        },
+        {
+          "id": "empty-support",
+          "carried": "rev-empty-support",
+          "basis": "rev-empty-support"
+        }
+      ],
+      "judged": {
+        "reference": []
+      },
+      "dropped": [
+        "five-agents: basis revision \"\", not rev-five-agents",
+        "one-agent: basis revision \"\", not rev-one-agent",
+        "bounds: basis revision \"\", not rev-bounds",
+        "empty-support: basis revision \"\", not rev-empty-support"
+      ]
+    },
+    "A3b": {
+      "counts": [
+        {
+          "id": "five-agents",
+          "count": 5,
+          "pairs": 5,
+          "legal": 5
+        },
+        {
+          "id": "one-agent",
+          "count": 3,
+          "pairs": 3,
+          "legal": 3
+        },
+        {
+          "id": "bounds",
+          "count": 1,
+          "pairs": 1,
+          "legal": 1
+        },
+        {
+          "id": "empty-support",
+          "count": 0,
+          "pairs": 0,
+          "legal": 0
+        }
+      ],
+      "grid": [
+        "five-agents: count 25 for 5 pairs",
+        "one-agent: count 5 for 3 pairs",
+        "bounds: count 20 for 1 pair",
+        "empty-support: count 10 for 0 pairs"
+      ]
+    },
+    "A4a": {
+      "sites": [],
+      "live": [],
+      "armed": {
+        "unregistered": [
+          "src/workbench/gp-support.ts: names GraphDataIR, no SITES registration"
+        ],
+        "registered": [],
+        "stale": [
+          "src/workbench/gp-support.ts: registered, names no vocabulary word (stale)"
+        ],
+        "twice": [
+          "src/workbench/gp-support.ts: registered twice"
+        ],
+        "pathOnly": [
+          "src/workbench/sampler.ts: names sampler, no SITES registration"
+        ],
+        "judged": []
+      }
+    },
+    "A4b": {
+      "floor": true,
+      "anchor": true,
+      "words": [],
+      "controls": {
+        "camel": [
+          "GraphDataIR"
+        ],
+        "snake": [
+          "GraphDataIR"
+        ],
+        "upper kebab": [
+          "GraphDataIR"
+        ],
+        "spaced": [
+          "GraphDataIR"
+        ],
+        "dotted": [
+          "GraphDataIR"
+        ],
+        "format characters between the parts": [
+          "GraphDataIR"
+        ],
+        "schema id": [
+          "training-export"
+        ],
+        "constant": [
+          "training-export"
+        ],
+        "camel training export": [
+          "training-export"
+        ],
+        "sampler": [
+          "sampler"
+        ],
+        "inside a longer name": [
+          "sampler"
+        ],
+        "pre-sampling": [
+          "PRE-SAMPLING"
+        ],
+        "pre_sampling": [
+          "PRE-SAMPLING"
+        ],
+        "presampling": [
+          "PRE-SAMPLING"
+        ],
+        "every word": [
+          "sampler",
+          "training-export",
+          "GraphDataIR",
+          "PRE-SAMPLING"
+        ],
+        "sampling alone": [],
+        "shared words": []
+      },
+      "listing": {
+        "listed": [
+          "src/link.ts",
+          "src/nested/planted.ts",
+          "src/quiet.ts"
+        ],
+        "findings": [
+          "src/nested/planted.ts: names GraphDataIR, no SITES registration"
+        ],
+        "unread": [
+          "src/link.ts"
+        ]
+      }
+    },
+    "A5a": {
+      "candidates": [
+        {
+          "id": "five-agents",
+          "inside": 5,
+          "outside": [
+            "a-reader/t-write",
+            "a-reader/t-open",
+            "a-reader/t-dual",
+            "a-reader/t-missing",
+            "a-writer/t-open",
+            "a-writer/t-missing",
+            "a-operator/t-read",
+            "a-operator/t-write",
+            "a-operator/t-dual",
+            "a-operator/t-missing",
+            "a-unknown/t-read",
+            "a-unknown/t-write",
+            "a-unknown/t-open",
+            "a-unknown/t-dual",
+            "a-unknown/t-missing",
+            "a-idle/t-read",
+            "a-idle/t-write",
+            "a-idle/t-open",
+            "a-idle/t-dual",
+            "a-idle/t-missing",
+            "a-ghost/t-read",
+            "a-reader/t-ghost"
+          ]
+        },
+        {
+          "id": "one-agent",
+          "inside": 3,
+          "outside": [
+            "a-solo/t-dual",
+            "a-solo/t-missing",
+            "a-ghost/t-read",
+            "a-solo/t-ghost"
+          ]
+        },
+        {
+          "id": "bounds",
+          "inside": 1,
+          "outside": [
+            "a-unbounded/t-read",
+            "a-unbounded/t-write",
+            "a-unbounded/t-open",
+            "a-unbounded/t-dual",
+            "a-unbounded/t-missing",
+            "a-fraction/t-read",
+            "a-fraction/t-write",
+            "a-fraction/t-open",
+            "a-fraction/t-dual",
+            "a-fraction/t-missing",
+            "a-negative/t-read",
+            "a-negative/t-write",
+            "a-negative/t-open",
+            "a-negative/t-dual",
+            "a-negative/t-missing",
+            "a-partial/t-write",
+            "a-partial/t-open",
+            "a-partial/t-dual",
+            "a-partial/t-missing",
+            "a-ghost/t-read",
+            "a-unbounded/t-ghost"
+          ]
+        },
+        {
+          "id": "empty-support",
+          "inside": 0,
+          "outside": [
+            "a-ungranted/t-read",
+            "a-ungranted/t-write",
+            "a-ungranted/t-open",
+            "a-ungranted/t-dual",
+            "a-ungranted/t-missing",
+            "a-unmeasured/t-read",
+            "a-unmeasured/t-write",
+            "a-unmeasured/t-open",
+            "a-unmeasured/t-dual",
+            "a-unmeasured/t-missing",
+            "a-ghost/t-read",
+            "a-ungranted/t-ghost"
+          ]
+        }
+      ]
+    },
+    "A5b": {
+      "samples": [
+        [
+          "a-reader/t-write",
+          {
+            "admitted": false,
+            "code": "outside-support",
+            "agent": "a-reader",
+            "task": "t-write"
+          }
+        ],
+        [
+          "a-ghost/t-read",
+          {
+            "admitted": false,
+            "code": "outside-support",
+            "agent": "a-ghost",
+            "task": "t-read"
+          }
+        ],
+        [
+          "a-reader/t-ghost",
+          {
+            "admitted": false,
+            "code": "outside-support",
+            "agent": "a-reader",
+            "task": "t-ghost"
+          }
+        ],
+        [
+          "a-reader/t-read",
+          {
+            "admitted": true
+          }
+        ]
+      ],
+      "judged": {
+        "reference": []
+      },
+      "mutants": [
+        [
+          "M18",
+          [
+            "five-agents: a-reader/t-write is not the typed refusal",
+            "five-agents: a-reader/t-open is not the typed refusal",
+            "five-agents: a-reader/t-dual is not the typed refusal",
+            "five-agents: a-reader/t-missing is not the typed refusal",
+            "five-agents: a-writer/t-open is not the typed refusal",
+            "five-agents: a-writer/t-missing is not the typed refusal",
+            "five-agents: a-operator/t-read is not the typed refusal",
+            "five-agents: a-operator/t-write is not the typed refusal",
+            "five-agents: a-operator/t-dual is not the typed refusal",
+            "five-agents: a-operator/t-missing is not the typed refusal",
+            "five-agents: a-unknown/t-read is not the typed refusal",
+            "five-agents: a-unknown/t-write is not the typed refusal",
+            "five-agents: a-unknown/t-open is not the typed refusal",
+            "five-agents: a-unknown/t-dual is not the typed refusal",
+            "five-agents: a-unknown/t-missing is not the typed refusal",
+            "five-agents: a-idle/t-read is not the typed refusal",
+            "five-agents: a-idle/t-write is not the typed refusal",
+            "five-agents: a-idle/t-open is not the typed refusal",
+            "five-agents: a-idle/t-dual is not the typed refusal",
+            "five-agents: a-idle/t-missing is not the typed refusal",
+            "five-agents: a-ghost/t-read is not the typed refusal",
+            "five-agents: a-reader/t-ghost is not the typed refusal",
+            "one-agent: a-solo/t-dual is not the typed refusal",
+            "one-agent: a-solo/t-missing is not the typed refusal",
+            "one-agent: a-ghost/t-read is not the typed refusal",
+            "one-agent: a-solo/t-ghost is not the typed refusal",
+            "bounds: a-unbounded/t-read is not the typed refusal",
+            "bounds: a-unbounded/t-write is not the typed refusal",
+            "bounds: a-unbounded/t-open is not the typed refusal",
+            "bounds: a-unbounded/t-dual is not the typed refusal",
+            "bounds: a-unbounded/t-missing is not the typed refusal",
+            "bounds: a-fraction/t-read is not the typed refusal",
+            "bounds: a-fraction/t-write is not the typed refusal",
+            "bounds: a-fraction/t-open is not the typed refusal",
+            "bounds: a-fraction/t-dual is not the typed refusal",
+            "bounds: a-fraction/t-missing is not the typed refusal",
+            "bounds: a-negative/t-read is not the typed refusal",
+            "bounds: a-negative/t-write is not the typed refusal",
+            "bounds: a-negative/t-open is not the typed refusal",
+            "bounds: a-negative/t-dual is not the typed refusal",
+            "bounds: a-negative/t-missing is not the typed refusal",
+            "bounds: a-partial/t-write is not the typed refusal",
+            "bounds: a-partial/t-open is not the typed refusal",
+            "bounds: a-partial/t-dual is not the typed refusal",
+            "bounds: a-partial/t-missing is not the typed refusal",
+            "bounds: a-ghost/t-read is not the typed refusal",
+            "bounds: a-unbounded/t-ghost is not the typed refusal",
+            "empty-support: a-ungranted/t-read is not the typed refusal",
+            "empty-support: a-ungranted/t-write is not the typed refusal",
+            "empty-support: a-ungranted/t-open is not the typed refusal",
+            "empty-support: a-ungranted/t-dual is not the typed refusal",
+            "empty-support: a-ungranted/t-missing is not the typed refusal",
+            "empty-support: a-unmeasured/t-read is not the typed refusal",
+            "empty-support: a-unmeasured/t-write is not the typed refusal",
+            "empty-support: a-unmeasured/t-open is not the typed refusal",
+            "empty-support: a-unmeasured/t-dual is not the typed refusal",
+            "empty-support: a-unmeasured/t-missing is not the typed refusal",
+            "empty-support: a-ghost/t-read is not the typed refusal",
+            "empty-support: a-ungranted/t-ghost is not the typed refusal"
+          ]
+        ],
+        [
+          "M19",
+          [
+            "five-agents: a-reader/t-write is not the typed refusal",
+            "five-agents: a-reader/t-open is not the typed refusal",
+            "five-agents: a-reader/t-dual is not the typed refusal",
+            "five-agents: a-reader/t-missing is not the typed refusal",
+            "five-agents: a-writer/t-open is not the typed refusal",
+            "five-agents: a-writer/t-missing is not the typed refusal",
+            "five-agents: a-operator/t-read is not the typed refusal",
+            "five-agents: a-operator/t-write is not the typed refusal",
+            "five-agents: a-operator/t-dual is not the typed refusal",
+            "five-agents: a-operator/t-missing is not the typed refusal",
+            "five-agents: a-unknown/t-read is not the typed refusal",
+            "five-agents: a-unknown/t-write is not the typed refusal",
+            "five-agents: a-unknown/t-open is not the typed refusal",
+            "five-agents: a-unknown/t-dual is not the typed refusal",
+            "five-agents: a-unknown/t-missing is not the typed refusal",
+            "five-agents: a-idle/t-read is not the typed refusal",
+            "five-agents: a-idle/t-write is not the typed refusal",
+            "five-agents: a-idle/t-open is not the typed refusal",
+            "five-agents: a-idle/t-dual is not the typed refusal",
+            "five-agents: a-idle/t-missing is not the typed refusal",
+            "five-agents: a-ghost/t-read is not the typed refusal",
+            "five-agents: a-reader/t-ghost is not the typed refusal",
+            "one-agent: a-solo/t-dual is not the typed refusal",
+            "one-agent: a-solo/t-missing is not the typed refusal",
+            "one-agent: a-ghost/t-read is not the typed refusal",
+            "one-agent: a-solo/t-ghost is not the typed refusal",
+            "bounds: a-unbounded/t-read is not the typed refusal",
+            "bounds: a-unbounded/t-write is not the typed refusal",
+            "bounds: a-unbounded/t-open is not the typed refusal",
+            "bounds: a-unbounded/t-dual is not the typed refusal",
+            "bounds: a-unbounded/t-missing is not the typed refusal",
+            "bounds: a-fraction/t-read is not the typed refusal",
+            "bounds: a-fraction/t-write is not the typed refusal",
+            "bounds: a-fraction/t-open is not the typed refusal",
+            "bounds: a-fraction/t-dual is not the typed refusal",
+            "bounds: a-fraction/t-missing is not the typed refusal",
+            "bounds: a-negative/t-read is not the typed refusal",
+            "bounds: a-negative/t-write is not the typed refusal",
+            "bounds: a-negative/t-open is not the typed refusal",
+            "bounds: a-negative/t-dual is not the typed refusal",
+            "bounds: a-negative/t-missing is not the typed refusal",
+            "bounds: a-partial/t-write is not the typed refusal",
+            "bounds: a-partial/t-open is not the typed refusal",
+            "bounds: a-partial/t-dual is not the typed refusal",
+            "bounds: a-partial/t-missing is not the typed refusal",
+            "bounds: a-ghost/t-read is not the typed refusal",
+            "bounds: a-unbounded/t-ghost is not the typed refusal",
+            "empty-support: a-ungranted/t-read is not the typed refusal",
+            "empty-support: a-ungranted/t-write is not the typed refusal",
+            "empty-support: a-ungranted/t-open is not the typed refusal",
+            "empty-support: a-ungranted/t-dual is not the typed refusal",
+            "empty-support: a-ungranted/t-missing is not the typed refusal",
+            "empty-support: a-unmeasured/t-read is not the typed refusal",
+            "empty-support: a-unmeasured/t-write is not the typed refusal",
+            "empty-support: a-unmeasured/t-open is not the typed refusal",
+            "empty-support: a-unmeasured/t-dual is not the typed refusal",
+            "empty-support: a-unmeasured/t-missing is not the typed refusal",
+            "empty-support: a-ghost/t-read is not the typed refusal",
+            "empty-support: a-ungranted/t-ghost is not the typed refusal"
+          ]
+        ],
+        [
+          "M20",
+          [
+            "five-agents: no IR to admit against",
+            "one-agent: no IR to admit against",
+            "bounds: no IR to admit against",
+            "empty-support: no IR to admit against"
+          ]
+        ]
+      ]
+    },
+    "S1": {
+      "doc": {
+        "line": 5,
+        "pin": true,
+        "head": true
+      },
+      "anchorControls": {
+        "liveWithoutTheLine": false,
+        "liveLineEdited": false,
+        "textAtAnotherLine": false
+      },
+      "tally": {
+        "permitted": 25,
+        "authorization": 23,
+        "unavailable": 12
+      },
+      "fromRegistry": {
+        "five-agents": [
+          "a-reader/t-read",
+          "a-writer/t-read",
+          "a-writer/t-write",
+          "a-writer/t-dual",
+          "a-operator/t-open"
+        ],
+        "one-agent": [
+          "a-solo/t-read",
+          "a-solo/t-write",
+          "a-solo/t-open"
+        ],
+        "bounds": [
+          "a-partial/t-read"
+        ],
+        "empty-support": []
+      },
+      "parity": [],
+      "providerCalls": 25
+    },
+    "S2": {
+      "docs": [
+        {
+          "line": 15,
+          "pin": true,
+          "head": true
+        },
+        {
+          "line": 28,
+          "pin": true,
+          "head": true
+        }
+      ],
+      "effects": [
+        "fixture.support-read:read->write",
+        "fixture.support-write:write->external",
+        "fixture.support-open:read->write",
+        "fixture.support-dual:external->unknown"
+      ],
+      "changed": [],
+      "moved": [],
+      "held": [
+        5,
+        3,
+        1,
+        0
+      ]
+    },
+    "S3": {
+      "doc": {
+        "line": 73,
+        "pin": true,
+        "head": true
+      },
+      "known": [
+        "fixture.support-write",
+        "fixture.support-open"
+      ],
+      "decisions": [
+        [
+          "fixture.support-write",
+          "authorization"
+        ]
+      ],
+      "own": [
+        "a-reader/t-read"
+      ],
+      "held": []
+    },
+    "P1": {
+      "sentence": true,
+      "unpermitted": [],
+      "narrowed": 16
+    },
+    "P2": {
+      "status": "closed",
+      "parity": true
+    },
+    "Q1": {
+      "name": "R-COMPOSED",
+      "members": [
+        "concatenated",
+        "commented",
+        "escaped",
+        "homoglyph",
+        "joined"
+      ],
+      "findings": []
+    },
+    "Q2": {
+      "name": "R-SHARED-WORD",
+      "members": [
+        "capacity",
+        "eligible"
+      ],
+      "findings": []
+    },
+    "Q3": {
+      "name": "R-UNNAMED-ADAPTER",
+      "members": [
+        "unnamed"
+      ],
+      "findings": []
+    },
+    "Q4": {
+      "members": [
+        "joint-capacity"
+      ],
+      "support": [
+        "a-pair/t-read-1",
+        "a-pair/t-read-2",
+        "a-pair/t-read-3"
+      ],
+      "findings": []
+    }
+  },
+  "tests": [
+    "A1a: a fixture with N agents, per-agent capacity and grants",
+    "A1b: yields a support set equal to exactly the legal (agent, task) pairs",
+    "A2a: a fixture that feeds an admission/reconcile record as the support",
+    "A2b: goes red with a typed refusal",
+    "A3a: the exported IR carries the support's basis revision",
+    "A3b: and count",
+    "A4a: test-only until the gate",
+    "A4b: src untouched",
+    "A5a: a candidate outside the support",
+    "A5b: is a typed refusal",
+    "S1: the registry authorizes",
+    "S2: effectClass is a routing hint",
+    "S3: a read-only agent cannot invoke a write capability",
+    "P1: the parity rule that surface allowlists only narrow a registry decision",
+    "P2: closed wb-6hb.4",
+    "Q1: R-COMPOSED",
+    "Q2: R-SHARED-WORD",
+    "Q3: R-UNNAMED-ADAPTER",
+    "Q4: R-JOINT-CAPACITY",
+    "rule 16: the rows, the tables and the vocabulary are frozen at their measured shape",
+    "mutant battery: the reference meets every check, each mutant is refused by exactly its declared checks, and every check refuses a mutant alone",
+    "the outside anchors: the bead's own row binds the rows, the pin quotes, the docs citation, the vocabulary and the producer block",
+    "roster: the judged rows, the quotes, the residual members, the mutants and the registered tests equal test/fixtures/mw-gp-support-roster.json, in order and both ways; every pin reached its witness compare"
+  ],
+  "producer": {
+    "repo": "MechanicalWorkflows",
+    "sha": "4b8b974ca72bf2ed36b99e315e45857c6181fbe8",
+    "lines": [
+      {
+        "path": "docs/programs/graph-policy-coordination-2026-10-18.md",
+        "blob": "01ff00d480ecd5e5f6999433612f0c713f1f72aa",
+        "line": 12,
+        "text": "2. A trusted adapter enumerates a finite, typed, legal **pre-sampling** assignment support under hard known capacity/permissions, and exports a bounded role-aware GraphDataIR."
+      },
+      {
+        "path": "docs/programs/graph-policy-coordination-2026-10-18.md",
+        "blob": "01ff00d480ecd5e5f6999433612f0c713f1f72aa",
+        "line": 8,
+        "text": "MechanicalWorkflows owns pure coordination composition, typed Intents and deterministic reconcile/admission; native hosts own effects. GraphPolicyCLI is an external optional pure adapter for scoring observed agent/task/resource/capability graphs. It neither schedules work nor claims tool effects, and does not reinterpret mw.training-export.v1 post-proposal admission as the policy's pre-sampling eligible support."
+      },
+      {
+        "path": "docs/programs/graph-policy-coordination-2026-10-18/README.md",
+        "blob": "0dbff582a14c13e4b4b13cb1848a23b935d92697",
+        "line": 9,
+        "text": "Host: obtain bounded typed graph and **pre-sampling** legal candidates \u2192 GP scores keyed agent/task pairs \u2192 a named selector samples with actual behavior log probability or selects deterministic proposal \u2192 host maps symbolic choice into typed Intent with expected source revision \u2192 MechanicalWorkflows reconcile enforces conflicts, protected scopes, limits and staleness \u2192 native executor runs accepted action \u2192 verifiers report actual outcome."
+      },
+      {
+        "path": "docs/programs/graph-policy-coordination-2026-10-18/README.md",
+        "blob": "0dbff582a14c13e4b4b13cb1848a23b935d92697",
+        "line": 15,
+        "text": "Add an application-owned sidecar rather than changing `mw.training-export.v1` admission semantics. Record exact GP graph/program/checkpoint, feature projection, actor/selector, legal support at sample time, proposed vs admitted vs executed action, actual source receipt and final feedback status. Post-proposal admission is **not** original sampler support. Unknown/pending feedback cannot be invented as observed reward; global team outcome alone does not attribute causal benefit to each actor."
+      }
+    ]
+  }
+}
