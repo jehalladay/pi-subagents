@@ -1,5 +1,5 @@
 {
-  "comment": "wb-021.5 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R7; the hk9l/5jha/1xvp.4/o4h0.3 roster pattern): the OUT-OF-FILE anchor of test/workbench-apo-rerender-census.test.ts (cut #4). rows: every judged row of test/helpers/apo-rerender-census.ts in census order (SURFACES, ADMISSION, INVOCATION, EFFECT, IDENTITY, QUIET, READERS, ABSENCE, REACH, NAMES) - table, id, label, the SHA-256 of each case as written (JSON of the case: its input and its expected reading) and the registered test. nonRender: the named non-render readers, each with its measured member references (value, type), its reason and, where the forms judge refuses a use in it, those refused uses site by site. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its non-render readers, its registered tests (vitest task tree, run modes and timeouts) and its residual families against this file at test time, in order and both ways. It is a literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. The outside anchors are src (the modules that reach the projection, the non-render readers' member references, refused uses and runtime closure, the render modules' references and forms, the forms src's nodes stand in, the projection's public members, the registry's effect classes and the dialog's actions) and the bead's own export row (.beads/issues.jsonl, wb-021.5: the title and the owner filing, each pinned byte for byte, and the judged statement the table quotes and their pinned junctions compose), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class plant or a dialog-action plant removed from the census and this file together still reds.",
+  "comment": "wb-021.5 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R7; the hk9l/5jha/1xvp.4/o4h0.3 roster pattern): the OUT-OF-FILE anchor of test/workbench-apo-rerender-census.test.ts (cut #5). rows: every judged row of test/helpers/apo-rerender-census.ts in census order (SURFACES, ADMISSION, INVOCATION, EFFECT, IDENTITY, QUIET, READERS, ABSENCE, REACH, NAMES) - table, id, label, the SHA-256 of each case as written (JSON of the case: its input and its expected reading) and the registered test. nonRender: the named non-render readers, each with its measured member references (value, type), its reason and, where the forms judge refuses a use in it, those refused uses site by site. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its non-render readers, its registered tests (vitest task tree, run modes and timeouts) and its residual families against this file at test time, in order and both ways. It is a literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. The outside anchors are src (the modules that reach the projection, the non-render readers' member references, refused uses and runtime closure, the render modules' references and forms, the forms src's nodes stand in, the class's own declaration's element kinds, the projection's public members, the registry's effect classes and the dialog's actions), the pinned typescript's declaration file (the ClassElement kinds and their SyntaxKinds) and the bead's own export row (.beads/issues.jsonl, wb-021.5: the title and the owner filing, each pinned byte for byte, and the judged statement the table quotes and their pinned junctions compose), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class plant, a dialog-action plant or a class-element kind removed from the census and this file together still reds.",
   "rows": [
     {
       "table": "SURFACES",
@@ -558,11 +558,15 @@
     {
       "table": "REACH",
       "id": "CLASS-MODULE",
-      "label": "the class's own module is read outside the class's instance members: a module function and a public static member that admit through the projection are read, and the class's instance members (judged by REPROJECTION and MEMBERS) are not",
+      "label": "the class's own module is read outside the class's instance members: a module function, a public static member and a static block (static by its kind) that admit through the projection are read and a static block's erasing cast is refused, an instance member's decorator and computed name (they run when the class is defined) are read, and the class's instance members' own code (judged by REPROJECTION and MEMBERS) is not",
       "pins": [
         "3bd44e14adc44f40121aee86ce8167d76aa1e6fa1a6387ca4f92d3a14ada5366",
         "bfebc3f56f7f903c5223d94d63e49f8ba5493be6f59728998c4ac9f640889a42",
-        "a7c01eb1e637e16f0ae29af42fe5305e4d2774e25432bbb85b4447d2c5cf7c01"
+        "a7c01eb1e637e16f0ae29af42fe5305e4d2774e25432bbb85b4447d2c5cf7c01",
+        "d72a715d2000a5d37a393545394e7a27ad6ca1684e7edb95dd7567fcb60d0cdf",
+        "ac64280636c369747c1c34e7870a3118cb6d007992445c8b8da8abd7d7ab2c00",
+        "6ed1229fbd792d20501041b5949086b929dbec5d65272b74ae8476f818013330",
+        "e36dcd71b4227253e060327e9a400d99c937d81f6007fd9e0e2720c07283a8bf"
       ],
       "test": "REACH CLASS-MODULE"
     },
@@ -654,6 +658,34 @@
         "dc4e666090a829864292c6f46c835392691aa3be251e5cf8aec684b21ef7a33b"
       ],
       "test": "REACH UNLISTED-FORMS"
+    },
+    {
+      "table": "REACH",
+      "id": "CLASS-ELEMENT-KINDS",
+      "label": "every class element is read by its kind, the pinned typescript's ClassElement union (CLASS_ELEMENT_KINDS): in a planted class module an instance element of each kind - an index signature, a field, the constructor, a getter, a setter, a semicolon, a method - reads nothing, a static one of each kind that can be static - an index signature, a field, a method, a getter, a setter and a static block, static by its kind - reads its own member reference, and an element of a kind outside the kinds a scan is given is read by both scans and refused (unlisted-class-element)",
+      "pins": [
+        "3691fa409614126fa3c62407feb0e6ceb3b627ed9fb566ffcc923713caad8350",
+        "78919a7aca125132b582c270ac4b2e85ea4b4ad696d9a292a2a8ecad0593e7e0",
+        "8dcf7541a5b716d34758bfccbb8ce395f4f32b5b545b3b575fbda5ca2d1f5b15",
+        "eee01263a9af9a4b239ca19765953b3ffedbe874d0415f3fbf62f80bbedc1320"
+      ],
+      "test": "REACH CLASS-ELEMENT-KINDS"
+    },
+    {
+      "table": "REACH",
+      "id": "STAND-IN-KINDS",
+      "label": "a class element stands in for a base member by its kind (STAND_IN): a getter returning a function whose parameter hides the projection, a static member overriding the extended class's static member with such a parameter, a member named by a computed key (a constant one, and one the checker resolves to no name, judged against every base member) and an object literal's getter doing so are refused, while a getter and a static override that keep the projection, and a class whose index signature, static block, constructor and semicolon stand in for no named member, read quiet",
+      "pins": [
+        "3fe0dfd6b9ec97dae3a0894fc735dff4fe1ddbc52e2beef283051020dd013f82",
+        "acdcd5bf56f023a29b74d80a418489919f929880d5e5bd98160ae63cf3f4d5fa",
+        "19ffa324b92758cb0d0062b6bab28d518d029224fda37203ea8a0318d5b1026f",
+        "05484d284f491c22927f66ac792718086d025b6d179c7d8a54d5ffb4035964a0",
+        "f13ae47c04f8dd724ce53ac15d11532fd110e1c1a6562b0f8f8cb591b5313ab0",
+        "3263ff571aff78a484e72f8aada325d59a59f6c8d53ba036a2c132729c83e841",
+        "5ecf9c7a86e15f51869c1a553649841d89a379e9dfd104ed2eb7976c051c796b",
+        "a7a2d26f1e48d6e627ad3da06f3d1dfe1ce8c148601d76ccd7111398ee1368f3"
+      ],
+      "test": "REACH STAND-IN-KINDS"
     },
     {
       "table": "NAMES",
@@ -913,6 +945,8 @@
     "REACH RELAYS",
     "REACH DISPATCH",
     "REACH UNLISTED-FORMS",
+    "REACH CLASS-ELEMENT-KINDS",
+    "REACH STAND-IN-KINDS",
     "NAMES CLASS-NAME-FORMS",
     "NAMES CLASS-MEMBER-KINDS",
     "NAMES CLASS-MEMBER-SHAPES",
@@ -924,12 +958,13 @@
     "live (armed): each named non-render reader references exactly the members its entry names and makes exactly the refused uses its entry names, site by site, and none is in the runtime import closure of the SURFACES modules",
     "live: the SURFACES modules, the class's own module outside its instance members included, reference read members of the projection only, in the forms the reach scan reads (every key through its type, an unresolved key failing closed), and make no use the forms judge refuses",
     "live: the resolvable forms are exactly the forms the RESOLVABLE-FORMS row's quiet cases stand in, every src module's nodes that expose the projection stand in them or are refused, and src's refused uses are exactly the named non-render readers' rows",
+    "live: the class-element kinds the scans resolve are exactly the pinned typescript's ClassElement kinds, as its declaration file declares them (every interface extending ClassElement, with its SyntaxKind), the CLASS-ELEMENT-KINDS cases plant every one of them, and every element of the class's own declaration in src is of a listed kind",
     "live: the projection's public instance members, as the checker reads the class (the member kinds, declaration shapes and name forms NAMES plants), are exactly the read and admission members, each planted or re-projected",
     "live: the invocation plants invoke every effect class the registry's descriptor declares",
     "live: the effect plants perform every WorkflowDialogActions member, as the checker reads the interface (the name forms, heritage and signature shapes NAMES plants; signatures fail closed)",
     "live: no src module spells the program, by path or text; the walk is every src module",
     "anchor: every table quote stands once in its section of the bead's export row (the title or the owner filing, each pinned byte for byte), the quotes with every junction between them pinned compose the judged statement contiguously after the requirement id, the quotes tile the acceptance, and the row holds no other requirement field (description, design, acceptance criteria) (.beads/issues.jsonl, wb-021.5)",
-    "rule 16: every judged row, the non-render readers and their refused uses, the residual families, the member sets, the reach scan's depth bound and marker, the resolvable forms, the requirement fields and src's forms are frozen at their measured shape",
+    "rule 16: every judged row, the non-render readers and their refused uses, the residual families, the member sets, the reach scan's depth bound and marker, the resolvable forms, the class-element kinds with their syntax and stand-in readings, the requirement fields and src's forms are frozen at their measured shape",
     "roster: the judged rows, the non-render readers, the registered tests and the residual families equal test/fixtures/apo-rerender-roster.json, in order and both ways"
   ],
   "residuals": {

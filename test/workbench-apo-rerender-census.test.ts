@@ -66,8 +66,36 @@
  * over unknown), now named in its NON_RENDER entry site by site - cut #3 read that module as referencing no member, true of
  * the reach scan's member reading and silent on these four erasing flows.
  *
+ * CUT #5 (the respin of refusal #4, gate run g10-gate-s121; the CUT #4 FORM kept, and orchestrator ruling R-B41 binding the
+ * enumerate-the-resolvable rule over class-element kinds). Cut #4's shape stands: 0 pins removed or changed; CLASS-MODULE
+ * gains four pins and restates its label to what is read, rule 16 restates its title, and two rows (CLASS-ELEMENT-KINDS,
+ * STAND-IN-KINDS) and one live row (CLASS ELEMENTS) are added. U1 (a class static initialization block was read as nothing
+ * by both scans, its static-ness syntax rather than a modifier): every predicate of the scans that classifies a class
+ * element reads it through CLASS_ELEMENT_KINDS, a literal roster this file pins - the pinned typescript's ClassElement union
+ * by declaration name (PropertyDeclaration, MethodDeclaration, GetAccessorDeclaration, SetAccessorDeclaration,
+ * ConstructorDeclaration, ClassStaticBlockDeclaration, IndexSignatureDeclaration, SemicolonClassElement), each with the
+ * SyntaxKind it declares, held equal to typescript's own declaration file by CLASS ELEMENTS - with static-ness read both
+ * ways: the static modifier, and a static block, static by its kind. The class's own module skips only the class's name
+ * and its instance members (a non-static element of a listed kind), and of an instance member it reads the parts that run
+ * when the class is defined, its decorators and its computed name; a static block is read by both scans like a static field
+ * or method (REACH CLASS-MODULE: a static block that admits through the projection is read, one that takes an erasing cast is
+ * refused). A class element of a kind outside the roster a scan is given is never skipped: both scans read it, and readForms
+ * refuses it with an unlisted-class-element row, so the census reds (REACH CLASS-ELEMENT-KINDS plants every listed kind as
+ * an instance and as a static element and narrows the roster to read the refusal). A member standing in for a base member
+ * is judged by its kind's STAND_IN reading - a method by its own parameters, a field by its function-like initializer's, a
+ * getter by those of the function it returns, a setter by its parameter; a constructor, a static block, an index signature
+ * and a semicolon stand in for no named member - matched to the base member its symbol names under any name form (a
+ * computed key the checker resolves to no name, against every base member), an instance element against the base's
+ * instance side and the implemented interfaces, a static one against the extended class's static side; an object
+ * literal's getter is judged like its method and setter (REACH STAND-IN-KINDS). Measured on src: the class's own
+ * declaration holds fields, the constructor and methods, none static, decorated or computed and none of an unlisted kind,
+ * and the live reach map and src's forms and refused uses read byte for byte the same under this cut's scans as under cut
+ * #4's.
+ *
  * MEASURED (read-only, by the cutting seats, 2026-10-27: cut #3 at trunk 79dadb2 and before it at db2d796; cut #4 re-measured at
- * trunk b92d7a1, the base this cut merges, which changes no src file after e61eaec and so none after 79dadb2; src there differs from 3223843, cut #2's measured trunk, by the wb-4ap.17 landing (src/index.ts,
+ * trunk b92d7a1, and it merged b92d7a1, bda6c2a and 88086c9, none of which changes a src file after e61eaec and so none after
+ * 79dadb2; cut #5 re-measured 2026-10-28 at trunk cf56481, and it merged cf56481 and df37dac, neither of which changes a src file after
+ * 88086c9; src there differs from 3223843, cut #2's measured trunk, by the wb-4ap.17 landing (src/index.ts,
  * src/workbench/forge-operation-observer.ts), the wb-jwc.4 landing (src/workbench/providers/reactivefiber.ts) and the wb-3ht.1
  * landing (src/workbench/hyperunix-observer.ts: a consumed-fields table that references no projection member), and the live
  * reach map over every src module reads byte for byte the same under cut #2's reach scan and this cut's, at both trunks): src holds 116 TypeScript modules and none spells the program (the mention judge below:
@@ -82,8 +110,8 @@
  * instance members are its 18 methods: twelve copy-out reads and six admissions (disconnect, ingest, markStale, reconnect,
  * refresh, relate). The forms judge reads the same 24 modules, each in the forms LIVE_FORMS pins (annotation, argument,
  * callee, indexed, initializer, lib-generic, member, property, statement, type-part), and refuses four uses, all four in
- * detached-control (above); the class's own module reads nothing outside its instance members. No src file is edited by
- * this cut.
+ * detached-control (above); the class's own module reads nothing outside its instance members, whose declaration holds no
+ * static element, decorator or computed name. No src file is edited by this cut.
  *
  * THE WORLD. Every subject renders in a fresh world: a real ObservationProjection holding recorded observations (five
  * snapshots, one event-only node, five typed relations of every kind, a cycle among them) behind a recording proxy (the
@@ -131,7 +159,10 @@
  * plants, each failing closed as <unresolved-key>. The forms judge (cut #4) is measured the same way: RESOLVABLE-FORMS
  * plants a node in each of RESOLVABLE_FORMS and reads it quiet; GENERIC-ACCESSORS, GENERIC-ALIASES, ERASING-FLOWS,
  * LIBRARY-FLOWS, RELAYS, DISPATCH and UNLISTED-FORMS plant each refused form and read its refusal row; CLASS-MODULE plants a
- * class module of its own and reads a module function and a static member while the instance members read nothing. What
+ * class module of its own and reads a module function, a static member, a static block and an instance member's decorator
+ * and computed name while the instance members' own code reads nothing (cut #5); CLASS-ELEMENT-KINDS plants every listed
+ * class-element kind, instance and static, and a narrowed roster's refusal; STAND-IN-KINDS plants each kind's stand-in
+ * reading, refused and quiet. What
  * neither scan reads is named: R-ERASED-ACCESS and R-DEEP-CARRIER.
  * NAMES, "issues no event admission and no invocation": planted classes and interfaces measure the member readers on the
  * name forms CLASS-NAME-FORMS plants, the member kinds CLASS-MEMBER-KINDS plants, the declaration shapes CLASS-MEMBER-SHAPES
@@ -154,17 +185,22 @@
  * <unresolved-key> failing closed, and make no use the forms judge refuses (the static half of the SURFACES rows' runtime
  * reading). FORMS: RESOLVABLE_FORMS equals the forms RESOLVABLE-FORMS's quiet cases stand in (none refused), src's
  * refused uses equal the NON_RENDER entries' rows, src's nodes stand in the forms LIVE_FORMS pins, and every module the
- * reach scan reads holds a node the forms judge reads. MEMBERS: the projection's public instance members,
+ * reach scan reads holds a node the forms judge reads. CLASS ELEMENTS: CLASS_ELEMENT_KINDS, each kind with its SyntaxKind,
+ * equals the ClassElement kinds typescript's own declaration file declares (every interface extending ClassElement), the
+ * CLASS-ELEMENT-KINDS cases plant every listed kind, and every element of the class's own declaration in src is of a listed
+ * kind. MEMBERS: the projection's public instance members,
  * as the checker reads the class, are exactly READ_MEMBERS and ADMISSION_MEMBERS, the ADMISSION row plants every admission
  * member and REPROJECTION reads every read member. EFFECT CLASSES: the plants invoke every effect class the registry's
  * CapabilityDescriptor declares (its union read literally; any other shape reads none and reds). DIALOG ACTIONS: the plants
  * perform every WorkflowDialogActions member, as the checker reads the interface. ABSENCE WALK: no src module (path and
  * text) spells the program, at a file floor.
  * OUTSIDE ANCHORS (each a source of truth outside this file and its roster): src (COVERAGE, NON-RENDER, RENDER TOUCHES,
- * FORMS, MEMBERS, EFFECT CLASSES, DIALOG ACTIONS) and the bead's export row (every table quote, the filing's bytes, the
+ * FORMS, CLASS ELEMENTS, MEMBERS, EFFECT CLASSES, DIALOG ACTIONS), the pinned typescript's declaration file (CLASS ELEMENTS:
+ * the class-element kinds and their SyntaxKinds) and the bead's export row (every table quote, the filing's bytes, the
  * title's bytes, the judged statement the quotes and their pinned junctions compose right after the requirement id, the
  * two tilings, the program's two spellings in the title, the absence of bd's other requirement fields), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class
- * plant or a dialog-action plant removed from the helper, the frozen literal and the roster together still reds.
+ * plant, a dialog-action plant or a class-element kind removed from the helper, the frozen literal and the roster together
+ * still reds.
  * RESIDUALS (named, each with its pinned quiet row): R-DEFERRED-EFFECT an invocation, an admission or a host effect a
  * render schedules past the settle window - three rounds of immediates, so a timer of any delay, 0 ms included, can land
  * past it while an immediate does not - each pinned with its own timer (INVOCATION); R-SIDE-CHANNEL an effect through a channel the world does not hold - a module global, a file,
@@ -192,13 +228,18 @@
  * projection sits past that (the instance nine wrappers deep: R-DEEP-CARRIER's fourth case); R-RUNTIME-MEMBER a member patched onto
  * the class's prototype at run time is not read by the member readers, which read the declared class and interface
  * (NAMES).
- * NOT CLAIMED (edits of this file, its helper and the roster together): a plant row of IDENTITY, QUIET,
+ * NOT CLAIMED. In src: an instance member's own code - its body, initializer, parameters and types - is not read statically
+ * (REPROJECTION's runtime reading and MEMBERS judge it), nor is a parameter decorator (the compiler refuses one under the
+ * repo's standard decorators, TS1206). As edits of this file, its helper and the roster together: a plant row of IDENTITY, QUIET,
  * WRITE-ANY-ROUTE, OTHER-ROUTES, EVIDENCE-ABORTS, a READERS, REACH or NAMES row or a residual row removed with its
  * frozen-literal element and roster entry (no outside anchor names those plants); a case and its expected reading
  * re-authored together; the reach scan's key reading or its marker removed from the helper together with the REACH rows
  * that plant them, and a resolvable form or a refusal of the forms judge removed from the helper together with its REACH
  * cases, RESOLVABLE_FORMS's element and the frozen literal (the src plants recorded with the cut are their falsifiers;
- * LIVE_FORMS and src's refused uses anchor the forms src itself exercises); an assertion narrowed in this file (the SURFACES rows' QUIET comparison cut to fewer fields
+ * LIVE_FORMS and src's refused uses anchor the forms src itself exercises); a class-element kind's class-module or stand-in
+ * reading (classInternal, STAND_IN) changed in the helper together with its REACH cases and the frozen literal (the src plants
+ * recorded with the cut are its falsifiers; the kinds themselves, each with its SyntaxKind, are anchored by typescript's
+ * declaration file); an assertion narrowed in this file (the SURFACES rows' QUIET comparison cut to fewer fields
  * stays green, since every real surface reads QUIET on every field, and the anchor's section reading widened back to
  * the whole row stays green on the clean export: the src and export plants recorded with the cut are those readings'
  * falsifiers); a NON_RENDER reason's prose (its member references and the closure are measured, its words are not); the
@@ -206,7 +247,7 @@
  * observation beyond the window total.
  * FROZEN SHAPE (standing rule 16): the rule-16 row pins `${table}/${id}:${pins.length}` for every judged row, the NON_RENDER
  * entries and their refused uses, the residual families, the member sets, CARRIER_DEPTH, the marker, RESOLVABLE_FORMS,
- * REQUIREMENT_FIELDS and LIVE_FORMS as literals; test/fixtures/apo-rerender-roster.json holds every judged
+ * REQUIREMENT_FIELDS, LIVE_FORMS and CLASS_ELEMENT_KINDS with each kind's SyntaxKind and STAND_IN reading as literals; test/fixtures/apo-rerender-roster.json holds every judged
  * row (table, id, label, SHA-256 of each case, test), the NON_RENDER entries, every registered test title and the residual
  * families, judged by this file's last row in order and both ways.
  *
@@ -216,8 +257,10 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import {
   ABSENCE,
@@ -226,6 +269,8 @@ import {
   ADMISSION_MEMBERS,
   type AdmissionMember,
   CARRIER_DEPTH,
+  CLASS_ELEMENT_KINDS,
+  CLASS_ELEMENT_SYNTAX,
   classMembers,
   type DialogAction,
   EFFECT,
@@ -255,6 +300,7 @@ import {
   type Reach,
   ROWS,
   readForms,
+  STAND_IN,
   SURFACES,
   scanReaders,
   sourceProgram,
@@ -302,6 +348,8 @@ const RENDER_TOUCHES =
   "live: the SURFACES modules, the class's own module outside its instance members included, reference read members of the projection only, in the forms the reach scan reads (every key through its type, an unresolved key failing closed), and make no use the forms judge refuses";
 const FORMS =
   "live: the resolvable forms are exactly the forms the RESOLVABLE-FORMS row's quiet cases stand in, every src module's nodes that expose the projection stand in them or are refused, and src's refused uses are exactly the named non-render readers' rows";
+const CLASS_ELEMENTS =
+  "live: the class-element kinds the scans resolve are exactly the pinned typescript's ClassElement kinds, as its declaration file declares them (every interface extending ClassElement, with its SyntaxKind), the CLASS-ELEMENT-KINDS cases plant every one of them, and every element of the class's own declaration in src is of a listed kind";
 const MEMBERS =
   "live: the projection's public instance members, as the checker reads the class (the member kinds, declaration shapes and name forms NAMES plants), are exactly the read and admission members, each planted or re-projected";
 const CLASSES = "live: the invocation plants invoke every effect class the registry's descriptor declares";
@@ -310,7 +358,7 @@ const ACTIONS =
 const ABSENCE_WALK = "live: no src module spells the program, by path or text; the walk is every src module";
 const ANCHOR =
   "anchor: every table quote stands once in its section of the bead's export row (the title or the owner filing, each pinned byte for byte), the quotes with every junction between them pinned compose the judged statement contiguously after the requirement id, the quotes tile the acceptance, and the row holds no other requirement field (description, design, acceptance criteria) (.beads/issues.jsonl, wb-021.5)";
-const SLOW = new Set(["SURFACES INSPECTOR", "SURFACES DIALOG", "SURFACES REPROJECTION", READER_WALK, COVERAGE, NON_RENDER_ROW, RENDER_TOUCHES, FORMS, MEMBERS, ACTIONS, ABSENCE_WALK]);
+const SLOW = new Set(["SURFACES INSPECTOR", "SURFACES DIALOG", "SURFACES REPROJECTION", READER_WALK, COVERAGE, NON_RENDER_ROW, RENDER_TOUCHES, FORMS, CLASS_ELEMENTS, MEMBERS, ACTIONS, ABSENCE_WALK]);
 /** bd's requirement fields beside the title and the notes: the export row holds none (F2 of refusal #3), so the title and the owner filing are the whole requirement. */
 const REQUIREMENT_FIELDS: readonly string[] = ["acceptance_criteria", "description", "design"];
 /** The forms src's nodes that expose the projection stand in, as measured at the cut (an outside anchor of RESOLVABLE_FORMS: a form the judge stops reading in src reds FORMS). */
@@ -403,6 +451,32 @@ function exportRow(): ExportRow {
   if (rows.length !== 1 || !only) throw new Error(`the tracked bead export holds ${rows.length} ${BEAD} rows; the anchor reads exactly one`);
   return only;
 }
+/**
+ * The pinned typescript's ClassElement kinds, read from its own declaration file beside the module the helper imports (an
+ * anchor outside this file and its roster): every interface it declares extending ClassElement, as name:SyntaxKind (its
+ * kind member's type), sorted.
+ */
+function typescriptClassElements(): string[] {
+  const file = join(dirname(createRequire(import.meta.url).resolve("typescript")), "typescript.d.ts");
+  const source = ts.createSourceFile(file, readFileSync(file, "utf8"), ts.ScriptTarget.Latest, true);
+  const found: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isInterfaceDeclaration(node) && (node.heritageClauses ?? []).some(clause => clause.types.some(item => ts.isIdentifier(item.expression) && item.expression.text === "ClassElement"))) {
+      const kind = node.members.find(member => ts.isPropertySignature(member) && member.name.getText(source) === "kind");
+      const type = kind && ts.isPropertySignature(kind) ? kind.type?.getText(source) : undefined;
+      found.push(`${node.name.text}:${type === undefined ? "<no kind>" : type.replace(/^SyntaxKind\./, "")}`);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return found.sort();
+}
+/** The kinds of the elements a module's declaration of the class holds, by SyntaxKind name (sorted, each once). */
+function elementKinds(rel: string, text: string): string[] {
+  const source = ts.createSourceFile(rel, text, ts.ScriptTarget.Latest, true);
+  const declaration = source.statements.find((statement): statement is ts.ClassDeclaration => ts.isClassDeclaration(statement) && statement.name?.text === CLASS_NAME);
+  return [...new Set((declaration?.members ?? []).map(member => ts.SyntaxKind[member.kind]))].sort();
+}
 /** The owner filing: the export notes' first two paragraphs (the filing's header and its acceptance); later notes are never read for a quote. */
 function filingOf(notes: string): string {
   const [header = "", acceptance = ""] = notes.split("\n\n");
@@ -456,8 +530,8 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
     it(`REACH ${entry.id}`, { timeout: WALK_BUDGET_MS }, () => {
       for (const item of entry.cases) {
         const classModule = item.classModule ?? CLASS_MODULE;
-        expect(projectionReach(planted(), ROOT, classModule, CLASS_NAME, [item.module]).get(item.module) ?? null, item.module).toEqual(item.expect);
-        if (item.forms !== undefined) expect(readForms(planted(), ROOT, classModule, CLASS_NAME, [item.module]).get(item.module) ?? null, `${item.module}: its forms`).toEqual(item.forms);
+        expect(projectionReach(planted(), ROOT, classModule, CLASS_NAME, [item.module], item.kinds).get(item.module) ?? null, item.module).toEqual(item.expect);
+        if (item.forms !== undefined) expect(readForms(planted(), ROOT, classModule, CLASS_NAME, [item.module], item.kinds).get(item.module) ?? null, `${item.module}: its forms`).toEqual(item.forms);
       }
     });
   }
@@ -545,6 +619,23 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
     expect([...liveReach().keys()].filter(module => !forms.has(module)), "modules that reach the projection with no node the forms judge reads").toEqual([]);
   });
 
+  it(CLASS_ELEMENTS, { timeout: WALK_BUDGET_MS }, () => {
+    const declared = typescriptClassElements();
+    expect(
+      CLASS_ELEMENT_KINDS.map(kind => `${kind}:${ts.SyntaxKind[CLASS_ELEMENT_SYNTAX[kind]]}`).sort(),
+      "the listed kinds, each with its SyntaxKind, are the ClassElement kinds the typescript declaration file declares",
+    ).toEqual(declared);
+    const syntax = CLASS_ELEMENT_KINDS.map(kind => ts.SyntaxKind[CLASS_ELEMENT_SYNTAX[kind]]).sort();
+    const cases = REACH.rows.find(row => row.id === "CLASS-ELEMENT-KINDS")?.cases ?? [];
+    expect([...new Set(cases.flatMap(item => elementKinds(item.module, item.plants[item.module])))].sort(), "the kinds the CLASS-ELEMENT-KINDS cases plant are every listed kind").toEqual(syntax);
+    const live = elementKinds(CLASS_MODULE, read(CLASS_MODULE));
+    expect(live.filter(kind => !syntax.includes(kind)), "elements of the class's own declaration in src of an unlisted kind").toEqual([]);
+    // Non-vacuity: the declaration file read finds the kinds (one per listed kind), the live declaration holds methods, and the reading finds a planted static block.
+    expect(declared.length, "the ClassElement kinds the declaration file declares").toBe(CLASS_ELEMENT_KINDS.length);
+    expect(live, "the live declaration's element kinds").toContain("MethodDeclaration");
+    expect(elementKinds("plant.ts", `export class ${CLASS_NAME} {\n  static {}\n}\n`), "a planted declaration's static block").toEqual(["ClassStaticBlockDeclaration"]);
+  });
+
   it(MEMBERS, { timeout: WALK_BUDGET_MS }, () => {
     expect(classMembers(live(), ROOT, CLASS_MODULE, CLASS_NAME), "ObservationProjection's public instance members are the read and admission members, exactly").toEqual(
       [...READ_MEMBERS, ...ADMISSION_MEMBERS].sort(),
@@ -603,7 +694,7 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
     }
   });
 
-  it("rule 16: every judged row, the non-render readers and their refused uses, the residual families, the member sets, the reach scan's depth bound and marker, the resolvable forms, the requirement fields and src's forms are frozen at their measured shape", () => {
+  it("rule 16: every judged row, the non-render readers and their refused uses, the residual families, the member sets, the reach scan's depth bound and marker, the resolvable forms, the class-element kinds with their syntax and stand-in readings, the requirement fields and src's forms are frozen at their measured shape", () => {
     expect(ROWS.map(entry => `${entry.table}/${entry.id}:${entry.pins.length}`)).toEqual([
       "SURFACES/GRAPH-VIEW:3",
       "SURFACES/TIMELINE:2",
@@ -649,12 +740,14 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "REACH/RESOLVABLE-FORMS:8",
       "REACH/GENERIC-ACCESSORS:6",
       "REACH/GENERIC-ALIASES:4",
-      "REACH/CLASS-MODULE:3",
+      "REACH/CLASS-MODULE:7",
       "REACH/ERASING-FLOWS:9",
       "REACH/LIBRARY-FLOWS:8",
       "REACH/RELAYS:13",
       "REACH/DISPATCH:9",
       "REACH/UNLISTED-FORMS:10",
+      "REACH/CLASS-ELEMENT-KINDS:4",
+      "REACH/STAND-IN-KINDS:8",
       "NAMES/CLASS-NAME-FORMS:6",
       "NAMES/CLASS-MEMBER-KINDS:9",
       "NAMES/CLASS-MEMBER-SHAPES:10",
@@ -702,6 +795,9 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       RESOLVABLE_FORMS.join(","),
       REQUIREMENT_FIELDS.join(","),
       LIVE_FORMS.join(","),
+      CLASS_ELEMENT_KINDS.join(","),
+      CLASS_ELEMENT_KINDS.map(kind => `${kind}:${ts.SyntaxKind[CLASS_ELEMENT_SYNTAX[kind]]}`).join(","),
+      CLASS_ELEMENT_KINDS.map(kind => `${kind}:${STAND_IN[kind]}`).join(","),
     ]).toEqual([
       "aggregate,aggregateStats,events,identityRefusals,indexOf,query,relationRevision,relations,relationsPage,stats,truncation,window",
       "disconnect,ingest,markStale,reconnect,refresh,relate",
@@ -713,6 +809,9 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "member,element,callee,argument,initializer,assignment,property,return,cast,array-element,spread-array,wrap,test,iteration,await,statement,annotation,type-part,keyof,constraint,heritage,indexed,lib-generic",
       "acceptance_criteria,description,design",
       "annotation,argument,callee,indexed,initializer,lib-generic,member,property,statement,type-part",
+      "PropertyDeclaration,MethodDeclaration,GetAccessorDeclaration,SetAccessorDeclaration,ConstructorDeclaration,ClassStaticBlockDeclaration,IndexSignatureDeclaration,SemicolonClassElement",
+      "PropertyDeclaration:PropertyDeclaration,MethodDeclaration:MethodDeclaration,GetAccessorDeclaration:GetAccessor,SetAccessorDeclaration:SetAccessor,ConstructorDeclaration:Constructor,ClassStaticBlockDeclaration:ClassStaticBlockDeclaration,IndexSignatureDeclaration:IndexSignature,SemicolonClassElement:SemicolonClassElement",
+      "PropertyDeclaration:field,MethodDeclaration:parameters,GetAccessorDeclaration:getter,SetAccessorDeclaration:setter,ConstructorDeclaration:none,ClassStaticBlockDeclaration:none,IndexSignatureDeclaration:none,SemicolonClassElement:none",
     ]);
   });
 

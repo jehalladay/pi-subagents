@@ -996,16 +996,82 @@ function classModel(program: ts.Program, root: string, classModule: string, clas
   return { checker, symbol, declaration, instance, isMember, carries };
 }
 /**
- * The nodes of the class's own module a scan never reads: the class's name and its instance members (fields, methods,
- * accessors and the constructor), which the REPROJECTION row's runtime reading and the MEMBERS row judge. Its static
- * members and everything outside the class are read like any other module (cut #4, U1(b)).
+ * The class-element kinds the scans resolve (cut #5, ruling R-B41: the enumerate-the-resolvable rule over class-element
+ * kinds), by declaration name: the pinned typescript's ClassElement union, each kind an interface its declaration file
+ * declares extending ClassElement, with the SyntaxKind it declares (CLASS_ELEMENT_SYNTAX; the CLASS ELEMENTS row holds both
+ * equal to that file). Every predicate of the scans that classifies a class element reads it through this roster: the
+ * class's own module skips a non-static element of a listed kind (classInternal), and a member standing in for a base
+ * member is judged by its kind's STAND_IN reading. Static-ness is read both ways: a static block is static by its kind, every
+ * other element by the static modifier. A class element of any kind outside the roster is never skipped: both scans read it,
+ * and readForms refuses it with an "unlisted-class-element <kind>" row, so the census reds.
  */
-const classInternal = (model: ClassModel, node: ts.Node): boolean =>
-  node === model.declaration.name || (node.parent === model.declaration && ts.isClassElement(node) && (ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Static) === 0);
+export const CLASS_ELEMENT_KINDS = [
+  "PropertyDeclaration",
+  "MethodDeclaration",
+  "GetAccessorDeclaration",
+  "SetAccessorDeclaration",
+  "ConstructorDeclaration",
+  "ClassStaticBlockDeclaration",
+  "IndexSignatureDeclaration",
+  "SemicolonClassElement",
+] as const;
+export type ClassElementKind = (typeof CLASS_ELEMENT_KINDS)[number];
+/** The SyntaxKind each listed class-element kind declares (its declaration's kind member in the typescript declaration file). */
+export const CLASS_ELEMENT_SYNTAX: Readonly<Record<ClassElementKind, ts.SyntaxKind>> = {
+  PropertyDeclaration: ts.SyntaxKind.PropertyDeclaration,
+  MethodDeclaration: ts.SyntaxKind.MethodDeclaration,
+  GetAccessorDeclaration: ts.SyntaxKind.GetAccessor,
+  SetAccessorDeclaration: ts.SyntaxKind.SetAccessor,
+  ConstructorDeclaration: ts.SyntaxKind.Constructor,
+  ClassStaticBlockDeclaration: ts.SyntaxKind.ClassStaticBlockDeclaration,
+  IndexSignatureDeclaration: ts.SyntaxKind.IndexSignature,
+  SemicolonClassElement: ts.SyntaxKind.SemicolonClassElement,
+};
+/**
+ * How a member of each listed kind stands in for a base member of its name (readForms' judgeStandIn): a method by its own
+ * parameters, a field by its function-like initializer's own parameters, a getter by the own parameters of the function it
+ * returns, a setter by its parameter (handed the property's type); a constructor, a static block, an index signature and a
+ * semicolon stand in for no named member (a constructor's parameters are judged where it is called).
+ */
+export const STAND_IN: Readonly<Record<ClassElementKind, "parameters" | "field" | "getter" | "setter" | "none">> = {
+  PropertyDeclaration: "field",
+  MethodDeclaration: "parameters",
+  GetAccessorDeclaration: "getter",
+  SetAccessorDeclaration: "setter",
+  ConstructorDeclaration: "none",
+  ClassStaticBlockDeclaration: "none",
+  IndexSignatureDeclaration: "none",
+  SemicolonClassElement: "none",
+};
+/** A stand-in reading that judges something (every reading but "none"). */
+type StandInReading = Exclude<(typeof STAND_IN)[ClassElementKind], "none">;
+/** A class element's kind among the kinds a scan is given (CLASS_ELEMENT_KINDS unless a case narrows them), or undefined: an unlisted kind. */
+const listedKind = (element: ts.Node, kinds: readonly ClassElementKind[]): ClassElementKind | undefined => kinds.find(kind => CLASS_ELEMENT_SYNTAX[kind] === element.kind);
+/** Static by syntax (a static block, by its kind) or by the static modifier. */
+const isStaticElement = (element: ts.ClassElement): boolean => ts.isClassStaticBlockDeclaration(element) || (ts.getCombinedModifierFlags(element) & ts.ModifierFlags.Static) !== 0;
+/** The node as a member of the class-like declaration it sits in (an element of any kind), or undefined. */
+const classElementOf = (node: ts.Node): ts.ClassElement | undefined => (ts.isClassLike(node.parent) ? node.parent.members.find(member => member === node) : undefined);
+/**
+ * The nodes of the class's own module a scan never reads, and what it reads of them: the class's name (nothing), and an
+ * instance member - a non-static element of a listed kind: a field, a method, an accessor, the constructor, an index
+ * signature or a semicolon - which the REPROJECTION row's runtime reading and the MEMBERS row judge, except the parts of it
+ * that run when the class is defined, its decorators and its computed name, which are read like module code (cut #5).
+ * undefined for every other node: a static element (a static field, method or accessor, a static index signature, a static
+ * block: static by its kind) and an element of an unlisted kind are read like any other module, as is everything outside
+ * the class (cut #4 U1(b); cut #5, refusal #4 U1 and ruling R-B41).
+ */
+function classInternal(model: ClassModel, node: ts.Node, kinds: readonly ClassElementKind[]): readonly ts.Node[] | undefined {
+  if (node === model.declaration.name) return [];
+  if (node.parent !== model.declaration) return undefined;
+  const element = classElementOf(node);
+  if (element === undefined || listedKind(element, kinds) === undefined || isStaticElement(element)) return undefined;
+  return [...(ts.canHaveDecorators(element) ? (ts.getDecorators(element) ?? []) : []), ...(element.name && ts.isComputedPropertyName(element.name) ? [element.name] : [])];
+}
 /**
  * Reads, for each given module, how it reaches the class declared in classModule (Reach); modules that reach nothing are
  * absent from the result. The class's own module is read outside the class's name and instance members (classInternal):
- * a module function or a static member there is read as any module is. Names resolve through the checker, so an alias, a
+ * a module function, a static member or a static block there, and an instance member's decorators and computed name, are
+ * read as any module is (kinds narrows the class-element kinds read as listed; CLASS_ELEMENT_KINDS by default). Names resolve through the checker, so an alias, a
  * namespace, a re-export chain and a render model, container, getter or function that carries the projection are all
  * followed, in value and type positions alike. A carrier is followed to the depth bound CARRIER_DEPTH states (the
  * instance inside at most four nested wrappers, a typed reader inside at most three), and an object type whose property
@@ -1017,7 +1083,14 @@ const classInternal = (model: ClassModel, node: ts.Node): boolean =>
  * module's own, Reflect, an any, a prototype lookup, an Object property call, a generic accessor or alias over an
  * unconstrained type parameter) is not read here: readForms refuses the erasing step itself, in the module that takes it.
  */
-export function projectionReach(program: ts.Program, root: string, classModule: string, className: string, modules: readonly string[]): Map<string, Reach> {
+export function projectionReach(
+  program: ts.Program,
+  root: string,
+  classModule: string,
+  className: string,
+  modules: readonly string[],
+  kinds: readonly ClassElementKind[] = CLASS_ELEMENT_KINDS,
+): Map<string, Reach> {
   const model = classModel(program, root, classModule, className);
   const { checker, symbol, isMember, carries } = model;
   const holderOf = new Map<ts.Symbol, boolean>();
@@ -1053,7 +1126,11 @@ export function projectionReach(program: ts.Program, root: string, classModule: 
       return ts.isIdentifier(key) || ts.isPrivateIdentifier(key) || ts.isStringLiteral(key) || ts.isNoSubstitutionTemplateLiteral(key) || ts.isNumericLiteral(key) ? [key.text] : undefined;
     };
     const visit = (node: ts.Node, inType: boolean): void => {
-      if (inClassModule && classInternal(model, node)) return;
+      const internal = inClassModule ? classInternal(model, node, kinds) : undefined;
+      if (internal) {
+        for (const part of internal) visit(part, inType);
+        return;
+      }
       const typed = inType || ts.isTypeNode(node);
       if (ts.isIdentifier(node) || ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) {
         let resolved = checker.getSymbolAtLocation(node);
@@ -1172,11 +1249,24 @@ function isValueName(node: ts.Identifier): boolean {
  * body of its own (an interface method, a function type, a call signature) is trusted for no parameter, so a value or a
  * holder it takes is refused; a member standing in for another's signature (a class member overriding or implementing
  * a base or interface member, an object literal's method under a contextual type, a setter for such a property) whose
- * own parameter hides a path the signature hands it is refused at its declaration. Type side, a type argument of a
+ * own parameter hides a path the signature hands it is refused at its declaration. Stand-ins are read by class-element
+ * kind (cut #5, STAND_IN): a method, a field, a getter (the function it returns) and a setter, each matched to the base
+ * member its symbol names under any name form (an identifier, a string or numeric literal, a computed key, a symbol), an
+ * instance element against the base's instance side and the implemented interfaces, a static one against the extended
+ * class's static side; an object literal's method, getter and setter alike under a contextual type. A class element of a
+ * kind outside the given kinds (CLASS_ELEMENT_KINDS by default) is refused wherever it stands (unlisted-class-element).
+ * Type side, a type argument of a
  * generic declared in src (a module's own or another module's alias, interface or class) or in a package is refused: a
  * generic indexed-access alias and an infer-conditional alias included.
  */
-export function readForms(program: ts.Program, root: string, classModule: string, className: string, modules: readonly string[]): Map<string, FormsReading> {
+export function readForms(
+  program: ts.Program,
+  root: string,
+  classModule: string,
+  className: string,
+  modules: readonly string[],
+  kinds: readonly ClassElementKind[] = CLASS_ELEMENT_KINDS,
+): Map<string, FormsReading> {
   const model = classModel(program, root, classModule, className);
   const { checker, isMember, carries } = model;
   const prefix = `${join(root, "src")}/`;
@@ -1389,39 +1479,73 @@ export function readForms(program: ts.Program, root: string, classModule: string
       }
       return { refused: `unlisted-type ${ts.SyntaxKind[parent.kind]}`, site: parent };
     };
-    /** A member that stands in for another's signature - a class member overriding or implementing a base or interface member, an object literal's method under a contextual type - keeps every path through which that signature hands it the projection, in the parameters it declares itself (a setter: the property's type). */
-    const judgeStandIn = (member: ts.MethodDeclaration | ts.SetAccessorDeclaration | ts.PropertyDeclaration, bases: readonly ts.Type[], form: ResolvableForm): void => {
-      const name = ts.isIdentifier(member.name) || ts.isStringLiteral(member.name) || ts.isPrivateIdentifier(member.name) ? member.name.text : undefined;
-      if (name === undefined) return;
-      const own = ts.isPropertyDeclaration(member) ? (member.initializer && ts.isFunctionLike(member.initializer) ? parametersOf(member.initializer) : []) : parametersOf(member);
+    /** The parameters through which a stand-in receives what its base member hands it, by its kind's STAND_IN reading: a method's and a setter's own, a field's function-like initializer's, the own parameters of the function a getter returns. */
+    const standInParameters = (member: ts.ClassElement | ts.ObjectLiteralElementLike, reading: StandInReading): readonly ts.ParameterDeclaration[] => {
+      if (reading === "field") return ts.isPropertyDeclaration(member) && member.initializer && ts.isFunctionLike(member.initializer) ? parametersOf(member.initializer) : [];
+      if (reading === "getter") return ts.isGetAccessorDeclaration(member) ? parametersOf(checker.getSignatureFromDeclaration(member)?.getReturnType().getCallSignatures()[0]?.getDeclaration()) : [];
+      return parametersOf(member);
+    };
+    /**
+     * A member that stands in for another's signature - a class member overriding or implementing a base or interface
+     * member, an object literal's member under a contextual type - keeps every path through which that signature hands it
+     * the projection, in the parameters its kind's STAND_IN reading names (a setter: the property's type). The base member
+     * is the one the stand-in's symbol names, under any name form; a computed key the checker resolves to no name may stand
+     * in for any member of the base, so it is judged against every one of them.
+     */
+    const judgeStandIn = (member: ts.ClassElement | ts.ObjectLiteralElementLike, reading: StandInReading, bases: readonly ts.Type[], form: ResolvableForm): void => {
+      const symbol = member.name ? checker.getSymbolAtLocation(member.name) : undefined;
+      if (symbol === undefined) return;
+      const own = standInParameters(member, reading);
       let lost = false;
       for (const base of bases) {
-        const property = checker.getPropertyOfType(base, name);
-        if (!property) continue;
-        const declared = checker.getTypeOfSymbol(property);
-        const handed: { readonly type: ts.Type; readonly at: number }[] = ts.isSetAccessorDeclaration(member)
-          ? [{ type: declared, at: 0 }]
-          : checker
-              .getNonNullableType(declared)
-              .getCallSignatures()
-              .flatMap(signature => signature.getParameters().map((parameter, at) => ({ type: checker.getTypeOfSymbol(parameter), at })));
-        for (const { type, at } of handed) {
-          const parameter = own[at];
-          if (!parameter) continue;
-          for (const path of heldPaths(type, 0)) if (!pathKept(checker.getTypeAtLocation(parameter), path)) lost = true;
+        const properties = checker.getPropertiesOfType(base);
+        for (const property of symbol.escapedName === ts.InternalSymbolName.Computed ? properties : properties.filter(item => item.escapedName === symbol.escapedName)) {
+          const declared = checker.getTypeOfSymbol(property);
+          const handed: { readonly type: ts.Type; readonly at: number }[] =
+            reading === "setter"
+              ? [{ type: declared, at: 0 }]
+              : checker
+                  .getNonNullableType(declared)
+                  .getCallSignatures()
+                  .flatMap(signature => signature.getParameters().map((parameter, at) => ({ type: checker.getTypeOfSymbol(parameter), at })));
+          for (const { type, at } of handed) {
+            const parameter = own[at];
+            if (!parameter) continue;
+            for (const path of heldPaths(type, 0)) if (!pathKept(checker.getTypeAtLocation(parameter), path)) lost = true;
+          }
         }
       }
       if (lost) refuse(form, member);
     };
+    /** The base sides a class element stands in for: an instance element the extended class's instance side and every implemented interface, a static one (the static modifier, or a static block) the extended class's static side, its constructor type. */
+    const standInBases = (element: ts.ClassElement, owner: ts.ClassLikeDeclaration): ts.Type[] =>
+      (owner.heritageClauses ?? []).flatMap(clause => {
+        if (!isStaticElement(element)) return clause.types.map(item => checker.getTypeAtLocation(item));
+        return clause.token === ts.SyntaxKind.ExtendsKeyword ? clause.types.map(item => checker.getTypeAtLocation(item.expression)) : [];
+      });
     const visit = (node: ts.Node, inType: boolean): void => {
-      if (inClassModule && classInternal(model, node)) return;
+      const internal = inClassModule ? classInternal(model, node, kinds) : undefined;
+      if (internal) {
+        for (const part of internal) visit(part, inType);
+        return;
+      }
       const typed = inType || ts.isTypeNode(node);
-      if ((ts.isMethodDeclaration(node) || ts.isSetAccessorDeclaration(node) || ts.isPropertyDeclaration(node)) && ts.isClassLike(node.parent)) {
-        const heritage = (node.parent.heritageClauses ?? []).flatMap(clause => clause.types.map(item => checker.getTypeAtLocation(item)));
-        if (heritage.length > 0) judgeStandIn(node, heritage, "heritage");
-      } else if ((ts.isMethodDeclaration(node) || ts.isSetAccessorDeclaration(node)) && ts.isObjectLiteralExpression(node.parent)) {
-        const contextual = checker.getContextualType(node.parent);
-        if (contextual) judgeStandIn(node, [contextual], "property");
+      const element = classElementOf(node);
+      if (element && ts.isClassLike(element.parent)) {
+        // Every class element is read by its kind: an unlisted kind is refused (fail closed), a listed one stands in by its STAND_IN reading.
+        const kind = listedKind(element, kinds);
+        const reading = kind === undefined ? undefined : STAND_IN[kind];
+        if (reading === undefined) refuse(`unlisted-class-element ${ts.SyntaxKind[element.kind]}`, element);
+        else if (reading !== "none") {
+          const bases = standInBases(element, element.parent);
+          if (bases.length > 0) judgeStandIn(element, reading, bases, "heritage");
+        }
+      } else if (ts.isObjectLiteralElementLike(node) && ts.isObjectLiteralExpression(node.parent)) {
+        // An object literal's method, getter and setter stand in for its contextual type's member by the same readings (its other elements are flows: property).
+        const kind = listedKind(node, CLASS_ELEMENT_KINDS);
+        const reading = kind === undefined ? "none" : STAND_IN[kind];
+        const contextual = reading === "none" ? undefined : checker.getContextualType(node.parent);
+        if (contextual && reading !== "none") judgeStandIn(node, reading, [contextual], "property");
       }
       if (ts.isTypeNode(node)) {
         if (exposes(checker.getTypeFromTypeNode(node))) record(judgeType(node));
@@ -1973,18 +2097,31 @@ export interface ReachItem {
   readonly forms?: FormsReading | null;
   /** The class's own module for this case, when the case plants one (CLASS-MODULE); absent, the real src/workbench/observation.ts. */
   readonly classModule?: string;
+  /** The class-element kinds both scans are given for this case, when it narrows them (CLASS-ELEMENT-KINDS' fail-closed cases, cut #5); absent, CLASS_ELEMENT_KINDS. */
+  readonly kinds?: readonly ClassElementKind[];
 }
 const reached = (names: boolean, value: readonly string[], type: readonly string[], holders: readonly string[]): Reach => ({ names, value, type, holders });
 const reach = (module: string, text: string, expect: Reach | null, also: Readonly<Record<string, string>> = {}): ReachItem => ({ plants: { ...also, [module]: text }, module, expect });
 const formsRead = (forms: readonly ResolvableForm[], refused: readonly string[]): FormsReading => ({ forms, refused });
-/** A cut #4 case: its reach and its forms, each pinned; a CLASS-MODULE case names the planted class module it reads. */
-const reachForms = (module: string, text: string, expect: Reach | null, forms: FormsReading | null, also: Readonly<Record<string, string>> = {}, classModule?: string): ReachItem => ({
+/** A cut #4 case: its reach and its forms, each pinned; a CLASS-MODULE case names the planted class module it reads, and a cut #5 fail-closed case the class-element kinds it narrows the scans to. */
+const reachForms = (
+  module: string,
+  text: string,
+  expect: Reach | null,
+  forms: FormsReading | null,
+  also: Readonly<Record<string, string>> = {},
+  classModule?: string,
+  kinds?: readonly ClassElementKind[],
+): ReachItem => ({
   plants: { ...also, [module]: text },
   module,
   expect,
   forms,
   ...(classModule ? { classModule } : {}),
+  ...(kinds ? { kinds } : {}),
 });
+/** A cut #5 case over a planted class module of its own (CLASS-MODULE, CLASS-ELEMENT-KINDS): the module is the class's own module. */
+const classCase = (module: string, text: string, expect: Reach | null, forms: FormsReading | null, kinds?: readonly ClassElementKind[]): ReachItem => reachForms(module, text, expect, forms, {}, module, kinds);
 const OBS_UI = 'import type { ObservationProjection } from "../workbench/observation.js";\n';
 const MODEL = 'import type { InspectorModel } from "./workflow-inspector.js";\n';
 export const REACH: Table<ReachItem> = {
@@ -2345,7 +2482,7 @@ export const REACH: Table<ReachItem> = {
     {
       id: "CLASS-MODULE",
       label:
-        "the class's own module is read outside the class's instance members: a module function and a public static member that admit through the projection are read, and the class's instance members (judged by REPROJECTION and MEMBERS) are not",
+        "the class's own module is read outside the class's instance members: a module function, a public static member and a static block (static by its kind) that admit through the projection are read and a static block's erasing cast is refused, an instance member's decorator and computed name (they run when the class is defined) are read, and the class's instance members' own code (judged by REPROJECTION and MEMBERS) is not",
       cases: [
         reachForms(
           "src/workbench/census-forms-class-function.ts",
@@ -2364,6 +2501,30 @@ export const REACH: Table<ReachItem> = {
           "export class ObservationProjection {\n  markStale(input: unknown): void {\n    void input;\n  }\n  refresh(): void {\n    this.markStale(0);\n  }\n}\n", null, null,
           {},
           "src/workbench/census-forms-class-internal.ts",
+        ),
+        classCase(
+          "src/workbench/census-forms-class-static-block.ts",
+          "export class ObservationProjection {\n  markStale(input: unknown): void {\n    void input;\n  }\n  static forget: ((projection: ObservationProjection, input: unknown) => void) | undefined;\n  static {\n    ObservationProjection.forget = (projection, input) => projection.markStale(input);\n  }\n}\n",
+          reached(true, ["markStale"], [], ["projection"]),
+          formsRead(["annotation", "member"], []),
+        ),
+        classCase(
+          "src/workbench/census-forms-class-static-block-cast.ts",
+          "export class ObservationProjection {\n  markStale(input: unknown): void {\n    void input;\n  }\n  static erase: ((projection: ObservationProjection) => unknown) | undefined;\n  static {\n    ObservationProjection.erase = projection => projection as unknown;\n  }\n}\n",
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["cast: projection as unknown"]),
+        ),
+        classCase(
+          "src/workbench/census-forms-class-decorator.ts",
+          "const track =\n  (sink: (projection: ObservationProjection) => void) =>\n  <T>(value: T, context: ClassMethodDecoratorContext): T => {\n    void sink;\n    void context;\n    return value;\n  };\nexport class ObservationProjection {\n  markStale(input: unknown): void {\n    void input;\n  }\n  @track(projection => projection.markStale({}))\n  refresh(): void {}\n}\n",
+          reached(true, ["markStale"], [], ["projection"]),
+          formsRead(["annotation", "member"], []),
+        ),
+        classCase(
+          "src/workbench/census-forms-class-computed.ts",
+          "const held: { projection?: ObservationProjection } = {};\nexport class ObservationProjection {\n  markStale(input: unknown): void {\n    void input;\n  }\n  [String(held.projection?.markStale({}))](): void {}\n}\n",
+          reached(true, ["markStale"], [], ["projection"]),
+          formsRead(["annotation", "member"], []),
         ),
       ],
     },
@@ -2482,6 +2643,92 @@ export const REACH: Table<ReachItem> = {
         reachForms("src/ui/census-forms-unlisted-throw.ts", `${OBS_UI}export function fail(reader: ObservationProjection): never {\n  throw reader;\n}\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["unlisted ThrowStatement: throw reader;"])),
         reachForms("src/ui/census-forms-unlisted-default.ts", `${OBS_UI}declare const reader: ObservationProjection;\nexport default reader;\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["unlisted ExportAssignment: export default reader;"])),
         reachForms("src/ui/census-forms-unlisted-in.ts", `${OBS_UI}export const stale = (reader: ObservationProjection): boolean => "markStale" in reader;\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["unlisted BinaryExpression: \"markStale\" in reader"])),
+      ],
+    },
+    {
+      id: "CLASS-ELEMENT-KINDS",
+      label:
+        "every class element is read by its kind, the pinned typescript's ClassElement union (CLASS_ELEMENT_KINDS): in a planted class module an instance element of each kind - an index signature, a field, the constructor, a getter, a setter, a semicolon, a method - reads nothing, a static one of each kind that can be static - an index signature, a field, a method, a getter, a setter and a static block, static by its kind - reads its own member reference, and an element of a kind outside the kinds a scan is given is read by both scans and refused (unlisted-class-element)",
+      cases: [
+        classCase(
+          "src/workbench/census-kinds-instance.ts",
+          "export class ObservationProjection {\n  [key: string]: ObservationProjection[\"relate\"] | unknown;\n  revision = this.disconnect();\n  constructor() {\n    this.ingest();\n  }\n  get size(): number {\n    this.markStale();\n    return 0;\n  }\n  set size(value: number) {\n    this.reconnect(value);\n  }\n  ;\n  disconnect(): void {}\n  ingest(): void {}\n  markStale(): void {}\n  reconnect(value: number): void {\n    void value;\n  }\n  refresh(): void {\n    this.refresh();\n  }\n  relate(): void {}\n}\n",
+          null,
+          null,
+        ),
+        classCase(
+          "src/workbench/census-kinds-static.ts",
+          "export class ObservationProjection {\n  static [key: string]: ObservationProjection[\"relate\"] | unknown;\n  static held: ObservationProjection | undefined;\n  static revision = (projection: ObservationProjection): void => projection.disconnect();\n  static forget(projection: ObservationProjection): void {\n    projection.ingest();\n  }\n  static get size(): number {\n    ObservationProjection.held?.markStale();\n    return 0;\n  }\n  static set size(value: number) {\n    ObservationProjection.held?.reconnect(value);\n  }\n  static {\n    ObservationProjection.held?.refresh();\n  }\n  disconnect(): void {}\n  ingest(): void {}\n  markStale(): void {}\n  reconnect(value: number): void {\n    void value;\n  }\n  refresh(): void {}\n  relate(): void {}\n}\n",
+          reached(true, ["disconnect", "ingest", "markStale", "reconnect", "refresh"], ["relate"], ["held", "projection"]),
+          formsRead(["annotation", "indexed", "member", "type-part"], []),
+        ),
+        classCase(
+          "src/workbench/census-kinds-unlisted-method.ts",
+          "export class ObservationProjection {\n  markStale(): void {}\n  refresh(): void {\n    this.markStale();\n  }\n}\n",
+          reached(false, ["markStale", "refresh"], [], []),
+          formsRead(["member"], ["unlisted-class-element MethodDeclaration: markStale(): void {}", "unlisted-class-element MethodDeclaration: refresh(): void { this.markStale(); }"]), CLASS_ELEMENT_KINDS.filter(kind => kind !== "MethodDeclaration"),
+        ),
+        classCase(
+          "src/workbench/census-kinds-unlisted-block.ts",
+          "export class ObservationProjection {\n  static held: ObservationProjection | undefined;\n  static {\n    ObservationProjection.held?.refresh();\n  }\n  refresh(): void {}\n}\n",
+          reached(true, ["refresh"], [], ["held"]),
+          formsRead(["annotation", "member", "type-part"], ["unlisted-class-element ClassStaticBlockDeclaration: static { ObservationProjection.held?.refresh(); }"]), CLASS_ELEMENT_KINDS.filter(kind => kind !== "ClassStaticBlockDeclaration"),
+        ),
+      ],
+    },
+    {
+      id: "STAND-IN-KINDS",
+      label:
+        "a class element stands in for a base member by its kind (STAND_IN): a getter returning a function whose parameter hides the projection, a static member overriding the extended class's static member with such a parameter, a member named by a computed key (a constant one, and one the checker resolves to no name, judged against every base member) and an object literal's getter doing so are refused, while a getter and a static override that keep the projection, and a class whose index signature, static block, constructor and semicolon stand in for no named member, read quiet",
+      cases: [
+        reachForms(
+          "src/ui/census-forms-stand-in-getter.ts",
+          `${OBS_UI}interface Api {\n  forget: (projection: ObservationProjection) => void;\n}\nexport class Impl implements Api {\n  get forget(): (projection: unknown) => void {\n    return projection => (projection as { markStale(input: unknown): void }).markStale({});\n  }\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["heritage: get forget(): (projection: unknown) => void { return projection => (projection as { markStale(input: unknown): void }).markStale({}); }"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-stand-in-static.ts",
+          `${OBS_UI}export class Base {\n  static take(projection: ObservationProjection): void {\n    void projection.stats();\n  }\n}\nexport class Sub extends Base {\n  static override take(projection: unknown): void {\n    (projection as { markStale(input: unknown): void }).markStale({});\n  }\n}\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], ["heritage: static override take(projection: unknown): void { (projection as { markStale(input: unknown): void }).markStale({}); }"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-stand-in-computed.ts",
+          `${OBS_UI}interface Api {\n  forget(projection: ObservationProjection): void;\n}\nconst FORGET = "forget";\nexport class Impl implements Api {\n  [FORGET](projection: unknown): void {\n    (projection as { markStale(input: unknown): void }).markStale({});\n  }\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["heritage: [FORGET](projection: unknown): void { (projection as { markStale(input: unknown): void }).markStale({}); }"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-stand-in-dynamic.ts",
+          `${OBS_UI}interface Api {\n  forget(projection: ObservationProjection): void;\n}\nexport const make = (key: string): Api =>\n  new (class implements Api {\n    forget(projection: ObservationProjection): void {\n      void projection.stats();\n    }\n    [key](projection: unknown): void {\n      (projection as { markStale(input: unknown): void }).markStale({});\n    }\n  })();\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], ["heritage: [key](projection: unknown): void { (projection as { markStale(input: unknown): void }).markStale({}); }"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-stand-in-literal-getter.ts",
+          `${OBS_UI}interface Api {\n  forget: (projection: ObservationProjection) => void;\n}\nexport const api: Api = {\n  get forget(): (projection: unknown) => void {\n    return projection => (projection as { markStale(input: unknown): void }).markStale({});\n  },\n};\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: get forget(): (projection: unknown) => void { return projection => (projection as { markStale(input: unknown): void }).markStale({}); }"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-stand-in-quiet-getter.ts",
+          `${OBS_UI}interface Api {\n  forget: (projection: ObservationProjection) => void;\n}\nexport class Impl implements Api {\n  get forget(): (projection: ObservationProjection) => void {\n    return projection => void projection.stats();\n  }\n}\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-stand-in-quiet-static.ts",
+          `${OBS_UI}export class Base {\n  static take(projection: ObservationProjection): number {\n    return projection.stats().nodes;\n  }\n}\nexport class Sub extends Base {\n  static override take(projection: ObservationProjection): number {\n    return projection.stats().edges;\n  }\n}\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-stand-in-none.ts",
+          `${OBS_UI}interface Api {\n  forget(projection: ObservationProjection): void;\n}\nexport class Impl implements Api {\n  [key: string]: unknown;\n  static {\n    void 0;\n  }\n  constructor(readonly held: unknown) {}\n  ;\n  forget(projection: ObservationProjection): void {\n    void projection.stats();\n  }\n}\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], []),
+        ),
       ],
     },
   ],
