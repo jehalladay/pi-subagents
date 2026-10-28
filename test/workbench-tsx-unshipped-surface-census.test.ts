@@ -39,12 +39,16 @@
  *   Pi's installed skills (SKILLS_ROOT: .agents/skills, which must hold a SKILL.md). The root list is CLAUSE_ROOTS's match
  *   in the clause (clauseRootsOf): it must parse - a clause without the list reads null, never an empty list - hold a root
  *   and, rejoined with "/", restate the export row's own list, so an empty or partial parse reds; the parse carries its own
- *   positive controls (a list, a single root, a clause without the list). The roots F1 reads are that parse itself, held to
- *   it by one expression (the tie) that parses the list again from the export row and reads each root's walk from row A's
- *   own walk, never from the reading: the read words equal the parsed list, in order, each read as the directory of its own
- *   name (skills as SKILLS_ROOT's) and walked by row A (row A's walk holds a file below it; that walk reader carries its own
- *   control). So a root dropped from, added to or redirected in that reading before the tie reads it reds, and a clause (a)
- *   root row A does not walk reds at the tie, whatever any other statement does to the reading.
+ *   positive controls (a list, a single root, a clause without the list). One expression (the tie) holds row A's walk and
+ *   F1's root reading to that list. Its walk half is read first and takes no value from F1's reading: it parses the list
+ *   again from the acceptance line, holds that parse to the row (rejoined, it restates the row's list) and reads each listed
+ *   root's walk from row A's own walk record - a file below the root's directory, for skills a SKILL.md below SKILLS_ROOT's
+ *   (that walk reader carries its own controls). Its read half takes one structuredClone snapshot of F1's root reading (its
+ *   own data, each root's word and directory read once, none of its methods called, a proxy refused) and holds it to the
+ *   same list, in order, each the directory of its own name (skills as SKILLS_ROOT's). So a clause (a) root row A does not
+ *   walk reds at the tie whatever values F1's reading holds or reports, and a root dropped from, added to, reordered or
+ *   redirected in that reading before the snapshot reads it reds there too; the tie's own instruments are named under Not
+ *   claimed.
  * - SENTENCE: a file's text cut at a run of white space after ".", "!", "?" or ";", at a blank line and before a line opening a
  *   table row ("|"); a .md file is also cut before a line opening a list item ("-", "+", "*", "1." or "1)" then a space). A code
  *   comment's wrapped lines stay one sentence.
@@ -101,26 +105,33 @@
  * its gating sentence's symbols, exports, file count, ADR slug and version are held by SYMBOLS, GATED_EXPORTS, TSX_IO_FILES,
  * ADR_SLUG and the roster's producer version; and every root its clause (a) names is walked (READINGS (a); the root reader
  * and row A's walk reader carry their own controls), so a filing root removed from SCAN_ROOTS, A4's plants and the roster
- * together still reds, and so does one dropped from, added to or redirected in F1's own root reading together with them -
- * at the walk mapping, in the root reader or by any statement before or after the tie (the tie holds the roots read to the
- * list parsed from the row and reads their walk from row A, in one expression of this file, never from the roster). The
- * root parse is held to the row itself (its list parses, holds a root and restates the row's list) and to its own positive
- * controls, so a parse hollowed - it never matches, reads part of the list, drops a root, is fed an empty clause or reads a
- * miss as an empty list - in this file and the roster together still reds.
+ * together still reds at the tie - its walk half reads the list parsed again from the row and row A's walk record and takes
+ * no value from F1's reading, so it reds whatever F1's own root reading is made to hold or report together with them, at
+ * the walk mapping, in the root reader or by any statement before or after the tie (one expression of this file, never the
+ * roster). The root parse is held to the row itself (its list parses, holds a root and restates the row's list, in the
+ * liveness floor and again in the tie) and to its own positive controls, so a parse hollowed - it never matches, reads part
+ * of the list, drops a root, is fed an empty clause or reads a miss as an empty list - in this file and the roster together
+ * still reds, and so does a parse that never matches the row's list, reads part of it or drops a root together with its own
+ * expected values (the liveness expectation and the parse controls' literals) and the roster, at the tie's restatement.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the judged set - every row's id, label
  * and pins, every pin's witness, the vocabularies and the probe constants - is held to the out-of-file roster
  * (test/fixtures/tsx-unshipped-surface-roster.json). A last case reads that every pin's case ran to its end. Not claimed: a
  * pin of rows M or R removed from ROWS, the literal, IMPL and the roster together (F1 anchors clauses, roots and
  * vocabulary, not those pins); examples/ or the root pages - the two surfaces beyond the filing's roots, which nothing
  * outside this file names - removed from the walk, A4's plants and the roster together; SKILLS_ROOT moved, in this file and
- * the roster together, to another covered directory that holds a SKILL.md; the root parse hollowed together with its own
- * expected values (the liveness expectation and the parse controls' literals) in this file and the roster; the tie
- * hollowed in its own predicate together with the roster - removed, its expected list made to skip a root, or its walk
- * read made to read as walked a root row A never walked: written as a constant, row A's walk reader keyed on the root's
- * word or hollowed together with its own control, or row A's cached walk record written to by a statement (the TIE-HOLLOW
- * form and its twins over the walk); F1's root reading changed after the tie - a root dropped, added, reordered or
- * redirected - together with the roster while row A still walks every clause (a) root (that edits the record, not the
- * walk).
+ * the roster together, to another covered directory that holds a SKILL.md; the tie hollowed in its own predicate - removed
+ * or returned before, its walk half written as a constant or made to skip a root, or its restatement written as a constant
+ * together with the root parse and its own expected values hollowed - together with F1's reading and the roster as the
+ * form needs; the tie's instruments forged - clause (a)'s parse (CLAUSE_ROOTS, clauseRootsOf), row A's walk reader
+ * (walkedByRowA: keyed on a root, or hollowed together with its own controls) or row A's walk record (liveCensus and its
+ * cache) edited at its site, or replaced or written to by a statement or by code a statement installs (an accessor or a
+ * proxy trap that runs when F1's reading is read), so that the walk half or the read half's expected list misreads the
+ * list or reads as walked a directory row A never walked - or the language's own built-ins replaced by a statement (a
+ * String method), each together with F1's reading and the roster as the form needs; clause (a) misread from the export row
+ * - its acceptance line's read edited in this file - together with row A's label and the roster (that moves the anchor,
+ * not F1's reading); F1's root reading made to differ from the list after the tie's snapshot read it - a root dropped,
+ * added, reordered or redirected later, by a statement or by an accessor that answers a later read differently - together
+ * with the roster while row A still walks every clause (a) root (that edits the record, not the walk).
  * RESIDUALS (named; each has a pinned quiet row in row R): R1 R-MARKER-ANYWHERE a marker anywhere in a sentence (a table row
  *   included) admits it, whatever the marker qualifies; R2 R-UNANCHORED a CONTEXT word in a sentence without the anchor (Pi
  *   says parity, data output and dogfood in other senses); R3 R-SPLIT a claim carried by a later sentence that names no
@@ -144,16 +155,18 @@
  * wb-4azw (R694 follow-up of landing 387, gate cmd_24c598497967): F1's clause (a) root parse gets a liveness floor held to
  * the export row and positive controls of its own (CLAUSE_ROOTS, clauseRootsOf; the HOLLOW-PARSE-COORD and
  * HOLLOW-PARSE-COORD+L2-09 survivors).
- * wb-ijf8 (R694 follow-up of landing 485, gate cmd_9008ace0edec; respin of refusal U1, gate cmd_a70822ea76e0): F1's root
- * reading is tied to the parse in one expression with row A's walk of each root - the roots it reads equal the list parsed
- * again from the export row, in order, each as the directory of its own name and walked by row A (the WALKDROP-QA+F1W+L2-09
- * survivor, and the GP13-SPLICE-QA-AFTER-TIE+F1W+L2-09 drop placed between the first tie and the walk check).
+ * wb-ijf8 (R694 follow-up of landing 485, gate cmd_9008ace0edec; respins of refusal #1 U1, gate cmd_a70822ea76e0, and of
+ * refusal #2 U1, gate-refused M:28638): F1's root reading and row A's walk are tied to the parse in one expression - its
+ * walk half reads the list parsed again from the export row, restated against the row, and row A's walk record, never F1's
+ * reading; its read half holds one structuredClone snapshot of F1's root reading to the same list, in order (the
+ * WALKDROP-QA+F1W+L2-09 survivor, the GP13-SPLICE-QA-AFTER-TIE+F1W+L2-09 drop, and the GP12-FORGE-GET-QA+L2-09 and
+ * GP12-MAP-PATCH+WALKDROP-QA+F1W+L2-09 forges of the reading).
  *
  * Display paths added: none. Test-only: the stand-in rf, the scanned trees and the pin replicas live in makeScratch scratch;
  * src, docs, qa, the skills, the receipts directory and the bead export are only read.
  */
 import { chmodSync, type Dirent, lstatSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, relative, sep } from "node:path";
+import { basename, dirname, join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { afterAll, afterEach, describe, expect, it } from "vitest";
@@ -970,10 +983,11 @@ function rootReading(tree: string, word: string): RootReading {
   const scannedBy = SCAN_ROOTS.find(scan => directory === scan.root || directory.startsWith(`${scan.root}/`))?.root ?? null;
   return { word, directory, held, scannedBy };
 }
-/** F1: whether row A's own walk (liveCensus's walked files) holds a file below `directory` - read from row A's walk, never
- * from a root reading, so a reading's held and scannedBy cannot stand in for it. */
-function walkedByRowA(directory: string): boolean {
-  return liveCensus().walked.some(file => file.startsWith(`${directory}/`));
+/** F1: whether row A's own walk (liveCensus's walked files) holds a file below `directory` - one named `member` when a member
+ * is given (skills: a SKILL.md) - read from row A's walk, never from a root reading, so a reading's held and scannedBy cannot
+ * stand in for it. */
+function walkedByRowA(directory: string, member?: string): boolean {
+  return liveCensus().walked.some(file => file.startsWith(`${directory}/`) && (member === undefined || file.endsWith(`/${member}`)));
 }
 
 type CaseKind = "file" | "markdown" | "cut" | "cutMarkdown" | "names" | "python" | "specifiers" | "words";
@@ -1274,14 +1288,19 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect(reading.controls).toStrictEqual({ unknown: ["quantum", "widget"], stopAndClaim: [], covered: [] });
     expect({ parsed: reading.rootParse.parsed, nonEmpty: reading.rootParse.count > 0, restated: reading.rootParse.restated }, "clause (a)'s root list parses, holds a root and restates the export row's list").toStrictEqual({ parsed: true, nonEmpty: true, restated: true });
     expect(reading.parseControls, "the root parse reads a list, a single root and a clause without the list").toStrictEqual({ list: ["alpha", "beta", "gamma"], single: ["docs"], absent: null });
-    // The tie (wb-ijf8): one expression reads F1's root reading - each root's word and directory, with row A's own walk of
-    // that directory - and holds it to clause (a)'s list parsed again from the export row here: the parsed words, in order,
-    // each the directory of its own name (skills as SKILLS_ROOT's), each walked by row A. So a root dropped from, added to or
-    // redirected in the reading before this line reds here, and a clause (a) root row A does not walk reds here, whatever any
-    // statement before or after this one does to the reading and whatever the roster holds.
-    expect(reading.roots.map(root => ({ word: root.word, directory: root.directory, walked: walkedByRowA(root.directory) })), "F1 reads exactly the roots clause (a)'s list parses, each as the directory of its name and walked by row A").toEqual((clauseRootsOf(acceptance) ?? []).map(word => ({ word, directory: word === SKILLS_ROOT.word ? SKILLS_ROOT.directory : word, walked: true })));
-    // Row A's walk reader's own control: the bead export's directory holds the file F1 read above, and row A never walks it.
+    // The tie (wb-ijf8): one expression holds row A's walk and F1's root reading to clause (a)'s list, parsed again here from
+    // the export row's acceptance line. Its walk half is read first and takes no value from F1's reading: the parse, rejoined
+    // with "/", must restate the row's own list, and row A's walk record must hold a file below each listed root's directory -
+    // for skills a SKILL.md below SKILLS_ROOT's. Its read half then takes one structuredClone snapshot of F1's root reading -
+    // its own data, each root's word and directory read once, none of its methods called, a proxy refused - and holds it to
+    // the same list, in order, each the directory of its own name. So a clause (a) root row A does not walk reds here whatever
+    // values F1's reading holds or reports and whatever the roster holds, and a root dropped from, added to, reordered or
+    // redirected in the reading before the snapshot reads it reds here (the tie's own instruments are named under Not claimed).
+    expect({ restated: acceptance.includes(`census over Pi ${(clauseRootsOf(acceptance) ?? []).join("/")} (`), unwalked: (clauseRootsOf(acceptance) ?? []).filter(word => !(word === SKILLS_ROOT.word ? walkedByRowA(SKILLS_ROOT.directory, SKILLS_ROOT.member) : walkedByRowA(word))), read: structuredClone(reading.roots).map(({ word, directory }) => ({ word, directory })) }, "F1 reads exactly the roots clause (a)'s list parses, each as the directory of its name, and row A walks every root of that list").toStrictEqual({ restated: true, unwalked: [], read: (clauseRootsOf(acceptance) ?? []).map(word => ({ word, directory: word === SKILLS_ROOT.word ? SKILLS_ROOT.directory : word })) });
+    // Row A's walk reader's own controls: the bead export's directory holds the file F1 read above, and row A never walks it;
+    // below a directory row A walks, a member name row A never walked there (the bead export's own file name) reads unwalked.
     expect(walkedByRowA(dirname(BEAD_EXPORT)), "row A's walk reader reads a directory outside row A's walk as unwalked").toBe(false);
+    expect(walkedByRowA(SKILLS_ROOT.directory, basename(BEAD_EXPORT)), "row A's walk reader reads a member name row A never walked below a walked directory as unwalked").toBe(false);
     expect(reading.roots.filter(root => !root.held || root.scannedBy === null).map(root => root.word), "clause (a) roots row A does not walk").toEqual([]);
     expect(reading.rootControls).toStrictEqual({
       unscanned: { word: "outside", directory: "outside", held: true, scannedBy: null },
