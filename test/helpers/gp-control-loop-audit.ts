@@ -26,9 +26,13 @@
  *   graphpolicy.rpc.v1 protocol ids, the gp.rpc.reply/v1 and gp.rpc.error/v1 reply schemas, and the GP_CLI_, GP_RPC_
  *   and GP_E_ code families).
  * A call site names its audited decision point with a `gp-decision-point: <id>[, <id>...]` comment attached to the
- * statement, class member or object property that holds it: above it, inside it up to the literal's own line, or
- * trailing its end on that line. A comment inside a nested block, class body or object literal of that statement
- * annotates that block's own members, and one that trails a later statement on the same line annotates that statement.
+ * unit that holds it - the child of its nearest member holder on the path to it (holdsMembers: a source file, block,
+ * module block, case or default clause, class-like node, object literal, interface, type literal or enum), so a
+ * statement, a case clause's label, a member of a class, object literal, interface, type literal or enum, or a class's
+ * or interface's type parameter or heritage clause or a class's decorator: above it, inside it up to the literal's own
+ * line, or trailing its end on that line. A comment inside a member holder nested in that unit (from the holder's
+ * first token, so a nested class expression's head too) annotates that holder's own members, and one that trails a
+ * later statement on the same line annotates that statement.
  * Every comment of the module is read wherever it stands between tokens - after a comma, a parenthesis, the = of a
  * declaration, a property's colon or a keyword too (wb-rdv6: wb-1xvp.3 gate F5, B06, a marker after a comma on the
  * literal's own line was never read) - and this rule places each one. A comment that trails code on the line above the
@@ -209,14 +213,14 @@ function holdsMembers(node: ts.Node): boolean {
   );
 }
 
-/** The statement, class member or object property that holds `node`: the unit a gp-decision-point comment attaches to. */
+/** The unit a gp-decision-point comment attaches to: the child of `node`'s nearest member holder on the path to `node`. */
 function anchorOf(node: ts.Node): ts.Node {
   let current = node;
   while (current.parent !== undefined && !holdsMembers(current.parent)) current = current.parent;
   return current;
 }
 
-/** The spans of the blocks, class bodies and object literals nested in `anchor`: a comment inside one annotates its members. */
+/** The span of every member holder nested in `anchor`, from its first token to its end: a comment inside one annotates its members. */
 function nestedMemberSpans(source: ts.SourceFile, anchor: ts.Node): (readonly [number, number])[] {
   const spans: (readonly [number, number])[] = [];
   const visit = (node: ts.Node): void => {

@@ -57,7 +57,10 @@
  *    span before the program, a span's leading piece, a construction, a spaced path read whole, a .cmd program, the $"..." quote,
  *    the while and until openers, every redirection prefix (heredoc, tab-stripped heredoc, here-string, input, append,
  *    read-write, both duplications, clobber, &> and &>>), a backslash-newline outside and inside double quotes, a program glued to
- *    ;, &&, >, < or a closing parenthesis, and an escaped backquote inside a backquoted env value (F4); A3 no string or template
+ *    ;, &&, >, < or a closing parenthesis, and an escaped backquote inside a backquoted env value (F4), and one kill per claimed
+ *    reading the wb-kls1 gate's reader mutants found unpinned (wb-vfzd, that gate's F1 and F2): an escaped backslash right before
+ *    a backquoted command's closing backquote and right before a substitution's closing bracket, a let template's string-literal
+ *    span, and a parameter expansion nested inside ${...}; A3 no string or template
  *    literal of any src module
  *    spells an rf replay verb (a template read with its literal and const spans folded in), no array literal or argument list
  *    has "context" before "replay" (a flag between them, a module-local const resolved), and no literal of an rf launch module
@@ -1166,6 +1169,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       shellGluedClose: control('execSync("(rf)");'),
       // wb-kls1 (the wb-3l7x gate's F4): a backslash-escaped backquote inside a backquoted env value never closes it (G22-O08).
       shellBackquotedEscaped: control('execSync("A=`echo \\\\`x\\\\`` rf --json status");'),
+      // wb-vfzd (R694 follow-up of the wb-kls1 gate's F1 and F2): one kill control per claimed reading a gate reader mutant left
+      // unpinned. A backslash escapes whatever character follows it, so an escaped backslash right before a backquoted command's
+      // closing backquote (GP22) or right before a substitution's closing bracket (GP40) never escapes that close; a let
+      // initializer's template folds a string-literal span in (GP42; the same template passed as the argument itself is masked
+      // by the kept landed templateText reading, so the control reads it through a binding); and a parameter expansion nested
+      // inside ${...} never closes it (GP43).
+      shellBackquotedEscapedBackslash: control('execSync("A=`echo \\\\\\\\` rf --json status");'),
+      shellSubstitutedEscapedBackslash: control('execSync("RF_HOME=$(echo \\\\\\\\) rf --json status");'),
+      letLiteralSpan: control(["let CMD = `$", '{"rf"} --json status`; execSync(CMD);'].join("")),
+      shellExpandedNested: control(['execSync("RF_HOME=$', '{A:-$', '{B} x} rf --json status");'].join("")),
       // R-WRAPPED quiet rows: rf behind a wrapper program or after another shell command is no A2 site.
       wrappedShell: control('spawn("sh", ["-c", "rf --json status"]);'),
       wrappedEnv: control('spawn("env", ["rf", "--json", "status"]);'),
