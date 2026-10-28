@@ -197,6 +197,15 @@
  * the other reading it. Row N holds one control per guarded return the filing's first F1 bullet names in the tracked export (an id
  * ending RET): the end judge over the record that mutant leaves at either hold, and the end shape over this file with that
  * case's end record moved above the mutant's return.
+ * GUARDED COMPARES (wb-2fb4, the R694 follow-up of landing 590, hop 4 of the landing-381 chain: its F3 rides here, its lead F1 in
+ * the program readiness census): a guard that never fires switched a compare off without a return or a skip - GL2-DRNEW-DEADWRAP
+ * wrapped the drive record's drive compare in `if (readers.length < 0)`, GL2-FLOOR900-DEADWRAP the judged set's export-floor
+ * compare in `if (rows.length < 0)` - and every case still ran to its end. Now the end shape reads each harness case's compares
+ * as well: every `expect` in its callback heads one of its own top-level statements (one under an if, a loop, a try, a nested
+ * function or an operand, or aliased, is a guarded compare), and the count of those statements is held to HARNESS_COMPARES, which
+ * the out-of-file roster mirrors, so a compare dropped from a case or moved into a helper reds too. The judged set models each
+ * dead-wrap mutant the landing-590 verdict's F3 line names in wb-52th's tracked export notes (wb-2fb4's filing carries that line
+ * byte-identically; its own row is not in the export at this cut's base) on this file and holds the gaps each reads.
  * NOT CLAIMED: an edit of this file together with the roster and the export rows it reads; every case of this file skipped at
  * once (vitest then runs no case and no hook; the delivered-file marker scan is the backstop); the exclusion sets, NOT_WALKED and
  * each scan's anchor token are literals here; a liveness-only compare at a pin with no subject change (I18 alone) reads the same
@@ -210,8 +219,9 @@
  * root is held to the index, so an untracked file there is never read, whatever it names. A launch whose executable or verb is
  * computed stays R1 and R2, and a family spelling outside the ones listed is not claimed. Of the end record: the end shape
  * reads the harness by its names (ENDED, HARNESS, endGaps, expect, it, afterAll and the three title constants), so a
- * coordinated edit of the shape's reader with the harness, or a rename of both, stays green; and only a return or a skip that
- * fires leaves a record short - a guard that never fires cuts nothing. The out-of-file roster
+ * coordinated edit of the shape's reader with the harness, or a rename of both, stays green; a guard inside a helper a harness
+ * case calls, or a compare whose matcher is weakened in place, keeps its case's count and is not claimed (wb-2fb4: a guard
+ * around a compare in the case itself is read). The out-of-file roster
  * test/fixtures/h2-bead-graph-roster.json holds every row's id, label and pins, every pin's witness, the pinned constants and the
  * vendored producer lines; FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal.
  * SCOPE: readGateVerdict, packetViolations, compileGated and familyViolations are the rule a future Pi bead machine must meet, not a
@@ -280,6 +290,41 @@ const END_CARRY_ROWS: readonly string[] = ["N"];
 const END_CURES: readonly Cure[] = [{ finding: "F1", pins: ["L2-DRRET", "L2-JSRET"], named: { ids: "L2-[A-Z]+RET" } }];
 /** The end carry's rides, cured in the program readiness census (its D3 reach scan and its abort cases), never here. */
 const END_ELSEWHERE: readonly string[] = ["F2", "F3"];
+/** The landing-590 verdict on the end carry's cut, in that bead's notes in the tracked export: its F1 and F3 lines are wb-2fb4's
+ * filing byte-identically (wb-2fb4's own row is not yet in the export at this cut's base), and its F3 line names the
+ * never-firing-guard mutants of this file's harness. F1 is cured in the program readiness census, never here. */
+const GUARD_VERDICT = END_CARRY;
+/** One never-firing-guard mutant (wb-2fb4 F3): a compare of a harness case wrapped in a guard that never fires. */
+interface DeadWrap {
+  /** The mutant's id as the verdict's F3 line names it. */
+  readonly id: string;
+  /** The harness case it wraps, by its title constant. */
+  readonly harness: string;
+  /** The opening text of the compare it wraps, a top-level statement of that case. */
+  readonly compare: string;
+  /** The condition of the guard, which never holds. */
+  readonly guard: string;
+  /** The end shape this file reads with that compare wrapped. */
+  readonly reads: readonly string[];
+}
+/** The verdict's dead-wrap mutants, each modeled on this file: the drive record's drive compare and the judged set's export-floor
+ * compare, each wrapped as the verdict wraps it. */
+const DEAD_WRAPS: readonly DeadWrap[] = [
+  {
+    id: "GL2-DRNEW-DEADWRAP",
+    harness: "DRIVE_RECORD",
+    compare: "expect(readers.map(",
+    guard: "readers.length < 0",
+    reads: ["DRIVE_RECORD compares x3", "DRIVE_RECORD guarded compare x1"],
+  },
+  {
+    id: "GL2-FLOOR900-DEADWRAP",
+    harness: "JUDGED_SET",
+    compare: "expect(exportFloorGaps(EXPORT_FLOOR,",
+    guard: "rows.length < 0",
+    reads: ["JUDGED_SET compares x23", "JUDGED_SET guarded compare x1"],
+  },
+];
 
 /** The tracker's executable name, composed so that no line of this file spells a bd command. */
 const BD = ["b", "d"].join("");
@@ -710,6 +755,7 @@ const constants = (): Json =>
     endCarryRows: END_CARRY_ROWS,
     endCures: END_CURES,
     endElsewhere: END_ELSEWHERE,
+    harnessCompares: HARNESS_COMPARES,
   });
 
 // --- the walk ---------------------------------------------------------------------------------------------------------
@@ -1411,6 +1457,9 @@ function endGaps(ended: readonly string[], expected: readonly string[]): string[
 }
 /** The harness cases' title constants as this file's code spells them, in registration order: the end shape reads them by name. */
 const HARNESS_CONSTANTS: readonly string[] = ["JUDGED_SET", "DRIVE_RECORD", "CLOSING"];
+/** The compares each harness case makes as its own top-level statements (wb-2fb4 F3), by its title constant; the out-of-file roster
+ * mirrors it, so a compare dropped, guarded or moved out of its case reds unless the roster is edited with it. */
+const HARNESS_COMPARES: Readonly<Record<string, number>> = { JUDGED_SET: 24, DRIVE_RECORD: 4, CLOSING: 4 };
 const isName = (node: ts.Node | undefined, name: string): boolean => node !== undefined && ts.isIdentifier(node) && node.text === name;
 /** The block a call's last argument runs: the callback of `it(...)` or `afterAll(...)`. */
 function callbackBody(call: ts.CallExpression): ts.Block | undefined {
@@ -1429,6 +1478,35 @@ function endHold(statement: ts.Statement): string | undefined {
   const [judge] = subject.arguments;
   if (judge === undefined || !ts.isCallExpression(judge) || !isName(judge.expression, "endGaps") || judge.arguments.length !== 2 || !isName(judge.arguments[0], "ENDED")) return undefined;
   return judge.arguments[1]?.getText(statement.getSourceFile());
+}
+/** The `expect(...)` call a statement's chain starts at when the statement is a compare: `[await] expect(...)<.member>(...)`. */
+function compareRoot(statement: ts.Statement): ts.CallExpression | undefined {
+  if (!ts.isExpressionStatement(statement)) return undefined;
+  let node: ts.Expression = ts.isAwaitExpression(statement.expression) ? statement.expression.expression : statement.expression;
+  for (;;) {
+    if (ts.isCallExpression(node) && isName(node.expression, "expect")) return node;
+    if (ts.isCallExpression(node) || ts.isPropertyAccessExpression(node)) node = node.expression;
+    else return undefined;
+  }
+}
+/** A harness case's compares (wb-2fb4 F3): its top-level compare statements, held to HARNESS_COMPARES, and every other spelling of
+ * `expect` in its callback - under an if, a loop, a try, a nested function or an operand, or aliased - a guarded compare. */
+function compareGaps(name: string, body: ts.Block): string[] {
+  const heads = new Set<ts.Node>();
+  for (const statement of body.statements) {
+    const root = compareRoot(statement);
+    if (root !== undefined) heads.add(root.expression);
+  }
+  let guarded = 0;
+  const visit = (node: ts.Node): void => {
+    if (isName(node, "expect") && !heads.has(node)) guarded += 1;
+    ts.forEachChild(node, visit);
+  };
+  visit(body);
+  return [
+    ...(heads.size === HARNESS_COMPARES[name] ? [] : [`${name} compares x${heads.size}`]),
+    ...(guarded > 0 ? [`${name} guarded compare x${guarded}`] : []),
+  ];
 }
 /** The harness of a source text, read by the TypeScript AST: each harness case's callback (by its title constant), the afterAll
  * hook's callback, every ENDED.push call and every other spelling of ENDED but its declaration. */
@@ -1468,7 +1546,8 @@ function harnessOf(text: string): {
 /** The end shape (wb-52th F1) as a predicate over a source text: each harness case is registered once and its callback's last
  * statement is `ENDED.push(<its title constant>);`, ENDED is pushed to nowhere else and spelled only there and as the end
  * judge's first argument, the closing case holds the two cases before it and the afterAll hook's callback is the one statement
- * holding ENDED against HARNESS. Its gaps, by kind. */
+ * holding ENDED against HARNESS; and (wb-2fb4 F3) each harness case makes exactly its HARNESS_COMPARES compares, every one a
+ * top-level statement of its callback, never under a guard. Its gaps, by kind. */
 function endShapeGaps(text: string): string[] {
   const { file, cases, hooks, writes, strays } = harnessOf(text);
   const gaps: string[] = [];
@@ -1483,6 +1562,8 @@ function endShapeGaps(text: string): string[] {
     if (bodies.length !== 1) gaps.push(`${name} registered x${bodies.length}`);
     else if (own.length !== 1) gaps.push(`${name} written x${own.length}`);
     else if (last === undefined || !ts.isExpressionStatement(last) || last.expression !== own[0]) gaps.push(`${name} end not last`);
+    const body = bodies.length === 1 ? bodies[0] : undefined;
+    if (body !== undefined) gaps.push(...compareGaps(name, body));
   }
   for (const write of writes) if (!HARNESS_CONSTANTS.includes(written(write))) gaps.push(`stray write ${written(write) || "?"}`);
   for (const stray of strays) gaps.push(`stray ENDED at line ${file.getLineAndCharacterOfPosition(stray.getStart(file)).line + 1}`);
@@ -1501,6 +1582,19 @@ function movedEnd(text: string, name: string): string {
   const last = statements[statements.length - 1];
   if (compare === undefined || last === undefined || compare === last) throw new Error(`the harness case ${name} has no compare above its end record`);
   return `${text.slice(0, compare.end)}\n    ${last.getText(file)}\n    if (${name}.length > 0) return;${text.slice(compare.end, last.getFullStart())}${text.slice(last.end)}`;
+}
+/** A source text with one harness case's compare wrapped in a guard that never fires (wb-2fb4 F3, the verdict's form). */
+function deadWrapped(text: string, wrap: DeadWrap): string {
+  const { file, cases } = harnessOf(text);
+  const target = (cases.get(wrap.harness)?.[0]?.statements ?? []).find(statement => statement.getText(file).startsWith(wrap.compare));
+  if (target === undefined) throw new Error(`the harness case ${wrap.harness} has no compare ${wrap.compare}`);
+  return `${text.slice(0, target.getStart(file))}if (${wrap.guard}) {\n      ${target.getText(file)}\n    }${text.slice(target.end)}`;
+}
+/** The never-firing-guard mutants the landing-590 verdict's F3 line names: the -DEADWRAP ids of the first `- F3 <grade> <role>:`
+ * line of the notes given (wb-52th's, in the tracked export). */
+function verdictDeadWraps(notes: string): string[] {
+  const line = /^- F3 (?:LOW|MEDIUM|HIGH) (?:LEADS|RIDES): (.*)$/m.exec(notes)?.[1] ?? "";
+  return [...new Set(line.match(/(?<![\w-])GL2-[A-Z0-9]+-DEADWRAP(?![\w-])/g) ?? [])];
 }
 /** Row N's model of a guarded return in a harness case (wb-52th F1): the end record each hold reads when that case is cut short,
  * and the end shape of this file with that case's end record moved above the return. */
@@ -2355,6 +2449,13 @@ describe(SUITE, () => {
     expect(registrationGaps(registeredOf(task.file, task), expectedTitles(), "collected"), "the collected task tree against the roster").toEqual([]);
     // END SHAPE (wb-52th F1), read here and again by the closing case: every harness case ends with its own end record.
     expect(endShapeGaps(textOf(THIS_FILE)), "the end shape of this file's harness").toEqual([]);
+    // GUARDED COMPARES (wb-2fb4 F3): each dead-wrap mutant the landing-590 verdict names, modeled on this file, reads its gaps.
+    expect(DEAD_WRAPS.map(wrap => wrap.id), `the dead-wrap mutants the landing-590 verdict's F3 names in ${GUARD_VERDICT}'s notes`).toEqual(
+      verdictDeadWraps(notesOf(rows, GUARD_VERDICT)),
+    );
+    expect(DEAD_WRAPS.map(wrap => `${wrap.id}: ${endShapeGaps(deadWrapped(textOf(THIS_FILE), wrap)).join(", ")}`)).toEqual(
+      DEAD_WRAPS.map(wrap => `${wrap.id}: ${wrap.reads.join(", ")}`),
+    );
     ENDED.push(JUDGED_SET);
   });
 

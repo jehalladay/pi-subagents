@@ -29,7 +29,8 @@
  *    readings through the registered provider, where the two stops the statement names carry the SDK's own typed facts: the
  *    resource-cap stop (budget-exhausted) its kernel budget dimension (result.d.ts:47-48, :124; bounds.d.ts:7 "wall") with the
  *    HX-BUDGET-EXHAUSTED code, the snapshot-change stop (view-invalidated) a view identity (result.d.ts:116), and those facts
- *    reach the adapter's input yet move nothing in its projection (strictEqual the fact-free document's); and a stop kind the
+ *    reach the adapter's input yet move nothing in its projection but the facets wb-gwr.2 relays (the snapshot-change stop's
+ *    view surfaces verbatim as its own view facet; every other output field strictEqual the fact-free document's); and a stop kind the
  *    SDK does not register (a planner failure surfacing under a new kind) decodes to protocol-failed and stays a failure.
  *  B, acceptance (b). The reason this census plants is a typed record for each of the program's three causes (CAUSES: this
  *    census's tokens for step 7's three conditions; the program names no token). B1 on the adapter, the record (or a bare
@@ -52,8 +53,10 @@
  *    it: the property names its source reads (property access, string element access, destructuring; TypeScript AST) that are
  *    keys of the served SDK representation (every key at any depth of a provider reading carrying both stop facts: the SDK's
  *    own serializer is the anchor) are exactly the pinned read set, which holds every input key the adapter projects from and
- *    none of the CARRIERS slots, the typed stop facts or the reason family - so a read of any other representation key reds
- *    C2, and the cut that lands (c) re-cuts this census with (c)'s cases.
+ *    no CARRIERS slot, typed stop fact or reason-family name beyond the three slots wb-gwr.2's relayed facets read for their
+ *    measured members (diagnostics for a conflict code, incomplete_regions for a scope and target, view for the view identity:
+ *    the slots the adapter's own HYPERUNIX_CONSUMED_FIELDS 'relayed' entries name) - so a read of any other representation key
+ *    reds C2, and the cut that lands (c) re-cuts this census with (c)'s cases.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (id, label, pins), every
  * pin's witness (each carries its pin id), the scan constants, the causes, the residual families and the registered test titles
  * are held to the out-of-file roster (test/fixtures/hx-planner-fallback-roster.json). OUTSIDE ANCHORS (the anchor case is its own
@@ -92,6 +95,7 @@ import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import {
+  HYPERUNIX_CONSUMED_FIELDS,
   HYPERUNIX_EXECUTION_KINDS,
   type HyperUnixProjectionTopology,
   type HyperUnixTopologyContext,
@@ -692,9 +696,12 @@ const IMPL: { readonly [pin: string]: Impl } = {
           ];
           expect(carried.length > 0, `${kind}'s typed facts reach the adapter's input`).toBe(true);
           facts[kind] = carried;
-          expect(hyperunixTopology(value, CONTEXT), `${kind}'s typed facts move nothing in the projection`).toStrictEqual(
+          // wb-gwr.2: the snapshot-change stop's view is relayed verbatim as its own facet; nothing else in the projection moves.
+          const { facets: relayedFacets, ...movedRest } = hyperunixTopology(value, CONTEXT);
+          expect(movedRest, `${kind}'s typed facts move nothing in the projection but the relayed facets`).toStrictEqual(
             hyperunixTopology(await served(sdkDocument(kind, licensed)), CONTEXT),
           );
+          expect(relayedFacets, `${kind}'s relayed facets`).toStrictEqual(kind === "view-invalidated" ? [{ kind: "view", view: "hx-view:census-1" }] : undefined);
         }
         const topology = hyperunixTopology(value, CONTEXT);
         const tuple = tupleOf(kind, licensed, topology);
@@ -846,7 +853,10 @@ const IMPL: { readonly [pin: string]: Impl } = {
       slots.filter(slot => !keys.includes(slot)),
       "every carrier and stop-fact slot is a key of the served SDK representation",
     ).toEqual([]);
-    expect(carriersRead, "carrier and stop-fact slots the adapter reads").toEqual([]);
+    // wb-gwr.2: the carrier slots the relayed facets read, from the adapter's own manifest; no other slot is read.
+    const relayedSlots = slots.filter(slot => HYPERUNIX_CONSUMED_FIELDS.some(field => field.use === "relayed" && field.path.split(/\.|\[\]/).includes(slot)));
+    expect(relayedSlots, "the carrier slots wb-gwr.2's relayed facets name").toEqual(["diagnostics", "incomplete_regions", "view"]);
+    expect(carriersRead, "carrier and stop-fact slots the adapter reads").toEqual(relayedSlots);
     expect(familyRead, "reason-family names the adapter reads").toEqual([]);
     expect(projectedMissing, "projected input keys the adapter no longer reads (a collapsed collector)").toEqual([]);
     const control = (source: string): { readonly names: string[]; readonly added: string[]; readonly flagged: string[] } => {
@@ -863,9 +873,10 @@ const IMPL: { readonly [pin: string]: Impl } = {
     expect([...renamed.added, ...renamed.flagged], "R-RENAMED: a carrier read under another name stays quiet").toEqual([]);
     expect([...dynamic.added, ...dynamic.flagged], "R-DYNAMIC: a spread, reflective or computed read stays quiet").toEqual([]);
     expect(homonym.added, "R-HOMONYM: a read of a representation key the adapter already spells elsewhere adds nothing").toEqual([]);
-    const forms = control("const d = source.diagnostics;\nconst {extensions} = source;\nconst c = source['cost'];\nconst v = record(source)?.view;\n");
-    expect(forms.flagged, "the collector reads each access form").toEqual(["cost", "diagnostics", "extensions", "view"]);
-    expect(forms.added, "and each such read adds to the read set").toEqual(["cost", "diagnostics", "extensions", "view"]);
+    // Each access form over a slot the adapter never reads (wb-gwr.2 now reads diagnostics and view, so those two would add nothing).
+    const forms = control("const d = source.support_ids;\nconst {extensions} = source;\nconst c = source['cost'];\nconst v = record(source)?.extra;\n");
+    expect(forms.flagged, "the collector reads each access form").toEqual(["cost", "extensions", "extra", "support_ids"]);
+    expect(forms.added, "and each such read adds to the read set").toEqual(["cost", "extensions", "extra", "support_ids"]);
     return done("C2", { keys, reads, slots, carriersRead, familyRead, projectedMissing, controls: { renamed, dynamic, homonym } });
   },
 };
