@@ -30,6 +30,12 @@
  * result as 'validation'; a speculative render behind its own capability id and grant) is the bead's other half, owed once the
  * marker ships at Pi's pin (wb-jwc.4's landing); this census claims only the until-then half and pins nothing that a re-pin moves.
  *
+ * wb-dkru (R694 follow-up from the wb-grmo.1 landing 545 gate cmd_c44799b3bdfd; its F3 leads, its F4 rides): the normalized view
+ * reads the rendered text of an inline mark inside a word (marked 18.0.11 renders spec*ul*ative, spec**ul**ative, spec~~ul~~ative
+ * and spec`ul`ative as one word under emphasis, strikethrough or a code span) and decodes every HTML5 named reference a pattern
+ * here can read (NAMED_REFERENCE_LIST), so the gate's P-D16 to P-D19 read in C1 and C2 (M5's positive controls); A2, C1 and C2
+ * each judge a planted unit after the real ones, so the gate's hollowing mutants G09, G12, G13 and G14 red (PLANTED LEGS).
+ *
  * ROWS (each pin's witness is held to the roster):
  *  A, the trigger as it reaches Pi. A1 the contractSource carrier states the --no-commit render contract, names no --scenario and
  *    pins the SCG-R11 roster's own release, beside the roster's measured first --scenario release (whatever the pinned release);
@@ -43,12 +49,15 @@
  *    opening output.text); B7 both tiers route through the tripwire (the live row holds its failures to [] and its tier config
  *    and forge command select it).
  *  C, the docs census. C1 no sentence of docs/workbench, raw or normalized, names a what-if or speculative term (SPECULATIVE_TERM)
- *    together with a served term (SERVED_TERM); C2 the forward guard: no sentence names a SPECULATIVE_TERM outside the roster's
- *    allowlist docsSpeculativeSentences, held to the frozen DOCS_SPECULATIVE_SENTENCES (the three sentences of docs/18's "RF
- *    speculation boundary:" paragraph, wb-km7q.9, on rf's passive speculation-policy default; C1 judges each quiet), so the first
- *    docs sentence about speculative RF context is added there and C1 judges it. C1 reads co-occurrence, not polarity: a refusal
- *    sentence names its refusal ('refuses'), never a served word.
- *  M, the matchers rows A to C read: M1-M4 the spellings each must catch and pass; Q1-Q8 the pinned quiet rows.
+ *    together with a served term (SERVED_TERM); C2 the forward guard: no sentence names a SPECULATIVE_TERM at all today (the
+ *    roster's allowlist docsSpeculativeSentences is empty), so the first docs sentence about speculative RF context is added there
+ *    and C1 judges it. C1 reads co-occurrence, not polarity: a refusal sentence names its refusal ('refuses'), never a served word.
+ *  M, the matchers rows A to C read: M1-M5 the spellings each must catch and pass (M5 the rendered text of inline marks and named
+ *    references: the gate's P-D16 to P-D19 and their class read, a mark or a reference a reader sees shown stays, and the decoded
+ *    table's size and digest); Q1-Q10 the pinned quiet rows.
+ *  PLANTED LEGS (wb-dkru F4): A2, C1 and C2 each run their own judge (srcHits, servedHits, speculativeHits) over the real units and
+ *    then over the real units with a planted one after them, and hold the planted run's hits to exactly the plant's, so a judge
+ *    forced quiet, a literal reader emptied or C2's allowlist read inverted reds although the real tree is clean.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the judged set - every row's id, label and
  * pins, every pin's witness and reached assertion count, the citations, the measured releases and the registered test titles - is
  * held to the out-of-file roster, whose measured vocabulary also anchors the helper's (B1). A pin deleted, relabelled, swapped for
@@ -63,7 +72,10 @@
  * the top level, is not read (Q6); R-SCOPE test/, .beads/, README.md, AGENTS.md, CHANGELOG.md and docs outside docs/workbench
  * (docs/rpc.md, docs/workflows.md) are outside every
  * scanned root, and this census's own roster spells every marker (Q7); R-HOMOGLYPH a SPECULATIVE_TERM spelled with a look-alike
- * letter NFKC does not fold escapes C1 and C2 (Q8).
+ * letter NFKC does not fold escapes C1 and C2 (Q8); R-INTRAWORD-LINK a link or an image inside a word, its text or alt between the
+ * brackets (spec[ul](./notes.md)ative), is not resolved, so a term it splits escapes C1 and C2 (Q9); R-LEGACY-REFERENCE a legacy name
+ * written without its ";" (spec&shyulative), which marked shows as written in text but a browser decodes inside an HTML block, is
+ * read as written (Q10).
  * SCOPE: the marker names are producer facts read off the installed rf and RFCLI; Pi vendors no rf schema, so a marker rf adds
  * later is seen only when a re-measure re-reads them into the roster. No speculative reader, refusal or capability is added or
  * faked here; the cut that adds them flips this census (the FLIP of the freeze-and-flip).
@@ -71,6 +83,7 @@
  * Display paths added: none. Test-only: no scratch is allocated; src, docs and the two tier files are only read.
  */
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { type Dirent, lstatSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -127,10 +140,55 @@ const SPECULATIVE_TERM = new RegExp(
 const SERVED_TERM = /\b(?:serv(?:e|es|ed|ing)|admit(?:s|ted|ting)?|available|supported|enabled|expos(?:e|es|ed|ing)|offer(?:s|ed|ing)?|provid(?:e|es|ed|ing)|deliver(?:s|ed|ing)?)\b/i;
 /** Sentence units: a sentence end before whitespace, a blank line, or a line opening a list item, heading, table row or quote. */
 const SENTENCE_BREAK = /(?<=[.!?])\s+|\n\s*\n|\n(?=\s*(?:[-*+]\s|\d+[.)]\s|#|\||>))/;
-/** The named character references the normalized view decodes beside every numeric one. */
-const NAMED_REFERENCES: Readonly<Record<string, string>> = {
-  lowbar: "_", UnderBar: "_", hyphen: "-", dash: "-", period: ".", colon: ":", nbsp: " ", amp: "&", lt: "<", gt: ">", quot: '"', apos: "'",
-};
+/** The named character references the normalized view decodes beside every numeric one, as name=code points (hex): every HTML5
+ * name written with its ";" whose value, its format characters removed and NFKC applied, is empty or holds an ASCII letter, digit or
+ * "_", white space, or a mark SEP, JOINT or SENTENCE_BREAK reads ("." "!" "?" "\" "*" "`" "~" "-" or a dash look-alike) - 309 of the
+ * table's 2125 such names - then the 10 names of the markup characters & < > " ' and ":". Read off Python 3.12.15
+ * html.entities.html5 by the cutting seat (the roster's basis; M5 pins the list's size and digest); the census does not re-read the
+ * HTML5 table. No HTML5 name spells a SPECULATIVE_TERM or a SERVED_TERM, and every other name's value, so folded, holds only
+ * characters none of these patterns reads, so the view reads any other name as written and still makes every hit its decoded value
+ * would make. */
+const NAMED_REFERENCE_LIST: readonly string[] = [
+  "AMP=0026", "Afr=1D504", "Aopf=1D538", "ApplyFunction=2061", "Ascr=1D49C", "Bernoullis=212C", "Bfr=1D505", "Bopf=1D539", "Breve=02D8", "Bscr=212C",
+  "CapitalDifferentialD=2145", "Cayleys=212D", "Cedilla=00B8", "Cfr=212D", "Copf=2102", "Cscr=1D49E", "DD=2145", "Dfr=1D507", "DiacriticalAcute=00B4",
+  "DiacriticalDot=02D9", "DiacriticalDoubleAcute=02DD", "DiacriticalGrave=0060", "DiacriticalTilde=02DC", "DifferentialD=2146", "Dopf=1D53B",
+  "Dot=00A8", "DoubleDot=00A8", "Dscr=1D49F", "Efr=1D508", "Eopf=1D53C", "Escr=2130", "ExponentialE=2147", "Ffr=1D509", "Fopf=1D53D",
+  "Fouriertrf=2131", "Fscr=2131", "GT=003E", "Gfr=1D50A", "Gopf=1D53E", "Gscr=1D4A2", "Hfr=210C", "HilbertSpace=210B", "Hopf=210D", "Hscr=210B",
+  "IJlig=0132", "Ifr=2111", "Im=2111", "ImaginaryI=2148", "InvisibleComma=2063", "InvisibleTimes=2062", "Iopf=1D540", "Iscr=2110", "Jfr=1D50D",
+  "Jopf=1D541", "Jscr=1D4A5", "Kfr=1D50E", "Kopf=1D542", "Kscr=1D4A6", "LT=003C", "Laplacetrf=2112", "Lfr=1D50F", "Lmidot=013F", "Lopf=1D543",
+  "Lscr=2112", "MediumSpace=205F", "Mellintrf=2133", "Mfr=1D510", "Mopf=1D544", "Mscr=2133", "NegativeMediumSpace=200B", "NegativeThickSpace=200B",
+  "NegativeThinSpace=200B", "NegativeVeryThinSpace=200B", "NewLine=000A", "Nfr=1D511", "NoBreak=2060", "NonBreakingSpace=00A0", "Nopf=2115",
+  "Nscr=1D4A9", "Ofr=1D512", "Oopf=1D546", "Oscr=1D4AA", "OverBar=203E", "Pfr=1D513", "Poincareplane=210C", "Popf=2119", "Pscr=1D4AB", "QUOT=0022",
+  "Qfr=1D514", "Qopf=211A", "Qscr=1D4AC", "Re=211C", "Rfr=211C", "Ropf=211D", "Rscr=211B", "Sfr=1D516", "Sopf=1D54A", "Sscr=1D4AE", "TRADE=2122",
+  "Tab=0009", "Tfr=1D517", "ThickSpace=205F 200A", "ThinSpace=2009", "Topf=1D54B", "Tscr=1D4AF", "Ufr=1D518", "UnderBar=005F", "Uopf=1D54C",
+  "Uscr=1D4B0", "VeryThinSpace=200A", "Vfr=1D519", "Vopf=1D54D", "Vscr=1D4B1", "Wfr=1D51A", "Wopf=1D54E", "Wscr=1D4B2", "Xfr=1D51B", "Xopf=1D54F",
+  "Xscr=1D4B3", "Yfr=1D51C", "Yopf=1D550", "Yscr=1D4B4", "ZeroWidthSpace=200B", "Zfr=2128", "Zopf=2124", "Zscr=1D4B5", "acute=00B4", "af=2061",
+  "afr=1D51E", "amp=0026", "aopf=1D552", "apos=0027", "ascr=1D4B6", "ast=002A", "bernou=212C", "bfr=1D51F", "bopf=1D553", "breve=02D8", "bscr=1D4B7",
+  "bsol=005C", "cedil=00B8", "cfr=1D520", "circledS=24C8", "colon=003A", "complexes=2102", "copf=1D554", "cscr=1D4B8", "dash=2010", "dblac=02DD",
+  "dd=2146", "dfr=1D521", "die=00A8", "dopf=1D555", "dot=02D9", "dscr=1D4B9", "ee=2147", "efr=1D522", "ell=2113", "emsp=2003", "emsp13=2004",
+  "emsp14=2005", "ensp=2002", "eopf=1D556", "escr=212F", "excl=0021", "expectation=2130", "exponentiale=2147", "ffilig=FB03", "fflig=FB00",
+  "ffllig=FB04", "ffr=1D523", "filig=FB01", "fjlig=0066 006A", "fllig=FB02", "fopf=1D557", "frac12=00BD", "frac13=2153", "frac14=00BC", "frac15=2155",
+  "frac16=2159", "frac18=215B", "frac23=2154", "frac25=2156", "frac34=00BE", "frac35=2157", "frac38=215C", "frac45=2158", "frac56=215A",
+  "frac58=215D", "frac78=215E", "fscr=1D4BB", "gfr=1D524", "gopf=1D558", "grave=0060", "gscr=210A", "gt=003E", "hairsp=200A", "half=00BD",
+  "hamilt=210B", "hellip=2026", "hfr=1D525", "hopf=1D559", "horbar=2015", "hscr=1D4BD", "hyphen=2010", "ic=2063", "ifr=1D526", "ii=2148",
+  "ijlig=0133", "image=2111", "imagline=2110", "imagpart=2111", "incare=2105", "integers=2124", "iopf=1D55A", "iscr=1D4BE", "it=2062", "jfr=1D527",
+  "jopf=1D55B", "jscr=1D4BF", "kfr=1D528", "kopf=1D55C", "kscr=1D4C0", "lagran=2112", "lfr=1D529", "lmidot=0140", "lopf=1D55D", "lowbar=005F",
+  "lrm=200E", "lscr=1D4C1", "lt=003C", "macr=00AF", "mdash=2014", "mfr=1D52A", "midast=002A", "minus=2212", "mldr=2026", "mopf=1D55E", "mscr=1D4C2",
+  "napos=0149", "naturals=2115", "nbsp=00A0", "ndash=2013", "nfr=1D52B", "nldr=2025", "nopf=1D55F", "nscr=1D4C3", "numero=2116", "numsp=2007",
+  "oS=24C8", "ofr=1D52C", "ogon=02DB", "oline=203E", "oopf=1D560", "order=2134", "orderof=2134", "ordf=00AA", "ordm=00BA", "oscr=2134", "period=002E",
+  "pfr=1D52D", "phmmat=2133", "planckh=210E", "popf=1D561", "primes=2119", "pscr=1D4C5", "puncsp=2008", "qfr=1D52E", "qopf=1D562", "qscr=1D4C6",
+  "quaternions=210D", "quest=003F", "quot=0022", "rationals=211A", "real=211C", "realine=211B", "realpart=211C", "reals=211D", "rfr=1D52F",
+  "ring=02DA", "rlm=200F", "ropf=1D563", "rscr=1D4C7", "sfr=1D530", "shy=00AD", "sopf=1D564", "sscr=1D4C8", "strns=00AF", "sup1=00B9", "sup2=00B2",
+  "sup3=00B3", "tfr=1D531", "thinsp=2009", "tilde=02DC", "topf=1D565", "trade=2122", "tscr=1D4C9", "ufr=1D532", "uml=00A8", "uopf=1D566",
+  "uscr=1D4CA", "vfr=1D533", "vopf=1D567", "vscr=1D4CB", "wfr=1D534", "wopf=1D568", "wscr=1D4CC", "xfr=1D535", "xopf=1D569", "xscr=1D4CD",
+  "yfr=1D536", "yopf=1D56A", "yscr=1D4CE", "zeetrf=2128", "zfr=1D537", "zopf=1D56B", "zscr=1D4CF", "zwj=200D", "zwnj=200C",
+];
+/** One NAMED_REFERENCE_LIST entry as [name, value]. */
+function namedReference(entry: string): [string, string] {
+  const at = entry.indexOf("=");
+  return [entry.slice(0, at), entry.slice(at + 1).split(" ").map(hex => String.fromCodePoint(Number.parseInt(hex, 16))).join("")];
+}
+const NAMED_REFERENCES: ReadonlyMap<string, string> = new Map(NAMED_REFERENCE_LIST.map(namedReference));
 /** A2's needles: the scenario flag and the distinctive marker spellings, read inside any literal; the generic key words read only
  * as a whole literal (a src string is free to say "scenario" in a longer sentence). */
 const SRC_CONTAINED = ["--scenario", "rendered_speculative_view", "rf.scenario_id", "rf.epistemic_status", "rf.whatif_notice", "WHAT-IF VIEW"];
@@ -140,14 +198,6 @@ const SRC_ROOT = { root: "src", floor: 100, anchorFile: "src/workbench/providers
 /** The docs walk C reads: 72 markdown pages and 5919 raw sentence units at base dc72a6d (floors 60 and 4000). Its anchor is the
  * frozen TRACEABILITY page (rule 13), whose "served-model journey" sentence keeps C1's served half live on today's docs. */
 const DOCS_ROOT = { root: "docs/workbench", floor: 60, sentenceFloor: 4000, anchorFile: "docs/workbench/TRACEABILITY.md", anchorToken: "served-model journey" };
-/** C2's allowlist, frozen (wb-km7q.9): the three sentences of docs/18's "RF speculation boundary:" paragraph that name rf's
- * speculation policy - its passive default, the RF_ADAPTIVE seat no Pi-launched rf receives, and the tighten-only rule for a
- * future Pi declaration. None names a SERVED_TERM, so C1 judges each quiet; none is about speculative RF context. */
-const DOCS_SPECULATIVE_SENTENCES: readonly string[] = [
-  "**RF speculation boundary:** rf's local default speculation policy stays passive/disabled and Pi documents no other default.",
-  "rf 0.1.845 ships `ResourceBrokerLimits` and `SpeculationBoundary` as values its host resource broker reads, with no CLI surface, and the one way an rf process opts into its speculative policy is the process-scoped `RF_ADAPTIVE` seat, which no rf child Pi launches receives: that child's environment holds only the `RF_CHILD_ENV_ALLOWLIST` names of `src/workbench/process-env.ts`.",
-  "Any Pi-declared SpeculationBoundary or broker-limit configuration may only tighten ResourceBrokerLimits and never overrides Pi host hard caps, the 60 s render deadline and the 256 KiB stdout and stderr bounds of `src/workbench/providers/reactivefiber.ts`.",
-];
 /** The two tiers that hold a result to the SCG-R11 roster through diffAgainstRoster. */
 const LIVE_TIER = { file: "test/workbench-native-rf-preview.test.ts", config: "vitest.rf.config.ts", command: "rf-preview" };
 const FIXTURE_TIER = "test/workbench-rf-result-fixture.test.ts";
@@ -177,8 +227,8 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "M",
-    label: "the matchers rows A to C read: M1-M4 the spellings each must catch and pass, Q1-Q8 the pinned quiet rows of the named residuals",
-    pins: ["M1", "M2", "M3", "M4", "Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8"],
+    label: "the matchers rows A to C read: M1-M5 the spellings each must catch and pass, Q1-Q10 the pinned quiet rows of the named residuals",
+    pins: ["M1", "M2", "M3", "M4", "M5", "Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10"],
   },
 ];
 
@@ -339,19 +389,28 @@ function failuresOf(roster: rfFixture.RfResultRoster, result: JsonObject): strin
   return [...rfFixture.diffAgainstRoster(roster, result).failures];
 }
 
+/** An inline mark beside a letter or digit: a run of "*", "~" or "`" that a letter or digit precedes or follows. marked 18.0.11
+ * renders such a run inside a word as emphasis, strikethrough or a code span (spec*ul*ative shows as one word), so the normalized
+ * view removes it before any reference is decoded (a reference is never markup); an unpaired run there is removed too, an
+ * over-read that can only join, and "_" stays, as marked shows an intraword "_" as written. */
+const INLINE_MARKS = /[*~`]+(?=[\p{L}\p{N}])|(?<=[\p{L}\p{N}])[*~`]+/gu;
 /** The decoded value of a numeric character reference, or nothing for a code point no string can hold. */
 function codePoint(code: number): string {
   return Number.isInteger(code) && code >= 0 && code <= 0x10ffff ? String.fromCodePoint(code) : "";
 }
-/** The normalized view: HTML comments and tags removed, character references decoded, backslash escapes resolved, format
- * characters (zero-width, bidi) removed and NFKC applied, so markup or an invisible code point inside a word cannot split it. */
+/** The normalized view, the text a reader of the rendered page sees: HTML comments and tags removed, INLINE_MARKS removed,
+ * numeric references and NAMED_REFERENCES decoded, backslash escapes resolved, format characters (zero-width, bidi, the soft
+ * hyphen) removed and NFKC applied, so emphasis, strikethrough or a code span, a named or numeric reference or an invisible code
+ * point inside a word cannot split it. Not read: a link or an image inside a word (R-INTRAWORD-LINK, Q9) and a legacy name written
+ * without its ";" (R-LEGACY-REFERENCE, Q10). */
 function normalized(body: string): string {
   return body
     .replace(/<!--[\s\S]*?-->/g, "")
     .replace(/<\/?[A-Za-z][^>]*>/g, "")
+    .replace(INLINE_MARKS, "")
     .replace(/&#(\d+);/g, (_match, code: string) => codePoint(Number(code)))
     .replace(/&#[xX]([0-9A-Fa-f]+);/g, (_match, code: string) => codePoint(Number.parseInt(code, 16)))
-    .replace(/&([A-Za-z]+);/g, (match, name: string) => NAMED_REFERENCES[name] ?? match)
+    .replace(/&([A-Za-z][A-Za-z0-9]*);/g, (match, name: string) => NAMED_REFERENCES.get(name) ?? match)
     .replace(/\\([!-/:-@[-`{-~])/g, "$1")
     .replace(/\p{Cf}/gu, "")
     .normalize("NFKC");
@@ -441,8 +500,20 @@ function callsOf(fileName: string, source: string, name: string): number {
   return calls;
 }
 
+/** One src module A2 reads: its repository path and its text. */
+interface SourceUnit {
+  readonly path: string;
+  readonly text: string;
+}
+/** One sentence unit C1 and C2 read: its page, its view and its text. */
+interface DocsUnit {
+  readonly file: string;
+  readonly view: string;
+  readonly sentence: string;
+}
+
 /** Every sentence of docs/workbench in both views, with its file, after the floors and the anchor are read. */
-function docsSentences(): { floorMet: boolean; sentenceFloorMet: boolean; anchorRead: boolean; servedSentences: boolean; read: string[]; sentences: { file: string; view: string; sentence: string }[] } {
+function docsSentences(): { floorMet: boolean; sentenceFloorMet: boolean; anchorRead: boolean; servedSentences: boolean; read: string[]; sentences: DocsUnit[] } {
   const files = filesBelow(join(REPO, DOCS_ROOT.root)).filter(file => file.endsWith(".md"));
   const read: string[] = [];
   const sentences = files.flatMap(file => {
@@ -460,6 +531,29 @@ function docsSentences(): { floorMet: boolean; sentenceFloorMet: boolean; anchor
     read,
     sentences,
   };
+}
+
+/** A2's judge over modules, the real walk's and any planted after them: every needle a module's literals spell, as "path: needle". */
+function srcHits(units: readonly SourceUnit[]): string[] {
+  return units.flatMap(unit => literalsOf(unit.path, unit.text).flatMap(literal => srcNeedles(literal).map(needle => `${unit.path}: ${needle}`)));
+}
+/** C1's judge over sentence units, the real walk's and any planted after them: each unit naming a speculative and a served term. */
+function servedHits(units: readonly DocsUnit[]): string[] {
+  return units.filter(entry => presentsServed(entry.sentence)).map(entry => `${entry.file} (${entry.view}): ${entry.sentence.slice(0, 160)}`);
+}
+/** C2's judge over sentence units and an allowlist: each distinct unit naming a speculative term the allowlist does not hold. */
+function speculativeHits(units: readonly DocsUnit[], allowed: ReadonlySet<string>): string[] {
+  const named = units.filter(entry => SPECULATIVE_TERM.test(entry.sentence));
+  return [...new Set(named.filter(entry => !allowed.has(entry.sentence)).map(entry => `${entry.file}: ${entry.sentence.slice(0, 160)}`))];
+}
+/** A2's plant, judged after the real modules: an rf launch whose literals spell the scenario flag. */
+const SRC_PLANT: SourceUnit = { path: "planted/scenario-arm.ts", text: 'spawn("rf", ["context", "render", "--scenario", plan]);' };
+/** C1's and C2's plant, judged after the real pages: a served speculative sentence, a speculative sentence C2's planted run allows,
+ * and a served sentence naming no speculative term. */
+const DOCS_PLANT = { file: "planted/speculative-context.md", served: "Pi serves speculative RF context.", allowed: "A what-if view is labeled.", quiet: "Pi serves validated RF context." };
+/** The planted page's sentence units in both views. */
+function plantedDocsUnits(): DocsUnit[] {
+  return sentencesOf([DOCS_PLANT.served, DOCS_PLANT.allowed, DOCS_PLANT.quiet].join("\n\n")).map(entry => ({ file: DOCS_PLANT.file, ...entry }));
 }
 
 /** A matcher's verdict on each control, asserted against the expected verdict; the list is the witness. */
@@ -489,19 +583,18 @@ const IMPL: Record<string, () => Json | Promise<Json>> = {
   },
   A2: () => {
     const files = filesBelow(join(REPO, SRC_ROOT.root)).filter(file => file.endsWith(".ts"));
-    const read = files.map(file => relative(REPO, file));
+    const units: SourceUnit[] = files.map(file => ({ path: relative(REPO, file), text: textOf(file) }));
+    const read = units.map(unit => unit.path);
     const listed = gitListed(SRC_ROOT.root, ".ts");
-    const hits = files.flatMap(file => {
-      const name = relative(REPO, file);
-      return literalsOf(name, textOf(file)).flatMap(literal => srcNeedles(literal).map(needle => `${name}: ${needle}`));
-    });
-    const anchor = join(REPO, SRC_ROOT.anchorFile);
-    const anchorRead = files.includes(anchor) && literalsOf(SRC_ROOT.anchorFile, textOf(anchor)).some(literal => literal.includes(SRC_ROOT.anchorToken));
-    const floorMet = files.length >= SRC_ROOT.floor;
-    expect(floorMet && anchorRead, `src walk: ${files.length} modules, anchor read ${anchorRead}`).toBe(true);
+    const hits = srcHits(units);
+    const planted = srcHits([...units, SRC_PLANT]);
+    const anchorRead = units.some(unit => unit.path === SRC_ROOT.anchorFile && literalsOf(unit.path, unit.text).some(literal => literal.includes(SRC_ROOT.anchorToken)));
+    const floorMet = units.length >= SRC_ROOT.floor;
+    expect(floorMet && anchorRead, `src walk: ${units.length} modules, anchor read ${anchorRead}`).toBe(true);
     expect([...read].sort(), "the A2 walk read exactly git's own listing of src/**/*.ts").toStrictEqual(listed);
     expect(hits).toEqual([]);
-    return { floorMet, anchorRead, walkAgreesWithGit: sameList(read, listed), hits };
+    expect(planted, "the same judge reads the planted module after the real ones: the plant's needle is its one hit").toStrictEqual([`${SRC_PLANT.path}: --scenario`]);
+    return { floorMet, anchorRead, walkAgreesWithGit: sameList(read, listed), hits, planted };
   },
   B1: () => {
     const vocabulary = {
@@ -583,25 +676,32 @@ const IMPL: Record<string, () => Json | Promise<Json>> = {
   C1: () => {
     const docs = docsSentences();
     const listed = gitListed(DOCS_ROOT.root, ".md");
-    const hits = docs.sentences.filter(entry => presentsServed(entry.sentence)).map(entry => `${entry.file} (${entry.view}): ${entry.sentence.slice(0, 160)}`);
+    const hits = servedHits(docs.sentences);
+    const planted = servedHits([...docs.sentences, ...plantedDocsUnits()]);
     expect(docs.floorMet && docs.sentenceFloorMet && docs.anchorRead && docs.servedSentences).toBe(true);
     expect([...docs.read].sort(), "the C walk read exactly git's own listing of docs/workbench/**/*.md").toStrictEqual(listed);
     expect(hits).toEqual([]);
+    expect(planted, "the same judge reads the planted page after the real pages: its served speculative sentence, in both views, is its one hit").toStrictEqual(
+      ["raw", "normalized"].map(view => `${DOCS_PLANT.file} (${view}): ${DOCS_PLANT.served}`),
+    );
     return {
-      floorMet: docs.floorMet, sentenceFloorMet: docs.sentenceFloorMet, anchorRead: docs.anchorRead, servedSentences: docs.servedSentences, walkAgreesWithGit: sameList(docs.read, listed), hits,
+      floorMet: docs.floorMet, sentenceFloorMet: docs.sentenceFloorMet, anchorRead: docs.anchorRead, servedSentences: docs.servedSentences, walkAgreesWithGit: sameList(docs.read, listed), hits, planted,
     };
   },
   C2: () => {
     const docs = docsSentences();
     const listed = gitListed(DOCS_ROOT.root, ".md");
     const allowed = new Set(ROSTER.docsSpeculativeSentences);
-    const named = docs.sentences.filter(entry => SPECULATIVE_TERM.test(entry.sentence));
-    const hits = [...new Set(named.filter(entry => !allowed.has(entry.sentence)).map(entry => `${entry.file}: ${entry.sentence.slice(0, 160)}`))];
+    const hits = speculativeHits(docs.sentences, allowed);
+    const planted = speculativeHits([...docs.sentences, ...plantedDocsUnits()], new Set([...allowed, DOCS_PLANT.allowed]));
     expect(docs.floorMet && docs.sentenceFloorMet && docs.anchorRead).toBe(true);
     expect([...docs.read].sort(), "the C walk read exactly git's own listing of docs/workbench/**/*.md").toStrictEqual(listed);
-    expect(ROSTER.docsSpeculativeSentences).toEqual(DOCS_SPECULATIVE_SENTENCES);
+    expect(ROSTER.docsSpeculativeSentences).toEqual([]);
     expect(hits).toEqual([]);
-    return { floorMet: docs.floorMet, walkAgreesWithGit: sameList(docs.read, listed), allowed: [...allowed], hits };
+    expect(planted, "the same judge reads the planted page after the real pages, the plant's what-if sentence allowed: the sentence it does not allow is its one hit").toStrictEqual([
+      `${DOCS_PLANT.file}: ${DOCS_PLANT.served}`,
+    ]);
+    return { floorMet: docs.floorMet, walkAgreesWithGit: sameList(docs.read, listed), allowed: [...allowed], hits, planted };
   },
   M1: () =>
     verdicts(body => docsVerdict(body).c2, [
@@ -665,6 +765,35 @@ const IMPL: Record<string, () => Json | Promise<Json>> = {
     });
     expect({ nearValue: record.nearValue, nearPrefix: record.nearPrefix }, "a label is read exactly: a near value or a near prefix trips nothing").toStrictEqual({ nearValue: [], nearPrefix: [] });
     return record;
+  },
+  M5: () => {
+    const cases: readonly { readonly text: string; readonly c1: boolean; readonly c2: boolean }[] = [
+      { text: "Pi serves spec*ul*ative RF context.", c1: true, c2: true },
+      { text: "Pi serves spec**ul**ative RF context.", c1: true, c2: true },
+      { text: "Pi serves spec&shy;ulative RF context.", c1: true, c2: true },
+      { text: "Pi serves spec&ZeroWidthSpace;ulative RF context.", c1: true, c2: true },
+      { text: "Pi serves spec***ul***ative RF context.", c1: true, c2: true },
+      { text: "Pi serves spec~~ul~~ative RF context.", c1: true, c2: true },
+      { text: "Pi serves spec`ul`ative RF context.", c1: true, c2: true },
+      { text: "Pi serves spec&ZeroWidthSpace;*ul*ative RF context.", c1: true, c2: true },
+      { text: "Pi serves spec&NoBreak;ulative RF context.", c1: true, c2: true },
+      { text: "Pi serves &sopf;peculative RF context.", c1: true, c2: true },
+      { text: "Pi serves specul&ordf;tive RF context.", c1: true, c2: true },
+      { text: "Pi serves the what&mdash;if view.", c1: true, c2: true },
+      { text: "Pi serves the scenario&emsp13;view.", c1: true, c2: true },
+      { text: "Pi serves spec_ul_ative RF context.", c1: false, c2: false },
+      { text: "Pi serves spec\\*ul\\*ative RF context.", c1: false, c2: false },
+      { text: "Pi serves spec&ast;ul&ast;ative RF context.", c1: false, c2: false },
+      { text: "Pi serves spec&emsp;ulative RF context.", c1: false, c2: false },
+      { text: "Pi serves sp&eacute;culative RF context.", c1: false, c2: false },
+    ];
+    const read = cases.map(entry => ({ text: entry.text, ...docsVerdict(entry.text) }));
+    expect(read, "the normalized view reads the rendered text: a mark or a named reference inside a word joins it (P-D16 to P-D19 first), a mark or a reference a reader sees shown stays").toStrictEqual(
+      cases.map(entry => ({ text: entry.text, c1: entry.c1, c2: entry.c2 })),
+    );
+    const table = { names: NAMED_REFERENCES.size, listed: NAMED_REFERENCE_LIST.length, sha256: createHash("sha256").update(NAMED_REFERENCE_LIST.join("\n")).digest("hex") };
+    expect(table.names, "each listed name is decoded, once").toBe(table.listed);
+    return { read, table };
   },
   Q1: () => {
     const clean = cleanResult();
@@ -750,6 +879,20 @@ const IMPL: Record<string, () => Json | Promise<Json>> = {
     });
     return verdict;
   },
+  Q9: () => {
+    const read = ["Pi serves spec[ul](./notes.md)ative RF context.", "Pi serves spec![ul](./ul.png)ative RF context."].map(text => ({ text, ...docsVerdict(text) }));
+    expect(read.map(({ c1, c2 }) => ({ c1, c2 })), "R-INTRAWORD-LINK: a link or an image inside a word, its text or alt between the brackets, is not resolved").toStrictEqual([
+      { c1: false, c2: false }, { c1: false, c2: false },
+    ]);
+    return read;
+  },
+  Q10: () => {
+    const read = ["<p>Pi serves spec&shyulative RF context.</p>", "Pi serves spec&shyulative RF context."].map(text => ({ text, ...docsVerdict(text) }));
+    expect(read.map(({ c1, c2 }) => ({ c1, c2 })), "R-LEGACY-REFERENCE: a legacy name written without its ';' is read as written, in an HTML block (where a browser decodes it) and in text (as marked shows it)").toStrictEqual([
+      { c1: false, c2: false }, { c1: false, c2: false },
+    ]);
+    return read;
+  },
 };
 
 /** Each pin's witness as its case returned it; the registration case compares the whole set against the roster a second time. */
@@ -759,7 +902,7 @@ const REACHED: string[] = [];
 
 describe("wb-grmo.1 rf speculative context census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R1, until-then leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:7", "C:2", "M:12"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:7", "C:2", "M:15"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );

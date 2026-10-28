@@ -29,8 +29,10 @@
  * the joined fold can join the modifier across punctuation; a camel-split identifier can produce the acronym by accident.
  *
  * THE READINGS (the wb-64x shape: the rendered model, never a raw-line scan):
- *  - CLAIM PAGES: every *.md below docs/ (so docs/workbench, its receipts and TRACEABILITY.md) plus README.md and CHANGELOG.md.
- *    Each page is lexed once (marked 18.0.11, GFM) and every claim block is judged on its own: a heading, a paragraph, a text
+ *  - CLAIM PAGES: every markdown page below docs/ (MARKDOWN_PAGE: a file name ending .md or .markdown, in any case - the landed
+ *    wb-p46r form; so docs/workbench, its receipts and TRACEABILITY.md) plus README.md and CHANGELOG.md. The walk reads regular
+ *    files only: every symlink below docs/ is recorded, never followed, and B1 holds that record empty. Each page is lexed once
+ *    (marked 18.0.11, GFM) and every claim block is judged on its own: a heading, a paragraph, a text
  *    block, every table header and body cell, every list item at any depth, every blockquote paragraph, every code block, and
  *    every raw HTML block (its complete comments and tags removed). Inline text composes emphasis, strikethrough, code
  *    spans, escapes, numeric and common named character references and link TEXT, an inline tag or comment reading as a word
@@ -44,14 +46,21 @@
  *    (.ts .mts .cts .tsx .js .mjs .cjs .jsx; 116 .ts modules at the cut) through its TypeScript AST: identifiers, private
  *    names, string, template and regular-expression literal texts (so every import, export and dynamic-import specifier) and
  *    JSX text, never a comment.
+ *  - THE TRACKED LISTING (wb-0st4): git's index (git ls-files -z) is the walks' independent anchor. The claim-page walk, the pages
+ *    B2 reads and the src modules A2 reads each equal git's tracked paths of the same scope, both ways, so a walk or a reader that
+ *    skips part of its scope reds without waiting for a floor, and so does an untracked page or module the walk would read.
  *
  * The census pins two rows and the residuals' quiet rows:
- *  A, the adoption clause: A1 the manifests, A2 the src modules (both with their walk floors), A3 the manifest and source
- *    readers' own controls, each read exactly as pinned.
+ *  A, the adoption clause: A1 the manifests, A2 the src modules (both with their walk floors; the modules A2 reads also equal
+ *    git's tracked script modules below src, both ways), A3 the manifest and source readers' own controls, each read exactly as
+ *    pinned.
  *  B, the claim-surface clause, judged where the acceptance names it: B1 the claim-page set (the required pages present, the
- *    walk above its floor, nothing outside the scope), B2 every claim page (surface docs/workbench), B3 TRACEABILITY.md read on
- *    its own (surface TRACEABILITY, the census the acceptance names), B4 every registered descriptor (surface descriptors), B5
- *    the page and descriptor readers' own controls. B2-B4 also hold their reading floors, so a reader that reads nothing reds.
+ *    walk above its floor, nothing outside the scope, the walk equal to git's tracked claim pages both ways, no symlink below
+ *    docs/, and the walk's own control WALK_CONTROL read exactly as pinned), B2 every claim page (surface docs/workbench; the
+ *    pages read equal to git's tracked claim pages both ways), B3 TRACEABILITY.md read on its own (surface TRACEABILITY, the
+ *    census the acceptance names), B4 every registered descriptor (surface descriptors; each leg carries its fingerprint, its
+ *    descriptors' ids and descriptions, so a leg read from the other registration reds), B5 the page and descriptor readers' own
+ *    controls. B2-B4 also hold their reading floors, so a reader that reads nothing reds.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and
  * pins, every pin's witness, the constants, the controls, the residual families and every registered test title - is held to
@@ -62,7 +71,8 @@
  * before it) and the pins that reached their witness.
  * NOT CLAIMED (edits of this file and the roster together below row level): a pin removed from ROWS, the literal, IMPL and the
  * roster where no surface of the acceptance anchors it (A1-A3, B1, B5, Q1-Q6, the last with its RESIDUALS entry); a control
- * removed from its list and the roster; a pin's case replaced by one that echoes its roster witness.
+ * removed from its list and the roster; a pin's case replaced by one that echoes its roster witness; git's listing replaced by the
+ * walk it anchors, in this file, together with a narrowing of that walk (trackedPaths is the only reader of git's index).
  * RESIDUALS (named, each with its pinned quiet row): R-VOCABULARY EDC described in other words (context assembly charter,
  * evidence-driven, demand-directed, E.D.C., evidence directing, QueryView judgments) names no stem (Q1); R-LOOKALIKE a stem
  * written with a look-alike letter of another script (Cyrillic ie, es) is not matched (Q2; each probe, repaired, names its stem);
@@ -70,15 +80,16 @@
  * definition, a complete HTML comment, an HTML attribute, a src comment (Q3); R-COMPOSED a src string composed at run time from
  * parts that each name no stem is not read by the source scan, while the descriptor readers do read it once it is registered
  * (Q4); R-SCOPE markdown outside the claim pages (AGENTS.md, CONTRIBUTING.md, SECURITY.md, examples/, new-feedback/, .pi/,
- * .agents/, vendor/), files under docs/ that are not markdown, and modules outside src (an operator's local provider module, the
- * vendored SDK dists) are not read (Q5); R-UNNAMED-ADOPTION an adoption spelled without either stem (a context-block import, a
- * QueryView input) is not read here (Q6) - whether Pi loads the ReactiveComponents distribution at all is pinned by
- * test/workbench-rc-remote-component-stream-census.test.ts.
+ * .agents/, vendor/), files under docs/ whose name is no MARKDOWN_PAGE (OUT_OF_SCOPE_DOCS), and modules outside src (an
+ * operator's local provider module, the vendored SDK dists) are not read (Q5); R-UNNAMED-ADOPTION an adoption spelled without
+ * either stem (a context-block import, a QueryView input) is not read here (Q6) - whether Pi loads the ReactiveComponents
+ * distribution at all is pinned by test/workbench-rc-remote-component-stream-census.test.ts.
  * SCOPE: a mention is judged, not the sentence's truth; the charter's own status is read by the cutting seat, never by this file
  * (it lives in another repository).
  *
- * Display paths added: none. Test-only: no scratch is allocated; docs, src, the manifests and .beads are only read.
+ * Display paths added: none. Test-only: no scratch is allocated; docs, src, the manifests, .beads and git's index are only read.
  */
+import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -102,6 +113,8 @@ const BEAD = "wb-pyel.4";
 const STEMS: Readonly<Record<string, "word" | "joined">> = { edc: "word", evidencedirected: "joined" };
 /** The top-level claim pages outside docs/. */
 const TOP_PAGES = ["README.md", "CHANGELOG.md"] as const;
+/** A claim page's file name below docs/: it ends .md or .markdown, in any case (the landed wb-p46r MARKDOWN_PAGE form). */
+const MARKDOWN_PAGE = /\.(?:md|markdown)$/i;
 /** The claim pages that must be present (a floor, never the exact set: receipts land every day). */
 const REQUIRED_PAGES = [
   "CHANGELOG.md",
@@ -172,6 +185,17 @@ const PAGE_CONTROLS: Readonly<Record<string, string>> = {
   "cross-word": "The named capability is used carefully.\n",
   "inside-word": "Reedcraft and credcheck ship.\n",
   "inline-tag": "| Feature | Status |\n| --- | --- |\n| EDC<br>shipped | yes |\n",
+};
+/** The page walk's own control: a synthetic tree below docs/, one entry per name of a directory (a trailing "/" a directory, a
+ * trailing "@" a symlink), holding a page of every MARKDOWN_PAGE spelling, pages one and two directories down, a symlink named
+ * like a page, a directory named like a page and files that are no pages. The walk must read exactly the pinned pages and
+ * symlinks, so a walk that selects pages by another name test, skips a depth, follows or drops a symlink, or reads a directory as
+ * a page reds. */
+const WALK_CONTROL: Readonly<Record<string, readonly string[]>> = {
+  docs: ["a.md", "b.markdown", "c.MD", "d.Markdown", "e.txt", "f.mdx", "g.md.bak", "link.md@", "nested/", "pages.md/"],
+  "docs/nested": ["h.md", "i.json", "deeper/"],
+  "docs/nested/deeper": ["j.MARKDOWN"],
+  "docs/pages.md": ["k.md"],
 };
 /** Descriptor fields the descriptor reader must read: one planted descriptor with a stem in each field kind. */
 const PLANTED_DESCRIPTOR: CapabilityDescriptor = {
@@ -246,6 +270,8 @@ const OUT_OF_SCOPE_PAGES: readonly string[] = [
   ".agents/skills/beads/SKILL.md",
   "vendor/README.md",
 ];
+/** R-SCOPE's names below docs/ that are no markdown page (MARKDOWN_PAGE selects none of them). */
+const OUT_OF_SCOPE_DOCS: readonly string[] = ["docs/workbench/plant.txt", "docs/workbench/plant.mdx", "docs/workbench/plant.md.bak", "docs/plant.html"];
 /** R-UNNAMED-ADOPTION's probe: a context-assembly adoption that names neither stem. */
 const UNNAMED_ADOPTION = `import { renderBlock } from "@example/context-blocks";
 export const block = renderBlock({ queryView: { failures: 0, seal: null }, coverageProofRef: "ref" });`;
@@ -443,19 +469,73 @@ function filesBelow(directory: string, extension: string): string[] {
 function repoPath(path: string): string {
   return relative(REPO, path).split("\\").join("/");
 }
-/** A path is a claim page when it is a markdown file below docs/ or one of the top-level claim pages. */
+/** A path is a claim page when it is a markdown page below docs/ (MARKDOWN_PAGE) or one of the top-level claim pages. */
 function inClaimScope(path: string): boolean {
-  return (path.startsWith("docs/") && path.endsWith(".md")) || (TOP_PAGES as readonly string[]).includes(path);
+  return (path.startsWith("docs/") && MARKDOWN_PAGE.test(path)) || (TOP_PAGES as readonly string[]).includes(path);
+}
+/** A directory entry as the page walk reads it: its name and its kind (a symlink is never followed). */
+interface WalkEntry {
+  readonly name: string;
+  isFile(): boolean;
+  isDirectory(): boolean;
+  isSymbolicLink(): boolean;
+}
+/** Lists the entries of one directory of a tree. */
+type ReadDirectory = (directory: string) => readonly WalkEntry[];
+const DISK: ReadDirectory = directory => readdirSync(directory, { withFileTypes: true });
+/** WALK_CONTROL's directory reader: each entry's kind from its spelling. */
+function treeReader(tree: Readonly<Record<string, readonly string[]>>): ReadDirectory {
+  return directory =>
+    (tree[directory] ?? []).map(spec => {
+      const kind = spec.endsWith("/") ? "directory" : spec.endsWith("@") ? "symlink" : "file";
+      const name = kind === "file" ? spec : spec.slice(0, -1);
+      return { name, isFile: () => kind === "file", isDirectory: () => kind === "directory", isSymbolicLink: () => kind === "symlink" };
+    });
+}
+/** The page walk below one directory of a tree: every regular file whose name is a MARKDOWN_PAGE, and every symlink (recorded,
+ * never followed), each as its path from the tree root, the entries of each directory visited in name order. */
+function pageWalk(read: ReadDirectory, root: string, directory: string): { pages: string[]; symlinks: string[] } {
+  const pages: string[] = [];
+  const symlinks: string[] = [];
+  const visit = (at: string): void => {
+    const entries = [...read(join(root, at))].sort((left, right) => (left.name < right.name ? -1 : left.name > right.name ? 1 : 0));
+    for (const entry of entries) {
+      const path = `${at}/${entry.name}`;
+      if (entry.isSymbolicLink()) symlinks.push(path);
+      else if (entry.isDirectory()) visit(path);
+      else if (entry.isFile() && MARKDOWN_PAGE.test(entry.name)) pages.push(path);
+    }
+  };
+  visit(directory);
+  return { pages, symlinks };
+}
+/** The real page walk: the repository's docs/ tree. */
+function docsWalk(): { pages: string[]; symlinks: string[] } {
+  return pageWalk(DISK, REPO, "docs");
 }
 function claimPages(): string[] {
   const top = TOP_PAGES.filter(page => existsSync(join(REPO, page)));
-  return [...filesBelow(join(REPO, "docs"), ".md").map(repoPath), ...top].sort();
+  return [...docsWalk().pages, ...top].sort();
+}
+/** git's tracked paths (its index, git ls-files -z, never quoted): the independent listing both walks and every read set are held
+ * to, both ways. */
+function trackedPaths(): string[] {
+  return execFileSync("git", ["ls-files", "-z"], { cwd: REPO, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 })
+    .split("\0")
+    .filter(path => path !== "");
+}
+/** git's tracked claim pages. */
+function trackedClaimPages(): string[] {
+  return trackedPaths()
+    .filter(path => inClaimScope(path))
+    .sort();
 }
 function readPage(page: string): string {
   return readFileSync(join(REPO, page), "utf8");
 }
-/** The judged reading of a page set: the mentions, the empty pages and the reading floors. */
-function pagesReading(pages: readonly string[]): { mentions: string[]; empty: string[]; blocks: number; words: number } {
+/** The judged reading of a page set: the pages read, the mentions, the empty pages and the reading floors. */
+function pagesReading(pages: readonly string[]): { pages: string[]; mentions: string[]; empty: string[]; blocks: number; words: number } {
+  const readPages: string[] = [];
   const mentions: string[] = [];
   const empty: string[] = [];
   let blocks = 0;
@@ -467,8 +547,9 @@ function pagesReading(pages: readonly string[]): { mentions: string[]; empty: st
     blocks += read.length;
     words += read.reduce((total, block) => total + wordCount(block.text), 0);
     mentions.push(...pageMentions(text, page));
+    readPages.push(page);
   }
-  return { mentions, empty, blocks, words };
+  return { pages: readPages, mentions, empty, blocks, words };
 }
 function controlPages(pages: Readonly<Record<string, string>>): JsonValue {
   return json(Object.fromEntries(Object.entries(pages).map(([name, page]) => [name, pageMentions(page, name)])));
@@ -527,14 +608,17 @@ function plantedRegistry(descriptor: CapabilityDescriptor): CapabilityRegistry {
   registry.register({ descriptor, invoke: async () => NEVER() });
   return registry;
 }
-/** A registry's reading: the required ids missing, the strings read, the mentions. */
-function registryReading(registry: CapabilityRegistry): { missing: string[]; texts: number; mentions: string[] } {
+/** A registry's reading: the required ids missing, the strings read, the mentions, and its fingerprint - each descriptor's id and
+ * description, in id order (the native and the injected registrations describe each capability in their own words, so one leg read
+ * from the other registration reds). */
+function registryReading(registry: CapabilityRegistry): { missing: string[]; texts: number; mentions: string[]; descriptions: string[] } {
   const descriptors = descriptorsOf(registry);
   const ids = new Set(descriptors.map(descriptor => descriptor.id));
   return {
     missing: REQUIRED_DESCRIPTORS.filter(id => !ids.has(id)),
     texts: descriptors.reduce((total, descriptor) => total + textsOf(descriptor, descriptor.id).length, 0),
     mentions: descriptors.flatMap(descriptor => textMentions(descriptor, descriptor.id)),
+    descriptions: descriptors.map(descriptor => `${descriptor.id}: ${descriptor.description}`).sort(),
   };
 }
 
@@ -598,6 +682,12 @@ function srcModules(): string[] {
     .map(repoPath)
     .sort();
 }
+/** git's tracked script modules below src. */
+function trackedModules(): string[] {
+  return trackedPaths()
+    .filter(path => path.startsWith("src/") && Object.keys(SCRIPT_KINDS).some(extension => path.endsWith(extension)))
+    .sort();
+}
 function readJson(path: string): unknown {
   return JSON.parse(readFileSync(join(REPO, path), "utf8"));
 }
@@ -655,12 +745,23 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
   A2: async () => {
     const modules = srcModules();
-    const texts = modules.reduce((total, module) => total + sourceTexts(readFileSync(join(REPO, module), "utf8"), module).length, 0);
+    const tracked = trackedModules();
+    const read: string[] = [];
+    const mentions: string[] = [];
+    let texts = 0;
+    for (const module of modules) {
+      const text = readFileSync(join(REPO, module), "utf8");
+      texts += sourceTexts(text, module).length;
+      mentions.push(...sourceMentions(text, module));
+      read.push(module);
+    }
     return json({
       modulesBelowFloor: modules.length < FLOORS.modules,
       textsBelowFloor: texts < FLOORS.texts,
       outsideSrc: modules.filter(module => !module.startsWith("src/")),
-      mentions: modules.flatMap(module => sourceMentions(readFileSync(join(REPO, module), "utf8"), module)),
+      untracked: read.filter(module => !tracked.includes(module)),
+      unread: tracked.filter(module => !read.includes(module)),
+      mentions,
     });
   },
   A3: async () =>
@@ -671,19 +772,28 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     }),
   B1: async () => {
     const pages = claimPages();
+    const tracked = trackedClaimPages();
+    const control = pageWalk(treeReader(WALK_CONTROL), "", "docs");
     return json({
       missing: REQUIRED_PAGES.filter(page => !pages.includes(page)),
       belowFloor: pages.length < FLOORS.pages,
       outsideScope: pages.filter(page => !inClaimScope(page)),
+      untracked: pages.filter(page => !tracked.includes(page)),
+      unwalked: tracked.filter(page => !pages.includes(page)),
+      symlinks: docsWalk().symlinks,
+      walkControl: { ...control, outsideScope: control.pages.filter(page => !inClaimScope(page)) },
     });
   },
   B2: async () => {
     const reading = pagesReading(claimPages());
+    const tracked = trackedClaimPages();
     return json({
       surface: "docs/workbench",
       empty: reading.empty,
       blocksBelowFloor: reading.blocks < FLOORS.blocks,
       wordsBelowFloor: reading.words < FLOORS.words,
+      untracked: reading.pages.filter(page => !tracked.includes(page)),
+      unread: tracked.filter(page => !reading.pages.includes(page)),
       mentions: reading.mentions,
     });
   },
@@ -701,8 +811,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const injectedReading = registryReading(injectedRegistry());
     return json({
       surface: "descriptors",
-      native: { missing: nativeReading.missing, read: nativeReading.texts > 0, mentions: nativeReading.mentions },
-      injected: { missing: injectedReading.missing, read: injectedReading.texts > 0, mentions: injectedReading.mentions },
+      native: { missing: nativeReading.missing, read: nativeReading.texts > 0, descriptions: nativeReading.descriptions, mentions: nativeReading.mentions },
+      injected: { missing: injectedReading.missing, read: injectedReading.texts > 0, descriptions: injectedReading.descriptions, mentions: injectedReading.mentions },
     });
   },
   B5: async () =>
@@ -741,6 +851,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       readDirectly: pageMentions("EDC integration ships.\n", OUT_OF_SCOPE_PAGES[0] ?? ""),
       inScope: OUT_OF_SCOPE_PAGES.filter(page => inClaimScope(page)),
       read: OUT_OF_SCOPE_PAGES.filter(page => pages.includes(page)),
+      docsNonPages: OUT_OF_SCOPE_DOCS.filter(path => inClaimScope(path)),
       modulesOutsideSrc: srcModules().filter(module => !module.startsWith("src/")).length,
     });
   },
@@ -758,6 +869,7 @@ describe("wb-pyel.4 EDC shipped-claim census (SDK-EVIDENCE-DIRECTED-COMPUTATION-
       json({
         stems: STEMS,
         topPages: TOP_PAGES,
+        markdownPage: `/${MARKDOWN_PAGE.source}/${MARKDOWN_PAGE.flags}`,
         requiredPages: REQUIRED_PAGES,
         traceability: TRACEABILITY,
         floors: FLOORS,
@@ -765,6 +877,7 @@ describe("wb-pyel.4 EDC shipped-claim census (SDK-EVIDENCE-DIRECTED-COMPUTATION-
         requiredDescriptors: REQUIRED_DESCRIPTORS,
         surfaces: SURFACES,
         pageControls: PAGE_CONTROLS,
+        walkControl: WALK_CONTROL,
         planted: PLANTED_DESCRIPTOR,
         manifestControls: MANIFEST_CONTROLS,
         lockControls: LOCK_CONTROLS,
@@ -775,6 +888,7 @@ describe("wb-pyel.4 EDC shipped-claim census (SDK-EVIDENCE-DIRECTED-COMPUTATION-
         nonClaimSource: NON_CLAIM_SOURCE,
         composed: [COMPOSED_SOURCE, COMPOSED_PART],
         outOfScope: OUT_OF_SCOPE_PAGES,
+        outOfScopeDocs: OUT_OF_SCOPE_DOCS,
         unnamedAdoption: UNNAMED_ADOPTION,
         residuals: RESIDUALS,
       }),

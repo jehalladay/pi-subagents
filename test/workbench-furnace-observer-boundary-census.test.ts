@@ -28,68 +28,96 @@
  * "boundary" or "boundaries", in any case - the record's own middle words (recordWords), so every spelling of the record and
  * of its family (any version, with or without the producer prefix) is read. Each file's own path is read ("path"). A file
  * holding a NUL byte is binary and its content is not read. Every other file is read as raw text ("raw"); a script (.ts .tsx
- * .mts .cts .js .jsx .mjs .cjs) also through the TypeScript AST - each string-like literal by its cooked value and each
- * template part by its cooked text, a substitution ending the part ("cooked"), and each chain of "+" whose operands are all
- * string literals by its folded value ("folded"); a .json file also by its parsed keys and string values ("cooked"); a
- * markup file (.md .html .htm .xml .svg) also with its numeric character references and the common named entities decoded
- * ("decoded"). A file's forms are the readings that found a mention. judgeScope reads an entry list in one call, so every leg judges its planted
+ * .mts .cts .js .jsx .mjs .cjs) also through the TypeScript AST - each string-like literal by its cooked value, each
+ * identifier spelled with an escape by its cooked name and each template part by its cooked text, a substitution ending
+ * the part ("cooked"), and each chain of "+" whose operands are all string literals by its folded value ("folded"); a .json
+ * file also by its parsed keys and string values ("cooked"); a markup file (.md .html .htm .xml .svg) also with its
+ * numeric character references and the common named entities decoded ("decoded"); a YAML or TOML file (.yml .yaml .toml)
+ * also with its backslash escapes (U, u and x forms) decoded ("decoded"). A file's forms are the readings that found a
+ * mention. judgeScope reads an entry list in one call, so every leg judges its planted
  * entries after the real ones: the findings must be exactly the plants', so a real mention, a hollowed judge or a result
  * forced empty reds.
  *
  * ROWS. T, the trigger clause, one pin per quoted part: T1 the release package.json resolves @furnace/sdk to is read entry
- * by entry (an entry floor, no skipped entry kind and no binary entry, every type the observer imports from @furnace/sdk
- * declared by the release's .d.ts) and spells no mention, a planted declaration is found by the same call - ARMED: when a
+ * by entry (an entry floor, no skipped entry kind and no binary entry, every type the observer imports or re-exports from
+ * @furnace/sdk declared by the release's .d.ts, a planted re-export of an undeclared name read as one) and spells no mention, a planted declaration is found by the same call - ARMED: when a
  * re-vendor brings the record, T1 reds naming the acceptance on landing as owed; T2 the record's release forms (declaration,
  * runtime export, schema id, registry key, docs heading, escape-spelled string, escape-spelled JSON) each found; T3 the
  * release's identity (package.json spec, lock resolution, version and
  * integrity, the tarball's own name, version and sha256) and the owner's recorded status, so any re-vendor reds T3 and
  * re-reads T1. W, the baseline the armed half must never widen: W1 the declared read surface (every declaration of
- * FurnaceObserverClient, its heritage, the type of the constructor's client parameter) equals docs/09's three reads one to
- * one, and a widened interface is read as widened; W2 every client read carries a timeoutMs bound, the list reads a
+ * FurnaceObserverClient, its heritage, the type of the constructor's client parameter, and every module augmentation of the
+ * observer module in a listed Pi script) equals docs/09's three reads one to one, docs/09 read through the landed rendered
+ * binding (Docs09Reading), and a widened interface, a planted augmentation and the docs plants are read as widened or
+ * refused; W2 every client read carries a timeoutMs bound, the list reads a
  * limit, and the poll loop both budgets, an unbounded plant read as such; W3 every client use is one of the three read calls
- * (no alias, no other member), the SDK is imported for types only, close() reads nothing, no docs/09 excluded verb is called,
+ * (no alias, no other member), the SDK is imported for types only (no value import, value re-export, import-equals
+ * require, dynamic import or require call; a planted re-export and import-equals read as runtime loads), close() reads nothing, no docs/09 excluded verb is called,
  * the ownership label is 'external', and a control plant is read as one. Z, the until-then duty: Z1 the trigger is unfired
- * today and the same judge over the filing pin's objects reads no mention, the pin being where the row was filed; Z2 every
- * listed Pi file (tracked plus untracked-not-ignored, minus the tracker and the holders) spells no mention, with file, script
- * and binary floors, content-liveness anchors and planted entries of each reading found; Z3 the record's identity: its words
+ * today and the same judge over the filing pin's objects reads no mention, the pin being where the row was filed, with a
+ * byte floor and content-liveness anchors over the blobs the judge read; Z2 every listed Pi file (tracked plus
+ * untracked-not-ignored, minus the tracker and the holders) spells no mention, with file, script, binary and byte floors,
+ * content-liveness anchors read from the text the judge read, and planted entries of each reading found; Z3 the record's identity: its words
  * from the export title, every spelling form read, and the observer's own identifiers and the sibling record (named in
  * wb-dqf.2's export title) quiet. Q, the residuals' pinned quiet rows.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and
- * pins, every pin's quote, claims and witness, the constants and every registered test title - is held to the out-of-file
- * roster (test/fixtures/furnace-observer-boundary-roster.json).
+ * pins, every pin's quote, claims and witness, the constants (READERS and ANCHORS included) and every registered test
+ * title - is held to the out-of-file roster (test/fixtures/furnace-observer-boundary-roster.json), and every case names a
+ * reader of the subject (READERS), so a case returning a constant witness reds.
  * OUTSIDE ANCHORS (their own registered case): the bead's own export row - its title, read after its requirement-id prefix,
  * is tiled in order by row T's label, the armed clause (ARMED), row W's label and row Z's label with nothing but separators
  * (whitespace, comma, semicolon, colon, period, parentheses, DASH) between them, and each row's pin quotes tile its label the
  * same way, so a row or a pin removed from ROWS, the literal, QUOTES, CLAIMS, IMPL and the roster together still reds; the
  * record is the title's token after "When Furnace ships " and the notes' gating artifact; MENTION is built from its words;
- * the recorded status and ACCEPTANCE are the notes' own text; docs/09's section names the reads W1 pairs and the verbs W3
- * excludes, and the notes cite that section; the filing pin's export holds the row and its parent's does not; the sibling
+ * the recorded status, the gate sentence, the docs/09 citation and ACCEPTANCE are the owner filing's own text (ownerFiling:
+ * the notes' first two blocks, so an appended note quoting them never masks a replaced original, a planted control of each
+ * kind read); docs/09's section names the reads W1 pairs and the verbs W3 excludes, and the owner filing cites that section; the filing pin's export holds the row and its parent's does not; the sibling
  * record is wb-dqf.2's title token.
  * CLAIMS: each quoted pin carries claims - terms tiling its quote, each naming the witness facts (top-level keys) that show
  * it; a pin's live witness holds exactly its claimed facts, each fact under one term, and no pin's live witness holds
  * another pin's claimed facts (the claims bound), so a case swap reds at the swapped pin's claims beside its roster witness.
+ * FOLLOW-UP wb-6c6i (R694, from the wb-dqf.1 gate cmd_3dcd6d57ec8d at landing 536; F1 leads, F2-F7 ride): F1 docs/09 was
+ *   read raw (the first heading by indexOf, bounded only at the next raw '## ', regexes over comments and fences, and Z2's
+ *   polling liveness an includes-anywhere check), so the gate's G17 hidden copy, G18 decoy heading, G19 appendix and G20 fence
+ *   stayed green; the section is now the landed docsSection binding and both sentences come from rendered paragraph blocks,
+ *   each exactly once, in a section without HTML, the six docs plants pinned in W1. F2 a case returning a constant witness
+ *   (H9a Z2, H9b Q5) stayed green; the judged set now requires every case to name a reader of the subject. F3 Z2's liveness
+ *   read through textOf and Z1 had none, so truncated real reads (H1P, H6) stayed green; both now read the anchors from the
+ *   text the judge read, beside byte floors. F4 YAML/TOML escapes (G03, G03b) and escaped identifiers (G04) were not read;
+ *   they are now ("decoded", "cooked"), each planted in Z2, and the escape kinds still not decoded are named in R-INTERIOR.
+ *   F5 runtime imports and imported names skipped export-from and import-equals (G13, G13b); both are read, plants in T1
+ *   and W3. F6 a module augmentation of the observer in another file (G06) widened the client unseen; W1 reads them from
+ *   every listed script, a planted one pinned. F7 the notes anchors were includes-anywhere, so a weakened owner sentence
+ *   with a later verbatim quote (G22b) stayed green; they read the owner filing only, G22b and G22a controls asserted.
  * RESIDUALS (named, each with its pinned quiet row): R-TRACKER the tracker export (.beads/) is not a Pi scope: the bead's
  * own row spells the record (Q1); R-HOLDER this file and its roster spell it and are excluded by name (Q2); R-BINARY a file
  * holding a NUL byte is not read (Q3); R-PARAPHRASE "observed boundary" and "observation boundary" are not the record's
  * words (Q4); R-WORD-ORDER the words in the other order are not read (Q5); R-INTERIOR a character inside a word (a format
- * character, a confusable letter, markup) or an HTML entity outside a markup file hides it (Q6); R-COMPUTED a template
- * substitution, a runtime
- * join or a computed character between word parts is not read (Q7); R-OTHER-MODULE W reads only the observer module: src/workbench/furnace-control.ts
- * calls docs/09's excluded verbs and is out of W's scope (Q8); R-COMPUTED-ACCESS a client reached through a computed key is
+ * character, a confusable letter, markup), an HTML entity outside a markup file, or a backslash escape in a file kind whose
+ * escapes are not decoded (a shell script, plain text: only scripts, .json, markup entities and YAML/TOML are decoded)
+ * hides it (Q6); R-COMPUTED a template substitution, a runtime join or a computed character between word parts is not read
+ * (Q7); R-OTHER-MODULE W reads only the observer module and its module augmentations in the listed scripts:
+ * src/workbench/furnace-control.ts calls docs/09's excluded verbs and is out of W's scope (Q8); R-COMPUTED-ACCESS a client reached through a computed key is
  * not read as a client use (Q9).
  * NOT CLAIMED (edits of this file and the roster together): a pin's case and its roster witness re-authored together, its
  * claims rewritten with them; a plant or control edited in IMPL and the roster together; a floor lowered with the roster; a
  * residual row removed from ROWS, the literal, IMPL, RESIDUALS and the roster (no outside anchor names the residual
- * families); the outside-anchor case or the closing case removed with its roster title.
+ * families); the outside-anchor case or the closing case removed with its roster title; a case that names a reader and
+ * discards what it read (the reader-keeping constant: the judged set requires a reader's name, not its use); a judge edited
+ * to read less of a file than the text it keeps as read, or to spare the anchor files from a truncation that keeps the read
+ * bytes above the floor (a scan edited to tell the anchors from the rest).
  * ARMED HALF PENDING: the clause ARMED (consume the record within the boundary: exposed fields only, non-exposed fields as
  * typed absence, the visibility policy honoured, a docs/07 sentence bound by a census) has nothing to read until the record
  * ships; no record is faked here. T1 binds it: the census reds with ACCEPTANCE the moment the vendored release spells it.
  * OVER-READS (disclosed; none today): any "observer ... boundary" prose reads as a mention, a heading or list break between
- * the words included. SCOPE: files git ignores (node_modules/, .forge/ and the rest of .gitignore) and files deleted from
+ * the words included; a YAML/TOML backslash sequence in a single-quoted or literal string is decoded; a bare module
+ * specifier whose last segment is furnace-observer is read as the observer module (W1). The augmentation read parses only
+ * a script whose text spells "module" (a module declaration's keyword cannot be escape-spelled). SCOPE: files git ignores (node_modules/, .forge/ and the rest of .gitignore) and files deleted from
  * the worktree are not listed; Furnace's own repository is never read (the gate is a release Pi vendors).
  * READS (contacts): every listed file (Z2), git objects at the filing pin (Z1), the tracker export rows of wb-dqf.1 and
  * wb-dqf.2, docs/workbench/09, package.json, package-lock.json, vendor/furnace-sdk-0.1.0.tgz, the structure of
- * src/workbench/furnace-observer.ts (W, Z3) and src/workbench/furnace-control.ts's calls (Q8).
+ * src/workbench/furnace-observer.ts (W, Z3), the module augmentations of it in every listed script (W1) and
+ * src/workbench/furnace-control.ts's calls (Q8).
  *
  * Display paths added: none (test-only; src/ is read, never edited). Scratch: none - every plant is an in-memory entry judged
  * by the same call as the real files; nothing is written to disk.
@@ -97,12 +125,13 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
-import { dirname, join, relative } from "node:path";
+import { dirname, join, posix, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 import { gunzipSync } from "node:zlib";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
+import { docsSection } from "./helpers/census.js";
 
 type JsonValue = null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue };
 type JsonObject = { [key: string]: JsonValue };
@@ -124,6 +153,8 @@ const IDENTITY = "src/workbench/identity.ts";
 const SCHEMA_LITERAL = "workflow-script/v1";
 const DOCS09 = "docs/workbench/09-observation-and-provenance.md";
 const DOCS09_SECTION = "## Experimental projection implementation";
+/** docs/09's page title: the one parent heading the section is bound under (the landed docsSection binding, D9; wb-6c6i F1). */
+const DOCS09_TITLE = `09 ${String.fromCodePoint(0x2014)} Observation, telemetry, provenance and derived graph`;
 const SDK = "@furnace/sdk";
 const TARBALL = "vendor/furnace-sdk-0.1.0.tgz";
 const LOCK_KEY = "node_modules/@furnace/sdk";
@@ -143,7 +174,11 @@ const MENTION_ONE = new RegExp(MENTION.source, "iu");
 const SCRIPT = /\.(?:[cm]?[jt]sx?)$/;
 const JSON_FILE = /\.json$/;
 const MARKUP = /\.(?:md|html?|xml|svg)$/;
-const FLOORS = { piFiles: 900, piScripts: 650, piBinaries: 3, sdkEntries: 100, pinFiles: 700 } as const;
+/** A file kind whose backslash escapes are decoded (YAML, TOML; wb-6c6i F4). */
+const ESCAPED = /\.(?:ya?ml|toml)$/;
+const FLOORS = { piFiles: 900, piScripts: 650, piBinaries: 3, piBytes: 25_000_000, sdkEntries: 100, pinFiles: 700, pinBytes: 13_000_000 } as const;
+/** The content-liveness anchors: real files whose deep needles are read from the text the judge consumed (wb-6c6i F3). */
+const ANCHORS: readonly string[] = [IDENTITY, DOCS09, OBSERVER];
 
 interface Row {
   readonly id: string;
@@ -171,20 +206,23 @@ const QUOTES: Readonly<Record<string, string>> = {
 };
 /** Each quoted pin's claims: terms tiling its quote, each naming the witness facts that show it. */
 const CLAIMS: Readonly<Record<string, Readonly<Record<string, readonly string[]>>>> = {
-  T1: { When: ["fired", "sdkMentions"], Furnace: ["package", "version", "observerTypesDeclared"], ships: ["entriesAtFloor", "skippedEntries", "binaryEntries", "sdkPlant"] },
+  T1: { When: ["fired", "sdkMentions"], Furnace: ["package", "version", "observerTypesDeclared", "typesPlant"], ships: ["entriesAtFloor", "skippedEntries", "binaryEntries", "sdkPlant"] },
   T2: { FurnaceObserverBoundaryV0: ["record", "releaseForms"] },
   T3: {
     proposed: ["recordedStatus"],
     "not shipped": ["spec", "lockResolved", "lockVersion", "lockIntegrityMatches", "tarballName", "tarballVersion", "tarballSha256"],
   },
-  W1: { never: ["widenedPlant"], widening: ["interfaceName", "interfaceDeclarations", "interfaceExtends", "clientParameterTypes", "readPaths", "docsReads", "pairs"] },
+  W1: {
+    never: ["widenedPlant", "augmentationPlant", "docsPlants"],
+    widening: ["interfaceName", "interfaceDeclarations", "interfaceExtends", "clientParameterTypes", "augmentations", "readPaths", "docsBinding", "docsReads", "pairs"],
+  },
   W2: { "today's": ["calls"], bounded: ["pollBounds", "unboundedPlant"] },
   W3: {
-    "read-only": ["clientChains", "unchainedClientUses", "sdkRuntimeImports", "closeReads", "excludedVerbs", "excludedVerbCalls", "controlPlant"],
+    "read-only": ["clientChains", "unchainedClientUses", "sdkRuntimeImports", "runtimeImportPlant", "closeReads", "excludedVerbs", "excludedVerbCalls", "controlPlant"],
     polling: ["ownership"],
   },
-  Z1: { "until then": ["triggerFired", "filingPin", "filedAtPin", "absentBeforePin", "pinFilesAtFloor", "pinMentions", "pinPlant"] },
-  Z2: { zero: ["piMentions"], Pi: ["scope", "filesAtFloor", "scriptsAtFloor", "binariesAtFloor", "liveness"], mentions: ["piPlants"] },
+  Z1: { "until then": ["triggerFired", "filingPin", "filedAtPin", "absentBeforePin", "pinFilesAtFloor", "pinBytesAtFloor", "pinLiveness", "pinMentions", "pinPlant"] },
+  Z2: { zero: ["piMentions"], Pi: ["scope", "filesAtFloor", "scriptsAtFloor", "binariesAtFloor", "bytesAtFloor", "liveness"], mentions: ["piPlants"] },
   Z3: { "of the record": ["recordWords", "spellingForms", "piIdentifiersQuiet", "siblingQuiet"] },
 };
 /** Each residual family and its quiet row. */
@@ -199,6 +237,30 @@ const RESIDUALS: Readonly<Record<string, string>> = {
   "R-OTHER-MODULE": "Q8",
   "R-COMPUTED-ACCESS": "Q9",
 };
+/**
+ * The functions that read the subject - the vendored release, the listed Pi files, the filing pin, the tracker export,
+ * docs/09, the observer, or the judge itself: every case must name one (direct names only), so a case returning a
+ * constant witness reds (wb-6c6i F2, the kjg9.1 judged-set precedent).
+ */
+const READERS: readonly string[] = [
+  "sdkRelease",
+  "sdkVerdict",
+  "tarball",
+  "vendoredPath",
+  "piListing",
+  "piVerdict",
+  "pinVerdict",
+  "augmentations",
+  "observer",
+  "observerText",
+  "textOf",
+  "exportRow",
+  "ownerFiling",
+  "docs09Furnace",
+  "verdictOf",
+  "mentions",
+  "git",
+];
 
 interface RosterPin {
   readonly id: string;
@@ -326,8 +388,12 @@ interface Entry {
 interface ScopeVerdict {
   readonly files: number;
   readonly scripts: number;
+  /** The UTF-8 bytes of the text the judge read, over every entry it read (a binary is not read). */
+  readonly textBytes: number;
   readonly binaries: readonly string[];
   readonly findings: { readonly [path: string]: readonly Form[] };
+  /** The text the judge read for each anchor path it was asked to keep (the content-liveness anchors, wb-6c6i F3). */
+  readonly anchored: { readonly [path: string]: string };
 }
 function entry(path: string, text: string): Entry {
   return { path, bytes: Buffer.from(text, "utf8") };
@@ -351,6 +417,8 @@ function scriptUnits(path: string, text: string): { readonly form: Form; readonl
     }
     return undefined;
   };
+  // An identifier spelled with an escape (F, \u{46}) is read by its cooked name (wb-6c6i F4); every escape spells "\u".
+  const escapes = text.includes("\\u");
   const visit = (node: ts.Node): void => {
     if (ts.isStringLiteralLike(node)) units.push({ form: "cooked", text: node.text });
     else if (ts.isTemplateExpression(node)) {
@@ -359,7 +427,7 @@ function scriptUnits(path: string, text: string): { readonly form: Form; readonl
     } else if (isPlus(node) && !isPlus(node.parent)) {
       const value = folded(node);
       if (value !== undefined) units.push({ form: "folded", text: value });
-    }
+    } else if (escapes && (ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) && node.getText(source) !== node.text) units.push({ form: "cooked", text: node.text });
     ts.forEachChild(node, visit);
   };
   visit(source);
@@ -395,24 +463,37 @@ function decodedMarkup(text: string): string {
     return NAMED_ENTITIES[(name ?? "").toLowerCase()] ?? whole;
   });
 }
-/** One file's verdict: binary (a NUL byte, not read) or the sorted forms in which a mention was read. */
-function verdictOf(path: string, bytes: Buffer): { readonly binary: boolean; readonly forms: readonly Form[] } {
+/**
+ * A YAML or TOML file's text with its backslash escapes decoded (\UXXXXXXXX, \uXXXX, \xXX; wb-6c6i F4), wherever they sit:
+ * an over-read in single-quoted and literal strings, where a backslash is literal.
+ */
+function decodedEscapes(text: string): string {
+  return text.replace(/\\(?:U([0-9a-fA-F]{8})|u([0-9a-fA-F]{4})|x([0-9a-fA-F]{2}))/g, (whole, long: string | undefined, short: string | undefined, byte: string | undefined) => {
+    const code = Number.parseInt(long ?? short ?? byte ?? "", 16);
+    return code <= 0x10ffff ? String.fromCodePoint(code) : whole;
+  });
+}
+/** One file's verdict: binary (a NUL byte, not read) or the sorted forms in which a mention was read, with the text it read. */
+function verdictOf(path: string, bytes: Buffer): { readonly binary: boolean; readonly forms: readonly Form[]; readonly text: string } {
   const forms = new Set<Form>();
   if (mentions(path)) forms.add("path");
-  if (bytes.includes(0)) return { binary: true, forms: [...forms].sort() };
+  if (bytes.includes(0)) return { binary: true, forms: [...forms].sort(), text: "" };
   const text = bytes.toString("utf8");
   if (mentions(text)) forms.add("raw");
   if (SCRIPT.test(path)) for (const unit of scriptUnits(path, text)) if (mentions(unit.text)) forms.add(unit.form);
   if (JSON_FILE.test(path) && jsonUnits(text).some(mentions)) forms.add("cooked");
   if (MARKUP.test(path) && mentions(decodedMarkup(text))) forms.add("decoded");
-  return { binary: false, forms: [...forms].sort() };
+  if (ESCAPED.test(path) && mentions(decodedEscapes(text))) forms.add("decoded");
+  return { binary: false, forms: [...forms].sort(), text };
 }
-/** Judges an entry list in one call: the real entries first, then any planted ones. */
-function judgeScope(entries: Iterable<Entry>): ScopeVerdict {
+/** Judges an entry list in one call: the real entries first, then any planted ones; the text read for each anchor path is kept. */
+function judgeScope(entries: Iterable<Entry>, anchors: readonly string[] = []): ScopeVerdict {
   let files = 0;
   let scripts = 0;
+  let textBytes = 0;
   const binaries: string[] = [];
   const findings: { [path: string]: Form[] } = {};
+  const anchored: { [path: string]: string } = {};
   for (const { path, bytes } of entries) {
     files += 1;
     const verdict = verdictOf(path, bytes);
@@ -421,9 +502,11 @@ function judgeScope(entries: Iterable<Entry>): ScopeVerdict {
       binaries.push(path);
       continue;
     }
+    textBytes += Buffer.byteLength(verdict.text, "utf8");
+    if (anchors.includes(path)) anchored[path] = verdict.text;
     if (SCRIPT.test(path)) scripts += 1;
   }
-  return { files, scripts, binaries, findings };
+  return { files, scripts, textBytes, binaries, findings, anchored };
 }
 function findingsFor(verdict: ScopeVerdict, paths: readonly string[], within: boolean): { [path: string]: Form[] } {
   return Object.fromEntries(Object.entries(verdict.findings).filter(([path]) => paths.includes(path) === within).map(([path, forms]) => [path, [...forms]]));
@@ -495,12 +578,13 @@ const PI_PLANTS: Readonly<Record<string, string>> = {
   "test/fixtures/zz-boundary-escaped.json": '{ "record": "Furnace\\u004fbserver\\u0042oundaryV0" }\n',
   "docs/workbench/zz-boundary-entity.md": "The Furnace &#79;bserver&#32;Boundary record.\n",
   "docs/workbench/zz-observer-boundary.md": "# Plant\n\nThis page's text names nothing.\n",
+  "config/zz-boundary.yml": 'record: "Furnace\\u004fbserverBoundaryV0"\n',
+  "config/zz-boundary.toml": 'record = "Furnace\\U0000004fbserverBoundaryV0"\n',
+  "src/workbench/zz-boundary-identifier.ts": "export const Furnace\\u004fbserverBoundaryV0 = 0;\n",
 };
-const piVerdict = lazy((): ScopeVerdict => {
-  const { paths } = piListing();
-  const real = paths.map(path => ({ path, bytes: readFileSync(join(REPO, path)) }));
-  return judgeScope([...real, ...Object.entries(PI_PLANTS).map(([path, text]) => entry(path, text))]);
-});
+/** The listed Pi files' bytes, read once: the entries the judge consumes (Z2) and the augmentation reader scans (W1). */
+const piEntries = lazy((): Entry[] => piListing().paths.map(path => ({ path, bytes: readFileSync(join(REPO, path)) })));
+const piVerdict = lazy((): ScopeVerdict => judgeScope([...piEntries(), ...Object.entries(PI_PLANTS).map(([path, text]) => entry(path, text))], ANCHORS));
 
 /** The blobs of a commit's paths, read through one git cat-file --batch call. */
 function blobsAt(commit: string, paths: readonly string[]): Entry[] {
@@ -519,9 +603,10 @@ function blobsAt(commit: string, paths: readonly string[]): Entry[] {
   return entries;
 }
 const PIN_PLANT = "docs/workbench/zz-pin-plant.md";
+const PIN_PLANT_TEXT = "Pi reads the furnace-observer-boundary record.\n";
 const pinVerdict = lazy((): ScopeVerdict => {
   const paths = git(["ls-tree", "-r", "-z", "--name-only", FILING_PIN]).toString("utf8").split("\0").filter(path => path !== "" && !path.startsWith(TRACKER));
-  return judgeScope([...blobsAt(FILING_PIN, paths), entry(PIN_PLANT, "Pi reads the furnace-observer-boundary record.\n")]);
+  return judgeScope([...blobsAt(FILING_PIN, paths), entry(PIN_PLANT, PIN_PLANT_TEXT)], ANCHORS);
 });
 
 function parse(path: string, text: string): ts.SourceFile {
@@ -540,11 +625,11 @@ function memberName(name: ts.PropertyName | undefined): string {
   return name !== undefined && (ts.isIdentifier(name) || ts.isStringLiteral(name)) ? name.text : "<computed>";
 }
 /** Every declaration of a named interface in a module (declaration merging adds members). */
-function interfaceDeclarations(source: ts.SourceFile, name: string): ts.InterfaceDeclaration[] {
+function interfaceDeclarations(source: ts.Node, name: string): ts.InterfaceDeclaration[] {
   return nodes(source).filter((node): node is ts.InterfaceDeclaration => ts.isInterfaceDeclaration(node) && node.name.text === name);
 }
 /** The read paths a client interface declares over all its declarations, each member chain down to a leaf (runs.get.status). */
-function declaredReads(source: ts.SourceFile, name: string): string[] | null {
+function declaredReads(source: ts.Node, name: string): string[] | null {
   const declarations = interfaceDeclarations(source, name);
   if (declarations.length === 0) return null;
   const paths: string[] = [];
@@ -653,10 +738,28 @@ function loopBounds(source: ts.SourceFile, method: string): string[] {
       .map(node => `limits.${node.name.text}`),
   );
 }
-/** Names imported from a module at runtime (a value import, a side-effect import, a dynamic import or a require). */
+/** The module a re-export reads from, or undefined. */
+function reexportModule(node: ts.Node): string | undefined {
+  return ts.isExportDeclaration(node) && node.moduleSpecifier !== undefined && ts.isStringLiteral(node.moduleSpecifier) ? node.moduleSpecifier.text : undefined;
+}
+/**
+ * Names loaded from a module at runtime: a value import, a side-effect import, a value re-export (export-from: each value
+ * name, "export *" or "export * as <name>"), an import-equals require ("<name> = require"; wb-6c6i F5), a dynamic import
+ * or a require call.
+ */
 function runtimeImports(source: ts.SourceFile, module: string): string[] {
   const names: string[] = [];
   for (const node of nodes(source)) {
+    if (ts.isExportDeclaration(node) && reexportModule(node) === module && !node.isTypeOnly) {
+      const clause = node.exportClause;
+      if (clause === undefined) names.push("export *");
+      else if (ts.isNamespaceExport(clause)) names.push(`export * as ${clause.name.text}`);
+      else for (const element of clause.elements) if (!element.isTypeOnly) names.push(`export ${element.name.text}`);
+    }
+    if (ts.isImportEqualsDeclaration(node) && !node.isTypeOnly && ts.isExternalModuleReference(node.moduleReference)) {
+      const target = node.moduleReference.expression;
+      if (ts.isStringLiteralLike(target) && target.text === module) names.push(`${node.name.text} = require`);
+    }
     if (ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier) && node.moduleSpecifier.text === module) {
       const clause = node.importClause;
       if (clause === undefined) names.push("<side-effect>");
@@ -675,10 +778,14 @@ function runtimeImports(source: ts.SourceFile, module: string): string[] {
   }
   return names.sort();
 }
-/** Names a module imports from a module (types included), in source order. */
+/** Names a module imports or re-exports from a module (types included), in source order (wb-6c6i F5: export-from read). */
 function importedNames(source: ts.SourceFile, module: string): string[] {
   const names: string[] = [];
   for (const node of nodes(source)) {
+    if (ts.isExportDeclaration(node) && reexportModule(node) === module && node.exportClause !== undefined && ts.isNamedExports(node.exportClause)) {
+      for (const element of node.exportClause.elements) names.push((element.propertyName ?? element.name).text);
+      continue;
+    }
     if (!ts.isImportDeclaration(node) || !ts.isStringLiteral(node.moduleSpecifier) || node.moduleSpecifier.text !== module) continue;
     const bindings = node.importClause?.namedBindings;
     if (bindings !== undefined && ts.isNamedImports(bindings)) for (const element of bindings.elements) names.push((element.propertyName ?? element.name).text);
@@ -719,20 +826,112 @@ function planted(text: string, from: string, to: string): string {
   expect(text.includes(from), `the observer still holds the plant's anchor span ${JSON.stringify(from)}`).toBe(true);
   return text.replace(from, to);
 }
-/** docs/09's Experimental projection section, from its heading to the next level-2 heading. */
-function docs09Section(): string {
-  const text = textOf(DOCS09);
-  const start = text.indexOf(`\n${DOCS09_SECTION}\n`);
-  if (start < 0) return "";
-  const next = text.indexOf("\n## ", start + 1);
-  return text.slice(start + 1, next < 0 ? text.length : next);
+/** What the census reads of docs/09's Furnace sentences: the section binding, every clause found, and the reads and verbs. */
+interface Docs09Reading {
+  readonly binds: boolean;
+  readonly why: string;
+  readonly html: boolean;
+  readonly readsClauses: readonly string[];
+  readonly verbsClauses: readonly string[];
+  readonly reads: readonly string[];
+  readonly verbs: readonly string[];
 }
-/** The reads and the excluded verbs docs/09's Furnace sentence states. */
-function docs09Furnace(): { readonly reads: string[]; readonly verbs: string[] } {
-  const section = docs09Section();
-  const reads = /The external Furnace reader uses explicit bounded (\S+) polling\./.exec(section)?.[1]?.split("/") ?? [];
-  const verbs = /Pi attachment is read-only and does not (.+?) a Run\./.exec(section)?.[1]?.split(/, | or /) ?? [];
-  return { reads, verbs };
+const READS_SENTENCE = /The external Furnace reader uses explicit bounded (\S+) polling\./g;
+const VERBS_SENTENCE = /Pi attachment is read-only and does not (.+?) a Run\./g;
+/**
+ * docs/09's Furnace sentences as a reader of the page reads them (wb-6c6i F1): the section is the landed docsSection
+ * binding's (test/helpers/census.ts: the heading exactly once in the rendered view, under the page title, bounded at the
+ * next level-1 or level-2 heading or EOF, no comment or fence spanning a heading line), each sentence is read from the
+ * section's rendered paragraph blocks only (a fence, a list or an HTML block holds none), and the reads and verbs are
+ * stated only when the section binds, carries no HTML (a comment can hide what its source says) and each sentence renders
+ * exactly once; otherwise they read as none, which reds every reader of them.
+ */
+function docs09Reading(text: string): Docs09Reading {
+  const section = docsSection(text, DOCS09_SECTION.slice("## ".length), 2, [DOCS09_TITLE]);
+  const paragraphs = section.blocks.flatMap(block => (block.kind === "paragraph" ? [block.text] : []));
+  const readsClauses = paragraphs.flatMap(paragraph => [...paragraph.matchAll(READS_SENTENCE)].map(match => match[1] ?? ""));
+  const verbsClauses = paragraphs.flatMap(paragraph => [...paragraph.matchAll(VERBS_SENTENCE)].map(match => match[1] ?? ""));
+  const stated = section.ok && !section.hasHtml && readsClauses.length === 1 && verbsClauses.length === 1;
+  return {
+    binds: section.ok,
+    why: section.why,
+    html: section.hasHtml,
+    readsClauses,
+    verbsClauses,
+    reads: stated ? (readsClauses[0] ?? "").split("/") : [],
+    verbs: stated ? (verbsClauses[0] ?? "").split(/, | or /) : [],
+  };
+}
+/** docs/09's reading on the real page. */
+function docs09Furnace(): Docs09Reading {
+  return docs09Reading(textOf(DOCS09));
+}
+const FURNACE_READS = "The external Furnace reader uses explicit bounded status/attempt/log-reference polling.";
+const FURNACE_VERBS = "Pi attachment is read-only and does not create, resume or stop a Run.";
+/** docs/09 plants (the wb-dqf.1 gate's G17-G21b shapes; wb-6c6i F1): each a copy of the real page, read by the same docs reading. */
+function docs09Plants(text: string): { [plant: string]: Docs09Reading } {
+  const from = text.indexOf(FURNACE_READS);
+  const to = from < 0 ? -1 : text.indexOf(FURNACE_VERBS, from);
+  expect(from >= 0 && to > from, "docs/09 still holds the Furnace paragraph the plants rewrite").toBe(true);
+  const paragraph = text.slice(from, to + FURNACE_VERBS.length);
+  const widened = (prose: string): string => prose.replace("status/attempt/log-reference polling", "status/attempt/log-reference/event-stream polling");
+  const narrowed = (prose: string): string => prose.replace("create, resume or stop", "create or resume");
+  const pages: Readonly<Record<string, string>> = {
+    hiddenCopy: text.replace(paragraph, `<!-- ${paragraph} -->\n\n${narrowed(widened(paragraph))}`),
+    decoyHeading: widened(text).replace("\n## Acceptance/negative controls\n", `\n${DOCS09_SECTION}\n\n${paragraph}\n\n## Acceptance/negative controls\n`),
+    appendix: `${text.replace(paragraph, "")}\n# Appendix\n\n${paragraph}\n`,
+    fenced: text.replace(paragraph, `${"```"}\n${paragraph}\n${"```"}`),
+    widened: widened(text),
+    narrowed: narrowed(text),
+  };
+  return Object.fromEntries(Object.entries(pages).map(([plant, page]) => [plant, docs09Reading(page)]));
+}
+/**
+ * The owner's filing (wb-6c6i F7): the export notes' first two blank-line-separated blocks - the "Owner filing (" header
+ * and its body, which opens with the gating artifact - read before any appended note, so a later note that quotes a filing
+ * sentence verbatim never stands in for a replaced original; notes of any other shape read as no filing.
+ */
+function ownerFiling(notes: string): string {
+  const [header = "", body = ""] = notes.split("\n\n");
+  return header.startsWith("Owner filing (") && body.startsWith("Gating artifact: ") ? `${header}\n\n${body}` : "";
+}
+/** A module augmentation of the observer module, planted as a file of its own (W1, wb-6c6i F6). */
+const AUGMENTATION_PLANT = entry(
+  "src/workbench/zz-observer-augmentation.ts",
+  'declare module "./furnace-observer.js" {\n  interface FurnaceObserverClient {\n    runs: { get(runId: string): { events(call?: { timeoutMs?: number }): AsyncIterable<unknown> } };\n  }\n}\nexport {};\n',
+);
+const OBSERVER_MODULE = OBSERVER.replace(SCRIPT, "");
+/** Whether a module specifier in a file names the observer module: a relative one resolved from the file, a bare one by its last segment (an over-read). */
+function namesObserver(from: string, specifier: string): boolean {
+  if (specifier.startsWith(".")) return posix.join(posix.dirname(from), specifier).replace(SCRIPT, "") === OBSERVER_MODULE;
+  return posix.basename(specifier).replace(SCRIPT, "") === posix.basename(OBSERVER_MODULE);
+}
+/** The read paths a file's module augmentations of the observer module add to FurnaceObserverClient (wb-6c6i F6). */
+function augmentedReads(path: string, text: string): string[] {
+  if (!text.includes("module")) return [];
+  return nodes(parse(path, text))
+    .filter((node): node is ts.ModuleDeclaration => ts.isModuleDeclaration(node) && ts.isStringLiteral(node.name) && namesObserver(path, node.name.text))
+    .flatMap(node => (node.body === undefined ? [] : (declaredReads(node.body, "FurnaceObserverClient") ?? [])))
+    .sort();
+}
+/** Every listed Pi script that augments the observer module, with the read paths it adds. */
+const augmentations = lazy((): { readonly path: string; readonly reads: readonly string[] }[] =>
+  piEntries()
+    .filter(item => SCRIPT.test(item.path) && item.path !== OBSERVER)
+    .map(item => ({ path: item.path, reads: augmentedReads(item.path, item.bytes.toString("utf8")) }))
+    .filter(found => found.reads.length > 0),
+);
+/**
+ * The content-liveness anchors (wb-6c6i F3), each read from the text the judge itself read for its anchor path (never
+ * through textOf), so a judge fed truncated or empty content reds: the identity schema literal, docs/09's rendered
+ * Furnace reads and the observer's client declaration.
+ */
+function liveness(anchored: { readonly [path: string]: string }): { readonly identitySchemaLiteral: boolean; readonly docs09Polling: boolean; readonly observerClient: boolean } {
+  return {
+    identitySchemaLiteral: (anchored[IDENTITY] ?? "").includes(`"${SCHEMA_LITERAL}"`),
+    docs09Polling: docs09Reading(anchored[DOCS09] ?? "").reads.join("/") === "status/attempt/log-reference",
+    observerClient: (anchored[OBSERVER] ?? "").includes("export interface FurnaceObserverClient"),
+  };
 }
 /** Pairs each docs read with the declared path naming it (status, attempt(s), log(s)); a read with no or two paths is unpaired. */
 function pairReads(reads: readonly string[], paths: readonly string[]): string[][] {
@@ -767,12 +966,14 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     const observerTypes = importedNames(observer(), SDK);
     expect(observerTypes.length, "the observer imports its types from the SDK").toBeGreaterThanOrEqual(1);
     expect(observerTypes.filter(name => !declared(name)), "every type the observer imports is declared by the vendored release").toEqual([]);
+    const typesPlant = importedNames(parse(OBSERVER, `${observerText()}\nexport type { NotInTheRelease } from "${SDK}";\n`), SDK).filter(name => !declared(name));
     return json({
       fired: Object.keys(real).length > 0,
       sdkMentions: real,
       package: isObject(pkg) && typeof pkg.name === "string" ? pkg.name : null,
       version: isObject(pkg) && typeof pkg.version === "string" ? pkg.version : null,
       observerTypesDeclared: observerTypes.every(declared),
+      typesPlant,
       entriesAtFloor: release.entries.length >= FLOORS.sdkEntries,
       skippedEntries: release.skipped,
       binaryEntries: verdict.binaries.filter(path => !plantPaths.includes(path)),
@@ -794,8 +995,8 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     const manifest = sdkRelease().entries.find(item => item.path === "package/package.json");
     const shipped: unknown = JSON.parse(manifest?.bytes.toString("utf8") ?? "{}");
     const integrity = `sha512-${createHash("sha512").update(bytes).digest("base64")}`;
-    const notes = exportRow(BEAD).notes;
-    expect(notes.includes(`Gating artifact: ${RECORD}, ${RECORDED_STATUS}`), "the owner's recorded status of the record").toBe(true);
+    const filing = ownerFiling(exportRow(BEAD).notes);
+    expect(filing.includes(`Gating artifact: ${RECORD}, ${RECORDED_STATUS}`), "the owner's recorded status of the record").toBe(true);
     expect(vendoredPath(), "package.json resolves the SDK to the release this census reads").toBe(TARBALL);
     return json({
       recordedStatus: RECORDED_STATUS,
@@ -809,8 +1010,11 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     });
   },
   W1: () => {
-    const readPaths = declaredReads(observer(), "FurnaceObserverClient");
-    const { reads } = docs09Furnace();
+    const augmented = augmentations();
+    const own = declaredReads(observer(), "FurnaceObserverClient");
+    const readPaths = own === null ? null : [...own, ...augmented.flatMap(found => found.reads)].sort();
+    const docs = docs09Furnace();
+    const { reads } = docs;
     const pairs = pairReads(reads, readPaths ?? []);
     expect(pairs.filter(pair => (pair[1] ?? "").startsWith("<")), "every docs/09 read names exactly one declared path").toEqual([]);
     expect(sorted(pairs.map(pair => pair[1] ?? "")), "every declared path is a docs/09 read, one to one").toEqual(readPaths);
@@ -820,15 +1024,20 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     );
     const widenedPlant = (declaredReads(widened, "FurnaceObserverClient") ?? []).filter(path => !(readPaths ?? []).includes(path));
     expect(widenedPlant, "a widened interface reads as widened").toEqual(["runs.get.events"]);
+    const augmentationPlant = augmentedReads(AUGMENTATION_PLANT.path, AUGMENTATION_PLANT.bytes.toString("utf8"));
     return json({
       interfaceName: "FurnaceObserverClient",
       interfaceDeclarations: interfaceDeclarations(observer(), "FurnaceObserverClient").length,
       interfaceExtends: interfaceHeritage(observer(), "FurnaceObserverClient"),
       clientParameterTypes: clientParameterTypes(observer()),
+      augmentations: augmented,
       readPaths,
+      docsBinding: { binds: docs.binds, why: docs.why, html: docs.html, readsClauses: docs.readsClauses, verbsClauses: docs.verbsClauses },
       docsReads: reads,
       pairs,
       widenedPlant,
+      augmentationPlant,
+      docsPlants: docs09Plants(textOf(DOCS09)),
     });
   },
   W2: () => {
@@ -853,10 +1062,12 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     );
     const controlUses = clientUses(control);
     expect(uses.unchained, "every client use is a read call").toBe(0);
+    const runtimeImportPlant = runtimeImports(parse(OBSERVER, `${observerText()}\nexport { FurnaceClient } from "${SDK}";\nimport furnaceRuntime = require("${SDK}");\n`), SDK);
     return json({
       clientChains: sorted(uses.reads.map(read => read.path)),
       unchainedClientUses: uses.unchained,
       sdkRuntimeImports: runtimeImports(source, SDK),
+      runtimeImportPlant,
       closeReads: uses.reads.filter(read => read.inClose).map(read => read.path),
       excludedVerbs: verbs,
       excludedVerbCalls: verbCalls(source, verbs),
@@ -884,6 +1095,8 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       filedAtPin: holds(atPin),
       absentBeforePin: !holds(before),
       pinFilesAtFloor: verdict.files - 1 >= FLOORS.pinFiles,
+      pinBytesAtFloor: verdict.textBytes - Buffer.byteLength(PIN_PLANT_TEXT, "utf8") >= FLOORS.pinBytes,
+      pinLiveness: liveness(verdict.anchored),
       pinMentions: findingsFor(verdict, [PIN_PLANT], false),
       pinPlant: findingsFor(verdict, [PIN_PLANT], true),
     });
@@ -898,18 +1111,15 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     ).toEqual([]);
     const real = findingsFor(verdict, plantPaths, false);
     expect(real, `zero Pi mentions of ${RECORD} until it ships`).toEqual({});
-    const read = (path: string): string => (paths.includes(path) ? textOf(path) : "");
+    const plantBytes = Object.values(PI_PLANTS).reduce((sum, text) => sum + Buffer.byteLength(text, "utf8"), 0);
     return json({
       piMentions: real,
       scope: "listed files minus the tracker export and the holders",
       filesAtFloor: paths.length >= FLOORS.piFiles,
       scriptsAtFloor: verdict.scripts - plantPaths.filter(path => SCRIPT.test(path)).length >= FLOORS.piScripts,
       binariesAtFloor: verdict.binaries.length >= FLOORS.piBinaries,
-      liveness: {
-        identitySchemaLiteral: read(IDENTITY).includes(`"${SCHEMA_LITERAL}"`),
-        docs09Polling: read(DOCS09).includes("explicit bounded status/attempt/log-reference polling"),
-        observerClient: read(OBSERVER).includes("export interface FurnaceObserverClient"),
-      },
+      bytesAtFloor: verdict.textBytes - plantBytes >= FLOORS.piBytes,
+      liveness: liveness(verdict.anchored),
       piPlants: findingsFor(verdict, plantPaths, true),
     });
   },
@@ -971,8 +1181,10 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       confusable: `${String.fromCodePoint(0x043e)}bserver boundary`,
       entityOutsideMarkup: "// &#79;bserver Boundary",
       markup: "Obs*erver* Boundary",
+      escapeOutsideDecodedKinds: 'echo "\\u004fbserver Boundary"',
     };
-    return json({ residual: "R-INTERIOR", quiet: Object.fromEntries(Object.entries(interior).map(([kind, text]) => [kind, verdictOf(kind === "entityOutsideMarkup" ? "src/zz.ts" : "docs/zz.md", Buffer.from(text, "utf8")).forms.length === 0])) });
+    const at: Readonly<Record<string, string>> = { entityOutsideMarkup: "src/zz.ts", escapeOutsideDecodedKinds: "scripts/zz.sh" };
+    return json({ residual: "R-INTERIOR", quiet: Object.fromEntries(Object.entries(interior).map(([kind, text]) => [kind, verdictOf(at[kind] ?? "docs/zz.md", Buffer.from(text, "utf8")).forms.length === 0])) });
   },
   Q7: () => {
     const computed = {
@@ -1026,6 +1238,7 @@ describe("wb-dqf.1 Furnace observer-boundary census (FURNACE-CAC-EXECUTION-ASSUR
         schemaLiteral: SCHEMA_LITERAL,
         docs09: DOCS09,
         docs09Section: DOCS09_SECTION,
+        docs09Title: DOCS09_TITLE,
         sdk: SDK,
         tarball: TARBALL,
         lockKey: LOCK_KEY,
@@ -1034,12 +1247,20 @@ describe("wb-dqf.1 Furnace observer-boundary census (FURNACE-CAC-EXECUTION-ASSUR
         sdkPlants: Object.fromEntries(Object.entries(SDK_PLANTS).map(([form, plant]) => [form, { path: plant.path, text: plant.bytes.toString("utf8") }])),
         piPlants: PI_PLANTS,
         pinPlant: PIN_PLANT,
+        augmentationPlant: { path: AUGMENTATION_PLANT.path, text: AUGMENTATION_PLANT.bytes.toString("utf8") },
+        anchors: [...ANCHORS],
+        readers: [...READERS],
         residuals: RESIDUALS,
       }),
     ).toStrictEqual(ROSTER.constants);
     for (const [pin, impl] of Object.entries(IMPL)) {
       expect(/\bROSTER\b|rosterWitness|readRoster/.test(impl.toString()), `${pin}'s case reads no roster (SELF-READ)`).toBe(false);
     }
+    const pins = ROWS.flatMap(row => row.pins);
+    expect(
+      pins.map(pin => [pin, READERS.some(reader => new RegExp(`\\b${reader}\\(`).test(String(IMPL[pin])))]),
+      "every case names a reader of the subject, so a constant witness reds (wb-6c6i F2)",
+    ).toStrictEqual(pins.map(pin => [pin, true]));
   });
 
   it("the outside anchors: the bead's export row binds the rows, the quotes, the record, the armed clause, the status and the acceptance; docs/09 binds the reads and the verbs; the filing pin and the sibling row bind their readings", { timeout: 60_000 }, () => {
@@ -1055,12 +1276,17 @@ describe("wb-dqf.1 Furnace observer-boundary census (FURNACE-CAC-EXECUTION-ASSUR
     for (const [pin, claims] of Object.entries(CLAIMS)) expect(tiles(QUOTES[pin] ?? "", Object.keys(claims)), `${pin}'s claim terms tile its quote`).toBe(true);
     const record = /When Furnace ships (\S+) \(proposed, not shipped\)/.exec(statement)?.[1];
     expect(record, "the record is the title's token").toBe(RECORD);
-    expect(notes.includes(`Gating artifact: ${RECORD}, ${RECORDED_STATUS} (`), "the notes name the same record and its recorded status").toBe(true);
+    const filing = ownerFiling(notes);
+    expect(filing.includes(`Gating artifact: ${RECORD}, ${RECORDED_STATUS} (`), "the owner filing names the same record and its recorded status").toBe(true);
     expect(MENTION.source, "MENTION is built from the record's own middle words").toBe(mentionSource(recordWords(RECORD)));
     expect(MENTION.flags, "read in any case, by code point").toBe("giu");
-    expect(notes.includes(ACCEPTANCE), "ACCEPTANCE is the notes' acceptance on landing, verbatim").toBe(true);
-    expect(notes.includes("Gate: the record appears in a released Furnace surface Pi vendors (@furnace/sdk"), "the gate is a released surface Pi vendors").toBe(true);
-    const cited = /Today the external Furnace reader is explicit bounded (\S+) polling \(docs\/09 § ([^;]+);/.exec(notes);
+    expect(filing.includes(ACCEPTANCE), "ACCEPTANCE is the owner filing's acceptance on landing, verbatim").toBe(true);
+    expect(filing.includes("Gate: the record appears in a released Furnace surface Pi vendors (@furnace/sdk"), "the gate is a released surface Pi vendors").toBe(true);
+    const weakened = ACCEPTANCE.replace("asserts only the exposed fields/counters are projected", "asserts the exposed fields/counters are projected");
+    expect(weakened, "the weakening control changes the acceptance").not.toBe(ACCEPTANCE);
+    expect(ownerFiling(`${notes.replace(ACCEPTANCE, weakened)}\n\nA later note quoting it: ${ACCEPTANCE}`).includes(ACCEPTANCE), "a replaced owner sentence is not masked by a later verbatim quote (G22b)").toBe(false);
+    expect(ownerFiling(`${notes}\n\nLANDED (a later note quoting it: ${ACCEPTANCE})`), "an appended note leaves the owner filing as it was (G22a)").toBe(filing);
+    const cited = /Today the external Furnace reader is explicit bounded (\S+) polling \(docs\/09 § ([^;]+);/.exec(filing);
     expect(DOCS09_SECTION.startsWith(`## ${cited?.[2] ?? "-"}`), "the notes cite docs/09's section").toBe(true);
     const furnace = docs09Furnace();
     expect(furnace.reads, "docs/09 states the notes' reads").toEqual(cited?.[1]?.split("/"));

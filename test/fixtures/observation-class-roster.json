@@ -393,6 +393,20 @@
               "observation-builds-authority src/workbench/claude-control.ts exec:bd",
               "tracker-exec src/workbench/claude-control.ts"
             ],
+            "filedMembers": {
+              "path": [
+                "observation-builds-authority src/workbench/claude-control.ts exec:bd",
+                "tracker-exec src/workbench/claude-control.ts"
+              ],
+              "env": [
+                "observation-builds-authority src/workbench/claude-control.ts exec:bd",
+                "tracker-exec src/workbench/claude-control.ts"
+              ],
+              "alias": [
+                "observation-builds-authority src/workbench/claude-control.ts exec:bd",
+                "tracker-exec src/workbench/claude-control.ts"
+              ]
+            },
             "read": [
               "literal",
               "property",
@@ -449,7 +463,73 @@
               "expansion",
               "word-part",
               "other-api"
-            ]
+            ],
+            "overReads": [
+              {
+                "id": "Q02",
+                "kinds": [
+                  "exec:git"
+                ],
+                "authority": true,
+                "lines": []
+              },
+              {
+                "id": "Q03",
+                "kinds": [
+                  "exec:bd",
+                  "exec:git"
+                ],
+                "authority": true,
+                "lines": [
+                  "tracker-exec src/workbench/zz-spby-Q03.ts"
+                ]
+              },
+              {
+                "id": "Q12",
+                "kinds": [
+                  "exec:bd"
+                ],
+                "authority": true,
+                "lines": [
+                  "tracker-exec src/workbench/zz-spby-Q12.ts"
+                ]
+              }
+            ],
+            "anchor": {
+              "note": "wb-4tdn",
+              "filing": "wb-spby",
+              "stated": {
+                "note": {
+                  "spellings": 53,
+                  "read": 26,
+                  "breaks": 12,
+                  "unread": 27
+                },
+                "filing": {
+                  "spellings": 53,
+                  "read": 26,
+                  "unread": 27
+                }
+              },
+              "plants": [
+                "Q02",
+                "Q03",
+                "Q12"
+              ],
+              "members": [
+                "path",
+                "env",
+                "alias"
+              ],
+              "findings": [],
+              "unseenRemovals": [],
+              "unseenFlips": [],
+              "unseenOverReadRemovals": [],
+              "unseenMemberRemovals": [],
+              "laterSpelling": [
+                "later: no outside record names it"
+              ]
+            }
           }
         },
         {

@@ -246,10 +246,13 @@
    "Object.entries",
    "Object.assign",
    "Object.getOwnPropertyDescriptors",
-   "Reflect.get",
    "Reflect.ownKeys",
    "JSON.stringify",
    "structuredClone"
+  ],
+  "keyedReads": [
+   "Reflect.get",
+   "Object.getOwnPropertyDescriptor"
   ],
   "readProbes": [
    "computed-key",
@@ -267,13 +270,40 @@
    "local-helper",
    "spread",
    "for-in",
-   "reflective"
+   "reflective",
+   "element-result",
+   "assigned-name",
+   "or-arm",
+   "conditional-arm",
+   "non-null",
+   "awaited",
+   "satisfied",
+   "type-assertion",
+   "binding-computed",
+   "parameter-pattern",
+   "nested-assigned",
+   "reflect-get",
+   "logical-assigned",
+   "parameter-default",
+   "binding-default",
+   "and-arm",
+   "array-binding",
+   "array-after-spread",
+   "for-of",
+   "for-of-name",
+   "descriptor",
+   "comma",
+   "comma-key",
+   "comma-const-key"
   ],
   "quietProbes": [
    "other-member",
    "bare-spread",
    "bare-other-member",
-   "string-result"
+   "string-result",
+   "reflect-other-member",
+   "descriptor-other-member",
+   "array-other-element"
   ],
   "surfacePins": {
    "Pi type": "C2",
@@ -892,12 +922,31 @@
       ],
       "members": [],
       "typeNames": [],
-      "srcFloorMet": true
+      "srcFloorMet": true,
+      "everyReading": {
+       "readers": [
+        "src/workbench/probe-reader.ts"
+       ],
+       "words": {
+        "src/workbench/probe-reader.ts": [
+         "click"
+        ]
+       }
+      }
      }
     },
     {
      "id": "C3",
      "witness": {
+      "everyReading": {
+       "loads": [
+        "../workbench/providers/reactivefiber.js"
+       ],
+       "reads": [
+        "2 element blocks"
+       ],
+       "spells": true
+      },
       "rfModules": [
        "src/workbench/native-evidence.ts",
        "src/workbench/providers/reactivefiber.ts",
@@ -974,13 +1023,88 @@
         ],
         "reflective": [
          "1 reflective Object.values"
+        ],
+        "element-result": [
+         "1 member blocks"
+        ],
+        "assigned-name": [
+         "3 member blocks"
+        ],
+        "or-arm": [
+         "2 member blocks"
+        ],
+        "conditional-arm": [
+         "1 member blocks"
+        ],
+        "non-null": [
+         "1 member blocks"
+        ],
+        "awaited": [
+         "1 member blocks"
+        ],
+        "satisfied": [
+         "1 member blocks"
+        ],
+        "type-assertion": [
+         "1 member blocks"
+        ],
+        "binding-computed": [
+         "2 binding blocks"
+        ],
+        "parameter-pattern": [
+         "1 binding blocks"
+        ],
+        "nested-assigned": [
+         "2 assigned blocks"
+        ],
+        "reflect-get": [
+         "1 reflective Reflect.get blocks"
+        ],
+        "logical-assigned": [
+         "3 member blocks"
+        ],
+        "parameter-default": [
+         "1 member blocks"
+        ],
+        "binding-default": [
+         "2 member blocks"
+        ],
+        "and-arm": [
+         "3 member blocks"
+        ],
+        "array-binding": [
+         "2 member blocks"
+        ],
+        "array-after-spread": [
+         "2 member blocks"
+        ],
+        "for-of": [
+         "2 binding blocks"
+        ],
+        "for-of-name": [
+         "2 member blocks"
+        ],
+        "descriptor": [
+         "1 reflective Object.getOwnPropertyDescriptor blocks"
+        ],
+        "comma": [
+         "1 member blocks"
+        ],
+        "comma-key": [
+         "1 element computed"
+        ],
+        "comma-const-key": [
+         "2 element computed"
         ]
        },
        "quiet": {
         "other-member": [],
         "bare-spread": [],
         "bare-other-member": [],
-        "string-result": []
+        "string-result": [],
+        "reflect-other-member": [],
+        "descriptor-other-member": [],
+        "array-other-element": []
        }
       },
       "reactivefiberLoader": false,
@@ -1148,43 +1272,90 @@
       },
       "readings": {
        "nulPage": {
-        "lossy": false,
-        "encoding": "utf-8",
+        "encodings": [
+         "utf-8"
+        ],
         "hits": [
          "sdk:exact"
         ]
        },
        "notUtf8": {
-        "lossy": true,
-        "encoding": "utf-8",
+        "encodings": [
+         "utf-8 lossy"
+        ],
         "hits": [
          "sdk:exact"
         ]
        },
        "utf16le": {
-        "lossy": false,
-        "encoding": "utf-16le",
+        "encodings": [
+         "utf-8 lossy",
+         "utf-16le"
+        ],
         "hits": [
          "sdk:exact"
         ]
        },
        "utf16be": {
-        "lossy": false,
-        "encoding": "utf-16be",
+        "encodings": [
+         "utf-8 lossy",
+         "utf-16be"
+        ],
         "hits": [
          "sdk:exact"
         ]
        },
        "utf16leUnmarked": {
-        "lossy": false,
-        "encoding": "utf-16le",
+        "encodings": [
+         "utf-8",
+         "utf-16le"
+        ],
         "hits": [
          "sdk:exact"
         ]
        },
        "utf16beUnmarked": {
-        "lossy": false,
-        "encoding": "utf-16be",
+        "encodings": [
+         "utf-8",
+         "utf-16be"
+        ],
+        "hits": [
+         "sdk:exact"
+        ]
+       },
+       "paddedEven": {
+        "encodings": [
+         "utf-8",
+         "utf-16be"
+        ],
+        "hits": [
+         "sdk:exact"
+        ]
+       },
+       "paddedOdd": {
+        "encodings": [
+         "utf-8",
+         "utf-16le"
+        ],
+        "hits": [
+         "sdk:exact"
+        ]
+       },
+       "utf32le": {
+        "encodings": [
+         "utf-8 lossy",
+         "utf-16le",
+         "utf-32le"
+        ],
+        "hits": [
+         "sdk:exact"
+        ]
+       },
+       "utf32be": {
+        "encodings": [
+         "utf-8 lossy",
+         "utf-32be"
+        ],
         "hits": [
          "sdk:exact"
         ]
@@ -1192,6 +1363,88 @@
        "path": [
         "sdk:finding"
        ]
+      },
+      "bounds": {
+       "le": {
+        "floorAt": {
+         "encodings": [
+          "utf-8",
+          "utf-16le"
+         ],
+         "hits": [
+          "sdk:exact"
+         ]
+        },
+        "floorUnder": {
+         "encodings": [
+          "utf-8"
+         ],
+         "hits": []
+        },
+        "parityAt": {
+         "encodings": [
+          "utf-8",
+          "utf-16le"
+         ],
+         "hits": [
+          "sdk:exact"
+         ]
+        },
+        "parityUnder": {
+         "encodings": [
+          "utf-8"
+         ],
+         "hits": []
+        }
+       },
+       "be": {
+        "floorAt": {
+         "encodings": [
+          "utf-8",
+          "utf-16be"
+         ],
+         "hits": [
+          "sdk:exact"
+         ]
+        },
+        "floorUnder": {
+         "encodings": [
+          "utf-8"
+         ],
+         "hits": []
+        },
+        "parityAt": {
+         "encodings": [
+          "utf-8",
+          "utf-16be"
+         ],
+         "hits": [
+          "sdk:exact"
+         ]
+        },
+        "parityUnder": {
+         "encodings": [
+          "utf-8"
+         ],
+         "hits": []
+        }
+       }
+      },
+      "walked": {
+       "padded": {
+        "readings": 2,
+        "lossy": false,
+        "hits": [
+         "docs/workbench/probe.md:2 sdk exact"
+        ]
+       },
+       "wide": {
+        "readings": 2,
+        "lossy": false,
+        "hits": [
+         "docs/workbench/probe.md:2 sdk exact"
+        ]
+       }
       }
      }
     },
@@ -1371,7 +1624,10 @@
        "tagged": [
         "attribution"
        ]
-      }
+      },
+      "everyReading": [
+       "docs/workbench/probe.md:1 control-model: Pi renders each context block as a TUI control."
+      ]
      }
     }
    ]
@@ -1440,13 +1696,13 @@
   "B3:9",
   "B4:9",
   "C1:10",
-  "C2:6",
-  "C3:11",
+  "C2:7",
+  "C3:12",
   "C4:6",
   "C5:5",
-  "M1:7",
+  "M1:9",
   "M2:5",
-  "M3:6",
+  "M3:7",
   "R1:3"
  ]
 }
