@@ -852,7 +852,7 @@
     },
     {
       "id": "PC",
-      "label": "the live legs' instruments each report a planted violation: A3's state capture, A4's key-bearing projection and two-root judgment, and the A5 and C5 src scans over a planted file, over each live rf-scope file and over each rf-scope file read short through the tree alone or through the tree and the disk reader together",
+      "label": "the live legs' instruments each report a planted violation: A3's state capture, A4's key-bearing projection and two-root judgment, and the A5 and C5 src scans over a planted file, over each live rf-scope file and over each rf-scope file read short through the tree alone or through the tree and the disk reader together and over an rf-scope control file whose bytes are not UTF-8, the size anchor's wiring reads as this file's text states, and the size check's two named residuals stay pinned quiet",
       "pins": [
         {
           "id": "PC1",
@@ -1024,6 +1024,103 @@
             "missed": [],
             "untargeted": [],
             "anchorsReadShort": [
+              true,
+              true
+            ]
+          }
+        },
+        {
+          "id": "PC10",
+          "witness": {
+            "bytes": 71,
+            "decodedBytes": 73,
+            "reading": {
+              "unread": [],
+              "unsized": [
+                "control"
+              ],
+              "anchorsUnread": [],
+              "offDisk": [],
+              "hits": []
+            }
+          }
+        },
+        {
+          "id": "PC11",
+          "witness": {
+            "sizeOnDiskBody": "{ try { return statSync(path).size; } catch { return undefined; } }",
+            "readRfScopeDefaults": {
+              "readDisk": "diskText",
+              "readSize": "sizeOnDisk"
+            },
+            "readRfScopeReaders": [],
+            "scanCalls": [
+              [
+                "matcher",
+                "tree"
+              ]
+            ],
+            "bindings": [
+              "readFileSync: import node:fs",
+              "statSync: import node:fs"
+            ]
+          }
+        },
+        {
+          "id": "QP1",
+          "witness": {
+            "readings": [
+              {
+                "unread": [],
+                "unsized": [],
+                "anchorsUnread": [],
+                "offDisk": []
+              }
+            ],
+            "counterparts": [
+              {
+                "unread": [],
+                "unsized": [
+                  "own"
+                ],
+                "anchorsUnread": [],
+                "offDisk": []
+              }
+            ],
+            "loud": [],
+            "unseen": [],
+            "untargeted": [],
+            "anchorsQuiet": [
+              true,
+              true
+            ]
+          }
+        },
+        {
+          "id": "QP2",
+          "witness": {
+            "readings": [
+              {
+                "unread": [],
+                "unsized": [],
+                "anchorsUnread": [],
+                "offDisk": []
+              }
+            ],
+            "counterparts": [
+              {
+                "unread": [
+                  "own"
+                ],
+                "unsized": [],
+                "anchorsUnread": [],
+                "offDisk": []
+              }
+            ],
+            "loud": [],
+            "unseen": [],
+            "untargeted": [],
+            "anchorsQuiet": [
               true,
               true
             ]
