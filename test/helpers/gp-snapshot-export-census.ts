@@ -2,15 +2,18 @@
  * wb-0lf.2 (FURNACE-GRAPH-POLICY-DECISION-EXECUTOR-R2): the tables, the fixture projections, the reference exporter, its
  * mutants and the judge of the GP snapshot-export census, test/workbench-gp-snapshot-export-census.test.ts (its header states
  * the bead, the measured facts and every reading). Everything here is pure over the inputs it is handed: the fixtures are
- * real ObservationProjection instances built through the class's public methods, the reference exporter and its mutants
- * only read them (one mutant writes on purpose, and the judge refuses it), and nothing here starts gp, fakes a
- * GraphPolicyCLI binary, adds a dependency or implements a Pi exporter. The census's own src reads compose the landed
- * wb-e66.5 vocabulary reader and listers (test/helpers/gp-mw-coordination-census.ts) and the landed wb-gxd7.3 export
- * reader (test/helpers/gp-snapshot-join-census.ts).
+ * real ObservationProjection instances built through the class's public methods, the reference exporter only reads them,
+ * and so do its mutants except the A1 purity members, which write or edit the class on purpose (the judge refuses each
+ * one and puts the class back); nothing here starts gp, fakes a GraphPolicyCLI binary, adds a dependency or implements a
+ * Pi exporter.
+ * The census's own reads compose the landed wb-e66.5 vocabulary reader and listers (test/helpers/gp-mw-coordination-census.ts),
+ * the landed wb-gxd7.3 export reader (test/helpers/gp-snapshot-join-census.ts) and the landed docs binding
+ * (docsSection/sectionTables of test/helpers/census.ts).
  */
 import { isDeepStrictEqual } from "node:util";
 import { NATIVE_CONTROL_ACTIONS } from "../../src/workbench/control.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type Presentation, type RelationKind } from "../../src/workbench/observation.js";
+import { docsSection, sectionTables } from "./census.js";
 import { namedWords } from "./gp-mw-coordination-census.js";
 import { exportedNames } from "./gp-snapshot-join-census.js";
 
@@ -78,6 +81,10 @@ const OTHER_RUN = ref("furnace", "run", "frn-run-0002");
 
 /** The verbatim forms the fixture's revisions and bases carry: padding and mixed case, and a decomposed accent. */
 export const PADDED_REVISION = " sess-rev MiXeD ";
+/** A provider the fixture holds no node of (the A1 connection members disconnect and reconnect it). */
+export const UNHELD_PROVIDER = "hx";
+/** A run id the projection refuses as an unsafe identity (U+202E, composed at run time): markStale logs a refusal and changes no node. */
+export const UNSAFE_RUN_ID = `frn-run-${String.fromCodePoint(0x202e)}0009`;
 export const DECOMPOSED_BASIS = `basis-cafe${String.fromCodePoint(0x301)}`;
 
 /** The caller's scope A, two neighbours that share a native ref with it (B: same workspace; C: same principal) and an empty D. */
@@ -232,13 +239,45 @@ export function truthOf(projection: ObservationProjection, scope: ObservationSco
   return { scope: { ...scope }, entities, relations };
 }
 
-/** Everything a drive could change: the counts, the topology revision and every scope's full read. */
-export function fingerprint(projection: ObservationProjection): unknown {
-  return {
-    stats: projection.stats(),
-    relationRevision: projection.relationRevision(),
-    scopes: SCOPES.map(spec => ({ nodes: projection.query({ scope: spec.scope, limit: READ_LIMIT }), relations: projection.relationsPage({ scope: spec.scope, limit: READ_LIMIT }) })),
-  };
+// ---- purity: what a drive may do to the projection it is handed (A1) ----
+
+/**
+ * The projection's reads (src/workbench/observation.ts). Every other method a drive calls through its request counts against
+ * it: each public write (ingest, refresh, markStale, disconnect, reconnect and relate today; an A1 member calls each one) and
+ * any other member, inherited ones included (M-OTHER-CALL calls toString). A pure exporter calls none, not even one that
+ * changes nothing.
+ */
+export const READ_METHODS: readonly string[] = ["aggregate", "aggregateStats", "events", "identityRefusals", "indexOf", "query", "relationRevision", "relations", "relationsPage", "stats", "truncation", "window"];
+
+/** The projection a drive is handed: the fixture itself, behind a view that records each call of a method outside READ_METHODS. */
+export function watched(projection: ObservationProjection, writes: string[]): ObservationProjection {
+  return new Proxy(projection, {
+    get(target, property) {
+      const value: unknown = Reflect.get(target, property, target);
+      if (typeof value !== "function") return value;
+      const name = String(property);
+      return (...args: unknown[]): unknown => {
+        if (!READ_METHODS.includes(name)) writes.push(name);
+        return Reflect.apply(value, target, args);
+      };
+    },
+  });
+}
+
+/** The class's own members, its prototype's and its statics': a drive that edits ObservationProjection edits every instance and the twin alike. */
+type ClassShape = readonly [PropertyDescriptorMap, PropertyDescriptorMap];
+const classShape = (): ClassShape => [Object.getOwnPropertyDescriptors(ObservationProjection.prototype), Object.getOwnPropertyDescriptors(ObservationProjection)];
+/** Put the class back as classShape read it (a drive's edit is judged once, never inherited by the next case). */
+function restoreClass(shape: ClassShape): void {
+  const targets = [ObservationProjection.prototype, ObservationProjection] as const;
+  targets.forEach((target, index) => {
+    const saved = shape[index] ?? {};
+    for (const key of Reflect.ownKeys(target)) if (!Object.hasOwn(saved, key)) Reflect.deleteProperty(target, key);
+    for (const key of Reflect.ownKeys(saved)) {
+      const descriptor = saved[key];
+      if (descriptor !== undefined) Object.defineProperty(target, key, descriptor);
+    }
+  });
 }
 
 // ---- the judged outcome ----
@@ -521,22 +560,36 @@ export const judgeCaseOf = (row: CaseRow): JudgeCase => {
   return { scope, budget: row.budget, over: row.over, truth: truthOf(buildProjection(), scope) };
 };
 
-/** Drive once on a fresh projection, judge it, then prove the drive pure: the projection unchanged and a second drive equal. */
+/**
+ * Drive twice, each time on a fresh projection behind watched(), judge the first outcome against the truth, then prove the
+ * drive pure on four legs: it called no method outside READ_METHODS; it left the class (prototype and statics) as it was;
+ * each projection it read is still deep-equal to a fresh twin (util.isDeepStrictEqual over every own field of the
+ * instance, the connection map and the identity-refusal log among them); and the two outcomes are equal.
+ */
 export async function driveFindings(drive: Drive, row: CaseRow): Promise<string[]> {
   const scope = scopeSpec(row.scope).scope;
-  const projection = buildProjection();
-  const before = fingerprint(projection);
+  const judged = judgeCaseOf(row);
+  const shape = classShape();
+  const writes: string[] = [];
   const run = async (target: ObservationProjection): Promise<{ readonly threw: false; readonly value: unknown } | { readonly threw: true; readonly value: string }> => {
     try {
-      return { threw: false, value: await drive({ projection: target, scope, budget: row.budget }) };
+      return { threw: false, value: await drive({ projection: watched(target, writes), scope, budget: row.budget }) };
     } catch (error) {
       return { threw: true, value: error instanceof Error ? error.message : String(error) };
     }
   };
-  const first = await run(projection);
-  const findings = first.threw ? [`outcome the drive threw: ${first.value}`] : exportFindings(judgeCaseOf(row), first.value);
-  if (!isDeepStrictEqual(fingerprint(projection), before)) findings.push("impure the drive changed the projection it read");
-  const second = await run(buildProjection());
+  const read = [buildProjection(), buildProjection()] as const;
+  const first = await run(read[0]);
+  const second = await run(read[1]);
+  const findings = first.threw ? [`outcome the drive threw: ${first.value}`] : exportFindings(judged, first.value);
+  for (const name of new Set(writes)) findings.push(`impure the drive called the projection's ${name}, which is no read`);
+  if (!isDeepStrictEqual(classShape(), shape)) {
+    findings.push("impure a drive edited the ObservationProjection class");
+    restoreClass(shape);
+  }
+  read.forEach((projection, index) => {
+    if (!isDeepStrictEqual(projection, buildProjection())) findings.push(`impure drive ${index + 1} left the projection it read unlike a fresh twin`);
+  });
   if (!isDeepStrictEqual(first, second)) findings.push("impure two drives over one fixture returned different outcomes");
   return findings;
 }
@@ -570,6 +623,24 @@ export interface Recipe {
   readonly counter?: boolean;
   /** A padding member the judge reads only through the presented bytes. */
   readonly bloat?: boolean;
+  /** Calls projection.disconnect on this provider before the reads. */
+  readonly disconnect?: string;
+  /** Calls projection.reconnect on this provider before the reads. */
+  readonly reconnect?: string;
+  /** Calls markStale on a run ref whose id is UNSAFE_RUN_ID: the projection logs an identity refusal and changes no node. */
+  readonly refuseIdentity?: boolean;
+  /** Calls markStale on a ref the caller's scope does not hold: a write that changes nothing. */
+  readonly noopWrite?: boolean;
+  /** Calls disconnect(UNHELD_PROVIDER) through the class prototype, around the request's view of the projection. */
+  readonly bypassWrite?: boolean;
+  /** Defines a member on the ObservationProjection prototype, which every instance and the twin share. */
+  readonly classPatch?: boolean;
+  /** Defines a static member on the ObservationProjection class itself. */
+  readonly classStatic?: boolean;
+  /** Calls one public write into the empty scope D (refresh a node, relate two refs, ingest an event), so the export is unchanged. */
+  readonly writeIntoD?: "refresh" | "relate" | "ingest";
+  /** Calls toString on the projection: an inherited member, outside READ_METHODS, that reads nothing and changes nothing. */
+  readonly otherCall?: boolean;
   /** A second relation tracing the first one's projection relation. */
   readonly duplicateEdge?: boolean;
 }
@@ -604,6 +675,15 @@ const basisOf = (value: string | null, recipe: Recipe): string | null => {
 /** The reference exporter: pure over the projection's own reads; each recipe field is one mutant's change. */
 export function referenceExport(request: ExportRequest, recipe: Recipe = {}, nextId: (prefix: string, index: number) => string = (prefix, index) => `${prefix}${index + 1}`): Exported | Refused {
   const { projection, scope, budget } = request;
+  if (recipe.disconnect !== undefined) projection.disconnect(recipe.disconnect);
+  if (recipe.reconnect !== undefined) projection.reconnect(recipe.reconnect);
+  if (recipe.refuseIdentity === true) projection.markStale({ scope, ref: ref("furnace", "run", UNSAFE_RUN_ID) });
+  if (recipe.noopWrite === true) projection.markStale({ scope, ref: ref("furnace", "run", "frn-run-absent") });
+  if (recipe.bypassWrite === true) ObservationProjection.prototype.disconnect.call(projection, UNHELD_PROVIDER);
+  if (recipe.classPatch === true) Object.defineProperty(ObservationProjection.prototype, "exportedBy", { value: (): string => "pi", configurable: true, writable: true });
+  if (recipe.classStatic === true) Object.defineProperty(ObservationProjection, "exportedBy", { value: "pi", configurable: true, writable: true });
+  if (recipe.writeIntoD !== undefined) writeInto(projection, scopeSpec("D").scope, recipe.writeIntoD);
+  if (recipe.otherCall === true) projection.toString();
   const truth = truthOf(projection, scope);
   let entities: TruthEntity[] = [...truth.entities];
   let relations: TruthRelation[] = [...truth.relations];
@@ -644,6 +724,15 @@ export function referenceExport(request: ExportRequest, recipe: Recipe = {}, nex
   else outcome = over(first[0], first[1]);
   if (recipe.mutate === true) projection.markStale({ scope, ref: (truth.entities[0] as TruthEntity).ref });
   return outcome;
+}
+
+/** One public write into a scope the caller does not read (the A1 write members). */
+function writeInto(projection: ObservationProjection, scope: ObservationScope, write: "refresh" | "relate" | "ingest"): void {
+  const at = "2026-10-28T00:30:00Z";
+  const run = ref("furnace", "run", "frn-run-0009");
+  if (write === "refresh") projection.refresh({ source: run, scope, capturedAt: at, observedAt: at, node: { title: "run frn-run-0009", type: "workflow", statusText: "active", statusTone: "active" } });
+  else if (write === "relate") projection.relate({ scope, from: run, to: ref("forge", "command", "cmd_00000000aaaa"), kind: "dependency", provenance: { source: "furnace", observedAt: at } });
+  else projection.ingest({ projectionEventId: "evt-0009", source: run, scope, observedAt: at, kind: "furnace.run.event" });
 }
 
 /** The over-budget truncation mutant: the first maxNodes observed nodes and the relations among them, admitted as an export. */
@@ -750,6 +839,18 @@ export interface MutantRow {
 export const MUTANTS: readonly MutantRow[] = [
   { id: "M-MUTATES", pin: "A1", case: "K-FITS", recipe: { mutate: true }, expect: ["impure"] },
   { id: "M-COUNTER-IDS", pin: "A1", case: "K-FITS", recipe: { counter: true }, expect: ["impure"] },
+  { id: "M-DISCONNECT-UNHELD", pin: "A1", case: "K-FITS", recipe: { disconnect: UNHELD_PROVIDER }, expect: ["impure"] },
+  { id: "M-RECONNECT-UNHELD", pin: "A1", case: "K-FITS", recipe: { reconnect: UNHELD_PROVIDER }, expect: ["impure"] },
+  { id: "M-IDENTITY-REFUSAL", pin: "A1", case: "K-FITS", recipe: { refuseIdentity: true }, expect: ["impure"] },
+  { id: "M-DISCONNECT-HELD", pin: "A1", case: "K-FITS", recipe: { disconnect: "beads" }, expect: ["impure"] },
+  { id: "M-WRITE-NOOP", pin: "A1", case: "K-FITS", recipe: { noopWrite: true }, expect: ["impure"] },
+  { id: "M-BYPASS-WRITE", pin: "A1", case: "K-FITS", recipe: { bypassWrite: true }, expect: ["impure"] },
+  { id: "M-CLASS-PATCH", pin: "A1", case: "K-FITS", recipe: { classPatch: true }, expect: ["impure"] },
+  { id: "M-CLASS-STATIC", pin: "A1", case: "K-FITS", recipe: { classStatic: true }, expect: ["impure"] },
+  { id: "M-REFRESH-WRITE", pin: "A1", case: "K-FITS", recipe: { writeIntoD: "refresh" }, expect: ["impure"] },
+  { id: "M-RELATE-WRITE", pin: "A1", case: "K-FITS", recipe: { writeIntoD: "relate" }, expect: ["impure"] },
+  { id: "M-INGEST-WRITE", pin: "A1", case: "K-FITS", recipe: { writeIntoD: "ingest" }, expect: ["impure"] },
+  { id: "M-OTHER-CALL", pin: "A1", case: "K-FITS", recipe: { otherCall: true }, expect: ["impure"] },
   { id: "M-NAMESPACE", pin: "A2", case: "K-FITS", recipe: { namespace: true }, expect: ["graphdatair"] },
   { id: "M-DUPLICATE-ID", pin: "A2", case: "K-FITS", recipe: { duplicateId: true }, expect: ["graphdatair"] },
   { id: "M-DANGLING", pin: "A2", case: "K-FITS", recipe: { dangling: true }, expect: ["graphdatair", "relation"] },
@@ -855,6 +956,124 @@ export const SITE_CASES: readonly SiteCase[] = [
 export const SITE_WORD_HITS: readonly string[] = ["GraphDataIR", "graph_data_ir", "graph-data-ir", "graphpolicy.data.v1", "GraphPolicyCLI", "graph-policy-cli", "toGraphDataIR"];
 export const SITE_WORD_QUIET: readonly string[] = ["ObservationProjection", "graph", "policy", "GraphQL", "graphDataIndex", "dataflow graph", "MicroPolicy", "mw.training-export"];
 
+// ---- the absence readers of D3 and G2, each proven live by a planted positive read in the same call ----
+
+/** A typed executor request named in a module: "executor request" in any case, joined by nothing, a space, "_" or "-" (D3). */
+export const EXECUTOR_REQUEST = /executor[ _-]?request/i;
+/** D3's reader: the modules whose text names a typed executor request, in listing order. */
+export const executorRequestNamers = (texts: ReadonlyMap<string, string>): string[] => [...texts].filter(([, text]) => EXECUTOR_REQUEST.test(text)).map(([path]) => path);
+/** G2's reader: the files whose text names the GraphDataIR namespace, in listing order. */
+export const namespaceNamers = (texts: ReadonlyMap<string, string>): string[] => [...texts].filter(([, text]) => text.includes(GRAPH_NAMESPACE)).map(([path]) => path);
+/** D3's planted positive: a src module declaring a typed executor request, read after the tracked modules. */
+export const PLANTED_EXECUTOR_REQUEST = { path: "src/workbench/zz-executor-request.ts", text: "export interface ExecutorRequest {\n  readonly executor: string;\n}\n" } as const;
+/** G2's planted positive: a qa script naming the namespace, read after the tracked files. */
+export const PLANTED_NAMESPACE = { path: "qa/zz-gp-namespace.mjs", text: `export const NAMESPACE = "${GRAPH_NAMESPACE}";\n` } as const;
+/** The spellings D3's reader reads (each one's match is in D3's witness), and near spellings outside its reading (pinned quiet). */
+export const EXECUTOR_REQUEST_HITS: readonly string[] = ["ExecutorRequest", "executor request", "executor_request", "executor-request", "EXECUTOR_REQUEST", "typedExecutorRequests"];
+export const EXECUTOR_REQUEST_QUIET: readonly string[] = ["executor.request", "ExecRequest", "executorsRequest", "request executor"];
+
+// ---- docs/workbench/03's two GraphPolicyCLI sentences (G3) ----
+
+/** The page's level-1 title (its em dash composed at run time, so this file stays ASCII): the parent path of both sections. */
+export const DOCS_03_TITLE = `03 ${String.fromCodePoint(0x2014)} High-level architecture, module ownership and dataflow`;
+export const OWNERSHIP_HEADING = "Ownership boundaries";
+export const BOUNDARY_HEADING = "GraphPolicyCLI boundary";
+/** The ownership table's owner cell (its second column, "Authoritative owner") on GraphPolicyCLI's row. */
+export const GP_OWNER = "GraphPolicyCLI";
+/** The first clause ("; "-cut) of that row's third cell ("Workbench may do"). */
+export const OWNERSHIP_CELL = "nothing today (no gp seam is registered)";
+export const BOUNDARY_SENTENCE = "Pi carries no GraphPolicyCLI (gp) integration today.";
+
+/** What G3 read: the ownership row (how many GraphPolicyCLI rows, the one row's first clause) and the boundary section's opening. */
+export interface Docs03Reading {
+  readonly ownership: { readonly refused: string | null; readonly rows: number; readonly cell: string | null };
+  readonly boundary: { readonly refused: string | null; readonly first: string | null; readonly opening: string | null };
+}
+/** The docs rules, in report order; a finding is its rule, one space, and what it found. */
+export const DOCS_RULES = ["ownership-bound", "ownership-rows", "ownership-cell", "boundary-bound", "boundary-first", "boundary-opening"] as const;
+
+/** A rendered paragraph's first sentence: its text up to the first ". ", or the whole text. */
+const firstSentence = (text: string): string => {
+  const end = text.indexOf(". ");
+  return end === -1 ? text : text.slice(0, end + 1);
+};
+/**
+ * G3's reading of docs/03 through the landed docs binding (test/helpers/census.ts): ONE binding per heading, each heading once
+ * in the rendered view under the page title. The ownership rows are sectionTables' cells of the Ownership boundaries
+ * section only (every table row whose owner cell is GraphPolicyCLI); the opening is the first sentence of the boundary
+ * section's first rendered block (an HTML block renders nothing, so it is passed over) when that block is a paragraph.
+ */
+export function docs03Reading(page: string): Docs03Reading {
+  const tables = sectionTables(page, OWNERSHIP_HEADING, 2, [DOCS_03_TITLE]);
+  const rows = tables.grids.flatMap(grid => grid.slice(1).filter(cells => cells[1] === GP_OWNER));
+  const row = rows.length === 1 ? rows[0] : undefined;
+  const section = docsSection(page, BOUNDARY_HEADING, 2, [DOCS_03_TITLE]);
+  const first = section.blocks.find(block => block.kind !== "html");
+  return {
+    ownership: { refused: tables.ok ? null : tables.why, rows: rows.length, cell: row === undefined ? null : ((row[2] ?? "").split("; ")[0] ?? "") },
+    boundary: { refused: section.ok ? null : section.why, first: first?.kind ?? null, opening: first?.kind === "paragraph" ? firstSentence(first.text) : null },
+  };
+}
+
+/** Judge a reading: exactly one GraphPolicyCLI ownership row registering no gp seam, and a boundary section opening with the sentence. */
+export function docs03Findings(reading: Docs03Reading): string[] {
+  const findings: string[] = [];
+  const { ownership, boundary } = reading;
+  if (ownership.refused !== null) findings.push(`ownership-bound ${ownership.refused}`);
+  else if (ownership.rows !== 1) findings.push(`ownership-rows the ${OWNERSHIP_HEADING} section holds ${ownership.rows} ${GP_OWNER} rows, not one`);
+  else if (ownership.cell !== OWNERSHIP_CELL) findings.push(`ownership-cell the ${GP_OWNER} row's Workbench cell opens ${JSON.stringify(ownership.cell)}, not ${JSON.stringify(OWNERSHIP_CELL)}`);
+  if (boundary.refused !== null) findings.push(`boundary-bound ${boundary.refused}`);
+  else if (boundary.first !== "paragraph") findings.push(`boundary-first the ${BOUNDARY_HEADING} section's first rendered block is ${boundary.first ?? "nothing"}, not a paragraph`);
+  else if (boundary.opening !== BOUNDARY_SENTENCE) findings.push(`boundary-opening the ${BOUNDARY_HEADING} section opens ${JSON.stringify(boundary.opening)}, not ${JSON.stringify(BOUNDARY_SENTENCE)}`);
+  return findings;
+}
+
+/** One in-memory edit of the live page, read by the same reader; expect is the docs rules it is refused with, in order. */
+export interface DocsPlant {
+  readonly id: string;
+  readonly edit: (page: string) => string;
+  readonly expect: readonly string[];
+}
+/** Replace the one occurrence of old (a plant needs its anchor exactly once on the page). */
+function onceIn(page: string, old: string, replacement: string): string {
+  const at = page.indexOf(old);
+  if (at === -1 || page.indexOf(old, at + 1) !== -1) throw new Error(`a docs plant needs exactly one ${JSON.stringify(old.slice(0, 60))} on the page`);
+  return `${page.slice(0, at)}${replacement}${page.slice(at + old.length)}`;
+}
+/** Replace the one line containing anchor with the lines of make(line). */
+function lineIn(page: string, anchor: string, make: (line: string) => readonly string[]): string {
+  const lines = page.split("\n");
+  const at = lines.flatMap((line, index) => (line.includes(anchor) ? [index] : []));
+  if (at.length !== 1) throw new Error(`a docs plant needs exactly one line holding ${JSON.stringify(anchor.slice(0, 60))}`);
+  const index = at[0] ?? 0;
+  return [...lines.slice(0, index), ...make(lines[index] ?? ""), ...lines.slice(index + 1)].join("\n");
+}
+const ROW_ANCHOR = `| ${GP_OWNER} | ${OWNERSHIP_CELL}`;
+const SEAM_CELL = `| ${GP_OWNER} | the gp seam at src/workbench/gp-seam.ts`;
+const seamRow = (page: string): string => onceIn(page, ROW_ANCHOR, SEAM_CELL);
+export const DOCS_PLANTS: readonly DocsPlant[] = [
+  // Refusal #1's five falsifiers (U1), each read conforming by the refused cut's raw-line reading.
+  { id: "D-MOVE", edit: page => onceIn(onceIn(page, `${BOUNDARY_SENTENCE} `, ""), `\n## ${BOUNDARY_HEADING}\n`, `\n${BOUNDARY_SENTENCE}\n\n## ${BOUNDARY_HEADING}\n`), expect: ["boundary-opening"] },
+  { id: "D-LEAD", edit: page => onceIn(page, `## ${BOUNDARY_HEADING}\n\n`, `## ${BOUNDARY_HEADING}\n\nPi carries a GraphPolicyCLI (gp) seam at src/workbench/gp-seam.ts.\n\n`), expect: ["boundary-opening"] },
+  { id: "D-COMMENT", edit: page => lineIn(page, BOUNDARY_SENTENCE, line => ["<!--", line, "-->"]), expect: ["boundary-first"] },
+  { id: "D-FENCE", edit: page => lineIn(page, BOUNDARY_SENTENCE, line => ["```", line, "```"]), expect: ["boundary-first"] },
+  {
+    id: "D-ROW-DUP",
+    edit: page => onceIn(seamRow(page), `\n## ${OWNERSHIP_HEADING}\n`, `\n| Legacy concern | Owner | Note |\n| --- | --- | --- |\n| Legacy scores | ${GP_OWNER} | ${OWNERSHIP_CELL} |\n\n## ${OWNERSHIP_HEADING}\n`),
+    expect: ["ownership-cell"],
+  },
+  // Its two controls, in-place edits of what G3 reads.
+  { id: "D-CELL-ONLY", edit: seamRow, expect: ["ownership-cell"] },
+  { id: "D-SENTENCE-EDIT", edit: page => onceIn(page, BOUNDARY_SENTENCE, "Pi carries no GraphPolicyCLI (gp) integration today, except src/workbench/gp-seam.ts."), expect: ["boundary-opening"] },
+  // Same view and heading uniqueness: a decoy row in the same table, a second section under either heading, a re-homed section.
+  { id: "D-ROW-SAME-TABLE", edit: page => lineIn(page, ROW_ANCHOR, line => [`| Decoy scores | ${GP_OWNER} | ${OWNERSHIP_CELL} |`, onceIn(line, ROW_ANCHOR, SEAM_CELL)]), expect: ["ownership-rows"] },
+  { id: "D-OWNERSHIP-DUP", edit: page => `${page.trimEnd()}\n\n## ${OWNERSHIP_HEADING}\n\n| Concern | Owner | Note |\n| --- | --- | --- |\n| Scores | ${GP_OWNER} | ${OWNERSHIP_CELL} |\n`, expect: ["ownership-bound"] },
+  { id: "D-HEADING-DUP", edit: page => `${page.trimEnd()}\n\n## ${BOUNDARY_HEADING}\n\n${BOUNDARY_SENTENCE}\n`, expect: ["boundary-bound"] },
+  { id: "D-REHOME", edit: page => onceIn(page, `\n## ${BOUNDARY_HEADING}\n`, `\n# Appendix\n\n## ${BOUNDARY_HEADING}\n`), expect: ["boundary-bound"] },
+  // Quiet: an HTML comment block renders nothing, so a reader of the section still meets the sentence first.
+  { id: "D-COMMENT-ABOVE", edit: page => onceIn(page, `## ${BOUNDARY_HEADING}\n\n`, `## ${BOUNDARY_HEADING}\n\n<!-- an editor's note -->\n\n`), expect: [] },
+];
+
 // ---- the judged rows (rule 16) ----
 
 export interface Row {
@@ -957,10 +1176,12 @@ export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
     { kind: "source", path: "src/workbench/q1-shape.ts", text: "export const snapshot = (entities: unknown[]): unknown => ({ schema_ref: { namespace: NAMESPACE }, entities, relations: [] });\ndeclare const NAMESPACE: string;\n" },
     { kind: "source", path: "src/workbench/q1-incidences.ts", text: 'export const edge = (from: string, to: string): unknown => ({ incidences: [{ participant: from, role: "source" }, { participant: to, role: "target" }] });\n' },
   ],
-  // A site word built at run time or spelled through an escape: the reader reads source characters only.
+  // A reader's word built at run time or spelled through an escape: every source reader reads source characters only. The
+  // joined namespace is G1's site word and G2's namespace, the escape G1's site word, the joined kind D3's executor request.
   Q2: [
     { kind: "source", path: "src/workbench/q2-joined.ts", text: 'export const NAMESPACE = ["graph", "policy"].join("") + ".data.v1";\n' },
     { kind: "source", path: "src/workbench/q2-escape.ts", text: 'export const NAME = "Graph\\u0044ataIR";\n' },
+    { kind: "source", path: "src/workbench/q2-request.ts", text: 'export const KIND = ["Executor", "Request"].join("");\n' },
   ],
   // The judge reads the vendored v1 shape, never a GraphDataIR schema document: another feature's status or value is unread.
   Q3: [

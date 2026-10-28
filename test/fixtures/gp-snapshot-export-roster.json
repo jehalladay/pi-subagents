@@ -114,6 +114,103 @@
         ],
         "M-COUNTER-IDS": [
           "impure"
+        ],
+        "M-DISCONNECT-UNHELD": [
+          "impure"
+        ],
+        "M-RECONNECT-UNHELD": [
+          "impure"
+        ],
+        "M-IDENTITY-REFUSAL": [
+          "impure"
+        ],
+        "M-DISCONNECT-HELD": [
+          "impure"
+        ],
+        "M-WRITE-NOOP": [
+          "impure"
+        ],
+        "M-BYPASS-WRITE": [
+          "impure"
+        ],
+        "M-CLASS-PATCH": [
+          "impure"
+        ],
+        "M-CLASS-STATIC": [
+          "impure"
+        ],
+        "M-REFRESH-WRITE": [
+          "impure"
+        ],
+        "M-RELATE-WRITE": [
+          "impure"
+        ],
+        "M-INGEST-WRITE": [
+          "impure"
+        ],
+        "M-OTHER-CALL": [
+          "impure"
+        ]
+      },
+      "legs": {
+        "M-MUTATES": [
+          "impure the drive called the projection's markStale, which is no read",
+          "impure drive 1 left the projection it read unlike a fresh twin",
+          "impure drive 2 left the projection it read unlike a fresh twin"
+        ],
+        "M-COUNTER-IDS": [
+          "impure two drives over one fixture returned different outcomes"
+        ],
+        "M-DISCONNECT-UNHELD": [
+          "impure the drive called the projection's disconnect, which is no read",
+          "impure drive 1 left the projection it read unlike a fresh twin",
+          "impure drive 2 left the projection it read unlike a fresh twin"
+        ],
+        "M-RECONNECT-UNHELD": [
+          "impure the drive called the projection's reconnect, which is no read",
+          "impure drive 1 left the projection it read unlike a fresh twin",
+          "impure drive 2 left the projection it read unlike a fresh twin"
+        ],
+        "M-IDENTITY-REFUSAL": [
+          "impure the drive called the projection's markStale, which is no read",
+          "impure drive 1 left the projection it read unlike a fresh twin",
+          "impure drive 2 left the projection it read unlike a fresh twin"
+        ],
+        "M-DISCONNECT-HELD": [
+          "impure the drive called the projection's disconnect, which is no read",
+          "impure drive 1 left the projection it read unlike a fresh twin",
+          "impure drive 2 left the projection it read unlike a fresh twin"
+        ],
+        "M-WRITE-NOOP": [
+          "impure the drive called the projection's markStale, which is no read"
+        ],
+        "M-BYPASS-WRITE": [
+          "impure drive 1 left the projection it read unlike a fresh twin",
+          "impure drive 2 left the projection it read unlike a fresh twin"
+        ],
+        "M-CLASS-PATCH": [
+          "impure a drive edited the ObservationProjection class"
+        ],
+        "M-CLASS-STATIC": [
+          "impure a drive edited the ObservationProjection class"
+        ],
+        "M-REFRESH-WRITE": [
+          "impure the drive called the projection's refresh, which is no read",
+          "impure drive 1 left the projection it read unlike a fresh twin",
+          "impure drive 2 left the projection it read unlike a fresh twin"
+        ],
+        "M-RELATE-WRITE": [
+          "impure the drive called the projection's relate, which is no read",
+          "impure drive 1 left the projection it read unlike a fresh twin",
+          "impure drive 2 left the projection it read unlike a fresh twin"
+        ],
+        "M-INGEST-WRITE": [
+          "impure the drive called the projection's ingest, which is no read",
+          "impure drive 1 left the projection it read unlike a fresh twin",
+          "impure drive 2 left the projection it read unlike a fresh twin"
+        ],
+        "M-OTHER-CALL": [
+          "impure the drive called the projection's toString, which is no read"
         ]
       },
       "cases": {
@@ -455,7 +552,24 @@
       "last": "});"
     },
     "D3": {
-      "named": []
+      "named": [],
+      "planted": [
+        "src/workbench/zz-executor-request.ts"
+      ],
+      "hits": [
+        "ExecutorRequest",
+        "executor request",
+        "executor_request",
+        "executor-request",
+        "EXECUTOR_REQUEST",
+        "ExecutorRequest"
+      ],
+      "quiet": [
+        "executor.request",
+        "ExecRequest",
+        "executorsRequest",
+        "request executor"
+      ]
     },
     "E1": {
       "case": {
@@ -601,11 +715,60 @@
     },
     "G2": {
       "namespace": "graphpolicy.data.v1",
-      "naming": []
+      "naming": [],
+      "planted": [
+        "qa/zz-gp-namespace.mjs"
+      ]
     },
     "G3": {
-      "ownership": "nothing today (no gp seam is registered)",
-      "boundary": "Pi carries no GraphPolicyCLI (gp) integration today."
+      "reading": {
+        "ownership": {
+          "refused": null,
+          "rows": 1,
+          "cell": "nothing today (no gp seam is registered)"
+        },
+        "boundary": {
+          "refused": null,
+          "first": "paragraph",
+          "opening": "Pi carries no GraphPolicyCLI (gp) integration today."
+        }
+      },
+      "plants": {
+        "D-MOVE": [
+          "boundary-opening"
+        ],
+        "D-LEAD": [
+          "boundary-opening"
+        ],
+        "D-COMMENT": [
+          "boundary-first"
+        ],
+        "D-FENCE": [
+          "boundary-first"
+        ],
+        "D-ROW-DUP": [
+          "ownership-cell"
+        ],
+        "D-CELL-ONLY": [
+          "ownership-cell"
+        ],
+        "D-SENTENCE-EDIT": [
+          "boundary-opening"
+        ],
+        "D-ROW-SAME-TABLE": [
+          "ownership-rows"
+        ],
+        "D-OWNERSHIP-DUP": [
+          "ownership-bound"
+        ],
+        "D-HEADING-DUP": [
+          "boundary-bound"
+        ],
+        "D-REHOME": [
+          "boundary-bound"
+        ],
+        "D-COMMENT-ABOVE": []
+      }
     },
     "Q1": {
       "members": [
@@ -617,7 +780,8 @@
     "Q2": {
       "members": [
         "src/workbench/q2-joined.ts",
-        "src/workbench/q2-escape.ts"
+        "src/workbench/q2-escape.ts",
+        "src/workbench/q2-request.ts"
       ],
       "findings": []
     },
@@ -650,7 +814,8 @@
     ],
     "Q2": [
       "src/workbench/q2-joined.ts",
-      "src/workbench/q2-escape.ts"
+      "src/workbench/q2-escape.ts",
+      "src/workbench/q2-request.ts"
     ],
     "Q3": [
       "q3-feature-status",
