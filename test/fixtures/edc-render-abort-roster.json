@@ -1,0 +1,682 @@
+{
+  "bead": "wb-pyel.5",
+  "constants": {
+    "preview": "reactivefiber.render.preview",
+    "grants": [
+      "reactivefiber:render"
+    ],
+    "renderModule": "src/workbench/providers/reactivefiber.ts",
+    "nativeLoader": "src/workbench/native-modules.ts",
+    "renderVerb": [
+      "context",
+      "render"
+    ],
+    "uncommittedTail": [
+      "--no-commit",
+      "--no-input",
+      "--json"
+    ],
+    "registryDeadlineMs": 250,
+    "passes": [
+      "native-registry",
+      "native-direct",
+      "native-preview",
+      "injected-registry",
+      "injected-direct"
+    ],
+    "entry": {
+      "native-registry": "registerNativeReactiveFiberRender",
+      "native-direct": "nativeReactiveFiberRender",
+      "native-preview": "nativeReactiveFiberPreview",
+      "injected-registry": "registerReactiveFiberRender",
+      "injected-direct": "registerReactiveFiberRender"
+    },
+    "nativePasses": [
+      "native-registry",
+      "native-direct",
+      "native-preview"
+    ],
+    "registryPasses": [
+      "native-registry",
+      "injected-registry"
+    ],
+    "scenarios": [
+      "before",
+      "running",
+      "proposed",
+      "queued",
+      "deadline",
+      "settled"
+    ],
+    "kind": {
+      "before": "aborted",
+      "running": "aborted",
+      "proposed": "aborted",
+      "queued": "suspended",
+      "deadline": "suspended",
+      "settled": "settled"
+    },
+    "driven": {
+      "native-registry": [
+        "before",
+        "running",
+        "proposed",
+        "queued",
+        "settled"
+      ],
+      "native-direct": [
+        "before",
+        "running",
+        "proposed",
+        "settled"
+      ],
+      "native-preview": [
+        "before",
+        "running",
+        "proposed",
+        "settled"
+      ],
+      "injected-registry": [
+        "before",
+        "proposed",
+        "queued",
+        "deadline",
+        "settled"
+      ],
+      "injected-direct": [
+        "before",
+        "proposed",
+        "settled"
+      ]
+    },
+    "violations": [
+      "committed-after-abort",
+      "committed-proposal",
+      "committing-launch",
+      "started-after-abort",
+      "extra-launch",
+      "foreign-launch",
+      "host-write"
+    ],
+    "clauseOf": {
+      "committed-after-abort": "commit",
+      "committed-proposal": "commit",
+      "committing-launch": "effect",
+      "started-after-abort": "effect",
+      "extra-launch": "effect",
+      "foreign-launch": "effect",
+      "host-write": "effect"
+    },
+    "committedForms": [
+      "commit_seq",
+      "render_id",
+      "ephemeral",
+      "storage_write_count"
+    ],
+    "controls": {
+      "dropped-signal": [
+        "committed-after-abort"
+      ],
+      "unguarded-bare": [
+        "committed-after-abort"
+      ],
+      "unguarded-registry": [],
+      "unguarded-registry-same-tick": [],
+      "committed-form": [
+        "committed-proposal"
+      ],
+      "committing-argv": [
+        "committing-launch"
+      ],
+      "started-after-abort": [
+        "started-after-abort"
+      ],
+      "extra-launch": [
+        "extra-launch"
+      ],
+      "foreign-launch": [
+        "foreign-launch"
+      ],
+      "host-write": [
+        "host-write"
+      ]
+    },
+    "launchCalls": [
+      "spawn",
+      "spawnSync",
+      "exec",
+      "execSync",
+      "execFile",
+      "execFileSync",
+      "fork"
+    ],
+    "childProcess": [
+      "node:child_process",
+      "child_process"
+    ],
+    "ioGlobals": [
+      "fetch",
+      "XMLHttpRequest",
+      "WebSocket",
+      "EventSource",
+      "require"
+    ],
+    "ioBuiltins": [
+      "child_process",
+      "cluster",
+      "dgram",
+      "dns",
+      "fs",
+      "fs/promises",
+      "http",
+      "http2",
+      "https",
+      "net",
+      "tls",
+      "worker_threads"
+    ],
+    "tsxSdk": "@reactive-fiber/tsx",
+    "hookName": "/^use[A-Z]/",
+    "descriptorName": "pureProjectRequirement",
+    "scriptModule": "/\\.(?:ts|mts|cts|tsx|js|mjs|cjs|jsx)$/",
+    "componentModule": "/\\.(?:tsx|jsx)$/i",
+    "requiredTracked": [
+      "package.json",
+      "src/index.ts",
+      "src/workbench/providers/reactivefiber.ts",
+      "test/helpers/scratch.ts",
+      "docs/workbench/07-native-integrations.md"
+    ],
+    "floors": {
+      "tracked": 900,
+      "srcModules": 100,
+      "descriptors": 8
+    },
+    "trigger": "a Pi-authored EDC component/hook surface now exists: wb-pyel.5's acceptance is owed on it - drive its render passes through the render-abort falsifier (row A, PASSES) and re-measure this census",
+    "residuals": {
+      "R-INJECTED-RELAY": [
+        "Q1"
+      ],
+      "R-STATED-EFFECTS": [
+        "Q2"
+      ],
+      "R-HOOK-VOCABULARY": [
+        "Q3"
+      ],
+      "R-STAND-IN": [
+        "Q4"
+      ],
+      "R-HOST-ELSEWHERE": [
+        "Q5"
+      ]
+    },
+    "serves": {
+      "A1": "zero committed proposals",
+      "A2": "zero committed proposals",
+      "A3": "zero committed proposals",
+      "A4": "zero tool/model/host effects from a render pass",
+      "A5": "zero tool/model/host effects from a render pass",
+      "A6": "a committed-after-abort attempt going red"
+    },
+    "otherHooks": "export function evidenceHook() { return describeRequirement(view); }\nconst makeEvidenceDescriptor = () => ({ need: 1 });\n",
+    "otherPhrases": "states an evidence need and a resource demand for the next render",
+    "plantedPaths": [
+      "src/edc/EvidencePanel.tsx",
+      "examples/Card.JSX",
+      "src/edc/panel.ts",
+      "docs/hooks.md"
+    ],
+    "plantedSource": "import { useQuery } from \"@reactive-fiber/tsx\";\nexport function useRequirement(view: unknown) { return pureProjectRequirement(view); }\nconst panel = () => useProvider(\"evidence-view\", {});\n",
+    "plantedManifest": {
+      "name": "planted",
+      "dependencies": {
+        "@reactive-fiber/tsx": "1.0.0"
+      },
+      "devDependencies": {
+        "@reactive-fiber/tsx": "1.0.0"
+      },
+      "peerDependencies": {
+        "@reactive-fiber/tsx": "1.0.0"
+      },
+      "optionalDependencies": {
+        "@reactive-fiber/tsx": "1.0.0"
+      },
+      "bundleDependencies": [
+        "@reactive-fiber/tsx"
+      ],
+      "bundledDependencies": [
+        "@reactive-fiber/tsx"
+      ]
+    },
+    "plantedLock": {
+      "packages": {
+        "": {
+          "name": "planted"
+        },
+        "node_modules/@reactive-fiber/tsx": {
+          "version": "1.0.0"
+        }
+      }
+    },
+    "plantedDescription": "Describes a logical evidence requirement for the next render",
+    "plantedKey": "prospectiveResourceInterest",
+    "plantedReach": "import { spawn as run, execFileSync } from \"node:child_process\";\nimport * as cp from \"child_process\";\nexport * from \"./planted-peer.js\";\nimport q = require(\"planted-required\");\nconst lazy = await import(\"planted-lazy\");\nrun(\"hx\", []);\nexecFileSync(command);\ncp.fork(\"worker.js\");\nServerConnection.spawn(\"forge\");\npi.exec(\"git\", []);\nmanager.spawn(pi);\nconst reply = await fetch(\"https://example.invalid/\");\nconst socket = new WebSocket(\"wss://example.invalid/\");\nsettings.fetch = 1;\n"
+  },
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster, the bead's export row, src and the cases agree",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "A6",
+    "T1",
+    "T2",
+    "T3",
+    "T4",
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "the registered tests and the reached pins equal the roster, in order and both ways"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "a render-abort falsifier proving zero committed proposals and zero tool/model/host effects from a render pass, with a committed-after-abort attempt going red",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "clause": "zero committed proposals",
+            "kind": "aborted",
+            "passes": [
+              "native-registry/before: at abort - | refused transport: Capability reactivefiber.render.preview was cancelled before invocation. | []",
+              "native-registry/running: at abort started | refused transport: Capability reactivefiber.render.preview wait was cancelled. | []",
+              "native-registry/proposed: at abort proposed | refused transport: Capability reactivefiber.render.preview wait was cancelled. | []",
+              "native-direct/before: at abort - | refused transport: RF preview cancelled before launch. | []",
+              "native-direct/running: at abort started | refused transport: RF preview cancelled. | []",
+              "native-direct/proposed: at abort proposed | refused transport: RF preview cancelled. | []",
+              "native-preview/before: at abort - | refused transport: RF preview cancelled before launch. | []",
+              "native-preview/running: at abort started | refused transport: RF preview cancelled. | []",
+              "native-preview/proposed: at abort proposed | refused transport: RF preview cancelled. | []",
+              "injected-registry/before: at abort - | refused transport: Capability reactivefiber.render.preview was cancelled before invocation. | []",
+              "injected-registry/proposed: at abort reader called 1, unanswered | refused transport: Capability reactivefiber.render.preview wait was cancelled. | []",
+              "injected-direct/before: at abort - | refused transport: RF preview cancelled before invocation. | []",
+              "injected-direct/proposed: at abort reader called 1, unanswered | refused transport: RF preview cancelled. | []"
+            ]
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "clause": "zero committed proposals",
+            "kind": "suspended",
+            "passes": [
+              "native-registry/queued: at abort slot holder in flight 1 of 1, admitted 1 | refused transport: Capability reactivefiber.render.preview was cancelled while waiting for admission. | []",
+              "injected-registry/queued: at abort slot holder in flight 1 of 1, admitted 1 | refused transport: Capability reactivefiber.render.preview was cancelled while waiting for admission. | []",
+              "injected-registry/deadline: at abort reader called 1, unanswered | refused transport: Capability reactivefiber.render.preview exceeded its deadline of 250ms. | []"
+            ],
+            "cancelledWhileQueued": [
+              "native-registry: 1",
+              "injected-registry: 1"
+            ]
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "clause": "zero committed proposals",
+            "kind": "settled",
+            "settled": [
+              "native-registry/legacy: returned uncommitted | --workspace <root> context render --model m --task native-registry-legacy --no-commit --no-input --json",
+              "native-registry/view: returned uncommitted | --workspace <root> context render --view v --task-id native-registry-view --no-commit --no-input --json",
+              "native-direct/legacy: returned uncommitted | --workspace <root> context render --model m --task native-direct-legacy --no-commit --no-input --json",
+              "native-direct/view: returned uncommitted | --workspace <root> context render --view v --task-id native-direct-view --no-commit --no-input --json",
+              "native-preview/legacy: returned uncommitted | --workspace <root> context render --model m --task native-preview-legacy --no-commit --no-input --json"
+            ],
+            "committed": [
+              "native-registry/commit_seq: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/commit_seq: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/render_id: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/render_id: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/ephemeral: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/ephemeral: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/storage_write_count: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/storage_write_count: refused transport: RF preview returned an unrecognized or contradictory envelope."
+            ]
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "clause": "zero tool/model/host effects from a render pass",
+            "judges": [
+              "tool",
+              "host"
+            ],
+            "stand_ins": [
+              "rf",
+              "forge",
+              "git"
+            ],
+            "passes": [
+              "native-registry/before: launches 0, reader 0, foreign 0, host unchanged, stopped false | []",
+              "native-registry/running: launches 1, reader 0, foreign 0, host unchanged, stopped true | []",
+              "native-registry/proposed: launches 1, reader 0, foreign 0, host unchanged, stopped true | []",
+              "native-registry/queued: launches 0, reader 0, foreign 0, host unchanged, stopped false | []",
+              "native-registry/settled: launches 1, reader 0, foreign 0, host unchanged, stopped false | []",
+              "native-direct/before: launches 0, reader 0, foreign 0, host unchanged, stopped false | []",
+              "native-direct/running: launches 1, reader 0, foreign 0, host unchanged, stopped true | []",
+              "native-direct/proposed: launches 1, reader 0, foreign 0, host unchanged, stopped true | []",
+              "native-direct/settled: launches 1, reader 0, foreign 0, host unchanged, stopped false | []",
+              "native-preview/before: launches 0, reader 0, foreign 0, host unchanged, stopped false | []",
+              "native-preview/running: launches 1, reader 0, foreign 0, host unchanged, stopped true | []",
+              "native-preview/proposed: launches 1, reader 0, foreign 0, host unchanged, stopped true | []",
+              "native-preview/settled: launches 1, reader 0, foreign 0, host unchanged, stopped false | []",
+              "injected-registry/before: launches 0, reader 0, foreign 0, host unchanged, stopped false | []",
+              "injected-registry/proposed: launches 0, reader 1, foreign 0, host unchanged, stopped false | []",
+              "injected-registry/queued: launches 0, reader 0, foreign 0, host unchanged, stopped false | []",
+              "injected-registry/deadline: launches 0, reader 1, foreign 0, host unchanged, stopped false | []",
+              "injected-registry/settled: launches 0, reader 1, foreign 0, host unchanged, stopped false | []",
+              "injected-direct/before: launches 0, reader 0, foreign 0, host unchanged, stopped false | []",
+              "injected-direct/proposed: launches 0, reader 1, foreign 0, host unchanged, stopped false | []",
+              "injected-direct/settled: launches 0, reader 1, foreign 0, host unchanged, stopped false | []"
+            ]
+          }
+        },
+        {
+          "id": "A5",
+          "witness": {
+            "clause": "zero tool/model/host effects from a render pass",
+            "judges": [
+              "tool",
+              "model",
+              "host"
+            ],
+            "modules": [
+              "src/workbench/capability-registry.ts",
+              "src/workbench/process-env.ts",
+              "src/workbench/providers/reactivefiber.ts",
+              "src/workbench/redaction.ts"
+            ],
+            "externals": [
+              "node:child_process",
+              "typebox/value"
+            ],
+            "launches": [
+              {
+                "module": "src/workbench/providers/reactivefiber.ts",
+                "callee": "spawn",
+                "command": "rf"
+              }
+            ],
+            "ioBuiltins": [
+              "src/workbench/providers/reactivefiber.ts:node:child_process"
+            ],
+            "ioGlobals": [],
+            "foreign": {
+              "modules": [
+                "src/workbench/claude-host.ts",
+                "src/workbench/claude-transcript.ts",
+                "src/workbench/hosts/local-detached.ts",
+                "src/workbench/providers/forge.ts",
+                "src/workbench/providers/furnace.ts",
+                "src/workbench/providers/hyperunix.ts"
+              ],
+              "externals": [
+                "@anthropic-ai/claude-agent-sdk",
+                "@forge/sdk",
+                "@furnace/sdk",
+                "@hyperunix/sdk",
+                "typescript"
+              ]
+            },
+            "overlap": [],
+            "rfSitesInSrc": [
+              {
+                "module": "src/workbench/providers/reactivefiber.ts",
+                "callee": "spawn",
+                "command": "rf"
+              }
+            ],
+            "controls": {
+              "specifiers": [
+                "node:child_process",
+                "child_process",
+                "./planted-peer.js",
+                "planted-required",
+                "planted-lazy"
+              ],
+              "childProcessLaunches": [
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "hx"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "execFileSync",
+                  "command": "<expression>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "fork",
+                  "command": "worker.js"
+                }
+              ],
+              "launchSites": [
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "fork",
+                  "command": "worker.js"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "forge"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "git"
+                }
+              ],
+              "ioGlobals": [
+                "planted/reach.ts:fetch",
+                "planted/reach.ts:WebSocket"
+              ]
+            }
+          }
+        },
+        {
+          "id": "A6",
+          "witness": {
+            "clause": "a committed-after-abort attempt going red",
+            "controls": {
+              "dropped-signal": [
+                "committed-after-abort"
+              ],
+              "unguarded-bare": [
+                "committed-after-abort"
+              ],
+              "unguarded-registry": [],
+              "unguarded-registry-same-tick": [],
+              "committed-form": [
+                "committed-proposal"
+              ],
+              "committing-argv": [
+                "committing-launch"
+              ],
+              "started-after-abort": [
+                "started-after-abort"
+              ],
+              "extra-launch": [
+                "extra-launch"
+              ],
+              "foreign-launch": [
+                "foreign-launch"
+              ],
+              "host-write": [
+                "host-write"
+              ]
+            },
+            "outcomes": {
+              "dropped-signal": "returned",
+              "unguarded-bare": "returned",
+              "unguarded-registry": "refused transport: Capability census.render.unguarded wait was cancelled.",
+              "unguarded-registry-same-tick": "refused transport: Capability census.render.unguarded wait was cancelled.",
+              "committed-form": "returned",
+              "committing-argv": "returned",
+              "started-after-abort": "refused transport: census control: cancelled after it launched",
+              "extra-launch": "returned",
+              "foreign-launch": "returned",
+              "host-write": "returned"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "T",
+      "label": "a Pi-authored EDC component/hook surface (none exists)",
+      "pins": [
+        {
+          "id": "T1",
+          "witness": {
+            "missing": [],
+            "trackedBelowFloor": false,
+            "components": []
+          }
+        },
+        {
+          "id": "T2",
+          "witness": {
+            "readEqualsTracked": true,
+            "walkEqualsTracked": true,
+            "modulesBelowFloor": false,
+            "mentions": [],
+            "manifest": [],
+            "lock": []
+          }
+        },
+        {
+          "id": "T3",
+          "witness": {
+            "phrases": [
+              "evidencerequirement",
+              "resourceinterest"
+            ],
+            "belowFloor": false,
+            "native": {
+              "ids": [
+                "forge.gate.status",
+                "furnace.run.inspect",
+                "hyperunix.find",
+                "reactivefiber.render.preview"
+              ],
+              "render": "RF noncommitted context with native provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)"
+            },
+            "injected": {
+              "ids": [
+                "forge.gate.status",
+                "furnace.run.inspect",
+                "hyperunix.find",
+                "reactivefiber.render.preview"
+              ],
+              "render": "Preview native RF context with provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)"
+            },
+            "mentions": []
+          }
+        },
+        {
+          "id": "T4",
+          "witness": {
+            "components": [
+              "src/edc/EvidencePanel.tsx",
+              "examples/Card.JSX"
+            ],
+            "hooks": [
+              "planted/panel.ts:useQuery",
+              "planted/panel.ts:useRequirement",
+              "planted/panel.ts:pureProjectRequirement",
+              "planted/panel.ts:useProvider",
+              "planted/panel.ts:import @reactive-fiber/tsx"
+            ],
+            "manifest": [
+              "dependencies:@reactive-fiber/tsx",
+              "devDependencies:@reactive-fiber/tsx",
+              "peerDependencies:@reactive-fiber/tsx",
+              "optionalDependencies:@reactive-fiber/tsx",
+              "bundleDependencies:@reactive-fiber/tsx",
+              "bundledDependencies:@reactive-fiber/tsx"
+            ],
+            "lock": [
+              "node_modules/@reactive-fiber/tsx"
+            ],
+            "descriptor": [
+              "planted.description|evidencerequirement",
+              "planted.inputSchema.properties.prospectiveResourceInterest#key|resourceinterest"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the residuals: each named family pinned by its quiet row",
+      "pins": [
+        {
+          "id": "Q1",
+          "witness": {
+            "relayed": [
+              "injected-registry: returned commit_seq 1",
+              "injected-direct: returned commit_seq 1"
+            ]
+          }
+        },
+        {
+          "id": "Q2",
+          "witness": {
+            "outcome": "returned",
+            "effects": 1,
+            "plan": {
+              "operations": [
+                {
+                  "kind": "stated-by-rf"
+                }
+              ],
+              "would_commit": true
+            }
+          }
+        },
+        {
+          "id": "Q3",
+          "witness": {
+            "hooks": [],
+            "descriptor": []
+          }
+        },
+        {
+          "id": "Q4",
+          "witness": {
+            "entries": [
+              "<bench>"
+            ],
+            "outcome": "returned",
+            "logged": [
+              "rf"
+            ]
+          }
+        },
+        {
+          "id": "Q5",
+          "witness": {
+            "verdict": []
+          }
+        }
+      ]
+    }
+  ]
+}
