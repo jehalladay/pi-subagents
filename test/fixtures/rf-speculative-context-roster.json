@@ -1,6 +1,6 @@
 {
  "bead": "wb-grmo.1",
- "basis": "MEASURED by the cutting seat (ws-02, g10-work-s110, 2026-10-26), every read read-only and none re-read by the census. RFCLI (/workplace/.../PrimaryInstallation/src/ReactiveFiberCLI): the first commit whose context.render.schema.json defines result.speculative is 8bd35ecd4651 ('[RF-WM-R3-e] --scenario served on rf context render for cli', 2026-10-24, __version__.py VERSION 0.1.844); its $defs/result states the nine scenarioResultKeys 'present exactly on a `rf context render --scenario PATH` render ... and absent on a legacy or --view render', the same nine at origin/main c83fbd59ec1c (VERSION 0.1.845) and in the installed rf 0.1.845 schema (sha256 in measured). The marker keys and labels are application/scenario_view.py WHATIF_RESULT_KEY 'speculative', NOTICE_BLOCK_KEY 'rf.whatif_notice' and WhatIfNotice.text's opening 'WHAT-IF VIEW of scenario ', and domain/scenario.py SCENARIO_ID_MARKER_KEY 'rf.scenario_id' and EPISTEMIC_STATUS_MARKER_KEY 'rf.epistemic_status' (block and notice metadata); rendered_speculative_view is the design name of 02-architecture.md:9@82bd879eee52, spelled by no release; scenario_id and scenario are the scenario identity keys, which no 0.1.784 or 0.1.845 schema property spells outside a scenario member. The pin at the cut's base dc72a6d: RFCLI 403389a94 ('chore: bump version to 0.1.784') holds 28 result properties, none of the nine, and no marker or label string; recorded as provenance only (no case asserts it), so the queued re-pin wb-jwc.4 (0.1.845) moves nothing in this census. scenarioSample and scenarioBlock are CAPTURED: the nine members and the one block of a real `rf --workspace W context render --scenario scenario.json --audience cli --no-input --json` at the installed rf 0.1.845 (rc 0, ok true), in a disposable workspace W=/tmp/ws02-s110-grmo1-rfws provisioned by the rf-preview recipe of docs/workbench/receipts/wb-c7ku.md (rf init --backend jsonl --no-input; rf component create --kind declarative demo.banner; rf component add of its manifest; rf component activate demo.banner; rf graph validate; all rc 0), over one committed render of that workspace, with a reactive-fiber.scenario/v1 document whose one action is {source_id task, type set_source, value <text>}; the nine members carry no workspace path, id or timestamp. The same capture holds its notice in result.notice only (result.blocks is the one component block) and output.text opens with the notice line. Through the helper's diffAgainstRoster against this SCG-R11 roster the capture gives the 12 speculative entries B4 pins (the nine members, the two block markers, the output.text label), while a real --no-commit render of Pi's own legacy argv in the same workspace gives 0 speculative entries (its only failures are the pre-existing 0.1.784 to 0.1.845 drift keys judge_context, judge_context_layers and replay_of_operation_id). The members also pass the seat's structural check against the installed schema (required, additionalProperties false, enum, const, digest pattern; not a schema engine).",
+ "basis": "MEASURED by the cutting seat (ws-02, g10-work-s110, 2026-10-26), every read read-only and none re-read by the census. RFCLI (/workplace/.../PrimaryInstallation/src/ReactiveFiberCLI): the first commit whose context.render.schema.json defines result.speculative is 8bd35ecd4651 ('[RF-WM-R3-e] --scenario served on rf context render for cli', 2026-10-24, __version__.py VERSION 0.1.844); its $defs/result states the nine scenarioResultKeys 'present exactly on a `rf context render --scenario PATH` render ... and absent on a legacy or --view render', the same nine at origin/main c83fbd59ec1c (VERSION 0.1.845) and in the installed rf 0.1.845 schema (sha256 in measured). The marker keys and labels are application/scenario_view.py WHATIF_RESULT_KEY 'speculative', NOTICE_BLOCK_KEY 'rf.whatif_notice' and WhatIfNotice.text's opening 'WHAT-IF VIEW of scenario ', and domain/scenario.py SCENARIO_ID_MARKER_KEY 'rf.scenario_id' and EPISTEMIC_STATUS_MARKER_KEY 'rf.epistemic_status' (block and notice metadata); rendered_speculative_view is the design name of 02-architecture.md:9@82bd879eee52, spelled by no release; scenario_id and scenario are the scenario identity keys, which no 0.1.784 or 0.1.845 schema property spells outside a scenario member. The pin at the cut's base dc72a6d: RFCLI 403389a94 ('chore: bump version to 0.1.784') holds 28 result properties, none of the nine, and no marker or label string; recorded as provenance only (no case asserts it), so the queued re-pin wb-jwc.4 (0.1.845) moves nothing in this census. scenarioSample and scenarioBlock are CAPTURED: the nine members and the one block of a real `rf --workspace W context render --scenario scenario.json --audience cli --no-input --json` at the installed rf 0.1.845 (rc 0, ok true), in a disposable workspace W=/tmp/ws02-s110-grmo1-rfws provisioned by the rf-preview recipe of docs/workbench/receipts/wb-c7ku.md (rf init --backend jsonl --no-input; rf component create --kind declarative demo.banner; rf component add of its manifest; rf component activate demo.banner; rf graph validate; all rc 0), over one committed render of that workspace, with a reactive-fiber.scenario/v1 document whose one action is {source_id task, type set_source, value <text>}; the nine members carry no workspace path, id or timestamp. The same capture holds its notice in result.notice only (result.blocks is the one component block) and output.text opens with the notice line. Through the helper's diffAgainstRoster against this SCG-R11 roster the capture gives the 12 speculative entries B4 pins (the nine members, the two block markers, the output.text label), while a real --no-commit render of Pi's own legacy argv in the same workspace gives 0 speculative entries (its only failures are the pre-existing 0.1.784 to 0.1.845 drift keys judge_context, judge_context_layers and replay_of_operation_id). The members also pass the seat's structural check against the installed schema (required, additionalProperties false, enum, const, digest pattern; not a schema engine). wb-dkru (seat ws-01, g10-work-s119, 2026-10-27; R694 follow-up from the wb-grmo.1 landing 545 gate cmd_c44799b3bdfd, its F3 and F4), MEASURED by the cutting seat and not re-read by the census: marked 18.0.11 (the devDependency, marked.parseInline) renders spec*ul*ative, spec**ul**ative, spec***ul***ative, spec~ul~ative, spec~~ul~~ative and spec`ul`ative as em, strong, del or code inside one word, and spec&ZeroWidthSpace;*ul*ative with its emphasis; it shows spec_ul_ative, spec__ul__ative, spec\\*ul\\*ative and spec&ast;ul&ast;ative with their marks, escapes spec&shyulative (no ';') to show it as written, and renders spec[ul](...)ative as a link inside the word. NAMED_REFERENCE_LIST is read off Python 3.12.15 html.entities.html5 (2231 entries, 2125 names written with ';'): the 309 names whose value, its format characters removed and NFKC applied, is empty or holds an ASCII letter, digit or '_', JS white space, or one of . ! ? \\ * ` ~ - and the ten dash look-alikes, then the 10 names whose value is & < > \" ' or : (319; sha256 of the list joined by newlines 19d03e077020c95bd42333c25946ed79aaf8fe3526f8c8408d3224c9d37f2916, which M5 recomputes). In that table no name, written with or without its ';', spells a SPECULATIVE_TERM or a SERVED_TERM, and over twelve contexts (a name inside spec_ulative, speculat_ive, what_if, scenario_view, hypo_thetical, counter_factual and serve_d, inside and after the --scenario flag, before and after speculative, and inside a served sentence) no name outside the list makes a hit decoded that it does not make written. At base b92d7a1 the census read 25 passed (25), and the gate's G09, G12, G13 and G14 mutants each read 25 passed (25).",
  "measured": {
   "pinAtCutRelease": "0.1.784",
   "pinAtCutCommit": "403389a947583fea6eab9b5ef215939e3b831526",
@@ -231,7 +231,10 @@
       "floorMet": true,
       "anchorRead": true,
       "walkAgreesWithGit": true,
-      "hits": []
+      "hits": [],
+      "planted": [
+       "planted/scenario-arm.ts: --scenario"
+      ]
      }
     }
    ]
@@ -503,7 +506,11 @@
       "anchorRead": true,
       "servedSentences": true,
       "walkAgreesWithGit": true,
-      "hits": []
+      "hits": [],
+      "planted": [
+       "planted/speculative-context.md (raw): Pi serves speculative RF context.",
+       "planted/speculative-context.md (normalized): Pi serves speculative RF context."
+      ]
      }
     },
     {
@@ -512,14 +519,17 @@
       "floorMet": true,
       "walkAgreesWithGit": true,
       "allowed": [],
-      "hits": []
+      "hits": [],
+      "planted": [
+       "planted/speculative-context.md: Pi serves speculative RF context."
+      ]
      }
     }
    ]
   },
   {
    "id": "M",
-   "label": "the matchers rows A to C read: M1-M4 the spellings each must catch and pass, Q1-Q8 the pinned quiet rows of the named residuals",
+   "label": "the matchers rows A to C read: M1-M5 the spellings each must catch and pass, Q1-Q10 the pinned quiet rows of the named residuals",
    "pins": [
     {
      "id": "M1",
@@ -701,6 +711,108 @@
      }
     },
     {
+     "id": "M5",
+     "witness": {
+      "read": [
+       {
+        "text": "Pi serves spec*ul*ative RF context.",
+        "c1": true,
+        "c2": true
+       },
+       {
+        "text": "Pi serves spec**ul**ative RF context.",
+        "c1": true,
+        "c2": true
+       },
+       {
+        "text": "Pi serves spec&shy;ulative RF context.",
+        "c1": true,
+        "c2": true
+       },
+       {
+        "text": "Pi serves spec&ZeroWidthSpace;ulative RF context.",
+        "c1": true,
+        "c2": true
+       },
+       {
+        "text": "Pi serves spec***ul***ative RF context.",
+        "c1": true,
+        "c2": true
+       },
+       {
+        "text": "Pi serves spec~~ul~~ative RF context.",
+        "c1": true,
+        "c2": true
+       },
+       {
+        "text": "Pi serves spec`ul`ative RF context.",
+        "c1": true,
+        "c2": true
+       },
+       {
+        "text": "Pi serves spec&ZeroWidthSpace;*ul*ative RF context.",
+        "c1": true,
+        "c2": true
+       },
+       {
+        "text": "Pi serves spec&NoBreak;ulative RF context.",
+        "c1": true,
+        "c2": true
+       },
+       {
+        "text": "Pi serves &sopf;peculative RF context.",
+        "c1": true,
+        "c2": true
+       },
+       {
+        "text": "Pi serves specul&ordf;tive RF context.",
+        "c1": true,
+        "c2": true
+       },
+       {
+        "text": "Pi serves the what&mdash;if view.",
+        "c1": true,
+        "c2": true
+       },
+       {
+        "text": "Pi serves the scenario&emsp13;view.",
+        "c1": true,
+        "c2": true
+       },
+       {
+        "text": "Pi serves spec_ul_ative RF context.",
+        "c1": false,
+        "c2": false
+       },
+       {
+        "text": "Pi serves spec\\*ul\\*ative RF context.",
+        "c1": false,
+        "c2": false
+       },
+       {
+        "text": "Pi serves spec&ast;ul&ast;ative RF context.",
+        "c1": false,
+        "c2": false
+       },
+       {
+        "text": "Pi serves spec&emsp;ulative RF context.",
+        "c1": false,
+        "c2": false
+       },
+       {
+        "text": "Pi serves sp&eacute;culative RF context.",
+        "c1": false,
+        "c2": false
+       }
+      ],
+      "table": {
+       "names": 319,
+       "listed": 319,
+       "sha256": "19d03e077020c95bd42333c25946ed79aaf8fe3526f8c8408d3224c9d37f2916"
+      }
+     }
+    },
+    {
      "id": "Q1",
      "witness": {
       "topLevel": [
@@ -781,6 +893,36 @@
        "c2": true
       }
      }
+    },
+    {
+     "id": "Q9",
+     "witness": [
+      {
+       "text": "Pi serves spec[ul](./notes.md)ative RF context.",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "text": "Pi serves spec![ul](./ul.png)ative RF context.",
+       "c1": false,
+       "c2": false
+      }
+     ]
+    },
+    {
+     "id": "Q10",
+     "witness": [
+      {
+       "text": "<p>Pi serves spec&shyulative RF context.</p>",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "text": "Pi serves spec&shyulative RF context.",
+       "c1": false,
+       "c2": false
+      }
+     ]
     }
    ]
   }
@@ -802,6 +944,7 @@
   "M2",
   "M3",
   "M4",
+  "M5",
   "Q1",
   "Q2",
   "Q3",
@@ -810,11 +953,13 @@
   "Q6",
   "Q7",
   "Q8",
+  "Q9",
+  "Q10",
   "registration: every test of this file is registered once, in roster order, in run mode, not inverted, and ran; every pin reached its end with its pinned assertion count"
  ],
  "reached": [
   "A1:3",
-  "A2:5",
+  "A2:6",
   "B1:6",
   "B2:3",
   "B3:3",
@@ -822,12 +967,13 @@
   "B5:3",
   "B6:3",
   "B7:3",
-  "C1:5",
-  "C2:6",
+  "C1:6",
+  "C2:7",
   "M1:3",
   "M2:3",
   "M3:3",
   "M4:3",
+  "M5:4",
   "Q1:3",
   "Q2:3",
   "Q3:3",
@@ -835,6 +981,8 @@
   "Q5:3",
   "Q6:3",
   "Q7:3",
-  "Q8:3"
+  "Q8:3",
+  "Q9:3",
+  "Q10:3"
  ]
 }
