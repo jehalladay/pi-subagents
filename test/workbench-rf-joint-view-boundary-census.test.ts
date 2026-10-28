@@ -10,7 +10,7 @@
  * projection (failureSnapshot precedent), never swallowed; (c) an equivalence/similarity verdict input never short-circuits
  * capability permission checks or observer workspace-scope checks (read admission independent of scoring)".
  *
- * SOURCE (read-only git show and git rev-parse on the local ReactiveFiberCLI checkout by the cutting seat, 2026-10-28):
+ * SOURCE (read-only git show and git rev-parse on the local ReactiveFiberCLI checkout by the cut #1 seat, ws-01, 2026-10-28):
  * docs/programs/cac-context-refinement-2026-10-18/01-contracts-and-qa.md, blob 4a64d3b3f08b at the citation pin
  * 82bd879eee52 and byte-identical at origin/main 48f020fe625f (which descends from the pin): :4 names RFContextBoundaryV0 and its
  * fields, disclosure/permission conditions among them; :6 names RFContextRefinementV0 and closes "These are not shipped commands
@@ -21,13 +21,14 @@
  * registry src/reactive_fiber_cli/domain/diagnostics.py (blob 6ba8bb84db91 at 48f020fe625f) specs 20 codes at the trust-denied
  * exit (_EXIT_TRUST_DENIED = 5, :2036; 16 of them at the citation pin, the two broker and two scenario rows added since) and
  * RF_SOURCE_SECRET_WITHHELD as an info row (:4140). The roster vendors each cited doc line and each spec head verbatim with its
- * SHA256 (UTF-8, no trailing newline); this hermetic test never re-reads the producer.
+ * SHA256 (UTF-8, no trailing newline); this hermetic test never re-reads the producer (see ROSTER-HELD below).
  *
- * MEASURED AT BASE (7a0ab7f, landing 630; seat ws-01, run g10-work-s129): no tracked src module names a VOCABULARY fold (git grep,
- * 0 rows). Pi's rf surface is the reactivefiber.render.preview pair (the native and the injected registration): read class, one
- * selector per call (the legacy {model, task} arm or the {view, taskId, model?} arm); reactivefiberTopology reads one reading into
- * one snapshot. So the trigger has not fired: Pi declares no joint conditions and reads no boundary record, and a caller composes
- * views only as separate values and separate snapshots.
+ * MEASURED AT BASE (cut #2: trunk 014d116, landing 651, seat ws-05, run g10-work-s130; cut #1: 7a0ab7f, seat ws-01, run
+ * g10-work-s129): no tracked src module names a VOCABULARY fold (the A3 scan, 0 rows; a separator-tolerant git grep of the eight
+ * needles over src, 0 rows). Pi's rf surface is the reactivefiber.render.preview pair (the native and the injected registration):
+ * read class, one selector per call (the legacy {model, task} arm or the {view, taskId, model?} arm); reactivefiberTopology reads
+ * one reading into one snapshot. So the trigger has not fired: Pi declares no joint conditions and reads no boundary record, and a
+ * caller composes views only as separate values and separate snapshots.
  *
  * READINGS. A VOCABULARY fold is NFKC, lower case, every character outside a-z and 0-9 removed. The needles: the two contract
  * names the vendored :4 and :6 lines spell (RFContext...V0, the rf prefix and the V0 suffix dropped), the title's three
@@ -36,25 +37,32 @@
  * joint conditions") and the title's "hidden correlation", each pair of words joined. A VIEW is a {view, taskId} render answered
  * by a stand-in rf (the ONLY PATH entry, logging each argv) or by an injected host client; a COMPOSED pair is the two views read
  * by one caller, one value and one snapshot each.
- * The DENIAL family is every registry row the vendored excerpts spec at the trust-denied exit; a VERDICT is an input or reading
- * key spelled by the clause (c) words.
+ * The DENIAL family is every registry row the vendored excerpts spec at the trust-denied exit. A VERDICT key is a clause (c) word,
+ * bare or as <word>_verdict; a VERDICT form is a VERDICT key valued one of the seven VERDICT_VALUES (true, false, 1, 0,
+ * "equivalent", "divergent", "substitutable"): 4 keys, 28 forms, the one set C1, C2 and C3 read.
  *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin returns a measured witness held to the roster):
  *  A, clause (a), read where Pi composes today; the armed half is NOT DELIVERED (below).
  *    A1 both fixture views are individually permitted: through the native and the injected registration each view's call returns
  *    its value (one --view launch each, --no-commit --no-input --json), and each projects complete, success, its view contract
  *    satisfied.
- *    A2 the pair's correlated hidden field: each view's text states one half and neither states the field, which the pair derives;
- *    the composed values equal the two solo values and the composed snapshots the two solo snapshots, so Pi adds no joint reading
- *    and the exposure sits with the caller holding both values (R-CALLER-COMPOSITION); no snapshot copies either text.
+ *    A2 the pair's correlated hidden field: each view's text states one half and neither states the field, which the pair derives.
+ *    At three Pi surfaces the composed pair reads as the two solo views: the composed values equal the two solo values, the two
+ *    composed topologies equal the two solo topologies, and the composed pair refreshed into one ObservationProjection queries
+ *    (a scope query, every field of every node compared) exactly the nodes each solo value refreshed alone queries. So at those
+ *    three surfaces, as read here, Pi adds no joint reading, and the exposure sits with the caller holding both values
+ *    (R-CALLER-COMPOSITION); no topology and no queried node copies either text.
  *    A3 no declared joint conditions exist to read the pair under: no src script module (git ls-files held both ways to a
- *    filesystem walk) names a VOCABULARY fold in an identifier or a constant string composition (controls read, quiet rows below);
+ *    filesystem walk) names a VOCABULARY fold in an identifier, a regular-expression text, a constant text piece (a string
+ *    literal, a template head, middle or tail, a JSX text) or a constant string composition (controls read, quiet rows below);
  *    a boundary declaration stated on a view's result is carried opaque by the native preview and changes no projection; the
  *    pair reads complete and success twice; and the vendored :6 line states the contracts unshipped.
  *  B, clause (b).
  *    B1 every DENIAL code at either position of a composed pair: through the stand-in (exit 5) the refused view's call raises the
- *    typed refusal 'unavailable' naming the code and never returns a value, while the other view's call returns its value; through
- *    the injected registration the refusal envelope is relayed as a value stating ok false and the code.
+ *    typed refusal 'unavailable' naming the code and never returns a value, while the other view's call returns its value, equal
+ *    to its solo value (the same input answered through a separate registration whose every call is clean); through the injected
+ *    registration the refusal envelope is relayed as a value stating ok false and the code, and the other view's value equals its
+ *    solo value (the same view relayed through a separate injected registration).
  *    B2 the projection: each refusal projects through the observer's failureSnapshot (the precedent the clause names, read as a
  *    declared function of src/workbench/reactivefiber-observer.ts): coverage unknown, tone failure, status text and first note
  *    naming the code; the composed pair refreshed into one ObservationProjection holds exactly one failure node (the refused
@@ -62,34 +70,48 @@
  *    B3 never swallowed: either order composes the same nodes, each composed node equals its solo projection, two refusals stay
  *    two failure nodes, and the R-NONFATAL-DENIAL quiet row.
  *  C, clause (c).
- *    C1 every verdict form (each clause (c) word as a key valued true or 1, or a <word>_verdict key) beside either input arm is
- *    refused 'validation' on both registrations with the grant, before any launch or client call: the registered input schema's
- *    two arms are closed ({model, task} and {view, taskId, model}, additionalProperties false); the verdict-free arms launch.
+ *    C1 every VERDICT form beside either input arm is refused 'validation' on both registrations with the grant, before any
+ *    launch or client call: the registered input schema's two arms are closed ({model, task} and {view, taskId, model},
+ *    additionalProperties false); the verdict-free arms launch.
  *    C2 the descriptor's permissions (read from both registrations) are exactly reactivefiber:render, and without that grant
- *    every input, verdict-carrying or not, under every grant set (none, a verdict-named grant, or a discover, inspect or invoke
- *    grant) is refused 'authorization' with no launch or client call; authorization precedes the schema refusal.
+ *    every input, with no VERDICT form or with any one, under every grant set (none, a verdict-named grant, or a discover,
+ *    inspect or invoke grant) is refused 'authorization' with no launch or client call; authorization precedes the schema refusal.
  *    C3 the observer: a reading whose root differs from the observer scope, or from the host's authorized rf root, is refused
- *    'authorization' with the same message whatever verdict it carries (at the reading or on its result, every value), and an
- *    in-scope reading projects identically with and without any verdict.
+ *    'authorization' with the same message whatever VERDICT form it carries (at the reading or on its result), and an in-scope
+ *    reading projects identically with and without any VERDICT form.
  *
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the claims shape below. The judged set -
  * every row's id, label and pins, every pin's witness and claims, the vocabulary, the verdict words, the denial codes, the info
  * code, the residuals and the claims bound - is held to the out-of-file roster (test/fixtures/rf-joint-view-boundary-roster.json).
- * OUTSIDE ANCHORS. The tracked bead export (.beads/issues.jsonl, the wb-ae7u row): row A-C labels equal the acceptance clauses in
- * order and each row's pin quotes tile its clause with separator-only gaps (so a row or pin deleted from every census literal and
- * the roster still reds); the citation is the notes' own; VERDICT_WORDS are clause (c)'s words; B2's precedent is clause (b)'s
- * name; the title's contract is one the vendored :4 line names; the title's declaration words and hidden correlation and clause
- * (a)'s two nouns give six VOCABULARY needles. The vendored producer excerpts (each held to its SHA256): the two contract needles;
- * the DENIAL family and its count against the measured trustDeniedCount; the info code. CLAIMS: each roster pin's claims are
- * terms tiling its quote, each naming the witness
- * facts (top-level keys) that show it; a pin's live witness must show exactly its claims, and the claims bound case holds every
- * pin's claims against every other pin's live witness (none accepted), so a pin's case swapped for another's reds.
- * NOT CLAIMED: a case rewritten together with its roster witness and claims; an edit of a judge (tiled, claimMisses, the
- * derivations) together with the roster.
+ * TERMS RULE (the claims). Each roster pin's claims are terms tiling its quote, each naming facts. A pin's case returns its
+ * witness keyed by exactly those terms, in order, each entry holding exactly the facts its term names; so every word of a quote is
+ * spelled by a key the pin's own case returns. A pin's live witness must show exactly its claims, and the claims bound case holds
+ * every pin's claims against every other pin's live witness (none accepted), so a pin's case swapped for another's reds.
+ * OUTSIDE ANCHORS (outside this file and its roster): the tracked bead export (.beads/issues.jsonl, the wb-ae7u row). Row A-C
+ * labels equal the acceptance clauses in order and each row's pin quotes tile its clause with separator-only gaps; the citation is
+ * the notes' own; VERDICT_WORDS are clause (c)'s words; B2's precedent is clause (b)'s name; the title's contract name must appear
+ * in a vendored doc excerpt; the title's declaration words and hidden correlation and clause (a)'s two nouns give six VOCABULARY
+ * needles. With the TERMS rule, a row or pin deleted from every census literal and the roster still reds: a row deleted, at the
+ * labels; a pin deleted with its words dropped, at its clause's tiling; a pin merged into a neighbour (its words re-homed into the
+ * neighbour's quote and the neighbour's claims re-tiled), at the neighbour's claims, since the neighbour's own case returns no
+ * entry for the re-homed words.
+ * ROSTER-HELD (literals of the roster, NOT outside anchors): the vendored producer excerpts and their SHA256 values (the hash
+ * check binds each excerpt only to its own roster-held hash, and nothing re-reads the producer), the trust-denied exit,
+ * trustDeniedCount and citationPinCount, the DENIAL family and the info code the excerpts spec, and the two contract needles the
+ * doc excerpts spell.
+ * NOT CLAIMED: an edit of a case or of a helper it calls (its body, or the term keys it returns), alone or together with its roster
+ * witness and claims; an edit of a judge (tiled, claimMisses, constant, piece, scan, the derivations) together with the roster; a
+ * coordinated edit of the
+ * roster-held literals through the census and the roster together - for example a DENIAL code taken out of DENIAL_CODES, the
+ * roster's denialCodes, its excerpt and every count that encodes it, or the info code re-spelled in INFO_CODE, the roster and its
+ * excerpt with the hash recomputed - stays green.
  * RESIDUALS (named, each with its pinned quiet fact): R-CALLER-COMPOSITION (A2 composedEqualsSolo) the composition happens at the
  * caller, which holds both values whole, so a joint reveal there is judged by nothing in Pi until declared joint conditions
- * exist; R-COMPUTED (A3 quiet) a needle composed at run time from non-constant parts is not read by the src scan; R-PARAPHRASE
- * (A3 quiet) a boundary reader spelled with no VOCABULARY fold is not read (a src comment is no reader and is not scanned);
+ * exist; R-COMPUTED (A3 quiet, two rows) a needle that only a run-time composition completes - a part read at run time (a
+ * variable, a parameter, a call result) joined to constant text, or constant parts joined by a call such as Array.prototype.join
+ * or String.prototype.concat - is not read: the src scan reads single pieces and folds only the compositions constant() names
+ * (no single piece holds such a needle); R-PARAPHRASE (A3 quiet)
+ * a boundary reader spelled with no VOCABULARY fold is not read (a src comment is no reader and is not scanned);
  * R-NONFATAL-DENIAL (B3 nonfatal) a withholding rf states on an ok render as an info row (RF_SOURCE_SECRET_WITHHELD, a secret
  * capture the producer withheld) or as a warning is no failure under the failureSnapshot precedent: the projection names no info
  * diagnostic and counts warnings only from result.diagnostics_summary, so the render reads complete and success.
@@ -151,6 +173,8 @@ const VOCABULARY: readonly string[] = [
   "contextboundary", "contextrefinement", "disclosureconditions", "permissionconditions", "jointview", "boundaryviolation", "jointconditions", "hiddencorrelation",
 ];
 const VERDICT_WORDS: readonly string[] = ["equivalence", "similarity"];
+/** The values a VERDICT key is read at (C1, C2 and C3 read the same 28 forms). */
+const VERDICT_VALUES: readonly JsonValue[] = [true, false, 1, 0, "equivalent", "divergent", "substitutable"];
 const DENIAL_CODES: readonly string[] = [
   "RF_BROKER_DEMAND_NOT_OWNED", "RF_BROKER_RIGHTS_DENIED", "RF_CONFIG_LAYER_READONLY", "RF_GRAPH_OVERLAY_SCOPE_DENIED",
   "RF_GRAPH_OVERLAY_PROTECTED_TARGET", "RF_LENS_BINDING_DENIED", "RF_OBSERVATION_DENIED", "RF_OPTIC_EXECUTION_DENIED",
@@ -315,13 +339,15 @@ function observed(value: JsonValue, host: ReactiveFiberTopologyContext = HOST): 
     return { kind: "refused", category: error.category, message: error.message };
   }
 }
-/** Refreshes the snapshots into one projection; returns the node count per tone and the failure nodes' native ids. */
-function composed(snapshots: readonly NativeSnapshot[]): { applied: string[]; failure: string[]; success: string[]; nodes: string[] } {
+/** Refreshes the snapshots into one projection; returns each refresh's outcome, the failure and success nodes' native ids, the
+ * scope query's nodes as (id, presentation, completeness), and the same nodes whole (every field the query returns). */
+function composed(snapshots: readonly NativeSnapshot[]): { applied: string[]; failure: string[]; success: string[]; nodes: string[]; full: string[] } {
   const projection = new ObservationProjection();
   const applied = snapshots.map(snapshot => projection.refresh(snapshot));
   const ids = (tone: "failure" | "success"): string[] => projection.query({ scope: SCOPE, limit: 50, statusTone: tone }).nodes.map(node => node.nativeRef.id).sort();
-  const nodes = projection.query({ scope: SCOPE, limit: 50 }).nodes.map(node => JSON.stringify([node.nativeRef.id, node.presentation, node.completeness])).sort();
-  return { applied, failure: ids("failure"), success: ids("success"), nodes };
+  const queried = projection.query({ scope: SCOPE, limit: 50 }).nodes;
+  const nodes = queried.map(node => JSON.stringify([node.nativeRef.id, node.presentation, node.completeness])).sort();
+  return { applied, failure: ids("failure"), success: ids("success"), nodes, full: queried.map(node => JSON.stringify(node)).sort() };
 }
 
 /** A constant string composition: a string literal, a no-substitution template, a parenthesized part, a + concatenation or a
@@ -345,13 +371,20 @@ function constant(node: ts.Node): string | undefined {
   }
   return undefined;
 }
-/** The VOCABULARY folds a module's identifiers, regular-expression pattern texts and constant string compositions hold. */
+/** The parse kind a module's extension names (every tracked src module is .ts at this cut's base). */
+const scriptKind = (path: string): ts.ScriptKind =>
+  path.endsWith(".tsx") ? ts.ScriptKind.TSX : path.endsWith(".jsx") ? ts.ScriptKind.JSX : /\.[cm]?js$/.test(path) ? ts.ScriptKind.JS : ts.ScriptKind.TS;
+/** A constant text piece beside the string literals constant() reads: a template head, middle or tail, or a JSX text. */
+const piece = (node: ts.Node): string | undefined =>
+  ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node) || ts.isJsxText(node) ? node.text : undefined;
+/** The VOCABULARY folds a module holds in an identifier, a regular-expression pattern text, a constant text piece or a constant
+ * string composition. */
 function scan(text: string, path = "fixture.ts"): string[] {
-  const source = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const source = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, scriptKind(path));
   const hits = new Set<string>();
   const visit = (node: ts.Node): void => {
     const value = ts.isIdentifier(node) || ts.isPrivateIdentifier(node) ? node.text
-      : ts.isRegularExpressionLiteral(node) ? node.text.slice(1, node.text.lastIndexOf("/")) : constant(node);
+      : ts.isRegularExpressionLiteral(node) ? node.text.slice(1, node.text.lastIndexOf("/")) : piece(node) ?? constant(node);
     if (value !== undefined) for (const word of VOCABULARY) if (fold(value).includes(word)) hits.add(word);
     ts.forEachChild(node, visit);
   };
@@ -460,18 +493,26 @@ const derivedInfoCodes = (): string[] => excerptsAt(REGISTRY).flatMap(text => {
 });
 /** The failureSnapshot precedent clause (b) names: "(<name> precedent)". */
 const derivedPrecedent = (): string => /\((\w+) precedent\)/.exec(acceptanceClauses()[1] ?? "")?.[1] ?? "";
-/** Each clause (c) word as a key valued true or 1, or a <word>_verdict key valued "substitutable". */
-const verdictForms = (): Obj[] => VERDICT_WORDS.flatMap(word => [{ [word]: true }, { [word]: 1 }, { [`${word}_verdict`]: "substitutable" }]);
+/** The VERDICT keys: each clause (c) word, bare or as <word>_verdict. */
+const verdictKeys = (): string[] => VERDICT_WORDS.flatMap(word => [word, `${word}_verdict`]);
+/** The VERDICT forms: each VERDICT key valued each of the VERDICT_VALUES (the one set C1, C2 and C3 read). */
+const verdictForms = (): Obj[] => verdictKeys().flatMap(key => VERDICT_VALUES.map(value => ({ [key]: value })));
 
-/** Why a witness fails to show a pin's claims: the terms must tile the quote, each naming facts, the facts partitioning its keys. */
+/** Why a witness fails to show a pin's claims (the TERMS rule): the terms must tile the quote and be the witness's own keys in
+ * order, so every quote word is spelled by a key the pin's case returns; each term names facts, exactly its entry's keys. */
 function claimMisses(quote: string, claims: readonly Claim[], witness: JsonValue): string[] {
   const misses = tiled(quote, claims.map(claim => claim.term)) ? [] : ["tiling"];
-  for (const claim of claims) if (claim.facts.length === 0) misses.push(`idle: ${claim.term}`);
-  const facts = claims.flatMap(claim => claim.facts);
-  const keys = witness !== null && typeof witness === "object" && !Array.isArray(witness) ? Object.keys(witness) : [];
-  for (const [index, fact] of facts.entries()) if (facts.indexOf(fact) !== index) misses.push(`twice: ${fact}`);
-  for (const fact of facts) if (!keys.includes(fact)) misses.push(`absent: ${fact}`);
-  for (const key of keys) if (!facts.includes(key)) misses.push(`unclaimed: ${key}`);
+  const entries: Record<string, unknown> = isRecord(witness) ? witness : {};
+  const terms = Object.keys(entries);
+  if (JSON.stringify(terms) !== JSON.stringify(claims.map(claim => claim.term))) misses.push(`terms: ${terms.join(" | ")}`);
+  for (const claim of claims) {
+    if (claim.facts.length === 0) misses.push(`idle: ${claim.term}`);
+    const entry = entries[claim.term];
+    const keys = isRecord(entry) ? Object.keys(entry) : [];
+    for (const [index, fact] of claim.facts.entries()) if (claim.facts.indexOf(fact) !== index) misses.push(`twice: ${claim.term}: ${fact}`);
+    for (const fact of claim.facts) if (!keys.includes(fact)) misses.push(`absent: ${claim.term}: ${fact}`);
+    for (const key of keys) if (!claim.facts.includes(key)) misses.push(`unclaimed: ${claim.term}: ${key}`);
+  }
   return misses;
 }
 
@@ -494,12 +535,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const snapshots = values.map(snapshotOf);
     expect(relayed.map(value => JSON.stringify(project(value)))).toEqual(projections.map(projection => JSON.stringify(projection)));
     return {
-      views: [...VIEWS],
-      launches,
-      admitted: { native: values.map(value => object(object(value).source).ok ?? null), injected: relayed.map(value => object(object(value).source).ok ?? null) },
-      coverage: snapshots.map(snapshot => snapshot.coverage ?? null),
-      tones: snapshots.map(snapshot => snapshot.node.statusTone),
-      contractNotes: projections.map(projection => projection.diagnostics.find(note => note.startsWith("view contract:")) ?? null),
+      "two individually-permitted": {
+        admitted: { native: values.map(value => object(object(value).source).ok ?? null), injected: relayed.map(value => object(object(value).source).ok ?? null) },
+        coverage: snapshots.map(snapshot => snapshot.coverage ?? null),
+        tones: snapshots.map(snapshot => snapshot.node.statusTone),
+      },
+      "fixture views": {
+        views: [...VIEWS],
+        launches,
+        contractNotes: projections.map(projection => projection.diagnostics.find(note => note.startsWith("view contract:")) ?? null),
+      },
     };
   },
   A2: async () => {
@@ -515,12 +560,21 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const texts = composedValues.map(value => String(object(object(object(object(value).source).result).output).text));
     const halves = texts.map(text => Number(/ half (\d+)$/.exec(text)?.[1]));
     const projections = composedValues.map(value => JSON.stringify(project(value)));
+    // The composed pair refreshed into one ObservationProjection, against each solo value refreshed into a projection alone,
+    // compared node by node with every field the scope query returns.
+    const refreshed = composed(composedValues.map(snapshotOf));
+    const soloNodes = soloValues.flatMap(value => composed([snapshotOf(value)]).full).sort();
     return {
-      composedEqualsSolo: JSON.stringify(composedValues) === JSON.stringify(soloValues),
-      projectionsEqualSolo: JSON.stringify(projections) === JSON.stringify(soloValues.map(value => JSON.stringify(project(value)))),
-      valueTexts: texts,
-      hiddenField: { inEither: texts.some(text => text.includes(String(HIDDEN))), derivedFromPair: halves.reduce((sum, half) => sum + half, 0) === HIDDEN },
-      projectionCarriesText: projections.some(text => texts.some(value => text.includes(value))),
+      "whose composition": {
+        composedEqualsSolo: JSON.stringify(composedValues) === JSON.stringify(soloValues),
+        projectionsEqualSolo: JSON.stringify(projections) === JSON.stringify(soloValues.map(value => JSON.stringify(project(value)))),
+        refreshedPair: { applied: refreshed.applied, nodes: refreshed.full.length, equalsSolo: JSON.stringify(refreshed.full) === JSON.stringify(soloNodes) },
+      },
+      "exposes a correlated hidden field": {
+        valueTexts: texts,
+        hiddenField: { inEither: texts.some(text => text.includes(String(HIDDEN))), derivedFromPair: halves.reduce((sum, half) => sum + half, 0) === HIDDEN },
+        projectionCarriesText: [...projections, ...refreshed.full].some(text => texts.some(value => text.includes(value))),
+      },
     };
   },
   A3: async () => {
@@ -534,11 +588,15 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       "const boundary = result.context_boundary;", "const { disclosureConditions } = boundary;", 'return source["permission" + "_conditions"];',
       "type JointView = { readonly views: readonly string[] };", 'import refinement from "rf/RFContextRefinementV0";', "const pattern = /joint[-_]?view/i;",
       "const jointConditions = boundary.joint_conditions;", "function boundaryViolation(pair: readonly unknown[]): boolean { return pair.length > 1; }",
-      'const reason = "hidden correlation";',
+      'const reason = "hidden correlation";', `const key = (part: string): string => \`context_boundary.\${part}\`;`,
     ];
-    const controlHits = controls.map(text => scan(text));
-    // R-COMPUTED (a needle joined from a run-time part) and R-PARAPHRASE (a boundary reader with no needle), quiet.
-    const quiet = [scan('const key = "context_" + suffix; return result[key];'), scan("return result.view_policy.pair_rules;")];
+    const controlHits = [...controls.map(text => scan(text)), scan("export const Label = (): unknown => <b>joint view</b>;", "fixture.tsx")];
+    // R-COMPUTED (a needle only a run-time composition completes: a run-time + part, constant parts joined by a call) and
+    // R-PARAPHRASE (a boundary reader with no needle), quiet.
+    const quiet = [
+      scan('const key = "context_" + suffix; return result[key];'), scan('const key = ["context", "boundary"].join("_"); return result[key];'),
+      scan("return result.view_policy.pair_rules;"),
+    ];
     const declared = cleanView(0);
     object(declared.result).context_boundary = { disclosure_conditions: [{ views: [...VIEWS], hidden: "sum" }], permission_conditions: [] };
     const native = standIn({ [answerKey(viewInput(0))]: { envelope: declared, exit: 0 } });
@@ -546,15 +604,19 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const pair = VIEWS.map((_, index) => snapshotOf(reading(cleanView(index))));
     const unshipped = excerptsAt(DOC).some(text => text.includes("These are not shipped commands or schema exports."));
     return {
-      srcFindings: findings,
-      floorMet: true,
-      controlHits,
-      quiet,
-      boundaryCarriedOpaque: JSON.stringify(object(value).source) === JSON.stringify(declared),
-      boundaryRead: JSON.stringify(project(value)) !== JSON.stringify(project(reading(cleanView(0)))),
-      pairTones: pair.map(snapshot => snapshot.node.statusTone),
-      pairCoverage: pair.map(snapshot => snapshot.coverage ?? null),
-      producerShipped: !unshipped,
+      "read as a boundary violation": {
+        boundaryRead: JSON.stringify(project(value)) !== JSON.stringify(project(reading(cleanView(0)))),
+        pairTones: pair.map(snapshot => snapshot.node.statusTone),
+        pairCoverage: pair.map(snapshot => snapshot.coverage ?? null),
+      },
+      "under the declared joint conditions": {
+        srcFindings: findings,
+        floorMet: true,
+        controlHits,
+        quiet,
+        boundaryCarriedOpaque: JSON.stringify(object(value).source) === JSON.stringify(declared),
+        producerShipped: !unshipped,
+      },
     };
   },
   B1: async () => {
@@ -565,6 +627,19 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         answers[answerKey(viewInput(index, `${code}|clean`))] = { envelope: cleanView(index), exit: 0 };
       }
     }
+    // Each clean input's solo value: the same input answered through a separate registration whose every call is clean.
+    const soloNative = standIn(answers);
+    const soloValue = new Map<string, string>();
+    for (const code of DENIAL_CODES) {
+      for (const index of VIEWS.keys()) {
+        const input = viewInput(index, `${code}|clean`);
+        soloValue.set(answerKey(input), JSON.stringify(await call(soloNative.registry, input)));
+      }
+    }
+    expect(soloNative.launches().length).toBe(DENIAL_CODES.length * VIEWS.length);
+    const soloClient = injected(VIEWS.map((_, index) => cleanView(index)));
+    const soloRelayed: string[] = [];
+    for (const index of VIEWS.keys()) soloRelayed.push(JSON.stringify(await call(soloClient.registry, viewInput(index))));
     const native = standIn(answers);
     const nativeRows: Obj[] = [];
     const queue: JsonValue[] = [];
@@ -574,7 +649,11 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         const outcomes = await Promise.all(inputs.map(input => settle(call(native.registry, input))));
         const refused = outcomes[position] ?? {};
         const other = outcomes[1 - position] ?? {};
-        nativeRows.push({ code, position, refused: refused.kind ?? null, category: refused.category ?? null, namesCode: refused.message === `RF render refused: ${code}`, other: other.kind ?? null });
+        const otherInput = inputs[1 - position] ?? {};
+        nativeRows.push({
+          code, position, refused: refused.kind ?? null, category: refused.category ?? null, namesCode: refused.message === `RF render refused: ${code}`,
+          other: other.kind ?? null, otherIsSolo: JSON.stringify(other.value) === soloValue.get(answerKey(otherInput)),
+        });
         for (const index of VIEWS.keys()) queue.push(index === position ? refusal(code, index) : cleanView(index));
       }
     }
@@ -588,26 +667,32 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         const refused = object(object(values[position] ?? null).source);
         const primary = object((refused.diagnostics as JsonValue[] | undefined)?.[0] ?? null);
         const other = object(object(values[1 - position] ?? null).source);
-        relayedRows.push({ code, position, ok: refused.ok ?? null, primary: primary.code ?? null, otherOk: other.ok ?? null });
+        relayedRows.push({
+          code, position, ok: refused.ok ?? null, primary: primary.code ?? null, otherOk: other.ok ?? null,
+          otherIsSolo: JSON.stringify(values[1 - position] ?? null) === soloRelayed[1 - position],
+        });
       }
     }
     const { exit } = derivedDenial();
     return {
-      codes: [...DENIAL_CODES],
-      exitClass: exit,
-      native: {
-        pairs: nativeRows.length,
-        refused: unique(nativeRows.map(row => row.refused ?? null)),
-        categories: unique(nativeRows.map(row => row.category ?? null)),
-        namingCode: nativeRows.filter(row => row.namesCode === true).length,
-        others: unique(nativeRows.map(row => row.other ?? null)),
-        positions: unique(nativeRows.map(row => row.position ?? null)),
-      },
-      injected: {
-        pairs: relayedRows.length,
-        ok: unique(relayedRows.map(row => row.ok ?? null)),
-        primaryIsCode: relayedRows.filter(row => row.primary === row.code).length,
-        othersOk: unique(relayedRows.map(row => row.otherOk ?? null)),
+      "a permission/disclosure failure": { codes: [...DENIAL_CODES], exitClass: exit },
+      "in any composed view": {
+        native: {
+          pairs: nativeRows.length,
+          refused: unique(nativeRows.map(row => row.refused ?? null)),
+          categories: unique(nativeRows.map(row => row.category ?? null)),
+          namingCode: nativeRows.filter(row => row.namesCode === true).length,
+          others: unique(nativeRows.map(row => row.other ?? null)),
+          othersAsSolo: nativeRows.filter(row => row.otherIsSolo === true).length,
+          positions: unique(nativeRows.map(row => row.position ?? null)),
+        },
+        injected: {
+          pairs: relayedRows.length,
+          ok: unique(relayedRows.map(row => row.ok ?? null)),
+          primaryIsCode: relayedRows.filter(row => row.primary === row.code).length,
+          othersOk: unique(relayedRows.map(row => row.otherOk ?? null)),
+          othersAsSolo: relayedRows.filter(row => row.otherIsSolo === true).length,
+        },
       },
     };
   },
@@ -625,15 +710,19 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       });
     }
     return {
-      precedent,
-      precedentDeclared: declaredFunctions("src/workbench/reactivefiber-observer.ts").includes(precedent),
-      refused: {
-        coverage: unique(rows.map(row => row.coverage ?? null)), tones: unique(rows.map(row => row.tone ?? null)),
-        statusNamingCode: rows.filter(row => row.statusNamesCode === true).length, notesNamingCode: rows.filter(row => row.noteNamesCode === true).length,
+      "surfaces in the projection": {
+        refused: {
+          coverage: unique(rows.map(row => row.coverage ?? null)), tones: unique(rows.map(row => row.tone ?? null)),
+          statusNamingCode: rows.filter(row => row.statusNamesCode === true).length, notesNamingCode: rows.filter(row => row.noteNamesCode === true).length,
+        },
+        composed: {
+          pairs: rows.length, applied: unique(rows.map(row => row.applied ?? null)),
+          failureNodes: unique(rows.map(row => row.failure ?? null)), successNodes: unique(rows.map(row => row.success ?? null)),
+        },
       },
-      composed: {
-        pairs: rows.length, applied: unique(rows.map(row => row.applied ?? null)),
-        failureNodes: unique(rows.map(row => row.failure ?? null)), successNodes: unique(rows.map(row => row.success ?? null)),
+      "(failureSnapshot precedent)": {
+        precedent,
+        precedentDeclared: declaredFunctions("src/workbench/reactivefiber-observer.ts").includes(precedent),
       },
     };
   },
@@ -668,7 +757,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         named: JSON.stringify(projection).includes(INFO_CODE), equalsClean: JSON.stringify(projection) === JSON.stringify(project(reading(cleanView(0)))),
       };
     });
-    return { orderIndependent, soloEqual, twoRefusals: unique(twoRefusals), nonfatal };
+    return { "never swallowed": { orderIndependent, soloEqual, twoRefusals: unique(twoRefusals), nonfatal } };
   },
   C1: async () => {
     const forms = verdictForms();
@@ -690,12 +779,13 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     for (const arm of arms) controls.push(await settle(call(native.registry, arm)));
     const shape = (outcomes: readonly Obj[]): JsonValue => ({ kinds: unique(outcomes.map(outcome => outcome.kind ?? null)), categories: unique(outcomes.map(outcome => outcome.category ?? null)), messages: unique(outcomes.map(outcome => outcome.message ?? null)) });
     return {
-      words: [...VERDICT_WORDS],
-      forms: forms.map(form => Object.keys(form)[0] ?? ""),
-      arms: admission(native.registry).arms,
-      nativeOutcomes: { ...object(shape(nativeOutcomes)), launches: launchedByForms },
-      injectedOutcomes: { ...object(shape(injectedOutcomes)), calls: calledByForms },
-      controlLaunches: { kinds: unique(controls.map(outcome => outcome.kind ?? null)), launches: native.launches().length },
+      "an equivalence/similarity verdict": { words: [...VERDICT_WORDS], keys: verdictKeys(), values: [...VERDICT_VALUES], forms: forms.length },
+      input: {
+        arms: admission(native.registry).arms,
+        nativeOutcomes: { ...object(shape(nativeOutcomes)), launches: launchedByForms },
+        injectedOutcomes: { ...object(shape(injectedOutcomes)), calls: calledByForms },
+        controlLaunches: { kinds: unique(controls.map(outcome => outcome.kind ?? null)), launches: native.launches().length },
+      },
     };
   },
   C2: async () => {
@@ -717,16 +807,19 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const precedence = await settle(call(native.registry, { ...viewInput(0), ...(forms[0] ?? {}) }, []));
     const shape = (rows: readonly Obj[]): Obj => ({ calls: rows.length, categories: unique(rows.map(row => row.category ?? null)), messages: unique(rows.map(row => row.message ?? null)) });
     return {
-      permissions: unique([admission(native.registry).permissions, admission(client.registry).permissions]),
-      grantSets: grantSets.length,
-      nativeRefusals: { ...shape(nativeRows), launches: native.launches().length },
-      injectedRefusals: { ...shape(injectedRows), clientCalls: client.calls() },
-      precedesValidation: precedence.category === "authorization",
+      "never short-circuits": {
+        nativeRefusals: { ...shape(nativeRows), launches: native.launches().length },
+        injectedRefusals: { ...shape(injectedRows), clientCalls: client.calls() },
+        precedesValidation: precedence.category === "authorization",
+      },
+      "capability permission checks": {
+        permissions: unique([admission(native.registry).permissions, admission(client.registry).permissions]),
+        grantSets: grantSets.length,
+      },
     };
   },
   C3: async () => {
-    const values: readonly JsonValue[] = [true, false, 1, 0, "equivalent", "divergent"];
-    const verdicts = VERDICT_WORDS.flatMap(word => values.map(value => ({ [word]: value })));
+    const verdicts = verdictForms();
     const elsewhere = `${ROOT}-elsewhere`;
     const authorized: ReactiveFiberTopologyContext = { ...HOST, authorizedRfRoot: `${ROOT}-authorized` };
     const atResult = (verdict: Obj): Obj => {
@@ -739,11 +832,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const baseline = JSON.stringify(observed(reading(cleanView(0))));
     const inScope = variants(ROOT).map(value => JSON.stringify(observed(value)));
     return {
-      outOfScope: refusals(variants(elsewhere).map(value => observed(value))),
-      authorizedRoot: refusals(variants(ROOT).map(value => observed(value, authorized))),
-      positions: ["reading", "result"],
-      values: verdicts.length,
-      inScopeEqual: { readings: inScope.length, equal: inScope.filter(text => text === baseline).length, projected: (JSON.parse(baseline) as Obj).kind ?? null },
+      "or observer workspace-scope checks": {
+        outOfScope: refusals(variants(elsewhere).map(value => observed(value))),
+        authorizedRoot: refusals(variants(ROOT).map(value => observed(value, authorized))),
+      },
+      "(read admission independent of scoring)": {
+        positions: ["reading", "result"],
+        keys: verdictKeys(),
+        forms: verdicts.length,
+        inScopeEqual: { readings: inScope.length, equal: inScope.filter(text => text === baseline).length, projected: (JSON.parse(baseline) as Obj).kind ?? null },
+      },
     };
   },
 };
@@ -778,7 +876,7 @@ describe("wb-ae7u rf joint-view boundary census (RF-CAC-CONTEXT-REFINEMENT-R5, g
     expect(ROSTER.residuals.every(item => pins.includes(item.quietPin))).toBe(true);
     const held = ROSTER.rows.flatMap(row => row.pins);
     expect(ROSTER.residuals.every(item => held.find(pin => pin.id === item.quietPin)?.claims.some(claim => claim.facts.includes(item.fact)) === true)).toBe(true);
-    expect(held.map(pin => `${pin.id}:${pin.claims.map(claim => claim.facts.length).join("+")}`)).toEqual(["A1:3+3", "A2:2+3", "A3:3+6", "B1:2+2", "B2:2+2", "B3:4", "C1:2+4", "C2:3+2", "C3:2+3"]);
+    expect(held.map(pin => `${pin.id}:${pin.claims.map(claim => claim.facts.length).join("+")}`)).toEqual(["A1:3+3", "A2:3+3", "A3:3+6", "B1:2+2", "B2:2+2", "B3:4", "C1:4+4", "C2:3+2", "C3:2+4"]);
     expect(held.filter(pin => !tiled(pin.quote, pin.claims.map(claim => claim.term))).map(pin => pin.id)).toEqual([]);
   });
   for (const row of ROWS) {

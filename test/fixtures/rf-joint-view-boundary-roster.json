@@ -156,56 +156,60 @@
           "id": "A1",
           "quote": "two individually-permitted fixture views",
           "witness": {
-            "views": [
-              "fixture.alpha",
-              "fixture.beta"
-            ],
-            "launches": [
-              [
-                "context",
-                "render",
-                "--view",
-                "fixture.alpha",
-                "--task-id",
-                "joint-fixture",
-                "--no-commit",
-                "--no-input",
-                "--json"
+            "two individually-permitted": {
+              "admitted": {
+                "native": [
+                  true,
+                  true
+                ],
+                "injected": [
+                  true,
+                  true
+                ]
+              },
+              "coverage": [
+                "complete",
+                "complete"
               ],
-              [
-                "context",
-                "render",
-                "--view",
-                "fixture.beta",
-                "--task-id",
-                "joint-fixture",
-                "--no-commit",
-                "--no-input",
-                "--json"
-              ]
-            ],
-            "admitted": {
-              "native": [
-                true,
-                true
-              ],
-              "injected": [
-                true,
-                true
+              "tones": [
+                "success",
+                "success"
               ]
             },
-            "coverage": [
-              "complete",
-              "complete"
-            ],
-            "tones": [
-              "success",
-              "success"
-            ],
-            "contractNotes": [
-              "view contract: satisfied (fixture.alpha)",
-              "view contract: satisfied (fixture.beta)"
-            ]
+            "fixture views": {
+              "views": [
+                "fixture.alpha",
+                "fixture.beta"
+              ],
+              "launches": [
+                [
+                  "context",
+                  "render",
+                  "--view",
+                  "fixture.alpha",
+                  "--task-id",
+                  "joint-fixture",
+                  "--no-commit",
+                  "--no-input",
+                  "--json"
+                ],
+                [
+                  "context",
+                  "render",
+                  "--view",
+                  "fixture.beta",
+                  "--task-id",
+                  "joint-fixture",
+                  "--no-commit",
+                  "--no-input",
+                  "--json"
+                ]
+              ],
+              "contractNotes": [
+                "view contract: satisfied (fixture.alpha)",
+                "view contract: satisfied (fixture.beta)"
+              ]
+            }
           },
           "claims": [
             {
@@ -230,24 +234,37 @@
           "id": "A2",
           "quote": "whose composition exposes a correlated hidden field",
           "witness": {
-            "composedEqualsSolo": true,
-            "projectionsEqualSolo": true,
-            "valueTexts": [
-              "fixture.alpha constructed half 17",
-              "fixture.beta constructed half 25"
-            ],
-            "hiddenField": {
-              "inEither": false,
-              "derivedFromPair": true
+            "whose composition": {
+              "composedEqualsSolo": true,
+              "projectionsEqualSolo": true,
+              "refreshedPair": {
+                "applied": [
+                  "applied",
+                  "applied"
+                ],
+                "nodes": 2,
+                "equalsSolo": true
+              }
             },
-            "projectionCarriesText": false
+            "exposes a correlated hidden field": {
+              "valueTexts": [
+                "fixture.alpha constructed half 17",
+                "fixture.beta constructed half 25"
+              ],
+              "hiddenField": {
+                "inEither": false,
+                "derivedFromPair": true
+              },
+              "projectionCarriesText": false
+            }
           },
           "claims": [
             {
               "term": "whose composition",
               "facts": [
                 "composedEqualsSolo",
-                "projectionsEqualSolo"
+                "projectionsEqualSolo",
+                "refreshedPair"
               ]
             },
             {
@@ -264,52 +281,63 @@
           "id": "A3",
           "quote": "read as a boundary violation under the declared joint conditions",
           "witness": {
-            "srcFindings": [],
-            "floorMet": true,
-            "controlHits": [
-              [
-                "contextboundary"
+            "read as a boundary violation": {
+              "boundaryRead": false,
+              "pairTones": [
+                "success",
+                "success"
               ],
-              [
-                "disclosureconditions"
-              ],
-              [
-                "permissionconditions"
-              ],
-              [
-                "jointview"
-              ],
-              [
-                "contextrefinement"
-              ],
-              [
-                "jointview"
-              ],
-              [
-                "jointconditions"
-              ],
-              [
-                "boundaryviolation"
-              ],
-              [
-                "hiddencorrelation"
+              "pairCoverage": [
+                "complete",
+                "complete"
               ]
-            ],
-            "quiet": [
-              [],
-              []
-            ],
-            "boundaryCarriedOpaque": true,
-            "boundaryRead": false,
-            "pairTones": [
-              "success",
-              "success"
-            ],
-            "pairCoverage": [
-              "complete",
-              "complete"
-            ],
-            "producerShipped": false
+            },
+            "under the declared joint conditions": {
+              "srcFindings": [],
+              "floorMet": true,
+              "controlHits": [
+                [
+                  "contextboundary"
+                ],
+                [
+                  "disclosureconditions"
+                ],
+                [
+                  "permissionconditions"
+                ],
+                [
+                  "jointview"
+                ],
+                [
+                  "contextrefinement"
+                ],
+                [
+                  "jointview"
+                ],
+                [
+                  "jointconditions"
+                ],
+                [
+                  "boundaryviolation"
+                ],
+                [
+                  "hiddencorrelation"
+                ],
+                [
+                  "contextboundary"
+                ],
+                [
+                  "jointview"
+                ]
+              ],
+              "quiet": [
+                [],
+                [],
+                []
+              ],
+              "boundaryCarriedOpaque": true,
+              "producerShipped": false
+            }
           },
           "claims": [
             {
@@ -343,55 +371,61 @@
           "id": "B1",
           "quote": "a permission/disclosure failure in any composed view",
           "witness": {
-            "codes": [
-              "RF_BROKER_DEMAND_NOT_OWNED",
-              "RF_BROKER_RIGHTS_DENIED",
-              "RF_CONFIG_LAYER_READONLY",
-              "RF_GRAPH_OVERLAY_SCOPE_DENIED",
-              "RF_GRAPH_OVERLAY_PROTECTED_TARGET",
-              "RF_LENS_BINDING_DENIED",
-              "RF_OBSERVATION_DENIED",
-              "RF_OPTIC_EXECUTION_DENIED",
-              "RF_POLICY_CAPABILITY_DEFAULT_MISSING",
-              "RF_PUBLICATION_IMPACT_UNKNOWN",
-              "RF_PUBLICATION_UNAUTHORIZED",
-              "RF_REPLAY_TRUST_DENIED",
-              "RF_SCENARIO_MODEL_AUDIENCE_REFUSED",
-              "RF_SCENARIO_PUBLISH_REFUSED",
-              "RF_SOURCE_PATH_OUTSIDE_ROOT",
-              "RF_SOURCE_SYMLINK_ESCAPE",
-              "RF_SOURCE_CAPABILITY_DENIED",
-              "RF_STATE_NAMESPACE_PROTECTED",
-              "RF_TRUST_DENIED",
-              "RF_TSX_RESOURCE_DENIED"
-            ],
-            "exitClass": 5,
-            "native": {
-              "pairs": 40,
-              "refused": [
-                "refused"
+            "a permission/disclosure failure": {
+              "codes": [
+                "RF_BROKER_DEMAND_NOT_OWNED",
+                "RF_BROKER_RIGHTS_DENIED",
+                "RF_CONFIG_LAYER_READONLY",
+                "RF_GRAPH_OVERLAY_SCOPE_DENIED",
+                "RF_GRAPH_OVERLAY_PROTECTED_TARGET",
+                "RF_LENS_BINDING_DENIED",
+                "RF_OBSERVATION_DENIED",
+                "RF_OPTIC_EXECUTION_DENIED",
+                "RF_POLICY_CAPABILITY_DEFAULT_MISSING",
+                "RF_PUBLICATION_IMPACT_UNKNOWN",
+                "RF_PUBLICATION_UNAUTHORIZED",
+                "RF_REPLAY_TRUST_DENIED",
+                "RF_SCENARIO_MODEL_AUDIENCE_REFUSED",
+                "RF_SCENARIO_PUBLISH_REFUSED",
+                "RF_SOURCE_PATH_OUTSIDE_ROOT",
+                "RF_SOURCE_SYMLINK_ESCAPE",
+                "RF_SOURCE_CAPABILITY_DENIED",
+                "RF_STATE_NAMESPACE_PROTECTED",
+                "RF_TRUST_DENIED",
+                "RF_TSX_RESOURCE_DENIED"
               ],
-              "categories": [
-                "unavailable"
-              ],
-              "namingCode": 40,
-              "others": [
-                "value"
-              ],
-              "positions": [
-                0,
-                1
-              ]
+              "exitClass": 5
             },
-            "injected": {
-              "pairs": 40,
-              "ok": [
-                false
-              ],
-              "primaryIsCode": 40,
-              "othersOk": [
-                true
-              ]
+            "in any composed view": {
+              "native": {
+                "pairs": 40,
+                "refused": [
+                  "refused"
+                ],
+                "categories": [
+                  "unavailable"
+                ],
+                "namingCode": 40,
+                "others": [
+                  "value"
+                ],
+                "othersAsSolo": 40,
+                "positions": [
+                  0,
+                  1
+                ]
+              },
+              "injected": {
+                "pairs": 40,
+                "ok": [
+                  false
+                ],
+                "primaryIsCode": 40,
+                "othersOk": [
+                  true
+                ],
+                "othersAsSolo": 40
+              }
             }
           },
           "claims": [
@@ -415,36 +449,40 @@
           "id": "B2",
           "quote": "surfaces in the projection (failureSnapshot precedent)",
           "witness": {
-            "precedent": "failureSnapshot",
-            "precedentDeclared": true,
-            "refused": {
-              "coverage": [
-                "unknown"
-              ],
-              "tones": [
-                "failure"
-              ],
-              "statusNamingCode": 20,
-              "notesNamingCode": 20
+            "surfaces in the projection": {
+              "refused": {
+                "coverage": [
+                  "unknown"
+                ],
+                "tones": [
+                  "failure"
+                ],
+                "statusNamingCode": 20,
+                "notesNamingCode": 20
+              },
+              "composed": {
+                "pairs": 20,
+                "applied": [
+                  [
+                    "applied",
+                    "applied"
+                  ]
+                ],
+                "failureNodes": [
+                  [
+                    "rfo_cccccccccccccccccccccc"
+                  ]
+                ],
+                "successNodes": [
+                  [
+                    "rfo_bbbbbbbbbbbbbbbbbbbbbb"
+                  ]
+                ]
+              }
             },
-            "composed": {
-              "pairs": 20,
-              "applied": [
-                [
-                  "applied",
-                  "applied"
-                ]
-              ],
-              "failureNodes": [
-                [
-                  "rfo_cccccccccccccccccccccc"
-                ]
-              ],
-              "successNodes": [
-                [
-                  "rfo_bbbbbbbbbbbbbbbbbbbbbb"
-                ]
-              ]
+            "(failureSnapshot precedent)": {
+              "precedent": "failureSnapshot",
+              "precedentDeclared": true
             }
           },
           "claims": [
@@ -468,27 +506,29 @@
           "id": "B3",
           "quote": "never swallowed",
           "witness": {
-            "orderIndependent": 20,
-            "soloEqual": 20,
-            "twoRefusals": [
-              2
-            ],
-            "nonfatal": [
-              {
-                "severity": "info",
-                "coverage": "complete",
-                "tone": "success",
-                "named": false,
-                "equalsClean": true
-              },
-              {
-                "severity": "warning",
-                "coverage": "complete",
-                "tone": "success",
-                "named": false,
-                "equalsClean": false
-              }
-            ]
+            "never swallowed": {
+              "orderIndependent": 20,
+              "soloEqual": 20,
+              "twoRefusals": [
+                2
+              ],
+              "nonfatal": [
+                {
+                  "severity": "info",
+                  "coverage": "complete",
+                  "tone": "success",
+                  "named": false,
+                  "equalsClean": true
+                },
+                {
+                  "severity": "warning",
+                  "coverage": "complete",
+                  "tone": "success",
+                  "named": false,
+                  "equalsClean": false
+                }
+              ]
+            }
           },
           "claims": [
             {
@@ -512,64 +552,76 @@
           "id": "C1",
           "quote": "an equivalence/similarity verdict input",
           "witness": {
-            "words": [
-              "equivalence",
-              "similarity"
-            ],
-            "forms": [
-              "equivalence",
-              "equivalence",
-              "equivalence_verdict",
-              "similarity",
-              "similarity",
-              "similarity_verdict"
-            ],
-            "arms": [
-              {
-                "properties": [
-                  "model",
-                  "task"
+            "an equivalence/similarity verdict": {
+              "words": [
+                "equivalence",
+                "similarity"
+              ],
+              "keys": [
+                "equivalence",
+                "equivalence_verdict",
+                "similarity",
+                "similarity_verdict"
+              ],
+              "values": [
+                true,
+                false,
+                1,
+                0,
+                "equivalent",
+                "divergent",
+                "substitutable"
+              ],
+              "forms": 28
+            },
+            "input": {
+              "arms": [
+                {
+                  "properties": [
+                    "model",
+                    "task"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "properties": [
+                    "view",
+                    "taskId",
+                    "model"
+                  ],
+                  "additionalProperties": false
+                }
+              ],
+              "nativeOutcomes": {
+                "kinds": [
+                  "refused"
                 ],
-                "additionalProperties": false
+                "categories": [
+                  "validation"
+                ],
+                "messages": [
+                  "Invalid input schema for capability reactivefiber.render.preview."
+                ],
+                "launches": 0
               },
-              {
-                "properties": [
-                  "view",
-                  "taskId",
-                  "model"
+              "injectedOutcomes": {
+                "kinds": [
+                  "refused"
                 ],
-                "additionalProperties": false
+                "categories": [
+                  "validation"
+                ],
+                "messages": [
+                  "Invalid input schema for capability reactivefiber.render.preview."
+                ],
+                "calls": 0
+              },
+              "controlLaunches": {
+                "kinds": [
+                  "value"
+                ],
+                "launches": 2
               }
-            ],
-            "nativeOutcomes": {
-              "kinds": [
-                "refused"
-              ],
-              "categories": [
-                "validation"
-              ],
-              "messages": [
-                "Invalid input schema for capability reactivefiber.render.preview."
-              ],
-              "launches": 0
-            },
-            "injectedOutcomes": {
-              "kinds": [
-                "refused"
-              ],
-              "categories": [
-                "validation"
-              ],
-              "messages": [
-                "Invalid input schema for capability reactivefiber.render.preview."
-              ],
-              "calls": 0
-            },
-            "controlLaunches": {
-              "kinds": [
-                "value"
-              ],
-              "launches": 2
             }
           },
           "claims": [
@@ -577,6 +629,8 @@
               "term": "an equivalence/similarity verdict",
               "facts": [
                 "words",
+                "keys",
+                "values",
                 "forms"
               ]
             },
@@ -595,33 +649,37 @@
           "id": "C2",
           "quote": "never short-circuits capability permission checks",
           "witness": {
-            "permissions": [
-              [
-                "reactivefiber:render"
-              ]
-            ],
-            "grantSets": 8,
-            "nativeRefusals": {
-              "calls": 112,
-              "categories": [
-                "authorization"
-              ],
-              "messages": [
-                "Permission denied for capability reactivefiber.render.preview (invoke)."
-              ],
-              "launches": 0
+            "never short-circuits": {
+              "nativeRefusals": {
+                "calls": 464,
+                "categories": [
+                  "authorization"
+                ],
+                "messages": [
+                  "Permission denied for capability reactivefiber.render.preview (invoke)."
+                ],
+                "launches": 0
+              },
+              "injectedRefusals": {
+                "calls": 464,
+                "categories": [
+                  "authorization"
+                ],
+                "messages": [
+                  "Permission denied for capability reactivefiber.render.preview (invoke)."
+                ],
+                "clientCalls": 0
+              },
+              "precedesValidation": true
             },
-            "injectedRefusals": {
-              "calls": 112,
-              "categories": [
-                "authorization"
+            "capability permission checks": {
+              "permissions": [
+                [
+                  "reactivefiber:render"
+                ]
               ],
-              "messages": [
-                "Permission denied for capability reactivefiber.render.preview (invoke)."
-              ],
-              "clientCalls": 0
-            },
-            "precedesValidation": true
+              "grantSets": 8
+            }
           },
           "claims": [
             {
@@ -645,39 +703,49 @@
           "id": "C3",
           "quote": "or observer workspace-scope checks (read admission independent of scoring)",
           "witness": {
-            "outOfScope": {
-              "readings": 25,
-              "kinds": [
-                "refused"
-              ],
-              "categories": [
-                "authorization"
-              ],
-              "messages": [
-                "RF reading workspace differs from observer scope."
-              ]
+            "or observer workspace-scope checks": {
+              "outOfScope": {
+                "readings": 57,
+                "kinds": [
+                  "refused"
+                ],
+                "categories": [
+                  "authorization"
+                ],
+                "messages": [
+                  "RF reading workspace differs from observer scope."
+                ]
+              },
+              "authorizedRoot": {
+                "readings": 57,
+                "kinds": [
+                  "refused"
+                ],
+                "categories": [
+                  "authorization"
+                ],
+                "messages": [
+                  "RF reading workspace differs from observer scope."
+                ]
+              }
             },
-            "authorizedRoot": {
-              "readings": 25,
-              "kinds": [
-                "refused"
+            "(read admission independent of scoring)": {
+              "positions": [
+                "reading",
+                "result"
               ],
-              "categories": [
-                "authorization"
+              "keys": [
+                "equivalence",
+                "equivalence_verdict",
+                "similarity",
+                "similarity_verdict"
               ],
-              "messages": [
-                "RF reading workspace differs from observer scope."
-              ]
-            },
-            "positions": [
-              "reading",
-              "result"
-            ],
-            "values": 12,
-            "inScopeEqual": {
-              "readings": 25,
-              "equal": 25,
-              "projected": "projected"
+              "forms": 28,
+              "inScopeEqual": {
+                "readings": 57,
+                "equal": 57,
+                "projected": "projected"
+              }
             }
           },
           "claims": [
@@ -692,7 +760,8 @@
               "term": "(read admission independent of scoring)",
               "facts": [
                 "positions",
-                "values",
+                "keys",
+                "forms",
                 "inScopeEqual"
               ]
             }
