@@ -1,0 +1,588 @@
+{
+ "bead": "wb-klr7",
+ "constants": {
+  "gatingType": "CACWorkflowCompositionV0",
+  "programSlug": "cac-workflow-composition",
+  "mwScope": "@mechanical/",
+  "taskPrefixes": [
+   "bd-",
+   "wb-"
+  ],
+  "attemptPrefixes": [
+   "frn-"
+  ],
+  "idFields": [
+   "step",
+   "source-artifact"
+  ],
+  "compositionWord": "composition",
+  "holder": "test/workbench-docs07-provider-rules.census.ts",
+  "holderRow": "W1",
+  "holderFrozen": "FROZEN_W1",
+  "docsHeading": "MechanicalWorkflows is an ordinary function library"
+ },
+ "producer": {
+  "mw": {
+   "repository": "https://github.com/jehalladay/MechanicalWorkflows",
+   "measuredUtc": "2026-10-28T08:49:16Z",
+   "measuredBy": "seat ws-06 of g10-work-s125, read-only: git show on the local MechanicalWorkflows checkout and a depth-1 scratch clone of the remote tip; this hermetic census never re-reads the producer",
+   "filingPin": "4b8b974ca72bf2ed36b99e315e45857c6181fbe8",
+   "filingBlobs": {
+    "01-composition-contracts.md": "f006a4760ecbb8fb0ddcbba4db4066791b58f228",
+    "README.md": "40774a7b36f6d0cfe79d908090a4fc9818bf9a22"
+   },
+   "filingLine6": "Use \\`CACWorkflowCompositionV0\\` as a concept only. It can point to existing workflow step and source artifact IDs, but it must not create new authoritative IDs for Beads tasks, Forge tests or Furnace attempts.",
+   "remoteTip": "f489cee4ce2088e25440c82ecc448cc0dc9a66ce",
+   "remoteTipCommitted": "2026-10-27T20:36:35Z",
+   "tipBlobs": {
+    "01-composition-contracts.md": "937850d83fe6814cf93a02c66c923657cc1aea42",
+    "README.md": "8724bfbef6638e8efa371e78a7c026c28ca2dc62"
+   },
+   "tipLine6": "Use \\`CACWorkflowCompositionV0\\` as a concept only. It can point to existing workflow step and source artifact IDs, but it must not create new authoritative IDs for Beads tasks, Forge operations/gates, Furnace attempts, Git revisions or HyperUnix answers (a non-exhaustive list).",
+   "tipReadme3Status": "**Design-only as of 2026-10-18 (19ca8d4): the two program documents are the only artifacts; P2–P4 plan adapter code and live runs.**",
+   "tipTypeSpellings": [
+    "docs/10-current-state-and-gaps.md",
+    "docs/programs/cac-workflow-composition-2026-10-18/01-composition-contracts.md"
+   ],
+   "tipPackageSpellings": [
+    "packages/coordination/test/cacwc-doc-pins.test.ts (a test reading the program documents by path; no schema, type or export)"
+   ]
+  }
+ },
+ "residuals": [
+  {
+   "id": "R-PACKAGE-NAME",
+   "pin": "T1",
+   "quiet": [
+    "unscoped-name"
+   ],
+   "twin": [
+    "manifest-dependency"
+   ]
+  },
+  {
+   "id": "R-REQUIREMENT-ID",
+   "pin": "T2",
+   "quiet": [
+    "requirement-id"
+   ],
+   "twin": [
+    "type-name"
+   ]
+  },
+  {
+   "id": "R-UNSPELLED-CONSUMER",
+   "pin": "T2",
+   "quiet": [
+    "unspelled-consumer"
+   ],
+   "twin": [
+    "type-name"
+   ]
+  },
+  {
+   "id": "R-SCOPE",
+   "pin": "B1",
+   "quiet": [
+    "qa-module"
+   ],
+   "twin": [
+    "task-template"
+   ]
+  },
+  {
+   "id": "R-INDIRECT",
+   "pin": "B1",
+   "quiet": [
+    "indirect-binding"
+   ],
+   "twin": [
+    "task-template"
+   ]
+  },
+  {
+   "id": "R-CALL-FORM",
+   "pin": "B1",
+   "quiet": [
+    "concat-call",
+    "join-call"
+   ],
+   "twin": [
+    "task-template"
+   ]
+  },
+  {
+   "id": "R-PREFIX-CONSTANT",
+   "pin": "B1",
+   "quiet": [
+    "prefix-constant"
+   ],
+   "twin": [
+    "task-split-literal"
+   ]
+  },
+  {
+   "id": "R-ID-POSITION",
+   "pin": "B2",
+   "quiet": [
+    "builder-argument"
+   ],
+   "twin": [
+    "forge-native-ref"
+   ]
+  },
+  {
+   "id": "R-FIELD-SPELLING",
+   "pin": "B3",
+   "quiet": [
+    "other-field-name",
+    "bare-step-name"
+   ],
+   "twin": [
+    "attempt-template"
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "id": "T",
+   "label": "a MechanicalWorkflows release publishing CACWorkflowCompositionV0 as a versioned schema/type plus a Pi consumer decided under W11/VC-3 or the workflow_catalog/workflow_inspect readers",
+   "pins": [
+    {
+     "id": "T1",
+     "quote": "a MechanicalWorkflows release publishing CACWorkflowCompositionV0 as a versioned schema/type",
+     "witness": {
+      "scope": "@mechanical/",
+      "manifest": [],
+      "locks": {
+       "package-lock.json": [],
+       "vendor/dependency-lock.json": []
+      },
+      "imports": [],
+      "controls": {
+       "manifest-dependency": 1,
+       "manifest-dev": 1,
+       "manifest-bundled": 1,
+       "unscoped-name": 0,
+       "near-scope": 0,
+       "lock-path": 1,
+       "lock-nested": 1,
+       "lock-declared": 1,
+       "import-static": 1,
+       "import-type": 1,
+       "export-from": 1,
+       "dynamic-import": 1,
+       "require": 1,
+       "import-equals": 1,
+       "import-type-node": 1,
+       "import-other": 0
+      }
+     }
+    },
+    {
+     "id": "T2",
+     "quote": "plus a Pi consumer decided under W11/VC-3 or the workflow_catalog/workflow_inspect readers",
+     "witness": {
+      "slug": "cac-workflow-composition",
+      "spelling": [],
+      "bound": [],
+      "readers": {
+       "workflow_catalog": "quiet",
+       "workflow_inspect": "quiet"
+      },
+      "controls": {
+       "type-name": 1,
+       "program-slug": 1,
+       "snake-case": 1,
+       "embedded": 1,
+       "requirement-id": 0,
+       "unspelled-consumer": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "A",
+   "label": "(a) hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture, and that a row lacking a producer id yields a counted unmapped/unavailable entry, never a minted id",
+   "pins": [
+    {
+     "id": "A1",
+     "quote": "hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture",
+     "witness": {
+      "checks": [
+       "foreign",
+       "lost"
+      ],
+      "fixtures": "83361b3e5e9a2f72",
+      "honest": {
+       "F1": [],
+       "F2": []
+      },
+      "mutants": {
+       "mint-task": {
+        "F1": [],
+        "F2": []
+       },
+       "mint-attempt": {
+        "F1": [],
+        "F2": []
+       },
+       "mint-gate": {
+        "F1": [],
+        "F2": []
+       },
+       "mint-and-count": {
+        "F1": [],
+        "F2": []
+       },
+       "rewrite-id": {
+        "F1": [
+         "foreign",
+         "lost"
+        ],
+        "F2": [
+         "foreign",
+         "lost"
+        ]
+       },
+       "swap-provider": {
+        "F1": [
+         "foreign",
+         "lost"
+        ],
+        "F2": [
+         "foreign",
+         "lost"
+        ]
+       },
+       "add-scope": {
+        "F1": [
+         "foreign",
+         "lost"
+        ],
+        "F2": [
+         "foreign",
+         "lost"
+        ]
+       },
+       "drop-ref": {
+        "F1": [
+         "lost"
+        ],
+        "F2": [
+         "lost"
+        ]
+       },
+       "drop-unmapped": {
+        "F1": [],
+        "F2": []
+       },
+       "count-only": {
+        "F1": [],
+        "F2": []
+       },
+       "miscount": {
+        "F1": [],
+        "F2": []
+       }
+      },
+      "fires": {
+       "foreign": true,
+       "lost": true
+      },
+      "bound": {}
+     }
+    },
+    {
+     "id": "A2",
+     "quote": "and that a row lacking a producer id yields a counted unmapped/unavailable entry",
+     "witness": {
+      "checks": [
+       "uncounted",
+       "miscounted"
+      ],
+      "fixtures": "83361b3e5e9a2f72",
+      "honest": {
+       "F1": [],
+       "F2": []
+      },
+      "mutants": {
+       "mint-task": {
+        "F1": [],
+        "F2": [
+         "uncounted",
+         "miscounted"
+        ]
+       },
+       "mint-attempt": {
+        "F1": [],
+        "F2": [
+         "uncounted",
+         "miscounted"
+        ]
+       },
+       "mint-gate": {
+        "F1": [],
+        "F2": [
+         "uncounted",
+         "miscounted"
+        ]
+       },
+       "mint-and-count": {
+        "F1": [],
+        "F2": []
+       },
+       "rewrite-id": {
+        "F1": [],
+        "F2": []
+       },
+       "swap-provider": {
+        "F1": [],
+        "F2": []
+       },
+       "add-scope": {
+        "F1": [],
+        "F2": []
+       },
+       "drop-ref": {
+        "F1": [],
+        "F2": []
+       },
+       "drop-unmapped": {
+        "F1": [],
+        "F2": [
+         "uncounted",
+         "miscounted"
+        ]
+       },
+       "count-only": {
+        "F1": [],
+        "F2": [
+         "uncounted",
+         "miscounted"
+        ]
+       },
+       "miscount": {
+        "F1": [
+         "miscounted"
+        ],
+        "F2": [
+         "miscounted"
+        ]
+       }
+      },
+      "fires": {
+       "uncounted": true,
+       "miscounted": true
+      },
+      "bound": {}
+     }
+    },
+    {
+     "id": "A3",
+     "quote": "never a minted id",
+     "witness": {
+      "checks": [
+       "minted"
+      ],
+      "fixtures": "83361b3e5e9a2f72",
+      "honest": {
+       "F1": [],
+       "F2": []
+      },
+      "mutants": {
+       "mint-task": {
+        "F1": [],
+        "F2": [
+         "minted"
+        ]
+       },
+       "mint-attempt": {
+        "F1": [],
+        "F2": [
+         "minted"
+        ]
+       },
+       "mint-gate": {
+        "F1": [],
+        "F2": [
+         "minted"
+        ]
+       },
+       "mint-and-count": {
+        "F1": [],
+        "F2": [
+         "minted"
+        ]
+       },
+       "rewrite-id": {
+        "F1": [],
+        "F2": []
+       },
+       "swap-provider": {
+        "F1": [],
+        "F2": []
+       },
+       "add-scope": {
+        "F1": [],
+        "F2": []
+       },
+       "drop-ref": {
+        "F1": [],
+        "F2": []
+       },
+       "drop-unmapped": {
+        "F1": [],
+        "F2": []
+       },
+       "count-only": {
+        "F1": [],
+        "F2": []
+       },
+       "miscount": {
+        "F1": [],
+        "F2": []
+       }
+      },
+      "fires": {
+       "minted": true
+      },
+      "bound": {}
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields",
+   "pins": [
+    {
+     "id": "B1",
+     "quote": "static census over src that no module constructs a bd/wb- task id",
+     "witness": {
+      "prefixes": [
+       "bd-",
+       "wb-"
+      ],
+      "idFields": [
+       "step",
+       "source-artifact"
+      ],
+      "compositionWord": "composition",
+      "live": [],
+      "controls": {
+       "task-template": 1,
+       "task-bd-template": 1,
+       "task-concat": 1,
+       "task-split-literal": 1,
+       "task-native-ref": 1,
+       "task-id-key": 1,
+       "task-member-id": 1,
+       "task-copy": 0,
+       "task-no-field": 0,
+       "qa-module": 0,
+       "indirect-binding": 0,
+       "concat-call": 0,
+       "join-call": 0,
+       "prefix-constant": 0
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "quote": "a Forge operation or gate id",
+     "witness": {
+      "providers": [
+       "forge"
+      ],
+      "keys": [
+       "operationid",
+       "gateid",
+       "gatestepid"
+      ],
+      "live": [],
+      "controls": {
+       "forge-native-ref": 1,
+       "forge-gate-ref": 1,
+       "forge-id-key": 1,
+       "forge-gate-key": 1,
+       "forge-assignment": 1,
+       "forge-gate-step-name": 0,
+       "forge-copy": 0,
+       "builder-argument": 0
+      }
+     }
+    },
+    {
+     "id": "B3",
+     "quote": "or a Furnace frn- Attempt id from composition fields",
+     "witness": {
+      "prefixes": [
+       "frn-"
+      ],
+      "keys": [
+       "attemptid",
+       "furnaceattemptid"
+      ],
+      "live": [],
+      "controls": {
+       "attempt-template": 1,
+       "attempt-concat": 1,
+       "attempt-native-ref": 1,
+       "attempt-id-key": 1,
+       "attempt-element-id": 1,
+       "attempt-no-field": 0,
+       "attempt-literal": 0,
+       "other-field-name": 0,
+       "bare-step-name": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) docs/workbench/07 § MechanicalWorkflows gains one falsifiable sentence bound by the docs/07 census (wb-6hb.11 shape)",
+   "pins": [
+    {
+     "id": "C1",
+     "quote": "docs/workbench/07 § MechanicalWorkflows gains one falsifiable sentence",
+     "witness": {
+      "heading": "MechanicalWorkflows is an ordinary function library",
+      "sentence": "CACWorkflowCompositionV0 is design-only (the MechanicalWorkflows cac-workflow-composition-2026-10-18 program states it as a concept only, with no released schema or type), and no Pi surface consumes it; when a release ships it and a Pi surface consumes it, Pi carries each step and source-artifact ID only as a native reference equal to the producer's own ID, counts a step or source without one as an unmapped entry, and never mints a Beads task ID, a Forge operation or gate ID, or a Furnace Attempt ID from composition fields.",
+      "holding": 1,
+      "plants": {
+       "dropped": 0,
+       "doubled": 2,
+       "moved": 0
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "quote": "bound by the docs/07 census (wb-6hb.11 shape)",
+     "witness": {
+      "holder": "test/workbench-docs07-provider-rules.census.ts",
+      "row": "W1",
+      "frozen": "FROZEN_W1",
+      "shape": {
+       "census": true,
+       "judge": true
+      },
+      "binding": [
+       "today | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > T a MechanicalWorkflows release publishing CACWorkflowCompositionV0 as a versioned schema/type plus a Pi consumer decided under W11/VC-3 or the workflow_catalog/workflow_inspect readers | T1",
+       "today | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > T a MechanicalWorkflows release publishing CACWorkflowCompositionV0 as a versioned schema/type plus a Pi consumer decided under W11/VC-3 or the workflow_catalog/workflow_inspect readers | T2",
+       "producer-references-only | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > A (a) hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture, and that a row lacking a producer id yields a counted unmapped/unavailable entry, never a minted id | A1",
+       "counted-unmapped | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > A (a) hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture, and that a row lacking a producer id yields a counted unmapped/unavailable entry, never a minted id | A2",
+       "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > A (a) hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture, and that a row lacking a producer id yields a counted unmapped/unavailable entry, never a minted id | A3",
+       "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > B (b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields | B1",
+       "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > B (b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields | B2",
+       "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > B (b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields | B3"
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

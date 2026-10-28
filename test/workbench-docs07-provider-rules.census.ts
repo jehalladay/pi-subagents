@@ -27,9 +27,9 @@
  * and the FORGE ANCHOR reads the live Forge paragraph: every sentence of it is one Forge row's quote or one of the three named
  * unbound sentences, so a row removed from every literal of this file (CT5/CT6) is still red against the docs.
  *
- * The docs pin reads the RENDERED view through the helper's docsSection / sectionMatches: each of the seven sections, under
+ * The docs pin reads the RENDERED view through the helper's docsSection / sectionMatches: each of the eight sections, under
  * its unique level-2 heading of the level-1 parent heading and bounded at the next level-1/2 heading or EOF, must render
- * as exactly its frozen paragraph. A dropped or reworded clause names its row. The docs drift falsifiers run over a
+ * as exactly its frozen paragraph (the MechanicalWorkflows section as exactly its five frozen blocks). A dropped or reworded clause names its row. The docs drift falsifiers run over a
  * SYNTHETIC document built from the frozen section bodies, never over the live docs/07 text, so a legitimate edit of an
  * unpinned section (RCP provider, the vertical journey) can never redden a falsifier row.
  *
@@ -76,8 +76,20 @@
  * that sentence. Both rows' identities are frozen as literals (rule 16), and that census reads both sentences back from this
  * file and from the live docs/07 (its D1-D3), so a row removed from TABLE and from every literal here still reds there.
  *
- * Non-scope (no falsifiable adapter sentence, or covered by the docs/14 matrix): "MechanicalWorkflows is an ordinary
- * function library", "RCP provider", "First realistic vertical journey".
+ * Row W1 (wb-klr7, CAC-WORKFLOW-COMPOSITION-R1 (c)) is the MechanicalWorkflows section's composition-reference sentence, the
+ * section's last paragraph: CACWorkflowCompositionV0 is design-only and no Pi surface consumes it; a future consumer carries
+ * each step and source-artifact ID only as a native reference equal to the producer's own ID, counts a row without one as an
+ * unmapped entry, and never mints a Beads task, Forge operation or gate, or Furnace Attempt ID from composition fields. One
+ * half per clause, bound to test/workbench-mw-composition-ref-census.test.ts by file, describe path and verbatim title: today
+ * (T1-T2), producer-references-only (A1), counted-unmapped (A2) and never-mints (A3, B1-B3). "MechanicalWorkflows is an
+ * ordinary function library" joined the frozen sections with that sentence, its five blocks frozen whole (MW_SECTION_BLOCKS).
+ * The row's identity is frozen as the literal FROZEN_W1 (rule 16), and that census reads FROZEN_W1 back from this file and the
+ * sentence from the live docs/07 (its C1-C2), so a row removed from TABLE and from every literal here still reds there. The
+ * sentence carries the program status "design-only" verbatim, the wb-kku9.2 clause (c) duty, and the wb-kku9.2 census holds
+ * it to this file (its C3).
+ *
+ * Non-scope (no falsifiable adapter sentence, or covered by the docs/14 matrix): "RCP provider", "First realistic vertical
+ * journey".
  */
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -175,8 +187,25 @@ const AGENT_OBSERVATION_SENTENCE =
 /** The wb-kku9.1 census whose cases rows H3 and A1 bind (test/workbench-observation-class-census.test.ts). */
 const OBSERVATION_CENSUS = "observation-class-census";
 
-/** The seven frozen docs/07 section paragraphs, as the markdown source says them. */
+/** wb-klr7 (CAC-WORKFLOW-COMPOSITION-R1 (c)): the MechanicalWorkflows section, frozen whole with row W1's sentence as its last block. */
+const MW_SECTION = "MechanicalWorkflows is an ordinary function library";
+/** wb-klr7: the MechanicalWorkflows section's composition-reference sentence. Row W1 quotes it whole; FROZEN_W1 repeats the row's identity. */
+const MW_COMPOSITION_SENTENCE =
+  "CACWorkflowCompositionV0 is design-only (the MechanicalWorkflows cac-workflow-composition-2026-10-18 program states it as a concept only, with no released schema or type), and no Pi surface consumes it; when a release ships it and a Pi surface consumes it, Pi carries each step and source-artifact ID only as a native reference equal to the producer's own ID, counts a step or source without one as an unmapped entry, and never mints a Beads task ID, a Forge operation or gate ID, or a Furnace Attempt ID from composition fields.";
+/** The wb-klr7 census whose cases row W1 binds (test/workbench-mw-composition-ref-census.test.ts), and its describe paths. */
+const COMPOSITION_CENSUS = "mw-composition-ref-census";
+const COMPOSITION_TOP = "wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1)";
+const COMPOSITION_ROW_SUITES: Readonly<Record<string, string>> = {
+  T: "T a MechanicalWorkflows release publishing CACWorkflowCompositionV0 as a versioned schema/type plus a Pi consumer decided under W11/VC-3 or the workflow_catalog/workflow_inspect readers",
+  A: "A (a) hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture, and that a row lacking a producer id yields a counted unmapped/unavailable entry, never a minted id",
+  B: "B (b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields",
+};
+const compositionPin = (row: string, title: string): Pin => pin(COMPOSITION_CENSUS, title, [COMPOSITION_TOP, COMPOSITION_ROW_SUITES[row] ?? ""]);
+
+/** The eight frozen docs/07 sections, as the markdown source says them: one paragraph each, the MechanicalWorkflows section five blocks. */
 const SECTION_MARKDOWN: Readonly<Record<string, string>> = {
+  [MW_SECTION]:
+    "**Current evidence:** https://github.com/jehalladay/MechanicalWorkflows, docs/04-public-programming-model.md, docs/06-sdk-integration-and-hosts.md, docs/11-decisions-and-non-goals.md. The shipped @mechanical/workflows-development exports develop(services,request) with four injected callbacks; the documentation baseline described its rig as fixture-only. A later read-only inspection on 2026-10-15 found a narrower RF/Claude/Forge live rig, but not the required HX-task-scoped Pi binding. See `TRACEABILITY.md` for artifact pins and limitations. contracts/entrypoints/development.v1.json declares optional descriptor-only entrypoint metadata.\n\nHost integration:\n1. Resolve requested entrypoint package/export and pinned artifact digest; reject incompatible host ABI.\n2. Validate request against descriptor schema and application invariants.\n3. Construct a scope-limited service dependency object from native SDK clients owned by this host.\n4. Call exported function directly, or delegate to Furnace ExecutorApp where selected.\n5. Validate output and record native evidence references; preserve four existing outcome variants.\n6. Dispose only host-owned clients. Client disconnect does not imply detached native child stop.\n\nNo MechanicalWorkflows dependency on Workbench, no mandated graph DSL, no mandatory registration inside MechanicalWorkflows. Descriptor introspection helps catalog only; it is not already a deployment/runtime loader.\n\nCACWorkflowCompositionV0 is design-only (the MechanicalWorkflows cac-workflow-composition-2026-10-18 program states it as a concept only, with no released schema or type), and no Pi surface consumes it; when a release ships it and a Pi surface consumes it, Pi carries each step and source-artifact ID only as a native reference equal to the producer's own ID, counts a step or source without one as an unmapped entry, and never mints a Beads task ID, a Forge operation or gate ID, or a Furnace Attempt ID from composition fields.",
   "Forge provider":
     `Use public Forge TypeScript App Server/facade or other current SDK. Initial functions: build/verification, affected/incremental selection, inspect artifact and operation. Preserve actual source basis, full verdict axes, reason codes, reuse/cache evidence and partial/unknown states. ${BASIS_SENTENCE} A successful RPC or shell exit does **not** equal verified Forge PASS. ${SELECTION_SENTENCE} Prefer Forge first for gates, test, build and packaging. Workspace Families and global cache designs must be probed for actual shipped availability before calling child creation or cache APIs.`,
   "Furnace provider":
@@ -192,8 +221,28 @@ const SECTION_MARKDOWN: Readonly<Record<string, string>> = {
 };
 /** What a reader sees of each paragraph: the markdown source without its emphasis markers. */
 const renderedOf = (markdown: string): string => markdown.replaceAll("**", "");
-const SECTION_ORDER: readonly string[] = ["Forge provider", "Furnace provider", "HyperUnix provider", "ReactiveFiberCLI provider", "Beads provider", "Agent provider", "Shared integration requirements"];
+const SECTION_ORDER: readonly string[] = [MW_SECTION, "Forge provider", "Furnace provider", "HyperUnix provider", "ReactiveFiberCLI provider", "Beads provider", "Agent provider", "Shared integration requirements"];
+/** wb-klr7: the MechanicalWorkflows section's five rendered blocks, written by hand from its markdown (whole-section equality). */
+const MW_SECTION_BLOCKS: readonly RenderedBlock[] = [
+  { kind: "paragraph", text: "Current evidence: https://github.com/jehalladay/MechanicalWorkflows, docs/04-public-programming-model.md, docs/06-sdk-integration-and-hosts.md, docs/11-decisions-and-non-goals.md. The shipped @mechanical/workflows-development exports develop(services,request) with four injected callbacks; the documentation baseline described its rig as fixture-only. A later read-only inspection on 2026-10-15 found a narrower RF/Claude/Forge live rig, but not the required HX-task-scoped Pi binding. See TRACEABILITY.md for artifact pins and limitations. contracts/entrypoints/development.v1.json declares optional descriptor-only entrypoint metadata.", markdown: "**Current evidence:** https://github.com/jehalladay/MechanicalWorkflows, docs/04-public-programming-model.md, docs/06-sdk-integration-and-hosts.md, docs/11-decisions-and-non-goals.md. The shipped @mechanical/workflows-development exports develop(services,request) with four injected callbacks; the documentation baseline described its rig as fixture-only. A later read-only inspection on 2026-10-15 found a narrower RF/Claude/Forge live rig, but not the required HX-task-scoped Pi binding. See `TRACEABILITY.md` for artifact pins and limitations. contracts/entrypoints/development.v1.json declares optional descriptor-only entrypoint metadata." },
+  { kind: "paragraph", text: "Host integration:", markdown: "Host integration:" },
+  {
+    kind: "list",
+    ordered: true,
+    items: [
+      { text: "Resolve requested entrypoint package/export and pinned artifact digest; reject incompatible host ABI.", markdown: "Resolve requested entrypoint package/export and pinned artifact digest; reject incompatible host ABI." },
+      { text: "Validate request against descriptor schema and application invariants.", markdown: "Validate request against descriptor schema and application invariants." },
+      { text: "Construct a scope-limited service dependency object from native SDK clients owned by this host.", markdown: "Construct a scope-limited service dependency object from native SDK clients owned by this host." },
+      { text: "Call exported function directly, or delegate to Furnace ExecutorApp where selected.", markdown: "Call exported function directly, or delegate to Furnace ExecutorApp where selected." },
+      { text: "Validate output and record native evidence references; preserve four existing outcome variants.", markdown: "Validate output and record native evidence references; preserve four existing outcome variants." },
+      { text: "Dispose only host-owned clients. Client disconnect does not imply detached native child stop.", markdown: "Dispose only host-owned clients. Client disconnect does not imply detached native child stop." },
+    ],
+  },
+  { kind: "paragraph", text: "No MechanicalWorkflows dependency on Workbench, no mandated graph DSL, no mandatory registration inside MechanicalWorkflows. Descriptor introspection helps catalog only; it is not already a deployment/runtime loader.", markdown: "No MechanicalWorkflows dependency on Workbench, no mandated graph DSL, no mandatory registration inside MechanicalWorkflows. Descriptor introspection helps catalog only; it is not already a deployment/runtime loader." },
+  { kind: "paragraph", text: "CACWorkflowCompositionV0 is design-only (the MechanicalWorkflows cac-workflow-composition-2026-10-18 program states it as a concept only, with no released schema or type), and no Pi surface consumes it; when a release ships it and a Pi surface consumes it, Pi carries each step and source-artifact ID only as a native reference equal to the producer's own ID, counts a step or source without one as an unmapped entry, and never mints a Beads task ID, a Forge operation or gate ID, or a Furnace Attempt ID from composition fields.", markdown: "CACWorkflowCompositionV0 is design-only (the MechanicalWorkflows cac-workflow-composition-2026-10-18 program states it as a concept only, with no released schema or type), and no Pi surface consumes it; when a release ships it and a Pi surface consumes it, Pi carries each step and source-artifact ID only as a native reference equal to the producer's own ID, counts a step or source without one as an unmapped entry, and never mints a Beads task ID, a Forge operation or gate ID, or a Furnace Attempt ID from composition fields." },
+];
 const sectionBlocks = (heading: string): readonly RenderedBlock[] => {
+  if (heading === MW_SECTION) return MW_SECTION_BLOCKS;
   const markdown = SECTION_MARKDOWN[heading] ?? "";
   return [{ kind: "paragraph", text: renderedOf(markdown), markdown }];
 };
@@ -237,6 +286,20 @@ function isDeepFrozen(value: unknown): boolean {
 }
 
 const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
+  {
+    row: "W1",
+    section: MW_SECTION,
+    source: "docs",
+    quote: MW_COMPOSITION_SENTENCE,
+    // wb-klr7: one half per clause, in the sentence's order, bound to the composition-reference census by file, describe path
+    // and verbatim title; a renamed, deleted or skipped pin reads red.
+    halves: [
+      gate("today", [compositionPin("T", "T1"), compositionPin("T", "T2")]),
+      gate("producer-references-only", [compositionPin("A", "A1")]),
+      gate("counted-unmapped", [compositionPin("A", "A2")]),
+      gate("never-mints", [compositionPin("A", "A3"), compositionPin("B", "B1"), compositionPin("B", "B2"), compositionPin("B", "B3")]),
+    ],
+  },
   {
     row: "F1",
     section: "Forge provider",
@@ -664,7 +727,7 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
   },
 ]);
 
-const ROW_IDS: readonly string[] = ["F1", "F2", "F3", "F4", "F5", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "H3", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "B1", "B2", "A1", "S1", "S2"];
+const ROW_IDS: readonly string[] = ["W1", "F1", "F2", "F3", "F4", "F5", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "H3", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "B1", "B2", "A1", "S1", "S2"];
 /** Every half that has no landed case, as "row/half"; a seat that lands a case flips the half consciously and edits this list. */
 const UNPINNED_HALVES: readonly string[] = ["F3/whole", "U7/events", "U8/negative-verbs", "R3/whole", "S1/owner-basis", "S1/observed-evidence", "S1/trace-correlation-recorded"];
 
@@ -711,9 +774,13 @@ function docsFailures(markdown: string): string[] {
 
 /** The synthetic document the drift falsifiers run over: the frozen bodies under the real heading shape, never the live text. */
 const synthetic = (edit: (heading: string, body: string) => string = (_heading, body) => body, tail = ""): string =>
-  `# ${DOCS_PARENT}\n\n## MechanicalWorkflows is an ordinary function library\n\nNo dependency.\n\n${SECTION_ORDER.map(heading => `## ${heading}\n\n${edit(heading, SECTION_MARKDOWN[heading] ?? "")}\n`).join("\n")}\n## RCP provider\n\nOptional.\n\n## First realistic vertical journey\n\nA journey.\n${tail}`;
+  `# ${DOCS_PARENT}\n\n${SECTION_ORDER.map(heading => `## ${heading}\n\n${edit(heading, SECTION_MARKDOWN[heading] ?? "")}\n`).join("\n")}\n## RCP provider\n\nOptional.\n\n## First realistic vertical journey\n\nA journey.\n${tail}`;
 /** wb-pfl (ORCH-REC-R544 F1): the judged shape frozen as a literal, never derived from TABLE, so deleting a half or a pin cannot pass. */
 const FROZEN_JUDGED_SHAPE: readonly string[] = [
+  "W1/today:2",
+  "W1/producer-references-only:1",
+  "W1/counted-unmapped:1",
+  "W1/never-mints:4",
   "F1/whole:3",
   "F2/whole:3",
   "F4/derived-basis-echoed:4",
@@ -834,15 +901,15 @@ const RF_UNBOUND_SENTENCES: readonly string[] = ["Use actual public render/conte
 const sentencesOf = (text: string): string[] => text.split(/(?<=\.) (?=[A-Z])/u);
 
 describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () => {
-  it("AC1: the table holds the thirty frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
+  it("AC1: the table holds the thirty-one frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
     expect(isDeepFrozen(TABLE)).toBe(true);
     expect(TABLE.map(row => row.row)).toEqual(ROW_IDS);
-    expect(TABLE).toHaveLength(30);
+    expect(TABLE).toHaveLength(31);
     expect(JUDGED.map(({ row, half }) => `${row.row}/${half.id}:${half.pins.length}`)).toEqual(FROZEN_JUDGED_SHAPE);
     expect(docsFailures(readRepo(DOCS_FILE))).toEqual([]);
   });
 
-  it("AC1: the seven sections are the seven the table names, and the frozen bodies render exactly (HTML-free, whole-section equality)", () => {
+  it("AC1: the eight sections are the eight the table names, and the frozen bodies render exactly (HTML-free, whole-section equality)", () => {
     expect(new Set(TABLE.map(row => row.section))).toEqual(new Set(SECTION_ORDER));
     expect(Object.keys(SECTION_MARKDOWN)).toEqual(SECTION_ORDER);
     for (const heading of SECTION_ORDER) {
@@ -1072,7 +1139,7 @@ describe("wb-6hb.11 liveness: the adopted judge is not accept-all (the real repo
 describe("wb-6hb.11 docs drift names the row or the section (synthetic document, rendered view)", () => {
   const edit = (heading: string, from: string, to: string) => (section: string, body: string): string => (section === heading ? body.replace(from, to) : body);
 
-  it("accepts the seven sections exactly as written, at EOF and bounded by a following level-2 heading", () => {
+  it("accepts the eight sections exactly as written, at EOF and bounded by a following level-2 heading", () => {
     expect(docsFailures(synthetic())).toEqual([]);
     expect(docsFailures(synthetic(undefined, "\n## Next\n\nOther text.\n"))).toEqual([]);
   });
@@ -3797,5 +3864,53 @@ describe("wb-ur08 the consequence readers of EXPECTATION over the enumerated res
       "CLASSES",
       ...UR08_RESIDUALS.map(({ id }) => `RESIDUAL ${id}`),
     ]);
+  });
+});
+
+/**
+ * wb-klr7 (CAC-WORKFLOW-COMPOSITION-R1 (c), rule 16): row W1's identity as a literal, never derived from TABLE - the sentence
+ * whole, then every pin as "half | tier | file | describe path | title" (bindingOf's form) - so a shortened sentence or a
+ * dropped, swapped or re-homed pin reads red here. The composition-reference census reads this literal back (its C2) and holds
+ * every pin line to its own registered cases, and the sentence to the live docs/07 (its C1).
+ */
+const FROZEN_W1: readonly string[] = [
+  "quote | CACWorkflowCompositionV0 is design-only (the MechanicalWorkflows cac-workflow-composition-2026-10-18 program states it as a concept only, with no released schema or type), and no Pi surface consumes it; when a release ships it and a Pi surface consumes it, Pi carries each step and source-artifact ID only as a native reference equal to the producer's own ID, counts a step or source without one as an unmapped entry, and never mints a Beads task ID, a Forge operation or gate ID, or a Furnace Attempt ID from composition fields.",
+  "today | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > T a MechanicalWorkflows release publishing CACWorkflowCompositionV0 as a versioned schema/type plus a Pi consumer decided under W11/VC-3 or the workflow_catalog/workflow_inspect readers | T1",
+  "today | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > T a MechanicalWorkflows release publishing CACWorkflowCompositionV0 as a versioned schema/type plus a Pi consumer decided under W11/VC-3 or the workflow_catalog/workflow_inspect readers | T2",
+  "producer-references-only | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > A (a) hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture, and that a row lacking a producer id yields a counted unmapped/unavailable entry, never a minted id | A1",
+  "counted-unmapped | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > A (a) hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture, and that a row lacking a producer id yields a counted unmapped/unavailable entry, never a minted id | A2",
+  "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > A (a) hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture, and that a row lacking a producer id yields a counted unmapped/unavailable entry, never a minted id | A3",
+  "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > B (b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields | B1",
+  "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > B (b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields | B2",
+  "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > B (b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields | B3",
+];
+
+describe("wb-klr7 docs/workbench/07 row W1: the MechanicalWorkflows composition-reference sentence, frozen and read back by its census", () => {
+  const withMw = (change: (body: string) => string) => (section: string, body: string): string => (section === MW_SECTION ? change(body) : body);
+
+  it("AC1 (wb-klr7): row W1 quotes the composition-reference sentence whole, the MechanicalWorkflows section's last block, and binds every clause to the composition-reference census by file, describe path, verbatim title and tier, frozen as a literal", () => {
+    const row = TABLE.find(candidate => candidate.row === "W1");
+    expect(row).toBeDefined();
+    if (row === undefined) return;
+    expect(row.section).toBe(MW_SECTION);
+    expect(row.source).toBe("docs");
+    expect([`quote | ${row.quote}`, ...bindingOf(row)]).toEqual(FROZEN_W1);
+    expect(row.halves.map(half => `${half.id}:${half.pins.length}`)).toEqual(["today:2", "producer-references-only:1", "counted-unmapped:1", "never-mints:4"]);
+    expect(row.halves.every(half => half.tier === "default-gate" && half.reason === undefined && half.pins.every(entry => entry.file === T(COMPOSITION_CENSUS) && entry.suite?.[0] === COMPOSITION_TOP))).toBe(true);
+    const last = MW_SECTION_BLOCKS.at(-1);
+    expect(last?.kind === "paragraph" ? last.text : "", "the sentence is the section's last block").toBe(row.quote);
+    expect((SECTION_MARKDOWN[MW_SECTION] ?? "").endsWith(`\n\n${row.quote}`), "and its markdown's last paragraph").toBe(true);
+  });
+
+  it("K10 (wb-klr7) names row W1 (and only it) when the composition sentence lets Pi mint an id from composition fields", () => {
+    const lines = docsFailures(synthetic(withMw(body => body.replace("and never mints a Beads task ID", "and may mint a Beads task ID"))));
+    expect(named(lines)).toEqual(["row W1"]);
+    expect(lines.some(line => line.includes(`${MW_SECTION} is not exactly its frozen paragraph`))).toBe(true);
+  });
+
+  it("K11 (wb-klr7) reds the MechanicalWorkflows section, naming no row, when a weakening paragraph follows the composition sentence", () => {
+    const lines = docsFailures(synthetic(withMw(body => `${body}\n\nA host may mint composition IDs where the producer has none.`)));
+    expect(named(lines)).toEqual([]);
+    expect(lines.some(line => line.includes(`${MW_SECTION} is not exactly its frozen paragraph`))).toBe(true);
   });
 });
