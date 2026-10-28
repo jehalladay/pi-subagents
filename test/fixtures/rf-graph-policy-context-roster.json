@@ -19,10 +19,14 @@
     "docsScope": "docs/workbench/",
     "receipts": "docs/workbench/receipts/",
     "docs03": "docs/workbench/03-architecture-and-ownership.md",
+    "docs03Title": "03 \u2014 High-level architecture, module ownership and dataflow",
     "postureSection": "## GraphPolicyCLI boundary",
+    "postureHeading": "GraphPolicyCLI boundary",
+    "ownershipHeading": "Ownership boundaries",
     "postureOwner": "GraphPolicyCLI",
     "postureCell": "nothing today",
     "postureSentence": "Pi carries no GraphPolicyCLI (gp) integration today.",
+    "ownerFiling": "Owner filing (",
     "piScopes": [
       "src/",
       "qa/"
@@ -47,6 +51,8 @@
       "flags": "giu"
     },
     "script": "\\.(?:[cm]?[jt]sx?)$",
+    "shell": "\\.(?:sh|bash|zsh)$",
+    "abbreviation": "gp",
     "fieldWords": [
       "score",
       "ranking",
@@ -56,10 +62,14 @@
     "floors": {
       "piFiles": 150,
       "piScripts": 140,
+      "piBytes": 2500000,
       "surfaceFiles": 60,
+      "surfaceData": 50,
       "docsFiles": 20,
+      "claimBytes": 5500000,
       "envelopeItems": 140,
-      "rosterKeys": 40
+      "rosterKeys": 40,
+      "deepObjects": 18
     },
     "spellings": [
       "GraphPolicy",
@@ -107,7 +117,10 @@
       "src/workbench/zz-plant-template.ts": "export const plantTemplate = (x: string): string => `\\u0047raphPolicy ${x}`;\n",
       "qa/zz-plant-escaped.json": "{\"\\u0047raphDataIR\": 1}\n",
       "qa/zz-plant-entity.md": "Graph&#80;olicy\n",
-      "qa/GraphPolicy-plant.txt": "plain\n"
+      "qa/GraphPolicy-plant.txt": "plain\n",
+      "src/workbench/zz-plant-identifier.ts": "export const \\u0047raphPolicy = 1;\n",
+      "src/workbench/zz-plant-regex.ts": "export const plantRegex = /Graph\\x50olicy/;\n",
+      "qa/zz-plant-ansi.sh": "printf '%s\\n' $'\\x47raphPolicy'\n"
     },
     "claimPlants": {
       "docs/workbench/zz-plant-claim.md": "Pi reads GraphPolicy scores from the rf render envelope.\n",
@@ -119,12 +132,20 @@
       "test/zz-plant-respelled.test.ts": "import { fullShapeRf } from \"./helpers/rf-render-fixture.js\";\nexport const key = \"graph_policy predictions\";\nvoid fullShapeRf;\n",
       "test/zz-plant-owner.test.ts": "import { fullShapeRf } from \"./helpers/rf-render-fixture.js\";\nexport const owner = \"GraphPolicyCLI\";\nvoid fullShapeRf;\n",
       "test/zz-plant-other-row.test.ts": "import { fullShapeRf } from \"./helpers/rf-render-fixture.js\";\nexport const row = \"GraphPolicyCLI context rendering\";\nvoid fullShapeRf;\n",
-      "test/zz-plant-beside.test.ts": "import { fullShapeRf } from \"./helpers/rf-render-fixture.js\";\nexport const rows = [{ text: \"GraphPolicyCLI predictions and policy distributions.\" }]; // reads graph_policy\nvoid fullShapeRf;\n"
+      "test/zz-plant-beside.test.ts": "import { fullShapeRf } from \"./helpers/rf-render-fixture.js\";\nexport const rows = [{ text: \"GraphPolicyCLI predictions and policy distributions.\" }]; // reads graph_policy\nvoid fullShapeRf;\n",
+      "docs/workbench/zz-plant-commented.md": "<!--\n## GraphPolicyCLI boundary\n-->\n\nPi reads GraphPolicy scores from the rf render envelope.\n",
+      "docs/workbench/zz-plant-fenced.md": "```\n## GraphPolicyCLI boundary\n```\n\nPi reads GraphPolicy scores from the rf render envelope.\n",
+      "docs/workbench/zz-plant-appendix.md": "## GraphPolicyCLI boundary\n\nPi carries no GraphPolicyCLI (gp) integration today.\n\n# Appendix\n\nPi reads GraphPolicy scores from the rf render envelope.\n",
+      "docs/workbench/zz-plant-twice.md": "## GraphPolicyCLI boundary\n\nPi carries no GraphPolicyCLI (gp) integration today.\n\n## GraphPolicyCLI boundary\n\nPi reads GraphPolicy scores from the rf render envelope.\n",
+      "docs/workbench/zz-plant-commented-row.md": "<!--\n| Learned scores | GraphPolicyCLI | nothing today; Pi reads GraphPolicy scores |\n-->\n",
+      "test/zz-plant-data.test.ts": "import { fullShapeRf } from \"./helpers/rf-render-fixture.js\";\nexport const data = \"zz-plant-data.json\";\nvoid fullShapeRf;\n",
+      "test/fixtures/zz-plant-data.json": "{\"graph_policy\": {\"score\": 1}}\n"
     },
     "vocabularyPlants": [
       "plant:result.blocks[0].component_id",
       "plant:result.provenance.graphPolicyReceipt",
       "plant:result.graph_policy",
+      "plant:result.gp",
       "plant:diagnostics[0].metadata.graph-data-ir",
       "plant-roster:result.graphpolicy_rank"
     ],
@@ -147,8 +168,29 @@
       "R-INTERIOR": "Q8",
       "R-BINARY": "Q9",
       "R-RELAY": "Q10",
-      "R-GENERIC": "Q11"
-    }
+      "R-GENERIC": "Q11",
+      "R-NEAR-FIELD": "Q12"
+    },
+    "readers": [
+      "listing",
+      "piVerdict",
+      "claimVerdict",
+      "claimReading",
+      "pinEntries",
+      "judgeScope",
+      "judgeRecord",
+      "realRecord",
+      "keyRoster",
+      "fixtureEnvelope",
+      "exportRow",
+      "textOf",
+      "git",
+      "readersOn",
+      "registerReactiveFiberRender",
+      "untilThenPattern",
+      "mentions",
+      "postureHomes"
+    ]
   },
   "tests": [
     "the judged set: the frozen shape, the out-of-file roster and the cases agree",
@@ -172,6 +214,7 @@
     "Q9",
     "Q10",
     "Q11",
+    "Q12",
     "the registered tests, the reached pins and the claims equal the roster, in order and both ways"
   ],
   "rows": [
@@ -238,6 +281,7 @@
               "plant:result.blocks[0].component_id",
               "plant:result.provenance.graphPolicyReceipt",
               "plant:result.graph_policy",
+              "plant:result.gp",
               "plant:diagnostics[0].metadata.graph-data-ir",
               "plant-roster:result.graphpolicy_rank"
             ]
@@ -289,6 +333,7 @@
               "filedAtPin",
               "absentBeforePin",
               "pinFiles",
+              "pinBytes",
               "pinFindings",
               "pinPlant"
             ]
@@ -298,6 +343,7 @@
             "filedAtPin": true,
             "absentBeforePin": true,
             "pinFiles": 651,
+            "pinBytes": 12284748,
             "pinFindings": {},
             "pinPlant": {
               "docs/workbench/zz-pin-plant.md": [
@@ -314,7 +360,9 @@
             "Pi": [
               "scope",
               "filesAtFloor",
-              "scriptsAtFloor"
+              "scriptsAtFloor",
+              "bytesRead",
+              "bytesAtFloor"
             ],
             "reads": [
               "piFindings",
@@ -322,7 +370,9 @@
               "readersUnchanged",
               "variantsLive",
               "readerControls",
-              "readerLeaks"
+              "readerLeaks",
+              "strictObjects",
+              "deepPlanted"
             ]
           },
           "witness": {
@@ -332,6 +382,8 @@
             ],
             "filesAtFloor": true,
             "scriptsAtFloor": true,
+            "bytesRead": true,
+            "bytesAtFloor": true,
             "piFindings": {},
             "piPlants": {
               "src/workbench/zz-plant-raw.ts": [
@@ -354,6 +406,15 @@
               ],
               "qa/GraphPolicy-plant.txt": [
                 "path"
+              ],
+              "src/workbench/zz-plant-identifier.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-plant-regex.ts": [
+                "cooked"
+              ],
+              "qa/zz-plant-ansi.sh": [
+                "decoded"
               ]
             },
             "readersUnchanged": {
@@ -393,7 +454,12 @@
                 "0.918273645"
               ]
             },
-            "readerLeaks": []
+            "readerLeaks": [],
+            "strictObjects": [
+              "result.work",
+              "result.engine_metrics"
+            ],
+            "deepPlanted": true
           }
         },
         {
@@ -404,8 +470,13 @@
               "claimScope",
               "surfaceAtFloor",
               "recordRead",
+              "dataRead",
               "docsAtFloor",
-              "postureStated"
+              "bytesRead",
+              "bytesAtFloor",
+              "postureStated",
+              "postureHome",
+              "postureControls"
             ],
             "nothing": [
               "claimFindings",
@@ -433,10 +504,28 @@
             },
             "surfaceAtFloor": true,
             "recordRead": true,
+            "dataRead": true,
             "docsAtFloor": true,
+            "bytesRead": true,
+            "bytesAtFloor": true,
             "postureStated": true,
+            "postureHome": {
+              "section": "bound",
+              "rows": 1
+            },
+            "postureControls": {
+              "decoyCommentBeforeChanged": false,
+              "changedSentence": false,
+              "headingTwice": false,
+              "levelOneAbove": false,
+              "appendixRead": true
+            },
             "claimFindings": {},
             "claimPlants": {
+              "test/fixtures/zz-plant-data.json": [
+                "raw",
+                "cooked"
+              ],
               "test/zz-plant-beside.test.ts": [
                 "raw"
               ],
@@ -462,11 +551,31 @@
               "test/zz-plant-transitive.test.ts": [
                 "raw"
               ],
+              "docs/workbench/zz-plant-appendix.md": [
+                "raw",
+                "decoded"
+              ],
               "docs/workbench/zz-plant-claim.md": [
                 "raw",
                 "decoded"
               ],
+              "docs/workbench/zz-plant-commented-row.md": [
+                "raw",
+                "decoded"
+              ],
+              "docs/workbench/zz-plant-commented.md": [
+                "raw",
+                "decoded"
+              ],
+              "docs/workbench/zz-plant-fenced.md": [
+                "raw",
+                "decoded"
+              ],
               "docs/workbench/zz-plant-row.md": [
+                "raw",
+                "decoded"
+              ],
+              "docs/workbench/zz-plant-twice.md": [
                 "raw",
                 "decoded"
               ]
@@ -564,7 +673,9 @@
           "claims": null,
           "witness": {
             "residual": "R-GUARDS",
-            "inSurface": [],
+            "inSurface": [
+              "test/zz-quiet-computed.test.ts"
+            ],
             "findings": {}
           }
         },
@@ -577,7 +688,8 @@
             "inScope": [
               "docs/workbench/zz-quiet-section.md",
               "docs/workbench/zz-quiet-row.md",
-              "test/zz-quiet-echo.test.ts"
+              "test/zz-quiet-echo.test.ts",
+              "test/fixtures/zz-quiet-echo.json"
             ],
             "findings": {}
           }
@@ -647,6 +759,18 @@
           "witness": {
             "residual": "R-GENERIC",
             "findings": {}
+          }
+        },
+        {
+          "id": "Q12",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-NEAR-FIELD",
+            "findings": {
+              "vocabulary": [],
+              "fields": []
+            }
           }
         }
       ]
