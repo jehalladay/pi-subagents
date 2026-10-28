@@ -441,6 +441,7 @@
      "witness": {
       "hits": [],
       "mentionFiles": [
+       "src/workbench/collective-event.ts",
        "src/workbench/detached-observer.ts",
        "src/workbench/observation.ts",
        "src/workbench/reactivefiber-observer.ts"
