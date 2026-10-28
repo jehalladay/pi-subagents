@@ -27,6 +27,18 @@
  * and the FORGE ANCHOR reads the live Forge paragraph: every sentence of it is one Forge row's quote or one of the three named
  * unbound sentences, so a row removed from every literal of this file (CT5/CT6) is still red against the docs.
  *
+ * Row F6 (wb-b9n.2, R6 of the Forge evidence-assurance program at Forge bc2c379f7802) is the Forge provider's claim-scope
+ * sentence: a Forge verdict or verification reference warrants only its exact acceptance predicate at its declared source
+ * basis, and Workbench captions and previews never restate a pass as general or universal software correctness. One half per
+ * clause: exact-acceptance-predicate binds the withheld-success, short-selection and same-operation cases; declared-source-basis
+ * the echoed derived basis and the historical (not authoritative_current) reading; forge-pass-captions the exact pass captions
+ * of the gate.status, gate.run and forge-operation evidence readers and the evidence producer's never-verified scan. A fourth
+ * half, other-captions, is unpinned by design: no landed case walks the other Workbench caption paths, and the row says so
+ * rather than counting the clause as covered. Its identity (sentence, halves, pins) is frozen as the literal FROZEN_F6 (rule
+ * 16), the FORGE ANCHOR reads the sentence from the live paragraph, and the receipt of record (receipts/wb-b9n.2.md) repeats
+ * the identity's line count and SHA-256 outside this file, so a pin, half or the row removed, swapped or reordered in TABLE
+ * and in every literal here together still reds (CT5/CT6).
+ *
  * The docs pin reads the RENDERED view through the helper's docsSection / sectionMatches: each of the seven sections, under
  * its unique level-2 heading of the level-1 parent heading and bounded at the next level-1/2 heading or EOF, must render
  * as exactly its frozen paragraph. A dropped or reworded clause names its row. The docs drift falsifiers run over a
@@ -148,6 +160,14 @@ const SELECTION_SENTENCE =
   "The gate.run reader carries the producer's selected-versus-complete universe (data.selection_accounting for the declared steps or members, data.selection for the tests) beside the operation's verdict as its own facet; a run that selected fewer units than it declared or narrowed its tests renders partial, a selection that is not well formed renders unknown, neither ever renders success, and a gate-step node carries only its own step's outcome, never the workspace verdict.";
 
 /**
+ * wb-b9n.2 (R6 of the Forge evidence-assurance program): the Forge provider paragraph's claim-scope sentence, after the posture
+ * sentence and before the F3 sentence. Row F6 quotes it whole; FROZEN_F6 repeats the row's identity as a literal and the
+ * receipt of record repeats the identity's digest outside this file.
+ */
+const CLAIM_SCOPE_SENTENCE =
+  "A Forge verdict or verification reference warrants only its exact acceptance predicate at its declared source basis, and Workbench captions and previews never restate a pass as general or universal software correctness.";
+
+/**
  * wb-973.17 (SWARM-CONTEXT-GRAPH-R17 (c)): the RF paragraph's sentence on the contractSource release and the live drift
  * guard. Row R5 quotes it whole; FROZEN_R5_QUOTE repeats it as a literal.
  */
@@ -178,7 +198,7 @@ const OBSERVATION_CENSUS = "observation-class-census";
 /** The seven frozen docs/07 section paragraphs, as the markdown source says them. */
 const SECTION_MARKDOWN: Readonly<Record<string, string>> = {
   "Forge provider":
-    `Use public Forge TypeScript App Server/facade or other current SDK. Initial functions: build/verification, affected/incremental selection, inspect artifact and operation. Preserve actual source basis, full verdict axes, reason codes, reuse/cache evidence and partial/unknown states. ${BASIS_SENTENCE} A successful RPC or shell exit does **not** equal verified Forge PASS. ${SELECTION_SENTENCE} Prefer Forge first for gates, test, build and packaging. Workspace Families and global cache designs must be probed for actual shipped availability before calling child creation or cache APIs.`,
+    `Use public Forge TypeScript App Server/facade or other current SDK. Initial functions: build/verification, affected/incremental selection, inspect artifact and operation. Preserve actual source basis, full verdict axes, reason codes, reuse/cache evidence and partial/unknown states. ${BASIS_SENTENCE} A successful RPC or shell exit does **not** equal verified Forge PASS. ${SELECTION_SENTENCE} Prefer Forge first for gates, test, build and packaging. ${CLAIM_SCOPE_SENTENCE} Workspace Families and global cache designs must be probed for actual shipped availability before calling child creation or cache APIs.`,
   "Furnace provider":
     "Use public TypeScript client for runs.start/get/status/events/pause/stop as verified. Native Run/Work/Attempt and supervision semantics remain Furnace's. Future idempotent ensure/reconcile and convenience wait methods are upstream targets, not an assumed API. Ambiguous runs.start timeout -> uncertain/reconcile; do not issue second start blindly. A Furnace host may use ExecutorApp over the per-Attempt embedded bridge to call a MechanicalWorkflows function, with the application outcome mapped explicitly to the four-word Furnace execution result (only status is read; failure_class and data are not); failure and indeterminate park the Run rather than retrying, cancellation is a cooperative AbortSignal, and transport success is never domain verification.",
   "HyperUnix provider": `Use typed TS HX SDK/HXQ builder/results; preserve source basis, coverage classification, bounds, known-empty vs incomplete/unknown and evidence. Incomplete query cannot silently authorize "nothing to do" or produce false success. Graph query as observation enhancement is optional; HX is not mandatory UI event storage. ${HX_OBSERVATION_SENTENCE}`,
@@ -201,6 +221,10 @@ const sectionBlocks = (heading: string): readonly RenderedBlock[] => {
 const CAPABILITY_SUITE = "no native cancel: the typed capability-unavailable refusal quotes the measured surface, never a shell-out or a minted verb";
 /** wb-6ps1.2: the describe path holding the gate.run selection cases row F5 binds (its pins bind the describe as well as the case). */
 const SELECTION_SUITE = "wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict";
+/** wb-b9n.2: the describe paths holding the gate.status, forge-operation evidence and evidence-producer cases row F6 binds. */
+const FORGE_STATUS_SUITE = "Forge gate.status reader adapter";
+const FORGE_EVIDENCE_SUITE = "forge-operation evidence reader";
+const PRODUCER_MAPPING_SUITE = "producer-mapping conformance pass (wb-6ze.20, docs/workbench/20 § Producer mapping)";
 /** wb-693.9: the describe paths holding the R1/R4 cases row R4 binds (its pins bind the describe as well as the case). */
 const RELEASE_SUITE = "producer release from result.provenance.cli_version (wb-2j3.1 reader, wb-2j3.2 no-synthesis guard)";
 const ENGINE_SUITE = "engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-693.2 R2, wb-693.3 R3)";
@@ -330,6 +354,35 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
         pin("forge-operation-observer", "wb-6ps1.2 (a): through the live observer the measured --only reply settles the operation node partial with its facet, and a gate-step node never carries the workspace verdict", [SELECTION_SUITE]),
         pin("forge-operation-observer", "wb-6ps1.2 (a): a gate-step node never carries the workspace verdict - a failed step stays failed under a complete success reply, and a passed step stays passed under a failure reply", [SELECTION_SUITE]),
       ]),
+    ],
+  },
+  {
+    row: "F6",
+    section: "Forge provider",
+    source: "docs",
+    quote: CLAIM_SCOPE_SENTENCE,
+    // wb-b9n.2: one half per clause, in the sentence's order, then the unpinned rest of the third clause. Every pin binds its
+    // describe path, so a same-titled case anywhere else never counts; a renamed, deleted or skipped pin reads red.
+    halves: [
+      gate("exact-acceptance-predicate", [
+        pin("forge-observer", "withholds workspace success that the read status or a declared verdict does not support, and says so", [FORGE_STATUS_SUITE]),
+        pin("forge-operation-observer", "wb-6ps1.2 (a): the measured --only selection (1 of 3 steps) renders partial with its own facet and never success, whatever command status the reply states", [SELECTION_SUITE]),
+        pin("forge-evidence", "C1: an id mismatch between ref and reading, or a reading naming no operation, is a validation refusal never a substituted result", [FORGE_EVIDENCE_SUITE]),
+      ]),
+      gate("declared-source-basis", [
+        pin("forge-observer", "F9 (wb-4ap.1): the measured STALE row carries its derived_from digest B as the package subjectBasis, never its source_digest A", [FORGE_STATUS_SUITE]),
+        pin("forge-evidence", "C2: authoritative_current=false stays historical and indeterminate, never current verification", [FORGE_EVIDENCE_SUITE]),
+      ]),
+      gate("forge-pass-captions", [
+        pin("forge-observer", "F2: a current failed gate stays failed despite transport success, and current success is success", [FORGE_STATUS_SUITE]),
+        pin("forge-operation-observer", "wb-6ps1.2 (a): the measured complete selection (3 of 3 steps) travels with the verdict as its own facet, complete coverage, and the command status keeps its tone", [SELECTION_SUITE]),
+        pin("forge-evidence", "C1: a valid ref re-reads exactly once through the injected seam and loads EvidenceContent-shaped data", [FORGE_EVIDENCE_SUITE]),
+        pin("evidence-loader", "the producer module imports no SDK or child_process and never labels a result verified", [PRODUCER_MAPPING_SUITE]),
+      ]),
+      unpinned(
+        "other-captions",
+        "PARTIAL by design: the forge-pass-captions half binds the exact pass captions of the three Forge readers (the gate.status workspace and package captions, the gate.run operation caption and the forge-operation evidence preview) and the evidence producer's never-verified scan; no landed case walks every other Workbench caption or preview path (the workflow card and dialog, control replies, reconcile rows) for a general or universal correctness restatement of a single pass (the wb-kku9.4 receipt-composition census judges composition across producers, not one producer's pass), so the rest of the clause has no falsifier today and is never reported as covered; a seat that lands such a walk flips this half to a pin consciously",
+      ),
     ],
   },
   {
@@ -664,9 +717,9 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
   },
 ]);
 
-const ROW_IDS: readonly string[] = ["F1", "F2", "F3", "F4", "F5", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "H3", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "B1", "B2", "A1", "S1", "S2"];
+const ROW_IDS: readonly string[] = ["F1", "F2", "F3", "F4", "F5", "F6", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "H3", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "B1", "B2", "A1", "S1", "S2"];
 /** Every half that has no landed case, as "row/half"; a seat that lands a case flips the half consciously and edits this list. */
-const UNPINNED_HALVES: readonly string[] = ["F3/whole", "U7/events", "U8/negative-verbs", "R3/whole", "S1/owner-basis", "S1/observed-evidence", "S1/trace-correlation-recorded"];
+const UNPINNED_HALVES: readonly string[] = ["F3/whole", "F6/other-captions", "U7/events", "U8/negative-verbs", "R3/whole", "S1/owner-basis", "S1/observed-evidence", "S1/trace-correlation-recorded"];
 
 const readRepo = (path: string): string => readFileSync(join(ROOT, path), "utf8");
 
@@ -727,6 +780,9 @@ const FROZEN_JUDGED_SHAPE: readonly string[] = [
   "F5/short-renders-partial:4",
   "F5/malformed-renders-unknown:2",
   "F5/step-never-verdict:2",
+  "F6/exact-acceptance-predicate:3",
+  "F6/declared-source-basis:2",
+  "F6/forge-pass-captions:4",
   "U1/whole:2",
   "U2/whole:2",
   "U3/whole:1",
@@ -834,10 +890,10 @@ const RF_UNBOUND_SENTENCES: readonly string[] = ["Use actual public render/conte
 const sentencesOf = (text: string): string[] => text.split(/(?<=\.) (?=[A-Z])/u);
 
 describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () => {
-  it("AC1: the table holds the thirty frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
+  it("AC1: the table holds the thirty-one frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
     expect(isDeepFrozen(TABLE)).toBe(true);
     expect(TABLE.map(row => row.row)).toEqual(ROW_IDS);
-    expect(TABLE).toHaveLength(30);
+    expect(TABLE).toHaveLength(31);
     expect(JUDGED.map(({ row, half }) => `${row.row}/${half.id}:${half.pins.length}`)).toEqual(FROZEN_JUDGED_SHAPE);
     expect(docsFailures(readRepo(DOCS_FILE))).toEqual([]);
   });
@@ -920,6 +976,7 @@ describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () =
     expect(listed).toEqual(UNPINNED_HALVES);
     const reasons = Object.fromEntries(TABLE.flatMap(row => row.halves.filter(half => half.reason !== undefined).map(half => [`${row.row}/${half.id}`, half.reason ?? ""])));
     expect(reasons["F3/whole"]).toContain("Workspace Families");
+    expect(reasons["F6/other-captions"]).toContain("PARTIAL by design");
     expect(reasons["U7/events"]).toContain("furnace-observer.ts:2");
     expect(reasons["U8/negative-verbs"]).toContain("bare-text");
     expect(reasons["R3/whole"]).toContain("native-rf-preview");
@@ -2844,6 +2901,183 @@ describe("wb-6ps1.2 docs/workbench/07 row F5: the gate.run selection sentence an
     for (const quote of quotes) expect(sentences.filter(sentence => sentence === quote), quote).toHaveLength(1);
     for (const unbound of FORGE_UNBOUND_SENTENCES) expect(sentences.filter(sentence => sentence === unbound), unbound).toHaveLength(1);
     expect(sentences).toHaveLength(quotes.length + FORGE_UNBOUND_SENTENCES.length);
+  });
+});
+
+/**
+ * wb-b9n.2 (rule 16): row F6's identity as a literal, never derived from TABLE - the sentence whole, every half with its tier
+ * and its reason (or "pinned"), then every pin as "half | tier | file | describe path | title" - so a shortened sentence, a
+ * dropped, swapped or re-homed pin, a dropped or reworded half or a relabelled tier reads red.
+ */
+const FROZEN_F6: readonly string[] = [
+  "quote | A Forge verdict or verification reference warrants only its exact acceptance predicate at its declared source basis, and Workbench captions and previews never restate a pass as general or universal software correctness.",
+  "half | exact-acceptance-predicate | test | pinned",
+  "half | declared-source-basis | test | pinned",
+  "half | forge-pass-captions | test | pinned",
+  "half | other-captions | test | PARTIAL by design: the forge-pass-captions half binds the exact pass captions of the three Forge readers (the gate.status workspace and package captions, the gate.run operation caption and the forge-operation evidence preview) and the evidence producer's never-verified scan; no landed case walks every other Workbench caption or preview path (the workflow card and dialog, control replies, reconcile rows) for a general or universal correctness restatement of a single pass (the wb-kku9.4 receipt-composition census judges composition across producers, not one producer's pass), so the rest of the clause has no falsifier today and is never reported as covered; a seat that lands such a walk flips this half to a pin consciously",
+  "exact-acceptance-predicate | test | test/workbench-forge-observer.test.ts | Forge gate.status reader adapter | withholds workspace success that the read status or a declared verdict does not support, and says so",
+  "exact-acceptance-predicate | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): the measured --only selection (1 of 3 steps) renders partial with its own facet and never success, whatever command status the reply states",
+  "exact-acceptance-predicate | test | test/workbench-forge-evidence.test.ts | forge-operation evidence reader | C1: an id mismatch between ref and reading, or a reading naming no operation, is a validation refusal never a substituted result",
+  "declared-source-basis | test | test/workbench-forge-observer.test.ts | Forge gate.status reader adapter | F9 (wb-4ap.1): the measured STALE row carries its derived_from digest B as the package subjectBasis, never its source_digest A",
+  "declared-source-basis | test | test/workbench-forge-evidence.test.ts | forge-operation evidence reader | C2: authoritative_current=false stays historical and indeterminate, never current verification",
+  "forge-pass-captions | test | test/workbench-forge-observer.test.ts | Forge gate.status reader adapter | F2: a current failed gate stays failed despite transport success, and current success is success",
+  "forge-pass-captions | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): the measured complete selection (3 of 3 steps) travels with the verdict as its own facet, complete coverage, and the command status keeps its tone",
+  "forge-pass-captions | test | test/workbench-forge-evidence.test.ts | forge-operation evidence reader | C1: a valid ref re-reads exactly once through the injected seam and loads EvidenceContent-shaped data",
+  "forge-pass-captions | test | test/workbench-evidence-loader.test.ts | producer-mapping conformance pass (wb-6ze.20, docs/workbench/20 § Producer mapping) | the producer module imports no SDK or child_process and never labels a result verified",
+];
+/** A row's identity in FROZEN_F6's form: the sentence, one line per half (tier, then reason or "pinned"), then bindingOf's pin lines. */
+const f6IdentityOf = (row: Row): string[] => [`quote | ${row.quote}`, ...row.halves.map(half => `half | ${half.id} | ${tierCommand(half.tier)} | ${half.reason ?? "pinned"}`), ...bindingOf(row)];
+
+/**
+ * wb-b9n.2 RECEIPT ANCHOR (rule 16 CT5/CT6, the 6ze.39 class): the receipt of record repeats row F6's identity OUTSIDE this
+ * file - its line count and the SHA-256 of f6IdentityOf's lines joined by newlines - as one B9N2_F6_IDENTITY JSON item of its
+ * dated entry, read through the rendered view (docsSection) under the receipt's own level-1 title, so a pin, a half or the row
+ * removed, swapped or reordered in TABLE and in every literal here together still reds against the receipt. A digest, not the
+ * lines: the receipt is a docs/workbench page, which the docs walkers judge sentence by sentence.
+ */
+const F6_RECEIPT_FILE = "docs/workbench/receipts/wb-b9n.2.md";
+const F6_RECEIPT_ENTRY = "2026-10-26 receipt: the Forge provider claim-scope sentence and docs/07 census row F6";
+const F6_IDENTITY_MARK = "Identity of record: B9N2_F6_IDENTITY ";
+/** The receipt shape's first line (standing rule 15): "# <bead>: <bead title>"; the entry is bound under that title. */
+const F6_RECEIPT_OPENING = "# wb-b9n.2: ";
+
+interface RecordedIdentity {
+  readonly row: string;
+  readonly lines: number;
+  readonly sha256: string;
+}
+type ReceiptIdentity = { readonly ok: true; readonly identity: RecordedIdentity } | { readonly ok: false; readonly why: string };
+
+const isRecordedIdentity = (value: unknown): value is RecordedIdentity =>
+  isRecord(value) &&
+  Object.keys(value).length === 3 &&
+  value.row === "F6" &&
+  typeof value.lines === "number" &&
+  Number.isInteger(value.lines) &&
+  typeof value.sha256 === "string" &&
+  /^[0-9a-f]{64}$/.test(value.sha256);
+
+/** The one B9N2_F6_IDENTITY item of the receipt entry, parsed; any other shape is a named refusal. */
+function f6ReceiptIdentity(markdown: string): ReceiptIdentity {
+  const opening = markdown.split("\n", 1)[0] ?? "";
+  if (!opening.startsWith(F6_RECEIPT_OPENING)) return { ok: false, why: `${F6_RECEIPT_FILE}: the first line does not open "${F6_RECEIPT_OPENING}" (standing rule 15)` };
+  const section = docsSection(markdown, F6_RECEIPT_ENTRY, 2, [opening.slice(2)]);
+  if (!section.ok) return { ok: false, why: `${F6_RECEIPT_FILE}: ${section.why}` };
+  if (section.hasHtml) return { ok: false, why: `${F6_RECEIPT_FILE}: the entry carries HTML, which can hide what its source says` };
+  const items = section.blocks.flatMap(block => (block.kind === "list" ? block.items.map(item => item.text) : [])).filter(text => text.startsWith(F6_IDENTITY_MARK));
+  if (items.length !== 1) return { ok: false, why: `${F6_RECEIPT_FILE}: the entry renders ${items.length} B9N2_F6_IDENTITY items, not exactly one` };
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse((items[0] ?? "").slice(F6_IDENTITY_MARK.length));
+  } catch (error) {
+    return { ok: false, why: `${F6_RECEIPT_FILE}: the B9N2_F6_IDENTITY item is not JSON (${error instanceof Error ? error.message : String(error)})` };
+  }
+  if (!isRecordedIdentity(parsed)) return { ok: false, why: `${F6_RECEIPT_FILE}: the B9N2_F6_IDENTITY item is not one {row: "F6", lines, sha256} record` };
+  return { ok: true, identity: parsed };
+}
+
+/** Every disagreement between a table's row F6 and the receipt's identity of record, naming the row and its sentence. */
+function f6ReceiptFindings(table: readonly Row[], identity: RecordedIdentity): string[] {
+  const row = table.find(candidate => candidate.row === identity.row);
+  if (row === undefined) return [`row ${identity.row}: the receipt records it but the table holds no such row`];
+  const lines = f6IdentityOf(row);
+  const digest = bindingDigest(lines);
+  if (lines.length === identity.lines && digest === identity.sha256) return [];
+  return [`row F6 ("${row.quote}"): the table's identity is ${lines.length} lines (sha256 ${digest}), not the receipt's ${identity.lines} (sha256 ${identity.sha256})`];
+}
+
+describe("wb-b9n.2 docs/workbench/07 row F6: the Forge claim-scope sentence, frozen and anchored in its receipt", () => {
+  const rowF6 = (table: readonly Row[] = TABLE): Row | undefined => table.find(candidate => candidate.row === "F6");
+  const withF6 = (change: (row: Row) => Row): readonly Row[] => TABLE.map(row => (row.row === "F6" ? change(row) : row));
+
+  it("AC1 (wb-b9n.2): row F6 quotes the whole claim-scope sentence, binds its clauses by file, describe path, verbatim title and tier, records the unpinned rest, and is frozen as a literal", () => {
+    const row = rowF6();
+    expect(row).toBeDefined();
+    if (row === undefined) return;
+    expect(row.section).toBe("Forge provider");
+    expect(row.source).toBe("docs");
+    expect(f6IdentityOf(row)).toEqual(FROZEN_F6);
+    expect(row.halves.map(half => `${half.id}:${half.pins.length}`)).toEqual(["exact-acceptance-predicate:3", "declared-source-basis:2", "forge-pass-captions:4", "other-captions:0"]);
+    expect(row.halves.filter(half => half.reason === undefined).every(half => half.tier === "default-gate" && half.pins.every(entry => entry.suite !== undefined))).toBe(true);
+    // The sentence is the paragraph's own: one whole sentence of the Forge provider source, after the posture sentence and before the F3 sentence.
+    const markdown = SECTION_MARKDOWN["Forge provider"] ?? "";
+    expect(markdown.split(`build and packaging. ${row.quote} Workspace Families`)).toHaveLength(2);
+  });
+
+  it("F6 receipt anchor (rule 16 CT5/CT6): row F6's identity is the one the receipt of record names, read from receipts/wb-b9n.2.md through the rendered view, never from TABLE", () => {
+    const recorded = f6ReceiptIdentity(readRepo(F6_RECEIPT_FILE));
+    expect(recorded.ok, recorded.ok ? "" : recorded.why).toBe(true);
+    if (!recorded.ok) return;
+    expect(f6ReceiptFindings(TABLE, recorded.identity)).toEqual([]);
+    expect(recorded.identity.lines).toBe(14);
+  });
+
+  it("F6 receipt anchor falsifiers: a pin, a half or the row dropped, swapped, reworded, relabelled or reordered in the table (and in every literal of this file with it) reds against the receipt, naming the row and its sentence", () => {
+    const recorded = f6ReceiptIdentity(readRepo(F6_RECEIPT_FILE));
+    expect(recorded.ok).toBe(true);
+    if (!recorded.ok) return;
+    const named6 = `row F6 ("${CLAIM_SCOPE_SENTENCE}"): the table's identity is`;
+    const halfOf = (row: Row, id: string, change: (half: Half) => Half): Row => ({ ...row, halves: row.halves.map(half => (half.id === id ? change(half) : half)) });
+    const cases: readonly [string, readonly Row[], string][] = [
+      ["a dropped pin", withF6(row => halfOf(row, "forge-pass-captions", half => ({ ...half, pins: half.pins.slice(1) }))), `${named6} 13 lines`],
+      [
+        "a same-seam swapped pin",
+        withF6(row => halfOf(row, "forge-pass-captions", half => ({ ...half, pins: half.pins.map(entry => (entry.title.startsWith("C1: a valid ref") ? pin("forge-evidence", "C2: an empty package list judges nothing", [FORGE_EVIDENCE_SUITE]) : entry)) }))),
+        `${named6} 14 lines`,
+      ],
+      ["a dropped half", withF6(row => ({ ...row, halves: row.halves.filter(half => half.id !== "other-captions") })), `${named6} 13 lines`],
+      ["a reworded reason", withF6(row => halfOf(row, "other-captions", half => ({ ...half, reason: "PARTIAL by design: the other caption paths are not walked." }))), `${named6} 14 lines`],
+      ["a relabelled tier", withF6(row => halfOf(row, "declared-source-basis", half => ({ ...half, tier: "native-read" }))), `${named6} 14 lines`],
+      ["reordered halves", withF6(row => ({ ...row, halves: [...row.halves].reverse() })), `${named6} 14 lines`],
+      ["a dropped row", TABLE.filter(row => row.row !== "F6"), "row F6: the receipt records it but the table holds no such row"],
+    ];
+    expect(cases.map(([name]) => name)).toEqual(["a dropped pin", "a same-seam swapped pin", "a dropped half", "a reworded reason", "a relabelled tier", "reordered halves", "a dropped row"]);
+    for (const [name, table, expected] of cases) {
+      expect(table, `${name} is a real edit`).not.toEqual(TABLE);
+      expect(f6ReceiptFindings(table, recorded.identity).some(line => line.startsWith(expected)), name).toBe(true);
+    }
+  });
+
+  it("F6 receipt shape: the identity item relabelled, duplicated, hidden in a comment, given a fractional line count or re-homed under another title is refused, naming the receipt", () => {
+    const source = readRepo(F6_RECEIPT_FILE);
+    const item = /- Identity of record: `B9N2_F6_IDENTITY [^\n]*/;
+    const shapes: readonly [string, string][] = [
+      ["the identity item relabelled", source.replace("- Identity of record: `B9N2_F6_IDENTITY ", "- Identity: `B9N2_F6_IDENTITY ")],
+      ["the identity item duplicated", source.replace(item, match => `${match}\n${match}`)],
+      ["the identity item hidden in a comment", source.replace(item, match => `<!-- ${match} -->`)],
+      ["a line count made fractional", source.replace('"lines":14,', '"lines":14.5,')],
+      ["the entry re-homed under another title", source.replace(F6_RECEIPT_OPENING, "# wb-b9n.3: ")],
+    ];
+    expect(shapes.map(([name]) => name)).toEqual(["the identity item relabelled", "the identity item duplicated", "the identity item hidden in a comment", "a line count made fractional", "the entry re-homed under another title"]);
+    for (const [name, mutant] of shapes) {
+      expect(mutant, `${name} is a real edit`).not.toBe(source);
+      const read = f6ReceiptIdentity(mutant);
+      expect(read.ok, name).toBe(false);
+      if (!read.ok) expect(read.why, name).toContain(F6_RECEIPT_FILE);
+    }
+  });
+
+  it("K10 (wb-b9n.2) names row F6 (and only it) when the claim-scope sentence lets a caption widen a pass", () => {
+    const edit = (heading: string, body: string): string => (heading === "Forge provider" ? body.replace("never restate a pass as general", "may restate a pass as general") : body);
+    const lines = docsFailures(synthetic(edit));
+    expect(named(lines)).toEqual(["row F6"]);
+    expect(lines.some(line => line.includes("Forge provider is not exactly its frozen paragraph"))).toBe(true);
+  });
+
+  it("M6 (wb-b9n.2): every row-F6 pin renamed by one character is absent from the report and red, naming row F6, its half, the file and the title", () => {
+    const row = rowF6();
+    const pins = row === undefined ? [] : row.halves.flatMap(half => half.pins.map(entry => ({ half, entry })));
+    expect(pins).toHaveLength(9);
+    if (row === undefined) return;
+    for (const { half, entry } of pins) {
+      const wrong = { ...entry, title: `${entry.title}.` };
+      const verdicts = judge(REPORT, [casePin(half, wrong)]);
+      expect(verdicts[0]?.code, wrong.title).toBe("absent");
+      const [line] = failures(row, half, verdicts);
+      expect(line, wrong.title).toContain(`row F6/${half.id}`);
+      expect(line, wrong.title).toContain(entry.file);
+      expect(line, wrong.title).toContain(wrong.title);
+    }
   });
 });
 
