@@ -22,51 +22,86 @@
  * in all: the FurnaceReading source type's sdk member and the reading's sdk value (furnace-observer.ts), the legacy and
  * native furnace.run.inspect descriptors' contractSource (providers/furnace.ts) and the verified-protocol line of
  * furnace-hosted.ts's header. The only @furnace/sdk/<path> loads in src/ are furnace-hosted.ts's two deep imports.
+ * RE-MEASURED at cut #2 (read-only, by seat ws-02 of g10-work-s129, 2026-10-28T17:06:21Z, on trunk a5eecf0): every fact above reads
+ * the same (116 scripts, the same five spellings in three files, the same two deep loads). Both index entries star-export
+ * ./protocol.js (export * from "./protocol.js"), whose declarations and code re-export nothing; src/ creates a require twice,
+ * both in src/workbench/hosts/local-detached.ts and both with a computed specifier.
  *
  * ROWS (each pin quotes the clause it binds, reads the real tree clean and reds each of its planted drifts):
  *  D, the deep imports (acceptance item 4, first half, and clause (b)): D1 every @furnace/sdk/<path> load in src/ (import and
- *   export declarations, import-equals, import types, import(), require() and *.resolve() calls, read through the TypeScript
- *   AST) is a DEEP row, read once, importing exactly the listed names; D2 each DEEP row resolves inside the vendored tarball
- *   to a regular entry whose declaration file exports the class; D3 no switch is owed: the tarball's package.json has no
- *   exports map and neither index entry (types, main) names a deep-imported class, so furnace-hosted.ts's header claim
- *   (HEADER_CLAIM) holds of the tarball; D4 the tarball still carries dist/src/durability.js and dist/src/executor.js still
- *   derives the profile from the declaration, every member false when none was - the module the hello-reply durability
- *   rows of wb-lrz.5 rest on.
+ *   export declarations, import-equals, import types, import(), require() and *.resolve() calls, and created-require calls -
+ *   a createRequire(...) result called at once, or called through a name the script binds to one - read through the
+ *   TypeScript AST) is a DEEP row, read once, importing exactly the listed names; D2 each DEEP row resolves inside the
+ *   vendored tarball to a regular entry whose declaration file exports the class, as text and as a class declaration in its
+ *   code (AST); D3 no switch is owed: the tarball's package.json has no exports map, neither index entry (types, main) names
+ *   a deep-imported class, and no export * chain from either entry (AST, followed through the tarball's modules by relative
+ *   specifier or through the package's own name) reaches a deep-imported module or a re-export naming a deep-imported
+ *   class, so furnace-hosted.ts's header claim (HEADER_CLAIM)
+ *   holds of the tarball; D4 the tarball still carries dist/src/durability.js and its declarations, executor.js still reads
+ *   DurabilityProfile.fromDeclaration(options.durability) and its register method still derives the profile through that
+ *   call in its code (AST), and executor.js still documents every member false when none was - the module the hello-reply
+ *   durability rows of wb-lrz.5 rest on.
  *  V, the version literals (acceptance item 4, second half): V1 every versioned @furnace/sdk spelling in src/ (the at form
  *   "@furnace/sdk@X.Y.Z", the space form "@furnace/sdk X.Y.Z" and the tarball form "furnace-sdk-X.Y.Z.tgz") belongs to a
  *   SITES row read its listed number of times, and each one names the vendored version; V2 the observer's sdk member and sdk
  *   value (AST) each name it, once; V3 both furnace.run.inspect contractSource literals (AST) begin with it.
  *  U, the until-then clause: U1 the vendored version is the clause's own 0.1.0, on package.json's spec and inside the
- *   tarball, and vendor/README.md still records the tarball as wb-zby's repack from Furnace revision 9970621d8 (the trigger
- *   has not fired); U2 the tarball's contract manifest digest equals its generated provenance digest, the condition the
- *   hosted adapter's decodeContextValue preflight admits (acceptance item 3); the refusal itself is the hosted suite's.
+ *   tarball, and vendor/README.md's rendered page (every top-level block through marked's tokens - paragraphs, headings,
+ *   lists, tables, quotes and code alike - with raw HTML and comments dropped) shows exactly one record of the tarball as
+ *   wb-zby's repack, from Furnace revision 9970621d8 (the trigger has not fired); U2 the tarball's contract manifest digest
+ *   equals its generated provenance digest, the condition the hosted adapter's decodeContextValue preflight admits
+ *   (acceptance item 3); the refusal itself is the hosted suite's.
  *  Q, the residuals' pinned quiet rows (RESIDUALS below).
- * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal.
+ * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and FROZEN_PINS pins every row's pin ids;
+ * the JUDGED and QUIET subsets' ids, the call sites' records and the case count are read against FROZEN_PINS, never against
+ * ROWS or a subset. PLANT_SHAPE pins each judged pin's plant count and a literal pins V1's three forms.
+ * EACH-LIVENESS (the wb-mqm6 F7 / wb-vkdl form): every case records its key at its last line - each it.each case its pin
+ * id, each plant its pin and index - and the closing tally, the file's last case, reads vitest's own task tree: every case
+ * is set to run, the case count is the fixed cases plus two cases per judged id, one per quiet id and the tally, and the
+ * records equal the frozen literals, in order. A subset filtered, sliced or emptied, an it.each call site sliced, or a
+ * plants loop cut short goes red at the subset's literal or at the tally.
  * OUTSIDE ANCHORS (their own registered case): acceptance item 4 is tiled in order by the quotes of D1, D2, D3, V1, V2 and V3,
  * and the statement's until-then parenthetical by U1 and U2, with nothing between two quotes but whitespace, comma,
- * semicolon, colon, period and parentheses; D4's quote is found in the notes. A pin removed from ROWS and the literal
- * together, or a quote shortened, leaves part of a clause untiled.
+ * semicolon, colon, period and parentheses; D4's quote opens clause (b) of the notes' one N5 paragraph, read where it
+ * stands (the one notes line that opens with N5_OPEN, holding one clause (b)): a second N5 paragraph or a second clause (b)
+ * is refused, never read first-match, and a copy of the clause elsewhere in the notes is never read. A pin removed from
+ * ROWS and every literal together, or a quote shortened, leaves part of a clause untiled. ANCHOR CONTROLS (their own case)
+ * show tile() tiling a clean pair and refusing a word between two quotes, a reversed pair, an untiled tail and a missing
+ * last quote, then each real acceptance-4 and statement quote dropped in turn and the acceptance-4 quotes reversed; and the
+ * clause (b) reader refusing a clause weakened in place under a verbatim copy, a doubled N5 paragraph, a dropped one and a
+ * weakened clause masked by an earlier second clause (b).
  * RESIDUALS (named, each with its pinned quiet row; every quiet row also runs a control spelled in a read form, so its plant
  * is shown to reach the judge): R-COMPUTED-VERSION a version spelling the raw text does not hold (joined at run time, or
  * escape-spelled) is not read by V1 (Q1); R-OTHER-SPELLING spellings outside V1's three forms ("v9.9.9", "furnace sdk 9.9.9",
  * "version 9.9.9") are not read (Q2); R-OUTSIDE-SRC V1 and D1 read src/ only - docs, test and qa files keep the versions
  * they measured, and a receipt never moves with a re-vendor (Q3); R-COMPUTED-SPECIFIER a load whose specifier is not one
- * string literal is not read by D1 (Q4).
+ * string literal is not read by D1 (Q4); R-INDIRECT-LOADER a created require reached any other way - held in an object,
+ * re-aliased from a bound name, or passed in as a parameter - is not read by D1 (Q5); R-INDEX-INDIRECT a deep-imported
+ * class a module of the export * walk re-binds (a value or a type declared from it) instead of re-exporting it by name is
+ * not read by D3 (Q6).
  * NOT CLAIMED: what a re-vendor commit owes beyond these rows (acceptance items 1-3, 5 and 6: the vendor pins and the
  * dependency census pass on the new tarball, the live tiers re-run against a release-built binary, one re-vendor sequenced
- * with wb-zby); the hosted adapter's preflight refusal, which test/workbench-furnace-hosted.test.ts drives; a pin re-authored
- * together with its plants; a residual row removed from ROWS and the literal together (no outside anchor names the residual
- * families). A tarball entry stored under a pax or GNU long name reads as absent, so a row that needs it reds.
+ * with wb-zby); the hosted adapter's preflight refusal, which test/workbench-furnace-hosted.test.ts drives; a pin
+ * re-authored together with its plants; a plant removed together with its PLANT_SHAPE count (plants are the census's own
+ * inputs, which no outside anchor names); a residual row removed from ROWS and every literal together (no outside anchor
+ * names the residual families, so the census stays green); the census's own instruments edited together with their own
+ * literals (a fixed case removed with its FIXED_CASES key, or the closing tally itself removed). D4's "every member false when none was" is executor.js's own
+ * documented contract, a doc comment by nature, read as text; how executor() reaches register and how durability.js builds
+ * the profile are the hosted suite's hello-reply durability rows (wb-lrz.5), not this census's. The text reads kept beside
+ * the AST reads (D2's declaration text, D3's index mentions, D4's derivation text) only add findings: a comment can satisfy
+ * a text read but never the AST read beside it, and a comment naming a deep-imported class in an index entry reds D3 (an
+ * over-read). A tarball entry stored under a pax or GNU long name reads as absent, so a row that needs it reds.
  * READS (contacts): package.json, vendor/README.md, the tarball package.json names (today vendor/furnace-sdk-0.1.0.tgz),
- * every script under src/, and the wb-lrz.4 row of .beads/issues.jsonl (its description, and its notes for clause (b): an
- * append to the notes is safe, a notes replace that drops the clause reds the anchor case).
+ * every script under src/, and the wb-lrz.4 row of .beads/issues.jsonl (its description, and the N5 paragraph of its notes:
+ * an appended note is safe; a notes replace that drops, doubles or weakens that paragraph's clause (b) reds the anchor case).
  *
  * Display paths added: none (test-only; src/ is read, never edited). Scratch: none - every plant is an in-memory tree.
  */
 import { readdirSync, readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, posix } from "node:path";
 import { fileURLToPath } from "node:url";
 import { gunzipSync } from "node:zlib";
+import { marked, type Token, type Tokens } from "marked";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
 
@@ -83,9 +118,13 @@ const ZBY_REVISION = "9970621d8";
 const HEADER_CLAIM = "The SDK exposes EmbeddedHost and ResidentSession only through deep imports (no index re-export, no exports map).";
 const VERSION = String.raw`\d+\.\d+\.\d+(?:-[0-9A-Za-z][0-9A-Za-z.-]*)?`;
 const SPEC = new RegExp(`^file:vendor/(furnace-sdk-(${VERSION})\\.tgz)$`);
-const PROVENANCE = new RegExp(`(furnace-sdk-${VERSION}\\.tgz) was re-packaged on (\\d{4}-\\d{2}-\\d{2}) \\(wb-zby\\) from Furnace revision ([0-9a-f]{7,40})\\b`);
+/** vendor/README.md's record of the vendored tarball as wb-zby's repack (global: every record the rendered page shows is read). */
+const PROVENANCE = new RegExp(`(furnace-sdk-${VERSION}\\.tgz) was re-packaged on (\\d{4}-\\d{2}-\\d{2}) \\(wb-zby\\) from Furnace revision ([0-9a-f]{7,40})\\b`, "g");
 const SCRIPT = /\.(?:ts|tsx|mts|cts)$/;
 const TRIGGERED = `the trigger has fired, and the re-vendor owes ${BEAD}'s acceptance on landing`;
+/** The notes line the delta paragraph N5 opens with, and the separator its clause (b) follows (D4's quote is read there only). */
+const N5_OPEN = "2026-10-17b (CLUSTERS-delta N5): ";
+const CLAUSE_B = "; (b) ";
 
 type Form = "at" | "space" | "tarball";
 const FORMS: readonly { readonly form: Form; readonly pattern: RegExp; readonly spell: (version: string) => string }[] = [
@@ -184,6 +223,7 @@ function jsonEntry(tree: Tree, path: string): Record<string, unknown> | undefine
 }
 
 const PARSED = new Map<string, Map<string, ts.SourceFile>>();
+/** A src script or a tarball module, parsed once per text: JavaScript modules as JavaScript, everything else as TypeScript. */
 function parsed(file: string, text: string): ts.SourceFile {
   let byText = PARSED.get(file);
   if (byText === undefined) {
@@ -192,7 +232,7 @@ function parsed(file: string, text: string): ts.SourceFile {
   }
   const hit = byText.get(text);
   if (hit !== undefined) return hit;
-  const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, false, ts.ScriptKind.TS);
+  const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, false, /\.[cm]?js$/.test(file) ? ts.ScriptKind.JS : ts.ScriptKind.TS);
   byText.set(text, source);
   return source;
 }
@@ -231,8 +271,21 @@ function vendored(tree: Tree): { readonly version?: string; readonly tarballName
   return { version, tarballName: spec[1], problems };
 }
 
-/** One @furnace/sdk/<path> load: an import or export declaration, import-equals, import type, import(), require() or *.resolve(). */
-function deepLoad(node: ts.Node): { readonly specifier: string; readonly names: readonly string[] } | undefined {
+/** Whether an expression creates a require: createRequire(...) or <module>.createRequire(...). */
+const createsRequire = (node: ts.Node): boolean =>
+  ts.isCallExpression(node) && ((ts.isIdentifier(node.expression) && node.expression.text === "createRequire") || (ts.isPropertyAccessExpression(node.expression) && node.expression.name.text === "createRequire"));
+
+/** The names a script binds to a created require (const load = createRequire(import.meta.url)): D1 reads a call through one as require(). */
+function createdRequires(source: ts.SourceFile): ReadonlySet<string> {
+  const names = new Set<string>();
+  walk(source, (node) => {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined && createsRequire(node.initializer)) names.add(node.name.text);
+  });
+  return names;
+}
+
+/** One @furnace/sdk/<path> load: an import or export declaration, import-equals, import type, import(), require(), *.resolve() or created-require call. */
+function deepLoad(node: ts.Node, created: ReadonlySet<string>): { readonly specifier: string; readonly names: readonly string[] } | undefined {
   const deep = (expression: ts.Node | undefined): string | undefined => (expression !== undefined && ts.isStringLiteralLike(expression) && expression.text.startsWith(`${SDK}/`) ? expression.text : undefined);
   if (ts.isImportDeclaration(node)) {
     const specifier = deep(node.moduleSpecifier);
@@ -261,7 +314,11 @@ function deepLoad(node: ts.Node): { readonly specifier: string; readonly names: 
   }
   if (ts.isCallExpression(node)) {
     const callee = node.expression;
-    const loads = callee.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(callee) && callee.text === "require") || (ts.isPropertyAccessExpression(callee) && callee.name.text === "resolve");
+    const loads =
+      callee.kind === ts.SyntaxKind.ImportKeyword ||
+      (ts.isIdentifier(callee) && (callee.text === "require" || created.has(callee.text))) ||
+      (ts.isPropertyAccessExpression(callee) && callee.name.text === "resolve") ||
+      createsRequire(callee);
     const specifier = loads ? deep(node.arguments[0]) : undefined;
     return specifier === undefined ? undefined : { specifier, names: ["*"] };
   }
@@ -277,8 +334,9 @@ function deepLoads(tree: Tree): DeepImport[] {
     let loads = LOADS.get(source);
     if (loads === undefined) {
       const read: DeepImport[] = [];
+      const created = createdRequires(source);
       walk(source, (node) => {
-        const load = deepLoad(node);
+        const load = deepLoad(node, created);
         if (load !== undefined) read.push({ file, ...load });
       });
       loads = read;
@@ -306,7 +364,18 @@ function deepImportSet(tree: Tree): string[] {
   return findings;
 }
 
-/** D2: each DEEP row resolves to a regular tarball entry whose declaration file exports the imported class. */
+const hasModifier = (node: ts.ClassDeclaration, kind: ts.SyntaxKind): boolean => (node.modifiers ?? []).some((modifier) => modifier.kind === kind);
+/** Whether a declaration file exports class `name`: as text (export declare class <name>), and as a class declaration in its code (AST, comments never read). */
+function declaresClass(path: string, text: string, name: string): { readonly text: boolean; readonly code: boolean } {
+  return {
+    text: new RegExp(`\\bexport\\s+declare\\s+class\\s+${name}\\b`).test(text),
+    code: parsed(path, text).statements.some(
+      (statement) => ts.isClassDeclaration(statement) && statement.name?.text === name && hasModifier(statement, ts.SyntaxKind.ExportKeyword) && hasModifier(statement, ts.SyntaxKind.DeclareKeyword),
+    ),
+  };
+}
+
+/** D2: each DEEP row resolves to a regular tarball entry whose declaration file exports the imported class, as text and in its code. */
 function deepImportsResolve(tree: Tree): string[] {
   const findings: string[] = [];
   for (const row of DEEP) {
@@ -317,12 +386,63 @@ function deepImportsResolve(tree: Tree): string[] {
     }
     const declarations = `package/${path.replace(/\.js$/, ".d.ts")}`;
     const text = tree.tarball.get(declarations) ?? "";
-    for (const name of row.names) if (!new RegExp(`\\bexport\\s+declare\\s+class\\s+${name}\\b`).test(text)) findings.push(`D2 ${declarations} declares no exported class ${name}`);
+    for (const name of row.names) {
+      const declared = declaresClass(declarations, text, name);
+      if (!declared.text) findings.push(`D2 ${declarations} declares no exported class ${name}`);
+      if (!declared.code) findings.push(`D2 ${declarations} declares no exported class ${name} in its code (a comment declares nothing)`);
+    }
   }
   return findings;
 }
 
-/** D3: no switch to index re-exports is owed - no exports map, no index entry naming a deep-imported class, the header claim standing. */
+/** A module specifier resolved inside the tarball from the module naming it - relative, or through the package's own name; a declaration file names declaration files. */
+function tarballModule(from: string, specifier: string): string | undefined {
+  const own = specifier.startsWith(`${SDK}/`) ? `package/${specifier.slice(`${SDK}/`.length)}` : undefined;
+  if (own === undefined && !specifier.startsWith("./") && !specifier.startsWith("../")) return undefined;
+  const target = own ?? posix.normalize(posix.join(posix.dirname(from), specifier));
+  return from.endsWith(".d.ts") ? target.replace(/\.js$/, ".d.ts") : target;
+}
+
+/** What an index entry exposes of the deep imports through export *: the classes, and the module chain from the entry. */
+interface Exposure {
+  readonly names: readonly string[];
+  readonly chain: readonly string[];
+}
+/**
+ * D3's export walk (AST, comments never read): from an index entry through every module an export * names, each export * or
+ * export * as of a DEEP row's module, and each named re-export of a DEEP class in a module the walk reached.
+ */
+function starExposures(tree: Tree, entry: string): Exposure[] {
+  const modules = new Map<string, readonly string[]>(DEEP.map((row) => [`package/${row.specifier.slice(`${SDK}/`.length)}`, row.names]));
+  const classes = DEEP.flatMap((row) => row.names);
+  const exposures: Exposure[] = [];
+  const seen = new Set<string>([entry]);
+  const visit = (path: string, chain: readonly string[]): void => {
+    const text = tree.tarball.get(path);
+    if (text === undefined) return;
+    for (const statement of parsed(path, text).statements) {
+      if (!ts.isExportDeclaration(statement) || statement.moduleSpecifier === undefined || !ts.isStringLiteralLike(statement.moduleSpecifier)) continue;
+      const target = tarballModule(path, statement.moduleSpecifier.text);
+      if (target === undefined) continue;
+      const clause = statement.exportClause;
+      if (clause === undefined || ts.isNamespaceExport(clause)) {
+        const names = modules.get(target.replace(/\.d\.ts$/, ".js"));
+        if (names !== undefined) exposures.push({ names, chain: [...chain, target] });
+        else if (clause === undefined && !seen.has(target)) {
+          seen.add(target);
+          visit(target, [...chain, target]);
+        }
+      } else if (chain.length > 1) {
+        const named = clause.elements.map((element) => (element.propertyName ?? element.name).text).filter((name) => classes.includes(name));
+        if (named.length > 0) exposures.push({ names: named, chain });
+      }
+    }
+  };
+  visit(entry, [entry]);
+  return exposures;
+}
+
+/** D3: no switch to index re-exports is owed - no exports map, no index entry naming or star-exposing a deep-imported class, the header claim standing. */
 function noSwitchOwed(tree: Tree): string[] {
   const pkg = jsonEntry(tree, "package/package.json");
   if (pkg === undefined) return ["D3 the vendored tarball has no readable package/package.json"];
@@ -330,17 +450,37 @@ function noSwitchOwed(tree: Tree): string[] {
   if (Object.hasOwn(pkg, "exports")) findings.push("D3 the vendored SDK carries an exports map: switch the deep imports to index re-exports (acceptance 4)");
   for (const field of ["types", "main"] as const) {
     const entry = pkg[field];
-    const text = typeof entry === "string" ? tree.tarball.get(`package/${entry}`) : undefined;
-    if (text === undefined) {
+    const path = typeof entry === "string" ? `package/${entry}` : undefined;
+    const text = path === undefined ? undefined : tree.tarball.get(path);
+    if (path === undefined || text === undefined) {
       findings.push(`D3 the vendored SDK's ${field} entry ${String(entry)} is not in the tarball`);
       continue;
     }
     for (const name of DEEP.flatMap((row) => row.names)) {
       if (new RegExp(`\\b${name}\\b`).test(text)) findings.push(`D3 the vendored SDK's ${field} entry ${String(entry)} names ${name}: switch its deep import to the index re-export (acceptance 4)`);
     }
+    for (const exposure of starExposures(tree, path)) {
+      const chain = exposure.chain.map((module) => module.slice("package/".length)).join(" -> ");
+      findings.push(`D3 the vendored SDK's ${field} entry ${String(entry)} exposes ${exposure.names.join(", ")} through export * (${chain}): switch its deep import to the index re-export (acceptance 4)`);
+    }
   }
   if (!moduleHeader(tree.files.get(HOSTED) ?? "").includes(HEADER_CLAIM)) findings.push(`D3 ${HOSTED}'s header no longer states the deep-import claim this row holds the vendored tarball to`);
   return findings;
+}
+
+const DERIVATION = "DurabilityProfile.fromDeclaration(options.durability)";
+/** Whether executor.js's register method derives the profile through DurabilityProfile.fromDeclaration(options.durability) in its code (AST, comments never read). */
+function registerDerives(text: string): boolean {
+  const access = (node: ts.Node | undefined, object: string, member: string): boolean =>
+    node !== undefined && ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === object && node.name.text === member;
+  let derives = false;
+  walk(parsed("package/dist/src/executor.js", text), (node) => {
+    if (!ts.isMethodDeclaration(node) || nameOf(node.name) !== "register" || node.body === undefined) return;
+    walk(node.body, (inner) => {
+      if (ts.isCallExpression(inner) && access(inner.expression, "DurabilityProfile", "fromDeclaration") && inner.arguments.length === 1 && access(inner.arguments[0], "options", "durability")) derives = true;
+    });
+  });
+  return derives;
 }
 
 /** D4: the durability module rides in the tarball and the executor derives an undeclared registration's profile as all-false. */
@@ -348,9 +488,10 @@ function durabilityModule(tree: Tree): string[] {
   const findings: string[] = [];
   for (const path of ["package/dist/src/durability.js", "package/dist/src/durability.d.ts"]) if (!tree.tarball.has(path)) findings.push(`D4 the vendored tarball has no ${path}`);
   const executor = tree.tarball.get("package/dist/src/executor.js") ?? "";
-  for (const line of ["DurabilityProfile.fromDeclaration(options.durability)", "every member false when none was"]) {
+  for (const line of [DERIVATION, "every member false when none was"]) {
     if (!executor.includes(line)) findings.push(`D4 package/dist/src/executor.js no longer reads ${JSON.stringify(line)}: re-run the hello-reply durability rows (wb-lrz.5) on the new tarball`);
   }
+  if (!registerDerives(executor)) findings.push(`D4 package/dist/src/executor.js's register method no longer derives the profile through ${DERIVATION} in its code: re-run the hello-reply durability rows (wb-lrz.5) on the new tarball`);
   return findings;
 }
 
@@ -419,17 +560,36 @@ function providerContractSource(tree: Tree): string[] {
   return findings;
 }
 
+const isList = (token: Token): token is Tokens.List => token.type === "list";
+const isTable = (token: Token): token is Tokens.Table => token.type === "table";
+/**
+ * vendor/README.md as its rendered page shows it: the text of each top-level block through marked's tokens - paragraphs,
+ * headings, lists, tables, quotes and code alike - with raw HTML (comments included) dropped.
+ */
+function shownBlocks(markdown: string): string[] {
+  const shown = (token: Token): string => {
+    if (token.type === "html") return "";
+    if (isList(token)) return token.items.map((item) => ` ${shown(item)} `).join("");
+    if (isTable(token)) return [...token.header, ...token.rows.flat()].map((cell) => ` ${cell.tokens.map(shown).join("")} `).join("");
+    if ("tokens" in token && token.tokens !== undefined && token.tokens.length > 0) return token.tokens.map(shown).join("");
+    return "text" in token && typeof token.text === "string" ? token.text : token.raw;
+  };
+  return marked.lexer(markdown).map((token) => collapse(shown(token)));
+}
+
 const U1_QUOTE = "the vendored 0.1.0 pin remains correct";
 
-/** U1: the vendored version is the clause's own, and vendor/README.md still records the tarball as wb-zby's repack. */
+/** U1: the vendored version is the clause's own, and vendor/README.md's rendered page shows one record of the tarball as wb-zby's repack. */
 function untilThenPin(tree: Tree): string[] {
   const { version, tarballName, problems } = vendored(tree);
   if (version === undefined) return problems.map((problem) => `U1 ${problem}`);
   const findings: string[] = [];
   const clause = /\b(\d+\.\d+\.\d+)\b/.exec(U1_QUOTE)?.[1];
   if (version !== clause) findings.push(`U1 the vendored ${SDK} is ${version}, not the until-then ${String(clause)}: ${TRIGGERED}`);
-  const recorded = PROVENANCE.exec(collapse(tree.readme));
-  if (recorded === null) findings.push(`U1 vendor/README.md no longer records the vendored tarball as wb-zby's repack from Furnace revision ${ZBY_REVISION}: ${TRIGGERED}`);
+  const records = shownBlocks(tree.readme).flatMap((block) => [...block.matchAll(PROVENANCE)]);
+  const [recorded] = records;
+  if (recorded === undefined) findings.push(`U1 vendor/README.md no longer records the vendored tarball as wb-zby's repack from Furnace revision ${ZBY_REVISION}: ${TRIGGERED}`);
+  else if (records.length > 1) findings.push(`U1 vendor/README.md shows ${records.length} records of a tarball as wb-zby's repack, not one`);
   else {
     if (recorded[1] !== tarballName) findings.push(`U1 vendor/README.md records ${String(recorded[1])} as wb-zby's repack, not the vendored ${String(tarballName)}`);
     if (recorded[3] !== ZBY_REVISION) findings.push(`U1 vendor/README.md records the repack from Furnace revision ${String(recorded[3])}, not ${ZBY_REVISION}`);
@@ -520,6 +680,13 @@ const NEXT = "0.2.0";
 const NEXT_SOURCE = `${SDK}@0.1.0:Furnace.runs.get().inspect`;
 const REAL_DIGEST = (tree: Tree): string => String(jsonEntry(tree, "package/contract/manifest.json")?.smithy_model_digest);
 const STALE_DIGEST = `sha256:${"e5995480".padEnd(64, "0")}`;
+/** A deep path no DEEP row lists, and the D1 finding a planted load of it in `file` reads as. */
+const CLIENT = `${SDK}/dist/src/host_client.js`;
+const unlistedClient = (file: string, names: string): string => `D1 unlisted deep import ${CLIENT} in ${file} (${names}): every ${SDK}/<path> load is re-measured on re-vendor, so list it`;
+const unlistedSite = (key: string): string => `V1 unlisted site ${key}, read 1 times: every versioned ${SDK} spelling in src/ moves with the vendored tarball, so list it`;
+const switchOwed = (field: string, entry: string, names: string, chain: string): string =>
+  `D3 the vendored SDK's ${field} entry ${entry} exposes ${names} through export * (${chain}): switch its deep import to the index re-export (acceptance 4)`;
+const RERUN = "re-run the hello-reply durability rows (wb-lrz.5) on the new tarball";
 
 const ROWS: readonly Row[] = [
   {
@@ -535,7 +702,7 @@ const ROWS: readonly Row[] = [
           {
             name: "a new deep load in src/",
             tree: (real) => withFile(real, "src/workbench/plant-d1.ts", 'import { HostClient } from "@furnace/sdk/dist/src/host_client.js";\nexport const PLANTED = HostClient;\n'),
-            findings: [`D1 unlisted deep import ${SDK}/dist/src/host_client.js in src/workbench/plant-d1.ts (HostClient): every ${SDK}/<path> load is re-measured on re-vendor, so list it`],
+            findings: [unlistedClient("src/workbench/plant-d1.ts", "HostClient")],
           },
           {
             name: "the embedded host taken from the index instead",
@@ -546,6 +713,82 @@ const ROWS: readonly Row[] = [
             name: "a second name through a listed path",
             tree: (real) => editFile(real, HOSTED, (text) => text.replace("import { ResidentSession } from", "import { ResidentSession, type ResidentSessionOptions } from")),
             findings: [`D1 ${HOSTED} imports ResidentSession, ResidentSessionOptions from ${SDK}/dist/src/resident_session.js, listed ResidentSession`],
+          },
+          {
+            name: "an export declaration re-exporting a deep path by name",
+            tree: (real) => withFile(real, "src/workbench/plant-d1-export.ts", 'export { HostClient } from "@furnace/sdk/dist/src/host_client.js";\n'),
+            findings: [unlistedClient("src/workbench/plant-d1-export.ts", "HostClient")],
+          },
+          {
+            name: "an export * of a deep path",
+            tree: (real) => withFile(real, "src/workbench/plant-d1-star.ts", 'export * from "@furnace/sdk/dist/src/host_client.js";\n'),
+            findings: [unlistedClient("src/workbench/plant-d1-star.ts", "*")],
+          },
+          {
+            name: "an import-equals declaration",
+            tree: (real) => withFile(real, "src/workbench/plant-d1-equals.ts", 'import client = require("@furnace/sdk/dist/src/host_client.js");\nexport { client };\n'),
+            findings: [unlistedClient("src/workbench/plant-d1-equals.ts", "*")],
+          },
+          {
+            name: "a type-only import",
+            tree: (real) => withFile(real, "src/workbench/plant-d1-type-only.ts", 'import type { HostClient } from "@furnace/sdk/dist/src/host_client.js";\nexport type Planted = HostClient;\n'),
+            findings: [unlistedClient("src/workbench/plant-d1-type-only.ts", "HostClient")],
+          },
+          {
+            name: "an import type",
+            tree: (real) => withFile(real, "src/workbench/plant-d1-import-type.ts", 'export type Planted = import("@furnace/sdk/dist/src/host_client.js").HostClient;\n'),
+            findings: [unlistedClient("src/workbench/plant-d1-import-type.ts", "type")],
+          },
+          {
+            name: "a dynamic import()",
+            tree: (real) => withFile(real, "src/workbench/plant-d1-dynamic.ts", 'export const load = (): Promise<unknown> => import("@furnace/sdk/dist/src/host_client.js");\n'),
+            findings: [unlistedClient("src/workbench/plant-d1-dynamic.ts", "*")],
+          },
+          {
+            name: "a require() call",
+            tree: (real) => withFile(real, "src/workbench/plant-d1-require.ts", 'declare const require: (id: string) => unknown;\nexport const planted = require("@furnace/sdk/dist/src/host_client.js");\n'),
+            findings: [unlistedClient("src/workbench/plant-d1-require.ts", "*")],
+          },
+          {
+            name: "a *.resolve() call",
+            tree: (real) => withFile(real, "src/workbench/plant-d1-resolve.ts", 'export const where = import.meta.resolve("@furnace/sdk/dist/src/host_client.js");\n'),
+            findings: [unlistedClient("src/workbench/plant-d1-resolve.ts", "*")],
+          },
+          {
+            name: "a created require called at once",
+            tree: (real) => withFile(real, "src/workbench/plant-d1-created.ts", 'import { createRequire } from "node:module";\nexport const planted: unknown = createRequire(import.meta.url)("@furnace/sdk/dist/src/host_client.js");\n'),
+            findings: [unlistedClient("src/workbench/plant-d1-created.ts", "*")],
+          },
+          {
+            name: "a call through a name bound to a created require",
+            tree: (real) =>
+              withFile(real, "src/workbench/plant-d1-bound.ts", 'import { createRequire } from "node:module";\nconst load = createRequire(import.meta.url);\nexport const planted: unknown = load("@furnace/sdk/dist/src/host_client.js");\n'),
+            findings: [unlistedClient("src/workbench/plant-d1-bound.ts", "*")],
+          },
+          {
+            name: "a deep load in src/ outside src/workbench/",
+            tree: (real) => withFile(real, "src/plant-d1-root.ts", 'import { HostClient } from "@furnace/sdk/dist/src/host_client.js";\nexport const PLANTED = HostClient;\n'),
+            findings: [unlistedClient("src/plant-d1-root.ts", "HostClient")],
+          },
+          {
+            name: "a listed deep import read twice",
+            tree: (real) =>
+              editFile(real, HOSTED, (text) =>
+                text.replace(
+                  'import { EmbeddedHost } from "@furnace/sdk/dist/src/embedded.js";',
+                  'import { EmbeddedHost } from "@furnace/sdk/dist/src/embedded.js";\nimport { EmbeddedHost as EmbeddedHostAgain } from "@furnace/sdk/dist/src/embedded.js";',
+                ),
+              ),
+            findings: [`D1 listed deep import ${SDK}/dist/src/embedded.js in ${HOSTED} is read 2 times, not once`],
+          },
+          {
+            name: "deep loads in .tsx, .mts and .cts scripts",
+            tree: (real) =>
+              ["src/workbench/plant-d1.tsx", "src/workbench/plant-d1.mts", "src/workbench/plant-d1.cts"].reduce(
+                (next, file) => withFile(next, file, 'import { HostClient } from "@furnace/sdk/dist/src/host_client.js";\nexport const PLANTED = HostClient;\n'),
+                real,
+              ),
+            findings: [unlistedClient("src/workbench/plant-d1.tsx", "HostClient"), unlistedClient("src/workbench/plant-d1.mts", "HostClient"), unlistedClient("src/workbench/plant-d1.cts", "HostClient")],
           },
         ],
       },
@@ -564,7 +807,16 @@ const ROWS: readonly Row[] = [
           {
             name: "a tarball whose resident session class is renamed",
             tree: (real) => editEntry(real, "package/dist/src/resident_session.d.ts", (text) => text.replace("export declare class ResidentSession", "export declare class ResidentChannel")),
-            findings: ["D2 package/dist/src/resident_session.d.ts declares no exported class ResidentSession"],
+            findings: [
+              "D2 package/dist/src/resident_session.d.ts declares no exported class ResidentSession",
+              "D2 package/dist/src/resident_session.d.ts declares no exported class ResidentSession in its code (a comment declares nothing)",
+            ],
+          },
+          {
+            name: "a renamed resident session class whose old declaration a comment keeps",
+            tree: (real) =>
+              editEntry(real, "package/dist/src/resident_session.d.ts", (text) => text.replace("export declare class ResidentSession", "/* export declare class ResidentSession */\nexport declare class ResidentChannel")),
+            findings: ["D2 package/dist/src/resident_session.d.ts declares no exported class ResidentSession in its code (a comment declares nothing)"],
           },
         ],
       },
@@ -582,13 +834,43 @@ const ROWS: readonly Row[] = [
           },
           {
             name: "a tarball whose index re-exports the embedded host",
-            tree: (real) => editEntry(real, "package/dist/src/index.d.ts", (text) => `${text}export { EmbeddedHost } from "./embedded.js";\n`),
+            tree: (real) => editEntry(real, "package/dist/src/index.d.ts", (text) => `${text}\nexport { EmbeddedHost } from "./embedded.js";\n`),
             findings: ["D3 the vendored SDK's types entry dist/src/index.d.ts names EmbeddedHost: switch its deep import to the index re-export (acceptance 4)"],
           },
           {
             name: "the header claim dropped",
             tree: (real) => editFile(real, HOSTED, (text) => text.replace("(no index re-export, no exports map).", "(see the SDK index).")),
             findings: [`D3 ${HOSTED}'s header no longer states the deep-import claim this row holds the vendored tarball to`],
+          },
+          {
+            name: "a main entry that names the resident session",
+            tree: (real) => editEntry(real, "package/dist/src/index.js", (text) => `${text}\nexport { ResidentSession } from "./resident_session.js";\n`),
+            findings: ["D3 the vendored SDK's main entry dist/src/index.js names ResidentSession: switch its deep import to the index re-export (acceptance 4)"],
+          },
+          {
+            name: "an index export * of the embedded module",
+            tree: (real) => editEntry(real, "package/dist/src/index.d.ts", (text) => `${text}\nexport * from "./embedded.js";\n`),
+            findings: [switchOwed("types", "dist/src/index.d.ts", "EmbeddedHost", "dist/src/index.d.ts -> dist/src/embedded.d.ts")],
+          },
+          {
+            name: "an export * chain through the protocol module",
+            tree: (real) => editEntry(real, "package/dist/src/protocol.js", (text) => `${text}\nexport * from "./resident_session.js";\n`),
+            findings: [switchOwed("main", "dist/src/index.js", "ResidentSession", "dist/src/index.js -> dist/src/protocol.js -> dist/src/resident_session.js")],
+          },
+          {
+            name: "a starred module re-exporting the embedded host by name",
+            tree: (real) => editEntry(real, "package/dist/src/protocol.d.ts", (text) => `${text}\nexport { EmbeddedHost } from "./embedded.js";\n`),
+            findings: [switchOwed("types", "dist/src/index.d.ts", "EmbeddedHost", "dist/src/index.d.ts -> dist/src/protocol.d.ts")],
+          },
+          {
+            name: "an index export * of the embedded module through the package's own name",
+            tree: (real) => editEntry(real, "package/dist/src/index.js", (text) => `${text}\nexport * from "@furnace/sdk/dist/src/embedded.js";\n`),
+            findings: [switchOwed("main", "dist/src/index.js", "EmbeddedHost", "dist/src/index.js -> dist/src/embedded.js")],
+          },
+          {
+            name: "an index export * as of the resident session module",
+            tree: (real) => editEntry(real, "package/dist/src/index.js", (text) => `${text}\nexport * as resident from "./resident_session.js";\n`),
+            findings: [switchOwed("main", "dist/src/index.js", "ResidentSession", "dist/src/index.js -> dist/src/resident_session.js")],
           },
         ],
       },
@@ -606,8 +888,26 @@ const ROWS: readonly Row[] = [
           },
           {
             name: "an executor that claims by default",
-            tree: (real) => editEntry(real, "package/dist/src/executor.js", (text) => text.replaceAll("DurabilityProfile.fromDeclaration(options.durability)", "DurabilityProfile.fromDeclaration(options.durability ?? CLAIM_ALL)")),
-            findings: ['D4 package/dist/src/executor.js no longer reads "DurabilityProfile.fromDeclaration(options.durability)": re-run the hello-reply durability rows (wb-lrz.5) on the new tarball'],
+            tree: (real) => editEntry(real, "package/dist/src/executor.js", (text) => text.replaceAll(DERIVATION, "DurabilityProfile.fromDeclaration(options.durability ?? CLAIM_ALL)")),
+            findings: [
+              `D4 package/dist/src/executor.js no longer reads "${DERIVATION}": ${RERUN}`,
+              `D4 package/dist/src/executor.js's register method no longer derives the profile through ${DERIVATION} in its code: ${RERUN}`,
+            ],
+          },
+          {
+            name: "a tarball without the durability declarations",
+            tree: (real) => editEntry(real, "package/dist/src/durability.d.ts", () => undefined),
+            findings: ["D4 the vendored tarball has no package/dist/src/durability.d.ts"],
+          },
+          {
+            name: "an executor whose documented contract changes",
+            tree: (real) => editEntry(real, "package/dist/src/executor.js", (text) => text.replace("every member false when none was", "every member true when none was")),
+            findings: [`D4 package/dist/src/executor.js no longer reads "every member false when none was": ${RERUN}`],
+          },
+          {
+            name: "an executor that claims by default while a comment keeps the derivation's text",
+            tree: (real) => editEntry(real, "package/dist/src/executor.js", (text) => `${text.replaceAll(DERIVATION, "DurabilityProfile.fromDeclaration(options.durability ?? CLAIM_ALL)")}\n// ${DERIVATION}\n`),
+            findings: [`D4 package/dist/src/executor.js's register method no longer derives the profile through ${DERIVATION} in its code: ${RERUN}`],
           },
         ],
       },
@@ -631,7 +931,7 @@ const ROWS: readonly Row[] = [
           {
             name: "an unlisted versioned spelling",
             tree: (real) => withFile(real, "src/workbench/plant-v1.ts", 'export const PINNED = "@furnace/sdk@0.1.0";\n'),
-            findings: [`V1 unlisted site src/workbench/plant-v1.ts (at form), read 1 times: every versioned ${SDK} spelling in src/ moves with the vendored tarball, so list it`],
+            findings: [unlistedSite("src/workbench/plant-v1.ts (at form)")],
           },
           {
             name: "a listed site that stops spelling the version",
@@ -647,6 +947,36 @@ const ROWS: readonly Row[] = [
             name: "a clean re-vendor (every site moved)",
             tree: (real) => bump(revendor(real, NEXT), NEXT, OBSERVER, PROVIDER, HOSTED),
             findings: [],
+          },
+          {
+            name: "an unlisted space-form spelling",
+            tree: (real) => withFile(real, "src/workbench/plant-v1-space.ts", "// verified against @furnace/sdk 0.1.0\nexport {};\n"),
+            findings: [unlistedSite("src/workbench/plant-v1-space.ts (space form)")],
+          },
+          {
+            name: "an unlisted tarball-form spelling",
+            tree: (real) => withFile(real, "src/workbench/plant-v1-tarball.ts", 'export const ARTIFACT = "vendor/furnace-sdk-0.1.0.tgz";\n'),
+            findings: [unlistedSite("src/workbench/plant-v1-tarball.ts (tarball form)")],
+          },
+          {
+            name: "an unlisted spelling in src/ outside src/workbench/",
+            tree: (real) => withFile(real, "src/plant-v1-root.ts", 'export const PINNED = "@furnace/sdk@0.1.0";\n'),
+            findings: [unlistedSite("src/plant-v1-root.ts (at form)")],
+          },
+          {
+            name: "a listed site spelled once more than listed",
+            tree: (real) => editFile(real, OBSERVER, (text) => `// @furnace/sdk@0.1.0\n${text}`),
+            findings: [`V1 listed site ${OBSERVER} (at form), the FurnaceReading source type's sdk member and the reading's sdk value, is read 3 times, listed 2`],
+          },
+          {
+            name: "a prerelease spelling at a listed site",
+            tree: (real) => editFile(real, HOSTED, (text) => text.replace("(@furnace/sdk 0.1.0, furnace.executor.v1)", "(@furnace/sdk 0.1.0-rc.1, furnace.executor.v1)")),
+            findings: [`V1 stale site ${HOSTED} (space form) names 0.1.0-rc.1; the vendored tarball is 0.1.0`],
+          },
+          {
+            name: "versioned spellings in .tsx, .mts and .cts scripts",
+            tree: (real) => ["src/workbench/plant-v1.tsx", "src/workbench/plant-v1.mts", "src/workbench/plant-v1.cts"].reduce((next, file) => withFile(next, file, 'export const PINNED = "@furnace/sdk@0.1.0";\n'), real),
+            findings: [unlistedSite("src/workbench/plant-v1.tsx (at form)"), unlistedSite("src/workbench/plant-v1.mts (at form)"), unlistedSite("src/workbench/plant-v1.cts (at form)")],
           },
         ],
       },
@@ -667,6 +997,11 @@ const ROWS: readonly Row[] = [
             tree: (real) => editFile(real, OBSERVER, (text) => text.replace("sdk:'@furnace/sdk@0.1.0',producerVersion", "sdk:OBSERVED_SDK,producerVersion")),
             findings: [`V2 ${OBSERVER} carries 0 literals for the reading's sdk value, not one`],
           },
+          {
+            name: "the reading type's sdk member widened to string",
+            tree: (real) => editFile(real, OBSERVER, (text) => text.replace("sdk:'@furnace/sdk@0.1.0';producerVersion", "sdk:string;producerVersion")),
+            findings: [`V2 ${OBSERVER} carries 0 literals for the reading type's sdk member, not one`],
+          },
         ],
       },
       {
@@ -685,6 +1020,11 @@ const ROWS: readonly Row[] = [
             name: "one registration's contractSource taken from a constant",
             tree: (real) => editFile(real, PROVIDER, (text) => text.replace(`contractSource:"${NEXT_SOURCE}"`, "contractSource:INSPECT_SOURCE")),
             findings: [`V3 ${PROVIDER} carries 1 contractSource literals, not the two (legacy and native) registrations`],
+          },
+          {
+            name: "a third contractSource literal",
+            tree: (real) => editFile(real, PROVIDER, (text) => `${text}export const PLANTED = { contractSource: "${NEXT_SOURCE}" };\n`),
+            findings: [`V3 ${PROVIDER} carries 3 contractSource literals, not the two (legacy and native) registrations`],
           },
         ],
       },
@@ -713,6 +1053,58 @@ const ROWS: readonly Row[] = [
           {
             name: "the README names another revision",
             tree: (real) => editReadme(real, (text) => text.replace("Furnace revision 9970621d8", "Furnace revision 0123456789")),
+            findings: [`U1 vendor/README.md records the repack from Furnace revision 0123456789, not ${ZBY_REVISION}`],
+          },
+          {
+            name: "the README keeps the old record only inside an HTML comment above a changed one",
+            tree: (real) =>
+              editReadme(real, (text) =>
+                text
+                  .replace("Furnace revision 9970621d8", "Furnace revision 0123456789")
+                  .replace("Artifacts were packaged from", "<!-- furnace-sdk-0.1.0.tgz was re-packaged on 2026-10-17 (wb-zby) from Furnace revision 9970621d8 -->\n\nArtifacts were packaged from"),
+              ),
+            findings: [`U1 vendor/README.md records the repack from Furnace revision 0123456789, not ${ZBY_REVISION}`],
+          },
+          {
+            name: "the README shows a second record",
+            tree: (real) => editReadme(real, (text) => `${text}\nfurnace-sdk-0.1.0.tgz was re-packaged on 2026-10-18 (wb-zby) from Furnace revision 0123456789.\n`),
+            findings: ["U1 vendor/README.md shows 2 records of a tarball as wb-zby's repack, not one"],
+          },
+          {
+            name: "the README keeps the old record only inside an inline HTML comment beside a changed one",
+            tree: (real) =>
+              editReadme(real, (text) =>
+                text.replace("from Furnace revision 9970621d8 (", "from Furnace revision 0123456789 <!-- furnace-sdk-0.1.0.tgz was re-packaged on 2026-10-17 (wb-zby) from Furnace revision 9970621d8 --> ("),
+              ),
+            findings: [`U1 vendor/README.md records the repack from Furnace revision 0123456789, not ${ZBY_REVISION}`],
+          },
+          {
+            name: "the README shows a second record as a list item",
+            tree: (real) => editReadme(real, (text) => `${text}\n- furnace-sdk-0.1.0.tgz was re-packaged on 2026-10-18 (wb-zby) from Furnace revision 0123456789\n`),
+            findings: ["U1 vendor/README.md shows 2 records of a tarball as wb-zby's repack, not one"],
+          },
+          {
+            name: "the README shows a second record in a table cell",
+            tree: (real) => editReadme(real, (text) => `${text}\n| Record |\n| --- |\n| furnace-sdk-0.1.0.tgz was re-packaged on 2026-10-18 (wb-zby) from Furnace revision 0123456789 |\n`),
+            findings: ["U1 vendor/README.md shows 2 records of a tarball as wb-zby's repack, not one"],
+          },
+          {
+            name: "the README keeps the old record only inside a list item's HTML comment, beside a changed one",
+            tree: (real) =>
+              editReadme(
+                real,
+                (text) => `${text.replace("Furnace revision 9970621d8", "Furnace revision 0123456789")}\n- note <!-- furnace-sdk-0.1.0.tgz was re-packaged on 2026-10-17 (wb-zby) from Furnace revision 9970621d8 -->\n`,
+              ),
+            findings: [`U1 vendor/README.md records the repack from Furnace revision 0123456789, not ${ZBY_REVISION}`],
+          },
+          {
+            name: "the README keeps the old record only inside a table cell's HTML comment, beside a changed one",
+            tree: (real) =>
+              editReadme(
+                real,
+                (text) =>
+                  `${text.replace("Furnace revision 9970621d8", "Furnace revision 0123456789")}\n| Record |\n| --- |\n| note <!-- furnace-sdk-0.1.0.tgz was re-packaged on 2026-10-17 (wb-zby) from Furnace revision 9970621d8 --> |\n`,
+              ),
             findings: [`U1 vendor/README.md records the repack from Furnace revision 0123456789, not ${ZBY_REVISION}`],
           },
         ],
@@ -773,6 +1165,42 @@ const ROWS: readonly Row[] = [
         quiet: (real) => withFile(real, "src/workbench/plant-q4.ts", 'const BASE = "@furnace/sdk/dist/src/";\nexport const load = (): Promise<unknown> => import(BASE + "client.js");\n'),
         control: (real) => withFile(real, "src/workbench/plant-q4.ts", 'export const load = (): Promise<unknown> => import("@furnace/sdk/dist/src/client.js");\n'),
       },
+      {
+        kind: "quiet",
+        id: "Q5",
+        residual: "R-INDIRECT-LOADER",
+        judge: deepImportSet,
+        quiet: (real) =>
+          withFile(
+            real,
+            "src/workbench/plant-q5.ts",
+            [
+              'import { createRequire } from "node:module";',
+              "const loaders = { load: createRequire(import.meta.url) };",
+              'export const held: unknown = loaders.load("@furnace/sdk/dist/src/durability.js");',
+              "const created = createRequire(import.meta.url);",
+              "const again = created;",
+              'export const realiased: unknown = again("@furnace/sdk/dist/src/durability.js");',
+              'export const passed = (load: (id: string) => unknown): unknown => load("@furnace/sdk/dist/src/durability.js");',
+              "",
+            ].join("\n"),
+          ),
+        control: (real) =>
+          withFile(real, "src/workbench/plant-q5.ts", 'import { createRequire } from "node:module";\nconst load = createRequire(import.meta.url);\nexport const durability: unknown = load("@furnace/sdk/dist/src/durability.js");\n'),
+      },
+      {
+        kind: "quiet",
+        id: "Q6",
+        residual: "R-INDEX-INDIRECT",
+        judge: noSwitchOwed,
+        quiet: (real) =>
+          editEntry(
+            editEntry(real, "package/dist/src/protocol.d.ts", (text) => `${text}\nimport { EmbeddedHost } from "./embedded.js";\nexport declare const Host: typeof EmbeddedHost;\n`),
+            "package/dist/src/protocol.js",
+            (text) => `${text}\nimport { ResidentSession } from "./resident_session.js";\nexport const Session = ResidentSession;\n`,
+          ),
+        control: (real) => editEntry(real, "package/dist/src/index.d.ts", (text) => `${text}\nexport * from "./embedded.js";\n`),
+      },
     ],
   },
 ];
@@ -781,6 +1209,29 @@ const PINS = ROWS.flatMap((row) => row.pins);
 const JUDGED = PINS.filter((pin): pin is JudgedPin => pin.kind === "judged");
 const QUIET = PINS.filter((pin): pin is QuietPin => pin.kind === "quiet");
 const quotesOf = (source: Source): string[] => JUDGED.filter((pin) => pin.source === source).map((pin) => pin.quote);
+
+// ---- frozen shape and each-liveness (standing rule 16; the U1 cure of wb-lrz.4 refusal #1) -------------------------------
+
+/** Every row's pin ids, frozen at this cut: the one literal the subsets' ids, the call sites' records and the case count are read against. */
+const FROZEN_PINS = ["D:D1,D2,D3,D4", "V:V1,V2,V3", "U:U1,U2", "Q:Q1,Q2,Q3,Q4,Q5,Q6"] as const;
+const FROZEN_IDS = FROZEN_PINS.flatMap((entry) => entry.slice(entry.indexOf(":") + 1).split(","));
+/** The judged ids (rows D, V and U) and the quiet ids (row Q), taken from FROZEN_PINS - never from ROWS or a subset. */
+const JUDGED_IDS = FROZEN_IDS.filter((id) => !id.startsWith("Q"));
+const QUIET_IDS = FROZEN_IDS.filter((id) => id.startsWith("Q"));
+/** Each judged pin's plant count, frozen at this cut: a plant deleted, or a plants loop cut short, goes red. */
+const PLANT_SHAPE = ["D1:16", "D2:3", "D3:9", "D4:5", "V1:11", "V2:3", "V3:3", "U1:10", "U2:2"] as const;
+/** The key each plant records at its last line, in order: its pin id and its index, expanded from PLANT_SHAPE. */
+const PLANT_KEYS = PLANT_SHAPE.flatMap((entry) => {
+  const [id = "", count = "0"] = entry.split(":");
+  return Array.from({ length: Number(count) }, (_, index) => `${id}#${index}`);
+});
+/** The key each fixed case records at its last line, in registration order (the closing tally is the file's last case). */
+const FIXED_CASES = ["frozen shape", "outside anchors", "anchor controls"] as const;
+/** What this run's cases did: each case and each plant records its key at its last line, so one cut short, sliced off or never run is missing. */
+const REACHED = new Map<string, string[]>();
+const reached = (site: string, key: string): void => {
+  REACHED.set(site, [...(REACHED.get(site) ?? []), key]);
+};
 
 /** The bead's own row of the tracker export: its description and notes. */
 function beadRow(): { readonly description: string; readonly notes: string } {
@@ -836,12 +1287,41 @@ function tile(text: string, quotes: readonly string[]): string[] {
   return rest.replace(BETWEEN, "") === "" ? [] : [`untiled tail ${JSON.stringify(rest)}`];
 }
 
+/** Problems reading D4's one quote where clause (b) of the notes' one N5 paragraph opens; a copy of the clause anywhere else is never read. */
+function noteClause(notes: string, quotes: readonly string[]): string[] {
+  const paragraphs = notes.split("\n").filter((line) => line.startsWith(N5_OPEN));
+  if (paragraphs.length !== 1) return [`the notes hold ${paragraphs.length} N5 paragraphs, not one`];
+  const parts = (paragraphs[0] ?? "").split(CLAUSE_B);
+  if (parts.length !== 2) return [`the N5 paragraph carries ${parts.length - 1} clauses (b), not one`];
+  const clause = parts[1] ?? "";
+  return quotes.flatMap((quote) => (clause.startsWith(quote) ? [] : [`clause (b) of the N5 paragraph opens ${JSON.stringify(clause.slice(0, quote.length))}, not ${JSON.stringify(quote)}`]));
+}
+
+/** One node of vitest's task tree, as far as the tally reads it. */
+interface TaskNode {
+  readonly type: string;
+  readonly name: string;
+  readonly mode?: string;
+  readonly tasks?: readonly TaskNode[];
+}
+/** Every case vitest registered in this file, in registration order, with its run mode, read from the runner's own task tree. */
+const registeredCases = (tasks: readonly TaskNode[]): { readonly name: string; readonly mode: string | undefined }[] =>
+  tasks.flatMap((child) => (child.type === "test" ? [{ name: child.name, mode: child.mode }] : child.type === "suite" ? registeredCases(child.tasks ?? []) : []));
+const TALLY_TITLE =
+  "EACH-LIVENESS closing tally: every case is set to run, the case count is the fixed cases plus two per judged id, one per quiet id and this tally, every case and every plant reached its last line in frozen order, and this tally is the file's last case";
+
 describe("wb-lrz.4 Furnace SDK re-vendor readiness census", () => {
-  it("FROZEN SHAPE (standing rule 16): ROWS pins every row's id and pin count", () => {
-    expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(["D:4", "V:3", "U:2", "Q:4"]);
+  it("FROZEN SHAPE (standing rule 16): literals pin ROWS's shape and pin ids, the JUDGED and QUIET subsets' ids, each judged pin's plant count and V1's forms", () => {
+    expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(["D:4", "V:3", "U:2", "Q:6"]);
+    expect(ROWS.map((row) => `${row.id}:${row.pins.map((pin) => pin.id).join(",")}`)).toEqual([...FROZEN_PINS]);
+    expect(JUDGED.map((pin) => pin.id)).toEqual(JUDGED_IDS);
+    expect(QUIET.map((pin) => pin.id)).toEqual(QUIET_IDS);
+    expect(JUDGED.map((pin) => `${pin.id}:${pin.plants.length}`)).toEqual([...PLANT_SHAPE]);
+    expect(FORMS.map((entry) => entry.form)).toEqual(["at", "space", "tarball"]);
+    reached("cases", "frozen shape");
   });
 
-  it("OUTSIDE ANCHORS: wb-lrz.4's acceptance item 4 and its statement's until-then clause are tiled by the pins' quotes in ROWS order, and its notes hold D4's quote", () => {
+  it("OUTSIDE ANCHORS: wb-lrz.4's acceptance item 4 and its statement's until-then clause are tiled by the pins' quotes in ROWS order, and D4's quote opens clause (b) of its notes' one N5 paragraph", () => {
     const row = beadRow();
     const acceptance = acceptanceItems(row.description);
     expect(acceptance).toHaveLength(6);
@@ -849,23 +1329,82 @@ describe("wb-lrz.4 Furnace SDK re-vendor readiness census", () => {
     expect(tile(untilThen(row.description), quotesOf("statement"))).toEqual([]);
     const notes = quotesOf("note-b");
     expect(notes).toHaveLength(1);
-    for (const quote of notes) expect(row.notes.includes(quote), quote).toBe(true);
+    expect(noteClause(row.notes, notes)).toEqual([]);
     expect(new Set(PINS.map((pin) => pin.id)).size).toBe(PINS.length);
-    for (const row of ROWS) for (const pin of row.pins) expect(pin.id.startsWith(row.id), pin.id).toBe(true);
+    expect(ROWS.flatMap((entry) => entry.pins.filter((pin) => !pin.id.startsWith(entry.id)).map((pin) => pin.id))).toEqual([]);
+    reached("cases", "outside anchors");
+  });
+
+  it("ANCHOR CONTROLS: tile() refuses a word between quotes, a reversed pair, an untiled tail, a missing quote, each real quote dropped and the real quotes reversed; the clause (b) reader refuses a weakened, doubled, dropped or masked clause", () => {
+    const pair = ["alpha beta", "gamma"];
+    expect(tile("alpha beta, gamma.", pair)).toEqual([]);
+    expect(tile("alpha beta, delta gamma.", pair)).toEqual(['the next clause reads "delta gamma.", not "gamma"']);
+    expect(tile("gamma; alpha beta", pair)).toEqual(['the next clause reads "gamma; alpha beta", not "alpha beta"']);
+    expect(tile("alpha beta, gamma, delta", pair)).toEqual(['untiled tail ", delta"']);
+    expect(tile("alpha beta", pair)).toEqual(['the next clause reads "", not "gamma"']);
+    const row = beadRow();
+    const item = acceptanceItems(row.description)[3] ?? "";
+    const acceptance = quotesOf("acceptance-4");
+    expect(acceptance.map((quote) => tile(item, acceptance.filter((other) => other !== quote)).length > 0)).toEqual([true, true, true, true, true, true]);
+    expect(tile(item, [...acceptance].reverse()).length).toBeGreaterThan(0);
+    const clause = untilThen(row.description);
+    const statement = quotesOf("statement");
+    expect(statement.map((quote) => tile(clause, statement.filter((other) => other !== quote)).length > 0)).toEqual([true, true]);
+    const [quote = ""] = quotesOf("note-b");
+    const n5 = row.notes.split("\n").find((line) => line.startsWith(N5_OPEN)) ?? "";
+    const weakened = row.notes.replace(quote, "the deep-import census may leave out the durability module");
+    expect(noteClause(`${weakened}\n${quote}`, [quote])).toEqual([`clause (b) of the N5 paragraph opens "the deep-import census may leave out the durability modu", not ${JSON.stringify(quote)}`]);
+    expect(noteClause(`${row.notes}\n${n5}`, [quote])).toEqual(["the notes hold 2 N5 paragraphs, not one"]);
+    expect(
+      noteClause(
+        row.notes
+          .split("\n")
+          .filter((line) => !line.startsWith(N5_OPEN))
+          .join("\n"),
+        [quote],
+      ),
+    ).toEqual(["the notes hold 0 N5 paragraphs, not one"]);
+    expect(noteClause(weakened.replace(CLAUSE_B, `${CLAUSE_B}${quote}${CLAUSE_B}`), [quote])).toEqual(["the N5 paragraph carries 2 clauses (b), not one"]);
+    reached("cases", "anchor controls");
   });
 
   it.each(JUDGED)("$id reads the real tree clean: $quote", (pin) => {
     expect(pin.judge(REAL)).toEqual([]);
+    reached("real tree", pin.id);
   });
 
   it.each(JUDGED)("$id reds each planted drift: $quote", (pin) => {
     expect(pin.plants.some((plant) => plant.findings.length > 0)).toBe(true);
-    for (const plant of pin.plants) expect(pin.judge(plant.tree(REAL)), plant.name).toEqual(plant.findings);
+    for (const [index, plant] of pin.plants.entries()) {
+      expect(pin.judge(plant.tree(REAL)), plant.name).toEqual(plant.findings);
+      reached("plant", `${pin.id}#${index}`);
+    }
+    reached("plants", pin.id);
   });
 
   it.each(QUIET)("$id is residual $residual's pinned quiet row: the plant reads as nothing, its read-form control as a finding", (pin) => {
     expect(pin.judge(REAL)).toEqual([]);
     expect(pin.judge(pin.quiet(REAL))).toEqual([]);
     expect(pin.judge(pin.control(REAL)).length).toBeGreaterThan(0);
+    reached("quiet", pin.id);
+  });
+});
+
+describe("wb-lrz.4 each-liveness: the closing tally", () => {
+  it(TALLY_TITLE, ({ task }) => {
+    const cases = registeredCases(task.file.tasks);
+    expect(
+      cases.filter((entry) => entry.mode !== "run").map((entry) => entry.name),
+      "cases of this file not set to run",
+    ).toEqual([]);
+    expect(cases.map((entry) => entry.name)[cases.length - 1], "the file's last case").toBe(TALLY_TITLE);
+    expect(cases, "the file's case count").toHaveLength(FIXED_CASES.length + 2 * JUDGED_IDS.length + QUIET_IDS.length + 1);
+    expect(Object.fromEntries(REACHED), "the key every case and plant recorded at its last line").toEqual({
+      cases: [...FIXED_CASES],
+      "real tree": JUDGED_IDS,
+      plant: PLANT_KEYS,
+      plants: JUDGED_IDS,
+      quiet: QUIET_IDS,
+    });
   });
 });
