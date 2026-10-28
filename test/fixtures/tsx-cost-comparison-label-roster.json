@@ -840,6 +840,112 @@
          "shared-JSON-text": false
         }
        }
+      },
+      "absent": {
+       "skill": {
+        "skill": [
+         false,
+         false,
+         false,
+         false
+        ],
+        "display": [
+         true,
+         true,
+         true,
+         true,
+         true
+        ],
+        "rf": [
+         true,
+         true,
+         true,
+         true,
+         true
+        ],
+        "viewer": [
+         true,
+         true
+        ]
+       },
+       "display": {
+        "skill": [
+         true,
+         true,
+         true,
+         true
+        ],
+        "display": [
+         false,
+         false,
+         false,
+         false,
+         true
+        ],
+        "rf": [
+         true,
+         true,
+         true,
+         true,
+         true
+        ],
+        "viewer": [
+         true,
+         true
+        ]
+       },
+       "rf": {
+        "skill": [
+         true,
+         true,
+         true,
+         true
+        ],
+        "display": [
+         true,
+         true,
+         true,
+         true,
+         true
+        ],
+        "rf": [
+         false,
+         false,
+         false,
+         false,
+         false
+        ],
+        "viewer": [
+         true,
+         true
+        ]
+       },
+       "viewer": {
+        "skill": [
+         true,
+         true,
+         true,
+         true
+        ],
+        "display": [
+         true,
+         true,
+         true,
+         true,
+         true
+        ],
+        "rf": [
+         true,
+         true,
+         true,
+         true,
+         true
+        ],
+        "viewer": [
+         false,
+         false
+        ]
+       }
       }
      }
     },

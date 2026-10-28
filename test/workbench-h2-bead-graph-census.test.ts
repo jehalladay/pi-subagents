@@ -103,7 +103,8 @@
  *    readiness reader alike (the wb-4nut.5 census pins it as its gate form G08); R14 R-COORDINATED-PIN a pin removed from every
  *    literal at once (ROWS, IMPL, the roster, the frozen count and every list here) stays green unless something outside this
  *    file and the roster requires it: the OUTSIDE ANCHORS below hold every delivered pin (rows T to M by the delivered floors,
- *    R1-R12 by the delivered residual names, rows E and K by wb-ze6u's filing, rows V and X by wb-mdfe's: the CARRY ANCHORS),
+ *    R1-R12 by the delivered residual names, rows E and K by wb-ze6u's filing, rows V and X by wb-mdfe's and row N by wb-52th's:
+ *    the CARRY ANCHORS),
  *    the drive record requires T4's walk and the A4,
  *    B6, C5 and D3 drives of each walked gate reader, and a single-pin row's describe empties; a pin a later cut adds above
  *    its row's floor (R13 and R14, wb-k888's), a paired input or an A4 gate state is held by the roster alone (R14 derives
@@ -126,6 +127,11 @@
  *    program name, the unpadded key, the PascalCase gate key and the dotted bead id hit the H2 family; G-1-G-3 the underscore and
  *    spaced spellings hit the prerequisite family; TR1 the tracker's own root reads only the files the git index tracks, so the
  *    bd runtime files the filing lists are never read.
+ *  N, the end judge the closing case and the afterAll hook apply, and the end shape this file's harness keeps, one control per
+ *    guarded return wb-52th's filing names (F1): L2-DRRET (a return in the drive record after its first compare) and L2-JSRET
+ *    (one in the judged set after its frozen-shape compare), each judged as the end record that mutant leaves - the case it cuts
+ *    short is unended at the closing case and at the afterAll hook - and as this file's source with that case's end record moved
+ *    above the return, which the end shape reads out of place.
  * FOLLOW-UP (wb-ze6u, the R694 follow-up of landing 307; cut #1 on trunk 9f6b726, respun under owner ruling R760 on trunk
  * 24e0d5b over wb-4nut.5's landed rows T4, A4, B6, C5 and D3): the gate's LEG 2 survivors of wb-4nut.4 cut #1
  * are cured here - F1 by REGISTRATION, F2 by the OUTSIDE ANCHORS, F3 by row E - and row K holds a control per named mutant.
@@ -136,7 +142,8 @@
  * closing case's own included) reds before any pin runs. The closing case, registered last, reads the tree again after the run
  * (every other case ran) and holds REACHED to the roster: every pin reached its compare, in roster order, and every reached
  * witness equals its roster witness - a second compare, so a liveness-only compare at a pin no longer leaves its witness held by
- * one line. An afterAll hook holds the closing case to its end, so a runtime skip or a guarded return there reds the file too.
+ * one line. An afterAll hook holds the closing case to its end, so a runtime skip or a guarded return there reds the file too
+ * (since wb-52th it holds every harness case to its end: the END RECORD below).
  * OUTSIDE ANCHORS (F2): rows T to R are held to the frozen shape and the residual names wb-4nut.4's delivery recorded in the
  * tracked export (the first "Frozen shape" and "named residuals" statements of its notes; the shape as a floor per row, so a later
  * cut may add a pin but none may drop below the delivered count), rows T to D to the frozen shape wb-4nut.5's delivery recorded
@@ -176,6 +183,20 @@
  * Rows V and X are held to wb-mdfe's filing in the tracked export (its first F1-F5 bullets): the findings it routes are exactly
  * CARRY_CURES', each of F2-F4 cured by the pins named as its bullet names them, F1 by one control per mutant its cure names and
  * F5 by one pin per cure candidate, whose model drops every runtime file the bullet lists.
+ * END RECORD (wb-52th, the R694 follow-up of landing 498, hop 3 of the landing-381 chain): its lead F1 is cured here, its rides
+ * F2 and F3 in the program readiness census (test/workbench-beads-program-readiness.test.ts). Only the closing case was held to
+ * its end: a guarded return in the drive record after its first compare (L2-DRRET) or in the judged set after its frozen-shape
+ * compare (L2-JSRET) kept the file green and switched off every compare after it - the drive record's only kill of an undriven
+ * gate reader (L2-DRNEW), the judged set's outside anchors. Now each harness case writes its own title to ENDED on its last line;
+ * the closing case holds the two cases before it to their end and the afterAll hook every one of them, once each and in order
+ * (endGaps). The END SHAPE, read from this file's code by the TypeScript AST in the judged set and again in the closing case,
+ * holds each harness case's end record to that case's last statement, spelled once, ENDED to those three pushes and the end
+ * judge's reads (any other spelling of it - a splice, an alias, a length write - is a stray), the closing case to its hold of
+ * the two before it and the afterAll hook's callback to the one statement judging ENDED against HARNESS, so an end record moved
+ * above a return, written twice, written another way or dropped reds the file, and a return in one reader of the shape leaves
+ * the other reading it. Row N holds one control per guarded return the filing's first F1 bullet names in the tracked export (an id
+ * ending RET): the end judge over the record that mutant leaves at either hold, and the end shape over this file with that
+ * case's end record moved above the mutant's return.
  * NOT CLAIMED: an edit of this file together with the roster and the export rows it reads; every case of this file skipped at
  * once (vitest then runs no case and no hook; the delivered-file marker scan is the backstop); the exclusion sets, NOT_WALKED and
  * each scan's anchor token are literals here; a liveness-only compare at a pin with no subject change (I18 alone) reads the same
@@ -187,7 +208,10 @@
  * or of a helper the cases share (familyScan's hits emptied, say), which all three evaluations read alike. The root's own untracked
  * files are still read (a plant there is seen); only the tracker's own
  * root is held to the index, so an untracked file there is never read, whatever it names. A launch whose executable or verb is
- * computed stays R1 and R2, and a family spelling outside the ones listed is not claimed. The out-of-file roster
+ * computed stays R1 and R2, and a family spelling outside the ones listed is not claimed. Of the end record: the end shape
+ * reads the harness by its names (ENDED, HARNESS, endGaps, expect, it, afterAll and the three title constants), so a
+ * coordinated edit of the shape's reader with the harness, or a rename of both, stays green; and only a return or a skip that
+ * fires leaves a record short - a guard that never fires cuts nothing. The out-of-file roster
  * test/fixtures/h2-bead-graph-roster.json holds every row's id, label and pins, every pin's witness, the pinned constants and the
  * vendored producer lines; FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal.
  * SCOPE: readGateVerdict, packetViolations, compileGated and familyViolations are the rule a future Pi bead machine must meet, not a
@@ -247,6 +271,15 @@ const CARRY_CURES: readonly Cure[] = [
   { finding: "F4", pins: ["G-1", "G-2", "G-3"], named: { ids: "G-\\d+" } },
   { finding: "F5", pins: ["TR1"], named: "candidates" },
 ];
+/** The R694 follow-up of landing 498 (wb-k888's gate verdict F1-F3); its filing in the tracked export anchors row N. */
+const END_CARRY = "wb-52th";
+/** The row the end carry added after the carry's. */
+const END_CARRY_ROWS: readonly string[] = ["N"];
+/** The finding the end carry's filing routes here (F1 leads), with the pins that cure it: one control per guarded-return mutant
+ * its bullet names (an id ending RET). */
+const END_CURES: readonly Cure[] = [{ finding: "F1", pins: ["L2-DRRET", "L2-JSRET"], named: { ids: "L2-[A-Z]+RET" } }];
+/** The end carry's rides, cured in the program readiness census (its D3 reach scan and its abort cases), never here. */
+const END_ELSEWHERE: readonly string[] = ["F2", "F3"];
 
 /** The tracker's executable name, composed so that no line of this file spells a bd command. */
 const BD = ["b", "d"].join("");
@@ -576,6 +609,11 @@ const ROWS: readonly Row[] = [
     label: "the escapes wb-mdfe's filing names are judged: its write, H2 and prerequisite spellings hit their families, and the tracker's own root reads only the files the git index tracks, never the bd runtime files it lists",
     pins: ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8", "H1", "H2", "H3", "H4", "H5", "G-1", "G-2", "G-3", "TR1"],
   },
+  {
+    id: "N",
+    label: "the end judge the closing case and the afterAll hook apply, and the end shape this file's harness keeps, flag a constructed model of each guarded return wb-52th's filing names: the harness case it cuts short reads unended, and its end record moved above the return reads out of place",
+    pins: ["L2-DRRET", "L2-JSRET"],
+  },
 ];
 
 interface RosterPin {
@@ -669,6 +707,9 @@ const constants = (): Json =>
     followUpRows: FOLLOW_UP_ROWS,
     carryRows: CARRY_ROWS,
     carryCures: CARRY_CURES,
+    endCarryRows: END_CARRY_ROWS,
+    endCures: END_CURES,
+    endElsewhere: END_ELSEWHERE,
   });
 
 // --- the walk ---------------------------------------------------------------------------------------------------------
@@ -1346,8 +1387,137 @@ const DRIVE_RECORD = "the drive record (wb-k888): every gate reader the walk fin
 const AFTER_PINS: readonly string[] = [DRIVE_RECORD, CLOSING];
 /** The pins that reached their witness compare, with the witness each recorded, in run order; the closing case holds it. */
 const REACHED = new Map<string, Json>();
-/** Set by the closing case's last line; the suite's afterAll hook holds it. */
-const CLOSED = { done: false };
+/** The harness cases, in registration order: the judged set, then the drive record and the closing case after the pins. */
+const HARNESS: readonly string[] = [JUDGED_SET, ...AFTER_PINS];
+/** The end record (wb-52th F1): each harness case writes its own title here on its last line, so a case a runtime skip or a
+ * guarded return cuts short is missing; the closing case holds the two before it, the suite's afterAll hook every one. */
+const ENDED: string[] = [];
+/** A harness case by the short name its end gaps carry. */
+const HARNESS_NAMES: ReadonlyMap<string, string> = new Map([
+  [JUDGED_SET, "judged set"],
+  [DRIVE_RECORD, "drive record"],
+  [CLOSING, "closing case"],
+]);
+/** The end rule as a predicate over an end record: every expected harness case ended, once each and in order, and no other did. */
+function endGaps(ended: readonly string[], expected: readonly string[]): string[] {
+  const name = (title: string): string => HARNESS_NAMES.get(title) ?? title;
+  const gaps = [
+    ...expected.filter(title => !ended.includes(title)).map(title => `unended ${name(title)}`),
+    ...ended.filter(title => !expected.includes(title)).map(title => `unexpected ${name(title)}`),
+    ...ended.filter((title, at) => ended.indexOf(title) !== at).map(title => `twice ${name(title)}`),
+  ];
+  if (gaps.length === 0 && !sameList(ended, expected)) gaps.push("order");
+  return gaps;
+}
+/** The harness cases' title constants as this file's code spells them, in registration order: the end shape reads them by name. */
+const HARNESS_CONSTANTS: readonly string[] = ["JUDGED_SET", "DRIVE_RECORD", "CLOSING"];
+const isName = (node: ts.Node | undefined, name: string): boolean => node !== undefined && ts.isIdentifier(node) && node.text === name;
+/** The block a call's last argument runs: the callback of `it(...)` or `afterAll(...)`. */
+function callbackBody(call: ts.CallExpression): ts.Block | undefined {
+  const last = call.arguments[call.arguments.length - 1];
+  return last !== undefined && (ts.isArrowFunction(last) || ts.isFunctionExpression(last)) && ts.isBlock(last.body) ? last.body : undefined;
+}
+/** `expect(endGaps(ENDED, <against>)[, message]).toEqual([]);` as one statement: the code text of what it holds ENDED against. */
+function endHold(statement: ts.Statement): string | undefined {
+  if (!ts.isExpressionStatement(statement) || !ts.isCallExpression(statement.expression)) return undefined;
+  const compare = statement.expression;
+  const [want] = compare.arguments;
+  if (!ts.isPropertyAccessExpression(compare.expression) || compare.expression.name.text !== "toEqual") return undefined;
+  if (compare.arguments.length !== 1 || want === undefined || !ts.isArrayLiteralExpression(want) || want.elements.length !== 0) return undefined;
+  const subject = compare.expression.expression;
+  if (!ts.isCallExpression(subject) || !isName(subject.expression, "expect")) return undefined;
+  const [judge] = subject.arguments;
+  if (judge === undefined || !ts.isCallExpression(judge) || !isName(judge.expression, "endGaps") || judge.arguments.length !== 2 || !isName(judge.arguments[0], "ENDED")) return undefined;
+  return judge.arguments[1]?.getText(statement.getSourceFile());
+}
+/** The harness of a source text, read by the TypeScript AST: each harness case's callback (by its title constant), the afterAll
+ * hook's callback, every ENDED.push call and every other spelling of ENDED but its declaration. */
+function harnessOf(text: string): {
+  readonly file: ts.SourceFile;
+  readonly cases: Map<string, ts.Block[]>;
+  readonly hooks: ts.Block[];
+  readonly writes: ts.CallExpression[];
+  readonly strays: ts.Identifier[];
+} {
+  const file = ts.createSourceFile("census.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const cases = new Map<string, ts.Block[]>();
+  const hooks: ts.Block[] = [];
+  const writes: ts.CallExpression[] = [];
+  const strays: ts.Identifier[] = [];
+  // ENDED is read only as the end judge's first argument and written only through a push call: any other spelling is a stray.
+  const kept = (node: ts.Identifier): boolean => {
+    const parent = node.parent;
+    if (ts.isVariableDeclaration(parent) && parent.name === node) return true;
+    if (ts.isCallExpression(parent) && isName(parent.expression, "endGaps") && parent.arguments[0] === node) return true;
+    return ts.isPropertyAccessExpression(parent) && parent.expression === node && parent.name.text === "push" && ts.isCallExpression(parent.parent) && parent.parent.expression === parent;
+  };
+  const visit = (node: ts.Node): void => {
+    if (isName(node, "ENDED") && ts.isIdentifier(node) && !kept(node)) strays.push(node);
+    if (ts.isCallExpression(node)) {
+      const body = callbackBody(node);
+      const name = HARNESS_CONSTANTS.find(constant => isName(node.arguments[0], constant));
+      if (isName(node.expression, "it") && name !== undefined && body !== undefined) cases.set(name, [...(cases.get(name) ?? []), body]);
+      if (isName(node.expression, "afterAll") && body !== undefined) hooks.push(body);
+      if (ts.isPropertyAccessExpression(node.expression) && isName(node.expression.expression, "ENDED") && node.expression.name.text === "push") writes.push(node);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return { file, cases, hooks, writes, strays };
+}
+/** The end shape (wb-52th F1) as a predicate over a source text: each harness case is registered once and its callback's last
+ * statement is `ENDED.push(<its title constant>);`, ENDED is pushed to nowhere else and spelled only there and as the end
+ * judge's first argument, the closing case holds the two cases before it and the afterAll hook's callback is the one statement
+ * holding ENDED against HARNESS. Its gaps, by kind. */
+function endShapeGaps(text: string): string[] {
+  const { file, cases, hooks, writes, strays } = harnessOf(text);
+  const gaps: string[] = [];
+  const written = (write: ts.CallExpression): string => {
+    const [only] = write.arguments;
+    return write.arguments.length === 1 && only !== undefined && ts.isIdentifier(only) ? only.text : "";
+  };
+  for (const name of HARNESS_CONSTANTS) {
+    const bodies = cases.get(name) ?? [];
+    const own = writes.filter(write => written(write) === name);
+    const last = bodies[0]?.statements[bodies[0].statements.length - 1];
+    if (bodies.length !== 1) gaps.push(`${name} registered x${bodies.length}`);
+    else if (own.length !== 1) gaps.push(`${name} written x${own.length}`);
+    else if (last === undefined || !ts.isExpressionStatement(last) || last.expression !== own[0]) gaps.push(`${name} end not last`);
+  }
+  for (const write of writes) if (!HARNESS_CONSTANTS.includes(written(write))) gaps.push(`stray write ${written(write) || "?"}`);
+  for (const stray of strays) gaps.push(`stray ENDED at line ${file.getLineAndCharacterOfPosition(stray.getStart(file)).line + 1}`);
+  const closing = cases.get("CLOSING")?.[0]?.statements ?? [];
+  if (!closing.some(statement => endHold(statement) === "[JUDGED_SET, DRIVE_RECORD]")) gaps.push("closing case unheld");
+  const hook = hooks.length === 1 ? (hooks[0]?.statements ?? []) : [];
+  if (hook.length !== 1 || hook[0] === undefined || endHold(hook[0]) !== "HARNESS") gaps.push("afterAll unheld");
+  return gaps;
+}
+/** A source text with a harness case's end record moved to just after the case's first compare, behind a return there: the form
+ * of a guarded return the end record alone would not see (row N's model of each filed mutant). */
+function movedEnd(text: string, name: string): string {
+  const { file, cases } = harnessOf(text);
+  const statements = cases.get(name)?.[0]?.statements ?? [];
+  const compare = statements.find(statement => statement.getText(file).startsWith("expect("));
+  const last = statements[statements.length - 1];
+  if (compare === undefined || last === undefined || compare === last) throw new Error(`the harness case ${name} has no compare above its end record`);
+  return `${text.slice(0, compare.end)}\n    ${last.getText(file)}\n    if (${name}.length > 0) return;${text.slice(compare.end, last.getFullStart())}${text.slice(last.end)}`;
+}
+/** Row N's model of a guarded return in a harness case (wb-52th F1): the end record each hold reads when that case is cut short,
+ * and the end shape of this file with that case's end record moved above the return. */
+function endModel(cut: string, name: string): Json {
+  const before = HARNESS.filter(title => title !== CLOSING);
+  return {
+    closing: endGaps(
+      before.filter(title => title !== cut),
+      before,
+    ),
+    afterAll: endGaps(
+      HARNESS.filter(title => title !== cut),
+      HARNESS,
+    ),
+    moved: endShapeGaps(movedEnd(textOf(THIS_FILE), name)),
+  };
+}
 /** A registered test of this file as the vitest task tree reads it. */
 interface Registered {
   readonly name: string;
@@ -1503,11 +1673,11 @@ function namedBy(bullet: string, named: Cure["named"]): string[] {
   if (named === "candidates") return [...bullet.matchAll(/Cure candidate: ([^.;]*)/g)].map(match => match[1] ?? "");
   return [...new Set([...bullet.matchAll(new RegExp(`(?<![\\w-])(?:${named.ids})(?![\\w-])`, "g"))].map(match => match[0]))];
 }
-/** The carry's cures against its filing: a routed finding without a cure (or the reverse), and a cure whose pins are not what its
- * bullet names - the ids themselves, or one pin per named mutant or cure candidate. */
-function carryGaps(cures: readonly Cure[], notes: string): string[] {
+/** The carry's cures against its filing: a routed finding without a cure here or a named cure elsewhere (or the reverse), and a
+ * cure whose pins are not what its bullet names - the ids themselves, or one pin per named mutant or cure candidate. */
+function carryGaps(cures: readonly Cure[], notes: string, elsewhere: readonly string[] = []): string[] {
   const filing = carryFiling(notes);
-  const findings = cures.map(cure => cure.finding);
+  const findings = [...cures.map(cure => cure.finding), ...elsewhere];
   const gaps = [...filing.routed.filter(finding => !findings.includes(finding)).map(finding => `uncured ${finding}`), ...findings.filter(finding => !filing.routed.includes(finding)).map(finding => `unrouted ${finding}`)];
   for (const cure of cures) {
     const named = namedBy(filing.bullets[cure.finding] ?? "", cure.named);
@@ -1976,6 +2146,9 @@ const CASES: Readonly<Record<string, () => Promise<Json>>> = Object.freeze({
     fresh.set("T1", isObject(t1) && Array.isArray(t1.roots) ? { ...t1, roots: t1.roots.map(planted) } : t1);
     return gapWitness(closingGaps(modelReached(), new Map(), fresh));
   },
+  // wb-52th F1's guarded returns: the drive record cut after its first compare, the judged set after its frozen-shape compare.
+  "L2-DRRET": async () => endModel(DRIVE_RECORD, "DRIVE_RECORD"),
+  "L2-JSRET": async () => endModel(JUDGED_SET, "JUDGED_SET"),
   TR1: async () => {
     const tracked = trackedPaths();
     const scan = PROGRAM_SCANS.find(entry => entry.tracked === true);
@@ -2056,8 +2229,8 @@ const CASES: Readonly<Record<string, () => Promise<Json>>> = Object.freeze({
   },
   R14: async () => {
     // Each anchor outside this file and the roster that reds a pin removed from every literal at once: the delivered floors and
-    // residual names, wb-ze6u's filing and wb-mdfe's (the export), the drive record (a row's sole drive, T's sole walk) and an
-    // emptied single-pin describe. A pin none of them holds is held by the roster alone.
+    // residual names, wb-ze6u's filing, wb-mdfe's and wb-52th's (the export), the drive record (a row's sole drive, T's sole walk)
+    // and an emptied single-pin describe. A pin none of them holds is held by the roster alone.
     const rows = exportRows();
     const delivered = deliveredRecord(notesOf(rows, BEAD));
     const floors = new Map<string, number>();
@@ -2067,21 +2240,26 @@ const CASES: Readonly<Record<string, () => Promise<Json>>> = Object.freeze({
     }
     const filed = filedIds(notesOf(rows, FOLLOW_UP));
     const filedPins = [...filed.lead, ...filed.f2, ...filed.f3];
-    const carry = carryFiling(notesOf(rows, CARRY));
+    const carries = [
+      { cures: CARRY_CURES, filing: carryFiling(notesOf(rows, CARRY)) },
+      { cures: END_CURES, filing: carryFiling(notesOf(rows, END_CARRY)) },
+    ];
     const pinsOf = (pin: string): readonly string[] => ROWS.find(row => row.pins.includes(pin))?.pins ?? [];
     const soleIn = (pins: Iterable<string>, pin: string): boolean => [...pins].filter(other => rowOf(other) === rowOf(pin)).join(" ") === pin;
     const anchors: Readonly<Record<string, (pin: string) => boolean>> = {
       floor: pin => pinsOf(pin).length - 1 < (floors.get(rowOf(pin)) ?? 0),
       residualName: pin => delivered.residuals.includes(RESIDUALS.find(residual => residual.pin === pin)?.name ?? ""),
       filing: pin => filedPins.includes(pin),
-      // wb-mdfe's cures (CARRY ANCHORS): a pin its bullet names by id, or a pin of a cure whose count its bullet names (one control
-      // per mutant, one pin per cure candidate), so dropping it leaves the cure short.
+      // wb-mdfe's and wb-52th's cures (CARRY ANCHORS): a pin its bullet names by id, or a pin of a cure whose count its bullet
+      // names (one control per mutant, one pin per cure candidate), so dropping it leaves the cure short.
       carry: pin =>
-        CARRY_CURES.some(cure => {
-          if (!cure.pins.includes(pin)) return false;
-          const named = namedBy(carry.bullets[cure.finding] ?? "", cure.named);
-          return typeof cure.named === "object" ? named.includes(pin) : cure.pins.length - 1 < named.length;
-        }),
+        carries.some(({ cures, filing }) =>
+          cures.some(cure => {
+            if (!cure.pins.includes(pin)) return false;
+            const named = namedBy(filing.bullets[cure.finding] ?? "", cure.named);
+            return typeof cure.named === "object" ? named.includes(pin) : cure.pins.length - 1 < named.length;
+          }),
+        ),
       drive: pin => ["A", "B", "C", "D"].includes(rowOf(pin)) && [...DRIVES.values()].some(drivers => soleIn(drivers, pin)),
       walk: pin => rowOf(pin) === "T" && soleIn(WALKERS, pin),
       describe: pin => pinsOf(pin).length === 1,
@@ -2123,11 +2301,11 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = Object.freeze(
 
 describe(SUITE, () => {
   afterAll(() => {
-    expect(CLOSED.done, "the closing case ran to its end (a runtime skip or a guarded return there leaves this unset)").toBe(true);
+    expect(endGaps(ENDED, HARNESS), "every harness case ran to its end (a runtime skip or a guarded return in one leaves it unended)").toEqual([]);
   });
 
   it(JUDGED_SET, ({ task }) => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:4", "A:4", "B:6", "C:5", "D:3", "G:1", "P:4", "F:1", "M:18", "R:14", "E:8", "K:11", "V:2", "X:17"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:4", "A:4", "B:6", "C:5", "D:3", "G:1", "P:4", "F:1", "M:18", "R:14", "E:8", "K:11", "V:2", "X:17", "N:2"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
@@ -2138,10 +2316,11 @@ describe(SUITE, () => {
     // OUTSIDE ANCHORS (wb-ze6u F2): the delivery's record and the follow-up's filing, read from the tracked bead export.
     const rows = exportRows();
     const delivered = deliveredRecord(notesOf(rows, BEAD));
-    expect(ROWS.map(row => row.id), "the rows are the delivered rows T to R, then the follow-up's, then the carry's").toEqual([
+    expect(ROWS.map(row => row.id), "the rows are the delivered rows T to R, then the follow-up's, the carry's and the end carry's").toEqual([
       ...delivered.shape.map(entry => entry.split(":")[0] ?? ""),
       ...FOLLOW_UP_ROWS,
       ...CARRY_ROWS,
+      ...END_CARRY_ROWS,
     ]);
     expect(belowShape(delivered.shape), `rows T to R hold at least the pins ${BEAD}'s delivery recorded (a later cut may add a pin, never drop one)`).toEqual([]);
     const readerShape = readerCutShape(notesOf(rows, READER_CUT));
@@ -2161,6 +2340,12 @@ describe(SUITE, () => {
       CARRY_ROWS.flatMap(id => ROWS.find(row => row.id === id)?.pins ?? []),
       "rows V and X are the carry's cures, in finding order",
     ).toEqual(CARRY_CURES.flatMap(cure => cure.pins));
+    // END ANCHORS (wb-52th): row N against the end carry's filing - its first F1 bullet - in the export; F2 and F3 ride elsewhere.
+    expect(carryGaps(END_CURES, notesOf(rows, END_CARRY), END_ELSEWHERE), `the cures against the findings ${END_CARRY}'s filing routes`).toEqual([]);
+    expect(
+      END_CARRY_ROWS.flatMap(id => ROWS.find(row => row.id === id)?.pins ?? []),
+      "row N is the end carry's cure",
+    ).toEqual(END_CURES.flatMap(cure => cure.pins));
     expect(exportFloorGaps(EXPORT_FLOOR, delivered.exportRows), "EXPORT_FLOOR against the export rows the delivery recorded").toEqual([]);
     expect(rootsOf(EXEC_SCANS), "T2's roots: T1's but the scriptless ones").toEqual(rootsOf(PROGRAM_SCANS).filter(root => !SCRIPTLESS_ROOTS.includes(root)));
     expect(rootsOf(GATED_SCANS).sort(), "G1's roots: T1's but the claimless ones, and docs").toEqual(
@@ -2168,6 +2353,9 @@ describe(SUITE, () => {
     );
     // REGISTRATION (wb-ze6u F1), first: every case of this file is collected exactly as the roster lists it, in run mode.
     expect(registrationGaps(registeredOf(task.file, task), expectedTitles(), "collected"), "the collected task tree against the roster").toEqual([]);
+    // END SHAPE (wb-52th F1), read here and again by the closing case: every harness case ends with its own end record.
+    expect(endShapeGaps(textOf(THIS_FILE)), "the end shape of this file's harness").toEqual([]);
+    ENDED.push(JUDGED_SET);
   });
 
   for (const row of ROWS) {
@@ -2197,6 +2385,7 @@ describe(SUITE, () => {
     expect([...WALKERS].map(rowOf)).toContain("T");
     // A negative control: a module no case drives reads no row.
     expect(rows("src/workbench/observation.ts")).toBe("");
+    ENDED.push(DRIVE_RECORD);
   });
 
   it(CLOSING, { timeout: 120_000 }, async ({ task }) => {
@@ -2208,6 +2397,9 @@ describe(SUITE, () => {
       fresh.set(pin, run === undefined ? null : await run());
     }
     expect(closingGaps(REACHED, INVOKED, fresh), "REACHED, INVOKED and the re-evaluation against the roster: every pin, in order, each witness the roster's").toEqual([]);
-    CLOSED.done = true;
+    // END RECORD (wb-52th F1): the end shape read once more, and the two harness cases before this one ran to their end.
+    expect(endShapeGaps(textOf(THIS_FILE)), "the end shape of this file's harness, read again").toEqual([]);
+    expect(endGaps(ENDED, [JUDGED_SET, DRIVE_RECORD]), "the judged set and the drive record ran to their end").toEqual([]);
+    ENDED.push(CLOSING);
   });
 });

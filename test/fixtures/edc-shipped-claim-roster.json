@@ -1,6 +1,6 @@
 {
   "bead": "wb-pyel.4",
-  "comment": "wb-pyel.4 (SDK-EVIDENCE-DIRECTED-COMPUTATION-R7): the OUT-OF-FILE anchor of test/workbench-edc-shipped-claim-census.test.ts. It holds the judged set the census must match exactly, in both directions: every row's id, label and pins, every pin's witness (the reading the census measured at the cut), the constants (stems, floors, script kinds, required pages and descriptors, surfaces, every control and residual probe) and every registered test title in order. A pin, row, control or test dropped or renamed in every literal of the census still reds here. Regenerate only by re-measuring: an adoption cut that makes Pi name EDC re-judges every row.",
+  "comment": "wb-pyel.4 (SDK-EVIDENCE-DIRECTED-COMPUTATION-R7): the OUT-OF-FILE anchor of test/workbench-edc-shipped-claim-census.test.ts. It holds the judged set the census must match exactly, in both directions: every row's id, label and pins, every pin's witness (the reading the census measured at the cut), the constants (stems, floors, script kinds, required pages and descriptors, surfaces, every control and residual probe) and every registered test title in order. A pin, row, control or test dropped or renamed in every literal of the census still reds here. Regenerate only by re-measuring: an adoption cut that makes Pi name EDC re-judges every row. wb-0st4 (R694 follow-up of landing 546) adds git's tracked listing (git ls-files) as the independent anchor of both walks and of each reading's read set, each registry leg's descriptions as its fingerprint, the MARKDOWN_PAGE page form with every symlink below docs/ recorded and never followed, and the page walk's own synthetic-tree control.",
   "constants": {
     "stems": {
       "edc": "word",
@@ -10,6 +10,7 @@
       "README.md",
       "CHANGELOG.md"
     ],
+    "markdownPage": "/\\.(?:md|markdown)$/i",
     "requiredPages": [
       "CHANGELOG.md",
       "README.md",
@@ -95,6 +96,31 @@
       "cross-word": "The named capability is used carefully.\n",
       "inside-word": "Reedcraft and credcheck ship.\n",
       "inline-tag": "| Feature | Status |\n| --- | --- |\n| EDC<br>shipped | yes |\n"
+    },
+    "walkControl": {
+      "docs": [
+        "a.md",
+        "b.markdown",
+        "c.MD",
+        "d.Markdown",
+        "e.txt",
+        "f.mdx",
+        "g.md.bak",
+        "link.md@",
+        "nested/",
+        "pages.md/"
+      ],
+      "docs/nested": [
+        "h.md",
+        "i.json",
+        "deeper/"
+      ],
+      "docs/nested/deeper": [
+        "j.MARKDOWN"
+      ],
+      "docs/pages.md": [
+        "k.md"
+      ]
     },
     "planted": {
       "id": "planted.edc.read",
@@ -230,6 +256,12 @@
       ".agents/skills/beads/SKILL.md",
       "vendor/README.md"
     ],
+    "outOfScopeDocs": [
+      "docs/workbench/plant.txt",
+      "docs/workbench/plant.mdx",
+      "docs/workbench/plant.md.bak",
+      "docs/plant.html"
+    ],
     "unnamedAdoption": "import { renderBlock } from \"@example/context-blocks\";\nexport const block = renderBlock({ queryView: { failures: 0, seal: null }, coverageProofRef: \"ref\" });",
     "residuals": {
       "R-VOCABULARY": [
@@ -291,6 +323,8 @@
             "modulesBelowFloor": false,
             "textsBelowFloor": false,
             "outsideSrc": [],
+            "untracked": [],
+            "unread": [],
             "mentions": []
           }
         },
@@ -358,7 +392,25 @@
           "witness": {
             "missing": [],
             "belowFloor": false,
-            "outsideScope": []
+            "outsideScope": [],
+            "untracked": [],
+            "unwalked": [],
+            "symlinks": [],
+            "walkControl": {
+              "pages": [
+                "docs/a.md",
+                "docs/b.markdown",
+                "docs/c.MD",
+                "docs/d.Markdown",
+                "docs/nested/deeper/j.MARKDOWN",
+                "docs/nested/h.md",
+                "docs/pages.md/k.md"
+              ],
+              "symlinks": [
+                "docs/link.md"
+              ],
+              "outsideScope": []
+            }
           }
         },
         {
@@ -368,6 +420,8 @@
             "empty": [],
             "blocksBelowFloor": false,
             "wordsBelowFloor": false,
+            "untracked": [],
+            "unread": [],
             "mentions": []
           }
         },
@@ -387,11 +441,23 @@
             "native": {
               "missing": [],
               "read": true,
+              "descriptions": [
+                "forge.gate.status: Read current Forge workspace gate readiness; last_result is historical only.",
+                "furnace.run.inspect: Attach read-only to external native Furnace Run",
+                "hyperunix.find: Native bounded HX query with coverage",
+                "reactivefiber.render.preview: RF noncommitted context with native provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)"
+              ],
               "mentions": []
             },
             "injected": {
               "missing": [],
               "read": true,
+              "descriptions": [
+                "forge.gate.status: Read Forge workspace gate status. Historical results are not current verification.",
+                "furnace.run.inspect: Read native Furnace Run record without starting or controlling it",
+                "hyperunix.find: Read typed HX results with native coverage and query basis",
+                "reactivefiber.render.preview: Preview native RF context with provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)"
+              ],
               "mentions": []
             }
           }
@@ -550,7 +616,8 @@
             ],
             "inScope": [],
             "read": [],
-            "modulesOutsideSrc": 0
+            "modulesOutsideSrc": 0,
+            "docsNonPages": []
           }
         },
         {

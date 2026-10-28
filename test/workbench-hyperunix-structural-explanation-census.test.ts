@@ -60,7 +60,11 @@
  *    reports the sha-256 of the reading it judged and where that reading departs from the base (planted), and B1 requires the
  *    planted reading's own sha-256 and exactly the member at its position, so a judge handed the root plant, a second plant, the
  *    base or any other reading whose JSON text differs reds B1; B2 and Q1 bind their judges by the same sha-256, the B1 and B2
- *    witnesses count the distinct judged readings and Q1's names where each judged plant departs (wb-kggj F1). B2 the same
+ *    witnesses count the distinct judged readings and Q1's names where each judged plant departs (wb-kggj F1). The judge also
+ *    reports the sha-256 of the base it judged against, and every judge call (B1's, its control's, B2's and Q1's) requires its
+ *    own base's (B2's is the provider's twin), so a judge handed as its base any other reading whose JSON text differs - the
+ *    judged reading itself wherever it departs from the base, or the base carrying another value at the planted member - reds
+ *    the case (wb-3ul6). B2 the same
  *    member planted at every object node of the SDK document, plus the diagnostic-grammar entries
  *    (05-physical-provider-lld.md:33 "Cost fallbacks and explainable refusal use existing diagnostic grammar."), through the
  *    registered provider: which positions survive the decoder is measured, and the projection stays strictEqual with nothing
@@ -453,8 +457,8 @@ function remainderOf(quote: string, part: string): { readonly prefix: string; re
   if (part.length === 0 || at === -1 || quote.indexOf(part, at + 1) !== -1) return undefined;
   return { prefix: quote.slice(0, at), suffix: quote.slice(at + part.length) };
 }
-/** A remainder's shape (wb-kggj F3): the quote is one sentence on one line that ends with a period and holds no single quote, and
- * the filing's part sits in it on word boundaries. */
+/** A remainder's shape (wb-kggj F3): the quote is one line that ends with a period and holds no single quote, and the filing's
+ * part sits in it on word boundaries. */
 function remainderShaped(quote: string, prefix: string, suffix: string): boolean {
   return !/[\n']/.test(quote) && quote.endsWith(".") && (prefix === "" || prefix.endsWith(" ")) && (suffix === "" || !/^[\p{L}\p{N}]/u.test(suffix));
 }
@@ -777,10 +781,12 @@ interface Plant {
   readonly carried: readonly string[];
   /** The sha-256 of the judged candidate's JSON text: which reading the judge saw, held to the planted reading's own (wb-kggj F1). */
   readonly judged: string;
+  /** The sha-256 of the base's JSON text: which reading the judge judged against, held to the case's own base (wb-3ul6). */
+  readonly base: string;
   /** Where the judged candidate departs from the reading it is judged against (differences): where the judge saw the plant. */
   readonly planted: readonly string[];
 }
-/** What a witness pins of a plant: where it departs and its outcome, never the digest of the reading. */
+/** What a witness pins of a plant: where it departs and its outcome, never either reading's digest. */
 interface Shown {
   readonly planted: readonly string[];
   readonly unchanged: boolean;
@@ -801,7 +807,7 @@ function judgePlant(base: JsonValue, candidate: JsonValue): Plant {
     isDeepStrictEqual(after.topology, before.topology) &&
     JSON.stringify(after.topology) === JSON.stringify(before.topology) &&
     isDeepStrictEqual(after.verdict, before.verdict);
-  return { unchanged, leaked: leaksOf(after.topology), carried: leaksOf(candidate), judged: digestOf(candidate), planted: differences(base, candidate) };
+  return { unchanged, leaked: leaksOf(after.topology), carried: leaksOf(candidate), judged: digestOf(candidate), base: digestOf(base), planted: differences(base, candidate) };
 }
 
 interface Facet {
@@ -1217,6 +1223,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       payloads.add(payload);
       const plant = judgePlant(base, value);
       expect(plant.judged, `${pathText(path)}: the judge judged the planted reading itself`).toBe(digestOf(value));
+      expect(plant.base, `${pathText(path)}: the judge judged against the base itself`).toBe(digestOf(base));
       expect(plant.planted, `${pathText(path)}: the judged reading is the base plus exactly the member at its position`).toStrictEqual([pathText([...path, MEMBER])]);
       outcomes[pathText(path)] = plant;
     }
@@ -1229,6 +1236,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(unseen, "every judged candidate carried every explanation's sentinel: the judge saw the plant").toStrictEqual([]);
     const sourceOf = isObject(base) && isObject(base.source) ? base.source : {};
     const control = judgePlant(base, { ...(base as JsonObject), source: json({ ...sourceOf, operation: `find ${explanationOf("accepted-assumption").text}` }) });
+    expect(control.base, "the control's judge judged against the base itself").toBe(digestOf(base));
     expect(control.leaked, "the leak detector sees a leak through the operation the title shows").not.toStrictEqual([]);
     return {
       positions: positions.map(pathText),
@@ -1257,6 +1265,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       expect(hyperunixTopology(value, CONTEXT), `${label}: projection strictEqual`).toStrictEqual(hyperunixTopology(twin, CONTEXT));
       const plant = judgePlant(twin, value);
       expect(plant.judged, `${label}: the judge judged the provider's reading itself`).toBe(digestOf(value));
+      expect(plant.base, `${label}: the judge judged against the provider's twin`).toBe(digestOf(twin));
       judged.add(plant.judged);
       expect({ unchanged: plant.unchanged, leaked: plant.leaked }, `${label}: nothing moves or shows`).toStrictEqual({ unchanged: true, leaked: [] });
     };
@@ -1343,6 +1352,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       expect(memberText(value, ["source"], key), `${key}: the plant, read back under its own key, is the planted text`).toBe(JSON.stringify(text));
       const plant = judgePlant(base, value);
       expect(plant.judged, `${key}: the judge judged the planted reading itself`).toBe(digestOf(value));
+      expect(plant.base, `${key}: the judge judged against the base itself`).toBe(digestOf(base));
       return shown(plant);
     });
     expect(
