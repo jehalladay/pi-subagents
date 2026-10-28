@@ -1,0 +1,1465 @@
+{
+ "bead": "wb-2wiv.2",
+ "rows": [
+  {
+   "id": "G",
+   "label": "Gating artifact: released FiberOpticsSDK PublicPortBridge (unshipped) + a wb-x32 committing decision connecting a Pi runtime over it",
+   "pins": [
+    "G1",
+    "G2"
+   ]
+  },
+  {
+   "id": "C",
+   "label": "then Pi supplies the full bridge contract (visibility/schema/direction through resync on gaps)",
+   "pins": [
+    "C1",
+    "C2"
+   ]
+  },
+  {
+   "id": "O",
+   "label": "keeps one authority per runtime domain",
+   "pins": [
+    "O1"
+   ]
+  },
+  {
+   "id": "P",
+   "label": "admits no private endpoint or remote executable function",
+   "pins": [
+    "P1",
+    "P2"
+   ]
+  },
+  {
+   "id": "N",
+   "label": "and asserts no global ordering, shared memory or implicit conflict merge",
+   "pins": [
+    "N1",
+    "N2",
+    "N3"
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the residuals' pinned quiet rows",
+   "pins": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5"
+   ]
+  }
+ ],
+ "quotes": {
+  "G1": "Gating artifact: released FiberOpticsSDK PublicPortBridge (unshipped)",
+  "G2": "+ a wb-x32 committing decision connecting a Pi runtime over it",
+  "C1": "then Pi supplies the full bridge contract",
+  "C2": "(visibility/schema/direction through resync on gaps)",
+  "O1": "keeps one authority per runtime domain",
+  "P1": "admits no private endpoint",
+  "P2": "or remote executable function",
+  "N1": "and asserts no global ordering",
+  "N2": "shared memory",
+  "N3": "or implicit conflict merge",
+  "Q1": "R-SPELLING",
+  "Q2": "R-INDIRECT-LOAD",
+  "Q3": "R-DECISION-ELSEWHERE",
+  "Q4": "R-SIDE-PATH",
+  "Q5": "R-PARAPHRASE"
+ },
+ "residuals": {
+  "Q1": [
+   "abbreviation",
+   "split-statements",
+   "base64",
+   "yaml-escape",
+   "homoglyph",
+   "digit-substitution"
+  ],
+  "Q2": [
+   "environment-specifier",
+   "configured-subprocess",
+   "configured-binary"
+  ],
+  "Q3": [
+   "other-bead-row",
+   "sdk-only",
+   "work-package"
+  ],
+  "Q4": [
+   "side-path-host"
+  ],
+  "Q5": [
+   "total-order",
+   "single-timeline",
+   "reversed-merge",
+   "reversed-shared",
+   "last-writer-wins",
+   "split-statements"
+  ]
+ },
+ "witnesses": {
+  "G1": {
+   "manifest": [],
+   "lock": [],
+   "sites": {
+    "src": [],
+    "qa": [],
+    "examples": [],
+    "docs": [],
+    "front": []
+   },
+   "hosts": [],
+   "bound": [],
+   "live": {
+    "src": {
+     "floor": true,
+     "anchor": true
+    },
+    "qa": {
+     "floor": true,
+     "anchor": true
+    },
+    "examples": {
+     "floor": true,
+     "anchor": true
+    },
+    "docs": {
+     "floor": true,
+     "anchor": true
+    },
+    "front": {
+     "floor": true,
+     "anchor": true
+    }
+   },
+   "controls": {
+    "manifest": [
+     "dependencies:fiber-optics-sdk",
+     "devDependencies:@public-port/bridge"
+    ],
+    "lock": [
+     "node_modules/fiberoptics",
+     "node_modules/a/node_modules/@x/public-port-bridge"
+    ],
+    "code": {
+     "specifier": [
+      "sdk"
+     ],
+     "identifier": [
+      "bridge"
+     ],
+     "escaped": [
+      "bridge"
+     ],
+     "folded": [
+      "bridge"
+     ],
+     "template": [
+      "bridge"
+     ],
+     "escaped-identifier": [
+      "bridge"
+     ],
+     "normalized": [
+      "bridge"
+     ],
+     "comment": [
+      "bridge"
+     ],
+     "subprocess": [
+      "sdk"
+     ],
+     "examples-sdk": [
+      "sdk"
+     ],
+     "json": [
+      "sdk"
+     ],
+     "rf-identity-key": [
+      "sdk"
+     ],
+     "quiet": []
+    },
+    "pages": {
+     "page": [
+      "bridge"
+     ],
+     "entity": [
+      "bridge"
+     ],
+     "quiet": [],
+     "front": [
+      "bridge"
+     ],
+     "front-quiet": []
+    }
+   }
+  },
+  "G2": {
+   "rowRead": true,
+   "found": [],
+   "controls": {
+    "note": [
+     "wb-x32:notes"
+    ],
+    "child": [
+     "wb-x32.9:title"
+    ],
+    "edge": [
+     "wb-zz01:description"
+    ],
+    "log": [
+     "docs/workbench/18-decisions-and-risks.md"
+    ]
+   }
+  },
+  "C1": {
+   "bound": [],
+   "fixtures": [
+    "F-SESSION",
+    "F-READ",
+    "F-VERSION",
+    "F-SCHEMA",
+    "F-DIGEST",
+    "F-EPOCH",
+    "F-DUPLICATE",
+    "F-BASIS",
+    "F-DISPOSITION",
+    "F-FEEDBACK",
+    "F-GAP",
+    "F-GAP-ANNOUNCED",
+    "F-AUTHORITY",
+    "F-PRIVATE",
+    "F-EXECUTABLE",
+    "F-EFFECT"
+   ],
+   "verdicts": {
+    "F-SESSION": [
+     "admitted",
+     "admitted",
+     "admitted",
+     "admitted"
+    ],
+    "F-READ": [
+     "admitted",
+     "admitted"
+    ],
+    "F-VERSION": [
+     "admitted",
+     "rejected:bad-version"
+    ],
+    "F-SCHEMA": [
+     "admitted",
+     "rejected:schema-mismatch"
+    ],
+    "F-DIGEST": [
+     "admitted",
+     "rejected:bad-digest"
+    ],
+    "F-EPOCH": [
+     "admitted",
+     "rejected:stale-epoch"
+    ],
+    "F-DUPLICATE": [
+     "admitted",
+     "admitted",
+     "rejected:duplicate-message"
+    ],
+    "F-BASIS": [
+     "admitted",
+     "rejected:missing-basis"
+    ],
+    "F-DISPOSITION": [
+     "rejected:missing-disposition",
+     "rejected:missing-disposition",
+     "admitted"
+    ],
+    "F-FEEDBACK": [
+     "admitted",
+     "rejected:unbounded-feedback",
+     "rejected:unbounded-feedback"
+    ],
+    "F-GAP": [
+     "admitted",
+     "rejected:gap-without-resync",
+     "rejected:gap-without-resync",
+     "admitted",
+     "admitted"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "admitted",
+     "admitted",
+     "rejected:gap-without-resync",
+     "admitted",
+     "admitted"
+    ],
+    "F-AUTHORITY": [
+     "rejected:foreign-authority",
+     "rejected:foreign-authority",
+     "admitted"
+    ],
+    "F-PRIVATE": [
+     "rejected:private-endpoint",
+     "rejected:private-endpoint",
+     "admitted"
+    ],
+    "F-EXECUTABLE": [
+     "rejected:executable-function-on-the-wire",
+     "rejected:executable-function-on-the-wire",
+     "admitted"
+    ],
+    "F-EFFECT": [
+     "admitted",
+     "rejected:unauthorized-effect"
+    ]
+   },
+   "fired": [
+    "admit",
+    "reject",
+    "diagnostic",
+    "resync",
+    "aliased",
+    "merged",
+    "claim-order",
+    "claim-shared",
+    "claim-merge"
+   ],
+   "quiet": [],
+   "isolated": [
+    "admit",
+    "reject",
+    "diagnostic",
+    "resync",
+    "aliased",
+    "merged",
+    "claim-order",
+    "claim-shared",
+    "claim-merge"
+   ],
+   "mutants": {
+    "M-DISPOSITION": {
+     "F-DISPOSITION": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-VERSION": {
+     "F-VERSION": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-SCHEMA": {
+     "F-SCHEMA": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-DIGEST": {
+     "F-DIGEST": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-EPOCH": {
+     "F-EPOCH": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-DUPLICATE": {
+     "F-DUPLICATE": [
+      "diagnostic",
+      "resync"
+     ]
+    },
+    "M-BASIS": {
+     "F-BASIS": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-FEEDBACK": {
+     "F-FEEDBACK": [
+      "reject",
+      "diagnostic",
+      "resync",
+      "merged"
+     ]
+    },
+    "M-CODE-COLLAPSED": {
+     "F-VERSION": [
+      "diagnostic"
+     ],
+     "F-SCHEMA": [
+      "diagnostic"
+     ],
+     "F-DIGEST": [
+      "diagnostic"
+     ],
+     "F-EPOCH": [
+      "diagnostic"
+     ],
+     "F-DUPLICATE": [
+      "diagnostic"
+     ],
+     "F-BASIS": [
+      "diagnostic"
+     ],
+     "F-DISPOSITION": [
+      "diagnostic"
+     ],
+     "F-FEEDBACK": [
+      "diagnostic"
+     ],
+     "F-GAP": [
+      "diagnostic"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "diagnostic"
+     ],
+     "F-AUTHORITY": [
+      "diagnostic"
+     ],
+     "F-PRIVATE": [
+      "diagnostic"
+     ],
+     "F-EXECUTABLE": [
+      "diagnostic"
+     ],
+     "F-EFFECT": [
+      "diagnostic"
+     ]
+    },
+    "M-REFUSE-ALL": {
+     "F-SESSION": [
+      "admit",
+      "merged"
+     ],
+     "F-READ": [
+      "admit",
+      "merged"
+     ],
+     "F-VERSION": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-SCHEMA": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-DIGEST": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-EPOCH": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-DUPLICATE": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-BASIS": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-DISPOSITION": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-FEEDBACK": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-GAP": [
+      "admit",
+      "diagnostic",
+      "resync",
+      "merged"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "admit",
+      "diagnostic",
+      "resync",
+      "merged"
+     ],
+     "F-AUTHORITY": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-PRIVATE": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-EXECUTABLE": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-EFFECT": [
+      "admit",
+      "merged"
+     ]
+    },
+    "M-SIGNAL-APPLIED": {
+     "F-SESSION": [
+      "admit"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "admit"
+     ]
+    },
+    "M-DOUBLE-APPLY": {
+     "F-SESSION": [
+      "admit"
+     ],
+     "F-READ": [
+      "admit"
+     ],
+     "F-VERSION": [
+      "admit"
+     ],
+     "F-SCHEMA": [
+      "admit"
+     ],
+     "F-DIGEST": [
+      "admit"
+     ],
+     "F-EPOCH": [
+      "admit"
+     ],
+     "F-DUPLICATE": [
+      "admit"
+     ],
+     "F-BASIS": [
+      "admit"
+     ],
+     "F-DISPOSITION": [
+      "admit"
+     ],
+     "F-FEEDBACK": [
+      "admit"
+     ],
+     "F-GAP": [
+      "admit"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "admit"
+     ],
+     "F-AUTHORITY": [
+      "admit"
+     ],
+     "F-PRIVATE": [
+      "admit"
+     ],
+     "F-EXECUTABLE": [
+      "admit"
+     ],
+     "F-EFFECT": [
+      "admit"
+     ]
+    },
+    "M-REJECTED-APPLIED": {
+     "F-VERSION": [
+      "reject"
+     ],
+     "F-SCHEMA": [
+      "reject"
+     ],
+     "F-DIGEST": [
+      "reject"
+     ],
+     "F-EPOCH": [
+      "reject"
+     ],
+     "F-DUPLICATE": [
+      "reject"
+     ],
+     "F-BASIS": [
+      "reject"
+     ],
+     "F-DISPOSITION": [
+      "reject"
+     ],
+     "F-FEEDBACK": [
+      "reject"
+     ],
+     "F-GAP": [
+      "reject"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "reject"
+     ],
+     "F-AUTHORITY": [
+      "reject"
+     ],
+     "F-PRIVATE": [
+      "reject"
+     ],
+     "F-EXECUTABLE": [
+      "reject"
+     ],
+     "F-EFFECT": [
+      "reject"
+     ]
+    }
+   }
+  },
+  "C2": {
+   "gap": [
+    "admitted",
+    "rejected:gap-without-resync",
+    "rejected:gap-without-resync",
+    "admitted",
+    "admitted"
+   ],
+   "announced": [
+    "admitted",
+    "admitted",
+    "rejected:gap-without-resync",
+    "admitted",
+    "admitted"
+   ],
+   "resync": [
+    [
+     "browser/view"
+    ],
+    [
+     "browser/view"
+    ]
+   ],
+   "applied": [
+    [
+     0,
+     3,
+     4
+    ],
+    [
+     0,
+     3,
+     4
+    ]
+   ],
+   "M-GAP-APPLY": {
+    "F-GAP": [
+     "reject",
+     "diagnostic",
+     "resync"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-GAP-SILENT": {
+    "F-GAP": [
+     "resync"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "resync"
+    ]
+   },
+   "M-GAP-RESUME": {
+    "F-GAP": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-ANNOUNCED-IGNORED": {
+    "F-GAP-ANNOUNCED": [
+     "reject",
+     "diagnostic",
+     "resync"
+    ]
+   },
+   "M-RESYNC-SPURIOUS": {
+    "F-SESSION": [
+     "resync"
+    ],
+    "F-READ": [
+     "resync"
+    ],
+    "F-VERSION": [
+     "resync"
+    ],
+    "F-SCHEMA": [
+     "resync"
+    ],
+    "F-DIGEST": [
+     "resync"
+    ],
+    "F-EPOCH": [
+     "resync"
+    ],
+    "F-DUPLICATE": [
+     "resync"
+    ],
+    "F-BASIS": [
+     "resync"
+    ],
+    "F-DISPOSITION": [
+     "resync"
+    ],
+    "F-FEEDBACK": [
+     "resync"
+    ],
+    "F-AUTHORITY": [
+     "resync"
+    ],
+    "F-PRIVATE": [
+     "resync"
+    ],
+    "F-EXECUTABLE": [
+     "resync"
+    ],
+    "F-EFFECT": [
+     "resync"
+    ]
+   }
+  },
+  "O1": {
+   "receipts": [
+    "rejected:foreign-authority",
+    "rejected:foreign-authority",
+    "admitted"
+   ],
+   "applied": [
+    2
+   ],
+   "values": {
+    "pi": {
+     "status": {
+      "state": "idle"
+     }
+    },
+    "browser": {
+     "view": {
+      "rows": [
+       1
+      ]
+     }
+    }
+   },
+   "owners": {
+    "browser/view": "browser",
+    "server/view": "server",
+    "pi/status": "pi",
+    "browser/secret": "browser",
+    "browser/bare": "browser",
+    "browser/half": "browser"
+   },
+   "M-FOREIGN": {
+    "F-AUTHORITY": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ]
+   }
+  },
+  "P1": {
+   "receipts": [
+    "rejected:private-endpoint",
+    "rejected:private-endpoint",
+    "admitted"
+   ],
+   "applied": [
+    2
+   ],
+   "M-PRIVATE": {
+    "F-PRIVATE": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ]
+   },
+   "M-UNDECLARED-OPEN": {
+    "F-PRIVATE": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ]
+   }
+  },
+  "P2": {
+   "payload": [
+    "rejected:executable-function-on-the-wire",
+    "rejected:executable-function-on-the-wire",
+    "admitted"
+   ],
+   "effect": [
+    "admitted",
+    "rejected:unauthorized-effect"
+   ],
+   "applied": [
+    [
+     2
+    ],
+    [
+     0
+    ]
+   ],
+   "keys": [
+    "code",
+    "handler",
+    "script",
+    "function"
+   ],
+   "M-EXECUTABLE": {
+    "F-EXECUTABLE": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-CALLABLES-ONLY": {
+    "F-EXECUTABLE": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-EFFECT": {
+    "F-EFFECT": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ]
+   }
+  },
+  "N1": {
+   "surfaces": {
+    "src": [],
+    "qa": [],
+    "examples": [],
+    "docs": [],
+    "front": []
+   },
+   "live": {
+    "src": {
+     "floor": true,
+     "anchor": true
+    },
+    "qa": {
+     "floor": true,
+     "anchor": true
+    },
+    "examples": {
+     "floor": true,
+     "anchor": true
+    },
+    "docs": {
+     "floor": true,
+     "anchor": true
+    },
+    "front": {
+     "floor": true,
+     "anchor": true
+    }
+   },
+   "read": {
+    "prose": [
+     "order"
+    ],
+    "charter": [
+     "order"
+    ],
+    "camel": [
+     "order"
+    ],
+    "negated": [
+     "order"
+    ],
+    "decoded": [
+     "order"
+    ]
+   },
+   "quiet": {
+    "settings": [],
+    "list": []
+   },
+   "label": "browser/view: epoch 3, sequence 1; server/view: epoch 5, sequence 1; pi: local",
+   "M-ORDER-LABEL": {
+    "F-SESSION": [
+     "claim-order"
+    ],
+    "F-READ": [
+     "claim-order"
+    ],
+    "F-VERSION": [
+     "claim-order"
+    ],
+    "F-SCHEMA": [
+     "claim-order"
+    ],
+    "F-DIGEST": [
+     "claim-order"
+    ],
+    "F-EPOCH": [
+     "claim-order"
+    ],
+    "F-DUPLICATE": [
+     "claim-order"
+    ],
+    "F-BASIS": [
+     "claim-order"
+    ],
+    "F-DISPOSITION": [
+     "claim-order"
+    ],
+    "F-FEEDBACK": [
+     "claim-order"
+    ],
+    "F-GAP": [
+     "claim-order"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "claim-order"
+    ],
+    "F-AUTHORITY": [
+     "claim-order"
+    ],
+    "F-PRIVATE": [
+     "claim-order"
+    ],
+    "F-EXECUTABLE": [
+     "claim-order"
+    ],
+    "F-EFFECT": [
+     "claim-order"
+    ]
+   }
+  },
+  "N2": {
+   "surfaces": {
+    "src": [],
+    "qa": [],
+    "examples": [],
+    "docs": [],
+    "front": []
+   },
+   "live": {
+    "src": {
+     "floor": true,
+     "anchor": true
+    },
+    "qa": {
+     "floor": true,
+     "anchor": true
+    },
+    "examples": {
+     "floor": true,
+     "anchor": true
+    },
+    "docs": {
+     "floor": true,
+     "anchor": true
+    },
+    "front": {
+     "floor": true,
+     "anchor": true
+    }
+   },
+   "read": {
+    "hyphen": [
+     "shared"
+    ],
+    "camel": [
+     "shared"
+    ],
+    "escaped": [
+     "shared"
+    ],
+    "json": [
+     "shared"
+    ]
+   },
+   "quiet": {
+    "state": [],
+    "store": []
+   },
+   "label": "browser/view: epoch 3, sequence 1; server/view: epoch 5, sequence 1; pi: local",
+   "aliased": false,
+   "M-SHARED-REF": {
+    "F-SESSION": [
+     "aliased"
+    ],
+    "F-READ": [
+     "aliased"
+    ],
+    "F-VERSION": [
+     "aliased"
+    ],
+    "F-SCHEMA": [
+     "aliased"
+    ],
+    "F-DIGEST": [
+     "aliased"
+    ],
+    "F-EPOCH": [
+     "aliased"
+    ],
+    "F-DUPLICATE": [
+     "aliased"
+    ],
+    "F-BASIS": [
+     "aliased"
+    ],
+    "F-DISPOSITION": [
+     "aliased"
+    ],
+    "F-FEEDBACK": [
+     "aliased"
+    ],
+    "F-GAP": [
+     "aliased"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "aliased"
+    ],
+    "F-AUTHORITY": [
+     "aliased"
+    ],
+    "F-PRIVATE": [
+     "aliased"
+    ],
+    "F-EXECUTABLE": [
+     "aliased"
+    ],
+    "F-EFFECT": [
+     "aliased"
+    ]
+   },
+   "M-SHARED-LABEL": {
+    "F-SESSION": [
+     "claim-shared"
+    ],
+    "F-READ": [
+     "claim-shared"
+    ],
+    "F-VERSION": [
+     "claim-shared"
+    ],
+    "F-SCHEMA": [
+     "claim-shared"
+    ],
+    "F-DIGEST": [
+     "claim-shared"
+    ],
+    "F-EPOCH": [
+     "claim-shared"
+    ],
+    "F-DUPLICATE": [
+     "claim-shared"
+    ],
+    "F-BASIS": [
+     "claim-shared"
+    ],
+    "F-DISPOSITION": [
+     "claim-shared"
+    ],
+    "F-FEEDBACK": [
+     "claim-shared"
+    ],
+    "F-GAP": [
+     "claim-shared"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "claim-shared"
+    ],
+    "F-AUTHORITY": [
+     "claim-shared"
+    ],
+    "F-PRIVATE": [
+     "claim-shared"
+    ],
+    "F-EXECUTABLE": [
+     "claim-shared"
+    ],
+    "F-EFFECT": [
+     "claim-shared"
+    ]
+   }
+  },
+  "N3": {
+   "surfaces": {
+    "src": [],
+    "qa": [],
+    "examples": [],
+    "docs": [],
+    "front": []
+   },
+   "live": {
+    "src": {
+     "floor": true,
+     "anchor": true
+    },
+    "qa": {
+     "floor": true,
+     "anchor": true
+    },
+    "examples": {
+     "floor": true,
+     "anchor": true
+    },
+    "docs": {
+     "floor": true,
+     "anchor": true
+    },
+    "front": {
+     "floor": true,
+     "anchor": true
+    }
+   },
+   "read": {
+    "hyphen": [
+     "merge"
+    ],
+    "implicit": [
+     "merge"
+    ],
+    "charter": [
+     "merge"
+    ],
+    "compact": [
+     "merge"
+    ],
+    "normalized": [
+     "merge"
+    ]
+   },
+   "quiet": {
+    "loading": [],
+    "request": [],
+    "save": []
+   },
+   "label": "browser/view: epoch 3, sequence 1; server/view: epoch 5, sequence 1; pi: local",
+   "values": {
+    "pi": {
+     "status": {
+      "state": "idle"
+     }
+    },
+    "browser": {
+     "view": {
+      "rows": [
+       1,
+       2
+      ]
+     }
+    },
+    "server": {
+     "view": {
+      "rows": [
+       3
+      ]
+     }
+    }
+   },
+   "M-MERGE": {
+    "F-SESSION": [
+     "merged"
+    ],
+    "F-READ": [
+     "merged"
+    ],
+    "F-VERSION": [
+     "merged"
+    ],
+    "F-SCHEMA": [
+     "merged"
+    ],
+    "F-DIGEST": [
+     "merged"
+    ],
+    "F-EPOCH": [
+     "merged"
+    ],
+    "F-DUPLICATE": [
+     "merged"
+    ],
+    "F-BASIS": [
+     "merged"
+    ],
+    "F-DISPOSITION": [
+     "merged"
+    ],
+    "F-FEEDBACK": [
+     "merged"
+    ],
+    "F-GAP": [
+     "merged"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "merged"
+    ],
+    "F-AUTHORITY": [
+     "merged"
+    ],
+    "F-PRIVATE": [
+     "merged"
+    ],
+    "F-EXECUTABLE": [
+     "merged"
+    ],
+    "F-EFFECT": [
+     "merged"
+    ]
+   },
+   "M-MERGE-LABEL": {
+    "F-SESSION": [
+     "claim-merge"
+    ],
+    "F-READ": [
+     "claim-merge"
+    ],
+    "F-VERSION": [
+     "claim-merge"
+    ],
+    "F-SCHEMA": [
+     "claim-merge"
+    ],
+    "F-DIGEST": [
+     "claim-merge"
+    ],
+    "F-EPOCH": [
+     "claim-merge"
+    ],
+    "F-DUPLICATE": [
+     "claim-merge"
+    ],
+    "F-BASIS": [
+     "claim-merge"
+    ],
+    "F-DISPOSITION": [
+     "claim-merge"
+    ],
+    "F-FEEDBACK": [
+     "claim-merge"
+    ],
+    "F-GAP": [
+     "claim-merge"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "claim-merge"
+    ],
+    "F-AUTHORITY": [
+     "claim-merge"
+    ],
+    "F-PRIVATE": [
+     "claim-merge"
+    ],
+    "F-EXECUTABLE": [
+     "claim-merge"
+    ],
+    "F-EFFECT": [
+     "claim-merge"
+    ]
+   }
+  },
+  "Q1": {
+   "abbreviation": [],
+   "split-statements": [],
+   "base64": [],
+   "yaml-escape": [],
+   "homoglyph": [],
+   "digit-substitution": []
+  },
+  "Q2": {
+   "environment-specifier": [],
+   "configured-subprocess": [],
+   "configured-binary": []
+  },
+  "Q3": {
+   "other-bead-row": [],
+   "sdk-only": [],
+   "work-package": []
+  },
+  "Q4": {
+   "violations": {},
+   "sideTaken": true
+  },
+  "Q5": {
+   "total-order": [],
+   "single-timeline": [],
+   "reversed-merge": [],
+   "reversed-shared": [],
+   "last-writer-wins": [],
+   "split-statements": []
+  }
+ },
+ "readers": {
+  "G1": [
+   "manifest",
+   "lock",
+   "src",
+   "mention-judge",
+   "qa",
+   "examples",
+   "docs",
+   "front"
+  ],
+  "G2": [
+   "export",
+   "decisions",
+   "decision-reader",
+   "mention-judge"
+  ],
+  "C1": [
+   "host",
+   "claim-judge"
+  ],
+  "C2": [
+   "host",
+   "claim-judge"
+  ],
+  "O1": [
+   "host",
+   "claim-judge"
+  ],
+  "P1": [
+   "host",
+   "claim-judge"
+  ],
+  "P2": [
+   "host",
+   "claim-judge"
+  ],
+  "N1": [
+   "src",
+   "claim-judge",
+   "qa",
+   "examples",
+   "docs",
+   "front",
+   "host"
+  ],
+  "N2": [
+   "host",
+   "src",
+   "claim-judge",
+   "qa",
+   "examples",
+   "docs",
+   "front"
+  ],
+  "N3": [
+   "host",
+   "src",
+   "claim-judge",
+   "qa",
+   "examples",
+   "docs",
+   "front"
+  ],
+  "Q1": [
+   "mention-judge"
+  ],
+  "Q2": [
+   "mention-judge"
+  ],
+  "Q3": [
+   "decision-reader",
+   "mention-judge"
+  ],
+  "Q4": [
+   "host",
+   "claim-judge"
+  ],
+  "Q5": [
+   "claim-judge"
+  ]
+ },
+ "tests": [
+  "G1: Gating artifact: released FiberOpticsSDK PublicPortBridge (unshipped)",
+  "G2: + a wb-x32 committing decision connecting a Pi runtime over it",
+  "C1: then Pi supplies the full bridge contract",
+  "C2: (visibility/schema/direction through resync on gaps)",
+  "O1: keeps one authority per runtime domain",
+  "P1: admits no private endpoint",
+  "P2: or remote executable function",
+  "N1: and asserts no global ordering",
+  "N2: shared memory",
+  "N3: or implicit conflict merge",
+  "Q1: R-SPELLING",
+  "Q2: R-INDIRECT-LOAD",
+  "Q3: R-DECISION-ELSEWHERE",
+  "Q4: R-SIDE-PATH",
+  "Q5: R-PARAPHRASE",
+  "rule 16: the rows, the residual families, the classes, the contract parts, the claim families, the checks, the mutants, the fixtures, the words, the walks (floors, pathspecs, code roots and anchors) and the hosts are frozen at their measured shape",
+  "the outside anchors: the bead's title binds the rows, the quotes, the words and the decision bead; the owner filing binds the derived classes, the contract parts, the claim families, the gate and the producer citation; the producer's :41, :17, :19 and :23 lines bind the charter-only classes, the three families, the unshipped heading and the record's own line",
+  "roster: the judged rows, the quotes, the residual members, the readers and the registered tests equal test/fixtures/foa-public-port-bridge-roster.json, in order and both ways; every pin reached its witness compare"
+ ],
+ "producer": {
+  "repo": "FiberOpticsSDK",
+  "path": "docs/programs/universal-reactive-rendering-2026-10-18.md",
+  "sha": "dcc5b57c4aed5fa2daa5333ec0b39c0916a508d7",
+  "blob": "5ae73cc357221ae2754ba5bf87f6f5b11db66a1e",
+  "lines": {
+   "3": "**Status:** design charter only (2026-10-18), no code or backend switch. **Owner:** FiberOpticsSDK. **Authority:** existing Rust-runtime normative requirements/ADRs outrank this additive charter; cross-program decisions: https://github.com/jehalladay/FiberOpticsResearch/tree/main/docs/research/foa/programs/universal-reactive-rendering-2026-10-18.",
+   "17": "Use one authority per runtime domain; remote public-port bridge may connect independent browser and server runtimes. Bridge requires endpoint visibility/schema/direction, lane and invalidation disposition, source revision, message identity, feedback bound, and explicit resync on gaps. Do not assert global transaction ordering, shared memory or implicit optimistic conflict merge.",
+   "19": "## Proposed interfaces (unshipped)",
+   "23": "- PublicPortBridge: negotiate contracts; subscribe/unsubscribe; snapshot/delta/ack/gap/resync; rejects private endpoints. No remotely supplied arbitrary executable functions.",
+   "41": "- Invalid private-port bridge, bad version/digest, stale epoch, duplicate message, missing basis, unauthorized effect and unbounded feedback are rejected with stable diagnostics."
+  },
+  "measured": {
+   "readAt": "2026-10-28",
+   "tip": "2099f193cccff7e35d0e618f4aab805b481e1983",
+   "tipBlob": "5ae73cc357221ae2754ba5bf87f6f5b11db66a1e",
+   "contractHalf": {
+    "workPackage": "FO-UI-05-a",
+    "commit": "52c16fc725a8d579fcb156841adcdb2ec98854e9",
+    "module": "src/fiber_optics/bridge.py",
+    "moduleBlob": "61697119a19b078c27f57b2b209c218fdbada9a2",
+    "codeRoster": "conformance/urr/v1/diagnostic_codes.json",
+    "codeRosterBlob": "dba3980c6d978c73337b349d2416e5e9b64226fa",
+    "codes": [
+     "BRIDGE_EXECUTABLE_PAYLOAD_REFUSED",
+     "BRIDGE_NOT_CROSS_RUNTIME",
+     "BRIDGE_DECLARATION_MISMATCH",
+     "BRIDGE_DISPOSITION_UNDECLARED",
+     "BRIDGE_PRIVATE_ENDPOINT",
+     "BRIDGE_PROTOCOL_VERSION_UNSUPPORTED",
+     "BRIDGE_SCHEMA_MISMATCH",
+     "BRIDGE_DIRECTION_CLASH",
+     "BRIDGE_DIGEST_MISMATCH"
+    ],
+    "executablePayloadKeys": [
+     "code",
+     "handler",
+     "script",
+     "function"
+    ]
+   },
+   "transportTier": {
+    "workPackage": "FO-UI-05-d",
+    "commit": "384f03f9cdc1d848f454fbb4b84ce9aa5003a56a",
+    "gapAnswer": "BRIDGE_GAP plus a ResyncRequest (tests/shell/lib/fo_urr_bridge_child.py, test-side)"
+   },
+   "releaseTags": 0,
+   "rfBundled": {
+    "rf": "0.1.845",
+    "fiber_optics": "0.1.0.20261014202847",
+    "receipt": "docs/workbench/receipts/wb-jwc.4.md"
+   }
+  }
+ }
+}
