@@ -1,0 +1,1666 @@
+{
+ "bead": "wb-b9n.1",
+ "constants": {
+  "gating": "ForgeCACReceiptV0",
+  "word": "VERIFIED_HISTORICAL",
+  "fields": [
+   "predicate",
+   "snapshot digest",
+   "checker identity+version"
+  ],
+  "neutral": "XQZ_NEUTRAL_CONTROL",
+  "lead": "hermetic reader-adapter tests over receipt fixtures"
+ },
+ "residuals": [
+  {
+   "id": "R-COMPOSED",
+   "quietPin": "A2",
+   "quiet": [
+    "composed"
+   ],
+   "twin": [
+    "composedTwin"
+   ]
+  },
+  {
+   "id": "R-EMBEDDED",
+   "quietPin": "A2",
+   "quiet": [
+    "embedded"
+   ],
+   "twin": [
+    "glued"
+   ]
+  },
+  {
+   "id": "R-LOOKALIKE",
+   "quietPin": "A2",
+   "quiet": [
+    "cyrillic"
+   ],
+   "twin": [
+    "fullwidth"
+   ]
+  },
+  {
+   "id": "R-PARAPHRASE",
+   "quietPin": "A2",
+   "quiet": [
+    "passed",
+    "atSnapshot"
+   ],
+   "twin": [
+    "adverb"
+   ]
+  },
+  {
+   "id": "R-SIBLING",
+   "quietPin": "A2",
+   "quiet": [
+    "current"
+   ],
+   "twin": [
+    "title"
+   ]
+  },
+  {
+   "id": "R-OTHER-NAME",
+   "quietPin": "A1",
+   "quiet": [
+    "otherName"
+   ],
+   "twin": [
+    "named"
+   ]
+  },
+  {
+   "id": "R-UNPLANTED-SPELLING",
+   "quietPin": "B1",
+   "quiet": [
+    "otherSpelling"
+   ],
+   "twin": [
+    "readKey"
+   ]
+  }
+ ],
+ "notDue": {
+  "A": [
+   "with the predicate and snapshot echoed verbatim"
+  ],
+  "B": [
+   "renders UNKNOWN with a diagnostic naming the missing field,"
+  ],
+  "C": []
+ },
+ "rows": [
+  {
+   "id": "A",
+   "label": "a full-field receipt renders VERIFIED_HISTORICAL with the predicate and snapshot echoed verbatim",
+   "pins": [
+    {
+     "id": "A1",
+     "quote": "a full-field receipt",
+     "witness": {
+      "release": "@forge/sdk@0.1.0",
+      "files": 49,
+      "links": [],
+      "readEqualsReleasePlusPlants": true,
+      "bigPlantLongest": true,
+      "gating": [
+       "dist/zz-plant-receipt.d.ts",
+       "dist/ForgeCACReceiptV0.d.ts",
+       "dist/zz-plant-receipt-big.d.ts"
+      ],
+      "word": [
+       "dist/zz-plant-receipt.d.ts"
+      ],
+      "receiptShaped": [
+       "dist/zz-plant-receipt.d.ts"
+      ],
+      "live": {
+       "CancelReceipt": [
+        "dist/cancellation.d.ts",
+        "dist/cancellation.js",
+        "dist/operation.d.ts",
+        "dist/operation.js"
+       ],
+       "source_snapshot_id": [
+        "dist/cli_oneshot.js"
+       ]
+      },
+      "planted": {
+       "named": "gating=1 word=1 receiptShaped=1 dist/zz-plant-receipt.d.ts",
+       "pathOnly": "gating=1 word=0 receiptShaped=0 dist/ForgeCACReceiptV0.d.ts",
+       "otherName": "gating=0 word=0 receiptShaped=0 dist/zz-plant-other.d.ts"
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "quote": "renders VERIFIED_HISTORICAL",
+     "witness": {
+      "judge": {
+       "texts": {
+        "title": "word=1 plain=1 display=1 VERIFIED_HISTORICAL",
+        "spaced": "word=1 plain=1 display=1 verified historical",
+        "hyphen": "word=1 plain=1 display=1 Verified-Historical",
+        "glued": "word=1 plain=1 display=1 VerifiedHistorical",
+        "reversed": "word=1 plain=1 display=1 historical-verified",
+        "adverb": "word=1 plain=1 display=1 historically verified",
+        "sentence": "word=1 plain=1 display=1 Receipt reads VERIFIED_HISTORICAL at the declared snapshot.",
+        "fullwidth": "word=1 plain=1 display=1 \\u{ff36}\\u{ff25}\\u{ff32}\\u{ff29}\\u{ff26}\\u{ff29}\\u{ff25}\\u{ff24}_HISTORICAL",
+        "zeroWidth": "word=1 plain=0 display=1 VERIFIED\\u{200b}_HISTORICAL",
+        "softHyphen": "word=1 plain=0 display=1 VERI\\u{ad}FIED_HISTORICAL",
+        "wordJoiner": "word=1 plain=0 display=1 VERIFIED\\u{2060}HISTORICAL",
+        "bareVerified": "word=0 plain=0 display=0 verified",
+        "bareHistorical": "word=0 plain=0 display=0 historical",
+        "todayLabel": "word=0 plain=0 display=0 success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED)",
+        "todayEvidence": "word=0 plain=0 display=0 verification indeterminate (historical; not current verification)",
+        "current": "word=0 plain=0 display=0 VERIFIED_CURRENT",
+        "embedded": "word=0 plain=0 display=0 isVerifiedHistorical",
+        "cyrillic": "word=0 plain=0 display=0 V\\u{415}\\u{420}IFI\\u{415}D_HISTORICAL",
+        "passed": "word=0 plain=0 display=0 historically passed",
+        "atSnapshot": "word=0 plain=0 display=0 verified at the declared snapshot",
+        "gating": "word=0 plain=0 display=0 ForgeCACReceiptV0"
+       },
+       "modules": {
+        "literal": "hits=1 export const shown = \"VERIFIED_HISTORICAL\";\n",
+        "comment": "hits=1 // a full-field receipt renders VERIFIED_HISTORICAL\nexport const shown = 1;\n",
+        "identifier": "hits=1 export const VerifiedHistorical = 1;\n",
+        "composed": "hits=0 export const shown = \"VERIFIED_\" + \"HISTORICAL\";\n",
+        "composedTwin": "hits=1 export const shown = \"VERIFIED_HISTORICAL\";\n"
+       }
+      },
+      "walk": {
+       "judgedEqualsListedPlusPlants": true,
+       "bigPlantLongest": true,
+       "gitEqualsWalk": true,
+       "links": [],
+       "floorMet": true,
+       "hits": [
+        "src/workbench/forge-cac-receipt-plant.ts VERIFIED_HISTORICAL",
+        "src/workbench/forge-cac-receipt-plant-big.ts VERIFIED_HISTORICAL"
+       ]
+      },
+      "rendered": {
+       "tags": [
+        "forgeGateTopology:measured",
+        "readForgeOperationEvidence:measured",
+        "forgeGateTopology:authorityAbsent",
+        "readForgeOperationEvidence:authorityAbsent",
+        "forgeGateTopology:quotedCurrent",
+        "readForgeOperationEvidence:quotedCurrent",
+        "forgeGateTopology:current",
+        "readForgeOperationEvidence:current",
+        "forgeGateTopology:currentFailure",
+        "readForgeOperationEvidence:currentFailure",
+        "forgeGateTopology:descriptorless",
+        "readForgeOperationEvidence:descriptorless",
+        "forgeGateTopology:withheld",
+        "readForgeOperationEvidence:withheld",
+        "forgeGateTopology:degraded",
+        "readForgeOperationEvidence:degraded",
+        "forgeGateTopology:empty",
+        "readForgeOperationEvidence:empty",
+        "forgeGateTopology:mixed",
+        "readForgeOperationEvidence:mixed",
+        "nativeEvidence:measured",
+        "nativeEvidence:authorityAbsent",
+        "nativeEvidence:quotedCurrent",
+        "nativeEvidence:current",
+        "nativeEvidence:currentFailure",
+        "nativeEvidence:descriptorless",
+        "nativeEvidence:withheld",
+        "nativeEvidence:degraded",
+        "nativeEvidence:empty",
+        "nativeEvidence:mixed",
+        "forgeOperationStartedSnapshot:started",
+        "forgeGateStepTopology:started",
+        "forgeGateStepTopology:passed",
+        "forgeGateStepTopology:failed",
+        "forgeOperationTerminalSnapshot:success",
+        "forgeOperationTerminalSnapshot:error",
+        "layoutWorkflowCard:10 nodes"
+       ],
+       "fixtureDigest": "ee4287c53b249ca7",
+       "walked": true,
+       "hits": [],
+       "control": 2
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "dropping any one of predicate, snapshot digest, or checker identity+version renders UNKNOWN with a diagnostic naming the missing field, never a pass",
+   "pins": [
+    {
+     "id": "B1",
+     "quote": "dropping any one of predicate, snapshot digest, or checker identity+version",
+     "witness": {
+      "fields": {
+       "predicate": [
+        "acceptance_predicate"
+       ],
+       "snapshot digest": [
+        "snapshot_digest"
+       ],
+       "checker identity+version": [
+        "checker_identity",
+        "checker_version"
+       ]
+      },
+      "receipt": [
+       "artifact",
+       "interpretation",
+       "acceptance_predicate",
+       "snapshot_digest",
+       "checker_identity",
+       "checker_version"
+      ],
+      "carriers": [
+       "source",
+       "envelope",
+       "data",
+       "package",
+       "package-flat"
+      ],
+      "bases": {
+       "historical": [
+        "workspace unknown partial",
+        "package unknown partial"
+       ],
+       "current": [
+        "workspace success complete",
+        "package success complete"
+       ]
+      },
+      "cells": {
+       "historical/source/full": "identical topology,evidence,native; differing none; planted 6: cac_receipt.artifact cac_receipt.interpretation cac_receipt.acceptance_predicate cac_receipt.snapshot_digest cac_receipt.checker_identity cac_receipt.checker_version",
+       "historical/source/-acceptance_predicate": "identical topology,evidence,native; differing none; planted 5: cac_receipt.artifact cac_receipt.interpretation cac_receipt.snapshot_digest cac_receipt.checker_identity cac_receipt.checker_version",
+       "historical/source/-snapshot_digest": "identical topology,evidence,native; differing none; planted 5: cac_receipt.artifact cac_receipt.interpretation cac_receipt.acceptance_predicate cac_receipt.checker_identity cac_receipt.checker_version",
+       "historical/source/-checker_identity": "identical topology,evidence,native; differing none; planted 5: cac_receipt.artifact cac_receipt.interpretation cac_receipt.acceptance_predicate cac_receipt.snapshot_digest cac_receipt.checker_version",
+       "historical/source/-checker_version": "identical topology,evidence,native; differing none; planted 5: cac_receipt.artifact cac_receipt.interpretation cac_receipt.acceptance_predicate cac_receipt.snapshot_digest cac_receipt.checker_identity",
+       "historical/envelope/full": "identical topology,evidence,native; differing none; planted 6: envelope.cac_receipt.artifact envelope.cac_receipt.interpretation envelope.cac_receipt.acceptance_predicate envelope.cac_receipt.snapshot_digest envelope.cac_receipt.checker_identity envelope.cac_receipt.checker_version",
+       "historical/envelope/-acceptance_predicate": "identical topology,evidence,native; differing none; planted 5: envelope.cac_receipt.artifact envelope.cac_receipt.interpretation envelope.cac_receipt.snapshot_digest envelope.cac_receipt.checker_identity envelope.cac_receipt.checker_version",
+       "historical/envelope/-snapshot_digest": "identical topology,evidence,native; differing none; planted 5: envelope.cac_receipt.artifact envelope.cac_receipt.interpretation envelope.cac_receipt.acceptance_predicate envelope.cac_receipt.checker_identity envelope.cac_receipt.checker_version",
+       "historical/envelope/-checker_identity": "identical topology,evidence,native; differing none; planted 5: envelope.cac_receipt.artifact envelope.cac_receipt.interpretation envelope.cac_receipt.acceptance_predicate envelope.cac_receipt.snapshot_digest envelope.cac_receipt.checker_version",
+       "historical/envelope/-checker_version": "identical topology,evidence,native; differing none; planted 5: envelope.cac_receipt.artifact envelope.cac_receipt.interpretation envelope.cac_receipt.acceptance_predicate envelope.cac_receipt.snapshot_digest envelope.cac_receipt.checker_identity",
+       "historical/data/full": "identical topology,evidence,native; differing none; planted 6: data.cac_receipt.artifact data.cac_receipt.interpretation data.cac_receipt.acceptance_predicate data.cac_receipt.snapshot_digest data.cac_receipt.checker_identity data.cac_receipt.checker_version",
+       "historical/data/-acceptance_predicate": "identical topology,evidence,native; differing none; planted 5: data.cac_receipt.artifact data.cac_receipt.interpretation data.cac_receipt.snapshot_digest data.cac_receipt.checker_identity data.cac_receipt.checker_version",
+       "historical/data/-snapshot_digest": "identical topology,evidence,native; differing none; planted 5: data.cac_receipt.artifact data.cac_receipt.interpretation data.cac_receipt.acceptance_predicate data.cac_receipt.checker_identity data.cac_receipt.checker_version",
+       "historical/data/-checker_identity": "identical topology,evidence,native; differing none; planted 5: data.cac_receipt.artifact data.cac_receipt.interpretation data.cac_receipt.acceptance_predicate data.cac_receipt.snapshot_digest data.cac_receipt.checker_version",
+       "historical/data/-checker_version": "identical topology,evidence,native; differing none; planted 5: data.cac_receipt.artifact data.cac_receipt.interpretation data.cac_receipt.acceptance_predicate data.cac_receipt.snapshot_digest data.cac_receipt.checker_identity",
+       "historical/package/full": "identical topology,evidence,native; differing none; planted 6: data.packages[0].cac_receipt.artifact data.packages[0].cac_receipt.interpretation data.packages[0].cac_receipt.acceptance_predicate data.packages[0].cac_receipt.snapshot_digest data.packages[0].cac_receipt.checker_identity data.packages[0].cac_receipt.checker_version",
+       "historical/package/-acceptance_predicate": "identical topology,evidence,native; differing none; planted 5: data.packages[0].cac_receipt.artifact data.packages[0].cac_receipt.interpretation data.packages[0].cac_receipt.snapshot_digest data.packages[0].cac_receipt.checker_identity data.packages[0].cac_receipt.checker_version",
+       "historical/package/-snapshot_digest": "identical topology,evidence,native; differing none; planted 5: data.packages[0].cac_receipt.artifact data.packages[0].cac_receipt.interpretation data.packages[0].cac_receipt.acceptance_predicate data.packages[0].cac_receipt.checker_identity data.packages[0].cac_receipt.checker_version",
+       "historical/package/-checker_identity": "identical topology,evidence,native; differing none; planted 5: data.packages[0].cac_receipt.artifact data.packages[0].cac_receipt.interpretation data.packages[0].cac_receipt.acceptance_predicate data.packages[0].cac_receipt.snapshot_digest data.packages[0].cac_receipt.checker_version",
+       "historical/package/-checker_version": "identical topology,evidence,native; differing none; planted 5: data.packages[0].cac_receipt.artifact data.packages[0].cac_receipt.interpretation data.packages[0].cac_receipt.acceptance_predicate data.packages[0].cac_receipt.snapshot_digest data.packages[0].cac_receipt.checker_identity",
+       "historical/package-flat/full": "identical topology,evidence,native; differing none; planted 6: data.packages[0].artifact data.packages[0].interpretation data.packages[0].acceptance_predicate data.packages[0].snapshot_digest data.packages[0].checker_identity data.packages[0].checker_version",
+       "historical/package-flat/-acceptance_predicate": "identical topology,evidence,native; differing none; planted 5: data.packages[0].artifact data.packages[0].interpretation data.packages[0].snapshot_digest data.packages[0].checker_identity data.packages[0].checker_version",
+       "historical/package-flat/-snapshot_digest": "identical topology,evidence,native; differing none; planted 5: data.packages[0].artifact data.packages[0].interpretation data.packages[0].acceptance_predicate data.packages[0].checker_identity data.packages[0].checker_version",
+       "historical/package-flat/-checker_identity": "identical topology,evidence,native; differing none; planted 5: data.packages[0].artifact data.packages[0].interpretation data.packages[0].acceptance_predicate data.packages[0].snapshot_digest data.packages[0].checker_version",
+       "historical/package-flat/-checker_version": "identical topology,evidence,native; differing none; planted 5: data.packages[0].artifact data.packages[0].interpretation data.packages[0].acceptance_predicate data.packages[0].snapshot_digest data.packages[0].checker_identity",
+       "current/source/full": "identical topology,evidence,native; differing none; planted 6: cac_receipt.artifact cac_receipt.interpretation cac_receipt.acceptance_predicate cac_receipt.snapshot_digest cac_receipt.checker_identity cac_receipt.checker_version",
+       "current/source/-acceptance_predicate": "identical topology,evidence,native; differing none; planted 5: cac_receipt.artifact cac_receipt.interpretation cac_receipt.snapshot_digest cac_receipt.checker_identity cac_receipt.checker_version",
+       "current/source/-snapshot_digest": "identical topology,evidence,native; differing none; planted 5: cac_receipt.artifact cac_receipt.interpretation cac_receipt.acceptance_predicate cac_receipt.checker_identity cac_receipt.checker_version",
+       "current/source/-checker_identity": "identical topology,evidence,native; differing none; planted 5: cac_receipt.artifact cac_receipt.interpretation cac_receipt.acceptance_predicate cac_receipt.snapshot_digest cac_receipt.checker_version",
+       "current/source/-checker_version": "identical topology,evidence,native; differing none; planted 5: cac_receipt.artifact cac_receipt.interpretation cac_receipt.acceptance_predicate cac_receipt.snapshot_digest cac_receipt.checker_identity",
+       "current/envelope/full": "identical topology,evidence,native; differing none; planted 6: envelope.cac_receipt.artifact envelope.cac_receipt.interpretation envelope.cac_receipt.acceptance_predicate envelope.cac_receipt.snapshot_digest envelope.cac_receipt.checker_identity envelope.cac_receipt.checker_version",
+       "current/envelope/-acceptance_predicate": "identical topology,evidence,native; differing none; planted 5: envelope.cac_receipt.artifact envelope.cac_receipt.interpretation envelope.cac_receipt.snapshot_digest envelope.cac_receipt.checker_identity envelope.cac_receipt.checker_version",
+       "current/envelope/-snapshot_digest": "identical topology,evidence,native; differing none; planted 5: envelope.cac_receipt.artifact envelope.cac_receipt.interpretation envelope.cac_receipt.acceptance_predicate envelope.cac_receipt.checker_identity envelope.cac_receipt.checker_version",
+       "current/envelope/-checker_identity": "identical topology,evidence,native; differing none; planted 5: envelope.cac_receipt.artifact envelope.cac_receipt.interpretation envelope.cac_receipt.acceptance_predicate envelope.cac_receipt.snapshot_digest envelope.cac_receipt.checker_version",
+       "current/envelope/-checker_version": "identical topology,evidence,native; differing none; planted 5: envelope.cac_receipt.artifact envelope.cac_receipt.interpretation envelope.cac_receipt.acceptance_predicate envelope.cac_receipt.snapshot_digest envelope.cac_receipt.checker_identity",
+       "current/data/full": "identical topology,evidence,native; differing none; planted 6: data.cac_receipt.artifact data.cac_receipt.interpretation data.cac_receipt.acceptance_predicate data.cac_receipt.snapshot_digest data.cac_receipt.checker_identity data.cac_receipt.checker_version",
+       "current/data/-acceptance_predicate": "identical topology,evidence,native; differing none; planted 5: data.cac_receipt.artifact data.cac_receipt.interpretation data.cac_receipt.snapshot_digest data.cac_receipt.checker_identity data.cac_receipt.checker_version",
+       "current/data/-snapshot_digest": "identical topology,evidence,native; differing none; planted 5: data.cac_receipt.artifact data.cac_receipt.interpretation data.cac_receipt.acceptance_predicate data.cac_receipt.checker_identity data.cac_receipt.checker_version",
+       "current/data/-checker_identity": "identical topology,evidence,native; differing none; planted 5: data.cac_receipt.artifact data.cac_receipt.interpretation data.cac_receipt.acceptance_predicate data.cac_receipt.snapshot_digest data.cac_receipt.checker_version",
+       "current/data/-checker_version": "identical topology,evidence,native; differing none; planted 5: data.cac_receipt.artifact data.cac_receipt.interpretation data.cac_receipt.acceptance_predicate data.cac_receipt.snapshot_digest data.cac_receipt.checker_identity",
+       "current/package/full": "identical topology,evidence,native; differing none; planted 6: data.packages[0].cac_receipt.artifact data.packages[0].cac_receipt.interpretation data.packages[0].cac_receipt.acceptance_predicate data.packages[0].cac_receipt.snapshot_digest data.packages[0].cac_receipt.checker_identity data.packages[0].cac_receipt.checker_version",
+       "current/package/-acceptance_predicate": "identical topology,evidence,native; differing none; planted 5: data.packages[0].cac_receipt.artifact data.packages[0].cac_receipt.interpretation data.packages[0].cac_receipt.snapshot_digest data.packages[0].cac_receipt.checker_identity data.packages[0].cac_receipt.checker_version",
+       "current/package/-snapshot_digest": "identical topology,evidence,native; differing none; planted 5: data.packages[0].cac_receipt.artifact data.packages[0].cac_receipt.interpretation data.packages[0].cac_receipt.acceptance_predicate data.packages[0].cac_receipt.checker_identity data.packages[0].cac_receipt.checker_version",
+       "current/package/-checker_identity": "identical topology,evidence,native; differing none; planted 5: data.packages[0].cac_receipt.artifact data.packages[0].cac_receipt.interpretation data.packages[0].cac_receipt.acceptance_predicate data.packages[0].cac_receipt.snapshot_digest data.packages[0].cac_receipt.checker_version",
+       "current/package/-checker_version": "identical topology,evidence,native; differing none; planted 5: data.packages[0].cac_receipt.artifact data.packages[0].cac_receipt.interpretation data.packages[0].cac_receipt.acceptance_predicate data.packages[0].cac_receipt.snapshot_digest data.packages[0].cac_receipt.checker_identity",
+       "current/package-flat/full": "identical topology,evidence,native; differing none; planted 6: data.packages[0].artifact data.packages[0].interpretation data.packages[0].acceptance_predicate data.packages[0].snapshot_digest data.packages[0].checker_identity data.packages[0].checker_version",
+       "current/package-flat/-acceptance_predicate": "identical topology,evidence,native; differing none; planted 5: data.packages[0].artifact data.packages[0].interpretation data.packages[0].snapshot_digest data.packages[0].checker_identity data.packages[0].checker_version",
+       "current/package-flat/-snapshot_digest": "identical topology,evidence,native; differing none; planted 5: data.packages[0].artifact data.packages[0].interpretation data.packages[0].acceptance_predicate data.packages[0].checker_identity data.packages[0].checker_version",
+       "current/package-flat/-checker_identity": "identical topology,evidence,native; differing none; planted 5: data.packages[0].artifact data.packages[0].interpretation data.packages[0].acceptance_predicate data.packages[0].snapshot_digest data.packages[0].checker_version",
+       "current/package-flat/-checker_version": "identical topology,evidence,native; differing none; planted 5: data.packages[0].artifact data.packages[0].interpretation data.packages[0].acceptance_predicate data.packages[0].snapshot_digest data.packages[0].checker_identity"
+      },
+      "unplanted": {
+       "otherSpelling": "identical topology,evidence,native; differing none",
+       "readKey": "identical native; differing topology,evidence"
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "quote": "never a pass",
+     "witness": {
+      "demoted": {
+       "measured": {
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "package": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+        "evidence": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)"
+       },
+       "authorityAbsent": {
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "package": "success (historical; authoritative_current=unknown; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+        "evidence": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)"
+       },
+       "authorityString": {
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "package": "success (historical; authoritative_current=unknown; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+        "evidence": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)"
+       },
+       "authorityNull": {
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "package": "success (historical; authoritative_current=unknown; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+        "evidence": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)"
+       },
+       "quotedCurrent": {
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "package": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis CURRENT",
+        "evidence": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)"
+       },
+       "receiptNested": {
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "package": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+        "evidence": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)"
+       },
+       "receiptFlat": {
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "package": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+        "evidence": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)"
+       }
+      },
+      "quoted": {
+       "historical/source.status": {
+        "planted": [
+         "reading.source.status"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "shown": [
+         "{W} \u00b7 FORGE_OK \u00b7 verification indeterminate",
+         "status: {W} \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+         "{W} \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)"
+        ]
+       },
+       "historical/source.envelope.verdict": {
+        "planted": [
+         "reading.source.envelope.verdict"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "shown": [
+         "success \u00b7 {W} \u00b7 FORGE_OK \u00b7 verification indeterminate",
+         "status: success \u00b7 {W} \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+         "success \u00b7 {W} \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)"
+        ]
+       },
+       "historical/source.envelope.reason_code": {
+        "planted": [
+         "reading.source.envelope.reason_code"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "shown": [
+         "success \u00b7 {W} \u00b7 verification indeterminate",
+         "forge:gate.status:{W}",
+         "status: success \u00b7 {W} \u00b7 verification indeterminate (historical; not current verification)",
+         "success \u00b7 {W} \u00b7 verification indeterminate (historical; not current verification)"
+        ]
+       },
+       "historical/package.ref": {
+        "planted": [
+         "reading.source.data.packages[0].ref"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "shown": [
+         "{W}",
+         "Forge package {W}",
+         "{W}",
+         "Forge package {W}: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE"
+        ]
+       },
+       "historical/package.last_result": {
+        "planted": [
+         "reading.source.data.packages[0].last_result"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "shown": [
+         "{W} (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+         "Forge package code:pi-subagents: {W} (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE"
+        ]
+       },
+       "historical/package.unverified_reason": {
+        "planted": [
+         "reading.source.data.packages[0].unverified_reason"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "shown": [
+         "success (historical; authoritative_current=false; {W}) \u00b7 basis STALE",
+         "Forge package code:pi-subagents: success (historical; authoritative_current=false; {W}) \u00b7 basis STALE"
+        ]
+       },
+       "current/source.status": {
+        "planted": [
+         "reading.source.status"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace unknown partial",
+         "package success partial"
+        ],
+        "shown": [
+         "{W} \u00b7 FORGE_OK \u00b7 verification indeterminate",
+         "status: {W} \u00b7 FORGE_OK \u00b7 verification indeterminate",
+         "{W} \u00b7 FORGE_OK \u00b7 verification indeterminate"
+        ]
+       },
+       "current/source.envelope.verdict": {
+        "planted": [
+         "reading.source.envelope.verdict"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace unknown complete",
+         "package success complete"
+        ],
+        "shown": [
+         "success \u00b7 {W} \u00b7 FORGE_OK \u00b7 verification indeterminate",
+         "status: success \u00b7 {W} \u00b7 FORGE_OK \u00b7 verification indeterminate",
+         "success \u00b7 {W} \u00b7 FORGE_OK \u00b7 verification indeterminate"
+        ]
+       },
+       "current/source.envelope.reason_code": {
+        "planted": [
+         "reading.source.envelope.reason_code"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace success complete",
+         "package success complete"
+        ],
+        "shown": [
+         "success \u00b7 {W} \u00b7 current gate passed",
+         "forge:gate.status:{W}",
+         "status: success \u00b7 {W} \u00b7 current gate passed",
+         "success \u00b7 {W} \u00b7 current gate passed"
+        ]
+       },
+       "current/package.ref": {
+        "planted": [
+         "reading.source.data.packages[0].ref"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace success complete",
+         "package success complete"
+        ],
+        "shown": [
+         "{W}",
+         "Forge package {W}",
+         "{W}",
+         "Forge package {W}: success (current) \u00b7 basis STALE"
+        ]
+       },
+       "current/package.last_result": {
+        "planted": [
+         "reading.source.data.packages[0].last_result"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace unknown complete",
+         "package unknown complete"
+        ],
+        "shown": [
+         "{W} (current) \u00b7 basis STALE",
+         "Forge package code:pi-subagents: {W} (current) \u00b7 basis STALE"
+        ]
+       },
+       "current/package.unverified_reason": {
+        "planted": [
+         "reading.source.data.packages[0].unverified_reason"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace success complete",
+         "package success complete"
+        ],
+        "shown": []
+       }
+      },
+      "freshness": {
+       "identical": true,
+       "shown": 0,
+       "package": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis UNKNOWN",
+       "diagnostics": [
+        "Forge gate.status package code:pi-subagents published a last_result_state that is not well formed, so its basis is withheld and shown as basis UNKNOWN."
+       ]
+      },
+      "card": {
+       "domainStatus": "{W}",
+       "glyphs": {
+        "word": "?",
+        "neutral": "?",
+        "verified": "\\u{221a}"
+       },
+       "outcome": "? forge gate 0 \u00b7 forge.gate.status \u00b7 {W}"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "the existing gate.status and forge-operation evidence adapters stay byte-identical",
+   "pins": [
+    {
+     "id": "C1",
+     "quote": "the existing gate.status and forge-operation evidence adapters",
+     "witness": {
+      "forgeGateTopology:measured": {
+       "snapshots": [
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge gate status /b9n1-forge-ws",
+          "type": "sdk-operation",
+          "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.snapshot",
+         "evidenceRefs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n1"
+         ]
+        },
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge package code:pi-subagents",
+          "type": "sdk-operation",
+          "statusText": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.package.snapshot",
+         "subjectBasis": "sha256:c47710910801e2d55661144061e0b3162720dc5a924b97da683cd92e47be5d6c"
+        }
+       ],
+       "relations": [
+        {
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "from": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "to": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "kind": "grouping",
+         "provenance": {
+          "source": "forge-observer",
+          "observedAt": "2026-10-28T11:00:01Z"
+         }
+        }
+       ],
+       "diagnostics": []
+      },
+      "readForgeOperationEvidence:measured": {
+       "kind": "forge-operation",
+       "provider": "forge",
+       "capturedAt": "2026-10-28T11:00:02Z",
+       "bytes": 250,
+       "truncated": false,
+       "preview": [
+        "forge-operation:op_b9n1",
+        "status: success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+        "Forge package code:pi-subagents: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE"
+       ],
+       "freshness": "current",
+       "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+       "producerReceipt": {
+        "requestedOperationId": "op_b9n1",
+        "readOperationId": "op_b9n1",
+        "sameOperation": true
+       }
+      },
+      "forgeGateTopology:authorityAbsent": {
+       "snapshots": [
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge gate status /b9n1-forge-ws",
+          "type": "sdk-operation",
+          "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.snapshot",
+         "evidenceRefs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n1"
+         ]
+        },
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge package code:pi-subagents",
+          "type": "sdk-operation",
+          "statusText": "success (historical; authoritative_current=unknown; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.package.snapshot",
+         "subjectBasis": "sha256:c47710910801e2d55661144061e0b3162720dc5a924b97da683cd92e47be5d6c"
+        }
+       ],
+       "relations": [
+        {
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "from": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "to": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "kind": "grouping",
+         "provenance": {
+          "source": "forge-observer",
+          "observedAt": "2026-10-28T11:00:01Z"
+         }
+        }
+       ],
+       "diagnostics": []
+      },
+      "readForgeOperationEvidence:authorityAbsent": {
+       "kind": "forge-operation",
+       "provider": "forge",
+       "capturedAt": "2026-10-28T11:00:02Z",
+       "bytes": 252,
+       "truncated": false,
+       "preview": [
+        "forge-operation:op_b9n1",
+        "status: success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+        "Forge package code:pi-subagents: success (historical; authoritative_current=unknown; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE"
+       ],
+       "freshness": "current",
+       "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+       "producerReceipt": {
+        "requestedOperationId": "op_b9n1",
+        "readOperationId": "op_b9n1",
+        "sameOperation": true
+       }
+      },
+      "forgeGateTopology:quotedCurrent": {
+       "snapshots": [
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge gate status /b9n1-forge-ws",
+          "type": "sdk-operation",
+          "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.snapshot",
+         "evidenceRefs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n1"
+         ]
+        },
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge package code:pi-subagents",
+          "type": "sdk-operation",
+          "statusText": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis CURRENT",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.package.snapshot",
+         "subjectBasis": "sha256:c47710910801e2d55661144061e0b3162720dc5a924b97da683cd92e47be5d6c"
+        }
+       ],
+       "relations": [
+        {
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "from": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "to": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "kind": "grouping",
+         "provenance": {
+          "source": "forge-observer",
+          "observedAt": "2026-10-28T11:00:01Z"
+         }
+        }
+       ],
+       "diagnostics": []
+      },
+      "readForgeOperationEvidence:quotedCurrent": {
+       "kind": "forge-operation",
+       "provider": "forge",
+       "capturedAt": "2026-10-28T11:00:02Z",
+       "bytes": 252,
+       "truncated": false,
+       "preview": [
+        "forge-operation:op_b9n1",
+        "status: success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+        "Forge package code:pi-subagents: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis CURRENT"
+       ],
+       "freshness": "current",
+       "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+       "producerReceipt": {
+        "requestedOperationId": "op_b9n1",
+        "readOperationId": "op_b9n1",
+        "sameOperation": true
+       }
+      },
+      "forgeGateTopology:current": {
+       "snapshots": [
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "complete",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge gate status /b9n1-forge-ws",
+          "type": "sdk-operation",
+          "statusText": "success \u00b7 FORGE_OK \u00b7 current gate passed",
+          "statusTone": "success"
+         },
+         "kind": "forge.gate.status.snapshot",
+         "evidenceRefs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n1"
+         ]
+        },
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "complete",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge package code:pi-subagents",
+          "type": "sdk-operation",
+          "statusText": "success (current) \u00b7 basis STALE",
+          "statusTone": "success"
+         },
+         "kind": "forge.gate.status.package.snapshot",
+         "subjectBasis": "sha256:c47710910801e2d55661144061e0b3162720dc5a924b97da683cd92e47be5d6c"
+        }
+       ],
+       "relations": [
+        {
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "from": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "to": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "kind": "grouping",
+         "provenance": {
+          "source": "forge-observer",
+          "observedAt": "2026-10-28T11:00:01Z"
+         }
+        }
+       ],
+       "diagnostics": []
+      },
+      "readForgeOperationEvidence:current": {
+       "kind": "forge-operation",
+       "provider": "forge",
+       "capturedAt": "2026-10-28T11:00:02Z",
+       "bytes": 140,
+       "truncated": false,
+       "preview": [
+        "forge-operation:op_b9n1",
+        "status: success \u00b7 FORGE_OK \u00b7 current gate passed",
+        "Forge package code:pi-subagents: success (current) \u00b7 basis STALE"
+       ],
+       "freshness": "current",
+       "statusText": "success \u00b7 FORGE_OK \u00b7 current gate passed",
+       "producerReceipt": {
+        "requestedOperationId": "op_b9n1",
+        "readOperationId": "op_b9n1",
+        "sameOperation": true
+       }
+      },
+      "forgeGateTopology:currentFailure": {
+       "snapshots": [
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "complete",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge gate status /b9n1-forge-ws",
+          "type": "sdk-operation",
+          "statusText": "success \u00b7 FORGE_OK \u00b7 current gate failed",
+          "statusTone": "failure"
+         },
+         "kind": "forge.gate.status.snapshot",
+         "evidenceRefs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n1"
+         ]
+        },
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "complete",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge package code:pi-subagents",
+          "type": "sdk-operation",
+          "statusText": "failure (current) \u00b7 basis STALE",
+          "statusTone": "failure"
+         },
+         "kind": "forge.gate.status.package.snapshot",
+         "subjectBasis": "sha256:c47710910801e2d55661144061e0b3162720dc5a924b97da683cd92e47be5d6c"
+        }
+       ],
+       "relations": [
+        {
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "from": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "to": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "kind": "grouping",
+         "provenance": {
+          "source": "forge-observer",
+          "observedAt": "2026-10-28T11:00:01Z"
+         }
+        }
+       ],
+       "diagnostics": []
+      },
+      "readForgeOperationEvidence:currentFailure": {
+       "kind": "forge-operation",
+       "provider": "forge",
+       "capturedAt": "2026-10-28T11:00:02Z",
+       "bytes": 140,
+       "truncated": false,
+       "preview": [
+        "forge-operation:op_b9n1",
+        "status: success \u00b7 FORGE_OK \u00b7 current gate failed",
+        "Forge package code:pi-subagents: failure (current) \u00b7 basis STALE"
+       ],
+       "freshness": "current",
+       "statusText": "success \u00b7 FORGE_OK \u00b7 current gate failed",
+       "producerReceipt": {
+        "requestedOperationId": "op_b9n1",
+        "readOperationId": "op_b9n1",
+        "sameOperation": true
+       }
+      },
+      "forgeGateTopology:descriptorless": {
+       "snapshots": [
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "complete",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge gate status /b9n1-forge-ws",
+          "type": "sdk-operation",
+          "statusText": "success \u00b7 FORGE_OK \u00b7 current gate passed",
+          "statusTone": "success"
+         },
+         "kind": "forge.gate.status.snapshot",
+         "evidenceRefs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n1"
+         ]
+        },
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "complete",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge package code:pi-subagents",
+          "type": "sdk-operation",
+          "statusText": "success (current)",
+          "statusTone": "success"
+         },
+         "kind": "forge.gate.status.package.snapshot"
+        }
+       ],
+       "relations": [
+        {
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "from": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "to": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "kind": "grouping",
+         "provenance": {
+          "source": "forge-observer",
+          "observedAt": "2026-10-28T11:00:01Z"
+         }
+        }
+       ],
+       "diagnostics": []
+      },
+      "readForgeOperationEvidence:descriptorless": {
+       "kind": "forge-operation",
+       "provider": "forge",
+       "capturedAt": "2026-10-28T11:00:02Z",
+       "bytes": 125,
+       "truncated": false,
+       "preview": [
+        "forge-operation:op_b9n1",
+        "status: success \u00b7 FORGE_OK \u00b7 current gate passed",
+        "Forge package code:pi-subagents: success (current)"
+       ],
+       "freshness": "current",
+       "statusText": "success \u00b7 FORGE_OK \u00b7 current gate passed",
+       "producerReceipt": {
+        "requestedOperationId": "op_b9n1",
+        "readOperationId": "op_b9n1",
+        "sameOperation": true
+       }
+      },
+      "forgeGateTopology:withheld": {
+       "snapshots": [
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge gate status /b9n1-forge-ws",
+          "type": "sdk-operation",
+          "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.snapshot",
+         "evidenceRefs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n1"
+         ]
+        },
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge package code:pi-subagents",
+          "type": "sdk-operation",
+          "statusText": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis UNKNOWN",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.package.snapshot"
+        }
+       ],
+       "relations": [
+        {
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "from": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "to": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "kind": "grouping",
+         "provenance": {
+          "source": "forge-observer",
+          "observedAt": "2026-10-28T11:00:01Z"
+         }
+        }
+       ],
+       "diagnostics": [
+        "Forge gate.status package code:pi-subagents published a last_result_state that is not well formed, so its basis is withheld and shown as basis UNKNOWN."
+       ]
+      },
+      "readForgeOperationEvidence:withheld": {
+       "kind": "forge-operation",
+       "provider": "forge",
+       "capturedAt": "2026-10-28T11:00:02Z",
+       "bytes": 252,
+       "truncated": false,
+       "preview": [
+        "forge-operation:op_b9n1",
+        "status: success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+        "Forge package code:pi-subagents: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis UNKNOWN"
+       ],
+       "freshness": "current",
+       "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+       "producerReceipt": {
+        "requestedOperationId": "op_b9n1",
+        "readOperationId": "op_b9n1",
+        "sameOperation": true
+       }
+      },
+      "forgeGateTopology:degraded": {
+       "snapshots": [
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge gate status /b9n1-forge-ws",
+          "type": "sdk-operation",
+          "statusText": "partial \u00b7 COULD_NOT_JUDGE \u00b7 FORGE_DEGRADED \u00b7 verification indeterminate",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.snapshot",
+         "evidenceRefs": [
+          "forge:gate.status:FORGE_DEGRADED",
+          "forge-operation:op_b9n1"
+         ]
+        },
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge package code:pi-subagents",
+          "type": "sdk-operation",
+          "statusText": "success (current) \u00b7 basis STALE",
+          "statusTone": "success"
+         },
+         "kind": "forge.gate.status.package.snapshot",
+         "subjectBasis": "sha256:c47710910801e2d55661144061e0b3162720dc5a924b97da683cd92e47be5d6c"
+        }
+       ],
+       "relations": [
+        {
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "from": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "to": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "kind": "grouping",
+         "provenance": {
+          "source": "forge-observer",
+          "observedAt": "2026-10-28T11:00:01Z"
+         }
+        }
+       ],
+       "diagnostics": [
+        "Every package reports current success but the read status or declared verdict does not, so workspace success is withheld."
+       ]
+      },
+      "readForgeOperationEvidence:degraded": {
+       "kind": "forge-operation",
+       "provider": "forge",
+       "capturedAt": "2026-10-28T11:00:02Z",
+       "bytes": 172,
+       "truncated": false,
+       "preview": [
+        "forge-operation:op_b9n1",
+        "status: partial \u00b7 COULD_NOT_JUDGE \u00b7 FORGE_DEGRADED \u00b7 verification indeterminate",
+        "Forge package code:pi-subagents: success (current) \u00b7 basis STALE"
+       ],
+       "freshness": "current",
+       "statusText": "partial \u00b7 COULD_NOT_JUDGE \u00b7 FORGE_DEGRADED \u00b7 verification indeterminate",
+       "producerReceipt": {
+        "requestedOperationId": "op_b9n1",
+        "readOperationId": "op_b9n1",
+        "sameOperation": true
+       }
+      },
+      "forgeGateTopology:empty": {
+       "snapshots": [
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge gate status /b9n1-forge-ws",
+          "type": "sdk-operation",
+          "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.snapshot",
+         "evidenceRefs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n1"
+         ]
+        }
+       ],
+       "relations": [],
+       "diagnostics": [
+        "Forge gate.status reported an empty package list: no package was observed and workspace verification stays indeterminate."
+       ]
+      },
+      "readForgeOperationEvidence:empty": {
+       "kind": "forge-operation",
+       "provider": "forge",
+       "capturedAt": "2026-10-28T11:00:02Z",
+       "bytes": 81,
+       "truncated": false,
+       "preview": [
+        "forge-operation:op_b9n1",
+        "status: success \u00b7 FORGE_OK \u00b7 verification indeterminate"
+       ],
+       "freshness": "current",
+       "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate",
+       "producerReceipt": {
+        "requestedOperationId": "op_b9n1",
+        "readOperationId": "op_b9n1",
+        "sameOperation": true
+       }
+      },
+      "forgeGateTopology:mixed": {
+       "snapshots": [
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge gate status /b9n1-forge-ws",
+          "type": "sdk-operation",
+          "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.snapshot",
+         "evidenceRefs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n1"
+         ]
+        },
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge package code:pi-subagents",
+          "type": "sdk-operation",
+          "statusText": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.package.snapshot",
+         "subjectBasis": "sha256:c47710910801e2d55661144061e0b3162720dc5a924b97da683cd92e47be5d6c"
+        },
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:b9n1-current",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "complete",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge package code:b9n1-current",
+          "type": "sdk-operation",
+          "statusText": "success (current) \u00b7 basis STALE",
+          "statusTone": "success"
+         },
+         "kind": "forge.gate.status.package.snapshot",
+         "subjectBasis": "sha256:c47710910801e2d55661144061e0b3162720dc5a924b97da683cd92e47be5d6c"
+        }
+       ],
+       "relations": [
+        {
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "from": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "to": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "kind": "grouping",
+         "provenance": {
+          "source": "forge-observer",
+          "observedAt": "2026-10-28T11:00:01Z"
+         }
+        },
+        {
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "from": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "to": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:b9n1-current",
+          "scope": "/b9n1-forge-ws"
+         },
+         "kind": "grouping",
+         "provenance": {
+          "source": "forge-observer",
+          "observedAt": "2026-10-28T11:00:01Z"
+         }
+        }
+       ],
+       "diagnostics": []
+      },
+      "readForgeOperationEvidence:mixed": {
+       "kind": "forge-operation",
+       "provider": "forge",
+       "capturedAt": "2026-10-28T11:00:02Z",
+       "bytes": 316,
+       "truncated": false,
+       "preview": [
+        "forge-operation:op_b9n1",
+        "status: success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+        "Forge package code:pi-subagents: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+        "Forge package code:b9n1-current: success (current) \u00b7 basis STALE"
+       ],
+       "freshness": "current",
+       "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+       "producerReceipt": {
+        "requestedOperationId": "op_b9n1",
+        "readOperationId": "op_b9n1",
+        "sameOperation": true
+       }
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "quote": "stay byte-identical",
+     "witness": {
+      "tags": [
+       "forgeGateTopology:measured",
+       "readForgeOperationEvidence:measured",
+       "forgeGateTopology:authorityAbsent",
+       "readForgeOperationEvidence:authorityAbsent",
+       "forgeGateTopology:quotedCurrent",
+       "readForgeOperationEvidence:quotedCurrent",
+       "forgeGateTopology:current",
+       "readForgeOperationEvidence:current",
+       "forgeGateTopology:currentFailure",
+       "readForgeOperationEvidence:currentFailure",
+       "forgeGateTopology:descriptorless",
+       "readForgeOperationEvidence:descriptorless",
+       "forgeGateTopology:withheld",
+       "readForgeOperationEvidence:withheld",
+       "forgeGateTopology:degraded",
+       "readForgeOperationEvidence:degraded",
+       "forgeGateTopology:empty",
+       "readForgeOperationEvidence:empty",
+       "forgeGateTopology:mixed",
+       "readForgeOperationEvidence:mixed"
+      ],
+      "bytes": {
+       "forgeGateTopology:measured": "388c2ebe310bf55a 1625 bytes",
+       "readForgeOperationEvidence:measured": "c2d6468350ab1d3c 608 bytes",
+       "forgeGateTopology:authorityAbsent": "da06fb9c08b2a169 1627 bytes",
+       "readForgeOperationEvidence:authorityAbsent": "f1584e612b0b22b6 610 bytes",
+       "forgeGateTopology:quotedCurrent": "c48a8bd641fde0c8 1627 bytes",
+       "readForgeOperationEvidence:quotedCurrent": "7034db11dab03f78 610 bytes",
+       "forgeGateTopology:current": "cb7da16181ecb947 1556 bytes",
+       "readForgeOperationEvidence:current": "a66338be6c89bc69 452 bytes",
+       "forgeGateTopology:currentFailure": "00abc279e151097c 1556 bytes",
+       "readForgeOperationEvidence:currentFailure": "968b20c5efad2cb0 452 bytes",
+       "forgeGateTopology:descriptorless": "7f06281283217152 1452 bytes",
+       "readForgeOperationEvidence:descriptorless": "dea718835de549c8 437 bytes",
+       "forgeGateTopology:withheld": "47b1bfc1a064053e 1691 bytes",
+       "readForgeOperationEvidence:withheld": "16576a91fc8f9cd4 610 bytes",
+       "forgeGateTopology:degraded": "716d64880db4ca55 1715 bytes",
+       "readForgeOperationEvidence:degraded": "23cc0c517ae4ac03 516 bytes",
+       "forgeGateTopology:empty": "192aa4fec364f67b 741 bytes",
+       "readForgeOperationEvidence:empty": "20596fef7c243ce8 397 bytes",
+       "forgeGateTopology:mixed": "ed974f224c74578d 2570 bytes",
+       "readForgeOperationEvidence:mixed": "11a7f8a73ae419be 676 bytes"
+      }
+     }
+    }
+   ]
+  }
+ ]
+}
