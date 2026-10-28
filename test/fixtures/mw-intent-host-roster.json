@@ -427,7 +427,7 @@
   "Q3: R-SIDE-PATH",
   "Q4: R-REJECTED-PERMIT",
   "rule 16: the rows, the residual families, the vocabulary, the variants, the checks, the hosts and the fixtures are frozen at their measured shape",
-  "the outside anchors: the bead's own row binds the rows, the pin quotes, the codes, the vocabulary and the stale code; the docs and wb-w12 bind the variants; the citations resolve",
+  "the outside anchors: the bead's own row binds rows T, A, B and C (each label and its quotes' text), the six codes, the vocabulary, the package scope, the stale code and the producer citation; J03 and wb-w12 bind the variants; clause C's citation resolves; row Q and the pin partition are not anchored",
   "roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/mw-intent-host-roster.json, in order and both ways; every pin reached its witness compare"
  ],
  "producer": {

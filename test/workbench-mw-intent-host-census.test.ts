@@ -15,10 +15,14 @@
  * did not, "so no Pi host exists for either today; the trigger becomes 'when MW publishes a host ABI for admitted intents (or
  * Pi decides to host coordination policies)' (MW-M0-PI-1)". Row T's label is that trigger, verbatim.
  *
- * MEASURED (read-only, by the cutting seat, 2026-10-28, at f5589e0dc7bb and again at the merged base 6fbc23468b81, whose
- * delta touches neither src nor the package files). Producer (the local
- * MechanicalWorkflows checkout, git show / rev-parse; this census never re-reads the producer, and the roster's producer
- * block carries the one line it quotes): at cf214758bcff packages/coordination/package.json (blob fc3e3b574d75) names the
+ * MEASURED (read-only, by the cutting seats, 2026-10-28: cut #1 at f5589e0dc7bb and at its merged base 6fbc23468b81, whose
+ * delta touches neither src nor the package files; cut #2 re-measured the Pi facts below at its merged base e81d2b08eecf,
+ * whose delta from cut #1's cd8927fbdbc6 adds src/workbench/collective-event.ts and edits src/workbench/hyperunix-observer.ts,
+ * neither naming an @mechanical/ package or an M0 spelling, leaves the package files, src/workbench/control.ts,
+ * src/workbench/observation.ts and docs/workbench/01 unchanged, and edits docs/workbench/07 at line 19 only).
+ * Producer (the local MechanicalWorkflows checkout, git show / rev-parse; this census never re-reads the producer, and the
+ * roster's producer block carries the one line it quotes): at cf214758bcff packages/coordination/package.json (blob
+ * fc3e3b574d75) names the
  * package @mechanical/workflows-coordination 0.1.0; src/contracts.ts (blob 92373823252b) declares Basis {workspaceId,
  * revision} and an Intent whose expectedRevision is "The subject revision the intent was proposed against; a different basis
  * makes it stale" (:58-59), and states at :7-8 that whether an intent may become an effect "is decided by `reconcile`
@@ -73,26 +77,45 @@
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and each residual family's member
  * count as literals, beside the vocabulary, the variants, the checks, the hosts and the fixtures; the judged set (every row's
  * id, label and pins, every pin's quote and witness, the residual members, every registered test title) is held to the
- * out-of-file roster test/fixtures/mw-intent-host-roster.json. OUTSIDE ANCHORS (their own registered case): the bead's own row
- * in the tracker export (.beads/issues.jsonl): each acceptance clause, without its final period and its trailing citation, is
- * exactly one row's label, row T's label is the notes' trigger sentence, and each row's pin quotes tile its label; the six
- * codes are the notes' list, in order, the vocabulary's other two spellings and the package scope are the notes' words, and
- * clause B maps to the code the notes name, every notes reading taken from the owner's 2026-10-17b delta paragraph's own line
- * (the tracker appends each later note on a line of its own, so a park, delivery or gate note binds nothing, and the case
- * shows an appended note naming a new code changes no reading); the four variants are the J03 sentence's
- * (docs/workbench/01) and wb-w12's row's; clause C's citation resolves in Pi's own objects to the docs/07 line that counts
- * them; clause B's citation names the
- * roster's producer block. So a pin, a row, a code or a variant removed from every literal of this file and the roster
- * together still reds. The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran
- * before it) and REACHED (every pin reached its witness compare, and each compare's own result).
+ * out-of-file roster test/fixtures/mw-intent-host-roster.json, which this cut authors with the census (it binds the census to
+ * itself, not to an outside source). OUTSIDE ANCHORS (their own registered case) bind exactly this. The bead's own row in the
+ * tracker export (.beads/issues.jsonl) binds rows T, A, B and C: each acceptance clause, without its final period and its
+ * trailing citation, is exactly the label of row A, B or C, row T's label is the notes' trigger sentence, and the pin quotes
+ * of each of those four rows tile its label in order (the quotes' text, never how many pins share it). It binds the six codes
+ * (the notes' list, in order), the Intent member and the package scope and name (read out of the notes' words), the
+ * vocabulary (the six codes, then that member and that name, in order) and the code clause B maps to. Every notes reading is
+ * taken from the owner's 2026-10-17b delta paragraph's own line (the tracker appends each later note on a line of its own, so
+ * a park, delivery or gate note binds nothing, and the case shows an appended note naming a new code changes no reading). The
+ * four variants are J03's (docs/workbench/01: every `<!--` ... `-->` span stripped, then the one blank-line-separated
+ * paragraph opening with J03 inside the "## Concrete user journeys" section, which ends at the next level-1 or level-2
+ * ATX heading; the case's controls show that a commented-out J03 and a J03 past the section's end are not read, that two J03
+ * paragraphs read nothing, and that a J03 wrapped over two lines is read whole) and wb-w12's row's; clause C's citation
+ * resolves in Pi's own objects to the docs/07 line that counts them; clause B's citation binds the roster producer block's
+ * path, line, sha prefix and quoted text (its repo and blob are this file's and the roster's own words). So, with that case
+ * intact, each of these changes, made in every literal of this file and the roster together, still reds: removing one of
+ * rows T, A, B and C, a word of its label, one of its pins together with its quote, a code, a vocabulary spelling or a
+ * variant; rewording a word of such a label, a pin quote, a code, a vocabulary spelling, a variant, the package scope or
+ * the stale code. No anchor outside the file binds row Q or any member of it, a pin's id, or how a row's quotes are
+ * partitioned into pins (NOT CLAIMED). The last case reads the vitest
+ * task tree (every registered test, in roster order, in run mode, ran before it) and REACHED (every pin reached its witness
+ * compare, and each compare's own result).
  * NOT CLAIMED: qa/, test/ and docs/ (a test names the vocabulary as the text it judges, this census included); a host ABI's
  * actual shape (the armed contract is this census's reading of an unpublished ABI: a host whose own cut must take another
  * shape re-measures rows A to C with it); that a cited reference resolves in the producer; MW's own reconcile (the census
  * imports no MechanicalWorkflows package and copies the M0 shapes structurally); a check removed from CHECKS and from the
  * judge together while every remaining mutant still fails one; a mutant, a fixture or a planted control removed from its
- * table, the frozen literal and the roster together while every check still fires; a pin's case replaced by one that echoes
- * its roster witness.
- * RESIDUALS (named families, each member a pinned quiet row; a reader that starts reading a member reds its row):
+ * table, the frozen literal and the roster together while every check still fires; a pin's case replaced by another (one
+ * that echoes its roster witness, or any passing case with the roster re-measured to it); row Q and its residuals: the row,
+ * a residual family (its pin) or a family member removed from every literal of this file and the roster together (no anchor
+ * outside the file names the families or their members); the pin ids and the pin partition: a pin renamed, or a pin of row
+ * T, A, B or C merged into a sibling,
+ * its case deleted and its quote re-homed into the sibling's so the row's quotes still tile its label (merging T2 into T1
+ * deletes the vocabulary leg, after which a src module spelling an M0 code reds nothing); that the J03 reading is the
+ * rendered page: the reader resolves only the constructs named under OUTSIDE ANCHORS, so an unclosed `<!--`, comment-like
+ * text inside a code span or fence (stripped all the same), a heading line inside a fence (it ends the section), a Setext
+ * heading, a block quote, list item, indented block or HTML block, an escape and an entity are read as written.
+ * RESIDUALS (named families, each family one pinned quiet row over its members; a reader that starts reading a member reds
+ * its family's row):
  * R-SPELLING (Q1, an M0 spelling the vocabulary reader does not read: snake case, Pascal case, a code composed at run time),
  * R-COMPUTED-SPECIFIER (Q2, an @mechanical/ module loaded through a computed specifier, a template with a substitution or a
  * createRequire loader), R-SIDE-PATH (Q3, a host that reaches a native effect outside the injected seam: the armed check
@@ -754,13 +777,23 @@ function beadRow(bead: string): { readonly title: string; readonly description: 
 /** The owner's 2026-10-17b delta paragraph opens with this; the tracker appends every later note on a line of its own. */
 const DELTA_OPENING = "2026-10-17b (CLUSTERS-delta N11; gate HALF-OPEN): ";
 /** What the anchors read from the notes: the delta paragraph's line only, so a note appended later (a park, delivery or gate note) binds nothing. */
-function deltaReading(notes: string): { readonly trigger?: string; readonly codes: readonly string[]; readonly packageNamed: boolean; readonly memberNamed: boolean; readonly staleCode?: string } {
+function deltaReading(notes: string): {
+  readonly trigger?: string;
+  readonly codes: readonly string[];
+  readonly packageScope?: string;
+  readonly packageName?: string;
+  readonly member?: string;
+  readonly staleCode?: string;
+} {
   const delta = notes.split("\n").find(line => line.startsWith(DELTA_OPENING)) ?? "";
+  // The M0 package is the one the notes give a Forge member of its own name: "`@scope/name` (Forge member `library:name`".
+  const m0Package = /`(@[a-z][\w-]*\/)([a-z][\w-]*)` \(Forge member `library:\2`/.exec(delta);
   return {
     trigger: /the trigger becomes '([^']+)' \(MW-M0-PI-1\)/.exec(delta)?.[1],
     codes: [...new Set(delta.match(/\bINTENT_[A-Z_]+\b/g) ?? [])],
-    packageNamed: delta.includes(`\`${PACKAGE_SCOPE}${PACKAGE_NAME}\``),
-    memberNamed: delta.includes(`(${REVISION_MEMBER}; optional authority)`),
+    packageScope: m0Package?.[1],
+    packageName: m0Package?.[2],
+    member: /`Intent` \((\w+); optional authority\)/.exec(delta)?.[1],
     staleCode: /Map acceptance \(b\) \('expected source revision differs \.\.\. conflict receipt'\) to (\w+)\./.exec(delta)?.[1],
   };
 }
@@ -768,6 +801,25 @@ function deltaReading(notes: string): { readonly trigger?: string; readonly code
 function acceptanceClauses(description: string): string[] {
   const body = /^ACCEPTANCE: \[(.*)\]$/m.exec(description)?.[1] ?? "";
   return [...body.matchAll(/(["'])(.*?)\1(?=, |$)/g)].map(match => match[2] ?? "");
+}
+/** docs/workbench/01's section that holds the journeys. */
+const JOURNEY_SECTION = "## Concrete user journeys";
+/**
+ * J03's variants. The reader strips every `<!--` ... `-->` span, keeps the journeys section up to the next level-1 or
+ * level-2 ATX heading, splits it into blank-line-separated paragraphs and reads the one paragraph whose first line opens
+ * with J03 (its lines joined by single spaces); none or two such paragraphs read nothing. It resolves no other Markdown
+ * construct (NOT CLAIMED names what it reads as written).
+ */
+function journeyVariants(text: string): readonly string[] | undefined {
+  const lines = text.replace(/<!--[\s\S]*?-->/g, "").split("\n");
+  const start = lines.indexOf(JOURNEY_SECTION);
+  if (start < 0) return undefined;
+  const next = lines.findIndex((line, index) => index > start && /^#{1,2} /.test(line));
+  const section = lines.slice(start + 1, next < 0 ? undefined : next).join("\n");
+  const paragraphs = section.split(/\n\s*\n/).map(block => block.replace(/^\n+/, "")).filter(block => /^J03\b/.test(block));
+  if (paragraphs.length !== 1) return undefined;
+  const paragraph = (paragraphs[0] ?? "").replace(/\s*\n\s*/g, " ");
+  return /preserving the producer's (.+?) outcome rather than collapsing to Boolean success/.exec(paragraph)?.[1]?.split(" / ");
 }
 /** A clause without its final period and without a trailing parenthetical that cites a pinned source (path:line@sha). */
 function labelOf(clause: string): { readonly label: string; readonly citation?: string } {
@@ -834,7 +886,7 @@ describe(SUITE, () => {
     expect(SRC_FLOOR).toBe(100);
   });
 
-  it("the outside anchors: the bead's own row binds the rows, the pin quotes, the codes, the vocabulary and the stale code; the docs and wb-w12 bind the variants; the citations resolve", { timeout: 60_000 }, () => {
+  it("the outside anchors: the bead's own row binds rows T, A, B and C (each label and its quotes' text), the six codes, the vocabulary, the package scope, the stale code and the producer citation; J03 and wb-w12 bind the variants; clause C's citation resolves; row Q and the pin partition are not anchored", { timeout: 60_000 }, () => {
     const row = beadRow(BEAD);
     expect(row, `${BEAD}'s row was read from the tracker export`).toBeDefined();
     const title = row?.title ?? "";
@@ -844,17 +896,29 @@ describe(SUITE, () => {
     expect(clauses.map(clause => clause.label), "the acceptance holds three clauses, each exactly one row's label").toEqual(["A", "B", "C"].map(id => ROWS.find(entry => entry.id === id)?.label));
     const delta = deltaReading(notes);
     expect(delta.trigger, "row T's label is the notes' trigger sentence").toBe(ROWS.find(entry => entry.id === "T")?.label);
-    for (const entry of ROWS.filter(candidate => candidate.id !== "Q")) {
-      expect(tiles(entry.label, entry.pins.map(pin => QUOTES[pin] ?? "")), `row ${entry.id}'s pin quotes tile its label`).toBe(true);
+    // The anchored rows are the rows those two readings name, and only their quotes' text is bound (the tiling), never how many
+    // pins share it; no reading names row Q.
+    const anchored = [delta.trigger, ...clauses.map(clause => clause.label)].map(label => ROWS.find(entry => entry.label === label));
+    expect(anchored.map(entry => entry?.id ?? null), "the anchors name rows T, A, B and C").toEqual(["T", "A", "B", "C"]);
+    for (const entry of anchored) {
+      expect(tiles(entry?.label ?? "-", (entry?.pins ?? []).map(pin => QUOTES[pin] ?? "")), `row ${entry?.id ?? "-"}'s pin quotes tile its label`).toBe(true);
     }
     expect(delta.codes, "the six codes are the notes' list, in order").toEqual([...CODES]);
-    expect(delta.packageNamed, "the package and its scope are the notes' words").toBe(true);
-    expect(delta.memberNamed, "the intent's revision member is the notes' word").toBe(true);
+    expect(delta.member, "the intent's revision member is the notes' word").toBe(REVISION_MEMBER);
+    expect([delta.packageScope, delta.packageName], "the package scope and name are the notes' M0 package").toEqual([PACKAGE_SCOPE, PACKAGE_NAME]);
+    expect(VOCABULARY, "the vocabulary is the notes' six codes, then its Intent member and its package name").toEqual([...delta.codes, delta.member, delta.packageName]);
     expect(delta.staleCode, "clause B maps to the stale code").toBe(STALE);
     const appended = `${notes}\n2026-10-28 appended note: INTENT_BASIS_STALE_X; the trigger becomes 'something else' (MW-M0-PI-1).`;
     expect(deltaReading(appended), "a note appended after the delta paragraph changes no reading").toEqual(delta);
-    const journey = /preserving the producer's (.+?) outcome rather than collapsing to Boolean success/.exec(textOf(JOURNEYS))?.[1]?.split(" / ");
-    expect(journey, "the four variants are docs/workbench/01 J03's").toEqual([...VARIANTS]);
+    expect(journeyVariants(textOf(JOURNEYS)), "the four variants are docs/workbench/01 J03's").toEqual([...VARIANTS]);
+    const page = (body: string): string => `# 01\n\n${JOURNEY_SECTION}\n\n${body}\n\n## Outcome measures\n`;
+    const sentence = (variants: readonly string[]): string => `J03 binds, preserving the producer's ${variants.join(" / ")} outcome rather than collapsing to Boolean success.`;
+    const fewer = VARIANTS.slice(1);
+    expect(journeyVariants(page(`<!-- ${sentence(VARIANTS)} -->\n${sentence(fewer)}`)), "a commented-out J03 is not read").toEqual(fewer);
+    expect(journeyVariants(`${page(sentence(fewer))}\n${sentence(VARIANTS)}\n`), "a J03 outside its section is not read").toEqual(fewer);
+    expect(journeyVariants(page(`${sentence(VARIANTS)}\n\n${sentence(VARIANTS)}`)), "two J03 paragraphs fail closed").toBeUndefined();
+    expect(journeyVariants(page(sentence(VARIANTS).replace(" / needs_evidence", "\n/ needs_evidence"))), "a J03 paragraph wrapped over two lines is read whole").toEqual([...VARIANTS]);
+    expect(journeyVariants(page(`J01 x\n\n# Appendix\n\n${sentence(VARIANTS)}`)), "a level-1 heading ends the section").toBeUndefined();
     const sibling = /\(([a-z_/]+)\)/.exec(beadRow(VARIANT_BEAD)?.description ?? "")?.[1]?.split("/");
     expect(sibling, "and wb-w12's").toEqual([...VARIANTS]);
     const citationC = clauses[2]?.citation ?? "";
