@@ -1,11 +1,12 @@
 {
- "comment": "wb-2j3.10 (RFCLI-PERFORMANCE-MATHEMATICAL-OPTIMIZATION-R11) roster of test/workbench-rf-graph-explain-truncation-census.test.ts. capture: the producer state, written by the cutting seat's capture script (ws-04, g10-work-s123) from the installed rf and a read-only git show of the RFCLI pin; constants, rows, witnesses and tests: measured from the census at trunk 09f45a5, never hand-typed. A carrier re-pin reds row G1 until capture is re-measured at the new release (capture.remeasure).",
+ "comment": "wb-2j3.10 (RFCLI-PERFORMANCE-MATHEMATICAL-OPTIMIZATION-R11) roster of test/workbench-rf-graph-explain-truncation-census.test.ts, cut #2. capture: the producer state, written by the cutting seat's capture script (ws-03, g10-work-s129) from the installed rf, two scratch rf workspaces and a read-only git show and log of the RFCLI object store; filing, constants, rows, witnesses and tests: measured from the census at trunk e81d2b0 (merged into the branch after dab445f) by a dump run on a throwaway tree, never hand-typed. A carrier re-pin reds row G1 until capture is re-measured at the new release (capture.remeasure); a rebuild under the same release does not (R-SAME-RELEASE-REBUILD, Q2).",
  "bead": "wb-2j3.10",
  "capture": {
-  "capturedUtc": "2026-10-28T05:33:13Z",
-  "host": "the cutting seat's installed rf",
+  "capturedUtc": "2026-10-28T17:21:52Z",
+  "host": "the cutting seat's installed rf (ws-03, g10-work-s129)",
   "release": "0.1.845",
-  "commit": "7e6ed89a09f6f64eb0fa6fb8671288ae50a1e6b8",
+  "commit": "b8b3e9f1de56cf8bd0e7fc4a8e8a4c135a5f7af3",
+  "mismatch": false,
   "leaf": {
    "path": "graph.explain",
    "served": true,
@@ -20,12 +21,12 @@
     "--help"
    ],
    "columns": 200,
-   "line": "usage: rf graph explain [-h] [--from NODE] [--json] [--workspace PATH] [--actor ID] [--no-input] [--yes] [--debug] [--color {auto,always,never}] [-v] TARGET"
+   "line": "usage: rf graph explain [-h] [--from NODE] [--max-paths N] [--json] [--workspace PATH] [--actor ID] [--no-input] [--yes] [--debug] [--color {auto,always,never}] [-v] TARGET"
   },
   "schema": {
    "file": "reactive_fiber_cli/schemas/cli/graph.explain.schema.json",
-   "bytes": 23231,
-   "sha256": "22528742c2bb678de11f51a937618466e54fd788d0806d3aecd55f66bc7621c2",
+   "bytes": 25309,
+   "sha256": "95c98db73e3c16813843cc30e2287a2bdb9f33dad3f6ab6618cd52c8776c83ae",
    "pointer": "/$defs/result",
    "members": [
     "graph_revision_id",
@@ -35,7 +36,9 @@
     "paths",
     "edge_paths",
     "reason",
-    "diagnostics"
+    "diagnostics",
+    "truncated",
+    "path_limit"
    ],
    "required": [
     "graph_revision_id",
@@ -60,34 +63,107 @@
     "--workspace",
     "<scratch>"
    ],
-   "exit": 2,
+   "exit": 3,
    "envelope": {
     "schema": "reactive-fiber.cli/v1",
     "ok": false,
     "command": "graph.explain",
-    "operation_id": "rfo_7bvwyobviszpcxitfdc52wutlq",
+    "operation_id": "rfo_z7luxdnifwe453xd3jnbhirxba",
     "workspace": null,
     "transaction_id": null,
     "result": null,
     "diagnostics": [
      {
-      "code": "RF_USAGE_UNKNOWN_OPTION",
+      "code": "RF_WORKSPACE_INVALID",
       "severity": "error",
-      "message": "unrecognized arguments: --max-paths source:x",
-      "hint": "Run `rf graph explain --help` for its usage.",
+      "message": "workspace path <scratch> has no .reactive-fiber/manifest.json",
+      "hint": "Point --workspace / RF_WORKSPACE at a directory holding .reactive-fiber/manifest.json, or unset it to discover from the current directory.",
       "source": "host",
       "metadata": {
-       "options": [
-        "--max-paths"
-       ],
-       "positionals": [
-        "source:x"
-       ],
-       "surface": "graph explain",
-       "suggestions": []
+       "path": "<scratch>",
+       "source": "flag"
       }
      }
     ]
+   }
+  },
+  "bounded": {
+   "workspace": {
+    "init": [
+     "rf",
+     "init",
+     "--json",
+     "--no-input",
+     "<scratch>"
+    ],
+    "appended": [
+     "[[source]]",
+     "id = \"a\"",
+     "kind = \"literal\"",
+     "value = 1"
+    ]
+   },
+   "flagged": {
+    "argv": [
+     "rf",
+     "graph",
+     "explain",
+     "--max-paths",
+     "1",
+     "source:a",
+     "--json",
+     "--no-input",
+     "--workspace",
+     "<scratch>"
+    ],
+    "exit": 0,
+    "ok": true,
+    "command": "graph.explain",
+    "keys": [
+     "graph_revision_id",
+     "target",
+     "source",
+     "reachable",
+     "paths",
+     "edge_paths",
+     "reason",
+     "diagnostics",
+     "truncated",
+     "path_limit"
+    ],
+    "truncated": false,
+    "path_limit": 1,
+    "paths": [],
+    "diagnostics": []
+   },
+   "unflagged": {
+    "argv": [
+     "rf",
+     "graph",
+     "explain",
+     "source:a",
+     "--json",
+     "--no-input",
+     "--workspace",
+     "<scratch>"
+    ],
+    "exit": 0,
+    "ok": true,
+    "command": "graph.explain",
+    "keys": [
+     "graph_revision_id",
+     "target",
+     "source",
+     "reachable",
+     "paths",
+     "edge_paths",
+     "reason",
+     "diagnostics"
+    ],
+    "truncated": "<absent>",
+    "path_limit": "<absent>",
+    "paths": [],
+    "diagnostics": []
    }
   },
   "pin": {
@@ -116,12 +192,56 @@
     "reason"
    ]
   },
+  "shipped": {
+   "commit": "e2d707538bb9e49b240a8b70ab27b54114e23943",
+   "subject": "feat(schemas): [PMO-05b] rf graph explain --max-paths N adds truncated",
+   "inBuild": true,
+   "prior": "7e6ed89a09f6f64eb0fa6fb8671288ae50a1e6b8",
+   "inPrior": false
+  },
   "remeasure": [
-   "rf --json --version (result.version, provenance.commit_id, the graph.explain leaf row)",
+   "rf --json --version (result.version, provenance.commit_id and mismatch, the graph.explain leaf row)",
    "COLUMNS=200 rf graph explain --help (the usage paragraph, joined)",
    "the installed reactive_fiber_cli/schemas/cli/graph.explain.schema.json: bytes, sha-256, $defs/result properties and required",
    "rf graph explain --max-paths 1 source:x --json --workspace <empty scratch dir> (exit status and envelope)",
-   "git -C <ReactiveFiberCLI> show 8a8b83e4d:src/reactive_fiber_cli/schemas/cli/graph.explain.schema.json ($defs/result and the lines of its required list)"
+   "rf init --json --no-input <scratch> plus one literal [[source]] row, then rf graph explain [--max-paths 1] source:a --json --no-input --workspace <scratch> (exit, result keys, truncated, path_limit)",
+   "git -C <ReactiveFiberCLI> show 8a8b83e4d:src/reactive_fiber_cli/schemas/cli/graph.explain.schema.json ($defs/result and the lines of its required list)",
+   "git -C <ReactiveFiberCLI> log -1 --grep '^feat(schemas): [PMO-05b]' <commit> and merge-base --is-ancestor against <commit> and the prior build"
+  ]
+ },
+ "filing": {
+  "heads": [
+   "PROGRAM",
+   "STATEMENT",
+   "RATIONALE",
+   "ACCEPTANCE",
+   "SURFACES",
+   "RELATED"
+  ],
+  "repeated": [],
+  "plants": {
+   "acceptance-after-related": [
+    "ACCEPTANCE"
+   ],
+   "statement-at-end": [
+    "STATEMENT"
+   ],
+   "single-newline": [
+    "ACCEPTANCE"
+   ],
+   "lower-case": [
+    "ACCEPTANCE"
+   ],
+   "inline-rationale": [
+    "RATIONALE"
+   ],
+   "second-surfaces": [
+    "SURFACES"
+   ]
+  },
+  "fields": [],
+  "planted": [
+   "acceptance_criteria"
   ]
  },
  "constants": {
@@ -159,6 +279,27 @@
    "; ",
    "."
   ],
+  "heads": {
+   "statement": "\n\nSTATEMENT: ",
+   "rationale": "\n\nRATIONALE: ",
+   "acceptance": "\n\nACCEPTANCE: ",
+   "surfaces": "\n\nSURFACES: "
+  },
+  "headPlants": {
+   "acceptance-after-related": "\n\nACCEPTANCE: [\"A standing item: the consumer adapter ships with this bead.\"]",
+   "statement-at-end": "\n\nSTATEMENT: A second statement read after the first.",
+   "single-newline": "\nACCEPTANCE: [\"A standing item.\"]",
+   "lower-case": "\n\nAcceptance: [\"A standing item.\"]",
+   "inline-rationale": " RATIONALE: a second rationale inline.",
+   "second-surfaces": "\n\nSURFACES: src/index.ts"
+  },
+  "filingFields": [
+   "acceptance_criteria",
+   "design"
+  ],
+  "fieldPlant": {
+   "acceptance_criteria": "A standing item: the consumer adapter ships with this bead."
+  },
   "srcFloor": 100,
   "calls": [
    "spawn",
@@ -172,6 +313,26 @@
   "shellCalls": [
    "exec",
    "execSync"
+  ],
+  "shellOptionCalls": [
+   "spawn",
+   "spawnSync",
+   "execFile",
+   "execFileSync"
+  ],
+  "assignmentWord": "^[A-Za-z_][A-Za-z0-9_]*=",
+  "unwalkedModule": "\\.(?:[cm]?jsx?|[cm]ts|tsx)$",
+  "unwalkedControls": [
+   "probe.js",
+   "probe.mjs",
+   "probe.cjs",
+   "probe.jsx",
+   "probe.mts",
+   "probe.cts",
+   "probe.tsx",
+   "probe.ts",
+   "probe.d.ts",
+   "probe.json"
   ],
   "valueOptions": [
    "--workspace",
@@ -194,16 +355,43 @@
    "git": "import { execFileSync } from \"node:child_process\"; execFileSync(\"git\", [\"status\"]);",
    "regex-exec": "import { spawn } from \"node:child_process\"; const found = /rf/.exec(text);",
    "type-only": "import type { ChildProcess } from \"node:child_process\"; const exec = (line: string) => line; exec(\"rf\");",
-   "unimported": "spawn(\"rf\", argv);"
+   "unimported": "spawn(\"rf\", argv);",
+   "exe": "import { execFileSync } from \"node:child_process\"; execFileSync(\"rf.exe\", [\"context\", \"show\"]);",
+   "cmd-path": "import { execFileSync } from \"node:child_process\"; execFileSync(\"C:\\\\tools\\\\rf.cmd\", [\"context\", \"show\"]);",
+   "upper": "import { spawn } from \"node:child_process\"; spawn(\"RF\", [\"context\", \"show\"]);",
+   "const-alias": "import { spawn } from \"node:child_process\"; const launch = spawn; launch(\"rf\", [\"context\", \"show\"]);",
+   "namespace-destructure": "import * as cp from \"node:child_process\"; const { execFileSync: run } = cp; run(\"rf\", [\"context\", \"show\"]);",
+   "member-alias": "import * as cp from \"node:child_process\"; const run = cp.execFileSync; run(\"rf\", [\"context\", \"show\"]);",
+   "alias-chain": "import * as cp from \"node:child_process\"; const space = cp; const { spawn: go } = space; const again = go; again(\"rf\", []);",
+   "let-alias": "import { spawn } from \"node:child_process\"; let launch = spawn; launch(\"rf\", []);",
+   "exported-alias": "import { spawn } from \"node:child_process\"; export const launch = spawn;",
+   "argument": "import { spawn } from \"node:child_process\"; run(spawn, \"rf\");",
+   "call-method": "import { spawn } from \"node:child_process\"; spawn.call(undefined, \"rf\", []);",
+   "property": "import * as cp from \"node:child_process\"; const host = { launch: cp.spawn };",
+   "re-export": "export { spawn as launch } from \"node:child_process\";",
+   "local-export": "import { spawn } from \"node:child_process\"; export { spawn as launch };",
+   "wrapper-function": "import { spawn } from \"node:child_process\"; export function launch(binary: string, argv: string[]) { return spawn(binary, argv); }",
+   "wrapped-caller": "import { launch } from \"./launch.js\"; launch(\"rf\", [\"graph\", \"explain\", target]);",
+   "inline-require": "require(\"node:child_process\").execFileSync(\"rf\", [\"context\", \"show\"]);",
+   "shell-true": "import { spawn } from \"node:child_process\"; spawn(\"rf context show --json\", { shell: true });",
+   "shell-path": "import { execFile } from \"node:child_process\"; execFile(\"rf context show\", [], { shell: \"/bin/sh\" });",
+   "shell-false": "import { spawn } from \"node:child_process\"; spawn(\"rf context show\", { shell: false });",
+   "shell-unknown": "import { spawnSync } from \"node:child_process\"; spawnSync(\"rf context show\", options);",
+   "assignment-prefix": "import { execSync } from \"node:child_process\"; execSync(\"RF_LOG_LEVEL=debug rf context show --json\");",
+   "launcher": "import { execFileSync } from \"node:child_process\"; execFileSync(\"env\", [\"rf\", \"context\", \"show\"]);",
+   "method-scope": "import { spawn } from \"node:child_process\"; class Host { launch() { spawn(\"rf\", []); } } const run = function () { spawn(\"git\", []); };"
   },
   "leafCaught": {
    "argv": "spawn(\"rf\", [\"graph\", \"explain\", target, \"--json\"]);",
    "spaced": "const line = \"rf graph explain source:x --json\";",
    "dotted": "const leaf = \"graph.explain\";",
+   "colon": "const id = \"rf:graph:explain\";",
+   "slashed": "const route = \"/rf/graph/explain\";",
    "option-between": "const argv = [\"--workspace\", root, \"graph\", \"--json\", \"explain\", target];",
    "value-option-between": "const argv = [\"graph\", \"--color\", \"never\", \"explain\"];",
    "template": "const line = `rf graph ${flags} explain ${target}`;",
    "shell-quoted": "const line = \"rf graph 'explain' source:x\";",
+   "escaped": "const line = \"rf graph expl\\\\ain source:x\";",
    "upper": "const LEAF = \"GRAPH_EXPLAIN\";",
    "kebab": "const verb = \"graph-explain\";",
    "camel": "const verb = \"graphExplain\";"
@@ -214,6 +402,7 @@
    "word": "const word = \"explain\";",
    "explainer": "const text = \"the graph explainer\";",
    "paragraph": "const text = \"a paragraph explains it\";",
+   "subgraph": "const text = \"the subgraph explain step\";",
    "render": "const argv = [\"--workspace\", root, \"context\", \"render\", \"--no-commit\", \"--no-input\", \"--json\"];",
    "comment": "// rf graph explain is not consumed here\nconst value = 1;"
   },
@@ -223,7 +412,9 @@
    "camel-field": "interface Projection { pathLimit: number }",
    "library-keyword": "const options = { max_paths: 5 };",
    "camel-flag": "const maxPaths = 5;",
-   "kebab-field": "const option = \"path-limit\";"
+   "kebab-field": "const option = \"path-limit\";",
+   "line-comment": "// the path_limit field is never read here\nconst value = 1;",
+   "block-comment": "/* --max-paths stays unconsumed */ const value = 1;"
   },
   "nameQuiet": {
    "socket": "export const DETACHED_SOCKET_PATH_LIMIT = 103;",
@@ -282,17 +473,20 @@
    "concatenated": "const leaf = \"gr\" + \"aph explain\";",
    "pushed": "const words = [\"graph\"]; words.push(\"explain\");"
   },
-  "wrapped": [
-   "export { spawn as launch } from \"node:child_process\";",
-   "import { launch } from \"./launch.js\"; launch(\"rf\", [\"graph\", \"explain\", target]);"
-  ],
   "localProvider": "import { spawn } from \"node:child_process\";\nexport function register(registry) {\n  registry.register({ descriptor: { id: \"local.graph\", version: \"1.0.0\", description: \"d\", inputSchema: {}, effectClass: \"read\", permissions: [], supportedModes: [\"invoke\"] }, invoke: async () => spawn(\"rf\", [\"graph\", \"explain\", \"source:x\", \"--json\"]) });\n}",
   "commonWord": "if (result.truncated) return { partial: true };",
+  "unseen": {
+   "composed-specifier": "const cp = await import(\"node:\" + \"child\" + \"_process\"); cp.spawn(\"rf\", [\"graph\", \"explain\", target]);",
+   "execve": "process.execve(\"/usr/local/bin/rf\", [\"rf\", \"graph\", \"explain\", target], process.env);",
+   "binding": "process.binding(\"spawn_sync\").spawn({ file: \"rf\", args: [\"rf\", \"graph\", \"explain\"] });",
+   "evaluated": "eval(\"require('node:child_process').spawn('rf', ['graph', 'explain'])\");",
+   "package": "import { execa } from \"execa\"; await execa(\"rf\", [\"graph\", \"explain\", target]);"
+  },
   "residuals": {
    "R-COMPOSED": [
     "Q1"
    ],
-   "R-WRAPPED": [
+   "R-SAME-RELEASE-REBUILD": [
     "Q2"
    ],
    "R-OUTSIDE-SRC": [
@@ -300,11 +494,14 @@
    ],
    "R-COMMON-WORD": [
     "Q4"
+   ],
+   "R-UNSEEN-LAUNCHER": [
+    "Q5"
    ]
   }
  },
  "tests": [
-  "the judged set: the frozen shape, the out-of-file roster, the bead's STATEMENT and ACCEPTANCE and the cases agree",
+  "the judged set: the frozen shape, the out-of-file roster, the filing's sections (each read head once), its STATEMENT and ACCEPTANCE, and the cases agree",
   "G1",
   "G2",
   "G3",
@@ -318,6 +515,7 @@
   "Q2",
   "Q3",
   "Q4",
+  "Q5",
   "the registered tests and the reached pins equal the roster, in order and both ways"
  ],
  "rows": [
@@ -330,8 +528,20 @@
      "witness": {
       "carrier": "0.1.845",
       "release": "0.1.845",
-      "commit": true,
-      "leaf": "graph.explain|true|served_reachable"
+      "build": "b8b3e9f1de56cf8bd0e7fc4a8e8a4c135a5f7af3",
+      "mismatch": false,
+      "leaf": "graph.explain|true|served_reachable",
+      "shipped": {
+       "commit": "e2d707538bb9e49b240a8b70ab27b54114e23943",
+       "subject": "feat(schemas): [PMO-05b] rf graph explain --max-paths N adds truncated",
+       "names": [
+        true,
+        true
+       ],
+       "inBuild": true,
+       "prior": "7e6ed89a09f6f64eb0fa6fb8671288ae50a1e6b8",
+       "inPrior": false
+      }
      }
     },
     {
@@ -341,6 +551,7 @@
       "options": [
        "-h",
        "--from",
+       "--max-paths",
        "--json",
        "--workspace",
        "--actor",
@@ -352,19 +563,44 @@
       ],
       "probe": {
        "flag": true,
-       "exit": 2,
+       "exit": 3,
        "ok": false,
        "command": "graph.explain",
-       "code": "RF_USAGE_UNKNOWN_OPTION",
-       "refused": [
-        "--max-paths"
-       ]
+       "codes": [
+        "RF_WORKSPACE_INVALID"
+       ],
+       "unknown": []
+      },
+      "bounded": {
+       "flagged": {
+        "flag": true,
+        "exit": 0,
+        "ok": true,
+        "command": "graph.explain",
+        "emitted": [
+         "truncated",
+         "path_limit"
+        ],
+        "truncated": false,
+        "pathLimit": 1
+       },
+       "unflagged": {
+        "flag": false,
+        "exit": 0,
+        "ok": true,
+        "command": "graph.explain",
+        "emitted": []
+       }
       }
      }
     },
     {
      "id": "G3",
      "witness": {
+      "schema": {
+       "bytes": 25309,
+       "sha256": "95c98db73e3c16813843cc30e2287a2bdb9f33dad3f6ab6618cd52c8776c83ae"
+      },
       "release": {
        "members": [
         "graph_revision_id",
@@ -374,7 +610,9 @@
         "paths",
         "edge_paths",
         "reason",
-        "diagnostics"
+        "diagnostics",
+        "truncated",
+        "path_limit"
        ],
        "required": [
         "graph_revision_id",
@@ -414,7 +652,14 @@
        true,
        true
       ],
-      "fields": [],
+      "fields": {
+       "members": [
+        "truncated",
+        "path_limit"
+       ],
+       "required": [],
+       "atPin": []
+      },
       "span": true
      }
     }
@@ -428,25 +673,72 @@
      "id": "W1",
      "witness": {
       "agree": true,
-      "provider": true,
+      "importers": [
+       "src/index.ts",
+       "src/workbench/hosts/local-detached.ts",
+       "src/workbench/providers/reactivefiber.ts"
+      ],
+      "sites": [
+       "src/index.ts|literal|git|execFileSync|git|none",
+       "src/index.ts|literal|atRoot|execFileSync|git|none",
+       "src/index.ts|literal|revision|execFileSync|git|none",
+       "src/workbench/hosts/local-detached.ts|opaque|launchDetachedWorkflow|spawn|process.execPath|none",
+       "src/workbench/providers/reactivefiber.ts|rf|nativeReactiveFiberRender|spawn|rf|none"
+      ],
       "rf": [
        "src/workbench/providers/reactivefiber.ts|nativeReactiveFiberRender|spawn"
       ],
-      "opaque": [
-       "src/workbench/hosts/local-detached.ts|launchDetachedWorkflow|spawn|process.execPath"
-      ],
+      "escapes": [],
+      "unbound": [],
+      "unwalked": [],
+      "unwalkedControls": {
+       "probe.js": true,
+       "probe.mjs": true,
+       "probe.cjs": true,
+       "probe.jsx": true,
+       "probe.mts": true,
+       "probe.cts": true,
+       "probe.tsx": true,
+       "probe.ts": false,
+       "probe.d.ts": false,
+       "probe.json": false
+      },
       "controls": {
-       "named": "imports|rf:run:spawn:rf",
-       "alias": "imports|rf:<module>:execFile:/usr/local/bin/rf",
-       "namespace": "imports|rf:<module>:spawnSync:rf",
-       "default-opaque": "imports|opaque:<module>:fork:script",
-       "require": "imports|rf:<module>:spawn:rf",
-       "require-element": "imports|rf:<module>:execSync:rf",
-       "variable-binary": "imports|opaque:<module>:spawn:BIN",
-       "git": "imports|literal:<module>:execFileSync:git",
-       "regex-exec": "imports|",
-       "type-only": "no-import|",
-       "unimported": "no-import|"
+       "named": "imports|rf:run:spawn:rf:unknown|",
+       "alias": "imports|rf:<module>:execFile:/usr/local/bin/rf:none|",
+       "namespace": "imports|rf:<module>:spawnSync:rf:none|",
+       "default-opaque": "imports|opaque:<module>:fork:script:none|",
+       "require": "imports|rf:<module>:spawn:rf:unknown|",
+       "require-element": "imports|rf:<module>:execSync:rf:shell|",
+       "variable-binary": "imports|opaque:<module>:spawn:BIN:unknown|",
+       "git": "imports|literal:<module>:execFileSync:git:none|",
+       "regex-exec": "imports||",
+       "type-only": "no-import||",
+       "unimported": "no-import||",
+       "exe": "imports|rf:<module>:execFileSync:rf.exe:none|",
+       "cmd-path": "imports|rf:<module>:execFileSync:C:\\tools\\rf.cmd:none|",
+       "upper": "imports|rf:<module>:spawn:RF:none|",
+       "const-alias": "imports|rf:<module>:spawn:rf:none|",
+       "namespace-destructure": "imports|rf:<module>:execFileSync:rf:none|",
+       "member-alias": "imports|rf:<module>:execFileSync:rf:none|",
+       "alias-chain": "imports|rf:<module>:spawn:rf:none|",
+       "let-alias": "imports||<module>:spawn:mutable-alias",
+       "exported-alias": "imports||<module>:spawn:exported-alias",
+       "argument": "imports||<module>:spawn:argument",
+       "call-method": "imports||<module>:spawn:member",
+       "property": "imports||<module>:cp:member",
+       "re-export": "imports||<module>:spawn:re-export",
+       "local-export": "imports||<module>:spawn:export",
+       "wrapper-function": "imports|opaque:launch:spawn:binary:unknown|",
+       "wrapped-caller": "no-import||",
+       "inline-require": "unbound||",
+       "shell-true": "imports|rf:<module>:spawn:rf:shell|",
+       "shell-path": "imports|rf:<module>:execFile:rf:shell|",
+       "shell-false": "imports|literal:<module>:spawn:rf context show:none|",
+       "shell-unknown": "imports|opaque:<module>:spawnSync:rf context show:unknown|",
+       "assignment-prefix": "imports|rf:<module>:execSync:rf:shell|",
+       "launcher": "imports|literal:<module>:execFileSync:env:none|",
+       "method-scope": "imports|rf:launch:spawn:rf:none,literal:run:spawn:git:none|"
       }
      }
     },
@@ -474,10 +766,13 @@
        "argv": 1,
        "spaced": 1,
        "dotted": 1,
+       "colon": 1,
+       "slashed": 1,
        "option-between": 1,
        "value-option-between": 1,
        "template": 1,
        "shell-quoted": 1,
+       "escaped": 1,
        "upper": 1,
        "kebab": 1,
        "camel": 1
@@ -488,6 +783,7 @@
        "word": 0,
        "explainer": 0,
        "paragraph": 0,
+       "subgraph": 0,
        "render": 0,
        "comment": 0
       }
@@ -532,6 +828,13 @@
        ],
        "kebab-field": [
         "path-limit"
+       ],
+       "line-comment": [
+        "path_limit"
+       ],
+       "block-comment": [
+        "--max-paths",
+        "max-paths"
        ]
       },
       "quiet": {
@@ -586,11 +889,16 @@
     {
      "id": "Q2",
      "witness": {
-      "wrapper": "imports|",
-      "caller": "no-import|",
-      "callerLeafHits": [
-       "argv:1"
-      ]
+      "carrier": "rf@<release>:reactive-fiber.cli/v1 context.render --no-commit",
+      "release": "0.1.845",
+      "capture": {
+       "build": "b8b3e9f1de56cf8bd0e7fc4a8e8a4c135a5f7af3",
+       "admitted": true
+      },
+      "prior": {
+       "build": "7e6ed89a09f6f64eb0fa6fb8671288ae50a1e6b8",
+       "admitted": true
+      }
      }
     },
     {
@@ -599,7 +907,7 @@
       "roots": [
        "src"
       ],
-      "scan": "imports|rf:register:spawn:rf",
+      "scan": "imports|rf:register:spawn:rf:none|",
       "leafHits": [
        "argv:3"
       ]
@@ -614,6 +922,39 @@
       "needle": false,
       "probe": [],
       "spelled": true
+     }
+    },
+    {
+     "id": "Q5",
+     "witness": {
+      "composed-specifier": {
+       "scan": "no-import||",
+       "leafHits": [
+        "argv:1"
+       ]
+      },
+      "execve": {
+       "scan": "no-import||",
+       "leafHits": [
+        "argv:1"
+       ]
+      },
+      "binding": {
+       "scan": "no-import||",
+       "leafHits": [
+        "argv:1"
+       ]
+      },
+      "evaluated": {
+       "scan": "no-import||",
+       "leafHits": []
+      },
+      "package": {
+       "scan": "no-import||",
+       "leafHits": [
+        "argv:1"
+       ]
+      }
      }
     }
    ]
