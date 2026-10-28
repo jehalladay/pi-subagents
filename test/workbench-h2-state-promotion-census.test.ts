@@ -48,10 +48,10 @@
  *    Pi reads names those producers, are never read. E2 a lexical scan of every src module (literals and identifiers, camelCase split)
  *    finds no H2 record term and no distinctive state word, with a floor and three anchors (the observer, the registry,
  *    telemetry.ts) scanned and quiet. E1's and E2's walks each equal an independent recursive listing of src (node:fs readdirSync
- *    recursive, not filesBelow) and git's own listing of src (GIT_LISTING, a roster constant: tracked or untracked files, ignored
- *    ones included, regular files only), so a walk narrowed by a subtree or a file reds whatever the floor's margin, and so does a
- *    walk narrowed together with the in-file listing. E3 the detector's controls: flagged lines (every term and word flags one),
- *    quiet lines and the residuals' quiet rows.
+ *    recursive, not filesBelow) and git's own listing of src (GIT_LISTING, a frozen roster constant: tracked or untracked files,
+ *    ignored ones included, regular files only), so a walk narrowed by a subtree or a file reds whatever the floor's margin, and so
+ *    does a walk narrowed together with the in-file listing. E3 the detector's controls: flagged lines (every term and word flags
+ *    one), quiet lines and the residuals' quiet rows.
  * MEASURED PRODUCER FACTS (roster `producers`, read-only git show on the local checkouts, 2026-10-23): the program README at the four
  * pins the epic wb-4nut names (FiberOpticsSDK e803f66c5fb9, ReactiveFiberTSXSDK 76bbbffd9d4a, ReactiveInferenceSDK 485f3615db1e,
  * ReactiveLensesSDK bfe1f4ac7fa0), its blob and every line the filing cites (FO 25, 27, 35, 36, 44, 47; TSX 37, 48; RI 23, 24, 34,
@@ -80,7 +80,13 @@
  * in-file listing narrowed together still differ from it. Git runs with GIT_LISTING as it stands, its whole argv with the src
  * pathspec in it, and the judged set holds GIT_LISTING to the roster, so an argument of it narrowed, dropped or added reds there
  * whatever the walks do (wb-fugf, the landing-494 gate's F1: the src pathspec was in-file code at gitListedSrc's call site, which
- * the roster did not hold).
+ * the roster did not hold). GIT_LISTING is frozen where it is declared, and the judged set holds that to the roster too (its
+ * Object.isFrozen reading against the roster's gitListingFrozen), so the argv the judged set holds is the argv git runs with: an
+ * edit of GIT_LISTING at run time (a push, a splice, an index or its length written) throws a TypeError where it is made, so the
+ * case it is made in reds (from a hook, the case the hook runs for; at module load, the file), the edits made after the judged
+ * set has read it included, and an edit caught where it is made leaves GIT_LISTING as the judged set read it, so walks narrowed
+ * with it still red at E1 and E2 (wb-iwhu, the landing-585 gate's F1: GIT_LISTING was a plain array, so a push made in D2 or in
+ * beforeEach after the judged set had read it, with both walks narrowed by the same path, kept the census green).
  * Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the filing anchors rows, clauses and words, not
  * pins); an assertion removed from this file together with its pinned count in the roster; the file-end judge or the selection it
  * reads removed (no claim rides them alone: the registration case still holds the record); every case of the file skipped at once
@@ -91,7 +97,10 @@
  * carries the edit: an argument added at its call site, its filter of git's output (regularFile included) or the result it
  * returns, there or where E1 or E2 reads it (an edit of three sites that no in-file check reads: the declared filter form and the
  * landing-494 gate's G7 and G10); GIT_LISTING narrowed in this file and the roster together with filesBelow and the in-file
- * listing (the roster moving with the census, an edit of four sites visible in any diff: that gate's G4).
+ * listing (the roster moving with the census, an edit of four sites visible in any diff: that gate's G4); GIT_LISTING's freeze
+ * removed together with the judged set's reading of it, in the roster (gitListingFrozen false) or in this file (the reading
+ * replaced by a literal true), and a run-time edit of it with filesBelow and the in-file listing narrowed by the same path (an
+ * edit of five sites, in this file alone or in this file and the roster, visible in any diff).
  * RESIDUALS (named families, each with a pinned quiet row): R-FOREIGN-VALUE the observer knows rf's two observed words only, so a
  * producer VALUE reads not observed, verbatim (A1's VALUE reading); R-LISTED-FOUR the observations note lists at most four distinct
  * words, a fifth is counted and marked, never renamed (A2's five-word note); R-REFUSED-FLAG a missing flag is refused rather than
@@ -197,8 +206,9 @@ const ANCHORS: readonly string[] = ["src/workbench/reactivefiber-observer.ts", "
 const MODULE_FLOOR = 100;
 /** The listing E1's and E2's walks are also held to (wb-cd1r): git's own list of the files below src, tracked or untracked with
  * ignored ones included, so it names every file the walk reads, from a walk this file does not compute. It is git's whole argv,
- * the src pathspec included, so the roster holds every argument git runs with (wb-fugf). */
-const GIT_LISTING: readonly string[] = ["ls-files", "-z", "--cached", "--others", "--", "src"];
+ * the src pathspec included, so the roster holds every argument git runs with (wb-fugf). It is frozen here, so no case, hook or
+ * module line edits it at run time, before the judged set reads it or after: an edit throws a TypeError where it is made (wb-iwhu). */
+const GIT_LISTING: readonly string[] = Object.freeze(["ls-files", "-z", "--cached", "--others", "--", "src"]);
 const RESIDUAL_FAMILIES: readonly string[] = [
   "R-FOREIGN-VALUE", "R-LISTED-FOUR", "R-REFUSED-FLAG", "R-OPTIONAL-COMMIT-SEQ", "R-READ-TIMEOUT", "R-COUNT-NOT-WORD", "R-COMPOSED",
   "R-GENERIC-WORD", "R-COMMENT",
@@ -631,7 +641,7 @@ function regularFile(path: string): boolean {
 }
 /** Every regular file git lists below src (GIT_LISTING), sorted: read from git, never from a walk of this file, so a walk and the
  * in-file listing narrowed together still differ from it; a tracked path deleted from the checkout is no file. Git runs with
- * GIT_LISTING as it stands, nothing added at this call site (wb-fugf). */
+ * GIT_LISTING as it stands, nothing added at this call site (wb-fugf), and frozen, it stands as the judged set read it (wb-iwhu). */
 function gitListedSrc(): string[] {
   const out = execFileSync("git", GIT_LISTING, { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 });
   return [...new Set(out.split("\0").filter(path => path !== "" && regularFile(path)))].sort();
@@ -1002,7 +1012,7 @@ describe("wb-4nut.10 H2 state-promotion census (TSX-HARNESS2-REACTIVE-EVOLUTION-
       bead: BEAD, publicationWords: PUBLICATION_WORDS, nonTerminal: NON_TERMINAL, controlWord: CONTROL_WORD, reportCarriers: REPORT_CARRIERS, bareFlag: BARE_FLAG,
       committedShapes: COMMITTED_SHAPES, requiredFlags: REQUIRED_FLAGS, optionalFlag: OPTIONAL_FLAG, effectful: EFFECTFUL, deadlineMs: DEADLINE_MS,
       outcomeKeys: OUTCOME_KEYS, h2Packages: H2_PACKAGES, siblingEntries: SIBLING_ENTRIES, recordTerms: RECORD_TERMS, stateWords: STATE_WORDS,
-      anchors: ANCHORS, moduleFloor: MODULE_FLOOR, gitListing: GIT_LISTING, residuals: RESIDUAL_FAMILIES,
+      anchors: ANCHORS, moduleFloor: MODULE_FLOOR, gitListing: GIT_LISTING, gitListingFrozen: Object.isFrozen(GIT_LISTING), residuals: RESIDUAL_FAMILIES,
     }).toStrictEqual({ bead: ROSTER.bead, ...ROSTER.constants, residuals: [...ROSTER.residuals] });
     // The producer facts: the program README at the four pins, each with its blob and the cited lines.
     expect(ROSTER.producers.map(entry => [entry.short, entry.sha.length, entry.path, entry.blob.length, Object.keys(entry.lines)])).toEqual([

@@ -51,7 +51,8 @@
  *    type-only import or re-export too) is an exact set read backwards, and the preview contract has exactly one importer (a
  *    type-only re-export counts) and one spelling; the controls read a direct call,
  *    an alias and a member call, an object-destructured member or authority name, a destructuring-assignment member or authority
- *    name (shorthand, aliased, nested, in an array, in an array's rest element, in a loop head, with a default), a string and a
+ *    name (shorthand, aliased, nested, in an array, in an array's rest element at the top level or below it - in a property's
+ *    value, an array element or a for-of head - in a loop head, with a default), a string and a
  *    template-literal computed pattern key, a value re-export closure and a type-only re-export closure, the type-only re-export
  *    quiet row, the importer
  *    sets on a type-only re-export, a type-only star re-export and a type-only import of a reader and on a type-only re-export of
@@ -153,6 +154,12 @@
  *    parent is an assignment-pattern array literal now holds a pattern (A1 controls assignedRest, and assignedRestArray for an
  *    array pattern in the rest element; spreadLiteral quiet, a spread inside an array literal assigned). With it, wb-7iyv F3's
  *    "the key of every object pattern" holds at the rest-element position too.
+ *
+ * FOLLOW-UP wb-a6nf (R694, landing 581's gate verdict on wb-3ji0; F1 leads; pinned red-first):
+ *  F1 the rest-element clause was pinned only at the top level of an '=' assignment, so the clause narrowed to an array literal
+ *    that is directly the left of '=' (the gate's mutant GM3) kept A1 green: three A1 controls read a rest element below the top
+ *    level, each 1 here and 0 under GM3 - assignedRestNested in a property's value, assignedRestElement in an array element and
+ *    assignedRestLoop in a for-of head. isAssignmentPattern is unchanged.
  *
  * Display paths added: none. Test-only: no src file is edited, no scratch is allocated, and the stand-ins live in this file.
  */
@@ -1161,6 +1168,11 @@ const IMPL: Record<string, () => Promise<JsonValue>> = {
       // wb-3ji0 (landing 490's F1): an object pattern, or an array pattern holding one, inside an array-assignment rest element.
       assignedRest: control("let invoke;\n[...{ invoke }] = list;"),
       assignedRestArray: control("let invoke;\n[...[{ invoke }]] = lists;"),
+      // wb-a6nf (landing 581's F1): the rest element below the top level of an '=' assignment - in a property's value, in an
+      // array element and in a for-of head - so the clause narrowed to the top level (gate mutant GM3) reds.
+      assignedRestNested: control("let invoke;\n({ inner: [...{ invoke }] } = holder);"),
+      assignedRestElement: control("let invoke;\n[[...{ invoke }]] = lists;"),
+      assignedRestLoop: control("let invoke;\nfor ([...{ invoke }] of list) {}"),
       computedKey: control('const { ["invoke"]: run } = registry;'),
       templateKey: control("const { [`invoke`]: run } = registry;"),
       // ...and no pattern: an object literal's key, an object literal assigned (the right of `=`), and a computed key (R-COMPOSED).
@@ -1204,7 +1216,7 @@ const IMPL: Record<string, () => Promise<JsonValue>> = {
       typeImportImporter: ["src/workbench/virtual-importer.ts <- src/workbench/reactivefiber-observer.ts (type): ReactiveFiberSeam"],
       typeReexportContract: ["src/workbench/virtual-importer.ts"], reexportTypeClosure: ["virtual-reader.ts"],
       assignedMember: 1, assignedAlias: 1, assignedAuthority: 1, assignedNested: 1, assignedElement: 1, assignedLoop: 1, assignedDefault: 1,
-      assignedRest: 1, assignedRestArray: 1,
+      assignedRest: 1, assignedRestArray: 1, assignedRestNested: 1, assignedRestElement: 1, assignedRestLoop: 1,
       computedKey: 1, templateKey: 1, literalObjectKey: 0, assignedLiteral: 0, spreadLiteral: 0, composedBinding: 0, consumerLeaf: 1, consumerCli: 1, consumerArgv: 1,
       consumerArguments: 1, consumerProse: 0, consumerReversed: 0, consumerInterrupted: 0, exported: 1, local: 0, exportReader: 2,
     });
