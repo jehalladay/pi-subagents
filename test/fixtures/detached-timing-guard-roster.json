@@ -1,5 +1,5 @@
 {
- "provenance": "wb-nqbd guard roster (the R694 follow-up of wb-maza landing 395, gate cmd_d35d53e6a40a: F1 leads, F2-F5 ride), cut by ws-03 (run g10-work-s96) on trunk 467b14b4bf0106677ab65fd79efb4c8a8c6990e9. The rules of every control were authored from the bead's findings before the widened reading existed (RED-1 of record: 28 of 28 kill controls read nothing on the landed reader); each finding's text was then measured by test/workbench-detached-timing-guard.test.ts on 467b14b plus the cut and reviewed against the finding it pins, so a control swapped to another case of the same rule reds. controls holds what each planted site of the guard yields, as '<rule> <text>' (F1, F2 and F3 kill controls; N negative controls, which yield nothing), residuals the quiet rows of each named residual (F5), raiseRows the family's raiseTransportLapse call rows (F5, R-RAISE-SITE), and tests the guard's collected test titles in order, '%s: ' opening a per-member rule row (F4, the frozen shape). wb-vh7c carry (the R694 follow-up of wb-nqbd landing 491, gate cmd_7cbc36ba6b11: F1 leads, F2 rides), cut by ws-01 (run g10-work-s117) on trunk 94fc15ab5f9a4b9d21c0e77bd7f1cba9b4654da7: adds the V1 kill controls (G3: a counter of the loop under an equality operator or read as its truth value), the V2 kill controls (G4: vitest's onTestFinished, onTestFailed, aroundEach and aroundAll, hooks through a destructured binding or a variable, and every fixture that stops hosts), five N negatives, the R-COUNTER-ROUTE and R-REGISTRAR-ROUTE quiet rows, and three test titles. Each V control's finding was authored from the bead's findings before the widened reading existed (RED-2 of record: 28 of 28 V kill controls read nothing on the landed reader), and the cut's reader then yields each one unchanged.",
+ "provenance": "wb-nqbd guard roster (the R694 follow-up of wb-maza landing 395, gate cmd_d35d53e6a40a: F1 leads, F2-F5 ride), cut by ws-03 (run g10-work-s96) on trunk 467b14b4bf0106677ab65fd79efb4c8a8c6990e9. The rules of every control were authored from the bead's findings before the widened reading existed (RED-1 of record: 28 of 28 kill controls read nothing on the landed reader); each finding's text was then measured by test/workbench-detached-timing-guard.test.ts on 467b14b plus the cut and reviewed against the finding it pins, so a control swapped to another case of the same rule reds. controls holds what each planted site of the guard yields, as '<rule> <text>' (F1, F2 and F3 kill controls; N negative controls, which yield nothing), residuals the quiet rows of each named residual (F5), raiseRows the family's raiseTransportLapse call rows (F5, R-RAISE-SITE), and tests the guard's collected test titles in order, '%s: ' opening a per-member rule row (F4, the frozen shape). wb-vh7c carry (the R694 follow-up of wb-nqbd landing 491, gate cmd_7cbc36ba6b11: F1 leads, F2 rides), cut by ws-01 (run g10-work-s117) on trunk 94fc15ab5f9a4b9d21c0e77bd7f1cba9b4654da7: adds the V1 kill controls (G3: a counter of the loop under an equality operator or read as its truth value), the V2 kill controls (G4: vitest's onTestFinished, onTestFailed, aroundEach and aroundAll, hooks through a destructured binding or a variable, and every fixture that stops hosts), five N negatives, the R-COUNTER-ROUTE and R-REGISTRAR-ROUTE quiet rows, and three test titles. Each V control's finding was authored from the bead's findings before the widened reading existed (RED-2 of record: 28 of 28 V kill controls read nothing on the landed reader), and the cut's reader then yields each one unchanged. wb-n5xs carry (the R694 follow-up of wb-vh7c landing 583, gate cmd_9a13529b9c57: F1 leads), cut by ws-01 (run g10-work-s120) on trunk 415cc30c9b4e8c5afcc4808a709f4db2facc13e6: adds the T1 kill controls (G3: a counter of the loop read through a TypeScript type-level wrapper - as, an angle-bracket assertion, satisfies or the non-null !, nested too - as its truth value or under an equality operator, and a counter keyed by its unwrapped operand), two N negatives (a state or a flag read through a wrapper while another value counts), the T1 and wrapper-kinds test titles, and re-titles the negative-controls row. Each T1 control's finding was authored from the bead's findings before the widened reading existed (RED-3 of record: 12 of 13 T1 kill controls read nothing on the landed reader; T1.wrappedBoth, the bead's W5, reads on both readers and pins the keying by unwrapped operand), and the cut's reader then yields each one unchanged.",
  "bead": "wb-nqbd",
  "tests": [
   "judges every default-gate member of the family, read from the test directory and vitest.config.ts",
@@ -16,7 +16,9 @@
   "wb-vh7c F1 kill controls: a for, while or do loop whose condition joins with && a counter of the loop reads as G3 - compared by ===, ==, !== or != against a literal or a named bound (on either side, under a negation too), or read as its truth value (n--, --n, n -= 1, a member's step, or n stepped in the body)",
   "wb-vh7c F2 kill controls: vitest's other four hooks that stop hosts read as G4 - onTestFinished and onTestFailed (by name, a vitest import alias, a test-context member, a destructured binding, or a variable bound to one by name or as a member), aroundEach and aroundAll - and so does every fixture that stops hosts (extend, override or scoped; inline, as a tuple, through a builder's onCleanup or a module-local function), which no timeout bounds",
   "wb-vh7c F2 hook kinds: the hooks G4 reads by name are exactly vitest's own hook exports (before*, after*, around* and onTest*), read from the vitest module",
-  "wb-nqbd and wb-vh7c negative controls: a settled hook (an onTestFinished among them), a hook or a fixture that stops nothing, a loop without && (a countdown among them), a loop whose && joins neither a relational bound nor a counter of its own (an inequality on a state, an equality on a flag while another value counts), text alone and another object's members yield no finding; the controls are the roster's, in order",
+  "wb-n5xs F1 kill controls: a for, while or do loop whose condition joins with && a counter of the loop read through a TypeScript type-level wrapper (as, an angle-bracket assertion, satisfies or the non-null !, nested too) reads as G3 - as its truth value or under an equality operator, the wrapper around the step itself or around a counter the loop steps, bare or wrapped, in its incrementor or body",
+  "wb-n5xs F1 wrapper kinds: the wrappers G3 reads a counter through are exactly TypeScript's own type-level ones (OuterExpressionKinds.Assertions: as and an angle-bracket assertion, satisfies, the non-null !), and a T1 kill control plants each one in both of the reading's forms",
+  "wb-nqbd, wb-vh7c and wb-n5xs negative controls: a settled hook (an onTestFinished among them), a hook or a fixture that stops nothing, a loop without && (a countdown among them), a loop whose && joins neither a relational bound nor a counter of its own (an inequality on a state, an equality on a flag while another value counts, a state or a flag read through a TypeScript wrapper), text alone and another object's members yield no finding; the controls are the roster's, in order",
   "wb-nqbd F5 named residuals: every residual the header names has quiet rows in the roster, and each quiet row's planted member yields no finding",
   "wb-nqbd F5 R-RAISE-SITE: the family's raiseTransportLapse call rows equal the roster's - socket-base's 60-byte TMPDIR row and the helper's own unit row",
   "wb-nqbd F4 frozen shape, as run: this file's tests equal the roster's, expanded over the judged set, and every other test ran before this last case"
@@ -205,6 +207,45 @@
   "V2.scopedFixture": [
    "G4 a fixture that stops hosts (hostTest.scoped) tears down under no timeout"
   ],
+  "T1.asTruth": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && (n-- as number))"
+  ],
+  "T1.satisfiesTruth": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && (n-- satisfies number))"
+  ],
+  "T1.angleTruth": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && <number>n--)"
+  ],
+  "T1.nonNullTruth": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && n!)"
+  ],
+  "T1.wrappedBoth": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && n!)"
+  ],
+  "T1.wrappedStep": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && n)"
+  ],
+  "T1.wrappedAssignment": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && left)"
+  ],
+  "T1.asStepEquality": [
+   "G3 fixed-count poll loop (a counter under an equality operator): while (alive() && (tries++ as number) !== MAX_TRIES)"
+  ],
+  "T1.asNameEquality": [
+   "G3 fixed-count poll loop (a counter under an equality operator): for (...; (i as number) !== 150 && alive(); ...)"
+  ],
+  "T1.nonNullEquality": [
+   "G3 fixed-count poll loop (a counter under an equality operator): for (...; i! !== 150 && alive(); ...)"
+  ],
+  "T1.angleEquality": [
+   "G3 fixed-count poll loop (a counter under an equality operator): while (alive() && <number>tries++ !== MAX_TRIES)"
+  ],
+  "T1.satisfiesEquality": [
+   "G3 fixed-count poll loop (a counter under an equality operator): do ... while ((left satisfies number) !== 0 && alive())"
+  ],
+  "T1.nestedWrappers": [
+   "G3 fixed-count poll loop (a counter under an equality operator): do ... while (((left as number)!) !== 0 && alive())"
+  ],
   "N.settledHelper": [],
   "N.settledNamed": [],
   "N.quietHook": [],
@@ -216,7 +257,9 @@
   "N.flagEquality": [],
   "N.unconjoinedCountdown": [],
   "N.settledFinished": [],
-  "N.quietFixture": []
+  "N.quietFixture": [],
+  "N.wrappedState": [],
+  "N.wrappedFlag": []
  },
  "residuals": {
   "R-WAIT-LOOP": [
