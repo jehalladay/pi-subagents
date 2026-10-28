@@ -1,0 +1,851 @@
+{
+ "bead": "wb-km7q.4",
+ "constants": {
+  "terms": [
+   "CoverageWitness",
+   "CoveragePopulation",
+   "CoverageIssuer",
+   "CoverageInvalidation",
+   "CoverageJudgement",
+   "judge_coverage",
+   "CoverageLedger",
+   "CoverageVerdict",
+   "ManifestDeclaration",
+   "SealWithdrawal",
+   "sealed_snapshot"
+  ],
+  "carrier": [
+   [
+    "collection identity",
+    "collection"
+   ],
+   [
+    "scope",
+    "scope"
+   ],
+   [
+    "generation",
+    "generation"
+   ],
+   [
+    "population manifest/expected range",
+    "population"
+   ],
+   [
+    "sealed snapshot",
+    "sealed_snapshot"
+   ],
+   [
+    "issuer/evidence",
+    "issuer"
+   ],
+   [
+    "policy scope",
+    "policy_scope"
+   ],
+   [
+    "invalidation conditions",
+    "invalidation"
+   ]
+  ],
+  "gates": [
+   "RL-RQ1",
+   "RL-RQ2",
+   "RL-RQ3",
+   "RL-RQ4",
+   "RL-RQ5",
+   "RL-RQ6",
+   "RL-RQ7",
+   "RL-RQ8"
+  ],
+  "generation": "g2",
+  "payloads": {
+   "sealed": "4edf63fa0c74f5c8",
+   "partial": "d5bbfded307dd6d3",
+   "oldGeneration": "dfe825fb6f75a476",
+   "noRecords": "ba50cfb9bc626dda",
+   "freshness": "80218b22791b3a96"
+  },
+  "verdicts": {
+   "sealed": "sealed manifest_complete",
+   "partial": "no_seal population_incomplete",
+   "oldGeneration": "refused_generation generation_mismatch",
+   "noRecords": "no_seal no_records",
+   "freshness": "refused witness"
+  },
+  "battery": [
+   {
+    "id": "L-SEALED",
+    "basis": "RL-RQ1",
+    "payload": "sealed",
+    "rule": "complete"
+   },
+   {
+    "id": "F-PARTIAL",
+    "basis": "RL-RQ2",
+    "payload": "partial",
+    "rule": "never-complete"
+   },
+   {
+    "id": "F-FIELDS",
+    "basis": "the adapter carries all eight typed fields (collection identity through invalidation conditions)",
+    "payload": null,
+    "rule": "fields"
+   },
+   {
+    "id": "F-FRESHNESS",
+    "basis": "a freshness witness never proves enumeration coverage",
+    "payload": "freshness",
+    "rule": "never-complete"
+   },
+   {
+    "id": "F-GENERATION",
+    "basis": "an old-generation seal is stale for today's task",
+    "payload": "oldGeneration",
+    "rule": "never-complete"
+   },
+   {
+    "id": "F-NO-RECORDS",
+    "basis": "source-only 'no records observed' never certifies absence",
+    "payload": "noRecords",
+    "rule": "never-complete"
+   }
+  ]
+ },
+ "producer": {
+  "charter": {
+   "repo": "ReactiveLensesSDK",
+   "path": "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md",
+   "revision": "d75fe44948cdc4a19562b23be347e516256d5dea",
+   "blob": "ed7137db247b41d11ad5f8e4afa1b58aa15024f8",
+   "status": {
+    "sha256": "ea54e72d3d1cdae24c5b0ed053e8f74d3f30cb8b8d24a06bb4372f46727d5fed",
+    "text": "**Date:** 2026-10-17. **Status:** proposed / doc-only. **Branch:** master. **Program:** [Adaptive Computation and Control](https://github.com/jehalladay/FiberOpticsResearch/tree/main/docs/research/foa/programs/adaptive-computation-and-control-2026-10-17). **Work packages:** AC-01, AC-07, AC-15."
+   },
+   "lines": {
+    "35": {
+     "sha256": "e88134688745fab6980fab2218e9f401844aa24c13c7df027384039ff4f3cd74",
+     "text": "ReactiveQuerySDK (https://github.com/jehalladay/ReactiveQuerySDK/tree/main/docs/program) now owns QuerySpec/QueryView and the pure absence evaluator. ReactiveLensesSDK remains **source freshness authority** through NativeSourceRef, FreshnessWitness, WitnessVerdict and pull/push resolver contracts; no second freshness implementation in QuerySDK or new query engine here."
+    },
+    "37": {
+     "sha256": "e876b42ddf351dc46d3aded9f22539d8c6b52b301dff0f572f9e7603fe9ee502",
+     "text": "Define an optional host/source-supplied **CoverageWitness adapter**: collection identity, scope, generation, population manifest/expected range, sealed snapshot, issuer/evidence, policy scope and invalidation conditions. A freshness witness for current values does NOT prove that all candidate records were enumerated. A coverage seal for an old generation may be complete historically but stale for today's task. Source-only \"no records observed\" cannot certify absence."
+    },
+    "41": {
+     "sha256": "84445fb280e16d478be08d32f2a7532af9d79e4ee445c6db0b18a358b4ee9bc3",
+     "text": "Acceptance RL-RQ1 complete 20-result manifest seal; RL-RQ2 partial 4/20 -> no seal; RL-RQ3 wrong-source generation refused; RL-RQ4 expired/stale proof shows unknown; RL-RQ5 missing source vs ready-UNKNOWN distinct; RL-RQ6 source and QuerySDK native codec fixtures; RL-RQ7 no source IO from QuerySDK/TSX render; RL-RQ8 local Forge/installed-wheel evidence."
+    }
+   }
+  },
+  "measured": {
+   "how": "seat ws-01, run g10-work-s125, 2026-10-28, read-only: git show/rev-parse on the local ReactiveLensesSDK and ReactiveFiberCLI checkouts; the battery payloads decoded and judged by executing the installed rf environment's python (-I -B, no bytecode written) over vibranium-reactive-lenses 0.1.1.20261024.1, whose coverage_witness.py and freshness.py hash to the pin's blobs",
+   "reactiveLenses": {
+    "pin": "d75fe44948cdc4a19562b23be347e516256d5dea",
+    "originMaster": "4efe999ceba247389490d404841e560f008c1d0f",
+    "charterBlobAtBoth": "ed7137db247b41d11ad5f8e4afa1b58aa15024f8",
+    "coverageWitnessModule": {
+     "path": "src/reactive_lenses/coverage_witness.py",
+     "blobAtPinMasterInstalled": "afde4a99409debeb38bc4afa129eb42baaffa1bf",
+     "addedAt": "28f172dc77151c36ab78e260835aee376f12adf4"
+    },
+    "freshnessModule": {
+     "path": "src/reactive_lenses/freshness.py",
+     "blobAtPinMasterInstalled": "dd655682d361b19a9eead39cac3f55c5b9d49555"
+    },
+    "installedDistribution": "vibranium-reactive-lenses 0.1.1.20261024.1",
+    "gatesNamedInCoverageTests": {
+     "tests/test_coverage_witness.py": [
+      "RL-RQ1",
+      "RL-RQ2",
+      "RL-RQ3",
+      "RL-RQ4"
+     ],
+     "tests/test_coverage_ledger.py": [
+      "RL-RQ1",
+      "RL-RQ2",
+      "RL-RQ3",
+      "RL-RQ4",
+      "RL-RQ5",
+      "RL-RQ7"
+     ]
+    }
+   },
+   "rosters": {
+    "COVERAGE_WITNESS_FIELDS": [
+     "collection",
+     "scope",
+     "generation",
+     "population",
+     "sealed_snapshot",
+     "issuer",
+     "policy_scope",
+     "invalidation"
+    ],
+    "COVERAGE_POPULATION_FIELDS": [
+     "manifest_digest",
+     "expected_count",
+     "expected_range",
+     "observed_count"
+    ],
+    "COVERAGE_ISSUER_FIELDS": [
+     "name",
+     "evidence_ref"
+    ],
+    "COVERAGE_INVALIDATION_FIELDS": [
+     "valid_until",
+     "on_source_revision_change",
+     "on_manifest_change"
+    ],
+    "COVERAGE_JUDGEMENT_FIELDS": [
+     "kind",
+     "reason",
+     "source_diagnostic"
+    ],
+    "COVERAGE_KINDS": [
+     "no_seal",
+     "refused_generation",
+     "sealed",
+     "unknown_expired"
+    ],
+    "COVERAGE_REASONS_BY_KIND": {
+     "no_seal": [
+      "no_manifest",
+      "no_records",
+      "no_sealed_snapshot",
+      "population_incomplete"
+     ],
+     "refused_generation": [
+      "generation_mismatch"
+     ],
+     "sealed": [
+      "manifest_complete"
+     ],
+     "unknown_expired": [
+      "expired",
+      "no_clock"
+     ]
+    },
+    "FRESHNESS_WITNESS_FIELDS": [
+     "source",
+     "binding_revision",
+     "readset",
+     "observed_at",
+     "witness_kind",
+     "witness_value",
+     "policy_scope",
+     "valid_until"
+    ]
+   },
+   "payloads": {
+    "sealed": {
+     "coverageDecode": "accepted",
+     "judgement": {
+      "kind": "sealed",
+      "reason": "manifest_complete",
+      "source_diagnostic": null
+     },
+     "roundTrip": true,
+     "freshnessDecode": "refused LensObservationError: freshness witness payload must carry exactly the 8 fields ['source', 'binding_revision', 'readset', 'observed_at', 'witn"
+    },
+    "partial": {
+     "coverageDecode": "accepted",
+     "judgement": {
+      "kind": "no_seal",
+      "reason": "population_incomplete",
+      "source_diagnostic": null
+     },
+     "roundTrip": true,
+     "freshnessDecode": "refused LensObservationError: freshness witness payload must carry exactly the 8 fields ['source', 'binding_revision', 'readset', 'observed_at', 'witn"
+    },
+    "oldGeneration": {
+     "coverageDecode": "accepted",
+     "judgement": {
+      "kind": "refused_generation",
+      "reason": "generation_mismatch",
+      "source_diagnostic": null
+     },
+     "roundTrip": true,
+     "freshnessDecode": "refused LensObservationError: freshness witness payload must carry exactly the 8 fields ['source', 'binding_revision', 'readset', 'observed_at', 'witn"
+    },
+    "noRecords": {
+     "coverageDecode": "accepted",
+     "judgement": {
+      "kind": "no_seal",
+      "reason": "no_records",
+      "source_diagnostic": null
+     },
+     "roundTrip": true,
+     "freshnessDecode": "refused LensObservationError: freshness witness payload must carry exactly the 8 fields ['source', 'binding_revision', 'readset', 'observed_at', 'witn"
+    },
+    "freshness": {
+     "coverageDecode": "refused LensObservationError: coverage witness payload must carry exactly the 8 fields ['collection', 'scope', 'generation', 'population', 'sealed_snapshot', 'issuer', 'policy_scope', 'invalidation']: unexpected ['binding_revision",
+     "freshnessDecode": "accepted",
+     "judgeOnFreshness": "refused LensObservationError: judge_coverage argument 'witness' must be a CoverageWitness: a FreshnessWitness proves the freshness of a value and never that a population was enumerated (charter:37), so nothing else is judged here."
+    }
+   },
+   "reactiveFiberCli": {
+    "originMain": "48f020fe625ff09b0056134711a77bf1dbcad72c",
+    "renderSchema": "src/reactive_fiber_cli/schemas/cli/context.render.schema.json",
+    "renderSchemaBlob": "3282323161f4dd7dbab73a9d61ac035b64070bc0",
+    "linesMatchingCoverageWitnessOrSeal": 0
+   }
+  }
+ },
+ "residuals": [
+  {
+   "id": "R-COMPOSED",
+   "pin": "A1",
+   "quiet": [
+    "composed"
+   ],
+   "twin": [
+    "composedTwin"
+   ]
+  },
+  {
+   "id": "R-SPACED",
+   "pin": "A1",
+   "quiet": [
+    "spaced",
+    "dotted",
+    "spacedSeal"
+   ],
+   "twin": [
+    "snake"
+   ]
+  },
+  {
+   "id": "R-ESCAPED",
+   "pin": "A1",
+   "quiet": [
+    "escaped"
+   ],
+   "twin": [
+    "title"
+   ]
+  },
+  {
+   "id": "R-LOOKALIKE",
+   "pin": "A1",
+   "quiet": [
+    "cyrillic",
+    "zeroWidth",
+    "softHyphen"
+   ],
+   "twin": [
+    "fullwidth"
+   ]
+  },
+  {
+   "id": "R-OTHER-NAME",
+   "pin": "A1",
+   "quiet": [
+    "otherName",
+    "otherCertificate"
+   ],
+   "twin": [
+    "embedded"
+   ]
+  },
+  {
+   "id": "R-OUTSIDE-ROOTS",
+   "pin": "A1",
+   "quiet": [
+    "docsPlant",
+    "testPlant",
+    "rootPlant"
+   ],
+   "twin": [
+    "srcPlant"
+   ]
+  },
+  {
+   "id": "R-OTHER-SHAPE",
+   "pin": "A2",
+   "quiet": [
+    "M-CAMEL"
+   ],
+   "twin": [
+    "M-SNAKE"
+   ]
+  },
+  {
+   "id": "R-EXPIRY",
+   "pin": "A2",
+   "quiet": [
+    "M-EXPIRY"
+   ],
+   "twin": [
+    "M-NO-EXPIRY"
+   ]
+  },
+  {
+   "id": "R-EVENT-KEEPS-SEAL",
+   "pin": "C1",
+   "quiet": [
+    "eventKeepsSeal"
+   ],
+   "twin": [
+    "refreshDropsSeal"
+   ]
+  }
+ ],
+ "adoption": null,
+ "rows": [
+  {
+   "id": "A",
+   "label": "adoption-time falsifiers",
+   "pins": [
+    {
+     "id": "A1",
+     "quote": "adoption-time",
+     "witness": {
+      "walk": {
+       "floorsMet": true,
+       "packageListed": true,
+       "links": [],
+       "notUtf8": [],
+       "missing": [],
+       "hits": [],
+       "judgedEqualsListedPlusPlants": true,
+       "bigPlantLongest": true,
+       "plantHits": [
+        "src/workbench/coverage-witness-plant.ts CoverageWitness",
+        "qa/coverage-witness-plant-big.mjs judge_coverage"
+       ]
+      },
+      "judge": {
+       "terms": {
+        "CoverageWitness": 1,
+        "CoveragePopulation": 1,
+        "CoverageIssuer": 1,
+        "CoverageInvalidation": 1,
+        "CoverageJudgement": 1,
+        "judge_coverage": 1,
+        "CoverageLedger": 1,
+        "CoverageVerdict": 1,
+        "ManifestDeclaration": 1,
+        "SealWithdrawal": 1,
+        "sealed_snapshot": 1
+       },
+       "texts": {
+        "title": "hits=1 CoverageWitness",
+        "snake": "hits=1 coverage_witness",
+        "kebab": "hits=1 coverage-witness",
+        "upper": "hits=1 COVERAGE_WITNESS",
+        "camel": "hits=1 coverageWitness",
+        "embedded": "hits=1 isCoverageWitness",
+        "judge": "hits=1 judge_coverage(witness, generation)",
+        "seal": "hits=1 witness.sealed_snapshot",
+        "ledger": "hits=1 new CoverageLedger()",
+        "composedTwin": "hits=1 const name = \"CoverageWitness\";",
+        "fullwidth": "hits=1 \\u{ff23}\\u{ff4f}\\u{ff56}\\u{ff45}\\u{ff52}\\u{ff41}\\u{ff47}\\u{ff45}\\u{ff37}\\u{ff49}\\u{ff54}\\u{ff4e}\\u{ff45}\\u{ff53}\\u{ff53}",
+        "composed": "hits=0 const name = \"Coverage\" + \"Witness\";",
+        "spaced": "hits=0 reads the coverage witness",
+        "dotted": "hits=0 coverage.witness",
+        "spacedSeal": "hits=0 sealed snapshot",
+        "escaped": "hits=0 const name = \"Coverage\\u0057itness\";",
+        "cyrillic": "hits=0 \\u{421}overageWitness",
+        "zeroWidth": "hits=0 Coverage\\u{200b}Witness",
+        "softHyphen": "hits=0 Cover\\u{ad}ageWitness",
+        "otherName": "hits=0 type PopulationSeal = { sealed: boolean };",
+        "otherCertificate": "hits=0 const enumerationCertificate = read();",
+        "hxCoverage": "hits=0 coverage_summary: { licenses_absence: false }",
+        "rfRowKey": "hits=0 freshness_witness",
+        "piCompleteness": "hits=0 completeness: 'complete'"
+       },
+       "files": {
+        "srcPlant": "judged=true hits=1 src/workbench/coverage-witness-plant.ts",
+        "docsPlant": "judged=false hits=0 docs/coverage-witness-plant.md",
+        "testPlant": "judged=false hits=0 test/coverage-witness-plant.test.ts",
+        "rootPlant": "judged=false hits=0 coverage-witness-plant.ts"
+       }
+      },
+      "package": {
+       "real": [],
+       "planted": [
+        "dependencies:vibranium-reactive-lenses",
+        "devDependencies:@scope/reactive_lenses"
+       ]
+      },
+      "rf": {
+       "clean": "complete; witness keys identical; a read key differing",
+       "undiagnosed": "partial; witness keys identical; a read key differing"
+      },
+      "adoption": null
+     }
+    },
+    {
+     "id": "A2",
+     "quote": "falsifiers",
+     "witness": {
+      "battery": [
+       {
+        "id": "L-SEALED",
+        "basis": "RL-RQ1",
+        "payload": "sealed",
+        "rule": "complete"
+       },
+       {
+        "id": "F-PARTIAL",
+        "basis": "RL-RQ2",
+        "payload": "partial",
+        "rule": "never-complete"
+       },
+       {
+        "id": "F-FIELDS",
+        "basis": "the adapter carries all eight typed fields (collection identity through invalidation conditions)",
+        "payload": null,
+        "rule": "fields"
+       },
+       {
+        "id": "F-FRESHNESS",
+        "basis": "a freshness witness never proves enumeration coverage",
+        "payload": "freshness",
+        "rule": "never-complete"
+       },
+       {
+        "id": "F-GENERATION",
+        "basis": "an old-generation seal is stale for today's task",
+        "payload": "oldGeneration",
+        "rule": "never-complete"
+       },
+       {
+        "id": "F-NO-RECORDS",
+        "basis": "source-only 'no records observed' never certifies absence",
+        "payload": "noRecords",
+        "rule": "never-complete"
+       }
+      ],
+      "payloads": {
+       "sealed": "4edf63fa0c74f5c8 collection,scope,generation,population,sealed_snapshot,issuer,policy_scope,invalidation",
+       "partial": "d5bbfded307dd6d3 collection,scope,generation,population,sealed_snapshot,issuer,policy_scope,invalidation",
+       "oldGeneration": "dfe825fb6f75a476 collection,scope,generation,population,sealed_snapshot,issuer,policy_scope,invalidation",
+       "noRecords": "ba50cfb9bc626dda collection,scope,generation,population,sealed_snapshot,issuer,policy_scope,invalidation",
+       "freshness": "80218b22791b3a96 source,binding_revision,readset,observed_at,witness_kind,witness_value,policy_scope,valid_until"
+      },
+      "verdicts": {
+       "sealed": "sealed manifest_complete",
+       "partial": "no_seal population_incomplete",
+       "oldGeneration": "refused_generation generation_mismatch",
+       "noRecords": "no_seal no_records",
+       "freshness": "refused witness"
+      },
+      "runs": {
+       "ORACLE": {
+        "fired": [],
+        "readings": {
+         "L-SEALED": "complete",
+         "F-PARTIAL": "unknown",
+         "F-FIELDS": "fields held",
+         "F-FRESHNESS": "unknown",
+         "F-GENERATION": "unknown",
+         "F-NO-RECORDS": "unknown"
+        }
+       },
+       "M-FRESHNESS": {
+        "fired": [
+         "F-FRESHNESS"
+        ],
+        "readings": {
+         "L-SEALED": "complete",
+         "F-PARTIAL": "unknown",
+         "F-FIELDS": "fields held",
+         "F-FRESHNESS": "complete",
+         "F-GENERATION": "unknown",
+         "F-NO-RECORDS": "unknown"
+        }
+       },
+       "M-PARTIAL": {
+        "fired": [
+         "F-PARTIAL"
+        ],
+        "readings": {
+         "L-SEALED": "complete",
+         "F-PARTIAL": "complete",
+         "F-FIELDS": "fields held",
+         "F-FRESHNESS": "unknown",
+         "F-GENERATION": "unknown",
+         "F-NO-RECORDS": "unknown"
+        }
+       },
+       "M-GENERATION": {
+        "fired": [
+         "F-GENERATION"
+        ],
+        "readings": {
+         "L-SEALED": "complete",
+         "F-PARTIAL": "unknown",
+         "F-FIELDS": "fields held",
+         "F-FRESHNESS": "unknown",
+         "F-GENERATION": "complete",
+         "F-NO-RECORDS": "unknown"
+        }
+       },
+       "M-NO-RECORDS": {
+        "fired": [
+         "F-NO-RECORDS"
+        ],
+        "readings": {
+         "L-SEALED": "complete",
+         "F-PARTIAL": "unknown",
+         "F-FIELDS": "fields held",
+         "F-FRESHNESS": "unknown",
+         "F-GENERATION": "unknown",
+         "F-NO-RECORDS": "complete"
+        }
+       },
+       "M-FIELDS": {
+        "fired": [
+         "F-FIELDS"
+        ],
+        "readings": {
+         "L-SEALED": "complete",
+         "F-PARTIAL": "unknown",
+         "F-FIELDS": "fields collection,scope,generation,population,sealed_snapshot,issuer,policy_scope",
+         "F-FRESHNESS": "unknown",
+         "F-GENERATION": "unknown",
+         "F-NO-RECORDS": "unknown"
+        }
+       },
+       "M-CONSTANT": {
+        "fired": [
+         "L-SEALED"
+        ],
+        "readings": {
+         "L-SEALED": "unknown",
+         "F-PARTIAL": "unknown",
+         "F-FIELDS": "fields held",
+         "F-FRESHNESS": "unknown",
+         "F-GENERATION": "unknown",
+         "F-NO-RECORDS": "unknown"
+        }
+       },
+       "M-CAMEL": {
+        "fired": [],
+        "readings": {
+         "L-SEALED": "complete",
+         "F-PARTIAL": "unknown",
+         "F-FIELDS": "fields held",
+         "F-FRESHNESS": "unknown",
+         "F-GENERATION": "unknown",
+         "F-NO-RECORDS": "unknown"
+        }
+       },
+       "M-SNAKE": {
+        "fired": [
+         "F-PARTIAL",
+         "F-GENERATION",
+         "F-NO-RECORDS"
+        ],
+        "readings": {
+         "L-SEALED": "complete",
+         "F-PARTIAL": "complete",
+         "F-FIELDS": "fields held",
+         "F-FRESHNESS": "unknown",
+         "F-GENERATION": "complete",
+         "F-NO-RECORDS": "complete"
+        }
+       },
+       "M-EXPIRY": {
+        "fired": [],
+        "readings": {
+         "L-SEALED": "complete",
+         "F-PARTIAL": "unknown",
+         "F-FIELDS": "fields held",
+         "F-FRESHNESS": "unknown",
+         "F-GENERATION": "unknown",
+         "F-NO-RECORDS": "unknown"
+        }
+       },
+       "M-NO-EXPIRY": {
+        "fired": [
+         "F-PARTIAL",
+         "F-GENERATION",
+         "F-NO-RECORDS"
+        ],
+        "readings": {
+         "L-SEALED": "complete",
+         "F-PARTIAL": "complete",
+         "F-FIELDS": "fields held",
+         "F-FRESHNESS": "unknown",
+         "F-GENERATION": "complete",
+         "F-NO-RECORDS": "complete"
+        }
+       }
+      },
+      "adoption": null,
+      "adopted": null
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "that freshness-without-coverage never reads complete",
+   "pins": [
+    {
+     "id": "B1",
+     "quote": "that freshness-without-coverage",
+     "witness": {
+      "freshOnly": {
+       "steps": [
+        "refresh at=01s"
+       ],
+       "readings": [
+        "applied: current/unknown"
+       ]
+      },
+      "partial": {
+       "steps": [
+        "refresh at=01s coverage=partial"
+       ],
+       "readings": [
+        "applied: current/partial"
+       ]
+      },
+      "stated": {
+       "steps": [
+        "refresh at=01s coverage=complete"
+       ],
+       "readings": [
+        "applied: current/complete"
+       ]
+      },
+      "fresherRead": {
+       "steps": [
+        "refresh at=01s coverage=complete",
+        "refresh at=02s"
+       ],
+       "readings": [
+        "applied: current/complete",
+        "applied: current/unknown"
+       ]
+      },
+      "eventsOnly": {
+       "steps": [
+        "event e1 seq=1",
+        "event e2 seq=2"
+       ],
+       "readings": [
+        "applied: unknown/unknown",
+        "applied: unknown/unknown"
+       ]
+      },
+      "failedRead": {
+       "steps": [
+        "refresh at=01s coverage=complete",
+        "markStale"
+       ],
+       "readings": [
+        "applied: current/complete",
+        "marked: stale/unknown"
+       ]
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "quote": "never reads complete",
+     "witness": {
+      "rf": {
+       "clean": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: complete success | observations: 1 row, 0 reused",
+       "undiagnosed": "rows=[captured_at_render] blocks=absent necessity=absent withheld=0 render_id=null commit_seq=null: partial unknown | inclusion not diagnosed: result.blocks and result.necessity absent: partial",
+       "noBlock": "rows=[captured_at_render] blocks=0 necessity=0 withheld=0 render_id=null commit_seq=null: partial unknown | inclusion: 0 blocks included, 0 of 0 judged candidates withheld at host_necessity: partial",
+       "withheld": "rows=[captured_at_render] blocks=1 necessity=2 withheld=1 render_id=null commit_seq=null: partial unknown | inclusion: 1 block included, 1 of 2 judged candidates withheld at host_necessity: partial"
+      },
+      "hx": {
+       "licensedEmpty": "complete-empty licensed=true rows=0: complete success | known-empty (runtime-licensed) \u00b7 rows 0",
+       "unlicensedEmpty": "complete licensed=false rows=0: partial unknown | complete \u00b7 rows 0 \u00b7 absence not licensed",
+       "unlicensedCompleteEmpty": "complete-empty licensed=false rows=0: partial unknown | complete-empty \u00b7 rows 0 \u00b7 absence not licensed",
+       "unlicensedRows": "complete licensed=false rows=2: partial unknown | complete \u00b7 rows 2 \u00b7 absence not licensed"
+      },
+      "precedent": "wb-6ze.7 (absence must be runtime-licensed) and docs/workbench/07 HX known-empty vs incomplete/unknown"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "and stale-generation seals are refused for current tasks",
+   "pins": [
+    {
+     "id": "C1",
+     "quote": "and stale-generation seals are refused",
+     "witness": {
+      "olderCapture": {
+       "steps": [
+        "refresh at=02s",
+        "refresh at=01s coverage=complete"
+       ],
+       "readings": [
+        "applied: current/unknown",
+        "out-of-order: current/unknown"
+       ]
+      },
+      "lowerSequence": {
+       "steps": [
+        "refresh at=02s seq=3",
+        "refresh at=03s seq=2 coverage=complete"
+       ],
+       "readings": [
+        "applied: current/unknown",
+        "out-of-order: current/unknown"
+       ]
+      },
+      "unsequenced": {
+       "steps": [
+        "refresh at=02s seq=3",
+        "refresh at=03s coverage=complete"
+       ],
+       "readings": [
+        "applied: current/unknown",
+        "out-of-order: current/unknown"
+       ]
+      },
+      "laterSeal": {
+       "steps": [
+        "refresh at=02s seq=3",
+        "refresh at=03s seq=4 coverage=complete"
+       ],
+       "readings": [
+        "applied: current/unknown",
+        "applied: current/complete"
+       ]
+      },
+      "eventKeepsSeal": {
+       "steps": [
+        "refresh at=01s seq=1 version=v1 coverage=complete",
+        "event e2 seq=2 version=v2"
+       ],
+       "readings": [
+        "applied: current/complete",
+        "applied: current/complete"
+       ]
+      },
+      "refreshDropsSeal": {
+       "steps": [
+        "refresh at=01s seq=1 version=v1 coverage=complete",
+        "refresh at=02s seq=2 version=v2"
+       ],
+       "readings": [
+        "applied: current/complete",
+        "applied: current/unknown"
+       ]
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "quote": "for current tasks",
+     "witness": {
+      "current": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: complete success | observations: 1 row, 0 reused",
+      "reused": "rows=[reused] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: partial unknown | observations: 1 row, 1 reused: partial",
+      "committedRender": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=\"rnd_aaaaaaaaaaaaaaaaaaaaaa\" commit_seq=null: refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.",
+      "committedSeq": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=1: refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null."
+     }
+    }
+   ]
+  }
+ ]
+}
