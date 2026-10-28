@@ -1,0 +1,698 @@
+{
+  "bead": "wb-pyel.2",
+  "producer": {
+    "repository": "ReactiveComponentsSDK",
+    "path": "docs/programs/evidence-directed-computation-2026-10-18.md",
+    "beadPin": "44b72145b1756908585c94da2327ab8809a3ca9a",
+    "originMaster": "5c480c5712b4562c12446b00fd47b7e9b4633067",
+    "measuredAt": "2026-10-28T12:00:45Z",
+    "blob": "de04229d9cdad063e4704d732f3cbcee1f001e68",
+    "lines": [
+      {
+        "line": 14,
+        "text": "4. Treat context demand/precision as an *explicit client projection requirement*, not an imperative model or tool call.",
+        "sha256": "00d67aecc9bdde7ae8a8e07a85a067631a70112135ff9c71146127de9c32d179"
+      }
+    ]
+  },
+  "vocabulary": {
+    "subject": [
+      "context",
+      "contexts"
+    ],
+    "families": {
+      "demand": [
+        "demand",
+        "demands",
+        "demanded",
+        "demanding"
+      ],
+      "precision": [
+        "precision",
+        "precise",
+        "precisely",
+        "imprecise",
+        "imprecisely",
+        "imprecision"
+      ]
+    },
+    "carrier": [
+      [
+        "projection",
+        "requirement"
+      ],
+      [
+        "projection",
+        "requirements"
+      ]
+    ],
+    "markers": [
+      "not",
+      "no",
+      "never",
+      "nor",
+      "neither",
+      "without",
+      "cannot",
+      "none",
+      "nothing"
+    ],
+    "stems": {
+      "word": [
+        "edc",
+        "edcs"
+      ],
+      "joined": [
+        "evidencedirected"
+      ]
+    }
+  },
+  "constants": {
+    "codeRoots": [
+      "examples",
+      "src"
+    ],
+    "pageRoots": [
+      ".agents",
+      ".pi",
+      "examples"
+    ],
+    "consumerRoot": "src",
+    "frozenAt": "864dff943711",
+    "titlePrefix": "[SDK-EVIDENCE-DIRECTED-COMPUTATION-R4] ",
+    "seam": "reactivefiber.render.preview",
+    "backend": "claude"
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "If Pi-subagents adopts EDC context assembly",
+      "pins": [
+        {
+          "id": "A1",
+          "quote": "If Pi-subagents adopts",
+          "witness": {
+            "gate": "ABSENT",
+            "sites": [],
+            "dependencies": [],
+            "floors": {
+              "srcModules": true,
+              "readings": true,
+              "tables": true
+            },
+            "walkAgreesWithGit": true,
+            "links": [],
+            "frozen": {
+              "revision": "864dff943711",
+              "ancestor": true,
+              "modules": 116,
+              "readings": 136007,
+              "sites": [],
+              "dependencies": [],
+              "tables": 3
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "quote": "EDC context assembly",
+          "witness": {
+            "stems": {
+              "word": [
+                "edc",
+                "edcs"
+              ],
+              "joined": [
+                "evidencedirected"
+              ]
+            },
+            "routes": {
+              "identifier": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "acronymPlural": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "camel": [
+                "src/plant.ts:1 lexeme edc",
+                "src/plant.ts:2 lexeme edc"
+              ],
+              "string": [
+                "src/plant.ts:1 lexeme evidencedirected"
+              ],
+              "joinedForms": [
+                "src/plant.ts:1 lexeme evidencedirected",
+                "src/plant.ts:2 lexeme evidencedirected"
+              ],
+              "specifier": [
+                "src/plant.ts:1 import edc",
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "dynamicImport": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "template": [
+                "src/plant.ts:1 lexeme evidencedirected",
+                "src/plant.ts:1 lexeme evidencedirected"
+              ],
+              "member": [
+                "src/plant.ts:1 member edc",
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "invisible": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "fullwidth": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "javascript": [
+                "src/plant.cjs:1 lexeme edc"
+              ],
+              "manifest": [
+                "dependencies.edc-sdk",
+                "devDependencies.x",
+                "optionalDependencies.EvidenceDirected"
+              ]
+            },
+            "nearMisses": {
+              "comment": [],
+              "inner": [],
+              "evidenceAlone": [],
+              "testModule": []
+            },
+            "quiet": {
+              "R-UNNAMED-ADOPTION": [
+                [],
+                []
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "so no Pi prompt, tool description or capability input becomes the demand channel",
+      "pins": [
+        {
+          "id": "B1",
+          "quote": "so no Pi prompt",
+          "witness": {
+            "findings": [],
+            "floors": {
+              "srcModules": true,
+              "exampleModules": true,
+              "pages": true,
+              "everyPageRoot": [
+                true,
+                true,
+                true
+              ],
+              "codeReadings": true,
+              "defaultAgents": true,
+              "guidelines": true,
+              "promptTexts": true,
+              "instructions": true
+            },
+            "walkAgreesWithGit": true,
+            "links": [],
+            "frozen": {
+              "revision": "864dff943711",
+              "ancestor": true,
+              "modules": 122,
+              "pages": 3,
+              "readings": 136731,
+              "findings": [],
+              "quieted": [
+                "src/default-agents.ts:41 lexeme:28 subjectless:precision",
+                "src/workbench/claude-capability-tools.ts:127 lexeme:1 subjectless:demand"
+              ]
+            },
+            "quiet": {
+              "R-SCOPE": {
+                "listed": [
+                  "src/plant-comment.ts"
+                ],
+                "findings": [],
+                "aloneWouldFind": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "R-COMPOSED": [
+                [],
+                []
+              ]
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "quote": "tool description",
+          "witness": {
+            "findings": [],
+            "floors": {
+              "piTools": true,
+              "requiredPiTools": [],
+              "everyToolDescribed": true,
+              "curatedEqualsExport": true,
+              "nativeMissing": [],
+              "injectedMissing": [],
+              "texts": true
+            },
+            "plants": {
+              "piTool": [
+                "pi:plant_tool.description:1 demand"
+              ],
+              "curatedTool": [
+                "mcp:plant_tool.description:1 carrier"
+              ],
+              "descriptor": [
+                "planted:plant.capability.description:1 precision"
+              ]
+            }
+          }
+        },
+        {
+          "id": "B3",
+          "quote": "or capability input",
+          "witness": {
+            "findings": [],
+            "floors": {
+              "texts": true
+            },
+            "keys": [
+              "contextDemand: demand",
+              "contextPrecision: precision",
+              "projectionRequirement: carrier"
+            ],
+            "seamArms": [
+              {
+                "closed": true,
+                "properties": [
+                  "model",
+                  "task"
+                ]
+              },
+              {
+                "closed": true,
+                "properties": [
+                  "model",
+                  "taskId",
+                  "view"
+                ]
+              }
+            ],
+            "matrix": [
+              "forge.gate.status {target}: transport reached=true",
+              "forge.gate.status {target} +contextDemand: validation reached=false",
+              "forge.gate.status {target} +contextPrecision: validation reached=false",
+              "forge.gate.status {target} +projectionRequirement: validation reached=false",
+              "furnace.run.inspect {runId}: transport reached=true",
+              "furnace.run.inspect {runId} +contextDemand: validation reached=false",
+              "furnace.run.inspect {runId} +contextPrecision: validation reached=false",
+              "furnace.run.inspect {runId} +projectionRequirement: validation reached=false",
+              "hyperunix.find {kind}: transport reached=true",
+              "hyperunix.find {kind} +contextDemand: validation reached=false",
+              "hyperunix.find {kind} +contextPrecision: validation reached=false",
+              "hyperunix.find {kind} +projectionRequirement: validation reached=false",
+              "reactivefiber.render.preview {model,task}: transport reached=true",
+              "reactivefiber.render.preview {model,task} +contextDemand: validation reached=false",
+              "reactivefiber.render.preview {model,task} +contextPrecision: validation reached=false",
+              "reactivefiber.render.preview {model,task} +projectionRequirement: validation reached=false",
+              "reactivefiber.render.preview {view,taskId}: transport reached=true",
+              "reactivefiber.render.preview {view,taskId} +contextDemand: validation reached=false",
+              "reactivefiber.render.preview {view,taskId} +contextPrecision: validation reached=false",
+              "reactivefiber.render.preview {view,taskId} +projectionRequirement: validation reached=false"
+            ],
+            "seam": {
+              "invoke": {
+                "refusals": [
+                  "{model,task} +contextDemand: validation",
+                  "{model,task} +contextPrecision: validation",
+                  "{model,task} +projectionRequirement: validation",
+                  "{view,taskId} +contextDemand: validation",
+                  "{view,taskId} +contextPrecision: validation",
+                  "{view,taskId} +projectionRequirement: validation"
+                ],
+                "spawnedOnRefusal": false,
+                "control": "returned",
+                "controlArgv": [
+                  "--workspace",
+                  "<root>",
+                  "context",
+                  "render",
+                  "--model",
+                  "fixture-model",
+                  "--task",
+                  "fixture-task",
+                  "--no-commit",
+                  "--no-input",
+                  "--json"
+                ]
+              },
+              "node": {
+                "refusals": [
+                  "{model,task} +contextDemand: validation",
+                  "{model,task} +contextPrecision: validation",
+                  "{model,task} +projectionRequirement: validation",
+                  "{view,taskId} +contextDemand: validation",
+                  "{view,taskId} +contextPrecision: validation",
+                  "{view,taskId} +projectionRequirement: validation"
+                ],
+                "spawnedOnRefusal": false,
+                "control": "returned",
+                "controlArgv": [
+                  "--workspace",
+                  "<root>",
+                  "context",
+                  "render",
+                  "--model",
+                  "fixture-model",
+                  "--task",
+                  "fixture-task",
+                  "--no-commit",
+                  "--no-input",
+                  "--json"
+                ]
+              },
+              "capability_invoke": {
+                "refusals": [
+                  "{model,task} +contextDemand: validation",
+                  "{model,task} +contextPrecision: validation",
+                  "{model,task} +projectionRequirement: validation",
+                  "{view,taskId} +contextDemand: validation",
+                  "{view,taskId} +contextPrecision: validation",
+                  "{view,taskId} +projectionRequirement: validation"
+                ],
+                "spawnedOnRefusal": false,
+                "control": "returned",
+                "controlArgv": [
+                  "--workspace",
+                  "<root>",
+                  "context",
+                  "render",
+                  "--model",
+                  "fixture-model",
+                  "--task",
+                  "fixture-task",
+                  "--no-commit",
+                  "--no-input",
+                  "--json"
+                ]
+              }
+            },
+            "plants": {
+              "piParameter": [
+                "pi:plant_tool.parameters.properties.contextDemand#key:1 demand"
+              ],
+              "curatedInput": [
+                "mcp:plant_tool.inputSchema.properties.mode.description:1 precision"
+              ],
+              "descriptorInput": [
+                "planted:plant.capability.inputSchema.properties.projection_requirement#key:1 carrier"
+              ]
+            },
+            "quiet": {
+              "R-UNNAMED-INPUT": {
+                "declared": [
+                  "inherit_context"
+                ],
+                "findings": [],
+                "shapes": [
+                  [],
+                  []
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "B4",
+          "quote": "becomes the demand channel",
+          "witness": {
+            "subjects": [
+              "demand",
+              "demand",
+              "demand",
+              "precision",
+              "precision",
+              "demand",
+              "demand",
+              "demand"
+            ],
+            "families": [
+              "demand",
+              "demand",
+              "demand",
+              "demand",
+              "precision",
+              "precision",
+              "precision",
+              "precision",
+              "precision",
+              "precision"
+            ],
+            "carrier": [
+              "carrier",
+              "carrier",
+              "carrier",
+              "carrier"
+            ],
+            "markers": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "nearMisses": [
+              "subjectless",
+              "subjectless",
+              "none",
+              "none",
+              "none"
+            ],
+            "cuts": [
+              [
+                "t:1 demand"
+              ],
+              [
+                "t:1 demand"
+              ],
+              [
+                "t:1 demand"
+              ],
+              [],
+              [],
+              [
+                "t:1 demand"
+              ]
+            ],
+            "quiet": {
+              "R-PARAPHRASE": [
+                null,
+                null,
+                null,
+                null
+              ],
+              "R-SUBJECTLESS": [
+                null,
+                null,
+                null
+              ],
+              "R-SPLIT": [
+                [],
+                []
+              ],
+              "R-MARKER-ANYWHERE": [
+                null,
+                null
+              ],
+              "R-LOOKALIKE": [
+                null,
+                null
+              ],
+              "R-SYNONYM": [
+                "cannot",
+                "contexts",
+                "demanded",
+                "demanding",
+                "demands",
+                "imprecise",
+                "imprecisely",
+                "imprecision",
+                "neither",
+                "nor",
+                "nothing",
+                "precise",
+                "precisely",
+                "requirements",
+                "without"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "Artifact: a Pi EDC context-assembly consumer (none exists)",
+      "pins": [
+        {
+          "id": "C1",
+          "quote": "Artifact: a Pi EDC context-assembly consumer",
+          "witness": {
+            "table": {
+              "gates": [
+                "ABSENT",
+                "PRESENT",
+                "PRESENT"
+              ],
+              "guards": [
+                "pass",
+                "fail",
+                "owed",
+                "owed"
+              ],
+              "owed": [
+                [],
+                [
+                  "U1",
+                  "U2",
+                  "U3"
+                ]
+              ]
+            },
+            "replica": {
+              "sites": [
+                "src/consumer.ts:1 import edc",
+                "src/consumer.ts:1 lexeme edc"
+              ],
+              "dependencies": [
+                "dependencies.evidence-directed-assembly"
+              ],
+              "gate": "PRESENT",
+              "verdict": "owed",
+              "owed": [
+                "U1",
+                "U2",
+                "U3"
+              ]
+            }
+          }
+        },
+        {
+          "id": "C2",
+          "quote": "(none exists)",
+          "witness": {
+            "gate": "ABSENT",
+            "verdict": "pass",
+            "findings": [],
+            "positives": [
+              "src/zz-plant.ts:1 lexeme:1 demand",
+              ".pi/agents/zz-plant.md:1 precision",
+              "examples/zz-plant.md:1 carrier",
+              "pi:zz_plant.description:1 demand"
+            ],
+            "replica": {
+              "code": [
+                "examples/workflows/plant-twin.js",
+                "examples/workflows/plant.js",
+                "src/plant-twin.ts",
+                "src/plant.ts"
+              ],
+              "pages": [
+                ".agents/skills/plant/SKILL.md",
+                ".pi/agents/plant-twin.md",
+                ".pi/agents/plant.md",
+                "examples/plant.md"
+              ],
+              "findings": [
+                ".agents/skills/plant/SKILL.md:1 carrier",
+                ".pi/agents/plant.md:1 demand",
+                "examples/plant.md:1 demand",
+                "examples/workflows/plant.js:1 lexeme:1 precision",
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "verdict": "fail",
+              "owed": "owed"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "unclaimed": [
+    {
+      "id": "U1",
+      "source": "title",
+      "duty": "context demand and precision shall be expressed only as an explicit, typed, declarative client projection requirement validated at the boundary",
+      "reason": "an armed duty: it binds once Pi adopts EDC context assembly; no Pi EDC context-assembly consumer exists (C2 reads ABSENT), so there is no projection requirement to type or validate at a boundary"
+    },
+    {
+      "id": "U2",
+      "source": "title",
+      "duty": "never encoded as an imperative model instruction or tool call",
+      "reason": "an armed duty: it binds at adoption; until then B1-B3 read that no Pi prompt, tool description or capability input names context demand or precision at all"
+    },
+    {
+      "id": "U3",
+      "source": "filing",
+      "duty": "Acceptance: at adoption, a falsifier shows demand carried as a typed projection-requirement value, plus a red case where an imperative prompt phrase or tool call attempts to carry demand and is refused.",
+      "reason": "the acceptance is at adoption: an adoption reads PRESENT and reds this census (verdict owed, C1), and the adopting cut delivers this falsifier pair"
+    }
+  ],
+  "residuals": [
+    {
+      "id": "R-UNNAMED-ADOPTION",
+      "quietPin": "A2"
+    },
+    {
+      "id": "R-SCOPE",
+      "quietPin": "B1"
+    },
+    {
+      "id": "R-COMPOSED",
+      "quietPin": "B1"
+    },
+    {
+      "id": "R-UNNAMED-INPUT",
+      "quietPin": "B3"
+    },
+    {
+      "id": "R-PARAPHRASE",
+      "quietPin": "B4"
+    },
+    {
+      "id": "R-SUBJECTLESS",
+      "quietPin": "B4"
+    },
+    {
+      "id": "R-SPLIT",
+      "quietPin": "B4"
+    },
+    {
+      "id": "R-MARKER-ANYWHERE",
+      "quietPin": "B4"
+    },
+    {
+      "id": "R-LOOKALIKE",
+      "quietPin": "B4"
+    },
+    {
+      "id": "R-SYNONYM",
+      "quietPin": "B4"
+    }
+  ]
+}
