@@ -59,9 +59,15 @@
  *   (src/ui/conversation-viewer.ts, Pi's Markdown renderer, with the markdown mode on and off). The producer's file does not
  *   exist, so the document is a CONSTRUCTED STAND-IN that says so; B1 pins that no copy named after the gating files exists
  *   in Pi's tree while the gate reads ABSENT, so the real copy arrives only by a re-cut. B3 reads every carrier's render of
- *   each producer label, with the next label as the label-axis control; the two R-DISPLAY-GAPS labels are its carrier-axis
- *   negative rows (wb-vp5l): the carriers that render a gap do not hold them byte for byte, so a cell that reads the input
- *   document instead of its carrier's render reds.
+ *   each producer label, with the next label as the label-axis control. The two R-DISPLAY-GAPS labels are carrier-axis
+ *   negative rows for the carriers that render a gap (wb-vp5l): those carriers do not hold them byte for byte, so a cell of
+ *   theirs that reads the input document instead of its carrier's render reds there. The byte carriers (the four skill
+ *   renders, rf native and injected, the viewer with markdown off) hold both gap labels byte for byte, so those rows cannot
+ *   attribute their cells; the CARRIER-ABSENT control does (wb-wnfb): each carrier family in turn (skill, display, rf,
+ *   viewer) renders a neutral document while the reader is handed the base label's document, so that family's cells read
+ *   false and every other family's true, and any cell that reads the input document instead of its own carrier's render
+ *   reds there (the label layout's identity cell reads the label alone, never a document; the gap and foreign rows
+ *   attribute it).
  * - (c) REFRESH PATH: Pi has no rf/TSX skill copy installed; its only skill reader is preloadSkills, called only by
  *   src/agent-runner.ts on each run; it re-reads the installed file every call (no cache), its only transform is trim, and no
  *   src module writes into a skill root (a writer scan over every src module, with planted positive controls).
@@ -92,7 +98,9 @@
  * that a pass and its recount share (gitList, sentences, WRITE_APIS) hollowed for both sides of an EXACT COVERAGE equality at
  * once (A1's walk, A2's cutter rows, A4's exact counts at d75b68d and C3's five controls read those primitives too); a pass
  * that visits a path, a sentence or a write call and then drops its verdict (the EXACT COVERAGE counts are visits, not
- * verdicts; the in-pass positives and the replica plants judge verdicts only where they sit).
+ * verdicts; the in-pass positives and the replica plants judge verdicts only where they sit); a byte-carrier cell that reads
+ * its own carrier's input instead of its render (those carriers hold every B3 label byte for byte, so the two readings agree
+ * on every row, the carrier-absent rows included).
  * RESIDUALS (named; each has a pinned quiet row): R-OUTSIDE-ROOTS (A1) a claim in new-feedback/, vendor/, media/, .beads/,
  *   dist/, node_modules/, .codex/ or .github/, in a root file that is not a .md page (package.json, forge.toml, LICENSE and
  *   the like), or in one of the three user-level skill roots src/skill-loader.ts reads (getAgentDir()/skills,
@@ -579,12 +587,21 @@ function viewerLines(text: string | null, mode: "assistant" | "off"): string[] {
   return viewer.render(200).map(line => line.replace(ANSI, ""));
 }
 const visible = (lines: readonly string[], line: string): boolean => lines.some(rendered => rendered.includes(line));
-/** One render of `doc` through every carrier; the returned reader says which carriers hold a given label (B3's cells). */
-async function holdersOf(doc: string): Promise<(label: string) => Obj> {
-  const skill = Object.values(skillRender(doc));
-  const shown = Object.values(display(doc));
-  const carried = Object.values(await rfCarried(doc));
-  const viewer = [viewerLines(doc, "assistant"), viewerLines(doc, "off")];
+/** The carrier families of B3's cells, in the reader's order; the carrier-absent control (wb-wnfb) takes each in turn. */
+const CARRIER_FAMILIES = ["skill", "display", "rf", "viewer"] as const;
+type CarrierFamily = (typeof CARRIER_FAMILIES)[number];
+/** What an absent carrier renders: the stand-in carrying a label no B3 row reads. */
+const NEUTRAL_DOC = standIn("Status: neutral");
+/**
+ * One render of `doc` through every carrier; the returned reader says which carriers hold a given label (B3's cells). The
+ * family named `absent` renders NEUTRAL_DOC instead of `doc`, so its cells must read false while the others read `doc`.
+ */
+async function holdersOf(doc: string, absent?: CarrierFamily): Promise<(label: string) => Obj> {
+  const input = (family: CarrierFamily): string => (family === absent ? NEUTRAL_DOC : doc);
+  const skill = Object.values(skillRender(input("skill")));
+  const shown = Object.values(display(input("display")));
+  const carried = Object.values(await rfCarried(input("rf")));
+  const viewer = [viewerLines(input("viewer"), "assistant"), viewerLines(input("viewer"), "off")];
   return label => ({
     skill: skill.map(value => value.includes(label)),
     display: [...shown.map(value => value.includes(label)), sanitizeWorkbenchText(label, WORKBENCH_TEXT_LIMIT, "label") === label],
@@ -882,7 +899,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     }
     const gapLabels = ["Status:  partial, two spaces", "Status:\tpartial, one tab"];
     // Carrier-axis negative rows (wb-vp5l): each R-DISPLAY-GAPS label read through the same reader over its own document. The
-    // carriers that render a gap do not hold it byte for byte, so a cell that reads the input document reds here.
+    // carriers that render a gap do not hold it byte for byte, so a cell of theirs that reads the input document reds here;
+    // the byte carriers hold both labels byte for byte, so their cells read the same either way (the carrier-absent control
+    // below attributes them).
     for (const label of gapLabels) matrix[label] = (await holdersOf(standIn(label)))(label);
     // R-DISPLAY-GAPS quiet row: a run of spaces or a tab in the label line is rendered as a gap by the display layouts and the
     // shared JSON sanitizer (bytes change, words do not); the byte carriers keep it.
@@ -891,7 +910,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       const carried = await rfCarried(standIn(label));
       gaps[label] = { label: carriage(label, sanitizeWorkbenchText(label, WORKBENCH_TEXT_LIMIT, "label")), text: carriage(label, sanitizeWorkbenchText(label, WORKBENCH_TEXT_LIMIT, "text")), rf: Object.fromEntries(Object.entries(carried).map(([name, value]) => [name, value.output.includes(label)])) };
     }
-    return { matrix, gaps };
+    // Carrier-absent control (wb-wnfb): each carrier family in turn renders NEUTRAL_DOC while the reader is handed the base
+    // label's document, so that family's cells read false (the label layout's identity cell reads the label alone and stays
+    // true) and every other family's read true. A cell that reads the input document instead of its own carrier's render
+    // reds here, the byte carriers' cells included (the four skill renders, rf native and injected, the viewer with markdown
+    // off). The control covers every family the reader reports.
+    const doc = standIn(BASE_LABEL);
+    expect(Object.keys((await holdersOf(doc))(BASE_LABEL))).toEqual([...CARRIER_FAMILIES]);
+    const absent: Record<string, JsonValue> = {};
+    for (const family of CARRIER_FAMILIES) absent[family] = (await holdersOf(doc, family))(BASE_LABEL);
+    return { matrix, gaps, absent };
   },
   B4: async () => {
     const deltas: Record<string, JsonValue> = {};

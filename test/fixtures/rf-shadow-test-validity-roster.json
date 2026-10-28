@@ -1,6 +1,6 @@
 {
   "bead": "wb-hs2j.5",
-  "basis": "The out-of-file roster of test/workbench-rf-shadow-test-validity-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the scan constants, the residual families and the registered test titles, so a census edit that deletes, relabels, swaps or removes a member reds against this file. Producer facts read-only on 2026-10-23: at ReactiveFiberCLI 6a251bf73af57c3a703caf6892dfe3015e06a481, graphTestResultKeys is the required list of $defs.result in src/reactive_fiber_cli/schemas/cli/graph.test.schema.json (blob 8e95edd2c02e) and validationDigestDescription its validation_digest description verbatim, followed by one bracketed Pi qualifier (not producer text) stating that the publication leaf the description names is not served, the not-served marker convention test/workbench-rf-publish-emulation-census.test.ts C2 reads (wb-hs2j.5 re-cut after owner ruling R713); graphValidateResultKeys is the property list of $defs.result in graph.validate.schema.json (blob 1f7ac9bf6eaa). digests are the sha256 of JSON.stringify of: graphTestEnvelope, the producer fixture schemas/fixtures/graph.test/valid/ok_shadow.json (blob 7442508d4fcc) as parsed; graphValidateEnvelope, the installed rf 0.1.832 graph validate --json envelope over a scratch rf init --backend jsonl workspace holding one [[component]] row (instance notes, component demo.notes, created with rf component create --kind declarative) that no [[fiber]] row feeds, with operation_id, workspace id and root normalized to the graph.test fixture's; unfedRow, its one RF_COMPONENT_INSTANCE_UNFED row (identical in result.diagnostics, on the envelope and on the unscoped context render --no-commit envelope over the same workspace, and equal to application/graph.py:983-997 unfed_instance_warnings at the pin); emptyDocumentRow, the RF_RENDER_EMPTY_DOCUMENT row that render printed beside it; validationReceipt, result.validation of schemas/fixtures/graph.validate/valid/ok_candidate_validation.json (blob 3ff2448f1472).",
+  "basis": "The out-of-file roster of test/workbench-rf-shadow-test-validity-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the scan constants, the residual families and the registered test titles, so a census edit that deletes, relabels, swaps or removes a member reds against this file. Since wb-7rz9 the scan also holds every planted control's text by digest (plantDigests, the sha256 of JSON.stringify of each PLANTS text; readingPlantDigests, of each READING_PLANTS [before, after] pair), so a control whose text is swapped reds against this file while no planted needle is copied into the roster, and each reading control's tag shape as the census's tagShapeOf reads it from that text (readingShapes) beside the shapes READING_TAG's alternatives read (tagShapes). Producer facts read-only on 2026-10-23: at ReactiveFiberCLI 6a251bf73af57c3a703caf6892dfe3015e06a481, graphTestResultKeys is the required list of $defs.result in src/reactive_fiber_cli/schemas/cli/graph.test.schema.json (blob 8e95edd2c02e) and validationDigestDescription its validation_digest description verbatim, followed by one bracketed Pi qualifier (not producer text) stating that the publication leaf the description names is not served, the not-served marker convention test/workbench-rf-publish-emulation-census.test.ts C2 reads (wb-hs2j.5 re-cut after owner ruling R713); graphValidateResultKeys is the property list of $defs.result in graph.validate.schema.json (blob 1f7ac9bf6eaa). digests are the sha256 of JSON.stringify of: graphTestEnvelope, the producer fixture schemas/fixtures/graph.test/valid/ok_shadow.json (blob 7442508d4fcc) as parsed; graphValidateEnvelope, the installed rf 0.1.832 graph validate --json envelope over a scratch rf init --backend jsonl workspace holding one [[component]] row (instance notes, component demo.notes, created with rf component create --kind declarative) that no [[fiber]] row feeds, with operation_id, workspace id and root normalized to the graph.test fixture's; unfedRow, its one RF_COMPONENT_INSTANCE_UNFED row (identical in result.diagnostics, on the envelope and on the unscoped context render --no-commit envelope over the same workspace, and equal to application/graph.py:983-997 unfed_instance_warnings at the pin); emptyDocumentRow, the RF_RENDER_EMPTY_DOCUMENT row that render printed beside it; validationReceipt, result.validation of schemas/fixtures/graph.validate/valid/ok_candidate_validation.json (blob 3ff2448f1472).",
   "quote": "A shadow test can have additional runtime findings, but cannot silently claim a superset of graph-validity evidence unless it either includes or references the core structural verdict.",
   "citation": "docs/programs/reactive-context-assembly-2026-10-18/02-swarm-usage-and-command-grammar.md:56@6a251bf73af5",
   "scan": {
@@ -99,6 +99,65 @@
     "readingResiduals": [
       "R-UNTAGGED",
       "R-UNPARENTHESISED"
+    ],
+    "plantDigests": [
+      "src/argv-test.ts:sha256:f719b197d55f896d4b9a5e2a14aefc8770e87865492baa075e6261d3e3a5691a",
+      "src/argv-validate.mts:sha256:2730357d3084f746d44c10b65b1a70e253c7cae0780bdb1a67743bfdf6f3698e",
+      "src/dotted.ts:sha256:8232671453410ff628d16d68b9fa226f779d50d1bd9b560035fcf78cc4711f68",
+      "src/folded.ts:sha256:224e06d223d3851bec6b91a4e92b390b699a9167aef1fd35ab9d8169fda1f9e9",
+      "src/escaped.ts:sha256:c2e31afb01bb53a304a1c6c5e4fe98d04573b6727af252d72ee983528aaa6b60",
+      "src/identifier.ts:sha256:f6b2346b409678cf6bb9ef094bf323e487099603a97fc887cd8cb3d0c540f07f",
+      "src/comment.ts:sha256:6eb8e19db8d55ddc6670fbdeb9304896e8ce9978eab92a35a9152023808af8e4",
+      "src/template.ts:sha256:7e1c463e27afadd773053eaba0d751ac84af87743ff02e9a7fe4a7c96bb139c4",
+      "qa/receipt.mjs:sha256:7e8c6d53788e13c5703e275cc85d02a996744badff4a110d2da6686d331063c0",
+      "examples/flow.js:sha256:120737f3afb88217d9f99fc93ae1544de1e18c5d44fbad1deb285f41d52b862c",
+      "forge.toml:sha256:ef6a0cc3498e530560536a8dd00f886097d1337b9065f1da02d6a8c7a60ce2ac",
+      "scripts/check.ts:sha256:6f38e53dfe75e973e2b260f3a1c24cb740e5a29af85884f3f0f07e66e656437b",
+      "src/composed.ts:sha256:7c4d01d6224142f0c2ea31ac41589d1688b9cc6d72b8e8cfa0245d57c9ca26da",
+      "src/joined.ts:sha256:8b0b8abfeecb699c1ed6ab0edc0de98ec40c8423e51ed468ab9233c09c876119",
+      "src/encoded.ts:sha256:075f46e37a29fa16d295f5865424ecaf105e62785b0d7a57e7be376bb48093a0",
+      "src/lookalike.ts:sha256:4ee3d7cfab87caa72df7be98f276f2f0ef12f21f76e3b649bca239b2f4a93774",
+      "src/invisible.ts:sha256:29f557873602d1f64afcc7bbb510e11e8a68964ff8bfb69f5fc074d37b5d67d1",
+      "docs/provisioning.md:sha256:1b3d6e391750bb4c2e595620cdf3b0d97f5aa77bc4c075c11904d729e429b1a7",
+      "test/needle.test.ts:sha256:c23b4c68156ec5a6f9e8c26c183d5fabc4c4d18a35d49c54bd086a429dc4ea27",
+      "vendor/pkg/index.js:sha256:ba4ffe739f1426b47ce1f7bb5ec6ce4859baa337559ceb5d1faedb99c8065da5",
+      "README.md:sha256:849223da43edb438f00af59459176c882699c63d3c2ca7f246fbec7e635d23c5",
+      "node_modules/pkg/index.js:sha256:9d3c6dbaa1075d1be7fb77ac5eccf20bb8613f5305a1f59a3d91e4d12a6e2926",
+      "src/subgraph.ts:sha256:be1e6f6a56ca16a22f39b745c992435d9acb642c0ea9d9029fb2fb5247352bb7",
+      "src/apart.ts:sha256:2fd80dd15db1b416c9ab380fd002ddbfc59c734cbe758251457dcbb0210c9047"
+    ],
+    "readingPlantDigests": [
+      "G6:sha256:86734191d0e4446f8e6e9854f9a28267a9bb2df1640bba2590dffa70f469335a",
+      "tail:sha256:aad01fed0ead5699a18bf7f851c0251e6e167152e13f7b260782cecbc3ae319f",
+      "upper:sha256:0755a6f281ae96d9383a16329061a2513958d59350df4b3ac89374e233984cb2",
+      "roman:sha256:5c26696f8f034b627931b14c77a65f345391ebffe651e4aad62e9f7dcfae896f",
+      "statement:sha256:a1b966c4c4fc5488df0c6e11ac1e5bf974b12d2af7ccd744576cc0e2c4fe4401",
+      "unclosed:sha256:3ae2991967cc0744b02ea023f7c07bcdd5496c69bba4d6f8e9339cf583e721a2",
+      "unopened:sha256:b833318d3b941b211156de7850ee3894e59d47007bf8f71c0b6334ddffba7f2f",
+      "second-colon:sha256:59451220127f7964dff6d49a44fab913fc463e86455ae68ebe5266c6b5b63921",
+      "untagged:sha256:78e3d335dcef6215edefe48969de13a4b8b76e3d51ed5046bf36c21b1d816a60",
+      "bracket:sha256:ce6961de63bb75deed39cb3c75790cdae516d406810cb39aba416a2cf0ed77dc",
+      "fullwidth:sha256:7362ea12fd1898cbb11da251b6f8eb1dda3cc2dfa77dcae1a5f4f034dc23c2cd",
+      "numbered:sha256:a7644f6eda61a053682538be6b74e5282b57f9ef0a300ea2532528fe2adf3506"
+    ],
+    "readingShapes": [
+      "G6:parenthesised",
+      "tail:parenthesised",
+      "upper:parenthesised",
+      "roman:parenthesised",
+      "statement:parenthesised",
+      "unclosed:unclosed",
+      "unopened:unopened",
+      "second-colon:parenthesised",
+      "untagged:none",
+      "bracket:none",
+      "fullwidth:none",
+      "numbered:none"
+    ],
+    "tagShapes": [
+      "parenthesised",
+      "unclosed",
+      "unopened"
     ]
   },
   "producer": {

@@ -681,13 +681,19 @@ export interface SourceRow {
   readonly pins: readonly string[];
 }
 
+/**
+ * Every printable ASCII character (U+0020 to U+007E) that is not a word character (a letter, digit, _ or $), in code order:
+ * T-FIELD bounds one field on both sides by each, so a scan that reads any of them as a word character under-reports.
+ */
+const BOUNDARY_CHARS: readonly string[] = Array.from({ length: 0x7f - 0x20 }, (_, offset) => String.fromCharCode(0x20 + offset)).filter(char => !/[A-Za-z0-9_$]/.test(char));
+
 /** One row per touch kind; every pin is a source the scan must report exactly once, under that kind only. */
 export const TOUCHPOINTS: readonly (SourceRow & { readonly kind: TouchKind })[] = [
   {
     id: "T-FIELD",
     kind: "FIELD",
     label:
-      "a gp join-value field in code: input_snapshot, graph_digest or canonical_digest, or a camel-case mirror, as a name, a private name, a member, a string, a template part or a regular expression, and in text as a whole word wherever it stands: inside a dotted path, or after or before a longer name that holds it",
+      "a gp join-value field in code: input_snapshot, graph_digest or canonical_digest, or a camel-case mirror, as a name, a private name, a member, a string, a template head, middle or tail, a template without substitutions or a regular expression, and in text as a whole word wherever it stands: inside a dotted path, bounded on both sides by any one printable ASCII character that is not a letter, digit, _ or $, after one, two or sixteen longer names that hold it, or before one",
     pins: [
       'if (receipt.input_snapshot !== exported) throw new Error("mismatch");',
       "const { graph_digest } = reply.result.decision;",
@@ -701,13 +707,19 @@ export const TOUCHPOINTS: readonly (SourceRow & { readonly kind: TouchKind })[] 
       'const path = "receipt.input_snapshot.value";',
       'const text = "xinput_snapshot input_snapshot";',
       'const text = "input_snapshot, not input_snapshots";',
+      ["const path = `receipt.input_snapshot.$", "{part}`;"].join(""),
+      ["const path = `$", "{a}.graph_digest.$", "{b}`;"].join(""),
+      "const path = `receipt.input_snapshot`;",
+      'const text = "xinput_snapshot xinput_snapshot input_snapshot";',
+      `const text = "${"xinput_snapshot ".repeat(16)}input_snapshot";`,
+      ...BOUNDARY_CHARS.map(char => `const text = ${JSON.stringify(`decision${char}graph_digest${char}value`)};`),
     ],
   },
   {
     id: "T-IDENTITIES",
     kind: "IDENTITIES",
     label:
-      "gp's whole-document identity read as identities.graph: a member chain, an optional chain, an element access, a binding or assignment pattern, or a path string, slashed or dotted, whole or inside a longer path",
+      "gp's whole-document identity read as identities.graph: a member chain, an optional chain, an element access, a binding or assignment pattern, or a path string, slashed or dotted, as the whole string or at the start, inside or at the end of a longer path",
     pins: [
       "const id = envelope.identities.graph;",
       "const id = check.identities?.graph;",
@@ -719,6 +731,10 @@ export const TOUCHPOINTS: readonly (SourceRow & { readonly kind: TouchKind })[] 
       'const id = get(check, "identities.graph");',
       'const pointer = "/identities/graph/0";',
       'const path = "check.identities.graph.value";',
+      'const pointer = "identities/graph";',
+      'const pointer = "identities/graph/0";',
+      'const path = "identities.graph.value";',
+      'const path = "check.identities.graph";',
     ],
   },
   {

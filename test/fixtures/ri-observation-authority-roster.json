@@ -1,5 +1,5 @@
 {
-  "comment": "wb-tz4r.5 (RI-UNIFIED-DECISION-INFERENCE-R5): the judged set of test/workbench-ri-observation-authority-census.test.ts. The three spellings of acceptance (a)'s grep are written as placeholders and composed at runtime from their words; each sha256 is the digest of the alternative's own text in the bead (the third one's dot as the plain dot), so the words cannot drift. Producer facts (read-only git show, 2026-10-23): ReactiveInferenceSDK 485f3615db1e 01-contracts.md:20 (the observation-authority sentence), 02-implementation.md:9/:21/:23 (RI-DEC-04, RI-DEC-10, initial restricted seed only), 03-conformance.md:14, the typed decision package's preflight.py:1-3 and contracts.py:55-56 (observations and typed effect policies are later slices; the package name is a sibling census's guarded spelling and is not written here); re-probed at RI origin/master 075ac589d64d: the same sentence at contracts.py:63, no observation-port or tool type, gate closed. ReactiveAgentsSDK: no checkout on the cutting host, not probed. Installed rf 0.1.836 (commit b3494ab13397): 79 leaves, the inference group's one leaf served_reachable, store_required and attach_required, its help sending a recorded render to a model and offering tool schemas from a file; no decision leaf. Pi at c6369e0: the bead's raw grep reads 3, each a leaf-path string in a captured rf leaf catalog (the knownCatalogs), 0 at the filing (trunk 1443ffb and f331270). Witnesses are what each pin's case returns on the cut's tree. wb-roxk (the R694 follow-up of landing 319) adds C1's environment shapes, C2's computed-load and wrapped-launch shapes, C3's quiet controls and three residual rows (R-ALIASED-LOADER, R-VARIABLE-COMMAND, R-EVALUATED-ENV), the outside anchor's test, the wiring constants and each pin's reached assertion count; every line above the row B label stays in place (the sibling seed-claim census pins it by line). wb-1f2w (the R694 follow-up of landing 411) adds C1's runtime-load and re-export environment shapes, C2's indirect-loader and launcher-name shapes, C3's three quiet controls and three residual rows (R-EVALUATED-LOAD, R-INDIRECT-LOADER, R-PASSED-LAUNCHER), and one assertion to every pin's reached count (the echo guard each pin's runner applies), with every line above the row B label in place.",
+  "comment": "wb-tz4r.5 (RI-UNIFIED-DECISION-INFERENCE-R5): the judged set of test/workbench-ri-observation-authority-census.test.ts. The three spellings of acceptance (a)'s grep are written as placeholders and composed at runtime from their words; each sha256 is the digest of the alternative's own text in the bead (the third one's dot as the plain dot), so the words cannot drift. Producer facts (read-only git show, 2026-10-23): ReactiveInferenceSDK 485f3615db1e 01-contracts.md:20 (the observation-authority sentence), 02-implementation.md:9/:21/:23 (RI-DEC-04, RI-DEC-10, initial restricted seed only), 03-conformance.md:14, the typed decision package's preflight.py:1-3 and contracts.py:55-56 (observations and typed effect policies are later slices; the package name is a sibling census's guarded spelling and is not written here); re-probed at RI origin/master 075ac589d64d: the same sentence at contracts.py:63, no observation-port or tool type, gate closed. ReactiveAgentsSDK: no checkout on the cutting host, not probed. Installed rf 0.1.836 (commit b3494ab13397): 79 leaves, the inference group's one leaf served_reachable, store_required and attach_required, its help sending a recorded render to a model and offering tool schemas from a file; no decision leaf. Pi at c6369e0: the bead's raw grep reads 3, each a leaf-path string in a captured rf leaf catalog (the knownCatalogs), 0 at the filing (trunk 1443ffb and f331270). Witnesses are what each pin's case returns on the cut's tree. wb-roxk (the R694 follow-up of landing 319) adds C1's environment shapes, C2's computed-load and wrapped-launch shapes, C3's quiet controls and three residual rows (R-ALIASED-LOADER, R-VARIABLE-COMMAND, R-EVALUATED-ENV), the outside anchor's test, the wiring constants and each pin's reached assertion count; every line above the row B label stays in place (the sibling seed-claim census pins it by line). wb-1f2w (the R694 follow-up of landing 411) adds C1's runtime-load and re-export environment shapes, C2's indirect-loader and launcher-name shapes, C3's three quiet controls and three residual rows (R-EVALUATED-LOAD, R-INDIRECT-LOADER, R-PASSED-LAUNCHER), and one assertion to every pin's reached count (the echo guard each pin's runner applies), with every line above the row B label in place. wb-tnig (the R694 follow-up of landing 509) adds C1's built-in-loader and loader-member environment shapes, C2's computed built-in load, quoted-key loader-method and launcher-alternative shapes, C3's two quiet controls and one residual row (R-COMPUTED-LAUNCHER), and one assertion to every pin's reached count (the identity reading each pin's runner applies after its case runs), with every line above the row B label in place.",
   "bead": "wb-tz4r.5",
   "riPin": "485f3615db1e",
   "riProbe": "075ac589d64d",
@@ -379,6 +379,27 @@
             ],
             "reexportedProcess": [
               "env-read"
+            ],
+            "builtinProcess": [
+              "env-read"
+            ],
+            "builtinGlobal": [
+              "env-read"
+            ],
+            "builtinKeyedCall": [
+              "env-read"
+            ],
+            "mainModuleProcess": [
+              "env-read"
+            ],
+            "mainRequireProcess": [
+              "env-read"
+            ],
+            "namespaceCreateRequire": [
+              "env-read"
+            ],
+            "internalLoadProcess": [
+              "env-read"
             ]
           }
         },
@@ -487,6 +508,55 @@
             "managerModuleRequire": [
               "orchestrator",
               "env-read"
+            ],
+            "builtinComputed": [
+              "computed-load"
+            ],
+            "managerRequireKeyedCall": [
+              "orchestrator",
+              "env-read"
+            ],
+            "managerReflectKeyedApply": [
+              "orchestrator",
+              "env-read"
+            ],
+            "conditionalLauncher": [
+              "launches"
+            ],
+            "arrayPatternLauncher": [
+              "launches"
+            ],
+            "logicalLauncher": [
+              "launches"
+            ],
+            "orLauncher": [
+              "launches"
+            ],
+            "andLauncher": [
+              "launches"
+            ],
+            "assignedLauncher": [
+              "launches"
+            ],
+            "elementLauncher": [
+              "launches"
+            ],
+            "heldArrayLauncher": [
+              "launches"
+            ],
+            "objectPatternLauncher": [
+              "launches"
+            ],
+            "iteratedLauncher": [
+              "launches",
+              "loop"
+            ],
+            "conditionalWrapped": [
+              "launches",
+              "wrapped"
+            ],
+            "keyedElementLauncher": [
+              "launches"
             ]
           }
         },
@@ -511,7 +581,10 @@
             "renamedOther": [],
             "R-EVALUATED-LOAD": [],
             "R-INDIRECT-LOADER": [],
-            "R-PASSED-LAUNCHER": []
+            "R-PASSED-LAUNCHER": [],
+            "builtinOther": [],
+            "otherAlternatives": [],
+            "R-COMPUTED-LAUNCHER": []
           }
         }
       ]
@@ -540,17 +613,17 @@
     "exportFile": ".beads/issues.jsonl"
   },
   "reached": [
-    "A1:6",
-    "A2:5",
-    "A3:6",
-    "A4:6",
-    "A5:7",
-    "A6:7",
-    "B1:6",
-    "B2:4",
-    "B3:4",
-    "C1:4",
-    "C2:4",
-    "C3:4"
+    "A1:7",
+    "A2:6",
+    "A3:7",
+    "A4:7",
+    "A5:8",
+    "A6:8",
+    "B1:7",
+    "B2:5",
+    "B3:5",
+    "C1:5",
+    "C2:5",
+    "C3:5"
   ]
 }
