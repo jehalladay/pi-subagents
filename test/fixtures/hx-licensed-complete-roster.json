@@ -1,0 +1,414 @@
+{
+  "comment": "wb-tz2.9 (HX-ORIGINAL-GOALS-CLOSURE-R9): the OUT-OF-FILE anchor of test/workbench-hx-licensed-complete-census.test.ts (the hk9l/5jha roster pattern). rows, quotes, readings and residuals: the census's judged set, held to the census both ways and in order; witnesses: one per pin, each the value its case MEASURED at the cut (base cd8927fbdbc6, re-measured unchanged on the merged base bb96515d2744), computed by the census from the docs, the configs, forge.toml, package.json, the live sources and src; tests: every registered test title in registration order; gate: the R9 gate artifact's state, its condition, citations and on-landing text (each equal to the bead's own description in the tracker export), and the cutting seat's read-only measurement, which the census never re-reads.",
+  "bead": "wb-tz2.9",
+  "rows": [
+    {
+      "id": "W",
+      "label": "Pi shall add one live licensed-complete/known-empty witness to the native tier, asserted through the R1 invariant predicate",
+      "pins": [
+        "W1",
+        "W2"
+      ]
+    },
+    {
+      "id": "S",
+      "label": "until then the licensed-complete branch remains explicitly fixture-labelled",
+      "pins": [
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "id": "T",
+      "label": "tier labels stay explicit — the docs/14 HX row (docs/workbench/14-qa-and-benchmarks.md:25@9df9a03) is bound by the wb-cax.25 census",
+      "pins": [
+        "T1",
+        "T2",
+        "T3"
+      ]
+    },
+    {
+      "id": "N",
+      "label": "fixture passes are never counted as native evidence",
+      "pins": [
+        "N1"
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the claim scanner's named residual families, each member a pinned quiet row",
+      "pins": [
+        "Q1",
+        "Q2"
+      ]
+    }
+  ],
+  "quotes": {
+    "W1": "Pi shall add one live licensed-complete/known-empty witness to the native tier",
+    "W2": "asserted through the R1 invariant predicate",
+    "S1": "until then the licensed-complete branch remains",
+    "S2": "explicitly fixture-labelled",
+    "T1": "tier labels stay explicit",
+    "T2": "the docs/14 HX row (docs/workbench/14-qa-and-benchmarks.md:25@9df9a03)",
+    "T3": "is bound by the wb-cax.25 census",
+    "N1": "fixture passes are never counted as native evidence",
+    "Q1": "R-RUNTIME-VALUE",
+    "Q2": "R-HELPER"
+  },
+  "readings": {
+    "W1": "pending: the native-read tier's HX live set is its two files that import an HX entry point, and no HX case there witnesses the licensed-complete branch",
+    "W2": "both live files assert through hxLiveInvariant, which licenses absence on the provider path's runtime-licensed complete-empty reading only",
+    "S1": "no native-read file states a licensed-complete claim, and the claim scanner flags every falsifier and no benign statement",
+    "S2": "every HX row of the positive half in the docs/14 evidence table carries the default-gate tier, beside the section's no-live-pass sentence",
+    "T1": "each HX evidence row's tier names the config that selects its file, and its case is registered there by its verbatim title",
+    "T2": "the cited line at 9df9a03 is the current HX row of the docs/14 matrix, cell for cell",
+    "T3": "the complete gate's census step selects the wb-cax.25 census, which binds the docs/14 matrix section",
+    "N1": "TRACEABILITY.md:76 keeps its sentence, the default config selects no native-read file and the native-read config selects no licensed-complete fixture file",
+    "Q1": "quiet: the scanner reads no licence or verdict value computed at run time",
+    "Q2": "quiet: the scanner follows no helper"
+  },
+  "residuals": {
+    "Q1": [
+      "expect(verdict).toMatchObject({absenceLicensed: !0});",
+      "const yes = true; expect(verdict).toMatchObject({absenceLicensed: yes});",
+      "expect(verdict).toMatchObject({['absence' + 'Licensed']: true});"
+    ],
+    "Q2": [
+      "assertLicensedComplete(result);"
+    ]
+  },
+  "witnesses": {
+    "W1": {
+      "config": "vitest.native.config.ts",
+      "files": [
+        "test/workbench-ecosystem-native.test.ts",
+        "test/workbench-native-client.test.ts",
+        "test/workbench-native-ecosystem.test.ts",
+        "test/workbench-pi-node-client.test.ts"
+      ],
+      "entryPoints": [
+        "HyperUnix",
+        "nativeHyperUnixFind",
+        "registerHyperUnixFind",
+        "registerNativeHyperUnixFind"
+      ],
+      "live": [
+        {
+          "file": "test/workbench-ecosystem-native.test.ts",
+          "entries": [
+            "HyperUnix",
+            "registerHyperUnixFind"
+          ],
+          "cases": [
+            "HX partial coverage remains incomplete and does not license absence"
+          ],
+          "witnessing": []
+        },
+        {
+          "file": "test/workbench-native-ecosystem.test.ts",
+          "entries": [
+            "nativeHyperUnixFind"
+          ],
+          "cases": [
+            "HX typed query retains incomplete coverage and binary identity"
+          ],
+          "witnessing": []
+        }
+      ]
+    },
+    "W2": {
+      "route": [
+        {
+          "file": "test/workbench-ecosystem-native.test.ts",
+          "predicateExpectations": 1
+        },
+        {
+          "file": "test/workbench-native-ecosystem.test.ts",
+          "predicateExpectations": 1
+        }
+      ],
+      "armed": {
+        "verdicts": {
+          "licensed": {
+            "holds": true,
+            "violations": [],
+            "absenceLicensed": true,
+            "versionClass": "unstamped"
+          },
+          "unlicensed": {
+            "holds": true,
+            "violations": [],
+            "absenceLicensed": false,
+            "versionClass": "unstamped"
+          }
+        },
+        "projection": {
+          "coverage": "complete",
+          "statusTone": "success",
+          "statusText": "known-empty (runtime-licensed) · rows 0"
+        },
+        "paths": {
+          "kind": "source.execution_status.kind",
+          "licence": "source.coverage_summary.licenses_absence"
+        },
+        "vocabulary": {
+          "verdictField": "absenceLicensed",
+          "licenceField": "licenses_absence",
+          "completeKinds": [
+            "complete",
+            "complete-empty"
+          ],
+          "coverage": "complete",
+          "knownEmpty": "known-empty"
+        }
+      }
+    },
+    "S1": {
+      "files": {
+        "test/workbench-ecosystem-native.test.ts": [],
+        "test/workbench-native-client.test.ts": [],
+        "test/workbench-native-ecosystem.test.ts": [],
+        "test/workbench-pi-node-client.test.ts": []
+      },
+      "falsifiers": {
+        "verdict-property": 1,
+        "verdict-tobe": 1,
+        "verdict-not-false": 1,
+        "verdict-truthy": 1,
+        "licence-property": 1,
+        "licence-quoted-key": 1,
+        "licence-element": 1,
+        "licence-not-falsy": 1,
+        "licence-dotted-path": 1,
+        "licence-array-path": 1,
+        "kind-complete": 1,
+        "kind-complete-empty": 1,
+        "kind-matcher": 1,
+        "coverage-complete": 1,
+        "known-empty-text": 1,
+        "known-empty-template": 1,
+        "known-empty-title": 1
+      },
+      "benign": []
+    },
+    "S2": {
+      "table": "one table",
+      "licensedHalf": [
+        {
+          "half": "positive",
+          "tier": "default-gate",
+          "file": "test/workbench-hyperunix-observer.test.ts",
+          "title": "H2: only a runtime-licensed complete-empty answer is known-empty, complete coverage and a success"
+        },
+        {
+          "half": "positive",
+          "tier": "default-gate",
+          "file": "test/workbench-hyperunix-observer.test.ts",
+          "title": "keeps a provider-failed result failed and reads a runtime-licensed complete-empty result as the one known-empty success"
+        }
+      ],
+      "noLivePass": true
+    },
+    "T1": {
+      "configs": {
+        "default-gate": "vitest.config.ts",
+        "native-read": "vitest.native.config.ts"
+      },
+      "rows": [
+        {
+          "half": "positive",
+          "tier": "default-gate",
+          "file": "test/workbench-hyperunix-observer.test.ts",
+          "selectedBy": {
+            "default": true,
+            "native-read": false
+          },
+          "registered": true
+        },
+        {
+          "half": "positive",
+          "tier": "default-gate",
+          "file": "test/workbench-hyperunix-observer.test.ts",
+          "selectedBy": {
+            "default": true,
+            "native-read": false
+          },
+          "registered": true
+        },
+        {
+          "half": "negative",
+          "tier": "default-gate",
+          "file": "test/workbench-hyperunix-observer.test.ts",
+          "selectedBy": {
+            "default": true,
+            "native-read": false
+          },
+          "registered": true
+        },
+        {
+          "half": "negative-native",
+          "tier": "native-read",
+          "file": "test/workbench-ecosystem-native.test.ts",
+          "selectedBy": {
+            "default": false,
+            "native-read": true
+          },
+          "registered": true
+        },
+        {
+          "half": "negative-native",
+          "tier": "native-read",
+          "file": "test/workbench-native-ecosystem.test.ts",
+          "selectedBy": {
+            "default": false,
+            "native-read": true
+          },
+          "registered": true
+        }
+      ]
+    },
+    "T2": {
+      "citation": {
+        "path": "docs/workbench/14-qa-and-benchmarks.md",
+        "line": 25,
+        "sha": "9df9a03"
+      },
+      "cited": [
+        "HX",
+        "complete query and bounded result",
+        "partial/unknown not known-empty"
+      ],
+      "current": [
+        [
+          "HX",
+          "complete query and bounded result",
+          "partial/unknown not known-empty"
+        ]
+      ]
+    },
+    "T3": {
+      "gateRunsCensus": true,
+      "config": "vitest.census.config.ts",
+      "selectsBinder": true,
+      "leadNamesBead": true,
+      "bindsSection": true
+    },
+    "N1": {
+      "cited": true,
+      "nativeSelectedByDefault": [],
+      "fixtures": [
+        {
+          "file": "test/workbench-hyperunix-observer.test.ts",
+          "default": true,
+          "native-read": false
+        }
+      ]
+    },
+    "Q1": [
+      [],
+      [],
+      []
+    ],
+    "Q2": [
+      []
+    ]
+  },
+  "tests": [
+    "W1: Pi shall add one live licensed-complete/known-empty witness to the native tier - pending: the native-read tier's HX live set is its two files that import an HX entry point, and no HX case there witnesses the licensed-complete branch",
+    "W2: asserted through the R1 invariant predicate - both live files assert through hxLiveInvariant, which licenses absence on the provider path's runtime-licensed complete-empty reading only",
+    "S1: until then the licensed-complete branch remains - no native-read file states a licensed-complete claim, and the claim scanner flags every falsifier and no benign statement",
+    "S2: explicitly fixture-labelled - every HX row of the positive half in the docs/14 evidence table carries the default-gate tier, beside the section's no-live-pass sentence",
+    "T1: tier labels stay explicit - each HX evidence row's tier names the config that selects its file, and its case is registered there by its verbatim title",
+    "T2: the docs/14 HX row (docs/workbench/14-qa-and-benchmarks.md:25@9df9a03) - the cited line at 9df9a03 is the current HX row of the docs/14 matrix, cell for cell",
+    "T3: is bound by the wb-cax.25 census - the complete gate's census step selects the wb-cax.25 census, which binds the docs/14 matrix section",
+    "N1: fixture passes are never counted as native evidence - TRACEABILITY.md:76 keeps its sentence, the default config selects no native-read file and the native-read config selects no licensed-complete fixture file",
+    "Q1: R-RUNTIME-VALUE - quiet: the scanner reads no licence or verdict value computed at run time",
+    "Q2: R-HELPER - quiet: the scanner follows no helper",
+    "rule 16: the rows, the residual families, the falsifier and benign rosters and the claim vocabulary are frozen at their measured shape",
+    "the outside anchors: the bead's own description binds the rows, row N's citation and the gate block; src binds the claim vocabulary and every falsifier form",
+    "roster: the judged rows, the quotes, the readings, the residual members and the registered tests equal test/fixtures/hx-licensed-complete-roster.json, in order and both ways; every pin reached its witness compare"
+  ],
+  "gate": {
+    "state": "absent",
+    "condition": "a Pi-runnable fixture exists where SDK find returns licenses_absence:true from a fresh hx",
+    "citations": [
+      "HXGC-EPI-002 DESIGN requirements.jsonl:6@6ed14cab8d",
+      "GC-D10 14-decisions-and-migration.md:16"
+    ],
+    "onLanding": "a native-tier test drives the fixture workspace through nativeHyperUnixFind and asserts the R1 predicate holds AND coverage reads complete/known-empty with the runtime licence present; the run lands as a NEW TRACEABILITY receipt row (R13 discipline)",
+    "measured": {
+      "recordedUtc": "2026-10-28T04:43:41Z",
+      "seat": "ws-02, run g10-work-s123",
+      "hx": {
+        "onPath": "hx",
+        "version": "0.1.0",
+        "versionClass": "unstamped",
+        "binarySha256": "451221852d248a2d31398b6b18bee9f6e149e5561e30bb6efc5fadeb23dc2913"
+      },
+      "sdkCall": "@hyperunix/sdk 0.1.0 HyperUnix.open(<workspace>).find({kind, root, bestEffort: true, bounds: Bounds.create({wall: '30s'}), timeoutMs: 60000}), the call nativeHyperUnixFind makes",
+      "probes": [
+        {
+          "workspace": "a fresh scratch workspace with an empty src",
+          "kind": "hx.fs/regular-file",
+          "root": "src",
+          "runtimeVersion": "0.1.0",
+          "executionKind": "incomplete",
+          "licensesAbsence": false,
+          "completeness": "incomplete",
+          "modes": [
+            "opportunistic"
+          ],
+          "rows": 1
+        },
+        {
+          "workspace": "a fresh scratch workspace with one file under src",
+          "kind": "hx.fs/regular-file",
+          "root": "src",
+          "runtimeVersion": "0.1.0",
+          "executionKind": "incomplete",
+          "licensesAbsence": false,
+          "completeness": "incomplete",
+          "modes": [
+            "opportunistic"
+          ],
+          "rows": 2
+        },
+        {
+          "workspace": "this checkout",
+          "kind": "hx.fs/regular-file",
+          "root": "src",
+          "runtimeVersion": "0.1.0",
+          "executionKind": "incomplete",
+          "licensesAbsence": false,
+          "completeness": "incomplete",
+          "modes": [
+            "opportunistic"
+          ],
+          "rows": 127
+        },
+        {
+          "cli": "hx find --workspace <empty scratch> --kind hx.fs/regular-file src (strict)",
+          "exit": 3,
+          "code": "HX-COVERAGE-INCOMPLETE",
+          "coverage": "opportunistic",
+          "cause": "other:No_change_exclusion"
+        },
+        {
+          "cli": "hx find --view git:HEAD --workspace <this checkout> --kind hx.fs/regular-file src",
+          "exit": 4,
+          "code": "HX-RUNTIME-INTERNAL-FAILURE",
+          "requirements": "HX-VIEW-003 HX-VIEW-008 HX-VIEW-013"
+        }
+      ],
+      "producer": {
+        "repo": "HyperUnix-CLI",
+        "sha": "166963a04cd757634d25fbddd9b305e966247403",
+        "path": "src/hx_cli/cmd_observer.ml",
+        "blob": "00e173cabe717eb053e73ad517fb68765209b042",
+        "lines": "385-390",
+        "text": "meets a request with Partial under cause No_change_exclusion, so every live listing reads opportunistic, nothing licenses absence, and a Strict listing exits 3 -- the fact cmd_fs.ml states beside [probe]. A constant of the build, computed from the probe record rather than spelled."
+      },
+      "reading": "no Pi-runnable fixture licenses absence on this build: every live hx.fs find reads opportunistic, and hx find binds no pinned view (HX-VIEW-013), so the gate artifact does not exist and the on-landing leg is not delivered"
+    }
+  }
+}
