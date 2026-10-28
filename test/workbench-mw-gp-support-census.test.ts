@@ -10,86 +10,122 @@
  * the gate, src untouched." The statement's last clause is row A5's label. The filing: "Zero Pi change owed until the
  * conjoint gate (GP shadow-mode adapter + Pi hosting) fires."
  *
- * MEASURED (read-only, by the cutting seat, 2026-10-28, at trunk 71a5831 and again at df37dac; every Pi reading below is the
- * same at the claim-time base cf56481: 0 src paths and no docs/workbench/06 change between them). Producer (the local
- * MechanicalWorkflows checkout, git show at the bead's pin 4b8b974ca72bf2ed36b99e315e45857c6181fbe8; the roster's producer
- * block holds the four cited lines and their blobs, and this census never re-reads the producer):
+ * MEASURED (read-only, by the seat of cut #2, 2026-10-28, at trunk e81d2b0 merged into the branch and again at 5fbe25e,
+ * whose delta from e81d2b0 holds no src or docs path). Producer (the local MechanicalWorkflows checkout, git show at the
+ * bead's pin 4b8b974ca72bf2ed36b99e315e45857c6181fbe8; the roster's producer block holds the four cited lines and their
+ * blobs, re-read equal at cut #2, and this census never re-reads the producer):
  * docs/programs/graph-policy-coordination-2026-10-18.md
  * (blob 01ff00d480ec) :8 ends "and does not reinterpret mw.training-export.v1 post-proposal admission as the policy's
  * pre-sampling eligible support." and :12 reads "2. A trusted adapter enumerates a finite, typed, legal **pre-sampling**
  * assignment support under hard known capacity/permissions, and exports a bounded role-aware GraphDataIR."; its README.md
  * (blob 0dbff582a14c) :9 opens the host's flow "Host: obtain bounded typed graph and **pre-sampling** legal candidates" and
- * :15 holds "Post-proposal admission is **not** original sampler support." Pi: git's src listing holds 116 files, all .ts,
+ * :15 holds "Post-proposal admission is **not** original sampler support." Pi: git's src listing holds 117 files, all .ts,
  * and the vocabulary reader below reads none of them. The filing's other two search words are Pi's own words with other
  * meanings: "capacity" in src/ui/workflow-dialog.ts, src/ui/workflow-inspector.ts and src/workbench/claude-control-observer.ts,
  * "eligible" in src/agent-manager.ts, src/ui/agent-widget.ts and src/workflow/journal-compat.ts. docs/workbench/06 is
- * byte-identical at the filing pin 758ec18187a5 and at the base (git diff --quiet rc 0); its :5, :15 and :73 are the filing's
+ * byte-identical at the filing pin 758ec18187a5 and at 5fbe25e (git diff --quiet rc 0); its :5, :15 and :73 are the filing's
  * citations, and the routing-hint sentence the filing paraphrases is its :28. No src module names the vocabulary: the gate
  * has not fired.
  *
  * READINGS.
  * - THE MODEL (this file; test-only, src untouched): a pre-sampling basis (a revision, agents with a capacity and grants,
- *   tasks with a capability and a load) or a post-proposal record (an mw.training-export.v1 admission or a reconcile verdict,
- *   each naming the pairs it admitted). A pair (agent, task) is legal when the agent's capacity is hard known (a
- *   non-negative safe integer: "unknown", a fraction, a negative or an unbounded value is not), the task's load fits it, and
- *   the registry grants the agent invocation of the task's capability: every explicit permission of the registered
- *   descriptor, or exact invoke:<id> when it requires none (docs/workbench/06 "Current experimental policy surface"); an
- *   unregistered capability is never legal. The registry is the real src CapabilityRegistry holding four fixture
- *   capabilities: its catalogSnapshot is the catalog an adapter reads, and its invoke is the oracle rows S and P hold the
- *   reading to.
+ *   tasks with a capability and a load) or a post-proposal record (an mw.training-export.v1 admission or a reconcile
+ *   verdict, each naming the pairs it admitted). A pair (agent, task) is legal when the agent's capacity is hard known (a
+ *   non-negative safe integer), the task's load fits it, and the registry grants the agent invocation of the task's
+ *   capability: every explicit permission of the registered descriptor, or exact invoke:<id> when it requires none
+ *   (docs/workbench/06 "Current experimental policy surface"; the invoke-grants case's agent holds exact invoke:<id> for
+ *   every fixture capability and its only legal pair is the one whose capability requires no permission, as the registry's
+ *   own decisions in S1 give it); an unregistered capability is never legal. capacityKind splits capacities into eight
+ *   kinds: unknown (the "unknown" marker), not-a-number (NaN), unbounded, fraction, unsafe (an integer past the safe
+ *   range), negative, zero and known; the fixtures hold an agent of every kind, and each fixture agent's capacity is hard
+ *   known exactly when its kind is zero or known (A1a). The registry is the real src CapabilityRegistry holding four
+ *   fixture capabilities: its catalogSnapshot is the catalog an adapter reads, and its invoke is the oracle rows S and P
+ *   hold the reading to.
  * - THE REFERENCE adapter: a pre-sampling basis yields the IR {basisRevision, count, pairs} of exactly its legal pairs; any
  *   other source is the typed refusal {ok: false, code: "support-source", source: <its kind>}; a candidate outside the IR's
  *   pairs is the typed refusal {admitted: false, code: "outside-support", agent, task}, and one inside is {admitted: true}.
  * - THE CHECKS (judged by value): K-LEGAL (each case's support equals its hand-authored legal pairs exactly, no pair twice),
  *   K-SOURCE (each post-proposal record is the typed refusal), K-IR (each IR's basisRevision is its basis's revision and
  *   its count its pair count), K-OUTSIDE (every candidate of the agent x task grid, plus a ghost agent and a ghost task, is
- *   admitted exactly when inside the support and refused typed otherwise). MUTANTS: 20 adapters, each refused by exactly
+ *   admitted exactly when inside the support and refused typed otherwise). MUTANTS: 22 adapters, each refused by exactly
  *   its declared checks, and every check refuses one alone.
  * - THE ARMED REGISTRATIONS (SITES, empty today): a src module that names the vocabulary must register its adapter there,
  *   and every check then judges it beside the reference; an unregistered naming module, a stale registration and a duplicate
  *   are findings.
  * - THE SRC READING (row A4): every path git lists under src/ (tracked, plus untracked files git does not ignore), each a
  *   regular file read as text; a listed path that is not a regular file is a finding, never skipped. A vocabulary word
- *   (sampler, training-export, GraphDataIR, PRE-SAMPLING) is read case-insensitively anywhere in the path or the text, with any run of
- *   whitespace, dot, underscore, hyphen or format character (Cf) between its parts (separators and camel humps: GraphDataIR
- *   is graph, data, ir).
+ *   (sampler, training-export, GraphDataIR, PRE-SAMPLING) is read case-insensitively anywhere in the path or the text: its
+ *   parts in order, with any run of these separators between them - whitespace (the regex class \s), a full stop (U+002E),
+ *   a low line (U+005F), a dash (Unicode category Pd, which holds the hyphen-minus, U+2010 HYPHEN, U+2011 NON-BREAKING
+ *   HYPHEN and the en dash) or a format character (Cf). A spelling's parts are its words split at whitespace, full stops, low
+ *   lines and hyphen-minus, then at camel humps (GraphDataIR is graph, data, ir). A4b's controls read every separator kind.
+ * - THE DOCS ANCHORS (row S): each docs/workbench/06 line row S reads (:5, :15, :28 and :73) is read at the filing pin and
+ *   in the live page. At the pin, the line holds the row's text and the text stands nowhere else in the page. Both pages
+ *   are read in the rendered view (test/helpers/census.ts docsSection, marked's lexer: markup and HTML comments render no
+ *   text), where the line's level-2 section is bound once under the page's title and runs to the next level-1 or 2 heading
+ *   or EOF: at the pin the section is HTML-free and renders the text in exactly one block, and the live section renders
+ *   exactly the pinned section's blocks and carries no HTML (sectionMatches: slice equality, never includes-anywhere). The
+ *   first cut's reading, the pinned line standing whole in the live page's raw text, is kept as a further conjunct. Each
+ *   line's anchor is also read under five controls, and none leaves it holding: four edits of the live page (the line
+ *   deleted, the line edited, the line wrapped in an HTML comment, the line moved under a new trailing section) and the
+ *   text read at the pinned page's next line. The comment and the move keep the raw line whole, so only the section reading
+ *   refuses them.
+ * - THE ECHO GUARD (the runner, never the case): while a pin's case runs, the roster's witnesses are sealed (a case that
+ *   reads one throws), and the assertions the case makes are counted around it and must number at least one; after the
+ *   witness compare, the runner records the pin's assertion count, and the last case holds those counts, in row order, to
+ *   the roster's. So a case that returns its roster witness, a case that returns a copied witness without asserting, and a
+ *   case that gains or loses an assertion while the roster's counts stand each red.
  *
  * ROWS. A1-A4, the acceptance's four clauses; A5, the statement's last clause; S, the filing's authority slice (the registry
  * authorizes: the reference's permission bit is the registry's dispatch decision for every agent and task, and the
  * registry's own decisions under hard known capacity give each case's legal pairs; effectClass is a routing hint: rotating
  * every fixture's effect class changes no decision and no support; a read-only agent that knows a write capability's id is
- * refused it and holds no pair on it), each docs/workbench/06 line read at the filing pin and found whole in the live page;
- * P, the parity rule (every support pair is one the registry permits, so the support only narrows the registry decision;
- * wb-6hb.4 is closed in the tracker export and its parity test keeps the narrowing sentence); Q, the residuals' pinned quiet
- * rows.
+ * refused it and holds no pair on it), each pin with its docs anchors; P, the parity rule (every support pair is one the
+ * registry permits, so the support only narrows the registry decision; wb-6hb.4 is closed in the tracker export and its
+ * parity test keeps the narrowing sentence); Q, the residuals' pinned quiet rows.
  * RESIDUALS (named families, each member a pinned quiet row; a reading that starts reading a member reds its row):
- * R-COMPOSED (Q1: a word whose parts are split by something other than the reading's separators - an operator, a comment,
- * a quote - or that is escaped, spelled with a homoglyph or joined at run time), R-SHARED-WORD (Q2: the
- * filing's search words "capacity" and "eligible", Pi words with other meanings), R-UNNAMED-ADAPTER (Q3: an enumerator whose
- * path and text name no vocabulary word: what a support enumeration means without the words is outside a text reading) and
- * R-JOINT-CAPACITY (Q4: the support is per pair; three load-1 pairs of one capacity-2 agent all stand in it, since joint
- * capacity across one agent's pairs is the selector's duty, R3 = wb-e66.2).
- * NOT CLAIMED: the bounded, role-aware GraphDataIR schema (node and edge kinds, roles, the bound), design-only at the producer
- * pin (the census pins the acceptance's two IR fields, the basis revision and the count); provider-specific resource scope
- * (docs/workbench/06: enforced by native adapters and host wiring); grant expiry or revocation (the grants "in force" are
- * the ones a basis carries; docs/workbench/06 names no expired-token service); the host's configured grants
+ * R-COMPOSED (Q1, seven members: a word whose parts are split by something other than the reading's separators - an
+ * operator, a comment, a quote, a slash, a middle dot - or that is escaped, spelled with a homoglyph or joined at run time),
+ * R-SHARED-WORD (Q2: the filing's search words "capacity" and "eligible", Pi words with other meanings), R-UNNAMED-ADAPTER
+ * (Q3: an enumerator whose path and text name no vocabulary word: what a support enumeration means without the words is
+ * outside a text reading) and R-JOINT-CAPACITY (Q4: the support is per pair; three load-1 pairs of one capacity-2 agent all
+ * stand in it, since joint capacity across one agent's pairs is the selector's duty, R3 = wb-e66.2).
+ * NOT CLAIMED: the bounded, role-aware GraphDataIR schema (node and edge kinds, roles, the bound), design-only at the
+ * producer pin (the census pins the acceptance's two IR fields, the basis revision and the count); provider-specific
+ * resource scope (docs/workbench/06: enforced by native adapters and host wiring); grant expiry or revocation (the grants
+ * "in force" are the ones a basis carries; docs/workbench/06 names no expired-token service); the host's configured grants
  * (workbench.capabilityGrants) and its registry wiring (an adapter here reads a registry this file builds); the authority
  * sentence's first clause (the support is the host adapter's duty, never GP's and never MW reconcile's: A2 judges the
- * reconcile half, and the GP half has no Pi subject before the gate); that a producer line reads the same past the pin; a
- * case, a record, a mutant or a residual member removed from its table and from every literal of this file and the roster
- * together while every check keeps a sole witness (the vocabulary and the shared words are anchored in the export).
- * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and the shape of every table
- * as literals; the judged set (every row's id, label and pins, every pin's quote and witness, the cases, the records, the
- * mutants and their declared checks, the residual members, every registered test title) is held to the out-of-file roster
- * test/fixtures/mw-gp-support-roster.json, in order and both ways.
- * OUTSIDE ANCHORS (their own registered case): the bead's own row in the tracker export (.beads/issues.jsonl) - each
- * acceptance clause is exactly one A row's label, A5's label ends the statement, rows S and P are the authority sentence's
- * slices, and each row's pin quotes tile its label with nothing but separators; the docs/workbench/06 lines and the filing
- * pin are the authority citation's; the vocabulary and the shared words are the filing's search words, in order, and the
- * statement's PRE-SAMPLING; the producer block's paths, lines and pin are the source citations', and it carries their
- * quotes. So a pin, a row, a word or a label removed from every literal of this file and the roster together still reds.
- * The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran before it) and REACHED
- * (every pin reached its witness compare, and each compare's own result).
+ * reconcile half, and the GP half has no Pi subject before the gate); that a producer line reads the same past the pin; the
+ * producer block's line texts beyond the two quotes the source citations carry (the seats read them equal at the pin; the
+ * census never re-reads the producer); that R-COMPOSED's seven members exhaust the ways a text reading misses a word. Nor
+ * does it claim that these removals red when made in every literal of this file and the roster together (the self-anchored
+ * CT6 / 6ze.39 class): row Q (its label, its pins Q1-Q4, its residual families and their members), which no source outside
+ * this file names; a pin merge (a pin's case deleted and its quote re-homed into a neighbouring pin of its row), since the
+ * row still tiles its label, so the deleted case's checks (such as A4b's src floor or S2's effect-class rotation) are held
+ * by no anchor outside this file; the :28 docs line's own entry and reading (not a citation; the section equality of :15,
+ * which shares its section, still holds its text); a docs line's text cut to another substring that stands once in the
+ * pinned page (the text only finds the line); a case, a record, a mutant, a residual member, a capacity kind or a
+ * vocabulary control; and a case's assertions changed together with the roster's count.
+ * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS, one quote and one case per
+ * pin in row order, and as literals the shape of the capabilities, the tasks, the cases, the records, the mutants, the
+ * residual families and members, the vocabulary, the shared words, the docs lines, the capacity kinds and the
+ * registrations. The out-of-file roster test/fixtures/mw-gp-support-roster.json holds the rows (id, label, pins), the
+ * quotes, the residual members, the mutants with their declared checks, every pin's witness and assertion count, and every
+ * registered test title; each is compared by equality and in order (keys included). The cases and the records reach the
+ * roster through the pins' witnesses.
+ * OUTSIDE ANCHORS (their own registered case): the bead's own row in the tracker export (.beads/issues.jsonl). The title
+ * opens with the requirement id and the gate; each acceptance clause is exactly one of rows A1-A4's labels, A5's label ends
+ * the statement, rows S and P are the authority sentence's slices, and the pin quotes of each of rows A1-A5, S and P tile
+ * that row's label with nothing but separators between them; the cited docs/workbench/06 lines (:5, :15, :73) and the
+ * filing pin are the authority citation's; the shared words and V1-V3 are the filing's search words, in order, V4 is the
+ * statement's word, and the filing names every vocabulary word; the producer block's paths, lines and pin are the source
+ * citations' (the pin is also PRODUCER_PIN), and it carries their two quotes. So, made in every literal of this file and
+ * the roster together, each of these removals still reds through the export: one of rows A1-A5, S and P; its label, or a
+ * word of it; a pin of one of those rows whose quote is not re-homed (the row's quotes stop tiling its label); a cited docs
+ * line; a vocabulary word or a shared word; a producer line.
+ * The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran before it), REACHED
+ * (every pin reached its witness compare, and each compare's own result) and the recorded assertion counts.
  *
  * Display paths added: none. Test-only: no src change, no GraphPolicyCLI adapter, sampler, seam or fake binary.
  */
@@ -100,6 +136,7 @@ import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 import { afterAll, describe, expect, it } from "vitest";
 import { type CapabilityDescriptor, CapabilityError, type CapabilityErrorCategory, CapabilityRegistry } from "../src/workbench/capability-registry.js";
+import { docsSection, type RenderedBlock, sectionMatches } from "./helpers/census.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 installScratchLeakGuard(afterAll);
@@ -245,7 +282,7 @@ async function decide(registry: CapabilityRegistry, capability: string, grants: 
 
 // ---- the reference adapter ----
 
-/** Hard known capacity: a non-negative safe integer; "unknown", a fraction, a negative or an unbounded value is not known. */
+/** Hard known capacity: a non-negative safe integer; "unknown", NaN, an unbounded value, a fraction, an integer past the safe range or a negative is not known. */
 const knownCapacity = (capacity: Capacity): capacity is number => typeof capacity === "number" && Number.isSafeInteger(capacity) && capacity >= 0;
 /** The registry's invocation rule over the catalog: every explicit permission, or exact invoke:<id> when the descriptor requires none; an unregistered capability is never permitted. */
 function permits(catalog: Catalog, capability: string, grants: readonly string[]): boolean {
@@ -306,6 +343,8 @@ const CASES: readonly Case[] = [
       { id: "a-unbounded", capacity: Number.POSITIVE_INFINITY, grants: ["fixture:read", "fixture:write"] },
       { id: "a-fraction", capacity: 1.5, grants: ["fixture:read"] },
       { id: "a-negative", capacity: -1, grants: ["fixture:read"] },
+      { id: "a-unsafe", capacity: Number.MAX_SAFE_INTEGER + 1, grants: ["fixture:read"] },
+      { id: "a-nan", capacity: Number.NaN, grants: ["fixture:read"] },
       { id: "a-partial", capacity: 4, grants: ["fixture:read"] },
     ]),
     legal: ["a-partial/t-read"],
@@ -317,6 +356,17 @@ const CASES: readonly Case[] = [
       { id: "a-unmeasured", capacity: "unknown", grants: ["fixture:read", "fixture:write", "invoke:fixture.support-open"] },
     ]),
     legal: [],
+  },
+  {
+    id: "invoke-grants",
+    basis: basisOf("invoke-grants", [
+      {
+        id: "a-invoker",
+        capacity: 3,
+        grants: ["invoke:fixture.support-read", "invoke:fixture.support-write", "invoke:fixture.support-open", "invoke:fixture.support-dual", "invoke:fixture.support-missing"],
+      },
+    ]),
+    legal: ["a-invoker/t-open"],
   },
 ];
 interface PostCase {
@@ -536,6 +586,24 @@ const MUTANTS: readonly Mutant[] = [
     adapter: { enumerate: REFERENCE.enumerate, admit: (ir, candidate) => (ir.pairs.some(pair => key(pair) === key(candidate)) ? { admitted: true } : { admitted: false }) },
   },
   { id: "M20", name: "refuse-every-source", refusedBy: ["K-LEGAL", "K-IR", "K-OUTSIDE"], adapter: withEnumerate(source => ({ ok: false, code: "support-source", source: source.kind })) },
+  {
+    id: "M21",
+    name: "unsafe-integer-capacity",
+    refusedBy: ["K-LEGAL"],
+    adapter: withLegal(
+      (catalog, agent, task) =>
+        typeof agent.capacity === "number" && Number.isInteger(agent.capacity) && agent.capacity >= 0 && task.load <= agent.capacity && permits(catalog, task.capability, agent.grants),
+    ),
+  },
+  {
+    id: "M22",
+    name: "invoke-grant-overrides-permissions",
+    refusedBy: ["K-LEGAL"],
+    adapter: withLegal(
+      (catalog, agent, task) =>
+        fits(agent, task) && ((catalog.permissions(task.capability) !== undefined && agent.grants.includes(`invoke:${task.capability}`)) || permits(catalog, task.capability, agent.grants)),
+    ),
+  },
 ];
 const mutantOf = (id: string): Mutant => {
   const found = MUTANTS.find(mutant => mutant.id === id);
@@ -575,8 +643,8 @@ const SHARED_WORDS: readonly string[] = ["capacity", "eligible"];
 /** A spelling's parts: split at whitespace, dots, underscores and hyphens, then at camel humps. */
 const partsOf = (spelling: string): string[] => spelling.split(/[\s._-]+/).flatMap(word => word.match(/[A-Z]+(?![a-z])|[A-Z]?[a-z]+|\d+/g) ?? []);
 const escapeRegex = (text: string): string => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-/** A word's reading: its parts in order, any case, with any run of whitespace, dot, underscore, hyphen or format character between them. */
-const readerOf = (word: Word): RegExp => new RegExp(partsOf(word.spelling).map(escapeRegex).join("[\\s._\\-\\p{Cf}]*"), "iu");
+/** A word's reading: its parts in order, any case, with any run of whitespace, full stops, low lines, dashes (Unicode Pd, the hyphen-minus among them) or format characters (Cf) between them. */
+const readerOf = (word: Word): RegExp => new RegExp(partsOf(word.spelling).map(escapeRegex).join("[\\s._\\p{Pd}\\p{Cf}]*"), "iu");
 const READERS = VOCABULARY.map(word => ({ word, reader: readerOf(word) }));
 /** The vocabulary words a text names, in vocabulary order. */
 const namedWords = (text: string): string[] => READERS.filter(({ reader }) => reader.test(text)).map(({ word }) => word.spelling);
@@ -634,6 +702,12 @@ function liveSrc(): { readonly entries: readonly Entry[]; readonly unread: reado
 }
 const FORMAT_CHARACTER = String.fromCodePoint(0x200b);
 const CYRILLIC_A = String.fromCodePoint(0x430);
+/** Dashes (Unicode Pd) other than the hyphen-minus: HYPHEN, NON-BREAKING HYPHEN and EN DASH. */
+const HYPHEN = String.fromCodePoint(0x2010);
+const NON_BREAKING_HYPHEN = String.fromCodePoint(0x2011);
+const EN_DASH = String.fromCodePoint(0x2013);
+/** MIDDLE DOT (Po): none of the reading's separators. */
+const MIDDLE_DOT = String.fromCodePoint(0xb7);
 /** The reading's controls: each label with its text, read for the words it names. */
 const VOCABULARY_CONTROLS: readonly (readonly [string, string])[] = [
   ["camel", "export type GraphDataIR = unknown;"],
@@ -642,6 +716,9 @@ const VOCABULARY_CONTROLS: readonly (readonly [string, string])[] = [
   ["spaced", "a graph data ir export"],
   ["dotted", "graph.data.ir"],
   ["format characters between the parts", `graph${FORMAT_CHARACTER}data${FORMAT_CHARACTER}ir`],
+  ["hyphen (U+2010) between the parts", `pre${HYPHEN}sampling`],
+  ["non-breaking hyphens (U+2011) between the parts", `Graph${NON_BREAKING_HYPHEN}Data${NON_BREAKING_HYPHEN}IR`],
+  ["en dash (U+2013) between the parts", `training${EN_DASH}export`],
   ["schema id", "mw.training-export.v1"],
   ["constant", "TRAINING_EXPORT"],
   ["camel training export", "trainingExport"],
@@ -658,13 +735,27 @@ const VOCABULARY_CONTROLS: readonly (readonly [string, string])[] = [
 // ---- the docs, the export and the roster ----
 
 const textOf = (path: string): string => readFileSync(join(ROOT, path), "utf8");
-/** The filing's docs/workbench/06 citations (:5, :15, :73) and the routing-hint sentence's own line (:28), each with the text its row needs. */
-const DOCS_LINES: readonly { readonly line: number; readonly cited: boolean; readonly text: string }[] = [
-  { line: 5, cited: true, text: "its job is discover/authorize/dispatch/inspect operations" },
-  { line: 15, cited: true, text: 'effectClass: "read" | "write" | "external" | "unknown";' },
-  { line: 28, cited: false, text: 'The "effectClass" is a conservative routing hint, not an exactly-once guarantee.' },
-  { line: 73, cited: true, text: "Read-only agent cannot invoke write capability even if it knows ID." },
+/** docs/workbench/06's title: the parent heading every bound section sits under. */
+const DOCS_06_TITLE = "06 \u2014 Capability registry, typed node providers and agent tools";
+interface DocsLine {
+  readonly line: number;
+  readonly cited: boolean;
+  /** The level-2 section the line sits in. */
+  readonly section: string;
+  readonly text: string;
+}
+/** The filing's docs/workbench/06 citations (:5, :15, :73) and the routing-hint sentence's own line (:28), each with its section and the text its row needs. */
+const DOCS_LINES: readonly DocsLine[] = [
+  { line: 5, cited: true, section: "Location and scope", text: "its job is discover/authorize/dispatch/inspect operations" },
+  { line: 15, cited: true, section: "Proposed capability descriptor", text: 'effectClass: "read" | "write" | "external" | "unknown";' },
+  { line: 28, cited: false, section: "Proposed capability descriptor", text: 'The "effectClass" is a conservative routing hint, not an exactly-once guarantee.' },
+  { line: 73, cited: true, section: "Conformance tests", text: "Read-only agent cannot invoke write capability even if it knows ID." },
 ];
+const docsLineOf = (line: number): DocsLine => {
+  const found = DOCS_LINES.find(entry => entry.line === line);
+  if (found === undefined) throw new Error(`no docs line ${line}`);
+  return found;
+};
 let pinDocCache: string | undefined;
 const pinDoc = (): string => {
   if (pinDocCache === undefined) pinDocCache = execFileSync("git", ["show", `${FILING_PIN}:${DOCS_06}`], { cwd: ROOT, encoding: "utf8", maxBuffer: 1 << 26 });
@@ -672,16 +763,84 @@ const pinDoc = (): string => {
 };
 interface DocAnchor {
   readonly line: number;
+  /** The pinned page's line holds the text, and the text stands nowhere else in the pinned page. */
   readonly pin: boolean;
+  /** The pinned line stands whole somewhere in the live page's raw text (the first cut's reading, kept as a conjunct). */
   readonly head: boolean;
+  /** At the pin, the line's section (rendered view) carries no HTML and renders the text in exactly one block. */
+  readonly rendered: boolean;
+  /** The live page's section, bound the same way, renders exactly the pinned section's blocks and carries no HTML. */
+  readonly section: boolean;
 }
-/** An anchor read over a pinned page and a live page: the pinned page's line holds the text, and the same whole line stands in the live page. */
-function anchorIn(line: number, text: string, pinned: string, live: string): DocAnchor {
+/** A rendered block shows the text: a list through one of its items, any other block but a heading through its own text. */
+const blockRenders = (block: RenderedBlock, text: string): boolean => (block.kind === "list" ? block.items.some(item => item.text.includes(text)) : block.kind !== "heading" && block.text.includes(text));
+/**
+ * A docs anchor read at a line of the pinned page and over a live page. Both pages are read in the rendered view
+ * (test/helpers/census.ts docsSection: marked's lexer, where markup and HTML comments render no text, the section's heading
+ * stands once in the page under its title, and the section runs to the next level-1 or 2 heading or EOF), and the live
+ * section must equal the pinned one block for block (sectionMatches: slice equality, HTML refused, never includes-anywhere).
+ */
+function anchorIn(entry: DocsLine, line: number, pinned: string, live: string): DocAnchor {
   const at = pinned.split("\n")[line - 1] ?? "";
-  return { line, pin: text !== "" && at.includes(text), head: at !== "" && live.split("\n").includes(at) };
+  const pinnedSection = docsSection(pinned, entry.section, 2, [DOCS_06_TITLE]);
+  return {
+    line,
+    pin: entry.text !== "" && at.includes(entry.text) && pinned.split(entry.text).length === 2,
+    head: at !== "" && live.split("\n").includes(at),
+    rendered: pinnedSection.ok && !pinnedSection.hasHtml && pinnedSection.blocks.filter(block => blockRenders(block, entry.text)).length === 1,
+    section: pinnedSection.ok && pinnedSection.blocks.length > 0 && sectionMatches(docsSection(live, entry.section, 2, [DOCS_06_TITLE]), pinnedSection.blocks).ok,
+  };
 }
-/** A docs/workbench/06 anchor: the line at the filing pin holds the row's text, and the same whole line stands in the live page. */
-const docAnchor = (line: number): DocAnchor => anchorIn(line, DOCS_LINES.find(entry => entry.line === line)?.text ?? "", pinDoc(), textOf(DOCS_06));
+/** An anchor holds when every one of its readings holds. */
+const holds = (anchor: DocAnchor): boolean => anchor.pin && anchor.head && anchor.rendered && anchor.section;
+/** A docs/workbench/06 anchor at its own line: the filing pin's page and the live page. */
+const docAnchor = (line: number): DocAnchor => anchorIn(docsLineOf(line), line, pinDoc(), textOf(DOCS_06));
+interface DocControls {
+  readonly lineDeleted: DocAnchor;
+  readonly lineEdited: DocAnchor;
+  readonly textAtNextLine: DocAnchor;
+  readonly lineCommented: DocAnchor;
+  readonly lineMoved: DocAnchor;
+}
+/**
+ * A docs line's anchor read under five controls, each of which must leave it not holding: four edits of the live page (the
+ * line deleted, the line edited, the line wrapped in an HTML comment - the B5 shape - and the line moved under a new
+ * trailing section - the B6 shape) and the text read at the pinned page's next line. The comment and the move keep the raw
+ * line whole in the live page.
+ */
+function docControls(line: number): DocControls {
+  const entry = docsLineOf(line);
+  const pinned = pinDoc();
+  const live = textOf(DOCS_06);
+  const raw = pinned.split("\n")[line - 1] ?? "";
+  const lines = live.split("\n");
+  const at = lines.indexOf(raw);
+  const edited = (replacement: readonly string[]): string => (at < 0 ? live : [...lines.slice(0, at), ...replacement, ...lines.slice(at + 1)].join("\n"));
+  return {
+    lineDeleted: anchorIn(entry, line, pinned, edited([])),
+    lineEdited: anchorIn(entry, line, pinned, edited([`${raw} (edited)`])),
+    textAtNextLine: anchorIn(entry, line + 1, pinned, live),
+    lineCommented: anchorIn(entry, line, pinned, edited(["<!--", raw, "-->"])),
+    lineMoved: anchorIn(entry, line, pinned, `${edited([]).trimEnd()}\n\n## Withdrawn (not enforced)\n\n${raw}\n`),
+  };
+}
+/** A docs line, asserted: its anchor holds, no control leaves it holding, and the comment and move edits fall to the section reading alone. */
+function assertDocLine(line: number): { readonly anchor: DocAnchor; readonly controls: DocControls } {
+  const anchor = docAnchor(line);
+  expect(anchor, `docs/workbench/06:${line} at the filing pin; its section renders the same in the live page`).toEqual({ line, pin: true, head: true, rendered: true, section: true });
+  const controls = docControls(line);
+  expect(
+    Object.entries(controls)
+      .filter(([, control]) => holds(control))
+      .map(([name]) => name),
+    `no edit of :${line} in the live page leaves its anchor holding`,
+  ).toEqual([]);
+  expect([controls.lineCommented, controls.lineMoved], `:${line} commented or moved keeps its raw line whole, and only the section reading refuses it`).toEqual([
+    { line, pin: true, head: true, rendered: true, section: false },
+    { line, pin: true, head: true, rendered: true, section: false },
+  ]);
+  return { anchor, controls };
+}
 interface BeadRow {
   readonly title: string;
   readonly notes: string;
@@ -743,7 +902,7 @@ const ROWS: readonly Row[] = [
   { id: "P", label: "the parity rule that surface allowlists only narrow a registry decision (closed wb-6hb.4)", pins: ["P1", "P2"] },
   { id: "Q", label: "the named residual families, each member a pinned quiet row", pins: ["Q1", "Q2", "Q3", "Q4"] },
 ];
-/** Each pin's quote: a row's quotes tile its label. Q's pins name their residual families. */
+/** Each pin's quote: the quotes of rows A1-A5, S and P tile their row's label (the outside anchors read it); Q's pins name their residual families. */
 const QUOTES: Readonly<Record<string, string>> = {
   A1a: "a fixture with N agents, per-agent capacity and grants",
   A1b: "yields a support set equal to exactly the legal (agent, task) pairs",
@@ -782,6 +941,8 @@ const RESIDUALS: readonly Residual[] = [
       { id: "escaped", text: 'export const name = "\\u0047raphDataIR";\n' },
       { id: "homoglyph", text: `export const name = "Gr${CYRILLIC_A}phDataIR";\n` },
       { id: "joined", text: 'export const name = ["training", "export"].join("-");\n' },
+      { id: "slashed", text: 'export const at = "graph/data/ir";\n' },
+      { id: "middle-dot", text: `export const name = "graph${MIDDLE_DOT}data${MIDDLE_DOT}ir";\n` },
     ],
   },
   {
@@ -822,6 +983,8 @@ interface Roster {
   readonly residuals: Readonly<Record<string, readonly string[]>>;
   readonly mutants: readonly string[];
   readonly witnesses: Readonly<Record<string, unknown>>;
+  /** Each pin's assertion count at the end of its test (`${pin}:${count}`), in row order. */
+  readonly assertions: readonly string[];
   readonly tests: readonly string[];
   readonly producer: {
     readonly repo: string;
@@ -829,7 +992,19 @@ interface Roster {
     readonly lines: readonly { readonly path: string; readonly blob: string; readonly line: number; readonly text: string }[];
   };
 }
-const ROSTER = JSON.parse(textOf(ROSTER_PATH)) as Roster;
+const ROSTER_FILE = JSON.parse(textOf(ROSTER_PATH)) as Roster;
+/** Set by the runner while a pin's case runs: the roster's witnesses are then sealed (the echo guard). */
+let witnessSealed = false;
+/** The roster, its witnesses read through a seal: a read while a case runs throws. */
+const ROSTER: Roster = {
+  ...ROSTER_FILE,
+  witnesses: new Proxy(ROSTER_FILE.witnesses, {
+    get: (target, property, receiver): unknown => {
+      if (witnessSealed) throw new Error(`a case read the roster witness ${String(property)} while it ran`);
+      return Reflect.get(target, property, receiver);
+    },
+  }),
+};
 const mutantLine = (mutant: Mutant): string => `${mutant.id}:${mutant.name}:${mutant.refusedBy.join("+")}`;
 
 // ---- the pins ----
@@ -839,10 +1014,17 @@ const supportKeys = (adapter: Adapter, entry: Case, catalog: Catalog): string[] 
   const outcome = adapter.enumerate(entry.basis, catalog);
   return outcome.ok ? outcome.ir.pairs.map(key) : null;
 };
-const capacityKind = (capacity: Capacity): string => {
+/** Every capacity kind, in capacityKind's order; only zero and known are hard known. */
+const CAPACITY_KINDS = ["unknown", "not-a-number", "unbounded", "fraction", "unsafe", "negative", "zero", "known"] as const;
+type CapacityKind = (typeof CAPACITY_KINDS)[number];
+const HARD_KNOWN_KINDS: readonly CapacityKind[] = ["zero", "known"];
+/** A capacity's kind ("unsafe": an integer past the safe range). */
+const capacityKind = (capacity: Capacity): CapacityKind => {
   if (capacity === "unknown") return "unknown";
+  if (Number.isNaN(capacity)) return "not-a-number";
   if (!Number.isFinite(capacity)) return "unbounded";
   if (!Number.isInteger(capacity)) return "fraction";
+  if (!Number.isSafeInteger(capacity)) return "unsafe";
   if (capacity < 0) return "negative";
   return capacity === 0 ? "zero" : "known";
 };
@@ -853,13 +1035,17 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
     const shapes = CASES.map(entry => ({ id: entry.id, agents: entry.basis.agents.map(agent => `${agent.id}:${capacityKind(agent.capacity)}:${agent.grants.length}`) }));
     for (const entry of CASES) expect(entry.basis.agents.length, `${entry.id} holds agents`).toBeGreaterThan(0);
     const kinds = [...new Set(CASES.flatMap(entry => entry.basis.agents.map(agent => capacityKind(agent.capacity))))].sort();
-    expect(kinds, "the fixtures hold every capacity kind the support reads").toEqual(["fraction", "known", "negative", "unbounded", "unknown", "zero"]);
+    expect(kinds, "the fixtures hold an agent of every capacity kind").toEqual([...CAPACITY_KINDS].sort());
+    const disagree = CASES.flatMap(entry =>
+      entry.basis.agents.filter(agent => knownCapacity(agent.capacity) !== HARD_KNOWN_KINDS.includes(capacityKind(agent.capacity))).map(agent => `${entry.id}/${agent.id}`),
+    );
+    expect(disagree, "each fixture agent's capacity is hard known exactly when its kind is zero or known").toEqual([]);
     expect(new Set(CASES.map(entry => entry.basis.agents.length)).size, "N differs across the fixtures").toBeGreaterThan(1);
     expect(
       CASES.every(entry => entry.basis.agents.every(agent => Array.isArray(agent.grants))),
       "every agent carries its grants",
     ).toBe(true);
-    return { shapes, kinds };
+    return { shapes, kinds, disagree };
   },
   A1b: () => {
     const catalog = baseCatalog();
@@ -1013,18 +1199,7 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
     return { samples, judged, mutants };
   },
   S1: async () => {
-    const doc = docAnchor(5);
-    expect(doc, "docs/workbench/06:5 at the filing pin, whole in the live page").toEqual({ line: 5, pin: true, head: true });
-    const pinned = pinDoc();
-    const live = textOf(DOCS_06);
-    const line5 = pinned.split("\n")[4] ?? "";
-    const text5 = DOCS_LINES.find(entry => entry.line === 5)?.text ?? "";
-    const anchorControls = {
-      liveWithoutTheLine: anchorIn(5, text5, pinned, live.split("\n").filter(entry => entry !== line5).join("\n")).head,
-      liveLineEdited: anchorIn(5, text5, pinned, live.replace(line5, `${line5} (edited)`)).head,
-      textAtAnotherLine: anchorIn(6, text5, pinned, live).pin,
-    };
-    expect(anchorControls, "the anchor reads the live page and the pinned line, never a constant").toEqual({ liveWithoutTheLine: false, liveLineEdited: false, textAtAnotherLine: false });
+    const doc = assertDocLine(5);
     const { registry, calls } = fixtureRegistry();
     const catalog = catalogOf(registry);
     const tally: Record<string, number> = {};
@@ -1045,14 +1220,10 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
     expect(fromRegistry, "the registry's own decisions under hard known capacity give each case's legal pairs").toEqual(Object.fromEntries(CASES.map(entry => [entry.id, [...entry.legal]])));
     expect(parity, "the reference's permission bit is the registry's dispatch decision for every agent and task").toEqual([]);
     expect(calls.length, "a refused invocation never reached a provider").toBe(tally.permitted ?? 0);
-    return { doc, anchorControls, tally, fromRegistry, parity, providerCalls: calls.length };
+    return { doc, tally, fromRegistry, parity, providerCalls: calls.length };
   },
   S2: async () => {
-    const docs = [docAnchor(15), docAnchor(28)];
-    expect(docs, "docs/workbench/06:15 and :28 at the filing pin, whole in the live page").toEqual([
-      { line: 15, pin: true, head: true },
-      { line: 28, pin: true, head: true },
-    ]);
+    const docs = [assertDocLine(15), assertDocLine(28)];
     const base = fixtureRegistry();
     const rotated = fixtureRegistry(capability => ROTATE[capability.effectClass]);
     const effects = CAPABILITIES.map(capability => `${capability.id}:${base.registry.effectClassOf(capability.id)}->${rotated.registry.effectClassOf(capability.id)}`);
@@ -1076,8 +1247,7 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
     return { docs, effects, changed, moved, held };
   },
   S3: async () => {
-    const doc = docAnchor(73);
-    expect(doc, "docs/workbench/06:73 at the filing pin, whole in the live page").toEqual({ line: 73, pin: true, head: true });
+    const doc = assertDocLine(73);
     const { registry } = fixtureRegistry();
     const five = caseOf("five-agents");
     const reader = five.basis.agents.find(agent => agent.id === "a-reader");
@@ -1148,6 +1318,21 @@ function quietText(id: string): unknown {
 }
 
 const REACHED: { readonly pin: string; readonly same: boolean }[] = [];
+/** Each pin's assertion count at the end of its test, recorded by the runner (`${pin}:${count}`). */
+const ASSERTED: string[] = [];
+/** The assertions a pin's case must make of its own. */
+const OWN_FLOOR = 1;
+/** Runs a pin's case as the runner does: the roster's witnesses sealed while it runs, the assertions it makes counted around it. */
+async function runSealed(implementation: () => unknown): Promise<{ readonly raw: unknown; readonly own: number }> {
+  const before = expect.getState().assertionCalls;
+  witnessSealed = true;
+  try {
+    const raw: unknown = await implementation();
+    return { raw, own: expect.getState().assertionCalls - before };
+  } finally {
+    witnessSealed = false;
+  }
+}
 
 describe(SUITE, () => {
   for (const row of ROWS) {
@@ -1155,12 +1340,14 @@ describe(SUITE, () => {
       it(`${pin}: ${QUOTES[pin] ?? ""}`, { timeout: LIVE_BUDGET_MS }, async () => {
         const implementation = IMPL[pin];
         expect(implementation, `${pin} has a case`).toBeDefined();
-        const raw = implementation === undefined ? undefined : await implementation();
+        const { raw, own } = implementation === undefined ? { raw: undefined, own: 0 } : await runSealed(implementation);
+        expect(own, `${pin}'s case asserts its own outcome before it returns its witness`).toBeGreaterThanOrEqual(OWN_FLOOR);
         expect(raw, `${pin} returns a witness`).not.toBeUndefined();
         const witness: unknown = raw === undefined ? null : JSON.parse(JSON.stringify(raw));
         const expected = ROSTER.witnesses[pin];
         REACHED.push({ pin, same: isDeepStrictEqual(witness, expected) });
         expect(witness, `${pin}'s witness equals the roster's`).toStrictEqual(expected);
+        ASSERTED.push(`${pin}:${expect.getState().assertionCalls}`);
       });
     }
   }
@@ -1182,7 +1369,7 @@ describe(SUITE, () => {
       "t-dual:fixture.support-dual:3",
       "t-missing:fixture.support-missing:1",
     ]);
-    expect(CASES.map(entry => `${entry.id}:${entry.basis.agents.length}:${entry.legal.length}`)).toEqual(["five-agents:5:5", "one-agent:1:3", "bounds:4:1", "empty-support:2:0"]);
+    expect(CASES.map(entry => `${entry.id}:${entry.basis.agents.length}:${entry.legal.length}`)).toEqual(["five-agents:5:5", "one-agent:1:3", "bounds:6:1", "empty-support:2:0", "invoke-grants:1:1"]);
     expect(RECORDS.map(record => `${record.id}:${record.source.kind}:${record.source.admitted.length}`)).toEqual(["training-export-admission:mw.training-export.v1:2", "reconcile-verdict:reconcile-verdict:1"]);
     expect(MUTANTS.map(mutantLine)).toEqual([
       "M01:capacity-ignored:K-LEGAL",
@@ -1205,12 +1392,20 @@ describe(SUITE, () => {
       "M18:admit-every-candidate:K-OUTSIDE",
       "M19:untyped-outside-refusal:K-OUTSIDE",
       "M20:refuse-every-source:K-LEGAL+K-IR+K-OUTSIDE",
+      "M21:unsafe-integer-capacity:K-LEGAL",
+      "M22:invoke-grant-overrides-permissions:K-LEGAL",
     ]);
-    expect(Object.entries(RESIDUAL_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:5", "Q2:2", "Q3:1", "Q4:1"]);
+    expect(Object.entries(RESIDUAL_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:7", "Q2:2", "Q3:1", "Q4:1"]);
     expect(RESIDUALS.map(family => `${family.id}:${family.name}`)).toEqual(["Q1:R-COMPOSED", "Q2:R-SHARED-WORD", "Q3:R-UNNAMED-ADAPTER"]);
     expect(VOCABULARY.map(word => `${word.id}:${word.spelling}`)).toEqual(["V1:sampler", "V2:training-export", "V3:GraphDataIR", "V4:PRE-SAMPLING"]);
     expect(SHARED_WORDS).toEqual(["capacity", "eligible"]);
-    expect(DOCS_LINES.map(entry => `${entry.line}:${entry.cited}`)).toEqual(["5:true", "15:true", "28:false", "73:true"]);
+    expect(DOCS_LINES.map(entry => `${entry.line}:${entry.cited}:${entry.section}`)).toEqual([
+      "5:true:Location and scope",
+      "15:true:Proposed capability descriptor",
+      "28:false:Proposed capability descriptor",
+      "73:true:Conformance tests",
+    ]);
+    expect(CAPACITY_KINDS).toEqual(["unknown", "not-a-number", "unbounded", "fraction", "unsafe", "negative", "zero", "known"]);
     expect(SITES).toEqual([]);
   });
 
@@ -1227,7 +1422,7 @@ describe(SUITE, () => {
     }
   });
 
-  it("the outside anchors: the bead's own row binds the rows, the pin quotes, the docs citation, the vocabulary and the producer block", { timeout: LIVE_BUDGET_MS }, () => {
+  it("the outside anchors: the bead's own row binds the labels of rows A1-A5, S and P and the pin quotes that tile each, the cited docs lines and the filing pin, the vocabulary and the shared words, and the producer block's citations and quotes", { timeout: LIVE_BUDGET_MS }, () => {
     const row = beadRow(BEAD);
     expect(row, `${BEAD}'s row was read from the tracker export`).toBeDefined();
     const title = row?.title ?? "";
@@ -1267,13 +1462,21 @@ describe(SUITE, () => {
     for (const quote of quoted) expect(producerText, `the producer block carries '${quote}'`).toContain(quote);
   });
 
-  it("roster: the judged rows, the quotes, the residual members, the mutants and the registered tests equal test/fixtures/mw-gp-support-roster.json, in order and both ways; every pin reached its witness compare", ({ task }) => {
+  it("roster: the judged rows, the quotes, the residual members, the mutants and the registered tests equal test/fixtures/mw-gp-support-roster.json, in order and both ways; every pin reached its witness compare", async ({ task }) => {
     expect(ROSTER.bead, "the roster is this bead's").toBe(BEAD);
     expect(ROWS, "the judged rows equal the roster rows exactly and in order").toEqual(ROSTER.rows);
     expect(QUOTES, "the pin quotes equal the roster's").toEqual(ROSTER.quotes);
+    expect(Object.keys(QUOTES), "in the roster's order").toEqual(Object.keys(ROSTER.quotes));
     expect(RESIDUAL_MEMBERS, "the residual members equal the roster's").toEqual(ROSTER.residuals);
+    expect(Object.keys(RESIDUAL_MEMBERS), "in the roster's order").toEqual(Object.keys(ROSTER.residuals));
     expect(MUTANTS.map(mutantLine), "the mutants and their declared checks equal the roster's").toEqual(ROSTER.mutants);
     expect(Object.keys(ROSTER.witnesses), "one roster witness per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
+    expect(ROSTER.assertions.map(entry => entry.split(":")[0]), "one roster assertion count per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
+    await expect(
+      runSealed(() => ROSTER.witnesses.A1a),
+      "the echo guard: a case that reads its roster witness throws",
+    ).rejects.toThrow("a case read the roster witness A1a while it ran");
+    expect((await runSealed(() => ({ copied: true }))).own, "the echo guard: a case returning a copied witness makes no assertion of its own").toBeLessThan(OWN_FLOOR);
     const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
     const walk = (tasks: typeof task.file.tasks): void => {
       for (const child of tasks) {
@@ -1303,5 +1506,6 @@ describe(SUITE, () => {
       REACHED.filter(entry => !entry.same).map(entry => entry.pin),
       "and each compare held",
     ).toEqual([]);
+    expect(ASSERTED, "every pin reached its end with the roster's assertion count, its witness compare included, in row order").toEqual(ROSTER.assertions);
   });
 });

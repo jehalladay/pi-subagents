@@ -1,5 +1,5 @@
 {
-  "comment": "wb-e66.1 (MW-GRAPH-POLICY-COORDINATION-R2): the out-of-file roster of test/workbench-mw-gp-support-census.test.ts (standing rule 16). It holds every judged row (id, label, pins), every pin's quote and witness, the residual members, the mutants with their declared checks and every registered test title, in order; the census judges itself against it both ways. The producer block holds the four MechanicalWorkflows lines the filing cites, read with git show at the bead's pin from the local MechanicalWorkflows checkout by the cutting seat on 2026-10-28; the census never re-reads the producer.",
+  "comment": "wb-e66.1 (MW-GRAPH-POLICY-COORDINATION-R2): the out-of-file roster of test/workbench-mw-gp-support-census.test.ts (standing rule 16). It holds every judged row (id, label, pins), every pin's quote, witness and assertion count, the residual members, the mutants with their declared checks and every registered test title, in order; the census compares each with its own by equality. The producer block holds the four MechanicalWorkflows lines the filing cites, read with git show at the bead's pin from the local MechanicalWorkflows checkout by the cutting seat on 2026-10-28 (re-read equal by the seat of cut #2); the census never re-reads the producer.",
   "bead": "wb-e66.1",
   "rows": [
     {
@@ -97,7 +97,9 @@
       "commented",
       "escaped",
       "homoglyph",
-      "joined"
+      "joined",
+      "slashed",
+      "middle-dot"
     ],
     "Q2": [
       "capacity",
@@ -130,7 +132,9 @@
     "M17:count-of-the-grid:K-IR",
     "M18:admit-every-candidate:K-OUTSIDE",
     "M19:untyped-outside-refusal:K-OUTSIDE",
-    "M20:refuse-every-source:K-LEGAL+K-IR+K-OUTSIDE"
+    "M20:refuse-every-source:K-LEGAL+K-IR+K-OUTSIDE",
+    "M21:unsafe-integer-capacity:K-LEGAL",
+    "M22:invoke-grant-overrides-permissions:K-LEGAL"
   ],
   "witnesses": {
     "A1a": {
@@ -157,6 +161,8 @@
             "a-unbounded:unbounded:2",
             "a-fraction:fraction:1",
             "a-negative:negative:1",
+            "a-unsafe:unsafe:1",
+            "a-nan:not-a-number:1",
             "a-partial:known:1"
           ]
         },
@@ -166,16 +172,25 @@
             "a-ungranted:known:0",
             "a-unmeasured:unknown:3"
           ]
+        },
+        {
+          "id": "invoke-grants",
+          "agents": [
+            "a-invoker:known:5"
+          ]
         }
       ],
       "kinds": [
         "fraction",
         "known",
         "negative",
+        "not-a-number",
         "unbounded",
         "unknown",
+        "unsafe",
         "zero"
-      ]
+      ],
+      "disagree": []
     },
     "A1b": {
       "support": {
@@ -194,7 +209,10 @@
         "bounds": [
           "a-partial/t-read"
         ],
-        "empty-support": []
+        "empty-support": [],
+        "invoke-grants": [
+          "a-invoker/t-open"
+        ]
       },
       "judged": {
         "reference": []
@@ -215,6 +233,8 @@
             "bounds: holds a-unbounded/t-dual, outside the legal pairs",
             "bounds: holds a-fraction/t-read, outside the legal pairs",
             "bounds: holds a-negative/t-read, outside the legal pairs",
+            "bounds: holds a-unsafe/t-read, outside the legal pairs",
+            "bounds: holds a-nan/t-read, outside the legal pairs",
             "empty-support: holds a-unmeasured/t-read, outside the legal pairs",
             "empty-support: holds a-unmeasured/t-write, outside the legal pairs",
             "empty-support: holds a-unmeasured/t-open, outside the legal pairs",
@@ -240,7 +260,8 @@
             "bounds: holds a-unbounded/t-read, outside the legal pairs",
             "bounds: holds a-unbounded/t-write, outside the legal pairs",
             "bounds: holds a-unbounded/t-dual, outside the legal pairs",
-            "bounds: holds a-fraction/t-read, outside the legal pairs"
+            "bounds: holds a-fraction/t-read, outside the legal pairs",
+            "bounds: holds a-unsafe/t-read, outside the legal pairs"
           ]
         ],
         [
@@ -256,7 +277,10 @@
             "empty-support: holds a-ungranted/t-read, outside the legal pairs",
             "empty-support: holds a-ungranted/t-write, outside the legal pairs",
             "empty-support: holds a-ungranted/t-open, outside the legal pairs",
-            "empty-support: holds a-ungranted/t-dual, outside the legal pairs"
+            "empty-support: holds a-ungranted/t-dual, outside the legal pairs",
+            "invoke-grants: holds a-invoker/t-read, outside the legal pairs",
+            "invoke-grants: holds a-invoker/t-write, outside the legal pairs",
+            "invoke-grants: holds a-invoker/t-dual, outside the legal pairs"
           ]
         ],
         [
@@ -267,7 +291,8 @@
             "five-agents: holds a-operator/t-read, outside the legal pairs",
             "bounds: holds a-partial/t-open, outside the legal pairs",
             "empty-support: holds a-ungranted/t-read, outside the legal pairs",
-            "empty-support: holds a-ungranted/t-open, outside the legal pairs"
+            "empty-support: holds a-ungranted/t-open, outside the legal pairs",
+            "invoke-grants: holds a-invoker/t-read, outside the legal pairs"
           ]
         ],
         [
@@ -285,7 +310,8 @@
             "five-agents: holds a-operator/t-missing, outside the legal pairs",
             "one-agent: holds a-solo/t-missing, outside the legal pairs",
             "bounds: holds a-partial/t-missing, outside the legal pairs",
-            "empty-support: holds a-ungranted/t-missing, outside the legal pairs"
+            "empty-support: holds a-ungranted/t-missing, outside the legal pairs",
+            "invoke-grants: holds a-invoker/t-missing, outside the legal pairs"
           ]
         ],
         [
@@ -299,7 +325,8 @@
           [
             "five-agents: holds a-reader/t-read twice",
             "one-agent: holds a-solo/t-read twice",
-            "bounds: holds a-partial/t-read twice"
+            "bounds: holds a-partial/t-read twice",
+            "invoke-grants: holds a-invoker/t-open twice"
           ]
         ],
         [
@@ -307,7 +334,8 @@
           [
             "five-agents: misses a-operator/t-open",
             "one-agent: misses a-solo/t-open",
-            "bounds: misses a-partial/t-read"
+            "bounds: misses a-partial/t-read",
+            "invoke-grants: misses a-invoker/t-open"
           ]
         ],
         [
@@ -324,7 +352,22 @@
             "five-agents: refused (support-source)",
             "one-agent: refused (support-source)",
             "bounds: refused (support-source)",
-            "empty-support: refused (support-source)"
+            "empty-support: refused (support-source)",
+            "invoke-grants: refused (support-source)"
+          ]
+        ],
+        [
+          "M21",
+          [
+            "bounds: holds a-unsafe/t-read, outside the legal pairs"
+          ]
+        ],
+        [
+          "M22",
+          [
+            "invoke-grants: holds a-invoker/t-read, outside the legal pairs",
+            "invoke-grants: holds a-invoker/t-write, outside the legal pairs",
+            "invoke-grants: holds a-invoker/t-dual, outside the legal pairs"
           ]
         ]
       ]
@@ -428,6 +471,11 @@
           "id": "empty-support",
           "carried": "rev-empty-support",
           "basis": "rev-empty-support"
+        },
+        {
+          "id": "invoke-grants",
+          "carried": "rev-invoke-grants",
+          "basis": "rev-invoke-grants"
         }
       ],
       "judged": {
@@ -437,7 +485,8 @@
         "five-agents: basis revision \"\", not rev-five-agents",
         "one-agent: basis revision \"\", not rev-one-agent",
         "bounds: basis revision \"\", not rev-bounds",
-        "empty-support: basis revision \"\", not rev-empty-support"
+        "empty-support: basis revision \"\", not rev-empty-support",
+        "invoke-grants: basis revision \"\", not rev-invoke-grants"
       ]
     },
     "A3b": {
@@ -465,13 +514,20 @@
           "count": 0,
           "pairs": 0,
           "legal": 0
+        },
+        {
+          "id": "invoke-grants",
+          "count": 1,
+          "pairs": 1,
+          "legal": 1
         }
       ],
       "grid": [
         "five-agents: count 25 for 5 pairs",
         "one-agent: count 5 for 3 pairs",
-        "bounds: count 20 for 1 pair",
-        "empty-support: count 10 for 0 pairs"
+        "bounds: count 30 for 1 pair",
+        "empty-support: count 10 for 0 pairs",
+        "invoke-grants: count 5 for 1 pair"
       ]
     },
     "A4a": {
@@ -516,6 +572,15 @@
         ],
         "format characters between the parts": [
           "GraphDataIR"
+        ],
+        "hyphen (U+2010) between the parts": [
+          "PRE-SAMPLING"
+        ],
+        "non-breaking hyphens (U+2011) between the parts": [
+          "GraphDataIR"
+        ],
+        "en dash (U+2013) between the parts": [
+          "training-export"
         ],
         "schema id": [
           "training-export"
@@ -623,6 +688,16 @@
             "a-negative/t-open",
             "a-negative/t-dual",
             "a-negative/t-missing",
+            "a-unsafe/t-read",
+            "a-unsafe/t-write",
+            "a-unsafe/t-open",
+            "a-unsafe/t-dual",
+            "a-unsafe/t-missing",
+            "a-nan/t-read",
+            "a-nan/t-write",
+            "a-nan/t-open",
+            "a-nan/t-dual",
+            "a-nan/t-missing",
             "a-partial/t-write",
             "a-partial/t-open",
             "a-partial/t-dual",
@@ -647,6 +722,18 @@
             "a-unmeasured/t-missing",
             "a-ghost/t-read",
             "a-ungranted/t-ghost"
+          ]
+        },
+        {
+          "id": "invoke-grants",
+          "inside": 1,
+          "outside": [
+            "a-invoker/t-read",
+            "a-invoker/t-write",
+            "a-invoker/t-dual",
+            "a-invoker/t-missing",
+            "a-ghost/t-read",
+            "a-invoker/t-ghost"
           ]
         }
       ]
@@ -735,6 +822,16 @@
             "bounds: a-negative/t-open is not the typed refusal",
             "bounds: a-negative/t-dual is not the typed refusal",
             "bounds: a-negative/t-missing is not the typed refusal",
+            "bounds: a-unsafe/t-read is not the typed refusal",
+            "bounds: a-unsafe/t-write is not the typed refusal",
+            "bounds: a-unsafe/t-open is not the typed refusal",
+            "bounds: a-unsafe/t-dual is not the typed refusal",
+            "bounds: a-unsafe/t-missing is not the typed refusal",
+            "bounds: a-nan/t-read is not the typed refusal",
+            "bounds: a-nan/t-write is not the typed refusal",
+            "bounds: a-nan/t-open is not the typed refusal",
+            "bounds: a-nan/t-dual is not the typed refusal",
+            "bounds: a-nan/t-missing is not the typed refusal",
             "bounds: a-partial/t-write is not the typed refusal",
             "bounds: a-partial/t-open is not the typed refusal",
             "bounds: a-partial/t-dual is not the typed refusal",
@@ -752,7 +849,13 @@
             "empty-support: a-unmeasured/t-dual is not the typed refusal",
             "empty-support: a-unmeasured/t-missing is not the typed refusal",
             "empty-support: a-ghost/t-read is not the typed refusal",
-            "empty-support: a-ungranted/t-ghost is not the typed refusal"
+            "empty-support: a-ungranted/t-ghost is not the typed refusal",
+            "invoke-grants: a-invoker/t-read is not the typed refusal",
+            "invoke-grants: a-invoker/t-write is not the typed refusal",
+            "invoke-grants: a-invoker/t-dual is not the typed refusal",
+            "invoke-grants: a-invoker/t-missing is not the typed refusal",
+            "invoke-grants: a-ghost/t-read is not the typed refusal",
+            "invoke-grants: a-invoker/t-ghost is not the typed refusal"
           ]
         ],
         [
@@ -799,6 +902,16 @@
             "bounds: a-negative/t-open is not the typed refusal",
             "bounds: a-negative/t-dual is not the typed refusal",
             "bounds: a-negative/t-missing is not the typed refusal",
+            "bounds: a-unsafe/t-read is not the typed refusal",
+            "bounds: a-unsafe/t-write is not the typed refusal",
+            "bounds: a-unsafe/t-open is not the typed refusal",
+            "bounds: a-unsafe/t-dual is not the typed refusal",
+            "bounds: a-unsafe/t-missing is not the typed refusal",
+            "bounds: a-nan/t-read is not the typed refusal",
+            "bounds: a-nan/t-write is not the typed refusal",
+            "bounds: a-nan/t-open is not the typed refusal",
+            "bounds: a-nan/t-dual is not the typed refusal",
+            "bounds: a-nan/t-missing is not the typed refusal",
             "bounds: a-partial/t-write is not the typed refusal",
             "bounds: a-partial/t-open is not the typed refusal",
             "bounds: a-partial/t-dual is not the typed refusal",
@@ -816,7 +929,13 @@
             "empty-support: a-unmeasured/t-dual is not the typed refusal",
             "empty-support: a-unmeasured/t-missing is not the typed refusal",
             "empty-support: a-ghost/t-read is not the typed refusal",
-            "empty-support: a-ungranted/t-ghost is not the typed refusal"
+            "empty-support: a-ungranted/t-ghost is not the typed refusal",
+            "invoke-grants: a-invoker/t-read is not the typed refusal",
+            "invoke-grants: a-invoker/t-write is not the typed refusal",
+            "invoke-grants: a-invoker/t-dual is not the typed refusal",
+            "invoke-grants: a-invoker/t-missing is not the typed refusal",
+            "invoke-grants: a-ghost/t-read is not the typed refusal",
+            "invoke-grants: a-invoker/t-ghost is not the typed refusal"
           ]
         ],
         [
@@ -825,26 +944,63 @@
             "five-agents: no IR to admit against",
             "one-agent: no IR to admit against",
             "bounds: no IR to admit against",
-            "empty-support: no IR to admit against"
+            "empty-support: no IR to admit against",
+            "invoke-grants: no IR to admit against"
           ]
         ]
       ]
     },
     "S1": {
       "doc": {
-        "line": 5,
-        "pin": true,
-        "head": true
-      },
-      "anchorControls": {
-        "liveWithoutTheLine": false,
-        "liveLineEdited": false,
-        "textAtAnotherLine": false
+        "anchor": {
+          "line": 5,
+          "pin": true,
+          "head": true,
+          "rendered": true,
+          "section": true
+        },
+        "controls": {
+          "lineDeleted": {
+            "line": 5,
+            "pin": true,
+            "head": false,
+            "rendered": true,
+            "section": false
+          },
+          "lineEdited": {
+            "line": 5,
+            "pin": true,
+            "head": false,
+            "rendered": true,
+            "section": false
+          },
+          "textAtNextLine": {
+            "line": 6,
+            "pin": false,
+            "head": false,
+            "rendered": true,
+            "section": true
+          },
+          "lineCommented": {
+            "line": 5,
+            "pin": true,
+            "head": true,
+            "rendered": true,
+            "section": false
+          },
+          "lineMoved": {
+            "line": 5,
+            "pin": true,
+            "head": true,
+            "rendered": true,
+            "section": false
+          }
+        }
       },
       "tally": {
-        "permitted": 25,
-        "authorization": 23,
-        "unavailable": 12
+        "permitted": 28,
+        "authorization": 32,
+        "unavailable": 15
       },
       "fromRegistry": {
         "five-agents": [
@@ -862,22 +1018,107 @@
         "bounds": [
           "a-partial/t-read"
         ],
-        "empty-support": []
+        "empty-support": [],
+        "invoke-grants": [
+          "a-invoker/t-open"
+        ]
       },
       "parity": [],
-      "providerCalls": 25
+      "providerCalls": 28
     },
     "S2": {
       "docs": [
         {
-          "line": 15,
-          "pin": true,
-          "head": true
+          "anchor": {
+            "line": 15,
+            "pin": true,
+            "head": true,
+            "rendered": true,
+            "section": true
+          },
+          "controls": {
+            "lineDeleted": {
+              "line": 15,
+              "pin": true,
+              "head": false,
+              "rendered": true,
+              "section": false
+            },
+            "lineEdited": {
+              "line": 15,
+              "pin": true,
+              "head": false,
+              "rendered": true,
+              "section": false
+            },
+            "textAtNextLine": {
+              "line": 16,
+              "pin": false,
+              "head": true,
+              "rendered": true,
+              "section": true
+            },
+            "lineCommented": {
+              "line": 15,
+              "pin": true,
+              "head": true,
+              "rendered": true,
+              "section": false
+            },
+            "lineMoved": {
+              "line": 15,
+              "pin": true,
+              "head": true,
+              "rendered": true,
+              "section": false
+            }
+          }
         },
         {
-          "line": 28,
-          "pin": true,
-          "head": true
+          "anchor": {
+            "line": 28,
+            "pin": true,
+            "head": true,
+            "rendered": true,
+            "section": true
+          },
+          "controls": {
+            "lineDeleted": {
+              "line": 28,
+              "pin": true,
+              "head": false,
+              "rendered": true,
+              "section": false
+            },
+            "lineEdited": {
+              "line": 28,
+              "pin": true,
+              "head": false,
+              "rendered": true,
+              "section": false
+            },
+            "textAtNextLine": {
+              "line": 29,
+              "pin": false,
+              "head": false,
+              "rendered": true,
+              "section": true
+            },
+            "lineCommented": {
+              "line": 28,
+              "pin": true,
+              "head": true,
+              "rendered": true,
+              "section": false
+            },
+            "lineMoved": {
+              "line": 28,
+              "pin": true,
+              "head": true,
+              "rendered": true,
+              "section": false
+            }
+          }
         }
       ],
       "effects": [
@@ -892,14 +1133,56 @@
         5,
         3,
         1,
-        0
+        0,
+        1
       ]
     },
     "S3": {
       "doc": {
-        "line": 73,
-        "pin": true,
-        "head": true
+        "anchor": {
+          "line": 73,
+          "pin": true,
+          "head": true,
+          "rendered": true,
+          "section": true
+        },
+        "controls": {
+          "lineDeleted": {
+            "line": 73,
+            "pin": true,
+            "head": false,
+            "rendered": true,
+            "section": false
+          },
+          "lineEdited": {
+            "line": 73,
+            "pin": true,
+            "head": false,
+            "rendered": true,
+            "section": false
+          },
+          "textAtNextLine": {
+            "line": 74,
+            "pin": false,
+            "head": true,
+            "rendered": true,
+            "section": true
+          },
+          "lineCommented": {
+            "line": 73,
+            "pin": true,
+            "head": true,
+            "rendered": true,
+            "section": false
+          },
+          "lineMoved": {
+            "line": 73,
+            "pin": true,
+            "head": true,
+            "rendered": true,
+            "section": false
+          }
+        }
       },
       "known": [
         "fixture.support-write",
@@ -919,7 +1202,7 @@
     "P1": {
       "sentence": true,
       "unpermitted": [],
-      "narrowed": 16
+      "narrowed": 18
     },
     "P2": {
       "status": "closed",
@@ -932,7 +1215,9 @@
         "commented",
         "escaped",
         "homoglyph",
-        "joined"
+        "joined",
+        "slashed",
+        "middle-dot"
       ],
       "findings": []
     },
@@ -963,6 +1248,27 @@
       "findings": []
     }
   },
+  "assertions": [
+    "A1a:13",
+    "A1b:20",
+    "A2a:7",
+    "A2b:10",
+    "A3a:12",
+    "A3b:10",
+    "A4a:7",
+    "A4b:9",
+    "A5a:10",
+    "A5b:9",
+    "S1:10",
+    "S2:13",
+    "S3:12",
+    "P1:7",
+    "P2:6",
+    "Q1:7",
+    "Q2:7",
+    "Q3:7",
+    "Q4:6"
+  ],
   "tests": [
     "A1a: a fixture with N agents, per-agent capacity and grants",
     "A1b: yields a support set equal to exactly the legal (agent, task) pairs",
@@ -985,7 +1291,7 @@
     "Q4: R-JOINT-CAPACITY",
     "rule 16: the rows, the tables and the vocabulary are frozen at their measured shape",
     "mutant battery: the reference meets every check, each mutant is refused by exactly its declared checks, and every check refuses a mutant alone",
-    "the outside anchors: the bead's own row binds the rows, the pin quotes, the docs citation, the vocabulary and the producer block",
+    "the outside anchors: the bead's own row binds the labels of rows A1-A5, S and P and the pin quotes that tile each, the cited docs lines and the filing pin, the vocabulary and the shared words, and the producer block's citations and quotes",
     "roster: the judged rows, the quotes, the residual members, the mutants and the registered tests equal test/fixtures/mw-gp-support-roster.json, in order and both ways; every pin reached its witness compare"
   ],
   "producer": {
