@@ -165,95 +165,248 @@
        "test/fixtures/plant-short.json.bak": "outside",
        "test/fixtures/Plant-Short.json": "outside",
        "test/fixtures/plant-short.yaml": "outside",
+       "test/fixtures/Plant-Cased/plant-dircase.json": "outside",
+       "test/fixtures/plant-extcase.JSON": "outside",
+       "test/fixtures/plant-dir.json": "outside",
+       "test/fixtures/plant-short": "outside",
+       "test/fixtures/plant-ghost": "outside",
+       "test/fixtures/plant-nested.json": "outside",
+       "test/fixtures/alias/plant-nested.json": "outside",
        "test/fixtures/plant-dir/plant-inner.json": "outside",
        "test/fixtures/plant-noncensus.json": "outside",
        "test/fixtures/plant-helper-named.json": "outside",
        "test/fixtures/plant-mjs-named.json": "outside",
        "test/fixtures/plant-src-named.json": "outside",
+       "test/fixtures/plant-setup-named.json": "outside",
+       "test/fixtures/plant-dash-named.json": "outside",
+       "test/fixtures/plant-dot-named.json": "outside",
+       "test/fixtures/plant-sub-named.json": "outside",
+       "test/fixtures/plant-deep-named.json": "outside",
+       "test/fixtures/plant-deeptest-named.json": "outside",
+       "test/fixtures/plant-js-named.json": "outside",
+       "test/fixtures/plant-cjs-named.json": "outside",
+       "test/fixtures/plant-mts-named.json": "outside",
+       "test/fixtures/plant-cts-named.json": "outside",
+       "test/fixtures/plant-wb-named.json": "outside",
+       "test/fixtures/plant-wbsub-named.json": "outside",
+       "test/fixtures/plant-srccensus-named.json": "outside",
        "test/helpers/plant-helper.ts": "outside",
        "test/plant-plain.test.ts": "outside",
        "test/plant-reader.test.ts": "quiet",
        "test/helpers/plant-reader.census.ts": "quiet",
        "test/plant-reader.census.mjs": "quiet",
        "src/plant-namer.ts": "quiet",
+       "test/plant-setup.ts": "quiet",
+       "test/plant-loose-census.ts": "quiet",
+       "test/plant-loose.census.test.ts": "quiet",
+       "test/plant-sub/plant-sub-census.test.ts": "quiet",
+       "test/plant-deep/inner/plant-deep.census.ts": "quiet",
+       "test/helpers/inner/plant-inner-census.test.ts": "quiet",
+       "test/plant-reader.census.js": "quiet",
+       "test/plant-reader.census.cjs": "quiet",
+       "test/plant-reader.census.mts": "quiet",
+       "test/plant-reader.census.cts": "quiet",
+       "src/workbench/plant-namer.ts": "quiet",
+       "src/workbench/plant-sub/plant-namer.ts": "quiet",
+       "src/plant.census.ts": "quiet",
        "test/quiet-spelling.test.ts": "quiet",
        "test/quiet-composed.test.ts": "quiet",
        "qa/quiet-scope.mjs": "unwalked"
       },
       "selfNamed": {
        "named": [
+        "test/fixtures/Plant-Cased/plant-dircase.json",
         "test/fixtures/Plant-Short.json",
         "test/fixtures/alias/plant-joined.json",
+        "test/fixtures/alias/plant-nested.json",
         "test/fixtures/alias/plant-roster.json",
         "test/fixtures/alias/roster.json",
         "test/fixtures/orphan-fixture.json",
         "test/fixtures/plant-bare.json",
+        "test/fixtures/plant-cjs-named.json",
+        "test/fixtures/plant-cts-named.json",
+        "test/fixtures/plant-dash-named.json",
+        "test/fixtures/plant-deep-named.json",
+        "test/fixtures/plant-deeptest-named.json",
+        "test/fixtures/plant-dir.json",
         "test/fixtures/plant-dir/plant-inner.json",
+        "test/fixtures/plant-dot-named.json",
+        "test/fixtures/plant-extcase.JSON",
+        "test/fixtures/plant-ghost",
         "test/fixtures/plant-helper-named.json",
+        "test/fixtures/plant-js-named.json",
         "test/fixtures/plant-long.json",
         "test/fixtures/plant-mjs-named.json",
+        "test/fixtures/plant-mts-named.json",
+        "test/fixtures/plant-nested.json",
         "test/fixtures/plant-noncensus.json",
         "test/fixtures/plant-qa-joined.json",
         "test/fixtures/plant-qa.json",
+        "test/fixtures/plant-setup-named.json",
+        "test/fixtures/plant-short",
         "test/fixtures/plant-short.json.bak",
         "test/fixtures/plant-short.yaml",
         "test/fixtures/plant-spaced.json",
         "test/fixtures/plant-src-named.json",
-        "test/fixtures/plant-vendor.json"
+        "test/fixtures/plant-srccensus-named.json",
+        "test/fixtures/plant-sub-named.json",
+        "test/fixtures/plant-vendor.json",
+        "test/fixtures/plant-wb-named.json",
+        "test/fixtures/plant-wbsub-named.json"
        ],
        "absent": [
+        "test/fixtures/Plant-Cased/plant-dircase.json",
         "test/fixtures/Plant-Short.json",
         "test/fixtures/alias/plant-joined.json",
+        "test/fixtures/alias/plant-nested.json",
         "test/fixtures/alias/plant-roster.json",
         "test/fixtures/alias/roster.json",
         "test/fixtures/orphan-fixture.json",
         "test/fixtures/plant-bare.json",
+        "test/fixtures/plant-cjs-named.json",
+        "test/fixtures/plant-cts-named.json",
+        "test/fixtures/plant-dash-named.json",
+        "test/fixtures/plant-deep-named.json",
+        "test/fixtures/plant-deeptest-named.json",
+        "test/fixtures/plant-dir.json",
         "test/fixtures/plant-dir/plant-inner.json",
+        "test/fixtures/plant-dot-named.json",
+        "test/fixtures/plant-extcase.JSON",
+        "test/fixtures/plant-ghost",
         "test/fixtures/plant-helper-named.json",
+        "test/fixtures/plant-js-named.json",
         "test/fixtures/plant-long.json",
         "test/fixtures/plant-mjs-named.json",
+        "test/fixtures/plant-mts-named.json",
+        "test/fixtures/plant-nested.json",
         "test/fixtures/plant-noncensus.json",
         "test/fixtures/plant-qa-joined.json",
         "test/fixtures/plant-qa.json",
+        "test/fixtures/plant-setup-named.json",
+        "test/fixtures/plant-short",
         "test/fixtures/plant-short.json.bak",
         "test/fixtures/plant-short.yaml",
         "test/fixtures/plant-spaced.json",
         "test/fixtures/plant-src-named.json",
-        "test/fixtures/plant-vendor.json"
+        "test/fixtures/plant-srccensus-named.json",
+        "test/fixtures/plant-sub-named.json",
+        "test/fixtures/plant-vendor.json",
+        "test/fixtures/plant-wb-named.json",
+        "test/fixtures/plant-wbsub-named.json"
        ]
       },
       "near": {
-       "prefix": [
-        "test/fixtures/plant-dir/plant-inner.json",
-        "test/fixtures/plant-short.json.bak"
-       ],
-       "shorter": [
-        "test/fixtures/plant-long.json"
-       ],
-       "case": [
-        "test/fixtures/Plant-Short.json"
-       ],
-       "stem": [
-        "test/fixtures/plant-short.yaml"
-       ],
-       "basename": [
-        "test/fixtures/alias/plant-joined.json",
-        "test/fixtures/alias/plant-roster.json"
-       ]
+       "prefix": {
+        "extension": [
+         "test/fixtures/plant-short.json.bak"
+        ],
+        "extensionless": [
+         "test/fixtures/plant-dir.json"
+        ],
+        "child": [
+         "test/fixtures/plant-dir/plant-inner.json"
+        ]
+       },
+       "shorter": {
+        "extension": [
+         "test/fixtures/plant-long.json"
+        ],
+        "extensionless": [
+         "test/fixtures/plant-short"
+        ],
+        "parent": [
+         "test/fixtures/plant-ghost"
+        ]
+       },
+       "case": {
+        "stem": [
+         "test/fixtures/Plant-Short.json"
+        ],
+        "directory": [
+         "test/fixtures/Plant-Cased/plant-dircase.json"
+        ],
+        "extension": [
+         "test/fixtures/plant-extcase.JSON"
+        ]
+       },
+       "stem": {
+        "extension": [
+         "test/fixtures/plant-short.yaml"
+        ]
+       },
+       "basename": {
+        "deeper": [
+         "test/fixtures/alias/plant-joined.json",
+         "test/fixtures/alias/plant-roster.json"
+        ],
+        "shallower": [
+         "test/fixtures/plant-nested.json"
+        ],
+        "sibling": [
+         "test/fixtures/alias/plant-nested.json"
+        ]
+       }
       },
       "namedBy": {
-       "plain": [
-        "test/fixtures/plant-noncensus.json"
-       ],
-       "nested": [
-        "test/fixtures/plant-helper-named.json"
-       ],
-       "script": [
-        "test/fixtures/plant-mjs-named.json"
-       ],
-       "src": [
-        "test/fixtures/plant-src-named.json"
-       ]
+       "plain": {
+        "test": [
+         "test/fixtures/plant-noncensus.json"
+        ],
+        "module": [
+         "test/fixtures/plant-setup-named.json"
+        ],
+        "dash": [
+         "test/fixtures/plant-dash-named.json"
+        ],
+        "dot": [
+         "test/fixtures/plant-dot-named.json"
+        ]
+       },
+       "nested": {
+        "census": [
+         "test/fixtures/plant-helper-named.json"
+        ],
+        "test": [
+         "test/fixtures/plant-sub-named.json"
+        ],
+        "deepCensus": [
+         "test/fixtures/plant-deep-named.json"
+        ],
+        "deepTest": [
+         "test/fixtures/plant-deeptest-named.json"
+        ]
+       },
+       "script": {
+        "mjs": [
+         "test/fixtures/plant-mjs-named.json"
+        ],
+        "js": [
+         "test/fixtures/plant-js-named.json"
+        ],
+        "cjs": [
+         "test/fixtures/plant-cjs-named.json"
+        ],
+        "mts": [
+         "test/fixtures/plant-mts-named.json"
+        ],
+        "cts": [
+         "test/fixtures/plant-cts-named.json"
+        ]
+       },
+       "src": {
+        "top": [
+         "test/fixtures/plant-src-named.json"
+        ],
+        "nested": [
+         "test/fixtures/plant-wb-named.json"
+        ],
+        "deep": [
+         "test/fixtures/plant-wbsub-named.json"
+        ],
+        "census": [
+         "test/fixtures/plant-srccensus-named.json"
+        ]
+       }
       }
      }
     }

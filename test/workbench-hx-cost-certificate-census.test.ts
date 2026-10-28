@@ -48,24 +48,38 @@
  * fced7bf, 98 of 149 fixtures are holders beside 131 census modules, the same set with the landed bytes of this file in place.
  * THE CRITERION (wb-9clo: hop 4, the last, of the chain wb-z3ft.2 332 -> wb-xvmw 429 -> wb-p8lh 523 -> wb-9clo, the R694 follow-up of
  * the landing-523 gate's F1 - its reader mutants G-CASE, G-STEM and G-SRCNAMER stayed green - in the R739 TERMINAL
- * enumerate-the-resolvable form under rules 14 and 19(c)): EXACT AND CENSUS-ONLY (the paragraph above, re-pinned here) claim exactly
- * the directions of NEAR and NAMERS, each witnessed by planted outside rows authored red-first against its mutant and pinned in A3's
- * witness, never the escapes found so far. EXACT (NEAR: the relation a designed-outside planted fixture bears to a planted name;
- * witness near): prefix - it extends a named path (the longer twin plant-short.json.bak, and plant-dir/plant-inner.json below the named
- * directory); shorter - a named path extends it (plant-long.json beside the named plant-long.json.bak); case - it equals one
- * case-folded (Plant-Short.json beside the named plant-short.json); stem - it equals one with the last extension dropped from both
- * (plant-short.yaml); basename - it shares a named path's last segment in another directory (alias/plant-roster.json,
- * alias/plant-joined.json). CENSUS-ONLY (NAMERS: the module beside the census modules whose text names the fixture; witness namedBy):
- * plain - a test module at test/'s top level (plant-noncensus.json); nested - a census-suffixed module below it
- * (plant-helper-named.json); script - a census-suffixed module that is not TypeScript (plant-mjs-named.json); src - a product module
- * (plant-src-named.json, named by the planted src/plant-namer.ts). Each such fixture reads outside. near and namedBy are read from the
- * planted tree, so a one-file edit that drops a planted name or re-points a namer's path reds A3, and a direction left with no row reds
- * its floor (measured at the landed bytes: dropping the SHORTER, LONGER or DIRECTORY line, or re-pointing a namer, read 10 passed (10)
- * and left the twin, shorter-twin, inner-file and plain-scope mutants green, against the landed NOT CLAIMED sentence below). This cut
- * changes no reading either (fixtureNames, QUOTED_RUN, HOLDER_MODULE and the holder rule are byte-identical): measured at trunk
- * 449fdd7, 113 of 165 fixtures are holders beside 148 census modules, the same set with the landed bytes of this file in place; the
- * real tree's named set gains only this cut's three planted paths, all absent. CHAIN TERMINAL (R739): a later survivor outside these
- * directions is record-only unless it contradicts a claim above.
+ * enumerate-the-resolvable form under rules 14 and 19(c); cut #2 answers refusal #1, whose ten reader survivors each admitted a member
+ * of cut #1's broad NEAR and NAMERS predicates that no planted row witnessed, and its class-level guard): EXACT AND CENSUS-ONLY (the
+ * paragraph above, re-pinned here) claim exactly the members of NEAR and NAMERS, each stated at the grain of the planted outside row
+ * that witnesses it, authored red-first against a reader admitting it, pinned in A3's witness and floored at one row - never the
+ * escapes found so far; a relation or module shape no member states is not claimed (NOT CLAIMED below names them, each measured). EXACT
+ * (NEAR: the relation a designed-outside planted fixture bears to a planted name; witness near): prefix - it is the name plus one
+ * extension (plant-short.json.bak; plant-dir.json beside the extensionless named plant-dir) or plus one segment
+ * (plant-dir/plant-inner.json); shorter - the name is it plus one extension (plant-long.json beside plant-long.json.bak; plant-short
+ * beside plant-short.json) or plus one segment (plant-ghost beside the never-planted plant-ghost/plant-ghost.json); case - it differs
+ * from the name in case in exactly one part, the stem (Plant-Short.json), the directory (Plant-Cased/plant-dircase.json) or the
+ * extension (plant-extcase.JSON), each beside a never-planted name, so a case-insensitive file system merges no two planted files; stem
+ * - both carry an extension and the extensions differ beyond case (plant-short.yaml); basename - it carries the name's last segment one
+ * level deeper (alias/plant-roster.json, alias/plant-joined.json), one level shallower (plant-nested.json beside
+ * nested/plant-nested.json) or at the same depth in a directory that is not a case variant of the name's (alias/plant-nested.json).
+ * CENSUS-ONLY (NAMERS: the module beside the census modules whose text names the fixture, its name carrying no dot before its suffix;
+ * witness namedBy): plain - a top-level test module that is no census module, ending .test.ts (plant-reader.test.ts) or .ts
+ * (plant-setup.ts), or a near miss of either census suffix, -census.ts (plant-loose-census.ts) or .census.test.ts
+ * (plant-loose.census.test.ts); nested - a census-suffixed TypeScript module one level below test/ (helpers/plant-reader.census.ts,
+ * plant-sub/plant-sub-census.test.ts) or two (plant-deep/inner/plant-deep.census.ts, helpers/inner/plant-inner-census.test.ts); script
+ * - a top-level .census module ending .mjs, .js, .cjs, .mts or .cts (plant-reader.census.mjs and its four siblings); src - a product
+ * module at src/'s top level (plant-namer.ts), one or two levels below it (workbench/plant-namer.ts,
+ * workbench/plant-sub/plant-namer.ts) or census-suffixed at its top level (plant.census.ts). Each such fixture reads outside. U1a and
+ * U1b CURED (refusal #1's survivors, each 10 passed (10) on cut #1's bytes and 2 failed | 8 passed here): G2-CASE-DIR and G2-CASE-EXT
+ * through the directory and extension case rows; G2-PLAIN-NONTEST through plant-setup.ts; G2-NESTED-TESTSUFFIX and G2-NESTED-DEEP
+ * through the nested test row and the two-level rows; G2-SCRIPT-JS and G2-SCRIPT-JTS through the .js row; G2-SRC-NESTED,
+ * G2-SRC-WORKBENCH and G2-SRC-CENSUS through the nested, two-level and census src rows. near and namedBy are read from the planted
+ * tree, so a one-file edit that drops a planted name or re-points a namer's path reds A3, and a member left with no row reds its floor.
+ * This cut changes no reading either (fixtureNames, QUOTED_RUN, HOLDER_MODULE and the holder rule are byte-identical): measured at
+ * trunk ade68d6 (and bb96515), 116 of 168 fixtures are holders beside 151 census modules, the same set with the landed bytes of this
+ * file in place; the real tree's named set gains only the 26 paths this file's plant table spells beyond the landed bytes
+ * (designed-outside rows and never-planted names), all absent. CHAIN TERMINAL (R739): a later survivor outside these members is
+ * record-only unless it contradicts a claim above.
  *
  * The adapter (src/workbench/hyperunix-observer.ts) reads coverage items for batch_id only (measured :207) and builds evidenceRefs from
  * the runtime binary digest and those batch ids only (measured :229-235). The rows:
@@ -80,7 +94,7 @@
  *    the needle grep by class, as above, with a positive control per alternative and a planted tree per class: a fixture named in each
  *    NAMING form reads holder, every alias NAMING refuses reads outside; and R-HOLDER's real-tree quiet row: every designed-outside
  *    planted fixture is a path this file spells, so the real tree names each while no file sits there (named and absent, pinned);
- *    and every direction of NEAR and NAMERS keeps a planted outside row (near, namedBy: pinned, each direction floored at one row).
+ *    and every member of NEAR and NAMERS keeps a planted outside row (near, namedBy: pinned, each member floored at one row).
  *  B, acceptance (b). The fixtures are the upstream law record, the same record with its empty reference lists loaded with sentinels,
  *    and a cost certificate keyed by the excerpt's member names; each is placed at 14 carriers of a direct reading (spread fields and a
  *    nested record at the top level and in the source, every certificate's fields and body, an extra coverage item, the summary and its
@@ -120,12 +134,22 @@
  * so removed: no outside source names them, and the planted-kinds floor reds only when a class has no row left), so the kill a
  * planted row carries is pinned against a one-file edit, not a coordinated one. (wb-9clo, measured) That sentence read only the row
  * itself: at the landed bytes a one-file edit of a planted name or a namer's path voided a row's kill while every class held; near and
- * namedBy now pin both. Still not claimed: a direction's row removed from this file and the roster together reads green while the
- * direction keeps another row (plant-short.json.bak so removed reads 10/10; the floor reds a direction left with none, as the case row
- * or the src row with its namer so removed does), and so does a direction removed from NEAR or NAMERS and the roster together, whose
- * rows still carry their reader kills through the class check (the case and src directions so removed read 10/10, and G-CASE and
- * G-SRCNAMER still red A3 beside them); a reading outside NEAR and NAMERS (a normalized, encoded or confusable spelling of a named path,
- * a namer elsewhere in test/ or outside src/ and test/) is not claimed (CHAIN TERMINAL).
+ * namedBy now pin both. Still not claimed: a member's row removed from this file and the roster together reads green while the member
+ * keeps another row (alias/plant-joined.json so removed reads 10/10, basename deeper keeping alias/plant-roster.json; a member's only
+ * row so removed reds its floor, as Plant-Cased/plant-dircase.json, or plant-wb-named.json with its namer, does), and so does a member
+ * removed from NEAR or NAMERS and the roster together, its row still carrying its reader kills through the class check (case directory
+ * and src nested so removed read 10/10, and G2-CASE-DIR and G2-SRC-NESTED still red A3 beside them). Outside the members, each measured
+ * 10 passed (10) against a reader admitting only it, so none is claimed (CHAIN TERMINAL): a case twin differing in two or more parts,
+ * or in which letters of a part; a file two or more levels below a named path, or a named path two or more levels below a file; a name
+ * plus two or more extensions, or a file the name extends by two or more; a continuation by a character other than a dot or a slash; a
+ * basename twin two or more levels apart; a sibling extension other than the planted .yaml, or which extension a twin adds or drops
+ * (.bak and .json are planted); a namer whose name carries a dot before its suffix (a top-level .spec.ts or .d.ts module, a src .d.ts
+ * module); a census-suffixed module three or more levels below test/; a nested module that is not a census-suffixed TypeScript module
+ * (a plain or script module below test/'s top level); a script with the -census.test suffix or ending .jsx or .tsx; a src module three
+ * or more levels deep, census-suffixed below src/'s top level, or -census suffixed; which directory holds a basename twin or a member's
+ * namer (a deeper basename twin outside alias/, a one-level .census.ts namer outside helpers/ or -census.test.ts namer inside it, a
+ * nested src namer outside workbench/); and a normalized, encoded or confusable spelling of a named path, or a namer outside src/ and
+ * test/.
  * Display paths added: none. Test-only: planted trees live in makeScratch scratch with the leak guard installed; src, the roster, the
  * SDK declarations and the bead export are only read.
  */
@@ -524,25 +548,73 @@ function classify(tree: TreeCensus, file: string): string {
   if (!tree.testHits.includes(file)) return 'quiet';
   return tree.holders.has(file) ? 'holder' : 'outside';
 }
-/** A path without its last extension, and a path's last segment. */
-const stemOf = (path: string): string => path.replace(/\.[^./]*$/, '');
+/** A path's directory, its last segment, the path without its last extension, that extension ('' when none) and its segment count. */
+const dirOf = (path: string): string => path.slice(0, path.lastIndexOf('/'));
 const baseOf = (path: string): string => path.slice(path.lastIndexOf('/') + 1);
-/** EXACT's directions (wb-9clo, THE CRITERION): each relation a fixture's path can bear to a named path without equalling it. A
- * reader admitting one would hold every planted outside row that bears it to a planted name (A3's witness near). */
-const NEAR: Readonly<Record<string, (file: string, name: string) => boolean>> = {
-  prefix: (file, name) => file !== name && file.startsWith(name),
-  shorter: (file, name) => file !== name && name.startsWith(file),
-  case: (file, name) => file !== name && file.toLowerCase() === name.toLowerCase(),
-  stem: (file, name) => file !== name && stemOf(file) === stemOf(name),
-  basename: (file, name) => file !== name && baseOf(file) === baseOf(name),
+const stemOf = (path: string): string => path.replace(/\.[^./]*$/, '');
+const extOf = (path: string): string => path.slice(stemOf(path).length);
+const depthOf = (path: string): number => path.split('/').length;
+/** Unequal as written, equal case-folded. */
+const folded = (left: string, right: string): boolean => left !== right && left.toLowerCase() === right.toLowerCase();
+/** `longer` is `shorter` plus exactly one more extension (a dot, then neither a dot nor a slash). */
+const plusExtension = (longer: string, shorter: string): boolean => longer.startsWith(shorter) && /^\.[^./]+$/.test(longer.slice(shorter.length));
+/** EXACT's members (wb-9clo, THE CRITERION): each relation a designed-outside planted fixture can bear to a planted name, stated at the
+ * grain of the planted row that witnesses it (A3's witness near, each member floored at one row); a relation no member states is not
+ * claimed. */
+const NEAR: Readonly<Record<string, Readonly<Record<string, (file: string, name: string) => boolean>>>> = {
+  prefix: {
+    extension: (file, name) => extOf(name) !== '' && plusExtension(file, name),
+    extensionless: (file, name) => extOf(name) === '' && plusExtension(file, name),
+    child: (file, name) => dirOf(file) === name,
+  },
+  shorter: {
+    extension: (file, name) => extOf(file) !== '' && plusExtension(name, file),
+    extensionless: (file, name) => extOf(file) === '' && plusExtension(name, file),
+    parent: (file, name) => dirOf(name) === file,
+  },
+  case: {
+    stem: (file, name) => dirOf(file) === dirOf(name) && extOf(file) === extOf(name) && folded(file, name),
+    directory: (file, name) => baseOf(file) === baseOf(name) && folded(dirOf(file), dirOf(name)),
+    extension: (file, name) => stemOf(file) === stemOf(name) && folded(extOf(file), extOf(name)),
+  },
+  stem: {
+    extension: (file, name) => stemOf(file) === stemOf(name) && extOf(file) !== '' && extOf(name) !== '' && extOf(file).toLowerCase() !== extOf(name).toLowerCase(),
+  },
+  basename: {
+    deeper: (file, name) => baseOf(file) === baseOf(name) && depthOf(file) === depthOf(name) + 1,
+    shallower: (file, name) => baseOf(file) === baseOf(name) && depthOf(file) + 1 === depthOf(name),
+    sibling: (file, name) => baseOf(file) === baseOf(name) && depthOf(file) === depthOf(name) && dirOf(file).toLowerCase() !== dirOf(name).toLowerCase(),
+  },
 };
-/** CENSUS-ONLY's directions (wb-9clo): the modules beside the census modules whose text a reader could take as naming a fixture
- * (A3's witness namedBy: the planted outside rows each one names). */
-const NAMERS: Readonly<Record<string, (module: string) => boolean>> = {
-  plain: module => /^test\/[^/]+\.ts$/.test(module) && !HOLDER_MODULE.test(module),
-  nested: module => /^test\/.+\/[^/]+(?:-census\.test|\.census)\.ts$/.test(module),
-  script: module => /^test\/[^/]+(?:-census\.test|\.census)\.\w+$/.test(module) && !module.endsWith('.ts'),
-  src: module => module.startsWith('src/'),
+/** CENSUS-ONLY's members (wb-9clo): each module shape beside the census modules whose text a reader could take as naming a fixture,
+ * stated at the grain of the planted namer that witnesses it (A3's witness namedBy: the planted outside rows its modules name, each
+ * member floored at one row); a module shape no member states is not claimed. */
+const NAMERS: Readonly<Record<string, Readonly<Record<string, (module: string) => boolean>>>> = {
+  plain: {
+    test: module => /^test\/[^/.]+\.test\.ts$/.test(module) && !HOLDER_MODULE.test(module),
+    module: module => /^test\/[^/.]+\.ts$/.test(module) && !module.endsWith('-census.ts'),
+    dash: module => /^test\/[^/.]+-census\.ts$/.test(module),
+    dot: module => /^test\/[^/.]+\.census\.test\.ts$/.test(module),
+  },
+  nested: {
+    census: module => /^test\/[^/]+\/[^/.]+\.census\.ts$/.test(module),
+    test: module => /^test\/[^/]+\/[^/.]+-census\.test\.ts$/.test(module),
+    deepCensus: module => /^test\/[^/]+\/[^/]+\/[^/.]+\.census\.ts$/.test(module),
+    deepTest: module => /^test\/[^/]+\/[^/]+\/[^/.]+-census\.test\.ts$/.test(module),
+  },
+  script: {
+    mjs: module => /^test\/[^/.]+\.census\.mjs$/.test(module),
+    js: module => /^test\/[^/.]+\.census\.js$/.test(module),
+    cjs: module => /^test\/[^/.]+\.census\.cjs$/.test(module),
+    mts: module => /^test\/[^/.]+\.census\.mts$/.test(module),
+    cts: module => /^test\/[^/.]+\.census\.cts$/.test(module),
+  },
+  src: {
+    top: module => /^src\/[^/.]+\.ts$/.test(module),
+    nested: module => /^src\/[^/]+\/[^/.]+\.ts$/.test(module),
+    deep: module => /^src\/[^/]+\/[^/]+\/[^/.]+\.ts$/.test(module),
+    census: module => /^src\/[^/.]+\.census\.ts$/.test(module),
+  },
 };
 /** The clause's literal command, run in the repository (tracked files only): exit and the files it lists. */
 function gitGrep(pattern: string): {status: number | null; files: string[]} {
@@ -560,7 +632,8 @@ const spellings = (alternatives: readonly string[]): string[] => [...new Set(alt
   .filter(spelling => !alternatives.includes(spelling)).sort();
 /** The planted census module (wb-xvmw): a fixture named in each NAMING form, the based join R-HOLDER keeps, the names whose basenames
  * alone the aliases below carry, a named path and a named directory whose longer twin and inner file the prefix aliases carry
- * (wb-p8lh) - the same named path's case twin and other-extension sibling the case and stem aliases carry (wb-9clo) - and a needle. */
+ * (wb-p8lh) - the never-planted names whose directory-case, extension-case and parent twins NEAR's case and shorter members carry
+ * (wb-9clo) - and a needle. */
 const plantCensus = (list: string): string => [
   "const ROSTER = 'test/fixtures/plant-roster.json';",
   "const DOSSIER = 'test/fixtures/plant-dossier.md';",
@@ -577,6 +650,9 @@ const plantCensus = (list: string): string => [
   "const LONGER = 'test/fixtures/plant-long.json.bak';",
   "const SHORTER = 'test/fixtures/plant-short.json';",
   "const DIRECTORY = readdirSync(join(HERE, 'fixtures', 'plant-dir'));",
+  "const CASED = 'test/fixtures/plant-cased/plant-dircase.json';",
+  "const EXTCASE = 'test/fixtures/plant-extcase.json';",
+  "const GHOST = 'test/fixtures/plant-ghost/plant-ghost.json';",
   "const BARE = 'plant-bare.json';",
   `const key = '${list}';`,
 ].join('\n') + '\n';
@@ -608,17 +684,50 @@ function plant(root: string, alternatives: readonly string[]): Record<string, st
     'test/fixtures/plant-short.json.bak': [`{"key": "${field}"}\n`, 'outside'],
     'test/fixtures/Plant-Short.json': [`{"key": "${field}"}\n`, 'outside'],
     'test/fixtures/plant-short.yaml': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/Plant-Cased/plant-dircase.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-extcase.JSON': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-dir.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-short': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-ghost': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-nested.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/alias/plant-nested.json': [`{"key": "${field}"}\n`, 'outside'],
     'test/fixtures/plant-dir/plant-inner.json': [`{"key": "${field}"}\n`, 'outside'],
     'test/fixtures/plant-noncensus.json': [`{"key": "${field}"}\n`, 'outside'],
     'test/fixtures/plant-helper-named.json': [`{"key": "${field}"}\n`, 'outside'],
     'test/fixtures/plant-mjs-named.json': [`{"key": "${field}"}\n`, 'outside'],
     'test/fixtures/plant-src-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-setup-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-dash-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-dot-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-sub-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-deep-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-deeptest-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-js-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-cjs-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-mts-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-cts-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-wb-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-wbsub-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-srccensus-named.json': [`{"key": "${field}"}\n`, 'outside'],
     'test/helpers/plant-helper.ts': [`export const key = '${list}';\n`, 'outside'],
     'test/plant-plain.test.ts': [`const name = '${type}';\n`, 'outside'],
     'test/plant-reader.test.ts': ["const DATA = 'test/fixtures/plant-noncensus.json';\n", 'quiet'],
     'test/helpers/plant-reader.census.ts': ["export const DATA = 'test/fixtures/plant-helper-named.json';\n", 'quiet'],
     'test/plant-reader.census.mjs': ["export const DATA = 'test/fixtures/plant-mjs-named.json';\n", 'quiet'],
     'src/plant-namer.ts': ["export const DATA = 'test/fixtures/plant-src-named.json';\n", 'quiet'],
+    'test/plant-setup.ts': ["export const DATA = 'test/fixtures/plant-setup-named.json';\n", 'quiet'],
+    'test/plant-loose-census.ts': ["export const DATA = 'test/fixtures/plant-dash-named.json';\n", 'quiet'],
+    'test/plant-loose.census.test.ts': ["const DATA = 'test/fixtures/plant-dot-named.json';\n", 'quiet'],
+    'test/plant-sub/plant-sub-census.test.ts': ["const DATA = 'test/fixtures/plant-sub-named.json';\n", 'quiet'],
+    'test/plant-deep/inner/plant-deep.census.ts': ["export const DATA = 'test/fixtures/plant-deep-named.json';\n", 'quiet'],
+    'test/helpers/inner/plant-inner-census.test.ts': ["const DATA = 'test/fixtures/plant-deeptest-named.json';\n", 'quiet'],
+    'test/plant-reader.census.js': ["export const DATA = 'test/fixtures/plant-js-named.json';\n", 'quiet'],
+    'test/plant-reader.census.cjs': ["exports.DATA = 'test/fixtures/plant-cjs-named.json';\n", 'quiet'],
+    'test/plant-reader.census.mts': ["export const DATA = 'test/fixtures/plant-mts-named.json';\n", 'quiet'],
+    'test/plant-reader.census.cts': ["export const DATA = 'test/fixtures/plant-cts-named.json';\n", 'quiet'],
+    'src/workbench/plant-namer.ts': ["export const DATA = 'test/fixtures/plant-wb-named.json';\n", 'quiet'],
+    'src/workbench/plant-sub/plant-namer.ts': ["export const DATA = 'test/fixtures/plant-wbsub-named.json';\n", 'quiet'],
+    'src/plant.census.ts': ["export const DATA = 'test/fixtures/plant-srccensus-named.json';\n", 'quiet'],
     'test/quiet-spelling.test.ts': [`${spellings(alternatives).map(spelling => `const name = '${spelling}';`).join('\n')}\n`, 'quiet'],
     'test/quiet-composed.test.ts': [`const key = [${[...field].map(letter => `'${letter}'`).join(', ')}].join('');\n`, 'quiet'],
     'qa/quiet-scope.mjs': [`export const key = '${field}';\n`, 'unwalked'],
@@ -710,10 +819,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const outsideRows = Object.keys(designed).filter(file => designed[file] === 'outside' && file.startsWith('test/fixtures/')).sort();
     const selfNamed = {named: outsideRows.filter(file => real.named.has(file)), absent: outsideRows.filter(file => !real.walked.includes(file))};
     expect(selfNamed).toEqual({named: outsideRows, absent: outsideRows});
-    const near = Object.fromEntries(Object.entries(NEAR).map(([direction, bears]) => [direction, outsideRows.filter(file => [...planted.named].some(name => bears(file, name)))]));
-    const namedBy = Object.fromEntries(Object.entries(NAMERS).map(([direction, beside]) => [direction, outsideRows.filter(file =>
-      planted.walked.some(module => beside(module) && fixtureNames(readFileSync(join(root, module), 'utf8')).includes(file)))]));
-    expect([...Object.values(near), ...Object.values(namedBy)].map(rows => rows.length > 0)).toEqual([...Object.keys(NEAR), ...Object.keys(NAMERS)].map(() => true));
+    const near = Object.fromEntries(Object.entries(NEAR).map(([direction, members]) => [direction, Object.fromEntries(Object.entries(members).map(([member, bears]) =>
+      [member, outsideRows.filter(file => [...planted.named].some(name => bears(file, name)))]))]));
+    const namedBy = Object.fromEntries(Object.entries(NAMERS).map(([direction, members]) => [direction, Object.fromEntries(Object.entries(members).map(([member, beside]) =>
+      [member, outsideRows.filter(file => planted.walked.some(module => beside(module) && fixtureNames(readFileSync(join(root, module), 'utf8')).includes(file)))]))]));
+    const floored = [...Object.values(near), ...Object.values(namedBy)].flatMap(members => Object.values(members).map(rows => rows.length > 0));
+    expect(floored).toEqual([...Object.values(NEAR), ...Object.values(NAMERS)].flatMap(members => Object.keys(members).map(() => true)));
     JUDGED.add('A3');
     return {claim: claim('A3'), alternatives: alternatives.length, perAlternative, floors, srcHits: real.srcHits, outside: real.outside, own,
       command: {ran: true, ...listed}, planted: classes, selfNamed, near, namedBy};
