@@ -53,14 +53,31 @@
  * export is one of its rows. F3: an abort before a seam call reaches no seam - aborted before the first call the read calls bd
  * never, and a read aborted as the gated child's work reading answers never reads the gate (L2-M27p: dropping seam()'s pre-call
  * abort check kept the transport category and called bd).
+ * WB-2FB4 (the R694 follow-up of wb-52th's landing 590, hop 4 of the landing-381 chain: F1 leads here, F3 rides in the h2
+ * bead-graph census). F1: two GM33-class plants reached the Function constructor past D3's reach scan without spelling
+ * `constructor` - GM33-ENUMKEY keyed proto[door] by a name Object.getOwnPropertyNames found, GM33-VALUES took it from
+ * Object.values over Object.getOwnPropertyDescriptors with no key at all - the class's fourth cycle of fresh members, so the scan
+ * now ENUMERATES THE RESOLVABLE, not the escapes: every read of an allowed built-in takes one of the forms the reader reads today
+ * (RESOLVABLE: a rostered member such as Object.entries, a construction such as new Map, undefined), and every key that is not a
+ * literal is a const literal tuple's element (the tuple named only as a `<tuple>.flatMap(...)` receiver, its callback's first
+ * parameter named only as a key, no element 'constructor'); any other form - another member of a built-in, a built-in aliased,
+ * cast or passed, any other named key - fails closed as a reach, and the reader's own forms equal RESOLVABLE exactly. Both members
+ * and the verdict's two kill controls (GM33-TPLKEY, GM33-CDESTRUCT) are rows of REACH_PLANTS, and every GM33 plant the
+ * landing-590 verdict's F1 line names in wb-52th's tracked export notes is one of them (wb-2fb4's filing carries that line
+ * byte-identically; its own row is not in the export at this cut's base). The tuple form has a quiet control and one kill per
+ * clause (KEY-TUPLE-*: a written parameter, an escaped tuple, a 'constructor' element, a composed element, an exported tuple,
+ * another method, a default, a rest, another parameter, a callback that is not the call's first argument). R2 R-REFLECTIVE-REACH is CURED, not dropped: its two doors are
+ * REACH_PLANTS rows that must read their reach (R2-DOOR, R2-DESCRIPTOR), beside the class members the resolvable form closes
+ * beyond them (R2-ARROW, a composed key on a value the code builds; R2-DESTRUCT, that key in a binding pattern; GM33-ALIAS, a
+ * built-in aliased).
  * NAMED RESIDUALS (row R; each pin is the residual's quiet row, its quiet set derived from the run and pinned as its witness):
  *  R1 R-SHARED-SUBCLAUSE where pins share one acceptance sub-clause and none holds a pinned map or the maps' union, removing one
  *    from every literal at once (its pin, its ROWS entry, the frozen count) leaves the structural holds green. The quiet set is
  *    derived from the bead's acceptance text, so a pin whose only partner is gone leaves it: removing A3, A4, A5, A6, C1 or C3
  *    reds R1 through that text, while B5 (beside the four map-held B pins) and D1, D2 and D3 (one sub-clause, three pins) stay
  *    quiet.
- *  R2 R-REFLECTIVE-REACH a member or descriptor read keyed by a name bound to a composed string (the Function constructor
- *    reached as Object[door], or as Object.getOwnPropertyDescriptor(prototype, door)) is no reach to the scan.
+ *  (R2, the former R-REFLECTIVE-REACH - a member or descriptor read keyed by a name bound to a composed string - is cured by
+ *    wb-2fb4's resolvable-form scan: its doors are REACH_PLANTS rows.)
  *  R3 R-WITNESS-ECHO outside row B's map hold no witnessed value has an anchor outside this file: a body swapped for a case that
  *    still reaches its witness stays green.
  * The gate form G08 stays this census's pin of R-NEGATED-PROSE.
@@ -430,9 +447,18 @@ interface Reach {
   /** The name `constructor` spelled in the code (wb-52th F2): a member read dotted or by a literal key, a destructured key, or a
    * string anywhere, a descriptor or reflect read's argument included - the door to the Function constructor. */
   constructorReads: number;
-  /** Member reads whose key is computed from anything but a literal or a name. */
+  /** Member reads and computed property names whose key is computed from anything but a literal or a name. */
   computedKeys: number;
+  /** Every member-reference form the code reads (wb-2fb4), sorted: each read of an allowed built-in by its form (a member, a
+   * construction, a call or the value itself) and each named key by its resolution. The scan resolves exactly RESOLVABLE. */
+  forms: string[];
 }
+/** The member-reference forms the scan resolves (wb-2fb4, ENUMERATE-THE-RESOLVABLE): exactly the forms the reader's code reads
+ * today. Any other form - another member of a built-in, a built-in aliased, cast, called or passed, a named key that is not a
+ * const literal tuple's element - fails closed: the scan reads it as a reach, so unlisted syntax never reads as unreachable. */
+const RESOLVABLE: readonly string[] = ['Array.isArray', 'JSON.parse', 'Number.isSafeInteger', 'Object.entries', 'key tuple element', 'new Map', 'new RegExp', 'new Set', 'undefined'];
+/** The methods whose callback's first parameter the tuple form resolves: the one the reader calls on its tuple today. */
+const TUPLE_METHODS: readonly string[] = ['flatMap'];
 /** A name the node binds (a declaration's own name), never a read. */
 function declaresName(node: ts.Identifier): boolean {
   const parent = node.parent;
@@ -466,11 +492,13 @@ function keysMember(node: ts.Identifier): boolean {
 /** The free-read test for one module, from the TypeScript binder over that file alone (no lib, nothing resolved; wb-52th F2): a
  * name is free where no declaration in the file is its symbol's, so a parameter that shadows a built-in binds only the reads
  * inside its own function, never a read elsewhere in the file (the L2-M33sh door of a file-wide declared set). */
-function freeReads(file: ts.SourceFile): (node: ts.Identifier) => boolean {
+function checkerOf(file: ts.SourceFile): ts.TypeChecker {
   const options: ts.CompilerOptions = {noLib: true, noResolve: true, types: [], target: ts.ScriptTarget.Latest};
   const host = ts.createCompilerHost(options);
   host.getSourceFile = (name) => (name === file.fileName ? file : undefined);
-  const checker = ts.createProgram([file.fileName], options, host).getTypeChecker();
+  return ts.createProgram([file.fileName], options, host).getTypeChecker();
+}
+function freeReads(checker: ts.TypeChecker, file: ts.SourceFile): (node: ts.Identifier) => boolean {
   return (node) => {
     const parent = node.parent;
     // A shorthand property's name is the property's own declaration; the value it reads is the name's symbol (GM33h).
@@ -481,24 +509,88 @@ function freeReads(file: ts.SourceFile): (node: ts.Identifier) => boolean {
 /** A class's extends clause: TypeScript parses it as a type node, but the class evaluates it (wb-52th GM33f). */
 const extendsValue = (node: ts.Node): boolean =>
   ts.isExpressionWithTypeArguments(node) && ts.isHeritageClause(node.parent) && node.parent.token === ts.SyntaxKind.ExtendsKeyword && ts.isClassLike(node.parent.parent);
+/** A read of an allowed built-in by its form (wb-2fb4): a member (`Object.entries`), a construction (`new Map`), a call, or the
+ * value itself (aliased, cast, passed or keyed); `undefined` is only ever a value. */
+function globalForm(node: ts.Identifier): string {
+  const parent = node.parent;
+  if (node.text === 'undefined') return 'undefined';
+  if (ts.isPropertyAccessExpression(parent) && parent.expression === node) return `${node.text}.${parent.name.text}`;
+  if (ts.isNewExpression(parent) && parent.expression === node) return `new ${node.text}`;
+  if (ts.isCallExpression(parent) && parent.expression === node) return `${node.text}()`;
+  return `${node.text} value`;
+}
+/** Every identifier spelled `name` below a node that names a value (never a member name, a property key or a label). */
+function namesIn(root: ts.Node, name: string): ts.Identifier[] {
+  const found: ts.Identifier[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) && node.text === name && !keysMember(node)) found.push(node);
+    ts.forEachChild(node, visit);
+  };
+  visit(root);
+  return found;
+}
+/** A name keying a member read or a computed property name. */
+const isKey = (node: ts.Identifier): boolean =>
+  (ts.isElementAccessExpression(node.parent) && node.parent.argumentExpression === node) || (ts.isComputedPropertyName(node.parent) && node.parent.expression === node);
+/** `as const`. */
+const isConstType = (type: ts.TypeNode): boolean => ts.isTypeReferenceNode(type) && ts.isIdentifier(type.typeName) && type.typeName.text === 'const';
+/** The one named-key form the scan resolves (wb-2fb4): a key read through the first parameter of a callback handed straight to
+ * `<tuple>.flatMap(...)`, where <tuple> is an unexported const array of string literals (none of them 'constructor') that the code
+ * names only as such a call's receiver, and the parameter (no default, no rest) is named inside its callback only as a key. Any
+ * other named key - a composed string, a found name, a written parameter, a tuple that escapes - fails closed. */
+function tupleElement(key: ts.Identifier, file: ts.SourceFile, checker: ts.TypeChecker): boolean {
+  const [parameter, ...more] = checker.getSymbolAtLocation(key)?.declarations ?? [];
+  if (parameter === undefined || more.length > 0 || !ts.isParameter(parameter) || !ts.isIdentifier(parameter.name)) return false;
+  if (parameter.initializer !== undefined || parameter.dotDotDotToken !== undefined) return false;
+  const callback = parameter.parent;
+  if (!(ts.isArrowFunction(callback) || ts.isFunctionExpression(callback)) || callback.parameters[0] !== parameter) return false;
+  const call = callback.parent;
+  if (!ts.isCallExpression(call) || call.arguments[0] !== callback || !ts.isPropertyAccessExpression(call.expression)) return false;
+  const receiver = call.expression.expression;
+  if (!ts.isIdentifier(receiver) || !TUPLE_METHODS.includes(call.expression.name.text)) return false;
+  const [tuple, ...others] = checker.getSymbolAtLocation(receiver)?.declarations ?? [];
+  if (tuple === undefined || others.length > 0 || !ts.isVariableDeclaration(tuple) || !ts.isIdentifier(tuple.name)) return false;
+  const list = tuple.parent;
+  if (!ts.isVariableDeclarationList(list) || (list.flags & ts.NodeFlags.Const) === 0 || !ts.isVariableStatement(list.parent)) return false;
+  if (list.parent.modifiers?.some((modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword) === true) return false;
+  const value = tuple.initializer !== undefined && ts.isAsExpression(tuple.initializer) && isConstType(tuple.initializer.type) ? tuple.initializer.expression : tuple.initializer;
+  if (value === undefined || !ts.isArrayLiteralExpression(value) || !value.elements.every((element) => ts.isStringLiteralLike(element) && element.text !== 'constructor')) return false;
+  const named = tuple.name;
+  const receives = (node: ts.Identifier): boolean =>
+    ts.isPropertyAccessExpression(node.parent) &&
+    node.parent.expression === node &&
+    TUPLE_METHODS.includes(node.parent.name.text) &&
+    ts.isCallExpression(node.parent.parent) &&
+    node.parent.parent.expression === node.parent;
+  return namesIn(file, named.text).every((node) => node === named || receives(node)) && namesIn(callback.body, parameter.name.text).every(isKey);
+}
+/** A named key's form: the tuple form when it resolves, else the name itself (a reach). */
+const keyForm = (key: ts.Identifier, file: ts.SourceFile, checker: ts.TypeChecker): string => (tupleElement(key, file, checker) ? 'key tuple element' : `key ${key.text}`);
 function reachOf(source: string): Reach {
   const file = ts.createSourceFile('reader.ts', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-  const free = freeReads(file);
+  const checker = checkerOf(file);
+  const free = freeReads(checker, file);
   const used = new Set<string>();
+  const forms = new Set<string>();
   const reach = {dynamicImports: 0, constructorReads: 0, computedKeys: 0};
+  const keyed = (key: ts.Expression): void => {
+    if (ts.isIdentifier(key)) forms.add(keyForm(key, file, checker));
+    else if (!ts.isStringLiteralLike(key) && !ts.isNumericLiteral(key)) reach.computedKeys += 1;
+  };
   const visit = (node: ts.Node): void => {
     if ((ts.isTypeNode(node) && !extendsValue(node)) || ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node)) return;
-    if (ts.isIdentifier(node) && !declaresName(node) && !keysMember(node) && free(node)) used.add(node.text);
+    if (ts.isIdentifier(node) && !declaresName(node) && !keysMember(node) && free(node)) {
+      used.add(node.text);
+      if (ALLOWED_GLOBALS.includes(node.text)) forms.add(globalForm(node));
+    }
     if ((ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword) || ts.isMetaProperty(node) || ts.isExternalModuleReference(node)) reach.dynamicImports += 1;
     if ((ts.isIdentifier(node) || ts.isStringLiteralLike(node)) && node.text === 'constructor') reach.constructorReads += 1;
-    if (ts.isElementAccessExpression(node)) {
-      const key = node.argumentExpression;
-      if (!ts.isStringLiteralLike(key) && !ts.isNumericLiteral(key) && !ts.isIdentifier(key)) reach.computedKeys += 1;
-    }
+    if (ts.isElementAccessExpression(node)) keyed(node.argumentExpression);
+    if (ts.isComputedPropertyName(node)) keyed(node.expression);
     ts.forEachChild(node, visit);
   };
   visit(file);
-  return {globals: [...used].sort(), ...reach};
+  return {globals: [...used].sort(), ...reach, forms: [...forms].sort()};
 }
 /** The reach a code text has beyond the allowed built-ins, one entry per kind. */
 function reachViolations(reach: Reach): string[] {
@@ -507,6 +599,7 @@ function reachViolations(reach: Reach): string[] {
     ...(reach.dynamicImports > 0 ? [`import() x${reach.dynamicImports}`] : []),
     ...(reach.constructorReads > 0 ? [`constructor read x${reach.constructorReads}`] : []),
     ...(reach.computedKeys > 0 ? [`computed key x${reach.computedKeys}`] : []),
+    ...reach.forms.filter((form) => !RESOLVABLE.includes(form)).map((form) => `form ${form}`),
   ];
 }
 /** A plant as a module of its own (an exported function holding the code), so each control judges the scan alone. */
@@ -519,6 +612,11 @@ interface ReachPlant {
   module?: true;
 }
 const plantText = (plant: ReachPlant): string => (plant.module === true ? plant.code : planted(plant.code));
+/** The former R2's door (R-REFLECTIVE-REACH, cured by wb-2fb4): a member read keyed by a name bound to a composed string. */
+const REFLECTIVE_DOOR = "  try {\n    const door = ['constr', 'uctor'].join('');\n    void (Object as unknown as Record<string, (code: string) => () => unknown>)[door]('return this')();\n  } catch {}\n";
+/** The former R2's second door (wb-52th F2; cured by wb-2fb4): the same composed name handed to a descriptor read. */
+const DESCRIPTOR_DOOR =
+  "  try {\n    const door = ['constr', 'uctor'].join('');\n    void (Object.getOwnPropertyDescriptor(Object.getPrototypeOf(() => 0), door)?.value as ((code: string) => () => unknown) | undefined)?.('return this')();\n  } catch {}\n";
 /** The gate's GM33 (wb-4nut.5 cut #1, landing-381 F17) and the class members this cut found, each with the reach it must read;
  * GM34 is the gate's control the text bans already killed. Every plant discards its result: the scan reads reach, not use. */
 const REACH_PLANTS: readonly ReachPlant[] = [
@@ -536,15 +634,87 @@ const REACH_PLANTS: readonly ReachPlant[] = [
   {
     id: 'L2-M33p',
     code: "  try {\n    void (Object.getOwnPropertyDescriptor(Object.getPrototypeOf(() => 0), 'constructor')?.value as ((code: string) => () => unknown) | undefined)?.('return this')();\n  } catch {}\n",
-    reads: 'constructor read x1',
+    reads: 'constructor read x1, form Object.getOwnPropertyDescriptor, form Object.getPrototypeOf',
   },
-  {id: 'L2-M33d2', code: "  try {\n    const {constructor: door} = Object.getPrototypeOf(() => 0) as {constructor: (code: string) => () => unknown};\n    void door('return this')();\n  } catch {}\n", reads: 'constructor read x1'},
+  {
+    id: 'L2-M33d2',
+    code: "  try {\n    const {constructor: door} = Object.getPrototypeOf(() => 0) as {constructor: (code: string) => () => unknown};\n    void door('return this')();\n  } catch {}\n",
+    reads: 'constructor read x1, form Object.getPrototypeOf',
+  },
   {id: 'L2-M33sh', code: '  const shadow = (globalThis: {process?: unknown}): unknown => globalThis.process;\n  void shadow({});\n  void (globalThis as {process?: {env?: unknown}}).process?.env;\n', reads: 'global globalThis'},
   {id: 'L2-M33sh-quiet', code: '  const shadow = (globalThis: {process?: unknown}): unknown => globalThis.process;\n  void shadow({});\n', reads: ''},
   {id: 'GM33f', code: "  try {\n    class Door extends Function {}\n    void new Door('return this')();\n  } catch {}\n", reads: 'global Function'},
   {id: 'GM33g', code: "import door = require('node:os');\nexport const home = (): unknown => door;\n", reads: 'import() x1', module: true},
   {id: 'GM33h', code: '  void {globalThis};\n', reads: 'global globalThis'},
   {id: 'GM34', code: "  await import('node:fs').catch(() => undefined);\n", reads: 'import() x1'},
+  // wb-2fb4 (the landing-590 verdict's F1, filed from wb-52th): the two members that reached the Function constructor past the
+  // escape-by-escape scan (no 'constructor' spelling), its two kill controls, the former R2 doors and the class members the
+  // resolvable-form scan closes beyond them, and the controls of the one keyed form it resolves (a const literal tuple's element).
+  {
+    id: 'GM33-ENUMKEY',
+    code: "  try {\n    const proto = Object.getPrototypeOf(() => 0) as Record<string, ((code: string) => () => unknown) | undefined>;\n    const door = Object.getOwnPropertyNames(proto).find((key) => key.length === 11 && key.startsWith('con')) ?? '';\n    void proto[door]?.('return this')();\n  } catch {}\n",
+    reads: 'form Object.getOwnPropertyNames, form Object.getPrototypeOf, form key door',
+  },
+  {
+    id: 'GM33-VALUES',
+    code: "  try {\n    const found = Object.values(Object.getOwnPropertyDescriptors(Object.getPrototypeOf(() => 0))).find((entry) => (entry.value as {name?: unknown} | undefined)?.name === 'Function');\n    void (found?.value as ((code: string) => () => unknown) | undefined)?.('return this')();\n  } catch {}\n",
+    reads: 'form Object.getOwnPropertyDescriptors, form Object.getPrototypeOf, form Object.values',
+  },
+  {
+    id: 'GM33-TPLKEY',
+    code: "  try {\n    void (Object.getPrototypeOf(() => 0) as Record<string, (code: string) => () => unknown>)[`constructor`]('return this')();\n  } catch {}\n",
+    reads: 'constructor read x1, form Object.getPrototypeOf',
+  },
+  {
+    id: 'GM33-CDESTRUCT',
+    code: "  try {\n    const {['constructor']: door} = Object.getPrototypeOf(() => 0) as {constructor: (code: string) => () => unknown};\n    void door('return this')();\n  } catch {}\n",
+    reads: 'constructor read x1, form Object.getPrototypeOf',
+  },
+  {id: 'R2-DOOR', code: REFLECTIVE_DOOR, reads: 'form Object value, form key door'},
+  {id: 'R2-DESCRIPTOR', code: DESCRIPTOR_DOOR, reads: 'form Object.getOwnPropertyDescriptor, form Object.getPrototypeOf'},
+  {
+    id: 'R2-ARROW',
+    code: "  try {\n    const door = ['constr', 'uctor'].join('');\n    void ((() => 0) as unknown as Record<string, (code: string) => () => unknown>)[door]('return this')();\n  } catch {}\n",
+    reads: 'form key door',
+  },
+  {
+    id: 'R2-DESTRUCT',
+    code: "  try {\n    const door = ['constr', 'uctor'].join('');\n    const {[door]: make} = (() => 0) as unknown as Record<string, (code: string) => () => unknown>;\n    void make('return this')();\n  } catch {}\n",
+    reads: 'form key door',
+  },
+  {id: 'GM33-ALIAS', code: '  try {\n    const reflect = Object;\n    void reflect.getOwnPropertyNames(reflect.getPrototypeOf(() => 0));\n  } catch {}\n', reads: 'form Object value'},
+  {id: 'KEY-TUPLE-quiet', code: "  const fields = ['title', 'notes'] as const;\n  const record: Record<string, unknown> = {};\n  void fields.flatMap((field) => [record[field]]);\n", reads: ''},
+  {
+    id: 'KEY-TUPLE-WRITE',
+    code: "  const fields = ['title', 'notes'] as const;\n  const record: Record<string, unknown> = {};\n  void fields.flatMap((field) => {\n    field = ['constr', 'uctor'].join('') as 'title';\n    return [record[field]];\n  });\n",
+    reads: 'form key field',
+  },
+  {
+    id: 'KEY-TUPLE-ESCAPE',
+    code: "  const fields = ['title', 'notes'] as const;\n  const record: Record<string, unknown> = {};\n  (fields as unknown as string[]).push(['constr', 'uctor'].join(''));\n  void fields.flatMap((field) => [record[field]]);\n",
+    reads: 'form key field',
+  },
+  {
+    id: 'KEY-TUPLE-CTOR',
+    code: "  const fields = ['title', 'constructor'] as const;\n  const record: Record<string, unknown> = {};\n  void fields.flatMap((field) => [record[field]]);\n",
+    reads: 'constructor read x1, form key field',
+  },
+  {
+    id: 'KEY-TUPLE-COMPOSED',
+    code: "  const fields = ['title', ['constr', 'uctor'].join('')] as const;\n  const record: Record<string, unknown> = {};\n  void fields.flatMap((field) => [record[field]]);\n",
+    reads: 'form key field',
+  },
+  {
+    id: 'KEY-TUPLE-EXPORT',
+    code: "export const fields = ['title', 'notes'] as const;\nconst record: Record<string, unknown> = {};\nexport const read = (): unknown[] => fields.flatMap((field) => [record[field]]);\n",
+    reads: 'form key field',
+    module: true,
+  },
+  {id: 'KEY-TUPLE-REDUCE', code: "  const fields = ['title', 'notes'] as const;\n  const record: Record<string, unknown> = {};\n  void fields.reduce((door: string) => record[door] as string, ['constr', 'uctor'].join(''));\n", reads: 'form key door'},
+  {id: 'KEY-TUPLE-DEFAULT', code: "  const fields = ['title', 'notes'] as const;\n  const record: Record<string, unknown> = {};\n  void fields.flatMap((field = 'title') => [record[field]]);\n", reads: 'form key field'},
+  {id: 'KEY-TUPLE-REST', code: "  const fields = ['title', 'notes'] as const;\n  const record: Record<string, unknown> = {};\n  void fields.flatMap((...field) => [record[field]]);\n", reads: 'form key field'},
+  {id: 'KEY-TUPLE-INDEX', code: "  const fields = ['title', 'notes'] as const;\n  const record: Record<string, unknown> = {};\n  void fields.flatMap((_, index) => [record[index]]);\n", reads: 'form key index'},
+  {id: 'KEY-TUPLE-THISARG', code: "  const fields = ['title', 'notes'] as const;\n  const record: Record<string, unknown> = {};\n  void fields.flatMap((name: string) => [name], (field: string) => [record[field]]);\n", reads: 'form key field'},
 ];
 /** The bead whose filing names the L2 reach plants (wb-k888's landing-498 R694 follow-up). */
 const FOLLOW_UP = 'wb-52th';
@@ -553,11 +723,12 @@ function filedReachPlants(): string[] {
   const bullet = /^\[rides\] - F2 (.*)$/m.exec(notesOf(FOLLOW_UP))?.[1] ?? '';
   return [...new Set(bullet.match(/(?<![\w-])L2-M33\w*(?![\w-])/g) ?? [])];
 }
-/** R2's quiet row: a member read keyed by a name bound to a composed string reads no reach (R-REFLECTIVE-REACH). */
-const REFLECTIVE_DOOR = "  try {\n    const door = ['constr', 'uctor'].join('');\n    void (Object as unknown as Record<string, (code: string) => () => unknown>)[door]('return this')();\n  } catch {}\n";
-/** R2's second door (wb-52th F2): the same composed name handed to a descriptor read, now that a 'constructor' string is a read. */
-const DESCRIPTOR_DOOR =
-  "  try {\n    const door = ['constr', 'uctor'].join('');\n    void (Object.getOwnPropertyDescriptor(Object.getPrototypeOf(() => 0), door)?.value as ((code: string) => () => unknown) | undefined)?.('return this')();\n  } catch {}\n";
+/** The GM33-class plants the landing-590 verdict's F1 line names (wb-2fb4's filing carries that line byte-identically; its own
+ * row is not yet in the export at this cut's base): the GM33- ids of the first `- F1 <grade> <role>:` line in wb-52th's notes. */
+function verdictReachPlants(): string[] {
+  const line = /^- F1 (?:LOW|MEDIUM|HIGH) (?:LEADS|RIDES): (.*)$/m.exec(notesOf(FOLLOW_UP))?.[1] ?? '';
+  return [...new Set(line.match(/(?<![\w-])GM33-[A-Z]+(?![\w-])/g) ?? [])];
+}
 
 // ---------------------------------------------------------------------------------------------------------------------------
 // The judged set: rows A-D quote the bead's acceptance; every pin covers one of its sub-clauses and is registered exactly once.
@@ -582,9 +753,8 @@ const AC_BLOCKS = 'a blocks edge between H2 beads is refused';
 const AC_UNREACHABLE = "with the store unreachable Pi reports 'unknown (store unreachable)', never the snapshot's 'open'";
 /** Row R (wb-k888): the named residuals, each one pin covering its own name, each named in this file's header with its row. */
 const R_SHARED = 'R-SHARED-SUBCLAUSE';
-const R_REFLECTIVE = 'R-REFLECTIVE-REACH';
 const R_ECHO = 'R-WITNESS-ECHO';
-const RESIDUALS_LABEL = 'the named residuals R1-R3 stay pinned quiet';
+const RESIDUALS_LABEL = 'the named residuals R1 and R3 stay pinned quiet';
 const ROWS: readonly Row[] = [
   {
     id: 'A',
@@ -632,7 +802,6 @@ const ROWS: readonly Row[] = [
     label: RESIDUALS_LABEL,
     pins: [
       {id: 'R1', covers: R_SHARED},
-      {id: 'R2', covers: R_REFLECTIVE},
       {id: 'R3', covers: R_ECHO},
     ],
   },
@@ -706,7 +875,7 @@ const subClauses = (clause: string): string[] => clause.split(/; | (?:and|or) (?
 
 describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-HARNESS2-REACTIVE-EVOLUTION-R5)', () => {
   it('the judged set: frozen shape, the bead acceptance text, the registered pins and the pinned maps agree', () => {
-    expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(['A:6', 'B:5', 'C:3', 'D:3', 'R:3']);
+    expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(['A:6', 'B:5', 'C:3', 'D:3', 'R:2']);
     const clauses = acceptanceClauses();
     expect(acceptanceRows().map((row) => row.label)).toEqual(clauses);
     for (const [index, row] of acceptanceRows().entries()) {
@@ -715,7 +884,7 @@ describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-H
     }
     // Row R: one pin per named residual, covering its own name, each named with its pin in this file's header comment.
     const residuals = ROWS.find((row) => row.id === 'R');
-    expect([residuals?.label, residuals?.pins.map((entry) => `${entry.id} ${entry.covers}`)]).toEqual([RESIDUALS_LABEL, [`R1 ${R_SHARED}`, `R2 ${R_REFLECTIVE}`, `R3 ${R_ECHO}`]]);
+    expect([residuals?.label, residuals?.pins.map((entry) => `${entry.id} ${entry.covers}`)]).toEqual([RESIDUALS_LABEL, [`R1 ${R_SHARED}`, `R3 ${R_ECHO}`]]);
     const header = readFileSync(fileURLToPath(import.meta.url), 'utf8').split('*/')[0] ?? '';
     expect((residuals?.pins ?? []).filter((entry) => !header.includes(`${entry.id} ${entry.covers}`))).toEqual([]);
     expect(sorted([...REGISTERED.keys()])).toEqual(sorted(ROWS.flatMap((row) => row.pins.map((entry) => entry.id))));
@@ -979,16 +1148,55 @@ describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-H
       .replace(/^\s*\/\/.*$/gm, '');
     const specifiers = [...source.matchAll(/^import .* from '([^']+)';$/gm)].map((match) => match[1]);
     // wb-k888 (F17): nor is a builtin reached without an import. The AST reach scan holds the code's free names to the language
-    // built-ins it names today, with no import(), no constructor read and no computed member key ...
+    // built-ins it names today, with no import(), no constructor read and no computed member key, and (wb-2fb4) its
+    // member-reference forms to exactly the resolvable roster: any other form fails closed ...
     const code = readFileSync(MODULE, 'utf8');
-    expect(reachOf(code)).toEqual({globals: [...ALLOWED_GLOBALS], dynamicImports: 0, constructorReads: 0, computedKeys: 0});
+    expect(reachOf(code)).toEqual({globals: [...ALLOWED_GLOBALS], dynamicImports: 0, constructorReads: 0, computedKeys: 0, forms: [...RESOLVABLE]});
     // ... and each GM33-class plant reads as the reach it has: the scan's kill controls.
     expect(REACH_PLANTS.map((plant) => `${plant.id}: ${reachViolations(reachOf(plantText(plant))).join(', ')}`)).toEqual(REACH_PLANTS.map((plant) => `${plant.id}: ${plant.reads}`));
     // wb-52th (F2): the plant table's frozen shape, and every L2 reach plant the follow-up's filing names is one of its rows.
-    expect(REACH_PLANTS.map((plant) => plant.id)).toEqual(['GM33', 'GM33b', 'GM33c', 'GM33d', 'GM33e', 'L2-M33p', 'L2-M33d2', 'L2-M33sh', 'L2-M33sh-quiet', 'GM33f', 'GM33g', 'GM33h', 'GM34']);
+    expect(REACH_PLANTS.map((plant) => plant.id)).toEqual([
+      'GM33',
+      'GM33b',
+      'GM33c',
+      'GM33d',
+      'GM33e',
+      'L2-M33p',
+      'L2-M33d2',
+      'L2-M33sh',
+      'L2-M33sh-quiet',
+      'GM33f',
+      'GM33g',
+      'GM33h',
+      'GM34',
+      'GM33-ENUMKEY',
+      'GM33-VALUES',
+      'GM33-TPLKEY',
+      'GM33-CDESTRUCT',
+      'R2-DOOR',
+      'R2-DESCRIPTOR',
+      'R2-ARROW',
+      'R2-DESTRUCT',
+      'GM33-ALIAS',
+      'KEY-TUPLE-quiet',
+      'KEY-TUPLE-WRITE',
+      'KEY-TUPLE-ESCAPE',
+      'KEY-TUPLE-CTOR',
+      'KEY-TUPLE-COMPOSED',
+      'KEY-TUPLE-EXPORT',
+      'KEY-TUPLE-REDUCE',
+      'KEY-TUPLE-DEFAULT',
+      'KEY-TUPLE-REST',
+      'KEY-TUPLE-INDEX',
+      'KEY-TUPLE-THISARG',
+    ]);
     const filed = filedReachPlants();
     expect(filed, `the L2 reach plants ${FOLLOW_UP}'s filing names`).toEqual(['L2-M33p', 'L2-M33d2', 'L2-M33sh']);
     expect(filed.filter((id) => !REACH_PLANTS.some((plant) => plant.id === id))).toEqual([]);
+    // wb-2fb4: every GM33-class plant the landing-590 verdict's F1 line names in the tracked export is one of the table's rows.
+    const verdict = verdictReachPlants();
+    expect(verdict, `the GM33 plants the landing-590 verdict's F1 names in ${FOLLOW_UP}'s notes`).toEqual(['GM33-ENUMKEY', 'GM33-VALUES', 'GM33-TPLKEY', 'GM33-CDESTRUCT']);
+    expect(verdict.filter((id) => !REACH_PLANTS.some((plant) => plant.id === id))).toEqual([]);
     // No Beads reader is imported in any form: the work reader arrives injected (the wb-kku9.3 claim re-check census contract).
     witness('D3', specifiers, ['./capability-registry.js', './observation.js']);
     for (const banned of [/node:/, /readFile|readdir|existsSync/, /BEADS-|\.md\b/, /child_process|spawn|exec\(/, /\bbd ready\b/]) expect(source).not.toMatch(banned);
@@ -1009,14 +1217,6 @@ describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-H
       MAPS.every((map) => mapNamed(map).some((id) => id !== gone)) &&
       unionHolders().some((id) => id !== gone);
     witness('R1', acceptanceRows().flatMap((row) => row.pins.map((entry) => entry.id)).filter(stillHolds), ['A3', 'A4', 'A5', 'A6', 'B5', 'C1', 'C3', 'D1', 'D2', 'D3']);
-  });
-
-  pin('R2', `${R_REFLECTIVE}: a member or descriptor read keyed by a name bound to a composed string reaches past the reach scan; each door, planted, reads no reach`, () => {
-    witness(
-      'R2',
-      [REFLECTIVE_DOOR, DESCRIPTOR_DOOR].map((door) => reachViolations(reachOf(planted(door)))),
-      [[], []],
-    );
   });
 
   pin('R3', `${R_ECHO}: outside row B's map hold no pin's witnessed value has an anchor outside this file, so a body swapped for a case that still reaches its witness stays green; the unheld pins are derived from the hold`, () => {
