@@ -7,7 +7,32 @@
  * Until-then clause (owner filing notes, verbatim): "Until both gates exist, no src or docs change and no Pi claim of an embedded
  * Fiber core; rf CLI envelope consumption stays owned by the wb-x32/wb-973/wb-693 families."
  *
- * THE SOURCE AT THE PIN (FiberOpticsSDK dcc5b57c4aed, the notes' citation, read with read-only git show by the cutting seat; the
+ * CUT #2 (the respin of refusal #1, gate run g10-gate-s128 on cut #1 470578ab; seat ws-01, run g10-work-s130). Each unmet item is
+ * cured by READING, red-first against the gate plants the refusal names (each replayed on the real tree, see the delivery note):
+ *  U1 (C3, rendered-text docs truth + section bound): both Markdown statements are read through ONE rendered view
+ *    (test/helpers/census.ts docsSection and sectionTables, marked 18.0.11's lexer, one binding for the check and the extraction):
+ *    the section under its pinned heading - unique in the rendered view, under its pinned parent path, to the next level-1/2
+ *    heading or EOF - must be HTML-free (a comment or an HTML block anywhere in it is refused) and is pinned WHOLE as a reader sees
+ *    it (its rendered block list, the adoption form), the cited row must be a row of that section's own table, and the README
+ *    sentence a sentence of that section's rendered paragraphs. G-C3a, G-C3b, G-C3c and G-C3d red C3 beside the control
+ *    G-C3-ctl; F4's G-C3e reds it too, as the provider module's leading comments must be exactly its one statement. C3's controls
+ *    vary the three sources in memory the same ways and six more (a lead paragraph or an appended retraction inside a section
+ *    among them) and pin each reading.
+ *  U2 (C1, record honesty): the rf launch roster reads a launcher's COMMAND (THE COMMAND below), so a shell command string, a
+ *    path-qualified binary and a wrapper binary are read (G-C1c, G-C1d, G-C1e red C1), and the load forms include a call through a
+ *    createRequire loader (G-C1f reds C1), beside the controls G-C1a and G-C1b. C1 claims exactly that roster and those load forms;
+ *    what they do not parse is named with pinned quiet rows (R-UNREAD-COMMAND, R-INDIRECT-LOAD beside R-INDIRECT-LAUNCH).
+ *  U3 (B2 and D1, rendered-text truth on the negative pins): a Markdown text is read RAW and RENDERED (THE RENDERED LEG below), so a
+ *    character reference or an inline tag no longer hides a decision or a claim (G-D1f and G-D1g red B2 and D1, G-D1h reds D1); a
+ *    reference or a tag in a text that is not Markdown is named R-ENCODED-SOURCE with its pinned quiet row.
+ *  U4 (D1, head misattribution): a structured text is never cut as prose (THE FORMS below), so no word lends itself to another
+ *    value or line: G-D1i (a lock bin key holding the wasm token) reads quiet on D1, as no claim exists, and on A1, as no lock path
+ *    or name field holds it; G-A1b and G-A1c red A1 alone. A claim wrapped across YAML lines is named R-WRAPPED-STRUCTURED.
+ *  F1 (A4, G-A4d): A4 reads an enum, a binding pattern and a parameter list beside the four declaration kinds cut #1 read; the
+ *    constructs it does not read are named R-OTHER-SHAPE. F3: the roster JSON is in no biome or tsc include; its bytes are held by
+ *    this file's JSON.parse and readRoster on every run. F2 (the landing-order registry entry) is a fold duty, not this cut's.
+ *
+ * THE SOURCE AT THE PIN (FiberOpticsSDK dcc5b57c4aed, the notes' citation, read with read-only git show by the cut #1 seat; the
  * roster vendors lines 3, 11, 15, 19, 21, 22 and 24 with their SHA256): docs/programs/universal-reactive-rendering-2026-10-18.md
  * :3 "design charter only (2026-10-18), no code or backend switch"; :11 the portable workspace members
  * fiber-model/fiber-core/fiber-runtime; :15 "Host capabilities supply clocks/timers/randomness/spawn; the core never imports DOM,
@@ -21,15 +46,16 @@
  * scenario schema, the Rust capability traits of rust/fiber-model/src/capabilities.rs) and the tree holds no package.json, no
  * .wasm file and no wasm-pack output: no released WASM artifact or capability-set package exists for Pi to adopt.
  *
- * MEASURED AT BASE (7a0ab7f, landing 630; seat ws-03, run g10-work-s129, 2026-10-28): src holds 116 tracked script
- * modules (100929 judged AST texts, 3608 member-bearing declarations, 617 module specifiers) and none spells
+ * MEASURED AT BASE (trunk 014d116, landing 651, merged into the branch; seat ws-01, run g10-work-s130, 2026-10-28): src holds
+ * 117 tracked script modules (101769 judged AST texts, 6482 member-bearing declarations, 618 module specifiers) and none spells
  * a stem, crate, WebAssembly, ABI or capability-set name, declares the four members together or loads an RF or Fiber SDK; the
- * one rf launch is the provider's spawn; git tracks 1048 files, none a .wasm file or a path naming the core; package.json
- * (120 texts) and the two lockfiles (372 packages each) name none; the 304 product texts (51492
- * sentences) carry no claim - the only stem spellings are the rf_identity sdk_versions keys of four rf receipts, rf's own
- * identity echoed through its CLI envelope; the wb-x32 row (1798 characters across its string fields) and the decisions
- * page (65 sentences) state no decision. So the gate has not fired, and until it does Pi's RF surface is the rf CLI
- * envelope: the native preview admits only the reactive-fiber.cli/v1 envelope and Pi says so in three places.
+ * one rf launch is the provider's spawn; git tracks 1060 files (the trunk's 1058, this census and its roster), none a .wasm
+ * file or a path naming the core; package.json (120 texts) and the two lockfiles (372 packages each) name none; the 306
+ * product texts (60861 raw sentences; 8670 rendered units of the 88 Markdown texts) carry no claim and no unknown named
+ * reference - the only stem spellings are the rf_identity sdk_versions keys of four rf receipts, rf's own identity echoed
+ * through its CLI envelope; the wb-x32 row (1798 characters across its string fields) and the decisions page (65 sentences,
+ * 58 rendered units) state no decision. So the gate has not fired, and until it does Pi's RF surface is the rf CLI envelope:
+ * the native preview admits only the reactive-fiber.cli/v1 envelope and Pi says so in three places.
  *
  * THE VOCABULARY. fold: NFKC, lower case, every character outside a-z and 0-9 removed (fiber_optics, fiber-optics, FiberOptics
  * and "@fiber-optics/sdk" all hold "fiberoptics"). tokens: the same text split at every run outside a-z and 0-9; the wasm word is
@@ -41,6 +67,29 @@
  * every ".", "!", "?" or ";" followed by white space; wrapped lines stay one sentence (a JSDoc comment's too). A CLAIM (row D): a
  * sentence holding a core name, or EMBED beside the stem, a crate or the wasm token. A DECISION (row B): a sentence holding EMBED
  * beside a core name, the stem, a crate or the wasm token.
+ * THE FORMS (row D reads a text by its extension): a .md text RAW (its sentences, every source line, hidden text included) and
+ * RENDERED; a .json text per key and string at any depth, a string-valued key read with its value ("<key>: <value>"), any other
+ * key alone and an array's strings alone, each cut into sentences and placed by its key path (a JSON text that does not parse is
+ * read line by line); a .yml, .yaml or .toml text LINE BY LINE, each line a unit of its own; every other text
+ * extension as prose sentences. A structured text is never one prose run, so a word in one value lends itself to no other.
+ * THE RENDERED LEG (Markdown, rows B and D): marked 18.0.11 lexes the text once; a unit is a heading, a paragraph, a list item's
+ * text, a table cell, a block quote's blocks or an HTML block, placed at its first source line (top-level raws concatenate to the
+ * source exactly, so the line is measured, never estimated). A unit renders what a reader sees: an inline HTML token (a tag or a
+ * comment) and a task checkbox render nothing, a code span and an escape show their text as written, a hard break is a line end,
+ * an HTML block renders its text with its comments (an unclosed one to its end) and tags removed, and every numeric character
+ * reference and each NAMED_REFERENCES name is decoded; any other named reference is REFUSED (a finding of its own, since the
+ * census cannot say what it renders). A code block shows its text as written and is left to the raw leg; a link destination and
+ * an attribute are read only raw. A rendered unit cuts into sentences after every ".", "!", "?" or ";" followed by white space,
+ * and its findings carry the leg: "<path>:<line>: rendered <families>".
+ * THE COMMAND (C1's launch roster): a call by one of LAUNCHERS (its name, a member of that name, or a named-import alias of one
+ * from node:child_process) launches rf when its command does. The command is the first argument (a string literal, or a template
+ * literal's head: its text before the first substitution, a word the substitution continues dropped) read as a command line -
+ * simple commands cut at every ";", "&", "|" and line end outside quotes, words split at white space outside quotes, the quotes
+ * removed - and a single simple command is continued by a second-argument array's literal words. A simple command
+ * launches the basename of its first word after any leading VAR=value assignments; through one of WRAPPERS, the wrapper's first
+ * later word that is no option and no assignment; through one of SHELLS, the simple commands of its -c script (the word after a
+ * single-dash option word holding c). A substitution, a subshell, a valued wrapper option, another wrapper, a script file or a
+ * launcher outside LAUNCHERS is not parsed (R-UNREAD-COMMAND); a launcher or a binary reached through a binding is R-INDIRECT-LAUNCH.
  *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin returns a measured witness held to the roster):
  *  A, the gating artifact ("released FiberOpticsSDK WASM ABI + HostCapabilitySet (unshipped)"), absent from Pi today.
@@ -55,34 +104,48 @@
  *    regular-expression and JSX texts; never a comment), holds no stem, crate, WebAssembly or ABI name fold, no .wasm string and
  *    no module specifier carrying the wasm token; anchors show every reader position reads the live tree; planted modules (one
  *    per reading position) read, near misses (the workflow VM's wasm option among them) quiet.
- *    A4 THE CAPABILITY SET: no src text names HostCapabilitySet, and no interface, type literal, class or object literal declares
- *    all four of the title's members (by fold) - the set under another name; controls: each declaration kind read, three members
- *    and a comment quiet (row D reads the comment).
+ *    A4 THE CAPABILITY SET: no src text names HostCapabilitySet, and no interface, type literal, class, object literal, enum,
+ *    object binding pattern or parameter list declares all four of the title's members (by fold) - the set under another name;
+ *    controls: each declaration kind read, three members and a comment quiet (row D reads the comment).
  *  B, the decision ("a wb-x32 committing decision to embed the portable Fiber core"), absent today.
- *    B1 THE DECISION BEAD: the tracked export's wb-x32 row (the bead id read from the title), every string field cut into
- *    sentences, holds no decision; anchors show its title, description and notes were read; controls read, near misses quiet.
- *    B2 THE DECISIONS PAGE: docs/workbench/18-decisions-and-risks.md (the notes' cited page) holds no decision; table rows and
- *    list items are units of their own (controls).
+ *    B1 THE DECISION BEAD: the tracked export's wb-x32 row (the bead id read from the title), every string field read raw (as bd
+ *    prints it) and rendered (as a Markdown view shows it), holds no decision and no unknown named reference; anchors show its
+ *    title, description and notes were read; controls read (a no-break-space decision rendered, an unknown reference refused),
+ *    near misses quiet, each control text also read through the same row reader as a field of a planted decision-bead row.
+ *    B2 THE DECISIONS PAGE: docs/workbench/18-decisions-and-risks.md (the notes' cited page), read raw and rendered, holds no
+ *    decision and no unknown named reference; table rows, cells and list items are units of their own (controls: a decision behind
+ *    a no-break-space reference, an inline tag, a numeric reference, an unknown reference refused, a pipe paragraph read as one;
+ *    a code span, a split table and split items quiet).
  *  C, the until-then clause ("until then Pi's RF surface stays the rf CLI envelope only").
  *    C1 NO RF SDK: no src module specifier outside the relative ones names reactivefiber, the stem or a crate (import, export,
- *    import-equals, import type, dynamic import, require); no src text or property-access chain spells the notes' three wb-693
- *    names (@reactive-fiber and Host.resources as written, createReactiveFiberRuntime by fold); src's rf launch roster (a
- *    launcher call by name, member or named-import alias of node:child_process whose first argument is the literal rf) is the
- *    provider alone.
+ *    import-equals, import type, dynamic import, require, or a call through a createRequire loader: a name the module binds to
+ *    createRequire(...)'s result - createRequire by name, by a named-import alias from node:module or module, or as a member - or
+ *    createRequire(...)(...) itself); no src text or property-access chain spells the notes' three wb-693 names (@reactive-fiber
+ *    and Host.resources as written, createReactiveFiberRuntime by fold); src's rf launch roster (THE COMMAND) is the provider
+ *    alone. Controls: each load form and each command form read; a resolve, a relative import, another binary, another wrapped
+ *    binary, an echoed word and a non-child_process alias quiet.
  *    C2 THE CLI ENVELOPE: through a stand-in rf (the ONLY PATH entry, logging each argv) both input arms of the native preview
  *    spawn exactly one `context render ... --no-commit --no-input --json` each and return the reactive-fiber.cli/v1 envelope (its
  *    schema, command and eight keys); a ChangedViewReceipt-shaped reply, the envelope under another schema and the envelope with
  *    one key more are each refused as transport on both arms, one spawn each.
  *    C3 THE STATED SURFACE: Pi's own three statements of its RF surface hold - the notes' cited line (docs/workbench/18:33, "No RF
- *    typed render SDK in pinned revision"), vendor/README.md's ReactiveFiberCLI sentence ("currently uses its installed CLI JSON
- *    envelope") and the provider module's leading comment ("installed CLI JSON contract (no TS SDK published)").
+ *    typed render SDK in pinned revision"), a row of the HTML-free "Key risks and mitigations" section under the page's title;
+ *    vendor/README.md's ReactiveFiberCLI sentence ("currently uses its installed CLI JSON envelope"), a rendered sentence of the
+ *    HTML-free section under the README's "Native SDK artifacts" title; each section pinned whole as a reader sees it; and the
+ *    provider module's leading comment ("installed CLI JSON contract (no TS SDK published)"), its one leading comment. Controls:
+ *    the row in an HTML comment, the heading retired, a comment elsewhere in the section, the heading twice, a lead paragraph in
+ *    the page section, a heading or a lead paragraph above the README sentence, the sentence in a comment, a comment in the README
+ *    section, a retraction appended to another README paragraph and a second leading comment, each read as the binding sees it.
  *  D, the claim clause ("no Pi claim of an embedded Fiber core").
  *    D1 THE PRODUCT TEXTS: every tracked file below docs, src, qa, examples, vendor, .agents, .pi, .github and .codex and every
  *    tracked file at the repository root (the roots held both ways to a walk), read as strict UTF-8 when its extension is a
- *    measured text extension (any other is reported), holds no claim, and every root is read; a scratch tree planting one claim
- *    per root and one at the root reads exactly those; controls read (a wrapped sentence, a JSDoc comment, an NFKC form) and near
- *    misses stay quiet (a receipt's rf_identity sdk_versions key, the workflow VM's wasm option, split sentences, table rows and
- *    list items).
+ *    measured text extension (any other is reported) by its FORM, holds no claim and no unknown named reference, and every root is
+ *    read; a scratch tree planting one claim per root and one at the root reads exactly those (raw and rendered); controls read (a
+ *    wrapped sentence, a JSDoc comment, an NFKC form, each rendered form - a no-break-space, an inline tag, a decimal and a hex
+ *    reference, an HTML block, a table cell, a list item, a block quote and a heading, each at its line - a JSON value, a YAML line)
+ *    and near misses stay quiet (a receipt's rf_identity sdk_versions key, the workflow VM's wasm option, split sentences, a table's
+ *    rows, list items, a code span, a lock whose embed and wasm words sit in different values, YAML lines that pair them only as
+ *    prose would).
  *    D2 THE REGISTERED CAPABILITIES: every descriptor the native registration and the four injected-client registrations register,
  *    read whole (every key and string at any depth, each one unit), states no claim; planted descriptors read, a neutral one quiet.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
@@ -99,12 +162,14 @@
  * vendors the notes' cited charter lines at the notes' pin, the Authority quote is line 15's, both halves of the status quote are
  * line 3's, and lines 11, 21, 22 and 24 name the census's crates, ABI names, capability set and members, and receipt fields.
  * FAIL-CLOSED (by design, not a residual): a negated sentence ("no decision to embed the Fiber core yet") on the decision bead, on
- * the decisions page or in a product text reads as a decision or a claim; the census reds and its reader judges the sentence.
+ * the decisions page or in a product text reads as a decision or a claim; an unknown named reference in a Markdown text, and any
+ * HTML in a stated surface's section, is refused; pipe lines with no delimiter row render as one paragraph and are read as one; any
+ * edit of docs/18's "Key risks and mitigations" section or of vendor/README.md's title section (the whole file at base; each file
+ * changed twice in the trunk's history) reds C3, and the editing cut re-pins the section; the census reds and its reader judges.
  * NOT CLAIMED (edits of this file and the roster together below row level): a pin removed from ROWS, the literal, IMPL and the
- * roster where no anchor of the bead text holds it - D2 and every Q pin (the cut-time CT6 sweep removed each pin from every
- * literal and the roster: A1-A4, B1, B2, C1-C3 and D1 red through the bead text, D2 and Q1-Q7 stay green); a control removed from
- * its list and the roster; a pin's case replaced by one that echoes its roster witness; git's listing replaced by the walk it
- * anchors.
+ * roster where no anchor of the bead text holds it - D2 and every Q pin (the cut-time CT6 sweep removed each pin from every literal
+ * and the roster: A1-A4, B1, B2, C1-C3 and D1 red through the bead text, D2 and Q1-Q13 stay green); a control removed from its
+ * list and the roster; a pin's case replaced by one that echoes its roster witness; git's listing replaced by the walk it anchors.
  * RESIDUALS (named, each with its pinned quiet row): R-COMPOSED a name composed at run time from parts is read by no scan (Q1);
  * R-GENERIC-ABI the ABI spelled only through its generic entries (initialize, inspect, subscribe, snapshot, close) is not read
  * (Q2); R-OUTSIDE-SCOPE a claim in a tree row D does not walk (test/, new-feedback/, .beads/, media/, untracked or ignored files)
@@ -113,7 +178,18 @@
  * decision recorded on another bead, or outside the export and the decisions page, is not read (Q5); R-OTHER-VOCABULARY the core
  * under other names (another package, another ABI verb, renamed capability members, another phrase) is read by no surface (Q6);
  * R-INDIRECT-LAUNCH an rf launch whose launcher or binary is reached through a binding (a re-bound launcher, a destructured
- * require, the binary held in a constant) is not in the roster (Q7).
+ * require, the binary held in a constant) is not in the roster (Q7); R-UNREAD-COMMAND an rf launch whose command C1 does not parse
+ * (a command substitution or subshell, a wrapper option that takes a value before the binary, a wrapper outside WRAPPERS such as
+ * xargs or npm exec, a script file a shell runs, a launcher outside LAUNCHERS such as execa or zx's $ tag) is not in the roster
+ * (Q8); R-INDIRECT-LOAD an RF or Fiber SDK load through a loader C1 does not resolve (a createRequire loader re-bound,
+ * module.require, require.call) or with its specifier in a binding is not read (Q9); R-OTHER-SHAPE the four members together
+ * in a construct A4 does not read (a union of string literal types, an array, a Map, a named tuple) are not read (Q10);
+ * R-RETRACTED-ELSEWHERE a retraction of a stated surface written outside its
+ * bound section or leading comment (another section of the page, a later section of the README, a later comment of the provider)
+ * is not read (Q11); R-ENCODED-SOURCE a character reference or an inline tag in a text that is not Markdown (a source comment, a
+ * YAML line, a JSON value) is read raw, never decoded (Q12); R-WRAPPED-STRUCTURED a claim wrapped across the lines of a YAML or
+ * TOML text is read line by line, so a pairing whose halves sit on different lines is not read, nor one split across a JSON text's
+ * key levels (an object key and a string under a nested key) (Q13).
  * NOT DELIVERED (the armed half, parked on the bead with its external target): the conformance tier that initializes an embedded
  * core with an explicit HostCapabilitySet (real and deterministic fake; errors, cycles and subscriptions under fakes) and the
  * import/manifest census of the portable core (no ambient DOM, JS or network API reaches it from Pi) need the released artifact
@@ -127,6 +203,7 @@ import { createHash } from "node:crypto";
 import { chmodSync, existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import { dirname, extname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
+import { marked, type Token, type Tokens } from "marked";
 import ts from "typescript";
 import { afterAll, afterEach, describe, expect, it } from "vitest";
 import { type CapabilityDescriptor, CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
@@ -140,6 +217,7 @@ import {
   registerNativeReactiveFiberRender,
   registerReactiveFiberRender,
 } from "../src/workbench/providers/reactivefiber.js";
+import { docsSection, sectionTables } from "./helpers/census.js";
 import { fullShapeRf, type Json } from "./helpers/rf-render-fixture.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
@@ -182,16 +260,61 @@ const CORE_NAMES = ["Fiber core", CAPABILITY_SET, WASM_GLOBAL, "FOA SDK"] as con
 const EMBED = "embed";
 /** The notes' wb-693 grep spellings, verbatim ("git grep finds no @reactive-fiber/Host.resources/createReactiveFiberRuntime import"). */
 const SPELLINGS = ["@reactive-fiber", "Host.resources", "createReactiveFiberRuntime"] as const;
-/** The rf launchers C1's roster reads: a call by one of these names (or a named-import alias of one) whose first argument is the literal rf. */
+/** The rf launchers C1's roster reads: a call by one of these names (or a named-import alias of one) whose command launches rf. */
 const LAUNCHERS = ["spawn", "spawnSync", "execFile", "execFileSync", "exec", "execSync", "fork"] as const;
 /** The modules a launcher is imported from. */
 const CHILD_PROCESS = ["node:child_process", "child_process"] as const;
+/** The wrappers a command runs its binary through: the binary is the wrapper's first later word that is no option and no assignment. */
+const WRAPPERS = ["npx", "pnpx", "bunx", "env", "nohup", "nice", "time", "sudo", "exec", "command"] as const;
+/** The shells whose -c script (the word after a single-dash option word holding c) is read as a command line of its own. */
+const SHELLS = ["sh", "bash", "zsh", "dash"] as const;
+/** The modules a createRequire loader is imported from (C1 reads a call through the loader as a load). */
+const LOADER_MODULES = ["node:module", "module"] as const;
+/** The extensions row D reads line by line (each line a unit of its own); a .json text is read per key and string, a .md text also rendered. */
+const LINE_EXTENSIONS = [".yml", ".yaml", ".toml"] as const;
+const at = (code: number): string => String.fromCodePoint(code);
+/** The named character references the rendered leg decodes; any other named reference is refused (the census cannot say what it renders). */
+const NAMED_REFERENCES: Readonly<Record<string, string>> = {
+  amp: "&",
+  lt: "<",
+  gt: ">",
+  quot: '"',
+  apos: "'",
+  nbsp: at(0xa0),
+  ensp: at(0x2002),
+  emsp: at(0x2003),
+  thinsp: at(0x2009),
+  hairsp: at(0x200a),
+  shy: at(0xad),
+  ZeroWidthSpace: at(0x200b),
+  zwnj: at(0x200c),
+  zwj: at(0x200d),
+  NoBreak: at(0x2060),
+  hyphen: at(0x2010),
+  dash: at(0x2010),
+  ndash: at(0x2013),
+  mdash: at(0x2014),
+  minus: at(0x2212),
+  period: ".",
+  excl: "!",
+  quest: "?",
+  comma: ",",
+  colon: ":",
+  semi: ";",
+};
+/** C3's two Markdown statements, each bound to its section: the heading pinned by text, unique in the rendered view, under its parent path. */
+const STATED_SECTIONS = {
+  page: { heading: "Key risks and mitigations", depth: 2, parents: [`18 ${at(0x2014)} Decisions, risks, deliberate defaults and re-evaluation triggers`] },
+  readme: { heading: "Native SDK artifacts", depth: 1, parents: [] },
+} as const;
+/** The README statement's subject (C3 reads the bound section's rendered sentences that name it). */
+const README_SUBJECT = "ReactiveFiberCLI";
 /** Row D's scanned roots (every tracked file below each) beside every tracked file at the repository root. */
 const SCAN_ROOTS = ["docs", "src", "qa", "examples", "vendor", ".agents", ".pi", ".github", ".codex"] as const;
 /** The text extensions row D reads (the set measured in its roots at base; any other extension is skipped and reported). */
 const TEXT_EXTENSIONS = ["", ".md", ".ts", ".js", ".mjs", ".json", ".yml", ".yaml", ".toml", ".sh"] as const;
 /** Floors below the counts measured at base 7a0ab7f (recorded in the header). */
-const FLOORS = { modules: 100, texts: 60000, shapes: 1000, specifiers: 300, manifestTexts: 80, lockPackages: 300, trackedFiles: 900, productFiles: 280, sentences: 20000, pageSentences: 50, exportText: 1000 } as const;
+const FLOORS = { modules: 100, texts: 60000, shapes: 1000, specifiers: 300, manifestTexts: 80, lockPackages: 300, trackedFiles: 900, productFiles: 280, sentences: 20000, renderedUnits: 5000, pageSentences: 50, pageUnits: 40, exportText: 1000 } as const;
 const SCRIPT_KINDS: Readonly<Record<string, ts.ScriptKind>> = {
   ".ts": ts.ScriptKind.TS,
   ".mts": ts.ScriptKind.TS,
@@ -319,22 +442,173 @@ function sentencesOf(text: string, markdown: boolean): Sentence[] {
   if (block.length > 0) flush();
   return out;
 }
-function isMarkdown(path: string): boolean {
-  return extname(path).toLowerCase() === ".md";
+/** How row D reads a text, by its extension: Markdown (raw sentences beside the rendered leg), JSON (per key and string), lines, or prose. */
+type TextForm = "markdown" | "json" | "lines" | "prose";
+function formOf(path: string): TextForm {
+  const extension = extname(path).toLowerCase();
+  const lineExtensions: readonly string[] = LINE_EXTENSIONS;
+  if (extension === ".md") return "markdown";
+  if (extension === ".json") return "json";
+  return lineExtensions.includes(extension) ? "lines" : "prose";
 }
-/** A text's claims, `<path>:<line>: <families>`. */
-function claimsOf(text: string, path: string): string[] {
-  return sentencesOf(text, isMarkdown(path)).flatMap(sentence => {
-    const families = claimFamilies(sentence.text);
-    return families.length === 0 ? [] : [`${path}:${sentence.line}: ${families.join(",")}`];
+/** A unit's sentences: cut after every ".", "!", "?" or ";" followed by white space (the cut sentencesOf applies). */
+function cutSentences(text: string): string[] {
+  return text
+    .split(/(?<=[.!?;])\s+/)
+    .map(piece => piece.trim())
+    .filter(piece => piece.length > 0);
+}
+interface RawSentence {
+  /** Where the sentence sits: its first line, or, in a JSON text, the key path of its string. */
+  readonly at: string;
+  readonly text: string;
+}
+/** Each line of a text cut into sentences, each line a unit of its own. */
+function lineSentences(text: string): RawSentence[] {
+  return text.split("\n").flatMap((line, index) => cutSentences(line).map(sentence => ({ at: String(index + 1), text: sentence })));
+}
+/**
+ * A text's raw sentences by its form: a Markdown or prose text's sentences (sentencesOf); each line of a YAML or TOML text; each
+ * key and string of a JSON text at any depth (a JSON text that does not parse is read line by line). A structured text is never cut
+ * as prose, so no word in one value or line lends itself to a word elsewhere in the file.
+ */
+function rawSentences(text: string, path: string): RawSentence[] {
+  const form = formOf(path);
+  if (form === "markdown" || form === "prose") return sentencesOf(text, form === "markdown").map(sentence => ({ at: String(sentence.line), text: sentence.text }));
+  if (form === "lines") return lineSentences(text);
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(text);
+  } catch {
+    return lineSentences(text);
+  }
+  return jsonUnits(parsed, "").flatMap(entry => cutSentences(entry.text).map(sentence => ({ at: entry.path, text: sentence })));
+}
+/** A JSON text's units, each placed by its key path: a string-valued key read with its value ("<key>: <value>"), any other key alone, an array's strings alone. */
+function jsonUnits(value: unknown, path: string): { path: string; text: string }[] {
+  if (typeof value === "string") return [{ path, text: value }];
+  if (Array.isArray(value)) return value.flatMap((item, index) => jsonUnits(item, `${path}[${index}]`));
+  if (!isObject(value)) return [];
+  return Object.entries(value).flatMap(([key, item]) =>
+    typeof item === "string" ? [{ path: `${path}.${key}`, text: `${key}: ${item}` }] : [{ path: `${path}{${key}}`, text: key }, ...jsonUnits(item, `${path}.${key}`)],
+  );
+}
+
+// ---- the rendered leg (rows B and D, Markdown only): what a reader of the rendered page sees (marked 18.0.11's lexer) ----
+
+const REFERENCE = /&(?:#(\d{1,7})|#[xX]([0-9a-fA-F]{1,6})|([A-Za-z][A-Za-z0-9]{1,31}));/g;
+const HTML_COMMENT = /<!--[\s\S]*?(?:-->|$)/g;
+const HTML_TAG = /<\/?[A-Za-z][A-Za-z0-9-]*(?:\s[^>]*)?\/?>/g;
+/** A text with every numeric reference and each NAMED_REFERENCES name decoded; any other named reference stays as written and is recorded. */
+function decodeReferences(text: string, unknown: string[]): string {
+  return text.replace(REFERENCE, (whole: string, decimal?: string, hex?: string, name?: string) => {
+    const code = decimal !== undefined ? Number.parseInt(decimal, 10) : hex !== undefined ? Number.parseInt(hex, 16) : undefined;
+    if (code !== undefined) return code <= 0x10ffff ? at(code) : whole;
+    const value = name === undefined ? undefined : NAMED_REFERENCES[name];
+    if (value === undefined) unknown.push(whole);
+    return value ?? whole;
   });
 }
-/** A text's decisions, `<label>:<line>: <families>`. */
+function tokenText(token: Token): string {
+  const value: unknown = (token as { text?: unknown }).text;
+  return typeof value === "string" ? value : "";
+}
+function tokenChildren(token: Token): readonly Token[] {
+  const value: unknown = (token as { tokens?: unknown }).tokens;
+  return Array.isArray(value) ? (value as Token[]) : [];
+}
+function newlines(text: string): number {
+  return text.split("\n").length - 1;
+}
+/**
+ * What a reader sees of inline tokens: an inline HTML token (a tag or a comment) and a task checkbox render nothing, a code span
+ * and an escape show their text as written, a hard break is a line end, and every other text renders with its references decoded.
+ */
+function inlineRendered(tokens: readonly Token[], unknown: string[]): string {
+  let out = "";
+  for (const token of tokens) {
+    if (token.type === "html" || token.type === "checkbox") continue;
+    if (token.type === "br") out += "\n";
+    else if (token.type === "codespan" || token.type === "escape") out += tokenText(token);
+    else if (tokenChildren(token).length > 0) out += inlineRendered(tokenChildren(token), unknown);
+    else out += decodeReferences(tokenText(token), unknown);
+  }
+  return out;
+}
+interface RenderedUnit {
+  readonly line: number;
+  readonly text: string;
+  readonly unknown: readonly string[];
+}
+/**
+ * A Markdown text's rendered units, each with its first source line: a heading, a paragraph, a list item's text, a table cell, a
+ * block quote's blocks and an HTML block (its comments, an unclosed one to its end, and its tags removed, its references decoded).
+ * A code block shows its text as written, which the raw leg reads; a link destination and an HTML attribute are never rendered.
+ */
+function renderedUnits(markdown: string): RenderedUnit[] {
+  const units: RenderedUnit[] = [];
+  const push = (line: number, render: (unknown: string[]) => string): void => {
+    const unknown: string[] = [];
+    const text = render(unknown);
+    units.push({ line, text, unknown });
+  };
+  const walk = (tokens: readonly Token[], first: number): void => {
+    let line = first;
+    for (const token of tokens) {
+      const start = line;
+      if (token.type === "heading" || token.type === "paragraph" || token.type === "text") {
+        push(start, unknown => (tokenChildren(token).length > 0 ? inlineRendered(tokenChildren(token), unknown) : decodeReferences(tokenText(token), unknown)));
+      } else if (token.type === "list") {
+        let itemLine = start;
+        for (const item of (token as Tokens.List).items) {
+          walk(item.tokens, itemLine);
+          itemLine += newlines(item.raw);
+        }
+      } else if (token.type === "table") {
+        const table = token as Tokens.Table;
+        for (const cell of table.header) push(start, unknown => inlineRendered(cell.tokens, unknown));
+        table.rows.forEach((row, index) => {
+          for (const cell of row) push(start + 2 + index, unknown => inlineRendered(cell.tokens, unknown));
+        });
+      } else if (token.type === "blockquote") {
+        walk(tokenChildren(token), start);
+      } else if (token.type === "html") {
+        push(start, unknown => decodeReferences(token.raw.replace(HTML_COMMENT, "").replace(HTML_TAG, ""), unknown));
+      }
+      line += newlines(token.raw);
+    }
+  };
+  walk(marked.lexer(markdown), 1);
+  return units;
+}
+/** A Markdown text's rendered findings, `<label>:<line>: rendered <families>`; an unknown named reference is refused as a finding of its own. */
+function renderedFindings(markdown: string, label: string, families: (text: string) => string[]): string[] {
+  return renderedUnits(markdown).flatMap(unit => [
+    ...unit.unknown.map(reference => `${label}:${unit.line}: rendered unknown ${reference}`),
+    ...cutSentences(unit.text).flatMap(sentence => {
+      const found = families(sentence);
+      return found.length === 0 ? [] : [`${label}:${unit.line}: rendered ${found.join(",")}`];
+    }),
+  ]);
+}
+/** A text's claims: every raw sentence (by its form) holding one, `<path>:<at>: <families>`, and for Markdown the rendered leg's beside them. */
+function claimsOf(text: string, path: string): string[] {
+  const raw = rawSentences(text, path).flatMap(sentence => {
+    const families = claimFamilies(sentence.text);
+    return families.length === 0 ? [] : [`${path}:${sentence.at}: ${families.join(",")}`];
+  });
+  return formOf(path) === "markdown" ? [...raw, ...renderedFindings(text, path, claimFamilies)] : raw;
+}
+/** A text's raw decisions, `<label>:<line>: <families>`. */
 function decisionsOf(text: string, label: string, markdown: boolean): string[] {
   return sentencesOf(text, markdown).flatMap(sentence => {
     const families = decisionFamilies(sentence.text);
     return families.length === 0 ? [] : [`${label}:${sentence.line}: ${families.join(",")}`];
   });
+}
+/** A Markdown page's decisions: the raw sentences' and the rendered leg's beside them. */
+function pageDecisions(text: string, label: string): string[] {
+  return [...decisionsOf(text, label, true), ...renderedFindings(text, label, decisionFamilies)];
 }
 
 // ---- the controls (each reader's planted positives and near misses; every expectation is pinned in the roster too) ----
@@ -405,6 +679,15 @@ const SET_CONTROLS: Readonly<Record<string, PlantedModule>> = {
     module: "set-object.ts",
     source: 'declare const clock: number;\nexport const capabilities = { clock, timer: 1, "randomness": 2, spawner(): void {} };\n',
   },
+  enumShape: { module: "set-enum.ts", source: "export enum HostCap {\n  Clock,\n  Timer,\n  Randomness,\n  Spawner,\n}\n" },
+  bindingShape: {
+    module: "set-binding.ts",
+    source: "export function host({ clock, timer, randomness, spawner }: Record<string, number>): number {\n  return clock + timer + randomness + spawner;\n}\n",
+  },
+  parameterShape: {
+    module: "set-parameters.ts",
+    source: "export function init(clock: number, timer: number, randomness: number, spawner: number): number {\n  return clock + timer + randomness + spawner;\n}\n",
+  },
   threeMembers: { module: "set-three.ts", source: "export interface Partial {\n  clock: number;\n  timer: number;\n  randomness: number;\n}\n" },
   comment: { module: "set-comment.ts", source: "// a HostCapabilitySet with Clock, Timer, Randomness and Spawner\nexport {};\n" },
 };
@@ -416,6 +699,19 @@ const SDK_CONTROLS: Readonly<Record<string, PlantedModule>> = {
   importEquals: { module: "import-equals.ts", source: 'import rf = require("@fiber-optics/rf");\nexport const sdk = rf;\n' },
   importType: { module: "import-type.ts", source: 'export type Core = import("fiber-core").Core;\n' },
   exportFrom: { module: "export-from.ts", source: 'export { render } from "reactivefiber-sdk";\n' },
+  createRequireLoad: {
+    module: "create-require.ts",
+    source: 'import { createRequire } from "node:module";\nconst load = createRequire(import.meta.url);\nexport const sdk = load("reactivefiber-sdk");\n',
+  },
+  createRequireAlias: {
+    module: "create-require-alias.ts",
+    source: 'import { createRequire as make } from "module";\nconst need = make(import.meta.url);\nexport const core = need("@fiber-optics/core");\n',
+  },
+  createRequireDirect: { module: "create-require-direct.ts", source: 'import * as nodeModule from "node:module";\nexport const runtime = nodeModule.createRequire(import.meta.url)("fiber-runtime");\n' },
+  nearMissResolve: {
+    module: "near-miss-resolve.ts",
+    source: 'import { createRequire } from "node:module";\nconst load = createRequire(import.meta.url);\nexport const where = load.resolve("reactivefiber-sdk");\n',
+  },
   nearMissRelative: {
     module: "near-miss-relative.ts",
     source: 'import { registerNativeReactiveFiberRender } from "./providers/reactivefiber.js";\nexport const register = registerNativeReactiveFiberRender;\n',
@@ -427,10 +723,21 @@ const LAUNCH_CONTROLS: Readonly<Record<string, PlantedModule>> = {
   execFileSyncRf: { module: "exec-rf.ts", source: 'import { execFileSync } from "node:child_process";\nexecFileSync("rf", ["--version"]);\n' },
   memberSpawnRf: { module: "member-spawn-rf.ts", source: 'import * as cp from "node:child_process";\ncp.spawn("rf", ["context", "show"]);\n' },
   aliasedImport: { module: "aliased-import.ts", source: 'import { spawn as run } from "node:child_process";\nrun("rf", ["context", "show"]);\n' },
+  shellCommand: { module: "shell-command.ts", source: 'import { execSync } from "node:child_process";\nexecSync("rf context render --json");\n' },
+  qualifiedBinary: { module: "qualified-binary.ts", source: 'import { spawn } from "node:child_process";\nspawn("/usr/local/bin/rf", ["context", "show"]);\n' },
+  wrapperBinary: { module: "wrapper-binary.ts", source: 'import { spawn } from "node:child_process";\nspawn("npx", ["rf", "context", "show"]);\n' },
+  envAssignments: { module: "env-assignments.ts", source: 'import { exec } from "node:child_process";\nexec("RF_HOME=/tmp/rf-home env -i PATH=/usr/bin rf context show");\n' },
+  shellScript: { module: "shell-script.ts", source: 'import { spawnSync } from "node:child_process";\nspawnSync("bash", ["-lc", "rf context show"]);\n' },
+  compoundCommand: { module: "compound-command.ts", source: 'import { execSync } from "node:child_process";\nexecSync("cd /tmp && \'rf\' context show");\n' },
   otherBinary: { module: "spawn-rg.ts", source: 'import { spawn } from "node:child_process";\nspawn("rg", ["-n", "rf"]);\n' },
+  otherWrapped: { module: "npx-prettier.ts", source: 'import { spawn } from "node:child_process";\nspawn("npx", ["prettier", "--write", "rf"]);\n' },
+  echoWord: { module: "echo-rf.ts", source: 'import { execSync } from "node:child_process";\nexecSync("echo rf | tee rf.log");\n' },
+  templateHead: { module: "template-head.ts", source: `import { execSync } from "node:child_process";\ndeclare const view: string;\nexecSync(\`rf context render --view \${view}\`);\n` },
+  templateBinary: { module: "template-binary.ts", source: `import { execSync } from "node:child_process";\ndeclare const bin: string;\nexecSync(\`\${bin} context show\`);\n` },
+  templateWord: { module: "template-word.ts", source: `import { execSync } from "node:child_process";\ndeclare const suffix: string;\nexecSync(\`rf\${suffix} context show\`);\n` },
   otherModuleAlias: { module: "other-alias.ts", source: 'import { spawn as run } from "./runner.js";\nrun("rf", ["context", "show"]);\n' },
 };
-/** B1's decision reader's controls: bead-field texts. */
+/** B1's decision reader's controls: bead-field texts, read raw and rendered. */
 const DECISION_CONTROLS: Readonly<Record<string, string>> = {
   decision: "OWNER DECISION: Pi will embed the portable Fiber core behind the W10 provider.",
   wasmDecision: "Ruling: embed the WASM build in the workbench host.",
@@ -439,13 +746,21 @@ const DECISION_CONTROLS: Readonly<Record<string, string>> = {
   nearMissEmbed: "The fixture is embedded in the test.",
   nearMissCore: "The rf binary reports fiber_optics in sdk_versions.",
   splitSentences: "We will embed nothing. The Fiber core stays outside.",
+  entityDecision: "OWNER RULING: the W10 provider shall embed the Fiber&nbsp;core.",
+  unknownReference: "OWNER RULING: the W10 provider shall embed the Fiber&bogus;core.",
 };
-/** B2's decision reader's controls: decisions-page Markdown (table rows and list items are units of their own). */
+/** B2's decision reader's controls: decisions-page Markdown, read raw and rendered (table rows, cells and list items are units of their own). */
 const PAGE_CONTROLS: Readonly<Record<string, string>> = {
   tableRow: "| Embed the portable Fiber core | decided | wb-x32 |",
   listItem: "- **Embedding:** embed the portable Fiber core behind W10.",
-  splitRows: "| embed | first |\n| Fiber core | second |",
+  entityDecision: "OWNER DECISION: Pi will embed the Fiber&nbsp;core behind W10.",
+  inlineTagDecision: "OWNER DECISION: Pi will embed the Fi<b></b>ber core behind W10.",
+  numericDecision: "Ruling: embed the Web&#65;ssembly build in the workbench host.",
+  unknownReference: "OWNER DECISION: Pi will embed the Fiber&bogus;core behind W10.",
+  pipeParagraph: "| embed | first |\n| Fiber core | second |",
+  splitRows: "| step | owner |\n| --- | --- |\n| embed | first |\n| Fiber core | second |",
   splitItems: "- embed the receipt\n- the Fiber core stays outside",
+  codeSpanQuiet: "The page writes `embed the Fiber&nbsp;core` as an example.",
 };
 /** Row D's claim reader's controls: a text and the path it is read under (which sets the Markdown rules). */
 interface PlantedText {
@@ -463,12 +778,32 @@ const CLAIM_CONTROLS: Readonly<Record<string, PlantedText>> = {
   fullwidth: { path: "docs/fullwidth.md", text: `The host loads ${String.fromCodePoint(0xff37)}ebAssembly modules.\n` },
   srcComment: { path: "src/comment.ts", text: "/**\n * Pi embeds the\n * Fiber core here.\n */\nexport {};\n" },
   setComment: { path: "src/set-comment.ts", text: "// a HostCapabilitySet with Clock, Timer, Randomness and Spawner\nexport {};\n" },
+  entityClaim: { path: "docs/entity.md", text: "Pi will embed the Fiber&nbsp;core behind W10.\n" },
+  inlineTagClaim: { path: "docs/tag.md", text: "Pi hosts the Fi<b></b>ber core.\n" },
+  numericClaim: { path: "README.md", text: "The workbench instantiates Web&#65;ssembly modules.\n" },
+  hexClaim: { path: "docs/hex.md", text: "The host passes a HostCapability&#x53;et.\n" },
+  htmlBlockClaim: { path: "docs/block.md", text: "<div>\nPi hosts the Fiber&#32;core.\n</div>\n" },
+  unknownReference: { path: "docs/unknown.md", text: "Pi hosts the Fiber&bogus;core.\n" },
+  pipeParagraph: { path: "docs/pipes.md", text: "| embed | x |\n| fiber_optics | y |\n" },
+  tableCellEntity: { path: "docs/cell.md", text: "| a | b |\n| --- | --- |\n| x | y |\n| Fiber&nbsp;core | z |\n" },
+  listItemEntity: { path: "docs/item.md", text: "Intro.\n\n- first\n- Pi hosts the Fiber&nbsp;core\n" },
+  quoteEntity: { path: "docs/quote.md", text: "Intro.\n\n> Pi hosts the\n> Fiber&nbsp;core.\n" },
+  headingEntity: { path: "docs/heading.md", text: "Intro.\n\n## Fiber&nbsp;core host\n" },
+  jsonClaim: { path: "docs/claim.json", text: '{ "description": "Pi embeds the portable Fiber core." }\n' },
+  jsonPairClaim: { path: "docs/pair.json", text: '{ "embedded": "fiber_optics" }\n' },
+  yamlClaim: { path: ".github/claim.yml", text: "# Pi ships the FOA SDK\n" },
   nearMissEmbed: { path: "AGENTS.md", text: "Don't embed multi-line scripts in bash.\n" },
   nearMissStem: { path: "docs/receipt.md", text: '`RF_PREVIEW_RECEIPT {"rf_identity":{"sdk_versions":{"fiber_optics":"0.1.0"}}}`\n' },
   nearMissWasm: { path: "src/vm.ts", text: "codeGeneration: { strings: false, wasm: false },\n" },
   nearMissSentences: { path: "docs/split.md", text: "Pi embeds rf. The fiber_optics version is read from its envelope.\n" },
-  nearMissRows: { path: "docs/rows.md", text: "| embed | x |\n| fiber_optics | y |\n" },
+  nearMissRows: { path: "docs/rows.md", text: "| word | note |\n| --- | --- |\n| embed | x |\n| fiber_optics | y |\n" },
   nearMissItems: { path: "docs/items.md", text: "- embed the receipt\n- fiber_optics stays rf's\n" },
+  nearMissCodeSpan: { path: "docs/code.md", text: "Write `Fiber&nbsp;core` to keep the words apart.\n" },
+  nearMissLock: {
+    path: "vendor/lock.json",
+    text: '{\n  "packages": {\n    "node_modules/sass-embedded": { "version": "1.0.0" },\n    "node_modules/x-tool": { "version": "1.0.0", "bin": { "wasm-opt": "bin/wasm-opt" } }\n  }\n}\n',
+  },
+  nearMissYamlLines: { path: ".github/lines.yml", text: "steps:\n  # embedded runner\n  # fiber_optics wheel\n" },
 };
 const NEVER = (): never => {
   throw new Error("census: a planted or injected capability is never invoked here");
@@ -558,6 +893,41 @@ const INDIRECT_LAUNCH_MODULE: PlantedModule = {
   source:
     'import { spawn } from "node:child_process";\nconst run = spawn;\nrun("rf", ["context", "show"]);\nconst { spawnSync: go } = require("node:child_process");\ngo("rf", ["--version"]);\nconst RF = "rf";\nspawn(RF, ["graph", "show"]);\n',
 };
+/** Q8 R-UNREAD-COMMAND: rf launches whose command C1 does not parse (a substitution, a subshell, a valued wrapper option, another wrapper, a script file, a launcher outside LAUNCHERS). */
+const UNREAD_COMMAND_MODULE: PlantedModule = {
+  module: "unread-command.ts",
+  source:
+    'import { execSync, spawn } from "node:child_process";\nimport { execa } from "execa";\nimport { $ } from "zx";\nexecSync("echo $(rf --version)");\nexecSync("(rf context show)");\nspawn("npx", ["-p", "@acme/rf-cli", "rf", "context", "show"]);\nspawn("xargs", ["rf", "context", "show"]);\nspawn("npm", ["exec", "rf", "--", "context", "show"]);\nspawn("sh", ["./scripts/run-rf.sh"]);\nawait execa("rf", ["context", "show"]);\nawait $`rf context show`;\n',
+};
+/** Q9 R-INDIRECT-LOAD: RF or Fiber SDK loads through a loader C1 does not resolve, or with the specifier held in a binding. */
+const INDIRECT_LOAD_MODULE: PlantedModule = {
+  module: "indirect-load.ts",
+  source:
+    'import { createRequire } from "node:module";\nconst load = createRequire(import.meta.url);\nconst again = load;\nagain("reactivefiber-sdk");\nmodule.require("@fiber-optics/sdk");\nrequire.call(null, "fiber-core");\nconst spec = "reactivefiber-sdk";\nexport const sdk = await import(spec);\n',
+};
+/** Q10 R-OTHER-SHAPE: the four members together in a construct A4 does not read (a union of literal types, an array, a Map, a named tuple). */
+const OTHER_SHAPE_MODULE: PlantedModule = {
+  module: "other-shape.ts",
+  source:
+    'export type Member = "clock" | "timer" | "randomness" | "spawner";\nexport const members = ["clock", "timer", "randomness", "spawner"];\nexport const table = new Map([["clock", 0], ["timer", 0], ["randomness", 0], ["spawner", 0]]);\nexport type Tuple = [clock: number, timer: number, randomness: number, spawner: number];\n',
+};
+/** Q11 R-RETRACTED-ELSEWHERE: a retraction of each stated surface written outside its bound section or leading comment. */
+const RETRACTIONS = {
+  page: { after: "## Decisions deferred, with recommended starting defaults\n", text: "\n**RF risk:** the RF render SDK row of the key risks no longer holds.\n" },
+  readme: { after: "", text: "\n## Superseded\n\nThe ReactiveFiberCLI sentence above no longer holds.\n" },
+  provider: { after: 'import { spawn } from "node:child_process";\n', text: "// The leading comment above no longer holds.\n" },
+} as const;
+/** Q12 R-ENCODED-SOURCE: a character reference or an inline tag in a text that is not Markdown, which row D reads raw. */
+const ENCODED_TEXTS: Readonly<Record<string, PlantedText>> = {
+  sourceComment: { path: "src/encoded.ts", text: "/** Pi embeds the Fiber&nbsp;core here. */\nexport {};\n" },
+  yamlComment: { path: ".github/encoded.yml", text: "# Pi hosts the Fi<b></b>ber core\n" },
+  jsonValue: { path: "docs/encoded.json", text: '{ "note": "The host instantiates Web&#65;ssembly modules." }\n' },
+};
+/** Q13 R-WRAPPED-STRUCTURED: a claim wrapped across the lines of a YAML text, and a pairing split across a JSON text's key levels. */
+const WRAPPED_STRUCTURED: Readonly<Record<string, PlantedText>> = {
+  yamlWrapped: { path: ".github/wrapped.yml", text: "description: >\n  Pi embeds the portable\n  fiber_optics runtime in-process.\n" },
+  jsonNested: { path: "docs/nested.json", text: '{ "embedded": { "runtime": "fiber_optics" } }\n' },
+};
 /** The residual families, each named by the quiet-row pin that holds it. */
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-COMPOSED": ["Q1"],
@@ -567,6 +937,12 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-DECISION-ELSEWHERE": ["Q5"],
   "R-OTHER-VOCABULARY": ["Q6"],
   "R-INDIRECT-LAUNCH": ["Q7"],
+  "R-UNREAD-COMMAND": ["Q8"],
+  "R-INDIRECT-LOAD": ["Q9"],
+  "R-OTHER-SHAPE": ["Q10"],
+  "R-RETRACTED-ELSEWHERE": ["Q11"],
+  "R-ENCODED-SOURCE": ["Q12"],
+  "R-WRAPPED-STRUCTURED": ["Q13"],
 };
 
 // ---- the judged rows ----
@@ -582,7 +958,11 @@ const ROWS: readonly Row[] = [
   { id: "B", label: "a wb-x32 committing decision to embed the portable Fiber core", pins: ["B1", "B2"] },
   { id: "C", label: "until then Pi's RF surface stays the rf CLI envelope only", pins: ["C1", "C2", "C3"] },
   { id: "D", label: "no Pi claim of an embedded Fiber core", pins: ["D1", "D2"] },
-  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"] },
+  {
+    id: "Q",
+    label: "the residuals: each named family pinned by its quiet row",
+    pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12", "Q13"],
+  },
 ];
 
 // ---- the out-of-file roster ----
@@ -732,8 +1112,42 @@ function judgedText(node: ts.Node): { kind: TextKind; text: string } | undefined
   if (ts.isJsxText(node)) return { kind: "jsx", text: node.text };
   return undefined;
 }
-/** A module specifier a node states: import, export, import-equals, import type, dynamic import or require. */
-function specifierOf(node: ts.Node): string | undefined {
+/** A module's createRequire names: the named-import aliases of createRequire and the names a declaration binds to a loader it returns. */
+interface Loaders {
+  readonly aliases: ReadonlySet<string>;
+  readonly loaders: ReadonlySet<string>;
+}
+/** Whether a callee is createRequire: by name, by a named-import alias of it from a loader module, or as a member (`nodeModule.createRequire`). */
+function isCreateRequire(expression: ts.Expression, loaders: Loaders): boolean {
+  if (ts.isIdentifier(expression)) return expression.text === "createRequire" || loaders.aliases.has(expression.text);
+  return ts.isPropertyAccessExpression(expression) && expression.name.text === "createRequire";
+}
+function requireLoaders(file: ts.SourceFile): Loaders {
+  const aliases = new Set<string>();
+  const loaders = new Set<string>();
+  const modules: readonly string[] = LOADER_MODULES;
+  for (const statement of file.statements) {
+    if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier) || !modules.includes(statement.moduleSpecifier.text)) continue;
+    const bindings = statement.importClause?.namedBindings;
+    if (bindings === undefined || !ts.isNamedImports(bindings)) continue;
+    for (const element of bindings.elements) if ((element.propertyName?.text ?? element.name.text) === "createRequire") aliases.add(element.name.text);
+  }
+  const found: Loaders = { aliases, loaders };
+  const visit = (node: ts.Node): void => {
+    const init = ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) ? node.initializer : undefined;
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && init !== undefined && ts.isCallExpression(init) && isCreateRequire(init.expression, found)) {
+      loaders.add(node.name.text);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return found;
+}
+/**
+ * A module specifier a node states: import, export, import-equals, import type, dynamic import, require, or a call through a
+ * createRequire loader (a name the module binds to one, or `createRequire(...)(...)` itself).
+ */
+function specifierOf(node: ts.Node, loaders: Loaders): string | undefined {
   if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier !== undefined && ts.isStringLiteral(node.moduleSpecifier)) {
     return node.moduleSpecifier.text;
   }
@@ -744,17 +1158,23 @@ function specifierOf(node: ts.Node): string | undefined {
   if (ts.isCallExpression(node)) {
     const first = node.arguments[0];
     const callee = node.expression;
-    const loads = callee.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(callee) && callee.text === "require");
+    const loads =
+      callee.kind === ts.SyntaxKind.ImportKeyword ||
+      (ts.isIdentifier(callee) && (callee.text === "require" || loaders.loaders.has(callee.text))) ||
+      (ts.isCallExpression(callee) && isCreateRequire(callee.expression, loaders));
     if (loads && first !== undefined && ts.isStringLiteralLike(first)) return first.text;
   }
   return undefined;
 }
-/** A member-bearing declaration's kind and members: an interface, a type literal, a class or an object literal. */
+/** A member-bearing declaration's kind and members: an interface, a type literal, a class, an object literal, an enum, a binding pattern or a parameter list. */
 function shapeOf(node: ts.Node): { kind: string; members: readonly ts.Node[] } | undefined {
   if (ts.isInterfaceDeclaration(node)) return { kind: "interface", members: node.members };
   if (ts.isTypeLiteralNode(node)) return { kind: "type literal", members: node.members };
   if (ts.isClassDeclaration(node) || ts.isClassExpression(node)) return { kind: "class", members: node.members };
   if (ts.isObjectLiteralExpression(node)) return { kind: "object literal", members: node.properties };
+  if (ts.isEnumDeclaration(node)) return { kind: "enum", members: node.members };
+  if (ts.isObjectBindingPattern(node)) return { kind: "binding pattern", members: node.elements };
+  if (ts.isFunctionLike(node)) return { kind: "parameter list", members: node.parameters };
   return undefined;
 }
 /** The folded names of a declaration's named members (a computed name is not read: R-COMPOSED). */
@@ -769,9 +1189,10 @@ function memberNames(members: readonly ts.Node[]): string[] {
       ts.isGetAccessorDeclaration(member) ||
       ts.isSetAccessorDeclaration(member) ||
       ts.isPropertyAssignment(member) ||
-      ts.isShorthandPropertyAssignment(member);
-    if (!named) continue;
-    const name = member.name;
+      ts.isShorthandPropertyAssignment(member) ||
+      ts.isEnumMember(member);
+    const name = named ? member.name : ts.isBindingElement(member) ? (member.propertyName ?? member.name) : ts.isParameter(member) ? member.name : undefined;
+    if (name === undefined) continue;
     if (ts.isIdentifier(name) || ts.isPrivateIdentifier(name) || ts.isStringLiteral(name) || ts.isNumericLiteral(name)) names.push(fold(name.text));
   }
   return names;
@@ -798,10 +1219,100 @@ function launcherAliases(file: ts.SourceFile): Map<string, string> {
   }
   return aliases;
 }
+/**
+ * A command line's simple commands, each as its words: cut at every ";", "&", "|" and line end outside quotes (so "&&" and "||"
+ * too), its words split at white space outside quotes, the quotes removed. A substitution or a subshell is not opened (R-UNREAD-COMMAND).
+ */
+function simpleCommands(line: string): string[][] {
+  const commands: string[][] = [];
+  let words: string[] = [];
+  let word = "";
+  let open = false;
+  let quote = "";
+  const endWord = (): void => {
+    if (open) words.push(word);
+    word = "";
+    open = false;
+  };
+  const endCommand = (): void => {
+    endWord();
+    if (words.length > 0) commands.push(words);
+    words = [];
+  };
+  for (const character of line) {
+    if (quote.length > 0) {
+      if (character === quote) quote = "";
+      else word += character;
+    } else if (character === "'" || character === '"') {
+      quote = character;
+      open = true;
+    } else if (character === ";" || character === "&" || character === "|" || character === "\n") {
+      endCommand();
+    } else if (/\s/.test(character)) {
+      endWord();
+    } else {
+      word += character;
+      open = true;
+    }
+  }
+  endCommand();
+  return commands;
+}
+function isAssignment(word: string): boolean {
+  return /^[A-Za-z_][A-Za-z0-9_]*=/.test(word);
+}
+/**
+ * The binaries a simple command launches, each by its basename: leading assignments skipped; through a wrapper, the wrapper's first
+ * later word that is no option and no assignment; through a shell, the simple commands of its -c script.
+ */
+function launchedBinaries(words: readonly string[]): string[] {
+  const wrappers: readonly string[] = WRAPPERS;
+  const shells: readonly string[] = SHELLS;
+  let start = 0;
+  while (start < words.length && isAssignment(words[start] ?? "")) start += 1;
+  const word = words[start] ?? "";
+  const binary = word.slice(word.lastIndexOf("/") + 1);
+  if (wrappers.includes(binary)) {
+    let next = start + 1;
+    while (next < words.length && ((words[next] ?? "").startsWith("-") || isAssignment(words[next] ?? ""))) next += 1;
+    return launchedBinaries(words.slice(next));
+  }
+  if (shells.includes(binary)) {
+    const flag = words.findIndex((candidate, index) => index > start && /^-[A-Za-z]*c[A-Za-z]*$/.test(candidate));
+    const script = flag === -1 ? undefined : words[flag + 1];
+    if (script !== undefined) return simpleCommands(script).flatMap(launchedBinaries);
+  }
+  return binary.length === 0 ? [] : [binary];
+}
+/** A template literal's command head: its text before the first substitution, a word the substitution continues dropped. */
+function templateHead(head: string): string {
+  return /\s$/.test(head) ? head : head.replace(/\S+$/, "");
+}
+/**
+ * A launcher call's command: its first argument (a string literal, or a template literal's head) read as a command line; one
+ * simple command is continued by a second-argument array's literal words, up to the first that is no literal (a binding is
+ * R-INDIRECT-LAUNCH).
+ */
+function commandOf(call: ts.CallExpression): string[][] {
+  const first = call.arguments[0];
+  const line = first === undefined ? undefined : ts.isStringLiteralLike(first) ? first.text : ts.isTemplateExpression(first) ? templateHead(first.head.text) : undefined;
+  if (line === undefined) return [];
+  const commands = simpleCommands(line);
+  const second = call.arguments[1];
+  const single = commands.length === 1 ? commands[0] : undefined;
+  if (single === undefined || second === undefined || !ts.isArrayLiteralExpression(second)) return commands;
+  const words = [...single];
+  for (const element of second.elements) {
+    if (!ts.isStringLiteralLike(element)) break;
+    words.push(element.text);
+  }
+  return [words];
+}
 /** One AST read of a module: its judged texts, property-access chains, specifiers, member-bearing declarations and rf launches. */
 function readModule(text: string, module: string): ModuleRead {
   const file = ts.createSourceFile(module, text, ts.ScriptTarget.Latest, true, scriptKind(module));
   const aliases = launcherAliases(file);
+  const loaders = requireLoaders(file);
   const lineOf = (node: ts.Node): number => file.getLineAndCharacterOfPosition(node.getStart(file)).line + 1;
   const texts: (Located & { kind: TextKind })[] = [];
   const accesses: Located[] = [];
@@ -813,7 +1324,7 @@ function readModule(text: string, module: string): ModuleRead {
     const read = judgedText(node);
     if (read !== undefined) texts.push({ line: lineOf(node), ...read });
     if (ts.isPropertyAccessExpression(node) || ts.isQualifiedName(node)) accesses.push({ line: lineOf(node), text: node.getText(file).replace(/\s+/g, "") });
-    const specifier = specifierOf(node);
+    const specifier = specifierOf(node, loaders);
     if (specifier !== undefined) specifiers.push({ line: lineOf(node), text: specifier });
     const shape = shapeOf(node);
     if (shape !== undefined) {
@@ -823,8 +1334,7 @@ function readModule(text: string, module: string): ModuleRead {
     if (ts.isCallExpression(node)) {
       const called = calleeName(node.expression);
       const name = called === undefined ? undefined : ts.isIdentifier(node.expression) ? (aliases.get(called) ?? called) : called;
-      const first = node.arguments[0];
-      if (name !== undefined && launchers.includes(name) && first !== undefined && ts.isStringLiteralLike(first) && first.text === "rf") launches.push(`${module}: ${name}`);
+      if (name !== undefined && launchers.includes(name) && commandOf(node).some(words => launchedBinaries(words).includes("rf"))) launches.push(`${module}: ${name}`);
     }
     ts.forEachChild(node, visit);
   };
@@ -956,6 +1466,7 @@ function isRootLevel(path: string): boolean {
 interface ProductReading {
   readonly files: number;
   readonly sentences: number;
+  readonly renderedUnits: number;
   readonly claims: string[];
   readonly unreadable: string[];
   readonly otherExtensions: string[];
@@ -970,6 +1481,7 @@ function productReading(root: string, files: readonly string[]): ProductReading 
   const claims: string[] = [];
   let read = 0;
   let sentences = 0;
+  let rendered = 0;
   const roots: { [root: string]: boolean } = Object.fromEntries([...SCAN_ROOTS.map(dir => [dir, false]), ["(root files)", false]]);
   for (const path of files) {
     const extension = extname(path).toLowerCase();
@@ -985,12 +1497,13 @@ function productReading(root: string, files: readonly string[]): ProductReading 
       continue;
     }
     read += 1;
-    sentences += sentencesOf(text, isMarkdown(path)).length;
+    sentences += rawSentences(text, path).length;
+    if (formOf(path) === "markdown") rendered += renderedUnits(text).length;
     claims.push(...claimsOf(text, path));
     const top = isRootLevel(path) ? "(root files)" : (path.split("/")[0] ?? "");
     if (Object.hasOwn(roots, top)) roots[top] = true;
   }
-  return { files: read, sentences, claims, unreadable, otherExtensions: [...others].sort(), roots };
+  return { files: read, sentences, renderedUnits: rendered, claims, unreadable, otherExtensions: [...others].sort(), roots };
 }
 /** Row D's walk of a tree: every regular file below each scanned root (never following a symlink), and the root's own files. */
 function productWalk(root: string): { files: string[]; symlinks: string[] } {
@@ -1147,7 +1660,7 @@ function beadDecisions(rows: ReadonlyMap<string, ExportRow>, bead: string): { fo
     found: true,
     text: fields.reduce((sum, [, value]) => sum + value.length, 0),
     anchors,
-    decisions: fields.flatMap(([field, value]) => decisionsOf(value, `${bead}.${field}`, true)),
+    decisions: fields.flatMap(([field, value]) => pageDecisions(value, `${bead}.${field}`)),
   };
 }
 function beadText(): { title: string; notes: string } {
@@ -1223,6 +1736,124 @@ function sha256(text: string): string {
   return createHash("sha256").update(text, "utf8").digest("hex");
 }
 
+// ---- the stated surface (C3, Q11) ----
+
+/** A Markdown table row's cells, its leading and trailing pipe dropped. */
+function rowCells(row: string): string[] {
+  return row
+    .trim()
+    .replace(/^\|/, "")
+    .replace(/\|$/, "")
+    .split("|")
+    .map(cell => cell.trim());
+}
+/** A section binding's verdict in the rendered view (test/helpers/census.ts docsSection): bound or why not, and whether HTML sits in it. */
+interface SectionVerdict {
+  readonly heading: string;
+  readonly bound: boolean;
+  readonly why: string;
+  readonly hasHtml: boolean;
+  /** The section's whole rendered block list (docsSection's blocks: what a reader sees, HTML rendering none), pinned whole. */
+  readonly blocks: JsonValue;
+}
+function sectionVerdict(section: { readonly ok: boolean; readonly why: string; readonly hasHtml: boolean; readonly blocks: readonly unknown[] }, heading: string): SectionVerdict {
+  return { heading, bound: section.ok, why: section.why, hasHtml: section.hasHtml, blocks: json(section.blocks) };
+}
+/** A section verdict in a few words: bound or not, HTML or not, and its rendered block count and digest (SHA-256, first 12). */
+function verdictWords(section: SectionVerdict): string {
+  const blocks = Array.isArray(section.blocks) ? section.blocks.length : 0;
+  return `${section.bound ? "bound" : "unbound"} ${section.hasHtml ? "html" : "html-free"} blocks=${blocks}#${sha256(JSON.stringify(section.blocks)).slice(0, 12)}`;
+}
+/** The three sources of Pi's stated RF surface. */
+interface StatedTexts {
+  readonly page: string;
+  readonly readme: string;
+  readonly provider: string;
+}
+interface StatedReading {
+  readonly cited: { readonly page: string; readonly line: number; readonly row: string; readonly section: SectionVerdict; readonly sectionRows: readonly (readonly string[])[] };
+  readonly readme: { readonly page: string; readonly section: SectionVerdict; readonly sentences: readonly string[] };
+  readonly provider: { readonly module: string; readonly leading: readonly string[] };
+}
+/**
+ * C3's reading of Pi's three statements of its RF surface. The cited row and the README sentence are each read from ONE rendered
+ * view of its page (marked's lexer, through test/helpers/census.ts): the section under its pinned heading - unique in the rendered
+ * view, under its parent path, to the next level-1/2 heading or EOF - must be HTML-free (a comment or an HTML block anywhere in it
+ * is refused), the cited row must be a row of that section's own table, and the README sentence a sentence of that section's
+ * rendered paragraphs. The provider module's leading comments must be exactly its one statement.
+ */
+function statedSurface(texts: StatedTexts, cited: { readonly page: string; readonly line: number }): StatedReading {
+  const { page: pageBound, readme: readmeBound } = STATED_SECTIONS;
+  const row = texts.page.split("\n")[cited.line - 1] ?? "";
+  const cells = JSON.stringify(rowCells(row));
+  const pageSection = docsSection(texts.page, pageBound.heading, pageBound.depth, pageBound.parents);
+  const pageRows = sectionTables(texts.page, pageBound.heading, pageBound.depth, pageBound.parents).grids.flatMap(grid => grid.slice(1));
+  const readmeSection = docsSection(texts.readme, readmeBound.heading, readmeBound.depth, readmeBound.parents);
+  const subject = fold(README_SUBJECT);
+  return {
+    cited: {
+      page: cited.page,
+      line: cited.line,
+      row,
+      section: sectionVerdict(pageSection, pageBound.heading),
+      sectionRows: pageRows.filter(cellsOf => JSON.stringify(cellsOf) === cells),
+    },
+    readme: {
+      page: STATED_README,
+      section: sectionVerdict(readmeSection, readmeBound.heading),
+      sentences: readmeSection.blocks.flatMap(block => (block.kind === "paragraph" ? cutSentences(block.text) : [])).filter(sentence => fold(sentence).includes(subject)),
+    },
+    provider: { module: PROVIDER_MODULE, leading: (ts.getLeadingCommentRanges(texts.provider, 0) ?? []).map(range => texts.provider.slice(range.pos, range.end)) },
+  };
+}
+/** A stated reading in one line: each statement's binding and HTML, what its section yields, and the provider's leading comments. */
+function statedDigest(reading: StatedReading): string {
+  return `page ${verdictWords(reading.cited.section)} rows=${reading.cited.sectionRows.length}; readme ${verdictWords(reading.readme.section)} sentences=${reading.readme.sentences.length}; leading=${reading.provider.leading.length}`;
+}
+/** A text with the given 1-based lines replaced; a line number outside the text changes nothing. */
+function replaceLines(text: string, lines: Readonly<Record<number, string>>): string {
+  const all = text.split("\n");
+  for (const [number, line] of Object.entries(lines)) {
+    const index = Number(number) - 1;
+    if (index >= 0 && index < all.length) all[index] = line;
+  }
+  return all.join("\n");
+}
+/** A text with a line before and a line after the first line that starts with an anchor (an empty insertion adds none; unchanged when no line does). */
+function aroundLine(text: string, anchor: string, before: string, after: string): string {
+  const lines = text.split("\n");
+  const index = lines.findIndex(line => line.startsWith(anchor));
+  if (index === -1) return text;
+  return [...lines.slice(0, index), ...(before.length > 0 ? [before] : []), lines[index] ?? "", ...(after.length > 0 ? [after] : []), ...lines.slice(index + 1)].join("\n");
+}
+/** C3's controls: the live sources varied in memory the ways the gate planted them (G-C3a to G-C3e) and three ways more, each read by statedSurface. */
+const STATED_CONTROLS: Readonly<Record<string, (texts: StatedTexts, line: number) => StatedTexts>> = {
+  live: texts => texts,
+  rowInComment: (texts, line) => ({ ...texts, page: replaceLines(texts.page, { [line - 1]: "<!--", [line + 1]: "-->" }) }),
+  headingRetired: texts => ({ ...texts, page: texts.page.replace(`## ${STATED_SECTIONS.page.heading}\n`, "## Retired risks (all resolved; none of the rows below applies to Pi any more)\n") }),
+  commentInSection: texts => ({ ...texts, page: aroundLine(texts.page, "## Decisions deferred", "<!-- reviewed -->\n", "") }),
+  headingTwice: texts => ({ ...texts, page: `${texts.page}\n## ${STATED_SECTIONS.page.heading}\n\nNone today.\n` }),
+  readmeHeadingAbove: texts => ({ ...texts, readme: aroundLine(texts.readme, README_SUBJECT, "## Retired statements (none of the following holds today)", "") }),
+  readmeInComment: texts => ({ ...texts, readme: aroundLine(texts.readme, README_SUBJECT, "<!--", "-->") }),
+  readmeCommentInSection: texts => ({ ...texts, readme: `${texts.readme}\n<!-- reviewed -->\n` }),
+  pageParagraphLead: texts => ({
+    ...texts,
+    page: aroundLine(texts.page, `## ${STATED_SECTIONS.page.heading}`, "", "\nAll rows below are retired; none of them applies to Pi any more."),
+  }),
+  readmeParagraphLead: texts => ({ ...texts, readme: aroundLine(texts.readme, README_SUBJECT, "None of the following holds today.\n", "") }),
+  readmeSentenceAppended: texts => ({ ...texts, readme: aroundLine(texts.readme, "Run the portable package gate", "", "The sentence on ReactiveFiberCLI above no longer holds.") }),
+  providerRetracted: texts => ({ ...texts, provider: aroundLine(texts.provider, "/**", "", "/** RETRACTED: the comment above no longer holds; this provider loads an RF TypeScript SDK. */") }),
+};
+function liveText(path: string): string {
+  return readFileSync(join(REPO, path), "utf8");
+}
+/** A text with an insertion after the first occurrence of an anchor (an empty anchor appends); the text unchanged when the anchor is absent. */
+function insertAfter(text: string, anchor: string, insertion: string): string {
+  if (anchor.length === 0) return text + insertion;
+  const index = text.indexOf(anchor);
+  return index === -1 ? text : text.slice(0, index + anchor.length) + insertion + text.slice(index + anchor.length);
+}
+
 // ---- the cases ----
 
 const REACHED: string[] = [];
@@ -1286,15 +1917,17 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     });
   },
   B1: async () => {
-    const reading = beadDecisions(exportRows(), titleDecision(ROWS[1]?.label ?? "").bead);
+    const decisionBead = titleDecision(ROWS[1]?.label ?? "").bead;
+    const reading = beadDecisions(exportRows(), decisionBead);
     return json({
       surface: "bead export",
-      bead: titleDecision(ROWS[1]?.label ?? "").bead,
+      bead: decisionBead,
       found: reading.found,
       textAboveFloor: reading.text >= FLOORS.exportText,
       anchors: reading.anchors,
       decisions: reading.decisions,
-      controls: Object.fromEntries(Object.entries(DECISION_CONTROLS).map(([name, text]) => [name, decisionsOf(text, name, true)])),
+      controls: Object.fromEntries(Object.entries(DECISION_CONTROLS).map(([name, text]) => [name, pageDecisions(text, name)])),
+      rowControls: beadDecisions(rowsById([{ id: decisionBead, ...DECISION_CONTROLS }]), decisionBead).decisions,
     });
   },
   B2: async () => {
@@ -1304,8 +1937,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       surface: "decisions page",
       page,
       sentencesAboveFloor: sentencesOf(text, true).length >= FLOORS.pageSentences,
-      decisions: decisionsOf(text, page, true),
-      controls: Object.fromEntries(Object.entries(PAGE_CONTROLS).map(([name, text]) => [name, decisionsOf(text, name, true)])),
+      renderedUnitsAboveFloor: renderedUnits(text).length >= FLOORS.pageUnits,
+      decisions: pageDecisions(text, page),
+      controls: Object.fromEntries(Object.entries(PAGE_CONTROLS).map(([name, text]) => [name, pageDecisions(text, name)])),
     });
   },
   C1: async () => {
@@ -1343,18 +1977,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
   C3: async () => {
     const evidence = notesEvidence(beadText().notes);
-    const page = readFileSync(join(REPO, evidence.page), "utf8").split("\n");
-    const readme = readFileSync(join(REPO, STATED_README), "utf8");
-    const provider = readFileSync(join(REPO, PROVIDER_MODULE), "utf8");
-    const leading = ts.getLeadingCommentRanges(provider, 0) ?? [];
-    const first = leading[0];
+    const cited = { page: evidence.page, line: evidence.line };
+    const live: StatedTexts = { page: liveText(evidence.page), readme: liveText(STATED_README), provider: liveText(PROVIDER_MODULE) };
     return json({
       surface: "stated surface",
-      cited: { page: evidence.page, line: evidence.line, row: page[evidence.line - 1] ?? "" },
-      readme: sentencesOf(readme, true)
-        .filter(sentence => fold(sentence.text).includes("reactivefibercli"))
-        .map(sentence => `${STATED_README}:${sentence.line}: ${sentence.text}`),
-      provider: first === undefined ? "" : `${PROVIDER_MODULE}:1: ${provider.slice(first.pos, first.end)}`,
+      ...statedSurface(live, cited),
+      controls: Object.fromEntries(Object.entries(STATED_CONTROLS).map(([name, vary]) => [name, statedDigest(statedSurface(vary(live, cited.line), cited))])),
     });
   },
   D1: async () => {
@@ -1376,6 +2004,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       roots: [...SCAN_ROOTS, "(root files)"],
       filesAboveFloor: reading.files >= FLOORS.productFiles,
       sentencesAboveFloor: reading.sentences >= FLOORS.sentences,
+      renderedUnitsAboveFloor: reading.renderedUnits >= FLOORS.renderedUnits,
       rootsRead: reading.roots,
       symlinks: walk.symlinks,
       walkedNotTracked: walkedRoots.filter(path => !trackedRoots.includes(path)),
@@ -1439,11 +2068,63 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     });
   },
   Q7: async () => json({ residual: "R-INDIRECT-LAUNCH", launches: plantedRead(INDIRECT_LAUNCH_MODULE).launches }),
+  Q8: async () => {
+    const read = plantedRead(UNREAD_COMMAND_MODULE);
+    return json({
+      residual: "R-UNREAD-COMMAND",
+      launches: read.launches,
+      rfWords: read.texts.filter(entry => entry.kind === "string" && tokens(entry.text).includes("rf")).length,
+      otherLaunchers: read.specifiers.filter(entry => !(CHILD_PROCESS as readonly string[]).includes(entry.text)).map(entry => entry.text),
+    });
+  },
+  Q9: async () => {
+    const read = plantedRead(INDIRECT_LOAD_MODULE);
+    return json({
+      residual: "R-INDIRECT-LOAD",
+      loads: sdkHits(read, INDIRECT_LOAD_MODULE.module).loads,
+      named: read.texts.filter(entry => entry.kind === "string" && needlesIn(entry.text, RF_SDK_NEEDLES).length > 0).length,
+    });
+  },
+  Q10: async () => {
+    const read = plantedRead(OTHER_SHAPE_MODULE);
+    return json({
+      residual: "R-OTHER-SHAPE",
+      shaped: setHits(read, OTHER_SHAPE_MODULE.module).shaped,
+      membersSpelled: CAPABILITY_MEMBERS.map(fold).filter(member => read.texts.some(entry => fold(entry.text) === member)),
+    });
+  },
+  Q11: async () => {
+    const evidence = notesEvidence(beadText().notes);
+    const cited = { page: evidence.page, line: evidence.line };
+    const live: StatedTexts = { page: liveText(evidence.page), readme: liveText(STATED_README), provider: liveText(PROVIDER_MODULE) };
+    const planted: StatedTexts = {
+      page: insertAfter(live.page, RETRACTIONS.page.after, RETRACTIONS.page.text),
+      readme: insertAfter(live.readme, RETRACTIONS.readme.after, RETRACTIONS.readme.text),
+      provider: insertAfter(live.provider, RETRACTIONS.provider.after, RETRACTIONS.provider.text),
+    };
+    return json({
+      residual: "R-RETRACTED-ELSEWHERE",
+      planted: { page: planted.page !== live.page, readme: planted.readme !== live.readme, provider: planted.provider !== live.provider },
+      quiet: JSON.stringify(statedSurface(planted, cited)) === JSON.stringify(statedSurface(live, cited)),
+    });
+  },
+  Q12: async () =>
+    json({
+      residual: "R-ENCODED-SOURCE",
+      read: Object.fromEntries(Object.entries(ENCODED_TEXTS).map(([name, planted]) => [name, claimsOf(planted.text, planted.path)])),
+      asMarkdown: Object.fromEntries(Object.entries(ENCODED_TEXTS).map(([name, planted]) => [name, claimsOf(planted.text, `${planted.path}.md`).length])),
+    }),
+  Q13: async () =>
+    json({
+      residual: "R-WRAPPED-STRUCTURED",
+      read: Object.fromEntries(Object.entries(WRAPPED_STRUCTURED).map(([name, planted]) => [name, claimsOf(planted.text, planted.path)])),
+      asProse: Object.fromEntries(Object.entries(WRAPPED_STRUCTURED).map(([name, planted]) => [name, claimsOf(planted.text, `${planted.path}.sh`).length])),
+    }),
 };
 
 describe("wb-2wiv.1 portable Fiber core gate census (SDK-UNIVERSAL-REACTIVE-RENDERING-R1, until-then leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster, the bead's title and notes, the vendored charter lines and the cases agree", { timeout: 60_000 }, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:2", "C:3", "D:2", "Q:7"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:2", "C:3", "D:2", "Q:13"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
@@ -1463,8 +2144,16 @@ describe("wb-2wiv.1 portable Fiber core gate census (SDK-UNIVERSAL-REACTIVE-REND
         spellings: SPELLINGS,
         launchers: LAUNCHERS,
         childProcess: CHILD_PROCESS,
+        wrappers: WRAPPERS,
+        shells: SHELLS,
+        loaderModules: LOADER_MODULES,
         scanRoots: SCAN_ROOTS,
         textExtensions: TEXT_EXTENSIONS,
+        lineExtensions: LINE_EXTENSIONS,
+        namedReferences: Object.fromEntries(Object.entries(NAMED_REFERENCES).map(([name, value]) => [name, [...value].map(unit => unit.codePointAt(0) ?? 0)])),
+        statedSections: STATED_SECTIONS,
+        readmeSubject: README_SUBJECT,
+        statedControls: Object.keys(STATED_CONTROLS),
         floors: FLOORS,
         scriptKinds: Object.keys(SCRIPT_KINDS),
         requiredDescriptors: REQUIRED_DESCRIPTORS,
@@ -1490,6 +2179,12 @@ describe("wb-2wiv.1 portable Fiber core gate census (SDK-UNIVERSAL-REACTIVE-REND
         elsewhereRows: ELSEWHERE_ROWS,
         otherVocabulary: OTHER_VOCABULARY,
         indirectLaunch: INDIRECT_LAUNCH_MODULE,
+        unreadCommand: UNREAD_COMMAND_MODULE,
+        indirectLoad: INDIRECT_LOAD_MODULE,
+        otherShape: OTHER_SHAPE_MODULE,
+        retractions: RETRACTIONS,
+        encodedTexts: ENCODED_TEXTS,
+        wrappedStructured: WRAPPED_STRUCTURED,
         residuals: RESIDUALS,
     });
     expect(constants).toStrictEqual(ROSTER.constants);
