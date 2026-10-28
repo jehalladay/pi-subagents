@@ -996,12 +996,20 @@ describe("wb-4ap.17 (R17): the gate.run reply's own run-start pin is the verdict
     expect(moved.diagnostics).toStrictEqual([]);
     // The tree is compared on its own: an equal commit beside another tree is not current.
     expect(readingOf(MEASURED_CLEAN_RUN, { commit: PIN_COMMIT, tree: LATER_HEAD.tree }).freshness).toBe("stale");
+    // The commit is compared on its own too (wb-8a7p): another commit beside an equal tree (an amended message, an empty
+    // commit, a revert of a revert) is not current, and subjectBasis still names the gated commit, never a success tone.
+    const sameTree = readingOf(MEASURED_CLEAN_RUN, { commit: LATER_HEAD.commit, tree: PIN_TREE });
+    expect(sameTree.freshness).toBe("stale");
+    expect(sameTree.snapshot.subjectBasis).toBe(PIN_COMMIT);
+    expect(sameTree.snapshot.node.statusText).toBe(`${MEASURED_TEXT} · basis stale`);
+    expect(sameTree.snapshot.node.statusTone).toBe("unknown");
+    expect(sameTree.diagnostics).toStrictEqual([]);
     // A dirty run's "" tree is never the commit's, so the measured dirty run at its own commit is stale.
     const dirty = readingOf(MEASURED_DIRTY_RUN, MEASURED_HEAD);
     expect(dirty.freshness).toBe("stale");
     expect(dirty.snapshot.node.statusText).toBe(`${MEASURED_TEXT} · basis stale`);
     expect(dirty.snapshot.node.statusTone).toBe("unknown");
-    for (const reading of [moved, dirty]) expect(reading.snapshot.node.statusText).not.toContain("current");
+    for (const reading of [moved, sameTree, dirty]) expect(reading.snapshot.node.statusText).not.toContain("current");
   });
 
   it("wb-4ap.17 (R17 c): the measured null pin (a directory in no repository) yields no subjectBasis, one diagnostic naming the missing pin, basis indeterminate and never a success tone", () => {
