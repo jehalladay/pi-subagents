@@ -1,0 +1,797 @@
+{
+  "bead": "wb-km7q.6",
+  "producer": {
+    "repository": "ReactiveFiberTSXSDK",
+    "path": "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md",
+    "beadPin": "e7e6616d3d0842af51ca6fa31164f33ac2d85bf3",
+    "blob": "0197095027b82e38d062d334c6858b4c0a2971ff",
+    "measuredAt": "2026-10-28",
+    "lines": [
+      {
+        "line": 3,
+        "text": "**Date:** 2026-10-17. **Status:** proposed extensions; none of the new exports claimed shipped. **Branch:** main. **Canonical program:** [Adaptive Computation and Control](https://github.com/jehalladay/FiberOpticsResearch/tree/main/docs/research/foa/programs/adaptive-computation-and-control-2026-10-17). **Work packages:** AC-01, AC-04, AC-10, AC-15.",
+        "sha256": "ec7457829e2137aefb8e88f4451d1155db1d93bf002cd58d6de8b2c1cefef58b"
+      },
+      {
+        "line": 66,
+        "text": "ActivityBoundary ACTIVE/WARM/DORMANT/EVICTED remains separate from QueryView identity and speculative execution ownership. A warm context may precompute only explicitly eligible read-only resources under existing SpeculationBoundary, not call inference/effects. Add tests TSX-RQ1 five-stage TestHealth, TSX-RQ2 ready UNKNOWN vs pending, TSX-RQ3 aborted attempt no registration, TSX-RQ4 query spec scope changes stable hook order, TSX-RQ5 two consumers share one host query view without premature unsubscribe, TSX-RQ6 TS/Python golden, TSX-RQ7 existing ADR-0032 no premature optimizer or component skipping. DevTools only consumes emitted host events.",
+        "sha256": "844542075747acc40157ebf5078077036f308a65c3726caa11d455de66ed00f6"
+      }
+    ],
+    "tip": {
+      "ref": "origin/main",
+      "commit": "94ae52c14aef957a76d05834b1e823cfc67e6996",
+      "blob": "0197095027b82e38d062d334c6858b4c0a2971ff",
+      "package": "@reactive-fiber/tsx",
+      "version": "0.1.668",
+      "exports": [
+        ".",
+        "./jsx-runtime",
+        "./jsx-dev-runtime",
+        "./testing",
+        "./embedding",
+        "./package.json"
+      ],
+      "srcFiles": 159,
+      "subjectSrcFiles": 0,
+      "triage": {
+        "path": "docs/triage/programs-2026-10-21/requirements/ATOMIC-REQUIREMENTS.md",
+        "blob": "df7eec143737781476bedb8ace511a348b5f0628",
+        "line": 87,
+        "text": "- Statement: The shared ADR (next free number per docs/adr/README.md:46-51) MUST define the Activity states ACTIVE/WARM/DORMANT/EVICTED exactly once and MUST record the host as the lifecycle owner, the SDK declaring an ActivityBoundary and reading a status (ruling R-03); ActivityBoundary and SpeculationBoundary MUST be marked PROPOSED (0 files at db7558552).",
+        "sha256": "8f84e594a7ed275985e9be4b53d9d7a03039fce154804a324a348f11322fd49b"
+      }
+    },
+    "reading": "UNSHIPPED"
+  },
+  "vocabulary": {
+    "subject": {
+      "words": [
+        "activityboundary",
+        "activityboundaries"
+      ],
+      "pairs": [
+        [
+          "activity",
+          "boundary"
+        ],
+        [
+          "activity",
+          "boundaries"
+        ]
+      ]
+    },
+    "warm": {
+      "words": [
+        "warm"
+      ],
+      "pairs": []
+    },
+    "state": {
+      "words": [
+        "state",
+        "states",
+        "active",
+        "warm",
+        "dormant",
+        "evicted"
+      ],
+      "pairs": []
+    },
+    "surface": {
+      "words": [
+        "devtools",
+        "inspector",
+        "inspectors"
+      ],
+      "pairs": [
+        [
+          "dev",
+          "tools"
+        ]
+      ]
+    },
+    "families": {
+      "inference": {
+        "words": [
+          "inference",
+          "inferences",
+          "infer",
+          "infers",
+          "inferred",
+          "inferring"
+        ],
+        "pairs": []
+      },
+      "effect": {
+        "words": [
+          "effect",
+          "effects",
+          "effectful"
+        ],
+        "pairs": []
+      },
+      "query-view": {
+        "words": [
+          "queryview",
+          "queryviews"
+        ],
+        "pairs": [
+          [
+            "query",
+            "view"
+          ],
+          [
+            "query",
+            "views"
+          ]
+        ]
+      },
+      "execution": {
+        "words": [],
+        "pairs": [
+          [
+            "speculative",
+            "execution"
+          ],
+          [
+            "speculative",
+            "executions"
+          ],
+          [
+            "execution",
+            "owner"
+          ],
+          [
+            "execution",
+            "ownership"
+          ],
+          [
+            "speculation",
+            "owner"
+          ],
+          [
+            "speculation",
+            "ownership"
+          ]
+        ]
+      },
+      "driving": {
+        "words": [
+          "mutate",
+          "mutates",
+          "mutated",
+          "mutating",
+          "mutation",
+          "mutations",
+          "command",
+          "commands",
+          "commanded",
+          "commanding",
+          "control",
+          "controls",
+          "controlled",
+          "controlling",
+          "write",
+          "writes",
+          "writing",
+          "wrote",
+          "written",
+          "dispatch",
+          "dispatches",
+          "dispatched",
+          "dispatching",
+          "drive",
+          "drives",
+          "driving",
+          "drove",
+          "driven",
+          "transition",
+          "transitions",
+          "transitioned",
+          "transitioning"
+        ],
+        "pairs": []
+      }
+    },
+    "markers": {
+      "A": {
+        "words": [
+          "not",
+          "no",
+          "never",
+          "nor",
+          "neither",
+          "without",
+          "cannot",
+          "refuse",
+          "refuses",
+          "refused",
+          "refusing",
+          "refusal",
+          "reject",
+          "rejects",
+          "rejected",
+          "rejecting"
+        ],
+        "pairs": []
+      },
+      "B": {
+        "words": [
+          "not",
+          "no",
+          "never",
+          "nor",
+          "neither",
+          "without",
+          "cannot",
+          "separate",
+          "separately",
+          "separated",
+          "distinct",
+          "independent",
+          "independently",
+          "apart"
+        ],
+        "pairs": []
+      },
+      "C": {
+        "words": [
+          "not",
+          "no",
+          "never",
+          "nor",
+          "neither",
+          "without",
+          "cannot"
+        ],
+        "pairs": [
+          [
+            "read",
+            "only"
+          ]
+        ]
+      }
+    },
+    "rows": {
+      "A": [
+        "inference",
+        "effect"
+      ],
+      "B": [
+        "query-view",
+        "execution"
+      ],
+      "C": [
+        "driving"
+      ]
+    },
+    "dependency": [
+      "reactive",
+      "fiber"
+    ]
+  },
+  "constants": {
+    "readRoots": [
+      ".agents",
+      ".pi",
+      "docs",
+      "examples",
+      "qa",
+      "src"
+    ],
+    "outside": [
+      ".beads",
+      ".codex",
+      ".github",
+      "media",
+      "new-feedback",
+      "test",
+      "vendor"
+    ],
+    "filing": "Citation: docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:66@",
+    "docs10": "docs/workbench/10-terminal-inspector.md",
+    "docs10ReadOnly": "A read-only rich inspector now offers overview, observed-reference graph, source-interval timeline and evidence/details.",
+    "docs10Controls": "Mutating commands on separate explicit controls require confirmation and per-provider authorization.",
+    "inspector": "src/ui/workflow-inspector.ts",
+    "inspectorHeader": "Read-only terminal inspector over the bounded producer-qualified observation projection."
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "adoption-time falsifier that a WARM precompute attempting inference or an effect is refused",
+      "pins": [
+        {
+          "id": "A1",
+          "quote": "adoption-time falsifier",
+          "witness": {
+            "producer": "UNSHIPPED",
+            "adoption": "ABSENT",
+            "anchored": [],
+            "findings": [],
+            "unreadable": [],
+            "tsxDependencies": [],
+            "floors": {
+              "files": true,
+              "root": true,
+              "src": true,
+              "docs": true,
+              "qa": true,
+              "examples": true
+            },
+            "positives": [
+              "docs/workbench/zz-plant.md:1 A:inference",
+              "src/zz-plant.ts:1 C:driving"
+            ],
+            "replica": {
+              "listed": [
+                ".gitignore",
+                ".pi/agents/plant.md",
+                "README.md",
+                "docs/plant-twin.md",
+                "docs/plant.md",
+                "docs/unanchored.md",
+                "examples/plant.md",
+                "package.json",
+                "qa/plant.mjs",
+                "src/plant.ts"
+              ],
+              "adoption": "PRESENT",
+              "anchored": [
+                ".pi/agents/plant.md",
+                "README.md",
+                "docs/plant-twin.md",
+                "docs/plant.md",
+                "examples/plant.md",
+                "qa/plant.mjs",
+                "src/plant.ts"
+              ],
+              "findings": [
+                ".pi/agents/plant.md:1 C:driving",
+                "README.md:1 C:driving",
+                "docs/plant.md:5 A:inference",
+                "examples/plant.md:1 B:query-view",
+                "qa/plant.mjs:1 B:execution",
+                "src/plant.ts:2 A:effect"
+              ],
+              "tsxDependencies": [
+                "@reactive-fiber/tsx"
+              ]
+            },
+            "quiet": {
+              "R-OUTSIDE-ROOTS": [
+                [],
+                [
+                  "docs/plant.md:5 A:inference"
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "quote": "that a WARM precompute attempting inference",
+          "witness": {
+            "doc": {
+              "A WARM context calls inference.": "A:inference",
+              "A warm context infers the next step.": "A:inference",
+              "The WARM precompute runs inferences for the query.": "A:inference",
+              "A WARM context only calls inference.": "A:inference",
+              "A WARM context never calls inference.": null,
+              "A WARM context cannot call inference.": null,
+              "A WARM precompute attempting inference is refused.": null,
+              "A WARM context doesn't call inference.": null,
+              "An ACTIVE context calls inference.": null,
+              "A WARM context calls the inferential layer.": null
+            },
+            "code": [
+              [
+                "src/plant.ts:2 A:inference"
+              ],
+              [
+                "src/plant.ts:2 A:inference"
+              ],
+              []
+            ],
+            "quiet": {
+              "R-UNANCHORED": [
+                [],
+                [
+                  "docs/plant.md:3 A:inference"
+                ]
+              ],
+              "R-SPLIT": [
+                [],
+                [
+                  "docs/plant.md:1 A:inference"
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "quote": "or an effect is refused",
+          "witness": {
+            "doc": {
+              "A WARM context runs effects.": "A:effect",
+              "The WARM precompute commits an effect.": "A:effect",
+              "A WARM context is effectful.": "A:effect",
+              "A WARM context calls inference and effects.": "A:inference+effect",
+              "A WARM context never runs effects.": null,
+              "A WARM precompute attempting an effect is rejected.": null,
+              "A WARM context is effective.": null,
+              "A DORMANT context runs effects.": null
+            },
+            "code": [
+              [
+                "src/plant.ts:2 A:effect"
+              ],
+              []
+            ],
+            "quiet": {
+              "R-MARKER-ANYWHERE": [
+                null,
+                "A:effect"
+              ],
+              "R-PARAPHRASE": [
+                null,
+                "A:inference"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "that boundary state never aliases QueryView identity or speculative execution ownership",
+      "pins": [
+        {
+          "id": "B1",
+          "quote": "that boundary state never aliases QueryView identity",
+          "witness": {
+            "doc": {
+              "ActivityBoundary state is the QueryView identity.": "B:query-view",
+              "The WARM state keys the query view.": "B:query-view",
+              "A DORMANT context reuses the QueryView.": "B:query-view",
+              "ActivityBoundary states share the query views.": "B:query-view",
+              "ActivityBoundary state stays separate from QueryView identity.": null,
+              "The EVICTED state is distinct from the query view.": null,
+              "The state names a query.": null,
+              "The ActivityBoundary reads a view of the query.": null
+            },
+            "code": [
+              [
+                "src/plant.ts:2 B:query-view"
+              ],
+              []
+            ],
+            "quiet": {
+              "R-COMPOSED": [
+                [],
+                [
+                  "src/plant.ts:2 B:query-view"
+                ]
+              ],
+              "R-LOOKALIKE": [
+                [
+                  null,
+                  null
+                ],
+                [
+                  "B:query-view",
+                  "B:query-view"
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "quote": "or speculative execution ownership",
+          "witness": {
+            "doc": {
+              "The WARM state owns the speculative execution.": "B:execution",
+              "ActivityBoundary state decides the execution owner.": "B:execution",
+              "The ACTIVE state holds speculation ownership.": "B:execution",
+              "ActivityBoundary state is the QueryView identity and the speculative execution owner.": "B:query-view+execution",
+              "ActivityBoundary state never aliases speculative execution ownership.": null,
+              "The state stays independent of the speculative execution.": null,
+              "The WARM state runs under the SpeculationBoundary.": null,
+              "The WARM state owns the execution.": null
+            },
+            "code": [
+              [
+                "src/plant.ts:2 B:execution"
+              ]
+            ],
+            "quiet": {
+              "R-SYNONYM": [
+                "activity boundaries",
+                "activityboundaries",
+                "activityboundary",
+                "apart",
+                "cannot",
+                "command",
+                "commanded",
+                "commanding",
+                "controlled",
+                "controlling",
+                "devtools",
+                "dispatch",
+                "dispatched",
+                "dispatches",
+                "dispatching",
+                "distinct",
+                "drive",
+                "driven",
+                "drives",
+                "driving",
+                "drove",
+                "effectful",
+                "execution owner",
+                "independent",
+                "independently",
+                "infer",
+                "inferences",
+                "inferred",
+                "inferring",
+                "infers",
+                "inspectors",
+                "mutate",
+                "mutated",
+                "mutates",
+                "mutation",
+                "mutations",
+                "neither",
+                "nor",
+                "not",
+                "query views",
+                "queryview",
+                "queryviews",
+                "refusal",
+                "refuse",
+                "refuses",
+                "refusing",
+                "reject",
+                "rejected",
+                "rejecting",
+                "rejects",
+                "separated",
+                "separately",
+                "speculation owner",
+                "speculation ownership",
+                "speculative executions",
+                "transition",
+                "transitioned",
+                "transitioning",
+                "transitions",
+                "without",
+                "write",
+                "writes",
+                "writing",
+                "written",
+                "wrote"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "and that DevTools-style surfaces stay read-only consumers",
+      "pins": [
+        {
+          "id": "C1",
+          "quote": "and that DevTools-style surfaces",
+          "witness": {
+            "doc": {
+              "The inspector transitions the context to WARM.": "C:driving",
+              "DevTools writes the ActivityBoundary state.": "C:driving",
+              "The dev tools panel dispatches a WARM command.": "C:driving",
+              "The inspector controls the boundary.": "C:driving",
+              "DevTools only consumes emitted host events.": null,
+              "The inspector never transitions the context.": null,
+              "The inspector is a read-only view of the controls.": null,
+              "The inspector shows the WARM state.": null
+            },
+            "code": [
+              [
+                "src/plant.ts:2 C:driving"
+              ],
+              []
+            ],
+            "quiet": {
+              "R-SURFACE-OTHER": [
+                null,
+                "C:driving"
+              ]
+            }
+          }
+        },
+        {
+          "id": "C2",
+          "quote": "stay read-only consumers",
+          "witness": {
+            "surfaces": [
+              "src/ui/workflow-inspector.ts"
+            ],
+            "closures": {
+              "src/ui/workflow-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": [
+                  "@earendil-works/pi-tui",
+                  "typebox/value"
+                ],
+                "direct": [
+                  "../workbench/redaction.js",
+                  "../workbench/timeline.js",
+                  "./workflow-card.js",
+                  "@earendil-works/pi-tui"
+                ],
+                "reaches": true
+              }
+            },
+            "header": "Read-only terminal inspector over the bounded producer-qualified observation projection.",
+            "controls": {
+              "src/ui/plant-computed-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-dynamic-devtools.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-dynamic-devtools.ts:node:child_process"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-injected-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/plant-b.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-package-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": [
+                  "fake-io-lib"
+                ]
+              },
+              "src/ui/plant-reexport-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-reexport-inspector.ts:node:net"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-require-dev-tools.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-require-dev-tools.ts:child_process"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-typed-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-unresolved-inspector.ts": {
+                "pure": false,
+                "builtins": [],
+                "unresolved": [
+                  "src/ui/plant-unresolved-inspector.ts:./missing.js"
+                ],
+                "packages": []
+              }
+            },
+            "quiet": {
+              "R-UNNAMED-SURFACE": [
+                false,
+                [
+                  "src/ui/plant-panel.ts:node:fs"
+                ]
+              ],
+              "R-PACKAGE": [
+                true,
+                false
+              ],
+              "R-INJECTED": [
+                true,
+                false
+              ],
+              "R-COMPUTED-LOAD": [
+                true,
+                false
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "unclaimed": [
+    {
+      "duty": "a WARM context precomputes only explicitly eligible read-only resources under the existing SpeculationBoundary",
+      "reason": "binds once Pi declares a precompute set: no Pi file names the boundary (A1 reads the adoption ABSENT) and Pi holds no precompute, resource set or SpeculationBoundary, so there is no eligibility to judge; the producer's own triage marks SpeculationBoundary PROPOSED with 0 files. The clause's refusal half (never calls inference or effects) is row A."
+    },
+    {
+      "duty": "gated TSX-RQ7",
+      "reason": "a test the charter asks the TSX SDK to add (line 66's test list); Pi records the producer reading UNSHIPPED in A1 and judges any adoption by rows A-C whatever that producer test reads."
+    }
+  ],
+  "residuals": [
+    {
+      "id": "R-OUTSIDE-ROOTS",
+      "quietPin": "A1"
+    },
+    {
+      "id": "R-UNANCHORED",
+      "quietPin": "A2"
+    },
+    {
+      "id": "R-SPLIT",
+      "quietPin": "A2"
+    },
+    {
+      "id": "R-MARKER-ANYWHERE",
+      "quietPin": "A3"
+    },
+    {
+      "id": "R-PARAPHRASE",
+      "quietPin": "A3"
+    },
+    {
+      "id": "R-COMPOSED",
+      "quietPin": "B1"
+    },
+    {
+      "id": "R-LOOKALIKE",
+      "quietPin": "B1"
+    },
+    {
+      "id": "R-SYNONYM",
+      "quietPin": "B2"
+    },
+    {
+      "id": "R-SURFACE-OTHER",
+      "quietPin": "C1"
+    },
+    {
+      "id": "R-UNNAMED-SURFACE",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-PACKAGE",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-INJECTED",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-COMPUTED-LOAD",
+      "quietPin": "C2"
+    }
+  ]
+}
