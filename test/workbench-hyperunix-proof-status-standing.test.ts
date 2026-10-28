@@ -14,6 +14,8 @@
  * @hyperunix/sdk 0.1.0 result carries no such status. Re-measured read-only by the cutting seat (ws-05, run g10-work-s129) at
  * HyperUnix-CLI origin/main 8bb511fa (2026-10-28): the TypeScript SDK there is still 0.1.0, its QueryResult the same 20 members,
  * its result module spells no proof, confidence, verified or refuted word, and the program's README.md:3 still reads "Design only.".
+ * Re-measured the same way by the respin seat (ws-03, run g10-work-s130) at origin/main eef91d3e (2026-10-28, read from the local
+ * clone's own origin/main object): the same four readings, and 8bb511fa..eef91d3e touches no path of the TypeScript SDK or the program.
  * What can be held before the field ships, for the adapter (hyperunixTopology) and the live invariant (hxLiveInvariant) only (another
  * reader of the same provider output, such as nativeEvidence, is not judged here):
  *   T1 the trigger at the declaration: the SDK result records (QueryResult, ExecutionStatus over every variant, CoverageSummary,
@@ -27,9 +29,9 @@
  *      member, each of its three empty-body kinds (EMPTY_BODY_KINDS, read from the same text) refuses a body carrying one as
  *      SDK_PROTOCOL_MALFORMED at the body, and the three proof-named frame kinds are refused under each value as
  *      SDK_PROTOCOL_INCOMPATIBLE at their kind; the one confidence member the shipped SDK names (measured at the cut, not pinned: the
- *      one case-insensitive "confidence" in the installed dist/, the native support body's own, HX's support confidence, which 01:9
- *      keeps "distinct from" proof confidence) decodes under each value and the evidence summary drops it; a node claim's attribute
- *      list is open, so a proof-named attribute decodes there;
+ *      one case-insensitive "confidence" in the installed dist/, the native support body's own, HX's support confidence; the "remain
+ *      distinct from" clause of 01:9 is about "HX three-valued/partial semantic statuses", not this member) decodes under each value
+ *      and the evidence summary drops it; a node claim's attribute list is open, so a proof-named attribute decodes there;
  *   T3 the representation round trip the provider applies (resultFromJson, resultToJson), over the twenty placements this file
  *      plants on (PLACEMENTS): a proof-shaped member is dropped at each of the nine typed-record placements (the result, the
  *      execution status, the run status, the coverage summary, the evidence summary, a certificate, a diagnostic, the transport
@@ -39,18 +41,28 @@
  *   R1 a proof status moves neither output today: a proof-shaped member at each of the twenty placements, under each of the four
  *      member spellings and seven values, on every cell, leaves the adapter's projection (or refusal) and the live verdict exactly
  *      the field-less reading's, and no consumed field (HYPERUNIX_CONSUMED_FIELDS) names one;
- *   R2 neither reader touches it: a tracing proxy over each of those variant readings records no get, in check or descriptor read
- *      of the planted member by the adapter or the live invariant (the instrument's controls read the member);
+ *   R2 neither reader reads it: a tracing proxy over each of those variant readings records no get, in check or descriptor read
+ *      of the planted member, and no listing of the own keys of an object that holds it, by the adapter or the live invariant (the
+ *      instrument's controls exercise each leg: a serialization of the reading records the holder's key listing, the member's
+ *      descriptor read and its get, in that order, and an in check, a descriptor read and a key listing on the holder are each
+ *      recorded once);
  *   A1 a proof status never moves coverage, absence or tone: coverage, status tone, status text and the licensed absence are the
  *      field-less reading's on every one of those cells and variants, and a mutation outcome stays refused;
  *   A2 the two directions of the acceptance: a refuted or failed status never flips tone to failure nor coverage to unknown on a
  *      kind that is not a failure, and a verified status never flips tone to success, coverage to complete or the licence on any of
  *      those cells short of the runtime-licensed complete reading; the licensed complete readings stay the one success and the
  *      failure kinds stay failures (the controls that show both directions are reachable);
- *   K1 K3 unknown is never read as unverified or refuted: Pi's own reading (coverage, tone, status text, title, node type,
- *      diagnostics, or the refusal text of a mutation outcome) holds none of the proof-status words PROOF_WORD and ADMISSION_WORD
- *      name on any of those cells and variants, nor under the SDK's K3 values (truth unknown, known_absent or known_present;
- *      completeness unknown);
+ *   K1 K3 unknown is never read as unverified or refuted: none of the proof-status words PROOF_WORD and ADMISSION_WORD name is
+ *      anywhere in either reader's whole output on any of those cells, read field-less and under each of the SDK's K3 values (truth
+ *      unknown, known_absent or known_present; completeness unknown): the projection (its snapshot with the evidence references, its
+ *      relations, diagnostics and facets) or its refusal, and the live verdict (its violations and version class), serialized with
+ *      member names; nor is one in Pi's own texts (coverage, tone, status text, title, node type, diagnostics, or the refusal text
+ *      of a mutation outcome) on those readings or on any variant. A variant's whole output is R1's to judge (today exactly the
+ *      field-less reading's), not K1's: the landing's facet will quote a producer's status verbatim in it, so a whole-output leg over
+ *      the variants would red at the landing, and K1 holds across it. The one text cut from the whole output is the fixture's
+ *      workspace path WS, the host's own identity, which the projection repeats in its scope and in an incomplete-region facet and
+ *      whose "proof" PROOF_WORD would match; the controls show that the cut is needed, that it takes nothing else, and that the
+ *      judged text holds the verdict and the evidence references;
  *   L1 the leak check the landing keeps, for the title's "no verified label is minted": no output on any of those cells and
  *      variants holds "verified":true;
  *   L2 today no output on any of those cells and variants holds the word verified at all (the landing's facet will quote a
@@ -208,7 +220,8 @@ function* variantsOf(reading: JsonValue): Generator<Variant> {
     }
   }
 }
-/** Wraps a JSON tree so every get, in check or descriptor read of the given member, anywhere in it, lands in reads (R2). */
+/** Wraps a JSON tree so every get, in check or descriptor read of the given member, and every listing of the own keys of an object
+ * that holds it, anywhere in the tree, lands in reads (R2). */
 function traced(value: JsonValue, member: string, reads: string[]): JsonValue {
   if (typeof value !== 'object' || value === null) return value;
   return new Proxy(value, {
@@ -226,6 +239,10 @@ function traced(value: JsonValue, member: string, reads: string[]): JsonValue {
       const descriptor = Reflect.getOwnPropertyDescriptor(target, key);
       return descriptor !== undefined && 'value' in descriptor && typeof key === 'string'
         ? {...descriptor, value: traced(descriptor.value as JsonValue, member, reads)} : descriptor;
+    },
+    ownKeys(target) {
+      if (Object.hasOwn(target, member)) reads.push('keys');
+      return Reflect.ownKeys(target);
     },
   });
 }
@@ -333,16 +350,16 @@ function axisOf(reading: JsonValue, host: HyperUnixTopologyContext = context): A
     return {refused: (error as Error).message, absenceLicensed};
   }
 }
-/** Pi's own reading of one output: every text the adapter composes, or the refusal it raises. */
-function ownText(reading: JsonValue, host: HyperUnixTopologyContext = context): string[] {
-  try {
-    const topology = hyperunixTopology(reading, host);
-    const [snapshot] = topology.snapshots;
-    return [snapshot.coverage ?? '', snapshot.node.statusTone, snapshot.node.statusText, snapshot.node.title, snapshot.node.type, ...topology.diagnostics];
-  } catch (error) {
-    return [(error as Error).message];
-  }
+/** Pi's own texts in one reading's outputs: every text the adapter composes, or the refusal it raises. */
+function ownText({projection}: Outputs): string[] {
+  if ('refused' in projection) return [projection.refused];
+  const [snapshot] = projection.snapshots;
+  return [snapshot.coverage ?? '', snapshot.node.statusTone, snapshot.node.statusText, snapshot.node.title, snapshot.node.type, ...projection.diagnostics];
 }
+/** The whole of one reading's outputs as K1 judges it: the projection (or its refusal) and the live verdict serialized, member names
+ * included, with the fixture's workspace path WS cut out (the host's own identity, which the projection repeats in its scope and in
+ * an incomplete-region facet, and whose "proof" PROOF_WORD would match). */
+const wholeText = (outputs: Outputs): string => JSON.stringify(outputs).replaceAll(WS, '');
 /** The member names of one declaration block of dist/result.d.ts, from its opening line to its closing brace. */
 function declaredMembers(declaration: string, opening: string, closing = '\n}'): string[] {
   const start = declaration.indexOf(opening);
@@ -607,17 +624,26 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
     expect(HYPERUNIX_CONSUMED_FIELDS.filter(field => /proof|confidence|claim/i.test(field.path)), TRIGGER).toStrictEqual([]);
   });
 
-  it('R2: neither reader touches the planted member: a tracing proxy over every variant reading here records no get, in check or descriptor read of it by the adapter or the live invariant', {timeout: 60_000}, async () => {
+  it('R2: neither reader reads the planted member: a tracing proxy over every variant reading here records no get, in check, descriptor read or own-key listing of it by the adapter or the live invariant', {timeout: 60_000}, async () => {
     const cells = await cellsOf(HYPERUNIX_EXECUTION_KINDS);
-    // The instrument's controls, on the first variant (its member sits on the source itself): a full serialization reads the
-    // member, and an in check on its holder is recorded as exactly one read.
+    // The instrument's controls, one per leg, on the first variant (its member sits on the source itself): a full serialization lists
+    // the holder's own keys, reads the member's descriptor and gets it, in that order, and an in check, a descriptor read and a key
+    // listing on the holder are each recorded as exactly one read.
     const [control] = variantsOf(cells[0].reading);
+    const holder = (reads: string[]): Json => asRecord(asRecord(traced(json(control.reading), control.member, reads)).source);
     const serialized: string[] = [];
     JSON.stringify(traced(json(control.reading), control.member, serialized));
-    expect(serialized).toContain('get');
+    expect(serialized).toStrictEqual(['keys', 'descriptor', 'get']);
     const checked: string[] = [];
-    expect(control.member in asRecord(asRecord(traced(json(control.reading), control.member, checked)).source)).toBe(true);
+    expect(control.member in holder(checked)).toBe(true);
     expect(checked).toStrictEqual(['in']);
+    const described: string[] = [];
+    const descriptor = Object.getOwnPropertyDescriptor(holder(described), control.member);
+    expect(descriptor?.value).toStrictEqual(memberValue(control.member, control.value));
+    expect(described).toStrictEqual(['descriptor']);
+    const listed: string[] = [];
+    expect(Reflect.ownKeys(holder(listed))).toContain(control.member);
+    expect(listed).toStrictEqual(['keys']);
     let judged = 0;
     let expected = 0;
     for (const cell of cells) {
@@ -690,31 +716,56 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
     expect(positives).toBeGreaterThan(0);
   });
 
-  it('K1: K3 unknown is never read as unverified or refuted: Pi\'s own reading holds none of the named proof-status words on any cell, variant or K3 value here', {timeout: 120_000}, async () => {
+  it('K1: K3 unknown is never read as unverified or refuted: no named proof-status word is anywhere in either reader\'s whole output (the projection or its refusal, and the live verdict; only the fixture\'s workspace path cut out) on any cell\'s field-less or K3 reading here, nor in Pi\'s own texts on any variant', {timeout: 120_000}, async () => {
     const cells = await cellsOf(HYPERUNIX_EXECUTION_KINDS);
+    // The instrument's controls: the judged text holds the live verdict and the projection's evidence references, and its one cut,
+    // the fixture's workspace path, is exactly what the uncut serialization of a field-less reading would otherwise match.
+    const sample = outputsOf(cells[0].reading, cells[0].host);
+    const uncut = JSON.stringify(sample);
+    expect(uncut).toContain(WS);
+    expect(uncut).toMatch(PROOF_WORD);
+    expect(wholeText(sample)).toBe(uncut.replaceAll(WS, ''));
+    expect(wholeText(sample)).not.toMatch(PROOF_WORD);
+    expect(wholeText(sample)).toContain('"versionClass":"unstamped"');
+    expect(wholeText(sample)).toContain(`"evidenceRefs":["${BINARY_REF}"`);
+    // The cut takes the workspace path and nothing else: every word the two patterns name survives it.
+    const named = 'verified unverified refuted proven proof confidence PASS FAIL UNKNOWN';
+    expect(wholeText({projection: {refused: `${WS} ${named}`}, verdict: sample.verdict})).toContain(`"refused":" ${named}"`);
     let judged = 0;
+    let wholes = 0;
     let unknowns = 0;
     for (const cell of cells) {
       // The SDK's own K3 values, carried through the real registration: they survive the round trip the provider applies.
-      const readings: JsonValue[] = [cell.reading];
-      for (const truth of ['unknown', 'known_absent', 'known_present']) readings.push(await provided({...cell.document, truth}));
-      readings.push(await provided({...cell.document, coverage_summary: {...asRecord(cell.document.coverage_summary), completeness: 'unknown'}}));
-      expect(readings.slice(1).map(value => {
+      const readings: (readonly [string, JsonValue])[] = [['field-less', cell.reading]];
+      for (const truth of ['unknown', 'known_absent', 'known_present']) readings.push([`truth ${truth}`, await provided({...cell.document, truth})]);
+      readings.push(['completeness unknown',
+        await provided({...cell.document, coverage_summary: {...asRecord(cell.document.coverage_summary), completeness: 'unknown'}})]);
+      expect(readings.slice(1).map(([, value]) => {
         const source = asRecord(asRecord(value).source);
         return [source.truth, asRecord(source.coverage_summary).completeness];
       }), cell.label).toStrictEqual([['unknown', null], ['known_absent', null], ['known_present', null], [null, 'unknown']]);
-      for (const variant of variantsOf(cell.reading)) readings.push(variant.reading);
+      // The field-less reading and the K3 readings, judged whole.
+      for (const [label, value] of readings) {
+        const whole = wholeText(outputsOf(value, cell.host));
+        expect(whole, `${cell.label} ${label} (whole output)`).not.toMatch(PROOF_WORD);
+        expect(whole, `${cell.label} ${label} (whole output)`).not.toMatch(ADMISSION_WORD);
+        wholes++;
+      }
+      // Pi's own texts on those readings and on every variant.
+      for (const variant of variantsOf(cell.reading)) readings.push([variant.label, variant.reading]);
       const axis = axisOf(cell.reading, cell.host);
       if (axis.coverage === 'unknown' || axis.statusTone === 'unknown') unknowns++;
-      for (const value of readings) {
-        for (const text of ownText(value, cell.host)) {
-          expect(text, cell.label).not.toMatch(PROOF_WORD);
-          expect(text, cell.label).not.toMatch(ADMISSION_WORD);
+      for (const [label, value] of readings) {
+        for (const text of ownText(outputsOf(value, cell.host))) {
+          expect(text, `${cell.label} ${label}`).not.toMatch(PROOF_WORD);
+          expect(text, `${cell.label} ${label}`).not.toMatch(ADMISSION_WORD);
         }
         judged++;
       }
     }
-    // Every cell with its four K3 readings and every variant; the unknown readings are all but the licensed complete ones.
+    // Every cell's field-less and four K3 readings judged whole; Pi's own texts on those and on every variant; the unknown readings
+    // are all but the licensed complete ones.
+    expect(wholes).toBe(cells.length * 5);
     expect(judged).toBe(cells.reduce((sum, cell) => sum + 5 + variantCount(cell.kind, cell.shape, VALUES.length), 0));
     expect(unknowns).toBe(SHAPES.length * (READ_KINDS.length * LICENCES.length - 2));
   });
