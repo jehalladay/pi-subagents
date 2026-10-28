@@ -1,11 +1,12 @@
 /**
- * wb-vu3i: the RUN PIN of two rf censuses, a census-tier leg judged in wb-u62 REPORT MODE (judge() reads the gate's own test report,
- * DEFAULT_TIER_REPORT, written by the test step, and never re-executes the tier; the .census.ts suffix keeps this file out of the
- * report it judges).
+ * wb-vu3i: the RUN PIN of the rf censuses CENSUSES names (two at wb-vu3i, a third since wb-yght), a census-tier leg judged in wb-u62
+ * REPORT MODE (judge() reads the gate's own test report, DEFAULT_TIER_REPORT, written by the test step, and never re-executes the tier;
+ * the .census.ts suffix keeps this file out of the report it judges).
  *
  * Each census below holds its record in its own last case - the stamps census (wb-o4h0.5) its each-liveness, mode, second witness
- * compare and REACHED record; the edge-edit echo census (wb-pfxo.7) its registration record - so nothing outside that case could see it
- * skipped or cut short: the o4h0.5 gate's F3 (G01 the record skipped, G02 an early return after its title checks, both green) and the
+ * compare and REACHED record; the edge-edit echo census (wb-pfxo.7) its registration record; the epistemic-status census (wb-grmo.2,
+ * since wb-yght) its run-mode and REACHED seam record - so nothing outside that case could see it skipped or cut short: the o4h0.5
+ * gate's F3 (G01 the record skipped, G02 an early return after its title checks, both green) and the
  * pfxo.7 gate's F1, which rides wb-vu3i (S11/S11b/S12: the registration record skipped or hollowed, rc 0). This leg pins EVERY title of
  * each census - collected exactly once, passed, and asserting on every static path, by the helper's three legs - and holds the report's
  * record of each file to the titles frozen HERE, exactly and in order, and to the census's roster. Each record case reads the task tree
@@ -42,6 +43,12 @@
  *    census in its first case, and the census page without it holds none).
  * NOT CLAIMED: what each census compares - an expected side rewritten to read its own actual (the W08 body-swap limit the wb-vu3i seat
  * disclosed) stays green here; this file judges registration, reaching and the report's record, never a comparison's content.
+ * wb-yght (the wb-grmo.2 gate's F4, its R694 follow-up; the same self-record class): THE THIRD CENSUS. The rf epistemic-status census
+ * held its record in its own last case as well, so the record skipped (G17a) or returning early after its title checks (G17b) stayed
+ * green. It joins CENSUSES with every title frozen here; its record now reads the task tree inline and asserts once, as its last
+ * statement, and its judged-set case reads this table back like the other two. That census titles each case by its pin id and what it
+ * pins, so its rows here freeze each pin's whole title, and rosterOf reads a roster pin's title where the roster carries one (else its
+ * id, as the other two rosters do).
  */
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -67,7 +74,8 @@ interface Census {
   readonly suite: string;
   readonly first: string;
   readonly last: string;
-  /** Each row's id and its pins, in registration order: frozen here, outside the census and its roster. */
+  /** Each row's id and the title each of its pins registers under, in registration order: frozen here, outside the census and its
+   * roster (a pin's id, or the pin's whole title where the census titles its cases by more than the id). */
   readonly rows: readonly (readonly [string, readonly string[]])[];
 }
 
@@ -99,6 +107,55 @@ const CENSUSES: readonly Census[] = [
       ["C", ["C1", "C2", "C3"]],
     ],
   },
+  {
+    file: "test/workbench-rf-epistemic-status-census.test.ts",
+    roster: "test/fixtures/rf-epistemic-status-roster.json",
+    suite: "wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2)",
+    first: "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+    last: "the record: every registered test is in run mode and ran, and every pin reached its seams as the roster pins",
+    rows: [
+      [
+        "T",
+        [
+          "T1 reads the SCG-R11 fixture roster: test/fixtures/rf-result-keys.json parses through readRfResultRoster as the captured, exhaustive roster, each key list at its floor",
+          "T2 fails when a captured envelope names epistemic_status (ARMED): no key of the roster's four lists spells an epistemic form, and the roster diff reds a result-level one",
+          "T3 or a scenario key (ARMED): no roster key spells scenario, uncertified or speculative or is the shipped notice key, and the roster diff reds a result-level one",
+          "T4 before those cases exist (freeze-and-flip): the code of the observer suite the owed cases land in, read parse-aware (case titles, identifiers, strings; never a comment), spells no epistemic word, so this census stands in its frozen form",
+        ],
+      ],
+      [
+        "D",
+        [
+          "D1 docs/workbench/09 § Reader adapters gains one census-bound sentence: it renders there exactly once and the docs09 census binds it as half RA6/f",
+          "D2 that an RF prediction renders as unverified context: the sentence opens with the owner's words verbatim",
+          "D3 (fold into wb-973.17 if it lands first): wb-973.17 landed first, and the sentence closes the RF bullet that carries its clauses",
+        ],
+      ],
+      [
+        "Z",
+        [
+          "Z1 Pi claims nothing in code: no src module's identifiers, strings, templates or regexes spell an epistemic, scenario, uncertified or speculative word",
+          "Z2 Pi composes no epistemic claim: an envelope marked with each RF-WM-001 word, the shipped block markers or the scenario form projects and evidences byte for byte as its unmarked twin",
+        ],
+      ],
+      [
+        "F",
+        [
+          "F1 the owner filing's until-then sentence is rows T and D joined, each label its pins' quotes, and the title holds row Z's clause once",
+        ],
+      ],
+      [
+        "Q",
+        [
+          "Q1 R-NESTED: a marker below the result level outside the speculative tripwire's names (a provenance key) passes the roster diff, so no re-capture brings it to the roster",
+          "Q2 R-VALUE: an uncertified word carried as the value of a roster key passes the roster diff unseen",
+          "Q3 R-VOCABULARY: a key outside the vocabulary that carries the same meaning (belief_state, what_if_view) reads quiet on T2 and T3",
+          "Q4 R-SHARED-WORD: Z1 does not take hypothesis, which src code spells for Pi's own relation kind",
+          "Q5 R-SCENARIO-CASE: an owed uncertified-scenario case that never spells epistemic reads quiet on T4, whose reader takes the epistemic word only",
+        ],
+      ],
+    ],
+  },
 ];
 
 interface RosterRow {
@@ -113,7 +170,9 @@ interface Roster {
 function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === "object" && !Array.isArray(value);
 }
-/** A census's roster: its rows (id, label, pin ids) and its tests list, refused by name when either has the wrong shape. */
+/** A census's roster: its rows (id, label, and the title each pin registers under) and its tests list, refused by name when either has
+ * the wrong shape. A pin registers under its roster title when it carries one (wb-yght: the wb-grmo.2 census titles each case by its
+ * pin id and what it pins), else under its id (the stamps and echo censuses register each pin by its id alone). */
 function rosterOf(census: Census): Roster {
   const raw: unknown = JSON.parse(readFileSync(join(ROOT, census.roster), "utf8"));
   if (!isRecord(raw) || !Array.isArray(raw.rows) || !Array.isArray(raw.tests) || !raw.tests.every(title => typeof title === "string")) {
@@ -121,7 +180,10 @@ function rosterOf(census: Census): Roster {
   }
   const rows = raw.rows.map((row: unknown, index: number): RosterRow => {
     if (!isRecord(row) || typeof row.id !== "string" || typeof row.label !== "string" || !Array.isArray(row.pins)) throw new Error(`${census.roster} rows[${index}] needs an id, a label and pins`);
-    const pins = row.pins.map((pin: unknown) => (isRecord(pin) && typeof pin.id === "string" ? pin.id : `<pin without an id in row ${row.id}>`));
+    const pins = row.pins.map((pin: unknown) => {
+      if (!isRecord(pin) || typeof pin.id !== "string") return `<pin without an id in row ${row.id}>`;
+      return typeof pin.title === "string" ? pin.title : pin.id;
+    });
     return { id: row.id, label: row.label, pins };
   });
   return { rows, tests: raw.tests };
@@ -288,6 +350,7 @@ describe("wb-vu3i rf census run pins: every title of each census, judged from th
     expect(CENSUSES.map(shapeOf), "the frozen shape of CENSUSES (standing rule 16): each census's file and its rows' pin counts").toEqual([
       "test/workbench-rf-federation-stamps-census.test.ts A:5 B:3 C:3 D:3 E:2",
       "test/workbench-rf-graph-edge-edit-echo-census.test.ts T:4 A:5 B:5 C:3",
+      "test/workbench-rf-epistemic-status-census.test.ts T:4 D:3 Z:2 F:1 Q:5",
     ]);
     const cases = registered(task.file.tasks, task.id);
     expect(
