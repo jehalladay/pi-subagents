@@ -1,0 +1,215 @@
+{
+  "bead": "wb-0lf.5",
+  "rows": [
+    {
+      "id": "T",
+      "label": "When Pi consumes GP scores",
+      "pins": [
+        "T1"
+      ]
+    },
+    {
+      "id": "A",
+      "label": "a fixture stochastic reply round-trips through the host with support order and log probability byte-identical in the receipt (no renormalization, no re-sampling, no host-side argmax over scores)",
+      "pins": [
+        "A1",
+        "A2"
+      ]
+    },
+    {
+      "id": "B",
+      "label": "a deterministic reply records keyed scores verbatim",
+      "pins": [
+        "B1"
+      ]
+    },
+    {
+      "id": "C",
+      "label": "the mapped host action is recorded as a separate field beside the symbolic proposal",
+      "pins": [
+        "C1"
+      ]
+    },
+    {
+      "id": "D",
+      "label": "a proposal naming an action outside the exported support is refused, never mapped by nearest match",
+      "pins": [
+        "D1"
+      ]
+    },
+    {
+      "id": "E",
+      "label": "a receipt replayed from the audit never issues a verb (wb-pjj look-alike test pattern)",
+      "pins": [
+        "E1"
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "named residual quiet boundaries",
+      "pins": [
+        "Q1",
+        "Q2"
+      ]
+    }
+  ],
+  "quotes": {
+    "T1": "When Pi consumes GP scores",
+    "A1": "a fixture stochastic reply round-trips through the host with support order and log probability byte-identical in the receipt",
+    "A2": "(no renormalization, no re-sampling, no host-side argmax over scores)",
+    "B1": "a deterministic reply records keyed scores verbatim",
+    "C1": "the mapped host action is recorded as a separate field beside the symbolic proposal",
+    "D1": "a proposal naming an action outside the exported support is refused, never mapped by nearest match",
+    "E1": "a receipt replayed from the audit never issues a verb (wb-pjj look-alike test pattern)",
+    "Q1": "R-OTHER-REPLY",
+    "Q2": "R-MISSING-SEAM"
+  },
+  "residuals": {
+    "Q1": [
+      "gp eval output has no sampled-decision receipt and the synthetic deterministic scores are not gp output"
+    ],
+    "Q2": [
+      "no Pi GP decision point or production mapping exists; this census arms a fixture-only contract"
+    ]
+  },
+  "witnesses": {
+    "T1": {
+      "hits": [],
+      "bound": [],
+      "countFloor": true,
+      "control": [
+        "GraphPolicyCLI",
+        "GraphDataIR",
+        "graphpolicy.receipt.decision.v1",
+        "sampled-decision",
+        "log_probabilities",
+        "log_probability",
+        "chosen_id"
+      ],
+      "quiet": []
+    },
+    "A1": {
+      "rawSame": true,
+      "support": [
+        "exec-a1-t1",
+        "exec-a1-t2",
+        "exec-a2-t2"
+      ],
+      "supportOrder": "graphpolicy.policy.support-order.codepoint.v1",
+      "logProbability": "bf5e8cf0"
+    },
+    "A2": {
+      "original": "exec-a1-t1",
+      "changed": [
+        {
+          "kind": "M-RESAMPLE",
+          "same": true,
+          "proposal": "exec-a1-t2"
+        },
+        {
+          "kind": "M-ARGMAX",
+          "same": true,
+          "proposal": "exec-a1-t1"
+        },
+        {
+          "kind": "M-RECOMPUTE",
+          "same": false,
+          "proposal": "exec-a1-t1"
+        }
+      ]
+    },
+    "B1": {
+      "kind": "synthetic-deterministic-scores",
+      "result": {
+        "outcome": "scores-only",
+        "keyedScores": [
+          [
+            "exec-a1-t1",
+            "3fe00000"
+          ],
+          [
+            "exec-a1-t2",
+            "3fa00000"
+          ],
+          [
+            "exec-a2-t2",
+            "3fc00000"
+          ]
+        ]
+      },
+      "mutated": [
+        [
+          "exec-a1-t1",
+          "3FE00000"
+        ],
+        [
+          "exec-a1-t2",
+          "3FA00000"
+        ],
+        [
+          "exec-a2-t2",
+          "3FC00000"
+        ]
+      ]
+    },
+    "C1": {
+      "proposal": "exec-a1-t1",
+      "mappedAction": {
+        "proposal": "exec-a1-t1",
+        "hostAction": "stop",
+        "target": {
+          "provider": "furnace",
+          "type": "run",
+          "id": "frn-run-score-fixture",
+          "scope": "/work/gp-score-receipt"
+        }
+      },
+      "permit": "permitted"
+    },
+    "D1": {
+      "wrong": {
+        "outcome": "refused",
+        "field": "support",
+        "proposal": "exec-outside-export"
+      },
+      "nearest": {
+        "proposal": "exec-a1-t1",
+        "hostAction": "stop",
+        "target": {
+          "provider": "furnace",
+          "type": "run",
+          "id": "frn-run-score-fixture",
+          "scope": "/work/gp-score-receipt"
+        }
+      }
+    },
+    "E1": {
+      "minted": false,
+      "refusal": "unvetted-decision",
+      "issued": 0,
+      "replay": "refused"
+    },
+    "Q1": {
+      "deterministic": "scores-only",
+      "receipt": null
+    },
+    "Q2": {
+      "sourceNames": [],
+      "bound": []
+    }
+  },
+  "tests": [
+    "T1: When Pi consumes GP scores",
+    "A1: a fixture stochastic reply round-trips through the host with support order and log probability byte-identical in the receipt",
+    "A2: (no renormalization, no re-sampling, no host-side argmax over scores)",
+    "B1: a deterministic reply records keyed scores verbatim",
+    "C1: the mapped host action is recorded as a separate field beside the symbolic proposal",
+    "D1: a proposal naming an action outside the exported support is refused, never mapped by nearest match",
+    "E1: a receipt replayed from the audit never issues a verb (wb-pjj look-alike test pattern)",
+    "Q1: R-OTHER-REPLY",
+    "Q2: R-MISSING-SEAM",
+    "rule 16: rows, quotes, residuals, source bindings and mutant names have the frozen measured shape",
+    "outside anchors: owner filing, producer receipt, snapshot and control pin bind every acceptance row",
+    "roster: every judged pin and registered test ran, and every witness was compared"
+  ]
+}
