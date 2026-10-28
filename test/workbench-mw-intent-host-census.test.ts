@@ -19,7 +19,9 @@
  * delta touches neither src nor the package files; cut #2 re-measured the Pi facts below at its merged base e81d2b08eecf,
  * whose delta from cut #1's cd8927fbdbc6 adds src/workbench/collective-event.ts and edits src/workbench/hyperunix-observer.ts,
  * neither naming an @mechanical/ package or an M0 spelling, leaves the package files, src/workbench/control.ts,
- * src/workbench/observation.ts and docs/workbench/01 unchanged, and edits docs/workbench/07 at line 19 only).
+ * src/workbench/observation.ts and docs/workbench/01 unchanged, and edits docs/workbench/07 at line 19 only; cut #3
+ * re-measured them at its merged base 014d116fb4c1, whose delta from e81d2b08eecf touches only test files and the tracker
+ * export, and re-read the producer line and blob below from the MechanicalWorkflows checkout's objects at b8264aac5ef1).
  * Producer (the local MechanicalWorkflows checkout, git show / rev-parse; this census never re-reads the producer, and the
  * roster's producer block carries the one line it quotes): at cf214758bcff packages/coordination/package.json (blob
  * fc3e3b574d75) names the
@@ -81,17 +83,39 @@
  * itself, not to an outside source). OUTSIDE ANCHORS (their own registered case) bind exactly this. The bead's own row in the
  * tracker export (.beads/issues.jsonl) binds rows T, A, B and C: each acceptance clause, without its final period and its
  * trailing citation, is exactly the label of row A, B or C, row T's label is the notes' trigger sentence, and the pin quotes
- * of each of those four rows tile its label in order (the quotes' text, never how many pins share it). It binds the six codes
- * (the notes' list, in order), the Intent member and the package scope and name (read out of the notes' words), the
- * vocabulary (the six codes, then that member and that name, in order) and the code clause B maps to. Every notes reading is
- * taken from the owner's 2026-10-17b delta paragraph's own line (the tracker appends each later note on a line of its own, so
- * a park, delivery or gate note binds nothing, and the case shows an appended note naming a new code changes no reading). The
- * four variants are J03's (docs/workbench/01: every `<!--` ... `-->` span stripped, then the one blank-line-separated
- * paragraph opening with J03 inside the "## Concrete user journeys" section, which ends at the next level-1 or level-2
- * ATX heading; the case's controls show that a commented-out J03 and a J03 past the section's end are not read, that two J03
- * paragraphs read nothing, and that a J03 wrapped over two lines is read whole) and wb-w12's row's; clause C's citation
- * resolves in Pi's own objects to the docs/07 line that counts them; clause B's citation binds the roster producer block's
- * path, line, sha prefix and quoted text (its repo and blob are this file's and the roster's own words). So, with that case
+ * of each of those four rows tile its label in order: read in order they carry the label's whole text, leaving out nothing
+ * but separators (whitespace, comma, semicolon, colon, parentheses) before the first quote, between two quotes and after
+ * the last, and where one quote ends and the next begins, and so how the text is shared among the pins, is not bound. It
+ * binds the six codes (the notes' list, in order), the Intent member and the package scope and name (read out of the notes'
+ * words), the vocabulary (the six codes, then that member and that name, in order), the code clause B maps to, and the
+ * resolution of clause B's citation prefix, MW/ (below).
+ * Every notes reading is taken from the owner's 2026-10-17b delta paragraph's own line (the tracker appends each later note
+ * on a line of its own, so a park, delivery or gate note binds nothing, and the case shows an appended note naming a new
+ * code, trigger and resolution changes no reading). The four variants are J03's and wb-w12's row's. J03 is read from
+ * docs/workbench/01 through the landed docsSection binding (test/helpers/census.ts), which reads the page as marked's lexer
+ * renders it: the "Concrete user journeys" heading renders exactly once at level 2 (a second level-2 copy anywhere, nested
+ * in a block quote or list item included, refuses; a copy at another level does not count), at the page's top level (one
+ * that renders only nested refuses), under exactly the page title "01 — Product goals, users, journeys, and exclusions"
+ * (another parent refuses), the section runs to the next level-1 or level-2 heading at the page's top level or EOF (a heading
+ * nested in a block quote or list item ends nothing), and a code or HTML block in it that carries an ATX heading line (up to
+ * three spaces, one to six #, then a space, a tab or the line's end) refuses. The reader then requires the section to carry no
+ * HTML of any kind, block or inline, comments included (the binding's hasHtml), and reads the one top-level paragraph block
+ * whose rendered text opens with the word J03, whose rendered text must equal its source, whitespace collapsed (so emphasis,
+ * a strikethrough, a code span, a link, an image, an escape or a decoded entity in it reads nothing), and the ' / '-separated
+ * list its "preserving the producer's ... outcome rather than collapsing to Boolean success" clause names; a refused binding,
+ * HTML in the section, a J03 block whose rendered text is not its source, or no such block or more than one, read nothing (a
+ * J03 inside a list item, block quote or table, or run into the paragraph above it, is no such block). The case's controls
+ * show a duplicated heading, another page title, a code block carrying a heading line, a section carrying a comment or a
+ * hidden wrapper, and a J03 carrying a strikethrough each reading nothing; the indented, empty, tab-separated, closed and
+ * level-1 ATX forms and both Setext forms each
+ * ending the section; a J03 past the section's end or inside a list item not read; two J03 paragraphs reading nothing; and a
+ * J03 indented by one or three spaces, or wrapped over two lines, read whole. Clause C's citation resolves in Pi's own objects
+ * to the docs/07 line that counts the variants. Clause B's citation binds the roster producer block's line, the first seven
+ * hex digits of its sha (the citation's pin) and the quoted words its text must contain, and the notes' resolution of the
+ * citation's MW/ prefix (the delta line resolves the rationale's MW/04-implementation-plan.md to
+ * MechanicalWorkflows:docs/programs/collective-adaptation-2026-10-16/04-implementation-plan.md) binds the block's repo and,
+ * joined with the citation's file name, its whole path (its blob, the rest of its sha and the rest of its text are the
+ * roster's own words). So, with that case
  * intact, each of these changes, made in every literal of this file and the roster together, still reds: removing one of
  * rows T, A, B and C, a word of its label, one of its pins together with its quote, a code, a vocabulary spelling or a
  * variant; rewording a word of such a label, a pin quote, a code, a vocabulary spelling, a variant, the package scope or
@@ -107,13 +131,17 @@
  * table, the frozen literal and the roster together while every check still fires; a pin's case replaced by another (one
  * that echoes its roster witness, or any passing case with the roster re-measured to it); row Q and its residuals: the row,
  * a residual family (its pin) or a family member removed from every literal of this file and the roster together (no anchor
- * outside the file names the families or their members); the pin ids and the pin partition: a pin renamed, or a pin of row
- * T, A, B or C merged into a sibling,
+ * outside the file names the families or their members); the pin ids and the pin partition: a pin renamed, a boundary
+ * between two quotes moved (words passing from one pin's quote to its neighbour's, or a separator at the boundary moving
+ * into or out of a quote), or a pin of row T, A, B or C merged into a sibling,
  * its case deleted and its quote re-homed into the sibling's so the row's quotes still tile its label (merging T2 into T1
- * deletes the vocabulary leg, after which a src module spelling an M0 code reds nothing); that the J03 reading is the
- * rendered page: the reader resolves only the constructs named under OUTSIDE ANCHORS, so an unclosed `<!--`, comment-like
- * text inside a code span or fence (stripped all the same), a heading line inside a fence (it ends the section), a Setext
- * heading, a block quote, list item, indented block or HTML block, an escape and an entity are read as written.
+ * deletes the vocabulary leg, after which a src module spelling an M0 code reds nothing); that the J03 reading is a
+ * browser's view of the page beyond what the binding renders: where marked departs from CommonMark the binding follows
+ * marked, an entity reference outside the binding's decoded set (&amp; &lt; &gt; &quot; &#39; &#x27; &nbsp;) is read as
+ * written, and a section the binding refuses, one carrying HTML, or a J03 block whose rendered text is not its source reads
+ * nothing whatever a browser would show (the census then reds: it fails closed, never open); the producer block's blob, the
+ * rest of its sha past the citation's pin and the rest of its text past the quoted words (the roster's own words, as stated
+ * above).
  * RESIDUALS (named families, each family one pinned quiet row over its members; a reader that starts reading a member reds
  * its family's row):
  * R-SPELLING (Q1, an M0 spelling the vocabulary reader does not read: snake case, Pascal case, a code composed at run time),
@@ -144,6 +172,7 @@ import {
   type NativeControlRequest,
 } from "../src/workbench/control.js";
 import { type NativeRef, ObservationProjection, type ObservationScope } from "../src/workbench/observation.js";
+import { docsSection } from "./helpers/census.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BEAD = "wb-4ap.16";
@@ -784,10 +813,16 @@ function deltaReading(notes: string): {
   readonly packageName?: string;
   readonly member?: string;
   readonly staleCode?: string;
+  readonly citationPrefix?: string;
+  readonly producerRepo?: string;
+  readonly producerDirectory?: string;
 } {
   const delta = notes.split("\n").find(line => line.startsWith(DELTA_OPENING)) ?? "";
   // The M0 package is the one the notes give a Forge member of its own name: "`@scope/name` (Forge member `library:name`".
   const m0Package = /`(@[a-z][\w-]*\/)([a-z][\w-]*)` \(Forge member `library:\2`/.exec(delta);
+  // The notes resolve one rationale citation: "'... (MW/<file>:<lines>@<pin>)' resolves to <repo>:<directory>/<file>:<lines>",
+  // the same file name on both sides, so the prefix MW/ reads as that repo and directory.
+  const resolved = /\((\w+\/)([\w.-]+):[\d-]+@[0-9a-f]{7,40}\)' resolves to (\w+):((?:[\w.-]+\/)+)\2:[\d-]+ /.exec(delta);
   return {
     trigger: /the trigger becomes '([^']+)' \(MW-M0-PI-1\)/.exec(delta)?.[1],
     codes: [...new Set(delta.match(/\bINTENT_[A-Z_]+\b/g) ?? [])],
@@ -795,6 +830,9 @@ function deltaReading(notes: string): {
     packageName: m0Package?.[2],
     member: /`Intent` \((\w+); optional authority\)/.exec(delta)?.[1],
     staleCode: /Map acceptance \(b\) \('expected source revision differs \.\.\. conflict receipt'\) to (\w+)\./.exec(delta)?.[1],
+    citationPrefix: resolved?.[1],
+    producerRepo: resolved?.[3],
+    producerDirectory: resolved?.[4],
   };
 }
 /** The description's ACCEPTANCE list: each element of its one-line bracket, single- or double-quoted. */
@@ -802,24 +840,23 @@ function acceptanceClauses(description: string): string[] {
   const body = /^ACCEPTANCE: \[(.*)\]$/m.exec(description)?.[1] ?? "";
   return [...body.matchAll(/(["'])(.*?)\1(?=, |$)/g)].map(match => match[2] ?? "");
 }
-/** docs/workbench/01's section that holds the journeys. */
-const JOURNEY_SECTION = "## Concrete user journeys";
+/** docs/workbench/01's page title (its one level-1 heading) and the section under it that holds the journeys. */
+const JOURNEY_PAGE = "01 — Product goals, users, journeys, and exclusions";
+const JOURNEY_HEADING = "Concrete user journeys";
 /**
- * J03's variants. The reader strips every `<!--` ... `-->` span, keeps the journeys section up to the next level-1 or
- * level-2 ATX heading, splits it into blank-line-separated paragraphs and reads the one paragraph whose first line opens
- * with J03 (its lines joined by single spaces); none or two such paragraphs read nothing. It resolves no other Markdown
- * construct (NOT CLAIMED names what it reads as written).
+ * J03's variants, read through the landed docsSection binding: the heading renders exactly once at level 2 under the page
+ * title, and the section runs to the next top-level level-1 or level-2 heading or EOF. A refused binding or a section carrying
+ * any HTML reads nothing; so do no top-level paragraph block whose rendered text opens with J03 or more than one, and a J03
+ * block whose rendered text is not its source. The variants are the ' / '-separated list that block's
+ * "preserving the producer's ... outcome rather than collapsing to Boolean success" clause names.
  */
 function journeyVariants(text: string): readonly string[] | undefined {
-  const lines = text.replace(/<!--[\s\S]*?-->/g, "").split("\n");
-  const start = lines.indexOf(JOURNEY_SECTION);
-  if (start < 0) return undefined;
-  const next = lines.findIndex((line, index) => index > start && /^#{1,2} /.test(line));
-  const section = lines.slice(start + 1, next < 0 ? undefined : next).join("\n");
-  const paragraphs = section.split(/\n\s*\n/).map(block => block.replace(/^\n+/, "")).filter(block => /^J03\b/.test(block));
-  if (paragraphs.length !== 1) return undefined;
-  const paragraph = (paragraphs[0] ?? "").replace(/\s*\n\s*/g, " ");
-  return /preserving the producer's (.+?) outcome rather than collapsing to Boolean success/.exec(paragraph)?.[1]?.split(" / ");
+  const section = docsSection(text, JOURNEY_HEADING, 2, [JOURNEY_PAGE]);
+  if (!section.ok || section.hasHtml) return undefined;
+  const j03 = section.blocks.flatMap(block => (block.kind === "paragraph" && /^J03\b/.test(block.text) ? [block] : []));
+  const only = j03.length === 1 ? j03[0] : undefined;
+  if (only === undefined || only.markdown !== only.text) return undefined;
+  return /preserving the producer's (.+?) outcome rather than collapsing to Boolean success/.exec(only.text)?.[1]?.split(" / ");
 }
 /** A clause without its final period and without a trailing parenthetical that cites a pinned source (path:line@sha). */
 function labelOf(clause: string): { readonly label: string; readonly citation?: string } {
@@ -886,7 +923,7 @@ describe(SUITE, () => {
     expect(SRC_FLOOR).toBe(100);
   });
 
-  it("the outside anchors: the bead's own row binds rows T, A, B and C (each label and its quotes' text), the six codes, the vocabulary, the package scope, the stale code and the producer citation; J03 and wb-w12 bind the variants; clause C's citation resolves; row Q and the pin partition are not anchored", { timeout: 60_000 }, () => {
+  it("the outside anchors: the bead's own row binds rows T, A, B and C (each label, which its quotes tile in order), the six codes, the vocabulary, the package scope, the stale code and the producer citation, whose prefix the notes resolve; J03, read through docsSection, and wb-w12 bind the variants; clause C's citation resolves; row Q and the pin partition are not anchored", { timeout: 60_000 }, () => {
     const row = beadRow(BEAD);
     expect(row, `${BEAD}'s row was read from the tracker export`).toBeDefined();
     const title = row?.title ?? "";
@@ -908,17 +945,28 @@ describe(SUITE, () => {
     expect([delta.packageScope, delta.packageName], "the package scope and name are the notes' M0 package").toEqual([PACKAGE_SCOPE, PACKAGE_NAME]);
     expect(VOCABULARY, "the vocabulary is the notes' six codes, then its Intent member and its package name").toEqual([...delta.codes, delta.member, delta.packageName]);
     expect(delta.staleCode, "clause B maps to the stale code").toBe(STALE);
-    const appended = `${notes}\n2026-10-28 appended note: INTENT_BASIS_STALE_X; the trigger becomes 'something else' (MW-M0-PI-1).`;
+    const appended = `${notes}\n2026-10-28 appended note: INTENT_BASIS_STALE_X; the trigger becomes 'something else' (MW-M0-PI-1); the rationale line 'x (MW/09-x.md:1@b8264aa)' resolves to Elsewhere:docs/x/09-x.md:1 here.`;
     expect(deltaReading(appended), "a note appended after the delta paragraph changes no reading").toEqual(delta);
     expect(journeyVariants(textOf(JOURNEYS)), "the four variants are docs/workbench/01 J03's").toEqual([...VARIANTS]);
-    const page = (body: string): string => `# 01\n\n${JOURNEY_SECTION}\n\n${body}\n\n## Outcome measures\n`;
+    const page = (body: string, title = JOURNEY_PAGE): string => `# ${title}\n\n## ${JOURNEY_HEADING}\n\n${body}\n\n## Outcome measures\n`;
     const sentence = (variants: readonly string[]): string => `J03 binds, preserving the producer's ${variants.join(" / ")} outcome rather than collapsing to Boolean success.`;
     const fewer = VARIANTS.slice(1);
-    expect(journeyVariants(page(`<!-- ${sentence(VARIANTS)} -->\n${sentence(fewer)}`)), "a commented-out J03 is not read").toEqual(fewer);
+    expect(journeyVariants(page(sentence(VARIANTS))), "the controls' page reads the four").toEqual([...VARIANTS]);
+    expect(journeyVariants(page(`<!-- ${sentence(VARIANTS)} -->\n${sentence(fewer)}`)), "a commented-out J03 is not read: a section carrying HTML reads nothing").toBeUndefined();
+    expect(journeyVariants(page(`<div hidden>\n\n${sentence(VARIANTS)}\n\n</div>`)), "a J03 inside a hidden wrapper is not read").toBeUndefined();
+    expect(journeyVariants(page(sentence(VARIANTS).replace("needs_evidence", "~~needs_evidence~~"))), "a J03 carrying a strikethrough reads nothing").toBeUndefined();
     expect(journeyVariants(`${page(sentence(fewer))}\n${sentence(VARIANTS)}\n`), "a J03 outside its section is not read").toEqual(fewer);
+    expect(journeyVariants(page(`- ${sentence(VARIANTS)}`)), "a J03 inside a list item is not read").toBeUndefined();
     expect(journeyVariants(page(`${sentence(VARIANTS)}\n\n${sentence(VARIANTS)}`)), "two J03 paragraphs fail closed").toBeUndefined();
+    expect(journeyVariants(page(`${sentence(VARIANTS)}\n\n## ${JOURNEY_HEADING}\n\n${sentence(fewer)}`)), "a duplicated journeys heading reads nothing").toBeUndefined();
+    expect(journeyVariants(page(sentence(VARIANTS), "Another page")), "the section under another page title reads nothing").toBeUndefined();
+    expect(journeyVariants(page(`J01 x\n\n\`\`\`\n## not a heading\n\`\`\`\n\n${sentence(VARIANTS)}`)), "a code block carrying a heading line reads nothing").toBeUndefined();
+    for (const heading of [" ## Interlude", "  # Appendix", "##", "##\tInterlude", "## Interlude ##", "# Appendix", "Interlude\n---------", "Interlude\n========="]) {
+      expect(journeyVariants(page(`J01 x\n\n${heading}\n\n${sentence(VARIANTS)}`)), `${JSON.stringify(heading)} ends the section`).toBeUndefined();
+    }
+    expect(journeyVariants(page(` ${sentence(VARIANTS)}`)), "a J03 paragraph indented by one space is read whole").toEqual([...VARIANTS]);
+    expect(journeyVariants(page(`   ${sentence(VARIANTS)}`)), "and by three").toEqual([...VARIANTS]);
     expect(journeyVariants(page(sentence(VARIANTS).replace(" / needs_evidence", "\n/ needs_evidence"))), "a J03 paragraph wrapped over two lines is read whole").toEqual([...VARIANTS]);
-    expect(journeyVariants(page(`J01 x\n\n# Appendix\n\n${sentence(VARIANTS)}`)), "a level-1 heading ends the section").toBeUndefined();
     const sibling = /\(([a-z_/]+)\)/.exec(beadRow(VARIANT_BEAD)?.description ?? "")?.[1]?.split("/");
     expect(sibling, "and wb-w12's").toEqual([...VARIANTS]);
     const citationC = clauses[2]?.citation ?? "";
@@ -926,13 +974,14 @@ describe(SUITE, () => {
     const cited = execFileSync("git", ["show", `${pinC?.[3] ?? "-"}:${pinC?.[1] ?? "-"}`], { cwd: ROOT, encoding: "utf8" }).split("\n")[Number(pinC?.[2]) - 1] ?? "";
     expect(cited, "clause C's citation resolves to the line that records native evidence references").toContain("record native evidence references");
     expect(cited, "and counts the variants").toContain(`preserve ${["zero", "one", "two", "three", "four", "five"][VARIANTS.length] ?? "-"} existing outcome variants`);
-    const citationB = /^MW\/([\w.-]+):(\d+)@([0-9a-f]{7,40}) '(.+)'$/.exec(clauses[1]?.citation ?? "");
+    const citationB = /^(\w+\/)([\w.-]+):(\d+)@([0-9a-f]{7,40}) '(.+)'$/.exec(clauses[1]?.citation ?? "");
     const producer = ROSTER.producer;
-    expect(producer.repo, "the producer is MechanicalWorkflows").toBe("MechanicalWorkflows");
-    expect(producer.path.endsWith(`/${citationB?.[1] ?? "-"}`), "the producer path is clause B's citation").toBe(true);
-    expect(producer.line, "the producer line is clause B's").toBe(Number(citationB?.[2]));
-    expect(producer.sha.startsWith(citationB?.[3] ?? "-"), "the producer sha is clause B's pin").toBe(true);
-    expect(producer.text, "the producer line carries clause B's quote").toContain(citationB?.[4] ?? "-");
+    expect(citationB?.[1] ?? "no clause B prefix", "clause B cites under the prefix the notes resolve").toBe(delta.citationPrefix ?? "no resolved prefix");
+    expect(producer.repo, "the producer repo is the notes' resolution of that prefix").toBe(delta.producerRepo ?? "no resolved repo");
+    expect(producer.path, "the producer path is that resolution's directory and clause B's file name").toBe(`${delta.producerDirectory ?? "no resolved directory/"}${citationB?.[2] ?? "-"}`);
+    expect(producer.line, "the producer line is clause B's").toBe(Number(citationB?.[3]));
+    expect(producer.sha.startsWith(citationB?.[4] ?? "-"), "the producer sha is clause B's pin").toBe(true);
+    expect(producer.text, "the producer line carries clause B's quote").toContain(citationB?.[5] ?? "-");
     expect(typeof decideControl === "function" && typeof isCoreMintedDecision === "function", "the control core exports the clause's two names").toBe(true);
   });
 
