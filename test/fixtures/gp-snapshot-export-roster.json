@@ -1,0 +1,700 @@
+{
+  "bead": "wb-0lf.2",
+  "rows": [
+    {
+      "id": "A",
+      "label": "a pure exporter test builds GraphDataIR from an ObservationProjection fixture and asserts every node and edge traces to a native ref inside the caller's scope",
+      "pins": [
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "A5"
+      ]
+    },
+    {
+      "id": "B",
+      "label": "coverage partial/unknown rows export as explicit unknown (never absent, never a guessed value)",
+      "pins": [
+        "B1",
+        "B2",
+        "B3"
+      ]
+    },
+    {
+      "id": "C",
+      "label": "sourceRevision/subjectBasis are carried verbatim",
+      "pins": [
+        "C1",
+        "C2",
+        "C3"
+      ]
+    },
+    {
+      "id": "D",
+      "label": "candidate actions are exactly the host's admissible set (NATIVE_CONTROL_ACTIONS at control.ts:30-37 or typed executor requests)",
+      "pins": [
+        "D1",
+        "D2",
+        "D3"
+      ]
+    },
+    {
+      "id": "E",
+      "label": "and a snapshot over the declared node/edge/byte budget is refused with a typed unavailable",
+      "pins": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ]
+    },
+    {
+      "id": "F",
+      "label": "never truncated silently",
+      "pins": [
+        "F1"
+      ]
+    },
+    {
+      "id": "G",
+      "label": "When Pi exports a request to GraphPolicyCLI (artifact: released GraphDataIR schema + an owner-decided Pi decision point)",
+      "pins": [
+        "G1",
+        "G2",
+        "G3"
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the named residual families, each member a pinned quiet row",
+      "pins": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5"
+      ]
+    }
+  ],
+  "quotes": {
+    "A1": "a pure exporter test",
+    "A2": "builds GraphDataIR",
+    "A3": "from an ObservationProjection fixture",
+    "A4": "and asserts every node and edge traces to a native ref",
+    "A5": "inside the caller's scope",
+    "B1": "coverage partial/unknown rows export as explicit unknown",
+    "B2": "never absent",
+    "B3": "never a guessed value",
+    "C1": "sourceRevision",
+    "C2": "subjectBasis",
+    "C3": "are carried verbatim",
+    "D1": "candidate actions are exactly the host's admissible set",
+    "D2": "NATIVE_CONTROL_ACTIONS at control.ts:30-37",
+    "D3": "or typed executor requests",
+    "E1": "and a snapshot over the declared node",
+    "E2": "edge",
+    "E3": "byte budget",
+    "E4": "is refused with a typed unavailable",
+    "F1": "never truncated silently",
+    "G1": "When Pi exports a request to GraphPolicyCLI",
+    "G2": "artifact: released GraphDataIR schema",
+    "G3": "an owner-decided Pi decision point",
+    "Q1": "R-UNNAMED",
+    "Q2": "R-COMPOSED",
+    "Q3": "R-SCHEMA",
+    "Q4": "R-LABELS",
+    "Q5": "R-SNAPSHOT-REVISIONS"
+  },
+  "witnesses": {
+    "A1": {
+      "mutants": {
+        "M-MUTATES": [
+          "impure"
+        ],
+        "M-COUNTER-IDS": [
+          "impure"
+        ]
+      },
+      "cases": {
+        "K-FITS": [],
+        "K-OTHER-PRINCIPAL": [],
+        "K-OTHER-WORKSPACE": [],
+        "K-EMPTY": [],
+        "K-AT-BUDGET": [],
+        "K-NODES": [],
+        "K-EDGES": [],
+        "K-BYTES": [],
+        "K-ALL": []
+      }
+    },
+    "A2": {
+      "producer": [],
+      "exports": [
+        "K-FITS",
+        "K-OTHER-PRINCIPAL",
+        "K-OTHER-WORKSPACE",
+        "K-EMPTY",
+        "K-AT-BUDGET"
+      ],
+      "mutants": {
+        "M-NAMESPACE": [
+          "graphdatair"
+        ],
+        "M-DUPLICATE-ID": [
+          "graphdatair"
+        ],
+        "M-DANGLING": [
+          "graphdatair",
+          "relation"
+        ]
+      }
+    },
+    "A3": {
+      "scopes": {
+        "A": [
+          "furnace/frn-run-0001:observed:complete",
+          "claude-agent-sdk/sess-0001:observed:partial",
+          "forge/cmd_0123456789ab:observed:unknown",
+          "local-detached/det-0001:observed:unknown",
+          "beads/wb-zz9:observed:complete",
+          "furnace/frn-atm-0001:observed:unknown",
+          "forge/art-0001:related:unknown"
+        ],
+        "B": [
+          "furnace/frn-run-0001:observed:complete",
+          "furnace/frn-run-0002:observed:partial"
+        ],
+        "C": [
+          "claude-agent-sdk/sess-0001:observed:complete"
+        ],
+        "D": []
+      },
+      "cases": {
+        "K-FITS": {
+          "kind": "ok",
+          "entities": 7,
+          "relations": 5
+        },
+        "K-OTHER-PRINCIPAL": {
+          "kind": "ok",
+          "entities": 2,
+          "relations": 1
+        },
+        "K-OTHER-WORKSPACE": {
+          "kind": "ok",
+          "entities": 1,
+          "relations": 0
+        },
+        "K-EMPTY": {
+          "kind": "ok",
+          "entities": 0,
+          "relations": 0
+        },
+        "K-AT-BUDGET": {
+          "kind": "ok",
+          "entities": 7,
+          "relations": 5
+        },
+        "K-NODES": {
+          "ok": false,
+          "category": "unavailable",
+          "code": "export-over-budget",
+          "limit": "nodes",
+          "declared": 3,
+          "measured": 7
+        },
+        "K-EDGES": {
+          "ok": false,
+          "category": "unavailable",
+          "code": "export-over-budget",
+          "limit": "edges",
+          "declared": 2,
+          "measured": 5
+        },
+        "K-BYTES": {
+          "ok": false,
+          "category": "unavailable",
+          "code": "export-over-budget",
+          "limit": "bytes",
+          "declared": 256,
+          "measured": 1678
+        },
+        "K-ALL": {
+          "ok": false,
+          "category": "unavailable",
+          "code": "export-over-budget",
+          "limit": "nodes",
+          "declared": 1,
+          "measured": 7
+        }
+      }
+    },
+    "A4": {
+      "traced": [
+        "furnace/frn-run-0001",
+        "claude-agent-sdk/sess-0001",
+        "forge/cmd_0123456789ab",
+        "local-detached/det-0001",
+        "beads/wb-zz9",
+        "furnace/frn-atm-0001",
+        "forge/art-0001"
+      ],
+      "relations": 5,
+      "mutants": {
+        "M-UNTRACED": [
+          "trace"
+        ],
+        "M-GHOST": [
+          "native-ref"
+        ],
+        "M-REF-SWAP": [
+          "native-ref"
+        ],
+        "M-EDGE-REVERSED": [
+          "relation"
+        ],
+        "M-EDGE-KIND": [
+          "relation",
+          "truncated"
+        ]
+      }
+    },
+    "A5": {
+      "isolated": {
+        "K-FITS": 7,
+        "K-OTHER-PRINCIPAL": 2,
+        "K-OTHER-WORKSPACE": 1,
+        "K-EMPTY": 0
+      },
+      "mutants": {
+        "M-FOREIGN-NODE": [
+          "scope"
+        ],
+        "M-FOREIGN-EDGE": [
+          "scope"
+        ],
+        "M-SCOPE-STAMP": [
+          "scope"
+        ]
+      }
+    },
+    "B1": {
+      "marked": [
+        {
+          "entity": "furnace/frn-run-0001",
+          "completeness": "complete",
+          "coverage": {
+            "status": "known",
+            "value": 1
+          }
+        },
+        {
+          "entity": "claude-agent-sdk/sess-0001",
+          "completeness": "partial",
+          "coverage": {
+            "status": "unknown"
+          }
+        },
+        {
+          "entity": "forge/cmd_0123456789ab",
+          "completeness": "unknown",
+          "coverage": {
+            "status": "unknown"
+          }
+        },
+        {
+          "entity": "local-detached/det-0001",
+          "completeness": "unknown",
+          "coverage": {
+            "status": "unknown"
+          }
+        },
+        {
+          "entity": "beads/wb-zz9",
+          "completeness": "complete",
+          "coverage": {
+            "status": "known",
+            "value": 1
+          }
+        },
+        {
+          "entity": "furnace/frn-atm-0001",
+          "completeness": "unknown",
+          "coverage": {
+            "status": "unknown"
+          }
+        },
+        {
+          "entity": "forge/art-0001",
+          "completeness": "unknown",
+          "coverage": {
+            "status": "unknown"
+          }
+        }
+      ],
+      "mutants": {
+        "M-COMPLETE-AS-UNKNOWN": [
+          "coverage-known"
+        ]
+      }
+    },
+    "B2": {
+      "mutants": {
+        "M-COVERAGE-ABSENT": [
+          "unknown-absent"
+        ],
+        "M-DROP-UNKNOWN": [
+          "truncated"
+        ]
+      }
+    },
+    "B3": {
+      "mutants": {
+        "M-COVERAGE-HALF": [
+          "unknown-guessed"
+        ],
+        "M-COVERAGE-COMPLETE": [
+          "unknown-guessed"
+        ],
+        "M-COVERAGE-VALUE-NULL": [
+          "unknown-guessed"
+        ]
+      }
+    },
+    "C1": {
+      "revisions": [
+        "frn-rev-0042",
+        " sess-rev MiXeD ",
+        "forge-0.9.1",
+        null,
+        "bd-export-3f2a",
+        "frn-rev-0043",
+        null
+      ],
+      "mutants": {
+        "M-REVISION-TRIM": [
+          "revision"
+        ],
+        "M-REVISION-LOWER": [
+          "revision"
+        ],
+        "M-REVISION-GUESS": [
+          "revision"
+        ],
+        "M-REVISION-SWAP": [
+          "revision"
+        ]
+      }
+    },
+    "C2": {
+      "bases": [
+        "furnace:run/frn-run-0001@seq 7",
+        "basis-cafe<U+0301>",
+        null,
+        null,
+        "wb-zz9@2026-10-28",
+        "furnace:attempt",
+        null
+      ],
+      "mutants": {
+        "M-BASIS-NFC": [
+          "basis"
+        ],
+        "M-BASIS-DROP": [
+          "basis"
+        ],
+        "M-BASIS-EMPTY": [
+          "basis"
+        ]
+      }
+    },
+    "C3": {
+      "revision": "20736573732d726576204d6958654420",
+      "basis": "62617369732d63616665cc81",
+      "absent": [
+        "local-detached/det-0001",
+        "forge/art-0001"
+      ]
+    },
+    "D1": {
+      "listed": [
+        "furnace:stop",
+        "claude-agent-sdk:interrupt",
+        "forge:cancel",
+        "local-detached:cancel",
+        "local-detached:shutdown",
+        "furnace:stop",
+        "forge:cancel"
+      ],
+      "mutants": {
+        "M-ACTION-EXTRA": [
+          "actions"
+        ],
+        "M-ACTION-MISSING": [
+          "actions"
+        ],
+        "M-ACTION-UNIVERSAL": [
+          "actions"
+        ],
+        "M-ACTION-UNLISTED": [
+          "actions"
+        ],
+        "M-ACTION-DUPLICATE": [
+          "actions"
+        ]
+      }
+    },
+    "D2": {
+      "pin": "758ec18187a5d66ba40b766caad38754b5313558",
+      "lines": [
+        30,
+        37
+      ],
+      "first": "export const NATIVE_CONTROL_ACTIONS: Readonly<Record<string, readonly string[]>> = Object.freeze({",
+      "last": "});"
+    },
+    "D3": {
+      "named": []
+    },
+    "E1": {
+      "case": {
+        "ok": false,
+        "category": "unavailable",
+        "code": "export-over-budget",
+        "limit": "nodes",
+        "declared": 3,
+        "measured": 7
+      },
+      "mutants": {
+        "M-NODES-TRUNCATE": [
+          "truncated",
+          "over-budget"
+        ],
+        "M-NODES-ADMIT": [
+          "over-budget"
+        ],
+        "M-NODES-OVERFLOW": [
+          "native-ref",
+          "over-budget"
+        ]
+      }
+    },
+    "E2": {
+      "case": {
+        "ok": false,
+        "category": "unavailable",
+        "code": "export-over-budget",
+        "limit": "edges",
+        "declared": 2,
+        "measured": 5
+      },
+      "mutants": {
+        "M-EDGES-TRUNCATE": [
+          "truncated",
+          "over-budget"
+        ],
+        "M-EDGES-ADMIT": [
+          "over-budget"
+        ],
+        "M-EDGES-OVERFLOW": [
+          "trace",
+          "over-budget"
+        ]
+      }
+    },
+    "E3": {
+      "case": {
+        "ok": false,
+        "category": "unavailable",
+        "code": "export-over-budget",
+        "limit": "bytes",
+        "declared": 256,
+        "measured": 1678
+      },
+      "margin": 4,
+      "mutants": {
+        "M-BYTES-ADMIT": [
+          "over-budget"
+        ],
+        "M-BYTES-BLOAT": [
+          "over-budget"
+        ]
+      }
+    },
+    "E4": {
+      "all": {
+        "ok": false,
+        "category": "unavailable",
+        "code": "export-over-budget",
+        "limit": "nodes",
+        "declared": 1,
+        "measured": 7
+      },
+      "mutants": {
+        "M-OVER-THROW": [
+          "outcome"
+        ],
+        "M-OVER-UNTYPED": [
+          "refusal"
+        ],
+        "M-OVER-WRONG-LIMIT": [
+          "refusal"
+        ],
+        "M-OVER-DECLARED": [
+          "refusal"
+        ],
+        "M-OVER-PARTIAL": [
+          "refusal"
+        ],
+        "M-REFUSE-FITTING": [
+          "refused-fitting"
+        ]
+      }
+    },
+    "F1": {
+      "atBudget": {
+        "kind": "ok",
+        "entities": 7,
+        "relations": 5
+      },
+      "mutants": {
+        "M-DROP-NODE": [
+          "truncated"
+        ],
+        "M-DROP-EDGE": [
+          "truncated"
+        ]
+      }
+    },
+    "G1": {
+      "touched": [],
+      "planted": [
+        "S-UNREGISTERED src/workbench/zz-gp-export.ts names GraphPolicy with no EXPORT_SITES registration"
+      ],
+      "sites": {
+        "S-REGISTERED": [],
+        "S-UNREGISTERED": [
+          "S-UNREGISTERED"
+        ],
+        "S-STALE": [
+          "S-STALE"
+        ],
+        "S-DUPLICATE": [
+          "S-DUPLICATE"
+        ],
+        "S-UNEXPORTED": [
+          "S-UNEXPORTED"
+        ]
+      },
+      "hits": [
+        "GraphDataIR",
+        "GraphDataIR",
+        "GraphDataIR",
+        "GraphPolicy",
+        "GraphPolicy",
+        "GraphPolicy",
+        "GraphDataIR"
+      ],
+      "quiet": 8,
+      "drives": []
+    },
+    "G2": {
+      "namespace": "graphpolicy.data.v1",
+      "naming": []
+    },
+    "G3": {
+      "ownership": "nothing today (no gp seam is registered)",
+      "boundary": "Pi carries no GraphPolicyCLI (gp) integration today."
+    },
+    "Q1": {
+      "members": [
+        "src/workbench/q1-shape.ts",
+        "src/workbench/q1-incidences.ts"
+      ],
+      "findings": []
+    },
+    "Q2": {
+      "members": [
+        "src/workbench/q2-joined.ts",
+        "src/workbench/q2-escape.ts"
+      ],
+      "findings": []
+    },
+    "Q3": {
+      "members": [
+        "q3-feature-status",
+        "q3-schema-hash"
+      ],
+      "findings": []
+    },
+    "Q4": {
+      "members": [
+        "q4-entity-kind",
+        "q4-roles"
+      ],
+      "findings": []
+    },
+    "Q5": {
+      "members": [
+        "q5-revisions-empty",
+        "q5-revisions-guessed"
+      ],
+      "findings": []
+    }
+  },
+  "residuals": {
+    "Q1": [
+      "src/workbench/q1-shape.ts",
+      "src/workbench/q1-incidences.ts"
+    ],
+    "Q2": [
+      "src/workbench/q2-joined.ts",
+      "src/workbench/q2-escape.ts"
+    ],
+    "Q3": [
+      "q3-feature-status",
+      "q3-schema-hash"
+    ],
+    "Q4": [
+      "q4-entity-kind",
+      "q4-roles"
+    ],
+    "Q5": [
+      "q5-revisions-empty",
+      "q5-revisions-guessed"
+    ]
+  },
+  "tests": [
+    "A1: a pure exporter test",
+    "A2: builds GraphDataIR",
+    "A3: from an ObservationProjection fixture",
+    "A4: and asserts every node and edge traces to a native ref",
+    "A5: inside the caller's scope",
+    "B1: coverage partial/unknown rows export as explicit unknown",
+    "B2: never absent",
+    "B3: never a guessed value",
+    "C1: sourceRevision",
+    "C2: subjectBasis",
+    "C3: are carried verbatim",
+    "D1: candidate actions are exactly the host's admissible set",
+    "D2: NATIVE_CONTROL_ACTIONS at control.ts:30-37",
+    "D3: or typed executor requests",
+    "E1: and a snapshot over the declared node",
+    "E2: edge",
+    "E3: byte budget",
+    "E4: is refused with a typed unavailable",
+    "F1: never truncated silently",
+    "G1: When Pi exports a request to GraphPolicyCLI",
+    "G2: artifact: released GraphDataIR schema",
+    "G3: an owner-decided Pi decision point",
+    "Q1: R-UNNAMED",
+    "Q2: R-COMPOSED",
+    "Q3: R-SCHEMA",
+    "Q4: R-LABELS",
+    "Q5: R-SNAPSHOT-REVISIONS",
+    "rule 16: the rows, the residual families, the mutants and cases per pin, the rules and the registry are frozen at their measured shape",
+    "the outside anchors: the bead's own row binds the rows and the pin quotes; the vendored producer fixture, the registry and the live control import bind the judge's spellings",
+    "roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/gp-snapshot-export-roster.json, in order and both ways; every pin reached its witness compare"
+  ]
+}
