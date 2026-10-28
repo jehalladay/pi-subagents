@@ -456,6 +456,9 @@
               [
                 "2:The gp seam is",
                 "2:served."
+              ],
+              [
+                "1:Intro The gp seam is served."
               ]
             ],
             "judged": [
@@ -598,9 +601,9 @@
               }
             ],
             "twins": {
-              "pages": 292,
-              "identical": 292,
-              "same": 292
+              "pages": 357,
+              "identical": 357,
+              "same": 357
             },
             "markup": {
               "blocks": [
@@ -1154,6 +1157,15 @@
                 "findings": [
                   "N2: served-served"
                 ]
+              },
+              {
+                "sentences": [
+                  "Intro",
+                  "The gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
               }
             ],
             "sameHtml": [
@@ -1293,11 +1305,91 @@
             "quiet": {
               "R-TREE-CONSTRUCTION": [
                 [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
                 []
               ]
             },
             "residualTwins": {
               "R-TREE-CONSTRUCTION": [
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:3 N2: served-served"
+                ],
+                [
+                  "docs/x.md:2 N2: served-served"
+                ],
+                [
+                  "docs/x.md:3 N2: served-served"
+                ],
+                [
+                  "docs/x.md:3 N2: served-served"
+                ],
+                [
+                  "docs/x.md:3 N2: served-served"
+                ],
+                [
+                  "docs/x.md:3 N2: served-served"
+                ],
+                [
+                  "docs/x.md:3 N2: served-served"
+                ],
+                [
+                  "docs/x.md:3 N2: served-served"
+                ],
+                [
+                  "docs/x.md:3 N2: served-served"
+                ],
+                [
+                  "docs/x.md:3 N2: served-served"
+                ],
+                [
+                  "docs/x.md:3 N2: served-served"
+                ],
+                [
+                  "docs/x.md:3 N2: served-served"
+                ],
+                [
+                  "docs/x.md:3 N2: served-served"
+                ],
+                [
+                  "docs/x.md:3 N2: served-served"
+                ],
+                [
+                  "docs/x.md:3 N2: served-served"
+                ],
+                [
+                  "docs/x.md:3 N2: served-served"
+                ],
+                [
+                  "docs/x.md:3 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
                 [
                   "docs/x.md:1 N2: served-served"
                 ],
@@ -1309,6 +1401,9 @@
             "overRead": [
               [
                 "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:3 N2: served-served"
               ]
             ]
           }
@@ -1724,6 +1819,12 @@
               ],
               [
                 "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
               ]
             ],
             "foreignScope": [
@@ -1805,6 +1906,16 @@
                 [],
                 [],
                 [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
                 []
               ],
               "R-PARAPHRASE": [
@@ -1860,6 +1971,36 @@
             },
             "twins": {
               "R-MARKER-ANYWHERE": [
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
                 [
                   "docs/x.md:1 N2: served-served"
                 ],
