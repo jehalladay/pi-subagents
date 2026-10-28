@@ -1,6 +1,7 @@
 /**
  * wb-2j3.10 (RFCLI-PERFORMANCE-MATHEMATICAL-OPTIMIZATION-R11, program-triage-2026-10-17), the standing leg: the rf graph explain
- * truncation-honesty census, an until-then pin. Cut #2, the respin of refusal #1 (its unmet U1-U4 are cured below, CUT #2).
+ * truncation-honesty census, an until-then pin. Cut #3, the respin of refusal #2 (its unmet U1 is cured below, CUT #3; refusal #1's
+ * unmet U1-U4 stay cured, CUT #2).
  * Statement (the bead's STATEMENT, read from the tracked export .beads/issues.jsonl at run time and never retyped beyond the
  * fragments the rows quote): it is tiled, in order and exactly, by row G's label, ", ", row W's label, ". ", the PENDING clause,
  * "; ", row U's label and ".", so no row label can drift from the filing and no row can be dropped without leaving its fragment
@@ -20,11 +21,11 @@
  * The description's ACCEPTANCE section is held to exactly those two on-landing items, so a standing item added to it, a second
  * ACCEPTANCE or STATEMENT section, or an acceptance_criteria or design field on the row reds this census; a note does not.
  *
- * MEASURED (by the cutting seat ws-03, run g10-work-s129, 2026-10-28, on trunk dab445f and then e81d2b0 merged into the branch:
- * since cut #1's base 09f45a5, test, docs and .beads paths plus two src modules, src/workbench/collective-event.ts added and
- * src/workbench/hyperunix-observer.ts changed (landings 644 and 646), neither touching a reading below; the roster's "capture"
- * object holds the producer values, written by a capture script from the installed rf, two scratch rf workspaces and a read-only
- * git show and log of the RFCLI object store, never by hand):
+ * MEASURED (by the cutting seat ws-03, run g10-work-s130, 2026-10-28, on trunk 014d116 merged into the branch: since cut #2's base
+ * e81d2b0, landings 649-651 changed test and .beads paths only, no src module and no package.json; the roster's "capture" object
+ * holds the producer values cut #2's capture script wrote (seat ws-03, run g10-work-s129) from the installed rf, two scratch rf
+ * workspaces and a read-only git show and log of the RFCLI object store, never by hand, and this cut's run of the same script at
+ * 2026-10-28T22:20:05Z read every value equal, the empty-scratch probe's per-run operation id aside):
  * - The installed rf was 0.1.845 at build b8b3e9f1de56 (rf --json --version at capturedUtc 2026-10-28T17:21:52Z:
  *   provenance.commit_id, mismatch false), the release
  *   the contractSource carrier records (REACTIVE_FIBER_CONTRACT_SOURCE, read through recordedRfRelease of
@@ -44,13 +45,15 @@
  *   :297), over PMO-05a's capped search below the CLI, has SHIPPED at the recorded build: the gating artifact's RFCLI conjunct is
  *   MET. It shipped under the unchanged release string 0.1.845 (cut #1 captured build 7e6ed89a, where it had not), a rebuild no
  *   repository anchor records (R-SAME-RELEASE-REBUILD below).
- * - Pi: three src modules import node:child_process, with five call sites, all pinned: execFileSync of git three times in
- *   src/index.ts (workspaceCandidateBasis's git and atRoot, observedPackageHead's revision), the detached host's spawn of
- *   process.execPath (launchDetachedWorkflow) and the provider's spawn of rf (nativeReactiveFiberRender), its argv renderArgv's
- *   (verb context render, tail --no-commit --no-input --json). No reference to a child-process binding escapes a call, and no
- *   module names child_process without binding it. No src literal spells the graph explain leaf, no src text spells a PMO-05b
- *   name, no src module imports an rf package (none is published) and the one registered rf capability is the non-committing
- *   render preview: the Pi conjunct is unmet.
+ * - Pi: three src modules import node:child_process, each by one static import declaration; those three are the only
+ *   child_process module-name literals in src and the only spellings of child_process in its text. They hold five call sites,
+ *   all pinned: execFileSync of git three times in src/index.ts (workspaceCandidateBasis's git and atRoot, observedPackageHead's
+ *   revision), the detached host's spawn of process.execPath (launchDetachedWorkflow) and the provider's spawn of rf
+ *   (nativeReactiveFiberRender), its argv renderArgv's (verb context render, tail --no-commit --no-input --json). No reference
+ *   to a child-process binding escapes a call, no module-name literal is unbound and no spelling is unread. No src literal
+ *   spells the graph explain leaf, no src text spells a PMO-05b name, no src module imports or loads an rf package (none is
+ *   published), package.json names or specifies none in any field, and the one registered rf capability is the
+ *   non-committing render preview: the Pi conjunct is unmet.
  *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin's witness is the roster's):
  *  G, the gating artifact's RFCLI conjunct, read from the capture: MET. G1 the capture's identity: the carrier's release at the
@@ -63,8 +66,9 @@
  *    in each list; the pin's required list spans exactly the cited lines; the schema file's bytes and sha-256.
  *  W, the Pi slice that invokes graph explain (none). W1 the src modules importing node:child_process (this reader and the shared
  *    sourceStructure read the same list, and the list is pinned) and every value reference there to a child-process binding: a
- *    named, default or namespace import, a require binding, or a const alias of one (a non-exported const or destructure of a
- *    binding or a namespace, or a const of a namespace member), resolved to a fixpoint. A reference is a call site when it calls
+ *    named, default or namespace import, a bound require declaration (a variable whose whole initializer is require of the
+ *    module, named by an identifier or an object pattern of plain elements), or a const alias of one (a non-exported const or
+ *    destructure of a binding or a namespace, or a const of a namespace member), resolved to a fixpoint. A reference is a call site when it calls
  *    a child-process function directly (or a namespace member of one); every call site is pinned
  *    (module|kind|scope|callee|binary|shell) and exactly one is rf (the provider's spawn). A call's binary is its first argument
  *    or, for a shell call (exec, execSync, or a spawn, spawnSync, execFile or execFileSync whose options literal sets shell to true
@@ -72,14 +76,32 @@
  *    rf by its basename, lower-cased, without a .exe or .cmd launcher extension; a call whose shell cannot be read (an options
  *    argument that is no literal, a spread, a computed or non-literal shell value) is opaque when its two readings differ; a
  *    non-literal binary is opaque. Every other value reference (a let or var alias, an exported alias, an argument, a member such
- *    as spawn.call or an uncalled namespace member, a property, an assignment, an export or a re-export) is an escape, and none
- *    exists (fail-closed: a new one reds for re-measure, as a new call site of any binary does). A module holding a child_process
- *    module-name literal outside an import or export declaration that it does not bind (an inline require, createRequire, an
- *    import equals, a variable specifier) is unbound, and none is; no code module under src is one the walks skip (a .js, .mjs,
- *    .cjs, .jsx, .mts, .cts or .tsx file: the list is pinned empty, its file-name controls read as pinned). A caller of another
- *    module's wrapper is not read; the wrapper module is (a re-export or an exported alias is an escape, a parameter binary an
- *    opaque site, a fixed rf binary a second rf site). The scanner's controls read as pinned. W2 the rf spawn's argv is
- *    renderArgv's: the argument is the const argv
+ *    as spawn.call or an uncalled namespace member, a property, an assignment, an export or a re-export) is an escape, as is a
+ *    direct eval in a module that binds child_process (its source text runs in the module's scope and reaches the binding), and none
+ *    exists (fail-closed: a new one reds for re-measure, as a new call site of any binary does). Every child_process module-name
+ *    literal (a string or template literal whose value is child_process or node:child_process) is read per occurrence, whether
+ *    or not its module also binds child_process: as an import, type, side-effect or re-export declaration's, a bound require
+ *    declaration's, or else unbound with its carrier (require: any other require call, an inline require; import: a dynamic
+ *    import, awaited, destructured or chained with then; call: the first argument of any other call, a createRequire-made
+ *    loader, module.require, process.getBuiltinModule; import-equals; value: anywhere else, a variable specifier or a
+ *    concatenation operand). The occurrence list is pinned (the three static imports, read without line numbers) and none is
+ *    unbound. Every spelling of child_process in src text outside a module-name literal (a comment, a longer string such as
+ *    source text held for evaluation, a template, an identifier, a regular expression), and every string or template piece
+ *    whose cooked text spells it through an escape sequence, is unread, and none is. So every
+ *    child_process load src text spells is read and pinned whether or not its module also binds child_process: a new load is a
+ *    new occurrence, an unbound one is unbound, a spelling elsewhere is unread, and a new reference to a resolved binding is a
+ *    new site or an escape (a direct eval included). An existing pinned site's arguments are not pinned: a new call of a
+ *    same-module wrapper around one (workspaceCandidateBasis's git and atRoot closures) runs whatever argv it passes, so that
+ *    argv is W3's and, composed, R-COMPOSED's (Q1). The importer controls read
+ *    refusal #2's forms (inline require, await-import destructure, import().then, createRequire, import equals, and the composed
+ *    explain through the await-import and createRequire idioms) and the variable, concatenated, template, escaped,
+ *    getBuiltinModule, module.require, bound-require, defaulted-pattern and type-position forms and a direct eval inside a
+ *    module that also imports child_process. No code module under src is one the walks skip (a .js, .mjs, .cjs, .jsx, .mts, .cts or .tsx file:
+ *    the list is pinned empty, its file-name controls read as pinned). A caller of another module's wrapper is not read; the
+ *    wrapper module is (a re-export or an exported alias is an escape, a parameter binary an opaque site, a fixed rf binary a
+ *    second rf site). A launcher binary (env, git with an alias, a shell line's first word) reads as itself, not as the process
+ *    it starts: W3 reads a literal argv naming the leaf, and a composed one passed through an existing site is R-COMPOSED's.
+ *    The scanner's controls read as pinned. W2 the rf spawn's argv is renderArgv's: the argument is the const argv
  *    initialised by renderArgv(selector,workspaceRoot), renderArgv's array literals read as pinned and its returned array's words,
  *    with options and expressions elided, are context render. W3 no src string, template or array literal spells the leaf (its
  *    two words in any case, joined directly or by white space, ".", "_", ":", "/" or "-", neither word part of a longer one),
@@ -90,9 +112,17 @@
  *    caught (in code, a line comment and a block comment) and the near misses are not. U2 the native and the injected rf
  *    registrations hold exactly the render preview (effectClass read, contractSource the carrier's non-committing render with its
  *    release masked) and no rf descriptor's id, description or contractSource spells the leaf; a registry holding a planted explain
- *    descriptor reads one finding. U3 no src module imports (static, export-from, dynamic or require) an rf package and package.json
- *    names or specifies none; the predicate's planted names and specs are caught, and Pi's own relative reactivefiber module and
- *    the other packages are not.
+ *    descriptor reads one finding. U3 no src module imports an rf package (static, export-from, dynamic or require, as the shared
+ *    sourceStructure reads); no src call takes a string literal naming one as its first argument (read through parentheses and
+ *    type assertions), whatever the callee (require, import(), a call of a call such as createRequire(import.meta.url)(...),
+ *    module.require, require.resolve, a loader under any name), other than a child-process call site's binary, which W1 reads, no
+ *    tagged template's literal names one and no import-equals declaration does (so a literal rf binary passed to a launch W1 does
+ *    not resolve reads as such a load); and package.json names or specifies none in any key or string value at any depth (the four dependency maps,
+ *    bundledDependencies, overrides, resolutions, pi.extensions, scripts and every other field). A name or spec is an rf
+ *    package's when it carries reactive-fiber, reactivefiber or reactive_fiber in any case or has a name or path segment that
+ *    is rf or begins rf and a -, _ or . (rf-sdk, rf.tgz); the predicate's planted names and specs, the loader plants (a call
+ *    whose first argument names an rf package reads as a load whatever it does) and the manifest plants are caught, and Pi's own
+ *    relative reactivefiber module, the provider's rf binary, the other packages and the quiet manifest fields are not.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and
  *  pins, every pin's witness, the constants and controls, the filing reading (paragraph heads, repeated heads, each head plant's
@@ -106,15 +136,20 @@
  *  or a head plant removed from its list and the roster; a pin's case replaced by one that echoes its roster witness; row Q
  *  removed with RESIDUALS from every literal and the roster (Q quotes no STATEMENT fragment).
  * RESIDUALS (named, each with its pinned quiet row): R-COMPOSED the leaf spelled from runtime parts (a verb held in a variable,
- *  a concatenation, a pushed word) is invisible to W3 (Q1); R-SAME-RELEASE-REBUILD the carrier records a release and no build, so
+ *  a concatenation, a pushed word, a template substitution, a shell expansion) is invisible to W3, and passed as an argv through an existing pinned
+ *  site (a launcher such as git with an alias, a same-module wrapper) it is no new W1 site either (Q1); R-SAME-RELEASE-REBUILD the carrier records a release and no build, so
  *  G1 admits a capture at any build of the carrier's release and a producer rebuilt under it (as b8b3e9f1 was over 7e6ed89a) is
  *  invisible to row G until a seat re-measures the capture (Q2); R-OUTSIDE-SRC the walks read src only (qa/, scripts and an
  *  operator's local provider module loaded from a path outside src are not read), though the scanners flag the same text (Q3);
  *  R-COMMON-WORD the filing's truncated field is an ordinary src word (a relation page flag, text truncation) and is not a U1
- *  needle (Q4); R-UNSEEN-LAUNCHER a process launched where no reader sees node:child_process (a composed module specifier,
- *  source text evaluated at run time, process.execve, an internal process binding, a package's own spawn such as execa) is no
- *  W1 site, importer or unbound module; W3 still reads a literal argv such a launch passes, but not one spelled inside evaluated
- *  source text (Q5).
+ *  needle (Q4); R-UNSEEN-LAUNCHER a process launched where no src text spells child_process (a module specifier composed or
+ *  read at run time, also inside evaluated source text that composes it; process.execve; an internal process binding;
+ *  node:cluster's fork; a package's own spawn such as execa) is no W1 site, load or unread spelling; W3 still reads a literal
+ *  argv such a launch passes and U3 a literal rf binary it passes as a call's first argument, but W3 reads none spelled inside
+ *  evaluated source text and U3 no binary path or composed name (Q5); R-UNREAD-SPECIFIER an rf package
+ *  specifier that reaches a loader other than as a call's first-argument literal, a tagged template's literal or an import-equals
+ *  reference (any other expression: held in a variable, an array spread into the call or passed through Reflect.apply, a
+ *  conditional, composed at run time, built into a URL) is no U3 load (Q6).
  * SCOPE: the census judges Pi's src, its registrations and package.json, the filing's description and specification fields, and
  *  the captured producer state. It re-runs none of the runtime argv pins the rf graph mutation census owns
  *  (test/workbench-rf-graph-mutation-census.test.ts rows A and C), and the honesty homes the bead's rationale names
@@ -126,6 +161,21 @@
  *  in the extraction's own view, before any extraction (plants pinned), and the specification fields held absent (F3's scope);
  *  U4 comment-form names and rf.exe, rf.cmd and RF binaries pinned as controls, with backslash, word-boundary and scope controls
  *  beside them.
+ * CUT #3 (refusal #2's unmet list; the record CURE's first arm, the class-level guard): U1 every child_process module-name literal
+ *  is read per occurrence (scanSpawns' loads), so a load inside a module that also imports child_process is read exactly as in
+ *  one that does not and is never masked by the module's static import (refusal #2's mechanism: cut #2 read a module as
+ *  unbound only when it held such a literal and bound none); a require binds only as a variable's whole initializer under an
+ *  identifier or a plain object pattern; a spelling of child_process anywhere else in src text, or through an escape sequence in
+ *  a string or template, is unread; the occurrence,
+ *  unbound and unread lists are pinned; the importer controls cover P01 (inline require), P02 (await-import destructure), P03
+ *  (import().then), P04 (createRequire), import equals, P05 and P05b (the composed explain through the await-import and
+ *  createRequire idioms) and the further forms W1 names, each reading as an unbound load, a second load or an escape inside a
+ *  module that also imports child_process. F3 (P27): U3 reads every call's first-argument literal naming an rf package and every import-equals
+ *  reference, a createRequire-made loader under any name included, read through parentheses and type assertions and in a tagged
+ *  template, and names the remainder (R-UNREAD-SPECIFIER, Q6); a direct eval in a module that binds child_process is a W1 escape. F4 (P28):
+ *  U3 reads package.json in full. R-UNSEEN-LAUNCHER's boundary is restated on the spelling, its evaluated probe composes the
+ *  specifier inside the evaluated text (spelled there it now reads unread) and node:cluster is named; R-COMPOSED names the
+ *  composed argv passed through an existing pinned site.
  *
  * Display paths added: none. Test-only: no scratch is allocated; src, package.json, .beads and the roster are only read.
  */
@@ -200,8 +250,12 @@ const ASSIGNMENT_WORD = /^[A-Za-z_][A-Za-z0-9_]*=/;
 const CHILD_PROCESS_MODULE = /^(?:node:)?child_process$/;
 /** rf's value-taking globals (its parser's RF_VALUE_OPTIONS): spelled apart, each consumes the next token. */
 const RF_VALUE_OPTIONS: readonly string[] = ["--workspace", "--actor", "--color"];
-/** A package name or spec carrying one of these (lower-cased), or a name or path segment equal to rf, is an rf package. */
+/** A package name or spec carrying one of these (lower-cased), or a name or path segment RF_SEGMENT reads as rf's, is an rf package. */
 const RF_PACKAGE_WORDS: readonly string[] = ["reactive-fiber", "reactivefiber", "reactive_fiber"];
+/** A name or path segment that is rf's: rf itself, or rf and a -, _ or . before more (rf-sdk, rf.tgz; not rfc-parser or rfdc). */
+const RF_SEGMENT = /^rf(?:$|[-_.])/;
+/** The text W1's unread reading looks for: child_process spelled anywhere in a module's source, comments included. */
+const SPELLING = "child_process";
 
 /** W1's scanner controls: module bodies (parsed, never compiled or run). */
 const SPAWN_CONTROLS: Readonly<Record<string, string>> = {
@@ -240,6 +294,28 @@ const SPAWN_CONTROLS: Readonly<Record<string, string>> = {
   "assignment-prefix": `import { execSync } from "node:child_process"; execSync("RF_LOG_LEVEL=debug rf context show --json");`,
   launcher: `import { execFileSync } from "node:child_process"; execFileSync("env", ["rf", "context", "show"]);`,
   "method-scope": `import { spawn } from "node:child_process"; class Host { launch() { spawn("rf", []); } } const run = function () { spawn("git", []); };`,
+  "launcher-alias": `import { execFileSync } from "node:child_process"; const git = (...args: string[]) => execFileSync("git", ["-C", cwd, ...args]); git("-c", "alias.x=!rf graph explain", "x");`,
+  "importer-inline-require": `import { spawn } from "node:child_process"; spawn("git", []); require("node:child_process").spawn("rf", ["context", "show", "--json"]);`,
+  "importer-await-import": `import { spawn } from "node:child_process"; spawn("git", []); const { spawn: run } = await import("node:child_process"); run("rf", ["context", "show", "--json"]);`,
+  "importer-import-then": `import { spawn } from "node:child_process"; spawn("git", []); import("node:child_process").then(cp => cp.execFileSync("rf", ["context", "show", "--json"]));`,
+  "importer-create-require": `import { spawn } from "node:child_process"; import { createRequire } from "node:module"; spawn("git", []); createRequire(import.meta.url)("node:child_process").execFileSync("rf", ["context", "show", "--json"]);`,
+  "importer-import-equals": `import { spawn } from "node:child_process"; import cp = require("node:child_process"); spawn("git", []); cp.spawn("rf", ["context", "show"]);`,
+  "importer-explain-await": `import { execFileSync } from "node:child_process"; execFileSync("git", ["status"]); const { spawn: run } = await import("node:child_process"); const verb = "explain"; run("rf", ["graph", verb, target, "--json"]);`,
+  "importer-explain-create-require": `import { spawn } from "node:child_process"; import { createRequire } from "node:module"; spawn("git", []); const verb = "explain"; createRequire(import.meta.url)("node:child_process").execFileSync("rf", ["graph", verb, target, "--json"]);`,
+  "importer-require-binding": `import { spawn } from "node:child_process"; const { execFileSync } = require("node:child_process"); spawn("git", []); execFileSync("rf", ["context", "show"]);`,
+  "importer-require-default": `import { spawn } from "node:child_process"; const { execFileSync = undefined } = require("node:child_process"); spawn("git", []); execFileSync?.("rf", ["context", "show"]);`,
+  "importer-variable-specifier": `import { spawn } from "node:child_process"; const name = "node:child_process"; spawn("git", []); require(name).spawn("rf", []);`,
+  "importer-concatenated": `import { spawn } from "node:child_process"; spawn("git", []); require("node:" + "child_process").spawn("rf", []);`,
+  "importer-template-specifier": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); require(`node:child_process`).spawn(\"rf\", []);",
+  "importer-escaped-specifier": String.raw`import { spawn } from "node:child_process"; spawn("git", []); require("node:child\u005fprocess").spawn("rf", []);`,
+  "importer-builtin-module": `import { spawn } from "node:child_process"; spawn("git", []); process.getBuiltinModule("node:child_process").spawn("rf", []);`,
+  "importer-module-require": `import { spawn } from "node:child_process"; spawn("git", []); module.require("child_process").spawn("rf", []);`,
+  "importer-type-position": `import { spawn } from "node:child_process"; type Launcher = typeof import("node:child_process"); spawn("git", []);`,
+  "importer-direct-eval": `import { spawn } from "node:child_process"; spawn("git", []); eval("spawn('rf', ['graph', 'explain'])");`,
+  "spelled-comment": "import { spawn } from \"node:child_process\";\n// a second child_process load would sit here\nspawn(\"git\", []);",
+  "spelled-source": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); export const WORKER = `const cp = require(\"node:child_process\"); cp.spawn(\"rf\", [\"context\", \"show\"]);`;",
+  "spelled-escaped": String.raw`import { spawn } from "node:child_process"; spawn("git", []); export const WORKER = "const cp = require('node:child\u005fprocess'); cp.spawn('rf', ['context', 'show']);";`,
+  "spelled-template": `import { spawn } from "node:child_process"; spawn("git", []); export const worker = (argv: string): string => \`const cp = require("node:child_process"); cp.spawn("rf", \${argv});\`;`,
 };
 /** W3's planted spellings of the leaf (each must be caught) and its near misses (none may be). */
 const LEAF_CAUGHT: Readonly<Record<string, string>> = {
@@ -295,15 +371,52 @@ const PLANTED_DESCRIPTOR: CapabilityDescriptor = {
   contractSource: "rf@0.0.0:reactive-fiber.cli/v1 graph.explain",
 };
 /** U3's planted specifiers and specs: rf packages (each caught) and others (none caught). */
-const PACKAGE_CAUGHT: readonly string[] = ["@reactive-fiber/sdk", "reactivefiber", "@reactivefiber/cli", "reactive_fiber_cli", "@rf/sdk", "rf", "@acme/reactive-fiber-tsx"];
-const PACKAGE_QUIET: readonly string[] = ["@furnace/sdk", "./providers/reactivefiber.js", "../workbench/providers/reactivefiber.js", "node:child_process", "@hyperunix/sdk", "typescript", "rfc-parser", "surf"];
-const SPEC_CAUGHT: readonly string[] = ["npm:@reactive-fiber/sdk@1.0.0", "file:../ReactiveFiberCLI", "file:vendor/rf"];
-const SPEC_QUIET: readonly string[] = ["^4.1.0", "file:vendor/furnace-sdk", "npm:surf@2.0.0"];
-/** Q1's composed spellings (R-COMPOSED): the leaf assembled at run time. */
+const PACKAGE_CAUGHT: readonly string[] = ["@reactive-fiber/sdk", "reactivefiber", "@reactivefiber/cli", "reactive_fiber_cli", "@rf/sdk", "rf", "@acme/reactive-fiber-tsx", "rf-sdk", "@acme/rf-tools"];
+const PACKAGE_QUIET: readonly string[] = ["@furnace/sdk", "./providers/reactivefiber.js", "../workbench/providers/reactivefiber.js", "node:child_process", "@hyperunix/sdk", "typescript", "rfc-parser", "surf", "rfdc"];
+const SPEC_CAUGHT: readonly string[] = ["npm:@reactive-fiber/sdk@1.0.0", "file:../ReactiveFiberCLI", "file:vendor/rf", "file:vendor/rf-sdk-0.1.0.tgz"];
+const SPEC_QUIET: readonly string[] = ["^4.1.0", "file:vendor/furnace-sdk", "npm:surf@2.0.0", "npm:rfdc@1.4.1"];
+/** U3's loader plants (each must read one load) and quiet loads (none may), module bodies read by packageLoads; a call whose
+ * first argument names an rf package reads as a load whatever it does (id-lookup: fail-closed). */
+const LOAD_CAUGHT: Readonly<Record<string, string>> = {
+  "create-require-call": `import { createRequire as gateCreateRequire } from "node:module"; gateCreateRequire(import.meta.url)("@reactive-fiber/sdk");`,
+  "create-require-bound": `import { createRequire } from "node:module"; const load = createRequire(import.meta.url); load("reactivefiber");`,
+  "module-require": `module.require("@rf/sdk");`,
+  "require-resolve": `require.resolve("@reactive-fiber/sdk");`,
+  "meta-resolve": `import.meta.resolve("@reactivefiber/cli");`,
+  "import-equals": `import sdk = require("@reactive-fiber/sdk");`,
+  "inline-require": `require("rf-sdk").render();`,
+  "id-lookup": `registry.get("reactivefiber.render.preview");`,
+  parenthesized: `import { createRequire } from "node:module"; createRequire(import.meta.url)(("@reactive-fiber/sdk"));`,
+  asserted: `import { createRequire } from "node:module"; createRequire(import.meta.url)("@reactive-fiber/sdk" as string);`,
+  tagged: "import { createRequire } from \"node:module\"; const load = createRequire(import.meta.url); load`@reactive-fiber/sdk`;",
+  "unresolved-launch": `const cp = await import("node:" + "child" + "_process"); cp.spawn("rf", ["context", "show"]);`,
+};
+const LOAD_QUIET: Readonly<Record<string, string>> = {
+  "rf-binary": `import { spawn } from "node:child_process"; spawn("rf", ["context", "render", "--json"]);`,
+  relative: `import { createRequire } from "node:module"; createRequire(import.meta.url)("./providers/reactivefiber.js");`,
+  "other-package": `import { createRequire } from "node:module"; createRequire(import.meta.url)("@furnace/sdk");`,
+};
+/** U3's manifest plants, each merged over package.json's own fields: an rf package named or specified outside the four dependency
+ * maps or by a vendored spec (each must read a hit), and fields that are no rf package (none may). */
+const MANIFEST_CAUGHT: Readonly<Record<string, JsonObject>> = {
+  overrides: { overrides: { "@reactive-fiber/sdk": "1.0.0" } },
+  resolutions: { resolutions: { reactivefiber: "1.0.0" } },
+  bundled: { bundledDependencies: ["@forge/sdk", "@rf/sdk"] },
+  "pi-extension": { pi: { extensions: ["./src/index.ts", "@reactive-fiber/pi-extension"] } },
+  script: { scripts: { explain: "npx @reactive-fiber/cli graph explain" } },
+  "vendored-spec": { dependencies: { "@acme/graph": "file:vendor/rf-sdk-0.1.0.tgz" } },
+};
+const MANIFEST_QUIET: Readonly<Record<string, JsonObject>> = {
+  keyword: { keywords: ["pi-package", "surf"] },
+  script: { scripts: { "test:rfc": "vitest run test/rfc-parser.test.ts" } },
+  "vendored-spec": { dependencies: { "@furnace/sdk": "file:vendor/furnace-sdk-0.1.0.tgz", rfdc: "^1.4.1" } },
+};
+/** Q1's composed spellings (R-COMPOSED): the leaf assembled at run time, also as an argv passed through an existing pinned site. */
 const COMPOSED_PROBES: Readonly<Record<string, string>> = {
   variable: `const verb = "explain"; spawn("rf", ["graph", verb]);`,
   concatenated: `const leaf = "gr" + "aph explain";`,
   pushed: `const words = ["graph"]; words.push("explain");`,
+  "through-site": `import { execFileSync } from "node:child_process"; const git = (...args: string[]) => execFileSync("git", ["-C", cwd, ...args]); const verb = "explain"; git("-c", \`alias.x=!rf graph \${verb}\`, "x");`,
 };
 /** Q3's out-of-src text (R-OUTSIDE-SRC): an operator's local provider module spawning the leaf. */
 const LOCAL_PROVIDER = `import { spawn } from "node:child_process";
@@ -312,13 +425,26 @@ export function register(registry) {
 }`;
 /** Q4's probe (R-COMMON-WORD): a page flag read under the excluded field's name. */
 const COMMON_WORD_PROBE = "if (result.truncated) return { partial: true };";
-/** Q5's launches no reader sees (R-UNSEEN-LAUNCHER): W3 reads the leaf in a literal argv one passes, not inside evaluated source text. */
+/** Q5's launches where no src text spells child_process (R-UNSEEN-LAUNCHER): W3 reads the leaf in a literal argv one passes, not
+ * inside evaluated source text. */
 const UNSEEN_LAUNCHES: Readonly<Record<string, string>> = {
   "composed-specifier": `const cp = await import("node:" + "child" + "_process"); cp.spawn("rf", ["graph", "explain", target]);`,
+  "composed-path": `const cp = await import("node:" + "child" + "_process"); cp.spawn("/usr/local/bin/rf", ["graph", "explain", target]);`,
   execve: `process.execve("/usr/local/bin/rf", ["rf", "graph", "explain", target], process.env);`,
   binding: `process.binding("spawn_sync").spawn({ file: "rf", args: ["rf", "graph", "explain"] });`,
-  evaluated: `eval("require('node:child_process').spawn('rf', ['graph', 'explain'])");`,
+  evaluated: `eval("require('node:child' + '_process').spawn('rf', ['graph', 'explain'])");`,
+  cluster: `import cluster from "node:cluster"; cluster.fork();`,
   package: `import { execa } from "execa"; await execa("rf", ["graph", "explain", target]);`,
+};
+/** Q6's specifiers no U3 reader reads (R-UNREAD-SPECIFIER): an rf package reaching a loader other than as a call's first-argument
+ * literal or an import-equals reference. */
+const UNREAD_SPECIFIERS: Readonly<Record<string, string>> = {
+  variable: `import { createRequire } from "node:module"; const spec = "@reactive-fiber/sdk"; createRequire(import.meta.url)(spec);`,
+  array: `import { createRequire } from "node:module"; Reflect.apply(createRequire(import.meta.url), undefined, ["@reactive-fiber/sdk"]);`,
+  composed: `import { createRequire } from "node:module"; createRequire(import.meta.url)("@reactive" + "-fiber/sdk");`,
+  url: `await import(new URL("@reactive-fiber/sdk", import.meta.url).href);`,
+  spread: `import { createRequire } from "node:module"; createRequire(import.meta.url)(...["@reactive-fiber/sdk"]);`,
+  conditional: `import { createRequire } from "node:module"; createRequire(import.meta.url)(flag ? "@reactive-fiber/sdk" : "@furnace/sdk");`,
 };
 /** Each residual family and the quiet row that pins it. */
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
@@ -327,6 +453,7 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-OUTSIDE-SRC": ["Q3"],
   "R-COMMON-WORD": ["Q4"],
   "R-UNSEEN-LAUNCHER": ["Q5"],
+  "R-UNREAD-SPECIFIER": ["Q6"],
 };
 
 interface Row {
@@ -344,7 +471,7 @@ const ROWS: readonly Row[] = [
   },
   { id: "W", label: "conjoined with a Pi W10 slice that actually invokes graph explain", pins: ["W1", "W2", "W3"] },
   { id: "U", label: "until the artifact exists, no Pi change", pins: ["U1", "U2", "U3"] },
-  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5"] },
+  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6"] },
 ];
 
 interface RosterPin {
@@ -594,11 +721,19 @@ interface SpawnSite {
   readonly shell: Shell;
   readonly call: ts.CallExpression;
 }
+/** One child_process module-name literal (a string or template literal whose value is child_process or node:child_process). */
+interface SpawnLoad {
+  readonly scope: string;
+  /** Its reading (loadForm): import, type, side-effect or re-export, require (a bound require declaration), else unbound:<carrier>. */
+  readonly form: string;
+}
 interface SpawnScan {
-  /** The module binds node:child_process (a non-type import with bindings, a require binding or a non-type re-export). */
+  /** The module binds node:child_process (a non-type import with bindings, a bound require declaration or a non-type re-export). */
   readonly imports: boolean;
-  /** The module holds a child_process module-name literal outside an import or export declaration. */
-  readonly loads: boolean;
+  /** Every child_process module-name literal, per occurrence, whether or not the module also binds child_process. */
+  readonly loads: readonly SpawnLoad[];
+  /** Every spelling of child_process outside a module-name literal, as `${scope}:${holder}` (holderOf). */
+  readonly unread: readonly string[];
   readonly sites: readonly SpawnSite[];
   /** Every value reference to a binding that is no call site, as `${scope}:${binding}:${form}`. */
   readonly escapes: readonly string[];
@@ -615,6 +750,50 @@ function requiresChildProcess(node: ts.Expression | undefined): boolean {
   if (node === undefined || !ts.isCallExpression(node) || !ts.isIdentifier(node.expression) || node.expression.text !== "require") return false;
   const first = node.arguments[0];
   return first !== undefined && ts.isStringLiteralLike(first) && CHILD_PROCESS_MODULE.test(first.text);
+}
+/** The declaration a require call binds: the call is a variable's whole initializer and its name an identifier or an object
+ * pattern of plain elements; else undefined, and the require is unbound. */
+function boundRequire(call: ts.CallExpression): ts.VariableDeclaration | undefined {
+  const declaration = call.parent;
+  if (!ts.isVariableDeclaration(declaration) || declaration.initializer !== call) return undefined;
+  const name = declaration.name;
+  return ts.isIdentifier(name) || (ts.isObjectBindingPattern(name) && name.elements.every(plainElement)) ? declaration : undefined;
+}
+/** How one child_process module-name literal is read, whether or not its module also binds child_process: import, type,
+ * side-effect or re-export (a declaration's module specifier; type also for an import type's argument), require (a bound
+ * require declaration), else unbound and its carrier: require (any other require call, such as an inline require), import (a
+ * dynamic import, awaited, destructured or chained), call (the first argument of any other call, such as
+ * createRequire(...)(...), module.require or process.getBuiltinModule), import-equals, or value (anywhere else: a variable
+ * specifier, a concatenation operand, an argument after the first, a property). */
+function loadForm(literal: ts.StringLiteralLike): string {
+  const parent = literal.parent;
+  if (ts.isImportDeclaration(parent)) return parent.importClause === undefined ? "side-effect" : parent.importClause.isTypeOnly ? "type" : "import";
+  if (ts.isExportDeclaration(parent)) return parent.isTypeOnly ? "type" : "re-export";
+  if (ts.isLiteralTypeNode(parent) && ts.isImportTypeNode(parent.parent)) return "type";
+  if (ts.isExternalModuleReference(parent)) return "unbound:import-equals";
+  if (ts.isCallExpression(parent) && parent.arguments[0] === literal) {
+    if (ts.isIdentifier(parent.expression) && parent.expression.text === "require") return boundRequire(parent) === undefined ? "unbound:require" : "require";
+    return parent.expression.kind === ts.SyntaxKind.ImportKeyword ? "unbound:import" : "unbound:call";
+  }
+  return "unbound:value";
+}
+/** Where a spelling of child_process outside a module-name literal sits: a string, template or regular-expression literal, an
+ * identifier, else a comment (trivia), as `${scope}:${holder}`; a string or template piece whose cooked text spells it while its
+ * raw text does not (an escape sequence) reads `${scope}:escaped`. */
+function holderOf(file: ts.SourceFile, position: number): string {
+  let holder = "comment";
+  let deepest: ts.Node = file;
+  const visit = (node: ts.Node): void => {
+    if (position < node.getStart(file) || position >= node.getEnd()) return;
+    deepest = node;
+    if (ts.isStringLiteralLike(node)) holder = "string";
+    else if (ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)) holder = "template";
+    else if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) holder = "identifier";
+    else if (ts.isRegularExpressionLiteral(node)) holder = "regex";
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return `${scopeOf(deepest)}:${holder}`;
 }
 /** The basename of a binary path, without a Windows launcher extension, lower-cased. */
 function binaryName(binary: string): string {
@@ -700,31 +879,33 @@ function elementKey(element: ts.BindingElement): string {
   const key = element.propertyName ?? element.name;
   return ts.isIdentifier(key) || ts.isStringLiteral(key) ? key.text : "<computed>";
 }
-/** One module's child-process bindings (static imports, require bindings and const aliases of them, resolved to a fixpoint; a
- * type-only import binds nothing) and every value reference to them: a call site (its callee, its binary read as rf, another
- * literal or opaque, and its shell reading) or an escape. */
+/** One module's child-process bindings (static imports, bound require declarations and const aliases of them, resolved to a
+ * fixpoint; a type-only import binds nothing) and every value reference to them: a call site (its callee, its binary read as rf,
+ * another literal or opaque, and its shell reading) or an escape; every child_process module-name literal, per occurrence
+ * (loadForm); and every spelling of child_process outside one (holderOf). */
 function scanSpawns(fileName: string, source: string): SpawnScan {
   const file = parse(fileName, source);
   const named = new Map<string, string>();
   const spaces = new Set<string>();
   const consumed = new Set<ts.Node>();
   const escapes: string[] = [];
+  const loads: SpawnLoad[] = [];
+  const literals: ts.StringLiteralLike[] = [];
   let imports = false;
-  let loads = false;
   const bindRequire = (declaration: ts.VariableDeclaration): void => {
-    if (!requiresChildProcess(declaration.initializer)) return;
+    const initializer = declaration.initializer;
+    if (!requiresChildProcess(initializer) || initializer === undefined || !ts.isCallExpression(initializer) || boundRequire(initializer) !== declaration) return;
     imports = true;
     if (ts.isIdentifier(declaration.name)) spaces.add(declaration.name.text);
     else if (ts.isObjectBindingPattern(declaration.name)) {
-      for (const element of declaration.name.elements) {
-        if (!ts.isIdentifier(element.name)) continue;
-        const exported = element.propertyName !== undefined && ts.isIdentifier(element.propertyName) ? element.propertyName.text : element.name.text;
-        named.set(element.name.text, exported);
-      }
+      for (const element of declaration.name.elements) if (ts.isIdentifier(element.name)) named.set(element.name.text, elementKey(element));
     }
   };
   const bind = (node: ts.Node): void => {
-    if (ts.isStringLiteralLike(node) && CHILD_PROCESS_MODULE.test(node.text) && !ts.isImportDeclaration(node.parent) && !ts.isExportDeclaration(node.parent)) loads = true;
+    if (ts.isStringLiteralLike(node) && CHILD_PROCESS_MODULE.test(node.text)) {
+      literals.push(node);
+      loads.push({ scope: scopeOf(node), form: loadForm(node) });
+    }
     if (ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier) && CHILD_PROCESS_MODULE.test(node.moduleSpecifier.text)) {
       const clause = node.importClause;
       if (clause !== undefined && !clause.isTypeOnly) {
@@ -747,6 +928,17 @@ function scanSpawns(fileName: string, source: string): SpawnScan {
     ts.forEachChild(node, bind);
   };
   bind(file);
+  const unread: string[] = [];
+  for (let at = source.indexOf(SPELLING); at !== -1; at = source.indexOf(SPELLING, at + SPELLING.length)) {
+    if (!literals.some(literal => at >= literal.getStart(file) && at < literal.getEnd())) unread.push(holderOf(file, at));
+  }
+  const moduleNames = new Set<ts.Node>(literals);
+  const escapedSpelling = (node: ts.Node): void => {
+    const cooked = ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node) ? node.text : undefined;
+    if (cooked !== undefined && !moduleNames.has(node) && cooked.includes(SPELLING) && !node.getText(file).includes(SPELLING)) unread.push(`${scopeOf(node)}:escaped`);
+    ts.forEachChild(node, escapedSpelling);
+  };
+  escapedSpelling(file);
   const memberOf = (expression: ts.Node): string | undefined => {
     if (ts.isPropertyAccessExpression(expression) && ts.isIdentifier(expression.expression) && spaces.has(expression.expression.text)) return expression.name.text;
     if (ts.isElementAccessExpression(expression) && ts.isIdentifier(expression.expression) && spaces.has(expression.expression.text) && ts.isStringLiteralLike(expression.argumentExpression)) {
@@ -824,14 +1016,23 @@ function scanSpawns(fileName: string, source: string): SpawnScan {
   };
   const visit = (node: ts.Node): void => {
     if (ts.isIdentifier(node) && (named.has(node.text) || spaces.has(node.text)) && !consumed.has(node) && isValueReference(node)) classify(node);
+    if (imports && ts.isCallExpression(node) && directEval(node)) escapes.push(`${scopeOf(node)}:eval:direct-eval`);
     ts.forEachChild(node, visit);
   };
   visit(file);
-  return { imports, loads, sites, escapes };
+  return { imports, loads, unread, sites, escapes };
 }
+/** A call of eval itself (through parentheses too): its source text runs in the module's own scope and so reaches every binding. */
+function directEval(call: ts.CallExpression): boolean {
+  let callee: ts.Expression = call.expression;
+  while (ts.isParenthesizedExpression(callee)) callee = callee.expression;
+  return ts.isIdentifier(callee) && callee.text === "eval";
+}
+/** A control's reading: binding|sites|escapes|loads (every module-name literal, per occurrence)|unread spellings. */
 function scanReading(scan: SpawnScan): string {
   const sites = scan.sites.map(site => `${site.kind}:${site.scope}:${site.callee}:${site.binary}:${site.shell}`).join(",");
-  return `${scan.imports ? "imports" : scan.loads ? "unbound" : "no-import"}|${sites}|${scan.escapes.join(",")}`;
+  const loads = scan.loads.map(load => `${load.scope}:${load.form}`).join(",");
+  return `${scan.imports ? "imports" : "no-import"}|${sites}|${scan.escapes.join(",")}|${loads}|${scan.unread.join(",")}`;
 }
 /** The modules the shared reader (sourceStructure, test/helpers/census.ts) reads as loading node:child_process. */
 function sharedImporters(modules: readonly Module[]): string[] {
@@ -857,14 +1058,59 @@ function packageOf(specifier: string): string | undefined {
   const parts = specifier.split("/");
   return specifier.startsWith("@") ? parts.slice(0, 2).join("/") : parts[0];
 }
+function rfSegment(segment: string): boolean {
+  return RF_SEGMENT.test(segment);
+}
 function rfPackage(specifier: string): boolean {
   const name = packageOf(specifier)?.toLowerCase();
   if (name === undefined) return false;
-  return RF_PACKAGE_WORDS.some(word => name.includes(word)) || name.replace(/^@/, "").split("/").includes("rf");
+  return RF_PACKAGE_WORDS.some(word => name.includes(word)) || name.replace(/^@/, "").split("/").some(rfSegment);
 }
 function rfSpec(spec: string): boolean {
   const lower = spec.toLowerCase();
-  return RF_PACKAGE_WORDS.some(word => lower.includes(word)) || lower.split(/[/:@\\]/).includes("rf");
+  return RF_PACKAGE_WORDS.some(word => lower.includes(word)) || lower.split(/[/:@\\]/).some(rfSegment);
+}
+/** An expression read through its parentheses, type assertions (as, angle-bracket, satisfies) and non-null assertions. */
+function unwrapped(expression: ts.Expression): ts.Expression {
+  let at = expression;
+  while (ts.isParenthesizedExpression(at) || ts.isAsExpression(at) || ts.isTypeAssertionExpression(at) || ts.isSatisfiesExpression(at) || ts.isNonNullExpression(at)) at = at.expression;
+  return at;
+}
+/** U3's loader reading of one module: every string literal that is the first argument of a call (read through parentheses and type
+ * assertions), whatever the callee (require, import(), a call of a call such as createRequire(import.meta.url)(...),
+ * module.require, require.resolve, a loader under any name), a tagged template's literal, or an import-equals declaration's module
+ * reference, and names an rf package, except a child-process call site's binary (W1 reads it), as `${scope}:${carrier}:${specifier}`
+ * (carrier require, import, call, tagged or import-equals). */
+function packageLoads(fileName: string, source: string): string[] {
+  const file = parse(fileName, source);
+  const binaries = new Set(scanSpawns(fileName, source).sites.map(site => site.call.arguments[0]?.getStart()));
+  const found: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isCallExpression(node)) {
+      const first = node.arguments[0] === undefined ? undefined : unwrapped(node.arguments[0]);
+      if (first !== undefined && ts.isStringLiteralLike(first) && rfPackage(first.text) && !binaries.has(first.getStart(file))) {
+        const callee = node.expression;
+        const carrier = callee.kind === ts.SyntaxKind.ImportKeyword ? "import" : ts.isIdentifier(callee) && callee.text === "require" ? "require" : "call";
+        found.push(`${scopeOf(node)}:${carrier}:${first.text}`);
+      }
+    }
+    if (ts.isTaggedTemplateExpression(node) && ts.isNoSubstitutionTemplateLiteral(node.template) && rfPackage(node.template.text)) {
+      found.push(`${scopeOf(node)}:tagged:${node.template.text}`);
+    }
+    if (ts.isExternalModuleReference(node) && ts.isStringLiteralLike(node.expression) && rfPackage(node.expression.text)) {
+      found.push(`${scopeOf(node)}:import-equals:${node.expression.text}`);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return found;
+}
+/** Every key naming an rf package and every string value specifying one, at any depth of a manifest, as `${path}` or
+ * `${path}=${value}`: the dependency maps, bundledDependencies, overrides, resolutions, pi.extensions, scripts and every other field. */
+function manifestHits(value: unknown, path = ""): string[] {
+  if (Array.isArray(value)) return value.flatMap((item: unknown, index: number) => manifestHits(item, `${path}[${index}]`));
+  if (isObject(value)) return Object.entries(value).flatMap(([key, item]) => [...(rfPackage(key) ? [`${path}.${key}`] : []), ...manifestHits(item, `${path}.${key}`)]);
+  return typeof value === "string" && rfSpec(value) ? [`${path}=${value}`] : [];
 }
 
 /** Never invoked: registration only stores the descriptor. */
@@ -1045,13 +1291,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const scans = modules.map(module => ({ module: module.name, scan: scanSpawns(module.name, module.source) }));
     const importers = scans.filter(entry => entry.scan.imports).map(entry => entry.module);
     const sites = scans.flatMap(entry => entry.scan.sites.map(site => ({ module: entry.module, site })));
+    const loads = scans.flatMap(entry => entry.scan.loads.map(load => `${entry.module}|${load.scope}|${load.form}`));
     return json({
       agree: JSON.stringify(importers) === JSON.stringify(sharedImporters(modules)),
       importers,
       sites: sites.map(({ module, site }) => `${module}|${site.kind}|${site.scope}|${site.callee}|${site.binary}|${site.shell}`),
       rf: sites.filter(entry => entry.site.kind === "rf").map(entry => `${entry.module}|${entry.site.scope}|${entry.site.callee}`),
       escapes: scans.flatMap(entry => entry.scan.escapes.map(found => `${entry.module}|${found}`)),
-      unbound: scans.filter(entry => entry.scan.loads && !entry.scan.imports).map(entry => entry.module),
+      loads,
+      unbound: loads.filter(load => load.split("|")[2]?.startsWith("unbound:") === true),
+      unread: scans.flatMap(entry => entry.scan.unread.map(found => `${entry.module}|${found}`)),
       unwalked: filesBelow(join(REPO, "src"))
         .filter(file => UNWALKED_MODULE.test(file))
         .map(file => relative(REPO, file).split("\\").join("/")),
@@ -1135,6 +1384,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       specs: entries.filter(([, spec]) => rfSpec(spec)).map(([name, spec]) => `${name}|${spec}`),
       missed: [...PACKAGE_CAUGHT.filter(name => !rfPackage(name)), ...SPEC_CAUGHT.filter(spec => !rfSpec(spec))],
       quiet: [...PACKAGE_QUIET.filter(rfPackage), ...SPEC_QUIET.filter(rfSpec)],
+      loads: modules.flatMap(module => packageLoads(module.name, module.source).map(found => `${module.name}|${found}`)),
+      loadCaught: Object.fromEntries(Object.entries(LOAD_CAUGHT).map(([name, body]) => [name, packageLoads(`${name}.ts`, body)])),
+      loadQuiet: Object.fromEntries(Object.entries(LOAD_QUIET).map(([name, body]) => [name, packageLoads(`${name}.ts`, body)])),
+      deep: manifestHits(manifest),
+      manifestCaught: Object.fromEntries(Object.entries(MANIFEST_CAUGHT).map(([name, plant]) => [name, manifestHits({ ...manifest, ...plant })])),
+      manifestQuiet: Object.fromEntries(Object.entries(MANIFEST_QUIET).map(([name, plant]) => [name, manifestHits({ ...manifest, ...plant })])),
     });
   },
   Q1: async () => json(Object.fromEntries(Object.entries(COMPOSED_PROBES).map(([name, body]) => [name, leafHits(`${name}.ts`, body)]))),
@@ -1161,12 +1416,17 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     });
   },
   Q5: async () =>
-    json(Object.fromEntries(Object.entries(UNSEEN_LAUNCHES).map(([name, body]) => [name, { scan: scanReading(scanSpawns(`${name}.ts`, body)), leafHits: leafHits(`${name}.ts`, body) }]))),
+    json(
+      Object.fromEntries(
+        Object.entries(UNSEEN_LAUNCHES).map(([name, body]) => [name, { scan: scanReading(scanSpawns(`${name}.ts`, body)), leafHits: leafHits(`${name}.ts`, body), loads: packageLoads(`${name}.ts`, body) }]),
+      ),
+    ),
+  Q6: async () => json(Object.fromEntries(Object.entries(UNREAD_SPECIFIERS).map(([name, body]) => [name, packageLoads(`${name}.ts`, body)]))),
 };
 
 describe("wb-2j3.10 rf graph explain truncation census (RFCLI-PERFORMANCE-MATHEMATICAL-OPTIMIZATION-R11, standing leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster, the filing's sections (each read head once), its STATEMENT and ACCEPTANCE, and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["G:3", "W:3", "U:3", "Q:5"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["G:3", "W:3", "U:3", "Q:6"]);
     const judged = ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }));
     const rosterRows = ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) }));
     expect(judged).toStrictEqual(rosterRows);
@@ -1195,6 +1455,8 @@ describe("wb-2j3.10 rf graph explain truncation census (RFCLI-PERFORMANCE-MATHEM
       unwalkedControls: UNWALKED_CONTROLS,
       valueOptions: RF_VALUE_OPTIONS,
       packageWords: RF_PACKAGE_WORDS,
+      rfSegment: RF_SEGMENT.source,
+      spelling: SPELLING,
       spawnControls: SPAWN_CONTROLS,
       leafCaught: LEAF_CAUGHT,
       leafQuiet: LEAF_QUIET,
@@ -1205,10 +1467,15 @@ describe("wb-2j3.10 rf graph explain truncation census (RFCLI-PERFORMANCE-MATHEM
       packageQuiet: PACKAGE_QUIET,
       specCaught: SPEC_CAUGHT,
       specQuiet: SPEC_QUIET,
+      loadCaught: LOAD_CAUGHT,
+      loadQuiet: LOAD_QUIET,
+      manifestCaught: MANIFEST_CAUGHT,
+      manifestQuiet: MANIFEST_QUIET,
       composed: COMPOSED_PROBES,
       localProvider: LOCAL_PROVIDER,
       commonWord: COMMON_WORD_PROBE,
       unseen: UNSEEN_LAUNCHES,
+      unreadSpecifiers: UNREAD_SPECIFIERS,
       residuals: RESIDUALS,
     });
     expect(constants).toStrictEqual(ROSTER.constants);

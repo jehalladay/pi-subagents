@@ -1,5 +1,5 @@
 {
- "comment": "wb-2j3.10 (RFCLI-PERFORMANCE-MATHEMATICAL-OPTIMIZATION-R11) roster of test/workbench-rf-graph-explain-truncation-census.test.ts, cut #2. capture: the producer state, written by the cutting seat's capture script (ws-03, g10-work-s129) from the installed rf, two scratch rf workspaces and a read-only git show and log of the RFCLI object store; filing, constants, rows, witnesses and tests: measured from the census at trunk e81d2b0 (merged into the branch after dab445f) by a dump run on a throwaway tree, never hand-typed. A carrier re-pin reds row G1 until capture is re-measured at the new release (capture.remeasure); a rebuild under the same release does not (R-SAME-RELEASE-REBUILD, Q2).",
+ "comment": "wb-2j3.10 (RFCLI-PERFORMANCE-MATHEMATICAL-OPTIMIZATION-R11) roster of test/workbench-rf-graph-explain-truncation-census.test.ts, cut #3. capture: the producer state, written by cut #2's capture script (seat ws-03, g10-work-s129) from the installed rf, two scratch rf workspaces and a read-only git show and log of the RFCLI object store, and re-read equal on every value by the same script at 2026-10-28T22:20:05Z (seat ws-03, g10-work-s130; the empty-scratch probe's per-run operation id aside); filing, constants, rows, witnesses and tests: measured from the census at trunk 014d116 (merged into the branch) by a dump run on a throwaway tree, never hand-typed. A carrier re-pin reds row G1 until capture is re-measured at the new release (capture.remeasure); a rebuild under the same release does not (R-SAME-RELEASE-REBUILD, Q2).",
  "bead": "wb-2j3.10",
  "capture": {
   "capturedUtc": "2026-10-28T17:21:52Z",
@@ -344,6 +344,8 @@
    "reactivefiber",
    "reactive_fiber"
   ],
+  "rfSegment": "^rf(?:$|[-_.])",
+  "spelling": "child_process",
   "spawnControls": {
    "named": "import { spawn } from \"node:child_process\"; function run(argv: string[]) { return spawn(\"rf\", argv); }",
    "alias": "import { execFile as launch } from \"child_process\"; launch(\"/usr/local/bin/rf\", [\"graph\"]);",
@@ -379,7 +381,29 @@
    "shell-unknown": "import { spawnSync } from \"node:child_process\"; spawnSync(\"rf context show\", options);",
    "assignment-prefix": "import { execSync } from \"node:child_process\"; execSync(\"RF_LOG_LEVEL=debug rf context show --json\");",
    "launcher": "import { execFileSync } from \"node:child_process\"; execFileSync(\"env\", [\"rf\", \"context\", \"show\"]);",
-   "method-scope": "import { spawn } from \"node:child_process\"; class Host { launch() { spawn(\"rf\", []); } } const run = function () { spawn(\"git\", []); };"
+   "method-scope": "import { spawn } from \"node:child_process\"; class Host { launch() { spawn(\"rf\", []); } } const run = function () { spawn(\"git\", []); };",
+   "launcher-alias": "import { execFileSync } from \"node:child_process\"; const git = (...args: string[]) => execFileSync(\"git\", [\"-C\", cwd, ...args]); git(\"-c\", \"alias.x=!rf graph explain\", \"x\");",
+   "importer-inline-require": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); require(\"node:child_process\").spawn(\"rf\", [\"context\", \"show\", \"--json\"]);",
+   "importer-await-import": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); const { spawn: run } = await import(\"node:child_process\"); run(\"rf\", [\"context\", \"show\", \"--json\"]);",
+   "importer-import-then": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); import(\"node:child_process\").then(cp => cp.execFileSync(\"rf\", [\"context\", \"show\", \"--json\"]));",
+   "importer-create-require": "import { spawn } from \"node:child_process\"; import { createRequire } from \"node:module\"; spawn(\"git\", []); createRequire(import.meta.url)(\"node:child_process\").execFileSync(\"rf\", [\"context\", \"show\", \"--json\"]);",
+   "importer-import-equals": "import { spawn } from \"node:child_process\"; import cp = require(\"node:child_process\"); spawn(\"git\", []); cp.spawn(\"rf\", [\"context\", \"show\"]);",
+   "importer-explain-await": "import { execFileSync } from \"node:child_process\"; execFileSync(\"git\", [\"status\"]); const { spawn: run } = await import(\"node:child_process\"); const verb = \"explain\"; run(\"rf\", [\"graph\", verb, target, \"--json\"]);",
+   "importer-explain-create-require": "import { spawn } from \"node:child_process\"; import { createRequire } from \"node:module\"; spawn(\"git\", []); const verb = \"explain\"; createRequire(import.meta.url)(\"node:child_process\").execFileSync(\"rf\", [\"graph\", verb, target, \"--json\"]);",
+   "importer-require-binding": "import { spawn } from \"node:child_process\"; const { execFileSync } = require(\"node:child_process\"); spawn(\"git\", []); execFileSync(\"rf\", [\"context\", \"show\"]);",
+   "importer-require-default": "import { spawn } from \"node:child_process\"; const { execFileSync = undefined } = require(\"node:child_process\"); spawn(\"git\", []); execFileSync?.(\"rf\", [\"context\", \"show\"]);",
+   "importer-variable-specifier": "import { spawn } from \"node:child_process\"; const name = \"node:child_process\"; spawn(\"git\", []); require(name).spawn(\"rf\", []);",
+   "importer-concatenated": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); require(\"node:\" + \"child_process\").spawn(\"rf\", []);",
+   "importer-template-specifier": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); require(`node:child_process`).spawn(\"rf\", []);",
+   "importer-escaped-specifier": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); require(\"node:child\\u005fprocess\").spawn(\"rf\", []);",
+   "importer-builtin-module": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); process.getBuiltinModule(\"node:child_process\").spawn(\"rf\", []);",
+   "importer-module-require": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); module.require(\"child_process\").spawn(\"rf\", []);",
+   "importer-type-position": "import { spawn } from \"node:child_process\"; type Launcher = typeof import(\"node:child_process\"); spawn(\"git\", []);",
+   "importer-direct-eval": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); eval(\"spawn('rf', ['graph', 'explain'])\");",
+   "spelled-comment": "import { spawn } from \"node:child_process\";\n// a second child_process load would sit here\nspawn(\"git\", []);",
+   "spelled-source": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); export const WORKER = `const cp = require(\"node:child_process\"); cp.spawn(\"rf\", [\"context\", \"show\"]);`;",
+   "spelled-escaped": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); export const WORKER = \"const cp = require('node:child\\u005fprocess'); cp.spawn('rf', ['context', 'show']);\";",
+   "spelled-template": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); export const worker = (argv: string): string => `const cp = require(\"node:child_process\"); cp.spawn(\"rf\", ${argv});`;"
   },
   "leafCaught": {
    "argv": "spawn(\"rf\", [\"graph\", \"explain\", target, \"--json\"]);",
@@ -446,7 +470,9 @@
    "reactive_fiber_cli",
    "@rf/sdk",
    "rf",
-   "@acme/reactive-fiber-tsx"
+   "@acme/reactive-fiber-tsx",
+   "rf-sdk",
+   "@acme/rf-tools"
   ],
   "packageQuiet": [
    "@furnace/sdk",
@@ -456,31 +482,119 @@
    "@hyperunix/sdk",
    "typescript",
    "rfc-parser",
-   "surf"
+   "surf",
+   "rfdc"
   ],
   "specCaught": [
    "npm:@reactive-fiber/sdk@1.0.0",
    "file:../ReactiveFiberCLI",
-   "file:vendor/rf"
+   "file:vendor/rf",
+   "file:vendor/rf-sdk-0.1.0.tgz"
   ],
   "specQuiet": [
    "^4.1.0",
    "file:vendor/furnace-sdk",
-   "npm:surf@2.0.0"
+   "npm:surf@2.0.0",
+   "npm:rfdc@1.4.1"
   ],
+  "loadCaught": {
+   "create-require-call": "import { createRequire as gateCreateRequire } from \"node:module\"; gateCreateRequire(import.meta.url)(\"@reactive-fiber/sdk\");",
+   "create-require-bound": "import { createRequire } from \"node:module\"; const load = createRequire(import.meta.url); load(\"reactivefiber\");",
+   "module-require": "module.require(\"@rf/sdk\");",
+   "require-resolve": "require.resolve(\"@reactive-fiber/sdk\");",
+   "meta-resolve": "import.meta.resolve(\"@reactivefiber/cli\");",
+   "import-equals": "import sdk = require(\"@reactive-fiber/sdk\");",
+   "inline-require": "require(\"rf-sdk\").render();",
+   "id-lookup": "registry.get(\"reactivefiber.render.preview\");",
+   "parenthesized": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)((\"@reactive-fiber/sdk\"));",
+   "asserted": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(\"@reactive-fiber/sdk\" as string);",
+   "tagged": "import { createRequire } from \"node:module\"; const load = createRequire(import.meta.url); load`@reactive-fiber/sdk`;",
+   "unresolved-launch": "const cp = await import(\"node:\" + \"child\" + \"_process\"); cp.spawn(\"rf\", [\"context\", \"show\"]);"
+  },
+  "loadQuiet": {
+   "rf-binary": "import { spawn } from \"node:child_process\"; spawn(\"rf\", [\"context\", \"render\", \"--json\"]);",
+   "relative": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(\"./providers/reactivefiber.js\");",
+   "other-package": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(\"@furnace/sdk\");"
+  },
+  "manifestCaught": {
+   "overrides": {
+    "overrides": {
+     "@reactive-fiber/sdk": "1.0.0"
+    }
+   },
+   "resolutions": {
+    "resolutions": {
+     "reactivefiber": "1.0.0"
+    }
+   },
+   "bundled": {
+    "bundledDependencies": [
+     "@forge/sdk",
+     "@rf/sdk"
+    ]
+   },
+   "pi-extension": {
+    "pi": {
+     "extensions": [
+      "./src/index.ts",
+      "@reactive-fiber/pi-extension"
+     ]
+    }
+   },
+   "script": {
+    "scripts": {
+     "explain": "npx @reactive-fiber/cli graph explain"
+    }
+   },
+   "vendored-spec": {
+    "dependencies": {
+     "@acme/graph": "file:vendor/rf-sdk-0.1.0.tgz"
+    }
+   }
+  },
+  "manifestQuiet": {
+   "keyword": {
+    "keywords": [
+     "pi-package",
+     "surf"
+    ]
+   },
+   "script": {
+    "scripts": {
+     "test:rfc": "vitest run test/rfc-parser.test.ts"
+    }
+   },
+   "vendored-spec": {
+    "dependencies": {
+     "@furnace/sdk": "file:vendor/furnace-sdk-0.1.0.tgz",
+     "rfdc": "^1.4.1"
+    }
+   }
+  },
   "composed": {
    "variable": "const verb = \"explain\"; spawn(\"rf\", [\"graph\", verb]);",
    "concatenated": "const leaf = \"gr\" + \"aph explain\";",
-   "pushed": "const words = [\"graph\"]; words.push(\"explain\");"
+   "pushed": "const words = [\"graph\"]; words.push(\"explain\");",
+   "through-site": "import { execFileSync } from \"node:child_process\"; const git = (...args: string[]) => execFileSync(\"git\", [\"-C\", cwd, ...args]); const verb = \"explain\"; git(\"-c\", `alias.x=!rf graph ${verb}`, \"x\");"
   },
   "localProvider": "import { spawn } from \"node:child_process\";\nexport function register(registry) {\n  registry.register({ descriptor: { id: \"local.graph\", version: \"1.0.0\", description: \"d\", inputSchema: {}, effectClass: \"read\", permissions: [], supportedModes: [\"invoke\"] }, invoke: async () => spawn(\"rf\", [\"graph\", \"explain\", \"source:x\", \"--json\"]) });\n}",
   "commonWord": "if (result.truncated) return { partial: true };",
   "unseen": {
    "composed-specifier": "const cp = await import(\"node:\" + \"child\" + \"_process\"); cp.spawn(\"rf\", [\"graph\", \"explain\", target]);",
+   "composed-path": "const cp = await import(\"node:\" + \"child\" + \"_process\"); cp.spawn(\"/usr/local/bin/rf\", [\"graph\", \"explain\", target]);",
    "execve": "process.execve(\"/usr/local/bin/rf\", [\"rf\", \"graph\", \"explain\", target], process.env);",
    "binding": "process.binding(\"spawn_sync\").spawn({ file: \"rf\", args: [\"rf\", \"graph\", \"explain\"] });",
-   "evaluated": "eval(\"require('node:child_process').spawn('rf', ['graph', 'explain'])\");",
+   "evaluated": "eval(\"require('node:child' + '_process').spawn('rf', ['graph', 'explain'])\");",
+   "cluster": "import cluster from \"node:cluster\"; cluster.fork();",
    "package": "import { execa } from \"execa\"; await execa(\"rf\", [\"graph\", \"explain\", target]);"
+  },
+  "unreadSpecifiers": {
+   "variable": "import { createRequire } from \"node:module\"; const spec = \"@reactive-fiber/sdk\"; createRequire(import.meta.url)(spec);",
+   "array": "import { createRequire } from \"node:module\"; Reflect.apply(createRequire(import.meta.url), undefined, [\"@reactive-fiber/sdk\"]);",
+   "composed": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(\"@reactive\" + \"-fiber/sdk\");",
+   "url": "await import(new URL(\"@reactive-fiber/sdk\", import.meta.url).href);",
+   "spread": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(...[\"@reactive-fiber/sdk\"]);",
+   "conditional": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(flag ? \"@reactive-fiber/sdk\" : \"@furnace/sdk\");"
   },
   "residuals": {
    "R-COMPOSED": [
@@ -497,6 +611,9 @@
    ],
    "R-UNSEEN-LAUNCHER": [
     "Q5"
+   ],
+   "R-UNREAD-SPECIFIER": [
+    "Q6"
    ]
   }
  },
@@ -516,6 +633,7 @@
   "Q3",
   "Q4",
   "Q5",
+  "Q6",
   "the registered tests and the reached pins equal the roster, in order and both ways"
  ],
  "rows": [
@@ -689,7 +807,13 @@
        "src/workbench/providers/reactivefiber.ts|nativeReactiveFiberRender|spawn"
       ],
       "escapes": [],
+      "loads": [
+       "src/index.ts|<module>|import",
+       "src/workbench/hosts/local-detached.ts|<module>|import",
+       "src/workbench/providers/reactivefiber.ts|<module>|import"
+      ],
       "unbound": [],
+      "unread": [],
       "unwalked": [],
       "unwalkedControls": {
        "probe.js": true,
@@ -704,41 +828,63 @@
        "probe.json": false
       },
       "controls": {
-       "named": "imports|rf:run:spawn:rf:unknown|",
-       "alias": "imports|rf:<module>:execFile:/usr/local/bin/rf:none|",
-       "namespace": "imports|rf:<module>:spawnSync:rf:none|",
-       "default-opaque": "imports|opaque:<module>:fork:script:none|",
-       "require": "imports|rf:<module>:spawn:rf:unknown|",
-       "require-element": "imports|rf:<module>:execSync:rf:shell|",
-       "variable-binary": "imports|opaque:<module>:spawn:BIN:unknown|",
-       "git": "imports|literal:<module>:execFileSync:git:none|",
-       "regex-exec": "imports||",
-       "type-only": "no-import||",
-       "unimported": "no-import||",
-       "exe": "imports|rf:<module>:execFileSync:rf.exe:none|",
-       "cmd-path": "imports|rf:<module>:execFileSync:C:\\tools\\rf.cmd:none|",
-       "upper": "imports|rf:<module>:spawn:RF:none|",
-       "const-alias": "imports|rf:<module>:spawn:rf:none|",
-       "namespace-destructure": "imports|rf:<module>:execFileSync:rf:none|",
-       "member-alias": "imports|rf:<module>:execFileSync:rf:none|",
-       "alias-chain": "imports|rf:<module>:spawn:rf:none|",
-       "let-alias": "imports||<module>:spawn:mutable-alias",
-       "exported-alias": "imports||<module>:spawn:exported-alias",
-       "argument": "imports||<module>:spawn:argument",
-       "call-method": "imports||<module>:spawn:member",
-       "property": "imports||<module>:cp:member",
-       "re-export": "imports||<module>:spawn:re-export",
-       "local-export": "imports||<module>:spawn:export",
-       "wrapper-function": "imports|opaque:launch:spawn:binary:unknown|",
-       "wrapped-caller": "no-import||",
-       "inline-require": "unbound||",
-       "shell-true": "imports|rf:<module>:spawn:rf:shell|",
-       "shell-path": "imports|rf:<module>:execFile:rf:shell|",
-       "shell-false": "imports|literal:<module>:spawn:rf context show:none|",
-       "shell-unknown": "imports|opaque:<module>:spawnSync:rf context show:unknown|",
-       "assignment-prefix": "imports|rf:<module>:execSync:rf:shell|",
-       "launcher": "imports|literal:<module>:execFileSync:env:none|",
-       "method-scope": "imports|rf:launch:spawn:rf:none,literal:run:spawn:git:none|"
+       "named": "imports|rf:run:spawn:rf:unknown||<module>:import|",
+       "alias": "imports|rf:<module>:execFile:/usr/local/bin/rf:none||<module>:import|",
+       "namespace": "imports|rf:<module>:spawnSync:rf:none||<module>:import|",
+       "default-opaque": "imports|opaque:<module>:fork:script:none||<module>:import|",
+       "require": "imports|rf:<module>:spawn:rf:unknown||<module>:require|",
+       "require-element": "imports|rf:<module>:execSync:rf:shell||<module>:require|",
+       "variable-binary": "imports|opaque:<module>:spawn:BIN:unknown||<module>:import|",
+       "git": "imports|literal:<module>:execFileSync:git:none||<module>:import|",
+       "regex-exec": "imports|||<module>:import|",
+       "type-only": "no-import|||<module>:type|",
+       "unimported": "no-import||||",
+       "exe": "imports|rf:<module>:execFileSync:rf.exe:none||<module>:import|",
+       "cmd-path": "imports|rf:<module>:execFileSync:C:\\tools\\rf.cmd:none||<module>:import|",
+       "upper": "imports|rf:<module>:spawn:RF:none||<module>:import|",
+       "const-alias": "imports|rf:<module>:spawn:rf:none||<module>:import|",
+       "namespace-destructure": "imports|rf:<module>:execFileSync:rf:none||<module>:import|",
+       "member-alias": "imports|rf:<module>:execFileSync:rf:none||<module>:import|",
+       "alias-chain": "imports|rf:<module>:spawn:rf:none||<module>:import|",
+       "let-alias": "imports||<module>:spawn:mutable-alias|<module>:import|",
+       "exported-alias": "imports||<module>:spawn:exported-alias|<module>:import|",
+       "argument": "imports||<module>:spawn:argument|<module>:import|",
+       "call-method": "imports||<module>:spawn:member|<module>:import|",
+       "property": "imports||<module>:cp:member|<module>:import|",
+       "re-export": "imports||<module>:spawn:re-export|<module>:re-export|",
+       "local-export": "imports||<module>:spawn:export|<module>:import|",
+       "wrapper-function": "imports|opaque:launch:spawn:binary:unknown||<module>:import|",
+       "wrapped-caller": "no-import||||",
+       "inline-require": "no-import|||<module>:unbound:require|",
+       "shell-true": "imports|rf:<module>:spawn:rf:shell||<module>:import|",
+       "shell-path": "imports|rf:<module>:execFile:rf:shell||<module>:import|",
+       "shell-false": "imports|literal:<module>:spawn:rf context show:none||<module>:import|",
+       "shell-unknown": "imports|opaque:<module>:spawnSync:rf context show:unknown||<module>:import|",
+       "assignment-prefix": "imports|rf:<module>:execSync:rf:shell||<module>:import|",
+       "launcher": "imports|literal:<module>:execFileSync:env:none||<module>:import|",
+       "method-scope": "imports|rf:launch:spawn:rf:none,literal:run:spawn:git:none||<module>:import|",
+       "launcher-alias": "imports|literal:git:execFileSync:git:none||<module>:import|",
+       "importer-inline-require": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:require|",
+       "importer-await-import": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:import|",
+       "importer-import-then": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:import|",
+       "importer-create-require": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:call|",
+       "importer-import-equals": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:import-equals|",
+       "importer-explain-await": "imports|literal:<module>:execFileSync:git:none||<module>:import,<module>:unbound:import|",
+       "importer-explain-create-require": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:call|",
+       "importer-require-binding": "imports|literal:<module>:spawn:git:none,rf:<module>:execFileSync:rf:none||<module>:import,<module>:require|",
+       "importer-require-default": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:require|",
+       "importer-variable-specifier": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:value|",
+       "importer-concatenated": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:value|",
+       "importer-template-specifier": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:require|",
+       "importer-escaped-specifier": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:require|",
+       "importer-builtin-module": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:call|",
+       "importer-module-require": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:call|",
+       "importer-type-position": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:type|",
+       "importer-direct-eval": "imports|literal:<module>:spawn:git:none|<module>:eval:direct-eval|<module>:import|",
+       "spelled-comment": "imports|literal:<module>:spawn:git:none||<module>:import|<module>:comment",
+       "spelled-source": "imports|literal:<module>:spawn:git:none||<module>:import|<module>:string",
+       "spelled-escaped": "imports|literal:<module>:spawn:git:none||<module>:import|<module>:escaped",
+       "spelled-template": "imports|literal:<module>:spawn:git:none||<module>:import|worker:template"
       }
      }
     },
@@ -869,7 +1015,77 @@
       "packages": [],
       "specs": [],
       "missed": [],
-      "quiet": []
+      "quiet": [],
+      "loads": [],
+      "loadCaught": {
+       "create-require-call": [
+        "<module>:call:@reactive-fiber/sdk"
+       ],
+       "create-require-bound": [
+        "<module>:call:reactivefiber"
+       ],
+       "module-require": [
+        "<module>:call:@rf/sdk"
+       ],
+       "require-resolve": [
+        "<module>:call:@reactive-fiber/sdk"
+       ],
+       "meta-resolve": [
+        "<module>:call:@reactivefiber/cli"
+       ],
+       "import-equals": [
+        "<module>:import-equals:@reactive-fiber/sdk"
+       ],
+       "inline-require": [
+        "<module>:require:rf-sdk"
+       ],
+       "id-lookup": [
+        "<module>:call:reactivefiber.render.preview"
+       ],
+       "parenthesized": [
+        "<module>:call:@reactive-fiber/sdk"
+       ],
+       "asserted": [
+        "<module>:call:@reactive-fiber/sdk"
+       ],
+       "tagged": [
+        "<module>:tagged:@reactive-fiber/sdk"
+       ],
+       "unresolved-launch": [
+        "<module>:call:rf"
+       ]
+      },
+      "loadQuiet": {
+       "rf-binary": [],
+       "relative": [],
+       "other-package": []
+      },
+      "deep": [],
+      "manifestCaught": {
+       "overrides": [
+        ".overrides.@reactive-fiber/sdk"
+       ],
+       "resolutions": [
+        ".resolutions.reactivefiber"
+       ],
+       "bundled": [
+        ".bundledDependencies[1]=@rf/sdk"
+       ],
+       "pi-extension": [
+        ".pi.extensions[1]=@reactive-fiber/pi-extension"
+       ],
+       "script": [
+        ".scripts.explain=npx @reactive-fiber/cli graph explain"
+       ],
+       "vendored-spec": [
+        ".dependencies.@acme/graph=file:vendor/rf-sdk-0.1.0.tgz"
+       ]
+      },
+      "manifestQuiet": {
+       "keyword": [],
+       "script": [],
+       "vendored-spec": []
+      }
      }
     }
    ]
@@ -883,7 +1099,8 @@
      "witness": {
       "variable": [],
       "concatenated": [],
-      "pushed": []
+      "pushed": [],
+      "through-site": []
      }
     },
     {
@@ -907,7 +1124,7 @@
       "roots": [
        "src"
       ],
-      "scan": "imports|rf:register:spawn:rf:none|",
+      "scan": "imports|rf:register:spawn:rf:none||<module>:import|",
       "leafHits": [
        "argv:3"
       ]
@@ -928,33 +1145,65 @@
      "id": "Q5",
      "witness": {
       "composed-specifier": {
-       "scan": "no-import||",
+       "scan": "no-import||||",
        "leafHits": [
         "argv:1"
+       ],
+       "loads": [
+        "<module>:call:rf"
        ]
+      },
+      "composed-path": {
+       "scan": "no-import||||",
+       "leafHits": [
+        "argv:1"
+       ],
+       "loads": []
       },
       "execve": {
-       "scan": "no-import||",
+       "scan": "no-import||||",
        "leafHits": [
         "argv:1"
-       ]
+       ],
+       "loads": []
       },
       "binding": {
-       "scan": "no-import||",
+       "scan": "no-import||||",
        "leafHits": [
         "argv:1"
-       ]
+       ],
+       "loads": []
       },
       "evaluated": {
-       "scan": "no-import||",
-       "leafHits": []
+       "scan": "no-import||||",
+       "leafHits": [],
+       "loads": []
+      },
+      "cluster": {
+       "scan": "no-import||||",
+       "leafHits": [],
+       "loads": []
       },
       "package": {
-       "scan": "no-import||",
+       "scan": "no-import||||",
        "leafHits": [
         "argv:1"
+       ],
+       "loads": [
+        "<module>:call:rf"
        ]
       }
+     }
+    },
+    {
+     "id": "Q6",
+     "witness": {
+      "variable": [],
+      "array": [],
+      "composed": [],
+      "url": [],
+      "spread": [],
+      "conditional": []
      }
     }
    ]
