@@ -51,6 +51,8 @@ D14: Do not automatically rewrite a pinned running workflow after designer chang
 
 **Provider extensibility:** explicitly versioned capability contracts in local host; postpone dynamic remote provider marketplace.
 
+**RF speculation boundary:** rf's local default speculation policy stays passive/disabled and Pi documents no other default. rf 0.1.845 ships `ResourceBrokerLimits` and `SpeculationBoundary` as values its host resource broker reads, with no CLI surface, and the one way an rf process opts into its speculative policy is the process-scoped `RF_ADAPTIVE` seat, which no rf child Pi launches receives: that child's environment holds only the `RF_CHILD_ENV_ALLOWLIST` names of `src/workbench/process-env.ts`. Any Pi-declared SpeculationBoundary or broker-limit configuration may only tighten ResourceBrokerLimits and never overrides Pi host hard caps, the 60 s render deadline and the 256 KiB stdout and stderr bounds of `src/workbench/providers/reactivefiber.ts`. Pi declares none today, so the cut that declares the first one owes the adoption-time test that refuses or clamps a value looser than a host cap (wb-km7q.9).
+
 ## Revisit criteria
 
 Any new abstraction that duplicates SDK authority must demonstrate a real second consumer and domain contract equivalence; otherwise remove it. Any broad subsystem not used by VC-1 through VC-5 should remain unimplemented, not treated as an architectural prerequisite.
