@@ -9,12 +9,13 @@
  * host-pending/unavailable-block (never logical UNKNOWN), an empty rendered list never flips unknown to pass, and the
  * inspector/DevTools surface only consumes emitted evidence, never computes query truth."
  *
- * CUT #2 (the respin of refusal #1, gate-prep-24 of g10-gate-s128). U1: F3's emitted set is the producer block a case carries,
- * never rf's own envelope fields. U2: every pin is anchored on the owner text (each pin quote is one whole owner clause, and
- * every owner clause is one pin's quote or a named unpinned clause) and every PASS or FAIL word on the producer's texts and the
- * outside texts; the one branch no outside text anchors is named (R-S-INFLECTION). U3: A1 reads every key and string value of
- * package.json and claims no more than it reads; the abbreviation is named (R-ABBREVIATION). Riders: F1 (R-RUN-TOGETHER,
- * R-JOIN), F2 (whole clauses and whole charter sentences, never containment) and F3 (R-UNNAMED-READER).
+ * CUT #3 (the respin of refusal #2, gate-prep-1 of g10-gate-s137; refusal #1's cures carried). U1: the pinned set is the owner
+ *  title's. Each clause of the title's statement is one pin, in title order (row A the trigger part's clauses, the i-th row after
+ *  it the i-th arm's), and every pin is one such clause, so which owner clauses are pinned is the title's, not a literal of this
+ *  file (only the clause boundaries are this file's rule, R-CLAUSE-RULE), and there is no unpinned set a quote could be re-homed
+ *  into (cut #2's UNPINNED is gone; the acceptance's clauses are the labels).
+ *  Riders: F1 (a pin's quote is bound to it by the title's order), F2 (the judged set's reach record) and F3 (a template's
+ *  constant span folds as spelled).
  *
  * MEASURED AT CUT #1 (seat ws-06, 2026-10-28, read-only; carried unchanged, this census is hermetic and never re-reads any of it):
  *  - The producer ships the adapter. ReactiveComponentsSDK at the bead pin 44b72145b175 and at origin/master 5c480c5712b4
@@ -25,25 +26,27 @@
  *    reactive_fiber_cli module calls it, so no rf render carries query evidence today.
  *  The roster vendors both producer files as base64 (so no Pi text census reads producer prose as Pi text) and the outputs the
  *  installed adapter returned, run read-only from rf's environment, for one view of each verdict and for each policy.
- *  RE-READ AT CUT #2 (seat ws-05, 2026-10-29, read-only): the installed rf is still 0.1.845, its bundled reactive_components
- *  0.1.1.20261024212618 adapter is still blob c8a2f154, and no reactive_fiber_cli module names query_evidence,
- *  project_query_evidence or unavailable_block. On Pi's side the trigger has not fired (A1): no Pi code module spells an
- *  adapter word sequence or holds a producer text, and no key or string value of package.json spells a sequence.
+ *  RE-READ AT CUT #2 and AT CUT #3 (seat ws-05, 2026-10-29, read-only): the installed rf is still 0.1.845, its bundled
+ *  reactive_components 0.1.1.20261024212618 adapter is still blob c8a2f154, and no reactive_fiber_cli module names
+ *  query_evidence, project_query_evidence or unavailable_block. On Pi's side the trigger has not fired (A1): no Pi code module
+ *  spells an adapter word sequence or holds a producer text, and no key or string value of package.json spells a sequence.
  *
- * WHERE ADOPTED EVIDENCE ARRIVES (SURFACES). RC's adapter renders context blocks, and Pi takes assembled context only through
- *  the rf render envelope, so adopted evidence rides result.output.text and the result.blocks rows of a render. The envelope
- *  readers are the src modules whose code names REACTIVE_FIBER_CLI_SCHEMA (an identifier read by the TypeScript AST, never a
- *  comment or a literal): the registered native provider (providers/reactivefiber.ts, the capability output a workflow
- *  receives), nativeEvidence (native-evidence.ts, the node evidence the runtime emits and the inspector shows) and the RF
- *  reader adapter (reactivefiber-observer.ts, the snapshot an ObservationProjection holds). The fourth surface is the DevTools
- *  surface the bead names: the four-view inspector (ui/workflow-inspector.ts layoutInspector, docs/workbench/10), drawn over a
- *  projection holding that snapshot. A new src module naming REACTIVE_FIBER_CLI_SCHEMA reds A3 until it joins SURFACES; a
- *  reader that does not name it is not found (R-UNNAMED-READER).
+ * WHERE ADOPTED EVIDENCE ARRIVES (SURFACES, read from src). RC's adapter renders context blocks, and Pi takes assembled context
+ *  only through the rf render envelope, so adopted evidence rides result.output.text and the result.blocks rows of a render. The
+ *  envelope readers are the src modules whose code names REACTIVE_FIBER_CLI_SCHEMA (an identifier read by the TypeScript AST,
+ *  never a comment or a literal): the registered native provider (providers/reactivefiber.ts, the capability output a workflow
+ *  receives), nativeEvidence (native-evidence.ts, the node evidence the runtime emits and the inspector shows) and the RF reader
+ *  adapter (reactivefiber-observer.ts, the snapshot an ObservationProjection holds). The fourth surface is the DevTools surface
+ *  the bead names: the src module declaring layoutInspector (ui/workflow-inspector.ts, docs/workbench/10), drawn over a
+ *  projection holding that snapshot, in every InspectorView member the module declares. A new src module naming
+ *  REACTIVE_FIBER_CLI_SCHEMA or declaring layoutInspector reds A1 until it joins SURFACES; a reader that does neither is not
+ *  found (R-UNNAMED-READER).
  * CASES: the clean full-shape envelope (test/helpers/rf-render-fixture.ts) whose document is one producer output - the TRUE,
- *  FALSE and UNKNOWN (empty source list) evidence blocks and the unavailable block, each on two carriers (text: the block's
- *  text in output.text with a five-key row; row: that row also carrying the producer block's kind, content, metadata,
- *  provenance and visibility, an open-object carrier) - and the defer policy (no block: an empty rendered list), beside the
- *  neutral render. Every case reaches the provider through a stand-in rf on PATH in makeScratch scratch.
+ *  FALSE and UNKNOWN (empty source list) evidence blocks and the unavailable block, each on two carriers (text: the block's text
+ *  in output.text with today's rf row, the helper's five row keys and a span; row: that row also carrying every field of the
+ *  producer block but its key, read from the vendored outputs - content, kind, metadata, provenance and visibility - an
+ *  open-object carrier) - and the defer policy (no block: an empty rendered list), beside the neutral render (the helper's clean
+ *  envelope unchanged). Every case reaches the provider through a stand-in rf on PATH in makeScratch scratch.
  *
  * READINGS. A verdict TOKEN is a VERDICTS member spelled exactly (case-sensitive, word-bounded) and a verdict TEXT is a
  *  TEST_HEALTH_TEXTS value or the UNAVAILABLE_TEXT, matched as a substring; both are read from the vendored producer bytes. A
@@ -54,58 +57,76 @@
  *  line, the charter or the adapter module spell (pass, passed, passing, failed) must be a class word, which anchors the
  *  rule's bare, -ed and -ing branches; no outside text spells an -s form (passes, fails), so the -s branch is the rule's alone
  *  (R-S-INFLECTION).
- * THE FALSIFIERS (each armed on every surface it reads; A3 plants each violation on each surface and the judge fires):
- *  F1 (arm 1), on a missing-resource case (unavailable, defer): any logical-UNKNOWN reading (the UNKNOWN token or text) on a
+ * THE FALSIFIERS (each armed by the pin that judges it: on every surface it reads, each planted reading of its class fires):
+ *  F1 (arm 1, B3), on a missing-resource case (unavailable, defer): any logical-UNKNOWN reading (the UNKNOWN token or text) on a
  *    surface. The producer emitted none, so any such reading is Pi's.
- *  F2 (arm 2), on an unknown-or-empty case (UNKNOWN with no sources, defer): any pass reading (the TRUE token or text, a PASS
- *    word) on a surface, and on the reader adapter a zero-block render reading complete or success.
- *  F3 (arm 3), on every case, on the inspector and its inputs (the node evidence and the snapshot): any verdict reading that
+ *  F2 (arm 2, C1 and C2), on an unknown-or-empty case (UNKNOWN with no sources, defer): any pass reading (the TRUE token or
+ *    text, a PASS word) on a surface, and on the reader adapter a zero-block render reading complete or success.
+ *  F3 (arm 3, D1), on every case, on the inspector and its inputs (the node evidence and the snapshot): any verdict reading that
  *    the producer block the case carries does not hold. The text carrier carries the block's content (the output text) and its
- *    key (inside the row's candidate key); the row carrier also the row's kind, content, metadata, provenance and visibility;
- *    the neutral render and the defer policy carry none. rf's own envelope fields (the necessity record's failure_mode 'fail',
- *    the provenance, the budget) are never the producer's evidence. Consuming emitted evidence passes and a reading the
- *    producer did not emit fires; a computed reading equal to one the producer emitted for the case cannot be told from
- *    consuming it (R-COINCIDENT).
+ *    key (inside the row's candidate key); the row carrier also the row's producer fields; the neutral render and the defer
+ *    policy carry none. rf's own envelope fields (the necessity record's failure_mode 'fail', the provenance, the budget) are
+ *    never the producer's evidence. Consuming emitted evidence passes and a reading the producer did not emit fires; a computed
+ *    reading equal to one the producer emitted for the case cannot be told from consuming it (R-COINCIDENT).
  *
- * JUDGED ROWS (ROWS; one test per pin under its row's label; every witness carries its pin id and is held to the roster):
- *  A "adoption-time falsifiers for the three arms". A1 the trigger has not fired: no product module's code (every git-listed
- *    JS or TS module below src/, qa/ and examples/ and at the root, read as TypeScript AST lexemes with each template and +
- *    chain also read as spelled, comments excluded) spells an adapter word sequence (every public name, kind or schema of the
- *    producer module that spells two words or more, and the producer's package, reduced to the minimal set) or holds a
- *    producer text; no key or string value of package.json (a dependency name or spec, an npm alias, an override, a script)
- *    spells a sequence, the manifest reader armed on an npm alias of the producer's package; and no surface reads the evidence
- *    (each one-block case projects as the neutral render does, the provider carrying the envelope verbatim for every case and
- *    the reader adapter referencing the text by digest only). A2 the producer artifact: the vendored bytes are the measured
- *    blobs; the charter section over :44 is the 2026-10-17 amendment, :44's arm sentences are the roster's (each a whole
- *    sentence) and :46 holds RC-RQ2 unknown not pass as one whole acceptance item; the verdicts read three distinct classes
- *    and the PASS and FAIL words are anchored as READINGS says; the outputs agree with the producer's texts, kinds, schema
- *    and policies; and the bead's citation pins are the roster's. A3 the falsifiers are armed: SURFACES are the envelope
- *    readers plus the inspector, CASES cover every output on both carriers, the matrix ran, and each judge fires on every
- *    planted reading of its class on every surface it reads (F1 the UNKNOWN token and text; F2 the TRUE token and text and
- *    every PASS word; F3, on the UNKNOWN row case, every token, text and PASS or FAIL word its producer block does not hold,
- *    and quiet on the two it holds; each word also in upper case).
- *  B "missing QueryView renders host-pending/unavailable-block (never logical UNKNOWN)". B1 the unavailable block on both
- *    carriers: F1 quiet on every surface, the provider carrying its text, kind and policy verbatim. B2 the defer policy: F1
- *    quiet on every surface, the reader adapter holding Pi's own pending marker (the zero-block inclusion note, partial).
- *  C "an empty rendered list never flips unknown to pass". C1 the empty rendered list (defer): F2 quiet on every surface,
- *    never complete or success. C2 the UNKNOWN view with an empty source list on both carriers: F2 quiet on every surface, the
- *    record's verdict and empty sources carried verbatim, beside the producer's own refusal of a TRUE without coverage.
- *  D "the inspector/DevTools surface only consumes emitted evidence, never computes query truth". D1 F3 quiet on the four
- *    inspector views of every case. D2 F3 quiet on the node evidence and the snapshot of every case; the node evidence holds
- *    no domainStatus and only the envelope's own values.
- * OUTSIDE ANCHORS. The owner filing's row of wb-km7q.3 in .beads/issues.jsonl: the acceptance clause is the labels joined;
- *  the title's arms are rows B-D; the owner text's clauses (the title's statement and the acceptance clause, split at an
- *  opening or closing parenthesis, a semicolon, a comma, an em dash, an " or " and before a " because ", without a leading
- *  "and " or a closing period or parenthesis) are each one pin's whole quote, from its own row's title part or label, or an
- *  UNPINNED clause naming the pins of the row holding it that judge it; the citation pins are the roster's. The vendored
- *  producer bytes: the tokens, texts, kinds and policies and their coverage, the PASS and FAIL stems (through the verdict
- *  classes), the attested pass and fail words, the amendment heading, the arm sentences and the gate item. src: the envelope
- *  readers. So a row, a pin, a case, a surface or a PASS or FAIL word removed from every literal of this file and of the
- *  roster together still reds. Not anchored outside: the paradigm rule's -s branch (R-S-INFLECTION) and the residual list
+ * JUDGED ROWS (ROWS: a row per title part, labelled by the acceptance's part, and a pin per clause of the part in title order,
+ *  one test each under its row's label; every witness carries its pin id and is held to the roster; a pin whose clause names a
+ *  producer term reads that term from its clause):
+ *  A "adoption-time falsifiers for the three arms", the trigger part.
+ *   A1 "If Pi ever projects query evidence into context via RC's optional query-evidence adapter": the trigger has not fired.
+ *    The clause spells an adapter word sequence. No product module's code (every git-listed JS or TS module below src/, qa/ and
+ *    examples/ and at the root, read as TypeScript AST lexemes with each template and + chain also read as spelled, a constant
+ *    span folding, comments excluded) spells an adapter word sequence (every public name, kind or schema of the producer module
+ *    that spells two words or more, and the producer's package, reduced to the minimal set) or holds a producer text; no key or
+ *    string value of package.json (a dependency name or spec, an npm alias, an override, a script) spells a sequence, the
+ *    manifest reader armed on an npm alias of the producer's package; SURFACES are the src envelope readers and the module
+ *    declaring layoutInspector, every case shows strings on every surface and its details view selects the RF node; and no
+ *    surface reads the evidence (each one-block case projects as the neutral render does, the provider carrying the envelope
+ *    verbatim for every case and the reader adapter referencing the text by digest only).
+ *   A2 "2026-10-17 amendment": the producer artifact. The vendored bytes are the measured blobs; the charter section over :44 is
+ *    the clause; :44's arm sentences are the roster's, one per arm row and each a whole sentence; the outputs agree with the
+ *    adapter module's texts, kinds, schema and policies (one output per verdict; one policy renders no block, and it has a null
+ *    output); the cases are the neutral render (one case is the helper's clean envelope unchanged) and every output on both
+ *    carriers, each output with a block riding today's rf row (the helper's row keys and a span) and that row with every
+ *    producer field; the bead's citation pins are the roster's.
+ *   A3 "gated RC-RQ2 'unknown not pass'": the gate. Charter :46 holds RC-RQ2 unknown not pass as one whole acceptance item and
+ *    the clause is the title's spelling of it; it names the unknown verdict and a PASS word; the verdicts read three distinct
+ *    classes and the PASS and FAIL words are anchored as READINGS says.
+ *  B "missing QueryView renders host-pending/unavailable-block (never logical UNKNOWN)", arm 1.
+ *   B1 "a missing QueryView resource reads as host-pending": the one producer policy that renders no block (defer) leaves an
+ *    empty rendered list, and the reader adapter holds Pi's own pending marker (the zero-block inclusion note, partial).
+ *   B2 "an explicit unavailable-block policy": the producer policy the clause names (unavailable_block) renders its block on
+ *    both carriers, the provider carrying its text, kind and policy verbatim.
+ *   B3 "never as logical UNKNOWN": the token the clause names reads as the unknown class; F1 is quiet on every surface of every
+ *    missing-resource case (the outputs of both policies) and fires on every surface on the UNKNOWN token and text planted.
+ *  C "an empty rendered list never flips unknown to pass", arm 2.
+ *   C1 "unknown never renders as passing": the clause names the unknown verdict and a PASS word; F2 is quiet on every surface of
+ *    the UNKNOWN view with an empty source list on both carriers, the record's verdict and empty sources carried verbatim
+ *    beside the producer's own refusal of a TRUE without coverage; and F2 fires on every surface on the TRUE token and text and
+ *    each PASS word planted, each word also in upper case.
+ *   C2 "because an empty list rendered": on the policy that renders no block F2 is quiet on every surface and the render is
+ *    never complete or success, while that structural reading fires on the same render forced complete.
+ *  D "the inspector/DevTools surface only consumes emitted evidence, never computes query truth", arm 3.
+ *   D1 "no DevTools/debugger surface computes query truth": F3 is quiet on every InspectorView of every case and on the node
+ *    evidence and the snapshot of every case; the node evidence holds no domainStatus and only the envelope's own values; and
+ *    F3, on the UNKNOWN row case and each of those surfaces, fires on every token, text and PASS or FAIL word (each word also in
+ *    upper case) its producer block does not hold and is quiet on the two it holds.
+ * OUTSIDE ANCHORS. The owner filing's row of wb-km7q.3 in .beads/issues.jsonl: the acceptance clause is the labels joined; the
+ *  title's statement is the rows' parts (the trigger to the parenthesis that closes it, then the three arms); each part's
+ *  clauses (split at an opening or closing parenthesis, a semicolon, a comma, an em dash, an " or " and before a " because ",
+ *  without a leading "and " or a closing period or parenthesis) are its row's pins' quotes in title order, so the frozen shape
+ *  is the title's clause count per part and the pins that ran are one per title clause; the citation pins are the roster's.
+ *  The vendored producer bytes: the tokens, texts, kinds and policies and their coverage, the PASS and FAIL stems (through the
+ *  verdict classes), the attested pass and fail words, the amendment heading, the arm sentences and the gate item. src: the
+ *  envelope readers, the module declaring layoutInspector and its InspectorView members. The rf fixture helper: the neutral
+ *  render and today's rf row (the text carrier); the vendored outputs' fields: the row carrier. So a row, a pin, a case, a
+ *  surface or a PASS or FAIL word removed from every literal of this file and of the roster together still reds. Not anchored
+ *  outside: the part and clause rule (R-CLAUSE-RULE), the paradigm rule's -s branch (R-S-INFLECTION) and the residual list
  *  itself (a disclosure).
- * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; rows, pins, quotes, witnesses, cases,
- *  surfaces, words, floors and residuals are held to test/fixtures/rc-query-evidence-roster.json; the last cases read that
- *  every pin ran to its witness and every residual's quiet row ran.
+ * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, held to the title's clause count per part;
+ *  rows, pins, quotes, witnesses, cases, surfaces, words, floors and residuals are held to
+ *  test/fixtures/rc-query-evidence-roster.json; the last cases read that the judged set ran to its end, that every pin ran to
+ *  its witness (one per title clause) and that every residual's quiet row ran.
  * RESIDUALS (named; each has a pinned quiet row): Q1 R-TONE-WORD Pi's own lowercase presentation word 'unknown' (a statusTone,
  *  coverage, freshness or connection value, the inspector's attention line) marks a partial or unobserved reading and is no
  *  verdict, so F1 stays quiet on it; Q2 R-RENDER-TONE the reader adapter's success tone and complete coverage judge the
@@ -118,20 +139,22 @@
  *  output, which is judged; Q7 R-OTHER-ROUTE an adoption that spells no adapter sequence (a generic reader of rendered rows) is
  *  no trigger; Q8 R-NON-MODULE a file that is not a JS or TS module (a doc page, a Python or shell script under qa/, a
  *  configuration file, the lockfile) is not read by A1, which reads package.json alone among them; Q9 R-COMPOSED a name
- *  assembled from a non-constant part (a variable holding the word) is read with that part as one space (constant + chains
- *  and templates fold as spelled); Q10 R-LOOKALIKE a look-alike letter (Cyrillic, Greek) or an inserted invisible inside a
- *  word is not folded (NFKC folds the fullwidth forms, which are read); Q11 R-ABBREVIATION an abbreviation of the producer or
- *  its adapter ("RC", "rc", RC_ADAPTER; an "rc" package in the manifest) is not read, since every sequence spells two words or
- *  more; Q12 R-RUN-TOGETHER a sequence run together inside one word (QUERYEVIDENCE) is no run of words, a word breaking only
- *  at a case change, an acronym's last capital or a character outside a-z and 0-9; Q13 R-JOIN a name joined at run time from
- *  an array of literal parts (["query", "evidence"].join("_")) is read part by part, never folded; Q14 R-UNNAMED-READER an
- *  envelope reader whose code does not name REACTIVE_FIBER_CLI_SCHEMA (a generic reader of a provider output's
- *  source.result.blocks) is not found by A3; Q15 R-S-INFLECTION no outside text spells the -s forms, so a removal of the
- *  paradigm rule's -s branch together with both -s words from every literal stays green; Q16 R-COINCIDENT a reading a
- *  surface computed that equals one the producer emitted for the case reads as consuming it (F3 judges readings, not how a
- *  surface made them).
+ *  assembled from a non-constant part (a variable holding the word, a span expression that is no constant string) is read
+ *  with that part as one space (constant + chains, templates and constant spans fold as spelled); Q10 R-LOOKALIKE a look-alike
+ *  letter (Cyrillic, Greek) or an inserted invisible inside a word is not folded (NFKC folds the fullwidth forms, which are
+ *  read); Q11 R-ABBREVIATION an abbreviation of the producer or its adapter ("RC", "rc", RC_ADAPTER; an "rc" package in the
+ *  manifest) is not read, since every sequence spells two words or more; Q12 R-RUN-TOGETHER a sequence run together inside one
+ *  word (QUERYEVIDENCE) is no run of words, a word breaking only at a case change, an acronym's last capital or a character
+ *  outside a-z and 0-9; Q13 R-JOIN a name joined at run time from an array of literal parts (["query", "evidence"].join("_"))
+ *  is read part by part, never folded; Q14 R-UNNAMED-READER an envelope reader whose code does not name
+ *  REACTIVE_FIBER_CLI_SCHEMA (a generic reader of a provider output's source.result.blocks) is not found by A1; Q15
+ *  R-S-INFLECTION no outside text spells the -s forms, so a removal of the paradigm rule's -s branch together with both -s words
+ *  from every literal stays green; Q16 R-COINCIDENT a reading a surface computed that equals one the producer emitted for the
+ *  case reads as consuming it (F3 judges readings, not how a surface made them); Q17 R-CLAUSE-RULE the part and clause breaks
+ *  are this file's own rule, not an outside text, so an edit of the rule that merges two clauses of one part, together with one
+ *  of their pins removed and the other quoting the merged clause, still tiles the title.
  * NOT CLAIMED: the producer's own conformance (RC's tests own RC-RQ2) and rf's; any Pi doc page (the trigger is code). An
- *  adopting cut owes its projection surface in SURFACES and a re-measured A1 baseline (A1 and A3 red until it does).
+ *  adopting cut owes its projection surface in SURFACES and a re-measured A1 baseline (A1 red until it does).
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch with the leak guard installed; Pi's code,
  * the bead export and package.json are only read; nothing is spawned but git and the stand-in rf.
@@ -149,7 +172,7 @@ import { nativeEvidence } from "../src/workbench/native-evidence.js";
 import { ObservationProjection, type ObservationScope } from "../src/workbench/observation.js";
 import { registerNativeReactiveFiberRender } from "../src/workbench/providers/reactivefiber.js";
 import { type ReactiveFiberProjectionTopology, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
-import { fullShapeRf, type Json, rfFixtureDecision } from "./helpers/rf-render-fixture.js";
+import { fullShapeRf, type Json, rfFixtureBlock, rfFixtureDecision } from "./helpers/rf-render-fixture.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 installScratchLeakGuard(afterAll);
@@ -164,16 +187,20 @@ const CAPABILITY = "reactivefiber.render.preview";
 const SLOW = 180_000;
 
 // ---------------------------------------------------------------------------------------- the judged rows (standing rule 16)
+/** A row per title part (the trigger, then each arm), labelled by the acceptance's part; a pin per clause of the part, in title
+ * order (the judged set holds each pin's quote to its clause). */
 const ROWS = [
   { id: "A", label: "adoption-time falsifiers for the three arms", pins: ["A1", "A2", "A3"] },
-  { id: "B", label: "missing QueryView renders host-pending/unavailable-block (never logical UNKNOWN)", pins: ["B1", "B2"] },
+  { id: "B", label: "missing QueryView renders host-pending/unavailable-block (never logical UNKNOWN)", pins: ["B1", "B2", "B3"] },
   { id: "C", label: "an empty rendered list never flips unknown to pass", pins: ["C1", "C2"] },
-  { id: "D", label: "the inspector/DevTools surface only consumes emitted evidence, never computes query truth", pins: ["D1", "D2"] },
+  { id: "D", label: "the inspector/DevTools surface only consumes emitted evidence, never computes query truth", pins: ["D1"] },
 ] as const;
-const FROZEN_SHAPE = ["A:3", "B:2", "C:2", "D:2"];
+const FROZEN_SHAPE = ["A:3", "B:3", "C:2", "D:1"];
 type PinId = (typeof ROWS)[number]["pins"][number];
 /** A row's label by its id (a describe title never indexes ROWS by position, so a deleted row is judged, not a crash). */
 const labelOf = (id: string): string => ROWS.find(row => row.id === id)?.label ?? id;
+/** The two carriers a producer block rides an rf render on (CASES). */
+const CARRIERS = ["text", "row"];
 /** The cases: the neutral render, each producer output on each carrier and the defer policy (an empty rendered list). */
 const CASES = ["neutral", "true:text", "true:row", "false:text", "false:row", "unknown-empty:text", "unknown-empty:row", "unavailable:text", "unavailable:row", "defer"];
 /** The Pi surfaces an rf render reaches, each with its src module. */
@@ -182,17 +209,6 @@ const SURFACES: Readonly<Record<string, string>> = {
   "native-evidence": "src/workbench/native-evidence.ts",
   observer: "src/workbench/reactivefiber-observer.ts",
   inspector: "src/ui/workflow-inspector.ts",
-};
-/** The owner clauses no pin quotes whole, each with the pins of the row holding it that judge it: the amendment A2 reads as the
- * charter section over :44, arm 1's negation and the parts of row B's label (B1, B2), row C's label (C1, C2) and the tail of row
- * D's label (D1, D2). */
-const UNPINNED: Readonly<Record<string, readonly PinId[]>> = {
-  "2026-10-17 amendment": ["A2"],
-  "never as logical UNKNOWN": ["B1", "B2"],
-  "missing QueryView renders host-pending/unavailable-block": ["B1", "B2"],
-  "never logical UNKNOWN": ["B1", "B2"],
-  "an empty rendered list never flips unknown to pass": ["C1", "C2"],
-  "never computes query truth": ["D1", "D2"],
 };
 const RESIDUALS = [
   { id: "R-TONE-WORD", quiet: "Q1" },
@@ -211,6 +227,7 @@ const RESIDUALS = [
   { id: "R-UNNAMED-READER", quiet: "Q14" },
   { id: "R-S-INFLECTION", quiet: "Q15" },
   { id: "R-COINCIDENT", quiet: "Q16" },
+  { id: "R-CLAUSE-RULE", quiet: "Q17" },
 ];
 
 // ------------------------------------------------------------------------------------------------------------- the roster
@@ -265,6 +282,8 @@ const QUIET = new Set<string>();
 const quietRan = (id: string): void => {
   QUIET.add(id);
 };
+/** The judged set ran to its end; recorded for the last cases. */
+let judgedRan = false;
 
 // ------------------------------------------------------------------------------------- the producer, from its own bytes
 const gitBlobId = (bytes: Buffer): string => createHash("sha1").update(Buffer.concat([Buffer.from(`blob ${bytes.length}\0`), bytes])).digest("hex");
@@ -314,6 +333,8 @@ const PRODUCER = {
   texts: pyTable("TEST_HEALTH_TEXTS"),
   publicNames: pyPublicNames(),
 };
+/** Charter:44's arm sentences: its sentences after the one carrying the TestHealth texts. */
+const armSentences = (): string[] => sentencesOf(charterLine(ROSTER.producer.charter.armLine)).filter(sentence => !PRODUCER_TEXTS.some(text => sentence.includes(text)));
 
 // --------------------------------------------------------------------------------------------------------- the readings
 /** NFKC, a break at each lower-to-upper change and before the last capital of an acronym run, lower case, runs of a-z0-9. */
@@ -380,6 +401,7 @@ function stringsOf(value: unknown): string[] {
   if (isObject(value)) return Object.values(value).flatMap(stringsOf);
   return [];
 }
+const upper = (list: readonly string[]): string[] => list.map(word => word.toUpperCase());
 
 // --------------------------------------------------------------------------------------------------------- the code pass
 const CODE_ROOTS = ["src", "qa", "examples"];
@@ -394,20 +416,22 @@ interface Lexeme {
   readonly text: string;
   readonly literal: boolean;
 }
+const scriptKind = (path: string): ts.ScriptKind =>
+  /\.[jt]sx$/.test(path) ? (path.endsWith(".jsx") ? ts.ScriptKind.JSX : ts.ScriptKind.TSX) : /\.[cm]?js$/.test(path) ? ts.ScriptKind.JS : ts.ScriptKind.TS;
+const parseModule = (path: string, text: string): ts.SourceFile => ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, scriptKind(path));
 const isPlus = (node: ts.Node): node is ts.BinaryExpression => ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken;
-/** A template or a + chain as spelled: its literal parts in order, each non-constant part read as one space. */
+/** A template or a + chain as spelled: its literal parts in order, each span's expression read as spelled in its turn, so a
+ * constant string folds and a non-constant part reads as one space. */
 function spelled(node: ts.Expression): string {
   if (ts.isParenthesizedExpression(node)) return spelled(node.expression);
   if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) return node.text;
-  if (ts.isTemplateExpression(node)) return node.head.text + node.templateSpans.map(span => ` ${span.literal.text}`).join("");
+  if (ts.isTemplateExpression(node)) return node.head.text + node.templateSpans.map(span => `${spelled(span.expression)}${span.literal.text}`).join("");
   if (isPlus(node)) return spelled(node.left) + spelled(node.right);
   return " ";
 }
 /** A module's identifiers and literal texts (string, template part, regular expression, JSX text), and each template and each
  * outermost + chain as spelled; comments are never read. */
-function lexemes(path: string, text: string): Lexeme[] {
-  const kind = /\.[jt]sx$/.test(path) ? (path.endsWith(".jsx") ? ts.ScriptKind.JSX : ts.ScriptKind.TSX) : /\.[cm]?js$/.test(path) ? ts.ScriptKind.JS : ts.ScriptKind.TS;
-  const source = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, kind);
+function lexemesOf(source: ts.SourceFile): Lexeme[] {
   const out: Lexeme[] = [];
   const visit = (node: ts.Node): void => {
     const named = ts.isIdentifier(node) || ts.isPrivateIdentifier(node);
@@ -423,6 +447,7 @@ function lexemes(path: string, text: string): Lexeme[] {
   visit(source);
   return out;
 }
+const lexemes = (path: string, text: string): Lexeme[] => lexemesOf(parseModule(path, text));
 /** The adapter's word sequences: each public name, kind or schema of the producer module and the producer's package directory
  * that spells two words or more, reduced to the minimal set (a sequence holding another as a run is dropped). */
 function triggerSequences(): string[][] {
@@ -432,27 +457,33 @@ function triggerSequences(): string[][] {
   return unique.filter(sequence => !unique.some(other => other.length < sequence.length && containsRun(sequence, other))).sort((a, b) => a.join(" ").localeCompare(b.join(" ")));
 }
 const PRODUCER_TEXTS = [...Object.values(PRODUCER.texts), PRODUCER.unavailableText].filter(text => text !== "");
-/** One module's trigger findings: a lexeme spelling an adapter sequence, or a literal holding a producer text. */
-function triggerFindings(path: string, text: string, sequences: readonly (readonly string[])[]): string[] {
-  return lexemes(path, text).flatMap(lexeme => {
-    const spelled = words(lexeme.text);
-    const hits = sequences.filter(sequence => containsRun(spelled, sequence)).map(sequence => sequence.join(" "));
+/** One module's trigger findings from its lexemes: a lexeme spelling an adapter sequence, or a literal holding a producer text. */
+function findingsOf(path: string, read: readonly Lexeme[], sequences: readonly (readonly string[])[]): string[] {
+  return read.flatMap(lexeme => {
+    const spelledWords = words(lexeme.text);
+    const hits = sequences.filter(sequence => containsRun(spelledWords, sequence)).map(sequence => sequence.join(" "));
     if (lexeme.literal) hits.push(...PRODUCER_TEXTS.filter(phrase => lexeme.text.includes(phrase)).map(() => "producer text"));
     return hits.map(hit => `${path}:${lexeme.line} ${hit}`);
   });
 }
+const triggerFindings = (path: string, text: string, sequences: readonly (readonly string[])[]): string[] => findingsOf(path, lexemes(path, text), sequences);
 /** The rf envelope's schema constant. */
 const ENVELOPE_SCHEMA = "REACTIVE_FIBER_CLI_SCHEMA";
 /** An envelope reader: a src module whose code names the envelope's schema constant (an identifier, never a comment or a literal). */
 const isEnvelopeReader = (path: string, read: readonly Lexeme[]): boolean => path.startsWith("src/") && read.some(lexeme => !lexeme.literal && lexeme.text === ENVELOPE_SCHEMA);
+/** The function that draws the inspector views (the census draws them through it). */
+const DRAWER = "layoutInspector";
+/** A module's top-level function declarations of a name. */
+const declaresFunction = (source: ts.SourceFile, name: string): boolean => source.statements.some(statement => ts.isFunctionDeclaration(statement) && statement.name?.text === name);
 interface CodePass {
   readonly modules: readonly string[];
   readonly lexemes: number;
   readonly findings: readonly string[];
   readonly readers: readonly string[];
+  readonly drawers: readonly string[];
 }
 let codePass: CodePass | undefined;
-/** The one pass over Pi's code: trigger findings, and the envelope readers. */
+/** The one pass over Pi's code: trigger findings, the envelope readers and the module drawing the inspector views. */
 function code(): CodePass {
   if (codePass !== undefined) return codePass;
   const sequences = triggerSequences();
@@ -460,14 +491,16 @@ function code(): CodePass {
   let count = 0;
   const findings: string[] = [];
   const readers: string[] = [];
+  const drawers: string[] = [];
   for (const path of modules) {
-    const text = readFileSync(join(REPO, path), "utf8");
-    const read = lexemes(path, text);
+    const source = parseModule(path, readFileSync(join(REPO, path), "utf8"));
+    const read = lexemesOf(source);
     count += read.length;
-    findings.push(...triggerFindings(path, text, sequences));
+    findings.push(...findingsOf(path, read, sequences));
     if (isEnvelopeReader(path, read)) readers.push(path);
+    if (path.startsWith("src/") && declaresFunction(source, DRAWER)) drawers.push(path);
   }
-  codePass = { modules, lexemes: count, findings, readers };
+  codePass = { modules, lexemes: count, findings, readers, drawers };
   return codePass;
 }
 /** A manifest's findings: every key and every string value (at any depth) that spells an adapter sequence, by its JSON path. */
@@ -493,10 +526,21 @@ function manifestFindings(manifest: unknown, sequences: readonly (readonly strin
 }
 /** package.json's findings. */
 const manifest = (): string[] => manifestFindings(JSON.parse(readFileSync(join(REPO, "package.json"), "utf8")), triggerSequences());
+/** The InspectorView members a module declares (its `type InspectorView = "a" | ...` union), read by the TypeScript AST. */
+function declaredViews(path: string): InspectorView[] {
+  if (!MODULE.test(path) || !existsSync(join(REPO, path))) return [];
+  const source = parseModule(path, readFileSync(join(REPO, path), "utf8"));
+  const alias = source.statements.find((statement): statement is ts.TypeAliasDeclaration => ts.isTypeAliasDeclaration(statement) && statement.name.text === "InspectorView");
+  const members = alias !== undefined && ts.isUnionTypeNode(alias.type) ? alias.type.types : [];
+  return members.flatMap(member => (ts.isLiteralTypeNode(member) && ts.isStringLiteral(member.literal) ? [member.literal.text as InspectorView] : []));
+}
+/** The inspector's views, read from the DevTools surface's module. */
+const VIEWS: readonly InspectorView[] = declaredViews(SURFACES.inspector ?? "");
 
 // ------------------------------------------------------------------------------------------------------------ the cases
-/** The producer fields the row carrier adds to its row (an open-object carrier). */
-const ROW_FIELDS = ["kind", "content", "metadata", "provenance", "visibility"];
+/** The producer block's fields the row carrier adds to its row: every key of a vendored producer output but its key (which
+ * rides in the row's candidate key). */
+const ROW_FIELDS = [...new Set(Object.values(ROSTER.producer.outputs).flatMap(output => (isObject(output) ? Object.keys(output) : [])))].filter(key => key !== "key");
 /** One case's rf render envelope: the clean full-shape render whose document is the producer output the case names. */
 function caseEnvelope(id: string): JsonObject {
   const envelope: JsonObject = fullShapeRf(REPO);
@@ -526,6 +570,12 @@ const blockCount = (id: string): number => {
   const result = caseEnvelope(id).result;
   return isObject(result) && Array.isArray(result.blocks) ? result.blocks.length : -1;
 };
+/** The keys of a case's first rendered row, sorted. */
+function rowKeys(id: string): string[] {
+  const result = caseEnvelope(id).result;
+  const row = isObject(result) && Array.isArray(result.blocks) && isObject(result.blocks[0]) ? result.blocks[0] : {};
+  return Object.keys(row).sort();
+}
 /** F3's emitted set: the producer block a case carries, as its envelope carries it - the text carrier its content (the output
  * text) and its key (inside the row's candidate key), the row carrier also the row's producer fields; the neutral render and the
  * defer policy carry none. rf's own envelope fields are never the producer's evidence. */
@@ -536,20 +586,41 @@ function emittedBy(id: string): string[] {
   const carried = [`${String(produced.content)}\n`, String(produced.key)];
   return carrier === "row" ? [...carried, ...ROW_FIELDS.flatMap(key => stringsOf(produced[key] ?? null))] : carried;
 }
+/** The cases of the named outputs, in CASES order. */
+const casesOf = (outputs: readonly string[]): string[] => ROSTER.cases.filter(id => outputs.includes(id.split(":")[0] ?? ""));
+/** The policies the vendored outputs name in their provenance. */
+const namedPolicies = (): string[] =>
+  Object.values(ROSTER.producer.outputs).flatMap(output => (isObject(output) && isObject(output.provenance) && typeof output.provenance.policy === "string" ? [output.provenance.policy] : []));
+/** The producer policies that render no block: those no output names. */
+const blocklessPolicies = (): string[] => PRODUCER.policies.filter(policy => !namedPolicies().includes(policy));
+/** A producer policy's outputs: the outputs whose provenance names it; a policy no output names renders no block, its outputs
+ * the null ones. */
+function outputsOfPolicy(policy: string): string[] {
+  const entries = Object.entries(ROSTER.producer.outputs);
+  if (!namedPolicies().includes(policy)) return entries.filter(([, output]) => output === null).map(([id]) => id);
+  return entries.filter(([, output]) => isObject(output) && isObject(output.provenance) && output.provenance.policy === policy).map(([id]) => id);
+}
+/** The outputs whose verdict record names the verdict. */
+function outputsOfVerdict(verdict: string): string[] {
+  return Object.entries(ROSTER.producer.outputs).flatMap(([id, output]) => {
+    const metadata = isObject(output) && isObject(output.metadata) ? output.metadata : {};
+    const record = metadata[PRODUCER.kind];
+    return isObject(record) && record.verdict === verdict ? [id] : [];
+  });
+}
 
 // --------------------------------------------------------------------------------------------------------- the surfaces
 interface Surfaces {
   readonly provider: JsonValue;
   readonly native: Readonly<Record<string, unknown>>;
   readonly topology: ReactiveFiberProjectionTopology;
-  readonly inspector: Readonly<Record<InspectorView, readonly string[]>>;
+  readonly inspector: Readonly<Record<string, readonly string[]>>;
   readonly detailsSelected: boolean;
 }
 const SCOPE: ObservationScope = { workspace: REPO, principal: "reader" };
 const INVOCATION = "workflow-1";
-const VIEWS: readonly InspectorView[] = ["overview", "graph", "timeline", "details"];
-/** The four inspector views over a projection holding the snapshot, the details view with the RF node selected. */
-function inspectorViews(topology: ReactiveFiberProjectionTopology): { readonly views: Record<InspectorView, readonly string[]>; readonly detailsSelected: boolean } {
+/** Every inspector view over a projection holding the snapshot, the details view with the RF node selected. */
+function inspectorViews(topology: ReactiveFiberProjectionTopology): { readonly views: Record<string, readonly string[]>; readonly detailsSelected: boolean } {
   const projection = new ObservationProjection({ maxEvents: 16, maxNodes: 16, maxEdges: 16, maxQuery: 16 });
   for (const snapshot of topology.snapshots) projection.refresh(snapshot);
   for (const relation of topology.relations) projection.relate(relation);
@@ -558,12 +629,7 @@ function inspectorViews(topology: ReactiveFiberProjectionTopology): { readonly v
   const base = initialInspectorState();
   const selected = reduceInspectorKey("j", base, model)?.state ?? base;
   const details = reduceInspectorKey("e", selected, model)?.state ?? selected;
-  const views = {
-    overview: layoutInspector(model, base, size),
-    graph: layoutInspector(model, { ...base, view: "graph" }, size),
-    timeline: layoutInspector(model, { ...base, view: "timeline" }, size),
-    details: layoutInspector(model, details, size),
-  };
+  const views = Object.fromEntries(VIEWS.map(view => [view, layoutInspector(model, view === details.view ? details : { ...base, view }, size)]));
   return { views, detailsSelected: details.view === "details" && details.selected !== null };
 }
 /** Every case through the registered native provider (a stand-in rf on PATH), nativeEvidence, the reader adapter and the inspector. */
@@ -609,7 +675,7 @@ function surfaceStrings(surfaces: Surfaces, surface: string): string[] {
   if (surface === "provider") return stringsOf(surfaces.provider);
   if (surface === "native-evidence") return stringsOf(surfaces.native);
   if (surface === "observer") return stringsOf(surfaces.topology);
-  if (surface === "inspector") return VIEWS.flatMap(view => surfaces.inspector[view]);
+  if (surface === "inspector") return VIEWS.flatMap(view => surfaces.inspector[view] ?? []);
   throw new Error(`no surface ${surface}`);
 }
 const SURFACE_IDS = (): string[] => Object.keys(ROSTER.surfaces);
@@ -627,6 +693,14 @@ async function judged(cases: readonly string[], surfaces: readonly string[], fal
   return { judged: count, readings };
 }
 const withoutPayload = (topology: ReactiveFiberProjectionTopology): string => JSON.stringify(topology, (key, value: unknown) => (key === "nativePayloadRef" ? "<payload>" : value));
+/** The row of a case's provider output (its first result.blocks entry) and its output text. */
+function providerRow(provider: JsonValue): { readonly text: unknown; readonly row: Record<string, unknown> } {
+  const source = isObject(provider) && isObject(provider.source) ? provider.source : {};
+  const result = isObject(source.result) ? source.result : {};
+  const output = isObject(result.output) ? result.output : {};
+  const row = Array.isArray(result.blocks) && isObject(result.blocks[0]) ? result.blocks[0] : {};
+  return { text: output.text, row };
+}
 
 // ------------------------------------------------------------------------------------------------- the owner's own text
 interface OwnerRow {
@@ -654,24 +728,28 @@ function ownerRow(): OwnerRow {
 }
 /** The title's statement: everything after its bracketed requirement id. */
 const statementOf = (title: string): string => title.slice(title.indexOf("] ") + 2);
-/** The owner title's parts: the trigger with its gate (to the parenthesis that closes it) and the three arms after it. */
-function titleParts(title: string): { readonly trigger: string; readonly arms: string[] } {
+/** The owner title's parts: the trigger with its gate (to the parenthesis that closes it), then the arms after it. */
+function titleParts(title: string): string[] {
   const statement = statementOf(title);
   const close = statement.indexOf("), ");
-  return { trigger: statement.slice(0, close + 1), arms: statement.slice(close + 3).split("; ") };
+  return [statement.slice(0, close + 1), ...statement.slice(close + 3).split("; ")];
 }
-/** A clause break: an opening or closing parenthesis, a semicolon, a comma, an em dash, an " or ", or before a " because ". */
-const CLAUSE_BREAK = /\s\(|\);\s|\),\s|;\s|,\s|\s\u2014\s|\sor\s|\s(?=because\s)/;
-/** An owner text's clauses, each without a leading "and " or a closing period or parenthesis. */
-const clauses = (text: string): string[] =>
+/** The clause breaks: an opening or closing parenthesis, a semicolon, a comma, an em dash, an " or ", or before a " because ". */
+const CLAUSE_BREAKS: readonly RegExp[] = [/\s\(/, /\);\s/, /\),\s/, /;\s/, /,\s/, /\s\u2014\s/, /\sor\s/, /\s(?=because\s)/];
+/** A text's clauses under a list of breaks, each without a leading "and " or a closing period or parenthesis. */
+const clausesBy = (breaks: readonly RegExp[], text: string): string[] =>
   text
-    .split(CLAUSE_BREAK)
+    .split(new RegExp(breaks.map(item => item.source).join("|")))
     .map(part => part.replace(/^and /, "").replace(/[.)]$/, ""))
     .filter(part => part !== "");
-/** Each row's clauses: those of its title part (the trigger for row A, arm i for the i-th row after it) and of its label. */
-function rowClauses(owner: OwnerRow): Readonly<Record<string, readonly string[]>> {
-  const { trigger, arms } = titleParts(owner.title);
-  return Object.fromEntries(ROWS.map((row, index) => [row.id, [...clauses(index === 0 ? trigger : (arms[index - 1] ?? "")), ...clauses(row.label)]]));
+/** An owner text's clauses under this file's rule (R-CLAUSE-RULE). */
+const clauses = (text: string): string[] => clausesBy(CLAUSE_BREAKS, text);
+/** A pin's clause, read from the owner title: the clause of its row's title part at the pin's position in its row. */
+function clauseOf(pin: PinId): string {
+  const index = ROWS.findIndex(row => (row.pins as readonly string[]).includes(pin));
+  const row = ROWS[index];
+  if (row === undefined) return "";
+  return clauses(titleParts(ownerRow().title)[index] ?? "")[(row.pins as readonly string[]).indexOf(pin)] ?? "";
 }
 /** Every word of the owner row (its title and Citation line), the vendored charter and the adapter module that begins with a
  * PASS or FAIL stem, sorted and unique: the pass and fail words an outside text spells. */
@@ -684,38 +762,17 @@ function attestedWords(): string[] {
 
 // ------------------------------------------------------------------------------------------------------------ the cases
 describe("the judged set", () => {
-  it("the labels tile the owner's acceptance, the title's arms are rows B-D, every owner clause is one pin's whole quote or an unpinned clause its row's pins judge, and the roster agrees", () => {
+  it("the labels tile the owner's acceptance, the title's parts are the rows, each part's clauses are its row's pins' quotes in title order, and the roster agrees", () => {
     const owner = ownerRow();
     const [a, b, c, d] = ROWS.map(row => row.label);
     expect(`${a} \u2014 ${b}, ${c}, and ${d}.`, "the acceptance clause, word for word").toBe(owner.acceptance);
-    const { arms } = titleParts(owner.title);
-    expect(arms.length, "the title's arms are the rows after A").toBe(ROWS.length - 1);
-    const units = rowClauses(owner);
-    const quotedBy = new Map<string, string[]>();
-    for (const row of ROWS) {
-      for (const pin of row.pins) {
-        const entry = ROSTER.pins[pin];
-        expect(entry?.row, `${pin} row`).toBe(row.id);
-        expect(units[row.id] ?? [], `${pin} quote is one whole clause of its row`).toContain(entry?.quote);
-        const quote = entry?.quote ?? "";
-        quotedBy.set(quote, [...(quotedBy.get(quote) ?? []), pin]);
-      }
+    const parts = titleParts(owner.title);
+    expect(parts.length, "one title part per row: the trigger, then one per arm").toBe(ROWS.length);
+    expect(ROWS.map((row, index) => `${row.id}:${clauses(parts[index] ?? "").length}`), "the frozen shape is the title's clause count per part").toEqual(FROZEN_SHAPE);
+    for (const [index, row] of ROWS.entries()) {
+      expect(row.pins.map(pin => ROSTER.pins[pin]?.quote ?? null), `row ${row.id}: its title part's clauses are its pins' quotes, in title order`).toEqual(clauses(parts[index] ?? ""));
+      for (const pin of row.pins) expect(ROSTER.pins[pin]?.row, `${pin} row`).toBe(row.id);
     }
-    const ownerClauses = [...clauses(statementOf(owner.title)), ...clauses(owner.acceptance)];
-    const defects: string[] = [];
-    for (const clause of ownerClauses) {
-      const by = quotedBy.get(clause) ?? [];
-      const judges = UNPINNED[clause] ?? [];
-      if (by.length > 1) defects.push(`${clause}: quoted by ${by.join(", ")}`);
-      if (by.length === 1 && Object.hasOwn(UNPINNED, clause)) defects.push(`${clause}: quoted by ${by.join(", ")} and also unpinned`);
-      if (by.length === 0 && judges.length === 0) defects.push(`${clause}: no pin quotes it and no pin judges it`);
-      for (const pin of judges) {
-        const row = ROWS.find(item => (item.pins as readonly string[]).includes(pin));
-        if (row === undefined || !(units[row.id] ?? []).includes(clause)) defects.push(`${clause}: ${pin} is no pin of a row holding it`);
-      }
-    }
-    for (const clause of [...Object.keys(UNPINNED), ...quotedBy.keys()]) if (!ownerClauses.includes(clause)) defects.push(`${clause}: no owner clause`);
-    expect(defects, "every owner clause is one pin's whole quote or an unpinned clause its row's pins judge").toEqual([]);
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(FROZEN_SHAPE);
     expect(ROSTER.frozenShape).toEqual(FROZEN_SHAPE);
     expect(ROSTER.rows).toEqual(ROWS);
@@ -724,18 +781,30 @@ describe("the judged set", () => {
     expect(ROSTER.cases).toEqual(CASES);
     expect(ROSTER.surfaces).toEqual(SURFACES);
     expect(ROSTER.residuals.map(residual => ({ id: residual.id, quiet: residual.quiet }))).toEqual(RESIDUALS);
+    judgedRan = true;
   });
 });
 
 describe(`A ${labelOf("A")}`, () => {
-  it("A1 the trigger has not fired: no Pi code module spells an adapter word sequence or holds a producer text, package.json spells none, and no surface reads the evidence", { timeout: SLOW }, async () => {
+  it("A1 the trigger has not fired: the clause names the adapter, no Pi code module spells an adapter word sequence or holds a producer text, package.json spells none, the surfaces are where a render arrives, and no surface reads the evidence", { timeout: SLOW }, async () => {
     const pass = code();
     expect(pass.modules.length, "code modules read").toBeGreaterThanOrEqual(ROSTER.floors.codeModules);
     expect(pass.modules.filter(path => path.startsWith("src/")).length, "src modules read").toBeGreaterThanOrEqual(ROSTER.floors.srcModules);
     expect(pass.lexemes, "lexemes read").toBeGreaterThanOrEqual(ROSTER.floors.lexemes);
     const sequences = triggerSequences();
+    const named = sequences.filter(sequence => containsRun(words(clauseOf("A1")), sequence)).map(sequence => sequence.join(" "));
+    expect(named.length, "the trigger clause names an adapter word sequence").toBeGreaterThan(0);
     const packageName = ROSTER.producer.adapter.path.split("/").at(-2)?.replaceAll("_", "-") ?? "";
     const armed = manifestFindings({ dependencies: { "qe-adapter": `npm:${packageName}@${ROSTER.producer.installed.reactiveComponents}` } }, sequences);
+    expect(armed.length, "the manifest reader fires on an npm alias of the producer's package").toBeGreaterThan(0);
+    expect([...pass.readers, ...pass.drawers].sort(), "the surfaces are the src envelope readers and the module drawing the inspector views").toEqual(Object.values(ROSTER.surfaces).sort());
+    expect(pass.drawers, "the DevTools surface is the module declaring layoutInspector").toEqual([ROSTER.surfaces.inspector]);
+    expect(VIEWS.length, "the inspector module declares its views").toBeGreaterThan(0);
+    for (const id of ROSTER.cases) {
+      const surfaces = await reading(id);
+      expect(surfaces.detailsSelected, `${id} details view selects the RF node`).toBe(true);
+      for (const surface of SURFACE_IDS()) expect(surfaceStrings(surfaces, surface).length, `${id} ${surface} shows strings`).toBeGreaterThan(0);
+    }
     const neutral = await reading("neutral");
     const diffs: string[] = [];
     for (const id of ROSTER.cases) {
@@ -752,39 +821,28 @@ describe(`A ${labelOf("A")}`, () => {
       const result = envelope.result;
       const output = isObject(result) && isObject(result.output) ? String(result.output.text) : "";
       if (surfaces.topology.snapshots[0]?.nativePayloadRef !== `rf-output:sha256:${sha256(output)}`) diffs.push(`${id} observer: payload not by digest`);
-      for (const view of VIEWS) if (surfaces.inspector[view].join("\n") !== neutral.inspector[view].join("\n")) diffs.push(`${id} inspector ${view}`);
+      for (const view of VIEWS) if ((surfaces.inspector[view] ?? []).join("\n") !== (neutral.inspector[view] ?? []).join("\n")) diffs.push(`${id} inspector ${view}`);
     }
     witnessed("A1", {
-      pin: "A1", sequences: sequences.map(sequence => sequence.join(" ")), findings: [...pass.findings], manifest: manifest(), manifestArmed: armed,
-      verbatimCases: ROSTER.cases.length, baselineCases: oneBlock.length, baselineDiffs: diffs,
+      pin: "A1", named, sequences: sequences.map(sequence => sequence.join(" ")), findings: [...pass.findings], manifest: manifest(), manifestArmed: armed,
+      readers: [...pass.readers].sort(), drawers: [...pass.drawers], views: [...VIEWS], verbatimCases: ROSTER.cases.length, baselineCases: oneBlock.length, baselineDiffs: diffs,
     });
   });
 
-  it("A2 the producer artifact: the measured bytes, the amendment section, the arms at charter:44, RC-RQ2 at :46, anchored PASS and FAIL words, and outputs that agree with the module", () => {
+  it("A2 the 2026-10-17 amendment: the measured bytes, the charter section the clause names, the arms at charter:44, outputs that agree with the module, and cases that cover them", () => {
     const owner = ownerRow();
     const { charter, adapter, installed, outputs, refusals } = ROSTER.producer;
     expect(gitBlobId(CHARTER_BYTES), "charter bytes").toBe(charter.blob);
     expect(gitBlobId(ADAPTER_BYTES), "adapter bytes").toBe(adapter.blob);
     expect(installed.adapterBlob, "the installed copy is the pinned module").toBe(adapter.blob);
     expect(owner.citations, "the bead's citation pins").toEqual([`${charter.armLine}@${ROSTER.producer.pin.slice(0, 12)}`, `${charter.gateLine}@${ROSTER.producer.pin.slice(0, 12)}`]);
+    const clause = clauseOf("A2");
     const section = CHARTER_LINES.slice(0, charter.armLine - 1).filter(line => line.startsWith("## ")).at(-1) ?? "";
-    const sectionClauses = Object.entries(UNPINNED).flatMap(([clause, pins]) => (pins.includes("A2") ? [clause] : []));
-    expect(sectionClauses.length, "A2 judges the amendment clause").toBeGreaterThan(0);
-    for (const clause of sectionClauses) expect(section, `the charter section over :${charter.armLine} is the ${clause}`).toContain(clause);
-    const arms = sentencesOf(charterLine(charter.armLine)).filter(sentence => !PRODUCER_TEXTS.some(text => sentence.includes(text)));
+    expect(clause, "the amendment clause").not.toBe("");
+    expect(section, `the charter section over :${charter.armLine} is the ${clause}`).toContain(clause);
+    const arms = armSentences();
     expect(arms.length, "one charter:44 sentence per arm row").toBe(ROWS.length - 1);
     expect(ROSTER.armSentences, "charter:44's arm sentences, each whole").toEqual(arms);
-    const gateItems = charterLine(charter.gateLine).replace(/^Acceptance /, "").split("; ");
-    expect(gateItems, "charter:46 holds the gate as one whole item").toContain(ROSTER.gatePhrase);
-    const [gateId = "", ...gateWords] = ROSTER.gatePhrase.split(" ");
-    expect(owner.title, "the title quotes the gate").toContain(`${gateId} '${gateWords.join(" ")}'`);
-    expect(new Set(PRODUCER.verdicts.map(classOf)).size, "three verdicts, three classes").toBe(PRODUCER.verdicts.length);
-    const stems = { pass: stemOf(ROSTER.words.pass), fail: stemOf(ROSTER.words.fail) };
-    expect([...ROSTER.words.pass].sort(), "the PASS words are one stem's inflections").toEqual(inflections(stems.pass).sort());
-    expect([...ROSTER.words.fail].sort(), "the FAIL words are one stem's inflections").toEqual(inflections(stems.fail).sort());
-    const attested = attestedWords();
-    const classWords = [...ROSTER.words.pass, ...ROSTER.words.fail];
-    expect(attested.filter(word => !classWords.includes(word)), "every pass or fail word an outside text spells is a class word").toEqual([]);
     const produced = Object.entries(outputs);
     const records: Record<string, string> = {};
     for (const [id, output] of produced) {
@@ -806,139 +864,163 @@ describe(`A ${labelOf("A")}`, () => {
       }
     }
     expect(Object.keys(records).sort(), "one output per verdict").toEqual([...PRODUCER.verdicts].sort());
-    const named = produced.flatMap(([, output]) => (isObject(output) && isObject(output.provenance) && typeof output.provenance.policy === "string" ? [output.provenance.policy] : []));
-    const unnamed = PRODUCER.policies.filter(policy => !named.includes(policy));
+    const unnamed = blocklessPolicies();
     expect(unnamed.length, "one policy renders no block").toBe(1);
     expect(produced.filter(([, output]) => output === null).length, "each policy that renders no block has a null output").toBe(unnamed.length);
+    const evidence = produced.filter(([, output]) => output !== null).map(([id]) => id);
+    const deferred = produced.filter(([, output]) => output === null).map(([id]) => id);
+    const clean = JSON.stringify(fullShapeRf(REPO));
+    const neutral = ROSTER.cases.filter(id => JSON.stringify(caseEnvelope(id)) === clean);
+    expect(neutral, "one case is the rf fixture helper's clean envelope unchanged: the neutral render").toHaveLength(1);
+    expect([...ROSTER.cases].sort(), "the cases are the neutral render and every output on both carriers").toEqual([...neutral, ...deferred, ...evidence.flatMap(id => CARRIERS.map(carrier => `${id}:${carrier}`))].sort());
+    const rfRow = [...Object.keys(rfFixtureBlock()), "span"].sort();
+    const plain = ROSTER.cases.filter(id => blockCount(id) === 1 && JSON.stringify(rowKeys(id)) === JSON.stringify(rfRow));
+    const full = ROSTER.cases.filter(id => blockCount(id) === 1 && [...rfRow, ...ROW_FIELDS].every(key => rowKeys(id).includes(key)));
+    const unridden = evidence.filter(id => !casesOf([id]).some(found => plain.includes(found)) || !casesOf([id]).some(found => full.includes(found)));
+    expect(unridden, "every output with a block rides today's rf row (the helper's row keys and a span) and that row with every producer field").toEqual([]);
     witnessed("A2", {
-      pin: "A2", charterBlob: charter.blob, adapterBlob: adapter.blob, section, arms: arms.length, gateItem: ROSTER.gatePhrase,
-      verdicts: [...PRODUCER.verdicts], classes: PRODUCER.verdicts.map(classOf), stems, attested,
+      pin: "A2", charterBlob: charter.blob, adapterBlob: adapter.blob, section, arms: arms.length,
       policies: [...PRODUCER.policies], kinds: [PRODUCER.kind, PRODUCER.unavailableKind], texts: PRODUCER_TEXTS.length, outputs: produced.map(([id]) => id).sort(),
-      records, deferPolicy: unnamed, citations: [...owner.citations], refusals: Object.keys(refusals).sort(),
+      records, deferPolicy: unnamed, citations: [...owner.citations], refusals: Object.keys(refusals).sort(), neutral, rowFields: [...ROW_FIELDS].sort(),
+      carriers: { plain, full },
     });
   });
 
-  it("A3 the falsifiers are armed: the surfaces are the envelope readers and the inspector, the cases cover the outputs, and each judge fires", { timeout: SLOW }, async () => {
-    const pass = code();
-    const inspectorModule = ROSTER.surfaces.inspector ?? "";
-    expect([...pass.readers].sort(), "the envelope readers are the surfaces").toEqual(Object.entries(ROSTER.surfaces).filter(([id]) => id !== "inspector").map(([, path]) => path).sort());
-    expect(lexemes(inspectorModule, readFileSync(join(REPO, inspectorModule), "utf8")).some(lexeme => lexeme.text === "layoutInspector"), "the inspector module draws the views").toBe(true);
-    const evidence = Object.entries(ROSTER.producer.outputs).filter(([, output]) => output !== null).map(([id]) => id);
-    const deferred = Object.entries(ROSTER.producer.outputs).filter(([, output]) => output === null).map(([id]) => id);
-    expect([...ROSTER.cases].sort(), "the cases cover every output on both carriers").toEqual(["neutral", ...deferred, ...evidence.flatMap(id => [`${id}:text`, `${id}:row`])].sort());
-    for (const id of ROSTER.cases) {
-      const surfaces = await reading(id);
-      expect(surfaces.detailsSelected, `${id} details view selects the RF node`).toBe(true);
-      for (const surface of SURFACE_IDS()) expect(surfaceStrings(surfaces, surface).length, `${id} ${surface} shows strings`).toBeGreaterThan(0);
-    }
-    const unknownVerdict = PRODUCER.verdicts.find(verdict => classOf(verdict) === "unknown") ?? "";
-    const passVerdict = PRODUCER.verdicts.find(verdict => classOf(verdict) === "pass") ?? "";
-    const upper = (list: readonly string[]): string[] => list.map(word => word.toUpperCase());
-    const f1Plants = [unknownVerdict, PRODUCER.texts[unknownVerdict] ?? ""];
-    const f2Plants = [passVerdict, PRODUCER.texts[passVerdict] ?? "", ...ROSTER.words.pass, ...upper(ROSTER.words.pass)];
-    const f3Case = "unknown-empty:row";
-    const emitted = new Set(emittedBy(f3Case).flatMap(text => verdictReadings(text).map(found => found.evidence)));
+  it("A3 the gate RC-RQ2 'unknown not pass': charter:46 holds it whole, the clause is the title's spelling of it, it names the unknown verdict and a PASS word, and the verdict classes and PASS and FAIL words are anchored", () => {
+    const { charter } = ROSTER.producer;
+    const gateItems = charterLine(charter.gateLine).replace(/^Acceptance /, "").split("; ");
+    expect(gateItems, "charter:46 holds the gate as one whole item").toContain(ROSTER.gatePhrase);
+    const [gateId = "", ...gateWords] = ROSTER.gatePhrase.split(" ");
+    expect(clauseOf("A3"), "the clause is the title's spelling of the gate").toBe(`gated ${gateId} '${gateWords.join(" ")}'`);
+    const separated = {
+      unknown: PRODUCER.verdicts.filter(verdict => containsRun(words(ROSTER.gatePhrase), words(verdict))),
+      pass: ROSTER.words.pass.filter(word => wordPattern(word, "i").test(ROSTER.gatePhrase)),
+    };
+    expect(separated.unknown.map(classOf), "the gate names the unknown verdict").toEqual(["unknown"]);
+    expect(separated.pass.length, "and a PASS word").toBeGreaterThan(0);
+    expect(new Set(PRODUCER.verdicts.map(classOf)).size, "three verdicts, three classes").toBe(PRODUCER.verdicts.length);
+    const stems = { pass: stemOf(ROSTER.words.pass), fail: stemOf(ROSTER.words.fail) };
+    expect([...ROSTER.words.pass].sort(), "the PASS words are one stem's inflections").toEqual(inflections(stems.pass).sort());
+    expect([...ROSTER.words.fail].sort(), "the FAIL words are one stem's inflections").toEqual(inflections(stems.fail).sort());
+    const attested = attestedWords();
     const classWords = [...ROSTER.words.pass, ...ROSTER.words.fail];
-    const f3Pool = [...PRODUCER.verdicts, ...PRODUCER_TEXTS, ...classWords, ...upper(classWords)];
-    const f3Plants = f3Pool.filter(plant => !emitted.has(plant));
-    const f3Quiet = f3Pool.filter(plant => emitted.has(plant));
-    const fired = { F1: 0, F2: 0, F3: 0, quiet: 0 };
-    for (const surface of SURFACE_IDS()) {
-      const missing = surfaceStrings(await reading("unavailable:row"), surface);
-      for (const plant of f1Plants) {
-        expect(f1([...missing, `query: ${plant}`]).length, `F1 fires on ${surface}: ${plant}`).toBeGreaterThan(f1(missing).length);
-        fired.F1 += 1;
-      }
-      const unknown = surfaceStrings(await reading("unknown-empty:row"), surface);
-      for (const plant of f2Plants) {
-        expect(f2([...unknown, `query: ${plant}`]).length, `F2 fires on ${surface}: ${plant}`).toBeGreaterThan(f2(unknown).length);
-        fired.F2 += 1;
-      }
-      if (surface === "provider") continue;
-      const consumed = surfaceStrings(await reading(f3Case), surface);
-      for (const plant of f3Plants) {
-        expect(f3([...consumed, `query: ${plant}`], emittedBy(f3Case)).length, `F3 fires on ${surface}: ${plant}`).toBeGreaterThan(0);
-        fired.F3 += 1;
-      }
-      for (const plant of f3Quiet) {
-        expect(f3([...consumed, `query: ${plant}`], emittedBy(f3Case)), `F3 lets ${surface} consume ${plant}`).toEqual([]);
-        fired.quiet += 1;
-      }
-    }
-    const deferTopology = (await reading("defer")).topology;
-    const forced = JSON.parse(JSON.stringify(deferTopology)) as ReactiveFiberProjectionTopology;
-    const first = forced.snapshots[0];
-    if (first !== undefined) Object.assign(first, { coverage: "complete" });
-    expect(zeroBlockPass(forced), "F2 fires on a zero-block render read complete").toEqual(["coverage complete"]);
-    witnessed("A3", { pin: "A3", surfaces: SURFACE_IDS(), readers: [...pass.readers].sort(), cases: ROSTER.cases.length, fired, f3Plants, f3Quiet });
+    expect(attested.filter(word => !classWords.includes(word)), "every pass or fail word an outside text spells is a class word").toEqual([]);
+    witnessed("A3", { pin: "A3", gateItem: ROSTER.gatePhrase, separated, verdicts: [...PRODUCER.verdicts], classes: PRODUCER.verdicts.map(classOf), stems, attested });
   });
 });
 
 describe(`B ${labelOf("B")}`, () => {
-  it("B1 the explicit unavailable-block policy: no logical UNKNOWN on any surface, and its text, kind and policy carried verbatim", { timeout: SLOW }, async () => {
-    const cases = ["unavailable:text", "unavailable:row"];
-    const { judged: count, readings } = await judged(cases, SURFACE_IDS(), strings => f1(strings));
-    const carried: string[] = [];
+  it("B1 a missing QueryView resource reads as host-pending: the policy that renders no block leaves an empty rendered list and the reader adapter holds Pi's own pending marker", { timeout: SLOW }, async () => {
+    const policies = blocklessPolicies();
+    expect(policies.length, "one producer policy renders no block").toBe(1);
+    const cases = casesOf(policies.flatMap(outputsOfPolicy));
+    expect(cases.length, "its cases").toBeGreaterThan(0);
+    const pending: JsonObject[] = [];
     for (const id of cases) {
-      const provider = (await reading(id)).provider;
-      const source = isObject(provider) && isObject(provider.source) ? provider.source : {};
-      const result = isObject(source.result) ? source.result : {};
-      const output = isObject(result.output) ? result.output : {};
-      const row = Array.isArray(result.blocks) && isObject(result.blocks[0]) ? result.blocks[0] : {};
-      if (output.text === `${PRODUCER.unavailableText}\n`) carried.push(`${id} text`);
-      if (row.kind === PRODUCER.unavailableKind) carried.push(`${id} kind`);
-      if (isObject(row.provenance) && typeof row.provenance.policy === "string" && PRODUCER.policies.includes(row.provenance.policy)) carried.push(`${id} policy`);
+      const { topology } = await reading(id);
+      const snapshot = topology.snapshots[0];
+      pending.push({ id, blocks: blockCount(id), coverage: snapshot?.coverage ?? null, tone: snapshot?.node.statusTone ?? null, marker: topology.diagnostics.filter(note => note.startsWith("inclusion:")) });
     }
-    witnessed("B1", { pin: "B1", judged: count, readings, carried });
+    witnessed("B1", { pin: "B1", policies, cases, pending });
   });
 
-  it("B2 the defer policy: no logical UNKNOWN on any surface, and the reader adapter holds Pi's own pending marker", { timeout: SLOW }, async () => {
-    const { judged: count, readings } = await judged(["defer"], SURFACE_IDS(), strings => f1(strings));
-    const snapshot = (await reading("defer")).topology.snapshots[0];
-    const marker = (await reading("defer")).topology.diagnostics.filter(note => note.startsWith("inclusion:"));
-    witnessed("B2", { pin: "B2", judged: count, readings, blocks: blockCount("defer"), coverage: snapshot?.coverage ?? null, tone: snapshot?.node.statusTone ?? null, marker });
+  it("B2 an explicit unavailable-block policy: the policy the clause names renders its block on both carriers, its text, kind and policy carried verbatim", { timeout: SLOW }, async () => {
+    const clause = clauseOf("B2");
+    const policies = PRODUCER.policies.filter(policy => containsRun(words(clause), words(policy)));
+    expect(policies.length, "the clause names one producer policy").toBe(1);
+    const [policy = ""] = policies;
+    const outputs = outputsOfPolicy(policy);
+    const cases = casesOf(outputs);
+    const carried: string[] = [];
+    for (const id of cases) {
+      const { text, row } = providerRow((await reading(id)).provider);
+      if (text === `${PRODUCER.unavailableText}\n`) carried.push(`${id} text`);
+      if (row.kind === PRODUCER.unavailableKind) carried.push(`${id} kind`);
+      if (isObject(row.provenance) && row.provenance.policy === policy) carried.push(`${id} policy`);
+    }
+    expect(carried.filter(entry => entry.endsWith(" policy")).length, "the policy the clause names is carried verbatim").toBeGreaterThan(0);
+    witnessed("B2", { pin: "B2", policy, outputs, cases, carried });
+  });
+
+  it("B3 never as logical UNKNOWN: the token the clause names reads as the unknown class, F1 is quiet on every surface of every missing-resource case, and fires on each planted UNKNOWN reading", { timeout: SLOW }, async () => {
+    const clause = clauseOf("B3");
+    const tokens = PRODUCER.verdicts.filter(verdict => wordPattern(verdict, "").test(clause));
+    expect(tokens.map(classOf), "the clause names the verdict F1 reads").toEqual(["unknown"]);
+    const cases = casesOf(PRODUCER.policies.flatMap(outputsOfPolicy));
+    const { judged: count, readings } = await judged(cases, SURFACE_IDS(), strings => f1(strings));
+    const [token = ""] = tokens;
+    const plants = [token, PRODUCER.texts[token] ?? ""];
+    let armed = 0;
+    for (const surface of SURFACE_IDS()) {
+      const missing = surfaceStrings(await reading("unavailable:row"), surface);
+      for (const plant of plants) {
+        expect(f1([...missing, `query: ${plant}`]).length, `F1 fires on ${surface}: ${plant}`).toBeGreaterThan(f1(missing).length);
+        armed += 1;
+      }
+    }
+    witnessed("B3", { pin: "B3", tokens, cases, judged: count, readings, armed });
   });
 });
 
 describe(`C ${labelOf("C")}`, () => {
-  it("C1 the empty rendered list: no pass reading on any surface, and never complete or success", { timeout: SLOW }, async () => {
-    const { judged: count, readings } = await judged(["defer"], SURFACE_IDS(), strings => f2(strings));
-    const structural = zeroBlockPass((await reading("defer")).topology);
-    witnessed("C1", { pin: "C1", judged: count, readings, structural, blocks: blockCount("defer") });
-  });
-
-  it("C2 an UNKNOWN view with an empty source list: no pass reading on any surface, the record carried verbatim", { timeout: SLOW }, async () => {
-    const cases = ["unknown-empty:text", "unknown-empty:row"];
+  it("C1 unknown never renders as passing: the clause names the unknown verdict and a PASS word, F2 is quiet on every surface of the UNKNOWN view with an empty source list, the record carried verbatim, and F2 fires on each planted pass reading", { timeout: SLOW }, async () => {
+    const clause = clauseOf("C1");
+    const verdicts = PRODUCER.verdicts.filter(verdict => containsRun(words(clause), words(verdict)));
+    expect(verdicts.map(classOf), "the clause names the unknown verdict").toEqual(["unknown"]);
+    const passWords = ROSTER.words.pass.filter(word => wordPattern(word, "i").test(clause));
+    expect(passWords.length, "and a PASS word, the class F2 reads").toBeGreaterThan(0);
+    const cases = casesOf(verdicts.flatMap(outputsOfVerdict));
     const { judged: count, readings } = await judged(cases, SURFACE_IDS(), strings => f2(strings));
-    const provider = (await reading("unknown-empty:row")).provider;
-    const source = isObject(provider) && isObject(provider.source) ? provider.source : {};
-    const result = isObject(source.result) ? source.result : {};
-    const row = Array.isArray(result.blocks) && isObject(result.blocks[0]) ? result.blocks[0] : {};
+    const { row } = providerRow((await reading("unknown-empty:row")).provider);
     const metadata = isObject(row.metadata) ? row.metadata : {};
     const record = isObject(metadata[PRODUCER.kind]) ? metadata[PRODUCER.kind] : {};
     const carried: JsonObject = isObject(record) ? { verdictClass: classOf(String(record.verdict)), sources: Array.isArray(record.sources) ? record.sources.length : -1, complete: typeof record.complete === "boolean" ? record.complete : null } : {};
+    const passVerdict = PRODUCER.verdicts.find(verdict => classOf(verdict) === "pass") ?? "";
     const refusal = ROSTER.producer.refusals["true-incomplete"] ?? "";
-    expect(refusal, "the producer refuses a TRUE without complete coverage").toContain(`${PRODUCER.verdicts.find(verdict => classOf(verdict) === "pass") ?? ""} verdict`);
-    witnessed("C2", { pin: "C2", judged: count, readings, carried, refusal });
+    expect(refusal, "the producer refuses a TRUE without complete coverage").toContain(`${passVerdict} verdict`);
+    const plants = [passVerdict, PRODUCER.texts[passVerdict] ?? "", ...ROSTER.words.pass, ...upper(ROSTER.words.pass)];
+    let armed = 0;
+    for (const surface of SURFACE_IDS()) {
+      const unknown = surfaceStrings(await reading("unknown-empty:row"), surface);
+      for (const plant of plants) {
+        expect(f2([...unknown, `query: ${plant}`]).length, `F2 fires on ${surface}: ${plant}`).toBeGreaterThan(f2(unknown).length);
+        armed += 1;
+      }
+    }
+    witnessed("C1", { pin: "C1", verdicts, passWords, cases, judged: count, readings, carried, refusal, armed });
+  });
+
+  it("C2 because an empty list rendered: on the policy that renders no block F2 is quiet on every surface and the render is never complete or success, while that reading fires on it forced complete", { timeout: SLOW }, async () => {
+    const cases = casesOf(blocklessPolicies().flatMap(outputsOfPolicy));
+    const { judged: count, readings } = await judged(cases, SURFACE_IDS(), strings => f2(strings));
+    const structural: string[] = [];
+    const forced: string[] = [];
+    for (const id of cases) {
+      const { topology } = await reading(id);
+      structural.push(...zeroBlockPass(topology).map(found => `${id}: ${found}`));
+      const copy = JSON.parse(JSON.stringify(topology)) as ReactiveFiberProjectionTopology;
+      const first = copy.snapshots[0];
+      if (first !== undefined) Object.assign(first, { coverage: "complete" });
+      forced.push(...zeroBlockPass(copy).map(found => `${id}: ${found}`));
+    }
+    expect(forced.length, "the structural reading fires on a zero-block render forced complete").toBeGreaterThan(0);
+    witnessed("C2", { pin: "C2", cases, blocks: cases.map(blockCount), judged: count, readings, structural, forced });
   });
 });
 
 describe(`D ${labelOf("D")}`, () => {
-  it("D1 the four inspector views of every case show no verdict the producer did not emit", { timeout: SLOW }, async () => {
+  it("D1 no DevTools/debugger surface computes query truth: F3 is quiet on every inspector view, the node evidence and the snapshot of every case, the node evidence holds only the envelope's own values, and F3 fires on each reading the producer did not emit", { timeout: SLOW }, async () => {
     const readings: string[] = [];
-    let count = 0;
+    let views = 0;
     for (const id of ROSTER.cases) {
       const surfaces = await reading(id);
       for (const view of VIEWS) {
-        count += 1;
-        readings.push(...f3(surfaces.inspector[view], emittedBy(id)).map(evidence => `${id} ${view}: ${evidence}`));
+        views += 1;
+        readings.push(...f3(surfaces.inspector[view] ?? [], emittedBy(id)).map(evidence => `${id} ${view}: ${evidence}`));
       }
     }
-    witnessed("D1", { pin: "D1", judged: count, readings });
-  });
-
-  it("D2 the node evidence and the snapshot of every case compute no verdict: no domainStatus, only the envelope's own values", { timeout: SLOW }, async () => {
-    const { judged: count, readings } = await judged(ROSTER.cases, ["native-evidence", "observer"], (strings, id) => f3(strings, emittedBy(id)));
+    const inputs = await judged(ROSTER.cases, ["native-evidence", "observer"], (strings, id) => f3(strings, emittedBy(id)));
+    readings.push(...inputs.readings);
     const keys = new Set<string>();
     const foreign: string[] = [];
     for (const id of ROSTER.cases) {
@@ -951,7 +1033,25 @@ describe(`D ${labelOf("D")}`, () => {
       if (native.sourceBasis !== result.bundle_revision_id) foreign.push(`${id} sourceBasis`);
       if (native.producerRelease !== provenance.cli_version) foreign.push(`${id} producerRelease`);
     }
-    witnessed("D2", { pin: "D2", judged: count, readings, nativeKeys: [...keys].sort(), foreign });
+    const f3Case = "unknown-empty:row";
+    const emitted = new Set(emittedBy(f3Case).flatMap(text => verdictReadings(text).map(found => found.evidence)));
+    const classWords = [...ROSTER.words.pass, ...ROSTER.words.fail];
+    const pool = [...PRODUCER.verdicts, ...PRODUCER_TEXTS, ...classWords, ...upper(classWords)];
+    const f3Plants = pool.filter(plant => !emitted.has(plant));
+    const f3Quiet = pool.filter(plant => emitted.has(plant));
+    const armed = { fired: 0, quiet: 0 };
+    for (const surface of SURFACE_IDS().filter(id => id !== "provider")) {
+      const consumed = surfaceStrings(await reading(f3Case), surface);
+      for (const plant of f3Plants) {
+        expect(f3([...consumed, `query: ${plant}`], emittedBy(f3Case)).length, `F3 fires on ${surface}: ${plant}`).toBeGreaterThan(0);
+        armed.fired += 1;
+      }
+      for (const plant of f3Quiet) {
+        expect(f3([...consumed, `query: ${plant}`], emittedBy(f3Case)), `F3 lets ${surface} consume ${plant}`).toEqual([]);
+        armed.quiet += 1;
+      }
+    }
+    witnessed("D1", { pin: "D1", judged: { views, inputs: inputs.judged }, readings, nativeKeys: [...keys].sort(), foreign, f3Plants, f3Quiet, armed });
   });
 });
 
@@ -1022,11 +1122,15 @@ describe("residuals, the read set", () => {
 });
 
 describe("residuals, the spellings", () => {
-  it("Q9 R-COMPOSED: a name assembled from a non-constant part is read with that part as a space, while constant parts fold", () => {
+  it("Q9 R-COMPOSED: a name assembled from a non-constant part is read with that part as a space, while constant parts and spans fold", () => {
     const sequences = triggerSequences();
     expect(triggerFindings("src/plant.ts", 'const w = "evidence";\nexport const key = "query_" + w;\n', sequences), "a variable part").toEqual([]);
     expect(triggerFindings("src/plant.ts", 'export const key = ("query" + "_") + "evidence";\n', sequences), "a constant chain folds").toEqual(["src/plant.ts:1 query evidence"]);
     expect(triggerFindings("src/plant.ts", "export const key = (x: string) => `query_$" + "{x}_evidence`;\n", sequences), "a template folds").toEqual(["src/plant.ts:1 query evidence"]);
+    expect(triggerFindings("src/plant.ts", "export const key = `query_$" + '{"evidence"}`;\n', sequences), "a constant span folds").toEqual(["src/plant.ts:1 query evidence"]);
+    const producerText = PRODUCER.texts[PRODUCER.verdicts.find(verdict => classOf(verdict) === "pass") ?? ""] ?? "";
+    const [head = "", tail = ""] = producerText.split(" passed ");
+    expect(triggerFindings("src/plant.ts", `export const note = \`${head} $` + '{"passed"}' + ` ${tail}\`;\n`, sequences), "a producer text through a constant span").toEqual(["src/plant.ts:1 producer text"]);
     quietRan("Q9");
   });
   it("Q10 R-LOOKALIKE: a look-alike letter inside a word is not folded, while NFKC folds the fullwidth forms", () => {
@@ -1052,7 +1156,7 @@ describe("residuals, the spellings", () => {
   });
 });
 
-describe("residuals, the vocabulary and the judge", () => {
+describe("residuals, the vocabulary, the judge and the owner text", () => {
   it("Q15 R-S-INFLECTION: no outside text spells the -s forms, which the paradigm rule alone reads", () => {
     const sForms = ["passes", "fails"];
     const ruleForms = [stemOf(ROSTER.words.pass), stemOf(ROSTER.words.fail)].flatMap(stem => inflections(stem).filter(form => form === `${stem}s` || form === `${stem}es`));
@@ -1067,11 +1171,36 @@ describe("residuals, the vocabulary and the judge", () => {
     expect(f3([`query ${token}`], emittedBy("false:text")), "the twin: the text carrier does not").toEqual([token]);
     quietRan("Q16");
   });
+  it("Q17 R-CLAUSE-RULE: the part and clause breaks are this file's own rule, so a rule without one break still tiles a part", () => {
+    const parts = titleParts(ownerRow().title);
+    const merges = CLAUSE_BREAKS.flatMap(item =>
+      parts.flatMap((part, index) => {
+        const written = clauses(part).length;
+        const merged = clausesBy(CLAUSE_BREAKS.filter(other => other !== item), part).length;
+        return merged < written ? [`${ROWS[index]?.id ?? "?"}: ${written} -> ${merged} without /${item.source}/`] : [];
+      }),
+    );
+    expect(merges, "the residual is live: dropping any one of these breaks merges two clauses of a part").toEqual([
+      "A: 3 -> 2 without /\\s\\(/",
+      "A: 3 -> 2 without /;\\s/",
+      "B: 3 -> 2 without /,\\s/",
+      "B: 3 -> 2 without /\\sor\\s/",
+      "C: 2 -> 1 without /\\s(?=because\\s)/",
+    ]);
+    const arm = parts[1] ?? "";
+    const written = clauses(arm);
+    expect(clausesBy(CLAUSE_BREAKS.filter(item => !item.test(" or ")), arm), "arm 1 without the ' or ' break: its alternatives are one clause").toEqual([`${written[0]} or ${written[1]}`, written[2]]);
+    quietRan("Q17");
+  });
 });
 
 describe("records", () => {
-  it("every pin of the roster ran to its witness", () => {
+  it("the judged set ran to its end", () => {
+    expect(judgedRan).toBe(true);
+  });
+  it("every pin of the roster ran to its witness, one per clause of the owner title", () => {
     expect([...REACHED].sort()).toEqual(Object.keys(ROSTER.pins).sort());
+    expect(REACHED.size, "one pin per title clause").toBe(titleParts(ownerRow().title).flatMap(clauses).length);
   });
   it("every residual's quiet row ran", () => {
     expect([...QUIET].sort()).toEqual(ROSTER.residuals.map(residual => residual.quiet).sort());

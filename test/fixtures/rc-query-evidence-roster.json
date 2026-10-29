@@ -16,7 +16,8 @@
    "label": "missing QueryView renders host-pending/unavailable-block (never logical UNKNOWN)",
    "pins": [
     "B1",
-    "B2"
+    "B2",
+    "B3"
    ]
   },
   {
@@ -31,16 +32,15 @@
    "id": "D",
    "label": "the inspector/DevTools surface only consumes emitted evidence, never computes query truth",
    "pins": [
-    "D1",
-    "D2"
+    "D1"
    ]
   }
  ],
  "frozenShape": [
   "A:3",
-  "B:2",
+  "B:3",
   "C:2",
-  "D:2"
+  "D:1"
  ],
  "pins": {
   "A1": {
@@ -48,6 +48,9 @@
    "quote": "If Pi ever projects query evidence into context via RC's optional query-evidence adapter",
    "witness": {
     "pin": "A1",
+    "named": [
+     "query evidence"
+    ],
     "sequences": [
      "query evidence",
      "query view",
@@ -63,6 +66,20 @@
     "manifestArmed": [
      "dependencies.qe-adapter: reactive components"
     ],
+    "readers": [
+     "src/workbench/native-evidence.ts",
+     "src/workbench/providers/reactivefiber.ts",
+     "src/workbench/reactivefiber-observer.ts"
+    ],
+    "drawers": [
+     "src/ui/workflow-inspector.ts"
+    ],
+    "views": [
+     "overview",
+     "graph",
+     "timeline",
+     "details"
+    ],
     "verbatimCases": 10,
     "baselineCases": 8,
     "baselineDiffs": []
@@ -70,34 +87,13 @@
   },
   "A2": {
    "row": "A",
-   "quote": "gated RC-RQ2 'unknown not pass'",
+   "quote": "2026-10-17 amendment",
    "witness": {
     "pin": "A2",
     "charterBlob": "45e623203565741f5b205b7e6930406bf21c4ac1",
     "adapterBlob": "c8a2f15491585c2e567c85032c310359f1d83192",
     "section": "## 2026-10-17 amendment \u2014 query evidence into context composition",
     "arms": 3,
-    "gateItem": "RC-RQ2 unknown not pass",
-    "verdicts": [
-     "TRUE",
-     "FALSE",
-     "UNKNOWN"
-    ],
-    "classes": [
-     "pass",
-     "fail",
-     "unknown"
-    ],
-    "stems": {
-     "pass": "pass",
-     "fail": "fail"
-    },
-    "attested": [
-     "failed",
-     "pass",
-     "passed",
-     "passing"
-    ],
     "policies": [
      "defer",
      "unavailable_block"
@@ -129,32 +125,194 @@
     "refusals": [
      "false-no-match",
      "true-incomplete"
-    ]
+    ],
+    "neutral": [
+     "neutral"
+    ],
+    "rowFields": [
+     "content",
+     "kind",
+     "metadata",
+     "provenance",
+     "visibility"
+    ],
+    "carriers": {
+     "plain": [
+      "true:text",
+      "false:text",
+      "unknown-empty:text",
+      "unavailable:text"
+     ],
+     "full": [
+      "true:row",
+      "false:row",
+      "unknown-empty:row",
+      "unavailable:row"
+     ]
+    }
    }
   },
   "A3": {
    "row": "A",
-   "quote": "adoption-time falsifiers for the three arms",
+   "quote": "gated RC-RQ2 'unknown not pass'",
    "witness": {
     "pin": "A3",
-    "surfaces": [
-     "provider",
-     "native-evidence",
-     "observer",
-     "inspector"
-    ],
-    "readers": [
-     "src/workbench/native-evidence.ts",
-     "src/workbench/providers/reactivefiber.ts",
-     "src/workbench/reactivefiber-observer.ts"
-    ],
-    "cases": 10,
-    "fired": {
-     "F1": 8,
-     "F2": 40,
-     "F3": 63,
-     "quiet": 6
+    "gateItem": "RC-RQ2 unknown not pass",
+    "separated": {
+     "unknown": [
+      "UNKNOWN"
+     ],
+     "pass": [
+      "pass"
+     ]
     },
+    "verdicts": [
+     "TRUE",
+     "FALSE",
+     "UNKNOWN"
+    ],
+    "classes": [
+     "pass",
+     "fail",
+     "unknown"
+    ],
+    "stems": {
+     "pass": "pass",
+     "fail": "fail"
+    },
+    "attested": [
+     "failed",
+     "pass",
+     "passed",
+     "passing"
+    ]
+   }
+  },
+  "B1": {
+   "row": "B",
+   "quote": "a missing QueryView resource reads as host-pending",
+   "witness": {
+    "pin": "B1",
+    "policies": [
+     "defer"
+    ],
+    "cases": [
+     "defer"
+    ],
+    "pending": [
+     {
+      "id": "defer",
+      "blocks": 0,
+      "coverage": "partial",
+      "tone": "unknown",
+      "marker": [
+       "inclusion: 0 blocks included, 0 of 0 judged candidates withheld at host_necessity: partial"
+      ]
+     }
+    ]
+   }
+  },
+  "B2": {
+   "row": "B",
+   "quote": "an explicit unavailable-block policy",
+   "witness": {
+    "pin": "B2",
+    "policy": "unavailable_block",
+    "outputs": [
+     "unavailable"
+    ],
+    "cases": [
+     "unavailable:text",
+     "unavailable:row"
+    ],
+    "carried": [
+     "unavailable:text text",
+     "unavailable:row text",
+     "unavailable:row kind",
+     "unavailable:row policy"
+    ]
+   }
+  },
+  "B3": {
+   "row": "B",
+   "quote": "never as logical UNKNOWN",
+   "witness": {
+    "pin": "B3",
+    "tokens": [
+     "UNKNOWN"
+    ],
+    "cases": [
+     "unavailable:text",
+     "unavailable:row",
+     "defer"
+    ],
+    "judged": 12,
+    "readings": [],
+    "armed": 8
+   }
+  },
+  "C1": {
+   "row": "C",
+   "quote": "unknown never renders as passing",
+   "witness": {
+    "pin": "C1",
+    "verdicts": [
+     "UNKNOWN"
+    ],
+    "passWords": [
+     "passing"
+    ],
+    "cases": [
+     "unknown-empty:text",
+     "unknown-empty:row"
+    ],
+    "judged": 8,
+    "readings": [],
+    "carried": {
+     "verdictClass": "unknown",
+     "sources": 0,
+     "complete": false
+    },
+    "refusal": "QueryViewError: query evidence field 'complete' must be True for a TRUE verdict: zero matches without complete coverage is UNKNOWN, not a pass",
+    "armed": 40
+   }
+  },
+  "C2": {
+   "row": "C",
+   "quote": "because an empty list rendered",
+   "witness": {
+    "pin": "C2",
+    "cases": [
+     "defer"
+    ],
+    "blocks": [
+     0
+    ],
+    "judged": 4,
+    "readings": [],
+    "structural": [],
+    "forced": [
+     "defer: coverage complete"
+    ]
+   }
+  },
+  "D1": {
+   "row": "D",
+   "quote": "no DevTools/debugger surface computes query truth",
+   "witness": {
+    "pin": "D1",
+    "judged": {
+     "views": 40,
+     "inputs": 20
+    },
+    "readings": [],
+    "nativeKeys": [
+     "nativeId",
+     "producerRelease",
+     "provider",
+     "sourceBasis"
+    ],
+    "foreign": [],
     "f3Plants": [
      "TRUE",
      "FALSE",
@@ -181,88 +339,11 @@
     "f3Quiet": [
      "UNKNOWN",
      "Test status not established (results incomplete)."
-    ]
-   }
-  },
-  "B1": {
-   "row": "B",
-   "quote": "an explicit unavailable-block policy",
-   "witness": {
-    "pin": "B1",
-    "judged": 8,
-    "readings": [],
-    "carried": [
-     "unavailable:text text",
-     "unavailable:row text",
-     "unavailable:row kind",
-     "unavailable:row policy"
-    ]
-   }
-  },
-  "B2": {
-   "row": "B",
-   "quote": "a missing QueryView resource reads as host-pending",
-   "witness": {
-    "pin": "B2",
-    "judged": 4,
-    "readings": [],
-    "blocks": 0,
-    "coverage": "partial",
-    "tone": "unknown",
-    "marker": [
-     "inclusion: 0 blocks included, 0 of 0 judged candidates withheld at host_necessity: partial"
-    ]
-   }
-  },
-  "C1": {
-   "row": "C",
-   "quote": "because an empty list rendered",
-   "witness": {
-    "pin": "C1",
-    "judged": 4,
-    "readings": [],
-    "structural": [],
-    "blocks": 0
-   }
-  },
-  "C2": {
-   "row": "C",
-   "quote": "unknown never renders as passing",
-   "witness": {
-    "pin": "C2",
-    "judged": 8,
-    "readings": [],
-    "carried": {
-     "verdictClass": "unknown",
-     "sources": 0,
-     "complete": false
-    },
-    "refusal": "QueryViewError: query evidence field 'complete' must be True for a TRUE verdict: zero matches without complete coverage is UNKNOWN, not a pass"
-   }
-  },
-  "D1": {
-   "row": "D",
-   "quote": "the inspector/DevTools surface only consumes emitted evidence",
-   "witness": {
-    "pin": "D1",
-    "judged": 40,
-    "readings": []
-   }
-  },
-  "D2": {
-   "row": "D",
-   "quote": "no DevTools/debugger surface computes query truth",
-   "witness": {
-    "pin": "D2",
-    "judged": 20,
-    "readings": [],
-    "nativeKeys": [
-     "nativeId",
-     "producerRelease",
-     "provider",
-     "sourceBasis"
     ],
-    "foreign": []
+    "armed": {
+     "fired": 63,
+     "quiet": 6
+    }
    }
   }
  },
@@ -493,7 +574,7 @@
   {
    "id": "R-COMPOSED",
    "quiet": "Q9",
-   "family": "a name assembled from a non-constant part (a variable holding the word) is read with that part as one space"
+   "family": "a name assembled from a non-constant part (a variable holding the word, a span expression that is no constant string) is read with that part as one space; constant + chains, templates and constant spans fold as spelled"
   },
   {
    "id": "R-LOOKALIKE",
@@ -518,7 +599,7 @@
   {
    "id": "R-UNNAMED-READER",
    "quiet": "Q14",
-   "family": "an envelope reader whose code does not name REACTIVE_FIBER_CLI_SCHEMA (a generic reader of a provider output's source.result.blocks) is not found by A3"
+   "family": "an envelope reader whose code does not name REACTIVE_FIBER_CLI_SCHEMA (a generic reader of a provider output's source.result.blocks) is not found by A1"
   },
   {
    "id": "R-S-INFLECTION",
@@ -529,6 +610,11 @@
    "id": "R-COINCIDENT",
    "quiet": "Q16",
    "family": "a reading a surface computed that equals one the producer emitted for the case reads as consuming it: F3 judges readings, not how a surface made them"
+  },
+  {
+   "id": "R-CLAUSE-RULE",
+   "quiet": "Q17",
+   "family": "the part and clause breaks are the census's own rule, not an outside text: an edit of the rule that merges two clauses of one part, with one of their pins removed and the other quoting the merged clause, still tiles the title"
   }
  ]
 }
