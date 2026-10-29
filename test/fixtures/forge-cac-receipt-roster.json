@@ -1,0 +1,2171 @@
+{
+ "bead": "wb-b9n.1",
+ "constants": {
+  "gating": "ForgeCACReceiptV0",
+  "word": "VERIFIED_HISTORICAL",
+  "fields": [
+   "predicate",
+   "snapshot digest",
+   "checker identity+version"
+  ],
+  "neutral": "XQZ_NEUTRAL_CONTROL",
+  "lead": "hermetic reader-adapter tests over receipt fixtures"
+ },
+ "residuals": [
+  {
+   "id": "R-COMPOSED",
+   "quietPin": "A2",
+   "quiet": [
+    "composed",
+    "escaped"
+   ],
+   "twin": [
+    "composedTwin"
+   ]
+  },
+  {
+   "id": "R-EMBEDDED",
+   "quietPin": "A2",
+   "quiet": [
+    "embedded",
+    "digitBefore",
+    "letterAfter",
+    "digitAfter",
+    "reversedLetterBefore",
+    "reversedDigitBefore",
+    "reversedLetterAfter",
+    "reversedDigitAfter",
+    "otherNumberBefore",
+    "otherNumberAfter",
+    "reversedOtherNumberBefore",
+    "reversedOtherNumberAfter",
+    "letterNumberBefore",
+    "letterNumberAfter",
+    "reversedLetterNumberBefore",
+    "reversedLetterNumberAfter",
+    "ideographicZeroBefore",
+    "aegeanOneBefore"
+   ],
+   "twin": [
+    "glued",
+    "reversedGlued"
+   ]
+  },
+  {
+   "id": "R-LOOKALIKE",
+   "quietPin": "A2",
+   "quiet": [
+    "cyrillic",
+    "dottedI",
+    "composedLetter"
+   ],
+   "twin": [
+    "fullwidth",
+    "markAfterReversed"
+   ]
+  },
+  {
+   "id": "R-PARAPHRASE",
+   "quietPin": "A2",
+   "quiet": [
+    "passed",
+    "atSnapshot"
+   ],
+   "twin": [
+    "adverb"
+   ]
+  },
+  {
+   "id": "R-SIBLING",
+   "quietPin": "A2",
+   "quiet": [
+    "current"
+   ],
+   "twin": [
+    "title"
+   ]
+  },
+  {
+   "id": "R-OTHER-SEPARATOR",
+   "quietPin": "A2",
+   "quiet": [
+    "hyphenBullet",
+    "minusSign",
+    "middleDot",
+    "brailleBlank",
+    "undertie",
+    "doubleLowLine"
+   ],
+   "twin": [
+    "pd2010"
+   ]
+  },
+  {
+   "id": "R-OTHER-NAME",
+   "quietPin": "A1",
+   "quiet": [
+    "otherName",
+    "oneField"
+   ],
+   "twin": [
+    "named"
+   ]
+  },
+  {
+   "id": "R-COMPOSED-RELEASE",
+   "quietPin": "A1",
+   "quiet": [
+    "pieces",
+    "unicodeEscape"
+   ],
+   "twin": [
+    "spelled"
+   ]
+  },
+  {
+   "id": "R-UNPLANTED-SPELLING",
+   "quietPin": "B1",
+   "quiet": [
+    "otherSpelling"
+   ],
+   "twin": [
+    "readKey"
+   ]
+  }
+ ],
+ "notDue": {
+  "A": [
+   "with the predicate and snapshot echoed verbatim"
+  ],
+  "B": [
+   "renders UNKNOWN with a diagnostic naming the missing field,"
+  ],
+  "C": []
+ },
+ "rows": [
+  {
+   "id": "A",
+   "label": "a full-field receipt renders VERIFIED_HISTORICAL with the predicate and snapshot echoed verbatim",
+   "pins": [
+    {
+     "id": "A1",
+     "quote": "a full-field receipt",
+     "witness": {
+      "release": "@forge/sdk@0.1.0",
+      "root": "directory",
+      "files": 49,
+      "contents": {
+       "dist/cancellation.d.ts": "a5453b729e9c6db6 3997 bytes",
+       "dist/cancellation.js": "33f9eb39c6859b7d 4277 bytes",
+       "dist/capabilities.d.ts": "5f30990da550e1e7 4981 bytes",
+       "dist/capabilities.js": "a2eed14ce84de5f9 4742 bytes",
+       "dist/cli_oneshot.d.ts": "07b29efd7cd0b9a1 6306 bytes",
+       "dist/cli_oneshot.js": "8b12882157a30eaa 8246 bytes",
+       "dist/compatibility.d.ts": "09c55615fed27754 4066 bytes",
+       "dist/compatibility.js": "1085bb4eba25cf03 4689 bytes",
+       "dist/conformance_registry.d.ts": "0f41d416b1157fcd 4488 bytes",
+       "dist/conformance_registry.js": "c07f8e9a51748269 12085 bytes",
+       "dist/errors.d.ts": "c7bb342b29faca68 14169 bytes",
+       "dist/errors.js": "75d3310a6d2278c1 13813 bytes",
+       "dist/event_delivery_policy.d.ts": "f42b86b8f79bc1aa 3946 bytes",
+       "dist/event_delivery_policy.js": "21f9135749508234 3667 bytes",
+       "dist/event_queue.d.ts": "6de7470bc06609b2 6753 bytes",
+       "dist/event_queue.js": "bed14cb38c0b01dd 8613 bytes",
+       "dist/events.d.ts": "7779ddbcc2e879c1 3516 bytes",
+       "dist/events.js": "4dc489cb5702834b 2762 bytes",
+       "dist/facades.d.ts": "44bdc635dafde888 8959 bytes",
+       "dist/facades.js": "3afd6c0f0accfea8 9933 bytes",
+       "dist/fallback.d.ts": "70589fae1f50b378 7566 bytes",
+       "dist/fallback.js": "11e90d6567c5da2f 11883 bytes",
+       "dist/index.d.ts": "20e2cd4533ecbc1c 2794 bytes",
+       "dist/index.js": "4267dff600d0ba66 2794 bytes",
+       "dist/journey_legs.d.ts": "f50e3dde40ad80b2 4865 bytes",
+       "dist/journey_legs.js": "ec3fb2b8bc403755 17833 bytes",
+       "dist/launch.d.ts": "77cbea31f1d4bd23 1465 bytes",
+       "dist/launch.js": "fe4a289df94572de 1489 bytes",
+       "dist/operation.d.ts": "946ea07f6a7ec7b8 5816 bytes",
+       "dist/operation.js": "b8f5ab3bccef0d97 7301 bytes",
+       "dist/operation_stream.d.ts": "f2b1aaed3629330d 17657 bytes",
+       "dist/operation_stream.js": "f60efa34b10028ff 21739 bytes",
+       "dist/result.d.ts": "89b619adb2bfa3ab 5690 bytes",
+       "dist/result.js": "12191fbc2bafafbb 6488 bytes",
+       "dist/result_model.d.ts": "828600159d0311ff 7812 bytes",
+       "dist/result_model.js": "1c7f1632740d2f79 9073 bytes",
+       "dist/telemetry.d.ts": "457d53b8641a37f2 8556 bytes",
+       "dist/telemetry.js": "685efbb5d2dce4d0 11928 bytes",
+       "dist/trace_context.d.ts": "3c26626ba36b2072 5169 bytes",
+       "dist/trace_context.js": "1d66528e979aa0a3 8383 bytes",
+       "dist/transport.d.ts": "46cec84e6cd8b5a3 29212 bytes",
+       "dist/transport.js": "d23538a3b94b9a69 52171 bytes",
+       "dist/waits.d.ts": "e28f6549a680e2cf 1230 bytes",
+       "dist/waits.js": "55eb03ea51a982df 1435 bytes",
+       "dist/work_classification.d.ts": "8d95a9b3e53eb9cf 7213 bytes",
+       "dist/work_classification.js": "9413a6d640aaed4c 11639 bytes",
+       "dist/workspace.d.ts": "162a0cd7ed4f8edf 4554 bytes",
+       "dist/workspace.js": "1cbff3b3da01f6ca 8095 bytes",
+       "package.json": "e49421c85b56138c 668 bytes"
+      },
+      "directories": [
+       "dist"
+      ],
+      "links": [],
+      "others": [],
+      "read": [
+       "dist/cancellation.d.ts",
+       "dist/cancellation.js",
+       "dist/capabilities.d.ts",
+       "dist/capabilities.js",
+       "dist/cli_oneshot.d.ts",
+       "dist/cli_oneshot.js",
+       "dist/compatibility.d.ts",
+       "dist/compatibility.js",
+       "dist/conformance_registry.d.ts",
+       "dist/conformance_registry.js",
+       "dist/errors.d.ts",
+       "dist/errors.js",
+       "dist/event_delivery_policy.d.ts",
+       "dist/event_delivery_policy.js",
+       "dist/event_queue.d.ts",
+       "dist/event_queue.js",
+       "dist/events.d.ts",
+       "dist/events.js",
+       "dist/facades.d.ts",
+       "dist/facades.js",
+       "dist/fallback.d.ts",
+       "dist/fallback.js",
+       "dist/index.d.ts",
+       "dist/index.js",
+       "dist/journey_legs.d.ts",
+       "dist/journey_legs.js",
+       "dist/launch.d.ts",
+       "dist/launch.js",
+       "dist/operation.d.ts",
+       "dist/operation.js",
+       "dist/operation_stream.d.ts",
+       "dist/operation_stream.js",
+       "dist/result.d.ts",
+       "dist/result.js",
+       "dist/result_model.d.ts",
+       "dist/result_model.js",
+       "dist/telemetry.d.ts",
+       "dist/telemetry.js",
+       "dist/trace_context.d.ts",
+       "dist/trace_context.js",
+       "dist/transport.d.ts",
+       "dist/transport.js",
+       "dist/waits.d.ts",
+       "dist/waits.js",
+       "dist/work_classification.d.ts",
+       "dist/work_classification.js",
+       "dist/workspace.d.ts",
+       "dist/workspace.js",
+       "package.json",
+       "dist/zz-plant-receipt.d.ts",
+       "dist/ForgeCACReceiptV0.d.ts",
+       "dist/zz-plant-other.d.ts",
+       "dist/zz-plant-one-field.d.ts",
+       "dist/zz-plant-hyphen.d.ts",
+       "dist/verified-historical.d.ts",
+       "dist/zz-plant-spelled.d.ts",
+       "dist/zz-plant-field-case.d.ts",
+       "dist/zz-plant-pieces.js",
+       "dist/zz-plant-unicode-escape.d.ts",
+       "dist/zz-plant-receipt-big.d.ts"
+      ],
+      "bigPlantLongest": true,
+      "gating": [
+       "dist/zz-plant-receipt.d.ts",
+       "dist/ForgeCACReceiptV0.d.ts",
+       "dist/zz-plant-receipt-big.d.ts"
+      ],
+      "word": [
+       "dist/zz-plant-receipt.d.ts",
+       "dist/zz-plant-hyphen.d.ts",
+       "dist/verified-historical.d.ts",
+       "dist/zz-plant-spelled.d.ts"
+      ],
+      "receiptShaped": [
+       "dist/zz-plant-receipt.d.ts",
+       "dist/zz-plant-field-case.d.ts"
+      ],
+      "live": {
+       "CancelReceipt": [
+        "dist/cancellation.d.ts",
+        "dist/cancellation.js",
+        "dist/operation.d.ts",
+        "dist/operation.js"
+       ],
+       "source_snapshot_id": [
+        "dist/cli_oneshot.js"
+       ]
+      },
+      "planted": {
+       "named": "gating=1 word=1 receiptShaped=1 dist/zz-plant-receipt.d.ts",
+       "pathOnly": "gating=1 word=0 receiptShaped=0 dist/ForgeCACReceiptV0.d.ts",
+       "otherName": "gating=0 word=0 receiptShaped=0 dist/zz-plant-other.d.ts",
+       "oneField": "gating=0 word=0 receiptShaped=0 dist/zz-plant-one-field.d.ts",
+       "hyphen": "gating=0 word=1 receiptShaped=0 dist/zz-plant-hyphen.d.ts",
+       "wordPath": "gating=0 word=1 receiptShaped=0 dist/verified-historical.d.ts",
+       "spelled": "gating=0 word=1 receiptShaped=0 dist/zz-plant-spelled.d.ts",
+       "fieldCase": "gating=0 word=0 receiptShaped=1 dist/zz-plant-field-case.d.ts",
+       "pieces": "gating=0 word=0 receiptShaped=0 dist/zz-plant-pieces.js",
+       "unicodeEscape": "gating=0 word=0 receiptShaped=0 dist/zz-plant-unicode-escape.d.ts"
+      },
+      "family": {
+       "title": 1,
+       "spaced": 1,
+       "hyphen": 1,
+       "glued": 1,
+       "reversed": 1,
+       "adverb": 1,
+       "sentence": 1,
+       "fullwidth": 1,
+       "zeroWidth": 1,
+       "softHyphen": 1,
+       "wordJoiner": 1,
+       "bareVerified": 0,
+       "bareHistorical": 0,
+       "todayLabel": 0,
+       "todayEvidence": 0,
+       "current": 0,
+       "embedded": 0,
+       "cyrillic": 0,
+       "passed": 0,
+       "atSnapshot": 0,
+       "gating": 0,
+       "pd58a": 1,
+       "pd1400": 1,
+       "pd1806": 1,
+       "pd2010": 1,
+       "pd2011": 1,
+       "pd2e17": 1,
+       "pd2e1a": 1,
+       "pd2e40": 1,
+       "pd2e5d": 1,
+       "pd30a0": 1,
+       "pd10ead": 1,
+       "hyphenBullet": 0,
+       "minusSign": 0,
+       "middleDot": 0,
+       "brailleBlank": 0,
+       "undertie": 0,
+       "doubleLowLine": 0,
+       "dottedI": 0,
+       "composedLetter": 0,
+       "markAfterReversed": 1,
+       "digitBefore": 0,
+       "letterAfter": 0,
+       "digitAfter": 0,
+       "reversedLetterBefore": 0,
+       "reversedDigitBefore": 0,
+       "reversedLetterAfter": 0,
+       "reversedDigitAfter": 0,
+       "otherNumberBefore": 0,
+       "otherNumberAfter": 0,
+       "reversedOtherNumberBefore": 0,
+       "reversedOtherNumberAfter": 0,
+       "letterNumberBefore": 0,
+       "letterNumberAfter": 0,
+       "reversedLetterNumberBefore": 0,
+       "reversedLetterNumberAfter": 0,
+       "ideographicZeroBefore": 0,
+       "aegeanOneBefore": 0,
+       "reversedGlued": 1,
+       "adverbForward": 1,
+       "run": 1,
+       "runEvery": 1,
+       "runEveryReversed": 1,
+       "labelOnly": 1,
+       "unbounded": 1,
+       "fwd0009": 1,
+       "rev0009": 1,
+       "fwd000a": 1,
+       "rev000a": 1,
+       "fwd000b": 1,
+       "rev000b": 1,
+       "fwd000c": 1,
+       "rev000c": 1,
+       "fwd000d": 1,
+       "rev000d": 1,
+       "fwd0020": 1,
+       "rev0020": 1,
+       "fwd00a0": 1,
+       "rev00a0": 1,
+       "fwd1680": 1,
+       "rev1680": 1,
+       "fwd2000": 1,
+       "rev2000": 1,
+       "fwd2001": 1,
+       "rev2001": 1,
+       "fwd2002": 1,
+       "rev2002": 1,
+       "fwd2003": 1,
+       "rev2003": 1,
+       "fwd2004": 1,
+       "rev2004": 1,
+       "fwd2005": 1,
+       "rev2005": 1,
+       "fwd2006": 1,
+       "rev2006": 1,
+       "fwd2007": 1,
+       "rev2007": 1,
+       "fwd2008": 1,
+       "rev2008": 1,
+       "fwd2009": 1,
+       "rev2009": 1,
+       "fwd200a": 1,
+       "rev200a": 1,
+       "fwd2028": 1,
+       "rev2028": 1,
+       "fwd2029": 1,
+       "rev2029": 1,
+       "fwd202f": 1,
+       "rev202f": 1,
+       "fwd205f": 1,
+       "rev205f": 1,
+       "fwd3000": 1,
+       "rev3000": 1,
+       "fwdfeff": 1,
+       "revfeff": 1,
+       "fwd002d": 1,
+       "rev002d": 1,
+       "fwd058a": 1,
+       "rev058a": 1,
+       "fwd05be": 1,
+       "rev05be": 1,
+       "fwd1400": 1,
+       "rev1400": 1,
+       "fwd1806": 1,
+       "rev1806": 1,
+       "fwd2010": 1,
+       "rev2010": 1,
+       "fwd2011": 1,
+       "rev2011": 1,
+       "fwd2012": 1,
+       "rev2012": 1,
+       "fwd2013": 1,
+       "rev2013": 1,
+       "fwd2014": 1,
+       "rev2014": 1,
+       "fwd2015": 1,
+       "rev2015": 1,
+       "fwd2e17": 1,
+       "rev2e17": 1,
+       "fwd2e1a": 1,
+       "rev2e1a": 1,
+       "fwd2e3a": 1,
+       "rev2e3a": 1,
+       "fwd2e3b": 1,
+       "rev2e3b": 1,
+       "fwd2e40": 1,
+       "rev2e40": 1,
+       "fwd2e5d": 1,
+       "rev2e5d": 1,
+       "fwd301c": 1,
+       "rev301c": 1,
+       "fwd3030": 1,
+       "rev3030": 1,
+       "fwd30a0": 1,
+       "rev30a0": 1,
+       "fwdfe31": 1,
+       "revfe31": 1,
+       "fwdfe32": 1,
+       "revfe32": 1,
+       "fwdfe58": 1,
+       "revfe58": 1,
+       "fwdfe63": 1,
+       "revfe63": 1,
+       "fwdff0d": 1,
+       "revff0d": 1,
+       "fwd10d6e": 1,
+       "rev10d6e": 1,
+       "fwd10ead": 1,
+       "rev10ead": 1,
+       "fwd005f": 1,
+       "rev005f": 1
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "quote": "renders VERIFIED_HISTORICAL",
+     "witness": {
+      "judge": {
+       "texts": {
+        "title": "word=1 plain=1 display=1 VERIFIED_HISTORICAL",
+        "spaced": "word=1 plain=1 display=1 verified historical",
+        "hyphen": "word=1 plain=1 display=1 Verified-Historical",
+        "glued": "word=1 plain=1 display=1 VerifiedHistorical",
+        "reversed": "word=1 plain=1 display=1 historical-verified",
+        "adverb": "word=1 plain=1 display=1 historically verified",
+        "sentence": "word=1 plain=1 display=1 Receipt reads VERIFIED_HISTORICAL at the declared snapshot.",
+        "fullwidth": "word=1 plain=1 display=1 \\u{ff36}\\u{ff25}\\u{ff32}\\u{ff29}\\u{ff26}\\u{ff29}\\u{ff25}\\u{ff24}_HISTORICAL",
+        "zeroWidth": "word=1 plain=0 display=1 VERIFIED\\u{200b}_HISTORICAL",
+        "softHyphen": "word=1 plain=0 display=1 VERI\\u{ad}FIED_HISTORICAL",
+        "wordJoiner": "word=1 plain=0 display=1 VERIFIED\\u{2060}HISTORICAL",
+        "bareVerified": "word=0 plain=0 display=0 verified",
+        "bareHistorical": "word=0 plain=0 display=0 historical",
+        "todayLabel": "word=0 plain=0 display=0 success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED)",
+        "todayEvidence": "word=0 plain=0 display=0 verification indeterminate (historical; not current verification)",
+        "current": "word=0 plain=0 display=0 VERIFIED_CURRENT",
+        "embedded": "word=0 plain=0 display=0 isVerifiedHistorical",
+        "cyrillic": "word=0 plain=0 display=0 V\\u{415}\\u{420}IFI\\u{415}D_HISTORICAL",
+        "passed": "word=0 plain=0 display=0 historically passed",
+        "atSnapshot": "word=0 plain=0 display=0 verified at the declared snapshot",
+        "gating": "word=0 plain=0 display=0 ForgeCACReceiptV0",
+        "pd58a": "word=1 plain=1 display=1 VERIFIED\\u{58a}HISTORICAL",
+        "pd1400": "word=1 plain=1 display=1 VERIFIED\\u{1400}HISTORICAL",
+        "pd1806": "word=1 plain=1 display=1 VERIFIED\\u{1806}HISTORICAL",
+        "pd2010": "word=1 plain=1 display=1 VERIFIED\\u{2010}HISTORICAL",
+        "pd2011": "word=1 plain=1 display=1 VERIFIED\\u{2011}HISTORICAL",
+        "pd2e17": "word=1 plain=1 display=1 VERIFIED\\u{2e17}HISTORICAL",
+        "pd2e1a": "word=1 plain=1 display=1 VERIFIED\\u{2e1a}HISTORICAL",
+        "pd2e40": "word=1 plain=1 display=1 VERIFIED\\u{2e40}HISTORICAL",
+        "pd2e5d": "word=1 plain=1 display=1 VERIFIED\\u{2e5d}HISTORICAL",
+        "pd30a0": "word=1 plain=1 display=1 VERIFIED\\u{30a0}HISTORICAL",
+        "pd10ead": "word=1 plain=1 display=1 VERIFIED\\u{10ead}HISTORICAL",
+        "hyphenBullet": "word=0 plain=0 display=0 VERIFIED\\u{2043}HISTORICAL",
+        "minusSign": "word=0 plain=0 display=0 VERIFIED\\u{2212}HISTORICAL",
+        "middleDot": "word=0 plain=0 display=0 VERIFIED\\u{b7}HISTORICAL",
+        "brailleBlank": "word=0 plain=0 display=0 VERIFIED\\u{2800}HISTORICAL",
+        "undertie": "word=0 plain=0 display=0 VERIFIED\\u{203f}HISTORICAL",
+        "doubleLowLine": "word=0 plain=0 display=0 VERIFIED\\u{2017}HISTORICAL",
+        "dottedI": "word=0 plain=0 display=0 VER\\u{130}F\\u{130}ED_HISTORICAL",
+        "composedLetter": "word=0 plain=0 display=0 VERIFIED_HISTORICAL\\u{301}",
+        "markAfterReversed": "word=1 plain=1 display=1 HISTORICAL_VERIFIED\\u{301}",
+        "digitBefore": "word=0 plain=0 display=0 2VERIFIED_HISTORICAL",
+        "letterAfter": "word=0 plain=0 display=0 VerifiedHistoricalReceipt",
+        "digitAfter": "word=0 plain=0 display=0 VERIFIED_HISTORICAL2",
+        "reversedLetterBefore": "word=0 plain=0 display=0 isHistoricalVerified",
+        "reversedDigitBefore": "word=0 plain=0 display=0 2HISTORICAL_VERIFIED",
+        "reversedLetterAfter": "word=0 plain=0 display=0 HistoricalVerifiedReceipt",
+        "reversedDigitAfter": "word=0 plain=0 display=0 HISTORICAL_VERIFIED2",
+        "otherNumberBefore": "word=0 plain=0 display=0 \\u{bf0}VERIFIED_HISTORICAL",
+        "otherNumberAfter": "word=0 plain=0 display=0 VERIFIED_HISTORICAL\\u{bf0}",
+        "reversedOtherNumberBefore": "word=0 plain=0 display=0 \\u{bf0}HISTORICAL_VERIFIED",
+        "reversedOtherNumberAfter": "word=0 plain=0 display=0 HISTORICAL_VERIFIED\\u{bf0}",
+        "letterNumberBefore": "word=0 plain=0 display=0 \\u{16ee}VERIFIED_HISTORICAL",
+        "letterNumberAfter": "word=0 plain=0 display=0 VERIFIED_HISTORICAL\\u{16ee}",
+        "reversedLetterNumberBefore": "word=0 plain=0 display=0 \\u{16ee}HISTORICAL_VERIFIED",
+        "reversedLetterNumberAfter": "word=0 plain=0 display=0 HISTORICAL_VERIFIED\\u{16ee}",
+        "ideographicZeroBefore": "word=0 plain=0 display=0 \\u{3007}VERIFIED_HISTORICAL",
+        "aegeanOneBefore": "word=0 plain=0 display=0 \\u{10107}VERIFIED_HISTORICAL",
+        "reversedGlued": "word=1 plain=1 display=1 HistoricalVerified",
+        "adverbForward": "word=1 plain=1 display=1 verified historically",
+        "run": "word=1 plain=1 display=1 verified - historical",
+        "runEvery": "word=1 plain=1 display=1 VERIFIED\t\n\u000b\f\r \\u{a0}\\u{1680}\\u{2000}\\u{2001}\\u{2002}\\u{2003}\\u{2004}\\u{2005}\\u{2006}\\u{2007}\\u{2008}\\u{2009}\\u{200a}\\u{2028}\\u{2029}\\u{202f}\\u{205f}\\u{3000}\\u{feff}-\\u{58a}\\u{5be}\\u{1400}\\u{1806}\\u{2010}\\u{2011}\\u{2012}\\u{2013}\\u{2014}\\u{2015}\\u{2e17}\\u{2e1a}\\u{2e3a}\\u{2e3b}\\u{2e40}\\u{2e5d}\\u{301c}\\u{3030}\\u{30a0}\\u{fe31}\\u{fe32}\\u{fe58}\\u{fe63}\\u{ff0d}\\u{10d6e}\\u{10ead}_HISTORICAL",
+        "runEveryReversed": "word=1 plain=1 display=1 HISTORICAL\t\n\u000b\f\r \\u{a0}\\u{1680}\\u{2000}\\u{2001}\\u{2002}\\u{2003}\\u{2004}\\u{2005}\\u{2006}\\u{2007}\\u{2008}\\u{2009}\\u{200a}\\u{2028}\\u{2029}\\u{202f}\\u{205f}\\u{3000}\\u{feff}-\\u{58a}\\u{5be}\\u{1400}\\u{1806}\\u{2010}\\u{2011}\\u{2012}\\u{2013}\\u{2014}\\u{2015}\\u{2e17}\\u{2e1a}\\u{2e3a}\\u{2e3b}\\u{2e40}\\u{2e5d}\\u{301c}\\u{3030}\\u{30a0}\\u{fe31}\\u{fe32}\\u{fe58}\\u{fe63}\\u{ff0d}\\u{10d6e}\\u{10ead}_VERIFIED",
+        "labelOnly": "word=1 plain=0 display=1 receipt\u001b[1mVERIFIED_HISTORICAL\u001b[0m",
+        "unbounded": "word=1 plain=0 display=1 x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x VERIFIED\\u{200b}_HISTORICAL",
+        "fwd0009": "word=1 plain=1 display=1 VERIFIED\tHISTORICAL",
+        "rev0009": "word=1 plain=1 display=1 HISTORICAL\tVERIFIED",
+        "fwd000a": "word=1 plain=1 display=1 VERIFIED\nHISTORICAL",
+        "rev000a": "word=1 plain=1 display=1 HISTORICAL\nVERIFIED",
+        "fwd000b": "word=1 plain=1 display=1 VERIFIED\u000bHISTORICAL",
+        "rev000b": "word=1 plain=1 display=1 HISTORICAL\u000bVERIFIED",
+        "fwd000c": "word=1 plain=1 display=1 VERIFIED\fHISTORICAL",
+        "rev000c": "word=1 plain=1 display=1 HISTORICAL\fVERIFIED",
+        "fwd000d": "word=1 plain=1 display=1 VERIFIED\rHISTORICAL",
+        "rev000d": "word=1 plain=1 display=1 HISTORICAL\rVERIFIED",
+        "fwd0020": "word=1 plain=1 display=1 VERIFIED HISTORICAL",
+        "rev0020": "word=1 plain=1 display=1 HISTORICAL VERIFIED",
+        "fwd00a0": "word=1 plain=1 display=1 VERIFIED\\u{a0}HISTORICAL",
+        "rev00a0": "word=1 plain=1 display=1 HISTORICAL\\u{a0}VERIFIED",
+        "fwd1680": "word=1 plain=1 display=1 VERIFIED\\u{1680}HISTORICAL",
+        "rev1680": "word=1 plain=1 display=1 HISTORICAL\\u{1680}VERIFIED",
+        "fwd2000": "word=1 plain=1 display=1 VERIFIED\\u{2000}HISTORICAL",
+        "rev2000": "word=1 plain=1 display=1 HISTORICAL\\u{2000}VERIFIED",
+        "fwd2001": "word=1 plain=1 display=1 VERIFIED\\u{2001}HISTORICAL",
+        "rev2001": "word=1 plain=1 display=1 HISTORICAL\\u{2001}VERIFIED",
+        "fwd2002": "word=1 plain=1 display=1 VERIFIED\\u{2002}HISTORICAL",
+        "rev2002": "word=1 plain=1 display=1 HISTORICAL\\u{2002}VERIFIED",
+        "fwd2003": "word=1 plain=1 display=1 VERIFIED\\u{2003}HISTORICAL",
+        "rev2003": "word=1 plain=1 display=1 HISTORICAL\\u{2003}VERIFIED",
+        "fwd2004": "word=1 plain=1 display=1 VERIFIED\\u{2004}HISTORICAL",
+        "rev2004": "word=1 plain=1 display=1 HISTORICAL\\u{2004}VERIFIED",
+        "fwd2005": "word=1 plain=1 display=1 VERIFIED\\u{2005}HISTORICAL",
+        "rev2005": "word=1 plain=1 display=1 HISTORICAL\\u{2005}VERIFIED",
+        "fwd2006": "word=1 plain=1 display=1 VERIFIED\\u{2006}HISTORICAL",
+        "rev2006": "word=1 plain=1 display=1 HISTORICAL\\u{2006}VERIFIED",
+        "fwd2007": "word=1 plain=1 display=1 VERIFIED\\u{2007}HISTORICAL",
+        "rev2007": "word=1 plain=1 display=1 HISTORICAL\\u{2007}VERIFIED",
+        "fwd2008": "word=1 plain=1 display=1 VERIFIED\\u{2008}HISTORICAL",
+        "rev2008": "word=1 plain=1 display=1 HISTORICAL\\u{2008}VERIFIED",
+        "fwd2009": "word=1 plain=1 display=1 VERIFIED\\u{2009}HISTORICAL",
+        "rev2009": "word=1 plain=1 display=1 HISTORICAL\\u{2009}VERIFIED",
+        "fwd200a": "word=1 plain=1 display=1 VERIFIED\\u{200a}HISTORICAL",
+        "rev200a": "word=1 plain=1 display=1 HISTORICAL\\u{200a}VERIFIED",
+        "fwd2028": "word=1 plain=1 display=1 VERIFIED\\u{2028}HISTORICAL",
+        "rev2028": "word=1 plain=1 display=1 HISTORICAL\\u{2028}VERIFIED",
+        "fwd2029": "word=1 plain=1 display=1 VERIFIED\\u{2029}HISTORICAL",
+        "rev2029": "word=1 plain=1 display=1 HISTORICAL\\u{2029}VERIFIED",
+        "fwd202f": "word=1 plain=1 display=1 VERIFIED\\u{202f}HISTORICAL",
+        "rev202f": "word=1 plain=1 display=1 HISTORICAL\\u{202f}VERIFIED",
+        "fwd205f": "word=1 plain=1 display=1 VERIFIED\\u{205f}HISTORICAL",
+        "rev205f": "word=1 plain=1 display=1 HISTORICAL\\u{205f}VERIFIED",
+        "fwd3000": "word=1 plain=1 display=1 VERIFIED\\u{3000}HISTORICAL",
+        "rev3000": "word=1 plain=1 display=1 HISTORICAL\\u{3000}VERIFIED",
+        "fwdfeff": "word=1 plain=1 display=1 VERIFIED\\u{feff}HISTORICAL",
+        "revfeff": "word=1 plain=1 display=1 HISTORICAL\\u{feff}VERIFIED",
+        "fwd002d": "word=1 plain=1 display=1 VERIFIED-HISTORICAL",
+        "rev002d": "word=1 plain=1 display=1 HISTORICAL-VERIFIED",
+        "fwd058a": "word=1 plain=1 display=1 VERIFIED\\u{58a}HISTORICAL",
+        "rev058a": "word=1 plain=1 display=1 HISTORICAL\\u{58a}VERIFIED",
+        "fwd05be": "word=1 plain=1 display=1 VERIFIED\\u{5be}HISTORICAL",
+        "rev05be": "word=1 plain=1 display=1 HISTORICAL\\u{5be}VERIFIED",
+        "fwd1400": "word=1 plain=1 display=1 VERIFIED\\u{1400}HISTORICAL",
+        "rev1400": "word=1 plain=1 display=1 HISTORICAL\\u{1400}VERIFIED",
+        "fwd1806": "word=1 plain=1 display=1 VERIFIED\\u{1806}HISTORICAL",
+        "rev1806": "word=1 plain=1 display=1 HISTORICAL\\u{1806}VERIFIED",
+        "fwd2010": "word=1 plain=1 display=1 VERIFIED\\u{2010}HISTORICAL",
+        "rev2010": "word=1 plain=1 display=1 HISTORICAL\\u{2010}VERIFIED",
+        "fwd2011": "word=1 plain=1 display=1 VERIFIED\\u{2011}HISTORICAL",
+        "rev2011": "word=1 plain=1 display=1 HISTORICAL\\u{2011}VERIFIED",
+        "fwd2012": "word=1 plain=1 display=1 VERIFIED\\u{2012}HISTORICAL",
+        "rev2012": "word=1 plain=1 display=1 HISTORICAL\\u{2012}VERIFIED",
+        "fwd2013": "word=1 plain=1 display=1 VERIFIED\\u{2013}HISTORICAL",
+        "rev2013": "word=1 plain=1 display=1 HISTORICAL\\u{2013}VERIFIED",
+        "fwd2014": "word=1 plain=1 display=1 VERIFIED\\u{2014}HISTORICAL",
+        "rev2014": "word=1 plain=1 display=1 HISTORICAL\\u{2014}VERIFIED",
+        "fwd2015": "word=1 plain=1 display=1 VERIFIED\\u{2015}HISTORICAL",
+        "rev2015": "word=1 plain=1 display=1 HISTORICAL\\u{2015}VERIFIED",
+        "fwd2e17": "word=1 plain=1 display=1 VERIFIED\\u{2e17}HISTORICAL",
+        "rev2e17": "word=1 plain=1 display=1 HISTORICAL\\u{2e17}VERIFIED",
+        "fwd2e1a": "word=1 plain=1 display=1 VERIFIED\\u{2e1a}HISTORICAL",
+        "rev2e1a": "word=1 plain=1 display=1 HISTORICAL\\u{2e1a}VERIFIED",
+        "fwd2e3a": "word=1 plain=1 display=1 VERIFIED\\u{2e3a}HISTORICAL",
+        "rev2e3a": "word=1 plain=1 display=1 HISTORICAL\\u{2e3a}VERIFIED",
+        "fwd2e3b": "word=1 plain=1 display=1 VERIFIED\\u{2e3b}HISTORICAL",
+        "rev2e3b": "word=1 plain=1 display=1 HISTORICAL\\u{2e3b}VERIFIED",
+        "fwd2e40": "word=1 plain=1 display=1 VERIFIED\\u{2e40}HISTORICAL",
+        "rev2e40": "word=1 plain=1 display=1 HISTORICAL\\u{2e40}VERIFIED",
+        "fwd2e5d": "word=1 plain=1 display=1 VERIFIED\\u{2e5d}HISTORICAL",
+        "rev2e5d": "word=1 plain=1 display=1 HISTORICAL\\u{2e5d}VERIFIED",
+        "fwd301c": "word=1 plain=1 display=1 VERIFIED\\u{301c}HISTORICAL",
+        "rev301c": "word=1 plain=1 display=1 HISTORICAL\\u{301c}VERIFIED",
+        "fwd3030": "word=1 plain=1 display=1 VERIFIED\\u{3030}HISTORICAL",
+        "rev3030": "word=1 plain=1 display=1 HISTORICAL\\u{3030}VERIFIED",
+        "fwd30a0": "word=1 plain=1 display=1 VERIFIED\\u{30a0}HISTORICAL",
+        "rev30a0": "word=1 plain=1 display=1 HISTORICAL\\u{30a0}VERIFIED",
+        "fwdfe31": "word=1 plain=1 display=1 VERIFIED\\u{fe31}HISTORICAL",
+        "revfe31": "word=1 plain=1 display=1 HISTORICAL\\u{fe31}VERIFIED",
+        "fwdfe32": "word=1 plain=1 display=1 VERIFIED\\u{fe32}HISTORICAL",
+        "revfe32": "word=1 plain=1 display=1 HISTORICAL\\u{fe32}VERIFIED",
+        "fwdfe58": "word=1 plain=1 display=1 VERIFIED\\u{fe58}HISTORICAL",
+        "revfe58": "word=1 plain=1 display=1 HISTORICAL\\u{fe58}VERIFIED",
+        "fwdfe63": "word=1 plain=1 display=1 VERIFIED\\u{fe63}HISTORICAL",
+        "revfe63": "word=1 plain=1 display=1 HISTORICAL\\u{fe63}VERIFIED",
+        "fwdff0d": "word=1 plain=1 display=1 VERIFIED\\u{ff0d}HISTORICAL",
+        "revff0d": "word=1 plain=1 display=1 HISTORICAL\\u{ff0d}VERIFIED",
+        "fwd10d6e": "word=1 plain=1 display=1 VERIFIED\\u{10d6e}HISTORICAL",
+        "rev10d6e": "word=1 plain=1 display=1 HISTORICAL\\u{10d6e}VERIFIED",
+        "fwd10ead": "word=1 plain=1 display=1 VERIFIED\\u{10ead}HISTORICAL",
+        "rev10ead": "word=1 plain=1 display=1 HISTORICAL\\u{10ead}VERIFIED",
+        "fwd005f": "word=1 plain=1 display=1 VERIFIED_HISTORICAL",
+        "rev005f": "word=1 plain=1 display=1 HISTORICAL_VERIFIED"
+       },
+       "modules": {
+        "literal": "hits=1 export const shown = \"VERIFIED_HISTORICAL\";\n",
+        "comment": "hits=1 // a full-field receipt renders VERIFIED_HISTORICAL\nexport const shown = 1;\n",
+        "identifier": "hits=1 export const VerifiedHistorical = 1;\n",
+        "composed": "hits=0 export const shown = \"VERIFIED_\" + \"HISTORICAL\";\n",
+        "escaped": "hits=0 export const shown = \"VERIFIED\\u005fHISTORICAL\";\n",
+        "composedTwin": "hits=1 export const shown = \"VERIFIED_HISTORICAL\";\n"
+       }
+      },
+      "separators": {
+       "floorMet": true,
+       "unread": []
+      },
+      "walk": {
+       "judgedEqualsListedPlusPlants": true,
+       "bigPlantLongest": true,
+       "gitEqualsWalk": true,
+       "links": [],
+       "floorMet": true,
+       "hits": [
+        "src/workbench/forge-cac-receipt-plant.ts VERIFIED_HISTORICAL",
+        "src/workbench/forge-cac-receipt-plant-big.ts VERIFIED_HISTORICAL"
+       ]
+      },
+      "rendered": {
+       "tags": [
+        "forgeGateTopology:measured",
+        "readForgeOperationEvidence:measured",
+        "forgeGateTopology:authorityAbsent",
+        "readForgeOperationEvidence:authorityAbsent",
+        "forgeGateTopology:quotedCurrent",
+        "readForgeOperationEvidence:quotedCurrent",
+        "forgeGateTopology:current",
+        "readForgeOperationEvidence:current",
+        "forgeGateTopology:currentFailure",
+        "readForgeOperationEvidence:currentFailure",
+        "forgeGateTopology:descriptorless",
+        "readForgeOperationEvidence:descriptorless",
+        "forgeGateTopology:withheld",
+        "readForgeOperationEvidence:withheld",
+        "forgeGateTopology:degraded",
+        "readForgeOperationEvidence:degraded",
+        "forgeGateTopology:empty",
+        "readForgeOperationEvidence:empty",
+        "forgeGateTopology:mixed",
+        "readForgeOperationEvidence:mixed",
+        "nativeEvidence:measured",
+        "nativeEvidence:authorityAbsent",
+        "nativeEvidence:quotedCurrent",
+        "nativeEvidence:current",
+        "nativeEvidence:currentFailure",
+        "nativeEvidence:descriptorless",
+        "nativeEvidence:withheld",
+        "nativeEvidence:degraded",
+        "nativeEvidence:empty",
+        "nativeEvidence:mixed",
+        "forgeOperationStartedSnapshot:started",
+        "forgeGateStepTopology:started",
+        "forgeGateStepTopology:passed",
+        "forgeGateStepTopology:failed",
+        "forgeOperationTerminalSnapshot:success",
+        "forgeOperationTerminalSnapshot:error",
+        "layoutWorkflowCard:10 nodes"
+       ],
+       "fixtureDigest": "ee4287c53b249ca7",
+       "walked": true,
+       "hits": [],
+       "control": 2
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "dropping any one of predicate, snapshot digest, or checker identity+version renders UNKNOWN with a diagnostic naming the missing field, never a pass",
+   "pins": [
+    {
+     "id": "B1",
+     "quote": "dropping any one of predicate, snapshot digest, or checker identity+version",
+     "witness": {
+      "fields": {
+       "predicate": [
+        "acceptance_predicate"
+       ],
+       "snapshot digest": [
+        "snapshot_digest"
+       ],
+       "checker identity+version": [
+        "checker_identity",
+        "checker_version"
+       ]
+      },
+      "receipt": [
+       "artifact",
+       "interpretation",
+       "acceptance_predicate",
+       "snapshot_digest",
+       "checker_identity",
+       "checker_version"
+      ],
+      "carriers": [
+       "source",
+       "envelope",
+       "data",
+       "package",
+       "package-flat"
+      ],
+      "bases": {
+       "historical": [
+        "workspace unknown partial",
+        "package unknown partial"
+       ],
+       "current": [
+        "workspace success complete",
+        "package success complete"
+       ]
+      },
+      "cells": {
+       "historical/source/full": "identical topology,evidence,native; differing none; planted 6: cac_receipt.artifact cac_receipt.interpretation cac_receipt.acceptance_predicate cac_receipt.snapshot_digest cac_receipt.checker_identity cac_receipt.checker_version",
+       "historical/source/-acceptance_predicate": "identical topology,evidence,native; differing none; planted 5: cac_receipt.artifact cac_receipt.interpretation cac_receipt.snapshot_digest cac_receipt.checker_identity cac_receipt.checker_version",
+       "historical/source/-snapshot_digest": "identical topology,evidence,native; differing none; planted 5: cac_receipt.artifact cac_receipt.interpretation cac_receipt.acceptance_predicate cac_receipt.checker_identity cac_receipt.checker_version",
+       "historical/source/-checker_identity": "identical topology,evidence,native; differing none; planted 5: cac_receipt.artifact cac_receipt.interpretation cac_receipt.acceptance_predicate cac_receipt.snapshot_digest cac_receipt.checker_version",
+       "historical/source/-checker_version": "identical topology,evidence,native; differing none; planted 5: cac_receipt.artifact cac_receipt.interpretation cac_receipt.acceptance_predicate cac_receipt.snapshot_digest cac_receipt.checker_identity",
+       "historical/envelope/full": "identical topology,evidence,native; differing none; planted 6: envelope.cac_receipt.artifact envelope.cac_receipt.interpretation envelope.cac_receipt.acceptance_predicate envelope.cac_receipt.snapshot_digest envelope.cac_receipt.checker_identity envelope.cac_receipt.checker_version",
+       "historical/envelope/-acceptance_predicate": "identical topology,evidence,native; differing none; planted 5: envelope.cac_receipt.artifact envelope.cac_receipt.interpretation envelope.cac_receipt.snapshot_digest envelope.cac_receipt.checker_identity envelope.cac_receipt.checker_version",
+       "historical/envelope/-snapshot_digest": "identical topology,evidence,native; differing none; planted 5: envelope.cac_receipt.artifact envelope.cac_receipt.interpretation envelope.cac_receipt.acceptance_predicate envelope.cac_receipt.checker_identity envelope.cac_receipt.checker_version",
+       "historical/envelope/-checker_identity": "identical topology,evidence,native; differing none; planted 5: envelope.cac_receipt.artifact envelope.cac_receipt.interpretation envelope.cac_receipt.acceptance_predicate envelope.cac_receipt.snapshot_digest envelope.cac_receipt.checker_version",
+       "historical/envelope/-checker_version": "identical topology,evidence,native; differing none; planted 5: envelope.cac_receipt.artifact envelope.cac_receipt.interpretation envelope.cac_receipt.acceptance_predicate envelope.cac_receipt.snapshot_digest envelope.cac_receipt.checker_identity",
+       "historical/data/full": "identical topology,evidence,native; differing none; planted 6: data.cac_receipt.artifact data.cac_receipt.interpretation data.cac_receipt.acceptance_predicate data.cac_receipt.snapshot_digest data.cac_receipt.checker_identity data.cac_receipt.checker_version",
+       "historical/data/-acceptance_predicate": "identical topology,evidence,native; differing none; planted 5: data.cac_receipt.artifact data.cac_receipt.interpretation data.cac_receipt.snapshot_digest data.cac_receipt.checker_identity data.cac_receipt.checker_version",
+       "historical/data/-snapshot_digest": "identical topology,evidence,native; differing none; planted 5: data.cac_receipt.artifact data.cac_receipt.interpretation data.cac_receipt.acceptance_predicate data.cac_receipt.checker_identity data.cac_receipt.checker_version",
+       "historical/data/-checker_identity": "identical topology,evidence,native; differing none; planted 5: data.cac_receipt.artifact data.cac_receipt.interpretation data.cac_receipt.acceptance_predicate data.cac_receipt.snapshot_digest data.cac_receipt.checker_version",
+       "historical/data/-checker_version": "identical topology,evidence,native; differing none; planted 5: data.cac_receipt.artifact data.cac_receipt.interpretation data.cac_receipt.acceptance_predicate data.cac_receipt.snapshot_digest data.cac_receipt.checker_identity",
+       "historical/package/full": "identical topology,evidence,native; differing none; planted 6: data.packages[0].cac_receipt.artifact data.packages[0].cac_receipt.interpretation data.packages[0].cac_receipt.acceptance_predicate data.packages[0].cac_receipt.snapshot_digest data.packages[0].cac_receipt.checker_identity data.packages[0].cac_receipt.checker_version",
+       "historical/package/-acceptance_predicate": "identical topology,evidence,native; differing none; planted 5: data.packages[0].cac_receipt.artifact data.packages[0].cac_receipt.interpretation data.packages[0].cac_receipt.snapshot_digest data.packages[0].cac_receipt.checker_identity data.packages[0].cac_receipt.checker_version",
+       "historical/package/-snapshot_digest": "identical topology,evidence,native; differing none; planted 5: data.packages[0].cac_receipt.artifact data.packages[0].cac_receipt.interpretation data.packages[0].cac_receipt.acceptance_predicate data.packages[0].cac_receipt.checker_identity data.packages[0].cac_receipt.checker_version",
+       "historical/package/-checker_identity": "identical topology,evidence,native; differing none; planted 5: data.packages[0].cac_receipt.artifact data.packages[0].cac_receipt.interpretation data.packages[0].cac_receipt.acceptance_predicate data.packages[0].cac_receipt.snapshot_digest data.packages[0].cac_receipt.checker_version",
+       "historical/package/-checker_version": "identical topology,evidence,native; differing none; planted 5: data.packages[0].cac_receipt.artifact data.packages[0].cac_receipt.interpretation data.packages[0].cac_receipt.acceptance_predicate data.packages[0].cac_receipt.snapshot_digest data.packages[0].cac_receipt.checker_identity",
+       "historical/package-flat/full": "identical topology,evidence,native; differing none; planted 6: data.packages[0].artifact data.packages[0].interpretation data.packages[0].acceptance_predicate data.packages[0].snapshot_digest data.packages[0].checker_identity data.packages[0].checker_version",
+       "historical/package-flat/-acceptance_predicate": "identical topology,evidence,native; differing none; planted 5: data.packages[0].artifact data.packages[0].interpretation data.packages[0].snapshot_digest data.packages[0].checker_identity data.packages[0].checker_version",
+       "historical/package-flat/-snapshot_digest": "identical topology,evidence,native; differing none; planted 5: data.packages[0].artifact data.packages[0].interpretation data.packages[0].acceptance_predicate data.packages[0].checker_identity data.packages[0].checker_version",
+       "historical/package-flat/-checker_identity": "identical topology,evidence,native; differing none; planted 5: data.packages[0].artifact data.packages[0].interpretation data.packages[0].acceptance_predicate data.packages[0].snapshot_digest data.packages[0].checker_version",
+       "historical/package-flat/-checker_version": "identical topology,evidence,native; differing none; planted 5: data.packages[0].artifact data.packages[0].interpretation data.packages[0].acceptance_predicate data.packages[0].snapshot_digest data.packages[0].checker_identity",
+       "current/source/full": "identical topology,evidence,native; differing none; planted 6: cac_receipt.artifact cac_receipt.interpretation cac_receipt.acceptance_predicate cac_receipt.snapshot_digest cac_receipt.checker_identity cac_receipt.checker_version",
+       "current/source/-acceptance_predicate": "identical topology,evidence,native; differing none; planted 5: cac_receipt.artifact cac_receipt.interpretation cac_receipt.snapshot_digest cac_receipt.checker_identity cac_receipt.checker_version",
+       "current/source/-snapshot_digest": "identical topology,evidence,native; differing none; planted 5: cac_receipt.artifact cac_receipt.interpretation cac_receipt.acceptance_predicate cac_receipt.checker_identity cac_receipt.checker_version",
+       "current/source/-checker_identity": "identical topology,evidence,native; differing none; planted 5: cac_receipt.artifact cac_receipt.interpretation cac_receipt.acceptance_predicate cac_receipt.snapshot_digest cac_receipt.checker_version",
+       "current/source/-checker_version": "identical topology,evidence,native; differing none; planted 5: cac_receipt.artifact cac_receipt.interpretation cac_receipt.acceptance_predicate cac_receipt.snapshot_digest cac_receipt.checker_identity",
+       "current/envelope/full": "identical topology,evidence,native; differing none; planted 6: envelope.cac_receipt.artifact envelope.cac_receipt.interpretation envelope.cac_receipt.acceptance_predicate envelope.cac_receipt.snapshot_digest envelope.cac_receipt.checker_identity envelope.cac_receipt.checker_version",
+       "current/envelope/-acceptance_predicate": "identical topology,evidence,native; differing none; planted 5: envelope.cac_receipt.artifact envelope.cac_receipt.interpretation envelope.cac_receipt.snapshot_digest envelope.cac_receipt.checker_identity envelope.cac_receipt.checker_version",
+       "current/envelope/-snapshot_digest": "identical topology,evidence,native; differing none; planted 5: envelope.cac_receipt.artifact envelope.cac_receipt.interpretation envelope.cac_receipt.acceptance_predicate envelope.cac_receipt.checker_identity envelope.cac_receipt.checker_version",
+       "current/envelope/-checker_identity": "identical topology,evidence,native; differing none; planted 5: envelope.cac_receipt.artifact envelope.cac_receipt.interpretation envelope.cac_receipt.acceptance_predicate envelope.cac_receipt.snapshot_digest envelope.cac_receipt.checker_version",
+       "current/envelope/-checker_version": "identical topology,evidence,native; differing none; planted 5: envelope.cac_receipt.artifact envelope.cac_receipt.interpretation envelope.cac_receipt.acceptance_predicate envelope.cac_receipt.snapshot_digest envelope.cac_receipt.checker_identity",
+       "current/data/full": "identical topology,evidence,native; differing none; planted 6: data.cac_receipt.artifact data.cac_receipt.interpretation data.cac_receipt.acceptance_predicate data.cac_receipt.snapshot_digest data.cac_receipt.checker_identity data.cac_receipt.checker_version",
+       "current/data/-acceptance_predicate": "identical topology,evidence,native; differing none; planted 5: data.cac_receipt.artifact data.cac_receipt.interpretation data.cac_receipt.snapshot_digest data.cac_receipt.checker_identity data.cac_receipt.checker_version",
+       "current/data/-snapshot_digest": "identical topology,evidence,native; differing none; planted 5: data.cac_receipt.artifact data.cac_receipt.interpretation data.cac_receipt.acceptance_predicate data.cac_receipt.checker_identity data.cac_receipt.checker_version",
+       "current/data/-checker_identity": "identical topology,evidence,native; differing none; planted 5: data.cac_receipt.artifact data.cac_receipt.interpretation data.cac_receipt.acceptance_predicate data.cac_receipt.snapshot_digest data.cac_receipt.checker_version",
+       "current/data/-checker_version": "identical topology,evidence,native; differing none; planted 5: data.cac_receipt.artifact data.cac_receipt.interpretation data.cac_receipt.acceptance_predicate data.cac_receipt.snapshot_digest data.cac_receipt.checker_identity",
+       "current/package/full": "identical topology,evidence,native; differing none; planted 6: data.packages[0].cac_receipt.artifact data.packages[0].cac_receipt.interpretation data.packages[0].cac_receipt.acceptance_predicate data.packages[0].cac_receipt.snapshot_digest data.packages[0].cac_receipt.checker_identity data.packages[0].cac_receipt.checker_version",
+       "current/package/-acceptance_predicate": "identical topology,evidence,native; differing none; planted 5: data.packages[0].cac_receipt.artifact data.packages[0].cac_receipt.interpretation data.packages[0].cac_receipt.snapshot_digest data.packages[0].cac_receipt.checker_identity data.packages[0].cac_receipt.checker_version",
+       "current/package/-snapshot_digest": "identical topology,evidence,native; differing none; planted 5: data.packages[0].cac_receipt.artifact data.packages[0].cac_receipt.interpretation data.packages[0].cac_receipt.acceptance_predicate data.packages[0].cac_receipt.checker_identity data.packages[0].cac_receipt.checker_version",
+       "current/package/-checker_identity": "identical topology,evidence,native; differing none; planted 5: data.packages[0].cac_receipt.artifact data.packages[0].cac_receipt.interpretation data.packages[0].cac_receipt.acceptance_predicate data.packages[0].cac_receipt.snapshot_digest data.packages[0].cac_receipt.checker_version",
+       "current/package/-checker_version": "identical topology,evidence,native; differing none; planted 5: data.packages[0].cac_receipt.artifact data.packages[0].cac_receipt.interpretation data.packages[0].cac_receipt.acceptance_predicate data.packages[0].cac_receipt.snapshot_digest data.packages[0].cac_receipt.checker_identity",
+       "current/package-flat/full": "identical topology,evidence,native; differing none; planted 6: data.packages[0].artifact data.packages[0].interpretation data.packages[0].acceptance_predicate data.packages[0].snapshot_digest data.packages[0].checker_identity data.packages[0].checker_version",
+       "current/package-flat/-acceptance_predicate": "identical topology,evidence,native; differing none; planted 5: data.packages[0].artifact data.packages[0].interpretation data.packages[0].snapshot_digest data.packages[0].checker_identity data.packages[0].checker_version",
+       "current/package-flat/-snapshot_digest": "identical topology,evidence,native; differing none; planted 5: data.packages[0].artifact data.packages[0].interpretation data.packages[0].acceptance_predicate data.packages[0].checker_identity data.packages[0].checker_version",
+       "current/package-flat/-checker_identity": "identical topology,evidence,native; differing none; planted 5: data.packages[0].artifact data.packages[0].interpretation data.packages[0].acceptance_predicate data.packages[0].snapshot_digest data.packages[0].checker_version",
+       "current/package-flat/-checker_version": "identical topology,evidence,native; differing none; planted 5: data.packages[0].artifact data.packages[0].interpretation data.packages[0].acceptance_predicate data.packages[0].snapshot_digest data.packages[0].checker_identity"
+      },
+      "unplanted": {
+       "otherSpelling": "identical topology,evidence,native; differing none",
+       "readKey": "identical native; differing topology,evidence"
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "quote": "never a pass",
+     "witness": {
+      "demoted": {
+       "measured": {
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "package": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+        "evidence": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)"
+       },
+       "authorityAbsent": {
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "package": "success (historical; authoritative_current=unknown; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+        "evidence": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)"
+       },
+       "authorityString": {
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "package": "success (historical; authoritative_current=unknown; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+        "evidence": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)"
+       },
+       "authorityNull": {
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "package": "success (historical; authoritative_current=unknown; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+        "evidence": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)"
+       },
+       "quotedCurrent": {
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "package": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis CURRENT",
+        "evidence": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)"
+       },
+       "receiptNested": {
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "package": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+        "evidence": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)"
+       },
+       "receiptFlat": {
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "package": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+        "evidence": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)"
+       }
+      },
+      "quoted": {
+       "historical/source.status": {
+        "planted": [
+         "reading.source.status"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "shown": [
+         "{W} \u00b7 FORGE_OK \u00b7 verification indeterminate",
+         "status: {W} \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+         "{W} \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)"
+        ]
+       },
+       "historical/source.envelope.verdict": {
+        "planted": [
+         "reading.source.envelope.verdict"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "shown": [
+         "success \u00b7 {W} \u00b7 FORGE_OK \u00b7 verification indeterminate",
+         "status: success \u00b7 {W} \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+         "success \u00b7 {W} \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)"
+        ]
+       },
+       "historical/source.envelope.reason_code": {
+        "planted": [
+         "reading.source.envelope.reason_code"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "shown": [
+         "success \u00b7 {W} \u00b7 verification indeterminate",
+         "forge:gate.status:{W}",
+         "status: success \u00b7 {W} \u00b7 verification indeterminate (historical; not current verification)",
+         "success \u00b7 {W} \u00b7 verification indeterminate (historical; not current verification)"
+        ]
+       },
+       "historical/package.ref": {
+        "planted": [
+         "reading.source.data.packages[0].ref"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "shown": [
+         "{W}",
+         "Forge package {W}",
+         "{W}",
+         "Forge package {W}: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE"
+        ]
+       },
+       "historical/package.last_result": {
+        "planted": [
+         "reading.source.data.packages[0].last_result"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "shown": [
+         "{W} (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+         "Forge package code:pi-subagents: {W} (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE"
+        ]
+       },
+       "historical/package.unverified_reason": {
+        "planted": [
+         "reading.source.data.packages[0].unverified_reason"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace unknown partial",
+         "package unknown partial"
+        ],
+        "shown": [
+         "success (historical; authoritative_current=false; {W}) \u00b7 basis STALE",
+         "Forge package code:pi-subagents: success (historical; authoritative_current=false; {W}) \u00b7 basis STALE"
+        ]
+       },
+       "current/source.status": {
+        "planted": [
+         "reading.source.status"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace unknown partial",
+         "package success partial"
+        ],
+        "shown": [
+         "{W} \u00b7 FORGE_OK \u00b7 verification indeterminate",
+         "status: {W} \u00b7 FORGE_OK \u00b7 verification indeterminate",
+         "{W} \u00b7 FORGE_OK \u00b7 verification indeterminate"
+        ]
+       },
+       "current/source.envelope.verdict": {
+        "planted": [
+         "reading.source.envelope.verdict"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace unknown complete",
+         "package success complete"
+        ],
+        "shown": [
+         "success \u00b7 {W} \u00b7 FORGE_OK \u00b7 verification indeterminate",
+         "status: success \u00b7 {W} \u00b7 FORGE_OK \u00b7 verification indeterminate",
+         "success \u00b7 {W} \u00b7 FORGE_OK \u00b7 verification indeterminate"
+        ]
+       },
+       "current/source.envelope.reason_code": {
+        "planted": [
+         "reading.source.envelope.reason_code"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace success complete",
+         "package success complete"
+        ],
+        "shown": [
+         "success \u00b7 {W} \u00b7 current gate passed",
+         "forge:gate.status:{W}",
+         "status: success \u00b7 {W} \u00b7 current gate passed",
+         "success \u00b7 {W} \u00b7 current gate passed"
+        ]
+       },
+       "current/package.ref": {
+        "planted": [
+         "reading.source.data.packages[0].ref"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace success complete",
+         "package success complete"
+        ],
+        "shown": [
+         "{W}",
+         "Forge package {W}",
+         "{W}",
+         "Forge package {W}: success (current) \u00b7 basis STALE"
+        ]
+       },
+       "current/package.last_result": {
+        "planted": [
+         "reading.source.data.packages[0].last_result"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace unknown complete",
+         "package unknown complete"
+        ],
+        "shown": [
+         "{W} (current) \u00b7 basis STALE",
+         "Forge package code:pi-subagents: {W} (current) \u00b7 basis STALE"
+        ]
+       },
+       "current/package.unverified_reason": {
+        "planted": [
+         "reading.source.data.packages[0].unverified_reason"
+        ],
+        "law": "topology=true evidence=true",
+        "tones": [
+         "workspace success complete",
+         "package success complete"
+        ],
+        "shown": []
+       }
+      },
+      "freshness": {
+       "identical": true,
+       "shown": 0,
+       "package": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis UNKNOWN",
+       "diagnostics": [
+        "Forge gate.status package code:pi-subagents published a last_result_state that is not well formed, so its basis is withheld and shown as basis UNKNOWN."
+       ]
+      },
+      "card": {
+       "domainStatus": "{W}",
+       "glyphs": {
+        "word": "?",
+        "neutral": "?",
+        "verified": "\\u{221a}"
+       },
+       "outcome": "? forge gate 0 \u00b7 forge.gate.status \u00b7 {W}"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "the existing gate.status and forge-operation evidence adapters stay byte-identical",
+   "pins": [
+    {
+     "id": "C1",
+     "quote": "the existing gate.status and forge-operation evidence adapters",
+     "witness": {
+      "forgeGateTopology:measured": {
+       "snapshots": [
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge gate status /b9n1-forge-ws",
+          "type": "sdk-operation",
+          "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.snapshot",
+         "evidenceRefs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n1"
+         ]
+        },
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge package code:pi-subagents",
+          "type": "sdk-operation",
+          "statusText": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.package.snapshot",
+         "subjectBasis": "sha256:c47710910801e2d55661144061e0b3162720dc5a924b97da683cd92e47be5d6c"
+        }
+       ],
+       "relations": [
+        {
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "from": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "to": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "kind": "grouping",
+         "provenance": {
+          "source": "forge-observer",
+          "observedAt": "2026-10-28T11:00:01Z"
+         }
+        }
+       ],
+       "diagnostics": []
+      },
+      "readForgeOperationEvidence:measured": {
+       "kind": "forge-operation",
+       "provider": "forge",
+       "capturedAt": "2026-10-28T11:00:02Z",
+       "bytes": 250,
+       "truncated": false,
+       "preview": [
+        "forge-operation:op_b9n1",
+        "status: success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+        "Forge package code:pi-subagents: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE"
+       ],
+       "freshness": "current",
+       "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+       "producerReceipt": {
+        "requestedOperationId": "op_b9n1",
+        "readOperationId": "op_b9n1",
+        "sameOperation": true
+       }
+      },
+      "forgeGateTopology:authorityAbsent": {
+       "snapshots": [
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge gate status /b9n1-forge-ws",
+          "type": "sdk-operation",
+          "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.snapshot",
+         "evidenceRefs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n1"
+         ]
+        },
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge package code:pi-subagents",
+          "type": "sdk-operation",
+          "statusText": "success (historical; authoritative_current=unknown; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.package.snapshot",
+         "subjectBasis": "sha256:c47710910801e2d55661144061e0b3162720dc5a924b97da683cd92e47be5d6c"
+        }
+       ],
+       "relations": [
+        {
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "from": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "to": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "kind": "grouping",
+         "provenance": {
+          "source": "forge-observer",
+          "observedAt": "2026-10-28T11:00:01Z"
+         }
+        }
+       ],
+       "diagnostics": []
+      },
+      "readForgeOperationEvidence:authorityAbsent": {
+       "kind": "forge-operation",
+       "provider": "forge",
+       "capturedAt": "2026-10-28T11:00:02Z",
+       "bytes": 252,
+       "truncated": false,
+       "preview": [
+        "forge-operation:op_b9n1",
+        "status: success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+        "Forge package code:pi-subagents: success (historical; authoritative_current=unknown; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE"
+       ],
+       "freshness": "current",
+       "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+       "producerReceipt": {
+        "requestedOperationId": "op_b9n1",
+        "readOperationId": "op_b9n1",
+        "sameOperation": true
+       }
+      },
+      "forgeGateTopology:quotedCurrent": {
+       "snapshots": [
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge gate status /b9n1-forge-ws",
+          "type": "sdk-operation",
+          "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.snapshot",
+         "evidenceRefs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n1"
+         ]
+        },
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge package code:pi-subagents",
+          "type": "sdk-operation",
+          "statusText": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis CURRENT",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.package.snapshot",
+         "subjectBasis": "sha256:c47710910801e2d55661144061e0b3162720dc5a924b97da683cd92e47be5d6c"
+        }
+       ],
+       "relations": [
+        {
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "from": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "to": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "kind": "grouping",
+         "provenance": {
+          "source": "forge-observer",
+          "observedAt": "2026-10-28T11:00:01Z"
+         }
+        }
+       ],
+       "diagnostics": []
+      },
+      "readForgeOperationEvidence:quotedCurrent": {
+       "kind": "forge-operation",
+       "provider": "forge",
+       "capturedAt": "2026-10-28T11:00:02Z",
+       "bytes": 252,
+       "truncated": false,
+       "preview": [
+        "forge-operation:op_b9n1",
+        "status: success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+        "Forge package code:pi-subagents: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis CURRENT"
+       ],
+       "freshness": "current",
+       "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+       "producerReceipt": {
+        "requestedOperationId": "op_b9n1",
+        "readOperationId": "op_b9n1",
+        "sameOperation": true
+       }
+      },
+      "forgeGateTopology:current": {
+       "snapshots": [
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "complete",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge gate status /b9n1-forge-ws",
+          "type": "sdk-operation",
+          "statusText": "success \u00b7 FORGE_OK \u00b7 current gate passed",
+          "statusTone": "success"
+         },
+         "kind": "forge.gate.status.snapshot",
+         "evidenceRefs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n1"
+         ]
+        },
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "complete",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge package code:pi-subagents",
+          "type": "sdk-operation",
+          "statusText": "success (current) \u00b7 basis STALE",
+          "statusTone": "success"
+         },
+         "kind": "forge.gate.status.package.snapshot",
+         "subjectBasis": "sha256:c47710910801e2d55661144061e0b3162720dc5a924b97da683cd92e47be5d6c"
+        }
+       ],
+       "relations": [
+        {
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "from": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "to": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "kind": "grouping",
+         "provenance": {
+          "source": "forge-observer",
+          "observedAt": "2026-10-28T11:00:01Z"
+         }
+        }
+       ],
+       "diagnostics": []
+      },
+      "readForgeOperationEvidence:current": {
+       "kind": "forge-operation",
+       "provider": "forge",
+       "capturedAt": "2026-10-28T11:00:02Z",
+       "bytes": 140,
+       "truncated": false,
+       "preview": [
+        "forge-operation:op_b9n1",
+        "status: success \u00b7 FORGE_OK \u00b7 current gate passed",
+        "Forge package code:pi-subagents: success (current) \u00b7 basis STALE"
+       ],
+       "freshness": "current",
+       "statusText": "success \u00b7 FORGE_OK \u00b7 current gate passed",
+       "producerReceipt": {
+        "requestedOperationId": "op_b9n1",
+        "readOperationId": "op_b9n1",
+        "sameOperation": true
+       }
+      },
+      "forgeGateTopology:currentFailure": {
+       "snapshots": [
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "complete",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge gate status /b9n1-forge-ws",
+          "type": "sdk-operation",
+          "statusText": "success \u00b7 FORGE_OK \u00b7 current gate failed",
+          "statusTone": "failure"
+         },
+         "kind": "forge.gate.status.snapshot",
+         "evidenceRefs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n1"
+         ]
+        },
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "complete",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge package code:pi-subagents",
+          "type": "sdk-operation",
+          "statusText": "failure (current) \u00b7 basis STALE",
+          "statusTone": "failure"
+         },
+         "kind": "forge.gate.status.package.snapshot",
+         "subjectBasis": "sha256:c47710910801e2d55661144061e0b3162720dc5a924b97da683cd92e47be5d6c"
+        }
+       ],
+       "relations": [
+        {
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "from": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "to": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "kind": "grouping",
+         "provenance": {
+          "source": "forge-observer",
+          "observedAt": "2026-10-28T11:00:01Z"
+         }
+        }
+       ],
+       "diagnostics": []
+      },
+      "readForgeOperationEvidence:currentFailure": {
+       "kind": "forge-operation",
+       "provider": "forge",
+       "capturedAt": "2026-10-28T11:00:02Z",
+       "bytes": 140,
+       "truncated": false,
+       "preview": [
+        "forge-operation:op_b9n1",
+        "status: success \u00b7 FORGE_OK \u00b7 current gate failed",
+        "Forge package code:pi-subagents: failure (current) \u00b7 basis STALE"
+       ],
+       "freshness": "current",
+       "statusText": "success \u00b7 FORGE_OK \u00b7 current gate failed",
+       "producerReceipt": {
+        "requestedOperationId": "op_b9n1",
+        "readOperationId": "op_b9n1",
+        "sameOperation": true
+       }
+      },
+      "forgeGateTopology:descriptorless": {
+       "snapshots": [
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "complete",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge gate status /b9n1-forge-ws",
+          "type": "sdk-operation",
+          "statusText": "success \u00b7 FORGE_OK \u00b7 current gate passed",
+          "statusTone": "success"
+         },
+         "kind": "forge.gate.status.snapshot",
+         "evidenceRefs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n1"
+         ]
+        },
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "complete",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge package code:pi-subagents",
+          "type": "sdk-operation",
+          "statusText": "success (current)",
+          "statusTone": "success"
+         },
+         "kind": "forge.gate.status.package.snapshot"
+        }
+       ],
+       "relations": [
+        {
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "from": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "to": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "kind": "grouping",
+         "provenance": {
+          "source": "forge-observer",
+          "observedAt": "2026-10-28T11:00:01Z"
+         }
+        }
+       ],
+       "diagnostics": []
+      },
+      "readForgeOperationEvidence:descriptorless": {
+       "kind": "forge-operation",
+       "provider": "forge",
+       "capturedAt": "2026-10-28T11:00:02Z",
+       "bytes": 125,
+       "truncated": false,
+       "preview": [
+        "forge-operation:op_b9n1",
+        "status: success \u00b7 FORGE_OK \u00b7 current gate passed",
+        "Forge package code:pi-subagents: success (current)"
+       ],
+       "freshness": "current",
+       "statusText": "success \u00b7 FORGE_OK \u00b7 current gate passed",
+       "producerReceipt": {
+        "requestedOperationId": "op_b9n1",
+        "readOperationId": "op_b9n1",
+        "sameOperation": true
+       }
+      },
+      "forgeGateTopology:withheld": {
+       "snapshots": [
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge gate status /b9n1-forge-ws",
+          "type": "sdk-operation",
+          "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.snapshot",
+         "evidenceRefs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n1"
+         ]
+        },
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge package code:pi-subagents",
+          "type": "sdk-operation",
+          "statusText": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis UNKNOWN",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.package.snapshot"
+        }
+       ],
+       "relations": [
+        {
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "from": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "to": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "kind": "grouping",
+         "provenance": {
+          "source": "forge-observer",
+          "observedAt": "2026-10-28T11:00:01Z"
+         }
+        }
+       ],
+       "diagnostics": [
+        "Forge gate.status package code:pi-subagents published a last_result_state that is not well formed, so its basis is withheld and shown as basis UNKNOWN."
+       ]
+      },
+      "readForgeOperationEvidence:withheld": {
+       "kind": "forge-operation",
+       "provider": "forge",
+       "capturedAt": "2026-10-28T11:00:02Z",
+       "bytes": 252,
+       "truncated": false,
+       "preview": [
+        "forge-operation:op_b9n1",
+        "status: success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+        "Forge package code:pi-subagents: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis UNKNOWN"
+       ],
+       "freshness": "current",
+       "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+       "producerReceipt": {
+        "requestedOperationId": "op_b9n1",
+        "readOperationId": "op_b9n1",
+        "sameOperation": true
+       }
+      },
+      "forgeGateTopology:degraded": {
+       "snapshots": [
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge gate status /b9n1-forge-ws",
+          "type": "sdk-operation",
+          "statusText": "partial \u00b7 COULD_NOT_JUDGE \u00b7 FORGE_DEGRADED \u00b7 verification indeterminate",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.snapshot",
+         "evidenceRefs": [
+          "forge:gate.status:FORGE_DEGRADED",
+          "forge-operation:op_b9n1"
+         ]
+        },
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge package code:pi-subagents",
+          "type": "sdk-operation",
+          "statusText": "success (current) \u00b7 basis STALE",
+          "statusTone": "success"
+         },
+         "kind": "forge.gate.status.package.snapshot",
+         "subjectBasis": "sha256:c47710910801e2d55661144061e0b3162720dc5a924b97da683cd92e47be5d6c"
+        }
+       ],
+       "relations": [
+        {
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "from": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "to": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "kind": "grouping",
+         "provenance": {
+          "source": "forge-observer",
+          "observedAt": "2026-10-28T11:00:01Z"
+         }
+        }
+       ],
+       "diagnostics": [
+        "Every package reports current success but the read status or declared verdict does not, so workspace success is withheld."
+       ]
+      },
+      "readForgeOperationEvidence:degraded": {
+       "kind": "forge-operation",
+       "provider": "forge",
+       "capturedAt": "2026-10-28T11:00:02Z",
+       "bytes": 172,
+       "truncated": false,
+       "preview": [
+        "forge-operation:op_b9n1",
+        "status: partial \u00b7 COULD_NOT_JUDGE \u00b7 FORGE_DEGRADED \u00b7 verification indeterminate",
+        "Forge package code:pi-subagents: success (current) \u00b7 basis STALE"
+       ],
+       "freshness": "current",
+       "statusText": "partial \u00b7 COULD_NOT_JUDGE \u00b7 FORGE_DEGRADED \u00b7 verification indeterminate",
+       "producerReceipt": {
+        "requestedOperationId": "op_b9n1",
+        "readOperationId": "op_b9n1",
+        "sameOperation": true
+       }
+      },
+      "forgeGateTopology:empty": {
+       "snapshots": [
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge gate status /b9n1-forge-ws",
+          "type": "sdk-operation",
+          "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.snapshot",
+         "evidenceRefs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n1"
+         ]
+        }
+       ],
+       "relations": [],
+       "diagnostics": [
+        "Forge gate.status reported an empty package list: no package was observed and workspace verification stays indeterminate."
+       ]
+      },
+      "readForgeOperationEvidence:empty": {
+       "kind": "forge-operation",
+       "provider": "forge",
+       "capturedAt": "2026-10-28T11:00:02Z",
+       "bytes": 81,
+       "truncated": false,
+       "preview": [
+        "forge-operation:op_b9n1",
+        "status: success \u00b7 FORGE_OK \u00b7 verification indeterminate"
+       ],
+       "freshness": "current",
+       "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate",
+       "producerReceipt": {
+        "requestedOperationId": "op_b9n1",
+        "readOperationId": "op_b9n1",
+        "sameOperation": true
+       }
+      },
+      "forgeGateTopology:mixed": {
+       "snapshots": [
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge gate status /b9n1-forge-ws",
+          "type": "sdk-operation",
+          "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.snapshot",
+         "evidenceRefs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n1"
+         ]
+        },
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "partial",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge package code:pi-subagents",
+          "type": "sdk-operation",
+          "statusText": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+          "statusTone": "unknown"
+         },
+         "kind": "forge.gate.status.package.snapshot",
+         "subjectBasis": "sha256:c47710910801e2d55661144061e0b3162720dc5a924b97da683cd92e47be5d6c"
+        },
+        {
+         "source": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:b9n1-current",
+          "scope": "/b9n1-forge-ws"
+         },
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "capturedAt": "2026-10-28T11:00:00Z",
+         "observedAt": "2026-10-28T11:00:01Z",
+         "coverage": "complete",
+         "sourceVersion": "forge.gate.status/v1",
+         "node": {
+          "title": "Forge package code:b9n1-current",
+          "type": "sdk-operation",
+          "statusText": "success (current) \u00b7 basis STALE",
+          "statusTone": "success"
+         },
+         "kind": "forge.gate.status.package.snapshot",
+         "subjectBasis": "sha256:c47710910801e2d55661144061e0b3162720dc5a924b97da683cd92e47be5d6c"
+        }
+       ],
+       "relations": [
+        {
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "from": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "to": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:pi-subagents",
+          "scope": "/b9n1-forge-ws"
+         },
+         "kind": "grouping",
+         "provenance": {
+          "source": "forge-observer",
+          "observedAt": "2026-10-28T11:00:01Z"
+         }
+        },
+        {
+         "scope": {
+          "workspace": "/b9n1-forge-ws",
+          "principal": "local-operator:b9n1"
+         },
+         "from": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "workspace",
+          "scope": "/b9n1-forge-ws"
+         },
+         "to": {
+          "provider": "forge",
+          "type": "gate-status",
+          "id": "code:b9n1-current",
+          "scope": "/b9n1-forge-ws"
+         },
+         "kind": "grouping",
+         "provenance": {
+          "source": "forge-observer",
+          "observedAt": "2026-10-28T11:00:01Z"
+         }
+        }
+       ],
+       "diagnostics": []
+      },
+      "readForgeOperationEvidence:mixed": {
+       "kind": "forge-operation",
+       "provider": "forge",
+       "capturedAt": "2026-10-28T11:00:02Z",
+       "bytes": 316,
+       "truncated": false,
+       "preview": [
+        "forge-operation:op_b9n1",
+        "status: success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+        "Forge package code:pi-subagents: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) \u00b7 basis STALE",
+        "Forge package code:b9n1-current: success (current) \u00b7 basis STALE"
+       ],
+       "freshness": "current",
+       "statusText": "success \u00b7 FORGE_OK \u00b7 verification indeterminate (historical; not current verification)",
+       "producerReceipt": {
+        "requestedOperationId": "op_b9n1",
+        "readOperationId": "op_b9n1",
+        "sameOperation": true
+       }
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "quote": "stay byte-identical",
+     "witness": {
+      "tags": [
+       "forgeGateTopology:measured",
+       "readForgeOperationEvidence:measured",
+       "forgeGateTopology:authorityAbsent",
+       "readForgeOperationEvidence:authorityAbsent",
+       "forgeGateTopology:quotedCurrent",
+       "readForgeOperationEvidence:quotedCurrent",
+       "forgeGateTopology:current",
+       "readForgeOperationEvidence:current",
+       "forgeGateTopology:currentFailure",
+       "readForgeOperationEvidence:currentFailure",
+       "forgeGateTopology:descriptorless",
+       "readForgeOperationEvidence:descriptorless",
+       "forgeGateTopology:withheld",
+       "readForgeOperationEvidence:withheld",
+       "forgeGateTopology:degraded",
+       "readForgeOperationEvidence:degraded",
+       "forgeGateTopology:empty",
+       "readForgeOperationEvidence:empty",
+       "forgeGateTopology:mixed",
+       "readForgeOperationEvidence:mixed"
+      ],
+      "bytes": {
+       "forgeGateTopology:measured": "388c2ebe310bf55a 1625 bytes",
+       "readForgeOperationEvidence:measured": "c2d6468350ab1d3c 608 bytes",
+       "forgeGateTopology:authorityAbsent": "da06fb9c08b2a169 1627 bytes",
+       "readForgeOperationEvidence:authorityAbsent": "f1584e612b0b22b6 610 bytes",
+       "forgeGateTopology:quotedCurrent": "c48a8bd641fde0c8 1627 bytes",
+       "readForgeOperationEvidence:quotedCurrent": "7034db11dab03f78 610 bytes",
+       "forgeGateTopology:current": "cb7da16181ecb947 1556 bytes",
+       "readForgeOperationEvidence:current": "a66338be6c89bc69 452 bytes",
+       "forgeGateTopology:currentFailure": "00abc279e151097c 1556 bytes",
+       "readForgeOperationEvidence:currentFailure": "968b20c5efad2cb0 452 bytes",
+       "forgeGateTopology:descriptorless": "7f06281283217152 1452 bytes",
+       "readForgeOperationEvidence:descriptorless": "dea718835de549c8 437 bytes",
+       "forgeGateTopology:withheld": "47b1bfc1a064053e 1691 bytes",
+       "readForgeOperationEvidence:withheld": "16576a91fc8f9cd4 610 bytes",
+       "forgeGateTopology:degraded": "716d64880db4ca55 1715 bytes",
+       "readForgeOperationEvidence:degraded": "23cc0c517ae4ac03 516 bytes",
+       "forgeGateTopology:empty": "192aa4fec364f67b 741 bytes",
+       "readForgeOperationEvidence:empty": "20596fef7c243ce8 397 bytes",
+       "forgeGateTopology:mixed": "ed974f224c74578d 2570 bytes",
+       "readForgeOperationEvidence:mixed": "11a7f8a73ae419be 676 bytes"
+      }
+     }
+    }
+   ]
+  }
+ ]
+}

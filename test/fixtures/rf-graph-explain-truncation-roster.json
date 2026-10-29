@@ -1,0 +1,1496 @@
+{
+ "comment": "wb-2j3.10 (RFCLI-PERFORMANCE-MATHEMATICAL-OPTIMIZATION-R11) roster of test/workbench-rf-graph-explain-truncation-census.test.ts, cut #4 (the enumerate-the-resolvable cut bound by refusal #3's CUT #4 FORM). capture: the producer state, written by cut #2's capture script (seat ws-03, g10-work-s129) from the installed rf, two scratch rf workspaces and a read-only git show and log of the RFCLI object store, re-read equal on every value by the same script at 2026-10-28T22:20:05Z (seat ws-03, g10-work-s130) and again at 2026-10-29T02:02:54Z (seat ws-04, g10-work-s133; the empty-scratch probe's per-run operation id aside each time); filing, constants, rows, witnesses and tests: measured from the census at trunk b3d410f (merged into the branch) by a dump run on a throwaway tree, never hand-typed. A carrier re-pin reds row G1 until capture is re-measured at the new release (capture.remeasure); a rebuild under the same release does not (R-SAME-RELEASE-REBUILD, Q2). Neither biome nor tsc reads this file (both include src/**/*.ts and test/**/*.ts only): the census's JSON.parse at run time is its only reader, and it refuses any field of the wrong shape by name.",
+ "bead": "wb-2j3.10",
+ "capture": {
+  "capturedUtc": "2026-10-28T17:21:52Z",
+  "host": "the cutting seat's installed rf (ws-03, g10-work-s129)",
+  "release": "0.1.845",
+  "commit": "b8b3e9f1de56cf8bd0e7fc4a8e8a4c135a5f7af3",
+  "mismatch": false,
+  "leaf": {
+   "path": "graph.explain",
+   "served": true,
+   "reachable": true,
+   "availability": "served_reachable"
+  },
+  "usage": {
+   "argv": [
+    "rf",
+    "graph",
+    "explain",
+    "--help"
+   ],
+   "columns": 200,
+   "line": "usage: rf graph explain [-h] [--from NODE] [--max-paths N] [--json] [--workspace PATH] [--actor ID] [--no-input] [--yes] [--debug] [--color {auto,always,never}] [-v] TARGET"
+  },
+  "schema": {
+   "file": "reactive_fiber_cli/schemas/cli/graph.explain.schema.json",
+   "bytes": 25309,
+   "sha256": "95c98db73e3c16813843cc30e2287a2bdb9f33dad3f6ab6618cd52c8776c83ae",
+   "pointer": "/$defs/result",
+   "members": [
+    "graph_revision_id",
+    "target",
+    "source",
+    "reachable",
+    "paths",
+    "edge_paths",
+    "reason",
+    "diagnostics",
+    "truncated",
+    "path_limit"
+   ],
+   "required": [
+    "graph_revision_id",
+    "target",
+    "source",
+    "reachable",
+    "paths",
+    "edge_paths",
+    "reason",
+    "diagnostics"
+   ]
+  },
+  "probe": {
+   "argv": [
+    "rf",
+    "graph",
+    "explain",
+    "--max-paths",
+    "1",
+    "source:x",
+    "--json",
+    "--workspace",
+    "<scratch>"
+   ],
+   "exit": 3,
+   "envelope": {
+    "schema": "reactive-fiber.cli/v1",
+    "ok": false,
+    "command": "graph.explain",
+    "operation_id": "rfo_z7luxdnifwe453xd3jnbhirxba",
+    "workspace": null,
+    "transaction_id": null,
+    "result": null,
+    "diagnostics": [
+     {
+      "code": "RF_WORKSPACE_INVALID",
+      "severity": "error",
+      "message": "workspace path <scratch> has no .reactive-fiber/manifest.json",
+      "hint": "Point --workspace / RF_WORKSPACE at a directory holding .reactive-fiber/manifest.json, or unset it to discover from the current directory.",
+      "source": "host",
+      "metadata": {
+       "path": "<scratch>",
+       "source": "flag"
+      }
+     }
+    ]
+   }
+  },
+  "bounded": {
+   "workspace": {
+    "init": [
+     "rf",
+     "init",
+     "--json",
+     "--no-input",
+     "<scratch>"
+    ],
+    "appended": [
+     "[[source]]",
+     "id = \"a\"",
+     "kind = \"literal\"",
+     "value = 1"
+    ]
+   },
+   "flagged": {
+    "argv": [
+     "rf",
+     "graph",
+     "explain",
+     "--max-paths",
+     "1",
+     "source:a",
+     "--json",
+     "--no-input",
+     "--workspace",
+     "<scratch>"
+    ],
+    "exit": 0,
+    "ok": true,
+    "command": "graph.explain",
+    "keys": [
+     "graph_revision_id",
+     "target",
+     "source",
+     "reachable",
+     "paths",
+     "edge_paths",
+     "reason",
+     "diagnostics",
+     "truncated",
+     "path_limit"
+    ],
+    "truncated": false,
+    "path_limit": 1,
+    "paths": [],
+    "diagnostics": []
+   },
+   "unflagged": {
+    "argv": [
+     "rf",
+     "graph",
+     "explain",
+     "source:a",
+     "--json",
+     "--no-input",
+     "--workspace",
+     "<scratch>"
+    ],
+    "exit": 0,
+    "ok": true,
+    "command": "graph.explain",
+    "keys": [
+     "graph_revision_id",
+     "target",
+     "source",
+     "reachable",
+     "paths",
+     "edge_paths",
+     "reason",
+     "diagnostics"
+    ],
+    "truncated": "<absent>",
+    "path_limit": "<absent>",
+    "paths": [],
+    "diagnostics": []
+   }
+  },
+  "pin": {
+   "rfcli": "8a8b83e4d",
+   "file": "src/reactive_fiber_cli/schemas/cli/graph.explain.schema.json",
+   "lines": [
+    375,
+    383
+   ],
+   "required": [
+    "graph_revision_id",
+    "target",
+    "source",
+    "reachable",
+    "paths",
+    "edge_paths",
+    "reason"
+   ],
+   "members": [
+    "graph_revision_id",
+    "target",
+    "source",
+    "reachable",
+    "paths",
+    "edge_paths",
+    "reason"
+   ]
+  },
+  "shipped": {
+   "commit": "e2d707538bb9e49b240a8b70ab27b54114e23943",
+   "subject": "feat(schemas): [PMO-05b] rf graph explain --max-paths N adds truncated",
+   "inBuild": true,
+   "prior": "7e6ed89a09f6f64eb0fa6fb8671288ae50a1e6b8",
+   "inPrior": false
+  },
+  "remeasure": [
+   "rf --json --version (result.version, provenance.commit_id and mismatch, the graph.explain leaf row)",
+   "COLUMNS=200 rf graph explain --help (the usage paragraph, joined)",
+   "the installed reactive_fiber_cli/schemas/cli/graph.explain.schema.json: bytes, sha-256, $defs/result properties and required",
+   "rf graph explain --max-paths 1 source:x --json --workspace <empty scratch dir> (exit status and envelope)",
+   "rf init --json --no-input <scratch> plus one literal [[source]] row, then rf graph explain [--max-paths 1] source:a --json --no-input --workspace <scratch> (exit, result keys, truncated, path_limit)",
+   "git -C <ReactiveFiberCLI> show 8a8b83e4d:src/reactive_fiber_cli/schemas/cli/graph.explain.schema.json ($defs/result and the lines of its required list)",
+   "git -C <ReactiveFiberCLI> log -1 --grep '^feat(schemas): [PMO-05b]' <commit> and merge-base --is-ancestor against <commit> and the prior build"
+  ]
+ },
+ "filing": {
+  "heads": [
+   "PROGRAM",
+   "STATEMENT",
+   "RATIONALE",
+   "ACCEPTANCE",
+   "SURFACES",
+   "RELATED"
+  ],
+  "repeated": [],
+  "plants": {
+   "acceptance-after-related": [
+    "ACCEPTANCE"
+   ],
+   "statement-at-end": [
+    "STATEMENT"
+   ],
+   "single-newline": [
+    "ACCEPTANCE"
+   ],
+   "lower-case": [
+    "ACCEPTANCE"
+   ],
+   "inline-rationale": [
+    "RATIONALE"
+   ],
+   "second-surfaces": [
+    "SURFACES"
+   ]
+  },
+  "fields": [],
+  "planted": [
+   "acceptance_criteria"
+  ]
+ },
+ "constants": {
+  "leaf": "graph.explain",
+  "flag": "--max-paths",
+  "fields": [
+   "truncated",
+   "path_limit"
+  ],
+  "excluded": [
+   "truncated"
+  ],
+  "revision": "graph_revision_id",
+  "citedPin": {
+   "rfcli": "8a8b83e4d",
+   "lines": [
+    375,
+    383
+   ]
+  },
+  "pending": "If and when a Pi surface consumes rf graph explain, it shall carry truncated/path_limit and the graph revision verbatim and shall never present a capped path list as complete",
+  "pendingAcceptance": [
+   "On landing: a consumer test drives the new adapter with a truncated:true, path_limit:N fixture and asserts the projection is partial/truncated with a counted remainder; a capped list never projects coverage 'complete'.",
+   "On landing: the graph revision is carried verbatim from the envelope (a second revision value round-trips)."
+  ],
+  "tiles": [
+   "G",
+   "W",
+   "PENDING",
+   "U"
+  ],
+  "separators": [
+   ", ",
+   ". ",
+   "; ",
+   "."
+  ],
+  "heads": {
+   "statement": "\n\nSTATEMENT: ",
+   "rationale": "\n\nRATIONALE: ",
+   "acceptance": "\n\nACCEPTANCE: ",
+   "surfaces": "\n\nSURFACES: "
+  },
+  "headPlants": {
+   "acceptance-after-related": "\n\nACCEPTANCE: [\"A standing item: the consumer adapter ships with this bead.\"]",
+   "statement-at-end": "\n\nSTATEMENT: A second statement read after the first.",
+   "single-newline": "\nACCEPTANCE: [\"A standing item.\"]",
+   "lower-case": "\n\nAcceptance: [\"A standing item.\"]",
+   "inline-rationale": " RATIONALE: a second rationale inline.",
+   "second-surfaces": "\n\nSURFACES: src/index.ts"
+  },
+  "filingFields": [
+   "acceptance_criteria",
+   "design"
+  ],
+  "fieldPlant": {
+   "acceptance_criteria": "A standing item: the consumer adapter ships with this bead."
+  },
+  "srcFloor": 100,
+  "calls": [
+   "spawn",
+   "spawnSync",
+   "execFile",
+   "execFileSync",
+   "exec",
+   "execSync",
+   "fork"
+  ],
+  "shellCalls": [
+   "exec",
+   "execSync"
+  ],
+  "shellOptionCalls": [
+   "spawn",
+   "spawnSync",
+   "execFile",
+   "execFileSync"
+  ],
+  "assignmentWord": "^[A-Za-z_][A-Za-z0-9_]*=",
+  "unwalkedModule": "\\.(?:[cm]?jsx?|[cm]ts|tsx)$",
+  "unwalkedControls": [
+   "probe.js",
+   "probe.mjs",
+   "probe.cjs",
+   "probe.jsx",
+   "probe.mts",
+   "probe.cts",
+   "probe.tsx",
+   "probe.ts",
+   "probe.d.ts",
+   "probe.json"
+  ],
+  "entryPlants": [
+   {
+    "path": "module.ts",
+    "kind": "file"
+   },
+   {
+    "path": "nested/inner.ts",
+    "kind": "file"
+   },
+   {
+    "path": "nested/deeper/types.d.ts",
+    "kind": "file"
+   },
+   {
+    "path": "nested/.hidden",
+    "kind": "file"
+   },
+   {
+    "path": "empty",
+    "kind": "directory"
+   },
+   {
+    "path": "gate-launch.txt",
+    "kind": "file"
+   },
+   {
+    "path": "gate-launch",
+    "kind": "file"
+   },
+   {
+    "path": "gate-launch.body",
+    "kind": "file"
+   },
+   {
+    "path": "data.json",
+    "kind": "file"
+   },
+   {
+    "path": "upper.TS",
+    "kind": "file"
+   },
+   {
+    "path": "linked.ts",
+    "kind": "symlink",
+    "target": "module.ts"
+   },
+   {
+    "path": "gate-launch.cjs",
+    "kind": "symlink",
+    "target": "gate-launch.body"
+   },
+   {
+    "path": "linked-dir",
+    "kind": "symlink",
+    "target": "nested"
+   },
+   {
+    "path": "dangling.ts",
+    "kind": "symlink",
+    "target": "missing.ts"
+   }
+  ],
+  "kindControls": {
+   "directory": [
+    true,
+    false,
+    false
+   ],
+   "file": [
+    false,
+    true,
+    false
+   ],
+   "symlink": [
+    false,
+    false,
+    true
+   ],
+   "other": [
+    false,
+    false,
+    false
+   ]
+  },
+  "readingControls": [
+   [
+    "probe.ts",
+    "file"
+   ],
+   [
+    "probe.d.ts",
+    "file"
+   ],
+   [
+    "probe.txt",
+    "file"
+   ],
+   [
+    "probe",
+    "file"
+   ],
+   [
+    "probe.TS",
+    "file"
+   ],
+   [
+    "probe.cjs",
+    "file"
+   ],
+   [
+    "probe.ts",
+    "symlink"
+   ],
+   [
+    "probe",
+    "symlink"
+   ],
+   [
+    "probe.ts",
+    "other"
+   ],
+   [
+    "probe",
+    "other"
+   ],
+   [
+    "probe.ts",
+    "directory"
+   ],
+   [
+    "probe",
+    "directory"
+   ]
+  ],
+  "valueOptions": [
+   "--workspace",
+   "--actor",
+   "--color"
+  ],
+  "packageWords": [
+   "reactive-fiber",
+   "reactivefiber",
+   "reactive_fiber"
+  ],
+  "rfSegment": "^rf(?:$|[-_.])",
+  "spelling": "child_process",
+  "spawnControls": {
+   "named": "import { spawn } from \"node:child_process\"; function run(argv: string[]) { return spawn(\"rf\", argv); }",
+   "alias": "import { execFile as launch } from \"child_process\"; launch(\"/usr/local/bin/rf\", [\"graph\"]);",
+   "namespace": "import * as cp from \"node:child_process\"; cp.spawnSync(\"rf\", []);",
+   "default-opaque": "import cp from \"node:child_process\"; cp.fork(script);",
+   "require": "const { spawn: launch } = require(\"node:child_process\"); launch(\"rf\", argv);",
+   "require-element": "const cp = require(\"child_process\"); cp[\"execSync\"](\"rf graph show --json\");",
+   "variable-binary": "import { spawn } from \"node:child_process\"; const BIN = \"rf\"; spawn(BIN, argv);",
+   "git": "import { execFileSync } from \"node:child_process\"; execFileSync(\"git\", [\"status\"]);",
+   "regex-exec": "import { spawn } from \"node:child_process\"; const found = /rf/.exec(text);",
+   "type-only": "import type { ChildProcess } from \"node:child_process\"; const exec = (line: string) => line; exec(\"rf\");",
+   "unimported": "spawn(\"rf\", argv);",
+   "exe": "import { execFileSync } from \"node:child_process\"; execFileSync(\"rf.exe\", [\"context\", \"show\"]);",
+   "cmd-path": "import { execFileSync } from \"node:child_process\"; execFileSync(\"C:\\\\tools\\\\rf.cmd\", [\"context\", \"show\"]);",
+   "upper": "import { spawn } from \"node:child_process\"; spawn(\"RF\", [\"context\", \"show\"]);",
+   "const-alias": "import { spawn } from \"node:child_process\"; const launch = spawn; launch(\"rf\", [\"context\", \"show\"]);",
+   "namespace-destructure": "import * as cp from \"node:child_process\"; const { execFileSync: run } = cp; run(\"rf\", [\"context\", \"show\"]);",
+   "member-alias": "import * as cp from \"node:child_process\"; const run = cp.execFileSync; run(\"rf\", [\"context\", \"show\"]);",
+   "alias-chain": "import * as cp from \"node:child_process\"; const space = cp; const { spawn: go } = space; const again = go; again(\"rf\", []);",
+   "let-alias": "import { spawn } from \"node:child_process\"; let launch = spawn; launch(\"rf\", []);",
+   "exported-alias": "import { spawn } from \"node:child_process\"; export const launch = spawn;",
+   "argument": "import { spawn } from \"node:child_process\"; run(spawn, \"rf\");",
+   "call-method": "import { spawn } from \"node:child_process\"; spawn.call(undefined, \"rf\", []);",
+   "property": "import * as cp from \"node:child_process\"; const host = { launch: cp.spawn };",
+   "re-export": "export { spawn as launch } from \"node:child_process\";",
+   "local-export": "import { spawn } from \"node:child_process\"; export { spawn as launch };",
+   "wrapper-function": "import { spawn } from \"node:child_process\"; export function launch(binary: string, argv: string[]) { return spawn(binary, argv); }",
+   "wrapped-caller": "import { launch } from \"./launch.js\"; launch(\"rf\", [\"graph\", \"explain\", target]);",
+   "inline-require": "require(\"node:child_process\").execFileSync(\"rf\", [\"context\", \"show\"]);",
+   "shell-true": "import { spawn } from \"node:child_process\"; spawn(\"rf context show --json\", { shell: true });",
+   "shell-path": "import { execFile } from \"node:child_process\"; execFile(\"rf context show\", [], { shell: \"/bin/sh\" });",
+   "shell-false": "import { spawn } from \"node:child_process\"; spawn(\"rf context show\", { shell: false });",
+   "shell-unknown": "import { spawnSync } from \"node:child_process\"; spawnSync(\"rf context show\", options);",
+   "assignment-prefix": "import { execSync } from \"node:child_process\"; execSync(\"RF_LOG_LEVEL=debug rf context show --json\");",
+   "launcher": "import { execFileSync } from \"node:child_process\"; execFileSync(\"env\", [\"rf\", \"context\", \"show\"]);",
+   "method-scope": "import { spawn } from \"node:child_process\"; class Host { launch() { spawn(\"rf\", []); } } const run = function () { spawn(\"git\", []); };",
+   "launcher-alias": "import { execFileSync } from \"node:child_process\"; const git = (...args: string[]) => execFileSync(\"git\", [\"-C\", cwd, ...args]); git(\"-c\", \"alias.x=!rf graph explain\", \"x\");",
+   "importer-inline-require": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); require(\"node:child_process\").spawn(\"rf\", [\"context\", \"show\", \"--json\"]);",
+   "importer-await-import": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); const { spawn: run } = await import(\"node:child_process\"); run(\"rf\", [\"context\", \"show\", \"--json\"]);",
+   "importer-import-then": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); import(\"node:child_process\").then(cp => cp.execFileSync(\"rf\", [\"context\", \"show\", \"--json\"]));",
+   "importer-create-require": "import { spawn } from \"node:child_process\"; import { createRequire } from \"node:module\"; spawn(\"git\", []); createRequire(import.meta.url)(\"node:child_process\").execFileSync(\"rf\", [\"context\", \"show\", \"--json\"]);",
+   "importer-import-equals": "import { spawn } from \"node:child_process\"; import cp = require(\"node:child_process\"); spawn(\"git\", []); cp.spawn(\"rf\", [\"context\", \"show\"]);",
+   "importer-explain-await": "import { execFileSync } from \"node:child_process\"; execFileSync(\"git\", [\"status\"]); const { spawn: run } = await import(\"node:child_process\"); const verb = \"explain\"; run(\"rf\", [\"graph\", verb, target, \"--json\"]);",
+   "importer-explain-create-require": "import { spawn } from \"node:child_process\"; import { createRequire } from \"node:module\"; spawn(\"git\", []); const verb = \"explain\"; createRequire(import.meta.url)(\"node:child_process\").execFileSync(\"rf\", [\"graph\", verb, target, \"--json\"]);",
+   "importer-require-binding": "import { spawn } from \"node:child_process\"; const { execFileSync } = require(\"node:child_process\"); spawn(\"git\", []); execFileSync(\"rf\", [\"context\", \"show\"]);",
+   "importer-require-default": "import { spawn } from \"node:child_process\"; const { execFileSync = undefined } = require(\"node:child_process\"); spawn(\"git\", []); execFileSync?.(\"rf\", [\"context\", \"show\"]);",
+   "importer-variable-specifier": "import { spawn } from \"node:child_process\"; const name = \"node:child_process\"; spawn(\"git\", []); require(name).spawn(\"rf\", []);",
+   "importer-concatenated": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); require(\"node:\" + \"child_process\").spawn(\"rf\", []);",
+   "importer-template-specifier": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); require(`node:child_process`).spawn(\"rf\", []);",
+   "importer-escaped-specifier": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); require(\"node:child\\u005fprocess\").spawn(\"rf\", []);",
+   "importer-builtin-module": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); process.getBuiltinModule(\"node:child_process\").spawn(\"rf\", []);",
+   "importer-module-require": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); module.require(\"child_process\").spawn(\"rf\", []);",
+   "importer-type-position": "import { spawn } from \"node:child_process\"; type Launcher = typeof import(\"node:child_process\"); spawn(\"git\", []);",
+   "importer-direct-eval": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); eval(\"spawn('rf', ['graph', 'explain'])\");",
+   "spelled-comment": "import { spawn } from \"node:child_process\";\n// a second child_process load would sit here\nspawn(\"git\", []);",
+   "spelled-source": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); export const WORKER = `const cp = require(\"node:child_process\"); cp.spawn(\"rf\", [\"context\", \"show\"]);`;",
+   "spelled-escaped": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); export const WORKER = \"const cp = require('node:child\\u005fprocess'); cp.spawn('rf', ['context', 'show']);\";",
+   "spelled-template": "import { spawn } from \"node:child_process\"; spawn(\"git\", []); export const worker = (argv: string): string => `const cp = require(\"node:child_process\"); cp.spawn(\"rf\", ${argv});`;"
+  },
+  "leafCaught": {
+   "argv": "spawn(\"rf\", [\"graph\", \"explain\", target, \"--json\"]);",
+   "spaced": "const line = \"rf graph explain source:x --json\";",
+   "dotted": "const leaf = \"graph.explain\";",
+   "colon": "const id = \"rf:graph:explain\";",
+   "slashed": "const route = \"/rf/graph/explain\";",
+   "option-between": "const argv = [\"--workspace\", root, \"graph\", \"--json\", \"explain\", target];",
+   "value-option-between": "const argv = [\"graph\", \"--color\", \"never\", \"explain\"];",
+   "template": "const line = `rf graph ${flags} explain ${target}`;",
+   "shell-quoted": "const line = \"rf graph 'explain' source:x\";",
+   "escaped": "const line = \"rf graph expl\\\\ain source:x\";",
+   "upper": "const LEAF = \"GRAPH_EXPLAIN\";",
+   "kebab": "const verb = \"graph-explain\";",
+   "camel": "const verb = \"graphExplain\";"
+  },
+  "leafQuiet": {
+   "show": "const argv = [\"graph\", \"show\", \"--json\"];",
+   "context-explain": "const argv = [\"context\", \"explain\", renderId];",
+   "word": "const word = \"explain\";",
+   "explainer": "const text = \"the graph explainer\";",
+   "paragraph": "const text = \"a paragraph explains it\";",
+   "subgraph": "const text = \"the subgraph explain step\";",
+   "render": "const argv = [\"--workspace\", root, \"context\", \"render\", \"--no-commit\", \"--no-input\", \"--json\"];",
+   "comment": "// rf graph explain is not consumed here\nconst value = 1;"
+  },
+  "nameCaught": {
+   "field": "const limit = result.path_limit;",
+   "flag": "const argv = [\"graph\", \"explain\", \"--max-paths\", \"5\"];",
+   "camel-field": "interface Projection { pathLimit: number }",
+   "library-keyword": "const options = { max_paths: 5 };",
+   "camel-flag": "const maxPaths = 5;",
+   "kebab-field": "const option = \"path-limit\";",
+   "line-comment": "// the path_limit field is never read here\nconst value = 1;",
+   "block-comment": "/* --max-paths stays unconsumed */ const value = 1;"
+  },
+  "nameQuiet": {
+   "socket": "export const DETACHED_SOCKET_PATH_LIMIT = 103;",
+   "applied": "const page = { truncated: true, limitApplied: 40 };",
+   "length": "const maxPathLength = 4096;"
+  },
+  "planted": {
+   "id": "reactivefiber.graph.explain",
+   "version": "1.0.0",
+   "description": "Explain one rf graph node",
+   "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+   },
+   "effectClass": "read",
+   "permissions": [
+    "reactivefiber:render"
+   ],
+   "supportedModes": [
+    "invoke"
+   ],
+   "contractSource": "rf@0.0.0:reactive-fiber.cli/v1 graph.explain"
+  },
+  "packageCaught": [
+   "@reactive-fiber/sdk",
+   "reactivefiber",
+   "@reactivefiber/cli",
+   "reactive_fiber_cli",
+   "@rf/sdk",
+   "rf",
+   "@acme/reactive-fiber-tsx",
+   "rf-sdk",
+   "@acme/rf-tools"
+  ],
+  "packageQuiet": [
+   "@furnace/sdk",
+   "./providers/reactivefiber.js",
+   "../workbench/providers/reactivefiber.js",
+   "node:child_process",
+   "@hyperunix/sdk",
+   "typescript",
+   "rfc-parser",
+   "surf",
+   "rfdc"
+  ],
+  "specCaught": [
+   "npm:@reactive-fiber/sdk@1.0.0",
+   "file:../ReactiveFiberCLI",
+   "file:vendor/rf",
+   "file:vendor/rf-sdk-0.1.0.tgz"
+  ],
+  "specQuiet": [
+   "^4.1.0",
+   "file:vendor/furnace-sdk",
+   "npm:surf@2.0.0",
+   "npm:rfdc@1.4.1"
+  ],
+  "loadCaught": {
+   "create-require-call": "import { createRequire as gateCreateRequire } from \"node:module\"; gateCreateRequire(import.meta.url)(\"@reactive-fiber/sdk\");",
+   "create-require-bound": "import { createRequire } from \"node:module\"; const load = createRequire(import.meta.url); load(\"reactivefiber\");",
+   "module-require": "module.require(\"@rf/sdk\");",
+   "require-resolve": "require.resolve(\"@reactive-fiber/sdk\");",
+   "meta-resolve": "import.meta.resolve(\"@reactivefiber/cli\");",
+   "import-equals": "import sdk = require(\"@reactive-fiber/sdk\");",
+   "inline-require": "require(\"rf-sdk\").render();",
+   "id-lookup": "registry.get(\"reactivefiber.render.preview\");",
+   "parenthesized": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)((\"@reactive-fiber/sdk\"));",
+   "asserted": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(\"@reactive-fiber/sdk\" as string);",
+   "tagged": "import { createRequire } from \"node:module\"; const load = createRequire(import.meta.url); load`@reactive-fiber/sdk`;",
+   "unresolved-launch": "const cp = await import(\"node:\" + \"child\" + \"_process\"); cp.spawn(\"rf\", [\"context\", \"show\"]);"
+  },
+  "loadQuiet": {
+   "rf-binary": "import { spawn } from \"node:child_process\"; spawn(\"rf\", [\"context\", \"render\", \"--json\"]);",
+   "relative": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(\"./providers/reactivefiber.js\");",
+   "other-package": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(\"@furnace/sdk\");"
+  },
+  "typeCaught": {
+   "import-type": "export type GateSdk = typeof import(\"@reactive-fiber/tsx\");",
+   "import-type-member": "type Client = import(\"@rf/sdk\").Client;",
+   "reference-types": "/// <reference types=\"@reactive-fiber/sdk\" />\nexport {};",
+   "amd-dependency": "/// <amd-dependency path=\"rf-sdk\" />\nexport {};",
+   "ambient-module": "declare module \"@reactive-fiber/sdk\" {\n  export const render: () => void;\n}",
+   "ambient-import": "declare module \"pi-host\" {\n  import type { Client } from \"@reactive-fiber/sdk\";\n  export const client: Client;\n}",
+   "ambient-export": "declare module \"pi-host\" {\n  export * from \"@reactive-fiber/tsx\";\n}"
+  },
+  "typeQuiet": {
+   "relative": "type Provider = typeof import(\"./providers/reactivefiber.js\");",
+   "builtin": "type Launcher = typeof import(\"node:child_process\");",
+   "other-package": "/// <reference types=\"node\" />\ndeclare module \"@furnace/sdk\" {\n  export const run: () => void;\n}",
+   "global": "declare global {\n  interface PiRelease {\n    readonly rf: string;\n  }\n}\nexport {};",
+   "namespace": "namespace rf {\n  export const release = \"0.0.0\";\n}",
+   "comment": "/** @type {import(\"@reactive-fiber/sdk\").Client} */\nexport const client = undefined;"
+  },
+  "manifestCaught": {
+   "overrides": {
+    "overrides": {
+     "@reactive-fiber/sdk": "1.0.0"
+    }
+   },
+   "resolutions": {
+    "resolutions": {
+     "reactivefiber": "1.0.0"
+    }
+   },
+   "bundled": {
+    "bundledDependencies": [
+     "@forge/sdk",
+     "@rf/sdk"
+    ]
+   },
+   "pi-extension": {
+    "pi": {
+     "extensions": [
+      "./src/index.ts",
+      "@reactive-fiber/pi-extension"
+     ]
+    }
+   },
+   "script": {
+    "scripts": {
+     "explain": "npx @reactive-fiber/cli graph explain"
+    }
+   },
+   "vendored-spec": {
+    "dependencies": {
+     "@acme/graph": "file:vendor/rf-sdk-0.1.0.tgz"
+    }
+   }
+  },
+  "manifestQuiet": {
+   "keyword": {
+    "keywords": [
+     "pi-package",
+     "surf"
+    ]
+   },
+   "script": {
+    "scripts": {
+     "test:rfc": "vitest run test/rfc-parser.test.ts"
+    }
+   },
+   "vendored-spec": {
+    "dependencies": {
+     "@furnace/sdk": "file:vendor/furnace-sdk-0.1.0.tgz",
+     "rfdc": "^1.4.1"
+    }
+   }
+  },
+  "composed": {
+   "variable": "const verb = \"explain\"; spawn(\"rf\", [\"graph\", verb]);",
+   "concatenated": "const leaf = \"gr\" + \"aph explain\";",
+   "pushed": "const words = [\"graph\"]; words.push(\"explain\");",
+   "through-site": "import { execFileSync } from \"node:child_process\"; const git = (...args: string[]) => execFileSync(\"git\", [\"-C\", cwd, ...args]); const verb = \"explain\"; git(\"-c\", `alias.x=!rf graph ${verb}`, \"x\");"
+  },
+  "localProvider": "import { spawn } from \"node:child_process\";\nexport function register(registry) {\n  registry.register({ descriptor: { id: \"local.graph\", version: \"1.0.0\", description: \"d\", inputSchema: {}, effectClass: \"read\", permissions: [], supportedModes: [\"invoke\"] }, invoke: async () => spawn(\"rf\", [\"graph\", \"explain\", \"source:x\", \"--json\"]) });\n}",
+  "commonWord": "if (result.truncated) return { partial: true };",
+  "unseen": {
+   "composed-specifier": "const cp = await import(\"node:\" + \"child\" + \"_process\"); cp.spawn(\"rf\", [\"graph\", \"explain\", target]);",
+   "composed-path": "const cp = await import(\"node:\" + \"child\" + \"_process\"); cp.spawn(\"/usr/local/bin/rf\", [\"graph\", \"explain\", target]);",
+   "execve": "process.execve(\"/usr/local/bin/rf\", [\"rf\", \"graph\", \"explain\", target], process.env);",
+   "binding": "process.binding(\"spawn_sync\").spawn({ file: \"rf\", args: [\"rf\", \"graph\", \"explain\"] });",
+   "evaluated": "eval(\"require('node:child' + '_process').spawn('rf', ['graph', 'explain'])\");",
+   "cluster": "import cluster from \"node:cluster\"; cluster.fork();",
+   "package": "import { execa } from \"execa\"; await execa(\"rf\", [\"graph\", \"explain\", target]);"
+  },
+  "unreadSpecifiers": {
+   "variable": "import { createRequire } from \"node:module\"; const spec = \"@reactive-fiber/sdk\"; createRequire(import.meta.url)(spec);",
+   "array": "import { createRequire } from \"node:module\"; Reflect.apply(createRequire(import.meta.url), undefined, [\"@reactive-fiber/sdk\"]);",
+   "composed": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(\"@reactive\" + \"-fiber/sdk\");",
+   "url": "await import(new URL(\"@reactive-fiber/sdk\", import.meta.url).href);",
+   "spread": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(...[\"@reactive-fiber/sdk\"]);",
+   "conditional": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(flag ? \"@reactive-fiber/sdk\" : \"@furnace/sdk\");"
+  },
+  "pathSpecifiers": {
+   "relative": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(\"../node_modules/@reactive-fiber/sdk/dist/index.js\");",
+   "absolute": "await import(\"/opt/reactive-fiber/sdk/index.js\");",
+   "file-url": "await import(\"file:///opt/reactive-fiber/sdk/index.js\");",
+   "reference-path": "/// <reference path=\"../node_modules/@reactive-fiber/sdk/index.d.ts\" />\nexport {};",
+   "import-type-path": "type Client = typeof import(\"../node_modules/@rf/sdk/index.js\");"
+  },
+  "pathNames": [
+   "../node_modules/@reactive-fiber/sdk/dist/index.js",
+   "/opt/reactive-fiber/sdk/index.js",
+   "file:///opt/reactive-fiber/sdk/index.js",
+   "../node_modules/@reactive-fiber/sdk/index.d.ts",
+   "../node_modules/@rf/sdk/index.js"
+  ],
+  "residuals": {
+   "R-COMPOSED": [
+    "Q1"
+   ],
+   "R-SAME-RELEASE-REBUILD": [
+    "Q2"
+   ],
+   "R-OUTSIDE-SRC": [
+    "Q3"
+   ],
+   "R-COMMON-WORD": [
+    "Q4"
+   ],
+   "R-UNSEEN-LAUNCHER": [
+    "Q5"
+   ],
+   "R-UNREAD-SPECIFIER": [
+    "Q6"
+   ],
+   "R-PATH-SPECIFIER": [
+    "Q7"
+   ]
+  }
+ },
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the filing's sections (each read head once), its STATEMENT and ACCEPTANCE, and the cases agree",
+  "G1",
+  "G2",
+  "G3",
+  "W1",
+  "W2",
+  "W3",
+  "U1",
+  "U2",
+  "U3",
+  "Q1",
+  "Q2",
+  "Q3",
+  "Q4",
+  "Q5",
+  "Q6",
+  "Q7",
+  "the registered tests and the reached pins equal the roster, in order and both ways"
+ ],
+ "rows": [
+  {
+   "id": "G",
+   "label": "Gating artifact: RFCLI PMO-05a/PMO-05b (program packets rfc-20qgk.8/rfc-20qgk.9, PMO/BEADS-2026-10-16.md:61,:296-297@8a8b83e4d) shipping rf graph explain --max-paths with truncated/path_limit fields (absent from graph.explain.schema.json:375-383@8a8b83e4d)",
+   "pins": [
+    {
+     "id": "G1",
+     "witness": {
+      "carrier": "0.1.845",
+      "release": "0.1.845",
+      "build": "b8b3e9f1de56cf8bd0e7fc4a8e8a4c135a5f7af3",
+      "mismatch": false,
+      "leaf": "graph.explain|true|served_reachable",
+      "shipped": {
+       "commit": "e2d707538bb9e49b240a8b70ab27b54114e23943",
+       "subject": "feat(schemas): [PMO-05b] rf graph explain --max-paths N adds truncated",
+       "names": [
+        true,
+        true
+       ],
+       "inBuild": true,
+       "prior": "7e6ed89a09f6f64eb0fa6fb8671288ae50a1e6b8",
+       "inPrior": false
+      }
+     }
+    },
+    {
+     "id": "G2",
+     "witness": {
+      "usage": true,
+      "options": [
+       "-h",
+       "--from",
+       "--max-paths",
+       "--json",
+       "--workspace",
+       "--actor",
+       "--no-input",
+       "--yes",
+       "--debug",
+       "--color",
+       "-v"
+      ],
+      "probe": {
+       "flag": true,
+       "exit": 3,
+       "ok": false,
+       "command": "graph.explain",
+       "codes": [
+        "RF_WORKSPACE_INVALID"
+       ],
+       "unknown": []
+      },
+      "bounded": {
+       "flagged": {
+        "flag": true,
+        "exit": 0,
+        "ok": true,
+        "command": "graph.explain",
+        "emitted": [
+         "truncated",
+         "path_limit"
+        ],
+        "truncated": false,
+        "pathLimit": 1
+       },
+       "unflagged": {
+        "flag": false,
+        "exit": 0,
+        "ok": true,
+        "command": "graph.explain",
+        "emitted": []
+       }
+      }
+     }
+    },
+    {
+     "id": "G3",
+     "witness": {
+      "schema": {
+       "bytes": 25309,
+       "sha256": "95c98db73e3c16813843cc30e2287a2bdb9f33dad3f6ab6618cd52c8776c83ae"
+      },
+      "release": {
+       "members": [
+        "graph_revision_id",
+        "target",
+        "source",
+        "reachable",
+        "paths",
+        "edge_paths",
+        "reason",
+        "diagnostics",
+        "truncated",
+        "path_limit"
+       ],
+       "required": [
+        "graph_revision_id",
+        "target",
+        "source",
+        "reachable",
+        "paths",
+        "edge_paths",
+        "reason",
+        "diagnostics"
+       ]
+      },
+      "pin": {
+       "rfcli": "8a8b83e4d",
+       "members": [
+        "graph_revision_id",
+        "target",
+        "source",
+        "reachable",
+        "paths",
+        "edge_paths",
+        "reason"
+       ],
+       "required": [
+        "graph_revision_id",
+        "target",
+        "source",
+        "reachable",
+        "paths",
+        "edge_paths",
+        "reason"
+       ]
+      },
+      "revision": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "fields": {
+       "members": [
+        "truncated",
+        "path_limit"
+       ],
+       "required": [],
+       "atPin": []
+      },
+      "span": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "W",
+   "label": "conjoined with a Pi W10 slice that actually invokes graph explain",
+   "pins": [
+    {
+     "id": "W1",
+     "witness": {
+      "agree": true,
+      "importers": [
+       "src/index.ts",
+       "src/workbench/hosts/local-detached.ts",
+       "src/workbench/providers/reactivefiber.ts"
+      ],
+      "sites": [
+       "src/index.ts|literal|git|execFileSync|git|none",
+       "src/index.ts|literal|atRoot|execFileSync|git|none",
+       "src/index.ts|literal|revision|execFileSync|git|none",
+       "src/workbench/hosts/local-detached.ts|opaque|launchDetachedWorkflow|spawn|process.execPath|none",
+       "src/workbench/providers/reactivefiber.ts|rf|nativeReactiveFiberRender|spawn|rf|none"
+      ],
+      "rf": [
+       "src/workbench/providers/reactivefiber.ts|nativeReactiveFiberRender|spawn"
+      ],
+      "escapes": [],
+      "loads": [
+       "src/index.ts|<module>|import",
+       "src/workbench/hosts/local-detached.ts|<module>|import",
+       "src/workbench/providers/reactivefiber.ts|<module>|import"
+      ],
+      "unbound": [],
+      "unread": [],
+      "unwalked": [],
+      "unwalkedControls": {
+       "probe.js": true,
+       "probe.mjs": true,
+       "probe.cjs": true,
+       "probe.jsx": true,
+       "probe.mts": true,
+       "probe.cts": true,
+       "probe.tsx": true,
+       "probe.ts": false,
+       "probe.d.ts": false,
+       "probe.json": false
+      },
+      "entries": [],
+      "entryControls": {
+       "modules": [
+        "module.ts",
+        "nested/deeper/types.d.ts",
+        "nested/inner.ts"
+       ],
+       "unwalked": [
+        "dangling.ts|symlink",
+        "data.json|file",
+        "gate-launch|file",
+        "gate-launch.body|file",
+        "gate-launch.cjs|symlink",
+        "gate-launch.txt|file",
+        "linked-dir|symlink",
+        "linked.ts|symlink",
+        "nested/.hidden|file",
+        "upper.TS|file"
+       ]
+      },
+      "kindControls": {
+       "directory": "directory",
+       "file": "file",
+       "symlink": "symlink",
+       "other": "other"
+      },
+      "readingControls": {
+       "probe.ts|file": "module",
+       "probe.d.ts|file": "module",
+       "probe.txt|file": "unwalked",
+       "probe|file": "unwalked",
+       "probe.TS|file": "unwalked",
+       "probe.cjs|file": "unwalked",
+       "probe.ts|symlink": "unwalked",
+       "probe|symlink": "unwalked",
+       "probe.ts|other": "unwalked",
+       "probe|other": "unwalked",
+       "probe.ts|directory": "descend",
+       "probe|directory": "descend"
+      },
+      "controls": {
+       "named": "imports|rf:run:spawn:rf:unknown||<module>:import|",
+       "alias": "imports|rf:<module>:execFile:/usr/local/bin/rf:none||<module>:import|",
+       "namespace": "imports|rf:<module>:spawnSync:rf:none||<module>:import|",
+       "default-opaque": "imports|opaque:<module>:fork:script:none||<module>:import|",
+       "require": "imports|rf:<module>:spawn:rf:unknown||<module>:require|",
+       "require-element": "imports|rf:<module>:execSync:rf:shell||<module>:require|",
+       "variable-binary": "imports|opaque:<module>:spawn:BIN:unknown||<module>:import|",
+       "git": "imports|literal:<module>:execFileSync:git:none||<module>:import|",
+       "regex-exec": "imports|||<module>:import|",
+       "type-only": "no-import|||<module>:type|",
+       "unimported": "no-import||||",
+       "exe": "imports|rf:<module>:execFileSync:rf.exe:none||<module>:import|",
+       "cmd-path": "imports|rf:<module>:execFileSync:C:\\tools\\rf.cmd:none||<module>:import|",
+       "upper": "imports|rf:<module>:spawn:RF:none||<module>:import|",
+       "const-alias": "imports|rf:<module>:spawn:rf:none||<module>:import|",
+       "namespace-destructure": "imports|rf:<module>:execFileSync:rf:none||<module>:import|",
+       "member-alias": "imports|rf:<module>:execFileSync:rf:none||<module>:import|",
+       "alias-chain": "imports|rf:<module>:spawn:rf:none||<module>:import|",
+       "let-alias": "imports||<module>:spawn:mutable-alias|<module>:import|",
+       "exported-alias": "imports||<module>:spawn:exported-alias|<module>:import|",
+       "argument": "imports||<module>:spawn:argument|<module>:import|",
+       "call-method": "imports||<module>:spawn:member|<module>:import|",
+       "property": "imports||<module>:cp:member|<module>:import|",
+       "re-export": "imports||<module>:spawn:re-export|<module>:re-export|",
+       "local-export": "imports||<module>:spawn:export|<module>:import|",
+       "wrapper-function": "imports|opaque:launch:spawn:binary:unknown||<module>:import|",
+       "wrapped-caller": "no-import||||",
+       "inline-require": "no-import|||<module>:unbound:require|",
+       "shell-true": "imports|rf:<module>:spawn:rf:shell||<module>:import|",
+       "shell-path": "imports|rf:<module>:execFile:rf:shell||<module>:import|",
+       "shell-false": "imports|literal:<module>:spawn:rf context show:none||<module>:import|",
+       "shell-unknown": "imports|opaque:<module>:spawnSync:rf context show:unknown||<module>:import|",
+       "assignment-prefix": "imports|rf:<module>:execSync:rf:shell||<module>:import|",
+       "launcher": "imports|literal:<module>:execFileSync:env:none||<module>:import|",
+       "method-scope": "imports|rf:launch:spawn:rf:none,literal:run:spawn:git:none||<module>:import|",
+       "launcher-alias": "imports|literal:git:execFileSync:git:none||<module>:import|",
+       "importer-inline-require": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:require|",
+       "importer-await-import": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:import|",
+       "importer-import-then": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:import|",
+       "importer-create-require": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:call|",
+       "importer-import-equals": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:import-equals|",
+       "importer-explain-await": "imports|literal:<module>:execFileSync:git:none||<module>:import,<module>:unbound:import|",
+       "importer-explain-create-require": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:call|",
+       "importer-require-binding": "imports|literal:<module>:spawn:git:none,rf:<module>:execFileSync:rf:none||<module>:import,<module>:require|",
+       "importer-require-default": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:require|",
+       "importer-variable-specifier": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:value|",
+       "importer-concatenated": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:value|",
+       "importer-template-specifier": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:require|",
+       "importer-escaped-specifier": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:require|",
+       "importer-builtin-module": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:call|",
+       "importer-module-require": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:unbound:call|",
+       "importer-type-position": "imports|literal:<module>:spawn:git:none||<module>:import,<module>:type|",
+       "importer-direct-eval": "imports|literal:<module>:spawn:git:none|<module>:eval:direct-eval|<module>:import|",
+       "spelled-comment": "imports|literal:<module>:spawn:git:none||<module>:import|<module>:comment",
+       "spelled-source": "imports|literal:<module>:spawn:git:none||<module>:import|<module>:string",
+       "spelled-escaped": "imports|literal:<module>:spawn:git:none||<module>:import|<module>:escaped",
+       "spelled-template": "imports|literal:<module>:spawn:git:none||<module>:import|worker:template"
+      }
+     }
+    },
+    {
+     "id": "W2",
+     "witness": {
+      "argument": "argv",
+      "initializer": "renderArgv(selector,workspaceRoot)",
+      "arrays": [
+       "--view <expr> --task-id <expr> <expr>",
+       "",
+       "--model <expr>",
+       "--model <expr> --task <expr>",
+       "--workspace <expr> context render <expr> --no-commit --no-input --json"
+      ],
+      "verb": "context render"
+     }
+    },
+    {
+     "id": "W3",
+     "witness": {
+      "floor": true,
+      "hits": [],
+      "caught": {
+       "argv": 1,
+       "spaced": 1,
+       "dotted": 1,
+       "colon": 1,
+       "slashed": 1,
+       "option-between": 1,
+       "value-option-between": 1,
+       "template": 1,
+       "shell-quoted": 1,
+       "escaped": 1,
+       "upper": 1,
+       "kebab": 1,
+       "camel": 1
+      },
+      "quiet": {
+       "show": 0,
+       "context-explain": 0,
+       "word": 0,
+       "explainer": 0,
+       "paragraph": 0,
+       "subgraph": 0,
+       "render": 0,
+       "comment": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "U",
+   "label": "until the artifact exists, no Pi change",
+   "pins": [
+    {
+     "id": "U1",
+     "witness": {
+      "needles": [
+       "--max-paths",
+       "max_paths",
+       "max-paths",
+       "maxPaths",
+       "path_limit",
+       "path-limit",
+       "pathLimit"
+      ],
+      "floor": true,
+      "hits": [],
+      "caught": {
+       "field": [
+        "path_limit"
+       ],
+       "flag": [
+        "--max-paths",
+        "max-paths"
+       ],
+       "camel-field": [
+        "pathLimit"
+       ],
+       "library-keyword": [
+        "max_paths"
+       ],
+       "camel-flag": [
+        "maxPaths"
+       ],
+       "kebab-field": [
+        "path-limit"
+       ],
+       "line-comment": [
+        "path_limit"
+       ],
+       "block-comment": [
+        "--max-paths",
+        "max-paths"
+       ]
+      },
+      "quiet": {
+       "socket": [],
+       "applied": [],
+       "length": []
+      }
+     }
+    },
+    {
+     "id": "U2",
+     "witness": {
+      "native": [
+       "reactivefiber.render.preview|read|rf@<release>:reactive-fiber.cli/v1 context.render --no-commit"
+      ],
+      "injected": [
+       "reactivefiber.render.preview|read|rf@<release>:reactive-fiber.cli/v1 context.render --no-commit"
+      ],
+      "explain": [],
+      "planted": [
+       "reactivefiber.graph.explain"
+      ]
+     }
+    },
+    {
+     "id": "U3",
+     "witness": {
+      "floor": true,
+      "unread": [],
+      "imports": [],
+      "manifest": true,
+      "packages": [],
+      "specs": [],
+      "missed": [],
+      "quiet": [],
+      "loads": [],
+      "loadCaught": {
+       "create-require-call": [
+        "<module>:call:@reactive-fiber/sdk"
+       ],
+       "create-require-bound": [
+        "<module>:call:reactivefiber"
+       ],
+       "module-require": [
+        "<module>:call:@rf/sdk"
+       ],
+       "require-resolve": [
+        "<module>:call:@reactive-fiber/sdk"
+       ],
+       "meta-resolve": [
+        "<module>:call:@reactivefiber/cli"
+       ],
+       "import-equals": [
+        "<module>:import-equals:@reactive-fiber/sdk"
+       ],
+       "inline-require": [
+        "<module>:require:rf-sdk"
+       ],
+       "id-lookup": [
+        "<module>:call:reactivefiber.render.preview"
+       ],
+       "parenthesized": [
+        "<module>:call:@reactive-fiber/sdk"
+       ],
+       "asserted": [
+        "<module>:call:@reactive-fiber/sdk"
+       ],
+       "tagged": [
+        "<module>:tagged:@reactive-fiber/sdk"
+       ],
+       "unresolved-launch": [
+        "<module>:call:rf"
+       ]
+      },
+      "loadQuiet": {
+       "rf-binary": [],
+       "relative": [],
+       "other-package": []
+      },
+      "types": [],
+      "typeCaught": {
+       "import-type": [
+        "<module>:import-type:@reactive-fiber/tsx"
+       ],
+       "import-type-member": [
+        "<module>:import-type:@rf/sdk"
+       ],
+       "reference-types": [
+        "<module>:reference-types:@reactive-fiber/sdk"
+       ],
+       "amd-dependency": [
+        "<module>:amd-dependency:rf-sdk"
+       ],
+       "ambient-module": [
+        "<module>:ambient-module:@reactive-fiber/sdk"
+       ],
+       "ambient-import": [
+        "<module>:ambient-import:@reactive-fiber/sdk"
+       ],
+       "ambient-export": [
+        "<module>:ambient-export:@reactive-fiber/tsx"
+       ]
+      },
+      "typeQuiet": {
+       "relative": [],
+       "builtin": [],
+       "other-package": [],
+       "global": [],
+       "namespace": [],
+       "comment": []
+      },
+      "typeLoads": {
+       "import-type": [],
+       "import-type-member": [],
+       "reference-types": [],
+       "amd-dependency": [],
+       "ambient-module": [],
+       "ambient-import": [],
+       "ambient-export": []
+      },
+      "deep": [],
+      "manifestCaught": {
+       "overrides": [
+        ".overrides.@reactive-fiber/sdk"
+       ],
+       "resolutions": [
+        ".resolutions.reactivefiber"
+       ],
+       "bundled": [
+        ".bundledDependencies[1]=@rf/sdk"
+       ],
+       "pi-extension": [
+        ".pi.extensions[1]=@reactive-fiber/pi-extension"
+       ],
+       "script": [
+        ".scripts.explain=npx @reactive-fiber/cli graph explain"
+       ],
+       "vendored-spec": [
+        ".dependencies.@acme/graph=file:vendor/rf-sdk-0.1.0.tgz"
+       ]
+      },
+      "manifestQuiet": {
+       "keyword": [],
+       "script": [],
+       "vendored-spec": []
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the residuals: each named family pinned by its quiet row",
+   "pins": [
+    {
+     "id": "Q1",
+     "witness": {
+      "variable": [],
+      "concatenated": [],
+      "pushed": [],
+      "through-site": []
+     }
+    },
+    {
+     "id": "Q2",
+     "witness": {
+      "carrier": "rf@<release>:reactive-fiber.cli/v1 context.render --no-commit",
+      "release": "0.1.845",
+      "capture": {
+       "build": "b8b3e9f1de56cf8bd0e7fc4a8e8a4c135a5f7af3",
+       "admitted": true
+      },
+      "prior": {
+       "build": "7e6ed89a09f6f64eb0fa6fb8671288ae50a1e6b8",
+       "admitted": true
+      }
+     }
+    },
+    {
+     "id": "Q3",
+     "witness": {
+      "roots": [
+       "src"
+      ],
+      "scan": "imports|rf:register:spawn:rf:none||<module>:import|",
+      "leafHits": [
+       "argv:3"
+      ]
+     }
+    },
+    {
+     "id": "Q4",
+     "witness": {
+      "excluded": [
+       "truncated"
+      ],
+      "needle": false,
+      "probe": [],
+      "spelled": true
+     }
+    },
+    {
+     "id": "Q5",
+     "witness": {
+      "composed-specifier": {
+       "scan": "no-import||||",
+       "leafHits": [
+        "argv:1"
+       ],
+       "loads": [
+        "<module>:call:rf"
+       ]
+      },
+      "composed-path": {
+       "scan": "no-import||||",
+       "leafHits": [
+        "argv:1"
+       ],
+       "loads": []
+      },
+      "execve": {
+       "scan": "no-import||||",
+       "leafHits": [
+        "argv:1"
+       ],
+       "loads": []
+      },
+      "binding": {
+       "scan": "no-import||||",
+       "leafHits": [
+        "argv:1"
+       ],
+       "loads": []
+      },
+      "evaluated": {
+       "scan": "no-import||||",
+       "leafHits": [],
+       "loads": []
+      },
+      "cluster": {
+       "scan": "no-import||||",
+       "leafHits": [],
+       "loads": []
+      },
+      "package": {
+       "scan": "no-import||||",
+       "leafHits": [
+        "argv:1"
+       ],
+       "loads": [
+        "<module>:call:rf"
+       ]
+      }
+     }
+    },
+    {
+     "id": "Q6",
+     "witness": {
+      "variable": [],
+      "array": [],
+      "composed": [],
+      "url": [],
+      "spread": [],
+      "conditional": []
+     }
+    },
+    {
+     "id": "Q7",
+     "witness": {
+      "probes": {
+       "relative": {
+        "loads": [],
+        "types": []
+       },
+       "absolute": {
+        "loads": [],
+        "types": []
+       },
+       "file-url": {
+        "loads": [],
+        "types": []
+       },
+       "reference-path": {
+        "loads": [],
+        "types": []
+       },
+       "import-type-path": {
+        "loads": [],
+        "types": []
+       }
+      },
+      "predicate": {
+       "../node_modules/@reactive-fiber/sdk/dist/index.js": false,
+       "/opt/reactive-fiber/sdk/index.js": false,
+       "file:///opt/reactive-fiber/sdk/index.js": false,
+       "../node_modules/@reactive-fiber/sdk/index.d.ts": false,
+       "../node_modules/@rf/sdk/index.js": false
+      }
+     }
+    }
+   ]
+  }
+ ]
+}
