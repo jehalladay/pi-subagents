@@ -823,7 +823,9 @@ describe('hxLiveReceipt: the live HX receipt line (wb-tz2.1 fold-in HXFS-PI-3)',
  * measured read carries a conflict diagnostic, so the conflict facet is pinned on HX's own code spelling (HX-SCHEMA-CONFLICT) from a
  * fixture; hyperunix.result/1 has no consistency-mode field, so a consistency mode is a named residual that sequences behind the
  * wb-tz2.3 successor re-vendor (R1-RESIDUAL below). Rows: G1 the measured read; G2 the acceptance fixture; G3 absence and basis;
- * G4 a result lacking them; G5 bounds and sanitizing; G6 only the measured shapes; G7 frozen, lossless, deterministic. */
+ * G4 a result lacking them; G5 bounds and sanitizing; G6 only the measured shapes; G7 frozen, lossless, deterministic; and from
+ * wb-noq8 (the landing-646 follow-up) G8 the whole-segment conflict boundary (CONFLICT glued to a letter or a digit is no conflict
+ * status) and G9 a facet whose string sanitizes to nothing is not relayed, read guard by guard. */
 describe('wb-gwr.2 HX result facets: view identity, provider versions, incomplete regions and conflicts relayed verbatim', () => {
   const MEASURED_BINARY = '451221852d248a2d31398b6b18bee9f6e149e5561e30bb6efc5fadeb23dc2913';
   const REGION_TARGET = 'hx.fs/directory-entry (coverage opportunistic (other:No_change_exclusion))';
@@ -992,6 +994,41 @@ describe('wb-gwr.2 HX result facets: view identity, provider versions, incomplet
     for (const facet of first.facets ?? []) expect(Object.isFrozen(facet)).toBe(true);
     expect(JSON.parse(JSON.stringify(first))).toStrictEqual(first);
     expect(hyperunixTopology(reading(acceptance()), context)).toStrictEqual(first);
+  });
+
+  it('G8: only a code naming CONFLICT as a whole segment is a conflict status: CONFLICT glued to a letter or a digit never surfaces', () => {
+    // G6's non-conflict codes spell no CONFLICT at all, so a substring reading of the conflict test reads them the same way; these
+    // spell it inside a longer segment on either side, and beside them the whole segment opens, sits inside and closes a code.
+    const glued = ['HX-NONCONFLICT', 'HX-CONFLICTED', 'HX-2CONFLICT', 'HX-CONFLICT9', 'NONCONFLICT', 'CONFLICTS'];
+    const whole = ['CONFLICT', 'CONFLICT-HX', 'HX-CONFLICT-ORIGIN', 'HX-CONTENT-EDIT-ORIGIN-CONFLICT'];
+    const coded = (codes: readonly string[]): Json => measured({diagnostics: codes.map(code => ({code, severity: 'error', message: 'SECRET-CONFLICT-MESSAGE'}))});
+    const bare = hyperunixTopology(measured(), context);
+    expect(hyperunixTopology(coded(glued), context)).toStrictEqual(bare);
+    const mixed = hyperunixTopology(coded([...glued, ...whole]), context);
+    expect(mixed.facets).toStrictEqual(whole.map(code => ({kind: 'conflict', code})));
+    expect(JSON.stringify(mixed)).not.toContain('SECRET-CONFLICT-MESSAGE');
+    const {facets: _facets, ...rest} = mixed;
+    expect(rest).toStrictEqual(bare);
+  });
+
+  it('G9: a facet whose string sanitizes to nothing is not relayed: a blank view, provider, version, region scope or target drops exactly that facet', () => {
+    // HyperUnixResultFacet's own claim, one plant per guard: every blank is a string the label layout keeps nothing of, and the
+    // unblanked provider and region beside them show the same document still relays.
+    const blanks = ['', '   ', `${ESC}[2J`, `${BEL}${RLO}`];
+    const bare = hyperunixTopology(measured(), context);
+    for (const blank of blanks) {
+      const value = measured({view: blank,
+        evidence: {providers: [blank, 'hx.fs/builtin', 'hx.fs/other'], provider_versions: {[blank]: '0.1.0', 'hx.fs/builtin': blank, 'hx.fs/other': '0.2.0'}},
+        coverage_summary: {licenses_absence: false, incomplete_regions: [{scope: blank, target: 'hx.fs/directory-entry'},
+          {scope: `fs:${WS}/src`, target: blank}, {scope: `fs:${WS}/lib`, target: 'hx.fs/regular-file'}]}});
+      const topology = hyperunixTopology(value, context);
+      expect(topology.facets, JSON.stringify(blank)).toStrictEqual([
+        {kind: 'provider-version', provider: 'hx.fs/other', version: '0.2.0'},
+        {kind: 'incomplete-region', scope: `fs:${WS}/lib`, target: 'hx.fs/regular-file'},
+      ]);
+      const {facets: _facets, ...rest} = topology;
+      expect(rest, JSON.stringify(blank)).toStrictEqual(bare);
+    }
   });
 
   it('R1-RESIDUAL: hyperunix.result/1 has no consistency-mode field, so no reading carries one and no facet kind names one', () => {
