@@ -313,8 +313,32 @@
               "src still names no subject": "UNSHIPPED",
               "triage still PROPOSED": "UNSHIPPED",
               "status still Proposed, capitalized": "UNSHIPPED",
+              "status still PROPOSED, upper case": "UNSHIPPED",
+              "status still pRoPoSeD, mixed case": "UNSHIPPED",
+              "status word proposed before a hyphen": "UNSHIPPED",
+              "status word proposed after a non-ASCII letter": "UNSHIPPED",
               "status word only holding proposed": "SHIPPED",
-              "triage reading Proposed, not upper case": "SHIPPED"
+              "status word opening with proposed": "SHIPPED",
+              "status word proposed before a digit": "SHIPPED",
+              "status word proposed after an underscore": "SHIPPED",
+              "status word proposed after a digit": "SHIPPED",
+              "status word proposed before an underscore": "SHIPPED",
+              "status word with the long s for its s": "SHIPPED",
+              "status phrase inside longer words": "UNSHIPPED",
+              "status phrase by its first five words": "SHIPPED",
+              "status phrase without its first word": "SHIPPED",
+              "status phrase capitalized": "SHIPPED",
+              "status phrase with a doubled space": "SHIPPED",
+              "triage PROPOSED before a hyphen": "UNSHIPPED",
+              "triage PROPOSED after a non-ASCII capital": "UNSHIPPED",
+              "triage reading Proposed, not upper case": "SHIPPED",
+              "triage reading PrOpOsEd, mixed case": "SHIPPED",
+              "triage PROPOSED only inside a longer word": "SHIPPED",
+              "triage word opening with PROPOSED": "SHIPPED",
+              "triage PROPOSED before a digit": "SHIPPED",
+              "triage PROPOSED after a digit": "SHIPPED",
+              "triage PROPOSED after an underscore": "SHIPPED",
+              "triage PROPOSED before an underscore": "SHIPPED"
             },
             "adoption": "ABSENT",
             "anchored": [],
@@ -352,6 +376,7 @@
                 "qa/plant.mjs",
                 "src/plant.ts"
               ],
+              "trackedRemoved": false,
               "adoption": "PRESENT",
               "anchored": [
                 ".agents/plant.md",
@@ -380,7 +405,13 @@
                 "@reactive-fiber/tsx",
                 "@reactive-fiber/zz-dev",
                 "@reactive-fiber/zz-optional",
-                "@reactive-fiber/zz-peer"
+                "@reactive-fiber/zz-peer",
+                "@reactive/fiber-zz-across",
+                "@zz-scope/reactive-fiber",
+                "REACTIVE.FIBER.ZZ-DOTTED",
+                "ReactiveFiberZzCamel",
+                "reactive-fiber-zz-unscoped",
+                "reactive_fiber_zz_snake"
               ],
               "unreadable": [
                 "docs"
@@ -409,6 +440,20 @@
                 ],
                 "twin": [
                   "docs/read.md:1 A:inference"
+                ]
+              },
+              "R-DEPENDENCY-NAME": {
+                "a folded name": [
+                  [],
+                  [
+                    "reactive-fiber-zz"
+                  ]
+                ],
+                "an alias": [
+                  [],
+                  [
+                    "@reactive-fiber/tsx"
+                  ]
                 ]
               }
             }
@@ -567,6 +612,42 @@
                   "docs/cut.md:4 A:inference"
                 ],
                 []
+              ],
+              "around a table row indented by twenty spaces": [
+                [
+                  "docs/cut.md:4 A:inference"
+                ],
+                []
+              ],
+              "before a list item numbered by twenty digits": [
+                [
+                  "docs/cut.md:4 A:inference"
+                ],
+                []
+              ],
+              "before a list item indented by twenty spaces": [
+                [
+                  "docs/cut.md:4 A:inference"
+                ],
+                []
+              ],
+              "before a list item whose mark a space follows at the line end": [
+                [
+                  "docs/cut.md:4 A:inference"
+                ],
+                []
+              ],
+              "before a list item whose mark a space follows at a CRLF line end": [
+                [
+                  "docs/cut.md:4 A:inference"
+                ],
+                []
+              ],
+              "before a bare list mark that a lone CR follows at a CRLF line end": [
+                [
+                  "docs/cut.md:4 A:inference"
+                ],
+                []
               ]
             },
             "joined": [
@@ -608,7 +689,37 @@
               "a lone carriage return": [
                 [],
                 []
+              ],
+              "a bare list mark before an LF line end": [
+                [],
+                []
+              ],
+              "a bare list number before an LF line end": [
+                [],
+                []
+              ],
+              "a bare list mark before a CRLF line end": [
+                [],
+                []
+              ],
+              "a bare list number before a CRLF line end": [
+                [],
+                []
+              ],
+              "an LF then a CR before a heading indented by three spaces": [
+                [],
+                []
               ]
+            },
+            "pages": {
+              "docs/cut.md": [
+                "docs/cut.md:3 A:inference"
+              ],
+              "docs/cut.MD": [],
+              "docs/cut.mdx": [],
+              "docs/cut.markdown": [],
+              "docs/cut.md.txt": [],
+              "docs/cutmd": []
             },
             "classes": {
               "ends a line": [
@@ -1385,6 +1496,14 @@
                 "unresolved": [],
                 "packages": []
               },
+              "src/ui/plant-declared-inspector.d.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-declared-inspector.d.ts:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
               "src/ui/plant-default-inspector.ts": {
                 "pure": false,
                 "builtins": [
@@ -1633,6 +1752,23 @@
                 "unresolved": [],
                 "packages": []
               },
+              "src/ui/plant-noncandidate-inspector.ts": {
+                "pure": false,
+                "builtins": [],
+                "unresolved": [
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/a",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/b",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/c",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/d",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/e",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/f",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/g.cjs",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/h.js",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/i.mjs",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/j"
+                ],
+                "packages": []
+              },
               "src/ui/plant-order-index-inspector.ts": {
                 "pure": true,
                 "builtins": [],
@@ -1664,6 +1800,14 @@
                 "packages": [
                   "fake-io-lib"
                 ]
+              },
+              "src/ui/plant-prefix-only-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-prefix-only-inspector.ts:node:test"
+                ],
+                "unresolved": [],
+                "packages": []
               },
               "src/ui/plant-property-loader-inspector.ts": {
                 "pure": true,
@@ -1880,6 +2024,10 @@
   "residuals": [
     {
       "id": "R-OUTSIDE-ROOTS",
+      "quietPin": "A1"
+    },
+    {
+      "id": "R-DEPENDENCY-NAME",
       "quietPin": "A1"
     },
     {

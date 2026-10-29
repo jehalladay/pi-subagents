@@ -24,19 +24,38 @@
  * @reactive-fiber/tsx 0.1.668, its export map names six entry points and none of its 159 src files names the subject; the
  * producer's own triage (docs/triage/programs-2026-10-21/requirements/ATOMIC-REQUIREMENTS.md:87, blob df7eec14, vendored with
  * its sha256) requires that ActivityBoundary and SpeculationBoundary be "marked PROPOSED (0 files at db7558552)" and names
- * the host as the lifecycle owner. producerOf reads SHIPPED only when all three conditions flip - the status line holds
- * neither the word "proposed" (in any case) nor the phrase "none of the new exports claimed shipped", the tip's src names
- * the subject (a count above 0), the triage line stops holding the upper-case word PROPOSED - and UNSHIPPED otherwise: it
- * fails closed. A1 holds eight producer controls: all three flipped (SHIPPED); each condition held back, the status line
- * once per phrase and once capitalized (UNSHIPPED); and two near misses that stay SHIPPED, a status word that only holds
- * "proposed" and a triage line reading "Proposed".
+ * the host as the lifecycle owner.
+ * PRODUCER READING (producerOf; A1 producer, and A1 producerControls: the recorded producer with line 3's status phrase, the
+ *   tip's subject src count and the triage marking replaced, each control named for the form it holds). It reads SHIPPED only
+ *   when every condition below flips, UNSHIPPED otherwise: it fails closed. Each condition claims exactly the forms its named
+ *   controls hold; no other form is claimed.
+ *   (1) the status line (line 3) holds no WORD proposed: its eight letters in ASCII upper or lower case in any mix, with no
+ *       ASCII letter, digit or underscore on either side (a JavaScript word boundary; the case is folded for ASCII only).
+ *       Read (UNSHIPPED): in lower case, capitalized, in upper case, in mixed case, before a hyphen, after a non-ASCII letter.
+ *       Not read (SHIPPED): after a letter (unproposed), before a letter (proposedly), after and before a digit, after and
+ *       before an underscore, and with the long s for its s.
+ *   (2) the status line holds no SUBSTRING "none of the new exports claimed shipped", exactly as written (its case and its
+ *       single spaces). Read (UNSHIPPED): whole, and inside longer words. Not read (SHIPPED): its first five words alone, the
+ *       phrase without its first word, the phrase capitalized, the phrase with a doubled space.
+ *   (3) the tip's src names the subject: a subject src file count above 0 (0 reads UNSHIPPED, 1 SHIPPED).
+ *   (4) the triage line holds no WORD PROPOSED in upper case (the same boundary; the case as written). Read (UNSHIPPED): in
+ *       upper case, before a hyphen, after a non-ASCII capital. Not read (SHIPPED): capitalized, in mixed case, after a
+ *       letter (UNPROPOSED), before a letter (PROPOSEDLY), after and before a digit, after and before an underscore.
+ *   All of them flipped reads SHIPPED; each held back alone (the status word, the status phrase, the count, the triage word)
+ *   reads UNSHIPPED.
  * ADOPTION (row A): Pi adopts the boundary when a file Pi ships names it. The adoption reads PRESENT once a read file (below)
- * names the subject, ABSENT otherwise; each reactive-fiber package (a name whose words hold the pair reactive fiber) that the
- * root package.json names in dependencies, devDependencies, optionalDependencies or peerDependencies is recorded beside it
- * (none today) [A1 replica: one such package in each of the four fields, one in overrides (never read), and a manifest below
- * the root (listed and read as text, never read as a manifest)]. The falsifier never stands down: every file that names the
- * subject is judged by rows A-C at every run, so the first adoption is judged the day it lands; today's live reading is the
- * empty adoption (no file to judge), held beside a scratch-repository adoption whose violations it finds exactly.
+ *   names the subject, ABSENT otherwise. Beside it, the root package.json's reactive-fiber packages are recorded, sorted (A1
+ *   tsxDependencies, none today; the A1 replica's manifest holds every form below): a package is recorded when its NAME - a
+ *   key of dependencies, devDependencies, optionalDependencies or peerDependencies - read by WORDS (below) holds the adjacent
+ *   pair reactive fiber, in that order. Recorded: the @reactive-fiber/ scope (a package in each of the four fields), an
+ *   unscoped kebab-case name, a camel-case name, another scope's name holding the pair, a snake-case name, a dotted upper-case
+ *   name, a name whose pair spans the scope's slash (@reactive/fiber-...). Not recorded, each in a read field: a name holding
+ *   one word of the pair (reactive alone, fiber alone), the two words reversed, the two words apart. Never read: a package in
+ *   overrides, resolutions, peerDependenciesMeta or dependenciesMeta, and a manifest below the root (listed and read as text,
+ *   never read as a manifest). A reactive-fiber package whose key does not hold the pair as two words is not recorded
+ *   (R-DEPENDENCY-NAME). The falsifier never stands down: every file that names the subject is judged by rows A-C at every
+ *   run, so the first adoption is judged the day it lands; today's live reading is the empty adoption (no file to judge), held
+ *   beside a scratch-repository adoption whose violations it finds exactly.
  *
  * READINGS (the pin in brackets holds every form, condition and character class its reading names; a form a reading does not
  * name is not claimed, and the residuals below name the senses the readers do not judge)
@@ -52,29 +71,39 @@
  * - THE SUBJECT [the judged set's vocabulary; B2 outside load]: the adjacent pair activity boundary (or boundaries), or the
  *   folded word activityboundary(ies).
  * - THE READ SET [A1]: every file git would commit at the repository root or below .agents/, .pi/, docs/, examples/, qa/ and
- *   src/, read as text: tracked (in the index) or untracked, never one git ignores - by the root .gitignore, by a
- *   directory's .gitignore, by .git/info/exclude or by the file core.excludesFile names [A1 replica: a tracked plant beside
- *   the untracked ones, an ignored plant per source, a plant under each outside root, the root files]. A file holding a NUL
- *   byte is binary: listed, never read. A listed path that cannot be read as a file is recorded unreadable; one gone before
- *   its read is dropped. A file is ANCHORED when it names the subject anywhere; only an anchored file is judged
- *   (R-UNANCHORED keeps Pi's own senses of warm, state and inspector out of it).
- * - SENTENCES [A2 cuts, A2 nearMisses, A2 classes]: a line ends at each LF (a CRLF pair ends one line; a lone CR ends none).
- *   A text is cut after ".", "!", "?" or ";" when white space or the line end follows, and at a blank line (a line of white
- *   space only, or none). A .md page (never another file) is also cut around a table row (a line whose first character after
- *   any white space is |) and around a heading line (up to three white-space characters, one to six #, then white space or
- *   the line end), and before a list item (a line opening, after any white space, with -, + or *, or with ASCII digits and .
- *   or ), then white space). A sentence wrapped over lines stays one. White space is JavaScript's \s throughout. A2 cuts
- *   holds each cut (as a .md page and as another file): after each terminator before a space, and after . before a tab and
- *   at the line end; at an empty line and between CRLF line ends; around a table row flush and indented by two spaces;
- *   around a heading of one and of six #, indented by three spaces, and a bare #; before a list item opened by -, numbered
- *   10) and indented by two spaces; A2 nearMisses holds the forms that stay one sentence: a terminator before a letter,
- *   seven #, a heading indented by four spaces, a # or a list mark without white space, a number without its closer, a |
- *   inside a line and a lone CR. A2 classes reads every BMP code point (every member of \s is one) in each single-character
- *   place these cuts read and lists, as ranges, those that cut there: the line end, the terminator before a space, the
- *   follower of a terminator, a blank line, the mark of a line read alone (# or |) and of a list item, the indentation
- *   before |, before # and before a list mark, the follower of # and of a list mark, the digit and the closer of a list
- *   number. Code is read by the same cut, so a statement and the branch it opens read as one sentence up to their first
- *   terminator [A2 code].
+ *   src/, read as text: tracked (in the index) or untracked, never one git ignores - by the root .gitignore, by a directory's
+ *   .gitignore, by .git/info/exclude or by the file core.excludesFile names; a tracked path gone from the tree is no file and
+ *   is never listed [A1 replica: a tracked plant beside the untracked ones, a tracked plant removed from the tree, an ignored
+ *   plant per source, a plant under each outside root, the root files]. A file holding a NUL byte is binary: listed, never
+ *   read. A listed path that cannot be read as a file is recorded unreadable; one gone before its read is dropped. A file is
+ *   ANCHORED when it names the subject anywhere; only an anchored file is judged (R-UNANCHORED keeps Pi's own senses of warm,
+ *   state and inspector out of it).
+ * - SENTENCES [A2 cuts, A2 nearMisses, A2 classes, A2 pages]: LINE ENDS - a line ends at each LF; a CR just before an LF
+ *   belongs to that line end and is dropped with it (a CRLF pair ends one line); any other CR (a lone CR) ends no line and
+ *   stays in its line as white space [cuts: between CRLF line ends, before a list item whose mark a space follows at a CRLF
+ *   line end, before a bare list mark that a lone CR follows at a CRLF line end; nearMisses: a lone carriage return, a bare
+ *   list mark and a bare list number before a CRLF line end, an LF then a CR before a heading indented by three spaces;
+ *   classes: ends a line]. A text is cut after ".", "!", "?" or ";" when white space or the line end follows, and at a blank
+ *   line (a line of white space only, or none). A .md page - a path ending in .md exactly, never another file (.MD, .mdx,
+ *   .markdown, a .md.txt file, a name ending in md with no dot before it) [A2 pages] - is also cut around a table row (a line
+ *   whose first character after any white space is |), around a heading line (up to three white-space characters, one to six
+ *   #, then white space or the line end), and before a list item (a line opening, after any white space, with -, + or *, or
+ *   with one or more ASCII digits and . or ), then white space). A sentence wrapped over lines stays one. White space is
+ *   JavaScript's \s throughout. A2 cuts holds each cut (as a .md page and as another file): after each terminator before a
+ *   space, and after . before a tab and at the line end; at an empty line and between CRLF line ends; around a table row
+ *   flush and indented by two and by twenty spaces; around a heading of one and of six #, indented by three spaces, and a
+ *   bare #; before a list item opened by -, numbered 10) and by a twenty-digit number, and indented by two and by twenty
+ *   spaces;
+ *   before a list item whose mark a space follows at the line end (an LF and a CRLF line end), and before a bare list mark
+ *   that a lone CR follows at a CRLF line end. A2 nearMisses holds the forms that stay one sentence: a terminator before a
+ *   letter, seven #, a heading indented by four spaces, a # or a list mark without white space, a number without its closer,
+ *   a | inside a line, a lone CR, a bare list mark and a bare list number before an LF and before a CRLF line end, and an LF
+ *   then a CR before a heading indented by three spaces. A2 classes reads every BMP code point (every member of \s is one) in
+ *   each single-character place these cuts read and lists, as ranges, those that cut there: the line end, the terminator
+ *   before a space, the follower of a terminator, a blank line, the mark of a line read alone (# or |) and of a list item, the
+ *   indentation before |, before # and before a list mark, the follower of # and of a list mark, the digit and the closer of
+ *   a list number. Code is read by the same cut, so a statement and the branch it opens read as one sentence up to their
+ *   first terminator [A2 code].
  * - ROWS' READERS (each on one sentence of an anchored file; a finding is `<path>:<line> <row>:<families>`):
  *   A [A2, A3]: the WARM word beside an inference word (inference, infer and their inflections) or an effect word (effect,
  *      effects, effectful), with no refusal marker (not, no, never, nor, neither, without, cannot, the refuse and reject
@@ -91,39 +120,44 @@
  *   The n't contraction, straight or curly, is a marker of each row [A2 doc and contraction, B1 contraction, C1
  *   contraction]. None of should, must, shall, will, may, might, can, could, would, if, when or "only" alone is a marker of
  *   any row [A2 never, B1 never, C1 never]: "a WARM context only calls inference" is a finding.
- * - THE HOUSE ANALOG [C2]: Pi's DevTools-style surfaces are the src/ modules whose path (a directory or the file name) names
- *   a surface word; a module is a .ts, .tsx, .mts, .cts, .js, .mjs or .cjs file, and neither a file that is not one (a page,
- *   data, a .jsx file) nor a module outside src/ is a surface [C2 controls: a surface per extension and one named by its
- *   directory; C2 notSurfaces]. Today the surfaces are exactly src/ui/workflow-inspector.ts, whose header reads "Read-only
- *   terminal inspector over the bounded producer-qualified observation projection." Each surface's VALUE import closure must
- *   hold no node builtin (Node's isBuiltin: with or without node:, a subpath too) and no unresolved local module. A .ts,
- *   .mts or .cts module is parsed as TypeScript (a type assertion reads as one), a .tsx, .js, .mjs or .cjs module with JSX
- *   (a JSX element reads as one) [C2 controls: each extension's surface loads its builtin in a syntax only that parse reads
- *   - a require() under a type assertion, or a require() as a JSX child]. Its value specifiers are read from the syntax,
- *   each form a C2 control: an import with no clause; a default, a namespace, a deferred namespace (import defer), a default
- *   plus named, a default plus namespace and a named import; an empty named list (import {} from and export {} from: read,
- *   though TypeScript erases it - fail-closed); export *, export * as ns and named re-exports; import-equals (export import
- *   too); require() and import() of a string or a no-substitution template literal. Never read, each a C2 control beside its
- *   value twin: import type (default, namespace or named); an import with no default whose named elements are all type-only;
- *   export type * (with or without as ns), export type { } and a re-export whose named elements are all type-only (Pi's
- *   tsconfig does not set verbatimModuleSyntax, so TypeScript erases each of these); import type x = require(); an import()
- *   in a type position (typeof import()). A declaration read is read whether or not its bindings are used (TypeScript drops
- *   an unused one; this reader never does: fail-closed) [C2 controls: an unused named import]. A local specifier is one
- *   opening with "." or "/": one opening with "/" names no file of the repository and is unresolved; one opening with "."
- *   (./, ../ or any other) is joined to the importing module's directory and resolves to the first file of: the path with
- *   .js read as .ts (a .js specifier only), the path with .mjs read as .mts (an .mjs specifier only; the two readings never
- *   apply together), the path as written, the path plus .ts, the path's index.ts. A candidate that is not a file is skipped,
- *   one outside the repository is never read, and a specifier no candidate resolves is unresolved [C2 controls: each
- *   candidate alone; each adjacent pair present together - .js read as .ts and .mjs read as .mts each before the path as
- *   written, the path as written before the path plus .ts, the path plus .ts before index.ts - where the earlier wins; a
- *   directory candidate; a dot form; an absolute path; an escaping path; a missing module]. Any other specifier is a
- *   package: recorded and not followed. A surface whose closure reaches a builtin can launch, write or open a socket of its
- *   own and is no longer only a consumer of what the host hands it; IO through an ambient global is not read (R-AMBIENT-IO),
- *   nor a module loaded by a property loader, a createRequire loader, a computed specifier or a global (R-COMPUTED-LOAD).
+ * - THE HOUSE ANALOG [C2]: Pi's DevTools-style surfaces are the src/ modules whose path (a directory or the file name) names a
+ *   surface word; a module is a .ts (a .d.ts declaration file too), .tsx, .mts, .cts, .js, .mjs or .cjs file, and neither a
+ *   file that is not one (a page, data, a .jsx file) nor a module outside src/ is a surface [C2 controls: a surface per
+ *   extension, a .d.ts surface and one named by its directory; C2 notSurfaces]. Today the surfaces are exactly
+ *   src/ui/workflow-inspector.ts, whose header reads "Read-only terminal inspector over the bounded producer-qualified
+ *   observation projection." Each surface's VALUE import closure must hold no node builtin (Node's isBuiltin: with or without
+ *   node:, a subpath too, and a name only its node: form loads) and no unresolved local module [C2 controls: node:fs,
+ *   child_process, fs/promises, node:test]. A .ts, .mts or .cts module is parsed as TypeScript (a type assertion reads as
+ *   one), a .tsx, .js, .mjs or .cjs module with JSX (a JSX element reads as one) [C2 controls: each extension's surface loads
+ *   its builtin in a syntax only that parse reads - a require() under a type assertion, or a require() as a JSX child]. Its
+ *   value specifiers are read from the syntax, each form a C2 control: an import with no clause; a default, a namespace, a
+ *   deferred namespace (import defer), a default plus named, a default plus namespace and a named import; an empty named list
+ *   (import {} from and export {} from: read, though TypeScript erases it - fail-closed); export *, export * as ns and named
+ *   re-exports; import-equals (export import too); require() and import() of a string or a no-substitution template literal.
+ *   Never read, each a C2 control beside its value twin: import type (default, namespace or named); an import with no default
+ *   whose named elements are all type-only; export type * (with or without as ns), export type { } and a re-export whose named
+ *   elements are all type-only (Pi's tsconfig does not set verbatimModuleSyntax, so TypeScript erases each of these); import
+ *   type x = require(); an import() in a type position (typeof import()). A declaration read is read whether or not its
+ *   bindings are used (TypeScript drops an unused one; this reader never does: fail-closed) [C2 controls: an unused named
+ *   import]. A local specifier is one opening with "." or "/": one opening with "/" names no file of the repository and is
+ *   unresolved; one opening with "." (./, ../ or any other) is joined to the importing module's directory and resolves to the
+ *   first file of: the path with .js read as .ts (a .js specifier only), the path with .mjs read as .mts (an .mjs specifier
+ *   only; the two readings never apply together), the path as written, the path plus .ts, the path's index.ts. A candidate
+ *   that is not a file is skipped, one outside the repository is never read, and a specifier no candidate resolves is
+ *   unresolved [C2 controls: each candidate alone; each adjacent pair present together - .js read as .ts and .mjs read as .mts
+ *   each before the path as written, the path as written before the path plus .ts, the path plus .ts before index.ts - where
+ *   the earlier wins; a directory candidate; a dot form; an absolute path; an escaping path; a missing module]. No other
+ *   candidate is tried [C2 controls: the non-candidates - one surface whose ten specifiers each name a file that only an
+ *   untried candidate reaches: .tsx, .js, .mts, .cts and .d.ts beside an extensionless specifier, index.js and index.tsx below
+ *   it, .cts for a .cjs specifier, .tsx for a .js specifier and .ts for an .mjs specifier - each read unresolved]. Any other
+ *   specifier is a package: recorded and not followed. A surface whose closure reaches a builtin can launch, write or open a
+ *   socket of its own and is no longer only a consumer of what the host hands it; IO through an ambient global is not read
+ *   (R-AMBIENT-IO), nor a module loaded by a property loader, a createRequire loader, a computed specifier or a global
+ *   (R-COMPUTED-LOAD).
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label; every witness is held to the roster):
  *  A "adoption-time falsifier that a WARM precompute attempting inference or an effect is refused": A1 the adoption gate - the
- *    producer facts read UNSHIPPED beside the eight producer controls; the live read set (floors per root) reads ABSENT with no
+ *    producer facts read UNSHIPPED beside the producer controls; the live read set (floors per root) reads ABSENT with no
  *    finding, no unreadable file and no reactive-fiber dependency; ONE pass over the live set and in-memory positives finds
  *    exactly the positives; the same pass over a scratch git repository holding an adoption finds exactly its plants (a
  *    finding in every read root and for every row; tracked and untracked files read) and nothing from a file under each
@@ -176,7 +210,9 @@
  * RESIDUALS (named; each member has a pinned quiet row held beside its unsilenced twin, which reads as a finding, an impure
  *   closure or, for R-SYNONYM, a moved reading): R-OUTSIDE-ROOTS (A1) a claim under .beads/, .codex/, .github/, media/,
  *   new-feedback/, test/ or vendor/, in a file git ignores (a row per ignore source) or in a binary file (a NUL byte), is
- *   never judged; R-UNANCHORED (A2)
+ *   never judged; R-DEPENDENCY-NAME (A1) a reactive-fiber package whose manifest key does not hold the pair as two words is
+ *   not recorded - a folded name (reactivefiber-...) and an alias (a key whose spec, npm:@reactive-fiber/..., names the
+ *   package); R-UNANCHORED (A2)
  *   a file that never names the subject is never judged (Pi's own senses of the words); R-SPLIT (A2) the WARM word and the
  *   family in different sentences (a pronoun: "It calls inference."); R-MARKER-ANYWHERE (A3) a marker anywhere in the
  *   sentence quiets it, whatever it qualifies, in prose and in a code comment read with the statement after it; R-PARAPHRASE
@@ -196,7 +232,7 @@
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { isBuiltin } from "node:module";
 import { dirname, join, posix } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -603,17 +639,50 @@ interface ProducerFlip {
   readonly subjectSrcFiles: number;
   readonly triage: string;
 }
-/** The producer controls: all three conditions flipped, then each one held back (the status line once per phrase and once
- * capitalized), and the two near misses that stay flipped (a longer status word, a triage line not in upper case). */
+/** Non-ASCII letters the producer controls place beside a word: e and E with an acute accent, and the long s. */
+const E_ACUTE = String.fromCodePoint(0xe9);
+const CAPITAL_E_ACUTE = String.fromCodePoint(0xc9);
+const LONG_S = String.fromCodePoint(0x17f);
+/** The producer controls, each named for the form it holds: all conditions flipped and each held back alone; then, for the
+ * status word, the status phrase and the triage word, every form that reads (UNSHIPPED) and every near miss (SHIPPED). */
 const PRODUCER_FLIPS: Readonly<Record<string, ProducerFlip>> = {
   "all three flipped": { status: "shipped extensions", subjectSrcFiles: 1, triage: "marked SHIPPED" },
   "status still proposed": { status: "proposed extensions", subjectSrcFiles: 1, triage: "marked SHIPPED" },
   "status still claims none shipped": { status: "shipped extensions; none of the new exports claimed shipped", subjectSrcFiles: 1, triage: "marked SHIPPED" },
   "src still names no subject": { status: "shipped extensions", subjectSrcFiles: 0, triage: "marked SHIPPED" },
   "triage still PROPOSED": { status: "shipped extensions", subjectSrcFiles: 1, triage: "marked PROPOSED" },
+  // The status word: read in any mix of ASCII case, and as a word beside a character that is no word character.
   "status still Proposed, capitalized": { status: "Proposed extensions", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  "status still PROPOSED, upper case": { status: "PROPOSED extensions", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  "status still pRoPoSeD, mixed case": { status: "pRoPoSeD extensions", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  "status word proposed before a hyphen": { status: "proposed-extensions", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  "status word proposed after a non-ASCII letter": { status: `${E_ACUTE}proposed extensions`, subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  // The status word's near misses: a letter, a digit or an underscore beside it, or a non-ASCII letter for one of its own.
   "status word only holding proposed": { status: "unproposed extensions", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  "status word opening with proposed": { status: "proposedly extensions", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  "status word proposed before a digit": { status: "proposed2 extensions", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  "status word proposed after an underscore": { status: "_proposed extensions", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  "status word proposed after a digit": { status: "2proposed extensions", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  "status word proposed before an underscore": { status: "proposed_extensions", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  "status word with the long s for its s": { status: `propo${LONG_S}ed extensions`, subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  // The status phrase: read as written, wherever it stands; its near misses are a part of it, another case, another space.
+  "status phrase inside longer words": { status: "shipped extensions; anone of the new exports claimed shippedly", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  "status phrase by its first five words": { status: "shipped extensions; none of the new exports are pending", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  "status phrase without its first word": { status: "shipped extensions; all of the new exports claimed shipped", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  "status phrase capitalized": { status: "shipped extensions; None of the new exports claimed shipped", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  "status phrase with a doubled space": { status: "shipped extensions; none of the new  exports claimed shipped", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  // The triage word: read in upper case only, and as a word beside a character that is no word character.
+  "triage PROPOSED before a hyphen": { status: "shipped extensions", subjectSrcFiles: 1, triage: "marked PROPOSED-ONLY" },
+  "triage PROPOSED after a non-ASCII capital": { status: "shipped extensions", subjectSrcFiles: 1, triage: `marked ${CAPITAL_E_ACUTE}PROPOSED` },
+  // The triage word's near misses: another case, or a letter or a digit beside it.
   "triage reading Proposed, not upper case": { status: "shipped extensions", subjectSrcFiles: 1, triage: "marked Proposed" },
+  "triage reading PrOpOsEd, mixed case": { status: "shipped extensions", subjectSrcFiles: 1, triage: "marked PrOpOsEd" },
+  "triage PROPOSED only inside a longer word": { status: "shipped extensions", subjectSrcFiles: 1, triage: "marked UNPROPOSED" },
+  "triage word opening with PROPOSED": { status: "shipped extensions", subjectSrcFiles: 1, triage: "marked PROPOSEDLY" },
+  "triage PROPOSED before a digit": { status: "shipped extensions", subjectSrcFiles: 1, triage: "marked PROPOSED2" },
+  "triage PROPOSED after a digit": { status: "shipped extensions", subjectSrcFiles: 1, triage: "marked 2PROPOSED" },
+  "triage PROPOSED after an underscore": { status: "shipped extensions", subjectSrcFiles: 1, triage: "marked _PROPOSED" },
+  "triage PROPOSED before an underscore": { status: "shipped extensions", subjectSrcFiles: 1, triage: "marked PROPOSED_ONLY" },
 };
 /** The recorded producer with line 3's status phrase, the tip's subject src count and the triage marking replaced. */
 function producerWith(flip: ProducerFlip): ProducerReading {
@@ -708,6 +777,8 @@ afterEach(() => {
 interface ReplicaOptions {
   /** Paths `git add` puts in the index (tracked); every other file stays untracked. */
   readonly tracked?: readonly string[];
+  /** Tracked paths removed from the tree after `git add`: in the index, gone from the tree. */
+  readonly removed?: readonly string[];
   /** Patterns of the repository's .git/info/exclude. */
   readonly exclude?: readonly string[];
   /** Patterns of a file the repository's own core.excludesFile names. */
@@ -735,6 +806,7 @@ function gitReplica(prefix: string, files: Readonly<Record<string, string>>, opt
     execFileSync("git", ["config", "core.excludesFile", excludes], { cwd: repo, stdio: "pipe" });
   }
   if (options.tracked !== undefined && options.tracked.length > 0) execFileSync("git", ["add", "--", ...options.tracked], { cwd: repo, stdio: "pipe" });
+  for (const path of options.removed ?? []) rmSync(join(repo, path));
   return repo;
 }
 /** A template placeholder opener for planted code, spelled in two parts so no literal of this file holds one. */
@@ -769,6 +841,12 @@ const CUTS: Readonly<Record<string, string>> = {
   "around a bare # line": "A WARM context calls inference\n#\nthe host never waits",
   "before a list item numbered 10)": "the host never waits\n10) A WARM context calls inference",
   "before a list item indented by two spaces": "the host never waits\n  - A WARM context calls inference",
+  "around a table row indented by twenty spaces": `the host never waits\n${" ".repeat(20)}| A WARM context calls inference |`,
+  "before a list item numbered by twenty digits": "the host never waits\n12345678901234567890) A WARM context calls inference",
+  "before a list item indented by twenty spaces": `the host never waits\n${" ".repeat(20)}- A WARM context calls inference`,
+  "before a list item whose mark a space follows at the line end": "the host never waits\n- \nA WARM context calls inference",
+  "before a list item whose mark a space follows at a CRLF line end": "the host never waits\r\n- \r\nA WARM context calls inference",
+  "before a bare list mark that a lone CR follows at a CRLF line end": "the host never waits\r\n-\r\r\nA WARM context calls inference",
 };
 /** The near misses: no cut keeps the WARM part apart from its marker, so each reads quiet as a .md page and as another file. */
 const NEAR_MISSES: Readonly<Record<string, string>> = {
@@ -780,7 +858,15 @@ const NEAR_MISSES: Readonly<Record<string, string>> = {
   "a number without its closer": "A WARM context calls inference\n1 the host never waits",
   "a pipe inside a line": "A WARM context calls inference | the host never waits",
   "a lone carriage return": "A WARM context calls inference\rthe host never waits",
+  "a bare list mark before an LF line end": "A WARM context calls inference\n-\nthe host never waits",
+  "a bare list number before an LF line end": "A WARM context calls inference\n10)\nthe host never waits",
+  "a bare list mark before a CRLF line end": "A WARM context calls inference\r\n-\r\nthe host never waits",
+  "a bare list number before a CRLF line end": "A WARM context calls inference\r\n10)\r\nthe host never waits",
+  "an LF then a CR before a heading indented by three spaces": "A WARM context calls inference\n\r   # the host never waits",
 };
+/** The page reading: the table-row cut, read at a path that is a .md page and at paths that are not. */
+const PAGE_CUT = "| A WARM context calls inference |\n| the host never waits |";
+const PAGE_PATHS: readonly string[] = ["docs/cut.md", "docs/cut.MD", "docs/cut.mdx", "docs/cut.markdown", "docs/cut.md.txt", "docs/cutmd"];
 /** The joined twins: one sentence (its marker quiets the WARM part), a sentence wrapped over two lines either way. */
 const JOINED: readonly string[] = ["A WARM context calls inference and the host never waits.", "A WARM context calls inference\nthe host never waits", "A WARM context\ncalls inference."];
 /** The WORDS statement's examples, each read by words(). */
@@ -812,6 +898,8 @@ const READ_TWIN = "docs/read.md";
 const BINARY_PLANT = "docs/binary.md";
 /** The plant git holds in its index (tracked), read beside the untracked ones. */
 const TRACKED_PLANT = "docs/tracked.md";
+/** A tracked plant removed from the tree: git still lists it from the index, and it is no file, so it is never listed. */
+const REMOVED_PLANT = "docs/removed.md";
 /** The ignored plants, one per ignore source git applies: the root .gitignore, a directory's .gitignore, .git/info/exclude
  * and the file core.excludesFile names. */
 const IGNORED_PLANTS: readonly string[] = ["docs/ignored.md", "docs/nested/ignored.md", "docs/excluded.md", "docs/global-ignored.md"];
@@ -819,8 +907,37 @@ const IGNORED_PLANTS: readonly string[] = ["docs/ignored.md", "docs/nested/ignor
 const UNREAD_PLANTS: readonly string[] = [...CONSTANTS.outside.map(root => `${root}/plant.md`), ...IGNORED_PLANTS];
 /** A manifest below the root, naming a reactive-fiber package: listed and read as text, never read as the manifest. */
 const NESTED_MANIFEST = "examples/pkg/package.json";
-/** The replica's manifest: one reactive-fiber package in each dependency field, and one in a field that is never read. */
-const REPLICA_MANIFEST = `${JSON.stringify({ dependencies: { "@reactive-fiber/tsx": "0.1.668" }, devDependencies: { "@reactive-fiber/zz-dev": "0.0.0" }, optionalDependencies: { "@reactive-fiber/zz-optional": "0.0.0" }, peerDependencies: { "@reactive-fiber/zz-peer": "0.0.0" }, overrides: { "@reactive-fiber/zz-override": "0.0.0" } }, null, 2)}\n`;
+/** The replica's manifest: a reactive-fiber package in each read field; in dependencies, the other spellings whose words hold
+ * the pair (recorded) and the near misses whose words do not (one word of it, the two reversed, the two apart); and one in
+ * each field that is never read. */
+const REPLICA_MANIFEST = `${JSON.stringify(
+  {
+    dependencies: {
+      "@reactive-fiber/tsx": "0.1.668",
+      "reactive-fiber-zz-unscoped": "0.0.0",
+      ReactiveFiberZzCamel: "0.0.0",
+      "@zz-scope/reactive-fiber": "0.0.0",
+      reactive_fiber_zz_snake: "0.0.0",
+      "REACTIVE.FIBER.ZZ-DOTTED": "0.0.0",
+      "@reactive/fiber-zz-across": "0.0.0",
+      "@reactive/zz-one-word": "0.0.0",
+      "@zz-one-word/fiber": "0.0.0",
+      "@zz-reversed/fiber-reactive": "0.0.0",
+      "@reactive/zz-apart-fiber": "0.0.0",
+    },
+    devDependencies: { "@reactive-fiber/zz-dev": "0.0.0" },
+    optionalDependencies: { "@reactive-fiber/zz-optional": "0.0.0" },
+    peerDependencies: { "@reactive-fiber/zz-peer": "0.0.0" },
+    overrides: { "@reactive-fiber/zz-override": "0.0.0" },
+    resolutions: { "@reactive-fiber/zz-resolution": "0.0.0" },
+    peerDependenciesMeta: { "@reactive-fiber/zz-peer-meta": { optional: true } },
+    dependenciesMeta: { "@reactive-fiber/zz-dependency-meta": { injected: true } },
+  },
+  null,
+  2,
+)}\n`;
+/** A root manifest holding exactly these dependencies, for the R-DEPENDENCY-NAME quiet rows. */
+const manifestOf = (dependencies: Readonly<Record<string, string>>): string => JSON.stringify({ dependencies });
 /** The adoption the A1 replica plants: a finding in every read root and for every row, a negated twin, an unanchored page,
  * the unread plants (one per outside root, an ignored file, a binary file) beside their read twin, and the manifest. */
 const ADOPTION_PLANTS: Readonly<Record<string, string>> = {
@@ -836,14 +953,16 @@ const ADOPTION_PLANTS: Readonly<Record<string, string>> = {
   ...Object.fromEntries(UNREAD_PLANTS.map(path => [path, OUTSIDE_TEXT])),
   [READ_TWIN]: OUTSIDE_TEXT,
   [TRACKED_PLANT]: OUTSIDE_TEXT,
+  [REMOVED_PLANT]: OUTSIDE_TEXT,
   [BINARY_PLANT]: `${OUTSIDE_TEXT}${NUL}\n`,
   ".gitignore": "docs/ignored.md\n",
   "docs/nested/.gitignore": "ignored.md\n",
   "package.json": REPLICA_MANIFEST,
   [NESTED_MANIFEST]: `${JSON.stringify({ dependencies: { "@reactive-fiber/zz-nested": "0.0.0" } }, null, 2)}\n`,
 };
-/** The replica's git setup beside its files: the tracked plant, and the two ignore sources that live outside the tree. */
-const ADOPTION_GIT: ReplicaOptions = { tracked: [TRACKED_PLANT], exclude: ["docs/excluded.md"], excludesFile: ["docs/global-ignored.md"] };
+/** The replica's git setup beside its files: the tracked plant, the tracked plant removed from the tree, and the two ignore
+ * sources that live outside the tree. */
+const ADOPTION_GIT: ReplicaOptions = { tracked: [TRACKED_PLANT, REMOVED_PLANT], removed: [REMOVED_PLANT], exclude: ["docs/excluded.md"], excludesFile: ["docs/global-ignored.md"] };
 /** The surfaces the C2 replica plants: the closure forms beside their twins, each resolution candidate, two non-surfaces named
  * for one, and the residuals. */
 const SURFACE_PLANTS: Readonly<Record<string, string>> = {
@@ -894,6 +1013,9 @@ const SURFACE_PLANTS: Readonly<Record<string, string>> = {
   "src/ui/plant-ext-inspector.mjs": 'export const view = <b>{require("node:os")}</b>;\n',
   "src/ui/plant-ext-inspector.cjs": 'module.exports = <b>{require("node:os")}</b>;\n',
   "src/ui/devtools/plant-view.ts": 'import { EOL } from "node:os";\nexport const e = EOL;\n',
+  // A declaration file is a .ts module (its import read like any other), and a builtin only its node: name loads.
+  "src/ui/plant-declared-inspector.d.ts": 'import { EOL } from "node:os";\nexport declare const e: typeof EOL;\n',
+  "src/ui/plant-prefix-only-inspector.ts": 'import { test } from "node:test";\nexport const t = test;\n',
   "src/ui/plant-inspector-data.json": '{ "fs": "node:fs" }\n',
   "src/ui/plant-inspector-view.jsx": 'import { EOL } from "node:os";\nexport const e = EOL;\n',
   // The resolution order: each adjacent pair of candidates present together, the earlier one pure and the later impure.
@@ -909,6 +1031,32 @@ const SURFACE_PLANTS: Readonly<Record<string, string>> = {
   "src/ui/plant-order-index-inspector.ts": 'import { o } from "./plant-o4";\nexport const x = o;\n',
   "src/ui/plant-o4.ts": "export const o = 4;\n",
   "src/ui/plant-o4/index.ts": 'import { arch } from "node:os";\nexport const o = arch;\n',
+  // The non-candidates: each specifier names a file that only a candidate this reader never tries would reach, so each
+  // stays unresolved.
+  "src/ui/plant-noncandidate-inspector.ts": [
+    'import { a } from "./plant-nc/a";',
+    'import { b } from "./plant-nc/b";',
+    'import { c } from "./plant-nc/c";',
+    'import { d } from "./plant-nc/d";',
+    'import { e } from "./plant-nc/e";',
+    'import { f } from "./plant-nc/f";',
+    'import { g } from "./plant-nc/g.cjs";',
+    'import { h } from "./plant-nc/h.js";',
+    'import { i } from "./plant-nc/i.mjs";',
+    'import { j } from "./plant-nc/j";',
+    "export const x = [a, b, c, d, e, f, g, h, i, j];",
+    "",
+  ].join("\n"),
+  "src/ui/plant-nc/a.tsx": "export const a = 1;\n",
+  "src/ui/plant-nc/b.js": "export const b = 1;\n",
+  "src/ui/plant-nc/c.mts": "export const c = 1;\n",
+  "src/ui/plant-nc/d.cts": "export const d = 1;\n",
+  "src/ui/plant-nc/e/index.js": "export const e = 1;\n",
+  "src/ui/plant-nc/f/index.tsx": "export const f = 1;\n",
+  "src/ui/plant-nc/g.cts": "export const g = 1;\n",
+  "src/ui/plant-nc/h.tsx": "export const h = 1;\n",
+  "src/ui/plant-nc/i.ts": "export const i = 1;\n",
+  "src/ui/plant-nc/j.d.ts": "export declare const j: number;\n",
   // The specifier shapes: a dot form other than ./ and ../, an absolute path, and a path that leaves the repository.
   "src/ui/plant-dot-inspector.ts": 'import { s } from ".plant-dot";\nexport const x = s;\n',
   "src/ui/.plant-dot.ts": 'import { arch } from "node:os";\nexport const s = arch;\n',
@@ -975,6 +1123,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       positives: [...alone],
       replica: {
         listed,
+        trackedRemoved: listed.includes(REMOVED_PLANT),
         adoption: adoptionOf(mirror.anchored),
         anchored: [...mirror.anchored],
         findings: [...mirror.findings],
@@ -987,6 +1136,10 @@ const IMPL: Readonly<Record<string, () => Json>> = {
           unread: Object.fromEntries(UNREAD_PLANTS.map(path => [path, listed.includes(path)])),
           binary: [[...mirror.binary], mirror.anchored.includes(BINARY_PLANT)],
           twin: mirror.findings.filter(finding => finding.startsWith(`${READ_TWIN}:`)),
+        },
+        "R-DEPENDENCY-NAME": {
+          "a folded name": [tsxDependencies(manifestOf({ "reactivefiber-zz": "0.0.0" })), tsxDependencies(manifestOf({ "reactive-fiber-zz": "0.0.0" }))],
+          "an alias": [tsxDependencies(manifestOf({ "zz-alias": "npm:@reactive-fiber/tsx@0.1.668" })), tsxDependencies(manifestOf({ "@reactive-fiber/tsx": "npm:@reactive-fiber/tsx@0.1.668" }))],
         },
       },
     };
@@ -1021,6 +1174,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       cuts: Object.fromEntries(Object.entries(CUTS).map(([name, text]) => [name, [cutFindings(text, "docs/cut.md"), cutFindings(text, "docs/cut.txt")]])),
       joined: JOINED.map(text => cutFindings(text, "docs/cut.md")),
       nearMisses: Object.fromEntries(Object.entries(NEAR_MISSES).map(([name, text]) => [name, [cutFindings(text, "docs/cut.md"), cutFindings(text, "docs/cut.txt")]])),
+      pages: Object.fromEntries(PAGE_PATHS.map(path => [path, cutFindings(PAGE_CUT, path)])),
       classes: Object.fromEntries(Object.entries(CLASS_PROBES).map(([name, test]) => [name, codePoints(test, BMP_TOP)])),
       never: verdicts(neverMarkerTexts(word => `A WARM context ${word} call inference.`, word => `${word} the context is WARM it calls inference.`, "A WARM context only calls inference.")),
       quiet: {
@@ -1478,7 +1632,7 @@ describe("wb-km7q.6 TSX ActivityBoundary adoption census (SDK-REACTIVE-FIBER-ADA
     expect(CONSTANTS.readRoots.filter(root => CONSTANTS.outside.includes(root))).toEqual([]);
     expect(trackedTop(REPO).filter(directory => CONSTANTS.readRoots.includes(directory) === CONSTANTS.outside.includes(directory))).toEqual([]);
     const pins = ROWS.flatMap(row => row.pins.map(pin => pin.id));
-    expect(ROSTER.residuals.map(residual => residual.id)).toEqual(["R-OUTSIDE-ROOTS", "R-UNANCHORED", "R-SPLIT", "R-MARKER-ANYWHERE", "R-PARAPHRASE", "R-COMPOSED", "R-LOOKALIKE", "R-SYNONYM", "R-SURFACE-OTHER", "R-UNNAMED-SURFACE", "R-PACKAGE", "R-INJECTED", "R-AMBIENT-IO", "R-COMPUTED-LOAD"]);
+    expect(ROSTER.residuals.map(residual => residual.id)).toEqual(["R-OUTSIDE-ROOTS", "R-DEPENDENCY-NAME", "R-UNANCHORED", "R-SPLIT", "R-MARKER-ANYWHERE", "R-PARAPHRASE", "R-COMPOSED", "R-LOOKALIKE", "R-SYNONYM", "R-SURFACE-OTHER", "R-UNNAMED-SURFACE", "R-PACKAGE", "R-INJECTED", "R-AMBIENT-IO", "R-COMPUTED-LOAD"]);
     expect(ROSTER.residuals.every(residual => pins.includes(residual.quietPin))).toBe(true);
   });
   for (const row of ROWS) {
