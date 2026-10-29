@@ -1,8 +1,10 @@
 /**
  * wb-jwc.6 (RFCLI-FEEDBACK-OPERATIONAL-CONVERGENCE-R6): the rf operation-receipt reconcile read - HONESTY CORE, STANDING LEG
- * AND GATE TRIPWIRE, the part of the bead that lands while the R5 conjoint gate is closed. Cut #4 is authored in the
- * enumerate-the-resolvable form (standing rule 19(c), engaged at refusal #3): this header and every pinned requirement claim exactly
- * what the readers below resolve, and every known mode they do not pin is a NAMED RESIDUAL with a pinned quiet row (row R).
+ * AND GATE TRIPWIRE, the part of the bead that lands while the R5 conjoint gate is closed. Cut #5 is the FINAL cut: orchestrator
+ * ruling R-B88 (the rule 19 structural exit at refusal #4) binds it to the FAIL-CLOSED CORE, in the enumerate-the-resolvable form
+ * (standing rule 19(c), engaged at refusal #3): this header and every pinned requirement claim exactly what the readers below
+ * resolve, for the inputs and the one run they measure, and every known mode they do not pin is a NAMED RESIDUAL with a pinned
+ * quiet row (row R). The cross-run registrar work and the per-category N/H probes belong to child wb-jwc.9 (blocked by this bead).
  *
  * OWNER FILING (the outside anchor): the tracked bead export .beads/issues.jsonl, row wb-jwc.6, read through its description
  * only, so a note a lane appends later changes nothing read. Its STATEMENT ("When <trigger> (<conjuncts>), Pi shall <duty>;
@@ -15,8 +17,9 @@
  *     SRC TREE (respin 3 U2): every file under src/, whatever its name. A file whose extension is a TypeScript or JavaScript module
  *     extension (.ts .mts .cts .tsx .js .mjs .cjs .jsx; a declaration file ends in one) is parsed with its own script kind; every
  *     other file under src/ is listed in the G:id witness (none today), so a new one moves it; and a relative module specifier a
- *     src module writes as a whole string token in an import or export declaration, an import() call or a require() call that
- *     resolves outside src/ is listed there too (none today). Each reader reads only what it names:
+ *     src module writes as a whole string token in an import, export or import-equals declaration (`import x = require(...)`),
+ *     an import type (`import(...)` in a type position), an import() call or a require() call that resolves outside src/ is
+ *     listed there too (none today; respin 4 reads the import-equals and import-type forms). Each reader reads only what it names:
  *     IDS - one pin per rf capability id a whole src string token spells (a string literal or a template with no
  *     substitution). An rf capability id is a token whose producer (src producerOf, the first `.`/`-` segment) is reactivefiber
  *     and which the real CapabilityRegistry accepts as a descriptor id: the registry's own grammar judges every token, so no
@@ -29,10 +32,14 @@
  *     one-argument call whose argument is a provider object literal with no spread or computed key, holding exactly one
  *     `descriptor` property assignment whose value is an object literal with no spread or computed key and exactly one `id`
  *     property assignment written as a whole string token; the registry judges that id. The functions whose judged
- *     registrations carry an rf id are exactly the two src registrars this census runs, and each registers the preview alone,
- *     read-only under a read-scoped permission: both run for real and every descriptor the registry holds when each one returns
- *     is listed (respin 3 U2), so a capability either one registers by then through code no reader parses still moves the
- *     witness. Every other spelling is UNJUDGED and listed by owner and syntax, so a new one moves the witness: an id held by
+ *     registrations carry an rf id are exactly the two src registrars this census runs. ONE MEASURED RUN (respin 4 U2, R-B88):
+ *     each is run once, with the census's arguments (a fresh registry and WS, plus, for the injectable one, a seam answering a
+ *     fresh preview envelope) in this process's environment, and in that run each has registered the preview alone, with
+ *     effect class read and the permission reactivefiber:render, when it returns: every descriptor the registry holds then is
+ *     listed (respin 3 U2), so a capability either one registers by then through code no reader parses still moves the
+ *     witness. A registration whose id, effect class or permissions depend on a registrar's arguments or on the environment is
+ *     read for that one run only (residual R-REGISTRAR-RUNTIME). Every other spelling is UNJUDGED and listed by owner and
+ *     syntax, so a new one moves the witness: an id held by
  *     reference or shorthand, concatenated, templated with substitutions or computed by a call; a provider or descriptor held
  *     by reference, spread or computed key; an alias, a bind, an element access, an assignment, a type member, the method's own
  *     declaration. Today the unjudged spellings are CapabilityRegistry's own declaration and registryFor's local-provider
@@ -50,41 +57,52 @@
  *     an array literal holding the whole token --no-commit as a direct element - never behind a spread, a conditional, a filter,
  *     a call or an identifier. Any other shape is written into the witness instead, so it fails closed. The witness names each
  *     binding, the call's argument count and option keys, each returned literal's elements and the builder's string tokens, and
- *     counts the src string tokens naming --idempotency-key (none). The child's argv is then MEASURED: each arm of the registered
+ *     counts the src string literals and template texts naming --idempotency-key (none; respin 4 reads a template's head, middle
+ *     and tail too). The child's argv is then MEASURED: each arm of the registered
  *     native render's inputSchema (src's oneOf) gives one input of the arm's required keys and, where the arm declares more
  *     properties, one of every key (each value census-<key>); each runs through the registry with a recording stand-in rf as the
  *     only PATH entry, and the witness lists every argv the stand-in received, the launch count and the provider's answer to the
  *     stand-in's empty output.
- *     Within those three readers, a committing rf capability id, a receipt-read id, an rf spawn whose callee, argument 2 or builder
- *     binds to any other declaration, a builder return without a direct --no-commit, or a probed child argv without --no-commit
- *     generates a pin this table does not hold or moves a witness: the tripwire that re-arms the PARKED remainder.
+ *     Within those three readers, an rf capability id a whole src string token spells other than the preview (a committing id or
+ *     a receipt-read id), the preview registered in a measured registrar's one run as anything but read under
+ *     reactivefiber:render, an rf spawn whose callee, argument 2 or builder binds to any other declaration, a builder return
+ *     without a direct --no-commit, or a probed child argv without --no-commit generates a pin this table does not hold or moves
+ *     a witness: the tripwire that re-arms the PARKED remainder, for exactly those forms (respin 4 U2).
  *   S statement.2, the duty's standing leg: one pin per file of the filing's SURFACES line, what that surface holds until the
  *     duty lands. reactivefiber's reconcile reads are the preview alone (acceptance.1 adds the receipt read beside it); the rf
  *     branch of nativeEvidence projects the preview envelope's own operation_id as nativeId and no domainStatus under two
  *     receipt-shaped results - the minimal receipt, and every result key the shipped receipt carries plus each status field a
  *     sibling branch projects domainStatus from (respin 1 F4) - and is the only rf case label of nativeEvidence's switch, where
  *     every case label is a whole string token (a label in any other syntax is listed unjudged, so it fails closed; respin 2)
- *     (acceptance.2 adds the receipt branch); the runtime journals no rf native reference: a run of a test-only committing rf
- *     stand-in records its dispatch marker and a settled write row with no nativeRefs and no value, so reconciling it can only
- *     come out operator-asserted (the filing's rationale); docs/workbench/08's operator reconcile journey, read through the
+ *     (acceptance.2 adds the receipt branch); the runtime journals the census's test-only committing rf stand-in with no native
+ *     reference: one run of it through the Claude workflow host's node() records its dispatch marker and a settled write row with
+ *     no nativeRefs and no value, and the preview receipt minted against those rows comes out operator-asserted (the filing's
+ *     rationale, measured for that one stand-in and run; respin 4); docs/workbench/08's operator reconcile journey, read through the
  *     shared helper's rendered view (test/helpers/census.ts docsSection: the unique level-2 heading under the page's level-1
  *     heading, bounded at the next level-1/2 heading or EOF, HTML refused; and here a rendered text that keeps a character
  *     reference the helper leaves undecoded is refused too, respin 2 F1), holds exactly one evidence allowlist sentence, in
  *     paragraph prose; the ids it names (every rendered word the registry accepts as an id, src's EvidenceBinding words aside;
  *     a word splits at a run of hyphens and loses its leading and trailing dots and hyphens first, respin 2 F2) are exactly
- *     RECONCILE_EVIDENCE_READS, and no other sentence of the section names a read (its other dotted or producer-namespaced ids
- *     are each the name of src's ACKNOWLEDGEMENT_VALUE_CONTRACT) (respin 1 U2; acceptance.4 updates it with acceptance.1).
- *   N statement.3, never commit evidence: with only a genuine preview read in hand (fresh, failed or unprojected) no effect-absent
- *     acknowledgement is producer-confirmed, so an override after it carries possible-duplicate and must accept that risk - the
- *     preview never certifies that a commit did not happen.
+ *     RECONCILE_EVIDENCE_READS, and no other sentence of the section names a read in such a word (its other dotted or
+ *     producer-namespaced ids are each the name of src's ACKNOWLEDGEMENT_VALUE_CONTRACT) (respin 1 U2; acceptance.4 updates it
+ *     with acceptance.1); and
+ *     every distinct character of the section's rendered text outside printable ASCII is listed (respin 4, the gate's D30: an
+ *     invisible or look-alike character inside an id hides it from the registry's word test), so a character outside printable
+ *     ASCII the section does not already hold (today U+2014 and U+2192), added to it, moves the witness.
+ *   N statement.3, never commit evidence: with only a genuine preview read in hand - fresh, failed with the unavailable category
+ *     (the one failure category fed, respin 4 U1) or unprojected - no effect-absent acknowledgement is producer-confirmed, so an
+ *     override after it carries possible-duplicate and must accept that risk. A read failed with any other category src's
+ *     CapabilityErrorCategory declares is not fed, so this claim does not cover it: residual R-FAILURE-CATEGORY names each one.
  *   H acceptance.3, the honesty core: one pin per claim of the item (split at its dash). H acceptance.3.1: for every
- *     determination the src EffectDetermination union declares, cited and uncited, over a genuine fresh, failed or unprojected
- *     preview read, the acknowledgement is denied or operator-asserted, never producer-confirmed. H acceptance.3.2: the preview's
- *     freshly-minted rfo_ (rf mints one per invocation: cli/output.py new_operation_id over domain.ids, secrets entropy) binds
- *     unbound against the journaled rfo_; two reads, two distinct ids, neither the journaled one.
+ *     determination the src EffectDetermination union declares, cited and uncited, over a genuine fresh read, a read failed with
+ *     the unavailable category (the one fed; R-FAILURE-CATEGORY names the others) or an unprojected read, the acknowledgement is
+ *     denied or operator-asserted, never producer-confirmed. H acceptance.3.2: two fresh preview reads carrying two distinct
+ *     synthetic rfo_ ids (standing in for rf's per-invocation mint, which this test does not read) each bind unbound against the
+ *     journaled rfo_, and neither id is the journaled one.
  *   R the NAMED RESIDUALS (no filing clause; NOT CLAIMED), each a pinned quiet row. The row exists while an outside anchor calls for
- *     one of its pins (respin 3 H1: src holds a self-identifying reconcile read, or a pin's requirement is this file's words alone),
- *     so the row removed from every literal reds.
+ *     one of its pins (respin 3 H1, respin 4: src holds a self-identifying reconcile read, src's CapabilityErrorCategory declares a
+ *     category the failed read does not feed, src holds an rf registrar, or a pin's requirement is this file's words alone), so the
+ *     row removed from every literal reds.
  *     R-ECHO (R:echo, one pin per reactivefiber reconcile read whose projection takes the envelope's own top-level operation_id
  *     as nativeId; today the preview): an envelope under the preview contract that echoes the journaled rfo_ binds
  *     journal-recorded and confirms producer-confirmed, and its effect-absent acknowledgement overrides at duplicate risk none: Pi
@@ -92,6 +110,18 @@
  *     today's behaviour: hardening it (the preview's reference never binds, whatever its id) reds R and moves the case into N. A
  *     receipt read that projected its own invocation id instead of the receipt's operation_id (acceptance.2) would generate an R
  *     pin this table does not hold.
+ *     R-FAILURE-CATEGORY (R:failure-category; respin 4 U1, the gate's H10 and H10u): N and H feed one failed preview read, of
+ *     the unavailable category, so a read failed with any other member of src's CapabilityErrorCategory (read from
+ *     src/workbench/capability-registry.ts the way EffectDetermination is read) is not probed, and N's and H's claims do not
+ *     cover it; the filing's N words stay universal, so this row names each such category. The quiet row lists src's
+ *     categories, the one fed (measured by running each read N and H feed) and each one not fed, so a category src adds or
+ *     removes, or a failed read fed with another category, moves it.
+ *     R-REGISTRAR-RUNTIME (R:registrar-runtime; respin 4 U2, the gate's R1 and R2): each src rf registrar is measured in one
+ *     run, with the census's arguments in this process's environment, so a registration whose id, effect class or permissions
+ *     depend on a registrar's arguments or on the environment is read for that run only. The quiet row lists each registrar
+ *     src's judged register calls name, with its src parameters (read from its declaration) and the arguments this file states
+ *     the census passes it, so a registrar src adds or renames, or a parameter one gains, moves it; the stated arguments and the
+ *     REGISTRARS table that passes them are this file's own (R-SELF-ANCHORED holds them together).
  *     R-SELF-ANCHORED (R:self-anchored; respin 3, the gate's survivors H3 and E14): a requirement in this file's words alone
  *     (the G, S and R requirements; N's and H's are the filing's own words, read from the export) shortened together with its
  *     frozen line, or this file's judging code (an it.each argument, an each-liveness list, a generator, a reader or an anchor
@@ -132,19 +162,30 @@
  *   src/ (THE SRC TREE above) and lists every descriptor the measured registrars register, so a registrar in a .mts (or any other
  *   module extension) is read and any other file is listed. Of the gate's disclosed survivors, H1 (row R removed from every
  *   literal) and H2 (row N re-parked) now red through the outside anchors above; H3 and E14 are R-SELF-ANCHORED.
+ * RESPIN 4 (gate verdict on cut #4 3e04894, refusal #4, unmet U1-U2; orchestrator ruling R-B88 binds this final cut to the
+ *   fail-closed core): U1 narrows the header's N and H claims to the one failure category fed (unavailable) and names
+ *   R-FAILURE-CATEGORY with its quiet row; U2 narrows the header's REGISTRATIONS claim, its tripwire and the G:id requirement to
+ *   the one measured run and names R-REGISTRAR-RUNTIME with its quiet row; the D30 member is read by listing the docs section's
+ *   characters outside printable ASCII (S), and the docs-id non-claim is restated to what the reader does. The core also narrows
+ *   the S runtime requirement to its one measured stand-in run, reads import-equals declarations and import types among the
+ *   specifiers that may leave src/, and counts --idempotency-key over template text too.
  * Not claimed: the rf-side conjuncts (measured at the cut, not here); the receipt projection's five-state vocabulary (the bead's
  *   2026-10-17b note, owed with acceptance.2); an rf capability id that no whole string token spells (concatenation, a template
  *   with substitutions) or that a `kind` property holds, except where a reader above reads every spelling - a register call's
  *   descriptor id and a nativeEvidence case label are listed unjudged, and RECONCILE_EVIDENCE_READS is measured at runtime; a
  *   register member reached through a name src never spells (one assembled at runtime); code outside src/ that src reaches other
- *   than through a relative specifier of an import or export declaration, an import() call or a require() call (a package; a
- *   module loaded through any other call, such as a function createRequire returns, or through a computed specifier, as the
- *   local-provider pass-through above does), except what the two measured registrars have registered when they return; a
- *   registration made after a measured registrar returns; an
+ *   than through a relative specifier, written as a whole string token, of an import, export or import-equals declaration, an
+ *   import type, an import() call or a require() call (a package; a module loaded through any other call, such as a function
+ *   createRequire returns, or through a computed specifier, as the local-provider pass-through above does), except what the two
+ *   measured registrars have registered when they return in their one measured run; a registration made after a measured
+ *   registrar returns; an
  *   rf binary name assembled at runtime (concatenation, a template with substitutions, or a value read from the environment or a
- *   config with no rf literal in src); a commit effected by anything but the spawned argv (the child's environment, working
+ *   config with no rf literal in src); a --idempotency-key flag no src string literal or template text holds whole (one
+ *   concatenated or computed at runtime); a commit effected by anything but the spawned argv (the child's environment, working
  *   directory or a config rf reads); how rf parses the argv it receives; an rf branch of nativeEvidence written outside its
- *   switch's case labels; a docs id written outside the registry grammar (it names nothing the registry registers); a hyphen-only
+ *   switch's case labels; a docs id the section's rendered text spells only with characters the registry's grammar refuses (it
+ *   is not read as an id even where it would render as one; S lists the section's characters outside printable ASCII, respin 4
+ *   D30); a hyphen-only
  *   id under a producer RECONCILE_EVIDENCE_READS does not key, named outside the allowlist sentence; a host path other than the
  *   Claude workflow host's node() journaling; the named residuals (R).
  *
@@ -203,6 +244,10 @@ const PROBE_COMMANDS = ["context.render", "operation.show"];
 const EM_DASH = String.fromCodePoint(0x2014);
 const HEAD = 'export const meta = { name: "rf-operation-receipt", description: "wb-jwc.6 census probe" };\n';
 const RECONCILE_TS = "src/workflow/reconcile.ts";
+/** src's failure vocabulary (respin 4 U1): the CapabilityErrorCategory union R-FAILURE-CATEGORY reads. */
+const CAPABILITY_REGISTRY_TS = "src/workbench/capability-registry.ts";
+/** The one failure category the N and H probes feed (respin 4 U1, R-B88): every other member of src's union is R-FAILURE-CATEGORY's. */
+const FAILED_CATEGORY: CapabilityErrorCategory = "unavailable";
 /** The producer src's producerOf names for every rf capability id. */
 const RF_PRODUCER = "reactivefiber";
 /** A whole string token naming the rf binary: rf itself, a path whose last segment is rf, or a command text whose first word is either. */
@@ -407,9 +452,10 @@ function rfBinarySites(): { readonly file: string; readonly name: string; readon
 /** A whole string token: a string literal or a template with no substitution. */
 const isWholeToken = (node: ts.Node): node is ts.StringLiteral | ts.NoSubstitutionTemplateLiteral => ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node);
 /**
- * Every relative module specifier a src module writes as a whole string token - in an import or export declaration, an import()
- * call or a require() call - that resolves outside src/ (respin 3 U2: the typecheck admits a declaration file outside src/ that a
- * src import reaches, and the script beside it would run unread), as `file -> specifier`, in file then source order.
+ * Every relative module specifier a src module writes as a whole string token - in an import, export or import-equals
+ * declaration, an import type, an import() call or a require() call (respin 4 adds the import-equals and import-type forms) -
+ * that resolves outside src/ (respin 3 U2: the typecheck admits a declaration file outside src/ that a src import reaches, and
+ * the script beside it would run unread), as `file -> specifier`, in file then source order.
  */
 function specifiersLeavingSrc(): string[] {
   return srcFiles().flatMap(file => {
@@ -417,6 +463,8 @@ function specifiersLeavingSrc(): string[] {
     visitAll(parsed(file), node => {
       let specifier: ts.Node | undefined;
       if (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) specifier = node.moduleSpecifier;
+      else if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference)) specifier = node.moduleReference.expression;
+      else if (ts.isImportTypeNode(node) && ts.isLiteralTypeNode(node.argument)) specifier = node.argument.literal;
       else if (ts.isCallExpression(node) && (node.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(node.expression) && node.expression.text === "require"))) specifier = node.arguments[0];
       if (specifier === undefined || !isWholeToken(specifier) || !/^\.\.?(?:\/|$)/.test(specifier.text)) return;
       const target = resolve(ROOT, dirname(file), specifier.text);
@@ -493,8 +541,28 @@ function registerSpellings(): RegisterSpelling[] {
   });
   return spellings;
 }
+/** Every src function whose judged register call carries an rf capability id, with its file, in file then source order. */
+const rfRegistrarSites = (): { readonly file: string; readonly owner: string }[] =>
+  registerSpellings().filter(spelling => spelling.id !== undefined && isRfCapabilityId(spelling.id)).map(spelling => ({ file: spelling.file, owner: spelling.owner }));
 /** Every src function whose judged register call carries an rf capability id, in file then source order. */
-const rfRegistrars = (): string[] => registerSpellings().filter(spelling => spelling.id !== undefined && isRfCapabilityId(spelling.id)).map(spelling => spelling.owner);
+const rfRegistrars = (): string[] => rfRegistrarSites().map(site => site.owner);
+/**
+ * A src rf registrar's parameters as its declaration writes them (respin 4 U2, R-REGISTRAR-RUNTIME's quiet row): the one function
+ * declaration of that name with a body in the file holding its judged register call, each parameter by name, marked when it is a
+ * rest, optional or defaulted parameter; any other count of such declarations is written instead, so it fails closed.
+ */
+function registrarParameters(file: string, name: string): string {
+  const source = parsed(file);
+  const found: ts.FunctionDeclaration[] = [];
+  visitAll(source, node => {
+    if (ts.isFunctionDeclaration(node) && node.name?.text === name && node.body !== undefined) found.push(node);
+  });
+  const [fn] = found;
+  if (fn === undefined || found.length !== 1) return `<${found.length} function declarations of ${name} with a body in ${file}>`;
+  return fn.parameters
+    .map(parameter => `${parameter.dotDotDotToken !== undefined ? "..." : ""}${parameter.name.getText(source)}${parameter.questionToken !== undefined ? "?" : ""}${parameter.initializer !== undefined ? "=<default>" : ""}`)
+    .join(", ");
+}
 /** Every register spelling the census does not judge, as file#owner syntax (respin 2 U2: a new one moves the G:id witness). */
 const unjudgedRegisterSpellings = (): string[] => registerSpellings().filter(spelling => spelling.id === undefined).map(spelling => `${spelling.file}#${spelling.owner} ${spelling.syntax}`);
 /** Every whole string token under a node, in source order. */
@@ -650,14 +718,15 @@ function nativeEvidenceLabels(): { readonly rf: readonly string[]; readonly unju
   return { rf, unjudged };
 }
 /**
- * The string members of a src/workflow/reconcile.ts union type (EffectDetermination, EvidenceBinding), in declaration order. The
- * alias must be declared once and every member must be a string literal type (respin 2, the U2 class guard): any other member
- * refuses the reading, so a determination or binding word added by reference can never go unread.
+ * The string members of a src union type (src/workflow/reconcile.ts EffectDetermination and EvidenceBinding; respin 4,
+ * src/workbench/capability-registry.ts CapabilityErrorCategory), in declaration order. The alias must be declared once in the
+ * file and every member must be a string literal type (respin 2, the U2 class guard): any other member refuses the reading, so
+ * a determination, a binding word or a failure category added by reference can never go unread.
  */
-function srcUnion(alias: string): string[] {
+function srcUnion(file: string, alias: string): string[] {
   const found: string[] = [];
   let declared = 0;
-  visitAll(parsed(RECONCILE_TS), node => {
+  visitAll(parsed(file), node => {
     if (!ts.isTypeAliasDeclaration(node) || node.name.text !== alias) return;
     declared += 1;
     for (const member of ts.isUnionTypeNode(node.type) ? node.type.types : [node.type]) {
@@ -665,7 +734,7 @@ function srcUnion(alias: string): string[] {
       found.push(member.literal.text);
     }
   });
-  if (declared !== 1) throw new Error(`${RECONCILE_TS} declares ${alias} ${declared} times`);
+  if (declared !== 1) throw new Error(`${file} declares ${alias} ${declared} times`);
   return found;
 }
 
@@ -674,14 +743,31 @@ type PreviewEnvelope = Awaited<ReturnType<Parameters<typeof registerReactiveFibe
 function previewEnvelope(operationId: string, result: JsonValue = { output: { text: "census context" } }, command = "context.render"): PreviewEnvelope {
   return { schema: REACTIVE_FIBER_CLI_SCHEMA, ok: true, command, operation_id: operationId, workspace: { id: WORKSPACE_ID, root: WS }, transaction_id: null, result, diagnostics: [] };
 }
-/** The preview reads a reconcile can be fed: a genuine fresh one, one that fails, and one whose envelope names no identity. */
+/**
+ * The preview reads a reconcile is fed: a genuine fresh one, one that fails with FAILED_CATEGORY (the one failure category fed,
+ * respin 4 U1), and one whose envelope names no identity.
+ */
 const VARIANTS: Readonly<Record<string, () => Promise<PreviewEnvelope>>> = {
   fresh: async () => previewEnvelope(FRESH),
   failed: async () => {
-    throw new CapabilityError("unavailable", "rf is not reachable from this census");
+    throw new CapabilityError(FAILED_CATEGORY, "rf is not reachable from this census");
   },
   unprojected: async () => previewEnvelope(FRESH, { output: { text: "census context" } }, "context.show"),
 };
+/** The failure categories the reads above feed, measured by running each one (respin 4 U1: R-FAILURE-CATEGORY's quiet row). */
+async function fedFailureCategories(): Promise<string[]> {
+  const fed: string[] = [];
+  for (const read of Object.values(VARIANTS)) {
+    try {
+      await read();
+    } catch (error) {
+      fed.push(error instanceof CapabilityError ? error.category : "<not a CapabilityError>");
+    }
+  }
+  return [...new Set(fed)];
+}
+/** The members of src's CapabilityErrorCategory the failed read does not feed (respin 4 U1): R-FAILURE-CATEGORY's row exists while one does. */
+const unfedFailureCategories = (): string[] => srcUnion(CAPABILITY_REGISTRY_TS, "CapabilityErrorCategory").filter(category => category !== FAILED_CATEGORY);
 /** The committed render the stand-in returns: the identity a committing rf effect would carry. */
 function committedReading(): JsonValue {
   return {
@@ -801,10 +887,12 @@ interface JourneyReading {
   readonly binding: readonly string[];
   /** The dotted or producer-namespaced ids the section's other sentences name. */
   readonly others: readonly string[];
+  /** Every distinct character of the section's rendered text outside printable ASCII, as U+XXXX in code point order (respin 4, D30). */
+  readonly outside: readonly string[];
 }
 /** docs/workbench/08's operator reconcile journey as a reader sees it (respin U2): the shared helper's rendered, section-bounded view. */
 function journeyReading(): JourneyReading {
-  const refuse = (why: string): JourneyReading => ({ why, named: [], binding: [], others: [] });
+  const refuse = (why: string): JourneyReading => ({ why, named: [], binding: [], others: [], outside: [] });
   const section = docsSection(readFileSync(join(ROOT, DOCS08), "utf8"), JOURNEY, 2, [PARENT_08]);
   if (!section.ok) return refuse(section.why);
   if (section.hasHtml) return refuse("the section carries HTML, whose rendered text can hide what its source says");
@@ -814,14 +902,19 @@ function journeyReading(): JourneyReading {
   const [only] = allowlist;
   if (only === undefined || allowlist.length !== 1) return refuse(`the section holds ${allowlist.length} evidence allowlist sentences, not exactly one`);
   if (only.kind !== "paragraph") return refuse(`the evidence allowlist sentence sits in a ${only.kind} block, not in paragraph prose`);
-  const bindingWords = srcUnion("EvidenceBinding");
+  const bindingWords = srcUnion(RECONCILE_TS, "EvidenceBinding");
   const producers = Object.keys(RECONCILE_EVIDENCE_READS);
   const words = idWords(only.text);
+  const outside = [...new Set(sentences.flatMap(sentence => [...sentence.text].filter(character => character < " " || character > "~")))]
+    .map(character => character.codePointAt(0) ?? 0)
+    .sort((left, right) => left - right)
+    .map(point => `U+${point.toString(16).toUpperCase().padStart(4, "0")}`);
   return {
     why: "",
     named: words.filter(word => !bindingWords.includes(word)),
     binding: words.filter(word => bindingWords.includes(word)),
     others: sentences.filter(sentence => sentence !== only).flatMap(sentence => idWords(sentence.text)).filter(word => word.includes(".") || producers.includes(producerOf(word))),
+    outside,
   };
 }
 
@@ -830,6 +923,21 @@ const REGISTRARS: Readonly<Record<string, (registry: CapabilityRegistry) => void
   registerReactiveFiberRender: registry => registerReactiveFiberRender(registry, async () => previewEnvelope(FRESH), WS),
   registerNativeReactiveFiberRender: registry => registerNativeReactiveFiberRender(registry, WS),
 };
+/** What this file states the census passes each measured registrar in its one run (respin 4 U2: R-REGISTRAR-RUNTIME's quiet row lists it). */
+const REGISTRAR_ARGUMENTS: Readonly<Record<string, string>> = {
+  registerReactiveFiberRender: `a fresh CapabilityRegistry, a seam answering a fresh preview envelope, ${WS}`,
+  registerNativeReactiveFiberRender: `a fresh CapabilityRegistry, ${WS}`,
+};
+/** How many src string literals and template texts (a template's head, middle or tail too; respin 4) name --idempotency-key. */
+function idempotencyKeyTexts(): number {
+  let count = 0;
+  for (const file of srcFiles()) {
+    visitAll(parsed(file), node => {
+      if ((ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)) && node.text.includes("--idempotency-key")) count += 1;
+    });
+  }
+  return count;
+}
 const NEVER_QUERY: ClaudeQuery = () => {
   throw new Error("the census script calls node only: the Claude query is never invoked");
 };
@@ -890,7 +998,7 @@ async function childArgvs(): Promise<string> {
 /** G: one pin per rf capability id src names, one per src function spawning rf. */
 const G_PINS: Readonly<Record<string, PinBody>> = {
   [`id:${PREVIEW_ID}`]: {
-    requirement: "every file under src/ is read, each module parsed with its own script kind and every other file listed, and no relative specifier of a src import or export declaration, import() call or require() call leaves src/; the one rf capability id a whole src string token spells is the preview: every naming site is listed, the functions whose judged register calls carry an rf id are the registrars measured here, each of which, run, has registered the preview alone, read-only under a read-scoped permission, when it returns, and every unjudged register spelling is listed by owner and syntax",
+    requirement: "every file under src/ is read, each module parsed with its own script kind and every other file listed, and no relative specifier a src module writes as a whole string token in an import, export or import-equals declaration, an import type, an import() call or a require() call leaves src/; the one rf capability id a whole src string token spells is the preview: every naming site is listed, the functions whose judged register calls carry an rf id are the registrars measured here, and each of them, in its one measured run (the census's arguments, this process's environment), has registered the preview alone, with effect class read and the permission reactivefiber:render, when it returns; every unjudged register spelling is listed by owner and syntax",
     witness: async () => {
       expect(registryAcceptsId(PREVIEW_ID), "the id-grammar probe descriptor is valid: the registry accepts the preview id under it").toBe(true);
       expect(rfRegistrars(), "every src function whose judged register call carries an rf id is measured here").toStrictEqual(Object.keys(REGISTRARS));
@@ -908,12 +1016,11 @@ const G_PINS: Readonly<Record<string, PinBody>> = {
     },
   },
   "bin:nativeReactiveFiberRender": {
-    requirement: "the one src declaration naming the rf binary is the noncommitted render, which spawns it: resolved by binding, never by name, its callee is the named import spawn of node:child_process and its argument 2 one const of the spawning function read only by the spawn, built by the file's one module-level function declaration of that name, the callee's and the builder's names each bound once in the file, and every return of that function is an array literal holding --no-commit as a direct element; the child receives --no-commit for every probed input of the descriptor's arms; and no src string token names --idempotency-key",
+    requirement: "the one src declaration holding a whole string token that names the rf binary is the noncommitted render, which spawns it: resolved by binding, never by name, its callee is the named import spawn of node:child_process and its argument 2 one const of the spawning function read only by the spawn, built by the file's one module-level function declaration of that name, the callee's and the builder's names each bound once in the file, and every return of that function is an array literal holding --no-commit as a direct element; the child receives --no-commit for every probed input of the descriptor's arms; and no src string literal or template text names --idempotency-key",
     witness: async () => {
       const site = rfBinarySites().find(entry => entry.name === "nativeReactiveFiberRender");
       if (site === undefined) return "<nativeReactiveFiberRender names no rf binary>";
-      const keyed = srcTokens().filter(token => token.text.includes("--idempotency-key")).length;
-      return `${site.file} use=${site.use}; ${spawnedArgv(site.file, site.name)}; ${await childArgvs()}; src string tokens naming --idempotency-key=${keyed}`;
+      return `${site.file} use=${site.use}; ${spawnedArgv(site.file, site.name)}; ${await childArgvs()}; src string literals and template texts naming --idempotency-key=${idempotencyKeyTexts()}`;
     },
   },
 };
@@ -937,7 +1044,7 @@ const S_PINS: Readonly<Record<string, PinBody>> = {
     },
   },
   "src/workflow/runtime.ts": {
-    requirement: "no rf effect is journaled with a native reference, so reconciling one can only come out operator-asserted",
+    requirement: "one run of the census's test-only committing rf stand-in through the Claude workflow host's node() journals no native reference, so the preview receipt minted against its rows comes out operator-asserted",
     witness: async () => {
       const registry = reconcileRegistry(async () => previewEnvelope(FRESH));
       const entries: WorkflowJournalEntry[] = [];
@@ -957,14 +1064,14 @@ const S_PINS: Readonly<Record<string, PinBody>> = {
     },
   },
   [DOCS08]: {
-    requirement: "the operator reconcile journey's rendered section holds one evidence allowlist sentence, the ids it names are exactly the reads RECONCILE_EVIDENCE_READS holds, and no other sentence of the section names a read",
+    requirement: "the operator reconcile journey's rendered section holds one evidence allowlist sentence, the ids it names (its rendered words the registry accepts) are exactly the reads RECONCILE_EVIDENCE_READS holds, no other sentence of the section names a read in such a word, and every distinct character of the section's rendered text outside printable ASCII is listed",
     witness: async () => {
       const reading = journeyReading();
       if (reading.why !== "") return `refused: ${reading.why}`;
       const reads = Object.values(RECONCILE_EVIDENCE_READS).flat();
       const contract = ACKNOWLEDGEMENT_VALUE_CONTRACT.replace(/\/v\d+$/, "");
       const equal = JSON.stringify([...reading.named].sort()) === JSON.stringify([...reads].sort());
-      return `one allowlist sentence, in paragraph prose: allowlist=${reading.named.join(",")}; binding words (src EvidenceBinding)=${reading.binding.join(",")}; equals RECONCILE_EVIDENCE_READS=${equal}; other sentences' ids=${reading.others.join(",")}, each the name of src ACKNOWLEDGEMENT_VALUE_CONTRACT=${reading.others.every(id => id === contract)}`;
+      return `one allowlist sentence, in paragraph prose: allowlist=${reading.named.join(",")}; binding words (src EvidenceBinding)=${reading.binding.join(",")}; equals RECONCILE_EVIDENCE_READS=${equal}; other sentences' ids=${reading.others.join(",")}, each the name of src ACKNOWLEDGEMENT_VALUE_CONTRACT=${reading.others.every(id => id === contract)}; rendered characters outside printable ASCII=${reading.outside.length === 0 ? "none" : reading.outside.join(",")}`;
     },
   },
 };
@@ -976,8 +1083,9 @@ const N_PINS: Readonly<Record<string, PinBody>> = {
       const uncited = acknowledgeWith("effect-absent", []);
       const parts = [`uncited: ${outcomeOf(uncited)} ${overrideAfter(uncited)}`];
       for (const [variant, read] of Object.entries(VARIANTS)) {
-        const acknowledgement = acknowledgeWith("effect-absent", [await previewReceipt(read)]);
-        parts.push(`${variant}: ${outcomeOf(acknowledgement)}${acknowledgement.decision === "acknowledge" ? ` ${overrideAfter(acknowledgement)}` : ""}`);
+        const receipt = await previewReceipt(read);
+        const acknowledgement = acknowledgeWith("effect-absent", [receipt]);
+        parts.push(`${variant}(${receipt.outcome}): ${outcomeOf(acknowledgement)}${acknowledgement.decision === "acknowledge" ? ` ${overrideAfter(acknowledgement)}` : ""}`);
       }
       const text = parts.join("; ");
       expect(text, "a preview-only effect-absent never overrides at duplicate risk none").not.toContain("override:none");
@@ -990,7 +1098,7 @@ const H_PINS: Readonly<Record<string, PinBody>> = {
   "acceptance.3.1": {
     requirement: FILING.honestyClaims[0] ?? "<acceptance.3 claim 1 missing>",
     witness: async () => {
-      const determinations = srcUnion("EffectDetermination");
+      const determinations = srcUnion(RECONCILE_TS, "EffectDetermination");
       const parts = [`uncited: ${determinations.map(determination => `${determination}=${outcomeOf(acknowledgeWith(determination, []))}`).join(" ")}`];
       for (const [variant, read] of Object.entries(VARIANTS)) {
         const receipt = await previewReceipt(read);
@@ -1010,7 +1118,7 @@ const H_PINS: Readonly<Record<string, PinBody>> = {
     },
   },
 };
-/** R: the named residual R-ECHO, one quiet row per self-identifying reconcile read. */
+/** R: the named residuals - R-ECHO (one quiet row per self-identifying reconcile read), R-FAILURE-CATEGORY and R-REGISTRAR-RUNTIME (respin 4), R-SELF-ANCHORED. */
 const R_PINS: Readonly<Record<string, PinBody>> = {
   [`echo:${PREVIEW_ID}`]: {
     requirement: "NAMED RESIDUAL R-ECHO, not claimed: an envelope under the preview contract that echoes the journaled rfo_ binds and confirms, because Pi takes the envelope's operation_id as given and never checks it is fresh",
@@ -1018,6 +1126,23 @@ const R_PINS: Readonly<Record<string, PinBody>> = {
       const receipt = await previewReceipt(async () => previewEnvelope(JOURNALED));
       const absent = acknowledgeWith("effect-absent", [receipt]);
       return `echo ref=${receipt.nativeRef?.id ?? "none"} binding=${receipt.binding}; effect-confirmed=${outcomeOf(acknowledgeWith("effect-confirmed", [receipt]))}; effect-absent=${outcomeOf(absent)} ${overrideAfter(absent)}`;
+    },
+  },
+  "failure-category": {
+    requirement: "NAMED RESIDUAL R-FAILURE-CATEGORY, not claimed: N and H feed one failed preview read, of the unavailable category, so a read failed with any other category src's CapabilityErrorCategory declares is not probed and N's and H's claims do not cover it; src's categories are listed, with the one fed and each one not fed",
+    witness: async () => {
+      const categories = srcUnion(CAPABILITY_REGISTRY_TS, "CapabilityErrorCategory");
+      const fed = await fedFailureCategories();
+      return `src CapabilityErrorCategory=${categories.join(",")}; fed to N and H as a failed preview read=${fed.join(",")}; not fed, so not probed and not claimed=${categories.filter(category => !fed.includes(category)).join(",")}`;
+    },
+  },
+  "registrar-runtime": {
+    requirement: "NAMED RESIDUAL R-REGISTRAR-RUNTIME, not claimed: each src rf registrar is run once here, with the census's arguments in this process's environment, so a registration whose id, effect class or permissions depend on a registrar's arguments or on the environment is read for that one run only; each registrar's src parameters and the arguments this file states the census passes it are listed",
+    witness: async () => {
+      const sites = rfRegistrarSites();
+      expect(Object.keys(REGISTRAR_ARGUMENTS), "every src rf registrar has the arguments the census passes it stated").toStrictEqual(sites.map(site => site.owner));
+      const runs = sites.map(site => `${site.file}#${site.owner}(${registrarParameters(site.file, site.owner)}) run once with (${REGISTRAR_ARGUMENTS[site.owner] ?? "<no stated arguments>"})`);
+      return `${runs.join("; ")}; environment=this census process's own`;
     },
   },
   "self-anchored": {
@@ -1046,7 +1171,12 @@ const GENERATED: Readonly<Record<RowId, () => string[]>> = {
   S: () => FILING.surfaces.map(surface => `S:${surface}`),
   N: () => (FILING.clauses.has("statement.3") ? ["N:statement.3"] : []),
   H: () => FILING.honestyClaims.map((_, index) => `H:acceptance.3.${index + 1}`),
-  R: () => [...selfIdentifyingReads().map(id => `R:echo:${id}`), ...(selfAnchoredPins().length > 0 ? ["R:self-anchored"] : [])],
+  R: () => [
+    ...selfIdentifyingReads().map(id => `R:echo:${id}`),
+    ...(unfedFailureCategories().length > 0 ? ["R:failure-category"] : []),
+    ...(rfRegistrars().length > 0 ? ["R:registrar-runtime"] : []),
+    ...(selfAnchoredPins().length > 0 ? ["R:self-anchored"] : []),
+  ],
 };
 /**
  * The row each filing clause takes as the filing's own text places it (respin 3 H2): the statement's three clauses - the trigger,
@@ -1065,8 +1195,13 @@ function selfAnchoredPins(): string[] {
   const description = filingText();
   return PINS.filter(pin => !description.includes(pin.requirement)).map(pin => pin.id);
 }
-/** The residual rows the outside anchors call for (respin 3 H1): row R while src holds a self-identifying reconcile read (R-ECHO) or a pin's requirement is this file's words alone (R-SELF-ANCHORED). */
-const residualRowsCalledFor = (): RowId[] => (selfIdentifyingReads().length > 0 || selfAnchoredPins().length > 0 ? ["R"] : []);
+/**
+ * The residual rows the outside anchors call for (respin 3 H1, respin 4): row R while src holds a self-identifying reconcile read
+ * (R-ECHO), src's CapabilityErrorCategory declares a category the failed read does not feed (R-FAILURE-CATEGORY), src holds an rf
+ * registrar (R-REGISTRAR-RUNTIME), or a pin's requirement is this file's words alone (R-SELF-ANCHORED).
+ */
+const residualRowsCalledFor = (): RowId[] =>
+  selfIdentifyingReads().length > 0 || unfedFailureCategories().length > 0 || rfRegistrars().length > 0 || selfAnchoredPins().length > 0 ? ["R"] : [];
 const CLAUSE_ROWS: Readonly<Record<string, RowId | "PARKED">> = {
   "statement.1": "G",
   "statement.2": "S",
@@ -1076,30 +1211,34 @@ const CLAUSE_ROWS: Readonly<Record<string, RowId | "PARKED">> = {
   "acceptance.3": "H",
   "acceptance.4": "PARKED",
 };
-const SHAPE = ["G:statement.1:2", "S:statement.2:4", "N:statement.3:1", "H:acceptance.3:2", "R:residual:2"];
+const SHAPE = ["G:statement.1:2", "S:statement.2:4", "N:statement.3:1", "H:acceptance.3:2", "R:residual:4"];
 const PIN_LINES: Readonly<Record<string, string>> = {
   "G:id:reactivefiber.render.preview":
-    "G:id:reactivefiber.render.preview | every file under src/ is read, each module parsed with its own script kind and every other file listed, and no relative specifier of a src import or export declaration, import() call or require() call leaves src/; the one rf capability id a whole src string token spells is the preview: every naming site is listed, the functions whose judged register calls carry an rf id are the registrars measured here, each of which, run, has registered the preview alone, read-only under a read-scoped permission, when it returns, and every unjudged register spelling is listed by owner and syntax | src files no reader parses=none; relative specifiers leaving src/=none; sites=src/workbench/hosts/local-detached.ts#NATIVE_CAPABILITIES, src/workbench/native-evidence.ts#nativeEvidence, src/workbench/providers/reactivefiber.ts#registerReactiveFiberRender, src/workbench/providers/reactivefiber.ts#registerNativeReactiveFiberRender, src/workflow/reconcile.ts#RECONCILE_EVIDENCE_READS; registered=registerReactiveFiberRender:reactivefiber.render.preview=read/reactivefiber:render, registerNativeReactiveFiberRender:reactivefiber.render.preview=read/reactivefiber:render; id-shaped kinds (not capabilities)=reactivefiber.render.preview.snapshot@src/workbench/reactivefiber-observer.ts#reactivefiberTopology; unjudged register spellings=src/workbench/capability-registry.ts#CapabilityRegistry MethodDeclaration, src/workbench/hosts/local-detached.ts#registryFor PropertySignature, src/workbench/hosts/local-detached.ts#registryFor TypeOfExpression, src/workbench/hosts/local-detached.ts#registryFor VariableDeclaration, src/workbench/hosts/local-detached.ts#registryFor PropertyAccessExpression, src/workbench/hosts/local-detached.ts#registryFor BinaryExpression, src/workbench/hosts/local-detached.ts#registryFor CallExpression, src/workbench/hosts/local-detached.ts#registryFor register call, provider Identifier",
+    "G:id:reactivefiber.render.preview | every file under src/ is read, each module parsed with its own script kind and every other file listed, and no relative specifier a src module writes as a whole string token in an import, export or import-equals declaration, an import type, an import() call or a require() call leaves src/; the one rf capability id a whole src string token spells is the preview: every naming site is listed, the functions whose judged register calls carry an rf id are the registrars measured here, and each of them, in its one measured run (the census's arguments, this process's environment), has registered the preview alone, with effect class read and the permission reactivefiber:render, when it returns; every unjudged register spelling is listed by owner and syntax | src files no reader parses=none; relative specifiers leaving src/=none; sites=src/workbench/hosts/local-detached.ts#NATIVE_CAPABILITIES, src/workbench/native-evidence.ts#nativeEvidence, src/workbench/providers/reactivefiber.ts#registerReactiveFiberRender, src/workbench/providers/reactivefiber.ts#registerNativeReactiveFiberRender, src/workflow/reconcile.ts#RECONCILE_EVIDENCE_READS; registered=registerReactiveFiberRender:reactivefiber.render.preview=read/reactivefiber:render, registerNativeReactiveFiberRender:reactivefiber.render.preview=read/reactivefiber:render; id-shaped kinds (not capabilities)=reactivefiber.render.preview.snapshot@src/workbench/reactivefiber-observer.ts#reactivefiberTopology; unjudged register spellings=src/workbench/capability-registry.ts#CapabilityRegistry MethodDeclaration, src/workbench/hosts/local-detached.ts#registryFor PropertySignature, src/workbench/hosts/local-detached.ts#registryFor TypeOfExpression, src/workbench/hosts/local-detached.ts#registryFor VariableDeclaration, src/workbench/hosts/local-detached.ts#registryFor PropertyAccessExpression, src/workbench/hosts/local-detached.ts#registryFor BinaryExpression, src/workbench/hosts/local-detached.ts#registryFor CallExpression, src/workbench/hosts/local-detached.ts#registryFor register call, provider Identifier",
   "G:bin:nativeReactiveFiberRender":
-    "G:bin:nativeReactiveFiberRender | the one src declaration naming the rf binary is the noncommitted render, which spawns it: resolved by binding, never by name, its callee is the named import spawn of node:child_process and its argument 2 one const of the spawning function read only by the spawn, built by the file's one module-level function declaration of that name, the callee's and the builder's names each bound once in the file, and every return of that function is an array literal holding --no-commit as a direct element; the child receives --no-commit for every probed input of the descriptor's arms; and no src string token names --idempotency-key | src/workbench/providers/reactivefiber.ts use=spawn argument 1; callee=spawn, bound to the named import spawn of node:child_process, the file's one binding of the name; arguments=3, option keys=stdio,env; argv=const argv, read only by the spawn, from renderArgv(), the file's one module-level function declaration of that name; returns=[--workspace workspaceRoot context render ...select --no-commit --no-input --json]; --no-commit a direct element of every returned array=true; builder string tokens=view --view --task-id --model --model --task --workspace context render --no-commit --no-input --json; child argv (recording stand-in, the only PATH entry): {model,task} -> [--workspace /workspace/rf-operation-receipt-census context render --model census-model --task census-task --no-commit --no-input --json] refused transport; {view,taskId} -> [--workspace /workspace/rf-operation-receipt-census context render --view census-view --task-id census-taskId --no-commit --no-input --json] refused transport; {view,taskId,model} -> [--workspace /workspace/rf-operation-receipt-census context render --view census-view --task-id census-taskId --model census-model --no-commit --no-input --json] refused transport; launches=3 for 3 inputs; --no-commit in every received argv=true; src string tokens naming --idempotency-key=0",
+    "G:bin:nativeReactiveFiberRender | the one src declaration holding a whole string token that names the rf binary is the noncommitted render, which spawns it: resolved by binding, never by name, its callee is the named import spawn of node:child_process and its argument 2 one const of the spawning function read only by the spawn, built by the file's one module-level function declaration of that name, the callee's and the builder's names each bound once in the file, and every return of that function is an array literal holding --no-commit as a direct element; the child receives --no-commit for every probed input of the descriptor's arms; and no src string literal or template text names --idempotency-key | src/workbench/providers/reactivefiber.ts use=spawn argument 1; callee=spawn, bound to the named import spawn of node:child_process, the file's one binding of the name; arguments=3, option keys=stdio,env; argv=const argv, read only by the spawn, from renderArgv(), the file's one module-level function declaration of that name; returns=[--workspace workspaceRoot context render ...select --no-commit --no-input --json]; --no-commit a direct element of every returned array=true; builder string tokens=view --view --task-id --model --model --task --workspace context render --no-commit --no-input --json; child argv (recording stand-in, the only PATH entry): {model,task} -> [--workspace /workspace/rf-operation-receipt-census context render --model census-model --task census-task --no-commit --no-input --json] refused transport; {view,taskId} -> [--workspace /workspace/rf-operation-receipt-census context render --view census-view --task-id census-taskId --no-commit --no-input --json] refused transport; {view,taskId,model} -> [--workspace /workspace/rf-operation-receipt-census context render --view census-view --task-id census-taskId --model census-model --no-commit --no-input --json] refused transport; launches=3 for 3 inputs; --no-commit in every received argv=true; src string literals and template texts naming --idempotency-key=0",
   "S:src/workflow/reconcile.ts":
     "S:src/workflow/reconcile.ts | reactivefiber's reconcile evidence reads are the preview alone until the receipt read is admitted beside it | RECONCILE_EVIDENCE_READS.reactivefiber=[\"reactivefiber.render.preview\"]",
   "S:src/workbench/native-evidence.ts":
     "S:src/workbench/native-evidence.ts | the rf branch projects the preview envelope's own operation_id as nativeId and no domainStatus under both receipt-shaped results, and is the only rf case label of nativeEvidence's switch, where every case label is a whole string token | minimal receipt: projection={\"provider\":\"reactivefiber\",\"nativeId\":\"rfo_freshpreview0000000000\"} domainStatus=absent; shipped receipt: projection={\"provider\":\"reactivefiber\",\"nativeId\":\"rfo_freshpreview0000000000\"} domainStatus=absent; rf branches=reactivefiber.render.preview; unjudged case labels=none",
   "S:src/workflow/runtime.ts":
-    "S:src/workflow/runtime.ts | no rf effect is journaled with a native reference, so reconciling one can only come out operator-asserted | run=completed; rows=dispatched:write:refs=0:value=none, settled:write:refs=0:value=none; inspect=0:reactivefiber.render.commit:recorded=0:reads=reactivefiber.render.preview; preview receipt=returned/operator-asserted",
+    "S:src/workflow/runtime.ts | one run of the census's test-only committing rf stand-in through the Claude workflow host's node() journals no native reference, so the preview receipt minted against its rows comes out operator-asserted | run=completed; rows=dispatched:write:refs=0:value=none, settled:write:refs=0:value=none; inspect=0:reactivefiber.render.commit:recorded=0:reads=reactivefiber.render.preview; preview receipt=returned/operator-asserted",
   "S:docs/workbench/08-lifecycle-and-recovery.md":
-    "S:docs/workbench/08-lifecycle-and-recovery.md | the operator reconcile journey's rendered section holds one evidence allowlist sentence, the ids it names are exactly the reads RECONCILE_EVIDENCE_READS holds, and no other sentence of the section names a read | one allowlist sentence, in paragraph prose: allowlist=furnace.run.inspect,forge.gate.status,hyperunix.find,reactivefiber.render.preview; binding words (src EvidenceBinding)=journal-recorded,operator-asserted; equals RECONCILE_EVIDENCE_READS=true; other sentences' ids=workbench.reconcile.acknowledgement, each the name of src ACKNOWLEDGEMENT_VALUE_CONTRACT=true",
+    "S:docs/workbench/08-lifecycle-and-recovery.md | the operator reconcile journey's rendered section holds one evidence allowlist sentence, the ids it names (its rendered words the registry accepts) are exactly the reads RECONCILE_EVIDENCE_READS holds, no other sentence of the section names a read in such a word, and every distinct character of the section's rendered text outside printable ASCII is listed | one allowlist sentence, in paragraph prose: allowlist=furnace.run.inspect,forge.gate.status,hyperunix.find,reactivefiber.render.preview; binding words (src EvidenceBinding)=journal-recorded,operator-asserted; equals RECONCILE_EVIDENCE_READS=true; other sentences' ids=workbench.reconcile.acknowledgement, each the name of src ACKNOWLEDGEMENT_VALUE_CONTRACT=true; rendered characters outside printable ASCII=U+2014,U+2192",
   "N:statement.3":
-    "N:statement.3 | the preview read shall never serve as commit evidence | uncited: ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; fresh: deny:evidence-identity-mismatch; failed: ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; unprojected: ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate",
+    "N:statement.3 | the preview read shall never serve as commit evidence | uncited: ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; fresh(returned): deny:evidence-identity-mismatch; failed(unavailable): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; unprojected(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate",
   "H:acceptance.3.1":
     "H:acceptance.3.1 | a reconcile fed only a preview envelope for a committed-effect journal row is asserted NOT producer-confirmed | uncited: effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; fresh(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; failed(unavailable/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; unprojected(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted",
   "H:acceptance.3.2":
     "H:acceptance.3.2 | the preview's freshly-minted rfo_ cannot bind the journaled rfo_ | journaled=rfo_journaledcommit000000000; preview refs=rfo_freshpreview0000000000,rfo_freshpreviewsecond0000 distinct=true journaled-among=false; bindings=unbound,unbound",
   "R:echo:reactivefiber.render.preview":
     "R:echo:reactivefiber.render.preview | NAMED RESIDUAL R-ECHO, not claimed: an envelope under the preview contract that echoes the journaled rfo_ binds and confirms, because Pi takes the envelope's operation_id as given and never checks it is fresh | echo ref=rfo_journaledcommit000000000 binding=journal-recorded; effect-confirmed=ack:producer-confirmed; effect-absent=ack:producer-confirmed override unaccepted=override:none accepted=override:none",
+  "R:failure-category":
+    "R:failure-category | NAMED RESIDUAL R-FAILURE-CATEGORY, not claimed: N and H feed one failed preview read, of the unavailable category, so a read failed with any other category src's CapabilityErrorCategory declares is not probed and N's and H's claims do not cover it; src's categories are listed, with the one fed and each one not fed | src CapabilityErrorCategory=validation,authorization,unavailable,transport,uncertain-effect; fed to N and H as a failed preview read=unavailable; not fed, so not probed and not claimed=validation,authorization,transport,uncertain-effect",
+  "R:registrar-runtime":
+    "R:registrar-runtime | NAMED RESIDUAL R-REGISTRAR-RUNTIME, not claimed: each src rf registrar is run once here, with the census's arguments in this process's environment, so a registration whose id, effect class or permissions depend on a registrar's arguments or on the environment is read for that one run only; each registrar's src parameters and the arguments this file states the census passes it are listed | src/workbench/providers/reactivefiber.ts#registerReactiveFiberRender(registry, invoke, workspaceRoot) run once with (a fresh CapabilityRegistry, a seam answering a fresh preview envelope, /workspace/rf-operation-receipt-census); src/workbench/providers/reactivefiber.ts#registerNativeReactiveFiberRender(registry, workspaceRoot) run once with (a fresh CapabilityRegistry, /workspace/rf-operation-receipt-census); environment=this census process's own",
   "R:self-anchored":
-    "R:self-anchored | NAMED RESIDUAL R-SELF-ANCHORED, not claimed: a requirement in this file's words alone, shortened together with its frozen line, or this file's judging code edited together with the literals it feeds, stays green; the pins whose requirement no outside text holds are listed, measured against the filing | requirements in this file's words alone=G:id:reactivefiber.render.preview, G:bin:nativeReactiveFiberRender, S:src/workflow/reconcile.ts, S:src/workbench/native-evidence.ts, S:src/workflow/runtime.ts, S:docs/workbench/08-lifecycle-and-recovery.md, R:echo:reactivefiber.render.preview, R:self-anchored; requirements in the filing's own words=N:statement.3, H:acceptance.3.1, H:acceptance.3.2; judging code (the it.each arguments, the each-liveness lists, the generators and the readers) held by this file alone",
+    "R:self-anchored | NAMED RESIDUAL R-SELF-ANCHORED, not claimed: a requirement in this file's words alone, shortened together with its frozen line, or this file's judging code edited together with the literals it feeds, stays green; the pins whose requirement no outside text holds are listed, measured against the filing | requirements in this file's words alone=G:id:reactivefiber.render.preview, G:bin:nativeReactiveFiberRender, S:src/workflow/reconcile.ts, S:src/workbench/native-evidence.ts, S:src/workflow/runtime.ts, S:docs/workbench/08-lifecycle-and-recovery.md, R:echo:reactivefiber.render.preview, R:failure-category, R:registrar-runtime, R:self-anchored; requirements in the filing's own words=N:statement.3, H:acceptance.3.1, H:acceptance.3.2; judging code (the it.each arguments, the each-liveness lists, the generators and the readers) held by this file alone",
 };
 const PINS = ROWS.flatMap(entry => entry.pins);
 /** EACH-LIVENESS (respin U1): the ids the row cases and the pin cases recorded as their last statement this run, in run order. */
