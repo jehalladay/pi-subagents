@@ -46,9 +46,10 @@
  *    (concurrent, fails, sequential and the rest, by property or by element access) or a condition's call registers one row,
  *    a table factory (TABLE_FACTORIES) one per entry and an API factory (API_FACTORIES) a further registrar - and a one-row
  *    head is a row only where it runs once, in the file body or in the body of a one-row suite (SUITE_REGISTRARS); every
- *    other reference (a table or API factory, an alias, an argument, a row in a loop, a branch, a table suite or another
- *    function) is unaccounted, a finding. And no literal in it names a federated import, the hook, network, a read-set, a
- *    resolved revision or an imported dependency (CLAIM_FAMILY), so no tier row claims (b) or (c) before the contract ships.
+ *    other reference (a table or API factory, an alias, an argument, a row in a loop, a branch, a table suite, a row's
+ *    callback or another function) is unaccounted, a finding. And no literal in it names a federated import, the hook,
+ *    network, a read-set, a resolved revision or an imported dependency (CLAIM_FAMILY), so no tier row claims (b) or (c)
+ *    before the contract ships.
  * THE WALK: every regular file below the repository root, at any depth, in name order. The root entries SKIPPED_ROOTS (git's
  * data, the tracker export - bead rows quote the statement -, installed dependencies, build, coverage and Forge outputs) are
  * skipped at the root only; the two EXEMPT files are walked but not judged. It reads the working tree, so an untracked plant
@@ -102,6 +103,10 @@
  * suiteReference() that no control read on their not-a-suite side - a row inside a call of a function no suite binding
  * names, and a row inside a call of a vitest namespace member that is no suite registrar - so the identifier arm's
  * suite-binding test and the namespace arm's suite-member test each have a control that reads a non-suite head.
+ * wb-8avz (the R694 follow-up of landing 625: gate finding F1) added C2's nested-row controls, the not-a-suite side of
+ * suiteReference()'s two checks for a row registrar's head: a row inside the callback of a row by each row registrar's
+ * name (it, test) and by a renamed vitest import, and inside the callback of a vitest namespace's row member (it, test),
+ * so neither check reads a row registrar as a suite and the inner row stays unaccounted.
  * Display paths added: none. Test-only: it spawns nothing; the controls plant files in makeScratch scratch only.
  */
 import { type Dirent, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
@@ -716,7 +721,8 @@ function memberOf(node: ts.Identifier): { readonly access: ts.Expression; readon
 /** The suite registrar a callee descends to (a suite binding, or a vitest namespace's suite member by property or by element
  * access), if any, through each member (by property or by element access) and each call (a condition's) of the head, seen
  * through parentheses and the type assertions headOf sees through (C2 holds a suite control per arm, and a non-suite
- * control each for the identifier arm's suite-binding test and the namespace arm's suite-member test). */
+ * control each for the identifier arm's suite-binding test and the namespace arm's suite-member test, a row registrar's
+ * head among them: a row inside a row's callback by each registrar's name, by a renamed import and as a namespace member). */
 function suiteReference(callee: ts.Expression, bindings: RegistrarBindings): ts.Expression | undefined {
   let current = callee;
   for (;;) {
@@ -1124,6 +1130,14 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       // that is no suite registrar - the not-a-suite side of suiteReference()'s two checks (gate F1 of landing 564).
       nonSuiteCall: rowsIn(`${vitest}wrap("s", () => {\n  it("r1", () => {});\n});\n`),
       namespaceNonSuiteMember: rowsIn('import * as vt from "vitest";\nvt.expect(() => {\n  vt.it("r1", () => {});\n});\n'),
+      // A row inside a row's callback: a row registrar's head is no suite, by each row registrar's name, by a renamed
+      // vitest import and as a vitest namespace's row member - the not-a-suite side of suiteReference()'s two checks for a
+      // row registrar's head (gate F1 of landing 625).
+      nestedRow: rowsIn(`${vitest}it("r1", () => {\n  it("r2", () => {});\n});\n`),
+      nestedTestRow: rowsIn(`${vitest}test("r1", () => {\n  test("r2", () => {});\n});\n`),
+      renamedNestedRow: rowsIn('import { it as row } from "vitest";\nrow("r1", () => {\n  row("r2", () => {});\n});\n'),
+      namespaceNestedRow: rowsIn('import * as vt from "vitest";\nvt.it("r1", () => {\n  vt.it("r2", () => {});\n});\n'),
+      namespaceNestedTestRow: rowsIn('import * as vt from "vitest";\nvt.test("r1", () => {\n  vt.test("r2", () => {});\n});\n'),
       suiteInLoop: rowsIn(`${vitest}for (const title of ["s1", "s2"]) describe(title, () => {\n  it("r1", () => {});\n});\n`),
       callOfResult: rowsIn(`${vitest}it("r1", () => {})("r2");\n`),
       computedMember: rowsIn(`${vitest}const modifier = process.env.MODIFIER ?? "concurrent";\nit[modifier]("r1", () => {});\n`),

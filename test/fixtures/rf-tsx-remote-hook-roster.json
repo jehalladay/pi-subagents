@@ -542,6 +542,26 @@
                 "rows": 0,
                 "unaccounted": 1
               },
+              "nestedRow": {
+                "rows": 1,
+                "unaccounted": 1
+              },
+              "nestedTestRow": {
+                "rows": 1,
+                "unaccounted": 1
+              },
+              "renamedNestedRow": {
+                "rows": 1,
+                "unaccounted": 1
+              },
+              "namespaceNestedRow": {
+                "rows": 1,
+                "unaccounted": 1
+              },
+              "namespaceNestedTestRow": {
+                "rows": 1,
+                "unaccounted": 1
+              },
               "suiteInLoop": {
                 "rows": 0,
                 "unaccounted": 1
