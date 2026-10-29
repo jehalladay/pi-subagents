@@ -1025,6 +1025,10 @@
    "blockTitle": {
     "path": "docs/block-title.md",
     "text": "<div title=\"Pi hosts the Fi&#98;er core\">x</div>\n"
+   },
+   "nestedInline": {
+    "path": "docs/nested-inline.md",
+    "text": "Pi embeds the [*Fi&#98;*](x)[**&#101;r**](y) [~~co&#114;e~~](z).\n"
    }
   },
   "descriptorControls": {
@@ -1185,6 +1189,25 @@
    "confusable": {
     "path": "docs/confusable.md",
     "text": "Pi embeds the F\u0456ber core.\n"
+   },
+   "invisible": {
+    "path": "src/invisible.ts",
+    "text": "// Pi embeds a WA\u200bSM runtime.\nexport {};\n"
+   },
+   "invisibleDescriptor": {
+    "version": "1.0.0",
+    "description": "Embeds a WA\u200bSM runtime in-process.",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "read",
+    "permissions": [
+     "planted:read"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "workbench.invisible.host"
    }
   },
   "outsideText": {
@@ -1317,6 +1340,7 @@
    "fencedframe",
    "frameset",
    "iframe",
+   "input",
    "link",
    "math",
    "meter",
@@ -1324,6 +1348,8 @@
    "noframes",
    "noscript",
    "object",
+   "optgroup",
+   "option",
    "plaintext",
    "progress",
    "rp",
@@ -1349,6 +1375,8 @@
   ],
   "altAttribute": "alt",
   "imageLimit": 8,
+  "rawState": "raw-state text",
+  "invisibleSplit": "(?<=[A-Za-z])\\p{Default_Ignorable_Code_Point}+(?=[A-Za-z])",
   "htmlForms": {
    "tag": "<span></span>",
    "tagAttributes": "<span title=\"a\" lang=en translate></span>",
@@ -1378,9 +1406,101 @@
    "unterminatedComment": "<!-- x",
    "unterminatedTag": "<span title=\"a",
    "refusedElement": "<template>x</template>",
-   "refusedAttribute": "<span hidden>x</span>"
+   "refusedAttribute": "<span hidden>x</span>",
+   "upperElement": "<TEMPLATE>x</TEMPLATE>",
+   "upperAttribute": "<span HIDDEN>x</span>"
   },
   "htmlFormPath": "docs/html-form.md",
+  "rawStateForms": {
+   "codeNamespaced": {
+    "shape": "paragraph",
+    "words": "<code>Fib<o:p>er core</code>"
+   },
+   "kbdDeclaration": {
+    "shape": "paragraph",
+    "words": "<kbd>Fib<!x>er core</kbd>"
+   },
+   "preEndSpace": {
+    "shape": "paragraph",
+    "words": "<pre>Fib</ x>er core</pre>"
+   },
+   "headingDotName": {
+    "shape": "heading",
+    "words": "<code>Fib<x.y>er core</code>"
+   },
+   "carriedState": {
+    "shape": "carried",
+    "words": "Fib<o:p>er core"
+   },
+   "cellDeclaration": {
+    "shape": "cell",
+    "words": "<kbd>Fib<!x>er core</kbd>"
+   },
+   "itemEndSpace": {
+    "shape": "item",
+    "words": "<code>Fib</ x>er core</code>"
+   },
+   "codeReference": {
+    "shape": "paragraph",
+    "words": "<code>Fi&#98er core</code>"
+   },
+   "scriptState": {
+    "shape": "paragraph",
+    "words": "<script>Fib<o:p>er core</script>"
+   },
+   "upperAttributes": {
+    "shape": "paragraph",
+    "words": "<CODE class=\"x\">Fib<o:p>er core</CODE>"
+   },
+   "markupFree": {
+    "shape": "paragraph",
+    "words": "<code>Fiber core</code>"
+   },
+   "closedState": {
+    "shape": "paragraph",
+    "words": "<code>x</code> Fib<o:p>er core"
+   }
+  },
+  "rawStatePath": "docs/raw-state.md",
+  "inputForms": {
+   "buttonValue": {
+    "block": true,
+    "words": "<input type=\"button\" value=\"Fiber\" title=\"x\"> core"
+   },
+   "textValue": {
+    "block": false,
+    "words": "<input value=\"Fiber\" size=\"6\"> core"
+   },
+   "placeholder": {
+    "block": true,
+    "words": "<input placeholder=\"Fiber\" size=\"6\"> core"
+   },
+   "upperInput": {
+    "block": true,
+    "words": "<INPUT VALUE=\"Fiber\" SIZE=\"6\"> core"
+   },
+   "optionLabel": {
+    "block": true,
+    "words": "<option label=\"Fiber\" title=\"x\"></option> core"
+   },
+   "groupLabel": {
+    "block": true,
+    "words": "<optgroup label=\"Fiber\" title=\"x\"></optgroup> core"
+   }
+  },
+  "inputFormPath": "docs/input-form.md",
+  "invisibleForms": {
+   "zeroWidthSpace": "WA\u200bSM",
+   "softHyphen": "wa\u00adsm",
+   "variationSelector": "WA\ufe0fSM",
+   "zeroWidthReference": "WA&ZeroWidthSpace;SM",
+   "wordJoinerReference": "WA&NoBreak;SM",
+   "doubleSplit": "WA\u200b\u2060SM",
+   "fullwidthNeighbor": "W\uff21\u200bSM",
+   "bidiSplit": "WA\u202eSM",
+   "imageAltSplit": "<img src=\"x.png\" alt=\"WA\u200bSM\">"
+  },
+  "invisibleFormPath": "docs/invisible.md",
   "expandedWord": {
    "module": "expanded-word.ts",
    "words": [
@@ -1967,6 +2087,106 @@
        ],
        "refusedAttribute": [
         "wb-x32.comments[0].text:1: rendered unknown <span hidden>"
+       ],
+       "upperElement": [
+        "wb-x32.comments[0].text:1: rendered unknown <TEMPLATE>"
+       ],
+       "upperAttribute": [
+        "wb-x32.comments[0].text:1: rendered unknown <span HIDDEN>"
+       ]
+      },
+      "rawStateForms": {
+       "codeNamespaced": [
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+       ],
+       "kbdDeclaration": [
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib<!x>er core\""
+       ],
+       "preEndSpace": [
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib</ x>er core\""
+       ],
+       "headingDotName": [
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib<x.y>er core\""
+       ],
+       "carriedState": [
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"x\"",
+        "wb-x32.comments[0].text:3: rendered unknown raw-state text \"OWNER DECISION (2026-10-29): Pi will emb...\""
+       ],
+       "cellDeclaration": [
+        "wb-x32.comments[0].text:3: rendered unknown raw-state text \"Fib<!x>er core\""
+       ],
+       "itemEndSpace": [
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib</ x>er core\""
+       ],
+       "codeReference": [
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fi&#98er core\""
+       ],
+       "scriptState": [
+        "wb-x32.comments[0].text:1: rendered unknown <script>",
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+       ],
+       "upperAttributes": [
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+       ],
+       "markupFree": [
+        "wb-x32.comments[0].text:1: embed+fibercore",
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fiber core\"",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "closedState": [
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"x\""
+       ]
+      },
+      "inputForms": {
+       "buttonValue": [
+        "wb-x32.comments[0].text:1: rendered unknown <input type=\"button\" value=\"Fiber\" title..."
+       ],
+       "textValue": [
+        "wb-x32.comments[0].text:1: rendered unknown <input value=\"Fiber\" size=\"6\">"
+       ],
+       "placeholder": [
+        "wb-x32.comments[0].text:1: rendered unknown <input placeholder=\"Fiber\" size=\"6\">"
+       ],
+       "upperInput": [
+        "wb-x32.comments[0].text:1: rendered unknown <INPUT VALUE=\"Fiber\" SIZE=\"6\">"
+       ],
+       "optionLabel": [
+        "wb-x32.comments[0].text:1: rendered unknown <option label=\"Fiber\" title=\"x\">"
+       ],
+       "groupLabel": [
+        "wb-x32.comments[0].text:1: rendered unknown <optgroup label=\"Fiber\" title=\"x\">"
+       ]
+      },
+      "invisibleForms": {
+       "zeroWidthSpace": [
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+200B"
+       ],
+       "softHyphen": [
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+00AD"
+       ],
+       "variationSelector": [
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+FE0F"
+       ],
+       "zeroWidthReference": [
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+200B"
+       ],
+       "wordJoinerReference": [
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+2060"
+       ],
+       "doubleSplit": [
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+200B",
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+2060"
+       ],
+       "fullwidthNeighbor": [
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+200B"
+       ],
+       "bidiSplit": [
+        "wb-x32.comments[0].text:1: rendered unknown U+202E",
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+202E"
+       ],
+       "imageAltSplit": [
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+200B",
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+200B"
        ]
       }
      }
@@ -2111,6 +2331,106 @@
        ],
        "refusedAttribute": [
         "refusedAttribute:1: rendered unknown <span hidden>"
+       ],
+       "upperElement": [
+        "upperElement:1: rendered unknown <TEMPLATE>"
+       ],
+       "upperAttribute": [
+        "upperAttribute:1: rendered unknown <span HIDDEN>"
+       ]
+      },
+      "rawStateForms": {
+       "codeNamespaced": [
+        "codeNamespaced:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+       ],
+       "kbdDeclaration": [
+        "kbdDeclaration:1: rendered unknown raw-state text \"Fib<!x>er core\""
+       ],
+       "preEndSpace": [
+        "preEndSpace:1: rendered unknown raw-state text \"Fib</ x>er core\""
+       ],
+       "headingDotName": [
+        "headingDotName:1: rendered unknown raw-state text \"Fib<x.y>er core\""
+       ],
+       "carriedState": [
+        "carriedState:1: rendered unknown raw-state text \"x\"",
+        "carriedState:3: rendered unknown raw-state text \"OWNER DECISION (2026-10-29): Pi will emb...\""
+       ],
+       "cellDeclaration": [
+        "cellDeclaration:3: rendered unknown raw-state text \"Fib<!x>er core\""
+       ],
+       "itemEndSpace": [
+        "itemEndSpace:1: rendered unknown raw-state text \"Fib</ x>er core\""
+       ],
+       "codeReference": [
+        "codeReference:1: rendered unknown raw-state text \"Fi&#98er core\""
+       ],
+       "scriptState": [
+        "scriptState:1: rendered unknown <script>",
+        "scriptState:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+       ],
+       "upperAttributes": [
+        "upperAttributes:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+       ],
+       "markupFree": [
+        "markupFree:1: embed+fibercore",
+        "markupFree:1: rendered unknown raw-state text \"Fiber core\"",
+        "markupFree:1: rendered embed+fibercore"
+       ],
+       "closedState": [
+        "closedState:1: rendered unknown raw-state text \"x\""
+       ]
+      },
+      "inputForms": {
+       "buttonValue": [
+        "buttonValue:1: rendered unknown <input type=\"button\" value=\"Fiber\" title..."
+       ],
+       "textValue": [
+        "textValue:1: rendered unknown <input value=\"Fiber\" size=\"6\">"
+       ],
+       "placeholder": [
+        "placeholder:1: rendered unknown <input placeholder=\"Fiber\" size=\"6\">"
+       ],
+       "upperInput": [
+        "upperInput:1: rendered unknown <INPUT VALUE=\"Fiber\" SIZE=\"6\">"
+       ],
+       "optionLabel": [
+        "optionLabel:1: rendered unknown <option label=\"Fiber\" title=\"x\">"
+       ],
+       "groupLabel": [
+        "groupLabel:1: rendered unknown <optgroup label=\"Fiber\" title=\"x\">"
+       ]
+      },
+      "invisibleForms": {
+       "zeroWidthSpace": [
+        "zeroWidthSpace:1: rendered unknown invisible U+200B"
+       ],
+       "softHyphen": [
+        "softHyphen:1: rendered unknown invisible U+00AD"
+       ],
+       "variationSelector": [
+        "variationSelector:1: rendered unknown invisible U+FE0F"
+       ],
+       "zeroWidthReference": [
+        "zeroWidthReference:1: rendered unknown invisible U+200B"
+       ],
+       "wordJoinerReference": [
+        "wordJoinerReference:1: rendered unknown invisible U+2060"
+       ],
+       "doubleSplit": [
+        "doubleSplit:1: rendered unknown invisible U+200B",
+        "doubleSplit:1: rendered unknown invisible U+2060"
+       ],
+       "fullwidthNeighbor": [
+        "fullwidthNeighbor:1: rendered unknown invisible U+200B"
+       ],
+       "bidiSplit": [
+        "bidiSplit:1: rendered unknown U+202E",
+        "bidiSplit:1: rendered unknown invisible U+202E"
+       ],
+       "imageAltSplit": [
+        "imageAltSplit:1: rendered unknown invisible U+200B",
+        "imageAltSplit:1: rendered unknown invisible U+200B"
        ]
       }
      }
@@ -3203,6 +3523,9 @@
        ],
        "blockTitle": [
         "docs/block-title.md:1: rendered fibercore"
+       ],
+       "nestedInline": [
+        "docs/nested-inline.md:1: rendered fibercore,embed+core"
        ]
       },
       "htmlForms": {
@@ -3446,6 +3769,22 @@
         "inline": [
          "docs/html-form.md:1: rendered unknown <span hidden>"
         ]
+       },
+       "upperElement": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <TEMPLATE>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <TEMPLATE>"
+        ]
+       },
+       "upperAttribute": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <span HIDDEN>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <span HIDDEN>"
+        ]
        }
       },
       "refusedElements": {
@@ -3493,6 +3832,10 @@
         "docs/html-form.md:1: rendered unknown <iframe>",
         "docs/html-form.md:1: rendered fibercore,embed+core"
        ],
+       "input": [
+        "docs/html-form.md:1: rendered unknown <input>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
        "link": [
         "docs/html-form.md:1: rendered unknown <link>",
         "docs/html-form.md:1: rendered fibercore,embed+core"
@@ -3519,6 +3862,14 @@
        ],
        "object": [
         "docs/html-form.md:1: rendered unknown <object>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "optgroup": [
+        "docs/html-form.md:1: rendered unknown <optgroup>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "option": [
+        "docs/html-form.md:1: rendered unknown <option>",
         "docs/html-form.md:1: rendered fibercore,embed+core"
        ],
        "plaintext": [
@@ -3602,6 +3953,100 @@
        "style": [
         "docs/html-form.md:1: rendered unknown <span style=\"x\">",
         "docs/html-form.md:1: rendered fibercore,embed+core"
+       ]
+      },
+      "rawStateForms": {
+       "codeNamespaced": [
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+       ],
+       "kbdDeclaration": [
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib<!x>er core\""
+       ],
+       "preEndSpace": [
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib</ x>er core\""
+       ],
+       "headingDotName": [
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib<x.y>er core\""
+       ],
+       "carriedState": [
+        "docs/raw-state.md:1: rendered unknown raw-state text \"x\"",
+        "docs/raw-state.md:3: rendered unknown raw-state text \"Pi embeds the Fib<o:p>er core.\""
+       ],
+       "cellDeclaration": [
+        "docs/raw-state.md:3: rendered unknown raw-state text \"Fib<!x>er core\""
+       ],
+       "itemEndSpace": [
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib</ x>er core\""
+       ],
+       "codeReference": [
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fi&#98er core\""
+       ],
+       "scriptState": [
+        "docs/raw-state.md:1: rendered unknown <script>",
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+       ],
+       "upperAttributes": [
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+       ],
+       "markupFree": [
+        "docs/raw-state.md:1: fibercore,embed+core",
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fiber core\"",
+        "docs/raw-state.md:1: rendered fibercore,embed+core"
+       ],
+       "closedState": [
+        "docs/raw-state.md:1: rendered unknown raw-state text \"x\""
+       ]
+      },
+      "inputForms": {
+       "buttonValue": [
+        "docs/input-form.md:1: rendered unknown <input type=\"button\" value=\"Fiber\" title..."
+       ],
+       "textValue": [
+        "docs/input-form.md:1: rendered unknown <input value=\"Fiber\" size=\"6\">"
+       ],
+       "placeholder": [
+        "docs/input-form.md:1: rendered unknown <input placeholder=\"Fiber\" size=\"6\">"
+       ],
+       "upperInput": [
+        "docs/input-form.md:1: rendered unknown <INPUT VALUE=\"Fiber\" SIZE=\"6\">"
+       ],
+       "optionLabel": [
+        "docs/input-form.md:1: rendered unknown <option label=\"Fiber\" title=\"x\">"
+       ],
+       "groupLabel": [
+        "docs/input-form.md:1: rendered unknown <optgroup label=\"Fiber\" title=\"x\">"
+       ]
+      },
+      "invisibleForms": {
+       "zeroWidthSpace": [
+        "docs/invisible.md:1: rendered unknown invisible U+200B"
+       ],
+       "softHyphen": [
+        "docs/invisible.md:1: rendered unknown invisible U+00AD"
+       ],
+       "variationSelector": [
+        "docs/invisible.md:1: rendered unknown invisible U+FE0F"
+       ],
+       "zeroWidthReference": [
+        "docs/invisible.md:1: rendered unknown invisible U+200B"
+       ],
+       "wordJoinerReference": [
+        "docs/invisible.md:1: rendered unknown invisible U+2060"
+       ],
+       "doubleSplit": [
+        "docs/invisible.md:1: rendered unknown invisible U+200B",
+        "docs/invisible.md:1: rendered unknown invisible U+2060"
+       ],
+       "fullwidthNeighbor": [
+        "docs/invisible.md:1: rendered unknown invisible U+200B"
+       ],
+       "bidiSplit": [
+        "docs/invisible.md:1: rendered unknown U+202E",
+        "docs/invisible.md:1: rendered unknown invisible U+202E"
+       ],
+       "imageAltSplit": [
+        "docs/invisible.md:1: rendered unknown invisible U+200B",
+        "docs/invisible.md:1: rendered unknown invisible U+200B"
        ]
       },
       "plantedTree": {
@@ -3789,7 +4234,11 @@
       "claims": [],
       "confusable": [],
       "confusableLatin": 2,
-      "descriptor": []
+      "descriptor": [],
+      "invisible": [],
+      "invisibleShown": 1,
+      "invisibleDescriptor": [],
+      "invisibleDescriptorShown": 1
      }
     },
     {

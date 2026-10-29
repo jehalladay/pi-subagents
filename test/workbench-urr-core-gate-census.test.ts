@@ -7,6 +7,29 @@
  * Until-then clause (owner filing notes, verbatim): "Until both gates exist, no src or docs change and no Pi claim of an embedded
  * Fiber core; rf CLI envelope consumption stays owned by the wb-x32/wb-973/wb-693 families."
  *
+ * CUT #6 (the FINAL cut: the respin of refusal #5, gate run g10-gate-s142 on cut #5 b70da137; seat ws-03, run g10-work-s141), bound
+ * by orchestrator ruling R-B93 (rule 19's structural exit) to the FAIL-CLOSED CORE: the rendered-reading claim restated to exactly
+ * the HTML forms the reader strips, every form outside the pinned set refused, no claim word without a falsifier; the full
+ * rendered-reading surface is child bead wb-2wiv.4's. Cut #5's frozen shape is kept and only added to: no title, row, pin,
+ * control, residual row or reading is removed or weakened (REFUSED_ELEMENTS' three names, THE RAW STATE's and the invisible split's
+ * refusals, the RAW_STATE_FORMS, INPUT_FORMS and INVISIBLE_FORMS controls on D1, B2 and B1, a D1 control and a member of Q6). Each
+ * of refusal #5's items, by the one cure option it takes:
+ *  U1, class (c), B1, B2 and D1, FAIL-CLOSED (the route's first option): marked 18.0.11 writes an inline text token it lexes in its
+ *    raw state to the page unescaped, so the markup and the references in it (refusal #5's family RB) reached an HTML parser outside
+ *    every html token THE HTML READ reads. The rendered leg now reads no HTML out of a text token: every inline text token marked
+ *    escaped is REFUSED (THE RAW STATE, below), and THE RENDERED LEG and THE HTML READ are restated to exactly the token kinds read.
+ *    So GP1-D1a to GP1-D1h red D1, GP1-B2a reds B2 and D1, and GP1-B1a reds B1, each as a refusal; RAW_STATE_FORMS pins each RB
+ *    form on D1, B2 and B1 (one checkable item per form) beside the raw state's other openings, a markup-free raw run and the end
+ *    tag that ends the state.
+ *  U2, class (c), D1, FAIL-CLOSED (the route's second option): input is a REFUSED_ELEMENTS name, and with it option and optgroup,
+ *    whose label stands in their place in a select; GP1-D1i2, GP1-D1j2 and GP1-D1k2 red D1 as refusals, and INPUT_FORMS pins each
+ *    form on D1, B2 and B1. THE HTML READ's REFUSED_ELEMENTS and REFUSED_ATTRIBUTES clauses are restated to their lists.
+ *  Found by the seat (no refusal item; FAIL-CLOSED and NAMED): a default-ignorable code point between two letters of the wasm word
+ *    - a zero-width space, a soft hyphen, a variation selector, raw or behind a reference - cuts THE VOCABULARY's token, and the
+ *    census cannot say how a reader shows it. A rendered unit holding such a split is REFUSED (INVISIBLE_FORMS on D1, B2 and B1),
+ *    and in a text no rendered leg reads (a script's comment, a registered descriptor) the split word is a member of
+ *    R-OTHER-VOCABULARY (Q6).
+ *
  * CUT #5 (the respin of refusal #4, gate run g10-gate-s137 on cut #4 cf9796dc; seat ws-02, run g10-work-s138), under orchestrator
  * ruling R-B76 (the rule 19 second-stage cap on class (c)) and still in the CUT #4 FORM. Cut #4's frozen shape is kept and only
  * added to: THE HTML READ (below) and its controls, two named residuals with their pinned quiet rows (Q17, Q18), a member each of
@@ -100,19 +123,20 @@
  * protocol_message_set.json, the scenario schema, the Rust capability traits of rust/fiber-model/src/capabilities.rs) and the tree
  * holds no package.json, no .wasm file and no wasm-pack output: no released WASM artifact or capability-set package exists.
  *
- * MEASURED AT BASE (trunk 499fb36, landing 675, merged into the branch; seat ws-02, run g10-work-s138, 2026-10-29, with the cut #5
- * readers; every count re-measured there - each equal to cut #4's at trunk 04123dc except git's listing, the raw sentence and
- * rendered unit counts and the decisions page's, which the trunk's new docs/18 paragraph moves, and the raw HTML token counts
- * new): src holds 117
+ * MEASURED AT BASE (trunk 9ad61f3, landing 680, merged into the branch; seat ws-03, run g10-work-s141, 2026-10-29, with the cut #6
+ * readers; every count re-measured there - each equal to cut #5's at trunk 27c968d except git's listing, as the trunk's landings
+ * 677 to 680 added and changed test files and the .beads exports only, and the raw-state, input and invisible-split counts new: none of the
+ * 17520 inline text tokens of the product Markdown and the wb-x32 row is in marked's raw state, and no rendered unit holds an
+ * input, option or optgroup start tag or an invisible split): src holds 117
  * tracked script modules (101769 judged AST texts, 6482 member-bearing declarations, 618 module specifiers) and none spells a stem,
  * crate, WebAssembly, ABI or capability-set name, declares the four members together or loads an RF or Fiber SDK; C1's rf census
  * holds 42 texts in 3 modules and its SDK census 27 texts in 8 modules, and the one rf text a launcher call takes is the
- * provider's spawn binary; git tracks 1094 files (the trunk's 1092, this census and its roster), none a .wasm file or a path naming
+ * provider's spawn binary; git tracks 1099 files (the trunk's 1097, this census and its roster), none a .wasm file or a path naming
  * the core; package.json (120 texts) and the two lockfiles (372 packages each) name none; the 306 product texts (88 Markdown, 8
  * JSON - each strict JSON -, 198 scripts, 4 shell, 7 line and 1 prose text; 174889 raw sentences, 9043 rendered units; 67 fenced
  * code blocks, 39 of them read by their form, and 19 indented code blocks, so 47 prose-read code blocks; 16 raw HTML tokens, 6
  * HTML blocks - four comments and two image tags - and 10 inline tags, none refused) carry no claim, no unknown named reference
- * and no form THE HTML READ refuses - the only stem spellings are the
+ * and no form THE RENDERED LEG refuses - the only stem spellings are the
  * rf_identity sdk_versions keys of four rf receipts, rf's own identity echoed through its CLI envelope; the wb-x32 row (2161
  * characters across its 28 members, no raw HTML) and the decisions page (69 raw sentences, 59 rendered units, no raw HTML) state no
  * decision. So the gate
@@ -158,24 +182,34 @@
  * path and source line.
  * THE RENDERED LEG (Markdown, rows B and D): marked 18.0.11 lexes the text once; a unit is a heading, a paragraph, a list item's
  * text, a table cell, a block quote's blocks or an HTML block, placed at its first source line (top-level raws concatenate to the
- * source exactly, so the line is measured, never estimated). A unit renders what a reader sees as THE HTML READ (below) reads its
- * markup (restated by cut #5): an inline html token renders nothing (THE HTML READ admits a tag or a comment of its grammar there
- * and refuses any other form) and a task checkbox renders nothing, a code span and an escape show their text as written, a hard
- * break is a line end, an HTML block renders its text with THE HTML READ's comments and tags removed (any other markup refused),
- * a Markdown image shows its alt text in place and an HTML image tag nothing (each image's other rendering is its unit's twin),
- * and a character reference is
+ * source exactly, so the line is measured, never estimated). A unit's text is read from marked's tokens kind by kind, exactly so
+ * (restated by cut #6 to the token kinds read, R-B93's fail-closed core; cut #5 said a unit "renders what a reader sees"): an html
+ * token - an HTML block, or one of marked's inline html tokens - is read by THE HTML READ (below), an inline one adding to its run
+ * only THE HTML READ's image pieces; an inline text token is its text, its references decoded (below), and one marked lexes in its
+ * raw state is REFUSED (THE RAW STATE, below); a code span and an escape are their text as written; a hard break is a line end; a
+ * task checkbox is nothing; a Markdown image is an image piece, its alt text (its children's reading) in place, gone in the twin
+ * that shows the image; a link, em, strong or del token is its children's reading; a code block is left to the raw leg. A
+ * character reference is
  * decoded by CommonMark's rule (REFERENCE: "&#" and 1 to 7 decimal digits, "&#x" and 1 to 6 hexadecimal digits, or "&" and a name,
  * each closed by ";") - a numeric one whose code point is at most 0x10FFFF, a named one when it is a NAMED_REFERENCES name; any
  * other named reference so written is REFUSED (a finding of its own, since the census cannot say what it renders), and every other
  * reference stays as written (restated by cut #4: one an HTML parser decodes in an HTML block or an attribute value beyond that
  * rule - no closing ";", more than 7 decimal digits, a legacy name without ";" - is R-HTML-REFERENCE). Beside a unit's text run,
- * what a reader may ALSO see is read as units of their own at the unit's line, references decoded by the same rule: every
+ * these are read as units of their own at the unit's line, references decoded by the same rule (restated by cut #6; cut #5 called
+ * them what a reader may also see): every
  * attribute value of a tag THE HTML READ reads (an HTML block's or an inline token's) and every
  * link's or image's destination, each percent-decoded where it decodes, and every link's or image's title (a Markdown image's alt
- * text is its children, read in the run). A code block shows its text as written and is left to the raw leg. A rendered unit cuts into sentences after every ".",
+ * text is its children, read in the run). A rendered unit cuts into sentences after every ".",
  * "!", "?" or ";" followed by white space, and its findings carry the leg: "<path>:<line>: rendered <families>".
- * THE HTML READ (cut #5, refusal #4's U1 under ruling R-B76; rows B and D, every raw HTML token - an HTML block and each of marked's
- * inline html tokens): the only markup the rendered leg reads, left to right. Its white space is the HTML Standard's ASCII
+ * THE RAW STATE (cut #6, refusal #5's U1 under ruling R-B93; rows B and D): marked 18.0.11's lexer enters its raw state at an inline
+ * html token that opens a pre, code, kbd or script element (/^<(pre|code|kbd|script)(\s|>)/i) and leaves it at one that closes such
+ * an element (/^<\/(pre|code|kbd|script)(\s|>)/i), carrying it across the blocks of the text between them, and marks every inline
+ * text token it reads in that state escaped; its renderer writes an escaped text token's text to the page unescaped, as raw HTML.
+ * The rendered leg reads no HTML out of a text token: every inline text token marked escaped is REFUSED (FAIL-CLOSED), recorded as
+ * "<path>:<line>: rendered unknown raw-state text "<its text by writtenForm>"", its text still read in the run beside the refusal.
+ * THE HTML READ (cut #5, refusal #4's U1 under ruling R-B76; rows B and D; restated by cut #6 to the token kinds read: exactly
+ * marked's html tokens - an HTML block and each of marked's inline html tokens -, the only tokens whose markup the rendered leg
+ * reads, the raw HTML an escaped text token carries being THE RAW STATE's refusal): their markup, left to right. Its white space is the HTML Standard's ASCII
  * whitespace (tab, line feed, form feed, carriage return, space; a vertical tab or a no-break space is none). A COMMENT is "<!--",
  * its text, the first "-->". A TAG is CommonMark's raw HTML tag over that white space: a start tag is "<", a name (an ASCII
  * letter, then ASCII letters, digits or hyphens), attributes (each after white space: a name of [A-Za-z_:][A-Za-z0-9_.:-]*, then
@@ -188,15 +222,20 @@
  * its token (a reader closes it past the token); a "<" before an ASCII letter, "/", "!" or "?" that opens no comment or tag
  * of the grammar - a processing instruction (<?x?>), a markup declaration or DOCTYPE (<!x>, <!DOCTYPE x>), a CDATA section, an
  * end tag outside the grammar (</ x>, </>, </span title="x">), a tag outside it (<o:p>, <x_y>, <x.y>, <x/y>, attributes with no
- * white space between them, a no-break space or a vertical tab for white space, an unterminated tag); a start tag of an element
- * whose text an HTML reader does not show in place as written (REFUSED_ELEMENTS: the tokenizer reads its text otherwise - iframe,
- * noembed, noframes, noscript, plaintext, script, style, textarea, title, xmp -, it is foreign content - math, svg -, the tree
- * builder moves text out of it - table -, the default rendering hides, replaces or moves its content - applet, audio, canvas,
- * datalist, details, dialog, fencedframe, frameset, meter, object, progress, rp, rt, rtc, select, template, video -, it reorders
- * its content - bdo - or it restyles the page - body, link); a tag carrying an attribute that hides, reorders or styles text
- * (REFUSED_ATTRIBUTES: color, dir, hidden, popover, style); a unit holding more than IMAGE_LIMIT (8) images; and a rendered unit
- * holding a bidirectional control (wb-era's class, raw or behind a reference: the census cannot say in what order a reader sees
- * it). A unit holding images is read once more for every other combination of their two renderings - an HTML image tag's alt
+ * white space between them, a no-break space or a vertical tab for white space, an unterminated tag); a start tag whose name, in
+ * any case, is one of REFUSED_ELEMENTS (restated by cut #6 to its list: exactly these 36 names, each listed because the tokenizer
+ * reads its text otherwise - iframe, noembed, noframes, noscript, plaintext, script, style, textarea, title, xmp -, it is foreign
+ * content - math, svg -, the tree builder moves text out of it - table -, the default rendering hides, replaces or moves its
+ * content - applet, audio, canvas, datalist, details, dialog, fencedframe, frameset, meter, object, progress, rp, rt, rtc, select,
+ * template, video -, an attribute's text stands in its place - cut #6, refusal #5's U2: input, a value, a placeholder or a button's
+ * label, and option and optgroup, a label in a select -, it reorders its content - bdo - or it restyles the page - body, link); a
+ * tag carrying an attribute whose name, in any case, is one of REFUSED_ATTRIBUTES (restated by cut #6 to its list: exactly color,
+ * dir, hidden, popover and style); a unit holding more than IMAGE_LIMIT (8) images; a rendered unit holding a bidirectional
+ * control (wb-era's class, raw or behind a reference: the census cannot say in what order a reader sees it); and (cut #6) a
+ * rendered unit - its run, a twin or a unit read beside the run - holding an invisible split (INVISIBLE_SPLIT: a
+ * run of default-ignorable code points, Unicode's Default_Ignorable_Code_Point, between two ASCII letters of its text after NFKC,
+ * raw or behind a reference, where THE VOCABULARY's tokens cut the word; each code point of the run recorded as "invisible
+ * U+XXXX", a bidirectional control there refused as both). A unit holding images is read once more for every other combination of their two renderings - an HTML image tag's alt
  * text in place, as when the image is not shown; a Markdown image shown, its alt text gone - each such twin adding only the
  * findings its unit lacks. Beyond THE HTML READ: a reader's own rendering beyond the HTML Standard's (R-READER-RENDERING) and a
  * reference an HTML parser decodes beyond CommonMark's rule (R-HTML-REFERENCE).
@@ -241,12 +280,14 @@
  *    quiet, each control text also read as a member of a planted decision-bead row; member controls read a decision in a bd
  *    comment, a label, a nested record, a key, a shadowed duplicate member, a shadowed duplicate id and a key behind a reference,
  *    beside two near misses (another bead's row, neutral members); and (cut #5) each HTML_FORMS form in a decision-bead comment and
- *    an image twin (an HTML image tag's alt text completing the decision).
+ *    an image twin (an HTML image tag's alt text completing the decision); and (cut #6) each RAW_STATE_FORMS, INPUT_FORMS and
+ *    INVISIBLE_FORMS form in a decision-bead comment, each refused.
  *    B2 THE DECISIONS PAGE: docs/workbench/18-decisions-and-risks.md (the notes' cited page), read raw and rendered, holds no
  *    decision and no unknown named reference; table rows, cells and list items are units of their own (controls: a decision behind
  *    a no-break-space reference, an inline tag, a numeric reference, an unknown reference refused, a pipe paragraph read as one;
  *    a code span, a split table and split items quiet; and, cut #5, each HTML_FORMS form in an HTML block on a decisions page and an
- *    image twin and an HTML block's title attribute).
+ *    image twin and an HTML block's title attribute; and, cut #6, each RAW_STATE_FORMS, INPUT_FORMS and INVISIBLE_FORMS form on a
+ *    decisions page, each refused).
  *  C, the until-then clause ("until then Pi's RF surface stays the rf CLI envelope only").
  *    C1 NO RF SDK: no src module specifier outside the relative ones names reactivefiber, the stem or a crate (import, export,
  *    import-equals, import type, dynamic import, require, or a call through a createRequire loader: a name the module binds to
@@ -291,7 +332,9 @@
  *    in an HTML <pre> block; and - cut #5 - a shell line's trailing comment, read with its command (FAIL-CLOSED), an HTML image
  *    tag's alt text in an HTML block and in a paragraph, a Markdown image shown and an image pair (image twins), images over the
  *    limit and a bidirectional control raw and behind a reference (refused), each HTML_FORMS form in an HTML block and in a
- *    paragraph, each REFUSED_ELEMENTS element and each REFUSED_ATTRIBUTES attribute, and an HTML block's title attribute)
+ *    paragraph, each REFUSED_ELEMENTS element and each REFUSED_ATTRIBUTES attribute, and an HTML block's title attribute; and - cut
+ *    #6 - each RAW_STATE_FORMS form (refused, beside the state its end tag ends), each INPUT_FORMS form (refused), each
+ *    INVISIBLE_FORMS form (refused) and a claim joined through a link's, an em's, a strong's and a del's children)
  *    and near
  *    misses stay quiet (a receipt's rf_identity sdk_versions key, the workflow VM's wasm option, split sentences, a table's rows,
  *    list items, a code span, a lock whose embed and wasm words sit in different values, YAML lines that pair them only as prose
@@ -302,7 +345,7 @@
  *    read whole (every key and string at any depth, each one unit), states no claim; planted descriptors read, a neutral one quiet.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  *
- * THE PINNED SET, in closed form (cut #4, extended by cut #5; the CUT #4 FORM (4)): each pin of rows A to D reads exactly the
+ * THE PINNED SET, in closed form (cut #4, extended by cuts #5 and #6; the CUT #4 FORM (4)): each pin of rows A to D reads exactly the
  * surfaces, by exactly the forms, legs and readers, named here; any other surface, form, leg or reader is outside its claim, and
  * each form known to escape them is a NAMED RESIDUAL (Q1 to Q18, each with its pinned quiet row) or a FAIL-CLOSED unit.
  *  A1: package.json parsed (every key and string at any depth) and by raw line, and the installed package paths and name fields
@@ -315,10 +358,12 @@
  *  A4: the same modules and texts, read for HostCapabilitySet's fold, and the member names of every interface, type literal, class,
  *    object literal, enum, object binding pattern and function-like parameter list, read for all four members by fold.
  *  B1: the tracked export's lines one of whose top-level id members is the title's decision bead, by THE JSON READER: every key and
- *    every string value at any depth, each alone, each read as a Markdown text - raw (THE FORMS) and rendered (THE RENDERED LEG,
- *    its markup by THE HTML READ) - for a decision, an unknown named reference and a form THE HTML READ refuses.
- *  B2: the notes' cited page, read as a Markdown text raw and rendered (its markup by THE HTML READ), for a decision, an unknown
- *    named reference and a form THE HTML READ refuses.
+ *    every string value at any depth, each alone, each read as a Markdown text - raw (THE FORMS) and rendered (THE RENDERED LEG:
+ *    its html tokens' markup by THE HTML READ, its raw-state text tokens refused by THE RAW STATE; restated by cut #6) - for a
+ *    decision, an unknown named reference and a form THE RENDERED LEG refuses.
+ *  B2: the notes' cited page, read as a Markdown text raw and rendered (THE RENDERED LEG: its html tokens' markup by THE HTML READ,
+ *    its raw-state text tokens refused by THE RAW STATE; restated by cut #6), for a decision, an unknown named reference and a form
+ *    THE RENDERED LEG refuses.
  *  C1: every tracked file below src (one that is no script module reds), each module parsed by TypeScript: its module specifiers
  *    (the load forms ROW C1 names; never a relative one) for reactivefiber, the stem or a crate; its texts and property-access
  *    chains for the three spellings; and THE CENSUS (its two censuses and the launch roster).
@@ -328,8 +373,9 @@
  *    table rows also through sectionTables) and by THE STATED SOURCE at marked's lexing grain; the cited row as written; the
  *    provider module's leading comments.
  *  D1: every tracked file below the nine roots and at the repository root (held both ways to a walk) whose extension is a measured
- *    text extension, decoded as strict UTF-8, by THE FORMS (raw) and, for Markdown, THE RENDERED LEG (its markup by THE HTML READ),
- *    for a claim, an unknown named reference and a form THE HTML READ refuses.
+ *    text extension, decoded as strict UTF-8, by THE FORMS (raw) and, for Markdown, THE RENDERED LEG (its html tokens' markup by
+ *    THE HTML READ, its raw-state text tokens refused by THE RAW STATE; restated by cut #6), for a claim, an unknown named reference
+ *    and a form THE RENDERED LEG refuses.
  *  D2: every descriptor of the native and the four injected registrations, every key and string at any depth each one unit, for a
  *    claim.
  *
@@ -358,8 +404,10 @@
  * edit of a stated section's pinned lines (as marked lexes them: R-LEXED-GRAIN) or of a parent heading line, and a link definition
  * added anywhere on docs/18 or vendor/README.md, reds C3 (each file changed twice in the trunk's history), and the editing cut
  * re-pins the section; every form THE HTML READ refuses (cut #5: a raw HTML token's markup outside its grammar, a REFUSED_ELEMENTS
- * element, a REFUSED_ATTRIBUTES attribute, more than IMAGE_LIMIT images in a unit, a bidirectional control in a rendered unit)
- * reds B1, B2 or D1 wherever it sits, so a product page, the decisions page or a decision-bead member that adds such markup reds
+ * element, a REFUSED_ATTRIBUTES attribute, more than IMAGE_LIMIT images in a unit, a bidirectional control in a rendered unit;
+ * cut #6: an inline text token marked's lexer reads in its raw state, an input, option or optgroup start tag, an invisible split
+ * in a rendered unit) reds B1, B2 or D1 wherever it sits, so a product page, the decisions page or a decision-bead member that
+ * adds such markup - an inline <code>, <kbd> or <pre> element included, which opens the raw state for the text it holds - reds
  * at its landing and the editing cut judges it; a shell line's trailing comment ("echo embed # wasm") is read with the line's
  * last command as one unit, so its words lend themselves to the command's (refusal #4's G8-D1i, pinned as the D1 control
  * shellTrailingComment); a src text that newly holds the word rf or an SDK name - a launch or
@@ -377,7 +425,9 @@
  * client returning a ChangedViewReceipt is returned as a value (Q4; the native preview is the admission point);
  * R-DECISION-ELSEWHERE a decision recorded on another bead, or outside the export and the decisions page, is not read (Q5);
  * R-OTHER-VOCABULARY the core under other names (another package, another ABI verb, renamed capability members, another phrase,
- * and - cut #5 - a core name spelled with a confusable letter, Fiber with a Cyrillic i) is read by no surface (Q6); R-OUTSIDE-TEXT an rf launch or an SDK load whose binary, command or specifier is no src text (the
+ * and - cut #5 - a core name spelled with a confusable letter, Fiber with a Cyrillic i, and - cut #6 - the wasm word split by a
+ * zero-width space in a text no rendered leg reads, a script's comment and a registered descriptor, whose rendered-leg form is
+ * refused) is read by no surface (Q6); R-OUTSIDE-TEXT an rf launch or an SDK load whose binary, command or specifier is no src text (the
  * environment, argv, a file outside src read at run time, a name's text such as a property key read by Object.keys; a file below
  * src that is no script module reds C1 instead) is read by neither census (Q7); R-PINNED-REUSE a launch or a load that reaches a pinned census text through its binding (an import of the binding through
  * a module path that names no SDK, a new use of it in its own module), the text's own entry unchanged, is not re-judged (Q8);
@@ -1022,8 +1072,9 @@ function rawSentences(text: string, path: string): RawSentence[] {
 
 const REFERENCE = /&(?:#(\d{1,7})|#[xX]([0-9a-fA-F]{1,6})|([A-Za-z][A-Za-z0-9]{1,31}));/g;
 /**
- * THE HTML READ (cut #5, refusal #4's U1 under ruling R-B76's second option): the only markup the rendered leg reads in a raw HTML
- * token (an HTML block, or one of marked's inline html tokens). Its white space is the HTML Standard's ASCII whitespace (tab, line
+ * THE HTML READ (cut #5, refusal #4's U1 under ruling R-B76's second option; restated by cut #6): the markup the rendered leg reads,
+ * in exactly marked's html tokens (an HTML block, or one of marked's inline html tokens) and in no other token (an escaped text
+ * token's raw HTML is THE RAW STATE's refusal). Its white space is the HTML Standard's ASCII whitespace (tab, line
  * feed, form feed, carriage return and space; a vertical tab or a no-break space is none). A tag is CommonMark's raw HTML open or
  * closing tag over that white space: a name of an ASCII letter then ASCII letters, digits or hyphens; a start tag's attributes,
  * each after white space, a name of [A-Za-z_:][A-Za-z0-9_.:-]* with an optional value (unquoted, or single- or double-quoted, a
@@ -1042,11 +1093,12 @@ const HTML_TAG = new RegExp(
   "y",
 );
 /**
- * The elements whose start tag THE HTML READ refuses (FAIL-CLOSED), each because an HTML reader does not show its text in place as
- * written: the tokenizer reads its text otherwise (iframe, noembed, noframes, noscript, plaintext, script, style, textarea, title,
- * xmp), it is foreign content (math, svg), the tree builder moves text out of it (table), the default rendering hides, replaces or
- * moves its content (applet, audio, canvas, datalist, details, dialog, fencedframe, frameset, meter, object, progress, rp, rt, rtc,
- * select, template, video), it reorders it (bdo), or it restyles the page (body, link).
+ * The elements whose start tag (its name in any case) THE HTML READ refuses (FAIL-CLOSED): exactly these 36 names (restated by cut
+ * #6 to the list), each listed because the tokenizer reads its text otherwise (iframe, noembed, noframes, noscript, plaintext,
+ * script, style, textarea, title, xmp), it is foreign content (math, svg), the tree builder moves text out of it (table), the
+ * default rendering hides, replaces or moves its content (applet, audio, canvas, datalist, details, dialog, fencedframe, frameset,
+ * meter, object, progress, rp, rt, rtc, select, template, video), an attribute's text stands in its place (cut #6: input, its value,
+ * placeholder or button label; option and optgroup, a label in a select), it reorders it (bdo), or it restyles the page (body, link).
  */
 const REFUSED_ELEMENTS = [
   "applet",
@@ -1060,6 +1112,7 @@ const REFUSED_ELEMENTS = [
   "fencedframe",
   "frameset",
   "iframe",
+  "input",
   "link",
   "math",
   "meter",
@@ -1067,6 +1120,8 @@ const REFUSED_ELEMENTS = [
   "noframes",
   "noscript",
   "object",
+  "optgroup",
+  "option",
   "plaintext",
   "progress",
   "rp",
@@ -1083,7 +1138,7 @@ const REFUSED_ELEMENTS = [
   "video",
   "xmp",
 ] as const;
-/** The attributes THE HTML READ refuses on any tag (FAIL-CLOSED): the HTML Standard's hiding (hidden, popover) and reordering (dir) attributes, inline style and a font colour. */
+/** The attributes (their names in any case) THE HTML READ refuses on any tag (FAIL-CLOSED): exactly these five (restated by cut #6 to the list), the HTML Standard's hiding (hidden, popover) and reordering (dir) attributes, inline style and a font colour. */
 const REFUSED_ATTRIBUTES = ["color", "dir", "hidden", "popover", "style"] as const;
 /** The attribute that makes a tag an image of THE HTML READ: a reader sees its value in the tag's place when the image is not shown. */
 const ALT_ATTRIBUTE = "alt";
@@ -1091,6 +1146,24 @@ const ALT_ATTRIBUTE = "alt";
 const IMAGE_LIMIT = 8;
 /** The bidirectional controls (wb-era's class): a rendered unit holding one is REFUSED, since the census cannot say in what order a reader sees it. */
 const BIDI_CONTROL = /[\u061C\u200E\u200F\u202A-\u202E\u2066-\u2069]/gu;
+/**
+ * THE RAW STATE (cut #6, refusal #5's U1 under ruling R-B93's fail-closed core): marked 18.0.11 marks an inline text token escaped
+ * when its lexer reads it in its raw state, and its renderer then writes that token's text to the page unescaped, as raw HTML. The
+ * rendered leg reads no HTML out of a text token: it REFUSES every inline text token marked escaped (FAIL-CLOSED), recorded as
+ * `raw-state text "<the token's text as written>"`.
+ */
+const RAW_STATE = "raw-state text";
+/**
+ * An invisible split (cut #6, FAIL-CLOSED): a run of default-ignorable code points (Unicode's Default_Ignorable_Code_Point property)
+ * between two ASCII letters of a rendered unit's text after NFKC, where THE VOCABULARY's tokens cut the word. A rendered unit (its
+ * run, a twin or a unit read beside the run) holding one is REFUSED, each code point of the run recorded as `invisible U+XXXX` (a
+ * bidirectional control there is BIDI_CONTROL's refusal too).
+ */
+const INVISIBLE_SPLIT = /(?<=[A-Za-z])\p{Default_Ignorable_Code_Point}+(?=[A-Za-z])/gu;
+/** Whether a token is an inline text token marked 18.0.11 lexed in its raw state (marked escaped: written to the page unescaped). */
+function inRawState(token: Token): boolean {
+  return token.type === "text" && (token as Tokens.Text).escaped === true;
+}
 /**
  * A rendered run as pieces: text, or an image with its two renderings - as the run first shows it (a Markdown image's alt text in
  * place; an HTML image tag, removed) and the other (a Markdown image shown, so its alt text gone; an HTML image tag's alt text in
@@ -1113,7 +1186,7 @@ interface HtmlRead {
   readonly values: readonly string[];
 }
 /**
- * THE HTML READ of one raw HTML token, left to right: a comment and a tag of the grammar are removed, a tag carrying an alt
+ * THE HTML READ of one of marked's html tokens, left to right: a comment and a tag of the grammar are removed, a tag carrying an alt
  * attribute becomes an image piece, and every other character is text. Any other markup is REFUSED, recorded in unknown as written
  * (a finding of its own, since the census cannot say what a reader sees): a comment opened as "<!-->" or "<!--->", one whose text
  * holds "--!>" (an HTML reader closes it there) and one unterminated in its token (a reader closes it past the token); a "<" before
@@ -1211,11 +1284,12 @@ function newlines(text: string): number {
   return text.split("\n").length - 1;
 }
 /**
- * What a reader sees of inline tokens, as pieces: an inline HTML token (a tag or a comment) renders nothing beyond THE HTML READ's
- * image pieces, a task checkbox renders nothing, a code span and an escape show their text as written, a hard break is a line end,
- * a Markdown image is an image piece (its alt text in place, or gone), and every other text renders with its references decoded.
- * Beside the run, extras collects what a reader may also see: an inline tag's attribute values and a link's or image's destination
- * and title (an image's alt text is its children, rendered in the run); unknown collects THE HTML READ's refused forms.
+ * Inline tokens read kind by kind, as pieces (THE RENDERED LEG, restated by cut #6): an inline html token adds only THE HTML READ's
+ * image pieces, a task checkbox nothing, a code span and an escape their text as written, a hard break a line end, a Markdown image
+ * an image piece (its alt text in place, or gone), a link, em, strong or del token its children's reading, and an inline text token
+ * its text with its references decoded - one marked lexed in its raw state also REFUSED (THE RAW STATE). Beside the run, extras
+ * collects an inline tag's attribute values and a link's or image's destination and title (an image's alt text is its children,
+ * read in the run); unknown collects THE HTML READ's and THE RAW STATE's refused forms.
  */
 function inlineRendered(tokens: readonly Token[], unknown: string[], extras: string[]): Piece[] {
   const out: Piece[] = [];
@@ -1234,7 +1308,10 @@ function inlineRendered(tokens: readonly Token[], unknown: string[], extras: str
     else if (token.type === "codespan" || token.type === "escape") out.push(tokenText(token));
     else if (token.type === "image") out.push({ first: runText(tokenChildren(token).length > 0 ? inlineRendered(tokenChildren(token), unknown, extras) : [decodeReferences(tokenText(token), unknown)]), other: "" });
     else if (tokenChildren(token).length > 0) out.push(...inlineRendered(tokenChildren(token), unknown, extras));
-    else out.push(decodeReferences(tokenText(token), unknown));
+    else {
+      if (inRawState(token)) unknown.push(`${RAW_STATE} "${writtenForm(tokenText(token))}"`);
+      out.push(decodeReferences(tokenText(token), unknown));
+    }
   }
   return out;
 }
@@ -1258,6 +1335,12 @@ function runVariant(pieces: readonly Piece[], mask: number): string {
 function bidiControls(text: string): string[] {
   return [...text.matchAll(BIDI_CONTROL)].map(match => `U+${(match[0].codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")}`);
 }
+/** The invisible splits a text holds after NFKC (INVISIBLE_SPLIT), each code point of each run as `invisible U+XXXX`. */
+function invisibleSplits(text: string): string[] {
+  return [...text.normalize("NFKC").matchAll(INVISIBLE_SPLIT)].flatMap(match =>
+    [...match[0]].map(character => `invisible U+${(character.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")}`),
+  );
+}
 interface RenderedUnit {
   readonly line: number;
   readonly text: string;
@@ -1269,8 +1352,9 @@ interface RenderedUnit {
  * A Markdown text's rendered units, each with its first source line: a heading, a paragraph, a list item's text, a table cell, a
  * block quote's blocks and an HTML block (THE HTML READ: its comments and tags removed, its references decoded, any other markup
  * refused). A unit holding images is read once more for every other combination of their renderings (its twins), and one holding
- * more than IMAGE_LIMIT images or a bidirectional control is refused. A code block shows its text as written, which the raw leg
- * reads; a link destination and an HTML attribute are never rendered.
+ * more than IMAGE_LIMIT images is refused, as is a unit, a twin or a unit read beside the run holding a bidirectional control or
+ * (cut #6) an invisible split. A code block is left to the raw leg; a link destination and an HTML attribute value are read beside
+ * the run as units of their own.
  */
 function renderedUnits(markdown: string): RenderedUnit[] {
   const units: RenderedUnit[] = [];
@@ -1281,18 +1365,18 @@ function renderedUnits(markdown: string): RenderedUnit[] {
     const text = runText(pieces);
     const images = pieces.filter(piece => typeof piece !== "string").length;
     if (images > IMAGE_LIMIT) unknown.push(`images ${images}`);
-    units.push({ line, text, unknown: [...unknown, ...bidiControls(text)], twin: false });
+    units.push({ line, text, unknown: [...unknown, ...bidiControls(text), ...invisibleSplits(text)], twin: false });
     const read = [text.trim(), ...extras.map(extra => decodeReferences(extra, []).trim())];
     for (let mask = 1; images <= IMAGE_LIMIT && mask < 2 ** images; mask += 1) {
       const variant = runVariant(pieces, mask);
       if (variant.trim().length === 0 || read.includes(variant.trim())) continue;
       read.push(variant.trim());
-      units.push({ line, text: variant, unknown: bidiControls(variant), twin: true });
+      units.push({ line, text: variant, unknown: [...bidiControls(variant), ...invisibleSplits(variant)], twin: true });
     }
     for (const extra of extras) {
       const unknownExtra: string[] = [];
       const shown = decodeReferences(extra, unknownExtra);
-      units.push({ line, text: shown, unknown: [...unknownExtra, ...bidiControls(shown)], twin: false });
+      units.push({ line, text: shown, unknown: [...unknownExtra, ...bidiControls(shown), ...invisibleSplits(shown)], twin: false });
     }
   };
   const walk = (tokens: readonly Token[], first: number): void => {
@@ -1670,6 +1754,9 @@ const CLAIM_CONTROLS: Readonly<Record<string, PlantedText>> = {
   imageTwinDeduped: { path: "docs/image-twin.md", text: "Pi embeds the Fiber core with ![x](a.png).\n" },
   // THE HTML READ's attribute values (cut #5): an HTML block's attribute is read as a unit of its own, beside an image's twin.
   blockTitle: { path: "docs/block-title.md", text: '<div title="Pi hosts the Fi&#98;er core">x</div>\n' },
+  // THE RENDERED LEG's token kinds (cut #6): a link's, an em's, a strong's and a del's text is its children's reading (each holding a
+  // reference only that reading decodes), joined in the run; the raw leg reads the references as written, so it reads no claim.
+  nestedInline: { path: "docs/nested-inline.md", text: "Pi embeds the [*Fi&#98;*](x)[**&#101;r**](y) [~~co&#114;e~~](z).\n" },
 };
 /**
  * THE HTML READ's forms (cut #5, refusal #4's U1 under ruling R-B76; one checkable item per form): each written inside the word
@@ -1709,6 +1796,9 @@ const HTML_FORMS: Readonly<Record<string, string>> = {
   unterminatedTag: '<span title="a',
   refusedElement: "<template>x</template>",
   refusedAttribute: "<span hidden>x</span>",
+  // cut #6: a REFUSED_ELEMENTS name and a REFUSED_ATTRIBUTES name are refused in any case.
+  upperElement: "<TEMPLATE>x</TEMPLATE>",
+  upperAttribute: "<span HIDDEN>x</span>",
 };
 /** The path D1 reads each HTML_FORMS text under. */
 const HTML_FORM_PATH = "docs/html-form.md";
@@ -1724,6 +1814,121 @@ function htmlFormDecision(markup: string): string {
 function htmlFormMember(markup: string, bead: string): string {
   const comment = { id: "c-html", issue_id: bead, author: "owner", text: htmlFormDecision(markup).trimEnd(), created_at: "2026-10-29T12:00:00Z" };
   return JSON.stringify({ id: bead, comments: [comment], comment_count: 1 });
+}
+/** The shapes a RAW_STATE_FORMS text is written in: a paragraph, a heading, a table cell, a list item, or a paragraph the raw state is carried into. */
+type RawStateShape = "paragraph" | "heading" | "cell" | "item" | "carried";
+/**
+ * THE RAW STATE's forms (cut #6, refusal #5's U1 under ruling R-B93; one checkable item per form, each read on D1, B2 and B1): a
+ * claim (D1) or a decision (B2 on a decisions page, B1 in a decision-bead comment) written in a block of the form's shape, its words
+ * "Fiber core" in text marked 18.0.11 lexes in its raw state. Refusal #5's RB plants are codeNamespaced (GP1-D1a, and GP1-B2a and
+ * GP1-B1a on B2 and B1), kbdDeclaration (GP1-D1b), preEndSpace (GP1-D1c), headingDotName (GP1-D1d), carriedState (GP1-D1e: an
+ * unclosed inline <code> in the paragraph before), cellDeclaration (GP1-D1f), itemEndSpace (GP1-D1g) and codeReference (GP1-D1h);
+ * scriptState and upperAttributes open the state with marked's other start tag forms (script; a tag name in upper case with an
+ * attribute), markupFree holds no markup or reference in the raw text, and closedState writes the words after the end tag.
+ */
+const RAW_STATE_FORMS: Readonly<Record<string, { readonly shape: RawStateShape; readonly words: string }>> = {
+  codeNamespaced: { shape: "paragraph", words: "<code>Fib<o:p>er core</code>" },
+  kbdDeclaration: { shape: "paragraph", words: "<kbd>Fib<!x>er core</kbd>" },
+  preEndSpace: { shape: "paragraph", words: "<pre>Fib</ x>er core</pre>" },
+  headingDotName: { shape: "heading", words: "<code>Fib<x.y>er core</code>" },
+  carriedState: { shape: "carried", words: "Fib<o:p>er core" },
+  cellDeclaration: { shape: "cell", words: "<kbd>Fib<!x>er core</kbd>" },
+  itemEndSpace: { shape: "item", words: "<code>Fib</ x>er core</code>" },
+  codeReference: { shape: "paragraph", words: "<code>Fi&#98er core</code>" },
+  scriptState: { shape: "paragraph", words: "<script>Fib<o:p>er core</script>" },
+  upperAttributes: { shape: "paragraph", words: '<CODE class="x">Fib<o:p>er core</CODE>' },
+  markupFree: { shape: "paragraph", words: "<code>Fiber core</code>" },
+  closedState: { shape: "paragraph", words: "<code>x</code> Fib<o:p>er core" },
+};
+/** The path D1 reads each RAW_STATE_FORMS text under. */
+const RAW_STATE_PATH = "docs/raw-state.md";
+/**
+ * The input forms (cut #6, refusal #5's U2 under ruling R-B93; one checkable item per form, each read on D1, B2 and B1): an element
+ * REFUSED_ELEMENTS refuses (cut #6) whose attribute value completes the words "Fiber core" - refusal #5's IV plants buttonValue
+ * (GP1-D1i2, an HTML block), textValue (GP1-D1j2, a paragraph) and placeholder (GP1-D1k2, an HTML block), each with a second
+ * attribute after the value so the raw leg's fold does not join the words, upperInput (the tag in upper case), and optionLabel and
+ * groupLabel, an option's and an optgroup's label.
+ */
+const INPUT_FORMS: Readonly<Record<string, { readonly block: boolean; readonly words: string }>> = {
+  buttonValue: { block: true, words: '<input type="button" value="Fiber" title="x"> core' },
+  textValue: { block: false, words: '<input value="Fiber" size="6"> core' },
+  placeholder: { block: true, words: '<input placeholder="Fiber" size="6"> core' },
+  upperInput: { block: true, words: '<INPUT VALUE="Fiber" SIZE="6"> core' },
+  optionLabel: { block: true, words: '<option label="Fiber" title="x"></option> core' },
+  groupLabel: { block: true, words: '<optgroup label="Fiber" title="x"></optgroup> core' },
+};
+/** The path D1 reads each INPUT_FORMS text under. */
+const INPUT_FORM_PATH = "docs/input-form.md";
+/**
+ * The invisible splits (cut #6, FAIL-CLOSED; one checkable item per form, each read on D1, B2 and B1): the wasm word of a claim or a
+ * decision written, in a paragraph, with default-ignorable code points between two of its letters - raw (a zero-width space, a
+ * soft hyphen between lower-case letters, a variation selector, a run of two, one beside a full-width letter NFKC reads as A, a
+ * bidirectional control) or behind a NAMED_REFERENCES reference (&ZeroWidthSpace;, &NoBreak;) - or in an HTML image tag's alt text
+ * (its unit's twin and the attribute value's unit).
+ */
+const INVISIBLE_FORMS: Readonly<Record<string, string>> = {
+  zeroWidthSpace: `WA${at(0x200b)}SM`,
+  softHyphen: `wa${at(0xad)}sm`,
+  variationSelector: `WA${at(0xfe0f)}SM`,
+  zeroWidthReference: "WA&ZeroWidthSpace;SM",
+  wordJoinerReference: "WA&NoBreak;SM",
+  doubleSplit: `WA${at(0x200b)}${at(0x2060)}SM`,
+  fullwidthNeighbor: `W${at(0xff21)}${at(0x200b)}SM`,
+  bidiSplit: `WA${at(0x202e)}SM`,
+  imageAltSplit: `<img src="x.png" alt="WA${at(0x200b)}SM">`,
+};
+/** The path D1 reads each INVISIBLE_FORMS text under. */
+const INVISIBLE_FORM_PATH = "docs/invisible.md";
+/** A claim (D1) and a decision (B1, B2) around the words a RAW_STATE_FORMS or INPUT_FORMS form writes for "Fiber core". */
+function formClaim(words: string): string {
+  return `Pi embeds the ${words}.`;
+}
+function formDecision(words: string): string {
+  return `OWNER DECISION (2026-10-29): Pi will embed the portable ${words} behind the W10 provider.`;
+}
+/** A claim (D1) and a decision (B1, B2) around an INVISIBLE_FORMS spelling of the wasm word. */
+function invisibleClaim(word: string): string {
+  return `Pi embeds a ${word} runtime.`;
+}
+function invisibleDecision(word: string): string {
+  return `OWNER DECISION (2026-10-29): Pi will embed the ${word} build behind the W10 provider.`;
+}
+/** A Markdown text holding a sentence in a RAW_STATE_FORMS shape. */
+function rawStateMarkdown(shape: RawStateShape, sentence: string): string {
+  if (shape === "heading") return `## ${sentence}\n`;
+  if (shape === "cell") return `| a | b |\n| --- | --- |\n| ${sentence} | y |\n`;
+  if (shape === "item") return `- ${sentence}\n`;
+  if (shape === "carried") return `Intro <code>x\n\n${sentence}\n`;
+  return `${sentence}\n`;
+}
+/** A Markdown text holding a sentence in an HTML block or a paragraph (INPUT_FORMS). */
+function inputMarkdown(block: boolean, sentence: string): string {
+  return block ? `<div>${sentence}</div>\n` : `${sentence}\n`;
+}
+/** A decision-bead export line whose one comment is a Markdown text (the cut #6 forms' B1 reading). */
+function formMember(markdown: string, bead: string): string {
+  const comment = { id: "c-form", issue_id: bead, author: "owner", text: markdown.trimEnd(), created_at: "2026-10-29T12:00:00Z" };
+  return JSON.stringify({ id: bead, comments: [comment], comment_count: 1 });
+}
+/** The cut #6 forms' Markdown texts by name, one record per table. */
+interface CutSixForms {
+  readonly rawState: Readonly<Record<string, string>>;
+  readonly input: Readonly<Record<string, string>>;
+  readonly invisible: Readonly<Record<string, string>>;
+}
+/** Each cut #6 form's Markdown text, as a claim (D1) or as a decision (B1, B2). */
+function cutSixForms(decision: boolean): CutSixForms {
+  const sentence = decision ? formDecision : formClaim;
+  const invisible = decision ? invisibleDecision : invisibleClaim;
+  return {
+    rawState: Object.fromEntries(Object.entries(RAW_STATE_FORMS).map(([name, form]) => [name, rawStateMarkdown(form.shape, sentence(form.words))])),
+    input: Object.fromEntries(Object.entries(INPUT_FORMS).map(([name, form]) => [name, inputMarkdown(form.block, sentence(form.words))])),
+    invisible: Object.fromEntries(Object.entries(INVISIBLE_FORMS).map(([name, word]) => [name, `${invisible(word)}\n`])),
+  };
+}
+/** Each form's reading, by name. */
+function formReadings(texts: Readonly<Record<string, string>>, read: (text: string, name: string) => string[]): Record<string, string[]> {
+  return Object.fromEntries(Object.entries(texts).map(([name, text]) => [name, read(text, name)]));
 }
 const NEVER = (): never => {
   throw new Error("census: a planted or injected capability is never invoked here");
@@ -1797,6 +2002,8 @@ const OTHER_VOCABULARY: {
   readonly text: PlantedText;
   readonly descriptor: CapabilityDescriptor;
   readonly confusable: PlantedText;
+  readonly invisible: PlantedText;
+  readonly invisibleDescriptor: CapabilityDescriptor;
 } = {
   module: {
     module: "other-vocabulary.ts",
@@ -1808,6 +2015,10 @@ const OTHER_VOCABULARY: {
   descriptor: plantedDescriptor({ id: "workbench.core.host", description: "Hosts the reactive core runtime in-process." }),
   // cut #5: a core name spelled with a confusable letter (CYRILLIC SMALL LETTER BYELORUSSIAN-UKRAINIAN I for the i of Fiber).
   confusable: { path: "docs/confusable.md", text: `Pi embeds the F${at(0x456)}ber core.\n` },
+  // cut #6: the wasm word split by a zero-width space in texts no rendered leg reads (a script's comment, a registered descriptor);
+  // in a Markdown text the rendered leg refuses the split (INVISIBLE_FORMS, FAIL-CLOSED).
+  invisible: { path: "src/invisible.ts", text: `// Pi embeds a WA${at(0x200b)}SM runtime.\nexport {};\n` },
+  invisibleDescriptor: plantedDescriptor({ id: "workbench.invisible.host", description: `Embeds a WA${at(0x200b)}SM runtime in-process.` }),
 };
 
 /** Q7 R-OUTSIDE-TEXT: an rf launch or an SDK load whose binary, command or specifier is no src text (the environment, argv, a file read at run time, a name's text). */
@@ -3109,6 +3320,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   B1: async () => {
     const decisionBead = titleDecision(ROWS[1]?.label ?? "").bead;
     const reading = beadDecisions(exportLines(), decisionBead);
+    const forms = cutSixForms(true);
+    const memberDecisions = (text: string): string[] => beadDecisions([formMember(text, decisionBead)], decisionBead).decisions;
     return json({
       surface: "bead export",
       bead: decisionBead,
@@ -3120,11 +3333,15 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       rowControls: beadDecisions([JSON.stringify({ id: decisionBead, ...DECISION_CONTROLS })], decisionBead).decisions,
       memberControls: Object.fromEntries(Object.entries(MEMBER_CONTROLS).map(([name, line]) => [name, beadDecisions([line.replaceAll("<bead>", decisionBead)], decisionBead).decisions])),
       htmlForms: Object.fromEntries(Object.entries(HTML_FORMS).map(([name, markup]) => [name, beadDecisions([htmlFormMember(markup, decisionBead)], decisionBead).decisions])),
+      rawStateForms: formReadings(forms.rawState, memberDecisions),
+      inputForms: formReadings(forms.input, memberDecisions),
+      invisibleForms: formReadings(forms.invisible, memberDecisions),
     });
   },
   B2: async () => {
     const page = notesEvidence(beadText().notes).page;
     const text = readFileSync(join(REPO, page), "utf8");
+    const forms = cutSixForms(true);
     return json({
       surface: "decisions page",
       page,
@@ -3133,6 +3350,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       decisions: pageDecisions(text, page),
       controls: Object.fromEntries(Object.entries(PAGE_CONTROLS).map(([name, text]) => [name, pageDecisions(text, name)])),
       htmlForms: Object.fromEntries(Object.entries(HTML_FORMS).map(([name, markup]) => [name, pageDecisions(htmlFormDecision(markup), name)])),
+      rawStateForms: formReadings(forms.rawState, pageDecisions),
+      inputForms: formReadings(forms.input, pageDecisions),
+      invisibleForms: formReadings(forms.invisible, pageDecisions),
     });
   },
   C1: async () => {
@@ -3198,6 +3418,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       writeFileSync(join(tree, path), text);
     }
     const plantedReading = productReading(tree, productWalk(tree).files);
+    const forms = cutSixForms(false);
     return json({
       surface: "product texts",
       roots: [...SCAN_ROOTS, "(root files)"],
@@ -3217,6 +3438,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       ),
       refusedElements: Object.fromEntries(REFUSED_ELEMENTS.map(name => [name, claimsOf(htmlFormClaim(`<${name}></${name}>`, false), HTML_FORM_PATH)])),
       refusedAttributes: Object.fromEntries(REFUSED_ATTRIBUTES.map(name => [name, claimsOf(htmlFormClaim(`<span ${name}="x"></span>`, false), HTML_FORM_PATH)])),
+      rawStateForms: formReadings(forms.rawState, text => claimsOf(text, RAW_STATE_PATH)),
+      inputForms: formReadings(forms.input, text => claimsOf(text, INPUT_FORM_PATH)),
+      invisibleForms: formReadings(forms.invisible, text => claimsOf(text, INVISIBLE_FORM_PATH)),
       plantedTree: { roots: plantedReading.roots, claims: plantedReading.claims },
     });
   },
@@ -3277,6 +3501,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       confusable: claimsOf(OTHER_VOCABULARY.confusable.text, OTHER_VOCABULARY.confusable.path),
       confusableLatin: claimsOf(OTHER_VOCABULARY.confusable.text.replaceAll(at(0x456), "i"), OTHER_VOCABULARY.confusable.path).length,
       descriptor: descriptorClaims(OTHER_VOCABULARY.descriptor),
+      invisible: claimsOf(OTHER_VOCABULARY.invisible.text, OTHER_VOCABULARY.invisible.path),
+      invisibleShown: claimsOf(OTHER_VOCABULARY.invisible.text.replaceAll(at(0x200b), ""), OTHER_VOCABULARY.invisible.path).length,
+      invisibleDescriptor: descriptorClaims(OTHER_VOCABULARY.invisibleDescriptor),
+      invisibleDescriptorShown: descriptorClaims({ ...OTHER_VOCABULARY.invisibleDescriptor, description: OTHER_VOCABULARY.invisibleDescriptor.description.replaceAll(at(0x200b), "") }).length,
     });
   },
   Q7: async () => json({ residual: "R-OUTSIDE-TEXT", census: censusReading(OUTSIDE_TEXT_MODULE), loads: sdkHits(plantedRead(OUTSIDE_TEXT_MODULE), OUTSIDE_TEXT_MODULE.module).loads }),
@@ -3462,8 +3690,16 @@ describe("wb-2wiv.1 portable Fiber core gate census (SDK-UNIVERSAL-REACTIVE-REND
         refusedAttributes: REFUSED_ATTRIBUTES,
         altAttribute: ALT_ATTRIBUTE,
         imageLimit: IMAGE_LIMIT,
+        rawState: RAW_STATE,
+        invisibleSplit: INVISIBLE_SPLIT.source,
         htmlForms: HTML_FORMS,
         htmlFormPath: HTML_FORM_PATH,
+        rawStateForms: RAW_STATE_FORMS,
+        rawStatePath: RAW_STATE_PATH,
+        inputForms: INPUT_FORMS,
+        inputFormPath: INPUT_FORM_PATH,
+        invisibleForms: INVISIBLE_FORMS,
+        invisibleFormPath: INVISIBLE_FORM_PATH,
         expandedWord: EXPANDED_WORD,
         readerRendering: READER_RENDERING,
         residuals: RESIDUALS,
@@ -3473,6 +3709,9 @@ describe("wb-2wiv.1 portable Fiber core gate census (SDK-UNIVERSAL-REACTIVE-REND
       for (const member of members) expect(ROWS.find(row => row.id === "Q")?.pins, `${member} is a quiet-row pin`).toContain(member);
     }
     for (const name of DISTRIBUTIONS) expect(fold(name), `${name} folds to hold the stem`).toContain(STEM);
+    // THE RAW STATE's premise (cut #6): marked's renderer writes an escaped (raw-state) text token unescaped and any other text escaped.
+    expect(marked.parse("Pi embeds the <code>Fib<o:p>er core</code>.", { async: false }), "marked writes raw-state text as raw HTML").toContain("<code>Fib<o:p>er core</code>");
+    expect(marked.parse("Pi embeds the Fib<o:p>er core.", { async: false }), "marked escapes text outside its raw state").toContain("Fib&lt;o:p&gt;er core");
 
     // The outside anchor: the bead's own title and owner-filing notes in the tracked export.
     const { title, notes } = beadText();
