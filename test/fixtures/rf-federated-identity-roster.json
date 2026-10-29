@@ -324,6 +324,7 @@
             ],
             "scopeOnDisk": true,
             "scopeReadInFull": true,
+            "scopeSized": true,
             "hits": [],
             "templateFloorMet": true
           }
@@ -478,6 +479,7 @@
             ],
             "scopeOnDisk": true,
             "scopeReadInFull": true,
+            "scopeSized": true,
             "hits": []
           }
         }
@@ -850,7 +852,7 @@
     },
     {
       "id": "PC",
-      "label": "the live legs' instruments each report a planted violation: A3's state capture, A4's key-bearing projection and two-root judgment, and the A5 and C5 src scans over a planted file, over each live rf-scope file and over each rf-scope file read short",
+      "label": "the live legs' instruments each report a planted violation: A3's state capture, A4's key-bearing projection and two-root judgment, and the A5 and C5 src scans over a planted file, over each live rf-scope file and over each rf-scope file read short through the tree alone or through the tree and the disk reader together and over an rf-scope control file whose bytes are not UTF-8, the size anchor's wiring reads as this file's text states, and the size check's two named residuals stay pinned quiet",
       "pins": [
         {
           "id": "PC1",
@@ -909,6 +911,7 @@
             ],
             "scopeOnDisk": true,
             "scopeReadInFull": true,
+            "scopeSized": true,
             "hits": [
               "src/workbench/rf-federated-census-plant.ts: template link.locator",
               "src/workbench/rf-federated-census-plant.ts: key link.path",
@@ -932,6 +935,7 @@
             ],
             "scopeOnDisk": true,
             "scopeReadInFull": true,
+            "scopeSized": true,
             "hits": [
               "src/workbench/rf-federated-census-plant.ts: point.workspaceId | point.revision",
               "src/workbench/rf-federated-census-plant.ts: point.workspaceId + point.epoch",
@@ -991,6 +995,7 @@
                 "unread": [
                   "own"
                 ],
+                "unsized": [],
                 "anchorsUnread": [],
                 "offDisk": []
               }
@@ -998,6 +1003,143 @@
             "missed": [],
             "untargeted": [],
             "anchorsReadShort": [
+              true,
+              true
+            ]
+          }
+        },
+        {
+          "id": "PC9",
+          "witness": {
+            "readings": [
+              {
+                "unread": [],
+                "unsized": [
+                  "own"
+                ],
+                "anchorsUnread": [],
+                "offDisk": []
+              }
+            ],
+            "missed": [],
+            "untargeted": [],
+            "anchorsReadShort": [
+              true,
+              true
+            ]
+          }
+        },
+        {
+          "id": "PC10",
+          "witness": {
+            "bytes": 71,
+            "decodedBytes": 73,
+            "reading": {
+              "unread": [],
+              "unsized": [
+                "control"
+              ],
+              "anchorsUnread": [],
+              "offDisk": [],
+              "hits": []
+            }
+          }
+        },
+        {
+          "id": "PC11",
+          "witness": {
+            "sizeOnDiskBody": "{ try { return statSync(path).size; } catch { return undefined; } }",
+            "readRfScopeDefaults": {
+              "readDisk": "diskText",
+              "readSize": "sizeOnDisk"
+            },
+            "readRfScopeReaders": [],
+            "scanCalls": [
+              [
+                "matcher",
+                "tree"
+              ]
+            ],
+            "bindings": [
+              "readFileSync: import node:fs",
+              "statSync: import node:fs"
+            ],
+            "readRfScopeText": "function readRfScope( matcher: (source: string) => string[], tree: SrcTree, readDisk: (path: string) => string | undefined = diskText, readSize: (path: string) => number | undefined = sizeOnDisk, ): ScopeReading { const scoped = tree.files.filter(inRfScope); const texts = scoped.map(file => tree.read(file)); const floorMet = tree.files.length >= SRC_FLOOR; const scopedFloorMet = scoped.length >= RF_SCOPE_FLOOR; const anchorsUnread = ANCHORS.filter(anchor => { const index = scoped.indexOf(anchor.file); return index === -1 || !(texts[index] ?? \"\").includes(anchor.token) || !tree.read(anchor.file).includes(anchor.token); }).map(anchor => relative(REPO, anchor.file)); const offDisk = scoped .filter(file => readDisk(file) === undefined && !(tree.planted ?? []).includes(file)) .map(file => relative(REPO, file)); const unread = scoped .filter((file, index) => { const disk = readDisk(file); return disk !== undefined && !(texts[index] ?? \"\").startsWith(disk); }) .map(file => relative(REPO, file)); const unsized = scoped .filter(file => { const disk = readDisk(file); return disk !== undefined && Buffer.byteLength(disk, \"utf8\") !== readSize(file); }) .map(file => relative(REPO, file)); const hits = scoped.flatMap((file, index) => matcher(texts[index] ?? \"\").map(hit => `${relative(REPO, file)}: ${hit}`)); return { scoped, floorMet, scopedFloorMet, anchorsUnread, offDisk, unread, unsized, hits }; }",
+            "scanRfScopeText": "function scanRfScope(matcher: (source: string) => string[], tree: SrcTree = liveTree()): ScopeScan { const { scoped, floorMet, scopedFloorMet, anchorsUnread, offDisk, unread, unsized, hits } = readRfScope(matcher, tree); expect(floorMet, `src: ${tree.files.length} files walked, floor ${SRC_FLOOR}`).toBe(true); expect(scopedFloorMet, `rf scope: ${scoped.length} files, floor ${RF_SCOPE_FLOOR}`).toBe(true); expect(anchorsUnread, \"token anchors the scan did not read with their token\").toEqual([]); expect(offDisk, \"rf-scope files with no text on disk beside the walk\").toEqual([]); expect(unread, \"rf-scope files the scan did not read in full from disk\").toEqual([]); expect(unsized, \"rf-scope files whose text on disk does not hold the size statSync reports\").toEqual([]); const anchors = ANCHORS.map(anchor => `${relative(REPO, anchor.file)}: ${anchor.token}`); const witness = { floorMet, scopedFloorMet, anchorRead: anchorsUnread.length === 0, anchors, scopeOnDisk: offDisk.length === 0, scopeReadInFull: unread.length === 0, scopeSized: unsized.length === 0, hits: [...hits], }; return { witness, hits, scoped }; }"
+          }
+        },
+        {
+          "id": "PC12",
+          "witness": {
+            "locatorHits": {
+              "refusedAt": "rf-scope files whose text on disk does not hold the size statSync reports",
+              "named": [
+                "control"
+              ]
+            },
+            "revisionJoinHits": {
+              "refusedAt": "rf-scope files whose text on disk does not hold the size statSync reports",
+              "named": [
+                "control"
+              ]
+            }
+          }
+        },
+        {
+          "id": "QP1",
+          "witness": {
+            "readings": [
+              {
+                "unread": [],
+                "unsized": [],
+                "anchorsUnread": [],
+                "offDisk": []
+              }
+            ],
+            "counterparts": [
+              {
+                "unread": [],
+                "unsized": [
+                  "own"
+                ],
+                "anchorsUnread": [],
+                "offDisk": []
+              }
+            ],
+            "loud": [],
+            "unseen": [],
+            "untargeted": [],
+            "anchorsQuiet": [
+              true,
+              true
+            ]
+          }
+        },
+        {
+          "id": "QP2",
+          "witness": {
+            "readings": [
+              {
+                "unread": [],
+                "unsized": [],
+                "anchorsUnread": [],
+                "offDisk": []
+              }
+            ],
+            "counterparts": [
+              {
+                "unread": [
+                  "own"
+                ],
+                "unsized": [],
+                "anchorsUnread": [],
+                "offDisk": []
+              }
+            ],
+            "loud": [],
+            "unseen": [],
+            "untargeted": [],
+            "anchorsQuiet": [
               true,
               true
             ]
