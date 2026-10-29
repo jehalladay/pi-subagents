@@ -53,6 +53,7 @@
     "script": "\\.(?:[cm]?[jt]sx?)$",
     "shell": "\\.(?:sh|bash|zsh)$",
     "abbreviation": "gp",
+    "gpRefForm": "rf-gp:program:checkpoint:backend",
     "fieldWords": [
       "score",
       "ranking",
@@ -110,6 +111,14 @@
       "notObserved",
       "fixtureSeam"
     ],
+    "envelopeRoot": "envelope",
+    "readerKinds": [
+      "topology",
+      "evidence"
+    ],
+    "headingProbe": "probe",
+    "emphasizedHeading": "## *GraphPolicyCLI* boundary",
+    "emphasizedTitle": "# 03 \u2014 *High-level* architecture, module ownership and dataflow",
     "piPlants": {
       "src/workbench/zz-plant-raw.ts": "// reads the GraphPolicy score of a render\nexport const plantRaw = 1;\n",
       "src/workbench/zz-plant-cooked.ts": "export const plantCooked = \"graph\\u005fpolicy\";\n",
@@ -142,11 +151,14 @@
       "test/fixtures/zz-plant-data.json": "{\"graph_policy\": {\"score\": 1}}\n"
     },
     "vocabularyPlants": [
+      "plant:result.blocks[0].candidate_key",
       "plant:result.blocks[0].component_id",
       "plant:result.provenance.graphPolicyReceipt",
       "plant:result.graph_policy",
       "plant:result.gp",
       "plant:diagnostics[0].metadata.graph-data-ir",
+      "plant:diagnostics[1].message",
+      "plant:diagnostics[1].source",
       "plant-roster:result.graphpolicy_rank"
     ],
     "fieldPlants": [
@@ -169,7 +181,8 @@
       "R-BINARY": "Q9",
       "R-RELAY": "Q10",
       "R-GENERIC": "Q11",
-      "R-NEAR-FIELD": "Q12"
+      "R-NEAR-FIELD": "Q12",
+      "R-FIELD-VALUE": "Q13"
     },
     "readers": [
       "listing",
@@ -215,6 +228,7 @@
     "Q10",
     "Q11",
     "Q12",
+    "Q13",
     "the registered tests, the reached pins and the claims equal the roster, in order and both ways"
   ],
   "rows": [
@@ -278,11 +292,14 @@
             "diagnosticsRead": true,
             "vocabularyFindings": [],
             "vocabularyPlants": [
+              "plant:result.blocks[0].candidate_key",
               "plant:result.blocks[0].component_id",
               "plant:result.provenance.graphPolicyReceipt",
               "plant:result.graph_policy",
               "plant:result.gp",
               "plant:diagnostics[0].metadata.graph-data-ir",
+              "plant:diagnostics[1].message",
+              "plant:diagnostics[1].source",
               "plant-roster:result.graphpolicy_rank"
             ]
           }
@@ -372,7 +389,8 @@
               "readerControls",
               "readerLeaks",
               "strictObjects",
-              "deepPlanted"
+              "deepPlanted",
+              "outerPlanted"
             ]
           },
           "witness": {
@@ -455,11 +473,28 @@
               ]
             },
             "readerLeaks": [],
-            "strictObjects": [
-              "result.work",
-              "result.engine_metrics"
-            ],
-            "deepPlanted": true
+            "strictObjects": {
+              "topology": [
+                "envelope",
+                "envelope.workspace",
+                "envelope.result.work",
+                "envelope.result.engine_metrics",
+                "envelope.diagnostics[0]"
+              ],
+              "evidence": []
+            },
+            "deepPlanted": true,
+            "outerPlanted": {
+              "topology": [
+                "envelope.diagnostics[0].metadata"
+              ],
+              "evidence": [
+                "envelope",
+                "envelope.workspace",
+                "envelope.diagnostics[0]",
+                "envelope.diagnostics[0].metadata"
+              ]
+            }
           }
         },
         {
@@ -518,7 +553,9 @@
               "changedSentence": false,
               "headingTwice": false,
               "levelOneAbove": false,
-              "appendixRead": true
+              "appendixRead": true,
+              "emphasisHeading": "bound",
+              "emphasisTitle": "bound"
             },
             "claimFindings": {},
             "claimPlants": {
@@ -688,6 +725,8 @@
             "inScope": [
               "docs/workbench/zz-quiet-section.md",
               "docs/workbench/zz-quiet-row.md",
+              "docs/workbench/zz-quiet-emphasis.md",
+              "docs/workbench/zz-quiet-titled.md",
               "test/zz-quiet-echo.test.ts",
               "test/fixtures/zz-quiet-echo.json"
             ],
@@ -767,6 +806,22 @@
           "claims": null,
           "witness": {
             "residual": "R-NEAR-FIELD",
+            "findings": {
+              "vocabulary": [],
+              "fields": []
+            }
+          }
+        },
+        {
+          "id": "Q13",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-FIELD-VALUE",
+            "values": [
+              "plant:result.output.path",
+              "plant:diagnostics[0].message"
+            ],
             "findings": {
               "vocabulary": [],
               "fields": []
