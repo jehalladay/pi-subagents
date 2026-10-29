@@ -1,6 +1,6 @@
 {
  "bead": "wb-pyel.6",
- "comment": "wb-pyel.6 EDC scope-narrowing census roster: the judged set (rows, quotes, constants, every pin's witness) and the registered tests, first measured by seat ws-04 (run g10-work-s125) on trunk 7a0ab7f plus the cut, re-measured for respin 1 by seat ws-05 (run g10-work-s136) on trunk 04123dc plus the cut; the census holds its own literals to this file and its rows, quotes, axes, codes and stems to the bead's row in .beads/issues.jsonl",
+ "comment": "wb-pyel.6 EDC scope-narrowing census roster: the judged set (rows, quotes, constants, every pin's witness) and the registered tests, first measured by seat ws-04 (run g10-work-s125) on trunk 7a0ab7f plus the cut, re-measured for respin 1 by seat ws-05 (run g10-work-s136) on trunk 04123dc plus the cut and for respin 2 by seat ws-03 (run g10-work-s138) on trunk a4cf24c plus the cut; the census holds its own literals to this file and its rows, quotes, partitions, axes, codes and stems to the bead's row in .beads/issues.jsonl",
  "constants": {
   "stems": {
    "edc": "word",
@@ -541,7 +541,155 @@
    "string-array": "const axes = [\"freshness\", \"precision\", \"ceiling\"] as const;",
    "plurals": "interface Scope { freshnesses: number[]; precisions: number[]; ceilings: number[] }",
    "zero-width": "interface Scope { \"fresh\u200bness\": number; precision: number; ceiling: number }",
-   "full-width": "interface Scope { \uff46\uff52\uff45\uff53\uff48\uff4e\uff45\uff53\uff53: number; precision: number; ceiling: number }"
+   "full-width": "interface Scope { \uff46\uff52\uff45\uff53\uff48\uff4e\uff45\uff53\uff53: number; precision: number; ceiling: number }",
+   "string-names": "interface Scope { \"freshness\": number; 'precision': number; ceiling: number }",
+   "accessors": "interface Scope { get freshness(): number; set precision(value: number); readonly ceiling: number }",
+   "class-accessors": "class Scope { get freshness() { return 1; } set precision(value: number) {} static ceiling = 3; }",
+   "class-expression": "const Scope = class { freshness = 1; precision = 2; ceiling = 3; };",
+   "shorthand": "const scope = { freshness, precision, ceiling };",
+   "object-methods": "const scope = { freshness() { return 1; }, get precision() { return 2; }, set ceiling(value: number) {} };",
+   "enum-string-names": "enum Axis { \"freshness\" = 1, \"precision\" = 2, \"ceiling\" = 3 }",
+   "binding-declaration": "const { freshness, precision, ceiling } = scope;",
+   "binding-renamed": "const { a: freshness, b: precision, c: ceiling } = scope;",
+   "binding-properties": "const { freshness: first, precision: second, ceiling: third } = scope;",
+   "binding-nested": "const { limits: { freshness }, precision, ceiling } = scope;",
+   "array-binding": "const [gateFreshness, gatePrecision, gateCeiling] = [1, 2, 3];",
+   "array-binding-defaults": "const [freshness = 1, , precision, ...ceiling] = values;",
+   "array-binding-nested": "const [[freshness], { precision }, ceiling] = values;",
+   "array-binding-parameter": "function narrow([freshness, precision, ceiling]: readonly number[]) { return freshness + precision + ceiling; }",
+   "parameters-destructured": "function narrow({ freshness }: Scope, [precision]: number[], ceiling: number) { return freshness + precision + ceiling; }",
+   "arrow-parameters": "const narrow = (freshness: number, precision: number, ceiling: number) => freshness;",
+   "function-type": "type Narrow = (freshness: number, precision: number, ceiling: number) => void;",
+   "method-signature": "interface Narrower { narrow(freshness: number, precision: number, ceiling: number): void }",
+   "function-expression": "const narrow = function (freshness: number, precision: number, ceiling: number) { return freshness; };",
+   "class-method": "class Narrower { narrow(freshness: number, precision: number, ceiling: number) { return freshness; } }",
+   "setter-pattern": "class Narrower { set scope({ freshness, precision, ceiling }: Limits) {} }",
+   "call-signature": "interface Narrow { (freshness: number, precision: number, ceiling: number): void }",
+   "construct-signature": "interface NarrowFactory { new (freshness: number, precision: number, ceiling: number): object }",
+   "constructor-type": "type NarrowFactory = new (freshness: number, precision: number, ceiling: number) => object;",
+   "index-signature": "interface Limits { [freshnessPrecisionCeiling: string]: number }",
+   "paren-union": "type Axis = (\"freshness\") | (\"precision\") | (\"ceiling\");",
+   "paren-union-mixed": "type Axis = \"freshness\" | (\"precision\") | `ceiling`;",
+   "paren-union-one": "type Axis = \"freshness\" | \"precision\" | (\"ceiling\");",
+   "paren-union-deep": "type Axis = ((\"freshness\")) | \"precision\" | \"ceiling\";",
+   "nested-union": "type Axis = \"freshness\" | (\"precision\" | (\"ceiling\"));",
+   "template-array": "const axes = [`freshness`, `precision`, `ceiling`];",
+   "array-paren": "const axes = [(\"freshness\"), (\"precision\"), (\"ceiling\")];",
+   "array-as": "const axes = [\"freshness\" as const, \"precision\" as const, \"ceiling\" as const];",
+   "array-satisfies": "const axes = [\"freshness\" satisfies string, \"precision\" satisfies string, \"ceiling\" satisfies string];",
+   "array-assertion": "const axes = [<const>\"freshness\", <const>\"precision\", <const>\"ceiling\"];",
+   "array-non-null": "const axes = [\"freshness\"!, \"precision\"!, \"ceiling\"!];",
+   "array-wrapped-deep": "const axes = [((\"freshness\" as const)), (<const>\"precision\")!, (\"ceiling\" satisfies string)];"
+  },
+  "declarationForms": {
+   "members": {
+    "kinds": [
+     "interface",
+     "type-literal",
+     "class"
+    ],
+    "controls": [
+     "interface",
+     "type-literal",
+     "class",
+     "nested",
+     "private-names",
+     "methods",
+     "plurals",
+     "zero-width",
+     "full-width",
+     "string-names",
+     "accessors",
+     "class-accessors",
+     "class-expression"
+    ]
+   },
+   "object-literal": {
+    "kinds": [
+     "object-literal"
+    ],
+    "controls": [
+     "object-literal",
+     "string-keys",
+     "shorthand",
+     "object-methods"
+    ]
+   },
+   "enum": {
+    "kinds": [
+     "enum"
+    ],
+    "controls": [
+     "enum",
+     "enum-string-names"
+    ]
+   },
+   "binding-pattern": {
+    "kinds": [
+     "binding-pattern",
+     "array-binding-pattern"
+    ],
+    "controls": [
+     "binding-declaration",
+     "binding-renamed",
+     "binding-properties",
+     "binding-nested",
+     "array-binding",
+     "array-binding-defaults",
+     "array-binding-nested"
+    ]
+   },
+   "parameters": {
+    "kinds": [
+     "parameters"
+    ],
+    "controls": [
+     "parameters",
+     "parameter-properties",
+     "binding-pattern",
+     "array-binding-parameter",
+     "parameters-destructured",
+     "arrow-parameters",
+     "function-type",
+     "method-signature",
+     "function-expression",
+     "class-method",
+     "setter-pattern",
+     "call-signature",
+     "construct-signature",
+     "constructor-type",
+     "index-signature"
+    ]
+   },
+   "literal-union": {
+    "kinds": [
+     "literal-union"
+    ],
+    "controls": [
+     "literal-union",
+     "template-union",
+     "paren-union",
+     "paren-union-mixed",
+     "paren-union-one",
+     "paren-union-deep",
+     "nested-union"
+    ]
+   },
+   "string-array": {
+    "kinds": [
+     "string-array"
+    ],
+    "controls": [
+     "string-array",
+     "template-array",
+     "array-paren",
+     "array-as",
+     "array-satisfies",
+     "array-assertion",
+     "array-non-null",
+     "array-wrapped-deep"
+    ]
+   }
   },
   "planted": {
    "id": "planted.scope.read",
@@ -582,10 +730,19 @@
     "latin": "C"
    }
   ],
+  "lookalikeTriple": "interface Scope { fr\u0435shness: number; precision: number; ceiling: number }",
   "partialControls": {
    "two-of-three": "interface Scope { freshness: number; ceiling: number }",
    "one-of-three": "interface Scope { precision: number }",
    "split-across": "interface A { freshness: number; precision: number } interface B { ceiling: number }",
+   "nested-split": "interface Outer { limits: { freshness: number }; precision: number; ceiling: number }",
+   "spread-split": "const scope = { ...{ freshness: 1 }, precision: 2, ceiling: 3 };",
+   "array-spread-split": "const axes = [...[\"freshness\", \"precision\"], \"ceiling\"];",
+   "heritage-split": "interface Base { freshness: number } interface Derived extends Base { precision: number; ceiling: number }",
+   "array-nested-split": "const axes = [[\"freshness\"], \"precision\", \"ceiling\"];",
+   "union-argument-split": "type Axis = \"freshness\" | Array<\"precision\" | \"ceiling\">;",
+   "union-intersection-split": "type Axis = \"freshness\" | ((\"precision\" | \"ceiling\") & string);",
+   "binding-default-split": "const { freshness = { precision: 1, ceiling: 2 } } = scope;",
    "complete": "interface Scope { freshness: number; precision: number; ceiling: number }"
   },
   "partialDescriptor": {
@@ -622,6 +779,16 @@
    "const CEILING = \"ceiling\"; const scope = { [\"fresh\" + \"ness\"]: 1, [`precision`]: 2, [CEILING]: 3 };",
    "const label = \"evidence-\" + \"directed\"; const acronym = [\"E\", \"D\", \"C\"].join(\"\");"
   ],
+  "composedElements": {
+   "constant": "const FRESHNESS = \"freshness\"; const axes = [FRESHNESS, \"precision\", \"ceiling\"];",
+   "type-alias": "type Freshness = \"freshness\"; type Axis = Freshness | \"precision\" | \"ceiling\";",
+   "concatenation": "const axes = [\"fresh\" + \"ness\", \"precision\", \"ceiling\"];",
+   "conditional": "const axes = [strict ? \"freshness\" : \"staleness\", \"precision\", \"ceiling\"];",
+   "template-substitution": "type Axis = `${\"fresh\"}ness` | \"precision\" | \"ceiling\";",
+   "tagged-template": "const axes = [raw`freshness`, \"precision\", \"ceiling\"];",
+   "call": "const axes = [String(\"freshness\"), \"precision\", \"ceiling\"];",
+   "twin": "const axes = [\"freshness\", \"precision\", \"ceiling\"];"
+  },
   "outOfScope": [
    "examples/edc-scope.ts",
    "qa/workbench/edc-scope.mjs",
@@ -632,14 +799,88 @@
    "src/workbench/edc-scope.d.json"
   ],
   "outOfScopeModule": "export interface EdcScope { freshness: number; precision: number; ceiling: number }",
-  "evaderFactor": 3,
+  "evaderFactors": [
+   1.5,
+   3
+  ],
   "suffixed": [
    "export const GateEDCv2Client = \"EDCv2\";",
    "export const GateEdcV2Client = \"EDC v2\";"
   ],
+  "suffixedTriple": [
+   "interface Scope { FRESHNESSms: number; PRECISIONpct: number; CEILINGbytes: number }",
+   "interface Scope { FRESHNESS_MS: number; PRECISION_PCT: number; CEILING_BYTES: number }"
+  ],
   "dotted": [
    "export const ASSEMBLY_LABEL = \"E.D.C. assembly\";",
    "export const ASSEMBLY_LABEL = \"EDC assembly\";"
+  ],
+  "siteControls": {
+   "type-parameters": "function narrow<Freshness, Precision, Ceiling>(): void {}",
+   "labeled-tuple": "type Scope = [freshness: number, precision: number, ceiling: number];",
+   "tuple-literals": "type Axes = readonly [\"freshness\", \"precision\", \"ceiling\"];",
+   "import-specifiers": "import { freshness, precision, ceiling } from \"./scope\";",
+   "export-specifiers": "export { freshness, precision, ceiling };",
+   "variable-list": "const freshness = 1, precision = 2, ceiling = 3;",
+   "namespace-members": "namespace Scope { export const freshness = 1; export const precision = 2; export const ceiling = 3; }",
+   "module-exports": "export const freshness = 1; export function precision() {} export class Ceiling {}",
+   "array-assignment": "[freshness, precision, ceiling] = values;",
+   "jsx-attributes.tsx": "const view = <Scope freshness={1} precision={2} ceiling={3} />;"
+  },
+  "siteTwin": "interface Scope { freshness: number; precision: number; ceiling: number }",
+  "valueControls": {
+   "member-values": "const names = { a: \"freshness\", b: \"precision\", c: \"ceiling\" };",
+   "call-arguments": "pick(\"freshness\", \"precision\", \"ceiling\");",
+   "case-labels": "switch (axis) { case \"freshness\": case \"precision\": case \"ceiling\": break; }",
+   "enum-initializers": "enum Axis { A = \"freshness\", B = \"precision\", C = \"ceiling\" }"
+  },
+  "valueDescriptor": {
+   "id": "planted.values.read",
+   "version": "1.0.0",
+   "description": "Read one planted scope",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "axis": {
+      "type": "string",
+      "enum": [
+       "freshness",
+       "precision",
+       "ceiling"
+      ]
+     }
+    },
+    "required": [
+     "axis"
+    ],
+    "additionalProperties": false
+   },
+   "effectClass": "read",
+   "permissions": [
+    "planted:read"
+   ],
+   "supportedModes": [
+    "invoke"
+   ]
+  },
+  "digit": [
+   "interface Scope { freshness2: number; precision2: number; ceiling2: number }",
+   "interface Scope { freshness_2: number; precision_2: number; ceiling_2: number }",
+   "export const label = \"EDC2 assembler\"; export const GateEDC2Client = 1;",
+   "export const label = \"EDC 2 assembler\";"
+  ],
+  "doc": [
+   "/** @property freshness @property precision @property ceiling - an EDC assembly scope */\ntype Scope = Record<string, number>;\n// interface Scope { freshness: number; precision: number; ceiling: number }",
+   "interface Scope { freshness: number; precision: number; ceiling: number }"
+  ],
+  "split": [
+   "fresh-ness",
+   "preCision",
+   "ceil_ing",
+   "interface Scope { \"fresh-ness\": number; preCision: number; ceil_ing: number }",
+   "interface Scope { \"freshness\": number; precision: number; ceiling: number }",
+   "export const label = \"E-D-C assembly\"; export const EdC = 1;",
+   "export const label = \"EDC assembly\";"
   ],
   "residuals": {
    "R-LOOKALIKE": [
@@ -668,6 +909,21 @@
    ],
    "R-DOTTED": [
     "Q9"
+   ],
+   "R-SITES": [
+    "Q10"
+   ],
+   "R-VALUES": [
+    "Q11"
+   ],
+   "R-DIGIT": [
+    "Q12"
+   ],
+   "R-DOC": [
+    "Q13"
+   ],
+   "R-SPLIT": [
+    "Q14"
    ]
   }
  },
@@ -691,6 +947,11 @@
   "Q7",
   "Q8",
   "Q9",
+  "Q10",
+  "Q11",
+  "Q12",
+  "Q13",
+  "Q14",
   "the registered tests and the reached pins equal the roster, in order and both ways"
  ],
  "rows": [
@@ -1288,6 +1549,7 @@
          "object-literal:1|object-literal|maxFreshness+precision+ceilings"
         ],
         "binding-pattern": [
+         "binding-pattern:1|parameters|freshness+precision+ceiling",
          "binding-pattern:1|binding-pattern|freshness+precision+ceiling"
         ],
         "enum": [
@@ -1328,6 +1590,122 @@
         ],
         "full-width": [
          "full-width:1|interface|\uff46\uff52\uff45\uff53\uff48\uff4e\uff45\uff53\uff53+precision+ceiling"
+        ],
+        "string-names": [
+         "string-names:1|interface|freshness+precision+ceiling"
+        ],
+        "accessors": [
+         "accessors:1|interface|freshness+precision+ceiling"
+        ],
+        "class-accessors": [
+         "class-accessors:1|class|freshness+precision+ceiling"
+        ],
+        "class-expression": [
+         "class-expression:1|class|freshness+precision+ceiling"
+        ],
+        "shorthand": [
+         "shorthand:1|object-literal|freshness+precision+ceiling"
+        ],
+        "object-methods": [
+         "object-methods:1|object-literal|freshness+precision+ceiling"
+        ],
+        "enum-string-names": [
+         "enum-string-names:1|enum|freshness+precision+ceiling"
+        ],
+        "binding-declaration": [
+         "binding-declaration:1|binding-pattern|freshness+precision+ceiling"
+        ],
+        "binding-renamed": [
+         "binding-renamed:1|binding-pattern|freshness+precision+ceiling"
+        ],
+        "binding-properties": [
+         "binding-properties:1|binding-pattern|freshness+precision+ceiling"
+        ],
+        "binding-nested": [
+         "binding-nested:1|binding-pattern|freshness+precision+ceiling"
+        ],
+        "array-binding": [
+         "array-binding:1|array-binding-pattern|gateFreshness+gatePrecision+gateCeiling"
+        ],
+        "array-binding-defaults": [
+         "array-binding-defaults:1|array-binding-pattern|freshness+precision+ceiling"
+        ],
+        "array-binding-nested": [
+         "array-binding-nested:1|array-binding-pattern|freshness+precision+ceiling"
+        ],
+        "array-binding-parameter": [
+         "array-binding-parameter:1|parameters|freshness+precision+ceiling",
+         "array-binding-parameter:1|array-binding-pattern|freshness+precision+ceiling"
+        ],
+        "parameters-destructured": [
+         "parameters-destructured:1|parameters|freshness+precision+ceiling"
+        ],
+        "arrow-parameters": [
+         "arrow-parameters:1|parameters|freshness+precision+ceiling"
+        ],
+        "function-type": [
+         "function-type:1|parameters|freshness+precision+ceiling"
+        ],
+        "method-signature": [
+         "method-signature:1|parameters|freshness+precision+ceiling"
+        ],
+        "function-expression": [
+         "function-expression:1|parameters|freshness+precision+ceiling"
+        ],
+        "class-method": [
+         "class-method:1|parameters|freshness+precision+ceiling"
+        ],
+        "setter-pattern": [
+         "setter-pattern:1|parameters|freshness+precision+ceiling",
+         "setter-pattern:1|binding-pattern|freshness+precision+ceiling"
+        ],
+        "call-signature": [
+         "call-signature:1|parameters|freshness+precision+ceiling"
+        ],
+        "construct-signature": [
+         "construct-signature:1|parameters|freshness+precision+ceiling"
+        ],
+        "constructor-type": [
+         "constructor-type:1|parameters|freshness+precision+ceiling"
+        ],
+        "index-signature": [
+         "index-signature:1|parameters|freshnessPrecisionCeiling"
+        ],
+        "paren-union": [
+         "paren-union:1|literal-union|freshness+precision+ceiling"
+        ],
+        "paren-union-mixed": [
+         "paren-union-mixed:1|literal-union|freshness+precision+ceiling"
+        ],
+        "paren-union-one": [
+         "paren-union-one:1|literal-union|freshness+precision+ceiling"
+        ],
+        "paren-union-deep": [
+         "paren-union-deep:1|literal-union|freshness+precision+ceiling"
+        ],
+        "nested-union": [
+         "nested-union:1|literal-union|freshness+precision+ceiling"
+        ],
+        "template-array": [
+         "template-array:1|string-array|freshness+precision+ceiling"
+        ],
+        "array-paren": [
+         "array-paren:1|string-array|freshness+precision+ceiling"
+        ],
+        "array-as": [
+         "array-as:1|string-array|freshness+precision+ceiling"
+        ],
+        "array-satisfies": [
+         "array-satisfies:1|string-array|freshness+precision+ceiling"
+        ],
+        "array-assertion": [
+         "array-assertion:1|string-array|freshness+precision+ceiling"
+        ],
+        "array-non-null": [
+         "array-non-null:1|string-array|freshness+precision+ceiling"
+        ],
+        "array-wrapped-deep": [
+         "array-wrapped-deep:1|string-array|freshness+precision+ceiling"
         ]
        },
        "descriptor": [
@@ -1383,7 +1761,14 @@
        [
         "edc"
        ]
-      ]
+      ],
+      "triple": {
+       "axes": [],
+       "lookalike": [],
+       "repaired": [
+        "repaired-triple:1|interface|freshness+precision+ceiling"
+       ]
+      }
      }
     },
     {
@@ -1394,6 +1779,14 @@
        "two-of-three": [],
        "one-of-three": [],
        "split-across": [],
+       "nested-split": [],
+       "spread-split": [],
+       "array-spread-split": [],
+       "heritage-split": [],
+       "array-nested-split": [],
+       "union-argument-split": [],
+       "union-intersection-split": [],
+       "binding-default-split": [],
        "complete": [
         "complete:1|interface|freshness+precision+ceiling"
        ]
@@ -1438,7 +1831,19 @@
        0,
        0,
        0
-      ]
+      ],
+      "elements": {
+       "constant": [],
+       "type-alias": [],
+       "concatenation": [],
+       "conditional": [],
+       "template-substitution": [],
+       "tagged-template": [],
+       "call": [],
+       "twin": [
+        "twin:1|string-array|freshness+precision+ceiling"
+       ]
+      }
      }
     },
     {
@@ -1469,8 +1874,13 @@
        "probes": 15,
        "violations": []
       },
-      "outside": [
-       "ceiling:outside|ceiling|widened-silently"
+      "offGrid": [
+       [
+        "ceiling:x1.5|ceiling|widened-silently"
+       ],
+       [
+        "ceiling:x3|ceiling|widened-silently"
+       ]
       ]
      }
     },
@@ -1494,6 +1904,11 @@
       "twin": [
        "suffixed-twin:1|identifier|edc",
        "suffixed-twin:1|string|edc"
+      ],
+      "axes": [],
+      "triple": [],
+      "tripleTwin": [
+       "suffixed-triple-twin:1|interface|FRESHNESS_MS+PRECISION_PCT+CEILING_BYTES"
       ]
      }
     },
@@ -1504,6 +1919,84 @@
       "dotted": [],
       "twin": [
        "dotted-twin:1|string|edc"
+      ]
+     }
+    },
+    {
+     "id": "Q10",
+     "quote": "R-SITES",
+     "witness": {
+      "sites": {
+       "type-parameters": [],
+       "labeled-tuple": [],
+       "tuple-literals": [],
+       "import-specifiers": [],
+       "export-specifiers": [],
+       "variable-list": [],
+       "namespace-members": [],
+       "module-exports": [],
+       "array-assignment": [],
+       "jsx-attributes.tsx": []
+      },
+      "twin": [
+       "site-twin:1|interface|freshness+precision+ceiling"
+      ]
+     }
+    },
+    {
+     "id": "Q11",
+     "quote": "R-VALUES",
+     "witness": {
+      "values": {
+       "member-values": [],
+       "call-arguments": [],
+       "case-labels": [],
+       "enum-initializers": []
+      },
+      "descriptor": [],
+      "twin": [
+       "planted.scope.read.inputSchema.properties|requestFreshness+resultPrecision+resourceCeiling"
+      ]
+     }
+    },
+    {
+     "id": "Q12",
+     "quote": "R-DIGIT",
+     "witness": {
+      "axes": [],
+      "triple": [],
+      "tripleTwin": [
+       "digit-triple-twin:1|interface|freshness_2+precision_2+ceiling_2"
+      ],
+      "source": [],
+      "sourceTwin": [
+       "digit-source-twin:1|string|edc"
+      ]
+     }
+    },
+    {
+     "id": "Q13",
+     "quote": "R-DOC",
+     "witness": {
+      "triples": [],
+      "mentions": [],
+      "twin": [
+       "doc-twin:1|interface|freshness+precision+ceiling"
+      ]
+     }
+    },
+    {
+     "id": "Q14",
+     "quote": "R-SPLIT",
+     "witness": {
+      "axes": [],
+      "triple": [],
+      "tripleTwin": [
+       "split-triple-twin:1|interface|freshness+precision+ceiling"
+      ],
+      "source": [],
+      "sourceTwin": [
+       "split-source-twin:1|string|edc"
       ]
      }
     }

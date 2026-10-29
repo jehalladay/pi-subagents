@@ -58,14 +58,40 @@
  *    fold - the landed wb-pyel.4 vocabulary: both folds start from NFKC with format controls and combining marks removed, so a
  *    zero-width space never splits a stem and full-width letters fold; the word fold splits an acronym's plural s, camel
  *    boundaries and every run outside a-z and 0-9). Any mention reads the adoption PRESENT.
- *  - D, the artifact: each name-carrying declaration (an interface, a type literal, a class, an object literal, an object binding
- *    pattern, an enum - its members' written names; a function-like declaration's parameter list, constructor parameter properties
- *    included; a union type's string-literal members, plain or no-substitution template literal types; an array literal's string
- *    elements) and each object of each registered descriptor (the native registration and the four injected-client
- *    registrations; every object at any depth by its own keys, so a schema's properties object reads by its property names) is
- *    read for the triple: it carries an axis when one of its names has the axis word, or its plural (es after a sibilant ending,
- *    so freshnesses; s otherwise, so precisions and ceilings), as a word of the word fold (requestFreshness, result_precision,
- *    Ceiling, freshnesses); it carries the triple when it carries all three. Any triple reads the artifact PRESENT.
+ *  - D, the artifact. THE FORMS (DECLARATION_FORMS; the claim is exactly these seven forms, each pinned by its TRIPLE_CONTROLS
+ *    rows): a name-carrying declaration is a node of one of the forms, read by its names -
+ *     (1) members: an interface, a type literal or a class (declaration or expression) - its members' written names (properties,
+ *         methods and get/set accessors; an index, call or construct signature, a constructor and a static block write none);
+ *     (2) object-literal: an object literal - its properties' written names (assignments, shorthands, methods and get/set
+ *         accessors; a spread writes none);
+ *     (3) enum: an enum - its members' written names;
+ *     (4) binding-pattern: an object or array binding pattern, read whole - the property names and bound names of its elements,
+ *         through its nested patterns at any depth (an omitted element writes none; a default value is read on its own);
+ *     (5) parameters: the parameter list of a function-like node (a function declaration or expression, an arrow function, a
+ *         method, a get/set accessor, a constructor, a call, construct, method or index signature, a function or constructor
+ *         type), read whole - each parameter's name, and the property names and bound names of a destructured parameter's
+ *         elements, through its nested patterns at any depth (constructor parameter properties included; a parameter's type and
+ *         default value are read on their own);
+ *     (6) literal-union: a union type - its members that are string-literal types (plain or no-substitution template literal
+ *         types), each read through any parentheses; a member that is a parenthesized union contributes that union's members the
+ *         same way, recursively (a union nested inside any other type, an intersection or a type argument among them, is its
+ *         own union);
+ *     (7) string-array: an array literal - its string elements (plain or no-substitution template literals), each read through
+ *         any nesting of parentheses and as, satisfies, <T> and non-null assertions (a spread writes none).
+ *    A written name is an identifier, a private name, or a string or numeric literal; a computed name writes none. Each
+ *    declaration is read by its own names: a declaration nested in another (an interface, a type literal, a class, an object
+ *    literal, a union or an array literal inside another) is its own declaration and adds no name to the outer one - except the
+ *    nested patterns of forms 4 and 5 and the parenthesized union members of form 6 - and a spread or a heritage clause adds no
+ *    name to the declaration around it. NO OTHER NODE IS READ FOR THE TRIPLE: every syntactic form outside the seven reads no
+ *    name, and each known one is a named residual family with a pinned quiet row (R-PARTIAL, R-COMPOSED, R-SITES, R-VALUES, R-DOC
+ *    below); a name read by a form carries an axis only through the word fold, whose known gaps are named the same way
+ *    (R-LOOKALIKE, R-VOCABULARY, R-SUFFIXED, R-DIGIT, R-SPLIT).
+ *    Each object of each registered descriptor (the native registration and the four injected-client registrations; every
+ *    object at any depth by its own keys, so a schema's properties object reads by its property names; a string value is no
+ *    key) is read the same way. A declaration or descriptor object carries an axis when one of its names has the axis word, or
+ *    its plural (es after a sibilant ending, so freshnesses; s otherwise, so precisions and ceilings), as a word of the word fold
+ *    (requestFreshness, result_precision, Ceiling, freshnesses); it carries the triple when it carries all three. Any triple
+ *    reads the artifact PRESENT.
  *  - The guard: guard(ABSENT, ABSENT) = pass; any PRESENT = owed. Each gate reads PRESENT on any one of its sources (a src
  *    reading, the manifest, either registration), pinned by composition controls; the live verdict is pinned.
  *
@@ -84,30 +110,50 @@
  *   is tiled, in order and with separator-only gaps, by the labels of A, B, C and D, and A's and D's labels by their pins' quotes;
  *   the acceptance sentence after its lead ("a falsifier where ") is tiled by B's pins' quotes; the notes' mirror span (the owner
  *   filing's text after its first "monotone-narrowing rule for ", up to the spaced em-dash terminator) is exactly C's pins' quotes
- *   joined by " and ". AXES equal the heads of the title's triple, the acceptance's looser list and the artifact's slash list;
- *   CODES equal the acceptance's "clamped or refused"; FORBIDDEN is the acceptance's "never silently widened"; STEMS are the notes'
- *   charter-path initials and modifier. So a row, a pin of A-D, an axis, a code or a stem removed from every literal of this file
- *   and of the roster together still reds.
+ *   joined by " and ". THE PARTITIONS (each row's split into pins, read from the bead's text, never from this file's quotes): A's
+ *   and D's pins are their labels' clauses and B's pins the acceptance's clauses after its lead (clausesOf: split at "; " and ", "
+ *   and before " and " and a parenthetical " (", outside the acceptance's looser list, which keeps its commas), and C's pins are
+ *   the mirror span's parts split at " and ". AXES equal the heads of the title's triple, the acceptance's looser list and the
+ *   artifact's slash list; CODES equal the acceptance's "clamped or refused"; FORBIDDEN is the acceptance's "never silently
+ *   widened"; STEMS are the notes' charter-path initials and modifier. So a row, a pin of A-D, an axis, a code or a stem removed
+ *   from every literal of this file and of the roster together still reds, and so does a pin of A-D merged into a sibling pin of
+ *   its row in every literal and the roster (the dropped pin's quote folded into the kept pin's quote).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; rows, quotes, constants and every pin's witness are
  *   held to the out-of-file roster (test/fixtures/edc-scope-narrowing-roster.json); the last case reads the vitest task tree (every
  *   registered test, in roster order, in run mode, ran before it) and that every pin reached its witness compare.
  * NOT CLAIMED: a Q pin removed from ROWS, the literal, IMPL, RESIDUALS and the roster together (no surface of the bead anchors the
- *   residual families); git's listing replaced, in this file, by the walk it anchors together with a narrowing of that walk smaller
- *   than the module floor's margin; a pin's case replaced by one that echoes its roster witness; a capability registered at run time by
+ *   residual families); git's listing replaced or narrowed, in this file, together with the walk it anchors, by less than the module
+ *   floor's margin; a pin's case replaced by one that echoes its roster witness; a capability registered at run time by
  *   any path other than the five registrations read (its literal src declaration is still read by the src walk); the rest of Pi's
  *   grant discipline (role exposure, inspect, observe and control grants) and the curated tools' run-time enforcement of an
  *   accepted bound (the call quota and the serialized byte limits), which their own suites pin; that any future composer is
  *   lawful - only that the falsifier reds the named mutants and accepts the two references.
- * RESIDUALS (named; each with its pinned quiet row): R-LOOKALIKE an EDC stem written with a look-alike letter of another script
- *   reads no stem (Q1); R-PARTIAL a declaration or descriptor object carrying one or two axes of the triple reads no triple - an
- *   unnamed partial surface is not the artifact (Q2); R-VOCABULARY the triple in other words (maxAgeMs, staleness, tolerance,
- *   accuracy, budget, quota, limit, cap, fresh, precise) carries no axis (Q3); R-COMPOSED a computed member name and a stem composed
- *   from parts are not read (Q4); R-SCOPE modules outside src (examples/, qa/, test/, scripts/), markdown, and the files below src
- *   that are no script module (a .json resource) are read by neither gate reader (Q5); R-GRID a composer that widens only outside the grid (beyond
- *   twice the bound) reads holds (Q6); R-STATEFUL a composer whose answers depend on its call history (lawful for the grid's calls,
- *   widening after them) reads holds (Q7); R-SUFFIXED the acronym run into a lower-case-led suffix (EDCv2, GateEDCv2Client), which
- *   the word fold splits before its last letter (ed, cv2), reads no stem (Q8); R-DOTTED a dotted acronym (E.D.C.), which the word
- *   fold reads as single letters, reads no stem (Q9) - both inherited with the landed wb-pyel.4 vocabulary.
+ * RESIDUALS (named; each with its pinned quiet row): R-LOOKALIKE an EDC stem or an axis word written with a look-alike letter of
+ *   another script reads no stem and no axis (Q1); R-PARTIAL a declaration or descriptor object carrying one or two axes of the
+ *   triple reads no triple - an unnamed partial surface is not the artifact - the triple split across declarations included (two
+ *   declarations; a nested declaration, in a member, an element, an intersection, a type argument or a default value; an object
+ *   or array spread; a heritage clause) (Q2); R-VOCABULARY the triple in other words (maxAgeMs, staleness, tolerance, accuracy,
+ *   budget, quota, limit, cap, fresh, precise) carries no axis (Q3); R-COMPOSED a computed member name, a stem composed from
+ *   parts, and an array element or a union member that is no string literal once its wrappers are read through (a reference to
+ *   a constant or a type alias, a concatenation, a conditional, a template literal with substitutions, a tagged template, a
+ *   call) are not read (Q4); R-SCOPE modules outside src
+ *   (examples/, qa/, test/, scripts/), markdown, and the files below src that are no script module (a .json resource) are read by
+ *   neither gate reader (Q5); R-GRID a composer that departs from the law only at requests off the grid's probe points (any
+ *   value but half, equal to and twice the bound) reads holds - pinned by one that widens unreported every looser request but
+ *   twice the bound, red at 1.5x and 3x probes (Q6); R-STATEFUL a composer
+ *   whose answers depend on its call history (lawful for the grid's calls, widening after them) reads holds (Q7); R-SUFFIXED the
+ *   acronym run into a lower-case-led suffix (EDCv2, GateEDCv2Client), which the word fold splits before its last letter (ed,
+ *   cv2), reads no stem, and an all-capitals axis word run into one (FRESHNESSms) reads no axis (Q8); R-DOTTED a dotted acronym
+ *   (E.D.C.), which the word fold reads as single letters, reads no stem (Q9) - both inherited with the landed wb-pyel.4
+ *   vocabulary; R-SITES the name sites outside the seven forms - a type parameter list, labeled tuple members, a tuple type's
+ *   literal elements, import and export specifier lists, one statement's variable declarations, declarations in separate
+ *   statements (a module's or a namespace's top level), an array destructuring assignment's targets, JSX attributes - read no
+ *   triple (Q10); R-VALUES the triple written as string values, never names - an object member's values, a call's arguments, case
+ *   labels, an enum's initializers, a descriptor's string values (a schema's enum list) - reads no triple (Q11); R-DIGIT a
+ *   stem or an axis word run into digits (EDC2, freshness2), one word of the fold, reads no stem and no axis (Q12); R-DOC a
+ *   comment, a doc comment included, is never read (Q13); R-SPLIT a stem or an axis word written across a word boundary of the
+ *   fold - split by a separator or an inner capital (fresh-ness, preCision, ceil_ing, E-D-C, EdC) - reads no stem and no axis
+ *   (Q14).
  *
  * Display paths added: none. Test-only: no scratch is allocated; src, package.json, .beads and git's index are only read, and the
  * mirror rows build in-memory registries and curated tool servers only.
@@ -617,31 +663,64 @@ function writtenName(name: ts.PropertyName | ts.BindingName | undefined): string
   if (ts.isNoSubstitutionTemplateLiteral(name)) return [name.text];
   return [];
 }
-/** A name-carrying declaration's written names: an interface, a type literal, a class, an object literal, an object binding pattern
- * or an enum (its members' names); a function-like declaration's parameter list (constructor parameter properties included); a
- * union type's string-literal members (plain or no-substitution template literal types); an array literal's string elements. Any
- * other node, or one that writes no name, is none. */
+/** A binding read whole: an identifier's own name, or the property names and bound names of a binding pattern's elements, through
+ * its nested patterns at any depth (an omitted element writes none; a default value is not read here). */
+function boundNames(name: ts.BindingName): string[] {
+  if (ts.isIdentifier(name)) return [name.text];
+  const elements: readonly ts.ArrayBindingElement[] = name.elements;
+  return elements.flatMap(element => (ts.isBindingElement(element) ? [...writtenName(element.propertyName), ...boundNames(element.name)] : []));
+}
+/** A type read through any parentheses. */
+function unwrapType(type: ts.TypeNode): ts.TypeNode {
+  return ts.isParenthesizedTypeNode(type) ? unwrapType(type.type) : type;
+}
+/** An expression read through any nesting of parentheses and as, satisfies, <T> and non-null assertions. */
+function unwrapExpression(expression: ts.Expression): ts.Expression {
+  if (
+    ts.isParenthesizedExpression(expression) ||
+    ts.isAsExpression(expression) ||
+    ts.isSatisfiesExpression(expression) ||
+    ts.isTypeAssertionExpression(expression) ||
+    ts.isNonNullExpression(expression)
+  ) {
+    return unwrapExpression(expression.expression);
+  }
+  return expression;
+}
+/** A union's members that are string-literal types (plain or no-substitution template literal types), each read through any
+ * parentheses; a member that is a parenthesized union contributes that union's members the same way, recursively. */
+function unionStrings(union: ts.UnionTypeNode): string[] {
+  return union.types.flatMap(member => {
+    const type = unwrapType(member);
+    if (ts.isUnionTypeNode(type)) return unionStrings(type);
+    return ts.isLiteralTypeNode(type) && ts.isStringLiteralLike(type.literal) ? [type.literal.text] : [];
+  });
+}
+/** An array literal's string elements (plain or no-substitution template literals), each read through unwrapExpression; a spread
+ * writes none. */
+function arrayStrings(array: ts.ArrayLiteralExpression): string[] {
+  return array.elements.flatMap(element => {
+    const expression = unwrapExpression(element);
+    return ts.isStringLiteralLike(expression) ? [expression.text] : [];
+  });
+}
+/** A name-carrying declaration's written names, by the seven forms of the header's D reading (DECLARATION_FORMS): (1) an interface, a
+ * type literal or a class - its members' names; (2) an object literal - its properties' names; (3) an enum - its members' names;
+ * (4) an object or array binding pattern, read whole; (5) a function-like node's parameter list, read whole; (6) a union type's
+ * string-literal members, read through parentheses; (7) an array literal's string elements, read through unwrapExpression. Any other
+ * node, or a parameter list, union or array that writes no name, is none. */
 function memberNames(node: ts.Node): { kind: string; names: string[] } | undefined {
   if (ts.isInterfaceDeclaration(node)) return { kind: "interface", names: node.members.flatMap(member => writtenName(member.name)) };
   if (ts.isTypeLiteralNode(node)) return { kind: "type-literal", names: node.members.flatMap(member => writtenName(member.name)) };
   if (ts.isClassDeclaration(node) || ts.isClassExpression(node)) return { kind: "class", names: node.members.flatMap(member => writtenName(member.name)) };
   if (ts.isObjectLiteralExpression(node)) return { kind: "object-literal", names: node.properties.flatMap(property => writtenName(property.name)) };
-  if (ts.isObjectBindingPattern(node)) return { kind: "binding-pattern", names: node.elements.flatMap(element => writtenName(element.propertyName ?? element.name)) };
   if (ts.isEnumDeclaration(node)) return { kind: "enum", names: node.members.flatMap(member => writtenName(member.name)) };
+  if (ts.isObjectBindingPattern(node)) return { kind: "binding-pattern", names: boundNames(node) };
+  if (ts.isArrayBindingPattern(node)) return { kind: "array-binding-pattern", names: boundNames(node) };
   const listed = (kind: string, names: string[]): { kind: string; names: string[] } | undefined => (names.length > 0 ? { kind, names } : undefined);
-  if (ts.isFunctionLike(node)) return listed("parameters", node.parameters.flatMap(parameter => writtenName(parameter.name)));
-  if (ts.isUnionTypeNode(node)) {
-    return listed(
-      "literal-union",
-      node.types.flatMap(type => (ts.isLiteralTypeNode(type) && ts.isStringLiteralLike(type.literal) ? [type.literal.text] : [])),
-    );
-  }
-  if (ts.isArrayLiteralExpression(node)) {
-    return listed(
-      "string-array",
-      node.elements.flatMap(element => (ts.isStringLiteral(element) || ts.isNoSubstitutionTemplateLiteral(element) ? [element.text] : [])),
-    );
-  }
+  if (ts.isFunctionLike(node)) return listed("parameters", node.parameters.flatMap(parameter => boundNames(parameter.name)));
+  if (ts.isUnionTypeNode(node)) return listed("literal-union", unionStrings(node));
+  if (ts.isArrayLiteralExpression(node)) return listed("string-array", arrayStrings(node));
   return undefined;
 }
 interface ModuleReading {
@@ -844,7 +923,9 @@ async function artifactReading(): Promise<{ native: RegistryReading; injected: R
 /** Walk and reading floors, each well below the cut-time measure: on trunk 7a0ab7f modules 116, texts 100929, name-carrying
  * declarations 7623, written names 18793, package.json keys and strings 120, descriptor objects 24 in each read registration;
  * re-measured for respin 1 on trunk 04123dc: modules 117, texts 101769, declarations 7694, written names 19003, package.json keys
- * and strings 120, descriptor objects 24 in each. */
+ * and strings 120, descriptor objects 24 in each; re-measured for respin 2 on trunk a4cf24c with its readers (forms 4-7 read whole
+ * and through wrappers): modules 117, texts 101769, declarations 7840, written names 19361, package.json keys and strings 120,
+ * descriptor objects 24 in each. */
 const FLOORS = { modules: 100, texts: 60000, declarations: 2500, members: 7000, manifestTexts: 80, descriptorObjects: 16 } as const;
 const ZWSP = String.fromCodePoint(0x200b);
 /** A Latin word written in full-width letters (NFKC folds each back to its Latin letter). */
@@ -871,7 +952,8 @@ const MANIFEST_CONTROLS: Readonly<Record<string, string>> = {
   "shadowed-key": `{ "name": "x", "dependencies": { "@example/edc": "1.0.0" }, "dependencies": { "blocks": "1.0.0" } }`,
   clean: `{ "name": "x", "description": "A workflow workbench", "dependencies": { "@example/blocks": "1.0.0" } }`,
 };
-/** Synthetic modules the artifact reader must read exactly as pinned: each declaration kind carrying the triple once. */
+/** Synthetic modules the artifact reader must read exactly as pinned: every variant of the seven forms the D reading claims, each
+ * carrying the triple (DECLARATION_FORMS binds each row to its form). */
 const TRIPLE_CONTROLS: Readonly<Record<string, string>> = {
   interface: "interface RequestScope { requestFreshness: number; resultPrecision: number; resourceCeiling: number }",
   "type-literal": "type Scope = { freshness: number; precision: number; ceiling: number };",
@@ -891,6 +973,108 @@ const TRIPLE_CONTROLS: Readonly<Record<string, string>> = {
   plurals: "interface Scope { freshnesses: number[]; precisions: number[]; ceilings: number[] }",
   "zero-width": `interface Scope { "fresh${ZWSP}ness": number; precision: number; ceiling: number }`,
   "full-width": `interface Scope { ${fullWidth("freshness")}: number; precision: number; ceiling: number }`,
+  "string-names": `interface Scope { "freshness": number; 'precision': number; ceiling: number }`,
+  accessors: "interface Scope { get freshness(): number; set precision(value: number); readonly ceiling: number }",
+  "class-accessors": "class Scope { get freshness() { return 1; } set precision(value: number) {} static ceiling = 3; }",
+  "class-expression": "const Scope = class { freshness = 1; precision = 2; ceiling = 3; };",
+  shorthand: "const scope = { freshness, precision, ceiling };",
+  "object-methods": "const scope = { freshness() { return 1; }, get precision() { return 2; }, set ceiling(value: number) {} };",
+  "enum-string-names": 'enum Axis { "freshness" = 1, "precision" = 2, "ceiling" = 3 }',
+  "binding-declaration": "const { freshness, precision, ceiling } = scope;",
+  "binding-renamed": "const { a: freshness, b: precision, c: ceiling } = scope;",
+  "binding-properties": "const { freshness: first, precision: second, ceiling: third } = scope;",
+  "binding-nested": "const { limits: { freshness }, precision, ceiling } = scope;",
+  "array-binding": "const [gateFreshness, gatePrecision, gateCeiling] = [1, 2, 3];",
+  "array-binding-defaults": "const [freshness = 1, , precision, ...ceiling] = values;",
+  "array-binding-nested": "const [[freshness], { precision }, ceiling] = values;",
+  "array-binding-parameter": "function narrow([freshness, precision, ceiling]: readonly number[]) { return freshness + precision + ceiling; }",
+  "parameters-destructured": "function narrow({ freshness }: Scope, [precision]: number[], ceiling: number) { return freshness + precision + ceiling; }",
+  "arrow-parameters": "const narrow = (freshness: number, precision: number, ceiling: number) => freshness;",
+  "function-type": "type Narrow = (freshness: number, precision: number, ceiling: number) => void;",
+  "method-signature": "interface Narrower { narrow(freshness: number, precision: number, ceiling: number): void }",
+  "function-expression": "const narrow = function (freshness: number, precision: number, ceiling: number) { return freshness; };",
+  "class-method": "class Narrower { narrow(freshness: number, precision: number, ceiling: number) { return freshness; } }",
+  "setter-pattern": "class Narrower { set scope({ freshness, precision, ceiling }: Limits) {} }",
+  "call-signature": "interface Narrow { (freshness: number, precision: number, ceiling: number): void }",
+  "construct-signature": "interface NarrowFactory { new (freshness: number, precision: number, ceiling: number): object }",
+  "constructor-type": "type NarrowFactory = new (freshness: number, precision: number, ceiling: number) => object;",
+  "index-signature": "interface Limits { [freshnessPrecisionCeiling: string]: number }",
+  "paren-union": 'type Axis = ("freshness") | ("precision") | ("ceiling");',
+  "paren-union-mixed": 'type Axis = "freshness" | ("precision") | `ceiling`;',
+  "paren-union-one": 'type Axis = "freshness" | "precision" | ("ceiling");',
+  "paren-union-deep": 'type Axis = (("freshness")) | "precision" | "ceiling";',
+  "nested-union": 'type Axis = "freshness" | ("precision" | ("ceiling"));',
+  "template-array": "const axes = [`freshness`, `precision`, `ceiling`];",
+  "array-paren": 'const axes = [("freshness"), ("precision"), ("ceiling")];',
+  "array-as": 'const axes = ["freshness" as const, "precision" as const, "ceiling" as const];',
+  "array-satisfies": 'const axes = ["freshness" satisfies string, "precision" satisfies string, "ceiling" satisfies string];',
+  "array-assertion": 'const axes = [<const>"freshness", <const>"precision", <const>"ceiling"];',
+  "array-non-null": 'const axes = ["freshness"!, "precision"!, "ceiling"!];',
+  "array-wrapped-deep": 'const axes = [(("freshness" as const)), (<const>"precision")!, ("ceiling" satisfies string)];',
+};
+/** The D reading's seven forms (the header's list, in order): each form's declaration kinds, and the TRIPLE_CONTROLS rows that pin
+ * it - every row pins exactly one form and reads a triple of that form's kind. */
+const DECLARATION_FORMS: Readonly<Record<string, { readonly kinds: readonly string[]; readonly controls: readonly string[] }>> = {
+  members: {
+    kinds: ["interface", "type-literal", "class"],
+    controls: [
+      "interface",
+      "type-literal",
+      "class",
+      "nested",
+      "private-names",
+      "methods",
+      "plurals",
+      "zero-width",
+      "full-width",
+      "string-names",
+      "accessors",
+      "class-accessors",
+      "class-expression",
+    ],
+  },
+  "object-literal": { kinds: ["object-literal"], controls: ["object-literal", "string-keys", "shorthand", "object-methods"] },
+  enum: { kinds: ["enum"], controls: ["enum", "enum-string-names"] },
+  "binding-pattern": {
+    kinds: ["binding-pattern", "array-binding-pattern"],
+    controls: [
+      "binding-declaration",
+      "binding-renamed",
+      "binding-properties",
+      "binding-nested",
+      "array-binding",
+      "array-binding-defaults",
+      "array-binding-nested",
+    ],
+  },
+  parameters: {
+    kinds: ["parameters"],
+    controls: [
+      "parameters",
+      "parameter-properties",
+      "binding-pattern",
+      "array-binding-parameter",
+      "parameters-destructured",
+      "arrow-parameters",
+      "function-type",
+      "method-signature",
+      "function-expression",
+      "class-method",
+      "setter-pattern",
+      "call-signature",
+      "construct-signature",
+      "constructor-type",
+      "index-signature",
+    ],
+  },
+  "literal-union": {
+    kinds: ["literal-union"],
+    controls: ["literal-union", "template-union", "paren-union", "paren-union-mixed", "paren-union-one", "paren-union-deep", "nested-union"],
+  },
+  "string-array": {
+    kinds: ["string-array"],
+    controls: ["string-array", "template-array", "array-paren", "array-as", "array-satisfies", "array-assertion", "array-non-null", "array-wrapped-deep"],
+  },
 };
 /** The planted descriptor the artifact reader must read: the triple in its input schema's properties. */
 const PLANTED_DESCRIPTOR: CapabilityDescriptor = {
@@ -913,11 +1097,22 @@ const LOOKALIKE_PROBES: readonly { readonly text: string; readonly lookalike: st
   { text: `${CYRILLIC_IE}vidence-directed scope`, lookalike: CYRILLIC_IE, latin: "e" },
   { text: `ED${CYRILLIC_ES} scope`, lookalike: CYRILLIC_ES, latin: "C" },
 ];
-/** R-PARTIAL's probes: declarations carrying one or two axes, the triple split across two declarations, and the complete control. */
+/** R-LOOKALIKE's axis probe: an axis word with one look-alike letter (the Cyrillic ie for the Latin e), and the Latin letter. */
+const LOOKALIKE_TRIPLE = `interface Scope { fr${CYRILLIC_IE}shness: number; precision: number; ceiling: number }`;
+/** R-PARTIAL's probes: declarations carrying one or two axes, the triple split across declarations (two, nested, spread, heritage),
+ * and the complete control. */
 const PARTIAL_CONTROLS: Readonly<Record<string, string>> = {
   "two-of-three": "interface Scope { freshness: number; ceiling: number }",
   "one-of-three": "interface Scope { precision: number }",
   "split-across": "interface A { freshness: number; precision: number } interface B { ceiling: number }",
+  "nested-split": "interface Outer { limits: { freshness: number }; precision: number; ceiling: number }",
+  "spread-split": "const scope = { ...{ freshness: 1 }, precision: 2, ceiling: 3 };",
+  "array-spread-split": 'const axes = [...["freshness", "precision"], "ceiling"];',
+  "heritage-split": "interface Base { freshness: number } interface Derived extends Base { precision: number; ceiling: number }",
+  "array-nested-split": 'const axes = [["freshness"], "precision", "ceiling"];',
+  "union-argument-split": 'type Axis = "freshness" | Array<"precision" | "ceiling">;',
+  "union-intersection-split": 'type Axis = "freshness" | (("precision" | "ceiling") & string);',
+  "binding-default-split": "const { freshness = { precision: 1, ceiling: 2 } } = scope;",
   complete: "interface Scope { freshness: number; precision: number; ceiling: number }",
 };
 const PARTIAL_DESCRIPTOR: CapabilityDescriptor = {
@@ -936,6 +1131,17 @@ const VOCABULARY_CONTROLS: Readonly<Record<string, string>> = {
 /** R-COMPOSED's probes: computed member names, and a stem composed from parts that each name none. */
 const COMPOSED_DECLARATION = 'const CEILING = "ceiling"; const scope = { ["fresh" + "ness"]: 1, [`precision`]: 2, [CEILING]: 3 };';
 const COMPOSED_SOURCE = 'const label = "evidence-" + "directed"; const acronym = ["E", "D", "C"].join("");';
+/** R-COMPOSED's element probes: an array element or a union member reached through a reference or an expression; and the plain twin. */
+const COMPOSED_ELEMENTS: Readonly<Record<string, string>> = {
+  constant: 'const FRESHNESS = "freshness"; const axes = [FRESHNESS, "precision", "ceiling"];',
+  "type-alias": 'type Freshness = "freshness"; type Axis = Freshness | "precision" | "ceiling";',
+  concatenation: 'const axes = ["fresh" + "ness", "precision", "ceiling"];',
+  conditional: 'const axes = [strict ? "freshness" : "staleness", "precision", "ceiling"];',
+  "template-substitution": `type Axis = \`\${"fresh"}ness\` | "precision" | "ceiling";`,
+  "tagged-template": 'const axes = [raw`freshness`, "precision", "ceiling"];',
+  call: 'const axes = [String("freshness"), "precision", "ceiling"];',
+  twin: 'const axes = ["freshness", "precision", "ceiling"];',
+};
 /** R-SCOPE's probes: paths outside the src walk, and one module the readers would read if it were walked. */
 const OUT_OF_SCOPE: readonly string[] = [
   "examples/edc-scope.ts",
@@ -947,17 +1153,20 @@ const OUT_OF_SCOPE: readonly string[] = [
   "src/workbench/edc-scope.d.json",
 ];
 const OUT_OF_SCOPE_MODULE = "export interface EdcScope { freshness: number; precision: number; ceiling: number }";
-/** R-GRID's composer: lawful on the grid, it widens unreported any request beyond the grid's looser factor. */
+/** R-GRID's composer: lawful on the grid, it widens unreported every looser request but one at the grid's looser factor. */
 const GRID_EVADER: Composer = (parent, request) => {
-  const evading = AXES.filter(axis => (request[axis] ?? 0) > parent[axis] * FACTORS.looser);
+  const evading = AXES.filter(axis => {
+    const asked = request[axis];
+    return asked !== undefined && asked > parent[axis] && asked !== parent[axis] * FACTORS.looser;
+  });
   return {
     kind: "scoped",
     scope: adopt(parent, request, evading),
     diagnostics: clamp(parent, request).diagnostics.filter(diagnostic => !evading.includes(diagnostic.axis)),
   };
 };
-/** R-GRID's request beyond the grid, as a factor on the parent's bound. */
-const EVADER_FACTOR = 3;
+/** R-GRID's requests off the grid, as factors on the parent's bound: one between the bound and the looser factor, one beyond it. */
+const EVADER_FACTORS = [1.5, 3] as const;
 /** R-STATEFUL's composer: lawful for its first `lawful` calls, then every axis adopts the child's request, unreported. */
 function statefulComposer(lawful: number): Composer {
   let calls = 0;
@@ -969,9 +1178,58 @@ function statefulComposer(lawful: number): Composer {
 /** R-SUFFIXED's probe: the acronym run into a lower-case-led suffix, as an identifier and a string; and its spaced twin. */
 const SUFFIXED_SOURCE = 'export const GateEDCv2Client = "EDCv2";';
 const SUFFIXED_TWIN = 'export const GateEdcV2Client = "EDC v2";';
+/** R-SUFFIXED's axis probe: all-capitals axis words run into lower-case-led suffixes; and the separated twin. */
+const SUFFIXED_TRIPLE = "interface Scope { FRESHNESSms: number; PRECISIONpct: number; CEILINGbytes: number }";
+const SUFFIXED_TRIPLE_TWIN = "interface Scope { FRESHNESS_MS: number; PRECISION_PCT: number; CEILING_BYTES: number }";
 /** R-DOTTED's probe: the dotted acronym; and its undotted twin. */
 const DOTTED_SOURCE = 'export const ASSEMBLY_LABEL = "E.D.C. assembly";';
 const DOTTED_TWIN = 'export const ASSEMBLY_LABEL = "EDC assembly";';
+/** R-SITES's probes: the name sites outside the seven forms, each carrying the triple; and the twin the reader reads. */
+const SITE_CONTROLS: Readonly<Record<string, string>> = {
+  "type-parameters": "function narrow<Freshness, Precision, Ceiling>(): void {}",
+  "labeled-tuple": "type Scope = [freshness: number, precision: number, ceiling: number];",
+  "tuple-literals": 'type Axes = readonly ["freshness", "precision", "ceiling"];',
+  "import-specifiers": 'import { freshness, precision, ceiling } from "./scope";',
+  "export-specifiers": "export { freshness, precision, ceiling };",
+  "variable-list": "const freshness = 1, precision = 2, ceiling = 3;",
+  "namespace-members": "namespace Scope { export const freshness = 1; export const precision = 2; export const ceiling = 3; }",
+  "module-exports": "export const freshness = 1; export function precision() {} export class Ceiling {}",
+  "array-assignment": "[freshness, precision, ceiling] = values;",
+  "jsx-attributes.tsx": "const view = <Scope freshness={1} precision={2} ceiling={3} />;",
+};
+const SITE_TWIN = "interface Scope { freshness: number; precision: number; ceiling: number }";
+/** R-VALUES's probes: the triple written as string values, never names; the descriptor's twin is PLANTED_DESCRIPTOR (D1). */
+const VALUE_CONTROLS: Readonly<Record<string, string>> = {
+  "member-values": 'const names = { a: "freshness", b: "precision", c: "ceiling" };',
+  "call-arguments": 'pick("freshness", "precision", "ceiling");',
+  "case-labels": 'switch (axis) { case "freshness": case "precision": case "ceiling": break; }',
+  "enum-initializers": 'enum Axis { A = "freshness", B = "precision", C = "ceiling" }',
+};
+const VALUE_DESCRIPTOR: CapabilityDescriptor = {
+  ...PLANTED_DESCRIPTOR,
+  id: "planted.values.read",
+  inputSchema: {
+    type: "object",
+    properties: { axis: { type: "string", enum: ["freshness", "precision", "ceiling"] } },
+    required: ["axis"],
+    additionalProperties: false,
+  },
+};
+/** R-DIGIT's probes: an axis word and the word stem run into digits; and their separated twins. */
+const DIGIT_TRIPLE = "interface Scope { freshness2: number; precision2: number; ceiling2: number }";
+const DIGIT_TRIPLE_TWIN = "interface Scope { freshness_2: number; precision_2: number; ceiling_2: number }";
+const DIGIT_SOURCE = 'export const label = "EDC2 assembler"; export const GateEDC2Client = 1;';
+const DIGIT_SOURCE_TWIN = 'export const label = "EDC 2 assembler";';
+/** R-DOC's probes: the triple and a stem written only in comments, a doc comment included; and the code twin. */
+const DOC_SOURCE =
+  "/** @property freshness @property precision @property ceiling - an EDC assembly scope */\ntype Scope = Record<string, number>;\n// interface Scope { freshness: number; precision: number; ceiling: number }";
+const DOC_TWIN = "interface Scope { freshness: number; precision: number; ceiling: number }";
+/** R-SPLIT's probes: axis words and the word stem split by a separator or an inner capital; and their whole twins. */
+const SPLIT_NAMES = ["fresh-ness", "preCision", "ceil_ing"] as const;
+const SPLIT_TRIPLE = 'interface Scope { "fresh-ness": number; preCision: number; ceil_ing: number }';
+const SPLIT_TRIPLE_TWIN = 'interface Scope { "freshness": number; precision: number; ceiling: number }';
+const SPLIT_SOURCE = 'export const label = "E-D-C assembly"; export const EdC = 1;';
+const SPLIT_SOURCE_TWIN = 'export const label = "EDC assembly";';
 /** Each residual family and the quiet row that pins it. */
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-LOOKALIKE": ["Q1"],
@@ -983,6 +1241,11 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-STATEFUL": ["Q7"],
   "R-SUFFIXED": ["Q8"],
   "R-DOTTED": ["Q9"],
+  "R-SITES": ["Q10"],
+  "R-VALUES": ["Q11"],
+  "R-DIGIT": ["Q12"],
+  "R-DOC": ["Q13"],
+  "R-SPLIT": ["Q14"],
 };
 
 // ---- the rows and the roster ----
@@ -1099,17 +1362,28 @@ function constants(): JsonValue {
     sourceControls: SOURCE_CONTROLS,
     manifestControls: MANIFEST_CONTROLS,
     tripleControls: TRIPLE_CONTROLS,
+    declarationForms: DECLARATION_FORMS,
     planted: PLANTED_DESCRIPTOR,
     lookalike: LOOKALIKE_PROBES,
+    lookalikeTriple: LOOKALIKE_TRIPLE,
     partialControls: PARTIAL_CONTROLS,
     partialDescriptor: PARTIAL_DESCRIPTOR,
     vocabularyControls: VOCABULARY_CONTROLS,
     composed: [COMPOSED_DECLARATION, COMPOSED_SOURCE],
+    composedElements: COMPOSED_ELEMENTS,
     outOfScope: OUT_OF_SCOPE,
     outOfScopeModule: OUT_OF_SCOPE_MODULE,
-    evaderFactor: EVADER_FACTOR,
+    evaderFactors: EVADER_FACTORS,
     suffixed: [SUFFIXED_SOURCE, SUFFIXED_TWIN],
+    suffixedTriple: [SUFFIXED_TRIPLE, SUFFIXED_TRIPLE_TWIN],
     dotted: [DOTTED_SOURCE, DOTTED_TWIN],
+    siteControls: SITE_CONTROLS,
+    siteTwin: SITE_TWIN,
+    valueControls: VALUE_CONTROLS,
+    valueDescriptor: VALUE_DESCRIPTOR,
+    digit: [DIGIT_TRIPLE, DIGIT_TRIPLE_TWIN, DIGIT_SOURCE, DIGIT_SOURCE_TWIN],
+    doc: [DOC_SOURCE, DOC_TWIN],
+    split: [...SPLIT_NAMES, SPLIT_TRIPLE, SPLIT_TRIPLE_TWIN, SPLIT_SOURCE, SPLIT_SOURCE_TWIN],
     residuals: RESIDUALS,
   });
 }
@@ -1159,10 +1433,36 @@ function tripleHeads(label: string): string[] {
     .split(/, | and /)
     .map(item => item.split(" ").at(-1) ?? "");
 }
-/** The acceptance's looser list: the words after "looser " up to " than ", split at ", " and " or ". */
+/** The acceptance's looser span: the words after "looser " up to " than ", or none. */
+function looserSpan(acceptance: string): string {
+  return /looser (.+?) than /.exec(acceptance)?.[1] ?? "";
+}
+/** The acceptance's looser list: its looser span split at ", " and " or ". */
 function looserList(acceptance: string): string[] {
-  const match = /looser (.+?) than /.exec(acceptance);
-  return match === null ? [] : (match[1] ?? "").split(/, | or /);
+  const span = looserSpan(acceptance);
+  return span === "" ? [] : span.split(/, | or /);
+}
+/** A text's clauses, in order (a row's partition into pins): the text without its trailing separators, split at "; " and ", " and
+ * before " and " and a parenthetical " (" - a conjunction or a parenthesis opens its clause - except inside a kept span (an
+ * enumeration such as the acceptance's looser list keeps its commas). */
+function clausesOf(text: string, kept: readonly string[]): string[] {
+  const body = text.replace(/[\s,;.:]+$/, "");
+  const spans = kept.flatMap(span => {
+    const at = span === "" ? -1 : body.indexOf(span);
+    return at === -1 ? [] : [{ start: at, end: at + span.length }];
+  });
+  const clauses: string[] = [];
+  let start = 0;
+  for (let index = 0; index < body.length; index += 1) {
+    if (spans.some(span => index >= span.start && index < span.end)) continue;
+    const dropped = body.startsWith("; ", index) || body.startsWith(", ", index);
+    const opened = body.startsWith(" and ", index) || body.startsWith(" (", index);
+    if (!dropped && !opened) continue;
+    clauses.push(body.slice(start, index));
+    start = index + (dropped ? 2 : 1);
+  }
+  clauses.push(body.slice(start));
+  return clauses.filter(clause => clause !== "");
 }
 /** The artifact's slash list: the word after "scoped " split at "/". */
 function slashList(label: string): string[] {
@@ -1292,6 +1592,18 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   D1: async () => {
     const reading = srcReading();
     const { native: nativeReading, injected: injectedReading, artifact } = await artifactReading();
+    const sources = Object.fromEntries(Object.entries(TRIPLE_CONTROLS).map(([name, text]) => [name, readModule(text, name).triples]));
+    const formed = Object.values(DECLARATION_FORMS).flatMap(form => form.controls);
+    expect([...formed].sort(), "every TRIPLE_CONTROLS row pins exactly one of the seven forms").toEqual(Object.keys(TRIPLE_CONTROLS).sort());
+    expect(
+      Object.entries(DECLARATION_FORMS).filter(([, form]) => form.controls.length === 0).map(([name]) => name),
+      "every form is pinned by a control",
+    ).toEqual([]);
+    for (const [form, { kinds, controls }] of Object.entries(DECLARATION_FORMS)) {
+      for (const control of controls) {
+        expect((sources[control] ?? []).some(triple => kinds.includes(triple.split("|")[1] ?? "")), `${control} reads a ${form} triple`).toBe(true);
+      }
+    }
     const descriptors = (entry: RegistryReading) => ({
       missing: entry.missing,
       objectsBelowFloor: entry.objects < FLOORS.descriptorObjects,
@@ -1306,7 +1618,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       injected: descriptors(injectedReading),
       artifact,
       controls: {
-        sources: Object.fromEntries(Object.entries(TRIPLE_CONTROLS).map(([name, text]) => [name, readModule(text, name).triples])),
+        sources,
         descriptor: registryReading(plantedRegistry(PLANTED_DESCRIPTOR)).triples,
       },
     });
@@ -1337,9 +1649,15 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       LOOKALIKE_PROBES.filter(probe => !probe.text.includes(probe.lookalike)).map(probe => probe.text),
       "each probe carries its look-alike",
     ).toStrictEqual([]);
+    expect(LOOKALIKE_TRIPLE.includes(CYRILLIC_IE), "the axis probe carries its look-alike").toBe(true);
     return json({
       lookalike: LOOKALIKE_PROBES.map(probe => stemsIn(probe.text)),
       repaired: LOOKALIKE_PROBES.map(probe => stemsIn(probe.text.split(probe.lookalike).join(probe.latin))),
+      triple: {
+        axes: axesOf([`fr${CYRILLIC_IE}shness`]),
+        lookalike: readModule(LOOKALIKE_TRIPLE, "lookalike-triple").triples,
+        repaired: readModule(LOOKALIKE_TRIPLE.split(CYRILLIC_IE).join("e"), "repaired-triple").triples,
+      },
     });
   },
   Q2: async () =>
@@ -1367,6 +1685,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       declaration: readModule(COMPOSED_DECLARATION, "composed-declaration").triples,
       source: readModule(COMPOSED_SOURCE, "composed-source").mentions,
       parts: ["evidence-", "directed", "E", "D", "C"].map(part => stemsIn(part).length),
+      elements: Object.fromEntries(Object.entries(COMPOSED_ELEMENTS).map(([name, text]) => [name, readModule(text, name).triples])),
     }),
   Q5: async () => {
     const reading = srcReading();
@@ -1380,10 +1699,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     });
   },
   Q6: async () => {
-    const outside: Probe = { name: "ceiling:outside", request: { ceiling: PARENT.ceiling * EVADER_FACTOR } };
+    const offGrid: Probe[] = EVADER_FACTORS.map(factor => ({ name: `ceiling:x${factor}`, request: { ceiling: PARENT.ceiling * factor } }));
     return json({
       grid: falsify(GRID_EVADER),
-      outside: judge(outside, GRID_EVADER(Object.freeze({ ...PARENT }), Object.freeze({ ...outside.request }))),
+      offGrid: offGrid.map(probe => judge(probe, GRID_EVADER(Object.freeze({ ...PARENT }), Object.freeze({ ...probe.request })))),
     });
   },
   Q7: async () => {
@@ -1392,13 +1711,51 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const second = falsify(composer);
     return json({ first: first.verdict, second: second.verdict, secondClasses: classesOf(second), secondViolations: second.violations.length });
   },
-  Q8: async () => json({ suffixed: readModule(SUFFIXED_SOURCE, "suffixed").mentions, twin: readModule(SUFFIXED_TWIN, "suffixed-twin").mentions }),
+  Q8: async () =>
+    json({
+      suffixed: readModule(SUFFIXED_SOURCE, "suffixed").mentions,
+      twin: readModule(SUFFIXED_TWIN, "suffixed-twin").mentions,
+      axes: axesOf(["FRESHNESSms", "PRECISIONpct", "CEILINGbytes"]),
+      triple: readModule(SUFFIXED_TRIPLE, "suffixed-triple").triples,
+      tripleTwin: readModule(SUFFIXED_TRIPLE_TWIN, "suffixed-triple-twin").triples,
+    }),
   Q9: async () => json({ dotted: readModule(DOTTED_SOURCE, "dotted").mentions, twin: readModule(DOTTED_TWIN, "dotted-twin").mentions }),
+  Q10: async () =>
+    json({
+      sites: Object.fromEntries(Object.entries(SITE_CONTROLS).map(([name, text]) => [name, readModule(text, name).triples])),
+      twin: readModule(SITE_TWIN, "site-twin").triples,
+    }),
+  Q11: async () =>
+    json({
+      values: Object.fromEntries(Object.entries(VALUE_CONTROLS).map(([name, text]) => [name, readModule(text, name).triples])),
+      descriptor: registryReading(plantedRegistry(VALUE_DESCRIPTOR)).triples,
+      twin: registryReading(plantedRegistry(PLANTED_DESCRIPTOR)).triples,
+    }),
+  Q12: async () =>
+    json({
+      axes: axesOf(["freshness2", "precision2", "ceiling2"]),
+      triple: readModule(DIGIT_TRIPLE, "digit-triple").triples,
+      tripleTwin: readModule(DIGIT_TRIPLE_TWIN, "digit-triple-twin").triples,
+      source: readModule(DIGIT_SOURCE, "digit-source").mentions,
+      sourceTwin: readModule(DIGIT_SOURCE_TWIN, "digit-source-twin").mentions,
+    }),
+  Q13: async () => {
+    const doc = readModule(DOC_SOURCE, "doc");
+    return json({ triples: doc.triples, mentions: doc.mentions, twin: readModule(DOC_TWIN, "doc-twin").triples });
+  },
+  Q14: async () =>
+    json({
+      axes: axesOf(SPLIT_NAMES),
+      triple: readModule(SPLIT_TRIPLE, "split-triple").triples,
+      tripleTwin: readModule(SPLIT_TRIPLE_TWIN, "split-triple-twin").triples,
+      source: readModule(SPLIT_SOURCE, "split-source").mentions,
+      sourceTwin: readModule(SPLIT_SOURCE_TWIN, "split-source-twin").mentions,
+    }),
 };
 
 describe("wb-pyel.6 EDC scope-narrowing census (SDK-EVIDENCE-DIRECTED-COMPUTATION-R14, until-then leg, falsifier armed)", () => {
   it("the judged set: the frozen shape, the out-of-file roster, the bead's title, acceptance and notes, and the cases agree", { timeout: 60_000 }, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:1", "B:4", "C:2", "D:2", "Q:9"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:1", "B:4", "C:2", "D:2", "Q:14"]);
     const shape = (rows: readonly { id: string; label: string; pins: readonly { id: string; quote: string }[] }[]) =>
       rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => ({ id: pin.id, quote: pin.quote })) }));
     expect(shape(ROWS)).toStrictEqual(shape(ROSTER.rows));
@@ -1418,6 +1775,13 @@ describe("wb-pyel.6 EDC scope-narrowing census (SDK-EVIDENCE-DIRECTED-COMPUTATIO
     expect(acceptance.startsWith(ACCEPTANCE_LEAD), "the acceptance opens with its lead").toBe(true);
     expect(tiled(acceptance.slice(ACCEPTANCE_LEAD.length), quotes("B")), "B's pins' quotes tile the acceptance after its lead").toBe(true);
     expect(mirrorSpan(notes), "the notes' mirror span is exactly C's pins' quotes, joined by ' and '").toBe(quotes("C").join(" and "));
+    // The partitions: each row's split into pins is the bead text's own, so a pin merged into a sibling (its quote folded in) reds.
+    expect(quotes("A"), "A's pins are its label's clauses").toEqual(clausesOf(row("A").label, []));
+    expect(quotes("B"), "B's pins are the acceptance's clauses after its lead, its looser list kept whole").toEqual(
+      clausesOf(acceptance.slice(ACCEPTANCE_LEAD.length), [looserSpan(acceptance)]),
+    );
+    expect(quotes("C"), "C's pins are the mirror span's parts, split at ' and '").toEqual(mirrorSpan(notes).split(" and "));
+    expect(quotes("D"), "D's pins are its label's clauses").toEqual(clausesOf(row("D").label, []));
     expect(tripleHeads(row("B").label), "the axes are the heads of the title's triple").toEqual([...AXES]);
     expect(looserList(acceptance), "the axes are the acceptance's looser list").toEqual([...AXES]);
     expect(slashList(row("D").label), "the axes are the artifact's slash list").toEqual([...AXES]);
@@ -1441,6 +1805,10 @@ describe("wb-pyel.6 EDC scope-narrowing census (SDK-EVIDENCE-DIRECTED-COMPUTATIO
     );
     expect(mirrorSpan(`The ${MIRROR_LEAD}alpha and beta gamma.`), "a mirror span with no dash terminator reads none").toBe("");
     expect(mirrorSpan(`alpha and beta gamma ${DASH} more`), "a text with no mirror lead reads none").toBe("");
+    expect(looserSpan("asks looser one, two or three than its parent"), "a looser span").toBe("one, two or three");
+    expect(clausesOf("a b and c d, e; f (g h).", []), "clauses split at '; ' and ', ' and before ' and ' and ' ('").toEqual(["a b", "and c d", "e", "f", "(g h)"]);
+    expect(clausesOf("x asks one, two or three then y, z", ["one, two or three"]), "a kept span keeps its commas").toEqual(["x asks one, two or three then y", "z"]);
+    expect(clausesOf("one clause: no boundary", []), "a text with no boundary is one clause").toEqual(["one clause: no boundary"]);
   });
 
   for (const row of ROWS) {
