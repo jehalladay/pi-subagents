@@ -73,7 +73,8 @@
     "Q2": [
       "handed-scores",
       "composed-launch",
-      "abbreviated-client"
+      "abbreviated-client",
+      "env-launch"
     ]
   },
   "witnesses": {
@@ -123,12 +124,22 @@
           ],
           "tokens": []
         },
+        "producer-names": {
+          "sites": [
+            "1:named:GraphPolicyCLI"
+          ],
+          "family": [
+            "GraphPolicy",
+            "GraphDataIR"
+          ],
+          "tokens": []
+        },
         "receipt-member": {
           "sites": [],
           "family": [],
           "tokens": [
-            "log_probability",
-            "chosen_id"
+            "chosen_id",
+            "log_probability"
           ]
         },
         "near-tokens": {
@@ -385,18 +396,152 @@
     },
     "E2": {
       "suite": "test/workbench-control-provenance.test.ts",
-      "forms": {
-        "deep-frozen JSON round-trip (a decision replayed from the audit or the journal)": [
-          "deepFreeze",
-          "jsonRoundTrip"
+      "forms": [
+        [
+          "deep-frozen JSON round-trip (a decision replayed from the audit or the journal)",
+          [
+            "deepFreeze",
+            "jsonRoundTrip"
+          ]
         ],
-        "JSON round-trip": [
-          "jsonRoundTrip"
+        [
+          "JSON round-trip",
+          [
+            "jsonRoundTrip"
+          ]
         ],
-        "double JSON round-trip": [
-          "jsonRoundTrip",
-          "jsonRoundTrip"
+        [
+          "double JSON round-trip",
+          [
+            "jsonRoundTrip",
+            "jsonRoundTrip"
+          ]
         ]
+      ],
+      "helpers": {
+        "deepFreeze": "function deepFreeze<T>(value: T): T { if (typeof value === \"object\" && value !== null) { for (const key of Reflect.ownKeys(value)) deepFreeze(Reflect.get(value, key)); Object.freeze(value); } return value; }",
+        "jsonRoundTrip": "const jsonRoundTrip = (value: unknown): unknown => JSON.parse(JSON.stringify(value));"
+      },
+      "plants": {
+        "inline": {
+          "unread": [
+            "inline JSON round-trip <- expectUnminted(await subject.attempt(JSON.parse(JSON.stringify(genuine))), \"inline JSON round-trip\");"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "bound": {
+          "unread": [
+            "<unlabelled> <- const replayed = jsonRoundTrip(genuine);",
+            "replayed JSON round-trip, bound first <- expectUnminted(await subject.attempt(replayed), \"replayed JSON round-trip, bound first\");"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "frozen-inline": {
+          "unread": [
+            "frozen JSON round-trip <- expectUnminted(await subject.attempt(Object.freeze(jsonRoundTrip(genuine))), \"frozen JSON round-trip\");"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "lookalikes-entry": {
+          "unread": [
+            "deep-frozen spread of a JSON round-trip (a decision replayed from the audit or the journal) <- [\"deep-frozen spread of a JSON round-trip (a decision replayed from the audit or the journal)\", deepFreeze({ ...(jsonRoundTrip(genuine) as object) })]"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "chain-control": {
+          "unread": [],
+          "added": [
+            "structured clone of a JSON round-trip: structuredClone > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "aliased-helper": {
+          "unread": [],
+          "added": [
+            "aliased JSON round-trip: replayOf"
+          ],
+          "missing": [],
+          "helpers": [
+            "replayOf"
+          ]
+        },
+        "conditional": {
+          "unread": [
+            "conditional JSON round-trip <- expectUnminted(await subject.attempt(subject.adapter === \"\" ? genuine : jsonRoundTrip(genuine)), \"conditional JSON round-trip\");"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "template-label": {
+          "unread": [
+            "<unlabelled> <- [`deep-frozen JSON round-trip (a decision replayed from the ${\"audit\"})`, deepFreeze(jsonRoundTrip(genuine))]",
+            "audit <- \"audit\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "options-skip": {
+          "unread": [
+            "refuses a JSON round-trip of a permitted decision exactly as the audit or the journal would hand it back <- \"refuses a JSON round-trip of a permitted decision exactly as the audit or the journal would hand it back\""
+          ],
+          "added": [],
+          "missing": [
+            "JSON round-trip",
+            "double JSON round-trip"
+          ],
+          "helpers": []
+        },
+        "test-head-case": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip as the audit or the journal would hand it back <- \"refuses a deep-frozen JSON round-trip as the audit or the journal would hand it back\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "computed-title": {
+          "unread": [
+            "<unlabelled> <- \"refuses a decision read back from the au\" + \"dit log\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "spread-entry": {
+          "unread": [
+            "<unlabelled> <- ...([] as (readonly [string, unknown])[])"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "helper-redefined": {
+          "unread": [],
+          "added": [],
+          "missing": [],
+          "helpers": [
+            "jsonRoundTrip"
+          ]
+        },
+        "journal-label-elsewhere": {
+          "unread": [
+            "a decision read back from the journal <- \"a decision read back from the journal\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        }
       }
     },
     "Q1": {
@@ -419,6 +564,10 @@
       "abbreviated-client": {
         "member": false,
         "twin": true
+      },
+      "env-launch": {
+        "member": false,
+        "twin": true
       }
     }
   },
@@ -433,7 +582,7 @@
     "E2: (wb-pjj look-alike test pattern)",
     "Q1: R-SYNTHETIC-DETERMINISTIC",
     "Q2: R-UNREAD-CONSUMER",
-    "rule 16: rows, quotes, residuals, mutants, prohibitions, replay forms, near misses, plants, grant sets, tokens and bindings have the frozen measured shape",
+    "rule 16: rows, quotes, residuals, mutants, prohibitions, replay forms, audit plants, near misses, plants, grant sets, receipt tokens and bindings have the frozen measured shape",
     "outside anchors: the owner filing, the control core at the Pi pin and the vendored receipt bind every row the census reads",
     "roster: every judged pin and registered test ran, and every witness was compared"
   ]
