@@ -58,6 +58,9 @@
    ],
    "twin": [
     "manifest-dependency"
+   ],
+   "open": [
+    "unscoped-name"
    ]
   },
   {
@@ -66,10 +69,14 @@
    "quiet": [
     "manifest-git-spec",
     "manifest-jsr-spec",
-    "manifest-overrides"
+    "manifest-overrides",
+    "manifest-npm-infix"
    ],
    "twin": [
     "manifest-npm-alias"
+   ],
+   "open": [
+    "manifest-git-spec"
    ]
   },
   {
@@ -81,10 +88,24 @@
     "require-alias",
     "require-member",
     "create-require-renamed",
-    "require-resolve"
+    "require-resolve",
+    "require-resolve-bare",
+    "create-require-element",
+    "create-require-destructured",
+    "create-require-parameter",
+    "create-require-property",
+    "create-require-string-callee",
+    "create-require-other-member",
+    "create-require-compound",
+    "assigned-other",
+    "require-string-callee",
+    "import-type-template"
    ],
    "twin": [
     "create-require-bound"
+   ],
+   "open": [
+    "require-template-substitution"
    ]
   },
   {
@@ -95,7 +116,8 @@
    ],
    "twin": [
     "lock-v1-dependencies"
-   ]
+   ],
+   "open": []
   },
   {
    "id": "R-MODULE-KIND",
@@ -105,7 +127,19 @@
    ],
    "twin": [
     "kind-ts"
-   ]
+   ],
+   "open": []
+  },
+  {
+   "id": "R-JSDOC-TYPE",
+   "pin": "T1",
+   "quiet": [
+    "kind-js-jsdoc"
+   ],
+   "twin": [
+    "import-type-node"
+   ],
+   "open": []
   },
   {
    "id": "R-REQUIREMENT-ID",
@@ -114,10 +148,22 @@
     "requirement-id",
     "requirement-id-bare",
     "requirement-id-two-digit",
-    "requirement-id-twice"
+    "requirement-id-twice",
+    "requirement-id-hyphen-after",
+    "requirement-id-hyphen-before",
+    "requirement-id-lead-embedded"
    ],
    "twin": [
     "type-name"
+   ],
+   "open": [
+    "requirement-id",
+    "requirement-id-bare",
+    "requirement-id-two-digit",
+    "requirement-id-twice",
+    "requirement-id-hyphen-after",
+    "requirement-id-hyphen-before",
+    "requirement-id-lead-embedded"
    ]
   },
   {
@@ -128,16 +174,22 @@
    ],
    "twin": [
     "type-name"
-   ]
+   ],
+   "open": []
   },
   {
    "id": "R-SCOPE",
    "pin": "B1",
    "quiet": [
-    "qa-module"
+    "qa-module",
+    "examples-src-module"
    ],
    "twin": [
     "task-template"
+   ],
+   "open": [
+    "qa-module",
+    "examples-src-module"
    ]
   },
   {
@@ -148,7 +200,8 @@
    ],
    "twin": [
     "task-template"
-   ]
+   ],
+   "open": []
   },
   {
    "id": "R-CALL-FORM",
@@ -159,7 +212,8 @@
    ],
    "twin": [
     "task-template"
-   ]
+   ],
+   "open": []
   },
   {
    "id": "R-PREFIX-CONSTANT",
@@ -169,7 +223,8 @@
    ],
    "twin": [
     "task-split-literal"
-   ]
+   ],
+   "open": []
   },
   {
    "id": "R-COMPOUND",
@@ -179,6 +234,48 @@
    ],
    "twin": [
     "task-concat"
+   ],
+   "open": []
+  },
+  {
+   "id": "R-HOLDER-FORM",
+   "pin": "B1",
+   "quiet": [
+    "task-holder-element-key",
+    "task-holder-call"
+   ],
+   "twin": [
+    "task-member-id"
+   ],
+   "open": [
+    "task-holder-element-key",
+    "task-holder-call"
+   ]
+  },
+  {
+   "id": "R-FIELD-STRING",
+   "pin": "B1",
+   "quiet": [
+    "task-field-string-argument"
+   ],
+   "twin": [
+    "task-kebab-key"
+   ],
+   "open": []
+  },
+  {
+   "id": "R-MEMBER-KEY",
+   "pin": "B1",
+   "quiet": [
+    "task-member-identifier-key",
+    "task-member-const-key"
+   ],
+   "twin": [
+    "task-member-id"
+   ],
+   "open": [
+    "task-member-identifier-key",
+    "task-member-const-key"
    ]
   },
   {
@@ -189,7 +286,8 @@
    ],
    "twin": [
     "forge-gate-ref"
-   ]
+   ],
+   "open": []
   },
   {
    "id": "R-NAME-BINDING",
@@ -202,7 +300,8 @@
    ],
    "twin": [
     "forge-provider-constant"
-   ]
+   ],
+   "open": []
   },
   {
    "id": "R-KEY-ACCESSOR",
@@ -213,17 +312,20 @@
    ],
    "twin": [
     "forge-id-key"
-   ]
+   ],
+   "open": []
   },
   {
    "id": "R-COMPOUND-KEY",
    "pin": "B2",
    "quiet": [
-    "forge-compound-key"
+    "forge-compound-key",
+    "forge-compound-key-template"
    ],
    "twin": [
     "forge-assignment"
-   ]
+   ],
+   "open": []
   },
   {
    "id": "R-ID-POSITION",
@@ -233,7 +335,8 @@
    ],
    "twin": [
     "forge-native-ref"
-   ]
+   ],
+   "open": []
   },
   {
    "id": "R-POSITION-BINDING",
@@ -244,7 +347,8 @@
    ],
    "twin": [
     "forge-native-ref"
-   ]
+   ],
+   "open": []
   },
   {
    "id": "R-FIELD-SPELLING",
@@ -255,6 +359,10 @@
    ],
    "twin": [
     "attempt-template"
+   ],
+   "open": [
+    "other-field-name",
+    "bare-step-name"
    ]
   }
  ],
@@ -326,6 +434,11 @@
        "manifest-overrides": [],
        "unscoped-name": [],
        "near-scope": [],
+       "upper-scope": [],
+       "manifest-npm-infix": [],
+       "manifest-list-non-string": [
+        "@mechanical/workflows-coordination"
+       ],
        "lock-path": [
         "node_modules/@mechanical/workflows-composition"
        ],
@@ -348,6 +461,10 @@
         "@mechanical/workflows-composition"
        ],
        "lock-workspace-path": [],
+       "lock-null-entry": [
+        "node_modules/@mechanical/workflows-composition"
+       ],
+       "lock-not-object": [],
        "lock-v1-nested": [],
        "import-static": [
         "@mechanical/workflows-development"
@@ -433,6 +550,15 @@
        "create-require-parenthesized": [
         "@mechanical/workflows-coordination"
        ],
+       "create-require-let": [
+        "@mechanical/workflows-composition"
+       ],
+       "create-require-var": [
+        "@mechanical/workflows-development"
+       ],
+       "create-require-local": [
+        "@mechanical/workflows-coordination"
+       ],
        "import-other": [],
        "import-equals-entity": [],
        "dynamic-specifier": [],
@@ -441,7 +567,23 @@
        "require-member": [],
        "create-require-renamed": [],
        "require-resolve": [],
+       "require-resolve-bare": [],
+       "create-require-element": [],
+       "create-require-destructured": [],
+       "create-require-parameter": [],
+       "create-require-property": [],
+       "create-require-string-callee": [],
+       "create-require-other-member": [],
+       "create-require-compound": [],
+       "assigned-other": [],
+       "require-string-callee": [],
+       "import-type-template": [],
+       "require-no-argument": [],
+       "import-type-reference": [],
        "kind-ts": [
+        "@mechanical/workflows-composition"
+       ],
+       "kind-dts": [
         "@mechanical/workflows-composition"
        ],
        "kind-tsx": [
@@ -474,7 +616,315 @@
        "kind-md": [],
        "kind-js-comparison": [],
        "kind-mjs-comparison": [],
-       "kind-cjs-comparison": []
+       "kind-cjs-comparison": [],
+       "kind-js-jsdoc": []
+      },
+      "closed": {
+       "src": [],
+       "manifests": [],
+       "controls": {
+        "manifest-dependency": [
+         "scope"
+        ],
+        "manifest-dev": [
+         "scope"
+        ],
+        "manifest-optional": [
+         "scope"
+        ],
+        "manifest-peer": [
+         "scope"
+        ],
+        "manifest-bundled": [
+         "scope"
+        ],
+        "manifest-bundled-spelling": [
+         "scope"
+        ],
+        "manifest-dependency-list": [
+         "scope"
+        ],
+        "manifest-dev-list": [
+         "scope"
+        ],
+        "manifest-optional-list": [
+         "scope"
+        ],
+        "manifest-peer-list": [
+         "scope"
+        ],
+        "manifest-bundled-map": [
+         "scope"
+        ],
+        "manifest-bundled-spelling-map": [
+         "scope"
+        ],
+        "manifest-own-name": [
+         "scope"
+        ],
+        "manifest-npm-alias": [
+         "scope"
+        ],
+        "manifest-git-spec": [],
+        "manifest-jsr-spec": [
+         "scope"
+        ],
+        "manifest-overrides": [
+         "scope"
+        ],
+        "unscoped-name": [],
+        "near-scope": [],
+        "upper-scope": [],
+        "manifest-npm-infix": [
+         "scope"
+        ],
+        "manifest-list-non-string": [
+         "scope"
+        ],
+        "lock-path": [
+         "scope"
+        ],
+        "lock-nested": [
+         "scope"
+        ],
+        "lock-declared": [
+         "scope"
+        ],
+        "lock-entry-name": [
+         "scope"
+        ],
+        "lock-alias-spec": [
+         "scope"
+        ],
+        "lock-v1-dependencies": [
+         "scope"
+        ],
+        "lock-own-name": [
+         "scope"
+        ],
+        "lock-workspace-path": [
+         "scope"
+        ],
+        "lock-null-entry": [
+         "scope"
+        ],
+        "lock-not-object": [],
+        "lock-v1-nested": [
+         "scope"
+        ],
+        "import-static": [
+         "scope"
+        ],
+        "import-type": [
+         "scope",
+         "field 1 Composition",
+         "field 2 Composition"
+        ],
+        "import-side-effect": [
+         "scope"
+        ],
+        "import-default": [
+         "scope"
+        ],
+        "import-namespace": [
+         "scope"
+        ],
+        "export-from": [
+         "scope"
+        ],
+        "export-named-from": [
+         "scope"
+        ],
+        "export-namespace-from": [
+         "scope"
+        ],
+        "export-type-from": [
+         "scope",
+         "field 1 Composition"
+        ],
+        "dynamic-import": [
+         "scope"
+        ],
+        "require": [
+         "scope"
+        ],
+        "require-template": [
+         "scope"
+        ],
+        "import-equals": [
+         "scope"
+        ],
+        "import-type-node": [
+         "scope",
+         "field 1 Composition"
+        ],
+        "create-require-bound": [
+         "scope"
+        ],
+        "create-require-direct": [
+         "scope"
+        ],
+        "create-require-assigned": [
+         "scope"
+        ],
+        "create-require-nullish-assigned": [
+         "scope"
+        ],
+        "create-require-or-assigned": [
+         "scope"
+        ],
+        "create-require-and-assigned": [
+         "scope"
+        ],
+        "create-require-member": [
+         "scope"
+        ],
+        "reference-types": [
+         "scope"
+        ],
+        "reference-path": [
+         "scope"
+        ],
+        "require-parenthesized": [
+         "scope"
+        ],
+        "require-wrapped-specifier": [
+         "scope"
+        ],
+        "create-require-wrapped-target": [
+         "scope"
+        ],
+        "create-require-asserted": [
+         "scope"
+        ],
+        "create-require-parenthesized": [
+         "scope"
+        ],
+        "create-require-let": [
+         "scope"
+        ],
+        "create-require-var": [
+         "scope"
+        ],
+        "create-require-local": [
+         "scope"
+        ],
+        "import-other": [],
+        "import-equals-entity": [],
+        "dynamic-specifier": [
+         "scope"
+        ],
+        "require-template-substitution": [],
+        "require-alias": [
+         "scope"
+        ],
+        "require-member": [
+         "scope"
+        ],
+        "create-require-renamed": [
+         "scope"
+        ],
+        "require-resolve": [
+         "scope"
+        ],
+        "require-resolve-bare": [
+         "scope"
+        ],
+        "create-require-element": [
+         "scope"
+        ],
+        "create-require-destructured": [
+         "scope"
+        ],
+        "create-require-parameter": [
+         "scope"
+        ],
+        "create-require-property": [
+         "scope"
+        ],
+        "create-require-string-callee": [
+         "scope"
+        ],
+        "create-require-other-member": [
+         "scope"
+        ],
+        "create-require-compound": [
+         "scope"
+        ],
+        "assigned-other": [
+         "scope"
+        ],
+        "require-string-callee": [
+         "scope"
+        ],
+        "import-type-template": [
+         "scope",
+         "field 1 Composition"
+        ],
+        "require-no-argument": [],
+        "import-type-reference": [
+         "field 2 Composition"
+        ],
+        "kind-ts": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-dts": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-tsx": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-mts": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-cts": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-js": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-jsx": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-mjs": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-cjs": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-tsx-jsx": [
+         "scope",
+         "field 1 stepId"
+        ],
+        "kind-jsx-jsx": [
+         "scope",
+         "field 1 stepId"
+        ],
+        "kind-md": [
+         "scope"
+        ],
+        "kind-js-comparison": [
+         "scope"
+        ],
+        "kind-mjs-comparison": [
+         "scope"
+        ],
+        "kind-cjs-comparison": [
+         "scope"
+        ],
+        "kind-js-jsdoc": [
+         "scope"
+        ]
+       }
       }
      }
     },
@@ -502,6 +952,13 @@
        "requirement-id-embedded": 1,
        "requirement-id-suffixed": 1,
        "requirement-id-lowercase": 1,
+       "requirement-id-no-digits": 1,
+       "requirement-id-hyphen-after": 0,
+       "requirement-id-hyphen-before": 0,
+       "requirement-id-lead-embedded": 0,
+       "requirement-id-between": 1,
+       "dotted": 1,
+       "letter-separated": 0,
        "unspelled-consumer": 0
       },
       "readerControls": {
@@ -515,7 +972,11 @@
        "reader-longer": [],
        "reader-longer-prefix": [],
        "reader-template-substitution": [],
+       "reader-identifier": [],
        "kind-ts": [
+        "workflow_inspect"
+       ],
+       "kind-dts": [
         "workflow_inspect"
        ],
        "kind-tsx": [
@@ -548,63 +1009,231 @@
        "kind-md": [],
        "kind-js-comparison": [],
        "kind-mjs-comparison": [],
-       "kind-cjs-comparison": []
+       "kind-cjs-comparison": [],
+       "kind-js-jsdoc": []
       },
-      "whitespace": {
-       "codePoints": [
-        "0009",
-        "000a",
-        "000b",
-        "000c",
-        "000d",
-        "0020",
-        "00a0",
-        "1680",
-        "2000",
-        "2001",
-        "2002",
-        "2003",
-        "2004",
-        "2005",
-        "2006",
-        "2007",
-        "2008",
-        "2009",
-        "200a",
-        "2028",
-        "2029",
-        "202f",
-        "205f",
-        "3000",
-        "feff"
-       ],
-       "spelled": [
-        "0009",
-        "000a",
-        "000b",
-        "000c",
-        "000d",
-        "0020",
-        "00a0",
-        "1680",
-        "2000",
-        "2001",
-        "2002",
-        "2003",
-        "2004",
-        "2005",
-        "2006",
-        "2007",
-        "2008",
-        "2009",
-        "200a",
-        "2028",
-        "2029",
-        "202f",
-        "205f",
-        "3000",
-        "feff"
+      "separators": {
+       "scanned": 65536,
+       "quiet": [
+        "0030",
+        "0031",
+        "0032",
+        "0033",
+        "0034",
+        "0035",
+        "0036",
+        "0037",
+        "0038",
+        "0039",
+        "0041",
+        "0042",
+        "0043",
+        "0044",
+        "0045",
+        "0046",
+        "0047",
+        "0048",
+        "0049",
+        "004a",
+        "004b",
+        "004c",
+        "004d",
+        "004e",
+        "004f",
+        "0050",
+        "0051",
+        "0052",
+        "0053",
+        "0054",
+        "0055",
+        "0056",
+        "0057",
+        "0058",
+        "0059",
+        "005a",
+        "0061",
+        "0062",
+        "0063",
+        "0064",
+        "0065",
+        "0066",
+        "0067",
+        "0068",
+        "0069",
+        "006a",
+        "006b",
+        "006c",
+        "006d",
+        "006e",
+        "006f",
+        "0070",
+        "0071",
+        "0072",
+        "0073",
+        "0074",
+        "0075",
+        "0076",
+        "0077",
+        "0078",
+        "0079",
+        "007a"
        ]
+      },
+      "requirementBoundary": {
+       "before": [
+        "0030",
+        "0031",
+        "0032",
+        "0033",
+        "0034",
+        "0035",
+        "0036",
+        "0037",
+        "0038",
+        "0039",
+        "0041",
+        "0042",
+        "0043",
+        "0044",
+        "0045",
+        "0046",
+        "0047",
+        "0048",
+        "0049",
+        "004a",
+        "004b",
+        "004c",
+        "004d",
+        "004e",
+        "004f",
+        "0050",
+        "0051",
+        "0052",
+        "0053",
+        "0054",
+        "0055",
+        "0056",
+        "0057",
+        "0058",
+        "0059",
+        "005a",
+        "005f",
+        "0061",
+        "0062",
+        "0063",
+        "0064",
+        "0065",
+        "0066",
+        "0067",
+        "0068",
+        "0069",
+        "006a",
+        "006b",
+        "006c",
+        "006d",
+        "006e",
+        "006f",
+        "0070",
+        "0071",
+        "0072",
+        "0073",
+        "0074",
+        "0075",
+        "0076",
+        "0077",
+        "0078",
+        "0079",
+        "007a"
+       ],
+       "after": [
+        "0041",
+        "0042",
+        "0043",
+        "0044",
+        "0045",
+        "0046",
+        "0047",
+        "0048",
+        "0049",
+        "004a",
+        "004b",
+        "004c",
+        "004d",
+        "004e",
+        "004f",
+        "0050",
+        "0051",
+        "0052",
+        "0053",
+        "0054",
+        "0055",
+        "0056",
+        "0057",
+        "0058",
+        "0059",
+        "005a",
+        "005f",
+        "0061",
+        "0062",
+        "0063",
+        "0064",
+        "0065",
+        "0066",
+        "0067",
+        "0068",
+        "0069",
+        "006a",
+        "006b",
+        "006c",
+        "006d",
+        "006e",
+        "006f",
+        "0070",
+        "0071",
+        "0072",
+        "0073",
+        "0074",
+        "0075",
+        "0076",
+        "0077",
+        "0078",
+        "0079",
+        "007a"
+       ]
+      },
+      "closed": {
+       "controls": {
+        "type-name": [],
+        "program-slug": [],
+        "snake-case": [],
+        "embedded": [],
+        "spaced": [],
+        "requirement-id": [],
+        "requirement-id-bare": [],
+        "requirement-id-two-digit": [],
+        "requirement-id-twice": [],
+        "requirement-id-embedded": [],
+        "requirement-id-suffixed": [],
+        "requirement-id-lowercase": [],
+        "requirement-id-no-digits": [],
+        "requirement-id-hyphen-after": [],
+        "requirement-id-hyphen-before": [],
+        "requirement-id-lead-embedded": [],
+        "requirement-id-between": [],
+        "dotted": [],
+        "letter-separated": [],
+        "unspelled-consumer": [
+         "field 1 sourceArtifactId",
+         "field 1 sourceArtifactId"
+        ],
+        "reader-literal": [],
+        "reader-template": [],
+        "reader-comment": [],
+        "reader-longer": [],
+        "reader-longer-prefix": [],
+        "reader-template-substitution": [],
+        "reader-identifier": []
+       }
       }
      }
     }
@@ -815,7 +1444,29 @@
        "foreign": true,
        "lost": true
       },
-      "bound": {}
+      "bound": {},
+      "quiet": {
+       "swap-reasons": {
+        "F1": [],
+        "F2": []
+       },
+       "reorder-refs": {
+        "F1": [],
+        "F2": []
+       },
+       "reorder-unmapped": {
+        "F1": [],
+        "F2": []
+       },
+       "duplicate-ref": {
+        "F1": [],
+        "F2": []
+       },
+       "undefined-scope": {
+        "F1": [],
+        "F2": []
+       }
+      }
      }
     },
     {
@@ -1002,7 +1653,29 @@
        "uncounted": true,
        "miscounted": true
       },
-      "bound": {}
+      "bound": {},
+      "quiet": {
+       "swap-reasons": {
+        "F1": [],
+        "F2": []
+       },
+       "reorder-refs": {
+        "F1": [],
+        "F2": []
+       },
+       "reorder-unmapped": {
+        "F1": [],
+        "F2": []
+       },
+       "duplicate-ref": {
+        "F1": [],
+        "F2": []
+       },
+       "undefined-scope": {
+        "F1": [],
+        "F2": []
+       }
+      }
      }
     },
     {
@@ -1178,7 +1851,29 @@
       "fires": {
        "minted": true
       },
-      "bound": {}
+      "bound": {},
+      "quiet": {
+       "swap-reasons": {
+        "F1": [],
+        "F2": []
+       },
+       "reorder-refs": {
+        "F1": [],
+        "F2": []
+       },
+       "reorder-unmapped": {
+        "F1": [],
+        "F2": []
+       },
+       "duplicate-ref": {
+        "F1": [],
+        "F2": []
+       },
+       "undefined-scope": {
+        "F1": [],
+        "F2": []
+       }
+      }
      }
     }
    ]
@@ -1321,13 +2016,81 @@
         "1 task native-ref+prefix stepId"
        ],
        "task-key-longer": [],
+       "task-standalone-parenthesized": [
+        "1 task prefix stepId"
+       ],
+       "task-standalone-as": [
+        "1 task prefix stepId"
+       ],
+       "task-standalone-satisfies": [
+        "1 task prefix stepId"
+       ],
+       "task-standalone-non-null": [
+        "1 task prefix stepId"
+       ],
+       "task-standalone-angle": [
+        "1 task prefix stepId"
+       ],
+       "task-standalone-receiver": [
+        "1 task prefix stepId"
+       ],
+       "task-standalone-argument": [
+        "1 task prefix stepId"
+       ],
+       "task-inner-parenthesized": [
+        "1 task prefix sourceArtifactId,stepId"
+       ],
+       "task-inner-as": [
+        "1 task prefix sourceArtifactId,stepId"
+       ],
+       "task-inner-satisfies": [
+        "1 task prefix sourceArtifactId,stepId"
+       ],
+       "task-inner-non-null": [
+        "1 task prefix sourceArtifactId,stepId"
+       ],
+       "task-inner-angle": [
+        "1 task prefix sourceArtifactId,stepId"
+       ],
+       "task-private-field": [
+        "4 task prefix #stepId"
+       ],
+       "task-private-holder": [
+        "4 task prefix #step.id"
+       ],
+       "task-private-member": [
+        "4 task prefix step.#id"
+       ],
+       "task-private-leading-word": [],
+       "task-private-holder-longer": [],
+       "task-optional-member": [
+        "1 task prefix step.id"
+       ],
+       "task-leading-underscore-field": [
+        "1 task prefix _stepId"
+       ],
+       "task-token-colon": [],
+       "task-holder-element-key": [],
+       "task-holder-call": [],
+       "task-field-string-argument": [],
+       "task-holder-half-match": [],
+       "task-member-identifier-key": [],
+       "task-member-const-key": [],
+       "task-other-operator": [],
+       "task-other-family": [
+        "1 attempt prefix stepId"
+       ],
        "qa-module": [],
+       "examples-src-module": [],
        "indirect-binding": [],
        "concat-call": [],
        "join-call": [],
        "prefix-constant": [],
        "task-compound": [],
        "kind-ts": [
+        "3 task prefix stepId"
+       ],
+       "kind-dts": [
         "3 task prefix stepId"
        ],
        "kind-tsx": [
@@ -1360,7 +2123,697 @@
        "kind-md": [],
        "kind-js-comparison": [],
        "kind-mjs-comparison": [],
-       "kind-cjs-comparison": []
+       "kind-cjs-comparison": [],
+       "kind-js-jsdoc": []
+      },
+      "inFamily": [
+       "task-template",
+       "task-bd-template",
+       "task-concat",
+       "task-template-chain",
+       "task-parenthesized-chain",
+       "task-split-literal",
+       "task-native-ref",
+       "task-id-key",
+       "task-work-key",
+       "task-beads-work-key",
+       "task-issue-key",
+       "task-hyphen-key",
+       "task-member-id",
+       "task-nested-holder",
+       "task-ids-member",
+       "task-snake-field",
+       "task-kebab-key",
+       "task-plural-field",
+       "task-composition-word",
+       "task-prose-prefix",
+       "task-template-literal-chain",
+       "task-later-value-prefix",
+       "task-underscore-preceded",
+       "task-hyphen-preceded",
+       "task-dot-preceded",
+       "task-token-chars",
+       "task-field-trailing-word",
+       "task-acronym-field",
+       "task-spaced-element-key",
+       "task-template-element-key",
+       "task-wrapped-holder",
+       "task-non-null-holder",
+       "task-wrapped-operand",
+       "task-wrapped-key-value",
+       "task-wrapped-ref-id",
+       "task-standalone-parenthesized",
+       "task-standalone-as",
+       "task-standalone-satisfies",
+       "task-standalone-non-null",
+       "task-standalone-angle",
+       "task-standalone-receiver",
+       "task-standalone-argument",
+       "task-inner-parenthesized",
+       "task-inner-as",
+       "task-inner-satisfies",
+       "task-inner-non-null",
+       "task-inner-angle",
+       "task-private-field",
+       "task-private-holder",
+       "task-private-member",
+       "task-optional-member",
+       "task-leading-underscore-field",
+       "kind-ts",
+       "kind-dts",
+       "kind-tsx",
+       "kind-mts",
+       "kind-cts",
+       "kind-js",
+       "kind-jsx",
+       "kind-mjs",
+       "kind-cjs",
+       "kind-tsx-jsx",
+       "kind-jsx-jsx"
+      ],
+      "scan": {
+       "bd-": {
+        "blocking": [
+         "0030",
+         "0031",
+         "0032",
+         "0033",
+         "0034",
+         "0035",
+         "0036",
+         "0037",
+         "0038",
+         "0039",
+         "0041",
+         "0042",
+         "0043",
+         "0044",
+         "0045",
+         "0046",
+         "0047",
+         "0048",
+         "0049",
+         "004a",
+         "004b",
+         "004c",
+         "004d",
+         "004e",
+         "004f",
+         "0050",
+         "0051",
+         "0052",
+         "0053",
+         "0054",
+         "0055",
+         "0056",
+         "0057",
+         "0058",
+         "0059",
+         "005a",
+         "0061",
+         "0062",
+         "0063",
+         "0064",
+         "0065",
+         "0066",
+         "0067",
+         "0068",
+         "0069",
+         "006a",
+         "006b",
+         "006c",
+         "006d",
+         "006e",
+         "006f",
+         "0070",
+         "0071",
+         "0072",
+         "0073",
+         "0074",
+         "0075",
+         "0076",
+         "0077",
+         "0078",
+         "0079",
+         "007a"
+        ],
+        "running": [
+         "002d",
+         "002e",
+         "0030",
+         "0031",
+         "0032",
+         "0033",
+         "0034",
+         "0035",
+         "0036",
+         "0037",
+         "0038",
+         "0039",
+         "0041",
+         "0042",
+         "0043",
+         "0044",
+         "0045",
+         "0046",
+         "0047",
+         "0048",
+         "0049",
+         "004a",
+         "004b",
+         "004c",
+         "004d",
+         "004e",
+         "004f",
+         "0050",
+         "0051",
+         "0052",
+         "0053",
+         "0054",
+         "0055",
+         "0056",
+         "0057",
+         "0058",
+         "0059",
+         "005a",
+         "005f",
+         "0061",
+         "0062",
+         "0063",
+         "0064",
+         "0065",
+         "0066",
+         "0067",
+         "0068",
+         "0069",
+         "006a",
+         "006b",
+         "006c",
+         "006d",
+         "006e",
+         "006f",
+         "0070",
+         "0071",
+         "0072",
+         "0073",
+         "0074",
+         "0075",
+         "0076",
+         "0077",
+         "0078",
+         "0079",
+         "007a"
+        ]
+       },
+       "wb-": {
+        "blocking": [
+         "0030",
+         "0031",
+         "0032",
+         "0033",
+         "0034",
+         "0035",
+         "0036",
+         "0037",
+         "0038",
+         "0039",
+         "0041",
+         "0042",
+         "0043",
+         "0044",
+         "0045",
+         "0046",
+         "0047",
+         "0048",
+         "0049",
+         "004a",
+         "004b",
+         "004c",
+         "004d",
+         "004e",
+         "004f",
+         "0050",
+         "0051",
+         "0052",
+         "0053",
+         "0054",
+         "0055",
+         "0056",
+         "0057",
+         "0058",
+         "0059",
+         "005a",
+         "0061",
+         "0062",
+         "0063",
+         "0064",
+         "0065",
+         "0066",
+         "0067",
+         "0068",
+         "0069",
+         "006a",
+         "006b",
+         "006c",
+         "006d",
+         "006e",
+         "006f",
+         "0070",
+         "0071",
+         "0072",
+         "0073",
+         "0074",
+         "0075",
+         "0076",
+         "0077",
+         "0078",
+         "0079",
+         "007a"
+        ],
+        "running": [
+         "002d",
+         "002e",
+         "0030",
+         "0031",
+         "0032",
+         "0033",
+         "0034",
+         "0035",
+         "0036",
+         "0037",
+         "0038",
+         "0039",
+         "0041",
+         "0042",
+         "0043",
+         "0044",
+         "0045",
+         "0046",
+         "0047",
+         "0048",
+         "0049",
+         "004a",
+         "004b",
+         "004c",
+         "004d",
+         "004e",
+         "004f",
+         "0050",
+         "0051",
+         "0052",
+         "0053",
+         "0054",
+         "0055",
+         "0056",
+         "0057",
+         "0058",
+         "0059",
+         "005a",
+         "005f",
+         "0061",
+         "0062",
+         "0063",
+         "0064",
+         "0065",
+         "0066",
+         "0067",
+         "0068",
+         "0069",
+         "006a",
+         "006b",
+         "006c",
+         "006d",
+         "006e",
+         "006f",
+         "0070",
+         "0071",
+         "0072",
+         "0073",
+         "0074",
+         "0075",
+         "0076",
+         "0077",
+         "0078",
+         "0079",
+         "007a"
+        ]
+       }
+      },
+      "closed": {
+       "src": [],
+       "bound": [],
+       "controls": {
+        "task-template": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-bd-template": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-concat": [
+         "field 1 composition",
+         "field 1 stepId",
+         "field 1 composition",
+         "field 1 stepId"
+        ],
+        "task-template-chain": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-parenthesized-chain": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-split-literal": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-native-ref": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-id-key": [
+         "field 1 sourceArtifactId",
+         "field 1 sourceArtifactId"
+        ],
+        "task-work-key": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-beads-work-key": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-issue-key": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-hyphen-key": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-member-id": [
+         "field 1 step.id"
+        ],
+        "task-nested-holder": [
+         "field 1 step.id"
+        ],
+        "task-ids-member": [
+         "field 1 sourceArtifacts.ids"
+        ],
+        "task-snake-field": [
+         "field 1 step_id",
+         "field 1 step_id"
+        ],
+        "task-kebab-key": [
+         "field 1 \"source-artifact-id\""
+        ],
+        "task-plural-field": [
+         "field 1 stepsIds",
+         "field 1 stepsIds"
+        ],
+        "task-composition-word": [
+         "field 1 compositions",
+         "field 1 compositions"
+        ],
+        "task-prose-prefix": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-copy": [],
+        "task-no-field": [],
+        "task-split-around-value": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-embedded-prefix": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-template-literal-chain": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-later-value-prefix": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-trailing-prefix": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-digit-preceded": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-upper-preceded": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-underscore-preceded": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-hyphen-preceded": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-dot-preceded": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-token-chars": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-token-broken": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-upper-prefix": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-field-trailing-word": [
+         "field 1 stepIdList",
+         "field 1 stepIdList"
+        ],
+        "task-field-leading-word": [],
+        "task-acronym-field": [
+         "field 1 stepID",
+         "field 1 stepID"
+        ],
+        "task-holder-longer-name": [],
+        "task-decomposition": [],
+        "task-later-composition-word": [],
+        "task-spaced-element-key": [
+         "field 1 \"step id\""
+        ],
+        "task-template-element-key": [
+         "field 1 \"source-artifact-id\""
+        ],
+        "task-wrapped-holder": [
+         "field 1 step.id"
+        ],
+        "task-non-null-holder": [
+         "field 1 step.id"
+        ],
+        "task-wrapped-operand": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-wrapped-key-value": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-wrapped-ref-id": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-key-longer": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-standalone-parenthesized": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-standalone-as": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-standalone-satisfies": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-standalone-non-null": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-standalone-angle": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-standalone-receiver": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-standalone-argument": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-inner-parenthesized": [
+         "field 1 sourceArtifactId",
+         "field 1 stepId",
+         "field 1 sourceArtifactId",
+         "field 1 stepId"
+        ],
+        "task-inner-as": [
+         "field 1 sourceArtifactId",
+         "field 1 stepId",
+         "field 1 sourceArtifactId",
+         "field 1 stepId"
+        ],
+        "task-inner-satisfies": [
+         "field 1 sourceArtifactId",
+         "field 1 stepId",
+         "field 1 sourceArtifactId",
+         "field 1 stepId"
+        ],
+        "task-inner-non-null": [
+         "field 1 sourceArtifactId",
+         "field 1 stepId",
+         "field 1 sourceArtifactId",
+         "field 1 stepId"
+        ],
+        "task-inner-angle": [
+         "field 1 sourceArtifactId",
+         "field 1 stepId",
+         "field 1 sourceArtifactId",
+         "field 1 stepId"
+        ],
+        "task-private-field": [
+         "field 2 #stepId",
+         "field 4 #stepId"
+        ],
+        "task-private-holder": [
+         "field 4 #step.id"
+        ],
+        "task-private-member": [
+         "field 4 step.#id"
+        ],
+        "task-private-leading-word": [],
+        "task-private-holder-longer": [],
+        "task-optional-member": [
+         "field 1 step.id"
+        ],
+        "task-leading-underscore-field": [
+         "field 1 _stepId",
+         "field 1 _stepId"
+        ],
+        "task-token-colon": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-holder-element-key": [],
+        "task-holder-call": [],
+        "task-field-string-argument": [
+         "field 1 \"stepId\""
+        ],
+        "task-holder-half-match": [],
+        "task-member-identifier-key": [],
+        "task-member-const-key": [],
+        "task-other-operator": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-other-family": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "qa-module": [],
+        "examples-src-module": [],
+        "indirect-binding": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "concat-call": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "join-call": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "prefix-constant": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "task-compound": [
+         "field 1 stepId",
+         "field 3 stepId"
+        ],
+        "kind-ts": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-dts": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-tsx": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-mts": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-cts": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-js": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-jsx": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-mjs": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-cjs": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-tsx-jsx": [
+         "scope",
+         "field 1 stepId"
+        ],
+        "kind-jsx-jsx": [
+         "scope",
+         "field 1 stepId"
+        ],
+        "kind-md": [
+         "scope"
+        ],
+        "kind-js-comparison": [
+         "scope"
+        ],
+        "kind-mjs-comparison": [
+         "scope"
+        ],
+        "kind-cjs-comparison": [
+         "scope"
+        ],
+        "kind-js-jsdoc": [
+         "scope"
+        ]
+       }
       }
      }
     },
@@ -1466,6 +2919,26 @@
        "forge-provider-angle-cts": [
         "1 forge native-ref stepId"
        ],
+       "forge-kind-tsx-infix": [
+        "1 forge native-ref stepId"
+       ],
+       "forge-kind-jsx-infix": [
+        "1 forge native-ref stepId"
+       ],
+       "forge-kind-js-infix": [
+        "1 forge native-ref stepId"
+       ],
+       "forge-key-inner-hash": [],
+       "forge-other-family": [
+        "1 task prefix stepId"
+       ],
+       "forge-other-property": [],
+       "forge-provider-other-key": [],
+       "forge-key-comparison": [],
+       "forge-compound-key-template": [],
+       "forge-nested-destructuring": [
+        "1 forge id-key stepId"
+       ],
        "forge-provider-shorthand": [
         "2 forge native-ref stepId"
        ],
@@ -1507,6 +2980,297 @@
        "forge-provider-destructured": [],
        "forge-id-binding": [],
        "forge-key-binding": []
+      },
+      "inFamily": [
+       "forge-native-ref",
+       "forge-gate-ref",
+       "forge-provider-constant",
+       "forge-shadowed-constant",
+       "forge-id-key",
+       "forge-gate-key",
+       "forge-computed-key",
+       "forge-key-constant",
+       "forge-wrapped-computed-key",
+       "forge-assignment",
+       "forge-element-assignment",
+       "forge-element-key-constant",
+       "forge-name-assignment",
+       "forge-declaration",
+       "forge-parameter-default",
+       "forge-destructuring-default",
+       "forge-destructuring-alias",
+       "forge-class-property",
+       "forge-provider-template",
+       "forge-provider-template-constant",
+       "forge-provider-as-const",
+       "forge-provider-constant-as-const",
+       "forge-provider-satisfies",
+       "forge-provider-angle",
+       "forge-provider-angle-mts",
+       "forge-provider-angle-cts",
+       "forge-kind-tsx-infix",
+       "forge-kind-jsx-infix",
+       "forge-kind-js-infix",
+       "forge-nested-destructuring",
+       "forge-provider-shorthand",
+       "forge-wrapped-target",
+       "forge-nullish-assignment",
+       "forge-or-assignment",
+       "forge-and-assignment",
+       "forge-private-field",
+       "forge-private-assignment",
+       "forge-let-declaration",
+       "forge-var-declaration",
+       "forge-static-property",
+       "forge-accessor-property",
+       "forge-array-destructuring-default"
+      ],
+      "closed": {
+       "controls": {
+        "forge-native-ref": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-gate-ref": [
+         "field 1 composition",
+         "field 1 compositionId",
+         "field 1 composition",
+         "field 1 compositionId"
+        ],
+        "forge-provider-constant": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "forge-shadowed-constant": [
+         "field 2 stepId",
+         "field 4 stepId"
+        ],
+        "forge-id-key": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-gate-key": [
+         "field 1 sourceArtifact.id"
+        ],
+        "forge-computed-key": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-key-constant": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "forge-wrapped-computed-key": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-assignment": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-element-assignment": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-element-key-constant": [
+         "field 2 stepId",
+         "field 3 stepId"
+        ],
+        "forge-name-assignment": [
+         "field 1 stepId",
+         "field 3 stepId"
+        ],
+        "forge-declaration": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-parameter-default": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-destructuring-default": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-destructuring-alias": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-class-property": [
+         "field 2 stepId",
+         "field 3 stepId"
+        ],
+        "forge-gate-step-name": [],
+        "forge-copy": [],
+        "builder-argument": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "forge-value-chain": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-provider-import": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "forge-provider-let": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "forge-provider-member": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "forge-key-getter": [
+         "field 1 stepId",
+         "field 3 stepId"
+        ],
+        "forge-compound-key": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-provider-template": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-provider-template-constant": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "forge-provider-as-const": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-provider-constant-as-const": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "forge-provider-satisfies": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-provider-angle": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-provider-angle-mts": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-provider-angle-cts": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-kind-tsx-infix": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-kind-jsx-infix": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-kind-js-infix": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-key-inner-hash": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-other-family": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-other-property": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-provider-other-key": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-key-comparison": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-compound-key-template": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-nested-destructuring": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-provider-shorthand": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "forge-wrapped-target": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-nullish-assignment": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-or-assignment": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-and-assignment": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-private-field": [
+         "field 2 stepId",
+         "field 3 stepId"
+        ],
+        "forge-private-assignment": [
+         "field 3 stepId",
+         "field 4 stepId"
+        ],
+        "forge-let-declaration": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-var-declaration": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-static-property": [
+         "field 2 stepId",
+         "field 3 stepId"
+        ],
+        "forge-accessor-property": [
+         "field 2 stepId",
+         "field 3 stepId"
+        ],
+        "forge-array-destructuring-default": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "other-provider-ref": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-key-method": [
+         "field 1 stepId",
+         "field 3 stepId"
+        ],
+        "forge-provider-destructured": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "forge-id-binding": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-key-binding": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ]
+       }
       }
      }
     },
@@ -1549,8 +3313,252 @@
        ],
        "attempt-no-field": [],
        "attempt-literal": [],
+       "attempt-standalone-parenthesized": [
+        "1 attempt prefix stepId"
+       ],
+       "attempt-standalone-as": [
+        "1 attempt prefix stepId"
+       ],
+       "attempt-standalone-satisfies": [
+        "1 attempt prefix stepId"
+       ],
+       "attempt-standalone-non-null": [
+        "1 attempt prefix stepId"
+       ],
+       "attempt-standalone-angle": [
+        "1 attempt prefix stepId"
+       ],
+       "attempt-standalone-receiver": [
+        "1 attempt prefix stepId"
+       ],
+       "attempt-standalone-argument": [
+        "1 attempt prefix stepId"
+       ],
        "other-field-name": [],
-       "bare-step-name": []
+       "bare-step-name": [],
+       "attempt-other-family": [
+        "1 forge id-key stepId"
+       ]
+      },
+      "inFamily": [
+       "attempt-template",
+       "attempt-concat",
+       "attempt-native-ref",
+       "attempt-id-key",
+       "attempt-furnace-key",
+       "attempt-element-id",
+       "attempt-element-member",
+       "attempt-template-element-member",
+       "attempt-standalone-parenthesized",
+       "attempt-standalone-as",
+       "attempt-standalone-satisfies",
+       "attempt-standalone-non-null",
+       "attempt-standalone-angle",
+       "attempt-standalone-receiver",
+       "attempt-standalone-argument"
+      ],
+      "scan": {
+       "frn-": {
+        "blocking": [
+         "0030",
+         "0031",
+         "0032",
+         "0033",
+         "0034",
+         "0035",
+         "0036",
+         "0037",
+         "0038",
+         "0039",
+         "0041",
+         "0042",
+         "0043",
+         "0044",
+         "0045",
+         "0046",
+         "0047",
+         "0048",
+         "0049",
+         "004a",
+         "004b",
+         "004c",
+         "004d",
+         "004e",
+         "004f",
+         "0050",
+         "0051",
+         "0052",
+         "0053",
+         "0054",
+         "0055",
+         "0056",
+         "0057",
+         "0058",
+         "0059",
+         "005a",
+         "0061",
+         "0062",
+         "0063",
+         "0064",
+         "0065",
+         "0066",
+         "0067",
+         "0068",
+         "0069",
+         "006a",
+         "006b",
+         "006c",
+         "006d",
+         "006e",
+         "006f",
+         "0070",
+         "0071",
+         "0072",
+         "0073",
+         "0074",
+         "0075",
+         "0076",
+         "0077",
+         "0078",
+         "0079",
+         "007a"
+        ],
+        "running": [
+         "002d",
+         "002e",
+         "0030",
+         "0031",
+         "0032",
+         "0033",
+         "0034",
+         "0035",
+         "0036",
+         "0037",
+         "0038",
+         "0039",
+         "0041",
+         "0042",
+         "0043",
+         "0044",
+         "0045",
+         "0046",
+         "0047",
+         "0048",
+         "0049",
+         "004a",
+         "004b",
+         "004c",
+         "004d",
+         "004e",
+         "004f",
+         "0050",
+         "0051",
+         "0052",
+         "0053",
+         "0054",
+         "0055",
+         "0056",
+         "0057",
+         "0058",
+         "0059",
+         "005a",
+         "005f",
+         "0061",
+         "0062",
+         "0063",
+         "0064",
+         "0065",
+         "0066",
+         "0067",
+         "0068",
+         "0069",
+         "006a",
+         "006b",
+         "006c",
+         "006d",
+         "006e",
+         "006f",
+         "0070",
+         "0071",
+         "0072",
+         "0073",
+         "0074",
+         "0075",
+         "0076",
+         "0077",
+         "0078",
+         "0079",
+         "007a"
+        ]
+       }
+      },
+      "closed": {
+       "controls": {
+        "attempt-template": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "attempt-concat": [
+         "field 1 sourceArtifact.id"
+        ],
+        "attempt-native-ref": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "attempt-id-key": [
+         "field 1 composition",
+         "field 1 composition"
+        ],
+        "attempt-furnace-key": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "attempt-element-id": [
+         "field 1 steps.id"
+        ],
+        "attempt-element-member": [
+         "field 1 sourceArtifact.id"
+        ],
+        "attempt-template-element-member": [
+         "field 1 sourceArtifact.id"
+        ],
+        "attempt-no-field": [],
+        "attempt-literal": [],
+        "attempt-standalone-parenthesized": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "attempt-standalone-as": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "attempt-standalone-satisfies": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "attempt-standalone-non-null": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "attempt-standalone-angle": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "attempt-standalone-receiver": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "attempt-standalone-argument": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "other-field-name": [],
+        "bare-step-name": [],
+        "attempt-other-family": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ]
+       }
       }
      }
     }
@@ -1573,6 +3581,7 @@
        "moved": 0,
        "extended": 1,
        "listed": 0,
+       "prefixed": 1,
        "retitled": 0,
        "held": {
         "dropped": false,
@@ -1580,9 +3589,11 @@
         "moved": false,
         "extended": false,
         "listed": false,
+        "prefixed": false,
         "retitled": false
        },
        "secondHeading": "",
+       "secondHeadingBare": "",
        "subHeading": "MechanicalWorkflows is an ordinary function library",
        "html": true,
        "statusReplaced": false,
@@ -1605,7 +3616,204 @@
         "sentence-two": 2,
         "sentence-lower-case-after": 1,
         "sentence-unspaced": 1,
-        "sentence-question": 1
+        "sentence-question": 1,
+        "sentence-exclamation": 1
+       }
+      },
+      "scans": {
+       "status": {
+        "before": [
+         "002d",
+         "0030",
+         "0031",
+         "0032",
+         "0033",
+         "0034",
+         "0035",
+         "0036",
+         "0037",
+         "0038",
+         "0039",
+         "0041",
+         "0042",
+         "0043",
+         "0044",
+         "0045",
+         "0046",
+         "0047",
+         "0048",
+         "0049",
+         "004a",
+         "004b",
+         "004c",
+         "004d",
+         "004e",
+         "004f",
+         "0050",
+         "0051",
+         "0052",
+         "0053",
+         "0054",
+         "0055",
+         "0056",
+         "0057",
+         "0058",
+         "0059",
+         "005a",
+         "005f",
+         "0061",
+         "0062",
+         "0063",
+         "0064",
+         "0065",
+         "0066",
+         "0067",
+         "0068",
+         "0069",
+         "006a",
+         "006b",
+         "006c",
+         "006d",
+         "006e",
+         "006f",
+         "0070",
+         "0071",
+         "0072",
+         "0073",
+         "0074",
+         "0075",
+         "0076",
+         "0077",
+         "0078",
+         "0079",
+         "007a"
+        ],
+        "after": [
+         "002d",
+         "0030",
+         "0031",
+         "0032",
+         "0033",
+         "0034",
+         "0035",
+         "0036",
+         "0037",
+         "0038",
+         "0039",
+         "0041",
+         "0042",
+         "0043",
+         "0044",
+         "0045",
+         "0046",
+         "0047",
+         "0048",
+         "0049",
+         "004a",
+         "004b",
+         "004c",
+         "004d",
+         "004e",
+         "004f",
+         "0050",
+         "0051",
+         "0052",
+         "0053",
+         "0054",
+         "0055",
+         "0056",
+         "0057",
+         "0058",
+         "0059",
+         "005a",
+         "005f",
+         "0061",
+         "0062",
+         "0063",
+         "0064",
+         "0065",
+         "0066",
+         "0067",
+         "0068",
+         "0069",
+         "006a",
+         "006b",
+         "006c",
+         "006d",
+         "006e",
+         "006f",
+         "0070",
+         "0071",
+         "0072",
+         "0073",
+         "0074",
+         "0075",
+         "0076",
+         "0077",
+         "0078",
+         "0079",
+         "007a"
+        ]
+       },
+       "sentence": {
+        "stops": [
+         "002e"
+        ],
+        "gaps": [
+         "0009",
+         "000a",
+         "000b",
+         "000c",
+         "000d",
+         "0020",
+         "00a0",
+         "1680",
+         "2000",
+         "2001",
+         "2002",
+         "2003",
+         "2004",
+         "2005",
+         "2006",
+         "2007",
+         "2008",
+         "2009",
+         "200a",
+         "2028",
+         "2029",
+         "202f",
+         "205f",
+         "3000",
+         "feff"
+        ],
+        "capitals": [
+         "0041",
+         "0042",
+         "0043",
+         "0044",
+         "0045",
+         "0046",
+         "0047",
+         "0048",
+         "0049",
+         "004a",
+         "004b",
+         "004c",
+         "004d",
+         "004e",
+         "004f",
+         "0050",
+         "0051",
+         "0052",
+         "0053",
+         "0054",
+         "0055",
+         "0056",
+         "0057",
+         "0058",
+         "0059",
+         "005a"
+        ]
        }
       }
      }
@@ -1672,6 +3880,10 @@
         "holder-default-import": {
          "census": true,
          "judge": false
+        },
+        "holder-census-infix": {
+         "census": false,
+         "judge": true
         }
        },
        "frozen": {
@@ -1695,12 +3907,224 @@
         ],
         "frozen-template-substitution": [
          "<non-literal TemplateExpression>"
-        ]
+        ],
+        "frozen-no-initializer": null
        }
       }
      }
     }
    ]
   }
- ]
+ ],
+ "membership": {
+  "plants": {
+   "tiled": {
+    "runs": [],
+    "misplaced": []
+   },
+   "comma-after": {
+    "runs": [],
+    "misplaced": []
+   },
+   "semicolon-after": {
+    "runs": [],
+    "misplaced": []
+   },
+   "stop-after": {
+    "runs": [],
+    "misplaced": []
+   },
+   "colon-after": {
+    "runs": [
+     "alpha beta:"
+    ],
+    "misplaced": [
+     "alpha beta"
+    ]
+   },
+   "mid-word-end": {
+    "runs": [
+     "alpha"
+    ],
+    "misplaced": [
+     "alph"
+    ]
+   },
+   "mid-word-start": {
+    "runs": [
+     "xalpha"
+    ],
+    "misplaced": [
+     "alpha"
+    ]
+   },
+   "twice": {
+    "runs": [
+     "alpha",
+     "alpha"
+    ],
+    "misplaced": [
+     "alpha"
+    ]
+   },
+   "gap": {
+    "runs": [
+     "and"
+    ],
+    "misplaced": []
+   },
+   "trailing-run": {
+    "runs": [
+     "gamma"
+    ],
+    "misplaced": []
+   },
+   "leading-run": {
+    "runs": [
+     "alpha"
+    ],
+    "misplaced": []
+   },
+   "lead-not-first": {
+    "runs": [
+     "(c)"
+    ],
+    "misplaced": []
+   },
+   "no-lead": {
+    "runs": [],
+    "misplaced": []
+   },
+   "one-char-quotes": {
+    "runs": [],
+    "misplaced": []
+   },
+   "empty-quote": {
+    "runs": [],
+    "misplaced": [
+     ""
+    ]
+   },
+   "quote-trailing-space": {
+    "runs": [
+     ","
+    ],
+    "misplaced": []
+   }
+  },
+  "scans": {
+   "before": [
+    "0009",
+    "000a",
+    "000b",
+    "000c",
+    "000d",
+    "0020",
+    "00a0",
+    "1680",
+    "2000",
+    "2001",
+    "2002",
+    "2003",
+    "2004",
+    "2005",
+    "2006",
+    "2007",
+    "2008",
+    "2009",
+    "200a",
+    "2028",
+    "2029",
+    "202f",
+    "205f",
+    "3000",
+    "feff"
+   ],
+   "after": [
+    "0009",
+    "000a",
+    "000b",
+    "000c",
+    "000d",
+    "0020",
+    "002c",
+    "002e",
+    "003b",
+    "00a0",
+    "1680",
+    "2000",
+    "2001",
+    "2002",
+    "2003",
+    "2004",
+    "2005",
+    "2006",
+    "2007",
+    "2008",
+    "2009",
+    "200a",
+    "2028",
+    "2029",
+    "202f",
+    "205f",
+    "3000",
+    "feff"
+   ],
+   "afterStop": [
+    "0009",
+    "000a",
+    "000b",
+    "000c",
+    "000d",
+    "0020",
+    "00a0",
+    "1680",
+    "2000",
+    "2001",
+    "2002",
+    "2003",
+    "2004",
+    "2005",
+    "2006",
+    "2007",
+    "2008",
+    "2009",
+    "200a",
+    "2028",
+    "2029",
+    "202f",
+    "205f",
+    "3000",
+    "feff"
+   ],
+   "lead": [
+    "0061",
+    "0062",
+    "0063",
+    "0064",
+    "0065",
+    "0066",
+    "0067",
+    "0068",
+    "0069",
+    "006a",
+    "006b",
+    "006c",
+    "006d",
+    "006e",
+    "006f",
+    "0070",
+    "0071",
+    "0072",
+    "0073",
+    "0074",
+    "0075",
+    "0076",
+    "0077",
+    "0078",
+    "0079",
+    "007a"
+   ]
+  }
+ }
 }
