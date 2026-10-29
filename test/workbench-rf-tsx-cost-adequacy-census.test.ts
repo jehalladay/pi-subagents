@@ -26,17 +26,27 @@
  * - RECORD (row B): recordedComparison reads the frozen TRACEABILITY page and the receipts directory for a comparison row of this
  *   bead; none exists, and none is owed while the gate reads ABSENT.
  * - POLICY (rows B and C): policyOf(source) parses the provider module with the TypeScript compiler as a program of its own, whose
- *   binder resolves each name at its use to the declarations its own scope sees, and reads every deadline timer's delay and every
- *   if whose comparison guards a call passing a stream reason (its operator and its bound). A deadline timer is a setTimeout call
- *   that passes the deadline reason in an argument after its delay, or whose callback stops with it, that is passes it to some
- *   call, whatever the callee: an arrow or function expression, or a call that builds the callback (stop.bind(null, reason)),
- *   parenthesized or not, is read itself; a name is read through every value its own declaration binds it to (a function
- *   declaration's body, a binding's initializer, each assignment to it with =, ||=, &&= or ??=, the property assignment of the
- *   object literal it is destructured from, under its own name or a renamed one), and a value that is itself a name is resolved
- *   again (an alias). A reason is a string literal or a template without substitutions, parenthesized or not, or a name bound by
- *   const to one. A delay or a bound is constant-folded through the const bindings its names resolve to (an inner binding of a
- *   name governs it beside an outer one, a fixed-module fact). An unfoldable value reads null, never a guess: a binding that is
- *   not const (a let binding, the FAIL-CLOSED rows) is never folded.
+ *   binder resolves each name at its use to the declarations its own scope sees, and reads every deadline timer's delay and, for
+ *   every if statement whose condition is a binary expression, each stream reason its then branch passes to a call (the
+ *   condition's operator, and its right operand as the bound). ENUMERATED, NOT GENERAL (wb-q1a0 cut 3, the rule 14 form): what
+ *   follows describes the reader as written; this census claims the forms its C1 rows pin, one row per form, and no family wider
+ *   than them, and every other form it knows of is a NAMED RESIDUAL with a pinned quiet row (RESIDUALS). A deadline timer is a call
+ *   of setTimeout by its bare name, an optional call included, that passes the deadline reason in an argument after its delay, or
+ *   whose callback argument reaches a call passing the deadline reason, whatever the callee. A callback argument is read so: a
+ *   parenthesized one is unwrapped; an arrow function, a function expression or a call (one that builds the callback, as
+ *   stop.bind(null, reason)) is searched whole, nested functions included, for such a call; a name is read through exactly these
+ *   bound values: the body of a function declaration of it, the initializer of a variable declaration of it by its own name
+ *   (const, let, var or any other keyword), the right operand of each binary =, ||=, &&= or ??= anywhere in the module whose left
+ *   operand is the name itself, and, for an element of an object binding pattern of a variable declaration whose initializer is
+ *   itself an object literal (unparenthesized, unasserted), the initializer of that literal's first property assignment whose
+ *   identifier key is the element's identifier key (its own name or a renamed one); a bound value that is a name or parenthesized
+ *   is read again as a callback argument (an alias), and any other bound value is searched whole (so a name bound to an asserted
+ *   arrow reads); no other callback argument is read. A reason is a string literal or a template without substitutions,
+ *   parenthesized or not, or a name whose one declaration is a const declaration of it by its own name, initialized to a reason. A
+ *   delay or a bound is constant-folded through numeric literals, parentheses, +, - and *, and names whose one declaration is such
+ *   a const declaration (an inner binding of a name governs it beside an outer one, a fixed-module fact); a reason or a value is
+ *   followed to a depth of at most 8 (parentheses, names and, in a fold, operators). Anything else reads null, never a guess: a
+ *   binding that is not const (a let binding, the FAIL-CLOSED rows) is never folded.
  * - SCAN (rows B and C): liveEntries() reads every file git lists (tracked or untracked, never ignored) below docs/, src/, qa/,
  *   examples/ and .agents/, and the repository root's .md pages, as UTF-8; a symlink or a file holding a NUL is refused.
  *   scanEntries cuts each text into sentences (after ".", "!", "?" or ";" before white space, at a blank line, before a line
@@ -59,22 +69,34 @@
  *    and none is owed; B2 neither alternative exists: the filing's own note form, given the subject, reads as a finding, the live
  *    pass finds none, and the policy is unchanged.
  *  C1 the provider's deadline and caps equal the statement's 60 s and 256 KiB, read by AST. VARIANTS planted on the live source
- *    each read as pinned: changed for another delay, another bound on the stdout cap or on the binding it names, an inclusive
- *    comparison, an unfoldable delay, a second or duplicate deadline timer, and a second one whose callback is passed by name, by
- *    a shadowed name, by an alias, by a name assigned with =, ||=, &&= or ??=, or by a name destructured from an object literal
- *    (its own or a renamed one), is parenthesized, is built by a call, is given the reason by the timer, or stops with a template,
- *    a parenthesized or a const-bound reason; unchanged for a renamed binding, under a name the module never spells, and for a
- *    timer that kills without the deadline reason under a name beside a function or a binding that does stop with it, under a
- *    block name shadowing such a function, under a name a call passes beside the deadline reason, or given another reason by the
- *    timer. Every census-owned plant text is held to the roster (FORMS). REFACTORS that keep the numerics (the deadline bound in
+ *    each read as pinned, one changed-map row per form named here (wb-q1a0 cut 3: exactly the claimed forms): changed for another
+ *    delay, another bound on the stdout cap or on the binding it names, an inclusive comparison, an unfoldable delay, a duplicate
+ *    deadline timer, and a second deadline timer whose callback is an arrow, a function expression, a parenthesized arrow or a
+ *    call (stop.bind), or that is set by an optional call; whose callback is a name declared by a function declaration, by a const
+ *    in a block shadowing a function of that name that does not stop, by a let or a var declaration initialized to the arrow, by a
+ *    const initialized to a parenthesized or to an asserted arrow, by a const alias of a const arrow, by a let declaration and an
+ *    assignment whose left operand is the name itself (with =, ||=, &&= or ??=), or by an element of an object binding pattern of
+ *    a const declaration whose object literal holds the arrow in its property assignment of that key (the element's own name or a
+ *    renamed key); or that is given the reason by the timer, or stops with a template, a parenthesized or a const-bound reason;
+ *    unchanged for a renamed binding, under a name the module never spells, and for a timer that kills without the deadline reason
+ *    under a name beside a function or a binding that does stop with it, under a block name shadowing such a function, under a
+ *    name a call passes beside the deadline reason, or given another reason by the timer. Every census-owned plant text is held to
+ *    the roster (FORMS). REFACTORS that keep the numerics (the deadline bound in
  *    its function or at module scope, to the variant's name or another; the callback bound, declared, aliased, assigned or
  *    destructured under a name; the reason bound by const to a literal or a template, or passed by the timer; a cap on its own
  *    binding or through an alias, for either stream or both; the caps inlined) each read unchanged and leave every variant's
  *    reading and every FAIL-CLOSED reading exactly as on the live module; each holds its planted form, found where it was planted
  *    and by the binder, never by the policy reader. The FAIL-CLOSED rows read changed with their readings pinned: the stdout cap's
- *    bound read through a let binding of its own (that cap alone reads null), the deadline read through a let binding (null), a
- *    stream reason passed to an unrelated call under a comparison (a third cap), and the deadline reason passed to an unrelated
- *    call in a timer's callback, inline or named (a second deadline). C2 the live scan finds nothing beyond its known positives,
+ *    bound read through a let binding of its own (that cap alone reads null) and the deadline read through a let binding (null);
+ *    and ten ADDITIONS that hand the deadline or a stream reason, in a form the reader reads, to a call that is not the module's
+ *    stop path (wb-q1a0 refusal 2's F3 over-read family, one row each): a stream reason as a literal, a template or a const-bound
+ *    name passed to an unrelated call under a comparison (a third cap, stdout > 0), and the deadline reason passed to an unrelated
+ *    call in a timer's inline callback as a literal, a template or a const-bound name, in a named callback or in a closure a named
+ *    callback returns, by a timer to an unrelated callback, or bound into an unrelated callback (a second deadline, 50000).
+ *    OVER-READS MEASURED at the cut (2026-10-29; not re-read by this file): on these rows' own texts, the eight that are the named
+ *    callback and refusal 2's A01, A02, A03, A03b, A05, A06 and A07 read unchanged under the landed reader (landing 538) and changed
+ *    here, landed-green-to-red 8, and the two let rows and the two literal additions read changed under both; the same eight forms
+ *    planted in the provider's render function read the landed census 10/10 and this one 6/10 (B2, C1, C3, records). C2 the live scan finds nothing beyond its known positives,
  *    and every family spelling, claim inflection, marker, cut rule and walk rule reads as pinned; C3 the guard is
  *    armed at the pin and reports nothing, reports a planted change while armed, and stands down on a listing that holds the report.
  * OUTSIDE ANCHOR: the owner filing's row of wb-693.8 in the tracked bead export (.beads/issues.jsonl), its description only (its
@@ -89,17 +111,30 @@
  * roster (test/fixtures/rf-tsx-cost-adequacy-roster.json) with its witness, each witness carries the digest of its own quote, and
  * a last case reads that every pin ran its own case to the end. SELF-READ: the judged set parses this file's IMPL and requires
  * every entry to name one of READERS and not ROSTER, and reads every case's explicit budget (the judged set's and each pin's 120 s).
- * RESIDUALS (named; each has a pinned quiet row in the pin named): R-RENAMED (A1) a report under another basename or case reads
- *   ABSENT; R-NON-TREE (A1) a report outside the repository tree (a redirected bench directory, a release asset) is never listed,
- *   and the ignored bench directory keeps a bench run's own report out of the tree; R-SCHEMA-SLICE (A2) only the vendored slices
- *   are read, so a value of the wrong type, pattern or enum outside the graph kinds reads valid; R-OTHER-KILL-PATH (C1) a timer
- *   that ends the child without the deadline reason is not read; R-INDIRECT-DEADLINE (C1) a timer whose callback the reader does
- *   not resolve: a wrapper that calls another function (()=>onLate()), a member (handlers.deadline), a parameter (a helper that
- *   sets the timer for a callback it is passed), a name destructured from an array or from a name; R-OTHER-TIMER (C1) a timer set
- *   through any call but a bare setTimeout (globalThis.setTimeout, an aliased node:timers import, setInterval); R-COMPUTED-REASON
- *   (C1) a reason spelled otherwise (a spread, a concatenation, an asserted literal, a let-bound name). The last three forms each
- *   read unchanged as a second timer, and the live timer refactored into any of them reads no deadline, so the census reds
- *   (fail-closed); R-UNANCHORED (C2) a claim about the policy or a cost that names no TSX anchor; R-MARKER-ANYWHERE (C2) a marker
+ * RESIDUALS (named families; every member listed has its own pinned quiet row in the pin named, so silencing or dropping one reds
+ *   the witness; C1's rows are read on the live module by quietRowsOf, each a second timer or cap beside the live ones that reads
+ *   unchanged, and the live timer or cap rewritten into the same form reads no deadline or no cap, so the census reds, fail-closed):
+ *   R-RENAMED (A1) a report under another basename or case reads ABSENT; R-NON-TREE (A1) a report outside the repository tree (a
+ *   redirected bench directory, a release asset) is never listed, and the ignored bench directory keeps a bench run's own report
+ *   out of the tree; R-SCHEMA-SLICE (A2) only the vendored slices are read, so a value of the wrong type, pattern or enum outside
+ *   the graph kinds reads valid; R-OTHER-KILL-PATH (C1) a timer that ends the child without passing the deadline reason to a call:
+ *   a kill timer, a reason assignment beside a kill; R-INDIRECT-DEADLINE (C1) a callback reached only through another call, a
+ *   lookup, a parameter or another module: a wrapper that calls another function (()=>onLate()), a member (handlers.deadline), a
+ *   parameter (a helper that sets the timer for a callback it is passed), a name destructured from an array or from a name, an
+ *   element access (table["deadline"]), a class's static method, an imported name; R-UNREAD-BINDING (C1; refusal 2's F1 members
+ *   K14, K14b, K11, K13, K17, K18 and K19 first) a callback name bound in a form the reader does not follow: a destructuring
+ *   assignment, and one under a renamed key, a renamed destructuring of a shorthand property, a destructuring default, a
+ *   destructuring of a parenthesized or of an asserted object literal, of a method property, under a string key, of a later
+ *   duplicate key, a nested destructuring, a destructuring of a spread literal, an array destructuring assignment, an assignment
+ *   to a parenthesized name; R-WRAPPED-CALLBACK (C1; refusal 2's F2 members K12, K12b, K12c and K23 first) a callback argument, or
+ *   an alias's bound value, wrapped in an expression the reader does not unwrap: an as, a non-null or a satisfies assertion, a
+ *   conditional, an angle-bracket assertion, a nullish or a logical-or fallback, a comma expression, an alias through as, through a
+ *   parenthesized as or through a non-null assertion; R-OTHER-TIMER (C1) a timer set through any call but setTimeout by its bare
+ *   name: globalThis.setTimeout, an aliased node:timers import, setInterval, a parenthesized setTimeout; R-COMPUTED-REASON (C1) a
+ *   reason spelled otherwise: a spread, a concatenation, an asserted literal, a let-bound or a var-bound name, a destructured const
+ *   name, a const name bound to an assertion, a template with a substitution, a member, a spread after the delay, an apply array;
+ *   R-OTHER-CAP-FORM (C1) a stream stop the reader does not read as a cap: under a conditional expression, a logical and, an else
+ *   branch, a loop or a negated condition; R-UNANCHORED (C2) a claim about the policy or a cost that names no TSX anchor; R-MARKER-ANYWHERE (C2) a marker
  *   anywhere in a sentence admits it, whatever it qualifies; R-SPLIT (C2) a claim and its subject in different sentences;
  *   R-PARAPHRASE (C2) a claim outside the claim words; R-LOOKALIKE (C2) a look-alike letter or an inserted invisible inside a claim
  *   word; R-JOINED (C2) an anchor, family or claim word joined to its neighbour inside an identifier (snake_case tsx_cost,
@@ -107,10 +142,12 @@
  *   root file but the .md pages.
  * NOT CLAIMED: a family alternative, claim word or marker that the filing never spells (overhead, latency, sufficient, enough,
  * and every marker but the three gating words) removed from the vocabulary and the roster together; a scan root beyond docs/
- * (the filing's docs/receipt clause) removed from the walk and the roster together.
+ * (the filing's docs/receipt clause) removed from the walk and the roster together; in C1, the reading of any form outside its
+ * VARIANTS, REFACTORS, FAIL-CLOSED rows and quiet rows (undetermined: a form found later is a residual-list addition under rule 14,
+ * never a claim of this file), and the reading of any numerics-preserving refactor outside REFACTORS.
  *
  * wb-q1a0 (the R694 follow-up the wb-693.8 gate routed at landing 538, gate cmd_9dd9399ce5bc: F1 leads, F2-F6 ride; cut 2 answers
- * refusal 1, its U1 and U2 and its F3-F5 riders). F1 the renamed-binding variant binds a name the module never spells, so a
+ * refusal 1, its U1 and U2 and its F3-F5 riders; cut 3 answers refusal 2 in the enumerate-the-resolvable form). F1 the renamed-binding variant binds a name the module never spells, so a
  * refactor that itself names the deadline after the variant reads unchanged (C1 REFACTORS). F3 a deadline callback passed by name,
  * by a shadowed name or built by a call is read as the deadline timer. F2 is the named residual R-JOINED. F4 the scratch walk
  * refuses a NUL-holding file beside the symlink. F5 it skips a root non-.md file, and R-OUTSIDE-ROOTS's quiet row probes one. F6
@@ -123,6 +160,17 @@
  * deadline reason is not read as a declaration of it; F4 names resolve by the binder's scopes, so a block name shadowing a deadline
  * function is read as the block's; F5 a template or const-bound reason is read, the forms still unread are the named residuals
  * R-INDIRECT-DEADLINE, R-OTHER-TIMER and R-COMPUTED-REASON, and the over-reads are pinned FAIL-CLOSED rows.
+ * Refusal 2 (rule 19(c) engaged, cut 3 in the rule 14 form; the reader is cut 2's, unchanged): U1 the POLICY and C1 text claimed
+ * every value a name's declaration binds and every name assigned with = or destructured from an object literal, wider than the
+ * reader, which leaves K14, K14b, K11, K13, K17, K18 and K19 unread; both now enumerate exactly the forms a pinned row reads, and
+ * those seven are R-UNREAD-BINDING quiet rows. U2 the asserted, non-null, satisfies and conditional callbacks K12, K12b, K12c and
+ * K23 were neither read nor named; they are R-WRAPPED-CALLBACK quiet rows, and the name bound to an asserted arrow (K20), which
+ * reads, is a variant, as are the other described forms no row pinned (a function expression, an optional call, a let-, a var- or
+ * a parenthesized-arrow binding). Every further form the cut's probes measured unread is a quiet row (R-OTHER-KILL-PATH,
+ * R-INDIRECT-DEADLINE, R-UNREAD-BINDING, R-WRAPPED-CALLBACK, R-OTHER-TIMER, R-COMPUTED-REASON, R-OTHER-CAP-FORM). (2b) the over-read
+ * additions A01, A02, A03, A03b, A05, A06 and A07 are FAIL-CLOSED rows, one each (A04 is cut 2's named-callback row), with the
+ * landed-green-to-red count above. The quiet rows are read on the live module only (quietRowsOf); a refactor's drift reads the
+ * variants and the FAIL-CLOSED rows, as in cut 2.
  *
  * Display paths added: none. Test-only: every plant is an in-memory text, listing or report, except C2's one scratch git repository
  * per run, made with makeScratch under the leak guard and removed in the same case; src, docs, the roster and the bead export are
@@ -205,8 +253,8 @@ const ROSTER = JSON.parse(readFileSync(join(REPO, ROSTER_FILE), "utf8")) as Rost
 /** The functions that read the subject; every IMPL entry names one directly (SELF-READ). */
 const READERS: readonly string[] = ["gateOf", "guardOf", "instanceAxes", "liveEntries", "policyOf", "recordedComparison", "scanEntries", "validateReport"];
 const RESIDUALS: readonly string[] = [
-  "R-RENAMED", "R-NON-TREE", "R-SCHEMA-SLICE", "R-OTHER-KILL-PATH", "R-INDIRECT-DEADLINE", "R-OTHER-TIMER", "R-COMPUTED-REASON", "R-UNANCHORED",
-  "R-MARKER-ANYWHERE", "R-SPLIT", "R-PARAPHRASE", "R-LOOKALIKE", "R-JOINED", "R-OUTSIDE-ROOTS",
+  "R-RENAMED", "R-NON-TREE", "R-SCHEMA-SLICE", "R-OTHER-KILL-PATH", "R-INDIRECT-DEADLINE", "R-UNREAD-BINDING", "R-WRAPPED-CALLBACK", "R-OTHER-TIMER",
+  "R-COMPUTED-REASON", "R-OTHER-CAP-FORM", "R-UNANCHORED", "R-MARKER-ANYWHERE", "R-SPLIT", "R-PARAPHRASE", "R-LOOKALIKE", "R-JOINED", "R-OUTSIDE-ROOTS",
 ];
 /** The vendored spans, by the site they were read at. */
 const IGNORE_SITE = ".gitignore:52-53";
@@ -875,8 +923,14 @@ const APPENDED: readonly (readonly [string, Plant])[] = [
   ["other timer by a name used beside the deadline reason", (n) => `const ${n("onUsedKill")}=()=>child.kill("SIGKILL");\nrecord(${n("onUsedKill")},"deadline");\nsetTimeout(${n("onUsedKill")},500);`],
   ["other timer passing another reason", () => `setTimeout(stop,500,"stdout");`],
   ["second deadline timer", () => `setTimeout(()=>stop("deadline"),5_000);`],
+  ["second deadline timer by a function expression", () => `setTimeout(function(){stop("deadline");},5_000);`],
+  ["second deadline timer by an optional call", () => `setTimeout?.(()=>stop("deadline"),5_000);`],
   ["second deadline timer by name", (n) => `function ${n("onLateDeadline")}(){stop("deadline");}\nsetTimeout(${n("onLateDeadline")},5_000);`],
   ["second deadline timer by a shadowed name", (n) => `function ${n("onShadowedDeadline")}(){}\n{const ${n("onShadowedDeadline")}=()=>stop("deadline");setTimeout(${n("onShadowedDeadline")},5_000);}`],
+  ["second deadline timer by a let-bound name", (n) => `let ${n("onLateLet")}=()=>stop("deadline");\nsetTimeout(${n("onLateLet")},5_000);`],
+  ["second deadline timer by a var-bound name", (n) => `var ${n("onLateVar")}=()=>stop("deadline");\nsetTimeout(${n("onLateVar")},5_000);`],
+  ["second deadline timer by a name bound to a parenthesized callback", (n) => `const ${n("onLateParenthesized")}=(()=>stop("deadline"));\nsetTimeout(${n("onLateParenthesized")},5_000);`],
+  ["second deadline timer by a name bound to an asserted arrow", (n) => `const ${n("onLateAsserted")}=(()=>stop("deadline")) as ()=>void;\nsetTimeout(${n("onLateAsserted")},5_000);`],
   ["second deadline timer by call", () => `setTimeout(stop.bind(null,"deadline"),5_000);`],
   ["second deadline timer by an alias", (n) => `const ${n("onLateTarget")}=()=>stop("deadline");\nconst ${n("onLateAlias")}=${n("onLateTarget")};\nsetTimeout(${n("onLateAlias")},5_000);`],
   ["second deadline timer by an assigned name", (n) => `let ${n("onLateAssigned")}:()=>void;\n${n("onLateAssigned")}=()=>stop("deadline");\nsetTimeout(${n("onLateAssigned")},5_000);`],
@@ -912,55 +966,118 @@ function variantsOf(source: string): Record<string, Variant> {
   out["renamed deadline binding"] = { text: `const ${renamed}=60_000;\n${plantAt(source, module, "deadline delay", renamed)}`, form: `const ${RENAMED_BASE}=60_000; ${RENAMED_BASE}` };
   return out;
 }
+/** The FAIL-CLOSED additions, appended after the module's last line: each adds a call that is not the module's stop path yet is handed
+ * the deadline or a stream reason in a form the reader reads, so each reads changed, its attribution recoverable (an extra deadline
+ * 50000 or an extra stdout cap > 0). The first three are cut 2's rows; the rest are refusal 2's F3 over-read family (A01, A02, A03,
+ * A03b, A05, A06, A07; its A04 is the named-callback row), each pinned row by row (wb-q1a0 cut 3). */
+const ADDITIONS: readonly (readonly [string, Plant])[] = [
+  ["stream reason in an unrelated call under a comparison", () => `if(n>0) console.debug("stdout");`],
+  ["deadline reason in an unrelated call inside a timer", () => `setTimeout(()=>console.debug("deadline"),50_000);`],
+  ["deadline reason in an unrelated call inside a named timer callback", (n) => `function ${n("onSlowWarning")}(){console.debug("deadline");}\nsetTimeout(${n("onSlowWarning")},50_000);`],
+  ["deadline reason passed by a timer to an unrelated callback", () => `setTimeout(console.warn,50_000,"deadline");`],
+  ["template deadline reason in an unrelated call inside a timer", () => "setTimeout(()=>console.warn(`deadline`),50_000);"],
+  ["template stream reason in an unrelated call under a comparison", () => "if(n>0) console.debug(`stdout`);"],
+  ["const-bound stream reason in an unrelated call under a comparison", (n) => `const ${n("STREAM_LABEL")}="stdout";\nif(n>0) console.debug(${n("STREAM_LABEL")});`],
+  ["deadline reason in a closure a named timer callback returns", (n) => `function ${n("makeLater")}(){return ()=>stop("deadline");}\nsetTimeout(${n("makeLater")},50_000);`],
+  ["const-bound deadline reason in an unrelated call inside a timer", (n) => `const ${n("SLOW_REASON")}="deadline";\nsetTimeout(()=>console.warn(${n("SLOW_REASON")}),50_000);`],
+  ["deadline reason bound into an unrelated callback", () => `setTimeout(console.warn.bind(console,"deadline"),50_000);`],
+];
 /** The FAIL-CLOSED readings of a module: each plant keeps the numerics, or adds an unrelated call, yet reads changed, by design (a
  * let binding is never folded; a stream or deadline reason passed to any call is read as a stop, whatever the callee). */
 function failClosedOf(source: string): Record<string, { readonly text: string; readonly form: string }> {
-  const named: Plant = (n) => `function ${n("onSlowWarning")}(){console.debug("deadline");}\nsetTimeout(${n("onSlowWarning")},50_000);`;
-  return {
+  const fresh = freshNamer(source);
+  const out: Record<string, { readonly text: string; readonly form: string }> = {
     "stdout cap read through a let binding": { text: letCap(source), form: "let STDOUT_LIMIT" },
     "deadline read through a let binding": { text: namedDeadline(source, freshName(source, "DEADLINE_LIMIT"), "function", "let"), form: "let DEADLINE_LIMIT" },
-    "stream reason in an unrelated call under a comparison": { text: `${source}\nif(n>0) console.debug("stdout");\n`, form: `if(n>0) console.debug("stdout");` },
-    "deadline reason in an unrelated call inside a timer": { text: `${source}\nsetTimeout(()=>console.debug("deadline"),50_000);\n`, form: `setTimeout(()=>console.debug("deadline"),50_000);` },
-    "deadline reason in an unrelated call inside a named timer callback": { text: `${source}\n${named(freshNamer(source))}\n`, form: named((base) => base) },
   };
+  for (const [name, plant] of ADDITIONS) out[name] = { text: `${source}\n${plant(fresh)}\n`, form: plant((base) => base) };
+  return out;
 }
-/** The C1 residuals' quiet rows: each plant is a form the reader does not read, so each reads unchanged. */
+/** The C1 residuals' quiet rows: each plant is a form the reader does not read, so each reads unchanged. Every row is a second timer or
+ * cap beside the live ones; the live timer or cap rewritten into the same form reads no deadline or no cap, so the census reds. */
 const RESIDUAL_ROWS: readonly (readonly [string, string, "prepend" | "append", Plant])[] = [
   ["R-OTHER-KILL-PATH", "a kill timer", "prepend", () => `setTimeout(()=>child.kill("SIGKILL"),30_000);`],
+  ["R-OTHER-KILL-PATH", "a reason assignment beside a kill", "append", () => `setTimeout(()=>{stopReason="deadline";child.kill("SIGTERM");},5_000);`],
   ["R-INDIRECT-DEADLINE", "a wrapper", "append", (n) => `const ${n("onLate")}=()=>stop("deadline");\nsetTimeout(()=>${n("onLate")}(),5_000);`],
   ["R-INDIRECT-DEADLINE", "a member", "append", (n) => `const ${n("handlers")}={deadline:()=>stop("deadline")};\nsetTimeout(${n("handlers")}.deadline,5_000);`],
   ["R-INDIRECT-DEADLINE", "a parameter", "append", (n) => `function ${n("armLate")}(${n("onArmed")}:()=>void){setTimeout(${n("onArmed")},5_000);}\n${n("armLate")}(()=>stop("deadline"));`],
   ["R-INDIRECT-DEADLINE", "an array destructuring", "append", (n) => `const [${n("onLateItem")}]=[()=>stop("deadline")];\nsetTimeout(${n("onLateItem")},5_000);`],
   ["R-INDIRECT-DEADLINE", "a destructuring of a name", "append", (n) => `const ${n("lateHandlers")}={${n("onLateKey")}:()=>stop("deadline")};\nconst {${n("onLateKey")}}=${n("lateHandlers")};\nsetTimeout(${n("onLateKey")},5_000);`],
+  ["R-INDIRECT-DEADLINE", "an element access", "append", (n) => `const ${n("lateTable")}={deadline:()=>stop("deadline")};\nsetTimeout(${n("lateTable")}["deadline"],5_000);`],
+  ["R-INDIRECT-DEADLINE", "a class's static method", "append", (n) => `class ${n("LateHandlers")}{static late(){stop("deadline");}}\nsetTimeout(${n("LateHandlers")}.late,5_000);`],
+  ["R-INDIRECT-DEADLINE", "an imported name", "append", (n) => `import { ${n("onImportedLate")} } from "./late.js";\nsetTimeout(${n("onImportedLate")},5_000);`],
+  ["R-UNREAD-BINDING", "a destructuring assignment", "append", (n) => `let ${n("onEarlyDA")}:()=>void=()=>{};\n({${n("onEarlyDA")}}={${n("onEarlyDA")}:()=>stop("deadline")});\nsetTimeout(${n("onEarlyDA")},5_000);`],
+  ["R-UNREAD-BINDING", "a destructuring assignment under a renamed key", "append", (n) => `let ${n("onEarlyDB")}:()=>void=()=>{};\n({late:${n("onEarlyDB")}}={late:()=>stop("deadline")});\nsetTimeout(${n("onEarlyDB")},5_000);`],
+  ["R-UNREAD-BINDING", "a renamed destructuring of a shorthand property", "append", (n) => `const ${n("onEarlySrc")}=()=>stop("deadline");\nconst {${n("onEarlySrc")}:${n("onEarlyCb")}}={${n("onEarlySrc")}};\nsetTimeout(${n("onEarlyCb")},5_000);`],
+  ["R-UNREAD-BINDING", "a destructuring default", "append", (n) => `const {${n("onEarlyDef")}=()=>stop("deadline")}:{${n("onEarlyDef")}?:()=>void}={};\nsetTimeout(${n("onEarlyDef")},5_000);`],
+  ["R-UNREAD-BINDING", "a destructuring of a parenthesized object literal", "append", (n) => `const {late:${n("onEarlyP")}}=({late:()=>stop("deadline")});\nsetTimeout(${n("onEarlyP")},5_000);`],
+  ["R-UNREAD-BINDING", "a destructuring of an asserted object literal", "append", (n) => `const {late:${n("onEarlyAs")}}={late:()=>stop("deadline")} as {late:()=>void};\nsetTimeout(${n("onEarlyAs")},5_000);`],
+  ["R-UNREAD-BINDING", "a destructuring of a method property", "append", (n) => `const {late:${n("onEarlyM")}}={late(){stop("deadline");}};\nsetTimeout(${n("onEarlyM")},5_000);`],
+  ["R-UNREAD-BINDING", "a destructuring under a string key", "append", (n) => `const {"late":${n("onLateQuoted")}}={"late":()=>stop("deadline")};\nsetTimeout(${n("onLateQuoted")},5_000);`],
+  ["R-UNREAD-BINDING", "a destructuring of a later duplicate key", "append", (n) => `const {late:${n("onLateDuplicate")}}={late:()=>{},late:()=>stop("deadline")};\nsetTimeout(${n("onLateDuplicate")},5_000);`],
+  ["R-UNREAD-BINDING", "a nested destructuring", "append", (n) => `const {outer:{late:${n("onLateNested")}}}={outer:{late:()=>stop("deadline")}};\nsetTimeout(${n("onLateNested")},5_000);`],
+  ["R-UNREAD-BINDING", "a destructuring of a spread literal", "append", (n) => `const {late:${n("onLateSpread")}}={...{late:()=>stop("deadline")}};\nsetTimeout(${n("onLateSpread")},5_000);`],
+  ["R-UNREAD-BINDING", "an array destructuring assignment", "append", (n) => `let ${n("onLateArrayed")}:()=>void=()=>{};\n[${n("onLateArrayed")}]=[()=>stop("deadline")];\nsetTimeout(${n("onLateArrayed")},5_000);`],
+  ["R-UNREAD-BINDING", "an assignment to a parenthesized name", "append", (n) => `let ${n("onLateWrapped")}:()=>void=()=>{};\n(${n("onLateWrapped")})=()=>stop("deadline");\nsetTimeout(${n("onLateWrapped")},5_000);`],
+  ["R-WRAPPED-CALLBACK", "an as assertion", "append", () => `setTimeout((()=>stop("deadline")) as ()=>void,5_000);`],
+  ["R-WRAPPED-CALLBACK", "a non-null assertion", "append", (n) => `const ${n("onEarlyNN")}:(()=>void)|undefined=()=>stop("deadline");\nsetTimeout(${n("onEarlyNN")}!,5_000);`],
+  ["R-WRAPPED-CALLBACK", "a satisfies expression", "append", () => `setTimeout((()=>stop("deadline")) satisfies ()=>void,5_000);`],
+  ["R-WRAPPED-CALLBACK", "a conditional", "append", (n) => `const ${n("lateGate")}={aborted:false};\nsetTimeout(${n("lateGate")}.aborted?()=>{}:()=>stop("deadline"),5_000);`],
+  ["R-WRAPPED-CALLBACK", "an angle-bracket assertion", "append", () => `setTimeout(<()=>void>(()=>stop("deadline")),5_000);`],
+  ["R-WRAPPED-CALLBACK", "a nullish fallback", "append", (n) => `const ${n("lateFallback")}:(()=>void)|undefined=undefined;\nsetTimeout(${n("lateFallback")}??(()=>stop("deadline")),5_000);`],
+  ["R-WRAPPED-CALLBACK", "a logical-or fallback", "append", (n) => `const ${n("lateOrFallback")}:(()=>void)|undefined=undefined;\nsetTimeout(${n("lateOrFallback")}||(()=>stop("deadline")),5_000);`],
+  ["R-WRAPPED-CALLBACK", "a comma expression", "append", () => `setTimeout((0,()=>stop("deadline")),5_000);`],
+  ["R-WRAPPED-CALLBACK", "an alias through as", "append", (n) => `const ${n("onLateCast")}=()=>stop("deadline");\nconst ${n("onLateCastAlias")}=${n("onLateCast")} as ()=>void;\nsetTimeout(${n("onLateCastAlias")},5_000);`],
+  ["R-WRAPPED-CALLBACK", "an alias through a parenthesized as", "append", (n) => `const ${n("onLateCastP")}=()=>stop("deadline");\nconst ${n("onLateCastPAlias")}=(${n("onLateCastP")} as ()=>void);\nsetTimeout(${n("onLateCastPAlias")},5_000);`],
+  ["R-WRAPPED-CALLBACK", "an alias through a non-null assertion", "append", (n) => `const ${n("onLateMaybe")}:(()=>void)|undefined=()=>stop("deadline");\nconst ${n("onLateSure")}=${n("onLateMaybe")}!;\nsetTimeout(${n("onLateSure")},5_000);`],
   ["R-OTHER-TIMER", "globalThis.setTimeout", "append", () => `globalThis.setTimeout(()=>stop("deadline"),5_000);`],
   ["R-OTHER-TIMER", "an aliased timers import", "append", (n) => `import { setTimeout as ${n("later")} } from "node:timers";\n${n("later")}(()=>stop("deadline"),5_000);`],
   ["R-OTHER-TIMER", "setInterval", "append", () => `setInterval(()=>stop("deadline"),5_000);`],
+  ["R-OTHER-TIMER", "a parenthesized setTimeout", "append", () => `(setTimeout)(()=>stop("deadline"),5_000);`],
   ["R-COMPUTED-REASON", "a spread", "append", () => `setTimeout(()=>stop(...["deadline"]),5_000);`],
   ["R-COMPUTED-REASON", "a concatenation", "append", () => `setTimeout(()=>stop("dead"+"line"),5_000);`],
   ["R-COMPUTED-REASON", "an assertion", "append", () => `setTimeout(()=>stop("deadline" as const),5_000);`],
   ["R-COMPUTED-REASON", "a let-bound name", "append", (n) => `let ${n("LATE_LET_REASON")}="deadline";\nsetTimeout(()=>stop(${n("LATE_LET_REASON")}),5_000);`],
+  ["R-COMPUTED-REASON", "a var-bound name", "append", (n) => `var ${n("LATE_VAR_REASON")}="deadline";\nsetTimeout(()=>stop(${n("LATE_VAR_REASON")}),5_000);`],
+  ["R-COMPUTED-REASON", "a destructured const name", "append", (n) => `const {${n("lateReason")}}={${n("lateReason")}:"deadline"};\nsetTimeout(()=>stop(${n("lateReason")}),5_000);`],
+  ["R-COMPUTED-REASON", "a const name bound to an assertion", "append", (n) => `const ${n("LATE_ASSERTED_REASON")}="deadline" as const;\nsetTimeout(()=>stop(${n("LATE_ASSERTED_REASON")}),5_000);`],
+  ["R-COMPUTED-REASON", "a template with a substitution", "append", () => `setTimeout(()=>stop(\`dead\${String()}line\`),5_000);`],
+  ["R-COMPUTED-REASON", "a member", "append", (n) => `const ${n("LATE_REASONS")}={late:"deadline"};\nsetTimeout(()=>stop(${n("LATE_REASONS")}.late),5_000);`],
+  ["R-COMPUTED-REASON", "a spread after the delay", "append", () => `setTimeout(stop,5_000,...["deadline"]);`],
+  ["R-COMPUTED-REASON", "an apply array", "append", () => `setTimeout(()=>stop.apply(null,["deadline"]),5_000);`],
+  ["R-OTHER-CAP-FORM", "a conditional expression", "append", () => `stdoutBytes>128*1024 ? stop("stdout") : undefined;`],
+  ["R-OTHER-CAP-FORM", "a logical and", "append", () => `stdoutBytes>128*1024 && stop("stdout");`],
+  ["R-OTHER-CAP-FORM", "an else branch", "append", () => `if(stdoutBytes<=128*1024) {} else stop("stdout");`],
+  ["R-OTHER-CAP-FORM", "a loop", "append", () => `while(stdoutBytes>128*1024) {stop("stdout");break;}`],
+  ["R-OTHER-CAP-FORM", "a negated condition", "append", () => `if(!(stdoutBytes<=128*1024)) stop("stdout");`],
 ];
-/** Every shape-independent reading C1 pins, of one module: the variants' changed flags, every census-owned plant's form, the
- * FAIL-CLOSED readings and the residuals' quiet rows. A REFACTOR that keeps the numerics must leave the variants' and the FAIL-CLOSED
- * readings as on the live module (wb-q1a0 class guard: no pin or variant may turn a numerics-preserving refactor into a red). */
-function readingsOf(source: string): { changed: Record<string, boolean>; forms: Record<string, string>; failClosed: Record<string, JsonObject>; residuals: Record<string, Record<string, string>> } {
-  const fresh = freshNamer(source);
+/** The shape-independent readings C1 compares across modules: the variants' changed flags, the FAIL-CLOSED readings and every one of
+ * their census-owned forms. A REFACTOR that keeps the numerics must leave the variants' and the FAIL-CLOSED readings as on the live
+ * module (wb-q1a0 class guard: no pin or variant may turn a numerics-preserving refactor into a red). */
+function readingsOf(source: string): { changed: Record<string, boolean>; forms: Record<string, string>; failClosed: Record<string, JsonObject> } {
   const variants = variantsOf(source);
   const closed = failClosedOf(source);
-  const residuals: Record<string, Record<string, string>> = {};
   const forms: Record<string, string> = Object.fromEntries(Object.entries(variants).map(([name, variant]) => [name, variant.form]));
   for (const [name, plant] of Object.entries(closed)) forms[name] = plant.form;
+  return {
+    changed: Object.fromEntries(Object.entries(variants).map(([name, variant]) => [name, !samePolicy(policyOf(variant.text))])),
+    forms,
+    failClosed: Object.fromEntries(Object.entries(closed).map(([name, plant]) => [name, policyJson(policyOf(plant.text))])),
+  };
+}
+/** The residuals' quiet rows of one module and their forms, each plant under fresh names. Read on the live module only: they are
+ * census-owned texts beside the module's own timers, and a refactor's drift reads the variants and the FAIL-CLOSED rows (wb-q1a0 cut 3,
+ * which keeps every refactor's comparison as it was and reads each quiet row once). */
+function quietRowsOf(source: string): { forms: Record<string, string>; residuals: Record<string, Record<string, string>> } {
+  const fresh = freshNamer(source);
+  const forms: Record<string, string> = {};
+  const residuals: Record<string, Record<string, string>> = {};
   for (const [id, label, end, plant] of RESIDUAL_ROWS) {
     const text = end === "prepend" ? `${plant(fresh)}\n${source}` : `${source}\n${plant(fresh)}\n`;
     residuals[id] = { ...residuals[id], [label]: samePolicy(policyOf(text)) ? "unchanged" : "read" };
     forms[`${id} ${label}`] = plant((base) => base);
   }
-  return {
-    changed: Object.fromEntries(Object.entries(variants).map(([name, variant]) => [name, !samePolicy(policyOf(variant.text))])),
-    forms,
-    failClosed: Object.fromEntries(Object.entries(closed).map(([name, plant]) => [name, policyJson(policyOf(plant.text))])),
-    residuals,
-  };
+  return { forms, residuals };
 }
 /** The REFACTORS of a module, by name: each keeps the numerics (wb-q1a0 F1, F3, F5 and U1, U2). */
 function refactorsOf(source: string): Record<string, string> {
@@ -1312,6 +1429,7 @@ const IMPL: Record<string, () => Json> = {
     const policy = policyOf(source);
     expect(policy).toEqual(statedShape());
     const live = readingsOf(source);
+    const quiet = quietRowsOf(source);
     expect(live.changed).toEqual({
       "deadline 30 s": true,
       "stdout cap 512 KiB": true,
@@ -1324,8 +1442,14 @@ const IMPL: Record<string, () => Json> = {
       "other timer by a name used beside the deadline reason": false,
       "other timer passing another reason": false,
       "second deadline timer": true,
+      "second deadline timer by a function expression": true,
+      "second deadline timer by an optional call": true,
       "second deadline timer by name": true,
       "second deadline timer by a shadowed name": true,
+      "second deadline timer by a let-bound name": true,
+      "second deadline timer by a var-bound name": true,
+      "second deadline timer by a name bound to a parenthesized callback": true,
+      "second deadline timer by a name bound to an asserted arrow": true,
       "second deadline timer by call": true,
       "second deadline timer by an alias": true,
       "second deadline timer by an assigned name": true,
@@ -1343,12 +1467,63 @@ const IMPL: Record<string, () => Json> = {
       "renamed deadline binding": false,
     });
     // FAIL-CLOSED (by design): each keeps the numerics, or adds an unrelated call, yet reads changed; each reading is pinned.
-    expect(Object.values(live.failClosed).map((reading) => JSON.stringify(reading) === JSON.stringify(statedShape()))).toEqual([false, false, false, false, false]);
-    expect(live.residuals).toEqual({
-      "R-OTHER-KILL-PATH": { "a kill timer": "unchanged" },
-      "R-INDIRECT-DEADLINE": { "a wrapper": "unchanged", "a member": "unchanged", "a parameter": "unchanged", "an array destructuring": "unchanged", "a destructuring of a name": "unchanged" },
-      "R-OTHER-TIMER": { "globalThis.setTimeout": "unchanged", "an aliased timers import": "unchanged", setInterval: "unchanged" },
-      "R-COMPUTED-REASON": { "a spread": "unchanged", "a concatenation": "unchanged", "an assertion": "unchanged", "a let-bound name": "unchanged" },
+    expect(Object.values(live.failClosed).map((reading) => JSON.stringify(reading) === JSON.stringify(statedShape()))).toEqual([false, false, false, false, false, false, false, false, false, false, false, false]);
+    // The quiet rows (wb-q1a0 cut 3, the enumerate-the-resolvable form): every known form the reader does not read, each unchanged.
+    expect(quiet.residuals).toEqual({
+      "R-OTHER-KILL-PATH": { "a kill timer": "unchanged", "a reason assignment beside a kill": "unchanged" },
+      "R-INDIRECT-DEADLINE": {
+        "a wrapper": "unchanged",
+        "a member": "unchanged",
+        "a parameter": "unchanged",
+        "an array destructuring": "unchanged",
+        "a destructuring of a name": "unchanged",
+        "an element access": "unchanged",
+        "a class's static method": "unchanged",
+        "an imported name": "unchanged",
+      },
+      "R-UNREAD-BINDING": {
+        "a destructuring assignment": "unchanged",
+        "a destructuring assignment under a renamed key": "unchanged",
+        "a renamed destructuring of a shorthand property": "unchanged",
+        "a destructuring default": "unchanged",
+        "a destructuring of a parenthesized object literal": "unchanged",
+        "a destructuring of an asserted object literal": "unchanged",
+        "a destructuring of a method property": "unchanged",
+        "a destructuring under a string key": "unchanged",
+        "a destructuring of a later duplicate key": "unchanged",
+        "a nested destructuring": "unchanged",
+        "a destructuring of a spread literal": "unchanged",
+        "an array destructuring assignment": "unchanged",
+        "an assignment to a parenthesized name": "unchanged",
+      },
+      "R-WRAPPED-CALLBACK": {
+        "an as assertion": "unchanged",
+        "a non-null assertion": "unchanged",
+        "a satisfies expression": "unchanged",
+        "a conditional": "unchanged",
+        "an angle-bracket assertion": "unchanged",
+        "a nullish fallback": "unchanged",
+        "a logical-or fallback": "unchanged",
+        "a comma expression": "unchanged",
+        "an alias through as": "unchanged",
+        "an alias through a parenthesized as": "unchanged",
+        "an alias through a non-null assertion": "unchanged",
+      },
+      "R-OTHER-TIMER": { "globalThis.setTimeout": "unchanged", "an aliased timers import": "unchanged", setInterval: "unchanged", "a parenthesized setTimeout": "unchanged" },
+      "R-COMPUTED-REASON": {
+        "a spread": "unchanged",
+        "a concatenation": "unchanged",
+        "an assertion": "unchanged",
+        "a let-bound name": "unchanged",
+        "a var-bound name": "unchanged",
+        "a destructured const name": "unchanged",
+        "a const name bound to an assertion": "unchanged",
+        "a template with a substitution": "unchanged",
+        "a member": "unchanged",
+        "a spread after the delay": "unchanged",
+        "an apply array": "unchanged",
+      },
+      "R-OTHER-CAP-FORM": { "a conditional expression": "unchanged", "a logical and": "unchanged", "an else branch": "unchanged", "a loop": "unchanged", "a negated condition": "unchanged" },
     });
     // REFACTORS (wb-q1a0 F1, F3, F5, U1, U2): each keeps the numerics, so it reads unchanged, and leaves every variant's reading and
     // every FAIL-CLOSED reading exactly as on the live module.
@@ -1368,12 +1543,12 @@ const IMPL: Record<string, () => Json> = {
       policy: policyJson(policy),
       stated: { deadlineMs: statedPolicy().deadlineMs, capBytes: statedPolicy().capBytes },
       changed: live.changed,
-      forms: live.forms,
+      forms: { ...live.forms, ...quiet.forms },
       refactored,
       failClosed: live.failClosed,
       fresh,
       scoped,
-      residuals: live.residuals,
+      residuals: quiet.residuals,
     };
   },
   C2: () => {

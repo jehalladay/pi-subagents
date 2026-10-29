@@ -279,8 +279,14 @@
               "other timer by a name used beside the deadline reason": false,
               "other timer passing another reason": false,
               "second deadline timer": true,
+              "second deadline timer by a function expression": true,
+              "second deadline timer by an optional call": true,
               "second deadline timer by name": true,
               "second deadline timer by a shadowed name": true,
+              "second deadline timer by a let-bound name": true,
+              "second deadline timer by a var-bound name": true,
+              "second deadline timer by a name bound to a parenthesized callback": true,
+              "second deadline timer by a name bound to an asserted arrow": true,
               "second deadline timer by call": true,
               "second deadline timer by an alias": true,
               "second deadline timer by an assigned name": true,
@@ -309,8 +315,14 @@
               "other timer by a name used beside the deadline reason": "const onUsedKill=()=>child.kill(\"SIGKILL\");\nrecord(onUsedKill,\"deadline\");\nsetTimeout(onUsedKill,500);",
               "other timer passing another reason": "setTimeout(stop,500,\"stdout\");",
               "second deadline timer": "setTimeout(()=>stop(\"deadline\"),5_000);",
+              "second deadline timer by a function expression": "setTimeout(function(){stop(\"deadline\");},5_000);",
+              "second deadline timer by an optional call": "setTimeout?.(()=>stop(\"deadline\"),5_000);",
               "second deadline timer by name": "function onLateDeadline(){stop(\"deadline\");}\nsetTimeout(onLateDeadline,5_000);",
               "second deadline timer by a shadowed name": "function onShadowedDeadline(){}\n{const onShadowedDeadline=()=>stop(\"deadline\");setTimeout(onShadowedDeadline,5_000);}",
+              "second deadline timer by a let-bound name": "let onLateLet=()=>stop(\"deadline\");\nsetTimeout(onLateLet,5_000);",
+              "second deadline timer by a var-bound name": "var onLateVar=()=>stop(\"deadline\");\nsetTimeout(onLateVar,5_000);",
+              "second deadline timer by a name bound to a parenthesized callback": "const onLateParenthesized=(()=>stop(\"deadline\"));\nsetTimeout(onLateParenthesized,5_000);",
+              "second deadline timer by a name bound to an asserted arrow": "const onLateAsserted=(()=>stop(\"deadline\")) as ()=>void;\nsetTimeout(onLateAsserted,5_000);",
               "second deadline timer by call": "setTimeout(stop.bind(null,\"deadline\"),5_000);",
               "second deadline timer by an alias": "const onLateTarget=()=>stop(\"deadline\");\nconst onLateAlias=onLateTarget;\nsetTimeout(onLateAlias,5_000);",
               "second deadline timer by an assigned name": "let onLateAssigned:()=>void;\nonLateAssigned=()=>stop(\"deadline\");\nsetTimeout(onLateAssigned,5_000);",
@@ -331,19 +343,67 @@
               "stream reason in an unrelated call under a comparison": "if(n>0) console.debug(\"stdout\");",
               "deadline reason in an unrelated call inside a timer": "setTimeout(()=>console.debug(\"deadline\"),50_000);",
               "deadline reason in an unrelated call inside a named timer callback": "function onSlowWarning(){console.debug(\"deadline\");}\nsetTimeout(onSlowWarning,50_000);",
+              "deadline reason passed by a timer to an unrelated callback": "setTimeout(console.warn,50_000,\"deadline\");",
+              "template deadline reason in an unrelated call inside a timer": "setTimeout(()=>console.warn(`deadline`),50_000);",
+              "template stream reason in an unrelated call under a comparison": "if(n>0) console.debug(`stdout`);",
+              "const-bound stream reason in an unrelated call under a comparison": "const STREAM_LABEL=\"stdout\";\nif(n>0) console.debug(STREAM_LABEL);",
+              "deadline reason in a closure a named timer callback returns": "function makeLater(){return ()=>stop(\"deadline\");}\nsetTimeout(makeLater,50_000);",
+              "const-bound deadline reason in an unrelated call inside a timer": "const SLOW_REASON=\"deadline\";\nsetTimeout(()=>console.warn(SLOW_REASON),50_000);",
+              "deadline reason bound into an unrelated callback": "setTimeout(console.warn.bind(console,\"deadline\"),50_000);",
               "R-OTHER-KILL-PATH a kill timer": "setTimeout(()=>child.kill(\"SIGKILL\"),30_000);",
+              "R-OTHER-KILL-PATH a reason assignment beside a kill": "setTimeout(()=>{stopReason=\"deadline\";child.kill(\"SIGTERM\");},5_000);",
               "R-INDIRECT-DEADLINE a wrapper": "const onLate=()=>stop(\"deadline\");\nsetTimeout(()=>onLate(),5_000);",
               "R-INDIRECT-DEADLINE a member": "const handlers={deadline:()=>stop(\"deadline\")};\nsetTimeout(handlers.deadline,5_000);",
               "R-INDIRECT-DEADLINE a parameter": "function armLate(onArmed:()=>void){setTimeout(onArmed,5_000);}\narmLate(()=>stop(\"deadline\"));",
               "R-INDIRECT-DEADLINE an array destructuring": "const [onLateItem]=[()=>stop(\"deadline\")];\nsetTimeout(onLateItem,5_000);",
               "R-INDIRECT-DEADLINE a destructuring of a name": "const lateHandlers={onLateKey:()=>stop(\"deadline\")};\nconst {onLateKey}=lateHandlers;\nsetTimeout(onLateKey,5_000);",
+              "R-INDIRECT-DEADLINE an element access": "const lateTable={deadline:()=>stop(\"deadline\")};\nsetTimeout(lateTable[\"deadline\"],5_000);",
+              "R-INDIRECT-DEADLINE a class's static method": "class LateHandlers{static late(){stop(\"deadline\");}}\nsetTimeout(LateHandlers.late,5_000);",
+              "R-INDIRECT-DEADLINE an imported name": "import { onImportedLate } from \"./late.js\";\nsetTimeout(onImportedLate,5_000);",
+              "R-UNREAD-BINDING a destructuring assignment": "let onEarlyDA:()=>void=()=>{};\n({onEarlyDA}={onEarlyDA:()=>stop(\"deadline\")});\nsetTimeout(onEarlyDA,5_000);",
+              "R-UNREAD-BINDING a destructuring assignment under a renamed key": "let onEarlyDB:()=>void=()=>{};\n({late:onEarlyDB}={late:()=>stop(\"deadline\")});\nsetTimeout(onEarlyDB,5_000);",
+              "R-UNREAD-BINDING a renamed destructuring of a shorthand property": "const onEarlySrc=()=>stop(\"deadline\");\nconst {onEarlySrc:onEarlyCb}={onEarlySrc};\nsetTimeout(onEarlyCb,5_000);",
+              "R-UNREAD-BINDING a destructuring default": "const {onEarlyDef=()=>stop(\"deadline\")}:{onEarlyDef?:()=>void}={};\nsetTimeout(onEarlyDef,5_000);",
+              "R-UNREAD-BINDING a destructuring of a parenthesized object literal": "const {late:onEarlyP}=({late:()=>stop(\"deadline\")});\nsetTimeout(onEarlyP,5_000);",
+              "R-UNREAD-BINDING a destructuring of an asserted object literal": "const {late:onEarlyAs}={late:()=>stop(\"deadline\")} as {late:()=>void};\nsetTimeout(onEarlyAs,5_000);",
+              "R-UNREAD-BINDING a destructuring of a method property": "const {late:onEarlyM}={late(){stop(\"deadline\");}};\nsetTimeout(onEarlyM,5_000);",
+              "R-UNREAD-BINDING a destructuring under a string key": "const {\"late\":onLateQuoted}={\"late\":()=>stop(\"deadline\")};\nsetTimeout(onLateQuoted,5_000);",
+              "R-UNREAD-BINDING a destructuring of a later duplicate key": "const {late:onLateDuplicate}={late:()=>{},late:()=>stop(\"deadline\")};\nsetTimeout(onLateDuplicate,5_000);",
+              "R-UNREAD-BINDING a nested destructuring": "const {outer:{late:onLateNested}}={outer:{late:()=>stop(\"deadline\")}};\nsetTimeout(onLateNested,5_000);",
+              "R-UNREAD-BINDING a destructuring of a spread literal": "const {late:onLateSpread}={...{late:()=>stop(\"deadline\")}};\nsetTimeout(onLateSpread,5_000);",
+              "R-UNREAD-BINDING an array destructuring assignment": "let onLateArrayed:()=>void=()=>{};\n[onLateArrayed]=[()=>stop(\"deadline\")];\nsetTimeout(onLateArrayed,5_000);",
+              "R-UNREAD-BINDING an assignment to a parenthesized name": "let onLateWrapped:()=>void=()=>{};\n(onLateWrapped)=()=>stop(\"deadline\");\nsetTimeout(onLateWrapped,5_000);",
+              "R-WRAPPED-CALLBACK an as assertion": "setTimeout((()=>stop(\"deadline\")) as ()=>void,5_000);",
+              "R-WRAPPED-CALLBACK a non-null assertion": "const onEarlyNN:(()=>void)|undefined=()=>stop(\"deadline\");\nsetTimeout(onEarlyNN!,5_000);",
+              "R-WRAPPED-CALLBACK a satisfies expression": "setTimeout((()=>stop(\"deadline\")) satisfies ()=>void,5_000);",
+              "R-WRAPPED-CALLBACK a conditional": "const lateGate={aborted:false};\nsetTimeout(lateGate.aborted?()=>{}:()=>stop(\"deadline\"),5_000);",
+              "R-WRAPPED-CALLBACK an angle-bracket assertion": "setTimeout(<()=>void>(()=>stop(\"deadline\")),5_000);",
+              "R-WRAPPED-CALLBACK a nullish fallback": "const lateFallback:(()=>void)|undefined=undefined;\nsetTimeout(lateFallback??(()=>stop(\"deadline\")),5_000);",
+              "R-WRAPPED-CALLBACK a logical-or fallback": "const lateOrFallback:(()=>void)|undefined=undefined;\nsetTimeout(lateOrFallback||(()=>stop(\"deadline\")),5_000);",
+              "R-WRAPPED-CALLBACK a comma expression": "setTimeout((0,()=>stop(\"deadline\")),5_000);",
+              "R-WRAPPED-CALLBACK an alias through as": "const onLateCast=()=>stop(\"deadline\");\nconst onLateCastAlias=onLateCast as ()=>void;\nsetTimeout(onLateCastAlias,5_000);",
+              "R-WRAPPED-CALLBACK an alias through a parenthesized as": "const onLateCastP=()=>stop(\"deadline\");\nconst onLateCastPAlias=(onLateCastP as ()=>void);\nsetTimeout(onLateCastPAlias,5_000);",
+              "R-WRAPPED-CALLBACK an alias through a non-null assertion": "const onLateMaybe:(()=>void)|undefined=()=>stop(\"deadline\");\nconst onLateSure=onLateMaybe!;\nsetTimeout(onLateSure,5_000);",
               "R-OTHER-TIMER globalThis.setTimeout": "globalThis.setTimeout(()=>stop(\"deadline\"),5_000);",
               "R-OTHER-TIMER an aliased timers import": "import { setTimeout as later } from \"node:timers\";\nlater(()=>stop(\"deadline\"),5_000);",
               "R-OTHER-TIMER setInterval": "setInterval(()=>stop(\"deadline\"),5_000);",
+              "R-OTHER-TIMER a parenthesized setTimeout": "(setTimeout)(()=>stop(\"deadline\"),5_000);",
               "R-COMPUTED-REASON a spread": "setTimeout(()=>stop(...[\"deadline\"]),5_000);",
               "R-COMPUTED-REASON a concatenation": "setTimeout(()=>stop(\"dead\"+\"line\"),5_000);",
               "R-COMPUTED-REASON an assertion": "setTimeout(()=>stop(\"deadline\" as const),5_000);",
-              "R-COMPUTED-REASON a let-bound name": "let LATE_LET_REASON=\"deadline\";\nsetTimeout(()=>stop(LATE_LET_REASON),5_000);"
+              "R-COMPUTED-REASON a let-bound name": "let LATE_LET_REASON=\"deadline\";\nsetTimeout(()=>stop(LATE_LET_REASON),5_000);",
+              "R-COMPUTED-REASON a var-bound name": "var LATE_VAR_REASON=\"deadline\";\nsetTimeout(()=>stop(LATE_VAR_REASON),5_000);",
+              "R-COMPUTED-REASON a destructured const name": "const {lateReason}={lateReason:\"deadline\"};\nsetTimeout(()=>stop(lateReason),5_000);",
+              "R-COMPUTED-REASON a const name bound to an assertion": "const LATE_ASSERTED_REASON=\"deadline\" as const;\nsetTimeout(()=>stop(LATE_ASSERTED_REASON),5_000);",
+              "R-COMPUTED-REASON a template with a substitution": "setTimeout(()=>stop(`dead${String()}line`),5_000);",
+              "R-COMPUTED-REASON a member": "const LATE_REASONS={late:\"deadline\"};\nsetTimeout(()=>stop(LATE_REASONS.late),5_000);",
+              "R-COMPUTED-REASON a spread after the delay": "setTimeout(stop,5_000,...[\"deadline\"]);",
+              "R-COMPUTED-REASON an apply array": "setTimeout(()=>stop.apply(null,[\"deadline\"]),5_000);",
+              "R-OTHER-CAP-FORM a conditional expression": "stdoutBytes>128*1024 ? stop(\"stdout\") : undefined;",
+              "R-OTHER-CAP-FORM a logical and": "stdoutBytes>128*1024 && stop(\"stdout\");",
+              "R-OTHER-CAP-FORM an else branch": "if(stdoutBytes<=128*1024) {} else stop(\"stdout\");",
+              "R-OTHER-CAP-FORM a loop": "while(stdoutBytes>128*1024) {stop(\"stdout\");break;}",
+              "R-OTHER-CAP-FORM a negated condition": "if(!(stdoutBytes<=128*1024)) stop(\"stdout\");"
             },
             "refactored": {
               "deadline bound in its function to the variant's name": {
@@ -507,6 +567,140 @@
                     "bound": 262144
                   }
                 ]
+              },
+              "deadline reason passed by a timer to an unrelated callback": {
+                "deadlines": [
+                  60000,
+                  50000
+                ],
+                "caps": [
+                  {
+                    "stream": "stderr",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 262144
+                  }
+                ]
+              },
+              "template deadline reason in an unrelated call inside a timer": {
+                "deadlines": [
+                  60000,
+                  50000
+                ],
+                "caps": [
+                  {
+                    "stream": "stderr",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 262144
+                  }
+                ]
+              },
+              "template stream reason in an unrelated call under a comparison": {
+                "deadlines": [
+                  60000
+                ],
+                "caps": [
+                  {
+                    "stream": "stderr",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 0
+                  }
+                ]
+              },
+              "const-bound stream reason in an unrelated call under a comparison": {
+                "deadlines": [
+                  60000
+                ],
+                "caps": [
+                  {
+                    "stream": "stderr",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 0
+                  }
+                ]
+              },
+              "deadline reason in a closure a named timer callback returns": {
+                "deadlines": [
+                  60000,
+                  50000
+                ],
+                "caps": [
+                  {
+                    "stream": "stderr",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 262144
+                  }
+                ]
+              },
+              "const-bound deadline reason in an unrelated call inside a timer": {
+                "deadlines": [
+                  60000,
+                  50000
+                ],
+                "caps": [
+                  {
+                    "stream": "stderr",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 262144
+                  }
+                ]
+              },
+              "deadline reason bound into an unrelated callback": {
+                "deadlines": [
+                  60000,
+                  50000
+                ],
+                "caps": [
+                  {
+                    "stream": "stderr",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 262144
+                  }
+                ]
               }
             },
             "fresh": {
@@ -518,25 +712,72 @@
             ],
             "residuals": {
               "R-OTHER-KILL-PATH": {
-                "a kill timer": "unchanged"
+                "a kill timer": "unchanged",
+                "a reason assignment beside a kill": "unchanged"
               },
               "R-INDIRECT-DEADLINE": {
                 "a wrapper": "unchanged",
                 "a member": "unchanged",
                 "a parameter": "unchanged",
                 "an array destructuring": "unchanged",
-                "a destructuring of a name": "unchanged"
+                "a destructuring of a name": "unchanged",
+                "an element access": "unchanged",
+                "a class's static method": "unchanged",
+                "an imported name": "unchanged"
+              },
+              "R-UNREAD-BINDING": {
+                "a destructuring assignment": "unchanged",
+                "a destructuring assignment under a renamed key": "unchanged",
+                "a renamed destructuring of a shorthand property": "unchanged",
+                "a destructuring default": "unchanged",
+                "a destructuring of a parenthesized object literal": "unchanged",
+                "a destructuring of an asserted object literal": "unchanged",
+                "a destructuring of a method property": "unchanged",
+                "a destructuring under a string key": "unchanged",
+                "a destructuring of a later duplicate key": "unchanged",
+                "a nested destructuring": "unchanged",
+                "a destructuring of a spread literal": "unchanged",
+                "an array destructuring assignment": "unchanged",
+                "an assignment to a parenthesized name": "unchanged"
+              },
+              "R-WRAPPED-CALLBACK": {
+                "an as assertion": "unchanged",
+                "a non-null assertion": "unchanged",
+                "a satisfies expression": "unchanged",
+                "a conditional": "unchanged",
+                "an angle-bracket assertion": "unchanged",
+                "a nullish fallback": "unchanged",
+                "a logical-or fallback": "unchanged",
+                "a comma expression": "unchanged",
+                "an alias through as": "unchanged",
+                "an alias through a parenthesized as": "unchanged",
+                "an alias through a non-null assertion": "unchanged"
               },
               "R-OTHER-TIMER": {
                 "globalThis.setTimeout": "unchanged",
                 "an aliased timers import": "unchanged",
-                "setInterval": "unchanged"
+                "setInterval": "unchanged",
+                "a parenthesized setTimeout": "unchanged"
               },
               "R-COMPUTED-REASON": {
                 "a spread": "unchanged",
                 "a concatenation": "unchanged",
                 "an assertion": "unchanged",
-                "a let-bound name": "unchanged"
+                "a let-bound name": "unchanged",
+                "a var-bound name": "unchanged",
+                "a destructured const name": "unchanged",
+                "a const name bound to an assertion": "unchanged",
+                "a template with a substitution": "unchanged",
+                "a member": "unchanged",
+                "a spread after the delay": "unchanged",
+                "an apply array": "unchanged"
+              },
+              "R-OTHER-CAP-FORM": {
+                "a conditional expression": "unchanged",
+                "a logical and": "unchanged",
+                "an else branch": "unchanged",
+                "a loop": "unchanged",
+                "a negated condition": "unchanged"
               }
             }
           }
@@ -713,11 +954,23 @@
       "quietPin": "C1"
     },
     {
+      "id": "R-UNREAD-BINDING",
+      "quietPin": "C1"
+    },
+    {
+      "id": "R-WRAPPED-CALLBACK",
+      "quietPin": "C1"
+    },
+    {
       "id": "R-OTHER-TIMER",
       "quietPin": "C1"
     },
     {
       "id": "R-COMPUTED-REASON",
+      "quietPin": "C1"
+    },
+    {
+      "id": "R-OTHER-CAP-FORM",
       "quietPin": "C1"
     },
     {
