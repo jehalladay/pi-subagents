@@ -65,6 +65,7 @@
    "pin": "T1",
    "quiet": [
     "manifest-git-spec",
+    "manifest-jsr-spec",
     "manifest-overrides"
    ],
    "twin": [
@@ -76,7 +77,9 @@
    "pin": "T1",
    "quiet": [
     "dynamic-specifier",
+    "require-template-substitution",
     "require-alias",
+    "require-member",
     "create-require-renamed",
     "require-resolve"
    ],
@@ -85,10 +88,33 @@
    ]
   },
   {
+   "id": "R-LOCK-NESTING",
+   "pin": "T1",
+   "quiet": [
+    "lock-v1-nested"
+   ],
+   "twin": [
+    "lock-v1-dependencies"
+   ]
+  },
+  {
+   "id": "R-MODULE-KIND",
+   "pin": "T1",
+   "quiet": [
+    "kind-md"
+   ],
+   "twin": [
+    "kind-ts"
+   ]
+  },
+  {
    "id": "R-REQUIREMENT-ID",
    "pin": "T2",
    "quiet": [
-    "requirement-id"
+    "requirement-id",
+    "requirement-id-bare",
+    "requirement-id-two-digit",
+    "requirement-id-twice"
    ],
    "twin": [
     "type-name"
@@ -171,7 +197,8 @@
    "quiet": [
     "forge-provider-import",
     "forge-provider-let",
-    "forge-provider-member"
+    "forge-provider-member",
+    "forge-provider-destructured"
    ],
    "twin": [
     "forge-provider-constant"
@@ -181,7 +208,8 @@
    "id": "R-KEY-ACCESSOR",
    "pin": "B2",
    "quiet": [
-    "forge-key-getter"
+    "forge-key-getter",
+    "forge-key-method"
    ],
    "twin": [
     "forge-id-key"
@@ -202,6 +230,17 @@
    "pin": "B2",
    "quiet": [
     "builder-argument"
+   ],
+   "twin": [
+    "forge-native-ref"
+   ]
+  },
+  {
+   "id": "R-POSITION-BINDING",
+   "pin": "B2",
+   "quiet": [
+    "forge-id-binding",
+    "forge-key-binding"
    ],
    "twin": [
     "forge-native-ref"
@@ -234,45 +273,208 @@
        "package-lock.json": [],
        "vendor/dependency-lock.json": []
       },
+      "lockVersions": {
+       "package-lock.json": 3,
+       "vendor/dependency-lock.json": 3
+      },
       "imports": [],
       "controls": {
-       "manifest-dependency": 1,
-       "manifest-dev": 1,
-       "manifest-optional": 1,
-       "manifest-peer": 1,
-       "manifest-bundled": 1,
-       "manifest-bundled-spelling": 1,
-       "manifest-own-name": 1,
-       "manifest-npm-alias": 1,
-       "manifest-git-spec": 0,
-       "manifest-overrides": 0,
-       "unscoped-name": 0,
-       "near-scope": 0,
-       "lock-path": 1,
-       "lock-nested": 1,
-       "lock-declared": 1,
-       "lock-entry-name": 1,
-       "lock-alias-spec": 1,
-       "lock-v1-dependencies": 1,
-       "import-static": 1,
-       "import-type": 1,
-       "export-from": 1,
-       "dynamic-import": 1,
-       "require": 1,
-       "require-template": 1,
-       "import-equals": 1,
-       "import-type-node": 1,
-       "create-require-bound": 1,
-       "create-require-direct": 1,
-       "create-require-assigned": 1,
-       "create-require-member": 1,
-       "reference-types": 1,
-       "reference-path": 1,
-       "import-other": 0,
-       "dynamic-specifier": 0,
-       "require-alias": 0,
-       "create-require-renamed": 0,
-       "require-resolve": 0
+       "manifest-dependency": [
+        "@mechanical/workflows-composition"
+       ],
+       "manifest-dev": [
+        "@mechanical/workflows-development"
+       ],
+       "manifest-optional": [
+        "@mechanical/workflows-coordination"
+       ],
+       "manifest-peer": [
+        "@mechanical/workflows-composition"
+       ],
+       "manifest-bundled": [
+        "@mechanical/workflows-coordination"
+       ],
+       "manifest-bundled-spelling": [
+        "@mechanical/workflows-development"
+       ],
+       "manifest-dependency-list": [
+        "@mechanical/workflows-composition"
+       ],
+       "manifest-dev-list": [
+        "@mechanical/workflows-development"
+       ],
+       "manifest-optional-list": [
+        "@mechanical/workflows-coordination"
+       ],
+       "manifest-peer-list": [
+        "@mechanical/workflows-composition"
+       ],
+       "manifest-bundled-map": [
+        "@mechanical/workflows-coordination"
+       ],
+       "manifest-bundled-spelling-map": [
+        "@mechanical/workflows-development"
+       ],
+       "manifest-own-name": [
+        "@mechanical/workflows-composition"
+       ],
+       "manifest-npm-alias": [
+        "@mechanical/workflows-composition"
+       ],
+       "manifest-git-spec": [],
+       "manifest-jsr-spec": [],
+       "manifest-overrides": [],
+       "unscoped-name": [],
+       "near-scope": [],
+       "lock-path": [
+        "node_modules/@mechanical/workflows-composition"
+       ],
+       "lock-nested": [
+        "node_modules/a/node_modules/@mechanical/workflows-coordination"
+       ],
+       "lock-declared": [
+        "@mechanical/workflows-development"
+       ],
+       "lock-entry-name": [
+        "@mechanical/workflows-composition"
+       ],
+       "lock-alias-spec": [
+        "@mechanical/workflows-development"
+       ],
+       "lock-v1-dependencies": [
+        "@mechanical/workflows-coordination"
+       ],
+       "lock-own-name": [
+        "@mechanical/workflows-composition"
+       ],
+       "lock-workspace-path": [],
+       "lock-v1-nested": [],
+       "import-static": [
+        "@mechanical/workflows-development"
+       ],
+       "import-type": [
+        "@mechanical/workflows-composition"
+       ],
+       "import-side-effect": [
+        "@mechanical/workflows-composition"
+       ],
+       "import-default": [
+        "@mechanical/workflows-development"
+       ],
+       "import-namespace": [
+        "@mechanical/workflows-coordination"
+       ],
+       "export-from": [
+        "@mechanical/workflows-coordination"
+       ],
+       "export-named-from": [
+        "@mechanical/workflows-development"
+       ],
+       "export-namespace-from": [
+        "@mechanical/workflows-composition"
+       ],
+       "export-type-from": [
+        "@mechanical/workflows-composition"
+       ],
+       "dynamic-import": [
+        "@mechanical/workflows-composition"
+       ],
+       "require": [
+        "@mechanical/workflows-composition"
+       ],
+       "require-template": [
+        "@mechanical/workflows-coordination"
+       ],
+       "import-equals": [
+        "@mechanical/workflows-composition"
+       ],
+       "import-type-node": [
+        "@mechanical/workflows-composition"
+       ],
+       "create-require-bound": [
+        "@mechanical/workflows-composition"
+       ],
+       "create-require-direct": [
+        "@mechanical/workflows-coordination"
+       ],
+       "create-require-assigned": [
+        "@mechanical/workflows-composition"
+       ],
+       "create-require-nullish-assigned": [
+        "@mechanical/workflows-development"
+       ],
+       "create-require-or-assigned": [
+        "@mechanical/workflows-coordination"
+       ],
+       "create-require-and-assigned": [
+        "@mechanical/workflows-composition"
+       ],
+       "create-require-member": [
+        "@mechanical/workflows-development"
+       ],
+       "reference-types": [
+        "@mechanical/workflows-composition"
+       ],
+       "reference-path": [
+        "../../node_modules/@mechanical/workflows-composition/index.d.ts"
+       ],
+       "require-parenthesized": [
+        "@mechanical/workflows-composition"
+       ],
+       "require-wrapped-specifier": [
+        "@mechanical/workflows-development"
+       ],
+       "create-require-wrapped-target": [
+        "@mechanical/workflows-coordination"
+       ],
+       "create-require-asserted": [
+        "@mechanical/workflows-composition"
+       ],
+       "create-require-parenthesized": [
+        "@mechanical/workflows-coordination"
+       ],
+       "import-other": [],
+       "import-equals-entity": [],
+       "dynamic-specifier": [],
+       "require-template-substitution": [],
+       "require-alias": [],
+       "require-member": [],
+       "create-require-renamed": [],
+       "require-resolve": [],
+       "kind-ts": [
+        "@mechanical/workflows-composition"
+       ],
+       "kind-tsx": [
+        "@mechanical/workflows-composition"
+       ],
+       "kind-mts": [
+        "@mechanical/workflows-composition"
+       ],
+       "kind-cts": [
+        "@mechanical/workflows-composition"
+       ],
+       "kind-js": [
+        "@mechanical/workflows-composition"
+       ],
+       "kind-jsx": [
+        "@mechanical/workflows-composition"
+       ],
+       "kind-mjs": [
+        "@mechanical/workflows-composition"
+       ],
+       "kind-cjs": [
+        "@mechanical/workflows-composition"
+       ],
+       "kind-tsx-jsx": [
+        "@mechanical/workflows-coordination"
+       ],
+       "kind-jsx-jsx": [
+        "@mechanical/workflows-coordination"
+       ],
+       "kind-md": [],
+       "kind-js-comparison": [],
+       "kind-mjs-comparison": [],
+       "kind-cjs-comparison": []
       }
      }
     },
@@ -294,13 +496,115 @@
        "embedded": 1,
        "spaced": 1,
        "requirement-id": 0,
+       "requirement-id-bare": 0,
+       "requirement-id-two-digit": 0,
+       "requirement-id-twice": 0,
+       "requirement-id-embedded": 1,
+       "requirement-id-suffixed": 1,
+       "requirement-id-lowercase": 1,
        "unspelled-consumer": 0
       },
       "readerControls": {
-       "reader-literal": 1,
-       "reader-template": 1,
-       "reader-comment": 0,
-       "reader-longer": 0
+       "reader-literal": [
+        "workflow_inspect"
+       ],
+       "reader-template": [
+        "workflow_catalog"
+       ],
+       "reader-comment": [],
+       "reader-longer": [],
+       "reader-longer-prefix": [],
+       "reader-template-substitution": [],
+       "kind-ts": [
+        "workflow_inspect"
+       ],
+       "kind-tsx": [
+        "workflow_inspect"
+       ],
+       "kind-mts": [
+        "workflow_inspect"
+       ],
+       "kind-cts": [
+        "workflow_inspect"
+       ],
+       "kind-js": [
+        "workflow_inspect"
+       ],
+       "kind-jsx": [
+        "workflow_inspect"
+       ],
+       "kind-mjs": [
+        "workflow_inspect"
+       ],
+       "kind-cjs": [
+        "workflow_inspect"
+       ],
+       "kind-tsx-jsx": [
+        "workflow_catalog"
+       ],
+       "kind-jsx-jsx": [
+        "workflow_catalog"
+       ],
+       "kind-md": [],
+       "kind-js-comparison": [],
+       "kind-mjs-comparison": [],
+       "kind-cjs-comparison": []
+      },
+      "whitespace": {
+       "codePoints": [
+        "0009",
+        "000a",
+        "000b",
+        "000c",
+        "000d",
+        "0020",
+        "00a0",
+        "1680",
+        "2000",
+        "2001",
+        "2002",
+        "2003",
+        "2004",
+        "2005",
+        "2006",
+        "2007",
+        "2008",
+        "2009",
+        "200a",
+        "2028",
+        "2029",
+        "202f",
+        "205f",
+        "3000",
+        "feff"
+       ],
+       "spelled": [
+        "0009",
+        "000a",
+        "000b",
+        "000c",
+        "000d",
+        "0020",
+        "00a0",
+        "1680",
+        "2000",
+        "2001",
+        "2002",
+        "2003",
+        "2004",
+        "2005",
+        "2006",
+        "2007",
+        "2008",
+        "2009",
+        "200a",
+        "2028",
+        "2029",
+        "202f",
+        "205f",
+        "3000",
+        "feff"
+       ]
       }
      }
     }
@@ -318,7 +622,7 @@
        "foreign",
        "lost"
       ],
-      "fixtures": "83361b3e5e9a2f72",
+      "fixtures": "4f075ab5cb24dfd1",
       "honest": {
        "F1": [],
        "F2": []
@@ -355,7 +659,8 @@
           "ref": {
            "provider": "forge",
            "type": "gate-step",
-           "id": "op-fx-0001/lint"
+           "id": "op-fx-0001/lint",
+           "scope": "fx-workspace"
           }
          }
         ],
@@ -440,6 +745,13 @@
          "foreign",
          "lost"
         ]
+       },
+       "drop-scope": {
+        "F1": [
+         "foreign",
+         "lost"
+        ],
+        "F2": []
        },
        "drop-ref": {
         "F1": [
@@ -514,7 +826,7 @@
        "uncounted",
        "miscounted"
       ],
-      "fixtures": "83361b3e5e9a2f72",
+      "fixtures": "4f075ab5cb24dfd1",
       "honest": {
        "F1": [],
        "F2": []
@@ -551,7 +863,8 @@
           "ref": {
            "provider": "forge",
            "type": "gate-step",
-           "id": "op-fx-0001/lint"
+           "id": "op-fx-0001/lint",
+           "scope": "fx-workspace"
           }
          }
         ],
@@ -625,6 +938,10 @@
         "F2": []
        },
        "add-scope": {
+        "F1": [],
+        "F2": []
+       },
+       "drop-scope": {
         "F1": [],
         "F2": []
        },
@@ -695,7 +1012,7 @@
       "checks": [
        "minted"
       ],
-      "fixtures": "83361b3e5e9a2f72",
+      "fixtures": "4f075ab5cb24dfd1",
       "honest": {
        "F1": [],
        "F2": []
@@ -732,7 +1049,8 @@
           "ref": {
            "provider": "forge",
            "type": "gate-step",
-           "id": "op-fx-0001/lint"
+           "id": "op-fx-0001/lint",
+           "scope": "fx-workspace"
           }
          }
         ],
@@ -805,6 +1123,10 @@
         "F2": []
        },
        "add-scope": {
+        "F1": [],
+        "F2": []
+       },
+       "drop-scope": {
         "F1": [],
         "F2": []
        },
@@ -880,36 +1202,165 @@
       "compositionWord": "composition",
       "live": [],
       "controls": {
-       "task-template": 1,
-       "task-bd-template": 1,
-       "task-concat": 1,
-       "task-template-chain": 1,
-       "task-parenthesized-chain": 1,
-       "task-split-literal": 1,
-       "task-native-ref": 1,
-       "task-id-key": 1,
-       "task-work-key": 1,
-       "task-beads-work-key": 1,
-       "task-issue-key": 1,
-       "task-hyphen-key": 1,
-       "task-member-id": 1,
-       "task-nested-holder": 1,
-       "task-ids-member": 1,
-       "task-snake-field": 1,
-       "task-kebab-key": 1,
-       "task-plural-field": 1,
-       "task-composition-word": 1,
-       "task-prose-prefix": 1,
-       "task-copy": 0,
-       "task-no-field": 0,
-       "task-split-around-value": 0,
-       "task-embedded-prefix": 0,
-       "qa-module": 0,
-       "indirect-binding": 0,
-       "concat-call": 0,
-       "join-call": 0,
-       "prefix-constant": 0,
-       "task-compound": 0
+       "task-template": [
+        "1 task prefix stepId"
+       ],
+       "task-bd-template": [
+        "1 task prefix stepId"
+       ],
+       "task-concat": [
+        "1 task prefix composition,stepId"
+       ],
+       "task-template-chain": [
+        "1 task prefix stepId"
+       ],
+       "task-parenthesized-chain": [
+        "1 task prefix stepId"
+       ],
+       "task-split-literal": [
+        "1 task prefix stepId"
+       ],
+       "task-native-ref": [
+        "1 task native-ref stepId"
+       ],
+       "task-id-key": [
+        "1 task id-key sourceArtifactId"
+       ],
+       "task-work-key": [
+        "1 task id-key stepId"
+       ],
+       "task-beads-work-key": [
+        "1 task id-key stepId"
+       ],
+       "task-issue-key": [
+        "1 task id-key stepId"
+       ],
+       "task-hyphen-key": [
+        "1 task id-key stepId"
+       ],
+       "task-member-id": [
+        "1 task prefix step.id"
+       ],
+       "task-nested-holder": [
+        "1 task prefix step.id"
+       ],
+       "task-ids-member": [
+        "1 task prefix sourceArtifacts.ids"
+       ],
+       "task-snake-field": [
+        "1 task prefix step_id"
+       ],
+       "task-kebab-key": [
+        "1 task prefix source-artifact-id"
+       ],
+       "task-plural-field": [
+        "1 task prefix stepsIds"
+       ],
+       "task-composition-word": [
+        "1 task prefix compositions"
+       ],
+       "task-prose-prefix": [
+        "1 task prefix stepId"
+       ],
+       "task-copy": [],
+       "task-no-field": [],
+       "task-split-around-value": [],
+       "task-embedded-prefix": [],
+       "task-template-literal-chain": [
+        "1 task prefix stepId"
+       ],
+       "task-later-value-prefix": [
+        "1 task prefix stepId"
+       ],
+       "task-trailing-prefix": [],
+       "task-digit-preceded": [],
+       "task-upper-preceded": [],
+       "task-underscore-preceded": [
+        "1 task prefix stepId"
+       ],
+       "task-hyphen-preceded": [
+        "1 task prefix stepId"
+       ],
+       "task-dot-preceded": [
+        "1 task prefix stepId"
+       ],
+       "task-token-chars": [
+        "1 task prefix stepId"
+       ],
+       "task-token-broken": [],
+       "task-upper-prefix": [],
+       "task-field-trailing-word": [
+        "1 task prefix stepIdList"
+       ],
+       "task-field-leading-word": [],
+       "task-acronym-field": [
+        "1 task prefix stepID"
+       ],
+       "task-holder-longer-name": [],
+       "task-decomposition": [],
+       "task-later-composition-word": [],
+       "task-spaced-element-key": [
+        "1 task prefix step id"
+       ],
+       "task-template-element-key": [
+        "1 task prefix source-artifact-id"
+       ],
+       "task-wrapped-holder": [
+        "1 task prefix step.id"
+       ],
+       "task-non-null-holder": [
+        "1 task prefix step.id"
+       ],
+       "task-wrapped-operand": [
+        "1 task prefix stepId"
+       ],
+       "task-wrapped-key-value": [
+        "1 task id-key+prefix stepId"
+       ],
+       "task-wrapped-ref-id": [
+        "1 task native-ref+prefix stepId"
+       ],
+       "task-key-longer": [],
+       "qa-module": [],
+       "indirect-binding": [],
+       "concat-call": [],
+       "join-call": [],
+       "prefix-constant": [],
+       "task-compound": [],
+       "kind-ts": [
+        "3 task prefix stepId"
+       ],
+       "kind-tsx": [
+        "3 task prefix stepId"
+       ],
+       "kind-mts": [
+        "3 task prefix stepId"
+       ],
+       "kind-cts": [
+        "3 task prefix stepId"
+       ],
+       "kind-js": [
+        "3 task prefix stepId"
+       ],
+       "kind-jsx": [
+        "3 task prefix stepId"
+       ],
+       "kind-mjs": [
+        "3 task prefix stepId"
+       ],
+       "kind-cjs": [
+        "3 task prefix stepId"
+       ],
+       "kind-tsx-jsx": [
+        "1 task prefix stepId"
+       ],
+       "kind-jsx-jsx": [
+        "1 task prefix stepId"
+       ],
+       "kind-md": [],
+       "kind-js-comparison": [],
+       "kind-mjs-comparison": [],
+       "kind-cjs-comparison": []
       }
      }
     },
@@ -927,32 +1378,135 @@
       ],
       "live": [],
       "controls": {
-       "forge-native-ref": 1,
-       "forge-gate-ref": 1,
-       "forge-provider-constant": 1,
-       "forge-shadowed-constant": 1,
-       "forge-id-key": 1,
-       "forge-gate-key": 1,
-       "forge-computed-key": 1,
-       "forge-key-constant": 1,
-       "forge-assignment": 1,
-       "forge-element-assignment": 1,
-       "forge-element-key-constant": 1,
-       "forge-name-assignment": 1,
-       "forge-declaration": 1,
-       "forge-parameter-default": 1,
-       "forge-destructuring-default": 1,
-       "forge-destructuring-alias": 1,
-       "forge-class-property": 1,
-       "forge-gate-step-name": 0,
-       "forge-copy": 0,
-       "builder-argument": 0,
-       "forge-value-chain": 0,
-       "forge-provider-import": 0,
-       "forge-provider-let": 0,
-       "forge-provider-member": 0,
-       "forge-key-getter": 0,
-       "forge-compound-key": 0
+       "forge-native-ref": [
+        "1 forge native-ref stepId"
+       ],
+       "forge-gate-ref": [
+        "1 forge native-ref composition,compositionId"
+       ],
+       "forge-provider-constant": [
+        "2 forge native-ref stepId"
+       ],
+       "forge-shadowed-constant": [
+        "4 forge native-ref stepId",
+        "4 task native-ref stepId"
+       ],
+       "forge-id-key": [
+        "1 forge id-key stepId"
+       ],
+       "forge-gate-key": [
+        "1 forge id-key sourceArtifact.id"
+       ],
+       "forge-computed-key": [
+        "1 forge id-key stepId"
+       ],
+       "forge-key-constant": [
+        "2 forge id-key stepId"
+       ],
+       "forge-wrapped-computed-key": [
+        "1 forge id-key stepId"
+       ],
+       "forge-assignment": [
+        "2 forge id-key stepId"
+       ],
+       "forge-element-assignment": [
+        "2 forge id-key stepId"
+       ],
+       "forge-element-key-constant": [
+        "3 forge id-key stepId"
+       ],
+       "forge-name-assignment": [
+        "3 forge id-key stepId"
+       ],
+       "forge-declaration": [
+        "2 forge id-key stepId"
+       ],
+       "forge-parameter-default": [
+        "1 forge id-key stepId"
+       ],
+       "forge-destructuring-default": [
+        "1 forge id-key stepId"
+       ],
+       "forge-destructuring-alias": [
+        "1 forge id-key stepId"
+       ],
+       "forge-class-property": [
+        "3 forge id-key stepId"
+       ],
+       "forge-gate-step-name": [],
+       "forge-copy": [],
+       "builder-argument": [],
+       "forge-value-chain": [],
+       "forge-provider-import": [],
+       "forge-provider-let": [],
+       "forge-provider-member": [],
+       "forge-key-getter": [],
+       "forge-compound-key": [],
+       "forge-provider-template": [
+        "1 forge native-ref stepId"
+       ],
+       "forge-provider-template-constant": [
+        "2 forge native-ref stepId"
+       ],
+       "forge-provider-as-const": [
+        "1 forge native-ref stepId"
+       ],
+       "forge-provider-constant-as-const": [
+        "2 forge native-ref stepId"
+       ],
+       "forge-provider-satisfies": [
+        "1 forge native-ref stepId"
+       ],
+       "forge-provider-angle": [
+        "1 forge native-ref stepId"
+       ],
+       "forge-provider-angle-mts": [
+        "1 forge native-ref stepId"
+       ],
+       "forge-provider-angle-cts": [
+        "1 forge native-ref stepId"
+       ],
+       "forge-provider-shorthand": [
+        "2 forge native-ref stepId"
+       ],
+       "forge-wrapped-target": [
+        "2 forge id-key stepId"
+       ],
+       "forge-nullish-assignment": [
+        "2 forge id-key stepId"
+       ],
+       "forge-or-assignment": [
+        "2 forge id-key stepId"
+       ],
+       "forge-and-assignment": [
+        "2 forge id-key stepId"
+       ],
+       "forge-private-field": [
+        "3 forge id-key stepId"
+       ],
+       "forge-private-assignment": [
+        "4 forge id-key stepId"
+       ],
+       "forge-let-declaration": [
+        "2 forge id-key stepId"
+       ],
+       "forge-var-declaration": [
+        "2 forge id-key stepId"
+       ],
+       "forge-static-property": [
+        "3 forge id-key stepId"
+       ],
+       "forge-accessor-property": [
+        "3 forge id-key stepId"
+       ],
+       "forge-array-destructuring-default": [
+        "1 forge id-key stepId"
+       ],
+       "other-provider-ref": [],
+       "forge-key-method": [],
+       "forge-provider-destructured": [],
+       "forge-id-binding": [],
+       "forge-key-binding": []
       }
      }
     },
@@ -969,17 +1523,34 @@
       ],
       "live": [],
       "controls": {
-       "attempt-template": 1,
-       "attempt-concat": 1,
-       "attempt-native-ref": 1,
-       "attempt-id-key": 1,
-       "attempt-furnace-key": 1,
-       "attempt-element-id": 1,
-       "attempt-element-member": 1,
-       "attempt-no-field": 0,
-       "attempt-literal": 0,
-       "other-field-name": 0,
-       "bare-step-name": 0
+       "attempt-template": [
+        "1 attempt prefix stepId"
+       ],
+       "attempt-concat": [
+        "1 attempt prefix sourceArtifact.id"
+       ],
+       "attempt-native-ref": [
+        "1 attempt native-ref stepId"
+       ],
+       "attempt-id-key": [
+        "1 attempt id-key composition"
+       ],
+       "attempt-furnace-key": [
+        "1 attempt id-key stepId"
+       ],
+       "attempt-element-id": [
+        "1 attempt prefix steps.id"
+       ],
+       "attempt-element-member": [
+        "1 attempt prefix sourceArtifact.id"
+       ],
+       "attempt-template-element-member": [
+        "1 attempt prefix sourceArtifact.id"
+       ],
+       "attempt-no-field": [],
+       "attempt-literal": [],
+       "other-field-name": [],
+       "bare-step-name": []
       }
      }
     }
@@ -1001,16 +1572,41 @@
        "doubled": 2,
        "moved": 0,
        "extended": 1,
+       "listed": 0,
+       "retitled": 0,
        "held": {
         "dropped": false,
         "doubled": false,
         "moved": false,
-        "extended": false
+        "extended": false,
+        "listed": false,
+        "retitled": false
        },
        "secondHeading": "",
+       "subHeading": "MechanicalWorkflows is an ordinary function library",
+       "html": true,
        "statusReplaced": false,
        "statusEmbedded": false,
-       "twoSentences": 2
+       "twoSentences": 2,
+       "status": {
+        "status-whole": true,
+        "status-punctuated": true,
+        "status-letter-before": false,
+        "status-digit-before": false,
+        "status-underscore-before": false,
+        "status-hyphen-before": false,
+        "status-letter-after": false,
+        "status-digit-after": false,
+        "status-underscore-after": false,
+        "status-hyphen-after": false,
+        "status-capitalized": false
+       },
+       "sentences": {
+        "sentence-two": 2,
+        "sentence-lower-case-after": 1,
+        "sentence-unspaced": 1,
+        "sentence-question": 1
+       }
       }
      }
     },
@@ -1056,6 +1652,26 @@
         "holder-judge-alias": {
          "census": true,
          "judge": true
+        },
+        "holder-header-not-first": {
+         "census": false,
+         "judge": true
+        },
+        "holder-other-header": {
+         "census": false,
+         "judge": true
+        },
+        "holder-renamed-to-judge": {
+         "census": true,
+         "judge": false
+        },
+        "holder-namespace-import": {
+         "census": true,
+         "judge": false
+        },
+        "holder-default-import": {
+         "census": true,
+         "judge": false
         }
        },
        "frozen": {
@@ -1068,7 +1684,18 @@
          "today | test"
         ],
         "frozen-other-name": null,
-        "frozen-not-array": null
+        "frozen-not-array": null,
+        "frozen-as-const": [
+         "quote | a",
+         "today | test"
+        ],
+        "frozen-template-element": [
+         "quote | a",
+         "today | test"
+        ],
+        "frozen-template-substitution": [
+         "<non-literal TemplateExpression>"
+        ]
        }
       }
      }

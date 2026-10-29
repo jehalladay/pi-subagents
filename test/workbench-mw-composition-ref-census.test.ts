@@ -9,105 +9,137 @@
  * the acceptance ("Acceptance shape:", clauses (a)-(c)); row T's label is the trigger sentence and rows A-C are the three
  * clauses, each verbatim without its separator, read back from that line in the judged-set case.
  *
- * MEASURED (read-only). Producer, first by seat ws-06 of g10-work-s125 on 2026-10-28 and re-read by seat ws-02 of g10-work-s136
- * on 2026-10-29: the local MechanicalWorkflows checkout (git show, never written) at the filing pin 4b8b974ca72b, and depth-1
- * scratch clones of the remote tip (git ls-remote origin HEAD: f489cee4ce20 on 2026-10-28, cb45df94cd8e committed
- * 2026-10-28T23:14:59Z on 2026-10-29, whose two program documents are blob-identical to f489cee4ce20's): at both pins
- * 01-composition-contracts.md:6 reads the type "as a concept only" (the tip widens the non-minting list to "Forge
- * operations/gates, Furnace attempts, Git revisions or HyperUnix answers (a non-exhaustive list)"), README.md:3 opens
- * "Design-only as of 2026-10-18 (19ca8d4): the two program documents are the only artifacts", and at the tip no file under
- * packages/, contracts/, schemas/ or apps/ spells the type or a workflow-composition schema (the type is spelled only in
- * docs/10-current-state-and-gaps.md:357, a prose mention, and the program document; under packages/ only a test reading the
- * program documents by path names the program). The producer block holds those facts; this hermetic census never re-reads the
- * producer. Pi, by seat ws-02 at trunk 1ad30c3 and again at 04123dc (landing 671 changed no src path or manifest; 117 src
- * modules): package.json and both locks (package-lock.json, vendor/dependency-lock.json) declare no @mechanical/ name and hold
- * no npm: alias spec, no src module loads one by any form T1 reads, no src file spells the program's words, no src module
- * builds a bd-/wb-/frn- or cmd_ string from a value (the only
- * frn- and bd- literals, src/workbench/hosts/furnace-hosted.ts's preflight context, are fixed strings), and every form B reads
- * finds one family construction from a value in src, the Forge gate-step id below, which reads no field. The workflow_catalog
- * and workflow_inspect readers the trigger names live in src/index.ts (their registrations) and src/workbench/tool-replies.ts
- * (their reply builders).
+ * MEASURED (read-only; the measuring seats' record, which no case re-reads beyond what rows T-C pin). Producer, first by seat
+ * ws-06 of g10-work-s125 on 2026-10-28 and re-read by seat ws-02 of g10-work-s136 on 2026-10-29 (its remote tip re-read again by
+ * seat ws-06 of g10-work-s138 on 2026-10-29: git ls-remote origin HEAD still cb45df94cd8e): the local MechanicalWorkflows
+ * checkout (git show, never written) at the filing pin 4b8b974ca72b, and depth-1 scratch clones of the remote tip (git ls-remote
+ * origin HEAD: f489cee4ce20 on 2026-10-28, cb45df94cd8e committed 2026-10-28T23:14:59Z on 2026-10-29, whose two program documents
+ * are blob-identical to f489cee4ce20's): at both pins 01-composition-contracts.md:6 reads the type "as a concept only" (the tip
+ * widens the non-minting list to "Forge operations/gates, Furnace attempts, Git revisions or HyperUnix answers (a non-exhaustive
+ * list)"), README.md:3 opens "Design-only as of 2026-10-18 (19ca8d4): the two program documents are the only artifacts", and at
+ * the tip no file under packages/, contracts/, schemas/ or apps/ spells the type or a workflow-composition schema (the type is
+ * spelled only in docs/10-current-state-and-gaps.md:357, a prose mention, and the program document; under packages/ only a test
+ * reading the program documents by path names the program). The producer block holds those facts; this hermetic census never
+ * re-reads the producer. Pi, by seat ws-06 of g10-work-s138 at trunk e8e13f8 (landing 672 changed no src path or manifest since
+ * 04123dc; 117 src files, every one a .ts module): package.json and both locks (package-lock.json, vendor/dependency-lock.json,
+ * both lockfileVersion 3) declare no @mechanical/ name and hold no npm: spec, no src module loads one by any form T1 reads, no
+ * src file spells the program's words, no src module builds a bd-/wb-/frn- or cmd_ string from a value (the only frn- and bd-
+ * literals, src/workbench/hosts/furnace-hosted.ts's preflight context, are fixed strings), and every form B reads, its field
+ * condition lifted, finds one family construction from a value in src, the Forge gate-step id below, which reads no field. The
+ * workflow_catalog and workflow_inspect readers the trigger names live in src/index.ts (their registrations) and
+ * src/workbench/tool-replies.ts (their reply builders).
  *
- * ROWS (frozen shape ["T:2", "A:3", "B:3", "C:2"]; one test per pin, titled by the pin id under "<row> <label>"). Every reading
- * a row names is shown on planted inputs that read it, one plant per named form, key, field spelling, map and provider, beside
- * planted controls that read nothing, and every plant's reading is held in its pin's witness. Planted manifests, locks,
- * documents, holders and literals go through the same readers as the real ones; planted modules go through the same call as
- * the real src modules, after them, so a reader that stops early misses them.
+ * ROWS (frozen shape ["T:2", "A:3", "B:3", "C:2"]; one test per pin, titled by the pin id under "<row> <label>"). PLANTS: every
+ * reading a row names below is shown on planted inputs, one per named form, side and boundary (the form it reads and the form it
+ * exempts), and each planted input's whole reading is held in its pin's witness - the @mechanical/ names or specifiers, the tool
+ * names, or the constructions as "<line> <family> <forms> <fields>" it yields ([] or 0 for a quiet row) - so a reader that reads a
+ * planted input differently reds the compare. Planted manifests, locks, documents, holders and literals go through the same
+ * readers as the real ones; planted modules go through the same call as the real src modules, after them, so a reader that stops
+ * early misses them. A SRC MODULE is a src file whose name ends with .ts, .tsx, .mts, .cts, .js, .jsx, .mjs or .cjs (a
+ * declaration file's .d.ts among them; one planted module per extension, each read by T1, T2's reader finder and B1, and the same
+ * text as a .ts.md file, read by none: R-MODULE-KIND), parsed by its extension: TSX for .tsx, JSX for .jsx, JavaScript for .js,
+ * .mjs and .cjs, TypeScript otherwise (planted: JSX that only a JSX-enabled parse reads, a <T> type assertion that only a
+ * TypeScript parse reads in .mts and .cts, and `require < string > (...)`, two comparisons to a JavaScript parse and a load to a
+ * TypeScript one; TypeScript parses JavaScript with JSX enabled, so the JSX and JavaScript kinds read alike). UNWRAP: wherever a
+ * reader below takes an expression - a callee, a call's specifier, a createRequire call and its callee, a value's holder, a chain
+ * operand, a provider, a key, a const initializer, an assignment target (B's and T1's), a position's value, a frozen initializer -
+ * it reads through parentheses and
+ * the type wrappers as, satisfies, ! and <T> (planted: every wrapper kind, and a wrapped form at every reading site).
  *  T, the trigger, not yet met. T1 (the release): no name package.json declares, and no name either lock declares or installs,
  *    is an @mechanical/ name (the scope docs/07's MechanicalWorkflows section names for the shipped development package: a name
- *    starting with it, or an install path through node_modules/<scope>), and no src module loads one. DECLARED NAMES, of a
- *    manifest and of every lock entry alike: the entry's own name, and each dependency field (dependencies, devDependencies,
- *    optionalDependencies, peerDependencies, bundleDependencies, bundledDependencies) read as a map - its keys, and the package
- *    each npm: alias spec names ("npm:@scope/name@range", the range optional) - or as a list, its items. A lock adds its own
- *    declared names (a v1 lock's top-level dependencies keys among them), every packages key (the v2/v3 install paths, nested
- *    ones included) and every packages entry's declared names. LOADS, read through the TypeScript parser, each with a
- *    string-literal specifier (a call's may be a template without substitution): import and export-from declarations,
- *    import-equals, a require() call, an import() call, an import type node, a call of a require made by createRequire (a name
- *    a variable declaration or an = assignment binds to a createRequire(...) or <x>.createRequire(...) call, or
- *    createRequire(...)(...) called directly) and a triple-slash types or path reference. T2 (the consumer): no src file spells the program's words (the program slug read
- *    word by word, any run of whitespace, underscore or hyphen between its words, case-insensitive, anywhere in the text; a
- *    requirement-id spelling is blanked first), the files that do are exactly the bound consumers MW_COMPOSITION_CONSUMERS
- *    (empty today both ways: a module that starts consuming must be bound, and a bound path that spells nothing is stale), and
- *    the two readers the trigger names are found by their tool names (a string literal or a template without substitution
- *    equal to the name; a comment or a longer name is not one) and spell none of it.
+ *    starting with it, or a path through node_modules/<scope>; a workspace path that holds the scope elsewhere is not one), and
+ *    no src module loads one. DECLARED NAMES, of a manifest and of every lock entry alike: the entry's own name, and each
+ *    dependency field (dependencies, devDependencies, optionalDependencies, peerDependencies, bundleDependencies,
+ *    bundledDependencies, each planted both ways) read as a map - its keys, and the package each npm: alias spec names
+ *    ("npm:@scope/name@range", the range optional and never part of the name) - or as a list, its items. A lock adds its own
+ *    declared names (its own name among them, and a v1 lock's top-level dependencies keys: R-LOCK-NESTING), every packages key
+ *    (the v2/v3 install paths, nested ones included) and every packages entry's declared names; both real locks are held at
+ *    lockfileVersion 3. LOADS, read through the TypeScript parser, each with a string-literal specifier (a call's may be a
+ *    template without substitution): every import declaration (named, default, namespace, type-only and side-effect), every
+ *    export-from declaration (star, named, namespace and type-only), import-equals of an external module reference (one of a
+ *    namespace member is no load), a require() call, an import() call, an import type node, a call of a require made by
+ *    createRequire (a name a variable declaration or an assignment - =, ??=, ||= or &&= - binds to a createRequire(...) or
+ *    <x>.createRequire(...) call, or createRequire(...)(...) called directly) and a triple-slash types or path reference. T2 (the
+ *    consumer): no src file spells the program's words (the program slug read word by word, any run of white space - each code
+ *    point the regular-expression class \s reads, computed from the engine, one planted text per code point and every code point
+ *    held in the witness - underscore or hyphen, or none, between its words, case-insensitive, anywhere in the text; a
+ *    requirement-id spelling is blanked first: "CAC-WORKFLOW-COMPOSITION-R" and digits as a whole word, its "MW-" lead optional,
+ *    case-sensitive, every occurrence, so inside a longer word, suffixed or in lower case it is no requirement id and spells), the
+ *    files that do are exactly the bound consumers MW_COMPOSITION_CONSUMERS (empty today both ways: a module that starts
+ *    consuming must be bound, and a bound path that spells nothing is stale), and the two readers the trigger names are found by
+ *    their tool names in src modules (a string literal or a template without substitution equal to the name; a comment, a name
+ *    longer on either side or a template with a substitution is not one) and spell none of it.
  *  A, clause (a), ARMED: the contract a consumer must meet, run today on synthetic bindings and on every bound consumer (none).
  *    A consumer is read as one function from a composition (steps and sources, each row carrying its producer reference
- *    {provider, type, id} or not) to a projection {refs: [{row, ref}], unmapped: {count, rows: [{row, reason}]}}. Two in-memory
- *    fixtures (F1 every row carries a producer id: a Beads task, a Forge operation, a Furnace Attempt and a Forge gate step; F2
- *    rows lacking one: no reference, a reference with no id, a reference with an empty id, beside one complete row). A row
- *    LACKS a producer id when it has no reference, or its reference has no id or an empty id. Five CHECKS judge a projection,
- *    each clause named with the MUTANT binding that pins it (a judge without that clause reads the mutant differently, so the
- *    pin's witness - every mutant's checks on each fixture - reds): foreign, a projected ref that is not its row's producer
- *    reference, provider (swap-provider), type (retype), id (rewrite-id) and scope (add-scope) compared, or that names no
- *    fixture row (ghost-row); lost, a row's producer reference not projected for that row (drop-ref; swap-rows, every ref
- *    projected under the next row: A1 reads "projects only ... equal to the producer ids" as set equality per row, since a
- *    consumer projecting nothing would meet "only" vacuously); uncounted, a row lacking a producer id not listed among the
- *    unmapped rows (drop-unmapped, count-only) or listed under a reason other than unmapped or unavailable (reason-pending, one
- *    of F2's three rows, so the check reads any row, never all); miscounted, the count differs from the listed rows
- *    (count-only) or from the rows lacking an id (drop-unmapped; miscount differs from both); minted, a ref projected for a row
- *    lacking a producer id - no reference (mint-task, mint-attempt, mint-gate, mint-and-count, each over every lacking row), no
- *    id (mint-undefined-id, its id spelled String(undefined), the row still counted) or an empty id (mint-empty-id, its own
- *    empty id, the row still counted). A1 pins foreign and lost, A2 uncounted and miscounted, A3 minted. The honest binding
- *    fires none on either fixture, and its own projection is pinned (every producer reference verbatim; a row with no reference
- *    counted unmapped, a reference with no or an empty id unavailable); each of the seventeen mutants fires at least one check, and
- *    every check fires.
+ *    {provider, type, id, scope?} or not) to a projection {refs: [{row, ref}], unmapped: {count, rows: [{row, reason}]}}. Two
+ *    in-memory fixtures (F1 every row carries a producer id: a Beads task, a Forge operation, a Furnace Attempt and a scoped Forge
+ *    gate step; F2 rows lacking one: no reference, a reference with no id, a reference with an empty id, beside one complete row).
+ *    A row LACKS a producer id when it has no reference, or its reference has no id or an empty id. Five CHECKS judge a
+ *    projection, each clause named with the MUTANT binding that pins it (a judge without that clause reads the mutant
+ *    differently, so the pin's witness - every mutant's checks on each fixture - reds): foreign, a projected ref that is not its
+ *    row's producer reference, provider (swap-provider), type (retype), id (rewrite-id) and scope (add-scope on unscoped rows,
+ *    drop-scope on the scoped one) compared, or that names no fixture row (ghost-row); lost, a row's producer reference not
+ *    projected for that row (drop-ref; swap-rows, every ref projected under the next row: A1 reads "projects only ... equal to
+ *    the producer ids" as set equality per row, since a consumer projecting nothing would meet "only" vacuously); uncounted, a row
+ *    lacking a producer id not listed among the unmapped rows (drop-unmapped, count-only) or listed under a reason other than
+ *    unmapped or unavailable (reason-pending, one of F2's three rows, so the check reads any row, never all); miscounted, the count
+ *    differs from the listed rows (count-only) or from the rows lacking an id (drop-unmapped; miscount differs from both); minted,
+ *    a ref projected for a row lacking a producer id - no reference (mint-task, mint-attempt, mint-gate, mint-and-count, each
+ *    over every lacking row), no id (mint-undefined-id, its id spelled String(undefined), the row still counted) or an empty id
+ *    (mint-empty-id, its own empty id, the row still counted). A1 pins foreign and lost, A2 uncounted and miscounted, A3 minted.
+ *    The honest binding fires none on either fixture, and its own projection is pinned (every producer reference verbatim, its
+ *    scope included; a row with no reference counted unmapped, a reference with no or an empty id unavailable); each of the
+ *    eighteen mutants fires at least one check, and every check fires.
  *  B, clause (b): the static census over src. A CONSTRUCTION is a template literal with a substitution, or a + chain holding a
- *    string literal (or a template literal, its pieces read in place) and a value - its parenthesized operands flattened into
- *    it, so each chain reads once, and a chain of values alone is not one (R-VALUE-CHAIN) - whose values read a COMPOSITION
- *    FIELD, in the filing's words (the title's "step and source-artifact IDs", clause (b)'s "composition fields"): a step or
- *    source-artifact ID - a name (identifier, property name or string element key) whose words (split at camelCase humps,
- *    underscores and hyphens, lower-cased) are the field word, singular or plural, then "id" or "ids" (stepId, step_id,
- *    stepsIds, source-artifact-id), or an id/ids member of a value so named, singular or plural, reached through a name, a
- *    property or an element (step.id, batch.step.id, steps[0].id, sourceArtifact["id"], sourceArtifacts.ids) - or a name whose
- *    first word begins "composition" (composition, compositionId, compositions). The bare words step and steps are not
- *    fields: Forge's gate-step vocabulary spells them (measured: forgeGateStepRef builds its gate-step id from the server's
- *    operation id and a step name, src/workbench/forge-operation-observer.ts, a quiet control below). It is in a FAMILY when
- *    (prefix) the literal text accumulated since the previous value, just before one of its values, ends with a token opening
- *    with a prefix of clause (b) - "bd-" or "wb-" for a task id (B1), "frn-" for a Furnace Attempt id (B3); a token opens where
- *    no letter or digit precedes it - or (position) it is the id of an object literal whose provider is the family's native
- *    provider (beads, forge, furnace), or it is the value bound to a family id key (taskId, workId, beadsWorkId, issueId;
- *    operationId, gateId, gateStepId; attemptId, furnaceAttemptId; any case, underscores and hyphens ignored). A provider or a
- *    key reads as written in a string literal or through a name a const declaration of the same module binds to one. An id key
- *    binds its value as an object literal property (identifier, string or computed key), an assignment with = (to a name, a
- *    property, or an element whose key so reads), a variable declaration, a parameter default, a destructuring default (under
- *    its property name when aliased) or a class property. A Forge operation or gate id (B2) has no prefix in clause (b), so it
- *    is read by position only. The walk reads every src module git lists (tracked or untracked, never ignored), equal to a
- *    filesystem walk of src with no symlink under it, over SRC_FLOOR modules, then the planted modules through the same call;
- *    pinned: the real modules hold no construction of any family, and each planted form reads as recorded.
- *  C, clause (c): C1 docs/07's MechanicalWorkflows section (its one level-2 heading under the page title, read through the
- *    shared rendered view, HTML-free) holds the holder's sentence as exactly one paragraph, whole and once, carrying the
- *    program status word "design-only" as a whole word (wb-kku9.2 clause (c)) in one sentence; planted documents with the
- *    sentence dropped, doubled, moved to another section or extended read 0, 2, 0 and 1 paragraphs, none held whole and once,
- *    and a second MechanicalWorkflows heading, a replaced or embedded status word and a second sentence each read as such. C2
- *    the holder, test/workbench-docs07-provider-rules.census.ts (the wb-6hb.11 census leg: a .census.ts file opening with that
- *    leg's header and importing the shared helper's judge, by its imported name, to judge the default gate's own report),
- *    carries row W1's identity FROZEN_W1, read from its source through the TypeScript parser (the string elements of the array
- *    literal bound to that name; any other element reads as non-literal): its quote line is the live sentence and its pin lines
- *    bind exactly this file's pins T1-T2 (today), A1 (producer-references-only), A2 (counted-unmapped) and A3, B1-B3
- *    (never-mints) by file, describe path, verbatim title and the default tier. Planted holders failing each shape clause, an
- *    aliased judge import, and planted frozen literals (literal, non-literal element, another name, not an array) read as
- *    such. The holder's own AC case holds its TABLE row to FROZEN_W1 and its report judge holds every pin to this file's
- *    registered, passing, asserting cases.
+ *    string literal or a template literal (one without substitution is a literal; a template's pieces are read in place) and a
+ *    value - its parenthesized operands flattened into it, so each chain reads once, and a chain of values alone is not one
+ *    (R-VALUE-CHAIN) - whose values read a COMPOSITION FIELD, in the filing's words (the title's "step and source-artifact IDs",
+ *    clause (b)'s "composition fields"): a step or source-artifact ID - a name (identifier, property name, or string or
+ *    no-substitution template element key) whose words (split at camelCase humps, an acronym's included, underscores, hyphens and
+ *    white space, lower-cased) open with the field word, singular or plural, then "id" or "ids" (stepId, stepID, step_id, stepsIds,
+ *    source-artifact-id, "step id", stepIdList; a word before the field word reads nothing: rawStepId), or an id/ids member, by property or
+ *    by string or no-substitution template element key, of a value named exactly for the field word, singular or plural, reached
+ *    through a name, a property or an element (step.id, batch.step.id, steps[0].id, sourceArtifact["id"], sourceArtifacts.ids;
+ *    stepInfo.id reads nothing) - or a name whose first word begins "composition" (composition, compositionId, compositions;
+ *    decomposition and rawComposition read nothing). The bare words step and steps are not fields: Forge's gate-step vocabulary
+ *    spells them (measured: forgeGateStepRef builds its gate-step id from the server's operation id and a step name,
+ *    src/workbench/forge-operation-observer.ts, a quiet control below). It is in a FAMILY when (prefix) the literal text
+ *    accumulated since the previous value (or the start), just before any one of its values, ends with a token opening with a
+ *    prefix of clause (b), case-sensitive - "bd-" or "wb-" for a task id (B1), "frn-" for a Furnace Attempt id (B3); a token opens
+ *    where no letter or digit precedes it (after a hyphen, underscore, dot, slash or space it opens) and runs on in letters,
+ *    digits, dots, underscores and hyphens to the value (literal text after the last value is before no value) - or (position) it
+ *    is the id of an object literal whose provider is the family's native provider (beads, forge, furnace; any other provider
+ *    reads nothing), or it is the value bound to a family id key (taskId, workId, beadsWorkId, issueId; operationId, gateId,
+ *    gateStepId; attemptId, furnaceAttemptId; any case, underscores and hyphens ignored, a #private name's leading # dropped; a
+ *    longer key such as taskIdList is not one). A provider or a key reads as written in a string literal (or a template without
+ *    substitution) or through a name a const declaration of the same module binds to one (a shorthand property names it). An id
+ *    key binds its value as an object literal property (identifier, string or computed key), an assignment (=, ??=, ||=
+ *    or &&=, to a name, a property, a #private property, or an element whose key so reads), a variable declaration (const, let or var), a parameter
+ *    default, a destructuring default (object or array; under its property name when aliased) or a class property (static,
+ *    accessor and #private included). A Forge operation or gate id (B2) has no prefix in clause (b), so it is read by position only. The walk reads every
+ *    src module git lists (git ls-files --cached --others --exclude-standard: tracked or untracked, never ignored) and requires
+ *    that listing to equal a filesystem walk of src with no symlink under it (held live: an ignored file or a symlink under src
+ *    reds B1), over SRC_FLOOR modules, then the planted modules through the same call; pinned: the real modules hold no
+ *    construction of any family, and each planted form reads as recorded.
+ *  C, clause (c): C1 docs/07's MechanicalWorkflows section (its one level-2 heading naming MechanicalWorkflows under the page
+ *    title, a level-3 one not counted, read through the shared rendered view, HTML-free) holds the holder's sentence as exactly one
+ *    paragraph (a list item is no paragraph), whole and once, carrying the program status word "design-only" as a whole word
+ *    (wb-kku9.2 clause (c); case-sensitive, a letter, digit, underscore or hyphen on either side breaks it, punctuation does not)
+ *    in one sentence (a full stop followed by white space and a capital letter ends a sentence; a question mark, a stop before a
+ *    lower-case word and an unspaced stop do not); planted documents with the sentence dropped, doubled, moved to another section,
+ *    extended or listed, or the page retitled, read 0, 2, 0, 1, 0 and 0 paragraphs, none held whole and once, a planted HTML block reads as HTML, and a second
+ *    MechanicalWorkflows heading, a replaced or embedded status word and a second sentence each read as such. C2 the holder,
+ *    test/workbench-docs07-provider-rules.census.ts (the wb-6hb.11 census leg: a .census.ts file whose text opens with that leg's
+ *    header - after a lead line, or under another leg's title, it does not - and that imports the shared helper's judge from
+ *    ./helpers/census.js by its imported name: an aliased import reads; another export renamed judge, a namespace import and a
+ *    default import do not), carries row W1's identity FROZEN_W1, read from its source through the TypeScript parser (the
+ *    elements of the array literal bound to that name: a string literal or a template without substitution reads as its text,
+ *    any other element as non-literal): its quote line is the live sentence and its pin lines bind exactly this file's pins T1-T2
+ *    (today), A1 (producer-references-only), A2 (counted-unmapped) and A3, B1-B3 (never-mints) by file, describe path, verbatim
+ *    title and the default tier. Planted holders failing each shape clause, an aliased judge import, and planted frozen literals
+ *    (literal, non-literal element, another name, not an array, wrapped, template elements) read as such. The holder's own cases
+ *    judge the default gate's report with that judge: its AC case holds its TABLE row to FROZEN_W1 and its report judge holds
+ *    every pin to this file's registered, passing, asserting cases.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; rows, constants, residuals and every pin's
  * witness are held to the out-of-file roster test/fixtures/mw-composition-ref-roster.json, and the roster's producer block is
  * held whole, every field, to the literal PRODUCER_MW. OUTSIDE ANCHORS (the judged-set case): the owner filing in the tracked
@@ -123,19 +155,26 @@
  * Citation reads; the repository is the one docs/07's MechanicalWorkflows section cites as its current evidence); the
  * holder's row W1 and the live docs/07 sentence sit outside this file. Each pin's witness carries its own planted inputs, so a
  * pin rewritten to another's body reds the compare; the records case reads that every registered pin ran to its compare.
- * RESIDUALS (named; each has a pinned quiet row and a live twin among the planted inputs of the pin named):
+ * RESIDUALS (named; each has a pinned quiet row and a live twin among the planted inputs of the pin named, and the judged-set
+ * case holds every quiet row at nothing and every twin reading, in the held witness):
  *   R-PACKAGE-NAME (T1) a MechanicalWorkflows release outside the @mechanical/ scope is not read (quiet: an unscoped
  *     "mechanical-workflows" dependency; twin: an @mechanical/ dependency).
- *   R-SPEC-FORM (T1) a dependency naming MechanicalWorkflows by a spec other than an npm: alias (git, github, file, link or a
- *     tarball URL) under a key outside the scope, or an overrides entry, is not read from package.json alone (a lock entry
- *     that declares the scoped name does read: lock-entry-name) (quiet: a github: spec and an overrides entry; twin: the npm:
- *     alias).
- *   R-LOAD-FORM (T1) a load whose specifier is neither a string literal nor a plain template, a call through an alias of
- *     require, a require made by createRequire imported under another name, and a resolution (a createRequire-made or other
- *     resolve) are not read (quiet: import() of a const name, a require alias, a renamed createRequire import and a
- *     createRequire(...).resolve call; twin: a call of a createRequire-made require).
- *   R-REQUIREMENT-ID (T2) a src file whose only spelling is a requirement id (MW-CAC-WORKFLOW-COMPOSITION-R1) is not a consumer
- *     (quiet: that comment; twin: the type name).
+ *   R-SPEC-FORM (T1) a dependency naming MechanicalWorkflows by a spec other than an npm: alias (git, github, jsr, file, link or
+ *     a tarball URL) under a key outside the scope, or an overrides entry, is not read from package.json alone (a lock entry
+ *     that declares the scoped name does read: lock-entry-name) (quiet: a github: spec, a jsr: spec and an overrides entry; twin:
+ *     the npm: alias).
+ *   R-LOAD-FORM (T1) a load whose specifier is neither a string literal nor a template without substitution, a call through an
+ *     alias of require or a require reached as a member (module.require), a require made by createRequire imported under another
+ *     name, and a resolution (a createRequire-made or other resolve) are not read (quiet: import() of a const name, require() of a
+ *     template with a substitution, a require alias, module.require, a renamed createRequire import and a createRequire(...).resolve
+ *     call; twin: a call of a createRequire-made require).
+ *   R-LOCK-NESTING (T1) a v1 lock's nested dependencies and requires maps are not read (both real locks are lockfileVersion 3,
+ *     held in the witness) (quiet: a v1 lock with @mechanical/ names nested under an ordinary entry; twin: a v1 top-level
+ *     dependency).
+ *   R-MODULE-KIND (T1) a src file outside the eight module extensions is not parsed (quiet: the module-kind plant's text as a
+ *     .ts.md file; twin: the same text as a .ts module).
+ *   R-REQUIREMENT-ID (T2) a src file whose only spelling is a requirement id is not a consumer (quiet: MW-CAC-WORKFLOW-COMPOSITION-R1,
+ *     this bead's own CAC-WORKFLOW-COMPOSITION-R1, a two-digit id and two ids in one comment; twin: the type name).
  *   R-UNSPELLED-CONSUMER (T2) a consumer that never spells the program's words or loads an @mechanical/ package (a module mapping
  *     steps and sourceArtifactId fields of some JSON) is not read as one (quiet: that module; twin: the type name).
  *   R-SCOPE (B1) clause (b)'s scope only: a construction in qa/, test/ or examples/ is not judged (quiet: the task plant as a
@@ -151,25 +190,30 @@
  *   R-VALUE-CHAIN (B2) a + chain of values alone is not a construction (quiet: `base + step.stepId` as a forge native
  *     reference's id; twin: a chain holding a literal, composition.compositionId + ":lint").
  *   R-NAME-BINDING (B2) a provider or key held other than by a literal or a same-module const binding is not read (quiet: an
- *     imported constant, a let binding and an object member; twin: the same-module const).
- *   R-KEY-ACCESSOR (B2) a family id key's value returned by a getter is not read (quiet: `get operationId()` returning the
- *     template; twin: the property).
+ *     imported constant, a let binding, an object member and a destructured const; twin: the same-module const).
+ *   R-KEY-ACCESSOR (B2) a family id key's value returned by a getter or a method is not read (quiet: `get operationId()` and
+ *     `operationId()` returning the template; twin: the property).
  *   R-COMPOUND-KEY (B2) a compound += to a family id key is not read (quiet: `target.operationId += step.stepId`; twin: the
  *     assignment with =).
  *   R-ID-POSITION (B2) a Forge id built outside the native-reference literal and the id-key bindings is not read (quiet: a
  *     template passed to forgeOperationRef; twin: the same template as a forge native reference's id).
+ *   R-POSITION-BINDING (B2) a construction bound to another name before it reaches a position is not traced (quiet: `const id =`
+ *     the template, then a forge native reference's shorthand id, and `const value =` the template, then `{ operationId: value }`;
+ *     twin: the template as a forge native reference's id).
  *   R-FIELD-SPELLING (B3) a composition field spelled outside the field forms is not read, the bare step words included (quiet:
  *     `frn-atm-${node.key}` and `wb-${step}`; twin: `frn-atm-${step.stepId}`).
  * OVER-READS (disclosed and pinned by a plant each; none today: src's one family construction from a value is the Forge
- * gate-step id, which reads no field): any name whose first word begins "composition" and any id member of a value named
- * step(s) or sourceArtifact(s) reads as a composition field; a family prefix inside prose ("see wb-${...}") reads as a
- * construction; a provider or key name bound by several const declarations of one module reads as each of their values
- * (scopes are not resolved) - each fails closed.
+ * gate-step id, which reads no field): any name whose first word begins "composition", any name whose words open with a field
+ * word and "id" (stepIdList) and any id member of a value named step(s) or sourceArtifact(s) reads as a composition field; a
+ * family prefix inside prose ("see wb-${...}") or after a hyphen, underscore or dot ("x_wb-${...}") reads as a construction; a
+ * provider or key name bound by several const declarations of one module reads as each of their values (scopes are not
+ * resolved) - each fails closed.
  * NOT CLAIMED: the armed contract is this census's reading of an unpublished type (a consumer whose own cut takes another shape
  * re-measures row A with it); whether W11 (wb-04s) or VC-3 (wb-w12) decided a consumer is read only through src and the
  * manifests; Git revisions and HyperUnix answers (the remote tip's widened list) are not clause (b)'s families; that a producer
- * reference resolves in its producer; and the producer facts beyond the anchored ones (the remote tip, its commit time, the
- * blob ids, the package spelling, the measuring stamps) are the measuring seats' record, held to the literal only.
+ * reference resolves in its producer; that the listing excludes ignored files is held only live (no in-memory plant reaches git);
+ * and the producer facts beyond the anchored ones (the remote tip, its commit time, the blob ids, the package spelling, the
+ * measuring stamps) are the measuring seats' record, held to the literal only.
  *
  * Display paths added: none (test-only; src/ is read, never edited). Scratch: none (every plant is in memory; the only spawn
  * is git ls-files; the bead export, docs, the locks and src are only read).
@@ -415,14 +459,18 @@ interface Module {
   readonly text: string;
 }
 const srcFiles = (): Module[] => gitSrc().map(path => ({ path, text: readRepo(path) }));
-const isModule = (path: string): boolean => /\.(?:[cm]?ts|tsx)$/.test(path);
+/** A src MODULE: a src file with one of these extensions (a declaration file's .d.ts among them); any other src file is not parsed (R-MODULE-KIND). */
+const MODULE_EXTENSIONS = [".ts", ".tsx", ".mts", ".cts", ".js", ".jsx", ".mjs", ".cjs"] as const;
+const isModule = (path: string): boolean => MODULE_EXTENSIONS.some(extension => path.endsWith(extension));
+/** Each module parses by its extension: TSX for .tsx, JSX for .jsx, JavaScript for .js, .mjs and .cjs, TypeScript otherwise. */
+const scriptKind = (path: string): ts.ScriptKind => (path.endsWith(".tsx") ? ts.ScriptKind.TSX : path.endsWith(".jsx") ? ts.ScriptKind.JSX : /\.[cm]?js$/.test(path) ? ts.ScriptKind.JS : ts.ScriptKind.TS);
 const PARSED = new Map<string, ts.SourceFile>();
 /** One parse per module text: every reader of this census walks the same source files. */
 const parse = (module: Module): ts.SourceFile => {
   const key = `${module.path}\0${module.text}`;
   const cached = PARSED.get(key);
   if (cached !== undefined) return cached;
-  const source = ts.createSourceFile(module.path, module.text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const source = ts.createSourceFile(module.path, module.text, ts.ScriptTarget.Latest, true, scriptKind(module.path));
   PARSED.set(key, source);
   return source;
 };
@@ -487,6 +535,8 @@ function lockNames(lock: unknown): { names: string[]; packages: number } {
   return { names, packages: packages.length };
 }
 const isMwName = (name: string): boolean => CONSTANTS.mwScope !== "" && (name.startsWith(CONSTANTS.mwScope) || name.includes(`node_modules/${CONSTANTS.mwScope}`));
+/** The assignments that bind a name or an id key: =, and the logical ??=, ||= and &&= (a compound += extends its target instead: R-COMPOUND-KEY). */
+const ASSIGNMENTS: readonly ts.SyntaxKind[] = [ts.SyntaxKind.EqualsToken, ts.SyntaxKind.QuestionQuestionEqualsToken, ts.SyntaxKind.BarBarEqualsToken, ts.SyntaxKind.AmpersandAmpersandEqualsToken];
 /** A call of createRequire, by its bare name or as a member (module.createRequire): the require it returns loads what it is called with. */
 function isCreateRequire(node: ts.Expression): boolean {
   const inner = unwrap(node);
@@ -505,7 +555,10 @@ function specifiersOf(module: Module): string[] {
   const made = new Set<string>();
   const bind = (node: ts.Node): void => {
     if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined && isCreateRequire(node.initializer)) made.add(node.name.text);
-    else if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken && ts.isIdentifier(node.left) && isCreateRequire(node.right)) made.add(node.left.text);
+    else if (ts.isBinaryExpression(node) && ASSIGNMENTS.includes(node.operatorToken.kind) && isCreateRequire(node.right)) {
+      const target = unwrap(node.left);
+      if (ts.isIdentifier(target)) made.add(target.text);
+    }
     ts.forEachChild(node, bind);
   };
   bind(source);
@@ -518,7 +571,7 @@ function specifiersOf(module: Module): string[] {
     if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier !== undefined && ts.isStringLiteral(node.moduleSpecifier)) out.push(node.moduleSpecifier.text);
     else if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference) && ts.isStringLiteral(node.moduleReference.expression)) out.push(node.moduleReference.expression.text);
     else if (ts.isCallExpression(node) && loads(node)) {
-      const first = node.arguments[0];
+      const first = node.arguments[0] === undefined ? undefined : unwrap(node.arguments[0]);
       if (first !== undefined && ts.isStringLiteralLike(first)) out.push(first.text);
     } else if (ts.isImportTypeNode(node) && ts.isLiteralTypeNode(node.argument) && ts.isStringLiteral(node.argument.literal)) out.push(node.argument.literal.text);
     ts.forEachChild(node, visit);
@@ -537,9 +590,16 @@ const MANIFEST_PLANTS: Readonly<Record<string, unknown>> = {
   "manifest-peer": { name: "planted", peerDependencies: { "@mechanical/workflows-composition": ">=0.1.0" } },
   "manifest-bundled": { name: "planted", bundleDependencies: ["@mechanical/workflows-coordination"] },
   "manifest-bundled-spelling": { name: "planted", bundledDependencies: ["@mechanical/workflows-development"] },
+  "manifest-dependency-list": { name: "planted", dependencies: ["@mechanical/workflows-composition"] },
+  "manifest-dev-list": { name: "planted", devDependencies: ["@mechanical/workflows-development"] },
+  "manifest-optional-list": { name: "planted", optionalDependencies: ["@mechanical/workflows-coordination"] },
+  "manifest-peer-list": { name: "planted", peerDependencies: ["@mechanical/workflows-composition"] },
+  "manifest-bundled-map": { name: "planted", bundleDependencies: { "@mechanical/workflows-coordination": "0.1.0" } },
+  "manifest-bundled-spelling-map": { name: "planted", bundledDependencies: { "@mechanical/workflows-development": "0.1.0" } },
   "manifest-own-name": { name: "@mechanical/workflows-composition", version: "0.1.0" },
   "manifest-npm-alias": { name: "planted", dependencies: { "mw-composition": "npm:@mechanical/workflows-composition@0.1.0" } },
   "manifest-git-spec": { name: "planted", dependencies: { "mw-composition": "github:jehalladay/MechanicalWorkflows" } },
+  "manifest-jsr-spec": { name: "planted", dependencies: { "mw-composition": "jsr:@mechanical/workflows-composition" } },
   "manifest-overrides": { name: "planted", overrides: { "@mechanical/workflows-composition": "0.1.0" } },
   "unscoped-name": { name: "planted", dependencies: { "mechanical-workflows": "^0.1.0" } },
   "near-scope": { name: "planted", dependencies: { "@mechanicalx/workflows": "1.0.0" } },
@@ -552,12 +612,25 @@ const LOCK_PLANTS: Readonly<Record<string, unknown>> = {
   "lock-entry-name": { name: "planted", lockfileVersion: 3, packages: { "": { name: "planted" }, "node_modules/mw-composition": { name: "@mechanical/workflows-composition", version: "0.1.0" } } },
   "lock-alias-spec": { name: "planted", lockfileVersion: 3, packages: { "": { name: "planted", dependencies: { "mw-development": "npm:@mechanical/workflows-development" } } } },
   "lock-v1-dependencies": { name: "planted", lockfileVersion: 1, dependencies: { "@mechanical/workflows-coordination": { version: "0.1.0" } } },
+  "lock-own-name": { name: "@mechanical/workflows-composition", lockfileVersion: 3, packages: {} },
+  "lock-workspace-path": { name: "planted", lockfileVersion: 3, packages: { "": { name: "planted" }, "packages/@mechanical/workflows-composition": { name: "planted-workspace" } } },
+  "lock-v1-nested": {
+    name: "planted",
+    lockfileVersion: 1,
+    dependencies: { a: { version: "1.0.0", requires: { "@mechanical/workflows-coordination": "0.1.0" }, dependencies: { "@mechanical/workflows-composition": { version: "0.1.0" } } } },
+  },
 };
 /** One planted module per load form, beside controls that read nothing (R-LOAD-FORM; import-other loads an ordinary module). */
 const IMPORT_PLANTS: Readonly<Record<string, string>> = {
   "import-static": 'import { develop } from "@mechanical/workflows-development";\nexport const run = develop;\n',
   "import-type": 'import type { Composition } from "@mechanical/workflows-composition";\nexport type Read = Composition;\n',
+  "import-side-effect": 'import "@mechanical/workflows-composition";\nexport const marker = 1;\n',
+  "import-default": 'import mw from "@mechanical/workflows-development";\nexport const run = mw;\n',
+  "import-namespace": 'import * as mw from "@mechanical/workflows-coordination";\nexport const run = mw;\n',
   "export-from": 'export * from "@mechanical/workflows-coordination";\n',
+  "export-named-from": 'export { develop } from "@mechanical/workflows-development";\n',
+  "export-namespace-from": 'export * as mw from "@mechanical/workflows-composition";\n',
+  "export-type-from": 'export type { Composition } from "@mechanical/workflows-composition";\n',
   "dynamic-import": 'export const load = async (): Promise<unknown> => import("@mechanical/workflows-composition");\n',
   require: 'declare const require: (id: string) => unknown;\nexport const mw = require("@mechanical/workflows-composition");\n',
   "require-template": "declare const require: (id: string) => unknown;\nexport const mw = require(`@mechanical/workflows-coordination`);\n",
@@ -567,16 +640,57 @@ const IMPORT_PLANTS: Readonly<Record<string, string>> = {
   "create-require-direct": 'import { createRequire } from "node:module";\nexport const mw = createRequire(import.meta.url)("@mechanical/workflows-coordination");\n',
   "create-require-assigned":
     'import { createRequire } from "node:module";\nlet load: (id: string) => unknown = () => undefined;\nload = createRequire(import.meta.url);\nexport const mw = load("@mechanical/workflows-composition");\n',
+  "create-require-nullish-assigned":
+    'import { createRequire } from "node:module";\nlet load: ((id: string) => unknown) | undefined;\nload ??= createRequire(import.meta.url);\nexport const mw = load("@mechanical/workflows-development");\n',
+  "create-require-or-assigned":
+    'import { createRequire } from "node:module";\nlet load: ((id: string) => unknown) | undefined;\nload ||= createRequire(import.meta.url);\nexport const mw = load("@mechanical/workflows-coordination");\n',
+  "create-require-and-assigned":
+    'import { createRequire } from "node:module";\nlet load: (id: string) => unknown = () => undefined;\nload &&= createRequire(import.meta.url);\nexport const mw = load("@mechanical/workflows-composition");\n',
   "create-require-member": 'import module from "node:module";\nconst load = module.createRequire(import.meta.url);\nexport const mw = load("@mechanical/workflows-development");\n',
   "reference-types": '/// <reference types="@mechanical/workflows-composition" />\nexport const marker = 1;\n',
   "reference-path": '/// <reference path="../../node_modules/@mechanical/workflows-composition/index.d.ts" />\nexport const marker = 1;\n',
+  "require-parenthesized": 'declare const require: (id: string) => unknown;\nexport const mw = (require)("@mechanical/workflows-composition");\n',
+  "require-wrapped-specifier": 'declare const require: (id: string) => unknown;\nexport const mw = require(("@mechanical/workflows-development" as string));\n',
+  "create-require-wrapped-target":
+    'import { createRequire } from "node:module";\nlet load: (id: string) => unknown = () => undefined;\n(load) = createRequire(import.meta.url);\nexport const mw = load("@mechanical/workflows-coordination");\n',
+  "create-require-asserted": 'import { createRequire } from "node:module";\nconst load = createRequire(import.meta.url) as (id: string) => unknown;\nexport const mw = load("@mechanical/workflows-composition");\n',
+  "create-require-parenthesized": 'import { createRequire } from "node:module";\nconst load = (createRequire)(import.meta.url);\nexport const mw = load("@mechanical/workflows-coordination");\n',
   "import-other": 'import { readFileSync } from "node:fs";\nexport const read = readFileSync;\n',
+  "import-equals-entity": "namespace N {\n  export const x = 1;\n}\nimport y = N.x;\nexport const z = y;\n",
   "dynamic-specifier": 'const NAME = "@mechanical/workflows-composition";\nexport const load = async (): Promise<unknown> => import(NAME);\n',
+  "require-template-substitution": planted('declare const require: (id: string) => unknown;\nconst scope = "@mechanical";\nexport const mw = require(`@{scope}/workflows-composition`);\n'),
   "require-alias": 'declare const require: (id: string) => unknown;\nconst load = require;\nexport const mw = load("@mechanical/workflows-composition");\n',
+  "require-member": 'declare const module: { require: (id: string) => unknown };\nexport const mw = module.require("@mechanical/workflows-composition");\n',
   "create-require-renamed": 'import { createRequire as makeRequire } from "node:module";\nconst load = makeRequire(import.meta.url);\nexport const mw = load("@mechanical/workflows-composition");\n',
   "require-resolve": 'import { createRequire } from "node:module";\nexport const where = createRequire(import.meta.url).resolve("@mechanical/workflows-composition");\n',
 };
 const plantPath = (id: string): string => `src/workbench/planted-${id}.ts`;
+/** The text every module-kind plant carries: a load (T1), a tool name (T2's reader finder) and a task construction (B1). */
+const KIND_TEXT = planted('export const mw = require("@mechanical/workflows-composition");\nexport const TOOL = "workflow_inspect";\nexport const taskOf = (step) => `wb-@{step.stepId}`;\n');
+/** The same three readings inside JSX, which only a TSX or JSX parse reads. */
+const JSX_TEXT = planted('export const View = (step) => <Gate id={`wb-@{step.stepId}`} tool="workflow_catalog">{require("@mechanical/workflows-coordination")}</Gate>;\n');
+/** A JavaScript parse reads `require < string > (...)` as two comparisons (no load); a TypeScript parse would read a call with a type argument. */
+const COMPARISON_TEXT = 'export const x = require < string > ("@mechanical/workflows-composition");\n';
+/**
+ * One planted module per module extension, the two JSX kinds with JSX, the three JavaScript kinds with a comparison only a
+ * TypeScript parse would read as a load, and a src file of another kind (R-MODULE-KIND), read by T1, T2 and B1 alike.
+ */
+const MODULE_PLANTS: Readonly<Record<string, Module>> = {
+  "kind-ts": { path: "src/workbench/planted-kind.ts", text: KIND_TEXT },
+  "kind-tsx": { path: "src/workbench/planted-kind.tsx", text: KIND_TEXT },
+  "kind-mts": { path: "src/workbench/planted-kind.mts", text: KIND_TEXT },
+  "kind-cts": { path: "src/workbench/planted-kind.cts", text: KIND_TEXT },
+  "kind-js": { path: "src/workbench/planted-kind.js", text: KIND_TEXT },
+  "kind-jsx": { path: "src/workbench/planted-kind.jsx", text: KIND_TEXT },
+  "kind-mjs": { path: "src/workbench/planted-kind.mjs", text: KIND_TEXT },
+  "kind-cjs": { path: "src/workbench/planted-kind.cjs", text: KIND_TEXT },
+  "kind-tsx-jsx": { path: "src/workbench/planted-jsx.tsx", text: JSX_TEXT },
+  "kind-jsx-jsx": { path: "src/workbench/planted-jsx.jsx", text: JSX_TEXT },
+  "kind-md": { path: "src/workbench/planted-kind.ts.md", text: KIND_TEXT },
+  "kind-js-comparison": { path: "src/workbench/planted-comparison.js", text: COMPARISON_TEXT },
+  "kind-mjs-comparison": { path: "src/workbench/planted-comparison.mjs", text: COMPARISON_TEXT },
+  "kind-cjs-comparison": { path: "src/workbench/planted-comparison.cjs", text: COMPARISON_TEXT },
+};
 
 // ------------------------------------------------------------------------------------------------- T2: the consumer
 const escaped = (word: string): string => word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -585,6 +699,14 @@ const SPELLING = new RegExp(CONSTANTS.programSlug.split("-").map(escaped).join("
 /** A requirement id of the program's family (this bead's and its 2026-10-22 siblings'), blanked before the reading. */
 const REQUIREMENT_ID = /\b(?:MW-)?CAC-WORKFLOW-COMPOSITION-R\d+\b/g;
 const spells = (text: string): boolean => CONSTANTS.programSlug !== "" && SPELLING.test(text.replace(REQUIREMENT_ID, " "));
+/** Every BMP code point the regular-expression class \s reads (white space and line terminators), computed from the engine, never typed. */
+const WHITESPACE: readonly number[] = Array.from({ length: 0x10000 }, (_, code) => code).filter(code => /^\s$/.test(String.fromCodePoint(code)));
+const hex4 = (code: number): string => code.toString(16).padStart(4, "0");
+/** One planted comment per white-space code point, the code point between each pair of the program's words: each one spells. */
+const whitespaceReading = (): { codePoints: string[]; spelled: string[] } => ({
+  codePoints: WHITESPACE.map(hex4),
+  spelled: WHITESPACE.filter(code => spells(`// CAC${String.fromCodePoint(code)}workflow${String.fromCodePoint(code)}composition rows\n`)).map(hex4),
+});
 /**
  * The bound composition consumers: every src file that spells the program's words, each with the function the armed contract
  * runs. Empty today. A module that starts consuming binds itself here, so row A runs on it.
@@ -597,6 +719,12 @@ const SPELLING_PLANTS: Readonly<Record<string, string>> = {
   embedded: "export function parseCacWorkflowComposition(): void {}\n",
   spaced: "// Maps CAC  workflow_-composition rows.\nexport const marker = 1;\n",
   "requirement-id": "// MW-CAC-WORKFLOW-COMPOSITION-R1: a cited requirement, not a reader.\nexport const cited = 1;\n",
+  "requirement-id-bare": "// CAC-WORKFLOW-COMPOSITION-R1: this bead's own requirement id, cited without the MW- lead.\nexport const cited = 1;\n",
+  "requirement-id-two-digit": "// MW-CAC-WORKFLOW-COMPOSITION-R12: a two-digit requirement number.\nexport const cited = 1;\n",
+  "requirement-id-twice": "// MW-CAC-WORKFLOW-COMPOSITION-R1 and CAC-WORKFLOW-COMPOSITION-R2: two cited ids, both blanked.\nexport const cited = 1;\n",
+  "requirement-id-embedded": "// XCAC-WORKFLOW-COMPOSITION-R1 is no requirement id: a spelling inside a longer word is read.\nexport const cited = 1;\n",
+  "requirement-id-suffixed": "// CAC-WORKFLOW-COMPOSITION-R1x is no requirement id either.\nexport const cited = 1;\n",
+  "requirement-id-lowercase": "// mw-cac-workflow-composition-r1 in lower case is no requirement id.\nexport const cited = 1;\n",
   "unspelled-consumer": "export const ids = (c: { steps: { sourceArtifactId: string }[] }): string[] => c.steps.map(step => step.sourceArtifactId);\n",
 };
 /** The readers the trigger names, found by their tool names among the src string literals (a string literal or a template without substitution). */
@@ -621,6 +749,8 @@ const READER_PLANTS: Readonly<Record<string, string>> = {
   "reader-template": "export const TOOL = `workflow_catalog`;\n",
   "reader-comment": "// workflow_inspect replies are built in the reply builders.\nexport const marker = 1;\n",
   "reader-longer": 'export const TOOL = "workflow_inspect_v2";\n',
+  "reader-longer-prefix": 'export const TOOL = "my_workflow_inspect";\n',
+  "reader-template-substitution": planted('const NAME = "inspect";\nexport const TOOL = `workflow_@{NAME}`;\n'),
 };
 
 // ------------------------------------------------------------------------------------------------- A: the armed contract
@@ -653,7 +783,7 @@ const FIXTURES: Readonly<Record<string, Composition>> = {
       { key: "verify", producer: { provider: "forge", type: "operation", id: "op-fx-0001" } },
       { key: "supervise", producer: { provider: "furnace", type: "attempt", id: "frn-atm-fx-0001-1" } },
     ],
-    sources: [{ key: "gate", producer: { provider: "forge", type: "gate-step", id: "op-fx-0001/lint" } }],
+    sources: [{ key: "gate", producer: { provider: "forge", type: "gate-step", id: "op-fx-0001/lint", scope: "fx-workspace" } }],
   },
   F2: {
     steps: [{ key: "plan" }, { key: "build", producer: { provider: "beads", type: "work", id: "wb-fx02" } }],
@@ -733,6 +863,7 @@ const MUTANTS: Readonly<Record<string, Consumer>> = {
   "rewrite-id": mapRefs(ref => ({ ...ref, id: ref.id.toUpperCase() })),
   "swap-provider": mapRefs(ref => ({ ...ref, provider: "pi-workflow" })),
   "add-scope": mapRefs(ref => ({ ...ref, scope: "composition" })),
+  "drop-scope": mapRefs(({ provider, type, id }) => ({ provider, type, id })),
   "drop-ref": composition => {
     const base = honest(composition);
     return { refs: base.refs.slice(1), unmapped: base.unmapped };
@@ -791,13 +922,13 @@ function contractReading(pin: string): JsonValue {
 // ------------------------------------------------------------------------------------------------- B: constructions
 type Family = "task" | "forge" | "attempt";
 const PROVIDER_FAMILY: Readonly<Record<string, Family>> = { beads: "task", forge: "forge", furnace: "attempt" };
-/** The family id keys, normalized (lower case, underscores and hyphens removed). */
+/** The family id keys, normalized (a private name's leading # dropped, lower case, underscores and hyphens removed). */
 const ID_KEYS: Readonly<Record<Family, readonly string[]>> = {
   task: ["taskid", "workid", "beadsworkid", "issueid"],
   forge: ["operationid", "gateid", "gatestepid"],
   attempt: ["attemptid", "furnaceattemptid"],
 };
-const normalizedKey = (name: string): string => name.toLowerCase().replace(/[_-]/g, "");
+const normalizedKey = (name: string): string => name.replace(/^#/, "").toLowerCase().replace(/[_-]/g, "");
 const familyOfKey = (name: string): Family | undefined => (Object.keys(ID_KEYS) as Family[]).find(family => ID_KEYS[family].includes(normalizedKey(name)));
 /** A name's words: camelCase, snake_case and kebab-case split, lower-cased. */
 const wordsOf = (name: string): string[] =>
@@ -920,9 +1051,10 @@ const textsOf = (node: ts.Expression, strings: ReadonlyMap<string, ReadonlySet<s
   if (ts.isIdentifier(inner)) return [...(strings.get(inner.text) ?? [])];
   return [];
 };
-/** A property name as text: an identifier, a string literal, or a computed key read through textsOf. */
+/** A property name as text: an identifier, a string literal, a #private name, or a computed key read through textsOf. */
 const namesOf = (name: ts.PropertyName, strings: ReadonlyMap<string, ReadonlySet<string>>): string[] => {
   if (ts.isIdentifier(name) || ts.isStringLiteralLike(name)) return [name.text];
+  if (ts.isPrivateIdentifier(name)) return [name.text];
   if (ts.isComputedPropertyName(name)) return textsOf(name.expression, strings);
   return [];
 };
@@ -962,13 +1094,17 @@ function constructionsOf(module: Module): Construction[] {
     }
     if (ts.isObjectLiteralExpression(node)) {
       const assigned: (readonly [string, ts.Expression])[] = [];
-      for (const property of node.properties) if (ts.isPropertyAssignment(property)) for (const name of namesOf(property.name, strings)) assigned.push([name, property.initializer]);
+      for (const property of node.properties) {
+        if (ts.isPropertyAssignment(property)) for (const name of namesOf(property.name, strings)) assigned.push([name, property.initializer]);
+        // A shorthand property is its name bound to the same name's value: { provider } reads the module's const provider.
+        else if (ts.isShorthandPropertyAssignment(property)) assigned.push([property.name.text, property.name]);
+      }
       const valuesOf = (key: string): ts.Expression[] => assigned.filter(([name]) => name === key).map(([, value]) => value);
       const families = new Set(valuesOf("provider").flatMap(provider => textsOf(provider, strings).flatMap(text => PROVIDER_FAMILY[text] ?? [])));
       for (const family of families) for (const id of valuesOf("id")) note(unwrap(id), family, "native-ref");
       for (const [name, value] of assigned) keyed([name], value);
     }
-    if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken) {
+    if (ts.isBinaryExpression(node) && ASSIGNMENTS.includes(node.operatorToken.kind)) {
       const target = unwrap(node.left);
       if (ts.isIdentifier(target)) keyed([target.text], node.right);
       else if (ts.isPropertyAccessExpression(target)) keyed([target.name.text], node.right);
@@ -1016,6 +1152,31 @@ const TASK_PLANTS: Readonly<Record<string, Module>> = {
   "task-no-field": { path: plantPath("task-no-field"), text: planted("export const taskOf = (issue: { id: string }): string => `wb-@{issue.id}`;\n") },
   "task-split-around-value": { path: plantPath("task-split-around-value"), text: planted("export const taskOf = (step: { stepId: string }, x: string): string => `w@{x}b-@{step.stepId}`;\n") },
   "task-embedded-prefix": { path: plantPath("task-embedded-prefix"), text: planted("export const nameOf = (step: { stepId: string }): string => `newb-@{step.stepId}`;\n") },
+  "task-template-literal-chain": { path: plantPath("task-template-literal-chain"), text: "export const taskOf = (step: { stepId: string }): string => `wb-` + step.stepId;\n" },
+  "task-later-value-prefix": { path: plantPath("task-later-value-prefix"), text: planted("export const taskOf = (run: { id: string }, step: { stepId: string }): string => `@{run.id}/wb-@{step.stepId}`;\n") },
+  "task-trailing-prefix": { path: plantPath("task-trailing-prefix"), text: planted("export const nameOf = (step: { stepId: string }): string => `@{step.stepId}-wb-`;\n") },
+  "task-digit-preceded": { path: plantPath("task-digit-preceded"), text: planted("export const nameOf = (step: { stepId: string }): string => `x1wb-@{step.stepId}`;\n") },
+  "task-upper-preceded": { path: plantPath("task-upper-preceded"), text: planted("export const nameOf = (step: { stepId: string }): string => `Xwb-@{step.stepId}`;\n") },
+  "task-underscore-preceded": { path: plantPath("task-underscore-preceded"), text: planted("export const nameOf = (step: { stepId: string }): string => `x_wb-@{step.stepId}`;\n") },
+  "task-hyphen-preceded": { path: plantPath("task-hyphen-preceded"), text: planted("export const nameOf = (step: { stepId: string }): string => `x-wb-@{step.stepId}`;\n") },
+  "task-dot-preceded": { path: plantPath("task-dot-preceded"), text: planted("export const nameOf = (step: { stepId: string }): string => `x.wb-@{step.stepId}`;\n") },
+  "task-token-chars": { path: plantPath("task-token-chars"), text: planted("export const taskOf = (step: { stepId: string }): string => `wb-Ab9._-@{step.stepId}`;\n") },
+  "task-token-broken": { path: plantPath("task-token-broken"), text: planted("export const nameOf = (step: { stepId: string }): string => `wb-x/@{step.stepId}`;\n") },
+  "task-upper-prefix": { path: plantPath("task-upper-prefix"), text: planted("export const nameOf = (step: { stepId: string }): string => `WB-@{step.stepId}`;\n") },
+  "task-field-trailing-word": { path: plantPath("task-field-trailing-word"), text: planted("export const taskOf = (row: { stepIdList: string }): string => `wb-@{row.stepIdList}`;\n") },
+  "task-field-leading-word": { path: plantPath("task-field-leading-word"), text: planted("export const taskOf = (row: { rawStepId: string }): string => `wb-@{row.rawStepId}`;\n") },
+  "task-acronym-field": { path: plantPath("task-acronym-field"), text: planted("export const taskOf = (step: { stepID: string }): string => `wb-@{step.stepID}`;\n") },
+  "task-holder-longer-name": { path: plantPath("task-holder-longer-name"), text: planted("export const taskOf = (stepInfo: { id: string }): string => `wb-@{stepInfo.id}`;\n") },
+  "task-decomposition": { path: plantPath("task-decomposition"), text: planted("export const taskOf = (row: { decomposition: string }): string => `wb-@{row.decomposition}`;\n") },
+  "task-later-composition-word": { path: plantPath("task-later-composition-word"), text: planted("export const taskOf = (row: { rawComposition: string }): string => `wb-@{row.rawComposition}`;\n") },
+  "task-spaced-element-key": { path: plantPath("task-spaced-element-key"), text: planted('export const taskOf = (row: Record<string, string>): string => `wb-@{row["step id"]}`;\n') },
+  "task-template-element-key": { path: plantPath("task-template-element-key"), text: planted("export const taskOf = (row: Record<string, string>): string => `wb-@{row[`source-artifact-id`]}`;\n") },
+  "task-wrapped-holder": { path: plantPath("task-wrapped-holder"), text: planted("export const taskOf = (step: unknown): string => `wb-@{(step as { id: string }).id}`;\n") },
+  "task-non-null-holder": { path: plantPath("task-non-null-holder"), text: planted("export const taskOf = (step?: { id: string }): string => `wb-@{step!.id}`;\n") },
+  "task-wrapped-operand": { path: plantPath("task-wrapped-operand"), text: 'export const taskOf = (step: { stepId: string }): string => ("wb-" as string) + step.stepId;\n' },
+  "task-wrapped-key-value": { path: plantPath("task-wrapped-key-value"), text: planted("export const rowOf = (step: { stepId: string }) => ({ taskId: (`wb-@{step.stepId}`) });\n") },
+  "task-wrapped-ref-id": { path: plantPath("task-wrapped-ref-id"), text: planted('export const refOf = (step: { stepId: string }) => ({ provider: "beads", type: "work", id: (`wb-@{step.stepId}`) });\n') },
+  "task-key-longer": { path: plantPath("task-key-longer"), text: planted("export const rowOf = (step: { stepId: string }) => ({ taskIdList: `@{step.stepId}` });\n") },
   "qa-module": { path: "qa/workbench/planted-task.ts", text: planted("export const taskOf = (step: { stepId: string }): string => `wb-@{step.stepId}`;\n") },
   "indirect-binding": { path: plantPath("indirect-binding"), text: planted("export const taskOf = (step: { stepId: string }): string => {\n  const k = step.stepId;\n  return `wb-@{k}`;\n};\n") },
   "concat-call": { path: plantPath("concat-call"), text: 'export const taskOf = (step: { stepId: string }): string => "wb-".concat(step.stepId);\n' },
@@ -1035,6 +1196,7 @@ const FORGE_PLANTS: Readonly<Record<string, Module>> = {
   "forge-gate-key": { path: plantPath("forge-gate-key"), text: 'export const rowOf = (sourceArtifact: { id: string }) => ({ gate_id: "gate:" + sourceArtifact.id });\n' },
   "forge-computed-key": { path: plantPath("forge-computed-key"), text: planted('export const rowOf = (step: { stepId: string }) => ({ ["operationId"]: `@{step.stepId}/run` });\n') },
   "forge-key-constant": { path: plantPath("forge-key-constant"), text: planted('const KEY = "gateStepId";\nexport const rowOf = (step: { stepId: string }) => ({ [KEY]: `@{step.stepId}/lint` });\n') },
+  "forge-wrapped-computed-key": { path: plantPath("forge-wrapped-computed-key"), text: planted('export const rowOf = (step: { stepId: string }) => ({ [("operationId" as string)]: `@{step.stepId}/run` });\n') },
   "forge-assignment": { path: plantPath("forge-assignment"), text: planted("export function setOf(target: { operationId?: string }, step: { stepId: string }): void {\n  target.operationId = `op-@{step.stepId}`;\n}\n") },
   "forge-element-assignment": {
     path: plantPath("forge-element-assignment"),
@@ -1080,6 +1242,67 @@ const FORGE_PLANTS: Readonly<Record<string, Module>> = {
   },
   "forge-key-getter": { path: plantPath("forge-key-getter"), text: planted("export const rowOf = (step: { stepId: string }) => ({\n  get operationId(): string {\n    return `@{step.stepId}/run`;\n  },\n});\n") },
   "forge-compound-key": { path: plantPath("forge-compound-key"), text: "export function setOf(target: { operationId: string }, step: { stepId: string }): void {\n  target.operationId += step.stepId;\n}\n" },
+  "forge-provider-template": { path: plantPath("forge-provider-template"), text: planted('export const refOf = (step: { stepId: string }) => ({ provider: `forge`, type: "operation", id: `@{step.stepId}` });\n') },
+  "forge-provider-template-constant": {
+    path: plantPath("forge-provider-template-constant"),
+    text: planted('const FORGE = `forge`;\nexport const refOf = (step: { stepId: string }) => ({ provider: FORGE, type: "operation", id: `@{step.stepId}` });\n'),
+  },
+  "forge-provider-as-const": { path: plantPath("forge-provider-as-const"), text: planted('export const refOf = (step: { stepId: string }) => ({ provider: "forge" as const, type: "operation", id: `@{step.stepId}` });\n') },
+  "forge-provider-constant-as-const": {
+    path: plantPath("forge-provider-constant-as-const"),
+    text: planted('const FORGE = "forge" as const;\nexport const refOf = (step: { stepId: string }) => ({ provider: FORGE, type: "operation", id: `@{step.stepId}` });\n'),
+  },
+  "forge-provider-satisfies": { path: plantPath("forge-provider-satisfies"), text: planted('export const refOf = (step: { stepId: string }) => ({ provider: "forge" satisfies string, type: "operation", id: `@{step.stepId}` });\n') },
+  "forge-provider-angle": { path: plantPath("forge-provider-angle"), text: planted('export const refOf = (step: { stepId: string }) => ({ provider: <string>"forge", type: "operation", id: `@{step.stepId}` });\n') },
+  "forge-provider-angle-mts": { path: "src/workbench/planted-forge-provider-angle.mts", text: planted('export const refOf = (step: { stepId: string }) => ({ provider: <string>"forge", type: "operation", id: `@{step.stepId}` });\n') },
+  "forge-provider-angle-cts": { path: "src/workbench/planted-forge-provider-angle.cts", text: planted('export const refOf = (step: { stepId: string }) => ({ provider: <string>"forge", type: "operation", id: `@{step.stepId}` });\n') },
+  "forge-provider-shorthand": {
+    path: plantPath("forge-provider-shorthand"),
+    text: planted('const provider = "forge";\nexport const refOf = (step: { stepId: string }) => ({ provider, type: "operation", id: `@{step.stepId}` });\n'),
+  },
+  "forge-wrapped-target": {
+    path: plantPath("forge-wrapped-target"),
+    text: planted("export function setOf(target: { operationId?: string }, step: { stepId: string }): void {\n  (target.operationId as string) = `op-@{step.stepId}`;\n}\n"),
+  },
+  "forge-nullish-assignment": {
+    path: plantPath("forge-nullish-assignment"),
+    text: planted("export function setOf(target: { operationId?: string }, step: { stepId: string }): void {\n  target.operationId ??= `op-@{step.stepId}`;\n}\n"),
+  },
+  "forge-or-assignment": { path: plantPath("forge-or-assignment"), text: planted("export function setOf(target: { gateId: string }, step: { stepId: string }): void {\n  target.gateId ||= `@{step.stepId}/gate`;\n}\n") },
+  "forge-and-assignment": { path: plantPath("forge-and-assignment"), text: planted("export function setOf(target: { gateStepId: string }, step: { stepId: string }): void {\n  target.gateStepId &&= `@{step.stepId}/lint`;\n}\n") },
+  "forge-private-field": {
+    path: plantPath("forge-private-field"),
+    text: planted("export class Gate {\n  constructor(private readonly step: { stepId: string }) {}\n  #operationId = `op-@{this.step.stepId}`;\n}\n"),
+  },
+  "forge-private-assignment": {
+    path: plantPath("forge-private-assignment"),
+    text: planted('export class Gate {\n  #gateId = "";\n  set(step: { stepId: string }): void {\n    this.#gateId = `@{step.stepId}/gate`;\n  }\n}\n'),
+  },
+  "forge-let-declaration": { path: plantPath("forge-let-declaration"), text: planted("export function opOf(step: { stepId: string }): string {\n  let operationId = `op-@{step.stepId}`;\n  return operationId;\n}\n") },
+  "forge-var-declaration": { path: plantPath("forge-var-declaration"), text: planted("export function opOf(step: { stepId: string }): string {\n  var gateId = `@{step.stepId}/gate`;\n  return gateId;\n}\n") },
+  "forge-static-property": { path: plantPath("forge-static-property"), text: planted('export class Gate {\n  static readonly step = { stepId: "s" };\n  static gateId = `@{Gate.step.stepId}/gate`;\n}\n') },
+  "forge-accessor-property": {
+    path: plantPath("forge-accessor-property"),
+    text: planted("export class Gate {\n  constructor(private readonly step: { stepId: string }) {}\n  accessor gateStepId = `@{this.step.stepId}/lint`;\n}\n"),
+  },
+  "forge-array-destructuring-default": {
+    path: plantPath("forge-array-destructuring-default"),
+    text: planted("export function opOf(step: { stepId: string }, [operationId = `op-@{step.stepId}`]: string[]): string {\n  return operationId;\n}\n"),
+  },
+  "other-provider-ref": { path: plantPath("other-provider-ref"), text: planted('export const refOf = (step: { stepId: string }) => ({ provider: "hyperunix", type: "answer", id: `@{step.stepId}` });\n') },
+  "forge-key-method": { path: plantPath("forge-key-method"), text: planted("export const rowOf = (step: { stepId: string }) => ({\n  operationId(): string {\n    return `@{step.stepId}/run`;\n  },\n});\n") },
+  "forge-provider-destructured": {
+    path: plantPath("forge-provider-destructured"),
+    text: planted('const { forge } = { forge: "forge" } as const;\nexport const refOf = (step: { stepId: string }) => ({ provider: forge, type: "operation", id: `@{step.stepId}` });\n'),
+  },
+  "forge-id-binding": {
+    path: plantPath("forge-id-binding"),
+    text: planted('export function refOf(step: { stepId: string }) {\n  const id = `@{step.stepId}`;\n  return { provider: "forge", type: "operation", id };\n}\n'),
+  },
+  "forge-key-binding": {
+    path: plantPath("forge-key-binding"),
+    text: planted("export function rowOf(step: { stepId: string }) {\n  const value = `@{step.stepId}/run`;\n  return { operationId: value };\n}\n"),
+  },
 };
 const ATTEMPT_PLANTS: Readonly<Record<string, Module>> = {
   "attempt-template": { path: plantPath("attempt-template"), text: planted("export const attemptOf = (step: { stepId: string }): string => `frn-atm-@{step.stepId}`;\n") },
@@ -1089,19 +1312,28 @@ const ATTEMPT_PLANTS: Readonly<Record<string, Module>> = {
   "attempt-furnace-key": { path: plantPath("attempt-furnace-key"), text: planted("export const rowOf = (step: { stepId: string }) => ({ furnaceAttemptId: `@{step.stepId}-1` });\n") },
   "attempt-element-id": { path: plantPath("attempt-element-id"), text: planted("export const attemptOf = (steps: { id: string }[]): string => `frn-atm-@{steps[0]?.id}`;\n") },
   "attempt-element-member": { path: plantPath("attempt-element-member"), text: planted('export const attemptOf = (sourceArtifact: Record<string, string>): string => `frn-@{sourceArtifact["id"]}`;\n') },
+  "attempt-template-element-member": {
+    path: plantPath("attempt-template-element-member"),
+    text: planted("export const attemptOf = (sourceArtifact: Record<string, string>): string => `frn-@{sourceArtifact[`id`]}`;\n"),
+  },
   "attempt-no-field": { path: plantPath("attempt-no-field"), text: planted("export const attemptOf = (run: { id: string }): string => `frn-atm-@{run.id}`;\n") },
   "attempt-literal": { path: plantPath("attempt-literal"), text: 'export const ATTEMPT = "frn-atm-preflight";\n' },
   "other-field-name": { path: plantPath("other-field-name"), text: planted("export const attemptOf = (node: { key: string }): string => `frn-atm-@{node.key}`;\n") },
   "bare-step-name": { path: plantPath("bare-step-name"), text: planted("export const taskOf = (step: string): string => `frn-@{step}`;\n") },
 };
-/** One B pin's reading: the live src constructions of its family and each planted module's count for that family. */
-function familyReading(family: Family, plants: Readonly<Record<string, Module>>): { live: string[]; controls: Record<string, number> } {
+/**
+ * One B pin's reading: the live src constructions of its family, and every construction each planted module reads, in every
+ * family, as "<line> <family> <forms> <fields>" (a planted quiet row reads [], so a reader that adds or drops a family, a form
+ * or a field on any plant reds the compare).
+ */
+function familyReading(family: Family, plants: Readonly<Record<string, Module>>): { live: string[]; controls: Record<string, string[]> } {
   // One call judges the real modules, then the planted ones after them.
-  const all = judgeConstructions([...srcFiles(), ...Object.values(plants)]).filter(entry => entry.family === family);
+  const all = judgeConstructions([...srcFiles(), ...Object.values(plants)]);
   const pathOf = (site: string): string => site.slice(0, site.lastIndexOf(":"));
   const plantPaths = new Set(Object.values(plants).map(module => module.path));
-  const live = all.filter(entry => !plantPaths.has(pathOf(entry.site)));
-  const controls = Object.fromEntries(Object.entries(plants).map(([id, module]) => [id, all.filter(entry => pathOf(entry.site) === module.path).length]));
+  const live = all.filter(entry => entry.family === family && !plantPaths.has(pathOf(entry.site)));
+  const reading = (entry: Construction): string => `${entry.site.slice(entry.site.lastIndexOf(":") + 1)} ${entry.family} ${entry.forms.join("+")} ${entry.fields.join(",")}`;
+  const controls = Object.fromEntries(Object.entries(plants).map(([id, module]) => [id, all.filter(entry => pathOf(entry.site) === module.path).map(reading)]));
   return { live: live.map(entry => `${entry.site} ${entry.forms.join("+")} ${entry.fields.join(",")}`), controls };
 }
 
@@ -1145,13 +1377,45 @@ const HOLDER_PLANTS: Readonly<Record<string, Module>> = {
   "holder-no-judge": { path: "test/planted-holder.census.ts", text: `${HOLDER_HEADER} (planted)\n */\nimport { docsSection } from "./helpers/census.js";\nexport const read = docsSection;\n` },
   "holder-judge-elsewhere": { path: "test/planted-holder.census.ts", text: `${HOLDER_HEADER} (planted)\n */\nimport { judge } from "./helpers/report.js";\nexport const read = judge;\n` },
   "holder-judge-alias": { path: "test/planted-holder.census.ts", text: `${HOLDER_HEADER} (planted)\n */\nimport { judge as judgeReport } from "./helpers/census.js";\nexport const read = judgeReport;\n` },
+  "holder-header-not-first": { path: "test/planted-holder.census.ts", text: `// a lead line\n${HOLDER_HEADER} (planted)\n */\nimport { judge } from "./helpers/census.js";\nexport const read = judge;\n` },
+  "holder-other-header": {
+    path: "test/planted-holder.census.ts",
+    text: '/**\n * wb-6hb.11 (VC-2/W07): census row of another leg (planted)\n */\nimport { judge } from "./helpers/census.js";\nexport const read = judge;\n',
+  },
+  "holder-renamed-to-judge": { path: "test/planted-holder.census.ts", text: `${HOLDER_HEADER} (planted)\n */\nimport { docsSection as judge } from "./helpers/census.js";\nexport const read = judge;\n` },
+  "holder-namespace-import": { path: "test/planted-holder.census.ts", text: `${HOLDER_HEADER} (planted)\n */\nimport * as census from "./helpers/census.js";\nexport const read = census.judge;\n` },
+  "holder-default-import": { path: "test/planted-holder.census.ts", text: `${HOLDER_HEADER} (planted)\n */\nimport judge from "./helpers/census.js";\nexport const read = judge;\n` },
 };
-/** Planted sources for the frozen-literal reader: a literal array, one with a non-literal element, another name, a non-array. */
+/** Planted sources for the frozen-literal reader: a literal array, one with a non-literal element, another name, a non-array, and the wrapped and template forms. */
 const FROZEN_PLANTS: Readonly<Record<string, string>> = {
   "frozen-literal": 'const FROZEN_W1: readonly string[] = ["quote | a", "today | test"];\n',
   "frozen-non-literal": 'const QUOTE = "quote | a";\nconst FROZEN_W1: readonly string[] = [QUOTE, "today | test"];\n',
   "frozen-other-name": 'const FROZEN_W2: readonly string[] = ["quote | a"];\n',
   "frozen-not-array": 'const FROZEN_W1 = "quote | a";\n',
+  "frozen-as-const": 'const FROZEN_W1 = ["quote | a", "today | test"] as const;\n',
+  "frozen-template-element": 'const FROZEN_W1: readonly string[] = [`quote | a`, "today | test"];\n',
+  "frozen-template-substitution": planted('const PIN = "a";\nconst FROZEN_W1: readonly string[] = [`quote | @{PIN}`];\n'),
+};
+/** Planted texts for the status word's boundaries: a letter, digit, underscore or hyphen on either side breaks the whole word, punctuation does not, and the case is exact. */
+const STATUS_PLANTS: Readonly<Record<string, string>> = {
+  "status-whole": "the program is design-only today",
+  "status-punctuated": "the program is (design-only).",
+  "status-letter-before": "the program is xdesign-only today",
+  "status-digit-before": "the program is 2design-only today",
+  "status-underscore-before": "the program is _design-only today",
+  "status-hyphen-before": "the program is non-design-only today",
+  "status-letter-after": "the program is design-onlyish today",
+  "status-digit-after": "the program is design-only2 today",
+  "status-underscore-after": "the program is design-only_ today",
+  "status-hyphen-after": "the program is design-only-ish today",
+  "status-capitalized": "the program is Design-only today",
+};
+/** Planted texts for the sentence rule: only a full stop followed by white space and a capital letter ends a sentence. */
+const SENTENCE_PLANTS: Readonly<Record<string, string>> = {
+  "sentence-two": "One part ends here. A second sentence follows.",
+  "sentence-lower-case-after": "It holds, e.g. a lower-case word after a stop.",
+  "sentence-unspaced": "It reads v1.Two as one sentence.",
+  "sentence-question": "Is it one sentence? Yes, by the full-stop rule.",
 };
 /** The binding this census expects of the holder's row: each half and the pins of this file it names, in pin order. */
 const BINDING: readonly (readonly [string, string])[] = [
@@ -1186,9 +1450,11 @@ const sentenceCount = (text: string): number => text.split(/(?<=\.)\s+(?=[A-Z])/
 // ------------------------------------------------------------------------------------------------- residuals
 const RESIDUALS: readonly Residual[] = [
   { id: "R-PACKAGE-NAME", pin: "T1", quiet: ["unscoped-name"], twin: ["manifest-dependency"] },
-  { id: "R-SPEC-FORM", pin: "T1", quiet: ["manifest-git-spec", "manifest-overrides"], twin: ["manifest-npm-alias"] },
-  { id: "R-LOAD-FORM", pin: "T1", quiet: ["dynamic-specifier", "require-alias", "create-require-renamed", "require-resolve"], twin: ["create-require-bound"] },
-  { id: "R-REQUIREMENT-ID", pin: "T2", quiet: ["requirement-id"], twin: ["type-name"] },
+  { id: "R-SPEC-FORM", pin: "T1", quiet: ["manifest-git-spec", "manifest-jsr-spec", "manifest-overrides"], twin: ["manifest-npm-alias"] },
+  { id: "R-LOAD-FORM", pin: "T1", quiet: ["dynamic-specifier", "require-template-substitution", "require-alias", "require-member", "create-require-renamed", "require-resolve"], twin: ["create-require-bound"] },
+  { id: "R-LOCK-NESTING", pin: "T1", quiet: ["lock-v1-nested"], twin: ["lock-v1-dependencies"] },
+  { id: "R-MODULE-KIND", pin: "T1", quiet: ["kind-md"], twin: ["kind-ts"] },
+  { id: "R-REQUIREMENT-ID", pin: "T2", quiet: ["requirement-id", "requirement-id-bare", "requirement-id-two-digit", "requirement-id-twice"], twin: ["type-name"] },
   { id: "R-UNSPELLED-CONSUMER", pin: "T2", quiet: ["unspelled-consumer"], twin: ["type-name"] },
   { id: "R-SCOPE", pin: "B1", quiet: ["qa-module"], twin: ["task-template"] },
   { id: "R-INDIRECT", pin: "B1", quiet: ["indirect-binding"], twin: ["task-template"] },
@@ -1196,42 +1462,58 @@ const RESIDUALS: readonly Residual[] = [
   { id: "R-PREFIX-CONSTANT", pin: "B1", quiet: ["prefix-constant"], twin: ["task-split-literal"] },
   { id: "R-COMPOUND", pin: "B1", quiet: ["task-compound"], twin: ["task-concat"] },
   { id: "R-VALUE-CHAIN", pin: "B2", quiet: ["forge-value-chain"], twin: ["forge-gate-ref"] },
-  { id: "R-NAME-BINDING", pin: "B2", quiet: ["forge-provider-import", "forge-provider-let", "forge-provider-member"], twin: ["forge-provider-constant"] },
-  { id: "R-KEY-ACCESSOR", pin: "B2", quiet: ["forge-key-getter"], twin: ["forge-id-key"] },
+  { id: "R-NAME-BINDING", pin: "B2", quiet: ["forge-provider-import", "forge-provider-let", "forge-provider-member", "forge-provider-destructured"], twin: ["forge-provider-constant"] },
+  { id: "R-KEY-ACCESSOR", pin: "B2", quiet: ["forge-key-getter", "forge-key-method"], twin: ["forge-id-key"] },
   { id: "R-COMPOUND-KEY", pin: "B2", quiet: ["forge-compound-key"], twin: ["forge-assignment"] },
   { id: "R-ID-POSITION", pin: "B2", quiet: ["builder-argument"], twin: ["forge-native-ref"] },
+  { id: "R-POSITION-BINDING", pin: "B2", quiet: ["forge-id-binding", "forge-key-binding"], twin: ["forge-native-ref"] },
   { id: "R-FIELD-SPELLING", pin: "B3", quiet: ["other-field-name", "bare-step-name"], twin: ["attempt-template"] },
 ];
 const PLANTED_OF: Readonly<Record<string, readonly string[]>> = {
-  T1: [...Object.keys(MANIFEST_PLANTS), ...Object.keys(LOCK_PLANTS), ...Object.keys(IMPORT_PLANTS)],
-  T2: [...Object.keys(SPELLING_PLANTS), ...Object.keys(READER_PLANTS)],
-  B1: Object.keys(TASK_PLANTS),
+  T1: [...Object.keys(MANIFEST_PLANTS), ...Object.keys(LOCK_PLANTS), ...Object.keys(IMPORT_PLANTS), ...Object.keys(MODULE_PLANTS)],
+  T2: [...Object.keys(SPELLING_PLANTS), ...Object.keys(READER_PLANTS), ...Object.keys(MODULE_PLANTS)],
+  B1: [...Object.keys(TASK_PLANTS), ...Object.keys(MODULE_PLANTS)],
   B2: Object.keys(FORGE_PLANTS),
   B3: Object.keys(ATTEMPT_PLANTS),
 };
+/** How much a planted input reads in a pin's witness (its controls or reader controls): a list's length, or a count. */
+function plantReads(witness: JsonValue | undefined, plant: string): number | undefined {
+  if (!isRecord(witness)) return undefined;
+  for (const map of [witness.controls, witness.readerControls]) {
+    const value = isRecord(map) ? map[plant] : undefined;
+    if (Array.isArray(value)) return value.length;
+    if (typeof value === "number") return value;
+  }
+  return undefined;
+}
 
 // ------------------------------------------------------------------------------------------------- the pins
 const REACHED = new Set<string>();
 const IMPL: Readonly<Record<string, () => JsonValue>> = {
   T1: () => {
     const manifest: unknown = JSON.parse(readRepo("package.json"));
-    const locks = ["package-lock.json", "vendor/dependency-lock.json"].map(path => ({ path, reading: lockNames(JSON.parse(readRepo(path))) }));
+    const locks = ["package-lock.json", "vendor/dependency-lock.json"].map(path => {
+      const lock: unknown = JSON.parse(readRepo(path));
+      return { path, version: isRecord(lock) ? lock.lockfileVersion : undefined, reading: lockNames(lock) };
+    });
     const src = srcFiles();
     expect(src.filter(module => isModule(module.path)).length, "the src leg reads at least SRC_FLOOR modules").toBeGreaterThanOrEqual(SRC_FLOOR);
     for (const lock of locks) expect(lock.reading.packages, `${lock.path} holds at least LOCK_FLOOR packages`).toBeGreaterThanOrEqual(LOCK_FLOOR);
     // One call reads the real modules, then the planted ones after them: a reader that stops early misses the plants.
-    const plants = Object.entries(IMPORT_PLANTS).map(([id, text]) => ({ id, path: plantPath(id), text }));
+    const plants = [...Object.entries(IMPORT_PLANTS).map(([id, text]) => ({ id, path: plantPath(id), text })), ...Object.entries(MODULE_PLANTS).map(([id, module]) => ({ id, ...module }))];
     const sites = importSites([...src, ...plants]);
     const plantOf = (site: string): string | undefined => plants.find(plant => site.startsWith(`${plant.path} `))?.id;
     expect(sites.some(site => plantOf(site) === undefined && (specOf(site) === "typescript" || specOf(site).startsWith("node:"))), "the import reader reads real src imports").toBe(true);
-    const controls: Record<string, number> = {};
-    for (const [id, plant] of Object.entries(MANIFEST_PLANTS)) controls[id] = declaredNames(plant).filter(isMwName).length;
-    for (const [id, plant] of Object.entries(LOCK_PLANTS)) controls[id] = lockNames(plant).names.filter(isMwName).length;
-    for (const plant of plants) controls[plant.id] = sites.filter(site => plantOf(site) === plant.id && isMwName(specOf(site))).length;
+    // Each plant's reading is the @mechanical/ names or specifiers it yields, in reading order ([] for a quiet row).
+    const controls: Record<string, string[]> = {};
+    for (const [id, plant] of Object.entries(MANIFEST_PLANTS)) controls[id] = declaredNames(plant).filter(isMwName);
+    for (const [id, plant] of Object.entries(LOCK_PLANTS)) controls[id] = lockNames(plant).names.filter(isMwName);
+    for (const plant of plants) controls[plant.id] = sites.filter(site => plantOf(site) === plant.id && isMwName(specOf(site))).map(specOf);
     return {
       scope: CONSTANTS.mwScope,
       manifest: declaredNames(manifest).filter(isMwName),
       locks: Object.fromEntries(locks.map(lock => [lock.path, lock.reading.names.filter(isMwName)])),
+      lockVersions: Object.fromEntries(locks.map(lock => [lock.path, typeof lock.version === "number" ? lock.version : null])),
       imports: sites.filter(site => plantOf(site) === undefined && isMwName(specOf(site))),
       controls,
     };
@@ -1240,8 +1522,8 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     const src = srcFiles();
     const spelling = src.filter(module => spells(module.text)).map(module => module.path);
     expect(spelling, "the src files spelling the program's words are exactly the bound consumers").toEqual(MW_COMPOSITION_CONSUMERS.map(entry => entry.module).sort(byName));
-    // One call per tool name reads the real modules, then the planted readers after them.
-    const readerPlants = Object.entries(READER_PLANTS).map(([id, text]) => ({ id, path: plantPath(id), text }));
+    // One call per tool name reads the real modules, then the planted readers (and the module-kind plants) after them.
+    const readerPlants = [...Object.entries(READER_PLANTS).map(([id, text]) => ({ id, path: plantPath(id), text })), ...Object.entries(MODULE_PLANTS).map(([id, module]) => ({ id, ...module }))];
     const isReaderPlant = (path: string): boolean => readerPlants.some(plant => plant.path === path);
     const found = Object.fromEntries(TRIGGER_READERS.map(name => [name, literalSites([...src, ...readerPlants], name)]));
     const readers = Object.fromEntries(Object.entries(found).map(([name, sites]) => [name, sites.filter(path => !isReaderPlant(path))]));
@@ -1249,7 +1531,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     const plants = Object.entries(SPELLING_PLANTS).map(([id, text]) => ({ id, path: plantPath(id), text }));
     const read = [...src, ...plants].filter(module => spells(module.text)).map(module => module.path);
     const controls = Object.fromEntries(plants.map(plant => [plant.id, read.filter(path => path === plant.path).length]));
-    const readerControls = Object.fromEntries(readerPlants.map(plant => [plant.id, Object.values(found).filter(sites => sites.includes(plant.path)).length]));
+    const readerControls = Object.fromEntries(readerPlants.map(plant => [plant.id, Object.entries(found).flatMap(([name, sites]) => (sites.includes(plant.path) ? [name] : []))]));
     return {
       slug: CONSTANTS.programSlug,
       spelling,
@@ -1257,6 +1539,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       readers: Object.fromEntries(Object.entries(readers).map(([name, sites]) => [name, sites.some(path => spelling.includes(path)) ? "spells" : "quiet"])),
       controls,
       readerControls,
+      whitespace: whitespaceReading(),
     };
   },
   A1: () => contractReading("A1"),
@@ -1268,7 +1551,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     expect(walk.files, "a filesystem walk of src lists what git lists").toEqual(listed);
     expect(walk.links, "no symlink sits under src").toEqual([]);
     expect(listed.filter(isModule).length, "the walk reads at least SRC_FLOOR modules").toBeGreaterThanOrEqual(SRC_FLOOR);
-    return { prefixes: [...CONSTANTS.taskPrefixes], idFields: [...CONSTANTS.idFields], compositionWord: CONSTANTS.compositionWord, ...familyReading("task", TASK_PLANTS) };
+    return { prefixes: [...CONSTANTS.taskPrefixes], idFields: [...CONSTANTS.idFields], compositionWord: CONSTANTS.compositionWord, ...familyReading("task", { ...TASK_PLANTS, ...MODULE_PLANTS }) };
   },
   B2: () => ({ providers: Object.keys(PROVIDER_FAMILY).filter(name => PROVIDER_FAMILY[name] === "forge"), keys: [...ID_KEYS.forge], ...familyReading("forge", FORGE_PLANTS) }),
   B3: () => ({ prefixes: [...CONSTANTS.attemptPrefixes], keys: [...ID_KEYS.attempt], ...familyReading("attempt", ATTEMPT_PLANTS) }),
@@ -1290,16 +1573,22 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       doubled: docs.replace(`\n${sentence}\n`, `\n${sentence}\n\n${sentence}\n`),
       moved: docs.replace(`\n${sentence}\n`, "\n").replace("\n## Forge provider\n\n", `\n## Forge provider\n\n${sentence}\n\n`),
       extended: docs.replace(`\n${sentence}\n`, `\n${sentence} Hosts may differ.\n`),
+      listed: docs.replace(`\n${sentence}\n`, `\n- ${sentence}\n`),
+      retitled: docs.replace(`# ${DOCS07_PARENT}\n`, "# Another page\n"),
     };
     const holding = Object.fromEntries(Object.entries(documents).map(([id, markdown]) => [id, sitesOf(markdown).length]));
     const held = Object.fromEntries(Object.entries(documents).map(([id, markdown]) => [id, heldOnce(sitesOf(markdown), sentence)]));
     const readings = {
       secondHeading: mwHeadingOf(`${docs}\n## MechanicalWorkflows notes\n\nNotes.\n`),
+      subHeading: mwHeadingOf(`${docs}\n### MechanicalWorkflows details\n\nDetails.\n`),
+      html: sentenceSites(docs.replace(`\n${sentence}\n`, `\n${sentence}\n\n<div>planted</div>\n`), CONSTANTS.docsHeading, sentence).html,
       statusReplaced: carriesStatus(sentence.replace("design-only", "unreleased")),
       statusEmbedded: carriesStatus(sentence.replace("design-only", "non-design-only")),
       twoSentences: sentenceCount(`${sentence} A second sentence follows.`),
     };
-    return { heading: CONSTANTS.docsHeading, sentence, holding: live.holding.length, plants: { ...holding, held, ...readings } };
+    const status = Object.fromEntries(Object.entries(STATUS_PLANTS).map(([id, text]) => [id, carriesStatus(text)]));
+    const sentences = Object.fromEntries(Object.entries(SENTENCE_PLANTS).map(([id, text]) => [id, sentenceCount(text)]));
+    return { heading: CONSTANTS.docsHeading, sentence, holding: live.holding.length, plants: { ...holding, held, ...readings, status, sentences } };
   },
   C2: () => {
     const lines = holderLiterals(CONSTANTS.holderFrozen);
@@ -1361,9 +1650,35 @@ describe(TOP, () => {
     const evidence = docsSection(readRepo(DOCS07), CONSTANTS.docsHeading, 2, [DOCS07_PARENT]).blocks.map(block => (block.kind === "paragraph" ? block.text : "")).join(" ");
     expect(/Current evidence:\W*(https:\/\/[^\s,]+)/.exec(evidence)?.[1], "the repository is the one docs/07's MechanicalWorkflows section cites").toBe(PRODUCER_MW.repository);
     // The residual table: named in order, held to the roster, each quiet row and twin a planted input of its pin.
-    expect(RESIDUALS.map(residual => residual.id)).toEqual(["R-PACKAGE-NAME", "R-SPEC-FORM", "R-LOAD-FORM", "R-REQUIREMENT-ID", "R-UNSPELLED-CONSUMER", "R-SCOPE", "R-INDIRECT", "R-CALL-FORM", "R-PREFIX-CONSTANT", "R-COMPOUND", "R-VALUE-CHAIN", "R-NAME-BINDING", "R-KEY-ACCESSOR", "R-COMPOUND-KEY", "R-ID-POSITION", "R-FIELD-SPELLING"]);
+    expect(RESIDUALS.map(residual => residual.id)).toEqual([
+      "R-PACKAGE-NAME",
+      "R-SPEC-FORM",
+      "R-LOAD-FORM",
+      "R-LOCK-NESTING",
+      "R-MODULE-KIND",
+      "R-REQUIREMENT-ID",
+      "R-UNSPELLED-CONSUMER",
+      "R-SCOPE",
+      "R-INDIRECT",
+      "R-CALL-FORM",
+      "R-PREFIX-CONSTANT",
+      "R-COMPOUND",
+      "R-VALUE-CHAIN",
+      "R-NAME-BINDING",
+      "R-KEY-ACCESSOR",
+      "R-COMPOUND-KEY",
+      "R-ID-POSITION",
+      "R-POSITION-BINDING",
+      "R-FIELD-SPELLING",
+    ]);
     expect(ROSTER.residuals).toEqual(RESIDUALS);
     expect(RESIDUALS.flatMap(residual => [...residual.quiet, ...residual.twin].filter(id => !(PLANTED_OF[residual.pin] ?? []).includes(id)).map(id => `${residual.id}:${id}`))).toEqual([]);
+    // Each residual's quiet rows read nothing and its twins read, in the held witness of its pin (the residual definition).
+    const heldWitness = (pin: string): JsonValue | undefined => ROSTER.rows.flatMap(row => row.pins).find(entry => entry.id === pin)?.witness;
+    const quietReads = RESIDUALS.flatMap(residual => residual.quiet.map(id => `${residual.id}:${id}=${plantReads(heldWitness(residual.pin), id)}`));
+    expect(quietReads, "every quiet row reads nothing").toEqual(RESIDUALS.flatMap(residual => residual.quiet.map(id => `${residual.id}:${id}=0`)));
+    const twinsReading = RESIDUALS.flatMap(residual => residual.twin.filter(id => (plantReads(heldWitness(residual.pin), id) ?? 0) === 0).map(id => `${residual.id}:${id}`));
+    expect(twinsReading, "every twin reads").toEqual([]);
     // The binding the holder must carry names every pin of rows T, A and B once, and no pin of row C.
     expect(BINDING.map(([, pin]) => pin)).toEqual(ROWS.filter(row => row.id !== "C").flatMap(row => row.pins.map(pin => pin.id)));
   });
