@@ -349,6 +349,29 @@
                 ".cjs": "JSX",
                 ".jsx": "JSX"
               }
+            },
+            "keyPaths": {
+              "functionType": 1,
+              "constructType": 1,
+              "comma": 1,
+              "yielded": 1,
+              "yieldedMethod": 1,
+              "innerDeclaration": 1,
+              "conditionalType": 1,
+              "conditionalTypeElse": 1,
+              "memberAssignment": 1,
+              "logicalAssignment": 1,
+              "elementAssignment": 1,
+              "assignedValue": 1,
+              "returnType": 1,
+              "functionReturnType": 1,
+              "taggedTemplate": 1,
+              "templateLiteral": 1
+            },
+            "splitPath": {
+              "declaredFunction": 0,
+              "nameAssignment": 0,
+              "keyedAssignment": 0
             }
           }
         },

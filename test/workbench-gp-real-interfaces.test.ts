@@ -92,6 +92,19 @@
  * memory: the D row plants each kind of disagreement (G1 and G1b among them) into the members or the docs line, and an F
  * row holds familyShapesOf, namesShape, statementWordsOf, oneChangeAway and pairingProblems to probes, one or more per branch.
  *
+ * THE wb-mpmm FOLLOW-UP (R694 of landing 559; gate of record cmd_732dc954f2ae, PREP F1 leads). F1: a member's named words
+ * are tied to the statement it measures. A D row reads each shape the residual line maps to exactly one member (by its
+ * named words, as above) against that member's own statement: the statement's launch - its words after the callee as
+ * statementWordsOf reads them - must begin with the shape (launchBeginsWith), and no two members' statements may read as
+ * the same words. So gate L2c (P32 given P05's statement, reads, control and controlWrites), L2h (P32 given a nohup
+ * statement docs/03 never names, with a coherent reading and control) and L2b (P11 and P12 trading named words and table
+ * places), each made coherently in every literal of this census and in the roster, red through docs/03, which still names
+ * coproc, BD.EXE and bd.bat. The bead's cure option read the shape anywhere in the statement's words; the launch must open
+ * with it because a shape carried behind another word survives that reading - P32 given nohup coproc bd close wb-example
+ * (quiet: the census reads nohup as the binary) pairs with bd close wb-example and leaves P32's quiet reading to nohup
+ * (measured at this cut). The D row plants each escape and each other kind of disagreement in memory, and an F row holds
+ * launchBeginsWith to probes.
+ *
  * Display paths added: none. No scratch directory is allocated: the synthetic trees live in memory.
  */
 import { createHash } from "node:crypto";
@@ -1175,6 +1188,7 @@ interface ResidualMember {
   readonly name: string;
   /** The words naming the member in its residual's family, so the docs/03 residual line names every member. */
   readonly named: string;
+  /** The launch its quiet row plants: it begins with the shape docs/03 names the member by, and no other member's statement reads as its words (wb-mpmm F1). */
   readonly statement: string;
   /** The member's launches as the census reads them (binary, then argv): the command word misread, no bd write found. */
   readonly reads: readonly string[];
@@ -2102,8 +2116,8 @@ const REGISTERED = {
     "type-only-launcher",
   ],
 } as const satisfies Readonly<Record<"F" | "Q" | "DT", readonly string[]>>;
-/** Every case this file registers: 20 fixed cases, the three it.each tables and the closing tally. */
-const FILE_CASES = 105;
+/** Every case this file registers: 22 fixed cases, the three it.each tables and the closing tally. */
+const FILE_CASES = 107;
 /** What this run's it.each cases did, recorded by each case at its last line; the closing tally pins every list. */
 const RAN: Record<"F" | "Q" | "DT", string[]> = { F: [], Q: [], DT: [] };
 /** The class-level residual members the Q rows read this run (residual/member), each recorded after its control (wb-nh0t F2). */
@@ -2208,6 +2222,16 @@ function statementWordsOf(statement: string): readonly string[] {
   const words = argv.elements.map(element => literalText(element));
   return words.every(word => word !== undefined) ? [callee, head, ...words] : [];
 }
+/**
+ * Whether a residual member's statement launches a shape first (wb-mpmm F1): its words after the callee, as
+ * statementWordsOf reads them, begin with the shape's words, whole word for whole word. A class-level member measures the
+ * command word its family names, so the shape opens the launch; one carried behind another word (nohup coproc bd close)
+ * leaves the launch's quiet reading to that word. A statement read as no words launches no shape.
+ */
+function launchBeginsWith(statement: string, shape: string): boolean {
+  const [, ...launch] = statementWordsOf(statement);
+  return shape.split(" ").every((word, offset) => launch[offset] === word);
+}
 /** Whether one word moved: taking the same word out of each leaves the same words in the same order. */
 function movedOneWord(statement: readonly string[], control: readonly string[]): boolean {
   const without = (words: readonly string[], index: number): string => JSON.stringify(words.filter((_, at) => at !== index));
@@ -2257,6 +2281,30 @@ function memberMismatches(line: string, residuals: readonly Residual[]): string[
     const table = members.map(member => member.name).filter(name => order.includes(name));
     if (JSON.stringify(order) !== JSON.stringify(table)) problems.push(`${id}: members out of the family's order`);
     if (members.length > 0) for (const group of unread) problems.push(`${id}: unread group ${group}`);
+  }
+  return problems;
+}
+/**
+ * Where docs/03's residual line and the launches a residual's members measure disagree (wb-mpmm F1): for each residual
+ * the line names, each shape its family enumerates that names exactly one member by its named words, when that member's
+ * statement does not launch the shape first (launchBeginsWith), and each member whose statement reads as the same words
+ * (statementWordsOf) as an earlier member's. So every member measures the shape docs/03 names it by, and no two members
+ * measure one launch. Empty when they agree; a shape naming other than exactly one member is memberMismatches' to report.
+ */
+function statementMismatches(line: string, residuals: readonly Residual[]): string[] {
+  const problems: string[] = [];
+  for (const [, id = "", family = ""] of line.matchAll(RESIDUAL_ENTRY)) {
+    const members = residuals.find(residual => residual.id === id)?.members ?? [];
+    for (const shape of familyShapesOf(family).shapes) {
+      const named = members.filter(member => namesShape(member.named, shape));
+      const owner = named.length === 1 ? named[0] : undefined;
+      if (owner !== undefined && !launchBeginsWith(owner.statement, shape)) problems.push(`${id}: the launch ${owner.name} measures does not begin with ${shape}, the shape docs/03 names it by`);
+    }
+    const launches = members.map(member => JSON.stringify(statementWordsOf(member.statement)));
+    members.forEach((member, index) => {
+      const earlier = members[launches.indexOf(launches[index] ?? "")];
+      if (earlier !== undefined && earlier !== member) problems.push(`${id}: ${member.name} measures the same launch as ${earlier.name}`);
+    });
   }
   return problems;
 }
@@ -2515,6 +2563,76 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
     ).toEqual(["WRAPPED-COMMAND: shape timeout names no member"]);
   });
 
+  it("D: every class-level member measures the shape docs/03 names it by - each shape a family enumerates in the rendered residual line that names exactly one member opens the launch of that member's statement, and no two members' statements read as one launch, so a member given another member's statement, a shape docs/03 never names, its shape behind another word or another member's named words reds through docs/03 (wb-mpmm F1, gate L2c/L2h/L2b)", () => {
+    const section = boundarySection();
+    expect(section.why).toBe("");
+    const lines = section.blocks.flatMap(block => (block.kind === "paragraph" && block.text.startsWith("Named residuals") ? [block.text] : []));
+    expect(lines).toHaveLength(1);
+    const line = lines[0] ?? "";
+    expect(statementMismatches(line, RESIDUALS), "docs/03's shapes against each member's launch").toEqual([]);
+    // The check is live: each escape gate s111 measured, and each other kind of disagreement, planted in memory in the members, is the one named.
+    const misread = "MISREAD-COMMAND-WORD";
+    const edited = (edit: (members: readonly ResidualMember[]) => readonly ResidualMember[]): Residual[] =>
+      RESIDUALS.map(residual => (residual.id === misread ? { ...residual, members: edit(residual.members ?? []) } : residual));
+    const set = (name: string, fields: Partial<ResidualMember>): Residual[] => edited(members => members.map(member => (member.name === name ? { ...member, ...fields } : member)));
+    const [time] = MISREAD_MEMBERS.filter(member => member.name === "P05 the time keyword");
+    expect(time, "P05 is a member").toBeDefined();
+    const timeMeasure = time === undefined ? {} : { statement: time.statement, reads: time.reads, control: time.control, controlWrites: time.controlWrites };
+    expect(statementMismatches(line, set("P32 the coproc keyword", timeMeasure)), "gate L2c: P32 measures P05's statement").toEqual([
+      `${misread}: the launch P32 the coproc keyword measures does not begin with coproc, the shape docs/03 names it by`,
+      `${misread}: P32 the coproc keyword measures the same launch as P05 the time keyword`,
+    ]);
+    const nohup = { reads: ["nohup bd close wb-example"], control: 'execSync("bd close wb-example");', controlWrites: ["bd close wb-example"] };
+    expect(statementMismatches(line, set("P32 the coproc keyword", { ...nohup, statement: 'execSync("nohup bd close wb-example");' })), "gate L2h: P32 measures a shape docs/03 never names").toEqual([
+      `${misread}: the launch P32 the coproc keyword measures does not begin with coproc, the shape docs/03 names it by`,
+    ]);
+    expect(
+      statementMismatches(line, edited(members => members.map((member, index, all) => (index === 5 ? { ...(all[6] ?? member), named: member.named } : index === 6 ? { ...(all[5] ?? member), named: member.named } : member)))),
+      "gate L2b: P11 and P12 trade named words and table places",
+    ).toEqual([
+      `${misread}: the launch P12 a .bat spelling measures does not begin with BD.EXE, the shape docs/03 names it by`,
+      `${misread}: the launch P11 an upper-case .EXE spelling measures does not begin with bd.bat, the shape docs/03 names it by`,
+    ]);
+    expect(
+      statementMismatches(line, set("P32 the coproc keyword", { ...nohup, reads: ["nohup coproc bd close wb-example"], statement: 'execSync("nohup coproc bd close wb-example");' })),
+      "its shape carried behind a word the census reads as the binary",
+    ).toEqual([`${misread}: the launch P32 the coproc keyword measures does not begin with coproc, the shape docs/03 names it by`]);
+    const both = 'execSync("time coproc bd close wb-example");';
+    expect(
+      statementMismatches(
+        line,
+        edited(members => members.map(member => (member.name === "P05 the time keyword" || member.name === "P32 the coproc keyword" ? { ...member, statement: both } : member))),
+      ),
+      "two members sharing a statement",
+    ).toEqual([
+      `${misread}: the launch P32 the coproc keyword measures does not begin with coproc, the shape docs/03 names it by`,
+      `${misread}: P32 the coproc keyword measures the same launch as P05 the time keyword`,
+    ]);
+    expect(
+      statementMismatches(
+        line,
+        edited(members => [...members, ...members.slice(0, 1).map(member => ({ ...member, name: "P99 a respaced copy", named: "a respaced copy", statement: member.statement.replace(" bd", "  bd") }))]),
+      ),
+      "a statement respelled only in its spacing reads as the same launch",
+    ).toEqual([`${misread}: P99 a respaced copy measures the same launch as P06 a leading redirection`]);
+    expect(statementMismatches(line, set("P06 a leading redirection", { statement: 'execSync(">/dev/null bd close wb-example"); execSync("f");' })), "a statement read as no words").toEqual([
+      `${misread}: the launch P06 a leading redirection measures does not begin with >/dev/null, the shape docs/03 names it by`,
+    ]);
+    expect(statementMismatches(line, set("P17 a global flag value read as the verb", { statement: 'spawnSync("bd", ["--actor=doctor", "close", "wb-example"]);' })), "the family's last shape, of four words").toEqual([
+      `${misread}: the launch P17 a global flag value read as the verb measures does not begin with bd --actor doctor close, the shape docs/03 names it by`,
+    ]);
+    const ambiguous = edited(members =>
+      members.map(member =>
+        member.name === "P05 the time keyword" ? { ...member, named: "time coproc" } : member.name === "P32 the coproc keyword" ? { ...member, statement: 'execSync("nohup coproc bd close wb-example");' } : member,
+      ),
+    );
+    expect(statementMismatches(line, ambiguous), "a shape naming two members, neither launch opening with it, is left to memberMismatches").toEqual([]);
+    expect(memberMismatches(line, ambiguous), "which reports it").toEqual([
+      `${misread}: shape coproc names P05 the time keyword | P32 the coproc keyword`,
+      `${misread}: member P05 the time keyword is named by 2 shapes`,
+    ]);
+  });
+
   it("F: the class-level member readings meet their in-memory probes - familyShapesOf reads each branch of the family grammar and returns a group it cannot read, namesShape reads whole contiguous words, statementWordsOf reads only one launcher call of literals, oneChangeAway admits one dropped, inserted, respelled or rejoined run or one moved word and refuses an identical, wider or second change, and pairingProblems names a control set to its own statement, an unrelated bd write and a misread respelling (wb-yxkq F1/F2, gate G2/G2b)", () => {
     expect(familyShapesOf("a lead such as Z: the A or B noun"), "after the colon; between the and its noun; or").toEqual({ shapes: ["A", "B"], unread: [] });
     expect(familyShapesOf("lead: a group such as A, B or C, the D noun, an other group spelled E, or a group spelled F or G"), "groups at a, the, an and or a").toEqual({
@@ -2569,6 +2687,25 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
       member("P05 the time keyword").flatMap(found => pairingProblems({ ...found, control: 'execSync("timer bd close wb-example");', controlWrites: [] })),
       "a misread respelling one change away",
     ).toEqual(["P05 the time keyword: the census reads no bd write in the control"]);
+  });
+
+  it("F: launchBeginsWith reads a shape as the opening words of a statement's launch - a word or a run across a binary and its argv, never the callee, a word's tail or head, a word in another case, a shape behind another word, a broken or cut-short run, or a statement statementWordsOf reads as no words (wb-mpmm F1)", () => {
+    const probes: readonly (readonly [string, string, boolean])[] = [
+      ['execSync(">/dev/null bd close wb-x");', ">/dev/null", true],
+      ['spawnSync("bd", ["--actor", "doctor", "close", "wb-x"]);', "bd --actor doctor close", true],
+      ['execSync("bd close wb-x");', "execSync", false],
+      ['execSync("2>/dev/null bd close wb-x");', ">/dev/null", false],
+      ['execSync("timer bd close wb-x");', "time", false],
+      ['spawnSync("bd.exe", ["close", "wb-x"]);', "BD.EXE", false],
+      ['execSync("nohup coproc bd close wb-x");', "coproc", false],
+      ['spawnSync("bd", ["--actor", "doctor", "list", "close"]);', "bd --actor doctor close", false],
+      ['spawnSync("bd", ["--actor", "doctor"]);', "bd --actor doctor close", false],
+      ['execSync("time bd close wb-x"); execSync("f");', "time", false],
+    ];
+    expect(
+      probes.map(([statement, shape]) => launchBeginsWith(statement, shape)),
+      "a word, a run across a binary and its argv, the callee, a word's tail, a word's head, another case, a shape behind another word, a broken run, a cut-short run, a statement read as no words",
+    ).toEqual(probes.map(probe => probe[2]));
   });
 
   it("F: a compliant gp integration judges clean - the rules admit a real-interface seam rather than banning gp", () => {

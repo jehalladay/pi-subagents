@@ -1,5 +1,5 @@
 {
-  "comment": "wb-1xvp.3 (RF-GRAPH-POLICY-MACHINE-CONTROL-R2; the hk9l/5jha roster pattern, as wb-1xvp.4 uses it; extended by wb-66f7, wb-rdv6 and wb-lx6m): the OUT-OF-FILE anchor of test/workbench-gp-control-loop-audit.test.ts. rows: every judged row of test/helpers/gp-control-loop-audit-cases.ts in table order (CALL_SITES, NOT_CALL_SITES, RESIDUALS, ANNOTATED, UNANNOTATED, MISATTRIBUTED, FALSIFIERS, STAGES) - table, positional id, label and the SHA-256 of each pin as written (each input and each expectation). residuals: the named residual families, each pinned by its row (the RESIDUALS quiet rows, then the MISATTRIBUTED rows that read today's credit). tests: every test the suite registers, in order. Written from the rows and the registered tests as measured at the cut; the suite judges its tables, its residual families and its registered tests (vitest task tree, run modes) against this file at test time, in order and both ways.",
+  "comment": "wb-1xvp.3 (RF-GRAPH-POLICY-MACHINE-CONTROL-R2; the hk9l/5jha roster pattern, as wb-1xvp.4 uses it; extended by wb-66f7, wb-rdv6, wb-lx6m and wb-2xd5): the OUT-OF-FILE anchor of test/workbench-gp-control-loop-audit.test.ts. rows: every judged row of test/helpers/gp-control-loop-audit-cases.ts in table order (CALL_SITES, NOT_CALL_SITES, RESIDUALS, ANNOTATED, UNANNOTATED, MISATTRIBUTED, FALSIFIERS, STAGES) - table, positional id, label and the SHA-256 of each pin as written (each input and each expectation). residuals: the named residual families, each pinned by its row (the RESIDUALS quiet rows, then the MISATTRIBUTED rows that read today's credit). tests: every test the suite registers, in order. Written from the rows and the registered tests as measured at the cut; the suite judges its tables, its residual families and its registered tests (vitest task tree, run modes) against this file at test time, in order and both ways.",
   "rows": [
     {
       "table": "CALL_SITES",
@@ -603,6 +603,15 @@
       ]
     },
     {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-16",
+      "label": "a comment after a labeled for statement's header, before the blockless body that holds the literal (wb-2xd5, wb-lx6m gate G-C14)",
+      "pins": [
+        "b46c28be380e9c3525bab9b9a071f9324a9e13f319e874a94e79069bdd4a0bd2",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
       "table": "UNANNOTATED",
       "id": "UNANNOTATED-01",
       "label": "no comment at all",
@@ -712,6 +721,102 @@
       "label": "a marker inside a nested class expression's body in a preceding argument (wb-lx6m)",
       "pins": [
         "c5c3e5e75a176a105fbab9b5d3ddd79b56b9eeb94d6032e5973f144a6edfe954"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-15",
+      "label": "a marker after the class keyword of a nested class expression in a preceding argument: a class-like holder's span starts at its first token, so its head lies inside it (wb-2xd5, wb-lx6m gate G-B01)",
+      "pins": [
+        "e0080cd932836baab2c5caad6cc3cc546cde9149ee4d09e34a88d53d0111ea29"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-16",
+      "label": "a marker inside a nested class expression's heritage clause in a preceding argument (wb-2xd5, wb-lx6m gate G-B02)",
+      "pins": [
+        "1dc9fab790eab1494fb04ae903ef6144813f8d1248643d2372c6046ad396b9ec"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-17",
+      "label": "a marker after a nested class expression's name in a preceding argument (wb-2xd5, wb-lx6m gate G-B03)",
+      "pins": [
+        "a1097747c47486849dfcbcc645cee39d2576c7e349de767b2c8e13fc8a603067"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-18",
+      "label": "a marker inside a nested class expression's type parameter list in a preceding argument (wb-2xd5, wb-lx6m gate G-B07)",
+      "pins": [
+        "5eae14eb7eaecddcbfd96def17f605e13d5ff0f1ce9436aa4859a817e9289a68"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-19",
+      "label": "a marker inside a case clause of the switch statement whose discriminant holds the literal: a case clause holds members (wb-2xd5, wb-lx6m gate G-B04)",
+      "pins": [
+        "dbf6a5b83f03077bd5959e952cd32e99c6a5bf171259c8934d05ffb49941eddc"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-20",
+      "label": "a marker inside a default clause of the switch statement whose discriminant holds the literal: a default clause holds members (wb-2xd5, wb-lx6m gate G-B06)",
+      "pins": [
+        "b72c0d1483e9f6b02e64a84d6d7e0614cf15d7f1b1a25344ccf330ae685dd00c"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-21",
+      "label": "a marker inside a nested object literal in a preceding argument (wb-2xd5, wb-lx6m gate G-A02)",
+      "pins": [
+        "8b9132e6b4348fd6db953bb7de8a6ea27d41cf919d7c38b043a9cf7e2fd8d1ee"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-22",
+      "label": "a marker inside the module block of an ambient module declaration that the literal names, on the literal's line: a module block holds members (wb-2xd5)",
+      "pins": [
+        "a16c06bfc1743af9aad6b0b623436712d4831f4a1071c0f3429bdc11aa783722"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-23",
+      "label": "a marker above a class declaration whose heritage clause holds the literal: the unit is the heritage clause, not the class (wb-2xd5)",
+      "pins": [
+        "a657b6b438ce59dc7c6bbb42678a0be790ff0d7932af9c71bc7304cfddb5dbfa"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-24",
+      "label": "a marker above a case clause whose label is the literal: the unit is the label, not the case clause (wb-2xd5)",
+      "pins": [
+        "0f3526cba1d0ab5665facdb2e08fe832cfb67a2e71873b45fdef915fb599c455"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-25",
+      "label": "a marker above an interface declaration whose member holds the literal: the unit is the member, not the interface (wb-2xd5)",
+      "pins": [
+        "c0a980b9d03eb794f12ed4c6557f4be66afe8279f353e8922ec71155bfc5ff4d"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-26",
+      "label": "a marker above an enum declaration whose member holds the literal: the unit is the member, not the enum (wb-2xd5)",
+      "pins": [
+        "cca594041fe9f8214dd888340eb85f4a0bdfe1ee018a4c952c04d071c70b7454"
       ]
     },
     {
@@ -1125,6 +1230,195 @@
       "label": "RES-58 a marker inside an object property value's nested call is credited to a gp literal later in the same value (wb-lx6m)",
       "pins": [
         "865dd7dd7003c7cb9de111765e098ed297a9fa4b217d9700b51240a084a151e6",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-47",
+      "label": "RES-59 a marker in a switch's case block before its first clause is credited to a gp literal in the switch's discriminant: a case block holds no members (wb-2xd5, wb-lx6m gate G-B05)",
+      "pins": [
+        "9cb01f06b3e30e1226c523c93e820eb2b8b5e86ab375b69d80a135c5c49938c6",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-48",
+      "label": "RES-60 a marker inside an enum member initializer's nested call is credited to a gp literal later in the same initializer: an enum member is a unit (wb-2xd5, wb-lx6m gate G-B08)",
+      "pins": [
+        "2ce7155465b22c75557c9d11cfc1116117efbd1a6aea7b8d4fe3c068e28e1577",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-49",
+      "label": "RES-61 a marker inside an interface member's type argument list is credited to a gp literal type later in the same member: an interface member is a unit (wb-2xd5)",
+      "pins": [
+        "7ef523c7341a52ab307ecece8d7635609b11673da2b53478263e67bab33791fb",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-50",
+      "label": "RES-62 a marker inside a type-literal member's type argument list is credited to a gp literal type later in the same member: a type-literal member is a unit (wb-2xd5)",
+      "pins": [
+        "07adc52e375f7fb94932f42f6061b8980c18d7c765a08f86ad71305666af9f29",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-51",
+      "label": "RES-63 a marker after a for-of statement's of keyword, annotating its iterable, is credited to a gp literal in its blockless body (wb-2xd5, wb-lx6m gate G-C01)",
+      "pins": [
+        "20cdd4d292e11a6e6b53bbc0abb97bc8150248b8774bdc44fc3ab50a6ae0f9f7",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-52",
+      "label": "RES-64 a marker after the = of a for statement's initializer is credited to a gp literal in its blockless body (wb-2xd5, wb-lx6m gate G-C02)",
+      "pins": [
+        "7f8e211eed53a544d41ba7e59998e8543ed6a51e7983ed8b170cfd38ea02a7e7",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-53",
+      "label": "RES-65 a marker inside a while statement's condition is credited to a gp literal in its blockless body (wb-2xd5, wb-lx6m gate G-C03)",
+      "pins": [
+        "67c4002fd6772abf017b6a0cb383a863c7d00ea9a12b5c03c2d082732916b038",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-54",
+      "label": "RES-66 a marker inside a computed property key is credited to a gp literal in the same property's value (wb-2xd5, wb-lx6m gate G-C04)",
+      "pins": [
+        "a6d23b7531146391b58dd74f76ce4f66cadb6361ec7682810ed2a6f8170c622a",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-55",
+      "label": "RES-67 a marker after an optional-chaining token in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C05)",
+      "pins": [
+        "dd14857763056585feff5ca8952206779963c77a16e8f56df5ed9dcd78f6ec1b",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-56",
+      "label": "RES-68 a marker inside a class member's decorator call, on the line above the member, is credited to a gp literal in the member's initializer (wb-2xd5, wb-lx6m gate G-C06)",
+      "pins": [
+        "3e3a5caeb04d5082dc9f8625c14554b281afc2fdba7f19ee33ee2ec20869cacd",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-57",
+      "label": "RES-69 a marker after a binary in operator in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C07)",
+      "pins": [
+        "787419f684d5481e9d336f457506a04024e39a147b829817da87ac7f58d53070",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-58",
+      "label": "RES-70 a marker between a tagged template's tag and its template in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C08)",
+      "pins": [
+        "e149a886873745a79f3d15b5477f6e7be94b9ebdc33dc2c6facc588ce06ed015",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-59",
+      "label": "RES-71 a marker after a comma operator inside a parenthesized preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C09)",
+      "pins": [
+        "13d59e9a67fc7cbc3927ea0cb5c30509bf541fcfcc9a84191f2ca92c6ea64196",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-60",
+      "label": "RES-72 a marker after a nested arrow's return-type colon is credited to a gp literal later in the outer call (wb-2xd5, wb-lx6m gate G-C10)",
+      "pins": [
+        "05c905b2cbe29d840381165039db5c49af2722e68c02d67b4aa134f89910a820",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-61",
+      "label": "RES-73 a marker after a nested arrow's arrow token in a later argument, on the gp literal's own line, is credited to it (wb-2xd5, wb-lx6m gate G-C11)",
+      "pins": [
+        "2ebccefc8f2089ee581ed01df8b1c4e965a1a8c47c34ad22f05325fab9193d8e",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-62",
+      "label": "RES-74 a block comment after the statement's end, annotating a later statement on the same line, is credited to a gp literal in the statement as its own trailing comment (wb-2xd5, wb-lx6m gate G-C12)",
+      "pins": [
+        "b9c4311de3e600affd6a00c50d94e60a249f30b63f3ed0a6e52a12fe456b9dbd",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-63",
+      "label": "RES-75 a marker after an earlier declarator's type-annotation colon is credited to a gp literal in a later declarator of the same statement (wb-2xd5, wb-lx6m gate G-C13)",
+      "pins": [
+        "61bf455015a5011d4760f3b8f0cc1a58c67893662352f52a1018119c7652a20c",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-64",
+      "label": "RES-76 a marker after a non-null assertion in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C15)",
+      "pins": [
+        "d867d92744a0a852afaa55623ae141dc2d6a27589bc832b70f9058272af59ad5",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-65",
+      "label": "RES-77 a marker after a nullish-coalescing operator in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C16)",
+      "pins": [
+        "ae4e38ce5efc1c8f20eadcc26efe7f24be47c33ba932aa822b4f3154afce8294",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-66",
+      "label": "RES-78 a marker after the opening parenthesis of the call an export default statement holds, annotating a preceding argument, is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C17)",
+      "pins": [
+        "eaf408ad48de5a1a14f053070812d438c2b1b1e6964b8e08060f74d796f1a4f5",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-67",
+      "label": "RES-79 a marker inside a dynamic import call in a preceding argument is credited to a gp literal later in the outer call (wb-2xd5, wb-lx6m gate G-C18)",
+      "pins": [
+        "c61bde036f89530c565b288a196709e4eafbf1d425d2b7e59503f07eb49a69d1",
         "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
       ]
     },
@@ -1787,7 +2081,28 @@
     "RES-55 a marker inside a nested call's argument list after the gp literal, on the literal's own line, is credited to it (wb-lx6m)",
     "RES-56 a marker after an expression-bodied arrow's arrow token after the gp literal, on the literal's own line, is credited to it (wb-lx6m)",
     "RES-57 a marker inside a class property initializer's nested call is credited to a gp literal later in the same initializer (wb-lx6m)",
-    "RES-58 a marker inside an object property value's nested call is credited to a gp literal later in the same value (wb-lx6m)"
+    "RES-58 a marker inside an object property value's nested call is credited to a gp literal later in the same value (wb-lx6m)",
+    "RES-59 a marker in a switch's case block before its first clause is credited to a gp literal in the switch's discriminant: a case block holds no members (wb-2xd5, wb-lx6m gate G-B05)",
+    "RES-60 a marker inside an enum member initializer's nested call is credited to a gp literal later in the same initializer: an enum member is a unit (wb-2xd5, wb-lx6m gate G-B08)",
+    "RES-61 a marker inside an interface member's type argument list is credited to a gp literal type later in the same member: an interface member is a unit (wb-2xd5)",
+    "RES-62 a marker inside a type-literal member's type argument list is credited to a gp literal type later in the same member: a type-literal member is a unit (wb-2xd5)",
+    "RES-63 a marker after a for-of statement's of keyword, annotating its iterable, is credited to a gp literal in its blockless body (wb-2xd5, wb-lx6m gate G-C01)",
+    "RES-64 a marker after the = of a for statement's initializer is credited to a gp literal in its blockless body (wb-2xd5, wb-lx6m gate G-C02)",
+    "RES-65 a marker inside a while statement's condition is credited to a gp literal in its blockless body (wb-2xd5, wb-lx6m gate G-C03)",
+    "RES-66 a marker inside a computed property key is credited to a gp literal in the same property's value (wb-2xd5, wb-lx6m gate G-C04)",
+    "RES-67 a marker after an optional-chaining token in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C05)",
+    "RES-68 a marker inside a class member's decorator call, on the line above the member, is credited to a gp literal in the member's initializer (wb-2xd5, wb-lx6m gate G-C06)",
+    "RES-69 a marker after a binary in operator in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C07)",
+    "RES-70 a marker between a tagged template's tag and its template in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C08)",
+    "RES-71 a marker after a comma operator inside a parenthesized preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C09)",
+    "RES-72 a marker after a nested arrow's return-type colon is credited to a gp literal later in the outer call (wb-2xd5, wb-lx6m gate G-C10)",
+    "RES-73 a marker after a nested arrow's arrow token in a later argument, on the gp literal's own line, is credited to it (wb-2xd5, wb-lx6m gate G-C11)",
+    "RES-74 a block comment after the statement's end, annotating a later statement on the same line, is credited to a gp literal in the statement as its own trailing comment (wb-2xd5, wb-lx6m gate G-C12)",
+    "RES-75 a marker after an earlier declarator's type-annotation colon is credited to a gp literal in a later declarator of the same statement (wb-2xd5, wb-lx6m gate G-C13)",
+    "RES-76 a marker after a non-null assertion in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C15)",
+    "RES-77 a marker after a nullish-coalescing operator in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C16)",
+    "RES-78 a marker after the opening parenthesis of the call an export default statement holds, annotating a preceding argument, is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C17)",
+    "RES-79 a marker inside a dynamic import call in a preceding argument is credited to a gp literal later in the outer call (wb-2xd5, wb-lx6m gate G-C18)"
   ],
   "tests": [
     "src/ carries no gp call site: the census over every src module is empty",
@@ -1864,6 +2179,7 @@
     "a comment after a property's colon names it",
     "a comment after else, above the branch that holds the literal names it",
     "a marker after // on a JSDoc tag line, credited once (a JSDoc block is read whole, never entered) names it",
+    "a comment after a labeled for statement's header, before the blockless body that holds the literal (wb-2xd5, wb-lx6m gate G-C14) names it",
     "no comment at all does not name one",
     "a marker inside a string on the line above does not name one",
     "a marker trailing the previous statement does not name one",
@@ -1878,6 +2194,18 @@
     "a marker trailing the opening brace of the object literal that holds the property does not name one",
     "a marker inside a nested type literal of a preceding argument (wb-lx6m) does not name one",
     "a marker inside a nested class expression's body in a preceding argument (wb-lx6m) does not name one",
+    "a marker after the class keyword of a nested class expression in a preceding argument: a class-like holder's span starts at its first token, so its head lies inside it (wb-2xd5, wb-lx6m gate G-B01) does not name one",
+    "a marker inside a nested class expression's heritage clause in a preceding argument (wb-2xd5, wb-lx6m gate G-B02) does not name one",
+    "a marker after a nested class expression's name in a preceding argument (wb-2xd5, wb-lx6m gate G-B03) does not name one",
+    "a marker inside a nested class expression's type parameter list in a preceding argument (wb-2xd5, wb-lx6m gate G-B07) does not name one",
+    "a marker inside a case clause of the switch statement whose discriminant holds the literal: a case clause holds members (wb-2xd5, wb-lx6m gate G-B04) does not name one",
+    "a marker inside a default clause of the switch statement whose discriminant holds the literal: a default clause holds members (wb-2xd5, wb-lx6m gate G-B06) does not name one",
+    "a marker inside a nested object literal in a preceding argument (wb-2xd5, wb-lx6m gate G-A02) does not name one",
+    "a marker inside the module block of an ambient module declaration that the literal names, on the literal's line: a module block holds members (wb-2xd5) does not name one",
+    "a marker above a class declaration whose heritage clause holds the literal: the unit is the heritage clause, not the class (wb-2xd5) does not name one",
+    "a marker above a case clause whose label is the literal: the unit is the label, not the case clause (wb-2xd5) does not name one",
+    "a marker above an interface declaration whose member holds the literal: the unit is the member, not the interface (wb-2xd5) does not name one",
+    "a marker above an enum declaration whose member holds the literal: the unit is the member, not the enum (wb-2xd5) does not name one",
     "residual RES-13 a marker inside an expression-bodied arrow, annotating its body, is credited to a gp literal later in the same call (gate B01) (named, not cured: today's credit is pinned)",
     "residual RES-14 a marker inside a nested call's argument list is credited to a gp literal later in the outer call (gate B02) (named, not cured: today's credit is pinned)",
     "residual RES-15 a marker on a ternary's first branch is credited to a gp literal in its second branch (gate B03) (named, not cured: today's credit is pinned)",
@@ -1924,6 +2252,27 @@
     "residual RES-56 a marker after an expression-bodied arrow's arrow token after the gp literal, on the literal's own line, is credited to it (wb-lx6m) (named, not cured: today's credit is pinned)",
     "residual RES-57 a marker inside a class property initializer's nested call is credited to a gp literal later in the same initializer (wb-lx6m) (named, not cured: today's credit is pinned)",
     "residual RES-58 a marker inside an object property value's nested call is credited to a gp literal later in the same value (wb-lx6m) (named, not cured: today's credit is pinned)",
+    "residual RES-59 a marker in a switch's case block before its first clause is credited to a gp literal in the switch's discriminant: a case block holds no members (wb-2xd5, wb-lx6m gate G-B05) (named, not cured: today's credit is pinned)",
+    "residual RES-60 a marker inside an enum member initializer's nested call is credited to a gp literal later in the same initializer: an enum member is a unit (wb-2xd5, wb-lx6m gate G-B08) (named, not cured: today's credit is pinned)",
+    "residual RES-61 a marker inside an interface member's type argument list is credited to a gp literal type later in the same member: an interface member is a unit (wb-2xd5) (named, not cured: today's credit is pinned)",
+    "residual RES-62 a marker inside a type-literal member's type argument list is credited to a gp literal type later in the same member: a type-literal member is a unit (wb-2xd5) (named, not cured: today's credit is pinned)",
+    "residual RES-63 a marker after a for-of statement's of keyword, annotating its iterable, is credited to a gp literal in its blockless body (wb-2xd5, wb-lx6m gate G-C01) (named, not cured: today's credit is pinned)",
+    "residual RES-64 a marker after the = of a for statement's initializer is credited to a gp literal in its blockless body (wb-2xd5, wb-lx6m gate G-C02) (named, not cured: today's credit is pinned)",
+    "residual RES-65 a marker inside a while statement's condition is credited to a gp literal in its blockless body (wb-2xd5, wb-lx6m gate G-C03) (named, not cured: today's credit is pinned)",
+    "residual RES-66 a marker inside a computed property key is credited to a gp literal in the same property's value (wb-2xd5, wb-lx6m gate G-C04) (named, not cured: today's credit is pinned)",
+    "residual RES-67 a marker after an optional-chaining token in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C05) (named, not cured: today's credit is pinned)",
+    "residual RES-68 a marker inside a class member's decorator call, on the line above the member, is credited to a gp literal in the member's initializer (wb-2xd5, wb-lx6m gate G-C06) (named, not cured: today's credit is pinned)",
+    "residual RES-69 a marker after a binary in operator in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C07) (named, not cured: today's credit is pinned)",
+    "residual RES-70 a marker between a tagged template's tag and its template in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C08) (named, not cured: today's credit is pinned)",
+    "residual RES-71 a marker after a comma operator inside a parenthesized preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C09) (named, not cured: today's credit is pinned)",
+    "residual RES-72 a marker after a nested arrow's return-type colon is credited to a gp literal later in the outer call (wb-2xd5, wb-lx6m gate G-C10) (named, not cured: today's credit is pinned)",
+    "residual RES-73 a marker after a nested arrow's arrow token in a later argument, on the gp literal's own line, is credited to it (wb-2xd5, wb-lx6m gate G-C11) (named, not cured: today's credit is pinned)",
+    "residual RES-74 a block comment after the statement's end, annotating a later statement on the same line, is credited to a gp literal in the statement as its own trailing comment (wb-2xd5, wb-lx6m gate G-C12) (named, not cured: today's credit is pinned)",
+    "residual RES-75 a marker after an earlier declarator's type-annotation colon is credited to a gp literal in a later declarator of the same statement (wb-2xd5, wb-lx6m gate G-C13) (named, not cured: today's credit is pinned)",
+    "residual RES-76 a marker after a non-null assertion in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C15) (named, not cured: today's credit is pinned)",
+    "residual RES-77 a marker after a nullish-coalescing operator in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C16) (named, not cured: today's credit is pinned)",
+    "residual RES-78 a marker after the opening parenthesis of the call an export default statement holds, annotating a preceding argument, is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C17) (named, not cured: today's credit is pinned)",
+    "residual RES-79 a marker inside a dynamic import call in a preceding argument is credited to a gp literal later in the outer call (wb-2xd5, wb-lx6m gate G-C18) (named, not cured: today's credit is pinned)",
     "reads each module's own comments: the unannotated module read first lends none of its comments to the next (wb-rdv6)",
     "control: an audit covering all eleven stages, with an annotated call site, an exported entrypoint, the measured gp version, the schema's keys, a fallback and a two-status inventory, reads no finding",
     "an audit beside a tree with no call site is still judged: the control reads clean, and a defect in it is a finding before any wiring",
