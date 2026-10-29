@@ -1,0 +1,2036 @@
+{
+  "comment": "wb-e66.2 (MW-GRAPH-POLICY-COORDINATION-R3): the out-of-file roster of test/workbench-mw-gp-selector-census.test.ts (standing rule 16). It holds every judged row (id, label, pins), every pin's quote and witness, the residual members, the mutants with their declared checks and every registered test title, in order; the census judges itself against it both ways. The producer block holds the four MechanicalWorkflows lines the filing cites, read once by the cutting seat with git show at the bead's pin; the census never re-reads the producer.",
+  "bead": "wb-e66.2",
+  "rows": [
+    {
+      "id": "A1",
+      "label": "a falsifier fixture in which per-pair argmax exceeds one agent's capacity proves the selector never emits that set",
+      "pins": [
+        "A1a",
+        "A1b"
+      ]
+    },
+    {
+      "id": "A2",
+      "label": "the deterministic resolver run twice on identical input yields an identical assignment set",
+      "pins": [
+        "A2a",
+        "A2b"
+      ]
+    },
+    {
+      "id": "A3",
+      "label": "the sampler path records a log probability over the actual support count",
+      "pins": [
+        "A3a",
+        "A3b"
+      ]
+    },
+    {
+      "id": "A4",
+      "label": "a decision lacking selector name or probability is a typed validation refusal",
+      "pins": [
+        "A4a",
+        "A4b"
+      ]
+    },
+    {
+      "id": "A5",
+      "label": "shall refuse independent per-pair argmax/logit selection for a multi-task assignment as not capacity-feasible",
+      "pins": [
+        "A5a",
+        "A5b"
+      ]
+    },
+    {
+      "id": "A6",
+      "label": "selector name and probability travel with the receipt",
+      "pins": [
+        "A6a",
+        "A6b"
+      ]
+    },
+    {
+      "id": "N",
+      "label": "The Pi host shall select through a named recorded selector",
+      "pins": [
+        "N1"
+      ]
+    },
+    {
+      "id": "D",
+      "label": "a capacity-aware deterministic matching resolver, or a documented joint/autoregressive sampler over the R2 support recording the JOINT behavior log probability",
+      "pins": [
+        "D1",
+        "D2",
+        "D3"
+      ]
+    },
+    {
+      "id": "C",
+      "label": "file conjoined with R2",
+      "pins": [
+        "C1"
+      ]
+    },
+    {
+      "id": "G",
+      "label": "Zero Pi change until the gate",
+      "pins": [
+        "G1",
+        "G2"
+      ]
+    },
+    {
+      "id": "S",
+      "label": "docs/workbench/03-architecture-and-ownership.md:22@758ec18187a5 keeps Pi from inventing a second scheduler, so the duty binds only if Pi hosts GP-conditioned assignment",
+      "pins": [
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the named residual families, each member a pinned quiet row",
+      "pins": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q6",
+        "Q7",
+        "Q8"
+      ]
+    }
+  ],
+  "quotes": {
+    "A1a": "a falsifier fixture in which per-pair argmax exceeds one agent's capacity",
+    "A1b": "proves the selector never emits that set",
+    "A2a": "the deterministic resolver run twice on identical input",
+    "A2b": "yields an identical assignment set",
+    "A3a": "the sampler path records a log probability",
+    "A3b": "over the actual support count",
+    "A4a": "a decision lacking selector name or probability",
+    "A4b": "is a typed validation refusal",
+    "A5a": "shall refuse independent per-pair argmax/logit selection for a multi-task assignment",
+    "A5b": "as not capacity-feasible",
+    "A6a": "selector name and probability",
+    "A6b": "travel with the receipt",
+    "N1": "The Pi host shall select through a named recorded selector",
+    "D1": "a capacity-aware deterministic matching resolver",
+    "D2": "or a documented joint/autoregressive sampler over the R2 support",
+    "D3": "recording the JOINT behavior log probability",
+    "C1": "file conjoined with R2",
+    "G1": "Zero Pi change",
+    "G2": "until the gate",
+    "S1": "docs/workbench/03-architecture-and-ownership.md:22@758ec18187a5 keeps Pi from inventing a second scheduler",
+    "S2": "so the duty binds only if Pi hosts GP-conditioned assignment",
+    "Q1": "R-COMPOSED",
+    "Q2": "R-SHARED-WORD",
+    "Q3": "R-UNNAMED-SELECTOR",
+    "Q4": "R-SCORE-BLIND",
+    "Q5": "R-DECLARED-KIND",
+    "Q6": "R-SINGLE-TASK",
+    "Q7": "R-STATEFUL",
+    "Q8": "R-LIVENESS"
+  },
+  "residuals": {
+    "Q1": [
+      "concatenated",
+      "split-one-part-word",
+      "spaced",
+      "escaped",
+      "homoglyph",
+      "abbreviated",
+      "hyphenated",
+      "joined"
+    ],
+    "Q2": [
+      "selector",
+      "matching",
+      "resolver",
+      "assignment"
+    ],
+    "Q3": [
+      "best-pair",
+      "softmax"
+    ],
+    "Q4": [
+      "score-blind"
+    ],
+    "Q5": [
+      "argmax-declared-resolver",
+      "logit-declared-sampler"
+    ],
+    "Q6": [
+      "per-pair-argmax",
+      "per-pair-logit"
+    ],
+    "Q7": [
+      "late-switch-resolver"
+    ],
+    "Q8": [
+      "empty-resolver",
+      "one-task-per-agent-resolver",
+      "silent-sampler",
+      "one-draw-sampler"
+    ]
+  },
+  "mutants": [
+    "M01:per-pair-argmax-resolver:K-FEASIBLE",
+    "M02:capacity-blind-resolver:K-FEASIBLE",
+    "M03:task-twice-resolver:K-FEASIBLE",
+    "M04:load-blind-resolver:K-FEASIBLE",
+    "M05:grid-fill-resolver:K-SUPPORT",
+    "M06:revision-dropped-resolver:K-SUPPORT",
+    "M07:chooser-consulted-resolver:K-DETERMINISTIC",
+    "M08:call-counter-resolver:K-DETERMINISTIC",
+    "M09:resolver-probability-sampled:K-DETERMINISTIC",
+    "M10:capacity-blind-sampler:K-FEASIBLE+K-COUNT",
+    "M11:first-candidate-sampler:K-JOINT+K-COUNT",
+    "M12:last-step-probability:K-JOINT",
+    "M13:independent-probability:K-JOINT",
+    "M14:grid-normalized-sampler:K-JOINT+K-COUNT",
+    "M15:support-count-of-the-grid:K-COUNT",
+    "M16:step-count-dropped:K-COUNT",
+    "M17:stale-revision-sampler:K-SUPPORT",
+    "M18:name-unchecked:K-VALIDATE",
+    "M19:probability-unchecked:K-VALIDATE",
+    "M20:untyped-validation-refusal:K-VALIDATE",
+    "M21:probability-above-one:K-VALIDATE",
+    "M22:independent-admitted:K-INDEPENDENT",
+    "M23:independent-untyped:K-INDEPENDENT",
+    "M24:capacity-unvalidated:K-INDEPENDENT",
+    "M25:unnamed-admitted:K-NAMED",
+    "M26:unknown-kind-admitted:K-NAMED",
+    "M27:decision-misnamed:K-NAMED",
+    "M28:receipt-without-selector:K-RECEIPT",
+    "M29:receipt-probability-one:K-RECEIPT",
+    "M30:receipt-probability-rounded:K-RECEIPT",
+    "M31:empty-assignment-refused:K-VALIDATE",
+    "M32:sampler-kind-refused:K-NAMED",
+    "M33:resolver-records-draws:K-DETERMINISTIC",
+    "M34:step-probability-dropped:K-JOINT",
+    "M35:steps-truncated:K-JOINT",
+    "M36:one-name-for-both:K-NAMED",
+    "M37:unbounded-sampler:K-NAMED+K-FEASIBLE+K-JOINT+K-COUNT+K-SUPPORT",
+    "M38:ghost-agent-resolver:K-FEASIBLE+K-SUPPORT",
+    "M39:independent-refused-by-name:K-INDEPENDENT",
+    "M40:palindrome-chooser-resolver:K-DETERMINISTIC",
+    "M41:ignored-draw-resolver:K-DETERMINISTIC",
+    "M42:task-twice-validated:K-INDEPENDENT",
+    "M43:support-names-unvalidated:K-INDEPENDENT",
+    "M44:format-name-admitted:K-NAMED",
+    "M45:format-selector-validated:K-VALIDATE",
+    "M46:single-unknown-kind:K-NAMED"
+  ],
+  "witnesses": {
+    "A1a": {
+      "argmax": [
+        "a-strong/t1",
+        "a-strong/t2",
+        "a-strong/t3"
+      ],
+      "loads": {
+        "a-strong": 3,
+        "a-weak": 0
+      },
+      "capacity": {
+        "a-strong": 2,
+        "a-weak": 2
+      },
+      "overloaded": [
+        "a-strong"
+      ],
+      "cases": [
+        {
+          "id": "falsifier",
+          "argmax": [
+            "a-strong/t1",
+            "a-strong/t2",
+            "a-strong/t3"
+          ],
+          "overloaded": [
+            "a-strong"
+          ]
+        },
+        {
+          "id": "loads",
+          "argmax": [
+            "a-big/t-heavy",
+            "a-small/t-light",
+            "a-big/t-mid"
+          ],
+          "overloaded": [
+            "a-big"
+          ]
+        },
+        {
+          "id": "ties",
+          "argmax": [
+            "a-one/t-a",
+            "a-one/t-b"
+          ],
+          "overloaded": [
+            "a-one"
+          ]
+        },
+        {
+          "id": "partial",
+          "argmax": [
+            "a-granted/t-p",
+            "a-granted/t-q"
+          ],
+          "overloaded": [
+            "a-granted"
+          ]
+        },
+        {
+          "id": "empty",
+          "argmax": [],
+          "overloaded": []
+        }
+      ]
+    },
+    "A1b": {
+      "judged": {
+        "reference": []
+      },
+      "mutants": [
+        [
+          "M01",
+          8
+        ],
+        [
+          "M02",
+          8
+        ],
+        [
+          "M03",
+          4
+        ],
+        [
+          "M04",
+          2
+        ],
+        [
+          "M10",
+          52
+        ],
+        [
+          "M37",
+          4
+        ],
+        [
+          "M38",
+          3
+        ]
+      ],
+      "falsifier": {
+        "resolver": [
+          "a-strong/t1",
+          "a-strong/t2",
+          "a-weak/t3"
+        ],
+        "samplerSets": 6,
+        "argmaxEmitted": false
+      }
+    },
+    "A2a": {
+      "runs": [
+        {
+          "id": "falsifier",
+          "identical": true,
+          "untouched": true,
+          "draws": 0
+        },
+        {
+          "id": "loads",
+          "identical": true,
+          "untouched": true,
+          "draws": 0
+        },
+        {
+          "id": "ties",
+          "identical": true,
+          "untouched": true,
+          "draws": 0
+        },
+        {
+          "id": "partial",
+          "identical": true,
+          "untouched": true,
+          "draws": 0
+        },
+        {
+          "id": "empty",
+          "identical": true,
+          "untouched": true,
+          "draws": 0
+        }
+      ]
+    },
+    "A2b": {
+      "judged": {
+        "reference": []
+      },
+      "mutants": [
+        [
+          "M07",
+          6
+        ],
+        [
+          "M08",
+          4
+        ],
+        [
+          "M09",
+          8
+        ],
+        [
+          "M33",
+          8
+        ],
+        [
+          "M40",
+          4
+        ],
+        [
+          "M41",
+          4
+        ]
+      ],
+      "sets": {
+        "falsifier": [
+          "a-strong/t1",
+          "a-strong/t2",
+          "a-weak/t3"
+        ],
+        "loads": [
+          "a-big/t-heavy",
+          "a-small/t-light"
+        ],
+        "ties": [
+          "a-one/t-a",
+          "a-two/t-b"
+        ],
+        "partial": [
+          "a-granted/t-p"
+        ],
+        "empty": []
+      }
+    },
+    "A3a": {
+      "judged": {
+        "reference": []
+      },
+      "mutants": [
+        [
+          "M11",
+          178
+        ],
+        [
+          "M12",
+          55
+        ],
+        [
+          "M13",
+          53
+        ],
+        [
+          "M14",
+          3
+        ],
+        [
+          "M34",
+          126
+        ],
+        [
+          "M35",
+          52
+        ],
+        [
+          "M37",
+          8
+        ]
+      ],
+      "totals": {
+        "falsifier": {
+          "paths": 36,
+          "total": 1
+        },
+        "loads": {
+          "paths": 12,
+          "total": 1
+        },
+        "ties": {
+          "paths": 4,
+          "total": 1
+        },
+        "partial": {
+          "paths": 2,
+          "total": 1
+        },
+        "empty": {
+          "paths": 1,
+          "total": 1
+        }
+      }
+    },
+    "A3b": {
+      "judged": {
+        "reference": []
+      },
+      "mutants": [
+        [
+          "M10",
+          244
+        ],
+        [
+          "M11",
+          152
+        ],
+        [
+          "M14",
+          41
+        ],
+        [
+          "M15",
+          15
+        ],
+        [
+          "M16",
+          148
+        ],
+        [
+          "M37",
+          4
+        ]
+      ],
+      "counts": {
+        "falsifier": {
+          "supportCount": 6,
+          "sequences": [
+            "6,4,1",
+            "6,4,2"
+          ]
+        },
+        "loads": {
+          "supportCount": 5,
+          "sequences": [
+            "5,2",
+            "5,2,1",
+            "5,3",
+            "5,3,1"
+          ]
+        },
+        "ties": {
+          "supportCount": 4,
+          "sequences": [
+            "4,1"
+          ]
+        },
+        "partial": {
+          "supportCount": 2,
+          "sequences": [
+            "2"
+          ]
+        },
+        "empty": {
+          "supportCount": 0,
+          "sequences": [
+            ""
+          ]
+        }
+      }
+    },
+    "A4a": {
+      "shapes": [
+        [
+          "selector-absent",
+          [
+            "selector"
+          ]
+        ],
+        [
+          "selector-empty",
+          [
+            "selector"
+          ]
+        ],
+        [
+          "selector-blank",
+          [
+            "selector"
+          ]
+        ],
+        [
+          "selector-number",
+          [
+            "selector"
+          ]
+        ],
+        [
+          "selector-format-only",
+          [
+            "selector"
+          ]
+        ],
+        [
+          "probability-absent",
+          [
+            "probability"
+          ]
+        ],
+        [
+          "probability-nan",
+          [
+            "probability"
+          ]
+        ],
+        [
+          "probability-infinite",
+          [
+            "probability"
+          ]
+        ],
+        [
+          "probability-above-one",
+          [
+            "probability"
+          ]
+        ],
+        [
+          "probability-text",
+          [
+            "probability"
+          ]
+        ],
+        [
+          "both-absent",
+          [
+            "selector",
+            "probability"
+          ]
+        ]
+      ],
+      "altered": [
+        {
+          "id": "selector-absent",
+          "selectorUsable": false,
+          "probabilityUsable": true,
+          "keys": [
+            "logProbability"
+          ]
+        },
+        {
+          "id": "selector-empty",
+          "selectorUsable": false,
+          "probabilityUsable": true,
+          "keys": [
+            "selector",
+            "logProbability"
+          ]
+        },
+        {
+          "id": "selector-blank",
+          "selectorUsable": false,
+          "probabilityUsable": true,
+          "keys": [
+            "selector",
+            "logProbability"
+          ]
+        },
+        {
+          "id": "selector-number",
+          "selectorUsable": false,
+          "probabilityUsable": true,
+          "keys": [
+            "selector",
+            "logProbability"
+          ]
+        },
+        {
+          "id": "selector-format-only",
+          "selectorUsable": false,
+          "probabilityUsable": true,
+          "keys": [
+            "selector",
+            "logProbability"
+          ]
+        },
+        {
+          "id": "probability-absent",
+          "selectorUsable": true,
+          "probabilityUsable": false,
+          "keys": [
+            "selector"
+          ]
+        },
+        {
+          "id": "probability-nan",
+          "selectorUsable": true,
+          "probabilityUsable": false,
+          "keys": [
+            "selector",
+            "logProbability"
+          ]
+        },
+        {
+          "id": "probability-infinite",
+          "selectorUsable": true,
+          "probabilityUsable": false,
+          "keys": [
+            "selector",
+            "logProbability"
+          ]
+        },
+        {
+          "id": "probability-above-one",
+          "selectorUsable": true,
+          "probabilityUsable": false,
+          "keys": [
+            "selector",
+            "logProbability"
+          ]
+        },
+        {
+          "id": "probability-text",
+          "selectorUsable": true,
+          "probabilityUsable": false,
+          "keys": [
+            "selector",
+            "logProbability"
+          ]
+        },
+        {
+          "id": "both-absent",
+          "selectorUsable": false,
+          "probabilityUsable": false,
+          "keys": []
+        }
+      ]
+    },
+    "A4b": {
+      "judged": {
+        "reference": []
+      },
+      "mutants": [
+        [
+          "M18",
+          12
+        ],
+        [
+          "M19",
+          12
+        ],
+        [
+          "M20",
+          22
+        ],
+        [
+          "M21",
+          2
+        ],
+        [
+          "M31",
+          2
+        ],
+        [
+          "M45",
+          2
+        ]
+      ],
+      "outcomes": {
+        "resolver": [
+          [
+            "selector-absent",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "selector"
+              ]
+            }
+          ],
+          [
+            "selector-empty",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "selector"
+              ]
+            }
+          ],
+          [
+            "selector-blank",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "selector"
+              ]
+            }
+          ],
+          [
+            "selector-number",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "selector"
+              ]
+            }
+          ],
+          [
+            "selector-format-only",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "selector"
+              ]
+            }
+          ],
+          [
+            "probability-absent",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "probability"
+              ]
+            }
+          ],
+          [
+            "probability-nan",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "probability"
+              ]
+            }
+          ],
+          [
+            "probability-infinite",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "probability"
+              ]
+            }
+          ],
+          [
+            "probability-above-one",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "probability"
+              ]
+            }
+          ],
+          [
+            "probability-text",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "probability"
+              ]
+            }
+          ],
+          [
+            "both-absent",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "selector",
+                "probability"
+              ]
+            }
+          ]
+        ],
+        "sampler": [
+          [
+            "selector-absent",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "selector"
+              ]
+            }
+          ],
+          [
+            "selector-empty",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "selector"
+              ]
+            }
+          ],
+          [
+            "selector-blank",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "selector"
+              ]
+            }
+          ],
+          [
+            "selector-number",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "selector"
+              ]
+            }
+          ],
+          [
+            "selector-format-only",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "selector"
+              ]
+            }
+          ],
+          [
+            "probability-absent",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "probability"
+              ]
+            }
+          ],
+          [
+            "probability-nan",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "probability"
+              ]
+            }
+          ],
+          [
+            "probability-infinite",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "probability"
+              ]
+            }
+          ],
+          [
+            "probability-above-one",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "probability"
+              ]
+            }
+          ],
+          [
+            "probability-text",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "probability"
+              ]
+            }
+          ],
+          [
+            "both-absent",
+            {
+              "ok": false,
+              "code": "decision-validation",
+              "missing": [
+                "selector",
+                "probability"
+              ]
+            }
+          ]
+        ]
+      }
+    },
+    "A5a": {
+      "judged": {
+        "reference": []
+      },
+      "mutants": [
+        [
+          "M22",
+          20
+        ],
+        [
+          "M23",
+          20
+        ],
+        [
+          "M24",
+          8
+        ],
+        [
+          "M39",
+          10
+        ],
+        [
+          "M42",
+          1
+        ],
+        [
+          "M43",
+          2
+        ]
+      ],
+      "admissions": {
+        "falsifier": [
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "per-pair-argmax"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "per-pair-logit"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "fast-argmax"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "fast-logit"
+          }
+        ],
+        "loads": [
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "per-pair-argmax"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "per-pair-logit"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "fast-argmax"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "fast-logit"
+          }
+        ],
+        "ties": [
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "per-pair-argmax"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "per-pair-logit"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "fast-argmax"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "fast-logit"
+          }
+        ],
+        "partial": [
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "per-pair-argmax"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "per-pair-logit"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "fast-argmax"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "fast-logit"
+          }
+        ],
+        "empty": [
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "per-pair-argmax"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "per-pair-logit"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "fast-argmax"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "fast-logit"
+          }
+        ]
+      }
+    },
+    "A5b": {
+      "refusals": {
+        "falsifier": {
+          "ok": false,
+          "code": "not-capacity-feasible",
+          "selector": "capacity-matching-resolver"
+        },
+        "loads": {
+          "ok": false,
+          "code": "not-capacity-feasible",
+          "selector": "capacity-matching-resolver"
+        },
+        "ties": {
+          "ok": false,
+          "code": "not-capacity-feasible",
+          "selector": "capacity-matching-resolver"
+        },
+        "partial": {
+          "ok": false,
+          "code": "not-capacity-feasible",
+          "selector": "capacity-matching-resolver"
+        }
+      },
+      "mass": {
+        "falsifier": 0.554285714286,
+        "loads": 0.96,
+        "ties": 0.5,
+        "partial": 1,
+        "empty": 0
+      },
+      "infeasible": [
+        {
+          "id": "task-twice",
+          "findings": [
+            "t-zero assigned twice"
+          ],
+          "outcome": {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "capacity-matching-resolver"
+          }
+        },
+        {
+          "id": "agent-over-capacity",
+          "findings": [
+            "a-one carries 2 over capacity 1"
+          ],
+          "outcome": {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "capacity-matching-resolver"
+          }
+        },
+        {
+          "id": "no-support-agent",
+          "findings": [
+            "a-ghost/t-zero names no support agent or task"
+          ],
+          "outcome": {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "capacity-matching-resolver"
+          }
+        },
+        {
+          "id": "no-support-task",
+          "findings": [
+            "a-one/t-ghost names no support agent or task"
+          ],
+          "outcome": {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "capacity-matching-resolver"
+          }
+        }
+      ]
+    },
+    "A6a": {
+      "carried": {
+        "falsifier": {
+          "resolver": [
+            "capacity-matching-resolver",
+            0
+          ],
+          "sampler": {
+            "names": [
+              "joint-autoregressive-sampler"
+            ],
+            "min": -6.147399348729,
+            "max": -1.704748092238
+          }
+        },
+        "loads": {
+          "resolver": [
+            "capacity-matching-resolver",
+            0
+          ],
+          "sampler": {
+            "names": [
+              "joint-autoregressive-sampler"
+            ],
+            "min": -5.123963979403,
+            "max": -1.188224447358
+          }
+        },
+        "ties": {
+          "resolver": [
+            "capacity-matching-resolver",
+            0
+          ],
+          "sampler": {
+            "names": [
+              "joint-autoregressive-sampler"
+            ],
+            "min": -1.38629436112,
+            "max": -1.38629436112
+          }
+        },
+        "partial": {
+          "resolver": [
+            "capacity-matching-resolver",
+            0
+          ],
+          "sampler": {
+            "names": [
+              "joint-autoregressive-sampler"
+            ],
+            "min": -1.098612288668,
+            "max": -0.405465108108
+          }
+        },
+        "empty": {
+          "resolver": [
+            "capacity-matching-resolver",
+            0
+          ],
+          "sampler": {
+            "names": [
+              "joint-autoregressive-sampler"
+            ],
+            "min": 0,
+            "max": 0
+          }
+        }
+      }
+    },
+    "A6b": {
+      "judged": {
+        "reference": []
+      },
+      "mutants": [
+        [
+          "M28",
+          60
+        ],
+        [
+          "M29",
+          54
+        ],
+        [
+          "M30",
+          54
+        ]
+      ],
+      "receipts": {
+        "resolver": {
+          "selector": "capacity-matching-resolver",
+          "logProbability": 0,
+          "basisRevision": "rev-falsifier",
+          "assignment": [
+            "a-strong/t1",
+            "a-strong/t2",
+            "a-weak/t3"
+          ]
+        },
+        "sampler": {
+          "selector": "joint-autoregressive-sampler",
+          "logProbability": -1.704748092238,
+          "basisRevision": "rev-falsifier",
+          "assignment": [
+            "a-strong/t1",
+            "a-strong/t2",
+            "a-weak/t3"
+          ]
+        }
+      }
+    },
+    "N1": {
+      "judged": {
+        "reference": []
+      },
+      "mutants": [
+        [
+          "M25",
+          20
+        ],
+        [
+          "M26",
+          10
+        ],
+        [
+          "M27",
+          5
+        ],
+        [
+          "M32",
+          15
+        ],
+        [
+          "M36",
+          1
+        ],
+        [
+          "M37",
+          4
+        ],
+        [
+          "M44",
+          10
+        ],
+        [
+          "M46",
+          5
+        ]
+      ],
+      "names": {
+        "resolver": "capacity-matching-resolver",
+        "sampler": "joint-autoregressive-sampler"
+      },
+      "controls": [
+        [
+          "",
+          "deterministic-resolver",
+          {
+            "ok": false,
+            "code": "unnamed-selector",
+            "selector": ""
+          }
+        ],
+        [
+          "U+0020 U+0020 U+0020",
+          "joint-sampler",
+          {
+            "ok": false,
+            "code": "unnamed-selector",
+            "selector": "   "
+          }
+        ],
+        [
+          "U+200B",
+          "deterministic-resolver",
+          {
+            "ok": false,
+            "code": "unnamed-selector",
+            "selector": "\u200b"
+          }
+        ],
+        [
+          "U+200B U+0020 U+200B",
+          "joint-sampler",
+          {
+            "ok": false,
+            "code": "unnamed-selector",
+            "selector": "\u200b \u200b"
+          }
+        ],
+        [
+          "U+006D U+0079 U+0073 U+0074 U+0065 U+0072 U+0079 U+002D U+0073 U+0065 U+006C U+0065 U+0063 U+0074 U+006F U+0072",
+          "unknown-kind",
+          {
+            "ok": false,
+            "code": "unknown-selector",
+            "selector": "mystery-selector"
+          }
+        ],
+        [
+          "U+0067 U+0072 U+0065 U+0065 U+0064 U+0079",
+          "random-kind",
+          {
+            "ok": false,
+            "code": "unknown-selector",
+            "selector": "greedy"
+          }
+        ]
+      ],
+      "flow": {
+        "resolver": {
+          "ok": true,
+          "receipt": {
+            "selector": "capacity-matching-resolver",
+            "logProbability": 0,
+            "basisRevision": "rev-falsifier",
+            "assignment": [
+              "a-strong/t1",
+              "a-strong/t2",
+              "a-weak/t3"
+            ]
+          }
+        },
+        "sampler": {
+          "ok": true,
+          "receipt": {
+            "selector": "joint-autoregressive-sampler",
+            "logProbability": -1.704748092238,
+            "basisRevision": "rev-falsifier",
+            "assignment": [
+              "a-strong/t1",
+              "a-strong/t2",
+              "a-weak/t3"
+            ]
+          }
+        },
+        "perPairArgmax": {
+          "ok": false,
+          "code": "not-capacity-feasible",
+          "selector": "per-pair-argmax"
+        },
+        "perPairLogit": {
+          "ok": false,
+          "code": "not-capacity-feasible",
+          "selector": "per-pair-logit"
+        },
+        "unnamed": {
+          "ok": false,
+          "code": "unnamed-selector",
+          "selector": ""
+        }
+      }
+    },
+    "D1": {
+      "name": "capacity-matching-resolver",
+      "kind": "deterministic-resolver",
+      "assignments": {
+        "falsifier": [
+          "a-strong/t1",
+          "a-strong/t2",
+          "a-weak/t3"
+        ],
+        "loads": [
+          "a-big/t-heavy",
+          "a-small/t-light"
+        ],
+        "ties": [
+          "a-one/t-a",
+          "a-two/t-b"
+        ],
+        "partial": [
+          "a-granted/t-p"
+        ],
+        "empty": []
+      }
+    },
+    "D2": {
+      "name": "joint-autoregressive-sampler",
+      "kind": "joint-sampler",
+      "readings": {
+        "falsifier": {
+          "paths": 36,
+          "sets": [
+            "a-strong/t1,a-strong/t2,a-weak/t3",
+            "a-strong/t1,a-strong/t3,a-weak/t2",
+            "a-strong/t1,a-weak/t2,a-weak/t3",
+            "a-strong/t2,a-strong/t3,a-weak/t1",
+            "a-strong/t2,a-weak/t1,a-weak/t3",
+            "a-strong/t3,a-weak/t1,a-weak/t2"
+          ],
+          "outside": [],
+          "fault": null
+        },
+        "loads": {
+          "paths": 12,
+          "sets": [
+            "a-big/t-heavy,a-big/t-light",
+            "a-big/t-heavy,a-small/t-light",
+            "a-big/t-light,a-big/t-mid,a-small/t-heavy",
+            "a-big/t-mid,a-small/t-light"
+          ],
+          "outside": [],
+          "fault": null
+        },
+        "ties": {
+          "paths": 4,
+          "sets": [
+            "a-one/t-a,a-two/t-b",
+            "a-one/t-b,a-two/t-a"
+          ],
+          "outside": [],
+          "fault": null
+        },
+        "partial": {
+          "paths": 2,
+          "sets": [
+            "a-granted/t-p",
+            "a-granted/t-q"
+          ],
+          "outside": [],
+          "fault": null
+        },
+        "empty": {
+          "paths": 1,
+          "sets": [
+            ""
+          ],
+          "outside": [],
+          "fault": null
+        }
+      }
+    },
+    "D3": {
+      "anchors": [
+        {
+          "case": "falsifier",
+          "path": [
+            "a-strong/t1",
+            "a-strong/t2",
+            "a-weak/t3"
+          ],
+          "probability": 0.181818181818
+        },
+        {
+          "case": "falsifier",
+          "path": [
+            "a-strong/t1",
+            "a-weak/t2",
+            "a-weak/t3"
+          ],
+          "probability": 0.006060606061
+        },
+        {
+          "case": "loads",
+          "path": [
+            "a-big/t-heavy",
+            "a-small/t-light"
+          ],
+          "probability": 0.304761904762
+        },
+        {
+          "case": "loads",
+          "path": [
+            "a-big/t-light",
+            "a-small/t-heavy",
+            "a-big/t-mid"
+          ],
+          "probability": 0.005952380952
+        },
+        {
+          "case": "ties",
+          "path": [
+            "a-two/t-a",
+            "a-one/t-b"
+          ],
+          "probability": 0.25
+        },
+        {
+          "case": "partial",
+          "path": [
+            "a-granted/t-q"
+          ],
+          "probability": 0.333333333333
+        },
+        {
+          "case": "empty",
+          "path": [],
+          "probability": 1
+        }
+      ],
+      "contrast": {
+        "joint": -1.704748092238,
+        "independent": -1.986732143576
+      }
+    },
+    "C1": {
+      "judged": {
+        "reference": []
+      },
+      "mutants": [
+        [
+          "M05",
+          1
+        ],
+        [
+          "M06",
+          5
+        ],
+        [
+          "M17",
+          55
+        ],
+        [
+          "M37",
+          4
+        ],
+        [
+          "M38",
+          3
+        ]
+      ],
+      "binding": {
+        "r2Title": true,
+        "r2Support": true,
+        "parents": {
+          "own": [
+            "wb-e66"
+          ],
+          "r2": [
+            "wb-e66"
+          ]
+        }
+      }
+    },
+    "G1": {
+      "floor": true,
+      "anchor": true,
+      "unread": [],
+      "live": [],
+      "sites": []
+    },
+    "G2": {
+      "controls": {
+        "argmax": [
+          "argmax"
+        ],
+        "argmax camel": [
+          "argmax"
+        ],
+        "logits": [
+          "logits",
+          "logit"
+        ],
+        "logit alone": [
+          "logit"
+        ],
+        "logit upper": [
+          "logit"
+        ],
+        "optimizer": [
+          "optimizer"
+        ],
+        "optimizer camel": [
+          "optimizer"
+        ],
+        "optimizer british": [
+          "optimizer"
+        ],
+        "optimizer british plural": [
+          "optimizer"
+        ],
+        "log probability spaced": [
+          "log probability"
+        ],
+        "log probability camel": [
+          "log probability"
+        ],
+        "log probability snake": [
+          "log probability"
+        ],
+        "log probability upper kebab": [
+          "log probability"
+        ],
+        "log probability dotted": [
+          "log probability"
+        ],
+        "log probability joined": [
+          "log probability"
+        ],
+        "log probability format characters": [
+          "log probability"
+        ],
+        "log probability plural camel": [
+          "log probability"
+        ],
+        "log probability plural spaced": [
+          "log probability"
+        ],
+        "log probability plural kebab": [
+          "log probability"
+        ],
+        "log probability comment wrap": [
+          "log probability"
+        ],
+        "log probability slash": [
+          "log probability"
+        ],
+        "log probability parenthesised": [
+          "log probability"
+        ],
+        "log probability dash punctuation": [
+          "log probability"
+        ],
+        "log probability middle dot": [
+          "log probability"
+        ],
+        "log probability symbol": [
+          "log probability"
+        ],
+        "log probability quoted list": [
+          "log probability"
+        ],
+        "sampler": [
+          "sampler"
+        ],
+        "sampler inside a longer name": [
+          "sampler"
+        ],
+        "autoregressive": [
+          "autoregressive"
+        ],
+        "autoregressive camel": [
+          "autoregressive"
+        ],
+        "autoregressive soft hyphen inside": [
+          "autoregressive"
+        ],
+        "argmax format character inside": [
+          "argmax"
+        ],
+        "every word": [
+          "argmax",
+          "logits",
+          "optimizer",
+          "log probability",
+          "sampler",
+          "autoregressive",
+          "logit"
+        ],
+        "shared words": []
+      },
+      "listing": {
+        "listed": [
+          "src/link.ts",
+          "src/nested/planted.ts",
+          "src/quiet.ts"
+        ],
+        "findings": [
+          "src/nested/planted.ts: names log probability, no SITES registration"
+        ],
+        "unread": [
+          "src/link.ts"
+        ]
+      }
+    },
+    "S1": {
+      "doc": {
+        "line": 22,
+        "pin": true,
+        "head": true
+      },
+      "plants": [
+        [
+          "as-is",
+          true
+        ],
+        [
+          "line-deleted",
+          false
+        ],
+        [
+          "line-edited",
+          false
+        ],
+        [
+          "comment-wrapped",
+          false
+        ],
+        [
+          "moved-to-a-trailing-section",
+          false
+        ],
+        [
+          "fenced",
+          false
+        ],
+        [
+          "indented-into-the-diagram",
+          false
+        ],
+        [
+          "inline-comment",
+          false
+        ],
+        [
+          "heading-duplicated",
+          false
+        ],
+        [
+          "rehomed-under-another-title",
+          false
+        ],
+        [
+          "emphasis-respelled",
+          true
+        ],
+        [
+          "comment-in-another-section",
+          true
+        ],
+        [
+          "rewrapped",
+          true
+        ]
+      ],
+      "anchorControls": {
+        "textAtAnotherLine": false,
+        "textAbsent": false,
+        "pinnedLineIndented": false
+      }
+    },
+    "S2": {
+      "unregistered": [
+        "src/workbench/gp-selection.ts: names logits, logit, no SITES registration"
+      ],
+      "registered": [],
+      "stale": [
+        "src/workbench/gp-selection.ts: registered, names no vocabulary word (stale)"
+      ],
+      "twice": [
+        "src/workbench/gp-selection.ts: registered twice"
+      ],
+      "pathOnly": [
+        "src/workbench/sampler.ts: names sampler, no SITES registration"
+      ],
+      "judged": [],
+      "bound": [
+        "K-FEASIBLE"
+      ]
+    },
+    "Q1": {
+      "name": "R-COMPOSED",
+      "members": [
+        "concatenated",
+        "split-one-part-word",
+        "spaced",
+        "escaped",
+        "homoglyph",
+        "abbreviated",
+        "hyphenated",
+        "joined"
+      ],
+      "findings": []
+    },
+    "Q2": {
+      "name": "R-SHARED-WORD",
+      "members": [
+        "selector",
+        "matching",
+        "resolver",
+        "assignment"
+      ],
+      "findings": []
+    },
+    "Q3": {
+      "name": "R-UNNAMED-SELECTOR",
+      "members": [
+        "best-pair",
+        "softmax"
+      ],
+      "findings": []
+    },
+    "Q4": {
+      "members": [
+        "score-blind"
+      ],
+      "refused": [],
+      "differs": true
+    },
+    "Q5": {
+      "members": [
+        "argmax-declared-resolver",
+        "logit-declared-sampler"
+      ],
+      "outcomes": [
+        [
+          "argmax-declared-resolver",
+          true
+        ],
+        [
+          "logit-declared-sampler",
+          true
+        ]
+      ]
+    },
+    "Q6": {
+      "members": [
+        "per-pair-argmax",
+        "per-pair-logit"
+      ],
+      "outcomes": [
+        [
+          "per-pair-argmax",
+          true,
+          true
+        ],
+        [
+          "per-pair-logit",
+          true,
+          true
+        ]
+      ]
+    },
+    "Q7": {
+      "members": [
+        "late-switch-resolver"
+      ],
+      "first": [
+        "a-strong/t1",
+        "a-strong/t2",
+        "a-weak/t3"
+      ],
+      "later": [
+        "a-strong/t1",
+        "a-weak/t2",
+        "a-weak/t3"
+      ],
+      "refused": []
+    },
+    "Q8": {
+      "members": [
+        "empty-resolver",
+        "one-task-per-agent-resolver",
+        "silent-sampler",
+        "one-draw-sampler"
+      ],
+      "reference": {
+        "resolver": 3,
+        "sampler": 3
+      },
+      "readings": [
+        {
+          "id": "empty-resolver",
+          "refused": [],
+          "largest": 0,
+          "less": true
+        },
+        {
+          "id": "one-task-per-agent-resolver",
+          "refused": [],
+          "largest": 2,
+          "less": true
+        },
+        {
+          "id": "silent-sampler",
+          "refused": [],
+          "largest": 0,
+          "less": true
+        },
+        {
+          "id": "one-draw-sampler",
+          "refused": [],
+          "largest": 1,
+          "less": true
+        }
+      ]
+    }
+  },
+  "tests": [
+    "A1a: a falsifier fixture in which per-pair argmax exceeds one agent's capacity",
+    "A1b: proves the selector never emits that set",
+    "A2a: the deterministic resolver run twice on identical input",
+    "A2b: yields an identical assignment set",
+    "A3a: the sampler path records a log probability",
+    "A3b: over the actual support count",
+    "A4a: a decision lacking selector name or probability",
+    "A4b: is a typed validation refusal",
+    "A5a: shall refuse independent per-pair argmax/logit selection for a multi-task assignment",
+    "A5b: as not capacity-feasible",
+    "A6a: selector name and probability",
+    "A6b: travel with the receipt",
+    "N1: The Pi host shall select through a named recorded selector",
+    "D1: a capacity-aware deterministic matching resolver",
+    "D2: or a documented joint/autoregressive sampler over the R2 support",
+    "D3: recording the JOINT behavior log probability",
+    "C1: file conjoined with R2",
+    "G1: Zero Pi change",
+    "G2: until the gate",
+    "S1: docs/workbench/03-architecture-and-ownership.md:22@758ec18187a5 keeps Pi from inventing a second scheduler",
+    "S2: so the duty binds only if Pi hosts GP-conditioned assignment",
+    "Q1: R-COMPOSED",
+    "Q2: R-SHARED-WORD",
+    "Q3: R-UNNAMED-SELECTOR",
+    "Q4: R-SCORE-BLIND",
+    "Q5: R-DECLARED-KIND",
+    "Q6: R-SINGLE-TASK",
+    "Q7: R-STATEFUL",
+    "Q8: R-LIVENESS",
+    "rule 16: the rows, the tables and the vocabulary are frozen at their measured shape",
+    "mutant battery: the reference meets every check, each mutant is refused by exactly its declared checks, and every check refuses a mutant alone",
+    "the outside anchors: the bead's own row binds the labels of rows A1-S and what their pin quotes tile (never row Q or a row's pin partition), the docs citation, the vocabulary and the shared words (Q2's members among them) and the producer block",
+    "roster: the judged rows, the quotes, the residual members, the mutants and the registered tests equal test/fixtures/mw-gp-selector-roster.json, in order and both ways; every pin reached its witness compare"
+  ],
+  "producer": {
+    "repo": "MechanicalWorkflows",
+    "sha": "4b8b974ca72bf2ed36b99e315e45857c6181fbe8",
+    "lines": [
+      {
+        "path": "docs/programs/graph-policy-coordination-2026-10-18.md",
+        "blob": "01ff00d480ecd5e5f6999433612f0c713f1f72aa",
+        "line": 14,
+        "text": "4. A recorded distribution samples only from actual eligible support, or a deterministic optimizer converts scores into a globally valid set of assignments; independent per-pair argmax is not sufficient for capacity constraints."
+      },
+      {
+        "path": "docs/programs/graph-policy-coordination-2026-10-18/README.md",
+        "blob": "0dbff582a14c13e4b4b13cb1848a23b935d92697",
+        "line": 9,
+        "text": "Host: obtain bounded typed graph and **pre-sampling** legal candidates \u2192 GP scores keyed agent/task pairs \u2192 a named selector samples with actual behavior log probability or selects deterministic proposal \u2192 host maps symbolic choice into typed Intent with expected source revision \u2192 MechanicalWorkflows reconcile enforces conflicts, protected scopes, limits and staleness \u2192 native executor runs accepted action \u2192 verifiers report actual outcome."
+      },
+      {
+        "path": "docs/programs/graph-policy-coordination-2026-10-18/README.md",
+        "blob": "0dbff582a14c13e4b4b13cb1848a23b935d92697",
+        "line": 11,
+        "text": "Independent pair logits are not globally capacity feasible. For a multi-task assignment choose either a capacity-aware deterministic matching resolver or a documented joint/autoregressive sampler recording *joint* behavior probability."
+      },
+      {
+        "path": "docs/programs/graph-policy-coordination-2026-10-18/README.md",
+        "blob": "0dbff582a14c13e4b4b13cb1848a23b935d92697",
+        "line": 23,
+        "text": "Original Policy/reconcile laws unchanged; pure GP call, exact source ID mapping, original behavior probability, no native-effect bypass, stale result rejection, evidence sidecar parity and Forge-installed integration tests before any runtime rollout."
+      }
+    ]
+  }
+}

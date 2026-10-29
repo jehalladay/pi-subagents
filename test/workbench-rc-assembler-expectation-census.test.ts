@@ -61,9 +61,43 @@
  *   COMMENT each sentence of each comment, read from the trivia around every token (an empty block's comment included). A
  *   finding is `<path>:<line> <via> <families>`.
  * - DOC (row A, "or doc"): every git-listed .md page below docs/, examples/, .agents/ and .pi/ and at the repository root,
- *   cut into sentences after ".", "!", "?" or ";" before white space or the line end, at a blank line, around a table row
- *   and a heading line, and before a list item (a sentence wrapped over lines stays one). A finding is `<path>:<line>
+ *   read as its source is written once its placed comments are out (COMMENTS OUT; R-SOURCE-AS-WRITTEN) and cut into
+ *   sentences after ".", "!", "?" or ";" before white space or the line end, at a line holding only white space, around a
+ *   line that opens with a pipe after white space and an ATX heading line (one to six # after at most three white-space
+ *   characters, then white space or the line end), and before a line that opens, after white space, with -, + or * or with
+ *   digits and . or ), then white space; a sentence otherwise runs on across line breaks. A finding is `<path>:<line>
  *   <families>`.
+ * - COMMENTS OUT (wb-cppf, the R694 follow-up of landing 553): the doc reading is the page source with its placed comments
+ *   taken out, never the rendered view - no clause of this file claims what a rendered page shows, and each clause names the
+ *   A3 rows that hold it. (1) TAKEN OUT: every span from `<!--` to the next `-->` (an empty `<!-->` or `<!--->` included; an
+ *   unterminated one runs to the end of its token) in the source of a token that marked (the markdown grammar
+ *   test/helpers/census.ts reads pages with) lexes as HTML, once placed (5): a marker only such a span holds quiets nothing
+ *   (comments.hiddenMarker), and a claim only it holds is not read (R-COMMENT-HIDDEN). (2) BLANKED: a comment block's opening
+ *   comment - the span an HTML block token's source opens with after at most three spaces, at any depth, as (5) confirms it -
+ *   reads as spaces with its line breaks kept, so a line holding nothing else but white space is a blank line
+ *   (comments.lines[0-1], R-SPLIT's third row); the rest of its lines is read as written, but for another comment there,
+ *   removed as (3) says (R-COMMENT-BLOCK). (3) JOINED: every other placed span is removed with its line breaks, so the text
+ *   before it and after it read as one line (comments.joined, comments.lines[2-3]), and a line a span touched that is left
+ *   with nothing but white space is dropped, never read as a blank line (comments.joined[1] and [3], R-COMMENT-BLOCK's second
+ *   rows). (4) UNLEXED: comment-shaped text that marked does not lex as HTML - in a code span or a code block, after a
+ *   backslash, an opener left unterminated in a paragraph - is read as written (comments.unlexed). (5) PLACED: walking each
+ *   top-level block's tokens in page order (a list's items, a table's header cells and then its body cells, any other token's
+ *   own tokens), a cursor moves past each leaf token's source as found in the block, and each span is found within its HTML
+ *   token's source as found there; source over several lines is found with each line break followed by spaces or tabs, then
+ *   quote marks each followed by at most one space or tab. A span so found is placed only when marked, lexing the page again
+ *   with a sentinel (the shortest run of Q the page does not hold) written just inside its `<!--`, keeps the sentinel inside
+ *   an HTML token; it is a comment block's opening comment (2) when that token is a block whose source opens with it after at
+ *   most three spaces. Placed shapes held (comments.containers): a list item's space-indented lines, a block quote's lines, a
+ *   block quote in a list item, nested block quotes; and two identical comments in one paragraph, each placed (the last
+ *   comments.unplaced row). A span the reader cannot place is not taken out: it is read as written and listed as unplaced,
+ *   and A3 holds the live and frozen lists empty. Unplaced shapes held (comments.unplaced): a comment spelling an escaped
+ *   pipe in a table cell; every span on a page whose top-level blocks do not tile its source (a lone carriage return); a list
+ *   item in a block quote whose continuation line repeats the quote mark before the item's indentation, bulleted or ordered;
+ *   a list item's continuation line indented with a tab; and a span the cursor found in other text spelled the same way,
+ *   which marked does not confirm - a link destination just before the comment, a code span past an escaped pipe in its table
+ *   cell, a code span on a later line after a tab-indented line. (6) LINES: each kept line keeps the page line it starts on,
+ *   so a finding names the page line its sentence starts on, and text after a span removed with its line breaks stays on the
+ *   line the span opens on (comments.lines).
  * - SEAM (row C, "an actual Pi seam"): the one path by which assembled context reaches Pi is the registered
  *   reactivefiber.render.preview capability (read), spawned at the one rf launch site in src (a child-process launcher whose
  *   first argument's constant names rf: exactly the provider's spawn). Its spawned argv for both input arms and the
@@ -75,8 +109,8 @@
  *  A "gating census — no Pi code or doc expects the assembler": A1 the guard - ONE pass over every code module, every doc
  *    page, the seam's words and in-memory positives finds exactly the positives, and the same guard over a scratch git
  *    repository finds exactly its plants; A2 the code read set, the live and frozen code passes and the code reader's
- *    controls; A3 the doc read set, the live and frozen doc passes and the sentence cutter; A4 the subject words, the anchors
- *    and the markers.
+ *    controls; A3 the doc read set, the live and frozen doc passes, the comments taken out and the sentence cutter; A4 the
+ *    subject words, the anchors and the markers.
  *  B "to acquire, schedule or judge freshness": B1 the acquire family, B2 the schedule family, B3 the freshness family, each in
  *    a doc sentence and in code, with near misses.
  *  C "until the RC gates pass and an actual Pi seam exists": C1 the producer facts and the gate's near misses; C2 the Pi seam
@@ -100,22 +134,51 @@
  *   facts, the unclaimed duties, the residuals and every pin's witness are held to the out-of-file roster
  *   (test/fixtures/rc-assembler-expectation-roster.json); a last case reads that every pin ran to its witness.
  * RESIDUALS (named; each has a pinned quiet row): R-OUTSIDE-ROOTS (A3) a claim in test/, vendor/, new-feedback/, media/,
- *   .beads/, .codex/ or .github/, a doc that is not a .md page or a code file that is not a JS or TS module (a shell script,
- *   a JSON or text file, root configuration) is not read; R-INDIRECT (A2) the subject and the family never inside one
- *   reading - an alias (const a = assembler; a.acquire()), a call argument (assembler.run("acquire")), a dynamic import's
- *   namespace; R-COMPOSED (A2) a name or key assembled at run time from a non-constant part (a variable holding the family
- *   word); R-SPLIT (A3) the subject and the family in different sentences; R-UNANCHORED (A4) an assembly word with no anchor
- *   beside a family word (Pi's own sense: "The reply assembly is stale."); R-RENDERER (A4) rf or the render named as the
- *   actor with no assembler word ("rf acquires the resource."), the context renderer's own obligations being other beads';
- *   R-SHORT-NAME (A4) RC or rc alone (a return code in Pi's receipts) is an anchor, never the subject ("RC acquires
- *   resources."); R-LOOKALIKE (A4) a look-alike letter, an inserted invisible or an HTML character reference inside a word
- *   (NFKC folds the fullwidth forms, which are read); R-MARKER-ANYWHERE (A4) a marker anywhere in the text quiets it,
- *   whatever it qualifies ("The assembler acquires resources, not the host."); R-SYNONYM (A4) a vocabulary word no outside
- *   text spells (the inflections, fresh and stale, the extra markers) is held by this file and the roster alone - removed
- *   from both together it stays green; A4 lists them; R-PARAPHRASE (B3) a family claim outside the family words (fetch,
- *   prefetch, load, refresh, expire, ttl, queue, defer, up to date); R-SEAM-OTHER (C2) an assembler reached by a path that
- *   names neither the subject nor a ReactiveComponents module (a URL, a spawned program under another name), or an input
- *   reaching it through stdin.
+ *   .beads/, .codex/ or .github/, a doc that is not a .md page (a text page, an upper-case .MD or a .markdown page) or a code
+ *   file that is not a JS or TS module (a shell script, a .jsx module, a JSON or text file, root configuration) is not read;
+ *   R-INDIRECT (A2) the subject and the family never inside one reading - an alias (const a = assembler; a.acquire()), a call
+ *   argument (assembler.run("acquire")), a dynamic import's namespace; R-COMPOSED (A2) a name or key assembled at run time
+ *   from a non-constant part (a variable holding the family word); R-SPLIT (A3) the subject and the family in different
+ *   sentences (two sentences of one line, or the two lines a blank comment-block line parts: COMMENTS OUT (2));
+ *   R-COMMENT-HIDDEN (A3) a claim only a placed HTML comment holds is not read, though a reader of the page source sees it;
+ *   R-COMMENT-BLOCK (A3) a comment block's lines are read as COMMENTS OUT (2) and (3) leave them, never as the page's blocks:
+ *   text after that comment on its line keeps the line from being blank, so a sentence runs on across it (trailing rows: a
+ *   marker after a space, after no space, or on the next line past text between two comments; the converse, a claim across
+ *   it); a second comment as that line's only other text leaves it holding only white space once removed, so it is dropped
+ *   and a sentence runs on across it (second rows: spaced, adjacent; the converse); a block quote's mark keeps the line from
+ *   being blank, so a sentence runs on across it (quoted rows: a block quote, a block quote in a list item; the converse);
+ *   and between two lines of one list item, in a list with no blank line, the blank line ends the sentence, so a marker after
+ *   it quiets nothing before it and a claim across it reads none (listed rows: bulleted, ordered, nested; the converse);
+ *   R-SOURCE-AS-WRITTEN (A3) outside its placed comments a page is read as its source is written, not as it renders: every
+ *   markdown and HTML character is page text to the cutter and the reading, and, but for the lines COMMENTS OUT (2) and (3)
+ *   blank, join or drop, the cutter's lines are the source's lines. Rows held, in order: a marker only such syntax holds
+ *   quiets the sentence it joins (markers: a link's destination, bare or angle-bracketed, its title, quoted or parenthesised,
+ *   or its reference label; a reference definition; an HTML tag's attribute or name; an image's alt text or source; a style
+ *   or script block; a processing instruction, CDATA or a declaration; a fenced code block's info string, after backticks or
+ *   tildes; the content of a [hidden] element, inline or a block, or of a template element), and a claim only such syntax
+ *   holds reads as a finding (claims: a tag attribute, a link destination, a style block, a reference definition, an info
+ *   string, [hidden] content, template content); markup inside a word splits the word ("The assem*bler* acquires resources."
+ *   names no subject), and a marker spelled by a character reference is not read as one (words; R-LOOKALIKE holds the subject
+ *   spelled with one); a character reference followed by white space ends a sentence at its ";", so a claim across it reads
+ *   none (references: &nbsp;, &amp;, &#38;, &not;, &lt;, &#x26;); and a line DOC does not cut at is a text line, so a
+ *   sentence runs on across it (lines: a block quote's empty line; a line that opens with a quote mark, as a list item or a
+ *   heading in a block quote does; === or --- under a line of text, a setext heading's underline; *** right after a line of
+ *   text; a line that opens with an HTML tag, after or before a line of text; a table's rows spelled a | b, with no leading
+ *   pipe; a # line indented four spaces, a code line; and the cutter never cuts at a table cell's pipe, so a table row's
+ *   cells run on in its line); R-UNANCHORED (A4) an assembly word with no anchor beside a family word (Pi's own sense: "The
+ *   reply assembly is stale."); R-RENDERER (A4) rf or the render named as the actor with no assembler word ("rf acquires the
+ *   resource."), the context renderer's own obligations being other beads'; R-SHORT-NAME (A4) RC or rc alone (a return code
+ *   in Pi's receipts) is an anchor, never the subject ("RC acquires resources."); R-LOOKALIKE (A4) a look-alike letter, an
+ *   inserted invisible or an HTML character reference inside a word (NFKC folds the fullwidth forms, which are read);
+ *   R-MARKER-ANYWHERE (A4) a marker anywhere in the text quiets it, whatever it qualifies ("The assembler acquires resources,
+ *   not the host."), on a doc page anywhere in its sentence once its placed comments are out (a marker only a placed comment
+ *   holds quiets nothing: comments.hiddenMarker; one only an unplaced comment holds quiets the sentence: comments.unplaced;
+ *   and a marker R-COMMENT-BLOCK or R-SOURCE-AS-WRITTEN reads into a sentence quiets it too); R-SYNONYM (A4) a vocabulary
+ *   word no outside text spells (the inflections, fresh and stale, the extra markers) is held by this file and the roster
+ *   alone - removed from both together it stays green; A4 lists them; R-PARAPHRASE (B3) a family claim outside the family
+ *   words (fetch, prefetch, load, refresh, expire, ttl, queue, defer, up to date); R-SEAM-OTHER (C2) an assembler reached by
+ *   a path that names neither the subject nor a ReactiveComponents module (a URL, a spawned program under another name), or
+ *   an input reaching it through stdin.
  *
  * Display paths added: none. Test-only: the stand-in rf and the replica trees live in makeScratch scratch with the leak guard
  * installed; Pi's code, docs, the bead export, docs/03, package.json and the frozen tree are only read; nothing is spawned but
@@ -126,6 +189,7 @@ import { createHash } from "node:crypto";
 import { chmodSync, existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { marked, type Token, type Tokens } from "marked";
 import ts from "typescript";
 import { afterAll, afterEach, describe, expect, it } from "vitest";
 import { CapabilityError, CapabilityRegistry } from "../src/workbench/capability-registry.js";
@@ -353,6 +417,142 @@ function sentences(text: string): { readonly line: number; readonly text: string
   return out;
 }
 
+// --------------------------------------------------------------------------------------------------------------- the comments
+/** marked's own HTML comment form: an empty <!--> or <!---> included, an unterminated one running to the end of its text. */
+const HTML_COMMENT = /<!--(?:-?>|[\s\S]*?(?:-->|$))/g;
+const LEADING_SPACES = /^ {0,3}/;
+const REGEXP_SPECIAL = /[.*+?^${}()|[\]\\]/g;
+const isHtmlToken = (token: Token): token is Tokens.HTML | Tokens.Tag => token.type === "html";
+const isListToken = (token: Token): token is Tokens.List => token.type === "list";
+const isTableToken = (token: Token): token is Tokens.Table => token.type === "table";
+/** A token's nested tokens in page order: a list's items, a table's cells (its header first), or its own tokens. */
+function nestedTokens(token: Token): readonly Token[] {
+  if (isListToken(token)) return token.items;
+  if (isTableToken(token)) return [...token.header, ...token.rows.flat()].flatMap(cell => cell.tokens);
+  const value: unknown = (token as { tokens?: unknown }).tokens;
+  return Array.isArray(value) ? (value as Token[]) : [];
+}
+/** Where a token's source sits in a block at or after `from` and before `end`: as written, or with each line break followed by
+ * spaces or tabs and then quote marks each followed by at most one space or tab (COMMENTS OUT (5)). */
+function placed(block: string, raw: string, from: number, end: number): { readonly start: number; readonly end: number } | undefined {
+  if (raw === "") return undefined;
+  const spelling = new RegExp(raw.split("\n").map(line => line.replace(REGEXP_SPECIAL, "\\$&")).join("\\n[ \\t]*(?:>[ \\t]?)*"), "g");
+  spelling.lastIndex = from;
+  const match = spelling.exec(block);
+  return match === null || match.index + match[0].length > end ? undefined : { start: match.index, end: match.index + match[0].length };
+}
+interface CommentSpan {
+  readonly start: number;
+  readonly end: number;
+  /** A comment block's opening comment (COMMENTS OUT (2), as htmlKindAt reads it): blanked, its line breaks kept. */
+  readonly block: boolean;
+}
+/** Every HTML token marked lexes in a page, at any depth. */
+function htmlTokens(page: string): (Tokens.HTML | Tokens.Tag)[] {
+  const out: (Tokens.HTML | Tokens.Tag)[] = [];
+  const visit = (token: Token): void => {
+    if (isHtmlToken(token)) out.push(token);
+    else for (const child of nestedTokens(token)) visit(child);
+  };
+  for (const token of marked.lexer(page)) visit(token);
+  return out;
+}
+/** COMMENTS OUT (5): marked lexes the page again with a sentinel (the shortest run of Q the page does not hold) written just inside
+ * the `<!--` at `start`. No HTML token holding the sentinel: undefined (the span is not placed). Otherwise whether that token is a
+ * block whose source opens with this comment after at most three spaces (a comment block's opening comment, blanked by (2)). */
+function htmlKindAt(page: string, start: number): boolean | undefined {
+  let mark = "Q";
+  while (page.includes(mark)) mark += "Q";
+  const holder = htmlTokens(`${page.slice(0, start + 4)}${mark}${page.slice(start + 4)}`).find(token => token.raw.includes(mark));
+  if (holder === undefined) return undefined;
+  const lead = LEADING_SPACES.exec(holder.raw)?.[0].length ?? 0;
+  return holder.block && holder.raw.indexOf(`<!--${mark}`) === lead;
+}
+/** Every comment span in the source of a token marked lexes as HTML, placed in the page (COMMENTS OUT (5)): walking each
+ * top-level block's tokens in page order moves a cursor past each leaf token's source as found, and a span found is placed only
+ * where htmlKindAt finds marked's own HTML token holding it. */
+function commentSpans(page: string): { readonly spans: readonly CommentSpan[]; readonly unplaced: readonly string[] } {
+  const blocks = marked.lexer(page);
+  // The top-level tokens tile the page; when they do not, no position can be trusted: every comment-shaped span is unplaced.
+  if (blocks.map(block => block.raw).join("") !== page) return { spans: [], unplaced: [...page.matchAll(HTML_COMMENT)].map(match => match[0]) };
+  const spans: CommentSpan[] = [];
+  const unplaced: string[] = [];
+  let top = 0;
+  for (const block of blocks) {
+    let cursor = 0;
+    const visit = (token: Token): void => {
+      const nested = isHtmlToken(token) ? [] : nestedTokens(token);
+      if (nested.length > 0) {
+        for (const child of nested) visit(child);
+        return;
+      }
+      const at = placed(block.raw, token.raw, cursor, block.raw.length);
+      if (isHtmlToken(token)) {
+        let inner = at?.start ?? 0;
+        for (const comment of token.raw.matchAll(HTML_COMMENT)) {
+          const spot = at === undefined ? undefined : placed(block.raw, comment[0], inner, at.end);
+          const kind = spot === undefined ? undefined : htmlKindAt(page, top + spot.start);
+          if (spot === undefined || kind === undefined) {
+            unplaced.push(comment[0]);
+            continue;
+          }
+          spans.push({ start: top + spot.start, end: top + spot.end, block: kind });
+          inner = spot.end;
+        }
+      }
+      if (at !== undefined) cursor = at.end;
+    };
+    visit(block);
+    top += block.raw.length;
+  }
+  return { spans, unplaced };
+}
+interface CommentFreePage {
+  /** The page for the sentence cut: each placed comment taken out, every other character as written (R-SOURCE-AS-WRITTEN). */
+  readonly text: string;
+  /** The page line each kept line starts on (1-based), or null when the page has no comment and is read as written. */
+  readonly lines: readonly number[] | null;
+  /** The comment spans the reader does not place (COMMENTS OUT (5)); each is read as written. */
+  readonly unplaced: readonly string[];
+}
+/** A page with its placed comments out (COMMENTS OUT (2), (3), (6)): a comment block's opening comment is blanked with its line
+ * breaks kept, any other comment is removed with its line breaks (a line it leaves holding only white space is dropped), every
+ * other character is kept as written, and every kept line keeps its page number. */
+function commentFreePage(markdown: string): CommentFreePage {
+  if (!markdown.includes("<!--")) return { text: markdown, lines: null, unplaced: [] };
+  const page = markdown.replace(/\r\n/g, "\n");
+  const { spans, unplaced } = commentSpans(page);
+  let line = 1;
+  let row: { text: string; line: number; emptied: boolean } = { text: "", line, emptied: false };
+  const rows = [row];
+  const lineBreak = (): void => {
+    line += 1;
+    row = { text: "", line, emptied: false };
+    rows.push(row);
+  };
+  const copy = (text: string): void => {
+    for (const char of text) {
+      if (char === "\n") lineBreak();
+      else row.text += char;
+    }
+  };
+  let at = 0;
+  for (const span of spans) {
+    copy(page.slice(at, span.start));
+    for (const char of page.slice(span.start, span.end)) {
+      if (char === "\n") {
+        if (span.block) lineBreak();
+        else line += 1;
+      } else if (span.block) row.text += " ";
+    }
+    if (!span.block) row.emptied = true;
+    at = span.end;
+  }
+  copy(page.slice(at));
+  const kept = rows.filter(entry => !(entry.emptied && entry.text.trim() === ""));
+  return { text: kept.map(entry => entry.text).join("\n"), lines: kept.map(entry => entry.line), unplaced };
+}
+
 // -------------------------------------------------------------------------------------------------------------- the code reader
 interface Site {
   readonly line: number;
@@ -500,6 +700,7 @@ interface Survey {
   readonly quieted: string[];
   readonly readings: number;
   readonly named: number;
+  readonly unplaced: string[];
 }
 function codeSurvey(path: string, text: string): Survey {
   const findings = new Set<string>();
@@ -513,21 +714,23 @@ function codeSurvey(path: string, text: string): Survey {
     if (reading.kind === "finding") findings.add(`${path}:${site.line} ${site.via} ${reading.reason}`);
     else if (reading.kind !== "none") quieted.add(`${path}:${site.line} ${site.via} ${reading.kind}:${reading.reason}`);
   }
-  return { findings: [...findings], quieted: [...quieted], readings: sites.length, named };
+  return { findings: [...findings], quieted: [...quieted], readings: sites.length, named, unplaced: [] };
 }
 function docSurvey(path: string, text: string): Survey {
   const findings: string[] = [];
   const quieted: string[] = [];
   let named = 0;
-  const cut = sentences(text);
+  const page = commentFreePage(text);
+  const cut = sentences(page.text);
   for (const sentence of cut) {
     const reading = read(sentence.text);
     const tokens = words(sentence.text);
+    const line = page.lines?.[sentence.line - 1] ?? sentence.line;
     if (namesSubject(tokens)) named += 1;
-    if (reading.kind === "finding") findings.push(`${path}:${sentence.line} ${reading.reason}`);
-    else if (reading.kind !== "none") quieted.push(`${path}:${sentence.line} ${reading.kind}:${reading.reason}`);
+    if (reading.kind === "finding") findings.push(`${path}:${line} ${reading.reason}`);
+    else if (reading.kind !== "none") quieted.push(`${path}:${line} ${reading.kind}:${reading.reason}`);
   }
-  return { findings, quieted, readings: cut.length, named };
+  return { findings, quieted, readings: cut.length, named, unplaced: page.unplaced.map(comment => `${path} ${JSON.stringify(comment)}`) };
 }
 const isModule = (path: string): boolean => /\.(?:ts|tsx|mts|cts|js|mjs|cjs)$/.test(path);
 const isPage = (path: string): boolean => /\.md$/.test(path);
@@ -542,6 +745,7 @@ interface Pass {
   readonly quieted: string[];
   readonly readings: number;
   readonly named: number;
+  readonly unplaced: string[];
   readonly unreadable: string[];
 }
 /** One pass over a set of (path, text) pairs: code modules by the code reader, doc pages by the sentence reader. */
@@ -550,6 +754,7 @@ function survey(texts: readonly (readonly [string, string])[]): Omit<Pass, "unre
   const docs: string[] = [];
   const findings: string[] = [];
   const quieted: string[] = [];
+  const unplaced: string[] = [];
   let readings = 0;
   let named = 0;
   for (const [path, text] of texts) {
@@ -558,10 +763,11 @@ function survey(texts: readonly (readonly [string, string])[]): Omit<Pass, "unre
     (asCode ? code : docs).push(path);
     findings.push(...one.findings);
     quieted.push(...one.quieted);
+    unplaced.push(...one.unplaced);
     readings += one.readings;
     named += one.named;
   }
-  return { code, docs, findings, quieted, readings, named };
+  return { code, docs, findings, quieted, readings, named, unplaced };
 }
 function surveyFiles(base: string, paths: readonly string[]): Pass {
   const texts: [string, string][] = [];
@@ -809,6 +1015,11 @@ function gitReplica(prefix: string, files: Readonly<Record<string, string>>): st
 }
 const codeOf = (text: string, path = "src/plant.ts"): string[] => codeSurvey(path, text).findings;
 const docOf = (text: string, path = "docs/plant.md"): string[] => docSurvey(path, text).findings;
+/** A page's findings and quieted readings together, so a quiet row names the marker that quiets it. */
+const asWritten = (text: string): string[] => {
+  const one = docSurvey("docs/plant.md", text);
+  return [...one.findings, ...one.quieted];
+};
 const PLANT = "The ReactiveComponents assembler acquires the resources Pi needs.";
 const LOOKALIKE_A = String.fromCodePoint(0x0430);
 const FULLWIDTH_A = String.fromCodePoint(0xff21);
@@ -841,6 +1052,8 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const plants: Record<string, string> = {
       "docs/workbench/plant.md": "The assembler schedules acquisition for Pi.\n",
       "docs/workbench/plant-twin.md": "The assembler never schedules acquisition for Pi.\n",
+      "docs/workbench/plant-hidden.md": "The assembler <!-- never --> schedules acquisition for Pi.\n",
+      "docs/workbench/plant-commented.md": "<!-- The assembler schedules acquisition for Pi. -->\n",
       "examples/plant.md": "Pi relies on the context assembly to judge freshness.\n",
       "examples/plant-twin.md": "Pi never relies on the context assembly to judge freshness.\n",
       ".pi/agents/plant.md": "The assembler speculates.\n",
@@ -952,22 +1165,150 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     outsideFiles["PLANT.txt"] = `${PLANT}\n`;
     outsideFiles["qa/plant.sh"] = `# ${PLANT}\n`;
     outsideFiles["docs/plant.txt"] = `${PLANT}\n`;
+    outsideFiles["docs/plant.MD"] = `${PLANT}\n`;
+    outsideFiles["docs/plant.markdown"] = `${PLANT}\n`;
+    outsideFiles["src/plant.jsx"] = `// ${PLANT}\nexport {};\n`;
     const replica = gitReplica("km7q2-outside-", outsideFiles);
     const read = gitList(replica);
     const unread = Object.keys(outsideFiles)
       .filter(path => !read.includes(path))
       .sort(byName);
     const quiet = {
-      "R-OUTSIDE-ROOTS": { read, findings: surveyFiles(replica, read).findings, unreadWouldFind: unread.map(path => docSurvey(path, outsideFiles[path] ?? "").findings.length) },
-      "R-SPLIT": [docOf("We added an assembler. It acquires resources."), docOf("Status: acquires. Subject: the assembler.")],
+      "R-OUTSIDE-ROOTS": { read, unread, findings: surveyFiles(replica, read).findings, unreadWouldFind: unread.map(path => docSurvey(path, outsideFiles[path] ?? "").findings.length) },
+      "R-SPLIT": [docOf("We added an assembler. It acquires resources."), docOf("Status: acquires. Subject: the assembler."), docOf("The assembler\n<!-- x -->\nacquires resources.\n")],
+      "R-COMMENT-HIDDEN": [
+        docOf("<!-- The assembler acquires resources. -->\n"),
+        docOf("Intro.\n\n<!--\nThe assembler schedules acquisition.\n-->\n"),
+        docOf("Intro.\n\n<!-- The assembler judges freshness.\n\nMore.\n"),
+        docOf("The assembler <!-- acquires resources --> is documented.\n"),
+      ],
+      // A comment block's lines read as COMMENTS OUT (2) and (3) leave them (the header's member order).
+      "R-COMMENT-BLOCK": {
+        trailing: ["The assembler acquires resources\n<!-- x --> never.\n", "The assembler acquires resources\n<!-- x -->never.\n", "The assembler acquires resources\n<!-- a -->x<!-- b -->\nnever.\n", "The assembler\n<!-- x --> acquires resources.\n"].map(asWritten),
+        second: ["The assembler acquires resources\n<!-- a --> <!-- b -->\nnever.\n", "The assembler acquires resources\n<!-- a --><!-- b -->\nnever.\n", "The assembler\n<!-- a --> <!-- b -->\nacquires resources.\n"].map(asWritten),
+        quoted: ["> The assembler acquires resources\n> <!-- x -->\n> never.\n", "- > The assembler acquires resources\n  > <!-- x -->\n  > never.\n", "> The assembler\n> <!-- x -->\n> acquires resources.\n"].map(asWritten),
+        listed: ["- The assembler acquires resources\n  <!-- x -->\n  never.\n", "1. The assembler acquires resources\n   <!-- x -->\n   never.\n", "- a\n  - The assembler acquires resources\n    <!-- x -->\n    never.\n", "- The assembler\n  <!-- x -->\n  acquires resources.\n"].map(asWritten),
+      },
+      // Outside its placed comments a page is read as its source is written (the header names each group's members in order).
+      "R-SOURCE-AS-WRITTEN": {
+        markers: [
+          "The assembler [acquires](https://example.com/never) resources.\n",
+          "The assembler [acquires](<https://example.com/never>) resources.\n",
+          'The assembler [acquires](https://example.com "never") resources.\n',
+          "The assembler [acquires](https://example.com (never)) resources.\n",
+          "The assembler [acquires][never] resources.\n\n[never]: https://example.com\n",
+          "[ref]: https://example.com/never\nThe assembler acquires resources.\n",
+          'The assembler <span title="never">acquires</span> resources.\n',
+          "The assembler <none>acquires</none> resources.\n",
+          "The assembler ![never](https://example.com/x.png) acquires resources.\n",
+          "The assembler ![x](https://example.com/never.png) acquires resources.\n",
+          "<style>/* never */</style>\nThe assembler acquires resources.\n",
+          "<script>never</script>\nThe assembler acquires resources.\n",
+          "<?never?>\nThe assembler acquires resources.\n",
+          "<![CDATA[never]]>\nThe assembler acquires resources.\n",
+          "<!NEVER>\nThe assembler acquires resources.\n",
+          "```never\nThe assembler acquires resources.\n```\n",
+          "~~~never\nThe assembler acquires resources.\n~~~\n",
+          "The assembler <span hidden>never</span> acquires resources.\n",
+          "<div hidden>never</div>\nThe assembler acquires resources.\n",
+          "<template>never</template>\nThe assembler acquires resources.\n",
+        ].map(asWritten),
+        claims: [
+          '<span title="The assembler acquires resources.">x</span>\n',
+          "See [x](https://example.com/the-assembler-acquires-resources).\n",
+          "<style>/* The assembler acquires resources. */</style>\n",
+          "[the assembler acquires resources]: https://example.com\n",
+          "```the assembler acquires resources\nx\n```\n",
+          "x <span hidden>The assembler acquires resources.</span>\n",
+          "<template>The assembler acquires resources.</template>\n",
+        ].map(asWritten),
+        words: ["The assem*bler* acquires resources.\n", "The assem`bler` acquires resources.\n", "The assembler &#110;ever acquires resources.\n"].map(asWritten),
+        references: [
+          "The assembler &nbsp; acquires resources.\n",
+          "The assembler &amp; acquires resources.\n",
+          "The assembler &#38; acquires resources.\n",
+          "The assembler &not; acquires resources.\n",
+          "The assembler &lt; acquires resources.\n",
+          "The assembler &#x26; acquires resources.\n",
+        ].map(asWritten),
+        lines: [
+          "> The assembler acquires resources\n>\n> never.\n",
+          "> The assembler\n>\n> acquires resources.\n",
+          "> The assembler acquires resources\n> - never\n",
+          "> The assembler\n> - acquires resources\n",
+          "> # The assembler acquires resources\n> never.\n",
+          "> The assembler\n> # acquires resources\n",
+          "The assembler acquires resources\n===\nnever.\n",
+          "The assembler acquires resources\n---\nnever.\n",
+          "The assembler\n===\nacquires resources.\n",
+          "The assembler acquires resources\n***\nnever.\n",
+          "The assembler acquires resources\n<div>never</div>\n",
+          "<div>never</div>\nThe assembler acquires resources.\n",
+          "The assembler\n<div>acquires resources.</div>\n",
+          "a | b\n--- | ---\nThe assembler | acquires resources\n",
+          "    # The assembler acquires resources\nnever.\n",
+          "| a | b |\n| --- | --- |\n| The assembler | acquires resources |\n",
+        ].map(asWritten),
+      },
+    };
+    // COMMENTS OUT (wb-cppf): the rows the header's clauses (1)-(6) name; every reading is the reader's, never a rendered page's.
+    const unplaced = [
+      "| Concern | Owner |\n| --- | --- |\n| assembler <!-- never \\| x --> | acquires |\n",
+      "The assembler <!-- never -->\racquires resources.\n",
+      "> - The assembler <!-- not\n>   never --> acquires resources.\n",
+      "> 1. The assembler <!-- not\n>    never --> acquires resources.\n",
+      "- The assembler <!-- not\n\tnever --> acquires resources.\n",
+      "See [x](<!--never-->)<!--never--> the assembler acquires resources.\n",
+      "| a | b |\n| --- | --- |\n| `\\| <!-- never -->` <!-- never --> The assembler acquires resources | x |\n",
+      "- a\n\n\t[<!-- never -->](u) x\n\n  The assembler `<!-- never -->` acquires resources.\n",
+      "The assembler <!-- x --> acquires <!-- x --> resources.\n",
+    ]
+      .map(page => docSurvey("docs/plant.md", page))
+      .map(one => ({ findings: one.findings, quieted: one.quieted, unplaced: one.unplaced }));
+    const comments = {
+      hiddenMarker: [
+        docOf("The assembler acquires resources<!-- , not the host -->.\n"),
+        docOf("The assembler <!-- never --> schedules acquisition.\n"),
+        docOf("The assembler judges freshness.<!-- Not today. -->\n"),
+      ],
+      joined: [
+        docOf("The assembler <!-- not\nnever -->\nacquires resources.\n"),
+        docOf("The assembler\n  <!-- never -->\nacquires resources.\n"),
+        docOf("The assem<!-- -->bler acquires resources.\n"),
+        docOf("<div>\nThe assembler\n<!-- never -->\nacquires resources.\n</div>\n"),
+      ],
+      lines: [
+        docOf("<!--\nnot\n-->\nThe assembler acquires resources.\n"),
+        docOf("<!-- not --> The assembler acquires resources.\n"),
+        docOf("Intro <!-- a\nb\nc --> text.\n\nThe assembler acquires resources.\n"),
+        docOf("Intro. <!-- a\nb\nc --> The assembler acquires resources.\n"),
+      ],
+      unlexed: [
+        docOf("The assembler `<!-- never -->` acquires resources.\n"),
+        docOf("```\n<!-- The assembler acquires resources. -->\n```\n"),
+        docOf("\\<!-- The assembler acquires resources. -->\n"),
+        docOf("Text <!-- open\n\nThe assembler acquires resources.\n"),
+        docOf("`<!-- never -->` spells a comment. The assembler <!-- never --> acquires resources.\n"),
+      ],
+      containers: [
+        docOf("- Intro\n\n  <!--\n  The assembler acquires resources.\n  -->\n"),
+        docOf("> <!-- The assembler\n> acquires resources. -->\n"),
+        docOf("- The assembler <!-- not\n  never --> acquires resources.\n"),
+        docOf("> The assembler <!-- not\n> never --> acquires resources.\n"),
+        docOf("- > The assembler <!-- not\n  > never --> acquires resources.\n"),
+        docOf(">> The assembler <!-- not\n>> never --> acquires resources.\n"),
+      ],
+      unplaced,
     };
     expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "A3").map(residual => residual.id));
     return {
       floors,
       findings: real.findings.filter(finding => isPage(finding.slice(0, finding.indexOf(":")))),
-      frozen: { revision: CONSTANTS.frozenAt, ancestor, pages: frozen.docs.length, sentences: frozen.readings, named: frozen.named, findings: frozen.findings, quieted: frozen.quieted },
+      unplaced: real.unplaced,
+      frozen: { revision: CONSTANTS.frozenAt, ancestor, pages: frozen.docs.length, sentences: frozen.readings, named: frozen.named, findings: frozen.findings, quieted: frozen.quieted, unplaced: frozen.unplaced },
       cuts,
       judged,
+      comments,
       quiet,
     };
   },
@@ -1237,7 +1578,7 @@ describe("wb-km7q.2 RC assembler expectation census (SDK-REACTIVE-FIBER-ADAPTIVE
     const tables = sectionTables(readFileSync(join(REPO, CONSTANTS.docs03), "utf8"), OWNERSHIP_HEADING, 2, [PAGE_TITLE]);
     expect(tables.grids.flatMap(grid => grid.filter(cells => cells[1] === RENDER_OWNER)).map(cells => cells[0])).toEqual(["Context rendering, necessity and provenance"]);
     const pins = ROWS.flatMap(row => row.pins.map(pin => pin.id));
-    expect(ROSTER.residuals.map(residual => residual.id)).toEqual(["R-OUTSIDE-ROOTS", "R-INDIRECT", "R-COMPOSED", "R-SPLIT", "R-UNANCHORED", "R-RENDERER", "R-SHORT-NAME", "R-LOOKALIKE", "R-MARKER-ANYWHERE", "R-SYNONYM", "R-PARAPHRASE", "R-SEAM-OTHER"]);
+    expect(ROSTER.residuals.map(residual => residual.id)).toEqual(["R-OUTSIDE-ROOTS", "R-INDIRECT", "R-COMPOSED", "R-SPLIT", "R-COMMENT-HIDDEN", "R-COMMENT-BLOCK", "R-SOURCE-AS-WRITTEN", "R-UNANCHORED", "R-RENDERER", "R-SHORT-NAME", "R-LOOKALIKE", "R-MARKER-ANYWHERE", "R-SYNONYM", "R-PARAPHRASE", "R-SEAM-OTHER"]);
     expect(ROSTER.residuals.every(residual => pins.includes(residual.quietPin))).toBe(true);
   });
   for (const row of ROWS) {
