@@ -749,6 +749,58 @@
         "ExecRequest",
         "executorsRequest",
         "request executor"
+      ],
+      "reading": {
+        "parts": [
+          "executor",
+          "request"
+        ],
+        "chars": [
+          " ",
+          "_",
+          "-"
+        ],
+        "quantifier": "?",
+        "flags": "i",
+        "uniform": true
+      },
+      "spelled": {
+        "ExecutorRequest/none/lower": "executorrequest",
+        "ExecutorRequest/none/upper": "EXECUTORREQUEST",
+        "ExecutorRequest/none/written": "ExecutorRequest",
+        "ExecutorRequest/space/lower": "executor request",
+        "ExecutorRequest/space/upper": "EXECUTOR REQUEST",
+        "ExecutorRequest/space/written": "Executor Request",
+        "ExecutorRequest/underscore/lower": "executor_request",
+        "ExecutorRequest/underscore/upper": "EXECUTOR_REQUEST",
+        "ExecutorRequest/underscore/written": "Executor_Request",
+        "ExecutorRequest/hyphen/lower": "executor-request",
+        "ExecutorRequest/hyphen/upper": "EXECUTOR-REQUEST",
+        "ExecutorRequest/hyphen/written": "Executor-Request"
+      },
+      "outside": [],
+      "spellingPlants": [
+        "src/workbench/zz-spelling-00.ts",
+        "src/workbench/zz-spelling-01.ts",
+        "src/workbench/zz-spelling-02.ts",
+        "src/workbench/zz-spelling-03.ts",
+        "src/workbench/zz-spelling-04.ts",
+        "src/workbench/zz-spelling-05.ts",
+        "src/workbench/zz-spelling-06.ts",
+        "src/workbench/zz-spelling-07.ts",
+        "src/workbench/zz-spelling-08.ts",
+        "src/workbench/zz-spelling-09.ts",
+        "src/workbench/zz-spelling-10.ts",
+        "src/workbench/zz-spelling-11.ts"
+      ],
+      "placedPlants": [
+        "src/workbench/zz-place-executor-line-comment.ts",
+        "src/workbench/zz-place-executor-block-comment.ts",
+        "src/workbench/zz-place-executor-doc-comment.ts",
+        "src/workbench/zz-place-executor-double-quoted.ts",
+        "src/workbench/zz-place-executor-single-quoted.ts",
+        "src/workbench/zz-place-executor-template.ts",
+        "src/workbench/zz-place-executor-code.ts"
       ]
     },
     "E1": {
@@ -1062,7 +1114,7 @@
         "GraphPolicy",
         "GraphDataIR"
       ],
-      "quiet": 8,
+      "quiet": 11,
       "drives": [],
       "wordProofs": {
         "GraphPolicy": {
@@ -1097,7 +1149,158 @@
         "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
         "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration"
       ],
-      "quietPaths": []
+      "quietPaths": [],
+      "patterns": {
+        "GraphPolicy": {
+          "parts": [
+            "graph",
+            "policy"
+          ],
+          "chars": [
+            " ",
+            "\t",
+            ".",
+            "_",
+            "-"
+          ],
+          "quantifier": "*",
+          "flags": "i",
+          "uniform": true
+        },
+        "GraphDataIR": {
+          "parts": [
+            "graph",
+            "data",
+            "ir"
+          ],
+          "chars": [
+            " ",
+            "\t",
+            ".",
+            "_",
+            "-"
+          ],
+          "quantifier": "*",
+          "flags": "i",
+          "uniform": true
+        }
+      },
+      "spellingReads": {
+        "GraphPolicy/none/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/none/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/none/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/space/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/space/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/space/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/tab/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/tab/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/tab/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/dot/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/dot/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/dot/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/underscore/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/underscore/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/underscore/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/hyphen/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/hyphen/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/hyphen/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/repeated/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/repeated/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/repeated/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/mixed/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/mixed/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/mixed/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphDataIR/none/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/none/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/none/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/space/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/space/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/space/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/tab/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/tab/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/tab/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/dot/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/dot/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/dot/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/underscore/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/underscore/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/underscore/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/hyphen/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/hyphen/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/hyphen/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/repeated/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/repeated/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/repeated/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/mixed/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/mixed/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/mixed/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration"
+      },
+      "spellingPlants": [
+        "S-UNREGISTERED src/workbench/zz-spelling-00.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-01.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-02.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-03.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-04.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-05.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-06.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-07.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-08.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-09.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-10.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-11.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-12.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-13.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-14.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-15.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-16.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-17.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-18.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-19.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-20.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-21.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-22.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-23.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-24.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-25.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-26.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-27.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-28.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-29.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-30.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-31.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-32.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-33.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-34.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-35.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-36.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-37.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-38.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-39.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-40.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-41.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-42.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-43.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-44.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-45.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-46.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-47.ts names GraphDataIR with no EXPORT_SITES registration"
+      ],
+      "placedFindings": [
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphDataIR-block-comment.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphDataIR-code.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphDataIR-doc-comment.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphDataIR-double-quoted.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphDataIR-line-comment.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphDataIR-single-quoted.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphDataIR-template.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphPolicy-block-comment.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphPolicy-code.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphPolicy-doc-comment.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphPolicy-double-quoted.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphPolicy-line-comment.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphPolicy-single-quoted.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphPolicy-template.ts names GraphPolicy with no EXPORT_SITES registration"
+      ]
     },
     "G2": {
       "namespace": "graphpolicy.data.v1",
@@ -1113,7 +1316,15 @@
           "middle": [],
           "end": []
         }
-      }
+      },
+      "placedPlants": [
+        "src/workbench/zz-place-namespace-line-comment.ts",
+        "src/workbench/zz-place-namespace-block-comment.ts",
+        "src/workbench/zz-place-namespace-doc-comment.ts",
+        "src/workbench/zz-place-namespace-double-quoted.ts",
+        "src/workbench/zz-place-namespace-single-quoted.ts",
+        "src/workbench/zz-place-namespace-template.ts"
+      ]
     },
     "G3": {
       "reading": {
@@ -1235,7 +1446,121 @@
         "D-OWNER-ALIAS": [
           "ownership-owner"
         ],
-        "D-OWNER-CELL-COMMENT": []
+        "D-OWNER-CELL-COMMENT": [],
+        "D-GP-SPELLED-none-lower": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-none-upper": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-none-written": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-space-lower": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-space-upper": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-space-written": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-tab-lower": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-tab-upper": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-tab-written": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-dot-lower": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-dot-upper": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-dot-written": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-underscore-lower": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-underscore-upper": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-underscore-written": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-hyphen-lower": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-hyphen-upper": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-hyphen-written": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-repeated-lower": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-repeated-upper": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-repeated-written": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-mixed-lower": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-mixed-upper": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-mixed-written": [
+          "ownership-rows"
+        ],
+        "D-GP-EMPH-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-STRIKE-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-NBSP-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-ENTITY-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-CODE-ENTITY-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-ESCAPE-ENTITY-ROW": [
+          "ownership-rows"
+        ],
+        "D-OTHER-PARAGRAPH": [
+          "ownership-other"
+        ],
+        "D-OTHER-CODE": [
+          "ownership-other"
+        ],
+        "D-OTHER-HEADING": [
+          "ownership-other"
+        ],
+        "D-OTHER-DEF": [
+          "ownership-other"
+        ],
+        "D-HEADER-SWAP-FIRST": [
+          "ownership-header"
+        ],
+        "D-HEADER-SWAP-SECOND": [
+          "ownership-header"
+        ],
+        "D-CELL-CASE": [
+          "ownership-cell"
+        ],
+        "D-SENTENCE-CASE": [
+          "boundary-opening"
+        ]
       },
       "views": {
         "D-MOVE": [
@@ -1377,6 +1702,158 @@
         "D-OWNER-CELL-COMMENT": [
           true,
           true
+        ],
+        "D-GP-SPELLED-none-lower": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-none-upper": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-none-written": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-space-lower": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-space-upper": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-space-written": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-tab-lower": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-tab-upper": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-tab-written": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-dot-lower": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-dot-upper": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-dot-written": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-underscore-lower": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-underscore-upper": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-underscore-written": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-hyphen-lower": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-hyphen-upper": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-hyphen-written": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-repeated-lower": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-repeated-upper": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-repeated-written": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-mixed-lower": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-mixed-upper": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-mixed-written": [
+          true,
+          true
+        ],
+        "D-GP-EMPH-ROW": [
+          true,
+          true
+        ],
+        "D-GP-STRIKE-ROW": [
+          true,
+          true
+        ],
+        "D-GP-NBSP-ROW": [
+          true,
+          true
+        ],
+        "D-GP-ENTITY-ROW": [
+          true,
+          true
+        ],
+        "D-GP-CODE-ENTITY-ROW": [
+          true,
+          true
+        ],
+        "D-GP-ESCAPE-ENTITY-ROW": [
+          true,
+          true
+        ],
+        "D-OTHER-PARAGRAPH": [
+          true,
+          true
+        ],
+        "D-OTHER-CODE": [
+          true,
+          true
+        ],
+        "D-OTHER-HEADING": [
+          true,
+          true
+        ],
+        "D-OTHER-DEF": [
+          true,
+          true
+        ],
+        "D-HEADER-SWAP-FIRST": [
+          true,
+          true
+        ],
+        "D-HEADER-SWAP-SECOND": [
+          true,
+          true
+        ],
+        "D-CELL-CASE": [
+          true,
+          true
+        ],
+        "D-SENTENCE-CASE": [
+          false,
+          false
         ]
       },
       "page": [],
@@ -1415,7 +1892,45 @@
         "D-GP-REFLINK-ROW": 2,
         "D-OWNER-BOLD": 1,
         "D-OWNER-ALIAS": 1,
-        "D-OWNER-CELL-COMMENT": 1
+        "D-OWNER-CELL-COMMENT": 1,
+        "D-GP-SPELLED-none-lower": 2,
+        "D-GP-SPELLED-none-upper": 2,
+        "D-GP-SPELLED-none-written": 2,
+        "D-GP-SPELLED-space-lower": 2,
+        "D-GP-SPELLED-space-upper": 2,
+        "D-GP-SPELLED-space-written": 2,
+        "D-GP-SPELLED-tab-lower": 2,
+        "D-GP-SPELLED-tab-upper": 2,
+        "D-GP-SPELLED-tab-written": 2,
+        "D-GP-SPELLED-dot-lower": 2,
+        "D-GP-SPELLED-dot-upper": 2,
+        "D-GP-SPELLED-dot-written": 2,
+        "D-GP-SPELLED-underscore-lower": 2,
+        "D-GP-SPELLED-underscore-upper": 2,
+        "D-GP-SPELLED-underscore-written": 2,
+        "D-GP-SPELLED-hyphen-lower": 2,
+        "D-GP-SPELLED-hyphen-upper": 2,
+        "D-GP-SPELLED-hyphen-written": 2,
+        "D-GP-SPELLED-repeated-lower": 2,
+        "D-GP-SPELLED-repeated-upper": 2,
+        "D-GP-SPELLED-repeated-written": 2,
+        "D-GP-SPELLED-mixed-lower": 2,
+        "D-GP-SPELLED-mixed-upper": 2,
+        "D-GP-SPELLED-mixed-written": 2,
+        "D-GP-EMPH-ROW": 2,
+        "D-GP-STRIKE-ROW": 2,
+        "D-GP-NBSP-ROW": 2,
+        "D-GP-ENTITY-ROW": 2,
+        "D-GP-CODE-ENTITY-ROW": 2,
+        "D-GP-ESCAPE-ENTITY-ROW": 2,
+        "D-OTHER-PARAGRAPH": 1,
+        "D-OTHER-CODE": 1,
+        "D-OTHER-HEADING": 1,
+        "D-OTHER-DEF": 1,
+        "D-HEADER-SWAP-FIRST": 1,
+        "D-HEADER-SWAP-SECOND": 1,
+        "D-CELL-CASE": 1,
+        "D-SENTENCE-CASE": 1
       },
       "owners": [
         "Pi",
@@ -1433,14 +1948,53 @@
         "Git/Forge artifact"
       ],
       "unlike": [],
-      "control": false
+      "control": false,
+      "ownerWords": {
+        "GraphPolicy/none/lower": true,
+        "GraphPolicy/none/upper": true,
+        "GraphPolicy/none/written": true,
+        "GraphPolicy/space/lower": true,
+        "GraphPolicy/space/upper": true,
+        "GraphPolicy/space/written": true,
+        "GraphPolicy/tab/lower": true,
+        "GraphPolicy/tab/upper": true,
+        "GraphPolicy/tab/written": true,
+        "GraphPolicy/dot/lower": true,
+        "GraphPolicy/dot/upper": true,
+        "GraphPolicy/dot/written": true,
+        "GraphPolicy/underscore/lower": true,
+        "GraphPolicy/underscore/upper": true,
+        "GraphPolicy/underscore/written": true,
+        "GraphPolicy/hyphen/lower": true,
+        "GraphPolicy/hyphen/upper": true,
+        "GraphPolicy/hyphen/written": true,
+        "GraphPolicy/repeated/lower": true,
+        "GraphPolicy/repeated/upper": true,
+        "GraphPolicy/repeated/written": true,
+        "GraphPolicy/mixed/lower": true,
+        "GraphPolicy/mixed/upper": true,
+        "GraphPolicy/mixed/written": true
+      }
     },
     "Q1": {
       "members": [
         "src/workbench/q1-shape.ts",
         "src/workbench/q1-incidences.ts"
       ],
-      "findings": []
+      "findings": [],
+      "live": {
+        "src/workbench/q1-shape.ts": [
+          "entities",
+          "schema_ref",
+          "namespace",
+          "relations"
+        ],
+        "src/workbench/q1-incidences.ts": [
+          "incidences",
+          "participant",
+          "role"
+        ]
+      }
     },
     "Q2": {
       "members": [
@@ -1448,35 +2002,106 @@
         "src/workbench/q2-escape.ts",
         "src/workbench/q2-request.ts"
       ],
-      "findings": []
+      "findings": [],
+      "live": {
+        "src/workbench/q2-joined.ts": [
+          "graphpolicy.data.v1",
+          "GraphPolicy",
+          "src/workbench/q2-joined.ts"
+        ],
+        "src/workbench/q2-escape.ts": [
+          "GraphDataIR",
+          "GraphDataIR"
+        ],
+        "src/workbench/q2-request.ts": [
+          "ExecutorRequest",
+          "src/workbench/q2-request.ts"
+        ]
+      }
     },
     "Q3": {
       "members": [
         "q3-feature-status",
         "q3-schema-hash"
       ],
-      "findings": []
+      "findings": [],
+      "live": {
+        "q3-feature-status": {
+          "at": "#0.graph.entities.0.features",
+          "facet": "keys"
+        },
+        "q3-schema-hash": {
+          "at": "#0.graph.schema_ref",
+          "facet": "keys"
+        }
+      }
     },
     "Q4": {
       "members": [
         "q4-entity-kind",
         "q4-roles"
       ],
-      "findings": []
+      "findings": [],
+      "live": {
+        "q4-entity-kind": {
+          "at": "#0.graph.entities.0.kind",
+          "facet": "value"
+        },
+        "q4-roles": {
+          "at": "#0.graph.relations.0.incidences.0.role",
+          "facet": "value"
+        }
+      }
     },
     "Q5": {
       "members": [
         "q5-revisions-empty",
         "q5-revisions-guessed"
       ],
-      "findings": []
+      "findings": [],
+      "live": {
+        "q5-revisions-empty": {
+          "at": "#0.graph.observation.revisions",
+          "facet": "keys"
+        },
+        "q5-revisions-guessed": {
+          "at": "#0.graph.observation.revisions",
+          "facet": "keys"
+        }
+      }
     },
     "Q6": {
       "members": [
         "q6-timer-write",
         "q6-timer-freeze"
       ],
-      "findings": []
+      "findings": [],
+      "live": {
+        "q6-timer-write": {
+          "deferredCalls": [
+            "disconnect"
+          ],
+          "projectionFrozen": false,
+          "globalMark": false,
+          "moduleRecord": false,
+          "symbolReads": [],
+          "rebound": [],
+          "addedKeys": [],
+          "requestFrozen": false,
+          "thirdDiffers": false
+        },
+        "q6-timer-freeze": {
+          "deferredCalls": [],
+          "projectionFrozen": true,
+          "globalMark": false,
+          "moduleRecord": false,
+          "symbolReads": [],
+          "rebound": [],
+          "addedKeys": [],
+          "requestFrozen": false,
+          "thirdDiffers": false
+        }
+      }
     },
     "Q7": {
       "members": [
@@ -1485,15 +2110,116 @@
         "q7-third-call",
         "q7-past-view-call"
       ],
-      "findings": []
+      "findings": [],
+      "live": {
+        "q7-global-write": {
+          "deferredCalls": [],
+          "projectionFrozen": false,
+          "globalMark": true,
+          "moduleRecord": false,
+          "symbolReads": [],
+          "rebound": [],
+          "addedKeys": [],
+          "requestFrozen": false,
+          "thirdDiffers": false
+        },
+        "q7-module-record": {
+          "deferredCalls": [],
+          "projectionFrozen": false,
+          "globalMark": false,
+          "moduleRecord": true,
+          "symbolReads": [],
+          "rebound": [],
+          "addedKeys": [],
+          "requestFrozen": false,
+          "thirdDiffers": false
+        },
+        "q7-third-call": {
+          "deferredCalls": [],
+          "projectionFrozen": false,
+          "globalMark": false,
+          "moduleRecord": false,
+          "symbolReads": [],
+          "rebound": [],
+          "addedKeys": [],
+          "requestFrozen": false,
+          "thirdDiffers": true
+        },
+        "q7-past-view-call": {
+          "deferredCalls": [],
+          "projectionFrozen": false,
+          "globalMark": false,
+          "moduleRecord": false,
+          "symbolReads": [
+            "Symbol(Symbol.toStringTag)"
+          ],
+          "rebound": [],
+          "addedKeys": [],
+          "requestFrozen": false,
+          "thirdDiffers": false
+        }
+      }
     },
     "Q8": {
       "members": [
         "q8-rebind-equal",
         "q8-request-key",
-        "q8-request-freeze"
+        "q8-request-freeze",
+        "q8-projection-rebind"
       ],
-      "findings": []
+      "findings": [],
+      "live": {
+        "q8-rebind-equal": {
+          "deferredCalls": [],
+          "projectionFrozen": false,
+          "globalMark": false,
+          "moduleRecord": false,
+          "symbolReads": [],
+          "rebound": [
+            "budget"
+          ],
+          "addedKeys": [],
+          "requestFrozen": false,
+          "thirdDiffers": false
+        },
+        "q8-request-key": {
+          "deferredCalls": [],
+          "projectionFrozen": false,
+          "globalMark": false,
+          "moduleRecord": false,
+          "symbolReads": [],
+          "rebound": [],
+          "addedKeys": [
+            "exportedBy"
+          ],
+          "requestFrozen": false,
+          "thirdDiffers": false
+        },
+        "q8-request-freeze": {
+          "deferredCalls": [],
+          "projectionFrozen": false,
+          "globalMark": false,
+          "moduleRecord": false,
+          "symbolReads": [],
+          "rebound": [],
+          "addedKeys": [],
+          "requestFrozen": true,
+          "thirdDiffers": false
+        },
+        "q8-projection-rebind": {
+          "deferredCalls": [],
+          "projectionFrozen": false,
+          "globalMark": false,
+          "moduleRecord": false,
+          "symbolReads": [],
+          "rebound": [
+            "projection"
+          ],
+          "addedKeys": [],
+          "requestFrozen": false,
+          "thirdDiffers": false
+        }
+      }
     },
     "Q9": {
       "members": [
@@ -1504,9 +2230,23 @@
         "q9-owner-gp",
         "q9-owner-reference",
         "q9-owner-invisible",
-        "q9-owner-confusable"
+        "q9-owner-confusable",
+        "q9-owner-hexref",
+        "q9-owner-named-reference"
       ],
-      "findings": []
+      "findings": [],
+      "live": {
+        "q9-concern-cell": true,
+        "q9-workbench-cell": true,
+        "q9-owner-column-moved": true,
+        "q9-header-row": true,
+        "q9-owner-gp": true,
+        "q9-owner-reference": true,
+        "q9-owner-invisible": true,
+        "q9-owner-confusable": true,
+        "q9-owner-hexref": true,
+        "q9-owner-named-reference": true
+      }
     }
   },
   "residuals": {
@@ -1544,7 +2284,8 @@
     "Q8": [
       "q8-rebind-equal",
       "q8-request-key",
-      "q8-request-freeze"
+      "q8-request-freeze",
+      "q8-projection-rebind"
     ],
     "Q9": [
       "q9-concern-cell",
@@ -1554,7 +2295,9 @@
       "q9-owner-gp",
       "q9-owner-reference",
       "q9-owner-invisible",
-      "q9-owner-confusable"
+      "q9-owner-confusable",
+      "q9-owner-hexref",
+      "q9-owner-named-reference"
     ]
   },
   "tests": [

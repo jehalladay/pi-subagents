@@ -4,8 +4,9 @@
  * the bead, the measured facts and every reading). Everything here is pure over the inputs it is handed: the fixtures are
  * real ObservationProjection instances built through the class's public methods, the reference exporter only reads them,
  * and so do its mutants except the A1 purity members, which write to the projection, edit its objects or edit the class on
- * purpose (the judge refuses each one and puts the class back), and the drive residuals of Q6, Q7 and Q8; nothing here starts
- * gp, fakes a GraphPolicyCLI binary, adds a dependency or implements a Pi exporter. The read proof (readProof) is pure over
+ * purpose (the judge refuses each one and puts the class back), and the drive residuals of Q6, Q7 and Q8, which the drive
+ * observer (driveEffects) also runs on fixture projections of its own to read what each one does; nothing here starts gp, fakes
+ * a GraphPolicyCLI binary, adds a dependency or implements a Pi exporter. The read proof (readProof) is pure over
  * the git blob ids the census hands it (git hash-object, read in the census file).
  * The census's own reads compose the landed wb-e66.5 vocabulary reader and listers (test/helpers/gp-mw-coordination-census.ts),
  * the landed wb-gxd7.3 export reader (test/helpers/gp-snapshot-join-census.ts) and the landed docs binding
@@ -1309,13 +1310,19 @@ export const PLANTED_WORD_SITES: readonly { readonly word: string; readonly path
   { word: "GraphPolicy", path: "src/workbench/zz-gp-site-policy.ts", text: "export type GraphPolicyRequest = Readonly<Record<string, unknown>>;\n" },
   { word: "GraphDataIR", path: "src/workbench/zz-gp-site-data-ir.ts", text: "export type GraphDataIR = Readonly<Record<string, unknown>>;\n" },
 ];
-/** The spellings the composed reader reads as a site word, and Pi words it must not. */
+/**
+ * The spellings the composed reader reads as a site word, and near spellings it must not: Pi words, and (refusal #4's U1) a word
+ * whose parts a character outside the joiner class or a line break separates.
+ */
 export const SITE_WORD_HITS: readonly string[] = ["GraphDataIR", "graph_data_ir", "graph-data-ir", "graphpolicy.data.v1", "GraphPolicyCLI", "graph-policy-cli", "toGraphDataIR"];
-export const SITE_WORD_QUIET: readonly string[] = ["ObservationProjection", "graph", "policy", "GraphQL", "graphDataIndex", "dataflow graph", "MicroPolicy", "mw.training-export"];
+export const SITE_WORD_QUIET: readonly string[] = ["ObservationProjection", "graph", "policy", "GraphQL", "graphDataIndex", "dataflow graph", "MicroPolicy", "mw.training-export", "Graph/Policy", "Graph:Data:IR", "graph\npolicy"];
 
 // ---- the absence readers of D3 and G2, each proven live by a planted positive read in the same call ----
 
-/** A typed executor request named in a module: "executor request" in any case, joined by nothing, a space, "_" or "-" (D3). */
+/**
+ * A typed executor request named in a module (D3): "executor request" in any case, joined by nothing or by one space, "_" or "-";
+ * a tab, a dot or a run of two or more joiners between the parts is outside it (EXECUTOR_REQUEST_OUTSIDE, pinned quiet).
+ */
 export const EXECUTOR_REQUEST = /executor[ _-]?request/i;
 /** D3's reader: the modules whose text names a typed executor request, in listing order. */
 export const executorRequestNamers = (texts: ReadonlyMap<string, string>): string[] => [...texts].filter(([, text]) => EXECUTOR_REQUEST.test(text)).map(([path]) => path);
@@ -1328,6 +1335,96 @@ export const PLANTED_NAMESPACE = { path: "qa/zz-gp-namespace.mjs", text: `export
 /** The spellings D3's reader reads (each one's match is in D3's witness), and near spellings outside its reading (pinned quiet). */
 export const EXECUTOR_REQUEST_HITS: readonly string[] = ["ExecutorRequest", "executor request", "executor_request", "executor-request", "EXECUTOR_REQUEST", "typedExecutorRequests"];
 export const EXECUTOR_REQUEST_QUIET: readonly string[] = ["executor.request", "ExecRequest", "executorsRequest", "request executor"];
+
+// ---- the spellings each word reader claims (refusal #4's U1, R-B66 (2) in its second form: every spelling a pinned falsifier) ----
+
+/**
+ * What a pattern reads between a word's parts, from its source: the parts (the text between its character classes), each
+ * character of its first class (an escape such as \t read as the character it names), the quantifier after that class,
+ * whether every class between the parts is that one, and its flags. The census holds each spelling table to a live pattern
+ * this way: G1's and G3's to the landed vocabulary's VOCABULARY patterns, D3's to EXECUTOR_REQUEST.
+ */
+export function readPattern(pattern: RegExp): { readonly parts: readonly string[]; readonly chars: readonly string[]; readonly quantifier: string; readonly flags: string; readonly uniform: boolean } {
+  const classes = [...pattern.source.matchAll(/\[((?:\\.|[^\]\\])*)\]([*+?]?)/g)];
+  const first = classes[0];
+  const chars = [...(first?.[1] ?? "").matchAll(/\\(.)|([^\\])/g)].map(part => (part[1] === undefined ? (part[2] ?? "") : part[1] === "t" ? "\t" : part[1]));
+  return {
+    parts: pattern.source.split(/\[(?:\\.|[^\]\\])*\][*+?]?/),
+    chars,
+    quantifier: first?.[2] ?? "",
+    flags: pattern.flags,
+    uniform: classes.every(entry => entry[0] === first?.[0]),
+  };
+}
+/**
+ * The joiners a spelling table puts between a word's parts: none, each character of the landed vocabulary's joiner class alone
+ * (namedWords joins a word's parts by that class repeated any number of times: space, tab, dot, underscore, hyphen), a repeated
+ * run of one of them and a mixed run of several.
+ */
+export const WORD_JOINERS: readonly { readonly id: string; readonly text: string }[] = [
+  { id: "none", text: "" },
+  { id: "space", text: " " },
+  { id: "tab", text: "\t" },
+  { id: "dot", text: "." },
+  { id: "underscore", text: "_" },
+  { id: "hyphen", text: "-" },
+  { id: "repeated", text: ".." },
+  { id: "mixed", text: " - " },
+];
+/** The case forms a spelling table writes each part in: lower case, upper case, and as the bead text writes it. */
+export const WORD_CASES: readonly { readonly id: string; readonly of: (part: string) => string }[] = [
+  { id: "lower", of: part => part.toLowerCase() },
+  { id: "upper", of: part => part.toUpperCase() },
+  { id: "written", of: part => part },
+];
+/** Each spelled word's parts as the bead text writes it (the census holds them, lower-cased, to the word's live pattern). */
+export const WORD_PARTS: Readonly<Record<string, readonly string[]>> = { GraphPolicy: ["Graph", "Policy"], GraphDataIR: ["Graph", "Data", "IR"], ExecutorRequest: ["Executor", "Request"] };
+export interface Spelling {
+  /** word/joiner/case. */
+  readonly id: string;
+  readonly word: string;
+  readonly spelling: string;
+}
+/** A word's spellings over the given joiners: every case form of each joiner in turn. */
+export const spellingsOf = (word: string, joiners: readonly { readonly id: string; readonly text: string }[]): Spelling[] =>
+  joiners.flatMap(joiner => WORD_CASES.map(form => ({ id: `${word}/${joiner.id}/${form.id}`, word, spelling: (WORD_PARTS[word] ?? []).map(form.of).join(joiner.text) })));
+/** A spelling's joiner and case form, as a plant id names it ("space-lower"). */
+export const spellingTag = (entry: Spelling): string => entry.id.split("/").slice(1).join("-");
+/** G1's spellings: each site word's parts over every joiner in every case form (2 x 8 x 3), each read by G1's one reader. */
+export const SITE_WORD_SPELLINGS: readonly Spelling[] = SITE_WORDS.flatMap(word => spellingsOf(word, WORD_JOINERS));
+/** A planted src module naming one spelling in a string literal, the index-th of its table (read after the tracked modules). */
+export const spellingSite = (entry: Spelling, index: number): { readonly path: string; readonly text: string } => ({
+  path: `src/workbench/zz-spelling-${String(index).padStart(2, "0")}.ts`,
+  text: `export const LABEL = "${entry.spelling}";\n`,
+});
+/** D3's joiners: none and each character of EXECUTOR_REQUEST's class alone (its quantifier admits none or one). */
+export const EXECUTOR_JOINERS: readonly { readonly id: string; readonly text: string }[] = WORD_JOINERS.filter(joiner => ["none", "space", "underscore", "hyphen"].includes(joiner.id));
+/** D3's spellings: "executor request" over its joiners in every case form (4 x 3), each read by executorRequestNamers. */
+export const EXECUTOR_REQUEST_SPELLINGS: readonly Spelling[] = spellingsOf("ExecutorRequest", EXECUTOR_JOINERS);
+/** The spellings outside D3's pattern: the other joiners (a tab, a dot, a repeated run, a mixed run) in every case form, each pinned quiet. */
+export const EXECUTOR_REQUEST_OUTSIDE: readonly Spelling[] = spellingsOf(
+  "ExecutorRequest",
+  WORD_JOINERS.filter(joiner => !EXECUTOR_JOINERS.includes(joiner)),
+);
+/** G3's owner-cell spellings: G3's word is the vocabulary's GraphPolicy, so its spellings are G1's GraphPolicy spellings. */
+export const OWNER_SPELLINGS: readonly Spelling[] = spellingsOf("GraphPolicy", WORD_JOINERS);
+/**
+ * The places a module names a word in (R-B66 (3): each source reader is proven on every place, beside the read proof's bare
+ * line): a line, a block and a doc comment, a double-quoted, a single-quoted and a template string, and code (a declared name,
+ * for a word that is a name).
+ */
+export const WORD_PLACES: readonly { readonly id: string; readonly wrap: (word: string) => string }[] = [
+  { id: "line-comment", wrap: word => `// ${word}\nexport const placed = 1;\n` },
+  { id: "block-comment", wrap: word => `/* ${word} */\nexport const placed = 1;\n` },
+  { id: "doc-comment", wrap: word => `/**\n * ${word}\n */\nexport const placed = 1;\n` },
+  { id: "double-quoted", wrap: word => `export const placed = "${word}";\n` },
+  { id: "single-quoted", wrap: word => `export const placed = '${word}';\n` },
+  { id: "template", wrap: word => `export const placed = \`${word}\`;\n` },
+  { id: "code", wrap: word => `export const ${word}Placed = 1;\n` },
+];
+/** One planted src module per place a word can sit in (code only for a word that is a name), in place order, read after the tracked modules. */
+export const placedSites = (prefix: string, word: string): { readonly id: string; readonly path: string; readonly text: string }[] =>
+  WORD_PLACES.filter(place => place.id !== "code" || /^[A-Za-z_$][\w$]*$/.test(word)).map(place => ({ id: place.id, path: `src/workbench/zz-place-${prefix}-${place.id}.ts`, text: place.wrap(word) }));
 /**
  * G1's reader as the read proof drives it: the files siteFindings names unregistered, with no registration (every site word is
  * a hit). G1 runs its read proof once per SITE_WORDS member through this reader, and SITE_WORD_HITS and SITE_WORD_QUIET read
@@ -1509,7 +1606,11 @@ export function shownIn(links: Links): (cell: string) => string {
     return clean(inlineText(lexer.inlineTokens(cell)));
   };
 }
-/** A text names GraphPolicy: the landed vocabulary's V1 word through namedWords (any case, any run of space, tab, dot, underscore or hyphen between graph and policy). */
+/**
+ * A text names GraphPolicy: the landed vocabulary's V1 word through namedWords (any case, any run of space, tab, dot, underscore
+ * or hyphen between graph and policy, or none), proven on every OWNER_SPELLINGS spelling; G3 hands it a cell's shown text, which
+ * collapses white space, so a tab or a run of spaces in a cell's source reaches it as one space.
+ */
 export const namesGraphPolicy = (text: string): boolean => namedWords(text).includes("GraphPolicy");
 /** A body row of a top-level table of the Ownership boundaries section, its owner cell (the second cell) in both views. */
 export interface OwnerCell {
@@ -1675,6 +1776,31 @@ export const DOCS_PLANTS: readonly DocsPlant[] = [
   { id: "D-OWNER-ALIAS", edit: page => onceIn(page, ROW_ANCHOR, `| ${GP_OWNER} (gp) | ${OWNERSHIP_CELL}`), expect: ["ownership-owner"] },
   // Quiet: an HTML comment naming GraphPolicyCLI inside another row's owner cell shows nothing, so that row shows Pi's.
   { id: "D-OWNER-CELL-COMMENT", edit: page => afterGpRow(page, `| Editor notes | <!-- ${GP_OWNER} -->Pi | register commands/tools/components |`), expect: [] },
+  // Refusal #4's U1 under R-B66 (3): a second row of the same table owned by each GraphPolicy spelling (OWNER_SPELLINGS: each
+  // joiner of the class alone, none, a repeated and a mixed run, in each case form), each one counted.
+  ...OWNER_SPELLINGS.map(entry => ({ id: `D-GP-SPELLED-${spellingTag(entry)}`, edit: (page: string): string => afterGpRow(page, seamRowOwnedBy(entry.spelling)), expect: ["ownership-rows"] })),
+  // R-B66 (3): the rendering rule's other inline forms in a second row, each held to the binding's rendering by tableViews:
+  // emphasis, a strike, a no-break space entity, entity references in text and in a code span (marked hands both texts over as
+  // their source, so the rule's decode is what turns each reference into its character), and escaped punctuation (an escape
+  // token's text is the one character it escapes, which shows as itself).
+  { id: "D-GP-EMPH-ROW", edit: page => afterGpRow(page, seamRowOwnedBy(`_${GP_OWNER}_`)), expect: ["ownership-rows"] },
+  { id: "D-GP-STRIKE-ROW", edit: page => afterGpRow(page, seamRowOwnedBy(`~~${GP_OWNER}~~`)), expect: ["ownership-rows"] },
+  { id: "D-GP-NBSP-ROW", edit: page => afterGpRow(page, seamRowOwnedBy("Graph&nbsp;PolicyCLI")), expect: ["ownership-rows"] },
+  { id: "D-GP-ENTITY-ROW", edit: page => afterGpRow(page, seamRowOwnedBy(`${GP_OWNER} &amp; &lt;gp&gt; &quot;gp&quot; &#39;gp&#39; &#x27;gp&#x27;`)), expect: ["ownership-rows"] },
+  { id: "D-GP-CODE-ENTITY-ROW", edit: page => afterGpRow(page, seamRowOwnedBy(`\`${GP_OWNER} &amp; &lt;gp&gt; &quot;gp&quot;\``)), expect: ["ownership-rows"] },
+  { id: "D-GP-ESCAPE-ENTITY-ROW", edit: page => afterGpRow(page, seamRowOwnedBy(`${GP_OWNER} \\& \\<gp\\>`)), expect: ["ownership-rows"] },
+  // R-B66 (3): every further block type the section's other blocks are read in (a paragraph, a fenced code block, a lower
+  // heading, and a link reference definition, which marked emits as a def block; the blockquote, the list and the HTML block
+  // are the plants above).
+  { id: "D-OTHER-PARAGRAPH", edit: page => onceIn(page, `\n## ${NEXT_HEADING}\n`, `\n${GP_OWNER} decides policy scores through the gp seam at src/workbench/gp-seam.ts.\n\n## ${NEXT_HEADING}\n`), expect: ["ownership-other"] },
+  { id: "D-OTHER-CODE", edit: page => onceIn(page, `\n## ${NEXT_HEADING}\n`, `\n\`\`\`\n${GP_OWNER} decides policy scores\n\`\`\`\n\n## ${NEXT_HEADING}\n`), expect: ["ownership-other"] },
+  { id: "D-OTHER-HEADING", edit: page => onceIn(page, `\n## ${NEXT_HEADING}\n`, `\n### ${GP_OWNER} seams\n\n## ${NEXT_HEADING}\n`), expect: ["ownership-other"] },
+  { id: "D-OTHER-DEF", edit: page => onceIn(page, `\n## ${NEXT_HEADING}\n`, `\n[gp-note]: #graphpolicycli-boundary "${GP_OWNER}"\n\n## ${NEXT_HEADING}\n`), expect: ["ownership-other"] },
+  // R-B66 (3): the header, the cell clause and the opening sentence are each compared exactly, case included, cell by cell.
+  { id: "D-HEADER-SWAP-FIRST", edit: page => onceIn(page, `| ${OWNERSHIP_HEADER.join(" | ")} |`, "| Area | Authoritative owner | Workbench may do |"), expect: ["ownership-header"] },
+  { id: "D-HEADER-SWAP-SECOND", edit: page => onceIn(page, `| ${OWNERSHIP_HEADER.join(" | ")} |`, "| Concern | Owner | Workbench may do |"), expect: ["ownership-header"] },
+  { id: "D-CELL-CASE", edit: page => onceIn(page, ROW_ANCHOR, `| ${GP_OWNER} | Nothing today (no gp seam is registered)`), expect: ["ownership-cell"] },
+  { id: "D-SENTENCE-CASE", edit: page => onceIn(page, BOUNDARY_SENTENCE, "Pi carries no GraphPolicyCLI (gp) integration TODAY."), expect: ["boundary-opening"] },
 ];
 
 // ---- the judged rows (rule 16) ----
@@ -1768,6 +1894,8 @@ export interface SourceResidual {
   readonly kind: "source";
   readonly path: string;
   readonly text: string;
+  /** What proves the member live: "shape" (its object keys name keys of the vendored v1 document) or "composed" (its string literals, decoded and joined, are read by a source reader). */
+  readonly live: "shape" | "composed";
 }
 export interface OutcomeResidual {
   readonly kind: "outcome";
@@ -1782,6 +1910,8 @@ export interface DriveResidual {
   readonly drive: () => Drive;
   /** Undo what the member leaves outside the projection, once its row has judged it. */
   readonly after?: () => void;
+  /** What the member does, as driveEffects reads it; every effect it does not name reads as NO_EFFECTS'. */
+  readonly effect: Partial<DriveEffects>;
 }
 export interface DocsResidual {
   readonly kind: "docs";
@@ -1794,19 +1924,113 @@ export type Residual = SourceResidual | OutcomeResidual | DriveResidual | DocsRe
 export const GLOBAL_MARK = Symbol.for("wb-0lf.2 R-OUTSIDE");
 /** The module record of the q7-module-record member: a drive's own state outside the projection. */
 const DRIVE_RECORD = new WeakMap<object, number>();
+/** The module record q7-module-record keeps of a view (driveEffects reads it back). */
+export const moduleRecordOf = (projection: object): number | undefined => DRIVE_RECORD.get(projection);
+/** What a drive does that the five legs do not read, as driveEffects observes it (each drive residual's liveness; NO_EFFECTS is the reference drive's). */
+export interface DriveEffects {
+  /** The projection methods the drive called through its view after its calls had returned (its timers run), by name. */
+  readonly deferredCalls: readonly string[];
+  /** The projection its first call was handed reads frozen once its timers have run. */
+  readonly projectionFrozen: boolean;
+  /** GLOBAL_MARK reads true on globalThis right after its first call. */
+  readonly globalMark: boolean;
+  /** It left a module record of the view its first call was handed (moduleRecordOf). */
+  readonly moduleRecord: boolean;
+  /** The symbol-keyed properties it read through its views, as String(symbol). */
+  readonly symbolReads: readonly string[];
+  /** The fields of its first request bound to another object than the one it was handed. */
+  readonly rebound: readonly string[];
+  /** The keys it added to its first request. */
+  readonly addedKeys: readonly string[];
+  /** Its first request reads frozen after the calls. */
+  readonly requestFrozen: boolean;
+  /** Its third call's outcome reads unlike its first's (isDeepStrictEqual). */
+  readonly thirdDiffers: boolean;
+}
+export const NO_EFFECTS: DriveEffects = { deferredCalls: [], projectionFrozen: false, globalMark: false, moduleRecord: false, symbolReads: [], rebound: [], addedKeys: [], requestFrozen: false, thirdDiffers: false };
+const REQUEST_FIELDS = ["projection", "scope", "budget"] as const;
+/**
+ * Observe a drive on fixture projections of its own, never driveFindings' (R-B66 and rule 19's residual definition: a quiet row
+ * reds when its member is silenced): one drive from make(), called three times on K-FITS, each call on a fresh fixture
+ * projection behind a view that hands out every property and records each symbol-keyed read, and each method call made once
+ * the calls have returned, with a fresh request (fresh scope and budget copies). after() runs before the first call and once
+ * the calls' timers have run; the first call's request, view and projection are read back then.
+ */
+export async function driveEffects(make: () => Drive, after: () => void = () => undefined): Promise<DriveEffects> {
+  const row = caseRow("K-FITS");
+  const scope = scopeSpec(row.scope).scope;
+  const drive = make();
+  const deferred = new Set<string>();
+  const symbols = new Set<string>();
+  let returned = false;
+  const calls: { readonly target: ObservationProjection; readonly view: ObservationProjection; readonly handed: { readonly projection: ObservationProjection; readonly scope: ObservationScope; readonly budget: ExportBudget }; readonly request: ExportRequest; readonly outcome: unknown }[] = [];
+  let globalMark = false;
+  after();
+  try {
+    for (let call = 0; call < 3; call++) {
+      const target = buildProjection();
+      const view = new Proxy(target, {
+        get(inner, property) {
+          if (typeof property === "symbol") symbols.add(String(property));
+          const value: unknown = Reflect.get(inner, property, inner);
+          if (typeof value !== "function") return value;
+          return (...args: unknown[]): unknown => {
+            if (returned) deferred.add(String(property));
+            return Reflect.apply(value, inner, args);
+          };
+        },
+      });
+      const handed = { projection: view, scope: { ...scope }, budget: { ...row.budget } };
+      const request: ExportRequest = { ...handed };
+      const outcome = await drive(request);
+      if (call === 0) globalMark = Reflect.get(globalThis, GLOBAL_MARK) === true;
+      calls.push({ target, view, handed, request, outcome });
+    }
+    returned = true;
+    await new Promise(resolve => setTimeout(resolve, 20));
+  } finally {
+    after();
+  }
+  const first = calls[0];
+  return {
+    deferredCalls: [...deferred].sort(),
+    projectionFrozen: first !== undefined && Object.isFrozen(first.target),
+    globalMark,
+    moduleRecord: first !== undefined && moduleRecordOf(first.view) !== undefined,
+    symbolReads: [...symbols].sort(),
+    rebound: first === undefined ? [] : REQUEST_FIELDS.filter(field => Reflect.get(first.request, field) !== first.handed[field]),
+    addedKeys: first === undefined ? [] : Reflect.ownKeys(first.request).filter(key => !(REQUEST_FIELDS as readonly PropertyKey[]).includes(key)).map(String),
+    requestFrozen: first !== undefined && Object.isFrozen(first.request),
+    thirdDiffers: calls.length === 3 && !isDeepStrictEqual(calls[2]?.outcome, calls[0]?.outcome),
+  };
+}
+/** A source member's double-quoted string literals, each decoded as JSON decodes it, joined in order: the word R-COMPOSED's member builds at run time. */
+export const composedOf = (text: string): string =>
+  [...text.matchAll(/"((?:[^"\\\n]|\\.)*)"/g)]
+    .map(match => {
+      try {
+        const decoded: unknown = JSON.parse(`"${match[1] ?? ""}"`);
+        return typeof decoded === "string" ? decoded : "";
+      } catch {
+        return "";
+      }
+    })
+    .join("");
+/** The object keys a source member's text names (an identifier before a colon) that are keys of the given document: R-UNNAMED's member builds a GraphDataIR-shaped value. */
+export const shapeKeysOf = (text: string, keys: ReadonlySet<string>): string[] => [...new Set([...text.matchAll(/\b([A-Za-z_][A-Za-z0-9_]*)\s*:/g)].map(match => match[1] ?? "").filter(key => keys.has(key)))];
 const withGraph = (outcome: Exported, change: (graph: Record<string, unknown>) => Record<string, unknown>): Exported => ({ ...outcome, graph: change(structuredClone(outcome.graph) as Record<string, unknown>) });
 export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
   // A module that builds a GraphDataIR-shaped document without naming a site word is no site: the reader reads words.
   Q1: [
-    { kind: "source", path: "src/workbench/q1-shape.ts", text: "export const snapshot = (entities: unknown[]): unknown => ({ schema_ref: { namespace: NAMESPACE }, entities, relations: [] });\ndeclare const NAMESPACE: string;\n" },
-    { kind: "source", path: "src/workbench/q1-incidences.ts", text: 'export const edge = (from: string, to: string): unknown => ({ incidences: [{ participant: from, role: "source" }, { participant: to, role: "target" }] });\n' },
+    { kind: "source", path: "src/workbench/q1-shape.ts", live: "shape", text: "export const snapshot = (entities: unknown[]): unknown => ({ schema_ref: { namespace: NAMESPACE }, entities, relations: [] });\ndeclare const NAMESPACE: string;\n" },
+    { kind: "source", path: "src/workbench/q1-incidences.ts", live: "shape", text: 'export const edge = (from: string, to: string): unknown => ({ incidences: [{ participant: from, role: "source" }, { participant: to, role: "target" }] });\n' },
   ],
   // A reader's word built at run time or spelled through an escape: every source reader reads source characters only. The
   // joined namespace is G1's site word and G2's namespace, the escape G1's site word, the joined kind D3's executor request.
   Q2: [
-    { kind: "source", path: "src/workbench/q2-joined.ts", text: 'export const NAMESPACE = ["graph", "policy"].join("") + ".data.v1";\n' },
-    { kind: "source", path: "src/workbench/q2-escape.ts", text: 'export const NAME = "Graph\\u0044ataIR";\n' },
-    { kind: "source", path: "src/workbench/q2-request.ts", text: 'export const KIND = ["Executor", "Request"].join("");\n' },
+    { kind: "source", path: "src/workbench/q2-joined.ts", live: "composed", text: 'export const NAMESPACE = ["graph", "policy"].join("") + ".data.v1";\n' },
+    { kind: "source", path: "src/workbench/q2-escape.ts", live: "composed", text: 'export const NAME = "Graph\\u0044ataIR";\n' },
+    { kind: "source", path: "src/workbench/q2-request.ts", live: "composed", text: 'export const KIND = ["Executor", "Request"].join("");\n' },
   ],
   // The judge reads the vendored v1 shape, never a GraphDataIR schema document: another feature's status or value is unread.
   Q3: [
@@ -1829,6 +2053,7 @@ export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
     {
       kind: "drive",
       id: "q6-timer-write",
+      effect: { deferredCalls: ["disconnect"] },
       drive: () => request => {
         const view = request.projection;
         setTimeout(() => view.disconnect(UNHELD_PROVIDER), 0);
@@ -1838,6 +2063,7 @@ export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
     {
       kind: "drive",
       id: "q6-timer-freeze",
+      effect: { projectionFrozen: true },
       drive: () => request => {
         const view = request.projection;
         setTimeout(() => Object.freeze(view), 0);
@@ -1853,6 +2079,7 @@ export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
     {
       kind: "drive",
       id: "q7-global-write",
+      effect: { globalMark: true },
       drive: () => request => {
         Reflect.set(globalThis, GLOBAL_MARK, true);
         return referenceExport(request);
@@ -1864,6 +2091,7 @@ export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
     {
       kind: "drive",
       id: "q7-module-record",
+      effect: { moduleRecord: true },
       drive: () => request => {
         DRIVE_RECORD.set(request.projection, (DRIVE_RECORD.get(request.projection) ?? 0) + 1);
         return referenceExport(request);
@@ -1872,6 +2100,7 @@ export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
     {
       kind: "drive",
       id: "q7-third-call",
+      effect: { thirdDiffers: true },
       drive: () => {
         let calls = 0;
         return request => {
@@ -1884,6 +2113,7 @@ export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
     {
       kind: "drive",
       id: "q7-past-view-call",
+      effect: { symbolReads: ["Symbol(Symbol.toStringTag)"] },
       drive: () => request => {
         Object.prototype.toString.call(request.projection);
         return referenceExport(request);
@@ -1892,11 +2122,14 @@ export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
   ],
   // The request object itself (refusal #3's U2 cure reads the scope and budget objects the judge handed, never the request's
   // fields after the drives): a field rebound to an equal fresh copy with no edit (the gate's CTRL-REBIND-ONLY), a key added to
-  // the request, and the request frozen, each leaving both handed objects fresh copies, read pure.
+  // the request, the request frozen, and its projection field rebound to another object after the export (refusal #4's F4
+  // L2-REQUEST-PROJECTION-REBIND: the state leg walks the projections the judge built, never the request's field), each
+  // leaving both handed objects fresh copies, read pure.
   Q8: [
     {
       kind: "drive",
       id: "q8-rebind-equal",
+      effect: { rebound: ["budget"] },
       drive: () => request => {
         const outcome = referenceExport(request);
         Reflect.set(request, "budget", { ...request.budget });
@@ -1906,6 +2139,7 @@ export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
     {
       kind: "drive",
       id: "q8-request-key",
+      effect: { addedKeys: ["exportedBy"] },
       drive: () => request => {
         const outcome = referenceExport(request);
         Reflect.set(request, "exportedBy", "pi");
@@ -1915,9 +2149,20 @@ export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
     {
       kind: "drive",
       id: "q8-request-freeze",
+      effect: { requestFrozen: true },
       drive: () => request => {
         const outcome = referenceExport(request);
         Object.freeze(request);
+        return outcome;
+      },
+    },
+    {
+      kind: "drive",
+      id: "q8-projection-rebind",
+      effect: { rebound: ["projection"] },
+      drive: () => request => {
+        const outcome = referenceExport(request);
+        Reflect.set(request, "projection", {});
         return outcome;
       },
     },
@@ -1925,9 +2170,10 @@ export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
   // G3 counts GraphPolicyCLI rows by each body row's second cell as it shows, through the vocabulary's GraphPolicy word: a row
   // naming GraphPolicyCLI only in another cell (the gate's D-GP-CONCERN-ROW in its Concern cell, its Workbench cell, or the first
   // cell of a table whose header moves the owner column there), a header row (a table of one header row naming it in its second
-  // cell), and a second cell that shows gp by a spelling the word does not read (the binary's name, a numeric character
-  // reference the binding's rendering rule leaves undecoded, an invisible or a confusable character inside the word) are not
-  // counted. Each member lands in the section's tables (the census holds the binding's rendered tables to differ).
+  // cell), and a second cell that shows gp by a spelling the word does not read (the binary's name, a character reference the
+  // binding's rendering rule leaves undecoded: decimal, hexadecimal (refusal #4's F5 L2-GP-HEXREF-ROW) or named (its
+  // L2-GP-SHY-ROW, &shy;), an invisible or a confusable character inside the word) are not counted. Each member lands in the
+  // section's tables (the census holds the binding's rendered tables to differ).
   Q9: [
     { kind: "docs", id: "q9-concern-cell", edit: page => afterGpRow(page, `| ${GP_OWNER} decision seams | Pi | the gp seam at src/workbench/gp-seam.ts |`) },
     { kind: "docs", id: "q9-workbench-cell", edit: page => afterGpRow(page, `| Policy decision seams | Pi | delegates to ${GP_OWNER} through the gp seam at src/workbench/gp-seam.ts |`) },
@@ -1941,6 +2187,8 @@ export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
     { kind: "docs", id: "q9-owner-reference", edit: page => afterGpRow(page, seamRowOwnedBy("&#71;raphPolicyCLI")) },
     { kind: "docs", id: "q9-owner-invisible", edit: page => afterGpRow(page, seamRowOwnedBy(`Graph${String.fromCodePoint(0x200b)}PolicyCLI`)) },
     { kind: "docs", id: "q9-owner-confusable", edit: page => afterGpRow(page, seamRowOwnedBy(`Gr${String.fromCodePoint(0x430)}phPolicyCLI`)) },
+    { kind: "docs", id: "q9-owner-hexref", edit: page => afterGpRow(page, seamRowOwnedBy("&#x47;raphPolicyCLI")) },
+    { kind: "docs", id: "q9-owner-named-reference", edit: page => afterGpRow(page, seamRowOwnedBy("Graph&shy;PolicyCLI")) },
   ],
 };
 export const residualId = (member: Residual): string => (member.kind === "source" ? member.path : member.id);
