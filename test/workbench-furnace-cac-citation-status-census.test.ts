@@ -44,6 +44,20 @@
  * any form of the record or its first middle word; wb-dqf.1's Z2 stays the reading of record (its cooked, folded and decoded forms
  * included).
  *
+ * THE RECEIPT ANCHOR (wb-xfkx, the R694 follow-up of landing 544: its F2 leads, F3 and F4 ride). Until this cut no record outside
+ * this file and its roster named the residual families, a residual's probe, row Q's label or how a row's pins split its clause, so a
+ * residual row removed, a quiet row's probe swapped or row Q's label shortened in every literal and the roster together read green
+ * (the gate's G-CT6-Q4 45/45, G-CT3-Q4-COORD and G-CT2-Q-COORD 46/46), and so did a pin folded into its neighbour when its quote names
+ * no anchored term (G-MERGE-A4, G-MERGE-K2 and G-MERGE-Z2 45/45). The record now lives in the wb-xfkx receipt
+ * (docs/workbench/receipts/wb-xfkx.md, append-only under standing rule 15, a document this census also judges): its last dated entry
+ * holds three tables, read through marked's tokens - every row's id, pins and label digest; every judged pin's quote digest; every
+ * residual family with its quiet row and the digest of that row's roster witness (its probe's path, text and causes) - each digest a
+ * sha-256 of the UTF-8 bytes, a witness read as its JSON text, so the receipt cites nothing and spells no record. The receipt-anchor
+ * case holds the three tables to ROWS, QUOTES, RESIDUALS and the roster witnesses, in order and both ways; a later cut that changes
+ * any of them appends a new dated entry carrying the three tables for its state and never edits a landed line. Four in-case controls
+ * pin the reader: only the last dated entry is read, a table before any dated entry is not, and a table inside an HTML comment or a
+ * code block is no table.
+ *
  * THE UNITS. A unit is the smallest text the judges read as one "paragraph". Markdown (every document is .md): a blank-line-delimited
  * block, where a heading, a table row and each line inside a code fence are units of their own and a list item starts a new unit (its
  * lazy continuation lines stay in it); a blockquote line holding only ">" is blank. Source (every src file is .ts), read through the
@@ -105,17 +119,23 @@
  * from the live docs/02 line; the producer block carries the filing's three quoted status lines; the bead's own title read as a
  * receipt heading is a content-quiet citation;
  * and every anchored term a pin's quote names is carried by that pin's roster witness (the wb-3cql F4 reading), so a re-tiling that
- * folds a naming pin into a neighbour reds. The last case reads the vitest task tree (every registered test, in roster order, in run
- * mode, ran before it) and REACHED (every pin reached its witness compare, and each compare's own result).
- * NOT CLAIMED (edits of this file and the roster together): a residual row removed from ROWS, the literal, IMPL, RESIDUALS and the
- * roster (no outside anchor names the residual families); a re-tiling that folds a pin whose quote names no anchored term (A1, A2,
- * A4, Z1, Z2, M2, D1, N3, K1, K2) into a neighbour in every literal and the roster; a control removed from IMPL and the roster
- * together while every remaining control holds; a plant edited in IMPL and the roster together; a floor lowered in FLOORS and the
+ * folds a naming pin into a neighbour reds. The receipt anchor (THE RECEIPT ANCHOR) holds what the bead text cannot: the residual
+ * families, each quiet row's probe, row Q's label and every row's split into pins, so a residual row removed, a probe swapped or a
+ * pin folded in every literal and the roster together still reds. The last case reads the vitest task tree (every registered test,
+ * in roster order, in run mode, ran before it), REACHED (every pin reached its witness compare, and each compare's own result) and
+ * ENDS (the judged-set, outside-anchors and receipt-anchor cases each recorded its own end with its assertion count, held to the
+ * roster's ends, so an early return or a cut tail in any of them reds).
+ * NOT CLAIMED (edits of this file and the roster together): every edit the receipt anchor would catch, made in the anchor too - a later
+ * dated entry appended to docs/workbench/receipts/wb-xfkx.md whose tables carry it (the census reads the last entry; the append is
+ * the visible act a gate judges) - and a sha-256 collision; a non-pin case's tail cut together with its count in the roster's ends;
+ * a control removed from IMPL and the roster together while every remaining control holds; a plant edited in IMPL and the roster
+ * together; a floor lowered in FLOORS and the
  * roster together (git's list equal to the filesystem walk stays the narrowing guard for docs/ and src/; the documents outside docs/
  * are held by git's list and the floor only); a seat-added vocabulary member (of EXISTS, ESTABLISHED, GUARD or the negation lists)
  * removed with every control naming it, in IMPL and the roster together (only the bead text's words are anchored outside); NFR-08's
  * "with exact source of evidence" tail (R-EVIDENCE-TAIL); "any violation found earlier is corrected append-only in the wb-lrz.3
- * style" (no violation exists: zero mentions); the outside-anchor case or the closing case removed with its roster title; an
+ * style" (no violation exists: zero mentions); the outside-anchor case, the receipt-anchor case or the closing case removed with its
+ * roster title and its ends entry; an
  * escape-spelled or concatenated form of the second record in this file (the judged-set guard reads this file's raw text and the
  * roster's raw and parsed strings; wb-dqf.1's Z2 reads the cooked and folded forms).
  * RESIDUALS (named, each with its pinned quiet row): R-SCOPE only the documents and src are judged - qa/, test/ (fixtures included),
@@ -335,6 +355,16 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-EVIDENCE-TAIL": ["Q13"],
   "R-CARRIER-PLACEMENT": ["Q14"],
 };
+/** THE RECEIPT ANCHOR: the record of this census's shape outside its two files - its bead's receipt, the path, and its last dated entry's three table headers, in order. */
+const ANCHOR = {
+  bead: "wb-xfkx",
+  receipt: "docs/workbench/receipts/wb-xfkx.md",
+  tables: [
+    ["Row", "Pins", "Label sha-256"],
+    ["Pin", "Quote sha-256"],
+    ["Quiet row", "Residual family", "Witness sha-256"],
+  ],
+} as const;
 
 interface Row {
   readonly id: string;
@@ -421,6 +451,8 @@ interface Roster {
   readonly producer: { [key: string]: JsonValue };
   readonly constants: { [key: string]: JsonValue };
   readonly tests: readonly string[];
+  /** Each non-pin case's recorded end, `${id}:${assertion count}`, in run order (ENDS). */
+  readonly ends: readonly string[];
   readonly rows: readonly RosterRow[];
 }
 
@@ -464,8 +496,8 @@ function resolved(value: unknown): unknown {
 /** Parses the roster, resolves its tokens and refuses any field of the wrong shape by name, so no case can read a malformed roster. */
 function readRoster(): Roster {
   const raw: unknown = resolved(JSON.parse(readFileSync(ROSTER_PATH, "utf8")));
-  if (!isObject(raw) || typeof raw.bead !== "string" || !Array.isArray(raw.rows) || !Array.isArray(raw.tests)) {
-    throw new Error("roster must be an object with bead, rows and tests");
+  if (!isObject(raw) || typeof raw.bead !== "string" || !Array.isArray(raw.rows) || !Array.isArray(raw.tests) || !Array.isArray(raw.ends)) {
+    throw new Error("roster must be an object with bead, rows, tests and ends");
   }
   const rows = raw.rows.map((row: unknown, index: number): RosterRow => {
     if (!isObject(row) || typeof row.id !== "string" || typeof row.label !== "string" || !Array.isArray(row.pins)) {
@@ -481,7 +513,11 @@ function readRoster(): Roster {
     if (typeof title !== "string") throw new Error(`roster tests[${index}] must be a string`);
     return title;
   });
-  return { bead: raw.bead, producer: objectOf(raw.producer, "roster producer"), constants: objectOf(raw.constants, "roster constants"), tests, rows };
+  const ends = raw.ends.map((end: unknown, index: number): string => {
+    if (typeof end !== "string") throw new Error(`roster ends[${index}] must be a string`);
+    return end;
+  });
+  return { bead: raw.bead, producer: objectOf(raw.producer, "roster producer"), constants: objectOf(raw.constants, "roster constants"), tests, ends, rows };
 }
 const ROSTER = readRoster();
 function rosterWitness(pin: string): JsonValue {
@@ -963,8 +999,32 @@ function tiles(clause: string, quotes: readonly string[]): boolean {
   return /^[\s,;:()]*$/.test(clause.slice(at));
 }
 
+/** The receipt anchor's digest: the sha-256 of a text's UTF-8 bytes, as lowercase hex. */
+function sha256(text: string): string {
+  return createHash("sha256").update(text, "utf8").digest("hex");
+}
+const isHeading = (token: Token): token is Tokens.Heading => token.type === "heading";
+/**
+ * The tables of a receipt's last dated entry (the part after its last level-2 heading), each as its header row then its body rows of
+ * cell texts, read through marked's tokens: a table only the raw markup holds - inside an HTML comment or a code block - is no
+ * table, and a table before the first level-2 heading belongs to no entry.
+ */
+function anchorTables(text: string): string[][][] {
+  const tokens = marked.lexer(text);
+  const entries = tokens.flatMap((token, index) => (isHeading(token) && token.depth === 2 ? [index] : []));
+  const last = entries.at(-1);
+  if (last === undefined) return [];
+  return tokens
+    .slice(last + 1)
+    .filter(isTable)
+    .map(table => [table.header.map(cell => cell.text), ...table.rows.map(row => row.map(cell => cell.text))]);
+}
+
 /** The pins that reached their witness compare, in run order, each with the compare's own result. */
 const REACHED: { pin: string; same: boolean }[] = [];
+/** Each non-pin case's own end, in run order, as `${id}:${assertion count}` (ENDS): an early return leaves it unrecorded, a cut tail short. */
+const ENDS: string[] = [];
+const endOf = (id: string): string => `${id}:${expect.getState().assertionCalls}`;
 
 /** A compliant citation of every subject: the program, both records, the asynchronous-attempt-semantics claims. */
 const COMPLIANT = `Pi cites the ${PROGRAM} program (design-only): ${SECOND.spelling} is proposed, not shipped, and its asynchronous attempt semantics are targets for proof/measurement.`;
@@ -1501,6 +1561,7 @@ function constants(): JsonValue {
     bound: [...BOUND],
     residuals: RESIDUALS,
     secondRecord: { sha256: SECOND_RECORD_SHA256, token: RECORD_TOKEN.source, forms: [...SECOND_FORMS.keys()] },
+    anchor: ANCHOR,
   });
 }
 
@@ -1520,7 +1581,7 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
     for (const [family, members] of Object.entries(RESIDUALS)) {
       for (const member of members) if (family !== "R-SCOPE") expect(probeOf(rosterWitness(member)), `${member} (${family}) carries its own probe`).toBeDefined();
     }
-    const readers: readonly ((...args: never[]) => unknown)[] = [...Object.values(IMPL), recordCase, scopeLeg, controlsHold, quiet, readScope, judgeFiles, judgeUnit];
+    const readers: readonly ((...args: never[]) => unknown)[] = [...Object.values(IMPL), recordCase, scopeLeg, controlsHold, quiet, readScope, judgeFiles, judgeUnit, anchorTables];
     for (const reader of readers) expect(/\bROSTER\b|rosterWitness|readRoster/.test(reader.toString()), `${reader.name || "a case"} reads no roster (SELF-READ)`).toBe(false);
     expect(formsOf(FIRST_RECORD), "formsOf reads the first record's forms as spelled (the second record's come from the same function)").toEqual({
       spelling: "FurnaceAttemptCapabilityV0",
@@ -1536,6 +1597,7 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
     expect(spelled(readFileSync(fileURLToPath(import.meta.url), "utf8")), "this file spells the second record in no form, its first middle word included (the landed wb-dqf.1 until-then leg)").toEqual([]);
     const rosterSource = readFileSync(ROSTER_PATH, "utf8");
     expect(spelled(`${rosterSource}\n${stringsOf(JSON.parse(rosterSource)).join("\n")}`), "the roster spells it only through its tokens, raw or parsed").toEqual([]);
+    ENDS.push(endOf("judged-set"));
   });
 
   it("the outside anchors: the bead's own row binds the rows, the pin quotes, the needles, the program, the records, the gradings, the subjects, the scopes, the labels and the predicate words; the producer block carries the filing's status lines", { timeout: 60_000 }, () => {
@@ -1633,6 +1695,43 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
       expect(naming.length, `a pin's quote names '${term}'`).toBeGreaterThan(0);
       for (const pin of naming) expect(JSON.stringify(rosterWitness(pin)), `${pin}'s witness carries '${term}' (an anchored term its quote names)`).toContain(JSON.stringify(term).slice(1, -1));
     }
+    ENDS.push(endOf("outside-anchors"));
+  });
+
+  it("the receipt anchor: the wb-xfkx receipt's last dated entry records every row's pins and label, every judged pin's quote and every residual family with its quiet row and witness, in order and both ways", () => {
+    expect(ANCHOR.receipt, "the anchor is its bead's receipt (standing rule 15: append-only)").toBe(`${RECEIPTS}${ANCHOR.bead}.md`);
+    expect(scopeList(REPO, SCOPES.documents), "git lists the anchor among the documents this census judges").toContain(ANCHOR.receipt);
+    expect(textOf(ANCHOR.receipt).startsWith(`# ${ANCHOR.bead}: `), "the anchor opens with its rule-15 first line").toBe(true);
+    const tables = anchorTables(textOf(ANCHOR.receipt));
+    expect(
+      tables.map(table => table[0]),
+      "the last dated entry holds the three anchor tables, in order",
+    ).toEqual(ANCHOR.tables.map(header => [...header]));
+    const [rows, pins, residuals] = tables.map(table => table.slice(1));
+    expect(rows, "the rows table: every row's id, its pins and the digest of its label, in row order, both ways").toEqual(ROWS.map(row => [row.id, row.pins.join(", "), sha256(row.label)]));
+    expect(pins, "the pins table: every judged pin and the digest of its quote, in row order, both ways").toEqual(
+      ROWS.filter(row => row.id !== "Q")
+        .flatMap(row => row.pins)
+        .map(pin => [pin, sha256(QUOTES[pin] ?? "")]),
+    );
+    expect(residuals, "the residuals table: every family's quiet row, the family and the digest of that row's roster witness, in order, both ways").toEqual(
+      Object.entries(RESIDUALS).flatMap(([family, members]) => members.map(member => [member, family, sha256(JSON.stringify(rosterWitness(member)))])),
+    );
+    const entry = (heading: string, cell: string): string => `## ${heading}\n\n| Pin | Quote sha-256 |\n| --- | --- |\n| ${cell} | 0 |`;
+    const page = (...blocks: string[]): string => `# wb-x: a receipt\n\n${blocks.join("\n\n")}\n`;
+    const controls = {
+      lastEntry: anchorTables(page(entry("2026-10-27 first", "A1"), entry("2026-10-28 second", "B1"))),
+      noEntry: anchorTables(page("| Pin | Quote sha-256 |\n| --- | --- |\n| A1 | 0 |")),
+      comment: anchorTables(page(entry("2026-10-27 first", "A1"), "## 2026-10-28 second\n\n<!--\n| Pin | Quote sha-256 |\n| --- | --- |\n| B1 | 0 |\n-->")),
+      codeBlock: anchorTables(page("## 2026-10-28 second\n\n```\n| Pin | Quote sha-256 |\n| --- | --- |\n| B1 | 0 |\n```")),
+    };
+    expect(controls, "the reader: the last dated entry's tables only, none before an entry, none inside a comment or a code block").toEqual({
+      lastEntry: [[["Pin", "Quote sha-256"], ["B1", "0"]]],
+      noEntry: [],
+      comment: [],
+      codeBlock: [],
+    });
+    ENDS.push(endOf("receipt-anchor"));
   });
 
   for (const row of ROWS) {
@@ -1683,5 +1782,6 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
       REACHED.filter(entry => !entry.same).map(entry => entry.pin),
       "every compare matched its roster witness",
     ).toEqual([]);
+    expect(ENDS, "every non-pin case before this one reached its end, in run order, with its pinned assertion count").toEqual([...ROSTER.ends]);
   });
 });

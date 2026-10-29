@@ -260,14 +260,24 @@ describe("workflow_observe identity refusals through the REAL projection (wb-86q
   it("refuses a malformed identityRefusals selector typed, before any projection read", () => {
     const view = new ObservationProjection();
     admitted(view, "run-ok");
+    // wb-llok: every refusal runs over the file's own spied() reader, and a refused request touches no reader member and calls none.
+    const { reader, touched, inputs } = spied(view);
     for (const selector of [true, null, [], {}, { limit: 0 }, { limit: OBSERVE_MAX_LIMIT + 1 }, { limit: 1.5 }, { limit: "5" }, { limit: Number.NaN }]) {
-      refusedWith(() => observe(view, { scope: alice, selectors: { identityRefusals: selector } as unknown as ObserveRequest["selectors"] }), "validation", /identityRefusals/);
+      refusedWith(() => observe(reader, { scope: alice, selectors: { identityRefusals: selector } as unknown as ObserveRequest["selectors"] }), "validation", /identityRefusals/);
+      expect([...touched], JSON.stringify(selector)).toEqual([]);
+      expect([...inputs.keys()], JSON.stringify(selector)).toEqual([]);
     }
     refusedWith(
-      () => observe(view, { scope: alice, selectors: { identityRefusals: { limit: 5, after: "x" } } as unknown as ObserveRequest["selectors"] }),
+      () => observe(reader, { scope: alice, selectors: { identityRefusals: { limit: 5, after: "x" } } as unknown as ObserveRequest["selectors"] }),
       "validation",
       /Unknown observe identity refusal selector field/,
     );
+    expect([...touched]).toEqual([]);
+    expect([...inputs.keys()]).toEqual([]);
+    // Liveness: the same spy records a well-formed request's reads, so the empty sets above are not vacuous.
+    observe(reader, { scope: alice, selectors: { identityRefusals: { limit: 5 } } });
+    expect([...touched]).toEqual(["window", "identityRefusals"]);
+    expect(inputs.get("identityRefusals")).toEqual([{ scope: alice, limit: 5 }]);
   });
 
   it("over the byte cap the reply drops events, then identity refusals, then relations, then nodes, and says so", () => {

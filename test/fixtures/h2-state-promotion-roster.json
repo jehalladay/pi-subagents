@@ -144,7 +144,8 @@
    "--others",
    "--",
    "src"
-  ]
+  ],
+  "gitListingFrozen": true
  },
  "residuals": [
   "R-FOREIGN-VALUE",
