@@ -317,21 +317,36 @@
                 "absent": [],
                 "empty": [
                   "docs/workbench/receipts"
+                ],
+                "belowOnly": [
+                  "docs/workbench"
                 ]
               },
               "markdownOnly": [
+                "docs/workbench/notes.md.txt",
                 "docs/workbench/notes.txt"
               ],
               "openingLines": [
                 "docs/workbench/b.md",
-                "docs/workbench/receipts/wb-b.md"
+                "docs/workbench/c.md",
+                "docs/workbench/d.md",
+                "docs/workbench/receipts/wb-b.md",
+                "docs/workbench/receipts/wb-c.md",
+                "docs/workbench/receipts/wb-d.md",
+                "docs/workbench/receipts/wb-e.md"
               ],
               "sentenceFloor": {
                 "short": [
                   "raw 3999 < 4000",
                   "rendered 3999 < 4000"
                 ],
-                "atFloor": []
+                "atFloor": [],
+                "renderedShort": [
+                  "rendered 3999 < 4000"
+                ],
+                "rawShort": [
+                  "raw 3999 < 4000"
+                ]
               }
             }
           }
