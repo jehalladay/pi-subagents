@@ -48,6 +48,31 @@
    "quote": "If Pi ever projects query evidence into context via RC's optional query-evidence adapter",
    "witness": {
     "pin": "A1",
+    "bound": {
+     "terms": [
+      "query",
+      "evidence"
+     ],
+     "spelled": [
+      "projects",
+      "query",
+      "evidence",
+      "into",
+      "context",
+      "rc",
+      "optional",
+      "query",
+      "evidence",
+      "adapter"
+     ],
+     "own": [
+      "if",
+      "pi",
+      "ever",
+      "via",
+      "s"
+     ]
+    },
     "named": [
      "query evidence"
     ],
@@ -71,9 +96,10 @@
      "src/workbench/providers/reactivefiber.ts",
      "src/workbench/reactivefiber-observer.ts"
     ],
-    "drawers": [
-     "src/ui/workflow-inspector.ts"
-    ],
+    "classes": {
+     "src/ui/workflow-dialog.ts": "forward",
+     "src/ui/workflow-inspector.ts": "drawer"
+    },
     "views": [
      "overview",
      "graph",
@@ -82,6 +108,7 @@
     ],
     "verbatimCases": 10,
     "baselineCases": 8,
+    "plain": [],
     "baselineDiffs": []
    }
   },
@@ -90,6 +117,21 @@
    "quote": "2026-10-17 amendment",
    "witness": {
     "pin": "A2",
+    "bound": {
+     "terms": [
+      "2026",
+      "10",
+      "17",
+      "amendment"
+     ],
+     "spelled": [
+      "2026",
+      "10",
+      "17",
+      "amendment"
+     ],
+     "own": []
+    },
     "charterBlob": "45e623203565741f5b205b7e6930406bf21c4ac1",
     "adapterBlob": "c8a2f15491585c2e567c85032c310359f1d83192",
     "section": "## 2026-10-17 amendment \u2014 query evidence into context composition",
@@ -157,6 +199,26 @@
    "quote": "gated RC-RQ2 'unknown not pass'",
    "witness": {
     "pin": "A3",
+    "bound": {
+     "terms": [
+      "gated",
+      "rc",
+      "rq2",
+      "unknown",
+      "not",
+      "pass"
+     ],
+     "spelled": [
+      "rc",
+      "rq2",
+      "unknown",
+      "not",
+      "pass"
+     ],
+     "own": [
+      "gated"
+     ]
+    },
     "gateItem": "RC-RQ2 unknown not pass",
     "separated": {
      "unknown": [
@@ -193,6 +255,27 @@
    "quote": "a missing QueryView resource reads as host-pending",
    "witness": {
     "pin": "B1",
+    "bound": {
+     "terms": [
+      "query",
+      "view",
+      "host",
+      "pending"
+     ],
+     "spelled": [
+      "missing",
+      "query",
+      "view",
+      "resource",
+      "host",
+      "pending"
+     ],
+     "own": [
+      "a",
+      "reads",
+      "as"
+     ]
+    },
     "policies": [
      "defer"
     ],
@@ -217,6 +300,21 @@
    "quote": "an explicit unavailable-block policy",
    "witness": {
     "pin": "B2",
+    "bound": {
+     "terms": [
+      "unavailable",
+      "block"
+     ],
+     "spelled": [
+      "explicit",
+      "unavailable",
+      "block",
+      "policy"
+     ],
+     "own": [
+      "an"
+     ]
+    },
     "policy": "unavailable_block",
     "outputs": [
      "unavailable"
@@ -238,6 +336,19 @@
    "quote": "never as logical UNKNOWN",
    "witness": {
     "pin": "B3",
+    "bound": {
+     "terms": [
+      "unknown"
+     ],
+     "spelled": [
+      "logical",
+      "unknown"
+     ],
+     "own": [
+      "never",
+      "as"
+     ]
+    },
     "tokens": [
      "UNKNOWN"
     ],
@@ -256,6 +367,21 @@
    "quote": "unknown never renders as passing",
    "witness": {
     "pin": "C1",
+    "bound": {
+     "terms": [
+      "unknown",
+      "passing"
+     ],
+     "spelled": [
+      "unknown",
+      "never",
+      "passing"
+     ],
+     "own": [
+      "renders",
+      "as"
+     ]
+    },
     "verdicts": [
      "UNKNOWN"
     ],
@@ -282,6 +408,23 @@
    "quote": "because an empty list rendered",
    "witness": {
     "pin": "C2",
+    "bound": {
+     "terms": [
+      "because",
+      "an",
+      "empty",
+      "list",
+      "rendered"
+     ],
+     "spelled": [
+      "because",
+      "an",
+      "empty",
+      "list",
+      "rendered"
+     ],
+     "own": []
+    },
     "cases": [
      "defer"
     ],
@@ -301,6 +444,27 @@
    "quote": "no DevTools/debugger surface computes query truth",
    "witness": {
     "pin": "D1",
+    "bound": {
+     "terms": [
+      "dev",
+      "tools",
+      "debugger",
+      "query",
+      "truth"
+     ],
+     "spelled": [
+      "dev",
+      "tools",
+      "debugger",
+      "query",
+      "truth"
+     ],
+     "own": [
+      "no",
+      "surface",
+      "computes"
+     ]
+    },
     "judged": {
      "views": 40,
      "inputs": 20
@@ -554,17 +718,17 @@
   {
    "id": "R-COMMENT",
    "quiet": "Q5",
-   "family": "a code comment naming the adapter is no trigger"
+   "family": "a code comment (or a shebang line, trivia like a comment) naming the adapter is no trigger"
   },
   {
    "id": "R-UNDRIVEN",
    "quiet": "Q6",
-   "family": "surfaces and modes the census does not drive (the runtime resultPreview, the dialog and card renderers, the inspector evidence-store view and pane tiers, the reconcile core) carry the provider output, which is judged"
+   "family": "surfaces the census does not drive (the runtime resultPreview, the dialog and card renderers - the drawer's forward -, the inspector evidence-store view and pane tiers, the reconcile core) are not judged: what they draw from the provider output, which R10 judges whole, is outside the census"
   },
   {
    "id": "R-OTHER-ROUTE",
    "quiet": "Q7",
-   "family": "an adoption spelling no adapter sequence (a generic reader of rendered rows) is no trigger"
+   "family": "an adoption spelling no adapter sequence (a generic reader of rendered rows) is no trigger, while what it puts on a driven surface is judged: the provider output whole for every case (R10), the node evidence, the observer and the inspector for each one-block case (R11-R13)"
   },
   {
    "id": "R-NON-MODULE",
@@ -574,7 +738,7 @@
   {
    "id": "R-COMPOSED",
    "quiet": "Q9",
-   "family": "a name assembled from a non-constant part (a variable holding the word, a span expression that is no constant string) is read with that part as one space; constant + chains, templates and constant spans fold as spelled"
+   "family": "a name assembled from a part the spelling does not fold - any part but a string literal, a string literal type, or a template or + chain of them (parentheses seen through): a variable holding the word, a call, a cast such as as const, a type span such as string - is read with that part as one space; constant + chains, templates, template literal types and constant spans fold as spelled"
   },
   {
    "id": "R-LOOKALIKE",
@@ -594,12 +758,12 @@
   {
    "id": "R-JOIN",
    "quiet": "Q13",
-   "family": "a name joined at run time from an array of literal parts is read part by part, never folded"
+   "family": "a name joined at run time from literal parts, by an array join or by a call (concat), is read part by part, never folded"
   },
   {
    "id": "R-UNNAMED-READER",
    "quiet": "Q14",
-   "family": "an envelope reader whose code does not name REACTIVE_FIBER_CLI_SCHEMA (a generic reader of a provider output's source.result.blocks) is not found by A1"
+   "family": "an envelope reader whose code holds no REACTIVE_FIBER_CLI_SCHEMA identifier (a generic reader of a provider output's source.result.blocks, or one naming the constant in a literal) is not found by A1"
   },
   {
    "id": "R-S-INFLECTION",
@@ -614,7 +778,100 @@
   {
    "id": "R-CLAUSE-RULE",
    "quiet": "Q17",
-   "family": "the part and clause breaks are the census's own rule, not an outside text: an edit of the rule that merges two clauses of one part, with one of their pins removed and the other quoting the merged clause, still tiles the title"
+   "family": "the part and clause breaks are the census's own rule, not an outside text: an edit of the rule (a break dropped so that two clauses merge, a clause filtered out, a part cut short) together with the pins it changes still tiles the title once the quiet row goes too, the quiet row pinning every break's merge and so every part's clause count while it stands"
+  },
+  {
+   "id": "R-OUT-OF-ROOT",
+   "quiet": "Q18",
+   "family": "a module outside src/, qa/, examples/ and the root (the test tree, whose censuses spell the adapter's words to judge them, test/helpers/ included) is not read by A1"
+  },
+  {
+   "id": "R-ACROSS-LEXEMES",
+   "quiet": "Q19",
+   "family": "a sequence spelled across lexemes (a property path, an element access, a nesting) is no lexeme's run: A1 reads each lexeme's own words"
+  },
+  {
+   "id": "R-INFLECTED-SEQUENCE",
+   "quiet": "Q20",
+   "family": "a sequence word in another inflection (reactive component, query views, unavailable blocks) is not the sequence: each word is matched as the producer spells it"
+  },
+  {
+   "id": "R-RECASED-TEXT",
+   "quiet": "Q21",
+   "family": "a producer text in another letter case or with other spacing is not read: a producer text is matched as the producer spells it"
+  },
+  {
+   "id": "R-UNNAMED-DRAWER",
+   "quiet": "Q22",
+   "family": "a module drawing the inspector views that never names layoutInspector (a drawer under another name, a call through a literal, a star re-export) is not found by A1"
+  },
+  {
+   "id": "R-DUPLICATE-KEY",
+   "quiet": "Q23",
+   "family": "a key given twice in one object of package.json is read as JSON.parse returns it, the last one (npm reads the manifest the same way): an earlier duplicate is not read"
+  },
+  {
+   "id": "R-ZERO-BLOCK",
+   "quiet": "Q24",
+   "family": "the zero-block render (the defer policy) differs from the neutral render by design (no block, partial coverage), so the baseline legs beside the provider compare the one-block cases only: a reading a surface puts beside the provider on the zero-block render is judged only by F1 and F2, for its verdict readings"
+  }
+ ],
+ "reads": [
+  {
+   "id": "R1",
+   "label": "the code modules"
+  },
+  {
+   "id": "R2",
+   "label": "the lexemes, by token kind"
+  },
+  {
+   "id": "R3",
+   "label": "the template spellings"
+  },
+  {
+   "id": "R4",
+   "label": "the chain spellings"
+  },
+  {
+   "id": "R5",
+   "label": "the producer texts"
+  },
+  {
+   "id": "R6",
+   "label": "the sequences"
+  },
+  {
+   "id": "R7",
+   "label": "the manifest"
+  },
+  {
+   "id": "R8",
+   "label": "the envelope readers"
+  },
+  {
+   "id": "R9",
+   "label": "the drawer classes"
+  },
+  {
+   "id": "R10",
+   "label": "the provider leg"
+  },
+  {
+   "id": "R11",
+   "label": "the node-evidence leg"
+  },
+  {
+   "id": "R12",
+   "label": "the observer leg"
+  },
+  {
+   "id": "R13",
+   "label": "the inspector leg"
+  },
+  {
+   "id": "R14",
+   "label": "plain data"
   }
  ]
 }
