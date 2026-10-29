@@ -46,7 +46,10 @@
         "Q1",
         "Q2",
         "Q3",
-        "Q4"
+        "Q4",
+        "Q5",
+        "Q6",
+        "Q7"
       ]
     }
   ],
@@ -67,7 +70,10 @@
     "Q1": "R-SPELLING",
     "Q2": "R-MULTI-VIOLATION",
     "Q3": "R-RESOURCE",
-    "Q4": "R-SIDE-PATH"
+    "Q4": "R-SIDE-PATH",
+    "Q5": "R-JUDGE",
+    "Q6": "R-PARTITION",
+    "Q7": "R-UNREAD"
   },
   "residuals": {
     "Q1": [
@@ -86,6 +92,38 @@
     ],
     "Q4": [
       "side-path-admitter"
+    ],
+    "Q5": [
+      "G1",
+      "G2",
+      "G3",
+      "G4",
+      "G5",
+      "G6",
+      "G7",
+      "G8",
+      "G9",
+      "G10",
+      "G11",
+      "G12",
+      "G13",
+      "G14"
+    ],
+    "Q6": [
+      "C6-mA",
+      "C6-mT",
+      "C6-mB",
+      "C6-mC"
+    ],
+    "Q7": [
+      "C6-labelQ",
+      "C6-quoteQ",
+      "C6-Q4",
+      "C6-Q",
+      "C6-member",
+      "PL1",
+      "PL2",
+      "PL4"
     ]
   },
   "witnesses": {
@@ -842,6 +880,153 @@
         "F-MALFORMED-NO-DECISION": []
       },
       "leaked": 8
+    },
+    "Q5": {
+      "G1": {
+        "input": "D1",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:schema",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G2": {
+        "input": "D2",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:checkpoint",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G3": {
+        "input": "D3",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:schema",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G4": {
+        "input": "D4",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:schema",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G5": {
+        "input": "D5",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "unavailable:malformed",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G6": {
+        "input": "D6",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "unavailable:malformed",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G7": {
+        "input": "D7",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:support",
+        "member": "admitted:exec-a1-t",
+        "departs": true
+      },
+      "G8": {
+        "input": "D8",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:actor",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G9": {
+        "input": "D9",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:schema",
+        "member": "refused:schema",
+        "departs": true
+      },
+      "G10": {
+        "input": "D10",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "unavailable:malformed",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G11": {
+        "input": "D11",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "unavailable:exit",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G12": {
+        "input": "D12",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:snapshotDigest",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G13": {
+        "input": "D13",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:schema",
+        "member": "refused:schema",
+        "departs": true
+      },
+      "G14": {
+        "input": "D14",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "unavailable:timeout",
+        "member": "unavailable:timeout",
+        "departs": true
+      }
+    },
+    "Q6": {
+      "quiet": {
+        "C6-mA": [],
+        "C6-mT": [],
+        "C6-mB": [],
+        "C6-mC": []
+      },
+      "kept": {
+        "C6-mA": [
+          "tiling A",
+          "field pins"
+        ],
+        "C6-mT": [
+          "tiling T"
+        ],
+        "C6-mB": [
+          "tiling B"
+        ],
+        "C6-mC": [
+          "tiling C"
+        ]
+      }
+    },
+    "Q7": {
+      "C6-labelQ": [],
+      "C6-quoteQ": [],
+      "C6-Q4": [],
+      "C6-Q": [],
+      "C6-member": [],
+      "PL1": [],
+      "PL2": [],
+      "PL4": []
     }
   },
   "tests": [
@@ -862,12 +1047,15 @@
     "Q2: R-MULTI-VIOLATION",
     "Q3: R-RESOURCE",
     "Q4: R-SIDE-PATH",
-    "rule 16: the rows, the residual families, the fields, the causes, the checks, the mutants, the fixtures, the field tokens and the admitters are frozen at their measured shape",
-    "the outside anchors: the bead's row binds the labels and quote tiling of rows T, A, B and C, the fields and causes by count and containment and the citation's two quotes in the roster's producer lines; the receipt, the runs, Pi's source and wb-gxd7.3 bind the pinned ids, the frame schema id, two words and A3's quote; row Q and pin partitions are unbound",
-    "respin scope: the header restricts the outside anchors to rows T, A, B and C and names C6-mA, C6-mT, C6-mB, C6-mC and C6-quoteQ under NOT CLAIMED",
-    "respin scope: armed checks state the measured fixture boundary and all G1-G12 survivors",
-    "respin scope: T1 claims the spelled vocabulary only (GraphPolicyCLI's names in any case, the field tokens case-sensitive), with escaped and vocabulary-free residuals",
-    "respin scope: the outside-anchor titles and the header carry the cut-3 restatements (rows T, A, B and C; the citation's two quotes; C6-labelQ, PL1, PL2 and PL4; the T1, T3, A2, frame, row-removal and wb-0lf.1 sentences)",
+    "Q5: R-JUDGE",
+    "Q6: R-PARTITION",
+    "Q7: R-UNREAD",
+    "rule 16: the rows, the residual families, the fields, the causes, the checks, the mutants, the fixtures, the field tokens, the admitters, the readings and the BOUND table are frozen at their measured shape",
+    "the outside anchors: every outside reading holds on the census's anchor model, every BOUND edit of that model reds the reading it names, and every reading is red under some BOUND edit",
+    "respin scope: the header carries the readings' summary and the not-read sentence, names each R-PARTITION and R-UNREAD member, and carries none of the retired summaries",
+    "respin scope: the header carries the fixture-boundary sentence and each R-JUDGE member's name with its description",
+    "respin scope: the header carries the T1 spelled-vocabulary sentence and the P4 and P5 sentence, P3's escaped spelling reads quiet, and the retired T1 sentence is absent",
+    "respin scope: no other registered title says bind or binds, four respin-scope cases are registered, one outside-anchor case title names the readings and the BOUND table, and the header carries the listed sentences and none of the retired ones",
     "roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/gp-reply-admission-roster.json, in order and both ways; every pin reached its witness compare"
   ],
   "producer": {

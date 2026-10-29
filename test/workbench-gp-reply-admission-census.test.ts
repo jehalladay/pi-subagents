@@ -11,9 +11,10 @@
  * timeout, non-zero exit or malformed stdout yields typed unavailable and no receipt row claims success (carries O11's GP
  * case)". Row T's label is the title's trigger, verbatim: its parenthetical names the two gating artifacts.
  *
- * MEASURED (read-only, by the cutting seats: cut 1 at base ade68d6534cc; the producer lines and the src facts re-read by cut 3
- * at base f5ffe68513ef). Producer (the local Furnace checkout, git show; the roster's producer block holds the three lines and
- * the blob, and this census never re-reads the producer): at the bead's pin 0f791db71b9d,
+ * MEASURED (read-only, by the cutting seats: cut 1 at base ade68d6534cc; the producer lines re-read by cut 3 at base
+ * f5ffe68513ef; the src facts re-read by cut 4 at base 43509269827c). Producer (the local Furnace checkout, git show; the
+ * roster's producer block holds the three lines and the blob, and this census never re-reads the producer): at the bead's pin
+ * 0f791db71b9d,
  * docs/programs/graph-policy-decision-executor-2026-10-18/README.md (blob 73135c2df014) line 13 opens "Furnace host checks
  * schema, source freshness, actor scope, action support and resource constraints independently.", line 11 lists the reply
  * ("Reply: schema and checkpoint identity, snapshot digest, ..."), line 25 carries "no fabricated success on worker timeout,
@@ -25,7 +26,7 @@
  * test/fixtures/gp-kind-label-roster.json's producer runs (wb-gxd7.4, the same build): exit 0 writes
  * {"schema":"graphpolicy.cli.v1","ok":true,"result":...} and the run "ready-work" exits 2 with an ok:false GP_CLI_ error
  * envelope; wb-gxd7.3 measured the receipt's path in gp sample's stdout as result.decision (its P-SAMPLE-FILE capture). The Pi
- * decision point half is unbuilt: at base f5ffe68513ef no src module (117 files; 116 at ade68d6534cc) spells a GraphPolicyCLI
+ * decision point half is unbuilt: at base 43509269827c no src module (117 files; 116 at ade68d6534cc) spells a GraphPolicyCLI
  * name (anywhere, in any case) or a receipt identity field (as a whole case-sensitive token), and the one near miss is
  * src/workbench/reactivefiber-observer.ts's GRAPH_DIGEST, an rf constant; NATIVE_CONTROL_ACTIONS registers no GraphPolicyCLI
  * provider (so decideControl denies a gp target as unknown-action before it reads the projection); and no src decision point
@@ -89,73 +90,91 @@
  *    outcome other than refused or unavailable.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and each residual family's member
- * count as literals, beside the fields, the causes, the checks, the mutants, the fixtures, the field tokens and the admitters;
- * the judged set (every row's id, label and pins, every pin's quote and witness, the residual members, every registered test
- * title) is held to the out-of-file roster test/fixtures/gp-reply-admission-roster.json. The roster is cut with the census, so
- * an edit made to both passes these roster comparisons.
- * OUTSIDE ANCHORS (their own case; each reading compares a literal with a file outside the census and its roster): (1) the
- * bead's own row in the tracker export (.beads/issues.jsonl): the roster's statement equals the title; the title opens with
- * the requirement tag and its trigger equals row T's label; the owner filing's citation line holds exactly three acceptance
- * clauses, equal to the labels of rows A, B and C in order (C without its carry note, the only note); each of rows T, A, B and
- * C has pin quotes that tile its label in order with only separators between; clause (a) splits into five requirements, the
- * i-th containing the i-th field, and each field's pin quote contains that field; clause (c) splits into three failures, the
- * i-th containing the i-th cause, and names typed unavailable; the citation quotes README.md lines 13 and 25, each quote is
- * contained in the roster's producer line of that number, and the cited pin opens the roster's producer sha. Every reading of
- * the notes is taken from the filing's own citation line (the first notes line opening "Citation: "), so a note appended
- * later changes
- * none (measured: an appended note, and an appended note carrying its own Citation line). (2) The vendored receipt binds the
- * pinned schema and checkpoint ids. (3) The measured runs bind the frame's schema id: a measured exit-0 run writes it with ok
- * true and an object result, and the measured exit-2 envelope carries it. (4) Pi's own source binds the words unavailable
- * (CapabilityErrorCategory) and success (statusTone). (5) The wb-gxd7.3 census binds row A3's quote. So the outside anchors
- * bind the labels and concatenated quote text of rows T, A, B and C, the count and containment of the five fields and the
- * three causes, A3's quote, the citation's two quotes in the roster's producer lines, the pinned ids, the frame's schema id
- * and the two words; they do not bind a row's pin partition, row Q's label, pins or quotes, the residual members, the
- * witnesses, the test titles, or the roster's producer block beyond the two quotes and the sha's pin prefix. Row T, A, B or C
- * removed whole from every literal and the roster reds by those readings, and so does one of the five
- * fields or three causes; a quote re-homed into a sibling pin need not. The last case reads the vitest task tree (every
- * registered test, in roster order, in run mode, ran before it) and REACHED (every pin reached its witness compare).
- * NOT CLAIMED (known non-equivalent survivors on the merged trunk; no assertion below certifies their absence):
- * C6-mA, C6-mT, C6-mB and C6-mC: each pin merges into a sibling with its quote re-homed and the census stays green.
- * C6-quoteQ: Q3's quote changes in both the census and roster while the census stays green.
- * C6-labelQ: row Q's label changes in both the census and the roster while the census stays green.
- * PL1, PL2 and PL4: the roster's producer line 11 edited, text appended to line 13 outside its quote, and the producer blob id
- * changed each leave the census green.
- * C6-frame: the frame's decision key renamed in both the census's frame reader and its fixture writer leaves the census green
- * (the measured runs bind the frame's schema id only).
- * H10: the respin-scope cases are header-text guards held by the roster: the G1-G12 case, the T1 case or the last respin-scope
- * case removed from the file and the roster's tests list together leaves the census green (the last case also counts the
- * first one's title, so removing the first reds it).
- * No outside anchor reads the outcome words admitted and refused, the check, mutant and fixture names, or the residual
- * family names.
- * G1: schema substring membership; G2: reverse checkpoint prefix; G3: schema compared case-insensitively;
- * G4: any version of the decision receipt, including one gp has not shipped (no unshipped schema fixture is committed);
- * G5: CLI frame schema ignored; G6: CLI ok coerced truthy; G7: support searched as a substring of joined ids;
- * G8: actor validation fails open on a relation with multiple workers; G9: a refusal inherits a decision on its prototype;
- * G10: a last-line salvage after noisy stdout; G11: null exit status treated as success; G12: digest of decoded UTF-8 text.
- * Each G1-G12 passes all fifteen fixtures and diverges from HONEST on its own gate-authored input (D1-D12); their survival
- * limits the synthetic judge, not the independently specified host admission requirement. The first future admitter must
- * add inputs for these cases or explicitly re-scope its own claim. A bound admitter is run over the fifteen fixtures (A1) and
- * must be a module that spells the vocabulary (T1); binding one also changes the frozen admitter literal (rule 16).
- * The label-tiling outside anchor cannot prove pin counts after a coordinated pin merge, and no tracker/source anchor binds
- * the names of residual families; C6-Q4, C6-Q and C6-member also survive coordinated removal.
- * qa/, test/ and docs/ (a test names the vocabulary as the text it judges, this census included); the decision
- * point's actual shape (the armed contract is this census's reading of an unbuilt decision point, so an admitter whose cut
- * takes another shape re-measures rows A to C with it); the RPC transport (gp rpc --stdio replies are not modelled; the armed
- * call is the CLI's exit code and stdout); a deterministic, scores-only reply (gp eval's keyed scores carry no proposal:
- * wb-0lf.5's duty); which result a host yields for a reply violating two fields (R-MULTI-VIOLATION); a check removed from
- * CHECKS and from the judge together while every remaining mutant still fails one; a mutant or a fixture removed from its
- * table, the frozen literal and the roster together while every check still fires; a residual family removed from every
- * literal of this file and the roster together (no anchor outside the census holds the residual list); a pin's case replaced
- * by one that echoes its roster witness. An unavailable result may carry more than its outcome and cause (wb-1xvp.4's
- * fallback record echoes the producer's refusal code verbatim); only those two are judged.
+ * count as literals, beside the fields, the causes, the checks, the mutants, the fixtures, the field tokens, the admitters, the
+ * READINGS and the BOUND table (`${member}:${reading}`); the judged set (every row's id, label and pins, every pin's quote and
+ * witness, the residual members, every registered test title) is held to the out-of-file roster
+ * test/fixtures/gp-reply-admission-roster.json. The roster is cut with the census, so an edit made to both passes these roster
+ * comparisons.
+ * OUTSIDE ANCHORS (their own case). The anchor model (AnchorModel; LIVE is the census's own) holds the census and roster
+ * literals the readings compare: the requirement tag, the rows and their pins, the pin quotes, the fields and their pins, the
+ * causes, clause (c)'s carry note, the words unavailable and success, the cited line numbers, the pinned schema and checkpoint
+ * ids, the frame schema id, the frame the census writes around the vendored receipt (F-ADMIT's valid stdout), the residual
+ * members, and the roster's statement and producer block. Each of the 27 READINGS compares part of the model with a file
+ * outside the census and its roster, through fixed parse patterns (the acceptance split, clause (c)'s pattern, the separator
+ * class, the citation pattern and PRODUCER_SPEC's capture id). (1) The bead's own row in the tracker export
+ * (.beads/issues.jsonl), read through its title and the owner filing's citation line only (the first notes line opening
+ * "Citation: ", so a note appended later changes no reading; measured: an appended note, and an appended note carrying its own
+ * Citation line): statement (the roster's statement is the title); tag (the title opens with the requirement tag); trigger
+ * (row T's label is the title's trigger); clauses (the citation line's three acceptance clauses are the labels of rows A, B and
+ * C, in order); carry (clause (c) alone carries a note, the carry note); tiling T, tiling A, tiling B and tiling C (the row's
+ * pin quotes, in order, tile its label: each quote is non-empty and opens and closes on a non-separator character, and only
+ * separator characters lie between quotes and at the label's ends); field count and field order (clause (a) splits into one
+ * requirement per field, the i-th containing the i-th field); field pins (each field's pin quote contains the field); cause
+ * count and cause order (clause (c) splits into one failure per cause, the i-th containing the i-th cause); unavailable word and
+ * success word (clause (c)'s word after "yields typed" equals the unavailable word, and its last word, after "claims", equals
+ * the success word); cites (the citation quotes README.md lines 13 and 25); producer quotes (each cited quote lies in the
+ * roster's producer line of that number); producer sha (each cited pin opens the roster's producer sha). (2) The vendored
+ * receipt: pinned schema and pinned checkpoint (each equals the receipt's own). (3) The measured runs: frame schema (a measured
+ * exit-0 run writes the frame schema id with ok true and an object result, and the measured exit-2 envelope carries it); frame
+ * keys (every key of the census's frame is a key of one measured exit-0 frame, whose schema id and ok value the frame carries).
+ * (4) wb-gxd7.3's P-SAMPLE-FILE capture path (result.decision.graph_digest): frame path (the census's frame holds the vendored
+ * receipt at that path, the field segment dropped). (5) Pi's own source: registry word and tone word (the unavailable word is a
+ * CapabilityErrorCategory member and the success word a statusTone member, membership only). (6) The wb-gxd7.3 census: A3
+ * quote (its clause (c) sentence quotes row A3's quote whole).
+ * BOUND: each BOUND member is an edit of the anchor model, named for the coordinated census-and-roster edit it stands for (the
+ * C6-, PL- and G- edits the gate measured on cut 3; G-fieldpin, G-causeorder, G-unavailable-nonmember, G-success-nonmember,
+ * ST-statement, G-requirement, G-carry, G-cites, G-schema, G-checkpoint and G-envelope added by cut 4), and the case asserts
+ * that each reds the reading the BOUND table names beside it; every reading is red under at least one member.
+ * So the readings hold by equality the labels of rows T, A, B and C, the requirement tag, the carry note, the cited line
+ * numbers, the two words, the pinned ids, the frame schema id, the roster's statement and A3's quote; by count, order and
+ * containment the five fields and the three causes; each quote's text once the row's split into pins is given, a separator at
+ * a quote's edge included; the frame's key names (schema, ok, result and the decision key; any further key must be a measured
+ * frame key) and its decision path; and the cited quotes in the producer lines with each cited pin as the producer sha's
+ * prefix. They do not read the split of a label into pins (R-PARTITION), row Q, the residual members or the producer block
+ * beyond the cited quotes and the sha's prefix (R-UNREAD), the witnesses, the test titles, the checks, the mutants, the
+ * fixtures, or the frame reader (F-ADMIT, a census check, holds the reader to the frame the census writes). The last case
+ * reads the vitest task tree (every registered test, in roster order, in run mode, ran before it) and REACHED (every pin
+ * reached its witness compare).
  * RESIDUALS (named families, each member a pinned quiet row; an instrument that starts reading a member reds its row):
  * R-SPELLING (Q1, a receipt field the vocabulary reader does not read: composed from parts at run time, concatenated,
  * a Unicode-escaped identifier P3, or the upper-case constant of another producer; a vocabulary-free admitter (P4),
  * including a gp-spawning one (P5), is outside T1's text trigger; both are pinned as quiet input text here, not as a
  * complete call-site audit), R-MULTI-VIOLATION (Q2, a reply violating two fields: the judge accepts a refusal
  * naming either), R-RESOURCE (Q3, the statement's "resource constraints": no acceptance clause names one, the armed call
- * carries no exported budget and no check reads the reply's runtime_budget) and R-SIDE-PATH (Q4, an admitter that reports a
- * refused reply's proposal outside its journal: the armed check reads the returned results and rows only).
+ * carries no exported budget and no check reads the reply's runtime_budget), R-SIDE-PATH (Q4, an admitter that reports a
+ * refused reply's proposal outside its journal: the armed check reads the returned results and rows only), R-JUDGE (Q5, an
+ * admitter the judge passes on all fifteen fixtures with HONEST's outcome on each, whose journal, as a property read sees it
+ * (prototypes included), departs from HONEST's on its own input: D1 to D12, with F-SCHEMA's call as D9 and D13 and
+ * F-TIMEOUT's as D14), R-PARTITION (Q6, a pin merged into its sibling with its quote re-homed: every reading holds, and the
+ * same merge with the sibling's quote left in place reds one) and R-UNREAD (Q7, an edit of a model part no reading takes:
+ * every reading holds and the model changes).
+ * R-JUDGE members: G1: schema substring membership; G2: reverse checkpoint prefix; G3: schema compared case-insensitively;
+ * G4: any member of the decision receipt's family, including one gp has not shipped; G5: CLI frame schema ignored; G6: CLI ok
+ * coerced truthy; G7: support searched as a substring of joined ids; G8: actor validation fails open on a relation with multiple
+ * workers; G9: a refusal inherits a decision on its prototype; G10: a last-line salvage after noisy stdout; G11: null exit
+ * status treated as success; G12: digest of decoded UTF-8 text; G13: a refused reply's receipt rows carry its decision;
+ * G14: an unavailable result carries the complete stdout's decision. Their survival limits the synthetic judge, not the
+ * independently specified host admission requirement. The first future admitter must add inputs for these cases or explicitly
+ * re-scope its own claim. A bound admitter is run over the fifteen fixtures (A1) and must be a module that spells the
+ * vocabulary (T1); binding one also changes the frozen admitter literal (rule 16).
+ * R-PARTITION members: C6-mA: A5 into A4; C6-mT: T2 into T1; C6-mB: B2 into B1; C6-mC: C2 into C1.
+ * R-UNREAD members: C6-labelQ: row Q's label; C6-quoteQ: Q3's quote; C6-Q4: pin Q4 with its quote and members; C6-Q: row Q
+ * whole with every residual member; C6-member: the Q1 member composed; PL1: the producer's line 11; PL2: text appended to
+ * line 13 outside its quote; PL4: the producer blob id.
+ * NOT CLAIMED (limits of this file's own literals, not reading modes: no source outside the census and its roster names
+ * them): an edit of this file and the roster together that changes only literals no reading takes, namely a BOUND, R-JUDGE,
+ * R-PARTITION, R-UNREAD or other residual member removed from its table, the frozen literal and the roster; a check removed
+ * from CHECKS and the judge while every remaining mutant still fails one; a mutant or a fixture removed from its table, the
+ * frozen literal and the roster while every check still fires; a pin's case replaced by one that echoes its roster witness
+ * (H6); the last respin-scope case removed with its roster title (H10-4; the respin-scope count holds the other three); a
+ * header sentence no respin-scope case pins; and the outcome words admitted and refused, or a check, mutant, fixture or
+ * residual family name, renamed everywhere it appears. Outside the claim: modules outside src/ (qa/, test/ and docs/ name the
+ * vocabulary as text a test judges, this census included); the decision point's actual shape (the armed contract is this
+ * census's reading of an unbuilt decision point, so an admitter whose cut takes another shape re-measures rows A to C with
+ * it); the RPC transport (gp rpc --stdio replies are not modelled; the armed call is the CLI's exit code and stdout); a
+ * deterministic, scores-only reply (gp eval's keyed scores carry no proposal: wb-0lf.5's duty). An unavailable result may
+ * carry more than its outcome and cause (wb-1xvp.4's fallback record echoes the producer's refusal code verbatim; R-JUDGE's
+ * G14 is one such result); only those two are judged.
  * SCOPE: the vocabulary reader does not read negation or context, so a src comment that merely names a field reds T1 (OVER-READ,
  * disclosed: no src module spells one today).
  *
@@ -512,7 +531,9 @@ function presentationOf(id: string): Presented {
   if (found === undefined) throw new Error(`no presentation ${id}`);
   return found;
 }
-const envelopeOf = (receipt: unknown): string => `${JSON.stringify({ schema: ENVELOPE_SCHEMA, ok: true, result: { decision: receipt } })}\n`;
+/** The gp CLI frame around a result, as the measured exit-0 runs write it: the frame schema id, ok true and the result. */
+const frameOf = (result: unknown): string => `${JSON.stringify({ schema: ENVELOPE_SCHEMA, ok: true, result })}\n`;
+const envelopeOf = (receipt: unknown): string => frameOf({ decision: receipt });
 const exited = (exitCode: number, stdout: string): WorkerResult => ({ timedOut: false, exitCode, stdout });
 const VALID = envelopeOf(RECEIPT);
 /** The valid stdout cut just after the proposal: the decision's tail and the frame never arrived. */
@@ -550,7 +571,7 @@ const FIXTURES: readonly Fixture[] = [
   { id: "F-EXIT-CRASH", call: callOf({ worker: exited(134, VALID) }), expected: unavailableFor("exit") },
   { id: "F-MALFORMED-TRUNCATED", call: callOf({ worker: exited(0, TRUNCATED) }), expected: unavailableFor("malformed") },
   { id: "F-MALFORMED-EMPTY", call: callOf({ worker: exited(0, "") }), expected: unavailableFor("malformed") },
-  { id: "F-MALFORMED-NO-DECISION", call: callOf({ worker: exited(0, `${JSON.stringify({ schema: ENVELOPE_SCHEMA, ok: true, result: {} })}\n`) }), expected: unavailableFor("malformed") },
+  { id: "F-MALFORMED-NO-DECISION", call: callOf({ worker: exited(0, frameOf({})) }), expected: unavailableFor("malformed") },
 ];
 /** The residual fixtures (never judged with FIXTURES): a reply violating two fields, and one over its own runtime budget. */
 const F_TWO: Fixture = { id: "F-TWO", call: callOf({ worker: exited(0, envelopeOf(R_SCHEMA)), actors: OUT_OF_SCOPE }), expected: refusing("schema", "actor"), reply: R_SCHEMA };
@@ -687,6 +708,186 @@ const REFUSE_IDS = FIXTURES.filter(entry => entry.expected.kind === "refuse").ma
 const WORKER_IDS = FIXTURES.filter(entry => entry.expected.kind === "unavailable").map(entry => entry.id);
 const DIGEST_IDS = Object.keys(PRESENTATIONS);
 
+// ---- the judge's residual members (R-JUDGE): admitters the judge passes, each departing from HONEST on its own input ----
+
+/** A text parsed as JSON, or undefined when it does not parse. */
+function parsedOf(text: string): unknown {
+  try {
+    const value: unknown = JSON.parse(text);
+    return value;
+  } catch {
+    return undefined;
+  }
+}
+/** The object at result.decision of a parsed frame. */
+function decisionAt(frame: unknown): Readonly<Record<string, unknown>> | undefined {
+  const decision = own(own(frame, "result"), "decision");
+  return record(decision) ? decision : undefined;
+}
+/** Every key a property read reaches on an object: its own and its prototypes' (Object.prototype aside). */
+function reachable(value: object): string[] {
+  const keys: string[] = [];
+  for (let at: object | null = value; at !== null && at !== Object.prototype; at = Object.getPrototypeOf(at)) keys.push(...Reflect.ownKeys(at).map(key => String(key)));
+  return [...new Set(keys)];
+}
+/** A value as a property read sees it, prototypes included (measured on node v24.20.0: util.isDeepStrictEqual reads a decision
+ * inherited through a prototype as no difference). */
+function readView(value: unknown): unknown {
+  if (typeof value !== "object" || value === null) return value;
+  if (Array.isArray(value)) return value.map(readView);
+  return Object.fromEntries(reachable(value).map(key => [key, readView(Reflect.get(value, key))]));
+}
+/** How an R-JUDGE member departs from the honest admitter: each hook replaces one honest step. */
+interface Departure {
+  readonly schemaOk?: (id: string, call: AdmissionCall) => boolean;
+  readonly checkpointOk?: (id: string, call: AdmissionCall) => boolean;
+  readonly digestOk?: (receipt: Readonly<Record<string, unknown>>, call: AdmissionCall) => boolean;
+  readonly actorOk?: (receipt: Readonly<Record<string, unknown>>, call: AdmissionCall) => boolean;
+  readonly supportOk?: (receipt: Readonly<Record<string, unknown>>, call: AdmissionCall) => boolean;
+  readonly read?: (stdout: string) => Readonly<Record<string, unknown>> | undefined;
+  readonly exitFailed?: (worker: WorkerResult) => boolean;
+  readonly refusal?: (field: Field, receipt: Readonly<Record<string, unknown>>) => unknown;
+}
+/** gate-prep-38's departing admitter (its LEG 2 probe, typed): the honest steps, each hook in place of its step. */
+function departing(hooks: Departure): Admitter {
+  return call => {
+    const unavailable = (cause: Cause): AdmissionJournal => ({ results: [{ outcome: UNAVAILABLE, cause }], rows: [{ outcome: UNAVAILABLE, tone: "unknown" }] });
+    const { worker } = call;
+    if (worker.timedOut) return unavailable("timeout");
+    if (hooks.exitFailed === undefined ? worker.exitCode !== 0 : hooks.exitFailed(worker)) return unavailable("exit");
+    const receipt = (hooks.read ?? decisionOf)(worker.stdout);
+    if (receipt === undefined) return unavailable("malformed");
+    const idHolds = (hook: ((id: string, call: AdmissionCall) => boolean) | undefined, key: string, field: Field): boolean => {
+      const id = own(receipt, key);
+      return hook === undefined ? passes({}, field, receipt, call) : typeof id === "string" && hook(id, call);
+    };
+    const holds: Readonly<Record<Field, () => boolean>> = {
+      schema: () => idHolds(hooks.schemaOk, "schema", "schema"),
+      checkpoint: () => idHolds(hooks.checkpointOk, "checkpoint_digest", "checkpoint"),
+      snapshotDigest: () => (hooks.digestOk === undefined ? passes({}, "snapshotDigest", receipt, call) : hooks.digestOk(receipt, call)),
+      actor: () => (hooks.actorOk === undefined ? passes({}, "actor", receipt, call) : hooks.actorOk(receipt, call)),
+      support: () => (hooks.supportOk === undefined ? passes({}, "support", receipt, call) : hooks.supportOk(receipt, call)),
+    };
+    const [field] = FIELDS.filter(entry => !holds[entry]());
+    if (field !== undefined) return { results: [hooks.refusal === undefined ? { outcome: "refused", field } : hooks.refusal(field, receipt)], rows: [{ outcome: "refused", tone: "failure" }] };
+    return { results: [{ outcome: "admitted", decision: { proposal: proposalOf(receipt), receipt } }], rows: [{ outcome: "admitted", tone: "active" }] };
+  };
+}
+/** HONEST's journal reworked after the fact (G13 and G14: HONEST's results and outcomes, more carried). */
+const reworked =
+  (edit: (call: AdmissionCall, journal: AdmissionJournal) => AdmissionJournal): Admitter =>
+  call =>
+    edit(call, HONEST(call));
+/** The presented snapshot with its relations edited, pretty-printed as the fixture file is. */
+function relationsEdited(edit: (relations: readonly Readonly<Record<string, unknown>>[]) => readonly unknown[]): Uint8Array {
+  const snapshot = recordOf(parsedOf(Buffer.from(presentedBytes(FIXTURE_FILE)).toString("utf8")), "the presented snapshot");
+  return utf8(`${JSON.stringify({ ...snapshot, relations: edit(listOf(own(snapshot, "relations")).filter(record)) }, null, 2)}\n`);
+}
+/** D7: an exported relation whose id is a substring of the joined support but no member of it. */
+const D7_BYTES = relationsEdited(relations => [...relations, ...relations.filter(relation => own(relation, "id") === "exec-a1-t1").map(relation => ({ ...relation, id: "exec-a1-t" }))]);
+/** D8: the proposal's relation carrying two workers. */
+const D8_BYTES = relationsEdited(relations =>
+  relations.map(relation => {
+    if (own(relation, "id") !== "exec-a1-t1") return relation;
+    const incidences = listOf(own(relation, "incidences"));
+    const worker = incidences.find(incidence => own(incidence, "role") === "worker");
+    return { ...relation, incidences: [...incidences, ...(record(worker) ? [{ ...worker, participant: "agent-2" }] : [])] };
+  }),
+);
+/** D12: the presented bytes with one invalid UTF-8 byte inside a string value. */
+const D12_AT = Buffer.from(presentedBytes(FIXTURE_FILE)).indexOf(Buffer.from('"agent-1"')) + 2;
+const D12_BYTES = new Uint8Array(
+  Buffer.concat([Buffer.from(presentedBytes(FIXTURE_FILE).slice(0, D12_AT)), Buffer.from([0xff]), Buffer.from(presentedBytes(FIXTURE_FILE).slice(D12_AT))]),
+);
+/** Each R-JUDGE member's own input, where it departs from HONEST (D9 and D13 are F-SCHEMA's call, D14 is F-TIMEOUT's). */
+const DEPARTURES: Readonly<Record<string, AdmissionCall>> = {
+  D1: callOf({ worker: exited(0, envelopeOf(edited({ schema: "graphpolicy.receipt.decision" }))) }),
+  D2: callOf({ worker: exited(0, envelopeOf(edited({ checkpoint_digest: prefixOf(PINNED_CHECKPOINT) }))) }),
+  D3: callOf({ worker: exited(0, envelopeOf(edited({ schema: PINNED_SCHEMA.toUpperCase() }))) }),
+  D4: callOf({ worker: exited(0, envelopeOf(edited({ schema: "graphpolicy.receipt.decision.draft" }))) }),
+  D5: callOf({ worker: exited(0, `${JSON.stringify({ schema: "other.cli.v9", ok: true, result: { decision: RECEIPT } })}\n`) }),
+  D6: callOf({ worker: exited(0, `${JSON.stringify({ schema: ENVELOPE_SCHEMA, ok: 1, result: { decision: RECEIPT } })}\n`) }),
+  D7: callOf({ presented: D7_BYTES, worker: exited(0, envelopeOf(edited({ graph_digest: keyOf(D7_BYTES), candidates: [...SUPPORT, "exec-a1-t"], sample: { ...SAMPLED, chosen_id: "exec-a1-t" } }))) }),
+  D8: callOf({ presented: D8_BYTES, worker: exited(0, envelopeOf(edited({ graph_digest: keyOf(D8_BYTES) }))) }),
+  D9: fixture("F-SCHEMA").call,
+  D10: callOf({ worker: exited(0, `progress 1/1\n${VALID}`) }),
+  D11: callOf({ worker: { timedOut: false, exitCode: null, stdout: VALID } }),
+  D12: callOf({ presented: D12_BYTES, worker: exited(0, envelopeOf(edited({ graph_digest: keyOf(utf8(Buffer.from(D12_BYTES).toString("utf8"))) }))) }),
+  D13: fixture("F-SCHEMA").call,
+  D14: fixture("F-TIMEOUT").call,
+};
+/** R-JUDGE (Q5): each member passes every check on all fifteen fixtures with HONEST's outcomes, and departs on its own input. */
+const JUDGE_SURVIVORS: Readonly<Record<string, { readonly about: string; readonly input: string; readonly admit: Admitter }>> = {
+  G1: { about: "schema substring membership", input: "D1", admit: departing({ schemaOk: (id, call) => call.schemas.some(schema => schema.includes(id)) }) },
+  G2: { about: "reverse checkpoint prefix", input: "D2", admit: departing({ checkpointOk: (id, call) => call.checkpoints.some(checkpoint => checkpoint.startsWith(id)) }) },
+  G3: {
+    about: "schema compared case-insensitively",
+    input: "D3",
+    admit: departing({ schemaOk: (id, call) => call.schemas.some(schema => schema.toLowerCase() === id.toLowerCase()) }),
+  },
+  G4: { about: "any member of the decision receipt's family, including one gp has not shipped", input: "D4", admit: departing({ schemaOk: id => id.startsWith("graphpolicy.receipt.decision.") }) },
+  G5: { about: "CLI frame schema ignored", input: "D5", admit: departing({ read: stdout => (own(parsedOf(stdout), "ok") === true ? decisionAt(parsedOf(stdout)) : undefined) }) },
+  G6: {
+    about: "CLI ok coerced truthy",
+    input: "D6",
+    admit: departing({ read: stdout => (own(parsedOf(stdout), "schema") === ENVELOPE_SCHEMA && own(parsedOf(stdout), "ok") ? decisionAt(parsedOf(stdout)) : undefined) }),
+  },
+  G7: {
+    about: "support searched as a substring of joined ids",
+    input: "D7",
+    admit: departing({ supportOk: (receipt, call) => typeof proposalOf(receipt) === "string" && call.support.join(",").includes(String(proposalOf(receipt))) }),
+  },
+  G8: {
+    about: "actor validation fails open on a relation with multiple workers",
+    input: "D8",
+    admit: departing({
+      actorOk: (receipt, call) => {
+        const actor = actorOf(call.presented, proposalOf(receipt));
+        return actor === undefined || call.actors.includes(actor);
+      },
+    }),
+  },
+  G9: {
+    about: "a refusal inherits a decision on its prototype",
+    input: "D9",
+    admit: departing({
+      refusal: (field, receipt) => {
+        const refusal: unknown = { outcome: "refused", field };
+        Object.setPrototypeOf(refusal, { decision: { proposal: proposalOf(receipt), receipt } });
+        return refusal;
+      },
+    }),
+  },
+  G10: { about: "a last-line salvage after noisy stdout", input: "D10", admit: departing({ read: stdout => decisionOf(stdout) ?? decisionOf(stdout.trim().split("\n").pop() ?? "") }) },
+  G11: { about: "null exit status treated as success", input: "D11", admit: departing({ exitFailed: worker => Boolean(worker.exitCode) }) },
+  G12: {
+    about: "digest of decoded UTF-8 text",
+    input: "D12",
+    admit: departing({ digestOk: (receipt, call) => own(receipt, "graph_digest") === keyOf(utf8(Buffer.from(call.presented).toString("utf8"))) }),
+  },
+  G13: {
+    about: "a refused reply's receipt rows carry its decision",
+    input: "D13",
+    admit: reworked((call, journal) => {
+      const receipt = decisionOf(call.worker.stdout);
+      if (receipt === undefined || !journal.results.some(result => own(result, "outcome") === "refused")) return journal;
+      return { results: journal.results, rows: journal.rows.map(row => (record(row) ? { ...row, decision: { proposal: proposalOf(receipt), receipt } } : row)) };
+    }),
+  },
+  G14: {
+    about: "an unavailable result carries the complete stdout's decision",
+    input: "D14",
+    admit: reworked((call, journal) => {
+      const receipt = decisionOf(call.worker.stdout);
+      if (receipt === undefined) return journal;
+      return {
+        results: journal.results.map(result => (record(result) && own(result, "outcome") === UNAVAILABLE ? { ...result, decision: { proposal: proposalOf(receipt), receipt } } : result)),
+        rows: journal.rows,
+      };
+    }),
+  },
+};
+
 // ---- the judged rows (rule 16) ----
 
 interface Row {
@@ -714,6 +915,9 @@ const QUOTES: Readonly<Record<string, string>> = {
   Q2: "R-MULTI-VIOLATION",
   Q3: "R-RESOURCE",
   Q4: "R-SIDE-PATH",
+  Q5: "R-JUDGE",
+  Q6: "R-PARTITION",
+  Q7: "R-UNREAD",
 };
 const ROWS: readonly Row[] = [
   { id: "T", label: "When Pi admits a GraphPolicyCLI reply (artifact: released GP reply schema + a Pi decision point)", pins: ["T1", "T2", "T3"] },
@@ -725,7 +929,7 @@ const ROWS: readonly Row[] = [
   },
   { id: "B", label: "each violation yields exactly one typed refusal naming only the field and no decision object", pins: ["B1", "B2", "B3"] },
   { id: "C", label: "a GP worker timeout, non-zero exit or malformed stdout yields typed unavailable and no receipt row claims success", pins: ["C1", "C2"] },
-  { id: "Q", label: "the residuals' pinned quiet rows", pins: ["Q1", "Q2", "Q3", "Q4"] },
+  { id: "Q", label: "the residuals' pinned quiet rows", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"] },
 ];
 /** The field each field-bearing pin of row A carries, in FIELDS order. */
 const FIELD_PINS: Readonly<Record<Field, string>> = { schema: "A2", checkpoint: "A2", snapshotDigest: "A3", actor: "A4", support: "A5" };
@@ -739,11 +943,82 @@ const SPELLINGS: Readonly<Record<string, string>> = {
   "vocabulary-free-admitter": 'export function admitReply(frame: { result?: { decision?: unknown } }) { return frame.result?.decision; }\n',
   "gp-spawning-admitter": 'export function admitReply(run: (binary: string) => unknown) { const frame = run("gp"); return frame; }\n',
 };
+// ---- the anchor model: what the outside readings compare from this census and its roster ----
+
+/** The census and roster literals the outside readings compare (LIVE, below the roster, is the census's own). */
+interface AnchorModel {
+  readonly requirement: string;
+  readonly rows: readonly Row[];
+  readonly quotes: Readonly<Record<string, string>>;
+  readonly fields: readonly string[];
+  readonly fieldPins: Readonly<Record<string, string>>;
+  readonly causes: readonly string[];
+  /** Clause (c)'s carry note. */
+  readonly carry: string;
+  readonly unavailable: string;
+  readonly success: string;
+  /** The README.md lines the filing cites. */
+  readonly citedLines: readonly number[];
+  readonly schema: string;
+  readonly checkpoint: string;
+  readonly envelope: string;
+  /** The frame the census writes around the vendored receipt: F-ADMIT's valid stdout. */
+  readonly frame: string;
+  readonly residuals: Readonly<Record<string, readonly string[]>>;
+  /** The roster's statement and producer block. */
+  readonly statement: string;
+  readonly producer: Roster["producer"];
+}
+type Edit = (model: AnchorModel) => AnchorModel;
+function omitted<T>(table: Readonly<Record<string, T>>, keys: readonly string[]): Record<string, T> {
+  return Object.fromEntries(Object.entries(table).filter(([key]) => !keys.includes(key)));
+}
+const quoted = (model: AnchorModel, pin: string, quote: string): AnchorModel => ({ ...model, quotes: { ...model.quotes, [pin]: quote } });
+const relabeled = (model: AnchorModel, id: string, label: string): AnchorModel => ({ ...model, rows: model.rows.map(row => (row.id === id ? { ...row, label } : row)) });
+const labelIn = (model: AnchorModel, id: string): string => model.rows.find(row => row.id === id)?.label ?? "";
+function rowRemoved(model: AnchorModel, id: string): AnchorModel {
+  const pins = model.rows.find(row => row.id === id)?.pins ?? [];
+  return { ...model, rows: model.rows.filter(row => row.id !== id), quotes: omitted(model.quotes, pins) };
+}
+function pinRemoved(model: AnchorModel, id: string, pin: string): AnchorModel {
+  return { ...model, rows: model.rows.map(row => (row.id === id ? { ...row, pins: row.pins.filter(entry => entry !== pin) } : row)), quotes: omitted(model.quotes, [pin]) };
+}
+/** Pin `from` of a row merged into its sibling `into`, whose quote becomes `quote`; a field `from` carried moves to `into`. */
+function merged(model: AnchorModel, id: string, into: string, from: string, quote: string): AnchorModel {
+  const removed = quoted(pinRemoved(model, id, from), into, quote);
+  return { ...removed, fieldPins: Object.fromEntries(Object.entries(model.fieldPins).map(([field, pin]) => [field, pin === from ? into : pin])) };
+}
+const fieldRemoved = (model: AnchorModel, field: string): AnchorModel => ({ ...model, fields: model.fields.filter(entry => entry !== field), fieldPins: omitted(model.fieldPins, [field]) });
+const causeRemoved = (model: AnchorModel, cause: string): AnchorModel => ({ ...model, causes: model.causes.filter(entry => entry !== cause) });
+const lined = (model: AnchorModel, line: string, text: string): AnchorModel => ({ ...model, producer: { ...model.producer, lines: { ...model.producer.lines, [line]: text } } });
+const frameText = (frame: Readonly<Record<string, unknown>>): string => `${JSON.stringify(frame)}\n`;
+
+/** R-PARTITION (Q6): a pin merged into its sibling, its quote re-homed into the sibling's (the gate's coordinated merges). */
+const PARTITIONS: Readonly<Record<string, { readonly row: string; readonly into: string; readonly from: string; readonly quote: string }>> = {
+  "C6-mA": { row: "A", into: "A4", from: "A5", quote: "actor in scope and proposed action inside the exported support" },
+  "C6-mT": { row: "T", into: "T1", from: "T2", quote: "When Pi admits a GraphPolicyCLI reply (artifact: released GP reply schema" },
+  "C6-mB": { row: "B", into: "B1", from: "B2", quote: "each violation yields exactly one typed refusal naming only the field" },
+  "C6-mC": { row: "C", into: "C1", from: "C2", quote: "a GP worker timeout, non-zero exit or malformed stdout yields typed unavailable and no receipt row claims success" },
+};
+/** R-UNREAD (Q7): edits of model parts no outside reading takes (the gate's coordinated edits of row Q, the residual list and the producer block). */
+const UNREAD: Readonly<Record<string, Edit>> = {
+  "C6-labelQ": model => relabeled(model, "Q", "the residuals' quiet rows"),
+  "C6-quoteQ": model => quoted(model, "Q3", "R-RESOURCES"),
+  "C6-Q4": model => ({ ...pinRemoved(model, "Q", "Q4"), residuals: omitted(model.residuals, ["Q4"]) }),
+  "C6-Q": model => ({ ...rowRemoved(model, "Q"), residuals: {} }),
+  "C6-member": model => ({ ...model, residuals: { ...model.residuals, Q1: (model.residuals.Q1 ?? []).filter(member => member !== "composed") } }),
+  PL1: model => lined(model, "11", (model.producer.lines["11"] ?? "").replace("permission-scoped, ", "")),
+  PL2: model => lined(model, "13", `${model.producer.lines["13"] ?? ""} (an edit outside the quote)`),
+  PL4: model => ({ ...model, producer: { ...model.producer, blob: "0".repeat(40) } }),
+};
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   Q1: Object.keys(SPELLINGS),
   Q2: ["two-field-reply"],
   Q3: ["over-budget-reply"],
   Q4: ["side-path-admitter"],
+  Q5: Object.keys(JUDGE_SURVIVORS),
+  Q6: Object.keys(PARTITIONS),
+  Q7: Object.keys(UNREAD),
 };
 
 // ---- the planted controls ----
@@ -995,6 +1270,61 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect(leaked.length, "the side path was taken").toBeGreaterThan(0);
     return { violations: found, leaked: leaked.length };
   },
+  Q5: () => {
+    const witness = Object.fromEntries(
+      Object.entries(JUDGE_SURVIVORS).map(([name, member]) => {
+        const call = DEPARTURES[member.input];
+        const honest = call === undefined ? undefined : HONEST(call);
+        const departed = call === undefined ? undefined : member.admit(call);
+        return [
+          name,
+          {
+            input: member.input,
+            judged: Object.values(violationsOf(member.admit)).flat(),
+            sameOutcomes: FIXTURES.every(entry => outcomeOf(drive(member.admit, entry)) === outcomeOf(drive(HONEST, entry))),
+            honest: honest === undefined ? null : outcomeOf(honest),
+            member: departed === undefined ? null : outcomeOf(departed),
+            departs: honest !== undefined && departed !== undefined && !isDeepStrictEqual(readView(honest), readView(departed)),
+          },
+        ];
+      }),
+    );
+    const members = Object.entries(witness);
+    expect(
+      members.filter(([, entry]) => entry.judged.length > 0).map(([name]) => name),
+      "R-JUDGE: the judge passes every member on the fifteen fixtures",
+    ).toEqual([]);
+    expect(
+      members.filter(([, entry]) => !entry.sameOutcomes).map(([name]) => name),
+      "with HONEST's outcome on each fixture",
+    ).toEqual([]);
+    expect(
+      members.filter(([, entry]) => !entry.departs).map(([name]) => name),
+      "and each member departs from HONEST on its own input",
+    ).toEqual([]);
+    return witness;
+  },
+  Q6: () => {
+    const quiet = Object.fromEntries(Object.entries(PARTITIONS).map(([name, merge]) => [name, failing(merged(LIVE, merge.row, merge.into, merge.from, merge.quote))]));
+    const kept = Object.fromEntries(Object.entries(PARTITIONS).map(([name, merge]) => [name, failing(merged(LIVE, merge.row, merge.into, merge.from, LIVE.quotes[merge.into] ?? ""))]));
+    expect(Object.values(quiet).flat(), "R-PARTITION: every reading holds under each merge").toEqual([]);
+    expect(
+      Object.entries(kept)
+        .filter(([, reds]) => reds.length === 0)
+        .map(([name]) => name),
+      "the same merge with the sibling's quote left in place reds a reading",
+    ).toEqual([]);
+    return { quiet, kept };
+  },
+  Q7: () => {
+    const quiet = Object.fromEntries(Object.entries(UNREAD).map(([name, edit]) => [name, failing(edit(LIVE))]));
+    const unchanged = Object.entries(UNREAD)
+      .filter(([, edit]) => isDeepStrictEqual(edit(LIVE), LIVE))
+      .map(([name]) => name);
+    expect(Object.values(quiet).flat(), "R-UNREAD: every reading holds under each edit").toEqual([]);
+    expect(unchanged, "each edit changes the model").toEqual([]);
+    return quiet;
+  },
 };
 
 interface Roster {
@@ -1032,6 +1362,9 @@ function beadRow(bead: string): { readonly title: string; readonly notes: string
 const CITATION_LEAD = "Citation: ";
 const ACCEPTANCE_LEAD = "Acceptance: ";
 const ACCEPTANCE_END = ". Consolidation candidate with R1/R9.";
+/** Clause (c)'s carry note, and the README.md lines the filing cites. */
+const CARRY = "carries O11's GP case";
+const CITED_LINES: readonly number[] = [13, 25];
 interface Cite {
   readonly line: number;
   readonly sha?: string;
@@ -1058,16 +1391,222 @@ function titleReading(title: string): { readonly tag?: string; readonly trigger?
   const match = /^\[([A-Z0-9-]+)\] (.+?), the host shall /.exec(title);
   return match === null ? {} : { tag: match[1], trigger: match[2] };
 }
-/** The quotes tile the label in order, with nothing but separators (whitespace, comma, semicolon, colon, parentheses, plus) between. */
+/** A separator character: whitespace, comma, semicolon, colon, parentheses or plus. */
+const SEPARATOR = /[\s,;:()+]/;
+const separatorsOnly = (text: string): boolean => [...text].every(character => SEPARATOR.test(character));
+/** The quotes tile the label in order: each quote is non-empty and opens and closes on a non-separator character, and only
+ * separator characters lie between quotes and at the label's ends. */
 function tiles(label: string, quotes: readonly string[]): boolean {
   let at = 0;
   for (const quote of quotes) {
+    if (quote === "" || SEPARATOR.test(quote.charAt(0)) || SEPARATOR.test(quote.charAt(quote.length - 1))) return false;
     const found = label.indexOf(quote, at);
-    if (found < 0 || !/^[\s,;:()+]*$/.test(label.slice(at, found))) return false;
+    if (found < 0 || !separatorsOnly(label.slice(at, found))) return false;
     at = found + quote.length;
   }
-  return /^[\s,;:()+]*$/.test(label.slice(at));
+  return separatorsOnly(label.slice(at));
 }
+
+// ---- the outside readings of the anchor model ----
+
+/** The files outside the census and its roster that the readings compare the model with, read once. */
+interface Outside {
+  readonly title: string;
+  readonly notes: string;
+  readonly receipt: Readonly<Record<string, unknown>>;
+  readonly okFrames: readonly unknown[];
+  readonly errorFrame: unknown;
+  readonly registry: string;
+  readonly tones: string;
+  readonly join: string;
+  /** wb-gxd7.3's P-SAMPLE-FILE capture path, its field segment dropped. */
+  readonly decisionPath: readonly string[];
+}
+let outsideCache: Outside | undefined;
+function outside(): Outside {
+  if (outsideCache === undefined) {
+    const row = beadRow(BEAD);
+    const runs = listOf(own(own(parsedOf(textOf(RUNS)), "producer"), "runs"));
+    const path = (CAPTURES.find(entry => entry.id === PRODUCER_SPEC.capture)?.path ?? "").split(".");
+    outsideCache = {
+      title: row?.title ?? "",
+      notes: row?.notes ?? "",
+      receipt: RECEIPT,
+      okFrames: runs.filter(run => own(run, "rc") === 0).map(run => parsedOf(String(own(run, "stdout")))),
+      errorFrame: parsedOf(MEASURED_ERROR.stdout),
+      registry: /export type CapabilityErrorCategory = ([^;]+);/.exec(textOf(REGISTRY))?.[1] ?? "",
+      tones: /statusTone: ([^;]+);/.exec(textOf(OBSERVATION))?.[1] ?? "",
+      join: textOf(JOIN_CENSUS),
+      decisionPath: path.at(-1) === PRODUCER_SPEC.field ? path.slice(0, -1) : [],
+    };
+  }
+  return outsideCache;
+}
+/** The outside readings, in order (each named in the header's OUTSIDE ANCHORS paragraph). */
+const READINGS = [
+  "statement",
+  "tag",
+  "trigger",
+  "clauses",
+  "carry",
+  "tiling T",
+  "tiling A",
+  "tiling B",
+  "tiling C",
+  "field count",
+  "field order",
+  "field pins",
+  "cause count",
+  "cause order",
+  "unavailable word",
+  "success word",
+  "cites",
+  "producer quotes",
+  "producer sha",
+  "pinned schema",
+  "pinned checkpoint",
+  "frame schema",
+  "frame keys",
+  "frame path",
+  "registry word",
+  "tone word",
+  "A3 quote",
+] as const;
+type Reading = (typeof READINGS)[number];
+/** Clause (c) read as its failures, its outcome word (after "yields typed") and its last word (after "claims"). */
+const OUTCOME_CLAUSE = /^(.*) yields typed (\S+) and no receipt row claims (\S+)$/;
+/** Every outside reading of a model: true where it holds. */
+function anchorReadings(model: AnchorModel): Readonly<Record<Reading, boolean>> {
+  const seen = outside();
+  const row = (id: string): Row | undefined => model.rows.find(entry => entry.id === id);
+  const tiled = (id: string): boolean => {
+    const entry = row(id);
+    return entry !== undefined && tiles(entry.label, entry.pins.map(pin => model.quotes[pin] ?? ""));
+  };
+  const heading = titleReading(seen.title);
+  const filing = filingReading(seen.notes);
+  const clauses = filing.clauses.map(labelOf);
+  const requirements = (clauses[0]?.label.split("asserts admission requires ")[1] ?? "").split(/, | and /);
+  const outcome = OUTCOME_CLAUSE.exec(clauses[2]?.label ?? "");
+  const failures = (outcome?.[1] ?? "").split(/, | or /);
+  const pinned = filing.cites.flatMap(cite => (cite.sha === undefined ? [] : [cite.sha]));
+  const frame = parsedOf(model.frame);
+  const keys = ownKeys(frame);
+  return {
+    statement: model.statement === seen.title,
+    tag: heading.tag !== undefined && heading.tag === model.requirement,
+    trigger: heading.trigger !== undefined && heading.trigger === row("T")?.label,
+    clauses: isDeepStrictEqual(
+      clauses.map(clause => clause.label),
+      ["A", "B", "C"].map(id => row(id)?.label),
+    ),
+    carry: isDeepStrictEqual(
+      clauses.map(clause => clause.carry ?? null),
+      [null, null, model.carry],
+    ),
+    "tiling T": tiled("T"),
+    "tiling A": tiled("A"),
+    "tiling B": tiled("B"),
+    "tiling C": tiled("C"),
+    "field count": requirements.length === model.fields.length,
+    "field order": model.fields.length > 0 && model.fields.every((field, index) => (requirements[index] ?? "").includes(field)),
+    "field pins": model.fields.length > 0 && model.fields.every(field => (model.quotes[model.fieldPins[field] ?? ""] ?? "").includes(field)),
+    "cause count": failures.length === model.causes.length,
+    "cause order": model.causes.length > 0 && model.causes.every((cause, index) => (failures[index] ?? "").includes(cause)),
+    "unavailable word": outcome?.[2] === model.unavailable,
+    "success word": outcome?.[3] === model.success,
+    cites: isDeepStrictEqual(
+      filing.cites.map(cite => cite.line),
+      model.citedLines,
+    ),
+    "producer quotes": filing.cites.length > 0 && filing.cites.every(cite => (model.producer.lines[String(cite.line)] ?? "").includes(cite.quote)),
+    "producer sha": pinned.length > 0 && pinned.every(sha => model.producer.sha.startsWith(sha)),
+    "pinned schema": model.schema === own(seen.receipt, "schema"),
+    "pinned checkpoint": model.checkpoint === own(seen.receipt, "checkpoint_digest"),
+    "frame schema":
+      seen.okFrames.some(measured => own(measured, "schema") === model.envelope && own(measured, "ok") === true && record(own(measured, "result"))) &&
+      own(seen.errorFrame, "schema") === model.envelope,
+    "frame keys":
+      keys.length > 0 &&
+      seen.okFrames.some(measured => keys.every(key => ownKeys(measured).includes(key)) && own(frame, "schema") === own(measured, "schema") && own(frame, "ok") === own(measured, "ok")),
+    "frame path": seen.decisionPath.length > 0 && isDeepStrictEqual(seen.decisionPath.reduce<unknown>((at, key) => own(at, key), frame), seen.receipt),
+    "registry word": seen.registry.includes(`"${model.unavailable}"`),
+    "tone word": seen.tones.includes(`"${model.success}"`),
+    "A3 quote": seen.join.includes(`wb-0lf.3's '${model.quotes.A3 ?? ""}' check is pinned to this byte-exact form`),
+  };
+}
+/** The readings a model fails, in READINGS order. */
+function failing(model: AnchorModel): Reading[] {
+  const readings = anchorReadings(model);
+  return READINGS.filter(reading => !readings[reading]);
+}
+/** The census's own anchor model: its literals, and its roster's statement and producer block. */
+const LIVE: AnchorModel = {
+  requirement: REQUIREMENT,
+  rows: ROWS,
+  quotes: QUOTES,
+  fields: FIELDS,
+  fieldPins: FIELD_PINS,
+  causes: CAUSES,
+  carry: CARRY,
+  unavailable: UNAVAILABLE,
+  success: SUCCESS,
+  citedLines: CITED_LINES,
+  schema: PINNED_SCHEMA,
+  checkpoint: PINNED_CHECKPOINT,
+  envelope: ENVELOPE_SCHEMA,
+  frame: VALID,
+  residuals: RESIDUALS,
+  statement: ROSTER.statement,
+  producer: ROSTER.producer,
+};
+/** BOUND: model edits, each named for the coordinated census-and-roster edit it stands for, and the reading it must red. */
+const BOUND: Readonly<Record<string, { readonly edit: Edit; readonly reds: Reading }>> = {
+  "C6-rowT": { edit: model => rowRemoved(model, "T"), reds: "trigger" },
+  "C6-rowA": { edit: model => rowRemoved(model, "A"), reds: "clauses" },
+  "C6-rowB": { edit: model => rowRemoved(model, "B"), reds: "clauses" },
+  "C6-rowC": { edit: model => rowRemoved(model, "C"), reds: "clauses" },
+  "C6-labelT": { edit: model => relabeled(model, "T", labelIn(model, "T").replace(" + a Pi", " and a Pi")), reds: "trigger" },
+  "C6-labelA": {
+    edit: model => quoted(relabeled(model, "A", labelIn(model, "A").replace("reader-adapter", "reader adapter")), "A1", (model.quotes.A1 ?? "").replace("reader-adapter", "reader adapter")),
+    reds: "clauses",
+  },
+  "C6-word-T3": { edit: model => quoted(model, "T3", "a Pi decision site"), reds: "tiling T" },
+  "C6-word-A4": { edit: model => quoted(model, "A4", "actor within scope"), reds: "tiling A" },
+  "C6-word-B2": { edit: model => quoted(model, "B2", "naming the field"), reds: "tiling B" },
+  "C6-word-C2": { edit: model => quoted(model, "C2", "and no receipt row claims a success"), reds: "tiling C" },
+  "G-sepT2": { edit: model => quoted(model, "T2", `(${model.quotes.T2 ?? ""}`), reds: "tiling T" },
+  "G-sepA2": { edit: model => quoted(model, "A2", `${model.quotes.A2 ?? ""},`), reds: "tiling A" },
+  "G-sepC1": { edit: model => quoted(model, "C1", ` ${model.quotes.C1 ?? ""}`), reds: "tiling C" },
+  "C6-mA3": { edit: model => merged(model, "A", "A3", "A4", "snapshotDigest === the digest Pi exported, actor in scope"), reds: "A3 quote" },
+  "C6-field-schema": { edit: model => fieldRemoved(model, "schema"), reds: "field count" },
+  "C6-field-checkpoint": { edit: model => fieldRemoved(model, "checkpoint"), reds: "field count" },
+  "C6-field-snapshotDigest": { edit: model => fieldRemoved(model, "snapshotDigest"), reds: "field count" },
+  "C6-field-actor": { edit: model => fieldRemoved(model, "actor"), reds: "field count" },
+  "C6-field-support": { edit: model => fieldRemoved(model, "support"), reds: "field count" },
+  "G-fieldorder": { edit: model => ({ ...model, fields: [model.fields[1] ?? "", model.fields[0] ?? "", ...model.fields.slice(2)] }), reds: "field order" },
+  "G-fieldpin": { edit: model => ({ ...model, fieldPins: { ...model.fieldPins, actor: "A5" } }), reds: "field pins" },
+  "C6-cause-timeout": { edit: model => causeRemoved(model, "timeout"), reds: "cause count" },
+  "C6-cause-exit": { edit: model => causeRemoved(model, "exit"), reds: "cause count" },
+  "C6-cause-malformed": { edit: model => causeRemoved(model, "malformed"), reds: "cause count" },
+  "G-causeorder": { edit: model => ({ ...model, causes: [model.causes[1] ?? "", model.causes[0] ?? "", ...model.causes.slice(2)] }), reds: "cause order" },
+  "G-unavailable": { edit: model => ({ ...model, unavailable: "transport" }), reds: "unavailable word" },
+  "G-unavailable-nonmember": { edit: model => ({ ...model, unavailable: "absent" }), reds: "registry word" },
+  "G-success": { edit: model => ({ ...model, success: "waiting" }), reds: "success word" },
+  "G-success-nonmember": { edit: model => ({ ...model, success: "succeeded" }), reds: "tone word" },
+  "ST-statement": { edit: model => ({ ...model, statement: model.statement.replace("the host shall independently check", "the host shall check") }), reds: "statement" },
+  "G-requirement": { edit: model => ({ ...model, requirement: model.requirement.replace(/R3$/, "R2") }), reds: "tag" },
+  "G-carry": { edit: model => ({ ...model, carry: model.carry.replace("O11's GP case", "O11's case") }), reds: "carry" },
+  "G-cites": { edit: model => ({ ...model, citedLines: model.citedLines.slice(0, 1) }), reds: "cites" },
+  PL3: { edit: model => lined(model, "13", (model.producer.lines["13"] ?? "").replace("constraints independently.", "constraints separately.")), reds: "producer quotes" },
+  "PL-sha": { edit: model => ({ ...model, producer: { ...model.producer, sha: `${model.producer.sha.startsWith("1") ? "2" : "1"}${model.producer.sha.slice(1)}` } }), reds: "producer sha" },
+  "G-schema": { edit: model => ({ ...model, schema: "graphpolicy.receipt.decision.draft" }), reds: "pinned schema" },
+  "G-checkpoint": { edit: model => ({ ...model, checkpoint: `${prefixOf(model.checkpoint)}${"0".repeat(64)}` }), reds: "pinned checkpoint" },
+  "G-envelope": { edit: model => ({ ...model, envelope: "graphpolicy.cli.draft", frame: frameText({ schema: "graphpolicy.cli.draft", ok: true, result: { decision: RECEIPT } }) }), reds: "frame schema" },
+  "C6-frame": { edit: model => ({ ...model, frame: frameText({ schema: model.envelope, ok: true, result: { choice: RECEIPT } }) }), reds: "frame path" },
+  "G-frame-result": { edit: model => ({ ...model, frame: frameText({ schema: model.envelope, ok: true, output: { decision: RECEIPT } }) }), reds: "frame keys" },
+  "G-frame-ok": { edit: model => ({ ...model, frame: frameText({ schema: model.envelope, okay: true, result: { decision: RECEIPT } }) }), reds: "frame keys" },
+};
 
 describe(SUITE, () => {
   for (const row of ROWS) {
@@ -1083,9 +1622,9 @@ describe(SUITE, () => {
     }
   }
 
-  it("rule 16: the rows, the residual families, the fields, the causes, the checks, the mutants, the fixtures, the field tokens and the admitters are frozen at their measured shape", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:3", "A:5", "B:3", "C:2", "Q:4"]);
-    expect(Object.entries(RESIDUALS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:6", "Q2:1", "Q3:1", "Q4:1"]);
+  it("rule 16: the rows, the residual families, the fields, the causes, the checks, the mutants, the fixtures, the field tokens, the admitters, the readings and the BOUND table are frozen at their measured shape", () => {
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:3", "A:5", "B:3", "C:2", "Q:7"]);
+    expect(Object.entries(RESIDUALS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:6", "Q2:1", "Q3:1", "Q4:1", "Q5:14", "Q6:4", "Q7:8"]);
     expect(Object.keys(QUOTES), "one quote per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
     expect(Object.keys(IMPL), "one case per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
     expect(FIELDS).toEqual(["schema", "checkpoint", "snapshotDigest", "actor", "support"]);
@@ -1150,100 +1689,121 @@ describe(SUITE, () => {
     expect(GP_PROVIDERS).toEqual(["gp", "graphpolicy", "graph-policy-cli"]);
     expect(GP_REPLY_ADMITTERS).toEqual([]);
     expect(SRC_FLOOR).toBe(100);
+    expect([...READINGS]).toEqual([
+      "statement",
+      "tag",
+      "trigger",
+      "clauses",
+      "carry",
+      "tiling T",
+      "tiling A",
+      "tiling B",
+      "tiling C",
+      "field count",
+      "field order",
+      "field pins",
+      "cause count",
+      "cause order",
+      "unavailable word",
+      "success word",
+      "cites",
+      "producer quotes",
+      "producer sha",
+      "pinned schema",
+      "pinned checkpoint",
+      "frame schema",
+      "frame keys",
+      "frame path",
+      "registry word",
+      "tone word",
+      "A3 quote",
+    ]);
+    expect(Object.entries(BOUND).map(([name, bound]) => `${name}:${bound.reds}`)).toEqual([
+      "C6-rowT:trigger",
+      "C6-rowA:clauses",
+      "C6-rowB:clauses",
+      "C6-rowC:clauses",
+      "C6-labelT:trigger",
+      "C6-labelA:clauses",
+      "C6-word-T3:tiling T",
+      "C6-word-A4:tiling A",
+      "C6-word-B2:tiling B",
+      "C6-word-C2:tiling C",
+      "G-sepT2:tiling T",
+      "G-sepA2:tiling A",
+      "G-sepC1:tiling C",
+      "C6-mA3:A3 quote",
+      "C6-field-schema:field count",
+      "C6-field-checkpoint:field count",
+      "C6-field-snapshotDigest:field count",
+      "C6-field-actor:field count",
+      "C6-field-support:field count",
+      "G-fieldorder:field order",
+      "G-fieldpin:field pins",
+      "C6-cause-timeout:cause count",
+      "C6-cause-exit:cause count",
+      "C6-cause-malformed:cause count",
+      "G-causeorder:cause order",
+      "G-unavailable:unavailable word",
+      "G-unavailable-nonmember:registry word",
+      "G-success:success word",
+      "G-success-nonmember:tone word",
+      "ST-statement:statement",
+      "G-requirement:tag",
+      "G-carry:carry",
+      "G-cites:cites",
+      "PL3:producer quotes",
+      "PL-sha:producer sha",
+      "G-schema:pinned schema",
+      "G-checkpoint:pinned checkpoint",
+      "G-envelope:frame schema",
+      "C6-frame:frame path",
+      "G-frame-result:frame keys",
+      "G-frame-ok:frame keys",
+    ]);
   });
 
-  it("the outside anchors: the bead's row binds the labels and quote tiling of rows T, A, B and C, the fields and causes by count and containment and the citation's two quotes in the roster's producer lines; the receipt, the runs, Pi's source and wb-gxd7.3 bind the pinned ids, the frame schema id, two words and A3's quote; row Q and pin partitions are unbound", { timeout: LIVE_BUDGET_MS }, () => {
+  it("the outside anchors: every outside reading holds on the census's anchor model, every BOUND edit of that model reds the reading it names, and every reading is red under some BOUND edit", { timeout: LIVE_BUDGET_MS }, () => {
     const row = beadRow(BEAD);
     expect(row, `${BEAD}'s row was read from the tracker export`).toBeDefined();
-    const title = row?.title ?? "";
+    expect(Object.keys(anchorReadings(LIVE)), "the readings, in READINGS order").toEqual([...READINGS]);
+    expect(failing(LIVE), "every outside reading holds on the census's own literals").toEqual([]);
+    for (const [name, bound] of Object.entries(BOUND)) expect(failing(bound.edit(LIVE)), `${name} reds ${bound.reds}`).toContain(bound.reds);
+    expect(
+      READINGS.filter(reading => !Object.values(BOUND).some(bound => bound.reds === reading)),
+      "every reading is red under some BOUND edit",
+    ).toEqual([]);
     const notes = row?.notes ?? "";
-    expect(ROSTER.statement, "the roster's statement is the bead's title").toBe(title);
-    const heading = titleReading(title);
-    expect(heading.tag, "the title opens with the requirement id").toBe(REQUIREMENT);
-    expect(heading.trigger, "row T's label is the title's trigger").toBe(ROWS.find(entry => entry.id === "T")?.label);
-    const filing = filingReading(notes);
-    const clauses = filing.clauses.map(labelOf);
-    expect(
-      clauses.map(clause => clause.label),
-      "the acceptance holds three clauses, each exactly one row's label",
-    ).toEqual(["A", "B", "C"].map(id => ROWS.find(entry => entry.id === id)?.label));
-    expect(
-      clauses.map(clause => clause.carry ?? null),
-      "clause (c) alone carries a note",
-    ).toEqual([null, null, "carries O11's GP case"]);
-    for (const entry of ROWS.filter(candidate => candidate.id !== "Q")) {
-      expect(
-        tiles(
-          entry.label,
-          entry.pins.map(pin => QUOTES[pin] ?? ""),
-        ),
-        `row ${entry.id}'s pin quotes tile its label`,
-      ).toBe(true);
-    }
-    const requirements = (clauses[0]?.label.split("asserts admission requires ")[1] ?? "").split(/, | and /);
-    expect(requirements.length, "clause (a) requires one check per field").toBe(FIELDS.length);
-    for (const [index, field] of FIELDS.entries()) {
-      expect(requirements[index], `clause (a)'s requirement ${index + 1} names ${field}`).toContain(field);
-      expect(QUOTES[FIELD_PINS[field]], `${field}'s pin quotes it`).toContain(field);
-    }
-    const causes = (clauses[2]?.label.split(" yields typed unavailable")[0] ?? "").split(/, | or /);
-    expect(causes.length, "clause (c) names one cause per worker failure").toBe(CAUSES.length);
-    for (const [index, cause] of CAUSES.entries()) expect(causes[index], `clause (c)'s cause ${index + 1} names ${cause}`).toContain(cause);
-    expect(clauses[2]?.label, "clause (c)'s outcome word").toContain(`typed ${UNAVAILABLE}`);
-    expect(
-      filing.cites.map(cite => cite.line),
-      "the filing quotes README.md lines 13 and 25",
-    ).toEqual([13, 25]);
-    for (const cite of filing.cites) {
-      expect(ROSTER.producer.lines[String(cite.line)] ?? "", `the producer's line ${cite.line} carries the filing's quote`).toContain(cite.quote);
-      if (cite.sha !== undefined) expect(ROSTER.producer.sha.startsWith(cite.sha), "the producer sha is the filing's pin").toBe(true);
-    }
-    expect(ROSTER.producer.repo, "the producer is Furnace").toBe("Furnace");
-    expect(ROSTER.producer.path.endsWith("/README.md"), "the producer path is the filing's README").toBe(true);
     const appended = `${notes}\n\nCitation: README.md:99@0123456789ab ('appended'). Acceptance: x; y; z. Consolidation candidate with R1/R9.\n`;
-    expect(filingReading(appended), "a note appended after the filing changes no reading").toEqual(filing);
-    expect(PINNED_SCHEMA, "the pinned schema is the vendored receipt's").toBe(own(RECEIPT, "schema"));
-    expect(PINNED_CHECKPOINT, "the pinned checkpoint is the vendored receipt's").toBe(own(RECEIPT, "checkpoint_digest"));
-    const runs = listOf(own(own(JSON.parse(textOf(RUNS)), "producer"), "runs"));
-    const frames = runs
-      .filter(run => own(run, "rc") === 0)
-      .map(run => {
-        try {
-          return JSON.parse(String(own(run, "stdout"))) as unknown;
-        } catch {
-          return undefined;
-        }
-      });
-    expect(
-      frames.some(frame => own(frame, "schema") === ENVELOPE_SCHEMA && own(frame, "ok") === true && record(own(frame, "result"))),
-      "a measured exit-0 gp run writes the frame the fixtures use",
-    ).toBe(true);
-    expect(own(JSON.parse(MEASURED_ERROR.stdout), "schema"), "the measured error envelope is the same frame").toBe(ENVELOPE_SCHEMA);
-    expect(/export type CapabilityErrorCategory = ([^;]+);/.exec(textOf(REGISTRY))?.[1] ?? "", "the registry's categories name unavailable").toContain(`"${UNAVAILABLE}"`);
-    expect(/statusTone: ([^;]+);/.exec(textOf(OBSERVATION))?.[1] ?? "", "Pi's statusTone names success").toContain(`"${SUCCESS}"`);
-    expect(textOf(JOIN_CENSUS), "wb-gxd7.3's clause (c) names row A3's check").toContain(`wb-0lf.3's '${QUOTES.A3}' check is pinned to this byte-exact form`);
+    expect(filingReading(appended), "a note appended after the filing changes no reading").toEqual(filingReading(notes));
+    expect(ROSTER.producer.repo, "the roster's producer is Furnace (a roster-internal check)").toBe("Furnace");
+    expect(ROSTER.producer.path.endsWith("/README.md"), "the roster's producer path is a README (a roster-internal check)").toBe(true);
   });
 
-  it("respin scope: the header restricts the outside anchors to rows T, A, B and C and names C6-mA, C6-mT, C6-mB, C6-mC and C6-quoteQ under NOT CLAIMED", () => {
+  it("respin scope: the header carries the readings' summary and the not-read sentence, names each R-PARTITION and R-UNREAD member, and carries none of the retired summaries", () => {
     const header = textOf("test/workbench-gp-reply-admission-census.test.ts").split("*/", 1)[0] ?? "";
     const normalized = header.replace(/\s*\*\s*/g, " ").replace(/\s+/g, " ");
     expect(normalized).toContain(
-      "So the outside anchors bind the labels and concatenated quote text of rows T, A, B and C, the count and containment of the five fields and the three causes, A3's quote, the citation's two quotes in the roster's producer lines, the pinned ids, the frame's schema id and the two words; they do not bind a row's pin partition, row Q's label, pins or quotes, the residual members, the witnesses, the test titles, or the roster's producer block beyond the two quotes and the sha's pin prefix.",
+      "So the readings hold by equality the labels of rows T, A, B and C, the requirement tag, the carry note, the cited line numbers, the two words, the pinned ids, the frame schema id, the roster's statement and A3's quote; by count, order and containment the five fields and the three causes; each quote's text once the row's split into pins is given, a separator at a quote's edge included; the frame's key names (schema, ok, result and the decision key; any further key must be a measured frame key) and its decision path; and the cited quotes in the producer lines with each cited pin as the producer sha's prefix.",
     );
-    expect(header).toContain("C6-mA, C6-mT, C6-mB and C6-mC: each pin merges into a sibling with its quote re-homed and the census stays green.");
-    expect(header).toContain("C6-quoteQ: Q3's quote changes in both the census and roster while the census stays green.");
-    expect(header).not.toContain("So a field, a cause, a pin or a row removed");
+    expect(normalized).toContain(
+      "They do not read the split of a label into pins (R-PARTITION), row Q, the residual members or the producer block beyond the cited quotes and the sha's prefix (R-UNREAD), the witnesses, the test titles, the checks, the mutants, the fixtures, or the frame reader (F-ADMIT, a census check, holds the reader to the frame the census writes).",
+    );
+    for (const name of [...Object.keys(PARTITIONS), ...Object.keys(UNREAD)]) expect(normalized, `${name} is named`).toContain(`${name}: `);
+    for (const retired of ["So a field, a cause, a pin or a row removed", "and the two words; they do not bind", "Pi's own source binds the words", "So the outside anchors bind"]) {
+      expect(normalized, "a retired summary").not.toContain(retired);
+    }
   });
 
-  it("respin scope: armed checks state the measured fixture boundary and all G1-G12 survivors", () => {
+  it("respin scope: the header carries the fixture-boundary sentence and each R-JUDGE member's name with its description", () => {
     const header = textOf("test/workbench-gp-reply-admission-census.test.ts").split("*/", 1)[0] ?? "";
     const normalized = header.replace(/\s*\*\s*/g, " ").replace(/\s+/g, " ");
     expect(normalized).toContain("The armed judge measures the fifteen listed fixtures and 23 listed mutants, not every possible admitter or input.");
-    for (let n = 1; n <= 12; n++) expect(header, `G${n} is named as an unmeasured member`).toContain(`G${n}:`);
+    for (const [name, member] of Object.entries(JUDGE_SURVIVORS)) expect(normalized, `${name} is named with its description`).toContain(`${name}: ${member.about}`);
     expect(header).not.toContain("that binds the first admitter to come");
   });
 
-  it("respin scope: T1 claims the spelled vocabulary only (GraphPolicyCLI's names in any case, the field tokens case-sensitive), with escaped and vocabulary-free residuals", () => {
+  it("respin scope: the header carries the T1 spelled-vocabulary sentence and the P4 and P5 sentence, P3's escaped spelling reads quiet, and the retired T1 sentence is absent", () => {
     const header = textOf("test/workbench-gp-reply-admission-census.test.ts").split("*/", 1)[0] ?? "";
     const normalized = header.replace(/\s*\*\s*/g, " ").replace(/\s+/g, " ");
     expect(normalized).toContain(
@@ -1254,7 +1814,7 @@ describe(SUITE, () => {
     expect(header).not.toContain("The census pins that (row T) and an ARMED contract");
   });
 
-  it("respin scope: the outside-anchor titles and the header carry the cut-3 restatements (rows T, A, B and C; the citation's two quotes; C6-labelQ, PL1, PL2 and PL4; the T1, T3, A2, frame, row-removal and wb-0lf.1 sentences)", ({ task }) => {
+  it("respin scope: no other registered title says bind or binds, four respin-scope cases are registered, one outside-anchor case title names the readings and the BOUND table, and the header carries the listed sentences and none of the retired ones", ({ task }) => {
     const header = textOf("test/workbench-gp-reply-admission-census.test.ts").split("*/", 1)[0] ?? "";
     const normalized = header.replace(/\s*\*\s*/g, " ").replace(/\s+/g, " ");
     const titles: string[] = [];
@@ -1265,26 +1825,37 @@ describe(SUITE, () => {
       }
     };
     walk(task.file.tasks);
-    const anchorTitles = titles.filter(title => title.includes("outside anchors"));
-    expect(anchorTitles.length, "two case titles speak for the outside anchors").toBe(2);
-    for (const title of anchorTitles) {
-      expect(title, "an outside-anchor title names the rows whose labels the anchors read").toContain("rows T, A, B and C");
-      expect(title, "and claims no label beyond them").not.toMatch(/\b(?:row|bind) labels\b/);
-    }
-    const anchorCase = anchorTitles.find(title => title.startsWith("the outside anchors: ")) ?? "";
-    expect(anchorCase, "the producer reading is the citation's two quotes").toContain("the citation's two quotes in the roster's producer lines");
-    expect(anchorCase, "never the producer lines themselves").not.toContain("and producer lines");
-    expect(normalized).toContain("C6-labelQ: row Q's label changes in both the census and the roster while the census stays green.");
-    expect(normalized).toContain("PL1, PL2 and PL4: the roster's producer line 11 edited, text appended to line 13 outside its quote, and the producer blob id changed each leave the census green.");
-    expect(normalized).toContain("Row T, A, B or C removed whole from every literal and the roster reds by those readings, and so does one of the five fields or three causes; a quote re-homed into a sibling pin need not.");
-    expect(normalized).toContain("one same-length checkpoint id sharing the pinned id's form prefix");
-    expect(normalized).toContain("The measured runs bind the frame's schema id");
-    expect(normalized).toContain("the control core registers none of the provider spellings gp, graphpolicy and graph-policy-cli");
-    expect(normalized).not.toContain("the listed case-sensitive spelled vocabulary");
-    expect(normalized).not.toContain("one longer prefix-sharing checkpoint");
-    expect(normalized).not.toContain("A whole row, field or cause removed from every literal");
-    expect(normalized).not.toContain("bind the pinned ids and the CLI frame");
-    expect(normalized).not.toContain("the decision point of wb-0lf.1 has not landed");
+    expect(
+      titles.filter(title => title !== task.name && /\bbinds?\b/i.test(title)),
+      "no other title says what an anchor binds",
+    ).toEqual([]);
+    expect(titles.filter(title => title.startsWith("respin scope: ")).length, "the four respin-scope cases are registered").toBe(4);
+    const anchorTitles = titles.filter(title => title.startsWith("the outside anchors: "));
+    expect(anchorTitles.length, "one case speaks for the outside anchors").toBe(1);
+    expect(anchorTitles[0], "its title names the readings on the anchor model").toContain("every outside reading holds on the census's anchor model");
+    expect(anchorTitles[0], "and the BOUND table").toContain("every BOUND edit of that model reds the reading it names");
+    const carried = [
+      "and no src decision point exists (wb-0lf.1 landed at landing 648 as a test-only census of that absence)",
+      "the control core registers none of the provider spellings gp, graphpolicy and graph-policy-cli",
+      "one same-length checkpoint id sharing the pinned id's form prefix",
+      "each quote is non-empty and opens and closes on a non-separator character, and only separator characters lie between quotes and at the label's ends",
+      'unavailable word and success word (clause (c)\'s word after "yields typed" equals the unavailable word, and its last word, after "claims", equals the success word)',
+      "registry word and tone word (the unavailable word is a CapabilityErrorCategory member and the success word a statusTone member, membership only)",
+      "frame keys (every key of the census's frame is a key of one measured exit-0 frame, whose schema id and ok value the frame carries)",
+      "frame path (the census's frame holds the vendored receipt at that path, the field segment dropped)",
+      "the case asserts that each reds the reading the BOUND table names beside it; every reading is red under at least one member.",
+    ];
+    for (const sentence of carried) expect(normalized, "a carried sentence").toContain(sentence);
+    const retired = [
+      "the listed case-sensitive spelled vocabulary",
+      "one longer prefix-sharing checkpoint",
+      "A whole row, field or cause removed from every literal",
+      "bind the pinned ids and the CLI frame",
+      "the decision point of wb-0lf.1 has not landed",
+      "The measured runs bind the frame's schema id",
+      "Row T, A, B or C removed whole from every literal and the roster reds by those readings",
+    ];
+    for (const sentence of retired) expect(normalized, "a retired sentence").not.toContain(sentence);
   });
 
   it("roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/gp-reply-admission-roster.json, in order and both ways; every pin reached its witness compare", ({ task }) => {
