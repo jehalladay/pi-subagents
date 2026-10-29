@@ -53,6 +53,10 @@
  * MEASURED FOR wb-8ccl AT 8d458c6 (trunk tip at claim time, landing 586): the two-word member written with a tab and with a no-break
  * space in place of its space, planted in one src file of the live tree, reads quiet (25 of 25, the gate's landing-579 F2 escape), so
  * both are R-SPELLING members, which its quiet row now plants with every other white-space character (RESIDUALS below).
+ * MEASURED FOR wb-iug2 AT 9ad61f3 (trunk tip at claim time, landing 680): the two-word member written with U+200B (zero-width space),
+ * with U+3164 (Hangul filler) and with nothing in place of its space, planted in one src file of the live tree, reads quiet (25 of 25,
+ * the gate's landing-635 F1 escape), while the member with its space reds 6 (A2, C2, E1, E2, F2 and records), so the site is read. Any
+ * code point can stand in for the space, so R-SPELLING now bounds that member's joiner at the class instead of listing members.
  *
  * READINGS. A tree is walked from the repository root by directory entries: a regular file is read, a directory recursed (hidden
  * entries included), anything else (a symlink, a socket) is UNREAD and recorded. Every file is read as latin1 bytes, so the ASCII
@@ -123,8 +127,14 @@
  * escapes the exact-name reading. With the extension, R-SPELLING also plants the upper case and the two-word member's other
  * separators (underscore, hyphen, two spaces and, since wb-8ccl, each other white-space character: the engine's \s class over the BMP,
  * 24 characters with a line break, the tab and the no-break space U+00A0 among them, pinned by code point in SPACE_SEPARATOR_POINTS
- * and derived at run time in WHITE_SPACE), and R-ENCODED reads the one extension member whose text spells a base member through that
- * member: encoded, it is still read (as the member it spells), so it is no escape.
+ * and derived at run time in WHITE_SPACE). Since wb-iug2 it bounds that member's joiner at the class: the reading admits one joiner
+ * between its words, its one space (the words carry no white space, and the matcher's one alternative holding both is the member's own
+ * text), and the quiet row plants every other joiner of at most one code point - the joined spelling and each of the 1,112,063 other
+ * Unicode scalar values, derived plane by plane from the engine (U+200B and U+3164 among them, named in JOINER_POINTS; the count pinned
+ * at the standard's SCALAR_VALUES, read off the files as written), one src file per plane that the member with its space opens and
+ * closes, so each file is read to its end. No joiner of one scalar value escapes unplanted, and a longer joiner is read as the member
+ * only where its line still holds the member's own text. R-ENCODED reads the one extension member whose text spells a base member
+ * through that member: encoded, it is still read (as the member it spells), so it is no escape.
  * Gate behaviour: the day a source owner publishes an exported package or an adapter with a recorded adoption gate, the artifact is
  * triaged as its own program-triage epic and the cut that lands its adoption owes this census's update; until then it stays empty by
  * design. Display paths added: none. Test-only: synthetic trees live in makeScratch scratch with the leak guard installed; src, the
@@ -909,6 +919,36 @@ const SPACE_SEPARATOR_POINTS: readonly string[] = ["005f", "002d", "0020+0020", 
 /** The white-space characters other than the space, derived at run time from the engine's \s class over the BMP - an anchor outside
  * this census's literals, so SPACE_SEPARATOR_POINTS losing a member (or the derivation losing one) reds R-SPELLING. */
 const WHITE_SPACE: readonly string[] = Array.from({ length: 0x10000 }, (_, point) => String.fromCodePoint(point)).filter(char => char !== " " && /\s/.test(char));
+/** R-SPELLING's class-level bound on what may join the two-word member's words (wb-iug2, the R694 lead from landing 635 F1): the line
+ * reading reads that member through one joiner only, its one space, so every other joiner of at most one code point - nothing at all
+ * (the joined spelling, named "none") and each other Unicode scalar value - is planted in its place. JOINER_POINTS names by code point
+ * the three members the gate measured outside the white-space class; SCALAR_VALUES is the standard's count the class must reach (17
+ * planes of 65,536 code points less the 2,048 surrogates: with the space out and the joined spelling in, the same number). */
+const JOINER_POINTS: readonly string[] = ["none", "200b", "3164"];
+const SCALAR_VALUES = 17 * 0x10000 - 0x800;
+/** A joiner's name read back: "none" is the joined spelling, any other name the code points it spells. */
+const joinerOf = (name: string): string => (name === "none" ? "" : String.fromCodePoint(...name.split("+").map(part => Number.parseInt(part, 16))));
+/** The engine's code space: String.fromCodePoint builds each code point in it and refuses one past its end (a RangeError). */
+const inCodeSpace = (point: number): boolean => {
+  try {
+    return String.fromCodePoint(point).length > 0;
+  } catch {
+    return false;
+  }
+};
+/** The joiner class by plane, derived from the engine at run time and never listed: plane 0 opens with the joined spelling, then each
+ * code point of the engine's code space but the space and the surrogates (its \p{Cs} class, no scalar value), in code point order. */
+function joinerPlanes(): string[][] {
+  const surrogate = /^\p{Cs}$/u;
+  const planes: string[][] = [];
+  for (let point = 0; inCodeSpace(point); point += 1) {
+    const plane = Math.floor(point / 0x10000);
+    if (planes[plane] === undefined) planes.push(plane === 0 ? [""] : []);
+    const char = String.fromCodePoint(point);
+    if (char !== " " && !surrogate.test(char)) planes[plane]?.push(char);
+  }
+  return planes;
+}
 const swaps = (text: string): string[] =>
   [
     text.toLowerCase(),
@@ -953,6 +993,51 @@ const QUIET: Readonly<Record<string, () => void>> = {
       expect(findings(treeCensus(root)), "another case or separator reads quiet").toEqual([]);
       write(root, "src/plant.ts", [needle, ...variants].map(code).join(""));
       expect(findings(treeCensus(root)), "beside a judged needle in the same file, the other spellings still read quiet").toEqual([{ file: "src/plant.ts", line: 1, needle }]);
+    });
+    // wb-iug2: the class-level bound, read over every joiner this row plants between the member's words: the class, plane by plane.
+    const member = joined[0]?.text ?? "";
+    /** The member spelled with a joiner in place of its space; the controls spell it with the space itself, through the same template. */
+    const spell = (joiner: string): string => `${head}${joiner}${tail}`;
+    /** A plane's spellings, 256 to a line and a space apart (a line read per spelling costs seconds); a space between two spellings
+     * follows the member's last word, never its first, so it joins no member. */
+    const packed = (lines: readonly string[]): string[] => Array.from({ length: Math.ceil(lines.length / 256) }, (_, row) => lines.slice(row * 256, (row + 1) * 256).join(" "));
+    /** Each plane's file as written: the member with its space opens and closes it, the plane's spellings between. */
+    const texts = joinerPlanes().map(plane => `${[spell(" "), ...packed(plane.map(spell)), spell(" ")].join("\n")}\n`);
+    /** The joiners the written files hold: each spelling ends in the member's last word once, so a file holds its count less the two
+     * controls, and a joiner is held when its spelling is in its plane's file. */
+    const planted = {
+      count: texts.reduce((sum, text) => sum + text.split(tail).length - 3, 0),
+      has: (name: string): boolean => {
+        const joiner = joinerOf(name);
+        return [...joiner].length <= 1 && (texts[Math.floor((joiner.codePointAt(0) ?? 0) / 0x10000)] ?? "").includes(spell(joiner));
+      },
+    };
+    expect(
+      [planted.count, JOINER_POINTS.filter(name => !planted.has(name))],
+      "the two-word member is planted with every joiner of at most one code point but its space: the joined spelling and each other scalar value, U+200B and U+3164 among them",
+    ).toEqual([SCALAR_VALUES, []]);
+    expect(separators.filter(name => !name.includes("+") && !planted.has(name)), "every landed one-code-point separator is a member of the class").toEqual([]);
+    expect(
+      [member.split(" ").length, [...head, ...tail].filter(char => /\s/.test(char)).length, MATCHER.source.split("|").filter(part => part.includes(head) && part.includes(tail))],
+      "the reading admits one joiner between the member's words, its one space: the words carry no white space and the matcher's one alternative holding both is the member's own text",
+    ).toEqual([2, 0, [escapeRe(member)]]);
+    withTree(root => {
+      const sites = texts.map((text, index) => {
+        const file = `src/plant-${index.toString(16).padStart(2, "0")}.ts`;
+        write(root, file, text);
+        return { file, last: text.split("\n").length - 1 };
+      });
+      const read = treeCensus(root);
+      expect(
+        sites.map(site => site.file).filter(file => !read.files.includes(file)),
+        "the walk reads each plane's file",
+      ).toEqual([]);
+      expect(findings(read), "every other joiner reads quiet, while the member with its one space, first and last in each plane's file, is read").toEqual(
+        sites.flatMap(site => [
+          { file: site.file, line: 1, needle: member },
+          { file: site.file, line: site.last, needle: member },
+        ]),
+      );
     });
   },
   "R-ENCODED": () => {
