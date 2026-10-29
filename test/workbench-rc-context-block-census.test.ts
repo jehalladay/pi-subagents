@@ -70,20 +70,39 @@
  *    are held live in its case: the TUI loads (UI_LOAD_PROBES) and one probe module per read form and per result-expression
  *    form the parse-aware reading names (READ_PROBES) or leaves quiet (QUIET_PROBES).
  *  R, the residuals' pinned quiet rows.
- * PARSE-AWARE READING (C3, wb-ycir F1, widened by wb-qnl8 F2; resultReadsOf): RF_READING reads the rf result's members
- * spelled after "result.", so a UI module also must not reach a RESULT_MEMBERS member off a result expression by any of these
- * forms: a member read through a name bound to the result, an element access keyed by a member or by a key that resolves to
- * no constant string, a destructuring (declared, assigned, a parameter of a local function a result is handed to, or a pattern
- * nested under a `result` property) naming a member, computing a key or gathering a rest, and a spread, a for-in walk, a
- * reflective read (REFLECTIVE_READS) or a keyed read (KEYED_READS, keyed as an element access is) of the result. A result
- * expression is a result member read (`.result`, `?.result`, or an element access keyed "result"), a name bound to one (the
- * initializer of a declaration, a parameter or a binding element; an assignment, a logical one included; either arm of "??",
- * "||", "&&" or "?:"; a destructured `result` property; an element of an array binding over an array literal, by position,
- * and past the literal's first spread any later item; a
- * for-of declaration or target over an array literal holding one; an argument of a call of a function the module declares)
- * or any name result, with its parentheses, type assertions, satisfies clauses, non-null marks, awaits and a comma
- * expression's left operands taken off; a bare name result is read for members, keys and destructurings only, never for a
- * spread or a reflective read, which Pi's agent and tool results take.
+ * PARSE-AWARE READING (C3, wb-ycir F1, widened by wb-qnl8 F2 and wb-qnls F2; resultReadsOf). The brackets after a form name
+ * the probes that hold it live: READ_PROBES rows the reading must name and QUIET_PROBES rows it must leave quiet; C3 holds the
+ * bracketed keys of this header equal to the two tables (headerProbeIds). RF_READING reads the rf result's members spelled
+ * after "result.", so a UI module also must not reach a RESULT_MEMBERS member off a result expression by any of these READS: a
+ * member read [alias-member, named-member], one of another member reading nothing [string-result]; an element access keyed by a
+ * member [literal-key, computed-key, element-result] or by a key that resolves to no constant string [parameter-key,
+ * named-result, comma-key, comma-const-key], one keyed by another member reading nothing [other-member]; a destructuring
+ * naming a member, computing a key or gathering a rest - declared [destructured, renamed, binding-computed, rest,
+ * named-destructured], a parameter's pattern [parameter-pattern], an assignment's pattern [assigned, assigned-renamed,
+ * assigned-rest] or a pattern nested under a `result` property [nested, nested-assigned] -, one naming another member reading
+ * nothing [bare-other-member]; and, off a result member read or a name bound to one but never off a bare name result, which
+ * Pi's agent and tool results take [bare-spread, bare-for-in, bare-reflective, bare-keyed]: an object or array spread [spread,
+ * array-spread], a for-in walk [for-in], a REFLECTIVE_READS call handed it as any argument [reflective, reflective-<call>,
+ * reflective-later-argument] and a KEYED_READS call keyed as an element access is [reflect-get, descriptor,
+ * reflect-get-computed], one keyed by another member reading nothing [reflect-other-member, descriptor-other-member].
+ * A RESULT EXPRESSION is a result member read - `.result` [literal-key], `?.result` [optional-key] or an element access keyed
+ * "result" [element-result] -, any name result [named-result, named-member], or a name bound to one: by a declaration's
+ * initializer [alias-member], a parameter's default [parameter-default] or a binding element's default [binding-default]; by an
+ * assignment to the name, plain [assigned-name] or logical - "??=" [logical-assigned], "||=" [or-assigned] or "&&="
+ * [and-assigned]; by a destructured `result` property of a binding pattern [result-binding]; as an element of an array binding
+ * over an array literal, by position [array-binding], nested [nested-array-binding] and, at or past the position of the
+ * literal's first spread, taking any later item [array-after-spread, array-first-after-spread], the element beside a result
+ * reading nothing [array-other-element]; as a for-of declaration [for-of, for-of-name] or target [for-of-target] over an array
+ * literal any item of which, a spread aside, is one [for-of-later-item]; and as a parameter, an object or array pattern
+ * included [parameter-pattern, parameter-array-pattern], of a function handed it by position - one the module declares as a
+ * function [function-helper], a method [method-helper] or a variable holding an arrow [local-helper] or a function expression
+ * [function-expression-helper], or an inline function called in place [iife, iife-function] -, called directly, by fn.call
+ * from its second argument on [call-method, call-inline] or by fn.apply over the items of an array literal [apply-method], a
+ * declared `this` parameter taking no argument [call-this-parameter]. An expression's value is read through its parentheses,
+ * type assertions [type-assertion], satisfies clauses [satisfied], non-null marks [non-null] and awaits [awaited], as a comma
+ * expression's last operand [comma], as a plain assignment's right side [assignment-value, chained-assign], and as either arm
+ * of "??" [alias-member], "||" [or-arm], "&&" [and-arm], "?:" [conditional-arm] or a logical assignment
+ * [nullish-assignment-value, or-assignment-value, and-assignment-value, logical-assignment-left].
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row, every pin's witness, the
  * constants, the registered test titles and each pin's assertion count are held to the out-of-file roster
  * (test/fixtures/rc-context-block-roster.json).
@@ -108,10 +127,13 @@
  * the filing names it (clause (a)'s three control words, clause (c)'s surfaces and names, the two fixture names); the rows, the
  * pins and the residual list are anchored as above, but which pin covers which words is this census's reading (COVERS); an
  * edit of the tracked bead export itself is outside every anchor (it is machine-written at each ledger hop). The parse-aware
- * reading reads one module at a time and follows a result by name only: a result value handed to another module, or held by a
- * name that no initializer, assignment, destructuring or local call binds (a callback's parameter, a value an imported
- * function returns), is not followed, nor is one held in an object's member or a class field, returned by a local function,
- * gathered by an array binding's rest element or walked by a for-of over anything but an array literal.
+ * reading reads one module at a time and binds a name to a result by the forms PARSE-AWARE READING lists only; it follows no
+ * other, and leaves quiet: a result handed to another module [other-module]; a function's return value, imported or local
+ * [imported-return, local-return]; a callback's parameter [callback-parameter]; an object's member or a class field holding one
+ * [object-member, class-field]; an array binding's rest element [array-rest]; a for-of or an fn.apply over an array a name
+ * holds [for-of-variable, apply-list]; a name a destructuring assignment binds - a renamed `result` target, an array pattern's
+ * element, a target's default - [assigned-result-property, array-assignment-pattern, assigned-target-default]; a partial
+ * application by fn.bind [bind-partial]; Reflect.apply [reflect-apply]; and a result handed as a call's `this` [this-argument].
  * It binds by name for the whole module, not by scope (wb-qnl8 F5): a name bound to a result in one function reads as bound
  * in every other, a same-named parameter of an unrelated function included, an over-read that can only refuse.
  * RESIDUALS (named families, each with a pinned quiet row in row R): R1 R-STATUS-WORD a control word rf states as an observation
@@ -156,6 +178,12 @@
  * claimed result-expression and read form, and keyed quiet rows; F4 the UTF-16 floor and parity pinned at their bounds, a
  * UTF-32 page read by its mark, and an unmarked UTF-16 page under the floor named under R5 with its quiet row; F5 the
  * module-wide binding disclosed.
+ * FOLLOW-UP wb-qnls (landing 598's findings): F1 one read probe per claimed binding form no other row discriminates ("||=",
+ * "&&=", a for-of target, an array binding's first element past a spread, a for-of item past the first, a nested array
+ * binding, an array-pattern parameter), each red against the gate's mutant of its form (MG-F2c, F2d, F2g, F2i1, F2o, F2k, F2n),
+ * and one per landed form the same class leaves undiscriminated; F2 an assignment's value, an inline function called in place
+ * and fn.call and fn.apply are parse-aware readings (the gate's P31-P33), every form NOT CLAIMED names is pinned by a quiet
+ * row, and the header's bracketed forms are held equal to the two probe tables.
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, docs, the fixtures, the bead export
  * and git's file list are only read.
@@ -334,8 +362,10 @@ const SURFACE_PINS: Readonly<Record<string, string>> = { "Pi type": "C2", "UI ha
 const UI_LOAD_PROBES: Readonly<Record<string, boolean>> = { [UI_PACKAGE]: true, [`${UI_PACKAGE}/dist/index.js`]: true, [`${UI_PACKAGE}-extra`]: false };
 /** A UI module's way to the rf result of a preview reading, as the probes below spell it. */
 const PROBE_RESULT = "(reading as { source: { result: Record<string, unknown> } }).source.result";
-/** C3's read forms (wb-ycir F1; wb-qnl8 F2 and F3 add one per claimed result-expression and read form): each probe module
- * reaches an rf result member without spelling "result.<member>", and the parse-aware reading must name it. */
+/** C3's read forms (wb-ycir F1; wb-qnl8 F2 and F3 add one per claimed result-expression and read form; wb-qnls F1 and F2 one per
+ * binding form no other row discriminates and per form it adds): each probe module reaches an rf result member without spelling
+ * "result.<member>", and the parse-aware reading must name it. Each key is named in brackets beside its form in the header's
+ * PARSE-AWARE READING, and C3 holds the two to each other (headerProbeIds). */
 const READ_PROBES: Readonly<Record<string, string>> = {
   "computed-key": `const part = "blocks";\nexport const rows = ${PROBE_RESULT}[part];\n`,
   "parameter-key": `export const rows = (key: string) => ${PROBE_RESULT}[key];\n`,
@@ -380,10 +410,48 @@ const READ_PROBES: Readonly<Record<string, string>> = {
   // POSITIVE-PROTECTION (owner ruling R754): a comma key resolves to no constant string, so it stays the landed computed read.
   "comma-key": `export const schema = ${PROBE_RESULT}[(0, "schema")];\n`,
   "comma-const-key": `const part = (0, "schema");\nexport const schema = ${PROBE_RESULT}[part];\n`,
+  // wb-qnls F1 (landing 598's PREP F1, the gate's MG-F2c/d/g/i1/o and MG-F2k/n): one probe per claimed binding form the rows
+  // above reach through another form, each reaching the result through that form alone.
+  "or-assigned": `let envelope: Record<string, unknown> | undefined;\nenvelope ||= ${PROBE_RESULT};\nexport const rows = envelope.blocks;\n`,
+  "and-assigned": `let envelope: Record<string, unknown> | undefined = {};\nenvelope &&= ${PROBE_RESULT};\nexport const rows = envelope.blocks;\n`,
+  "for-of-target": `let envelope: Record<string, unknown> = {};\nexport const rows: unknown[] = [];\nfor (envelope of [${PROBE_RESULT}]) rows.push(envelope.blocks);\n`,
+  "array-first-after-spread": `const [envelope] = [...([] as unknown[]), ${PROBE_RESULT}];\nexport const rows = envelope.blocks;\n`,
+  "for-of-later-item": `export const rows: unknown[] = [];\nfor (const envelope of [{} as Record<string, unknown>, ${PROBE_RESULT}, {} as Record<string, unknown>]) rows.push(envelope.blocks);\n`,
+  "nested-array-binding": `const [[envelope]] = [[${PROBE_RESULT}]];\nexport const rows = envelope.blocks;\n`,
+  "parameter-array-pattern": `const blocksOf = ([envelope]: Record<string, unknown>[]) => envelope.blocks;\nexport const rows = blocksOf([${PROBE_RESULT}]);\n`,
+  // wb-qnls F2 (landing 598's PREP F2, the gate's P31-P33): an assignment's value, an inline function called in place, and
+  // fn.call and fn.apply hand a result on.
+  "chained-assign": `let a: Record<string, unknown> = {};\nlet b: Record<string, unknown> = {};\na = b = ${PROBE_RESULT};\nexport const rows = [a.blocks, b];\n`,
+  "assignment-value": `const holder: { envelope?: Record<string, unknown> } = {};\nexport const rows = (holder.envelope = ${PROBE_RESULT}).blocks;\n`,
+  "nullish-assignment-value": `const holder: { envelope?: Record<string, unknown> } = {};\nexport const rows = (holder.envelope ??= ${PROBE_RESULT}).blocks;\n`,
+  "or-assignment-value": `const holder: { envelope?: Record<string, unknown> } = {};\nexport const rows = (holder.envelope ||= ${PROBE_RESULT}).blocks;\n`,
+  "and-assignment-value": `const holder: { envelope?: Record<string, unknown> } = { envelope: {} };\nexport const rows = (holder.envelope &&= ${PROBE_RESULT}).blocks;\n`,
+  "logical-assignment-left": `let envelope: Record<string, unknown> | undefined = ${PROBE_RESULT};\nexport const rows = (envelope ||= {}).blocks;\n`,
+  iife: `export const rows = ((envelope: Record<string, unknown>) => envelope.blocks)(${PROBE_RESULT});\n`,
+  "iife-function": `export const rows = (function (envelope: Record<string, unknown>) {\n  return envelope.blocks;\n})(${PROBE_RESULT});\n`,
+  "call-method": `const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf.call(undefined, ${PROBE_RESULT});\n`,
+  "call-inline": `export const rows = ((envelope: Record<string, unknown>) => envelope.blocks).call(undefined, ${PROBE_RESULT});\n`,
+  "apply-method": `const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf.apply(undefined, [${PROBE_RESULT}]);\n`,
+  "call-this-parameter": `function blocksOf(this: unknown, envelope: Record<string, unknown>) {\n  return envelope.blocks;\n}\nexport const rows = blocksOf.call(undefined, ${PROBE_RESULT});\n`,
+  // wb-qnls (the F1 class over the landed forms): one probe per landed form no row above discriminates - each kind of function
+  // the module declares, a bare name result's member read and destructuring, an assignment pattern's renamed key and rest, an
+  // array spread, a computed keyed read, a reflective read handed the result after another argument, and each reflective read.
+  "function-helper": `function blocksOf(envelope: Record<string, unknown>) {\n  return envelope.blocks;\n}\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "method-helper": `const helpers = {\n  blocksOf(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "function-expression-helper": `const blocksOf = function (envelope: Record<string, unknown>) {\n  return envelope.blocks;\n};\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "named-member": "export const rows = (result: Record<string, unknown>) => result?.blocks;\n",
+  "named-destructured": "export const rows = (result: { blocks: unknown }) => {\n  const { blocks } = result;\n  return blocks;\n};\n",
+  "assigned-renamed": `let rows: unknown;\n({ blocks: rows } = ${PROBE_RESULT});\n`,
+  "assigned-rest": `let all: Record<string, unknown> = {};\n({ ...all } = ${PROBE_RESULT});\n`,
+  "array-spread": `export const items = [...(${PROBE_RESULT} as unknown as unknown[])];\n`,
+  "reflect-get-computed": `export const rows = (key: string) => Reflect.get(${PROBE_RESULT}, key);\n`,
+  "reflective-later-argument": `export const copy = Object.assign({}, ${PROBE_RESULT});\n`,
+  ...Object.fromEntries(REFLECTIVE_READS.map(call => [`reflective-${call}`, `export const rows = ${call}(${PROBE_RESULT});\n`])),
 };
 /** The forms C3's parse-aware reading leaves quiet: a constant key naming another member, a bare name result spread, read for
  * another member or used as a string (today's Pi UI code reads agent and tool results so), a keyed read keyed by another member
- * (wb-qnl8 F3) and the element of an array binding beside a result (wb-qnl8 F2). */
+ * (wb-qnl8 F3), the element of an array binding beside a result (wb-qnl8 F2), a bare name result walked or read reflectively
+ * (wb-qnls), and every form the header's NOT CLAIMED names (wb-qnls F2), each key in brackets beside its form there. */
 const QUIET_PROBES: Readonly<Record<string, string>> = {
   "other-member": `export const schema = ${PROBE_RESULT}["schema"];\n`,
   "bare-spread": "export const copy = (result: object) => ({ ...result, usage: 1 });\n",
@@ -394,6 +462,26 @@ const QUIET_PROBES: Readonly<Record<string, string>> = {
   "descriptor-other-member": `export const schema = Object.getOwnPropertyDescriptor(${PROBE_RESULT}, "schema");\n`,
   // wb-qnl8 F2: an array binding binds by position, so the element beside a result reads nothing.
   "array-other-element": `const [envelope, other] = [${PROBE_RESULT}, {} as Record<string, unknown>];\nexport const rows = [envelope, other.blocks];\n`,
+  // wb-qnls: a bare name result is never read for a for-in walk, a reflective read or a keyed read (bare-spread: nor spread).
+  "bare-for-in": "export const keys = (result: object) => {\n  const found: string[] = [];\n  for (const key in result) found.push(key);\n  return found;\n};\n",
+  "bare-reflective": "export const values = (result: object) => Object.values(result);\n",
+  "bare-keyed": 'export const rows = (result: object) => Reflect.get(result, "blocks");\n',
+  // wb-qnls F2: every form NOT CLAIMED names, each pinned quiet, so a reading widened to follow one moves its row to READ_PROBES.
+  "other-module": `import { blocksOf } from "./elsewhere.js";\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "imported-return": 'import { resultOf } from "./elsewhere.js";\nexport const rows = resultOf().blocks;\n',
+  "local-return": `const resultOf = () => ${PROBE_RESULT};\nexport const rows = resultOf().blocks;\n`,
+  "callback-parameter": `export const rows = [${PROBE_RESULT}].map(envelope => envelope.blocks);\n`,
+  "object-member": `const holder = { envelope: ${PROBE_RESULT} };\nexport const rows = holder.envelope.blocks;\n`,
+  "class-field": `class Holder {\n  envelope = ${PROBE_RESULT};\n}\nexport const rows = new Holder().envelope.blocks;\n`,
+  "array-rest": `const [...rest] = [${PROBE_RESULT}];\nexport const rows = rest[0]?.blocks;\n`,
+  "for-of-variable": `const list = [${PROBE_RESULT}];\nexport const rows: unknown[] = [];\nfor (const envelope of list) rows.push(envelope.blocks);\n`,
+  "apply-list": `const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nconst list = [${PROBE_RESULT}];\nexport const rows = blocksOf.apply(undefined, list);\n`,
+  "assigned-result-property": "let envelope: Record<string, unknown> = {};\n({ result: envelope } = (reading as { source: { result: Record<string, unknown> } }).source);\nexport const rows = envelope.blocks;\n",
+  "array-assignment-pattern": `let envelope: Record<string, unknown> = {};\n[envelope] = [${PROBE_RESULT}];\nexport const rows = envelope.blocks;\n`,
+  "assigned-target-default": `let envelope: Record<string, unknown> = {};\n({ envelope = ${PROBE_RESULT} } = {} as { envelope?: Record<string, unknown> });\nexport const rows = envelope.blocks;\n`,
+  "bind-partial": `const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf.bind(undefined, ${PROBE_RESULT})();\n`,
+  "reflect-apply": `const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = Reflect.apply(blocksOf, undefined, [${PROBE_RESULT}]);\n`,
+  "this-argument": `const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf.call(${PROBE_RESULT}, {});\n`,
 };
 
 function needleNamed(id: string): string {
@@ -637,6 +725,15 @@ function headerResiduals(): string[] {
   if (start < 0 || end < 0) throw new Error("this file's header holds no RESIDUALS list");
   const block = text.slice(start, end).replace(/\n \*\s*/g, " ");
   return [...block.matchAll(/\bR(\d+) (R-[A-Z]+(?:-[A-Z]+)*)/g)].map(match => `R${match[1]} ${match[2]}`);
+}
+/** The probe keys this file's header names in brackets (wb-qnls): the PARSE-AWARE READING forms and the NOT CLAIMED forms,
+ * `reflective-<call>` read as one key per REFLECTIVE_READS call, sorted and each once. */
+function headerProbeIds(): string[] {
+  const text = readFileSync(fileURLToPath(import.meta.url), "utf8");
+  const header = text.slice(0, text.indexOf(" */")).replace(/\n \*\s*/g, " ");
+  const named = [...header.matchAll(/\[([a-z<>.-]+(?:, [a-z<>.-]+)*)\]/g)].flatMap(match => (match[1] ?? "").split(", "));
+  const keys = named.flatMap(name => (name === "reflective-<call>" ? REFLECTIVE_READS.map(call => `reflective-${call}`) : [name]));
+  return [...new Set(keys)].sort();
 }
 
 /** A text as the census reads it: NFKC-folded, every default-ignorable code point (an invisible joiner or space) removed. */
@@ -1194,20 +1291,19 @@ const ASSIGNMENTS: readonly ts.SyntaxKind[] = [
   ts.SyntaxKind.BarBarEqualsToken,
   ts.SyntaxKind.AmpersandAmpersandEqualsToken,
 ];
-/** C3's parse-aware reading of one module (wb-ycir F1, widened by wb-qnl8 F2): every read of a RESULT_MEMBERS member off a result
- * expression, as `<line> <form>`, so a UI module that reaches the rf result's blocks without spelling "result.<member>" reads as
- * one that spells it. A result expression is a result member read, a name bound to one (the initializer of a declaration, a
- * parameter or a binding element, an assignment's right side - a logical assignment's too -, either arm of "??", "||", "&&" or
- * "?:", a destructured `result` property, an element of an array binding over an array literal, a for-of declaration or target
- * over an array literal holding one, or an argument of a call of a function the module declares, which binds its parameter), or
- * any name result; parentheses, type assertions, satisfies clauses, non-null marks and awaits are taken off, and off a result
- * expression a comma expression's left operands too (heldValue; a comma key stays a computed one). A read off one is a
- * member read of a member ("member"), an element access keyed by a member or by a key that resolves to no constant string
- * ("element"), a destructuring - a declaration, a parameter so bound, an assignment, or a pattern nested under a `result`
- * property - naming a member, computing a key that resolves to one or to none, or gathering a rest ("binding", "assigned");
- * and, off a result member read or a name bound to one (never a bare name result, which Pi's agent and tool results use), a
- * spread, a for-in walk, a REFLECTIVE_READS call, or a KEYED_READS call keyed as an element access is ("spread", "for-in",
- * "reflective"). */
+/** The logical assignments (wb-qnls F2): the value of one is its left side's or its right side's, as an ARMS operator's is. */
+const LOGICAL_ASSIGNMENTS: readonly ts.SyntaxKind[] = ASSIGNMENTS.filter(kind => kind !== ts.SyntaxKind.EqualsToken);
+/** C3's parse-aware reading of one module (wb-ycir F1, widened by wb-qnl8 F2 and wb-qnls F2): every read of a RESULT_MEMBERS member
+ * off a result expression, as `<line> <form>` - "member", "element", "binding", "assigned", "spread", "for-in" or "reflective",
+ * with the member read, "computed" for a key that resolves to no constant string, or "rest" -, so a UI module that reaches the
+ * rf result's blocks without spelling "result.<member>" reads as one that spells it. The reads, the result expressions and the
+ * forms it leaves quiet are the header's PARSE-AWARE READING and NOT CLAIMED lists, each form beside the probes that hold it
+ * (READ_PROBES, QUIET_PROBES). Names bind to a result in passes until none grows - a declaration's, a parameter's or a binding
+ * element's initializer, an assignment to a name (a logical one included), a destructured `result` property, an array binding
+ * over an array literal, a for-of over one, and the parameters a call hands its arguments to (handOffsOf) -, then every read
+ * off a result expression (holdOf: a result member read, a name bound to one or any name result, through heldValue, either
+ * arm of ARMS, "?:" or a logical assignment, and a plain assignment's right side) is noted; off a bare name result only the
+ * member, element and destructuring reads are. */
 function resultReadsOf(file: ts.SourceFile): string[] {
   const consts = constStringsOf(file);
   const functions = new Map<string, readonly ts.ParameterDeclaration[]>();
@@ -1227,7 +1323,9 @@ function resultReadsOf(file: ts.SourceFile): string[] {
     const value = heldValue(node);
     if ((ts.isPropertyAccessExpression(value) && value.name.text === "result") || (ts.isElementAccessExpression(value) && keyOf(value.argumentExpression, consts) === "result")) return "bound";
     if (ts.isIdentifier(value)) return bound.has(value.text) ? "bound" : value.text === "result" ? "named" : undefined;
-    const either = ts.isBinaryExpression(value) && ARMS.includes(value.operatorToken.kind);
+    // wb-qnls F2: a plain assignment's value is its right side; a logical assignment's is either side, as an ARMS operator's.
+    if (ts.isBinaryExpression(value) && value.operatorToken.kind === ts.SyntaxKind.EqualsToken) return holdOf(value.right);
+    const either = ts.isBinaryExpression(value) && (ARMS.includes(value.operatorToken.kind) || LOGICAL_ASSIGNMENTS.includes(value.operatorToken.kind));
     const arms = ts.isConditionalExpression(value) ? [value.whenTrue, value.whenFalse] : either ? [value.left, value.right] : [];
     const holds = arms.map(holdOf);
     return holds.includes("bound") ? "bound" : holds.includes("named") ? "named" : undefined;
@@ -1266,6 +1364,30 @@ function resultReadsOf(file: ts.SourceFile): string[] {
     }
     return grown;
   };
+  /** The parameters of the function a callee names, a declared `this` parameter aside (it takes no argument; wb-qnls F2): an
+   * inline function's own (wb-qnls F2), or those of the function the module declares under the callee's name or its property
+   * name. */
+  const parametersOf = (callee: ts.Expression): readonly ts.ParameterDeclaration[] | undefined => {
+    const target = unwrapped(callee);
+    const name = ts.isIdentifier(target) ? target.text : ts.isPropertyAccessExpression(target) ? target.name.text : undefined;
+    const declared = ts.isArrowFunction(target) || ts.isFunctionExpression(target) ? target.parameters : name === undefined ? undefined : functions.get(name);
+    return declared?.filter(parameter => !(ts.isIdentifier(parameter.name) && parameter.name.text === "this"));
+  };
+  /** What a call hands to which parameters, each by position: its arguments to the function its callee names, and (wb-qnls F2)
+   * for fn.call its arguments from the second on, for fn.apply the items of an array literal second argument, to fn's. */
+  const handOffsOf = (call: ts.CallExpression): { parameters: readonly ts.ParameterDeclaration[]; handed: readonly ts.Expression[] }[] => {
+    const callee = unwrapped(call.expression);
+    const found: { parameters: readonly ts.ParameterDeclaration[]; handed: readonly ts.Expression[] }[] = [];
+    const direct = parametersOf(callee);
+    if (direct !== undefined) found.push({ parameters: direct, handed: call.arguments });
+    if (!ts.isPropertyAccessExpression(callee)) return found;
+    const relayed = parametersOf(callee.expression);
+    if (relayed === undefined) return found;
+    if (callee.name.text === "call") found.push({ parameters: relayed, handed: call.arguments.slice(1) });
+    const list = call.arguments[1] === undefined ? undefined : unwrapped(call.arguments[1]);
+    if (callee.name.text === "apply" && list !== undefined && ts.isArrayLiteralExpression(list)) found.push({ parameters: relayed, handed: list.elements });
+    return found;
+  };
   let grew = true;
   while (grew) {
     grew = false;
@@ -1281,13 +1403,12 @@ function resultReadsOf(file: ts.SourceFile): string[] {
         const walked = unwrapped(node.expression);
         if (target !== undefined && ts.isArrayLiteralExpression(walked)) grew = bind(target, itemsHold(walked.elements)) || grew;
       } else if (ts.isCallExpression(node)) {
-        const callee = unwrapped(node.expression);
-        const name = ts.isIdentifier(callee) ? callee.text : ts.isPropertyAccessExpression(callee) ? callee.name.text : undefined;
-        const parameters = name === undefined ? undefined : functions.get(name);
-        node.arguments.forEach((argument, index) => {
-          const parameter = parameters?.[index];
-          if (parameter !== undefined) grew = bindValue(parameter.name, argument) || grew;
-        });
+        for (const { parameters, handed } of handOffsOf(node)) {
+          handed.forEach((argument, index) => {
+            const parameter = parameters[index];
+            if (parameter !== undefined) grew = bindValue(parameter.name, argument) || grew;
+          });
+        }
       }
       ts.forEachChild(node, visit);
     };
@@ -1942,6 +2063,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(probes.loads, "the TUI package and any subpath of it make a UI module, a lookalike package does not").toStrictEqual(UI_LOAD_PROBES);
     expect(Object.entries(probes.reads).filter(([, found]) => found.length === 0).map(([id]) => id), "every read form a probe states is read").toStrictEqual([]);
     expect(Object.entries(probes.quiet).filter(([, found]) => found.length > 0).map(([id]) => id), "the quiet forms read nothing").toStrictEqual([]);
+    // wb-qnls: the header claims exactly the pinned forms - every probe is named in its brackets, and every bracketed name is a probe.
+    expect(headerProbeIds(), "the header's bracketed forms: exactly the read and quiet probes").toStrictEqual([...Object.keys(READ_PROBES), ...Object.keys(QUIET_PROBES)].sort());
     expect(loaders.length > 0 && !loaders.includes("reactivefiber"), "the evidence loader roster holds no reactivefiber row").toBe(true);
     // wb-qnl8 F1: a UI module read two ways is parsed, loaded from and spelled in both.
     const twoReadings: Walked = {

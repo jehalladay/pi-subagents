@@ -294,7 +294,43 @@
    "descriptor",
    "comma",
    "comma-key",
-   "comma-const-key"
+   "comma-const-key",
+   "or-assigned",
+   "and-assigned",
+   "for-of-target",
+   "array-first-after-spread",
+   "for-of-later-item",
+   "nested-array-binding",
+   "parameter-array-pattern",
+   "chained-assign",
+   "assignment-value",
+   "nullish-assignment-value",
+   "or-assignment-value",
+   "and-assignment-value",
+   "logical-assignment-left",
+   "iife",
+   "iife-function",
+   "call-method",
+   "call-inline",
+   "apply-method",
+   "call-this-parameter",
+   "function-helper",
+   "method-helper",
+   "function-expression-helper",
+   "named-member",
+   "named-destructured",
+   "assigned-renamed",
+   "assigned-rest",
+   "array-spread",
+   "reflect-get-computed",
+   "reflective-later-argument",
+   "reflective-Object.values",
+   "reflective-Object.entries",
+   "reflective-Object.assign",
+   "reflective-Object.getOwnPropertyDescriptors",
+   "reflective-Reflect.ownKeys",
+   "reflective-JSON.stringify",
+   "reflective-structuredClone"
   ],
   "quietProbes": [
    "other-member",
@@ -303,7 +339,25 @@
    "string-result",
    "reflect-other-member",
    "descriptor-other-member",
-   "array-other-element"
+   "array-other-element",
+   "bare-for-in",
+   "bare-reflective",
+   "bare-keyed",
+   "other-module",
+   "imported-return",
+   "local-return",
+   "callback-parameter",
+   "object-member",
+   "class-field",
+   "array-rest",
+   "for-of-variable",
+   "apply-list",
+   "assigned-result-property",
+   "array-assignment-pattern",
+   "assigned-target-default",
+   "bind-partial",
+   "reflect-apply",
+   "this-argument"
   ],
   "surfacePins": {
    "Pi type": "C2",
@@ -1095,6 +1149,114 @@
         ],
         "comma-const-key": [
          "2 element computed"
+        ],
+        "or-assigned": [
+         "3 member blocks"
+        ],
+        "and-assigned": [
+         "3 member blocks"
+        ],
+        "for-of-target": [
+         "3 member blocks"
+        ],
+        "array-first-after-spread": [
+         "2 member blocks"
+        ],
+        "for-of-later-item": [
+         "2 member blocks"
+        ],
+        "nested-array-binding": [
+         "2 member blocks"
+        ],
+        "parameter-array-pattern": [
+         "1 member blocks"
+        ],
+        "chained-assign": [
+         "4 member blocks"
+        ],
+        "assignment-value": [
+         "2 member blocks"
+        ],
+        "nullish-assignment-value": [
+         "2 member blocks"
+        ],
+        "or-assignment-value": [
+         "2 member blocks"
+        ],
+        "and-assignment-value": [
+         "2 member blocks"
+        ],
+        "logical-assignment-left": [
+         "2 member blocks"
+        ],
+        "iife": [
+         "1 member blocks"
+        ],
+        "iife-function": [
+         "2 member blocks"
+        ],
+        "call-method": [
+         "1 member blocks"
+        ],
+        "call-inline": [
+         "1 member blocks"
+        ],
+        "apply-method": [
+         "1 member blocks"
+        ],
+        "call-this-parameter": [
+         "2 member blocks"
+        ],
+        "function-helper": [
+         "2 member blocks"
+        ],
+        "method-helper": [
+         "3 member blocks"
+        ],
+        "function-expression-helper": [
+         "2 member blocks"
+        ],
+        "named-member": [
+         "1 member blocks"
+        ],
+        "named-destructured": [
+         "2 binding blocks"
+        ],
+        "assigned-renamed": [
+         "2 assigned blocks"
+        ],
+        "assigned-rest": [
+         "2 assigned rest"
+        ],
+        "array-spread": [
+         "1 spread"
+        ],
+        "reflect-get-computed": [
+         "1 reflective Reflect.get computed"
+        ],
+        "reflective-later-argument": [
+         "1 reflective Object.assign"
+        ],
+        "reflective-Object.values": [
+         "1 reflective Object.values"
+        ],
+        "reflective-Object.entries": [
+         "1 reflective Object.entries"
+        ],
+        "reflective-Object.assign": [
+         "1 reflective Object.assign"
+        ],
+        "reflective-Object.getOwnPropertyDescriptors": [
+         "1 reflective Object.getOwnPropertyDescriptors"
+        ],
+        "reflective-Reflect.ownKeys": [
+         "1 reflective Reflect.ownKeys"
+        ],
+        "reflective-JSON.stringify": [
+         "1 reflective JSON.stringify"
+        ],
+        "reflective-structuredClone": [
+         "1 reflective structuredClone"
         ]
        },
        "quiet": {
@@ -1104,7 +1266,25 @@
         "string-result": [],
         "reflect-other-member": [],
         "descriptor-other-member": [],
-        "array-other-element": []
+        "array-other-element": [],
+        "bare-for-in": [],
+        "bare-reflective": [],
+        "bare-keyed": [],
+        "other-module": [],
+        "imported-return": [],
+        "local-return": [],
+        "callback-parameter": [],
+        "object-member": [],
+        "class-field": [],
+        "array-rest": [],
+        "for-of-variable": [],
+        "apply-list": [],
+        "assigned-result-property": [],
+        "array-assignment-pattern": [],
+        "assigned-target-default": [],
+        "bind-partial": [],
+        "reflect-apply": [],
+        "this-argument": []
        }
       },
       "reactivefiberLoader": false,
@@ -1697,7 +1877,7 @@
   "B4:9",
   "C1:10",
   "C2:7",
-  "C3:12",
+  "C3:13",
   "C4:6",
   "C5:5",
   "M1:9",
