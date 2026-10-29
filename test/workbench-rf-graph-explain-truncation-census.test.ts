@@ -1,7 +1,8 @@
 /**
  * wb-2j3.10 (RFCLI-PERFORMANCE-MATHEMATICAL-OPTIMIZATION-R11, program-triage-2026-10-17), the standing leg: the rf graph explain
- * truncation-honesty census, an until-then pin. Cut #3, the respin of refusal #2 (its unmet U1 is cured below, CUT #3; refusal #1's
- * unmet U1-U4 stay cured, CUT #2).
+ * truncation-honesty census, an until-then pin. Cut #4, the respin of refusal #3, authored in the enumerate-the-resolvable form its
+ * CUT #4 FORM binds (standing rule 19(c), the rule 14 shape; the shape frozen at 3da116fd): its unmet U1-U3 are cured below, CUT #4,
+ * and the pinned set is named in closed form, ENUMERATION; refusal #2's unmet U1 stays cured (CUT #3), and refusal #1's U1-U4 (CUT #2).
  * Statement (the bead's STATEMENT, read from the tracked export .beads/issues.jsonl at run time and never retyped beyond the
  * fragments the rows quote): it is tiled, in order and exactly, by row G's label, ", ", row W's label, ". ", the PENDING clause,
  * "; ", row U's label and ".", so no row label can drift from the filing and no row can be dropped without leaving its fragment
@@ -21,11 +22,12 @@
  * The description's ACCEPTANCE section is held to exactly those two on-landing items, so a standing item added to it, a second
  * ACCEPTANCE or STATEMENT section, or an acceptance_criteria or design field on the row reds this census; a note does not.
  *
- * MEASURED (by the cutting seat ws-03, run g10-work-s130, 2026-10-28, on trunk 014d116 merged into the branch: since cut #2's base
- * e81d2b0, landings 649-651 changed test and .beads paths only, no src module and no package.json; the roster's "capture" object
- * holds the producer values cut #2's capture script wrote (seat ws-03, run g10-work-s129) from the installed rf, two scratch rf
- * workspaces and a read-only git show and log of the RFCLI object store, never by hand, and this cut's run of the same script at
- * 2026-10-28T22:20:05Z read every value equal, the empty-scratch probe's per-run operation id aside):
+ * MEASURED (by the cutting seat ws-04, run g10-work-s133, 2026-10-29, on trunk b3d410f merged into the branch: since cut #3's base
+ * c843ed5, landings 654-662 changed test and .beads paths only, no src module, no package.json and none of the census's helpers;
+ * the roster's "capture" object holds the producer values cut #2's capture script wrote (seat ws-03, run g10-work-s129) from the
+ * installed rf, two scratch rf workspaces and a read-only git show and log of the RFCLI object store, never by hand, and runs of
+ * the same script at 2026-10-28T22:20:05Z (cut #3) and 2026-10-29T02:02:54Z (this cut) read every value equal, the empty-scratch
+ * probe's per-run operation id aside):
  * - The installed rf was 0.1.845 at build b8b3e9f1de56 (rf --json --version at capturedUtc 2026-10-28T17:21:52Z:
  *   provenance.commit_id, mismatch false), the release
  *   the contractSource carrier records (REACTIVE_FIBER_CONTRACT_SOURCE, read through recordedRfRelease of
@@ -45,15 +47,17 @@
  *   :297), over PMO-05a's capped search below the CLI, has SHIPPED at the recorded build: the gating artifact's RFCLI conjunct is
  *   MET. It shipped under the unchanged release string 0.1.845 (cut #1 captured build 7e6ed89a, where it had not), a rebuild no
  *   repository anchor records (R-SAME-RELEASE-REBUILD below).
- * - Pi: three src modules import node:child_process, each by one static import declaration; those three are the only
- *   child_process module-name literals in src and the only spellings of child_process in its text. They hold five call sites,
+ * - Pi: every entry under src is a regular .ts file or a directory (117 walked modules in src and its five subdirectories at
+ *   b3d410f; no regular file of another name, no symlink and no entry of another type: the unwalked-entry list is empty). Three
+ *   walked modules import node:child_process, each by one static import declaration; those three are the only child_process
+ *   module-name literals in the walked modules and the only spellings of child_process in their text. They hold five call sites,
  *   all pinned: execFileSync of git three times in src/index.ts (workspaceCandidateBasis's git and atRoot, observedPackageHead's
  *   revision), the detached host's spawn of process.execPath (launchDetachedWorkflow) and the provider's spawn of rf
  *   (nativeReactiveFiberRender), its argv renderArgv's (verb context render, tail --no-commit --no-input --json). No reference
- *   to a child-process binding escapes a call, no module-name literal is unbound and no spelling is unread. No src literal
- *   spells the graph explain leaf, no src text spells a PMO-05b name, no src module imports or loads an rf package (none is
- *   published), package.json names or specifies none in any field, and the one registered rf capability is the
- *   non-committing render preview: the Pi conjunct is unmet.
+ *   to a child-process binding escapes a call, no module-name literal is unbound and no spelling is unread. No walked module's
+ *   literal spells the graph explain leaf, no walked module's text spells a PMO-05b name, no walked module imports, loads or
+ *   type-references an rf package by a bare specifier in any form U3 reads (none is published), package.json names or specifies
+ *   none in any field, and the one registered rf capability is the non-committing render preview: the Pi conjunct is unmet.
  *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin's witness is the roster's):
  *  G, the gating artifact's RFCLI conjunct, read from the capture: MET. G1 the capture's identity: the carrier's release at the
@@ -64,7 +68,14 @@
  *    adds both filing fields after the required members under the flag and neither without it. G3 the result members at the
  *    build include both fields and its required list neither; at the pin neither is a member or required; the revision member is
  *    in each list; the pin's required list spans exactly the cited lines; the schema file's bytes and sha-256.
- *  W, the Pi slice that invokes graph explain (none). W1 the src modules importing node:child_process (this reader and the shared
+ *  W, the Pi slice that invokes graph explain (none). W1 the walk, and every child_process load the walked modules hold. The walk
+ *    reads every entry under src by lstat: a directory it descends; a regular file whose name ends .ts, a walked module, which
+ *    every reader of this census reads (src text, a src module and a src literal below mean a walked module's); and any other
+ *    entry - a regular file of any other name (a .txt, an extensionless file, a .json, a .cjs, an upper-case .TS), a symlink
+ *    whatever its name or target, which it never follows, or an entry of another type - which it lists unwalked and never reads.
+ *    The unwalked-entry list is pinned (empty), so a file the readers would not read reds W1 for re-measure, as N1-N5 do; its
+ *    entry controls (a scratch tree holding every such form, read by the same walk), kind controls (lstat's answers, none of
+ *    them for a FIFO, a socket or a device) and reading controls read as pinned. Then the src modules importing node:child_process (this reader and the shared
  *    sourceStructure read the same list, and the list is pinned) and every value reference there to a child-process binding: a
  *    named, default or namespace import, a bound require declaration (a variable whose whole initializer is require of the
  *    module, named by an identifier or an object pattern of plain elements), or a const alias of one (a non-exported const or
@@ -88,16 +99,18 @@
  *    unbound. Every spelling of child_process in src text outside a module-name literal (a comment, a longer string such as
  *    source text held for evaluation, a template, an identifier, a regular expression), and every string or template piece
  *    whose cooked text spells it through an escape sequence, is unread, and none is. So every
- *    child_process load src text spells is read and pinned whether or not its module also binds child_process: a new load is a
- *    new occurrence, an unbound one is unbound, a spelling elsewhere is unread, and a new reference to a resolved binding is a
+ *    child_process load a walked module's text spells is read and pinned whether or not its module also binds child_process, and
+ *    src holds no text the walk leaves unread: a new load is a new occurrence, an unbound one is unbound, a spelling elsewhere is
+ *    unread, a new file the walk does not read is unwalked, and a new reference to a resolved binding is a
  *    new site or an escape (a direct eval included). An existing pinned site's arguments are not pinned: a new call of a
  *    same-module wrapper around one (workspaceCandidateBasis's git and atRoot closures) runs whatever argv it passes, so that
  *    argv is W3's and, composed, R-COMPOSED's (Q1). The importer controls read
  *    refusal #2's forms (inline require, await-import destructure, import().then, createRequire, import equals, and the composed
  *    explain through the await-import and createRequire idioms) and the variable, concatenated, template, escaped,
  *    getBuiltinModule, module.require, bound-require, defaulted-pattern and type-position forms and a direct eval inside a
- *    module that also imports child_process. No code module under src is one the walks skip (a .js, .mjs, .cjs, .jsx, .mts, .cts or .tsx file:
- *    the list is pinned empty, its file-name controls read as pinned). A caller of another module's wrapper is not read; the
+ *    module that also imports child_process. No regular file under src carries one of the seven code extensions the walk does not
+ *    read as modules (a .js, .mjs, .cjs, .jsx, .mts, .cts or .tsx file: that list is pinned empty, its file-name controls read as
+ *    pinned), and no entry under src is unwalked at all (the unwalked-entry list). A caller of another module's wrapper is not read; the
  *    wrapper module is (a re-export or an exported alias is an escape, a parameter binary an opaque site, a fixed rf binary a
  *    second rf site). A launcher binary (env, git with an alias, a shell line's first word) reads as itself, not as the process
  *    it starts: W3 reads a literal argv naming the leaf, and a composed one passed through an existing site is R-COMPOSED's.
@@ -112,17 +125,25 @@
  *    caught (in code, a line comment and a block comment) and the near misses are not. U2 the native and the injected rf
  *    registrations hold exactly the render preview (effectClass read, contractSource the carrier's non-committing render with its
  *    release masked) and no rf descriptor's id, description or contractSource spells the leaf; a registry holding a planted explain
- *    descriptor reads one finding. U3 no src module imports an rf package (static, export-from, dynamic or require, as the shared
- *    sourceStructure reads); no src call takes a string literal naming one as its first argument (read through parentheses and
+ *    descriptor reads one finding. U3 no src module imports an rf package (a static import declaration, type-only ones included,
+ *    or an export-from declaration at the module's top level, or a dynamic import or require call with a literal first argument:
+ *    the four forms the shared sourceStructure reads); no src call takes a string literal naming one as its first argument (read through parentheses and
  *    type assertions), whatever the callee (require, import(), a call of a call such as createRequire(import.meta.url)(...),
  *    module.require, require.resolve, a loader under any name), other than a child-process call site's binary, which W1 reads, no
  *    tagged template's literal names one and no import-equals declaration does (so a literal rf binary passed to a launch W1 does
- *    not resolve reads as such a load); and package.json names or specifies none in any key or string value at any depth (the four dependency maps,
- *    bundledDependencies, overrides, resolutions, pi.extensions, scripts and every other field). A name or spec is an rf
- *    package's when it carries reactive-fiber, reactivefiber or reactive_fiber in any case or has a name or path segment that
- *    is rf or begins rf and a -, _ or . (rf-sdk, rf.tgz); the predicate's planted names and specs, the loader plants (a call
- *    whose first argument names an rf package reads as a load whatever it does) and the manifest plants are caught, and Pi's own
- *    relative reactivefiber module, the provider's rf binary, the other packages and the quiet manifest fields are not.
+ *    not resolve reads as such a load); no src type position names one (an import type's argument, such as N11's typeof
+ *    import("@reactive-fiber/tsx"), a triple-slash types or path directive, an amd-dependency directive, an ambient module
+ *    declaration's name, or an import or export declaration nested in a module block), each read as a type reference and never as
+ *    a runtime load (no type plant reads a load); and package.json names or specifies none in any key or string value at any depth (the four dependency maps,
+ *    bundledDependencies, overrides, resolutions, pi.extensions, scripts and every other field). A module specifier, or a
+ *    manifest key, names an rf package when it is bare (not relative, absolute or node:, so Pi's own relative reactivefiber
+ *    module never does and a path to an rf package's files is R-PATH-SPECIFIER's, Q7) and its package name carries
+ *    reactive-fiber, reactivefiber or reactive_fiber in any case or has a scope or name segment that is rf or begins rf and a -,
+ *    _ or . (rf-sdk); a manifest string value specifies one when it carries one of those words or has a segment (split at /, :,
+ *    @ or a backslash) of that shape (rf.tgz, file:vendor/rf); the predicate's planted names and specs, the loader plants (a call
+ *    whose first argument names an rf package reads as a load whatever it does), the type plants and the manifest plants are
+ *    caught, and Pi's own relative reactivefiber module, the provider's rf binary, the other packages, the quiet type positions
+ *    and the quiet manifest fields are not.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and
  *  pins, every pin's witness, the constants and controls, the filing reading (paragraph heads, repeated heads, each head plant's
@@ -133,14 +154,41 @@
  *  the vitest task tree (every registered test, in roster order, in run mode, ran before it) and the pins that reached their
  *  witness.
  * NOT CLAIMED (edits of this file and the roster together): a pin removed from ROWS, the literal, IMPL and the roster; a control
- *  or a head plant removed from its list and the roster; a pin's case replaced by one that echoes its roster witness; row Q
+ *  or a head plant removed from its list and the roster; a pin's case, or one reading in it, replaced by one that echoes its
+ *  roster witness (a reading pinned empty over src, such as W1's entries or U3's types, stays green when its call is replaced by an
+ *  empty literal; measured at cut #4, E1 and E2 0 failed); row Q
  *  removed with RESIDUALS from every literal and the roster (Q quotes no STATEMENT fragment).
+ * ENUMERATION (CUT #4 FORM (4): the pinned set in closed form; any file or form not named here is outside the claim, and each
+ *  known member outside it is a named residual with its pinned quiet row, RESIDUALS):
+ *  - Files: the walk (W1) reads every entry under src by lstat, and every reader reads exactly its walked modules, the regular
+ *    files under src whose names end .ts; W1 pins the list of every other entry (empty) and of the regular files among them with
+ *    a skipped code extension (empty). Beyond src the census reads package.json whole (U3), the tracker export's wb-2j3.10 row
+ *    (its description and the two specification fields: the judged set), the native and the injected rf registrations (U2), the
+ *    carrier's release (G1, Q2) and the roster, and nothing else.
+ *  - W1's forms: bindings (a named, default or namespace import of node:child_process or child_process, a bound require
+ *    declaration, and their const aliases, to a fixpoint); call sites (a direct call of a bound spawn, spawnSync, execFile,
+ *    execFileSync, exec, execSync or fork, or of a namespace member of one, with its binary and shell readings); escapes (every
+ *    other value reference to a binding, and a direct eval in a module that binds child_process); loads (every string or template
+ *    literal whose value is child_process or node:child_process, per occurrence, read as an import, type, side-effect or
+ *    re-export declaration's, a bound require's, or unbound with its carrier); unread spellings (every other occurrence of the
+ *    text child_process in a walked module, and every string or template piece whose cooked text spells it through an escape).
+ *  - W2's and W3's: the rf spawn's argv through renderArgv; every string, template and array literal, read as spelled, with
+ *    options elided and shell-unquoted, for the leaf's spelling family. U1's: the PMO-05b needles in each walked module's whole
+ *    text. U2's: every rf descriptor's id, effect class, description and contractSource.
+ *  - U3's, for a bare specifier naming an rf package: sourceStructure's four (a top-level static import, type-only ones
+ *    included; a top-level export-from; a dynamic import or a require call with a literal first argument); packageLoads' three
+ *    (any call's literal first argument, read through parentheses and type assertions; a tagged template's literal; an
+ *    import-equals reference); typeReferences', each a type reference (an import type's argument; a triple-slash types or path
+ *    directive; an amd-dependency directive; an ambient module declaration's name; an import or export declaration nested in a
+ *    module block); and package.json's every key (as a specifier) and string value (as a spec) at any depth.
+ *  - G's: the capture's fields, which the capture script writes from the seven producer reads capture.remeasure names.
  * RESIDUALS (named, each with its pinned quiet row): R-COMPOSED the leaf spelled from runtime parts (a verb held in a variable,
  *  a concatenation, a pushed word, a template substitution, a shell expansion) is invisible to W3, and passed as an argv through an existing pinned
  *  site (a launcher such as git with an alias, a same-module wrapper) it is no new W1 site either (Q1); R-SAME-RELEASE-REBUILD the carrier records a release and no build, so
  *  G1 admits a capture at any build of the carrier's release and a producer rebuilt under it (as b8b3e9f1 was over 7e6ed89a) is
  *  invisible to row G until a seat re-measures the capture (Q2); R-OUTSIDE-SRC the walks read src only (qa/, scripts and an
- *  operator's local provider module loaded from a path outside src are not read), though the scanners flag the same text (Q3);
+ *  operator's local provider module loaded from a path outside src are not read; a symlink under src whose target lies outside
+ *  it is W1's unwalked entry, never followed), though the scanners flag the same text (Q3);
  *  R-COMMON-WORD the filing's truncated field is an ordinary src word (a relation page flag, text truncation) and is not a U1
  *  needle (Q4); R-UNSEEN-LAUNCHER a process launched where no src text spells child_process (a module specifier composed or
  *  read at run time, also inside evaluated source text that composes it; process.execve; an internal process binding;
@@ -149,7 +197,10 @@
  *  evaluated source text and U3 no binary path or composed name (Q5); R-UNREAD-SPECIFIER an rf package
  *  specifier that reaches a loader other than as a call's first-argument literal, a tagged template's literal or an import-equals
  *  reference (any other expression: held in a variable, an array spread into the call or passed through Reflect.apply, a
- *  conditional, composed at run time, built into a URL) is no U3 load (Q6).
+ *  conditional, composed at run time, built into a URL) is no U3 load (Q6); R-PATH-SPECIFIER an rf package's files reached by a
+ *  path rather than a bare specifier (a relative path into node_modules, an absolute path, a file: URL, a triple-slash path
+ *  directive, an import type of a path) name no rf package to U3's predicate, which reads bare specifiers only so that Pi's own
+ *  relative reactivefiber module stays quiet: no U3 reader reads one, in any position (Q7).
  * SCOPE: the census judges Pi's src, its registrations and package.json, the filing's description and specification fields, and
  *  the captured producer state. It re-runs none of the runtime argv pins the rf graph mutation census owns
  *  (test/workbench-rf-graph-mutation-census.test.ts rows A and C), and the honesty homes the bead's rationale names
@@ -176,10 +227,27 @@
  *  U3 reads package.json in full. R-UNSEEN-LAUNCHER's boundary is restated on the spelling, its evaluated probe composes the
  *  specifier inside the evaluated text (spelled there it now reads unread) and node:cluster is named; R-COMPOSED names the
  *  composed argv passed through an existing pinned site.
+ * CUT #4 (refusal #3's unmet list under its CUT #4 FORM; additions only: no title, row, pin, control, plant case or residual
+ *  family is removed and no pinned reading changes - the roster's prior constants, filing and witnesses read equal, and the
+ *  residuals map gains one key): U1 (the walk; record F1, F2): before, the walk kept regular files only (a Dirent's isFile)
+ *  and srcModules *.ts only, so a symlink under src (N4, N5) and a regular file of another name (N1 and N3 a .txt, N2 none) was
+ *  neither read nor listed, against MEASURED's only-literals sentence, W1's every-load sentence and the skipped-module sentence;
+ *  after, W1's walk reads every entry under src by lstat (walkEntries), srcModules is its walked modules (the same 117), W1 adds
+ *  the unwalked-entry list (entries, empty), the entry, kind and reading controls, and those sentences are restated to the walked
+ *  modules and the empty list: N1-N5 red W1 (N4 also U2, as before), and N1c, N4c and N5c stay red. U2 (U3's type references;
+ *  record F3): before, U3 read sourceStructure's four forms and packageLoads' three and no type position (N11 green), against
+ *  MEASURED's unscoped no-rf-package sentence; after, U3 adds typeReferences (types, empty; typeCaught, N11's exact text first;
+ *  typeQuiet; typeLoads, where packageLoads reads none of the type plants, so a type reference is never a load), and the
+ *  sentence is scoped to the forms U3 reads: N11 reds U3 and N12 stays red. U3 (note honesty, LOW; record F5): biome and tsc
+ *  include src/**\/*.ts and test/**\/*.ts only, so lint and typing check this file and never the roster, which the census's
+ *  JSON.parse alone reads (refusing any field of the wrong shape by name); the delivery note and the commit body say so.
+ *  ENUMERATION names the pinned set in closed form, and U3's predicate reading bare specifiers only is the named residual
+ *  R-PATH-SPECIFIER with its quiet row (Q7, new: the frozen shape moves from Q:6 to Q:7).
  *
- * Display paths added: none. Test-only: no scratch is allocated; src, package.json, .beads and the roster are only read.
+ * Display paths added: none. Test-only: one scratch directory (makeScratch from test/helpers/scratch.ts, removed by W1's case,
+ *  installScratchLeakGuard at module scope) holds W1's entry controls; src, package.json, .beads and the roster are only read.
  */
-import { readdirSync, readFileSync } from "node:fs";
+import { lstatSync, mkdirSync, readdirSync, readFileSync, type Stats, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
@@ -189,8 +257,12 @@ import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
 import { registerReactiveFiberRender } from "../src/workbench/providers/reactivefiber.js";
 import { sourceStructure } from "./helpers/census.js";
 import { recordedRfRelease } from "./helpers/rf-release-drift.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 type JsonObject = { [key: string]: JsonValue };
+
+/** W1's entry controls make one scratch tree (makeScratch, removed by the case); the guard fails the file on a leak. */
+installScratchLeakGuard();
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
@@ -204,6 +276,51 @@ const SRC_FLOOR = 100;
 const UNWALKED_MODULE = /\.(?:[cm]?jsx?|[cm]ts|tsx)$/;
 /** File-name controls for it: the seven skipped code extensions are caught; a .ts or .d.ts module and a .json file are not. */
 const UNWALKED_CONTROLS: readonly string[] = ["probe.js", "probe.mjs", "probe.cjs", "probe.jsx", "probe.mts", "probe.cts", "probe.tsx", "probe.ts", "probe.d.ts", "probe.json"];
+/** One entry W1's entry controls make: a regular file, a directory, or a symlink to its target (relative to the link). */
+type EntryPlant = { readonly path: string; readonly kind: "file" | "directory" } | { readonly path: string; readonly kind: "symlink"; readonly target: string };
+/** W1's entry controls, made in one scratch directory and read by the same walk as src: regular .ts modules at the top and
+ * nested (a .d.ts among them: walked), regular files of other names (.txt, none, .body, .json, an upper-case .TS, a dotfile),
+ * symlinks to a .ts module, to a .body file (N5's shape), to a directory and to nothing, and an empty directory (descended,
+ * holding nothing): every one but the regular .ts files is unwalked, and no symlink is followed. */
+const ENTRY_PLANTS: readonly EntryPlant[] = [
+  { path: "module.ts", kind: "file" },
+  { path: "nested/inner.ts", kind: "file" },
+  { path: "nested/deeper/types.d.ts", kind: "file" },
+  { path: "nested/.hidden", kind: "file" },
+  { path: "empty", kind: "directory" },
+  { path: "gate-launch.txt", kind: "file" },
+  { path: "gate-launch", kind: "file" },
+  { path: "gate-launch.body", kind: "file" },
+  { path: "data.json", kind: "file" },
+  { path: "upper.TS", kind: "file" },
+  { path: "linked.ts", kind: "symlink", target: "module.ts" },
+  { path: "gate-launch.cjs", kind: "symlink", target: "gate-launch.body" },
+  { path: "linked-dir", kind: "symlink", target: "nested" },
+  { path: "dangling.ts", kind: "symlink", target: "missing.ts" },
+];
+/** entryKind's controls: lstat's three answers as [isDirectory, isFile, isSymbolicLink], and none of them (a FIFO, a socket or
+ * a device, which no call here can make) read as other. */
+const KIND_CONTROLS: Readonly<Record<string, readonly [boolean, boolean, boolean]>> = {
+  directory: [true, false, false],
+  file: [false, true, false],
+  symlink: [false, false, true],
+  other: [false, false, false],
+};
+/** entryReading's controls: a name and an lstat kind, each read as descend, module or unwalked. */
+const READING_CONTROLS: readonly (readonly [string, EntryKind])[] = [
+  ["probe.ts", "file"],
+  ["probe.d.ts", "file"],
+  ["probe.txt", "file"],
+  ["probe", "file"],
+  ["probe.TS", "file"],
+  ["probe.cjs", "file"],
+  ["probe.ts", "symlink"],
+  ["probe", "symlink"],
+  ["probe.ts", "other"],
+  ["probe", "other"],
+  ["probe.ts", "directory"],
+  ["probe", "directory"],
+];
 /** The reading of a non-literal element, argument or template substitution. */
 const EXPR = "<expr>";
 /** The leaf, its flag and its two fields as the STATEMENT spells them (held to it in the first case). */
@@ -396,6 +513,26 @@ const LOAD_QUIET: Readonly<Record<string, string>> = {
   relative: `import { createRequire } from "node:module"; createRequire(import.meta.url)("./providers/reactivefiber.js");`,
   "other-package": `import { createRequire } from "node:module"; createRequire(import.meta.url)("@furnace/sdk");`,
 };
+/** U3's type-reference plants (each must read one reference, and none a load) and quiet ones (none may), module bodies read by
+ * typeReferences: an import type's argument (N11's exact text first), a triple-slash types directive, an amd-dependency
+ * directive, an ambient module declaration's name, and an import or export declaration nested in a module block. */
+const TYPE_CAUGHT: Readonly<Record<string, string>> = {
+  "import-type": `export type GateSdk = typeof import("@reactive-fiber/tsx");`,
+  "import-type-member": `type Client = import("@rf/sdk").Client;`,
+  "reference-types": `/// <reference types="@reactive-fiber/sdk" />\nexport {};`,
+  "amd-dependency": `/// <amd-dependency path="rf-sdk" />\nexport {};`,
+  "ambient-module": `declare module "@reactive-fiber/sdk" {\n  export const render: () => void;\n}`,
+  "ambient-import": `declare module "pi-host" {\n  import type { Client } from "@reactive-fiber/sdk";\n  export const client: Client;\n}`,
+  "ambient-export": `declare module "pi-host" {\n  export * from "@reactive-fiber/tsx";\n}`,
+};
+const TYPE_QUIET: Readonly<Record<string, string>> = {
+  relative: `type Provider = typeof import("./providers/reactivefiber.js");`,
+  builtin: `type Launcher = typeof import("node:child_process");`,
+  "other-package": `/// <reference types="node" />\ndeclare module "@furnace/sdk" {\n  export const run: () => void;\n}`,
+  global: `declare global {\n  interface PiRelease {\n    readonly rf: string;\n  }\n}\nexport {};`,
+  namespace: `namespace rf {\n  export const release = "0.0.0";\n}`,
+  comment: `/** @type {import("@reactive-fiber/sdk").Client} */\nexport const client = undefined;`,
+};
 /** U3's manifest plants, each merged over package.json's own fields: an rf package named or specified outside the four dependency
  * maps or by a vendored spec (each must read a hit), and fields that are no rf package (none may). */
 const MANIFEST_CAUGHT: Readonly<Record<string, JsonObject>> = {
@@ -446,6 +583,24 @@ const UNREAD_SPECIFIERS: Readonly<Record<string, string>> = {
   spread: `import { createRequire } from "node:module"; createRequire(import.meta.url)(...["@reactive-fiber/sdk"]);`,
   conditional: `import { createRequire } from "node:module"; createRequire(import.meta.url)(flag ? "@reactive-fiber/sdk" : "@furnace/sdk");`,
 };
+/** Q7's path specifiers (R-PATH-SPECIFIER): an rf package's files reached by a relative, absolute or file: URL path, which U3's
+ * package predicate (packageOf reads bare specifiers only, so Pi's own relative reactivefiber module stays quiet) reads as
+ * no package, in each U3 reader's position (a loader's first argument, a dynamic import, a path directive, an import type). */
+const PATH_SPECIFIERS: Readonly<Record<string, string>> = {
+  relative: `import { createRequire } from "node:module"; createRequire(import.meta.url)("../node_modules/@reactive-fiber/sdk/dist/index.js");`,
+  absolute: `await import("/opt/reactive-fiber/sdk/index.js");`,
+  "file-url": `await import("file:///opt/reactive-fiber/sdk/index.js");`,
+  "reference-path": `/// <reference path="../node_modules/@reactive-fiber/sdk/index.d.ts" />\nexport {};`,
+  "import-type-path": `type Client = typeof import("../node_modules/@rf/sdk/index.js");`,
+};
+/** The same paths as the predicate reads them (a static import of one, which sourceStructure reads, is filtered by it). */
+const PATH_NAMES: readonly string[] = [
+  "../node_modules/@reactive-fiber/sdk/dist/index.js",
+  "/opt/reactive-fiber/sdk/index.js",
+  "file:///opt/reactive-fiber/sdk/index.js",
+  "../node_modules/@reactive-fiber/sdk/index.d.ts",
+  "../node_modules/@rf/sdk/index.js",
+];
 /** Each residual family and the quiet row that pins it. */
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-COMPOSED": ["Q1"],
@@ -454,6 +609,7 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-COMMON-WORD": ["Q4"],
   "R-UNSEEN-LAUNCHER": ["Q5"],
   "R-UNREAD-SPECIFIER": ["Q6"],
+  "R-PATH-SPECIFIER": ["Q7"],
 };
 
 interface Row {
@@ -471,7 +627,7 @@ const ROWS: readonly Row[] = [
   },
   { id: "W", label: "conjoined with a Pi W10 slice that actually invokes graph explain", pins: ["W1", "W2", "W3"] },
   { id: "U", label: "until the artifact exists, no Pi change", pins: ["U1", "U2", "U3"] },
-  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6"] },
+  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"] },
 ];
 
 interface RosterPin {
@@ -649,23 +805,74 @@ function rosterWitness(pin: string): JsonValue {
 function parse(fileName: string, source: string): ts.SourceFile {
   return ts.createSourceFile(fileName, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
 }
-function filesBelow(directory: string): string[] {
-  return readdirSync(directory, { withFileTypes: true }).flatMap(entry => {
-    const path = join(directory, entry.name);
-    if (entry.isDirectory()) return filesBelow(path);
-    return entry.isFile() ? [path] : [];
-  });
+/** What lstat reads an entry as (a symlink is never followed): a directory, a regular file, a symlink whatever its name or
+ * target, or another type (a FIFO, a socket, a device). */
+type EntryKind = "directory" | "file" | "symlink" | "other";
+function entryKind(stat: Pick<Stats, "isDirectory" | "isFile" | "isSymbolicLink">): EntryKind {
+  if (stat.isSymbolicLink()) return "symlink";
+  if (stat.isDirectory()) return "directory";
+  return stat.isFile() ? "file" : "other";
+}
+/** How the walk takes one entry: it descends a directory; a regular file whose name ends .ts is a walked module, which every
+ * reader reads; every other entry (a regular file of any other name, a symlink whatever its name or target, any other type)
+ * is unwalked: listed, never read. */
+function entryReading(name: string, kind: EntryKind): "descend" | "module" | "unwalked" {
+  if (kind === "directory") return "descend";
+  return kind === "file" && name.endsWith(".ts") ? "module" : "unwalked";
+}
+interface Entry {
+  readonly path: string;
+  readonly kind: EntryKind;
+  readonly walked: boolean;
+}
+/** Every entry below top, by lstat: each directory descended (never listed, never reached through a symlink), every other
+ * entry listed with its kind and whether it is a walked module, by path relative to root with "/" separators, sorted. */
+function walkEntries(root: string, top: string): Entry[] {
+  const found: Entry[] = [];
+  const visit = (directory: string): void => {
+    for (const name of readdirSync(directory)) {
+      const path = join(directory, name);
+      const kind = entryKind(lstatSync(path));
+      const reading = entryReading(name, kind);
+      if (reading === "descend") visit(path);
+      else found.push({ path: relative(root, path).split("\\").join("/"), kind, walked: reading === "module" });
+    }
+  };
+  visit(top);
+  return found.sort((left, right) => (left.path < right.path ? -1 : left.path > right.path ? 1 : 0));
+}
+/** A walk's reading: its walked modules, and every unwalked entry as `${path}|${kind}`. */
+function entryListing(entries: readonly Entry[]): { readonly modules: string[]; readonly unwalked: string[] } {
+  return { modules: entries.filter(entry => entry.walked).map(entry => entry.path), unwalked: entries.filter(entry => !entry.walked).map(entry => `${entry.path}|${entry.kind}`) };
+}
+/** Every entry under src, by repository-relative path. */
+function srcEntries(): Entry[] {
+  return walkEntries(REPO, join(REPO, "src"));
+}
+/** W1's entry controls: ENTRY_PLANTS made in one scratch directory and read by the same walk and listing as src. */
+function entryControls(): JsonValue {
+  const root = makeScratch("wb-2j3.10-entries-");
+  try {
+    for (const plant of ENTRY_PLANTS) {
+      const path = join(root, plant.path);
+      mkdirSync(plant.kind === "directory" ? path : dirname(path), { recursive: true });
+      if (plant.kind === "symlink") symlinkSync(plant.target, path);
+      else if (plant.kind === "file") writeFileSync(path, "export const planted = 1;\n");
+    }
+    return json(entryListing(walkEntries(root, root)));
+  } finally {
+    removeScratch(root);
+  }
 }
 interface Module {
   readonly name: string;
   readonly source: string;
 }
-/** Every src/**\/*.ts module, by repository-relative path with "/" separators. */
+/** Every walked module under src (a regular file whose name ends .ts, never a symlink), by repository-relative path. */
 function srcModules(): Module[] {
-  return filesBelow(join(REPO, "src"))
-    .filter(file => file.endsWith(".ts"))
-    .map(file => ({ name: relative(REPO, file).split("\\").join("/"), source: readFileSync(file, "utf8") }))
-    .sort((left, right) => (left.name < right.name ? -1 : left.name > right.name ? 1 : 0));
+  return srcEntries()
+    .filter(entry => entry.walked)
+    .map(entry => ({ name: entry.path, source: readFileSync(join(REPO, entry.path), "utf8") }));
 }
 
 /** The leaf's spelling family: its words in any case, joined directly or by any run of white space, ".", "_", ":", "/" or "-". */
@@ -1105,6 +1312,32 @@ function packageLoads(fileName: string, source: string): string[] {
   visit(file);
   return found;
 }
+/** U3's type-reference reading of one module: every place a type position names an rf package by a bare specifier, read as a
+ * type reference and never as a runtime load: an import type's argument (typeof import("x"), import("x").T), a triple-slash
+ * types or path directive or an amd-dependency directive, an ambient module declaration's name, and the module specifier of an
+ * import or export declaration nested in a module block (a module's top-level ones are sourceStructure's), as
+ * `${scope}:${form}:${specifier}`. */
+function typeReferences(fileName: string, source: string): string[] {
+  const file = parse(fileName, source);
+  const directives: (readonly [string, string])[] = [
+    ...file.typeReferenceDirectives.map(reference => ["reference-types", reference.fileName] as const),
+    ...file.referencedFiles.map(reference => ["reference-path", reference.fileName] as const),
+    ...file.amdDependencies.map(dependency => ["amd-dependency", dependency.path] as const),
+  ];
+  const found = directives.filter(([, specifier]) => rfPackage(specifier)).map(([form, specifier]) => `<module>:${form}:${specifier}`);
+  const visit = (node: ts.Node): void => {
+    if (ts.isImportTypeNode(node) && ts.isLiteralTypeNode(node.argument) && ts.isStringLiteralLike(node.argument.literal) && rfPackage(node.argument.literal.text)) {
+      found.push(`${scopeOf(node)}:import-type:${node.argument.literal.text}`);
+    }
+    if (ts.isModuleDeclaration(node) && ts.isStringLiteral(node.name) && rfPackage(node.name.text)) found.push(`${scopeOf(node)}:ambient-module:${node.name.text}`);
+    if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && !ts.isSourceFile(node.parent) && node.moduleSpecifier !== undefined && ts.isStringLiteral(node.moduleSpecifier)) {
+      if (rfPackage(node.moduleSpecifier.text)) found.push(`${scopeOf(node)}:${ts.isImportDeclaration(node) ? "ambient-import" : "ambient-export"}:${node.moduleSpecifier.text}`);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return found;
+}
 /** Every key naming an rf package and every string value specifying one, at any depth of a manifest, as `${path}` or
  * `${path}=${value}`: the dependency maps, bundledDependencies, overrides, resolutions, pi.extensions, scripts and every other field. */
 function manifestHits(value: unknown, path = ""): string[] {
@@ -1301,10 +1534,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       loads,
       unbound: loads.filter(load => load.split("|")[2]?.startsWith("unbound:") === true),
       unread: scans.flatMap(entry => entry.scan.unread.map(found => `${entry.module}|${found}`)),
-      unwalked: filesBelow(join(REPO, "src"))
-        .filter(file => UNWALKED_MODULE.test(file))
-        .map(file => relative(REPO, file).split("\\").join("/")),
+      unwalked: srcEntries()
+        .filter(entry => entry.kind === "file" && UNWALKED_MODULE.test(entry.path))
+        .map(entry => entry.path),
       unwalkedControls: Object.fromEntries(UNWALKED_CONTROLS.map(name => [name, UNWALKED_MODULE.test(name)])),
+      entries: entryListing(srcEntries()).unwalked,
+      entryControls: entryControls(),
+      kindControls: Object.fromEntries(
+        Object.entries(KIND_CONTROLS).map(([name, [directory, file, symlink]]) => [name, entryKind({ isDirectory: () => directory, isFile: () => file, isSymbolicLink: () => symlink })]),
+      ),
+      readingControls: Object.fromEntries(READING_CONTROLS.map(([name, kind]) => [`${name}|${kind}`, entryReading(name, kind)])),
       controls: Object.fromEntries(Object.entries(SPAWN_CONTROLS).map(([name, body]) => [name, scanReading(scanSpawns(`${name}.ts`, body))])),
     });
   },
@@ -1387,6 +1626,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       loads: modules.flatMap(module => packageLoads(module.name, module.source).map(found => `${module.name}|${found}`)),
       loadCaught: Object.fromEntries(Object.entries(LOAD_CAUGHT).map(([name, body]) => [name, packageLoads(`${name}.ts`, body)])),
       loadQuiet: Object.fromEntries(Object.entries(LOAD_QUIET).map(([name, body]) => [name, packageLoads(`${name}.ts`, body)])),
+      types: modules.flatMap(module => typeReferences(module.name, module.source).map(found => `${module.name}|${found}`)),
+      typeCaught: Object.fromEntries(Object.entries(TYPE_CAUGHT).map(([name, body]) => [name, typeReferences(`${name}.ts`, body)])),
+      typeQuiet: Object.fromEntries(Object.entries(TYPE_QUIET).map(([name, body]) => [name, typeReferences(`${name}.ts`, body)])),
+      typeLoads: Object.fromEntries(Object.entries(TYPE_CAUGHT).map(([name, body]) => [name, packageLoads(`${name}.ts`, body)])),
       deep: manifestHits(manifest),
       manifestCaught: Object.fromEntries(Object.entries(MANIFEST_CAUGHT).map(([name, plant]) => [name, manifestHits({ ...manifest, ...plant })])),
       manifestQuiet: Object.fromEntries(Object.entries(MANIFEST_QUIET).map(([name, plant]) => [name, manifestHits({ ...manifest, ...plant })])),
@@ -1422,11 +1665,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       ),
     ),
   Q6: async () => json(Object.fromEntries(Object.entries(UNREAD_SPECIFIERS).map(([name, body]) => [name, packageLoads(`${name}.ts`, body)]))),
+  Q7: async () =>
+    json({
+      probes: Object.fromEntries(Object.entries(PATH_SPECIFIERS).map(([name, body]) => [name, { loads: packageLoads(`${name}.ts`, body), types: typeReferences(`${name}.ts`, body) }])),
+      predicate: Object.fromEntries(PATH_NAMES.map(path => [path, rfPackage(path)])),
+    }),
 };
 
 describe("wb-2j3.10 rf graph explain truncation census (RFCLI-PERFORMANCE-MATHEMATICAL-OPTIMIZATION-R11, standing leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster, the filing's sections (each read head once), its STATEMENT and ACCEPTANCE, and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["G:3", "W:3", "U:3", "Q:6"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["G:3", "W:3", "U:3", "Q:7"]);
     const judged = ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }));
     const rosterRows = ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) }));
     expect(judged).toStrictEqual(rosterRows);
@@ -1453,6 +1701,9 @@ describe("wb-2j3.10 rf graph explain truncation census (RFCLI-PERFORMANCE-MATHEM
       assignmentWord: ASSIGNMENT_WORD.source,
       unwalkedModule: UNWALKED_MODULE.source,
       unwalkedControls: UNWALKED_CONTROLS,
+      entryPlants: ENTRY_PLANTS,
+      kindControls: KIND_CONTROLS,
+      readingControls: READING_CONTROLS,
       valueOptions: RF_VALUE_OPTIONS,
       packageWords: RF_PACKAGE_WORDS,
       rfSegment: RF_SEGMENT.source,
@@ -1469,6 +1720,8 @@ describe("wb-2j3.10 rf graph explain truncation census (RFCLI-PERFORMANCE-MATHEM
       specQuiet: SPEC_QUIET,
       loadCaught: LOAD_CAUGHT,
       loadQuiet: LOAD_QUIET,
+      typeCaught: TYPE_CAUGHT,
+      typeQuiet: TYPE_QUIET,
       manifestCaught: MANIFEST_CAUGHT,
       manifestQuiet: MANIFEST_QUIET,
       composed: COMPOSED_PROBES,
@@ -1476,6 +1729,8 @@ describe("wb-2j3.10 rf graph explain truncation census (RFCLI-PERFORMANCE-MATHEM
       commonWord: COMMON_WORD_PROBE,
       unseen: UNSEEN_LAUNCHES,
       unreadSpecifiers: UNREAD_SPECIFIERS,
+      pathSpecifiers: PATH_SPECIFIERS,
+      pathNames: PATH_NAMES,
       residuals: RESIDUALS,
     });
     expect(constants).toStrictEqual(ROSTER.constants);

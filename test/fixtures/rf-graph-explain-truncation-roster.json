@@ -1,5 +1,5 @@
 {
- "comment": "wb-2j3.10 (RFCLI-PERFORMANCE-MATHEMATICAL-OPTIMIZATION-R11) roster of test/workbench-rf-graph-explain-truncation-census.test.ts, cut #3. capture: the producer state, written by cut #2's capture script (seat ws-03, g10-work-s129) from the installed rf, two scratch rf workspaces and a read-only git show and log of the RFCLI object store, and re-read equal on every value by the same script at 2026-10-28T22:20:05Z (seat ws-03, g10-work-s130; the empty-scratch probe's per-run operation id aside); filing, constants, rows, witnesses and tests: measured from the census at trunk 014d116 (merged into the branch) by a dump run on a throwaway tree, never hand-typed. A carrier re-pin reds row G1 until capture is re-measured at the new release (capture.remeasure); a rebuild under the same release does not (R-SAME-RELEASE-REBUILD, Q2).",
+ "comment": "wb-2j3.10 (RFCLI-PERFORMANCE-MATHEMATICAL-OPTIMIZATION-R11) roster of test/workbench-rf-graph-explain-truncation-census.test.ts, cut #4 (the enumerate-the-resolvable cut bound by refusal #3's CUT #4 FORM). capture: the producer state, written by cut #2's capture script (seat ws-03, g10-work-s129) from the installed rf, two scratch rf workspaces and a read-only git show and log of the RFCLI object store, re-read equal on every value by the same script at 2026-10-28T22:20:05Z (seat ws-03, g10-work-s130) and again at 2026-10-29T02:02:54Z (seat ws-04, g10-work-s133; the empty-scratch probe's per-run operation id aside each time); filing, constants, rows, witnesses and tests: measured from the census at trunk b3d410f (merged into the branch) by a dump run on a throwaway tree, never hand-typed. A carrier re-pin reds row G1 until capture is re-measured at the new release (capture.remeasure); a rebuild under the same release does not (R-SAME-RELEASE-REBUILD, Q2). Neither biome nor tsc reads this file (both include src/**/*.ts and test/**/*.ts only): the census's JSON.parse at run time is its only reader, and it refuses any field of the wrong shape by name.",
  "bead": "wb-2j3.10",
  "capture": {
   "capturedUtc": "2026-10-28T17:21:52Z",
@@ -334,6 +334,140 @@
    "probe.d.ts",
    "probe.json"
   ],
+  "entryPlants": [
+   {
+    "path": "module.ts",
+    "kind": "file"
+   },
+   {
+    "path": "nested/inner.ts",
+    "kind": "file"
+   },
+   {
+    "path": "nested/deeper/types.d.ts",
+    "kind": "file"
+   },
+   {
+    "path": "nested/.hidden",
+    "kind": "file"
+   },
+   {
+    "path": "empty",
+    "kind": "directory"
+   },
+   {
+    "path": "gate-launch.txt",
+    "kind": "file"
+   },
+   {
+    "path": "gate-launch",
+    "kind": "file"
+   },
+   {
+    "path": "gate-launch.body",
+    "kind": "file"
+   },
+   {
+    "path": "data.json",
+    "kind": "file"
+   },
+   {
+    "path": "upper.TS",
+    "kind": "file"
+   },
+   {
+    "path": "linked.ts",
+    "kind": "symlink",
+    "target": "module.ts"
+   },
+   {
+    "path": "gate-launch.cjs",
+    "kind": "symlink",
+    "target": "gate-launch.body"
+   },
+   {
+    "path": "linked-dir",
+    "kind": "symlink",
+    "target": "nested"
+   },
+   {
+    "path": "dangling.ts",
+    "kind": "symlink",
+    "target": "missing.ts"
+   }
+  ],
+  "kindControls": {
+   "directory": [
+    true,
+    false,
+    false
+   ],
+   "file": [
+    false,
+    true,
+    false
+   ],
+   "symlink": [
+    false,
+    false,
+    true
+   ],
+   "other": [
+    false,
+    false,
+    false
+   ]
+  },
+  "readingControls": [
+   [
+    "probe.ts",
+    "file"
+   ],
+   [
+    "probe.d.ts",
+    "file"
+   ],
+   [
+    "probe.txt",
+    "file"
+   ],
+   [
+    "probe",
+    "file"
+   ],
+   [
+    "probe.TS",
+    "file"
+   ],
+   [
+    "probe.cjs",
+    "file"
+   ],
+   [
+    "probe.ts",
+    "symlink"
+   ],
+   [
+    "probe",
+    "symlink"
+   ],
+   [
+    "probe.ts",
+    "other"
+   ],
+   [
+    "probe",
+    "other"
+   ],
+   [
+    "probe.ts",
+    "directory"
+   ],
+   [
+    "probe",
+    "directory"
+   ]
+  ],
   "valueOptions": [
    "--workspace",
    "--actor",
@@ -516,6 +650,23 @@
    "relative": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(\"./providers/reactivefiber.js\");",
    "other-package": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(\"@furnace/sdk\");"
   },
+  "typeCaught": {
+   "import-type": "export type GateSdk = typeof import(\"@reactive-fiber/tsx\");",
+   "import-type-member": "type Client = import(\"@rf/sdk\").Client;",
+   "reference-types": "/// <reference types=\"@reactive-fiber/sdk\" />\nexport {};",
+   "amd-dependency": "/// <amd-dependency path=\"rf-sdk\" />\nexport {};",
+   "ambient-module": "declare module \"@reactive-fiber/sdk\" {\n  export const render: () => void;\n}",
+   "ambient-import": "declare module \"pi-host\" {\n  import type { Client } from \"@reactive-fiber/sdk\";\n  export const client: Client;\n}",
+   "ambient-export": "declare module \"pi-host\" {\n  export * from \"@reactive-fiber/tsx\";\n}"
+  },
+  "typeQuiet": {
+   "relative": "type Provider = typeof import(\"./providers/reactivefiber.js\");",
+   "builtin": "type Launcher = typeof import(\"node:child_process\");",
+   "other-package": "/// <reference types=\"node\" />\ndeclare module \"@furnace/sdk\" {\n  export const run: () => void;\n}",
+   "global": "declare global {\n  interface PiRelease {\n    readonly rf: string;\n  }\n}\nexport {};",
+   "namespace": "namespace rf {\n  export const release = \"0.0.0\";\n}",
+   "comment": "/** @type {import(\"@reactive-fiber/sdk\").Client} */\nexport const client = undefined;"
+  },
   "manifestCaught": {
    "overrides": {
     "overrides": {
@@ -596,6 +747,20 @@
    "spread": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(...[\"@reactive-fiber/sdk\"]);",
    "conditional": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(flag ? \"@reactive-fiber/sdk\" : \"@furnace/sdk\");"
   },
+  "pathSpecifiers": {
+   "relative": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(\"../node_modules/@reactive-fiber/sdk/dist/index.js\");",
+   "absolute": "await import(\"/opt/reactive-fiber/sdk/index.js\");",
+   "file-url": "await import(\"file:///opt/reactive-fiber/sdk/index.js\");",
+   "reference-path": "/// <reference path=\"../node_modules/@reactive-fiber/sdk/index.d.ts\" />\nexport {};",
+   "import-type-path": "type Client = typeof import(\"../node_modules/@rf/sdk/index.js\");"
+  },
+  "pathNames": [
+   "../node_modules/@reactive-fiber/sdk/dist/index.js",
+   "/opt/reactive-fiber/sdk/index.js",
+   "file:///opt/reactive-fiber/sdk/index.js",
+   "../node_modules/@reactive-fiber/sdk/index.d.ts",
+   "../node_modules/@rf/sdk/index.js"
+  ],
   "residuals": {
    "R-COMPOSED": [
     "Q1"
@@ -614,6 +779,9 @@
    ],
    "R-UNREAD-SPECIFIER": [
     "Q6"
+   ],
+   "R-PATH-SPECIFIER": [
+    "Q7"
    ]
   }
  },
@@ -634,6 +802,7 @@
   "Q4",
   "Q5",
   "Q6",
+  "Q7",
   "the registered tests and the reached pins equal the roster, in order and both ways"
  ],
  "rows": [
@@ -826,6 +995,46 @@
        "probe.ts": false,
        "probe.d.ts": false,
        "probe.json": false
+      },
+      "entries": [],
+      "entryControls": {
+       "modules": [
+        "module.ts",
+        "nested/deeper/types.d.ts",
+        "nested/inner.ts"
+       ],
+       "unwalked": [
+        "dangling.ts|symlink",
+        "data.json|file",
+        "gate-launch|file",
+        "gate-launch.body|file",
+        "gate-launch.cjs|symlink",
+        "gate-launch.txt|file",
+        "linked-dir|symlink",
+        "linked.ts|symlink",
+        "nested/.hidden|file",
+        "upper.TS|file"
+       ]
+      },
+      "kindControls": {
+       "directory": "directory",
+       "file": "file",
+       "symlink": "symlink",
+       "other": "other"
+      },
+      "readingControls": {
+       "probe.ts|file": "module",
+       "probe.d.ts|file": "module",
+       "probe.txt|file": "unwalked",
+       "probe|file": "unwalked",
+       "probe.TS|file": "unwalked",
+       "probe.cjs|file": "unwalked",
+       "probe.ts|symlink": "unwalked",
+       "probe|symlink": "unwalked",
+       "probe.ts|other": "unwalked",
+       "probe|other": "unwalked",
+       "probe.ts|directory": "descend",
+       "probe|directory": "descend"
       },
       "controls": {
        "named": "imports|rf:run:spawn:rf:unknown||<module>:import|",
@@ -1060,6 +1269,47 @@
        "relative": [],
        "other-package": []
       },
+      "types": [],
+      "typeCaught": {
+       "import-type": [
+        "<module>:import-type:@reactive-fiber/tsx"
+       ],
+       "import-type-member": [
+        "<module>:import-type:@rf/sdk"
+       ],
+       "reference-types": [
+        "<module>:reference-types:@reactive-fiber/sdk"
+       ],
+       "amd-dependency": [
+        "<module>:amd-dependency:rf-sdk"
+       ],
+       "ambient-module": [
+        "<module>:ambient-module:@reactive-fiber/sdk"
+       ],
+       "ambient-import": [
+        "<module>:ambient-import:@reactive-fiber/sdk"
+       ],
+       "ambient-export": [
+        "<module>:ambient-export:@reactive-fiber/tsx"
+       ]
+      },
+      "typeQuiet": {
+       "relative": [],
+       "builtin": [],
+       "other-package": [],
+       "global": [],
+       "namespace": [],
+       "comment": []
+      },
+      "typeLoads": {
+       "import-type": [],
+       "import-type-member": [],
+       "reference-types": [],
+       "amd-dependency": [],
+       "ambient-module": [],
+       "ambient-import": [],
+       "ambient-export": []
+      },
       "deep": [],
       "manifestCaught": {
        "overrides": [
@@ -1204,6 +1454,40 @@
       "url": [],
       "spread": [],
       "conditional": []
+     }
+    },
+    {
+     "id": "Q7",
+     "witness": {
+      "probes": {
+       "relative": {
+        "loads": [],
+        "types": []
+       },
+       "absolute": {
+        "loads": [],
+        "types": []
+       },
+       "file-url": {
+        "loads": [],
+        "types": []
+       },
+       "reference-path": {
+        "loads": [],
+        "types": []
+       },
+       "import-type-path": {
+        "loads": [],
+        "types": []
+       }
+      },
+      "predicate": {
+       "../node_modules/@reactive-fiber/sdk/dist/index.js": false,
+       "/opt/reactive-fiber/sdk/index.js": false,
+       "file:///opt/reactive-fiber/sdk/index.js": false,
+       "../node_modules/@reactive-fiber/sdk/index.d.ts": false,
+       "../node_modules/@rf/sdk/index.js": false
+      }
      }
     }
    ]
