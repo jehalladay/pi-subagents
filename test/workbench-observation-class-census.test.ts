@@ -60,6 +60,32 @@
  *    quoted or escaped parts, in another letter case, behind another suffix (.cmd) or inside a parameter expansion; a process API
  *    outside EXEC_CALLEES (execa). Not claimed and not a row: a walk edited to tell the planted entries from the disk's, an edit of
  *    the disk listing alone (diskEntries) - the plants hold the walk's logic - and a source name in another letter case (x.TS).
+ * WB-SPBY (the R694 follow-up of landing 529: F1 leads, F3 rides; cut on trunk b92d7a1). No row, pin, label, registered title,
+ * frozen-shape count or exec reading changes; M5 gains three readings.
+ *  - OVER-READ (disclosed, the strict direction; F1): the exec reading takes a command word wherever it stands in a program text,
+ *    and an alias wherever an import specifier makes one, so it reads more than the execs of git and the tracker. An operand word
+ *    reads as a command - grep's pattern (spawnSync("grep", ["-rn", "git", "src"]) reads as a git exec, so its module joins C1's
+ *    authority roster and C3's git exec modules) and a commit message that names the tracker (an exec of git whose -m text holds
+ *    the tracker's name reads as a tracker exec as well, a tracker-exec line of C1 and C3) - and an import specifier aliasing an
+ *    EXEC_CALLEES name reads as an exec entry point whichever module it imports from (zzExec in import { exec as zzExec } from a
+ *    local helper). The direction is the strict one: the reading only adds constructs, so no absence claim of C1-C3 turns false
+ *    through it. A src landing that reds C1 or C3 through such a word re-judges the line, which then names a word, not an exec.
+ *    M5 pins the class with the review filing's plants Q02, Q03 and Q12 as over-read rows (OVER_READS, each read and each bound
+ *    to the filing's own spelling of its plant), so a reading narrowed to the argv of a wrapper program (env, sudo, sh) or to the
+ *    aliases of node:child_process reds M5.
+ *  - THE FILED PLANT PER MEMBER (F3): each of the filed plant's three members (path, env, alias), appended alone with the plant's
+ *    import line, reads as the two lines the whole plant reads, so a reading lost for one member (the path-segment step, the
+ *    gate's MX04) reds M5 whatever the spelling table holds; each member's line is bound to its spelling in the carried
+ *    landing-437 finding (wb-4tdn's first finding line in the tracked bead export).
+ *  - THE SPELLING ANCHOR (F3): M5's 53 spellings are held to two records outside this file and its roster - the cutting seat's
+ *    delivery note of record (wb-4tdn's row in the tracked bead export: "26 read (...) and 27 unread pinned quiet rows (...)", the
+ *    spellings by id and the 12 word breaks by their characters) and the review filing of record (wb-spby's row: "53-spelling
+ *    table (26 read kill controls, 27 pinned quiet rows)"). Every spelling the note names is a row of its class, every row is
+ *    named and the counts agree, so a row removed from the table and the roster (the gate's H1 'path', H2 'letter-case' and H3
+ *    'path' plus 'windows-path'), a class flipped or a row swapped for an unnamed one reds M5, and M5 shows it would for each
+ *    row. The over-read rows are held to the filing's F1 plants and the filed plant's members to its F3 member list the same way.
+ *    A later cut that adds a spelling names it in a record outside this file and extends the records read here in the same cut
+ *    (M5 pins that an unnamed later spelling reads as "<id>: no outside record names it").
  * CUT #3 (owner ruling R766, 2026-10-25; trunk 3a71372 merged INTO the branch): landing 381 added
  * src/workbench/beads-program-readiness.ts, which imports capability-registry.ts and observation.ts only and joins neither class,
  * so the src count moved 115 -> 116 and C1's hand-counted integer read red at landing 384's land-prep - and again through C1's
@@ -114,7 +140,8 @@
  *  F, the owner filing: F1 wb-kku9.1's row in the tracked bead export carries the pinned constants and an acceptance whose
  *    "(x) ..." clauses are exactly rows A-D, each label equal to its clause.
  *  M, the judge is live: M1-M9 each add one derivation shape to the real src tree and the judge names it; M5 also pins the exec
- *    spellings of its table, the read ones and the unread ones (wb-4tdn).
+ *    spellings of its table, the read ones and the unread ones (wb-4tdn), its over-read rows, the filed plant per member and the
+ *    spelling anchor (wb-spby).
  *  R, the named residuals, each with a pinned quiet row: R1 R-HOST-OPERATION the HX adapter echoes the operation the host names
  *    (a forge one included) as its display grouping, and no src module calls either topology adapter; R2 R-CROSS-SCOPE a value
  *    carried between scopes (a parameter, return value, closure or module-level const) is not traced; R3 R-COMPOSED a provider
@@ -124,7 +151,8 @@
  *    observation-class module; R6 R-NAMING a module that reads Claude or HX values under another name and imports no
  *    observation-class module is not in the class; R7 R-TEST-TREE only src is walked (tests build authority refs on purpose).
  * OUTSIDE ANCHORS: F1 (the bead export: rows A-D), C1-C3 (the src tree, walked; C1 also tsconfig.json's program), D1-D3 (docs/07 and the docs07 census), A1-A4
- * and B1 (the adapters themselves), B2 (the two files): each anchors what its case measures. Which pins exist is anchored by the
+ * and B1 (the adapters themselves), B2 (the two files), M5's spellings, over-read rows and filed members (wb-4tdn's delivery note
+ * and wb-spby's filing in the bead export, the spelling anchor): each anchors what its case measures. Which pins exist is anchored by the
  * pin anchor above. The out-of-file roster test/fixtures/observation-class-roster.json holds every row's id, label and pins, every
  * pin's witness and the anchor case's reading; FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}`.
  * SCOPE: test-only. Nothing is spawned or written; the repository files read are only read.
@@ -759,14 +787,53 @@ const EXEC_SPELLINGS: readonly ExecSpelling[] = [
 ];
 const spellingPath = (id: string): string => `src/workbench/zz-4tdn-${id}.ts`;
 /** The filed plant: the gate's L2-3 members (a path-qualified program, a wrapper's argv, an aliased import), appended to the
- * observation-class claude-control.ts as the finding filed them. */
+ * observation-class claude-control.ts as the finding filed them. M5 also reads each member alone with the import line (wb-spby
+ * F3), under the member names the review filing gives them; each quote is the member's spelling in the carried landing-437
+ * finding (wb-4tdn's first finding line), double-quoted. */
 const FILED_MODULE = "src/workbench/claude-control.ts";
-const FILED_PLANT = [
-  'import { execFileSync, spawnSync, execFileSync as fwProbeRun } from "node:child_process";',
-  `export const fwProbeByPath = (id: string) => execFileSync("/usr/local/bin/${BD}", ["close", id]);`,
-  `export const fwProbeViaEnv = (id: string) => spawnSync("env", ["${BD}", "close", id]);`,
-  `export const fwProbeAliased = (id: string) => fwProbeRun("${BD}", ["close", id]);`,
-].join("\n");
+const FILED_IMPORT = 'import { execFileSync, spawnSync, execFileSync as fwProbeRun } from "node:child_process";';
+interface FiledMember {
+  readonly line: string;
+  readonly quote: string;
+}
+const FILED_MEMBERS: Readonly<Record<string, FiledMember>> = {
+  path: { line: `export const fwProbeByPath = (id: string) => execFileSync("/usr/local/bin/${BD}", ["close", id]);`, quote: `"/usr/local/bin/${BD}"` },
+  env: { line: `export const fwProbeViaEnv = (id: string) => spawnSync("env", ["${BD}", "close", id]);`, quote: `spawnSync("env", ["${BD}"` },
+  alias: { line: `export const fwProbeAliased = (id: string) => fwProbeRun("${BD}", ["close", id]);`, quote: "fwProbeRun" },
+};
+const FILED_PLANT = [FILED_IMPORT, ...Object.values(FILED_MEMBERS).map(member => member.line)].join("\n");
+
+/** M5's over-read rows (wb-spby F1, the OVER-READ the header discloses): the review filing's plants, each an added src module that
+ * the exec reading reads as an exec of git or the tracker by a word that is no command at its call (grep's pattern, a commit
+ * message) or through an alias a local helper's import makes. reads: the commands the reading names; quotes: the filing's own
+ * spelling of the plant, double-quoted. */
+interface OverRead {
+  readonly id: string;
+  readonly reads: readonly string[];
+  readonly quotes: readonly string[];
+  readonly text: string;
+}
+const OVER_READS: readonly OverRead[] = [
+  {
+    id: "Q02",
+    reads: ["git"],
+    quotes: ['spawnSync("grep", ["-rn", "git", "src"])'],
+    text: 'import { spawnSync } from "node:child_process";\nexport const run = () => spawnSync("grep", ["-rn", "git", "src"]);',
+  },
+  {
+    id: "Q03",
+    reads: [BD, "git"],
+    quotes: [`execFileSync("git", ["-C", cwd, "commit", "-m", "the ${BD} show path stays read-only"])`],
+    text: `import { execFileSync } from "node:child_process";\nexport const run = (cwd: string) => execFileSync("git", ["-C", cwd, "commit", "-m", "the ${BD} show path stays read-only"]);`,
+  },
+  {
+    id: "Q12",
+    reads: [BD],
+    quotes: ["import { exec as zzExec } from", `zzExec("${BD} show wb-1")`],
+    text: `import { exec as zzExec } from "./zz-spby-exec-helpers.js";\nexport const run = () => zzExec("${BD} show wb-1");`,
+  },
+];
+const overReadPath = (id: string): string => `src/workbench/zz-spby-${id}.ts`;
 
 // --- the Claude fixture -----------------------------------------------------------------------------------------------
 
@@ -1029,6 +1096,152 @@ function anchorFindings(rows: readonly Row[], titles: Readonly<Record<string, st
   return findings;
 }
 
+/** The cutting seat's delivery note of record for M5's spellings (wb-spby F3): wb-4tdn's row in the tracked bead export, whose
+ * table sentence names the 53 spellings by class (the read ones by id and the word breaks by their characters, the unread ones by
+ * id) and whose first finding line, the carried landing-437 finding, spells the filed plant's three members. */
+const SPELLING_NOTE = "wb-4tdn";
+/** The review filing of record for M5 (wb-spby's row): its F1 line files the over-read plants, its F3 line counts the table and
+ * names the filed plant's members. */
+const SPELLING_FILING = "wb-spby";
+const NOTE_TABLE = /(\d+) spellings, one in-memory src module each: (\d+) read \((.+?)\) and (\d+) unread pinned quiet rows \((.+?)\)\. /;
+const NOTE_BREAKS = / and the (\d+) single word breaks: /;
+const FILING_COUNTS = /(\d+)-spelling table \((\d+) read kill controls, (\d+) pinned quiet rows\)/;
+const FILING_MEMBERS = /filed plant's \w+ members \(([^)]*)\)/;
+const SPELLING_ID = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;
+/** The delivery note's names for the twelve word breaks, each with the spelling ids it names ("both quotes" names two). */
+const BREAK_NAMES: Readonly<Record<string, readonly string[]>> = {
+  tab: ["break-tab"],
+  newline: ["break-newline"],
+  "both quotes": ["break-single-quote", "break-double-quote"],
+  "the backquote": ["break-backquote"],
+  ";": ["break-semicolon"],
+  "&": ["break-ampersand"],
+  "|": ["break-pipe"],
+  "(": ["break-open-paren"],
+  ")": ["break-close-paren"],
+  "<": ["break-less"],
+  ">": ["break-greater"],
+};
+interface SpellingRecords {
+  readonly stated: {
+    readonly note: { readonly spellings: number; readonly read: number; readonly breaks: number; readonly unread: number };
+    readonly filing: { readonly spellings: number; readonly read: number; readonly unread: number };
+  };
+  /** The spellings the delivery note names read (its ids, then the word breaks its names map to) and unread. */
+  readonly read: readonly string[];
+  readonly breaks: number;
+  readonly unread: readonly string[];
+  /** The delivery note's read items that are no spelling id and its break names that map to none. */
+  readonly prose: readonly string[];
+  /** The filing's F1 plants (Q<nn>, in order) and its F3 member names. */
+  readonly plants: readonly string[];
+  readonly members: readonly string[];
+  /** The delivery note's first finding line and the filing's F1 line, each single quote read as a double quote. */
+  readonly memberText: string;
+  readonly plantText: string;
+}
+const notesOf = (id: string): string => {
+  const row = exportRow(id);
+  return row !== undefined && typeof row.notes === "string" ? row.notes : "";
+};
+/** A record's first line for a finding id, as the filer writes it ("[<role>] - F1 ..."). */
+const findingLine = (notes: string, finding: string): string => notes.split("\n").find(line => new RegExp(`^\\[[a-z]+\\] - ${finding} `).test(line)) ?? "";
+const doubleQuoted = (text: string): string => text.replaceAll("'", '"');
+let spellingReading: SpellingRecords | undefined;
+/** The two records outside this file and its roster that name M5's spellings, its over-read rows and its filed members, read once. */
+function spellingRecords(): SpellingRecords {
+  if (spellingReading !== undefined) return spellingReading;
+  const noteText = notesOf(SPELLING_NOTE);
+  const [, total = "-1", readCount = "-1", readText = "", unreadCount = "-1", unreadText = ""] = NOTE_TABLE.exec(noteText) ?? [];
+  const breakSplit = NOTE_BREAKS.exec(readText);
+  const readItems = (breakSplit === null ? readText : readText.slice(0, breakSplit.index)).split(", ").filter(item => item !== "");
+  const breakNames =
+    breakSplit === null ? [] : readText.slice(breakSplit.index + breakSplit[0].length).split(", ").flatMap(name => (Object.hasOwn(BREAK_NAMES, name) ? [name] : name.split(" ")));
+  const breakIds = breakNames.flatMap(name => (Object.hasOwn(BREAK_NAMES, name) ? (BREAK_NAMES[name] ?? []) : []));
+  const unreadItems = unreadText.split("; ").flatMap(group => group.replace(/^(?:[A-Z][A-Z0-9 ]*: |and )/, "").split(", "));
+  const filingText = notesOf(SPELLING_FILING);
+  const plantLine = findingLine(filingText, "F1");
+  const tableLine = findingLine(filingText, "F3");
+  const counts = FILING_COUNTS.exec(tableLine);
+  spellingReading = {
+    stated: {
+      note: { spellings: Number(total), read: Number(readCount), breaks: Number(breakSplit?.[1] ?? -1), unread: Number(unreadCount) },
+      filing: { spellings: Number(counts?.[1] ?? -1), read: Number(counts?.[2] ?? -1), unread: Number(counts?.[3] ?? -1) },
+    },
+    read: [...readItems.filter(item => SPELLING_ID.test(item)), ...breakIds],
+    breaks: breakIds.length,
+    unread: unreadItems.filter(item => SPELLING_ID.test(item)),
+    prose: [...readItems.filter(item => !SPELLING_ID.test(item)), ...breakNames.filter(name => !Object.hasOwn(BREAK_NAMES, name))],
+    plants: [...new Set(plantLine.match(/\bQ\d{2}\b/g) ?? [])],
+    members: (FILING_MEMBERS.exec(tableLine)?.[1] ?? "").split(", ").filter(item => item !== ""),
+    memberText: doubleQuoted(findingLine(noteText, "F1")),
+    plantText: doubleQuoted(plantLine),
+  };
+  return spellingReading;
+}
+/** Every disagreement between M5's spelling table, over-read rows and filed members and the two outside records, each named. */
+function spellingFindings(
+  spellings: readonly ExecSpelling[],
+  overReads: readonly OverRead[],
+  members: Readonly<Record<string, FiledMember>>,
+  records: SpellingRecords,
+): string[] {
+  const findings: string[] = [];
+  const note = `the delivery note ${SPELLING_NOTE}`;
+  const filing = `the review filing ${SPELLING_FILING}`;
+  const { note: stated, filing: counted } = records.stated;
+  if (records.read.length !== stated.read) findings.push(`${note} names ${records.read.length} read spellings, not its stated ${stated.read}`);
+  if (records.unread.length !== stated.unread) findings.push(`${note} names ${records.unread.length} unread spellings, not its stated ${stated.unread}`);
+  if (records.breaks !== stated.breaks) findings.push(`${note} names ${records.breaks} word breaks, not its stated ${stated.breaks}`);
+  if (stated.read + stated.unread !== stated.spellings) findings.push(`${note} states ${stated.spellings} spellings, not ${stated.read} read and ${stated.unread} unread`);
+  if (!isDeepStrictEqual(counted, { spellings: stated.spellings, read: stated.read, unread: stated.unread }))
+    findings.push(`${filing} counts ${counted.spellings} spellings, ${counted.read} read and ${counted.unread} unread, not the note's ${stated.spellings}, ${stated.read} and ${stated.unread}`);
+  for (const item of records.prose) findings.push(`${note} names "${item}", which is no spelling id`);
+  const named = [...records.read, ...records.unread];
+  if (new Set(named).size !== named.length) findings.push(`${note} names a spelling twice`);
+  const ids = spellings.map(entry => entry.id);
+  if (new Set(ids).size !== ids.length) findings.push("the table holds a spelling twice");
+  for (const id of records.read) if (!spellings.some(entry => entry.id === id && entry.read)) findings.push(`${id}: ${note} names it read and no read row holds it`);
+  for (const id of records.unread) if (!spellings.some(entry => entry.id === id && !entry.read)) findings.push(`${id}: ${note} names it unread and no unread row holds it`);
+  for (const id of ids) if (!named.includes(id)) findings.push(`${id}: no outside record names it`);
+  for (const plant of records.plants) if (!overReads.some(entry => entry.id === plant)) findings.push(`${plant}: ${filing} files it and no over-read row holds it`);
+  for (const entry of overReads) {
+    if (!records.plants.includes(entry.id)) findings.push(`${entry.id}: no outside record names it`);
+    for (const quote of entry.quotes) {
+      if (!records.plantText.includes(quote)) findings.push(`${entry.id}: ${filing} never spells ${quote}`);
+      if (!entry.text.includes(quote)) findings.push(`${entry.id}: its module never spells ${quote}`);
+    }
+  }
+  if (!isDeepStrictEqual(Object.keys(members), [...records.members]))
+    findings.push(`the filed plant's members [${Object.keys(members).join(", ")}] are not ${filing}'s [${records.members.join(", ")}]`);
+  for (const [member, { line, quote }] of Object.entries(members)) {
+    if (!records.memberText.includes(quote)) findings.push(`${member}: ${note}'s carried finding never spells ${quote}`);
+    if (!line.includes(quote)) findings.push(`${member}: its line never spells ${quote}`);
+  }
+  return findings;
+}
+/** M5's spelling anchor (wb-spby F3): the findings, and the live readings - each row, over-read row and member removed from every
+ * literal here, and each row's class flipped, is seen; an unnamed later spelling reads as unnamed. */
+function spellingAnchor() {
+  const records = spellingRecords();
+  const findingsOf = (spellings: readonly ExecSpelling[], overReads: readonly OverRead[] = OVER_READS, members: Readonly<Record<string, FiledMember>> = FILED_MEMBERS): string[] =>
+    spellingFindings(spellings, overReads, members, records);
+  const membersWithout = (member: string): Record<string, FiledMember> => Object.fromEntries(Object.entries(FILED_MEMBERS).filter(([other]) => other !== member));
+  return {
+    note: SPELLING_NOTE,
+    filing: SPELLING_FILING,
+    stated: { note: { ...records.stated.note }, filing: { ...records.stated.filing } },
+    plants: [...records.plants],
+    members: [...records.members],
+    findings: findingsOf(EXEC_SPELLINGS),
+    unseenRemovals: EXEC_SPELLINGS.filter(entry => findingsOf(EXEC_SPELLINGS.filter(other => other !== entry)).length === 0).map(entry => entry.id),
+    unseenFlips: EXEC_SPELLINGS.filter(entry => findingsOf(EXEC_SPELLINGS.map(other => (other === entry ? { ...other, read: !other.read } : other))).length === 0).map(entry => entry.id),
+    unseenOverReadRemovals: OVER_READS.filter(entry => findingsOf(EXEC_SPELLINGS, OVER_READS.filter(other => other !== entry)).length === 0).map(entry => entry.id),
+    unseenMemberRemovals: Object.keys(FILED_MEMBERS).filter(member => findingsOf(EXEC_SPELLINGS, OVER_READS, membersWithout(member)).length === 0),
+    laterSpelling: findingsOf([...EXEC_SPELLINGS, spelling("later", true, "")]),
+  };
+}
+
 // --- the cases ----------------------------------------------------------------------------------------------------------
 
 const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
@@ -1262,16 +1475,41 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const violation = "tracker-exec src/workbench/attention.ts";
     const landed = added(withModule("src/workbench/attention.ts", `import { execFileSync } from "node:child_process";\nexport const settle = (id: string) => execFileSync("${BD}", ["close", id]);`, "extend"));
     // The lines whose subject is the planted module (a consequence on a module that imports it is not this pin's).
-    const filed = sorted(added(withModule(FILED_MODULE, FILED_PLANT, "extend")).filter(line => line.split(" ")[1] === FILED_MODULE));
+    const linesOf = (analysis: Analysis, path: string): string[] => sorted(added(analysis).filter(line => line.split(" ")[1] === path));
+    const filed = linesOf(withModule(FILED_MODULE, FILED_PLANT, "extend"), FILED_MODULE);
+    // Each filed member alone, with the plant's import line (wb-spby F3), so the members no longer dedupe into one reading.
+    const filedMembers = Object.fromEntries(Object.entries(FILED_MEMBERS).map(([member, { line }]) => [member, linesOf(withModule(FILED_MODULE, `${FILED_IMPORT}\n${line}`, "extend"), FILED_MODULE)]));
     const lines = added(withModules(EXEC_SPELLINGS.map(entry => ({ path: spellingPath(entry.id), text: entry.text }))));
     const read = EXEC_SPELLINGS.filter(entry => lines.includes(`tracker-exec ${spellingPath(entry.id)}`)).map(entry => entry.id);
     const unread = EXEC_SPELLINGS.filter(entry => !lines.some(line => line.includes(spellingPath(entry.id)))).map(entry => entry.id);
+    // The over-read rows (wb-spby F1): each module read as an exec of the commands its words name, though no word is its command.
+    const overReadAnalysis = withModules(OVER_READS.map(entry => ({ path: overReadPath(entry.id), text: entry.text })));
+    const overReads = OVER_READS.map(entry => ({
+      id: entry.id,
+      kinds: sorted(parseModule({ path: overReadPath(entry.id), text: entry.text }).constructs.map(construct => construct.kind)),
+      authority: overReadAnalysis.authority.includes(overReadPath(entry.id)),
+      lines: linesOf(overReadAnalysis, overReadPath(entry.id)),
+    }));
+    const anchor = spellingAnchor();
     expect(landed).toContain(violation);
     expect(filed, "the filed plant (the gate's L2-3 members in claude-control.ts) reads as the tracker exec it is").toEqual([`observation-builds-authority ${FILED_MODULE} exec:${BD}`, `tracker-exec ${FILED_MODULE}`]);
+    expect(filedMembers, "each filed member alone reads as the whole plant reads").toEqual(Object.fromEntries(Object.keys(FILED_MEMBERS).map(member => [member, filed])));
     expect(read, "every read spelling reads as a tracker exec").toEqual(EXEC_SPELLINGS.filter(entry => entry.read).map(entry => entry.id));
     expect(unread, "every unread spelling stays quiet").toEqual(EXEC_SPELLINGS.filter(entry => !entry.read).map(entry => entry.id));
     expect(lines, "the spellings add nothing beside their tracker execs").toEqual(read.map(id => `tracker-exec ${spellingPath(id)}`));
-    return { violation, hit: landed.includes(violation), filed, read, unread };
+    expect(
+      overReads.map(entry => entry.kinds),
+      "OVER-READ (disclosed): each over-read row reads as an exec of the commands its words name",
+    ).toEqual(OVER_READS.map(entry => sorted(entry.reads.map(command => `exec:${command}`))));
+    expect(overReads.map(entry => entry.authority), "each over-read module joins the authority roster").toEqual(OVER_READS.map(() => true));
+    expect(added(overReadAnalysis), "the over-read rows add nothing beside their own lines").toEqual(overReads.flatMap(entry => entry.lines));
+    expect(anchor.findings, "the spelling table, the over-read rows, the filed members and the outside records agree").toEqual([]);
+    expect(anchor.unseenRemovals, "spellings whose removal from every literal here no outside record would see").toEqual([]);
+    expect(anchor.unseenFlips, "spellings whose class flipped in every literal here no outside record would see").toEqual([]);
+    expect(anchor.unseenOverReadRemovals, "over-read rows whose removal no outside record would see").toEqual([]);
+    expect(anchor.unseenMemberRemovals, "filed members whose removal no outside record would see").toEqual([]);
+    expect(anchor.laterSpelling, "FORWARD CONTACT: a later spelling no outside record names reads as unnamed").toEqual(["later: no outside record names it"]);
+    return { violation, hit: landed.includes(violation), filed, filedMembers, read, unread, overReads, anchor };
   },
   M6: async () => hit(withModule("src/workbench/timeline.ts", `export const HINT = "run ${BD} update wb-1 --status closed";`, "extend"), "tracker-write-spelling src/workbench/timeline.ts"),
   M7: async () =>

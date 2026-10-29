@@ -18,6 +18,13 @@
  * disk; PAGE_TREE lists its entries), so each use, the root's name order, the walk's order, depth and entry kinds and the
  * DOC_DIRS set decide its outcome; R11's unread pages go through the same walk.
  *
+ * FOLLOW-UP wb-nfhy (the R694 follow-up of the landing-555 gate verdict: F1 leads; hop 3 of the chain wb-tz4r.8 -> wb-p46r ->
+ * wb-crmt, so the R739 terminal enumerate-the-resolvable form). MS1 pinned the walk's depth only as nested versus flat:
+ * PAGE_TREE's deepest pages sat one directory below their DOC_DIRS directory while the disk's sit two below theirs, so a cap
+ * on the walk's recursion at two levels (the gate's X7) or a bound of four path segments at the DOC_DIRS use of the selector
+ * (X7d) left MS1 green on the landed copy and the cut alike. PAGE_TREE now holds a page three directories below every DOC_DIRS
+ * directory, deeper than every disk page; DEPTH names the classes that resolves and R-DEPTH the bounds it leaves (R13).
+ *
  * THE PLACEHOLDERS. Acceptance (c)'s grep has three alternatives: <DE> is the producer's typed decision module (two words, one
  * underscore), <NDB> its native backend class (three words, Pascal case) and <DI> the bead's own two prose words (one space).
  * This file and its roster never spell one: NEEDLE_PARTS holds the words, NEEDLES composes each alternative at runtime by array
@@ -52,7 +59,10 @@
  * export carries. RE-MEASURED AT b1ce8c1 (landing 392, the wb-p46r cut): 98 docs pages, every one .md (0 .markdown, 0 under
  * another markdown extension), 46 receipts and 814 export rows; rows A and B read 0 docs mentions. RE-MEASURED AT 6a61219
  * (landing 454, the wb-crmt cut): 102 docs pages, every one .md, 47 receipts and 869 export lines; the root's pages are A1's
- * five; rows A and B read 0 docs mentions.
+ * five; rows A and B read 0 docs mentions. RE-MEASURED AT 88086c9 (landing 583, the wb-nfhy cut): 105 docs pages, every one
+ * .md, 50 receipts and 946 export lines; by path segments 5 pages have 1, 23 have 2, 26 have 3 and 51 have 4, so the deepest
+ * pages sit two directories below their DOC_DIRS directory (the 50 receipts and .agents/skills/beads/SKILL.md); rows A and B
+ * read 0 docs mentions.
  *
  * READINGS
  * - MENTIONS, matched in any case: M1 <DI>, its two words joined directly or by any run of white space, "_", "." or "-", except
@@ -91,8 +101,18 @@
  *    window, export, citation and echo readers; MN1 the needle detector C1, C2 and records share finds each NEEDLE once; MD1
  *    A4's descriptor scan finds a family in a description and in a schema key; MQ1 the quote partition and verbatim reading on
  *    a constructed tree and filing; MS1 docFiles itself, the walk rows A and B read, over a constructed tree (PAGE_TREE): it
- *    selects the .md and .markdown pages in any case directly in the root, in name order, and below every DOC_DIRS directory at
- *    any depth, in walk order, and no other name, directory, symlink or root. R, the residuals' pinned quiet rows.
+ *    selects the .md and .markdown pages in any case directly in the root, in name order, and below every DOC_DIRS directory
+ *    down to three directories deep (DEPTH), in walk order, and no other name, directory, symlink or root. R, the residuals'
+ *    pinned quiet rows.
+ *  DEPTH (wb-nfhy, the R739 terminal form: the depth classes this census resolves, by name). D1 a cap on the walk's
+ *    recursion, which rows A, B and C share (the landing-555 gate's X7 lists two levels of directories below a DOC_DIRS
+ *    directory, X7b one); D2 a bound on a page's path segments at the DOC_DIRS use of the selector (X7d keeps at most four):
+ *    a bound of n segments drops exactly the pages a cap of n - 2 levels drops; D3 either one written for a single DOC_DIRS
+ *    directory instead of all. PAGE_TREE's page three directories below each DOC_DIRS directory falls to every member that
+ *    caps below three levels or bounds below five segments, so MS1 reds under each; below no DOC_DIRS directory does a disk
+ *    page sit deeper than PAGE_TREE's (R13 reds when one does), so every member that hides a disk page from rows A and B also
+ *    hides a PAGE_TREE page from MS1. NOT CLAIMED: a member that caps at three or more levels, or bounds at five or more
+ *    segments, keeps every page of both trees and so reads exactly as the unbounded walk (R-DEPTH, R13).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every row's id, label and pins, every pin's
  * witness, the constants and the registered test titles are held to the out-of-file roster
  * test/fixtures/ri-decision-seed-claim-roster.json, and the records case walks this file's vitest task tree against it, so a pin
@@ -127,7 +147,13 @@
  * four sites; A1-A4, B1 and C2 read the docs, the export and the registrations). A pin of any row, or row F, M or R whole, so
  * hollowed survives (the landing-351 gate's X2, X3, X5-X7 and Y7b, 38/38 each); a judged row so hollowed reds through F1 (Y5),
  * and a hollow that also breaks a reader the tree exercises reds there (Y6, Y7c). R12 pins F1's reading of the real filing
- * blind to the first and seeing the second.
+ * blind to the first and seeing the second. R-DEPTH a cap on the walk of three or more levels, or a bound of five or more
+ * segments at the DOC_DIRS use, for every DOC_DIRS directory or a single one, keeps every page of PAGE_TREE and of the disk,
+ * so MS1 and rows A and B read it exactly as the unbounded walk (DEPTH); R13 runs docFiles over PAGE_TREE seen through caps
+ * of 0 to 3 levels (a lister that refuses every deeper directory, where a capped recursion stops), pins the first three seen
+ * and the fourth unseen, the deepest page below each DOC_DIRS directory through every cap and unbounded (three below every
+ * one) and the depth comparison on two of those views, and reds when a disk page sits deeper than PAGE_TREE's deepest below
+ * its DOC_DIRS directory.
  * SCOPE: the producer facts are read at the shas named and the census is hermetic (Pi vendors no RI source); a later cut that
  * names the capability in docs brings its receipt and its markers, and one that ships an RI consumer re-cuts row C.
  *
@@ -253,7 +279,7 @@ const ECHO = new RegExp(
 );
 const RESIDUALS: readonly string[] = [
   "R-LINE", "R-FIELD", "R-PROGRAM", "R-VOCABULARY", "R-INTERRUPTED", "R-CASE", "R-COMPOSED", "R-RECEIPT-TEXT", "R-SCOPE",
-  "R-SIBLING-QUOTE", "R-RENDERED", "R-COORDINATED",
+  "R-SIBLING-QUOTE", "R-RENDERED", "R-COORDINATED", "R-DEPTH",
 ];
 /** The bead whose filing the R-SIBLING-QUOTE sites quote. */
 const QUOTE_SOURCE = "wb-tz4r.5";
@@ -334,8 +360,8 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "R",
-    label: "the named residuals R-LINE, R-FIELD, R-PROGRAM, R-VOCABULARY, R-INTERRUPTED, R-CASE, R-COMPOSED, R-RECEIPT-TEXT, R-SCOPE, R-SIBLING-QUOTE, R-RENDERED and R-COORDINATED stay pinned quiet",
-    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12"],
+    label: "the named residuals R-LINE, R-FIELD, R-PROGRAM, R-VOCABULARY, R-INTERRUPTED, R-CASE, R-COMPOSED, R-RECEIPT-TEXT, R-SCOPE, R-SIBLING-QUOTE, R-RENDERED, R-COORDINATED and R-DEPTH stay pinned quiet",
+    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13"],
   },
 ];
 
@@ -861,9 +887,10 @@ const exportLine = (row: Record<string, string>): string => JSON.stringify(row);
 /**
  * MS1's constructed tree (constructedTree), one entry per line in listing order: pages and non-pages directly in the root,
  * a root directory and a root symlink named like pages, a page at some depth below every DOC_DIRS directory (two docs
- * entries listed out of name order, a nested page and a symlink among them), and two code roots outside DOC_DIRS that hold
- * pages. docFiles reads it as rows A and B read the disk, so both page-selector uses, the root's name order, the walk's
- * order, depth and entry kinds and the DOC_DIRS set each decide MS1's outcome.
+ * entries listed out of name order, nested pages and a symlink among them, and below each directory a page three
+ * directories deep, DEPTH), and two code roots outside DOC_DIRS that hold pages. docFiles reads it as rows A and B read the
+ * disk, so both page-selector uses, the root's name order, the walk's order, depth and entry kinds and the DOC_DIRS set
+ * each decide MS1's outcome; R13 reads it through capped views.
  */
 const PAGE_TREE: readonly string[] = [
   "README.md",
@@ -880,13 +907,20 @@ const PAGE_TREE: readonly string[] = [
   "docs/e.mdown",
   "docs/f.mdx",
   "docs/workbench/g.MD",
+  "docs/workbench/x/y/p.md",
   "docs/link.md -> a.markdown",
   "new-feedback/h.md",
+  "new-feedback/x/y/z/q.md",
   ".agents/i.md",
+  ".agents/x/y/z/r.md",
   ".pi/j.Md",
+  ".pi/x/y/z/s.md",
   ".beads/k.md",
+  ".beads/x/y/z/t.md",
   "examples/deep/l.markdown",
+  "examples/deep/y/z/u.md",
   "vendor/m.Markdown",
+  "vendor/x/y/z/v.md",
   "src/n.md",
   "qa/o.MARKDOWN",
 ];
@@ -996,8 +1030,10 @@ const CASES: readonly Case[] = [
     kind: "page",
     texts: [PAGE_TREE.join("\n")],
     outcome: [
-      "AGENTS.MD", "NOTES.MARKDOWN", "README.md", "docs/a.markdown", "docs/b.Markdown", "docs/workbench/g.MD", "new-feedback/h.md",
-      ".agents/i.md", ".pi/j.Md", ".beads/k.md", "examples/deep/l.markdown", "vendor/m.Markdown",
+      "AGENTS.MD", "NOTES.MARKDOWN", "README.md", "docs/a.markdown", "docs/b.Markdown", "docs/workbench/g.MD",
+      "docs/workbench/x/y/p.md", "new-feedback/h.md", "new-feedback/x/y/z/q.md", ".agents/i.md", ".agents/x/y/z/r.md", ".pi/j.Md",
+      ".pi/x/y/z/s.md", ".beads/k.md", ".beads/x/y/z/t.md", "examples/deep/l.markdown", "examples/deep/y/z/u.md",
+      "vendor/m.Markdown", "vendor/x/y/z/v.md",
     ],
   },
   { pin: "R1", kind: "mention", texts: [`${caps(DI)} serves Pi today; the seed only preflight at ${RI_PIN} is older.`], outcome: ["M1:1:admitted"] },
@@ -1107,6 +1143,30 @@ const COORDINATED_HOLLOWS: readonly (readonly [string, (rows: readonly Row[]) =>
   ["row R", rows => rows.filter(row => row.id !== "R")],
   ["row C", rows => rows.filter(row => row.id !== "C")],
 ];
+/** R-DEPTH's caps (header, DEPTH): a capped walk lists directories at most this many levels below a DOC_DIRS directory. */
+const DEPTH_CAPS: readonly number[] = [0, 1, 2, 3];
+/** The deepest page below a DOC_DIRS directory: the most directories between it and one of the pages (-1 when none). */
+const deepestBelow = (paths: readonly string[], directory: string): number =>
+  Math.max(-1, ...paths.filter(path => path.startsWith(`${directory}/`)).map(path => path.split("/").length - 2));
+/** The DOC_DIRS directories below which one page list reaches deeper than another (R13's disk guard and its control). */
+const deeperBelow = (paths: readonly string[], than: readonly string[]): string[] =>
+  DOC_DIRS.filter(directory => deepestBelow(paths, directory) > deepestBelow(than, directory));
+/**
+ * R13's capped view of a tree (header, DEPTH, D1): its lister refuses every directory more than `levels` directories below a
+ * DOC_DIRS directory, so the walk, which reads a refusal as an unreadable directory, stops where a capped recursion stops.
+ */
+function capped(from: FileTree, levels: number): FileTree {
+  return {
+    root: from.root,
+    list: directory => {
+      if (directory !== from.root && relative(from.root, directory).split(sep).length - 1 > levels) {
+        throw new Error(`capped at ${levels} levels: ${directory}`);
+      }
+      return from.list(directory);
+    },
+    read: from.read,
+  };
+}
 
 /** The pins whose case reached its end, in the order they ran. */
 const REACHED: string[] = [];
@@ -1288,6 +1348,25 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     ]);
     return done("R12", { outcome });
   },
+  R13: async () => {
+    const pageTree = constructedTree(PAGE_TREE);
+    const unbounded = docFiles(pageTree).map(file => file.path);
+    const views = DEPTH_CAPS.map(levels => ({ levels, read: docFiles(capped(pageTree, levels)).map(file => file.path) }));
+    const depths = (paths: readonly string[]): string => DOC_DIRS.map(directory => deepestBelow(paths, directory)).join(" ");
+    const reading = {
+      caps: views.map(view => `cap ${view.levels}: ${isDeepStrictEqual(view.read, unbounded) ? "unseen" : "seen"}`),
+      deepest: [...views.map(view => `cap ${view.levels}: ${depths(view.read)}`), `unbounded: ${depths(unbounded)}`],
+      deeperCap1ThanCap0: deeperBelow(views[1]?.read ?? [], views[0]?.read ?? []),
+      deeperOnDisk: deeperBelow(docFiles().map(file => file.path), unbounded),
+    };
+    expect(reading, "R-DEPTH: a cap is seen only while it drops a PAGE_TREE page, PAGE_TREE reaches three directories below every DOC_DIRS directory and no disk page sits deeper").toStrictEqual({
+      caps: ["cap 0: seen", "cap 1: seen", "cap 2: seen", "cap 3: unseen"],
+      deepest: ["cap 0: 0 0 0 0 0 -1 0", "cap 1: 1 0 0 0 0 1 0", "cap 2: 1 0 0 0 0 1 0", "cap 3: 3 3 3 3 3 3 3", "unbounded: 3 3 3 3 3 3 3"],
+      deeperCap1ThanCap0: ["docs", "examples"],
+      deeperOnDisk: [],
+    });
+    return done("R13", reading);
+  },
   ...Object.fromEntries(
     CASES.map(entry => [
       entry.pin,
@@ -1305,7 +1384,7 @@ const titleOf = (row: Row): string => `${row.id} ${row.label}`;
 
 describe("wb-tz4r.8 ReactiveInference seed-only claim census (program-triage-2026-10-22 R8, standing posture)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the constants agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:7", "C:2", "F:1", "M:14", "R:12"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:7", "C:2", "F:1", "M:14", "R:13"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
