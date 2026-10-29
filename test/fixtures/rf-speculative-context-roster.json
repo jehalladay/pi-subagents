@@ -1,6 +1,6 @@
 {
  "bead": "wb-grmo.1",
- "basis": "MEASURED by the cutting seat (ws-02, g10-work-s110, 2026-10-26), every read read-only and none re-read by the census. RFCLI (/workplace/.../PrimaryInstallation/src/ReactiveFiberCLI): the first commit whose context.render.schema.json defines result.speculative is 8bd35ecd4651 ('[RF-WM-R3-e] --scenario served on rf context render for cli', 2026-10-24, __version__.py VERSION 0.1.844); its $defs/result states the nine scenarioResultKeys 'present exactly on a `rf context render --scenario PATH` render ... and absent on a legacy or --view render', the same nine at origin/main c83fbd59ec1c (VERSION 0.1.845) and in the installed rf 0.1.845 schema (sha256 in measured). The marker keys and labels are application/scenario_view.py WHATIF_RESULT_KEY 'speculative', NOTICE_BLOCK_KEY 'rf.whatif_notice' and WhatIfNotice.text's opening 'WHAT-IF VIEW of scenario ', and domain/scenario.py SCENARIO_ID_MARKER_KEY 'rf.scenario_id' and EPISTEMIC_STATUS_MARKER_KEY 'rf.epistemic_status' (block and notice metadata); rendered_speculative_view is the design name of 02-architecture.md:9@82bd879eee52, spelled by no release; scenario_id and scenario are the scenario identity keys, which no 0.1.784 or 0.1.845 schema property spells outside a scenario member. The pin at the cut's base dc72a6d: RFCLI 403389a94 ('chore: bump version to 0.1.784') holds 28 result properties, none of the nine, and no marker or label string; recorded as provenance only (no case asserts it), so the queued re-pin wb-jwc.4 (0.1.845) moves nothing in this census. scenarioSample and scenarioBlock are CAPTURED: the nine members and the one block of a real `rf --workspace W context render --scenario scenario.json --audience cli --no-input --json` at the installed rf 0.1.845 (rc 0, ok true), in a disposable workspace W=/tmp/ws02-s110-grmo1-rfws provisioned by the rf-preview recipe of docs/workbench/receipts/wb-c7ku.md (rf init --backend jsonl --no-input; rf component create --kind declarative demo.banner; rf component add of its manifest; rf component activate demo.banner; rf graph validate; all rc 0), over one committed render of that workspace, with a reactive-fiber.scenario/v1 document whose one action is {source_id task, type set_source, value <text>}; the nine members carry no workspace path, id or timestamp. The same capture holds its notice in result.notice only (result.blocks is the one component block) and output.text opens with the notice line. Through the helper's diffAgainstRoster against this SCG-R11 roster the capture gives the 12 speculative entries B4 pins (the nine members, the two block markers, the output.text label), while a real --no-commit render of Pi's own legacy argv in the same workspace gives 0 speculative entries (its only failures are the pre-existing 0.1.784 to 0.1.845 drift keys judge_context, judge_context_layers and replay_of_operation_id). The members also pass the seat's structural check against the installed schema (required, additionalProperties false, enum, const, digest pattern; not a schema engine). wb-dkru (seat ws-01, g10-work-s119, 2026-10-27; R694 follow-up from the wb-grmo.1 landing 545 gate cmd_c44799b3bdfd, its F3 and F4), MEASURED by the cutting seat and not re-read by the census: marked 18.0.11 (the devDependency, marked.parseInline) renders spec*ul*ative, spec**ul**ative, spec***ul***ative, spec~ul~ative, spec~~ul~~ative and spec`ul`ative as em, strong, del or code inside one word, and spec&ZeroWidthSpace;*ul*ative with its emphasis; it shows spec_ul_ative, spec__ul__ative, spec\\*ul\\*ative and spec&ast;ul&ast;ative with their marks, escapes spec&shyulative (no ';') to show it as written, and renders spec[ul](...)ative as a link inside the word. NAMED_REFERENCE_LIST is read off Python 3.12.15 html.entities.html5 (2231 entries, 2125 names written with ';'): the 309 names whose value, its format characters removed and NFKC applied, is empty or holds an ASCII letter, digit or '_', JS white space, or one of . ! ? \\ * ` ~ - and the ten dash look-alikes, then the 10 names whose value is & < > \" ' or : (319; sha256 of the list joined by newlines 19d03e077020c95bd42333c25946ed79aaf8fe3526f8c8408d3224c9d37f2916, which M5 recomputes). In that table no name, written with or without its ';', spells a SPECULATIVE_TERM or a SERVED_TERM, and over twelve contexts (a name inside spec_ulative, speculat_ive, what_if, scenario_view, hypo_thetical, counter_factual and serve_d, inside and after the --scenario flag, before and after speculative, and inside a served sentence) no name outside the list makes a hit decoded that it does not make written. At base b92d7a1 the census read 25 passed (25), and the gate's G09, G12, G13 and G14 mutants each read 25 passed (25).",
+ "basis": "MEASURED by the cutting seat (ws-02, g10-work-s110, 2026-10-26), every read read-only and none re-read by the census. RFCLI (/workplace/.../PrimaryInstallation/src/ReactiveFiberCLI): the first commit whose context.render.schema.json defines result.speculative is 8bd35ecd4651 ('[RF-WM-R3-e] --scenario served on rf context render for cli', 2026-10-24, __version__.py VERSION 0.1.844); its $defs/result states the nine scenarioResultKeys 'present exactly on a `rf context render --scenario PATH` render ... and absent on a legacy or --view render', the same nine at origin/main c83fbd59ec1c (VERSION 0.1.845) and in the installed rf 0.1.845 schema (sha256 in measured). The marker keys and labels are application/scenario_view.py WHATIF_RESULT_KEY 'speculative', NOTICE_BLOCK_KEY 'rf.whatif_notice' and WhatIfNotice.text's opening 'WHAT-IF VIEW of scenario ', and domain/scenario.py SCENARIO_ID_MARKER_KEY 'rf.scenario_id' and EPISTEMIC_STATUS_MARKER_KEY 'rf.epistemic_status' (block and notice metadata); rendered_speculative_view is the design name of 02-architecture.md:9@82bd879eee52, spelled by no release; scenario_id and scenario are the scenario identity keys, which no 0.1.784 or 0.1.845 schema property spells outside a scenario member. The pin at the cut's base dc72a6d: RFCLI 403389a94 ('chore: bump version to 0.1.784') holds 28 result properties, none of the nine, and no marker or label string; recorded as provenance only (no case asserts it), so the queued re-pin wb-jwc.4 (0.1.845) moves nothing in this census. scenarioSample and scenarioBlock are CAPTURED: the nine members and the one block of a real `rf --workspace W context render --scenario scenario.json --audience cli --no-input --json` at the installed rf 0.1.845 (rc 0, ok true), in a disposable workspace W=/tmp/ws02-s110-grmo1-rfws provisioned by the rf-preview recipe of docs/workbench/receipts/wb-c7ku.md (rf init --backend jsonl --no-input; rf component create --kind declarative demo.banner; rf component add of its manifest; rf component activate demo.banner; rf graph validate; all rc 0), over one committed render of that workspace, with a reactive-fiber.scenario/v1 document whose one action is {source_id task, type set_source, value <text>}; the nine members carry no workspace path, id or timestamp. The same capture holds its notice in result.notice only (result.blocks is the one component block) and output.text opens with the notice line. Through the helper's diffAgainstRoster against this SCG-R11 roster the capture gives the 12 speculative entries B4 pins (the nine members, the two block markers, the output.text label), while a real --no-commit render of Pi's own legacy argv in the same workspace gives 0 speculative entries (its only failures are the pre-existing 0.1.784 to 0.1.845 drift keys judge_context, judge_context_layers and replay_of_operation_id). The members also pass the seat's structural check against the installed schema (required, additionalProperties false, enum, const, digest pattern; not a schema engine). wb-dkru (seat ws-01, g10-work-s119, 2026-10-27; R694 follow-up from the wb-grmo.1 landing 545 gate cmd_c44799b3bdfd, its F3 and F4), MEASURED by the cutting seat and not re-read by the census: marked 18.0.11 (the devDependency, marked.parseInline) renders spec*ul*ative, spec**ul**ative, spec***ul***ative, spec~ul~ative, spec~~ul~~ative and spec`ul`ative as em, strong, del or code inside one word, and spec&ZeroWidthSpace;*ul*ative with its emphasis; it shows spec_ul_ative, spec__ul__ative, spec\\*ul\\*ative and spec&ast;ul&ast;ative with their marks, escapes spec&shyulative (no ';') to show it as written, and renders spec[ul](...)ative as a link inside the word. NAMED_REFERENCE_LIST is read off Python 3.12.15 html.entities.html5 (2231 entries, 2125 names written with ';'): the 309 names whose value, its format characters removed and NFKC applied, is empty or holds an ASCII letter, digit or '_', JS white space, or one of . ! ? \\ * ` ~ - and the ten dash look-alikes, then the 10 names whose value is & < > \" ' or : (319; sha256 of the list joined by newlines 19d03e077020c95bd42333c25946ed79aaf8fe3526f8c8408d3224c9d37f2916, which M5 recomputes). In that table no name, written with or without its ';', spells a SPECULATIVE_TERM or a SERVED_TERM, and over twelve contexts (a name inside spec_ulative, speculat_ive, what_if, scenario_view, hypo_thetical, counter_factual and serve_d, inside and after the --scenario flag, before and after speculative, and inside a served sentence) no name outside the list makes a hit decoded that it does not make written. At base b92d7a1 the census read 25 passed (25), and the gate's G09, G12, G13 and G14 mutants each read 25 passed (25). READ_FORMS (M6; wb-eu94, seat ws-03, run g10-work-s141, 2026-10-29): every row's page reading was measured by rendering its text with marked 18.0.11 (the repository's own dependency, default options) and parsing the HTML with parse5 7.1.2 (the HTML Standard's tokenizer and tree builder): the text nodes outside script, style, template, noscript and hidden or display:none elements, invisible code points dropped and NFKC applied, judged by the census's SPECULATIVE_TERM and SERVED_TERM. Its 40 joined rows read c1 and c2 true on the page and its 18 split and 10 over-read rows read false (marked shows each over-read row's form as written); the same reading gives every text of the Q10-Q13 quiet rows c1 and c2 true on the page except Q10's middle row, which marked escapes. Python's html.parser reads a CDATA section through ']]>', unlike the HTML Standard's bogus comment state, so the split CDATA row rests on parse5.",
  "measured": {
   "pinAtCutRelease": "0.1.784",
   "pinAtCutCommit": "403389a947583fea6eab9b5ef215939e3b831526",
@@ -547,7 +547,7 @@
   },
   {
    "id": "M",
-   "label": "the matchers rows A to C read: M1-M5 the spellings each must catch and pass, Q1-Q10 the pinned quiet rows of the named residuals",
+   "label": "the matchers rows A to C read: M1-M6 the spellings each must catch and pass, Q1-Q13 the pinned quiet rows of the named residuals",
    "pins": [
     {
      "id": "M1",
@@ -831,6 +831,487 @@
      }
     },
     {
+     "id": "M6",
+     "witness": [
+      {
+       "page": "joined",
+       "form": "padded code span",
+       "text": "Pi serves spec` ul `ative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "padded code span of two backticks",
+       "text": "Pi serves spec`` ul ``ative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "decimal reference without its ; in a p block",
+       "text": "<p>Pi serves spe&#99ulative RF context.</p>",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "hex reference without its ; in a p block",
+       "text": "<p>Pi serves spe&#x63ulative RF context.</p>",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "decimal soft hyphen without its ; in a p block",
+       "text": "<p>Pi serves spec&#173ulative RF context.</p>",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "hex soft hyphen without its ; in a p block",
+       "text": "<p>Pi serves spec&#xADulative RF context.</p>",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "decimal reference without its ; in a div block",
+       "text": "<div>Pi serves spe&#99ulative RF context.</div>",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "tag whose double-quoted value holds >",
+       "text": "Pi serves spec<span title=\"a>b\">ul</span>ative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "processing instruction",
+       "text": "Pi serves spec<?x?>ulative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "CDATA section",
+       "text": "Pi serves spec<![CDATA[]]>ulative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "padded code span opening a word",
+       "text": "Pi serves ` spec `ulative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "padded code span closing a word",
+       "text": "Pi serves spec` ulative ` RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "padded code span holding the joint",
+       "text": "Pi serves the what` - `if view.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "padded code span holding a backtick",
+       "text": "Pi serves the what`` ` ``if view.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "padded code span after an escaped backslash",
+       "text": "Pi serves \\\\` spec `ulative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "tag whose single-quoted value holds >",
+       "text": "Pi serves spec<x-y data-v='1>2'>ul</x-y>ative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "tag whose quoted value holds > across a line",
+       "text": "Pi serves spec<span\ntitle=\"a>b\">ul</span>ative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "tag outside marked's grammar in a div block",
+       "text": "<div>Pi serves spec<span @click=\"a>b\">ul</span>ative RF context.</div>",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "tag holding a quote that opens no value, in a div block",
+       "text": "<div>Pi serves spec<span a'b>ul</span>ative RF context, 'a' says.</div>",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "attribute after a quoted value with no space, in a div block",
+       "text": "<div>Pi serves spec<span a=\"1\"b=\"x>y\">ul</span>ative RF context.</div>",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "attribute after a slash, in a div block",
+       "text": "<div>Pi serves spec<span/title=\"a>b\">ul</span>ative RF context.</div>",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "spaced = before a single-quoted value, in a div block",
+       "text": "<div>Pi serves spec<span title = 'a>b'>ul</span>ative RF context.</div>",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "unquoted value holding a quote, in a div block",
+       "text": "<div>Pi serves spec<span title=a\"b>ul</span>ative RF context.</div>",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "declaration",
+       "text": "Pi serves spec<!x y>ulative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "DOCTYPE",
+       "text": "Pi serves spec<!DOCTYPE html>ulative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "comment holding >",
+       "text": "Pi serves spec<!-- a > b -->ulative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "empty comment <!--> before a later comment",
+       "text": "Pi serves spec<!-->ulative RF context.<!-- b -->",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "empty comment <!--->",
+       "text": "Pi serves spec<!--->ulative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "comment holding > closed by --!> in a div block",
+       "text": "<div>Pi serves spec<!-- a > b --!>ulative RF context.</div>",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "processing instruction without ?> in a div block",
+       "text": "<div>Pi serves spec<?x>ulative RF context.</div>",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "declaration without white space in a div block",
+       "text": "<div>Pi serves spec<!x>ulative RF context.</div>",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "end tag of no name in a div block",
+       "text": "<div>Pi serves spec</>ulative RF context.</div>",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "end tag opening with a digit in a div block",
+       "text": "<div>Pi serves spec</1>ulative RF context.</div>",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "decimal reference to 0x96, an en dash",
+       "text": "Pi serves the what&#150;if view.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "decimal reference to 0x97, an em dash",
+       "text": "Pi serves the what&#151;if view.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "hex reference to 0x85, an ellipsis",
+       "text": "Pi serves the scenario&#x85;view.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "reference to 0x96 without its ; in a p block",
+       "text": "<p>Pi serves the what&#150if view.</p>",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "decimal reference of seven digits",
+       "text": "Pi serves spe&#0000099;ulative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "combining grapheme joiner",
+       "text": "Pi serves spec\u034fulative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "joined",
+       "form": "variation selector",
+       "text": "Pi serves spec\ufe0fulative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "split",
+       "form": "code span padded on one side",
+       "text": "Pi serves spec` ul`ative RF context.",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "page": "split",
+       "form": "code span padded by two spaces",
+       "text": "Pi serves spec`  ul  `ative RF context.",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "page": "split",
+       "form": "code span padded by tabs",
+       "text": "Pi serves spec`\tul\t`ative RF context.",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "page": "split",
+       "form": "code span holding a space",
+       "text": "Pi serves spec` u l `ative RF context.",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "page": "split",
+       "form": "code span of spaces",
+       "text": "Pi serves spec`   `ulative RF context.",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "page": "split",
+       "form": "code span before a space",
+       "text": "Pi serves spec` ul ` ative RF context.",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "page": "split",
+       "form": "escaped backtick",
+       "text": "Pi serves \\` spec `ulative RF context.",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "page": "split",
+       "form": "unquoted value ended by >",
+       "text": "Pi serves spec<span title=a>b>ul</span>ative RF context.",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "page": "split",
+       "form": "= opening an attribute name, in a div block",
+       "text": "<div>Pi serves spec<span =\"x>y\">ulative RF context.</div>",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "page": "split",
+       "form": "tag whose quoted value never closes",
+       "text": "Pi serves spec<span title=\"a>ulative RF context.",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "page": "split",
+       "form": "processing instruction holding >",
+       "text": "Pi serves spec<?a>b?>ulative RF context.",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "page": "split",
+       "form": "CDATA section holding >",
+       "text": "Pi serves spec<![CDATA[a>b]]>ulative RF context.",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "page": "split",
+       "form": "reference to 0",
+       "text": "Pi serves spec&#0;ulative RF context.",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "page": "split",
+       "form": "reference past 0x10FFFF",
+       "text": "Pi serves spec&#x110000;ulative RF context.",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "page": "split",
+       "form": "reference to a surrogate",
+       "text": "Pi serves spec&#xD800;ulative RF context.",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "page": "split",
+       "form": "decimal reference with no digits",
+       "text": "Pi serves spe&#ulative RF context.",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "page": "split",
+       "form": "hex reference with no digits",
+       "text": "Pi serves spe&#x;ulative RF context.",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "page": "split",
+       "form": "reference to 0x96 inside a word",
+       "text": "Pi serves spec&#150;ulative RF context.",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "page": "over-read",
+       "form": "decimal reference without its ; in text",
+       "text": "Pi serves spe&#99ulative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "over-read",
+       "form": "joint reference without its ; in text",
+       "text": "Pi serves the what&#45if view.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "over-read",
+       "form": "decimal reference of eight digits in text",
+       "text": "Pi serves spe&#00000099;ulative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "over-read",
+       "form": "declaration without white space in text",
+       "text": "Pi serves spec<!x>ulative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "over-read",
+       "form": "processing instruction without ?> in text",
+       "text": "Pi serves spec<?x>ulative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "over-read",
+       "form": "comment closed by --!> in text",
+       "text": "Pi serves spec<!-- a --!>ulative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "over-read",
+       "form": "tag outside marked's grammar in text",
+       "text": "Pi serves spec<span @click=\"a>b\">ul</span>ative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "over-read",
+       "form": "backtick a code span shows",
+       "text": "Pi serves spec`` `ul` ``ative RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "over-read",
+       "form": "reference a code span shows",
+       "text": "Pi serves `spe&#99;ulative` RF context.",
+       "c1": true,
+       "c2": true
+      },
+      {
+       "page": "over-read",
+       "form": "end tag opening with a digit in text",
+       "text": "Pi serves spec</1>ulative RF context.",
+       "c1": true,
+       "c2": true
+      }
+     ]
+    },
+    {
      "id": "Q1",
      "witness": {
       "topLevel": [
@@ -939,6 +1420,56 @@
        "text": "Pi serves spec&shyulative RF context.",
        "c1": false,
        "c2": false
+      },
+      {
+       "text": "Pi serves spec&shyulative; RF context.",
+       "c1": false,
+       "c2": false
+      }
+     ]
+    },
+    {
+     "id": "Q11",
+     "witness": [
+      {
+       "text": "Pi serves spec`\nul\n`ative RF context.",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "text": "Pi serves spec` ul\n`ative RF context.",
+       "c1": false,
+       "c2": false
+      }
+     ]
+    },
+    {
+     "id": "Q12",
+     "witness": [
+      {
+       "text": "Pi serves spec<span hidden>x</span>ulative RF context.",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "text": "Pi serves spec<template>x</template>ulative RF context.",
+       "c1": false,
+       "c2": false
+      }
+     ]
+    },
+    {
+     "id": "Q13",
+     "witness": [
+      {
+       "text": "Pi serves <b spec` ul `ative > RF context.",
+       "c1": false,
+       "c2": false
+      },
+      {
+       "text": "Pi serves <b spe&#99;ulative > RF context.",
+       "c1": false,
+       "c2": false
       }
      ]
     }
@@ -963,6 +1494,7 @@
   "M3",
   "M4",
   "M5",
+  "M6",
   "Q1",
   "Q2",
   "Q3",
@@ -973,6 +1505,9 @@
   "Q8",
   "Q9",
   "Q10",
+  "Q11",
+  "Q12",
+  "Q13",
   "registration: every test of this file is registered once, in roster order, in run mode, not inverted, and ran; every pin reached its end with its pinned assertion count"
  ],
  "reached": [
@@ -992,6 +1527,7 @@
   "M3:3",
   "M4:3",
   "M5:4",
+  "M6:3",
   "Q1:3",
   "Q2:3",
   "Q3:3",
@@ -1001,6 +1537,9 @@
   "Q7:3",
   "Q8:3",
   "Q9:3",
-  "Q10:3"
+  "Q10:3",
+  "Q11:3",
+  "Q12:3",
+  "Q13:3"
  ]
 }
