@@ -1994,6 +1994,10 @@
           "participant",
           "role"
         ]
+      },
+      "code": {
+        "src/workbench/q1-shape.ts": 0,
+        "src/workbench/q1-incidences.ts": 0
       }
     },
     "Q2": {
@@ -2017,6 +2021,11 @@
           "ExecutorRequest",
           "src/workbench/q2-request.ts"
         ]
+      },
+      "code": {
+        "src/workbench/q2-joined.ts": 0,
+        "src/workbench/q2-escape.ts": 0,
+        "src/workbench/q2-request.ts": 0
       }
     },
     "Q3": {
@@ -2300,6 +2309,124 @@
       "q9-owner-named-reference"
     ]
   },
+  "failClosed": {
+    "FC-G1-CAMEL": {
+      "site": [
+        "S-UNREGISTERED src/workbench/zz-fc-g1-camel.ts names GraphPolicy with no EXPORT_SITES registration"
+      ],
+      "unpinnedSite": [
+        "S-UNPINNED src/workbench/zz-fc-g1-camel.ts names GraphPolicy as \"graphPolicy\", a spelling outside G1's pinned set"
+      ],
+      "request": [],
+      "unpinnedRequest": []
+    },
+    "FC-G1-SENTENCE": {
+      "site": [
+        "S-UNREGISTERED src/workbench/zz-fc-g1-sentence.ts names GraphPolicy with no EXPORT_SITES registration"
+      ],
+      "unpinnedSite": [
+        "S-UNPINNED src/workbench/zz-fc-g1-sentence.ts names GraphPolicy as \"Graph policy\", a spelling outside G1's pinned set"
+      ],
+      "request": [],
+      "unpinnedRequest": []
+    },
+    "FC-G1-RUN-LONG": {
+      "site": [
+        "S-UNREGISTERED src/workbench/zz-fc-g1-run-long.ts names GraphPolicy with no EXPORT_SITES registration"
+      ],
+      "unpinnedSite": [
+        "S-UNPINNED src/workbench/zz-fc-g1-run-long.ts names GraphPolicy as \"graph -- policy\", a spelling outside G1's pinned set"
+      ],
+      "request": [],
+      "unpinnedRequest": []
+    },
+    "FC-G1-RUN3-SAME": {
+      "site": [
+        "S-UNREGISTERED src/workbench/zz-fc-g1-run3-same.ts names GraphPolicy with no EXPORT_SITES registration"
+      ],
+      "unpinnedSite": [
+        "S-UNPINNED src/workbench/zz-fc-g1-run3-same.ts names GraphPolicy as \"graph___policy\", a spelling outside G1's pinned set"
+      ],
+      "request": [],
+      "unpinnedRequest": []
+    },
+    "FC-G1-UNEVEN": {
+      "site": [
+        "S-UNREGISTERED src/workbench/zz-fc-g1-uneven.ts names GraphDataIR with no EXPORT_SITES registration"
+      ],
+      "unpinnedSite": [
+        "S-UNPINNED src/workbench/zz-fc-g1-uneven.ts names GraphDataIR as \"GRAPH_DATAIR\", a spelling outside G1's pinned set"
+      ],
+      "request": [],
+      "unpinnedRequest": []
+    },
+    "FC-G1-EVERY-MATCH": {
+      "site": [
+        "S-UNREGISTERED src/workbench/zz-fc-g1-every-match.ts names GraphPolicy, GraphDataIR with no EXPORT_SITES registration"
+      ],
+      "unpinnedSite": [
+        "S-UNPINNED src/workbench/zz-fc-g1-every-match.ts names GraphPolicy as \"graphPolicy\", a spelling outside G1's pinned set",
+        "S-UNPINNED src/workbench/zz-fc-g1-every-match.ts names GraphDataIR as \"GRAPH_DATAIR\", a spelling outside G1's pinned set"
+      ],
+      "request": [],
+      "unpinnedRequest": []
+    },
+    "FC-D3-CAMEL": {
+      "site": [],
+      "unpinnedSite": [],
+      "request": [
+        "src/workbench/zz-fc-d3-camel.ts"
+      ],
+      "unpinnedRequest": [
+        "D3-UNPINNED src/workbench/zz-fc-d3-camel.ts names a typed executor request as \"executorRequest\", a spelling outside D3's pinned set"
+      ]
+    },
+    "FC-D3-SENTENCE": {
+      "site": [],
+      "unpinnedSite": [],
+      "request": [
+        "src/workbench/zz-fc-d3-sentence.ts"
+      ],
+      "unpinnedRequest": [
+        "D3-UNPINNED src/workbench/zz-fc-d3-sentence.ts names a typed executor request as \"Executor request\", a spelling outside D3's pinned set"
+      ]
+    },
+    "FC-D3-EVERY-MATCH": {
+      "site": [],
+      "unpinnedSite": [],
+      "request": [
+        "src/workbench/zz-fc-d3-every-match.ts"
+      ],
+      "unpinnedRequest": [
+        "D3-UNPINNED src/workbench/zz-fc-d3-every-match.ts names a typed executor request as \"executorRequest\", a spelling outside D3's pinned set"
+      ]
+    },
+    "FC-G3-LEAD-HEADING": [
+      "boundary-first"
+    ],
+    "FC-G3-LEAD-BREAK": [
+      "boundary-first"
+    ],
+    "FC-G3-OTHER-LEAD": [
+      "ownership-other"
+    ],
+    "FC-S2-Q1-COMMENTED": {
+      "member": "shape",
+      "quiet": [],
+      "refusal": [
+        "R-COMMENTED"
+      ],
+      "proxy": true
+    },
+    "FC-S2-Q2-COMMENTED": {
+      "member": "composed",
+      "quiet": [],
+      "refusal": [
+        "R-COMMENTED"
+      ],
+      "proxy": true
+    }
+  },
   "tests": [
     "A1: a pure exporter test",
     "A2: builds GraphDataIR",
@@ -2334,6 +2461,7 @@
     "Q9: R-OWNER-CELL",
     "rule 16: the rows, the residual families, the mutants and cases per pin, the rules and the registry are frozen at their measured shape",
     "the outside anchors: the bead's own row binds the rows and the pin quotes; the vendored producer fixture, the registry and the live control import bind the judge's spellings",
+    "fail closed (R-B73): each FAIL_CLOSED form, outside its claim's pinned set, refuses with exactly its typed refusals, and the fail-closed readers refuse no pinned spelling and nothing on today's tree",
     "roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/gp-snapshot-export-roster.json, in order and both ways; every pin reached its witness compare"
   ]
 }

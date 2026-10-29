@@ -19,7 +19,7 @@ import { Lexer, type Links, marked, type Token, type Tokens } from "marked";
 import { NATIVE_CONTROL_ACTIONS } from "../../src/workbench/control.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type Presentation, type RelationKind } from "../../src/workbench/observation.js";
 import { docsSection, sectionTables } from "./census.js";
-import { namedWords } from "./gp-mw-coordination-census.js";
+import { namedWords, VOCABULARY } from "./gp-mw-coordination-census.js";
 import { exportedNames } from "./gp-snapshot-join-census.js";
 
 // ---- the GraphDataIR spellings this census reads (each one the vendored producer fixture's, asserted by the census) ----
@@ -1320,8 +1320,10 @@ export const SITE_WORD_QUIET: readonly string[] = ["ObservationProjection", "gra
 // ---- the absence readers of D3 and G2, each proven live by a planted positive read in the same call ----
 
 /**
- * A typed executor request named in a module (D3): "executor request" in any case, joined by nothing or by one space, "_" or "-";
- * a tab, a dot or a run of two or more joiners between the parts is outside it (EXECUTOR_REQUEST_OUTSIDE, pinned quiet).
+ * D3's pattern, a typed executor request named in a module: "executor request", case folded (flag i), joined by nothing or by
+ * one space, "_" or "-"; D3 claims EXECUTOR_REQUEST_SPELLINGS' 12 (lower, upper and written case), a match in another case
+ * form is refused by unpinnedExecutorRequestFindings (R-B73), and a tab, a dot or a run of two or more joiners between the
+ * parts is outside the pattern (EXECUTOR_REQUEST_OUTSIDE, pinned quiet).
  */
 export const EXECUTOR_REQUEST = /executor[ _-]?request/i;
 /** D3's reader: the modules whose text names a typed executor request, in listing order. */
@@ -1385,12 +1387,12 @@ export interface Spelling {
   readonly word: string;
   readonly spelling: string;
 }
-/** A word's spellings over the given joiners: every case form of each joiner in turn. */
+/** A word's spellings over the given joiners: each of WORD_CASES' case forms of each joiner in turn. */
 export const spellingsOf = (word: string, joiners: readonly { readonly id: string; readonly text: string }[]): Spelling[] =>
   joiners.flatMap(joiner => WORD_CASES.map(form => ({ id: `${word}/${joiner.id}/${form.id}`, word, spelling: (WORD_PARTS[word] ?? []).map(form.of).join(joiner.text) })));
 /** A spelling's joiner and case form, as a plant id names it ("space-lower"). */
 export const spellingTag = (entry: Spelling): string => entry.id.split("/").slice(1).join("-");
-/** G1's spellings: each site word's parts over every joiner in every case form (2 x 8 x 3), each read by G1's one reader. */
+/** G1's spellings, its claim (R-B73): each site word's parts over every WORD_JOINERS joiner in each WORD_CASES case form (2 x 8 x 3), each read by G1's one reader. */
 export const SITE_WORD_SPELLINGS: readonly Spelling[] = SITE_WORDS.flatMap(word => spellingsOf(word, WORD_JOINERS));
 /** A planted src module naming one spelling in a string literal, the index-th of its table (read after the tracked modules). */
 export const spellingSite = (entry: Spelling, index: number): { readonly path: string; readonly text: string } => ({
@@ -1399,9 +1401,9 @@ export const spellingSite = (entry: Spelling, index: number): { readonly path: s
 });
 /** D3's joiners: none and each character of EXECUTOR_REQUEST's class alone (its quantifier admits none or one). */
 export const EXECUTOR_JOINERS: readonly { readonly id: string; readonly text: string }[] = WORD_JOINERS.filter(joiner => ["none", "space", "underscore", "hyphen"].includes(joiner.id));
-/** D3's spellings: "executor request" over its joiners in every case form (4 x 3), each read by executorRequestNamers. */
+/** D3's spellings, its claim (R-B73): "executor request" over its joiners in each WORD_CASES case form (4 x 3), each read by executorRequestNamers. */
 export const EXECUTOR_REQUEST_SPELLINGS: readonly Spelling[] = spellingsOf("ExecutorRequest", EXECUTOR_JOINERS);
-/** The spellings outside D3's pattern: the other joiners (a tab, a dot, a repeated run, a mixed run) in every case form, each pinned quiet. */
+/** The spellings outside D3's pattern: the other joiners (a tab, a dot, a repeated run, a mixed run) in each WORD_CASES case form, each pinned quiet. */
 export const EXECUTOR_REQUEST_OUTSIDE: readonly Spelling[] = spellingsOf(
   "ExecutorRequest",
   WORD_JOINERS.filter(joiner => !EXECUTOR_JOINERS.includes(joiner)),
@@ -1607,9 +1609,10 @@ export function shownIn(links: Links): (cell: string) => string {
   };
 }
 /**
- * A text names GraphPolicy: the landed vocabulary's V1 word through namedWords (any case, any run of space, tab, dot, underscore
- * or hyphen between graph and policy, or none), proven on every OWNER_SPELLINGS spelling; G3 hands it a cell's shown text, which
- * collapses white space, so a tab or a run of spaces in a cell's source reaches it as one space.
+ * A text names GraphPolicy when the landed vocabulary's V1 live pattern matches it (namedWords: case folded, any run of space,
+ * tab, dot, underscore or hyphen between graph and policy, or none); G3 claims exactly OWNER_SPELLINGS' 24 spellings, each
+ * pinned (R-B73); G3 hands it a cell's shown text, which collapses white space, so a tab or a run of spaces in a cell's source
+ * reaches it as one space.
  */
 export const namesGraphPolicy = (text: string): boolean => namedWords(text).includes("GraphPolicy");
 /** A body row of a top-level table of the Ownership boundaries section, its owner cell (the second cell) in both views. */
@@ -1656,10 +1659,11 @@ const firstSentence = (text: string): string => {
  * header is read (refusal #2's header-rename falsifier: the cell is read under the header that names it), its third cell's
  * source is read up to its first "; "; rows are counted by the owner cell only (a row naming GraphPolicyCLI in another cell,
  * a header row, or an owner cell that shows gp by a spelling namedWords does not read, is R-OWNER-CELL, Q9); and every other block of that section whose
- * source names GraphPolicyCLI (sectionSources: a row in a quoted, listed or HTML table renders as a row the top-level grids
- * never hold; a block of HTML comments only is passed over);
- * the opening is the first sentence of the boundary section's first rendered block (an HTML block of comments only renders
- * nothing, so it is passed over; any other HTML block renders and is that first block) when that block is a paragraph,
+ * source holds the text GraphPolicyCLI (sectionSources: a row in a quoted, listed or HTML table renders as a row the top-level
+ * grids never hold; a block of HTML comments only is passed over);
+ * the opening is the first sentence of the boundary section's first block in the binding's view that is not an HTML block of
+ * comments only (such a block renders nothing, so it is passed over; any other HTML block renders and is that first block)
+ * when that block is a paragraph,
  * read twice: as rendered (the binding's text, inline marks removed) and in its source (the binding's markdown, marks kept),
  * so a struck "no" (~~no~~ or <del>no</del>, refusal #2's strike falsifier), which renders the same characters, is read.
  */
@@ -1894,7 +1898,7 @@ export interface SourceResidual {
   readonly kind: "source";
   readonly path: string;
   readonly text: string;
-  /** What proves the member live: "shape" (its object keys name keys of the vendored v1 document) or "composed" (its string literals, decoded and joined, are read by a source reader). */
+  /** The static reading that holds the member live: "shape" (its raw text names a key of the vendored v1 document before a colon, shapeKeysOf) or "composed" (its double-quoted literals, decoded and joined, are read by a source reader, composedOf), either over a text holding no comment opener (R-COMMENTED). */
   readonly live: "shape" | "composed";
 }
 export interface OutcomeResidual {
@@ -2004,7 +2008,7 @@ export async function driveEffects(make: () => Drive, after: () => void = () => 
     thirdDiffers: calls.length === 3 && !isDeepStrictEqual(calls[2]?.outcome, calls[0]?.outcome),
   };
 }
-/** A source member's double-quoted string literals, each decoded as JSON decodes it, joined in order: the word R-COMPOSED's member builds at run time. */
+/** A source member's double-quoted string literals, each decoded as JSON decodes it, joined in order: the word R-COMPOSED's member builds at run time, read over its raw text, comments included (so R-COMMENTED refuses a comment opener). */
 export const composedOf = (text: string): string =>
   [...text.matchAll(/"((?:[^"\\\n]|\\.)*)"/g)]
     .map(match => {
@@ -2016,7 +2020,7 @@ export const composedOf = (text: string): string =>
       }
     })
     .join("");
-/** The object keys a source member's text names (an identifier before a colon) that are keys of the given document: R-UNNAMED's member builds a GraphDataIR-shaped value. */
+/** The object keys a source member's text names (an identifier before a colon) that are keys of the given document: R-UNNAMED's static reading of a GraphDataIR-shaped value, over its raw text, comments included (so R-COMMENTED refuses a comment opener). */
 export const shapeKeysOf = (text: string, keys: ReadonlySet<string>): string[] => [...new Set([...text.matchAll(/\b([A-Za-z_][A-Za-z0-9_]*)\s*:/g)].map(match => match[1] ?? "").filter(key => keys.has(key)))];
 const withGraph = (outcome: Exported, change: (graph: Record<string, unknown>) => Record<string, unknown>): Exported => ({ ...outcome, graph: change(structuredClone(outcome.graph) as Record<string, unknown>) });
 export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
@@ -2192,3 +2196,135 @@ export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
   ],
 };
 export const residualId = (member: Residual): string => (member.kind === "source" ? member.path : member.id);
+
+// ---- the fail-closed core (R-B73, the final cut; R-B67's form): outside each pinned set the census refuses, typed ----
+
+/** Texts in path order (the order siteFindings reads them in). */
+const inPathOrder = (texts: ReadonlyMap<string, string>): (readonly [string, string])[] => [...texts].sort(([left], [right]) => (left < right ? -1 : left > right ? 1 : 0));
+/** A pattern read globally (every match, left to right), its own flags kept; a fresh object per call, so no lastIndex is shared. */
+const globally = (pattern: RegExp): RegExp => new RegExp(pattern.source, pattern.flags.includes("g") ? pattern.flags : `${pattern.flags}g`);
+/**
+ * G1's fail-closed reader (R-B73): each text in path order, each site word's live pattern (the VOCABULARY pattern namedWords
+ * tests) read globally over it, and every match whose text is not one of that word's 24 pinned spellings (SITE_WORD_SPELLINGS)
+ * refused, S-UNPINNED, naming the match; a site word with no live pattern is refused too. It runs its own loop over the texts,
+ * so an edit of siteFindings that stops reading a match leaves this reader refusing it, and an edit of this reader that stops
+ * refusing a match leaves siteFindings reading it (S-UNREGISTERED).
+ */
+export function unpinnedSiteFindings(texts: ReadonlyMap<string, string>): string[] {
+  const findings: string[] = [];
+  for (const [file, text] of inPathOrder(texts)) {
+    for (const word of SITE_WORDS) {
+      const live = VOCABULARY.find(entry => entry.spelling === word)?.pattern;
+      if (live === undefined) {
+        findings.push(`S-UNPINNED ${file} names ${word}, a site word with no live pattern in the landed vocabulary`);
+        continue;
+      }
+      const pinned = new Set(SITE_WORD_SPELLINGS.filter(entry => entry.word === word).map(entry => entry.spelling));
+      for (const match of text.matchAll(globally(live))) if (!pinned.has(match[0])) findings.push(`S-UNPINNED ${file} names ${word} as ${JSON.stringify(match[0])}, a spelling outside G1's pinned set`);
+    }
+  }
+  return findings;
+}
+/**
+ * D3's fail-closed reader (R-B73): each text in path order, D3's pattern (EXECUTOR_REQUEST) read globally over it, and every
+ * match whose text is not one of its 12 pinned spellings (EXECUTOR_REQUEST_SPELLINGS) refused, D3-UNPINNED, naming the match.
+ * Its own loop, as G1's: an edit of either D3 reader alone leaves the other reading the match.
+ */
+export function unpinnedExecutorRequestFindings(texts: ReadonlyMap<string, string>): string[] {
+  const pinned = new Set(EXECUTOR_REQUEST_SPELLINGS.map(entry => entry.spelling));
+  const findings: string[] = [];
+  for (const [file, text] of inPathOrder(texts)) for (const match of text.matchAll(globally(EXECUTOR_REQUEST))) if (!pinned.has(match[0])) findings.push(`D3-UNPINNED ${file} names a typed executor request as ${JSON.stringify(match[0])}, a spelling outside D3's pinned set`);
+  return findings;
+}
+/**
+ * The comment openers (// and /*) a residual source member's raw text holds, inside its string literals too: the static
+ * liveness proxies (shapeKeysOf, composedOf) read raw text and cannot tell a comment from code.
+ */
+export const commentOpeners = (text: string): number => [...text.matchAll(/\/[/*]/g)].length;
+/** S2's fail-closed refusal (R-B73): a residual source member whose text holds a comment opener is refused, R-COMMENTED. */
+export const commentFindings = (path: string, text: string): string[] => {
+  const openers = commentOpeners(text);
+  return openers === 0 ? [] : [`R-COMMENTED ${path} holds ${openers} comment opener${openers === 1 ? "" : "s"} (// or /*), so its static liveness proxy could read a comment as code`];
+};
+/** The paths a fail-closed reader's findings name (each finding's second word), each once in order: the reader its read proof drives. */
+export const findingPaths = (findings: readonly string[]): string[] => [...new Set(findings.map(finding => finding.split(" ", 2)[1] ?? ""))];
+/** A form outside G1's or D3's pinned spellings: a src module read after the tracked modules. */
+export interface FailClosedSource {
+  readonly kind: "source";
+  readonly id: string;
+  readonly claim: "G1" | "D3";
+  readonly path: string;
+  readonly text: string;
+  /** The words the claim's word reader names in the form (siteFindings' words for G1, ExecutorRequest for D3). */
+  readonly words: readonly string[];
+  /** Each match the claim's fail-closed reader refuses, in order: its word and its text. */
+  readonly unpinned: readonly { readonly word: string; readonly match: string }[];
+}
+/** A form outside G3's pinned plants: an in-memory edit of the live docs/03, read by docs03Reading and judged by docs03Findings. */
+export interface FailClosedDocs {
+  readonly kind: "docs";
+  readonly id: string;
+  readonly claim: "G3";
+  readonly edit: (page: string) => string;
+  /** The docs rules it is refused with, in order. */
+  readonly expect: readonly string[];
+}
+/** A form outside S2's liveness reading: a residual source member's text edited. */
+export interface FailClosedMember {
+  readonly kind: "member";
+  readonly id: string;
+  readonly claim: "S2";
+  /** The residual source member's path (RESIDUALS). */
+  readonly member: string;
+  readonly edit: (text: string) => string;
+}
+export type FailClosedForm = FailClosedSource | FailClosedDocs | FailClosedMember;
+/** Every non-empty line behind a line comment: the member defines nothing (refusal #5's S2-Q1-COMMENTED and S2-Q2-COMMENTED). */
+const commentedOut = (text: string): string =>
+  text
+    .split("\n")
+    .map(line => (line === "" ? line : `// ${line}`))
+    .join("\n");
+/**
+ * The fail-closed row (R-B73, R-B67's one pinned row proving that a form outside the pinned set refuses): refusal #5's twelve
+ * plants, one per member of its U1-U5, each outside its claim's pinned set and each refused with exactly its typed refusals.
+ * G1's five (U1): a lower-first camelCase word, a sentence-case word, a run of four joiners, a run of three of one joiner and a
+ * GraphDataIR spelling whose two gaps differ; D3's two (U2): camelCase and sentence case; G3's three (U3, U4): a lower heading
+ * and a thematic break leading the boundary section, and a paragraph holding GraphPolicyCLI between the Ownership boundaries
+ * heading and its table; S2's two (U5): q1-shape and q2-joined commented out. And two of this cut's own, FC-G1-EVERY-MATCH and
+ * FC-D3-EVERY-MATCH: an unpinned spelling after a pinned one in one module (G1's for each of its two words), so each
+ * fail-closed reader is proven on every match and every word, never only the first.
+ */
+export const FAIL_CLOSED: readonly FailClosedForm[] = [
+  { kind: "source", id: "FC-G1-CAMEL", claim: "G1", path: "src/workbench/zz-fc-g1-camel.ts", text: 'export const graphPolicyLabel = "seam";\n', words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "graphPolicy" }] },
+  { kind: "source", id: "FC-G1-SENTENCE", claim: "G1", path: "src/workbench/zz-fc-g1-sentence.ts", text: "// Graph policy decision seam\nexport const placed = 1;\n", words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "Graph policy" }] },
+  { kind: "source", id: "FC-G1-RUN-LONG", claim: "G1", path: "src/workbench/zz-fc-g1-run-long.ts", text: 'export const LABEL = "graph -- policy";\n', words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "graph -- policy" }] },
+  { kind: "source", id: "FC-G1-RUN3-SAME", claim: "G1", path: "src/workbench/zz-fc-g1-run3-same.ts", text: 'export const LABEL = "graph___policy";\n', words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "graph___policy" }] },
+  { kind: "source", id: "FC-G1-UNEVEN", claim: "G1", path: "src/workbench/zz-fc-g1-uneven.ts", text: 'export const GRAPH_DATAIR = "v1";\n', words: ["GraphDataIR"], unpinned: [{ word: "GraphDataIR", match: "GRAPH_DATAIR" }] },
+  {
+    kind: "source",
+    id: "FC-G1-EVERY-MATCH",
+    claim: "G1",
+    path: "src/workbench/zz-fc-g1-every-match.ts",
+    text: 'export const LABELS = ["GraphPolicy", "graphPolicy", "GraphDataIR", "GRAPH_DATAIR"];\n',
+    words: ["GraphPolicy", "GraphDataIR"],
+    unpinned: [
+      { word: "GraphPolicy", match: "graphPolicy" },
+      { word: "GraphDataIR", match: "GRAPH_DATAIR" },
+    ],
+  },
+  { kind: "source", id: "FC-D3-CAMEL", claim: "D3", path: "src/workbench/zz-fc-d3-camel.ts", text: 'export const executorRequest = { executor: "furnace" };\n', words: ["ExecutorRequest"], unpinned: [{ word: "ExecutorRequest", match: "executorRequest" }] },
+  { kind: "source", id: "FC-D3-SENTENCE", claim: "D3", path: "src/workbench/zz-fc-d3-sentence.ts", text: "// Executor request shape\nexport const placed = 1;\n", words: ["ExecutorRequest"], unpinned: [{ word: "ExecutorRequest", match: "Executor request" }] },
+  { kind: "source", id: "FC-D3-EVERY-MATCH", claim: "D3", path: "src/workbench/zz-fc-d3-every-match.ts", text: 'export const KINDS = ["ExecutorRequest", "executorRequest"];\n', words: ["ExecutorRequest"], unpinned: [{ word: "ExecutorRequest", match: "executorRequest" }] },
+  { kind: "docs", id: "FC-G3-LEAD-HEADING", claim: "G3", edit: page => onceIn(page, `## ${BOUNDARY_HEADING}\n\n`, `## ${BOUNDARY_HEADING}\n\n### Status\n\n`), expect: ["boundary-first"] },
+  { kind: "docs", id: "FC-G3-LEAD-BREAK", claim: "G3", edit: page => onceIn(page, `## ${BOUNDARY_HEADING}\n\n`, `## ${BOUNDARY_HEADING}\n\n---\n\n`), expect: ["boundary-first"] },
+  {
+    kind: "docs",
+    id: "FC-G3-OTHER-LEAD",
+    claim: "G3",
+    edit: page => onceIn(page, `## ${OWNERSHIP_HEADING}\n\n`, `## ${OWNERSHIP_HEADING}\n\n${GP_OWNER} decides policy scores through the gp seam at src/workbench/gp-seam.ts.\n\n`),
+    expect: ["ownership-other"],
+  },
+  { kind: "member", id: "FC-S2-Q1-COMMENTED", claim: "S2", member: "src/workbench/q1-shape.ts", edit: commentedOut },
+  { kind: "member", id: "FC-S2-Q2-COMMENTED", claim: "S2", member: "src/workbench/q2-joined.ts", edit: commentedOut },
+];

@@ -15,20 +15,23 @@
  * THE GATE (measured read-only by the cutting seat on 2026-10-28 at trunk ade68d6 and after each trunk merge into the cut, by the
  * first respin seat at trunk e81d2b0, by the second respin seat at trunk 014d116, whose delta from e81d2b0, landings 649-651,
  * touches no src, qa or docs file, by the third respin seat at trunk 4350926, whose delta from 06a280b, landings 657-660,
- * touches no src, qa or docs file either, and by the fourth respin seat at trunk aec4521, whose delta from b3d410f, landings
- * 663-664, touches no src, qa or docs file either; row G re-reads it live):
+ * touches no src, qa or docs file either, by the fourth respin seat at trunk aec4521, whose delta from b3d410f, landings
+ * 663-664, touches no src, qa or docs file either, and by the fifth respin seat (cut #6, R-B73) at trunk 04123dc, whose delta
+ * from aec4521, landings 665-671, touches no src, qa or docs file either; row G re-reads it live):
  * Pi has no exporter to test. docs/workbench/03's Ownership boundaries section holds one GraphPolicyCLI row (one body row of
  * its top-level tables whose owner cell, its second cell whatever the table's header names, as it shows in the document,
  * names GraphPolicy; G3 counts rows by that cell only),
  * whose owner cell's source is exactly GraphPolicyCLI, in a table headed "Concern | Authoritative owner | Workbench may do",
  * whose "Workbench may do" cell's source opens "nothing today (no gp seam is registered)", and no other block of that section
- * outside its top-level tables names GraphPolicyCLI in its source; its GraphPolicyCLI boundary section's
- * first rendered block is a paragraph that opens, as rendered and in its source, "Pi carries no GraphPolicyCLI (gp)
+ * outside its top-level tables holds the text GraphPolicyCLI in its source; its GraphPolicyCLI boundary section's
+ * first block in the binding's view (a block of HTML comments only passed over) is a paragraph that opens, as rendered and in
+ * its source, "Pi carries no GraphPolicyCLI (gp)
  * integration today." (G3, read through the landed docs binding sectionTables/docsSection of test/helpers/census.ts, each
- * heading once under the page title); no src module names GraphPolicy or GraphDataIR in any spelling the landed vocabulary
- * reads, each word's parts in any case joined by any run of space, tab, dot, underscore or hyphen or by none (G1, its reader
- * proven on each of the two words and on each of SITE_WORD_SPELLINGS' 48 spellings, its joiners and its case folding read back
- * from the live patterns; the landed wb-e66.5, wb-1xvp.2 and
+ * heading once under the page title); no src module's text matches either site word's live pattern (the landed vocabulary's
+ * VOCABULARY patterns for GraphPolicy and GraphDataIR, flag i, their parts joined by any run of the class [ \t._-] or by none,
+ * as readPattern reads them back), as G1's two readers read git's src listing: siteFindings, whose claim is exactly the
+ * spellings THE PINNED SET lists, and the fail-closed reader unpinnedSiteFindings, which refuses every match whose text is not
+ * one of them (G1, FAIL CLOSED; the landed wb-e66.5, wb-1xvp.2 and
  * wb-gxd7.4 guards pin the same absence by their own readings, and wb-gxd7.4's filing names this bead's exporter as unbuilt).
  * So this suite PINS TODAY'S ABSENCE and ARMS the acceptance for the first exporter: the judge (exportFindings, driveFindings)
  * is written now, proven on a reference exporter over real ObservationProjection fixtures and on seventy-seven mutants, each
@@ -117,6 +120,9 @@
  *   OWNER_SPELLINGS its 24 GraphPolicy ones (G3). D3's pattern (EXECUTOR_REQUEST) joins "executor" and "request" by none or one
  *   (?) character of the class [ _-], case folded, so EXECUTOR_REQUEST_SPELLINGS is its 4 joiners x 3 case forms = 12
  *   spellings, and EXECUTOR_REQUEST_OUTSIDE is the other 4 joiners' 12 (a tab, a dot, a repeated run, a mixed run), pinned quiet.
+ *   The patterns match more than the tables spell (a lower-first camelCase or a sentence-case word, a run of three or more
+ *   joiner characters, a GraphDataIR spelling whose two gaps differ): no reading claims those spellings, and G1's and D3's
+ *   fail-closed readers refuse each match outside the tables (FAIL CLOSED).
  *
  * ROWS. A-F, the acceptance clauses, each pin a quote of its clause with its own case: the reference conforms where the pin
  * names a case, and each of the pin's MUTANTS is refused with exactly its rules while the reference conforms on the same case.
@@ -153,14 +159,17 @@
  * (D-HEADER-SWAP-FIRST, D-HEADER-SWAP-SECOND, D-CELL-CASE, D-SENTENCE-CASE), each refused with exactly its docs rules, and
  * three quiet plants (HTML comments, one inside another row's owner cell). Q, the residuals' pinned quiet rows.
  * RESIDUALS (named families, each member a pinned quiet row; a reader or judge that starts reading a member reds its row, and
- * so does a member silenced, R-B66 and rule 19's residual definition: a Q1 member's object keys name keys of the vendored v1
- * document, a Q2 member's string literals, decoded and joined, are read by a source reader, a Q3-Q5 member's edit changes the
+ * so does a member silenced as its row reads it, R-B66 and rule 19's residual definition: a Q1 member's raw text names a key
+ * of the vendored v1 document as an identifier before a colon (shapeKeysOf), a Q2 member's double-quoted literals, decoded
+ * and joined, are read by a source reader (composedOf), each over a text holding no comment opener (R-COMMENTED refuses one,
+ * FAIL CLOSED), a Q3-Q5 member's edit changes the
  * reference's export (its first difference is named), a Q6-Q8 member does what its family names as the drive observer
  * driveEffects reads it on fixture projections of its own (the reference drive reads as NO_EFFECTS), and a Q9 member lands in
  * the section's tables):
  * R-UNNAMED (Q1, a module that builds a GraphDataIR-shaped document without naming a site word is no site), R-COMPOSED (Q2,
  * a reader's word built at run time or spelled through an escape; the Q1 and Q2 rows run each member through all three
- * source readers, G1's site words, G2's namespace and D3's executor request, and Q2 holds a composed word of each reader),
+ * source readers, G1's site words, G2's namespace and D3's executor request, and G1's and D3's fail-closed readers, and Q2
+ * holds a composed word of each reader),
  * R-SCHEMA (Q3, the judge reads the vendored v1 shape, never a
  * GraphDataIR schema document: another feature's status, the schema hash), R-LABELS (Q4, entity and relation kinds and
  * incidence roles; kind labels are wb-gxd7.4's), R-SNAPSHOT-REVISIONS (Q5, the snapshot-level observation block: the trace
@@ -185,24 +194,29 @@
  * claims, each reading a pinned case; any other form is outside the claim, and the forms known to be outside are the residual
  * families Q1-Q9, each member a pinned quiet row, and the NOT CLAIMED list):
  *  - G1 reads two site words, GraphPolicy and GraphDataIR (SITE_WORDS: the landed vocabulary's V1 and V2 through namedWords),
- *    with one reader, sitePaths over siteFindings, in exactly the spellings the live patterns read (refusal #4's U1, R-B66):
- *    each word's parts case folded and joined by any run of the class [ \t._-] (space, tab, dot, underscore, hyphen) or by
- *    none, as readPattern reads back from VOCABULARY's patterns. It is proven on each word: its read proof once per word over
+ *    with one reader, sitePaths over siteFindings, and claims exactly the spellings it is pinned on (R-B73): SITE_WORD_SPELLINGS'
+ *    48 (each word's parts in lower case, in upper case or as written, joined by nothing, by one space, tab, dot, underscore or
+ *    hyphen, by the repeated run ".." or by the mixed run " - ", one joiner in every gap), each read as exactly its word,
+ *    SITE_WORD_HITS' 7 words, each read as a site word, and SITE_WORD_QUIET's 11, each read as none; VOCABULARY's patterns
+ *    hold the class and the case flag those tables spell (readPattern). It is proven on each word: its read proof once per word over
  *    every walked src module at start, middle and end, one planted module per word naming that word only (PLANTED_WORD_SITES)
  *    in the same call, SITE_WORD_HITS and SITE_WORD_QUIET read through sitePaths as well as through siteWords, and every
- *    spelling of SITE_WORD_SPELLINGS (each word's parts in lower, upper and written case, joined by nothing, by each of the
- *    five joiners alone, by a repeated run and by a mixed run: 48 spellings), each read through siteFindings and sitePaths as
+ *    spelling of SITE_WORD_SPELLINGS (the 48 above), each read through siteFindings and sitePaths as
  *    exactly its word, alone and as one planted module per spelling in one call after the tracked modules, and each word
  *    planted once per place a module names a word in (WORD_PLACES: a line, a block and a doc comment, a double-quoted, a
  *    single-quoted and a template string, and code) in one call after the tracked modules; the planted exporter, the first
- *    word's proof, the anchor proof, PROOF_CONTROLS and SITE_CASES stay.
- *  - D3 reads EXECUTOR_REQUEST over every git-listed src module (executorRequestNamers): "executor request" case folded and
- *    joined by nothing or by one character of the class [ _-] (space, underscore, hyphen), as readPattern reads back from the
- *    pattern. It is proven by its read proof (ExecutorRequest), its planted ExecutorRequest module, EXECUTOR_REQUEST_HITS read
- *    through that reader, every spelling of EXECUTOR_REQUEST_SPELLINGS (its parts in every case form over its four joiners: 12
- *    spellings, each read whole, alone and as one planted module per spelling in one call after the tracked modules), and the
- *    spellings outside its reading pinned quiet: EXECUTOR_REQUEST_QUIET and EXECUTOR_REQUEST_OUTSIDE's 12; and it is planted
- *    once per place of WORD_PLACES in one call after the tracked modules. G2 reads the namespace literal graphpolicy.data.v1
+ *    word's proof, the anchor proof, PROOF_CONTROLS and SITE_CASES stay. Any other spelling its live pattern matches (another
+ *    case form, another run, two differing gaps) is outside G1's claim, and the census fails closed on it (FAIL CLOSED).
+ *  - D3 reads EXECUTOR_REQUEST over every git-listed src module (executorRequestNamers) and claims exactly the spellings it is
+ *    pinned on (R-B73): EXECUTOR_REQUEST_SPELLINGS' 12 ("executor request" in lower case, in upper case or as written, joined
+ *    by nothing or by one space, "_" or "-"), each read whole, and EXECUTOR_REQUEST_HITS' 6 words, each read; and, quiet, the
+ *    spellings outside its pattern, EXECUTOR_REQUEST_QUIET's 4 and EXECUTOR_REQUEST_OUTSIDE's 12; the pattern holds the class
+ *    and the case flag (readPattern). It is proven by its read proof (ExecutorRequest), its planted ExecutorRequest module,
+ *    EXECUTOR_REQUEST_HITS read through that reader, every spelling of EXECUTOR_REQUEST_SPELLINGS (each of WORD_CASES' three
+ *    case forms over its four joiners), each read whole, alone and as one planted module per spelling in one call after the
+ *    tracked modules, the quiet spellings above, and it is planted once per place of WORD_PLACES in one call after the tracked
+ *    modules. A match of its pattern in another case form (executorRequest, Executor request) is outside D3's claim, and the
+ *    census fails closed on it (FAIL CLOSED). G2 reads the namespace literal graphpolicy.data.v1
  *    over git's src listing and the qa walk (namespaceNamers), proven by its read proof, its planted qa script and the
  *    namespace planted once per place of WORD_PLACES but code (the namespace is no name) in one call after the tracked files.
  *  - A1's five legs, each read once both drives have settled: the write leg compares nothing, it names the projection methods
@@ -217,31 +231,65 @@
  *    binding's rendering rule over the cell's source lexed with the page's link definitions, held to the binding's own rendered
  *    tables by tableViews on the live page and on every plant, the plants carrying strong, emphasis, strike, code, link,
  *    reference link, HTML, escaped punctuation, a no-break space, and entity references in text and in a code span),
- *    a row counting when that shown text names GraphPolicy (namesGraphPolicy, the vocabulary's V1 word: refusal #4's U1 under
- *    R-B66 (3) pins every OWNER_SPELLINGS spelling read directly, and in place by its D-GP-SPELLED plant, a second row counted;
- *    the shown view collapses white space, so a tab or a run of spaces in a cell reaches the word as one space); then, in order, exactly
+ *    a row counting when namesGraphPolicy (the vocabulary's V1 live pattern) reads that shown text, claimed exactly on
+ *    OWNER_SPELLINGS' 24 spellings (G1's GraphPolicy spellings: refusal #4's U1 under R-B66 (3)), each read directly and in
+ *    place by its D-GP-SPELLED plant, a second row counted, and on the inline forms above; the shown view collapses white
+ *    space, so a tab or a run of spaces in a cell reaches the word as one space; an owner cell in another spelling the pattern
+ *    matches (refusal #5's F5: graphPolicyCLI) is outside the claim, and G3's owners witness pins the live page's owner
+ *    cells as they show; then, in order, exactly
  *    one such row (ownership-rows), its owner cell's source exactly GraphPolicyCLI (ownership-owner), its table headed
  *    "Concern | Authoritative owner | Workbench may do", each header cell exactly (ownership-header: D-HEADER-SWAP,
  *    D-HEADER-SWAP-FIRST, D-HEADER-SWAP-SECOND), its third cell's first clause (its source up to its first "; ") exactly
  *    "nothing today (no gp seam is registered)", case included (ownership-cell: D-CELL-CASE among its plants), and no block of
- *    the section outside its top-level tables naming GraphPolicyCLI in its source, whatever its block type (a paragraph, a
- *    fenced code block, a lower heading, a link reference definition, a blockquote, a list or an HTML block, each a plant), a
- *    block of HTML comments only passed over (ownership-other). G3's
+ *    the section outside its top-level tables holding the text GraphPolicyCLI in its source (ownership-other), claimed exactly
+ *    on the blocks pinned: after the section's table a paragraph, a fenced code block, a lower heading, a link reference
+ *    definition, a blockquote, a list and an HTML block (DOCS_PLANTS), and between its heading and its table a paragraph
+ *    (FAIL_CLOSED's FC-G3-OTHER-LEAD), each refused, and a block of HTML comments only passed over (quiet); the reader reads
+ *    every top-level block of the section, and another block type or position is outside the claim (FAIL CLOSED). G3's
  *    boundary-opening reading: the GraphPolicyCLI boundary section bound once under the page title (boundary-bound), whose
- *    first block that renders (a block of HTML comments only passed over) is a paragraph (boundary-first) whose first sentence
+ *    first block in the binding's view, a block of HTML comments only passed over, is a paragraph (boundary-first), claimed
+ *    exactly on the leads pinned: a list, an HTML block, a fenced code block or a blockquote leading, or the sentence
+ *    commented out (DOCS_PLANTS), and a lower heading or a thematic break leading (FAIL_CLOSED's FC-G3-LEAD-HEADING and
+ *    FC-G3-LEAD-BREAK), each refused, and an HTML comment above the sentence passed over (quiet); another lead is outside the
+ *    claim (FAIL CLOSED); and whose first sentence
  *    is the no-integration sentence both as rendered and in its source, case included (boundary-opening: D-SENTENCE-CASE among
  *    its plants).
- *  - Q1-Q9: every member of every residual family quiet in its row, and live in the same row (RESIDUALS above), so a member
- *    silenced reds its row.
+ *  - Q1-Q9: every member of every residual family quiet in its row, and its liveness read in the same row by the static
+ *    reading RESIDUALS above names, so a member whose reading no longer holds reds its row; a source member's text holding a
+ *    comment opener is refused (R-COMMENTED), and each source member's comment-opener count is held to the roster (the Q1 and
+ *    Q2 witnesses), so a source member commented out reds its row (FAIL_CLOSED's FC-S2-Q1-COMMENTED and FC-S2-Q2-COMMENTED);
+ *    a member silenced while its static reading still holds (its text wrapped in a string, its code made unreachable) is
+ *    outside the claim (FAIL CLOSED).
+ * FAIL CLOSED (R-B73, the final cut's fail-closed core, in R-B67's form): every claim above is exactly its pinned set, and
+ * outside it the census refuses with a typed refusal instead of passing. G1's fail-closed reader (unpinnedSiteFindings) and
+ * D3's (unpinnedExecutorRequestFindings) each run the claim's live pattern over the texts by a loop of their own and refuse
+ * every match whose text is not in the pinned set (S-UNPINNED, D3-UNPINNED), so a spelling outside the set never passes them;
+ * the census claims their silence on every pinned spelling, hit, planted module and place and on today's tree, their read
+ * proofs (every listed src module read as git reads it, an unpinned spelling, graphPolicy or executorRequest, named at its
+ * start, middle and end), and their refusal on FAIL_CLOSED's source forms, each of which the word reader beside them
+ * (siteFindings, executorRequestNamers) reads too, so an edit of either reader alone that stops reading a form leaves the
+ * other refusing it. G3's docs rules
+ * refuse a boundary section led by any block but a paragraph (boundary-first) and any block outside the Ownership section's
+ * tables holding GraphPolicyCLI (ownership-other). A residual source member holding a comment opener is refused
+ * (R-COMMENTED). FAIL_CLOSED, the one pinned row, holds fourteen forms outside the pinned sets: refusal #5's twelve U1-U5
+ * plants (G1's lower-first camelCase, sentence case, run of four joiners, run of three underscores and uneven GraphDataIR
+ * gaps; D3's camelCase and sentence case; G3's lower-heading and thematic-break leads and a paragraph before the Ownership
+ * table; S2's q1-shape and q2-joined commented out) and two of this cut's own (FC-G1-EVERY-MATCH, FC-D3-EVERY-MATCH: an
+ * unpinned spelling after a pinned one in one module, so each fail-closed reader is proven on every match and, for G1, on
+ * each word), each refused with exactly its typed refusals in one call after the tracked files; a match in another
+ * unpinned spelling is refused by the same tests but pinned on no form. The census claims those fourteen refusals and no
+ * more: the full-surface pinning of the families they come from (U1-U5: every further spelling, lead, position and
+ * liveness form) is the child bead wb-0lf.8's, blocked by this bead.
  * NOT CLAIMED: what docs/03 says outside its Ownership boundaries and GraphPolicyCLI boundary sections (G3 is section-bound:
  * a GraphPolicyCLI row in another section's table, such as D-ROW-DUP's earlier table, is unread); the grants half of the statement ("within the caller's grants": the filing places the GP call's grant and
  * registry bounds on the standing host rules, docs/workbench/12-security.md:19 and 06-capability-registry.md:81, and names the
  * export shape as the new duty); that gp graph check accepts the reference document (Pi holds no GraphDataIR schema
  * document); the typed-executor-request half of the admissible set (D3: src declares no executor request today, so a listed
- * one is refused by actions until one exists, and the cut that adds one re-reads D3; D3 reads "executor request" in any case
- * joined by nothing or by one space, "_" or "-", and its witness pins the spellings it does not read: executor.request,
+ * one is refused by actions until one exists, and the cut that adds one re-reads D3; D3's pattern is case folded and joins
+ * its parts by nothing or by one space, "_" or "-", its claim is the 12 spellings THE PINNED SET lists, and its witness pins
+ * the spellings it does not read: executor.request,
  * ExecRequest, executorsRequest, request executor and EXECUTOR_REQUEST_OUTSIDE's spellings joined by a tab, a dot, a repeated
- * run or a mixed run, in every case form); a site word whose parts a character outside the joiner class or a line break
+ * run or a mixed run, in each of WORD_CASES' three case forms); a site word whose parts a character outside the joiner class or a line break
  * separates (SITE_WORD_QUIET pins Graph/Policy, Graph:Data:IR and a word broken across two lines quiet: G1 reads the parts
  * joined only as its live patterns join them); a form of the binding's rendering rule that no plant carries (tableViews holds
  * shownIn to the binding on the live page and on the plants, whose inline forms the G3 bullet lists); a coordinated edit of
@@ -257,14 +305,20 @@
  * Proxy's target (the projection holds neither: A1's kinds); a refusal's measured beyond a count past the declared budget
  * (refusal #1's F3: E4 reads it no further); a reader edited to tell the read proof's planted word from a written one, a
  * gitIds edited to hash this census's own read of the same files (it still holds every text to the file's bytes), or a
- * coordinated edit of a reader and its read proof, PROOF_CONTROLS or the anchor proof in these files.
+ * coordinated edit of a reader and its read proof, PROOF_CONTROLS or the anchor proof in these files; a coordinated edit of a
+ * word reader and its fail-closed reader (siteFindings with unpinnedSiteFindings, executorRequestNamers with
+ * unpinnedExecutorRequestFindings) in these files; a site-word part spelled with a confusable or other non-ASCII letter
+ * (refusal #5's F6: the live patterns match ASCII letters only, so neither G1 reader reads it; wb-0lf.8); a residual member
+ * silenced while its static reading still holds (FAIL CLOSED; wb-0lf.8).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS, every residual family's member
  * count, the mutant and case ids per pin, the rule list, the registry, the docs plants with their rules, the docs rules,
  * READ_METHODS, the walk's probes with their facets, its facets and walked kinds, the equivalence controls, the read proof's
  * places and controls, the site words and their planted modules, the joiners, the case forms, the word places, the spelled words' parts, every
- * spelling of SITE_WORD_SPELLINGS, EXECUTOR_REQUEST_SPELLINGS and EXECUTOR_REQUEST_OUTSIDE, and each residual member's liveness
- * (a source member's kind, a drive member's effect) as literals; the judged set (every row's id, label
- * and pins, every pin's quote and witness, the residual members, every registered test title) is held to the out-of-file
+ * spelling of SITE_WORD_SPELLINGS, EXECUTOR_REQUEST_SPELLINGS and EXECUTOR_REQUEST_OUTSIDE, each residual member's liveness
+ * (a source member's kind, a drive member's effect) and FAIL_CLOSED's forms (each one's id, claim and word with its match,
+ * docs rules or member) as literals; the judged set (every row's id, label
+ * and pins, every pin's quote and witness, each residual source member's comment-opener count among them, the residual
+ * members, FAIL_CLOSED's refusals, one reading per form, every registered test title) is held to the out-of-file
  * roster test/fixtures/gp-snapshot-export-roster.json.
  * OUTSIDE ANCHORS (their own registered case): the bead's own row in the tracker export (.beads/issues.jsonl) - each
  * acceptance clause is exactly one of rows A-F's labels, row G's label is a slice of the statement, each row's pin quotes tile
@@ -300,6 +354,8 @@ import {
   COMPLETE_FEATURE,
   COVERAGE_FEATURE,
   caseRow,
+  commentFindings,
+  commentOpeners,
   composedOf,
   controlProof,
   DECOMPOSED_BASIS,
@@ -321,8 +377,10 @@ import {
   executorRequestNamers,
   exportFindings,
   FACETS,
+  FAIL_CLOSED,
   FULL_READ,
   facetDrift,
+  findingPaths,
   GRAPH_NAMESPACE,
   graphShapeFindings,
   HELD_PROVIDER,
@@ -382,6 +440,8 @@ import {
   truthOf,
   UNHELD_PROVIDER,
   UNKNOWN_FEATURE,
+  unpinnedExecutorRequestFindings,
+  unpinnedSiteFindings,
   unreadOf,
   WALKED_KINDS,
   WORD_CASES,
@@ -429,6 +489,8 @@ interface Roster {
   readonly quotes: Readonly<Record<string, string>>;
   readonly witnesses: Readonly<Record<string, Json>>;
   readonly residuals: Readonly<Record<string, readonly string[]>>;
+  /** FAIL_CLOSED's refusals, one reading per form (R-B73): the fail-closed row's judged set, held out of file like the rows. */
+  readonly failClosed: Readonly<Record<string, Json>>;
   readonly tests: readonly string[];
 }
 const ROSTER = JSON.parse(readFileSync(join(ROOT, ROSTER_PATH), "utf8")) as Roster;
@@ -634,22 +696,23 @@ const IMPL: Readonly<Record<string, (context: TestContext) => Json | Promise<Jso
     const proof = proofOver(gitList(ROOT, "src"), texts, "ExecutorRequest", executorRequestNamers);
     expect(proof, "D3 read every listed src module as git reads it, and its reader names each one carrying a typed executor request at its start, middle or end").toEqual(json(FULL_READ));
     const named = executorRequestNamers(texts);
-    expect(named, "no src module spells a typed executor request ('executor request' in any case, joined by nothing, a space, '_' or '-'), so the admissible set is NATIVE_CONTROL_ACTIONS alone").toEqual([]);
+    expect(named, "no src module's text matches D3's pattern (EXECUTOR_REQUEST), so the admissible set is NATIVE_CONTROL_ACTIONS alone").toEqual([]);
     const planted = executorRequestNamers(new Map([...texts, [PLANTED_EXECUTOR_REQUEST.path, PLANTED_EXECUTOR_REQUEST.text]]));
     expect(planted, "the same call, a planted typed executor request after the tracked modules: exactly it").toEqual([PLANTED_EXECUTOR_REQUEST.path]);
     const hits = EXECUTOR_REQUEST_HITS.map(word => executorRequestNamers(new Map([["src/workbench/zz-hit.ts", word]])).length === 1 ? (EXECUTOR_REQUEST.exec(word)?.[0] ?? null) : null);
     expect(hits.filter(hit => hit === null), "every listed spelling reads as a typed executor request").toEqual([]);
     const quiet = EXECUTOR_REQUEST_QUIET.filter(word => executorRequestNamers(new Map([["src/workbench/zz-quiet.ts", word]])).length === 0);
     expect(quiet, "and every near spelling is outside D3's reading").toEqual([...EXECUTOR_REQUEST_QUIET]);
-    // R-B66 (3): D3's claim is its pattern's ("executor request", case folded, joined by nothing or by one character of its
-    // class), every spelling it claims is a pinned falsifier through its reader, and every spelling of the other joiners is quiet.
+    // R-B66 (3), narrowed by R-B73: D3's claim is the 12 spellings its reader is pinned on (each of WORD_CASES' three case forms
+    // over none and each character of its pattern's class), every spelling of the other joiners is quiet, and a match in
+    // another case form is the fail-closed reader's (the fail-closed row).
     const reading = json(readPattern(EXECUTOR_REQUEST));
     const classChars = EXECUTOR_JOINERS.filter(joiner => joiner.text.length === 1).map(joiner => joiner.text);
     expect(reading, "D3's pattern joins its two parts, case folded, by nothing or by one character of a class whose characters are EXECUTOR_JOINERS' single joiners").toEqual(json({ parts: (WORD_PARTS.ExecutorRequest ?? []).map(part => part.toLowerCase()), chars: classChars, quantifier: "?", flags: "i", uniform: true }));
     expect(EXECUTOR_JOINERS.map(joiner => joiner.text), "D3's joiners are none and each character of its class alone").toEqual(["", ...classChars]);
     const others = WORD_JOINERS.filter(joiner => !EXECUTOR_JOINERS.includes(joiner));
     expect(others.filter(joiner => joiner.text.length === 1 && classChars.includes(joiner.text)).map(joiner => joiner.id), "every other joiner is a run or a character outside D3's class").toEqual([]);
-    expect([EXECUTOR_REQUEST_SPELLINGS.map(entry => entry.id), EXECUTOR_REQUEST_OUTSIDE.map(entry => entry.id)], "D3's spellings over its joiners and over the other joiners, each in every case form").toEqual([EXECUTOR_JOINERS, others].map(joiners => joiners.flatMap(joiner => WORD_CASES.map(form => `ExecutorRequest/${joiner.id}/${form.id}`))));
+    expect([EXECUTOR_REQUEST_SPELLINGS.map(entry => entry.id), EXECUTOR_REQUEST_OUTSIDE.map(entry => entry.id)], "D3's spellings over its joiners and over the other joiners, each in each of WORD_CASES' three case forms").toEqual([EXECUTOR_JOINERS, others].map(joiners => joiners.flatMap(joiner => WORD_CASES.map(form => `ExecutorRequest/${joiner.id}/${form.id}`))));
     const spelled = Object.fromEntries(EXECUTOR_REQUEST_SPELLINGS.map(entry => [entry.id, executorRequestNamers(new Map([["src/workbench/zz-hit.ts", entry.spelling]])).length === 1 ? (EXECUTOR_REQUEST.exec(entry.spelling)?.[0] ?? null) : null]));
     expect(EXECUTOR_REQUEST_SPELLINGS.filter(entry => spelled[entry.id] !== entry.spelling).map(entry => entry.id), "every spelling D3 claims is read by its reader, the whole spelling matched").toEqual([]);
     const outside = EXECUTOR_REQUEST_OUTSIDE.filter(entry => executorRequestNamers(new Map([["src/workbench/zz-quiet.ts", entry.spelling]])).length > 0).map(entry => entry.id);
@@ -721,15 +784,16 @@ const IMPL: Readonly<Record<string, (context: TestContext) => Json | Promise<Jso
     expect(SITE_WORD_HITS.filter(word => !isDeepStrictEqual(sitePaths(new Map([[hitPath, word]])), [hitPath])), "every listed spelling is read by G1's own reader (sitePaths over siteFindings), not only by siteWords").toEqual([]);
     const quietPaths = SITE_WORD_QUIET.filter(word => sitePaths(new Map([["src/workbench/zz-quiet.ts", word]])).length > 0);
     expect(quietPaths, "and no near spelling is").toEqual([]);
-    // Refusal #4's U1 (R-B66 (1)-(2), its second form): G1's claim is its reader's, and every spelling it claims is a pinned
-    // falsifier through that reader. The landed vocabulary's live patterns join each site word's parts, case folded, by any run
+    // Refusal #4's U1 (R-B66 (1)-(2), its second form), narrowed by R-B73: G1's claim is the spellings its reader is pinned on,
+    // each a pinned falsifier through that reader, and a match outside them is the fail-closed reader's (the fail-closed row).
+    // The landed vocabulary's live patterns join each site word's parts, case folded, by any run
     // of one class; WORD_JOINERS holds each character of that class alone, none, a repeated and a mixed run.
     const singles = WORD_JOINERS.filter(joiner => joiner.text.length === 1).map(joiner => joiner.text);
     const patterns = Object.fromEntries(SITE_WORDS.map(word => [word, json(readPattern(VOCABULARY.find(entry => entry.spelling === word)?.pattern ?? /(?!)/))]));
     expect(patterns, "each site word's live pattern (VOCABULARY) joins its parts, case folded, by any run of one class whose characters are WORD_JOINERS' single joiners").toEqual(Object.fromEntries(SITE_WORDS.map(word => [word, json({ parts: (WORD_PARTS[word] ?? []).map(part => part.toLowerCase()), chars: singles, quantifier: "*", flags: "i", uniform: true })])));
     const runs = WORD_JOINERS.filter(joiner => joiner.text.length > 1);
-    expect([WORD_JOINERS.some(joiner => joiner.text === ""), runs.some(joiner => new Set(joiner.text).size === 1), runs.some(joiner => new Set(joiner.text).size > 1), runs.every(joiner => [...joiner.text].every(character => singles.includes(character)))], "any run: none, a repeated run of one joiner and a mixed run of several, every run character the class's").toEqual([true, true, true, true]);
-    expect(SITE_WORD_SPELLINGS.map(entry => entry.id), "every site word's parts over every joiner in every case form").toEqual(SITE_WORDS.flatMap(word => WORD_JOINERS.flatMap(joiner => WORD_CASES.map(form => `${word}/${joiner.id}/${form.id}`))));
+    expect([WORD_JOINERS.some(joiner => joiner.text === ""), runs.some(joiner => new Set(joiner.text).size === 1), runs.some(joiner => new Set(joiner.text).size > 1), runs.every(joiner => [...joiner.text].every(character => singles.includes(character)))], "WORD_JOINERS' runs: none, a repeated run of one joiner and a mixed run of several, every run character the class's").toEqual([true, true, true, true]);
+    expect(SITE_WORD_SPELLINGS.map(entry => entry.id), "every site word's parts over every WORD_JOINERS joiner in each of WORD_CASES' three case forms").toEqual(SITE_WORDS.flatMap(word => WORD_JOINERS.flatMap(joiner => WORD_CASES.map(form => `${word}/${joiner.id}/${form.id}`))));
     const spellingReads = Object.fromEntries(SITE_WORD_SPELLINGS.map(entry => [entry.id, siteFindings([], new Map([[hitPath, entry.spelling]])).join(" | ")]));
     expect(SITE_WORD_SPELLINGS.filter(entry => spellingReads[entry.id] !== `S-UNREGISTERED ${hitPath} names ${entry.word} with no EXPORT_SITES registration`).map(entry => entry.id), "every spelling G1 claims is read by G1's one reader (siteFindings) as exactly its word").toEqual([]);
     expect(SITE_WORD_SPELLINGS.filter(entry => !isDeepStrictEqual(sitePaths(new Map([[hitPath, entry.spelling]])), [hitPath])).map(entry => entry.id), "and through sitePaths").toEqual([]);
@@ -800,7 +864,7 @@ const IMPL: Readonly<Record<string, (context: TestContext) => Json | Promise<Jso
     // GraphPolicy spelling is read directly, and in place by its D-GP-SPELLED plant, a second row counted beside the GraphPolicyCLI row.
     expect(OWNER_SPELLINGS.map(entry => entry.id), "G3's spellings are G1's GraphPolicy spellings").toEqual(SITE_WORD_SPELLINGS.filter(entry => entry.word === "GraphPolicy").map(entry => entry.id));
     const ownerWords = Object.fromEntries(OWNER_SPELLINGS.map(entry => [entry.id, namesGraphPolicy(entry.spelling)]));
-    expect(OWNER_SPELLINGS.filter(entry => ownerWords[entry.id] !== true).map(entry => entry.id), "namesGraphPolicy reads every GraphPolicy spelling").toEqual([]);
+    expect(OWNER_SPELLINGS.filter(entry => ownerWords[entry.id] !== true).map(entry => entry.id), "namesGraphPolicy reads every OWNER_SPELLINGS spelling").toEqual([]);
     const spelled = OWNER_SPELLINGS.map(entry => `D-GP-SPELLED-${spellingTag(entry)}`);
     expect(DOCS_PLANTS.filter(plant => plant.id.startsWith("D-GP-SPELLED-")).map(plant => plant.id), "one in-place plant per GraphPolicy spelling").toEqual(spelled);
     expect(spelled.filter(id => counts[id] !== 2), "each spelled row is counted beside the GraphPolicyCLI row").toEqual([]);
@@ -824,9 +888,12 @@ const vendoredKeys = (): Set<string> => {
 };
 /**
  * A quiet row: every member of the residual family reads as no finding (a drive member is judged by driveFindings on K-FITS, a
- * docs member by G3's reading of the edited live page), and every member is live (R-B66 and rule 19's residual definition: a
- * member silenced reds its row): a shape member's object keys name keys of the vendored v1 document, a composed member's string
- * literals, decoded and joined, are read by a source reader, an outcome member's edit changes the reference's export (its first
+ * docs member by G3's reading of the edited live page, a source member by every source reader, the fail-closed readers among
+ * them), and every member's static reading holds (R-B66 and rule 19's residual definition, narrowed by R-B73 to what the row
+ * reads: a member whose reading no longer holds reds its row): a shape member's raw text names keys of the vendored v1
+ * document before a colon (shapeKeysOf), a composed member's double-quoted literals, decoded and joined (composedOf), are
+ * read by a source reader, each over a text holding no comment opener (R-COMMENTED refuses one, and the row's witness holds
+ * each source member's count), an outcome member's edit changes the reference's export (its first
  * difference named), a drive member does what its family names as driveEffects reads it (the reference drive reading as
  * NO_EFFECTS), and a docs member lands in the section's tables.
  */
@@ -836,20 +903,25 @@ const quietRow = async (id: string): Promise<Json> => {
   const reference = referenceOn(caseRow("K-FITS"));
   const findings: string[] = [];
   const live: Record<string, Json> = {};
+  /** R-B73 (fail closed): each source member's comment openers, held to the roster, so a member commented out reds its row. */
+  const code: Record<string, Json> = {};
   if (members.some(member => member.kind === "drive")) expect(await driveEffects(() => recipeDrive()), "the drive observer reads no effect of the reference drive").toEqual(NO_EFFECTS);
   for (const member of members) {
     if (member.kind === "source") {
       const files = new Map([[member.path, member.text]]);
       findings.push(...siteWords(member.text), ...siteFindings([], files), ...namespaceNamers(files), ...executorRequestNamers(files));
+      // R-B73: G1's and D3's fail-closed readers read every member too, and a member holding a comment opener is refused.
+      findings.push(...unpinnedSiteFindings(files), ...unpinnedExecutorRequestFindings(files), ...commentFindings(member.path, member.text));
+      code[member.path] = commentOpeners(member.text);
       if (member.live === "shape") {
         const keys = shapeKeysOf(member.text, vendoredKeys());
-        expect(keys, `${member.path} builds a GraphDataIR-shaped value: its object keys name keys of the vendored v1 document`).not.toEqual([]);
+        expect(keys, `${member.path}'s raw text names keys of the vendored v1 document before a colon (shapeKeysOf)`).not.toEqual([]);
         live[member.path] = keys;
       } else {
         const composed = composedOf(member.text);
         const built = new Map([[member.path, composed]]);
         const read = [...siteWords(composed), ...namespaceNamers(built), ...executorRequestNamers(built)];
-        expect(read, `${member.path} builds a reader's word at run time or through an escape: its string literals, decoded and joined, are read`).not.toEqual([]);
+        expect(read, `${member.path}'s double-quoted literals, decoded and joined (composedOf), are read by a source reader`).not.toEqual([]);
         live[member.path] = [composed, ...read];
       }
     } else if (member.kind === "docs") {
@@ -877,7 +949,7 @@ const quietRow = async (id: string): Promise<Json> => {
     }
   }
   expect(findings, `${id}: every member is quiet`).toEqual([]);
-  return { members: members.map(residualId), findings, live };
+  return { members: members.map(residualId), findings, live, ...(Object.keys(code).length === 0 ? {} : { code }) };
 };
 
 describe(SUITE, () => {
@@ -1070,6 +1142,22 @@ describe(SUITE, () => {
     expect(Object.entries(WORD_PARTS).map(([word, parts]) => `${word}:${parts.join("|")}`)).toEqual(["GraphPolicy:Graph|Policy", "GraphDataIR:Graph|Data|IR", "ExecutorRequest:Executor|Request"]);
     expect(SITE_WORD_SPELLINGS.map(entry => entry.spelling)).toEqual(["graphpolicy", "GRAPHPOLICY", "GraphPolicy", "graph policy", "GRAPH POLICY", "Graph Policy", "graph\tpolicy", "GRAPH\tPOLICY", "Graph\tPolicy", "graph.policy", "GRAPH.POLICY", "Graph.Policy", "graph_policy", "GRAPH_POLICY", "Graph_Policy", "graph-policy", "GRAPH-POLICY", "Graph-Policy", "graph..policy", "GRAPH..POLICY", "Graph..Policy", "graph - policy", "GRAPH - POLICY", "Graph - Policy", "graphdatair", "GRAPHDATAIR", "GraphDataIR", "graph data ir", "GRAPH DATA IR", "Graph Data IR", "graph\tdata\tir", "GRAPH\tDATA\tIR", "Graph\tData\tIR", "graph.data.ir", "GRAPH.DATA.IR", "Graph.Data.IR", "graph_data_ir", "GRAPH_DATA_IR", "Graph_Data_IR", "graph-data-ir", "GRAPH-DATA-IR", "Graph-Data-IR", "graph..data..ir", "GRAPH..DATA..IR", "Graph..Data..IR", "graph - data - ir", "GRAPH - DATA - IR", "Graph - Data - IR"]);
     expect(EXECUTOR_JOINERS.map(joiner => joiner.id)).toEqual(["none", "space", "underscore", "hyphen"]);
+    expect(FAIL_CLOSED.map(form => `${form.id}:${form.claim}:${form.kind === "source" ? `${form.words.join("+")}:${form.unpinned.map(entry => `${entry.word}=${JSON.stringify(entry.match)}`).join(",")}` : form.kind === "docs" ? form.expect.join(",") : form.member}`)).toEqual([
+      'FC-G1-CAMEL:G1:GraphPolicy:GraphPolicy="graphPolicy"',
+      'FC-G1-SENTENCE:G1:GraphPolicy:GraphPolicy="Graph policy"',
+      'FC-G1-RUN-LONG:G1:GraphPolicy:GraphPolicy="graph -- policy"',
+      'FC-G1-RUN3-SAME:G1:GraphPolicy:GraphPolicy="graph___policy"',
+      'FC-G1-UNEVEN:G1:GraphDataIR:GraphDataIR="GRAPH_DATAIR"',
+      'FC-G1-EVERY-MATCH:G1:GraphPolicy+GraphDataIR:GraphPolicy="graphPolicy",GraphDataIR="GRAPH_DATAIR"',
+      'FC-D3-CAMEL:D3:ExecutorRequest:ExecutorRequest="executorRequest"',
+      'FC-D3-SENTENCE:D3:ExecutorRequest:ExecutorRequest="Executor request"',
+      'FC-D3-EVERY-MATCH:D3:ExecutorRequest:ExecutorRequest="executorRequest"',
+      "FC-G3-LEAD-HEADING:G3:boundary-first",
+      "FC-G3-LEAD-BREAK:G3:boundary-first",
+      "FC-G3-OTHER-LEAD:G3:ownership-other",
+      "FC-S2-Q1-COMMENTED:S2:src/workbench/q1-shape.ts",
+      "FC-S2-Q2-COMMENTED:S2:src/workbench/q2-joined.ts",
+    ]);
     expect(EXECUTOR_REQUEST_SPELLINGS.map(entry => entry.spelling)).toEqual(["executorrequest", "EXECUTORREQUEST", "ExecutorRequest", "executor request", "EXECUTOR REQUEST", "Executor Request", "executor_request", "EXECUTOR_REQUEST", "Executor_Request", "executor-request", "EXECUTOR-REQUEST", "Executor-Request"]);
     expect(EXECUTOR_REQUEST_OUTSIDE.map(entry => entry.spelling)).toEqual(["executor\trequest", "EXECUTOR\tREQUEST", "Executor\tRequest", "executor.request", "EXECUTOR.REQUEST", "Executor.Request", "executor..request", "EXECUTOR..REQUEST", "Executor..Request", "executor - request", "EXECUTOR - REQUEST", "Executor - Request"]);
     expect(Object.values(RESIDUALS).flatMap(members => members.flatMap(member => (member.kind === "drive" ? [`${member.id}:${JSON.stringify(member.effect)}`] : member.kind === "source" ? [`${member.path}:${member.live}`] : [])))).toEqual([
@@ -1115,12 +1203,64 @@ describe(SUITE, () => {
     expect(LIVE_WRITES.filter(name => !methods.includes(name) || READ_METHODS.includes(name)), "the writes the A1 members call are live methods outside READ_METHODS").toEqual([]);
   });
 
+  it("fail closed (R-B73): each FAIL_CLOSED form, outside its claim's pinned set, refuses with exactly its typed refusals, and the fail-closed readers refuse no pinned spelling and nothing on today's tree", () => {
+    const texts = liveSrc();
+    expect(texts.size >= SRC_FLOOR && texts.has(CONTROL), "the src listing read the tree").toBe(true);
+    const tree = { site: unpinnedSiteFindings(texts), request: unpinnedExecutorRequestFindings(texts) };
+    expect(tree, "G1's and D3's fail-closed readers refuse nothing in git's src listing today").toEqual({ site: [], request: [] });
+    const listing = gitList(ROOT, "src");
+    const proofs = {
+      site: proofOver(listing, texts, "graphPolicy", map => findingPaths(unpinnedSiteFindings(map))),
+      request: proofOver(listing, texts, "executorRequest", map => findingPaths(unpinnedExecutorRequestFindings(map))),
+    };
+    expect(proofs, "each fail-closed reader read every listed src module as git reads it, and names each one carrying an unpinned spelling (graphPolicy, executorRequest) at its start, middle or end").toEqual({ site: json(FULL_READ), request: json(FULL_READ) });
+    const hitPath = "src/workbench/zz-hit.ts";
+    const sitePinned = [...SITE_WORD_SPELLINGS.map(entry => entry.spelling), ...SITE_WORD_HITS, ...PLANTED_WORD_SITES.map(plant => plant.text), ...SITE_WORDS.flatMap(word => placedSites(`site-${word}`, word).map(site => site.text))];
+    expect(sitePinned.filter(text => unpinnedSiteFindings(new Map([[hitPath, text]])).length > 0), "G1's fail-closed reader refuses no spelling G1 pins (SITE_WORD_SPELLINGS, SITE_WORD_HITS, the planted word sites, every place)").toEqual([]);
+    const requestPinned = [...EXECUTOR_REQUEST_SPELLINGS.map(entry => entry.spelling), ...EXECUTOR_REQUEST_HITS, PLANTED_EXECUTOR_REQUEST.text, ...placedSites("executor", "ExecutorRequest").map(site => site.text)];
+    expect(requestPinned.filter(text => unpinnedExecutorRequestFindings(new Map([[hitPath, text]])).length > 0), "D3's fail-closed reader refuses no spelling D3 pins (EXECUTOR_REQUEST_SPELLINGS, EXECUTOR_REQUEST_HITS, the planted module, every place)").toEqual([]);
+    const page = textOf(DOCS_03);
+    expect(docs03Findings(docs03Reading(page)), "G3 refuses nothing on the live page").toEqual([]);
+    const sources = Object.values(RESIDUALS).flatMap(members => members.flatMap(member => (member.kind === "source" ? [member] : [])));
+    const refused: Record<string, Json> = {};
+    const expected: Record<string, Json> = {};
+    for (const form of FAIL_CLOSED) {
+      if (form.kind === "source") {
+        const planted = new Map([...texts, [form.path, form.text]]);
+        refused[form.id] = { site: siteFindings(EXPORT_SITES, planted), unpinnedSite: unpinnedSiteFindings(planted), request: executorRequestNamers(planted), unpinnedRequest: unpinnedExecutorRequestFindings(planted) };
+        expected[form.id] =
+          form.claim === "G1"
+            ? {
+                site: [`S-UNREGISTERED ${form.path} names ${form.words.join(", ")} with no EXPORT_SITES registration`],
+                unpinnedSite: form.unpinned.map(entry => `S-UNPINNED ${form.path} names ${entry.word} as ${JSON.stringify(entry.match)}, a spelling outside G1's pinned set`),
+                request: [],
+                unpinnedRequest: [],
+              }
+            : { site: [], unpinnedSite: [], request: [form.path], unpinnedRequest: form.unpinned.map(entry => `D3-UNPINNED ${form.path} names a typed executor request as ${JSON.stringify(entry.match)}, a spelling outside D3's pinned set`) };
+      } else if (form.kind === "docs") {
+        refused[form.id] = docs03Findings(docs03Reading(form.edit(page))).map(ruleOf);
+        expected[form.id] = [...form.expect];
+      } else {
+        const member = sources.find(entry => entry.path === form.member);
+        const text = member === undefined ? "" : form.edit(member.text);
+        const composed = composedOf(text);
+        const built = new Map([[form.member, composed]]);
+        const proxy = member?.live === "shape" ? shapeKeysOf(text, vendoredKeys()).length > 0 : [...siteWords(composed), ...namespaceNamers(built), ...executorRequestNamers(built)].length > 0;
+        refused[form.id] = { member: member === undefined ? null : member.live, quiet: member === undefined ? null : commentFindings(form.member, member.text), refusal: commentFindings(form.member, text).map(ruleOf), proxy };
+        expected[form.id] = { member: member?.live ?? "a residual source member", quiet: [], refusal: ["R-COMMENTED"], proxy: true };
+      }
+    }
+    expect(refused, "each form refuses with exactly its typed refusals in the same call after the tracked files: G1's by siteFindings and its fail-closed reader, D3's by its reader and its fail-closed reader, G3's by its docs rules, S2's by R-COMMENTED while the member's static proxy alone still reads it live").toEqual(expected);
+    expect(refused, "and each form's refusals equal the roster's (failClosed), so a form deleted from the table and its frozen literal still reds").toStrictEqual(ROSTER.failClosed);
+  });
+
   it("roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/gp-snapshot-export-roster.json, in order and both ways; every pin reached its witness compare", ({ task }) => {
     expect(ROSTER.bead, "the roster is this bead's").toBe(BEAD);
     expect(ROWS, "the judged rows equal the roster rows exactly and in order").toEqual(ROSTER.rows);
     expect(QUOTES, "the pin quotes equal the roster's").toEqual(ROSTER.quotes);
     expect(Object.fromEntries(Object.entries(RESIDUALS).map(([id, members]) => [id, members.map(residualId)])), "the residual members equal the roster's").toEqual(ROSTER.residuals);
     expect(Object.keys(ROSTER.witnesses), "one roster witness per pin, in row order").toEqual(ROWS.flatMap(entry => entry.pins));
+    expect(Object.keys(ROSTER.failClosed), "one roster reading per FAIL_CLOSED form, in order").toEqual(FAIL_CLOSED.map(form => form.id));
     expect(relative(ROOT, task.file.filepath), "this case runs in the census file").toBe(CENSUS);
     const loaded = config as unknown as { readonly test?: { readonly include?: readonly string[]; readonly exclude?: readonly string[] } };
     expect([loaded.test?.include, (loaded.test?.exclude ?? []).includes(CENSUS)], "the default tier collects this file").toEqual([["test/**/*.test.ts"], false]);
