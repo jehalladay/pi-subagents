@@ -1,5 +1,9 @@
 {
   "bead": "wb-pyel.2",
+  "filing": {
+    "length": 923,
+    "sha256": "d0549b8413d2b1c2d86bdc2a9f38ef126497bf6b0a28014138d087d6a7385e8f"
+  },
   "producer": {
     "repository": "ReactiveComponentsSDK",
     "path": "docs/programs/evidence-directed-computation-2026-10-18.md",
@@ -540,6 +544,10 @@
                 "requirements",
                 "without"
               ]
+            },
+            "appended": {
+              "pastBlock": [],
+              "edited": "refused"
             }
           }
         }

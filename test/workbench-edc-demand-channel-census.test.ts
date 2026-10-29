@@ -69,14 +69,22 @@
  *  A "If Pi-subagents adopts EDC context assembly": A1 the consumer reading over the live tree (the src walk equal to git's
  *    listing, its floors, the frozen pass at the cut's base); A2 the stems and the consumer reader's routes and near misses.
  *  B "so no Pi prompt, tool description or capability input becomes the demand channel": B1 the prompt surfaces (live findings,
- *    floors, the frozen pass); B2 the tool descriptions; B3 the capability inputs and the boundary; B4 the demand reading itself.
+ *    floors, the frozen pass); B2 the tool descriptions; B3 the capability inputs and the boundary; B4 the demand reading itself
+ *    and its append quiet row (a note appended after the owner filing block, spelling every vocabulary word, leaves the whole B4
+ *    witness unchanged; read past the block it would empty R-SYNONYM; a block edited in place is refused).
  *  C "Artifact: a Pi EDC context-assembly consumer (none exists)": C1 the gate and guard semantics, and a replica consumer read
  *    PRESENT and owed; C2 the live verdict - ONE pass over every surface and in-memory positives finds exactly the positives, the
  *    gate reads ABSENT, the guard reads pass, and the same pass over a scratch git repository finds exactly its plants.
  * OUTSIDE ANCHORS (the judged-set case): the bead's row in the tracked export (.beads/issues.jsonl). Its title, after the id
  *   prefix, is tiled by the three labels and the two title duties U1 and U2 in title order with separator-only gaps (so every word
- *   of the title is claimed or unclaimed), and each label is tiled by its pins' quotes. Its notes hold U3 verbatim and the citation
- *   whose path, line and pin equal the producer's. ROLE PLACES, derived from the title's own structure, never from a word list:
+ *   of the title is claimed or unclaimed), and each label is tiled by its pins' quotes. Its OWNER FILING BLOCK - the byte-exact
+ *   prefix of its notes the roster measures (filing: length and sha256), equal to the row's whole notes in the export at
+ *   CONSTANTS.frozenAt read from git objects - holds U3 verbatim and the citation whose path, line and pin equal the producer's.
+ *   Every reading of the export takes the title and that block, never the whole notes: bd appends each later note (a delivery, a
+ *   gate verdict, a landing) after the block and a ledger hop exports it, so a whole-notes read moved at every hop (the cut #1
+ *   refusal, U1: the cut's own delivery note spelled five R-SYNONYM words); a block edited in place is refused, never read through
+ *   an appended copy, and an appended note restating the citation and duties changes no reading (the judged set's quiet row).
+ *   ROLE PLACES, derived from the title's own structure, never from a word list:
  *   every word of U1 before "shall" but "and" reads a distinct role among subject, demand and precision; the two words before
  *   "validated" are a carrier pair; the word after "so" in B, U2's first word and C's first word in parentheses are markers; the
  *   word after "adopts" in A and the word before "context" in C are word stems; the cited slug's words before its head noun, joined,
@@ -101,9 +109,9 @@
  *   reads quiet, an imperative one too ("Demand more evidence before answering."); R-SPLIT (B4) the subject and the family in
  *   different sentences; R-MARKER-ANYWHERE (B4) a marker anywhere in the sentence quiets it, whatever it qualifies;
  *   R-LOOKALIKE (B4) a look-alike letter of another script inside a word (NFKC folds fullwidth forms and the fold drops format
- *   controls, which are read); R-SYNONYM (B4) a vocabulary word no outside text spells (the inflections, contexts, the plural
- *   carrier, the extra markers) is held by this file and the roster alone - removed from both together it stays green; B4 lists
- *   them.
+ *   controls, which are read); R-SYNONYM (B4) a vocabulary word no outside text - the export's title, the owner filing block and
+ *   the producer line - spells (the inflections, contexts, the plural carrier, the extra markers) is held by this file and the
+ *   roster alone - removed from both together it stays green; B4 lists them.
  * SCOPE: a mention is judged, not the sentence's truth; the charter's own status is read by the cutting seat, never by this file.
  *
  * Display paths added: none. Test-only: the stand-in rf, the hermetic boot directories and the replica trees live in makeScratch
@@ -186,8 +194,14 @@ interface Unclaimed {
   readonly duty: string;
   readonly reason: string;
 }
+/** The owner filing block's measure: the byte-exact prefix of the bead's notes as the owner filed them. */
+interface Filing {
+  readonly length: number;
+  readonly sha256: string;
+}
 interface Roster {
   readonly bead: string;
+  readonly filing: Filing;
   readonly producer: Producer;
   readonly vocabulary: Vocabulary;
   readonly constants: Constants;
@@ -265,6 +279,8 @@ const SUBJECT = new Set(VOCABULARY.subject);
 const DEMAND = new Set(VOCABULARY.families.demand);
 const PRECISION = new Set(VOCABULARY.families.precision);
 const MARKERS = new Set(VOCABULARY.markers);
+/** Every vocabulary word: the subject, both families, the carrier pairs' words and the markers, in vocabulary order. */
+const VOCABULARY_WORDS: readonly string[] = [...VOCABULARY.subject, ...VOCABULARY.families.demand, ...VOCABULARY.families.precision, ...VOCABULARY.carrier.flat(), ...VOCABULARY.markers];
 const CONTRACTION = /n['\u2019]t(?![a-z0-9])/;
 /** NFKC with format controls and combining marks removed (a zero-width space never splits a word; fullwidth letters fold). */
 function normal(text: string): string {
@@ -1008,6 +1024,33 @@ const PLANT = "Set the context demand before the render.";
 const PLANT_TWIN = "Never set the context demand before the render.";
 
 // ------------------------------------------------------------------------------------------------------------------- the pins
+/** B4's witness over a bead row: the demand reading itself and its quiet rows; only R-SYNONYM reads the row, through its owner
+ * filing block. */
+function demandWitness(row: BeadRow): { [key: string]: Json } {
+  const subjects = ["The context demand rides in the prompt.", "Contexts demand a tool call.", "contextDemand", "context_precision", "CONTEXT-PRECISION", `The ${INVISIBLE}context demand rides in the prompt.`, `The context dem${INVISIBLE}and rides in the prompt.`, `The ${fullwidth("CONTEXT")} demand rides in the prompt.`].map(verdict);
+  const families = [...VOCABULARY.families.demand, ...VOCABULARY.families.precision].map(word => verdict(`The context ${word} rides in the prompt.`));
+  const carrier = ["Send a projection requirement.", "projectionRequirements", "Projection-Requirement", "a projection requirement for the render"].map(verdict);
+  const markers = [...VOCABULARY.markers.map(word => verdict(`The context demand is ${word} a tool call.`)), verdict("The context demand isn't a tool call."), verdict(`The context demand isn${String.fromCodePoint(0x2019)}t a tool call.`)];
+  const nearMisses = ["Retrieve an authorized provider contract on demand.", "Be thorough and precise", "If true, fork parent conversation into the agent. Default: false (fresh context).", "A projection of the requirement.", "The project requirement."].map(text => readSentence(text).kind);
+  const cuts = [
+    textReadings("t", "Render the context. The context demand rides in the prompt.").findings,
+    textReadings("t", "The context\ndemand rides in the prompt.").findings,
+    textReadings("t", "| context | demand |\n| --- | --- |").findings,
+    textReadings("t", "The context\n- demand").findings,
+    textReadings("t", "# The context\ndemand").findings,
+    textReadings("t", "The context demand rides; the host owns none of it.").findings,
+  ];
+  const quiet = {
+    "R-PARAPHRASE": ["Ask for more context when you need it.", "Request a narrower context.", "Tighten the context to the failing file.", "Pass a larger context budget."].map(verdict),
+    "R-SUBJECTLESS": ["Demand more evidence before answering.", "Be more precise about the files.", "Precision matters here."].map(verdict),
+    "R-SPLIT": [textReadings("t", "Render the context. Demand is set by the model.").findings, textReadings("t", "Precision is set by the model.\n\nThe context follows.").findings],
+    "R-MARKER-ANYWHERE": ["The context demand is a tool call, not a projection.", "No host decides; the model sets the context precision."].map(verdict),
+    "R-LOOKALIKE": [`The context dem${LOOKALIKE_A}nd rides in the prompt.`, `The c${String.fromCodePoint(0x043e)}ntext demand rides in the prompt.`].map(verdict),
+    "R-SYNONYM": synonymsOf(row),
+  };
+  expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "B4").map(residual => residual.id));
+  return { subjects, families, carrier, markers, nearMisses, cuts, quiet };
+}
 const REACHED = new Set<string>();
 const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   A1: async () => {
@@ -1155,31 +1198,15 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     };
   },
   B4: async () => {
-    const subjects = ["The context demand rides in the prompt.", "Contexts demand a tool call.", "contextDemand", "context_precision", "CONTEXT-PRECISION", `The ${INVISIBLE}context demand rides in the prompt.`, `The context dem${INVISIBLE}and rides in the prompt.`, `The ${fullwidth("CONTEXT")} demand rides in the prompt.`].map(verdict);
-    const families = [...VOCABULARY.families.demand, ...VOCABULARY.families.precision].map(word => verdict(`The context ${word} rides in the prompt.`));
-    const carrier = ["Send a projection requirement.", "projectionRequirements", "Projection-Requirement", "a projection requirement for the render"].map(verdict);
-    const markers = [...VOCABULARY.markers.map(word => verdict(`The context demand is ${word} a tool call.`)), verdict("The context demand isn't a tool call."), verdict(`The context demand isn${String.fromCodePoint(0x2019)}t a tool call.`)];
-    const nearMisses = ["Retrieve an authorized provider contract on demand.", "Be thorough and precise", "If true, fork parent conversation into the agent. Default: false (fresh context).", "A projection of the requirement.", "The project requirement."].map(text => readSentence(text).kind);
-    const cuts = [
-      textReadings("t", "Render the context. The context demand rides in the prompt.").findings,
-      textReadings("t", "The context\ndemand rides in the prompt.").findings,
-      textReadings("t", "| context | demand |\n| --- | --- |").findings,
-      textReadings("t", "The context\n- demand").findings,
-      textReadings("t", "# The context\ndemand").findings,
-      textReadings("t", "The context demand rides; the host owns none of it.").findings,
-    ];
-    const outsideWords = new Set(words([beadRecord().title, beadRecord().notes, ...ROSTER.producer.lines.map(line => line.text)].join("\n")));
-    const vocabularyWords = [...VOCABULARY.subject, ...VOCABULARY.families.demand, ...VOCABULARY.families.precision, ...VOCABULARY.carrier.flat(), ...VOCABULARY.markers];
-    const quiet = {
-      "R-PARAPHRASE": ["Ask for more context when you need it.", "Request a narrower context.", "Tighten the context to the failing file.", "Pass a larger context budget."].map(verdict),
-      "R-SUBJECTLESS": ["Demand more evidence before answering.", "Be more precise about the files.", "Precision matters here."].map(verdict),
-      "R-SPLIT": [textReadings("t", "Render the context. Demand is set by the model.").findings, textReadings("t", "Precision is set by the model.\n\nThe context follows.").findings],
-      "R-MARKER-ANYWHERE": ["The context demand is a tool call, not a projection.", "No host decides; the model sets the context precision."].map(verdict),
-      "R-LOOKALIKE": [`The context dem${LOOKALIKE_A}nd rides in the prompt.`, `The c${String.fromCodePoint(0x043e)}ntext demand rides in the prompt.`].map(verdict),
-      "R-SYNONYM": [...new Set(vocabularyWords.filter(word => !outsideWords.has(word)))].sort(byName),
-    };
-    expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "B4").map(residual => residual.id));
-    return { subjects, families, carrier, markers, nearMisses, cuts, quiet };
+    const row = beadRecord();
+    const witness = demandWitness(row);
+    // The quiet row (the cut #1 refusal, U1): a note appended after the owner filing block - spelling every vocabulary word and
+    // restating the filing's citation and duties - leaves the whole B4 witness unchanged.
+    const appended = appendedRow(row);
+    expect(demandWitness(appended), "an appended note leaves the B4 witness unchanged").toEqual(witness);
+    // Non-vacuity: read past the block, the same note spells every vocabulary word, so R-SYNONYM would hold none; and a block
+    // edited in place is refused, never read through the note's restated copies.
+    return { ...witness, appended: { pastBlock: synonymsOver(appended.title, appended.notes), edited: blockVerdict(() => demandWitness(editedRow(row))) } };
   },
   C1: async () => {
     const table = {
@@ -1243,20 +1270,85 @@ function liveConsumerOfReplica(files: Readonly<Record<string, string>>): string[
 }
 
 // ------------------------------------------------------------------------------------------------------------ the bead export
-let beadCache: { readonly title: string; readonly notes: string } | undefined;
-/** The bead's row in the tracked export: its title and notes, never retyped here. */
-function beadRecord(): { readonly title: string; readonly notes: string } {
-  if (beadCache !== undefined) return beadCache;
-  for (const line of readFileSync(join(REPO, BEAD_EXPORT), "utf8").split("\n")) {
+interface BeadRow {
+  readonly title: string;
+  readonly notes: string;
+}
+/** The bead's row in an export's text: its title and notes, never retyped here. */
+function beadRowIn(text: string, where: string): BeadRow {
+  for (const line of text.split("\n")) {
     if (line.trim() === "") continue;
     const row: unknown = JSON.parse(line);
-    if (isObject(row) && row.id === BEAD && typeof row.title === "string") {
-      beadCache = { title: row.title, notes: typeof row.notes === "string" ? row.notes : "" };
-      return beadCache;
-    }
+    if (isObject(row) && row.id === BEAD && typeof row.title === "string") return { title: row.title, notes: typeof row.notes === "string" ? row.notes : "" };
   }
-  throw new Error(`census: ${BEAD} is not in ${BEAD_EXPORT}`);
+  throw new Error(`census: ${BEAD} is not in ${where}`);
 }
+let beadCache: BeadRow | undefined;
+/** The bead's row in the tracked export. */
+function beadRecord(): BeadRow {
+  beadCache ??= beadRowIn(readFileSync(join(REPO, BEAD_EXPORT), "utf8"), BEAD_EXPORT);
+  return beadCache;
+}
+/** The bead's row in the export at CONSTANTS.frozenAt, read from git objects: its notes then were the owner filing alone. */
+function frozenBeadRecord(): BeadRow {
+  const where = `${CONSTANTS.frozenAt}:${BEAD_EXPORT}`;
+  return beadRowIn(execFileSync("git", ["show", where], { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 28 }), where);
+}
+const FILING_CHANGED = "owner filing block changed";
+/** The owner filing block of a row: the byte-exact prefix of its notes the roster measures (filing: length and sha256). bd appends
+ * every later note - a delivery, a gate verdict, a landing - after it, so no filing reading sees an appended note (the cut #1
+ * refusal, U1: a whole-notes read went red at every ledger hop exporting a note that spells a vocabulary word); a block edited in
+ * place or cut short is refused, never read through an appended copy. */
+function ownerFiling(row: BeadRow): string {
+  const block = row.notes.slice(0, ROSTER.filing.length);
+  const digest = createHash("sha256").update(block, "utf8").digest("hex");
+  if (block.length !== ROSTER.filing.length || digest !== ROSTER.filing.sha256) {
+    throw new Error(`census: ${BEAD}'s ${FILING_CHANGED}: the first ${ROSTER.filing.length} characters of its notes digest ${digest.slice(0, 16)}, the roster measured ${ROSTER.filing.sha256.slice(0, 16)}`);
+  }
+  return block;
+}
+/** "refused" when `read` throws the changed-block refusal, "read" when it returns; any other error propagates. */
+function blockVerdict(read: () => unknown): string {
+  try {
+    read();
+    return "read";
+  } catch (error) {
+    if (error instanceof Error && error.message.includes(FILING_CHANGED)) return "refused";
+    throw error;
+  }
+}
+const filingDuties = (): string[] => ROSTER.unclaimed.filter(entry => entry.source === "filing").map(entry => entry.duty);
+/** A note as a ledger hop exports one after the owner filing block (bd joins an appended note with a newline): it spells every
+ * vocabulary word and restates the block's citation and filing duties, so a reading past the block would see them. */
+function appendedNote(block: string): string {
+  return ["", `GATE VERDICT (BIND) ${BEAD}: the delivery note spells ${VOCABULARY_WORDS.join(", ")}.`, `${CITATION.exec(block)?.[0] ?? ""}. ${filingDuties().join(" ")}`].join("\n");
+}
+/** The row with the note appended after all of its notes. */
+const appendedRow = (row: BeadRow): BeadRow => ({ title: row.title, notes: `${row.notes}${appendedNote(row.notes.slice(0, ROSTER.filing.length))}` });
+/** The row's owner filing block edited in place - its citation and filing duties cut out - followed by the note, which restates
+ * both: a reading past the block would take the restated copies for the filing. */
+function editedRow(row: BeadRow): BeadRow {
+  const block = row.notes.slice(0, ROSTER.filing.length);
+  const edited = filingDuties().reduce((text, duty) => text.replace(duty, ""), block.replace(CITATION, ""));
+  return { title: row.title, notes: `${edited}${appendedNote(block)}` };
+}
+interface FilingReadings {
+  readonly duties: readonly boolean[];
+  readonly citation: readonly string[];
+}
+/** The filing readings over a text: each filing duty verbatim, and the first citation's path, line and pin. */
+function readingsOver(text: string): FilingReadings {
+  return { duties: filingDuties().map(duty => text.includes(duty)), citation: CITATION.exec(text)?.slice(1) ?? [] };
+}
+/** The filing readings of a row: over its owner filing block alone (never an appended note). */
+const filingReadingsOf = (row: BeadRow): FilingReadings => readingsOver(ownerFiling(row));
+/** R-SYNONYM over a title and a text: the vocabulary words that no word of them, nor of the producer line, spells. */
+function synonymsOver(title: string, text: string): string[] {
+  const outside = new Set(words([title, text, ...ROSTER.producer.lines.map(line => line.text)].join("\n")));
+  return [...new Set(VOCABULARY_WORDS.filter(word => !outside.has(word)))].sort(byName);
+}
+/** R-SYNONYM of a row: over its title and its owner filing block alone (never an appended note). */
+const synonymsOf = (row: BeadRow): string[] => synonymsOver(row.title, ownerFiling(row));
 /** `parts` occur in `text` in order with only `joint` text between and around them. */
 function tiles(text: string, parts: readonly string[], joint: RegExp): boolean {
   let at = 0;
@@ -1281,7 +1373,8 @@ describe("wb-pyel.2 EDC demand-channel census (SDK-EVIDENCE-DIRECTED-COMPUTATION
     expect(ROSTER.bead).toBe(BEAD);
     expect(ROSTER.vocabulary).toEqual(VOCABULARY);
     expect(ROSTER.constants).toEqual(CONSTANTS);
-    const { title, notes } = beadRecord();
+    const row = beadRecord();
+    const { title } = row;
     // The title: its id prefix, then every claimed label and every title duty in title order, separator-only gaps.
     expect(title.startsWith(CONSTANTS.titlePrefix)).toBe(true);
     const body = title.slice(CONSTANTS.titlePrefix.length);
@@ -1290,15 +1383,24 @@ describe("wb-pyel.2 EDC demand-channel census (SDK-EVIDENCE-DIRECTED-COMPUTATION
     expect(parts.map(part => body.includes(part))).toEqual(parts.map(() => true));
     expect(tiles(body, [...parts].sort((a, b) => body.indexOf(a) - body.indexOf(b)), TITLE_JOINT)).toBe(true);
     expect(ROWS.map(row => tiles(row.label, row.pins.map(pin => pin.quote), LABEL_JOINT))).toEqual(ROWS.map(() => true));
-    // The filing: the acceptance duty verbatim, the citation's path, line and pin equal the producer's.
-    const filingDuties = ROSTER.unclaimed.filter(entry => entry.source === "filing").map(entry => entry.duty);
-    expect(filingDuties.length).toBeGreaterThan(0);
-    expect(filingDuties.map(duty => notes.includes(duty))).toEqual(filingDuties.map(() => true));
+    // The filing, read from the owner filing block alone: the acceptance duty verbatim, the citation's path, line and pin equal the
+    // producer's.
+    expect(filingDuties().length).toBeGreaterThan(0);
+    const filing = filingReadingsOf(row);
+    expect(filing.duties).toEqual(filingDuties().map(() => true));
     expect(ROSTER.unclaimed.every(entry => entry.reason.trim().length > 0)).toBe(true);
-    const cited = CITATION.exec(notes);
-    expect(cited?.[1]).toBe(ROSTER.producer.path);
-    expect(ROSTER.producer.lines.map(line => line.line)).toEqual([Number(cited?.[2])]);
-    expect(ROSTER.producer.beadPin.startsWith(cited?.[3] ?? "-")).toBe(true);
+    const [citedPath = "", citedLine = "", citedPin = "-"] = filing.citation;
+    expect(citedPath).toBe(ROSTER.producer.path);
+    expect(ROSTER.producer.lines.map(line => line.line)).toEqual([Number(citedLine)]);
+    expect(ROSTER.producer.beadPin.startsWith(citedPin)).toBe(true);
+    // The block's extent, anchored outside this file and the roster: the row's whole notes in the export at CONSTANTS.frozenAt.
+    expect(frozenBeadRecord().notes, "the owner filing block is the notes as filed").toBe(ownerFiling(row));
+    // The quiet row (the cut #1 refusal, U1 and F2): an appended note changes no filing reading; a block edited in place is
+    // refused, never read through the note's restated copies - which a whole-notes read takes for the filing (non-vacuity).
+    const edited = editedRow(row);
+    expect(filingReadingsOf(appendedRow(row)), "an appended note changes no filing reading").toEqual(filing);
+    expect(readingsOver(edited.notes), "read past the block, the restated copies mask the edit").toEqual(filing);
+    expect(blockVerdict(() => filingReadingsOf(edited)), "a block edited in place").toBe("refused");
     // ROLE PLACES, from the title's structure: U1's subject phrase, U1's carrier, the markers of B, U2 and C, the stems of A and C.
     const duty = (id: string): string => ROSTER.unclaimed.find(entry => entry.id === id)?.duty ?? "";
     const label = (id: string): string => ROWS.find(row => row.id === id)?.label ?? "";
@@ -1319,7 +1421,7 @@ describe("wb-pyel.2 EDC demand-channel census (SDK-EVIDENCE-DIRECTED-COMPUTATION
     expect(VOCABULARY.stems.word.includes(cWords[cWords.indexOf("context") - 1] ?? "")).toBe(true);
     const a = words(label("A"));
     expect(VOCABULARY.stems.word.includes(a[a.indexOf("adopts") + 1] ?? "")).toBe(true);
-    const slug = words((cited?.[1] ?? "").split("/").pop()?.replace(/-\d{4}-\d{2}-\d{2}\.md$/, "") ?? "");
+    const slug = words(citedPath.split("/").pop()?.replace(/-\d{4}-\d{2}-\d{2}\.md$/, "") ?? "");
     expect(VOCABULARY.stems.joined.includes(slug.slice(0, -1).join(""))).toBe(true);
     expect(verdict(duty("U1"))).toBe("demand+precision+carrier");
     // The producer line: its bytes match its sha256, it reads MARKER by its "not", and without it a finding of all three families.
