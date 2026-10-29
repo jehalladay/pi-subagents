@@ -41,17 +41,25 @@
  *    same document, other bytes, so its digest differs from the reply's), F3 current with an observer grant only, F4 current
  *    bytes with every observed run moved to the next revision, F5 the reply with its chosen_id set to exec-a2-t3, observed but
  *    no candidate. Each fixture's basis reading (valid, snapshot-mismatch, revision-mismatch or reply-unconverted) is computed by
- *    basisOf and held to the fixture's own field. Five CHECKS judge the record: effect-unvalidated (the seam was called for a
+ *    basisOf and held to the fixture's own field. Six CHECKS judge the record: effect-unvalidated (the seam was called for a
  *    reply whose converted decision fails basis validation), effect-unpermitted (handed a decision whose verdict is not
- *    'permitted'), effect-unminted (handed a value isCoreMintedDecision refuses), mismatch-receipt (a snapshot-mismatch reply
- *    lacks exactly one receipt of status conflict or refused naming snapshot-mismatch) and current-unexecuted (F1, the one reply
- *    every clause admits, did not reach the seam exactly once with a core-minted permit: the drive's positive control, without
- *    which a decision point that never issues anything would meet the clause's "unless" vacuously).
+ *    'permitted'), effect-unminted (handed a value isCoreMintedDecision refuses), effect-unrequested (handed a decision whose
+ *    receipt answers no request this call issued: the drive holds a copy of every request its requestOf returned, taken at the
+ *    return, and a receipt answers one when its scope, principal, target, action, invocationId and requestedAt each equal that
+ *    request's and its grant is one of that request's grants; every request a call issues carries that call's own serial in its
+ *    invocationId), mismatch-receipt (a snapshot-mismatch reply lacks exactly one receipt of status conflict or refused naming
+ *    snapshot-mismatch) and current-unexecuted (F1, the one reply every clause admits, did not reach the seam exactly once with
+ *    a core-minted permit: the drive's positive control, without which a decision point that never issues anything would meet
+ *    the clause's "unless" vacuously).
  *    A1 the bound decision points (none) and the synthetic bindings: the honest point meets every check on every fixture,
  *    every mutant fails one, every check fires, and each fixture's basis is the computed one. A2 a point skipping either
  *    basis member or the conversion's candidate check reaches the seam on F2, F4 or F5 (effect-unvalidated). A3 a denied
  *    decision executed anyway fails effect-unpermitted; today even an exact grant for a GraphPolicyCLI verb reads
- *    unknown-action. A4 a hand-built look-alike permit and a spread copy of a minted one fail effect-unminted;
+ *    unknown-action; and a permit decideControl returned for a request this call did not issue fails effect-unrequested: on
+ *    F3 (observer grant only) M-FORGED-GRANT writes the exact grant onto the issued request object itself and asks the core
+ *    on it, and M-REPLAYED-PERMIT hands the seam the first permit it minted (F1's), which fails the same point's next F1 call
+ *    too; a minted receipt answers the request it was minted for, and answers it no longer with any one echoed field or its
+ *    grant altered. A4 a hand-built look-alike permit and a spread copy of a minted one fail effect-unminted;
  *    isCoreMintedDecision is false for the reply, its typed conversion, a copy, a JSON round trip and a denial. B1 the
  *    mismatch condition: F2's presented bytes hash to a digest the reply does not carry, while F1's bytes hash to the reply's
  *    own. B2 the honest point records one conflict receipt naming snapshot-mismatch; a point dropping the reply silently or
@@ -64,9 +72,9 @@
  *    member is reported as that member's change, only.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and each residual family's member
- * count as literals, beside the vocabulary, the checks, the mutants, the fixtures, the bound points, the floor, the pin and the
- * derived path; the judged set (every row's id, label and pins, every pin's quote and witness, the residual members, every
- * registered test title) is held to the out-of-file roster test/fixtures/gp-decision-executor-roster.json. OUTSIDE ANCHORS
+ * count as literals, beside the vocabulary, the checks, the echoed request fields, the mutants, the fixtures, the bound points,
+ * the floor, the pin and the derived path; the judged set (every row's id, label and pins, every pin's quote and witness, the
+ * residual members, every registered test title) is held to the out-of-file roster test/fixtures/gp-decision-executor-roster.json. OUTSIDE ANCHORS
  * (their own registered case): the bead's own row in the tracker export (.beads/issues.jsonl): the title opens with the
  * requirement id and carries row T's label before its artifact parenthetical, and names exactly the two names; the first notes
  * line opening "Citation: " holds the Acceptance sentence, whose three clauses are exactly the labels of rows A, B and C, and
@@ -75,9 +83,12 @@
  * sentence, so the adapter path is the filing's; the vendored reply carries the vocabulary's schema, kind and members, its
  * digest is the generator's recorded input digest and the snapshot fixture's own, and the snapshot's revision is F1's observed
  * basis; and the vocabulary is derived outside every literal: the title's Graph names, the vendored reply's schema and kind
- * values, the reply member whose value is the snapshot fixture's digest and the sample member whose value is a candidate. A
- * tracker note appended later (a delivery, gate or park note) sits on a line of its own and binds nothing. So a pin, a row, a
- * clause or a vocabulary member removed from every literal of this file and the roster together still reds. The last case reads the vitest
+ * values, the reply member whose value is the snapshot fixture's digest and the sample member whose value is a candidate; and
+ * the follow-up bead wb-5omz's own row: its first notes line opening "[leads] - F1 " names the request-binding check, which is
+ * one of the checks, and the gate's two points, whose M- twins (each name with P- read as M-) are mutants that fail that check
+ * on F3. A tracker note appended later (a delivery, gate or park note) sits on a line of its own and binds nothing. So a pin, a
+ * row, a clause, a vocabulary member, the request-binding check or one of the gate's two points removed from every literal of
+ * this file and the roster together still reds. The last case reads the vitest
  * task tree (every registered test, in roster order, in run mode, ran before it) and REACHED (every pin reached its witness
  * compare, and each compare's own result).
  * NOT CLAIMED: qa/, test/ and docs/ (a test names the vocabulary as the text it judges, this census included; the docs leg is
@@ -85,7 +96,12 @@
  * point whose own cut must take another shape re-measures rows A and B with it); an executor request outside the core's verbs
  * (decideControl mints control verbs only, so a GP decision whose effect is an Attempt start has no core-minted path today and
  * reads unknown-action, as A3 shows); Furnace supervision itself (the seam is injected; the checks observe the seam, never
- * Furnace); the reply's numbers (gp's own inspect, wb-gxd7.5); the leading comment of a path member and anything C1 does not
+ * Furnace); the reply's numbers (gp's own inspect, wb-gxd7.5); for effect-unrequested, how a permit whose receipt answers a
+ * request this call issued was obtained (the check reads the receipt's echo of the request, so a permit decided on a forged
+ * request that keeps every echoed field, when the grant the core records is one the issued request holds, as M-FORGED-GRANT's
+ * on F1, or one minted before the call for the call's own request, answers it), what a point hands decideControl besides
+ * the request (the projection and the clock), and the request's params, which no receipt echoes; the leading comment of a
+ * path member and anything C1 does not
  * derive (row Q4); a mutant, a fixture or a planted control removed from its table, the frozen literal and the roster together
  * while every check still fires; row Q or a residual member removed from every literal and the roster together (no source
  * outside this cut names the residual families before its delivery note lands); a pin's case replaced by one that echoes its
@@ -104,6 +120,15 @@
  * conflict or refused and whose code names the failed basis member (snapshot-mismatch, the wb-gxd7.3 census's typed code); the
  * source revision is compared with the subjectBasis of the node the chosen candidate's control target names, the observation
  * model's own basis field.
+ *
+ * wb-5omz (R694 follow-up of wb-0lf.1 landing 648, gate cmd_0ea67120ff91: F1 leads): the five checks that cut armed read only
+ * the handed decision's verdict and its mint identity, so the gate's P-FORGED-GRANT (decideControl asked with the fixture's
+ * grants plus the exact control:furnace.stop grant) and P-REPLAYED-PERMIT (the seam handed the first permit the point minted,
+ * F1's) executed F3's reply, which the core denies observer-only on F3's own request, and met every check on every fixture.
+ * The request-binding check effect-unrequested reads each handed receipt against the requests the call issued. MUTANTS carry
+ * the two as M-FORGED-GRANT, which writes the grant onto the issued request object itself (so a record held by reference
+ * would read the forged grant as issued), and M-REPLAYED-PERMIT; each fails it on F3, and so do M-DENIED (a denial carries
+ * no receipt) and M-LOOKALIKE (its grant is none of F3's), beside the checks they already failed.
  *
  * Display paths added: none. Test-only: no src change, no GraphPolicyCLI dependency, adapter, seam or fake binary.
  */
@@ -128,6 +153,8 @@ import { type NativeRef, ObservationProjection, type ObservationScope } from "..
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BEAD = "wb-0lf.1";
+/** The bead carrying the wb-0lf.1 gate's F1 (landing 648): its lead line names the request-binding check and the gate's two points. */
+const FOLLOW_UP = "wb-5omz";
 const REQUIREMENT = "FURNACE-GRAPH-POLICY-DECISION-EXECUTOR-R1";
 const SUITE = `gp decision executor census (${BEAD}, ${REQUIREMENT})`;
 const ROSTER_PATH = "test/fixtures/gp-decision-executor-roster.json";
@@ -328,9 +355,10 @@ function projectionOf(fixture: Fixture): ObservationProjection {
   }
   return projection;
 }
-function requestFor(fixture: Fixture, candidate: string): NativeControlRequest {
+/** The control request for one candidate; a drive passes its own serial, so no two calls issue one invocationId (0: no drive). */
+function requestFor(fixture: Fixture, candidate: string, serial = 0): NativeControlRequest {
   return { scope: { ...SCOPE }, principal: { id: SCOPE.principal, role: "local-operator" }, grants: [...fixture.grants], target: runRef(candidate), action: "stop",
-    params: { confirmed: true }, invocationId: `inv-${fixture.id}-${candidate}`, requestedAt: REQUESTED_AT };
+    params: { confirmed: true }, invocationId: `inv-${fixture.id}-${serial}-${candidate}`, requestedAt: REQUESTED_AT };
 }
 /** The subjectBasis of the node a request's target names, read through the projection. */
 function observedBasis(projection: ObservationProjection, request: NativeControlRequest): string | undefined {
@@ -341,29 +369,48 @@ const targetIdOf = (decision: unknown): unknown => own(own(own(decision, "receip
 interface Drive {
   readonly receipts: readonly DecisionReceipt[];
   readonly calls: readonly { readonly decision: unknown; readonly answer: string }[];
+  /** Every request this call's requestOf returned, each a copy taken at the return: a later edit of the object edits no record. */
+  readonly issued: readonly NativeControlRequest[];
 }
+/** The drives so far: each drive's serial is its own, so every call issues requests no other call issues. */
+let driveSerial = 0;
 function drive(point: DecisionPoint, fixture: Fixture): Drive {
+  driveSerial += 1;
+  const serial = driveSerial;
   const calls: { readonly decision: unknown; readonly answer: string }[] = [];
+  const issued: NativeControlRequest[] = [];
   const effect = (decision: ControlDecision): string => {
     const answer = `frn-ack-${String(targetIdOf(decision))}`;
     calls.push({ decision, answer });
     return answer;
   };
-  const receipts = point({ reply: fixture.reply, presented: fixture.presented, projection: projectionOf(fixture), requestOf: candidate => requestFor(fixture, candidate),
-    effect, now: () => DECIDED_AT });
-  return { receipts, calls };
+  const requestOf = (candidate: string): NativeControlRequest => {
+    const request = requestFor(fixture, candidate, serial);
+    issued.push(structuredClone(request));
+    return request;
+  };
+  const receipts = point({ reply: fixture.reply, presented: fixture.presented, projection: projectionOf(fixture), requestOf, effect, now: () => DECIDED_AT });
+  return { receipts, calls, issued };
+}
+/** The request fields a minted receipt echoes (control.ts core(), held to the core's own receipt in A3). */
+const ECHOED = ["scope", "principal", "target", "action", "invocationId", "requestedAt"] as const;
+/** Whether a receipt answers a request: each echoed field equals the request's, and its grant is one of the request's grants. */
+function answers(receipt: unknown, request: NativeControlRequest): boolean {
+  const grant = own(receipt, "grant");
+  return ECHOED.every(field => isDeepStrictEqual(own(receipt, field), request[field])) && typeof grant === "string" && strings(request.grants) && request.grants.includes(grant);
 }
 
-const CHECKS = ["effect-unvalidated", "effect-unpermitted", "effect-unminted", "mismatch-receipt", "current-unexecuted"] as const;
+const CHECKS = ["effect-unvalidated", "effect-unpermitted", "effect-unminted", "effect-unrequested", "mismatch-receipt", "current-unexecuted"] as const;
 type Check = (typeof CHECKS)[number];
 const MISMATCH = "snapshot-mismatch";
 /** The checks one driven fixture fails, in CHECKS order. */
-function violations(fixture: Fixture, { receipts, calls }: Drive): Check[] {
+function violations(fixture: Fixture, { receipts, calls, issued }: Drive): Check[] {
   const found = new Set<Check>();
   for (const { decision } of calls) {
     if (fixture.basis !== "valid") found.add("effect-unvalidated");
     if (own(decision, "decision") !== "permitted") found.add("effect-unpermitted");
     if (!isCoreMintedDecision(decision)) found.add("effect-unminted");
+    if (!issued.some(request => answers(own(decision, "receipt"), request))) found.add("effect-unrequested");
   }
   if (fixture.basis === MISMATCH) {
     const [only] = receipts;
@@ -405,6 +452,10 @@ interface Shape {
   readonly decide?: "lookalike" | "copy";
   /** Hand the seam the core's decision whatever its verdict. */
   readonly executeDenied?: boolean;
+  /** Ask the core on the issued request with the exact grant its action needs written onto the issued object itself. */
+  readonly forgeGrant?: boolean;
+  /** Hand the seam the first permit this point minted, in this call or an earlier one, in place of the core's answer. */
+  readonly replay?: boolean;
   /** Never reach the seam. */
   readonly inert?: boolean;
   /** An effect reached outside the injected seam, once per execution. */
@@ -412,7 +463,13 @@ interface Shape {
   /** The candidate executed, when it is not the reply's choice. */
   readonly target?: (typed: TypedDecision) => string;
 }
+/** A forging point's request: the issued object itself, its grants extended by the exact grant its action needs. */
+function forged(request: NativeControlRequest): NativeControlRequest {
+  request.grants = [...(request.grants ?? []), `control:${request.target.provider}.${request.action}`];
+  return request;
+}
 function pointOf(shape: Shape): DecisionPoint {
+  let first: ControlDecision | undefined;
   return call => {
     const typed = convert(call.reply, shape.candidateCheck !== false);
     if (typed === undefined) return [{ status: "refused", code: "reply-unconverted" }];
@@ -434,8 +491,13 @@ function pointOf(shape: Shape): DecisionPoint {
     let decision: ControlDecision;
     if (shape.decide === "lookalike") decision = lookalike(request);
     else {
-      const minted = decideControl(request, { projection: call.projection, now: call.now });
+      const asked = shape.forgeGrant === true ? forged(request) : request;
+      const minted = decideControl(asked, { projection: call.projection, now: call.now });
       decision = shape.decide === "copy" ? { ...minted } : minted;
+    }
+    if (shape.replay === true) {
+      if (first === undefined && isCoreMintedDecision(decision)) first = decision;
+      decision = first ?? decision;
     }
     const executes = shape.executeDenied === true || (decision.decision === "permitted" && (shape.decide !== undefined || isCoreMintedDecision(decision)));
     if (!executes) return [...receipts, { status: "denied", candidate }];
@@ -452,6 +514,8 @@ const MUTANTS: Readonly<Record<string, Shape>> = {
   "M-REVISION-ONLY": { digestCheck: false },
   "M-UNCONVERTED": { candidateCheck: false },
   "M-DENIED": { executeDenied: true },
+  "M-FORGED-GRANT": { forgeGrant: true },
+  "M-REPLAYED-PERMIT": { replay: true },
   "M-LOOKALIKE": { decide: "lookalike" },
   "M-COPY": { decide: "copy" },
   "M-MISMATCH-SILENT": { mismatchAs: "silent" },
@@ -702,7 +766,34 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect(gpVerb, "an exact grant for a GraphPolicyCLI verb reads unknown-action").toEqual({ decision: "denied", policy: "unknown-action", category: "validation" });
     const executed = mutant("M-DENIED");
     expect(executed.F3, "a denial handed to the seam is caught").toContain("effect-unpermitted");
-    return { providers, denial, gpVerb, "M-DENIED": executed };
+    const forging = mutant("M-FORGED-GRANT");
+    const replaying = pointOf(MUTANTS["M-REPLAYED-PERMIT"] ?? {});
+    const replayDrives = FIXTURES.map(entry => [entry, drive(replaying, entry)] as const);
+    const replayed = Object.fromEntries(replayDrives.map(([entry, driven]) => [entry.id, violations(entry, driven)]));
+    const nextF1 = violations(fixture("F1"), drive(replaying, fixture("F1")));
+    const reachedF3 = {
+      "M-FORGED-GRANT": callsOf(pointOf(MUTANTS["M-FORGED-GRANT"] ?? {}), "F3"),
+      "M-REPLAYED-PERMIT": replayDrives.find(([entry]) => entry.id === "F3")?.[1].calls.length ?? 0,
+    };
+    expect(reachedF3, "each executes F3's reply, which the core denies on F3's own request").toEqual({ "M-FORGED-GRANT": 1, "M-REPLAYED-PERMIT": 1 });
+    const unrequested = { "M-FORGED-GRANT": forging.F3, "M-REPLAYED-PERMIT": replayed.F3, "M-REPLAYED-PERMIT next F1": nextF1 };
+    for (const [name, found] of Object.entries(unrequested)) expect(found, `${name}: a permit for a request this call did not issue is caught`).toContain("effect-unrequested");
+    const F1 = fixture("F1");
+    const mintedFor = requestFor(F1, String(own(own(REPLY, "sample"), REPLY_CHOICE)));
+    const receipt = own(decideControl(mintedFor, { projection: projectionOf(F1), now: () => DECIDED_AT }), "receipt");
+    const echoedByCore = record(receipt) ? Object.keys(receipt).filter(key => Object.hasOwn(mintedFor, key) && isDeepStrictEqual(own(receipt, key), own(mintedFor, key))) : [];
+    expect(echoedByCore, "the request fields the core's own receipt echoes are the ones the check reads").toEqual([...ECHOED]);
+    const altered = (value: unknown): unknown => (typeof value === "string" ? `${value}~` : record(value) ? { ...value, altered: true } : null);
+    const read = [...ECHOED, "grant"];
+    const echo = {
+      minted: answers(receipt, mintedFor),
+      altered: Object.fromEntries(read.map(field => [field, answers(record(receipt) ? { ...receipt, [field]: altered(own(receipt, field)) } : null, mintedFor)])),
+    };
+    expect(echo, "a minted receipt answers its own request, and no longer with any one echoed field or its grant altered").toEqual({
+      minted: true,
+      altered: Object.fromEntries(read.map(field => [field, false])),
+    });
+    return { providers, denial, gpVerb, "M-DENIED": executed, "M-FORGED-GRANT": forging, "M-REPLAYED-PERMIT": replayed, reachedF3, nextF1, echoedByCore, echo };
   },
   A4: () => {
     const F1 = fixture("F1");
@@ -833,6 +924,12 @@ function filingReading(notes: string): { readonly clauses: readonly string[]; re
     adapterLine: Number(/src\/workbench\/hosts\/furnace-hosted\.ts:(\d+) '/.exec(citation)?.[1] ?? Number.NaN),
   };
 }
+/** What the anchors read from a follow-up's notes: its first line opening "[leads] - F1 " only, so a later note binds nothing. */
+function leadReading(notes: string): { readonly check?: string; readonly points: readonly string[] } {
+  const lead = notes.split("\n").find(line => line.startsWith("[leads] - F1 ")) ?? "";
+  const cure = /arm a request-binding check \(([a-z-]+)\) with (P-[A-Z-]+) and (P-[A-Z-]+) as its mutants/.exec(lead);
+  return { check: cure?.[1], points: cure === null ? [] : [cure[2] ?? "", cure[3] ?? ""] };
+}
 /** The quotes tile the label in order, with nothing but separators (whitespace, comma, semicolon, colon) between. */
 function tiles(label: string, quotes: readonly string[]): boolean {
   let at = 0;
@@ -865,13 +962,16 @@ describe(SUITE, () => {
     expect(Object.keys(QUOTES), "one quote per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
     expect(Object.keys(IMPL), "one case per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
     expect(VOCABULARY).toEqual(["GraphPolicyCLI", "GraphDataIR", "graphpolicy.receipt.decision.v1", "sampled-decision", "graph_digest", "chosen_id"]);
-    expect(CHECKS).toEqual(["effect-unvalidated", "effect-unpermitted", "effect-unminted", "mismatch-receipt", "current-unexecuted"]);
+    expect(CHECKS).toEqual(["effect-unvalidated", "effect-unpermitted", "effect-unminted", "effect-unrequested", "mismatch-receipt", "current-unexecuted"]);
+    expect(ECHOED).toEqual(["scope", "principal", "target", "action", "invocationId", "requestedAt"]);
     expect(Object.keys(MUTANTS)).toEqual([
       "M-NO-BASIS",
       "M-DIGEST-ONLY",
       "M-REVISION-ONLY",
       "M-UNCONVERTED",
       "M-DENIED",
+      "M-FORGED-GRANT",
+      "M-REPLAYED-PERMIT",
       "M-LOOKALIKE",
       "M-COPY",
       "M-MISMATCH-SILENT",
@@ -900,7 +1000,7 @@ describe(SUITE, () => {
     ]);
   });
 
-  it("the outside anchors: the bead's own row binds the rows, the pin quotes, the names and the pin; the citations resolve at the pin; the vendored reply and snapshot bind the vocabulary and the fixtures", { timeout: 60_000 }, () => {
+  it("the outside anchors: the bead's own row binds the rows, the pin quotes, the names and the pin; the citations resolve at the pin; the vendored reply and snapshot bind the vocabulary and the fixtures; the follow-up's lead line binds the request-binding check and the gate's two points", { timeout: 60_000 }, () => {
     const row = beadRow(BEAD);
     expect(row, `${BEAD}'s row was read from the tracker export`).toBeDefined();
     const title = row?.title ?? "";
@@ -939,6 +1039,15 @@ describe(SUITE, () => {
     const choiceMembers = record(sample) && strings(candidates) ? Object.keys(sample).filter(key => candidates.includes(String(own(sample, key)))) : [];
     const derived = [...titleNames, String(own(REPLY, "schema")), String(own(REPLY, "kind")), ...digestMembers, ...choiceMembers];
     expect(derived, "the vocabulary is the title's names, the reply's own schema and kind, the member holding the snapshot digest and the sample member holding a candidate").toEqual([...VOCABULARY]);
+    const lead = leadReading(beadRow(FOLLOW_UP)?.notes ?? "");
+    expect(CHECKS.some(check => check === lead.check), `the request-binding check ${FOLLOW_UP}'s lead line names is one of the checks`).toBe(true);
+    const twins = lead.points.map(point => point.replace(/^P-/, "M-"));
+    expect(twins.length, "the lead line names the gate's two points").toBe(2);
+    for (const twin of twins) {
+      expect(Object.hasOwn(MUTANTS, twin) && (mutant(twin).F3 ?? []).some(check => check === lead.check), `${twin} is a mutant and fails that check on F3`).toBe(true);
+    }
+    const appendedLead = `${beadRow(FOLLOW_UP)?.notes ?? ""}\n[leads] - F1 later: arm a request-binding check (x) with P-X and P-Y as its mutants.`;
+    expect(leadReading(appendedLead), "a note appended after the lead line changes no reading").toEqual(lead);
   });
 
   it("roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/gp-decision-executor-roster.json, in order and both ways; every pin reached its witness compare", ({ task }) => {

@@ -139,6 +139,7 @@
         "effect-unvalidated",
         "effect-unpermitted",
         "effect-unminted",
+        "effect-unrequested",
         "mismatch-receipt",
         "current-unexecuted"
       ],
@@ -242,10 +243,56 @@
         "F2": [],
         "F3": [
           "effect-unpermitted",
-          "effect-unminted"
+          "effect-unminted",
+          "effect-unrequested"
         ],
         "F4": [],
         "F5": []
+      },
+      "M-FORGED-GRANT": {
+        "F1": [],
+        "F2": [],
+        "F3": [
+          "effect-unrequested"
+        ],
+        "F4": [],
+        "F5": []
+      },
+      "M-REPLAYED-PERMIT": {
+        "F1": [],
+        "F2": [],
+        "F3": [
+          "effect-unrequested"
+        ],
+        "F4": [],
+        "F5": []
+      },
+      "reachedF3": {
+        "M-FORGED-GRANT": 1,
+        "M-REPLAYED-PERMIT": 1
+      },
+      "nextF1": [
+        "effect-unrequested"
+      ],
+      "echoedByCore": [
+        "scope",
+        "principal",
+        "target",
+        "action",
+        "invocationId",
+        "requestedAt"
+      ],
+      "echo": {
+        "minted": true,
+        "altered": {
+          "scope": false,
+          "principal": false,
+          "target": false,
+          "action": false,
+          "invocationId": false,
+          "requestedAt": false,
+          "grant": false
+        }
       }
     },
     "A4": {
@@ -264,7 +311,8 @@
         ],
         "F2": [],
         "F3": [
-          "effect-unminted"
+          "effect-unminted",
+          "effect-unrequested"
         ],
         "F4": [],
         "F5": []
@@ -461,7 +509,7 @@
     "Q3: R-CHOSEN-TARGET",
     "Q4: R-ADAPTER-OUTSIDE-PATH",
     "rule 16: the rows, the residual families, the vocabulary, the checks, the mutants, the fixtures, the bound points and the path are frozen at their measured shape",
-    "the outside anchors: the bead's own row binds the rows, the pin quotes, the names and the pin; the citations resolve at the pin; the vendored reply and snapshot bind the vocabulary and the fixtures",
+    "the outside anchors: the bead's own row binds the rows, the pin quotes, the names and the pin; the citations resolve at the pin; the vendored reply and snapshot bind the vocabulary and the fixtures; the follow-up's lead line binds the request-binding check and the gate's two points",
     "roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/gp-decision-executor-roster.json, in order and both ways; every pin reached its witness compare"
   ]
 }
