@@ -311,7 +311,10 @@
               "status still proposed": "UNSHIPPED",
               "status still claims none shipped": "UNSHIPPED",
               "src still names no subject": "UNSHIPPED",
-              "triage still PROPOSED": "UNSHIPPED"
+              "triage still PROPOSED": "UNSHIPPED",
+              "status still Proposed, capitalized": "UNSHIPPED",
+              "status word only holding proposed": "SHIPPED",
+              "triage reading Proposed, not upper case": "SHIPPED"
             },
             "adoption": "ABSENT",
             "anchored": [],
@@ -337,10 +340,13 @@
                 ".pi/agents/plant.md",
                 "README.md",
                 "docs/binary.md",
+                "docs/nested/.gitignore",
                 "docs/plant-twin.md",
                 "docs/plant.md",
                 "docs/read.md",
+                "docs/tracked.md",
                 "docs/unanchored.md",
+                "examples/pkg/package.json",
                 "examples/plant.md",
                 "package.json",
                 "qa/plant.mjs",
@@ -354,6 +360,7 @@
                 "docs/plant-twin.md",
                 "docs/plant.md",
                 "docs/read.md",
+                "docs/tracked.md",
                 "examples/plant.md",
                 "qa/plant.mjs",
                 "src/plant.ts"
@@ -364,6 +371,7 @@
                 "README.md:1 C:driving",
                 "docs/plant.md:5 A:inference",
                 "docs/read.md:1 A:inference",
+                "docs/tracked.md:1 A:inference",
                 "examples/plant.md:1 B:query-view",
                 "qa/plant.mjs:1 B:execution",
                 "src/plant.ts:2 A:effect"
@@ -388,7 +396,10 @@
                   "new-feedback/plant.md": false,
                   "test/plant.md": false,
                   "vendor/plant.md": false,
-                  "docs/ignored.md": false
+                  "docs/ignored.md": false,
+                  "docs/nested/ignored.md": false,
+                  "docs/excluded.md": false,
+                  "docs/global-ignored.md": false
                 },
                 "binary": [
                   [
@@ -496,6 +507,66 @@
                   "docs/cut.md:4 A:inference"
                 ],
                 []
+              ],
+              "after . before a tab": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                [
+                  "docs/cut.txt:3 A:inference"
+                ]
+              ],
+              "after . at the line end": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                [
+                  "docs/cut.txt:3 A:inference"
+                ]
+              ],
+              "at a blank line between CRLF line ends": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                [
+                  "docs/cut.txt:3 A:inference"
+                ]
+              ],
+              "around a table row indented by two spaces": [
+                [
+                  "docs/cut.md:4 A:inference"
+                ],
+                []
+              ],
+              "around a heading of six #": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                []
+              ],
+              "around a heading indented by three spaces": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                []
+              ],
+              "around a bare # line": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                []
+              ],
+              "before a list item numbered 10)": [
+                [
+                  "docs/cut.md:4 A:inference"
+                ],
+                []
+              ],
+              "before a list item indented by two spaces": [
+                [
+                  "docs/cut.md:4 A:inference"
+                ],
+                []
               ]
             },
             "joined": [
@@ -505,6 +576,173 @@
                 "docs/cut.md:3 A:inference"
               ]
             ],
+            "nearMisses": {
+              "a terminator before a letter": [
+                [],
+                []
+              ],
+              "a heading of seven #": [
+                [],
+                []
+              ],
+              "a heading indented by four spaces": [
+                [],
+                []
+              ],
+              "a # without white space": [
+                [],
+                []
+              ],
+              "a list mark without white space": [
+                [],
+                []
+              ],
+              "a number without its closer": [
+                [],
+                []
+              ],
+              "a pipe inside a line": [
+                [],
+                []
+              ],
+              "a lone carriage return": [
+                [],
+                []
+              ]
+            },
+            "classes": {
+              "ends a line": [
+                "000A"
+              ],
+              "ends a sentence before a space": [
+                "0021",
+                "002E",
+                "003B",
+                "003F"
+              ],
+              "follows a terminator": [
+                "0009-000D",
+                "0020",
+                "00A0",
+                "1680",
+                "2000-200A",
+                "2028-2029",
+                "202F",
+                "205F",
+                "3000",
+                "FEFF"
+              ],
+              "makes a blank line": [
+                "0009",
+                "000B-000D",
+                "0020",
+                "00A0",
+                "1680",
+                "2000-200A",
+                "2028-2029",
+                "202F",
+                "205F",
+                "3000",
+                "FEFF"
+              ],
+              "marks a line read alone": [
+                "0023",
+                "007C"
+              ],
+              "marks a list item": [
+                "002A-002B",
+                "002D"
+              ],
+              "indents a table row": [
+                "0009",
+                "000B-000D",
+                "0020",
+                "007C",
+                "00A0",
+                "1680",
+                "2000-200A",
+                "2028-2029",
+                "202F",
+                "205F",
+                "3000",
+                "FEFF"
+              ],
+              "indents a heading": [
+                "0009",
+                "000B-000D",
+                "0020",
+                "0023",
+                "007C",
+                "00A0",
+                "1680",
+                "2000-200A",
+                "2028-2029",
+                "202F",
+                "205F",
+                "3000",
+                "FEFF"
+              ],
+              "follows a heading mark": [
+                "0009",
+                "000B-000D",
+                "0020",
+                "00A0",
+                "1680",
+                "2000-200A",
+                "2028-2029",
+                "202F",
+                "205F",
+                "3000",
+                "FEFF"
+              ],
+              "indents a list item": [
+                "0009",
+                "000B-000D",
+                "0020",
+                "00A0",
+                "1680",
+                "2000-200A",
+                "2028-2029",
+                "202F",
+                "205F",
+                "3000",
+                "FEFF"
+              ],
+              "follows a list mark": [
+                "0009",
+                "000B-000D",
+                "0020",
+                "00A0",
+                "1680",
+                "2000-200A",
+                "2028-2029",
+                "202F",
+                "205F",
+                "3000",
+                "FEFF"
+              ],
+              "numbers a list item": [
+                "0030-0039"
+              ],
+              "closes a list number": [
+                "0029",
+                "002E"
+              ]
+            },
+            "never": {
+              "A WARM context should call inference.": "A:inference",
+              "A WARM context must call inference.": "A:inference",
+              "A WARM context shall call inference.": "A:inference",
+              "A WARM context will call inference.": "A:inference",
+              "A WARM context may call inference.": "A:inference",
+              "A WARM context might call inference.": "A:inference",
+              "A WARM context can call inference.": "A:inference",
+              "A WARM context could call inference.": "A:inference",
+              "A WARM context would call inference.": "A:inference",
+              "If the context is WARM it calls inference.": "A:inference",
+              "When the context is WARM it calls inference.": "A:inference",
+              "A WARM context only calls inference.": "A:inference"
+            },
             "quiet": {
               "R-UNANCHORED": [
                 [],
@@ -606,7 +844,133 @@
               "acronym run": "warm context",
               "snake case": "activity boundary",
               "kebab case": "activity boundary",
-              "fullwidth letter": "query view"
+              "fullwidth letter": "query view",
+              "a fullwidth capital after a lower-case letter": "query view",
+              "a digit inside a run": "query2view",
+              "a digit closing a run": "activity boundary2",
+              "a digit opening a run": "2warm",
+              "a digit before a capital": "query2 view",
+              "every letter and digit": "abcdefghijklmnopqrstuvwxyz0123456789",
+              "capitals alone": "abcdefghijklmnopqrstuvwxyz"
+            },
+            "nonSeparators": [
+              "0030-0039",
+              "0041-005A",
+              "0061-007A",
+              "00AA",
+              "00B2-00B3",
+              "00B9-00BA",
+              "00BC-00BE",
+              "0130",
+              "0132-0133",
+              "013F-0140",
+              "0149",
+              "017F",
+              "01C4-01CC",
+              "01F1-01F3",
+              "02B0",
+              "02B2-02B3",
+              "02B7-02B8",
+              "02E1-02E3",
+              "1D2C",
+              "1D2E",
+              "1D30-1D31",
+              "1D33-1D3A",
+              "1D3C",
+              "1D3E-1D43",
+              "1D47-1D49",
+              "1D4D",
+              "1D4F-1D50",
+              "1D52",
+              "1D56-1D58",
+              "1D5B",
+              "1D62-1D65",
+              "1D9C",
+              "1DA0",
+              "1DBB",
+              "1E9A",
+              "2070-2071",
+              "2074-2079",
+              "207F-2089",
+              "2090-2093",
+              "2095-209C",
+              "20A8",
+              "2100-2103",
+              "2105-2106",
+              "2109-210E",
+              "2110-2113",
+              "2115-2116",
+              "2119-211D",
+              "2120-2122",
+              "2124",
+              "2128",
+              "212A",
+              "212C-212D",
+              "212F-2131",
+              "2133-2134",
+              "2139",
+              "213B",
+              "2145-2149",
+              "2150-217F",
+              "2189",
+              "2460-24EA",
+              "2C7C-2C7D",
+              "3250-325F",
+              "32B1-32CF",
+              "3358-337A",
+              "3380-33FF",
+              "A7F1-A7F4",
+              "FB00-FB06",
+              "FF10-FF19",
+              "FF21-FF3A",
+              "FF41-FF5A",
+              "107A5",
+              "1CCD6-1CCF9",
+              "1D400-1D454",
+              "1D456-1D49C",
+              "1D49E-1D49F",
+              "1D4A2",
+              "1D4A5-1D4A6",
+              "1D4A9-1D4AC",
+              "1D4AE-1D4B9",
+              "1D4BB",
+              "1D4BD-1D4C3",
+              "1D4C5-1D505",
+              "1D507-1D50A",
+              "1D50D-1D514",
+              "1D516-1D51C",
+              "1D51E-1D539",
+              "1D53B-1D53E",
+              "1D540-1D544",
+              "1D546",
+              "1D54A-1D550",
+              "1D552-1D6A3",
+              "1D7CE-1D7FF",
+              "1F100-1F10A",
+              "1F110-1F12E",
+              "1F130-1F14F",
+              "1F16A-1F16C",
+              "1F190",
+              "1FBF0-1FBF9"
+            ],
+            "contraction": [
+              null,
+              null,
+              "B:query-view"
+            ],
+            "never": {
+              "ActivityBoundary state should alias the QueryView identity.": "B:query-view",
+              "ActivityBoundary state must alias the QueryView identity.": "B:query-view",
+              "ActivityBoundary state shall alias the QueryView identity.": "B:query-view",
+              "ActivityBoundary state will alias the QueryView identity.": "B:query-view",
+              "ActivityBoundary state may alias the QueryView identity.": "B:query-view",
+              "ActivityBoundary state might alias the QueryView identity.": "B:query-view",
+              "ActivityBoundary state can alias the QueryView identity.": "B:query-view",
+              "ActivityBoundary state could alias the QueryView identity.": "B:query-view",
+              "ActivityBoundary state would alias the QueryView identity.": "B:query-view",
+              "If the state is WARM it keys the QueryView.": "B:query-view",
+              "When the state is WARM it keys the QueryView.": "B:query-view",
+              "ActivityBoundary state only keys the QueryView.": "B:query-view"
             },
             "quiet": {
               "R-COMPOSED": [
@@ -911,6 +1275,25 @@
               ],
               []
             ],
+            "never": {
+              "The inspector should transition the WARM context.": "C:driving",
+              "The inspector must transition the WARM context.": "C:driving",
+              "The inspector shall transition the WARM context.": "C:driving",
+              "The inspector will transition the WARM context.": "C:driving",
+              "The inspector may transition the WARM context.": "C:driving",
+              "The inspector might transition the WARM context.": "C:driving",
+              "The inspector can transition the WARM context.": "C:driving",
+              "The inspector could transition the WARM context.": "C:driving",
+              "The inspector would transition the WARM context.": "C:driving",
+              "If the inspector opens it writes the state.": "C:driving",
+              "When the inspector opens it writes the state.": "C:driving",
+              "The inspector only writes the state.": "C:driving"
+            },
+            "contraction": [
+              null,
+              null,
+              "C:driving"
+            ],
             "quiet": {
               "R-SURFACE-OTHER": {
                 "a panel": [
@@ -956,6 +1339,38 @@
             },
             "header": "Read-only terminal inspector over the bounded producer-qualified observation projection.",
             "controls": {
+              "src/ui/devtools/plant-view.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/devtools/plant-view.ts:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-absolute-inspector.ts": {
+                "pure": false,
+                "builtins": [],
+                "unresolved": [
+                  "src/ui/plant-absolute-inspector.ts:/plant-abs.js"
+                ],
+                "packages": []
+              },
+              "src/ui/plant-assertion-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-assertion-inspector.ts:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-bare-import-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-bare-import-inspector.ts:node:child_process"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
               "src/ui/plant-bare-inspector.ts": {
                 "pure": false,
                 "builtins": [
@@ -970,6 +1385,54 @@
                 "unresolved": [],
                 "packages": []
               },
+              "src/ui/plant-default-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-default-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-default-names-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-default-names-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-default-namespace-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-default-namespace-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-default-typed-names-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-default-typed-names-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-deferred-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-deferred-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-dot-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/.plant-dot.ts:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
               "src/ui/plant-dynamic-devtools.ts": {
                 "pure": false,
                 "builtins": [
@@ -978,10 +1441,90 @@
                 "unresolved": [],
                 "packages": []
               },
+              "src/ui/plant-empty-export-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-empty-export-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-empty-names-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-empty-names-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
               "src/ui/plant-equals-inspector.ts": {
                 "pure": false,
                 "builtins": [
                   "src/ui/plant-equals-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-escape-inspector.ts": {
+                "pure": false,
+                "builtins": [],
+                "unresolved": [
+                  "src/ui/plant-escape-inspector.ts:../../../plant-outside.js"
+                ],
+                "packages": []
+              },
+              "src/ui/plant-export-equals-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-export-equals-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-ext-inspector.cjs": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-ext-inspector.cjs:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-ext-inspector.cts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-ext-inspector.cts:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-ext-inspector.js": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-ext-inspector.js:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-ext-inspector.mjs": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-ext-inspector.mjs:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-ext-inspector.mts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-ext-inspector.mts:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-ext-inspector.tsx": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-ext-inspector.tsx:node:os"
                 ],
                 "unresolved": [],
                 "packages": []
@@ -1074,6 +1617,46 @@
                 "unresolved": [],
                 "packages": []
               },
+              "src/ui/plant-namespace-export-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-namespace-export-inspector.ts:node:net"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-namespace-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-namespace-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-order-index-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-order-js-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-order-mjs-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-order-written-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
               "src/ui/plant-package-inspector.ts": {
                 "pure": true,
                 "builtins": [],
@@ -1081,6 +1664,12 @@
                 "packages": [
                   "fake-io-lib"
                 ]
+              },
+              "src/ui/plant-property-loader-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
               },
               "src/ui/plant-reexport-inspector.ts": {
                 "pure": false,
@@ -1099,6 +1688,42 @@
                 "packages": []
               },
               "src/ui/plant-stream-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-subpath-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-subpath-inspector.ts:fs/promises"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-template-dynamic-devtools.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-template-dynamic-devtools.ts:node:child_process"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-template-require-devtools.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-template-require-devtools.ts:node:child_process"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-type-import-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-typed-default-inspector.ts": {
                 "pure": true,
                 "builtins": [],
                 "unresolved": [],
@@ -1134,12 +1759,38 @@
                 "unresolved": [],
                 "packages": []
               },
+              "src/ui/plant-typed-namespace-export-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-typed-namespace-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-typed-reexport-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
               "src/ui/plant-unresolved-inspector.ts": {
                 "pure": false,
                 "builtins": [],
                 "unresolved": [
                   "src/ui/plant-unresolved-inspector.ts:./missing.js"
                 ],
+                "packages": []
+              },
+              "src/ui/plant-unused-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-unused-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
                 "packages": []
               },
               "src/ui/plant-value-export-inspector.ts": {
@@ -1151,10 +1802,12 @@
                 "packages": []
               }
             },
-            "notSurfaces": [
-              false,
-              false
-            ],
+            "notSurfaces": {
+              "src/ui/plant-inspector-notes.md": false,
+              "src/ui/plant-inspector-data.json": false,
+              "src/ui/plant-inspector-view.jsx": false,
+              "qa/plant-inspector.mjs": false
+            },
             "quiet": {
               "R-UNNAMED-SURFACE": [
                 false,
@@ -1198,6 +1851,10 @@
                   [
                     "src/ui/plant-require-dev-tools.ts:child_process"
                   ]
+                ],
+                "a property loader": [
+                  true,
+                  false
                 ],
                 "a global": [
                   true,

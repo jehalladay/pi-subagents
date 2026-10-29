@@ -24,75 +24,124 @@
  * @reactive-fiber/tsx 0.1.668, its export map names six entry points and none of its 159 src files names the subject; the
  * producer's own triage (docs/triage/programs-2026-10-21/requirements/ATOMIC-REQUIREMENTS.md:87, blob df7eec14, vendored with
  * its sha256) requires that ActivityBoundary and SpeculationBoundary be "marked PROPOSED (0 files at db7558552)" and names
- * the host as the lifecycle owner. producerOf reads SHIPPED only when all three conditions flip - the status line reads
- * neither "proposed" nor "none of the new exports claimed shipped", the tip's src names the subject, the triage line stops
- * reading PROPOSED - and UNSHIPPED otherwise: it fails closed. A1 holds five producer controls: all three flipped (SHIPPED),
- * then each condition held back, the status line once per phrase (UNSHIPPED).
+ * the host as the lifecycle owner. producerOf reads SHIPPED only when all three conditions flip - the status line holds
+ * neither the word "proposed" (in any case) nor the phrase "none of the new exports claimed shipped", the tip's src names
+ * the subject (a count above 0), the triage line stops holding the upper-case word PROPOSED - and UNSHIPPED otherwise: it
+ * fails closed. A1 holds eight producer controls: all three flipped (SHIPPED); each condition held back, the status line
+ * once per phrase and once capitalized (UNSHIPPED); and two near misses that stay SHIPPED, a status word that only holds
+ * "proposed" and a triage line reading "Proposed".
  * ADOPTION (row A): Pi adopts the boundary when a file Pi ships names it. The adoption reads PRESENT once a read file (below)
- * names the subject, ABSENT otherwise; each reactive-fiber package a package.json names in dependencies, devDependencies,
- * optionalDependencies or peerDependencies (no other field is read) is recorded beside it (none today). The falsifier never
- * stands down: every file that names the subject is judged by rows A-C at every run, so the first adoption is judged the day
- * it lands; today's live reading is the empty adoption (no file to judge), held beside a scratch-repository adoption whose
- * violations it finds exactly.
+ * names the subject, ABSENT otherwise; each reactive-fiber package (a name whose words hold the pair reactive fiber) that the
+ * root package.json names in dependencies, devDependencies, optionalDependencies or peerDependencies is recorded beside it
+ * (none today) [A1 replica: one such package in each of the four fields, one in overrides (never read), and a manifest below
+ * the root (listed and read as text, never read as a manifest)]. The falsifier never stands down: every file that names the
+ * subject is judged by rows A-C at every run, so the first adoption is judged the day it lands; today's live reading is the
+ * empty adoption (no file to judge), held beside a scratch-repository adoption whose violations it finds exactly.
  *
- * READINGS (each cut, branch and condition stated here has a pinned control; the pin holding it is named in brackets)
- * - WORDS [B1 words]: NFKC, a break at each lower-to-upper case change and before the last capital of an acronym run, lower
- *   case, the runs of a-z and 0-9 (ActivityBoundary reads activity boundary, queryView query view, DevTools dev tools,
- *   WARMContext warm context; snake_case and kebab-case split at their separators; a fullwidth letter folds to its letter).
- * - THE SUBJECT: the adjacent pair activity boundary (or boundaries), or the folded word activityboundary(ies).
- * - THE READ SET [A1]: every file git would commit (tracked or untracked, never ignored) at the repository root or below
- *   .agents/, .pi/, docs/, examples/, qa/ and src/, read as text. A file holding a NUL byte is binary: listed, never read. A
- *   listed path that cannot be read as a file is recorded unreadable; one gone before its read is dropped. A file is ANCHORED
- *   when it names the subject anywhere; only an anchored file is judged (R-UNANCHORED keeps Pi's own senses of warm, state
- *   and inspector out of it).
- * - SENTENCES [A2 cuts]: a text cut after ".", "!", "?" or ";" before white space or the line end, and at a blank line; a .md
- *   page (never another file) is also cut around a table row and a heading line and before a list item; a sentence wrapped
- *   over lines stays one. Code is read by the same cut, so a statement and the branch it opens read as one sentence up to
- *   their first terminator [A2 code].
+ * READINGS (the pin in brackets holds every form, condition and character class its reading names; a form a reading does not
+ * name is not claimed, and the residuals below name the senses the readers do not judge)
+ * - WORDS [B1 words, B1 nonSeparators]: NFKC; a break between a lower-case letter or a digit and the capital after it, and
+ *   before the last capital of a run of capitals that a lower-case letter follows; lower case; the words are then the runs
+ *   of a-z and 0-9, and every other character separates them. B1 words holds the examples: ActivityBoundary reads activity
+ *   boundary, queryView query view, DevTools dev tools, WARMContext warm context, Query2View query2 view; a digit inside,
+ *   closing or opening a run stays in it; every letter and digit read as one run; capitals alone read as one word;
+ *   snake_case and kebab-case split at their separators; a fullwidth letter folds to its letter, before the break is read
+ *   (query, a fullwidth V and iew read query view). B1 nonSeparators reads every Unicode scalar value between the letters q
+ *   and v and lists, as code point ranges, those that do not separate them: a-z, A-Z, 0-9 and the characters NFKC or lower
+ *   case turns into one of them.
+ * - THE SUBJECT [the judged set's vocabulary; B2 outside load]: the adjacent pair activity boundary (or boundaries), or the
+ *   folded word activityboundary(ies).
+ * - THE READ SET [A1]: every file git would commit at the repository root or below .agents/, .pi/, docs/, examples/, qa/ and
+ *   src/, read as text: tracked (in the index) or untracked, never one git ignores - by the root .gitignore, by a
+ *   directory's .gitignore, by .git/info/exclude or by the file core.excludesFile names [A1 replica: a tracked plant beside
+ *   the untracked ones, an ignored plant per source, a plant under each outside root, the root files]. A file holding a NUL
+ *   byte is binary: listed, never read. A listed path that cannot be read as a file is recorded unreadable; one gone before
+ *   its read is dropped. A file is ANCHORED when it names the subject anywhere; only an anchored file is judged
+ *   (R-UNANCHORED keeps Pi's own senses of warm, state and inspector out of it).
+ * - SENTENCES [A2 cuts, A2 nearMisses, A2 classes]: a line ends at each LF (a CRLF pair ends one line; a lone CR ends none).
+ *   A text is cut after ".", "!", "?" or ";" when white space or the line end follows, and at a blank line (a line of white
+ *   space only, or none). A .md page (never another file) is also cut around a table row (a line whose first character after
+ *   any white space is |) and around a heading line (up to three white-space characters, one to six #, then white space or
+ *   the line end), and before a list item (a line opening, after any white space, with -, + or *, or with ASCII digits and .
+ *   or ), then white space). A sentence wrapped over lines stays one. White space is JavaScript's \s throughout. A2 cuts
+ *   holds each cut (as a .md page and as another file): after each terminator before a space, and after . before a tab and
+ *   at the line end; at an empty line and between CRLF line ends; around a table row flush and indented by two spaces;
+ *   around a heading of one and of six #, indented by three spaces, and a bare #; before a list item opened by -, numbered
+ *   10) and indented by two spaces; A2 nearMisses holds the forms that stay one sentence: a terminator before a letter,
+ *   seven #, a heading indented by four spaces, a # or a list mark without white space, a number without its closer, a |
+ *   inside a line and a lone CR. A2 classes reads every BMP code point (every member of \s is one) in each single-character
+ *   place these cuts read and lists, as ranges, those that cut there: the line end, the terminator before a space, the
+ *   follower of a terminator, a blank line, the mark of a line read alone (# or |) and of a list item, the indentation
+ *   before |, before # and before a list mark, the follower of # and of a list mark, the digit and the closer of a list
+ *   number. Code is read by the same cut, so a statement and the branch it opens read as one sentence up to their first
+ *   terminator [A2 code].
  * - ROWS' READERS (each on one sentence of an anchored file; a finding is `<path>:<line> <row>:<families>`):
  *   A [A2, A3]: the WARM word beside an inference word (inference, infer and their inflections) or an effect word (effect,
  *      effects, effectful), with no refusal marker (not, no, never, nor, neither, without, cannot, the refuse and reject
- *      forms, or the n't contraction, straight or curly): a WARM precompute that attempts inference or an effect, as Pi's text
- *      states it.
+ *      forms, or the n't contraction, straight or curly): a WARM precompute that attempts inference or an effect, as Pi's
+ *      text states it.
  *   B [B1, B2]: a state word (state, states, active, warm, dormant, evicted) or the subject itself (no state word needed)
  *      beside a QueryView word (the pair query view(s), queryview(s)) or a speculative-execution-ownership pair (speculative
- *      execution(s), execution owner(ship), speculation owner(ship)), with no separation marker (not, no, never, nor, neither,
- *      without, cannot, separate, separately, separated, distinct, independent, independently, apart, n't): boundary state
- *      aliased to either identity.
+ *      execution(s), execution owner(ship), speculation owner(ship)), with no separation marker (not, no, never, nor,
+ *      neither, without, cannot, separate, separately, separated, distinct, independent, independently, apart, n't):
+ *      boundary state aliased to either identity.
  *   C [C1]: a DevTools-style surface word (devtools, the pair dev tools, inspector, inspectors) beside a driving word (the
  *      mutate, command, control, write, dispatch, drive and transition families), with no read-only marker (not, no, never,
  *      nor, neither, without, cannot, the pair read only, n't): a surface that does more than consume.
- *   A modal (should, must, shall, will), an if/when condition or "only" alone is never a marker [A2]: "a WARM context only
- *   calls inference" is a finding.
- * - THE HOUSE ANALOG [C2]: Pi's DevTools-style surfaces are the src/ modules whose path names a surface word (a file that is
- *   not a module, or a module outside src/, never is one); today exactly src/ui/workflow-inspector.ts, whose header reads
- *   "Read-only terminal inspector over the bounded producer-qualified observation projection." Each surface's VALUE import
- *   closure must hold no node builtin and no unresolved relative module. It follows static imports and re-exports that are
- *   not type-only (one whose every named element is type-only counts as type-only: Pi's tsconfig does not set
- *   verbatimModuleSyntax, so TypeScript erases it), import-equals requires that are not type-only, and require() and import()
- *   of a string literal; a
- *   relative specifier resolves to the first file of: .js read as .ts, .mjs read as .mts, the path as written, the path plus
- *   .ts, the path's index.ts; packages are recorded and not followed. A surface whose closure reaches a builtin can launch,
- *   write or open a socket of its own and is no longer only a consumer of what the host hands it; IO through an ambient
- *   global is not read (R-AMBIENT-IO).
+ *   The n't contraction, straight or curly, is a marker of each row [A2 doc and contraction, B1 contraction, C1
+ *   contraction]. None of should, must, shall, will, may, might, can, could, would, if, when or "only" alone is a marker of
+ *   any row [A2 never, B1 never, C1 never]: "a WARM context only calls inference" is a finding.
+ * - THE HOUSE ANALOG [C2]: Pi's DevTools-style surfaces are the src/ modules whose path (a directory or the file name) names
+ *   a surface word; a module is a .ts, .tsx, .mts, .cts, .js, .mjs or .cjs file, and neither a file that is not one (a page,
+ *   data, a .jsx file) nor a module outside src/ is a surface [C2 controls: a surface per extension and one named by its
+ *   directory; C2 notSurfaces]. Today the surfaces are exactly src/ui/workflow-inspector.ts, whose header reads "Read-only
+ *   terminal inspector over the bounded producer-qualified observation projection." Each surface's VALUE import closure must
+ *   hold no node builtin (Node's isBuiltin: with or without node:, a subpath too) and no unresolved local module. A .ts,
+ *   .mts or .cts module is parsed as TypeScript (a type assertion reads as one), a .tsx, .js, .mjs or .cjs module with JSX
+ *   (a JSX element reads as one) [C2 controls: each extension's surface loads its builtin in a syntax only that parse reads
+ *   - a require() under a type assertion, or a require() as a JSX child]. Its value specifiers are read from the syntax,
+ *   each form a C2 control: an import with no clause; a default, a namespace, a deferred namespace (import defer), a default
+ *   plus named, a default plus namespace and a named import; an empty named list (import {} from and export {} from: read,
+ *   though TypeScript erases it - fail-closed); export *, export * as ns and named re-exports; import-equals (export import
+ *   too); require() and import() of a string or a no-substitution template literal. Never read, each a C2 control beside its
+ *   value twin: import type (default, namespace or named); an import with no default whose named elements are all type-only;
+ *   export type * (with or without as ns), export type { } and a re-export whose named elements are all type-only (Pi's
+ *   tsconfig does not set verbatimModuleSyntax, so TypeScript erases each of these); import type x = require(); an import()
+ *   in a type position (typeof import()). A declaration read is read whether or not its bindings are used (TypeScript drops
+ *   an unused one; this reader never does: fail-closed) [C2 controls: an unused named import]. A local specifier is one
+ *   opening with "." or "/": one opening with "/" names no file of the repository and is unresolved; one opening with "."
+ *   (./, ../ or any other) is joined to the importing module's directory and resolves to the first file of: the path with
+ *   .js read as .ts (a .js specifier only), the path with .mjs read as .mts (an .mjs specifier only; the two readings never
+ *   apply together), the path as written, the path plus .ts, the path's index.ts. A candidate that is not a file is skipped,
+ *   one outside the repository is never read, and a specifier no candidate resolves is unresolved [C2 controls: each
+ *   candidate alone; each adjacent pair present together - .js read as .ts and .mjs read as .mts each before the path as
+ *   written, the path as written before the path plus .ts, the path plus .ts before index.ts - where the earlier wins; a
+ *   directory candidate; a dot form; an absolute path; an escaping path; a missing module]. Any other specifier is a
+ *   package: recorded and not followed. A surface whose closure reaches a builtin can launch, write or open a socket of its
+ *   own and is no longer only a consumer of what the host hands it; IO through an ambient global is not read (R-AMBIENT-IO),
+ *   nor a module loaded by a property loader, a createRequire loader, a computed specifier or a global (R-COMPUTED-LOAD).
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label; every witness is held to the roster):
  *  A "adoption-time falsifier that a WARM precompute attempting inference or an effect is refused": A1 the adoption gate - the
- *    producer facts read UNSHIPPED beside the five producer controls; the live read set (floors per root) reads ABSENT with no
+ *    producer facts read UNSHIPPED beside the eight producer controls; the live read set (floors per root) reads ABSENT with no
  *    finding, no unreadable file and no reactive-fiber dependency; ONE pass over the live set and in-memory positives finds
  *    exactly the positives; the same pass over a scratch git repository holding an adoption finds exactly its plants (a
- *    finding in every read root and for every row; untracked files read) and nothing from a file under each outside root, an
- *    ignored file or a binary file, reads the four dependency fields of its package.json and no other, and records a listed
- *    directory unreadable; A2 the WARM-inference reader with the sentence cuts; A3 the WARM-effect reader; each over doc and
- *    code sentences with near misses.
+ *    finding in every read root and for every row; tracked and untracked files read) and nothing from a file under each
+ *    outside root, a file each ignore source hides or a binary file, reads the four dependency fields of its root
+ *    package.json and no other field or manifest, and records a listed directory unreadable; A2 the WARM-inference reader with
+ *    the sentence cuts, their near misses and their character classes, the contraction and the words never a marker; A3 the
+ *    WARM-effect reader; each over doc and code sentences with near misses.
  *  B "that boundary state never aliases QueryView identity or speculative execution ownership": B1 the QueryView reader with
- *    the word readings; B2 the speculative-execution-ownership reader and the outside load of every vocabulary member; each
- *    with its separation markers and near misses.
+ *    the word readings (the examples and every scalar value between two letters), the contraction and the words never a
+ *    marker; B2 the speculative-execution-ownership reader and the outside load of every vocabulary member; each with its
+ *    separation markers and near misses.
  *  C "and that DevTools-style surfaces stay read-only consumers": C1 the surface reader (a sentence may read in two rows, each
- *    finding kept); C2 the house analog - the surface set, each surface's closure read pure, its direct value imports and
- *    packages, and the closure reader's controls over a scratch git repository (a builtin three modules deep; each type-only
- *    form beside its value and mixed twins; import-equals; dynamic; require; re-export; each resolution candidate;
- *    unresolved; a non-module file and a module outside src/ named for a surface).
+ *    finding kept), the contraction and the words never a marker; C2 the house analog - the surface set, each surface's
+ *    closure read pure, its direct value imports and packages, and the closure reader's controls over a scratch git
+ *    repository (a builtin three modules deep; each declaration form beside its type-only and mixed twins; import-equals;
+ *    dynamic; require; the literal forms; re-exports; the builtin forms; each module extension and a surface named by its
+ *    directory; each resolution candidate and each adjacent pair of them; a directory candidate, a dot form, an absolute
+ *    path, an escaping path and a missing module; the files named for a surface that are not surfaces).
  * OUTSIDE ANCHORS (the judged-set case): the owner filing's row of wb-km7q.6 in the tracked bead export (.beads/issues.jsonl;
  *   the first notes line opening with its citation, so appended notes never move it): its acceptance clause is the three
  *   labels joined, each label tiled by its pins; label A reads quiet only by "refused" and, without it, as a finding of
@@ -126,7 +175,8 @@
  *   (test/fixtures/tsx-activity-boundary-roster.json); a last case reads that every pin ran to its witness.
  * RESIDUALS (named; each member has a pinned quiet row held beside its unsilenced twin, which reads as a finding, an impure
  *   closure or, for R-SYNONYM, a moved reading): R-OUTSIDE-ROOTS (A1) a claim under .beads/, .codex/, .github/, media/,
- *   new-feedback/, test/ or vendor/, in an ignored file or in a binary file (a NUL byte), is never judged; R-UNANCHORED (A2)
+ *   new-feedback/, test/ or vendor/, in a file git ignores (a row per ignore source) or in a binary file (a NUL byte), is
+ *   never judged; R-UNANCHORED (A2)
  *   a file that never names the subject is never judged (Pi's own senses of the words); R-SPLIT (A2) the WARM word and the
  *   family in different sentences (a pronoun: "It calls inference."); R-MARKER-ANYWHERE (A3) a marker anywhere in the
  *   sentence quiets it, whatever it qualifies, in prose and in a code comment read with the statement after it; R-PARAPHRASE
@@ -138,7 +188,8 @@
  *   R-PACKAGE (C2) IO reached through a package's own code (packages are recorded, never followed); R-INJECTED (C2) IO the
  *   host hands a surface (a callback, an object it calls); R-AMBIENT-IO (C2) IO through an ambient global with no import (a
  *   global fetch, a process stream); R-COMPUTED-LOAD (C2) a module loaded by a computed specifier, by a createRequire loader
- *   (only the loader's own node:module import is read) or by a global (process.getBuiltinModule).
+ *   (only the loader's own node:module import is read), by a property loader (module.require) or by a global
+ *   (process.getBuiltinModule).
  *
  * Display paths added: none. Test-only: the replica trees live in makeScratch scratch with the leak guard installed; Pi's
  * files, the bead export and docs/10 are only read; nothing is spawned but git.
@@ -338,6 +389,24 @@ function words(text: string): string[] {
     .split(/[^a-z0-9]+/)
     .filter(word => word !== "");
 }
+/** The code points 0..`top` (surrogates skipped) that `test` holds for, as ranges of upper-case hex ("0020", "0030-0039"). */
+function codePoints(test: (char: string) => boolean, top: number): string[] {
+  const out: string[] = [];
+  const hex = (point: number): string => point.toString(16).toUpperCase().padStart(4, "0");
+  let open = -1;
+  for (let point = 0; point <= top + 1; point += 1) {
+    const holds = point <= top && (point < 0xd800 || point > 0xdfff) && test(String.fromCodePoint(point));
+    if (holds && open < 0) open = point;
+    if (!holds && open >= 0) {
+      out.push(open === point - 1 ? hex(open) : `${hex(open)}-${hex(point - 1)}`);
+      open = -1;
+    }
+  }
+  return out;
+}
+/** The highest Unicode scalar value, and the highest of the Basic Multilingual Plane. */
+const UNICODE_TOP = 0x10ffff;
+const BMP_TOP = 0xffff;
 const hasPair = (tokens: readonly string[], pairs: readonly Pair[]): boolean => tokens.some((word, index) => pairs.some(([first, second]) => word === first && tokens[index + 1] === second));
 const names = (tokens: readonly string[], lexicon: Lexicon): boolean => tokens.some(word => lexicon.words.includes(word)) || hasPair(tokens, lexicon.pairs);
 /** Each row's subject under a vocabulary: A the WARM word; B a state word or the boundary itself; C a DevTools-style surface. */
@@ -412,6 +481,34 @@ function sentences(text: string, markdown: boolean): { readonly line: number; re
   flush();
   return out;
 }
+/** How a .md page cuts one line read between "a" and "z": joined to both, cut before it, cut around it, blank, or other. */
+function shapeOf(line: string): string {
+  const out = sentences(`a\n${line}\nz`, true);
+  const first = out[0];
+  const last = out[out.length - 1];
+  if (out.length === 1) return "joined";
+  if (first === undefined || last === undefined || first.text !== "a" || first.line !== 1) return "other";
+  if (last.text === "z" && last.line === 3) return out.length === 2 ? "blank" : out[1]?.line === 2 ? "around" : "other";
+  return last.text.endsWith(" z") && out.some(sentence => sentence.line === 2) ? "before" : "other";
+}
+/** The single-character classes the cuts read, each probed over every BMP code point: the line end, the terminators and the
+ * white space after one, a blank line, the marks of a line read alone (a table row, a heading) and of a list item, and each
+ * indentation, follower, digit and closer those marks take. */
+const CLASS_PROBES: Readonly<Record<string, (char: string) => boolean>> = {
+  "ends a line": char => sentences(`a${char}#`, true).length === 2,
+  "ends a sentence before a space": char => sentences(`a${char} b`, false).length === 2,
+  "follows a terminator": char => sentences(`a.${char}b`, false).length === 2,
+  "makes a blank line": char => shapeOf(char) === "blank",
+  "marks a line read alone": char => shapeOf(`${char} b`) === "around",
+  "marks a list item": char => shapeOf(`${char} b`) === "before",
+  "indents a table row": char => shapeOf(`${char}| b`) === "around",
+  "indents a heading": char => shapeOf(`${char}# b`) === "around",
+  "follows a heading mark": char => shapeOf(`#${char}b`) === "around",
+  "indents a list item": char => shapeOf(`${char}- b`) === "before",
+  "follows a list mark": char => shapeOf(`-${char}b`) === "before",
+  "numbers a list item": char => shapeOf(`${char}) b`) === "before",
+  "closes a list number": char => shapeOf(`1${char} b`) === "before",
+};
 
 // ---------------------------------------------------------------------------------------------------------------- the survey
 const NUL = String.fromCharCode(0);
@@ -506,13 +603,17 @@ interface ProducerFlip {
   readonly subjectSrcFiles: number;
   readonly triage: string;
 }
-/** The producer controls: all three conditions flipped, then each one held back (the status line once per phrase). */
+/** The producer controls: all three conditions flipped, then each one held back (the status line once per phrase and once
+ * capitalized), and the two near misses that stay flipped (a longer status word, a triage line not in upper case). */
 const PRODUCER_FLIPS: Readonly<Record<string, ProducerFlip>> = {
   "all three flipped": { status: "shipped extensions", subjectSrcFiles: 1, triage: "marked SHIPPED" },
   "status still proposed": { status: "proposed extensions", subjectSrcFiles: 1, triage: "marked SHIPPED" },
   "status still claims none shipped": { status: "shipped extensions; none of the new exports claimed shipped", subjectSrcFiles: 1, triage: "marked SHIPPED" },
   "src still names no subject": { status: "shipped extensions", subjectSrcFiles: 0, triage: "marked SHIPPED" },
   "triage still PROPOSED": { status: "shipped extensions", subjectSrcFiles: 1, triage: "marked PROPOSED" },
+  "status still Proposed, capitalized": { status: "Proposed extensions", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  "status word only holding proposed": { status: "unproposed extensions", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  "triage reading Proposed, not upper case": { status: "shipped extensions", subjectSrcFiles: 1, triage: "marked Proposed" },
 };
 /** The recorded producer with line 3's status phrase, the tip's subject src count and the triage marking replaced. */
 function producerWith(flip: ProducerFlip): ProducerReading {
@@ -532,7 +633,7 @@ interface Closure {
 }
 /** The value specifiers of one module: imports and re-exports that are not type-only, import-equals, require() and import(). */
 function valueSpecifiers(path: string, text: string): string[] {
-  const kind = /\.(?:ts|tsx|mts|cts)$/.test(path) ? ts.ScriptKind.TS : ts.ScriptKind.JS;
+  const kind = /\.tsx$/.test(path) ? ts.ScriptKind.TSX : /\.(?:ts|mts|cts)$/.test(path) ? ts.ScriptKind.TS : ts.ScriptKind.JS;
   const source = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, kind);
   const out: string[] = [];
   const visit = (node: ts.Node): void => {
@@ -557,10 +658,15 @@ function valueSpecifiers(path: string, text: string): string[] {
   return out;
 }
 const isLocal = (specifier: string): boolean => specifier.startsWith(".") || specifier.startsWith("/");
+/** A local specifier's module. One opening with "/" names no file of the repository: unresolved. One opening with "." is
+ * joined to the importing module's directory and resolves to the first file of the candidates; an extension reading is a
+ * candidate only where its suffix applies, and a candidate outside the repository is never read. */
 function resolveLocal(base: string, from: string, specifier: string): string | undefined {
+  if (specifier.startsWith("/")) return undefined;
   const joined = posix.normalize(posix.join(posix.dirname(from), specifier));
-  const candidates = [joined.replace(/\.js$/, ".ts"), joined.replace(/\.mjs$/, ".mts"), joined, `${joined}.ts`, `${joined}/index.ts`];
-  return candidates.find(candidate => !candidate.startsWith("..") && !candidate.startsWith("/") && existsSync(join(base, candidate)) && statSync(join(base, candidate)).isFile());
+  const readings = [joined.replace(/\.js$/, ".ts"), joined.replace(/\.mjs$/, ".mts")].filter(candidate => candidate !== joined);
+  const candidates = [...readings, joined, `${joined}.ts`, `${joined}/index.ts`];
+  return candidates.find(candidate => !candidate.startsWith("..") && existsSync(join(base, candidate)) && statSync(join(base, candidate)).isFile());
 }
 /** A module's value import closure: local modules followed, packages recorded, builtins and unresolved locals listed. */
 function closureOf(base: string, entry: string): Closure {
@@ -599,22 +705,44 @@ const scratches: string[] = [];
 afterEach(() => {
   removeScratch(...scratches.splice(0));
 });
-/** A scratch git repository holding `files`, left untracked, so gitList reads it exactly as it reads Pi's tree. */
-function gitReplica(prefix: string, files: Readonly<Record<string, string>>): string {
+interface ReplicaOptions {
+  /** Paths `git add` puts in the index (tracked); every other file stays untracked. */
+  readonly tracked?: readonly string[];
+  /** Patterns of the repository's .git/info/exclude. */
+  readonly exclude?: readonly string[];
+  /** Patterns of a file the repository's own core.excludesFile names. */
+  readonly excludesFile?: readonly string[];
+  /** Files written beside the repository, outside it (the repository is then the scratch's repo/ directory). */
+  readonly outside?: Readonly<Record<string, string>>;
+}
+/** A scratch git repository holding `files`, untracked unless named tracked, so gitList reads it exactly as it reads Pi's tree. */
+function gitReplica(prefix: string, files: Readonly<Record<string, string>>, options: ReplicaOptions = {}): string {
   const dir = makeScratch(prefix);
   scratches.push(dir);
-  execFileSync("git", ["init", "-q"], { cwd: dir, stdio: "pipe" });
+  const repo = options.outside === undefined ? dir : join(dir, "repo");
+  mkdirSync(repo, { recursive: true });
+  execFileSync("git", ["init", "-q"], { cwd: repo, stdio: "pipe" });
+  for (const [path, text] of Object.entries(options.outside ?? {})) writeFileSync(join(dir, path), text);
   for (const [path, text] of Object.entries(files)) {
-    mkdirSync(dirname(join(dir, path)), { recursive: true });
-    writeFileSync(join(dir, path), text);
+    mkdirSync(dirname(join(repo, path)), { recursive: true });
+    writeFileSync(join(repo, path), text);
   }
-  return dir;
+  mkdirSync(join(repo, ".git", "info"), { recursive: true });
+  if (options.exclude !== undefined) writeFileSync(join(repo, ".git", "info", "exclude"), `${options.exclude.join("\n")}\n`);
+  if (options.excludesFile !== undefined) {
+    const excludes = join(repo, ".git", "zz-excludes");
+    writeFileSync(excludes, `${options.excludesFile.join("\n")}\n`);
+    execFileSync("git", ["config", "core.excludesFile", excludes], { cwd: repo, stdio: "pipe" });
+  }
+  if (options.tracked !== undefined && options.tracked.length > 0) execFileSync("git", ["add", "--", ...options.tracked], { cwd: repo, stdio: "pipe" });
+  return repo;
 }
 /** A template placeholder opener for planted code, spelled in two parts so no literal of this file holds one. */
 const HOLE = "$" + "{";
 const LOOKALIKE_E = String.fromCodePoint(0x0435);
 const INVISIBLE = String.fromCodePoint(0x200b);
 const FULLWIDTH_Q = String.fromCodePoint(0xff31);
+const FULLWIDTH_V = String.fromCodePoint(0xff36);
 const ADAPTER = "// ActivityBoundary adapter.\n";
 /** The findings of one anchored code or doc plant (the adapter comment names the subject on line 1). */
 const codeFindings = (body: string, path = "src/plant.ts"): string[] => [...survey([[path, `${ADAPTER}${body}`]]).findings];
@@ -632,6 +760,26 @@ const CUTS: Readonly<Record<string, string>> = {
   "around a table row": "| A WARM context calls inference |\n| the host never waits |",
   "around a heading line": "# A WARM context calls inference\nthe host never waits",
   "before a list item": "the host never waits\n- A WARM context calls inference",
+  "after . before a tab": "A WARM context calls inference.\tThe host never waits.",
+  "after . at the line end": "A WARM context calls inference.\nthe host never waits",
+  "at a blank line between CRLF line ends": "A WARM context calls inference\r\n\r\nthe host never waits",
+  "around a table row indented by two spaces": "the host never waits\n  | A WARM context calls inference |",
+  "around a heading of six #": "###### A WARM context calls inference\nthe host never waits",
+  "around a heading indented by three spaces": "   # A WARM context calls inference\nthe host never waits",
+  "around a bare # line": "A WARM context calls inference\n#\nthe host never waits",
+  "before a list item numbered 10)": "the host never waits\n10) A WARM context calls inference",
+  "before a list item indented by two spaces": "the host never waits\n  - A WARM context calls inference",
+};
+/** The near misses: no cut keeps the WARM part apart from its marker, so each reads quiet as a .md page and as another file. */
+const NEAR_MISSES: Readonly<Record<string, string>> = {
+  "a terminator before a letter": "A WARM context calls inference.the host never waits",
+  "a heading of seven #": "A WARM context calls inference\n####### the host never waits",
+  "a heading indented by four spaces": "A WARM context calls inference\n    # the host never waits",
+  "a # without white space": "A WARM context calls inference\n#the host never waits",
+  "a list mark without white space": "A WARM context calls inference\n-the host never waits",
+  "a number without its closer": "A WARM context calls inference\n1 the host never waits",
+  "a pipe inside a line": "A WARM context calls inference | the host never waits",
+  "a lone carriage return": "A WARM context calls inference\rthe host never waits",
 };
 /** The joined twins: one sentence (its marker quiets the WARM part), a sentence wrapped over two lines either way. */
 const JOINED: readonly string[] = ["A WARM context calls inference and the host never waits.", "A WARM context calls inference\nthe host never waits", "A WARM context\ncalls inference."];
@@ -644,13 +792,33 @@ const WORD_CASES: Readonly<Record<string, string>> = {
   "snake case": "activity_boundary",
   "kebab case": "activity-boundary",
   "fullwidth letter": `${FULLWIDTH_Q}ueryView`,
+  "a fullwidth capital after a lower-case letter": `query${FULLWIDTH_V}iew`,
+  "a digit inside a run": "query2view",
+  "a digit closing a run": "ActivityBoundary2",
+  "a digit opening a run": "2warm",
+  "a digit before a capital": "Query2View",
+  "every letter and digit": "abcdefghijklmnopqrstuvwxyz0123456789",
+  "capitals alone": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 };
+/** The words that are never a marker: the modals, the two conditions and "only". */
+const MODALS: readonly string[] = ["should", "must", "shall", "will", "may", "might", "can", "could", "would"];
+const CONDITIONS: readonly string[] = ["if", "when"];
+const capital = (word: string): string => `${word.slice(0, 1).toUpperCase()}${word.slice(1)}`;
+/** One row's sentences holding each word that is never a marker, each a finding of that row. */
+const neverMarkerTexts = (modal: (word: string) => string, condition: (word: string) => string, only: string): string[] => [...MODALS.map(modal), ...CONDITIONS.map(word => condition(capital(word))), only];
 /** One sentence that names the subject with a row-A violation: planted wherever a file must stay unjudged, and once where it is read. */
 const OUTSIDE_TEXT = "The ActivityBoundary keeps a WARM context that calls inference.\n";
 const READ_TWIN = "docs/read.md";
 const BINARY_PLANT = "docs/binary.md";
-/** A plant under each outside root, and the ignored one. */
-const UNREAD_PLANTS: readonly string[] = [...CONSTANTS.outside.map(root => `${root}/plant.md`), "docs/ignored.md"];
+/** The plant git holds in its index (tracked), read beside the untracked ones. */
+const TRACKED_PLANT = "docs/tracked.md";
+/** The ignored plants, one per ignore source git applies: the root .gitignore, a directory's .gitignore, .git/info/exclude
+ * and the file core.excludesFile names. */
+const IGNORED_PLANTS: readonly string[] = ["docs/ignored.md", "docs/nested/ignored.md", "docs/excluded.md", "docs/global-ignored.md"];
+/** A plant under each outside root, and the ignored ones. */
+const UNREAD_PLANTS: readonly string[] = [...CONSTANTS.outside.map(root => `${root}/plant.md`), ...IGNORED_PLANTS];
+/** A manifest below the root, naming a reactive-fiber package: listed and read as text, never read as the manifest. */
+const NESTED_MANIFEST = "examples/pkg/package.json";
 /** The replica's manifest: one reactive-fiber package in each dependency field, and one in a field that is never read. */
 const REPLICA_MANIFEST = `${JSON.stringify({ dependencies: { "@reactive-fiber/tsx": "0.1.668" }, devDependencies: { "@reactive-fiber/zz-dev": "0.0.0" }, optionalDependencies: { "@reactive-fiber/zz-optional": "0.0.0" }, peerDependencies: { "@reactive-fiber/zz-peer": "0.0.0" }, overrides: { "@reactive-fiber/zz-override": "0.0.0" } }, null, 2)}\n`;
 /** The adoption the A1 replica plants: a finding in every read root and for every row, a negated twin, an unanchored page,
@@ -667,10 +835,15 @@ const ADOPTION_PLANTS: Readonly<Record<string, string>> = {
   "README.md": "The inspector writes the ActivityBoundary state.\n",
   ...Object.fromEntries(UNREAD_PLANTS.map(path => [path, OUTSIDE_TEXT])),
   [READ_TWIN]: OUTSIDE_TEXT,
+  [TRACKED_PLANT]: OUTSIDE_TEXT,
   [BINARY_PLANT]: `${OUTSIDE_TEXT}${NUL}\n`,
   ".gitignore": "docs/ignored.md\n",
+  "docs/nested/.gitignore": "ignored.md\n",
   "package.json": REPLICA_MANIFEST,
+  [NESTED_MANIFEST]: `${JSON.stringify({ dependencies: { "@reactive-fiber/zz-nested": "0.0.0" } }, null, 2)}\n`,
 };
+/** The replica's git setup beside its files: the tracked plant, and the two ignore sources that live outside the tree. */
+const ADOPTION_GIT: ReplicaOptions = { tracked: [TRACKED_PLANT], exclude: ["docs/excluded.md"], excludesFile: ["docs/global-ignored.md"] };
 /** The surfaces the C2 replica plants: the closure forms beside their twins, each resolution candidate, two non-surfaces named
  * for one, and the residuals. */
 const SURFACE_PLANTS: Readonly<Record<string, string>> = {
@@ -690,6 +863,59 @@ const SURFACE_PLANTS: Readonly<Record<string, string>> = {
   "src/ui/plant-require-dev-tools.ts": 'const cp = require("child_process");\nexport { cp };\n',
   "src/ui/plant-reexport-inspector.ts": 'export * from "node:net";\n',
   "src/ui/plant-unresolved-inspector.ts": 'import { z } from "./missing.js";\nexport const q = z;\n',
+  // Each remaining declaration form, beside its type-only twin where TypeScript has one.
+  "src/ui/plant-bare-import-inspector.ts": 'import "node:child_process";\n',
+  "src/ui/plant-default-inspector.ts": 'import fs from "node:fs";\nexport const d = fs;\n',
+  "src/ui/plant-typed-default-inspector.ts": 'import type fs from "node:fs";\nexport type F = typeof fs;\n',
+  "src/ui/plant-namespace-inspector.ts": 'import * as fs from "node:fs";\nexport const n = fs;\n',
+  "src/ui/plant-typed-namespace-inspector.ts": 'import type * as fs from "node:fs";\nexport type F = typeof fs;\n',
+  "src/ui/plant-deferred-inspector.ts": 'import defer * as fs from "node:fs";\nexport const n = fs;\n',
+  "src/ui/plant-default-names-inspector.ts": 'import fs, { statSync } from "node:fs";\nexport const d = [fs, statSync];\n',
+  "src/ui/plant-default-typed-names-inspector.ts": 'import fs, { type Stats } from "node:fs";\nexport const d = fs;\nexport type S = Stats;\n',
+  "src/ui/plant-default-namespace-inspector.ts": 'import fs, * as ns from "node:fs";\nexport const d = [fs, ns];\n',
+  "src/ui/plant-empty-names-inspector.ts": 'import {} from "node:fs";\n',
+  "src/ui/plant-empty-export-inspector.ts": 'export {} from "node:fs";\n',
+  "src/ui/plant-namespace-export-inspector.ts": 'export * as ns from "node:net";\n',
+  "src/ui/plant-typed-namespace-export-inspector.ts": 'export type * as ns from "node:net";\n',
+  "src/ui/plant-typed-reexport-inspector.ts": 'export type * from "node:net";\n',
+  "src/ui/plant-export-equals-inspector.ts": 'export import fs = require("node:fs");\n',
+  "src/ui/plant-template-dynamic-devtools.ts": "export const load = () => import(`node:child_process`);\n",
+  "src/ui/plant-template-require-devtools.ts": "const cp = require(`node:child_process`);\nexport { cp };\n",
+  "src/ui/plant-subpath-inspector.ts": 'import { readFile } from "fs/promises";\nexport const r = readFile;\n',
+  "src/ui/plant-unused-inspector.ts": 'import { statSync } from "node:fs";\n',
+  "src/ui/plant-type-import-inspector.ts": 'export type F = typeof import("node:fs");\n',
+  // A surface per module extension, each loading its builtin in a syntax only its own parse reads (a type assertion in
+  // TypeScript, a JSX child with JSX), and one named for a surface by its directory.
+  "src/ui/plant-assertion-inspector.ts": 'export const e = <unknown>require("node:os");\n',
+  "src/ui/plant-ext-inspector.mts": 'export const e = <unknown>require("node:os");\n',
+  "src/ui/plant-ext-inspector.cts": 'export const e = <unknown>require("node:os");\n',
+  "src/ui/plant-ext-inspector.tsx": 'export const view = <b>{require("node:os")}</b>;\n',
+  "src/ui/plant-ext-inspector.js": 'export const view = <b>{require("node:os")}</b>;\n',
+  "src/ui/plant-ext-inspector.mjs": 'export const view = <b>{require("node:os")}</b>;\n',
+  "src/ui/plant-ext-inspector.cjs": 'module.exports = <b>{require("node:os")}</b>;\n',
+  "src/ui/devtools/plant-view.ts": 'import { EOL } from "node:os";\nexport const e = EOL;\n',
+  "src/ui/plant-inspector-data.json": '{ "fs": "node:fs" }\n',
+  "src/ui/plant-inspector-view.jsx": 'import { EOL } from "node:os";\nexport const e = EOL;\n',
+  // The resolution order: each adjacent pair of candidates present together, the earlier one pure and the later impure.
+  "src/ui/plant-order-js-inspector.ts": 'import { o } from "./plant-o1.js";\nexport const x = o;\n',
+  "src/ui/plant-o1.ts": "export const o = 1;\n",
+  "src/ui/plant-o1.js": 'import { arch } from "node:os";\nexport const o = arch;\n',
+  "src/ui/plant-order-mjs-inspector.ts": 'import { o } from "./plant-o2.mjs";\nexport const x = o;\n',
+  "src/ui/plant-o2.mts": "export const o = 2;\n",
+  "src/ui/plant-o2.mjs": 'import { arch } from "node:os";\nexport const o = arch;\n',
+  "src/ui/plant-order-written-inspector.ts": 'import { o } from "./plant-o3.js";\nexport const x = o;\n',
+  "src/ui/plant-o3.js": "export const o = 3;\n",
+  "src/ui/plant-o3.js.ts": 'import { arch } from "node:os";\nexport const o = arch;\n',
+  "src/ui/plant-order-index-inspector.ts": 'import { o } from "./plant-o4";\nexport const x = o;\n',
+  "src/ui/plant-o4.ts": "export const o = 4;\n",
+  "src/ui/plant-o4/index.ts": 'import { arch } from "node:os";\nexport const o = arch;\n',
+  // The specifier shapes: a dot form other than ./ and ../, an absolute path, and a path that leaves the repository.
+  "src/ui/plant-dot-inspector.ts": 'import { s } from ".plant-dot";\nexport const x = s;\n',
+  "src/ui/.plant-dot.ts": 'import { arch } from "node:os";\nexport const s = arch;\n',
+  "src/ui/plant-absolute-inspector.ts": 'import { s } from "/plant-abs.js";\nexport const x = s;\n',
+  "src/ui/plant-abs.ts": "export const s = 0;\n",
+  "src/ui/plant-escape-inspector.ts": 'import { s } from "../../../plant-outside.js";\nexport const x = s;\n',
+  "src/ui/plant-property-loader-inspector.ts": 'export const cp = (): unknown => module.require("node:child_process");\n',
   "src/ui/plant-mts-inspector.ts": 'import { m } from "./plant-m.mjs";\nexport const x = m;\n',
   "src/ui/plant-m.mts": 'import { hostname } from "node:os";\nexport const m = hostname;\n',
   "src/ui/plant-js-inspector.ts": 'import { j } from "./plant-j.js";\nexport const x = j;\n',
@@ -711,6 +937,10 @@ const SURFACE_PLANTS: Readonly<Record<string, string>> = {
   "src/ui/plant-loader-inspector.ts": 'import { createRequire } from "node:module";\nconst load = createRequire(import.meta.url);\nexport const cp = load("node:child_process");\n',
   "src/ui/plant-global-load-inspector.ts": 'export const fs = (): unknown => process.getBuiltinModule("node:fs");\n',
 };
+/** The file beside the C2 replica, outside its repository, that the escaping specifier would reach if it were read. */
+const SURFACE_OUTSIDE: Readonly<Record<string, string>> = { "plant-outside.ts": 'import { arch } from "node:os";\nexport const s = arch;\n' };
+/** Files named for a surface that are not surfaces: three that are not modules (a page, data, a .jsx file) and a module outside src/. */
+const NOT_SURFACES: readonly string[] = ["src/ui/plant-inspector-notes.md", "src/ui/plant-inspector-data.json", "src/ui/plant-inspector-view.jsx", "qa/plant-inspector.mjs"];
 const summary = (closure: Closure): { [key: string]: Json } => ({ pure: pure(closure), builtins: closure.builtins, unresolved: closure.unresolved, packages: closure.packages });
 
 // ------------------------------------------------------------------------------------------------------------------- the pins
@@ -730,7 +960,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const count = (root: string): number => files.filter(path => (root === "" ? atRoot(path) : path.startsWith(`${root}/`))).length;
     const floors = { files: files.length >= FLOORS.files, root: count("") >= FLOORS.root, src: count("src") >= FLOORS.src, docs: count("docs") >= FLOORS.docs, qa: count("qa") >= FLOORS.qa, examples: count("examples") >= FLOORS.examples };
     // The same pass over a scratch git repository holding an adoption: exactly its plants, never an unread plant.
-    const replica = gitReplica("km7q6-adopt-", ADOPTION_PLANTS);
+    const replica = gitReplica("km7q6-adopt-", ADOPTION_PLANTS, ADOPTION_GIT);
     const listed = gitList(replica);
     const mirror = survey(readTexts(replica, listed).texts);
     return {
@@ -790,6 +1020,9 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       ],
       cuts: Object.fromEntries(Object.entries(CUTS).map(([name, text]) => [name, [cutFindings(text, "docs/cut.md"), cutFindings(text, "docs/cut.txt")]])),
       joined: JOINED.map(text => cutFindings(text, "docs/cut.md")),
+      nearMisses: Object.fromEntries(Object.entries(NEAR_MISSES).map(([name, text]) => [name, [cutFindings(text, "docs/cut.md"), cutFindings(text, "docs/cut.txt")]])),
+      classes: Object.fromEntries(Object.entries(CLASS_PROBES).map(([name, test]) => [name, codePoints(test, BMP_TOP)])),
+      never: verdicts(neverMarkerTexts(word => `A WARM context ${word} call inference.`, word => `${word} the context is WARM it calls inference.`, "A WARM context only calls inference.")),
       quiet: {
         "R-UNANCHORED": [docFindings(unanchored), docFindings(`The ActivityBoundary holds the context.\n\n${unanchored}`)],
         "R-SPLIT": [docFindings("The ActivityBoundary context is WARM. It calls inference.\n"), docFindings("The ActivityBoundary context is WARM and calls inference.\n")],
@@ -835,6 +1068,9 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     ]),
     code: [codeFindings(`export const key = \`${HOLE}activityState}:${HOLE}queryView.id}\`;\n`), codeFindings("export const keys = { state: 1, view: 2 };\n")],
     words: Object.fromEntries(Object.entries(WORD_CASES).map(([name, text]) => [name, words(text).join(" ")])),
+    nonSeparators: codePoints(char => words(`q${char}v`).join(" ") !== "q v", UNICODE_TOP),
+    contraction: [verdict("ActivityBoundary state doesn't alias the QueryView identity."), verdict(`ActivityBoundary state doesn${CURLY}t alias the QueryView identity.`), verdict("ActivityBoundary state does alias the QueryView identity.")],
+    never: verdicts(neverMarkerTexts(word => `ActivityBoundary state ${word} alias the QueryView identity.`, word => `${word} the state is WARM it keys the QueryView.`, "ActivityBoundary state only keys the QueryView.")),
     quiet: {
       "R-COMPOSED": [codeFindings('export const name = "Que" + "ryView" + "State";\n'), codeFindings('export const name = "Query" + "View" + "State";\n')],
       "R-LOOKALIKE": [
@@ -876,6 +1112,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "The inspector writes the WARM context that calls inference.",
     ]),
     code: [codeFindings('inspector.dispatch({ boundary: "WARM" });\n'), codeFindings("export const view = inspector.render(model);\n")],
+    never: verdicts(neverMarkerTexts(word => `The inspector ${word} transition the WARM context.`, word => `${word} the inspector opens it writes the state.`, "The inspector only writes the state.")),
+    contraction: [verdict("The inspector doesn't transition the WARM context."), verdict(`The inspector doesn${CURLY}t transition the WARM context.`), verdict("The inspector does transition the WARM context.")],
     quiet: {
       "R-SURFACE-OTHER": {
         "a panel": [verdict("The panel transitions the context to WARM."), verdict("The inspector panel transitions the context to WARM.")],
@@ -896,7 +1134,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         return [surface, { ...summary(closure), direct, reaches }];
       }),
     );
-    const replica = gitReplica("km7q6-surface-", SURFACE_PLANTS);
+    const replica = gitReplica("km7q6-surface-", SURFACE_PLANTS, { outside: SURFACE_OUTSIDE });
     const planted = surfacesOf(gitList(replica));
     const controls = Object.fromEntries(planted.map(surface => [surface, summary(closureOf(replica, surface))]));
     const isPure = (path: string): boolean => pure(closureOf(replica, path));
@@ -905,7 +1143,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       closures,
       header: headerOf(readFileSync(join(REPO, CONSTANTS.inspector), "utf8")),
       controls,
-      notSurfaces: ["src/ui/plant-inspector-notes.md", "qa/plant-inspector.mjs"].map(path => planted.includes(path)),
+      notSurfaces: Object.fromEntries(NOT_SURFACES.map(path => [path, planted.includes(path)])),
       quiet: {
         "R-UNNAMED-SURFACE": [planted.includes("src/ui/plant-panel.ts"), closureOf(replica, "src/ui/plant-panel.ts").builtins],
         "R-PACKAGE": [isPure("src/ui/plant-package-inspector.ts"), isPure("src/ui/plant-inspector.ts")],
@@ -920,6 +1158,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         "R-COMPUTED-LOAD": {
           "a computed specifier": [isPure("src/ui/plant-computed-inspector.ts"), isPure("src/ui/plant-dynamic-devtools.ts")],
           "a createRequire loader": [closureOf(replica, "src/ui/plant-loader-inspector.ts").builtins, closureOf(replica, "src/ui/plant-require-dev-tools.ts").builtins],
+          "a property loader": [isPure("src/ui/plant-property-loader-inspector.ts"), isPure("src/ui/plant-require-dev-tools.ts")],
           "a global": [isPure("src/ui/plant-global-load-inspector.ts"), isPure("src/ui/plant-dynamic-devtools.ts")],
         },
       },
