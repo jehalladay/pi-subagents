@@ -68,7 +68,8 @@
  * (every docs/workbench page opens with a level-1 heading in its rendered reading; docs/12's redaction-floor
  * sentence, the floor the armed clause names, is read) and one planted doc per reading found by the same call (two of them
  * UTF-16 docs, one per byte order); Z3 the claim: every mention counts (OVER-READ below), so a claim, a denial and a bare
- * mention each read; each reader-visible form the raw text splits (inline markup, a link, raw HTML with a quoted ">", a
+ * mention each read; each reader-visible form the raw text splits (inline markup, a link, an image's alt text split by
+ * inline markup, raw HTML with a quoted ">", a
  * comment, an HTML block, a list item, a table cell, a block quote, character references, a styled or accented letter's
  * reference, a soft hyphen, a zero-width space, a word joiner, a default-ignorable filler and a format control that is not
  * default-ignorable, compatibility forms, a combining mark, a precomposed accented letter, the backslash escapes \uXXXX,
@@ -1052,6 +1053,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       emphasis: "A*P*O",
       codeSpan: "A`P`O",
       link: "A[P](https://example.invalid)O",
+      imageAlt: "![A**P**O](x.png)",
       inlineTag: "A<span>P</span>O",
       quotedGreaterThan: 'A<span title=">">P</span>O',
       comment: "A<!-- x -->PO",

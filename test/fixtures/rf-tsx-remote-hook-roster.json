@@ -534,6 +534,14 @@
                 "rows": 0,
                 "unaccounted": 1
               },
+              "nonSuiteCall": {
+                "rows": 0,
+                "unaccounted": 1
+              },
+              "namespaceNonSuiteMember": {
+                "rows": 0,
+                "unaccounted": 1
+              },
               "suiteInLoop": {
                 "rows": 0,
                 "unaccounted": 1
