@@ -16,6 +16,30 @@
         {
           "id": "L3-literal",
           "digest": "8f3c3a867bf11cc5451e1f348ab3bf787e80ecdff58a9e1bd294a0d55f41078f"
+        },
+        {
+          "id": "L4-private",
+          "digest": "2e509623c52ff2d73051d839e604daac6287d73b82bed723c0ed052e2b67dde2"
+        },
+        {
+          "id": "L5-template",
+          "digest": "719274bb04af79eb25c0cb83abc2f0b082a578d1fe7cfc54d45fc74bdf56121c"
+        },
+        {
+          "id": "L6-template-part",
+          "digest": "6f27570a6db7c6955bb8288f6415b2de04dc763cb278049438ff5ba53549dd5b"
+        },
+        {
+          "id": "L7-folded",
+          "digest": "bf52c692449ceaea972e94fe579d6b4766f1f3ed7b4749d2cded5454d19e5649"
+        },
+        {
+          "id": "L8-regex",
+          "digest": "c2ac2863403628a5b008e18de1731a2ecdd0d223cf5c602ed3e6bfbe57f2e804"
+        },
+        {
+          "id": "L9-slug-name",
+          "digest": "5278340aec61a8d575dc66127ac868cea46f0b91d3a31873bde1a178ba6cdd56"
         }
       ]
     },
@@ -49,7 +73,7 @@
         },
         {
           "id": "V-admitted-free",
-          "digest": "6d431791290cb8b521bd59d12adb97c1b019e993910d81267220d5974d435ded"
+          "digest": "6557dbc2480c5f76d314e1f5a6c79e934617c7633027a240a107dc7d1262e4bb"
         },
         {
           "id": "V-type-only",
@@ -166,6 +190,10 @@
           "digest": "2b3a76880d666c84c4dc32fd4c83c79c5cba8c6fc96e1ca6094d9995e9ab9131"
         },
         {
+          "id": "Z-global-wrapper",
+          "digest": "6bade7be8744a6281c0da8f046ea6f665984e2be2d68773629b405bc7830bd43"
+        },
+        {
           "id": "Z-constructor",
           "digest": "1c1110864588d52370ef0d4c52eb7ba7a9816122945352ae0f4249eeb4f173df"
         }
@@ -216,12 +244,24 @@
           "digest": "adda88978bdae2472aed868f65bff2bf0b6d0b206d2bbc1f0f975a76ad0cbf13"
         },
         {
+          "id": "R-folded-forms",
+          "digest": "212a2c60911d4d7efa2b73048a56c9c3cfe81cd2a9b793dee418ac9ccbf1f345"
+        },
+        {
           "id": "R-type-position",
           "digest": "9f9599ba64f89da106d1ab2da0bc88a86c341d258cd7c6b57d35e2452bcf9ff6"
         },
         {
           "id": "R-unresolved",
           "digest": "afcc94ff052b165d45a8c2ffa9e4a153f9172c0cb0c16bff47f916caf90f1b4e"
+        },
+        {
+          "id": "R-unresolved-kinds",
+          "digest": "31dc75ce6a27b9e2e223cbacf3d2ffd27a70ba309561cef4af3d0391428bd1c9"
+        },
+        {
+          "id": "R-resolve-forms",
+          "digest": "54412d622effc5436933ffc8be61393102df3211799b1a4c96b47580aec2294d"
         },
         {
           "id": "R-computed",
@@ -234,6 +274,10 @@
         {
           "id": "R-closure-builtin",
           "digest": "1d36e21089cb5abef86611e02a4146b953adae72dc5ec53a59a2b4499927bd76"
+        },
+        {
+          "id": "R-package-forms",
+          "digest": "df0f3962afcd72021a615a9b20706ff2c9db2dd7804605eca95dc5269f0dc9ef"
         },
         {
           "id": "R-shorthand",
@@ -249,23 +293,83 @@
         },
         {
           "id": "R-extends",
-          "digest": "a9e54d0917a4beff3f4668ab5417ac3f610558671f2ce3e06dffe9b6a5059dd7"
+          "digest": "02d5547cb7eb1788c1ed7bcd51727740cbf3181c012b438cd098066e263b9c61"
+        },
+        {
+          "id": "R-enum-initializer",
+          "digest": "2719172fd70a14c29539ecafa27c23ef7dbba5d54e79cbc6e12c9cd8eb6a6b9f"
         },
         {
           "id": "R-closure-global",
           "digest": "7517a1c4e5b108dc4ea9ab45a9d78b389c5a424acd98aea2a1ab09f6a18ca5d4"
         },
         {
+          "id": "R-closure-depth",
+          "digest": "d20dc4021e81e3c080eb2e32d2573f7f30b32b5a0f11d8d5f0c4517ecaba46eb"
+        },
+        {
           "id": "R-global-escaped",
           "digest": "e73b39854b632952f291820f1084f1b12297c1de73836fcbd3d77feebf708644"
+        },
+        {
+          "id": "R-script-var",
+          "digest": "d77ea874ed72abda401b838bf48a8f492c3393b348ba0b16eba19c87b4abdfb3"
+        },
+        {
+          "id": "R-script-typed",
+          "digest": "7bbc0c6f2dd69a7d76e6279557d52b32d3110e2d0badb695bd164fdc7350683a"
+        },
+        {
+          "id": "R-script-function",
+          "digest": "7c6407438615e14b3dcfc6b9ee1746a3793b35e3d1aee88599d0b64589e0552e"
+        },
+        {
+          "id": "R-script-require",
+          "digest": "0b2e3880853877b51cbbf3686554968792f50c0e2be06137eafe667f3d4af2f9"
+        },
+        {
+          "id": "R-dts-script",
+          "digest": "fdfa2f0128e05a5366dcd162020bb95aefa422c18e2ac6c4f5758d27e33e23c3"
+        },
+        {
+          "id": "R-dts-module",
+          "digest": "5c7897c49008b598a10fb54dec7ded5cfaaa8e573da1878092c50db57f9d496f"
+        },
+        {
+          "id": "R-type-only-value",
+          "digest": "090976badaee22132859d046c48f3a5e1b2347102409cfd991927de8383f78e9"
+        },
+        {
+          "id": "R-type-only-erased",
+          "digest": "4fa0e7e8638188631d6b0760ecdc532eb27d2ac1c7f9ac2c9840fb239de83330"
+        },
+        {
+          "id": "R-non-value-alias",
+          "digest": "2532f4596186f10dccf7d240f54cc696dc5b7b7e36a5a41f04f282761e229f08"
+        },
+        {
+          "id": "R-types-erased",
+          "digest": "91726f0047470301b336b635653c385fd2e32c72081288e6d69ac2d758a56714"
+        },
+        {
+          "id": "R-arguments",
+          "digest": "4c73d61411ec4f312d1c910ae02ccb03794b54e1c75c72998da996d90b263fa4"
+        },
+        {
+          "id": "R-bodiless",
+          "digest": "ec6319216f41b8008abc531d2066dd774ebb8f47fe271234d3b6a3b9d7fe7b10"
+        },
+        {
+          "id": "R-const-enum",
+          "digest": "f489e69db71e7786438523e974d2404e7a77816ebe4f676f08755b0a97850868"
         },
         {
           "id": "R-not-references",
           "digest": "b79aa63eeb94576b411043f1b8cd5855e4d4931f76ca33ed3a4e5d15b2344a85"
         },
         {
-          "id": "R-not-read",
-          "digest": "271907557535039acf287f506393811e60f9a4601833f853ec81f2ff5a96d888"
+          "id": "R-constructor-forms",
+          "digest": "f5fb6a7b088287c5af5df4a61ac8e7c21c07491ca14e4c1bab4d06155b7e4169"
         }
       ]
     },
@@ -320,6 +424,10 @@
           "digest": "e8e1aa77e3e97f6ae483cfe151a921d5d35130bf51b79be7e1aaed7df37b1658"
         },
         {
+          "id": "R-LOOKALIKE-VIEW",
+          "digest": "243e4c38ae39170873e6a45ac59f6453d8707d4e8bccdcdc04aa73f80f1b74c3"
+        },
+        {
           "id": "R-UNNAMED-EFFECT",
           "digest": "4ac77942e50612ae11e4e5abf8e35824a85f42e819c72cce06b576e6c44d2af8"
         },
@@ -329,7 +437,7 @@
         },
         {
           "id": "R-FIELD-MUTATION",
-          "digest": "31ae7f33576d0d0100a4034d6126deeeb203e5dbfc83c70593cfb4f53d957d2d"
+          "digest": "efe6d8448053fcdc7d66f4af6dfad1fbb040c10f02f8d558e551d606b2c0250f"
         },
         {
           "id": "R-COMPUTED-TEXT",
@@ -338,6 +446,10 @@
         {
           "id": "R-REFLECTIVE-REACH",
           "digest": "90ddd0a9773c2048664a779f318f6101e7eeefc8b946efc08e60c61863e35503"
+        },
+        {
+          "id": "R-UNREAD-TEXT",
+          "digest": "5a51f90ec5538c881386932b516bd3088944849bc4e6acd14217f5368a097f35"
         }
       ]
     }
@@ -346,6 +458,12 @@
     "L L1-src",
     "L L2-name",
     "L L3-literal",
+    "L L4-private",
+    "L L5-template",
+    "L L6-template-part",
+    "L L7-folded",
+    "L L8-regex",
+    "L L9-slug-name",
     "V V-decision-graph",
     "V V-why-not",
     "V V-gradient",
@@ -377,6 +495,7 @@
     "Z Z-global-fetch",
     "Z Z-global-code",
     "Z Z-global-this",
+    "Z Z-global-wrapper",
     "Z Z-constructor",
     "R R-families",
     "R R-words",
@@ -388,19 +507,38 @@
     "R R-template-parts",
     "R R-folded",
     "R R-folded-parenthesized",
+    "R R-folded-forms",
     "R R-type-position",
     "R R-unresolved",
+    "R R-unresolved-kinds",
+    "R R-resolve-forms",
     "R R-computed",
     "R R-unreadable",
     "R R-closure-builtin",
+    "R R-package-forms",
     "R R-shorthand",
     "R R-export-local",
     "R R-ambient",
     "R R-extends",
+    "R R-enum-initializer",
     "R R-closure-global",
+    "R R-closure-depth",
     "R R-global-escaped",
+    "R R-script-var",
+    "R R-script-typed",
+    "R R-script-function",
+    "R R-script-require",
+    "R R-dts-script",
+    "R R-dts-module",
+    "R R-type-only-value",
+    "R R-type-only-erased",
+    "R R-non-value-alias",
+    "R R-types-erased",
+    "R R-arguments",
+    "R R-bodiless",
+    "R R-const-enum",
     "R R-not-references",
-    "R R-not-read",
+    "R R-constructor-forms",
     "S S-projection",
     "S S-registry",
     "S S-provider",
@@ -411,11 +549,13 @@
     "S S-reader-exports-unnamed",
     "S S-reader-missing",
     "Q R-UNNAMED-VIEW",
+    "Q R-LOOKALIKE-VIEW",
     "Q R-UNNAMED-EFFECT",
     "Q R-IMPLICIT-CALL",
     "Q R-FIELD-MUTATION",
     "Q R-COMPUTED-TEXT",
     "Q R-REFLECTIVE-REACH",
+    "Q R-UNREAD-TEXT",
     "outside anchors: the export row, its view classes and verbs, the seams it names, the shared edge kinds and the residual families",
     "rule 16: every judged row and the residual families are frozen at their measured shape",
     "roster: the judged rows, the registered tests and the residual families equal test/fixtures/apo-snapshot-roster.json, in order and both ways"
@@ -423,6 +563,9 @@
   "residuals": {
     "R-UNNAMED-VIEW": [
       "Q R-UNNAMED-VIEW"
+    ],
+    "R-LOOKALIKE-VIEW": [
+      "Q R-LOOKALIKE-VIEW"
     ],
     "R-UNNAMED-EFFECT": [
       "Q R-UNNAMED-EFFECT"
@@ -438,6 +581,9 @@
     ],
     "R-REFLECTIVE-REACH": [
       "Q R-REFLECTIVE-REACH"
+    ],
+    "R-UNREAD-TEXT": [
+      "Q R-UNREAD-TEXT"
     ]
   }
 }
