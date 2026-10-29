@@ -1,0 +1,406 @@
+{
+ "bead": "wb-rdlh.1",
+ "producer": "Library",
+ "pin": "72d79ed704d884e63c39c3d34e3ea9425b952140",
+ "program": "docs/programs/compositional-autonomous-computation-2026-10-18",
+ "filing": {
+  "export": ".beads/issues.jsonl",
+  "paragraphs": 7,
+  "sha256": "b766c672c29424f4f97e001c212fbad125ffbb1b07d5b387dfa13a67a36b2b7c"
+ },
+ "record": {
+  "roster": "test/fixtures/cac-absence-roster.json",
+  "site": "14-belief-transport-approximation-v6.md:15",
+  "sha256": "719bda654409f125477e2ddf7ea786615a5654fc32cc150c5d5215ac58f5acd5"
+ },
+ "citations": [
+  {
+   "site": "13-hypergraph-transport-safety-v5.md:47",
+   "textBase64": "LSAqKk1lY2hhbmljYWwgRmliZXIgYW5kIG90aGVyIGhhcm5lc3NlczoqKiBhY3R1YWwgdG9vbCBpbnZvY2F0aW9uLCBkZW5pYWwvYXVkaXQsIGFuZCBzb3VyY2UtdXNlciBwcmluY2lwYWwgYWRtaXNzaW9uIHJlbWFpbiBuYXRpdmUu",
+   "sha256": "f8fca761efe8a8ea274c045b71141a45a9d5d7ef64526a0492540db6ab12855e"
+  },
+  {
+   "site": "18-proof-carrying-finite-protocol-v10.md:55",
+   "textBase64": "OC4gKipIdW1hbi9hZ2VudCBpbnRlcmZhY2UqKiByZXR1cm5zIHNvdXJjZSB0cnV0aCwgYWJzdHJhY3QgcHJvb2YgYW5kIG9wZXJhdGlvbmFsIHN0YXR1cyBpbmRlcGVuZGVudGx5LiBVTktOT1dOIGlzIGFuIGFjdGlvbmFibGUgbWlzc2luZy1ldmlkZW5jZSBjYXRlZ29yeSwgbm90IGFuIGludml0YXRpb24gdG8gYnlwYXNzIHNvdXJjZSBkZW5pYWwu",
+   "sha256": "8df1444751b77c578b7149fc43014c13c49c088d833edba48ba3d108947fbae3"
+  },
+  {
+   "site": "14-belief-transport-approximation-v6.md:29",
+   "textBase64": "RS4gQXQgZWFjaCByZWFsIG9wZXJhdGlvbiByZXF1aXJlIHNvdXJjZSBjdXJyZW50IHBvbGljeS9wZXJtaXNzaW9uIGFuZCBldmlkZW5jZSBndWFyZC4gVGhlIGNsaWVudCBjb25zdW1lcyBtZXRhZGF0YSwgbmV2ZXIgYSBzaGFyZWQgcHJpdmlsZWdlZCB0b2tlbi4gRmFpbGVkL2V4cGlyZWQgc291cmNlIGNoZWNrcyByZW1haW4gRkFJTC9VTktOT1dOLCBub3QgcHJvYmFiaWxpc3RpYyBzdWNjZXNzLg==",
+   "sha256": "4adf7f9c07daca93e7c8478579d8e5e75a021248388e4d32f394eabbd96fe818"
+  },
+  {
+   "site": "14-belief-transport-approximation-v6.md:44",
+   "textBase64": "VHJhaW5pbmdXb3JrcyBzdXBwbGllcyBsZWFybmluZyBleHBlcmltZW50cyBhbmQgdGFzayByZXdhcmQvdHJhbnNmZXIgdmFsaWRhdGlvbiwgbm90IHByaXZpbGVnZXMuIEh5cGVyVW5peCBtYXkgc3RvcmUvcXVlcnkgZGlzdGluZ3Vpc2hhYmlsaXR5IGFuZCBzdXBwb3J0IHJlbGF0aW9uc2hpcHMgYnV0IG5vdCBuYXRpdmUgc291cmNlIHRydXRoLiBSZWFjdGl2ZSBGaWJlciBtYXkgZGVyaXZlIG9ic2VydmF0aW9ucyB3aXRoIHZlcnNpb24vdHJhY2UgY29uc3RyYWludHMuIE1lY2hhbmljYWwgRmliZXIvaGFybmVzc2VzIHJldGFpbiBhY3R1YWwgYWRtaXNzaW9uIGFuZCBkZW5pYWwuIEZvcmdlL0Z1cm5hY2UvQmVhZHMgY29udGludWUgdG8gb3duIHRoZWlyIGF1dGhvcml0YXRpdmUgcmVjZWlwdHMsIGF0dGVtcHRzIGFuZCBzdGF0ZS4gQ0FDIGNhbm5vdCBjcmVhdGUgY3Jvc3MtcHJvdmlkZXIgYXRvbWljaXR5IGJ5IGNvbWJpbmluZyBpbmRlcGVuZGVudGx5IHNvdXJjZWQgY2VydGlmaWNhdGVzLg==",
+   "sha256": "1dd318c7e69ad66c30f2e5358f0769b34472c00f79bfb020151b07c67da7ecff"
+  }
+ ],
+ "clock": "2026-10-15T07:00:00Z",
+ "fixtures": [
+  {
+   "id": "N1",
+   "condition": "PASS record",
+   "record": {
+    "record": "SourceBeliefSafetyCertificateV1",
+    "sourceId": "furnace",
+    "policyEpoch": "fixture-epoch-7",
+    "principal": "operator",
+    "worldScope": "/tmp/provenance-ws",
+    "completeTransitionSupportEvidence": "fixture-transition-support-1",
+    "observableEventSchema": "fixture-event-schema-1",
+    "initialBeliefSupport": [
+     "frn-run-r1:active"
+    ],
+    "supportUpdate": "fixture-support-update-1",
+    "legalActionSets": {
+     "frn-run-r1:active": [
+      "stop"
+     ]
+    },
+    "winningSupportFixedPoint": [
+     [
+      "frn-run-r1:active"
+     ]
+    ],
+    "memorylessWitness": {
+     "frn-run-r1:active": "stop"
+    },
+    "guardOrRelyReceipt": {
+     "ref": "fixture-guard-receipt-1",
+     "issuedAt": "2026-10-15T06:00:00Z",
+     "expiresAt": "2026-10-15T08:00:00Z"
+    },
+    "modelCoverage": "complete",
+    "proofTier": "LEAN_PASS",
+    "status": "PASS"
+   }
+  },
+  {
+   "id": "N2",
+   "condition": "status UNKNOWN",
+   "record": {
+    "record": "SourceBeliefSafetyCertificateV1",
+    "sourceId": "furnace",
+    "policyEpoch": "fixture-epoch-7",
+    "principal": "operator",
+    "worldScope": "/tmp/provenance-ws",
+    "completeTransitionSupportEvidence": "fixture-transition-support-1",
+    "observableEventSchema": "fixture-event-schema-1",
+    "initialBeliefSupport": [
+     "frn-run-r1:active"
+    ],
+    "supportUpdate": "fixture-support-update-1",
+    "legalActionSets": {
+     "frn-run-r1:active": [
+      "stop"
+     ]
+    },
+    "winningSupportFixedPoint": [
+     [
+      "frn-run-r1:active"
+     ]
+    ],
+    "memorylessWitness": {
+     "frn-run-r1:active": "stop"
+    },
+    "guardOrRelyReceipt": {
+     "ref": "fixture-guard-receipt-1",
+     "issuedAt": "2026-10-15T06:00:00Z",
+     "expiresAt": "2026-10-15T08:00:00Z"
+    },
+    "modelCoverage": "complete",
+    "proofTier": "LEAN_PASS",
+    "status": "UNKNOWN"
+   }
+  },
+  {
+   "id": "N3",
+   "condition": "expired guardOrRelyReceipt",
+   "record": {
+    "record": "SourceBeliefSafetyCertificateV1",
+    "sourceId": "furnace",
+    "policyEpoch": "fixture-epoch-7",
+    "principal": "operator",
+    "worldScope": "/tmp/provenance-ws",
+    "completeTransitionSupportEvidence": "fixture-transition-support-1",
+    "observableEventSchema": "fixture-event-schema-1",
+    "initialBeliefSupport": [
+     "frn-run-r1:active"
+    ],
+    "supportUpdate": "fixture-support-update-1",
+    "legalActionSets": {
+     "frn-run-r1:active": [
+      "stop"
+     ]
+    },
+    "winningSupportFixedPoint": [
+     [
+      "frn-run-r1:active"
+     ]
+    ],
+    "memorylessWitness": {
+     "frn-run-r1:active": "stop"
+    },
+    "guardOrRelyReceipt": {
+     "ref": "fixture-guard-receipt-1",
+     "issuedAt": "2026-10-15T06:00:00Z",
+     "expiresAt": "2026-10-15T06:30:00Z"
+    },
+    "modelCoverage": "complete",
+    "proofTier": "LEAN_PASS",
+    "status": "PASS"
+   }
+  }
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "status": "pinned",
+   "label": "the wb-pjj provenance test (isCoreMintedDecision, src/workbench/control.ts:255) gains CAC negative fixtures (PASS record, status UNKNOWN, expired guardOrRelyReceipt) - none yields a permit",
+   "pins": [
+    {
+     "id": "A1",
+     "quote": "the wb-pjj provenance test (isCoreMintedDecision, src/workbench/control.ts:255) gains CAC negative fixtures",
+     "witness": {
+      "claim": "6d47ed438a3934b6",
+      "test": "test/workbench-control-provenance.test.ts",
+      "header": "wb-pjj",
+      "roster": "test/fixtures/cac-authorization-input-roster.json",
+      "suite": "wb-rdlh.1 (a): a Library design-program record never yields a permit",
+      "registrations": 4,
+      "reads": [
+       "NEGATIVE_FIXTURES",
+       "PLACEMENTS",
+       "DENIED_REQUESTS",
+       "SUBJECTS",
+       "decideOver",
+       "minted"
+      ],
+      "predicate": "isCoreMintedDecision",
+      "core": "src/workbench/control.ts"
+     }
+    },
+    {
+     "id": "A2",
+     "quote": "(PASS record, status UNKNOWN, expired guardOrRelyReceipt)",
+     "witness": {
+      "claim": "b77de9219a421472",
+      "record": "SourceBeliefSafetyCertificateV1",
+      "members": 16,
+      "statuses": [
+       "PASS",
+       "FAIL",
+       "UNKNOWN"
+      ],
+      "conditions": [
+       "PASS record",
+       "status UNKNOWN",
+       "expired guardOrRelyReceipt"
+      ],
+      "clock": "2026-10-15T07:00:00Z",
+      "isolated": [
+       "status",
+       "guardOrRelyReceipt"
+      ]
+     }
+    },
+    {
+     "id": "A3",
+     "quote": "none yields a permit",
+     "witness": {
+      "claim": "6e6776f9d483412f",
+      "fixtures": 3,
+      "wrappers": 15,
+      "placements": [
+       "metadata:beside the params",
+       "metadata:beside the request's own fields",
+       "metadata:beside the principal's id and role",
+       "in-place:as the operator confirmation",
+       "in-place:as one more grant"
+      ],
+      "requests": 9,
+      "permitted": 9,
+      "denied": 126,
+      "policies": [
+       "cross-scope",
+       "malformed-request",
+       "missing-exact-grant",
+       "no-confirmed-ownership",
+       "observer-only",
+       "operator-confirmation",
+       "unknown-action",
+       "unknown-permission-data"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "status": "pinned",
+   "label": "a producer denial fixture (bd/furnace/forge/hx/rf) plus a CAC UNKNOWN row renders the denial unchanged in tone and text; a failed/expired source check renders FAIL/UNKNOWN, no success probability synthesized",
+   "pins": [
+    {
+     "id": "B1",
+     "quote": "a producer denial fixture (bd/furnace/forge/hx/rf) plus a CAC UNKNOWN row renders the denial unchanged in tone and text",
+     "witness": {
+      "claim": "938f42433a7c1b99",
+      "producer": "reactivefiber",
+      "status": "UNKNOWN",
+      "tone": "failure",
+      "text": "refused · RF_RENDER_FAILED",
+      "unchanged": [
+       "beside the reading's own fields",
+       "in the primary diagnostic's metadata",
+       "as a second, info diagnostic",
+       "as the primary diagnostic's hint",
+       "as the primary diagnostic's message"
+      ],
+      "refused": [
+       "beside the envelope's eight keys",
+       "beside the primary diagnostic's six keys",
+       "as the failed envelope's result"
+      ]
+     }
+    },
+    {
+     "id": "B2",
+     "quote": "a failed/expired source check renders FAIL/UNKNOWN",
+     "witness": {
+      "claim": "1e549c09a3fe86f6",
+      "fail": "failure",
+      "checks": [
+       {
+        "check": "failed",
+        "tone": "unknown",
+        "coverage": "partial"
+       },
+       {
+        "check": "expired",
+        "tone": "unknown",
+        "coverage": "partial"
+       }
+      ],
+      "clean": "success",
+      "plants": [
+       "beside the reading's own fields",
+       "beside the result's own fields",
+       "beside the observation row's own fields",
+       "in an info diagnostic's metadata"
+      ],
+      "records": 2
+     }
+    },
+    {
+     "id": "B3",
+     "quote": "no success probability synthesized",
+     "witness": {
+      "claim": "5f47f99db16009b8",
+      "readings": 47,
+      "tones": [
+       "failure",
+       "unknown"
+      ],
+      "planted": 5,
+      "probability": 0
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "status": "pinned",
+   "label": "static census: no src admission/decision path reads a CAC-shaped field (ties to R2)",
+   "pins": [
+    {
+     "id": "C1",
+     "quote": "static census: no src admission/decision path reads a CAC-shaped field",
+     "witness": {
+      "claim": "9889765e02427bd5",
+      "core": "src/workbench/control.ts",
+      "anchors": 6,
+      "modules": true,
+      "src": true,
+      "judged": 90,
+      "forms": [
+       "member",
+       "element",
+       "binding",
+       "in",
+       "own-key"
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "quote": "(ties to R2)",
+     "witness": {
+      "claim": "39a0b1e43e917b14",
+      "roster": "test/fixtures/cac-absence-roster.json",
+      "site": "14-belief-transport-approximation-v6.md:15",
+      "sha256": "719bda654409f125477e2ddf7ea786615a5654fc32cc150c5d5215ac58f5acd5",
+      "schema": "SourceBeliefSafetyCertificateV1",
+      "members": 14,
+      "definitions": [
+       "ChoiceCertificateV2:16",
+       "TemporalRelianceCertificateV1:12",
+       "SourceBeliefSafetyCertificateV1:13"
+      ],
+      "shared": [
+       "principal",
+       "status"
+      ],
+      "judged": 40,
+      "family": 50,
+      "words": 0
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "status": "parked",
+   "label": "docs/workbench/12-security.md 'Authorization design' gains one falsifiable sentence (CAC output never an authorization input; UNKNOWN never softens a denial) bound by the wb-gs2.3 census test",
+   "reason": "standing rule 3 (W19 INPUT HYGIENE, the user's order): agents write product input-hygiene tests only, never security design or security claims, and docs/workbench/12-security.md 'Authorization design' is the W19 security-design page (the wb-gs2.3 census, W19 / docs-12, binds it); the sentence and its wb-gs2.3 row are the owner's",
+   "pins": [
+    {
+     "id": "D1",
+     "quote": "docs/workbench/12-security.md 'Authorization design' gains one falsifiable sentence (CAC output never an authorization input; UNKNOWN never softens a denial) bound by the wb-gs2.3 census test",
+     "witness": {
+      "claim": "f89c4a2d21cb4e54",
+      "status": "parked",
+      "page": "docs/workbench/12-security.md",
+      "section": "Authorization design",
+      "sentence": "absent"
+     }
+    }
+   ]
+  }
+ ],
+ "residuals": [
+  {
+   "id": "R-OTHER-PRODUCER",
+   "family": "row B reads one producer's denial, the rf refusal envelope through the landed rf reader; a bd, furnace, forge or hx denial is not read by this census"
+  },
+  {
+   "id": "R-SHARED-NAME",
+   "family": "a record member spelled like a Pi-native member (principal) and the record's three-valued status, which its line names by no key (a reader meets it as a native status field), are read as the Pi-native or producer field; the name reading judges neither"
+  },
+  {
+   "id": "R-DYNAMIC-KEY",
+   "family": "a field read through a key the source does not spell as a literal (a variable, a concatenation, a template with a substitution) escapes the name reading"
+  },
+  {
+   "id": "R-PROSE-RECORD",
+   "family": "the judged members are the identifier members of the three record lines that list them; 29 of the absence roster's record lines define their records in prose, so a member derived from that prose (expiryTriggers) is not read as a record field"
+  },
+  {
+   "id": "R-UNVENDORED-MEMBERS",
+   "family": "18 of the absence roster's record lines are headings whose records list their members on lines the roster does not vendor (03-contracts-api.md:20 lists ObservationCertificateV1's closureVerdict); those members are not judged"
+  },
+  {
+   "id": "R-HOLLOW-BINDING",
+   "family": "A1 binds the wb-pjj provenance cases by presence, registrations and reads, never by strength: a case hollowed in place still reads bound (A3 drives the same fixtures through the core itself)"
+  }
+ ]
+}
