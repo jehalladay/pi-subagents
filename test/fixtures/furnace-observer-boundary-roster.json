@@ -11,6 +11,13 @@
     "dash": "\\u2014",
     "recordedStatus": "a proposed source-owned reference, not shipped",
     "acceptance": "Acceptance on landing: a hermetic fixture feeds a boundary record through the Furnace observer and asserts only the exposed fields/counters are projected, non-exposed fields are withheld as typed absence (never invented), and client decisions honour the stated visibility policy; a docs-07 Furnace-provider sentence names the boundary and joins the wb-6hb.11-style census.",
+    "filingSha256": "fb66562ab5acae93",
+    "ownerLeads": [
+      "Gating artifact: ",
+      "Today the external Furnace reader is ",
+      "Gate: ",
+      "Acceptance on landing: "
+    ],
     "armed": "Pi's Furnace observer shall consume it as an admitted observer strictly within the boundary \\u2014 reading only the attempt state/log fields and resource counters it exposes, under its stated visibility policy for admitted client decisions",
     "tracker": ".beads/",
     "holders": [
@@ -24,6 +31,36 @@
     "docs09": "docs/workbench/09-observation-and-provenance.md",
     "docs09Section": "## Experimental projection implementation",
     "docs09Title": "09 \u2014 Observation, telemetry, provenance and derived graph",
+    "docs09Subjects": {
+      "Furnace read": {
+        "source": "furnace(?:['\\u2019]s)?[^\\p{L}\\p{N}]*read",
+        "flags": "giu"
+      },
+      "poll": {
+        "source": "poll",
+        "flags": "giu"
+      },
+      "attach": {
+        "source": "attach",
+        "flags": "giu"
+      }
+    },
+    "restated": [
+      "blockquoteCopy",
+      "listItemCopy",
+      "tableCellCopy",
+      "headingCopy",
+      "codeCopy",
+      "nestedCopy",
+      "subjectCopy",
+      "pollCopy",
+      "verbsQuoteCopy",
+      "verbsSubjectCopy",
+      "entityCopy",
+      "fullWidthCopy",
+      "formCharacterCopy",
+      "listedOnly"
+    ],
     "sdk": "@furnace/sdk",
     "tarball": "vendor/furnace-sdk-0.1.0.tgz",
     "lockKey": "node_modules/@furnace/sdk",
@@ -85,6 +122,14 @@
       "path": "src/workbench/zz-observer-augmentation.ts",
       "text": "declare module \"./furnace-observer.js\" {\n  interface FurnaceObserverClient {\n    runs: { get(runId: string): { events(call?: { timeoutMs?: number }): AsyncIterable<unknown> } };\n  }\n}\nexport {};\n"
     },
+    "heritagePlant": {
+      "path": "src/workbench/zz-observer-heritage.ts",
+      "text": "interface ZzGateStream {\n  events: { stream(runId: string, call?: { timeoutMs?: number }): AsyncIterable<unknown> };\n}\ndeclare module \"./furnace-observer.js\" {\n  interface FurnaceObserverClient extends ZzGateStream {}\n}\nexport {};\n"
+    },
+    "aliasPlant": {
+      "path": "src/workbench/zz-observer-alias.ts",
+      "text": "declare module \"#furnace-observer-alias\" {\n  interface FurnaceObserverClient {\n    events: { stream(runId: string, call?: { timeoutMs?: number }): AsyncIterable<unknown> };\n  }\n}\nexport {};\n"
+    },
     "anchors": [
       "src/workbench/identity.ts",
       "docs/workbench/09-observation-and-provenance.md",
@@ -96,6 +141,7 @@
       "tarball",
       "vendoredPath",
       "piListing",
+      "piEntries",
       "piVerdict",
       "pinVerdict",
       "augmentations",
@@ -118,7 +164,10 @@
       "R-INTERIOR": "Q6",
       "R-COMPUTED": "Q7",
       "R-OTHER-MODULE": "Q8",
-      "R-COMPUTED-ACCESS": "Q9"
+      "R-COMPUTED-ACCESS": "Q9",
+      "R-DOCS-UNCOUNTED": "Q10",
+      "R-DOCS-ELSEWHERE": "Q11",
+      "R-ALIASED-MODULE": "Q12"
     }
   },
   "tests": [
@@ -142,6 +191,9 @@
     "Q7",
     "Q8",
     "Q9",
+    "Q10",
+    "Q11",
+    "Q12",
     "the registered tests, the reached pins and the claims equal the roster, in order and both ways"
   ],
   "rows": [
@@ -269,6 +321,7 @@
             "never": [
               "widenedPlant",
               "augmentationPlant",
+              "heritagePlant",
               "docsPlants"
             ],
             "widening": [
@@ -300,11 +353,39 @@
               "binds": true,
               "why": "",
               "html": false,
+              "subjects": {
+                "Furnace read": [
+                  "paragraph"
+                ],
+                "poll": [
+                  "paragraph"
+                ],
+                "attach": [
+                  "paragraph"
+                ]
+              },
               "readsClauses": [
                 "status/attempt/log-reference"
               ],
               "verbsClauses": [
                 "create, resume or stop"
+              ],
+              "blocks": [
+                {
+                  "kind": "paragraph",
+                  "text": "src/workbench/observation.ts stores a bounded, non-authoritative read projection. Native keys include provider, type, scope and identifier. Caller workspace/principal scope is separately bound by the host. Duplicate events and lower source sequences do not regress state. Gaps and disconnects mark observations stale; reconnect alone does not establish current state. Only a real read-current snapshot restores confirmation.",
+                  "markdown": "`src/workbench/observation.ts` stores a bounded, non-authoritative read projection. Native keys include provider, type, scope and identifier. Caller workspace/principal scope is separately bound by the host. Duplicate events and lower source sequences do not regress state. Gaps and disconnects mark observations stale; reconnect alone does not establish current state. Only a real read-current snapshot restores confirmation."
+                },
+                {
+                  "kind": "paragraph",
+                  "text": "Query indexes cover native references, invocation, typed relations, source basis, status kind, evidence, version and intervals. Event queries expose metadata and references without raw producer payloads. Source-qualified cursor retention loss is explicitly partial-gap. The benchmark in TRACEABILITY.md measures this model, not terminal viewport costs or live producer reconnect. Native reader adapters and entrypoint wiring need their own live evidence before observer release.",
+                  "markdown": "Query indexes cover native references, invocation, typed relations, source basis, status kind, evidence, version and intervals. Event queries expose metadata and references without raw producer payloads. Source-qualified cursor retention loss is explicitly partial-gap. The benchmark in `TRACEABILITY.md` measures this model, not terminal viewport costs or live producer reconnect. Native reader adapters and entrypoint wiring need their own live evidence before observer release."
+                },
+                {
+                  "kind": "paragraph",
+                  "text": "The external Furnace reader uses explicit bounded status/attempt/log-reference polling. The installed SDK's Run.events() follows one Attempt's output, not a Run lifecycle cursor stream, so that surface is not misrepresented as lifecycle reconnect. Read snapshots identify their sequential, non-atomic coherence. A closed or failed observer marks last-known state stale; stale readings cannot refresh confirmed projection state. Pi attachment is read-only and does not create, resume or stop a Run.",
+                  "markdown": "The external Furnace reader uses explicit bounded status/attempt/log-reference polling. The installed SDK's `Run.events()` follows one Attempt's output, not a Run lifecycle cursor stream, so that surface is not misrepresented as lifecycle reconnect. Read snapshots identify their sequential, non-atomic coherence. A closed or failed observer marks last-known state stale; stale readings cannot refresh confirmed projection state. Pi attachment is read-only and does not create, resume or stop a Run."
+                }
               ]
             },
             "docsReads": [
@@ -332,11 +413,30 @@
             "augmentationPlant": [
               "runs.get.events"
             ],
+            "heritagePlant": {
+              "augmentation": [
+                "<extends ZzGateStream>"
+              ],
+              "own": [
+                "<extends ZzGateStream>"
+              ]
+            },
             "docsPlants": {
               "hiddenCopy": {
                 "binds": true,
                 "why": "",
                 "html": true,
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
                 "readsClauses": [
                   "status/attempt/log-reference/event-stream"
                 ],
@@ -350,6 +450,11 @@
                 "binds": false,
                 "why": "the heading \"Experimental projection implementation\" occurs 2 times in the rendered view; a pinned section needs it exactly once",
                 "html": false,
+                "subjects": {
+                  "Furnace read": [],
+                  "poll": [],
+                  "attach": []
+                },
                 "readsClauses": [],
                 "verbsClauses": [],
                 "reads": [],
@@ -359,6 +464,11 @@
                 "binds": true,
                 "why": "",
                 "html": false,
+                "subjects": {
+                  "Furnace read": [],
+                  "poll": [],
+                  "attach": []
+                },
                 "readsClauses": [],
                 "verbsClauses": [],
                 "reads": [],
@@ -368,8 +478,23 @@
                 "binds": true,
                 "why": "",
                 "html": false,
-                "readsClauses": [],
-                "verbsClauses": [],
+                "subjects": {
+                  "Furnace read": [
+                    "code"
+                  ],
+                  "poll": [
+                    "code"
+                  ],
+                  "attach": [
+                    "code"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
                 "reads": [],
                 "verbs": []
               },
@@ -377,6 +502,17 @@
                 "binds": true,
                 "why": "",
                 "html": false,
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
                 "readsClauses": [
                   "status/attempt/log-reference/event-stream"
                 ],
@@ -399,6 +535,17 @@
                 "binds": true,
                 "why": "",
                 "html": false,
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
                 "readsClauses": [
                   "status/attempt/log-reference"
                 ],
@@ -414,6 +561,371 @@
                   "create",
                   "resume"
                 ]
+              },
+              "blockquoteCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "listItemCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "tableCellCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "table"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "table"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "headingCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "heading"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "heading"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "codeCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "code"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "code"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "nestedCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "subjectCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "pollCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "verbsQuoteCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph",
+                    "blockquote"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop",
+                  "create or resume"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "verbsSubjectCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph",
+                    "list item"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "entityCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "fullWidthCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "formCharacterCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "listedOnly": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "subjects": {
+                  "Furnace read": [
+                    "list item"
+                  ],
+                  "poll": [
+                    "list item"
+                  ],
+                  "attach": [
+                    "list item"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
               }
             }
           }
@@ -787,6 +1299,53 @@
             "residual": "R-COMPUTED-ACCESS",
             "reads": 3,
             "unchained": 0
+          }
+        },
+        {
+          "id": "Q10",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-DOCS-UNCOUNTED",
+            "quiet": {
+              "paraphrase": true,
+              "confusable": true,
+              "quoteNestedTable": true,
+              "itemNestedTable": true,
+              "linkTitle": true
+            },
+            "blockPinReds": {
+              "paraphrase": true,
+              "confusable": true,
+              "quoteNestedTable": true,
+              "itemNestedTable": true,
+              "linkTitle": true
+            }
+          }
+        },
+        {
+          "id": "Q11",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-DOCS-ELSEWHERE",
+            "quiet": {
+              "otherSection": true,
+              "nextHeading": true
+            }
+          }
+        },
+        {
+          "id": "Q12",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-ALIASED-MODULE",
+            "plantReads": [],
+            "plantDeclares": [
+              "src/workbench/zz-observer-alias.ts: #furnace-observer-alias"
+            ],
+            "listedDeclarations": []
           }
         }
       ]

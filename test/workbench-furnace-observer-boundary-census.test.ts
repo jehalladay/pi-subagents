@@ -46,10 +46,11 @@
  * release's identity (package.json spec, lock resolution, version and
  * integrity, the tarball's own name, version and sha256) and the owner's recorded status, so any re-vendor reds T3 and
  * re-reads T1. W, the baseline the armed half must never widen: W1 the declared read surface (every declaration of
- * FurnaceObserverClient, its heritage, the type of the constructor's client parameter, and every module augmentation of the
- * observer module in a listed Pi script) equals docs/09's three reads one to one, docs/09 read through the landed rendered
- * binding (Docs09Reading), and a widened interface, a planted augmentation and the docs plants are read as widened or
- * refused; W2 every client read carries a timeoutMs bound, the list reads a
+ * FurnaceObserverClient in the observer module and in every module augmentation of it in a listed Pi script - its member
+ * chains down to a leaf and each heritage type, read as the path `<extends T>` - and the type of the constructor's client
+ * parameter) equals docs/09's three reads one to one, docs/09 read through the landed rendered binding over every rendered
+ * block of its section (Docs09Reading), and a widened interface, a planted augmentation, the heritage plants and the docs
+ * plants are read as widened or refused; W2 every client read carries a timeoutMs bound, the list reads a
  * limit, and the poll loop both budgets, an unbounded plant read as such; W3 every client use is one of the three read calls
  * (no alias, no other member), the SDK is imported for types only (no value import, value re-export, import-equals
  * require, dynamic import or require call; a planted re-export and import-equals read as runtime loads), close() reads nothing, no docs/09 excluded verb is called,
@@ -67,11 +68,12 @@
  * OUTSIDE ANCHORS (their own registered case): the bead's own export row - its title, read after its requirement-id prefix,
  * is tiled in order by row T's label, the armed clause (ARMED), row W's label and row Z's label with nothing but separators
  * (whitespace, comma, semicolon, colon, period, parentheses, DASH) between them, and each row's pin quotes tile its label the
- * same way, so a row or a pin removed from ROWS, the literal, QUOTES, CLAIMS, IMPL and the roster together still reds; the
- * record is the title's token after "When Furnace ships " and the notes' gating artifact; MENTION is built from its words;
- * the recorded status, the gate sentence, the docs/09 citation and ACCEPTANCE are the owner filing's own text (ownerFiling:
- * the notes' first two blocks, so an appended note quoting them never masks a replaced original, a planted control of each
- * kind read); docs/09's section names the reads W1 pairs and the verbs W3 excludes, and the owner filing cites that section; the filing pin's export holds the row and its parent's does not; the sibling
+ * same way, so a row of T, W or Z, or one of their pins, removed from ROWS, the literal, QUOTES, CLAIMS, IMPL and the roster
+ * together still reds; the record is the title's token after "When Furnace ships " and the notes' gating artifact; MENTION
+ * is built from its words; the recorded status, the gate sentence, the docs/09 citation and ACCEPTANCE are the owner
+ * filing's own text (ownerFiling: the notes' first two blocks, so an appended note quoting them never masks a replaced
+ * original, a planted control of each kind read), the filing is pinned byte for byte (FILING_SHA256) and each bound owner
+ * sentence's lead (OWNER_LEADS) stands in it exactly once, an in-filing duplicate asserted against both; docs/09's section names the reads W1 pairs and the verbs W3 excludes, and the owner filing cites that section; the filing pin's export holds the row and its parent's does not; the sibling
  * record is wb-dqf.2's title token.
  * CLAIMS: each quoted pin carries claims - terms tiling its quote, each naming the witness facts (top-level keys) that show
  * it; a pin's live witness holds exactly its claimed facts, each fact under one term, and no pin's live witness holds
@@ -79,8 +81,9 @@
  * FOLLOW-UP wb-6c6i (R694, from the wb-dqf.1 gate cmd_3dcd6d57ec8d at landing 536; F1 leads, F2-F7 ride): F1 docs/09 was
  *   read raw (the first heading by indexOf, bounded only at the next raw '## ', regexes over comments and fences, and Z2's
  *   polling liveness an includes-anywhere check), so the gate's G17 hidden copy, G18 decoy heading, G19 appendix and G20 fence
- *   stayed green; the section is now the landed docsSection binding and both sentences come from rendered paragraph blocks,
- *   each exactly once, in a section without HTML, the six docs plants pinned in W1. F2 a case returning a constant witness
+ *   stayed green; the section is now the landed docsSection binding and both sentences came from rendered paragraph blocks,
+ *   each exactly once among them (wb-s876 F1 now reads every rendered block), in a section without HTML, the six docs
+ *   plants pinned in W1. F2 a case returning a constant witness
  *   (H9a Z2, H9b Q5) stayed green; the judged set now requires every case to name a reader of the subject. F3 Z2's liveness
  *   read through textOf and Z1 had none, so truncated real reads (H1P, H6) stayed green; both now read the anchors from the
  *   text the judge read, beside byte floors. F4 YAML/TOML escapes (G03, G03b) and escaped identifiers (G04) were not read;
@@ -89,6 +92,39 @@
  *   and W3. F6 a module augmentation of the observer in another file (G06) widened the client unseen; W1 reads them from
  *   every listed script, a planted one pinned. F7 the notes anchors were includes-anywhere, so a weakened owner sentence
  *   with a later verbatim quote (G22b) stayed green; they read the owner filing only, G22b and G22a controls asserted.
+ * FOLLOW-UP wb-s876 (R694 hop 3 of the wb-dqf.1 -> wb-6c6i chain, in the R739 TERMINAL enumerate-the-resolvable form;
+ *   from the wb-6c6i gate cmd_8f95838754ef at landing 609; F1 leads, F2 and F3 ride). Each class names its read set as
+ *   the criterion, the gate's survivors are cured inside it, and a member outside it is a named residual with a pinned
+ *   quiet row. F1, docs-truth over the rendered blocks: the gate's L2-D1 blockquote, L2-D2 list item and L2-D3 table
+ *   cell each restated a widened reads sentence beside the real paragraph and stayed green, as both sentences were taken
+ *   from paragraph blocks only. READ SET: every rendered block of the bound section - a paragraph, each list item and
+ *   each blockquote (the blocks nested in either, as the landed rendered view joins them: a nested table contributes no
+ *   cell), a heading, a code block (fenced or indented) and a table (its cells joined) - is read for the two sentences'
+ *   subject words (DOCS09_SUBJECTS: "Furnace read", "poll" and "attach", any case, as word parts, matched in
+ *   subjectText: character references decoded, NFKC-folded, format characters removed) and for their frames; the reads
+ *   and verbs are stated only when each subject word occurs exactly once in those units, in a paragraph, and each frame
+ *   matches once. Beside the reading, W1 pins docs/09's section whole: its rendered block list (each block's kind,
+ *   rendered text and, for a paragraph or list item, its markdown) is part of W1's witness (docsBinding.blocks, the
+ *   adoption form's slice equality held to the roster), so on docs/09 itself a block added, removed or re-ordered inside
+ *   the section, or one whose kind, rendered text or markdown changes - a restatement the reading does not count
+ *   included - reds W1 (a whitespace-only change renders the same and does not; the section holds no blockquote or table
+ *   today, so no nested cell sits outside the pin). The RESTATED docs plants (L2-D1, L2-D2, L2-D3, a heading, a fenced
+ *   code block, a list nested in a quote, the reads subject without its frame, a "poll" restatement, a narrowed verbs
+ *   quote, an "attach" restatement, the subject words spelled with character references, full-width letters or format
+ *   characters, and the paragraph moved into a list item) each refuse the reading, asserted and pinned in W1. Outside
+ *   the reading: R-DOCS-UNCOUNTED (Q10; covered on docs/09 itself by the block pin) and R-DOCS-ELSEWHERE (Q11, outside
+ *   the section and the pin). F2, augmentation heritage: L2-W4b's augmentation that only extends another interface read
+ *   as no augmentation. READ SET: each declaration of FurnaceObserverClient, in the observer module and in every module
+ *   augmentation of it in a listed script, is read for its member chains and for each heritage type as the path
+ *   `<extends T>`, which pairs with no docs/09 read, so W1's one-to-one check reds; the augmentation and own-declaration
+ *   heritage plants are asserted and pinned in W1. Outside the read set: R-ALIASED-MODULE (Q12). F3, the in-filing
+ *   duplicate: L2-F7a weakened the acceptance and restated it verbatim inside the filing's own block, and stayed green.
+ *   READ SET: the whole owner filing, pinned byte for byte by FILING_SHA256, and each bound sentence's lead
+ *   (OWNER_LEADS) exactly once in it, the L2-F7a duplicate asserted against both in the outside-anchor case; nothing
+ *   inside the filing's two blocks is outside the read set, so F3 names no residual (a note appended after a blank line
+ *   leaves the filing as it was, G22a). Measured at this cut's base 27c968d: docs/09's section renders three paragraphs
+ *   and no other block, each subject word occurs once, in the third; no listed script augments the observer or declares
+ *   FurnaceObserverClient under another specifier; the filing reads fb66562ab5acae93, each lead once.
  * RESIDUALS (named, each with its pinned quiet row): R-TRACKER the tracker export (.beads/) is not a Pi scope: the bead's
  * own row spells the record (Q1); R-HOLDER this file and its roster spell it and are excluded by name (Q2); R-BINARY a file
  * holding a NUL byte is not read (Q3); R-PARAPHRASE "observed boundary" and "observation boundary" are not the record's
@@ -98,9 +134,20 @@
  * hides it (Q6); R-COMPUTED a template substitution, a runtime join or a computed character between word parts is not read
  * (Q7); R-OTHER-MODULE W reads only the observer module and its module augmentations in the listed scripts:
  * src/workbench/furnace-control.ts calls docs/09's excluded verbs and is out of W's scope (Q8); R-COMPUTED-ACCESS a client reached through a computed key is
- * not read as a client use (Q9).
+ * not read as a client use (Q9); R-DOCS-UNCOUNTED the subject-word reading does not count a restatement inside docs/09's
+ * section that spells none of the subject words (a paraphrase, a subject word holding a confusable letter NFKC does not
+ * fold), a subject word in a table nested in a blockquote or a list item, or one in a link's title: a plant of each reads
+ * as stated, while on docs/09 itself each such plant adds a block or changes a block's text or markdown, which the
+ * section's block pin (W1) reds (Q10 pins both readings);
+ * R-DOCS-ELSEWHERE a restatement outside the bound section - a later heading of level 1 or 2 (it ends the section),
+ * another section of docs/09 (its Reader adapters list already names a Furnace event stream) or another page - is not
+ * read (Q11); R-ALIASED-MODULE a module declaration whose specifier reaches the observer only
+ * through configuration (tsconfig paths, package.json imports) is not read as an augmentation, and the listed scripts
+ * hold none (Q12).
  * NOT CLAIMED (edits of this file and the roster together): a pin's case and its roster witness re-authored together, its
  * claims rewritten with them; a plant or control edited in IMPL and the roster together; a floor lowered with the roster; a
+ * bound constant - FILING_SHA256, OWNER_LEADS, DOCS09_SUBJECTS or RESTATED - edited in this file and the roster together (the
+ * digest binds the filing as this file was cut, not the owner's intent); a
  * residual row removed from ROWS, the literal, IMPL, RESIDUALS and the roster (no outside anchor names the residual
  * families); the outside-anchor case or the closing case removed with its roster title; a case that names a reader and
  * discards what it read (the reader-keeping constant: the judged set requires a reader's name, not its use); a judge edited
@@ -111,7 +158,10 @@
  * ships; no record is faked here. T1 binds it: the census reds with ACCEPTANCE the moment the vendored release spells it.
  * OVER-READS (disclosed; none today): any "observer ... boundary" prose reads as a mention, a heading or list break between
  * the words included; a YAML/TOML backslash sequence in a single-quoted or literal string is decoded; a bare module
- * specifier whose last segment is furnace-observer is read as the observer module (W1). The augmentation read parses only
+ * specifier whose last segment is furnace-observer is read as the observer module (W1); a second subject word in any
+ * unit of docs/09's section refuses the reading (a later sentence that names the Furnace reader, polling or an
+ * attachment included), and a table's cells are read joined, so a sentence split across cells counts; any heritage type of
+ * FurnaceObserverClient reads as a widening, an empty interface extended included. The augmentation read parses only
  * a script whose text spells "module" (a module declaration's keyword cannot be escape-spelled). SCOPE: files git ignores (node_modules/, .forge/ and the rest of .gitignore) and files deleted from
  * the worktree are not listed; Furnace's own repository is never read (the gate is a release Pi vendors).
  * READS (contacts): every listed file (Z2), git objects at the filing pin (Z1), the tracker export rows of wb-dqf.1 and
@@ -131,7 +181,7 @@ import { isDeepStrictEqual } from "node:util";
 import { gunzipSync } from "node:zlib";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
-import { docsSection } from "./helpers/census.js";
+import { docsSection, type RenderedBlock } from "./helpers/census.js";
 
 type JsonValue = null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue };
 type JsonObject = { [key: string]: JsonValue };
@@ -166,6 +216,13 @@ const DASH = "\\u2014";
 const RECORDED_STATUS = "a proposed source-owned reference, not shipped";
 const ACCEPTANCE =
   "Acceptance on landing: a hermetic fixture feeds a boundary record through the Furnace observer and asserts only the exposed fields/counters are projected, non-exposed fields are withheld as typed absence (never invented), and client decisions honour the stated visibility policy; a docs-07 Furnace-provider sentence names the boundary and joins the wb-6hb.11-style census.";
+/**
+ * The owner filing (ownerFiling: the export notes' first two blocks) as this file binds it, by its sha256's first 16 hex
+ * digits, so an edit inside the two blocks - a weakened sentence, an in-filing duplicate, a reordering - reds (wb-s876 F3).
+ */
+const FILING_SHA256 = "fb66562ab5acae93";
+/** The leads of the owner sentences this file binds: the filing holds each exactly once (wb-s876 F3, the L2-F7a duplicate). */
+const OWNER_LEADS: readonly string[] = ["Gating artifact: ", "Today the external Furnace reader is ", "Gate: ", "Acceptance on landing: "];
 /** The title's armed clause: it binds when the record ships, so it has no judged row today (ARMED HALF PENDING). */
 const ARMED = `Pi's Furnace observer shall consume it as an admitted observer strictly within the boundary ${DASH} reading only the attempt state/log fields and resource counters it exposes, under its stated visibility policy for admitted client decisions`;
 /** A mention of the record: its own middle words, any non-alphanumeric run between them, any case (THE JUDGE). */
@@ -190,7 +247,7 @@ const ROWS: readonly Row[] = [
   { id: "T", label: "When Furnace ships FurnaceObserverBoundaryV0 (proposed, not shipped)", pins: ["T1", "T2", "T3"] },
   { id: "W", label: "never widening today's bounded read-only polling", pins: ["W1", "W2", "W3"] },
   { id: "Z", label: "until then zero Pi mentions of the record", pins: ["Z1", "Z2", "Z3"] },
-  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9"] },
+  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12"] },
 ];
 /** Each judged pin's quote: the quotes of a row tile its label (the anchor case). */
 const QUOTES: Readonly<Record<string, string>> = {
@@ -213,7 +270,7 @@ const CLAIMS: Readonly<Record<string, Readonly<Record<string, readonly string[]>
     "not shipped": ["spec", "lockResolved", "lockVersion", "lockIntegrityMatches", "tarballName", "tarballVersion", "tarballSha256"],
   },
   W1: {
-    never: ["widenedPlant", "augmentationPlant", "docsPlants"],
+    never: ["widenedPlant", "augmentationPlant", "heritagePlant", "docsPlants"],
     widening: ["interfaceName", "interfaceDeclarations", "interfaceExtends", "clientParameterTypes", "augmentations", "readPaths", "docsBinding", "docsReads", "pairs"],
   },
   W2: { "today's": ["calls"], bounded: ["pollBounds", "unboundedPlant"] },
@@ -236,6 +293,9 @@ const RESIDUALS: Readonly<Record<string, string>> = {
   "R-COMPUTED": "Q7",
   "R-OTHER-MODULE": "Q8",
   "R-COMPUTED-ACCESS": "Q9",
+  "R-DOCS-UNCOUNTED": "Q10",
+  "R-DOCS-ELSEWHERE": "Q11",
+  "R-ALIASED-MODULE": "Q12",
 };
 /**
  * The functions that read the subject - the vendored release, the listed Pi files, the filing pin, the tracker export,
@@ -248,6 +308,7 @@ const READERS: readonly string[] = [
   "tarball",
   "vendoredPath",
   "piListing",
+  "piEntries",
   "piVerdict",
   "pinVerdict",
   "augmentations",
@@ -644,9 +705,17 @@ function declaredReads(source: ts.Node, name: string): string[] | null {
   for (const declaration of declarations) walk(declaration.members, []);
   return paths.sort();
 }
-/** The heritage (extends) names of a named interface, over all its declarations. */
-function interfaceHeritage(source: ts.SourceFile, name: string): string[] {
-  return sorted(interfaceDeclarations(source, name).flatMap(declaration => (declaration.heritageClauses ?? []).flatMap(clause => clause.types.map(type => type.expression.getText()))));
+/** The heritage (extends) types of a named interface over all its declarations under a node, each by its full text (type arguments included). */
+function interfaceHeritage(source: ts.Node, name: string): string[] {
+  return sorted(interfaceDeclarations(source, name).flatMap(declaration => (declaration.heritageClauses ?? []).flatMap(clause => clause.types.map(type => type.getText()))));
+}
+/**
+ * A heritage type of FurnaceObserverClient read as a declared read path (wb-s876 F2): the extended type merges its members
+ * into the client unread here, so the path pairs with no docs/09 read and W1's one-to-one check reds (an over-read: an
+ * empty interface extended reads as widening too).
+ */
+function heritagePath(type: string): string {
+  return `<extends ${type}>`;
 }
 /** The type text of each constructor parameter named client, in every class of a module. */
 function clientParameterTypes(source: ts.SourceFile): string[] {
@@ -826,11 +895,13 @@ function planted(text: string, from: string, to: string): string {
   expect(text.includes(from), `the observer still holds the plant's anchor span ${JSON.stringify(from)}`).toBe(true);
   return text.replace(from, to);
 }
-/** What the census reads of docs/09's Furnace sentences: the section binding, every clause found, and the reads and verbs. */
+/** What the census reads of docs/09's Furnace sentences: the section binding, every subject word's blocks, every clause found, and the reads and verbs. */
 interface Docs09Reading {
   readonly binds: boolean;
   readonly why: string;
   readonly html: boolean;
+  /** For each subject word (DOCS09_SUBJECTS), the block kind of each of its occurrences in the section (wb-s876 F1). */
+  readonly subjects: { readonly [word: string]: readonly string[] };
   readonly readsClauses: readonly string[];
   readonly verbsClauses: readonly string[];
   readonly reads: readonly string[];
@@ -839,23 +910,75 @@ interface Docs09Reading {
 const READS_SENTENCE = /The external Furnace reader uses explicit bounded (\S+) polling\./g;
 const VERBS_SENTENCE = /Pi attachment is read-only and does not (.+?) a Run\./g;
 /**
- * docs/09's Furnace sentences as a reader of the page reads them (wb-6c6i F1): the section is the landed docsSection
- * binding's (test/helpers/census.ts: the heading exactly once in the rendered view, under the page title, bounded at the
- * next level-1 or level-2 heading or EOF, no comment or fence spanning a heading line), each sentence is read from the
- * section's rendered paragraph blocks only (a fence, a list or an HTML block holds none), and the reads and verbs are
- * stated only when the section binds, carries no HTML (a comment can hide what its source says) and each sentence renders
- * exactly once; otherwise they read as none, which reds every reader of them.
+ * The words that name the subjects of docs/09's two Furnace sentences (wb-s876 F1): the reads sentence's "Furnace read"
+ * (Furnace, an optional possessive, any run of non-alphanumeric characters, then read) and "poll", the verbs sentence's
+ * "attach", each in any case and as a word part, so reader, reading, reads, polling, polls, attachment and attaches all
+ * count (an over-read: reattachment and readiness count too). They are matched in subjectText, what a reader sees.
+ */
+const DOCS09_SUBJECTS: Readonly<Record<string, RegExp>> = {
+  "Furnace read": /furnace(?:['\u2019]s)?[^\p{L}\p{N}]*read/giu,
+  poll: /poll/giu,
+  attach: /attach/giu,
+};
+/**
+ * A unit's text as the subject words are matched in it (wb-s876 F1): numeric character references and the common named
+ * entities decoded (decodedMarkup; the rendered view keeps them as written), compatibility forms folded (NFKC: a
+ * full-width letter reads as its letter) and format characters removed, as a reader sees none.
+ */
+function subjectText(text: string): string {
+  return decodedMarkup(text).normalize("NFKC").replace(/\p{Cf}/gu, "");
+}
+/** One rendered text unit of docs/09's bound section: its block kind and what a reader sees of it (wb-s876 F1). */
+interface Docs09Unit {
+  readonly kind: string;
+  readonly text: string;
+}
+/**
+ * Every rendered text unit of the bound section (wb-s876 F1), by block kind: a paragraph; each list item, the blocks
+ * nested in it included; a heading; a code block, fenced or indented, its whitespace collapsed; and any other block by
+ * its marked type - a blockquote, the blocks nested in it included, or a table, its header and body cells joined by a
+ * space. An HTML block renders no text: HTML anywhere in the section refuses the reading whole. A thematic break, a link
+ * reference definition and a link's title render no text a reader sees on the page, so none holds a subject word (an
+ * image's alt text is read, as the rendered view keeps it). A table nested in a blockquote or a list item contributes
+ * none of its cells (the landed rendered view joins a nested block's text, and a table carries none), so a subject word
+ * there is not counted (R-DOCS-UNCOUNTED, Q10); on docs/09 itself W1 pins the section's whole block list, which reds it.
+ */
+function docs09Units(blocks: readonly RenderedBlock[]): Docs09Unit[] {
+  return blocks.flatMap((block): Docs09Unit[] => {
+    if (block.kind === "list") return block.items.map(item => ({ kind: "list item", text: item.text }));
+    if (block.kind === "other") return [{ kind: block.type, text: block.text }];
+    if (block.kind === "html") return [];
+    return [{ kind: block.kind, text: block.text.replace(/\s+/g, " ").trim() }];
+  });
+}
+/**
+ * docs/09's Furnace sentences as a reader of the page reads them (wb-6c6i F1, wb-s876 F1): the section is the landed
+ * docsSection binding's (test/helpers/census.ts: the heading exactly once in the rendered view, under the page title,
+ * bounded at the next level-1 or level-2 heading or EOF, no comment or fence spanning a heading line). Every rendered
+ * text unit of the section (docs09Units) is read twice: for each subject word (DOCS09_SUBJECTS, matched in subjectText)
+ * the block kind of each occurrence, and for each sentence's frame (READS_SENTENCE, VERBS_SENTENCE, matched as written)
+ * its clause. The reads and verbs are stated only when the section binds, carries no HTML (a comment can hide what its
+ * source says), each subject word occurs exactly once among the section's units, in a paragraph, and each frame matches
+ * exactly once; so a second unit of any kind - a paragraph, a list item, a blockquote, a table, a heading or a code block -
+ * that spells a subject word refuses the reading, as does a subject word held only by a unit that is not a paragraph.
+ * Otherwise the reads and verbs read as none, which reds every reader of them. What the units do not carry is not
+ * counted (R-DOCS-UNCOUNTED, Q10); W1 pins the real section's whole block list beside this reading.
  */
 function docs09Reading(text: string): Docs09Reading {
   const section = docsSection(text, DOCS09_SECTION.slice("## ".length), 2, [DOCS09_TITLE]);
-  const paragraphs = section.blocks.flatMap(block => (block.kind === "paragraph" ? [block.text] : []));
-  const readsClauses = paragraphs.flatMap(paragraph => [...paragraph.matchAll(READS_SENTENCE)].map(match => match[1] ?? ""));
-  const verbsClauses = paragraphs.flatMap(paragraph => [...paragraph.matchAll(VERBS_SENTENCE)].map(match => match[1] ?? ""));
-  const stated = section.ok && !section.hasHtml && readsClauses.length === 1 && verbsClauses.length === 1;
+  const units = docs09Units(section.blocks);
+  const subjects = Object.fromEntries(
+    Object.entries(DOCS09_SUBJECTS).map(([word, pattern]) => [word, units.flatMap(unit => [...subjectText(unit.text).matchAll(pattern)].map(() => unit.kind))]),
+  );
+  const readsClauses = units.flatMap(unit => [...unit.text.matchAll(READS_SENTENCE)].map(match => match[1] ?? ""));
+  const verbsClauses = units.flatMap(unit => [...unit.text.matchAll(VERBS_SENTENCE)].map(match => match[1] ?? ""));
+  const once = Object.values(subjects).every(kinds => kinds.length === 1 && kinds[0] === "paragraph");
+  const stated = section.ok && !section.hasHtml && once && readsClauses.length === 1 && verbsClauses.length === 1;
   return {
     binds: section.ok,
     why: section.why,
     html: section.hasHtml,
+    subjects,
     readsClauses,
     verbsClauses,
     reads: stated ? (readsClauses[0] ?? "").split("/") : [],
@@ -868,14 +991,51 @@ function docs09Furnace(): Docs09Reading {
 }
 const FURNACE_READS = "The external Furnace reader uses explicit bounded status/attempt/log-reference polling.";
 const FURNACE_VERBS = "Pi attachment is read-only and does not create, resume or stop a Run.";
-/** docs/09 plants (the wb-dqf.1 gate's G17-G21b shapes; wb-6c6i F1): each a copy of the real page, read by the same docs reading. */
-function docs09Plants(text: string): { [plant: string]: Docs09Reading } {
+function widened(prose: string): string {
+  return prose.replace("status/attempt/log-reference polling", "status/attempt/log-reference/event-stream polling");
+}
+function narrowed(prose: string): string {
+  return prose.replace("create, resume or stop", "create or resume");
+}
+/** docs/09's real Furnace paragraph (from the reads sentence to the end of the verbs sentence), found by its raw text. */
+function furnaceParagraph(text: string): string {
   const from = text.indexOf(FURNACE_READS);
   const to = from < 0 ? -1 : text.indexOf(FURNACE_VERBS, from);
   expect(from >= 0 && to > from, "docs/09 still holds the Furnace paragraph the plants rewrite").toBe(true);
-  const paragraph = text.slice(from, to + FURNACE_VERBS.length);
-  const widened = (prose: string): string => prose.replace("status/attempt/log-reference polling", "status/attempt/log-reference/event-stream polling");
-  const narrowed = (prose: string): string => prose.replace("create, resume or stop", "create or resume");
+  return text.slice(from, to + FURNACE_VERBS.length);
+}
+/** A copy of the page with one block written right after the real Furnace paragraph, inside the bound section. */
+function afterFurnace(text: string, block: string): string {
+  const paragraph = furnaceParagraph(text);
+  return text.replace(paragraph, () => `${paragraph}\n\n${block}`);
+}
+/**
+ * The restatement plants (wb-s876 F1): the wb-6c6i gate's L2-D1 blockquote, L2-D2 list item and L2-D3 table cell, and the
+ * seat's members of the same class - a heading, a fenced code block, a list nested in a quote, the reads subject without
+ * its frame, a "poll" restatement, a narrowed verbs quote, an "attach" restatement, the subject words spelled with
+ * character references, full-width letters or format characters, and the paragraph moved into a list item - each must
+ * refuse the reading (W1).
+ */
+const RESTATED: readonly string[] = [
+  "blockquoteCopy",
+  "listItemCopy",
+  "tableCellCopy",
+  "headingCopy",
+  "codeCopy",
+  "nestedCopy",
+  "subjectCopy",
+  "pollCopy",
+  "verbsQuoteCopy",
+  "verbsSubjectCopy",
+  "entityCopy",
+  "fullWidthCopy",
+  "formCharacterCopy",
+  "listedOnly",
+];
+/** docs/09 plants (the wb-dqf.1 gate's G17-G21b shapes, wb-6c6i F1; the RESTATED shapes, wb-s876 F1): each a copy of the real page, read by the same docs reading. */
+function docs09Plants(text: string): { [plant: string]: Docs09Reading } {
+  const paragraph = furnaceParagraph(text);
+  const after = (block: string): string => afterFurnace(text, block);
   const pages: Readonly<Record<string, string>> = {
     hiddenCopy: text.replace(paragraph, `<!-- ${paragraph} -->\n\n${narrowed(widened(paragraph))}`),
     decoyHeading: widened(text).replace("\n## Acceptance/negative controls\n", `\n${DOCS09_SECTION}\n\n${paragraph}\n\n## Acceptance/negative controls\n`),
@@ -883,6 +1043,20 @@ function docs09Plants(text: string): { [plant: string]: Docs09Reading } {
     fenced: text.replace(paragraph, `${"```"}\n${paragraph}\n${"```"}`),
     widened: widened(text),
     narrowed: narrowed(text),
+    blockquoteCopy: after(`> ${widened(FURNACE_READS)}`),
+    listItemCopy: after(`- ${widened(FURNACE_READS)}`),
+    tableCellCopy: after(`| Reader |\n| --- |\n| ${widened(FURNACE_READS)} |`),
+    headingCopy: after(`### ${widened(FURNACE_READS)}`),
+    codeCopy: after(`${"```"}\n${widened(FURNACE_READS)}\n${"```"}`),
+    nestedCopy: after(`> - ${widened(FURNACE_READS)}`),
+    subjectCopy: after("- The Furnace reader also follows each Run's event stream."),
+    pollCopy: after("> Pi also polls each Run's event stream."),
+    verbsQuoteCopy: after(`> ${narrowed(FURNACE_VERBS)}`),
+    verbsSubjectCopy: after("- Attachment may stop a Run it observes."),
+    entityCopy: after("- The external Furn&#97;ce reader uses explicit bounded status/attempt/log-reference/event-stream po&#108;ling."),
+    fullWidthCopy: after(`> The external ${String.fromCodePoint(0xff26, 0xff55, 0xff52, 0xff4e, 0xff41, 0xff43, 0xff45)} reader uses explicit bounded status/attempt/log-reference/event-stream ${String.fromCodePoint(0xff50, 0xff4f, 0xff4c, 0xff4c)}ing.`),
+    formCharacterCopy: after(`> The external Fur${String.fromCodePoint(0x200b)}nace reader uses explicit bounded status/attempt/log-reference/event-stream po${String.fromCodePoint(0x200b)}lling.`),
+    listedOnly: text.replace(paragraph, () => `- ${paragraph}`),
   };
   return Object.fromEntries(Object.entries(pages).map(([plant, page]) => [plant, docs09Reading(page)]));
 }
@@ -900,19 +1074,42 @@ const AUGMENTATION_PLANT = entry(
   "src/workbench/zz-observer-augmentation.ts",
   'declare module "./furnace-observer.js" {\n  interface FurnaceObserverClient {\n    runs: { get(runId: string): { events(call?: { timeoutMs?: number }): AsyncIterable<unknown> } };\n  }\n}\nexport {};\n',
 );
+/** An augmentation that only extends another interface, planted as a file of its own (the wb-6c6i gate's L2-W4b; wb-s876 F2). */
+const HERITAGE_PLANT = entry(
+  "src/workbench/zz-observer-heritage.ts",
+  'interface ZzGateStream {\n  events: { stream(runId: string, call?: { timeoutMs?: number }): AsyncIterable<unknown> };\n}\ndeclare module "./furnace-observer.js" {\n  interface FurnaceObserverClient extends ZzGateStream {}\n}\nexport {};\n',
+);
+/** A declaration of FurnaceObserverClient under a specifier only configuration could map to the observer (R-ALIASED-MODULE, Q12). */
+const ALIAS_PLANT = entry(
+  "src/workbench/zz-observer-alias.ts",
+  'declare module "#furnace-observer-alias" {\n  interface FurnaceObserverClient {\n    events: { stream(runId: string, call?: { timeoutMs?: number }): AsyncIterable<unknown> };\n  }\n}\nexport {};\n',
+);
 const OBSERVER_MODULE = OBSERVER.replace(SCRIPT, "");
 /** Whether a module specifier in a file names the observer module: a relative one resolved from the file, a bare one by its last segment (an over-read). */
 function namesObserver(from: string, specifier: string): boolean {
   if (specifier.startsWith(".")) return posix.join(posix.dirname(from), specifier).replace(SCRIPT, "") === OBSERVER_MODULE;
   return posix.basename(specifier).replace(SCRIPT, "") === posix.basename(OBSERVER_MODULE);
 }
-/** The read paths a file's module augmentations of the observer module add to FurnaceObserverClient (wb-6c6i F6). */
+/**
+ * The read paths a file's module augmentations of the observer module add to FurnaceObserverClient (wb-6c6i F6): each
+ * declaration's member chains down to a leaf, and each of its heritage types as `<extends T>` (wb-s876 F2), so an
+ * augmentation that only extends another interface reads as widened.
+ */
 function augmentedReads(path: string, text: string): string[] {
   if (!text.includes("module")) return [];
   return nodes(parse(path, text))
     .filter((node): node is ts.ModuleDeclaration => ts.isModuleDeclaration(node) && ts.isStringLiteral(node.name) && namesObserver(path, node.name.text))
-    .flatMap(node => (node.body === undefined ? [] : (declaredReads(node.body, "FurnaceObserverClient") ?? [])))
+    .flatMap(node => (node.body === undefined ? [] : [...(declaredReads(node.body, "FurnaceObserverClient") ?? []), ...interfaceHeritage(node.body, "FurnaceObserverClient").map(heritagePath)]))
     .sort();
+}
+/** Each module declaration in a file that declares FurnaceObserverClient under a specifier not naming the observer module, as "<path>: <specifier>" (R-ALIASED-MODULE, Q12). */
+function otherModuleClients(path: string, text: string): string[] {
+  if (!text.includes("module")) return [];
+  return nodes(parse(path, text)).flatMap(node =>
+    ts.isModuleDeclaration(node) && ts.isStringLiteral(node.name) && !namesObserver(path, node.name.text) && node.body !== undefined && interfaceDeclarations(node.body, "FurnaceObserverClient").length > 0
+      ? [`${path}: ${node.name.text}`]
+      : [],
+  );
 }
 /** Every listed Pi script that augments the observer module, with the read paths it adds. */
 const augmentations = lazy((): { readonly path: string; readonly reads: readonly string[] }[] =>
@@ -1012,9 +1209,11 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
   W1: () => {
     const augmented = augmentations();
     const own = declaredReads(observer(), "FurnaceObserverClient");
-    const readPaths = own === null ? null : [...own, ...augmented.flatMap(found => found.reads)].sort();
+    const ownHeritage = interfaceHeritage(observer(), "FurnaceObserverClient");
+    const readPaths = own === null ? null : [...own, ...ownHeritage.map(heritagePath), ...augmented.flatMap(found => found.reads)].sort();
     const docs = docs09Furnace();
     const { reads } = docs;
+    const { blocks } = docsSection(textOf(DOCS09), DOCS09_SECTION.slice("## ".length), 2, [DOCS09_TITLE]);
     const pairs = pairReads(reads, readPaths ?? []);
     expect(pairs.filter(pair => (pair[1] ?? "").startsWith("<")), "every docs/09 read names exactly one declared path").toEqual([]);
     expect(sorted(pairs.map(pair => pair[1] ?? "")), "every declared path is a docs/09 read, one to one").toEqual(readPaths);
@@ -1025,19 +1224,30 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     const widenedPlant = (declaredReads(widened, "FurnaceObserverClient") ?? []).filter(path => !(readPaths ?? []).includes(path));
     expect(widenedPlant, "a widened interface reads as widened").toEqual(["runs.get.events"]);
     const augmentationPlant = augmentedReads(AUGMENTATION_PLANT.path, AUGMENTATION_PLANT.bytes.toString("utf8"));
+    const heritagePlant = {
+      augmentation: augmentedReads(HERITAGE_PLANT.path, HERITAGE_PLANT.bytes.toString("utf8")),
+      own: interfaceHeritage(parse(OBSERVER, planted(observerText(), "export interface FurnaceObserverClient {", "export interface FurnaceObserverClient extends ZzGateStream {")), "FurnaceObserverClient").map(heritagePath),
+    };
+    expect(heritagePlant, "a declaration that only extends another interface reads as widened, in an augmentation and in the observer (wb-s876 F2)").toStrictEqual({ augmentation: ["<extends ZzGateStream>"], own: ["<extends ZzGateStream>"] });
+    const docsPlants = docs09Plants(textOf(DOCS09));
+    expect(
+      RESTATED.filter(plant => (docsPlants[plant]?.reads.length ?? 1) + (docsPlants[plant]?.verbs.length ?? 1) > 0),
+      "a subject word restated in a second rendered block, or held by no paragraph, refuses the reading (wb-s876 F1)",
+    ).toEqual([]);
     return json({
       interfaceName: "FurnaceObserverClient",
       interfaceDeclarations: interfaceDeclarations(observer(), "FurnaceObserverClient").length,
-      interfaceExtends: interfaceHeritage(observer(), "FurnaceObserverClient"),
+      interfaceExtends: ownHeritage,
       clientParameterTypes: clientParameterTypes(observer()),
       augmentations: augmented,
       readPaths,
-      docsBinding: { binds: docs.binds, why: docs.why, html: docs.html, readsClauses: docs.readsClauses, verbsClauses: docs.verbsClauses },
+      docsBinding: { binds: docs.binds, why: docs.why, html: docs.html, subjects: docs.subjects, readsClauses: docs.readsClauses, verbsClauses: docs.verbsClauses, blocks },
       docsReads: reads,
       pairs,
       widenedPlant,
       augmentationPlant,
-      docsPlants: docs09Plants(textOf(DOCS09)),
+      heritagePlant,
+      docsPlants,
     });
   },
   W2: () => {
@@ -1204,11 +1414,47 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     const uses = clientUses(parse(OBSERVER, computedKey));
     return json({ residual: "R-COMPUTED-ACCESS", reads: uses.reads.length, unchained: uses.unchained });
   },
+  Q10: () => {
+    const text = textOf(DOCS09);
+    const real = docs09Reading(text);
+    const blocksOf = (page: string): readonly RenderedBlock[] => docsSection(page, DOCS09_SECTION.slice("## ".length), 2, [DOCS09_TITLE]).blocks;
+    const uncounted: Readonly<Record<string, string>> = {
+      paraphrase: "> Pi's Furnace observer also follows each Run's event stream.",
+      confusable: `> The external Furn${String.fromCodePoint(0x0430)}ce reader uses explicit bounded status/attempt/log-reference/event-stream p${String.fromCodePoint(0x043e)}lling.`,
+      quoteNestedTable: `> | Reader |\n> | --- |\n> | ${widened(FURNACE_READS)} |`,
+      itemNestedTable: `- note\n\n  | Reader |\n  | --- |\n  | ${widened(FURNACE_READS)} |`,
+      linkTitle: `[see](https://example.invalid "${widened(FURNACE_READS)}")`,
+    };
+    const pages = Object.entries(uncounted).map(([kind, block]): [string, string] => [kind, afterFurnace(text, block)]);
+    return json({
+      residual: "R-DOCS-UNCOUNTED",
+      quiet: Object.fromEntries(pages.map(([kind, page]) => [kind, isDeepStrictEqual(docs09Reading(page), real)])),
+      blockPinReds: Object.fromEntries(pages.map(([kind, page]) => [kind, !isDeepStrictEqual(blocksOf(page), blocksOf(text))])),
+    });
+  },
+  Q11: () => {
+    const text = textOf(DOCS09);
+    const real = docs09Reading(text);
+    const next = "\n## Derived view indexes\n";
+    expect(text.includes(next), "docs/09 still holds the other section the plant writes into").toBe(true);
+    const otherSection = text.replace(next, () => `\n${widened(FURNACE_READS)}\n${next}`);
+    const nextHeading = afterFurnace(text, `## ${widened(FURNACE_READS)}`);
+    return json({ residual: "R-DOCS-ELSEWHERE", quiet: { otherSection: isDeepStrictEqual(docs09Reading(otherSection), real), nextHeading: isDeepStrictEqual(docs09Reading(nextHeading), real) } });
+  },
+  Q12: () => {
+    const listed = piEntries().filter(item => SCRIPT.test(item.path) && item.path !== OBSERVER);
+    return json({
+      residual: "R-ALIASED-MODULE",
+      plantReads: augmentedReads(ALIAS_PLANT.path, ALIAS_PLANT.bytes.toString("utf8")),
+      plantDeclares: otherModuleClients(ALIAS_PLANT.path, ALIAS_PLANT.bytes.toString("utf8")),
+      listedDeclarations: listed.flatMap(item => otherModuleClients(item.path, item.bytes.toString("utf8"))),
+    });
+  },
 };
 
 describe("wb-dqf.1 Furnace observer-boundary census (FURNACE-CAC-EXECUTION-ASSURANCE-R4, until-then leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:3", "W:3", "Z:3", "Q:9"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:3", "W:3", "Z:3", "Q:12"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     const quoted = ROWS.filter(row => row.id !== "Q").flatMap(row => row.pins);
@@ -1229,6 +1475,8 @@ describe("wb-dqf.1 Furnace observer-boundary census (FURNACE-CAC-EXECUTION-ASSUR
         dash: DASH,
         recordedStatus: RECORDED_STATUS,
         acceptance: ACCEPTANCE,
+        filingSha256: FILING_SHA256,
+        ownerLeads: [...OWNER_LEADS],
         armed: ARMED,
         tracker: TRACKER,
         holders: [...HOLDERS],
@@ -1239,6 +1487,8 @@ describe("wb-dqf.1 Furnace observer-boundary census (FURNACE-CAC-EXECUTION-ASSUR
         docs09: DOCS09,
         docs09Section: DOCS09_SECTION,
         docs09Title: DOCS09_TITLE,
+        docs09Subjects: Object.fromEntries(Object.entries(DOCS09_SUBJECTS).map(([word, pattern]) => [word, { source: pattern.source, flags: pattern.flags }])),
+        restated: [...RESTATED],
         sdk: SDK,
         tarball: TARBALL,
         lockKey: LOCK_KEY,
@@ -1248,6 +1498,8 @@ describe("wb-dqf.1 Furnace observer-boundary census (FURNACE-CAC-EXECUTION-ASSUR
         piPlants: PI_PLANTS,
         pinPlant: PIN_PLANT,
         augmentationPlant: { path: AUGMENTATION_PLANT.path, text: AUGMENTATION_PLANT.bytes.toString("utf8") },
+        heritagePlant: { path: HERITAGE_PLANT.path, text: HERITAGE_PLANT.bytes.toString("utf8") },
+        aliasPlant: { path: ALIAS_PLANT.path, text: ALIAS_PLANT.bytes.toString("utf8") },
         anchors: [...ANCHORS],
         readers: [...READERS],
         residuals: RESIDUALS,
@@ -1286,6 +1538,16 @@ describe("wb-dqf.1 Furnace observer-boundary census (FURNACE-CAC-EXECUTION-ASSUR
     expect(weakened, "the weakening control changes the acceptance").not.toBe(ACCEPTANCE);
     expect(ownerFiling(`${notes.replace(ACCEPTANCE, weakened)}\n\nA later note quoting it: ${ACCEPTANCE}`).includes(ACCEPTANCE), "a replaced owner sentence is not masked by a later verbatim quote (G22b)").toBe(false);
     expect(ownerFiling(`${notes}\n\nLANDED (a later note quoting it: ${ACCEPTANCE})`), "an appended note leaves the owner filing as it was (G22a)").toBe(filing);
+    const digest = (text: string): string => createHash("sha256").update(text).digest("hex").slice(0, 16);
+    const leads = (text: string): number[] => OWNER_LEADS.map(lead => text.split(lead).length - 1);
+    expect(digest(filing), "the owner filing is the one this file binds, byte for byte: an edit inside its two blocks reds (wb-s876 F3)").toBe(FILING_SHA256);
+    expect(leads(filing), "each bound owner sentence stands in the filing exactly once, by its lead (wb-s876 F3)").toEqual(OWNER_LEADS.map(() => 1));
+    const [head = "", body = "", ...later] = notes.split("\n\n");
+    const duplicated = ownerFiling([head, `${body.replace(ACCEPTANCE, weakened)}\n(owner restatement) ${ACCEPTANCE}`, ...later].join("\n\n"));
+    expect(
+      { verbatimKept: duplicated.includes(ACCEPTANCE), sameDigest: digest(duplicated) === FILING_SHA256, leads: leads(duplicated) },
+      "an in-filing duplicate - a weakened sentence restated verbatim inside the same block - reads as an edit and a second lead (L2-F7a)",
+    ).toStrictEqual({ verbatimKept: true, sameDigest: false, leads: [1, 1, 1, 2] });
     const cited = /Today the external Furnace reader is explicit bounded (\S+) polling \(docs\/09 § ([^;]+);/.exec(filing);
     expect(DOCS09_SECTION.startsWith(`## ${cited?.[2] ?? "-"}`), "the notes cite docs/09's section").toBe(true);
     const furnace = docs09Furnace();
