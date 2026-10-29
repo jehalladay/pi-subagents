@@ -1,7 +1,8 @@
 {
  "bead": "wb-ts6.2",
- "basis": "The out-of-file roster of test/workbench-hx-mutation-verified-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the constants (controls, probes, residual families, the undelivered armed clauses) and the registered test titles, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Witnesses measured by the cutting seat ws-04 (run g10-work-s125, 2026-10-28) on trunk 061c2ac with the vendored @hyperunix/sdk 0.1.0 (node_modules/@hyperunix/sdk/dist, installed by npm ci from vendor/hyperunix-sdk-0.1.0.tgz) and reviewed by hand against the shipped declarations and src.",
+ "basis": "The out-of-file roster of test/workbench-hx-mutation-verified-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the constants (controls, probes, reading shapes, residual families, the undelivered armed clauses) and the registered test titles, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Cut 1: witnesses measured by the cutting seat ws-04 (run g10-work-s125, 2026-10-28) on trunk 061c2ac. Respin 1 (refusal #1, U1-U6): every witness re-measured by seat ws-05 (run g10-work-s138, 2026-10-29) on trunk 04123dc with the vendored @hyperunix/sdk 0.1.0 (node_modules/@hyperunix/sdk/dist, installed by npm ci from vendor/hyperunix-sdk-0.1.0.tgz); the cut-1 readings each kept witness carries are unchanged, and every new or changed witness was reviewed by hand against the shipped declarations and src (the provider module's 13 SDK identifier references and src's 25 domainStatus places counted line by line).",
  "constants": {
+  "self": "test/workbench-hx-mutation-verified-census.test.ts",
   "sdk": "@hyperunix/sdk",
   "sdkDist": "node_modules/@hyperunix/sdk/dist",
   "mutationModules": [
@@ -17,6 +18,17 @@
   "guardBead": "wb-tz2.8",
   "producer": "hyperunix",
   "srcFloor": 100,
+  "moduleExtensions": [
+   ".ts",
+   ".tsx",
+   ".mts",
+   ".cts",
+   ".js",
+   ".jsx",
+   ".mjs",
+   ".cjs"
+  ],
+  "tierFloor": 400,
   "evidenceModule": "src/workbench/native-evidence.ts",
   "launchNames": [
    "exec",
@@ -32,6 +44,8 @@
    "git",
    "rf"
   ],
+  "wordSeparators": "[\\s;|&()<>`'\"$={},\\\\]+",
+  "hxCommand": "hx",
   "workspace": "/hx-mutation-verified-census/workspace",
   "binary": "5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f",
   "context": {
@@ -58,6 +72,208 @@
    },
    "execution_id": "census-execution"
   },
+  "shapes": [
+   {
+    "id": "minimal",
+    "source": {},
+    "summary": {},
+    "runtime": {}
+   },
+   {
+    "id": "rows",
+    "source": {
+     "rows": [
+      {
+       "claim_id": "census-claim"
+      }
+     ]
+    },
+    "summary": {},
+    "runtime": {}
+   },
+   {
+    "id": "not-retained",
+    "source": {
+     "rows_retained": false
+    },
+    "summary": {},
+    "runtime": {}
+   },
+   {
+    "id": "certified",
+    "source": {
+     "coverage": [
+      {
+       "batch_id": "census-batch"
+      }
+     ]
+    },
+    "summary": {},
+    "runtime": {}
+   },
+   {
+    "id": "operation",
+    "source": {
+     "operation": "show"
+    },
+    "summary": {},
+    "runtime": {}
+   },
+   {
+    "id": "runtime",
+    "source": {},
+    "summary": {},
+    "runtime": {
+     "version": "0.2.0",
+     "binarySha256": "a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0"
+    }
+   },
+   {
+    "id": "relayed",
+    "source": {
+     "view": "census-view",
+     "evidence": {
+      "providers": [
+       "census-provider"
+      ],
+      "provider_versions": {
+       "census-provider": "1.0.0"
+      }
+     },
+     "diagnostics": [
+      {
+       "code": "census-conflict"
+      }
+     ]
+    },
+    "summary": {
+     "incomplete_regions": [
+      {
+       "scope": "src",
+       "target": "census-target"
+      }
+     ]
+    },
+    "runtime": {}
+   },
+   {
+    "id": "context",
+    "source": {},
+    "summary": {},
+    "runtime": {},
+    "host": {
+     "scope": {
+      "workspace": "/hx-mutation-verified-census/workspace",
+      "principal": "local-operator:census-other"
+     },
+     "target": {
+      "kind": "hx.fs/directory",
+      "root": "test"
+     },
+     "capturedAt": "2026-10-28T00:00:02Z",
+     "observedAt": "2026-10-28T00:00:03Z",
+     "invocationId": "census-invocation",
+     "operationRef": {
+      "provider": "forge",
+      "type": "operation",
+      "id": "census-operation",
+      "scope": "/hx-mutation-verified-census/workspace"
+     }
+    }
+   },
+   {
+    "id": "receipt-fields",
+    "source": {
+     "state": "Verified",
+     "verified": true,
+     "verification": {
+      "outcome": "verified"
+     }
+    },
+    "summary": {},
+    "runtime": {}
+   },
+   {
+    "id": "all",
+    "source": {
+     "rows": [
+      {
+       "claim_id": "census-claim"
+      }
+     ],
+     "rows_retained": false,
+     "coverage": [
+      {
+       "batch_id": "census-batch"
+      }
+     ],
+     "operation": "show",
+     "view": "census-view",
+     "evidence": {
+      "providers": [
+       "census-provider"
+      ],
+      "provider_versions": {
+       "census-provider": "1.0.0"
+      }
+     },
+     "diagnostics": [
+      {
+       "code": "census-conflict"
+      }
+     ],
+     "state": "Verified",
+     "verified": true,
+     "verification": {
+      "outcome": "verified"
+     }
+    },
+    "summary": {
+     "incomplete_regions": [
+      {
+       "scope": "src",
+       "target": "census-target"
+      }
+     ]
+    },
+    "runtime": {
+     "version": "0.2.0",
+     "binarySha256": "a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0"
+    },
+    "host": {
+     "scope": {
+      "workspace": "/hx-mutation-verified-census/workspace",
+      "principal": "local-operator:census-other"
+     },
+     "target": {
+      "kind": "hx.fs/directory",
+      "root": "test"
+     },
+     "capturedAt": "2026-10-28T00:00:02Z",
+     "observedAt": "2026-10-28T00:00:03Z",
+     "invocationId": "census-invocation",
+     "operationRef": {
+      "provider": "forge",
+      "type": "operation",
+      "id": "census-operation",
+      "scope": "/hx-mutation-verified-census/workspace"
+     }
+    }
+   }
+  ],
+  "receiptFields": {
+   "state": "Verified",
+   "verified": true,
+   "verification": {
+    "outcome": "verified"
+   }
+  },
+  "boundLoadControl": "const SDK_NAME = \"@hyperunix/sdk\";\nexport const load = () => import(SDK_NAME);\nconst DIST = \"../../node_modules/@hyperunix/sdk/dist/protocol/mutation.js\";\nexport const loadDist = () => import(DIST);\nexport const loadTemplate = () => import(`@hyperunix/${\"sdk\"}`);\nconst OTHER = \"./other.js\";\nexport const loadOther = () => import(OTHER);\n",
+  "loopFields": [
+   "source.execution_status.kind",
+   "source.coverage_summary.licenses_absence"
+  ],
+  "envelope": "envelope",
   "notDelivered": [
    "a reconcile unit test where a mutation receipt carrying a filesystem Verified postcondition yields a typed filesystem-only reading and no build/semantic-success claim until an independent Forge/import recheck result is cited",
    "a falsifier reddens any surfaced string mapping Verified to semantic or build success"
@@ -73,7 +289,8 @@
    "mutation": "export type MutationOperation = \"create\" | \"touch\";\nexport declare class MutationPlan {\n    preview(): Promise<MutationPreview>;\n    apply(options?: ApplyOptions): Promise<MutationReceipt>;\n    replay(): Promise<MutationReceipt>;\n}",
    "titles": "describe(\"suite one\", () => { it(\"case one\", () => {}); test(\"case two\", () => {}); it(`case three`, () => {}); it(TITLE, () => {}); });",
    "evidence": "export function nativeEvidence(id: string) { switch (id) { case \"a.read\": break; case \"hyperunix.apply\": break; default: } }\nfunction other(id: string) { switch (id) { case \"z.read\": break; } }",
-   "glyph": "const lit = node.domainStatus === \"verified\" || \"complete\" == entry.domainStatus || node.state === \"done\" || node.domainStatus !== \"failed\";",
+   "glyph": "const lit = node.domainStatus === \"verified\" || \"complete\" == entry.domainStatus || node.state === \"done\" || node.domainStatus !== \"failed\" || [\"complete-empty\", 7].includes(node.domainStatus ?? \"\") || new Set([\"incomplete\"]).has(entry.domainStatus) || domainStatus === \"cancelled\" || node[\"domainStatus\"] === \"usage-error\";\nswitch (node.domainStatus) { case \"provider-failed\": break; default: }\nconst other = [\"done\"].includes(node.state);",
+   "places": "interface N { domainStatus?: string }\nconst a = node.domainStatus;\nconst { domainStatus } = node;\nconst b = node[\"domainStatus\"];\nconst c = { domainStatus: a, \"domainStatus\": b };\nconst d = { domainStatus };\nlabel(domainStatus);\nconst e = node.domainStatusText;",
    "registration": "registerHyperUnixFind(registry, reader, root);\nhyperunix.registerNativeHyperUnixFind(registry, root);\nregisterOther(registry);"
   },
   "siteControls": {
@@ -89,8 +306,27 @@
    "dynamic": "export const load = () => import('@hyperunix/sdk');",
    "require": "const sdk = require(\"@hyperunix/sdk\");",
    "import-type": "type R = import(\"@hyperunix/sdk\").MutationReceipt;",
-   "resolve": "const path = import.meta.resolve(\"@hyperunix/sdk\");"
+   "resolve": "const path = import.meta.resolve(\"@hyperunix/sdk\");",
+   "relative-dist": "import { receiptFromJson } from \"../../node_modules/@hyperunix/sdk/dist/protocol/mutation.js\";",
+   "relative-index": "import { HyperUnix } from \"../../node_modules/@hyperunix/sdk/dist/index.js\";",
+   "resolved-only": "import { HyperUnix } from \"../../node_modules/@hyperunix/./sdk/dist/index.js\";",
+   "unrelated": "import { nativeEvidence } from \"../workbench/native-evidence.js\";"
   },
+  "moduleNameControl": [
+   "a.ts",
+   "b.d.ts",
+   "c.mts",
+   "d.cts",
+   "e.tsx",
+   "f.js",
+   "g.mjs",
+   "h.cjs",
+   "i.jsx",
+   "j.json",
+   "k.md",
+   "l.ts.map",
+   "m.d.mts"
+  ],
   "memberControls": {
    "member": "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const read = HyperUnix.open(\"/r\").mutations;\n",
    "destructured": "import { HyperUnix } from \"@hyperunix/sdk\";\nconst { mutations } = HyperUnix.open(\"/r\");\nexport { mutations };\n",
@@ -99,22 +335,50 @@
    "namespace": "import * as sdk from \"@hyperunix/sdk\";\nexport const decode = sdk.receiptFromJson;\n",
    "raw": "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const run = HyperUnix.open(\"/r\").raw([\"apply\", \"plan\"]);\n",
    "flowed-open": "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const open = () => HyperUnix.open(\"/r\");\n",
-   "flowed": "import { open } from \"./flowed-open.js\";\nexport const read = open().mutations;\n"
+   "flowed": "import { open } from \"./flowed-open.js\";\nexport const read = open().mutations;\n",
+   "identifier": "import { receiptFromJson } from \"@hyperunix/sdk\";\nexport const decode = (value: unknown) => receiptFromJson(value as never);\n",
+   "relative-identifier": "import { receiptFromJson } from \"../../node_modules/@hyperunix/sdk/dist/protocol/mutation.js\";\nexport const decode = (value: unknown) => receiptFromJson(value as never);\n",
+   "type-identifier": "import type { MutationReceipt } from \"@hyperunix/sdk\";\nexport type Receipt = MutationReceipt;\n",
+   "mts-module.mts": "import { receiptFromJson } from \"@hyperunix/sdk\";\nexport const decode = (value: unknown) => receiptFromJson(value as never);\n"
   },
   "computedKeyProbes": {
    "composed": "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const read = HyperUnix.open(\"/r\")[\"mut\" + \"ations\"];\n",
    "reflected": "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const read = Reflect.get(HyperUnix.open(\"/r\"), \"mutations\");\n"
   },
   "castProbe": "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const read = (HyperUnix.open(\"/r\") as unknown as { mutations: unknown }).mutations;\n",
-  "composedSpecifierProbe": "const name = \"@hyperunix/\" + \"sdk\";\nexport const load = () => import(name);\nexport const loadTemplate = () => import(`@hyperunix/${\"sdk\"}`);\n",
+  "composedSpecifierProbe": "const name = \"@hyperunix/\" + \"sdk\";\nexport const load = () => import(name);\nconst part = \"sdk\";\nexport const loadJoined = () => import([\"@hyperunix\", part].join(\"/\"));\n",
   "launchControls": {
    "literal": "spawn(\"hx\", [\"apply\", \"plan\"]);",
    "shell": "exec(\"hx apply plan\");",
    "path": "execFileSync(\"/usr/local/bin/hx\", [\"apply\"]);",
-   "member": "pi.exec(\"hx\", [\"mutation\", \"recover\", \"id\"]);"
+   "member": "pi.exec(\"hx\", [\"mutation\", \"recover\", \"id\"]);",
+   "alias-import": "import { spawn as launch } from \"node:child_process\";\nlaunch(\"hx\", [\"mutation\", \"apply\", plan]);",
+   "promisified": "const execFileAsync = promisify(execFile);\nexecFileAsync(\"hx\", [\"mutation\", \"apply\", plan]);",
+   "shell-c": "spawn(\"sh\", [\"-c\", \"hx mutation apply \\\"$0\\\"\", plan]);",
+   "env-prefix": "execSync(\"HX_NO_COLOR=1 hx mutation apply plan\");",
+   "npx": "execFileSync(\"npx\", [\"hx\", \"mutation\", \"apply\", \"plan\"]);",
+   "bound": "const HX = \"hx\";\nspawn(HX, [\"apply\", \"plan\"]);",
+   "template": "exec(`${binDir}/hx mutation apply ${plan}`);"
   },
-  "boundLaunchProbe": "const HX = \"hx\";\nspawn(HX, [\"apply\", \"plan\"]);\nexecFile(binaryPath, [\"apply\"]);\n",
+  "nearMissControl": "spawn(\"hxd\", [\"--hx-plan\"]);\nexec(\"phx server && HX_NO_COLOR=1 hx-sdk run\");\nconst sdk = \"@hyperunix/sdk\";\nconst doc = \"the HX mutation Verified postcondition\";\n",
+  "computedCommandProbe": "const name = \"h\" + \"x\";\nspawn(name, [\"apply\", \"plan\"]);\nspawn(String.fromCharCode(104, 120), [\"apply\"]);\nexecFile(process.env.HX_BIN ?? binaryPath, [\"apply\"]);\n",
   "piTextProbe": "export const NOTE = \"HX Verified: the build passed and the refactor is semantically safe\";\n",
+  "unnamedStatusProbe": "export const lit = (node: Record<string, string>) => Object.values(node).includes(\"complete\") || Reflect.get(node, \"domain\" + \"Status\") === \"complete-empty\" || node[\"domain\" + \"Status\"] === \"incomplete\";\n",
+  "status": "domainStatus",
+  "membership": [
+   "includes",
+   "has",
+   "indexOf"
+  ],
+  "renderControls": [
+   "verified"
+  ],
+  "renderLabel": "census-node",
+  "renderTask": {
+   "status": "completed",
+   "startTime": 0,
+   "endTime": 1000
+  },
   "residuals": {
    "R-COMPUTED-KEY": [
     "Q1"
@@ -128,7 +392,7 @@
    "R-COMPOSED-SPECIFIER": [
     "Q4"
    ],
-   "R-BOUND-LAUNCH": [
+   "R-COMPUTED-COMMAND": [
     "Q5"
    ],
    "R-OUTSIDE-SRC": [
@@ -136,6 +400,12 @@
    ],
    "R-PI-TEXT": [
     "Q7"
+   ],
+   "R-UNSAMPLED-VALUE": [
+    "Q8"
+   ],
+   "R-STATUS-UNNAMED": [
+    "Q9"
    ]
   }
  },
@@ -194,6 +464,157 @@
        "mutation-partial|false|refused:validation:HyperUnix topology refused: mutation-partial is a mutation outcome and this read adapter refuses mutation outcomes.",
        "mutation-partial|true|refused:validation:HyperUnix topology refused: mutation-partial is a mutation outcome and this read adapter refuses mutation outcomes."
       ],
+      "shapes": [
+       {
+        "id": "minimal",
+        "moves": [],
+        "refused": [
+         "mutation-rejected",
+         "mutation-partial"
+        ],
+        "delta": []
+       },
+       {
+        "id": "rows",
+        "moves": [
+         "source.rows"
+        ],
+        "refused": [
+         "complete-empty",
+         "mutation-rejected",
+         "mutation-partial"
+        ],
+        "delta": [
+         "complete-empty|false|refused:validation:HyperUnix topology refused: a complete-empty result carries rows.",
+         "complete-empty|true|refused:validation:HyperUnix topology refused: a complete-empty result carries rows."
+        ]
+       },
+       {
+        "id": "not-retained",
+        "moves": [
+         "source.rows_retained"
+        ],
+        "refused": [
+         "mutation-rejected",
+         "mutation-partial"
+        ],
+        "delta": []
+       },
+       {
+        "id": "certified",
+        "moves": [
+         "source.coverage[].batch_id"
+        ],
+        "refused": [
+         "mutation-rejected",
+         "mutation-partial"
+        ],
+        "delta": []
+       },
+       {
+        "id": "operation",
+        "moves": [
+         "source.operation"
+        ],
+        "refused": [
+         "mutation-rejected",
+         "mutation-partial"
+        ],
+        "delta": []
+       },
+       {
+        "id": "runtime",
+        "moves": [
+         "runtime.binarySha256",
+         "runtime.version"
+        ],
+        "refused": [
+         "mutation-rejected",
+         "mutation-partial"
+        ],
+        "delta": []
+       },
+       {
+        "id": "relayed",
+        "moves": [
+         "source.view",
+         "source.evidence.providers[]",
+         "source.evidence.provider_versions.*",
+         "source.diagnostics[].code",
+         "source.coverage_summary.incomplete_regions[].scope",
+         "source.coverage_summary.incomplete_regions[].target"
+        ],
+        "refused": [
+         "mutation-rejected",
+         "mutation-partial"
+        ],
+        "delta": []
+       },
+       {
+        "id": "context",
+        "moves": [],
+        "refused": [
+         "mutation-rejected",
+         "mutation-partial"
+        ],
+        "delta": []
+       },
+       {
+        "id": "receipt-fields",
+        "moves": [],
+        "refused": [
+         "mutation-rejected",
+         "mutation-partial"
+        ],
+        "delta": []
+       },
+       {
+        "id": "all",
+        "moves": [
+         "source.rows",
+         "source.operation",
+         "runtime.binarySha256",
+         "runtime.version",
+         "source.coverage[].batch_id",
+         "source.rows_retained",
+         "source.view",
+         "source.evidence.providers[]",
+         "source.evidence.provider_versions.*",
+         "source.diagnostics[].code",
+         "source.coverage_summary.incomplete_regions[].scope",
+         "source.coverage_summary.incomplete_regions[].target"
+        ],
+        "refused": [
+         "complete-empty",
+         "mutation-rejected",
+         "mutation-partial"
+        ],
+        "delta": [
+         "complete-empty|false|refused:validation:HyperUnix topology refused: a complete-empty result carries rows.",
+         "complete-empty|true|refused:validation:HyperUnix topology refused: a complete-empty result carries rows."
+        ]
+       }
+      ],
+      "loopFields": [
+       "source.execution_status.kind",
+       "source.coverage_summary.licenses_absence"
+      ],
+      "judgedFields": [
+       "source.execution_status.kind",
+       "source.coverage_summary.licenses_absence",
+       "source.rows",
+       "source.operation",
+       "runtime.binarySha256",
+       "runtime.version",
+       "source.coverage[].batch_id",
+       "source.rows_retained",
+       "source.view",
+       "source.evidence.providers[]",
+       "source.evidence.provider_versions.*",
+       "source.diagnostics[].code",
+       "source.coverage_summary.incomplete_regions[].scope",
+       "source.coverage_summary.incomplete_regions[].target"
+      ],
       "control": [
        "complete",
        "mutation-verified"
@@ -234,6 +655,88 @@
       "readOutcomeBreaks": [
        "mutation-rejected",
        "mutation-partial"
+      ],
+      "shapes": [
+       {
+        "id": "minimal",
+        "readOutcomeBreaks": [
+         "mutation-rejected",
+         "mutation-partial"
+        ],
+        "delta": []
+       },
+       {
+        "id": "rows",
+        "readOutcomeBreaks": [
+         "mutation-rejected",
+         "mutation-partial"
+        ],
+        "delta": []
+       },
+       {
+        "id": "not-retained",
+        "readOutcomeBreaks": [
+         "mutation-rejected",
+         "mutation-partial"
+        ],
+        "delta": []
+       },
+       {
+        "id": "certified",
+        "readOutcomeBreaks": [
+         "mutation-rejected",
+         "mutation-partial"
+        ],
+        "delta": []
+       },
+       {
+        "id": "operation",
+        "readOutcomeBreaks": [
+         "mutation-rejected",
+         "mutation-partial"
+        ],
+        "delta": []
+       },
+       {
+        "id": "runtime",
+        "readOutcomeBreaks": [
+         "mutation-rejected",
+         "mutation-partial"
+        ],
+        "delta": []
+       },
+       {
+        "id": "relayed",
+        "readOutcomeBreaks": [
+         "mutation-rejected",
+         "mutation-partial"
+        ],
+        "delta": []
+       },
+       {
+        "id": "context",
+        "readOutcomeBreaks": [
+         "mutation-rejected",
+         "mutation-partial"
+        ],
+        "delta": []
+       },
+       {
+        "id": "receipt-fields",
+        "readOutcomeBreaks": [
+         "mutation-rejected",
+         "mutation-partial"
+        ],
+        "delta": []
+       },
+       {
+        "id": "all",
+        "readOutcomeBreaks": [
+         "mutation-rejected",
+         "mutation-partial"
+        ],
+        "delta": []
+       }
       ]
      }
     },
@@ -258,6 +761,48 @@
        "failed|undeclared|refused:validation:HyperUnix topology refused: source.execution_status.kind is not a vendored SDK ExecutionStatusKind.|breaks:execution-kind:absence-not-licensed",
        "Verified|undeclared|refused:validation:HyperUnix topology refused: source.execution_status.kind is not a vendored SDK ExecutionStatusKind.|breaks:execution-kind:absence-not-licensed",
        "RejectedBeforeApply|undeclared|refused:validation:HyperUnix topology refused: source.execution_status.kind is not a vendored SDK ExecutionStatusKind.|breaks:execution-kind:absence-not-licensed"
+      ],
+      "shapes": [
+       {
+        "id": "minimal",
+        "delta": []
+       },
+       {
+        "id": "rows",
+        "delta": []
+       },
+       {
+        "id": "not-retained",
+        "delta": []
+       },
+       {
+        "id": "certified",
+        "delta": []
+       },
+       {
+        "id": "operation",
+        "delta": []
+       },
+       {
+        "id": "runtime",
+        "delta": []
+       },
+       {
+        "id": "relayed",
+        "delta": []
+       },
+       {
+        "id": "context",
+        "delta": []
+       },
+       {
+        "id": "receipt-fields",
+        "delta": []
+       },
+       {
+        "id": "all",
+        "delta": []
+       }
       ],
       "control": {
        "outcomes": [
@@ -342,6 +887,39 @@
        "control|hyperunix.registerNativeHyperUnixFind"
       ]
      }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "tier": "test",
+      "chain": [
+       "forge.toml [build.commands.test] command = \"npm run test\"",
+       "package.json scripts.test = \"vitest run --reporter=default --reporter=json --outputFile=.forge/vitest-report.json --includeTaskLocation --expect.requireAssertions\""
+      ],
+      "argv": [
+       "run",
+       "--reporter=default",
+       "--reporter=json",
+       "--outputFile=.forge/vitest-report.json",
+       "--includeTaskLocation",
+       "--expect.requireAssertions"
+      ],
+      "filter": [],
+      "config": "vitest.config.ts",
+      "testNamePattern": null,
+      "setupFiles": [
+       "test/helpers/census-guard.ts"
+      ],
+      "lists": {
+       "guard": true,
+       "self": true,
+       "floor": true
+      },
+      "control": {
+       "guard": false,
+       "self": true
+      }
+     }
     }
    ]
   },
@@ -398,11 +976,30 @@
        "B",
        "e"
       ],
+      "walk": {
+       "extensions": [
+        ".ts"
+       ],
+       "control": [
+        "a.ts",
+        "b.d.ts",
+        "c.mts",
+        "d.cts",
+        "e.tsx",
+        "f.js",
+        "g.mjs",
+        "h.cjs",
+        "i.jsx",
+        "m.d.mts"
+       ]
+      },
       "src": {
        "sites": [
         "src/index.ts|literal:ArrayLiteralExpression|@hyperunix/sdk|",
         "src/workbench/hosts/local-detached.ts|import-meta-resolve|@hyperunix/sdk|",
-        "src/workbench/providers/hyperunix.ts|import|@hyperunix/sdk|Bounds,type ClaimBody,HyperUnix,type QueryResult,resultToJson"
+        "src/workbench/providers/hyperunix.ts|import|@hyperunix/sdk|Bounds,type ClaimBody,HyperUnix,type QueryResult,resultToJson",
+        "src/workbench/providers/hyperunix.ts|literal:PropertyAssignment|@hyperunix/sdk@0.1.0:HyperUnix.find|",
+        "src/workbench/providers/hyperunix.ts|literal:PropertyAssignment|@hyperunix/sdk@0.1.0:HyperUnix.find|"
        ],
        "violations": []
       },
@@ -506,7 +1103,47 @@
          "control:resolve|import-meta-resolve|@hyperunix/sdk|"
         ],
         "violations": []
+       },
+       "relative-dist": {
+        "sites": [
+         "control:relative-dist|import|../../node_modules/@hyperunix/sdk/dist/protocol/mutation.js|receiptFromJson|opaque"
+        ],
+        "violations": [
+         "control:relative-dist|import|../../node_modules/@hyperunix/sdk/dist/protocol/mutation.js|receiptFromJson|opaque"
+        ]
+       },
+       "relative-index": {
+        "sites": [
+         "control:relative-index|import|../../node_modules/@hyperunix/sdk/dist/index.js|HyperUnix|opaque"
+        ],
+        "violations": [
+         "control:relative-index|import|../../node_modules/@hyperunix/sdk/dist/index.js|HyperUnix|opaque"
+        ]
+       },
+       "resolved-only": {
+        "sites": [
+         "control:resolved-only|import|../../node_modules/@hyperunix/./sdk/dist/index.js|HyperUnix|resolved|opaque"
+        ],
+        "violations": [
+         "control:resolved-only|import|../../node_modules/@hyperunix/./sdk/dist/index.js|HyperUnix|resolved|opaque"
+        ]
+       },
+       "unrelated": {
+        "sites": [],
+        "violations": []
        }
+      },
+      "boundControl": {
+       "sites": [
+        "control:c1-bound|bound-dynamic-import|@hyperunix/sdk||opaque",
+        "control:c1-bound|bound-dynamic-import|../../node_modules/@hyperunix/sdk/dist/protocol/mutation.js||opaque",
+        "control:c1-bound|bound-dynamic-import|@hyperunix/sdk||opaque"
+       ],
+       "violations": [
+        "control:c1-bound|bound-dynamic-import|@hyperunix/sdk||opaque",
+        "control:c1-bound|bound-dynamic-import|../../node_modules/@hyperunix/sdk/dist/protocol/mutation.js||opaque",
+        "control:c1-bound|bound-dynamic-import|@hyperunix/sdk||opaque"
+       ]
       }
      }
     },
@@ -515,13 +1152,26 @@
      "witness": {
       "src": {
        "references": [
+        "src/workbench/providers/hyperunix.ts|identifier|Bounds|bounds.d.ts",
+        "src/workbench/providers/hyperunix.ts|identifier|ClaimBody|result.d.ts",
+        "src/workbench/providers/hyperunix.ts|identifier|HyperUnix|client.d.ts",
+        "src/workbench/providers/hyperunix.ts|identifier|QueryResult|result.d.ts",
+        "src/workbench/providers/hyperunix.ts|identifier|resultToJson|result.d.ts",
+        "src/workbench/providers/hyperunix.ts|identifier|Bounds|bounds.d.ts",
+        "src/workbench/providers/hyperunix.ts|identifier|QueryResult|result.d.ts",
+        "src/workbench/providers/hyperunix.ts|identifier|ClaimBody|result.d.ts",
         "src/workbench/providers/hyperunix.ts|member|create|bounds.d.ts",
+        "src/workbench/providers/hyperunix.ts|identifier|Bounds|bounds.d.ts",
+        "src/workbench/providers/hyperunix.ts|identifier|resultToJson|result.d.ts",
         "src/workbench/providers/hyperunix.ts|member|open|client.d.ts",
+        "src/workbench/providers/hyperunix.ts|identifier|HyperUnix|client.d.ts",
         "src/workbench/providers/hyperunix.ts|member|client|client.d.ts",
         "src/workbench/providers/hyperunix.ts|member|dispose|client.d.ts",
         "src/workbench/providers/hyperunix.ts|member|runtime|client.d.ts",
         "src/workbench/providers/hyperunix.ts|member|find|client.d.ts",
         "src/workbench/providers/hyperunix.ts|member|create|bounds.d.ts",
+        "src/workbench/providers/hyperunix.ts|identifier|Bounds|bounds.d.ts",
+        "src/workbench/providers/hyperunix.ts|identifier|resultToJson|result.d.ts",
         "src/workbench/providers/hyperunix.ts|member|version|client.d.ts",
         "src/workbench/providers/hyperunix.ts|member|binarySha256|client.d.ts",
         "src/workbench/providers/hyperunix.ts|member|close|client.d.ts"
@@ -531,8 +1181,10 @@
       "controls": {
        "member": {
         "references": [
+         "control:member|identifier|HyperUnix|client.d.ts",
          "control:member|member|mutations|client.d.ts|mutation",
-         "control:member|member|open|client.d.ts"
+         "control:member|member|open|client.d.ts",
+         "control:member|identifier|HyperUnix|client.d.ts"
         ],
         "violations": [
          "control:member|member|mutations|client.d.ts|mutation"
@@ -540,8 +1192,10 @@
        },
        "destructured": {
         "references": [
+         "control:destructured|identifier|HyperUnix|client.d.ts",
          "control:destructured|destructure|mutations|client.d.ts|mutation",
-         "control:destructured|member|open|client.d.ts"
+         "control:destructured|member|open|client.d.ts",
+         "control:destructured|identifier|HyperUnix|client.d.ts"
         ],
         "violations": [
          "control:destructured|destructure|mutations|client.d.ts|mutation"
@@ -549,8 +1203,10 @@
        },
        "element-literal": {
         "references": [
+         "control:element-literal|identifier|HyperUnix|client.d.ts",
          "control:element-literal|element|mutations|client.d.ts|mutation",
-         "control:element-literal|member|open|client.d.ts"
+         "control:element-literal|member|open|client.d.ts",
+         "control:element-literal|identifier|HyperUnix|client.d.ts"
         ],
         "violations": [
          "control:element-literal|element|mutations|client.d.ts|mutation"
@@ -558,8 +1214,10 @@
        },
        "const-key": {
         "references": [
+         "control:const-key|identifier|HyperUnix|client.d.ts",
          "control:const-key|element|mutations|client.d.ts|mutation",
-         "control:const-key|member|open|client.d.ts"
+         "control:const-key|member|open|client.d.ts",
+         "control:const-key|identifier|HyperUnix|client.d.ts"
         ],
         "violations": [
          "control:const-key|element|mutations|client.d.ts|mutation"
@@ -575,8 +1233,10 @@
        },
        "raw": {
         "references": [
+         "control:raw|identifier|HyperUnix|client.d.ts",
          "control:raw|member|raw|client.d.ts|argv",
-         "control:raw|member|open|client.d.ts"
+         "control:raw|member|open|client.d.ts",
+         "control:raw|identifier|HyperUnix|client.d.ts"
         ],
         "violations": [
          "control:raw|member|raw|client.d.ts|argv"
@@ -584,7 +1244,9 @@
        },
        "flowed-open": {
         "references": [
-         "control:flowed-open|member|open|client.d.ts"
+         "control:flowed-open|identifier|HyperUnix|client.d.ts",
+         "control:flowed-open|member|open|client.d.ts",
+         "control:flowed-open|identifier|HyperUnix|client.d.ts"
         ],
         "violations": []
        },
@@ -594,6 +1256,46 @@
         ],
         "violations": [
          "control:flowed|member|mutations|client.d.ts|mutation"
+        ]
+       },
+       "identifier": {
+        "references": [
+         "control:identifier|identifier|receiptFromJson|protocol/mutation.d.ts|mutation",
+         "control:identifier|identifier|receiptFromJson|protocol/mutation.d.ts|mutation"
+        ],
+        "violations": [
+         "control:identifier|identifier|receiptFromJson|protocol/mutation.d.ts|mutation",
+         "control:identifier|identifier|receiptFromJson|protocol/mutation.d.ts|mutation"
+        ]
+       },
+       "relative-identifier": {
+        "references": [
+         "control:relative-identifier|identifier|receiptFromJson|protocol/mutation.d.ts|mutation",
+         "control:relative-identifier|identifier|receiptFromJson|protocol/mutation.d.ts|mutation"
+        ],
+        "violations": [
+         "control:relative-identifier|identifier|receiptFromJson|protocol/mutation.d.ts|mutation",
+         "control:relative-identifier|identifier|receiptFromJson|protocol/mutation.d.ts|mutation"
+        ]
+       },
+       "type-identifier": {
+        "references": [
+         "control:type-identifier|identifier|MutationReceipt|protocol/mutation.d.ts|mutation",
+         "control:type-identifier|identifier|MutationReceipt|protocol/mutation.d.ts|mutation"
+        ],
+        "violations": [
+         "control:type-identifier|identifier|MutationReceipt|protocol/mutation.d.ts|mutation",
+         "control:type-identifier|identifier|MutationReceipt|protocol/mutation.d.ts|mutation"
+        ]
+       },
+       "mts-module.mts": {
+        "references": [
+         "control:mts-module.mts|identifier|receiptFromJson|protocol/mutation.d.ts|mutation",
+         "control:mts-module.mts|identifier|receiptFromJson|protocol/mutation.d.ts|mutation"
+        ],
+        "violations": [
+         "control:mts-module.mts|identifier|receiptFromJson|protocol/mutation.d.ts|mutation",
+         "control:mts-module.mts|identifier|receiptFromJson|protocol/mutation.d.ts|mutation"
         ]
        }
       }
@@ -630,6 +1332,21 @@
        "mutation-rejected|mutation-rejected",
        "mutation-partial|mutation-partial"
       ],
+      "receiptFind": [
+       "complete|complete",
+       "complete-empty|complete-empty",
+       "incomplete|incomplete",
+       "budget-exhausted|budget-exhausted",
+       "cancelled|cancelled",
+       "view-invalidated|view-invalidated",
+       "provider-failed|provider-failed",
+       "schema-failed|schema-failed",
+       "internal-failed|internal-failed",
+       "protocol-failed|protocol-failed",
+       "usage-error|usage-error",
+       "mutation-rejected|mutation-rejected",
+       "mutation-partial|mutation-partial"
+      ],
       "verbs": [
        "create",
        "rename",
@@ -650,13 +1367,71 @@
        "hyperunix.remove|{}",
        "hyperunix.apply|{}"
       ],
+      "drawn": [
+       "complete|card:?|dialog:?",
+       "complete-empty|card:?|dialog:?",
+       "incomplete|card:?|dialog:?",
+       "budget-exhausted|card:?|dialog:?",
+       "cancelled|card:?|dialog:?",
+       "view-invalidated|card:?|dialog:?",
+       "provider-failed|card:?|dialog:?",
+       "schema-failed|card:?|dialog:?",
+       "internal-failed|card:?|dialog:?",
+       "protocol-failed|card:?|dialog:?",
+       "usage-error|card:?|dialog:?",
+       "mutation-rejected|card:?|dialog:?",
+       "mutation-partial|card:?|dialog:?",
+       "verified|card:\u221a|dialog:\u221a"
+      ],
       "glyphTriggers": [
        "src/ui/workflow-card.ts|verified",
        "src/ui/workflow-dialog.ts|verified"
       ],
       "glyphControl": [
        "control|verified",
-       "control|complete"
+       "control|complete",
+       "control|complete-empty",
+       "control|incomplete",
+       "control|cancelled",
+       "control|usage-error",
+       "control|provider-failed"
+      ],
+      "statusPlaces": [
+       "src/index.ts|member|BinaryExpression:??",
+       "src/ui/workflow-card.ts|member|BinaryExpression:===",
+       "src/ui/workflow-card.ts|member|BinaryExpression:??",
+       "src/ui/workflow-dialog.ts|member|BinaryExpression:===",
+       "src/ui/workflow-dialog.ts|member|CallExpression",
+       "src/workbench/forge-observer.ts|member|VariableDeclaration",
+       "src/workbench/native-evidence.ts|key|PropertySignature",
+       "src/workbench/native-evidence.ts|member|BinaryExpression:=",
+       "src/workbench/reconcile-decision.ts|member|BinaryExpression:!==",
+       "src/workbench/reconcile-decision.ts|key|PropertyAssignment",
+       "src/workbench/reconcile-decision.ts|member|CallExpression",
+       "src/workbench/reconcile-tool.ts|member|BinaryExpression:!==",
+       "src/workbench/reconcile-tool.ts|key|PropertyAssignment",
+       "src/workbench/reconcile-tool.ts|member|PropertyAssignment",
+       "src/workflow/progress.ts|key|PropertySignature",
+       "src/workflow/reconcile.ts|key|PropertySignature",
+       "src/workflow/reconcile.ts|member|BinaryExpression:!==",
+       "src/workflow/reconcile.ts|member|CallExpression",
+       "src/workflow/reconcile.ts|member|BinaryExpression:!==",
+       "src/workflow/reconcile.ts|member|BinaryExpression:=",
+       "src/workflow/reconcile.ts|member|BinaryExpression:=",
+       "src/workflow/reconcile.ts|key|PropertySignature",
+       "src/workflow/reconcile.ts|member|BinaryExpression:!==",
+       "src/workflow/reconcile.ts|key|PropertyAssignment",
+       "src/workflow/reconcile.ts|member|PropertyAssignment"
+      ],
+      "placeControl": [
+       "control|key|PropertySignature",
+       "control|member|VariableDeclaration",
+       "control|binding|BindingElement",
+       "control|element|VariableDeclaration",
+       "control|key|PropertyAssignment",
+       "control|key|PropertyAssignment",
+       "control|shorthand|ShorthandPropertyAssignment",
+       "control|identifier|CallExpression"
       ],
       "kindsLightingGlyph": []
      }
@@ -672,18 +1447,40 @@
       "hx": [],
       "controls": {
        "literal": [
-        "control:literal|spawn|hx"
+        "control:literal|CallExpression|hx"
        ],
        "shell": [
-        "control:shell|exec|hx apply plan"
+        "control:shell|CallExpression|hx apply plan"
        ],
        "path": [
-        "control:path|execFileSync|/usr/local/bin/hx"
+        "control:path|CallExpression|/usr/local/bin/hx"
        ],
        "member": [
-        "control:member|exec|hx"
+        "control:member|CallExpression|hx"
+       ],
+       "alias-import": [
+        "control:alias-import|CallExpression|hx"
+       ],
+       "promisified": [
+        "control:promisified|CallExpression|hx"
+       ],
+       "shell-c": [
+        "control:shell-c|ArrayLiteralExpression|hx mutation apply \"$0\""
+       ],
+       "env-prefix": [
+        "control:env-prefix|CallExpression|HX_NO_COLOR=1 hx mutation apply plan"
+       ],
+       "npx": [
+        "control:npx|ArrayLiteralExpression|hx"
+       ],
+       "bound": [
+        "control:bound|VariableDeclaration|hx"
+       ],
+       "template": [
+        "control:template|TemplateSpan|/hx mutation apply "
        ]
-      }
+      },
+      "nearMiss": []
      }
     }
    ]
@@ -697,13 +1494,17 @@
      "witness": {
       "composed": {
        "references": [
-        "control:q1-composed|member|open|client.d.ts"
+        "control:q1-composed|identifier|HyperUnix|client.d.ts",
+        "control:q1-composed|member|open|client.d.ts",
+        "control:q1-composed|identifier|HyperUnix|client.d.ts"
        ],
        "violations": []
       },
       "reflected": {
        "references": [
-        "control:q1-reflected|member|open|client.d.ts"
+        "control:q1-reflected|identifier|HyperUnix|client.d.ts",
+        "control:q1-reflected|member|open|client.d.ts",
+        "control:q1-reflected|identifier|HyperUnix|client.d.ts"
        ],
        "violations": []
       }
@@ -714,7 +1515,9 @@
      "witness": {
       "cast": {
        "references": [
-        "control:q2-cast|member|open|client.d.ts"
+        "control:q2-cast|identifier|HyperUnix|client.d.ts",
+        "control:q2-cast|member|open|client.d.ts",
+        "control:q2-cast|identifier|HyperUnix|client.d.ts"
        ],
        "violations": []
       }
@@ -732,15 +1535,21 @@
     {
      "id": "Q4",
      "witness": {
-      "sites": [],
-      "violations": []
+      "sites": {
+       "sites": [],
+       "violations": []
+      },
+      "bound": {
+       "sites": [],
+       "violations": []
+      }
      }
     },
     {
      "id": "Q5",
      "witness": {
-      "launches": [],
-      "hx": []
+      "words": [],
+      "launches": []
      }
     },
     {
@@ -761,7 +1570,74 @@
        "references": [],
        "violations": []
       },
-      "launches": []
+      "launches": [],
+      "words": []
+     }
+    },
+    {
+     "id": "Q8",
+     "witness": {
+      "loops": [
+       "source.execution_status.kind",
+       "source.coverage_summary.licenses_absence"
+      ],
+      "sampled": {
+       "source.rows": [
+        "[[]]",
+        "[[{\"claim_id\":\"census-claim\"}]]"
+       ],
+       "source.operation": [
+        "[\"find\"]",
+        "[\"show\"]"
+       ],
+       "runtime.binarySha256": [
+        "[\"5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f\"]",
+        "[\"a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0\"]"
+       ],
+       "runtime.version": [
+        "[\"0.1.0\"]",
+        "[\"0.2.0\"]"
+       ],
+       "source.coverage[].batch_id": [
+        "[]",
+        "[\"census-batch\"]"
+       ],
+       "source.rows_retained": [
+        "[true]",
+        "[false]"
+       ],
+       "source.view": [
+        "[]",
+        "[\"census-view\"]"
+       ],
+       "source.evidence.providers[]": [
+        "[]",
+        "[\"census-provider\"]"
+       ],
+       "source.evidence.provider_versions.*": [
+        "[]",
+        "[\"1.0.0\"]"
+       ],
+       "source.diagnostics[].code": [
+        "[]",
+        "[\"census-conflict\"]"
+       ],
+       "source.coverage_summary.incomplete_regions[].scope": [
+        "[]",
+        "[\"src\"]"
+       ],
+       "source.coverage_summary.incomplete_regions[].target": [
+        "[]",
+        "[\"census-target\"]"
+       ]
+      }
+     }
+    },
+    {
+     "id": "Q9",
+     "witness": {
+      "places": [],
+      "triggers": []
      }
     }
    ]
@@ -774,6 +1650,7 @@
   "A3",
   "B1",
   "B2",
+  "B3",
   "C1",
   "C2",
   "C3",
@@ -785,6 +1662,8 @@
   "Q5",
   "Q6",
   "Q7",
+  "Q8",
+  "Q9",
   "the registered tests and the reached pins equal the roster, in order and both ways"
  ]
 }
