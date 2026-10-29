@@ -16,14 +16,17 @@
  * as production loads it (loadWorkbenchNative().registerNativeProviders, then CapabilityRegistry.invoke), the two exported
  * render functions called directly (nativeReactiveFiberRender, nativeReactiveFiberPreview), and the injected registration
  * (registerReactiveFiberRender) both through the registry and as its bare provider. And the until-then trigger: row T pins
- * that no Pi-authored EDC component/hook surface exists, so the day one lands this census reds naming the owed duty (drive
- * the new surface's render passes through row A). NOT DELIVERED: the falsifier run against a Pi-authored EDC hook surface -
- * none exists (the owner filing: "No EDC render pipeline exists in Pi to carry the duty").
+ * that no Pi-authored EDC component/hook surface exists in the homes and forms row T reads (listed below), so the day one
+ * lands there this census reds naming the owed duty (drive the new surface's render passes through row A); a surface in a
+ * home or a form row T does not read is a named residual (R-UNREAD-HOMES, R-HOOK-VOCABULARY), never claimed. NOT DELIVERED:
+ * the falsifier run against a Pi-authored EDC hook surface - none exists (the owner filing: "No EDC render pipeline exists in
+ * Pi to carry the duty").
  *
- * THE FALSIFIER (row A). Each pass runs on a bench: a fresh workspace root (two seeded files) and a hermetic PATH holding
- * one directory, whose `rf` is a stand-in (absolute node interpreter) that logs its argv, marks its progress in files beside
- * itself and exits 0 on SIGTERM (the clean exit is the hard case: a complete proposal on stdout and exit code 0). The same
- * directory holds a logging stand-in for every other command Pi's src launches by name (derived from src). The scenarios:
+ * THE FALSIFIER (row A). Each pass runs on a bench: a fresh workspace root (two seeded files) inside a bench home (a scratch
+ * directory that holds the root alone) and a hermetic PATH holding one directory, whose `rf` is a stand-in (absolute node
+ * interpreter) that logs its argv, marks its progress in files beside itself and exits 0 on SIGTERM (the clean exit is the
+ * hard case: a complete proposal on stdout and exit code 0). The same directory holds a logging stand-in for every other
+ * command Pi's src launches by name (derived from src: each resolved command of both launch readers, A5). The scenarios:
  *  - ABORTED (the title's "aborted"): before (the signal fired before the pass starts); running (native passes: the stand-in
  *    started and wrote nothing); proposed (the stand-in wrote a complete, valid, uncommitted proposal and waits; for the
  *    injected passes the reader is pending at the abort and resolves that proposal after it).
@@ -33,31 +36,64 @@
  *    the registry's own dispatch, the same for both registrations, and is driven through the injected one, where the
  *    proposal's timing is the test's).
  *  - SETTLED: no abort; the stand-in prints the proposal and exits.
- * The verdict (falsify) names seven violation classes: committed-after-abort (an aborted or suspended pass returned a
- * proposal), committed-proposal (a settled native pass returned a form stating a commit: ephemeral not true, render_id or
- * commit_seq set, or a store write), committing-launch (an rf launch outside the `context render ... --no-commit --no-input
- * --json` form), started-after-abort (a pass aborted before it started, or held in the queue, launched or read anyway),
- * extra-launch (more than one launch or read), foreign-launch (any other stand-in launched) and host-write (the workspace
- * root's tree changed). A1-A4 hold every driven pass and scenario to an empty verdict; A5 holds the pass's static reach
- * (its module closure from src: no tool provider, model host or tool SDK native-modules.ts loads, no I/O global, and one
- * launch site, spawn("rf")); A6 is the acceptance's "committed-after-abort attempt going red": a control for every class,
- * each tripping exactly its class (a render that drops its signal and so returns its proposal after the abort leads), plus one
- * signal-ignoring provider read three ways - bare (red: committed-after-abort), through a registry with the proposal arriving
- * after the abort (refused by the registry's race), and through a registry with the proposal settling inside the abort's own
- * tick (refused only by the registry's post-race guard; without that guard the census reds).
+ * Every wait on a pass is bounded (WAIT_MS): a pass that never settles reds naming itself. The verdict (falsify) names seven
+ * violation classes: committed-after-abort (an aborted or suspended pass returned a proposal), committed-proposal (a settled
+ * native pass returned a reading that does not state the uncommitted form: ephemeral not true, render_id set, commit_seq
+ * set, or a store write), committing-launch (an rf launch outside the `context render ... --no-commit --no-input --json`
+ * form: another verb, or the three flags not last), started-after-abort (a pass aborted before it started, or held in the
+ * queue, launched or read anyway), extra-launch (more than one launch or read), foreign-launch (any other stand-in launched)
+ * and host-write (the bench home's tree - the workspace root and the directory holding it: names, kinds and bytes -
+ * changed). A1-A4 hold every driven pass and scenario to an empty verdict; A5 holds the pass's static reach as its readers
+ * parse it (below); A6 is the acceptance's "committed-after-abort attempt going red": a control for every class and for
+ * every clause of its classifier (each committed form, the launch form's verb and its tail, a read before the start, a
+ * suspended pass that returned, a rewritten workspace file, a write beside the root in the bench home), each tripping
+ * exactly its class (a render that drops its signal and so returns its proposal after the abort leads), plus one
+ * signal-ignoring provider read three ways - bare (red: committed-after-abort), through a registry with the proposal
+ * arriving after the abort (refused by the registry's race), and through a registry with the proposal settling inside the
+ * abort's own tick (refused only by the registry's post-race guard; without that guard the census reds).
  *
- * THE UNTIL-THEN TRIGGER (row T): T1 no tracked .tsx/.jsx module anywhere in git's index; T2 no src script module (every
- * one git tracks, read equal to the src walk both ways) names a hook (an identifier of the use-prefixed form - the
- * charter's useProvider, useQuery, useAbsent, useRequirement, useEffect, useCommit fit it) or the charter's descriptor
- * pureProjectRequirement, or imports @reactive-fiber/tsx, and neither manifest names that package; T3 no capability
- * descriptor of the native or the injected registrations describes either of the title's two interests (evidence
- * requirement, resource interest, joined fold); T4 each reader's own controls. A red row T is the trigger, not a defect.
+ * A5, THE STATIC REACH, AS ITS READERS PARSE IT (a form outside these is R-STATIC-FORMS, Q6, and is not claimed): the render
+ * module's closure through src's relative imports (every static import and export, import-equals, and every import(),
+ * require() and getBuiltinModule() call; a specifier that does not resolve reads <expression>), held disjoint from the tool
+ * providers, model host and tool SDKs native-modules.ts loads; its I/O builtins by specifier; every reference to an I/O
+ * global by name (fetch, XMLHttpRequest, WebSocket, EventSource, BroadcastChannel, console, localStorage, sessionStorage,
+ * require, module, eval, Function) and every reference to a global object (globalThis, global, self, window - so an I/O
+ * global reached through one, aliased or computed, reads too); every reference to process other than its env read
+ * (getBuiltinModule, binding, dlopen, kill, a stdio write, the object aliased); and every value reference to a child_process
+ * binding (a named, renamed, namespace, default or import-equals import, or a variable bound by require(), import() or
+ * getBuiltinModule() of child_process, whole or destructured) - a launch call reads its command, any other use reads
+ * <reference> - and every re-export of one. Commands and specifiers resolve through string literals, the module's const
+ * bindings, literal indexes into const array literals and both arms of a conditional, and read <expression> otherwise. Read
+ * that way, the pass reaches no tool provider, model host or tool SDK native-modules.ts loads, no I/O global, no global
+ * object, no process member but env, one I/O builtin (node:child_process, in the render module) and one launch site,
+ * spawn("rf"). Src outside anchor: over every tracked src module, both launch readers (the child_process reader, and every
+ * call spelled as a launch call whose command resolves) read exactly one rf launch site, the render module's, and the
+ * child_process sites whose command does not resolve are pinned by name (any of them could launch rf).
  *
- * MEASURED (by the cutting seat ws-02, run g10-work-s125, 2026-10-28, on trunk 65a9e53): all 21 driven pass/scenario
- * observations read an empty verdict, the 5 settled native renders return the uncommitted form and the 8 committed-form
- * renders are refused; each of the 10 controls trips exactly its expected classes; the render closure is 4 src modules and 2
- * externals with one launch site; 0 tracked .tsx/.jsx of 1048 tracked paths; 0 hook names over 116 src modules; 0 interest
- * phrases in 8 descriptors.
+ * THE UNTIL-THEN TRIGGER (row T), in these homes and forms: T1 no tracked .tsx/.jsx module anywhere in git's index; T2 no
+ * tracked script module outside test/ (src, qa, examples, the root configs; src read equal to the src walk both ways) names
+ * a hook (an identifier of the use-prefixed form - the charter's useProvider, useQuery, useAbsent, useRequirement,
+ * useEffect, useCommit fit it) or the charter's descriptor pureProjectRequirement, or names @reactive-fiber/tsx as a
+ * specifier (A5's specifier reader), and neither manifest names that package; T3 neither the descriptors the native and
+ * injected registrations register (read at run time) nor any string, template part, identifier or key of a module T2 reads
+ * (read statically, so a descriptor registered by a module neither registration wires in reads too) spells either of the
+ * title's two interests (evidence requirement, resource interest, joined fold); T4 each reader's own controls. A red row T
+ * is the trigger, not a defect.
+ *
+ * RESPIN (cut #2; refusal #1 on cut #1 a2572832, seat gate-prep-25, lane g10-gate-s128): U1 A5's readers parse the
+ * global-object, process, default-import, renamed-binding and const-command forms of gate plants GX1, GX2, GX3, GX5 and GX5b,
+ * and its claims are stated to the forms they parse; U2 one committed-form control per form (G01, G02, G03); U3 row T reads
+ * every tracked script module outside test/ and every string in them (GT1, GT5), and its armed claim names the homes it
+ * reads. Riders: F4 a computed import() reads <expression>; F5 a control per masked classifier clause (G04, G05, G07, G08,
+ * G09); F6 every wait on a pass is bounded; F7 the stand-ins derive from the resolved commands of both launch readers.
+ *
+ * MEASURED (by the respin seat ws-06, run g10-work-s136, 2026-10-29, on merge 13b5c644: trunk 04123dc into cut #1): all 21
+ * driven pass/scenario observations read an empty verdict, the 5 settled native renders return the uncommitted form and the
+ * 8 committed-form renders are refused; each of the 19 controls trips exactly its expected classes; the render closure is 4
+ * src modules and 2 externals with one launch site, no I/O global, no global object and no process member but env; over src
+ * the launch readers read one rf site and one unresolved child_process site (the detached host's spawn of process.execPath),
+ * and 4 stand-ins beside the rf stand-in (cmd, forge, git, sh); 0 tracked .tsx/.jsx of 1087 tracked paths; 0 hook names
+ * over 198 read modules (117 in src); 0 interest phrases in 8 descriptors and over the 198 read modules.
  *
  * The census pins the rows and the residuals' quiet rows:
  *  A, the acceptance: A1 aborted passes, A2 suspended passes (both: no proposal reaches the caller), A3 a settled native
@@ -74,25 +110,37 @@
  * suspended), the effect classes A4/A5 judge are its "tool, model or host" (A5 alone judges model), A6 serves the acceptance's
  * third clause, and T3's phrases are its two interests. Outside anchors in src: the contract source states the uncommitted
  * render (A3 judges the settled form); the passes equal the render module's exported functions, both ways; every registered
- * render capability of both registrations is driven; src's only rf launch site is the render module's; the stand-ins are the
- * commands src launches by name; the foreign set is native-modules.ts's dynamic imports. The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran
- * before it) and the pins that reached their witness.
+ * render capability of both registrations is driven; src's only rf launch site is the render module's (both launch
+ * readers); the stand-ins are the commands src launches by name; the foreign set is native-modules.ts's dynamic imports. The
+ * last case reads the vitest task tree (every registered test, in roster order, in run mode, ran before it) and the pins
+ * that reached their witness.
  * NOT CLAIMED (edits of this file and the roster together below row level): a pin removed from ROWS, the literal, IMPL and
- * the roster where no outside anchor names it (A4, T1-T4, Q1-Q5 with their RESIDUALS entry); a constant edited in this file
- * and the roster together; T1's listing narrowed while it still holds REQUIRED_TRACKED and its floor; a launch killed before
- * the stand-in's first statement runs (the SIGTERM lands during the interpreter's start) leaves no log line, so the launch
- * ledger reads it as none - the outcome and the at-abort mark still record such a pass.
+ * the roster where no outside anchor names it (A4, T1-T4, Q1-Q7 with their RESIDUALS entry); a constant edited in this file
+ * and the roster together; T1's listing narrowed while it still holds REQUIRED_TRACKED and its floor, and T2's read set
+ * narrowed while it still holds REQUIRED_READ and its floor; a launch killed before the stand-in's first statement runs (the
+ * SIGTERM lands during the interpreter's start) leaves no log line, so the launch ledger reads it as none - the outcome and
+ * the at-abort mark still record such a pass.
  * RESIDUALS (named, each with its pinned quiet row): R-INJECTED-RELAY the injected registration relays its reader's
  * envelope without the native admission checks - a reader stating commit_seq 1 is returned unchanged by both injected passes,
  * so the committed-proposal class judges native passes only (Q1); R-STATED-EFFECTS the native admission reads ephemeral,
  * render_id, commit_seq and the store write count, never rf's own result.effects or result.plan statements - a settled
  * native pass whose envelope states an effect and would_commit true is returned (Q2); R-HOOK-VOCABULARY a hook spelled
- * outside the use-prefixed form, or a descriptor describing an interest in other words, is not read by T2/T3 (Q3);
- * R-STAND-IN the falsifier drives stand-ins, never the installed rf (its TSX Suspense, abort handling and the cache-plane
- * writes the descriptor discloses are rf's and are not measured here; the rf-preview live tier holds the installed rf to
- * the envelope) - during a pass PATH holds the bench directory alone (Q4); R-HOST-ELSEWHERE the host-write reading
- * fingerprints the workspace root only - a write outside it reads no violation (Q5), and A5 bounds the rest statically.
- * SCOPE: the falsifier judges the host boundary Pi owns; rf's own render semantics are rf's.
+ * outside the use-prefixed form, a descriptor describing an interest in other words or only in pieces composed at run time,
+ * or the TSX SDK loaded through a call the specifier reader does not read (a createRequire result called directly), is not
+ * read by T2/T3 (Q3); R-STAND-IN the falsifier drives stand-ins, never the installed rf (its TSX Suspense, abort handling and
+ * the cache-plane writes the descriptor discloses are rf's and are not measured here; the rf-preview live tier holds the
+ * installed rf to the envelope) - during a pass PATH holds the bench directory alone (Q4); R-HOST-ELSEWHERE the host-write
+ * reading fingerprints the bench home only - a write elsewhere (the stand-ins' directory, the host's temp or home
+ * directories) reads no violation (Q5); A5 bounds the render closure statically for the forms its readers parse, and
+ * R-STATIC-FORMS names the rest; R-STATIC-FORMS the forms A5's readers do not parse read nothing (Q6: one probe per form, its
+ * reading by every A5 reader pinned) - a launch through an API that is no child_process binding (pi.exec, a connection's
+ * spawn) whose command does not resolve, a launch through a value the module does not bind (a function a call returns), a
+ * launch through a package's own launcher (read by its specifier alone), a global reached without its name (a constructor
+ * chain), and a write through the allowed process.env read; R-UNREAD-HOMES row T's static readers read every tracked script
+ * module outside test/ - test/ (this census's own plants and the vitest timer API's use-prefixed names live there) and
+ * non-script files (JSON, YAML, Markdown) are not read (Q7 pins the read-home verdict of one probe path per unread home).
+ * SCOPE: the falsifier judges the host boundary Pi owns; rf's own render semantics are rf's, and the closure's one package
+ * (typebox/value) is read by its name, never inside.
  *
  * Display paths added: none. Test-only: the stand-ins and workspace roots live in makeScratch scratch; src, the manifests,
  * .beads and git's index are only read.
@@ -209,8 +257,12 @@ type CommittedForm = (typeof COMMITTED_FORMS)[number];
 /** The calls that launch a process, by the name the callee is spelled with. */
 const LAUNCH_CALLS = ["spawn", "spawnSync", "exec", "execSync", "execFile", "execFileSync", "fork"];
 const CHILD_PROCESS = ["node:child_process", "child_process"];
-/** Globals a module can reach the network or load code through without an import. */
-const IO_GLOBALS = ["fetch", "XMLHttpRequest", "WebSocket", "EventSource", "require"];
+/** Globals a module can reach the network, the host's stdio or storage, or load code through without an import. */
+const IO_GLOBALS = ["fetch", "XMLHttpRequest", "WebSocket", "EventSource", "BroadcastChannel", "console", "localStorage", "sessionStorage", "require", "module", "eval", "Function"];
+/** The global objects: every reference to one is read, so an I/O global reached through one (aliased or computed) reads too. */
+const GLOBAL_OBJECTS = ["globalThis", "global", "self", "window"];
+/** The process members a render module may read; every other reference to process (a member or the object) is a host reach. */
+const PROCESS_READS = ["env"];
 /** Builtins that read or write the host (files, sockets, processes, threads); others (crypto, util) are pure here. */
 const IO_BUILTINS = ["child_process", "cluster", "dgram", "dns", "fs", "fs/promises", "http", "http2", "https", "net", "tls", "worker_threads"];
 /** The TSX SDK's package (ReactiveFiberTSXSDK package.json name) and the charter's hook and descriptor forms. */
@@ -221,9 +273,13 @@ const SCRIPT_MODULE = /\.(?:ts|mts|cts|tsx|js|mjs|cjs|jsx)$/;
 const COMPONENT_MODULE = /\.(?:tsx|jsx)$/i;
 /** Paths git's index must hold for T1's listing to be the whole index (a floor, never the exact set). */
 const REQUIRED_TRACKED = ["package.json", "src/index.ts", RENDER_MODULE, "test/helpers/scratch.ts", "docs/workbench/07-native-integrations.md"];
-const FLOORS = { tracked: 900, srcModules: 100, descriptors: 8 };
+/** Row T's static readers (T2, T3) read every tracked script module outside this tree (R-UNREAD-HOMES names it). */
+const UNREAD_TREE = "test/";
+/** Modules the static read set must hold, one per read home (src, qa, examples, the root configs): a floor, never the set. */
+const REQUIRED_READ = ["src/index.ts", RENDER_MODULE, "qa/workbench/dependency-census.mjs", "examples/workflows/compose.js", "vitest.config.ts"];
+const FLOORS = { tracked: 900, srcModules: 100, readModules: 160, descriptors: 8 };
 const TRIGGER =
-  "a Pi-authored EDC component/hook surface now exists: wb-pyel.5's acceptance is owed on it - drive its render passes through the render-abort falsifier (row A, PASSES) and re-measure this census";
+  "row T read a Pi-authored EDC component/hook surface: wb-pyel.5's acceptance is owed on it - drive its render passes through the render-abort falsifier (row A, PASSES) and re-measure this census";
 
 /** Residual families and the quiet-row pins that hold them. */
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
@@ -232,28 +288,70 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-HOOK-VOCABULARY": ["Q3"],
   "R-STAND-IN": ["Q4"],
   "R-HOST-ELSEWHERE": ["Q5"],
+  "R-STATIC-FORMS": ["Q6"],
+  "R-UNREAD-HOMES": ["Q7"],
 };
 /** A5's planted module: each static reader must find its own sites in it (and skip what it must not read). */
 const PLANTED_REACH = [
   'import { spawn as run, execFileSync } from "node:child_process";',
   'import * as cp from "child_process";',
+  'import childProcess from "node:child_process";',
+  'import cpEquals = require("child_process");',
+  'export { exec as reexported } from "node:child_process";',
   'export * from "./planted-peer.js";',
   'import q = require("planted-required");',
   'const lazy = await import("planted-lazy");',
+  'const LAZY_NAME = "planted-const-lazy";',
+  "const constLazy = await import(LAZY_NAME);",
+  "const computedLazy = await import(pickName());",
+  'const required = require("planted-require-call");',
+  'const { spawnSync: launchSync } = require("node:child_process");',
+  'const loaded = process.getBuiltinModule("node:child_process");',
+  'const TOOL = "hx";',
+  'const SHELLS = flag ? ["cmd", "/c"] : ["sh", "-c"];',
+  'const PICKED = flag ? "git" : "forge";',
   'run("hx", []);',
+  'run("rf", []);',
   "execFileSync(command);",
   'cp.fork("worker.js");',
+  "cp.exec(PICKED);",
+  "childProcess.execFileSync(TOOL);",
+  'cpEquals.exec("git");',
+  "launchSync(SHELLS[0]);",
+  'loaded.spawn("rf");',
+  "const alias = run;",
   'ServerConnection.spawn("forge");',
   'pi.exec("git", []);',
+  "pi.exec(SHELLS[0], []);",
   "manager.spawn(pi);",
   'const reply = await fetch("https://example.invalid/");',
   'const socket = new WebSocket("wss://example.invalid/");',
+  "const viaGlobal = globalThis.fetch;",
+  'const viaIndex = self["XMLHttpRequest"];',
+  "const holder = global;",
+  "const code = eval(source);",
+  'const fs = process.getBuiltinModule("node:fs");',
+  "const env = process.env;",
   "settings.fetch = 1;",
+  "const typed: typeof globalThis.fetch = reply;",
   "",
 ].join("\n");
+/** Q6's probes, one per form A5's readers do not parse (R-STATIC-FORMS); each is read through every A5 reader. */
+const STATIC_RESIDUE: Readonly<Record<string, string>> = {
+  "unbound-api-launch": "export function run(api: { exec(command: string): void }, command: string): void { api.exec(command); }\n",
+  "unbound-value-launch": 'export function run(pick: () => (command: string) => void): void { const launch = pick(); launch("rf"); }\n',
+  "package-launcher": 'import { execa } from "execa";\nexport const run = (): unknown => execa("rf");\n',
+  "constructor-chain-global": 'export const reach = (): unknown => "".constructor.constructor("return this")();\n',
+  "env-write": 'export function run(): void { process.env.PLANTED = "1"; }\n',
+};
 /** Q3's probes: hooks and descriptors spelled outside the forms T2 and T3 read. */
 const OTHER_HOOKS = "export function evidenceHook() { return describeRequirement(view); }\nconst makeEvidenceDescriptor = () => ({ need: 1 });\n";
 const OTHER_PHRASES = "states an evidence need and a resource demand for the next render";
+/** A descriptor text composed from pieces at run time, and the TSX SDK loaded through a createRequire result called directly. */
+const OTHER_COMPOSED = 'export const description = "Describes a logical evidence " + "requirement for the next render";\n';
+const OTHER_LOADER = 'import { createRequire } from "node:module";\nconst tsx = createRequire(import.meta.url)("@reactive-fiber/tsx");\n';
+/** Q7's probes: one path per home row T's static readers do not read (test/, and non-script files anywhere). */
+const UNREAD_HOME_PROBES = ["test/helpers/edc-evidence-hooks.ts", "test/workbench-edc-descriptor.test.ts", "src/workbench/edc/descriptor.json", "examples/edc/hooks.md", "qa/workbench/edc-descriptor.yaml"];
 /** T4's planted samples, each of which its reader must find. */
 const PLANTED_PATHS = ["src/edc/EvidencePanel.tsx", "examples/Card.JSX", "src/edc/panel.ts", "docs/hooks.md"];
 const PLANTED_SOURCE = `import { useQuery } from "${TSX_SDK}";\nexport function useRequirement(view: unknown) { return pureProjectRequirement(view); }\nconst panel = () => useProvider("evidence-view", {});\n`;
@@ -270,6 +368,13 @@ const PLANTED_LOCK: JsonObject = { packages: { "": { name: "planted" }, [`node_m
 const PLANTED_DESCRIPTION = "Describes a logical evidence requirement for the next render";
 /** A planted descriptor key spelling the other interest in camel case (read in the joined fold, keys included). */
 const PLANTED_KEY = "prospectiveResourceInterest";
+/** One path per read home (src, qa, examples, a root config): the static readers' home predicate must read each. */
+const PLANTED_HOMES = ["src/workbench/edc/evidence-hooks.ts", "qa/workbench/edc-hooks.mjs", "examples/edc/evidence-hooks.ts", "vitest.edc.config.ts"];
+/** A descriptor registered by a module neither read registration wires in: T3's static reader must read its text. */
+const PLANTED_DESCRIPTOR_SOURCE =
+  'export function registerEvidence(registry: Registry): void {\n  registry.register({ descriptor: { id: "edc.evidence", description: "Describes a logical evidence requirement for the next render", inputSchema: { properties: { prospectiveResourceInterest: {} } } } });\n}\n';
+/** The TSX SDK loaded through a require call: T2's specifier reader must read it. */
+const PLANTED_REQUIRE = `const tsx = require("${TSX_SDK}");\n`;
 
 interface Row {
   readonly id: string;
@@ -285,7 +390,7 @@ const ROWS: readonly Row[] = [
     pins: ["A1", "A2", "A3", "A4", "A5", "A6"],
   },
   { id: "T", label: "a Pi-authored EDC component/hook surface (none exists)", pins: ["T1", "T2", "T3", "T4"] },
-  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5"] },
+  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"] },
 ];
 /** The acceptance clause each row A pin serves (held both ways to the acceptance sentence's three clauses). */
 const SERVES: Readonly<Record<string, string>> = {
@@ -354,6 +459,8 @@ function rosterWitness(pin: string): JsonValue {
 type Mode = "settled" | "running" | "proposed" | "late";
 interface Bench {
   readonly bin: string;
+  /** The bench home: a scratch directory holding the workspace root alone; host-write fingerprints this whole tree. */
+  readonly home: string;
   readonly root: string;
   readonly log: string;
 }
@@ -408,12 +515,13 @@ function rfBody(mode: Mode, envelope: JsonValue): string {
 /** A fresh bench whose rf behaves as `mode` and prints `envelope(root)`; PATH then holds the bench directory alone. */
 function bench(mode: Mode, envelope: (root: string) => JsonValue = fullShapeRf): Bench {
   const bin = makeScratch("edc-render-abort-bin-");
-  const root = makeScratch("edc-render-abort-root-");
-  scratches.push(bin, root);
+  const home = makeScratch("edc-render-abort-home-");
+  scratches.push(bin, home);
+  const root = join(home, "root");
+  mkdirSync(join(root, "notes"), { recursive: true });
   writeFileSync(join(root, "README.md"), "workspace seed\n");
-  mkdirSync(join(root, "notes"));
   writeFileSync(join(root, "notes", "seed.txt"), "seed\n");
-  const made: Bench = { bin, root, log: join(bin, "launches.jsonl") };
+  const made: Bench = { bin, home, root, log: join(bin, "launches.jsonl") };
   standIn(made, "rf", rfBody(mode, envelope(root)));
   for (const name of foreignCommands()) standIn(made, name, "process.exit(0);");
   process.env.PATH = bin;
@@ -433,7 +541,7 @@ function tagOf(argv: readonly string[]): string {
 function marked(made: Bench, mark: string, tag: string): boolean {
   return existsSync(join(made.bin, `${mark}.${tag}`));
 }
-/** The workspace root's tree: every path (kind and bytes) in name order, hashed. */
+/** A tree (the bench home): every path (kind and bytes) in name order, hashed. */
 function tree(root: string): string {
   const hash = createHash("sha256");
   const walk = (dir: string): void => {
@@ -453,6 +561,18 @@ async function until(check: () => boolean, what: string): Promise<void> {
   while (!check()) {
     if (Date.now() - start > WAIT_MS) throw new Error(`census: ${what} not reached within ${WAIT_MS} ms`);
     await new Promise(resolve => setTimeout(resolve, 10));
+  }
+}
+/** A pass bounded by WAIT_MS: a pass that never settles reds naming itself, never at vitest's test timeout. */
+async function bounded<T>(promise: Promise<T>, what: string): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const limit = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => reject(new Error(`census: ${what} did not settle within ${WAIT_MS} ms`)), WAIT_MS);
+  });
+  try {
+    return await Promise.race([promise, limit]);
+  } finally {
+    clearTimeout(timer);
   }
 }
 
@@ -601,7 +721,7 @@ async function observe(id: PassId, scenario: ScenarioId): Promise<Observation> {
   const reader = native ? undefined : new Reader(made.root, scenario !== "settled");
   const limits: CapabilityLimits = scenario === "queued" ? { maxInFlight: 1 } : scenario === "deadline" ? { deadlineMs: REGISTRY_DEADLINE_MS } : {};
   const driven = await pass(id, made, limits, reader);
-  const before = tree(made.root);
+  const before = tree(made.home);
   const tag = `${id}-${scenario}`;
   const controller = new AbortController();
   let callsBefore = 0;
@@ -610,10 +730,10 @@ async function observe(id: PassId, scenario: ScenarioId): Promise<Observation> {
   switch (scenario) {
     case "before":
       controller.abort();
-      outcome = await settle(driven.run(tag, controller.signal));
+      outcome = await bounded(settle(driven.run(tag, controller.signal)), `${tag}: the pass`);
       break;
     case "settled":
-      outcome = await settle(driven.run(tag, controller.signal));
+      outcome = await bounded(settle(driven.run(tag, controller.signal)), `${tag}: the pass`);
       break;
     case "running":
     case "proposed": {
@@ -626,7 +746,7 @@ async function observe(id: PassId, scenario: ScenarioId): Promise<Observation> {
           : ["started", "proposed"].filter(mark => marked(made, mark, tag)).join("+") || "no mark";
       controller.abort();
       reader?.release();
-      outcome = await running;
+      outcome = await bounded(running, `${tag}: the pass`);
       if (reader === undefined) await until(() => marked(made, "stopped", tag), `${tag}: the stand-in's stop`);
       break;
     }
@@ -641,15 +761,15 @@ async function observe(id: PassId, scenario: ScenarioId): Promise<Observation> {
       const slots = driven.registry?.admission();
       atAbort = `slot holder in flight ${slots?.inFlight ?? "?"} of ${slots?.maxInFlight ?? "?"}, admitted ${slots?.admitted ?? "?"}`;
       controller.abort();
-      outcome = await queued;
+      outcome = await bounded(queued, `${tag}: the queued pass`);
       holder.abort();
       reader?.release();
-      await held;
+      await bounded(held, `${holderTag}: the slot holder`);
       if (reader === undefined) await until(() => marked(made, "stopped", holderTag), `${holderTag}: the stand-in's stop`);
       break;
     }
     case "deadline":
-      outcome = await settle(driven.run(tag, controller.signal));
+      outcome = await bounded(settle(driven.run(tag, controller.signal)), `${tag}: the pass`);
       atAbort = reader === undefined ? "no reader" : `reader called ${reader.calls}, unanswered`;
       reader?.release();
       break;
@@ -663,7 +783,7 @@ async function observe(id: PassId, scenario: ScenarioId): Promise<Observation> {
     launches: all.filter(launch => launch.bin === "rf" && tagOf(launch.argv) === tag),
     foreign: all.filter(launch => launch.bin !== "rf"),
     readerCalls: (reader?.calls ?? 0) - callsBefore,
-    hostChanged: tree(made.root) !== before,
+    hostChanged: tree(made.home) !== before,
     stopped: marked(made, "stopped", tag),
     cancelledWhileQueued: driven.registry?.admission().cancelledWhileQueued,
     atAbort,
@@ -724,9 +844,19 @@ async function settledNative(id: PassId, envelope: (root: string) => JsonValue, 
 
 // ---- the controls (A6) and the quiet rows' passes ----
 
-/** The uncommitted launch a hand-built control makes itself (`committing` drops --no-commit). */
-function launchRf(made: Bench, tag: string, committing: boolean): JsonValue {
-  const argv = ["--workspace", made.root, ...RENDER_VERB, "--model", "m", "--task", tag, ...(committing ? ["--no-input", "--json"] : UNCOMMITTED_TAIL)];
+/** The argv shapes a hand-built control launches rf with: the uncommitted form, or one edit of it that the form forbids
+ * (--no-commit dropped, another verb, the uncommitted flags present but not last). */
+type ArgvShape = "uncommitted" | "committing" | "other-verb" | "misplaced-tail";
+function launchRf(made: Bench, tag: string, shape: ArgvShape): JsonValue {
+  const select = ["--model", "m", "--task", tag];
+  const argv =
+    shape === "uncommitted"
+      ? ["--workspace", made.root, ...RENDER_VERB, ...select, ...UNCOMMITTED_TAIL]
+      : shape === "committing"
+        ? ["--workspace", made.root, ...RENDER_VERB, ...select, "--no-input", "--json"]
+        : shape === "other-verb"
+          ? ["--workspace", made.root, "context", "commit", ...select, ...UNCOMMITTED_TAIL]
+          : ["--workspace", made.root, ...RENDER_VERB, ...UNCOMMITTED_TAIL, ...select];
   const stdout = execFileSync("rf", argv, { encoding: "utf8", env: { PATH: made.bin } });
   return { contract: REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, workspaceRoot: made.root, source: JSON.parse(stdout) as JsonValue };
 }
@@ -734,19 +864,20 @@ interface Control {
   readonly expected: readonly Violation[];
   readonly run: () => Promise<Observation>;
 }
-/** Runs `body` on a fresh bench as a pass of `scenario` and records it like observe does. */
+/** Runs `body` on a fresh bench as a pass of `scenario` and records it like observe does (with `reader`'s calls, if any). */
 async function controlObservation(
   name: string,
   scenario: ScenarioId,
   mode: Mode,
-  body: (made: Bench, tag: string, controller: AbortController) => Promise<JsonValue>,
+  body: (made: Bench, tag: string, controller: AbortController, reader: Reader) => Promise<JsonValue>,
 ): Promise<Observation> {
   const made = bench(mode);
-  const before = tree(made.root);
+  const reader = new Reader(made.root, false);
+  const before = tree(made.home);
   const tag = `control-${name}`;
   const controller = new AbortController();
   if (scenario === "before") controller.abort();
-  const outcome = await settle(body(made, tag, controller));
+  const outcome = await bounded(settle(body(made, tag, controller, reader)), `control ${name}`);
   const all = launches(made);
   return {
     pass: `control:${name}`,
@@ -755,11 +886,23 @@ async function controlObservation(
     outcome,
     launches: all.filter(launch => launch.bin === "rf" && tagOf(launch.argv) === tag),
     foreign: all.filter(launch => launch.bin !== "rf"),
-    readerCalls: 0,
-    hostChanged: tree(made.root) !== before,
+    readerCalls: reader.calls,
+    hostChanged: tree(made.home) !== before,
     stopped: marked(made, "stopped", tag),
     cancelledWhileQueued: undefined,
     atAbort: "-",
+  };
+}
+/** A committed-form control: a settled pass returning the proposal with one field edited into `form`. */
+function committedFormControl(form: CommittedForm): Control {
+  return {
+    expected: ["committed-proposal"],
+    run: () =>
+      controlObservation(`committed-form-${form}`, "settled", "settled", async made => ({
+        contract: REACTIVEFIBER_RENDER_PREVIEW_CONTRACT,
+        workspaceRoot: made.root,
+        source: committedForm(form)(made.root),
+      })),
   };
 }
 /** A proposal a control hands out on demand: the promise the provider returns IS the proposal's, so it settles in the very
@@ -804,7 +947,7 @@ async function unguarded(throughRegistry: boolean, sameTick: boolean): Promise<O
   registry.register(provider);
   const controller = new AbortController();
   if (sameTick) controller.signal.addEventListener("abort", () => proposer.release(proposal), { once: true });
-  const before = tree(made.root);
+  const before = tree(made.home);
   const running = settle(
     throughRegistry
       ? registry.invoke("census.render.unguarded", {}, { grants: ["invoke:census.render.unguarded"], signal: controller.signal })
@@ -813,7 +956,7 @@ async function unguarded(throughRegistry: boolean, sameTick: boolean): Promise<O
   await until(() => proposer.calls === 1, "the unguarded provider was called");
   controller.abort();
   if (!sameTick) proposer.release(proposal);
-  const outcome = await running;
+  const outcome = await bounded(running, "the unguarded provider's pass");
   return {
     pass: `control:unguarded-${throughRegistry ? "registry" : "bare"}${sameTick ? "-same-tick" : ""}`,
     scenario: "proposed",
@@ -822,13 +965,14 @@ async function unguarded(throughRegistry: boolean, sameTick: boolean): Promise<O
     launches: [],
     foreign: launches(made).filter(launch => launch.bin !== "rf"),
     readerCalls: proposer.calls,
-    hostChanged: tree(made.root) !== before,
+    hostChanged: tree(made.home) !== before,
     stopped: false,
     cancelledWhileQueued: undefined,
     atAbort: sameTick ? "proposal released by the abort itself" : "proposal unanswered",
   };
 }
-/** One control per violation class, each tripping its class alone, and the unguarded provider read both ways. */
+/** One control per violation class and per clause of its classifier, each tripping its class alone, and the unguarded
+ * provider read both ways. */
 const CONTROLS: Readonly<Record<string, Control>> = {
   "dropped-signal": {
     expected: ["committed-after-abort"],
@@ -845,26 +989,41 @@ const CONTROLS: Readonly<Record<string, Control>> = {
   "unguarded-bare": { expected: ["committed-after-abort"], run: () => unguarded(false, false) },
   "unguarded-registry": { expected: [], run: () => unguarded(true, false) },
   "unguarded-registry-same-tick": { expected: [], run: () => unguarded(true, true) },
-  "committed-form": {
-    expected: ["committed-proposal"],
-    run: () =>
-      controlObservation("committed-form", "settled", "settled", async made => ({
-        contract: REACTIVEFIBER_RENDER_PREVIEW_CONTRACT,
-        workspaceRoot: made.root,
-        source: committedForm("commit_seq")(made.root),
-      })),
-  },
+  "committed-form-commit_seq": committedFormControl("commit_seq"),
+  "committed-form-render_id": committedFormControl("render_id"),
+  "committed-form-ephemeral": committedFormControl("ephemeral"),
+  "committed-form-storage_write_count": committedFormControl("storage_write_count"),
   "committing-argv": {
     expected: ["committing-launch"],
-    run: () => controlObservation("committing-argv", "settled", "settled", async (made, tag) => launchRf(made, tag, true)),
+    run: () => controlObservation("committing-argv", "settled", "settled", async (made, tag) => launchRf(made, tag, "committing")),
+  },
+  "committing-verb": {
+    expected: ["committing-launch"],
+    run: () => controlObservation("committing-verb", "settled", "settled", async (made, tag) => launchRf(made, tag, "other-verb")),
+  },
+  "misplaced-tail": {
+    expected: ["committing-launch"],
+    run: () => controlObservation("misplaced-tail", "settled", "settled", async (made, tag) => launchRf(made, tag, "misplaced-tail")),
   },
   "started-after-abort": {
     expected: ["started-after-abort"],
     run: () =>
       controlObservation("started-after-abort", "before", "settled", async (made, tag) => {
-        launchRf(made, tag, false);
+        launchRf(made, tag, "uncommitted");
         throw new CapabilityError("transport", "census control: cancelled after it launched");
       }),
+  },
+  "started-reader": {
+    expected: ["started-after-abort"],
+    run: () =>
+      controlObservation("started-reader", "before", "settled", async (_made, _tag, _controller, reader) => {
+        void reader.read();
+        throw new CapabilityError("transport", "census control: cancelled after it read");
+      }),
+  },
+  "suspended-returned": {
+    expected: ["committed-after-abort"],
+    run: () => controlObservation("suspended-returned", "deadline", "settled", async (made, tag) => nativeReactiveFiberRender({ model: "m", task: tag }, made.root)),
   },
   "extra-launch": {
     expected: ["extra-launch"],
@@ -887,6 +1046,22 @@ const CONTROLS: Readonly<Record<string, Control>> = {
     run: () =>
       controlObservation("host-write", "settled", "settled", async (made, tag) => {
         writeFileSync(join(made.root, "proposal.json"), "{}\n");
+        return nativeReactiveFiberRender({ model: "m", task: tag }, made.root);
+      }),
+  },
+  "host-rewrite": {
+    expected: ["host-write"],
+    run: () =>
+      controlObservation("host-rewrite", "settled", "settled", async (made, tag) => {
+        writeFileSync(join(made.root, "README.md"), "workspace rewritten\n");
+        return nativeReactiveFiberRender({ model: "m", task: tag }, made.root);
+      }),
+  },
+  "host-sibling": {
+    expected: ["host-write"],
+    run: () =>
+      controlObservation("host-sibling", "settled", "settled", async (made, tag) => {
+        writeFileSync(`${made.root}.trace`, "render\n");
         return nativeReactiveFiberRender({ model: "m", task: tag }, made.root);
       }),
   },
@@ -942,7 +1117,85 @@ function visit(node: ts.Node, each: (node: ts.Node) => void): void {
   each(node);
   ts.forEachChild(node, child => visit(child, each));
 }
-/** Every module specifier a source names: static imports and exports, import-equals and literal dynamic imports. */
+/** An expression without its parentheses and type wrappers (as, satisfies, <T>, !). */
+function unwrap(expression: ts.Expression): ts.Expression {
+  let node = expression;
+  while (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isTypeAssertionExpression(node) || ts.isNonNullExpression(node)) {
+    node = node.expression;
+  }
+  return node;
+}
+/** The initializers of every const binding of `name` in the module, in any scope. */
+function constInitializers(source: ts.SourceFile, name: string): ts.Expression[] {
+  const found: ts.Expression[] = [];
+  visit(source, node => {
+    if (
+      ts.isVariableDeclaration(node) &&
+      ts.isIdentifier(node.name) &&
+      node.name.text === name &&
+      node.initializer !== undefined &&
+      ts.isVariableDeclarationList(node.parent) &&
+      (node.parent.flags & ts.NodeFlags.Const) !== 0
+    ) {
+      found.push(node.initializer);
+    }
+  });
+  return found;
+}
+/** The union of candidate lists (sorted), or undefined when there is none or any list is undefined. */
+function union(lists: readonly (readonly string[] | undefined)[]): string[] | undefined {
+  if (lists.length === 0 || lists.some(list => list === undefined)) return undefined;
+  return [...new Set(lists.flatMap(list => list ?? []))].sort();
+}
+const RESOLVE_DEPTH = 8;
+/** The literal values an expression can take, read through string literals, the module's const bindings, literal indexes into
+ * const array literals and both arms of a conditional; undefined when any part does not resolve. */
+function resolveTexts(source: ts.SourceFile, expression: ts.Expression, depth = 0): string[] | undefined {
+  if (depth > RESOLVE_DEPTH) return undefined;
+  const node = unwrap(expression);
+  if (ts.isStringLiteralLike(node)) return [node.text];
+  if (ts.isConditionalExpression(node)) return union([resolveTexts(source, node.whenTrue, depth + 1), resolveTexts(source, node.whenFalse, depth + 1)]);
+  if (ts.isIdentifier(node)) return union(constInitializers(source, node.text).map(initializer => resolveTexts(source, initializer, depth + 1)));
+  if (ts.isElementAccessExpression(node)) {
+    const index = unwrap(node.argumentExpression);
+    if (!ts.isNumericLiteral(index)) return undefined;
+    const arrays = resolveArrays(source, node.expression, depth + 1);
+    return arrays === undefined ? undefined : union(arrays.map(items => items[Number(index.text)]));
+  }
+  return undefined;
+}
+/** The candidate element lists of an array-valued expression: array literals without spreads, const bindings, both arms of
+ * a conditional; undefined otherwise. */
+function resolveArrays(source: ts.SourceFile, expression: ts.Expression, depth: number): (string[] | undefined)[][] | undefined {
+  if (depth > RESOLVE_DEPTH) return undefined;
+  const node = unwrap(expression);
+  let arms: ((string[] | undefined)[][] | undefined)[];
+  if (ts.isArrayLiteralExpression(node)) {
+    return node.elements.some(element => ts.isSpreadElement(element)) ? undefined : [node.elements.map(element => resolveTexts(source, element, depth + 1))];
+  } else if (ts.isConditionalExpression(node)) {
+    arms = [resolveArrays(source, node.whenTrue, depth + 1), resolveArrays(source, node.whenFalse, depth + 1)];
+  } else if (ts.isIdentifier(node)) {
+    arms = constInitializers(source, node.text).map(initializer => resolveArrays(source, initializer, depth + 1));
+  } else {
+    return undefined;
+  }
+  return arms.length === 0 || arms.some(arm => arm === undefined) ? undefined : arms.flatMap(arm => arm ?? []);
+}
+/** The name a call's callee is spelled with: an identifier, a property name or a literal element name; undefined otherwise. */
+function calleeName(call: ts.CallExpression): string | undefined {
+  const callee = unwrap(call.expression);
+  if (ts.isIdentifier(callee)) return callee.text;
+  if (ts.isPropertyAccessExpression(callee)) return callee.name.text;
+  if (ts.isElementAccessExpression(callee) && ts.isStringLiteralLike(callee.argumentExpression)) return callee.argumentExpression.text;
+  return undefined;
+}
+/** The calls that load a module or a builtin by specifier besides import(). */
+const LOADER_CALLS = ["require", "getBuiltinModule"];
+function isLoaderCall(node: ts.Node): node is ts.CallExpression {
+  return ts.isCallExpression(node) && (node.expression.kind === ts.SyntaxKind.ImportKeyword || LOADER_CALLS.includes(calleeName(node) ?? ""));
+}
+/** Every module specifier a source names: static imports and exports, import-equals, and every import(), require() and
+ * getBuiltinModule() call - its argument read through resolveTexts, <expression> when it does not resolve. */
 function specifiers(source: ts.SourceFile): string[] {
   const found: string[] = [];
   visit(source, node => {
@@ -950,12 +1203,64 @@ function specifiers(source: ts.SourceFile): string[] {
       found.push(node.moduleSpecifier.text);
     } else if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference) && ts.isStringLiteral(node.moduleReference.expression)) {
       found.push(node.moduleReference.expression.text);
-    } else if (ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword) {
+    } else if (isLoaderCall(node)) {
       const first = node.arguments[0];
-      if (first !== undefined && ts.isStringLiteralLike(first)) found.push(first.text);
+      found.push(...((first === undefined ? undefined : resolveTexts(source, first)) ?? ["<expression>"]));
     }
   });
   return found;
+}
+/** Whether an identifier sits in a name slot (a declaration's, a property's, an import or export specifier's or a label's
+ * name), not a value reference. */
+function isNameSlot(node: ts.Identifier): boolean {
+  const parent = node.parent;
+  if (ts.isPropertyAccessExpression(parent)) return parent.name === node;
+  if (ts.isQualifiedName(parent)) return parent.right === node;
+  if (ts.isBindingElement(parent)) return parent.name === node || parent.propertyName === node;
+  if (ts.isImportSpecifier(parent) || ts.isExportSpecifier(parent) || ts.isImportClause(parent) || ts.isNamespaceImport(parent) || ts.isNamespaceExport(parent)) return true;
+  if (ts.isLabeledStatement(parent) || ts.isBreakOrContinueStatement(parent)) return true;
+  if (
+    ts.isImportEqualsDeclaration(parent) ||
+    ts.isVariableDeclaration(parent) ||
+    ts.isFunctionDeclaration(parent) ||
+    ts.isFunctionExpression(parent) ||
+    ts.isClassDeclaration(parent) ||
+    ts.isClassExpression(parent) ||
+    ts.isParameter(parent) ||
+    ts.isMethodDeclaration(parent) ||
+    ts.isPropertyDeclaration(parent) ||
+    ts.isPropertyAssignment(parent) ||
+    ts.isPropertySignature(parent) ||
+    ts.isMethodSignature(parent) ||
+    ts.isGetAccessorDeclaration(parent) ||
+    ts.isSetAccessorDeclaration(parent) ||
+    ts.isEnumMember(parent) ||
+    ts.isEnumDeclaration(parent) ||
+    ts.isTypeAliasDeclaration(parent) ||
+    ts.isInterfaceDeclaration(parent) ||
+    ts.isModuleDeclaration(parent) ||
+    ts.isTypeParameterDeclaration(parent)
+  ) {
+    return parent.name === node;
+  }
+  return false;
+}
+/** Whether a node sits inside a type (a type reference, a typeof query, a type argument): it reaches nothing at run time. */
+function inType(node: ts.Node): boolean {
+  for (let at: ts.Node | undefined = node.parent; at !== undefined && !ts.isSourceFile(at); at = at.parent) {
+    if (ts.isTypeNode(at)) return true;
+    if (ts.isStatement(at)) return false;
+  }
+  return false;
+}
+/** The member read off an object identifier (".name", "[name]" or "[<computed>]"), or "" when no member is read off it. */
+function memberRead(node: ts.Identifier): string {
+  const parent = node.parent;
+  if (ts.isPropertyAccessExpression(parent) && parent.expression === node) return `.${parent.name.text}`;
+  if (ts.isElementAccessExpression(parent) && parent.expression === node) {
+    return ts.isStringLiteralLike(parent.argumentExpression) ? `[${parent.argumentExpression.text}]` : "[<computed>]";
+  }
+  return "";
 }
 /** A relative specifier resolved to the src module it names (.js read as its .ts source); undefined for a package. */
 function resolveModule(from: string, specifier: string): string | undefined {
@@ -987,61 +1292,179 @@ interface LaunchSite {
   readonly callee: string;
   readonly command: string;
 }
-/** Calls whose callee (an identifier or a property) is spelled as a launch call: the command literal, or <expression>. */
-function launchSites(module: string, source: ts.SourceFile = parse(module)): LaunchSite[] {
-  const found: LaunchSite[] = [];
+/** A launch site and the position it was read at (positions dedupe the two readers; no witness carries them). */
+interface Located {
+  readonly at: number;
+  readonly site: LaunchSite;
+}
+/** Calls whose callee (an identifier, a property or a literal element name) is spelled as a launch call and whose command
+ * resolves (resolveTexts; candidates joined by "|"). A call whose command does not resolve is not read here (R-STATIC-FORMS:
+ * regex .exec calls share the name); the child_process reader reads those when they go through a binding. */
+function launchSitesAt(module: string, source: ts.SourceFile = parse(module)): Located[] {
+  const found: Located[] = [];
   visit(source, node => {
     if (!ts.isCallExpression(node)) return;
-    const callee = ts.isIdentifier(node.expression) ? node.expression.text : ts.isPropertyAccessExpression(node.expression) ? node.expression.name.text : undefined;
+    const callee = calleeName(node);
     if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;
     const first = node.arguments[0];
-    if (first === undefined || !ts.isStringLiteralLike(first)) return;
-    found.push({ module, callee, command: first.text });
+    const commands = first === undefined ? undefined : resolveTexts(source, first);
+    if (commands !== undefined) found.push({ at: node.getStart(source), site: { module, callee, command: commands.join("|") } });
   });
   return found;
 }
-/** Launch calls bound to node:child_process in one module, whatever their first argument. */
-function childProcessLaunches(module: string, source: ts.SourceFile = parse(module)): LaunchSite[] {
-  const bound = new Map<string, string>();
+function launchSites(module: string, source?: ts.SourceFile): LaunchSite[] {
+  return launchSitesAt(module, source).map(entry => entry.site);
+}
+/** The child_process bindings of one module: named (local name to imported name) and namespace-like (namespace, default and
+ * import-equals imports, and a variable bound by require(), import() or getBuiltinModule() of child_process, whole or
+ * destructured). Type-only imports bind nothing. */
+function childProcessBindings(source: ts.SourceFile): { named: Map<string, string>; namespaces: Set<string> } {
+  const named = new Map<string, string>();
   const namespaces = new Set<string>();
-  for (const statement of source.statements) {
-    if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier) || !CHILD_PROCESS.includes(statement.moduleSpecifier.text)) continue;
-    const bindings = statement.importClause?.namedBindings;
-    if (bindings !== undefined && ts.isNamedImports(bindings)) {
-      for (const element of bindings.elements) bound.set(element.name.text, (element.propertyName ?? element.name).text);
-    } else if (bindings !== undefined && ts.isNamespaceImport(bindings)) namespaces.add(bindings.name.text);
-  }
-  const found: LaunchSite[] = [];
+  const isChildProcess = (expression: ts.Expression | undefined): boolean =>
+    expression !== undefined && (resolveTexts(source, expression) ?? []).some(text => CHILD_PROCESS.includes(text));
   visit(source, node => {
-    if (!ts.isCallExpression(node)) return;
-    let callee: string | undefined;
-    if (ts.isIdentifier(node.expression)) callee = bound.get(node.expression.text);
-    else if (ts.isPropertyAccessExpression(node.expression) && ts.isIdentifier(node.expression.expression) && namespaces.has(node.expression.expression.text)) {
-      callee = node.expression.name.text;
+    if (ts.isImportDeclaration(node) && isChildProcess(node.moduleSpecifier) && node.importClause !== undefined && !node.importClause.isTypeOnly) {
+      const clause = node.importClause;
+      if (clause.name !== undefined) namespaces.add(clause.name.text);
+      const bindings = clause.namedBindings;
+      if (bindings !== undefined && ts.isNamespaceImport(bindings)) namespaces.add(bindings.name.text);
+      if (bindings !== undefined && ts.isNamedImports(bindings)) {
+        for (const element of bindings.elements) if (!element.isTypeOnly) named.set(element.name.text, (element.propertyName ?? element.name).text);
+      }
+    } else if (ts.isImportEqualsDeclaration(node) && !node.isTypeOnly && ts.isExternalModuleReference(node.moduleReference) && isChildProcess(node.moduleReference.expression)) {
+      namespaces.add(node.name.text);
+    } else if (ts.isVariableDeclaration(node) && node.initializer !== undefined) {
+      let value: ts.Expression = unwrap(node.initializer);
+      if (ts.isAwaitExpression(value)) value = unwrap(value.expression);
+      if (!isLoaderCall(value) || !isChildProcess(value.arguments[0])) return;
+      if (ts.isIdentifier(node.name)) namespaces.add(node.name.text);
+      else if (ts.isObjectBindingPattern(node.name)) {
+        for (const element of node.name.elements) {
+          if (!ts.isIdentifier(element.name)) continue;
+          const key = element.propertyName;
+          named.set(element.name.text, key === undefined ? element.name.text : ts.isIdentifier(key) || ts.isStringLiteral(key) ? key.text : "<computed>");
+        }
+      }
     }
-    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;
-    const first = node.arguments[0];
-    found.push({ module, callee, command: first !== undefined && ts.isStringLiteralLike(first) ? first.text : "<expression>" });
+  });
+  return { named, namespaces };
+}
+/** Every value reference to a child_process binding in one module: a call of a launch member reads its command (resolved,
+ * or <expression>), any other use reads <reference> (an alias, an argument, a non-launch member, the namespace itself), and
+ * every re-export of child_process or of a binding reads <re-export>. Name slots and types are not references. */
+function childProcessLaunchesAt(module: string, source: ts.SourceFile = parse(module)): Located[] {
+  const { named, namespaces } = childProcessBindings(source);
+  const found: Located[] = [];
+  const add = (node: ts.Node, callee: string, command: string): void => {
+    found.push({ at: node.getStart(source), site: { module, callee, command } });
+  };
+  const use = (node: ts.Node, callee: string): void => {
+    const call = ts.isCallExpression(node.parent) && node.parent.expression === node ? node.parent : undefined;
+    const first = call?.arguments[0];
+    if (call === undefined || !LAUNCH_CALLS.includes(callee)) add(node, callee, "<reference>");
+    else add(node, callee, (first === undefined ? undefined : resolveTexts(source, first))?.join("|") ?? "<expression>");
+  };
+  visit(source, node => {
+    if (ts.isExportDeclaration(node) && node.moduleSpecifier !== undefined && (resolveTexts(source, node.moduleSpecifier) ?? []).some(text => CHILD_PROCESS.includes(text))) {
+      const clause = node.exportClause;
+      const names = clause !== undefined && ts.isNamedExports(clause) ? clause.elements.map(element => (element.propertyName ?? element.name).text) : ["*"];
+      for (const name of names) add(node, name, "<re-export>");
+      return;
+    }
+    if (ts.isExportSpecifier(node) && node.parent.parent.moduleSpecifier === undefined) {
+      const local = (node.propertyName ?? node.name).text;
+      const imported = named.get(local) ?? (namespaces.has(local) ? "<namespace>" : undefined);
+      if (imported !== undefined) add(node, imported, "<re-export>");
+      return;
+    }
+    if (!ts.isIdentifier(node) || isNameSlot(node) || inType(node)) return;
+    const imported = named.get(node.text);
+    if (imported !== undefined) {
+      use(node, imported);
+      return;
+    }
+    if (!namespaces.has(node.text)) return;
+    const member = memberRead(node);
+    if (member === "") add(node, "<namespace>", "<reference>");
+    else use(node.parent, member.startsWith(".") ? member.slice(1) : member.slice(1, -1));
   });
   return found;
+}
+function childProcessLaunches(module: string, source?: ts.SourceFile): LaunchSite[] {
+  return childProcessLaunchesAt(module, source).map(entry => entry.site);
+}
+/** Every launch site both readers read in one module, one per call (the child_process reader's reading first). */
+function launchUnion(module: string, source: ts.SourceFile = parse(module)): LaunchSite[] {
+  const byCall = new Map<string, LaunchSite>();
+  for (const entry of [...childProcessLaunchesAt(module, source), ...launchSitesAt(module, source)]) {
+    const key = `${entry.at}:${entry.site.callee}`;
+    if (!byCall.has(key)) byCall.set(key, entry.site);
+  }
+  return [...byCall.values()];
+}
+let srcSitesCache: LaunchSite[] | undefined;
+/** launchUnion over every tracked src module. */
+function srcLaunchSites(): LaunchSite[] {
+  srcSitesCache ??= trackedScriptModules().flatMap(module => launchUnion(module));
+  return srcSitesCache;
 }
 let foreignCache: string[] | undefined;
-/** The commands src launches by name other than rf: the stand-ins beside the stand-in rf. */
+/** The commands src launches by name other than rf - every resolved command (each candidate) of srcLaunchSites: the
+ * stand-ins beside the stand-in rf. */
 function foreignCommands(): string[] {
-  foreignCache ??= [...new Set(trackedScriptModules().flatMap(module => launchSites(module).map(site => site.command)))]
-    .filter(command => command !== "rf" && /^[a-z][a-z0-9-]*$/.test(command))
-    .sort();
+  foreignCache ??= [...new Set(srcLaunchSites().flatMap(site => site.command.split("|")))].filter(command => command !== "rf" && /^[a-z][a-z0-9-]*$/.test(command)).sort();
   return foreignCache;
 }
-/** Identifiers that reach an I/O global (a property name of an access is not a reference). */
+/** References to an I/O global by name, and every reference to a global object (with the member read off it): name slots
+ * and types are not references. */
 function ioGlobalReferences(module: string, source: ts.SourceFile = parse(module)): string[] {
   const found: string[] = [];
   visit(source, node => {
-    if (!ts.isIdentifier(node) || !IO_GLOBALS.includes(node.text)) return;
-    if (ts.isPropertyAccessExpression(node.parent) && node.parent.name === node) return;
-    found.push(`${module}:${node.text}`);
+    if (!ts.isIdentifier(node) || isNameSlot(node) || inType(node)) return;
+    if (IO_GLOBALS.includes(node.text)) found.push(`${module}:${node.text}`);
+    else if (GLOBAL_OBJECTS.includes(node.text)) found.push(`${module}:${node.text}${memberRead(node)}`);
   });
   return found;
+}
+/** Every reference to process other than a PROCESS_READS member read: getBuiltinModule, binding, dlopen, kill, a stdio
+ * write, the object aliased or passed on. */
+function processReferences(module: string, source: ts.SourceFile = parse(module)): string[] {
+  const found: string[] = [];
+  visit(source, node => {
+    if (!ts.isIdentifier(node) || node.text !== "process" || isNameSlot(node) || inType(node)) return;
+    const member = memberRead(node);
+    if (!PROCESS_READS.some(read => member === `.${read}` || member === `[${read}]`)) found.push(`${module}:process${member}`);
+  });
+  return found;
+}
+type SourceOf = (module: string) => ts.SourceFile;
+interface ReachReading {
+  readonly launches: LaunchSite[];
+  readonly namedLaunches: LaunchSite[];
+  readonly union: LaunchSite[];
+  readonly specifiers: string[];
+  readonly ioBuiltins: string[];
+  readonly ioGlobals: string[];
+  readonly processReach: string[];
+}
+/** A5's readings of a module set: one pipeline for the render closure and for its planted control, so a reading the
+ * pipeline drops reds the control. */
+function reachReading(modules: readonly string[], sourceOf: SourceOf): ReachReading {
+  const each = <T>(read: (module: string, source: ts.SourceFile) => T[]): T[] => modules.flatMap(module => read(module, sourceOf(module)));
+  return {
+    launches: each(childProcessLaunches),
+    namedLaunches: each(launchSites),
+    union: each(launchUnion),
+    specifiers: each((_module, source) => specifiers(source)),
+    ioBuiltins: each((module, source) =>
+      specifiers(source)
+        .filter(specifier => isBuiltin(specifier) && IO_BUILTINS.includes(specifier.replace(/^node:/, "")))
+        .map(specifier => `${module}:${specifier}`),
+    ),
+    ioGlobals: each(ioGlobalReferences),
+    processReach: each(processReferences),
+  };
 }
 /** The tool providers, model host and tool SDK native-modules.ts loads besides the render module, and the packages they import. */
 function foreignSet(): { modules: string[]; externals: string[] } {
@@ -1114,6 +1537,52 @@ function textsOf(value: unknown, path: string): { path: string; text: string }[]
 }
 function phraseMentions(value: unknown, location: string, phrases: readonly string[]): string[] {
   return textsOf(value, location).flatMap(entry => phrases.filter(phrase => joinedFold(entry.text).includes(phrase)).map(phrase => `${entry.path}|${phrase}`));
+}
+/** Row T's static homes: a script module anywhere in git's index outside UNREAD_TREE (R-UNREAD-HOMES names the rest). */
+function isStaticHome(path: string): boolean {
+  return SCRIPT_MODULE.test(path) && !path.startsWith(UNREAD_TREE);
+}
+function staticHomes(): string[] {
+  return trackedPaths().filter(isStaticHome).sort();
+}
+/** Every string, template part, identifier and key of one source that spells a phrase (joined fold): a descriptor's text,
+ * wherever the module registers it. */
+function sourcePhraseMentions(module: string, phrases: readonly string[], source: ts.SourceFile = parse(module)): string[] {
+  const found: string[] = [];
+  visit(source, node => {
+    let read: { kind: string; text: string } | undefined;
+    if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) read = { kind: "identifier", text: node.text };
+    else if (ts.isStringLiteralLike(node)) read = { kind: "string", text: node.text };
+    else if (ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)) read = { kind: "template", text: node.text };
+    if (read === undefined) return;
+    for (const phrase of phrases) if (joinedFold(read.text).includes(phrase)) found.push(`${module}:${read.kind}|${phrase}`);
+  });
+  return found;
+}
+interface HomeReading {
+  readonly read: string[];
+  readonly hooks: string[];
+  readonly written: string[];
+}
+/** Row T's static readings of a module set: one pipeline for the read homes (T2, T3) and for T4's planted homes, so a
+ * reading the pipeline drops reds T4. */
+function homeReading(modules: readonly string[], sourceOf: SourceOf, phrases: readonly string[]): HomeReading {
+  const read: string[] = [];
+  const hooks: string[] = [];
+  const written: string[] = [];
+  for (const module of modules) {
+    const source = sourceOf(module);
+    hooks.push(...hookMentions(module, source));
+    written.push(...sourcePhraseMentions(module, phrases, source));
+    read.push(module);
+  }
+  return { read, hooks, written };
+}
+let homesCache: HomeReading | undefined;
+/** homeReading over the read homes, once per file (T2 and T3 read the same title phrases). */
+function homesRead(phrases: readonly string[]): HomeReading {
+  homesCache ??= homeReading(staticHomes(), module => parse(module), phrases);
+  return homesCache;
 }
 /** Clients and readers that are never invoked: registration only stores the descriptor. */
 const NEVER = (): never => {
@@ -1218,39 +1687,46 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A5: async () => {
     const reach = closure(RENDER_MODULE);
     const foreign = foreignSet();
-    const launchesInReach = reach.modules.flatMap(module => childProcessLaunches(module));
-    const io = reach.modules.flatMap(module => ioGlobalReferences(module));
-    const ioBuiltins = reach.modules.flatMap(module =>
-      specifiers(parse(module))
-        .filter(specifier => isBuiltin(specifier) && IO_BUILTINS.includes(specifier.replace(/^node:/, "")))
-        .map(specifier => `${module}:${specifier}`),
-    );
+    const reading = reachReading(reach.modules, module => parse(module));
+    const planted = parse("planted/reach.ts", PLANTED_REACH);
+    const controls = reachReading(["planted/reach.ts"], () => planted);
     const overlap = [...reach.modules.filter(module => foreign.modules.includes(module)), ...reach.externals.filter(external => foreign.externals.includes(external))];
     expect(overlap, "the render pass reaches a tool provider, model host or tool SDK native-modules.ts loads").toEqual([]);
-    expect(io, "the render pass reaches an I/O global").toEqual([]);
-    const rfSites = trackedScriptModules().flatMap(module => launchSites(module).filter(site => site.command === "rf"));
-    const planted = parse("planted/reach.ts", PLANTED_REACH);
-    const controls = {
-      specifiers: specifiers(planted),
-      childProcessLaunches: childProcessLaunches("planted/reach.ts", planted),
-      launchSites: launchSites("planted/reach.ts", planted),
-      ioGlobals: ioGlobalReferences("planted/reach.ts", planted),
-    };
+    expect(reading.ioGlobals, "the render pass reaches an I/O global or a global object").toEqual([]);
+    expect(reading.processReach, "the render pass reaches process beyond its env read").toEqual([]);
+    // src's rf launch sites, read by both launch readers over every tracked src module, and the child_process sites whose
+    // command does not resolve (any of them could launch rf).
+    const rfSites = srcLaunchSites().filter(site => site.command.split("|").includes("rf"));
+    expect(
+      rfSites.map(site => site.module),
+      "src's only rf launch site is the render module's",
+    ).toEqual([RENDER_MODULE]);
+    const unresolvedInSrc = trackedScriptModules().flatMap(module => childProcessLaunches(module).filter(site => site.command.startsWith("<")));
     return json({
       clause: SERVES.A5,
       judges: ["tool", "model", "host"],
       modules: reach.modules,
       externals: reach.externals,
-      launches: launchesInReach,
-      ioBuiltins,
-      ioGlobals: io,
+      launches: reading.launches,
+      namedLaunches: reading.namedLaunches,
+      ioBuiltins: reading.ioBuiltins,
+      ioGlobals: reading.ioGlobals,
+      processReach: reading.processReach,
       foreign,
       overlap,
       rfSitesInSrc: rfSites,
+      unresolvedInSrc,
       controls,
     });
   },
   A6: async () => {
+    expect(
+      Object.keys(CONTROLS).filter(name => name.startsWith("committed-form-")),
+      "one committed-form control per committed form, in COMMITTED_FORMS order, both ways",
+    ).toEqual(COMMITTED_FORMS.map(form => `committed-form-${form}`));
+    for (const form of COMMITTED_FORMS) {
+      expect(CONTROLS[`committed-form-${form}`]?.expected, `the ${form} control expects committed-proposal alone`).toEqual(["committed-proposal"]);
+    }
     const verdicts: Record<string, string[]> = {};
     const outcomes: Record<string, string> = {};
     for (const [name, control] of Object.entries(CONTROLS)) {
@@ -1274,22 +1750,22 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     });
   },
   T2: async () => {
-    const tracked = trackedScriptModules();
+    const homes = staticHomes();
+    const src = trackedScriptModules();
     const walked = walkedScriptModules();
-    const read: string[] = [];
-    const mentions: string[] = [];
-    for (const module of tracked) {
-      mentions.push(...hookMentions(module));
-      read.push(module);
-    }
+    const { read, hooks } = homesRead(titleParts(exportRow().title).phrases);
     const manifest = manifestMentions(JSON.parse(readFileSync(join(REPO, "package.json"), "utf8")) as JsonObject);
     const lock = lockMentions(JSON.parse(readFileSync(join(REPO, "package-lock.json"), "utf8")) as JsonObject);
-    expect([...mentions, ...manifest, ...lock], TRIGGER).toEqual([]);
+    expect([...hooks, ...manifest, ...lock], TRIGGER).toEqual([]);
     return json({
-      readEqualsTracked: JSON.stringify(read) === JSON.stringify(tracked),
-      walkEqualsTracked: JSON.stringify(walked) === JSON.stringify(tracked),
-      modulesBelowFloor: read.length < FLOORS.srcModules,
-      mentions,
+      readEqualsHomes: JSON.stringify(read) === JSON.stringify(homes),
+      srcInRead: src.every(module => read.includes(module)),
+      srcWalkEqualsTracked: JSON.stringify(walked) === JSON.stringify(src),
+      missing: REQUIRED_READ.filter(path => !read.includes(path)),
+      readsUnreadTree: read.some(path => path.startsWith(UNREAD_TREE)),
+      readBelowFloor: read.length < FLOORS.readModules,
+      srcBelowFloor: src.length < FLOORS.srcModules,
+      mentions: hooks,
       manifest,
       lock,
     });
@@ -1299,17 +1775,34 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const native = await nativeDescriptors();
     const injected = injectedDescriptors();
     const mentions = [...native.flatMap(descriptor => phraseMentions(descriptor, `native:${descriptor.id}`, phrases)), ...injected.flatMap(descriptor => phraseMentions(descriptor, `injected:${descriptor.id}`, phrases))];
-    expect(mentions, TRIGGER).toEqual([]);
+    // The static read: every string and name of every module T2 reads, so a descriptor registered by a module neither read
+    // registration wires in reads too.
+    const homes = staticHomes();
+    const { read, written } = homesRead(phrases);
+    expect([...mentions, ...written], TRIGGER).toEqual([]);
     const leg = (descriptors: readonly CapabilityDescriptor[]): JsonValue =>
       json({ ids: descriptors.map(descriptor => descriptor.id).sort(), render: descriptors.find(descriptor => descriptor.id === PREVIEW)?.description ?? null });
-    return json({ phrases, belowFloor: native.length + injected.length < FLOORS.descriptors, native: leg(native), injected: leg(injected), mentions });
+    return json({
+      phrases,
+      belowFloor: native.length + injected.length < FLOORS.descriptors,
+      native: leg(native),
+      injected: leg(injected),
+      mentions,
+      readEqualsHomes: JSON.stringify(read) === JSON.stringify(homes),
+      readBelowFloor: read.length < FLOORS.readModules,
+      written,
+    });
   },
   T4: async () => {
     const { phrases } = titleParts(exportRow().title);
-    const planted = parse("planted/panel.ts", PLANTED_SOURCE);
+    // The planted homes go through the same pipeline T2 and T3 read the real homes with.
+    const texts: Readonly<Record<string, string>> = { "planted/panel.ts": PLANTED_SOURCE, "planted/hooks.cjs": PLANTED_REQUIRE, "planted/evidence.ts": PLANTED_DESCRIPTOR_SOURCE };
+    const planted = homeReading(Object.keys(texts), module => parse(module, texts[module]), phrases);
     return json({
       components: componentModules(PLANTED_PATHS),
-      hooks: hookMentions("planted/panel.ts", planted),
+      read: planted.read,
+      hooks: planted.hooks,
+      written: planted.written,
       manifest: manifestMentions(PLANTED_MANIFEST),
       lock: lockMentions(PLANTED_LOCK),
       descriptor: phraseMentions(
@@ -1317,6 +1810,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         "planted",
         phrases,
       ),
+      homes: PLANTED_HOMES.filter(isStaticHome),
     });
   },
   Q1: async () => {
@@ -1348,6 +1842,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     return json({
       hooks: hookMentions("probe/other-hooks.ts", parse("probe/other-hooks.ts", OTHER_HOOKS)),
       descriptor: phraseMentions({ id: "probe.render", description: OTHER_PHRASES }, "probe", phrases),
+      composed: sourcePhraseMentions("probe/composed.ts", phrases, parse("probe/composed.ts", OTHER_COMPOSED)),
+      loader: hookMentions("probe/loader.ts", parse("probe/loader.ts", OTHER_LOADER)),
     });
   },
   Q4: async () => {
@@ -1363,11 +1859,29 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     });
     return json({ verdict: falsify(seen) });
   },
+  Q6: async () =>
+    json(
+      Object.entries(STATIC_RESIDUE).map(([form, text]) => {
+        const module = `probe/${form}.ts`;
+        const source = parse(module, text);
+        const counts = {
+          specifiers: specifiers(source).length,
+          childProcess: childProcessLaunches(module, source).length,
+          launchSites: launchSites(module, source).length,
+          ioGlobals: ioGlobalReferences(module, source).length,
+          processReach: processReferences(module, source).length,
+        };
+        return `${form}: ${Object.entries(counts)
+          .map(([reader, count]) => `${reader} ${count}`)
+          .join(", ")}`;
+      }),
+    ),
+  Q7: async () => json(UNREAD_HOME_PROBES.map(path => `${path}: ${isStaticHome(path) ? "read" : "unread"}`)),
 };
 
 describe("wb-pyel.5 render-abort falsifier (SDK-EVIDENCE-DIRECTED-COMPUTATION-R12) and its until-then trigger", () => {
   it("the judged set: the frozen shape, the out-of-file roster, the bead's export row, src and the cases agree", { timeout: 120_000 }, async () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:6", "T:4", "Q:5"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:6", "T:4", "Q:7"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
@@ -1394,7 +1908,11 @@ describe("wb-pyel.5 render-abort falsifier (SDK-EVIDENCE-DIRECTED-COMPUTATION-R1
         controls: Object.fromEntries(Object.entries(CONTROLS).map(([name, control]) => [name, control.expected])),
         launchCalls: LAUNCH_CALLS,
         childProcess: CHILD_PROCESS,
+        loaderCalls: LOADER_CALLS,
+        resolveDepth: RESOLVE_DEPTH,
         ioGlobals: IO_GLOBALS,
+        globalObjects: GLOBAL_OBJECTS,
+        processReads: PROCESS_READS,
         ioBuiltins: IO_BUILTINS,
         tsxSdk: TSX_SDK,
         hookName: `/${HOOK_NAME.source}/${HOOK_NAME.flags}`,
@@ -1402,18 +1920,27 @@ describe("wb-pyel.5 render-abort falsifier (SDK-EVIDENCE-DIRECTED-COMPUTATION-R1
         scriptModule: `/${SCRIPT_MODULE.source}/${SCRIPT_MODULE.flags}`,
         componentModule: `/${COMPONENT_MODULE.source}/${COMPONENT_MODULE.flags}`,
         requiredTracked: REQUIRED_TRACKED,
+        unreadTree: UNREAD_TREE,
+        requiredRead: REQUIRED_READ,
         floors: FLOORS,
         trigger: TRIGGER,
         residuals: RESIDUALS,
         serves: SERVES,
         otherHooks: OTHER_HOOKS,
         otherPhrases: OTHER_PHRASES,
+        otherComposed: OTHER_COMPOSED,
+        otherLoader: OTHER_LOADER,
+        staticResidue: STATIC_RESIDUE,
+        unreadHomeProbes: UNREAD_HOME_PROBES,
         plantedPaths: PLANTED_PATHS,
         plantedSource: PLANTED_SOURCE,
+        plantedRequire: PLANTED_REQUIRE,
         plantedManifest: PLANTED_MANIFEST,
         plantedLock: PLANTED_LOCK,
         plantedDescription: PLANTED_DESCRIPTION,
         plantedKey: PLANTED_KEY,
+        plantedHomes: PLANTED_HOMES,
+        plantedDescriptorSource: PLANTED_DESCRIPTOR_SOURCE,
         plantedReach: PLANTED_REACH,
       }),
     ).toStrictEqual(ROSTER.constants);

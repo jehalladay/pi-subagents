@@ -122,14 +122,35 @@
       ],
       "unguarded-registry": [],
       "unguarded-registry-same-tick": [],
-      "committed-form": [
+      "committed-form-commit_seq": [
+        "committed-proposal"
+      ],
+      "committed-form-render_id": [
+        "committed-proposal"
+      ],
+      "committed-form-ephemeral": [
+        "committed-proposal"
+      ],
+      "committed-form-storage_write_count": [
         "committed-proposal"
       ],
       "committing-argv": [
         "committing-launch"
       ],
+      "committing-verb": [
+        "committing-launch"
+      ],
+      "misplaced-tail": [
+        "committing-launch"
+      ],
       "started-after-abort": [
         "started-after-abort"
+      ],
+      "started-reader": [
+        "started-after-abort"
+      ],
+      "suspended-returned": [
+        "committed-after-abort"
       ],
       "extra-launch": [
         "extra-launch"
@@ -138,6 +159,12 @@
         "foreign-launch"
       ],
       "host-write": [
+        "host-write"
+      ],
+      "host-rewrite": [
+        "host-write"
+      ],
+      "host-sibling": [
         "host-write"
       ]
     },
@@ -154,12 +181,33 @@
       "node:child_process",
       "child_process"
     ],
+    "loaderCalls": [
+      "require",
+      "getBuiltinModule"
+    ],
+    "resolveDepth": 8,
     "ioGlobals": [
       "fetch",
       "XMLHttpRequest",
       "WebSocket",
       "EventSource",
-      "require"
+      "BroadcastChannel",
+      "console",
+      "localStorage",
+      "sessionStorage",
+      "require",
+      "module",
+      "eval",
+      "Function"
+    ],
+    "globalObjects": [
+      "globalThis",
+      "global",
+      "self",
+      "window"
+    ],
+    "processReads": [
+      "env"
     ],
     "ioBuiltins": [
       "child_process",
@@ -187,12 +235,21 @@
       "test/helpers/scratch.ts",
       "docs/workbench/07-native-integrations.md"
     ],
+    "unreadTree": "test/",
+    "requiredRead": [
+      "src/index.ts",
+      "src/workbench/providers/reactivefiber.ts",
+      "qa/workbench/dependency-census.mjs",
+      "examples/workflows/compose.js",
+      "vitest.config.ts"
+    ],
     "floors": {
       "tracked": 900,
       "srcModules": 100,
+      "readModules": 160,
       "descriptors": 8
     },
-    "trigger": "a Pi-authored EDC component/hook surface now exists: wb-pyel.5's acceptance is owed on it - drive its render passes through the render-abort falsifier (row A, PASSES) and re-measure this census",
+    "trigger": "row T read a Pi-authored EDC component/hook surface: wb-pyel.5's acceptance is owed on it - drive its render passes through the render-abort falsifier (row A, PASSES) and re-measure this census",
     "residuals": {
       "R-INJECTED-RELAY": [
         "Q1"
@@ -208,6 +265,12 @@
       ],
       "R-HOST-ELSEWHERE": [
         "Q5"
+      ],
+      "R-STATIC-FORMS": [
+        "Q6"
+      ],
+      "R-UNREAD-HOMES": [
+        "Q7"
       ]
     },
     "serves": {
@@ -220,6 +283,22 @@
     },
     "otherHooks": "export function evidenceHook() { return describeRequirement(view); }\nconst makeEvidenceDescriptor = () => ({ need: 1 });\n",
     "otherPhrases": "states an evidence need and a resource demand for the next render",
+    "otherComposed": "export const description = \"Describes a logical evidence \" + \"requirement for the next render\";\n",
+    "otherLoader": "import { createRequire } from \"node:module\";\nconst tsx = createRequire(import.meta.url)(\"@reactive-fiber/tsx\");\n",
+    "staticResidue": {
+      "unbound-api-launch": "export function run(api: { exec(command: string): void }, command: string): void { api.exec(command); }\n",
+      "unbound-value-launch": "export function run(pick: () => (command: string) => void): void { const launch = pick(); launch(\"rf\"); }\n",
+      "package-launcher": "import { execa } from \"execa\";\nexport const run = (): unknown => execa(\"rf\");\n",
+      "constructor-chain-global": "export const reach = (): unknown => \"\".constructor.constructor(\"return this\")();\n",
+      "env-write": "export function run(): void { process.env.PLANTED = \"1\"; }\n"
+    },
+    "unreadHomeProbes": [
+      "test/helpers/edc-evidence-hooks.ts",
+      "test/workbench-edc-descriptor.test.ts",
+      "src/workbench/edc/descriptor.json",
+      "examples/edc/hooks.md",
+      "qa/workbench/edc-descriptor.yaml"
+    ],
     "plantedPaths": [
       "src/edc/EvidencePanel.tsx",
       "examples/Card.JSX",
@@ -227,6 +306,7 @@
       "docs/hooks.md"
     ],
     "plantedSource": "import { useQuery } from \"@reactive-fiber/tsx\";\nexport function useRequirement(view: unknown) { return pureProjectRequirement(view); }\nconst panel = () => useProvider(\"evidence-view\", {});\n",
+    "plantedRequire": "const tsx = require(\"@reactive-fiber/tsx\");\n",
     "plantedManifest": {
       "name": "planted",
       "dependencies": {
@@ -260,7 +340,14 @@
     },
     "plantedDescription": "Describes a logical evidence requirement for the next render",
     "plantedKey": "prospectiveResourceInterest",
-    "plantedReach": "import { spawn as run, execFileSync } from \"node:child_process\";\nimport * as cp from \"child_process\";\nexport * from \"./planted-peer.js\";\nimport q = require(\"planted-required\");\nconst lazy = await import(\"planted-lazy\");\nrun(\"hx\", []);\nexecFileSync(command);\ncp.fork(\"worker.js\");\nServerConnection.spawn(\"forge\");\npi.exec(\"git\", []);\nmanager.spawn(pi);\nconst reply = await fetch(\"https://example.invalid/\");\nconst socket = new WebSocket(\"wss://example.invalid/\");\nsettings.fetch = 1;\n"
+    "plantedHomes": [
+      "src/workbench/edc/evidence-hooks.ts",
+      "qa/workbench/edc-hooks.mjs",
+      "examples/edc/evidence-hooks.ts",
+      "vitest.edc.config.ts"
+    ],
+    "plantedDescriptorSource": "export function registerEvidence(registry: Registry): void {\n  registry.register({ descriptor: { id: \"edc.evidence\", description: \"Describes a logical evidence requirement for the next render\", inputSchema: { properties: { prospectiveResourceInterest: {} } } } });\n}\n",
+    "plantedReach": "import { spawn as run, execFileSync } from \"node:child_process\";\nimport * as cp from \"child_process\";\nimport childProcess from \"node:child_process\";\nimport cpEquals = require(\"child_process\");\nexport { exec as reexported } from \"node:child_process\";\nexport * from \"./planted-peer.js\";\nimport q = require(\"planted-required\");\nconst lazy = await import(\"planted-lazy\");\nconst LAZY_NAME = \"planted-const-lazy\";\nconst constLazy = await import(LAZY_NAME);\nconst computedLazy = await import(pickName());\nconst required = require(\"planted-require-call\");\nconst { spawnSync: launchSync } = require(\"node:child_process\");\nconst loaded = process.getBuiltinModule(\"node:child_process\");\nconst TOOL = \"hx\";\nconst SHELLS = flag ? [\"cmd\", \"/c\"] : [\"sh\", \"-c\"];\nconst PICKED = flag ? \"git\" : \"forge\";\nrun(\"hx\", []);\nrun(\"rf\", []);\nexecFileSync(command);\ncp.fork(\"worker.js\");\ncp.exec(PICKED);\nchildProcess.execFileSync(TOOL);\ncpEquals.exec(\"git\");\nlaunchSync(SHELLS[0]);\nloaded.spawn(\"rf\");\nconst alias = run;\nServerConnection.spawn(\"forge\");\npi.exec(\"git\", []);\npi.exec(SHELLS[0], []);\nmanager.spawn(pi);\nconst reply = await fetch(\"https://example.invalid/\");\nconst socket = new WebSocket(\"wss://example.invalid/\");\nconst viaGlobal = globalThis.fetch;\nconst viaIndex = self[\"XMLHttpRequest\"];\nconst holder = global;\nconst code = eval(source);\nconst fs = process.getBuiltinModule(\"node:fs\");\nconst env = process.env;\nsettings.fetch = 1;\nconst typed: typeof globalThis.fetch = reply;\n"
   },
   "tests": [
     "the judged set: the frozen shape, the out-of-file roster, the bead's export row, src and the cases agree",
@@ -279,6 +366,8 @@
     "Q3",
     "Q4",
     "Q5",
+    "Q6",
+    "Q7",
     "the registered tests and the reached pins equal the roster, in order and both ways"
   ],
   "rows": [
@@ -358,8 +447,10 @@
             ],
             "stand_ins": [
               "rf",
+              "cmd",
               "forge",
-              "git"
+              "git",
+              "sh"
             ],
             "passes": [
               "native-registry/before: launches 0, reader 0, foreign 0, host unchanged, stopped false | []",
@@ -412,10 +503,18 @@
                 "command": "rf"
               }
             ],
+            "namedLaunches": [
+              {
+                "module": "src/workbench/providers/reactivefiber.ts",
+                "callee": "spawn",
+                "command": "rf"
+              }
+            ],
             "ioBuiltins": [
               "src/workbench/providers/reactivefiber.ts:node:child_process"
             ],
             "ioGlobals": [],
+            "processReach": [],
             "foreign": {
               "modules": [
                 "src/workbench/claude-host.ts",
@@ -441,19 +540,29 @@
                 "command": "rf"
               }
             ],
+            "unresolvedInSrc": [
+              {
+                "module": "src/workbench/hosts/local-detached.ts",
+                "callee": "spawn",
+                "command": "<expression>"
+              }
+            ],
             "controls": {
-              "specifiers": [
-                "node:child_process",
-                "child_process",
-                "./planted-peer.js",
-                "planted-required",
-                "planted-lazy"
-              ],
-              "childProcessLaunches": [
+              "launches": [
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "<re-export>"
+                },
                 {
                   "module": "planted/reach.ts",
                   "callee": "spawn",
                   "command": "hx"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "rf"
                 },
                 {
                   "module": "planted/reach.ts",
@@ -464,13 +573,63 @@
                   "module": "planted/reach.ts",
                   "callee": "fork",
                   "command": "worker.js"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "forge|git"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "execFileSync",
+                  "command": "hx"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "git"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawnSync",
+                  "command": "cmd|sh"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "rf"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "<reference>"
                 }
               ],
-              "launchSites": [
+              "namedLaunches": [
                 {
                   "module": "planted/reach.ts",
                   "callee": "fork",
                   "command": "worker.js"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "forge|git"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "execFileSync",
+                  "command": "hx"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "git"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "rf"
                 },
                 {
                   "module": "planted/reach.ts",
@@ -481,11 +640,124 @@
                   "module": "planted/reach.ts",
                   "callee": "exec",
                   "command": "git"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "cmd|sh"
                 }
               ],
+              "union": [
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "<re-export>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "hx"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "rf"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "execFileSync",
+                  "command": "<expression>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "fork",
+                  "command": "worker.js"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "forge|git"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "execFileSync",
+                  "command": "hx"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "git"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawnSync",
+                  "command": "cmd|sh"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "rf"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "forge"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "git"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "cmd|sh"
+                }
+              ],
+              "specifiers": [
+                "node:child_process",
+                "child_process",
+                "node:child_process",
+                "child_process",
+                "node:child_process",
+                "./planted-peer.js",
+                "planted-required",
+                "planted-lazy",
+                "planted-const-lazy",
+                "<expression>",
+                "planted-require-call",
+                "node:child_process",
+                "node:child_process",
+                "node:fs"
+              ],
+              "ioBuiltins": [
+                "planted/reach.ts:node:child_process",
+                "planted/reach.ts:child_process",
+                "planted/reach.ts:node:child_process",
+                "planted/reach.ts:child_process",
+                "planted/reach.ts:node:child_process",
+                "planted/reach.ts:node:child_process",
+                "planted/reach.ts:node:child_process",
+                "planted/reach.ts:node:fs"
+              ],
               "ioGlobals": [
+                "planted/reach.ts:require",
+                "planted/reach.ts:require",
                 "planted/reach.ts:fetch",
-                "planted/reach.ts:WebSocket"
+                "planted/reach.ts:WebSocket",
+                "planted/reach.ts:globalThis.fetch",
+                "planted/reach.ts:self[XMLHttpRequest]",
+                "planted/reach.ts:global",
+                "planted/reach.ts:eval"
+              ],
+              "processReach": [
+                "planted/reach.ts:process.getBuiltinModule",
+                "planted/reach.ts:process.getBuiltinModule"
               ]
             }
           }
@@ -503,14 +775,35 @@
               ],
               "unguarded-registry": [],
               "unguarded-registry-same-tick": [],
-              "committed-form": [
+              "committed-form-commit_seq": [
+                "committed-proposal"
+              ],
+              "committed-form-render_id": [
+                "committed-proposal"
+              ],
+              "committed-form-ephemeral": [
+                "committed-proposal"
+              ],
+              "committed-form-storage_write_count": [
                 "committed-proposal"
               ],
               "committing-argv": [
                 "committing-launch"
               ],
+              "committing-verb": [
+                "committing-launch"
+              ],
+              "misplaced-tail": [
+                "committing-launch"
+              ],
               "started-after-abort": [
                 "started-after-abort"
+              ],
+              "started-reader": [
+                "started-after-abort"
+              ],
+              "suspended-returned": [
+                "committed-after-abort"
               ],
               "extra-launch": [
                 "extra-launch"
@@ -520,6 +813,12 @@
               ],
               "host-write": [
                 "host-write"
+              ],
+              "host-rewrite": [
+                "host-write"
+              ],
+              "host-sibling": [
+                "host-write"
               ]
             },
             "outcomes": {
@@ -527,12 +826,21 @@
               "unguarded-bare": "returned",
               "unguarded-registry": "refused transport: Capability census.render.unguarded wait was cancelled.",
               "unguarded-registry-same-tick": "refused transport: Capability census.render.unguarded wait was cancelled.",
-              "committed-form": "returned",
+              "committed-form-commit_seq": "returned",
+              "committed-form-render_id": "returned",
+              "committed-form-ephemeral": "returned",
+              "committed-form-storage_write_count": "returned",
               "committing-argv": "returned",
+              "committing-verb": "returned",
+              "misplaced-tail": "returned",
               "started-after-abort": "refused transport: census control: cancelled after it launched",
+              "started-reader": "refused transport: census control: cancelled after it read",
+              "suspended-returned": "returned",
               "extra-launch": "returned",
               "foreign-launch": "returned",
-              "host-write": "returned"
+              "host-write": "returned",
+              "host-rewrite": "returned",
+              "host-sibling": "returned"
             }
           }
         }
@@ -553,9 +861,13 @@
         {
           "id": "T2",
           "witness": {
-            "readEqualsTracked": true,
-            "walkEqualsTracked": true,
-            "modulesBelowFloor": false,
+            "readEqualsHomes": true,
+            "srcInRead": true,
+            "srcWalkEqualsTracked": true,
+            "missing": [],
+            "readsUnreadTree": false,
+            "readBelowFloor": false,
+            "srcBelowFloor": false,
             "mentions": [],
             "manifest": [],
             "lock": []
@@ -587,7 +899,10 @@
               ],
               "render": "Preview native RF context with provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)"
             },
-            "mentions": []
+            "mentions": [],
+            "readEqualsHomes": true,
+            "readBelowFloor": false,
+            "written": []
           }
         },
         {
@@ -597,12 +912,22 @@
               "src/edc/EvidencePanel.tsx",
               "examples/Card.JSX"
             ],
+            "read": [
+              "planted/panel.ts",
+              "planted/hooks.cjs",
+              "planted/evidence.ts"
+            ],
             "hooks": [
               "planted/panel.ts:useQuery",
               "planted/panel.ts:useRequirement",
               "planted/panel.ts:pureProjectRequirement",
               "planted/panel.ts:useProvider",
-              "planted/panel.ts:import @reactive-fiber/tsx"
+              "planted/panel.ts:import @reactive-fiber/tsx",
+              "planted/hooks.cjs:import @reactive-fiber/tsx"
+            ],
+            "written": [
+              "planted/evidence.ts:string|evidencerequirement",
+              "planted/evidence.ts:identifier|resourceinterest"
             ],
             "manifest": [
               "dependencies:@reactive-fiber/tsx",
@@ -618,6 +943,12 @@
             "descriptor": [
               "planted.description|evidencerequirement",
               "planted.inputSchema.properties.prospectiveResourceInterest#key|resourceinterest"
+            ],
+            "homes": [
+              "src/workbench/edc/evidence-hooks.ts",
+              "qa/workbench/edc-hooks.mjs",
+              "examples/edc/evidence-hooks.ts",
+              "vitest.edc.config.ts"
             ]
           }
         }
@@ -655,7 +986,9 @@
           "id": "Q3",
           "witness": {
             "hooks": [],
-            "descriptor": []
+            "descriptor": [],
+            "composed": [],
+            "loader": []
           }
         },
         {
@@ -675,6 +1008,26 @@
           "witness": {
             "verdict": []
           }
+        },
+        {
+          "id": "Q6",
+          "witness": [
+            "unbound-api-launch: specifiers 0, childProcess 0, launchSites 0, ioGlobals 0, processReach 0",
+            "unbound-value-launch: specifiers 0, childProcess 0, launchSites 0, ioGlobals 0, processReach 0",
+            "package-launcher: specifiers 1, childProcess 0, launchSites 0, ioGlobals 0, processReach 0",
+            "constructor-chain-global: specifiers 0, childProcess 0, launchSites 0, ioGlobals 0, processReach 0",
+            "env-write: specifiers 0, childProcess 0, launchSites 0, ioGlobals 0, processReach 0"
+          ]
+        },
+        {
+          "id": "Q7",
+          "witness": [
+            "test/helpers/edc-evidence-hooks.ts: unread",
+            "test/workbench-edc-descriptor.test.ts: unread",
+            "src/workbench/edc/descriptor.json: unread",
+            "examples/edc/hooks.md: unread",
+            "qa/workbench/edc-descriptor.yaml: unread"
+          ]
         }
       ]
     }
