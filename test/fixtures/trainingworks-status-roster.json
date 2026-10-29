@@ -243,7 +243,8 @@
     "hellip": "…"
    },
    "reference": "&(?:#(\\d{1,7})|#[xX]([0-9A-Fa-f]{1,6})|([A-Za-z][A-Za-z0-9]{1,31}));",
-   "hiddenHtml": "<!--(?:-?>|[\\s\\S]*?(?:-->|$))|<[!?][^>]*(?:>|$)|<\\/?[A-Za-z][^<>]*>",
+   "hiddenHtml": "<!--(?:-?>|[\\s\\S]*?(?:--!?>|$))|<[!?][^>]*(?:>|$)|<\\/?[A-Za-z][^<>]*>",
+   "inlineNonTag": "^<[!?]",
    "format": "\\p{Cf}",
    "phraseSpace": "[^\\S\\n]+"
   },
@@ -291,14 +292,11 @@
    ],
    "R-HTML-TABLE": [
     "Q12"
-   ],
-   "R-COMMENT-BANG": [
-    "Q12"
    ]
   },
   "htmlTable": {
    "tableTag": "<\\/?(?:table|caption|colgroup|col|thead|tbody|tfoot|tr|th|td)(?=[\\s/>]|$)",
-   "comment": "<!--(?:-?>|[\\s\\S]*?(?:-->|$))",
+   "comment": "<!--(?:-?>|[\\s\\S]*?(?:--!?>|$))",
    "guards": [
     "test/workbench-w10-stamped-claim-guard.test.ts",
     "test/workbench-traceability-freeze.test.ts"
@@ -570,6 +568,62 @@
         "findings": [
          "hx-gp:hx-gp"
         ]
+       },
+       {
+        "id": "text-after-a-comment-a-browser-ends-at-bang",
+        "findings": [
+         "trainingworks:hx+forge+furnace+mw+beads+rfcli"
+        ]
+       },
+       {
+        "id": "text-after-a-bang-ended-comment-inside-an-html-block",
+        "findings": [
+         "trainingworks:hx+forge+furnace+mw+beads+rfcli"
+        ]
+       },
+       {
+        "id": "text-after-a-bang-ended-comment-inside-an-inline-comment-token",
+        "findings": [
+         "trainingworks:hx+forge+furnace+mw+beads+rfcli"
+        ]
+       },
+       {
+        "id": "name-spelled-by-a-reference-after-a-bang-ended-comment-inside-an-inline-comment-token",
+        "findings": [
+         "trainingworks:hx+forge+furnace+mw+beads+rfcli"
+        ]
+       },
+       {
+        "id": "phrase-after-a-comment-a-browser-ends-at-bang",
+        "findings": []
+       },
+       {
+        "id": "text-after-an-inline-processing-instruction-a-browser-ends-at-its-first-bracket",
+        "findings": [
+         "trainingworks:hx+forge+furnace+mw+beads+rfcli"
+        ]
+       },
+       {
+        "id": "text-after-an-inline-cdata-section-a-browser-ends-at-its-first-bracket",
+        "findings": [
+         "trainingworks:hx+forge+furnace+mw+beads+rfcli"
+        ]
+       },
+       {
+        "id": "mention-inside-a-complete-inline-comment",
+        "findings": []
+       },
+       {
+        "id": "mention-inside-an-inline-processing-instruction",
+        "findings": []
+       },
+       {
+        "id": "mention-inside-a-comment-holding-a-bang-without-a-bracket",
+        "findings": []
+       },
+       {
+        "id": "mention-inside-an-attribute-value-of-an-inline-tag",
+        "findings": []
        }
       ],
       "findingLine": [
@@ -946,6 +1000,18 @@
        {
         "id": "equation-in-a-blockquote",
         "findings": 1
+       },
+       {
+        "id": "equation-after-a-comment-a-browser-ends-at-bang",
+        "findings": 1
+       },
+       {
+        "id": "equation-after-a-bang-ended-comment-inside-an-inline-comment-token",
+        "findings": 1
+       },
+       {
+        "id": "negation-after-a-bang-ended-comment-inside-an-inline-comment-token",
+        "findings": 0
        }
       ]
      }
@@ -1568,6 +1634,81 @@
         "id": "a-table-tag-inside-an-attribute-value",
         "htmlBlocks": 0,
         "tableTags": 1
+       },
+       {
+        "id": "an-html-block-of-a-combining-mark-alone",
+        "htmlBlocks": 1,
+        "tableTags": 0
+       },
+       {
+        "id": "table-tags-after-a-hard-line-break",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "table-tags-after-a-soft-line-break",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "a-table-tag-after-a-line-separator",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "table-tags-in-an-ordered-list-from-10-with-a-dot",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "table-tags-in-an-ordered-list-from-2",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "a-table-tag-opening-a-level-1-heading",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "table-tags-after-a-backslash-hard-line-break",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "table-tags-after-a-hard-and-a-soft-line-break-in-item-texts",
+        "htmlBlocks": 0,
+        "tableTags": 4
+       },
+       {
+        "id": "table-tags-after-every-other-unicode-white-space",
+        "htmlBlocks": 0,
+        "tableTags": 36
+       },
+       {
+        "id": "table-tags-in-an-ordered-list-from-2-with-a-paren",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "table-tags-opening-atx-headings-of-levels-3-to-6",
+        "htmlBlocks": 0,
+        "tableTags": 8
+       },
+       {
+        "id": "a-table-after-a-comment-a-browser-ends-at-bang",
+        "htmlBlocks": 1,
+        "tableTags": 1
+       },
+       {
+        "id": "a-table-tag-after-a-bang-ended-comment-inside-an-inline-comment-token",
+        "htmlBlocks": 0,
+        "tableTags": 1
+       },
+       {
+        "id": "a-table-tag-inside-a-comment-holding-a-bang-without-a-bracket",
+        "htmlBlocks": 0,
+        "tableTags": 0
        }
       ],
       "matrix": [
@@ -1704,15 +1845,7 @@
         "document": "docs/workbench/TRACEABILITY.md",
         "frozenSha256": "8ec4715e5b8cbec7d24e5926c79388c3018cc57780c05251b015d36411e462d4"
        }
-      },
-      "residuals": [
-       {
-        "family": "R-COMMENT-BANG",
-        "htmlBlocks": 0,
-        "tableTags": 0,
-        "tableTagsOnceCommentsEndAsHtml": 1
-       }
-      ]
+      }
      }
     }
    ]

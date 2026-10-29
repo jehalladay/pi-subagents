@@ -98,6 +98,10 @@
  * suiteReference() no control read - a suite under a condition's call, a suite by element access and a vitest namespace's
  * suite member by element access - and C1's whole-word notes for SHIPPED_OTHERWISE: a now reads otherwise and an
  * Unshipped: is no key.
+ * wb-k2t6 (the R694 follow-up of landing 564: gate finding F1) added C2's non-suite controls for the two checks of
+ * suiteReference() that no control read on their not-a-suite side - a row inside a call of a function no suite binding
+ * names, and a row inside a call of a vitest namespace member that is no suite registrar - so the identifier arm's
+ * suite-binding test and the namespace arm's suite-member test each have a control that reads a non-suite head.
  * Display paths added: none. Test-only: it spawns nothing; the controls plant files in makeScratch scratch only.
  */
 import { type Dirent, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
@@ -711,7 +715,8 @@ function memberOf(node: ts.Identifier): { readonly access: ts.Expression; readon
 }
 /** The suite registrar a callee descends to (a suite binding, or a vitest namespace's suite member by property or by element
  * access), if any, through each member (by property or by element access) and each call (a condition's) of the head, seen
- * through parentheses and the type assertions headOf sees through (C2 holds a suite control per arm). */
+ * through parentheses and the type assertions headOf sees through (C2 holds a suite control per arm, and a non-suite
+ * control each for the identifier arm's suite-binding test and the namespace arm's suite-member test). */
 function suiteReference(callee: ts.Expression, bindings: RegistrarBindings): ts.Expression | undefined {
   let current = callee;
   for (;;) {
@@ -1115,6 +1120,10 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       branch: rowsIn(`${vitest}if (process.env.ROW) it("r1", () => {});\n`),
       helperFunction: rowsIn(`${vitest}function row(title: string): void {\n  it(title, () => {});\n}\nrow("r1");\nrow("r2");\n`),
       callbackRows: rowsIn(`${vitest}["r1", "r2"].forEach(title => it(title, () => {}));\n`),
+      // A row inside a call whose head is no suite: a function no suite binding names, and a vitest namespace member
+      // that is no suite registrar - the not-a-suite side of suiteReference()'s two checks (gate F1 of landing 564).
+      nonSuiteCall: rowsIn(`${vitest}wrap("s", () => {\n  it("r1", () => {});\n});\n`),
+      namespaceNonSuiteMember: rowsIn('import * as vt from "vitest";\nvt.expect(() => {\n  vt.it("r1", () => {});\n});\n'),
       suiteInLoop: rowsIn(`${vitest}for (const title of ["s1", "s2"]) describe(title, () => {\n  it("r1", () => {});\n});\n`),
       callOfResult: rowsIn(`${vitest}it("r1", () => {})("r2");\n`),
       computedMember: rowsIn(`${vitest}const modifier = process.env.MODIFIER ?? "concurrent";\nit[modifier]("r1", () => {});\n`),

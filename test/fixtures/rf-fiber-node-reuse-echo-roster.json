@@ -932,6 +932,7 @@
    "registerComposedId": [],
    "registerImportedId": [],
    "registerLetId": [],
+   "registerVarId": [],
    "registerClassField": [],
    "registerAssignedId": [],
    "registerGetterId": [],
@@ -977,7 +978,19 @@
    "toolAssignedInModule": [
     "#probe_invoke"
    ],
+   "toolAssignedInFunction": [
+    "#probe_invoke"
+   ],
+   "toolAssignedMember": [
+    "#probe_invoke"
+   ],
+   "toolAssignedChain": [
+    "#probe_invoke"
+   ],
    "toolNamespaceElement": [
+    "#probe_invoke"
+   ],
+   "toolDefaultImportElement": [
     "#probe_invoke"
    ],
    "toolHandlerReference": [
@@ -1061,6 +1074,12 @@
     "#project"
    ],
    "projectParenthesizedImportAlias": [
+    "#project"
+   ],
+   "projectNestedParenthesized": [
+    "#project"
+   ],
+   "projectNestedParenthesizedAlias": [
     "#project"
    ],
    "projectUnexported": [],

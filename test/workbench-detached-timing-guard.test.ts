@@ -51,14 +51,24 @@
  *      options] tuple or through a builder's onCleanup. vitest runs a fixture's teardown under no timeout (its runner
  *      awaits each fixture cleanup unbounded), so a fixture cannot stop hosts under HOST_HOOK_TIMEOUT_MS: one that does
  *      is a finding by itself, and the family stops hosts in a hook.
+ * wb-n5xs (the R694 follow-up of wb-vh7c landing 583, gate cmd_9a13529b9c57: F1 leads) widens that G3 reading through
+ * TypeScript's type-level wrappers, the ones TypeScript files under OuterExpressionKinds.Assertions: `as` and an
+ * angle-bracket assertion, `satisfies` and the non-null `!`, nested or mixed with parentheses. A counter read through
+ * them, as an operand of the `&&` or under an equality operator, reads as the counter they wrap, and every counter is
+ * keyed by its unwrapped operand, so a loop that steps n! and reads n, or steps n and reads n!, holds one counter. The
+ * wrapper-kinds row reads those wrappers against TypeScript's own flags, and a T1 kill control plants each one in both
+ * of the reading's forms. One loop is still one finding.
  * The judged set is read from the test directory and the config, never typed here. The members importing the marked
- * twins (the two suites that drive real hosts, and the helper's own unit rows) are pinned, so a derivation that reads
+ * twins (the three suites that drive real hosts, and the helper's own unit rows) are pinned, so a derivation that reads
  * nothing, or a member that leaves the twins, reds. Every widened reading has planted kill controls beside negative
  * controls, and every named residual has planted quiet rows (a member the guard leaves quiet). What each one yields, as
  * each finding's rule and text, is held in the out-of-file roster test/fixtures/detached-timing-guard-roster.json,
  * beside this file's frozen shape. The first wb-nqbd case and the last case read that shape against the collected test
  * tree, and the last one also reads that every planted table reached its own compare (F4: a deleted case or row block
- * reds).
+ * reds). wb-g0yl (the R694 follow-up of wb-ksz landing 534: F3 leads): the importer pin row's title and this header
+ * count the real-host suites the list pins, every importer but the helper's own unit rows, so a suite that joins the
+ * list re-counts both. Not claimed: a hollow that removes that row from every literal of the shape (the row, the
+ * roster's title and the frozen-shape literal's element), which wb-g0yl measured at 0 failed.
  * NAMED RESIDUALS (not detected; each has quiet rows, F5):
  *   R-WAIT-LOOP a wait loop whose bound is not in its condition (a for-of over a fixed-length array, a counted loop
  *     that leaves through a break) or that awaits a read with no delay;
@@ -84,8 +94,9 @@
  * until().ok), and no landing judge reads its reds. The first case pins that exclusion.
  * NOT CLAIMED: a hollow that removes one planted site from every table it sits in at once (its own table, the roster's
  * entry and the frozen-shape literal's count), unless it also drops a hook kind from HOOKS, which the hook-kinds row
- * reads against vitest's own exports; a hollow that removes one of the two shape cases from every literal of the shape;
- * a case whose own assertions are weakened in place.
+ * reads against vitest's own exports, or the site is the only T1 kill control that plants a wrapper kind in one of the
+ * reading's two forms, which the wrapper-kinds row reads against TypeScript's own type-level wrappers; a hollow that
+ * removes one of the two shape cases from every literal of the shape; a case whose own assertions are weakened in place.
  */
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -107,6 +118,10 @@ const CLOCKS = new Set(["Date.now", "performance.now"]);
 /** Where the marked twins live, as the members import them. */
 const TWINS_MODULE = "./helpers/detached-timing.js";
 const TWINS = new Set(["launchDetachedMarked", "connectDetachedMarked"]);
+/** The helper's own unit rows: the one importer of the marked twins that plants its lapses instead of driving a real host. */
+const HELPER_ROWS = "workbench-detached-timing.test.ts";
+/** wb-g0yl: the words the pin row's title and the header count the real-host suites with. */
+const COUNT_WORDS: readonly string[] = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
 /** wb-nqbd F1: vitest's own wait helpers (vi.waitFor, vi.waitUntil, expect.poll), read by name on any receiver or binding. */
 const WAIT_HELPERS = new Set(["waitFor", "waitUntil", "poll"]);
 /** wb-nqbd F1, F3: the timers behind two host objects, read on the object by name: AbortSignal.timeout, Atomics.wait, Atomics.waitAsync. */
@@ -129,6 +144,18 @@ const EQUALITY = new Set<ts.SyntaxKind>([ts.SyntaxKind.EqualsEqualsEqualsToken, 
 /** wb-vh7c F1: the steps (++ and --) and the counting assignments (+= and -=) that make a value a loop's counter. */
 const STEPS = new Set<ts.SyntaxKind>([ts.SyntaxKind.PlusPlusToken, ts.SyntaxKind.MinusMinusToken]);
 const COUNTING_ASSIGNMENTS = new Set<ts.SyntaxKind>([ts.SyntaxKind.PlusEqualsToken, ts.SyntaxKind.MinusEqualsToken]);
+/** wb-n5xs F1: the TypeScript type-level wrappers G3 reads a counter through, by syntax kind, each with the flag TypeScript
+ * files it under: `as` and an angle-bracket assertion (TypeAssertions), `satisfies` (Satisfies) and the non-null `!`
+ * (NonNullAssertions). The wrapper-kinds row reads these flags against TypeScript's own OuterExpressionKinds.Assertions. */
+const TYPE_WRAPPERS: ReadonlyMap<ts.SyntaxKind, ts.OuterExpressionKinds> = new Map<ts.SyntaxKind, ts.OuterExpressionKinds>([
+  [ts.SyntaxKind.AsExpression, ts.OuterExpressionKinds.TypeAssertions],
+  [ts.SyntaxKind.TypeAssertionExpression, ts.OuterExpressionKinds.TypeAssertions],
+  [ts.SyntaxKind.SatisfiesExpression, ts.OuterExpressionKinds.Satisfies],
+  [ts.SyntaxKind.NonNullExpression, ts.OuterExpressionKinds.NonNullAssertions],
+]);
+/** wb-vh7c F1: the two forms in which the wb-vh7c G3 reading holds a counter (wb-n5xs F1: the wrapper-kinds row plants each
+ * wrapper in both). */
+const COUNTER_FORMS = { compared: "a counter under an equality operator", truth: "a counter read as its truth value" } as const;
 
 interface ConfigShape {
   test?: { exclude?: readonly string[] };
@@ -185,9 +212,14 @@ function relationalBound(node: ts.Node): boolean {
 function landedCount(node: ts.Node): boolean {
   return ts.isForStatement(node) && node.condition !== undefined && conjunction(node.condition) && fixedBound(node.condition);
 }
-/** wb-vh7c F1: `node` with its parentheses removed. */
-function unparenthesized(node: ts.Expression): ts.Expression {
-  return ts.isParenthesizedExpression(node) ? unparenthesized(node.expression) : node;
+/** wb-n5xs F1: true when `node` is one of TYPE_WRAPPERS, read by its syntax kind. */
+function isTypeWrapper(node: ts.Node): node is ts.AsExpression | ts.TypeAssertion | ts.SatisfiesExpression | ts.NonNullExpression {
+  return TYPE_WRAPPERS.has(node.kind);
+}
+/** wb-vh7c F1, wb-n5xs F1: `node` with its parentheses and its TypeScript type-level wrappers (TYPE_WRAPPERS) removed, at
+ * any depth and in any order. */
+function unwrapped(node: ts.Expression): ts.Expression {
+  return ts.isParenthesizedExpression(node) || isTypeWrapper(node) ? unwrapped(node.expression) : node;
 }
 /** wb-vh7c F1: true when `node` is a step, ++ or --, prefix or postfix. */
 function isStep(node: ts.Node): node is ts.PrefixUnaryExpression | ts.PostfixUnaryExpression {
@@ -197,21 +229,22 @@ function isStep(node: ts.Node): node is ts.PrefixUnaryExpression | ts.PostfixUna
 function isCountingAssignment(node: ts.Node): node is ts.BinaryExpression {
   return ts.isBinaryExpression(node) && COUNTING_ASSIGNMENTS.has(node.operatorToken.kind);
 }
-/** wb-vh7c F1: the counters of `loop`, by text: the operand of every step and the target of every counting assignment in
- * its condition, its incrementor or its body. */
+/** wb-vh7c F1, wb-n5xs F1: the counters of `loop`, by the text of their unwrapped operand: the operand of every step and
+ * the target of every counting assignment in its condition, its incrementor or its body. */
 function countersOf(loop: ts.Node, source: ts.SourceFile): Set<string> {
   const found = new Set<string>();
   const visit = (node: ts.Node): void => {
-    if (isStep(node)) found.add(node.operand.getText(source));
-    if (isCountingAssignment(node)) found.add(node.left.getText(source));
+    if (isStep(node)) found.add(unwrapped(node.operand).getText(source));
+    if (isCountingAssignment(node)) found.add(unwrapped(node.left).getText(source));
     ts.forEachChild(node, visit);
   };
   visit(loop);
   return found;
 }
-/** wb-vh7c F1: true when `node`, its parentheses aside, is a step, a counting assignment or one of the loop's counters. */
+/** wb-vh7c F1, wb-n5xs F1: true when `node`, its parentheses and type-level wrappers aside, is a step, a counting
+ * assignment or one of the loop's counters. */
 function readsCounter(node: ts.Expression, counters: ReadonlySet<string>, source: ts.SourceFile): boolean {
-  const bare = unparenthesized(node);
+  const bare = unwrapped(node);
   return isStep(bare) || isCountingAssignment(bare) || counters.has(bare.getText(source));
 }
 /** wb-vh7c F1: how `condition` holds a counter of its loop - under an equality operator anywhere in it, or as an operand
@@ -227,7 +260,7 @@ function counterBound(condition: ts.Expression, counters: ReadonlySet<string>, s
     ts.forEachChild(node, visit);
   };
   visit(condition);
-  return compared ? "a counter under an equality operator" : truth ? "a counter read as its truth value" : undefined;
+  return compared ? COUNTER_FORMS.compared : truth ? COUNTER_FORMS.truth : undefined;
 }
 /** wb-vh7c F1: the form a G3 finding shows `loop` in, around its condition's text. */
 function loopForm(loop: ts.Node, condition: string): string {
@@ -497,6 +530,19 @@ const CONTROLS: Readonly<Record<string, string>> = {
     "async function hostsFixture({}, use: (pids: number[]) => Promise<void>) { await use(hosts); for (const pid of hosts) process.kill(pid); }\nconst hostTest = test.extend({ hosts: hostsFixture });",
   "V2.overrideFixture": 'hostTest.override("hosts", async ({}, { onCleanup }) => { onCleanup(() => { process.kill(host.pid); }); return [host.pid]; });',
   "V2.scopedFixture": "hostTest.scoped({ hosts: async ({}, use) => { await use(hosts); for (const pid of hosts) process.kill(pid); } });",
+  "T1.asTruth": "while (alive() && (n-- as number)) await holdOpen(20);",
+  "T1.satisfiesTruth": "while (alive() && (n-- satisfies number)) await holdOpen(20);",
+  "T1.angleTruth": "while (alive() && <number>n--) await holdOpen(20);",
+  "T1.nonNullTruth": "while (alive() && n!) { n--; await holdOpen(20); }",
+  "T1.wrappedBoth": "while (alive() && n!) { n!--; await holdOpen(20); }",
+  "T1.wrappedStep": "while (alive() && n) { n!--; await holdOpen(20); }",
+  "T1.wrappedAssignment": "while (alive() && left) { left! -= 1; await holdOpen(20); }",
+  "T1.asStepEquality": "while (alive() && (tries++ as number) !== MAX_TRIES) await holdOpen(20);",
+  "T1.asNameEquality": "for (let i = 0; (i as number) !== 150 && alive(); i++) await holdOpen(20);",
+  "T1.nonNullEquality": "for (let i = 0; i! !== 150 && alive(); i++) await holdOpen(20);",
+  "T1.angleEquality": "while (alive() && <number>tries++ !== MAX_TRIES) await holdOpen(20);",
+  "T1.satisfiesEquality": "do { left -= 1; await holdOpen(20); } while ((left satisfies number) !== 0 && alive());",
+  "T1.nestedWrappers": "do { left--; await holdOpen(20); } while (((left as number)!) !== 0 && alive());",
   "N.settledHelper":
     "function stopHosts() { for (const pid of hosts) process.kill(pid); return hosts.map(gone); }\nafterEach(async () => { await reportAfterCleanup(stopHosts(), cleanup); }, HOST_HOOK_TIMEOUT_MS);",
   "N.settledNamed":
@@ -512,6 +558,8 @@ const CONTROLS: Readonly<Record<string, string>> = {
   "N.settledFinished":
     "onTestFinished(async () => { for (const pid of hosts) process.kill(pid); await reportAfterCleanup(hosts.map(gone), cleanup); }, HOST_HOOK_TIMEOUT_MS);",
   "N.quietFixture": "const dataTest = test.extend({ data: async ({}, use) => { await use(await loadData()); } });",
+  "N.wrappedState": 'while (alive() && (state as string) !== "done") { attempts++; await holdOpen(20); }',
+  "N.wrappedFlag": "while (alive() && ready!) { attempts++; await holdOpen(20); }",
 };
 
 /** wb-nqbd F5: each named residual's planted members (`<residual>.<member>`), every one a quiet row the guard reads nothing in. */
@@ -588,6 +636,17 @@ function controlsOf(prefix: string): Record<string, string[]> {
       .map(([id, text]) => [id, readText(`${id}.test.ts`, text).findings.map(finding => `${finding.rule} ${finding.text}`)]),
   );
 }
+/** wb-n5xs F1: the TYPE_WRAPPERS kinds a planted text holds, read as a syntax tree. */
+function wrapperKindsIn(name: string, text: string): Set<ts.SyntaxKind> {
+  const source = ts.createSourceFile(name, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const kinds = new Set<ts.SyntaxKind>();
+  const visit = (node: ts.Node): void => {
+    if (TYPE_WRAPPERS.has(node.kind)) kinds.add(node.kind);
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return kinds;
+}
 /** wb-nqbd F4: each planted table's case records its table once its compare held; the last case reads the record. */
 const COMPARED: string[] = [];
 /** The roster's findings for the planted sites `prefix` names. */
@@ -620,6 +679,10 @@ function headerResiduals(text: string): string[] {
   const header = text.slice(0, text.indexOf("*/"));
   return [...new Set([...header.matchAll(/\bR-[A-Z]+(?:-[A-Z]+)*\b/g)].map(match => match[0]))];
 }
+/** wb-g0yl: the prose of the leading comment of `text`, its comment prefixes dropped and its whitespace collapsed. */
+function headerProse(text: string): string {
+  return text.slice(0, text.indexOf("*/")).replace(/^[ \t]*\/?\*+[ \t]?/gm, "").replace(/\s+/g, " ");
+}
 /** True when `callee` registers a test row: it, test, or a member or table form of either (it.each(...)). */
 function registersTest(callee: ts.Expression): boolean {
   const root = ts.isCallExpression(callee) ? callee.expression : callee;
@@ -650,7 +713,7 @@ describe("wb-maza: the detached-* family keeps its strict timing markers (owner 
     expect(judged.length).toBe(family.length - 1);
   });
 
-  it("pins the members that import the marked twins: the two suites that drive real hosts, and the helper's own unit rows", () => {
+  it("pins the members that import the marked twins: the three suites that drive real hosts, and the helper's own unit rows", ({ task }) => {
     const importers = [...readings].filter(([, reading]) => reading.twins.length > 0).map(([name, reading]) => `${name}:${reading.twins.join("+")}`);
     expect(importers).toEqual([
       "workbench-detached-child-environ.test.ts:launchDetachedMarked",
@@ -658,6 +721,12 @@ describe("wb-maza: the detached-* family keeps its strict timing markers (owner 
       "workbench-detached-socket-base.test.ts:connectDetachedMarked+launchDetachedMarked",
       "workbench-detached-timing.test.ts:connectDetachedMarked+launchDetachedMarked",
     ]);
+    // wb-g0yl (R694 follow-up of wb-ksz landing 534, F3): this row's title and the header count the suites that drive real
+    // hosts - every importer the list pins but the helper's own unit rows - so a suite that joins the list re-counts both.
+    const hosts = importers.filter(entry => !entry.startsWith(`${HELPER_ROWS}:`)).length;
+    const counted = `the ${COUNT_WORDS[hosts] ?? String(hosts)} suites that drive real hosts`;
+    expect(task.name, "this row's title counts the real-host suites the list pins").toContain(counted);
+    expect(headerProse(SELF), "the header counts the real-host suites the list pins").toContain(counted);
   });
 
   it.each(judged)("%s: G1 drives hosts only through the marked twins, never a raw launch or connect value import", name => {
@@ -743,12 +812,15 @@ describe("wb-maza: the detached-* family keeps its strict timing markers (owner 
       "row",
       "row",
       "row",
+      "row",
+      "row",
       "F1:9",
       "F2:6",
       "F3:14",
       "V1:13",
       "V2:15",
-      "N:12",
+      "T1:13",
+      "N:14",
       "R-WAIT-LOOP:3",
       "R-COUNTER-ROUTE:3",
       "R-HOST-ROUTE:4",
@@ -800,7 +872,31 @@ describe("wb-maza: the detached-* family keeps its strict timing markers (owner 
     ).toEqual([...HOOKS].sort());
   });
 
-  it("wb-nqbd and wb-vh7c negative controls: a settled hook (an onTestFinished among them), a hook or a fixture that stops nothing, a loop without && (a countdown among them), a loop whose && joins neither a relational bound nor a counter of its own (an inequality on a state, an equality on a flag while another value counts), text alone and another object's members yield no finding; the controls are the roster's, in order", () => {
+  it("wb-n5xs F1 kill controls: a for, while or do loop whose condition joins with && a counter of the loop read through a TypeScript type-level wrapper (as, an angle-bracket assertion, satisfies or the non-null !, nested too) reads as G3 - as its truth value or under an equality operator, the wrapper around the step itself or around a counter the loop steps, bare or wrapped, in its incrementor or body", () => {
+    expect(controlsOf("T1.")).toStrictEqual(rosterControlsOf("T1."));
+    COMPARED.push("T1");
+  });
+
+  it("wb-n5xs F1 wrapper kinds: the wrappers G3 reads a counter through are exactly TypeScript's own type-level ones (OuterExpressionKinds.Assertions: as and an angle-bracket assertion, satisfies, the non-null !), and a T1 kill control plants each one in both of the reading's forms", () => {
+    expect(
+      [...TYPE_WRAPPERS.values()].reduce((flags, flag) => flags | flag, 0),
+      "the flags of the wrappers G3 reads a counter through, against TypeScript's own type-level outer expressions",
+    ).toBe(ts.OuterExpressionKinds.Assertions);
+    // Each wrapper kind, in each form of the reading: the cells the T1 kill controls plant, read from what each one yields.
+    const planted = new Set(
+      Object.entries(CONTROLS)
+        .filter(([id]) => id.startsWith("T1."))
+        .flatMap(([id, text]) => {
+          const kinds = [...wrapperKindsIn(`${id}.test.ts`, text)];
+          const forms = Object.values(COUNTER_FORMS).filter(form => readText(`${id}.test.ts`, text).findings.some(finding => finding.rule === "G3" && finding.text.includes(`(${form})`)));
+          return kinds.flatMap(kind => forms.map(form => `${ts.SyntaxKind[kind]} | ${form}`));
+        }),
+    );
+    const owed = [...TYPE_WRAPPERS.keys()].flatMap(kind => Object.values(COUNTER_FORMS).map(form => `${ts.SyntaxKind[kind]} | ${form}`));
+    expect(owed.filter(cell => !planted.has(cell)), "a wrapper kind that no T1 kill control plants in one of the reading's two forms").toEqual([]);
+  });
+
+  it("wb-nqbd, wb-vh7c and wb-n5xs negative controls: a settled hook (an onTestFinished among them), a hook or a fixture that stops nothing, a loop without && (a countdown among them), a loop whose && joins neither a relational bound nor a counter of its own (an inequality on a state, an equality on a flag while another value counts, a state or a flag read through a TypeScript wrapper), text alone and another object's members yield no finding; the controls are the roster's, in order", () => {
     expect(controlsOf("N.")).toStrictEqual(rosterControlsOf("N."));
     expect(Object.keys(CONTROLS), "the planted sites are the roster's, in order and both ways").toEqual(Object.keys(ROSTER.controls));
     COMPARED.push("N");

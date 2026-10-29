@@ -493,6 +493,26 @@
    "img",
    "input"
   ],
+  "voidElements": [
+   "area",
+   "base",
+   "basefont",
+   "bgsound",
+   "br",
+   "col",
+   "embed",
+   "frame",
+   "hr",
+   "img",
+   "input",
+   "keygen",
+   "link",
+   "meta",
+   "param",
+   "source",
+   "track",
+   "wbr"
+  ],
   "hiddenElements": [
    "datalist",
    "iframe",
@@ -568,6 +588,75 @@
        },
        "shownTwice": 2,
        "templateCopy": {
+        "labels": 1,
+        "roots": [
+         "~/.skills",
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "detailsCopy": {
+        "labels": 1,
+        "roots": [
+         "~/.skills",
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "hiddenAttributeCopy": {
+        "labels": 1,
+        "roots": [
+         "~/.skills",
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "dialogCopy": {
+        "labels": 1,
+        "roots": [
+         "~/.skills",
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "openDetailsCopy": {
+        "labels": 1,
+        "roots": [
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "summaryLabelCopy": {
+        "labels": 1,
+        "roots": [
+         "~/.skills",
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "nestedSummaryCopy": {
+        "labels": 1,
+        "roots": [
+         "~/.skills",
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "voidHiddenCopy": {
+        "labels": 1,
+        "roots": [
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "templateHiddenCopy": {
+        "labels": 1,
+        "roots": [
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "nestedHiddenCopy": {
         "labels": 1,
         "roots": [
          "~/.skills",
@@ -1694,10 +1783,39 @@
        [],
        [],
        [],
+       [],
+       [],
+       [],
+       [],
        []
       ],
       "control": [
        "served@+1"
+      ],
+      "paired": [
+       [
+        "served@+3"
+       ],
+       [
+        "served@+1"
+       ],
+       [
+        "served@+1"
+       ]
+      ],
+      "readme": [
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ],
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ],
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ]
       ]
      }
     },

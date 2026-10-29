@@ -70,7 +70,9 @@
  *    commit (tracked or untracked, never ignored) equals the filesystem walk (git-ignored files aside) both ways and keeps the
  *    roster's TRACKED FLOOR; every walked file is a markdown page; each page opens with a level-1 heading and each receipt with its
  *    rule-15 first line; the same call judges a planted page after the live ones and the findings are exactly the plant's; each leg
- *    reads at least 4000 sentences - A2 the citation reader, A3 the carrier on the rendered view (what a reader plainly sees
+ *    reads at least SENTENCE_FLOOR (4000) sentences; and each structural arm - both ways, the tracked and directory floors, the
+ *    markdown check, the opening lines and the sentence floor - reads its own plant in a scratch git repository (THE ARM
+ *    PLANTS) - A2 the citation reader, A3 the carrier on the rendered view (what a reader plainly sees
  *    qualifies; a comment, a link title, alt text, struck text, an element's content or an HTML block does not; a status in another
  *    sentence, block, row or list item does not), A4 the first status literal, A5 the second. B, the number duty: B1 the number
  *    reader, B2 the synthetic label, B3 the receipt. C, the live-coordination duty: C1 its scope, C2 its claim and guard words. D, the
@@ -86,6 +88,15 @@
  *    each directory holding a tracked file of its own (docs/workbench, docs/workbench/receipts); A1 holds that the walk keeps at least
  *    that many files and, of each measured directory still on disk, a file of its own. Floors, never equalities: an added page never
  *    reds them, and a cut that deletes pages re-measures walkFloor in the same commit.
+ * THE ARM PLANTS (wb-59u1 F2). Each of A1's six arms is one function that the live walk and a scratch git repository
+ *    (test/helpers/scratch.ts, leak guard installed) read alike, and A1 holds each arm's reading of its own plant: BOTH WAYS a page
+ *    below a plain .git directory (walked, never listed by git) and an untracked symlink page (listed by git, never a walked file);
+ *    TRACKED FLOOR the scratch's own count read against itself (quiet) and against one more (short); DIRECTORY FLOOR a measured
+ *    directory absent from disk (quiet) and present but empty (unwalked); MARKDOWN a .txt page; OPENING LINES a page without a
+ *    level-1 heading and a receipt whose first line is not its bead's, beside a good page and a good receipt; SENTENCE FLOOR a page
+ *    one sentence short of SENTENCE_FLOOR in each leg (short) and the same page read with a one-sentence plant (quiet). So an arm
+ *    hollowed in this file - an empty both-ways list, a floor compared with 0, an emptied directory list, a hollowed heading, receipt
+ *    or markdown check - reds A1 although the live tree still passes it.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and pins,
  *    every pin's witness, the constants and every registered test title - is held to the out-of-file roster
  *    (test/fixtures/mw-gp-citation-status-roster.json). RECORD: each pin's case records how many assertions its own case made and
@@ -97,16 +108,21 @@
  *    status literals are the statement's two quotes at their pinned sources; the program's name, the shorthand, GP, live,
  *    coordination and 'synthetic' are the statement's or the shape's words; REQUIREMENT_ID is the title's id family; the slug is the
  *    filed source path's; the producer block's lines carry the filed quotes and both literals, and its two document titles carry the
- *    program's name and the two subtitles; the filing pin is the filed measurement's tree. The last case reads the vitest task tree
- *    (every registered test, in roster order, in run mode, ran before it) and the reached record.
- * NOT CLAIMED (edits of this file and the roster together): a residual row removed from ROWS, the literal, IMPL, RESIDUALS and the
- *    roster (no outside anchor names the residual families); a control, plant or probe removed or edited in IMPL and the roster
- *    together while every remaining one holds; a pin folded into a neighbour where neither quote carries a quoted element (the bead
+ *    program's name and the two subtitles; the filing pin is the filed measurement's tree; and the residual families (wb-59u1 F3)
+ *    are held to the bead's landed record as floors - every quiet row its delivery record names ("Residual families Q1-Q13 have
+ *    quiet rows", the first match) is a Q pin and a residual's quiet row, RESIDUALS keeps at least the family count its gate verdict
+ *    names ("13 named families, each with a pinned quiet row Q1-Q13", the first match), and the two ranges agree. The last case
+ *    reads the vitest task tree (every registered test, in roster order, in run mode, ran before it) and the reached record.
+ * NOT CLAIMED (edits of this file and the roster together): a residual family renamed, or two families' quiet rows exchanged (the
+ *    landed record names the quiet rows and the family count, never a family's name or which row is its own); a residual added
+ *    after the landed record (the floors bound only Q1-Q13); a control, plant or probe removed or edited in IMPL and the roster
+ *    together while every remaining one holds; a live arm's reading in A1 replaced by its expected empty list (THE ARM PLANTS hold
+ *    each arm's function, not the live call that reads the tree through it); a pin folded into a neighbour where neither quote carries a quoted element (the bead
  *    text anchors each clause and its quoted elements, not the boundary between two unquoted parts); a seat-added vocabulary member
  *    (the joiners, MW and GraphPolicy, production and deployed, schedul-, assign-, dispatch- and orchestrat-, the GUARD, GUARD_AFTER
  *    and negation words, the NUMBER and WORD_BREAK shapes, the RECEIPT form, the NAMED_REFERENCES) removed with every control naming
  *    it in IMPL and the roster together (only the bead text's words are anchored outside); walkFloor lowered in the roster; the
- *    outside-anchor case or the last case removed with its roster title.
+ *    outside-anchor case (or one of its readings) or the last case removed or hollowed with its roster title.
  * RESIDUALS (named, each with its pinned quiet row): R-SCOPE only docs/workbench is judged - README.md, CHANGELOG.md, AGENTS.md,
  *    docs/ outside docs/workbench, src, qa and test are not (Q1); R-REQUIREMENT-ID a sentence whose only matches sit in a
  *    requirement-id spelling does not cite (Q2); R-PARAPHRASE-CITE a citation spelling none of the program's spellings ("the MW
@@ -125,12 +141,23 @@
  *    comment, a link destination) owes its literals in its source sentence although no reader sees it; only a Forge command id reads
  *    as a receipt; "live coordination stays classical" reads as a live claim; a status literal no reader plainly sees (struck, alt
  *    text, an element or an HTML block) also reads as a live claim, its own "not" unread.
+ * FOLLOW-UP wb-59u1 (R694, from the landing-539 gate cmd_16612b21a6cb PASS-WITH-FINDING; F1 leads, F2 and F3 ride):
+ *  F1 B3 reads its receipt on the plain text, and now holds B2's three counterparts: a struck receipt, a receipt inside a hidden
+ *    element and a receipt in a comment each label nothing in the rendered leg (a reader does not plainly see it) while the raw
+ *    leg reads it, so RECEIPT tested on the seen text instead of the plain (the gate's P05, 30/30 green on the landed census) reds
+ *    the struck and element controls.
+ *  F2 THE ARM PLANTS above: the gate's P11 (empty both-ways lists), P12 (tracked floor compared with 0), P13 (directory list
+ *    emptied), P14 (sentence floor compared with 0) and P17 (page heading check hollowed) each survived 30/30 on the landed census;
+ *    the markdown arm and the receipt half of the opening-line arm get their plants too.
+ *  F3 the residual families' anchor outside this file and the roster (OUTSIDE ANCHORS above): the bead's export row carries the
+ *    landed delivery record and gate verdict, so a residual removed from ROWS, the literal, IMPL, RESIDUALS and the roster together
+ *    (CT6 on Q13, 29/29 green on the landed census) reds against text no census cut edits.
  * SCOPE: the judges read words, not meaning. Display paths added: none (test-only; docs/workbench is read, never edited). Scratch:
- *    D2 and D3 compose makeScratch/removeScratch with the leak guard installed; docs, .beads and the roster are otherwise only read,
- *    and the census reads no git history (the filing pin is the seat's measurement, held in the roster).
+ *    A1's arm plants, D2 and D3 compose makeScratch/removeScratch with the leak guard installed; docs, .beads and the roster are
+ *    otherwise only read, and the census reads no git history (the filing pin is the seat's measurement, held in the roster).
  */
 import { execFileSync, spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { marked, type Token, type Tokens } from "marked";
@@ -149,6 +176,8 @@ const EXPORT = ".beads/issues.jsonl";
 /** The judged scope: every file git would commit below docs/workbench (its pages and docs/workbench/receipts). */
 const SCOPE_ROOT = "docs/workbench";
 const RECEIPTS = "docs/workbench/receipts/";
+/** A1's sentence floor: each leg of the live walk reads at least this many sentences. */
+const SENTENCE_FLOOR = 4000;
 
 const cp = (...points: number[]): string => String.fromCodePoint(...points);
 const TIMES = cp(0xd7);
@@ -756,6 +785,33 @@ function readScope(root: string, plants: readonly FileText[], bound: readonly st
   return { files, ...judgeFiles([...files.map(path => ({ path, text: readFileSync(join(root, path), "utf8") })), ...plants], bound) };
 }
 
+// ---- A1's arms: each reads one root's walk (the live repository, or a scratch plant) and lists what breaks it ----
+
+/** The tracked floor: what git would commit keeps at least the floor's count (the shortfall, or nothing). */
+function trackedShort(files: readonly string[], floor: WalkFloor): string[] {
+  return files.length >= floor.tracked ? [] : [`${files.length} < ${floor.tracked}`];
+}
+/** The directory floor: each measured directory still on disk under the root keeps a walked file of its own (those that do not). */
+function unwalkedDirectories(root: string, files: readonly string[], floor: WalkFloor): string[] {
+  return floor.directories.filter(directory => existsSync(join(root, directory)) && !files.some(path => dirname(path) === directory));
+}
+/** Every walked file is a markdown page (those that are not). */
+function notMarkdown(files: readonly string[]): string[] {
+  return files.filter(path => !path.endsWith(".md"));
+}
+/** Every page under the root opens with a level-1 heading and every receipt with its rule-15 first line '# <bead>: ' (those that do not). */
+function openingMisses(root: string, files: readonly string[]): string[] {
+  return files.filter(path => {
+    const first = readFileSync(join(root, path), "utf8").split("\n")[0] ?? "";
+    if (!path.startsWith(RECEIPTS)) return !first.startsWith("# ");
+    return !first.startsWith(`# ${(path.split("/").pop() ?? "").replace(/\.md$/, "")}: `);
+  });
+}
+/** The sentence floor: each leg reads at least SENTENCE_FLOOR sentences (each leg that does not, with its count). */
+function sentenceShort(sentences: Judgement["sentences"]): string[] {
+  return (["raw", "rendered"] as const).filter(leg => sentences[leg] < SENTENCE_FLOOR).map(leg => `${leg} ${sentences[leg]} < ${SENTENCE_FLOOR}`);
+}
+
 // ---- the plants, the controls and the probes ----
 
 const [S1, S2] = STATUS.map(status => status.literal) as [string, string];
@@ -805,8 +861,8 @@ function probeOf(witness: JsonValue): { path: string; text: string; causes: Json
   if (!isObject(witness) || typeof witness.path !== "string" || typeof witness.text !== "string" || !Array.isArray(witness.causes)) return undefined;
   return { path: witness.path, text: witness.text, causes: witness.causes };
 }
-/** Builds a scratch git repository holding the files, lists them through readScope's own git listing and judges them. */
-function scratchScope(prefix: string, files: readonly FileText[], bound: readonly string[]): Judgement & { files: readonly string[] } {
+/** A scratch git repository holding the files (written, then git init and git add -A), handed to `read` and removed afterwards. */
+function inScratchRepo<T>(prefix: string, files: readonly FileText[], read: (root: string) => T): T {
   const root = makeScratch(prefix);
   try {
     for (const file of files) {
@@ -815,10 +871,58 @@ function scratchScope(prefix: string, files: readonly FileText[], bound: readonl
     }
     execFileSync("git", ["init", "-q"], { cwd: root });
     execFileSync("git", ["add", "-A"], { cwd: root });
-    return readScope(root, [], bound);
+    return read(root);
   } finally {
     removeScratch(root);
   }
+}
+/** Builds a scratch git repository holding the files, lists them through readScope's own git listing and judges them. */
+function scratchScope(prefix: string, files: readonly FileText[], bound: readonly string[]): Judgement & { files: readonly string[] } {
+  return inScratchRepo(prefix, files, root => readScope(root, [], bound));
+}
+/** Each of A1's arms read over a scratch git repository planted to break it, beside its quiet twin where the arm has a boundary (THE ARM PLANTS). */
+interface ArmPlants {
+  readonly bothWays: { readonly walkOnly: readonly string[]; readonly gitOnly: readonly string[] };
+  readonly trackedFloor: { readonly atCount: readonly string[]; readonly oneMore: readonly string[] };
+  readonly directoryFloor: { readonly absent: readonly string[]; readonly empty: readonly string[] };
+  readonly markdownOnly: readonly string[];
+  readonly openingLines: readonly string[];
+  readonly sentenceFloor: { readonly short: readonly string[]; readonly atFloor: readonly string[] };
+}
+function armPlants(): ArmPlants {
+  const page: FileText = { path: "docs/workbench/a.md", text: "# A\n\nThe page.\n" };
+  const receipt: FileText = { path: "docs/workbench/receipts/wb-a.md", text: "# wb-a: a\n\nThe receipt.\n" };
+  const belowGitDirectory: FileText = { path: "docs/workbench/plain/.git/page.md", text: "# Below a plain .git directory\n" };
+  const bothWays = inScratchRepo("wb-59u1-both-ways-", [page, belowGitDirectory], root => {
+    symlinkSync("a.md", join(root, "docs/workbench/link.md"));
+    const scan = scanOf(root);
+    return { walkOnly: scan.walkOnly, gitOnly: scan.gitOnly };
+  });
+  const trackedFloor = inScratchRepo("wb-59u1-tracked-", [page, receipt], root => {
+    const files = gitList(root);
+    return {
+      atCount: trackedShort(files, { ...ROSTER.walkFloor, tracked: files.length }),
+      oneMore: trackedShort(files, { ...ROSTER.walkFloor, tracked: files.length + 1 }),
+    };
+  });
+  const directoryFloor = inScratchRepo("wb-59u1-directory-", [page], root => {
+    const absent = unwalkedDirectories(root, gitList(root), ROSTER.walkFloor);
+    mkdirSync(join(root, RECEIPTS));
+    return { absent, empty: unwalkedDirectories(root, gitList(root), ROSTER.walkFloor) };
+  });
+  const markdownOnly = inScratchRepo("wb-59u1-markdown-", [page, { path: "docs/workbench/notes.txt", text: "# Notes\n" }], root => notMarkdown(gitList(root)));
+  const openingLines = inScratchRepo(
+    "wb-59u1-opening-",
+    [page, receipt, { path: "docs/workbench/b.md", text: "A page without a heading.\n" }, { path: "docs/workbench/receipts/wb-b.md", text: "# wrong title\n" }],
+    root => openingMisses(root, gitList(root)),
+  );
+  // A heading and SENTENCE_FLOOR - 2 sentences: one short of the floor in each leg, and at it with a one-sentence plant.
+  const sentences = Array.from({ length: SENTENCE_FLOOR - 2 }, () => "S.").join(" ");
+  const sentenceFloor = inScratchRepo("wb-59u1-sentences-", [{ path: "docs/workbench/s.md", text: `# S\n\n${sentences}\n` }], root => ({
+    short: sentenceShort(readScope(root, [], BOUND).sentences),
+    atFloor: sentenceShort(readScope(root, [{ path: "docs/workbench/zz-s.md", text: "S.\n" }], BOUND).sentences),
+  }));
+  return { bothWays, trackedFloor, directoryFloor, markdownOnly, openingLines, sentenceFloor };
 }
 /** A text's citing sentences in both legs, as BOUND would hold them. */
 function citingForms(path: string, text: string): string[] {
@@ -841,25 +945,44 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       gitOnly: [],
     });
     const floor = ROSTER.walkFloor;
-    expect(scan.files.length, `the tracked floor: ${floor.tracked} files at ${floor.measuredAt}`).toBeGreaterThanOrEqual(floor.tracked);
-    const unwalked = floor.directories.filter(directory => existsSync(join(REPO, directory)) && !scan.files.some(path => dirname(path) === directory));
-    expect(unwalked, "every measured directory still on disk keeps a walked file of its own").toEqual([]);
-    expect(
-      scan.files.filter(path => !path.endsWith(".md")),
-      "every walked file is a markdown page",
-    ).toEqual([]);
-    const misses = scan.files.filter(path => {
-      const first = textOf(path).split("\n")[0] ?? "";
-      if (!path.startsWith(RECEIPTS)) return !first.startsWith("# ");
-      return !first.startsWith(`# ${(path.split("/").pop() ?? "").replace(/\.md$/, "")}: `);
-    });
-    expect(misses, "every page opens with a level-1 heading, every receipt with its rule-15 first line '# <bead>: '").toEqual([]);
+    expect(trackedShort(scan.files, floor), `the tracked floor: ${floor.tracked} files at ${floor.measuredAt}`).toEqual([]);
+    expect(unwalkedDirectories(REPO, scan.files, floor), "every measured directory still on disk keeps a walked file of its own").toEqual([]);
+    expect(notMarkdown(scan.files), "every walked file is a markdown page").toEqual([]);
+    expect(openingMisses(REPO, scan.files), "every page opens with a level-1 heading, every receipt with its rule-15 first line '# <bead>: '").toEqual([]);
     const reading = readScope(REPO, [PLANT], BOUND);
     expect(reading.files, "readScope reads git's list").toEqual(scan.files);
     const plantFindings = reading.findings.filter(finding => finding.startsWith(`${PLANT.path}:`));
     expect(reading.findings, "the only findings are the plant's: no live sentence breaks a duty in either leg").toEqual(plantFindings);
-    expect(reading.sentences.raw >= 4000 && reading.sentences.rendered >= 4000, "both legs read the pages (sentence floor 4000 each)").toBe(true);
-    return json({ root: SCOPE_ROOT, walkIsGit: true, floor: { tracked: floor.tracked, directories: floor.directories }, markdownOnly: true, openingLines: true, plantFindings });
+    expect(sentenceShort(reading.sentences), `both legs read the pages (sentence floor ${SENTENCE_FLOOR} each)`).toEqual([]);
+    // THE ARM PLANTS (wb-59u1 F2): each arm above, read through the same function over a scratch repository planted to break it.
+    const plants = armPlants();
+    expect(plants.bothWays, "both ways: a page below a plain .git directory is walked, never listed; an untracked symlink page is listed, never walked").toEqual({
+      walkOnly: ["docs/workbench/plain/.git/page.md"],
+      gitOnly: ["docs/workbench/link.md"],
+    });
+    expect(plants.trackedFloor, "the tracked floor: quiet at the scratch's own count, short against one more").toEqual({ atCount: [], oneMore: ["2 < 3"] });
+    expect(plants.directoryFloor, "the directory floor: a measured directory absent from disk is quiet; present but empty, it is unwalked").toEqual({
+      absent: [],
+      empty: ["docs/workbench/receipts"],
+    });
+    expect(plants.markdownOnly, "the markdown arm: a .txt page is not a markdown page").toEqual(["docs/workbench/notes.txt"]);
+    expect(plants.openingLines, "the opening lines: a page without a level-1 heading, a receipt whose first line is not its bead's").toEqual([
+      "docs/workbench/b.md",
+      "docs/workbench/receipts/wb-b.md",
+    ]);
+    expect(plants.sentenceFloor, "the sentence floor: one sentence short in each leg, quiet at the floor").toEqual({
+      short: ["raw 3999 < 4000", "rendered 3999 < 4000"],
+      atFloor: [],
+    });
+    return json({
+      root: SCOPE_ROOT,
+      walkIsGit: true,
+      floor: { tracked: floor.tracked, directories: floor.directories },
+      markdownOnly: true,
+      openingLines: true,
+      plantFindings,
+      armPlants: json(plants),
+    });
   },
   A2: () => {
     const controls: Control[] = [
@@ -1006,6 +1129,10 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "upper", text: `${QC}: GP regret 0.12 (cmd_0123456789AB).`, causes: UNLABELLED },
       { id: "other-sentence", text: `${QC}: GP regret 0.12. Receipt cmd_0123456789ab.`, causes: UNLABELLED },
       { id: "link-target", text: `${QC}: GP regret 0.12 ([receipt](https://example.invalid/cmd_0123456789ab)).`, causes: ["rendered:unlabelled-number"] },
+      // B2's counterparts (wb-59u1 F1): a receipt no reader plainly sees labels nothing in the rendered leg, while the raw leg reads it.
+      { id: "struck", text: `${QC}: GP regret 0.12 (~~cmd_0123456789ab~~).`, causes: ["rendered:unlabelled-number"] },
+      { id: "element", text: `${QC}: GP regret 0.12 (<span hidden>cmd_0123456789ab</span>).`, causes: ["rendered:unlabelled-number"] },
+      { id: "comment", text: `${QC}: GP regret 0.12 <!-- cmd_0123456789ab -->.`, causes: ["rendered:unlabelled-number"] },
     ];
     return json({ receipt: RECEIPT.source, controls: controlsHold(controls) });
   },
@@ -1125,6 +1252,7 @@ function constants(): JsonValue {
   return json({
     scope: SCOPE_ROOT,
     receipts: RECEIPTS,
+    sentenceFloor: SENTENCE_FLOOR,
     status: STATUS,
     slug: SLUG,
     subtitles: SUBTITLES,
@@ -1209,7 +1337,7 @@ describe("wb-e66.6 MW x GP coordination citation-status census (MW-GRAPH-POLICY-
     ).toEqual(elements.map(word => `${word}: ${(named.get(word) ?? ["-"]).length === 1 ? (named.get(word) ?? []).join(",") : "not one"}`));
   });
 
-  it("the outside anchors: the bead's own row binds the rows, the pin quotes, the status literals, the spellings and the vocabulary; the producer block carries the program's lines", () => {
+  it("the outside anchors: the bead's own row binds the rows, the pin quotes, the status literals, the spellings, the vocabulary and the residual families' quiet rows; the producer block carries the program's lines", () => {
     const { title, notes } = beadRow();
     expect(title.length > 0 && notes.length > 0, `${BEAD}'s row was read from the tracker export`).toBe(true);
     const id = /^\[([A-Z-]+-R\d+)\] /.exec(title)?.[1] ?? "-";
@@ -1234,6 +1362,22 @@ describe("wb-e66.6 MW x GP coordination citation-status census (MW-GRAPH-POLICY-
     expect(COORDINATION.test(c ?? "-"), "COORDINATION reads the statement's coordination").toBe(true);
     expect(quotedWords(ROWS[3]?.label ?? "-"), "the label word is the acceptance shape's quote").toEqual(["synthetic"]);
     expect(SYNTHETIC.source.includes("synthetic"), "SYNTHETIC reads it").toBe(true);
+    // The residual families (wb-59u1 F3), held as floors to the landed record outside this file and the roster: the quiet rows
+    // the delivery record names and the family count the gate verdict names, each its first match (later notes append after it).
+    const recorded = /Residual families Q1-Q(\d+) have quiet rows/.exec(notes);
+    const verdict = /\((\d+) named families, each with a pinned quiet row Q1-Q(\d+);/.exec(notes);
+    expect(recorded !== null && verdict !== null, `${BEAD}'s delivery record and gate verdict name the residual families' quiet rows`).toBe(true);
+    expect(verdict?.[2], "the gate verdict's quiet rows are the delivery record's").toBe(recorded?.[1]);
+    const quietRows = Array.from({ length: Number(recorded?.[1] ?? 0) }, (_, at) => `Q${at + 1}`);
+    const qPins = ROWS.find(row => row.id === "Q")?.pins ?? [];
+    const residualRows = Object.values(RESIDUALS).flat();
+    expect(
+      quietRows.filter(pin => !qPins.includes(pin) || !residualRows.includes(pin)),
+      "every quiet row the landed record names is still a Q pin and a residual's quiet row (a floor)",
+    ).toEqual([]);
+    expect(Object.keys(RESIDUALS).length, "RESIDUALS keeps at least the family count the gate verdict names (a floor)").toBeGreaterThanOrEqual(
+      Number(verdict?.[1] ?? Number.POSITIVE_INFINITY),
+    );
     const source = /Source: (docs\/programs\/(graph-policy-coordination)-\d{4}-\d{2}-\d{2}\.md):3 \('([^']+)'\)/.exec(notes);
     expect(source?.[2], "the slug is the filed source path's").toBe(SLUG);
     const mw = ROSTER.producer.mw;
