@@ -254,7 +254,13 @@
    "Q-NEEDLE-TEMPLATE",
    "Q-NEEDLE-REGEX",
    "Q-NEEDLE-COMMENT",
-   "Q-NEEDLE-JSDOC"
+   "Q-NEEDLE-JSDOC",
+   "Q-NEEDLE-JSX-TEXT",
+   "Q-NEEDLE-JSX-STRING",
+   "Q-NEEDLE-CASE",
+   "Q-NEEDLE-TYPEOF",
+   "Q-NEEDLE-ATTRIBUTE-KEY",
+   "Q-NEEDLE-SHEBANG"
   ],
   "R-CASED": [
    "Q-CASED"
@@ -264,13 +270,22 @@
   ],
   "R-COMPOSED": [
    "Q-COMPOSED",
-   "Q-COMPOSED-TYPE"
+   "Q-COMPOSED-TYPE",
+   "Q-COMPOSED-HEAD"
   ],
   "R-TYPE-FLOW": [
    "Q-FLOW-BINDING",
    "Q-FLOW-ALIAS",
    "Q-FLOW-EXPRESSION",
-   "Q-FLOW-TYPE"
+   "Q-FLOW-TYPE",
+   "Q-FLOW-AWAIT",
+   "Q-FLOW-RAW"
+  ],
+  "R-UNDECODED": [
+   "Q-UNDECODED-UTF16LE",
+   "Q-UNDECODED-UTF16BE",
+   "Q-UNDECODED-UTF32LE-BOM",
+   "Q-UNDECODED-UTF8-BEHIND-UTF16LE-BOM"
   ],
   "R-EMBEDDED": [
    "Q-EMBEDDED"
@@ -413,20 +428,38 @@
     "Q-NEEDLE-REGEX": false,
     "Q-NEEDLE-COMMENT": false,
     "Q-NEEDLE-JSDOC": false,
+    "Q-NEEDLE-JSX-TEXT": false,
+    "Q-NEEDLE-JSX-STRING": false,
+    "Q-NEEDLE-CASE": false,
+    "Q-NEEDLE-TYPEOF": false,
+    "Q-NEEDLE-ATTRIBUTE-KEY": false,
+    "Q-NEEDLE-SHEBANG": false,
     "Q-CASED": false,
     "Q-AFFIXED": false,
     "Q-COMPOSED": false,
     "Q-COMPOSED-TYPE": false,
+    "Q-COMPOSED-HEAD": false,
     "Q-FLOW-BINDING": false,
     "Q-FLOW-ALIAS": false,
     "Q-FLOW-EXPRESSION": false,
     "Q-FLOW-TYPE": false,
+    "Q-FLOW-AWAIT": false,
+    "Q-FLOW-RAW": false,
     "Q-EMBEDDED": false,
     "Q-REEXPORT": false,
     "Q-COMPOSITION": false,
     "Q-SHIPPED-HOOKS": false,
     "Q-AMENDMENT": false,
-    "Q-OWN-RENDER": false
+    "Q-OWN-RENDER": false,
+    "P-DECODE-UTF8": true,
+    "P-DECODE-UTF8-BOM": true,
+    "P-DECODE-UTF16LE-BOM": true,
+    "P-DECODE-UTF16BE-BOM": true,
+    "Q-UNDECODED-UTF16LE": false,
+    "Q-UNDECODED-UTF16BE": false,
+    "Q-UNDECODED-UTF32LE-BOM": false,
+    "Q-UNDECODED-UTF8-BEHIND-UTF16LE-BOM": false,
+    "P-DECODE-AS-HOST": true
    }
   },
   "A2": {
@@ -442,6 +475,7 @@
     "P-MODULE-KINDS": true,
     "P-NESTED-SKIPPED-NAME": true,
     "P-ROOT-MODULE": true,
+    "P-NAME-NOT-UTF8": true,
     "Q-OUTSIDE": false,
     "Q-NONMODULE": false
    }
@@ -531,7 +565,9 @@
     "P-ADOPTION": true,
     "N-NO-ADOPTION": false,
     "P-ARMS-ON-EVERY-READ": true,
-    "N-ARMS-ON-A-RESIDUAL": false
+    "N-ARMS-ON-A-RESIDUAL": false,
+    "P-ARMS-ON-EVERY-DECODING": true,
+    "N-ARMS-ON-AN-UNDECODED": false
    }
   },
   "B2": {
@@ -558,7 +594,9 @@
     "P-ADOPTION": true,
     "N-NO-ADOPTION": false,
     "P-ARMS-ON-EVERY-READ": true,
-    "N-ARMS-ON-A-RESIDUAL": false
+    "N-ARMS-ON-A-RESIDUAL": false,
+    "P-ARMS-ON-EVERY-DECODING": true,
+    "N-ARMS-ON-AN-UNDECODED": false
    }
   },
   "C1": {
@@ -574,7 +612,9 @@
     "P-ADOPTION": true,
     "N-NO-ADOPTION": false,
     "P-ARMS-ON-EVERY-READ": true,
-    "N-ARMS-ON-A-RESIDUAL": false
+    "N-ARMS-ON-A-RESIDUAL": false,
+    "P-ARMS-ON-EVERY-DECODING": true,
+    "N-ARMS-ON-AN-UNDECODED": false
    }
   }
  },

@@ -27,8 +27,14 @@
  * holds JSX and that no module loads the TSX SDK, so this census pins only what this bead adds: the proposed family's names and
  * the duties the filing arms. The trigger has not fired; acceptance (a) and (b) are owed by the cut that adopts. Rows:
  *  A the trigger (the title's If-clause), absent today. A1 no walked module spells one of the nineteen (read off the roster's
- *    copies of :11 and :13) in a read position. The judge is a parse by the TypeScript compiler under the module's own script
- *    kind, never a type check, and its read positions are exactly these, each with P- controls: (i) an identifier in any
+ *    copies of :11 and :13) in a read position. Each module's text is the text the compiler reads it as: the judge reads it
+ *    through ts.sys.readFile, the reader the compiler host's getSourceFile reads every module with, so a UTF-16BE (FE FF),
+ *    UTF-16LE (FF FE) or UTF-8 (EF BB BF) byte-order mark is decoded and dropped and any other bytes read as UTF-8. DECODINGS
+ *    names those four decodings, each a P- control (P-DECODE-*): the planted adoption, written in that encoding to the one
+ *    module of a scratch tree, reads through the live tree's own reader (readTree) as exactly the adoption's text and findings,
+ *    and P-DECODE-AS-HOST holds every planted module's text to the text the compiler host's getSourceFile reads, an anchor
+ *    outside this file. The judge is a parse by the TypeScript compiler under the module's own script kind, never a type
+ *    check, and its read positions are exactly these, each with P- controls: (i) an identifier in any
  *    position, escapes decoded by the compiler (an import or export specifier, a declaration, a reference, a property access, a
  *    JSX tag, attribute or namespaced name, a binding pattern, a type reference or qualified name, a label), or a private name;
  *    (ii) a quoted name: a property, method, accessor, signature or enum member's, a binding pattern property's (in a variable,
@@ -43,14 +49,18 @@
  *    witness holds the positions the P- plants reach. A spelling in no read position is never a finding: each such form is a
  *    named residual below. Planted leg: the same judge over the live readings plus one planted component reads exactly the
  *    plant's findings. A2 the walk read every module git lists (the listing is taken before the walk; a file or directory gone
- *    since is skipped) above its floor, the rf provider and this file among them, and met no symlink and no failed read. A3 the
+ *    since is skipped) above its floor, the rf provider and this file among them, and met no symlink and no failed read. An
+ *    entry whose name is not UTF-8 is a failed read (its name decodes lossily, so neither the walk nor the compiler can open it
+ *    by that name: P-NAME-NOT-UTF8), and so is a module the compiler's reader reads no text from. A3 the
  *    producer gate reads closed over the roster's measured facts: no src/ or python/ site, no site in a published file and no
  *    export key beyond the measured six at any revision; each opening fact, planted alone, reads open.
  *  B acceptance (a), armed at adoption. B1 the title's five forbidden acts in render, each traced to its :17 phrase; B2 the title's
  *    three useSpeculation callbacks, each traced to :19. Both arm on A1's judge and on nothing else: a tree A1 reads as naming the
- *    family arms them (each of A1's P- plants, planted alone, arms them: P-ARMS-ON-EVERY-READ) and a tree it reads as naming
- *    nothing leaves them disarmed (no quiet row arms them: N-ARMS-ON-A-RESIDUAL), so A1's residuals are theirs too. Each reads
- *    disarmed over the live tree (A1's live reading names nothing) and, armed, owes one falsifier per act.
+ *    family arms them (each of A1's P- plants, planted alone, arms them: P-ARMS-ON-EVERY-READ; so does the adoption in each of
+ *    DECODINGS' encodings, read through readTree: P-ARMS-ON-EVERY-DECODING) and a tree it reads as naming nothing leaves them
+ *    disarmed (no quiet row arms them: N-ARMS-ON-A-RESIDUAL; no undecoded module arms them: N-ARMS-ON-AN-UNDECODED), so A1's
+ *    residuals are theirs too. Each reads disarmed over the live tree (A1's live reading names nothing) and, armed, owes one
+ *    falsifier per act.
  *  C acceptance (b), armed at adoption on the same judge. C1 the title's unmount duty and the acceptance's unmount case, traced to
  *    :19; disarmed today, owed once A1's judge reads an adoption.
  * NOT CLAIMED: the title's third duty (promotion declares demand, never guaranteeing scheduling or reuse): the acceptance owes no
@@ -61,6 +71,8 @@
  *   here together stays green, because the vendored copy is its only anchor. Row A's pin set (A1, A2, A3) is held to this file and
  *   the roster only, so a pin of row A removed from every literal of both stays green. The row states: ROW_STATE is held to the
  *   roster's rowStates, so a state rewritten here alone reds, but one rewritten here and in the roster together stays green.
+ *   The encoding set: DECODINGS and R-UNDECODED's encodings are held to this file and the roster (each member's text is held to
+ *   the compiler host's, P-DECODE-AS-HOST), so an encoding removed from every literal of both together stays green.
  * OUTSIDE ANCHORS (the judged-set case): the owner filing's row in the tracked bead export (row wb-km7q.5: its title, and its first
  *   line opening "Citations: ", so appended notes are safe). The trigger is row A's label; the acceptance, split at " plus ", is row
  *   B's and row C's labels; the title's four duties (split at "; ") are DUTIES, and DUTIES' pins are derived from them (a duty that
@@ -73,13 +85,19 @@
  *   control (a closed or disarmed reading) read false.
  * RESIDUALS (named families, each with pinned quiet rows in the roster): R-NEEDLE a name in a string or template literal, a value or
  *   a literal type, in no read position (a call argument such as a reflective key, an initializer, a type annotation, a module
- *   specifier), a regular expression or a comment (JSDoc included: the judge never visits JSDoc, though a JS module's checker
- *   reads its types); R-CASED another casing; R-AFFIXED a longer identifier holding a name; R-COMPOSED a name assembled from parts
- *   (a `+` concatenation, a template expression or a template literal type with substitutions); R-TYPE-FLOW a name that reaches a
- *   key position only through what a type check evaluates (a binding, a type alias, a type parameter's constraint or default, a
- *   call's result, a comma, conditional or logical expression, a conditional or tuple type): the judge reads spellings, never
- *   types; R-EMBEDDED component source held in a literal (wb-o4h0.4's A3 collects the TSX module names censuses plant); R-SDK-LOAD
- *   a name reached through the SDK without spelling it, such as a re-export (wb-o4h0.4's A2 refuses every SDK load);
+ *   specifier, a case label, a typeof operand, a quoted import attribute key), JSX text or a JSX attribute string, a regular
+ *   expression, a comment (JSDoc included: the judge never visits JSDoc, though a JS module's checker reads its types) or a
+ *   shebang line; R-CASED another casing; R-AFFIXED a longer identifier holding a name; R-COMPOSED a name assembled from parts
+ *   (a `+` concatenation, a template expression, a head that holds the whole name included, or a template literal type with
+ *   substitutions); R-TYPE-FLOW a name that reaches a key position only through what a type check evaluates (a binding, a type
+ *   alias, a type parameter's constraint or default, a call's result, a tagged template's such as String.raw's included, an
+ *   awaited operand, a comma, conditional or logical expression, a conditional or tuple type): the judge reads spellings, never
+ *   types; R-UNDECODED a name held only in bytes the compiler's reader does not decode to it (such as UTF-16 without a
+ *   byte-order mark, UTF-32, whose FF FE 00 00 mark the reader takes for UTF-16LE's, EBCDIC, or UTF-8 bytes behind a UTF-16
+ *   mark): the compiler reads such a module as other text, and the judge reads that same text (an ASCII-compatible encoding
+ *   spells the names in their UTF-8 bytes, so they are read); R-EMBEDDED component source held in a
+ *   literal (wb-o4h0.4's A3 collects the TSX module names censuses plant); R-SDK-LOAD a name reached through the SDK without
+ *   spelling it, such as a re-export (wb-o4h0.4's A2 refuses every SDK load);
  *   R-COMPOSITION the charter's convenience compositions (the two quoted names on :13); R-OTHER-FAMILY the shipped hooks and the
  *   2026-10-17 amendment's adapter hooks and activity boundary (wb-km7q.3, wb-km7q.6); R-OWN-RENDER Pi's own render code, which is
  *   no rf component; R-OUTSIDE a file below a skipped root entry; R-NONMODULE a file that is no module (a page, a JSON fixture
@@ -88,15 +106,20 @@
  *   cut and not delivered here), so a report never reads a passing pin as a delivered falsifier; the pins are titled by their ids.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the rows, the row states, every pin's witness, the
  *   residual families with their quiet rows and the registered test titles are held to the roster.
- * Display paths added: none. Test-only: every plant is an in-memory text; the tree, the roster and the bead export are only read.
+ * Display paths added: none. Test-only: every plant is an in-memory text except the planted trees (DECODINGS', R-UNDECODED's and
+ * P-NAME-NOT-UTF8's modules), written once to rule-11 scratch (test/helpers/scratch.ts) and removed after they are read; the
+ * tree, the roster and the bead export are only read.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { type Dirent, lstatSync, readdirSync, readFileSync } from "node:fs";
+import { type Dirent, lstatSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
-import { describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it } from "vitest";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard(afterAll);
 
 type Json = null | boolean | number | string | Json[] | { readonly [key: string]: Json };
 type Controls = Readonly<Record<string, boolean>>;
@@ -181,11 +204,26 @@ const UNMOUNT_PHRASE = "Component unmount withdraws only its interest, not anoth
 const PROMOTION_PHRASE = "promotion declares actual demand but does not guarantee scheduling or reuse";
 /** The residual families, each with its quiet rows (held to the roster). */
 const QUIET: Readonly<Record<string, readonly string[]>> = {
-  "R-NEEDLE": ["Q-NEEDLE-ARG", "Q-NEEDLE-REFLECT", "Q-NEEDLE-VALUE", "Q-NEEDLE-TEMPLATE", "Q-NEEDLE-REGEX", "Q-NEEDLE-COMMENT", "Q-NEEDLE-JSDOC"],
+  "R-NEEDLE": [
+    "Q-NEEDLE-ARG",
+    "Q-NEEDLE-REFLECT",
+    "Q-NEEDLE-VALUE",
+    "Q-NEEDLE-TEMPLATE",
+    "Q-NEEDLE-REGEX",
+    "Q-NEEDLE-COMMENT",
+    "Q-NEEDLE-JSDOC",
+    "Q-NEEDLE-JSX-TEXT",
+    "Q-NEEDLE-JSX-STRING",
+    "Q-NEEDLE-CASE",
+    "Q-NEEDLE-TYPEOF",
+    "Q-NEEDLE-ATTRIBUTE-KEY",
+    "Q-NEEDLE-SHEBANG",
+  ],
   "R-CASED": ["Q-CASED"],
   "R-AFFIXED": ["Q-AFFIXED"],
-  "R-COMPOSED": ["Q-COMPOSED", "Q-COMPOSED-TYPE"],
-  "R-TYPE-FLOW": ["Q-FLOW-BINDING", "Q-FLOW-ALIAS", "Q-FLOW-EXPRESSION", "Q-FLOW-TYPE"],
+  "R-COMPOSED": ["Q-COMPOSED", "Q-COMPOSED-TYPE", "Q-COMPOSED-HEAD"],
+  "R-TYPE-FLOW": ["Q-FLOW-BINDING", "Q-FLOW-ALIAS", "Q-FLOW-EXPRESSION", "Q-FLOW-TYPE", "Q-FLOW-AWAIT", "Q-FLOW-RAW"],
+  "R-UNDECODED": ["Q-UNDECODED-UTF16LE", "Q-UNDECODED-UTF16BE", "Q-UNDECODED-UTF32LE-BOM", "Q-UNDECODED-UTF8-BEHIND-UTF16LE-BOM"],
   "R-EMBEDDED": ["Q-EMBEDDED"],
   "R-SDK-LOAD": ["Q-REEXPORT"],
   "R-COMPOSITION": ["Q-COMPOSITION"],
@@ -194,6 +232,40 @@ const QUIET: Readonly<Record<string, readonly string[]>> = {
   "R-OUTSIDE": ["Q-OUTSIDE"],
   "R-NONMODULE": ["Q-NONMODULE"],
 };
+
+interface Encoding {
+  readonly id: string;
+  readonly bytes: (text: string) => Buffer;
+}
+/** A text in UTF-32LE: each code point as four bytes, low byte first. */
+function utf32le(text: string): Buffer {
+  return Buffer.concat(
+    [...text].map(character => {
+      const unit = Buffer.alloc(4);
+      unit.writeUInt32LE(character.codePointAt(0) ?? 0);
+      return unit;
+    }),
+  );
+}
+/** The decodings the compiler's reader performs (ts.sys.readFile, typescript 6.0.3 lib/typescript.js readFile): UTF-8, and a
+ * UTF-8, UTF-16LE or UTF-16BE byte-order mark decoded and dropped. Each is a P- control (A1's P-DECODE-*). */
+const DECODINGS: readonly Encoding[] = [
+  { id: "P-DECODE-UTF8", bytes: text => Buffer.from(text, "utf8") },
+  { id: "P-DECODE-UTF8-BOM", bytes: text => Buffer.concat([Buffer.from([0xef, 0xbb, 0xbf]), Buffer.from(text, "utf8")]) },
+  { id: "P-DECODE-UTF16LE-BOM", bytes: text => Buffer.concat([Buffer.from([0xff, 0xfe]), Buffer.from(text, "utf16le")]) },
+  { id: "P-DECODE-UTF16BE-BOM", bytes: text => Buffer.concat([Buffer.from([0xfe, 0xff]), Buffer.from(text, "utf16le").swap16()]) },
+];
+/** R-UNDECODED's quiet rows: encodings the compiler's reader does not decode, so it reads other text, and so does the judge. */
+const UNDECODED: readonly Encoding[] = [
+  { id: "Q-UNDECODED-UTF16LE", bytes: text => Buffer.from(text, "utf16le") },
+  { id: "Q-UNDECODED-UTF16BE", bytes: text => Buffer.from(text, "utf16le").swap16() },
+  { id: "Q-UNDECODED-UTF32LE-BOM", bytes: text => Buffer.concat([Buffer.from([0xff, 0xfe, 0x00, 0x00]), utf32le(text)]) },
+  { id: "Q-UNDECODED-UTF8-BEHIND-UTF16LE-BOM", bytes: text => Buffer.concat([Buffer.from([0xff, 0xfe]), Buffer.from(text, "utf8")]) },
+];
+/** The planted adoption's module in each planted tree (a TSX module below src/, where Pi's first component would sit). */
+const PLANTED_MODULE = "src/planted.tsx";
+/** The planted tree whose one module is named by bytes that are not UTF-8 (A2's P-NAME-NOT-UTF8). */
+const NAME_TREE = "name-not-utf8";
 
 // ---- the roster ----
 
@@ -500,26 +572,31 @@ interface Walk {
   readonly symlinks: readonly string[];
   readonly failures: readonly string[];
 }
-/** Every regular file below the root, in name order; skipped roots are never entered, a symlink is recorded and never followed. */
+/** Every regular file below the root, in name order; skipped roots are never entered, a symlink is recorded and never followed.
+ * Names are read as bytes: a name that is not UTF-8 decodes lossily, so neither the walk nor the compiler can open its entry by
+ * the decoded name, and the walk records it as a failed read instead of skipping it as gone. */
 function walkTree(root: string): Walk {
   const files: string[] = [];
   const symlinks: string[] = [];
   const failures: string[] = [];
   const visit = (directory: string): void => {
-    let entries: Dirent[];
+    let entries: Dirent<Buffer>[];
     try {
-      entries = readdirSync(join(root, directory), { withFileTypes: true });
+      entries = readdirSync(join(root, directory), { withFileTypes: true, encoding: "buffer" });
     } catch (error) {
       // A directory gone between its listing and its read holds nothing to judge; any other failed read is a finding.
       if (!(error instanceof Error && "code" in error && error.code === "ENOENT")) failures.push(`${directory === "" ? "." : directory}: ${String(error)}`);
       return;
     }
-    for (const entry of [...entries].sort((left, right) => (left.name < right.name ? -1 : left.name > right.name ? 1 : 0))) {
-      const path = directory === "" ? entry.name : `${directory}/${entry.name}`;
-      if (directory === "" && SKIPPED_ROOTS.includes(entry.name)) continue;
-      if (entry.isSymbolicLink()) symlinks.push(path);
-      else if (entry.isDirectory()) visit(path);
-      else if (entry.isFile()) files.push(path);
+    const named = entries.map(entry => ({ entry, name: entry.name.toString("utf8") }));
+    for (const { entry, name } of named.sort((left, right) => (left.name < right.name ? -1 : left.name > right.name ? 1 : 0))) {
+      const path = directory === "" ? name : `${directory}/${name}`;
+      if (!Buffer.from(name, "utf8").equals(entry.name)) failures.push(`${path}: a name that is not UTF-8 (no reader can open the entry by it)`);
+      else if (directory !== "" || !SKIPPED_ROOTS.includes(name)) {
+        if (entry.isSymbolicLink()) symlinks.push(path);
+        else if (entry.isDirectory()) visit(path);
+        else if (entry.isFile()) files.push(path);
+      }
     }
   };
   visit("");
@@ -530,41 +607,49 @@ function gitListedModules(): string[] {
   const listing = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard"], { cwd: REPO, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
   return [...new Set(listing.split("\0"))].filter(path => path !== "" && walkReads(path)).sort();
 }
-const isFile = (path: string): boolean => {
+const isFileAt = (root: string, path: string): boolean => {
   try {
-    return lstatSync(join(REPO, path)).isFile();
+    return lstatSync(join(root, path)).isFile();
   } catch {
     return false;
   }
 };
-interface LiveTree {
-  readonly listed: readonly string[];
+const isFile = (path: string): boolean => isFileAt(REPO, path);
+/** A module's text as the compiler reads it: ts.sys.readFile, the reader the compiler host's getSourceFile reads every module
+ * with (a UTF-16BE, UTF-16LE or UTF-8 byte-order mark decoded and dropped, any other bytes read as UTF-8), or undefined when the
+ * file cannot be read. */
+function moduleText(absolute: string): string | undefined {
+  return ts.sys.readFile(absolute);
+}
+interface TreeReading {
   readonly walk: Walk;
   readonly modules: readonly string[];
   readonly readings: readonly ModuleReading[];
   readonly failures: readonly string[];
 }
-let liveTreeReading: LiveTree | undefined;
-/** The live tree, read once: git's listing first, then the walk, then every walked module (a module gone since is skipped). */
-function liveTree(): LiveTree {
-  if (liveTreeReading !== undefined) return liveTreeReading;
-  const listed = gitListedModules();
-  const walk = walkTree(REPO);
+/** A tree's readings, by the one reader the live tree and every planted tree share: the walk, then every walked module's text
+ * (moduleText) judged under its own script kind. A module gone since the walk is skipped; one with no text is a failed read. */
+function readTree(root: string): TreeReading {
+  const walk = walkTree(root);
   const modules = walk.files.filter(walkReads);
   const readings: ModuleReading[] = [];
   const failures = [...walk.failures];
   for (const path of modules) {
-    let source: string;
-    try {
-      source = readFileSync(join(REPO, path), "utf8");
-    } catch (error) {
-      if (!isFile(path)) continue;
-      failures.push(`${path}: ${String(error)}`);
-      continue;
-    }
-    readings.push(readModule(path, source, scriptKindOf(path)));
+    const source = moduleText(join(root, path));
+    if (source !== undefined) readings.push(readModule(path, source, scriptKindOf(path)));
+    else if (isFileAt(root, path)) failures.push(`${path}: the compiler's reader read no text`);
   }
-  liveTreeReading = { listed, walk, modules, readings, failures };
+  return { walk, modules, readings, failures };
+}
+interface LiveTree extends TreeReading {
+  readonly listed: readonly string[];
+}
+let liveTreeReading: LiveTree | undefined;
+/** The live tree, read once: git's listing first, then readTree over the repository root. */
+function liveTree(): LiveTree {
+  if (liveTreeReading !== undefined) return liveTreeReading;
+  const listed = gitListedModules();
+  liveTreeReading = { listed, ...readTree(REPO) };
   return liveTreeReading;
 }
 
@@ -682,14 +767,23 @@ function namePlants(): Readonly<Record<string, Plant>> {
   plant("Q-NEEDLE-REGEX", `const pattern = /${HOOK}/;\n`);
   plant("Q-NEEDLE-COMMENT", `// ${HOOK}\n/** ${BOUNDARY} */\nconst value = 1;\n`);
   plant("Q-NEEDLE-JSDOC", `/** @type {import("m").${BOUNDARY}} */\nlet boundary;\n/** @param {Sdk["${HOOK}"]} spec */\nfunction take(spec) {\n  return spec;\n}\n`, js);
+  plant("Q-NEEDLE-JSX-TEXT", `const view = <p>${HOOK}</p>;\nconst other = <div><b>${BOUNDARY}</b></div>;\n`, tsx);
+  plant("Q-NEEDLE-JSX-STRING", `const view = <Box title="${HOOK}" kind='${BOUNDARY}' />;\n`, tsx);
+  plant("Q-NEEDLE-CASE", `switch (name) {\n  case "${HOOK}":\n    break;\n}\n`);
+  plant("Q-NEEDLE-TYPEOF", `const view = sdk[typeof "${HOOK}"];\n`);
+  plant("Q-NEEDLE-ATTRIBUTE-KEY", `import data from "./data.json" with { "${HOOK}": "json" };\n`);
+  plant("Q-NEEDLE-SHEBANG", `#!/usr/bin/env node ${HOOK}\nconst value = 1;\n`, js);
   plant("Q-CASED", `const view = ${HOOK.toLowerCase()};\nconst other = ${BOUNDARY.toUpperCase()};\n`);
   plant("Q-AFFIXED", `const ${HOOK}Limits = 1;\nconst my${BOUNDARY} = 2;\n`);
   plant("Q-COMPOSED", `const view = sdk["use" + "${HOOK.slice(3)}"];\nconst other = sdk[${tick}use${open}part}${tick}];\n`);
   plant("Q-COMPOSED-TYPE", `type Spec = Sdk[${tick}use${open}"${HOOK.slice(3)}"}${tick}];\ntype Pair = Pick<Sdk, ${tick}${open}"use"}${HOOK.slice(3)}${tick}>;\n`);
+  plant("Q-COMPOSED-HEAD", `const view = sdk[${tick}${HOOK}${open}suffix}${tick}];\n`);
   plant("Q-FLOW-BINDING", `const key = "${HOOK}";\nconst view = sdk[key];\n`);
   plant("Q-FLOW-ALIAS", `type Key = "${HOOK}";\ntype View = Sdk[Key];\nfunction pick<K extends "${HOOK}" = "${HOOK}">(key: K) {\n  return sdk[key];\n}\n`);
   plant("Q-FLOW-EXPRESSION", `const view = sdk[(0, "${HOOK}")];\nconst other = sdk[flag ? "${HOOK}" : "x"];\nconst third = sdk[name ?? "${HOOK}"];\nconst fourth = sdk[String("${HOOK}")];\n`);
-  plant("Q-FLOW-TYPE", `type View = Sdk[["${HOOK}"][0]];\ntype Other = Pick<Sdk, Flag extends true ? "${HOOK}" : never>;\n`);
+  plant("Q-FLOW-TYPE", `type View = Sdk[["${HOOK}"][0]];\ntype Other = Pick<Sdk, Flag extends true ? "${HOOK}" : never>;\ntype Third = Sdk[Flag extends true ? "${HOOK}" : never];\n`);
+  plant("Q-FLOW-AWAIT", `const view = sdk[await "${HOOK}"];\n`);
+  plant("Q-FLOW-RAW", `const view = sdk[String.raw${tick}${HOOK}${tick}];\n`);
   plant("Q-EMBEDDED", `const source = ${tick}export function V() { const s = ${HOOK}({}); return <${BOUNDARY} />; }${tick};\n`);
   plant("Q-REEXPORT", 'export * from "m";\nimport * as sdk from "m";\nconst view = sdk[name];\n');
   plant("Q-COMPOSITION", FAMILY.compositions.map(name => `const ${name.toLowerCase()} = <${name} />;`).join("\n"), tsx);
@@ -712,12 +806,70 @@ function plantPositions(): string[] {
   }
   return [...positions].sort();
 }
-/** A2's controls: what the walk's path predicate reads. */
+interface PlantedTree {
+  readonly reading: TreeReading;
+  /** The planted module's text as the judge reads it (moduleText) and as the compiler host's getSourceFile reads it. */
+  readonly text: string | undefined;
+  readonly hostText: string | undefined;
+}
+let plantedTreesReading: Readonly<Record<string, PlantedTree>> | undefined;
+/** The planted trees, written once to rule-11 scratch and each read by readTree, the live tree's own reader: one tree per
+ * encoding of DECODINGS and UNDECODED, holding the adoption's text in it at PLANTED_MODULE, and one tree holding the adoption
+ * in a module named by bytes that are not UTF-8 (NAME_TREE). */
+function plantedTrees(): Readonly<Record<string, PlantedTree>> {
+  if (plantedTreesReading !== undefined) return plantedTreesReading;
+  const scratch = makeScratch("tsx-render-purity-");
+  try {
+    const host = ts.createCompilerHost({}, true);
+    const trees: Record<string, PlantedTree> = {};
+    for (const { id, bytes } of [...DECODINGS, ...UNDECODED]) {
+      const root = join(scratch, id);
+      const file = join(root, PLANTED_MODULE);
+      mkdirSync(dirname(file), { recursive: true });
+      writeFileSync(file, bytes(adoptionText()));
+      trees[id] = { reading: readTree(root), text: moduleText(file), hostText: host.getSourceFile(file, ts.ScriptTarget.Latest)?.text };
+    }
+    const named = join(scratch, NAME_TREE, "src");
+    mkdirSync(named, { recursive: true });
+    writeFileSync(Buffer.concat([Buffer.from(`${named}/planted-`), Buffer.from([0xff]), Buffer.from(".tsx")]), adoptionText());
+    trees[NAME_TREE] = { reading: readTree(join(scratch, NAME_TREE)), text: undefined, hostText: undefined };
+    plantedTreesReading = trees;
+    return trees;
+  } finally {
+    removeScratch(scratch);
+  }
+}
+/** A reading's findings without its path, so two readings of one text at two paths compare. */
+const findingsAt = (reading: ModuleReading): string[] => reading.findings.map(finding => finding.slice(reading.path.length));
+/** A planted tree's findings, each without its module's path. */
+const plantedFindings = (id: string): string[] => (plantedTrees()[id]?.reading.readings ?? []).flatMap(findingsAt);
+/** A1's decoding controls: each decoding reads, through readTree, exactly the adoption's text and findings (P-DECODE-*); each
+ * undecoded encoding reads no finding (R-UNDECODED's quiet rows); every planted module's text is the compiler host's. */
+function decodingControls(): Controls {
+  const trees = plantedTrees();
+  const adoption = JSON.stringify(findingsAt(adoptionReading()));
+  const controls: Record<string, boolean> = {};
+  for (const { id } of DECODINGS) {
+    const tree = trees[id];
+    controls[id] =
+      tree !== undefined &&
+      tree.text === adoptionText() &&
+      tree.reading.failures.length === 0 &&
+      tree.reading.readings.length === 1 &&
+      JSON.stringify(plantedFindings(id)) === adoption;
+  }
+  for (const { id } of UNDECODED) controls[id] = plantedFindings(id).length > 0;
+  controls["P-DECODE-AS-HOST"] = [...DECODINGS, ...UNDECODED].every(({ id }) => trees[id]?.text !== undefined && trees[id]?.text === trees[id]?.hostText);
+  return controls;
+}
+/** A2's controls: what the walk's path predicate reads, and the failed read a name that is not UTF-8 makes. */
 function walkControls(): Controls {
+  const named = plantedTrees()[NAME_TREE]?.reading;
   return {
     "P-MODULE-KINDS": [".ts", ".tsx", ".mts", ".cts", ".d.ts", ".js", ".jsx", ".mjs", ".cjs"].every(extension => walkReads(`src/x${extension}`)),
     "P-NESTED-SKIPPED-NAME": walkReads("examples/app/node_modules/x.ts") && walkReads("test/fixtures/dist/x.js"),
     "P-ROOT-MODULE": walkReads("vitest.config.ts"),
+    "P-NAME-NOT-UTF8": named !== undefined && named.readings.length === 0 && named.failures.length === 1 && named.failures.every(failure => failure.includes("a name that is not UTF-8")),
     "Q-OUTSIDE": SKIPPED_ROOTS.some(root => walkReads(`${root}/x.ts`)),
     "Q-NONMODULE": ["docs/workbench/x.md", ROSTER_FILE, "bin/script", "notes.txt"].some(walkReads),
   };
@@ -781,6 +933,8 @@ function armedControls(owedOnAdoption: readonly string[]): Controls {
     "N-NO-ADOPTION": armedReading([], owedOnAdoption).armed,
     "P-ARMS-ON-EVERY-READ": plants.filter(([id]) => id.startsWith("P-")).every(arms),
     "N-ARMS-ON-A-RESIDUAL": plants.filter(([id]) => id.startsWith("Q-")).some(arms),
+    "P-ARMS-ON-EVERY-DECODING": DECODINGS.every(({ id }) => armedReading(plantedFindings(id), owedOnAdoption).armed),
+    "N-ARMS-ON-AN-UNDECODED": UNDECODED.some(({ id }) => armedReading(plantedFindings(id), owedOnAdoption).armed),
   };
 }
 
@@ -801,7 +955,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect(judgeNames([...tree.readings, plant]), "the judge over the live readings plus the plant reads exactly the plant").toEqual(plant.findings);
     const positions = plantPositions();
     expect(positions, "the read positions the P- plants reach are READ_POSITIONS, the header's (i)-(iv)").toEqual([...READ_POSITIONS]);
-    return done("A1", { findings, planted: [...plant.findings], positions, controls: nameControls() });
+    return done("A1", { findings, planted: [...plant.findings], positions, controls: { ...nameControls(), ...decodingControls() } });
   },
   A2: () => {
     const tree = liveTree();
@@ -927,7 +1081,7 @@ describe("wb-km7q.5 TSX render-purity census (SDK-REACTIVE-FIBER-ADAPTIVE-COMPUT
     expect({ version: ROSTER.producer.rf.mappedVersion, source: ROSTER.producer.rf.lockSource }).toStrictEqual({ version: mapped?.version, source: `${ROSTER.producer.repo} ${mapped?.sha}` });
     expect(new Set(ROSTER.producer.revisions.map(entry => entry.docBlob)).size, "one charter blob at every revision").toBe(1);
     // Every residual's quiet rows are controls that read false.
-    const controls: Controls = { ...nameControls(), ...walkControls() };
+    const controls: Controls = { ...nameControls(), ...walkControls(), ...decodingControls() };
     expect(Object.values(QUIET).flatMap(ids => (ids.length === 0 ? ["(none)"] : ids.filter(id => controls[id] !== false))), "quiet rows that are missing or not false").toEqual([]);
     // Every row's describe title states what its pins hold (last, so no check above is masked by it).
     expect(Object.keys(ROW_STATE), "every row carries a state for its describe title").toEqual(ROWS.map(entry => entry.id));
