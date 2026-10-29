@@ -144,7 +144,9 @@
       "homoglyph",
       "abbreviated",
       "hyphenated",
-      "joined"
+      "joined",
+      "blank-symbol",
+      "blank-letter"
     ],
     "Q2": [
       "selector",
@@ -223,7 +225,15 @@
     "M43:support-names-unvalidated:K-INDEPENDENT",
     "M44:format-name-admitted:K-NAMED",
     "M45:format-selector-validated:K-VALIDATE",
-    "M46:single-unknown-kind:K-NAMED"
+    "M46:single-unknown-kind:K-NAMED",
+    "M47:independent-exempt-by-own-name:K-INDEPENDENT",
+    "M48:sampler-named-capacity-unvalidated:K-INDEPENDENT",
+    "M49:drawn-capacity-unvalidated:K-INDEPENDENT",
+    "M50:sampled-capacity-unvalidated:K-INDEPENDENT",
+    "M51:kind-word-admitted:K-NAMED",
+    "M52:kind-prefix-admitted:K-NAMED",
+    "M53:kind-case-folded:K-NAMED",
+    "M54:kind-trimmed:K-NAMED"
   ],
   "witnesses": {
     "A1a": {
@@ -978,27 +988,43 @@
       "mutants": [
         [
           "M22",
-          20
+          40
         ],
         [
           "M23",
-          20
+          40
         ],
         [
           "M24",
-          8
+          16
         ],
         [
           "M39",
-          10
+          30
         ],
         [
           "M42",
-          1
+          2
         ],
         [
           "M43",
-          2
+          4
+        ],
+        [
+          "M47",
+          20
+        ],
+        [
+          "M48",
+          8
+        ],
+        [
+          "M49",
+          8
+        ],
+        [
+          "M50",
+          8
         ]
       ],
       "admissions": {
@@ -1022,6 +1048,26 @@
             "ok": false,
             "code": "not-capacity-feasible",
             "selector": "fast-logit"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "capacity-matching-resolver"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "joint-autoregressive-sampler"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "joint-autoregressive-sampler"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "capacity-matching-resolver"
           }
         ],
         "loads": [
@@ -1044,6 +1090,26 @@
             "ok": false,
             "code": "not-capacity-feasible",
             "selector": "fast-logit"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "capacity-matching-resolver"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "joint-autoregressive-sampler"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "joint-autoregressive-sampler"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "capacity-matching-resolver"
           }
         ],
         "ties": [
@@ -1066,6 +1132,26 @@
             "ok": false,
             "code": "not-capacity-feasible",
             "selector": "fast-logit"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "capacity-matching-resolver"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "joint-autoregressive-sampler"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "joint-autoregressive-sampler"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "capacity-matching-resolver"
           }
         ],
         "partial": [
@@ -1088,6 +1174,26 @@
             "ok": false,
             "code": "not-capacity-feasible",
             "selector": "fast-logit"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "capacity-matching-resolver"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "joint-autoregressive-sampler"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "joint-autoregressive-sampler"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "capacity-matching-resolver"
           }
         ],
         "empty": [
@@ -1110,6 +1216,26 @@
             "ok": false,
             "code": "not-capacity-feasible",
             "selector": "fast-logit"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "capacity-matching-resolver"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "joint-autoregressive-sampler"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "joint-autoregressive-sampler"
+          },
+          {
+            "ok": false,
+            "code": "not-capacity-feasible",
+            "selector": "capacity-matching-resolver"
           }
         ]
       }
@@ -1150,44 +1276,72 @@
           "findings": [
             "t-zero assigned twice"
           ],
-          "outcome": {
-            "ok": false,
-            "code": "not-capacity-feasible",
-            "selector": "capacity-matching-resolver"
-          }
+          "outcomes": [
+            {
+              "ok": false,
+              "code": "not-capacity-feasible",
+              "selector": "capacity-matching-resolver"
+            },
+            {
+              "ok": false,
+              "code": "not-capacity-feasible",
+              "selector": "joint-autoregressive-sampler"
+            }
+          ]
         },
         {
           "id": "agent-over-capacity",
           "findings": [
             "a-one carries 2 over capacity 1"
           ],
-          "outcome": {
-            "ok": false,
-            "code": "not-capacity-feasible",
-            "selector": "capacity-matching-resolver"
-          }
+          "outcomes": [
+            {
+              "ok": false,
+              "code": "not-capacity-feasible",
+              "selector": "capacity-matching-resolver"
+            },
+            {
+              "ok": false,
+              "code": "not-capacity-feasible",
+              "selector": "joint-autoregressive-sampler"
+            }
+          ]
         },
         {
           "id": "no-support-agent",
           "findings": [
             "a-ghost/t-zero names no support agent or task"
           ],
-          "outcome": {
-            "ok": false,
-            "code": "not-capacity-feasible",
-            "selector": "capacity-matching-resolver"
-          }
+          "outcomes": [
+            {
+              "ok": false,
+              "code": "not-capacity-feasible",
+              "selector": "capacity-matching-resolver"
+            },
+            {
+              "ok": false,
+              "code": "not-capacity-feasible",
+              "selector": "joint-autoregressive-sampler"
+            }
+          ]
         },
         {
           "id": "no-support-task",
           "findings": [
             "a-one/t-ghost names no support agent or task"
           ],
-          "outcome": {
-            "ok": false,
-            "code": "not-capacity-feasible",
-            "selector": "capacity-matching-resolver"
-          }
+          "outcomes": [
+            {
+              "ok": false,
+              "code": "not-capacity-feasible",
+              "selector": "capacity-matching-resolver"
+            },
+            {
+              "ok": false,
+              "code": "not-capacity-feasible",
+              "selector": "joint-autoregressive-sampler"
+            }
+          ]
         }
       ]
     },
@@ -1312,7 +1466,7 @@
         ],
         [
           "M26",
-          10
+          35
         ],
         [
           "M27",
@@ -1336,6 +1490,22 @@
         ],
         [
           "M46",
+          30
+        ],
+        [
+          "M51",
+          20
+        ],
+        [
+          "M52",
+          5
+        ],
+        [
+          "M53",
+          5
+        ],
+        [
+          "M54",
           5
         ]
       ],
@@ -1396,6 +1566,51 @@
             "ok": false,
             "code": "unknown-selector",
             "selector": "greedy"
+          }
+        ],
+        [
+          "U+0066 U+0061 U+0073 U+0074",
+          "fast-sampler",
+          {
+            "ok": false,
+            "code": "unknown-selector",
+            "selector": "fast"
+          }
+        ],
+        [
+          "U+0071 U+0075 U+0069 U+0063 U+006B",
+          "greedy-resolver",
+          {
+            "ok": false,
+            "code": "unknown-selector",
+            "selector": "quick"
+          }
+        ],
+        [
+          "U+006E U+0065 U+0078 U+0074",
+          "joint-sampler-v2",
+          {
+            "ok": false,
+            "code": "unknown-selector",
+            "selector": "next"
+          }
+        ],
+        [
+          "U+0075 U+0070 U+0070 U+0065 U+0072",
+          "Deterministic-Resolver",
+          {
+            "ok": false,
+            "code": "unknown-selector",
+            "selector": "upper"
+          }
+        ],
+        [
+          "U+0070 U+0061 U+0064 U+0064 U+0065 U+0064",
+          " joint-sampler",
+          {
+            "ok": false,
+            "code": "unknown-selector",
+            "selector": "padded"
           }
         ]
       ],
@@ -1730,6 +1945,21 @@
         "argmax format character inside": [
           "argmax"
         ],
+        "argmax combining mark inside": [
+          "argmax"
+        ],
+        "sampler grapheme joiner inside": [
+          "sampler"
+        ],
+        "sampler variation selector inside": [
+          "sampler"
+        ],
+        "logit spacing mark inside": [
+          "logit"
+        ],
+        "optimizer enclosing mark inside": [
+          "optimizer"
+        ],
         "every word": [
           "argmax",
           "logits",
@@ -1803,6 +2033,14 @@
           false
         ],
         [
+          "moved-under-a-subsection",
+          false
+        ],
+        [
+          "moved-under-a-deeper-subsection",
+          false
+        ],
+        [
           "emphasis-respelled",
           true
         ],
@@ -1812,6 +2050,10 @@
         ],
         [
           "rewrapped",
+          true
+        ],
+        [
+          "subsection-after-the-line",
           true
         ]
       ],
@@ -1850,7 +2092,9 @@
         "homoglyph",
         "abbreviated",
         "hyphenated",
-        "joined"
+        "joined",
+        "blank-symbol",
+        "blank-letter"
       ],
       "findings": []
     },
