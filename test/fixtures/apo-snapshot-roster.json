@@ -1,0 +1,443 @@
+{
+  "comment": "wb-021.2 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R2): the OUT-OF-FILE anchor of test/workbench-apo-snapshot-census.test.ts (the hk9l/5jha roster pattern). rows: every judged row of test/helpers/apo-snapshot-census.ts in census order (L, V, N, P, Z, R, S, Q) - id, label and, per pin, its id and the SHA-256 of the pin as written (its JSON: a live pin's kind, what and expected values; a plant's planted files, copies, expected views and findings; a reading pin's texts and readings; a seam pin's source and members). tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its rows, its registered tests (vitest task tree, run modes) and its residual families against this file at test time, in order and both ways.",
+  "rows": [
+    {
+      "id": "L",
+      "label": "When Pi presents any APO-020 view class (operational decision graph, epistemic why-not/completeness, policy gradient/credit, developmental ancestry, resource pressure, certificate dependency),",
+      "pins": [
+        {
+          "id": "L1-src",
+          "digest": "4bca614334c99c79ef41c60a138b07fa8a552e486bce8b8275c618ec2cef2c68"
+        },
+        {
+          "id": "L2-name",
+          "digest": "39bb2ea648c55f208dd8ed62b9ebbc5155453bb089414ef339388ff08a1340bf"
+        },
+        {
+          "id": "L3-literal",
+          "digest": "8f3c3a867bf11cc5451e1f348ab3bf787e80ecdff58a9e1bd294a0d55f41078f"
+        }
+      ]
+    },
+    {
+      "id": "V",
+      "label": "the view renders read-only snapshots of recorded MW state and never actuates:",
+      "pins": [
+        {
+          "id": "V-decision-graph",
+          "digest": "d1ff7270137bbbe40f64b49657b3b04f0582d73bbb96f0263daf81dd715efca0"
+        },
+        {
+          "id": "V-why-not",
+          "digest": "f64915faebb4c210759a25b915cec1dded453bfe003b8fbe39e606ca6a8f2a73"
+        },
+        {
+          "id": "V-gradient",
+          "digest": "a9788a76e1dc5e1dcb3d69832f6024fac3a4c7017c98bc7ba75d8408b7f9a139"
+        },
+        {
+          "id": "V-ancestry",
+          "digest": "1eb089d44ab733bfff86c16b08b9cd0ed32e49045dc6414f8ac98c2c2bc97446"
+        },
+        {
+          "id": "V-pressure",
+          "digest": "dcea76d24dbde309031fd43115e2977426757730c398d5272f36c82440699b52"
+        },
+        {
+          "id": "V-certificate",
+          "digest": "6d3ad536b79e14b297d8269cdefeb3c7f490af08efa71065414fe34bcece30e6"
+        },
+        {
+          "id": "V-admitted-free",
+          "digest": "6d431791290cb8b521bd59d12adb97c1b019e993910d81267220d5974d435ded"
+        },
+        {
+          "id": "V-type-only",
+          "digest": "4cf8a8d5351d896d9e0ce752747a32a254e9a7b722baa652b8769c965c161705"
+        }
+      ]
+    },
+    {
+      "id": "N",
+      "label": "no view interaction executes, retries, admits an event, or mutates policy/organization state \\u2014 acceptance gate 'snapshot not actuation'.",
+      "pins": [
+        {
+          "id": "N-execute",
+          "digest": "1a0a14d57534e86aa72b7205bde66c32cd87245abb6abd18a5b74b8c23acd744"
+        },
+        {
+          "id": "N-retry",
+          "digest": "af1c9d3152ade91bfc89c0a1ce05b68c67eaf9db511d24d3d9c8f782e56accad"
+        },
+        {
+          "id": "N-admit",
+          "digest": "6858b971a5322939a4a9de515dd88ea4a75762d6afd5f99c40ade5a55461e002"
+        },
+        {
+          "id": "N-admit-projection",
+          "digest": "838a983ca17996560977fb2e5b19a0c7222902c2660859fda3d7afd68cef44f1"
+        },
+        {
+          "id": "N-mutate",
+          "digest": "3069b67c131c840a0988fa5b8aca60094e30e514dd96d7132699755953e4412d"
+        }
+      ]
+    },
+    {
+      "id": "P",
+      "label": "per-view interaction falsifier — every handler path is projection-read-only",
+      "pins": [
+        {
+          "id": "P-decision-graph",
+          "digest": "285808fce9cbe7832a13be5c3df4fee45715d8973fded0704e3c1afaf64f4182"
+        },
+        {
+          "id": "P-why-not",
+          "digest": "eab41550db2fcc1d0db1efc2fc44d367e043c1f6d96c249310cff5eb76f1125d"
+        },
+        {
+          "id": "P-gradient",
+          "digest": "eed45c50455ca8c6b5a4a3511d01d340959886fcc2aba1d19c8757db2bd6ee91"
+        },
+        {
+          "id": "P-ancestry",
+          "digest": "d97475f203814cd1c3be8b81b1b74787b15f523bab9809598f932a93535108f2"
+        },
+        {
+          "id": "P-pressure",
+          "digest": "da318fb321989c1f679805521c2d6a7ba905139f195bd942da1bbbd4d11c2868"
+        },
+        {
+          "id": "P-certificate",
+          "digest": "7060a41e51a26f25fb56e2a43c350070ca8023aa87cea85835b1cf88df085a2a"
+        }
+      ]
+    },
+    {
+      "id": "Z",
+      "label": "with zero capability invokes and zero journal/native writes.",
+      "pins": [
+        {
+          "id": "Z-invoke",
+          "digest": "82519fd2bb19645c54b1990547d286231f182ff2ad164ffd84f973b1688cccbc"
+        },
+        {
+          "id": "Z-inspect",
+          "digest": "c25487eab9705d4a5959e3a10766b89c40d05c626c4b9ee6bf8de784da7b4a33"
+        },
+        {
+          "id": "Z-register",
+          "digest": "542f73478ceeb83c9aafd8cd88c9a46af163c32c37383f08fd7b64eda4d73961"
+        },
+        {
+          "id": "Z-journal",
+          "digest": "55bd87e764f5bdbc7a9695572c100dbf607b225cb48295e61d4a71674ed32a23"
+        },
+        {
+          "id": "Z-journal-module",
+          "digest": "cae105eb91cb91ed7dff8234507ca1607947b5f2ca36f0471dd7c3f538024167"
+        },
+        {
+          "id": "Z-native-fs",
+          "digest": "17aaae09afec633e3d5100f713c35ae05b44c513e7d77ca5f3518e83442ed78f"
+        },
+        {
+          "id": "Z-native-child",
+          "digest": "0ddb019091a2e8a82bf89d80845f892d68d1321ef8c8fcb2efd345b17a29726f"
+        },
+        {
+          "id": "Z-native-client",
+          "digest": "9377848f65cbb819bd109f0d3542050f9790f3b689ccdd29e835f037d06a6895"
+        },
+        {
+          "id": "Z-global-process",
+          "digest": "5ca8c9524e95f403011a58bea5327df6e0bebfb240e4d2e72ecb6581124eb3dd"
+        },
+        {
+          "id": "Z-global-fetch",
+          "digest": "3a2374e68f21a57decfdca307b8a0293ffd783626557ec9a86831e983fb20676"
+        },
+        {
+          "id": "Z-global-code",
+          "digest": "b4dc0914666973ff709f738c4a8b4e505b54f4e52edc83b77ecc910b19a86b54"
+        },
+        {
+          "id": "Z-global-this",
+          "digest": "2b3a76880d666c84c4dc32fd4c83c79c5cba8c6fc96e1ca6094d9995e9ab9131"
+        },
+        {
+          "id": "Z-constructor",
+          "digest": "1c1110864588d52370ef0d4c52eb7ba7a9816122945352ae0f4249eeb4f173df"
+        }
+      ]
+    },
+    {
+      "id": "R",
+      "label": "the judge's readings, each failing closed",
+      "pins": [
+        {
+          "id": "R-families",
+          "digest": "155b9ab68211e594dfc3f5ad18e79cbf2aec1db1f05d7ccdba3d05bad87c8925"
+        },
+        {
+          "id": "R-words",
+          "digest": "e75277b6ccc6253f657f0affcd6e435f2623406a6ae528f5996ac78f084c7106"
+        },
+        {
+          "id": "R-escaped",
+          "digest": "ebbdc881079062d42bda1622dfcbfbe679c72a346397480a5655401ba5de5414"
+        },
+        {
+          "id": "R-escaped-scanner",
+          "digest": "b736150b6908060c8383fb73b106b6a8078bfed3c37899243242858c8639fb8d"
+        },
+        {
+          "id": "R-private",
+          "digest": "9b823a31bd868d222bb36e094be1ba40dab2735cb0cee714e2e2e93a92c2798f"
+        },
+        {
+          "id": "R-literal",
+          "digest": "4be0c421dfb648a9c5c27a9c84f8af90ca4ac51031e0eb2a84b3e557a20d41e1"
+        },
+        {
+          "id": "R-template",
+          "digest": "371b6a5173763d8b1d151ea90ee5712d0600d1b434969304d59091c477c762e4"
+        },
+        {
+          "id": "R-template-parts",
+          "digest": "d6e73ec65813887cf61f3db17e3464278b47f81c000ac457c134560a4c4406ab"
+        },
+        {
+          "id": "R-folded",
+          "digest": "bd0127160b26c9372fb8d4424bc23bfdb50dc565aae252bdf21869d2ef1f1d8f"
+        },
+        {
+          "id": "R-folded-parenthesized",
+          "digest": "adda88978bdae2472aed868f65bff2bf0b6d0b206d2bbc1f0f975a76ad0cbf13"
+        },
+        {
+          "id": "R-type-position",
+          "digest": "9f9599ba64f89da106d1ab2da0bc88a86c341d258cd7c6b57d35e2452bcf9ff6"
+        },
+        {
+          "id": "R-unresolved",
+          "digest": "afcc94ff052b165d45a8c2ffa9e4a153f9172c0cb0c16bff47f916caf90f1b4e"
+        },
+        {
+          "id": "R-computed",
+          "digest": "bf161d6c71484718ffcc4a59e9fb47865336a9f30261ef1805374ad2e801530a"
+        },
+        {
+          "id": "R-unreadable",
+          "digest": "55f0c0cef2203a3d19188d6efc22ae73aa31f6835bc16c6463e798992af0f4fd"
+        },
+        {
+          "id": "R-closure-builtin",
+          "digest": "1d36e21089cb5abef86611e02a4146b953adae72dc5ec53a59a2b4499927bd76"
+        },
+        {
+          "id": "R-shorthand",
+          "digest": "87743870583e922588f9acb98541190a57307c2cefd7b402a3e9e8022077f703"
+        },
+        {
+          "id": "R-export-local",
+          "digest": "24cf505cd91234b81ce8bf7df3a174a209dce9335a5d0bdbdea16b9579f05b7f"
+        },
+        {
+          "id": "R-ambient",
+          "digest": "405199eb0c32402adcaa7ff78b1f106374260a59da8a36fa61414507eeb00e90"
+        },
+        {
+          "id": "R-extends",
+          "digest": "a9e54d0917a4beff3f4668ab5417ac3f610558671f2ce3e06dffe9b6a5059dd7"
+        },
+        {
+          "id": "R-closure-global",
+          "digest": "7517a1c4e5b108dc4ea9ab45a9d78b389c5a424acd98aea2a1ab09f6a18ca5d4"
+        },
+        {
+          "id": "R-global-escaped",
+          "digest": "e73b39854b632952f291820f1084f1b12297c1de73836fcbd3d77feebf708644"
+        },
+        {
+          "id": "R-not-references",
+          "digest": "b79aa63eeb94576b411043f1b8cd5855e4d4931f76ca33ed3a4e5d15b2344a85"
+        },
+        {
+          "id": "R-not-read",
+          "digest": "271907557535039acf287f506393811e60f9a4601833f853ec81f2ff5a96d888"
+        }
+      ]
+    },
+    {
+      "id": "S",
+      "label": "Pi's effect seams, read from src and classified",
+      "pins": [
+        {
+          "id": "S-projection",
+          "digest": "c7dca4a28f3a98ad19b9e11021273e21657ea73ffd19d93a85c04c6270c9f12f"
+        },
+        {
+          "id": "S-registry",
+          "digest": "f7da1c1cedd61b9d308ad52c3dc61166918f3a0c586477f61f5ad2801e413899"
+        },
+        {
+          "id": "S-provider",
+          "digest": "dad458fffafd6702e7a4ad92d98abd451df4a825c608e434d629502f070dd9f6"
+        },
+        {
+          "id": "S-journal",
+          "digest": "0e438132e77c6e663124d4f47d185e4990893dea702fc8b7e26833877ada7895"
+        },
+        {
+          "id": "S-reader-class",
+          "digest": "b23417269446305d22d31c5c55400a1c221e7da485604a3d14b41d2026043a69"
+        },
+        {
+          "id": "S-reader-interface",
+          "digest": "8e606e16c230d549294695738afe7f6eb6f7e2076d92b577f4c729d05b01a582"
+        },
+        {
+          "id": "S-reader-exports",
+          "digest": "cb24d71df4159b6ff54d42908568232c84c6c3b0768a85d38db9695bcc308243"
+        },
+        {
+          "id": "S-reader-exports-unnamed",
+          "digest": "5680283038644ae5b4b59e42b1a08c91387fa1700a629cb53e2da28c1a7bc09d"
+        },
+        {
+          "id": "S-reader-missing",
+          "digest": "5c1c362a1b999b402b709a6540dd36bbf1e2bbb00c668994366f63194a6c509a"
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the named residuals",
+      "pins": [
+        {
+          "id": "R-UNNAMED-VIEW",
+          "digest": "e8e1aa77e3e97f6ae483cfe151a921d5d35130bf51b79be7e1aaed7df37b1658"
+        },
+        {
+          "id": "R-UNNAMED-EFFECT",
+          "digest": "4ac77942e50612ae11e4e5abf8e35824a85f42e819c72cce06b576e6c44d2af8"
+        },
+        {
+          "id": "R-IMPLICIT-CALL",
+          "digest": "16a204634b708c44cc7204bfd9c97a022efc9afaabf440d81587ae7728a46718"
+        },
+        {
+          "id": "R-FIELD-MUTATION",
+          "digest": "31ae7f33576d0d0100a4034d6126deeeb203e5dbfc83c70593cfb4f53d957d2d"
+        },
+        {
+          "id": "R-COMPUTED-TEXT",
+          "digest": "e051eece4eb3cf8d0b3a479c44188f72c446e4b210498860dded62edcc1eef19"
+        },
+        {
+          "id": "R-REFLECTIVE-REACH",
+          "digest": "90ddd0a9773c2048664a779f318f6101e7eeefc8b946efc08e60c61863e35503"
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "L L1-src",
+    "L L2-name",
+    "L L3-literal",
+    "V V-decision-graph",
+    "V V-why-not",
+    "V V-gradient",
+    "V V-ancestry",
+    "V V-pressure",
+    "V V-certificate",
+    "V V-admitted-free",
+    "V V-type-only",
+    "N N-execute",
+    "N N-retry",
+    "N N-admit",
+    "N N-admit-projection",
+    "N N-mutate",
+    "P P-decision-graph",
+    "P P-why-not",
+    "P P-gradient",
+    "P P-ancestry",
+    "P P-pressure",
+    "P P-certificate",
+    "Z Z-invoke",
+    "Z Z-inspect",
+    "Z Z-register",
+    "Z Z-journal",
+    "Z Z-journal-module",
+    "Z Z-native-fs",
+    "Z Z-native-child",
+    "Z Z-native-client",
+    "Z Z-global-process",
+    "Z Z-global-fetch",
+    "Z Z-global-code",
+    "Z Z-global-this",
+    "Z Z-constructor",
+    "R R-families",
+    "R R-words",
+    "R R-escaped",
+    "R R-escaped-scanner",
+    "R R-private",
+    "R R-literal",
+    "R R-template",
+    "R R-template-parts",
+    "R R-folded",
+    "R R-folded-parenthesized",
+    "R R-type-position",
+    "R R-unresolved",
+    "R R-computed",
+    "R R-unreadable",
+    "R R-closure-builtin",
+    "R R-shorthand",
+    "R R-export-local",
+    "R R-ambient",
+    "R R-extends",
+    "R R-closure-global",
+    "R R-global-escaped",
+    "R R-not-references",
+    "R R-not-read",
+    "S S-projection",
+    "S S-registry",
+    "S S-provider",
+    "S S-journal",
+    "S S-reader-class",
+    "S S-reader-interface",
+    "S S-reader-exports",
+    "S S-reader-exports-unnamed",
+    "S S-reader-missing",
+    "Q R-UNNAMED-VIEW",
+    "Q R-UNNAMED-EFFECT",
+    "Q R-IMPLICIT-CALL",
+    "Q R-FIELD-MUTATION",
+    "Q R-COMPUTED-TEXT",
+    "Q R-REFLECTIVE-REACH",
+    "outside anchors: the export row, its view classes and verbs, the seams it names, the shared edge kinds and the residual families",
+    "rule 16: every judged row and the residual families are frozen at their measured shape",
+    "roster: the judged rows, the registered tests and the residual families equal test/fixtures/apo-snapshot-roster.json, in order and both ways"
+  ],
+  "residuals": {
+    "R-UNNAMED-VIEW": [
+      "Q R-UNNAMED-VIEW"
+    ],
+    "R-UNNAMED-EFFECT": [
+      "Q R-UNNAMED-EFFECT"
+    ],
+    "R-IMPLICIT-CALL": [
+      "Q R-IMPLICIT-CALL"
+    ],
+    "R-FIELD-MUTATION": [
+      "Q R-FIELD-MUTATION"
+    ],
+    "R-COMPUTED-TEXT": [
+      "Q R-COMPUTED-TEXT"
+    ],
+    "R-REFLECTIVE-REACH": [
+      "Q R-REFLECTIVE-REACH"
+    ]
+  }
+}
