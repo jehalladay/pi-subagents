@@ -13,6 +13,14 @@
  * first Pi host: a Pi module that spells the seam must be bound in ARBITER_HOSTS with a HostBinding, every binding must name such a
  * module, and every bound host must meet the falsifier with no violation. The title's three duties are the falsifier's rows B, C
  * and D; none is judged on a real Pi host until one exists.
+ * CUT #2 (the respin of refusal #1 - gate run g10-gate-s126, BIND gate-prep-27, outbox O:1235 - on cut #1 c3599623, trunk 5c14136
+ *   merged into the branch): U1 and F3 cured in OUTSIDE ANCHORS - every seam name the title and the filing spell is read from the
+ *   export by its position and by its code shape, never by its own spelling, and must read as exactly one term, so each of the
+ *   nine reds the judged set through the export when it is removed from every literal that spells it; the terms no outside text
+ *   reads are named SELF-ANCHORED (R-SYNONYM, restated). U2 cured in C2 - a host fails each part of the typed refusal alone (no
+ *   code, an empty code thrown or returned, a numeric code, a thrown null, a thrown string, an apply that carries a code). F1 an
+ *   acronym-run plant (A1). F2 a non-finite number, a non-finite number inside an array and a Map among the malformed rows (B1).
+ *   Two reading limits are named with quiet plants (R-RUN-ON; the escapes of R-COMPOSED).
  *
  * THE ARTIFACT AT THE PIN (the roster's `producer` block, measured read-only by the cutting seat on 2026-10-28 with git show and
  * git rev-parse in the local FiberOpticsSDK checkout; this census is hermetic and never re-reads it): the charter
@@ -47,10 +55,11 @@
  *   row and wait one macrotask - the controller state must not move and the row must not change (B2: applied-at-submit,
  *   row-mutated); run one emit whose callback, while emit has not returned, attempts the one mutation path (arbitrate) - the
  *   callback must run inside emit (C1: emit-skipped-callback, callback-not-reentrant), the attempt must end in a typed refusal (a
- *   returned refusal or a thrown value with a non-empty string code) and the state must not move across emit (C2:
- *   reentrant-attempt-not-refused, state-mutated-in-emit); arbitrate outside emit must apply the row (B2:
- *   arbiter-applied-nothing); a fresh host given each malformed row (one of the seven fields missing, an extra key, a field that
- *   is not data) must never move its state (B1: malformed-applied:<variant>); and every member of the host's ControlDirective must
+ *   returned attempt of kind refused, or a thrown value - either one an object carrying a non-empty string code) and the state
+ *   must not move across emit (C2: reentrant-attempt-not-refused, state-mutated-in-emit); arbitrate outside emit must apply the
+ *   row (B2: arbiter-applied-nothing); a fresh host given each malformed row (one of the seven fields missing, an extra key, a
+ *   field that is not data - a function, a non-finite number, a non-finite number inside an array, a value of another
+ *   prototype) must never move its state (B1: malformed-applied:<variant>); and every member of the host's ControlDirective must
  *   be the producer's one field (D1: directive-grown:<member>), a grown member naming a proposal field or a seam verb reading as a
  *   second engine (D2: directive-engine:<member>).
  *
@@ -58,47 +67,62 @@
  *  A "adoption-time falsifier": A1 the trigger - one scan of Pi's read set finds no term, with floors per root, the whole check and
  *    no symlink, and the same scan over a scratch git repository finds exactly its plants (every term planted at least once, in
  *    code, an import, a string, a template, a line and a block comment, Python, shell, package.json, a nested path, a fullwidth
- *    spelling, three long plants whose term sits last, first or in the middle of filler runs longer than the longest read module in
- *    lines and in UTF-8 bytes, and a long-line plant whose term sits mid-line between runs longer than the longest read line in
- *    bytes) and reads quiet every quiet plant, and over a control tree whose one module is a symlink it reads that module through
- *    its link, reports the link and calls itself not whole; A2 the binding - the modules the scan finds and ARBITER_HOSTS name the same set (empty
- *    today, both ways) and every bound host meets the falsifier; the same report over synthetic findings and bindings names the
- *    unbound module, the stale binding and the failing host.
+ *    spelling, an acronym run, three long plants whose term sits last, first or in the middle of filler runs longer than the
+ *    longest read module in lines and in UTF-8 bytes, and a long-line plant whose term sits mid-line between runs longer than the
+ *    longest read line in bytes) and reads quiet every quiet plant, and over a control tree whose one module is a symlink it reads
+ *    that module through its link, reports the link and calls itself not whole; A2 the binding - the modules the scan finds and
+ *    ARBITER_HOSTS name the same set (empty today, both ways) and every bound host meets the falsifier; the same report over
+ *    synthetic findings and bindings names the unbound module, the stale binding and the failing host.
  *  B "that a proposal row is applied only via the host arbiter seam": B1 the row - the seven fields (held to the filing and the
- *    charter), the producer's shipped spellings admitted, each malformed variant's shape, and a host that applies malformed rows
- *    fails; B2 the seam - hosts that apply at submit, on a timer, inside emit, or not at all, or that change the row, fail.
+ *    charter), the producer's shipped spellings admitted, each malformed variant's shape (a field missing, an extra key, a
+ *    function, a non-finite number, one inside an array, a Map), and a host that applies malformed rows fails; B2 the seam - hosts
+ *    that apply at submit, on a timer, inside emit, or not at all, or that change the row, fail.
  *  C "and a mutation attempted inside a FiberRuntime.emit reentrant callback is refused,": C1 the attempt - the honest host runs the
  *    falsifier's callback inside emit and the attempt reaches it; hosts that never run the callback or run it after emit returns
- *    fail; C2 the refusal - a host that applies inside emit or ends the attempt with an untyped throw fails.
+ *    fail; C2 the refusal - a host that applies inside emit, or ends the attempt untyped, fails: a throw with no code, an empty
+ *    code thrown or returned, a numeric code, a thrown null, a thrown string, an apply that carries a code.
  *  D "with ControlDirective never grown into a second controller engine": D1 the directive's members - the producer's one field in
  *    either spelling passes, a grown member fails; D2 a member naming a proposal field or a seam verb reads as a second engine.
  * OUTSIDE ANCHORS (the judged-set case): the owner filing's row of wb-km7q.1 in the tracked bead export (.beads/issues.jsonl; the
  *   first notes line opening with its citation, so appended notes never move it): its acceptance clause is the four labels joined,
  *   each label tiled by its pins; its carrier list is the seven fields, five of them reading as terms and reason and min_interval
- *   as none; its citations are the vendored charter lines at the bead pin. The title's "seven typed fields, controller_id..
- *   min_interval" counts and bounds the fields, and every seam name it and the filing spell at a fixed place (FiberOptics,
- *   temporal-controller, FO-AC3, controller proposal, controller_id, host arbiter, FiberRuntime, ControlDirective, proposal
- *   arbitration) reads as its term. So a row, a pin, a field or an anchored term removed from every literal of this file and of the
- *   roster together still reds.
- * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; rows, terms, constants, fields, the producer
- *   facts, the residuals and every pin's witness are held to the out-of-file roster (test/fixtures/
+ *   as none; its citations are the vendored charter lines at the bead pin; and the title's "seven typed fields, controller_id..
+ *   min_interval" counts and bounds the fields. Every seam name the title, the filing's artifact clause and the acceptance clause
+ *   spell is read from those texts BY ITS POSITION - TITLE_PLACES, FILING_PLACES and CLAUSE_PLACES capture it from the words
+ *   around it, and no reader spells a term - and every code-shaped spelling of the title (less its requirement tag) and of the
+ *   filing (a camelCase hump, an underscore name, an upper-case code with a digit) is read BY ITS SHAPE (CODE_SHAPE). Each place
+ *   and each shape must read as exactly one term - one finding whose words are the whole read - and a shape that is a common
+ *   field as none (unanchored; its refusals are live on term-agnostic probes). ANCHORED are the terms the places, the shapes and
+ *   the carrier read: fiber-optics, temporal-controller, fo-ac3, controller-proposal, controller-id, host-arbiter, fiber-runtime,
+ *   control-directive, proposal-arbitration, observed-versions, state-epoch, actuator-id and requested-range (13); ANCHORS pins
+ *   what the readers read today. So a row, a pin, one of the seven fields or an ANCHORED term removed from every literal of this
+ *   file and of the roster that spells it still reds the judged set through the export: the reader still finds the export's
+ *   spelling, which then reads as no term. The other five terms are SELF-ANCHORED (R-SYNONYM): so removed, they stay green.
+ * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; rows, terms, constants, the outside reads
+ *   (ANCHORS), fields, the producer facts, the residuals and every pin's witness are held to the out-of-file roster (test/fixtures/
  *   fo-controller-arbitration-roster.json); a last case reads that every pin ran to its witness.
  * RESIDUALS (named; each has a pinned quiet row in the pin it names): R-OUTSIDE-ROOTS (A1) a host under test/, docs/, vendor/ or any
  *   other directory, an ignored file, or a file of another kind (a .toml, a .json other than the root package.json) is not read;
  *   R-COMMON-WORD (A1) reason, min interval, controller, proposal, arbiter, directive, FO and AC3 alone and Pi's own observer control
- *   hooks are no term; R-COMPOSED (A1) a name assembled at run time from parts that spell no term ("fib" + "erOptics"); R-LOOKALIKE
- *   (A1) a look-alike letter inside a word (NFKC folds the fullwidth forms, which are read); R-RENDERER-HOST (A1) arbitration hosted
- *   inside rf, Pi's renderer, reached by a spawn that names no term; R-SUBPROCESS (A1) a host reached through a spawned program whose
- *   argv names no term; R-SYNONYM (A1) a term neither the title nor the filing spells is held by this file and the roster alone -
- *   removed from both together it stays green; A1 lists them; R-ADAPTER-TRUST (A2) the falsifier reads a host only through its
+ *   hooks are no term; R-COMPOSED (A1) a name assembled at run time from parts, or spelled through an escape, that reads as no
+ *   term ("fib" + "erOptics", a backslash-u escape of its F); R-LOOKALIKE (A1) a look-alike letter inside a word (NFKC folds the
+ *   fullwidth forms, which are read); R-RUN-ON (A1) a term's words run together with no case change or separator (hostarbiter,
+ *   FIBERRUNTIME) read as one word, no term (fiberoptics, the producer's one-word spelling, is itself a term); R-RENDERER-HOST
+ *   (A1) arbitration hosted inside rf, Pi's renderer, reached by a spawn that names no term; R-SUBPROCESS (A1) a host reached
+ *   through a spawned program whose argv names no term; R-SYNONYM (A1) SELF-ANCHORED: a term no outside text reads - TERMS less
+ *   the ANCHORED terms, today abort-speculative-key, committed-controller, controller-registry, fiberoptics and
+ *   proposal-disposition - is held by this file and the roster alone, so removed from every literal of both it stays green; A1
+ *   lists them, read from the export; R-ADAPTER-TRUST (A2) the falsifier reads a host only through its
  *   binding's adapter, so an adapter that hides the state it moved passes; R-LATE-APPLY (B2) an apply on a timer later than one
  *   macrotask is not seen; R-ANY-CODE (C2) a refusal is read by its non-empty code alone, whatever the code names;
  *   R-DIRECTIVE-PAYLOAD (D1) the directive is read by its member names, so a controller payload carried inside the shipped member's
  *   value passes.
  * NOT CLAIMED: that the producer's own arbiter, registry or commit boundary meet the falsifier (the producer's tests own them); the
  *   FO-AC3 gate's state; a Pi doc's description of the seam (docs are not hosts and are not read); an edit of this file and the
- *   roster together beyond the outside anchors; a scan or falsifier edited to tell the scratch plants or the synthetic hosts from
- *   Pi's own (the plants prove only the partial reads the plant list names).
+ *   roster together beyond the outside anchors - among them a reader edited to skip a place or a shape together with ANCHORS and
+ *   the roster (no reader spells a term, so a term's coordinated hollow leaves every reader standing); a scan or falsifier edited
+ *   to tell the scratch plants or the synthetic hosts from Pi's own (the plants prove only the partial reads the plant list
+ *   names).
  *
  * Display paths added: none. Test-only: the plant repository lives in makeScratch scratch with the leak guard installed; Pi's
  * modules, package.json and the bead export are only read; nothing is spawned but git.
@@ -136,6 +160,11 @@ interface Constants {
   readonly commonFields: readonly string[];
   readonly seamVerbs: readonly string[];
 }
+/** What the outside readers read from the export: the places by position, the code-shaped spellings by shape. */
+interface Anchors {
+  readonly places: readonly string[];
+  readonly shapes: readonly string[];
+}
 interface ProducerLine {
   readonly line: number;
   readonly text: string;
@@ -159,6 +188,7 @@ interface Roster {
   readonly producer: Producer;
   readonly constants: Constants;
   readonly terms: readonly Term[];
+  readonly anchors: Anchors;
   readonly proposalFields: readonly string[];
   readonly shippedFields: readonly string[];
   readonly directiveMembers: readonly string[];
@@ -202,6 +232,23 @@ const TERMS: readonly Term[] = [
   { id: "state-epoch", words: ["state", "epoch"] },
   { id: "temporal-controller", words: ["temporal", "controller"] },
 ];
+/**
+ * OUTSIDE ANCHORS, the readers: each place is captured from the words around it in the export's text, and no pattern spells a
+ * term. TITLE_TAG is the title's requirement tag, which the code-shape read skips.
+ */
+const TITLE_TAG = /^\[[^\]]*\] /;
+const TITLE_PLACES =
+  /^\[[^\]]+\] If Pi ever hosts (\S+) (\S+) arbitration \(gated (\S+)\), a (.+?) \(\w+ typed fields, (\w+)\.\.\w+\) stays inert data until Pi's (.+?) applies it; Pi never mutates controller state inside (\w+)\.emit reentrant callbacks; (\w+) stays a narrow initial seam, never a second controller engine\.$/;
+const FILING_PLACES = /; artifact (\S+) bounded controller emission and (.+?) in one host \(/;
+const CLAUSE_PLACES =
+  /^adoption-time falsifier that a proposal row is applied only via the (.+?) seam and a mutation attempted inside a (\w+)\.emit reentrant callback is refused, with (\w+) never grown into a second controller engine$/;
+/** A code-shaped spelling: a camelCase hump, an underscore name, or an upper-case code with a digit. */
+const CODE_SHAPE = /\b(?:[A-Z][a-z0-9]+(?:[A-Z][a-z0-9]+)+|[a-z][a-z0-9]*(?:_[a-z0-9]+)+|[A-Z]+[0-9]*(?:-[A-Z]+[0-9]+)+)\b/g;
+/** What the readers read today: the title's, the filing's and the clause's places, then the title's and the filing's shapes. */
+const ANCHORS: Anchors = {
+  places: ["FiberOptics", "temporal-controller", "FO-AC3", "controller proposal", "controller_id", "host arbiter", "FiberRuntime", "ControlDirective", "FO-AC3", "proposal arbitration", "host arbiter", "FiberRuntime", "ControlDirective"],
+  shapes: ["FiberOptics", "FO-AC3", "controller_id", "min_interval", "FiberRuntime", "ControlDirective", "FO-AC3", "controller_id", "observed_versions", "state_epoch", "actuator_id", "requested_range", "min_interval", "FiberRuntime", "ControlDirective"],
+};
 /** The charter's seven proposal fields (charter :20), the bead's "seven typed fields, controller_id..min_interval". */
 const PROPOSAL_FIELDS: readonly string[] = ["controller_id", "observed_versions", "state_epoch", "actuator_id", "requested_range", "reason", "min_interval"];
 /** The producer's shipped ControllerProposal fields at the pin (control.py :441-:448). */
@@ -247,6 +294,7 @@ const RESIDUALS: readonly { readonly id: string; readonly quietPin: string }[] =
   { id: "R-COMMON-WORD", quietPin: "A1" },
   { id: "R-COMPOSED", quietPin: "A1" },
   { id: "R-LOOKALIKE", quietPin: "A1" },
+  { id: "R-RUN-ON", quietPin: "A1" },
   { id: "R-RENDERER-HOST", quietPin: "A1" },
   { id: "R-SUBPROCESS", quietPin: "A1" },
   { id: "R-SYNONYM", quietPin: "A1" },
@@ -286,6 +334,12 @@ function termsIn(text: string): Hit[] {
   return out;
 }
 const termIds = (text: string): string[] => [...new Set(termsIn(text).map(hit => hit.term))].sort(byName);
+/** Whether a text reads as exactly one term: one finding, whose term's words are the text's whole word stream. */
+function isOneTerm(text: string): boolean {
+  const hits = termsIn(text);
+  const term = TERMS.find(entry => entry.id === hits[0]?.term);
+  return hits.length === 1 && term !== undefined && term.words.join(" ") === words(text).join(" ");
+}
 const kindOf = (path: string): string => {
   const dot = path.lastIndexOf(".");
   return dot <= path.lastIndexOf("/") ? "" : path.slice(dot);
@@ -428,11 +482,14 @@ function rowShape(row: Readonly<Record<string, unknown>>): string {
   }
   return "ok";
 }
-/** The malformed rows the falsifier hands a fresh host: each field missing, an extra key, a field that is not data. */
+/** The malformed rows the falsifier hands a fresh host: each field missing, an extra key, fields that are not data. */
 function malformed(row: Readonly<Record<string, unknown>>): (readonly [string, Record<string, unknown>])[] {
   const out: (readonly [string, Record<string, unknown>])[] = PROPOSAL_FIELDS.map(field => [`missing:${field}`, Object.fromEntries(Object.entries(row).filter(([key]) => key !== field && key !== shippedAs(field)))] as const);
   out.push(["extra:apply", { ...row, apply: "now" }]);
   out.push(["not-data:reason", { ...row, reason: (): string => "computed when read" }]);
+  out.push(["not-data:state_epoch", { ...row, state_epoch: Number.NaN }]);
+  out.push(["not-data:requested_range", { ...row, requested_range: [0.25, Number.POSITIVE_INFINITY] }]);
+  out.push(["not-data:observed_versions", { ...row, observed_versions: new Map([["node-a", 3]]) }]);
   return out;
 }
 /** A grown directive member that names a proposal field or a seam verb: a second controller engine. */
@@ -528,6 +585,12 @@ type Flaw =
   | "defer-callback"
   | "apply-in-emit"
   | "untyped-throw"
+  | "empty-code-throw"
+  | "empty-code-return"
+  | "numeric-code-throw"
+  | "null-throw"
+  | "string-throw"
+  | "coded-apply"
   | "any-code-throw"
   | "camel-directive"
   | "grown-directive"
@@ -543,6 +606,8 @@ class HostRefusal extends Error {
   }
 }
 const LATE_MS = 50;
+/** An attempt of kind applied that carries a code, which the coded-apply host returns inside emit without applying anything. */
+const CODED_APPLY: Attempt & { readonly code: string } = { kind: "applied", controllers: [], code: "COMMIT_IN_EMIT" };
 const ADMISSIBLE = (): Record<string, unknown> => ({ controller_id: "ctl-1", observed_versions: { "node-a": 3 }, state_epoch: 0, actuator_id: "act-1", requested_range: [0.25, 0.75], reason: "load above the band", min_interval: 1_000_000 });
 /** A host of one flaw over the honest one: rows queue at submit, the arbiter applies them, and refuses while an emit runs. */
 class SyntheticHost implements ArbiterHost {
@@ -565,6 +630,12 @@ class SyntheticHost implements ArbiterHost {
   }
   arbitrate(): Attempt {
     if (this.emitting > 0 && this.flaw === "untyped-throw") throw new TypeError("the arbiter read an unset field");
+    if (this.emitting > 0 && this.flaw === "empty-code-throw") throw new HostRefusal("");
+    if (this.emitting > 0 && this.flaw === "empty-code-return") return { kind: "refused", code: "" };
+    if (this.emitting > 0 && this.flaw === "numeric-code-throw") throw Object.assign(new Error("COMMIT_IN_EMIT"), { code: 409 });
+    if (this.emitting > 0 && this.flaw === "null-throw") throw null;
+    if (this.emitting > 0 && this.flaw === "string-throw") throw "COMMIT_IN_EMIT";
+    if (this.emitting > 0 && this.flaw === "coded-apply") return CODED_APPLY;
     if (this.emitting > 0 && this.flaw === "any-code-throw") throw new HostRefusal("ENOENT");
     if (this.emitting > 0 && this.flaw !== "apply-in-emit") return { kind: "refused", code: "COMMIT_IN_EMIT" };
     if (this.flaw === "inert-arbiter") return { kind: "applied", controllers: [] };
@@ -673,13 +744,16 @@ function plants(sizes: { readonly lines: number; readonly bytes: number; readonl
     { path: "src/zz-types.ts", text: "export type Seam = ProposalDisposition | ControllerRegistry | CommittedControllerState;\n", expect: ["1 committed-controller", "1 controller-registry", "1 proposal-disposition"], role: "type names" },
     { path: "src/zz-mixed.ts", text: 'export const actuatorId = "a";\n/* proposal arbitration */\nexport const fiberoptics = ControlDirective;\n', expect: ["1 actuator-id", "2 proposal-arbitration", "3 control-directive", "3 fiberoptics"], role: "identifier, block comment" },
     { path: "src/zz-fullwidth.ts", text: `export const name = "${fullwidth("FiberOptics")}";\n`, expect: ["1 fiber-optics"], role: "fullwidth spelling" },
+    { path: "src/zz-acronym.ts", text: "export interface IFiberRuntime {}\nexport type Hook = FOControlDirective;\n", expect: ["1 fiber-runtime", "2 control-directive"], role: "acronym run" },
     { path: "src/zz-long-last.ts", text: `${filler}export const last = FiberRuntime;\n`, expect: [`${run + 1} fiber-runtime`], role: "long, last" },
     { path: "qa/zz-long-first.mjs", text: `export const first = "host arbiter";\n${filler}`, expect: ["1 host-arbiter"], role: "long, first" },
     { path: "examples/zz-long-middle.js", text: `${filler}// state epoch\n${filler}`, expect: [`${run + 1} state-epoch`], role: "long, middle" },
     { path: "src/zz-long-line.ts", text: `export const line = "${wide} ControllerProposal ${wide}";\n`, expect: ["1 controller-proposal"], role: "long line, middle" },
     { path: "src/zz-pi-words.ts", text: "export interface ClaudeObserverControlHooks { reason: string }\nexport const MIN_INTERVAL_MS = 1;\nexport const minIntervalMs = 2;\nconst controller = new AbortController();\nexport const proposal = 'a proposal, an arbiter, a directive';\nexport const alone = 'FO alone; AC3 alone';\n", expect: [], role: "R-COMMON-WORD" },
     { path: "src/zz-composed.ts", text: 'export const name = "fib" + "erOptics";\n', expect: [], role: "R-COMPOSED" },
+    { path: "src/zz-escaped.ts", text: 'export const name = "\\u0046iberOptics";\n', expect: [], role: "R-COMPOSED" },
     { path: "src/zz-lookalike.ts", text: `export const name = "Fiber${CYRILLIC_O}ptics";\n`, expect: [], role: "R-LOOKALIKE" },
+    { path: "src/zz-run-on.ts", text: "export const hostarbiter = 1;\nexport const FIBERRUNTIME = 2;\n", expect: [], role: "R-RUN-ON" },
     { path: "src/zz-rf.ts", text: 'import { spawn } from "node:child_process";\nspawn("rf", ["render", "--view", "context"]);\n', expect: [], role: "R-RENDERER-HOST" },
     { path: "qa/zz-helper.mjs", text: 'import { spawn } from "node:child_process";\nspawn("python3", ["-m", "helper"]);\n', expect: [], role: "R-SUBPROCESS" },
     { path: "test/zz-host.test.ts", text: "import type { FiberRuntime } from './x.js';\n", expect: [], role: "R-OUTSIDE-ROOTS" },
@@ -756,27 +830,33 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     // The quiet plants: in the roots they are read and quiet; outside them, ignored or of another kind they are not read - and
     // each spells its residual's construct: the outside ones a term, the composed and look-alike ones a term once resolved.
     const quiet = tree.filter(plant => plant.role.startsWith("R-"));
-    const textOf = (role: string): string => quiet.find(plant => plant.role === role)?.text ?? "";
+    const textOf = (path: string): string => quiet.find(plant => plant.path === path)?.text ?? "";
     const outside = quiet.filter(plant => plant.role === "R-OUTSIDE-ROOTS");
     expect(outside.map(plant => termIds(plant.text).length > 0)).toEqual(outside.map(() => true));
-    const parts = /"([^"]*)" \+ "([^"]*)"/.exec(textOf("R-COMPOSED"));
-    expect([termIds(textOf("R-COMPOSED")), termIds(`${parts?.[1] ?? ""}${parts?.[2] ?? ""}`)]).toEqual([[], ["fiber-optics"]]);
-    expect([termIds(textOf("R-LOOKALIKE")), termIds(textOf("R-LOOKALIKE").replace(CYRILLIC_O, "O"))]).toEqual([[], ["fiber-optics"]]);
-    const common = words(textOf("R-COMMON-WORD"));
+    const parts = /"([^"]*)" \+ "([^"]*)"/.exec(textOf("src/zz-composed.ts"));
+    const escaped = /"((?:[^"\\]|\\.)*)"/.exec(textOf("src/zz-escaped.ts"))?.[1] ?? "";
+    const resolved: unknown = JSON.parse(`"${escaped}"`);
+    expect([termIds(textOf("src/zz-composed.ts")), termIds(`${parts?.[1] ?? ""}${parts?.[2] ?? ""}`), termIds(textOf("src/zz-escaped.ts")), termIds(typeof resolved === "string" ? resolved : "")]).toEqual([[], ["fiber-optics"], [], ["fiber-optics"]]);
+    expect([termIds(textOf("src/zz-lookalike.ts")), termIds(textOf("src/zz-lookalike.ts").replace(CYRILLIC_O, "O"))]).toEqual([[], ["fiber-optics"]]);
+    // R-RUN-ON: each run-on word is a term's words run together, and reads as no term.
+    const runOn = textOf("src/zz-run-on.ts");
+    expect([termIds(runOn), words(runOn).filter(word => TERMS.some(term => term.words.length > 1 && term.words.join("") === word))]).toEqual([[], ["hostarbiter", "fiberruntime"]]);
+    const common = words(textOf("src/zz-pi-words.ts"));
     expect(["reason", "min", "interval", "controller", "proposal", "arbiter", "directive", "hooks", "fo", "ac3"].filter(word => !common.includes(word))).toEqual([]);
-    expect([words(textOf("R-RENDERER-HOST")).includes("rf"), words(textOf("R-SUBPROCESS")).includes("python3")]).toEqual([true, true]);
+    expect([words(textOf("src/zz-rf.ts")).includes("rf"), words(textOf("qa/zz-helper.mjs")).includes("python3")]).toEqual([true, true]);
     const residuals: { [residual: string]: Json } = {};
     for (const residual of RESIDUALS.filter(entry => entry.quietPin === "A1" && entry.id !== "R-SYNONYM")) {
       residuals[residual.id] = quiet.filter(plant => plant.role === residual.id).map(plant => `${plant.path} ${planted.read.includes(plant.path) ? "read-quiet" : "unread"}`);
     }
-    // R-SYNONYM: the terms neither the title nor the filing spells, held by this file and the roster alone.
+    // R-SYNONYM: the SELF-ANCHORED terms - no outside text reads them (TERMS less the ANCHORED terms the export's places, shapes
+    // and carrier read) - held by this file and the roster alone.
     const { title, filing } = beadRow();
-    const spelled = new Set([...termIds(title), ...termIds(filing)]);
+    const anchored = anchoredTerms(title, filing);
     return {
       live: { findings: [...real.findings], unreadable: [...real.unreadable], links: [...real.links], whole: real.whole },
       plants: { read: [...planted.read], findings: planted.findings.map(finding => finding.replace(/:\d+ /, " ")), residuals },
       wholeControl: { read: [...linked.read], findings: [...linked.findings], whole: linked.whole, links: [...linked.links] },
-      synonyms: TERMS.map(term => term.id).filter(id => !spelled.has(id)),
+      synonyms: TERMS.map(term => term.id).filter(id => !anchored.has(id)),
     };
   },
   A2: async () => {
@@ -831,7 +911,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const anyCode = await falsify(synthetic("any-code-throw"));
     return {
       refusal: seen.attempt === undefined ? null : attemptJson(seen.attempt),
-      hosts: await hostsOf(["honest", "apply-in-emit", "untyped-throw"]),
+      hosts: await hostsOf(["honest", "apply-in-emit", "untyped-throw", "empty-code-throw", "empty-code-return", "numeric-code-throw", "null-throw", "string-throw", "coded-apply"]),
       anyCode: { violations: [...anyCode.violations], probe: { ...anyCode.probe } },
     };
   },
@@ -864,6 +944,23 @@ function beadRow(): { readonly title: string; readonly filing: string } {
   }
   throw new Error("bead export lacks the owner filing");
 }
+const clauseOf = (filing: string): string => /Acceptance: (.+)\.$/.exec(filing)?.[1] ?? "";
+const carrierOf = (filing: string): string[] => (/The proposal carrier is \{([^}]*)\}/.exec(filing)?.[1] ?? "").split(", ");
+/** OUTSIDE ANCHORS: the seam names the export spells, read by position (places) and by code shape (shapes). */
+function outsideReads(title: string, filing: string): Anchors {
+  const matches = [TITLE_PLACES.exec(title), FILING_PLACES.exec(filing), CLAUSE_PLACES.exec(clauseOf(filing))];
+  return {
+    places: matches.flatMap(match => (match === null ? [] : match.slice(1))),
+    shapes: [title.replace(TITLE_TAG, ""), filing].flatMap(text => [...text.matchAll(CODE_SHAPE)].map(match => match[0])),
+  };
+}
+/** The reads that do not read as exactly one term; a read that is a common field must read as none. */
+const unanchored = (reads: readonly string[]): string[] => reads.filter(read => (CONSTANTS.commonFields.includes(read) ? termsIn(read).length > 0 : !isOneTerm(read)));
+/** The ANCHORED terms: what the export's places, shapes and carrier fields read as. */
+function anchoredTerms(title: string, filing: string): Set<string> {
+  const reads = outsideReads(title, filing);
+  return new Set([...reads.places, ...reads.shapes, ...carrierOf(filing)].flatMap(termIds));
+}
 const GAP = /^[\s,;:]*$/;
 function tiled(body: string, quotes: readonly string[]): boolean {
   let at = 0;
@@ -883,35 +980,32 @@ describe("wb-km7q.1 FiberOptics controller arbitration census (SDK-REACTIVE-FIBE
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:2", "C:2", "D:2"]);
     expect(ROWS).toEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(({ id: pinId, quote }) => ({ id: pinId, quote })) })));
     expect(Object.keys(IMPL).sort(byName)).toEqual(ROWS.flatMap(row => row.pins.map(pin => pin.id)).sort(byName));
-    expect([ROSTER.bead, ROSTER.constants, ROSTER.terms, ROSTER.proposalFields, ROSTER.shippedFields, ROSTER.directiveMembers, ROSTER.residuals]).toEqual([BEAD, CONSTANTS, TERMS, PROPOSAL_FIELDS, SHIPPED_FIELDS, DIRECTIVE_MEMBERS, RESIDUALS]);
+    expect([ROSTER.bead, ROSTER.constants, ROSTER.terms, ROSTER.anchors, ROSTER.proposalFields, ROSTER.shippedFields, ROSTER.directiveMembers, ROSTER.residuals]).toEqual([BEAD, CONSTANTS, TERMS, ANCHORS, PROPOSAL_FIELDS, SHIPPED_FIELDS, DIRECTIVE_MEMBERS, RESIDUALS]);
     expect(TERMS.map(term => term.id)).toEqual(TERMS.map(term => term.words.join("-")));
     const pins = ROWS.flatMap(row => row.pins.map(pin => pin.id));
     expect(RESIDUALS.map(residual => pins.includes(residual.quietPin))).toEqual(RESIDUALS.map(() => true));
     // The owner filing: the citation line carries the acceptance clause, the four labels joined, each label tiled by its pins.
     const { title, filing } = beadRow();
-    const clause = /Acceptance: (.+)\.$/.exec(filing)?.[1] ?? "";
+    const clause = clauseOf(filing);
     expect(clause).toBe(ROWS.map(row => row.label).join(" "));
     expect(ROWS.map(row => tiled(row.label, row.pins.map(pin => pin.quote)))).toEqual(ROWS.map(() => true));
     // The carrier: the seven fields; reason and min_interval read as no term, every other field as its own.
-    const carrier = (/The proposal carrier is \{([^}]*)\}/.exec(filing)?.[1] ?? "").split(", ");
+    const carrier = carrierOf(filing);
     expect(carrier).toEqual(PROPOSAL_FIELDS);
     expect(carrier.map(field => termIds(field))).toEqual(carrier.map(field => (CONSTANTS.commonFields.includes(field) ? [] : [words(field).join("-")])));
     // The title counts and bounds the fields.
     const span = /\((\w+) typed fields, (\w+)\.\.(\w+)\)/.exec(title);
     expect([NUMBER_WORDS.indexOf(span?.[1] ?? ""), span?.[2], span?.[3]]).toEqual([PROPOSAL_FIELDS.length, PROPOSAL_FIELDS[0], PROPOSAL_FIELDS[PROPOSAL_FIELDS.length - 1]]);
-    // Every seam name the title and the filing spell at a fixed place reads as its term.
-    const places: readonly (readonly [string, RegExp, string])[] = [
-      [title, /hosts (\w+) temporal-controller arbitration/, "fiber-optics"],
-      [title, /hosts \w+ (temporal-controller) arbitration/, "temporal-controller"],
-      [title, /\(gated (FO-AC3)\)/, "fo-ac3"],
-      [title, /, a (controller proposal) \(seven/, "controller-proposal"],
-      [title, /typed fields, (controller_id)\.\./, "controller-id"],
-      [title, /until Pi's (host arbiter) applies it/, "host-arbiter"],
-      [title, /inside (FiberRuntime)\.emit reentrant callbacks/, "fiber-runtime"],
-      [title, /; (ControlDirective) stays a narrow initial seam/, "control-directive"],
-      [filing, /artifact FO-AC3 bounded controller emission and (proposal arbitration) in one host/, "proposal-arbitration"],
-    ];
-    expect(places.map(([text, rx]) => termIds(rx.exec(text)?.[1] ?? ""))).toEqual(places.map(([, , term]) => [term]));
+    // OUTSIDE ANCHORS: every seam name the export spells, read by its position and by its code shape - never by its own spelling
+    // - reads as exactly one term; ANCHORS pins what the readers read today.
+    const reads = outsideReads(title, filing);
+    expect(unanchored([...reads.places, ...reads.shapes])).toEqual([]);
+    expect(reads).toEqual(ANCHORS);
+    // The readers' refusals are live on term-agnostic probes: a word beside a term, a doubled term, and a code shape that names no
+    // term read as unanchored; a common field does not.
+    const spelled = TERMS.map(term => term.words.join(" "));
+    expect(unanchored(spelled.flatMap(text => [text, `the ${text}`, `${text} seam`, `${text} ${text}`]))).toEqual(spelled.flatMap(text => [`the ${text}`, `${text} seam`, `${text} ${text}`]));
+    expect(unanchored([..."PriorityHint priority_hint FO-AC9 min_interval".matchAll(CODE_SHAPE)].map(match => match[0]))).toEqual(["PriorityHint", "priority_hint", "FO-AC9"]);
     // The citations: every cited line is a vendored charter line at the bead pin.
     const cited = [...filing.matchAll(/:(\d+)@([0-9a-f]{12})/g)].map(match => [Number(match[1]), match[2] ?? ""] as const);
     expect(cited.map(([line]) => line)).toEqual([20, 22, 40]);
