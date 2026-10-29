@@ -1,0 +1,1051 @@
+{
+ "comment": "wb-e66.3 (MW-GRAPH-POLICY-COORDINATION-R8): the judged set of test/workbench-mw-gp-sidecar-record-census.test.ts, held out of file (standing rule 16). rows, quotes, witnesses, asserted (each pin's assertion count, its witness compare included), residuals, mutants and tests are the census's measured shape at its cut (cut #1 base df37dac; cut #2, respin 1, base e81d2b0; cut #3, respin 2, base b3d410f; cut #4, respin 3, base 1ad30c3); producer holds the filing's cited MechanicalWorkflows lines at the bead's pin 4b8b974ca72b (git show from the local checkout; the census never re-reads the producer).",
+ "bead": "wb-e66.3",
+ "rows": [
+  {
+   "id": "A",
+   "label": "a schema fixture with one positive record and one negative per omitted field",
+   "pins": [
+    "A1",
+    "A2",
+    "A3"
+   ]
+  },
+  {
+   "id": "B",
+   "label": "a parity falsifier proving proposed, admitted and executed are three distinct fields (admitted != executed survives)",
+   "pins": [
+    "B1",
+    "B2"
+   ]
+  },
+  {
+   "id": "C",
+   "label": "the resolver verdict is either admitted or one of MW's stable rejection codes (INTENT_BASIS_STALE / INTENT_SCOPE_PROTECTED / INTENT_WRITE_CONFLICT / INTENT_BUDGET_EXCEEDED / INTENT_DUPLICATE / INTENT_AUTHORITY_EXCEEDED per the wb-4ap.16 note)",
+   "pins": [
+    "C1",
+    "C2",
+    "C3"
+   ]
+  },
+  {
+   "id": "D",
+   "label": "the abstain status is its own value, never success",
+   "pins": [
+    "D1",
+    "D2"
+   ]
+  },
+  {
+   "id": "S",
+   "label": "Each R7 sidecar record shall carry as required: GP program/checkpoint snapshot hash, feature projection, actor/selector, legal support at sample time, sampled decision with behavior log probability, proposed vs admitted vs executed action with resolver verdict, source-owned effect receipt ref, verifier outcome and final feedback status; any missing field is a typed refusal, never a default",
+   "pins": [
+    "S1",
+    "S2",
+    "S3"
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the residual families R-PLACEHOLDER-VALUE, R-OPEN-RECORD, R-VALUE-SHAPE, R-CROSS-FIELD, R-COMPOSED-WORD, R-UNNAMED-SITE, R-UNSEEN-CONTEXT, R-FIELD-PARTITION, R-FIELD-RUN, R-PIN-PARTITION and R-UNREAD, each member a pinned quiet row",
+   "pins": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7",
+    "Q8",
+    "Q9",
+    "Q10",
+    "Q11"
+   ]
+  }
+ ],
+ "quotes": {
+  "A1": "a schema fixture",
+  "A2": "with one positive record",
+  "A3": "and one negative per omitted field",
+  "B1": "a parity falsifier proving proposed, admitted and executed are three distinct fields",
+  "B2": "admitted != executed survives",
+  "C1": "the resolver verdict is either admitted",
+  "C2": "or one of MW's stable rejection codes",
+  "C3": "INTENT_BASIS_STALE / INTENT_SCOPE_PROTECTED / INTENT_WRITE_CONFLICT / INTENT_BUDGET_EXCEEDED / INTENT_DUPLICATE / INTENT_AUTHORITY_EXCEEDED per the wb-4ap.16 note",
+  "D1": "the abstain status is its own value",
+  "D2": "never success",
+  "S1": "Each R7 sidecar record shall carry as required: GP program/checkpoint snapshot hash, feature projection, actor/selector, legal support at sample time, sampled decision with behavior log probability, proposed vs admitted vs executed action with resolver verdict, source-owned effect receipt ref, verifier outcome and final feedback status",
+  "S2": "any missing field is a typed refusal",
+  "S3": "never a default",
+  "Q1": "R-PLACEHOLDER-VALUE",
+  "Q2": "R-OPEN-RECORD",
+  "Q3": "R-VALUE-SHAPE",
+  "Q4": "R-CROSS-FIELD",
+  "Q5": "R-COMPOSED-WORD",
+  "Q6": "R-UNNAMED-SITE",
+  "Q7": "R-UNSEEN-CONTEXT",
+  "Q8": "R-FIELD-PARTITION",
+  "Q9": "R-FIELD-RUN",
+  "Q10": "R-PIN-PARTITION",
+  "Q11": "R-UNREAD"
+ },
+ "witnesses": {
+  "A1": {
+   "path": "test/fixtures/mw-gp-sidecar-record-schema.json",
+   "required": [
+    "snapshotHash",
+    "featureProjection",
+    "actor",
+    "selector",
+    "support",
+    "decision",
+    "behaviorLogProbability",
+    "proposed",
+    "admitted",
+    "executed",
+    "resolverVerdict",
+    "effectReceiptRef",
+    "verifierOutcome",
+    "feedbackStatus"
+   ],
+   "positive": 1,
+   "negatives": 14
+  },
+  "A2": {
+   "subjects": [
+    "reference"
+   ],
+   "positive": "accepted",
+   "carried": 14
+  },
+  "A3": [
+   "snapshotHash: refused missing-field snapshotHash",
+   "featureProjection: refused missing-field featureProjection",
+   "actor: refused missing-field actor",
+   "selector: refused missing-field selector",
+   "support: refused missing-field support",
+   "decision: refused missing-field decision",
+   "behaviorLogProbability: refused missing-field behaviorLogProbability",
+   "proposed: refused missing-field proposed",
+   "admitted: refused missing-field admitted",
+   "executed: refused missing-field executed",
+   "resolverVerdict: refused missing-field resolverVerdict",
+   "effectReceiptRef: refused missing-field effectReceiptRef",
+   "verifierOutcome: refused missing-field verifierOutcome",
+   "feedbackStatus: refused missing-field feedbackStatus"
+  ],
+  "B1": {
+   "actions": [
+    "proposed",
+    "admitted",
+    "executed"
+   ],
+   "at": [
+    7,
+    8,
+    9
+   ],
+   "falsifiers": [
+    "admitted-not-executed: partial accepted",
+    "substituted: pass accepted",
+    "three-distinct: partial accepted",
+    "verified-not-executed: pass accepted",
+    "failed-execution: fail accepted",
+    "unexecuted: not-run accepted"
+   ],
+   "holding": {
+    "all": [
+     "three-distinct",
+     "failed-execution",
+     "unexecuted"
+    ],
+    "two": [
+     "admitted-not-executed",
+     "substituted",
+     "verified-not-executed"
+    ]
+   },
+   "outcomes": [
+    "fail",
+    "not-run",
+    "partial",
+    "pass"
+   ],
+   "pairs": [
+    "proposed/admitted",
+    "proposed/executed",
+    "admitted/executed"
+   ],
+   "collapsing": [
+    "M-COLLAPSE-EXECUTED: accepted-rewritten; refused by K-PARITY",
+    "M-COLLAPSE-ADMITTED: accepted-rewritten; refused by K-PARITY, K-VERDICT",
+    "M-REFUSE-DIVERGENT: refused parity; refused by K-PARITY",
+    "M-COLLAPSE-EXECUTED-VERIFIED: accepted; refused by K-PARITY"
+   ]
+  },
+  "B2": {
+   "proposed": [
+    "a1:t1",
+    "a2:t2"
+   ],
+   "admitted": [
+    "a1:t1",
+    "a2:t2"
+   ],
+   "executed": [
+    "a1:t1"
+   ],
+   "reading": "accepted"
+  },
+  "C1": {
+   "verdict": "admitted",
+   "readings": [
+    "positive: \"admitted\" accepted",
+    "single: \"admitted\" accepted",
+    "admitted-not-executed: \"admitted\" accepted",
+    "substituted: \"admitted\" accepted",
+    "three-distinct: \"admitted\" accepted",
+    "verified-not-executed: \"admitted\" accepted",
+    "failed-execution: \"admitted\" accepted",
+    "unexecuted: \"admitted\" accepted",
+    "decline: \"admitted\" accepted"
+   ]
+  },
+  "C2": {
+   "codes": [
+    "INTENT_BASIS_STALE: accepted",
+    "INTENT_SCOPE_PROTECTED: accepted",
+    "INTENT_WRITE_CONFLICT: accepted",
+    "INTENT_BUDGET_EXCEEDED: accepted",
+    "INTENT_DUPLICATE: accepted",
+    "INTENT_AUTHORITY_EXCEEDED: accepted"
+   ],
+   "off": [
+    "refused verdict-domain \"ADMITTED\"",
+    "refused verdict-domain \"Admitted\"",
+    "refused verdict-domain \" admitted\"",
+    "refused verdict-domain \"admitted \"",
+    "refused verdict-domain \"intent_basis_stale\"",
+    "refused verdict-domain \"Intent_basis_stale\"",
+    "refused verdict-domain \" INTENT_BASIS_STALE\"",
+    "refused verdict-domain \"INTENT_BASIS_STALE \"",
+    "refused verdict-domain \"intent_scope_protected\"",
+    "refused verdict-domain \"Intent_scope_protected\"",
+    "refused verdict-domain \" INTENT_SCOPE_PROTECTED\"",
+    "refused verdict-domain \"INTENT_SCOPE_PROTECTED \"",
+    "refused verdict-domain \"intent_write_conflict\"",
+    "refused verdict-domain \"Intent_write_conflict\"",
+    "refused verdict-domain \" INTENT_WRITE_CONFLICT\"",
+    "refused verdict-domain \"INTENT_WRITE_CONFLICT \"",
+    "refused verdict-domain \"intent_budget_exceeded\"",
+    "refused verdict-domain \"Intent_budget_exceeded\"",
+    "refused verdict-domain \" INTENT_BUDGET_EXCEEDED\"",
+    "refused verdict-domain \"INTENT_BUDGET_EXCEEDED \"",
+    "refused verdict-domain \"intent_duplicate\"",
+    "refused verdict-domain \"Intent_duplicate\"",
+    "refused verdict-domain \" INTENT_DUPLICATE\"",
+    "refused verdict-domain \"INTENT_DUPLICATE \"",
+    "refused verdict-domain \"intent_authority_exceeded\"",
+    "refused verdict-domain \"Intent_authority_exceeded\"",
+    "refused verdict-domain \" INTENT_AUTHORITY_EXCEEDED\"",
+    "refused verdict-domain \"INTENT_AUTHORITY_EXCEEDED \"",
+    "refused verdict-domain \"rejected\"",
+    "refused verdict-domain \"accepted\"",
+    "refused verdict-domain \"substituted\"",
+    "refused verdict-domain \"INTENT_UNKNOWN\"",
+    "refused verdict-domain \"INTENT_\"",
+    "refused verdict-domain \"\"",
+    "refused verdict-domain \"INTENT_CLAIM_INVALID\"",
+    "refused verdict-domain 0",
+    "refused verdict-domain true",
+    "refused verdict-domain [\"admitted\"]",
+    "refused verdict-domain {\"code\":\"INTENT_DUPLICATE\"}"
+   ],
+   "bases": [
+    "positive: 39 of 39 off-domain values refused",
+    "single: 39 of 39 off-domain values refused",
+    "admitted-not-executed: 39 of 39 off-domain values refused",
+    "substituted: 39 of 39 off-domain values refused",
+    "three-distinct: 39 of 39 off-domain values refused",
+    "verified-not-executed: 39 of 39 off-domain values refused",
+    "failed-execution: 39 of 39 off-domain values refused",
+    "unexecuted: 39 of 39 off-domain values refused",
+    "INTENT_BASIS_STALE: 39 of 39 off-domain values refused",
+    "INTENT_SCOPE_PROTECTED: 39 of 39 off-domain values refused",
+    "INTENT_WRITE_CONFLICT: 39 of 39 off-domain values refused",
+    "INTENT_BUDGET_EXCEEDED: 39 of 39 off-domain values refused",
+    "INTENT_DUPLICATE: 39 of 39 off-domain values refused",
+    "INTENT_AUTHORITY_EXCEEDED: 39 of 39 off-domain values refused",
+    "decline: 39 of 39 off-domain values refused"
+   ],
+   "mutants": {
+    "M-OPEN-VERDICT": [
+     "K-VERDICT"
+    ],
+    "M-FIVE-CODES": [
+     "K-VERDICT"
+    ],
+    "M-CASE-VERDICT": [
+     "K-VERDICT"
+    ],
+    "M-NO-ADMITTED": [
+     "K-POSITIVE",
+     "K-PARITY",
+     "K-VERDICT",
+     "K-STATUS"
+    ],
+    "M-OPEN-VERDICT-UNADMITTED": [
+     "K-VERDICT"
+    ],
+    "M-LATER-CODE-UNADMITTED": [
+     "K-VERDICT"
+    ]
+   }
+  },
+  "C3": {
+   "note": [
+    "INTENT_BASIS_STALE",
+    "INTENT_SCOPE_PROTECTED",
+    "INTENT_WRITE_CONFLICT",
+    "INTENT_BUDGET_EXCEEDED",
+    "INTENT_DUPLICATE",
+    "INTENT_AUTHORITY_EXCEEDED"
+   ],
+   "producer": [
+    "INTENT_BASIS_STALE",
+    "INTENT_SCOPE_PROTECTED",
+    "INTENT_WRITE_CONFLICT",
+    "INTENT_BUDGET_EXCEEDED",
+    "INTENT_DUPLICATE",
+    "INTENT_AUTHORITY_EXCEEDED"
+   ],
+   "later": "refused verdict-domain \"INTENT_CLAIM_INVALID\"",
+   "laterBases": 15
+  },
+  "D1": {
+   "statuses": "success and abstain",
+   "record": "accepted",
+   "decision": "status abstain, chosen []",
+   "off": [
+    "refused status-domain \"SUCCESS\"",
+    "refused status-domain \"Success\"",
+    "refused status-domain \" success\"",
+    "refused status-domain \"success \"",
+    "refused status-domain \"ABSTAIN\"",
+    "refused status-domain \"Abstain\"",
+    "refused status-domain \" abstain\"",
+    "refused status-domain \"abstain \"",
+    "refused status-domain \"abstained\"",
+    "refused status-domain \"sampled\"",
+    "refused status-domain \"skip\"",
+    "refused status-domain \"none\"",
+    "refused status-domain \"failure\"",
+    "refused status-domain \"\"",
+    "refused status-domain 1",
+    "refused status-domain true",
+    "refused status-domain [\"abstain\"]",
+    "refused status-domain {\"status\":\"success\"}"
+   ],
+   "families": [
+    "off over 15 bases",
+    "choice over 15 bases",
+    "order over 15 bases"
+   ]
+  },
+  "D2": {
+   "kept": "kept abstain",
+   "statusForms": 255,
+   "choices": 195,
+   "shapes": [
+    "success choosing nothing: refused success-without-choice",
+    "success choosing a bare word: refused success-without-choice",
+    "success choosing an empty word: refused success-without-choice",
+    "success choosing a number: refused success-without-choice",
+    "success choosing a flag: refused success-without-choice",
+    "success choosing an object: refused success-without-choice",
+    "abstain choosing a pair: refused decline-with-choice",
+    "abstain choosing two pairs: refused decline-with-choice",
+    "abstain choosing a bare word: refused decline-with-choice",
+    "abstain choosing an empty word: refused decline-with-choice",
+    "abstain choosing a number: refused decline-with-choice",
+    "abstain choosing a flag: refused decline-with-choice",
+    "abstain choosing an object: refused decline-with-choice"
+   ],
+   "mutants": {
+    "M-DECLINE-AS-SUCCESS": [
+     "K-STATUS"
+    ],
+    "M-DEFAULT-STATUS": [
+     "K-FORMS"
+    ],
+    "M-EMPTY-SUCCESS": [
+     "K-STATUS"
+    ],
+    "M-DECLINE-CHOICE": [
+     "K-STATUS"
+    ],
+    "M-STRING-CHOICE": [
+     "K-STATUS"
+    ],
+    "M-EMPTY-SUCCESS-UNPROPOSED": [
+     "K-STATUS"
+    ],
+    "M-DECLINE-CHOICE-REJECTED": [
+     "K-STATUS"
+    ],
+    "M-OBJECT-CHOICE": [
+     "K-STATUS"
+    ]
+   }
+  },
+  "S1": {
+   "items": [
+    "GP program/checkpoint snapshot hash: snapshotHash",
+    "feature projection: featureProjection",
+    "actor/selector: actor, selector",
+    "legal support at sample time: support",
+    "sampled decision with behavior log probability: decision, behaviorLogProbability",
+    "proposed vs admitted vs executed action with resolver verdict: proposed, admitted, executed, resolverVerdict",
+    "source-owned effect receipt ref: effectReceiptRef",
+    "verifier outcome: verifierOutcome",
+    "final feedback status: feedbackStatus"
+   ],
+   "vocabulary": [
+    "sidecar",
+    "snapshotHash",
+    "featureProjection",
+    "behaviorLogProbability",
+    "resolverVerdict",
+    "effectReceiptRef",
+    "verifierOutcome",
+    "feedbackStatus"
+   ],
+   "findings": [],
+   "floor": true,
+   "planted": [
+    "src/workbench/gp-sidecar.ts: names sidecar",
+    "src/workbench/gp-sidecar.ts: names behaviorLogProbability",
+    "src/workbench/gp-sidecar.ts: names feedbackStatus"
+   ],
+   "pathOnly": [
+    "src/workbench/gp-sidecar/index.ts: names sidecar"
+   ],
+   "separated": [
+    "src/workbench/gp-record-keys.ts: names snapshotHash",
+    "src/workbench/gp-record-keys.ts: names featureProjection",
+    "src/workbench/gp-record-keys.ts: names resolverVerdict",
+    "src/workbench/gp-record-keys.ts: names effectReceiptRef",
+    "src/workbench/gp-record-keys.ts: names verifierOutcome",
+    "src/workbench/gp-record-keys.ts: names feedbackStatus"
+   ],
+   "registered": [],
+   "stale": [
+    "src/workbench/gp-sidecar.ts: stale registration"
+   ],
+   "twice": [
+    "src/workbench/gp-sidecar.ts: registered twice"
+   ]
+  },
+  "S2": {
+   "negative": [
+    "positive: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "single: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "admitted-not-executed: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "substituted: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "three-distinct: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "verified-not-executed: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "failed-execution: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "unexecuted: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "INTENT_BASIS_STALE: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "INTENT_SCOPE_PROTECTED: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "INTENT_WRITE_CONFLICT: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "INTENT_BUDGET_EXCEEDED: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "INTENT_DUPLICATE: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "INTENT_AUTHORITY_EXCEEDED: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "decline: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78"
+   ],
+   "forms": [
+    "positive: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "single: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "admitted-not-executed: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "substituted: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "three-distinct: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "verified-not-executed: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "failed-execution: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "unexecuted: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "INTENT_BASIS_STALE: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "INTENT_SCOPE_PROTECTED: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "INTENT_WRITE_CONFLICT: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "INTENT_BUDGET_EXCEEDED: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "INTENT_DUPLICATE: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "INTENT_AUTHORITY_EXCEEDED: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "decline: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22"
+   ],
+   "faults": [
+    "a decision lacking its status (in decision)",
+    "a decision lacking its choice (in decision)",
+    "the decision a bare word (in decision)",
+    "the off status (in decision)",
+    "the choice its status refuses (in decision)",
+    "the off verdict (in resolverVerdict)"
+   ],
+   "mixes": [
+    "absent and absent",
+    "absent and undefined",
+    "absent and null",
+    "undefined and absent",
+    "undefined and undefined",
+    "undefined and null",
+    "null and absent",
+    "null and undefined",
+    "null and null"
+   ]
+  },
+  "S3": {
+   "refused": {
+    "M-DEFAULT-FEEDBACK": [
+     "K-NEGATIVE",
+     "K-FORMS"
+    ],
+    "M-DEFAULT-LOGPROB": [
+     "K-NEGATIVE",
+     "K-FORMS"
+    ],
+    "M-ABSENT-OK": [
+     "K-NEGATIVE"
+    ],
+    "M-THIRTEEN-FIELDS": [
+     "K-NEGATIVE",
+     "K-FORMS"
+    ],
+    "M-DEFAULT-STATUS": [
+     "K-FORMS"
+    ],
+    "M-UNTYPED-REFUSAL": [
+     "K-NEGATIVE",
+     "K-FORMS"
+    ],
+    "M-REFUSAL-CARRIES-RECORD": [
+     "K-NEGATIVE",
+     "K-FORMS"
+    ],
+    "M-DEFAULT-FEEDBACK-UNVERIFIED": [
+     "K-NEGATIVE",
+     "K-FORMS"
+    ],
+    "M-DEFAULT-RECEIPT-UNEXECUTED": [
+     "K-NEGATIVE",
+     "K-FORMS"
+    ],
+    "M-DEFAULT-LOGPROB-DECLINE": [
+     "K-NEGATIVE",
+     "K-FORMS"
+    ],
+    "M-DEFAULT-CHOSEN-DECLINE": [
+     "K-FORMS"
+    ],
+    "M-DEFAULT-STATUS-EMPTY": [
+     "K-FORMS"
+    ]
+   },
+   "forms": 16950,
+   "shapes": [
+    "ok,code,field ok=false"
+   ]
+  },
+  "Q1": {
+   "members": [
+    "an empty snapshot hash",
+    "an empty feature projection",
+    "an empty support",
+    "an unknown log probability",
+    "an unknown feedback status"
+   ],
+   "readings": [
+    "an empty snapshot hash: accepted",
+    "an empty feature projection: accepted",
+    "an empty support: accepted",
+    "an unknown log probability: accepted",
+    "an unknown feedback status: accepted"
+   ]
+  },
+  "Q2": {
+   "members": [
+    "a reward",
+    "a decision id"
+   ],
+   "readings": [
+    "a reward: accepted",
+    "a decision id: accepted"
+   ]
+  },
+  "Q3": {
+   "members": [
+    "a number hash",
+    "a positive log probability",
+    "a binary32-word log probability",
+    "a string support",
+    "an object actor"
+   ],
+   "readings": [
+    "a number hash: accepted",
+    "a positive log probability: accepted",
+    "a binary32-word log probability: accepted",
+    "a string support: accepted",
+    "an object actor: accepted"
+   ]
+  },
+  "Q4": {
+   "members": [
+    "a choice outside the support",
+    "a rejection beside an admitted list",
+    "an abstain beside executed actions"
+   ],
+   "readings": [
+    "a choice outside the support: accepted",
+    "a rejection beside an admitted list: accepted",
+    "an abstain beside executed actions: accepted"
+   ]
+  },
+  "Q5": {
+   "members": [
+    "src/workbench/side-car.ts",
+    "src/workbench/behaviour.ts",
+    "src/workbench/decision-receipt.ts",
+    "src/workbench/joined.ts",
+    "src/workbench/escaped.ts",
+    "src/workbench/wrapped.ts",
+    "src/workbench/colon.ts",
+    "src/workbench/slash.ts",
+    "src/workbench/invisible.ts"
+   ],
+   "findings": []
+  },
+  "Q6": {
+   "members": [
+    "src/workbench/assignment-log.ts"
+   ],
+   "findings": []
+  },
+  "Q7": {
+   "members": [
+    "a feedback default under an unseen actor",
+    "a receipt default under an unseen feedback status",
+    "a collapse under an unseen verifier outcome",
+    "an off verdict accepted under an unseen selector",
+    "a status default under a rejection code beside a passed verifier",
+    "an abstain recorded as success beside a rejection code",
+    "a collapse under a rejection code beside divergent actions",
+    "an off verdict no list holds accepted",
+    "an off status no list holds accepted",
+    "a success's number choice no list holds accepted",
+    "the second of three missing fields named when they are not a suffix",
+    "the verdict read first beside an off status when it is an off value other than rejected"
+   ],
+   "readings": [
+    "a feedback default under an unseen actor: no check refuses it; its context record reads accepted-rewritten, the reference refused missing-field feedbackStatus",
+    "a receipt default under an unseen feedback status: no check refuses it; its context record reads accepted-rewritten, the reference refused missing-field effectReceiptRef",
+    "a collapse under an unseen verifier outcome: no check refuses it; its context record reads accepted-rewritten, the reference accepted",
+    "an off verdict accepted under an unseen selector: no check refuses it; its context record reads accepted, the reference refused verdict-domain \"rejected\"",
+    "a status default under a rejection code beside a passed verifier: no check refuses it; its context record reads accepted-rewritten, the reference refused missing-field decision.status",
+    "an abstain recorded as success beside a rejection code: no check refuses it; its context record reads accepted-rewritten, the reference accepted",
+    "a collapse under a rejection code beside divergent actions: no check refuses it; its context record reads accepted-rewritten, the reference accepted",
+    "an off verdict no list holds accepted: no check refuses it; its context record reads accepted, the reference refused verdict-domain \"approved\"",
+    "an off status no list holds accepted: no check refuses it; its context record reads accepted, the reference refused status-domain \"succeeded\"",
+    "a success's number choice no list holds accepted: no check refuses it; its context record reads accepted, the reference refused success-without-choice",
+    "the second of three missing fields named when they are not a suffix: no check refuses it; its context record reads refused missing-field support, the reference refused missing-field snapshotHash",
+    "the verdict read first beside an off status when it is an off value other than rejected: no check refuses it; its context record reads refused verdict-domain \"accepted\", the reference refused status-domain \"skip\""
+   ]
+  },
+  "Q8": {
+   "members": [
+    "G19-SPLIT-SNAP: the first item cut at its slash, gpProgram and snapshotHash",
+    "G19-MERGE-ACTSEL: actor/selector read as one field, actorSelector",
+    "the decision item read as one field, decision",
+    "the resolver verdict read into executed, executed"
+   ],
+   "readings": [
+    "G19-SPLIT-SNAP: the first item cut at its slash, gpProgram and snapshotHash: reds no reading; its contrast reds join",
+    "G19-MERGE-ACTSEL: actor/selector read as one field, actorSelector: reds no reading; its contrast reds join",
+    "the decision item read as one field, decision: reds no reading; its contrast reds join",
+    "the resolver verdict read into executed, executed: reds no reading; its contrast reds join"
+   ]
+  },
+  "Q9": {
+   "members": [
+    "G-REN-FP: featureProjection named projection",
+    "S-FIELD-HASH: snapshotHash named hash",
+    "behaviorLogProbability named logProbability",
+    "support named legalSupport"
+   ],
+   "readings": [
+    "G-REN-FP: featureProjection named projection: reds no reading; its contrast reds runs",
+    "S-FIELD-HASH: snapshotHash named hash: reds no reading; its contrast reds runs",
+    "behaviorLogProbability named logProbability: reds no reading; its contrast reds runs",
+    "support named legalSupport: reds no reading; its contrast reds runs"
+   ]
+  },
+  "Q10": {
+   "members": [
+    "C6A2: A2 merged into A1",
+    "C6B2: B2 merged into B1",
+    "C6C3: C3 merged into C2",
+    "C6D2: D2 merged into D1",
+    "C6S1: S1 merged into S2"
+   ],
+   "readings": [
+    "C6A2: A2 merged into A1: reds no reading; its contrast reds tiling A",
+    "C6B2: B2 merged into B1: reds no reading; its contrast reds tiling B",
+    "C6C3: C3 merged into C2: reds no reading; its contrast reds tiling C",
+    "C6D2: D2 merged into D1: reds no reading; its contrast reds tiling D",
+    "C6S1: S1 merged into S2: reds no reading; its contrast reds tiling S"
+   ]
+  },
+  "Q11": {
+   "members": [
+    "S-DECISION-FIELD-RENAME: the decision's second field named choice",
+    "C6Q: row Q removed whole, with every residual member",
+    "C6Q4: pin Q4 removed with its quote and members",
+    "C6-labelQ: row Q's label reworded",
+    "C6-quoteQ: Q3's quote reworded",
+    "C6-member: Q1's first member removed",
+    "S-PRODUCER-PHRASE: a phrase cut from P3's text",
+    "PL-blob: P5's blob id"
+   ],
+   "readings": [
+    "S-DECISION-FIELD-RENAME: the decision's second field named choice: reds no reading",
+    "C6Q: row Q removed whole, with every residual member: reds no reading",
+    "C6Q4: pin Q4 removed with its quote and members: reds no reading",
+    "C6-labelQ: row Q's label reworded: reds no reading",
+    "C6-quoteQ: Q3's quote reworded: reds no reading",
+    "C6-member: Q1's first member removed: reds no reading",
+    "S-PRODUCER-PHRASE: a phrase cut from P3's text: reds no reading",
+    "PL-blob: P5's blob id: reds no reading"
+   ]
+  }
+ },
+ "asserted": [
+  "A1:8",
+  "A2:4",
+  "A3:3",
+  "B1:8",
+  "B2:5",
+  "C1:3",
+  "C2:5",
+  "C3:7",
+  "D1:6",
+  "D2:7",
+  "S1:12",
+  "S2:6",
+  "S3:4",
+  "Q1:4",
+  "Q2:4",
+  "Q3:4",
+  "Q4:4",
+  "Q5:4",
+  "Q6:4",
+  "Q7:5",
+  "Q8:6",
+  "Q9:6",
+  "Q10:6",
+  "Q11:6"
+ ],
+ "residuals": {
+  "Q1": [
+   "an empty snapshot hash",
+   "an empty feature projection",
+   "an empty support",
+   "an unknown log probability",
+   "an unknown feedback status"
+  ],
+  "Q2": [
+   "a reward",
+   "a decision id"
+  ],
+  "Q3": [
+   "a number hash",
+   "a positive log probability",
+   "a binary32-word log probability",
+   "a string support",
+   "an object actor"
+  ],
+  "Q4": [
+   "a choice outside the support",
+   "a rejection beside an admitted list",
+   "an abstain beside executed actions"
+  ],
+  "Q5": [
+   "src/workbench/side-car.ts",
+   "src/workbench/behaviour.ts",
+   "src/workbench/decision-receipt.ts",
+   "src/workbench/joined.ts",
+   "src/workbench/escaped.ts",
+   "src/workbench/wrapped.ts",
+   "src/workbench/colon.ts",
+   "src/workbench/slash.ts",
+   "src/workbench/invisible.ts"
+  ],
+  "Q6": [
+   "src/workbench/assignment-log.ts"
+  ],
+  "Q7": [
+   "a feedback default under an unseen actor",
+   "a receipt default under an unseen feedback status",
+   "a collapse under an unseen verifier outcome",
+   "an off verdict accepted under an unseen selector",
+   "a status default under a rejection code beside a passed verifier",
+   "an abstain recorded as success beside a rejection code",
+   "a collapse under a rejection code beside divergent actions",
+   "an off verdict no list holds accepted",
+   "an off status no list holds accepted",
+   "a success's number choice no list holds accepted",
+   "the second of three missing fields named when they are not a suffix",
+   "the verdict read first beside an off status when it is an off value other than rejected"
+  ],
+  "Q8": [
+   "G19-SPLIT-SNAP: the first item cut at its slash, gpProgram and snapshotHash",
+   "G19-MERGE-ACTSEL: actor/selector read as one field, actorSelector",
+   "the decision item read as one field, decision",
+   "the resolver verdict read into executed, executed"
+  ],
+  "Q9": [
+   "G-REN-FP: featureProjection named projection",
+   "S-FIELD-HASH: snapshotHash named hash",
+   "behaviorLogProbability named logProbability",
+   "support named legalSupport"
+  ],
+  "Q10": [
+   "C6A2: A2 merged into A1",
+   "C6B2: B2 merged into B1",
+   "C6C3: C3 merged into C2",
+   "C6D2: D2 merged into D1",
+   "C6S1: S1 merged into S2"
+  ],
+  "Q11": [
+   "S-DECISION-FIELD-RENAME: the decision's second field named choice",
+   "C6Q: row Q removed whole, with every residual member",
+   "C6Q4: pin Q4 removed with its quote and members",
+   "C6-labelQ: row Q's label reworded",
+   "C6-quoteQ: Q3's quote reworded",
+   "C6-member: Q1's first member removed",
+   "S-PRODUCER-PHRASE: a phrase cut from P3's text",
+   "PL-blob: P5's blob id"
+  ]
+ },
+ "mutants": {
+  "M-DEFAULT-FEEDBACK": [
+   "K-NEGATIVE",
+   "K-FORMS"
+  ],
+  "M-DEFAULT-LOGPROB": [
+   "K-NEGATIVE",
+   "K-FORMS"
+  ],
+  "M-ABSENT-OK": [
+   "K-NEGATIVE"
+  ],
+  "M-THIRTEEN-FIELDS": [
+   "K-NEGATIVE",
+   "K-FORMS"
+  ],
+  "M-NULL-PRESENT": [
+   "K-NEGATIVE",
+   "K-FORMS"
+  ],
+  "M-UNDEFINED-PRESENT": [
+   "K-NEGATIVE",
+   "K-FORMS"
+  ],
+  "M-UNTYPED-REFUSAL": [
+   "K-NEGATIVE",
+   "K-FORMS"
+  ],
+  "M-REFUSAL-CARRIES-RECORD": [
+   "K-NEGATIVE",
+   "K-FORMS"
+  ],
+  "M-DEFAULT-STATUS": [
+   "K-FORMS"
+  ],
+  "M-COLLAPSE-EXECUTED": [
+   "K-PARITY"
+  ],
+  "M-COLLAPSE-ADMITTED": [
+   "K-PARITY",
+   "K-VERDICT"
+  ],
+  "M-REFUSE-DIVERGENT": [
+   "K-PARITY"
+  ],
+  "M-SINGLE-EXECUTION": [
+   "K-POSITIVE"
+  ],
+  "M-OPEN-VERDICT": [
+   "K-VERDICT"
+  ],
+  "M-FIVE-CODES": [
+   "K-VERDICT"
+  ],
+  "M-CASE-VERDICT": [
+   "K-VERDICT"
+  ],
+  "M-NO-ADMITTED": [
+   "K-POSITIVE",
+   "K-PARITY",
+   "K-VERDICT",
+   "K-STATUS"
+  ],
+  "M-DECLINE-AS-SUCCESS": [
+   "K-STATUS"
+  ],
+  "M-OPEN-STATUS": [
+   "K-STATUS"
+  ],
+  "M-REFUSE-DECLINE": [
+   "K-VERDICT",
+   "K-STATUS"
+  ],
+  "M-EMPTY-SUCCESS": [
+   "K-STATUS"
+  ],
+  "M-DECLINE-CHOICE": [
+   "K-STATUS"
+  ],
+  "M-DEFAULT-FEEDBACK-UNVERIFIED": [
+   "K-NEGATIVE",
+   "K-FORMS"
+  ],
+  "M-DEFAULT-RECEIPT-UNEXECUTED": [
+   "K-NEGATIVE",
+   "K-FORMS"
+  ],
+  "M-DEFAULT-LOGPROB-DECLINE": [
+   "K-NEGATIVE",
+   "K-FORMS"
+  ],
+  "M-DEFAULT-CHOSEN-DECLINE": [
+   "K-FORMS"
+  ],
+  "M-DEFAULT-STATUS-EMPTY": [
+   "K-FORMS"
+  ],
+  "M-COLLAPSE-EXECUTED-VERIFIED": [
+   "K-PARITY"
+  ],
+  "M-LAST-MISSING": [
+   "K-NEGATIVE",
+   "K-FORMS"
+  ],
+  "M-STRING-CHOICE": [
+   "K-STATUS"
+  ],
+  "M-VERDICT-FIRST": [
+   "K-STATUS"
+  ],
+  "M-OPEN-VERDICT-UNADMITTED": [
+   "K-VERDICT"
+  ],
+  "M-LATER-CODE-UNADMITTED": [
+   "K-VERDICT"
+  ],
+  "M-OPEN-STATUS-UNPROPOSED": [
+   "K-STATUS"
+  ],
+  "M-EMPTY-SUCCESS-UNPROPOSED": [
+   "K-STATUS"
+  ],
+  "M-DECLINE-CHOICE-REJECTED": [
+   "K-STATUS"
+  ],
+  "M-LAST-MISSING-REJECTED": [
+   "K-NEGATIVE",
+   "K-FORMS"
+  ],
+  "M-STATUS-BEFORE-MISSING": [
+   "K-NEGATIVE",
+   "K-FORMS"
+  ],
+  "M-NULLISH-AFTER-ABSENT": [
+   "K-NEGATIVE"
+  ],
+  "M-OBJECT-CHOICE": [
+   "K-STATUS"
+  ]
+ },
+ "tests": [
+  "A1: a schema fixture",
+  "A2: with one positive record",
+  "A3: and one negative per omitted field",
+  "B1: a parity falsifier proving proposed, admitted and executed are three distinct fields",
+  "B2: admitted != executed survives",
+  "C1: the resolver verdict is either admitted",
+  "C2: or one of MW's stable rejection codes",
+  "C3: INTENT_BASIS_STALE / INTENT_SCOPE_PROTECTED / INTENT_WRITE_CONFLICT / INTENT_BUDGET_EXCEEDED / INTENT_DUPLICATE / INTENT_AUTHORITY_EXCEEDED per the wb-4ap.16 note",
+  "D1: the abstain status is its own value",
+  "D2: never success",
+  "S1: Each R7 sidecar record shall carry as required: GP program/checkpoint snapshot hash, feature projection, actor/selector, legal support at sample time, sampled decision with behavior log probability, proposed vs admitted vs executed action with resolver verdict, source-owned effect receipt ref, verifier outcome and final feedback status",
+  "S2: any missing field is a typed refusal",
+  "S3: never a default",
+  "Q1: R-PLACEHOLDER-VALUE",
+  "Q2: R-OPEN-RECORD",
+  "Q3: R-VALUE-SHAPE",
+  "Q4: R-CROSS-FIELD",
+  "Q5: R-COMPOSED-WORD",
+  "Q6: R-UNNAMED-SITE",
+  "Q7: R-UNSEEN-CONTEXT",
+  "Q8: R-FIELD-PARTITION",
+  "Q9: R-FIELD-RUN",
+  "Q10: R-PIN-PARTITION",
+  "Q11: R-UNREAD",
+  "rule 16: the rows, the items and fields, the domains, the value lists, the vocabulary, the bases, the later faults, the checks and their controls, the mutants, the residual families and the registrations are frozen at their measured shape",
+  "the mutant battery: every subject passes every check, a planted registration is judged, every base is a control accepted unchanged, each mutant is refused by exactly its declared checks, and every check refuses one mutant alone",
+  "the outside anchors: every outside reading holds on the census's anchor model and every BOUND edit of that model reds the reading it names; the bead's own row binds the labels of rows A-D (its acceptance clauses) and S (its title's statement), those rows' pin quotes' text, each item's text and the join of its fields' phrases, each field name to a contiguous run of its phrase's words, the actions and their three distinct fields, ADMITTED, the codes, the statuses, the record noun and the vocabulary's composition; wb-4ap.16's note carries the six codes; the notes cite the producer pin and lines; git's src listing names no vocabulary word unregistered; how an item is cut into fields, which run of its phrase a field name takes, the pin partition, row Q, the decision's fields and the roster's producer copy are not anchored",
+  "roster: the judged rows, the quotes, the residual members, the witness and mutant keys, the assertion counts and the registered tests equal test/fixtures/mw-gp-sidecar-record-roster.json, keys in order; every pin reached its witness compare and each compare held"
+ ],
+ "producer": {
+  "repo": "MechanicalWorkflows",
+  "sha": "4b8b974ca72bf2ed36b99e315e45857c6181fbe8",
+  "lines": [
+   {
+    "id": "P1",
+    "path": "docs/programs/graph-policy-coordination-2026-10-18/README.md",
+    "blob": "0dbff582a14c13e4b4b13cb1848a23b935d92697",
+    "line": 15,
+    "through": 15,
+    "text": "Add an application-owned sidecar rather than changing `mw.training-export.v1` admission semantics. Record exact GP graph/program/checkpoint, feature projection, actor/selector, legal support at sample time, proposed vs admitted vs executed action, actual source receipt and final feedback status. Post-proposal admission is **not** original sampler support. Unknown/pending feedback cannot be invented as observed reward; global team outcome alone does not attribute causal benefit to each actor."
+   },
+   {
+    "id": "P2",
+    "path": "docs/programs/graph-policy-coordination-2026-10-18.md",
+    "blob": "01ff00d480ecd5e5f6999433612f0c713f1f72aa",
+    "line": 13,
+    "through": 13,
+    "text": "3. GP computes keyed agent/task pair logits or graph value with program/checkpoint/snapshot hash, finite resource budget and explicit abstain status."
+   },
+   {
+    "id": "P3",
+    "path": "docs/programs/graph-policy-coordination-2026-10-18.md",
+    "blob": "01ff00d480ecd5e5f6999433612f0c713f1f72aa",
+    "line": 16,
+    "through": 16,
+    "text": "6. Sidecar correlates observation, sampled decision and behavior log probability, resulting proposal, resolver verdict, source-owned effect receipt and external verifier outcome. Feedback corrections and promotion remain outside the policy's evaluation."
+   },
+   {
+    "id": "P4",
+    "path": "docs/programs/graph-policy-coordination-2026-10-18/README.md",
+    "blob": "0dbff582a14c13e4b4b13cb1848a23b935d92697",
+    "line": 23,
+    "through": 23,
+    "text": "Original Policy/reconcile laws unchanged; pure GP call, exact source ID mapping, original behavior probability, no native-effect bypass, stale result rejection, evidence sidecar parity and Forge-installed integration tests before any runtime rollout."
+   },
+   {
+    "id": "P5",
+    "path": "packages/coordination/src/resolver.ts",
+    "blob": "1da5b67c3856f4d9c12821d5fe65b827b231ad3c",
+    "line": 4,
+    "through": 10,
+    "text": "export type RejectionCode =\n  | \"INTENT_BASIS_STALE\"\n  | \"INTENT_SCOPE_PROTECTED\"\n  | \"INTENT_WRITE_CONFLICT\"\n  | \"INTENT_BUDGET_EXCEEDED\"\n  | \"INTENT_DUPLICATE\"\n  | \"INTENT_AUTHORITY_EXCEEDED\";"
+   }
+  ]
+ }
+}
