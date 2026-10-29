@@ -1,19 +1,21 @@
 /**
  * wb-2wiv.2 (SDK-UNIVERSAL-REACTIVE-RENDERING-R2, program-triage-2026-10-18), the public-port bridge census: the until-then
- * leg of a requirement whose gate is conjoint and closed. This is cut #5, authored in the enumerate-the-resolvable form that
- * refusal #4's loop cap (standing rule 19(c), 2026-10-29) and ruling R-B71 require: the armed contract claims exactly its
- * pinned members, and every host departure off them that the record knows is a member of a named residual family with a
- * pinned quiet row. Cut #2 (17583cc3, the respin of cut #1 fed17c49) reads every field of the decision rows, walks every
- * file outside three named exclusions and binds each contract part's class through a break of that part alone; cut #3
- * (6fe6865a) binds the record's first residual-family declaration; cut #4 (a86c8015) isolates the oracle clauses refusal #3
- * named. Refusal #4 (PREP F, 2026-10-29) found 13 gate host mutants that met every check on cut #4's 27 fixtures (U1 the
- * executable reader's arrays held in arrays, top-level arrays, key case and non-string key values; U2 identities rejected
- * after the duplicate check, forgotten at a resync, or borne by an announced gap or a resync; U3 a re-base lifting holds
- * within its own runtime; U4 a resync asked again after a re-gap) and two outputs no check read (U5 a diagnostic on an
- * admitted receipt, a seam call naming no message). Cut #5 pins each with a fixture member and a mutant authored red-first
- * (and pins an identity rejected for EACH other class, beyond the classes the gate named), extends the admit check to read
- * both U5 outputs and the aliased check to read the read (PREP F4's read-alias), and turns every armed-contract NOT CLAIMED
- * entry of cut #4 into a member of a residual family (Q6-Q12) with its pinned quiet row.
+ * leg of a requirement whose gate is conjoint and closed. This is cut #6, the FINAL cut, bound by ruling R-B80 (the rule-19
+ * structural exit at refusal #5, 2026-10-29) to the FAIL-CLOSED CORE: every claim is restated to exactly the pinned set its
+ * falsifiers prove, the census certifies no host outside that set, and no claim word survives without a falsifier. Cut #2
+ * (17583cc3, the respin of cut #1 fed17c49) reads every field of the decision rows, walks every file outside three named
+ * exclusions and binds each contract part's class through a break of that part alone; cut #3 (6fe6865a) binds the record's
+ * first residual-family declaration; cut #4 (a86c8015) isolates the oracle clauses refusal #3 named; cut #5 (b24217d8, the
+ * enumerate-the-resolvable form of ruling R-B71) pins refusal #4's executable, identity, hold, resync and output members and
+ * turns cut #4's armed-contract NOT CLAIMED entries into residual families (Q6-Q12). Refusal #5 (PREP F, 2026-10-29) found
+ * cut #5's aliased-check description wider than its seam half (U1: the seam half compares each call with its own message
+ * only) and four cut #4 modes neither pinned nor residual members (U2: an absent version, schema or source, and a visibility
+ * in another case). Cut #6 states the aliased check's two halves exactly, each reading with a mutant only it kills
+ * (M-SEAM-ALIAS for the seam half, which no mutant isolated before this cut; M-READ-CROSS-ALIAS and, on the new fixture
+ * F-READ-KIND, M-READ-KIND-ALIAS for the read half's every-message reading by status and by kind), drops from the claim
+ * every cut #4 mode no residual row pins, restates R-PRECEDENCE's catch-all to its four members, and makes C1 fail closed
+ * (certification). The full-surface work (the seam half read against every wire message, the four modes as residual rows)
+ * is the child bead wb-2wiv.3's.
  * Statement (the bead's tracker-export title, verbatim): "Gating artifact: released FiberOpticsSDK PublicPortBridge
  * (unshipped) + a wb-x32 committing decision connecting a Pi runtime over it; then Pi supplies the full bridge contract
  * (visibility/schema/direction through resync on gaps), keeps one authority per runtime domain, admits no private endpoint
@@ -95,9 +97,14 @@
  *    are a child, an edge and a log row planted the same way.
  *  C, O, P: the ARMED contract, binding the first host at exactly the members of the CLASS TABLE: each member is a fixture
  *    message breaking one part, beside the mutant it kills. A clause is claimed at its listed members only, so a host that
- *    departs from the oracle on no listed member is not judged by it; every such departure the record knows is a member of a
- *    residual family (Q4, Q6-Q12) with its pinned quiet row, and one found later is an addition to the family it falls under,
- *    never a widened clause. A host is one function over a negotiated contract (the endpoints, each with an owner runtime, a
+ *    departs from the oracle on no listed member is not judged by it, and there the census FAILS CLOSED (ruling R-B80): it
+ *    certifies no host outside the pinned set. A host's certification is its failed checks followed by the typed refusal
+ *    OUTSIDE_PINNED_SET, so a host that meets every check on every fixture is refused outside the pinned set and never read
+ *    as conforming there (C1 pins the refusal on the honest host, on a residual member and after a member mutant's failed
+ *    checks). The residual families (Q4, Q6-Q12) pin exactly their listed members, each with its quiet row, and claim no
+ *    other departure: one no member and no residual row pins is outside the pinned set (NOT CLAIMED names the ones the
+ *    record knows).
+ *    A host is one function over a negotiated contract (the endpoints, each with an owner runtime, a
  *    visibility, a schema and a lane and invalidation disposition; the supported versions; each remote runtime's epoch; the
  *    feedback bound), the inbound messages in delivery order (kind, endpoint, source runtime, version, schema, content
  *    digest, epoch, sequence, message identity, source revision, feedback depth, value), Pi's local values and ONE injected
@@ -110,9 +117,11 @@
  *    admit (an admitted message was rejected or answered with a diagnostic, a value message reached the seam other than once
  *    at its own endpoint with an equal value in delivery order, a signal reached it, or a seam call named no message), reject
  *    (a rejected message reached the seam or was not rejected), diagnostic, resync (the endpoints asked to resync are exactly
- *    the gapped ones, each once per call, in the order they gapped), aliased (the seam or the read holds an object the wire
- *    messages hold), merged (the read is not each runtime's own values) and the three claim checks over the label.
- *    Thirty-four fixtures; the honest host meets every check on every fixture, each of 109 mutants fails at least one, every
+ *    the gapped ones, each once per call, in the order they gapped), aliased (exactly two halves: a seam call holds an object
+ *    of the one wire message it names, its own message only, or the read holds an object of any wire message of the call,
+ *    whatever its status or kind), merged (the read is not each runtime's own values) and the three claim checks over the
+ *    label.
+ *    Thirty-five fixtures; the honest host meets every check on every fixture, each of 112 mutants fails at least one, every
  *    check fires, every check is the only check some mutant fails, and C1's witness holds each check's isolating mutants
  *    and, per mutant, the messages whose receipt it departs on.
  *    CLASS TABLE (a class with the oracle's reading of it, then its members: fixture messages that each break one part, with
@@ -169,15 +178,23 @@
  *      (M-RESYNC-SORTED).
  *    The seam and the read: M-SIGNAL-APPLIED, M-DOUBLE-APPLY, M-REJECTED-APPLIED, M-SEAM-PORT, M-SEAM-BLANK, M-SEAM-REVERSED
  *    and M-SEAM-PHANTOM, a seam call naming no message (admit or reject); M-ADMITTED-DIAGNOSTIC, a diagnostic on each
- *    admitted receipt (admit); M-SHARED-REF and M-READ-ALIAS, the wire's own object handed to the seam or kept in the read
- *    (aliased); M-SIGNAL-READ (an ack's value kept in the read: F-GAP-ACK's closing ack c5, merged); M-CODE-COLLAPSED
- *    (diagnostic), M-REFUSE-ALL. Two fixture messages break two parts each and bind two precedences: o4 (foreign authority
- *    before stale epoch: M-LOCAL-SPOOF) and F-DUPLICATE's repeated u2 (duplicate message before a gap: M-DUPLICATE); every
- *    other precedence is R-PRECEDENCE's (Q6).
+ *    admitted receipt (admit); the aliased mutants, each by the half that kills it: M-SHARED-REF (the wire's own object
+ *    handed to the seam and kept in the read: both halves), M-SEAM-ALIAS (handed to the seam only: the seam half alone),
+ *    M-READ-ALIAS (kept in the read only), M-READ-CROSS-ALIAS (the read keeps, for an admitted value message, the wire
+ *    object of an earlier rejected message with a deep-equal value, as a resend's rejected first attempt: the read half
+ *    alone, through its reading of every status) and M-READ-KIND-ALIAS (the same, only from a rejected message of a kind off
+ *    the value kinds: F-READ-KIND's effect ek1 for its snapshot ek2, the read half alone, through its reading of every kind);
+ *    M-SIGNAL-READ (an ack's value kept in the read: F-GAP-ACK's closing ack c5, merged); M-CODE-COLLAPSED (diagnostic),
+ *    M-REFUSE-ALL. Two fixture messages break
+ *    two parts each and bind two precedences: o4 (foreign authority before stale epoch: M-LOCAL-SPOOF) and F-DUPLICATE's
+ *    repeated u2 (duplicate message before a gap: M-DUPLICATE); R-PRECEDENCE (Q6) pins four more as residual members, and
+ *    no other precedence is claimed.
  *    C1 the full contract: the session fixture is admitted (the ack never applied) and its seam calls are pinned, every class
  *    is the honest host's diagnostic (so the oracle's verdict) on some message, the version, schema, digest, epoch, identity
- *    (F-DUPLICATE-SCOPE, F-DUPLICATE-REJECTED, F-GAP-IDENTITY) and feedback members' receipts are pinned in this file, and
- *    the contract-field and seam mutants each fail. C2 the gap: a detected and an announced gap are rejected until a resync,
+ *    (F-DUPLICATE-SCOPE, F-DUPLICATE-REJECTED, F-GAP-IDENTITY) and feedback members' receipts are pinned in this file, the
+ *    contract-field and seam mutants each fail, and the certification of the honest host, of a residual member (Q6's
+ *    schema-before-version) and of a member mutant (M-SIGNAL-READ, after its failed check) each ends in the typed refusal
+ *    OUTSIDE_PINNED_SET. C2 the gap: a detected and an announced gap are rejected until a resync,
  *    a snapshot after a gap re-bases the stream, each gap asks to resync once, no gapless stream is asked to resync, the
  *    other gap members' receipts and resync asks are pinned in this file, and the 26 gap and resync mutants fail. O1 one
  *    authority per runtime domain: a remote write into Pi's own endpoint, a write by a non-owner runtime and a write into
@@ -189,8 +206,9 @@
  *  N, the falsifier, one pin per claim family: no file of any root spells the family (each root at its floor, every planted
  *    control read and every quiet control quiet), the honest host's label of a two-runtime read spells no claim and names
  *    each runtime's own epoch and sequence, and the family's mutants fail: N1 order (M-ORDER-LABEL), N2 shared memory
- *    (M-SHARED-REF hands the seam the wire's own object, M-READ-ALIAS keeps it in the read, M-SHARED-LABEL), N3 implicit
- *    conflict merge (M-MERGE keys the read by port across runtimes, M-MERGE-LABEL).
+ *    (the five aliased mutants M-SHARED-REF, M-SEAM-ALIAS, M-READ-ALIAS, M-READ-CROSS-ALIAS and M-READ-KIND-ALIAS, and
+ *    M-SHARED-LABEL), N3
+ *    implicit conflict merge (M-MERGE keys the read by port across runtimes, M-MERGE-LABEL).
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and each residual family's
  * member count as literals, beside the classes, the contract parts and their breaks, the claim families, the checks, the
@@ -230,8 +248,18 @@
  * rewritten to break another part; a pin's case replaced by one that echoes its roster witness and runs the same readers; a
  * row-Q family the record's first declaration does not list (the anchor binds the declared families into row Q, not the
  * reverse; it lists Q1-Q5, so a family of Q6-Q12 removed from every literal of this file and the roster together is held by
- * no outside anchor). The armed contract claims nothing off its CLASS TABLE members, and its known off-member departures
- * are the residual families below, each member with its pinned quiet row, not NOT CLAIMED prose.
+ * no outside anchor). The armed contract claims nothing off its CLASS TABLE members and its residual rows' listed members:
+ * outside them it fails closed (C1's certification), and this file claims no departure there as judged, as a residual
+ * member or as complete. The departures the record knows outside the pinned set, each dropped from the claim and none a
+ * residual member: refusal #5's seam call holding another message's wire object (the seam half reads its own message
+ * only) and its four cut #4 modes, an absent version, an absent schema, an absent source and a visibility in another case,
+ * the five the child bead wb-2wiv.3 carries; cut #4's general entries beyond the members their rows pin (any other
+ * precedence, any other class left unjudged on a kind its members do not carry, any other absent field, an owner in
+ * another case, an invalidation word other than the contract's own, any other payload nested deeper than j3, any other
+ * state a host keeps across calls, any other label text); and refusal #5's PREP F5 survivors (identities
+ * kept for the last six admitted only, a mixed-case key read only when it opens lower-case, a callable held directly in a
+ * top-level array, an executable key in a record in an array held in an array, a callable three arrays down, a resync
+ * asked again after a re-gap that follows a snapshot, a label paraphrase outside the three claim families).
  * RESIDUALS (named families, each member a pinned quiet row; a reader that starts reading a member reds its row):
  * R-SPELLING (Q1, a spelling the mention judges do not read: an abbreviation, words split across statements, base64, a YAML
  * or TOML escape, a markdown link splitting the words, a homoglyph letter, a digit for a letter), R-INDIRECT-LOAD (Q2, a
@@ -242,7 +270,8 @@
  * (Q4, a host that changes Pi's view outside the injected seam: the armed check observes the seam only), R-PARAPHRASE (Q5, a
  * claim worded outside the three families: a total order, a single timeline, a reversed "merged automatically", a reversed
  * "memory is shared", last-writer-wins, claim words split across statements); and the armed contract's own families, each
- * member a host departure off every CLASS TABLE member, whose quiet row asserts that the member meets every check on every
+ * claiming exactly its listed members (a departure beyond them is outside the pinned set), each member a host departure
+ * off every CLASS TABLE member, whose quiet row asserts that the member meets every check on every
  * fixture, that the honest host meets every check on the member's probe (a message list outside FIXTURES, over its own
  * contract where the member needs an endpoint no fixture names), and that the member, driven over its probe twice on one
  * host instance, departs from the honest host there (so a fixture that starts killing a member, or a member made honest,
@@ -923,6 +952,8 @@ const FIXTURES: readonly Fixture[] = [
     ],
   },
   { id: "F-READ", messages: [message("r1", "browser/view", "snapshot", 1, { rows: [1, 2] }), message("r2", "server/view", "snapshot", 1, { rows: [3] })] },
+  /** The read half's kind reading: a rejected effect ek1 carries the value the admitted snapshot ek2 then applies (M-READ-KIND-ALIAS). */
+  { id: "F-READ-KIND", messages: [message("ek1", "browser/view", "effect", 1, { rows: [1] }), snap("ek2")] },
   { id: "F-VERSION", messages: [snap("v1"), delta("v2", { version: "2" }), delta("v3", { version: "0" })] },
   { id: "F-SCHEMA", messages: [snap("h1"), delta("h2", { schema: "view/v2" }), delta("h3", { schema: "status/v1" })] },
   {
@@ -1324,6 +1355,14 @@ interface Shape {
   readonly seamPhantom?: boolean;
   /** Keep the wire's own value in the read (the seam takes a copy). */
   readonly readAlias?: boolean;
+  /** Hand the seam the wire's own value while the read keeps a copy: only the aliased check's seam half reads it. */
+  readonly seamAlias?: boolean;
+  /**
+   * Keep in the read, for an admitted value message, the wire object of an earlier rejected message whose value is deep-equal,
+   * else a copy (the seam takes a copy): rejected, a message of any kind (a resend's rejected first attempt); off-kind, only a
+   * message of a kind off the value kinds (a rejected effect). Only the read half's every-message reading reads either.
+   */
+  readonly readCrossAlias?: "rejected" | "off-kind";
   /**
    * apply: no gap reading; silent: never ask to resync; resume: take the gapped sequence as the new base; ignore-announced: read no
    * announced gap; backward-ok: only a forward jump is a gap; equal-ok: a delta at the last applied sequence is admitted; lower-ok:
@@ -1422,6 +1461,7 @@ function hostOf(shape: Shape): BridgeHost {
     const marks = new Map<string, string>();
     let current: { readonly entry: Message; readonly index: number } | undefined;
     const pending: (readonly [string, unknown, number])[] = [];
+    const rejectedWire: { readonly kind: string; readonly value: unknown }[] = [];
     const toSeam = (id: string, value: unknown, index: number): void => {
       if (shape.seam === "reversed") pending.unshift([id, value, index]);
       else call.apply(id, value, index);
@@ -1435,6 +1475,7 @@ function hostOf(shape: Shape): BridgeHost {
     const identityOf = (entry: Message): string => (shape.identity === "endpoint" ? `${entry.endpoint} ${fold("identity", entry.messageId)}` : fold("identity", entry.messageId));
     const reject = (found: RejectionClass): void => {
       receipts.push({ status: "rejected", diagnostic: shape.collapse === true ? "rejected" : found });
+      if (current !== undefined) rejectedWire.push({ kind: current.entry.kind, value: current.entry.value });
       if (current !== undefined && (shape.identity === "rejected" || shape.identityRejected?.includes(found) === true)) seen.add(identityOf(current.entry));
       if (shape.rejectedApplied === true && current !== undefined) toSeam(current.entry.endpoint, copyOf(current.entry.value), current.index);
     };
@@ -1544,7 +1585,7 @@ function hostOf(shape: Shape): BridgeHost {
       }
       shape.side?.();
       const value = shape.alias === true ? entry.value : copyOf(entry.value);
-      toSeam(shape.seam === "port" ? split(endpoint.id).port : endpoint.id, shape.seam === "blank" ? {} : value, index);
+      toSeam(shape.seam === "port" ? split(endpoint.id).port : endpoint.id, shape.seam === "blank" ? {} : shape.seamAlias === true ? entry.value : value, index);
       if (shape.doubleApply === true) toSeam(endpoint.id, copyOf(entry.value), index);
       if (shape.resyncSpurious === true && kind === "snapshot") askResync(endpoint.id);
       last.set(sequenceKey(endpoint.id), entry.sequence);
@@ -1552,7 +1593,8 @@ function hostOf(shape: Shape): BridgeHost {
       if (kind === "snapshot" || kind === "resync") episode.delete(endpoint.id);
       if (shape.snapshotKeepsHold !== true || kind !== "snapshot") held.delete(holdKey(endpoint.id));
       if (shape.holdLift === kind) for (const key of [...held]) if (shape.holdLiftRuntime !== true || split(key).domain === split(endpoint.id).domain) held.delete(key);
-      remember(endpoint.id, shape.readAlias === true ? entry.value : value);
+      const kept = rejectedWire.find(item => (shape.readCrossAlias === "rejected" || (shape.readCrossAlias === "off-kind" && !VALUE_KINDS.includes(item.kind))) && isDeepStrictEqual(item.value, entry.value));
+      remember(endpoint.id, shape.readAlias === true ? entry.value : kept !== undefined ? kept.value : value);
       marks.set(endpoint.id, shape.labelUnnamed === true ? "applied" : `epoch ${entry.epoch}, sequence ${entry.sequence}`);
     }
     for (const [id, value, index] of pending) call.apply(id, value, index);
@@ -1648,6 +1690,9 @@ const MUTANTS: Readonly<Record<string, Shape>> = {
   "M-ADMITTED-DIAGNOSTIC": { admittedDiagnostic: true },
   "M-SEAM-PHANTOM": { seamPhantom: true },
   "M-READ-ALIAS": { readAlias: true },
+  "M-SEAM-ALIAS": { seamAlias: true },
+  "M-READ-CROSS-ALIAS": { readCrossAlias: "rejected" },
+  "M-READ-KIND-ALIAS": { readCrossAlias: "off-kind" },
   "M-GAP-APPLY": { gap: "apply" },
   "M-GAP-SILENT": { gap: "silent" },
   "M-GAP-RESUME": { gap: "resume" },
@@ -1694,9 +1739,23 @@ function drive(host: BridgeHost, entry: Fixture): Drive {
 const CHECKS = ["admit", "reject", "diagnostic", "resync", "aliased", "merged", "claim-order", "claim-shared", "claim-merge"] as const;
 type Check = (typeof CHECKS)[number];
 /**
+ * The aliased check's reading, exactly its two halves (ruling R-B80): the SEAM half compares each seam call's value with the
+ * value of the one wire message the call names, its own message only, so a call holding another message's wire object is not
+ * read (outside the pinned set: wb-2wiv.3 carries the seam half's extension); the READ half compares the read's values with
+ * the value of every wire message of the call, whatever its status or kind. M-SEAM-ALIAS is the mutant only the seam half
+ * kills; M-READ-ALIAS, M-READ-CROSS-ALIAS (an earlier rejected message's wire object: the status reading) and
+ * M-READ-KIND-ALIAS (a rejected effect's wire object, at F-READ-KIND: the kind reading) are the ones only the read half kills.
+ */
+function aliasedIn(entry: Fixture, run: Drive): boolean {
+  const seam = run.calls.some(call => aliases(call.value, entry.messages[call.index]?.value));
+  const read = aliases(run.journal.read.values, entry.messages.map(sent => sent.value));
+  return seam || read;
+}
+/**
  * The checks one driven fixture fails, in CHECKS order (admit: an admitted message's receipt carries no diagnostic, an admitted
  * value message reached the seam once, at its own endpoint, with an equal value, in delivery order, an admitted signal never,
- * and every seam call names a message; aliased: neither the seam nor the read holds an object the wire messages hold).
+ * and every seam call names a message; aliased: a seam call holds an object of the wire message it names, or the read holds
+ * an object of any wire message of the call - aliasedIn's two halves).
  */
 function violations(entry: Fixture, run: Drive): Check[] {
   const want = expectation(entry);
@@ -1717,8 +1776,7 @@ function violations(entry: Fixture, run: Drive): Check[] {
   if (run.calls.some((call, at) => at > 0 && call.index <= (run.calls[at - 1]?.index ?? -1))) found.add("admit");
   if (run.calls.some(call => entry.messages[call.index] === undefined)) found.add("admit");
   if (!isDeepStrictEqual(run.journal.resync, want.resync)) found.add("resync");
-  const wire = entry.messages.map(sent => sent.value);
-  if (run.calls.some(call => aliases(call.value, entry.messages[call.index]?.value)) || aliases(run.journal.read.values, wire)) found.add("aliased");
+  if (aliasedIn(entry, run)) found.add("aliased");
   if (!isDeepStrictEqual(run.journal.read.values, want.values)) found.add("merged");
   for (const family of claimsOfLabel(run.journal.read.label)) found.add(`claim-${family}`);
   return CHECKS.filter(check => found.has(check));
@@ -1728,6 +1786,18 @@ function violationsOf(host: BridgeHost): Record<string, Check[]> {
   return Object.fromEntries(FIXTURES.map(entry => [entry.id, violations(entry, drive(host, entry))] as const).filter(([, list]) => list.length > 0));
 }
 const mutant = (name: string): Record<string, Check[]> => violationsOf(hostOf(MUTANTS[name] ?? {}));
+/** The typed refusal the armed contract answers outside its pinned set (FAIL CLOSED, ruling R-B80). */
+const OUTSIDE_PINNED_SET = "refused:outside-the-pinned-set";
+/**
+ * A host's certification (FAIL CLOSED, ruling R-B80): its failed checks, each `<fixture>:<check>`, then the typed refusal
+ * OUTSIDE_PINNED_SET. The armed contract judges a host at its pinned set only and certifies nothing outside it, so every host
+ * is refused there: one that meets every check on every fixture, the honest host and a residual member included, is never
+ * read as conforming.
+ */
+function certification(host: BridgeHost): string[] {
+  const failed = Object.entries(violationsOf(host)).flatMap(([id, checks]) => checks.map(check => `${id}:${check}`));
+  return [...failed, OUTSIDE_PINNED_SET];
+}
 const formatted = (receipts: readonly Receipt[]): string[] => receipts.map(receipt => (receipt.diagnostic === undefined ? receipt.status : `${receipt.status}:${receipt.diagnostic}`));
 /** A driven fixture's receipts as `<status>` or `<status>:<diagnostic>`. */
 const receiptsOf = (run: Drive): string[] => formatted(run.journal.receipts);
@@ -1748,7 +1818,7 @@ const PERTURBATIONS: Readonly<Record<string, { readonly broken: readonly Message
   "explicit resync on gaps": { broken: [snap("t1"), message("t2", "browser/view", "delta", 3, { rows: [3] })], restored: [snap("t1"), delta("t2")] },
 };
 
-// ---- the armed contract's residual families (Q6-Q12): every known host departure off the CLASS TABLE's members ----
+// ---- the armed contract's residual families (Q6-Q12): exactly their listed host departures off the CLASS TABLE's members ----
 
 /** A residual member: a host departing from the honest one off every CLASS TABLE member, and the probe (outside FIXTURES) it departs on. */
 interface OffMember {
@@ -2179,8 +2249,20 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     return { rowRead: decisionRow !== undefined, found, fields, controls };
   },
   C1: () => {
-    const bound = BRIDGE_HOSTS.map(entry => ({ path: entry.path, violations: violationsOf(entry.host) }));
-    for (const entry of bound) expect(entry.violations, `${entry.path} meets every check`).toEqual({});
+    const bound = BRIDGE_HOSTS.map(entry => ({ path: entry.path, refusals: certification(entry.host) }));
+    for (const entry of bound) expect(entry.refusals, `${entry.path} is certified`).toEqual([]);
+    const departure = PRECEDENCE["schema-before-version"];
+    expect(departure, "Q6's schema-before-version, a known departure off every CLASS TABLE member, is a residual member").toBeDefined();
+    const certified = {
+      honest: certification(HONEST),
+      "schema-before-version": certification(hostOf(departure?.shape ?? {})),
+      "M-SIGNAL-READ": certification(hostOf(MUTANTS["M-SIGNAL-READ"] ?? {})),
+    };
+    expect(certified, "fail closed: no host is certified outside the pinned set (a host meeting every check and a residual member are refused there); a mutant's failed checks come first").toEqual({
+      honest: [OUTSIDE_PINNED_SET],
+      "schema-before-version": [OUTSIDE_PINNED_SET],
+      "M-SIGNAL-READ": ["F-GAP-ACK:merged", OUTSIDE_PINNED_SET],
+    });
     const honest = violationsOf(HONEST);
     expect(honest, "the honest host meets every check on every fixture").toEqual({});
     const judged = mapOf(MUTANTS, shape => violationsOf(hostOf(shape)));
@@ -2318,6 +2400,9 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "M-ADMITTED-DIAGNOSTIC",
       "M-SEAM-PHANTOM",
       "M-READ-ALIAS",
+      "M-SEAM-ALIAS",
+      "M-READ-CROSS-ALIAS",
+      "M-READ-KIND-ALIAS",
     ];
     const departures = mapOf(MUTANTS, shape => {
       const host = hostOf(shape);
@@ -2329,6 +2414,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     });
     return {
       bound: bound.map(entry => entry.path),
+      certified,
       fixtures: FIXTURES.map(entry => entry.id),
       verdicts,
       fired,
@@ -2496,7 +2582,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "rejected:executable-function-on-the-wire",
       "admitted",
     ]);
-    expect(receiptsOf(effect), "a remote effect request and any other kind off the wire's list are rejected").toEqual(["admitted", "rejected:unauthorized-effect", "rejected:unauthorized-effect"]);
+    expect(receiptsOf(effect), "a remote effect request and the kind invoke, off the wire's list too, are rejected").toEqual(["admitted", "rejected:unauthorized-effect", "rejected:unauthorized-effect"]);
     const sole = Object.fromEntries(
       EXECUTABLE_KEYS.map(key => [
         key,
@@ -2548,10 +2634,18 @@ const IMPL: Readonly<Record<string, () => Json>> = {
   N1: () => ({ ...falsifier("order"), "M-ORDER-LABEL": mutant("M-ORDER-LABEL") }),
   N2: () => {
     const run = drive(HONEST, fixture("F-READ"));
-    const wire = fixture("F-READ").messages.map(sent => sent.value);
-    const aliased = run.calls.some(call => aliases(call.value, fixture("F-READ").messages[call.index]?.value)) || aliases(run.journal.read.values, wire);
-    expect(aliased, "the honest host hands the seam a copy and keeps a copy in the read, never the wire's object").toBe(false);
-    return { ...falsifier("shared"), aliased, "M-SHARED-REF": mutant("M-SHARED-REF"), "M-READ-ALIAS": mutant("M-READ-ALIAS"), "M-SHARED-LABEL": mutant("M-SHARED-LABEL") };
+    const aliased = aliasedIn(fixture("F-READ"), run);
+    expect(aliased, "no seam call of the honest host holds its own message's wire object and its read holds no wire message's object").toBe(false);
+    return {
+      ...falsifier("shared"),
+      aliased,
+      "M-SHARED-REF": mutant("M-SHARED-REF"),
+      "M-SEAM-ALIAS": mutant("M-SEAM-ALIAS"),
+      "M-READ-ALIAS": mutant("M-READ-ALIAS"),
+      "M-READ-CROSS-ALIAS": mutant("M-READ-CROSS-ALIAS"),
+      "M-READ-KIND-ALIAS": mutant("M-READ-KIND-ALIAS"),
+      "M-SHARED-LABEL": mutant("M-SHARED-LABEL"),
+    };
   },
   N3: () => {
     const run = drive(HONEST, fixture("F-READ"));
@@ -2836,6 +2930,9 @@ describe(SUITE, () => {
       "M-ADMITTED-DIAGNOSTIC",
       "M-SEAM-PHANTOM",
       "M-READ-ALIAS",
+      "M-SEAM-ALIAS",
+      "M-READ-CROSS-ALIAS",
+      "M-READ-KIND-ALIAS",
       "M-GAP-APPLY",
       "M-GAP-SILENT",
       "M-GAP-RESUME",
@@ -2871,6 +2968,7 @@ describe(SUITE, () => {
     expect(FIXTURES.map(entry => `${entry.id}:${entry.messages.length}`)).toEqual([
       "F-SESSION:4",
       "F-READ:2",
+      "F-READ-KIND:2",
       "F-VERSION:3",
       "F-SCHEMA:3",
       "F-DIGEST:4",
