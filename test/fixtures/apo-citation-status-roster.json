@@ -1,0 +1,1689 @@
+{
+ "bead": "wb-021.6",
+ "producer": {
+  "repository": "MechanicalWorkflows",
+  "sha": "4b8b974ca72bf2ed36b99e315e45857c6181fbe8",
+  "readme": {
+   "path": "docs/programs/adaptive-policy-organizations-2026-10-18/README.md",
+   "blob": "512de7eeb57997a13386bef7843f651814b1307a",
+   "line1": "# Adaptive Policy Organizations — design and developer program",
+   "line3": "Date: 2026-10-18. Status: accepted design direction; documentation only. No policy-graph compiler, developmental rewrite implementation, Lean proof or production collective is claimed here."
+  },
+  "vision": {
+   "path": "docs/programs/adaptive-policy-organizations-2026-10-18/01-vision-decisions.md",
+   "blob": "c0ae12b984818b89ecbeb91d133a4ecb7842d935",
+   "line20": "## Non-goals",
+   "line21": "Handwired compiler internals; ReactiveQuery query evaluator; network transport; distributed multi-host coordination; generalized DPO rewrite library; proof of arbitrary asynchronous liveness; effectful DevTools. All remain separate owners or deferred research."
+  },
+  "readBy": "the cutting seat, read-only git show at the pin, 2026-10-29; the hermetic census never re-reads it"
+ },
+ "constants": {
+  "carriers": {
+   "statusWord": "design-stage",
+   "scopeWord": "non-effectful",
+   "statusLiteral": "accepted design direction; documentation only"
+  },
+  "patterns": [
+   "(?<![\\w-])design-stage(?![\\w-])",
+   "(?<![\\w-])non-effectful(?![\\w-])",
+   "(?<![\\w-])accepted\\s+design\\s+direction;\\s+documentation\\s+only(?![\\w-])"
+  ],
+  "negation": [
+   "\\b(?:not|never|nor|no|isn't|aren't|wasn't|weren't|formerly|previously)\\b",
+   "^\\W*(?:no longer|no more|any ?more)\\b"
+  ],
+  "owes": [
+   "block",
+   "line",
+   "string"
+  ],
+  "units": [
+   "^\\s*(?:>\\s*)*$",
+   "^\\s*(?:>\\s*)*(?:[-*+]|\\d{1,9}[.)])\\s+",
+   "^\\s{0,3}#{1,6}(?:\\s|$)",
+   "^\\s*\\|",
+   "^\\s{0,3}(?:`{3,}|~{3,})",
+   "\\.md$",
+   "\\.[cm]?[jt]sx?$"
+  ],
+  "carrierView": {
+   "unshown": [
+    "html",
+    "image",
+    "def",
+    "del",
+    "space",
+    "hr"
+   ],
+   "element": "^<\\/?[A-Za-z]",
+   "footnote": [
+    "\\[\\^[^\\]\\n]+\\]",
+    "^\\s*(?:>\\s*)*\\[\\^[^\\]\\n]+\\]:"
+   ]
+  },
+  "unreadRoots": [
+   "test/",
+   ".beads/"
+  ],
+  "locks": [
+   "package-lock.json",
+   "vendor/dependency-lock.json"
+  ],
+  "registry": "src/workbench/capability-registry.ts",
+  "effectProperty": "effectClass",
+  "read": "read",
+  "identity": "src/workbench/identity.ts",
+  "schemaLiteral": "workflow-script/v1",
+  "floors": {
+   "product": 329,
+   "docs": 106,
+   "scripts": 198,
+   "src": 117,
+   "units": 6700,
+   "strings": 15100
+  },
+  "trees": {
+   "filing": {
+    "tree": "4ae04701b750f86bd07faaad19158a58f0922e1f",
+    "scope": "every file outside .beads/",
+    "files": 707,
+    "units": 634319
+   },
+   "base": {
+    "tree": "04123dc0d0f262b7a771c6b273c97f85558ac89b",
+    "scope": "every file outside test/ and .beads/",
+    "files": 329,
+    "units": 155480
+   }
+  },
+  "bound": [],
+  "quotes": {
+   "P1": "Non-effectful scope: 'effectful DevTools' is an explicit APO non-goal ('All remain separate owners or deferred research')",
+   "E1": "so no Pi capability, view, or handler",
+   "E2": "shall grow an effect class",
+   "E3": "under this program's DevTools/workbench banner",
+   "C1": "and any future Pi doc",
+   "C2": "or surfaced string",
+   "C3": "citing adaptive-policy-organizations-2026-10-18",
+   "C4": "shall carry its design-stage status",
+   "C5": "and this non-effectful scope",
+   "G1": "absence guard",
+   "G2": "today",
+   "M1": "citation-status census",
+   "M2": "when a mention first lands"
+  },
+  "plants": {
+   "qualified": {
+    "path": "docs/workbench/zz-wb-021.6-plant.md",
+    "text": "# Plant\n\nPi reads the adaptive-policy-organizations-2026-10-18 program (design-stage, non-effectful).\n"
+   },
+   "doc": {
+    "path": "docs/workbench/zz-wb-021.6-plant.md",
+    "text": "# Plant\n\nPi reads the adaptive-policy-organizations-2026-10-18 program.\n"
+   },
+   "string": {
+    "path": "src/zz-wb-021.6-plant.ts",
+    "text": "export const TITLE = \"The adaptive-policy-organizations-2026-10-18 view\";\n"
+   },
+   "banner": {
+    "path": "src/zz-wb-021.6-banner.ts",
+    "text": "// The APO view module.\nexport const DESCRIPTOR = { id: \"view.inspect\", effectClass: \"write\" };\n"
+   }
+  },
+  "residuals": {
+   "R-SCOPE": [
+    "Q1"
+   ],
+   "R-LOCKFILE": [
+    "Q2"
+   ],
+   "R-BINARY": [
+    "Q3"
+   ],
+   "R-PATH": [
+    "Q4"
+   ],
+   "R-PARAPHRASE-CITE": [
+    "Q5"
+   ],
+   "R-GLUED": [
+    "Q6"
+   ],
+   "R-PLURAL": [
+    "Q7"
+   ],
+   "R-ENCODED": [
+    "Q8"
+   ],
+   "R-SPLIT-SOURCE": [
+    "Q9"
+   ],
+   "R-NEGATION-DISTANCE": [
+    "Q10"
+   ],
+   "R-NOT-SURFACED": [
+    "Q11"
+   ],
+   "R-OTHER-FILES": [
+    "Q12"
+   ],
+   "R-CONTRADICTION": [
+    "Q13"
+   ],
+   "R-REACH": [
+    "Q14"
+   ],
+   "R-UNBANNERED": [
+    "Q15"
+   ],
+   "R-COMPUTED-KEY": [
+    "Q16"
+   ]
+  }
+ },
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+  "the outside anchors: the bead's own row binds the rows, the pin quotes, the carriers, the citation, the filing tree and the producer lines; the src registry binds the effect classes",
+  "P1",
+  "E1",
+  "E2",
+  "E3",
+  "C1",
+  "C2",
+  "C3",
+  "C4",
+  "C5",
+  "G1",
+  "G2",
+  "M1",
+  "M2",
+  "Q1",
+  "Q2",
+  "Q3",
+  "Q4",
+  "Q5",
+  "Q6",
+  "Q7",
+  "Q8",
+  "Q9",
+  "Q10",
+  "Q11",
+  "Q12",
+  "Q13",
+  "Q14",
+  "Q15",
+  "Q16",
+  "the registered tests and the reached pins equal the roster, in order and both ways"
+ ],
+ "rows": [
+  {
+   "id": "P",
+   "label": "Non-effectful scope: 'effectful DevTools' is an explicit APO non-goal ('All remain separate owners or deferred research')",
+   "pins": [
+    {
+     "id": "P1",
+     "witness": {
+      "nonGoals": [
+       "Handwired compiler internals",
+       "ReactiveQuery query evaluator",
+       "network transport",
+       "distributed multi-host coordination",
+       "generalized DPO rewrite library",
+       "proof of arbitrary asynchronous liveness",
+       "effectful DevTools"
+      ],
+      "closing": "All remain separate owners or deferred research.",
+      "status": "accepted design direction; documentation only",
+      "scopeWord": "non-effectful",
+      "controls": [
+       {
+        "id": "restated",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 (Status: accepted design direction; documentation only): its views are non-effectful.",
+        "causes": []
+       },
+       {
+        "id": "non-goal-quoted",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 (design-stage) lists 'effectful DevTools' among its non-goals.",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "closing-quoted",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 (design-stage): All remain separate owners or deferred research.",
+        "causes": [
+         "scope"
+        ]
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "E",
+   "label": "so no Pi capability, view, or handler shall grow an effect class under this program's DevTools/workbench banner",
+   "pins": [
+    {
+     "id": "E1",
+     "witness": {
+      "scope": "src",
+      "walkIsTracked": true,
+      "floor": 117,
+      "registry": [
+       "read",
+       "write",
+       "external",
+       "unknown"
+      ],
+      "banner": [
+       "src/zz-wb-021.6-banner.ts"
+      ],
+      "findings": [
+       "src/zz-wb-021.6-banner.ts:2 effect-class:write"
+      ]
+     }
+    },
+    {
+     "id": "E2",
+     "witness": {
+      "effectful": [
+       "write",
+       "external",
+       "unknown"
+      ],
+      "controls": [
+       {
+        "id": "read",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const D = { effectClass: \"read\" };",
+        "causes": []
+       },
+       {
+        "id": "registry-write",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const D = { effectClass: \"write\" };",
+        "causes": [
+         "effect-class:write"
+        ]
+       },
+       {
+        "id": "registry-external",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const D = { effectClass: \"external\" };",
+        "causes": [
+         "effect-class:external"
+        ]
+       },
+       {
+        "id": "registry-unknown",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const D = { effectClass: \"unknown\" };",
+        "causes": [
+         "effect-class:unknown"
+        ]
+       },
+       {
+        "id": "invented",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const D = { effectClass: \"admin\" };",
+        "causes": [
+         "effect-class:admin"
+        ]
+       },
+       {
+        "id": "read-as-const",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const D = { effectClass: \"read\" as const };",
+        "causes": []
+       },
+       {
+        "id": "read-satisfies",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const D = { effectClass: \"read\" satisfies string };",
+        "causes": []
+       },
+       {
+        "id": "parenthesized",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const D = { effectClass: (\"write\") };",
+        "causes": [
+         "effect-class:write"
+        ]
+       },
+       {
+        "id": "template",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const D = { effectClass: `write` };",
+        "causes": [
+         "effect-class:write"
+        ]
+       },
+       {
+        "id": "variable",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nconst C = \"read\";\nexport const D = { effectClass: C };",
+        "causes": [
+         "effect-class:non-literal"
+        ]
+       },
+       {
+        "id": "conditional",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const f = (flag: boolean) => ({ effectClass: flag ? \"read\" : \"write\" });",
+        "causes": [
+         "effect-class:non-literal"
+        ]
+       },
+       {
+        "id": "shorthand",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nconst effectClass = \"write\";\nexport const D = { effectClass };",
+        "causes": [
+         "effect-class:non-literal"
+        ]
+       },
+       {
+        "id": "quoted-key",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const D = { \"effectClass\": \"write\" };",
+        "causes": [
+         "effect-class:write"
+        ]
+       },
+       {
+        "id": "computed-literal-key",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const D = { [\"effectClass\"]: \"external\" };",
+        "causes": [
+         "effect-class:external"
+        ]
+       },
+       {
+        "id": "member-assignment",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const D = { id: \"x\" } as { id: string; effectClass?: string };\nD.effectClass = \"unknown\";",
+        "causes": [
+         "effect-class:unknown"
+        ]
+       },
+       {
+        "id": "element-assignment",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const D: Record<string, string> = {};\nD[\"effectClass\"] = \"write\";",
+        "causes": [
+         "effect-class:write"
+        ]
+       },
+       {
+        "id": "class-field",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport class V { effectClass = \"write\"; }",
+        "causes": [
+         "effect-class:write"
+        ]
+       },
+       {
+        "id": "class-field-read",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport class V { readonly effectClass = \"read\"; }",
+        "causes": []
+       },
+       {
+        "id": "register",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nregistry.register({ descriptor: { id: \"view.inspect\", effectClass: \"external\" } });",
+        "causes": [
+         "effect-class:external"
+        ]
+       },
+       {
+        "id": "type-only",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport interface V { effectClass: \"write\" | \"read\"; }",
+        "causes": []
+       },
+       {
+        "id": "comparison",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const f = (d: { effectClass: string }) => d.effectClass === \"write\";",
+        "causes": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "E3",
+     "witness": {
+      "controls": [
+       {
+        "id": "unbannered",
+        "path": "src/x.ts",
+        "text": "export const D = { effectClass: \"write\" };",
+        "causes": []
+       },
+       {
+        "id": "line-comment",
+        "path": "src/x.ts",
+        "text": "// An APO view.\nexport const D = { effectClass: \"write\" };",
+        "causes": [
+         "effect-class:write"
+        ]
+       },
+       {
+        "id": "block-comment",
+        "path": "src/x.ts",
+        "text": "/* adaptive-policy-organizations view */\nexport const D = { effectClass: \"write\" };",
+        "causes": [
+         "effect-class:write"
+        ]
+       },
+       {
+        "id": "jsdoc",
+        "path": "src/x.ts",
+        "text": "/** The adaptive policy organizations view. */\nexport const D = { effectClass: \"write\" };",
+        "causes": [
+         "effect-class:write"
+        ]
+       },
+       {
+        "id": "trailing-comment",
+        "path": "src/x.ts",
+        "text": "export const D = { effectClass: \"write\" }; // APO",
+        "causes": [
+         "effect-class:write"
+        ]
+       },
+       {
+        "id": "identifier",
+        "path": "src/x.ts",
+        "text": "export const apoView = 1;\nexport const D = { effectClass: \"write\" };",
+        "causes": [
+         "effect-class:write"
+        ]
+       },
+       {
+        "id": "qualified-string",
+        "path": "src/x.ts",
+        "text": "export const T = \"APO view (design-stage, non-effectful)\";\nexport const D = { effectClass: \"write\" };",
+        "causes": [
+         "effect-class:write"
+        ]
+       },
+       {
+        "id": "unqualified-string",
+        "path": "src/x.ts",
+        "text": "export const T = \"APO view\";\nexport const D = { effectClass: \"write\" };",
+        "causes": [
+         "status",
+         "scope",
+         "effect-class:write"
+        ]
+       },
+       {
+        "id": "requirement-id",
+        "path": "src/x.ts",
+        "text": "// MW-ADAPTIVE-POLICY-ORGANIZATIONS-R1\nexport const D = { effectClass: \"write\" };",
+        "causes": [
+         "effect-class:write"
+        ]
+       },
+       {
+        "id": "nested-src",
+        "path": "src/workbench/views/x.ts",
+        "text": "// An APO view.\nexport const D = { effectClass: \"write\" };",
+        "causes": [
+         "effect-class:write"
+        ]
+       },
+       {
+        "id": "qa-script",
+        "path": "qa/x.mjs",
+        "text": "// An APO view.\nexport const D = { effectClass: \"write\" };",
+        "causes": []
+       },
+       {
+        "id": "examples-script",
+        "path": "examples/x.js",
+        "text": "// An APO view.\nexport const D = { effectClass: \"write\" };",
+        "causes": []
+       },
+       {
+        "id": "src-markdown",
+        "path": "src/x.md",
+        "text": "The APO view (design-stage, non-effectful).\n\neffectClass: write\n",
+        "causes": []
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "and any future Pi doc or surfaced string citing adaptive-policy-organizations-2026-10-18 shall carry its design-stage status and this non-effectful scope",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "scope": "every markdown file",
+      "walkIsTracked": true,
+      "floor": 106,
+      "unitFloor": 6700,
+      "pagesOpenH1": true,
+      "receiptsOpenTitle": true,
+      "findings": [
+       "docs/workbench/zz-wb-021.6-plant.md:3 status",
+       "docs/workbench/zz-wb-021.6-plant.md:3 scope"
+      ],
+      "controls": [
+       {
+        "id": "same-block",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18\nis design-stage and non-effectful.",
+        "causes": []
+       },
+       {
+        "id": "blank-line-apart",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 program.\n\nIt is design-stage and non-effectful.",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "list-items",
+        "path": "docs/workbench/x.md",
+        "text": "- adaptive-policy-organizations-2026-10-18 program\n- design-stage, non-effectful",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "list-continuation",
+        "path": "docs/workbench/x.md",
+        "text": "- adaptive-policy-organizations-2026-10-18 program,\n  design-stage and non-effectful",
+        "causes": []
+       },
+       {
+        "id": "heading-carriers",
+        "path": "docs/workbench/x.md",
+        "text": "## The design-stage, non-effectful program\nadaptive-policy-organizations-2026-10-18 binds Pi.",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "heading-cites",
+        "path": "docs/workbench/x.md",
+        "text": "## The adaptive-policy-organizations-2026-10-18 program (design-stage, non-effectful)",
+        "causes": []
+       },
+       {
+        "id": "table-rows",
+        "path": "docs/workbench/x.md",
+        "text": "| adaptive-policy-organizations-2026-10-18 | x |\n| design-stage, non-effectful | y |",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "table-row",
+        "path": "docs/workbench/x.md",
+        "text": "| adaptive-policy-organizations-2026-10-18 | design-stage | non-effectful |",
+        "causes": []
+       },
+       {
+        "id": "fence",
+        "path": "docs/workbench/x.md",
+        "text": "```\nadaptive-policy-organizations-2026-10-18\ndesign-stage, non-effectful\n```",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "blockquote-blank",
+        "path": "docs/workbench/x.md",
+        "text": "> adaptive-policy-organizations-2026-10-18\n>\n> design-stage, non-effectful",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "html-comment",
+        "path": "docs/workbench/x.md",
+        "text": "<!-- adaptive-policy-organizations-2026-10-18 -->",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "comment-across-blocks",
+        "path": "docs/workbench/x.md",
+        "text": "<!-- design-stage\n\nnote\n\nnon-effectful -->\nPi reads the adaptive-policy-organizations-2026-10-18 program.",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "html-block",
+        "path": "docs/workbench/x.md",
+        "text": "<div hidden>\nPi reads the adaptive-policy-organizations-2026-10-18 program (design-stage, non-effectful).\n</div>",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "code-block",
+        "path": "docs/workbench/x.md",
+        "text": "An example:\n\n    adaptive-policy-organizations-2026-10-18 (design-stage, non-effectful) <!-- -->",
+        "causes": []
+       },
+       {
+        "id": "root-page",
+        "path": "README.md",
+        "text": "Pi reads the adaptive-policy-organizations-2026-10-18 program.",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "agent-page",
+        "path": ".pi/agents/x.md",
+        "text": "Pi reads the adaptive-policy-organizations-2026-10-18 program.",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "feedback-page",
+        "path": "new-feedback/x.md",
+        "text": "Pi reads the adaptive-policy-organizations-2026-10-18 program (design-stage, non-effectful).",
+        "causes": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "scope": "every script",
+      "floor": 198,
+      "stringFloor": 15100,
+      "schemaLiteralHolders": [
+       "src/workbench/identity.ts"
+      ],
+      "findings": [
+       "src/zz-wb-021.6-plant.ts:1 status",
+       "src/zz-wb-021.6-plant.ts:1 scope"
+      ],
+      "controls": [
+       {
+        "id": "qualified",
+        "path": "src/x.ts",
+        "text": "export const T = \"adaptive-policy-organizations-2026-10-18 (design-stage, non-effectful)\";",
+        "causes": []
+       },
+       {
+        "id": "bare",
+        "path": "src/x.ts",
+        "text": "export const T = \"adaptive-policy-organizations-2026-10-18\";",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "status-only",
+        "path": "src/x.ts",
+        "text": "export const T = \"adaptive-policy-organizations-2026-10-18 (design-stage)\";",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "scope-only",
+        "path": "src/x.ts",
+        "text": "export const T = \"adaptive-policy-organizations-2026-10-18 (non-effectful)\";",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "single-quoted",
+        "path": "src/x.ts",
+        "text": "export const T = 'adaptive-policy-organizations-2026-10-18';",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "template",
+        "path": "src/x.ts",
+        "text": "export const T = `adaptive-policy-organizations-2026-10-18 design-stage non-effectful`;",
+        "causes": []
+       },
+       {
+        "id": "template-substitution",
+        "path": "src/x.ts",
+        "text": "const S = \"design-stage, non-effectful\";\nexport const T = `adaptive-policy-organizations-2026-10-18 ${S}`;",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "cooked-escape",
+        "path": "src/x.ts",
+        "text": "export const T = \"The \\u0041PO view\";",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "split-carriers",
+        "path": "src/x.ts",
+        "text": "export const T = \"adaptive-policy-organizations-2026-10-18 (design-stage)\";\nexport const U = \"non-effectful\";",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "property-key",
+        "path": "src/x.ts",
+        "text": "export const T = { \"apo.view\": 1 };",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "regex",
+        "path": "src/x.ts",
+        "text": "export const R = /adaptive-policy-organizations/;",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "qa-string",
+        "path": "qa/workbench/x.mjs",
+        "text": "console.log(\"adaptive-policy-organizations-2026-10-18\");",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "examples-string",
+        "path": "examples/x.js",
+        "text": "export const T = \"adaptive-policy-organizations-2026-10-18 (design-stage, non-effectful)\";",
+        "causes": []
+       },
+       {
+        "id": "root-config",
+        "path": "vitest.x.config.ts",
+        "text": "export default { name: \"adaptive-policy-organizations-2026-10-18\" };",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "abbreviation": "apo",
+      "slug": [
+       [
+        "adaptive"
+       ],
+       [
+        "policy",
+        "policies"
+       ],
+       [
+        "organization",
+        "organizations",
+        "organisation",
+        "organisations"
+       ]
+      ],
+      "programId": "adaptive-policy-organizations-2026-10-18",
+      "controls": [
+       {
+        "id": "program-id",
+        "path": "docs/workbench/x.md",
+        "text": "Pi reads adaptive-policy-organizations-2026-10-18.",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "title-case",
+        "path": "docs/workbench/x.md",
+        "text": "The Adaptive Policy Organizations program.",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "camel",
+        "path": "docs/workbench/x.md",
+        "text": "The AdaptivePolicyOrganizations program.",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "underscore",
+        "path": "docs/workbench/x.md",
+        "text": "The adaptive_policy_organizations program.",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "upper",
+        "path": "docs/workbench/x.md",
+        "text": "The ADAPTIVE-POLICY-ORGANIZATIONS program.",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "singular",
+        "path": "docs/workbench/x.md",
+        "text": "An adaptive policy organization.",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "british-plural",
+        "path": "docs/workbench/x.md",
+        "text": "Adaptive policies organisations.",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "line-wrapped",
+        "path": "docs/workbench/x.md",
+        "text": "The adaptive-\npolicy-organizations program.",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "markdown-escaped",
+        "path": "docs/workbench/x.md",
+        "text": "The adaptive\\-policy\\-organizations program.",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "abbreviation",
+        "path": "docs/workbench/x.md",
+        "text": "The APO views.",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "abbreviation-lower",
+        "path": "docs/workbench/x.md",
+        "text": "The apo views.",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "abbreviation-id",
+        "path": "docs/workbench/x.md",
+        "text": "The APO-020 view classes.",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "source-tag",
+        "path": "docs/workbench/x.md",
+        "text": "Filed from apo-pi-wb-08.",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "possessive",
+        "path": "docs/workbench/x.md",
+        "text": "The APO's views.",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "requirement-id",
+        "path": "docs/workbench/x.md",
+        "text": "MW-ADAPTIVE-POLICY-ORGANIZATIONS-R8 binds Pi.",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "link-destination",
+        "path": "docs/workbench/x.md",
+        "text": "Pi reads [the program](https://example.invalid/adaptive-policy-organizations-2026-10-18).",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "comment-only",
+        "path": "docs/workbench/x.md",
+        "text": "Pi reads the program. <!-- adaptive-policy-organizations -->",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "apology",
+        "path": "docs/workbench/x.md",
+        "text": "An apology to capo Apollo.",
+        "causes": []
+       },
+       {
+        "id": "two-words",
+        "path": "docs/workbench/x.md",
+        "text": "Adaptive policies and policy organizations.",
+        "causes": []
+       },
+       {
+        "id": "research-program",
+        "path": "docs/workbench/x.md",
+        "text": "The adaptive organizational compositionality inquiry.",
+        "causes": []
+       },
+       {
+        "id": "other-program",
+        "path": "docs/workbench/x.md",
+        "text": "The MW cac-workflow-composition-2026-10-18 program.",
+        "causes": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "C4",
+     "witness": {
+      "word": "design-stage",
+      "literal": "accepted design direction; documentation only",
+      "controls": [
+       {
+        "id": "lower",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design-stage and non-effectful.",
+        "causes": []
+       },
+       {
+        "id": "capital",
+        "path": "docs/workbench/x.md",
+        "text": "Design-stage and non-effectful: adaptive-policy-organizations-2026-10-18.",
+        "causes": []
+       },
+       {
+        "id": "upper",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18: DESIGN-STAGE, non-effectful.",
+        "causes": []
+       },
+       {
+        "id": "absent",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is a non-effectful design.",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "unhyphenated",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design stage and non-effectful.",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "not",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is not design-stage; it is non-effectful.",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "no-longer",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is no longer design-stage; it is non-effectful.",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "trailing-no-longer",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is non-effectful and design-stage no longer.",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "prefixed",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is pre-design-stage and non-effectful.",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "suffixed",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design-stage-ish and non-effectful.",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "one-of-two",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is not design-stage; it is design-stage and non-effectful.",
+        "causes": []
+       },
+       {
+        "id": "literal",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 (Status: accepted design direction; documentation only) is non-effectful.",
+        "causes": []
+       },
+       {
+        "id": "literal-capital",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18: Accepted design direction; documentation only. It is non-effectful.",
+        "causes": []
+       },
+       {
+        "id": "literal-wrapped",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18: accepted design\ndirection; documentation only; non-effectful.",
+        "causes": []
+       },
+       {
+        "id": "literal-comma",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18: accepted design direction, documentation only; non-effectful.",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "literal-fragment",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18: documentation only; non-effectful.",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "literal-negated",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is not accepted design direction; documentation only; non-effectful.",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "literal-prefixed",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18: unaccepted design direction; documentation only; non-effectful.",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "comment",
+        "path": "docs/workbench/x.md",
+        "text": "Pi reads the adaptive-policy-organizations-2026-10-18 program (non-effectful). <!-- design-stage -->",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "link-destination",
+        "path": "docs/workbench/x.md",
+        "text": "Pi reads the [adaptive-policy-organizations-2026-10-18 program](https://example.invalid/design-stage) (non-effectful).",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "link-title",
+        "path": "docs/workbench/x.md",
+        "text": "Pi reads the [adaptive-policy-organizations-2026-10-18 program](https://example.invalid \"design-stage\") (non-effectful).",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "image-alt",
+        "path": "docs/workbench/x.md",
+        "text": "![design-stage](status.png) Pi reads the adaptive-policy-organizations-2026-10-18 program (non-effectful).",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "element",
+        "path": "docs/workbench/x.md",
+        "text": "Pi reads the adaptive-policy-organizations-2026-10-18 program (non-effectful). <span hidden>design-stage</span>",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "struck",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is ~~design-stage~~ and non-effectful.",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "footnote-label",
+        "path": "docs/workbench/x.md",
+        "text": "Pi reads the adaptive-policy-organizations-2026-10-18 program[^design-stage] (non-effectful).\n\n[^design-stage]: A note.",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "shown-link-text",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is [design-stage](https://example.invalid) and non-effectful.",
+        "causes": []
+       },
+       {
+        "id": "shown-code-span",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is `design-stage` and non-effectful.",
+        "causes": []
+       },
+       {
+        "id": "shown-emphasis",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is *design-stage* and non-effectful.",
+        "causes": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "C5",
+     "witness": {
+      "word": "non-effectful",
+      "controls": [
+       {
+        "id": "lower",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design-stage and non-effectful.",
+        "causes": []
+       },
+       {
+        "id": "capital",
+        "path": "docs/workbench/x.md",
+        "text": "Non-effectful and design-stage: adaptive-policy-organizations-2026-10-18.",
+        "causes": []
+       },
+       {
+        "id": "upper",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18: design-stage, NON-EFFECTFUL.",
+        "causes": []
+       },
+       {
+        "id": "absent",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design-stage.",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "effectful",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design-stage and effectful.",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "spaced",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design-stage and non effectful.",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "glued",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design-stage and noneffectful.",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "camel",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design-stage and nonEffectful.",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "paraphrase",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design-stage and read-only, with no effect capability.",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "not",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design-stage and not non-effectful.",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "never",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design-stage, never non-effectful.",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "no-longer",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design-stage and no longer non-effectful.",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "trailing-anymore",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design-stage and non-effectful anymore.",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "suffixed",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design-stage and non-effectful-ish.",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "one-of-two",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design-stage; never non-effectful? It is non-effectful.",
+        "causes": []
+       },
+       {
+        "id": "comment",
+        "path": "docs/workbench/x.md",
+        "text": "Pi reads the adaptive-policy-organizations-2026-10-18 program (design-stage). <!-- non-effectful -->",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "link-title",
+        "path": "docs/workbench/x.md",
+        "text": "Pi reads the [adaptive-policy-organizations-2026-10-18 program](https://example.invalid \"non-effectful\") (design-stage).",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "struck",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design-stage and ~~non-effectful~~.",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "image-alt",
+        "path": "docs/workbench/x.md",
+        "text": "![non-effectful](scope.png) adaptive-policy-organizations-2026-10-18 (design-stage).",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "shown-link-text",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design-stage and [non-effectful](https://example.invalid).",
+        "causes": []
+       },
+       {
+        "id": "shown-code-span",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design-stage and `non-effectful`.",
+        "causes": []
+       },
+       {
+        "id": "src-string",
+        "path": "src/x.ts",
+        "text": "export const T = \"adaptive-policy-organizations-2026-10-18 is design-stage and non-effectful\";",
+        "causes": []
+       },
+       {
+        "id": "src-string-bare",
+        "path": "src/x.ts",
+        "text": "export const T = \"adaptive-policy-organizations-2026-10-18 is design-stage\";",
+        "causes": [
+         "scope"
+        ]
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G",
+   "label": "absence guard today",
+   "pins": [
+    {
+     "id": "G1",
+     "witness": {
+      "scope": "every file git would commit outside test/ and .beads/",
+      "floor": 329,
+      "locks": [
+       "package-lock.json",
+       "vendor/dependency-lock.json"
+      ],
+      "bound": [],
+      "citing": [
+       "docs/workbench/zz-wb-021.6-plant.md:3"
+      ],
+      "binding": [
+       "docs/workbench/zz-wb-021.6-plant.md:3 unbound"
+      ]
+     }
+    },
+    {
+     "id": "G2",
+     "witness": {
+      "readings": [
+       {
+        "name": "filing",
+        "tree": "4ae04701b750f86bd07faaad19158a58f0922e1f",
+        "scope": "every file outside .beads/",
+        "files": 707,
+        "units": 634319,
+        "citing": [
+         "docs/workbench/zz-wb-021.6-plant.md:3"
+        ],
+        "findings": [
+         "docs/workbench/zz-wb-021.6-plant.md:3 status",
+         "docs/workbench/zz-wb-021.6-plant.md:3 scope"
+        ]
+       },
+       {
+        "name": "base",
+        "tree": "04123dc0d0f262b7a771c6b273c97f85558ac89b",
+        "scope": "every file outside test/ and .beads/",
+        "files": 329,
+        "units": 155480,
+        "citing": [
+         "docs/workbench/zz-wb-021.6-plant.md:3"
+        ],
+        "findings": [
+         "docs/workbench/zz-wb-021.6-plant.md:3 status",
+         "docs/workbench/zz-wb-021.6-plant.md:3 scope"
+        ]
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "M",
+   "label": "citation-status census when a mention first lands",
+   "pins": [
+    {
+     "id": "M1",
+     "witness": {
+      "listed": [
+       "docs/workbench/mutant.md",
+       "src/mutant.ts"
+      ],
+      "flagged": [
+       "docs/workbench/mutant.md:3 status",
+       "docs/workbench/mutant.md:3 scope",
+       "src/mutant.ts:1 status",
+       "src/mutant.ts:1 scope",
+       "src/mutant.ts:1 effect-class:write"
+      ],
+      "quiet": [],
+      "citingTwins": [
+       "docs/workbench/mutant.md:3",
+       "src/mutant.ts:1"
+      ]
+     }
+    },
+    {
+     "id": "M2",
+     "witness": {
+      "unbound": [
+       "docs/workbench/zz-wb-021.6-plant.md:3 unbound"
+      ],
+      "key": "docs/workbench/zz-wb-021.6-plant.md Pi reads the adaptive-policy-organizations-2026-10-18 program (design-stage, non-effectful).",
+      "bound": [],
+      "stale": [
+       "docs/workbench/zz-wb-021.6-plant.md Pi reads the program. stale"
+      ],
+      "reworded": [
+       "docs/workbench/zz-wb-021.6-plant.md:3 unbound",
+       "docs/workbench/zz-wb-021.6-plant.md Pi reads the adaptive-policy-organizations-2026-10-18 program (design-stage, non-effectful). stale"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the residuals: each named family pinned by its quiet row",
+   "pins": [
+    {
+     "id": "Q1",
+     "witness": {
+      "outside": [
+       "test/workbench-apo-export-census.test.ts",
+       "test/workbench-apo-ui-publish-census.test.ts",
+       "test/helpers/apo-ui-publish-census.ts",
+       ".beads/issues.jsonl"
+      ],
+      "listed": []
+     }
+    },
+    {
+     "id": "Q2",
+     "witness": {
+      "path": "package-lock.json",
+      "text": "{ \"name\": \"adaptive-policy-organizations-2026-10-18\" }\n",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q3",
+     "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "Pi reads the adaptive-policy-organizations-2026-10-18 program.\u0000\n",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q4",
+     "witness": {
+      "path": "docs/workbench/apo-views.md",
+      "text": "# Views\n\nThis page names nothing.\n",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q5",
+     "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "Pi reads the MW adaptive organization program, A.P.O. for short.",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q6",
+     "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "Pi reads the adaptivepolicyorganizations program.",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q7",
+     "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "Pi presents two APOs.",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q8",
+     "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "Pi reads the adaptive&#45;policy&#45;organizations program and A&#80;O.",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q9",
+     "witness": {
+      "path": "src/x.ts",
+      "text": "export const T = \"adaptive-policy-\" + \"organizations\";",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q10",
+     "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "adaptive-policy-organizations-2026-10-18 is not, as of today, design-stage, nor is it, as written, non-effectful.",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q11",
+     "witness": {
+      "path": "src/x.ts",
+      "text": "// The adaptive-policy-organizations-2026-10-18 view.\nexport const apoView = 1;",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q12",
+     "witness": {
+      "path": "forge.toml",
+      "text": "name = \"adaptive-policy-organizations-2026-10-18\"",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q13",
+     "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "adaptive-policy-organizations-2026-10-18 (design-stage, non-effectful) ships effectful DevTools in Pi.",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q14",
+     "witness": {
+      "path": "src/x.ts",
+      "text": "// The APO view module.\nexport const run = (registry: { invoke(request: { capability: string }): void }) => registry.invoke({ capability: \"forge.gate.run\" });",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q15",
+     "witness": {
+      "path": "src/x.ts",
+      "text": "export const DESCRIPTOR = { id: \"view.inspect\", effectClass: \"write\" };",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q16",
+     "witness": {
+      "path": "src/x.ts",
+      "text": "// The APO view module.\nimport { WRITE } from \"./descriptors.js\";\nexport const A = { [\"effect\" + \"Class\"]: \"write\" };\nexport const B: { effectClass?: string } = { ...WRITE };\nB.effectClass ??= \"write\";",
+      "causes": []
+     }
+    }
+   ]
+  }
+ ]
+}
