@@ -73,7 +73,9 @@
         "Q2",
         "Q3",
         "Q4",
-        "Q5"
+        "Q5",
+        "Q6",
+        "Q7"
       ]
     }
   ],
@@ -104,7 +106,9 @@
     "Q2": "R-COMPOSED",
     "Q3": "R-SCHEMA",
     "Q4": "R-LABELS",
-    "Q5": "R-SNAPSHOT-REVISIONS"
+    "Q5": "R-SNAPSHOT-REVISIONS",
+    "Q6": "R-DEFERRED",
+    "Q7": "R-OUTSIDE"
   },
   "witnesses": {
     "A1": {
@@ -150,67 +154,163 @@
         ],
         "M-OTHER-CALL": [
           "impure"
+        ],
+        "M-NONENUM-MEMO": [
+          "impure"
+        ],
+        "M-FREEZE": [
+          "impure"
+        ],
+        "M-PREVENT-EXTENSIONS": [
+          "impure"
+        ],
+        "M-SYMBOL-FIELD": [
+          "impure"
+        ],
+        "M-FIXED-REVISION": [
+          "impure"
+        ],
+        "M-REVISION-ACCESSOR": [
+          "impure"
+        ],
+        "M-PROTO-SWAP": [
+          "impure"
+        ],
+        "M-FROZEN-NODE": [
+          "impure"
+        ],
+        "M-SCOPE-REORDER": [
+          "impure"
+        ],
+        "M-SHADOW-CONNECTIONS": [
+          "impure"
+        ],
+        "M-KEY-ORDER": [
+          "impure"
+        ],
+        "M-CLASS-PROTO": [
+          "impure"
+        ],
+        "M-BUDGET-EDIT": [
+          "impure"
+        ],
+        "M-SCOPE-EDIT": [
+          "impure"
         ]
       },
       "legs": {
         "M-MUTATES": [
           "impure the drive called the projection's markStale, which is no read",
-          "impure drive 1 left the projection it read unlike a fresh twin",
-          "impure drive 2 left the projection it read unlike a fresh twin"
+          "impure drive 1 left the projection it read unlike a fresh twin (value)",
+          "impure drive 2 left the projection it read unlike a fresh twin (value)"
         ],
         "M-COUNTER-IDS": [
-          "impure two drives over one fixture returned different outcomes"
+          "impure two drives over one fixture returned different outcomes (value)"
         ],
         "M-DISCONNECT-UNHELD": [
           "impure the drive called the projection's disconnect, which is no read",
-          "impure drive 1 left the projection it read unlike a fresh twin",
-          "impure drive 2 left the projection it read unlike a fresh twin"
+          "impure drive 1 left the projection it read unlike a fresh twin (size)",
+          "impure drive 2 left the projection it read unlike a fresh twin (size)"
         ],
         "M-RECONNECT-UNHELD": [
           "impure the drive called the projection's reconnect, which is no read",
-          "impure drive 1 left the projection it read unlike a fresh twin",
-          "impure drive 2 left the projection it read unlike a fresh twin"
+          "impure drive 1 left the projection it read unlike a fresh twin (size)",
+          "impure drive 2 left the projection it read unlike a fresh twin (size)"
         ],
         "M-IDENTITY-REFUSAL": [
           "impure the drive called the projection's markStale, which is no read",
-          "impure drive 1 left the projection it read unlike a fresh twin",
-          "impure drive 2 left the projection it read unlike a fresh twin"
+          "impure drive 1 left the projection it read unlike a fresh twin (keys)",
+          "impure drive 2 left the projection it read unlike a fresh twin (keys)"
         ],
         "M-DISCONNECT-HELD": [
           "impure the drive called the projection's disconnect, which is no read",
-          "impure drive 1 left the projection it read unlike a fresh twin",
-          "impure drive 2 left the projection it read unlike a fresh twin"
+          "impure drive 1 left the projection it read unlike a fresh twin (value)",
+          "impure drive 2 left the projection it read unlike a fresh twin (value)"
         ],
         "M-WRITE-NOOP": [
           "impure the drive called the projection's markStale, which is no read"
         ],
         "M-BYPASS-WRITE": [
-          "impure drive 1 left the projection it read unlike a fresh twin",
-          "impure drive 2 left the projection it read unlike a fresh twin"
+          "impure drive 1 left the projection it read unlike a fresh twin (size)",
+          "impure drive 2 left the projection it read unlike a fresh twin (size)"
         ],
         "M-CLASS-PATCH": [
-          "impure a drive edited the ObservationProjection class"
+          "impure a drive edited the ObservationProjection class (keys)"
         ],
         "M-CLASS-STATIC": [
-          "impure a drive edited the ObservationProjection class"
+          "impure a drive edited the ObservationProjection class (keys)"
         ],
         "M-REFRESH-WRITE": [
           "impure the drive called the projection's refresh, which is no read",
-          "impure drive 1 left the projection it read unlike a fresh twin",
-          "impure drive 2 left the projection it read unlike a fresh twin"
+          "impure drive 1 left the projection it read unlike a fresh twin (size)",
+          "impure drive 2 left the projection it read unlike a fresh twin (size)"
         ],
         "M-RELATE-WRITE": [
           "impure the drive called the projection's relate, which is no read",
-          "impure drive 1 left the projection it read unlike a fresh twin",
-          "impure drive 2 left the projection it read unlike a fresh twin"
+          "impure drive 1 left the projection it read unlike a fresh twin (size)",
+          "impure drive 2 left the projection it read unlike a fresh twin (size)"
         ],
         "M-INGEST-WRITE": [
           "impure the drive called the projection's ingest, which is no read",
-          "impure drive 1 left the projection it read unlike a fresh twin",
-          "impure drive 2 left the projection it read unlike a fresh twin"
+          "impure drive 1 left the projection it read unlike a fresh twin (size)",
+          "impure drive 2 left the projection it read unlike a fresh twin (size)"
         ],
         "M-OTHER-CALL": [
           "impure the drive called the projection's toString, which is no read"
+        ],
+        "M-NONENUM-MEMO": [
+          "impure drive 1 left the projection it read unlike a fresh twin (keys)",
+          "impure drive 2 left the projection it read unlike a fresh twin (keys)"
+        ],
+        "M-FREEZE": [
+          "impure drive 1 left the projection it read unlike a fresh twin (integrity)",
+          "impure drive 2 left the projection it read unlike a fresh twin (integrity)"
+        ],
+        "M-PREVENT-EXTENSIONS": [
+          "impure drive 1 left the projection it read unlike a fresh twin (integrity)",
+          "impure drive 2 left the projection it read unlike a fresh twin (integrity)"
+        ],
+        "M-SYMBOL-FIELD": [
+          "impure drive 1 left the projection it read unlike a fresh twin (keys)",
+          "impure drive 2 left the projection it read unlike a fresh twin (keys)"
+        ],
+        "M-FIXED-REVISION": [
+          "impure drive 1 left the projection it read unlike a fresh twin (attributes)",
+          "impure drive 2 left the projection it read unlike a fresh twin (attributes)"
+        ],
+        "M-REVISION-ACCESSOR": [
+          "impure drive 1 left the projection it read unlike a fresh twin (attributes)",
+          "impure drive 2 left the projection it read unlike a fresh twin (attributes)"
+        ],
+        "M-PROTO-SWAP": [
+          "impure drive 1 left the projection it read unlike a fresh twin (prototype)",
+          "impure drive 2 left the projection it read unlike a fresh twin (prototype)"
+        ],
+        "M-FROZEN-NODE": [
+          "impure drive 1 left the projection it read unlike a fresh twin (integrity)",
+          "impure drive 2 left the projection it read unlike a fresh twin (integrity)"
+        ],
+        "M-SCOPE-REORDER": [
+          "impure drive 1 left the projection it read unlike a fresh twin (value)",
+          "impure drive 2 left the projection it read unlike a fresh twin (value)"
+        ],
+        "M-SHADOW-CONNECTIONS": [
+          "impure drive 1 left the projection it read unlike a fresh twin (keys)",
+          "impure drive 2 left the projection it read unlike a fresh twin (keys)"
+        ],
+        "M-KEY-ORDER": [
+          "impure two drives over one fixture returned different outcomes (keys)"
+        ],
+        "M-CLASS-PROTO": [
+          "impure a drive edited the ObservationProjection class (prototype)"
+        ],
+        "M-BUDGET-EDIT": [
+          "impure drive 1 edited the scope or budget of its request (value)",
+          "impure drive 2 edited the scope or budget of its request (value)"
+        ],
+        "M-SCOPE-EDIT": [
+          "impure drive 1 edited the scope or budget of its request (value)",
+          "impure drive 2 edited the scope or budget of its request (value)"
         ]
       },
       "cases": {
@@ -223,6 +323,45 @@
         "K-EDGES": [],
         "K-BYTES": [],
         "K-ALL": []
+      },
+      "walk": {
+        "S-EQUAL": "",
+        "S-VALUE": "value",
+        "S-NEGATIVE-ZERO": "value",
+        "S-NONENUMERABLE": "keys",
+        "S-SYMBOL": "keys",
+        "S-ATTRIBUTE": "attributes",
+        "S-ACCESSOR": "attributes",
+        "S-GETTER": "get",
+        "S-SETTER": "set",
+        "S-PROTOTYPE": "prototype",
+        "S-EXTENSIBLE": "integrity",
+        "S-NESTED-FROZEN": "integrity",
+        "S-MAP-ORDER": "value",
+        "S-MAP-SIZE": "size",
+        "S-MAP-OWN": "keys",
+        "S-SET-ORDER": "value",
+        "S-DATE": "time",
+        "S-UNSHARED": "kind",
+        "S-RESHARED": "same",
+        "S-PROXY": "kind"
+      },
+      "kinds": [
+        "array",
+        "map",
+        "object",
+        "set"
+      ],
+      "providers": [
+        "beads",
+        "claude-agent-sdk",
+        "forge",
+        "furnace",
+        "local-detached"
+      ],
+      "equivalents": {
+        "E-EVERY-READ": [],
+        "E-READ-RESULT-EDIT": []
       }
     },
     "A2": {
@@ -556,6 +695,15 @@
       "planted": [
         "src/workbench/zz-executor-request.ts"
       ],
+      "proof": {
+        "unread": [],
+        "extra": [],
+        "missed": {
+          "start": [],
+          "middle": [],
+          "end": []
+        }
+      },
       "hits": [
         "ExecutorRequest",
         "executor request",
@@ -683,6 +831,178 @@
     },
     "G1": {
       "touched": [],
+      "proof": {
+        "unread": [],
+        "extra": [],
+        "missed": {
+          "start": [],
+          "middle": [],
+          "end": []
+        }
+      },
+      "anchor": {
+        "unread": [
+          "src/workbench/control.ts"
+        ],
+        "extra": [],
+        "missed": {
+          "start": [],
+          "middle": [],
+          "end": []
+        }
+      },
+      "controls": {
+        "P-WHOLE": {
+          "unread": [],
+          "extra": [],
+          "missed": {
+            "start": [],
+            "middle": [],
+            "end": []
+          }
+        },
+        "P-MAP-BLANK": {
+          "unread": [
+            "src/workbench/zz-proof-b.ts"
+          ],
+          "extra": [],
+          "missed": {
+            "start": [],
+            "middle": [],
+            "end": []
+          }
+        },
+        "P-MAP-SHORT": {
+          "unread": [
+            "src/workbench/zz-proof-c.ts"
+          ],
+          "extra": [],
+          "missed": {
+            "start": [],
+            "middle": [],
+            "end": []
+          }
+        },
+        "P-MAP-DROP": {
+          "unread": [
+            "src/workbench/zz-proof-a.ts"
+          ],
+          "extra": [],
+          "missed": {
+            "start": [
+              "src/workbench/zz-proof-a.ts"
+            ],
+            "middle": [
+              "src/workbench/zz-proof-a.ts"
+            ],
+            "end": [
+              "src/workbench/zz-proof-a.ts"
+            ]
+          }
+        },
+        "P-MAP-EXTRA": {
+          "unread": [],
+          "extra": [
+            "src/workbench/zz-proof-unlisted.ts"
+          ],
+          "missed": {
+            "start": [],
+            "middle": [],
+            "end": []
+          }
+        },
+        "P-READER-LAST": {
+          "unread": [],
+          "extra": [],
+          "missed": {
+            "start": [
+              "src/workbench/zz-proof-a.ts",
+              "src/workbench/zz-proof-b.ts"
+            ],
+            "middle": [
+              "src/workbench/zz-proof-a.ts",
+              "src/workbench/zz-proof-b.ts"
+            ],
+            "end": [
+              "src/workbench/zz-proof-a.ts",
+              "src/workbench/zz-proof-b.ts"
+            ]
+          }
+        },
+        "P-READER-FIRST": {
+          "unread": [],
+          "extra": [],
+          "missed": {
+            "start": [
+              "src/workbench/zz-proof-b.ts",
+              "src/workbench/zz-proof-c.ts"
+            ],
+            "middle": [
+              "src/workbench/zz-proof-b.ts",
+              "src/workbench/zz-proof-c.ts"
+            ],
+            "end": [
+              "src/workbench/zz-proof-b.ts",
+              "src/workbench/zz-proof-c.ts"
+            ]
+          }
+        },
+        "P-READER-HEAD": {
+          "unread": [],
+          "extra": [],
+          "missed": {
+            "start": [],
+            "middle": [
+              "src/workbench/zz-proof-a.ts",
+              "src/workbench/zz-proof-b.ts",
+              "src/workbench/zz-proof-c.ts"
+            ],
+            "end": [
+              "src/workbench/zz-proof-a.ts",
+              "src/workbench/zz-proof-b.ts",
+              "src/workbench/zz-proof-c.ts"
+            ]
+          }
+        },
+        "P-READER-TAIL": {
+          "unread": [],
+          "extra": [],
+          "missed": {
+            "start": [
+              "src/workbench/zz-proof-a.ts",
+              "src/workbench/zz-proof-b.ts",
+              "src/workbench/zz-proof-c.ts"
+            ],
+            "middle": [
+              "src/workbench/zz-proof-a.ts",
+              "src/workbench/zz-proof-b.ts",
+              "src/workbench/zz-proof-c.ts"
+            ],
+            "end": []
+          }
+        },
+        "P-READER-BLANK": {
+          "unread": [],
+          "extra": [],
+          "missed": {
+            "start": [
+              "src/workbench/zz-proof-a.ts",
+              "src/workbench/zz-proof-b.ts",
+              "src/workbench/zz-proof-c.ts"
+            ],
+            "middle": [
+              "src/workbench/zz-proof-a.ts",
+              "src/workbench/zz-proof-b.ts",
+              "src/workbench/zz-proof-c.ts"
+            ],
+            "end": [
+              "src/workbench/zz-proof-a.ts",
+              "src/workbench/zz-proof-b.ts",
+              "src/workbench/zz-proof-c.ts"
+            ]
+          }
+        }
+      },
       "planted": [
         "S-UNREGISTERED src/workbench/zz-gp-export.ts names GraphPolicy with no EXPORT_SITES registration"
       ],
@@ -718,19 +1038,35 @@
       "naming": [],
       "planted": [
         "qa/zz-gp-namespace.mjs"
-      ]
+      ],
+      "proof": {
+        "unread": [],
+        "extra": [],
+        "missed": {
+          "start": [],
+          "middle": [],
+          "end": []
+        }
+      }
     },
     "G3": {
       "reading": {
         "ownership": {
           "refused": null,
           "rows": 1,
-          "cell": "nothing today (no gp seam is registered)"
+          "header": [
+            "Concern",
+            "Authoritative owner",
+            "Workbench may do"
+          ],
+          "cell": "nothing today (no gp seam is registered)",
+          "other": []
         },
         "boundary": {
           "refused": null,
           "first": "paragraph",
-          "opening": "Pi carries no GraphPolicyCLI (gp) integration today."
+          "opening": "Pi carries no GraphPolicyCLI (gp) integration today.",
+          "source": "Pi carries no GraphPolicyCLI (gp) integration today."
         }
       },
       "plants": {
@@ -767,8 +1103,148 @@
         "D-REHOME": [
           "boundary-bound"
         ],
-        "D-COMMENT-ABOVE": []
-      }
+        "D-COMMENT-ABOVE": [],
+        "D-HEADER-SWAP": [
+          "ownership-header"
+        ],
+        "D-BLOCKQUOTE": [
+          "boundary-first"
+        ],
+        "D-LIST-LEAD": [
+          "boundary-first"
+        ],
+        "D-SECOND-TABLE": [
+          "ownership-rows"
+        ],
+        "D-STRIKE": [
+          "boundary-opening"
+        ],
+        "D-STRIKE-HTML": [
+          "boundary-opening"
+        ],
+        "D-SETEXT-DUP": [
+          "boundary-bound"
+        ],
+        "D-CELL-STRIKE": [
+          "ownership-cell"
+        ],
+        "D-HTML-LEAD": [
+          "boundary-first"
+        ],
+        "D-QUOTED-ROW": [
+          "ownership-other"
+        ],
+        "D-HTML-ROW": [
+          "ownership-other"
+        ],
+        "D-LISTED-ROW": [
+          "ownership-other"
+        ],
+        "D-OWNER-COMMENT": []
+      },
+      "views": {
+        "D-MOVE": [
+          false,
+          false
+        ],
+        "D-LEAD": [
+          false,
+          false
+        ],
+        "D-COMMENT": [
+          false,
+          false
+        ],
+        "D-FENCE": [
+          false,
+          false
+        ],
+        "D-ROW-DUP": [
+          true,
+          true
+        ],
+        "D-CELL-ONLY": [
+          true,
+          true
+        ],
+        "D-SENTENCE-EDIT": [
+          false,
+          false
+        ],
+        "D-ROW-SAME-TABLE": [
+          true,
+          true
+        ],
+        "D-OWNERSHIP-DUP": [
+          true,
+          true
+        ],
+        "D-HEADING-DUP": [
+          false,
+          false
+        ],
+        "D-REHOME": [
+          false,
+          false
+        ],
+        "D-COMMENT-ABOVE": [
+          true,
+          true
+        ],
+        "D-HEADER-SWAP": [
+          true,
+          true
+        ],
+        "D-BLOCKQUOTE": [
+          false,
+          false
+        ],
+        "D-LIST-LEAD": [
+          false,
+          false
+        ],
+        "D-SECOND-TABLE": [
+          true,
+          true
+        ],
+        "D-STRIKE": [
+          true,
+          false
+        ],
+        "D-STRIKE-HTML": [
+          true,
+          false
+        ],
+        "D-SETEXT-DUP": [
+          false,
+          false
+        ],
+        "D-CELL-STRIKE": [
+          true,
+          true
+        ],
+        "D-HTML-LEAD": [
+          false,
+          false
+        ],
+        "D-QUOTED-ROW": [
+          true,
+          true
+        ],
+        "D-HTML-ROW": [
+          true,
+          true
+        ],
+        "D-LISTED-ROW": [
+          true,
+          true
+        ],
+        "D-OWNER-COMMENT": [
+          true,
+          true
+        ]
+      },
+      "page": []
     },
     "Q1": {
       "members": [
@@ -805,6 +1281,21 @@
         "q5-revisions-guessed"
       ],
       "findings": []
+    },
+    "Q6": {
+      "members": [
+        "q6-timer-write",
+        "q6-timer-freeze"
+      ],
+      "findings": []
+    },
+    "Q7": {
+      "members": [
+        "q7-global-write",
+        "q7-module-record",
+        "q7-third-call"
+      ],
+      "findings": []
     }
   },
   "residuals": {
@@ -828,6 +1319,15 @@
     "Q5": [
       "q5-revisions-empty",
       "q5-revisions-guessed"
+    ],
+    "Q6": [
+      "q6-timer-write",
+      "q6-timer-freeze"
+    ],
+    "Q7": [
+      "q7-global-write",
+      "q7-module-record",
+      "q7-third-call"
     ]
   },
   "tests": [
@@ -858,6 +1358,8 @@
     "Q3: R-SCHEMA",
     "Q4: R-LABELS",
     "Q5: R-SNAPSHOT-REVISIONS",
+    "Q6: R-DEFERRED",
+    "Q7: R-OUTSIDE",
     "rule 16: the rows, the residual families, the mutants and cases per pin, the rules and the registry are frozen at their measured shape",
     "the outside anchors: the bead's own row binds the rows and the pin quotes; the vendored producer fixture, the registry and the live control import bind the judge's spellings",
     "roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/gp-snapshot-export-roster.json, in order and both ways; every pin reached its witness compare"

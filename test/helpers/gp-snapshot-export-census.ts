@@ -3,14 +3,17 @@
  * mutants and the judge of the GP snapshot-export census, test/workbench-gp-snapshot-export-census.test.ts (its header states
  * the bead, the measured facts and every reading). Everything here is pure over the inputs it is handed: the fixtures are
  * real ObservationProjection instances built through the class's public methods, the reference exporter only reads them,
- * and so do its mutants except the A1 purity members, which write or edit the class on purpose (the judge refuses each
- * one and puts the class back); nothing here starts gp, fakes a GraphPolicyCLI binary, adds a dependency or implements a
- * Pi exporter.
+ * and so do its mutants except the A1 purity members, which write to the projection, edit its objects or edit the class on
+ * purpose (the judge refuses each one and puts the class back), and the drive residuals of Q6 and Q7; nothing here starts
+ * gp, fakes a GraphPolicyCLI binary, adds a dependency or implements a Pi exporter. The read proof (readProof) is pure over
+ * the git blob ids the census hands it (git hash-object, read in the census file).
  * The census's own reads compose the landed wb-e66.5 vocabulary reader and listers (test/helpers/gp-mw-coordination-census.ts),
  * the landed wb-gxd7.3 export reader (test/helpers/gp-snapshot-join-census.ts) and the landed docs binding
  * (docsSection/sectionTables of test/helpers/census.ts).
  */
-import { isDeepStrictEqual } from "node:util";
+import { createHash } from "node:crypto";
+import { isDeepStrictEqual, types } from "node:util";
+import { marked, type Tokens } from "marked";
 import { NATIVE_CONTROL_ACTIONS } from "../../src/workbench/control.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type Presentation, type RelationKind } from "../../src/workbench/observation.js";
 import { docsSection, sectionTables } from "./census.js";
@@ -81,8 +84,10 @@ const OTHER_RUN = ref("furnace", "run", "frn-run-0002");
 
 /** The verbatim forms the fixture's revisions and bases carry: padding and mixed case, and a decomposed accent. */
 export const PADDED_REVISION = " sess-rev MiXeD ";
-/** A provider the fixture holds no node of (the A1 connection members disconnect and reconnect it). */
+/** A provider the fixture holds no node of (the A1 connection members disconnect and reconnect it; A1 asserts it is unheld). */
 export const UNHELD_PROVIDER = "hx";
+/** A provider the fixture holds nodes of (the M-DISCONNECT-HELD control; A1 asserts it is held). */
+export const HELD_PROVIDER = "beads";
 /** A run id the projection refuses as an unsafe identity (U+202E, composed at run time): markStale logs a refusal and changes no node. */
 export const UNSAFE_RUN_ID = `frn-run-${String.fromCodePoint(0x202e)}0009`;
 export const DECOMPOSED_BASIS = `basis-cafe${String.fromCodePoint(0x301)}`;
@@ -264,21 +269,191 @@ export function watched(projection: ObservationProjection, writes: string[]): Ob
   });
 }
 
-/** The class's own members, its prototype's and its statics': a drive that edits ObservationProjection edits every instance and the twin alike. */
-type ClassShape = readonly [PropertyDescriptorMap, PropertyDescriptorMap];
-const classShape = (): ClassShape => [Object.getOwnPropertyDescriptors(ObservationProjection.prototype), Object.getOwnPropertyDescriptors(ObservationProjection)];
+/**
+ * The class's own members (its prototype's and its statics') and both prototypes, kept to put the class back: a drive that
+ * edits ObservationProjection edits every instance and the twin alike. The class leg reads the class through structureOf.
+ */
+interface ClassShape {
+  readonly members: readonly [PropertyDescriptorMap, PropertyDescriptorMap];
+  readonly prototypes: readonly [object | null, object | null];
+}
+const CLASS_ROOTS = (): readonly [object, object] => [ObservationProjection.prototype, ObservationProjection];
+const classShape = (): ClassShape => {
+  const [prototype, statics] = CLASS_ROOTS();
+  return { members: [Object.getOwnPropertyDescriptors(prototype), Object.getOwnPropertyDescriptors(statics)], prototypes: [Object.getPrototypeOf(prototype), Object.getPrototypeOf(statics)] };
+};
 /** Put the class back as classShape read it (a drive's edit is judged once, never inherited by the next case). */
 function restoreClass(shape: ClassShape): void {
-  const targets = [ObservationProjection.prototype, ObservationProjection] as const;
-  targets.forEach((target, index) => {
-    const saved = shape[index] ?? {};
+  CLASS_ROOTS().forEach((target, index) => {
+    const saved = shape.members[index] ?? {};
     for (const key of Reflect.ownKeys(target)) if (!Object.hasOwn(saved, key)) Reflect.deleteProperty(target, key);
     for (const key of Reflect.ownKeys(saved)) {
       const descriptor = saved[key];
       if (descriptor !== undefined) Object.defineProperty(target, key, descriptor);
     }
+    const prototype = shape.prototypes[index] ?? null;
+    if (Object.getPrototypeOf(target) !== prototype) Object.setPrototypeOf(target, prototype);
   });
 }
+
+// ---- the strict structural reading the purity legs compare (refusal #2's U2: class (b) of its CLASS-LEVEL GUARD) ----
+
+/** The facets the walk reads on one object, in its reading order; a drift names the facet of its first difference. */
+export const FACETS = ["kind", "prototype", "integrity", "keys", "attributes", "value", "get", "set", "size", "time", "same"] as const;
+export type FacetName = (typeof FACETS)[number];
+/** One reading of the walk: where (a path from its root), which facet, and the value read there. */
+export interface Facet {
+  readonly at: string;
+  readonly facet: FacetName;
+  readonly value: unknown;
+}
+/**
+ * The kinds the walk tells apart, each by an internal-slot brand check that runs no code of the object's own (node:util
+ * types): a Proxy is a leaf (its traps are never called, so a Proxy reads unlike any twin's object), a function met below a
+ * root is a leaf read by identity, an array, map, set and date are entered with their entries or time, and an opaque object
+ * (a WeakMap, WeakSet, Promise, RegExp, typed array, buffer or boxed primitive) is read by its own properties only, its
+ * internal state unread. A1 holds the fixture projection's walk to the entered kinds (WALKED_KINDS).
+ */
+export const KINDS = ["proxy", "function", "array", "map", "set", "date", "opaque", "object"] as const;
+export type Kind = (typeof KINDS)[number];
+/** The kinds a fixture projection's walk meets: A1 asserts it meets no proxy, opaque object or function below its root. */
+export const WALKED_KINDS: readonly Kind[] = ["array", "map", "object", "set"];
+const kindOf = (value: object): Kind => {
+  if (types.isProxy(value)) return "proxy";
+  if (typeof value === "function") return "function";
+  if (Array.isArray(value)) return "array";
+  if (types.isMap(value)) return "map";
+  if (types.isSet(value)) return "set";
+  if (types.isDate(value)) return "date";
+  if (types.isWeakMap(value) || types.isWeakSet(value) || types.isPromise(value) || types.isRegExp(value) || types.isTypedArray(value) || types.isAnyArrayBuffer(value) || types.isBoxedPrimitive(value)) return "opaque";
+  return "object";
+};
+
+/**
+ * Everything reachable from the roots, read in a fixed order and never through an accessor: per object its kind, its
+ * prototype (by identity), its integrity level (extensible, sealed, frozen), its own keys in order (Reflect.ownKeys: string and
+ * symbol keys, enumerable or not) and, per key, the descriptor's attributes (enumerable, configurable, writable or accessor)
+ * with its value, entered in turn, or its get and set functions (by identity); then a map's size and its entries in insertion
+ * order (keys and values entered), a set's size and members in order, a date's time. An object met again reads as the path it
+ * was first met at, so shared and cyclic references compare by shape; a primitive reads by Object.is. Roots that are
+ * functions (the class's constructor) are entered; a function met below them is a leaf.
+ */
+export function structureOf(roots: readonly unknown[]): Facet[] {
+  const facets: Facet[] = [];
+  const first = new Map<object, string>();
+  const enter = (value: unknown, at: string, root: boolean): void => {
+    if (value === null || (typeof value !== "object" && typeof value !== "function")) {
+      facets.push({ at, facet: "value", value });
+      return;
+    }
+    const kind = kindOf(value);
+    if (kind === "proxy" || (kind === "function" && !root)) {
+      facets.push({ at, facet: "kind", value: kind });
+      facets.push({ at, facet: "value", value });
+      return;
+    }
+    const met = first.get(value);
+    if (met !== undefined) {
+      facets.push({ at, facet: "same", value: met });
+      return;
+    }
+    first.set(value, at);
+    facets.push({ at, facet: "kind", value: kind });
+    facets.push({ at, facet: "prototype", value: Object.getPrototypeOf(value) });
+    facets.push({ at, facet: "integrity", value: [Object.isExtensible(value), Object.isSealed(value), Object.isFrozen(value)] });
+    const keys = Reflect.ownKeys(value);
+    facets.push({ at, facet: "keys", value: keys });
+    for (const key of keys) {
+      const where = `${at}.${String(key)}`;
+      const descriptor = Reflect.getOwnPropertyDescriptor(value, key);
+      if (descriptor === undefined) continue;
+      const data = Object.hasOwn(descriptor, "value");
+      facets.push({ at: where, facet: "attributes", value: [descriptor.enumerable === true, descriptor.configurable === true, data ? descriptor.writable === true : "accessor"] });
+      if (data) enter(descriptor.value, where, false);
+      else {
+        facets.push({ at: where, facet: "get", value: descriptor.get });
+        facets.push({ at: where, facet: "set", value: descriptor.set });
+      }
+    }
+    if (kind === "map") {
+      const entries = [...(Reflect.apply(Map.prototype.entries, value, []) as IterableIterator<[unknown, unknown]>)];
+      facets.push({ at, facet: "size", value: entries.length });
+      entries.forEach(([key, entry], index) => {
+        enter(key, `${at}<key ${index}>`, false);
+        enter(entry, `${at}<value ${index}>`, false);
+      });
+    } else if (kind === "set") {
+      const members = [...(Reflect.apply(Set.prototype.values, value, []) as IterableIterator<unknown>)];
+      facets.push({ at, facet: "size", value: members.length });
+      for (const [index, member] of members.entries()) enter(member, `${at}<member ${index}>`, false);
+    } else if (kind === "date") facets.push({ at, facet: "time", value: Reflect.apply(Date.prototype.getTime, value, []) });
+  };
+  for (const [index, root] of roots.entries()) enter(root, `#${index}`, true);
+  return facets;
+}
+const sameReading = (left: unknown, right: unknown): boolean =>
+  Array.isArray(left) && Array.isArray(right) ? left.length === right.length && left.every((item, index) => Object.is(item, right[index])) : Object.is(left, right);
+/** Where two walks first differ, path and facet (the left walk's reading where it has one), or undefined when they agree. */
+export function driftOf(left: readonly Facet[], right: readonly Facet[]): { readonly at: string; readonly facet: FacetName } | undefined {
+  for (let index = 0; index < Math.max(left.length, right.length); index++) {
+    const [a, b] = [left[index], right[index]];
+    if (a !== undefined && b !== undefined && a.at === b.at && a.facet === b.facet && sameReading(a.value, b.value)) continue;
+    const reading = a ?? b;
+    return reading === undefined ? undefined : { at: reading.at, facet: reading.facet };
+  }
+  return undefined;
+}
+/** The facet two walks first differ in, or undefined: what the purity findings name (never a private field's name). */
+export const facetDrift = (left: readonly Facet[], right: readonly Facet[]): FacetName | undefined => driftOf(left, right)?.facet;
+/** The class as the class leg reads it: its prototype and its constructor, entered as two roots. */
+const classStructure = (): Facet[] => structureOf(CLASS_ROOTS());
+
+/** Two values built alike, for the walk's own controls (STRUCTURE_PROBES): plain fields, a nested object, a map, a set, a date,
+ * a shared reference and an accessor whose getter is one module-level function (so two values built alike read alike). */
+export interface ProbeValue {
+  a: number;
+  nested: { x: number };
+  map: Map<string, number>;
+  set: Set<string>;
+  when: Date;
+  shared: { y: number };
+  again: { y: number };
+}
+const PROBE_GETTER = (): number => 1;
+export const probeValue = (): ProbeValue => {
+  const shared = { y: 1 };
+  const value: ProbeValue = { a: 0, nested: { x: 1 }, map: new Map([["k1", 1], ["k2", 2]]), set: new Set(["s1", "s2"]), when: new Date(0), shared, again: shared };
+  Object.defineProperty(value, "total", { get: PROBE_GETTER, enumerable: true, configurable: true });
+  return value;
+};
+/** Each control edits one of two equal values; expect is the facet the walk's drift names ("" when they still agree). */
+export interface StructureProbe {
+  readonly id: string;
+  readonly edit: (value: ProbeValue) => void;
+  readonly expect: FacetName | "";
+}
+export const STRUCTURE_PROBES: readonly StructureProbe[] = [
+  { id: "S-EQUAL", edit: () => undefined, expect: "" },
+  { id: "S-VALUE", edit: value => { value.a = 1; }, expect: "value" },
+  { id: "S-NEGATIVE-ZERO", edit: value => { value.a = -0; }, expect: "value" },
+  { id: "S-NONENUMERABLE", edit: value => { Object.defineProperty(value, "hidden", { value: 1 }); }, expect: "keys" },
+  { id: "S-SYMBOL", edit: value => { Object.defineProperty(value, Symbol("probe"), { value: 1 }); }, expect: "keys" },
+  { id: "S-ATTRIBUTE", edit: value => { Object.defineProperty(value, "a", { writable: false }); }, expect: "attributes" },
+  { id: "S-ACCESSOR", edit: value => { Object.defineProperty(value, "a", { get: (): number => 0 }); }, expect: "attributes" },
+  { id: "S-GETTER", edit: value => { Object.defineProperty(value, "total", { get: (): number => 1 }); }, expect: "get" },
+  { id: "S-SETTER", edit: value => { Object.defineProperty(value, "total", { set: (): void => undefined }); }, expect: "set" },
+  { id: "S-PROTOTYPE", edit: value => { Object.setPrototypeOf(value, Object.create(Object.prototype)); }, expect: "prototype" },
+  { id: "S-EXTENSIBLE", edit: value => { Object.preventExtensions(value); }, expect: "integrity" },
+  { id: "S-NESTED-FROZEN", edit: value => { Object.freeze(value.nested); }, expect: "integrity" },
+  { id: "S-MAP-ORDER", edit: value => { value.map.delete("k1"); value.map.set("k1", 1); }, expect: "value" },
+  { id: "S-MAP-SIZE", edit: value => { value.map.set("k3", 3); }, expect: "size" },
+  { id: "S-MAP-OWN", edit: value => { Object.defineProperty(value.map, "get", { value: (): number => 0 }); }, expect: "keys" },
+  { id: "S-SET-ORDER", edit: value => { value.set.delete("s1"); value.set.add("s1"); }, expect: "value" },
+  { id: "S-DATE", edit: value => { value.when.setTime(1); }, expect: "time" },
+  { id: "S-UNSHARED", edit: value => { value.again = { y: 1 }; }, expect: "kind" },
+  { id: "S-RESHARED", edit: value => { value.again = value.nested as unknown as { y: number }; }, expect: "same" },
+  { id: "S-PROXY", edit: value => { value.nested = new Proxy(value.nested, {}); }, expect: "kind" },
+];
 
 // ---- the judged outcome ----
 
@@ -561,19 +736,28 @@ export const judgeCaseOf = (row: CaseRow): JudgeCase => {
 };
 
 /**
- * Drive twice, each time on a fresh projection behind watched(), judge the first outcome against the truth, then prove the
- * drive pure on four legs: it called no method outside READ_METHODS; it left the class (prototype and statics) as it was;
- * each projection it read is still deep-equal to a fresh twin (util.isDeepStrictEqual over every own field of the
- * instance, the connection map and the identity-refusal log among them); and the two outcomes are equal.
+ * Drive twice, each time on a fresh projection behind watched() with fresh copies of the scope and budget, judge the first
+ * outcome against the truth, then, once both drives have settled, prove the drive pure on five legs, each read by the strict
+ * walk (structureOf) where it compares: it
+ * called no method outside READ_METHODS through its view; the class (its prototype and its constructor, walked as two roots)
+ * reads as it did before the drives; each projection it read reads as a fresh twin (the walk from the instance: every own
+ * property, enumerable or not, string- or symbol-keyed, with its attributes, the prototype, the integrity level, and every
+ * object reachable from it, the connection map, the indexes and the identity-refusal log among them, maps and sets in
+ * order); the scope and budget of each request read as fresh copies; and its two outcomes read alike. Each impure finding
+ * names the facet of its first difference.
  */
 export async function driveFindings(drive: Drive, row: CaseRow): Promise<string[]> {
   const scope = scopeSpec(row.scope).scope;
   const judged = judgeCaseOf(row);
   const shape = classShape();
+  const before = classStructure();
   const writes: string[] = [];
+  const requests: { readonly scope: ObservationScope; readonly budget: ExportBudget }[] = [];
   const run = async (target: ObservationProjection): Promise<{ readonly threw: false; readonly value: unknown } | { readonly threw: true; readonly value: string }> => {
+    const request = { projection: watched(target, writes), scope: { ...scope }, budget: { ...row.budget } };
+    requests.push(request);
     try {
-      return { threw: false, value: await drive({ projection: watched(target, writes), scope, budget: row.budget }) };
+      return { threw: false, value: await drive(request) };
     } catch (error) {
       return { threw: true, value: error instanceof Error ? error.message : String(error) };
     }
@@ -583,14 +767,21 @@ export async function driveFindings(drive: Drive, row: CaseRow): Promise<string[
   const second = await run(read[1]);
   const findings = first.threw ? [`outcome the drive threw: ${first.value}`] : exportFindings(judged, first.value);
   for (const name of new Set(writes)) findings.push(`impure the drive called the projection's ${name}, which is no read`);
-  if (!isDeepStrictEqual(classShape(), shape)) {
-    findings.push("impure a drive edited the ObservationProjection class");
+  const edited = facetDrift(before, classStructure());
+  if (edited !== undefined) {
+    findings.push(`impure a drive edited the ObservationProjection class (${edited})`);
     restoreClass(shape);
   }
   read.forEach((projection, index) => {
-    if (!isDeepStrictEqual(projection, buildProjection())) findings.push(`impure drive ${index + 1} left the projection it read unlike a fresh twin`);
+    const drift = facetDrift(structureOf([projection]), structureOf([buildProjection()]));
+    if (drift !== undefined) findings.push(`impure drive ${index + 1} left the projection it read unlike a fresh twin (${drift})`);
   });
-  if (!isDeepStrictEqual(first, second)) findings.push("impure two drives over one fixture returned different outcomes");
+  requests.forEach((request, index) => {
+    const drift = facetDrift(structureOf([request.scope, request.budget]), structureOf([{ ...scope }, { ...row.budget }]));
+    if (drift !== undefined) findings.push(`impure drive ${index + 1} edited the scope or budget of its request (${drift})`);
+  });
+  const differs = facetDrift(structureOf([first]), structureOf([second]));
+  if (differs !== undefined) findings.push(`impure two drives over one fixture returned different outcomes (${differs})`);
   return findings;
 }
 
@@ -643,7 +834,53 @@ export interface Recipe {
   readonly otherCall?: boolean;
   /** A second relation tracing the first one's projection relation. */
   readonly duplicateEdge?: boolean;
+  /** After the export, defines a non-enumerable own query on the projection answering the export's own read (the gate's P-NONENUM-MEMO). */
+  readonly memoQuery?: boolean;
+  /** After the export, fixes the projection's integrity level: freeze it (the gate's P-FREEZE) or only prevent extensions. */
+  readonly integrity?: "freeze" | "prevent";
+  /** After the export, defines a non-enumerable symbol-keyed own property on the projection. */
+  readonly symbolField?: boolean;
+  /** After the export, makes the projection's revision non-writable, its value unchanged (a later write to it throws). */
+  readonly fixRevision?: boolean;
+  /** After the export, redefines the projection's revision as an accessor answering the same value and dropping writes. */
+  readonly revisionAccessor?: boolean;
+  /** After the export, sets the projection's prototype to a child of ObservationProjection.prototype whose stats answers zeros. */
+  readonly protoSwap?: boolean;
+  /** After the export, freezes the first node object the projection stores (read through the view's nodes field). */
+  readonly freezeNode?: boolean;
+  /** After the export, moves the first key of the first scope index set to its end, so a later query reads another order. */
+  readonly reorderScope?: boolean;
+  /** After the export, shadows get on the projection's own connection map (non-enumerable), answering disconnected. */
+  readonly shadowConnections?: boolean;
+  /** The drive's second call presents the graph with its keys in reverse order: equal by util.isDeepStrictEqual, not in its bytes. */
+  readonly keyOrder?: boolean;
+  /** Sets the prototype of ObservationProjection.prototype to an object carrying an extra member, so every instance inherits it. */
+  readonly classProto?: boolean;
+  /** Before the reads, calls every READ_METHODS method once (an equivalence control: reads change nothing). */
+  readonly everyRead?: boolean;
+  /** After the export, edits the query and relationsPage results it read (an equivalence control: the reads hand out copies). */
+  readonly editReads?: boolean;
+  /** After the export, edits the request it was handed: its budget's node limit, or its scope's principal. */
+  readonly editRequest?: "budget" | "scope";
 }
+
+/** One call of each READ_METHODS method over a scope, its arguments valid (E-EVERY-READ; A1 holds the names to READ_METHODS). */
+export const READ_CALLS: Readonly<Record<string, (projection: ObservationProjection, scope: ObservationScope, key: string) => unknown>> = {
+  aggregate: (projection, scope, key) => projection.aggregate({ scope, key }),
+  aggregateStats: projection => projection.aggregateStats(),
+  events: (projection, scope) => projection.events({ scope, limit: READ_LIMIT }),
+  identityRefusals: (projection, scope) => projection.identityRefusals({ scope, limit: READ_LIMIT }),
+  indexOf: (projection, scope, key) => projection.indexOf({ scope, invocationId: "inv-0001", key }),
+  query: (projection, scope) => projection.query({ scope, limit: READ_LIMIT }),
+  relationRevision: projection => projection.relationRevision(),
+  relations: (projection, scope) => projection.relations({ scope }),
+  relationsPage: (projection, scope) => projection.relationsPage({ scope }),
+  stats: projection => projection.stats(),
+  truncation: (projection, scope) => projection.truncation({ scope }),
+  window: (projection, scope) => projection.window({ scope, invocationId: "inv-0001", offset: 0, limit: 10 }),
+};
+/** The objects a drive reaches through its view's own fields (a pure exporter never does; the A1 object members do). */
+const fieldOf = (projection: ObservationProjection, name: string): unknown => Reflect.get(projection, name);
 
 interface Built {
   readonly entities: { id: string; kind: string; features: Record<string, unknown> }[];
@@ -684,6 +921,11 @@ export function referenceExport(request: ExportRequest, recipe: Recipe = {}, nex
   if (recipe.classStatic === true) Object.defineProperty(ObservationProjection, "exportedBy", { value: "pi", configurable: true, writable: true });
   if (recipe.writeIntoD !== undefined) writeInto(projection, scopeSpec("D").scope, recipe.writeIntoD);
   if (recipe.otherCall === true) projection.toString();
+  if (recipe.classProto === true) Object.setPrototypeOf(ObservationProjection.prototype, Object.create(Object.prototype, { exportedBy: { value: (): string => "pi", configurable: true, writable: true } }));
+  if (recipe.everyRead === true) {
+    const key = projection.query({ scope, limit: READ_LIMIT }).nodes[0]?.key ?? "";
+    for (const call of Object.values(READ_CALLS)) call(projection, scope, key);
+  }
   const truth = truthOf(projection, scope);
   let entities: TruthEntity[] = [...truth.entities];
   let relations: TruthRelation[] = [...truth.relations];
@@ -723,7 +965,53 @@ export function referenceExport(request: ExportRequest, recipe: Recipe = {}, nex
   else if (recipe.overBudget === "partial") outcome = { ...over(first[0], first[1]), graph } as unknown as Refused;
   else outcome = over(first[0], first[1]);
   if (recipe.mutate === true) projection.markStale({ scope, ref: (truth.entities[0] as TruthEntity).ref });
+  afterExport(projection, scope, recipe);
+  if (recipe.editRequest === "budget") Reflect.set(budget, "maxNodes", 0);
+  if (recipe.editRequest === "scope") Reflect.set(scope, "principal", "operator-z");
   return outcome;
+}
+
+/** The A1 members that edit the projection's objects after the export (and the read-result equivalence control). */
+function afterExport(projection: ObservationProjection, scope: ObservationScope, recipe: Recipe): void {
+  if (recipe.memoQuery === true) {
+    const cached = projection.query({ scope, limit: READ_LIMIT });
+    Object.defineProperty(projection, "query", { value: (): typeof cached => cached, configurable: true, writable: true, enumerable: false });
+  }
+  if (recipe.integrity === "freeze") Object.freeze(projection);
+  if (recipe.integrity === "prevent") Object.preventExtensions(projection);
+  if (recipe.symbolField === true) Object.defineProperty(projection, Symbol("exported"), { value: true });
+  if (recipe.fixRevision === true) Object.defineProperty(projection, "revision", { writable: false });
+  if (recipe.revisionAccessor === true) {
+    const revision: unknown = fieldOf(projection, "revision");
+    Object.defineProperty(projection, "revision", { get: (): unknown => revision, set: (): void => undefined, configurable: true, enumerable: true });
+  }
+  if (recipe.protoSwap === true) Object.setPrototypeOf(projection, Object.create(ObservationProjection.prototype, { stats: { value: (): { nodes: number; events: number; edges: number } => ({ nodes: 0, events: 0, edges: 0 }) } }));
+  if (recipe.freezeNode === true) {
+    const nodes = fieldOf(projection, "nodes");
+    if (nodes instanceof Map) Object.freeze(nodes.values().next().value);
+  }
+  if (recipe.reorderScope === true) {
+    const scopes = fieldOf(projection, "scopes");
+    const index: unknown = scopes instanceof Map ? scopes.values().next().value : undefined;
+    if (index instanceof Set) {
+      const moved: unknown = index.values().next().value;
+      index.delete(moved);
+      index.add(moved);
+    }
+  }
+  if (recipe.shadowConnections === true) {
+    const connections = fieldOf(projection, "connections");
+    if (connections instanceof Map) Object.defineProperty(connections, "get", { value: (): string => "disconnected", configurable: true, writable: true });
+  }
+  if (recipe.editReads === true) {
+    const read = projection.query({ scope, limit: READ_LIMIT });
+    const node = read.nodes[0];
+    if (node !== undefined) Reflect.set(node.presentation, "title", "rewritten by the drive");
+    read.nodes.length = 0;
+    const page = projection.relationsPage({ scope, limit: READ_LIMIT });
+    const relation = page.relations[0];
+    if (relation !== undefined) Reflect.set(relation, "kind", "hypothesis");
+  }
 }
 
 /** One public write into a scope the caller does not read (the A1 write members). */
@@ -819,11 +1107,16 @@ function candidatesOf(built: Built, recipe: Recipe): Candidate[] {
   return candidates;
 }
 
-/** A drive over the reference exporter with one recipe; counter ids continue across calls (a non-deterministic exporter). */
+/** A drive over the reference exporter with one recipe; counter ids continue across calls, and keyOrder changes the second call. */
 export function recipeDrive(recipe: Recipe = {}): Drive {
   let issued = 0;
+  let calls = 0;
   const nextId = recipe.counter === true ? (prefix: string): string => `${prefix}${++issued}` : undefined;
-  return request => referenceExport(request, recipe, nextId);
+  return request => {
+    calls++;
+    const outcome = referenceExport(request, recipe, nextId);
+    return recipe.keyOrder === true && calls === 2 && outcome.ok && isRecord(outcome.graph) ? { ...outcome, graph: Object.fromEntries(Object.entries(outcome.graph).reverse()) } : outcome;
+  };
 }
 
 // ---- the mutants: each one recipe on one case, refused with exactly its rules, the reference conforming on the same case ----
@@ -842,7 +1135,7 @@ export const MUTANTS: readonly MutantRow[] = [
   { id: "M-DISCONNECT-UNHELD", pin: "A1", case: "K-FITS", recipe: { disconnect: UNHELD_PROVIDER }, expect: ["impure"] },
   { id: "M-RECONNECT-UNHELD", pin: "A1", case: "K-FITS", recipe: { reconnect: UNHELD_PROVIDER }, expect: ["impure"] },
   { id: "M-IDENTITY-REFUSAL", pin: "A1", case: "K-FITS", recipe: { refuseIdentity: true }, expect: ["impure"] },
-  { id: "M-DISCONNECT-HELD", pin: "A1", case: "K-FITS", recipe: { disconnect: "beads" }, expect: ["impure"] },
+  { id: "M-DISCONNECT-HELD", pin: "A1", case: "K-FITS", recipe: { disconnect: HELD_PROVIDER }, expect: ["impure"] },
   { id: "M-WRITE-NOOP", pin: "A1", case: "K-FITS", recipe: { noopWrite: true }, expect: ["impure"] },
   { id: "M-BYPASS-WRITE", pin: "A1", case: "K-FITS", recipe: { bypassWrite: true }, expect: ["impure"] },
   { id: "M-CLASS-PATCH", pin: "A1", case: "K-FITS", recipe: { classPatch: true }, expect: ["impure"] },
@@ -851,6 +1144,21 @@ export const MUTANTS: readonly MutantRow[] = [
   { id: "M-RELATE-WRITE", pin: "A1", case: "K-FITS", recipe: { writeIntoD: "relate" }, expect: ["impure"] },
   { id: "M-INGEST-WRITE", pin: "A1", case: "K-FITS", recipe: { writeIntoD: "ingest" }, expect: ["impure"] },
   { id: "M-OTHER-CALL", pin: "A1", case: "K-FITS", recipe: { otherCall: true }, expect: ["impure"] },
+  // Refusal #2's U2 members and the other forms of their class (b): edits util.isDeepStrictEqual does not see.
+  { id: "M-NONENUM-MEMO", pin: "A1", case: "K-FITS", recipe: { memoQuery: true }, expect: ["impure"] },
+  { id: "M-FREEZE", pin: "A1", case: "K-FITS", recipe: { integrity: "freeze" }, expect: ["impure"] },
+  { id: "M-PREVENT-EXTENSIONS", pin: "A1", case: "K-FITS", recipe: { integrity: "prevent" }, expect: ["impure"] },
+  { id: "M-SYMBOL-FIELD", pin: "A1", case: "K-FITS", recipe: { symbolField: true }, expect: ["impure"] },
+  { id: "M-FIXED-REVISION", pin: "A1", case: "K-FITS", recipe: { fixRevision: true }, expect: ["impure"] },
+  { id: "M-REVISION-ACCESSOR", pin: "A1", case: "K-FITS", recipe: { revisionAccessor: true }, expect: ["impure"] },
+  { id: "M-PROTO-SWAP", pin: "A1", case: "K-FITS", recipe: { protoSwap: true }, expect: ["impure"] },
+  { id: "M-FROZEN-NODE", pin: "A1", case: "K-FITS", recipe: { freezeNode: true }, expect: ["impure"] },
+  { id: "M-SCOPE-REORDER", pin: "A1", case: "K-FITS", recipe: { reorderScope: true }, expect: ["impure"] },
+  { id: "M-SHADOW-CONNECTIONS", pin: "A1", case: "K-FITS", recipe: { shadowConnections: true }, expect: ["impure"] },
+  { id: "M-KEY-ORDER", pin: "A1", case: "K-FITS", recipe: { keyOrder: true }, expect: ["impure"] },
+  { id: "M-CLASS-PROTO", pin: "A1", case: "K-FITS", recipe: { classProto: true }, expect: ["impure"] },
+  { id: "M-BUDGET-EDIT", pin: "A1", case: "K-FITS", recipe: { editRequest: "budget" }, expect: ["impure"] },
+  { id: "M-SCOPE-EDIT", pin: "A1", case: "K-FITS", recipe: { editRequest: "scope" }, expect: ["impure"] },
   { id: "M-NAMESPACE", pin: "A2", case: "K-FITS", recipe: { namespace: true }, expect: ["graphdatair"] },
   { id: "M-DUPLICATE-ID", pin: "A2", case: "K-FITS", recipe: { duplicateId: true }, expect: ["graphdatair"] },
   { id: "M-DANGLING", pin: "A2", case: "K-FITS", recipe: { dangling: true }, expect: ["graphdatair", "relation"] },
@@ -896,6 +1204,11 @@ export const MUTANTS: readonly MutantRow[] = [
   { id: "M-REFUSE-FITTING", pin: "E4", case: "K-FITS", recipe: { refuseFitting: true }, expect: ["refused-fitting"] },
   { id: "M-DROP-NODE", pin: "F1", case: "K-FITS", recipe: { dropNode: true }, expect: ["truncated"] },
   { id: "M-DROP-EDGE", pin: "F1", case: "K-FITS", recipe: { dropEdge: true }, expect: ["truncated"] },
+];
+/** The purity legs' equivalence controls: each recipe reads more or edits only copies, and is judged pure (A1). */
+export const PURE_RECIPES: readonly { readonly id: string; readonly recipe: Recipe }[] = [
+  { id: "E-EVERY-READ", recipe: { everyRead: true } },
+  { id: "E-READ-RESULT-EDIT", recipe: { editReads: true } },
 ];
 
 // ---- the registration of a src exporter (the live leg) ----
@@ -971,6 +1284,89 @@ export const PLANTED_NAMESPACE = { path: "qa/zz-gp-namespace.mjs", text: `export
 /** The spellings D3's reader reads (each one's match is in D3's witness), and near spellings outside its reading (pinned quiet). */
 export const EXECUTOR_REQUEST_HITS: readonly string[] = ["ExecutorRequest", "executor request", "executor_request", "executor-request", "EXECUTOR_REQUEST", "typedExecutorRequests"];
 export const EXECUTOR_REQUEST_QUIET: readonly string[] = ["executor.request", "ExecRequest", "executorsRequest", "request executor"];
+/** G1's reader as the read proof drives it: the files siteFindings names unregistered, with no registration (every site word is a hit). */
+export const sitePaths = (texts: ReadonlyMap<string, string>): string[] => siteFindings([], texts).flatMap(finding => (finding.startsWith("S-UNREGISTERED ") ? [finding.slice("S-UNREGISTERED ".length).split(" names ", 1)[0] ?? ""] : []));
+
+// ---- the absence readers' read proof (G1, G2, D3; refusal #2's U1: class (a) of its CLASS-LEVEL GUARD) ----
+
+/** The git blob id of a text read as UTF-8: what git hash-object prints for a file holding exactly its bytes (sha1, or sha256 for a 64-hex id). */
+export const blobIdOf = (text: string, id = ""): string => createHash(id.length === 64 ? "sha256" : "sha1").update(`blob ${Buffer.byteLength(text, "utf8")}\0`).update(text, "utf8").digest("hex");
+/** Where the read proof writes a reader's word into every listed text, each time on a line of its own. */
+export const PLACES = ["start", "middle", "end"] as const;
+export type Place = (typeof PLACES)[number];
+export const withWordAt = (text: string, word: string, place: Place): string => {
+  const at = place === "start" ? 0 : place === "end" ? text.length : Math.floor(text.length / 2);
+  return `${text.slice(0, at)}\n${word}\n${text.slice(at)}`;
+};
+/** A reader: the paths of a read map it names. */
+export type Reader = (texts: ReadonlyMap<string, string>) => readonly string[];
+/**
+ * One reader's read proof over the listing its claim covers. unread: every listed path the read map lacks, or holds a text for
+ * that is not git's reading of the file (ids: git's blob id per path, from git hash-object in the census); extra: every path the
+ * read map holds outside the listing; missed, per place: every listed path the reader does not name when each listed text of the
+ * read map carries the reader's word at that place (its start, its middle, its end). So a read map that drops, blanks or
+ * shortens a listed file names it in unread, and a reader that skips an entry, or reads only part of a text, names it in missed.
+ */
+export interface ReadProof {
+  readonly unread: readonly string[];
+  readonly extra: readonly string[];
+  readonly missed: Readonly<Record<Place, readonly string[]>>;
+}
+export const FULL_READ: ReadProof = { unread: [], extra: [], missed: { start: [], middle: [], end: [] } };
+/** The listed paths a read map lacks, or holds a text for that is not git's reading of the file (readProof's unread). */
+export const unreadOf = (listing: readonly string[], texts: ReadonlyMap<string, string>, ids: ReadonlyMap<string, string>): string[] =>
+  listing.filter(path => {
+    const text = texts.get(path);
+    const id = ids.get(path);
+    return text === undefined || id === undefined || blobIdOf(text, id) !== id;
+  });
+export function readProof(listing: readonly string[], texts: ReadonlyMap<string, string>, ids: ReadonlyMap<string, string>, word: string, reader: Reader): ReadProof {
+  const listed = new Set(listing);
+  const unread = unreadOf(listing, texts, ids);
+  const extra = [...texts.keys()].filter(path => !listed.has(path));
+  const missedAt = (place: Place): string[] => {
+    const marked = new Map(listing.flatMap(path => {
+      const text = texts.get(path);
+      return text === undefined ? [] : [[path, withWordAt(text, word, place)] as const];
+    }));
+    const named = new Set(reader(marked));
+    return listing.filter(path => !named.has(path));
+  };
+  return { unread, extra, missed: { start: missedAt("start"), middle: missedAt("middle"), end: missedAt("end") } };
+}
+/** The read proof's own controls: a fixed three-file listing (each text 400 characters, so its middle is far from both ends). */
+export const PROOF_LISTING: readonly string[] = ["src/workbench/zz-proof-a.ts", "src/workbench/zz-proof-b.ts", "src/workbench/zz-proof-c.ts"];
+export const PROOF_WORD = "ProofWord";
+const PROOF_TEXT = `${"// filler line of a listed file\n".repeat(12)}${"x".repeat(400 - 12 * 32)}`;
+const proofTexts = (): Map<string, string> => new Map(PROOF_LISTING.map(path => [path, PROOF_TEXT] as const));
+const wholeReader: Reader = texts => [...texts].filter(([, text]) => text.includes(PROOF_WORD)).map(([path]) => path);
+/** Each control is a read map edit or a hollow reader; expect is the proof it must give (the whole reader and map give FULL_READ). */
+export interface ProofControl {
+  readonly id: string;
+  readonly texts: (texts: Map<string, string>) => Map<string, string>;
+  readonly reader: Reader;
+  readonly expect: ReadProof;
+}
+const [PA, PB, PC] = PROOF_LISTING as readonly [string, string, string];
+const missedEverywhere = (paths: readonly string[]): Record<Place, readonly string[]> => ({ start: paths, middle: paths, end: paths });
+export const PROOF_CONTROLS: readonly ProofControl[] = [
+  { id: "P-WHOLE", texts: texts => texts, reader: wholeReader, expect: FULL_READ },
+  { id: "P-MAP-BLANK", texts: texts => new Map([...texts].map(([path, text]) => [path, path === PB ? "" : text] as const)), reader: wholeReader, expect: { ...FULL_READ, unread: [PB] } },
+  { id: "P-MAP-SHORT", texts: texts => new Map([...texts].map(([path, text]) => [path, path === PC ? text.slice(0, -1) : text] as const)), reader: wholeReader, expect: { ...FULL_READ, unread: [PC] } },
+  { id: "P-MAP-DROP", texts: texts => new Map([...texts].filter(([path]) => path !== PA)), reader: wholeReader, expect: { unread: [PA], extra: [], missed: missedEverywhere([PA]) } },
+  { id: "P-MAP-EXTRA", texts: texts => new Map([...texts, ["src/workbench/zz-proof-unlisted.ts", PROOF_TEXT]]), reader: wholeReader, expect: { ...FULL_READ, extra: ["src/workbench/zz-proof-unlisted.ts"] } },
+  { id: "P-READER-LAST", texts: texts => texts, reader: texts => wholeReader(new Map([...texts].slice(-1))), expect: { ...FULL_READ, missed: missedEverywhere([PA, PB]) } },
+  { id: "P-READER-FIRST", texts: texts => texts, reader: texts => wholeReader(new Map([...texts].slice(0, 1))), expect: { ...FULL_READ, missed: missedEverywhere([PB, PC]) } },
+  { id: "P-READER-HEAD", texts: texts => texts, reader: texts => wholeReader(new Map([...texts].map(([path, text]) => [path, text.slice(0, 64)] as const))), expect: { ...FULL_READ, missed: { start: [], middle: [PA, PB, PC], end: [PA, PB, PC] } } },
+  { id: "P-READER-TAIL", texts: texts => texts, reader: texts => wholeReader(new Map([...texts].map(([path, text]) => [path, text.slice(-64)] as const))), expect: { ...FULL_READ, missed: { start: [PA, PB, PC], middle: [PA, PB, PC], end: [] } } },
+  { id: "P-READER-BLANK", texts: texts => texts, reader: texts => wholeReader(new Map([...texts].map(([path]) => [path, ""] as const))), expect: { ...FULL_READ, missed: missedEverywhere([PA, PB, PC]) } },
+];
+/** A control's proof: git's ids stand in as the ids of the unedited texts. */
+export const controlProof = (control: ProofControl): ReadProof => {
+  const texts = proofTexts();
+  const ids = new Map([...texts].map(([path, text]) => [path, blobIdOf(text)] as const));
+  return readProof(PROOF_LISTING, control.texts(proofTexts()), ids, PROOF_WORD, control.reader);
+};
 
 // ---- docs/workbench/03's two GraphPolicyCLI sentences (G3) ----
 
@@ -982,15 +1378,42 @@ export const BOUNDARY_HEADING = "GraphPolicyCLI boundary";
 export const GP_OWNER = "GraphPolicyCLI";
 /** The first clause ("; "-cut) of that row's third cell ("Workbench may do"). */
 export const OWNERSHIP_CELL = "nothing today (no gp seam is registered)";
+/** The header of the table holding that row: the owner cell is read under its second column and the clause under its third. */
+export const OWNERSHIP_HEADER: readonly string[] = ["Concern", "Authoritative owner", "Workbench may do"];
+/** The heading after the Ownership boundaries section (an anchor of the D-SECOND-TABLE plant). */
+export const NEXT_HEADING = "Package dependency direction";
 export const BOUNDARY_SENTENCE = "Pi carries no GraphPolicyCLI (gp) integration today.";
 
 /** What G3 read: the ownership row (how many GraphPolicyCLI rows, the one row's first clause) and the boundary section's opening. */
 export interface Docs03Reading {
-  readonly ownership: { readonly refused: string | null; readonly rows: number; readonly cell: string | null };
-  readonly boundary: { readonly refused: string | null; readonly first: string | null; readonly opening: string | null };
+  /** other: the kinds of the section's blocks outside its tables that name GraphPolicyCLI (a row in a quoted or an HTML table among them). */
+  readonly ownership: { readonly refused: string | null; readonly rows: number; readonly header: readonly string[] | null; readonly cell: string | null; readonly other: readonly string[] };
+  /** The opening's first sentence as rendered (inline marks removed) and in its markdown source (marks kept). */
+  readonly boundary: { readonly refused: string | null; readonly first: string | null; readonly opening: string | null; readonly source: string | null };
 }
 /** The docs rules, in report order; a finding is its rule, one space, and what it found. */
-export const DOCS_RULES = ["ownership-bound", "ownership-rows", "ownership-cell", "boundary-bound", "boundary-first", "boundary-opening"] as const;
+export const DOCS_RULES = ["ownership-bound", "ownership-rows", "ownership-header", "ownership-cell", "ownership-other", "boundary-bound", "boundary-first", "boundary-opening"] as const;
+
+/** An HTML block whose source is HTML comments only: it renders nothing, so the reading passes over it (any other HTML block renders). */
+export const commentOnly = (raw: string): boolean => /^(?:\s*<!--[\s\S]*?-->)+\s*$/.test(raw);
+/**
+ * The type and markdown source of each top-level block of a level-2 section, from marked's own tokens (the parser the landed
+ * binding lexes with), sliced at the section's heading up to the next heading of level 1 or 2: the binding's own bounding, read
+ * only once the binding has bound the section. A table nested in a blockquote or a list renders no text in the binding's
+ * blocks, so the Ownership check reads each block's source.
+ */
+export function sectionSources(page: string, heading: string): { readonly type: string; readonly raw: string }[] {
+  const tokens = marked.lexer(page);
+  const isHeading = (token: (typeof tokens)[number]): token is Tokens.Heading => token.type === "heading";
+  const at = tokens.findIndex(token => isHeading(token) && token.depth === 2 && token.text === heading);
+  const sources: { readonly type: string; readonly raw: string }[] = [];
+  if (at === -1) return sources;
+  for (const token of tokens.slice(at + 1)) {
+    if (isHeading(token) && token.depth <= 2) break;
+    if (token.type !== "space") sources.push({ type: token.type, raw: token.raw });
+  }
+  return sources;
+}
 
 /** A rendered paragraph's first sentence: its text up to the first ". ", or the whole text. */
 const firstSentence = (text: string): string => {
@@ -1000,18 +1423,30 @@ const firstSentence = (text: string): string => {
 /**
  * G3's reading of docs/03 through the landed docs binding (test/helpers/census.ts): ONE binding per heading, each heading once
  * in the rendered view under the page title. The ownership rows are sectionTables' cells of the Ownership boundaries
- * section only (every table row whose owner cell is GraphPolicyCLI); the opening is the first sentence of the boundary
- * section's first rendered block (an HTML block renders nothing, so it is passed over) when that block is a paragraph.
+ * section only (every table row whose owner cell is GraphPolicyCLI), with the header of the one row's table (refusal #2's
+ * header-rename falsifier: the cell is read under the header that names it), and every other block of that section whose
+ * source names GraphPolicyCLI (sectionSources: a row in a quoted, listed or HTML table renders as a row the top-level grids
+ * never hold; a block of HTML comments only is passed over);
+ * the opening is the first sentence of the boundary section's first rendered block (an HTML block of comments only renders
+ * nothing, so it is passed over; any other HTML block renders and is that first block) when that block is a paragraph,
+ * read twice: as rendered (the binding's text, inline marks removed) and in its source (the binding's markdown, marks kept),
+ * so a struck "no" (~~no~~ or <del>no</del>, refusal #2's strike falsifier), which renders the same characters, is read.
  */
 export function docs03Reading(page: string): Docs03Reading {
   const tables = sectionTables(page, OWNERSHIP_HEADING, 2, [DOCS_03_TITLE]);
-  const rows = tables.grids.flatMap(grid => grid.slice(1).filter(cells => cells[1] === GP_OWNER));
+  const held = tables.grids.flatMap(grid => grid.slice(1).filter(cells => cells[1] === GP_OWNER).map(cells => ({ header: grid[0] ?? [], cells })));
+  const rows = held.map(entry => entry.cells);
   const row = rows.length === 1 ? rows[0] : undefined;
+  const other = tables.ok
+    ? sectionSources(page, OWNERSHIP_HEADING)
+        .filter(block => block.type !== "table" && !(block.type === "html" && commentOnly(block.raw)) && block.raw.includes(GP_OWNER))
+        .map(block => block.type)
+    : [];
   const section = docsSection(page, BOUNDARY_HEADING, 2, [DOCS_03_TITLE]);
-  const first = section.blocks.find(block => block.kind !== "html");
+  const first = section.blocks.find(block => !(block.kind === "html" && commentOnly(block.raw)));
   return {
-    ownership: { refused: tables.ok ? null : tables.why, rows: rows.length, cell: row === undefined ? null : ((row[2] ?? "").split("; ")[0] ?? "") },
-    boundary: { refused: section.ok ? null : section.why, first: first?.kind ?? null, opening: first?.kind === "paragraph" ? firstSentence(first.text) : null },
+    ownership: { refused: tables.ok ? null : tables.why, rows: rows.length, header: held.length === 1 ? [...(held[0]?.header ?? [])] : null, cell: row === undefined ? null : ((row[2] ?? "").split("; ")[0] ?? ""), other },
+    boundary: { refused: section.ok ? null : section.why, first: first?.kind ?? null, opening: first?.kind === "paragraph" ? firstSentence(first.text) : null, source: first?.kind === "paragraph" ? firstSentence(first.markdown) : null },
   };
 }
 
@@ -1021,10 +1456,12 @@ export function docs03Findings(reading: Docs03Reading): string[] {
   const { ownership, boundary } = reading;
   if (ownership.refused !== null) findings.push(`ownership-bound ${ownership.refused}`);
   else if (ownership.rows !== 1) findings.push(`ownership-rows the ${OWNERSHIP_HEADING} section holds ${ownership.rows} ${GP_OWNER} rows, not one`);
+  else if (!isDeepStrictEqual(ownership.header, OWNERSHIP_HEADER)) findings.push(`ownership-header the table holding the ${GP_OWNER} row is headed ${JSON.stringify(ownership.header)}, not ${JSON.stringify(OWNERSHIP_HEADER)}`);
   else if (ownership.cell !== OWNERSHIP_CELL) findings.push(`ownership-cell the ${GP_OWNER} row's Workbench cell opens ${JSON.stringify(ownership.cell)}, not ${JSON.stringify(OWNERSHIP_CELL)}`);
+  if (ownership.other.length > 0) findings.push(`ownership-other the ${OWNERSHIP_HEADING} section names ${GP_OWNER} outside its tables, in ${ownership.other.join(", ")}`);
   if (boundary.refused !== null) findings.push(`boundary-bound ${boundary.refused}`);
   else if (boundary.first !== "paragraph") findings.push(`boundary-first the ${BOUNDARY_HEADING} section's first rendered block is ${boundary.first ?? "nothing"}, not a paragraph`);
-  else if (boundary.opening !== BOUNDARY_SENTENCE) findings.push(`boundary-opening the ${BOUNDARY_HEADING} section opens ${JSON.stringify(boundary.opening)}, not ${JSON.stringify(BOUNDARY_SENTENCE)}`);
+  else if (boundary.opening !== BOUNDARY_SENTENCE || boundary.source !== BOUNDARY_SENTENCE) findings.push(`boundary-opening the ${BOUNDARY_HEADING} section opens ${JSON.stringify(boundary.opening)} (source ${JSON.stringify(boundary.source)}), not ${JSON.stringify(BOUNDARY_SENTENCE)}`);
   return findings;
 }
 
@@ -1072,6 +1509,22 @@ export const DOCS_PLANTS: readonly DocsPlant[] = [
   { id: "D-REHOME", edit: page => onceIn(page, `\n## ${BOUNDARY_HEADING}\n`, `\n# Appendix\n\n## ${BOUNDARY_HEADING}\n`), expect: ["boundary-bound"] },
   // Quiet: an HTML comment block renders nothing, so a reader of the section still meets the sentence first.
   { id: "D-COMMENT-ABOVE", edit: page => onceIn(page, `## ${BOUNDARY_HEADING}\n\n`, `## ${BOUNDARY_HEADING}\n\n<!-- an editor's note -->\n\n`), expect: [] },
+  // Refusal #2's gate-authored docs falsifiers (its LEG 2), the header rename that stayed green among them.
+  { id: "D-HEADER-SWAP", edit: page => onceIn(page, `| ${OWNERSHIP_HEADER.join(" | ")} |`, `| Concern | Authoritative owner | Workbench must never do |`), expect: ["ownership-header"] },
+  { id: "D-BLOCKQUOTE", edit: page => lineIn(page, BOUNDARY_SENTENCE, line => [`> ${line}`]), expect: ["boundary-first"] },
+  { id: "D-LIST-LEAD", edit: page => onceIn(page, `## ${BOUNDARY_HEADING}\n\n`, `## ${BOUNDARY_HEADING}\n\n- Pi carries a gp seam at src/workbench/gp-seam.ts.\n\n`), expect: ["boundary-first"] },
+  { id: "D-SECOND-TABLE", edit: page => onceIn(page, `\n## ${NEXT_HEADING}\n`, `\n| Added concern | Owner | Workbench may do |\n| --- | --- | --- |\n| Policy scores | ${GP_OWNER} | the gp seam at src/workbench/gp-seam.ts |\n\n## ${NEXT_HEADING}\n`), expect: ["ownership-rows"] },
+  { id: "D-STRIKE", edit: page => onceIn(page, BOUNDARY_SENTENCE, "Pi carries ~~no~~ GraphPolicyCLI (gp) integration today."), expect: ["boundary-opening"] },
+  { id: "D-STRIKE-HTML", edit: page => onceIn(page, BOUNDARY_SENTENCE, "Pi carries <del>no</del> GraphPolicyCLI (gp) integration today."), expect: ["boundary-opening"] },
+  { id: "D-SETEXT-DUP", edit: page => `${page.trimEnd()}\n\n${BOUNDARY_HEADING}\n${"-".repeat(BOUNDARY_HEADING.length)}\n\n${BOUNDARY_SENTENCE}\n`, expect: ["boundary-bound"] },
+  { id: "D-CELL-STRIKE", edit: page => onceIn(page, ROW_ANCHOR, `| ${GP_OWNER} | ~~${OWNERSHIP_CELL}~~`), expect: ["ownership-cell"] },
+  // Rendered blocks the grids and the opening would pass over: a visible HTML block leading the section, a row in a quoted table, a row in an HTML table.
+  { id: "D-HTML-LEAD", edit: page => onceIn(page, `## ${BOUNDARY_HEADING}\n\n`, `## ${BOUNDARY_HEADING}\n\n<p>Pi carries a GraphPolicyCLI (gp) seam at src/workbench/gp-seam.ts.</p>\n\n`), expect: ["boundary-first"] },
+  { id: "D-QUOTED-ROW", edit: page => onceIn(page, `\n## ${NEXT_HEADING}\n`, `\n> | Quoted concern | Owner | Workbench may do |\n> | --- | --- | --- |\n> | Policy scores | ${GP_OWNER} | the gp seam at src/workbench/gp-seam.ts |\n\n## ${NEXT_HEADING}\n`), expect: ["ownership-other"] },
+  { id: "D-HTML-ROW", edit: page => onceIn(page, `\n## ${NEXT_HEADING}\n`, `\n<table><tr><td>Policy scores</td><td>${GP_OWNER}</td><td>the gp seam at src/workbench/gp-seam.ts</td></tr></table>\n\n## ${NEXT_HEADING}\n`), expect: ["ownership-other"] },
+  { id: "D-LISTED-ROW", edit: page => onceIn(page, `\n## ${NEXT_HEADING}\n`, `\n- | Listed concern | Owner | Workbench may do |\n  | --- | --- | --- |\n  | Policy scores | ${GP_OWNER} | the gp seam at src/workbench/gp-seam.ts |\n\n## ${NEXT_HEADING}\n`), expect: ["ownership-other"] },
+  // Quiet: an HTML comment naming GraphPolicyCLI in the Ownership section renders nothing.
+  { id: "D-OWNER-COMMENT", edit: page => onceIn(page, `\n## ${NEXT_HEADING}\n`, `\n<!-- ${GP_OWNER}: an editor's note -->\n\n## ${NEXT_HEADING}\n`), expect: [] },
 ];
 
 // ---- the judged rows (rule 16) ----
@@ -1111,6 +1564,8 @@ export const QUOTES: Readonly<Record<string, string>> = {
   Q3: "R-SCHEMA",
   Q4: "R-LABELS",
   Q5: "R-SNAPSHOT-REVISIONS",
+  Q6: "R-DEFERRED",
+  Q7: "R-OUTSIDE",
 };
 export const ROWS: readonly Row[] = [
   { id: "A", label: "a pure exporter test builds GraphDataIR from an ObservationProjection fixture and asserts every node and edge traces to a native ref inside the caller's scope", pins: ["A1", "A2", "A3", "A4", "A5"] },
@@ -1120,7 +1575,7 @@ export const ROWS: readonly Row[] = [
   { id: "E", label: "and a snapshot over the declared node/edge/byte budget is refused with a typed unavailable", pins: ["E1", "E2", "E3", "E4"] },
   { id: "F", label: "never truncated silently", pins: ["F1"] },
   { id: "G", label: "When Pi exports a request to GraphPolicyCLI (artifact: released GraphDataIR schema + an owner-decided Pi decision point)", pins: ["G1", "G2", "G3"] },
-  { id: "Q", label: "the named residual families, each member a pinned quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5"] },
+  { id: "Q", label: "the named residual families, each member a pinned quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"] },
 ];
 
 /** The quotes tile the label in order, with nothing but separators (white space, , ; : ( ) / +) between and around them. */
@@ -1168,7 +1623,19 @@ export interface OutcomeResidual {
   /** An edit of the reference's conforming export that the judge does not read. */
   readonly edit: (outcome: Exported) => Exported;
 }
-export type Residual = SourceResidual | OutcomeResidual;
+export interface DriveResidual {
+  readonly kind: "drive";
+  readonly id: string;
+  /** A fresh drive for each row run (a member may count its own calls), judged by driveFindings on K-FITS. */
+  readonly drive: () => Drive;
+  /** Undo what the member leaves outside the projection, once its row has judged it. */
+  readonly after?: () => void;
+}
+export type Residual = SourceResidual | OutcomeResidual | DriveResidual;
+/** The global mark of the q7-global-write member (a registered symbol on globalThis, removed by its row). */
+export const GLOBAL_MARK = Symbol.for("wb-0lf.2 R-OUTSIDE");
+/** The module record of the q7-module-record member: a drive's own state outside the projection. */
+const DRIVE_RECORD = new WeakMap<object, number>();
 const withGraph = (outcome: Exported, change: (graph: Record<string, unknown>) => Record<string, unknown>): Exported => ({ ...outcome, graph: change(structuredClone(outcome.graph) as Record<string, unknown>) });
 export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
   // A module that builds a GraphDataIR-shaped document without naming a site word is no site: the reader reads words.
@@ -1197,6 +1664,64 @@ export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
   Q5: [
     { kind: "outcome", id: "q5-revisions-empty", edit: outcome => withGraph(outcome, graph => ({ ...graph, observation: { ...(graph.observation as object), revisions: [] } })) },
     { kind: "outcome", id: "q5-revisions-guessed", edit: outcome => withGraph(outcome, graph => ({ ...graph, observation: { ...(graph.observation as object), revisions: ["unknown"], scope: "pi://elsewhere" } })) },
+  ],
+  // A write the drive defers past its own settlement (a timer, refusal #2's F4 P-DEFERRED-WRITE): every leg reads once both
+  // drives have settled, so neither the write leg nor the state leg sees it.
+  Q6: [
+    {
+      kind: "drive",
+      id: "q6-timer-write",
+      drive: () => request => {
+        const view = request.projection;
+        setTimeout(() => view.disconnect(UNHELD_PROVIDER), 0);
+        return referenceExport(request);
+      },
+    },
+    {
+      kind: "drive",
+      id: "q6-timer-freeze",
+      drive: () => request => {
+        const view = request.projection;
+        setTimeout(() => Object.freeze(view), 0);
+        return referenceExport(request);
+      },
+    },
+  ],
+  // What a drive keeps outside the projection's object graph and its class (global and module state), read only through the
+  // outcomes of two drives: a global mark, a module record of the projection, and an outcome that changes from the third call on
+  // (refusal #1's F4).
+  Q7: [
+    {
+      kind: "drive",
+      id: "q7-global-write",
+      drive: () => request => {
+        Reflect.set(globalThis, GLOBAL_MARK, true);
+        return referenceExport(request);
+      },
+      after: () => {
+        Reflect.deleteProperty(globalThis, GLOBAL_MARK);
+      },
+    },
+    {
+      kind: "drive",
+      id: "q7-module-record",
+      drive: () => request => {
+        DRIVE_RECORD.set(request.projection, (DRIVE_RECORD.get(request.projection) ?? 0) + 1);
+        return referenceExport(request);
+      },
+    },
+    {
+      kind: "drive",
+      id: "q7-third-call",
+      drive: () => {
+        let calls = 0;
+        return request => {
+          calls++;
+          const outcome = referenceExport(request);
+          return calls >= 3 && outcome.ok ? { ...outcome, candidates: [] } : outcome;
+        };
+      },
+    },
   ],
 };
 export const residualId = (member: Residual): string => (member.kind === "source" ? member.path : member.id);

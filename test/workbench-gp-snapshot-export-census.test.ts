@@ -12,21 +12,21 @@
  * (NATIVE_CONTROL_ACTIONS at control.ts:30-37 or typed executor requests), and a snapshot over the declared node/edge/byte
  * budget is refused with a typed unavailable, never truncated silently." The filing closes "Tracked gate, never a blocker."
  *
- * THE GATE (measured read-only by the cutting seat on 2026-10-28 at trunk ade68d6 and again after each trunk merge into the cut,
- * landings 602-605, none of which touches a src or docs file, and by the respin seat at trunk e81d2b0, whose delta from the
- * refused cut's base e544dd8, landings 607-648, touches no qa file and not docs/workbench/03, and two src modules,
- * src/workbench/collective-event.ts and src/workbench/hyperunix-observer.ts, neither of which G1, G2 or D3 reads a word in;
- * row G re-reads it live):
- * Pi has no exporter to test. docs/workbench/03's Ownership boundaries section holds one GraphPolicyCLI row, whose
- * "Workbench may do" cell opens "nothing today (no gp seam is registered)", and its GraphPolicyCLI boundary section's first
- * rendered block opens "Pi carries no GraphPolicyCLI (gp) integration today." (G3, read through the landed docs binding
- * sectionTables/docsSection of test/helpers/census.ts, each heading once under the page title); no src module
- * names GraphPolicy or GraphDataIR (G1; the landed wb-e66.5, wb-1xvp.2 and wb-gxd7.4 guards pin the same absence by their own
- * readings, and wb-gxd7.4's filing names this bead's exporter as unbuilt). So this suite PINS TODAY'S ABSENCE and ARMS the
- * acceptance for the first exporter: the judge (exportFindings, driveFindings) is written now, proven on a reference exporter
- * over real ObservationProjection fixtures and on fifty-nine mutants, each refused with exactly its rules, and every
- * EXPORT_SITES registration (none today) must pass it on every CASES row. A src module that names a site word without a
- * registration reds G1, so the cut that adds the exporter registers it here, with a drive, and meets the judge.
+ * THE GATE (measured read-only by the cutting seat on 2026-10-28 at trunk ade68d6 and after each trunk merge into the cut, by the
+ * first respin seat at trunk e81d2b0, and by the second respin seat at trunk 014d116, whose delta from e81d2b0, landings
+ * 649-651, touches no src, qa or docs file; row G re-reads it live):
+ * Pi has no exporter to test. docs/workbench/03's Ownership boundaries section holds one GraphPolicyCLI row, in a table headed
+ * "Concern | Authoritative owner | Workbench may do", whose "Workbench may do" cell opens "nothing today (no gp seam is
+ * registered)", and no other block of that section names GraphPolicyCLI in its source; its GraphPolicyCLI boundary section's
+ * first rendered block is a paragraph that opens, as rendered and in its source, "Pi carries no GraphPolicyCLI (gp)
+ * integration today." (G3, read through the landed docs binding sectionTables/docsSection of test/helpers/census.ts, each
+ * heading once under the page title); no src module names GraphPolicy or GraphDataIR (G1; the landed wb-e66.5, wb-1xvp.2 and
+ * wb-gxd7.4 guards pin the same absence by their own readings, and wb-gxd7.4's filing names this bead's exporter as unbuilt).
+ * So this suite PINS TODAY'S ABSENCE and ARMS the acceptance for the first exporter: the judge (exportFindings, driveFindings)
+ * is written now, proven on a reference exporter over real ObservationProjection fixtures and on seventy-three mutants, each
+ * refused with exactly its rules, and every EXPORT_SITES registration (none today) must pass it on every CASES row. A src
+ * module that names a site word without a registration reds G1, so the cut that adds the exporter registers it here, with a
+ * drive, and meets the judge.
  *
  * THE DRIVE CONTRACT (what a registration's drive returns; the presented document's spelling beyond the vendored v1 shape and
  * where the candidates ride are the owner-decided seam's, so the drive maps the exporter's output to this form):
@@ -36,6 +36,7 @@
  *    {entity, action} pairs;
  *  - or a refusal {ok: false, category: "unavailable", code: "export-over-budget", limit, declared, measured}, the capability
  *    registry's unavailable category (CapabilityErrorCategory, src/workbench/capability-registry.ts), and nothing else.
+ *  An outcome is read as data: an accessor or a function in it reads by identity, so two calls that build fresh ones differ.
  * READINGS (test/helpers/gp-snapshot-export-census.ts holds the tables, the fixture, the reference exporter and the judge; its
  * gp- name puts it in the GraphPolicy family holder class of the landed wb-kjg9.1 census, beside this census module and its
  * roster, which that census's census-module and census-roster classes already hold):
@@ -51,13 +52,25 @@
  *   relation a kind, a features object and incidences naming exported entities, one id space for entities, relations and
  *   incidences. The vendored fixture itself reads clean (A2).
  * - PURITY (driveFindings): each drive runs twice, each time on a fresh projection behind a view (watched) that records every
- *   call of a projection method outside READ_METHODS. A drive is impure on any of four legs: it called such a method (each of
- *   the six public writes has an A1 member, M-WRITE-NOOP one that changes nothing and M-OTHER-CALL an inherited toString);
- *   it edited the ObservationProjection class (its prototype or its statics, which the twin shares; the judge puts the class
- *   back, and A1 holds both member lists to the ones this module loaded with); a projection it read is not deep-equal to a
- *   fresh twin afterwards (util.isDeepStrictEqual over every own field of the instance, the connection map and the
- *   identity-refusal log among them); or its two outcomes differ.
- * - THE RULES (exportFindings; every finding names its rule): A outcome, graphdatair, impure (PURITY's four legs); A trace
+ *   call of a projection method outside READ_METHODS, with fresh copies of the scope and the budget. Once both drives have
+ *   settled, a drive is impure on any of five legs: it called such a method (each of the six public writes has an A1 member,
+ *   M-WRITE-NOOP one that changes nothing and M-OTHER-CALL an inherited toString); the class (its prototype and its
+ *   constructor) no longer reads as it did before the drives (the judge puts the class back, prototypes included, and A1
+ *   holds both member lists and the prototype's prototype to the ones this module loaded with); a projection it read no longer
+ *   reads as a fresh twin; the scope or the budget it was handed no longer reads as a fresh copy; or its two outcomes read
+ *   unlike each other. Every leg after the first reads through one strict walk (structureOf, refusal #2's U2 cure): from each
+ *   root, every object reachable through own properties (Reflect.ownKeys: string and symbol keys, enumerable or not) and map
+ *   and set entries, and per object its kind (internal-slot brand checks that run none of its own code), its prototype by
+ *   identity, its integrity level (extensible, sealed, frozen), its own keys in order and per key the descriptor's attributes
+ *   with its value or its accessor functions, a map's or set's size and entries in insertion order, a date's time; an object
+ *   met again reads as the path it was first met at, a primitive by Object.is. A Proxy is a leaf whose traps are never called
+ *   (it reads unlike any twin's object), a function below a root a leaf read by identity, and an opaque object (a WeakMap,
+ *   WeakSet, Promise, RegExp, typed array, buffer or boxed primitive) is read by its own properties only; A1 holds a fixture
+ *   projection's walk to the kinds it enters (array, map, object, set). STRUCTURE_PROBES pins each facet the walk reads, each
+ *   one's first difference named, and each impure finding names the facet of its first difference (never a private field's
+ *   name). The two equivalence controls (PURE_RECIPES: every READ_METHODS call, and edits of the copies the reads hand out)
+ *   are judged pure, so the walk is strict without reading a read as a write.
+ * - THE RULES (exportFindings; every finding names its rule): A outcome, graphdatair, impure (PURITY's five legs); A trace
  *   (an element without its trace entry, a trace entry without its element, two elements tracing one key or one relation),
  *   scope, native-ref (a key the scope neither observed nor related,
  *   or a ref that is not the one its key encodes), relation (a trace that is no projection relation of the scope, or
@@ -70,19 +83,33 @@
  *   relation counts, and the presented bytes, UTF-8 compact JSON.stringify as an RPC call presents them, wb-gxd7.3), refusal
  *   (anything but exactly the typed unavailable naming an exceeded limit, its declared budget and a measure past it),
  *   refused-fitting; F truncated (an export missing an observed node, a related endpoint or a relation).
+ * - THE READ PROOF (readProof, refusal #2's U1 cure, the landed wb-b1rq form): each absence reader's case reads its claim's
+ *   listing (G1: the src walk less git's ignored set; D3: git's src listing; G2: git's src listing and the qa walk less git's
+ *   ignored set, which equals git's qa listing), the read map its reader is handed, and git's own reading of every listed
+ *   path (git hash-object --no-filters --stdin-paths, never this census's read). unread names every listed path the map lacks
+ *   or holds a text for that does not hash to git's blob id (a dropped, blanked or shortened file), extra every mapped path the
+ *   listing lacks, and missed, at each of three places (start, middle, end), every listed path the reader does not name when
+ *   each mapped text carries the reader's word there on a line of its own (a reader that skips an entry or reads part of a
+ *   text). Each witness holds its proof (all empty), and PROOF_CONTROLS proves the proof itself on a fixed three-file listing:
+ *   a blanked, a shortened, a dropped and an extra map entry, and readers that read only the last entry, the first entry, the
+ *   first 64 or the last 64 characters, or nothing, each named exactly; G1's anchor proof blanks control.ts in a read map of
+ *   its own and must name it unread, so ids taken from the read map instead of git's reading red.
  *
  * ROWS. A-F, the acceptance clauses, each pin a quote of its clause with its own case: the reference conforms where the pin
  * names a case, and each of the pin's MUTANTS is refused with exactly its rules while the reference conforms on the same case.
- * G, the statement's gate slice: G1 the live leg (the src listing against the walk less git's ignored set, the registration
- * judge on the tree and on a planted exporter, SITE_CASES, the composed word reader's controls, and every registration's
- * drive on every case), G2 the namespace the judge reads is the vendored producer fixture's and no src or qa file names it,
- * G3 docs/03's two sentences. Each absence reader is proven live inside its own case, in G1's form: D3's reader (a planted
- * src module declaring an ExecutorRequest, read after the tracked modules in the same call, plus its pinned spellings and
- * near misses), G2's (a planted qa script naming the namespace) and G3's (DOCS_PLANTS: the same reading of twelve in-memory
- * edits of the live page, refusal #1's five falsifiers D-MOVE, D-LEAD, D-COMMENT, D-FENCE and D-ROW-DUP and its two controls
- * among them, each refused with exactly its docs rules, and one quiet plant), and each witness carries what its reader read
- * (D3's and G2's planted hits, D3's matched spellings and quiet set, G3's reading and every plant's rules). Q, the residuals'
- * pinned quiet rows.
+ * G, the statement's gate slice: G1 the live leg (the src listing against the walk less git's ignored set, its read proof and
+ * PROOF_CONTROLS, the registration judge on the tree and on a planted exporter, SITE_CASES, the composed word reader's
+ * controls, and every registration's drive on every case), G2 the namespace the judge reads is the vendored producer
+ * fixture's and no src or qa file names it, G3 docs/03's two sentences. Each absence reader is proven live inside its own case
+ * twice: by a planted positive read after the tracked files in the same call (G1's planted exporter; D3's planted src module
+ * declaring an ExecutorRequest, plus its pinned spellings and near misses; G2's planted qa script naming the namespace) and by
+ * its read proof over every listed file's own text. G3 holds the page it read to git's reading of docs/03 and is proven live
+ * by DOCS_PLANTS: the same reading of twenty-five in-memory edits of the live page (each plant's rules and what its two
+ * views of the opening read, so a blinded view reds even where the other view still refuses the plant), refusal #1's five falsifiers D-MOVE,
+ * D-LEAD, D-COMMENT, D-FENCE and D-ROW-DUP and its two controls, refusal #2's seven gate-authored docs falsifiers (the header
+ * rename D-HEADER-SWAP among them) and the further rendered shapes (a struck "no" in markdown or HTML, a visible HTML block
+ * leading the section, a GraphPolicyCLI row in a quoted, an HTML or a listed table), each refused with exactly its docs rules,
+ * and two quiet plants (HTML comments). Q, the residuals' pinned quiet rows.
  * RESIDUALS (named families, each member a pinned quiet row; a reader or judge that starts reading a member reds its row):
  * R-UNNAMED (Q1, a module that builds a GraphDataIR-shaped document without naming a site word is no site), R-COMPOSED (Q2,
  * a reader's word built at run time or spelled through an escape; the Q1 and Q2 rows run each member through all three
@@ -90,7 +117,10 @@
  * R-SCHEMA (Q3, the judge reads the vendored v1 shape, never a
  * GraphDataIR schema document: another feature's status, the schema hash), R-LABELS (Q4, entity and relation kinds and
  * incidence roles; kind labels are wb-gxd7.4's), R-SNAPSHOT-REVISIONS (Q5, the snapshot-level observation block: the trace
- * carries each element's revision, and an observation.revisions list that is empty or guessed is not judged).
+ * carries each element's revision, and an observation.revisions list that is empty or guessed is not judged), R-DEFERRED (Q6,
+ * refusal #2's F4: a write or an edit a drive defers past its own settlement, on a timer, which every leg reads too early to
+ * see), R-OUTSIDE (Q7, what a drive keeps outside the projection's object graph and its class: a global mark, a module record
+ * of the projection, and an outcome that changes from its third call on, refusal #1's F4, which two drives never reach).
  * NOT CLAIMED: the grants half of the statement ("within the caller's grants": the filing places the GP call's grant and
  * registry bounds on the standing host rules, docs/workbench/12-security.md:19 and 06-capability-registry.md:81, and names the
  * export shape as the new duty); that gp graph check accepts the reference document (Pi holds no GraphDataIR schema
@@ -102,13 +132,15 @@
  * is the per-producer verb set NATIVE_CONTROL_ACTIONS names, the filing's parenthetical, while the host's decision core
  * decideControl in src/workbench/control.ts further admits a verb only on an observed target inside the caller's scope with
  * a confirmed lifecycle-ownership relation, which the gate measured as 1 permitted of the reference's 7 K-FITS candidates;
- * those observed-target and confirmed-ownership halves are not judged here); a drive's effects outside the projection and
- * its class (module or global state), which PURITY reads only through its outcomes over two drives (refusal #1's F4: an
- * exporter that changes from its third call on is not read); a refusal's measured beyond a count past the declared budget
- * (refusal #1's F3: E4 reads it no further).
+ * those observed-target and confirmed-ownership halves are not judged here); the internal state of an opaque object or a
+ * Proxy's target (the projection holds neither: A1's kinds); a refusal's measured beyond a count past the declared budget
+ * (refusal #1's F3: E4 reads it no further); a reader edited to tell the read proof's planted word from a written one, a
+ * gitIds edited to hash this census's own read of the same files (it still holds every text to the file's bytes), or a
+ * coordinated edit of a reader and its read proof, PROOF_CONTROLS or the anchor proof in these files.
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS, every residual family's member
- * count, the mutant and case ids per pin, the rule list, the registry, the docs plants with their rules, the docs rules and
- * READ_METHODS as literals; the judged set (every row's id, label
+ * count, the mutant and case ids per pin, the rule list, the registry, the docs plants with their rules, the docs rules,
+ * READ_METHODS, the walk's probes with their facets, its facets and walked kinds, the equivalence controls, the read proof's
+ * places and controls as literals; the judged set (every row's id, label
  * and pins, every pin's quote and witness, the residual members, every registered test title) is held to the out-of-file
  * roster test/fixtures/gp-snapshot-export-roster.json.
  * OUTSIDE ANCHORS (their own registered case): the bead's own row in the tracker export (.beads/issues.jsonl) - each
@@ -116,9 +148,10 @@
  * its label with nothing but separators, and the filing's Pi pin is the one D2 reads control.ts at; the vendored producer
  * fixture holds the namespace, the explicit unknown and the known status the judge reads; capability-registry.ts declares the
  * unavailable category; NATIVE_CONTROL_ACTIONS is the live src import; READ_METHODS and the writes the A1 members call are the
- * live class's methods, the writes outside READ_METHODS. So a pin or a row removed from every literal of this
- * file, the helper and the roster together still reds. The last case reads the vitest task tree (every registered test, in
- * roster order, in run mode, ran before it) and REACHED (every pin reached its witness compare, and each compare's result).
+ * live class's methods, the writes outside READ_METHODS; git's blob ids anchor every text the readers read. So a pin or a row
+ * removed from every literal of this file, the helper and the roster together still reds. The last case reads the vitest task
+ * tree (every registered test, in roster order, in run mode, ran before it) and REACHED (every pin reached its witness
+ * compare, and each compare's result).
  *
  * Display paths added: none. Test-only: no src change, no GraphPolicyCLI exporter, seam, package or fake binary.
  */
@@ -135,12 +168,14 @@ import { beadRow, gitList, ignoredOf, walkList } from "./helpers/gp-mw-coordinat
 import {
   acceptanceClauses,
   admissibleActions,
+  BOUNDARY_SENTENCE,
   buildProjection,
   CASES,
   type CaseRow,
   COMPLETE_FEATURE,
   COVERAGE_FEATURE,
   caseRow,
+  controlProof,
   DECOMPOSED_BASIS,
   DOCS_PLANTS,
   DOCS_RULES,
@@ -154,8 +189,12 @@ import {
   type Exported,
   executorRequestNamers,
   exportFindings,
+  FACETS,
+  FULL_READ,
+  facetDrift,
   GRAPH_NAMESPACE,
   graphShapeFindings,
+  HELD_PROVIDER,
   judgeCaseOf,
   KNOWN_STATUS,
   keyParts,
@@ -163,15 +202,21 @@ import {
   namespaceNamers,
   OVER_BUDGET_CODE,
   PADDED_REVISION,
+  PLACES,
   PLANTED_EXECUTOR_REQUEST,
   PLANTED_NAMESPACE,
+  PROOF_CONTROLS,
+  PURE_RECIPES,
   presentedBytes,
+  probeValue,
   QUOTES,
+  READ_CALLS,
   READ_METHODS,
   RESIDUALS,
   ROWS,
   type Row,
   RULES,
+  readProof,
   recipeDrive,
   referenceExport,
   refOfKey,
@@ -182,13 +227,20 @@ import {
   SITE_CASES,
   SITE_WORD_HITS,
   SITE_WORD_QUIET,
+  SITE_WORDS,
   type SiteEntry,
+  STRUCTURE_PROBES,
   scopeSpec,
   siteFindings,
+  sitePaths,
   siteWords,
+  structureOf,
   tiles,
   truthOf,
+  UNHELD_PROVIDER,
   UNKNOWN_FEATURE,
+  unreadOf,
+  WALKED_KINDS,
 } from "./helpers/gp-snapshot-export-census.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -246,6 +298,23 @@ function liveSrc(): ReadonlyMap<string, string> {
   return srcTexts;
 }
 
+/**
+ * git's own reading of each listed path (the landed wb-b1rq form): git hash-object --no-filters --stdin-paths reads every file's
+ * bytes and answers its blob id, so the ids come from git and never from this census's read; readProof holds each read text to
+ * them.
+ */
+function gitIds(paths: readonly string[]): Map<string, string> {
+  if (paths.length === 0) return new Map();
+  if (paths.some(path => path.includes("\n"))) throw new Error("git hash-object --stdin-paths cannot read a path holding a newline");
+  const ids = execFileSync("git", ["hash-object", "--no-filters", "--stdin-paths"], { cwd: ROOT, encoding: "utf8", input: `${paths.join("\n")}\n`, maxBuffer: 1 << 26 })
+    .split("\n")
+    .filter(id => id !== "");
+  if (ids.length !== paths.length) throw new Error(`git hash-object answered ${ids.length} ids for ${paths.length} paths`);
+  return new Map(paths.map((path, index) => [path, ids[index] ?? ""] as const));
+}
+/** The read proof of one reader over the listing its claim covers, the read map its case read, and git's ids of the listing. */
+const proofOver = (listing: readonly string[], texts: ReadonlyMap<string, string>, word: string, reader: (texts: ReadonlyMap<string, string>) => readonly string[]): Json => json(readProof(listing, texts, gitIds(listing), word, reader));
+
 /** The reference's outcome on a case, over a fresh projection. */
 const referenceOn = (row: CaseRow): ReturnType<typeof referenceExport> => referenceExport({ projection: buildProjection(), scope: scopeSpec(row.scope).scope, budget: row.budget });
 const outcomeKind = (outcome: ReturnType<typeof referenceExport>): string => (outcome.ok ? "ok" : `refused ${outcome.limit}`);
@@ -279,6 +348,8 @@ const featuresOf = (graph: Record<string, unknown>): unknown[] =>
 
 /** The class's own members, its prototype's and its statics', when this module loaded: the judge puts the class back after a drive edits it (A1). */
 const CLASS_AT_LOAD = [Object.getOwnPropertyNames(ObservationProjection.prototype), Object.getOwnPropertyNames(ObservationProjection)];
+/** The prototype's own prototype when this module loaded, held by identity (M-CLASS-PROTO replaces it; the judge puts it back). */
+const PROTOTYPE_AT_LOAD: unknown = Object.getPrototypeOf(ObservationProjection.prototype);
 
 /** The pins that reached their witness compare, in run order, each with the compare's own result. */
 const REACHED: { pin: string; same: boolean }[] = [];
@@ -290,11 +361,26 @@ const IMPL: Readonly<Record<string, (context: TestContext) => Json | Promise<Jso
     const purity: Record<string, Json> = {};
     for (const row of CASES) purity[row.id] = rulesOf(await driveFindings(reference, row));
     expect(Object.values(purity).flat(), "the reference leaves the projection unchanged and repeats itself on every case").toEqual([]);
+    const walk: Record<string, Json> = {};
+    for (const probe of STRUCTURE_PROBES) {
+      const [edited, twin] = [probeValue(), probeValue()];
+      probe.edit(edited);
+      walk[probe.id] = facetDrift(structureOf([edited]), structureOf([twin])) ?? "";
+    }
+    expect(walk, "the walk the state, class and determinism legs compare reads every facet the header names, each control's first difference").toEqual(Object.fromEntries(STRUCTURE_PROBES.map(probe => [probe.id, probe.expect])));
+    const kinds = [...new Set(structureOf([buildProjection()]).filter(facet => facet.facet === "kind").map(facet => String(facet.value)))].sort();
+    expect(kinds, "a fixture projection's walk meets only the kinds it enters (no proxy, opaque object or function below its root)").toEqual([...WALKED_KINDS]);
+    const providers = [...new Set(SCOPES.flatMap(spec => truthOf(buildProjection(), spec.scope).entities.map(entity => entity.ref.provider)))].sort();
+    expect([providers.includes(UNHELD_PROVIDER), providers.includes(HELD_PROVIDER)], "the unheld provider holds no fixture node or endpoint, the held one does (refusal #2's F1)").toEqual([false, true]);
+    expect(Object.keys(READ_CALLS), "E-EVERY-READ calls every READ_METHODS method").toEqual([...READ_METHODS]);
+    const equivalents: Record<string, Json> = {};
+    for (const row of PURE_RECIPES) equivalents[row.id] = await driveFindings(recipeDrive(row.recipe), caseRow("K-FITS"));
+    expect(Object.values(equivalents).flat(), "every read, and edits of the copies the reads hand out, are judged pure").toEqual([]);
     const legs: Record<string, Json> = {};
     for (const row of MUTANTS.filter(mutant => mutant.pin === "A1")) legs[row.id] = (await driveFindings(recipeDrive(row.recipe), caseRow(row.case))).filter(finding => ruleOf(finding) === "impure");
     const mutants = await mutantsOf("A1");
-    expect([Object.getOwnPropertyNames(ObservationProjection.prototype), Object.getOwnPropertyNames(ObservationProjection)], "the judge put the class back after the class members' drives").toEqual(CLASS_AT_LOAD);
-    return { mutants, legs, cases: purity };
+    expect([Object.getOwnPropertyNames(ObservationProjection.prototype), Object.getOwnPropertyNames(ObservationProjection), Object.getPrototypeOf(ObservationProjection.prototype) === PROTOTYPE_AT_LOAD], "the judge put the class back after the class members' drives, its prototype's prototype by identity").toEqual([...CLASS_AT_LOAD, true]);
+    return { mutants, legs, cases: purity, walk, kinds, providers, equivalents };
   },
   A2: async () => {
     const producer = vendored();
@@ -398,6 +484,8 @@ const IMPL: Readonly<Record<string, (context: TestContext) => Json | Promise<Jso
   D3: () => {
     const texts = liveSrc();
     expect(texts.size >= SRC_FLOOR && texts.has(CONTROL), "D3's src listing read the tree").toBe(true);
+    const proof = proofOver(gitList(ROOT, "src"), texts, "ExecutorRequest", executorRequestNamers);
+    expect(proof, "D3 read every listed src module as git reads it, and its reader names each one carrying a typed executor request at its start, middle or end").toEqual(json(FULL_READ));
     const named = executorRequestNamers(texts);
     expect(named, "no src module spells a typed executor request ('executor request' in any case, joined by nothing, a space, '_' or '-'), so the admissible set is NATIVE_CONTROL_ACTIONS alone").toEqual([]);
     const planted = executorRequestNamers(new Map([...texts, [PLANTED_EXECUTOR_REQUEST.path, PLANTED_EXECUTOR_REQUEST.text]]));
@@ -406,7 +494,7 @@ const IMPL: Readonly<Record<string, (context: TestContext) => Json | Promise<Jso
     expect(hits.filter(hit => hit === null), "every listed spelling reads as a typed executor request").toEqual([]);
     const quiet = EXECUTOR_REQUEST_QUIET.filter(word => executorRequestNamers(new Map([["src/workbench/zz-quiet.ts", word]])).length === 0);
     expect(quiet, "and every near spelling is outside D3's reading").toEqual([...EXECUTOR_REQUEST_QUIET]);
-    return { named, planted, hits, quiet };
+    return { named, planted, proof, hits, quiet };
   },
   E1: async () => ({ case: await caseOf("K-NODES"), mutants: await mutantsOf("E1") }),
   E2: async () => ({ case: await caseOf("K-EDGES"), mutants: await mutantsOf("E2") }),
@@ -432,8 +520,16 @@ const IMPL: Readonly<Record<string, (context: TestContext) => Json | Promise<Jso
     expect(texts.has(CONTROL) && (texts.get(CONTROL) ?? "").includes("NATIVE_CONTROL_ACTIONS"), "the listing read the src tree").toBe(true);
     const walked = walkList(ROOT, "src");
     const ignored = ignoredOf(ROOT, walked);
-    expect(walked.filter(path => !ignored.has(path)), "git's src listing equals the walk less what git ignores").toEqual([...texts.keys()]);
-    const touched = [...texts].filter(([, text]) => siteWords(text).length > 0).map(([path]) => path);
+    const listed = walked.filter(path => !ignored.has(path));
+    expect(listed, "git's src listing equals the walk less what git ignores").toEqual([...texts.keys()]);
+    const proof = proofOver(listed, texts, SITE_WORDS[0] ?? "", sitePaths);
+    expect(proof, "G1 read every walked src module as git reads it, and its reader names each one carrying a site word at its start, middle or end").toEqual(json(FULL_READ));
+    const anchor = proofOver([CONTROL, REGISTRY], new Map([[CONTROL, ""], [REGISTRY, textOf(REGISTRY)]]), SITE_WORDS[0] ?? "", sitePaths);
+    expect(anchor, "the same proof over a read map that blanks control.ts names it unread: the ids are git's reading of the files, never the map's").toEqual(json({ ...FULL_READ, unread: [CONTROL] }));
+    const controls: Record<string, Json> = {};
+    for (const control of PROOF_CONTROLS) controls[control.id] = json(controlProof(control));
+    expect(controls, "the read proof names exactly what each control drops, blanks, shortens or adds, and every entry or place each hollow reader skips").toEqual(Object.fromEntries(PROOF_CONTROLS.map(control => [control.id, json(control.expect)])));
+    const touched = sitePaths(texts);
     expect({ registration: siteFindings(EXPORT_SITES, texts), touched }, "no src module exports a GraphDataIR snapshot today").toEqual({ registration: [], touched: [] });
     const planted = new Map([...texts, ["src/workbench/zz-gp-export.ts", 'export const NAMESPACE = "graphpolicy.data.v1";\n']]);
     const plantedFindings = siteFindings(EXPORT_SITES, planted);
@@ -449,44 +545,63 @@ const IMPL: Readonly<Record<string, (context: TestContext) => Json | Promise<Jso
     const drives: string[] = [];
     for (const site of EXPORT_SITES) for (const row of CASES) drives.push(...(await driveFindings(site.drive, row)).map(finding => `${site.file} ${row.id} ${finding}`));
     expect(drives, "every registered exporter conforms on every case").toEqual([]);
-    return { touched, planted: plantedFindings, sites, hits: SITE_WORD_HITS.map(word => siteWords(word).join(",")), quiet: SITE_WORD_QUIET.length, drives };
+    return { touched, proof, anchor, controls, planted: plantedFindings, sites, hits: SITE_WORD_HITS.map(word => siteWords(word).join(",")), quiet: SITE_WORD_QUIET.length, drives };
   },
   G2: () => {
     const producer = vendored() as { readonly schema_ref?: { readonly namespace?: unknown } };
     expect(producer.schema_ref?.namespace, "the namespace the judge reads is the vendored producer fixture's").toBe(GRAPH_NAMESPACE);
     const qa = gitList(ROOT, "qa");
     expect([liveSrc().size >= SRC_FLOOR, qa.length >= QA_FLOOR], "G2's src and qa listings read the tree").toEqual([true, true]);
+    const qaWalked = walkList(ROOT, "qa");
+    const qaIgnored = ignoredOf(ROOT, qaWalked);
+    const qaListed = qaWalked.filter(path => !qaIgnored.has(path));
+    expect(qaListed, "git's qa listing equals the walk less what git ignores").toEqual(qa);
     const texts = new Map([...liveSrc(), ...qa.map(path => [path, textOf(path)] as const)]);
+    const proof = proofOver([...gitList(ROOT, "src"), ...qaListed], texts, GRAPH_NAMESPACE, namespaceNamers);
+    expect(proof, "G2 read every listed src module and every walked qa file as git reads it, and its reader names each one carrying the namespace at its start, middle or end").toEqual(json(FULL_READ));
     const naming = namespaceNamers(texts);
     expect(naming, "no src or qa file names the GraphDataIR namespace").toEqual([]);
     const planted = namespaceNamers(new Map([...texts, [PLANTED_NAMESPACE.path, PLANTED_NAMESPACE.text]]));
     expect(planted, "the same call, a planted qa script naming the namespace after the tracked files: exactly it").toEqual([PLANTED_NAMESPACE.path]);
-    return { namespace: GRAPH_NAMESPACE, naming, planted };
+    return { namespace: GRAPH_NAMESPACE, naming, planted, proof };
   },
   G3: () => {
     const page = textOf(DOCS_03);
+    const unread = unreadOf([DOCS_03], new Map([[DOCS_03, page]]), gitIds([DOCS_03]));
+    expect(unread, "G3 read docs/03 as git reads it (its reader is proven live by DOCS_PLANTS)").toEqual([]);
     const reading = docs03Reading(page);
     expect(docs03Findings(reading), "docs/03: one GraphPolicyCLI ownership row registering no gp seam, and a GraphPolicyCLI boundary section opening with Pi's no-integration sentence").toEqual([]);
     const plants: Record<string, Json> = {};
-    for (const plant of DOCS_PLANTS) plants[plant.id] = docs03Findings(docs03Reading(plant.edit(page))).map(ruleOf);
+    const views: Record<string, Json> = {};
+    for (const plant of DOCS_PLANTS) {
+      const planted = docs03Reading(plant.edit(page));
+      plants[plant.id] = docs03Findings(planted).map(ruleOf);
+      views[plant.id] = [planted.boundary.opening === BOUNDARY_SENTENCE, planted.boundary.source === BOUNDARY_SENTENCE];
+    }
     expect(plants, "the same reader on each planted page: exactly the plant's docs rules").toEqual(Object.fromEntries(DOCS_PLANTS.map(plant => [plant.id, [...plant.expect]])));
-    return { reading: json(reading), plants };
+    return { reading: json(reading), plants, views, page: unread };
   },
 };
 
-/** A quiet row: every member of the residual family reads as no finding. */
-const quietRow = (id: string): Json => {
+/** A quiet row: every member of the residual family reads as no finding (a drive member is judged by driveFindings on K-FITS). */
+const quietRow = async (id: string): Promise<Json> => {
   const members = RESIDUALS[id] ?? [];
   expect(members.length, `${id} has members`).toBeGreaterThan(0);
   const reference = referenceOn(caseRow("K-FITS"));
-  const findings = members.flatMap(member => {
+  const findings: string[] = [];
+  for (const member of members) {
     if (member.kind === "source") {
       const files = new Map([[member.path, member.text]]);
-      return [...siteWords(member.text), ...siteFindings([], files), ...namespaceNamers(files), ...executorRequestNamers(files)];
-    }
-    if (!reference.ok) return ["the reference did not export K-FITS"];
-    return exportFindings(judgeCaseOf(caseRow("K-FITS")), member.edit(reference as Exported));
-  });
+      findings.push(...siteWords(member.text), ...siteFindings([], files), ...namespaceNamers(files), ...executorRequestNamers(files));
+    } else if (member.kind === "drive") {
+      try {
+        findings.push(...(await driveFindings(member.drive(), caseRow("K-FITS"))));
+      } finally {
+        member.after?.();
+      }
+    } else if (!reference.ok) findings.push("the reference did not export K-FITS");
+    else findings.push(...exportFindings(judgeCaseOf(caseRow("K-FITS")), member.edit(reference as Exported)));
+  }
   expect(findings, `${id}: every member is quiet`).toEqual([]);
   return { members: members.map(residualId), findings };
 };
@@ -496,7 +611,7 @@ describe(SUITE, () => {
     for (const pin of row.pins) {
       it(`${pin}: ${QUOTES[pin] ?? ""}`, { timeout: 120_000 }, async context => {
         const implementation = IMPL[pin];
-        const witness = row.id === "Q" ? quietRow(pin) : implementation === undefined ? null : await implementation(context);
+        const witness = row.id === "Q" ? await quietRow(pin) : implementation === undefined ? null : await implementation(context);
         expect(witness, `${pin} has a case`).not.toBeNull();
         const expected = ROSTER.witnesses[pin];
         REACHED.push({ pin, same: isDeepStrictEqual(witness, expected) });
@@ -506,12 +621,12 @@ describe(SUITE, () => {
   }
 
   it("rule 16: the rows, the residual families, the mutants and cases per pin, the rules and the registry are frozen at their measured shape", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:3", "C:3", "D:3", "E:4", "F:1", "G:3", "Q:5"]);
-    expect(Object.entries(RESIDUALS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:2", "Q2:3", "Q3:2", "Q4:2", "Q5:2"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:3", "C:3", "D:3", "E:4", "F:1", "G:3", "Q:7"]);
+    expect(Object.entries(RESIDUALS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:2", "Q2:3", "Q3:2", "Q4:2", "Q5:2", "Q6:2", "Q7:3"]);
     expect(Object.keys(QUOTES), "one quote per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
     const perPin = ROWS.flatMap(row => row.pins).map(pin => `${pin}:${MUTANTS.filter(mutant => mutant.pin === pin).map(mutant => mutant.id).join(",")}`);
     expect(perPin).toEqual([
-      "A1:M-MUTATES,M-COUNTER-IDS,M-DISCONNECT-UNHELD,M-RECONNECT-UNHELD,M-IDENTITY-REFUSAL,M-DISCONNECT-HELD,M-WRITE-NOOP,M-BYPASS-WRITE,M-CLASS-PATCH,M-CLASS-STATIC,M-REFRESH-WRITE,M-RELATE-WRITE,M-INGEST-WRITE,M-OTHER-CALL",
+      "A1:M-MUTATES,M-COUNTER-IDS,M-DISCONNECT-UNHELD,M-RECONNECT-UNHELD,M-IDENTITY-REFUSAL,M-DISCONNECT-HELD,M-WRITE-NOOP,M-BYPASS-WRITE,M-CLASS-PATCH,M-CLASS-STATIC,M-REFRESH-WRITE,M-RELATE-WRITE,M-INGEST-WRITE,M-OTHER-CALL,M-NONENUM-MEMO,M-FREEZE,M-PREVENT-EXTENSIONS,M-SYMBOL-FIELD,M-FIXED-REVISION,M-REVISION-ACCESSOR,M-PROTO-SWAP,M-FROZEN-NODE,M-SCOPE-REORDER,M-SHADOW-CONNECTIONS,M-KEY-ORDER,M-CLASS-PROTO,M-BUDGET-EDIT,M-SCOPE-EDIT",
       "A2:M-NAMESPACE,M-DUPLICATE-ID,M-DANGLING",
       "A3:",
       "A4:M-UNTRACED,M-GHOST,M-REF-SWAP,M-EDGE-REVERSED,M-EDGE-KIND",
@@ -538,8 +653,10 @@ describe(SUITE, () => {
       "Q3:",
       "Q4:",
       "Q5:",
+      "Q6:",
+      "Q7:",
     ]);
-    expect(MUTANTS.length, "every mutant belongs to a pin").toBe(59);
+    expect(MUTANTS.length, "every mutant belongs to a pin").toBe(73);
     expect(CASES.map(row => `${row.id}:${row.scope}:${row.over.join("+") || "fits"}`)).toEqual([
       "K-FITS:A:fits",
       "K-OTHER-PRINCIPAL:B:fits",
@@ -568,10 +685,51 @@ describe(SUITE, () => {
       "D-HEADING-DUP:boundary-bound",
       "D-REHOME:boundary-bound",
       "D-COMMENT-ABOVE:",
+      "D-HEADER-SWAP:ownership-header",
+      "D-BLOCKQUOTE:boundary-first",
+      "D-LIST-LEAD:boundary-first",
+      "D-SECOND-TABLE:ownership-rows",
+      "D-STRIKE:boundary-opening",
+      "D-STRIKE-HTML:boundary-opening",
+      "D-SETEXT-DUP:boundary-bound",
+      "D-CELL-STRIKE:ownership-cell",
+      "D-HTML-LEAD:boundary-first",
+      "D-QUOTED-ROW:ownership-other",
+      "D-HTML-ROW:ownership-other",
+      "D-LISTED-ROW:ownership-other",
+      "D-OWNER-COMMENT:",
     ]);
-    expect([...DOCS_RULES]).toEqual(["ownership-bound", "ownership-rows", "ownership-cell", "boundary-bound", "boundary-first", "boundary-opening"]);
+    expect([...DOCS_RULES]).toEqual(["ownership-bound", "ownership-rows", "ownership-header", "ownership-cell", "ownership-other", "boundary-bound", "boundary-first", "boundary-opening"]);
     expect(DOCS_RULES.filter(rule => !DOCS_PLANTS.some(plant => plant.expect.includes(rule))), "every docs rule is some plant's").toEqual([]);
     expect([...READ_METHODS]).toEqual(["aggregate", "aggregateStats", "events", "identityRefusals", "indexOf", "query", "relationRevision", "relations", "relationsPage", "stats", "truncation", "window"]);
+    expect(STRUCTURE_PROBES.map(probe => `${probe.id}:${probe.expect}`)).toEqual([
+      "S-EQUAL:",
+      "S-VALUE:value",
+      "S-NEGATIVE-ZERO:value",
+      "S-NONENUMERABLE:keys",
+      "S-SYMBOL:keys",
+      "S-ATTRIBUTE:attributes",
+      "S-ACCESSOR:attributes",
+      "S-GETTER:get",
+      "S-SETTER:set",
+      "S-PROTOTYPE:prototype",
+      "S-EXTENSIBLE:integrity",
+      "S-NESTED-FROZEN:integrity",
+      "S-MAP-ORDER:value",
+      "S-MAP-SIZE:size",
+      "S-MAP-OWN:keys",
+      "S-SET-ORDER:value",
+      "S-DATE:time",
+      "S-UNSHARED:kind",
+      "S-RESHARED:same",
+      "S-PROXY:kind",
+    ]);
+    expect([...FACETS]).toEqual(["kind", "prototype", "integrity", "keys", "attributes", "value", "get", "set", "size", "time", "same"]);
+    expect(FACETS.filter(facet => !STRUCTURE_PROBES.some(probe => probe.expect === facet)), "every facet is some probe's first difference").toEqual([]);
+    expect([...WALKED_KINDS]).toEqual(["array", "map", "object", "set"]);
+    expect(PURE_RECIPES.map(row => row.id)).toEqual(["E-EVERY-READ", "E-READ-RESULT-EDIT"]);
+    expect([...PLACES]).toEqual(["start", "middle", "end"]);
+    expect(PROOF_CONTROLS.map(control => control.id)).toEqual(["P-WHOLE", "P-MAP-BLANK", "P-MAP-SHORT", "P-MAP-DROP", "P-MAP-EXTRA", "P-READER-LAST", "P-READER-FIRST", "P-READER-HEAD", "P-READER-TAIL", "P-READER-BLANK"]);
   });
 
   it("the outside anchors: the bead's own row binds the rows and the pin quotes; the vendored producer fixture, the registry and the live control import bind the judge's spellings", () => {
