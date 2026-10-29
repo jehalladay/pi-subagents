@@ -9,8 +9,8 @@
  * context render + FOC-ADR-03 landed in an installed rf, conjoined with wb-x32 resolving to a committing render.
  *
  * MEASURED (read-only, by the cutting seat, 2026-10-28, at base cd8927f; re-run green at bb96515, whose landing 597 touched
- * one other census and .beads only; the rf readings below re-read unchanged by the cut #2 seat at dab445f and by the cut
- * #3 seat at 5ffe345). The installed rf
+ * one other census and .beads only; the rf readings below re-read unchanged by the cut #2 seat at dab445f, by the cut #3
+ * seat at 5ffe345 and by the cut #4 seat at aec4521). The installed rf
  * reads 0.1.845 (`rf --json --version`: 80 leaves, context.render and operation.show both served_reachable). `rf context
  * render --help` serves `--idempotency-key KEY` ("the same key with the same request replays the committed receipt ... the
  * same key with a different request is exit 4 RF_IDEMPOTENCY_KEY_CONFLICT, and a key with --no-commit is exit 2"). `rf
@@ -38,10 +38,10 @@
  *    reads (zero findings); the reader leaves no detected src literal UNREAD (an empty list); the src calls spelled
  *    register that hold no register-position literal are exactly the two pinned forwarding sites (REGISTER SITES); and
  *    CapabilityRegistry.register serves a copy (a write to the registered descriptor object afterwards does not reach the
- *    descriptor it serves). Planted module trees exercise every form the reader reads (each a committing literal that
- *    draws every finding), every form it refuses as UNREAD or reports as a forwarding site (each SEALED rewrite form and
- *    each form outside the register position among them), every form it excepts, and each channel named under NOT CLAIMED
- *    (PLANTED_UNSEEN: its reading pinned as the quiet value it gives); the rule refuses a committing render declared read
+ *    descriptor it serves). Planted module trees pin THE PINNED SET: every form the reader reads (each a committing literal
+ *    that draws every finding), every form it refuses as UNREAD or reports as a forwarding site, every form it excepts, and
+ *    the page of each NAMED RESIDUAL the SRC READER does not read (PLANTED_UNSEEN: its reading pinned as the quiet value it
+ *    gives); the rule refuses a committing render declared read
  *    (rf's whitespace spelling `context render` included) while admitting write, external and unknown. A2
  *    (--idempotency-key): the rule refuses a committing contract without the flag (prose naming the key included), and the
  *    live preview argv for both input arms carries --no-commit and no key (rf refuses the pair, exit 2).
@@ -49,19 +49,21 @@
  *    contract) whose provider spawns a stand-in rf with a committing argv, --idempotency-key <stable key> and no --no-commit,
  *    and never kills it (a commit may already be durable). B1: for each outcome the clause names (timeout, kill, unknown) the
  *    registry surfaces uncertain-effect ("Reconcile with the producer before retrying") and the stand-in records exactly one
- *    spawn; each arm pins the deadlineMs field it ran under, and the kill and unknown arms pin actedAfterHold (TIMING). B2:
- *    Pi's runtime, through the Claude host, fails the run uncertain-effect after one spawn, its live retry control answers
- *    false for the in-flight node (a forward guard, see NOT CLAIMED), and a resume of the journal refuses uncertain-effect
- *    naming the producer with zero spawns.
+ *    spawn; each arm pins the deadlineMs field it ran under, and the kill and unknown arms pin actedAfterHold (TIMING);
+ *    R-TIMER-GAP's rows re-run the timeout and kill arms under a timer that differs from the field (B1.gap). B2: Pi's
+ *    runtime, through the Claude host, fails the run uncertain-effect after one spawn, its live retry control answers false
+ *    for the in-flight node and for a node index the run never reached (a forward guard, R-RETRY-BY-DESIGN), and a resume of
+ *    the journal refuses uncertain-effect naming the producer with zero spawns.
  *  C, ACCEPTANCE[2], over the journal of a timed-out committing run (each pin holds that run to failed, uncertain-effect,
  *    one spawn). C1 (receipt states): no reader of them exists today - the reconcile roster offers the preview as the only
  *    reactivefiber evidence read, an evidence request naming an operation-show reader is refused, src holds no spelling of
- *    the leaf the LEAF READER reads (a planted control pins each form it reads and its near misses, and LEAF_UNSEEN pins a
- *    rewritten word array as not expanded), and the rule refuses a committing contract that does not name rf operation
- *    show. C2 (not_found never concludes effect-absent): while the run is active the core refuses any acknowledgement;
- *    once settled, effect-absent citing the not-found read (outcome unavailable) and a returned preview read is
- *    operator-asserted, never producer-confirmed; the override after it is refused until the operator accepts the
- *    possible-duplicate risk; effect-confirmed on the failed read alone is refused.
+ *    the leaf the LEAF READER reads (a planted control pins each form it reads and its near misses, and LEAF_UNSEEN pins the
+ *    page of each leaf residual as the quiet value it gives), and the rule refuses a committing contract that does not name
+ *    rf operation show. C2 (not_found never concludes effect-absent): while the run is active the core refuses any
+ *    acknowledgement; once settled, effect-absent citing the not-found read (outcome unavailable) and a returned preview read
+ *    is operator-asserted, never producer-confirmed; the override after it is refused until the operator accepts the
+ *    possible-duplicate risk; effect-confirmed on the failed read alone is refused; R-IN-FLIGHT-SETTLED's row decides once
+ *    more while a stubborn stand-in is still alive and reads the same acknowledgement.
  *  D, ACCEPTANCE[3], the negative guards. D1: the two preview descriptor literals are byte-stable (digests of their source
  *    text) and both registrations serve the same descriptor. D2: src's one SIGTERM-SIGKILL(500 ms) custody sits in
  *    nativeReactiveFiberRender, whose one spawn runs renderArgv (always --no-commit) and whose only callers are the preview's;
@@ -70,51 +72,100 @@
  *    alone, and the preview holds exactly NATIVE_GRANTS.reactivefiber. D4: the rule refuses a committing render holding no
  *    permission or only read grants, and the registry refuses the stand-in under the preview grant with zero spawns and
  *    admits it under its own grant (one spawn, under SETTLE_MS, actedAfterHold).
- * SRC READER (A1; cut #3 adds SEALED, the register position and REGISTER SITES). The src tree is every .ts module under src
- * (the srcFiles walk; a planted tree lists its .ts modules the same way). Detected: every object literal of a src module
- * in the REGISTER POSITION, and every other object literal that carries an `id` member together with an
- * `effectClass` or a `contractSource` member, or whose `id` reads as a reactivefiber.* string. The REGISTER POSITION is
- * the `descriptor` member, written inline, of an object literal whose keys all read, with no spread member and no other
- * member keyed `descriptor`, itself written inline as the first argument of a call whose callee is spelled `register` or
- * `<expression>.register` (parentheses, `as`, `satisfies`, `!` and type assertions aside). A key reads when it is an
- * identifier, a string literal, or a computed name whose expression reads. A value reads through string and
- * no-substitution template literals, `+` concatenations and templates whose every part reads, a name the module declares
- * exactly once as a const with an initializer or as an import (variables, parameters, functions, classes, enums and
- * imports are counted, so a shadowed or let/var-bound name does not read), named and aliased imports, namespace-import
- * members, re-exports (named, aliased and `export * from`) and local export aliases, each followed to the exporting src
- * module (relative specifiers only), and members of SEALED const object literals (Object.freeze({...}) followed unless
- * the module declares its own `Object`; an object literal with a spread member has no member that reads; an accessor or
- * method member never reads). SEALED: a const's own object or array literal (through wrappers and `.freeze(...)`), and
- * every object or array literal nested in its members or elements, is sealed when every reference the tree's modules hold
- * to it - its name in its own module, an import of it under any name, a namespace-import member access, counting every
- * same-named binding of a module whatever its scope and every re-export path - is either the object of a member read
- * chain that is not the target of an assignment of any operator, of ++/--, of delete, of a destructuring assignment or of
- * a for-in/for-of head, and that reads as a string where it is used (a callee, a function, an object, an array or a
- * number never does); or a spread (`...`) every value of which reads as a string. Any other reference (the object passed,
- * bound, returned or placed in a literal, a shorthand member included; a namespace import used other than through member
- * reads whose names read, re-exported, or a module re-exported by `export * as`) leaves it OPEN, with every literal nested
- * in it: members of an open object, and elements of an open array, do not read; a local export alias (`export { X }`) is
- * not a use, its importers' references are. rf-ness is decided by the id (a reactivefiber.* string) or by RF_CONTRACT over
- * the contract's static text (each unread part a placeholder), and a literal that is not rf-driving needs only its id to
- * read. A literal is UNREAD when its id does not read; when it carries a spread member or a key that does not read; when
- * it carries an accessor or method member (`accessor`: a getter or method can rewrite the literal while
- * CapabilityRegistry.register validates it, before the copy); when it is rf-driving and its effectClass, or its
- * contractSource in full, does not read; or when it is not in the register position (`position`: a literal held anywhere
- * else can be rewritten before it is registered). A literal that would be UNREAD is instead an excepted projection when
- * it is NOT in the register position, has no unread key, and each of its id, effectClass and contractSource members
- * (those present) is `B.field` off one same base B (reached through `??` left operands and the first arguments of
- * wrapping calls): a view that copies those fields from another descriptor value.
+ * CUT #4 FORM (standing rule 19(c), bound on this bead by refusal #3; the enumerate-the-resolvable form). The shape is frozen:
+ * the 12 tests (the 10 judged pins titled by the ACCEPTANCE clauses, ANCHOR and FROZEN SHAPE), ROWS and WITNESS's keys. The
+ * census claims exactly THE PINNED SET below: each form a reader reads, refuses or excepts is stated there with the planted rows
+ * that pin its reading (a bracketed rows list; every planted row - each row of A1's planted tables and of C1's LEAF_UNSEEN, and
+ * each residual row - is cited exactly once in this header), and nothing beyond it is
+ * claimed. Every family the readers are known not to read is a NAMED RESIDUAL (RESIDUALS) with the rows that pin its quiet
+ * reading. FROZEN SHAPE holds the header's citations to the planted tables both ways and the RESIDUALS paragraph to the
+ * RESIDUALS roster. From this cut on, an escape found later is a residual-list addition unless a sentence of THE PINNED SET
+ * states its form as read.
+ *
+ * THE PINNED SET, SRC READER (A1). The src tree is every .ts module under src (the srcFiles walk); a planted tree's src tree is
+ * likewise the .ts modules it holds under src/, and nothing else it holds is read (R-OUTSIDE-TREE). Detected: every object
+ * literal of a src module in the REGISTER POSITION, and every other object literal that carries an `id` member together with an
+ * `effectClass` or a `contractSource` member, or whose `id` reads as a reactivefiber.* string [rows: rfIdOnly].
+ * REGISTER POSITION: the `descriptor` member, a property written inline, of an object literal whose keys all read, with no
+ * spread member and no other member keyed `descriptor`, itself written inline as the first argument of a call whose callee is
+ * spelled `register` or `<expression>.register` (parentheses, `as`, `satisfies`, `!` and type assertions aside) [rows:
+ * bareRegister, wrappedRegistration]. A detected literal held anywhere else is UNREAD (`position`) and the call that registers
+ * it is a forwarding site: a descriptor bound to a name, returned by a call or reached through a bound holder [rows:
+ * boundDescriptor, returnedDescriptor, boundHolder], or one whose holder is wrapped in a call, holds a spread, a second
+ * `descriptor` member (either side) or a key that does not read [rows: wrappedHolder, holderSpread, secondDescriptor,
+ * secondDescriptorLast, holderUnreadKey].
+ * KEYS: a key reads when it is an identifier, a string literal, or a computed name whose expression reads [rows: computedKeys];
+ * a numeric literal key, and a computed name whose expression does not read, do not.
+ * VALUES: a value reads through string and no-substitution template literals, and `+` concatenations and templates whose every
+ * part reads [rows: concatenation]; through a name the module declares exactly once, as a const with an initializer or as an
+ * import [rows: shorthand] (variables, parameters, functions, classes, enums, imports, import-equals aliases and namespaces are
+ * counted, whatever their scope, so a name declared twice, or bound by let or var, does not read [rows: shadowedNames,
+ * letVarBindings, importEqualsShadow, namespaceShadow]); and through named and aliased imports [rows: importedConsts,
+ * aliasedImport], namespace-import members [rows: namespaceImport] and a default import [rows: defaultAlias], each followed to
+ * the exporting src module through a relative specifier only (a package specifier, or a name the module does not export, reads
+ * nothing [rows: packageImport, missingExport]). A call never reads [rows: callId].
+ * EXPORTS: a module's own export of a name decides it, whatever its form. It reads only as an exported const with an
+ * initializer, a local export alias (`export { X }`, `export { X as Y }`, `export { X as default }`) [rows: exportAlias,
+ * exportedObject] or a named or aliased re-export [rows: reExports]. Every other local export form reads as nothing: let, var, a
+ * destructured const, a declared const, a function, a class, an enum, a namespace, an import-equals alias, `export * as`, and
+ * `export default` or `export =` of any expression (a name included), a function or a class [rows: ownLet, ownVar,
+ * ownDestructured, ownDeclared, ownFunction, ownClass, ownEnum, ownNamespace, ownImportEquals, ownNamespaceExport,
+ * namespaceExport, ownDefault, ownDefaultName]. A name the module does not itself export is forwarded by `export * from` only
+ * from the one star module that exports it, through nested stars too [rows: exportStar, nestedExportStar, ambiguousStar],
+ * and a default never [rows: starDefault]. Only a module's top-level statements export: a namespace body's own `export` is
+ * not a module export [rows: innerExportNotModule].
+ * MEMBERS: a member of a SEALED const object literal reads [rows: constObject, importedFrozenObject], the last member of its
+ * key winning [rows: lastKeyWins] (Object.freeze({...}) is followed unless the module declares its own `Object` [rows:
+ * shadowedFreeze]); no member of an object literal reads when it holds a spread member [rows: spreadObjectMember] or a member
+ * whose key does not read [rows: computedOverride, nestedComputedOverride, importedComputedOverride, numericKey]; an accessor
+ * or method member never reads [rows: accessorMember].
+ * SEALED: a const's own object or array literal (through wrappers and `.freeze(...)`), and every object or array literal nested
+ * in its members or elements, is sealed when every reference the tree's modules hold to it - its name in its own module, an
+ * import of it under any name, a namespace-import member access, counting every same-named binding of a module whatever its
+ * scope and every re-export path - is either the object of a member read chain that is not the target of an assignment of any
+ * operator, of ++/--, of delete, of a destructuring assignment or of a for-in/for-of head, and that reads as a string where it
+ * is used (a callee, a function, an object, an array or a number never does); or a spread (`...`) every value of which reads as
+ * a string [rows: sealedReads]. Any other reference (the object passed, bound, returned or placed in a literal, a shorthand
+ * member included; a namespace import used other than through member reads whose names read, re-exported, or a module
+ * re-exported by `export * as`) leaves it OPEN, with every literal nested in it: members of an open object, and elements of an
+ * open array, do not read; a local export alias (`export { X }`) is not a use, its importers' references are. Each rewrite form
+ * leaves it open [rows: memberWrite, setupModule, elementWrite, computedWrite, compoundWrite, logicalWrite, updateWrite,
+ * updateStringWrite, deleteWrite, destructuringWrite, arrayDestructuringWrite, forOfWrite, objectAssign, defineProperty,
+ * reflectSet, alias, parameter, shorthandMember, methodThis, nestedAlias, spreadCopyWrite, namespaceWrite, namespaceWhole,
+ * reExportWrite, namespaceReExport, namespaceReExported, defaultExport, shadowedImportWrite].
+ * JUDGED, UNREAD, EXCEPTED: rf-ness is decided by the id (a reactivefiber.* string) or by RF_CONTRACT over the contract's static
+ * text (each unread part a placeholder), and a literal that is not rf-driving needs only its id to read [rows: notRf,
+ * notRfUnreadEffect]; a contract read through a sealed base is judged as it reads [rows: readableBase]. A literal is UNREAD when
+ * its id does not read; when it carries a spread member [rows: spread, idOnly, registeredSpread, registeredNoId] or a key that
+ * does not read [rows: unreadKey]; when it carries an accessor or method member (`accessor`: a getter or method can rewrite the
+ * literal while CapabilityRegistry.register validates it, before the copy) [rows: accessor, method, accessorRewrite]; when it
+ * is rf-driving and its effectClass, or its contractSource in full, does not read [rows: noEffectClass, rfContractPart]; or
+ * when it is not in the register position (`position`) [rows: parameters]. A literal that would be UNREAD is instead an excepted
+ * projection when it is NOT in the register position, has no unread key, and each of its id, effectClass and contractSource
+ * members (those present) is `B.field` off one same base B, reached through `??` left operands and the first arguments of
+ * wrapping calls [rows: projection, wrappedProjection]: a view that copies those fields from another descriptor value; any
+ * other such literal stays UNREAD [rows: mixedProjection, twoBases, projectionUnreadKey, registeredProjection]. Every
+ * resolution above is bounded by the reader's hop counter (MAX_HOPS = 32, counted across its steps): a value it does not reach
+ * within the bound does not read [rows: deepChain].
  * REGISTER SITES (A1). A src call whose callee is spelled `register` or `<expression>.register` and whose first argument is
  * not an object literal holding a register-position literal is a FORWARDING site: what it registers, if anything, the
  * reader cannot judge. A1 pins the src list of forwarding sites (today the two in hosts/local-detached.ts registryFor,
  * which register the local provider module's descriptors, held outside src), so a new one reds A1.
- * RF FAMILY (RF_CONTRACT, case-insensitive): `rf@` with `rf` starting a word; `reactive-fiber.cli/`; `reactive` then
- * `fiber` with one whitespace character, dot, underscore or hyphen between or none (ReactiveFiberCLI included); or `rf`
- * starting a word, then whitespace, then a digit (an optional `v` before it) or the word `context` or `operation`.
+ * RF FAMILY (RF_CONTRACT, case-insensitive): `rf@` with `rf` starting a word [rows: familyAt]; `reactive-fiber.cli/` (every
+ * such text is also an instance of the next alternative, so no row isolates it); `reactive` then `fiber` with one whitespace
+ * character, dot, underscore or hyphen between or none, ReactiveFiberCLI included [rows: familyReactiveFiber]; or `rf`
+ * starting a word, then whitespace, then a digit (an optional `v` before it) [rows: familyRfVersion] or the word `context`
+ * [rows: familyRfContext] or `operation` [rows: familyRfOperation]; several at once [rows: rfCliWords].
+ * THE RULE (A, the judge, case-sensitive): a contract names a committing render when it matches /\bcontext[.\s]+render\b/ and
+ * not /(?:^|\s)--no-commit(?:\s|,|;|$)/; it names the key when it matches /(?:^|\s)--idempotency-key(?:[\s=,;]|$)/ and the
+ * receipt reader when it matches /\boperation[.\s]+show\b/; a permission set that is empty, or holds read grants only, is no
+ * write grant. Constructed cases pin each clause (A1.constructed, A2.rule, C1.rule, D4.rule).
  * LEAF READER (C1). A spelling is a string or template literal part matching /\boperation[\s._-]*show\b/i; an outermost `+`
  * concatenation or template whose text (read as in A1, each unread part a placeholder) matches while none of its literal
  * parts does; or two adjacent elements of an array literal or an argument list (spreads of SEALED const arrays expanded,
- * elements read as in A1) that read as `operation` then `show`, case-insensitive.
+ * elements read as in A1) that read as `operation` then `show`, case-insensitive. An element that does not read is a
+ * placeholder, never a word (R-LEAF-UNREAD-ELEMENT). C1's planted control (LEAF_CONTROL) pins 15 spellings - each form above,
+ * a member of a SEALED const object among them - and 5 near misses.
  * TIMING (cut #3). No witness needs a spawned stand-in to finish inside a deadline host load can exceed. Every stand-in that
  * answers, ends or prints does so HOLD_MS (1.5 s) after it starts. DEADLINE_MS (250 ms) governs only B1's timeout arm,
  * the timed-out runs of B2, C1 and C2 and B2's resume (which spawns nothing), so the deadline wins by construction; B1's
@@ -126,38 +177,68 @@
  * reading carry actedAfterHold (the call settled no earlier than HOLD_MS after it was invoked). Those stand-ins cannot end
  * their call before HOLD_MS, so an effective registry deadline below HOLD_MS ends the three calls first on every run,
  * whatever the host load: the deadline message replaces the kill and unknown messages and the D4 reading is refused, so
- * B1 and D4 red deterministically whether or not the deadlineMs field moves.
+ * B1 and D4 red deterministically whether or not the deadlineMs field moves. A timer that differs from the field inside
+ * those bounds is not read (R-TIMER-GAP).
+ * RESIDUALS (named, each with its pinned quiet row: the row's reading is held to WITNESS, so a page whose reading moves reds
+ * its pin; each page is held live - a planted page by the digest of its modules (A1.pages, C1.pages), R-TIMER-GAP's by the
+ * timer its registry armed (armedMs) and, for the timeout arm, by the call settling no earlier than 50 ms before that timer
+ * (settledAtTimer), retryOther by
+ * the index it asks, inFlightSettled by aliveAtDecision - so a page silenced reds its pin; and FROZEN SHAPE reds a family or a
+ * row taken from this paragraph or from the roster alone):
+ *  R-CODE-IN-STRING [rows: codeInAString]: a write written inside a string that code runs.
+ *  R-UNFOLLOWED-MODULE [rows: dynamicImport, requireCall, absoluteSpecifier]: a src module reached through a dynamic import, a
+ *   require, or a specifier that is not relative.
+ *  R-OUTSIDE-TREE [rows: nonTsModule, outsideSrc]: a module outside the src tree (a src file that is not .ts; anything outside
+ *   src).
+ *  R-REPLACED-GLOBAL [rows: replacedFreeze]: a replaced global (Object.freeze reassigned at run time).
+ *  R-REWRITING-CALLEE [rows: rewritingCallee]: a callee spelled register that rewrites the descriptor it receives and registers
+ *   it through a call not spelled register (A pins CapabilityRegistry.register's copy, not other callees).
+ *  R-UNSPELLED-CALLEE [rows: aliasRegistration, callRegistration, callbackRegistration]: a registration that src does not write
+ *   as a call spelled register - a bound alias, Function.prototype.call or apply, an element access, register handed on as a
+ *   value (a callback, a decorator).
+ *  R-OUTSIDE-FAMILY [rows: rfOutsideFamily]: an rf descriptor whose id and contract fall outside the reactivefiber.* id and RF
+ *   FAMILY.
+ *  R-UNREAD-CONTRACT [rows: unreadContract]: a literal whose rf contract would come wholly from an unread part behind a
+ *   non-reactivefiber id is judged not rf-driving.
+ *  R-PROJECTION-BASE [rows: runtimeBase]: a projection's base value is judged only where it is itself a src literal of the read
+ *   shape; a base built at run time is not.
+ *  R-PROVIDER-BODY [rows: spawnedArgv, providerBody]: A judges each descriptor's declared contract, never its provider's body:
+ *   the argv it spawns, how it derives its key, how it stops its child (A2 and D2 read the one live rf launch; B's committing
+ *   provider is test-only, so its key derivation and its never-kill custody prove nothing about a future provider's - B pins
+ *   Pi's registry, runtime and resume around it).
+ *  R-LEAF-REWRITE [rows: addsLeaf, removesLeaf]: a rewritten const word array, which the LEAF READER does not expand either way.
+ *  R-LEAF-UNREAD-ELEMENT [rows: unreadElements]: an element that does not read - a member of a literal holding a key that does
+ *   not read, a call's result, a value past the hop bound - is a placeholder, so `operation` beside it is not a spelling.
+ *  R-LEAF-ACROSS-STATEMENTS [rows: acrossStatements]: a leaf assembled across statements or calls (two pushes, a `+=`).
+ *  R-LEAF-METHOD [rows: methodBuilt]: a leaf built by a string or array method (concat; map then join).
+ *  R-TIMER-GAP [rows: timeoutTimer, settleTimer]: a registry timer that differs from its deadlineMs field - the timeout arm's
+ *   between DEADLINE_MS and HOLD_MS, a settle arm's at or above HOLD_MS - reads exactly as the arm does in every field the
+ *   arm's witness carries (B1.gap).
+ *  R-RETRY-BY-DESIGN [rows: retryOther]: the runtime's retry consults agent() calls only, so control.retry answers false for
+ *   every node index by design; B2's retry clause is a forward guard that reds when a node-retry path starts answering true
+ *   for the in-flight node.
+ *  R-IN-FLIGHT-SETTLED [rows: inFlightSettled]: decideReconcile takes no process-liveness input, so a settled run whose
+ *   never-killed attempt still runs is answered as one whose stand-in has exited (C2 decides once more while a stubborn
+ *   stand-in is alive, then reaps it).
+ * NOT CLAIMED (edits of this file alone, with no anchor outside it): a planted row removed together with its WITNESS entry and
+ * its citation here; a residual family removed together from RESIDUALS, the roster literal, this paragraph and its rows'
+ * WITNESS entries; a reader form removed from the code together with its planted rows. The seat battery of record carries
+ * their falsifiers.
  * ANCHORS (outside this file): the tracker export (.beads/issues.jsonl, the bead's title and description only; later store
  * writes change neither) holds ACCEPTANCE verbatim, and each row's pins are exactly the clauses of its item, split
  * mechanically on "; " and " and "; src (the registrations, the descriptor literals, the register sites, the custody and
  * NATIVE_GRANTS).
- * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal and WITNESS's keys are exactly the pins.
- * NOT CLAIMED: A judges each descriptor's declared contract, not the argv its provider spawns (A2 and D2 read the one live
- * rf launch); the committing provider here is test-only, so its key derivation and its never-kill custody prove nothing
- * about a future provider's (B pins Pi's registry, runtime and resume around it, not the provider). Both readers are
- * static: they read source text, and judge a value as its expression reads where it is written, through exactly the forms
- * above, and nothing outside those forms is read; a descriptor value that no detected literal spells is seen by A only
- * where a forwarding site registers it. The run-time channels known to this cut that they do not read, each with its
- * reading pinned in A1 as PLANTED_UNSEEN (or in C1 as LEAF_UNSEEN): a write written inside a string that code runs; a src
- * module reached through a dynamic import, a require, or a specifier that is not relative; a module outside the src tree (a
- * src file that is not .ts, anything outside src); a replaced global (Object.freeze); a callee spelled register that
- * rewrites the descriptor it receives and registers it through a call not spelled register (A pins
- * CapabilityRegistry.register's copy, not other callees); a registration whose callee is not spelled register (an element
- * access, a bound alias); an rf descriptor whose id and contract fall outside the reactivefiber.* id and RF FAMILY; and a
- * rewritten const word array, which the LEAF READER does not expand. A projection's base value is judged only where it is
- * itself a src literal of the read shape, and a literal whose rf contract would come wholly from an unread part behind a
- * non-reactivefiber id is judged not rf-driving. TIMING reads the deadlineMs field and the HOLD_MS bound only: an effective
- * deadline at or above HOLD_MS that differs from the field is not read. C2 reconciles over the timed-out run after its
- * never-killed stand-in has exited (timedOutRun awaits it): decideReconcile takes no process-liveness input, so a settled
- * run whose attempt is still in flight is answered the same way by construction, and that state is not exercised. B2's
- * retry clause is a forward guard: the runtime's retry consults agent() calls only, so control.retry answers false for
- * every node index by design, and the pin reds when a node-retry path starts answering true for the in-flight node.
+ * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal and WITNESS's keys are exactly the pins; the
+ * RESIDUALS roster is pinned as a `${family}:${rows}` literal, equal to the RESIDUALS paragraph above (families in order,
+ * each with exactly its rows); every bracketed rows citation of this header names a planted row, and every planted row (the
+ * rows of A1's PLANTED_FORMS, PLANTED_REFUSED, PLANTED_EXCEPTED and PLANTED_UNSEEN, of C1's LEAF_UNSEEN, R-TIMER-GAP's rows,
+ * retryOther and inFlightSettled; LEAF_CONTROL's spellings are pinned in C1's witness instead) is cited exactly once.
  * PARKED (owed by the cut that builds the committing render, once wb-x32 resolves to one): that capability's own registration
  * test, a stable key derived from the invocation, its reader of rf operation show (committed or exit 3 on 0.1.845; the five
  * receipt states once rf ships them) wired as RECONCILE_EVIDENCE_READS.reactivefiber evidence, and its write grant. Each
  * lands red here first when it is spelled in a form these readers read: A1 (a src literal the SRC READER judges
  * rf-driving, a detected literal it leaves UNREAD, or a new forwarding site), C1 (a new evidence read, or a leaf spelling
- * the LEAF READER reads), D1-D3 (the preview). A channel named under NOT CLAIMED does not land red here.
+ * the LEAF READER reads), D1-D3 (the preview). A NAMED RESIDUAL does not land red here.
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch, the only PATH entry, run by this
  * process's own node; src and the tracker export are only read. A stand-in still running when its test ends (a red path
@@ -285,6 +366,16 @@ function exportRow(): { title: string; description: string } {
   expect(mine, "the export holds exactly one row for the bead").toHaveLength(1);
   return mine[0];
 }
+/** This file's header comment as one line of prose (the comment markers and line breaks removed): FROZEN SHAPE reads it. */
+function headerText(): string {
+  const source = readFileSync(fileURLToPath(import.meta.url), "utf8");
+  return source
+    .slice(0, source.indexOf("*/"))
+    .split("\n")
+    .map((line) => line.replace(/^\s*\/?\*+\s?/, ""))
+    .join(" ")
+    .replace(/\s+/g, " ");
+}
 function digest16(text: string): string {
   return createHash("sha256").update(text, "utf8").digest("hex").slice(0, 16);
 }
@@ -358,9 +449,11 @@ const SRC: ModuleTree = {
     return srcPaths;
   },
 };
+/** A planted tree: its modules by path, of which (as for src on disk) only the .ts modules under src/ are in the tree. */
 function plantedTree(modules: Readonly<Record<string, string>>): ModuleTree {
   const files = new Map(Object.entries(modules).map(([path, text]) => [path, parse(path, text)]));
-  return { module: (path) => files.get(path), paths: () => [...files.keys()].filter((path) => path.endsWith(".ts")) };
+  const inTree = (path: string): boolean => path.startsWith("src/") && path.endsWith(".ts");
+  return { module: (path) => (inTree(path) ? files.get(path) : undefined), paths: () => [...files.keys()].filter(inTree) };
 }
 function srcFiles(): string[] {
   const files = readdirSync(join(REPO, "src"), { encoding: "utf8", recursive: true })
@@ -411,8 +504,19 @@ interface Bindings {
   readonly declared: ReadonlyMap<string, number>;
   readonly consts: Map<string, ts.Expression>;
   readonly imports: Map<string, { readonly from: string | undefined; readonly name: string }>;
-  readonly exports: Map<string, { readonly local: string } | { readonly from: string | undefined; readonly name: string }>;
+  readonly exports: Map<string, ExportEntry>;
   readonly stars: (string | undefined)[];
+}
+/** How a module exports a name: a local binding, a re-export, or a local export form that never reads (cut #4, S). */
+type ExportEntry = { readonly local: string } | { readonly from: string | undefined; readonly name: string } | { readonly opaque: string };
+/** Whether a statement carries the export modifier (and the default modifier, for `export default function/class`). */
+function hasModifier(node: ts.Node, kind: ts.SyntaxKind): boolean {
+  return ts.canHaveModifiers(node) && (ts.getModifiers(node)?.some((modifier) => modifier.kind === kind) ?? false);
+}
+/** Every name a binding name binds (an identifier, or each element of a destructuring pattern). */
+function boundNames(name: ts.BindingName): string[] {
+  if (ts.isIdentifier(name)) return [name.text];
+  return name.elements.flatMap((element) => (ts.isOmittedExpression(element) ? [] : boundNames(element.name)));
 }
 /** The src module a relative specifier names (`.js` spells the `.ts` source); undefined for packages and missing modules. */
 function moduleOf(tree: ModuleTree, from: string, specifier: ts.Expression | undefined): string | undefined {
@@ -433,22 +537,40 @@ function bindingsOf(file: ts.SourceFile, tree: ModuleTree): Bindings {
   };
   const consts = new Map<string, ts.Expression>();
   const imports = new Map<string, { readonly from: string | undefined; readonly name: string }>();
-  const exports = new Map<string, { readonly local: string } | { readonly from: string | undefined; readonly name: string }>();
+  const exports = new Map<string, ExportEntry>();
   const stars: (string | undefined)[] = [];
+  /** A local export form other than an exported const with an initializer: the module owns the name, and it never reads (S). */
+  const own = (name: string, form: string): void => {
+    exports.set(name, { opaque: form });
+  };
   visit(file, (node) => {
     if (ts.isVariableDeclaration(node)) {
       declare(node.name);
-      if (ts.isIdentifier(node.name) && node.initializer !== undefined && (ts.getCombinedNodeFlags(node) & ts.NodeFlags.Const) !== 0) {
-        consts.set(node.name.text, node.initializer);
-        const statement = node.parent.parent;
-        if (ts.isVariableStatement(statement) && statement.modifiers?.some((modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword)) {
-          exports.set(node.name.text, { local: node.name.text });
+      const constant = ts.isIdentifier(node.name) && node.initializer !== undefined && (ts.getCombinedNodeFlags(node) & ts.NodeFlags.Const) !== 0;
+      if (constant && ts.isIdentifier(node.name) && node.initializer !== undefined) consts.set(node.name.text, node.initializer);
+      const statement = node.parent.parent;
+      if (ts.isVariableStatement(statement) && ts.isSourceFile(statement.parent) && hasModifier(statement, ts.SyntaxKind.ExportKeyword)) {
+        for (const name of boundNames(node.name)) {
+          if (constant && ts.isIdentifier(node.name) && node.name.text === name) exports.set(name, { local: name });
+          else own(name, "variable");
         }
       }
     } else if (ts.isParameter(node)) {
       declare(node.name);
     } else if (ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) || ts.isClassDeclaration(node) || ts.isClassExpression(node) || ts.isEnumDeclaration(node)) {
       declare(node.name);
+      if ((ts.isFunctionDeclaration(node) || ts.isClassDeclaration(node) || ts.isEnumDeclaration(node)) && ts.isSourceFile(node.parent) && hasModifier(node, ts.SyntaxKind.ExportKeyword)) {
+        if (hasModifier(node, ts.SyntaxKind.DefaultKeyword)) own("default", "default");
+        else if (node.name !== undefined) own(node.name.text, ts.isEnumDeclaration(node) ? "enum" : ts.isClassDeclaration(node) ? "class" : "function");
+      }
+    } else if (ts.isModuleDeclaration(node) || ts.isImportEqualsDeclaration(node)) {
+      // D (cut #4): a namespace (module) declaration and an import-equals alias declare their names like any binding.
+      if (ts.isIdentifier(node.name)) {
+        declare(node.name);
+        if (ts.isSourceFile(node.parent) && hasModifier(node, ts.SyntaxKind.ExportKeyword)) own(node.name.text, ts.isModuleDeclaration(node) ? "namespace" : "import-equals");
+      }
+    } else if (ts.isExportAssignment(node)) {
+      own("default", node.isExportEquals === true ? "export-equals" : "default");
     } else if (ts.isImportDeclaration(node) && node.importClause !== undefined && !node.importClause.isTypeOnly) {
       const from = moduleOf(tree, file.fileName, node.moduleSpecifier);
       const clause = node.importClause;
@@ -471,6 +593,8 @@ function bindingsOf(file: ts.SourceFile, tree: ModuleTree): Bindings {
       const from = node.moduleSpecifier === undefined ? undefined : moduleOf(tree, file.fileName, node.moduleSpecifier);
       if (node.exportClause === undefined) {
         if (node.moduleSpecifier !== undefined) stars.push(from);
+      } else if (ts.isNamespaceExport(node.exportClause)) {
+        own(node.exportClause.name.text, "namespace-export");
       } else if (ts.isNamedExports(node.exportClause)) {
         for (const element of node.exportClause.elements) {
           const local = (element.propertyName ?? element.name).text;
@@ -563,12 +687,19 @@ function exportOf(path: string | undefined, name: string, tree: ModuleTree, hops
   const at: At = { tree, file };
   const table = bindingsOf(file, tree);
   const entry = table.exports.get(name);
-  if (entry !== undefined) return "local" in entry ? bindingOf(entry.local, at, hops + 1) : exportOf(entry.from, entry.name, tree, hops + 1);
-  for (const star of table.stars) {
-    const found = exportOf(star, name, tree, hops + 1);
-    if (found !== undefined) return found;
-  }
-  return undefined;
+  // S (cut #4): the module's own export of the name decides, whatever its form; a form other than a const reads as nothing.
+  if (entry !== undefined) return "opaque" in entry ? undefined : "local" in entry ? bindingOf(entry.local, at, hops + 1) : exportOf(entry.from, entry.name, tree, hops + 1);
+  // `export *` never forwards a default, and forwards a name only from the one star module that exports it.
+  if (name === "default") return undefined;
+  const holders = table.stars.filter((star) => exportsName(star, name, tree, hops + 1));
+  return holders.length === 1 ? exportOf(holders[0], name, tree, hops + 1) : undefined;
+}
+/** Whether a module of the tree exports a name, by its own exports or through its `export *` modules (S, cut #4). */
+function exportsName(path: string | undefined, name: string, tree: ModuleTree, hops: number): boolean {
+  const file = path === undefined || hops > MAX_HOPS ? undefined : tree.module(path);
+  if (file === undefined) return false;
+  const table = bindingsOf(file, tree);
+  return table.exports.has(name) || (name !== "default" && table.stars.some((star) => exportsName(star, name, tree, hops + 1)));
 }
 function objectOf(node: ts.Expression, at: At, hops: number): { readonly node: ts.ObjectLiteralExpression; readonly at: At } | undefined {
   if (hops > MAX_HOPS) return undefined;
@@ -599,6 +730,8 @@ function memberValue(member: ts.ObjectLiteralElementLike | undefined): ts.Expres
 function memberOf(object: ts.ObjectLiteralExpression, name: string, at: At, hops: number): Definition | undefined {
   if (!sealed(object, at.tree)) return undefined;
   if (object.properties.some((member) => ts.isSpreadAssignment(member))) return undefined;
+  // K (cut #4): a member whose key does not read may stand for any key, so no member of its literal reads.
+  if (object.properties.some((member) => keyOf(member, at, hops) === undefined)) return undefined;
   let found: ts.ObjectLiteralElementLike | undefined;
   for (const member of object.properties) if (keyOf(member, at, hops) === name) found = member;
   const node = memberValue(found);
@@ -1222,16 +1355,24 @@ interface TimedOutRun {
   readonly status: string;
   readonly category: string | null;
   readonly retryWhileInFlight: boolean | null;
+  /** R-RETRY-BY-DESIGN: the live retry control's answer for a node index the run never reached. */
+  readonly retryOther: boolean | null;
   readonly spawns: number;
   readonly log: string;
+  readonly settled: Promise<void>[];
 }
-/** One run of the committing node through Pi's runtime and Claude host, against a stand-in that outlives the deadline. */
-async function timedOutRun(): Promise<TimedOutRun> {
-  const log = standInRf("hold");
+/**
+ * One run of the committing node through Pi's runtime and Claude host, against a stand-in that outlives the deadline; by
+ * default it returns once the stand-in has exited (R-IN-FLIGHT-SETTLED's row passes a stubborn stand-in and does not wait).
+ */
+async function timedOutRun(behavior: Behavior = "hold", waitForStandIn = true): Promise<TimedOutRun> {
+  const log = standInRf(behavior);
   let control: WorkflowControl | undefined;
   let retryWhileInFlight: boolean | null = null;
+  let retryOther: boolean | null = null;
   const harness = commitHarness(DEADLINE_MS, () => {
     retryWhileInFlight = control?.retry(0) ?? null;
+    retryOther = control?.retry(RETRY_OTHER_INDEX) ?? null;
   });
   const entries: WorkflowJournalEntry[] = [];
   const recorded = await runWorkflow({
@@ -1246,14 +1387,16 @@ async function timedOutRun(): Promise<TimedOutRun> {
       control = live;
     },
   });
-  await Promise.all(harness.settled);
+  if (waitForStandIn) await Promise.all(harness.settled);
   return {
     entries,
     status: recorded.status,
     category: recorded.capabilityError?.category ?? null,
     retryWhileInFlight,
+    retryOther,
     spawns: spawnsOf(log).length,
     log,
+    settled: harness.settled,
   };
 }
 
@@ -1359,6 +1502,22 @@ function rewritten(rewrite: string, registration = THROUGH_IDS): Readonly<Record
 }
 /** A noncommitting descriptor literal's fields (forge values), for the forms that place or rewrite the literal itself. */
 const FORGE_FIELDS = 'id: "forge.gate.commit", effectClass: "read", permissions: ["reactivefiber:render"], contractSource: "@forge/sdk@0.1.0:GateFacade.commit"';
+/** A chain of `levels` modules, each re-exporting the committing consts from the next: a resolution past MAX_HOPS reads nothing. */
+function deepChain(levels: number): Readonly<Record<string, string>> {
+  const modules: Record<string, string> = { [`src/chain/m${levels}.ts`]: PLANTED_IDS };
+  for (let level = 0; level < levels; level++) modules[`src/chain/m${level}.ts`] = `export { RF_COMMIT_CAPABILITY, RF_COMMIT_CONTRACT } from "./m${level + 1}.js";\n`;
+  modules["src/chain/reg.ts"] = plantedRegistration("RF_COMMIT_CAPABILITY", "RF_COMMIT_CONTRACT", 'import { RF_COMMIT_CAPABILITY, RF_COMMIT_CONTRACT } from "./m0.js";\n');
+  return modules;
+}
+/** S (cut #4): RF_IDS as a star module exports it (forge values), shadowed by the module's own export of RF_IDS. */
+const STAR_FORGE = 'export const RF_IDS = { commit: "forge.gate.commit", contract: "@forge/sdk@0.1.0:GateFacade.commit" };\n';
+function ownExport(own: string): Readonly<Record<string, string>> {
+  return {
+    "src/p/forge.ts": STAR_FORGE,
+    "src/p/ids.ts": `export * from "./forge.js";\n${own}`,
+    "src/p/reg.ts": plantedRegistration("RF_IDS.commit", "RF_IDS.contract", 'import { RF_IDS } from "./ids.js";\n'),
+  };
+}
 /** One tree per value form the SRC READER reads: each registration reads as that committing literal. */
 const PLANTED_FORMS: PlantedTrees = {
   importedConsts: { "src/p/ids.ts": PLANTED_IDS, "src/p/reg.ts": plantedRegistration("RF_COMMIT_CAPABILITY", "RF_COMMIT_CONTRACT", 'import { RF_COMMIT_CAPABILITY, RF_COMMIT_CONTRACT } from "./ids.js";\n') },
@@ -1388,6 +1547,27 @@ const PLANTED_FORMS: PlantedTrees = {
   exportedObject: {
     "src/p/ids.ts": `const IDS = { commit: ${PLANTED_ID}, contract: ${PLANTED_CONTRACT} };\nexport { IDS };\n`,
     "src/p/reg.ts": plantedRegistration("IDS.commit", "IDS.contract", 'import { IDS } from "./ids.js";\n'),
+  },
+  nestedExportStar: {
+    "src/p/ids.ts": PLANTED_IDS,
+    "src/p/index.ts": 'export * from "./ids.js";\n',
+    "src/p/barrel.ts": 'export * from "./index.js";\n',
+    "src/reg.ts": plantedRegistration("RF_COMMIT_CAPABILITY", "RF_COMMIT_CONTRACT", 'import { RF_COMMIT_CAPABILITY, RF_COMMIT_CONTRACT } from "./p/barrel.js";\n'),
+  },
+  lastKeyWins: {
+    "src/p/reg.ts": `const KEY = "commit";\nconst CONTRACT_KEY = "contract";\nconst IDS = { commit: "forge.gate.commit", contract: "@forge/sdk@0.1.0:GateFacade.commit", [KEY]: ${PLANTED_ID}, [CONTRACT_KEY]: ${PLANTED_CONTRACT} };\n${THROUGH_IDS}`,
+  },
+  familyAt: { "src/p/reg.ts": plantedRegistration(JSON.stringify("pi.render.commit"), JSON.stringify("rf@0.1.845 context.render")) },
+  familyReactiveFiber: { "src/p/reg.ts": plantedRegistration(JSON.stringify("pi.render.commit"), JSON.stringify("ReactiveFiberCLI context.render")) },
+  familyRfVersion: { "src/p/reg.ts": plantedRegistration(JSON.stringify("pi.render.commit"), JSON.stringify("rf v0.1.845, context.render")) },
+  familyRfContext: { "src/p/reg.ts": plantedRegistration(JSON.stringify("pi.render.commit"), JSON.stringify("rf context.render")) },
+  familyRfOperation: { "src/p/reg.ts": plantedRegistration(JSON.stringify("pi.render.commit"), JSON.stringify("rf operation context.render")) },
+  defaultAlias: {
+    "src/p/ids.ts": `const IDS = { commit: ${PLANTED_ID}, contract: ${PLANTED_CONTRACT} };\nexport { IDS as default };\n`,
+    "src/p/reg.ts": plantedRegistration("RF_IDS.commit", "RF_IDS.contract", 'import RF_IDS from "./ids.js";\n'),
+  },
+  bareRegister: {
+    "src/p/reg.ts": `register({ descriptor: { id: ${PLANTED_ID}, effectClass: "read", permissions: ["reactivefiber:render"], contractSource: ${PLANTED_CONTRACT} }, invoke: async () => null });\n`,
   },
   wrappedRegistration: {
     "src/p/reg.ts": `registry.register(<CapabilityProvider>({ descriptor: <CapabilityDescriptor>{ id: ${PLANTED_ID}, effectClass: "read", permissions: ["reactivefiber:render"], contractSource: ${PLANTED_CONTRACT} } as CapabilityDescriptor, invoke: async () => null } satisfies CapabilityProvider));\n`,
@@ -1495,6 +1675,65 @@ const PLANTED_REFUSED: PlantedTrees = {
   },
   registeredSpread: { "src/p/reg.ts": 'registry.register({ descriptor: { id: "forge.gate.commit", ...COMMIT_FIELDS }, invoke: async () => null });\n' },
   registeredNoId: { "src/p/reg.ts": "registry.register({ descriptor: { ...COMMIT_DESCRIPTOR }, invoke: async () => null });\n" },
+  // cut #4, K: a member whose key does not read may stand for any key (a computed key that does not read, a numeric key), so no member of its literal reads
+  computedOverride: {
+    "src/p/reg.ts": `const IDS = { commit: "forge.gate.commit", contract: "@forge/sdk@0.1.0:GateFacade.commit", [String("commit")]: ${PLANTED_ID}, [String("contract")]: ${PLANTED_CONTRACT} };\n${THROUGH_IDS}`,
+  },
+  nestedComputedOverride: {
+    "src/p/reg.ts": `const IDS = { render: { commit: "forge.gate.commit", [String("commit")]: ${PLANTED_ID} }, contract: "@forge/sdk@0.1.0:GateFacade.commit", [String("contract")]: ${PLANTED_CONTRACT} };\n${plantedRegistration("IDS.render.commit", "IDS.contract")}`,
+  },
+  importedComputedOverride: {
+    "src/p/ids.ts": `const field = (name: string): string => name;\nexport const IDS = { commit: "forge.gate.commit", contract: "@forge/sdk@0.1.0:GateFacade.commit", [field("commit")]: ${PLANTED_ID}, [field("contract")]: ${PLANTED_CONTRACT} };\n`,
+    "src/p/reg.ts": plantedRegistration("IDS.commit", "IDS.contract", 'import { IDS } from "./ids.js";\n'),
+  },
+  accessorMember: { "src/p/reg.ts": `const IDS = { get commit(): string { return ${PLANTED_ID}; }, contract: ${PLANTED_CONTRACT} };\n${THROUGH_IDS}` },
+  rfIdOnly: { "src/p/entry.ts": `export const ENTRY = { id: ${PLANTED_ID}, label: "commit" };\n` },
+  deepChain: deepChain(40),
+  numericKey: { "src/p/reg.ts": `const IDS = { 0: "forge.gate.commit", commit: ${PLANTED_ID}, contract: ${PLANTED_CONTRACT} };\n${THROUGH_IDS}` },
+  // cut #4, S: a module's own export of the name decides it whatever its form, and only a const with an initializer, a local alias or a named re-export reads
+  ownLet: ownExport(`export let RF_IDS = { commit: ${PLANTED_ID}, contract: ${PLANTED_CONTRACT} };\n`),
+  ownVar: ownExport(`export var RF_IDS = { commit: ${PLANTED_ID}, contract: ${PLANTED_CONTRACT} };\n`),
+  ownDestructured: ownExport(`const ALL = { RF_IDS: { commit: ${PLANTED_ID}, contract: ${PLANTED_CONTRACT} } };\nexport const { RF_IDS } = ALL;\n`),
+  ownDeclared: ownExport("export declare const RF_IDS: { readonly commit: string; readonly contract: string };\n"),
+  ownFunction: ownExport(`export function RF_IDS(): void {}\nRF_IDS.commit = ${PLANTED_ID};\nRF_IDS.contract = ${PLANTED_CONTRACT};\n`),
+  ownClass: ownExport(`export class RF_IDS {\n  static commit = ${PLANTED_ID};\n  static contract = ${PLANTED_CONTRACT};\n}\n`),
+  ownEnum: ownExport(`export enum RF_IDS {\n  commit = ${PLANTED_ID},\n  contract = ${PLANTED_CONTRACT},\n}\n`),
+  ownNamespace: ownExport(`export namespace RF_IDS {\n  export const commit = ${PLANTED_ID};\n  export const contract = ${PLANTED_CONTRACT};\n}\n`),
+  ownImportEquals: ownExport(`namespace Rf {\n  export const ids = { commit: ${PLANTED_ID}, contract: ${PLANTED_CONTRACT} };\n}\nexport import RF_IDS = Rf.ids;\n`),
+  ownNamespaceExport: { ...ownExport('export * as RF_IDS from "./real.js";\n'), "src/p/real.ts": `export const commit = ${PLANTED_ID};\nexport const contract = ${PLANTED_CONTRACT};\n` },
+  namespaceExport: {
+    "src/p/real.ts": `export const commit = ${PLANTED_ID};\nexport const contract = ${PLANTED_CONTRACT};\n`,
+    "src/p/ids.ts": 'export * as RF_IDS from "./real.js";\n',
+    "src/p/reg.ts": plantedRegistration("RF_IDS.commit", "RF_IDS.contract", 'import { RF_IDS } from "./ids.js";\n'),
+  },
+  ownDefault: {
+    "src/p/forge.ts": 'const IDS = { commit: "forge.gate.commit", contract: "@forge/sdk@0.1.0:GateFacade.commit" };\nexport { IDS as default };\n',
+    "src/p/ids.ts": `export * from "./forge.js";\nexport default { commit: ${PLANTED_ID}, contract: ${PLANTED_CONTRACT} };\n`,
+    "src/p/reg.ts": plantedRegistration("RF_IDS.commit", "RF_IDS.contract", 'import RF_IDS from "./ids.js";\n'),
+  },
+  ownDefaultName: {
+    "src/p/forge.ts": 'const IDS = { commit: "forge.gate.commit", contract: "@forge/sdk@0.1.0:GateFacade.commit" };\nexport { IDS as default };\n',
+    "src/p/ids.ts": `export * from "./forge.js";\nconst IDS = { commit: ${PLANTED_ID}, contract: ${PLANTED_CONTRACT} };\nexport default IDS;\n`,
+    "src/p/reg.ts": plantedRegistration("RF_IDS.commit", "RF_IDS.contract", 'import RF_IDS from "./ids.js";\n'),
+  },
+  starDefault: {
+    "src/p/real.ts": `const IDS = { commit: ${PLANTED_ID}, contract: ${PLANTED_CONTRACT} };\nexport { IDS as default };\n`,
+    "src/p/ids.ts": 'export * from "./real.js";\n',
+    "src/p/reg.ts": plantedRegistration("RF_IDS.commit", "RF_IDS.contract", 'import RF_IDS from "./ids.js";\n'),
+  },
+  ambiguousStar: {
+    "src/p/forge.ts": STAR_FORGE,
+    "src/p/real.ts": `export const RF_IDS = { commit: ${PLANTED_ID}, contract: ${PLANTED_CONTRACT} };\n`,
+    "src/p/ids.ts": 'export * from "./real.js";\nexport * from "./forge.js";\n',
+    "src/p/reg.ts": plantedRegistration("RF_IDS.commit", "RF_IDS.contract", 'import { RF_IDS } from "./ids.js";\n'),
+  },
+  // cut #4, D: an import-equals alias and a namespace declare their names, so a same-named const no longer reads (declared twice)
+  importEqualsShadow: {
+    "src/p/reg.ts": `const ID = "forge.gate.commit";\nconst CONTRACT = "@forge/sdk@0.1.0:GateFacade.commit";\nnamespace Rf {\n  export const commitId = ${PLANTED_ID};\n  export const commitContract = ${PLANTED_CONTRACT};\n}\nnamespace Commit {\n  import ID = Rf.commitId;\n  import CONTRACT = Rf.commitContract;\n  ${plantedRegistration("ID", "CONTRACT")}}\nexport const forgeIds = [ID, CONTRACT];\n`,
+  },
+  namespaceShadow: {
+    "src/p/reg.ts": `const IDS = { commit: "forge.gate.commit", contract: "@forge/sdk@0.1.0:GateFacade.commit" };\nnamespace Commit {\n  namespace IDS {\n    export const commit = ${PLANTED_ID};\n    export const contract = ${PLANTED_CONTRACT};\n  }\n  ${THROUGH_IDS}}\nexport const forgeIds = [IDS.commit, IDS.contract];\n`,
+  },
 };
 /** Trees the SRC READER excepts as projections, judges not rf-driving, or judges through a readable (sealed) base. */
 const PLANTED_EXCEPTED: PlantedTrees = {
@@ -1504,6 +1743,11 @@ const PLANTED_EXCEPTED: PlantedTrees = {
   notRfUnreadEffect: { "src/p/reg.ts": 'registry.register({ descriptor: { id: "forge.gate.status", effectClass: effectOf(), permissions: ["forge:inspect"], contractSource: "@forge/sdk@0.1.0:GateFacade.status" } });\n' },
   readableBase: {
     "src/p/reg.ts": `const PREVIEW = { capability: "reactivefiber.render.preview", contract: "rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit" };\n${plantedRegistration("PREVIEW.capability", "PREVIEW.contract")}`,
+  },
+  innerExportNotModule: {
+    "src/p/forge.ts": STAR_FORGE,
+    "src/p/ids.ts": `export * from "./forge.js";\nnamespace Inner {\n  export const RF_IDS = { commit: ${PLANTED_ID}, contract: ${PLANTED_CONTRACT} };\n}\nexport const inner = Inner;\n`,
+    "src/p/reg.ts": plantedRegistration("RF_IDS.commit", "RF_IDS.contract", 'import { RF_IDS } from "./ids.js";\n'),
   },
   sealedReads: {
     "src/p/reg.ts": `${FORGE_IDS}export const label = "" + IDS.commit + " (" + IDS.contract + ")";\nexport const same = IDS.commit === "forge.gate.commit";\nexport const words = [...[IDS.commit], IDS.contract];\n${THROUGH_IDS}`,
@@ -1529,6 +1773,18 @@ const PLANTED_UNSEEN: PlantedTrees = {
   },
   aliasRegistration: { "src/p/reg.ts": "const add = registry.register.bind(registry);\nadd(commitProvider());\n" },
   rfOutsideFamily: { "src/p/reg.ts": plantedRegistration(JSON.stringify("pi.render.commit"), JSON.stringify("R-F command line: context render")) },
+  // cut #4 pages: each NOT CLAIMED channel of the cut #3 header now has its row
+  outsideSrc: { ...SHARED_IDS, "lib/setup.ts": `import { IDS } from "../src/p/ids.js";\nIDS.commit = ${PLANTED_ID};\nIDS.contract = ${PLANTED_CONTRACT};\n` },
+  callRegistration: { "src/p/reg.ts": "registry.register.call(registry, commitProvider());\n" },
+  callbackRegistration: { "src/p/reg.ts": "[commitProvider()].forEach(registry.register, registry);\n" },
+  unreadContract: { "src/p/reg.ts": plantedRegistration(JSON.stringify("pi.render.commit"), "contractOf()") },
+  runtimeBase: { "src/p/view.ts": "const base = JSON.parse(COMMITTING_TEXT) as CapabilityDescriptor;\nexport const view = { id: base.id, effectClass: base.effectClass, contractSource: base.contractSource };\n" },
+  spawnedArgv: {
+    "src/p/reg.ts": 'registry.register({ descriptor: { id: "reactivefiber.render.preview", effectClass: "read", permissions: ["reactivefiber:render"], contractSource: "rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit" }, invoke: async () => runRf(["context", "render", "--json"]) });\n',
+  },
+  providerBody: {
+    "src/p/reg.ts": `registry.register({ descriptor: { id: ${PLANTED_ID}, effectClass: "write", permissions: ["reactivefiber:commit"], contractSource: ${JSON.stringify(COMMIT_CONTRACT)} }, invoke: async () => {\n  const child = spawn("rf", ["context", "render", "--idempotency-key", String(Date.now())]);\n  setTimeout(() => child.kill("SIGKILL"), 500);\n  return null;\n} });\n`,
+  },
 };
 /** The LEAF READER's planted control: each form it reads, then near misses it must not read. */
 const LEAF_CONTROL: Readonly<Record<string, string>> = {
@@ -1554,6 +1810,8 @@ const LEAF_CONTROL: Readonly<Record<string, string>> = {
     'export const nearMisses = [["operation", "list"], ["show", "operation"], ["operation", "--json", "show"]];',
     'export function unread(verb: string): string[] { return ["operation", verb]; }',
     'export const prose = "an operation; show it";',
+    'const WORDS = { noun: "operation", verb: "show" };',
+    'export function receipt(id: string): string[] { return ["--json", WORDS.noun, WORDS.verb, id]; }',
     "",
   ].join("\n"),
 };
@@ -1565,6 +1823,48 @@ const LEAF_UNSEEN: PlantedTrees = {
   removesLeaf: {
     "src/leaf/rewrite.ts": 'const OPERATION_WORDS = ["operation"];\nconst VERBS = ["show"];\nVERBS[0] = "list";\nexport function argv(id: string): string[] {\n  return ["--workspace", ".", ...OPERATION_WORDS, ...VERBS, id];\n}\n',
   },
+  // cut #4 pages
+  unreadElements: {
+    "src/leaf/receipt.ts":
+      'const WORDS = { noun: "operation", verb: "list", [String("verb")]: "show" };\nexport function receiptArgv(id: string): string[] {\n  return ["--json", WORDS.noun, WORDS.verb, id];\n}\nexport function calledArgv(id: string): string[] {\n  return ["--json", "operation", verbOf(), id];\n}\n',
+  },
+  acrossStatements: {
+    "src/leaf/receipt.ts": 'export function argv(id: string): string[] {\n  const args = ["--json"];\n  args.push("operation");\n  args.push("show");\n  let line = "rf operation";\n  line += " show";\n  return [...args, id, line];\n}\n',
+  },
+  methodBuilt: {
+    "src/leaf/receipt.ts": 'export const leaf = "operation".concat(" show");\nexport const mapped = ["operation", "list"].map((word) => (word === "list" ? "show" : word)).join(" ");\n',
+  },
+};
+/**
+ * The NAMED RESIDUALS (cut #4, the enumerate-the-resolvable form of standing rule 19(c)): each a family the census does not
+ * read, with the rows that pin its quiet reading (A1.unseen and C1.unseen pages, B1.gap, B2's retryOther, C2's
+ * inFlightSettled). The header's RESIDUALS paragraph lists exactly these, in this order (FROZEN SHAPE).
+ */
+const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
+  "R-CODE-IN-STRING": ["codeInAString"],
+  "R-UNFOLLOWED-MODULE": ["dynamicImport", "requireCall", "absoluteSpecifier"],
+  "R-OUTSIDE-TREE": ["nonTsModule", "outsideSrc"],
+  "R-REPLACED-GLOBAL": ["replacedFreeze"],
+  "R-REWRITING-CALLEE": ["rewritingCallee"],
+  "R-UNSPELLED-CALLEE": ["aliasRegistration", "callRegistration", "callbackRegistration"],
+  "R-OUTSIDE-FAMILY": ["rfOutsideFamily"],
+  "R-UNREAD-CONTRACT": ["unreadContract"],
+  "R-PROJECTION-BASE": ["runtimeBase"],
+  "R-PROVIDER-BODY": ["spawnedArgv", "providerBody"],
+  "R-LEAF-REWRITE": ["addsLeaf", "removesLeaf"],
+  "R-LEAF-UNREAD-ELEMENT": ["unreadElements"],
+  "R-LEAF-ACROSS-STATEMENTS": ["acrossStatements"],
+  "R-LEAF-METHOD": ["methodBuilt"],
+  "R-TIMER-GAP": ["timeoutTimer", "settleTimer"],
+  "R-RETRY-BY-DESIGN": ["retryOther"],
+  "R-IN-FLIGHT-SETTLED": ["inFlightSettled"],
+};
+/** R-RETRY-BY-DESIGN's page: a node index the one-node run never reaches. */
+const RETRY_OTHER_INDEX = 1;
+/** R-TIMER-GAP's rows: the arm each re-runs, and the timer its registry arms while the deadlineMs field reads the arm's own. */
+const TIMER_GAP: Readonly<Record<string, { readonly outcome: "timeout" | "kill"; readonly timerMs: number }>> = {
+  timeoutTimer: { outcome: "timeout", timerMs: 600 },
+  settleTimer: { outcome: "kill", timerMs: 15_000 },
 };
 
 /* ---------------------------------------------------------------- judged rows */
@@ -1617,9 +1917,9 @@ const ROWS: readonly Row[] = [
           const forwarding = srcFiles().flatMap((path) => forwardingSites(path, SRC));
           const copied = copyReading();
           const plantedFile = {
-            "planted.ts": 'const C = "rf@0.1.845:reactive-fiber.cli/v1 context.render";\nregistry.register({ descriptor: { id: "reactivefiber.render.commit", effectClass: "read", permissions: ["reactivefiber:render"], contractSource: C } });',
+            "src/planted.ts": 'const C = "rf@0.1.845:reactive-fiber.cli/v1 context.render";\nregistry.register({ descriptor: { id: "reactivefiber.render.commit", effectClass: "read", permissions: ["reactivefiber:render"], contractSource: C } });',
           };
-          const planted = descriptorReadings("planted.ts", plantedTree(plantedFile)).flatMap((reading) => (reading.kind === "judged" ? [judge(reading.facts, grants).findings] : []));
+          const planted = descriptorReadings("src/planted.ts", plantedTree(plantedFile)).flatMap((reading) => (reading.kind === "judged" ? [judge(reading.facts, grants).findings] : []));
           const trees = (set: PlantedTrees) => Object.fromEntries(Object.entries(set).map(([form, modules]) => [form, plantedReadings(modules, grants)]));
           const forms = trees(PLANTED_FORMS);
           const refused = trees(PLANTED_REFUSED);
@@ -1645,7 +1945,9 @@ const ROWS: readonly Row[] = [
           expect(planted).toStrictEqual([["effectClass", "idempotency-key", "operation-show", "write-grant"]]);
           for (const readingsOfForm of Object.values(forms)) expect(readingsOfForm).toStrictEqual(["committing:effectClass,idempotency-key,operation-show,write-grant"]);
           expect(constructed.read).toStrictEqual(["effectClass"]);
-          return { native, injected, rfLiterals, unread, forwarding, copied, planted, forms, refused, excepted, unseen, constructed };
+          // Each residual page held live: a page edited (its escape silenced) moves its digest and reds A1 (NAMED RESIDUALS).
+          const pages = Object.fromEntries(Object.entries(PLANTED_UNSEEN).map(([row, modules]) => [row, digest16(JSON.stringify(modules))]));
+          return { native, injected, rfLiterals, unread, forwarding, copied, planted, forms, refused, excepted, unseen, pages, constructed };
         },
       },
       {
@@ -1710,7 +2012,29 @@ const ROWS: readonly Row[] = [
             expect(spawned).toHaveLength(1);
             measured[outcome] = { deadlineMs: harness.deadlineMs, ...refusal, spawns: spawned.length, argv: tailOf(spawned[0]), actedAfterHold: outcome === "timeout" ? null : settledMs >= HOLD_MS };
           }
-          return measured;
+          // R-TIMER-GAP (cut #4, a NAMED RESIDUAL): an arm re-run while its registry arms a timer other than its deadlineMs field
+          // (the timeout arm's between DEADLINE_MS and HOLD_MS, the kill arm's at or above HOLD_MS) reads exactly as the arm does.
+          const gap: JsonObject = {};
+          for (const [row, { outcome, timerMs }] of Object.entries(TIMER_GAP)) {
+            const arm = arms[outcome];
+            const log = standInRf(arm.behavior);
+            const harness = commitHarness(arm.deadlineMs);
+            Reflect.set(harness.registry, "deadlineMs", timerMs);
+            const armedMs: unknown = Reflect.get(harness.registry, "deadlineMs");
+            const invoked = performance.now();
+            const call = harness.registry.invoke(COMMIT_ID, LEGACY_INPUT, contextOf([COMMIT_PERMISSION]));
+            Reflect.set(harness.registry, "deadlineMs", arm.deadlineMs);
+            const refusal = await refusalFrom(call);
+            const settledMs = performance.now() - invoked;
+            await Promise.all(harness.settled);
+            const spawned = spawnsOf(log);
+            expect(spawned).toHaveLength(1);
+            // The page held live: the timer the registry armed (armedMs), and for the timeout arm that the call ended at that timer.
+            const live = { armedMs: typeof armedMs === "number" ? armedMs : null, settledAtTimer: outcome === "timeout" ? settledMs >= timerMs - 50 : null };
+            gap[row] = { deadlineMs: harness.deadlineMs, ...refusal, spawns: spawned.length, argv: tailOf(spawned[0]), actedAfterHold: outcome === "timeout" ? null : settledMs >= HOLD_MS, ...live };
+          }
+          expect(Object.keys(gap)).toStrictEqual(RESIDUALS["R-TIMER-GAP"]);
+          return { ...measured, gap };
         },
       },
       {
@@ -1732,6 +2056,8 @@ const ROWS: readonly Row[] = [
           expect(resumeSpawns).toBe(0);
           return {
             recorded: { status: recorded.status, category: recorded.category, retryWhileInFlight: recorded.retryWhileInFlight, spawns: recorded.spawns, nodeRows: nodeRows(recorded.entries) },
+            // R-RETRY-BY-DESIGN (cut #4, a NAMED RESIDUAL): retry consults agent() calls only, so it answers false for any node index.
+            [RESIDUALS["R-RETRY-BY-DESIGN"][0]]: { index: RETRY_OTHER_INDEX, answer: recorded.retryOther },
             resumed: {
               status: resumed.status,
               category: resumed.capabilityError?.category ?? null,
@@ -1777,6 +2103,7 @@ const ROWS: readonly Row[] = [
               return [form, Object.keys(modules).flatMap((path) => operationShowSpellings(path, tree))];
             }),
           );
+          const pages = Object.fromEntries(Object.entries(LEAF_UNSEEN).map(([row, modules]) => [row, digest16(JSON.stringify(modules))]));
           const grants = readGrants();
           const result = {
             timedOut: { status: run.status, category: run.category, spawns: run.spawns },
@@ -1786,6 +2113,7 @@ const ROWS: readonly Row[] = [
             srcSpellings: spellings,
             control,
             unseen,
+            pages,
             rule: {
               withoutReader: judge(committing({ contractSource: "reactive-fiber.cli/v1 context.render --idempotency-key KEY" }), grants).findings,
               withReader: judge(committing({}), grants).findings,
@@ -1793,7 +2121,7 @@ const ROWS: readonly Row[] = [
           };
           expect(result.evidenceReads).toStrictEqual([PREVIEW_ID]);
           expect(result.srcSpellings).toStrictEqual([]);
-          expect(result.control).toHaveLength(14);
+          expect(result.control).toHaveLength(15);
           return result;
         },
       },
@@ -1842,6 +2170,18 @@ const ROWS: readonly Row[] = [
               reconcileDeps(run.entries, "failed", [notFound]),
             ),
           );
+          // R-IN-FLIGHT-SETTLED (cut #4, a NAMED RESIDUAL): decideReconcile takes no process-liveness input, so a settled run whose
+          // never-killed attempt still runs (a stubborn stand-in, reaped after the decision) is answered as above.
+          const live = await timedOutRun("stubborn", false);
+          await until(() => spawnsOf(live.log).length === 1, "the stubborn stand-in to log its spawn");
+          const liveRows = live.entries.filter((entry) => entry.kind === "node");
+          const liveReceipts = [previewReceipt(liveRows[liveRows.length - 1], false), previewReceipt(liveRows[liveRows.length - 1], true)];
+          const livePid = spawnsOf(live.log)[0]?.pid ?? 0;
+          const aliveAtDecision = livePid > 0 && alive(livePid);
+          const liveDecision = decideReconcile(reconcileRequest("acknowledge", absent(liveReceipts.map((receipt) => receipt.receiptId))), reconcileDeps(live.entries, "failed", liveReceipts));
+          if (livePid > 0) reapStandIn(livePid, join(dirname(live.log), "rf"));
+          await Promise.all(live.settled);
+          const liveRecord = liveDecision.decision === "acknowledge" && liveDecision.entry.reconcile?.decision === "acknowledge" ? liveDecision.entry.reconcile : undefined;
           const result = {
             timedOut: { status: run.status, category: run.category, spawns: run.spawns },
             inFlight,
@@ -1849,6 +2189,14 @@ const ROWS: readonly Row[] = [
             settled: { determination: record.determination, evidenceClass: record.evidenceClass, settlement: record.settlement },
             override: { unaccepted: override(false), accepted: override(true) },
             confirmedOnFailed,
+            [RESIDUALS["R-IN-FLIGHT-SETTLED"][0]]: {
+              status: live.status,
+              aliveAtDecision,
+              decision: liveDecision.decision,
+              determination: liveRecord?.determination ?? null,
+              evidenceClass: liveRecord?.evidenceClass ?? null,
+              settlement: liveRecord?.settlement ?? null,
+            },
           };
           expect(result.settled.evidenceClass).toBe("operator-asserted");
           expect(result.override.unaccepted).toStrictEqual({ decision: "denied", policy: "duplicate-risk-unaccepted" });
@@ -2027,7 +2375,7 @@ const ROWS: readonly Row[] = [
   },
 ];
 
-/** Every pin's measured witness: frozen at base cd8927f (cut #1), re-measured at dab445f with the cut #2 additions (A1's reader trees, C1's control spellings, the B1 and D4 deadlines) and at 5ffe345 with the cut #3 additions (A1's SEALED, register-position, forwarding, copy and unseen readings; C1's unseen rows; the B1 and D4 actedAfterHold readings). */
+/** Every pin's measured witness: frozen at base cd8927f (cut #1), re-measured at dab445f with the cut #2 additions (A1's reader trees, C1's control spellings, the B1 and D4 deadlines), at 5ffe345 with the cut #3 additions (A1's SEALED, register-position, forwarding, copy and unseen readings; C1's unseen rows; the B1 and D4 actedAfterHold readings) and at aec4521 with the cut #4 additions (A1's K, S and D refused forms, two read forms and the residual pages; C1's sealed-member spelling and leaf residual pages; B1.gap, B2's retryOther and C2's inFlightSettled, every earlier value unchanged). */
 const WITNESS: Readonly<Record<string, JsonValue>> = {
   A1: {
     native: [{"id": "reactivefiber.render.preview", "effectClass": "read", "rf": true, "committing": false, "findings": []}],
@@ -2037,10 +2385,11 @@ const WITNESS: Readonly<Record<string, JsonValue>> = {
     forwarding: ["src/workbench/hosts/local-detached.ts#registryFor:register(provider)", "src/workbench/hosts/local-detached.ts#registryFor:module.register(registry)"],
     copied: {"served": [{"id": "census.copy.probe", "effectClass": "write", "contractSource": "census copy probe"}], "rewritten": {"id": "reactivefiber.render.commit", "effectClass": "read"}},
     planted: [["effectClass", "idempotency-key", "operation-show", "write-grant"]],
-    forms: {"importedConsts": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "aliasedImport": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "namespaceImport": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "reExports": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "exportStar": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "exportAlias": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "constObject": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "importedFrozenObject": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "concatenation": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "computedKeys": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "shorthand": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "rfCliWords": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "exportedObject": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "wrappedRegistration": ["committing:effectClass,idempotency-key,operation-show,write-grant"]},
-    refused: {"callId": ["unread:id"], "parameters": ["unread:id,effectClass,position"], "shadowedNames": ["unread:id", "unread:id", "unread:id", "unread:id", "unread:id", "unread:id"], "letVarBindings": ["unread:id", "unread:id"], "packageImport": ["unread:id"], "missingExport": ["unread:id"], "spreadObjectMember": ["unread:id"], "spread": ["unread:spread"], "accessor": ["unread:effectClass,accessor"], "method": ["unread:effectClass,accessor"], "unreadKey": ["unread:key"], "rfContractPart": ["unread:contractSource,position"], "mixedProjection": ["unread:id,position"], "twoBases": ["unread:id,effectClass,position"], "projectionUnreadKey": ["unread:id,effectClass,key,position"], "noEffectClass": ["unread:effectClass"], "idOnly": ["unread:effectClass,spread"], "memberWrite": ["unread:id,contractSource"], "setupModule": ["unread:id,contractSource"], "elementWrite": ["unread:id,contractSource"], "computedWrite": ["unread:id,contractSource"], "compoundWrite": ["unread:id,contractSource"], "logicalWrite": ["unread:id,contractSource"], "updateWrite": ["unread:id,contractSource"], "updateStringWrite": ["unread:id,contractSource"], "deleteWrite": ["unread:id,contractSource"], "destructuringWrite": ["unread:id,contractSource"], "arrayDestructuringWrite": ["unread:id,contractSource"], "forOfWrite": ["unread:id,contractSource"], "objectAssign": ["unread:id,contractSource"], "defineProperty": ["unread:id,contractSource"], "reflectSet": ["unread:id,contractSource"], "alias": ["unread:id,contractSource"], "parameter": ["unread:id,contractSource"], "shorthandMember": ["unread:id,contractSource"], "methodThis": ["unread:id,contractSource"], "nestedAlias": ["unread:id,contractSource"], "spreadCopyWrite": ["unread:id,contractSource"], "namespaceWrite": ["unread:id,contractSource"], "namespaceWhole": ["unread:id,contractSource"], "reExportWrite": ["unread:id,contractSource"], "namespaceReExport": ["unread:id,contractSource"], "namespaceReExported": ["unread:id,contractSource"], "defaultExport": ["unread:id,contractSource"], "shadowedImportWrite": ["unread:id,contractSource"], "shadowedFreeze": ["unread:id,contractSource"], "boundDescriptor": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor: DESCRIPTOR, invoke: async () => null })"], "returnedDescriptor": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor, invoke: async () => null })"], "wrappedHolder": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register(audited({ descriptor: { id: \"forge.gate.commit\", effectClass: \"read\", permission...)"], "holderSpread": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor: { id: \"forge.gate.commit\", effectClass: \"read\", permissions: [\"rea...)"], "secondDescriptor": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor: { id: \"forge.gate.commit\", effectClass: \"read\", permissions: [\"rea...)"], "secondDescriptorLast": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor: COMMITTING, descriptor: { id: \"forge.gate.commit\", effectClass: \"r...)"], "holderUnreadKey": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor: { id: \"forge.gate.commit\", effectClass: \"read\", permissions: [\"rea...)"], "boundHolder": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register(PROVIDER)"], "accessorRewrite": ["unread:accessor"], "registeredProjection": ["unread:id,effectClass,contractSource"], "registeredSpread": ["unread:spread"], "registeredNoId": ["unread:id,effectClass,spread"]},
-    excepted: {"projection": ["projection"], "wrappedProjection": ["projection"], "notRf": ["not-rf"], "notRfUnreadEffect": ["not-rf"], "readableBase": ["noncommitting:"], "sealedReads": ["not-rf"]},
-    unseen: {"codeInAString": ["not-rf"], "dynamicImport": ["not-rf"], "requireCall": ["not-rf"], "absoluteSpecifier": ["not-rf"], "nonTsModule": ["not-rf"], "replacedFreeze": ["not-rf"], "rewritingCallee": ["not-rf"], "aliasRegistration": [], "rfOutsideFamily": ["not-rf"]},
+    forms: {"importedConsts": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "aliasedImport": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "namespaceImport": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "reExports": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "exportStar": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "exportAlias": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "constObject": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "importedFrozenObject": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "concatenation": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "computedKeys": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "shorthand": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "rfCliWords": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "exportedObject": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "nestedExportStar": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "lastKeyWins": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "familyAt": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "familyReactiveFiber": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "familyRfVersion": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "familyRfContext": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "familyRfOperation": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "defaultAlias": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "bareRegister": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "wrappedRegistration": ["committing:effectClass,idempotency-key,operation-show,write-grant"]},
+    refused: {"callId": ["unread:id"], "parameters": ["unread:id,effectClass,position"], "shadowedNames": ["unread:id", "unread:id", "unread:id", "unread:id", "unread:id", "unread:id"], "letVarBindings": ["unread:id", "unread:id"], "packageImport": ["unread:id"], "missingExport": ["unread:id"], "spreadObjectMember": ["unread:id"], "spread": ["unread:spread"], "accessor": ["unread:effectClass,accessor"], "method": ["unread:effectClass,accessor"], "unreadKey": ["unread:key"], "rfContractPart": ["unread:contractSource,position"], "mixedProjection": ["unread:id,position"], "twoBases": ["unread:id,effectClass,position"], "projectionUnreadKey": ["unread:id,effectClass,key,position"], "noEffectClass": ["unread:effectClass"], "idOnly": ["unread:effectClass,spread"], "memberWrite": ["unread:id,contractSource"], "setupModule": ["unread:id,contractSource"], "elementWrite": ["unread:id,contractSource"], "computedWrite": ["unread:id,contractSource"], "compoundWrite": ["unread:id,contractSource"], "logicalWrite": ["unread:id,contractSource"], "updateWrite": ["unread:id,contractSource"], "updateStringWrite": ["unread:id,contractSource"], "deleteWrite": ["unread:id,contractSource"], "destructuringWrite": ["unread:id,contractSource"], "arrayDestructuringWrite": ["unread:id,contractSource"], "forOfWrite": ["unread:id,contractSource"], "objectAssign": ["unread:id,contractSource"], "defineProperty": ["unread:id,contractSource"], "reflectSet": ["unread:id,contractSource"], "alias": ["unread:id,contractSource"], "parameter": ["unread:id,contractSource"], "shorthandMember": ["unread:id,contractSource"], "methodThis": ["unread:id,contractSource"], "nestedAlias": ["unread:id,contractSource"], "spreadCopyWrite": ["unread:id,contractSource"], "namespaceWrite": ["unread:id,contractSource"], "namespaceWhole": ["unread:id,contractSource"], "reExportWrite": ["unread:id,contractSource"], "namespaceReExport": ["unread:id,contractSource"], "namespaceReExported": ["unread:id,contractSource"], "defaultExport": ["unread:id,contractSource"], "shadowedImportWrite": ["unread:id,contractSource"], "shadowedFreeze": ["unread:id,contractSource"], "boundDescriptor": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor: DESCRIPTOR, invoke: async () => null })"], "returnedDescriptor": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor, invoke: async () => null })"], "wrappedHolder": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register(audited({ descriptor: { id: \"forge.gate.commit\", effectClass: \"read\", permission...)"], "holderSpread": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor: { id: \"forge.gate.commit\", effectClass: \"read\", permissions: [\"rea...)"], "secondDescriptor": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor: { id: \"forge.gate.commit\", effectClass: \"read\", permissions: [\"rea...)"], "secondDescriptorLast": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor: COMMITTING, descriptor: { id: \"forge.gate.commit\", effectClass: \"r...)"], "holderUnreadKey": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor: { id: \"forge.gate.commit\", effectClass: \"read\", permissions: [\"rea...)"], "boundHolder": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register(PROVIDER)"], "accessorRewrite": ["unread:accessor"], "registeredProjection": ["unread:id,effectClass,contractSource"], "registeredSpread": ["unread:spread"], "registeredNoId": ["unread:id,effectClass,spread"], "computedOverride": ["unread:id,contractSource"], "nestedComputedOverride": ["unread:id,contractSource"], "importedComputedOverride": ["unread:id,contractSource"], "accessorMember": ["unread:id,contractSource"], "rfIdOnly": ["unread:effectClass,position"], "deepChain": ["unread:id,contractSource"], "numericKey": ["unread:id,contractSource"], "ownLet": ["unread:id,contractSource"], "ownVar": ["unread:id,contractSource"], "ownDestructured": ["unread:id,contractSource"], "ownDeclared": ["unread:id,contractSource"], "ownFunction": ["unread:id,contractSource"], "ownClass": ["unread:id,contractSource"], "ownEnum": ["unread:id,contractSource"], "ownNamespace": ["unread:id,contractSource"], "ownImportEquals": ["unread:id,contractSource"], "ownNamespaceExport": ["unread:id,contractSource"], "namespaceExport": ["unread:id,contractSource"], "ownDefault": ["unread:id,contractSource"], "ownDefaultName": ["unread:id,contractSource"], "starDefault": ["unread:id,contractSource"], "ambiguousStar": ["unread:id,contractSource"], "importEqualsShadow": ["unread:id,contractSource"], "namespaceShadow": ["unread:id,contractSource"]},
+    excepted: {"projection": ["projection"], "wrappedProjection": ["projection"], "notRf": ["not-rf"], "notRfUnreadEffect": ["not-rf"], "readableBase": ["noncommitting:"], "innerExportNotModule": ["not-rf"], "sealedReads": ["not-rf"]},
+    unseen: {"codeInAString": ["not-rf"], "dynamicImport": ["not-rf"], "requireCall": ["not-rf"], "absoluteSpecifier": ["not-rf"], "nonTsModule": ["not-rf"], "replacedFreeze": ["not-rf"], "rewritingCallee": ["not-rf"], "aliasRegistration": [], "rfOutsideFamily": ["not-rf"], "outsideSrc": ["not-rf"], "callRegistration": [], "callbackRegistration": [], "unreadContract": ["not-rf"], "runtimeBase": ["projection"], "spawnedArgv": ["noncommitting:"], "providerBody": ["committing:"]},
+    pages: {"codeInAString": "83fbaf6a15418514", "dynamicImport": "096ebb1826f3fe2c", "requireCall": "c27d5855ffe1f25d", "absoluteSpecifier": "ca09cb6922d46c8a", "nonTsModule": "35d5cce0d4a79a1c", "replacedFreeze": "18e99a38c9b528bb", "rewritingCallee": "6ca48180da611383", "aliasRegistration": "559d701aaa35aa2d", "rfOutsideFamily": "d121dcb1455f6cbf", "outsideSrc": "c831a46b6ec694f4", "callRegistration": "6045d528454cc141", "callbackRegistration": "4480b8db95192f86", "unreadContract": "ce82a9604951a99c", "runtimeBase": "88d0f99e1eb90c50", "spawnedArgv": "27304241c2f69aeb", "providerBody": "de8c5f8aab50243a"},
     constructed: {"read": ["effectClass"], "write": [], "external": [], "unknown": [], "noContract": ["contract"], "stand": [], "spaced": ["effectClass", "idempotency-key", "operation-show"]},
   },
   A2: {
@@ -2051,9 +2400,11 @@ const WITNESS: Readonly<Record<string, JsonValue>> = {
     timeout: {"deadlineMs": 250, "category": "uncertain-effect", "message": "Capability reactivefiber.render.commit has an uncertain external effect: Capability reactivefiber.render.commit exceeded its deadline of 250ms.. Reconcile with the producer before retrying.", "spawns": 1, "argv": ["context", "render", "--model", "m", "--task", "t", "--idempotency-key", "pi-census-cbaa2cbef0260cf9", "--no-input", "--json"], "actedAfterHold": null},
     kill: {"deadlineMs": 30000, "category": "uncertain-effect", "message": "Capability reactivefiber.render.commit has an uncertain external effect: rf ended by signal SIGKILL. Reconcile with the producer before retrying.", "spawns": 1, "argv": ["context", "render", "--model", "m", "--task", "t", "--idempotency-key", "pi-census-cbaa2cbef0260cf9", "--no-input", "--json"], "actedAfterHold": true},
     unknown: {"deadlineMs": 30000, "category": "uncertain-effect", "message": "Capability reactivefiber.render.commit has an uncertain external effect: rf exited 0 with no envelope on stdout. Reconcile with the producer before retrying.", "spawns": 1, "argv": ["context", "render", "--model", "m", "--task", "t", "--idempotency-key", "pi-census-cbaa2cbef0260cf9", "--no-input", "--json"], "actedAfterHold": true},
+    gap: {"timeoutTimer": {"deadlineMs": 250, "category": "uncertain-effect", "message": "Capability reactivefiber.render.commit has an uncertain external effect: Capability reactivefiber.render.commit exceeded its deadline of 250ms.. Reconcile with the producer before retrying.", "spawns": 1, "argv": ["context", "render", "--model", "m", "--task", "t", "--idempotency-key", "pi-census-cbaa2cbef0260cf9", "--no-input", "--json"], "actedAfterHold": null, "armedMs": 600, "settledAtTimer": true}, "settleTimer": {"deadlineMs": 30000, "category": "uncertain-effect", "message": "Capability reactivefiber.render.commit has an uncertain external effect: rf ended by signal SIGKILL. Reconcile with the producer before retrying.", "spawns": 1, "argv": ["context", "render", "--model", "m", "--task", "t", "--idempotency-key", "pi-census-cbaa2cbef0260cf9", "--no-input", "--json"], "actedAfterHold": true, "armedMs": 15000, "settledAtTimer": null}},
   },
   B2: {
     recorded: {"status": "failed", "category": "uncertain-effect", "retryWhileInFlight": false, "spawns": 1, "nodeRows": [{"index": 0, "dispatched": true, "effectClass": "write", "ok": false}, {"index": 0, "dispatched": false, "effectClass": "write", "ok": false}]},
+    retryOther: {"index": 1, "answer": false},
     resumed: {"status": "failed", "category": "uncertain-effect", "namesProducer": true, "namesReconcile": true, "replayedNodeCount": 0, "reconciledNodeCount": 0, "spawns": 0},
   },
   C1: {
@@ -2062,8 +2413,9 @@ const WITNESS: Readonly<Record<string, JsonValue>> = {
     roster: [{"position": 0, "capabilityId": "reactivefiber.render.commit", "effectClass": "write", "producer": "reactivefiber", "state": "pending", "evidenceReads": ["reactivefiber.render.preview"]}],
     evidence: {"operationShow": {"decision": "denied", "policy": "malformed-request"}, "preview": {"decision": "evidence"}},
     srcSpellings: [],
-    control: ["src/leaf/control.ts:literal:rf operation show rfo_x", "src/leaf/control.ts:literal:operation.show", "src/leaf/control.ts:composite:operation show", "src/leaf/control.ts:composite:rf operation show rfo_x", "src/leaf/control.ts:literal:rf operation show ", "src/leaf/control.ts:literal: rf operation show ", "src/leaf/control.ts:literal: then operation.show", "src/leaf/control.ts:composite:operation show!", "src/leaf/control.ts:adjacent@2:operation,show", "src/leaf/control.ts:adjacent@0:operation,show", "src/leaf/control.ts:adjacent@0:operation,show", "src/leaf/control.ts:adjacent@0:OPERATION,Show", "src/leaf/control.ts:adjacent@1:operation,show", "src/leaf/control.ts:adjacent@1:operation,show"],
-    unseen: {"addsLeaf": [], "removesLeaf": []},
+    control: ["src/leaf/control.ts:literal:rf operation show rfo_x", "src/leaf/control.ts:literal:operation.show", "src/leaf/control.ts:composite:operation show", "src/leaf/control.ts:composite:rf operation show rfo_x", "src/leaf/control.ts:literal:rf operation show ", "src/leaf/control.ts:literal: rf operation show ", "src/leaf/control.ts:literal: then operation.show", "src/leaf/control.ts:composite:operation show!", "src/leaf/control.ts:adjacent@2:operation,show", "src/leaf/control.ts:adjacent@0:operation,show", "src/leaf/control.ts:adjacent@0:operation,show", "src/leaf/control.ts:adjacent@0:OPERATION,Show", "src/leaf/control.ts:adjacent@1:operation,show", "src/leaf/control.ts:adjacent@1:operation,show", "src/leaf/control.ts:adjacent@1:operation,show"],
+    unseen: {"addsLeaf": [], "removesLeaf": [], "unreadElements": [], "acrossStatements": [], "methodBuilt": []},
+    pages: {"addsLeaf": "d45c2c5b567f3d81", "removesLeaf": "7daa41e3f82b3b05", "unreadElements": "6296a5b75c4f19ce", "acrossStatements": "5a2a1fce15a9f7a7", "methodBuilt": "5b40e1920f71bf02"},
     rule: {"withoutReader": ["operation-show"], "withReader": []},
   },
   C2: {
@@ -2073,6 +2425,7 @@ const WITNESS: Readonly<Record<string, JsonValue>> = {
     settled: {"determination": "effect-absent", "evidenceClass": "operator-asserted", "settlement": "none"},
     override: {"unaccepted": {"decision": "denied", "policy": "duplicate-risk-unaccepted"}, "accepted": {"decision": "override", "duplicateRisk": "possible-duplicate"}},
     confirmedOnFailed: {"decision": "denied", "policy": "effect-confirmed-without-evidence"},
+    inFlightSettled: {"status": "failed", "aliveAtDecision": true, "decision": "acknowledge", "determination": "effect-absent", "evidenceClass": "operator-asserted", "settlement": "none"},
   },
   D1: {
     sites: [{"fn": "registerReactiveFiberRender", "bytes": 353, "sha256_16": "ee650e97701c3fd4"}, {"fn": "registerNativeReactiveFiberRender", "bytes": 358, "sha256_16": "de887b1d6381f563"}],
@@ -2117,8 +2470,37 @@ describe("wb-jwc.5: the committing rf render posture, pinned while Pi registers 
     for (const judged of ROWS) expect(judged.pins.map((pin) => pin.clause)).toStrictEqual(clausesOf(ACCEPTANCE[judged.acceptance]));
   });
 
-  it("FROZEN SHAPE (standing rule 16): ROWS' ids and pin counts, and WITNESS keyed by exactly the pins", () => {
+  it("FROZEN SHAPE (standing rule 16): ROWS' ids and pin counts, WITNESS keyed by exactly the pins, the NAMED RESIDUALS roster, and the header citing every planted row once", () => {
     expect(ROWS.map((judged) => `${judged.id}:${judged.pins.length}`)).toStrictEqual(["A:2", "B:2", "C:2", "D:4"]);
     expect(Object.keys(WITNESS)).toStrictEqual(ROWS.flatMap((judged) => judged.pins.map((pin) => pin.id)));
+    const roster = Object.entries(RESIDUALS).map(([family, rows]) => `${family}:${rows.join(",")}`);
+    expect(roster).toStrictEqual([
+      "R-CODE-IN-STRING:codeInAString",
+      "R-UNFOLLOWED-MODULE:dynamicImport,requireCall,absoluteSpecifier",
+      "R-OUTSIDE-TREE:nonTsModule,outsideSrc",
+      "R-REPLACED-GLOBAL:replacedFreeze",
+      "R-REWRITING-CALLEE:rewritingCallee",
+      "R-UNSPELLED-CALLEE:aliasRegistration,callRegistration,callbackRegistration",
+      "R-OUTSIDE-FAMILY:rfOutsideFamily",
+      "R-UNREAD-CONTRACT:unreadContract",
+      "R-PROJECTION-BASE:runtimeBase",
+      "R-PROVIDER-BODY:spawnedArgv,providerBody",
+      "R-LEAF-REWRITE:addsLeaf,removesLeaf",
+      "R-LEAF-UNREAD-ELEMENT:unreadElements",
+      "R-LEAF-ACROSS-STATEMENTS:acrossStatements",
+      "R-LEAF-METHOD:methodBuilt",
+      "R-TIMER-GAP:timeoutTimer,settleTimer",
+      "R-RETRY-BY-DESIGN:retryOther",
+      "R-IN-FLIGHT-SETTLED:inFlightSettled",
+    ]);
+    // The header's RESIDUALS paragraph is the roster (cut #4): every family in order, each with exactly its rows.
+    const header = headerText();
+    expect([...header.matchAll(/\b(R-[A-Z-]+) \[rows: ([^\]]+)\]/g)].map((match) => `${match[1]}:${match[2].split(/,\s*/).join(",")}`)).toStrictEqual(roster);
+    // The pages: every residual row is a planted page of A1 or C1, an R-TIMER-GAP arm, B2's retryOther or C2's inFlightSettled.
+    const pages = [...Object.keys(PLANTED_UNSEEN), ...Object.keys(LEAF_UNSEEN), ...Object.keys(TIMER_GAP), "retryOther", "inFlightSettled"];
+    expect(Object.values(RESIDUALS).flat().sort()).toStrictEqual([...pages].sort());
+    // THE PINNED SET: the header cites every planted row exactly once, and nothing else.
+    const cited = [...header.matchAll(/\[rows: ([^\]]+)\]/g)].flatMap((match) => match[1].split(/,\s*/));
+    expect([...cited].sort()).toStrictEqual([...Object.keys(PLANTED_FORMS), ...Object.keys(PLANTED_REFUSED), ...Object.keys(PLANTED_EXCEPTED), ...pages].sort());
   });
 });
