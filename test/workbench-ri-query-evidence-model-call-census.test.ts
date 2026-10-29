@@ -7,17 +7,24 @@
  * SDK." Acceptance (owner filing, verbatim, read from the tracked bead export; the labels of rows A and B joined by one space are
  * this clause word for word): "adoption-time falsifier that an UNKNOWN->TRUE flip alone produces zero model calls and that a
  * model request receipt retains the QueryView source witness as typed provenance". Row C's label is the title's gate clause.
- * CLAIMED: that clause, as an until-then falsifier: the falsifier is built, proven live against mutant compositions and run over
- * Pi's session as it stands; the gate (row C) reads CLOSED, and the first Pi module that names either SDK flips it and reds
- * this census until the adopting cut brings its own composition and receipt under rows A and B.
+ * CLAIMED (cut #2, to the measured scope): that clause as an until-then falsifier. falsify(composition, source) presents the
+ * evidence source it is handed (provider, type, event kind, title and nodes per arm; the census's own source by default) and
+ * refuses every pinned mutant composition: the seven mutants over the census source, and five compositions each keyed on one
+ * attribute of a query-shaped source (its provider, type, kind or title, or a call from its third flip on) when that source is
+ * handed in. It runs over Pi's session as it stands on both sources (0 calls). The gate (row C) reads CLOSED; a Pi code module,
+ * or package.json, that spells a subject within the READINGS flips it and reds this census until the adopting cut hands
+ * falsify() its own composition and its own evidence source, and witnessViolations() its receipt. The falsifier refuses what it
+ * presents and nothing else: a composition keyed on evidence it is not handed (R-SOURCE-KEYED) or on more flips than the source
+ * presents (R-FLIP-COUNT) reads quiet, each a named residual with a pinned quiet row.
  * NOT CLAIMED (ROSTER.unclaimed): the title's last clause (no query engine is expected inside the inference SDK: a producer-side
  * duty the producer states at execution.py:437, "no query engine enters this package"; Pi expects nothing of the SDK while it
- * composes nothing); the producer's own INF-RQ1..INF-RQ5 tests (C2 reads their gate state, never re-runs them); wb-km7q.7's
- * (R19) standing posture - whether any Pi model-call site is reachable from an evidence path beyond the projection module, and
- * the opt-in checklist.
+ * composes nothing); the title's two armed duties on an actual composition and receipt (they bind when C1 reads PRESENT); the
+ * producer's own INF-RQ1..INF-RQ5 tests (C2 reads their gate state, never re-runs them); wb-km7q.7's (R19) standing posture -
+ * whether any Pi model-call site is reachable from an evidence path beyond the projection module, and the opt-in checklist.
  *
- * THE PRODUCER AT THE PINS (the roster's `producer` block; measured read-only with git show by the cutting seat on 2026-10-28 in
- * the local ReactiveInferenceSDK checkout, no fetch; this census is hermetic and never re-reads it): the charter
+ * THE PRODUCER AT THE PINS (the roster's `producer` block; measured read-only with git show in the local ReactiveInferenceSDK
+ * checkout by the cut #1 seat on 2026-10-28 and re-verified by the cut #2 seat on 2026-10-29, no fetch, every vendored line and
+ * blob equal; this census is hermetic and never re-reads it): the charter
  * docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md is one blob (6252a3f6ffcc) at the bead pin
  * 52c9271ed485 and at the checkout's origin/master e361471d0b5c (2026-10-28T08:15:07Z). The roster vendors its lines :3 (the
  * status line, "design only"), :35 (query recomputation or a change from UNKNOWN to TRUE never directly calls a model), :37
@@ -29,13 +36,17 @@
  * line end).
  * THE GATE: producerGateOf reads PASSED only when the status line no longer carries "design only" and the acceptance line still
  * names every gate the title's range INF-RQ1..INF-RQ5 expands to (a missing line fails closed); the Pi seam (C1) reads PRESENT
- * once a Pi code module or a package.json dependency names either SDK. gateOf is CLOSED while the seam reads ABSENT;
+ * once a git-listed JS/TS module below the code roots or at the root, or package.json (the names and specs of its four
+ * dependency fields, and its whole text), spells a subject within the READINGS. gateOf is CLOSED while the seam reads ABSENT;
  * ADOPTED-BEFORE-GATE when it reads PRESENT under a NOT-PASSED producer and ADOPTED-FALSIFIER-OWED under a PASSED one, both red
- * here: the adoption is the FLIP of this freeze-and-flip, and the adopting cut re-measures this census with its composition
- * handed to falsify() and its receipt to witnessViolations().
+ * here: the adoption is the FLIP of this freeze-and-flip, and the adopting cut re-measures this census with its composition and
+ * its evidence source handed to falsify() and its receipt to witnessViolations().
  *
  * READINGS
- * - WORDS: NFKC, a break at each lower-to-upper case change and before the last capital of a capital run, lower case, the runs
+ * - SPELLING: every text is read as written and with its escapes decoded (JS \u{X}, \uXXXX and \xXX; a control escape as a
+ *   space and any other escaped character as itself; HTML numeric character references; URL percent escapes), each in its
+ *   visible spelling: format and default-ignorable characters removed, then NFKC, so an invisible never splits a name.
+ * - WORDS: a break at each lower-to-upper case change and before the last capital of a capital run, lower case, the runs
  *   of a-z and 0-9 (ReactiveQuerySDK reads reactive query sdk; reactive_inference reads reactive inference).
  * - SUBJECTS (never a literal here: vocabularyOf derives them from the bead title): the title's CamelCase names
  *   (ReactiveQuerySDK, ReactiveInferenceSDK, QueryView) cut into words; the subject words are what one SDK-suffixed name spells
@@ -45,66 +56,97 @@
  *   answers query(), and "type inference" is prose.
  * - SEGMENTS: two words are adjacent only inside one run of letters, digits, white space, "_", "-", "." and "/" (prose, a name,
  *   a path, a package name); any other character ends the run, so claude-host.ts's `config.query ?? sdkQuery` (measured at the
- *   first red: it read "query sdk" across the operator) reads nothing, while "the reactive query engine" and
+ *   first red of cut #1: it read "query sdk" across the operator) reads nothing, while "the reactive query engine" and
  *   "@acme/reactive-query" do. A pair split across a line break is read at its first line, the next line's leading comment
- *   marker (//, *, #) dropped.
+ *   marker (//, /*, *, #) dropped.
  * - THE FLIP (the house analog: Pi holds no QueryView): Pi's real ObservationProjection defaults an observed node it has no
  *   presentation for to statusText "UNKNOWN" and statusTone "unknown" (observation.ts ingest); the flip is the same source read
- *   back as statusText "TRUE", statusTone "success", on two arms (a refresh snapshot with coverage complete; an ingest event),
- *   and the recomputation is the same source read again at the next sequence with the same answer.
- * - THE FALSIFIER: falsify(composition) builds a live session - the real projection, the real Claude workflow host
+ *   back as statusText "TRUE", statusTone "success", on two arms per node (a refresh snapshot with coverage complete; an ingest
+ *   event), and the recomputation is the same source read again at the next sequence with the same answer.
+ * - THE FALSIFIER: falsify(composition, source) builds a live session - the real projection, the real Claude workflow host
  *   (createClaudeWorkflowHost) on a counting ClaudeQuery (the host's one model seam) and Pi's real runWorkflow for explicit
- *   demand - lets the composition attach to the session (it may wrap the projection) and hands it every evidence step as it
- *   lands. It reads the count from before each step lands to when its handler settles, after
- *   a SETTLE_MS real-time settle and again after it releases readOver and settles once more; a violation is any call counted
- *   inside the window: `call-on:<arm>:<step>` for a handler's own call, `deferred:<n>` for calls landing before the read.
+ *   demand - lets the composition attach to the session (it may wrap the projection) and hands it every evidence step of the
+ *   source's arms as it lands. A step's window runs from before the step lands until its handler settles and a DRAIN_TURNS
+ *   microtask drain completes (no timer runs inside a drain): a call the step's landing or its handler makes, awaits or chains
+ *   through fewer microtask turns is counted there, `call-on:<arm>:<step>` (a longer chain lands in a later window, still a
+ *   violation). Calls landing after the last window and before the read (a SETTLE_MS real-time settle) are `deferred:<n>`;
+ *   calls after the read are counted as late after it releases readOver and settles once more (R-LATE).
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label; each pin's phrases tile its row's label, and
  * every witness is held to the roster):
  *  A "adoption-time falsifier that an UNKNOWN->TRUE flip alone produces zero model calls": A1 the falsifier fails each mutant
- *    composition (a demand on the flip, a direct call on the recomputation, a call deferred inside the settle, a projection whose
- *    refresh is wrapped to call on the flip, a call resolving the UNKNOWN reading) and its pinned quiet rows (read-only, R-LATE, R-OTHER-SEAM); A2 the flip on both arms through Pi's real
- *    projection (every step's return code and its before and after readings) and its isolation: the projection module's
- *    value-import closure reaches no model-call module and no model package, the model-call modules of src are an exact set
- *    (the falsifier's own host module among them) and the closure reader's controls; A3 Pi's session as it stands (no
- *    composition: C1 reads ABSENT) reads 0 calls on both arms, the counter is live (one explicit demand afterwards counts exactly
- *    one call carrying its prompt) and R-EXPLICIT's quiet row.
+ *    composition over the census source (a demand on the flip, a direct call on the recomputation, a call deferred inside the
+ *    settle, a projection whose refresh or ingest is wrapped to call on the flip, a call chained through a microtask on the
+ *    flip, a call resolving the UNKNOWN reading) and each composition keyed on one attribute of the query-shaped source when it
+ *    is handed in (provider, type, kind, title; a call from the third flip on), with its pinned quiet rows (read-only, R-LATE,
+ *    R-OTHER-SEAM, R-SOURCE-KEYED: the four keyed compositions over the census source, R-FLIP-COUNT: the third-flip composition
+ *    over two flips); A2 the flip on both arms through Pi's real projection (every step's return code and its before and after
+ *    readings), the four flips of the query-shaped source, and the projection's isolation: its value-import closure (every
+ *    static value form; a loader with no literal specifier fails it closed) reaches no model-call module and no model package
+ *    at any subpath, and the src modules that name a listed model-call entry by value in a static form are an exact set (the
+ *    falsifier's own host module among them), with the closure and entry readers' controls and the quiet rows R-OBSERVER-PATH,
+ *    R-OTHER-ENTRY, R-RELAYED and R-COMPUTED-SPECIFIER; A3 Pi's session as it stands (no composition: C1 reads ABSENT) reads 0
+ *    calls on every arm of both sources, the counter is live (one explicit demand afterwards counts exactly one call carrying its
+ *    prompt) and R-EXPLICIT's quiet row.
  *  B "and that a model request receipt retains the QueryView source witness as typed provenance": B1 Pi's existing model request
- *    identifier and receipt (ClaudeCallIdentity, WorkflowSpawnRequest, WorkflowSpawnResult, WorkflowJournalEntry, read from src by
- *    the TypeScript AST, and the keys the demand's call, settled result and journal row carry at run time) name no witness
- *    member today (NO-WITNESS-SEAM); the journal row's basis is the host's replay basis (the nearest Pi analog of a model context
- *    basis: the host's own configuration as a JSON array); with its controls and R-OTHER-RECORD's quiet row; B2 witnessViolations, typed by the
- *    producer's own SourceWitness lines, accepts a retained witness and refuses each hollowing (dropped, null, stringified,
- *    folded into text, an array, a renamed, retyped, changed, missing or extra field), with R-SAME-VALUE's quiet row.
+ *    identifier and receipt (ClaudeCallIdentity, WorkflowSpawnRequest, WorkflowSpawnResult, WorkflowJournalEntry, read through
+ *    the TypeScript checker with tsconfig.json's module settings: every own, inherited, merged and computed-literal member) and the keys
+ *    the demand's call, settled result and journal row carry at run time name no witness member today (NO-WITNESS-SEAM); the
+ *    journal row's basis is the host's replay basis (the nearest Pi analog of a model context basis: the host's own
+ *    configuration as a JSON array); with its controls (the member vocabulary, and a witness carried through an extends clause,
+ *    a merged declaration before or after, a computed key, an imported base and an intersection, each read) and
+ *    R-OTHER-RECORD's quiet row; B2 witnessViolations, typed by the producer's own SourceWitness lines, accepts a retained
+ *    witness and refuses each hollowing (dropped, null, stringified, folded into text, an array, a renamed, retyped, changed,
+ *    missing or extra field, a fractional, NaN, unsafe or string epoch, a boolean generation, a nested wrap, a nulled digest, an
+ *    all-null witness, an alias member, upper-case keys, an empty trace), with R-SAME-VALUE's quiet row.
  *  C "If Pi ever composes ReactiveQuerySDK evidence with ReactiveInferenceSDK-mediated execution (gated INF-RQ1..INF-RQ5)": C1 the
  *    Pi seam reads ABSENT (every git-listed JS/TS module, tracked or untracked and never ignored, below src/, qa/ and examples/ and
- *    at the root, read line by line and across each line break, and package.json's four dependency fields), the reader's plants
- *    read PRESENT, its quiet rows (R-OUTSIDE-ROOTS, R-COMPOSED, R-LOOKALIKE, R-RF-INTERNAL) stay quiet and the role places read in
- *    their role (each title name, producer lines :35 and :37); C2 the producer facts (every vendored line's sha256, the title's
- *    range expanded to the five ids the acceptance line names, the status line's "design only"), producerGateOf NOT-PASSED, gateOf
- *    CLOSED and the gate's near misses.
- * OUTSIDE ANCHORS (the judged-set case): wb-km7q.8's row of the tracked bead export (.beads/issues.jsonl; the first notes line
- *   opening "Citations: ", so appended notes never move it): the rows' labels joined in order equal its Acceptance clause followed
- *   by its title's gate clause (the title from its tag to its first ", "), each label is its pins' phrases joined, its cited
- *   lines (:35, :37, :39 at 52c9271ed485) are vendored in the roster at that pin, the line it cites for the acceptance gates names
- *   exactly the ids of the title's range, and its title spells the subjects (vocabularyOf) and the range (gateIdsOf). The producer's own
- *   lines type the witness check (B2) and anchor the role places (C1); src anchors B1's member lists and A2's model-call modules.
+ *    at the root, read line by line and across each line break in the SPELLING; and package.json: its four dependency fields'
+ *    names and specs and its whole text), the reader's plants read PRESENT (among them a dependency spec as an npm alias, a file
+ *    tarball and a git spec, the escaped, invisible-split, comment-continued, entity and percent spellings), its quiet rows
+ *    (R-OUTSIDE-ROOTS, R-COMPOSED, R-LOOKALIKE, R-RF-INTERNAL, R-SEPARATOR, R-ENCODED) stay quiet and the role places read in
+ *    their role (each title name, producer lines :35 and :37); C2 the producer facts (every vendored line's text against its
+ *    recorded sha256, the title's range expanded to the five ids the acceptance line names, the status line's "design only"),
+ *    producerGateOf NOT-PASSED, gateOf CLOSED and the gate's near misses.
+ * OUTSIDE ANCHORS. The judged-set case reads wb-km7q.8's row of the tracked bead export (.beads/issues.jsonl; the first notes
+ *   line opening "Citations: ", so appended notes never move it): the rows' labels joined in order equal its Acceptance clause
+ *   followed by its title's gate clause (the title from its tag to its first ", "); each label is its pins' phrases joined; the
+ *   title's gate range "(gated INF-RQ1..INF-RQ5)" is exactly one pin's phrase; its cited lines (:35, :37, :39 at 52c9271ed485)
+ *   are vendored in the roster at that pin; the line it cites for the acceptance gates names exactly the ids of the title's
+ *   range; and its title spells the subjects (vocabularyOf) and the range (gateIdsOf). The records case holds pin witnesses to a
+ *   source outside their runners and the roster: the gate pin (whose phrase is the title's range) carries the title's ids and
+ *   the citation's pins, C1 the title's vocabulary, B2 the producer's typed fields, B1 the records as the checker reads src, A2
+ *   the projection closure and the model-call modules as src reads; A1 and A3 are anchored to Pi's live session (the real
+ *   projection, host and runtime), not to a record outside it. The producer's own lines type the witness check (B2) and anchor
+ *   the role places (C1). The vendored lines' sha256 values are an integrity record that a reader re-verifies against the
+ *   producer with git show; inside this hermetic census they hold each vendored text to its recorded hash and are no outside
+ *   anchor.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, the rows, the residuals and every pin's witness
  *   are held to the out-of-file roster (test/fixtures/ri-query-evidence-model-call-roster.json), and the last case reads that every
  *   pin ran once to its witness and that every named residual has its quiet row in a pin's witness.
- * RESIDUALS (named; each has a pinned quiet row): R-LATE (A1) a call deferred past the settle lands after the read; R-OTHER-SEAM
- *   (A1) a model call through another seam (the SDK called directly, Pi's Agent tool session in agent-runner.ts, the mention clone)
- *   is not counted; R-OBSERVER-PATH (A2) the closure covers the projection module, so an observer that couples a flip to a model
- *   call before it hands evidence to the projection is not read (wb-km7q.7's reachability); R-EXPLICIT (A3) an explicit demand
- *   carrying the flipped answer as conditioning data (charter :35) is demand, never a flip's call; R-OTHER-RECORD (B1) a witness
- *   member on a record other than the four is not read; R-SAME-VALUE (B2) the check judges value and type against the witness
- *   handed in, so a copy with equal fields passes; R-OUTSIDE-ROOTS (C1) docs, test/, vendor/, .beads/ and every non-JS/TS file
- *   (this census and its roster spell every subject) are not read; R-COMPOSED (C1) a subject assembled from parts that split its
- *   words; R-LOOKALIKE (C1) a look-alike letter NFKC does not fold; R-RF-INTERNAL (C1) rf's own composition (its sdk_versions names
- *   reactive_inference) read by a module that never spells it.
+ * RESIDUALS (named; each has a pinned quiet row in the pin named): R-LATE (A1) a call deferred past the settle lands after the
+ *   read; R-OTHER-SEAM (A1) a model call through another seam (the SDK called directly, Pi's Agent tool session in
+ *   agent-runner.ts, the mention clone) is not counted; R-SOURCE-KEYED (A1) a composition keyed on evidence falsify() is not
+ *   handed (another provider, type, kind or title; the scope, node ids, stamps or sequences, which no source supplies) is never
+ *   presented that evidence; R-FLIP-COUNT (A1) a composition that calls only past the 2 x nodes flips the source presents;
+ *   R-OBSERVER-PATH (A2) the closure covers the projection module, so an observer that couples a flip to a model call before it
+ *   hands evidence to the projection is not read (wb-km7q.7's reachability); R-OTHER-ENTRY (A2) an export of a model package
+ *   that MODEL_CALL_ENTRIES does not list (pi-coding-agent's compact or generateSummary, pi-ai's provider streams, the SDK's
+ *   bridge sessions); R-RELAYED (A2) a module that reaches an entry through a local module (a barrel's consumer, a wrapper's
+ *   caller) is not itself in the set, the barrel or wrapper is; R-COMPUTED-SPECIFIER (A2) a src module outside the projection
+ *   closure that loads a package through a computed specifier; R-EXPLICIT (A3) an explicit demand carrying the flipped answer as
+ *   conditioning data (charter :35) is demand, never a flip's call; R-OTHER-RECORD (B1) a witness member on a record other than
+ *   the four is not read; R-SAME-VALUE (B2) the check judges value and type against the witness handed in, so a copy with equal
+ *   fields passes; R-OUTSIDE-ROOTS (C1) docs, test/, vendor/, .beads/ and every non-JS/TS file but package.json (this census and
+ *   its roster spell every subject) are not read; R-COMPOSED (C1) a subject assembled from parts that split its words;
+ *   R-LOOKALIKE (C1) a look-alike letter NFKC does not fold; R-RF-INTERNAL (C1) rf's own composition (its sdk_versions names
+ *   reactive_inference) read by a module that never spells it; R-SEPARATOR (C1) a subject whose words a character outside the
+ *   SEGMENTS set joins (`reactive:query`); R-ENCODED (C1) a subject spelled through an encoding the SPELLING does not decode
+ *   (base64, a byte array, rot13).
  *
  * Display paths added: none. Test-only: no src file is edited, no scratch is allocated (the projection, the host and the counting
- * query live in memory; the host's cwd is the repository root, which it only checks), and every stand-in lives in this file.
+ * query live in memory; the host's cwd is the repository root, which it only checks; the checker's plant programs are in
+ * memory), and every stand-in lives in this file.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -206,6 +248,13 @@ const RESIDUALS = [
   "R-COMPOSED",
   "R-LOOKALIKE",
   "R-RF-INTERNAL",
+  "R-SOURCE-KEYED",
+  "R-FLIP-COUNT",
+  "R-OTHER-ENTRY",
+  "R-RELAYED",
+  "R-COMPUTED-SPECIFIER",
+  "R-SEPARATOR",
+  "R-ENCODED",
 ];
 /** The bounded real-time settle every falsifier read waits for (no fake clock). */
 const SETTLE_MS = 150;
@@ -250,6 +299,15 @@ function acceptanceLineOf(citation: string): number | undefined {
 /** Every `:<line>@<12 hex>` pin the citation line names, in order. */
 function citedLinesOf(citation: string): { line: number; pin: string }[] {
   return [...citation.matchAll(/:(\d+)@([0-9a-f]{12})\b/g)].map(match => ({ line: Number(match[1]), pin: match[2] }));
+}
+/** The title's gate range, `(gated X1..Xn)`, as it is spelled. */
+function gatedPhraseOf(title: string): string | undefined {
+  return /\(gated [^)]*\)/.exec(title)?.[0];
+}
+/** The gate ids a charter line names, in order, under the range's prefix. */
+function namedIdsOf(line: string, ids: readonly string[]): string[] {
+  const prefix = (ids[0] ?? "").replace(/\d+$/, "");
+  return prefix === "" ? [] : [...line.matchAll(new RegExp(`\\b${prefix}\\d+\\b`, "g"))].map(match => match[0]);
 }
 /** The gate ids the title's `(gated X1..Xn)` range expands to. */
 function gateIdsOf(title: string): string[] {
@@ -313,22 +371,50 @@ function subjectsIn(words: readonly string[], vocabulary: readonly SubjectPair[]
  * it, so `config.query ?? sdkQuery` reads no "query sdk" while "the reactive query engine" and "@acme/reactive-query" do.
  */
 function readSubjects(text: string, vocabulary: readonly SubjectPair[]): string[] {
-  const segments = text.normalize("NFKC").split(/[^\p{L}\p{N}\s_./-]+/u);
+  const segments = visibleOf(text).split(/[^\p{L}\p{N}\s_./-]+/u);
   return [...new Set(segments.flatMap(segment => subjectsIn(wordsOf(segment), vocabulary)))].sort();
 }
+/** The visible spelling: format and default-ignorable characters removed, then NFKC (an invisible never splits a name). */
+function visibleOf(text: string): string {
+  return text.replace(/[\p{Cf}\p{Default_Ignorable_Code_Point}]/gu, "").normalize("NFKC");
+}
+function codePointOf(value: number): string {
+  return value <= 0x10ffff ? String.fromCodePoint(value) : "";
+}
+/**
+ * A text with its escapes decoded: JS escapes (\u{X}, \uXXXX, \xXX, a control escape read as a space, any other escaped
+ * character as itself), HTML numeric character references and URL percent escapes. R-ENCODED names the encodings left.
+ */
+function decodedOf(text: string): string {
+  return text
+    .replace(/\\(?:u\{([0-9a-fA-F]{1,6})\}|u([0-9a-fA-F]{4})|x([0-9a-fA-F]{2})|([\s\S]))/g, (_whole, brace?: string, four?: string, two?: string, other?: string) => {
+      const hex = brace ?? four ?? two;
+      if (hex !== undefined) return codePointOf(Number.parseInt(hex, 16));
+      return other !== undefined && "bfnrtv0".includes(other) ? " " : (other ?? "");
+    })
+    .replace(/&#(?:[xX]([0-9a-fA-F]{1,6})|(\d{1,7}));/g, (_whole, hex?: string, decimal?: string) => codePointOf(hex !== undefined ? Number.parseInt(hex, 16) : Number(decimal)))
+    .replace(/%([0-9a-fA-F]{2})/g, (_whole, two: string) => String.fromCharCode(Number.parseInt(two, 16)));
+}
+/** The subjects a text names as written or with its escapes decoded. */
+function textSubjects(text: string, vocabulary: readonly SubjectPair[]): string[] {
+  const raw = readSubjects(text, vocabulary);
+  const decoded = decodedOf(text);
+  return decoded === text ? raw : [...new Set([...raw, ...readSubjects(decoded, vocabulary)])].sort();
+}
 /** A line's leading comment marker (`//`, `*`, `#`), dropped where a pair is read across a line break. */
-const COMMENT_LEAD = /^\s*(?:\/\/+|\*+|#+)\s?/;
+const COMMENT_LEAD = /^\s*(?:\/\/+|\/\*+|\*+|#+)\s?/;
 /** `<path>:<line> <subject>` for each line naming a subject, and for a pair split across a line break (read at its first line). */
 function findingsOf(path: string, text: string, vocabulary: readonly SubjectPair[]): string[] {
   const lines = text.split(/\r?\n/);
+  const subjects = lines.map(line => textSubjects(line, vocabulary));
   const findings: string[] = [];
   lines.forEach((line, index) => {
-    const here = readSubjects(line, vocabulary);
+    const here = subjects[index];
     const next = index + 1 < lines.length ? lines[index + 1] : undefined;
     const split =
       next === undefined
         ? []
-        : readSubjects(`${line} ${next.replace(COMMENT_LEAD, "")}`, vocabulary).filter(subject => !here.includes(subject) && !readSubjects(next, vocabulary).includes(subject));
+        : textSubjects(`${line} ${next.replace(COMMENT_LEAD, "")}`, vocabulary).filter(subject => !here.includes(subject) && !subjects[index + 1].includes(subject));
     for (const subject of [...new Set([...here, ...split])].sort()) findings.push(`${path}:${index + 1} ${subject}`);
   });
   return findings;
@@ -354,8 +440,9 @@ function manifestFindings(manifest: { [key: string]: Json }, vocabulary: readonl
   for (const field of DEPENDENCY_FIELDS) {
     const entries = manifest[field];
     if (entries === null || typeof entries !== "object" || Array.isArray(entries)) continue;
-    for (const name of Object.keys(entries).sort()) {
-      for (const subject of readSubjects(name, vocabulary)) findings.push(`package.json:${field}:${name} ${subject}`);
+    for (const [name, spec] of Object.entries(entries).sort(([left], [right]) => left.localeCompare(right))) {
+      for (const subject of textSubjects(name, vocabulary)) findings.push(`package.json:${field}:${name} ${subject}`);
+      if (typeof spec === "string") for (const subject of textSubjects(spec, vocabulary)) findings.push(`package.json:${field}:${name}:spec ${subject}`);
     }
   }
   return findings;
@@ -373,8 +460,11 @@ function liveSeam(): SeamReading {
 function seamReading(vocabulary: readonly SubjectPair[]): SeamReading {
   const modules = listedCode();
   const code = modules.flatMap(path => findingsOf(path, readFileSync(join(REPO, path), "utf8"), vocabulary));
-  const manifest = JSON.parse(readFileSync(join(REPO, "package.json"), "utf8")) as { [key: string]: Json };
-  return { modules: modules.length, findings: [...code, ...manifestFindings(manifest, vocabulary)] };
+  const manifestText = readFileSync(join(REPO, "package.json"), "utf8");
+  const manifest = JSON.parse(manifestText) as { [key: string]: Json };
+  // The whole manifest text too (overrides, bundled names, scripts), beside its four dependency fields' names and specs.
+  const whole = findingsOf("package.json", manifestText, vocabulary);
+  return { modules: modules.length, findings: [...code, ...manifestFindings(manifest, vocabulary), ...whole] };
 }
 
 /* ----------------------------------------------------------------------------------------------------------------------- *
@@ -405,11 +495,33 @@ function gateOf(producer: ProducerGate, seam: readonly string[]): Gate {
  * Module closure and model-call modules (A2)
  * ----------------------------------------------------------------------------------------------------------------------- */
 
-/** The model-call entry points of Pi's dependencies: a value import of one of these names, a namespace or a dynamic import. */
+/**
+ * The model packages Pi depends on and the model-call entries this census lists for each (R-OTHER-ENTRY: any other export
+ * that reaches a model is not listed): the Claude Agent SDK's query, pi-coding-agent's session factories and session
+ * classes, pi-ai's complete and stream calls. A package is read at any subpath.
+ */
 const MODEL_CALL_ENTRIES: Readonly<Record<string, readonly string[]>> = {
   "@anthropic-ai/claude-agent-sdk": ["query"],
-  "@earendil-works/pi-coding-agent": ["createAgentSession"],
+  "@earendil-works/pi-ai": ["complete", "completeSimple", "stream", "streamSimple"],
+  "@earendil-works/pi-coding-agent": ["AgentSession", "AgentSessionRuntime", "createAgentSession", "createAgentSessionFromServices", "createAgentSessionRuntime"],
 };
+/** Names that reach a loader with no literal specifier: the projection closure fails closed on any of them. */
+const OPAQUE_LOADERS = ["createRequire", "getBuiltinModule"];
+/** A bare specifier's package (`@scope/name` or `name`); a node: builtin is itself. */
+function packageOf(specifier: string): string {
+  if (specifier.startsWith("node:")) return specifier;
+  return specifier
+    .split("/")
+    .slice(0, specifier.startsWith("@") ? 2 : 1)
+    .join("/");
+}
+/** A resolution call (`import.meta.resolve`, `require.resolve`, a created require's `resolve`): it reads a path and loads nothing. */
+function isResolution(call: ts.CallExpression): boolean {
+  return ts.isPropertyAccessExpression(call.expression) && call.expression.name.text === "resolve";
+}
+function isModelPackage(specifier: string): boolean {
+  return !specifier.startsWith(".") && Object.hasOwn(MODEL_CALL_ENTRIES, packageOf(specifier));
+}
 const PROJECTION_MODULE = "src/workbench/observation.ts";
 const HOST_MODULE = "src/workbench/claude-host.ts";
 type ReadModule = (path: string) => string | undefined;
@@ -417,24 +529,38 @@ type ReadModule = (path: string) => string | undefined;
 function sourceOf(path: string, text: string): ts.SourceFile {
   return ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true);
 }
-/** Every value specifier a module reaches: imports and re-exports that are not type-only, dynamic imports and require calls. */
-function valueSpecifiers(path: string, text: string): string[] {
+interface ModuleReads {
+  /** Every value specifier: imports and re-exports that are not type-only, import-equals, a loader call with a literal, any call naming a model package. */
+  readonly specifiers: readonly string[];
+  /** Every loader reached with no literal specifier (import(id), require(id), a require that is not called, createRequire, getBuiltinModule). */
+  readonly opaque: readonly string[];
+}
+function moduleReadsOf(path: string, text: string): ModuleReads {
   const specifiers: string[] = [];
+  const opaque = new Set<string>();
   const visit = (node: ts.Node): void => {
     if (ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier) && node.importClause?.isTypeOnly !== true) {
       specifiers.push(node.moduleSpecifier.text);
     } else if (ts.isExportDeclaration(node) && node.moduleSpecifier !== undefined && ts.isStringLiteral(node.moduleSpecifier) && !node.isTypeOnly) {
       specifiers.push(node.moduleSpecifier.text);
+    } else if (ts.isImportEqualsDeclaration(node) && !node.isTypeOnly && ts.isExternalModuleReference(node.moduleReference) && ts.isStringLiteral(node.moduleReference.expression)) {
+      specifiers.push(node.moduleReference.expression.text);
     } else if (ts.isCallExpression(node)) {
       const callee = node.expression;
       const first = node.arguments[0];
       const loader = callee.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(callee) && callee.text === "require");
-      if (loader && first !== undefined && ts.isStringLiteralLike(first)) specifiers.push(first.text);
+      if (first !== undefined && ts.isStringLiteralLike(first)) {
+        if (loader || (isModelPackage(first.text) && !isResolution(node))) specifiers.push(first.text);
+      } else if (loader) opaque.add(callee.kind === ts.SyntaxKind.ImportKeyword ? "import()" : "require()");
+    } else if (ts.isIdentifier(node) && OPAQUE_LOADERS.includes(node.text)) {
+      opaque.add(node.text);
+    } else if (ts.isIdentifier(node) && node.text === "require" && !(ts.isCallExpression(node.parent) && node.parent.expression === node)) {
+      opaque.add("require");
     }
     ts.forEachChild(node, visit);
   };
   visit(sourceOf(path, text));
-  return specifiers;
+  return { specifiers, opaque: [...opaque].sort() };
 }
 function resolveRelative(from: string, specifier: string): string {
   const joined = posix.normalize(posix.join(posix.dirname(from), specifier));
@@ -444,11 +570,14 @@ interface Closure {
   readonly modules: readonly string[];
   readonly packages: readonly string[];
   readonly unread: readonly string[];
+  /** `<module> <loader>` for every loader the closure reaches with no literal specifier: the closure fails closed. */
+  readonly opaque: readonly string[];
 }
 function closureOf(entry: string, read: ReadModule): Closure {
   const modules = new Set<string>();
   const packages = new Set<string>();
   const unread = new Set<string>();
+  const opaque = new Set<string>();
   const queue = [entry];
   while (queue.length > 0) {
     const path = queue.shift() ?? "";
@@ -459,32 +588,49 @@ function closureOf(entry: string, read: ReadModule): Closure {
       continue;
     }
     modules.add(path);
-    for (const specifier of valueSpecifiers(path, text)) {
+    const reads = moduleReadsOf(path, text);
+    for (const specifier of reads.specifiers) {
       if (specifier.startsWith(".")) queue.push(resolveRelative(path, specifier));
-      else packages.add(specifier.startsWith("node:") ? specifier : specifier.split("/").slice(0, specifier.startsWith("@") ? 2 : 1).join("/"));
+      else packages.add(packageOf(specifier));
     }
+    for (const loader of reads.opaque) opaque.add(`${path} ${loader}`);
   }
-  return { modules: [...modules].sort(), packages: [...packages].sort(), unread: [...unread].sort() };
+  return { modules: [...modules].sort(), packages: [...packages].sort(), unread: [...unread].sort(), opaque: [...opaque].sort() };
 }
-/** The model-call entries one module imports by value: `<package>:<name>`, `<package>:*` for a namespace or a dynamic import. */
+/**
+ * The model-call entries one module names by value, in every static form: `<package>:<name>` for a named import or
+ * re-export of a listed entry; `<package>:*` for a default or namespace import, `export *` (plain or `as`), import-equals,
+ * or any call whose literal argument names a model package (import(), require(), a created require; a resolution call such as
+ * import.meta.resolve loads nothing and is not read). A package is read at any
+ * subpath. R-RELAYED (a module reaching an entry through a local module), R-COMPUTED-SPECIFIER (a computed specifier) and
+ * R-OTHER-ENTRY (an export the list does not name) are the named families this reading leaves.
+ */
 function modelCallsOf(path: string, text: string): string[] {
   const calls = new Set<string>();
+  const whole = (specifier: string): void => {
+    if (isModelPackage(specifier)) calls.add(`${packageOf(specifier)}:*`);
+  };
+  const named = (specifier: string, names: readonly string[]): void => {
+    if (!isModelPackage(specifier)) return;
+    const pkg = packageOf(specifier);
+    for (const name of names) if (MODEL_CALL_ENTRIES[pkg]?.includes(name) === true) calls.add(`${pkg}:${name}`);
+  };
   const visit = (node: ts.Node): void => {
     if (ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier) && node.importClause?.isTypeOnly !== true) {
-      const entries = MODEL_CALL_ENTRIES[node.moduleSpecifier.text];
-      const bindings = node.importClause?.namedBindings;
-      if (entries !== undefined && bindings !== undefined) {
-        if (ts.isNamespaceImport(bindings)) calls.add(`${node.moduleSpecifier.text}:*`);
-        else {
-          for (const element of bindings.elements) {
-            const imported = (element.propertyName ?? element.name).text;
-            if (!element.isTypeOnly && entries.includes(imported)) calls.add(`${node.moduleSpecifier.text}:${imported}`);
-          }
-        }
-      }
-    } else if (ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword) {
+      const clause = node.importClause;
+      const bindings = clause?.namedBindings;
+      if (clause?.name !== undefined) whole(node.moduleSpecifier.text);
+      if (bindings !== undefined && ts.isNamespaceImport(bindings)) whole(node.moduleSpecifier.text);
+      else if (bindings !== undefined) named(node.moduleSpecifier.text, bindings.elements.filter(element => !element.isTypeOnly).map(element => (element.propertyName ?? element.name).text));
+    } else if (ts.isExportDeclaration(node) && node.moduleSpecifier !== undefined && ts.isStringLiteral(node.moduleSpecifier) && !node.isTypeOnly) {
+      const clause = node.exportClause;
+      if (clause === undefined || ts.isNamespaceExport(clause)) whole(node.moduleSpecifier.text);
+      else named(node.moduleSpecifier.text, clause.elements.filter(element => !element.isTypeOnly).map(element => (element.propertyName ?? element.name).text));
+    } else if (ts.isImportEqualsDeclaration(node) && !node.isTypeOnly && ts.isExternalModuleReference(node.moduleReference) && ts.isStringLiteral(node.moduleReference.expression)) {
+      whole(node.moduleReference.expression.text);
+    } else if (ts.isCallExpression(node) && !isResolution(node)) {
       const first = node.arguments[0];
-      if (first !== undefined && ts.isStringLiteralLike(first) && MODEL_CALL_ENTRIES[first.text] !== undefined) calls.add(`${first.text}:*`);
+      if (first !== undefined && ts.isStringLiteralLike(first)) whole(first.text);
     }
     ts.forEachChild(node, visit);
   };
@@ -509,7 +655,7 @@ function reachesModel(closure: Closure, models: readonly string[]): string[] {
 
 const SCOPE: ObservationScope = { workspace: "/fixture/km7q8-workspace", principal: "census-operator" };
 const STAMPS = ["2026-10-28T00:00:01.000Z", "2026-10-28T00:00:02.000Z", "2026-10-28T00:00:03.000Z"];
-const TRUE_NODE = { title: "census predicate", type: "sdk-operation", statusText: "TRUE", statusTone: "success" } as const;
+const TRUE_NODE = { type: "sdk-operation", statusText: "TRUE", statusTone: "success" } as const;
 const FIXTURE_ANSWER = "fixture answer";
 const DEMAND_SCRIPT =
   'export const meta = { name: "km7q8-demand", description: "wb-km7q.8 census: one explicit agent() demand" };\n' +
@@ -525,6 +671,7 @@ interface NodeReading {
 interface EvidenceStep {
   readonly arm: string;
   readonly name: StepName;
+  readonly ref: NativeRef;
   readonly applied: string;
   readonly before: NodeReading | null;
   readonly after: NodeReading | null;
@@ -534,46 +681,64 @@ interface Arm {
   readonly ref: NativeRef;
   readonly steps: readonly { readonly name: StepName; apply(projection: ObservationProjection): string }[];
 }
-function unknownEvent(ref: NativeRef): ObservationEvent {
-  return { projectionEventId: `${ref.id}-0`, source: ref, scope: SCOPE, sourceSequence: 1, observedAt: STAMPS[0], kind: "census.predicate.evaluated" };
+/** What the falsifier presents: an adopting cut hands falsify() its own evidence source. */
+interface EvidenceSource {
+  readonly provider: string;
+  readonly type: string;
+  /** The event kind stem: an ingest event is `<kind>.evaluated`, a refresh snapshot `<kind>.snapshot`. */
+  readonly kind: string;
+  /** The title the evidence presents once it reads TRUE. */
+  readonly title: string;
+  /** Evidence nodes per arm; each flips once, so a source presents 2 x nodes flips. */
+  readonly nodes: number;
 }
-function trueEvent(ref: NativeRef, sequence: number): ObservationEvent {
+/** The census's own evidence source (the default). */
+const CENSUS_SOURCE: EvidenceSource = { provider: "census-evidence", type: "predicate", kind: "census.predicate", title: "census predicate", nodes: 1 };
+/** A stand-in for the source an adopting cut hands in: query-shaped names, two nodes per arm (obviously fake). */
+const ADOPTER_SOURCE: EvidenceSource = { provider: "reactive-query", type: "query-view", kind: "reactive-query.view", title: "QueryView predicate", nodes: 2 };
+function unknownEvent(ref: NativeRef, source: EvidenceSource): ObservationEvent {
+  return { projectionEventId: `${ref.id}-0`, source: ref, scope: SCOPE, sourceSequence: 1, observedAt: STAMPS[0], kind: `${source.kind}.evaluated` };
+}
+function trueEvent(ref: NativeRef, sequence: number, source: EvidenceSource): ObservationEvent {
   return {
     projectionEventId: `${ref.id}-${sequence - 1}`,
     source: ref,
     scope: SCOPE,
     sourceSequence: sequence,
     observedAt: STAMPS[sequence - 1],
-    kind: "census.predicate.evaluated",
-    node: { presentation: { ...TRUE_NODE } },
+    kind: `${source.kind}.evaluated`,
+    node: { presentation: { ...TRUE_NODE, title: source.title } },
   };
 }
-function trueSnapshot(ref: NativeRef, sequence: number): Parameters<ObservationProjection["refresh"]>[0] {
+function trueSnapshot(ref: NativeRef, sequence: number, source: EvidenceSource): Parameters<ObservationProjection["refresh"]>[0] {
   const at = STAMPS[sequence - 1];
-  return { source: ref, scope: SCOPE, capturedAt: at, observedAt: at, sequence, coverage: "complete", kind: "census.predicate.snapshot", node: { ...TRUE_NODE } };
+  return { source: ref, scope: SCOPE, capturedAt: at, observedAt: at, sequence, coverage: "complete", kind: `${source.kind}.snapshot`, node: { ...TRUE_NODE, title: source.title } };
 }
-const REFRESH_REF: NativeRef = { provider: "census-evidence", type: "predicate", id: "refresh-arm" };
-const INGEST_REF: NativeRef = { provider: "census-evidence", type: "predicate", id: "ingest-arm" };
-const ARMS: readonly Arm[] = [
-  {
-    name: "refresh",
-    ref: REFRESH_REF,
-    steps: [
-      { name: "unknown", apply: projection => projection.ingest(unknownEvent(REFRESH_REF)) },
-      { name: "flip", apply: projection => projection.refresh(trueSnapshot(REFRESH_REF, 2)) },
-      { name: "recompute", apply: projection => projection.refresh(trueSnapshot(REFRESH_REF, 3)) },
-    ],
-  },
-  {
-    name: "ingest",
-    ref: INGEST_REF,
-    steps: [
-      { name: "unknown", apply: projection => projection.ingest(unknownEvent(INGEST_REF)) },
-      { name: "flip", apply: projection => projection.ingest(trueEvent(INGEST_REF, 2)) },
-      { name: "recompute", apply: projection => projection.ingest(trueEvent(INGEST_REF, 3)) },
-    ],
-  },
-];
+/** The census source's two refs (the composition rows read them; armsOf builds every source's refs the same way). */
+const REFRESH_REF: NativeRef = { provider: CENSUS_SOURCE.provider, type: CENSUS_SOURCE.type, id: "refresh-arm" };
+const INGEST_REF: NativeRef = { provider: CENSUS_SOURCE.provider, type: CENSUS_SOURCE.type, id: "ingest-arm" };
+/** The arms a source presents: a refresh arm and an ingest arm per node, each unknown -> flip -> recompute. */
+function armsOf(source: EvidenceSource): Arm[] {
+  const arms: Arm[] = [];
+  for (const kind of ["refresh", "ingest"] as const) {
+    for (let node = 1; node <= source.nodes; node += 1) {
+      const name = node === 1 ? kind : `${kind}-${node}`;
+      const ref: NativeRef = { provider: source.provider, type: source.type, id: `${name}-arm` };
+      const flip = (sequence: number) => (projection: ObservationProjection) =>
+        kind === "refresh" ? projection.refresh(trueSnapshot(ref, sequence, source)) : projection.ingest(trueEvent(ref, sequence, source));
+      arms.push({
+        name,
+        ref,
+        steps: [
+          { name: "unknown", apply: projection => projection.ingest(unknownEvent(ref, source)) },
+          { name: "flip", apply: flip(2) },
+          { name: "recompute", apply: flip(3) },
+        ],
+      });
+    }
+  }
+  return arms;
+}
 function readingOf(projection: ObservationProjection, ref: NativeRef): NodeReading | null {
   const node = projection.query({ scope: SCOPE, limit: 64 }).nodes.find(candidate => candidate.nativeRef.id === ref.id);
   if (node === undefined) return null;
@@ -628,6 +793,11 @@ interface Falsification {
   readonly otherSeam: number;
   readonly violations: readonly string[];
 }
+/** Microtask turns each step's window drains after its handler settles (no timer runs inside a drain). */
+const DRAIN_TURNS = 64;
+async function drain(): Promise<void> {
+  for (let turn = 0; turn < DRAIN_TURNS; turn += 1) await Promise.resolve();
+}
 async function settle(): Promise<void> {
   await new Promise<void>(resolve => {
     setTimeout(resolve, SETTLE_MS);
@@ -664,21 +834,25 @@ function createSession(): { session: Session; release(): void; otherCount(): num
   };
   return { session, release: () => release(), otherCount: () => other };
 }
-/** The falsifier: hands every evidence step of both arms to the composition and judges every model call inside the window. */
-async function falsify(composition: Composition): Promise<Falsification> {
+/**
+ * The falsifier: presents the source it is handed (the census's own by default) on its arms, hands every evidence step to the
+ * composition and judges every model call counted inside a step's window or the settle.
+ */
+async function falsify(composition: Composition, source: EvidenceSource = CENSUS_SOURCE): Promise<Falsification> {
   const { session, release, otherCount } = createSession();
   const steps: EvidenceStep[] = [];
   const violations: string[] = [];
   composition.attach?.(session);
-  for (const arm of ARMS) {
+  for (const arm of armsOf(source)) {
     for (const step of arm.steps) {
       // Counted from before the step lands: a call made while the projection applies it is the step's call too.
       const count = session.prompts.length;
       const before = readingOf(session.projection, arm.ref);
       const applied = step.apply(session.projection);
-      const evidence: EvidenceStep = { arm: arm.name, name: step.name, applied, before, after: readingOf(session.projection, arm.ref) };
+      const evidence: EvidenceStep = { arm: arm.name, name: step.name, ref: arm.ref, applied, before, after: readingOf(session.projection, arm.ref) };
       steps.push(evidence);
       await composition.onEvidence?.(evidence, session);
+      await drain();
       if (session.prompts.length > count) violations.push(`call-on:${arm.name}:${step.name}`);
     }
   }
@@ -740,7 +914,73 @@ const MUTANTS: readonly Composition[] = [
       if (step.before === null && step.after?.statusText === "UNKNOWN") await session.direct(`resolve the unknown ${step.arm} reading`);
     },
   },
+  {
+    name: "ingest-wrapped",
+    attach(session) {
+      const projection = session.projection;
+      const ingest = projection.ingest.bind(projection);
+      projection.ingest = event => {
+        const before = readingOf(projection, event.source);
+        const applied = ingest(event);
+        if (before?.statusTone === "unknown" && readingOf(projection, event.source)?.statusTone === "success") void session.direct("wrapped ingest flip");
+        return applied;
+      };
+    },
+  },
+  {
+    name: "microtask-on-flip",
+    onEvidence(step, session) {
+      if (isFlip(step)) {
+        queueMicrotask(() => {
+          void session.direct(`microtask ${step.arm}`);
+        });
+      }
+    },
+  },
 ];
+/** The projection node a step landed on. */
+function nodeOf(session: Session, step: EvidenceStep): ReturnType<ObservationProjection["query"]>["nodes"][number] | undefined {
+  return session.projection.query({ scope: SCOPE, limit: 64 }).nodes.find(node => node.nativeRef.id === step.ref.id);
+}
+/** Compositions keyed on one attribute of the adopting cut's source: refused when fed it, quiet on any other (R-SOURCE-KEYED). */
+const SOURCED: readonly Composition[] = [
+  {
+    name: "provider-keyed",
+    async onEvidence(step, session) {
+      if (isFlip(step) && step.ref.provider === ADOPTER_SOURCE.provider) await session.direct(`provider-keyed ${step.arm}`);
+    },
+  },
+  {
+    name: "type-keyed",
+    async onEvidence(step, session) {
+      if (isFlip(step) && step.ref.type === ADOPTER_SOURCE.type) await session.direct(`type-keyed ${step.arm}`);
+    },
+  },
+  {
+    name: "kind-keyed",
+    async onEvidence(step, session) {
+      if (isFlip(step) && nodeOf(session, step)?.kind.startsWith(`${ADOPTER_SOURCE.kind}.`) === true) await session.direct(`kind-keyed ${step.arm}`);
+    },
+  },
+  {
+    name: "title-keyed",
+    async onEvidence(step, session) {
+      if (isFlip(step) && nodeOf(session, step)?.presentation.title === ADOPTER_SOURCE.title) await session.direct(`title-keyed ${step.arm}`);
+    },
+  },
+];
+/** A composition that calls from the third flip on: refused when the source presents it, quiet when not (R-FLIP-COUNT). */
+function countKeyed(): Composition {
+  let flips = 0;
+  return {
+    name: "count-keyed",
+    async onEvidence(step, session) {
+      if (!isFlip(step)) return;
+      flips += 1;
+      if (flips > 2) await session.direct(`count-keyed flip ${flips}`);
+    },
+  };
+}
 const QUIET: readonly Composition[] = [
   {
     name: "read-only",
@@ -783,14 +1023,53 @@ const RECEIPT_TYPES: readonly (readonly [string, string])[] = [
   ["src/workflow/runtime.ts", "WorkflowSpawnResult"],
   ["src/workflow/journal.ts", "WorkflowJournalEntry"],
 ];
-function interfaceMembers(path: string, text: string, name: string): string[] | null {
-  let members: string[] | null = null;
-  sourceOf(path, text).forEachChild(node => {
-    if (ts.isInterfaceDeclaration(node) && node.name.text === name) {
-      members = node.members.flatMap(member => (member.name !== undefined && (ts.isIdentifier(member.name) || ts.isStringLiteral(member.name)) ? [member.name.text] : []));
-    }
-  });
-  return members;
+/** A record's property names as the checker resolves its declared type: own, inherited, merged and computed-literal members. */
+function checkedMembers(program: ts.Program, file: string, name: string): string[] | null {
+  const source = program.getSourceFile(file);
+  const declaration = source?.statements.find(
+    (statement): statement is ts.InterfaceDeclaration | ts.TypeAliasDeclaration => (ts.isInterfaceDeclaration(statement) || ts.isTypeAliasDeclaration(statement)) && statement.name.text === name,
+  );
+  if (declaration === undefined) return null;
+  const checker = program.getTypeChecker();
+  const symbol = checker.getSymbolAtLocation(declaration.name);
+  return symbol === undefined ? null : checker.getPropertiesOfType(checker.getDeclaredTypeOfSymbol(symbol)).map(property => property.name);
+}
+/** tsconfig.json's target, module and resolution (ES2022, bundler); no ambient @types package is auto-included. */
+const CHECKER_OPTIONS: ts.CompilerOptions = {
+  target: ts.ScriptTarget.ES2022,
+  module: ts.ModuleKind.ES2022,
+  moduleResolution: ts.ModuleResolutionKind.Bundler,
+  skipLibCheck: true,
+  noEmit: true,
+  types: [],
+};
+let LIVE_RECORDS: ts.Program | undefined;
+/** The four records as src declares them: one program over their modules with the default lib, imports resolved through src and packages. */
+function liveRecordMembers(path: string, name: string): string[] | null {
+  LIVE_RECORDS ??= ts.createProgram(
+    [...new Set(RECEIPT_TYPES.map(([file]) => join(REPO, file)))],
+    CHECKER_OPTIONS,
+  );
+  return checkedMembers(LIVE_RECORDS, join(REPO, path), name);
+}
+/** A record read through the checker over in-memory modules (relative imports between them resolve; no lib, no package). */
+function recordMembersOf(files: Readonly<Record<string, string>>, path: string, name: string): string[] | null {
+  const root = "/km7q8-plant";
+  const virtual = new Map(Object.entries(files).map(([file, text]) => [posix.join(root, file), text]));
+  const options: ts.CompilerOptions = { ...CHECKER_OPTIONS, noLib: true };
+  const host = ts.createCompilerHost(options, true);
+  host.fileExists = file => virtual.has(file);
+  host.readFile = file => virtual.get(file);
+  host.getSourceFile = (file, language) => {
+    const text = virtual.get(file);
+    return text === undefined ? undefined : ts.createSourceFile(file, text, language, true);
+  };
+  host.resolveModuleNameLiterals = (literals, containing) =>
+    literals.map(literal => {
+      const target = posix.join(posix.dirname(containing), literal.text).replace(/\.js$/, ".ts");
+      return { resolvedModule: virtual.has(target) ? { resolvedFileName: target, extension: ts.Extension.Ts, isExternalLibraryImport: false } : undefined };
+    });
+  return checkedMembers(ts.createProgram([...virtual.keys()], options, host), posix.join(root, path), name);
 }
 /** The words a witness member would carry: the title's (witness, provenance) and the producer's SourceWitness field names. */
 function witnessVocabulary(title: string, fields: readonly WitnessField[]): string[][] {
@@ -870,6 +1149,17 @@ function receiptFixtures(member: string): Record<string, Json> {
     partial: { ...base, [member]: { source_digest: witness.source_digest } },
     extra: { ...base, [member]: { ...witness, query: "select-all" } },
     notObject: "census-request-1",
+    floatEpoch: { ...base, [member]: { ...witness, host_epoch: 7.5 } },
+    nanEpoch: { ...base, [member]: { ...witness, host_epoch: Number.NaN } },
+    unsafeEpoch: { ...base, [member]: { ...witness, host_epoch: 2 ** 53 } },
+    stringEpoch: { ...base, [member]: { ...witness, host_epoch: "7" } },
+    booleanGeneration: { ...base, [member]: { ...witness, generation: true } },
+    nestedWrap: { ...base, [member]: { [member]: witness } },
+    nulledDigest: { ...base, [member]: { ...witness, source_digest: null } },
+    allNull: { ...base, [member]: { host_epoch: null, generation: null, source_digest: null, trace_id: null } },
+    aliasMember: { ...base, provenance: witness },
+    upperKeys: { ...base, [member]: Object.fromEntries(Object.entries(witness).map(([key, value]) => [key.toUpperCase(), value])) },
+    emptyTrace: { ...base, [member]: { ...witness, trace_id: "" } },
   };
 }
 
@@ -884,6 +1174,9 @@ function keysOf(value: Json): string[] {
   return Object.entries(value).flatMap(([key, inner]) => [key, ...keysOf(inner)]);
 }
 
+const BACKSLASH = String.fromCodePoint(0x5c);
+const ZERO_WIDTH = String.fromCodePoint(0x200b);
+const SOFT_HYPHEN = String.fromCodePoint(0x00ad);
 const BEAD_ROW = beadRow();
 const VOCABULARY = vocabularyOf(BEAD_ROW.title);
 const RECORDED = new Map<string, Json>();
@@ -904,7 +1197,24 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
     }
     expect(quiet["R-LATE"]).toMatchObject({ calls: 0, late: 2 });
     expect(quiet["R-OTHER-SEAM"]).toMatchObject({ calls: 0, otherSeam: 2 });
-    return { mutants, quiet };
+    expect((mutants["microtask-on-flip"] as { violations: Json }).violations, "a call chained through microtasks is its step's own").toEqual(["call-on:refresh:flip", "call-on:ingest:flip"]);
+    const sourced: { [key: string]: Json } = {};
+    const keyedQuiet: { [key: string]: Json } = {};
+    for (const composition of [...SOURCED, countKeyed()]) {
+      const fed = await falsify(composition, ADOPTER_SOURCE);
+      expect(fed.violations.length, `${composition.name} fed its own source must be refused`).toBeGreaterThan(0);
+      sourced[composition.name] = judged(fed);
+    }
+    for (const composition of SOURCED) {
+      const other = await falsify(composition, CENSUS_SOURCE);
+      expect(other.violations, `${composition.name} on a source it is not keyed on is R-SOURCE-KEYED's quiet row`).toEqual([]);
+      keyedQuiet[composition.name] = judged(other);
+    }
+    const fewer = await falsify(countKeyed(), CENSUS_SOURCE);
+    expect(fewer.violations, "count-keyed under three flips is R-FLIP-COUNT's quiet row").toEqual([]);
+    quiet["R-SOURCE-KEYED"] = keyedQuiet;
+    quiet["R-FLIP-COUNT"] = judged(fewer);
+    return { mutants, sourced, quiet };
   },
   async A2() {
     const today = await falsify(PI_TODAY);
@@ -913,11 +1223,13 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
     expect(flips).toEqual(["refresh:flip", "ingest:flip"]);
     expect(recomputes).toEqual(["refresh:recompute", "ingest:recompute"]);
     for (const step of today.steps.filter(candidate => candidate.name === "unknown")) expect(step.after).toMatchObject({ statusText: "UNKNOWN", statusTone: "unknown" });
-    const src = listedCode().filter(path => path.startsWith("src/") && path.endsWith(".ts"));
+    // Every JS/TS module below src/ (listedCode keeps the code extensions), not .ts alone.
+    const src = listedCode().filter(path => path.startsWith("src/"));
     const models = modelCallModules(src, readTree);
     expect(models).toContain(HOST_MODULE);
     const closure = closureOf(PROJECTION_MODULE, readTree);
     expect(closure.unread).toEqual([]);
+    expect(closure.opaque).toEqual([]);
     expect(reachesModel(closure, models)).toEqual([]);
     const plantedModels = [HOST_MODULE];
     const controls: { [key: string]: Json } = {
@@ -950,13 +1262,56 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
       namespaceEntry: modelCallsOf("src/x.ts", 'import * as sdk from "@anthropic-ai/claude-agent-sdk";\nexport const a = sdk;\n'),
       toolEntryOnly: modelCallsOf("src/x.ts", 'import { tool } from "@anthropic-ai/claude-agent-sdk";\nexport const a = tool;\n'),
       typeEntryOnly: modelCallsOf("src/x.ts", 'import { type query } from "@anthropic-ai/claude-agent-sdk";\nexport type Q = typeof query;\n'),
+      resolveOnly: modelCallsOf("src/x.ts", 'export const path = import.meta.resolve("@anthropic-ai/claude-agent-sdk");\n'),
+      resolveClosure: reachesModel(closureOf(PROJECTION_MODULE, readMap({ [PROJECTION_MODULE]: 'export const path = import.meta.resolve("@anthropic-ai/claude-agent-sdk");\n' })), plantedModels),
     };
+    expect(controls.resolveOnly, "a resolution call loads nothing").toEqual([]);
+    expect(controls.resolveClosure, "a resolution call is no value edge").toEqual([]);
     expect(controls.chained).toEqual(["@anthropic-ai/claude-agent-sdk", HOST_MODULE]);
     expect(controls.dynamic).toEqual(["@anthropic-ai/claude-agent-sdk"]);
     expect(controls["R-OBSERVER-PATH"]).toEqual([]);
+    const adopter = await falsify(PI_TODAY, ADOPTER_SOURCE);
+    const adopterFlips = adopter.steps.filter(isFlip).map(step => `${step.arm}:${step.name}`);
+    expect(adopterFlips).toEqual(["refresh:flip", "refresh-2:flip", "ingest:flip", "ingest-2:flip"]);
+    const opaque = (text: string): Json => {
+      const closure = closureOf(PROJECTION_MODULE, readMap({ [PROJECTION_MODULE]: text }));
+      return { unread: [...closure.unread], opaque: [...closure.opaque] };
+    };
+    const loaders: { [key: string]: Json } = {
+      computedImport: opaque('const id = ["@anthropic-ai", "claude-agent-sdk"].join("/");\nexport async function f() { return import(id); }\n'),
+      computedRequire: opaque("export function f(id: string) { return require(id); }\n"),
+      createRequire: opaque('import { createRequire } from "node:module";\nexport const load = createRequire(import.meta.url);\n'),
+      builtinRequire: opaque('const load = process.getBuiltinModule("node:module").createRequire(import.meta.url);\nexport const sdk = load("@anthropic-ai/claude-agent-sdk");\n'),
+    };
+    for (const [loader, reading] of Object.entries(loaders)) expect((reading as { opaque: Json[] }).opaque, `${loader} fails the closure closed`).not.toEqual([]);
+    const forms: { [key: string]: Json } = {
+      exportFrom: modelCallsOf("src/b.ts", 'export { query } from "@anthropic-ai/claude-agent-sdk";\n'),
+      exportStar: modelCallsOf("src/b.ts", 'export * from "@anthropic-ai/claude-agent-sdk";\n'),
+      exportStarAs: modelCallsOf("src/b.ts", 'export * as sdk from "@anthropic-ai/claude-agent-sdk";\n'),
+      defaultImport: modelCallsOf("src/b.ts", 'import sdk from "@anthropic-ai/claude-agent-sdk";\nexport const a = sdk;\n'),
+      requireCall: modelCallsOf("src/r.ts", 'const { query } = require("@anthropic-ai/claude-agent-sdk");\nexport const go = query;\n'),
+      importEquals: modelCallsOf("src/r.ts", 'import sdk = require("@anthropic-ai/claude-agent-sdk");\nexport const go = sdk;\n'),
+      literalLoader: modelCallsOf("src/r.ts", 'import { createRequire } from "node:module";\nexport const sdk = createRequire(import.meta.url)("@anthropic-ai/claude-agent-sdk");\n'),
+      subpath: modelCallsOf("src/s.ts", 'import { query } from "@anthropic-ai/claude-agent-sdk/core";\nexport const go = query;\n'),
+      fromServices: modelCallsOf("src/s.ts", 'import { createAgentSessionFromServices } from "@earendil-works/pi-coding-agent";\nexport const go = createAgentSessionFromServices;\n'),
+      sessionRuntime: modelCallsOf("src/s.ts", 'import { createAgentSessionRuntime } from "@earendil-works/pi-coding-agent";\nexport const go = createAgentSessionRuntime;\n'),
+      sessionClass: modelCallsOf("src/s.ts", 'import { AgentSession } from "@earendil-works/pi-coding-agent";\nexport const go = AgentSession;\n'),
+      piAiComplete: modelCallsOf("src/s.ts", 'import { complete } from "@earendil-works/pi-ai/compat";\nexport const go = complete;\n'),
+    };
+    for (const [form, calls] of Object.entries(forms)) expect(calls, `${form} names a model-call entry`).not.toEqual([]);
+    const residuals: { [key: string]: Json } = {
+      "R-OTHER-ENTRY": modelCallsOf("src/s.ts", 'import { generateSummary } from "@earendil-works/pi-coding-agent";\nexport const go = generateSummary;\n'),
+      "R-RELAYED": modelCallsOf("src/c.ts", 'import { query } from "./b.js";\nexport const go = query;\n'),
+      "R-COMPUTED-SPECIFIER": modelCallsOf("src/c.ts", 'const id = ["@anthropic-ai", "claude-agent-sdk"].join("/");\nexport async function f() { return import(id); }\n'),
+    };
+    for (const [row, calls] of Object.entries(residuals)) expect(calls, `${row} is a pinned quiet row`).toEqual([]);
     return {
       steps: today.steps.map(stepJson),
-      closure: { modules: [...closure.modules], packages: [...closure.packages], unread: [...closure.unread] },
+      adopterFlips,
+      loaders,
+      forms,
+      residuals,
+      closure: { modules: [...closure.modules], packages: [...closure.packages], unread: [...closure.unread], opaque: [...closure.opaque] },
       modelCallModules: models,
       controls,
     };
@@ -972,8 +1327,12 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
     const { run } = await today.session.demand(prompt);
     expect(run.status).toBe("completed");
     expect(today.session.prompts.slice(before)).toEqual([prompt]);
+    const adopter = await falsify(PI_TODAY, ADOPTER_SOURCE);
+    expect(adopter.violations).toEqual([]);
+    expect(adopter.calls).toBe(0);
     return {
       today: judged(today),
+      todayOnAdopterSource: { ...(judged(adopter) as { [key: string]: Json }), steps: adopter.steps.length },
       demand: { calls: today.session.prompts.length - before, prompt: today.session.prompts.at(-1) ?? null, status: run.status, agentCount: run.agentCount, value: (run.value ?? null) as Json },
       "R-EXPLICIT": { violations: [...today.violations], conditionedOn: conditioned?.statusText ?? null },
     };
@@ -982,7 +1341,7 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
     const declared: { [key: string]: Json } = {};
     const members = new Map<string, string[]>();
     for (const [path, name] of RECEIPT_TYPES) {
-      const list = interfaceMembers(path, readFileSync(join(REPO, path), "utf8"), name);
+      const list = liveRecordMembers(path, name);
       expect(list, `${path} declares ${name}`).not.toBeNull();
       members.set(name, list ?? []);
       declared[name] = list ?? [];
@@ -1009,7 +1368,10 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
     expect(basis).toEqual([session.host.replayBasis]);
     const basisItems = JSON.parse(session.host.replayBasis ?? "null") as Json;
     expect(Array.isArray(basisItems)).toBe(true);
-    const plant = (text: string): string[] => (interfaceMembers("src/plant.ts", text, "Plant") ?? []).filter(member => isWitnessMember(member, vocabulary, VOCABULARY));
+    function witnessOf(files: Readonly<Record<string, string>>): string[] {
+      return (recordMembersOf(files, "src/p.ts", "WorkflowSpawnResult") ?? []).filter(member => isWitnessMember(member, vocabulary, VOCABULARY));
+    }
+    const plant = (text: string): string[] => (recordMembersOf({ "src/plant.ts": text }, "src/plant.ts", "Plant") ?? []).filter(member => isWitnessMember(member, vocabulary, VOCABULARY));
     const controls: { [key: string]: Json } = {
       witness: plant("interface Plant { witness?: string }"),
       sourceWitness: plant("interface Plant { sourceWitness?: string }"),
@@ -1018,10 +1380,21 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
       hostEpoch: plant("interface Plant { hostEpoch?: number; trace_id?: string; generation?: number }"),
       queryView: plant("interface Plant { queryViewRef?: string }"),
       quiet: plant("interface Plant { source?: string; basis?: string; traceparent?: string; query?: string; view?: string }"),
-      "R-OTHER-RECORD": (interfaceMembers("src/plant.ts", "interface Plant { ok: boolean }\ninterface Other { witness?: string }", "Plant") ?? []).filter(member => isWitnessMember(member, vocabulary, VOCABULARY)),
+      "R-OTHER-RECORD": (recordMembersOf({ "src/plant.ts": "interface Plant { ok: boolean }\ninterface Other { witness?: string }" }, "src/plant.ts", "Plant") ?? []).filter(member => isWitnessMember(member, vocabulary, VOCABULARY)),
     };
     expect(controls.quiet).toEqual([]);
     expect(controls["R-OTHER-RECORD"]).toEqual([]);
+    const shape = "{ host_epoch: number | null; generation: number | null; source_digest: string | null; trace_id: string | null }";
+    const forms: { [key: string]: Json } = {
+      extends: witnessOf({ "src/p.ts": `interface Carrier { witness?: ${shape} }\ninterface WorkflowSpawnResult extends Carrier { ok: boolean }\n` }),
+      mergedBefore: witnessOf({ "src/p.ts": `interface WorkflowSpawnResult { witness?: ${shape} }\ninterface WorkflowSpawnResult { ok: boolean }\n` }),
+      mergedAfter: witnessOf({ "src/p.ts": `interface WorkflowSpawnResult { ok: boolean }\ninterface WorkflowSpawnResult { witness?: ${shape} }\n` }),
+      computedKey: witnessOf({ "src/p.ts": 'interface WorkflowSpawnResult { ok: boolean; ["witness"]?: string }\n' }),
+      importedBase: witnessOf({ "src/p.ts": 'import type { Carrier } from "./carrier.js";\ninterface WorkflowSpawnResult extends Carrier { ok: boolean }\n', "src/carrier.ts": `export interface Carrier { witness?: ${shape} }\n` }),
+      intersection: witnessOf({ "src/p.ts": `interface Base { ok: boolean }\ntype WorkflowSpawnResult = Base & { witness?: ${shape} };\n` }),
+    };
+    for (const [form, found] of Object.entries(forms)) expect(found, `${form} carries the witness member`).toContain("witness");
+    controls.forms = forms;
     return {
       declared,
       witnessMembers,
@@ -1063,6 +1436,19 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
       splitLine: read("// handed to the reactive\n// query engine"),
       splitBlock: read("/**\n * handed to the inference\n * SDK at the host\n */"),
       manifest: manifestFindings({ dependencies: { "@acme/reactive-query": "1.0.0" }, devDependencies: { "reactive-inference-sdk": "2.0.0" } }, VOCABULARY),
+      specAlias: manifestFindings({ dependencies: { rq: "npm:reactive-query-sdk@1.0.0" } }, VOCABULARY),
+      specFile: manifestFindings({ dependencies: { "@acme/evidence": "file:vendor/reactive-query-sdk-0.1.0.tgz" } }, VOCABULARY),
+      specGit: manifestFindings({ dependencies: { "evidence-engine": "github:example/ReactiveQuerySDK" } }, VOCABULARY),
+      escapedUnicode: read(`import { open } from "reactive-${BACKSLASH}u0071uery-sdk";`),
+      escapedHex: read(`const pkg = "reactive-${BACKSLASH}x71uery-sdk";`),
+      escapedBrace: read(`const pkg = "Reactive${BACKSLASH}u{51}uerySDK";`),
+      escapedIdentity: read(`const pkg = "Reactive${BACKSLASH}Query";`),
+      zeroWidthSplit: read(`const n = "Reactive${ZERO_WIDTH}Inference${ZERO_WIDTH}SDK";`),
+      softHyphenSplit: read(`const n = "Reactive${SOFT_HYPHEN}Query${SOFT_HYPHEN}SDK";`),
+      innerInvisible: read(`const n = "Reac${ZERO_WIDTH}tiveInference";`),
+      blockContinued: read("// handed to the reactive\n/* query engine */"),
+      htmlEntity: read('const s = "Reactive&#81;uery";'),
+      percentEncoded: read('const u = "https://example.invalid/Reactive%20Query%20SDK";'),
     };
     for (const [plant, findings] of Object.entries(plants)) expect(findings, plant).not.toEqual([]);
     const quiet: { [key: string]: Json } = {
@@ -1074,7 +1460,9 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
       "R-COMPOSED": read('const name = "Reactive" + "Que" + "rySDK";'),
       "R-LOOKALIKE": read(lookalike),
       "R-RF-INTERNAL": read("const engines = Object.keys(provenance.sdk_versions ?? {});"),
-      "R-OUTSIDE-ROOTS": selectCode(["docs/workbench/plant.md", "test/plant.test.ts", "vendor/plant.js", ".beads/plant.ts", "README.md", "package.json", "src/plant.json"]),
+      "R-OUTSIDE-ROOTS": selectCode(["docs/workbench/plant.md", "test/plant.test.ts", "vendor/plant.js", ".beads/plant.ts", "README.md", "src/plant.json"]),
+      "R-SEPARATOR": read('const id = "reactive:query";'),
+      "R-ENCODED": read(`const n = atob("${Buffer.from("ReactiveQuerySDK").toString("base64")}");`),
     };
     for (const [row, findings] of Object.entries(quiet)) expect(findings, row).toEqual([]);
     const titleNames = titleNamesOf(BEAD_ROW.title).map(words => `${words.join(" ")}: ${subjectsIn(words, VOCABULARY).join(" ")}`);
@@ -1154,6 +1542,13 @@ describe("wb-km7q.8 query evidence and model calls: the adoption-time falsifier 
     }
     expect(gateIdsOf(BEAD_ROW.title)).toHaveLength(5);
     expect(new Set(VOCABULARY.map(pair => pair.subject))).toEqual(new Set(["query", "inference"]));
+    // Outside anchor: the charter line the citation names for the acceptance gates names exactly the ids of the title's range.
+    const ids = gateIdsOf(BEAD_ROW.title);
+    expect(namedIdsOf(linesOf(ROSTER.producer.charter).get(acceptanceLineOf(BEAD_ROW.citation) ?? -1) ?? "", ids)).toEqual(ids);
+    // Outside anchor: the title's gate range is exactly one pin's phrase, so the gate pin cannot be merged into another.
+    const gated = gatedPhraseOf(BEAD_ROW.title);
+    expect(gated).toBeDefined();
+    expect(ROWS.flatMap(row => row.pins).filter(pin => pin.phrase === gated)).toHaveLength(1);
   });
   for (const row of ROWS) {
     describe(`${row.id} ${row.label}`, () => {
@@ -1180,5 +1575,15 @@ describe("wb-km7q.8 query evidence and model calls: the adoption-time falsifier 
     for (const pin of pins) expect(RECORDED.get(pin), pin).toEqual(ROSTER.witnesses[pin]);
     const rows = [...RECORDED.values()].flatMap(keysOf);
     for (const residual of RESIDUALS) expect(rows, `${residual} has a quiet row in a pin's witness`).toContain(residual);
+    // Outside the runners and the roster: the gate pin (the title's range phrase) carries the title's ids and the citation's
+    // pins; C1 the title's vocabulary; B2 the producer's typed fields; B1 the records as src declares them; A2 the
+    // projection closure and the model-call modules as src reads.
+    const gated = ROWS.flatMap(row => row.pins).find(pin => pin.phrase === gatedPhraseOf(BEAD_ROW.title));
+    expect(RECORDED.get(gated?.id ?? "")).toMatchObject({ ids: gateIdsOf(BEAD_ROW.title), cited: citedLinesOf(BEAD_ROW.citation).map(entry => `:${entry.line}@${entry.pin}`) });
+    expect(RECORDED.get("C1")).toMatchObject({ vocabulary: VOCABULARY.map(pair => `${pair.words.join(" ")}: ${pair.subject}`) });
+    expect(RECORDED.get("B2")).toMatchObject({ fields: witnessFieldsOf(ROSTER.producer.witness).map(field => `${field.name}:${field.type}`) });
+    expect(RECORDED.get("B1")).toMatchObject({ declared: Object.fromEntries(RECEIPT_TYPES.map(([path, name]) => [name, liveRecordMembers(path, name)])) });
+    const srcModules = listedCode().filter(path => path.startsWith("src/"));
+    expect(RECORDED.get("A2")).toMatchObject({ closure: { modules: [...closureOf(PROJECTION_MODULE, readTree).modules] }, modelCallModules: modelCallModules(srcModules, readTree) });
   });
 });

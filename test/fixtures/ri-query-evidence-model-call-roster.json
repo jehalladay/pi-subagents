@@ -152,11 +152,18 @@
   "R-OUTSIDE-ROOTS",
   "R-COMPOSED",
   "R-LOOKALIKE",
-  "R-RF-INTERNAL"
+  "R-RF-INTERNAL",
+  "R-SOURCE-KEYED",
+  "R-FLIP-COUNT",
+  "R-OTHER-ENTRY",
+  "R-RELAYED",
+  "R-COMPUTED-SPECIFIER",
+  "R-SEPARATOR",
+  "R-ENCODED"
  ],
  "unclaimed": [
   "the title's last clause, no query engine is expected inside the inference SDK: a producer-side duty (execution.py:437 'no query engine enters this package'); Pi expects nothing of the SDK while it composes nothing",
-  "the title's two armed duties on an actual composition and receipt (no query recomputation or UNKNOWN->TRUE change directly calls a model; a QueryView source witness entering a model context basis is retained as typed provenance on the existing request identifier/receipt): they bind when C1 reads PRESENT, and the adopting cut runs falsify() over its composition and witnessViolations() over its receipt",
+  "the title's two armed duties on an actual composition and receipt (no query recomputation or UNKNOWN->TRUE change directly calls a model; a QueryView source witness entering a model context basis is retained as typed provenance on the existing request identifier/receipt): they bind when C1 reads PRESENT, and the adopting cut hands falsify() its composition and its own evidence source (provider, type, kind, title, nodes per arm) and witnessViolations() its receipt; the falsifier refuses what it presents, never a composition keyed on evidence it is not handed (R-SOURCE-KEYED) or on more flips than the source presents (R-FLIP-COUNT)",
   "the producer's INF-RQ1..INF-RQ5 tests themselves: C2 reads their gate state from the charter, never re-runs them",
   "wb-km7q.7 (R19): whether a Pi model-call site is reachable from an evidence path beyond the projection module, and the speculative-inference opt-in checklist"
  ],
@@ -205,6 +212,78 @@
       "call-on:refresh:unknown",
       "call-on:ingest:unknown"
      ]
+    },
+    "ingest-wrapped": {
+     "calls": 1,
+     "late": 0,
+     "otherSeam": 0,
+     "violations": [
+      "call-on:ingest:flip"
+     ]
+    },
+    "microtask-on-flip": {
+     "calls": 2,
+     "late": 0,
+     "otherSeam": 0,
+     "violations": [
+      "call-on:refresh:flip",
+      "call-on:ingest:flip"
+     ]
+    }
+   },
+   "sourced": {
+    "provider-keyed": {
+     "calls": 4,
+     "late": 0,
+     "otherSeam": 0,
+     "violations": [
+      "call-on:refresh:flip",
+      "call-on:refresh-2:flip",
+      "call-on:ingest:flip",
+      "call-on:ingest-2:flip"
+     ]
+    },
+    "type-keyed": {
+     "calls": 4,
+     "late": 0,
+     "otherSeam": 0,
+     "violations": [
+      "call-on:refresh:flip",
+      "call-on:refresh-2:flip",
+      "call-on:ingest:flip",
+      "call-on:ingest-2:flip"
+     ]
+    },
+    "kind-keyed": {
+     "calls": 4,
+     "late": 0,
+     "otherSeam": 0,
+     "violations": [
+      "call-on:refresh:flip",
+      "call-on:refresh-2:flip",
+      "call-on:ingest:flip",
+      "call-on:ingest-2:flip"
+     ]
+    },
+    "title-keyed": {
+     "calls": 4,
+     "late": 0,
+     "otherSeam": 0,
+     "violations": [
+      "call-on:refresh:flip",
+      "call-on:refresh-2:flip",
+      "call-on:ingest:flip",
+      "call-on:ingest-2:flip"
+     ]
+    },
+    "count-keyed": {
+     "calls": 2,
+     "late": 0,
+     "otherSeam": 0,
+     "violations": [
+      "call-on:ingest:flip",
+      "call-on:ingest-2:flip"
+     ]
     }
    },
    "quiet": {
@@ -224,6 +303,38 @@
      "calls": 0,
      "late": 0,
      "otherSeam": 2,
+     "violations": []
+    },
+    "R-SOURCE-KEYED": {
+     "provider-keyed": {
+      "calls": 0,
+      "late": 0,
+      "otherSeam": 0,
+      "violations": []
+     },
+     "type-keyed": {
+      "calls": 0,
+      "late": 0,
+      "otherSeam": 0,
+      "violations": []
+     },
+     "kind-keyed": {
+      "calls": 0,
+      "late": 0,
+      "otherSeam": 0,
+      "violations": []
+     },
+     "title-keyed": {
+      "calls": 0,
+      "late": 0,
+      "otherSeam": 0,
+      "violations": []
+     }
+    },
+    "R-FLIP-COUNT": {
+     "calls": 0,
+     "late": 0,
+     "otherSeam": 0,
      "violations": []
     }
    }
@@ -323,12 +434,89 @@
      }
     }
    ],
+   "adopterFlips": [
+    "refresh:flip",
+    "refresh-2:flip",
+    "ingest:flip",
+    "ingest-2:flip"
+   ],
+   "loaders": {
+    "computedImport": {
+     "unread": [],
+     "opaque": [
+      "src/workbench/observation.ts import()"
+     ]
+    },
+    "computedRequire": {
+     "unread": [],
+     "opaque": [
+      "src/workbench/observation.ts require()"
+     ]
+    },
+    "createRequire": {
+     "unread": [],
+     "opaque": [
+      "src/workbench/observation.ts createRequire"
+     ]
+    },
+    "builtinRequire": {
+     "unread": [],
+     "opaque": [
+      "src/workbench/observation.ts createRequire",
+      "src/workbench/observation.ts getBuiltinModule"
+     ]
+    }
+   },
+   "forms": {
+    "exportFrom": [
+     "@anthropic-ai/claude-agent-sdk:query"
+    ],
+    "exportStar": [
+     "@anthropic-ai/claude-agent-sdk:*"
+    ],
+    "exportStarAs": [
+     "@anthropic-ai/claude-agent-sdk:*"
+    ],
+    "defaultImport": [
+     "@anthropic-ai/claude-agent-sdk:*"
+    ],
+    "requireCall": [
+     "@anthropic-ai/claude-agent-sdk:*"
+    ],
+    "importEquals": [
+     "@anthropic-ai/claude-agent-sdk:*"
+    ],
+    "literalLoader": [
+     "@anthropic-ai/claude-agent-sdk:*"
+    ],
+    "subpath": [
+     "@anthropic-ai/claude-agent-sdk:query"
+    ],
+    "fromServices": [
+     "@earendil-works/pi-coding-agent:createAgentSessionFromServices"
+    ],
+    "sessionRuntime": [
+     "@earendil-works/pi-coding-agent:createAgentSessionRuntime"
+    ],
+    "sessionClass": [
+     "@earendil-works/pi-coding-agent:AgentSession"
+    ],
+    "piAiComplete": [
+     "@earendil-works/pi-ai:complete"
+    ]
+   },
+   "residuals": {
+    "R-OTHER-ENTRY": [],
+    "R-RELAYED": [],
+    "R-COMPUTED-SPECIFIER": []
+   },
    "closure": {
     "modules": [
      "src/workbench/observation.ts"
     ],
     "packages": [],
-    "unread": []
+    "unread": [],
+    "opaque": []
    },
    "modelCallModules": [
     "src/agent-runner.ts",
@@ -358,7 +546,9 @@
      "@anthropic-ai/claude-agent-sdk:*"
     ],
     "toolEntryOnly": [],
-    "typeEntryOnly": []
+    "typeEntryOnly": [],
+    "resolveOnly": [],
+    "resolveClosure": []
    }
   },
   "A3": {
@@ -367,6 +557,13 @@
     "late": 0,
     "otherSeam": 0,
     "violations": []
+   },
+   "todayOnAdopterSource": {
+    "calls": 0,
+    "late": 0,
+    "otherSeam": 0,
+    "violations": [],
+    "steps": 12
    },
    "demand": {
     "calls": 1,
@@ -483,7 +680,27 @@
      "queryViewRef"
     ],
     "quiet": [],
-    "R-OTHER-RECORD": []
+    "R-OTHER-RECORD": [],
+    "forms": {
+     "extends": [
+      "witness"
+     ],
+     "mergedBefore": [
+      "witness"
+     ],
+     "mergedAfter": [
+      "witness"
+     ],
+     "computedKey": [
+      "witness"
+     ],
+     "importedBase": [
+      "witness"
+     ],
+     "intersection": [
+      "witness"
+     ]
+    }
    }
   },
   "B2": {
@@ -532,6 +749,53 @@
     "notObject": [
      "receipt-not-object"
     ],
+    "floatEpoch": [
+     "field-type:host_epoch"
+    ],
+    "nanEpoch": [
+     "field-type:host_epoch"
+    ],
+    "unsafeEpoch": [
+     "field-type:host_epoch"
+    ],
+    "stringEpoch": [
+     "field-type:host_epoch"
+    ],
+    "booleanGeneration": [
+     "field-type:generation"
+    ],
+    "nestedWrap": [
+     "field-extra:witness",
+     "field-missing:generation",
+     "field-missing:host_epoch",
+     "field-missing:source_digest",
+     "field-missing:trace_id"
+    ],
+    "nulledDigest": [
+     "field-mismatch:source_digest"
+    ],
+    "allNull": [
+     "field-mismatch:generation",
+     "field-mismatch:host_epoch",
+     "field-mismatch:source_digest",
+     "field-mismatch:trace_id"
+    ],
+    "aliasMember": [
+     "missing"
+    ],
+    "upperKeys": [
+     "field-extra:GENERATION",
+     "field-extra:HOST_EPOCH",
+     "field-extra:SOURCE_DIGEST",
+     "field-extra:TRACE_ID",
+     "field-missing:generation",
+     "field-missing:host_epoch",
+     "field-missing:source_digest",
+     "field-missing:trace_id"
+    ],
+    "emptyTrace": [
+     "field-mismatch:trace_id"
+    ],
     "R-SAME-VALUE": []
    }
   },
@@ -573,6 +837,45 @@
     "manifest": [
      "package.json:dependencies:@acme/reactive-query query",
      "package.json:devDependencies:reactive-inference-sdk inference"
+    ],
+    "specAlias": [
+     "package.json:dependencies:rq:spec query"
+    ],
+    "specFile": [
+     "package.json:dependencies:@acme/evidence:spec query"
+    ],
+    "specGit": [
+     "package.json:dependencies:evidence-engine:spec query"
+    ],
+    "escapedUnicode": [
+     "src/plant.ts:1 query"
+    ],
+    "escapedHex": [
+     "src/plant.ts:1 query"
+    ],
+    "escapedBrace": [
+     "src/plant.ts:1 query"
+    ],
+    "escapedIdentity": [
+     "src/plant.ts:1 query"
+    ],
+    "zeroWidthSplit": [
+     "src/plant.ts:1 inference"
+    ],
+    "softHyphenSplit": [
+     "src/plant.ts:1 query"
+    ],
+    "innerInvisible": [
+     "src/plant.ts:1 inference"
+    ],
+    "blockContinued": [
+     "src/plant.ts:1 query"
+    ],
+    "htmlEntity": [
+     "src/plant.ts:1 query"
+    ],
+    "percentEncoded": [
+     "src/plant.ts:1 query"
     ]
    },
    "quiet": {
@@ -584,7 +887,9 @@
     "R-COMPOSED": [],
     "R-LOOKALIKE": [],
     "R-RF-INTERNAL": [],
-    "R-OUTSIDE-ROOTS": []
+    "R-OUTSIDE-ROOTS": [],
+    "R-SEPARATOR": [],
+    "R-ENCODED": []
    },
    "roles": {
     "titleNames": [
