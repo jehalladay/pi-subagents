@@ -1,6 +1,7 @@
 /**
- * wb-tz2.11 (HX-ORIGINAL-GOALS-CLOSURE-R11), STANDING LEG ONLY, cut #3 (the respin of refusal #2, gate-prep-22 / g10-gate-s127,
- * gate-refused M:31621; refusal #1 was gate-prep-19 / g10-gate-s126, M:30519): the HyperUnix custody-claims census. Pi's
+ * wb-tz2.11 (HX-ORIGINAL-GOALS-CLOSURE-R11), STANDING LEG ONLY, cut #4, the FINAL cut (orchestrator ruling R-B83, M:34371: the
+ * rule-19 structural exit after refusal #3, gate-prep-13 / g10-gate-s139, gate-refused M:34363; refusal #2 was gate-prep-22 /
+ * g10-gate-s127, M:31621; refusal #1 gate-prep-19 / g10-gate-s126, M:30519): the HyperUnix custody-claims census. Pi's
  * dispose/close custody tests for the HX SDK prove the CALLS, never the termination, and no Pi test or qa script hand-rolls a
  * real-process kill falsifier for the HX child in place of the SDK-owned conformance.
  *
@@ -16,10 +17,15 @@
  * (artifact id + hx sha), and the census that the citation names it, wait for that receipt (HXGC-OPS-002 reads status DESIGN in
  * HyperUnix-CLI's requirements.jsonl:12, with no sdk/conformance receipt). The bead stays open for that leg.
  *
- * FORM OF RECORD (enumerate-the-resolvable, taken at cut #3 as refusal #2's LOOP-CAP DISCLOSURE permits): each row claims exactly
- * the read set this header enumerates for it, and a calibration plant pins each read form; every known unread family is a named
- * residual (R-*) with a pinned quiet row; a spelling outside a row's read set is a member of a residual family, never a claim of
- * that row. "Every" and "no" below range over the enumerated forms.
+ * FORM OF RECORD (enumerate-the-resolvable, taken at cut #3 as refusal #2's LOOP-CAP DISCLOSURE permits, kept at cut #4): each row
+ * claims exactly the read set this header enumerates for it, and a calibration plant pins each read form; every known unread
+ * family is a named residual (R-*) with a pinned quiet row; a spelling outside a row's read set is a member of a residual family,
+ * never a claim of that row. "Every" and "no" below range over the enumerated forms. FAIL-CLOSED CORE (cut #4, R-B83): every C2 and
+ * C7 claim states exactly the reader forms its plants prove, and where a reader cannot tell which binding, alias or flag form
+ * applies it reads every candidate instead of picking one - a const name reads every const declaration of it, a root naming a
+ * platform global reads as that global, a wrapped command reads every word past its wrapper - so the doubt reds and never hides
+ * a member. The full-surface readers (each binding resolved in its own scope, every wrapper flag form modelled) are child bead
+ * wb-tz2.16's.
  *
  * VOCABULARY OF RECORD (termination claims, five rows): W1 the terminate family (HXGC-OPS-002 "terminate owned child-process
  * trees"; the SDK transport's own "the owned process tree is terminated"); W2 every signal name (anchored outside: every key of
@@ -46,18 +52,26 @@
  * nativeHyperUnixFind(...) call, a registry.invoke(...) call on a const registry declared once as new CapabilityRegistry() and
  * referenced only as that receiver or as a provider-entry argument (so no stand-in capability is registered on it), or an
  * identifier declared once by const with one of those calls as its initializer and referenced in the case only as an expect
- * subject; no assertion in the suite sits outside its cases; the suite makes no assert call; no BOUND name is re-bound. MOCKS: no MODULE_MOCKS call (mock or doMock on vi or on
- * vitest, read through calleeName: a member or a string-keyed element) has a specifier - its first argument as a string literal or
- * a const-bound one, or the literal an import(...) first argument loads - that specifierTarget resolves (relative to test/,
- * root-relative, absolute under the root, else under node_modules; the extension and a trailing /index dropped) to the provider
- * or registry file or to a path inside the SDK package. TAMPERS, file-wide (every suite, hook and top-level statement): no
- * vi.spyOn other than vi.spyOn(HyperUnix, "open"); no GLOBAL_STUBS call (vi.stubGlobal, vi.useFakeTimers, vi.setSystemTime); no
- * WATCHED callee (vi.spyOn, the GLOBAL_STUBS, the MUTATORS, the MODULE_MOCKS) referenced other than as a call's callee (so call /
- * apply / bind of one, an alias of one or one passed as an argument counts); and
- * no assignment (= or a compound operator), delete, ++ or --, nor a MUTATORS call (Object.assign / defineProperty /
- * defineProperties / setPrototypeOf, Reflect.set / defineProperty / deleteProperty / setPrototypeOf) on a member chain or name whose
- * root is a global or an import binding, followed through const aliases. A chain rooted at process.env, and vi.stubEnv, is the
- * environment, which the stubbed HyperUnix.open makes inert; it is not read.
+ * subject; no assertion in the suite sits outside its cases; the suite makes no assert call; no BOUND name is re-bound. CALLEES (C2
+ * and C7) read through calleeChains: every dotted spelling - a member, or an element keyed by a string literal or a const binding
+ * (every value of it; any other key reads <computed>) - with a root identifier also read as each name or member chain its const
+ * declarations alias (every declaration), and a leading globalThis. or global. dropped. MOCKS: no call whose callee chains hold a
+ * MODULE_MOCKS name (mock or doMock on vi or on vitest) has a specifier - each string value of its first argument (a literal, or
+ * every value a const name reaches), or of the literal an import(...) first argument loads - that specifierTarget resolves
+ * (relative to test/, root-relative, absolute under the root, else under node_modules; the extension and a trailing /index
+ * dropped) to the provider or registry file or to a path inside the SDK package. TAMPERS, file-wide (every suite, hook and
+ * top-level statement): no vi.spyOn other than vi.spyOn(HyperUnix, "open") (its "open" read only from a literal or from a name the
+ * file declares exactly once); no GLOBAL_STUBS call (vi.stubGlobal, vi.useFakeTimers, vi.setSystemTime); no WATCHED callee
+ * (vi.spyOn, the GLOBAL_STUBS, the MUTATORS, the MODULE_MOCKS) referenced other than as a call's callee (so call / apply / bind of
+ * one, an alias of one, one destructured from its owner - const { assign } = Object, or a destructuring assignment, a rest element
+ * counting as every member - or one passed as an argument counts); and no assignment (= or a compound operator; every target of
+ * an array or object destructuring-assignment pattern, nested, spread and rest included), for-in or for-of target, delete, ++ or
+ * --, nor a MUTATORS call (Object.assign / defineProperty / defineProperties / setPrototypeOf, Reflect.set / defineProperty /
+ * deleteProperty / setPrototypeOf) on a member chain or name whose root is a global or an import binding. ROOTS, fail-closed: a
+ * root the file declares no local of, or a root GLOBAL_NAMES holds (a property name of the running platform's globalThis) even
+ * where the file declares a local of that name in some scope; a local root is followed through EVERY const declaration of its
+ * name. A chain rooted at process.env, and vi.stubEnv, is the environment, which the stubbed HyperUnix.open makes inert; it is not
+ * read.
  * C3 STAND-INS ONLY: every case's callback body holds, as a top-level statement (an expression statement, or a lone const
  * declaration's initializer) before the first top-level statement that references a provider entry, a vi.spyOn(HyperUnix, "open")
  * call with a MOCKED_RETURNS return; no case calls a STUB_UNDOS member (mockRestore, mockReset) or an ALL_UNDOS restore
@@ -80,14 +94,20 @@
  * an alias binding, or through call / apply / bind) - abort -> stop -> kill -> process.kill(-child.pid). Every string signal
  * argument of a kill call (kill(...) or .kill(...)) in it or Pi's RF provider is a W2 term and every kill call's name a W3 term.
  * C7 NO HAND-ROLLED KILL FALSIFIER: the judged files are the test/ and qa/ sources (.ts .mts .cts .js .mjs .cjs; node_modules
- * skipped; this file excluded, it spells the detector) that hold a DRIVER_TOKENS needle and that hxDrivers classes by a driving
- * form. "import": an import or export-from declaration of an HX module (the SDK or a path inside it, or a path ending
- * providers/hyperunix or hyperunix-observer) that is not type-only (import type / export type, or named bindings each marked type),
- * an import-equals of one (not type-only), or a call through LOADERS (import(), require, module.require, vi.importActual,
- * vi.importMock) or a created require (a call of a call) whose first argument is a literal or const-bound HX module. "invoke": a
- * .invoke(...) call whose first argument is the literal or const-bound hyperunix.find. "override": HYPERUNIX_HX as a member or
- * element key (literal or const-bound) on any receiver, a destructuring or destructuring-assignment key, an object-literal key,
- * the left operand of an in, or an argument of an ENV_CALLS call or of an ENV_METHODS method call. A judged file carries no
+ * skipped; this file excluded, it spells the detector) whose text, raw or unescaped (its JavaScript string escapes - \xHH, \uHHHH,
+ * \u{H...}, legacy octal, a line continuation, any other escaped character as itself - and its %HH escapes decoded), holds
+ * DRIVER_NEEDLE (hyperunix, any case; every DRIVER_TOKENS member holds it) and that hxDrivers classes by a driving form. CONST
+ * NAMES, fail-closed: a "const-bound" argument or key reads EVERY value the const declarations of its name reach, alias links
+ * included, so a name const-declared in several scopes drives when any of its values does (its own scope is not resolved).
+ * "import": an import or export-from declaration of an HX module that is not type-only (import type / export type, or named
+ * bindings each marked type), an import-equals of one (not type-only), or a call through LOADERS (import(), require,
+ * module.require, vi.importActual, vi.importMock; read through calleeChains) or a created require (a call of a call) whose first
+ * argument is a literal or const-bound HX module. An HX module, read after %HH decoding and posix path normalization: the SDK
+ * package or a subpath of it, a path into node_modules/@hyperunix/sdk, or a path ending providers/hyperunix or hyperunix-observer.
+ * "invoke": a call whose callee chains end .invoke and whose first argument is the literal or const-bound hyperunix.find.
+ * "override": HYPERUNIX_HX as a member or element key (literal or const-bound) on any receiver, a destructuring or
+ * destructuring-assignment key, an object-literal key, the left operand of an in, or an argument of an ENV_CALLS call or of an
+ * ENV_METHODS method call (callees read through calleeChains). A judged file carries no
  * falsifier shape: F1 a kill member read (.kill, ["kill"] or a const-bound element key, on any receiver, called or not, so call /
  * apply / bind of it count; typeof x.kill in a type counts), a kill destructured, destructuring-assigned or imported, a bare
  * kill(...) call, or the literal "kill" (trimmed) outside a spawner's argument; F2 the same member forms for pid, or the literal
@@ -95,7 +115,10 @@
  * PROCESS_TABLE tool by basename - a string that is no key, or a template part, split at COMMAND_SEPARATOR, each piece read past VAR=value words
  * and SHELL_KEYWORDS, through each WRAPPERS wrapper (its flags, its option table's options with their argument, its positionals;
  * an option of its command table reads the rest as a command; "--" ends the options), and into a SHELLS shell's first command flag
- * (a dash word holding c, or --command); F4 the word ESRCH (ESRCH_WORD, any case) in an identifier, member or key name read as
+ * (a dash word holding c, or --command) - and, fail-closed, every fragment (each word split at quotes and "=") of every word past a
+ * WRAPPERS wrapper or a SHELLS shell in head position, so a flag form the option tables do not model (su's or env's lone "-",
+ * "--" after a shell's command flag, an attached or unlisted option argument) still reads its command; F4 the word ESRCH
+ * (ESRCH_WORD, any case) in an identifier, member or key name read as
  * words, or in a string, template part or regular expression (escapes decoded). A defined key (an object-literal property, a
  * method, a class or type member) is no read of kill or pid (R-DEFINITION).
  * C8 DOCS: every .md file under docs/workbench is read as marked 18.0.11 (the repo's renderer) renders it to HTML, and this view
@@ -109,6 +132,16 @@
  * the on-landing citation's form.
  * C9 RUN PIN: the run pin's literals name the suite, every CASES title, this file's suite and every case of this file.
  *
+ * CURES OF REFUSAL #3 (cut #4, the fail-closed core; each named in the delivery note; each member a calibration plant, the gate's
+ * own text where it was a code member): U1 a const name reads every const declaration of it (the shadowed SDK import, HYPERUNIX_HX
+ * key and hyperunix.find invoke, and a shadowed kill key); U2 every word past a wrapper or a shell reads (su - root -c, env -,
+ * sh -c --, attached and unlisted option arguments); U3 every destructuring-assignment and for-of target is a write and MUTATORS
+ * read through globalThis and const aliases (the gate's G10x, G11x, G12x, G12bx and G13x forges, plus a destructured mutator, an
+ * aliased spy, a global shadowed by a local and a const-keyed module mock); U4 the prefilter reads the text unescaped and the C7
+ * title states its needle (an escaped specifier, escaped needle letters, a line continuation, an escaped override name, a
+ * percent-encoded path). F5 (rides): a node_modules path into the SDK and a non-normal provider path class as "import". F1, F2 and
+ * F4 (ride) are named residuals with pinned quiet rows (R-BIDI, R-RUNTIME, R-COMPOSED); F6 and F7 are pinned R-CLAUSE and R-WRAPPER
+ * members.
  * CURES OF REFUSAL #2 (each named in the delivery note; each member is a calibration plant, verbatim where it was a code member):
  * U1 F3 reads a wrapper through its option table (option arguments and positionals passed over) and a shell's flags before its
  * command flag (timeout -s TERM, sudo -u, env -u, bash -o pipefail -c, sh -e -c); U2 the classifier resolves const-bound loader
@@ -133,7 +166,7 @@
  * RESIDUALS (each a named family with its pinned row, R-* below; the row plants a member and shows the reader quiet on it beside a
  * control the same reader catches): R-WORDING, R-UNANCHORED, R-SHAPELESS, R-COMPOSED, R-ERRNO, R-UNDRIVEN, R-ARGUMENTS, R-RUNTIME,
  * R-DEAD-PATH, R-CLAUSE, R-CITATION, R-REFERENCE, R-LOOKALIKE, R-ATTRIBUTE, R-SCOPE, R-DETACHED-COMMENT, R-WRAPPER, R-INDIRECT,
- * R-DATA-OVERRIDE, R-DEFINITION, R-ELSEWHERE, R-HELPER-REGISTRATION, R-GROUP-FORM (RESIDUALS names each family; the records row
+ * R-DATA-OVERRIDE, R-DEFINITION, R-ELSEWHERE, R-HELPER-REGISTRATION, R-GROUP-FORM, R-BIDI (RESIDUALS names each family; the records row
  * requires every one to have run to its end).
  *
  * Display paths added: none. Test-only: spawns nothing, writes nothing, reads sources and docs and parses planted text in memory.
@@ -379,36 +412,77 @@ const FILLERS: ReadonlySet<string> = new Set([0x115f, 0x1160, 0x3164, 0xffa0].ma
 function visible(text: string): string {
   return text.replace(/\p{Default_Ignorable_Code_Point}/gu, char => (FILLERS.has(char) ? " " : ""));
 }
-const CONST_STRINGS = new WeakMap<ts.SourceFile, ReadonlyMap<string, string>>();
-/** Every const binding of a file whose initializer is a string literal, or a const alias chain ending in one, by name. */
-function constStrings(source: ts.SourceFile): ReadonlyMap<string, string> {
+const CONST_INITIALIZERS = new WeakMap<ts.SourceFile, ReadonlyMap<string, readonly ts.Expression[]>>();
+/** Every const declaration of a file that has an initializer, by name, in source order: a name const-declared in several scopes keeps every one. */
+function constInitializers(source: ts.SourceFile): ReadonlyMap<string, readonly ts.Expression[]> {
+  const cached = CONST_INITIALIZERS.get(source);
+  if (cached !== undefined) return cached;
+  const out = new Map<string, ts.Expression[]>();
+  for (const node of descendants(source)) {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined && isConst(node)) out.set(node.name.text, [...(out.get(node.name.text) ?? []), node.initializer]);
+  }
+  CONST_INITIALIZERS.set(source, out);
+  return out;
+}
+const CONST_STRINGS = new WeakMap<ts.SourceFile, ReadonlyMap<string, readonly string[]>>();
+/**
+ * Every const binding of a file whose initializer is a string literal, or a const alias chain ending in one, by name: a name maps
+ * to the values EVERY const declaration of it reaches, each alias link followed through every declaration of its own name
+ * (distinct, sorted). The binding's own scope is not resolved, so a name const-declared in several scopes reads all of its values
+ * (fail-closed, refusal #3 U1: the last declaration no longer wins).
+ */
+function constStrings(source: ts.SourceFile): ReadonlyMap<string, readonly string[]> {
   const cached = CONST_STRINGS.get(source);
   if (cached !== undefined) return cached;
-  const initializers = new Map<string, ts.Expression>();
-  for (const node of descendants(source)) {
-    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined && isConst(node)) initializers.set(node.name.text, node.initializer);
-  }
-  const chained = (name: string, seen: ReadonlySet<string>): string | undefined => {
-    const initializer = seen.has(name) ? undefined : initializers.get(name);
-    if (initializer === undefined) return undefined;
-    const inner = bare(initializer);
-    if (ts.isStringLiteralLike(inner)) return inner.text;
-    return ts.isIdentifier(inner) ? chained(inner.text, new Set([...seen, name])) : undefined;
-  };
-  const out = new Map<string, string>();
+  const initializers = constInitializers(source);
+  const chained = (name: string, seen: ReadonlySet<string>): string[] =>
+    seen.has(name)
+      ? []
+      : (initializers.get(name) ?? []).flatMap(initializer => {
+          const inner = bare(initializer);
+          if (ts.isStringLiteralLike(inner)) return [inner.text];
+          return ts.isIdentifier(inner) ? chained(inner.text, new Set([...seen, name])) : [];
+        });
+  const out = new Map<string, readonly string[]>();
   for (const name of initializers.keys()) {
-    const value = chained(name, new Set());
-    if (value !== undefined) out.set(name, value);
+    const values = [...new Set(chained(name, new Set()))].sort();
+    if (values.length > 0) out.set(name, values);
   }
   CONST_STRINGS.set(source, out);
   return out;
 }
-/** The string a node spells: a string literal or no-substitution template, or an identifier const-bound to one (constStrings). */
+/** Every string a node may spell: a string literal or no-substitution template, or an identifier const-bound to one - every value its name's const declarations reach (constStrings). */
+function stringValues(node: ts.Node | undefined): readonly string[] {
+  if (node === undefined) return [];
+  const inner = bare(node);
+  if (ts.isStringLiteralLike(inner)) return [inner.text];
+  return ts.isIdentifier(inner) ? (constStrings(inner.getSourceFile()).get(inner.text) ?? []) : [];
+}
+const DECLARATION_COUNTS = new WeakMap<ts.SourceFile, ReadonlyMap<string, number>>();
+/** How many times a file declares each name, in any binding form (declaredNames: imports, variables, parameters, binding elements, functions, classes, enums). */
+function declarationCounts(source: ts.SourceFile): ReadonlyMap<string, number> {
+  const cached = DECLARATION_COUNTS.get(source);
+  if (cached !== undefined) return cached;
+  const out = new Map<string, number>();
+  for (const entry of declaredNames(source)) out.set(entry.name, (out.get(entry.name) ?? 0) + 1);
+  DECLARATION_COUNTS.set(source, out);
+  return out;
+}
+/** The value of a name the file declares exactly once, in any binding form, as a const reaching one string through names each declared once - else undefined. */
+function soleString(source: ts.SourceFile, name: string, seen: ReadonlySet<string>): string | undefined {
+  const initializers = constInitializers(source).get(name) ?? [];
+  const initializer = initializers[0];
+  if (initializer === undefined || initializers.length !== 1 || seen.has(name) || declarationCounts(source).get(name) !== 1) return undefined;
+  const inner = bare(initializer);
+  if (ts.isStringLiteralLike(inner)) return inner.text;
+  return ts.isIdentifier(inner) ? soleString(source, inner.text, new Set([...seen, name])) : undefined;
+}
+/** The ONE string a node spells, or undefined: a literal, or an identifier soleString resolves - so an exemption never follows a name the file declares twice (fail-closed). */
 function stringValue(node: ts.Node | undefined): string | undefined {
   if (node === undefined) return undefined;
   const inner = bare(node);
   if (ts.isStringLiteralLike(inner)) return inner.text;
-  return ts.isIdentifier(inner) ? constStrings(inner.getSourceFile()).get(inner.text) : undefined;
+  return ts.isIdentifier(inner) ? soleString(inner.getSourceFile(), inner.text, new Set()) : undefined;
 }
 /** A callee as dotted text: property access and string-keyed element access both read as a.b (an element key reads as its member). */
 function calleeName(expression: ts.Expression): string {
@@ -416,6 +490,33 @@ function calleeName(expression: ts.Expression): string {
   if (ts.isPropertyAccessExpression(inner)) return `${calleeName(inner.expression)}.${inner.name.text}`;
   if (ts.isElementAccessExpression(inner) && ts.isStringLiteralLike(inner.argumentExpression)) return `${calleeName(inner.expression)}.${inner.argumentExpression.text}`;
   return ts.isIdentifier(inner) ? inner.text : `<${ts.SyntaxKind[inner.kind]}>`;
+}
+/** A leading read of the global object through itself (globalThis. or global.), which a callee chain drops: globalThis.Object.assign reads Object.assign. */
+const GLOBAL_PREFIX = /^(?:(?:globalThis|global)\.)+/;
+const unglobal = (chain: string): string => chain.replace(GLOBAL_PREFIX, "");
+const isChainExpression = (node: ts.Node): boolean => {
+  const inner = bare(node);
+  return ts.isIdentifier(inner) || ts.isPropertyAccessExpression(inner) || ts.isElementAccessExpression(inner);
+};
+/**
+ * Every dotted spelling a callee may have: a property access, and an element access keyed by a string literal or a const binding
+ * (every value of it, stringValues; any other key reads <computed>), each read as a.b; a root identifier also reads as each name
+ * or member chain its const declarations alias (every declaration, cycle-guarded); a leading globalThis. or global. is dropped
+ * (refusal #3 U3: Object.assign reached through globalThis or through a const alias of Object reads as Object.assign).
+ */
+function calleeChains(expression: ts.Node, seen: ReadonlySet<string> = new Set()): readonly string[] {
+  const inner = bare(expression);
+  let chains: readonly string[];
+  if (ts.isPropertyAccessExpression(inner)) chains = calleeChains(inner.expression, seen).map(base => `${base}.${inner.name.text}`);
+  else if (ts.isElementAccessExpression(inner)) {
+    const keys = stringValues(inner.argumentExpression);
+    const bases = calleeChains(inner.expression, seen);
+    chains = (keys.length > 0 ? keys : ["<computed>"]).flatMap(key => bases.map(base => `${base}.${key}`));
+  } else if (ts.isIdentifier(inner)) {
+    const aliases = seen.has(inner.text) ? [] : (constInitializers(inner.getSourceFile()).get(inner.text) ?? []).filter(isChainExpression);
+    chains = [inner.text, ...aliases.flatMap(alias => calleeChains(alias, new Set([...seen, inner.text])))];
+  } else chains = [`<${ts.SyntaxKind[inner.kind]}>`];
+  return [...new Set(chains.map(unglobal))];
 }
 
 // ---- comments ---------------------------------------------------------------------------------------------------------
@@ -764,18 +865,20 @@ function reboundNames(source: ts.SourceFile): string[] {
     .filter(entry => BOUND.has(entry.name) && !(entry.kind === "import" && entry.from === BOUND.get(entry.name)))
     .map(entry => `${entry.name} :${entry.line} (${entry.kind}${entry.from === undefined ? "" : ` from ${entry.from}`})`);
 }
-/** A module mock's specifier: its first argument as a string value (stringValue), or the string an import(...) argument loads. */
-function mockSpecifier(argument: ts.Expression | undefined): string | undefined {
+/** A module mock's specifiers: its first argument's string values (stringValues), or those of the string an import(...) argument loads. */
+function mockSpecifiers(argument: ts.Expression | undefined): readonly string[] {
   const inner = argument === undefined ? undefined : bare(argument);
-  if (inner !== undefined && ts.isCallExpression(inner) && inner.expression.kind === ts.SyntaxKind.ImportKeyword) return stringValue(inner.arguments[0]);
-  return stringValue(inner);
+  if (inner !== undefined && ts.isCallExpression(inner) && inner.expression.kind === ts.SyntaxKind.ImportKeyword) return stringValues(inner.arguments[0]);
+  return stringValues(inner);
 }
-/** Every module mock whose specifier resolves to a guarded module (specifierTarget). */
+/** Every module mock (a call whose calleeChains hold a MODULE_MOCKS name) with a specifier value that resolves to a guarded module (specifierTarget). */
 function moduleMocks(source: ts.SourceFile): string[] {
   return callsIn(source).flatMap(call => {
-    const callee = calleeName(call.expression);
-    const specifier = MODULE_MOCKS.has(callee) ? mockSpecifier(call.arguments[0]) : undefined;
-    return specifier !== undefined && isGuardedTarget(specifierTarget(specifier)) ? [`${callee}(${specifier}) :${lineOf(source, call)}`] : [];
+    const mock = calleeChains(call.expression).find(name => MODULE_MOCKS.has(name));
+    if (mock === undefined) return [];
+    return mockSpecifiers(call.arguments[0])
+      .filter(specifier => isGuardedTarget(specifierTarget(specifier)))
+      .map(specifier => `${mock}(${specifier}) :${lineOf(source, call)}`);
   });
 }
 /** The vitest calls that stub a global; vi.stubEnv sets the environment and is read with process.env below. */
@@ -791,59 +894,109 @@ const IMPORT_KINDS: ReadonlySet<string> = new Set(["import", "ImportClause", "Na
 function localNames(source: ts.SourceFile): ReadonlySet<string> {
   return new Set(declaredNames(source).filter(entry => !IMPORT_KINDS.has(entry.kind)).map(entry => entry.name));
 }
-/** A member chain as dotted text when its root is a global or an import binding (followed through const aliases), else undefined. */
-function outsideChain(node: ts.Node, source: ts.SourceFile, locals: ReadonlySet<string>, seen: ReadonlySet<string> = new Set()): string | undefined {
+/** The names of the running platform's global object: a root spelling one of them reads as that global even where the file declares a local of the same name in some scope (the shadowing scope is not resolved: fail-closed). */
+const GLOBAL_NAMES: ReadonlySet<string> = new Set(Object.getOwnPropertyNames(globalThis));
+/**
+ * Every member chain a node may write, as dotted text, whose root is a global or an import binding: a root the file declares no
+ * local of, or one GLOBAL_NAMES holds; a local root followed through EVERY const declaration of its name (its aliases); a key spelled
+ * through a const binding read as every value of it (stringValues; any other key reads <computed>, never the environment).
+ */
+function outsideChains(node: ts.Node, source: ts.SourceFile, locals: ReadonlySet<string>, seen: ReadonlySet<string> = new Set()): readonly string[] {
   const inner = bare(node);
   if (ts.isPropertyAccessExpression(inner) || ts.isElementAccessExpression(inner)) {
-    const base = outsideChain(inner.expression, source, locals, seen);
-    const key = ts.isPropertyAccessExpression(inner) ? inner.name.text : (stringValue(inner.argumentExpression) ?? "<computed>");
-    return base === undefined ? undefined : `${base}.${key}`;
+    const keys = ts.isPropertyAccessExpression(inner) ? [inner.name.text] : stringValues(inner.argumentExpression);
+    return outsideChains(inner.expression, source, locals, seen).flatMap(base => (keys.length > 0 ? keys : ["<computed>"]).map(key => `${base}.${key}`));
   }
-  if (!ts.isIdentifier(inner)) return undefined;
-  if (!locals.has(inner.text)) return inner.text;
-  const alias = seen.has(inner.text) ? undefined : descendants(source).find((entry): entry is ts.VariableDeclaration => ts.isVariableDeclaration(entry) && ts.isIdentifier(entry.name) && entry.name.text === inner.text && isConst(entry));
-  return alias?.initializer === undefined ? undefined : outsideChain(alias.initializer, source, locals, new Set([...seen, inner.text]));
+  if (!ts.isIdentifier(inner)) return [];
+  const own = !locals.has(inner.text) || GLOBAL_NAMES.has(inner.text) ? [inner.text] : [];
+  const aliases = seen.has(inner.text) ? [] : (constInitializers(source).get(inner.text) ?? []);
+  return [...new Set([...own, ...aliases.flatMap(alias => outsideChains(alias, source, locals, new Set([...seen, inner.text])))])];
 }
 const isEnvironment = (chain: string): boolean => {
-  const path = chain.replace(/^globalThis\./, "");
+  const path = unglobal(chain);
   return path === ENVIRONMENT || path.startsWith(`${ENVIRONMENT}.`);
 };
-/** Every write to a global or an import binding anywhere in a file: a vi.spyOn beside HyperUnix.open, a GLOBAL_STUBS call, an assignment, delete or update of a chain rooted outside the file, or a MUTATORS call on one - the environment left out. */
+/**
+ * The targets a write names: the expression itself, or every element of an array or object destructuring-assignment pattern (nested,
+ * spread / rest included; a shorthand property's own name). A default inside a pattern (x = v) is an assignment the walk reads by
+ * itself, so it adds nothing here (refusal #3 U3: [JSON.parse] = [forged] and ({ parse: JSON.parse } = ...) name JSON.parse).
+ */
+function assignmentTargets(target: ts.Node): ts.Node[] {
+  const inner = bare(target);
+  if (ts.isArrayLiteralExpression(inner)) return inner.elements.flatMap(element => (ts.isOmittedExpression(element) ? [] : assignmentTargets(ts.isSpreadElement(element) ? element.expression : element)));
+  if (ts.isObjectLiteralExpression(inner)) {
+    return inner.properties.flatMap((property): ts.Node[] => {
+      if (ts.isPropertyAssignment(property)) return assignmentTargets(property.initializer);
+      if (ts.isShorthandPropertyAssignment(property)) return [property.name];
+      return ts.isSpreadAssignment(property) ? assignmentTargets(property.expression) : [];
+    });
+  }
+  if (ts.isBinaryExpression(inner) && inner.operatorToken.kind === ts.SyntaxKind.EqualsToken) return [];
+  return [inner];
+}
+/** The member chains a destructuring pattern reads from the chains its source spells: each key under each base (a rest element reads base.*), nested patterns followed. */
+function patternMembers(pattern: ts.Node, bases: readonly string[]): string[] {
+  const inner = bare(pattern);
+  const under = (keys: readonly string[]): string[] => keys.flatMap(key => bases.map(base => `${base}.${key}`));
+  if (ts.isObjectBindingPattern(inner)) {
+    return inner.elements.flatMap(element => (element.dotDotDotToken !== undefined ? under(["*"]) : patternMembers(element.name, under(keyTexts(element.propertyName ?? element.name)))));
+  }
+  if (ts.isObjectLiteralExpression(inner)) {
+    return inner.properties.flatMap((property): string[] => {
+      if (ts.isSpreadAssignment(property)) return under(["*"]);
+      if (ts.isPropertyAssignment(property)) return patternMembers(property.initializer, under(keyTexts(property.name)));
+      return ts.isShorthandPropertyAssignment(property) ? under([property.name.text]) : [];
+    });
+  }
+  return [...bases];
+}
+/** The WATCHED names a list of member chains holds; a rest read (base.*) holds every WATCHED name under its base. */
+const watchedIn = (members: readonly string[]): string[] =>
+  members.map(unglobal).flatMap(member => (member.endsWith(".*") ? [...WATCHED].filter(name => name.startsWith(member.slice(0, -1))) : WATCHED.has(member) ? [member] : []));
+/**
+ * Every write to a global or an import binding anywhere in a file: a vi.spyOn beside HyperUnix.open, a GLOBAL_STUBS call, an
+ * assignment (each target of a destructuring pattern included), a for-in / for-of target, a delete or update of a chain rooted
+ * outside the file, or a MUTATORS call on one - the environment left out; and every WATCHED callee read other than as a call's
+ * callee, a destructured alias of one included. Callees read through calleeChains.
+ */
 function tampersIn(source: ts.SourceFile): string[] {
   const locals = localNames(source);
-  const outside = (node: ts.Node): string | undefined => {
-    const chain = outsideChain(node, source, locals);
-    return chain === undefined || isEnvironment(chain) ? undefined : chain;
-  };
+  const outside = (node: ts.Node): readonly string[] => outsideChains(node, source, locals).filter(chain => !isEnvironment(chain));
   return descendants(source).flatMap((node): string[] => {
     const at = (what: string): string[] => [`${what} :${lineOf(source, node)}`];
-    if ((ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) && WATCHED.has(calleeName(node))) {
-      let link: ts.Node = node;
-      while (ts.isParenthesizedExpression(link.parent)) link = link.parent;
-      if (!(ts.isCallExpression(link.parent) && link.parent.expression === link)) return at(`${calleeName(node)} referenced as a value`);
+    if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) {
+      const watched = calleeChains(node).find(name => WATCHED.has(name));
+      if (watched !== undefined) {
+        let link: ts.Node = node;
+        while (ts.isParenthesizedExpression(link.parent)) link = link.parent;
+        if (!(ts.isCallExpression(link.parent) && link.parent.expression === link)) return at(`${watched} referenced as a value`);
+      }
+    }
+    if (ts.isVariableDeclaration(node) && !ts.isIdentifier(node.name) && node.initializer !== undefined) {
+      return watchedIn(patternMembers(node.name, calleeChains(node.initializer))).flatMap(name => at(`${name} referenced as a value`));
     }
     if (ts.isCallExpression(node)) {
-      const callee = calleeName(node.expression);
-      if (GLOBAL_STUBS.has(callee)) return at(callee);
-      if (callee === "vi.spyOn") {
+      const callees = calleeChains(node.expression);
+      const stub = callees.find(name => GLOBAL_STUBS.has(name));
+      if (stub !== undefined) return at(stub);
+      if (callees.includes("vi.spyOn")) {
         const [target, method] = node.arguments;
         const open = target !== undefined && ts.isIdentifier(bare(target)) && (bare(target) as ts.Identifier).text === "HyperUnix" && stringValue(method) === "open";
         return open ? [] : at(`vi.spyOn(${target?.getText() ?? ""})`);
       }
-      const chain = MUTATORS.has(callee) ? outside(node.arguments[0] ?? node) : undefined;
-      return chain === undefined ? [] : at(`${callee}(${chain})`);
+      const mutator = callees.find(name => MUTATORS.has(name));
+      return mutator === undefined ? [] : outside(node.arguments[0] ?? node).flatMap(chain => at(`${mutator}(${chain})`));
     }
     if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment) {
-      const chain = outside(node.left);
-      return chain === undefined ? [] : at(`${chain} assigned`);
+      const aliased = node.operatorToken.kind === ts.SyntaxKind.EqualsToken && !isChainExpression(node.left) ? watchedIn(patternMembers(node.left, calleeChains(node.right))) : [];
+      return [...assignmentTargets(node.left).flatMap(outside).flatMap(chain => at(`${chain} assigned`)), ...aliased.flatMap(name => at(`${name} referenced as a value`))];
     }
-    if (ts.isDeleteExpression(node)) {
-      const chain = outside(node.expression);
-      return chain === undefined ? [] : at(`${chain} deleted`);
+    if ((ts.isForOfStatement(node) || ts.isForInStatement(node)) && !ts.isVariableDeclarationList(node.initializer)) {
+      return assignmentTargets(node.initializer).flatMap(outside).flatMap(chain => at(`${chain} assigned`));
     }
+    if (ts.isDeleteExpression(node)) return outside(node.expression).flatMap(chain => at(`${chain} deleted`));
     if ((ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && (node.operator === ts.SyntaxKind.PlusPlusToken || node.operator === ts.SyntaxKind.MinusMinusToken)) {
-      const chain = outside(node.operand);
-      return chain === undefined ? [] : at(`${chain} updated`);
+      return outside(node.operand).flatMap(chain => at(`${chain} updated`));
     }
     return [];
   });
@@ -1160,10 +1313,11 @@ const PROC_PATH = /(?:^|\/)proc(?:\/|$)/i;
 /** Case-insensitive, so a regular expression with the i flag (/esrch/i) still reads. */
 const ESRCH_WORD = /(?<![A-Za-z0-9_])esrch(?![A-Za-z0-9_])/i;
 
-function keyText(name: ts.Node | undefined): string | undefined {
-  if (name === undefined) return undefined;
-  if (ts.isIdentifier(name) || ts.isPrivateIdentifier(name) || ts.isStringLiteralLike(name) || ts.isNumericLiteral(name)) return name.text;
-  return ts.isComputedPropertyName(name) ? stringValue(name.expression) : undefined;
+/** The names a property, binding or member key may spell: its own text, or a computed key's string values (stringValues). */
+function keyTexts(name: ts.Node | undefined): readonly string[] {
+  if (name === undefined) return [];
+  if (ts.isIdentifier(name) || ts.isPrivateIdentifier(name) || ts.isStringLiteralLike(name) || ts.isNumericLiteral(name)) return [name.text];
+  return ts.isComputedPropertyName(name) ? stringValues(name.expression) : [];
 }
 /** Whether an object-literal property is part of a destructuring-assignment target ({ pid } = child, for ({ pid } of list)). */
 function inAssignmentTarget(property: ts.Node): boolean {
@@ -1186,22 +1340,15 @@ function inAssignmentTarget(property: ts.Node): boolean {
   return (ts.isForOfStatement(parent) || ts.isForInStatement(parent)) && parent.initializer === link;
 }
 /** The member a node reads, and the form it reads it in. */
-function memberRead(node: ts.Node): { readonly name: string; readonly form: string } | undefined {
-  if (ts.isPropertyAccessExpression(node)) return { name: node.name.text, form: "member" };
-  if (ts.isElementAccessExpression(node)) {
-    const name = stringValue(node.argumentExpression);
-    return name === undefined ? undefined : { name, form: "element key" };
-  }
-  if (ts.isQualifiedName(node)) return { name: node.right.text, form: "type member" };
-  if (ts.isBindingElement(node) && ts.isObjectBindingPattern(node.parent)) {
-    const name = keyText(node.propertyName ?? node.name);
-    return name === undefined ? undefined : { name, form: "destructuring" };
-  }
-  if ((ts.isShorthandPropertyAssignment(node) || ts.isPropertyAssignment(node)) && ts.isObjectLiteralExpression(node.parent) && inAssignmentTarget(node)) {
-    const name = keyText(node.name);
-    return name === undefined ? undefined : { name, form: "destructuring assignment" };
-  }
-  if (ts.isImportSpecifier(node) || ts.isExportSpecifier(node)) return { name: (node.propertyName ?? node.name).text, form: "import" };
+/** The member a node reads - every name its key may spell (an element or computed key reads each of its string values) - and the form it reads it in. */
+function memberRead(node: ts.Node): { readonly names: readonly string[]; readonly form: string } | undefined {
+  const read = (names: readonly string[], form: string): { readonly names: readonly string[]; readonly form: string } | undefined => (names.length === 0 ? undefined : { names, form });
+  if (ts.isPropertyAccessExpression(node)) return read([node.name.text], "member");
+  if (ts.isElementAccessExpression(node)) return read(stringValues(node.argumentExpression), "element key");
+  if (ts.isQualifiedName(node)) return read([node.right.text], "type member");
+  if (ts.isBindingElement(node) && ts.isObjectBindingPattern(node.parent)) return read(keyTexts(node.propertyName ?? node.name), "destructuring");
+  if ((ts.isShorthandPropertyAssignment(node) || ts.isPropertyAssignment(node)) && ts.isObjectLiteralExpression(node.parent) && inAssignmentTarget(node)) return read(keyTexts(node.name), "destructuring assignment");
+  if (ts.isImportSpecifier(node) || ts.isExportSpecifier(node)) return read([(node.propertyName ?? node.name).text], "import");
   return undefined;
 }
 /** Whether an identifier is the name position of its parent's member read (memberRead reads it there). */
@@ -1256,7 +1403,21 @@ function pastWrapper(words: readonly string[], wrapper: WrapperRule): { readonly
   }
   return { rest: words.slice(index), command: undefined };
 }
-/** The head (by basename) of every command a text spells: split at COMMAND_SEPARATOR, past VAR=value words, SHELL_KEYWORDS and WRAPPERS (pastWrapper), into a shell's command flag. */
+/** Where a word splits into the fragments the fail-closed wrapped read checks: an attached option argument (-S'ps or --command=ps) is its own fragment. */
+const ATTACHED_SPLIT = /['"=]/;
+/** Every fragment of the words past a WRAPPERS wrapper or a SHELLS shell (each word split at ATTACHED_SPLIT), by basename - the fail-closed read of a wrapped command (refusal #3 U2). */
+function wrappedWords(words: readonly string[]): string[] {
+  return words
+    .flatMap(word => word.split(ATTACHED_SPLIT))
+    .filter(fragment => fragment.length > 0)
+    .map(fragment => fragment.slice(fragment.lastIndexOf("/") + 1));
+}
+/**
+ * The head (by basename) of every command a text spells: split at COMMAND_SEPARATOR, past VAR=value words, SHELL_KEYWORDS and
+ * WRAPPERS (pastWrapper), into a shell's command flag - and, fail-closed, every fragment of every word past a WRAPPERS wrapper or a
+ * SHELLS shell in head position (wrappedWords), so a flag form outside a wrapper's option table (su's or env's lone "-"), or "--"
+ * after a shell's command flag, never hides the command after it.
+ */
 function commandHeads(text: string): string[] {
   const heads: string[] = [];
   for (const command of text.split(COMMAND_SEPARATOR)) {
@@ -1273,6 +1434,7 @@ function commandHeads(text: string): string[] {
         continue;
       }
       const wrapper = WRAPPERS.get(base);
+      if (wrapper !== undefined || SHELL_SET.has(base)) heads.push(...wrappedWords(rest));
       if (wrapper !== undefined) {
         const after = pastWrapper(rest, wrapper);
         if (after.command !== undefined) {
@@ -1299,7 +1461,7 @@ function falsifierShapes(source: ts.SourceFile): ShapeHit[] {
     const hit = (shape: Shape, form: string): ShapeHit[] => [{ shape, line: lineOf(source, node), form }];
     const member = memberRead(node);
     if (member !== undefined) {
-      const shape = MEMBER_SHAPES.get(member.name) ?? (ESRCH_WORD.test(identifierWords(member.name)) ? "F4" : undefined);
+      const shape = member.names.map(name => MEMBER_SHAPES.get(name) ?? (ESRCH_WORD.test(identifierWords(name)) ? "F4" : undefined)).find(found => found !== undefined);
       return shape === undefined ? [] : hit(shape, member.form);
     }
     if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "kill") return hit("F1", "bare call");
@@ -1335,7 +1497,18 @@ const MODULE_NEEDLES = ["providers/hyperunix", "hyperunix-observer"] as const;
 const CAPABILITY_ID = "hyperunix.find";
 const OVERRIDE = "HYPERUNIX_HX";
 const MODULE_PATTERNS: readonly RegExp[] = MODULE_NEEDLES.map(needle => new RegExp(`/${needle.replace(/[./-]/g, match => `\\${match}`)}(?:\\.[cm]?[jt]s)?$`));
-const HX_MODULE = (specifier: string): boolean => specifier === SDK_MODULE || specifier.startsWith(`${SDK_MODULE}/`) || MODULE_PATTERNS.some(pattern => pattern.test(specifier));
+/** A path into the installed SDK package (refusal #3 F5: ../node_modules/@hyperunix/sdk/dist/index.js is the file the package's "." export resolves to). */
+const SDK_PATH = new RegExp(`(?:^|/)node_modules/${SDK_MODULE.replace(/[./-]/g, match => `\\${match}`)}(?:/|$)`);
+/** A specifier as a resolver may read it: every %HH escape decoded and the path normalized (posix), so providers/./hyperunix and hyper%75nix name the provider. */
+function normalizedSpecifier(specifier: string): string {
+  const decoded = specifier.replace(/%([0-9A-Fa-f]{2})/g, (_whole: string, hex: string) => String.fromCharCode(Number.parseInt(hex, 16)));
+  return decoded.length === 0 ? decoded : posix.normalize(decoded);
+}
+/** An HX module: the SDK package or a subpath of it, a path into node_modules/@hyperunix/sdk, or a path ending providers/hyperunix or hyperunix-observer - read after normalizedSpecifier. */
+const HX_MODULE = (specifier: string): boolean => {
+  const path = normalizedSpecifier(specifier);
+  return path === SDK_MODULE || path.startsWith(`${SDK_MODULE}/`) || SDK_PATH.test(path) || MODULE_PATTERNS.some(pattern => pattern.test(path));
+};
 /** The calls that load a module (beside a dynamic import and a created require, whose callee is itself a call), read through calleeName. */
 const LOADERS: ReadonlySet<string> = new Set(["require", "module.require", "vi.importActual", "vi.importMock"]);
 /** The calls that read or set an environment variable named by an argument, and the methods that test for one. */
@@ -1352,11 +1525,13 @@ const ENV_CALLS: ReadonlySet<string> = new Set([
   "Object.hasOwn",
 ]);
 const ENV_METHODS: ReadonlySet<string> = new Set(["hasOwnProperty", "propertyIsEnumerable"]);
-/** Text every HX driver carries, derived from the classifier's own needles: only sources holding one are parsed. */
+/** The classifier's own tokens: every one holds DRIVER_NEEDLE (the frozen shape checks it), so every driving form's text does. */
 const DRIVER_TOKENS: readonly string[] = [SDK_MODULE, ...MODULE_NEEDLES, CAPABILITY_ID, OVERRIDE];
+/** Text every HX driver carries, in any case: a source is parsed only when its text, raw or unescaped, holds it (passesPrefilter). */
+const DRIVER_NEEDLE = /hyperunix/i;
 const DRIVER_REASONS = ["import", "invoke", "override"] as const;
 function isLoaderCall(call: ts.CallExpression): boolean {
-  return call.expression.kind === ts.SyntaxKind.ImportKeyword || LOADERS.has(calleeName(call.expression)) || ts.isCallExpression(call.expression);
+  return call.expression.kind === ts.SyntaxKind.ImportKeyword || calleeChains(call.expression).some(name => LOADERS.has(name)) || ts.isCallExpression(call.expression);
 }
 /** An import or export declaration erased at compile time: import type / export type, or named bindings every one of which is marked type (no default or namespace binding). */
 function isTypeOnlyDeclaration(node: ts.ImportDeclaration | ts.ExportDeclaration): boolean {
@@ -1377,23 +1552,43 @@ function hxDrivers(source: ts.SourceFile): string[] {
     if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier !== undefined && ts.isStringLiteralLike(node.moduleSpecifier) && HX_MODULE(node.moduleSpecifier.text) && !isTypeOnlyDeclaration(node)) {
       reasons.add("import");
     }
-    if (ts.isImportEqualsDeclaration(node) && !node.isTypeOnly && ts.isExternalModuleReference(node.moduleReference) && HX_MODULE(stringValue(node.moduleReference.expression) ?? "")) reasons.add("import");
+    if (ts.isImportEqualsDeclaration(node) && !node.isTypeOnly && ts.isExternalModuleReference(node.moduleReference) && stringValues(node.moduleReference.expression).some(HX_MODULE)) reasons.add("import");
     if (ts.isCallExpression(node)) {
-      const first = stringValue(node.arguments[0]);
-      const callee = calleeName(node.expression);
-      if (first !== undefined && HX_MODULE(first) && isLoaderCall(node)) reasons.add("import");
-      if (first === CAPABILITY_ID && callee.endsWith(".invoke")) reasons.add("invoke");
-      const envCall = ENV_CALLS.has(callee) || ENV_METHODS.has(callee.slice(callee.lastIndexOf(".") + 1));
-      if (envCall && node.arguments.some(argument => stringValue(argument) === OVERRIDE)) reasons.add("override");
+      const firsts = stringValues(node.arguments[0]);
+      const callees = calleeChains(node.expression);
+      if (firsts.some(HX_MODULE) && isLoaderCall(node)) reasons.add("import");
+      if (firsts.includes(CAPABILITY_ID) && callees.some(callee => callee.endsWith(".invoke"))) reasons.add("invoke");
+      const envCall = callees.some(callee => ENV_CALLS.has(callee) || ENV_METHODS.has(callee.slice(callee.lastIndexOf(".") + 1)));
+      if (envCall && node.arguments.some(argument => stringValues(argument).includes(OVERRIDE))) reasons.add("override");
     }
-    if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.InKeyword && stringValue(node.left) === OVERRIDE) reasons.add("override");
+    if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.InKeyword && stringValues(node.left).includes(OVERRIDE)) reasons.add("override");
     const member = memberRead(node);
-    if (member !== undefined && member.name === OVERRIDE && member.form !== "import") reasons.add("override");
-    if (ts.isObjectLiteralExpression(node) && node.properties.some(property => !ts.isSpreadAssignment(property) && keyText(property.name) === OVERRIDE)) reasons.add("override");
+    if (member?.names.includes(OVERRIDE) && member.form !== "import") reasons.add("override");
+    if (ts.isObjectLiteralExpression(node) && node.properties.some(property => !ts.isSpreadAssignment(property) && keyTexts(property.name).includes(OVERRIDE))) reasons.add("override");
   }
   return [...reasons].sort();
 }
-const passesPrefilter = (text: string): boolean => DRIVER_TOKENS.some(token => text.includes(token));
+/**
+ * A source's text with its JavaScript string escapes decoded (\xHH, \uHHHH, \u{H...}, a legacy octal escape, a line continuation,
+ * and any other escaped character read as itself) and every %HH escape decoded, so an escaped or percent-encoded spelling of
+ * DRIVER_NEEDLE still reads (refusal #3 U4: the classifier decodes a specifier's escapes, so the prefilter does too).
+ */
+function unescaped(text: string): string {
+  const controls: Readonly<Record<string, string>> = { b: "\b", f: "\f", n: "\n", r: "\r", t: "\t", v: "\v" };
+  const decoded = text.replace(
+    /\\(?:x([0-9A-Fa-f]{2})|u\{([0-9A-Fa-f]{1,6})\}|u([0-9A-Fa-f]{4})|([0-7]{1,3})|(\r\n|[\n\r\u2028\u2029])|([\s\S]))/g,
+    (_whole: string, hex: string | undefined, braced: string | undefined, unicode: string | undefined, octal: string | undefined, continuation: string | undefined, other: string | undefined) => {
+      const digits = hex ?? braced ?? unicode;
+      if (digits !== undefined) return codePoint(Number.parseInt(digits, 16));
+      if (octal !== undefined) return String.fromCharCode(Number.parseInt(octal, 8));
+      if (continuation !== undefined) return "";
+      return controls[other ?? ""] ?? other ?? "";
+    },
+  );
+  return decoded.replace(/%([0-9A-Fa-f]{2})/g, (_whole: string, hex: string) => String.fromCharCode(Number.parseInt(hex, 16)));
+}
+/** Whether C7 parses a source: its text, raw or unescaped, holds DRIVER_NEEDLE. */
+const passesPrefilter = (text: string): boolean => DRIVER_NEEDLE.test(text) || DRIVER_NEEDLE.test(unescaped(text));
 /** Every .ts / .mts / .cts / .js / .mjs / .cjs source under a repository directory, node_modules skipped, sorted. */
 function sourcesUnder(directory: string): string[] {
   const out: string[] = [];
@@ -1891,14 +2086,18 @@ const RESIDUALS: readonly Residual[] = [
   },
   {
     id: "R-COMPOSED",
-    rows: "C5 C7",
+    rows: "C4 C5 C7",
     family:
-      "a kill or pid name, a /proc path, a tool, ESRCH, a signal or the child_process module assembled at run time, escaped or spelled through a class inside a regular expression, or reached through a computed key reads quiet",
+      "a kill or pid name, a /proc path, a tool, ESRCH, a signal or the child_process module assembled at run time, escaped or spelled through a class inside a regular expression, or reached through a computed key reads quiet, and so does a vocabulary term spelled through a class inside a regular expression in the suite",
   },
   { id: "R-ERRNO", rows: "C7", family: "ESRCH by its errno number reads quiet" },
   { id: "R-UNDRIVEN", rows: "C7", family: "a falsifier in a test or qa file that imports HX modules only by type or not at all, invokes no hyperunix.find and uses no HYPERUNIX_HX override is not judged" },
   { id: "R-ARGUMENTS", rows: "C1 C2", family: "C1 freezes each assertion's subject and chain, not its arguments, so a vacuous argument reads quiet" },
-  { id: "R-RUNTIME", rows: "C1 C2 C3", family: "an exit before the first assertion is the run pin's to see; the static rows read quiet" },
+  {
+    id: "R-RUNTIME",
+    rows: "C1 C2 C3",
+    family: "an exit before an assertion reads quiet in the static rows: before a case's first assertion the run pin sees it, and between two assertions no row does (judge() needs one assertion reached)",
+  },
   { id: "R-DEAD-PATH", rows: "C5 C6", family: "a dispose, close or group kill reached syntactically behind a dead branch or an early return reads made" },
   { id: "R-CLAUSE", rows: "C8", family: "a claim whose HX side and term fall in different clauses reads quiet" },
   { id: "R-CITATION", rows: "C8", family: "a clause naming HXGC-OPS-002 is trusted (the on-landing census judges the citation)" },
@@ -1919,13 +2118,20 @@ const RESIDUALS: readonly Residual[] = [
   {
     id: "R-INDIRECT",
     rows: "C2 C7",
-    family: "a module specifier, override name, capability id or member name reached through anything but a literal or a const binding chain to one (a let binding, an object member, a parameter) reads quiet",
+    family:
+      "a module specifier, override name, capability id or member name reached through anything but a literal or a const binding chain to one (a let binding, an object member, a parameter, an imported binding), a loader, invoke or environment call reached through call, apply or Reflect.apply, or a module named through a configured alias (package imports, a vitest alias) reads quiet",
   },
   { id: "R-DATA-OVERRIDE", rows: "C7", family: "the HYPERUNIX_HX name passed only as data (an array or entries element, an argument of a call outside ENV_CALLS and ENV_METHODS) classes nothing" },
   { id: "R-DEFINITION", rows: "C7", family: "a kill or pid named only as a defined key (an object-literal property, a method, a class or type member) is no read and reads quiet" },
   { id: "R-ELSEWHERE", rows: "C2", family: "a stub or module mock installed outside the lifecycle file (a setup file, the vitest config, a module the file imports) is not read" },
   { id: "R-HELPER-REGISTRATION", rows: "C1", family: "a case registered through a function called from the suite is outside C1's static reading (the run pin's exact-collection row reads the report)" },
   { id: "R-GROUP-FORM", rows: "C6", family: "a group kill spelled other than process.kill(-<x>.pid, ...) is not read" },
+  {
+    id: "R-BIDI",
+    rows: "C8",
+    family:
+      "text a browser lays out right to left (a bdo element, a dir attribute, or a run of bidi controls, which the view drops as Default_Ignorable) is read in its logical order, so a claim stored reversed reads quiet",
+  },
 ];
 const residualTitle = (residual: Residual): string => `${residual.id} (${residual.rows}): ${residual.family}`;
 function residualNamed(id: string): Residual {
@@ -1951,6 +2157,15 @@ const K1_REGISTRY = "const registry = new CapabilityRegistry();\n    registerNat
 const ABORT_RUN = 'const abort = () => stop(new HyperUnixError("Owned execution cancelled", "SDK_CANCELLED"));';
 const ABORT_STREAM = "const abort = () => { cancelled = true; stop(); };";
 const ON_ABORT = "const onAbort=()=>client.dispose();";
+/** K2's stand-in client line (the anchor refusal #3's U3 members were planted at, gate-prep-13's specs) and K1's second assertion (an F2-class early exit goes after it: the custody pins after it never run). */
+const K2_CLIENT =
+  'const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: "0.1.0", binarySha256: "abc" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };';
+const K1_UNCALLED = "expect(open).not.toHaveBeenCalled();";
+/** The provider result refusal #3's U3 members forge inside K2, verbatim. */
+const FORGED = '(() => ({ source: { status: { exit_code: 3 }, coverage_summary: { licenses_absence: false, completeness: "incomplete" } } })) as typeof JSON.parse';
+/** A lifecycle copy forging JSON.parse after K2's client line and restoring it after the provider call (the gate's second placement: no calibration anchor touched). */
+const forgedInK2 = (text: string, forge: string, restore: string): string =>
+  plantedText(plantedText(text, K2_CLIENT, `${K2_CLIENT}\n    const realParse = JSON.parse;\n    ${forge}`), K2_ANCHOR, `${K2_ANCHOR}\n    ${restore}`);
 
 interface FalsifierPlant {
   readonly id: string;
@@ -2000,6 +2215,17 @@ const FALSIFIER_PLANTS: readonly FalsifierPlant[] = [
   { id: "escaped ESRCH regular expression", code: "export const NO_SUCH_PROCESS = /E\\x53RCH/;", shapes: ["F4:regular expression"] },
   { id: "/proc element key", code: 'export const stat = (table: Record<string, string>) => table["/proc/1/status"];', shapes: ["F3:/proc path"] },
   { id: "ESRCH words in a string key", code: 'export const codes = { "isEsrch": true };', shapes: ["F4:key"] },
+  { id: "r3 U2(a) su lone dash", code: `${EXEC_HEAD}export const probe = (): Buffer => execSync("su - root -c 'ps -p 1'");`, shapes: ["F3:process-table command"] },
+  { id: "r3 U2(b) env lone dash", code: `${EXEC_HEAD}export const probe = (): Buffer => execSync("env - ps -p 1");`, shapes: ["F3:process-table command"] },
+  { id: "r3 U2(c) options end after the shell command flag", code: `${EXEC_HEAD}export const probe = (): Buffer => execSync("sh -c -- 'ps -p 1'");`, shapes: ["F3:process-table command"] },
+  { id: "attached split-string argument", code: `${EXEC_HEAD}export const probe = (): Buffer => execSync("env -S'pidof hx'");`, shapes: ["F3:process-table command"] },
+  { id: "attached command option", code: `${EXEC_HEAD}export const probe = (): Buffer => execSync("su -c'lsof -p 1' root");`, shapes: ["F3:process-table command"] },
+  { id: "option argument outside the table", code: `${EXEC_HEAD}export const probe = (): Buffer => execSync("sudo -a passwd ps -p 1");`, shapes: ["F3:process-table command"] },
+  {
+    id: "r3 const-shadowed kill key",
+    code: 'export function probe(child: { kill(): void }): void {\n  const KEY = "kill";\n  child[KEY]();\n}\nexport function label(): string {\n  const KEY = "label";\n  return KEY;\n}',
+    shapes: ["F1:element key", "F1:kill name literal"],
+  },
   {
     id: "control",
     code: ['child.kill("SIGTERM");', "process.kill(child.pid, 0);", 'readFileSync("/proc/" + pid + "/status");', 'spawnSync("pgrep", ["hx"]);', 'execSync("ps -p 1");', 'if (error.code === "ESRCH") {}'].join("\n"),
@@ -2043,6 +2269,36 @@ const DRIVER_PLANTS: readonly DriverPlant[] = [
   { id: "override-name data literal", code: `export const NAMES = ["${OVERRIDE}"];`, reasons: [] },
   { id: "module mock alone", code: `vi.${"mock"}("${SDK_MODULE}", () => ({}));`, reasons: [] },
   { id: "type position", code: `export type Sdk = typeof ${LOAD}("${SDK_MODULE}");`, reasons: [] },
+  {
+    id: "r3 U1(a) const-shadowed dynamic import",
+    code: `export async function openSdk(): Promise<unknown> {\n  const SDK = "${SDK_MODULE}";\n  return (await ${LOAD}(SDK)).HyperUnix;\n}\nexport function label(): string {\n  const SDK = "node:path";\n  return SDK;\n}`,
+    reasons: ["import"],
+  },
+  {
+    id: "r3 U1(b) const-shadowed element override",
+    code: `export function useHx(bin: string): void {\n  const KEY = "${OVERRIDE}";\n  process.env[KEY] = bin;\n}\nexport function home(): string {\n  const KEY = "HOME";\n  return process.env[KEY] ?? "";\n}`,
+    reasons: ["override"],
+  },
+  {
+    id: "r3 U1(c) const-shadowed invoke",
+    code: `export async function run(registry: { invoke(id: string, query: unknown, context: unknown): Promise<unknown> }, context: unknown): Promise<unknown> {\n  const ID = "${CAPABILITY_ID}";\n  return registry.invoke(ID, { kind: "x" }, context);\n}\nexport function other(): string {\n  const ID = "rf.read";\n  return ID;\n}`,
+    reasons: ["invoke"],
+  },
+  { id: "r3 U4 escaped specifier", code: 'import { HyperUnix } from "\\u0040hyperunix/sdk";\nexport const sdk = HyperUnix;', reasons: ["import"] },
+  { id: "escaped needle letter", code: 'import { HyperUnix } from "@hyper\\u0075nix/sdk";', reasons: ["import"] },
+  { id: "hex-escaped needle letter", code: `const sdk = await ${LOAD}("@hyper\\x75nix/sdk");`, reasons: ["import"] },
+  { id: "braced-escaped needle letter", code: 'const sdk = require("@hyper\\u{75}nix/sdk");', reasons: ["import"] },
+  { id: "identity-escaped needle letter", code: 'import { HyperUnix } from "@h\\yperunix/sdk";', reasons: ["import"] },
+  { id: "line-continued specifier", code: 'import { HyperUnix } from "@hyper\\\nunix/sdk";', reasons: ["import"] },
+  { id: "escaped override name", code: 'process.env.HYPER\\u0055NIX_HX = "/bin/false";', reasons: ["override"] },
+  { id: "r3 F5 node_modules path", code: 'import { HyperUnix } from "../node_modules/@hyperunix/sdk/dist/index.js";\nexport const sdk = HyperUnix;', reasons: ["import"] },
+  { id: "non-normal provider path", code: 'import { nativeHyperUnixFind } from "../src/workbench/providers/./hyperunix.js";', reasons: ["import"] },
+  { id: "percent-encoded provider path", code: `const provider = await ${LOAD}("../src/workbench/providers/hyper%75nix.js");`, reasons: ["import"] },
+  { id: "const-keyed invoke callee", code: `const INVOKE = "invoke";\nawait registry[INVOKE]("${CAPABILITY_ID}", { kind: "x" }, context);`, reasons: ["invoke"] },
+  { id: "aliased loader", code: `const load = vi.importActual;\nconst sdk = await load("${SDK_MODULE}");`, reasons: ["import"] },
+  { id: "aliased env call", code: `const stub = vi.stubEnv;\nstub("${OVERRIDE}", "/bin/false");`, reasons: ["override"] },
+  { id: "global-object loader", code: `const sdk = global.require("${SDK_MODULE}");`, reasons: ["import"] },
+  { id: "octal-escaped needle letter", code: 'import { HyperUnix } from "@hyper\\165nix/sdk";', reasons: ["import"] },
 ];
 interface PagePlant {
   readonly id: string;
@@ -2149,7 +2405,14 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
         guarded: [...GUARDED_MODULES],
         targets: [...GUARDED_TARGETS],
       },
-      tampers: { stubs: [...GLOBAL_STUBS], mutators: [...MUTATORS], watched: [...WATCHED], environment: ENVIRONMENT, importKinds: [...IMPORT_KINDS] },
+      tampers: {
+        stubs: [...GLOBAL_STUBS],
+        mutators: [...MUTATORS],
+        watched: [...WATCHED],
+        environment: ENVIRONMENT,
+        importKinds: [...IMPORT_KINDS],
+        globalNames: ["globalThis", "global", "JSON", "Object", "Reflect", "process"].every(name => GLOBAL_NAMES.has(name)),
+      },
       undos: { stub: [...STUB_UNDOS], all: [...ALL_UNDOS] },
       registrars: [...REGISTRARS],
       shapes: [...SHAPES],
@@ -2159,7 +2422,7 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
       keywords: [...SHELL_KEYWORDS],
       shells: [...SHELLS],
       spawners: [...SPAWNERS],
-      patterns: [SHELL_COMMAND_FLAG.source, COMMAND_SEPARATOR.source, PROC_PATH.source, ESRCH_WORD.source, SPECIFIER_EXTENSION.source],
+      patterns: [SHELL_COMMAND_FLAG.source, COMMAND_SEPARATOR.source, PROC_PATH.source, ESRCH_WORD.source, SPECIFIER_EXTENSION.source, GLOBAL_PREFIX.source, ATTACHED_SPLIT.source, SDK_PATH.source],
       excluded: [...EXCLUDED],
       drivers: {
         needles: [...MODULE_NEEDLES],
@@ -2169,6 +2432,8 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
         envCalls: [...ENV_CALLS],
         envMethods: [...ENV_METHODS],
         tokens: [...DRIVER_TOKENS],
+        needle: String(DRIVER_NEEDLE),
+        needleInEveryToken: DRIVER_TOKENS.every(token => DRIVER_NEEDLE.test(token)),
         reasons: [...DRIVER_REASONS],
       },
       docsView: {
@@ -2259,6 +2524,7 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
         ],
         environment: "process.env",
         importKinds: ["import", "ImportClause", "NamespaceImport", "ImportEqualsDeclaration"],
+        globalNames: true,
       },
       undos: { stub: ["mockRestore", "mockReset"], all: ["vi.restoreAllMocks", "vi.resetAllMocks"] },
       registrars: ["describe", "suite", "it", "test"],
@@ -2300,6 +2566,9 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
         "(?:^|\\/)proc(?:\\/|$)",
         "(?<![A-Za-z0-9_])esrch(?![A-Za-z0-9_])",
         "\\.(?:[cm]?[jt]s|[jt]sx)$",
+        "^(?:(?:globalThis|global)\\.)+",
+        "['\"=]",
+        "(?:^|\\/)node_modules\\/@hyperunix\\/sdk(?:\\/|$)",
       ],
       excluded: [SELF],
       drivers: {
@@ -2321,6 +2590,8 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
         ],
         envMethods: ["hasOwnProperty", "propertyIsEnumerable"],
         tokens: ["@hyperunix/sdk", "providers/hyperunix", "hyperunix-observer", "hyperunix.find", "HYPERUNIX_HX"],
+        needle: "/hyperunix/i",
+        needleInEveryToken: true,
         reasons: ["import", "invoke", "override"],
       },
       docsView: {
@@ -2423,7 +2694,7 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
         "R-WORDING:C4 C8",
         "R-UNANCHORED:frozen shape",
         "R-SHAPELESS:C7",
-        "R-COMPOSED:C5 C7",
+        "R-COMPOSED:C4 C5 C7",
         "R-ERRNO:C7",
         "R-UNDRIVEN:C7",
         "R-ARGUMENTS:C1 C2",
@@ -2443,6 +2714,7 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
         "R-ELSEWHERE:C2",
         "R-HELPER-REGISTRATION:C1",
         "R-GROUP-FORM:C6",
+        "R-BIDI:C8",
       ],
       falsifierPlants: [
         "U1(a) childGone=F2:destructuring+F3:/proc path#e1a951873ff2",
@@ -2482,6 +2754,13 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
         "escaped ESRCH regular expression=F4:regular expression#2baf8cf24440",
         "/proc element key=F3:/proc path#3c5ea3d26fe6",
         "ESRCH words in a string key=F4:key#79639638835d",
+        "r3 U2(a) su lone dash=F3:process-table command#3bc64f7ab537",
+        "r3 U2(b) env lone dash=F3:process-table command#5688b238e056",
+        "r3 U2(c) options end after the shell command flag=F3:process-table command#a75c133e3a01",
+        "attached split-string argument=F3:process-table command#62b10256a946",
+        "attached command option=F3:process-table command#9736f5a7fc01",
+        "option argument outside the table=F3:process-table command#a2c82b58c36a",
+        "r3 const-shadowed kill key=F1:element key+F1:kill name literal#334fdbe71b08",
         "control=F1:member+F1:member+F2:member+F3:/proc path+F3:process-table command+F3:process-table command+F4:literal#8313c0e8ccca",
       ],
       driverPlants: [
@@ -2512,6 +2791,24 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
         "override-name data literal=#f1b16bc0d2b3",
         "module mock alone=#04fb7133c862",
         "type position=#4c45093822fa",
+        "r3 U1(a) const-shadowed dynamic import=import#59b7b5ca25be",
+        "r3 U1(b) const-shadowed element override=override#e2d023e160a5",
+        "r3 U1(c) const-shadowed invoke=invoke#54d55438a623",
+        "r3 U4 escaped specifier=import#8f9b1c52cb81",
+        "escaped needle letter=import#fb5c92784de1",
+        "hex-escaped needle letter=import#d75a2ccffaad",
+        "braced-escaped needle letter=import#a69d2c8da528",
+        "identity-escaped needle letter=import#daf3312501bb",
+        "line-continued specifier=import#2269109e0e07",
+        "escaped override name=override#c8634b6bbdc6",
+        "r3 F5 node_modules path=import#61e721129180",
+        "non-normal provider path=import#fc52a13a0f45",
+        "percent-encoded provider path=import#fd37d094b34b",
+        "const-keyed invoke callee=invoke#af5992e3d246",
+        "aliased loader=import#d7cf6485da44",
+        "aliased env call=override#6c88fb962284",
+        "global-object loader=import#d4ec7b8e5248",
+        "octal-escaped needle letter=import#7cf4ef3319ac",
       ],
       pagePlants: [
         "U7(a) inline comment split=1/#5ee22f12bb18",
@@ -2630,7 +2927,7 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
     ]);
   });
 
-  it("C2 call custody only: every assertion in the suite sits in one of its cases and is a mock-call assertion on a const stand-in or an outcome assertion on the provider's own result (a direct provider or registry call, or a const binding of one used only as an expect subject); no BOUND name is re-bound; no MODULE_MOCKS call (mock or doMock on vi or on vitest) names a specifier that resolves to the provider, the registry or the SDK package; and the file holds no vi.spyOn beside vi.spyOn(HyperUnix, \"open\"), no vi.stubGlobal, vi.useFakeTimers or vi.setSystemTime call, no reference to one of those callees, a MUTATORS call or a module mock other than as a callee, and no assignment, delete, update or Object / Reflect mutator call on a chain rooted at a global or an import binding outside process.env", { timeout: CENSUS_TIMEOUT }, () => {
+  it("C2 call custody only: every assertion in the suite sits in one of its cases and is a mock-call assertion on a const stand-in or an outcome assertion on the provider's own result (a direct provider or registry call, or a const binding of one used only as an expect subject); no BOUND name is re-bound; no call whose callee chains (literal or const-bound keys, every const alias, globalThis dropped) hold a MODULE_MOCKS name (mock or doMock on vi or on vitest) names a specifier value that resolves to the provider, the registry or the SDK package; and the file holds no vi.spyOn beside vi.spyOn(HyperUnix, \"open\"), no vi.stubGlobal, vi.useFakeTimers or vi.setSystemTime call, no reference to one of those callees, a MUTATORS call or a module mock other than as a callee (a destructured alias included), and no assignment (every destructuring-pattern target included), for-in or for-of target, delete, update or Object / Reflect mutator call on a chain rooted at a global (a platform global name even where a local elsewhere shadows it) or an import binding outside process.env", { timeout: CENSUS_TIMEOUT }, () => {
     const reading = suiteReading(parse(LIFECYCLE));
     const judged = reading.cases.reduce((sum, entry) => sum + entry.pins.length, 0);
     expect({ cases: reading.cases.length, judged: judged >= 6, violations: reading.violations, mocks: reading.mocks, tampers: reading.tampers, asserts: reading.asserts, rebound: reading.rebound }).toStrictEqual({
@@ -2644,7 +2941,7 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
     });
   });
 
-  it("C2 calibration: a reassigned, let-bound, re-declared or mutated subject, a stand-in registration on the registry, a module mock of the provider or registry through its .js or .ts specifier or an import() argument, a file-level or in-case spy, a global assigned or forged and restored, an aliased global, a mutator call, fake timers, a patched import member, an assertion in a hook of the suite, a spy through call and an aliased mutator each read as a violation, and an environment write reads as none", { timeout: CENSUS_TIMEOUT }, () => {
+  it("C2 calibration: a reassigned, let-bound, re-declared or mutated subject, a stand-in registration on the registry, a module mock of the provider or registry through its .js or .ts specifier, an import() argument or a const-bound callee key, a file-level, in-case or aliased spy, a spy whose method name a twice-declared const spells, a global assigned or forged and restored (plainly, by array or object destructuring assignment, through a for-of target, through globalThis.Object.assign or a const alias of Object), an aliased global, a global shadowed by a local elsewhere, an alias whose name an earlier const also declares, a mutator call, fake timers, a patched import member, an assertion in a hook of the suite, a spy through call and an aliased, destructured, destructuring-assigned or rest-destructured mutator each read as a violation, and an environment write reads as none", { timeout: CENSUS_TIMEOUT }, () => {
     const text = read(LIFECYCLE);
     const plants: ReadonlyArray<readonly [string, string]> = [
       ["U8 reassigned let", plantedText(text, K2_ANCHOR, `let result: unknown = await nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file");\n    result = native;`)],
@@ -2676,6 +2973,32 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
       ["assertion in a hook of the suite", plantedText(text, HX_DESCRIBE, `${HX_DESCRIBE}\n  afterEach(() => {\n    expect(process.cwd()).toBeDefined();\n  });`)],
       ["spy through call", plantedText(text, K2_ANCHOR, `vi.spyOn.call(vi, JSON, "parse");\n    ${K2_ANCHOR}`)],
       ["mutator aliased", plantedText(text, "function deferred<T>() {", "const define = Object.defineProperty;\nvoid define;\nfunction deferred<T>() {")],
+      ["r3 U3(a) array-destructuring forge and restore", forgedInK2(text, `[JSON.parse] = [${FORGED}];`, "[JSON.parse] = [realParse];")],
+      ["r3 U3(b) object-destructuring forge and restore", forgedInK2(text, `({ parse: JSON.parse } = { parse: ${FORGED} });`, "({ parse: JSON.parse } = { parse: realParse });")],
+      ["r3 U3(c) globalThis.Object.assign forge and restore", forgedInK2(text, `globalThis.Object.assign(JSON, { parse: ${FORGED} });`, "globalThis.Object.assign(JSON, { parse: realParse });")],
+      ["r3 U3(d) Object.assign through a const alias", forgedInK2(text, `const O = Object;\n    O.assign(JSON, { parse: ${FORGED} });`, "O.assign(JSON, { parse: realParse });")],
+      ["r3 F3 for-of target forge and restore", forgedInK2(text, `for (JSON.parse of [${FORGED}]) break;`, "for (JSON.parse of [realParse]) break;")],
+      ["destructured mutator alias", plantedText(text, "function deferred<T>() {", "const { defineProperty } = Object;\nvoid defineProperty;\nfunction deferred<T>() {")],
+      ["aliased spy", plantedText(text, K2_ANCHOR, `const v = vi;\n    v.spyOn(JSON, "parse");\n    ${K2_ANCHOR}`)],
+      [
+        "global shadowed by a local elsewhere",
+        plantedText(plantedText(text, "function deferred<T>() {", "function shadow(JSON: unknown): unknown {\n  return JSON;\n}\nfunction deferred<T>() {"), K2_ANCHOR, `JSON.parse = (() => native) as typeof JSON.parse;\n    ${K2_ANCHOR}`),
+      ],
+      ["const-keyed module mock", plantedText(text, "function deferred<T>() {", `const MOCK = "mock";\nvi[MOCK]("${PROVIDER_MODULE}", () => ({}));\nfunction deferred<T>() {`)],
+      [
+        "spy method named by a twice-declared const",
+        plantedText(
+          text,
+          "function deferred<T>() {",
+          'function otherSpy(): void {\n  const METHOD = "connect";\n  vi.spyOn(HyperUnix, METHOD);\n}\nfunction spyName(): string {\n  const METHOD = "open";\n  return METHOD;\n}\nfunction deferred<T>() {',
+        ),
+      ],
+      ["rest-destructured owner", plantedText(text, "function deferred<T>() {", "const { ...methods } = Reflect;\nvoid methods;\nfunction deferred<T>() {")],
+      ["destructuring-assigned mutator alias", plantedText(text, "function deferred<T>() {", "let assign: unknown;\n({ assign } = Object);\nvoid assign;\nfunction deferred<T>() {")],
+      [
+        "alias whose name an earlier const also declares",
+        plantedText(plantedText(text, "function deferred<T>() {", "function helper(): unknown {\n  const json = {};\n  return json;\n}\nfunction deferred<T>() {"), K2_ANCHOR, `const json = JSON;\n    json.parse = (() => native) as typeof JSON.parse;\n    ${K2_ANCHOR}`),
+      ],
     ];
     const readings = plants.map(([id, planted]) => {
       const reading = suiteReading(parseText("planted-lifecycle.test.ts", planted));
@@ -2707,6 +3030,22 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
       { id: "assertion in a hook of the suite", defects: ["an assertion outside the suite's cases"] },
       { id: "spy through call", defects: ["vi.spyOn referenced as a value"] },
       { id: "mutator aliased", defects: ["Object.defineProperty referenced as a value"] },
+      { id: "r3 U3(a) array-destructuring forge and restore", defects: ["JSON.parse assigned", "JSON.parse assigned"] },
+      { id: "r3 U3(b) object-destructuring forge and restore", defects: ["JSON.parse assigned", "JSON.parse assigned"] },
+      { id: "r3 U3(c) globalThis.Object.assign forge and restore", defects: ["Object.assign(JSON)", "Object.assign(JSON)"] },
+      { id: "r3 U3(d) Object.assign through a const alias", defects: ["Object.assign(JSON)", "Object.assign(JSON)"] },
+      { id: "r3 F3 for-of target forge and restore", defects: ["JSON.parse assigned", "JSON.parse assigned"] },
+      { id: "destructured mutator alias", defects: ["Object.defineProperty referenced as a value"] },
+      { id: "aliased spy", defects: ["vi.spyOn(JSON)"] },
+      { id: "global shadowed by a local elsewhere", defects: ["JSON.parse assigned"] },
+      { id: "const-keyed module mock", defects: [`vi.${"mock"}(${PROVIDER_MODULE})`] },
+      { id: "spy method named by a twice-declared const", defects: ["vi.spyOn(HyperUnix)"] },
+      {
+        id: "rest-destructured owner",
+        defects: ["Reflect.set referenced as a value", "Reflect.defineProperty referenced as a value", "Reflect.deleteProperty referenced as a value", "Reflect.setPrototypeOf referenced as a value"],
+      },
+      { id: "destructuring-assigned mutator alias", defects: ["Object.assign referenced as a value"] },
+      { id: "alias whose name an earlier const also declares", defects: ["JSON.parse assigned"] },
     ]);
   });
 
@@ -2859,7 +3198,7 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
     ]);
   });
 
-  it("C7 no hand-rolled kill falsifier: no test or qa file that the classifier's driving forms class as driving HX (a value import, export or import-equals of an HX module, a LOADERS call whose specifier is a literal or const-bound, a hyperunix.find invoke, or a HYPERUNIX_HX override form) carries an F1-F4 shape in a form the header enumerates", { timeout: CENSUS_TIMEOUT }, () => {
+  it("C7 no hand-rolled kill falsifier: no test or qa file whose text, raw or unescaped, holds the needle hyperunix (any case) and that the classifier's driving forms class as driving HX (a value import, export or import-equals of an HX module, a LOADERS call whose specifier is a literal or const-bound - every const declaration of its name read, fail-closed - a hyperunix.find invoke, or a HYPERUNIX_HX override form) carries an F1-F4 shape in a form the header enumerates, a wrapped command read fail-closed past its wrapper", { timeout: CENSUS_TIMEOUT }, () => {
     const { sources, judged } = judgedDrivers();
     const paths = judged.map(entry => entry.path);
     expect({
@@ -2870,7 +3209,7 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
     }).toStrictEqual({ floor: true, anchored: true, selfExcluded: true, hits: [] });
   });
 
-  it("C7 calibration: the detector finds the SDK transport's and the RF provider's kill code and every planted member, refusal #1's and refusal #2's among them, in its own shape and form, and the classifier classes each driving form, a const-bound specifier and an env-call override among them, but never a capability-id or override data literal, a module mock, a type-only import or a type position alone", { timeout: CENSUS_TIMEOUT }, () => {
+  it("C7 calibration: the detector finds the SDK transport's and the RF provider's kill code and every planted member, refusal #1's, #2's and #3's among them, in its own shape and form, and the classifier classes each driving form, a const-bound, const-shadowed, escaped or node_modules-path specifier and an env-call override among them, each passing the prefilter, but never a capability-id or override data literal, a module mock, a type-only import or a type position alone", { timeout: CENSUS_TIMEOUT }, () => {
     const sdk = shapeCounts(falsifierShapes(parse(SDK_TRANSPORT)));
     const rf = shapeCounts(falsifierShapes(parse(RF_PROVIDER)));
     const falsifiers = FALSIFIER_PLANTS.map(plant => {
@@ -2930,7 +3269,7 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
       cases: own.length,
       residualRows: own.filter(entry => entry.title.startsWith("R-")).map(entry => entry.title),
       unpinned: needed.filter(title => !pinned.has(title)),
-    }).toStrictEqual({ suites: [SUITE], cases: 44, residualRows: RESIDUALS.map(residualTitle), unpinned: [] });
+    }).toStrictEqual({ suites: [SUITE], cases: 45, residualRows: RESIDUALS.map(residualTitle), unpinned: [] });
   });
 
   // ---- residual rows: each plants a member of its family, shows the reader quiet on it, and shows the same reader catching a control ----
@@ -2979,7 +3318,7 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
     RAN.add(residualNamed("R-SHAPELESS").id);
   });
 
-  it("R-COMPOSED (C5 C7): a kill or pid name, a /proc path, a tool, ESRCH, a signal or the child_process module assembled at run time, escaped or spelled through a class inside a regular expression, or reached through a computed key reads quiet", { timeout: CENSUS_TIMEOUT }, () => {
+  it("R-COMPOSED (C4 C5 C7): a kill or pid name, a /proc path, a tool, ESRCH, a signal or the child_process module assembled at run time, escaped or spelled through a class inside a regular expression, or reached through a computed key reads quiet, and so does a vocabulary term spelled through a class inside a regular expression in the suite", { timeout: CENSUS_TIMEOUT }, () => {
     const composed = [
       'export const probe = (id: number) => (process as unknown as Record<string, (n: number, s: number) => void>)[["ki", "ll"].join("")]?.(id, 0);',
       'export const idOf = (child: Record<string, number>) => child["p" + "id"];',
@@ -2999,12 +3338,22 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
     const loud = parseText("planted-falsifier.test.ts", `${HX_HEAD}${plain.join("\n")}\n`);
     const quietProvider = parseText("planted-provider.ts", `export const signal = "SIG" + "TERM";\nexport const load = () => ${LOAD}("node:child" + "_process");\n`);
     const loudProvider = parseText("planted-provider.ts", `export const signal = "SIGTERM";\nexport const load = () => ${LOAD}("node:child_process");\n`);
+    const lifecycle = read(LIFECYCLE);
     expect({
       quiet: shapeForms(falsifierShapes(quiet)),
       loud: shapeForms(falsifierShapes(loud)),
       quietProvider: [...signalNames(quietProvider), ...childProcessNames(quietProvider)],
       loudProvider: [...signalNames(loudProvider), ...childProcessNames(loudProvider)],
-    }).toStrictEqual({ quiet: [], loud: ["F1:member", "F2:member", "F3:/proc path", "F3:process-table command", "F4:literal"], quietProvider: [], loudProvider: ["SIGTERM", "node:child_process"] });
+      quietSuite: plantedSuiteHits(plantedText(lifecycle, K2_ANCHOR, `${K2_ANCHOR}\n    void /termi[n]ated on abort/;`)),
+      loudSuite: plantedSuiteHits(plantedText(lifecycle, K2_ANCHOR, `${K2_ANCHOR}\n    void /terminated on abort/;`)).length > 0,
+    }).toStrictEqual({
+      quiet: [],
+      loud: ["F1:member", "F2:member", "F3:/proc path", "F3:process-table command", "F4:literal"],
+      quietProvider: [],
+      loudProvider: ["SIGTERM", "node:child_process"],
+      quietSuite: [],
+      loudSuite: true,
+    });
     RAN.add(residualNamed("R-COMPOSED").id);
   });
 
@@ -3037,12 +3386,13 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
     RAN.add(residualNamed("R-ARGUMENTS").id);
   });
 
-  it("R-RUNTIME (C1 C2 C3): an exit before the first assertion is the run pin's to see; the static rows read quiet", { timeout: CENSUS_TIMEOUT }, () => {
+  it("R-RUNTIME (C1 C2 C3): an exit before an assertion reads quiet in the static rows: before a case's first assertion the run pin sees it, and between two assertions no row does (judge() needs one assertion reached)", { timeout: CENSUS_TIMEOUT }, () => {
     const text = read(LIFECYCLE);
     const base = suiteReading(parse(LIFECYCLE));
     const early = suiteReading(parseText("planted-lifecycle.test.ts", plantedText(text, K2_HEAD, `${K2_HEAD}\n    if (process.cwd().length > 0) return;`)));
+    const between = suiteReading(parseText("planted-lifecycle.test.ts", plantedText(text, K1_UNCALLED, `${K1_UNCALLED}\n    if (process.cwd().length > 0) return;`)));
     const member = suiteReading(parseText("planted-lifecycle.test.ts", plantedText(text, K2_HEAD, K2_HEAD.replace('it("', 'it.fails("'))));
-    expect({ quiet: JSON.stringify(early) === JSON.stringify(base), loud: member.departures.length }).toStrictEqual({ quiet: true, loud: 1 });
+    expect({ quiet: [early, between].map(reading => JSON.stringify(reading) === JSON.stringify(base)), loud: member.departures.length }).toStrictEqual({ quiet: [true, true], loud: 1 });
     RAN.add(residualNamed("R-RUNTIME").id);
   });
 
@@ -3066,7 +3416,10 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
   });
 
   it("R-CLAUSE (C8): a claim whose HX side and term fall in different clauses reads quiet", { timeout: CENSUS_TIMEOUT }, () => {
-    expect({ quiet: pageHits("HX owns the read. The child is terminated by the SDK.").hits, loud: pageHits("HX children are terminated by the SDK.").hits }).toStrictEqual({
+    expect({
+      quiet: [...pageHits("HX owns the read. The child is terminated by the SDK.").hits, ...pageHits("HyperUnix (cf. Sec. 4) terminates its child processes.").hits],
+      loud: pageHits("HX children are terminated by the SDK.").hits,
+    }).toStrictEqual({
       quiet: [],
       loud: ["HX children are terminated by the SDK."],
     });
@@ -3139,6 +3492,7 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
         'export const viaUnread = (): Buffer => execSync("nsenter -t 1 ps -p 1");',
         'export const viaScript = (): Buffer => execSync("bash ./probe-children.sh");',
         `export const viaProgram = (): Buffer => execSync('python3 -c "import os; os.kill(1, 0)"');`,
+        'export const viaRedirect = (): Buffer => execSync(">/dev/null ps -p 1");',
       ].join("\n")}\n`,
     );
     const loud = parseText("planted-falsifier.test.ts", `${HX_HEAD}${EXEC_HEAD}export const probe = (): Buffer => execSync("timeout 5 ps -p 1");\n`);
@@ -3146,11 +3500,19 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
     RAN.add(residualNamed("R-WRAPPER").id);
   });
 
-  it("R-INDIRECT (C2 C7): a module specifier, override name, capability id or member name reached through anything but a literal or a const binding chain to one (a let binding, an object member, a parameter) reads quiet", { timeout: CENSUS_TIMEOUT }, () => {
+  it("R-INDIRECT (C2 C7): a module specifier, override name, capability id or member name reached through anything but a literal or a const binding chain to one (a let binding, an object member, a parameter, an imported binding), a loader, invoke or environment call reached through call, apply or Reflect.apply, or a module named through a configured alias (package imports, a vitest alias) reads quiet", { timeout: CENSUS_TIMEOUT }, () => {
     const body = "export const alive = (child: { pid: number }): boolean => { process.kill(child.pid, 0); return true; };\n";
     const quietDriver = parseText(
       "planted-driver.test.ts",
-      `let SDK = "${SDK_MODULE}";\nSDK = SDK.trim();\nexport const load = () => ${LOAD}(SDK);\nconst MODULES = { sdk: "${SDK_MODULE}" };\nexport const loadAgain = () => ${LOAD}(MODULES.sdk);\n${body}`,
+      [
+        `let SDK = "${SDK_MODULE}";\nSDK = SDK.trim();\nexport const load = () => ${LOAD}(SDK);\nconst MODULES = { sdk: "${SDK_MODULE}" };\nexport const loadAgain = () => ${LOAD}(MODULES.sdk);`,
+        `import { SDK_NAME } from "./hx-names.js";\nexport const loadImported = () => ${LOAD}(SDK_NAME);`,
+        `export const viaCall = () => require.call(undefined, "${SDK_MODULE}");`,
+        `export const viaInvoke = () => registry.invoke.call(registry, "${CAPABILITY_ID}", { kind: "x" }, context);`,
+        `export const viaApply = () => Reflect.apply(vi.stubEnv, vi, ["${OVERRIDE}", "/bin/false"]);`,
+        `export const viaAlias = () => ${LOAD}("#hx-sdk");`,
+        body,
+      ].join("\n"),
     );
     const loudDriver = parseText("planted-driver.test.ts", `const SDK = "${SDK_MODULE}";\nexport const load = () => ${LOAD}(SDK);\n${body}`);
     const quietShape = parseText("planted-falsifier.test.ts", `${HX_HEAD}export const read = (child: Record<string, number>, key: string) => child[key];\n`);
@@ -3215,6 +3577,14 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
       loud: reading(`${text}\nfunction reapGroup(child) { process.kill(-child.pid, "SIGKILL"); }\n`),
     }).toStrictEqual({ quiet: ["runHx:1:true", "streamHx:1:true"], loud: ["runHx:1:true", "streamHx:1:true", "reapGroup:0:false"] });
     RAN.add(residualNamed("R-GROUP-FORM").id);
+  });
+
+  it("R-BIDI (C8): text a browser lays out right to left (a bdo element, a dir attribute, or a run of bidi controls, which the view drops as Default_Ignorable) is read in its logical order, so a claim stored reversed reads quiet", { timeout: CENSUS_TIMEOUT }, () => {
+    const reversed = ".detanimret era nerdlihc XH";
+    const quiet = [`Note: <bdo dir="rtl">${reversed}</bdo>`, `Note: <span dir="rtl">${reversed}</span>`, `Note: ${String.fromCodePoint(0x202e)}${reversed}${String.fromCodePoint(0x202c)}`].map(page => pageHits(page));
+    const loud = pageHits('Note: <bdo dir="ltr">HX children are terminated.</bdo>');
+    expect({ quiet: quiet.map(reading => [...reading.hits, ...reading.refusals]), loud: [...loud.hits, ...loud.refusals] }).toStrictEqual({ quiet: [[], [], []], loud: ["Note: HX children are terminated."] });
+    RAN.add(residualNamed("R-BIDI").id);
   });
 
   it("records: every residual row ran its own case to its end", () => {
