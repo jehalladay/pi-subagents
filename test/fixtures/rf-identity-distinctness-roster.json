@@ -215,7 +215,15 @@
       ],
       "R-GUARD-MARKER": [
         "A1.digestMarkerKeyed",
-        "A1.anchorMarkerKeyed"
+        "A1.anchorMarkerKeyed",
+        "A1.digestMarkerField",
+        "A1.anchorMarkerField",
+        "A1.digestMarkerOthers",
+        "A1.anchorMarkerOthers",
+        "A1.digestMarkerShaped",
+        "A1.anchorMarkerShaped",
+        "A1.digestMarkerExempt",
+        "A1.anchorMarkerExempt"
       ]
     },
     "acceptedForms": [
@@ -245,7 +253,15 @@
       },
       "R-GUARD-MARKER": {
         "A1.digestMarkerKeyed": "A1.digestMarkerBlind",
-        "A1.anchorMarkerKeyed": "A1.anchorMarkerBlind"
+        "A1.anchorMarkerKeyed": "A1.anchorMarkerBlind",
+        "A1.digestMarkerField": "A1.digestMarkerFieldBlind",
+        "A1.anchorMarkerField": "A1.anchorMarkerFieldBlind",
+        "A1.digestMarkerOthers": "A1.digestMarkerOthersBlind",
+        "A1.anchorMarkerOthers": "A1.anchorMarkerOthersBlind",
+        "A1.digestMarkerShaped": "A1.digestMarkerShapedBlind",
+        "A1.anchorMarkerShaped": "A1.anchorMarkerShapedBlind",
+        "A1.digestMarkerExempt": "A1.digestMarkerExemptBlind",
+        "A1.anchorMarkerExempt": "A1.anchorMarkerExemptBlind"
       }
     },
     "pinHollowMembers": [
@@ -621,7 +637,23 @@
               "digestMarkerKeyed": 0,
               "anchorMarkerKeyed": 0,
               "digestMarkerBlind": 1,
-              "anchorMarkerBlind": 1
+              "anchorMarkerBlind": 1,
+              "digestMarkerField": 0,
+              "anchorMarkerField": 0,
+              "digestMarkerOthers": 0,
+              "anchorMarkerOthers": 0,
+              "digestMarkerShaped": 0,
+              "anchorMarkerShaped": 0,
+              "digestMarkerExempt": 0,
+              "anchorMarkerExempt": 0,
+              "digestMarkerFieldBlind": 1,
+              "anchorMarkerFieldBlind": 1,
+              "digestMarkerOthersBlind": 1,
+              "anchorMarkerOthersBlind": 1,
+              "digestMarkerShapedBlind": 1,
+              "anchorMarkerShapedBlind": 1,
+              "digestMarkerExemptBlind": 1,
+              "anchorMarkerExemptBlind": 1
             }
           }
         },

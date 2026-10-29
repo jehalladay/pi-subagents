@@ -235,10 +235,28 @@
  * src/workbench/hosts modules beside a planted prefix, and of those modules' first literals), so it falls outside
  * R-GUARD-CONTENT, which names content no module holds (quiet rows A1.digestMarkerKeyed and A1.anchorMarkerKeyed: each sweep,
  * run against a digest and a reread reading each list entry only against ALTERED, finds nothing, beside the blind positives
- * A1.digestMarkerBlind and A1.anchorMarkerBlind: each misses RUNTIME's first literal swapped for the render prefix, which the
- * view digest and the judged anchor see - and that reading holds the live guards at that one point, so a view digest or a
- * judged anchor marker-keyed in RUNTIME's literals reds A1, the gate's G6-4 and G6-4b among them, while one marker-keyed only
- * in another field or only below another directory is this residual); R-ANCHOR-SOURCE (wb-yvoa) an outside anchor's own
+ * A1.digestMarkerBlind and A1.anchorMarkerBlind). THE MARKER POINTS (wb-ahgz U1): RUNTIME's first literal swapped, its list's
+ * length kept, for each of exactly two swap values - the render prefix and the literal's same-length complement (each UTF-16 unit
+ * x written as y and every other unit as x; neither spells ALTERED) - in exactly two views: RUNTIME's one-module view (no readers
+ * entry) and the full view A1 holds (every walked module and the readers list, the view each tree judge records). Each of the two
+ * blind positives reads that its marker-keyed guard misses both swap values in the one-module view and that the live guard sees
+ * all four points (the view digest moves; the judged anchor rereads RUNTIME). So a view digest or a judged anchor that misses one
+ * of the four points reds A1 - measured, each 2 failed (A1, records): the gate's G6-4 and G6-4b (P02, Q01), P09 and P19, the
+ * guards marker-keyed only on views of two or more modules or with a readers entry (the gate's P16, Q12, P05, P06, P11) or reading
+ * in full the entries that spell the render prefix (Q11, Q02, P18), and Q03 (each entry read as ALTERED or its length) - and one
+ * that sees all four is this residual. It names these members beyond the points, each with quiet rows (each sweep, run against its
+ * constructed digest and reread, finds nothing) beside blind positives at one point of its own (the module's reading changes
+ * there, read from its JSON, and the member's guard misses the change): marker keying only in a list field other than literals
+ * (A1.digestMarkerField and A1.anchorMarkerField, keyed in the identifiers, beside A1.digestMarkerFieldBlind and
+ * A1.anchorMarkerFieldBlind at RUNTIME's first identifier swapped for the render prefix; the gate's Q07), only in modules other
+ * than RUNTIME, below its directory or another (A1.digestMarkerOthers and A1.anchorMarkerOthers, keyed in every other module,
+ * beside A1.digestMarkerOthersBlind and A1.anchorMarkerOthersBlind at the first READER's first literal swapped for the render
+ * prefix; the gate's Q05, P03, Q14 and P10), in RUNTIME's literals only on views of two or more modules smaller than the full view
+ * (A1.digestMarkerShaped and A1.anchorMarkerShaped, beside A1.digestMarkerShapedBlind and A1.anchorMarkerShapedBlind at RUNTIME's
+ * first literal swapped for the render prefix in the sample view), and everywhere but the entries that spell a swap value
+ * (A1.digestMarkerExempt and A1.anchorMarkerExempt, beside A1.digestMarkerExemptBlind and A1.anchorMarkerExemptBlind at RUNTIME's
+ * first literal swapped for a value outside the swap set); marker keying only past a list's first entry is R-GUARD-ENTRY's (the
+ * gate's P07); R-ANCHOR-SOURCE (wb-yvoa) an outside anchor's own
  * source served
  * from the shared site - the compiler's second read (ownReadings, or the TypeScript compiler itself) or Git's blob ids - since
  * a guard and its sweep hold a reading to whatever its source returns, never to where it came from (quiet rows A1.sourceReread
@@ -253,7 +271,9 @@
  * present); one quiet row of a guard residual deleted together with its control, its blind positive and its pairing, in this
  * file and the roster (the pairing reads the quiet rows present); a guard residual's quiet row and its blind positive pointed
  * at two different guards (each pair reads one binding, so an edit of that binding moves both); a blind positive's reading of
- * the live guard (the conditioned and marker positives' second conjunct) dropped together with the hollowing it would see; a
+ * the live guard (the conditioned positives' second conjunct, the marker positives' live-guard conjuncts) dropped together
+ * with the hollowing it would see; a marker member's blind positive with its change check dropped and its point made no
+ * change (its guard then compares a reading with itself); a
  * positive control other than a guard residual's blind positive deleted from its witness in this file and the roster together
  * (the control reading reads the controls present, the named quiet rows, the accepted forms and the guard residuals' blind
  * positives); the judged-set
@@ -382,7 +402,18 @@ const QUIET_ROWS: Readonly<Record<string, readonly string[]>> = frozen({
   "R-GUARD-CONTENT": ["A1.digestContentConditioned", "A1.anchorContentConditioned", "A1.walkContentConditioned"],
   "R-GUARD-ENTRY": ["A1.digestEntryConditioned", "A1.anchorEntryConditioned", "A1.digestPartConditioned", "A1.anchorPartConditioned"],
   "R-GUARD-TIMED": ["A1.digestTimed", "A1.anchorTimed", "A1.walkTimed"],
-  "R-GUARD-MARKER": ["A1.digestMarkerKeyed", "A1.anchorMarkerKeyed"],
+  "R-GUARD-MARKER": [
+    "A1.digestMarkerKeyed",
+    "A1.anchorMarkerKeyed",
+    "A1.digestMarkerField",
+    "A1.anchorMarkerField",
+    "A1.digestMarkerOthers",
+    "A1.anchorMarkerOthers",
+    "A1.digestMarkerShaped",
+    "A1.anchorMarkerShaped",
+    "A1.digestMarkerExempt",
+    "A1.anchorMarkerExempt",
+  ],
 });
 /** The one quiet control that is no residual: a form the judge accepts (D1's sha256 digest of the document text). */
 const ACCEPTED_FORMS: readonly string[] = frozen(["D1.textDigest"]);
@@ -400,7 +431,18 @@ const GUARD_POSITIVES: Readonly<Record<string, Readonly<Record<string, string>>>
     "A1.anchorPartConditioned": "A1.anchorPartBlind",
   },
   "R-GUARD-TIMED": { "A1.digestTimed": "A1.digestTimedBlind", "A1.anchorTimed": "A1.anchorTimedBlind", "A1.walkTimed": "A1.walkTimedBlind" },
-  "R-GUARD-MARKER": { "A1.digestMarkerKeyed": "A1.digestMarkerBlind", "A1.anchorMarkerKeyed": "A1.anchorMarkerBlind" },
+  "R-GUARD-MARKER": {
+    "A1.digestMarkerKeyed": "A1.digestMarkerBlind",
+    "A1.anchorMarkerKeyed": "A1.anchorMarkerBlind",
+    "A1.digestMarkerField": "A1.digestMarkerFieldBlind",
+    "A1.anchorMarkerField": "A1.anchorMarkerFieldBlind",
+    "A1.digestMarkerOthers": "A1.digestMarkerOthersBlind",
+    "A1.anchorMarkerOthers": "A1.anchorMarkerOthersBlind",
+    "A1.digestMarkerShaped": "A1.digestMarkerShapedBlind",
+    "A1.anchorMarkerShaped": "A1.anchorMarkerShapedBlind",
+    "A1.digestMarkerExempt": "A1.digestMarkerExemptBlind",
+    "A1.anchorMarkerExempt": "A1.anchorMarkerExemptBlind",
+  },
 });
 /** R-PIN-HOLLOW: the pins whose removal from every literal (ROWS, the frozen literal, IMPL, the roster) the bead-row anchor
  * cannot see - its quiet row in the judged-set case recomputes them. */
@@ -1690,9 +1732,12 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = frozen({
       };
       // R-GUARD-MARKER (wb-ahgz F1, the wb-iy1n gate's G6-4, H6-DIGEST-SWEEP-KEYED): a digest and a reread reading each list
       // entry only as whether it spells ALTERED, every count and the blob id kept, move with every alteration (an appended
-      // ALTERED) and every substitution (a first entry made ALTERED), so they read every sweep honest - and each misses
-      // RUNTIME's first literal swapped for the render prefix, the list's length kept, which the view digest and the judged
-      // anchor see (markerBlind) - a reading that also holds the live view digest and judged anchor at RUNTIME's literals.
+      // ALTERED) and every substitution (a first entry made ALTERED), so they read every sweep honest. The marker points
+      // (wb-ahgz U1): RUNTIME's first literal swapped, its list's length kept, for each of the two swap values - the render
+      // prefix and the literal's same-length complement (each UTF-16 unit x written as y and every other unit as x) - in two
+      // views: RUNTIME's one-module view (no readers entry) and the full view A1 holds (every walked module and the readers
+      // list, the view each tree judge records). markerBlind holds the marker-keyed digest and reread blind at every point of
+      // the one-module view and the live view digest and judged anchor seeing every point of both views, and nowhere else.
       const marked = (value: string): string => (value.includes(ALTERED) ? ALTERED : "");
       const markerKeyed = (reading: ModuleReading): ModuleReading => ({
         ...reading,
@@ -1706,11 +1751,97 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = frozen({
       });
       const markerDigest = fieldBlind(markerKeyed);
       const markerReread = rereadBy(markerKeyed);
-      const swappedView = viewOfOne(RUNTIME, { ...runtimeReading, literals: runtimeReading.literals.map((value, index) => (index === 0 ? RENDER_PREFIX : value)) });
+      const complement = (value: string): string =>
+        value
+          .split("")
+          .map(unit => (unit === "x" ? "y" : "x"))
+          .join("");
+      const swapValues = [RENDER_PREFIX, complement(runtimeReading.literals[0] ?? "")];
+      const literalSwapped = (reading: ModuleReading, value: string): ModuleReading => ({ ...reading, literals: [value, ...reading.literals.slice(1)] });
+      const runtimeSwapped = (value: string): JudgedView => viewOfOne(RUNTIME, literalSwapped(runtimeReading, value));
+      const swappedIn = (seen: JudgedView, path: string, value: string): JudgedView => ({
+        modules: new Map([...seen.modules].map(([key, reading]) => [key, key === path ? literalSwapped(reading, value) : reading])),
+        readers: [...seen.readers],
+      });
+      const fullDigest = viewDigest(view);
       const markerBlind = {
-        digest: markerDigest(swappedView) === markerDigest(runtimeView) && viewDigest(swappedView) !== viewDigest(runtimeView),
-        anchor: markerReread(onRuntime, swappedView, own).reread.length === 0 && judgedAnchor(onRuntime, swappedView, own).reread.length > 0,
+        digest: swapValues.every(
+          value =>
+            markerDigest(runtimeSwapped(value)) === markerDigest(runtimeView) &&
+            viewDigest(runtimeSwapped(value)) !== viewDigest(runtimeView) &&
+            viewDigest(swappedIn(view, RUNTIME, value)) !== fullDigest,
+        ),
+        anchor: swapValues.every(
+          value =>
+            markerReread(onRuntime, runtimeSwapped(value), own).reread.length === 0 &&
+            judgedAnchor(onRuntime, runtimeSwapped(value), own).reread.includes(RUNTIME) &&
+            judgedAnchor(tree, swappedIn(view, RUNTIME, value), own).reread.includes(RUNTIME),
+        ),
       };
+      // The members R-GUARD-MARKER names beyond the marker points (wb-ahgz U1): each a constructed digest and reread, keyed on
+      // ALTERED where its member says, with its quiet rows (each sweep, run against it, finds nothing) and its own blind
+      // positives at one point of its own, where the module's reading changes and the member's guard misses the change - the
+      // change read from the reading's JSON, not from the live view digest or judged anchor: a list field other than literals
+      // (the identifiers; RUNTIME's first identifier swapped for the render prefix), the modules other than RUNTIME (the first
+      // READER's first literal swapped for the render prefix), RUNTIME's literals on views of two or more modules smaller than
+      // the full view (RUNTIME's first literal swapped for the render prefix in the sample view), and every entry but those
+      // spelling a swap value (RUNTIME's first literal swapped for otherSwap, a value outside the swap set).
+      const keyedWhere = (keyed: (path: string, seen: JudgedView) => (reading: ModuleReading) => ModuleReading): { digest: DigestGuard; anchor: AnchorGuard } => ({
+        digest: seen => viewDigest({ modules: new Map([...seen.modules].map(([path, reading]) => [path, keyed(path, seen)(reading)])), readers: seen.readers }),
+        anchor: (on, seen, readings) => ({
+          ...judgedAnchor(on, seen, readings),
+          reread: [...seen.modules]
+            .filter(([path, reading]) => {
+              const read = readings.get(path);
+              return read === undefined || JSON.stringify(keyed(path, seen)(reading)) !== JSON.stringify(keyed(path, seen)(read));
+            })
+            .map(([path]) => path),
+        }),
+      });
+      const asRead = (reading: ModuleReading): ModuleReading => reading;
+      const spellsSwap = (value: string): boolean => swapValues.some(swap => value.includes(swap));
+      const exemptMarked = (value: string): string => (spellsSwap(value) ? value : marked(value));
+      const exemptKeyed = (reading: ModuleReading): ModuleReading => ({
+        ...reading,
+        identifiers: reading.identifiers.map(exemptMarked),
+        literals: reading.literals.map(exemptMarked),
+        regexes: reading.regexes.map(exemptMarked),
+        reads: reading.reads.map((read): KeyRead => (spellsSwap(read.name) ? read : { name: marked(read.name), nullCompared: false })),
+        members: reading.members.map(exemptMarked),
+        nullTypedMembers: reading.nullTypedMembers.map(exemptMarked),
+        textReads: reading.textReads.map((read): TextRead => (spellsSwap(read.object) ? read : { object: marked(read.object), use: "other" })),
+      });
+      const markerMembers = {
+        field: keyedWhere(() => reading => ({ ...reading, identifiers: reading.identifiers.map(marked) })),
+        others: keyedWhere(path => (path === RUNTIME ? asRead : markerKeyed)),
+        shaped: keyedWhere((path, seen) =>
+          path === RUNTIME && seen.modules.size > 1 && seen.modules.size < view.modules.size ? reading => ({ ...reading, literals: reading.literals.map(marked) }) : asRead,
+        ),
+        exempt: keyedWhere(() => exemptKeyed),
+      };
+      const otherSwap = "wb-ahgz-other";
+      const onReader = { ...tree, walk: { ...tree.walk, modules: [readerPath] } };
+      const readerView = viewOfOne(readerPath, readingOf(view, readerPath));
+      const identifierSwapped = viewOfOne(RUNTIME, { ...runtimeReading, identifiers: [RENDER_PREFIX, ...runtimeReading.identifiers.slice(1)] });
+      const memberPoints: { [Member in keyof typeof markerMembers]: { on: Pick<TreeReading, "walk" | "blobs">; path: string; from: JudgedView; to: JudgedView } } = {
+        field: { on: onRuntime, path: RUNTIME, from: runtimeView, to: identifierSwapped },
+        others: { on: onReader, path: readerPath, from: readerView, to: swappedIn(readerView, readerPath, RENDER_PREFIX) },
+        shaped: { on: sampleTree, path: RUNTIME, from: sample, to: swappedIn(sample, RUNTIME, RENDER_PREFIX) },
+        exempt: { on: onRuntime, path: RUNTIME, from: runtimeView, to: runtimeSwapped(otherSwap) },
+      };
+      const memberBlind = (member: keyof typeof markerMembers): { digest: number; anchor: number } => {
+        const guard = markerMembers[member];
+        const point = memberPoints[member];
+        const moved = JSON.stringify(readingOf(point.to, point.path)) !== JSON.stringify(readingOf(point.from, point.path));
+        return {
+          digest: Number(moved && guard.digest(point.to) === guard.digest(point.from)),
+          anchor: Number(moved && !guard.anchor(point.on, point.to, own).reread.includes(point.path)),
+        };
+      };
+      const fieldBlindness = memberBlind("field");
+      const othersBlindness = memberBlind("others");
+      const shapedBlindness = memberBlind("shaped");
+      const exemptBlindness = memberBlind("exempt");
       const controls = {
         propertyRead: ratio("const id = result.render_id;\n", "render_id"),
         nullCompare: ratio("if (result.render_id !== null) throw refused();\n", "render_id"),
@@ -1800,6 +1931,22 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = frozen({
         anchorMarkerKeyed: finds(anchorSweep(sampleTree, sample, own, markerReread)),
         digestMarkerBlind: Number(markerBlind.digest),
         anchorMarkerBlind: Number(markerBlind.anchor),
+        digestMarkerField: finds(digestSweep(sample, markerMembers.field.digest)),
+        anchorMarkerField: finds(anchorSweep(sampleTree, sample, own, markerMembers.field.anchor)),
+        digestMarkerOthers: finds(digestSweep(sample, markerMembers.others.digest)),
+        anchorMarkerOthers: finds(anchorSweep(sampleTree, sample, own, markerMembers.others.anchor)),
+        digestMarkerShaped: finds(digestSweep(sample, markerMembers.shaped.digest)),
+        anchorMarkerShaped: finds(anchorSweep(sampleTree, sample, own, markerMembers.shaped.anchor)),
+        digestMarkerExempt: finds(digestSweep(sample, markerMembers.exempt.digest)),
+        anchorMarkerExempt: finds(anchorSweep(sampleTree, sample, own, markerMembers.exempt.anchor)),
+        digestMarkerFieldBlind: fieldBlindness.digest,
+        anchorMarkerFieldBlind: fieldBlindness.anchor,
+        digestMarkerOthersBlind: othersBlindness.digest,
+        anchorMarkerOthersBlind: othersBlindness.anchor,
+        digestMarkerShapedBlind: shapedBlindness.digest,
+        anchorMarkerShapedBlind: shapedBlindness.anchor,
+        digestMarkerExemptBlind: exemptBlindness.digest,
+        anchorMarkerExemptBlind: exemptBlindness.anchor,
       };
       return done("A1", { modulesFloorMet, walk: json(walk), judged: json(judged), sweeps, readers: [...view.readers], table, nullOnly, nullTyped, prefixes, typedPrefixes, outside, shippedSpelled, controls });
     } finally {
