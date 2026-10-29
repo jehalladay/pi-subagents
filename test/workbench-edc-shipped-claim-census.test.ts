@@ -16,7 +16,9 @@
  * MEASURED (read-only, by the cutting seat ws-04, run g10-work-s109, 2026-10-26, on trunk dc72a6d): no tracked file outside
  * .beads/ and test/ spells either stem (git grep over both spellings; its one hit, media/demo.mp4, is video bytes): 0 of the 76
  * claim pages, 0 of the 116 src modules, 0 of the 8 registered descriptors, 0 of package.json and the 372 package-lock.json
- * packages.
+ * packages. RE-MEASURED at the wb-kv0y cut (seat ws-04, run g10-work-s141, 2026-10-29, on trunk 57cb1c0): 81 tracked claim pages, each
+ * judged by both of B2's readings, and 117 tracked src modules (all .ts, so none of a JSX script kind), each judged by both of A2's,
+ * with no mention.
  *
  * THE VOCABULARY: both stems are derived from the title's charter path (docs/programs/<slug>-<date>.md, slug
  * evidence-directed-computation): its INITIALS, the acronym the title spells (edc, read as a whole word or its plural "edcs"),
@@ -46,24 +48,55 @@
  *    (.ts .mts .cts .tsx .js .mjs .cjs .jsx; 116 .ts modules at the cut) through its TypeScript AST: identifiers, private
  *    names, string, template and regular-expression literal texts (so every import, export and dynamic-import specifier) and
  *    JSX text, never a comment.
- *  - THE TRACKED LISTING (wb-0st4): git's index (git ls-files -z) is the walks' independent anchor. The claim-page walk, the pages
- *    B2 reads and the src modules A2 reads each equal git's tracked paths of the same scope, both ways, so a walk or a reader that
- *    skips part of its scope reds without waiting for a floor, and so does an untracked page or module the walk would read.
+ *  - THE TRACKED LISTING (wb-0st4, restated by wb-kv0y): git's index (git ls-files -z) is the walks' independent anchor. The
+ *    claim-page walk equals git's tracked claim pages, both ways (B1). The pages B2 judges and the src modules A2 judges each equal
+ *    git's tracked paths of the same scope, both ways, and a reading records a file only through its judgment's own output
+ *    (judgePage and judgeModule return the file, its count and its mentions from one parse), so a reading that leaves a file of its
+ *    scope out of the judgment reds without waiting for a floor, as does an untracked page or module the walk would read. git's
+ *    listing binds which files are judged, not what in them is judged: that is THE PLANTED READING's.
+ *  - THE PLANTED READING (wb-kv0y): A2 and B2 each read their scope twice through one reading function (modulesReading,
+ *    pagesReading), over the files' own texts and over each file's own text wrapped between the parts of a plant (PLANTED_MODULE,
+ *    PLANTED_PAGE): a first part made of the reader's own controls (every SOURCE_CONTROLS module but the JSX one, whose JSX parses in
+ *    the JSX script kinds only; every PAGE_CONTROLS page, each closed by a thematic break so no list, table or quote runs on) and a last
+ *    part naming the modifier once. The plant's own reading is the planted reading of an empty text: each witness pins it with its
+ *    count, and it must be exactly the controls' and the last part's own readings, in order (asControls). Every file of the scope
+ *    must read, wrapped, exactly its own mentions plus the plant's (unjudged empty; compared as sorted kind-and-stem lists) and
+ *    exactly its own count plus the plant's (unwrapped empty; the count is the judged texts or claim blocks, so the plant wraps a
+ *    file's text and never stands in for it).
  *
  * The census pins two rows and the residuals' quiet rows:
- *  A, the adoption clause: A1 the manifests, A2 the src modules (both with their walk floors; the modules A2 reads also equal
- *    git's tracked script modules below src, both ways), A3 the manifest and source readers' own controls, each read exactly as
- *    pinned.
+ *  A, the adoption clause: A1 the manifests, A2 the src modules (both with their walk floors; the modules A2 judges also equal
+ *    git's tracked script modules below src, both ways, and its planted reading judges each of them), A3 the manifest and source
+ *    readers' own controls, each read exactly as pinned.
  *  B, the claim-surface clause, judged where the acceptance names it: B1 the claim-page set (the required pages present, the
  *    walk above its floor, nothing outside the scope, the walk equal to git's tracked claim pages both ways, no symlink below
- *    docs/, and the walk's own control WALK_CONTROL read exactly as pinned), B2 every claim page (surface docs/workbench; the
- *    pages read equal to git's tracked claim pages both ways), B3 TRACEABILITY.md read on its own (surface TRACEABILITY, the
- *    census the acceptance names), B4 every registered descriptor (surface descriptors; each leg carries its fingerprint, its
+ *    docs/, and the walk's own control WALK_CONTROL, walked through docsWalk itself, read exactly as pinned), B2 every claim page
+ *    (surface docs/workbench; the pages judged equal to git's tracked claim pages both ways, and its planted reading judges each
+ *    of them), B3 TRACEABILITY.md read on its own (surface TRACEABILITY, the census the acceptance names), B4 every registered
+ *    descriptor (surface descriptors; each leg carries its fingerprint, its
  *    descriptors' ids and descriptions, so a leg read from the other registration reds), B5 the page and descriptor readers' own
  *    controls. B2-B4 also hold their reading floors, so a reader that reads nothing reds.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
+ * ENUMERATION (wb-kv0y; hop 3 of the wb-pyel.4 chain - landing 546, then wb-0st4 at landing 612, then this carry - in R739's
+ * terminal enumerate-the-resolvable form, the chain capped here). For the class the landing-612 gate's F1 names - a reading that
+ * records a file as read apart from its stem judgment, so a reader judging only part of what it reads keeps every witness
+ * unchanged - the census claims exactly these members, each red on today's stem-free tree for every selection that takes at least
+ * one file of the scope, and nothing beyond them:
+ *  K1 the module or page reading judges only part of its scope while still recording or counting every file (the named L2-SCAN-A2
+ *     and L2-SCAN-B2): no file is recorded apart from its judgment (THE TRACKED LISTING), and THE PLANTED READING reds the skip;
+ *  K2 the reading judges every file but drops the mentions of part of its scope;
+ *  K3 the reading skips, for part of its scope, a form one of its controls carries a stem in (a SOURCE_CONTROLS module but the JSX
+ *     one, a PAGE_CONTROLS page);
+ *  K4 the reading skips the judgment of a file selected by its size, its content or its place in the scope's list, or judges a
+ *     file only up to before its end or only from after its start.
+ *  K1-K4 red A2 (the src modules) or B2 (the claim pages, TRACEABILITY.md among them; B3 reads it through the same function).
+ * For the class the gate's F3 names - the walk's control bound to a function the real walk does not run through - it claims
+ * exactly K5: docsWalk replaced by a walk that ignores its injected directory reader (the named L2-REALWALK, with its untracked
+ * forms L2-REALWALK+G16 and +G27) reds B1, because WALK_CONTROL is walked through docsWalk itself. F2's sentence is THE TRACKED
+ * LISTING's, restated above to the bound it measures. An escape found outside K1-K5 is a residual-list addition for the owner,
+ * not a claim this census makes; NOT CLAIMED bounds the rest.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and
- * pins, every pin's witness, the constants, the controls, the residual families and every registered test title - is held to
+ * pins, every pin's witness, the constants, the controls, the plants, the residual families and every registered test title - is held to
  * the out-of-file roster (test/fixtures/edc-shipped-claim-roster.json). The labels of rows A and B are held both ways to the two
  * clauses of the bead's own title in the tracker export (.beads/issues.jsonl), the stems to the title's charter path, and the
  * surfaces of B2-B4 both ways to the acceptance's until-then sentence (the first one in the bead's notes, so later notes on the
@@ -72,7 +105,17 @@
  * NOT CLAIMED (edits of this file and the roster together below row level): a pin removed from ROWS, the literal, IMPL and the
  * roster where no surface of the acceptance anchors it (A1-A3, B1, B5, Q1-Q6, the last with its RESIDUALS entry); a control
  * removed from its list and the roster; a pin's case replaced by one that echoes its roster witness; git's listing replaced by the
- * walk it anchors, in this file, together with a narrowing of that walk (trackedPaths is the only reader of git's index).
+ * walk it anchors, in this file, together with a narrowing of that walk (trackedPaths is the only reader of git's index). And, each
+ * measured at the wb-kv0y cut: a reading function or docsWalk that branches on its injected reader, or a judgment that keys on the
+ * plant's own text, so the planted or the synthetic-tree run takes another path than the real one; a judgment that skips some of a
+ * file's own texts or blocks selected by their content or by their place strictly inside the file's own text (the plant stands in
+ * for each control form and for a file's two ends, not for every text the file holds); a judged form no control carries a stem in
+ * (a template middle or tail, a no-substitution template literal, an escape, a named character reference), skipped for part or
+ * all of the scope, and JSX text, which no tracked src module holds at the cut; a case that drops part of its reading's mentions
+ * after the reading returns them (the partial form of a case that echoes its witness; a dropped record reds through git's
+ * listing); and the entry readers outside the two file loops - A1's manifest and lock readers, B4's descriptor reader - judging
+ * only part of the entries or fields they count (they hold floors and fingerprints, not a judged record, and no plant wraps them:
+ * A3 and B5 read them on their own synthetic controls only).
  * RESIDUALS (named, each with its pinned quiet row): R-VOCABULARY EDC described in other words (context assembly charter,
  * evidence-driven, demand-directed, E.D.C., evidence directing, QueryView judgments) names no stem (Q1); R-LOOKALIKE a stem
  * written with a look-alike letter of another script (Cyrillic ie, es) is not matched (Q2; each probe, repaired, names its stem);
@@ -232,6 +275,22 @@ const SOURCE_CONTROLS: Readonly<Record<string, string>> = {
   "cross-word": "const namedCount = 1; usedCarefully(namedCount);",
   "jsx.tsx": "export const view = <span>EDC integration</span>;",
 };
+/** THE PLANTED READING's plants (wb-kv0y): each wraps a file's own text as `${first}${gap}${text}${gap}${last}`. The first part is
+ * the reader's own controls and the last part names the modifier once. */
+interface Plant {
+  readonly first: string;
+  readonly gap: string;
+  readonly last: string;
+}
+/** The source controls a planted module carries: every SOURCE_CONTROLS module but the JSX one, which parses as no other script kind. */
+const PLANT_SOURCE_CONTROLS: readonly (readonly [string, string])[] = Object.entries(SOURCE_CONTROLS).filter(([name]) => name !== "jsx.tsx");
+const PLANTED_MODULE: Plant = {
+  first: PLANT_SOURCE_CONTROLS.map(([, body]) => body).join("\n"),
+  gap: "\n",
+  last: "const evidenceDirectedPlant = 1;",
+};
+/** A planted page: every PAGE_CONTROLS page, each closed by a thematic break so no list, table or quote runs on into the next. */
+const PLANTED_PAGE: Plant = { first: Object.values(PAGE_CONTROLS).join("\n---\n\n"), gap: "\n\n---\n\n", last: "# Evidence-directed plant\n" };
 /** R-VOCABULARY's members: EDC in other words. */
 const VOCABULARY_CONTROLS: readonly string[] = [
   "context assembly charter",
@@ -450,12 +509,33 @@ function blocksOf(page: string): Block[] {
   for (const token of new Lexer({ gfm: true }).lex(page)) visit(token);
   return blocks;
 }
-/** One page's mentions: `${location}|${kind}#${block index}|${stems}`. */
+/** One file judged (wb-kv0y): the file, the count of what its judgment read (a module's judged texts, a page's claim blocks) and its
+ * mentions, all from one parse. A reading records a file only through this output. */
+interface Judged {
+  readonly file: string;
+  readonly count: number;
+  readonly mentions: readonly string[];
+}
+/** One page judged, with its words. */
+interface JudgedPage extends Judged {
+  readonly words: number;
+}
+/** One page judged: its claim blocks lexed once, each mention `${location}|${kind}#${block index}|${stems}`. */
+function judgePage(page: string, location: string): JudgedPage {
+  const blocks = blocksOf(page);
+  return {
+    file: location,
+    count: blocks.length,
+    words: blocks.reduce((total, block) => total + wordCount(block.text), 0),
+    mentions: blocks.flatMap((block, index) => {
+      const stems = stemsIn(block.text);
+      return stems.length > 0 ? [`${location}|${block.kind}#${index}|${stems.join("+")}`] : [];
+    }),
+  };
+}
+/** One page's mentions. */
 function pageMentions(page: string, location: string): string[] {
-  return blocksOf(page).flatMap((block, index) => {
-    const stems = stemsIn(block.text);
-    return stems.length > 0 ? [`${location}|${block.kind}#${index}|${stems.join("+")}`] : [];
-  });
+  return [...judgePage(page, location).mentions];
 }
 function filesBelow(directory: string, extension: string): string[] {
   const found: string[] = [];
@@ -509,9 +589,10 @@ function pageWalk(read: ReadDirectory, root: string, directory: string): { pages
   visit(directory);
   return { pages, symlinks };
 }
-/** The real page walk: the repository's docs/ tree. */
-function docsWalk(): { pages: string[]; symlinks: string[] } {
-  return pageWalk(DISK, REPO, "docs");
+/** The real page walk: the repository's docs/ tree through the injected directory reader. B1 walks WALK_CONTROL through this same
+ * entry point (wb-kv0y), so the control binds the walk the claim pages come from. */
+function docsWalk(read: ReadDirectory = DISK, root: string = REPO): { pages: string[]; symlinks: string[] } {
+  return pageWalk(read, root, "docs");
 }
 function claimPages(): string[] {
   const top = TOP_PAGES.filter(page => existsSync(join(REPO, page)));
@@ -530,26 +611,12 @@ function trackedClaimPages(): string[] {
     .filter(path => inClaimScope(path))
     .sort();
 }
-function readPage(page: string): string {
-  return readFileSync(join(REPO, page), "utf8");
-}
-/** The judged reading of a page set: the pages read, the mentions, the empty pages and the reading floors. */
-function pagesReading(pages: readonly string[]): { pages: string[]; mentions: string[]; empty: string[]; blocks: number; words: number } {
-  const readPages: string[] = [];
-  const mentions: string[] = [];
-  const empty: string[] = [];
-  let blocks = 0;
-  let words = 0;
-  for (const page of pages) {
-    const text = readPage(page);
-    const read = blocksOf(text);
-    if (read.length === 0) empty.push(page);
-    blocks += read.length;
-    words += read.reduce((total, block) => total + wordCount(block.text), 0);
-    mentions.push(...pageMentions(text, page));
-    readPages.push(page);
-  }
-  return { pages: readPages, mentions, empty, blocks, words };
+/** Reads a file's text by its repository path. */
+type ReadText = (path: string) => string;
+const DISK_TEXT: ReadText = path => readFileSync(join(REPO, path), "utf8");
+/** The page reading (B2, B3): every page of the list judged, in list order; what it records is the judgments' own output. */
+function pagesReading(pages: readonly string[], read: ReadText): JudgedPage[] {
+  return pages.map(page => judgePage(read(page), page));
 }
 function controlPages(pages: Readonly<Record<string, string>>): JsonValue {
   return json(Object.fromEntries(Object.entries(pages).map(([name, page]) => [name, pageMentions(page, name)])));
@@ -670,11 +737,20 @@ function sourceTexts(text: string, module: string): { line: number; kind: string
   visit(source);
   return texts;
 }
+/** One module judged: its texts parsed once, each mention `${module}:${line}|${kind}|${stems}`. */
+function judgeModule(text: string, module: string): Judged {
+  const texts = sourceTexts(text, module);
+  return {
+    file: module,
+    count: texts.length,
+    mentions: texts.flatMap(entry => {
+      const stems = stemsIn(entry.text);
+      return stems.length > 0 ? [`${module}:${entry.line}|${entry.kind}|${stems.join("+")}`] : [];
+    }),
+  };
+}
 function sourceMentions(text: string, module: string): string[] {
-  return sourceTexts(text, module).flatMap(entry => {
-    const stems = stemsIn(entry.text);
-    return stems.length > 0 ? [`${module}:${entry.line}|${entry.kind}|${stems.join("+")}`] : [];
-  });
+  return [...judgeModule(text, module).mentions];
 }
 function srcModules(): string[] {
   return Object.keys(SCRIPT_KINDS)
@@ -688,8 +764,55 @@ function trackedModules(): string[] {
     .filter(path => path.startsWith("src/") && Object.keys(SCRIPT_KINDS).some(extension => path.endsWith(extension)))
     .sort();
 }
+/** The module reading (A2): every module of the list judged, in list order; what it records is the judgments' own output. */
+function modulesReading(modules: readonly string[], read: ReadText): Judged[] {
+  return modules.map(module => judgeModule(read(module), module));
+}
 function readJson(path: string): unknown {
   return JSON.parse(readFileSync(join(REPO, path), "utf8"));
+}
+
+// ---- the planted reading ----
+
+/** A text wrapped between a plant's parts. */
+function plantText(plant: Plant, text: string): string {
+  return [plant.first, text, plant.last].join(plant.gap);
+}
+/** A text reader that reads each file as its own text wrapped between a plant's parts. */
+function plantedReader(read: ReadText, plant: Plant): ReadText {
+  return path => plantText(plant, read(path));
+}
+/** Each mention's kind and stems, its location and position removed: `${kind}|${stems}`. */
+function shapes(mentions: readonly string[]): string[] {
+  return mentions.map(mention => {
+    const [, kind = "", stems = ""] = mention.split("|");
+    return `${kind.split("#")[0] ?? ""}|${stems}`;
+  });
+}
+/** THE PLANTED READING's verdict over one scope: the plant's own reading (the planted reading of an empty text) and its count,
+ * whether that reading is exactly the controls' and the last part's own readings in order, and the files of the scope whose planted
+ * reading is not exactly their own reading plus the plant's - in mentions (unjudged; sorted kind-and-stem lists) or in count
+ * (unwrapped). */
+function plantedVerdict(files: readonly string[], own: readonly Judged[], planted: readonly Judged[], plant: Judged, controls: readonly string[]): JsonValue {
+  const ownOf = new Map(own.map((entry): [string, Judged] => [entry.file, entry]));
+  const plantedOf = new Map(planted.map((entry): [string, Judged] => [entry.file, entry]));
+  const sorted = (list: readonly string[]): string => JSON.stringify([...list].sort());
+  const plantShapes = shapes(plant.mentions);
+  return json({
+    plant: plantShapes,
+    count: plant.count,
+    asControls: JSON.stringify(plantShapes) === JSON.stringify(controls),
+    unjudged: files.filter(file => {
+      const mine = ownOf.get(file);
+      const read = plantedOf.get(file);
+      return mine === undefined || read === undefined || sorted(shapes(read.mentions)) !== sorted([...plantShapes, ...shapes(mine.mentions)]);
+    }),
+    unwrapped: files.filter(file => {
+      const mine = ownOf.get(file);
+      const read = plantedOf.get(file);
+      return mine === undefined || read === undefined || read.count !== mine.count + plant.count;
+    }),
+  });
 }
 
 // ---- the bead's own text ----
@@ -746,22 +869,17 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A2: async () => {
     const modules = srcModules();
     const tracked = trackedModules();
-    const read: string[] = [];
-    const mentions: string[] = [];
-    let texts = 0;
-    for (const module of modules) {
-      const text = readFileSync(join(REPO, module), "utf8");
-      texts += sourceTexts(text, module).length;
-      mentions.push(...sourceMentions(text, module));
-      read.push(module);
-    }
+    const judged = modulesReading(modules, DISK_TEXT);
+    const read = judged.map(entry => entry.file);
+    const controls = [...PLANT_SOURCE_CONTROLS.flatMap(([name, body]) => shapes(sourceMentions(body, name))), ...shapes(sourceMentions(PLANTED_MODULE.last, "last"))];
     return json({
       modulesBelowFloor: modules.length < FLOORS.modules,
-      textsBelowFloor: texts < FLOORS.texts,
+      textsBelowFloor: judged.reduce((total, entry) => total + entry.count, 0) < FLOORS.texts,
       outsideSrc: modules.filter(module => !module.startsWith("src/")),
       untracked: read.filter(module => !tracked.includes(module)),
       unread: tracked.filter(module => !read.includes(module)),
-      mentions,
+      mentions: judged.flatMap(entry => entry.mentions),
+      planted: plantedVerdict(modules, judged, modulesReading(modules, plantedReader(DISK_TEXT, PLANTED_MODULE)), judgeModule(plantText(PLANTED_MODULE, ""), "plant"), controls),
     });
   },
   A3: async () =>
@@ -773,7 +891,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   B1: async () => {
     const pages = claimPages();
     const tracked = trackedClaimPages();
-    const control = pageWalk(treeReader(WALK_CONTROL), "", "docs");
+    const control = docsWalk(treeReader(WALK_CONTROL), "");
     return json({
       missing: REQUIRED_PAGES.filter(page => !pages.includes(page)),
       belowFloor: pages.length < FLOORS.pages,
@@ -785,25 +903,29 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     });
   },
   B2: async () => {
-    const reading = pagesReading(claimPages());
+    const pages = claimPages();
     const tracked = trackedClaimPages();
+    const judged = pagesReading(pages, DISK_TEXT);
+    const read = judged.map(entry => entry.file);
+    const controls = [...Object.entries(PAGE_CONTROLS).flatMap(([name, page]) => shapes(pageMentions(page, name))), ...shapes(pageMentions(PLANTED_PAGE.last, "last"))];
     return json({
       surface: "docs/workbench",
-      empty: reading.empty,
-      blocksBelowFloor: reading.blocks < FLOORS.blocks,
-      wordsBelowFloor: reading.words < FLOORS.words,
-      untracked: reading.pages.filter(page => !tracked.includes(page)),
-      unread: tracked.filter(page => !reading.pages.includes(page)),
-      mentions: reading.mentions,
+      empty: judged.filter(entry => entry.count === 0).map(entry => entry.file),
+      blocksBelowFloor: judged.reduce((total, entry) => total + entry.count, 0) < FLOORS.blocks,
+      wordsBelowFloor: judged.reduce((total, entry) => total + entry.words, 0) < FLOORS.words,
+      untracked: read.filter(page => !tracked.includes(page)),
+      unread: tracked.filter(page => !read.includes(page)),
+      mentions: judged.flatMap(entry => entry.mentions),
+      planted: plantedVerdict(pages, judged, pagesReading(pages, plantedReader(DISK_TEXT, PLANTED_PAGE)), judgePage(plantText(PLANTED_PAGE, ""), "plant"), controls),
     });
   },
   B3: async () => {
-    const reading = pagesReading([TRACEABILITY]);
+    const judged = pagesReading([TRACEABILITY], DISK_TEXT);
     return json({
       surface: "TRACEABILITY",
       inClaimPages: claimPages().includes(TRACEABILITY),
-      empty: reading.empty,
-      mentions: reading.mentions,
+      empty: judged.filter(entry => entry.count === 0).map(entry => entry.file),
+      mentions: judged.flatMap(entry => entry.mentions),
     });
   },
   B4: async () => {
@@ -882,6 +1004,8 @@ describe("wb-pyel.4 EDC shipped-claim census (SDK-EVIDENCE-DIRECTED-COMPUTATION-
         manifestControls: MANIFEST_CONTROLS,
         lockControls: LOCK_CONTROLS,
         sourceControls: SOURCE_CONTROLS,
+        plantedModule: PLANTED_MODULE,
+        plantedPage: PLANTED_PAGE,
         vocabulary: VOCABULARY_CONTROLS,
         lookalike: LOOKALIKE_PROBES,
         nonClaimPages: NON_CLAIM_PAGES,

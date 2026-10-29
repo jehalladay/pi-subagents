@@ -1,6 +1,6 @@
 {
   "bead": "wb-pyel.4",
-  "comment": "wb-pyel.4 (SDK-EVIDENCE-DIRECTED-COMPUTATION-R7): the OUT-OF-FILE anchor of test/workbench-edc-shipped-claim-census.test.ts. It holds the judged set the census must match exactly, in both directions: every row's id, label and pins, every pin's witness (the reading the census measured at the cut), the constants (stems, floors, script kinds, required pages and descriptors, surfaces, every control and residual probe) and every registered test title in order. A pin, row, control or test dropped or renamed in every literal of the census still reds here. Regenerate only by re-measuring: an adoption cut that makes Pi name EDC re-judges every row. wb-0st4 (R694 follow-up of landing 546) adds git's tracked listing (git ls-files) as the independent anchor of both walks and of each reading's read set, each registry leg's descriptions as its fingerprint, the MARKDOWN_PAGE page form with every symlink below docs/ recorded and never followed, and the page walk's own synthetic-tree control.",
+  "comment": "wb-pyel.4 (SDK-EVIDENCE-DIRECTED-COMPUTATION-R7): the OUT-OF-FILE anchor of test/workbench-edc-shipped-claim-census.test.ts. It holds the judged set the census must match exactly, in both directions: every row's id, label and pins, every pin's witness (the reading the census measured at the cut), the constants (stems, floors, script kinds, required pages and descriptors, surfaces, every control and residual probe) and every registered test title in order. A pin, row, control or test dropped or renamed in every literal of the census still reds here. Regenerate only by re-measuring: an adoption cut that makes Pi name EDC re-judges every row. wb-0st4 (R694 follow-up of landing 546) adds git's tracked listing (git ls-files) as the independent anchor of both walks and of each reading's read set, each registry leg's descriptions as its fingerprint, the MARKDOWN_PAGE page form with every symlink below docs/ recorded and never followed, and the page walk's own synthetic-tree control. wb-kv0y (R694 follow-up of landing 612, hop 3 of the chain, R739's terminal enumerate-the-resolvable form) records each file a reading reads only through its judgment's own output, adds THE PLANTED READING to A2 and B2 (every file of the scope read again wrapped between its reader's own controls and a last part; the plants are pinned constants, and each witness pins the plant's own reading, its count, that it reads as the controls do, and the files it found unjudged or unwrapped) and walks WALK_CONTROL through docsWalk itself.",
   "constants": {
     "stems": {
       "edc": "word",
@@ -213,6 +213,16 @@
       "cross-word": "const namedCount = 1; usedCarefully(namedCount);",
       "jsx.tsx": "export const view = <span>EDC integration</span>;"
     },
+    "plantedModule": {
+      "first": "const EdcAssembler = 1;\nconst label = \"evidence-directed context\";\nconst label = `EDC ${name} ships`;\nimport { assemble } from \"@example/edc\";\nawait import(\"evidence_directed\");\nconst pattern = /EDC/;\nclass Host { #edcBlock = 1; }\nconst namedCount = 1; usedCarefully(namedCount);",
+      "gap": "\n",
+      "last": "const evidenceDirectedPlant = 1;"
+    },
+    "plantedPage": {
+      "first": "# EDC adoption\n\n---\n\nEvidence-directed context assembly ships today.\n\n---\n\n| EDC | Status |\n| --- | --- |\n| assembly | shipped |\n\n---\n\n| Feature | Status |\n| --- | --- |\n| EDC integration | shipped |\n\n---\n\n- EDC integration is supported\n\n---\n\n- outer item\n  - evidence directed assembly\n\n---\n\n- first\n\n- EDCs are wired\n\n---\n\n> The EDC path is available.\n\n---\n\n```ts\nimport { assemble } from './edc';\n```\n\n---\n\nThe `EvidenceDirected` reader ships.\n\n---\n\n[EDC integration](https://example.invalid/a)\n\n---\n\n**Evidence**-*directed* assembly ships.\n\n---\n\n~~EDC~~ shipped.\n\n---\n\nE&#68;C integration ships.\n\n---\n\nThe evidence-\ndirected assembly ships.\n\n---\n\nE\u200bDC integration ships.\n\n---\n\n\uff25\uff24\uff23 integration ships.\n\n---\n\nThe EdcAssembler ships.\n\n---\n\n<details>\n<summary>EDC integration</summary>\n</details>\n\n---\n\nThe named capability is used carefully.\n\n---\n\nReedcraft and credcheck ship.\n\n---\n\n| Feature | Status |\n| --- | --- |\n| EDC<br>shipped | yes |\n",
+      "gap": "\n\n---\n\n",
+      "last": "# Evidence-directed plant\n"
+    },
     "vocabulary": [
       "context assembly charter",
       "evidence-driven assembly",
@@ -325,7 +335,23 @@
             "outsideSrc": [],
             "untracked": [],
             "unread": [],
-            "mentions": []
+            "mentions": [],
+            "planted": {
+              "plant": [
+                "identifier|edc",
+                "string|evidencedirected",
+                "template|edc",
+                "string|edc",
+                "string|evidencedirected",
+                "regex|edc",
+                "identifier|edc",
+                "identifier|evidencedirected"
+              ],
+              "count": 18,
+              "asControls": true,
+              "unjudged": [],
+              "unwrapped": []
+            }
           }
         },
         {
@@ -422,7 +448,36 @@
             "wordsBelowFloor": false,
             "untracked": [],
             "unread": [],
-            "mentions": []
+            "mentions": [],
+            "planted": {
+              "plant": [
+                "heading|edc",
+                "paragraph|evidencedirected",
+                "header-cell|edc",
+                "cell|edc",
+                "text|edc",
+                "text|evidencedirected",
+                "paragraph|edc",
+                "paragraph|edc",
+                "code|edc",
+                "paragraph|evidencedirected",
+                "paragraph|edc",
+                "paragraph|evidencedirected",
+                "paragraph|edc",
+                "paragraph|edc",
+                "paragraph|evidencedirected",
+                "paragraph|edc",
+                "paragraph|edc",
+                "paragraph|edc",
+                "html|edc",
+                "cell|edc",
+                "heading|evidencedirected"
+              ],
+              "count": 34,
+              "asControls": true,
+              "unjudged": [],
+              "unwrapped": []
+            }
           }
         },
         {
