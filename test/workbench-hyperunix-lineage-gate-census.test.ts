@@ -21,14 +21,16 @@
  * (vendor/hyperunix-sdk-0.1.0.tgz). Its 27 shipped declaration files spell none of the six kinds as a string literal (only
  * namesakes: the "verified" mutation outcome, the dependents/dependencies reads, ConsumerActiveError, a provider.d.ts comment),
  * and its QueryResult declares the lossless extension sidecar ("Lossless sidecar of negotiated extension frames"). On the
- * provider's own path (resultFromJson, resultToJson, the JSON round trip) an unknown member survives at 12 of the 23 object nodes
+ * provider's own path (resultFromJson, resultToJson, the JSON round trip) an unknown member survives at 12 of the 22 object nodes
  * of a full SDK document - the row claim bodies, each certificate's cause, scope, target and body, the incomplete regions and
  * the sidecar - and is dropped from every record the serializer rebuilds field by field. So a typed-ref payload that reached
  * Pi's find path before a released SDK declares it would arrive inside one of those open containers. Pi reads no unknown member
- * of any of them: the reader adapter reads rows for their count and certificates for their batch ids only, and the
- * native-evidence projection reads the execution id, kind and evidence ids only. A read of a named producer member of an
- * incomplete region (a relayed display facet) stays outside A3's boundary and inside the B rows' byte-identity, which plant
- * this census's own member.
+ * of any of them: the registered provider registerHyperUnixFind (providers/hyperunix.ts, the injected-reader registration)
+ * delivers a planted member where the serializer left it, and its output otherwise equals, byte for byte, its output for the same
+ * document without one (B2's whole-output leg; wb-57n1, measured on trunk 9ad61f3), the reader adapter reads rows for their count
+ * and certificates for their batch ids only, and the native-evidence projection reads the execution id, kind and evidence ids
+ * only. A read of a named producer member of an incomplete region (a relayed display facet) stays outside A3's boundary and
+ * inside the B rows' byte-identity, which plant this census's own member.
  *
  * Pi consumes no H0/H1 result today. This census pins that standing leg, and the on-landing leg stays owed (NOT CLAIMED below):
  *  A, the gate. A1 the vendored SDK's shipped declarations (every dist .d.ts of the installed package, the version Pi's
@@ -44,8 +46,12 @@
  *    they differ) carrying each constructed lineage record of PLANTS in the sidecar projects strictEqual and byte-identical to the
  *    same reading without it, under both host contexts, for the reader adapter and the native-evidence projection alike, and no
  *    output string carries a planted sentinel (a sentinel planted in the operation is the control that the detector sees one);
- *    B2 through the registered provider, the full record planted at each of the 12 open containers arrives verbatim in the
- *    provider output and the projection and native evidence stay strictEqual; B3 the full record planted at every object node of
+ *    B2 through the registered provider registerHyperUnixFind (a stub reader returning the document), for every reading of
+ *    READINGS, the full record (P9) planted at each node of the reading's document where the SDK's own codec keeps it, one node
+ *    at a time (the 12 open containers of A2 on R05; 161 over READINGS), arrives verbatim in the provider output, the whole
+ *    provider output is its output for the plain document with exactly that record added at that node (nothing else added, no
+ *    other byte moved; a delivered output given a member beside source or a changed runtime value is the control that the judge
+ *    sees one), and the projection and native evidence stay strictEqual; B3 the full record planted at every object node of
  *    a provider reading (positions derived from the reading, their count re-derived from its JSON text) moves no output byte.
  *  N, the statement's negative clause. N1 no projection states any relation but the one display-grouping edge from the invoking
  *    operation to the query node (none without one), so no planted kind is lifted to a RelationKind or merged into grouping; N2 a
@@ -65,6 +71,8 @@
  * NOT CLAIMED: acceptance clauses 1 and 2 (ON_LANDING) - a typed-ref fixture mapped onto distinct RelationKinds or counted as
  * unmapped, per-edge coverage and source revision, a bounded walk read partial with its remainder counted - wait for H0/H1
  * results in a released @hyperunix/sdk (HyperUnix-CLI H0/H1, an external target) and a re-vendor; no Pi reader of them exists.
+ * The native registration's invoke (nativeHyperUnixFind, which launches the SDK's client and so needs the hx binary) is not
+ * driven: B2 reaches the provider through registerHyperUnixFind only, and A3 reads both registrations' catalogs, not outputs.
  * Every lineage record, kind spelling and carrier key below is CONSTRUCTED by this census; the producer mints none of them.
  */
 import {readdirSync, readFileSync} from 'node:fs';
@@ -136,7 +144,7 @@ const OPEN_POSITIONS: readonly string[] = Object.freeze([
   'rows.0', 'rows.1', 'coverage.0.cause', 'coverage.0.scope', 'coverage.0.target', 'coverage.0.body', 'coverage.1.cause', 'coverage.1.scope',
   'coverage.1.target', 'coverage.1.body', 'coverage_summary.incomplete_regions.0', 'extensions',
 ]);
-/** The measured witness each pin must reproduce (payload identity), measured on trunk f5589e0 with @hyperunix/sdk 0.1.0. */
+/** The measured witness each pin must reproduce (payload identity), measured on trunk f5589e0 with @hyperunix/sdk 0.1.0 (B2's re-measured on trunk 9ad61f3 when wb-57n1 added the whole-output leg). */
 const WITNESSES: Readonly<Record<string, JsonValue>> = Object.freeze({
   A1: {declarationFiles: 27, kindLiteralFiles: 0, version: '0.1.0', sidecarDeclared: true},
   A1c: {flagged: 9, kinds: 6, namesakes: 4, flaggedHits: 9, namesakeHits: 0},
@@ -144,7 +152,8 @@ const WITNESSES: Readonly<Record<string, JsonValue>> = Object.freeze({
   A3: {sidecarReads: 0, bodyReads: 0, rowsUse: 'rows', sidecarTokens: 0, reads: [['hyperunix.find'], ['hyperunix.find']],
     registrations: [['Read typed HX results with native coverage and query basis'], ['Native bounded HX query with coverage']]},
   B1: {readings: 14, plants: 9, contexts: 2, adapter: 252, evidence: 126, delivered: 126, sentinelHits: 0},
-  B2: {positions: [...OPEN_POSITIONS], compared: 12},
+  B2: {positions: [...OPEN_POSITIONS], compared: 161, whole: 161, controls: 2,
+    kept: {R01: 11, R02: 12, R03: 9, R04: 10, R05: 12, R06: 11, R07: 12, R08: 12, R09: 12, R10: 12, R11: 12, R12: 12, R13: 12, R14: 12}},
   B3: {readings: ['R01', 'R05'], positions: [23, 24]},
   N1: {topologies: 280, relations: 140, kinds: ['grouping']},
   N2: {complete: 2, partial: 7, unknown: 5},
@@ -281,6 +290,12 @@ const topologyOf = (value: JsonValue, context: HyperUnixTopologyContext): HyperU
 /** Whether any output string carries a planted sentinel: B1's loop and its leak control share this one judge. */
 const leaks = (value: unknown): boolean => JSON.stringify(value).includes(SENTINEL);
 const evidenceOf = (value: JsonValue) => nativeEvidence('hyperunix.find', value);
+/**
+ * B2's whole-output judge (wb-57n1): whether the provider's entire output for a document planted at `path` differs, as JSON text,
+ * from its output for the plain document with exactly that record added at that node. B2's loop and its controls share it.
+ */
+const wholeMoved = (output: JsonValue, plain: JsonValue, path: Path, record: Json): boolean =>
+  JSON.stringify(output) !== JSON.stringify(plantedAt(plain, ['source', ...path], CENSUS_KEY, record));
 const CTX = {grants: ['hyperunix:read'], signal: new AbortController().signal};
 /** The registered provider's output for a document, through a stub reader and the capability registry. */
 async function provided(document: Json): Promise<JsonValue> {
@@ -428,20 +443,42 @@ describe('wb-4ap.13 HyperUnix lineage gate census (standing leg)', () => {
     settle('B1', {readings: READINGS.length, plants: PLANTS.length, contexts: CONTEXTS.length, adapter, evidence, delivered, sentinelHits});
   });
 
-  it('B2: the registered provider delivers the full record at each open container verbatim and the projection stays strictEqual', async () => {
+  it('B2: through registerHyperUnixFind the full record arrives verbatim at each open container of every reading and is the only change to the whole output', async () => {
     const full = plantOf('P9');
-    const base = documentOf('incomplete', false);
-    const plain = await provided(base);
-    const kept = objectPaths(base).filter(path => JSON.stringify(resultToJson(resultFromJson(plantedAt(base, path, CENSUS_KEY, full.record)))).includes(SENTINEL));
+    const kept: Record<string, number> = {};
+    let positions: string[] = [];
     let compared = 0;
-    for (const path of kept) {
-      const output = await provided(plantedAt(base, path, CENSUS_KEY, full.record));
-      expect(JSON.stringify(nodeAt(output, ['source', ...path, CENSUS_KEY])), `the record at ${dotted(path)} arrives verbatim`).toBe(JSON.stringify(full.record));
-      for (const context of CONTEXTS) expect(topologyOf(output, context), dotted(path)).toStrictEqual(topologyOf(plain, context));
-      expect(evidenceOf(output), dotted(path)).toStrictEqual(evidenceOf(plain));
-      compared++;
+    let whole = 0;
+    for (const row of READINGS) {
+      const base = documentOf(row.kind, row.licensed);
+      const plain = await provided(base);
+      const open = objectPaths(base).filter(path => JSON.stringify(resultToJson(resultFromJson(plantedAt(base, path, CENSUS_KEY, full.record)))).includes(SENTINEL));
+      for (const path of open) {
+        const output = await provided(plantedAt(base, path, CENSUS_KEY, full.record));
+        const at = `${row.id} at ${dotted(path)}`;
+        expect(JSON.stringify(nodeAt(output, ['source', ...path, CENSUS_KEY])), `${at}: the record arrives verbatim`).toBe(JSON.stringify(full.record));
+        // The whole-output leg (wb-57n1): the provider's output is its plain output with exactly this record added at its own node.
+        const moved = wholeMoved(output, plain, path, full.record);
+        expect(moved, `${at}: the whole provider output moved beside the delivered record`).toBe(false);
+        if (!moved) whole++;
+        for (const context of CONTEXTS) expect(topologyOf(output, context), at).toStrictEqual(topologyOf(plain, context));
+        expect(evidenceOf(output), at).toStrictEqual(evidenceOf(plain));
+        compared++;
+      }
+      kept[row.id] = open.length;
+      if (row.id === 'R05') positions = open.map(dotted);
     }
-    settle('B2', {positions: kept.map(dotted), compared});
+    // The judge's controls, on R05's record at rows.0: the delivered output with a member added beside source (where the landing-647
+    // gate's GP1 plant put lineage:'seen') or with a changed runtime value is judged moved, so a judge narrowed to source reds here.
+    const base = documentOf('incomplete', false);
+    const first: Path = ['rows', 0];
+    const plain = await provided(base);
+    const output = await provided(plantedAt(base, first, CENSUS_KEY, full.record));
+    const controls = [plantedAt(output, [], 'lineage', 'seen'), plantedAt(output, ['runtime'], 'version', `${SDK_VERSION}-other`)];
+    const seen = controls.filter(changed => wholeMoved(changed, plain, first, full.record)).length;
+    expect(wholeMoved(output, plain, first, full.record), 'the control output itself is unmoved').toBe(false);
+    expect(seen, 'the judge sees a member beside source and a changed runtime value').toBe(controls.length);
+    settle('B2', {positions, kept, compared, whole, controls: seen});
   });
 
   it('B3: the full record planted at every object node of a provider reading moves no output byte', () => {
