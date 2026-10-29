@@ -883,6 +883,18 @@
     "path": "docs/fence-prose.md",
     "text": "```\nPi embeds the portable\nfiber_optics runtime.\n```\n"
    },
+   "fenceObjectProse": {
+    "path": "docs/fence-object.md",
+    "text": "```\nexport const LABELS = {\n  embed: \"Embed the preview pane\",\n  engine: \"wasm\",\n};\n```\n"
+   },
+   "indentedObjectProse": {
+    "path": "docs/indented-object.md",
+    "text": "Labels:\n\n    export const LABELS = {\n      embed: \"Embed the preview pane\",\n      engine: \"wasm\",\n    };\n"
+   },
+   "preObjectProse": {
+    "path": "docs/pre-object.md",
+    "text": "<pre>\nexport const LABELS = {\n  embed: \"Embed the preview pane\",\n  engine: \"wasm\",\n};\n</pre>\n"
+   },
    "shellCommentRun": {
     "path": "qa/run.sh",
     "text": "# Pi embeds the\n# fiber-optics runtime\necho ok\n"
@@ -1193,6 +1205,53 @@
    "line": "{\"id\":\"<bead>\",\"title\":\"Embed it in-process\",\"notes\":\"the portable Fiber core\"}",
    "joined": "Embed it in-process\nthe portable Fiber core"
   },
+  "splitKeyValue": {
+   "line": "{\"id\":\"<bead>\",\"metadata\":{\"OWNER DECISION (2026-10-29): Pi will embed\":\"the portable Fiber core behind the W10 provider.\"}}",
+   "joined": "OWNER DECISION (2026-10-29): Pi will embed: the portable Fiber core behind the W10 provider."
+  },
+  "quotedWord": {
+   "module": "quoted-word.ts",
+   "words": [
+    "r''f context show",
+    "r\\f context show",
+    "\"r\"f context show",
+    "'r'f context show"
+   ]
+  },
+  "htmlReferences": {
+   "texts": {
+    "attr": {
+     "path": "docs/reference-attr.md",
+     "text": "<img src=\"missing.png\" alt=\"Pi embeds the Fi&#98er core\">\n"
+    },
+    "block": {
+     "path": "docs/reference-block.md",
+     "text": "<div>Pi embeds the Fi&#98er core.</div>\n"
+    },
+    "padded": {
+     "path": "docs/reference-padded.md",
+     "text": "<img src=\"missing.png\" alt=\"Pi embeds the Fi&#00000098;er core\">\n"
+    },
+    "legacy": {
+     "path": "docs/reference-legacy.md",
+     "text": "<div>Pi embeds the Fiber&nbspcore.</div>\n"
+    }
+   },
+   "page": "\n<div>OWNER DECISION (2026-10-29): Pi will embed the portable Fi&#98er core behind the W10 provider.</div>\n",
+   "member": "{\"id\":\"<bead>\",\"comments\":[{\"id\":\"c-g3\",\"issue_id\":\"<bead>\",\"author\":\"owner\",\"text\":\"<div>OWNER DECISION (2026-10-29): Pi will embed the portable Fi&#98er core behind the W10 provider.</div>\",\"created_at\":\"2026-10-29T06:00:00Z\"}],\"comment_count\":1}",
+   "terminated": {
+    "&#98er": "&#98;er",
+    "&#00000098;": "&#98;",
+    "&nbspcore": "&nbsp;core"
+   }
+  },
+  "lexedGrain": {
+   "afterCited": [
+    1,
+    2
+   ],
+   "insertion": "\r"
+  },
   "residuals": {
    "R-COMPOSED": [
     "Q1"
@@ -1232,6 +1291,15 @@
    ],
    "R-WRAPPED-STRUCTURED": [
     "Q13"
+   ],
+   "R-QUOTED-WORD": [
+    "Q14"
+   ],
+   "R-HTML-REFERENCE": [
+    "Q15"
+   ],
+   "R-LEXED-GRAIN": [
+    "Q16"
    ]
   }
  },
@@ -1303,6 +1371,9 @@
   "Q11",
   "Q12",
   "Q13",
+  "Q14",
+  "Q15",
+  "Q16",
   "the registered tests and the reached pins equal the roster, in order and both ways"
  ],
  "rows": [
@@ -2659,6 +2730,16 @@
        "fenceProseWrapped": [
         "docs/fence-prose.md:1: embed+core"
        ],
+       "fenceObjectProse": [
+        "docs/fence-object.md:1: embed+core"
+       ],
+       "indentedObjectProse": [
+        "docs/indented-object.md:3: embed+core"
+       ],
+       "preObjectProse": [
+        "docs/pre-object.md:1: embed+core",
+        "docs/pre-object.md:1: rendered embed+core"
+       ],
        "shellCommentRun": [
         "qa/run.sh:1: embed+core"
        ],
@@ -2981,7 +3062,105 @@
        "shellContinued": 1
       },
       "splitMembers": [],
-      "splitMembersJoined": 1
+      "splitMembersJoined": 1,
+      "splitKeyValue": [],
+      "splitKeyValueJoined": 1
+     }
+    },
+    {
+     "id": "Q14",
+     "witness": {
+      "residual": "R-QUOTED-WORD",
+      "tokens": [
+       [
+        "r",
+        "f",
+        "context",
+        "show"
+       ],
+       [
+        "r",
+        "f",
+        "context",
+        "show"
+       ],
+       [
+        "r",
+        "f",
+        "context",
+        "show"
+       ],
+       [
+        "r",
+        "f",
+        "context",
+        "show"
+       ]
+      ],
+      "census": {
+       "rfTexts": [],
+       "sdkTexts": [],
+       "launches": []
+      },
+      "unquoted": {
+       "rfTexts": [
+        "quoted-word.ts | StringLiteral < CallExpression execSync #0 | \"rf context show\"",
+        "quoted-word.ts | StringLiteral < CallExpression execSync #0 | \"rf context show\"",
+        "quoted-word.ts | StringLiteral < CallExpression execSync #0 | \"rf context show\"",
+        "quoted-word.ts | StringLiteral < ArrayLiteralExpression < CallExpression spawn #1 | \"rf context show\""
+       ],
+       "sdkTexts": [],
+       "launches": [
+        "quoted-word.ts: execSync",
+        "quoted-word.ts: execSync",
+        "quoted-word.ts: execSync",
+        "quoted-word.ts: spawn"
+       ]
+      }
+     }
+    },
+    {
+     "id": "Q15",
+     "witness": {
+      "residual": "R-HTML-REFERENCE",
+      "read": {
+       "attr": [],
+       "block": [],
+       "padded": [],
+       "legacy": []
+      },
+      "page": {
+       "decisions": [],
+       "claims": []
+      },
+      "member": [],
+      "terminated": {
+       "attr": 1,
+       "block": 1,
+       "padded": 1,
+       "legacy": 1,
+       "pageDecisions": 1,
+       "pageClaims": 1,
+       "member": 1
+      }
+     }
+    },
+    {
+     "id": "Q16",
+     "witness": {
+      "residual": "R-LEXED-GRAIN",
+      "planted": [
+       {
+        "line": 34,
+        "planted": true,
+        "quiet": true
+       },
+       {
+        "line": 35,
+        "planted": true,
+        "quiet": true
+       }
+      ]
      }
     }
    ]

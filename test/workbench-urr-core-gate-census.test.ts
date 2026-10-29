@@ -7,6 +7,32 @@
  * Until-then clause (owner filing notes, verbatim): "Until both gates exist, no src or docs change and no Pi claim of an embedded
  * Fiber core; rf CLI envelope consumption stays owned by the wb-x32/wb-973/wb-693 families."
  *
+ * CUT #4 (the respin of refusal #3, gate run g10-gate-s135 on cut #3 c16ea39b; seat ws-01, run g10-work-s136), authored in the
+ * enumerate-the-resolvable form refusal #3 bound on this bead (its CUT #4 FORM: standing rule 19(c), the rule 14 shape). Cut #3's
+ * shape is frozen: every title, row, pin, control and residual row it pins is kept and no pinned reading is removed or weakened;
+ * cut #4 only adds (three named residuals with their pinned quiet rows, Q14 to Q16; a member of Q13; three D1 controls), restates
+ * the three header claims the CUT #4 FORM (2) names to exactly what is read, states THE STATED SOURCE's grain, and adds THE
+ * PINNED SET (the closed form, below). Each of refusal #3's items, by the one cure option it takes:
+ *  U1, class (b), C1, NAMED: tokens are cut at every character outside a-z and 0-9, so a quote or a backslash INSIDE a word splits
+ *    it and the rf census never holds a word that holds rf only after the shell's quote removal (G3-C1a r''f, G3-C1b r\f, G3-C1c
+ *    "r"f, G3-C1d 'r'f through sh -c). C1's claim below is narrowed to that reading and the form is R-QUOTED-WORD, its pinned quiet
+ *    row Q14 (the four words quiet as written, each read once its quote and backslash characters are removed).
+ *  U2, class (c), B1, B2 and D1, NAMED: THE RENDERED LEG decodes a character reference by CommonMark's rule only (REFERENCE); one an
+ *    HTML parser also decodes in an HTML block or an attribute value (no ";", more than 7 decimal digits, a legacy name without
+ *    ";") stays as written. The claim is narrowed and the form is R-HTML-REFERENCE, its pinned quiet row Q15 (G3-D1a to G3-D1d,
+ *    G3-B2a, G3-B1b quiet; each member with its reference written to CommonMark's rule reds, as the gate's paired controls do).
+ *  U3, class (d), D1, FAIL-CLOSED: a prose-read code block (an unlabeled or other fence, an indented code block) is read as prose
+ *    sentences, as is every part of a Markdown text outside a form-read fence (an HTML block such as <pre> among them), so a word on
+ *    one line of a sentence lends itself to another. THE FORMS' closing sentence is narrowed to the structured forms, FAIL-CLOSED
+ *    names the prose reading, and the D1 controls fenceObjectProse and indentedObjectProse pin G3-D1e and G3-D1f as the reds they
+ *    are (preObjectProse pins the <pre> form beside them).
+ *  F1 (G3-B1a), NAMED: a decision split across one member's key and its own string value is a member of R-WRAPPED-STRUCTURED (Q13's
+ *    splitKeyValue leg quiet, its joined "<key>: <value>" read).
+ *  F2 (G3-C3a, G3-C3b), STATED and NAMED: THE STATED SOURCE reads lines as marked lexes them, so a carriage return inserted before a
+ *    line feed changes none of its pinned lines (R-LEXED-GRAIN, its pinned quiet row Q16; the cited row alone is also read as
+ *    written). Under G3-C3a (docs/18:34, the row the cellsResplit control anchors on as written) C3 still reds, through that
+ *    control's digest, never through the reading; under G3-C3b (:35) it reads quiet.
+ *
  * CUT #3 (the respin of refusal #2, gate run g10-gate-s128 on cut #2 b08aaf17; seat ws-05, run g10-work-s133). Refusal #2's four
  * unmet items and the class-level guards (a) to (e) it bound are cured by READING, each red-first against the gate plants it names
  * (replayed on the real tree, see the delivery note); every member refusal #1 named still reds:
@@ -17,11 +43,13 @@
  *    controls vary the sources those ways in memory.
  *  U2, class (b), C1: the launch roster no longer rests on a command grammar. C1 pins two CENSUSES (THE CENSUS): every src text
  *    holding the word rf and every src text naming an RF or Fiber SDK, each by module, context and text. So an rf launch or an SDK
- *    load in any form whose binary, command or specifier is such a text adds or changes a pinned entry and reds C1: a
- *    backslash-quoted binary, an element-access, comma, .call or re-bound launcher, an if/then, a brace group, a negated pipeline,
- *    an 'as const' argument (G46-C1a to G46-C1h), a destructured createRequire (G46-C1i), and every form cut #2 left to
- *    R-INDIRECT-LAUNCH, R-UNREAD-COMMAND and R-INDIRECT-LOAD (retired). What the censuses cannot read is named with pinned quiet
- *    rows (R-COMPOSED, R-OUTSIDE-TEXT, R-PINNED-REUSE).
+ *    load whose binary, command or specifier is such a text - a text whose tokens (THE VOCABULARY) include rf, or whose fold holds
+ *    reactivefiber, the stem or a crate - adds or changes a pinned entry and reds C1, whatever its launcher, call form or argument
+ *    form: a binary behind a leading backslash (\rf), an element-access, comma, .call or re-bound launcher, an if/then, a brace
+ *    group, a negated pipeline, an 'as const' argument (G46-C1a to G46-C1h), a destructured createRequire (G46-C1i), and every form
+ *    cut #2 left to R-INDIRECT-LAUNCH, R-UNREAD-COMMAND and R-INDIRECT-LOAD (retired). (Restated by cut #4: a word that holds rf only
+ *    after the shell's quote removal inside it holds no rf token, so no census holds it - R-QUOTED-WORD.) What the censuses cannot
+ *    read is named with pinned quiet rows (R-COMPOSED, R-OUTSIDE-TEXT, R-PINNED-REUSE, R-QUOTED-WORD).
  *  U3, class (e), B1: the decision bead's export line is read AS WRITTEN (THE JSON READER): every key and every string at any
  *    depth, raw and rendered - comments[].text and labels[] (G46-B1a, G46-B1b), a nested record, a shadowed duplicate member or id.
  *  U4, class (d), D1: a structured text is read as written and a script by its AST (THE FORMS): a JSON text through THE JSON
@@ -29,8 +57,8 @@
  *    and comment runs each a unit, so no word lends itself across properties or statements (G46-D1b reads quiet on D1, as no claim
  *    exists); a shell text by its simple commands, a YAML or TOML line by its flow pieces, a fenced code block by its info string.
  *  Class (c), B1, B2 and D1: the rendered leg also reads what a reader may see beside a unit's text run - every HTML attribute value
- *    and every link's or image's destination and title, references decoded (THE RENDERED LEG), so refusal #2's F3 (G46-D1c, an
- *    entity-coded img alt) reds D1.
+ *    and every link's or image's destination and title, references decoded (THE RENDERED LEG; restated by cut #4: by CommonMark's
+ *    rule, R-HTML-REFERENCE beyond it), so refusal #2's F3 (G46-D1c, an entity-coded img alt, "&#98;" closed by ";") reds D1.
  *  F2 of refusal #2: the residual-family probes G46-A4a and G46-A4b are members pinned in R-OTHER-SHAPE's quiet row; G46-C1i,
  *    G46-C3d and G46-D1c are read (above). F4 (the landing-order registry entry) is a fold duty, not this cut's.
  *
@@ -48,14 +76,17 @@
  * protocol_message_set.json, the scenario schema, the Rust capability traits of rust/fiber-model/src/capabilities.rs) and the tree
  * holds no package.json, no .wasm file and no wasm-pack output: no released WASM artifact or capability-set package exists.
  *
- * MEASURED AT BASE (trunk 4350926, landing 660, merged into the branch; seat ws-05, run g10-work-s133, 2026-10-29): src holds 117
+ * MEASURED AT BASE (trunk 04123dc, landing 671, merged into the branch; seat ws-01, run g10-work-s136, 2026-10-29; every count
+ * re-measured there - each equal to cut #3's at trunk 4350926 except git's listing, and the indented and prose-read code block
+ * counts new): src holds 117
  * tracked script modules (101769 judged AST texts, 6482 member-bearing declarations, 618 module specifiers) and none spells a stem,
  * crate, WebAssembly, ABI or capability-set name, declares the four members together or loads an RF or Fiber SDK; C1's rf census
  * holds 42 texts in 3 modules and its SDK census 27 texts in 8 modules, and the one rf text a launcher call takes is the
- * provider's spawn binary; git tracks 1070 files (the trunk's 1068, this census and its roster), none a .wasm file or a path naming
+ * provider's spawn binary; git tracks 1087 files (the trunk's 1085, this census and its roster), none a .wasm file or a path naming
  * the core; package.json (120 texts) and the two lockfiles (372 packages each) name none; the 306 product texts (88 Markdown, 8
  * JSON - each strict JSON -, 198 scripts, 4 shell, 7 line and 1 prose text; 174885 raw sentences, 9042 rendered units; 67 fenced
- * code blocks, 39 of them read by their form) carry no claim and no unknown named reference - the only stem spellings are the
+ * code blocks, 39 of them read by their form, and 19 indented code blocks, so 47 prose-read code blocks) carry no claim and no
+ * unknown named reference - the only stem spellings are the
  * rf_identity sdk_versions keys of four rf receipts, rf's own identity echoed through its CLI envelope; the wb-x32 row (2161
  * characters across its 28 members) and the decisions page (65 raw sentences, 58 rendered units) state no decision. So the gate
  * has not fired, and until it does Pi's RF surface is the rf CLI envelope: the native preview admits only the reactive-fiber.cli/v1
@@ -63,7 +94,8 @@
  *
  * THE VOCABULARY. fold: NFKC, lower case, every character outside a-z and 0-9 removed (fiber_optics, fiber-optics, FiberOptics
  * and "@fiber-optics/sdk" all hold "fiberoptics"). tokens: the same text split at every run outside a-z and 0-9; the wasm word and
- * RF_WORD are read as tokens, never as folds, so "was measured" and "perf" are no hits. STEM (the title's distribution word, its SDK
+ * RF_WORD are read as tokens, never as folds, so "was measured" and "perf" are no hits, and a quote or a backslash inside a word
+ * splits it (r''f holds the tokens r and f: R-QUOTED-WORD). STEM (the title's distribution word, its SDK
  * suffix dropped) and CRATES (charter :11); ABI_NAMES (charter :21's one non-generic entry and the entries' parameters; the generic
  * entries are R-GENERIC-ABI); WASM_GLOBAL; CAPABILITY_SET and its four CAPABILITY_MEMBERS (the title's list); CORE_NAMES (Fiber core,
  * HostCapabilitySet, WebAssembly and the notes' FOA SDK); EMBED (the title's decision verb); SPELLINGS (the notes' wb-693 grep);
@@ -75,7 +107,8 @@
  *    a .md text RAW and RENDERED: raw, every source line read as prose sentences (hidden text included), except a fenced code
  *    block whose info string names a JSON, script, YAML or TOML, or shell form, which is read by that form, its lines taken out of
  *    the prose pass (its fence lines verified at the measured lines; a block whose fences are not found there stays prose); an
- *    unlabeled or other fence and an indented code block stay prose;
+ *    unlabeled or other fence and an indented code block stay prose (a prose-read code block, FAIL-CLOSED: read as prose
+ *    SENTENCES, so the lines of one sentence lend each other words);
  *    a .json text AS WRITTEN through THE JSON READER: each member - a string-valued member read with its key ("<key>: <value>"),
  *    any other key alone - and each array string, placed by its key path; a text that is not strict JSON is read by line;
  *    a script (.ts, .tsx, .js, .jsx, .mjs, .cjs, .mts, .cts) by its AST: each string-like literal, regular-expression pattern, JSX
@@ -87,7 +120,11 @@
  *    a .yml, .yaml or .toml text, and an extensionless dotfile (.gitignore), by line: a run of comment lines as prose; every other
  *    line a unit, a flow collection's pieces (cut at each comma inside braces or brackets outside quotes) each one;
  *    any other text (LICENSE) as prose sentences.
- *    So no word in one value, property, statement or command lends itself to another, beyond the units FAIL-CLOSED names.
+ *    So, in a text read by a structured form - a JSON, script or shell text, a YAML, TOML or dotfile line, or a fenced code block
+ *    whose info string names such a form - no word in one value, property, statement or command lends itself to another, beyond
+ *    the units FAIL-CLOSED names (restated by cut #4: every other part of a Markdown text - a paragraph, a list item, a table row,
+ *    a block quote, an HTML block such as <pre>, an unlabeled or other fence, an indented code block - and a prose text are read
+ *    as prose sentences, so a script, JSON or shell text written there lends its words within a sentence: FAIL-CLOSED).
  * THE JSON READER (rows B1 and D1; A1 reads package.json parsed and by raw line, and the lockfiles parsed): a strict JSON parser
  * that keeps EVERY object member in source order - JSON.parse keeps only a shadowed duplicate key's last value - each with its key
  * path and source line.
@@ -95,10 +132,14 @@
  * text, a table cell, a block quote's blocks or an HTML block, placed at its first source line (top-level raws concatenate to the
  * source exactly, so the line is measured, never estimated). A unit renders what a reader sees: an inline HTML token (a tag or a
  * comment) and a task checkbox render nothing, a code span and an escape show their text as written, a hard break is a line end,
- * an HTML block renders its text with its comments (an unclosed one to its end) and tags removed, and every numeric character
- * reference and each NAMED_REFERENCES name is decoded; any other named reference is REFUSED (a finding of its own, since the
- * census cannot say what it renders). Beside a unit's text run, what a reader may ALSO see is read as units of their own at the
- * unit's line, references decoded: every attribute value of its HTML (a block or an inline tag; comments removed first) and every
+ * an HTML block renders its text with its comments (an unclosed one to its end) and tags removed, and a character reference is
+ * decoded by CommonMark's rule (REFERENCE: "&#" and 1 to 7 decimal digits, "&#x" and 1 to 6 hexadecimal digits, or "&" and a name,
+ * each closed by ";") - a numeric one whose code point is at most 0x10FFFF, a named one when it is a NAMED_REFERENCES name; any
+ * other named reference so written is REFUSED (a finding of its own, since the census cannot say what it renders), and every other
+ * reference stays as written (restated by cut #4: one an HTML parser decodes in an HTML block or an attribute value beyond that
+ * rule - no closing ";", more than 7 decimal digits, a legacy name without ";" - is R-HTML-REFERENCE). Beside a unit's text run,
+ * what a reader may ALSO see is read as units of their own at the unit's line, references decoded by the same rule: every
+ * attribute value of its HTML (a block or an inline tag; comments removed first) and every
  * link's or image's destination, each percent-decoded where it decodes, and every link's or image's title (an image's alt text is
  * its children, read in the run). A code block shows its text as written and is left to the raw leg. A rendered unit cuts into sentences after every ".",
  * "!", "?" or ";" followed by white space, and its findings carry the leg: "<path>:<line>: rendered <families>".
@@ -115,7 +156,9 @@
  * top level by its heading line exactly as written ("#" times the pinned depth, one space, the heading), exactly once; beside it
  * are pinned its parents' heading lines as written (the enclosing top-level headings, outermost first), its lines from the heading
  * line to the bound (the next top-level heading of level 1 or 2, or EOF) with trailing blank lines dropped, and the page's link
- * reference definitions (a definition anywhere re-renders a reference inside the section).
+ * reference definitions (a definition anywhere re-renders a reference inside the section). Its grain (stated by cut #4): every line
+ * is read as marked lexes it, and marked 18.0.11's lexer reads a CRLF and a lone CR as a line feed, so a carriage return inserted
+ * before a line feed changes none of these pinned lines (R-LEXED-GRAIN); the rendered view lexes the same way.
  *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin returns a measured witness held to the roster):
  *  A, the gating artifact ("released FiberOpticsSDK WASM ABI + HostCapabilitySet (unshipped)"), absent from Pi today.
@@ -185,7 +228,9 @@
  *    YAML line and comment run and a flow line, a quoted comma inside a flow collection, a shadowed JSON key at the top level and
  *    nested, a script's string, name, template, comment run, property pair and JSX text, a JSON fence's shadowed key, an unlabeled
  *    fence's wrapped prose, an unclosed fence read as prose, a shell comment run, echo and quoted pipe, an img alt and an inline title behind a reference, a link destination, an HTML link, a link title and an image
- *    title) and near
+ *    title, and - FAIL-CLOSED, cut #4 - a script object literal read as prose in an unlabeled fence, in an indented code block and
+ *    in an HTML <pre> block)
+ *    and near
  *    misses stay quiet (a receipt's rf_identity sdk_versions key, the workflow VM's wasm option, split sentences, a table's rows,
  *    list items, a code span, a lock whose embed and wasm words sit in different values, YAML lines that pair them only as prose
  *    would, a src object literal whose embed label and wasm value sit in different properties - on separate lines and on one - and
@@ -194,6 +239,36 @@
  *    D2 THE REGISTERED CAPABILITIES: every descriptor the native registration and the four injected-client registrations register,
  *    read whole (every key and string at any depth, each one unit), states no claim; planted descriptors read, a neutral one quiet.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
+ *
+ * THE PINNED SET, in closed form (cut #4; the CUT #4 FORM (4)): each pin of rows A to D reads exactly the surfaces, by exactly the
+ * forms, legs and readers, named here; any other surface, form, leg or reader is outside its claim, and each form known to escape
+ * them is a NAMED RESIDUAL (Q1 to Q16, each with its pinned quiet row) or a FAIL-CLOSED unit.
+ *  A1: package.json parsed (every key and string at any depth) and by raw line, and the installed package paths and name fields
+ *    of package-lock.json and vendor/dependency-lock.json, each text read for a stem or crate fold and the wasm token.
+ *  A2: git's whole listing (git ls-files), each path read for a .wasm extension (any case), a stem or crate fold and the wasm token.
+ *  A3: every tracked script module below src (git ls-files, held both ways to a walk) parsed by TypeScript: every name (an
+ *    identifier or a private name), string-like literal, template part, regular-expression pattern and JSX text, read for a stem,
+ *    crate, WebAssembly or ABI-name fold; every string text for ".wasm" at a word end (any case); every module specifier for the
+ *    wasm token.
+ *  A4: the same modules and texts, read for HostCapabilitySet's fold, and the member names of every interface, type literal, class,
+ *    object literal, enum, object binding pattern and function-like parameter list, read for all four members by fold.
+ *  B1: the tracked export's lines one of whose top-level id members is the title's decision bead, by THE JSON READER: every key and
+ *    every string value at any depth, each alone, each read as a Markdown text - raw (THE FORMS) and rendered (THE RENDERED LEG) -
+ *    for a decision and an unknown named reference.
+ *  B2: the notes' cited page, read as a Markdown text raw and rendered, for a decision and an unknown named reference.
+ *  C1: every tracked file below src (one that is no script module reds), each module parsed by TypeScript: its module specifiers
+ *    (the load forms ROW C1 names; never a relative one) for reactivefiber, the stem or a crate; its texts and property-access
+ *    chains for the three spellings; and THE CENSUS (its two censuses and the launch roster).
+ *  C2: the native preview's two input arms, each spawned through the stand-in rf (the only PATH entry): their argv and the admitted
+ *    or refused reply.
+ *  C3: docs/18's and vendor/README.md's stated sections, each in the rendered view (test/helpers/census.ts docsSection; docs/18's
+ *    table rows also through sectionTables) and by THE STATED SOURCE at marked's lexing grain; the cited row as written; the
+ *    provider module's leading comments.
+ *  D1: every tracked file below the nine roots and at the repository root (held both ways to a walk) whose extension is a measured
+ *    text extension, decoded as strict UTF-8, by THE FORMS (raw) and, for Markdown, THE RENDERED LEG, for a claim and an unknown
+ *    named reference.
+ *  D2: every descriptor of the native and the four injected registrations, every key and string at any depth each one unit, for a
+ *    claim.
  *
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and pins,
  * every pin's witness, the constants, the controls, the residual families and every registered test title - is held to the
@@ -211,14 +286,20 @@
  * named reference in a Markdown text (its run, an attribute value, a destination or a title) and any HTML in a stated section's
  * body are refused; pipe lines with no delimiter row render as one paragraph and are read as one, and a table row is one raw unit
  * (its cells lend each other words in the raw leg; the rendered leg reads each cell); a shell command's words after its
- * assignments, a line's flow piece and a comment run are each one unit; any edit of a stated section's pinned lines or of a parent
- * heading line, and a link definition added anywhere on docs/18 or vendor/README.md, reds C3 (each file changed twice in the
- * trunk's history), and the editing cut re-pins the section; a src text that newly holds the word rf or an SDK name - a launch or
+ * assignments, a line's flow piece and a comment run are each one unit; a script, JSON or shell text written in a Markdown text's
+ * prose (cut #4) - a prose-read code block (an unlabeled or other fence, an indented code block), an HTML block such as <pre>, a
+ * paragraph or a list item - is read as prose sentences, so the lines of one sentence lend each other words: a script object
+ * literal whose embed label and wasm value sit in different properties reads as a claim there (refusal #3's G3-D1e and G3-D1f,
+ * and the <pre> form, pinned as the D1 controls fenceObjectProse, indentedObjectProse and preObjectProse), though in a script
+ * file or a ts fence it reads quiet; any
+ * edit of a stated section's pinned lines (as marked lexes them: R-LEXED-GRAIN) or of a parent heading line, and a link definition
+ * added anywhere on docs/18 or vendor/README.md, reds C3 (each file changed twice in the trunk's history), and the editing cut
+ * re-pins the section; a src text that newly holds the word rf or an SDK name - a launch or
  * not, a near miss of the old command grammar included - and a pinned text whose module, context or text changes red C1, and the
  * editing cut judges and re-pins the entry; and a tracked file below src that is no script module reds C1.
  * NOT CLAIMED (edits of this file and the roster together below row level): a pin removed from ROWS, the literal, IMPL and the
  * roster where no anchor of the bead text holds it - D2 and every Q pin (the cut-time CT6 sweep removed each pin from every literal
- * and the roster: A1-A4, B1, B2, C1-C3 and D1 red through the bead text, D2 and Q1-Q13 stay green); a control removed from its
+ * and the roster: A1-A4, B1, B2, C1-C3 and D1 red through the bead text, D2 and Q1-Q16 stay green); a control removed from its
  * list and the roster; a pin's case replaced by one that echoes its roster witness; git's listing replaced by the walk it anchors.
  * RESIDUALS (named, each with its pinned quiet row): R-COMPOSED a name composed at run time from parts no one of which holds it
  * ("Host" + "CapabilitySet", a join, a split template, "r" + "f", String.fromCharCode) is read by no scan and by neither census
@@ -240,7 +321,19 @@
  * reference or an inline tag in a text that is not Markdown (a source comment, a YAML line, a JSON value) is read raw, never
  * decoded (Q12); R-WRAPPED-STRUCTURED a claim wrapped across the value lines of a YAML or TOML text or across a shell command's
  * continued lines is read by line, so a pairing whose halves sit on different lines is not read, nor one split across a JSON
- * text's key levels (an object key and a string under a nested key) or across two members of the decision bead's row (Q13).
+ * text's key levels (an object key and a string under a nested key), across two members of the decision bead's row, or across one
+ * member's key and its own string value (B1 reads each alone; cut #4, refusal #3's G3-B1a) (Q13); R-QUOTED-WORD a word that holds
+ * rf only after the shell's quote removal inside it - an empty-quote join (r''f), a backslash inside the word (r\f), partial double
+ * or single quoting ("r"f, 'r'f, through sh -c too) - splits into the tokens r and f, so neither census holds its text and no launch
+ * of it reads (Q14; refusal #3's G3-C1a to G3-C1d); R-HTML-REFERENCE a character reference an HTML parser decodes in an HTML block
+ * or an attribute value beyond CommonMark's rule - a numeric reference without ";" (&#98), one of more than 7 decimal digits
+ * (&#00000098;), a legacy name without ";" (&nbsp) - stays as written, so a claim on a product page (D1), a decision on the
+ * decisions page (B2, and D1 there) or a decision in a decision-bead member (B1) behind one is not read (Q15; refusal #3's G3-D1a to
+ * G3-D1d, G3-B2a and G3-B1b); R-LEXED-GRAIN an edit marked's lexer normalizes away - a carriage return inserted before the line
+ * feed of a stated section's line other than the cited row (docs/18:33, which C3 also reads as written, so a CR there reds C3) -
+ * leaves the stated reading unchanged, so C3 reds then only when the edited line is one a C3 control anchors on as written
+ * (docs/18's title :1, heading :20, header row :22 and the row cellsResplit re-splits :34; vendor/README.md's title :1 and the row
+ * readmeRowStruck strikes :7), through that control's digest (Q16; refusal #3's G3-C3a at :34 and G3-C3b at :35).
  * NOT DELIVERED (the armed half, parked on the bead with its external target): the conformance tier that initializes an embedded
  * core with an explicit HostCapabilitySet (real and deterministic fake; errors, cycles and subscriptions under fakes) and the
  * import/manifest census of the portable core (no ambient DOM, JS or network API reaches it from Pi) need the released artifact
@@ -1252,6 +1345,11 @@ const CLAIM_CONTROLS: Readonly<Record<string, PlantedText>> = {
   jsxText: { path: "examples/view.tsx", text: "export const view = <p>Pi hosts the Fiber core</p>;\n" },
   fenceJsonShadowed: { path: "docs/fence-json.md", text: '```json\n{ "note": "Pi embeds the portable Fiber core.", "note": "A neutral note." }\n```\n' },
   fenceProseWrapped: { path: "docs/fence-prose.md", text: "```\nPi embeds the portable\nfiber_optics runtime.\n```\n" },
+  // FAIL-CLOSED (cut #4, refusal #3's U3, G3-D1e and G3-D1f): a prose-read code block is read as prose sentences, so these read.
+  fenceObjectProse: { path: "docs/fence-object.md", text: '```\nexport const LABELS = {\n  embed: "Embed the preview pane",\n  engine: "wasm",\n};\n```\n' },
+  indentedObjectProse: { path: "docs/indented-object.md", text: 'Labels:\n\n    export const LABELS = {\n      embed: "Embed the preview pane",\n      engine: "wasm",\n    };\n' },
+  // FAIL-CLOSED (cut #4): an HTML <pre> block is Markdown prose to the raw leg and an HTML block to the rendered one, so it reads too.
+  preObjectProse: { path: "docs/pre-object.md", text: '<pre>\nexport const LABELS = {\n  embed: "Embed the preview pane",\n  engine: "wasm",\n};\n</pre>\n' },
   shellCommentRun: { path: "qa/run.sh", text: "# Pi embeds the\n# fiber-optics runtime\necho ok\n" },
   shellEcho: { path: "qa/echo.sh", text: 'echo "Pi embeds the portable fiber-optics runtime"\n' },
   shellQuotedPipe: { path: "qa/quoted.sh", text: 'echo "Pi embeds the portable | fiber-optics runtime"\n' },
@@ -1399,6 +1497,60 @@ const WRAPPED_STRUCTURED: Readonly<Record<string, PlantedText>> = {
 };
 /** Q13's decision-bead member: a decision whose verb and object sit in two members of the row (each member is a unit of its own). */
 const SPLIT_MEMBERS = { line: '{"id":"<bead>","title":"Embed it in-process","notes":"the portable Fiber core"}', joined: "Embed it in-process\nthe portable Fiber core" } as const;
+/**
+ * Q13's key-value member (cut #4, refusal #3's F1, G3-B1a): a decision split across ONE member's key and its own string value; B1
+ * reads the key and the value each alone (THE JSON READER), so neither half holds the pairing that the joined "<key>: <value>" holds.
+ */
+const SPLIT_KEY_VALUE = {
+  line: '{"id":"<bead>","metadata":{"OWNER DECISION (2026-10-29): Pi will embed":"the portable Fiber core behind the W10 provider."}}',
+  joined: "OWNER DECISION (2026-10-29): Pi will embed: the portable Fiber core behind the W10 provider.",
+} as const;
+/**
+ * Q14 R-QUOTED-WORD (cut #4, refusal #3's U1, G3-C1a to G3-C1d): a word that holds rf only after the shell's quote removal inside it
+ * - an empty-quote join, a backslash inside the word, partial double quoting, partial single quoting through sh -c - splits into
+ * the tokens r and f (tokens cut at every character outside a-z and 0-9), so neither census holds its text. Each word launches rf
+ * under sh; the quiet row reads the four words as written and again with their quote and backslash characters removed.
+ */
+const QUOTED_WORD = { module: "quoted-word.ts", words: ["r''f context show", "r\\f context show", '"r"f context show', "'r'f context show"] } as const;
+/** Q14's planted module: the first three words each an execSync command, the fourth an sh -c script (G3-C1d's form). */
+function quotedWordModule(words: readonly string[]): PlantedModule {
+  const [joined, backslash, doubled, single] = words.map(word => JSON.stringify(word));
+  return {
+    module: QUOTED_WORD.module,
+    source: `import { execSync, spawn } from "node:child_process";\nexecSync(${joined});\nexecSync(${backslash});\nexecSync(${doubled});\nspawn("sh", ["-c", ${single}]);\n`,
+  };
+}
+/**
+ * Q15 R-HTML-REFERENCE (cut #4, refusal #3's U2, G3-D1a to G3-D1d, G3-B2a, G3-B1b): a character reference an HTML parser decodes
+ * beyond CommonMark's rule (REFERENCE: closed by ";", at most 7 decimal or 6 hexadecimal digits) - a numeric reference without ";",
+ * one of more than 7 decimal digits, a legacy name without ";" - in an HTML block or an attribute value stays as written, so a
+ * claim (D1) or a decision (B2, and B1's decision-bead member) behind one is not read. The quiet row reads each member, and each
+ * again with its reference written to CommonMark's rule (terminated), which reds.
+ */
+const HTML_REFERENCES = {
+  texts: {
+    attr: { path: "docs/reference-attr.md", text: '<img src="missing.png" alt="Pi embeds the Fi&#98er core">\n' },
+    block: { path: "docs/reference-block.md", text: "<div>Pi embeds the Fi&#98er core.</div>\n" },
+    padded: { path: "docs/reference-padded.md", text: '<img src="missing.png" alt="Pi embeds the Fi&#00000098;er core">\n' },
+    legacy: { path: "docs/reference-legacy.md", text: "<div>Pi embeds the Fiber&nbspcore.</div>\n" },
+  },
+  page: "\n<div>OWNER DECISION (2026-10-29): Pi will embed the portable Fi&#98er core behind the W10 provider.</div>\n",
+  member:
+    '{"id":"<bead>","comments":[{"id":"c-g3","issue_id":"<bead>","author":"owner","text":"<div>OWNER DECISION (2026-10-29): Pi will embed the portable Fi&#98er core behind the W10 provider.</div>","created_at":"2026-10-29T06:00:00Z"}],"comment_count":1}',
+  terminated: { "&#98er": "&#98;er", "&#00000098;": "&#98;", "&nbspcore": "&nbsp;core" },
+} as const;
+/** A Q15 member with each of its references written to CommonMark's rule. */
+function terminatedText(text: string): string {
+  return Object.entries(HTML_REFERENCES.terminated).reduce((written, [from, to]) => written.replaceAll(from, to), text);
+}
+/**
+ * Q16 R-LEXED-GRAIN (cut #4, refusal #3's F2, G3-C3a and G3-C3b): a carriage return inserted before the line feed of a stated section's
+ * line (the two rows after the cited one, docs/18:34 and :35) is an edit marked's lexer normalizes away, so the stated reading (the
+ * rendered view and THE STATED SOURCE, which reads lines as marked lexes them; the cited row :33 is also read as written) is
+ * unchanged. Each is planted on the cited page with every carriage return removed first, so the row reads the same whatever the
+ * page already holds.
+ */
+const LEXED_GRAIN = { afterCited: [1, 2], insertion: "\r" } as const;
 /** The residual families, each named by the quiet-row pin that holds it. */
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-COMPOSED": ["Q1"],
@@ -1414,6 +1566,9 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-RETRACTED-ELSEWHERE": ["Q11"],
   "R-ENCODED-SOURCE": ["Q12"],
   "R-WRAPPED-STRUCTURED": ["Q13"],
+  "R-QUOTED-WORD": ["Q14"],
+  "R-HTML-REFERENCE": ["Q15"],
+  "R-LEXED-GRAIN": ["Q16"],
 };
 
 // ---- the judged rows ----
@@ -1432,7 +1587,7 @@ const ROWS: readonly Row[] = [
   {
     id: "Q",
     label: "the residuals: each named family pinned by its quiet row",
-    pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12", "Q13"],
+    pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12", "Q13", "Q14", "Q15", "Q16"],
   },
 ];
 
@@ -2770,12 +2925,56 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       asProse: Object.fromEntries(Object.entries(WRAPPED_STRUCTURED).map(([name, planted]) => [name, claimsOf(planted.text, `${planted.path}.txt`).length])),
       splitMembers: beadDecisions([SPLIT_MEMBERS.line.replaceAll("<bead>", titleDecision(ROWS[1]?.label ?? "").bead)], titleDecision(ROWS[1]?.label ?? "").bead).decisions,
       splitMembersJoined: decisionsOf(SPLIT_MEMBERS.joined, "joined", false).length,
+      splitKeyValue: beadDecisions([SPLIT_KEY_VALUE.line.replaceAll("<bead>", titleDecision(ROWS[1]?.label ?? "").bead)], titleDecision(ROWS[1]?.label ?? "").bead).decisions,
+      splitKeyValueJoined: decisionsOf(SPLIT_KEY_VALUE.joined, "joined", false).length,
     }),
+  Q14: async () => {
+    const unquoted = QUOTED_WORD.words.map(word => word.replace(/['"\\]/g, ""));
+    return json({
+      residual: "R-QUOTED-WORD",
+      tokens: QUOTED_WORD.words.map(word => tokens(word)),
+      census: censusReading(quotedWordModule(QUOTED_WORD.words)),
+      unquoted: censusReading(quotedWordModule(unquoted)),
+    });
+  },
+  Q15: async () => {
+    const page = notesEvidence(beadText().notes).page;
+    const decisionBead = titleDecision(ROWS[1]?.label ?? "").bead;
+    const member = (text: string): string[] => beadDecisions([text.replaceAll("<bead>", decisionBead)], decisionBead).decisions;
+    const texts = Object.entries(HTML_REFERENCES.texts);
+    return json({
+      residual: "R-HTML-REFERENCE",
+      read: Object.fromEntries(texts.map(([name, planted]) => [name, claimsOf(planted.text, planted.path)])),
+      page: { decisions: pageDecisions(HTML_REFERENCES.page, page), claims: claimsOf(HTML_REFERENCES.page, page) },
+      member: member(HTML_REFERENCES.member),
+      terminated: {
+        ...Object.fromEntries(texts.map(([name, planted]) => [name, claimsOf(terminatedText(planted.text), planted.path).length])),
+        pageDecisions: pageDecisions(terminatedText(HTML_REFERENCES.page), page).length,
+        pageClaims: claimsOf(terminatedText(HTML_REFERENCES.page), page).length,
+        member: member(terminatedText(HTML_REFERENCES.member)).length,
+      },
+    });
+  },
+  Q16: async () => {
+    const evidence = notesEvidence(beadText().notes);
+    const cited = { page: evidence.page, line: evidence.line };
+    const base: StatedTexts = { page: liveText(evidence.page).replaceAll("\r", ""), readme: liveText(STATED_README), provider: liveText(PROVIDER_MODULE) };
+    const reading = JSON.stringify(statedSurface(base, cited));
+    const lines = base.page.split("\n");
+    return json({
+      residual: "R-LEXED-GRAIN",
+      planted: LEXED_GRAIN.afterCited.map(offset => {
+        const line = cited.line + offset;
+        const page = replaceLines(base.page, { [line]: `${lines[line - 1] ?? ""}${LEXED_GRAIN.insertion}` });
+        return { line, planted: page !== base.page, quiet: JSON.stringify(statedSurface({ ...base, page }, cited)) === reading };
+      }),
+    });
+  },
 };
 
 describe("wb-2wiv.1 portable Fiber core gate census (SDK-UNIVERSAL-REACTIVE-RENDERING-R1, until-then leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster, the bead's title and notes, the vendored charter lines and the cases agree", { timeout: 60_000 }, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:2", "C:3", "D:2", "Q:13"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:2", "C:3", "D:2", "Q:16"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
@@ -2837,6 +3036,10 @@ describe("wb-2wiv.1 portable Fiber core gate census (SDK-UNIVERSAL-REACTIVE-REND
         encodedTexts: ENCODED_TEXTS,
         wrappedStructured: WRAPPED_STRUCTURED,
         splitMembers: SPLIT_MEMBERS,
+        splitKeyValue: SPLIT_KEY_VALUE,
+        quotedWord: QUOTED_WORD,
+        htmlReferences: HTML_REFERENCES,
+        lexedGrain: LEXED_GRAIN,
         residuals: RESIDUALS,
     });
     expect(constants).toStrictEqual(ROSTER.constants);
