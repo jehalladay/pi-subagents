@@ -9,99 +9,148 @@
  * privacy/security and causal ordering'); "Gating artifact: source_revision/capture_completeness/redaction_hash on a released
  * surface."; and the acceptance shape (ACCEPTANCE below, verbatim).
  *
- * MEASURED (read-only). By the cutting seat, 2026-10-28, at base 7a0ab7f and again at 1bb7b05; by the respin seat (cut #2,
- * after the PREP F refusal of cut #1), 2026-10-28, at trunk 5fbe25e. Producer (Furnace's own tree, read with git show at the
- * filing pin 0f791db71b9d and again at Furnace main 0d41031, 2026-10-26: the same three blobs; this census never reads it):
- * docs/programs/world-model-trace-adapter-2026-10-18/README.md (blob 8649ef6e) reads "DESIGN ONLY, not a new executor,
- * scheduler or live trace exporter." at :2 and "Redact secret-bearing logs" at :6; 01-architecture.md (blob f2f3f1c6) holds
- * FRN-WM-003 at :7 and the "Proposed records:" line at :11 (PROPOSED_RECORDS below, verbatim). The installed @furnace/sdk is
- * 0.1.0 from vendor/furnace-sdk-0.1.0.tgz (sha256 aaa57dcfb1c205ec...; 128 files: 28 .d.ts, 28 .js, 28 .map, 43 .json and the
- * README, no .d.mts or .d.cts file). Read through the TypeScript AST as THE READERS below do, its 28 declaration files hold 602
- * named declarations (237 interfaces, 101 type aliases, 51 classes, 130 functions, 83 variables) with 1715 members: no
- * declaration is named for a proposed record, no member name reads as one of the three FRN-WM-003 fields, and no file spells a
- * record, a field or the world-model words by path or content, as written or escape-decoded (no file spells "redact" either).
- * Its nearest members are what Pi's Furnace observer reads today: RunDto.furnace_version and RunDto.binary_revision (version
- * provenance), LogsReadDto.complete and LogsReadDto.lossy (a log read's missing-fields status) and AttemptDto.ordinal (order).
- * Pi (117 src files at 5fbe25e): no src file spells a proposed record's identifier or an FRN-WM-003 wire name, in any case,
- * inside a longer name or through an escape. Two wider readings cannot be used in src: Pi's own NativeSnapshot field is the
- * camelCase sourceRevision, and the export files two other programs' world-model requirement families
- * (HX-PREDICTIVE-WORLD-MODEL-ADAPTERS, RF-PREDICTIVE-WORLD-MODEL-CONTEXT) whose Pi children cite their ids in src comments:
- * landing 646 (wb-gwr.2) cites HX-PREDICTIVE-WORLD-MODEL-ADAPTERS-R2 at src/workbench/hyperunix-observer.ts:291, the one src
- * file that spells the world-model words. So T3 reads neither wider form (R-SRC-NARROW), no world-model record has shipped and
- * no Pi reader of one exists. No src, docs or tracker text is edited by this cut.
+ * MEASURED (read-only). By the cutting seat, 2026-10-28, at base 7a0ab7f and again at 1bb7b05; by the cut #2 respin seat,
+ * 2026-10-28, at trunk 5fbe25e; by the cut #3 respin seat, 2026-10-29, at trunk b3d410f (no src file, vendored SDK or docs/12
+ * changed from 5fbe25e to b3d410f). Producer (Furnace's own tree, read with git show at the filing pin 0f791db71b9d and at
+ * Furnace main 0d41031, and re-read so by the cut #3 seat on 2026-10-29 with main still at 0d41031: the same three blobs at
+ * both; this census never reads it): docs/programs/world-model-trace-adapter-2026-10-18/README.md (blob 8649ef6e) reads "DESIGN
+ * ONLY, not a new executor, scheduler or live trace exporter." at :2 and "Redact secret-bearing logs" at :6; 01-architecture.md
+ * (blob f2f3f1c6) holds FRN-WM-003 at :7 and the "Proposed records:" line at :11 (PROPOSED_RECORDS below, byte for byte);
+ * 02-qualification.md is blob eeb98f37. The installed @furnace/sdk is 0.1.0 from vendor/furnace-sdk-0.1.0.tgz (sha256
+ * aaa57dcfb1c205ec...; 128 regular files and no symlink: 28 .d.ts, 28 .js, 28 .map, 43 .json and the README, no .d.mts or
+ * .d.cts file). Read as THE READERS below read it, its 28 declaration files hold 602 named declarations (237 interfaces, 101
+ * type aliases, 51 classes, 130 functions, 83 variables) with 1715 members, besides 20 get and set accessors, which the member
+ * reading does not read: no declaration is named for a proposed record, no member name reads as one of the three FRN-WM-003
+ * fields, and no file spells a record, a field or the world-model words by path or content, as written or with the three hex
+ * escape forms decoded (no file spells "redact" either). A one-off tolerant reading by the cut #3 seat, which also cooks
+ * identity escapes, line continuations and legacy octal escapes as no reader of this file does, finds none either, and no
+ * accessor name reads as a field. The release's nearest members are what Pi's Furnace observer reads today:
+ * RunDto.furnace_version and RunDto.binary_revision (version provenance), LogsReadDto.complete and LogsReadDto.lossy (a log
+ * read's missing-fields status) and AttemptDto.ordinal (order). Pi (117 regular src files at b3d410f, no symlink): no src file
+ * spells a proposed record's identifier or an FRN-WM-003 wire name in any letter case, alone or inside a longer name, as
+ * written or through the three hex escape forms, and the one-off tolerant reading finds none either. Two wider readings cannot
+ * be used in src: Pi's own NativeSnapshot field is the camelCase sourceRevision, and the export files two other programs'
+ * world-model requirement families (HX-PREDICTIVE-WORLD-MODEL-ADAPTERS, RF-PREDICTIVE-WORLD-MODEL-CONTEXT), the first of which
+ * a Pi child cites in a src comment: landing 646 (wb-gwr.2) cites HX-PREDICTIVE-WORLD-MODEL-ADAPTERS-R2 at
+ * src/workbench/hyperunix-observer.ts:291, the one src file that spells the world-model words (no src file cites the second).
+ * So T3 reads neither wider form (R-SRC-NARROW), no world-model record has shipped and no Pi reader of one exists. No src, docs
+ * or tracker text is edited by this cut.
  *
- * THE READERS. The release reader reads every regular file under the installed package: each declaration file (.d.ts, .d.mts
- * or .d.cts) through the TypeScript AST (every interface, type alias, class, enum, function and variable declaration with every
- * member signature, property, method and enum member nested in it at any depth, a function's or a variable's type literal
- * included, so a field reaches the reading through any heritage, alias, generic wrapper or nesting; the AST reads an escaped
- * identifier or a quoted name as the name it spells, and comments never count), and every file's package-relative path and
- * content, each as written and with its JavaScript escape sequences (\uXXXX, \u{X}, \xXX) decoded. A record is read by its
- * words after the "Furnace" prefix, a field by its two words and the world-model pair by "world" and "model", each with any run
- * of non-alphanumeric characters (or none) between its words, in any case, anywhere in a name or text. The src reader reads
- * every regular file under src/ as text, as written and escape-decoded, for each record's exact identifier and each field's
- * exact snake-case wire name, in any case and anywhere in the text, a longer name holding it included (a reader of the records
- * reads their JSON keys; FurnaceObservedTransitionDto and native_source_revision read).
+ * THE READERS (exactly what they read; a form they do not read escapes them). The release reader reads every regular file under
+ * the installed package (a symlink is not followed) in two ways. (1) The member reading parses each declaration file (.d.ts,
+ * .d.mts or .d.cts) into the TypeScript AST. It reads the name of every interface, type alias, class, enum and function
+ * declaration and of every variable declared by an identifier against the record readings, and the name of every property
+ * signature, method signature, property declaration, method declaration and enum member nested at any depth under one of those
+ * declarations (a function's or a variable's type literal included, so a field declared under a named declaration is read
+ * however deep it nests and whatever heritage, alias or generic wrapper carries it) against the field readings. A computed name
+ * reads as its source text and every other name as TypeScript cooks it (an escape in an identifier or a quoted name decoded).
+ * Nothing else is a declaration or a member of the reading: a get or set accessor, an index, call or construct signature, a
+ * constructor, a parameter, a mapped-type key, a namespace's own name and any member under no named declaration are among what
+ * it does not read (a type literal nested in one of them under a named declaration still holds members), and a comment declares
+ * nothing. (2) The content reading reads every file's package-relative path and text against every reading, each as written and
+ * with every \uXXXX, \xXX and \u{X} (up to 10FFFF) sequence decoded. It decodes no other escape (an identity escape such as \c,
+ * a line continuation and a legacy octal escape stay as written) and evaluates nothing (no concatenation, join, template
+ * placeholder or character code). The readings: a record by its capitalized words with the "Furnace" prefix dropped, a field by
+ * its two snake-case words and the world-model pair by "world" and "model", each in order with any run of characters other than
+ * ASCII letters and digits (or none) between consecutive words, in any letter case, anywhere in a name or text; those words
+ * with what lies between them are the reading's run. The src reader reads every regular file under src/ as text, as written and
+ * with the same three hex forms decoded, for each record's exact identifier and each field's exact snake-case wire name in any
+ * letter case, alone or inside a longer name (a reader of the records reads their JSON keys; FurnaceObservedTransitionDto and
+ * native_source_revision read); for it the run is the whole identifier or wire name. It decodes no other escape, evaluates
+ * nothing, and reads neither camelCase nor the world-model words. RESIDUALS names the families of unread forms known at this
+ * cut, each with a pinned quiet row; it claims no completeness, and a form outside THE READERS escapes them whether RESIDUALS
+ * names it or not.
  *
  * CASES (each test title opens with its id and the ROWS it holds). T1 (ARMED) the installed release declares no record and no
- * field and spells none of RELEASE_WORDS, in any form THE READERS read, while the same reader finds the observer's analog
- * members and, by content, the release's own binary_revision (liveness): when a re-vendor brings a record or a field in such a
- * form, T1 reds naming the acceptance as owed (RESIDUALS names the forms no reader reads). T2 the same readers find every
- * record, field and word in a planted release (through a quoted member, a type alias, a class and a comment), every field
- * declared on a type-alias parent, behind a generic wrapper or nested under an unrelated member, each escaped spelling the cut
- * #1 refusal planted (a computed key over an escaped literal, a variable's and a function's type literal, a .d.mts declaration
- * of an escaped record), a .d.cts declaration, and each escape form in plain content. T3 (ARMED) no src file spells SRC_WORDS in
- * any form THE READERS read, while the reader finds the schema literal in src/workbench/identity.ts only and finds each planted
- * identifier and wire name, the escaped, affixed and re-cased ones included: when a Pi reader spelling a record identifier or a
- * wire name in such a form lands, T3 reds naming the acceptance as owed. T3 reads neither the world-model words nor camelCase
- * (R-SRC-NARROW; A1 holds why). Q1 the four named residuals, each a pinned quiet row re-judged here (RESIDUALS). J1 the
- * acceptance's per-field round-trip judge: an identity reader passes, and a reader that drops a judged field, strips or
- * reverses redaction_hash, retypes a field while keeping its text, or reorders the records reds with exactly its findings. R1
- * FurnaceObservedTransition-shaped records (PROPOSED_RECORDS' fields, HYPOTHETICAL values) survive the furnace_observe reply's
- * sanitizer byte for byte, per field, key order and record order included; each CORPUS class planted in each text field in
- * turn is redacted there while every other field survives, and the same line as a producer that already redacted it writes it
- * (HELD: its value replaced by the marker) stays redacted. O1 in every RunState the installed release declares (STATES), the
- * observer's analogs survive its reading (its last reading and observe()'s first yield equal it, and every yield and the last
- * reading after close() keep its source and page), its Run snapshot, its topology, an ObservationProjection fed that
- * topology, and the reply: furnace_version and binary_revision as producer version and revision on every snapshot and every
- * projected node (an absent binary_revision is stated nowhere, never guessed), each INCOMPLETE fact as "partial" everywhere,
- * and the Attempt page's order in the items, snapshots, edges, evidence refs and projected nodes, with ownership edges only; a
- * doctored output set, one label changed per surface, proves the label reader reads every surface and the reply's text. O2
- * log lines, FRN-WM-003-shaped members the release does not publish and secret-bearing members, planted on the Run status, its
- * failed and active rows, every Attempt row and the log read, in every RunState, change no output of a successful read (the
- * reading, the last reading before and after close(), every observe() yield, the Run snapshot, the topology, the projection
- * and the reply) and reach none. E1 the log evidence presentation of either stream (STREAMS) keeps every HELD line redacted
- * and redacts every CORPUS class. S1 the furnace_observe tool body, read
- * through the AST of src/index.ts, replies with textResult(sanitizeWorkbenchJsonText(reading)) for the reading its
- * FurnaceObserver returned, names that reading in no other call and writes none of it, makes no other reply than its two
- * literal refusals and its sanitized error text, and refreshes the projection with that reading's Run snapshot, so R1 and O1
- * read the reply the tool returns. A1 the outside anchors: the export title's clauses, snake-case fields and requirement id;
- * the export notes' FRN-WM-003 phrases, per-field acceptance list, citation, gating artifact and ACCEPTANCE; docs/12's
- * redaction-floor sentence, read as one whole sentence of a rendered paragraph of its '## Current diagnostic protections'
- * section, bound once under the page title and carrying no HTML (CORPUS); the observer source's incompleteness operands
- * (INCOMPLETE); the installed release's RunState and OutputStream unions (STATES, STREAMS); every ROWS field among
- * PROPOSED_RECORDS' fields; and the two reasons for R-SRC-NARROW: Pi's NativeSnapshot declaring exactly one ROWS field in
- * camelCase (src/workbench/observation.ts) and the export filing world-model requirement families other than this bead's. F1
- * the frozen shape. J2 the judged set: each row's pins are exactly the cases whose titles name it, and every case is
- * registered once.
+ * field and spells none of RELEASE_WORDS in any form THE READERS read, while the same reader finds the observer's analog
+ * members and, by content, the release's own binary_revision (liveness): when a re-vendor brings a record or a field in a form
+ * THE READERS read, T1 reds naming the acceptance as owed, and in any other form it escapes T1, named in RESIDUALS or not. T2
+ * the same readers find every record, field and word in a planted release (through a quoted member, a type alias, a class and a
+ * comment), every field declared on a type-alias parent, behind a generic wrapper or nested under an unrelated member, each
+ * hex-escaped spelling the cut #1 refusal planted (a computed key over an escaped literal, a variable's and a function's type
+ * literal, a .d.mts declaration of an escaped record), a .d.cts declaration and each of the three hex forms in plain content;
+ * and the edge of THE READERS that the cut #2 refusal measured, each beside the RESIDUALS family it bounds: a quoted member
+ * name holding an identity escape is cooked and read as the member (content alone does not read it), an identity escape or a
+ * line continuation between two words is read by content, a plain accessor name is read by content and never as a member, and
+ * parts joined at value or type level between two words by a joint holding no letter or digit are read by content. T3 (ARMED)
+ * no src file spells SRC_WORDS in any form THE READERS read, while the reader finds the schema literal in
+ * src/workbench/identity.ts only and finds each planted identifier and wire name, the hex-escaped, affixed and re-cased ones
+ * included: when a Pi reader spelling a record identifier or a wire name in such a form lands, T3 reds naming the acceptance as
+ * owed, and in any other form it escapes T3, named in RESIDUALS or not. T3 reads neither the world-model words nor camelCase
+ * (R-SRC-NARROW; A1 holds why). Q1 the six named residuals, each a pinned quiet row re-judged here (RESIDUALS);
+ * R-UNDECODED-ESCAPE and R-ASSEMBLED also carry a witness, the names each probe file spells as TypeScript cooks its string
+ * literals, joined where the file joins them (by +, a template placeholder or an array join, a same-file constant read as its
+ * value). J1 the acceptance's per-field round-trip judge: an identity reader passes, and a reader that drops a judged field,
+ * strips or reverses redaction_hash, retypes a field while keeping its text, or reorders the records reds with exactly its
+ * findings. R1 FurnaceObservedTransition-shaped records (PROPOSED_RECORDS' fields, HYPOTHETICAL values) survive the
+ * furnace_observe reply's sanitizer byte for byte, per field, key order and record order included; each CORPUS class planted in
+ * each text field in turn is redacted there while every other field survives, and the same line as a producer that already
+ * redacted it writes it (HELD: its value replaced by the marker) stays redacted. O1 in every RunState the installed release
+ * declares (STATES), the observer's analogs survive its reading (its last reading and observe()'s first yield equal it, and
+ * every yield and the last reading after close() keep its source and page), its Run snapshot, its topology, an
+ * ObservationProjection fed that topology, and the reply: furnace_version and binary_revision as producer version and revision
+ * on every snapshot and every projected node (an absent binary_revision is stated nowhere, never guessed), each INCOMPLETE fact
+ * as "partial" everywhere, and the Attempt page's order in the items, snapshots, edges, evidence refs and projected nodes, with
+ * ownership edges only; the reading itself is left unchanged by every call made after it is read (the Run snapshot, topology
+ * and reply calls, observe() and close()); a doctored output set, one label changed per surface, proves the label reader reads
+ * every surface and the reply's text. O2 log lines, FRN-WM-003-shaped members the release does not publish and secret-bearing
+ * members, planted on the Run status, its failed and active rows, every Attempt row and the log read, in every RunState, on a
+ * complete read and under each one INCOMPLETE fact, change none of the outputs O2 reads (the reading, the last reading before
+ * and after close(), every observe() yield, the Run snapshot, the topology, the projection and the reply) and reach none of
+ * them. E1 the log evidence presentation of either stream (STREAMS) keeps every HELD line redacted and redacts every CORPUS
+ * class. S1 the furnace_observe tool body, read through the AST of src/index.ts, replies with
+ * textResult(sanitizeWorkbenchJsonText(reading)) for the reading its FurnaceObserver returned and refreshes the projection with
+ * that reading's Run snapshot. It names that reading exactly three times, its binding and the arguments of
+ * observer.projectionSnapshot and of that sanitizer, so it hands the reading to no other call and binds, iterates, writes or
+ * returns it nowhere else; its textResult calls and its return statements are exactly its two literal refusals, the sanitized
+ * reading and its sanitized error text. O1 holds that the two calls leave the reading unchanged, so R1 and O1 read the reply
+ * the tool returns. A1 the outside anchors: the export title's clauses, snake-case fields and requirement id; the export notes'
+ * FRN-WM-003 phrases, per-field acceptance list, citation, gating artifact and ACCEPTANCE; docs/12's redaction-floor sentence,
+ * read as one whole sentence of a paragraph that stands directly under its '## Current diagnostic protections' heading (before
+ * any subsection heading) and spells the sentence the same in its source as in its rendered text (so no inline markup, a
+ * strikethrough included, wraps or touches it), the section bound once under the page title and carrying no HTML (CORPUS); the
+ * observer source's incompleteness operands (INCOMPLETE); the installed release's RunState and OutputStream unions (STATES,
+ * STREAMS); every ROWS field among PROPOSED_RECORDS' fields; and the two reasons for R-SRC-NARROW: Pi's NativeSnapshot
+ * declaring exactly one ROWS field in camelCase (src/workbench/observation.ts) and the export filing world-model requirement
+ * families other than this bead's. F1 the frozen shape. J2 the judged set: each row's pins are exactly the cases whose titles
+ * name it, and every case is registered once.
  *
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}`, and INCOMPLETE, CORPUS, STATES, STREAMS, RESIDUALS,
  * RECORDS and the transition fields are pinned as literals. ROWS, INCOMPLETE, CORPUS, STATES and STREAMS are each also held to
  * an anchor outside this file (A1); RECORDS and the transition fields are read from PROPOSED_RECORDS, the producer line quoted
  * verbatim, and only the three ROWS fields among them are anchored outside it (the export title and gating artifact); of
- * RESIDUALS, R-SRC-NARROW is anchored outside (observation.ts and the export) and R-RENAMED, R-COMPUTED and R-ENCODED are
- * pinned by their quiet rows and the literal only.
+ * RESIDUALS, R-SRC-NARROW is anchored outside (observation.ts and the export); the presence of R-RENAMED, R-COMPUTED and
+ * R-ENCODED is pinned by its quiet row and the literal only, so deleting one of them with its literal element survives
+ * (disclosed); the presence of R-UNDECODED-ESCAPE and R-ASSEMBLED is also pinned by Q1's list of witnessed residuals, a second
+ * literal of this file (deleting one of them from all three literals survives, disclosed), and their probe files are held to
+ * what TypeScript cooks in them (their witnesses), so hollowing one of those files reds Q1 (a probe function that returns its
+ * quiet verdict without reading its files is census-internal and not caught, disclosed).
  *
- * RESIDUALS (named families, each with its pinned quiet row in Q1): R-RENAMED, a record shipped under names that spell no
- * reading escapes T1; R-COMPUTED, a field whose name the release assembles at type level (a mapped type over a template-literal
- * key that splits the field's words) escapes T1, since neither the member reading nor the content reading sees the words;
- * R-ENCODED, a record, a field or the world-model words spelled only through an encoding other than a JavaScript escape
- * (character codes, an HTML character reference) escapes T1 and T3; R-SRC-NARROW, a Pi reader spelling the fields only in
- * camelCase, or a record or a field only in prose or in keys assembled from parts, escapes T3.
+ * RESIDUALS (named families of forms THE READERS do not read, each with its pinned quiet row in Q1; the families known at this
+ * cut, not a complete list): R-RENAMED, a record shipped only under a name, with fields under names, that hold no reading's run
+ * (here TraceStep {rev, cover, digest}), escapes T1; R-COMPUTED, a field name the release spells only at type level, through a
+ * mapped type over a template-literal key whose placeholder falls inside a word or holds a letter or digit (here
+ * sou${"rce"}_revision and capture${Sep}completeness), escapes T1, since the member reading reads no mapped-type key and the
+ * placeholder breaks the run (one between two words holding neither is read by content, T2); R-ENCODED, a record, a field or
+ * the world-model words spelled only through character codes (String.fromCharCode) or HTML character references, which no
+ * reader decodes, escape T1 and T3 wherever a code or reference falls inside the run that reader reads, between two words
+ * included, since each holds a digit or a letter; R-UNDECODED-ESCAPE, a name or the world-model words spelled only with an
+ * escape no reader decodes standing between two of their characters, an identity escape (a backslash before a character with no
+ * escape meaning, as in sour\ce_revision, capture\_completeness or Synthetic\AttemptState) or a line continuation (a backslash
+ * and a line break): in a src file it escapes T3 wherever it stands inside a record identifier or wire name, and in the release
+ * it escapes T1 where it stands inside a word of a reading's run, unless the name is the quoted name of a member the member
+ * reading reads and spells a field (TypeScript cooks that name, T2), while one standing between two words is read by content
+ * (T2); R-ASSEMBLED, a record or field name the release spells only by joining parts at value level (with +, a template
+ * placeholder or an array join) escapes T1 where a joint falls inside a word or holds a letter or digit, while parts whose
+ * every joint falls between two words and holds neither are read by content (T2); R-SRC-NARROW, a Pi reader spelling the fields
+ * only in camelCase or kebab-case (sourceRevision, source-revision), a record or a field only as separate words (an observed
+ * transition), or a name only through keys assembled from parts that split it (['capture', 'completeness'].join('_')), escapes
+ * T3, which reads exact identifiers and wire names only, and so do the world-model words, which T3 does not read.
  *
  * PARKED (the external remainder, a Furnace release): the acceptance itself - a round-trip preservation test per field through
  * a real reader's projection and tool reply - needs the records in a released @furnace/sdk and a Pi reader of them. T1 or T3
- * reds when either arrives in a form THE READERS read (RESIDUALS names the forms they do not), and J1's judge is the one that
- * test runs.
+ * reds when either arrives in a form THE READERS read; one that arrives only in another form escapes both, whether RESIDUALS
+ * names its family or not. J1's judge is the one that test runs.
  */
 import { createHash } from "node:crypto";
 import { readdirSync, readFileSync } from "node:fs";
@@ -140,7 +189,7 @@ const ACCEPTANCE =
 const GATING = "Gating artifact: source_revision/capture_completeness/redaction_hash on a released surface.";
 const CITATION = `01-architecture.md:7@${PRODUCER_PIN}`;
 const OWED_RELEASE = `ARMED (${BEAD}): the installed @furnace/sdk now declares or spells a Furnace world-model record, an FRN-WM-003 field or the world-model words. If the records shipped, a Pi reader of them owes the acceptance: ${ACCEPTANCE} If they did not, re-measure against the new release and say so.`;
-const OWED_READER = `ARMED (${BEAD}): a Pi src file now spells a proposed record's identifier or an FRN-WM-003 wire name (in any case, inside a longer name or through an escape), so a Pi reader of the records may exist. If one does, it owes the acceptance: ${ACCEPTANCE} If none does, re-measure the src tree and say so.`;
+const OWED_READER = `ARMED (${BEAD}): a Pi src file now spells a proposed record's identifier or an FRN-WM-003 wire name (in any letter case, alone or inside a longer name, as written or through one of the three hex escape forms), so a Pi reader of the records may exist. If one does, it owes the acceptance: ${ACCEPTANCE} If none does, re-measure the src tree and say so.`;
 
 interface Row {
   /** The clause's own name. */
@@ -198,9 +247,15 @@ const CASES = {
     rows: ["trigger", "provenance", "completeness", "redaction"],
     title: "(ARMED) the installed release declares no world-model record or FRN-WM-003 field and spells none of them, nor the world-model words, in any form the readers read",
   },
-  T2: { rows: ["trigger"], title: "the same readers find every record, field and word in a planted release, escaped spellings included" },
-  T3: { rows: ["trigger"], title: "(ARMED) no Pi src file spells a proposed record's identifier or an FRN-WM-003 wire name, in any case, affixed or escaped" },
-  Q1: { rows: ["trigger"], title: "each named residual is a pinned quiet row: its probe is read and found quiet" },
+  T2: {
+    rows: ["trigger"],
+    title: "the same readers find every record, field and word in a planted release, hex-escaped spellings included, and each edge form stated for R-COMPUTED, R-UNDECODED-ESCAPE and R-ASSEMBLED reads as stated",
+  },
+  T3: {
+    rows: ["trigger"],
+    title: "(ARMED) no Pi src file spells a proposed record's identifier or an FRN-WM-003 wire name in any letter case, alone or inside a longer name, as written or through one of the three hex escape forms",
+  },
+  Q1: { rows: ["trigger"], title: "each named residual is a pinned quiet row: its probe is read and found quiet, and a witnessed probe spells the names TypeScript cooks in it" },
   J1: {
     rows: ["provenance", "completeness", "redaction", "ordering"],
     title: "the per-field round-trip judge passes an identity reader and reds a reader that drops, strips, reverses, retypes or reorders",
@@ -215,7 +270,7 @@ const CASES = {
   },
   O2: {
     rows: ["redaction", "privacy"],
-    title: "in every RunState no log line, unpublished FRN-WM-003-shaped member or secret-bearing member reaches any output of a successful observer read",
+    title: "in every RunState no log line, unpublished FRN-WM-003-shaped member or secret-bearing member reaches an output O2 reads, on a complete read or under any one INCOMPLETE fact",
   },
   E1: { rows: ["redaction", "privacy"], title: "the log evidence presentation of either stream keeps a producer's redaction redacted and redacts every corpus class" },
   S1: {
@@ -246,18 +301,19 @@ const WORLD_MODEL = words("world", "model");
 const FIELDS: readonly string[] = ROWS.flatMap(row => (row.field !== undefined ? [row.field] : []));
 /** What the release reader spells for: the world-model pair, each record and each field. */
 const RELEASE_WORDS: readonly RegExp[] = [WORLD_MODEL, ...RECORDS.map(recordReading), ...FIELDS.map(fieldReading)];
-/** What the src reader spells for: each record's exact identifier and each field's exact snake-case wire name, in any case and
- * anywhere in the text, a longer name holding it included (the wider readings are R-SRC-NARROW's: Pi's own camelCase
+/** What the src reader spells for: each record's exact identifier and each field's exact snake-case wire name, in any letter
+ * case and anywhere in the text, a longer name holding it included (the wider readings are R-SRC-NARROW's: Pi's own camelCase
  * sourceRevision and other programs' world-model ids, A1). */
 const SRC_WORDS: readonly RegExp[] = [...RECORDS, ...FIELDS].map(name => new RegExp(name, "i"));
-/** A text with its JavaScript escape sequences (\uXXXX, \u{X}, \xXX) decoded, so an escape-spelled name reads as the name it spells. */
+/** A text with exactly three JavaScript escape forms decoded, every \uXXXX, \xXX and \u{X} (up to 10FFFF) sequence, so a name
+ * spelled through one of them reads as the name it spells; every other escape stays as written (R-UNDECODED-ESCAPE). */
 function decoded(text: string): string {
   return text.replace(/\\u\{([0-9a-fA-F]+)\}|\\u([0-9a-fA-F]{4})|\\x([0-9a-fA-F]{2})/g, (sequence: string, braced?: string, four?: string, two?: string) => {
     const code = Number.parseInt(braced ?? four ?? two ?? "", 16);
     return code <= 0x10ffff ? String.fromCodePoint(code) : sequence;
   });
 }
-/** A text in every form THE READERS read it: as written and escape-decoded. */
+/** A text in both forms THE READERS read: as written and with the three hex escape forms decoded. */
 const forms = (text: string): readonly string[] => [text, decoded(text)];
 /** A name with one character written as a JavaScript escape of one form (the cut #1 refusal's U2 spellings, built, never typed). */
 function escapeAt(name: string, at: number, form: "four" | "braced" | "two"): string {
@@ -265,6 +321,11 @@ function escapeAt(name: string, at: number, form: "four" | "braced" | "two"): st
   const sequence = form === "four" ? `\\u${hex.padStart(4, "0")}` : form === "braced" ? `\\u{${hex}}` : `\\x${hex.padStart(2, "0")}`;
   return `${name.slice(0, at)}${sequence}${name.slice(at + 1)}`;
 }
+/** A name with a backslash set before the character at `at`: an identity escape where that character has no escape meaning
+ * (the cut #2 refusal's spellings, built, never typed; R-UNDECODED-ESCAPE). */
+const identityAt = (name: string, at: number): string => `${name.slice(0, at)}\\${name.slice(at)}`;
+/** A name with a line continuation (a backslash and a line break) set before the character at `at` (R-UNDECODED-ESCAPE). */
+const continuedAt = (name: string, at: number): string => `${name.slice(0, at)}\\\n${name.slice(at)}`;
 /** The members the observer reads for each analog today: the member reader's liveness anchor in the release it judges. */
 const ANALOGS: readonly string[] = ["RunDto.furnace_version", "RunDto.binary_revision", "LogsReadDto.complete", "LogsReadDto.lossy", "AttemptDto.ordinal"];
 
@@ -285,8 +346,10 @@ function declared(node: ts.Node): string | undefined {
   }
   return ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) ? node.name.text : undefined;
 }
-/** Every named interface, type alias, class, enum, function and variable of one declaration file with the members nested in it
- * (a function's or a variable's type literal included; AST only). */
+/** Every named interface, type alias, class, enum and function declaration and every variable declared by an identifier in one
+ * declaration file, with the property and method signatures, property and method declarations and enum members nested in it
+ * (a function's or a variable's type literal included; AST only). A get or set accessor, like every other node kind, is no
+ * member (THE READERS). */
 function declarations(file: string, text: string): Declared[] {
   const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
   const found: { name: string; members: string[] }[] = [];
@@ -350,7 +413,7 @@ interface Findings {
   readonly spellings: readonly string[];
 }
 /** What the release reader finds: declarations named for a record, members per field, and files whose path or content, as
- * written or escape-decoded, spells RELEASE_WORDS. */
+ * written or with the three hex escape forms decoded, spells RELEASE_WORDS. */
 function findings(read: Release): Findings {
   const members = qualified(read.found);
   return {
@@ -365,7 +428,8 @@ function findings(read: Release): Findings {
   };
 }
 const QUIET: Findings = { records: [], fields: Object.fromEntries(FIELDS.map(field => [field, []])), spellings: [] };
-/** Every src path (repository-relative) whose text, as written or escape-decoded, spells one of the readings. */
+/** Every src path (repository-relative) whose text, as written or with the three hex escape forms decoded, spells one of the
+ * readings. */
 function srcSpellings(files: readonly { readonly path: string; readonly text: string }[], readings: readonly RegExp[]): string[] {
   return files
     .filter(file => {
@@ -378,12 +442,18 @@ function srcFiles(): { path: string; text: string }[] {
   return regularFiles(join(REPO, "src")).map(file => ({ path: relative(REPO, file), text: readFileSync(file, "utf8") }));
 }
 
-/** The bead's own export row: its title and notes (later notes are appended, so notes are read by inclusion only). */
-function exportRow(): { title: string; notes: string } {
-  const rows = readFileSync(join(REPO, EXPORT), "utf8")
+let exported: readonly unknown[] | undefined;
+/** Every export row, parsed once per run (the export is large, and A1 reads it for its own row and for every title). */
+function exportRows(): readonly unknown[] {
+  exported ??= readFileSync(join(REPO, EXPORT), "utf8")
     .split("\n")
     .filter(line => line.trim() !== "")
     .map((line): unknown => JSON.parse(line));
+  return exported;
+}
+/** The bead's own export row: its title and notes (later notes are appended, so notes are read by inclusion only). */
+function exportRow(): { title: string; notes: string } {
+  const rows = exportRows();
   const mine = rows.flatMap(row =>
     typeof row === "object" &&
     row !== null &&
@@ -401,13 +471,7 @@ function exportRow(): { title: string; notes: string } {
 }
 /** Every export row's title. */
 function exportTitles(): string[] {
-  return readFileSync(join(REPO, EXPORT), "utf8")
-    .split("\n")
-    .filter(line => line.trim() !== "")
-    .flatMap(line => {
-      const row: unknown = JSON.parse(line);
-      return typeof row === "object" && row !== null && "title" in row && typeof row.title === "string" ? [row.title] : [];
-    });
+  return exportRows().flatMap(row => (typeof row === "object" && row !== null && "title" in row && typeof row.title === "string" ? [row.title] : []));
 }
 /** Splits a list at its separators outside parentheses. */
 function topLevel(text: string, separators: readonly string[]): string[] {
@@ -521,14 +585,21 @@ const DOCS12_SECTION = "Current diagnostic protections";
 /**
  * The redaction-floor sentences a reader of docs/12 reads: the section binds through the landed docsSection reading
  * (test/helpers/census.ts: the heading exactly once in the rendered view, under the page title, bounded at the next level-1 or
- * level-2 heading or EOF), carries no HTML (a comment can hide what its source says), and each rendered paragraph is split into
- * whole sentences; a sentence counts only when it is FLOOR_SENTENCE exactly, so a hidden, relocated, prefixed or merged copy
- * reads as none.
+ * level-2 heading or EOF, so a ### subsection belongs to it), carries no HTML (a comment can hide what its source says), and
+ * only the paragraphs standing directly under the heading, before the section's first subsection heading, are read. Each is
+ * split into whole sentences, and a sentence counts only when it is FLOOR_SENTENCE exactly in the paragraph's source and in its
+ * rendered text alike (any inline mark, a strikethrough included, changes the source), so a hidden, relocated, prefixed,
+ * merged, struck, emphasized or sub-sectioned copy reads as none.
  */
 function floorSentences(markdown: string): string[] {
   const section = docsSection(markdown, DOCS12_SECTION, 2, [DOCS12_TITLE]);
   if (!section.ok || section.hasHtml) return [];
-  return section.blocks.flatMap(block => (block.kind === "paragraph" ? block.text.split(/(?<=\.) +(?=[A-Z])/) : [])).filter(sentence => sentence === FLOOR_SENTENCE);
+  const subsection = section.blocks.findIndex(block => block.kind === "heading");
+  const direct = subsection === -1 ? section.blocks : section.blocks.slice(0, subsection);
+  const sentences = (text: string): string[] => text.split(/(?<=\.) +(?=[A-Z])/);
+  return direct
+    .flatMap(block => (block.kind === "paragraph" && sentences(block.markdown).includes(FLOOR_SENTENCE) ? sentences(block.text) : []))
+    .filter(sentence => sentence === FLOOR_SENTENCE);
 }
 
 const CLOCK = "2026-10-28T15:30:00.000Z";
@@ -699,6 +770,7 @@ interface Outputs {
 async function outputs(fixture: Fixture): Promise<Outputs> {
   const observer = new FurnaceObserver(client(fixture), { workspaceRoot: WORKSPACE, runId: RUN_ID, scope: SCOPE, limits: LIMITS });
   const reading = await observer.snapshot();
+  const pristine = structuredClone(reading);
   const last = observer.last;
   expect(last, "the last reading is the reading").toStrictEqual(reading);
   const snapshot = observer.projectionSnapshot(reading);
@@ -721,7 +793,9 @@ async function outputs(fixture: Fixture): Promise<Outputs> {
     reading.source,
     reading.attempts.items,
   ]);
-  return { reading, last, observed, closed, snapshot, topology, nodes, order, reply: sanitizeWorkbenchJsonText(reading) };
+  const reply = sanitizeWorkbenchJsonText(reading);
+  expect(reading, "the Run snapshot, topology and reply calls, observe() and close() leave the reading unchanged").toStrictEqual(pristine);
+  return { reading, last, observed, closed, snapshot, topology, nodes, order, reply };
 }
 /** Every completeness label one output set states, reading first, then each snapshot, each node and the reply's own text. */
 function completenessOf(out: Outputs): unknown[] {
@@ -729,17 +803,102 @@ function completenessOf(out: Outputs): unknown[] {
   return [out.reading.completeness, out.snapshot.coverage, ...out.topology.snapshots.map(item => item.coverage), ...out.nodes.map(node => node.completeness), isRec(reply) ? reply.completeness : undefined];
 }
 
-/** One residual family and its quiet row: a probe the readers read, and the quiet verdict they return for it today. */
+/** One planted file a probe hands to a reader: a release-relative or repository-relative path and its text. */
+interface ProbeFile {
+  readonly path: string;
+  readonly text: string;
+}
+/** What the witness reads for: each record, each field and the world-model words. */
+const WITNESSED: readonly string[] = [...RECORDS, ...FIELDS, "world model"];
+/**
+ * The witness, outside THE READERS: the names a probe file spells as TypeScript cooks its string literals (every string
+ * literal and no-substitution template as the compiler reads it, a constant of the same file bound to one read as its value, a
+ * + chain or a template of them joined, and an array of them joined by a literal separator), so a probe that spells nothing
+ * would show.
+ */
+function cookedNames(file: ProbeFile): string[] {
+  const source = ts.createSourceFile(file.path, file.text, ts.ScriptTarget.Latest, true);
+  const constants = new Map<string, string>();
+  const bind = (node: ts.Node): void => {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined && ts.isStringLiteral(node.initializer)) {
+      constants.set(node.name.text, node.initializer.text);
+    }
+    ts.forEachChild(node, bind);
+  };
+  bind(source);
+  const values: string[] = [];
+  const value = (node: ts.Node): string | undefined => {
+    if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) return node.text;
+    if (ts.isIdentifier(node)) return constants.get(node.text);
+    if (ts.isParenthesizedExpression(node)) return value(node.expression);
+    if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken) {
+      const left = value(node.left);
+      const right = value(node.right);
+      return left === undefined || right === undefined ? undefined : `${left}${right}`;
+    }
+    if (ts.isTemplateExpression(node)) {
+      const parts = node.templateSpans.map(span => value(span.expression));
+      return parts.some(part => part === undefined) ? undefined : node.head.text + node.templateSpans.map((span, index) => `${parts[index]}${span.literal.text}`).join("");
+    }
+    if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression) && node.expression.name.text === "join" && ts.isArrayLiteralExpression(node.expression.expression)) {
+      const parts = node.expression.expression.elements.map(value);
+      const separator = node.arguments.length === 0 ? "," : value(node.arguments[0]);
+      return separator === undefined || parts.some(part => part === undefined) ? undefined : parts.join(separator);
+    }
+    return undefined;
+  };
+  const visit = (node: ts.Node): void => {
+    const found = value(node);
+    if (found !== undefined) values.push(found);
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return WITNESSED.filter(name => values.some(text => text.includes(name)));
+}
+/** R-UNDECODED-ESCAPE's release plants: the cut #2 refusal's six T1 plants (L2C2-T1-IDESC-COMPUTED, -IDESC-VAR, -IDESC-VAR2,
+ * -IDESC-JS, -IDESC-GETTER and -LINECONT-MID, rebuilt byte for byte), then a record and the world-model words, each broken
+ * inside a word. */
+const UNDECODED_RELEASE: readonly ProbeFile[] = [
+  { path: "dist/src/protocol.d.ts", text: `declare const K2: "${identityAt("source_revision", 4)}";\nexport interface RunDto {\n    [K2]?: string;\n}\n` },
+  { path: "dist/src/protocol.d.ts", text: `export declare const transitionKey: "${identityAt("redaction_hash", 6)}";\n` },
+  { path: "dist/src/protocol.d.ts", text: `export declare const completenessKey: "${identityAt("capture_completeness", 2)}";\n` },
+  { path: "dist/src/index.js", text: `\nexport const RECORD_KEY = "${identityAt("redaction_hash", 2)}";\n` },
+  { path: "dist/src/protocol.d.ts", text: `export declare class TraceView {\n    get "${identityAt("source_revision", 4)}"(): string;\n}\n` },
+  { path: "dist/src/protocol.d.ts", text: `declare const K3: "${continuedAt("source_revision", 4)}";\nexport interface RunDto {\n    [K3]?: string;\n}\n` },
+  { path: "dist/src/index.js", text: `export const KIND = "${identityAt("SyntheticAttemptState", 5)}";\n` },
+  { path: "dist/src/index.js", text: `export const NOTE = "a ${identityAt("world model", 3)}";\n` },
+];
+/** R-UNDECODED-ESCAPE's src plants: the cut #2 refusal's four T3 plants (L2C2-T3-IDESC, -IDESC-SEP, -IDESC-RECORD and
+ * -LINECONT, rebuilt byte for byte). */
+const UNDECODED_SRC: readonly ProbeFile[] = [
+  { path: "src/workbench/zz-gate-plant.ts", text: `export const FIELD = "${identityAt("source_revision", 4)}";\n` },
+  { path: "src/workbench/zz-gate-plant.ts", text: `export const FIELD = "${identityAt("capture_completeness", 7)}";\n` },
+  { path: "src/workbench/zz-gate-plant.ts", text: `export const KIND = "${identityAt("SyntheticAttemptState", 9)}";\n` },
+  { path: "src/workbench/zz-gate-plant.ts", text: `export const FIELD = "${continuedAt("redaction_hash", 10)}";\n` },
+];
+/** R-ASSEMBLED's release plants: the cut #2 refusal's L2C2-T1-JS-CONCAT (byte for byte), then a template placeholder, an array
+ * join and a record, each joined inside a word, and a field joined between its words through a constant whose name holds
+ * letters (the template's placeholder is joined at "$" so no literal here holds one). */
+const ASSEMBLED_RELEASE: readonly ProbeFile[] = [
+  { path: "dist/src/index.js", text: '\nexport const FIELD_KEY = "sou" + "rce_revision";\n' },
+  { path: "dist/src/index.js", text: ["export const CAPTURE_KEY = `cap", '{"ture"}_completeness`;\n'].join("$") },
+  { path: "dist/src/index.js", text: 'export const HASH_KEY = ["redac", "tion_hash"].join("");\n' },
+  { path: "dist/src/index.js", text: 'export const KIND = "Counter" + "factualCandidate";\n' },
+  { path: "dist/src/index.js", text: 'export const SEP = "_";\nexport const REVISION_KEY = "source" + SEP + "revision";\n' },
+];
+/** One residual family and its quiet row: a probe the readers read, and the quiet verdict they return for it today; a witnessed
+ * family also holds, for each of its probe files, the names TypeScript cooks in it (cookedNames). */
 interface Residual {
   readonly id: string;
   readonly family: string;
   readonly probe: () => unknown;
   readonly quiet: unknown;
+  readonly witness?: { readonly files: readonly ProbeFile[]; readonly spells: readonly (readonly string[])[] };
 }
 const RESIDUALS: readonly Residual[] = [
   {
     id: "R-RENAMED",
-    family: "a record shipped under a name and fields that spell no reading (here TraceStep {rev, cover, digest}) escapes T1",
+    family: "a record shipped only under a name, with fields under names, that hold no reading's run (here TraceStep {rev, cover, digest}) escapes T1",
     probe: () =>
       findings(
         release([
@@ -750,15 +909,21 @@ const RESIDUALS: readonly Residual[] = [
   },
   {
     id: "R-COMPUTED",
-    family: "a field whose name the release assembles at type level (a mapped type over a template-literal key splitting its words) escapes T1",
-    // The key is `sou${"rce"}_revision`, joined at "$" so no literal here holds a template placeholder.
-    probe: () => findings(release([{ path: "dist/src/computed.d.ts", text: ["type Key = `sou", '{"rce"}_revision`; export type Computed = { [K in Key]: string };'].join("$") }])),
-    quiet: QUIET,
+    family:
+      "a field name the release spells only at type level, through a mapped type over a template-literal key whose placeholder falls inside a word or holds a letter or digit (here one of each), escapes T1",
+    // The keys are `sou${"rce"}_revision` and `capture${Sep}completeness`, joined at "$" so no literal here holds a template
+    // placeholder.
+    probe: () =>
+      [
+        ["type Key = `sou", '{"rce"}_revision`; export type Computed = { [K in Key]: string };'],
+        ['type Sep = "_"; type Key = `capture', "{Sep}completeness`; export type Computed = { [K in Key]: string };"],
+      ].map(parts => findings(release([{ path: "dist/src/computed.d.ts", text: parts.join("$") }]))),
+    quiet: [QUIET, QUIET],
   },
   {
     id: "R-ENCODED",
     family:
-      "a record, a field or the world-model words spelled only through an encoding other than a JavaScript escape (character codes, an HTML character reference) escapes T1 and T3",
+      "a record, a field or the world-model words spelled only through character codes (String.fromCharCode) or HTML character references, which no reader decodes, escape T1 and T3 wherever a code or reference falls inside the run that reader reads, between two words included",
     probe: () => {
       const codes = (name: string): string => [...name].map(char => char.codePointAt(0)).join(", ");
       const text = [
@@ -771,15 +936,47 @@ const RESIDUALS: readonly Residual[] = [
     quiet: [QUIET, []],
   },
   {
+    id: "R-UNDECODED-ESCAPE",
+    family:
+      "a name or the world-model words spelled only with an identity escape or a line continuation between two of their characters, which no reader decodes, escapes T3 anywhere inside a record identifier or wire name, and T1 inside a word of a reading's run outside the quoted name of a member the member reading reads (T2 holds both edges)",
+    probe: () => ({ release: UNDECODED_RELEASE.map(file => findings(release([file]))), src: UNDECODED_SRC.map(file => srcSpellings([file], SRC_WORDS)) }),
+    quiet: { release: UNDECODED_RELEASE.map(() => QUIET), src: UNDECODED_SRC.map(() => []) },
+    witness: {
+      files: [...UNDECODED_RELEASE, ...UNDECODED_SRC],
+      spells: [
+        ["source_revision"],
+        ["redaction_hash"],
+        ["capture_completeness"],
+        ["redaction_hash"],
+        ["source_revision"],
+        ["source_revision"],
+        ["SyntheticAttemptState"],
+        ["world model"],
+        ["source_revision"],
+        ["capture_completeness"],
+        ["SyntheticAttemptState"],
+        ["redaction_hash"],
+      ],
+    },
+  },
+  {
+    id: "R-ASSEMBLED",
+    family:
+      "a record or field name the release spells only by joining parts at value level (with +, a template placeholder or an array join) escapes T1 where a joint falls inside a word or holds a letter or digit (T2 holds the edge between two words)",
+    probe: () => ASSEMBLED_RELEASE.map(file => findings(release([file]))),
+    quiet: ASSEMBLED_RELEASE.map(() => QUIET),
+    witness: { files: ASSEMBLED_RELEASE, spells: [["source_revision"], ["capture_completeness"], ["redaction_hash"], ["CounterfactualCandidate"], ["source_revision"]] },
+  },
+  {
     id: "R-SRC-NARROW",
     family:
-      "a Pi reader spelling the fields only in camelCase (sourceRevision), or a record or a field only in prose or in keys assembled from parts (a world model, ['capture', 'completeness'].join('_')), escapes T3",
+      "a Pi reader spelling the fields only in camelCase or kebab-case (sourceRevision, source-revision), a record or a field only as separate words (an observed transition), or a name only through keys assembled from parts that split it (['capture', 'completeness'].join('_')), escapes T3, and so do the world-model words (a world model), which T3 does not read",
     probe: () =>
       srcSpellings(
         [
           {
             path: "src/workbench/zz-world-model-probe.ts",
-            text: "const sourceRevision = record.sourceRevision; record.captureCompleteness; record.redactionHash; const key = ['capture', 'completeness'].join('_'); // a world model's observed transitions (HX-PREDICTIVE-WORLD-MODEL-ADAPTERS-R2)",
+            text: "const sourceRevision = record.sourceRevision; record['source-revision']; record.captureCompleteness; record.redactionHash; const key = ['capture', 'completeness'].join('_'); // a world model's observed transitions (HX-PREDICTIVE-WORLD-MODEL-ADAPTERS-R2)",
           },
         ],
         SRC_WORDS,
@@ -799,6 +996,12 @@ interface ToolBody {
   readonly replies: string[];
   /** The target of every assignment, increment, decrement and delete. */
   readonly writes: string[];
+  /** Every return statement's value, a nested function's included: a textResult call read in its reply shape, any other value
+   * as written (whitespace removed), and a bare return as "<none>". */
+  readonly returns: string[];
+  /** Every place the identifier `reading` occurs: "binding" where it is declared, "argument of <callee>" where it is a call's
+   * argument, and "in <parent>" anywhere else (whitespace removed). */
+  readonly mentions: string[];
 }
 /** The named tool's execute body in src/index.ts (or in a planted source), read through the AST. */
 function toolBody(name: string, text = readFileSync(join(REPO, INDEX_SOURCE), "utf8")): ToolBody | undefined {
@@ -828,7 +1031,22 @@ function toolBody(name: string, text = readFileSync(join(REPO, INDEX_SOURCE), "u
     return `${squeeze(argument.expression)}(${inner.join(",")})`;
   };
   const updates: readonly ts.SyntaxKind[] = [ts.SyntaxKind.PlusPlusToken, ts.SyntaxKind.MinusMinusToken];
+  const returns: string[] = [];
+  const mentions: string[] = [];
+  const isTextResult = (node: ts.Expression): node is ts.CallExpression => ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "textResult";
+  const returned = (value: ts.Expression | undefined): string => {
+    if (value === undefined) return "<none>";
+    return isTextResult(value) ? `textResult(${value.arguments.map(shape).join(",")})` : squeeze(value);
+  };
+  const mention = (node: ts.Identifier): string => {
+    const parent = node.parent;
+    if (ts.isVariableDeclaration(parent) && parent.name === node) return "binding";
+    if (ts.isCallExpression(parent) && parent.arguments.some(argument => argument === node)) return `argument of ${squeeze(parent.expression)}`;
+    return `in ${squeeze(parent)}`;
+  };
   const collect = (node: ts.Node): void => {
+    if (ts.isReturnStatement(node)) returns.push(returned(node.expression));
+    if (ts.isIdentifier(node) && node.text === "reading") mentions.push(mention(node));
     if (ts.isCallExpression(node) || ts.isNewExpression(node)) calls.push(squeeze(node));
     if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "textResult") replies.push(`textResult(${node.arguments.map(shape).join(",")})`);
     if (ts.isVariableDeclaration(node) && node.initializer !== undefined) bindings.push(`${squeeze(node.name)}=${squeeze(node.initializer)}`);
@@ -838,7 +1056,7 @@ function toolBody(name: string, text = readFileSync(join(REPO, INDEX_SOURCE), "u
     ts.forEachChild(node, collect);
   };
   collect(body);
-  return { calls, bindings, replies, writes };
+  return { calls, bindings, replies, writes, returns, mentions };
 }
 /** The leaf operands of the `||` chains in the observer's `incomplete` initializer: an operand holding a chain is read through
  * to that chain only (the callback of logs.some contributes its two operands, its callee and parameter nothing). */
@@ -956,6 +1174,30 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
       "each escape form in content the AST never declares",
     ).toStrictEqual(escapes.map(() => ["dist/src/index.js"]));
     expect(one("README.md", [`Exports ${escapeAt("world model", 5, "two")} traces.`]).spellings, "and the world-model words").toStrictEqual(["README.md"]);
+    // The edge of THE READERS that the cut #2 refusal measured, beside the residual family each bounds. TypeScript cooks a quoted
+    // member name, so an identity escape inside a word of it reads as the member while content alone misses it
+    // (R-UNDECODED-ESCAPE); between two words an identity escape, a line continuation or a joint holding no letter or digit is
+    // part of the run, at value level and at type level (R-UNDECODED-ESCAPE, R-ASSEMBLED, R-COMPUTED); and a plain accessor name
+    // is content, never a member.
+    expect(one("dist/src/protocol.d.ts", ["export interface TraceRow {", `    "${identityAt("source_revision", 4)}": string;`, "}"]), "a quoted member name holding an identity escape").toStrictEqual({
+      ...QUIET,
+      fields: fields("source_revision", ["TraceRow.source_revision"]),
+    });
+    const between: readonly ProbeFile[] = [
+      { path: "dist/src/protocol.d.ts", text: `declare const K4: "${continuedAt("source_revision", 7)}";\nexport interface RunDto {\n    [K4]?: string;\n}` },
+      { path: "dist/src/index.js", text: `export const KEY = "${identityAt("capture_completeness", 7)}";` },
+      { path: "dist/src/index.js", text: `export const KIND = "${identityAt("SyntheticAttemptState", 9)}";` },
+      { path: "dist/src/index.js", text: 'export const FIELD_KEY = "source_" + "revision";' },
+      { path: "dist/src/computed.d.ts", text: ["type Key = `redaction", '{"_"}hash`; export type Computed = { [K in Key]: string };'].join("$") },
+    ];
+    expect(
+      between.map(file => findings(release([file]))),
+      "a line continuation, an identity escape or a joint between two words is read by content",
+    ).toStrictEqual(between.map(file => ({ ...QUIET, spellings: [file.path] })));
+    expect(one("dist/src/protocol.d.ts", ["export declare class TraceView {", "    get source_revision(): string;", "}"]), "a plain accessor name is content, never a member").toStrictEqual({
+      ...QUIET,
+      spellings: ["dist/src/protocol.d.ts"],
+    });
   });
 
   pinned("T3", () => {
@@ -985,6 +1227,14 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
 
   pinned("Q1", () => {
     for (const residual of RESIDUALS) expect(residual.probe(), `${residual.id}: ${residual.family}`).toStrictEqual(residual.quiet);
+    const witnessed = RESIDUALS.flatMap(residual => (residual.witness !== undefined ? [{ id: residual.id, ...residual.witness }] : []));
+    expect(
+      witnessed.map(item => item.id),
+      "the witnessed residuals",
+    ).toStrictEqual(["R-UNDECODED-ESCAPE", "R-ASSEMBLED"]);
+    for (const item of witnessed) {
+      expect(item.files.map(cookedNames), `${item.id}: TypeScript cooks each probe file to the names it spells`).toStrictEqual(item.spells);
+    }
   });
 
   pinned("J1", () => {
@@ -1095,14 +1345,20 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
 
     pinned("O2", async () => {
       for (const state of STATES) {
-        const base = await outputs(inState(BASE, state));
-        const planted = await outputs(inState(PLANTED, state));
-        expect(planted, `${state}: unpublished, secret-bearing and log-line plants change no output`).toStrictEqual(base);
-        const text = JSON.stringify(planted);
-        expect(PLANT_MARKS.filter(mark => text.includes(mark)), `${state}: and reach none`).toStrictEqual([]);
-        expect(planted.reading.logs, `${state}: the reading keeps only the log read's counts and flags`).toStrictEqual([
-          { attemptId: PAGE_IDS[2], stream: "stdout", complete: true, lossy: false, returned: LOG_LINES.length, nextCursor: null },
-        ]);
+        for (const fact of [undefined, ...INCOMPLETE]) {
+          // The complete read, then each one INCOMPLETE fact planted on the same RunState.
+          const at = (fixture: Fixture): Fixture => (fact === undefined ? inState(fixture, state) : fact.plant(inState(fixture, state)));
+          const label = fact === undefined ? `${state} complete` : `${state} ${fact.id}`;
+          const base = await outputs(at(BASE));
+          const planted = await outputs(at(PLANTED));
+          expect(planted, `${label}: unpublished, secret-bearing and log-line plants change no output`).toStrictEqual(base);
+          const text = JSON.stringify(planted);
+          expect(PLANT_MARKS.filter(mark => text.includes(mark)), `${label}: and reach none`).toStrictEqual([]);
+          const log = at(BASE).log;
+          expect(planted.reading.logs, `${label}: the reading keeps only the log read's counts and flags`).toStrictEqual([
+            { attemptId: PAGE_IDS[2], stream: "stdout", complete: log.complete, lossy: log.lossy, returned: LOG_LINES.length, nextCursor: null },
+          ]);
+        }
       }
     });
   });
@@ -1160,6 +1416,17 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
       "sanitizeWorkbenchJsonText(reading)",
     ]);
     expect(tool?.writes.filter(target => /^reading\b/.test(target)), "and nothing writes any of it").toStrictEqual([]);
+    expect(tool?.mentions, "the body names the reading only where it binds it and as those two calls' argument").toStrictEqual([
+      "binding",
+      "argument of observer.projectionSnapshot",
+      "argument of sanitizeWorkbenchJsonText",
+    ]);
+    expect(tool?.returns, "and every return is one of its four textResult replies").toStrictEqual([
+      'textResult("<literal>")',
+      'textResult("<literal>")',
+      "textResult(sanitizeWorkbenchJsonText(reading))",
+      "textResult(sanitizeWorkbenchText(...))",
+    ]);
     expect(toolBody("zz-no-such-tool"), "the reader finds no body for an unregistered name").toBeUndefined();
     expect(toolBody("workflow_observe")?.calls.length ?? 0, "and finds another tool's body").toBeGreaterThan(0);
     // The reply, reading-call and write readers are live on a planted body.
@@ -1171,6 +1438,15 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
       ["textResult(JSON.stringify(reading))"],
       ["reading.native", "reading.extra", "reading.count"],
       ["Object.assign(reading,{})", "textResult(JSON.stringify(reading))", "JSON.stringify(reading)"],
+    ]);
+    // The mention and return readers are live on the cut #2 refusal's alias and loop-variable writes and two other returns.
+    const aliased = toolBody(
+      "zz-alias",
+      'tools.push({ name: "zz-alias", execute: async () => { const view = reading; Object.assign(view, {}); for (const item of reading.attempts.items) item.ordinal = 0; if (view) return { content: view }; return; } });',
+    );
+    expect([aliased?.mentions, aliased?.returns], "an alias, a loop variable, a bare return and a non-textResult return are read").toStrictEqual([
+      ["in view=reading", "in reading.attempts"],
+      ["{content:view}", "<none>"],
     ]);
   });
 
@@ -1190,14 +1466,24 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
     expect(/Gating artifact: ([a-z_/]+) on a released surface\./.exec(GATING)?.[1]?.split("/"), "the gating artifact names ROWS' fields").toStrictEqual([...FIELDS]);
     expect(FIELDS.filter(field => !TRANSITION_FIELDS.includes(field)), "every field is a proposed transition field").toStrictEqual([]);
     const docs12 = readFileSync(join(REPO, DOCS12), "utf8");
-    expect(floorSentences(docs12), "docs/12's bound section renders the redaction-floor sentence once, whole").toStrictEqual([FLOOR_SENTENCE]);
+    expect(floorSentences(docs12), "docs/12 states the redaction-floor sentence once, whole and plain, directly under its section heading").toStrictEqual([FLOOR_SENTENCE]);
     const lowered = `${FLOOR_SENTENCE.charAt(0).toLowerCase()}${FLOOR_SENTENCE.slice(1)}`;
     const pages = [
       docs12.replace(FLOOR_SENTENCE, `<!-- ${FLOOR_SENTENCE} -->`),
       `${docs12.replace(FLOOR_SENTENCE, "")}\n## Withdrawn protections\n\n${FLOOR_SENTENCE}\n`,
       docs12.replace(FLOOR_SENTENCE, `It is not the case that ${lowered}`),
+      docs12.replace(FLOOR_SENTENCE, `~~${FLOOR_SENTENCE}~~`),
+      docs12.replace(FLOOR_SENTENCE, `### Withdrawn (no longer provided)\n\n${FLOOR_SENTENCE}`),
+      docs12.replace(FLOOR_SENTENCE, `*${FLOOR_SENTENCE}*`),
     ];
-    expect(pages.map(floorSentences), "the reading is live: a hidden, a relocated and a prefixed copy each read as none").toStrictEqual([[], [], []]);
+    expect(pages.map(floorSentences), "the reading is live: a hidden, a relocated, a prefixed, a struck, a sub-sectioned and an emphasized copy each read as none").toStrictEqual([
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+    ]);
     const floor = /redact recognized (.+) credentials, common (.+) prefixes and sensitive (.+) key\/value fields/.exec(FLOOR_SENTENCE);
     expect(floor === null ? [] : [...floor[1].split("/"), floor[2], ...floor[3].split(" or ")], "its classes are CORPUS's words").toStrictEqual(CORPUS.map(entry => entry.word));
     expect(incompleteOperands(), "the observer's incompleteness operands are INCOMPLETE's").toStrictEqual(INCOMPLETE.map(fact => fact.reads));
@@ -1243,7 +1529,7 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
     expect(CORPUS.map(entry => entry.id)).toStrictEqual(["bearer", "basic", "token-prefix", "plain-key-value", "json-key-value"]);
     expect(STATES).toStrictEqual(["created", "active", "paused", "needs_attention", "completed", "stopped", "failed"]);
     expect(STREAMS).toStrictEqual(["stdout", "stderr"]);
-    expect(RESIDUALS.map(residual => residual.id)).toStrictEqual(["R-RENAMED", "R-COMPUTED", "R-ENCODED", "R-SRC-NARROW"]);
+    expect(RESIDUALS.map(residual => residual.id)).toStrictEqual(["R-RENAMED", "R-COMPUTED", "R-ENCODED", "R-UNDECODED-ESCAPE", "R-ASSEMBLED", "R-SRC-NARROW"]);
     expect(RECORDS).toStrictEqual(["FurnaceObservedTransition", "CounterfactualCandidate", "SyntheticAttemptState"]);
     expect(TRANSITION_FIELDS).toStrictEqual([
       "source_revision",
