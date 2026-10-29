@@ -46,8 +46,9 @@
  *    witness beside its reading, the identity-escape and brace-quantifier regex readings and the one finding step: wb-3w79, the
  *    landing-501 gate's F1, F3 and F4; the type-name root's qualified form (a type name that is a qualified name, rec.Owner) and
  *    the regex reading's separator family, every class escape (d D s S w W), assertion (b B) and control character escape
- *    (f n r t v) spelled between the term's two words, one literal per member: wb-jdz6, the landing-594 gate's F1 and F2) and the
- *    TOKEN ANCHOR (wb-3wcm F4): the TypeScript compiler, outside this cut, is the anchor of
+ *    (f n r t v) spelled between the term's two words, one literal per member: wb-jdz6, the landing-594 gate's F1 and F2; a
+ *    qualified name two links deep, its left side itself a qualified name (Rec.Owner.Epoch): wb-jdz6 cut #2, refusal #1's F2) and
+ *    the TOKEN ANCHOR (wb-3wcm F4): the TypeScript compiler, outside this cut, is the anchor of
  *    the token readings - every node of a src module's syntax tree that carries its own text (an identifier, a private name, a
  *    string, a template part, a regex, a number) must be one a token reading read, so a token reading removed together with its
  *    controls, the roster's scan and A2's witness reds (a text-carrying kind no reading reads, JSX text today, is the anchor's
@@ -110,6 +111,19 @@
  * the witness declaration, wrote the roster's witness into the measured one and kept both comparisons comparing the roster
  * against itself): every statement of the pin case's callback body, of any kind and in order, spelled exactly so, the list held
  * to the roster's, so a statement added to the pin case (a write to an operand among them), removed or reordered reds.
+ * SPELLED EXACTLY SO is read token for token (wb-jdz6 cut #2, refusal #1's U1, G-SQUEEZE: a reader that dropped every whitespace
+ * run read 'await impl()' and 'awaitimpl()' as one spelling, so the witness declaration rerouted in place to a module-level helper
+ * named awaitimpl, which returned the roster's witness and padded the pinned assertion count, kept every hold, and a witness drift
+ * and a src finding stayed green): COMPARISONS, OPERANDS and PIN_CASE alike are held through one reader, tokensOf, which reads a
+ * statement of this file, and a held literal parsed on its own, as the TypeScript compiler's tokens in order, each with its own
+ * source text (a name, a keyword or an operator, and a string, a template part or a regex byte for byte), and every comment that
+ * stands between two of its tokens; only the whitespace between two tokens is layout. So two tokens merged into one ('await
+ * impl()' into 'awaitimpl()', 'const witness' into 'constwitness'), a token's own text changed or a comment added between two
+ * tokens reds. The reader is held to its own controls before it reads any statement (SPELLING_CONTROLS, the list held to the
+ * roster's): G-SQUEEZE's pair, the keyword merge, an operator's own text, the inner whitespace of a string, a template part and a
+ * regex, a comment between two tokens, a JSDoc block's own text and the tokens' order each read as two spellings, and layout
+ * between two tokens as one, so a reader that drops whitespace again, or drops a comment or a comment's own text, a literal's
+ * inner whitespace, an operator's text or the order, reds, as does one that reads layout as spelling.
  * Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the filing anchors rows and clauses, not pins); a
  * term removed from IDENTITY_TERMS or WORK_PACKAGE_TERMS together with its controls, the roster's scan and A2's witness (the
  * filing anchors rows and clauses, not words, and no source outside this cut lists the vocabulary); an assertion removed from this
@@ -126,9 +140,12 @@
  * A2's src read narrowed, where it is declared or at the finding step's call, to the known spelling's own hits (the step then
  * holds the known spelling and finds nothing else; the token anchor holds tokens, not hits); a witness comparison, an operand
  * statement or the pin case's body edited in place together with its COMPARISONS, OPERANDS or PIN_CASE entry and the roster's;
- * an operand written from outside the pin case's body (from a hook, from a helper either comparison calls, or from a case that
- * keeps an alias of its witness); or a comparison hollowed through its matcher, an expect.extend override (the SELF-READ holds
- * the spelling and the place, and no source outside this cut lists the comparisons, the operands or the pin case's body).
+ * the SELF-READ's reading narrowed in place at its calls - where selfStatements or pinCaseBodies reads a statement and where a
+ * held literal is read for its comparison - instead of in tokensOf or heldSpelling, the readers its spelling controls read, or a
+ * spelling control changed together with its roster entry; an operand written from outside the pin case's body (from a hook, from
+ * a helper either comparison calls, or from a case that keeps an alias of its witness); or a comparison hollowed through its
+ * matcher, an expect.extend override (the SELF-READ holds each statement's tokens and place, not what its names are bound to, and
+ * no source outside this cut lists the comparisons, the operands, the pin case's body or the spelling controls).
  * THE GATE-OPENING SIGNAL: A1 reds when an H2 producer package is declared, installed, loaded or named, and A2 when a src module
  * names a gating work package or an identity-record word: the H2 reader RL-H2-01/02, FO-H2-01/02, RC-H2-02 or RI-H2-02 calls for
  * reds this census first, and its cut re-pins (a) to (d) at that reader's own keys (B to E already pin the sites it would use).
@@ -242,7 +259,9 @@ const COMPOSED_CONTROL = 'const word = ["owner", "epoch"].join(" ");';
  * control true), and the regex reading's separator family has one control per kind - class escapes, assertions and control
  * character escapes - each source spelling the term across every member of its kind, one literal per member, so a member read
  * as an identity escape glues the two words and drops its literal's hit from the spelling (F2: the family's alternative removed
- * kept every control true). */
+ * kept every control true). A qualified name two links deep has its own control too (wb-jdz6 cut #2, refusal #1's F2: a
+ * qualified name read only when its left side is a name kept every control true, each of them one link deep), so a qualified
+ * name read only one link deep loses the term. */
 const READING_CONTROLS: readonly (readonly [string, string, string])[] = [
   ["identifier", "identifier", "let ownerEpoch = 0;"],
   ["private name", "identifier", "class Holder { #ownerEpoch = 0; }"],
@@ -252,6 +271,7 @@ const READING_CONTROLS: readonly (readonly [string, string, string])[] = [
   ["computed root", "chain", "const e = load().owner.epoch;"],
   ["element access", "chain", 'const e = record["owner"]?.["epoch"];'],
   ["qualified name", "chain", "type E = Owner.Epoch;"],
+  ["nested qualified name", "chain", "type E = Rec.Owner.Epoch;"],
   ["object keys", "key path", "const o = { owner: { epoch: 1 } };"],
   ["type members", "key path", "type T = { owner: { epoch: number } };"],
   ["binding pattern", "key path", "const { owner: { epoch } } = record;"],
@@ -330,6 +350,24 @@ const PIN_CASE: readonly string[] = [
   "expect(witness).toStrictEqual(rosterWitness(pin));",
   "MEASURED[pin] = witness;",
   "REACHED.push(endOf(pin));",
+];
+/** A spelling control of the SELF-READ's reader: [label, one spelling, another, whether tokensOf reads the two as one spelling]. */
+type SpellingControl = readonly [label: string, one: string, other: string, same: boolean];
+/** The SELF-READ reader's own controls (wb-jdz6 cut #2, refusal #1's U1), each spelling parsed on its own and read by tokensOf:
+ * two tokens merged into one (G-SQUEEZE's pair), a keyword merged into a name, an operator's own text, a string's, a template
+ * part's and a regex's inner whitespace, a comment between two tokens, a JSDoc block's own text and the tokens' order each read
+ * as two spellings, and layout between two tokens as one. */
+const SPELLING_CONTROLS: readonly SpellingControl[] = [
+  ["two tokens merged into one", "const witness = impl === undefined ? null : await impl();", "const witness = impl === undefined ? null : awaitimpl();", false],
+  ["a keyword merged into a name", "const witness = impl === undefined ? null : await impl();", "constwitness = impl === undefined ? null : await impl();", false],
+  ["an operator's own text", "const witness = impl === undefined ? null : await impl();", "const witness = impl == undefined ? null : await impl();", false],
+  ["a string's inner whitespace", 'expect(impl, "no case").toBeTypeOf("function");', 'expect(impl, "no  case").toBeTypeOf("function");', false],
+  ["a template part's inner whitespace", `expect(impl, \`no case for \${pin}\`).toBeTypeOf("function");`, `expect(impl, \`no case  for \${pin}\`).toBeTypeOf("function");`, false],
+  ["a regex's inner whitespace", "expect(text).toMatch(/owner epoch/);", "expect(text).toMatch(/owner  epoch/);", false],
+  ["a comment between two tokens", "MEASURED[pin] = witness;", "MEASURED[pin] = /* drift */ witness;", false],
+  ["a JSDoc block's own text", "const f = /** @param x the one */ (x: number) => x;", "const f = /** @param x the other */ (x: number) => x;", false],
+  ["the tokens' order", "MEASURED[pin] = witness;", "witness = MEASURED[pin];", false],
+  ["layout between two tokens", "REACHED.push(endOf(pin));", "REACHED.push(\n  endOf( pin )\n);", true],
 ];
 /** R-SPLIT-NAMES' quiet row: a term split across two names that form no chain and no key path. */
 const SPLIT_CONTROLS: readonly string[] = [
@@ -432,6 +470,8 @@ interface Roster {
   readonly operands: readonly string[];
   /** The SELF-READ's pin case body. */
   readonly pinCase: readonly string[];
+  /** The SELF-READ reader's spelling controls. */
+  readonly spellingControls: readonly SpellingControl[];
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
   /** The ends every case before the records case records, in run order (`${id}:${count}`). */
@@ -469,6 +509,17 @@ function producerOf(value: unknown, index: number): ProducerSource {
   };
 }
 
+/** The roster's spelling controls, each [label, one spelling, another, whether the two read as one]. */
+function spellingControlsOf(value: unknown): SpellingControl[] {
+  if (!Array.isArray(value)) throw new Error("roster spellingControls must be a list");
+  return value.map((entry: unknown, index: number): SpellingControl => {
+    const [label, one, other, same]: unknown[] = Array.isArray(entry) && entry.length === 4 ? entry : [];
+    if (typeof label !== "string" || typeof one !== "string" || typeof other !== "string" || typeof same !== "boolean") {
+      throw new Error(`roster spellingControls[${index}] must be [label, spelling, spelling, same]`);
+    }
+    return [label, one, other, same];
+  });
+}
 /** Parses the roster, refusing any field of the wrong shape by name, so no case can read a malformed roster. */
 function readRoster(): Roster {
   const raw: unknown = JSON.parse(readFileSync(join(REPO, ROSTER_FILE), "utf8"));
@@ -494,6 +545,7 @@ function readRoster(): Roster {
     comparisons: strings(raw.comparisons, "comparisons"),
     operands: strings(raw.operands, "operands"),
     pinCase: strings(raw.pinCase, "pinCase"),
+    spellingControls: spellingControlsOf(raw.spellingControls),
     rows,
     tests: strings(raw.tests, "tests"),
     reached: strings(raw.reached, "reached"),
@@ -1501,8 +1553,51 @@ const SCAN: JsonObject = json({
 /** A describe title: the row id and its label. */
 const titleOf = (row: Row): string => `${row.id} ${row.label}`;
 
-/** Text with every whitespace run dropped, so the SELF-READ compares spellings, not layout. */
-const squeezed = (value: string): string => value.replace(/\s+/g, "");
+/** Every comment in a run of trivia (the text between two tokens), each whole, as the compiler's scanner reads it. */
+function commentsIn(trivia: string): string[] {
+  const scanner = ts.createScanner(ts.ScriptTarget.Latest, false, ts.LanguageVariant.Standard, trivia);
+  const comments: string[] = [];
+  for (let kind = scanner.scan(); kind !== ts.SyntaxKind.EndOfFileToken; kind = scanner.scan()) {
+    if (kind === ts.SyntaxKind.SingleLineCommentTrivia || kind === ts.SyntaxKind.MultiLineCommentTrivia) comments.push(scanner.getTokenText());
+  }
+  return comments;
+}
+/** A node's spelling as the SELF-READ reads it (wb-jdz6 cut #2, refusal #1's U1: a reader that dropped every whitespace run read
+ * 'await impl()' and 'awaitimpl()' as one spelling): the TypeScript compiler's tokens of the node, in order, each with its own
+ * source text (a string, template part or regex token byte for byte), and every comment that stands between two of its tokens (a
+ * JSDoc block among them, read as the comment it is); only the whitespace between two tokens is layout. */
+function tokensOf(node: ts.Node, file: ts.SourceFile): string[] {
+  const tokens: string[] = [];
+  let end = -1;
+  const visit = (at: ts.Node): void => {
+    if (ts.isJSDoc(at)) return;
+    const children = at.getChildren(file);
+    if (children.length > 0) {
+      for (const child of children) visit(child);
+      return;
+    }
+    const start = at.getStart(file);
+    if (start === at.getEnd()) return;
+    if (end >= 0) tokens.push(...commentsIn(file.text.slice(end, start)));
+    tokens.push(file.text.slice(start, at.getEnd()));
+    end = at.getEnd();
+  };
+  visit(node);
+  return tokens;
+}
+/** A held literal's spelling (COMPARISONS, OPERANDS, PIN_CASE and SPELLING_CONTROLS): the literal parsed on its own and read by
+ * tokensOf, as a statement of this file is. */
+function heldSpelling(literal: string): string[] {
+  const file = ts.createSourceFile("held.ts", literal, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  return tokensOf(file, file);
+}
+/** Whether two spellings are one: the same tokens, in order. */
+const sameSpelling = (one: readonly string[], other: readonly string[]): boolean => one.length === other.length && one.every((token, index) => token === other[index]);
+/** How many of the statements spell a held literal, token for token. */
+function spelledCount(statements: readonly (readonly string[])[], literal: string): number {
+  const spelling = heldSpelling(literal);
+  return statements.filter(statement => sameSpelling(statement, spelling)).length;
+}
 /** A statement that stands directly in a test case's callback body (`it(title, options, callback)`): no try, condition, loop or
  * nested function between the case and the statement. */
 function inCaseBody(statement: ts.Statement): boolean {
@@ -1514,30 +1609,30 @@ function inCaseBody(statement: ts.Statement): boolean {
   return ts.isCallExpression(call) && ts.isIdentifier(call.expression) && call.expression.text === "it" && call.arguments.at(-1) === callback;
 }
 /** SELF-READ: every expression or variable statement standing directly in a test case's callback body, as the TypeScript compiler
- * parses this file, whitespace dropped. */
-function selfStatements(): string[] {
+ * parses this file, each read by tokensOf. */
+function selfStatements(): string[][] {
   const path = fileURLToPath(import.meta.url);
   const file = ts.createSourceFile(path, readFileSync(path, "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-  const statements: string[] = [];
+  const statements: string[][] = [];
   const visit = (node: ts.Node): void => {
-    if ((ts.isExpressionStatement(node) || ts.isVariableStatement(node)) && inCaseBody(node)) statements.push(squeezed(node.getText(file)));
+    if ((ts.isExpressionStatement(node) || ts.isVariableStatement(node)) && inCaseBody(node)) statements.push(tokensOf(node, file));
     ts.forEachChild(node, visit);
   };
   visit(file);
   return statements;
 }
 /** SELF-READ (wb-jdz6 F3): the body of every test case whose title argument is the pin loop's `pin`, as the TypeScript compiler
- * parses this file - each statement of its callback body, of any kind, in order, whitespace dropped (a callback without a block
- * body reads as an empty one). */
-function pinCaseBodies(): string[][] {
+ * parses this file - each statement of its callback body, of any kind, in order, each read by tokensOf (a callback without a
+ * block body reads as an empty one). */
+function pinCaseBodies(): string[][][] {
   const path = fileURLToPath(import.meta.url);
   const file = ts.createSourceFile(path, readFileSync(path, "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-  const bodies: string[][] = [];
+  const bodies: string[][][] = [];
   const visit = (node: ts.Node): void => {
     if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "it" && node.arguments[0]?.getText(file) === "pin") {
       const callback = node.arguments.at(-1);
       const body = callback !== undefined && (ts.isArrowFunction(callback) || ts.isFunctionExpression(callback)) && ts.isBlock(callback.body) ? callback.body : undefined;
-      bodies.push(body === undefined ? [] : body.statements.map(statement => squeezed(statement.getText(file))));
+      bodies.push(body === undefined ? [] : body.statements.map(statement => tokensOf(statement, file)));
     }
     ts.forEachChild(node, visit);
   };
@@ -1594,17 +1689,19 @@ describe("wb-4nut.9 H2 identity and reuse census (TSX-HARNESS2-REACTIVE-EVOLUTIO
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:2", "C:3", "D:2", "E:2"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
-    expect({ bead: BEAD, scan: SCAN, residuals: RESIDUAL_FAMILIES, residualRows: RESIDUAL_ROWS, comparisons: COMPARISONS, operands: OPERANDS, pinCase: PIN_CASE }).toStrictEqual({
+    expect({ bead: BEAD, scan: SCAN, residuals: RESIDUAL_FAMILIES, residualRows: RESIDUAL_ROWS, comparisons: COMPARISONS, operands: OPERANDS, pinCase: PIN_CASE, spellingControls: SPELLING_CONTROLS }).toStrictEqual({
       bead: ROSTER.bead, scan: ROSTER.scan, residuals: [...ROSTER.residuals], residualRows: ROSTER.residualRows, comparisons: [...ROSTER.comparisons], operands: [...ROSTER.operands],
-      pinCase: [...ROSTER.pinCase],
+      pinCase: [...ROSTER.pinCase], spellingControls: [...ROSTER.spellingControls],
     });
-    // SELF-READ: each witness comparison, and each statement that gives a comparison its operand, is one statement standing
-    // directly in a case's body, spelled exactly so.
+    // SELF-READ: the reader first - each spelling control reads as one spelling or two, as its row says (wb-jdz6 cut #2, U1).
+    expect(SPELLING_CONTROLS.filter(([, one, other, same]) => sameSpelling(heldSpelling(one), heldSpelling(other)) !== same).map(([label]) => label), "the spelling controls tokensOf reads otherwise than their rows say").toEqual([]);
+    // Then each witness comparison, and each statement that gives a comparison its operand, is one statement standing directly in
+    // a case's body, spelled exactly so, token for token.
     const statements = selfStatements();
-    expect(COMPARISONS.map(comparison => statements.filter(statement => statement === squeezed(comparison)).length), "each witness comparison is spelled once, strict, directly in its case's body").toEqual(COMPARISONS.map(() => 1));
-    expect(OPERANDS.map(operand => statements.filter(statement => statement === squeezed(operand)).length), "each witness comparison's operand is spelled once, directly in the pin case's body").toEqual(OPERANDS.map(() => 1));
-    // The pin case's whole body, statement for statement: an added write to an operand reds (wb-jdz6 F3).
-    expect(pinCaseBodies(), "the pin case's body is its operand statements, its witness comparison and its record, statement for statement, nothing added").toEqual([PIN_CASE.map(squeezed)]);
+    expect(COMPARISONS.map(comparison => spelledCount(statements, comparison)), "each witness comparison is spelled once, strict, directly in its case's body").toEqual(COMPARISONS.map(() => 1));
+    expect(OPERANDS.map(operand => spelledCount(statements, operand)), "each witness comparison's operand is spelled once, directly in the pin case's body").toEqual(OPERANDS.map(() => 1));
+    // The pin case's whole body, statement for statement, token for token: an added write to an operand reds (wb-jdz6 F3).
+    expect(pinCaseBodies(), "the pin case's body is its IMPL lookup, its impl-type check, its echo check, its witness declaration, its witness comparison, its MEASURED record and its end record, statement for statement, in order, nothing added").toEqual([PIN_CASE.map(heldSpelling)]);
     // Every residual names a pin of the judged set, and that pin's roster witness carries its pinned quiet row.
     const quietRows = RESIDUAL_FAMILIES.map(family => {
       const pin = RESIDUAL_ROWS[family] ?? "";
