@@ -157,7 +157,7 @@
           "quote": "two individually-permitted fixture views",
           "witness": {
             "two individually-permitted": {
-              "admitted": {
+              "values": {
                 "native": [
                   true,
                   true
@@ -167,14 +167,26 @@
                   true
                 ]
               },
-              "coverage": [
-                "complete",
-                "complete"
-              ],
-              "tones": [
-                "success",
-                "success"
-              ]
+              "coverage": {
+                "native": [
+                  "complete",
+                  "complete"
+                ],
+                "injected": [
+                  "complete",
+                  "complete"
+                ]
+              },
+              "tones": {
+                "native": [
+                  "success",
+                  "success"
+                ],
+                "injected": [
+                  "success",
+                  "success"
+                ]
+              }
             },
             "fixture views": {
               "views": [
@@ -183,6 +195,8 @@
               ],
               "launches": [
                 [
+                  "--workspace",
+                  "<root>",
                   "context",
                   "render",
                   "--view",
@@ -194,6 +208,8 @@
                   "--json"
                 ],
                 [
+                  "--workspace",
+                  "<root>",
                   "context",
                   "render",
                   "--view",
@@ -205,17 +221,23 @@
                   "--json"
                 ]
               ],
-              "contractNotes": [
-                "view contract: satisfied (fixture.alpha)",
-                "view contract: satisfied (fixture.beta)"
-              ]
+              "contractNotes": {
+                "native": [
+                  "view contract: satisfied (fixture.alpha)",
+                  "view contract: satisfied (fixture.beta)"
+                ],
+                "injected": [
+                  "view contract: satisfied (fixture.alpha)",
+                  "view contract: satisfied (fixture.beta)"
+                ]
+              }
             }
           },
           "claims": [
             {
               "term": "two individually-permitted",
               "facts": [
-                "admitted",
+                "values",
                 "coverage",
                 "tones"
               ]
@@ -327,10 +349,32 @@
                   "contextboundary"
                 ],
                 [
+                  "contextrefinement"
+                ],
+                [
+                  "jointconditions"
+                ],
+                [
+                  "boundaryviolation"
+                ],
+                [
+                  "disclosureconditions"
+                ],
+                [
+                  "hiddencorrelation"
+                ],
+                [
+                  "permissionconditions"
+                ],
+                [
                   "jointview"
                 ]
               ],
               "quiet": [
+                [],
+                [],
+                [],
+                [],
                 [],
                 [],
                 []
@@ -421,6 +465,7 @@
                   false
                 ],
                 "primaryIsCode": 40,
+                "refusalsWhole": 40,
                 "othersOk": [
                   true
                 ],
@@ -458,7 +503,44 @@
                   "failure"
                 ],
                 "statusNamingCode": 20,
-                "notesNamingCode": 20
+                "notesNamingCode": 20,
+                "topologies": [
+                  {
+                    "snapshots": [
+                      {
+                        "source": {
+                          "provider": "reactivefiber",
+                          "type": "context-preview",
+                          "id": "rfo_cccccccccccccccccccccc",
+                          "scope": "<root>"
+                        },
+                        "scope": {
+                          "workspace": "<root>",
+                          "principal": "fixture"
+                        },
+                        "capturedAt": "2026-10-28T00:00:00Z",
+                        "observedAt": "2026-10-28T00:00:01Z",
+                        "coverage": "unknown",
+                        "node": {
+                          "title": "RF context preview rfo_cccccccccccccccccccccc",
+                          "type": "sdk-operation",
+                          "statusText": "refused · <code>",
+                          "statusTone": "failure"
+                        },
+                        "kind": "reactivefiber.render.preview.snapshot",
+                        "evidenceRefs": [
+                          "rf-workspace:rfw_aaaaaaaaaaaaaaaaaaaaaa"
+                        ]
+                      }
+                    ],
+                    "relations": [],
+                    "diagnostics": [
+                      "render refused with <code>",
+                      "diagnostic message, hint and metadata withheld",
+                      "no native interval supplied"
+                    ]
+                  }
+                ]
               },
               "composed": {
                 "pairs": 20,
@@ -467,6 +549,9 @@
                     "applied",
                     "applied"
                   ]
+                ],
+                "nodes": [
+                  2
                 ],
                 "failureNodes": [
                   [
@@ -509,21 +594,37 @@
             "never swallowed": {
               "orderIndependent": 20,
               "soloEqual": 20,
-              "twoRefusals": [
-                2
-              ],
+              "twoRefusals": {
+                "failureNodes": [
+                  2
+                ],
+                "soloEqual": 20
+              },
               "nonfatal": [
                 {
                   "severity": "info",
+                  "summaryWarnings": 0,
                   "coverage": "complete",
                   "tone": "success",
+                  "warnings": 0,
                   "named": false,
                   "equalsClean": true
                 },
                 {
                   "severity": "warning",
+                  "summaryWarnings": 0,
                   "coverage": "complete",
                   "tone": "success",
+                  "warnings": 0,
+                  "named": false,
+                  "equalsClean": true
+                },
+                {
+                  "severity": "warning",
+                  "summaryWarnings": 1,
+                  "coverage": "complete",
+                  "tone": "success",
+                  "warnings": 1,
                   "named": false,
                   "equalsClean": false
                 }
@@ -592,6 +693,7 @@
                   "additionalProperties": false
                 }
               ],
+              "schemasEqual": true,
               "nativeOutcomes": {
                 "kinds": [
                   "refused"
@@ -620,7 +722,11 @@
                 "kinds": [
                   "value"
                 ],
-                "launches": 2
+                "launches": 2,
+                "relayedKinds": [
+                  "value"
+                ],
+                "clientCalls": 2
               }
             }
           },
@@ -638,6 +744,7 @@
               "term": "input",
               "facts": [
                 "arms",
+                "schemasEqual",
                 "nativeOutcomes",
                 "injectedOutcomes",
                 "controlLaunches"
@@ -651,7 +758,7 @@
           "witness": {
             "never short-circuits": {
               "nativeRefusals": {
-                "calls": 464,
+                "calls": 696,
                 "categories": [
                   "authorization"
                 ],
@@ -661,7 +768,7 @@
                 "launches": 0
               },
               "injectedRefusals": {
-                "calls": 464,
+                "calls": 696,
                 "categories": [
                   "authorization"
                 ],
@@ -678,7 +785,7 @@
                   "reactivefiber:render"
                 ]
               ],
-              "grantSets": 8
+              "grantSets": 12
             }
           },
           "claims": [
