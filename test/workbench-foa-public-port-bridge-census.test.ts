@@ -1,10 +1,14 @@
 /**
  * wb-2wiv.2 (SDK-UNIVERSAL-REACTIVE-RENDERING-R2, program-triage-2026-10-18), the public-port bridge census: the until-then
- * leg of a requirement whose gate is conjoint and closed. This is cut #3. Cut #2 (17583cc3, the respin of cut #1 fed17c49,
- * refused at PREP F on 2026-10-28) reads every field of the decision rows, walks every file outside three named exclusions,
- * and binds each contract part's class through a break of that part alone; it was refused at PREP F on 2026-10-29 because
- * its record anchor read every R-token of every note, so a later note naming one (its own delivery note did) reds the
- * census once the tracker export carries it. Cut #3 binds the record's first residual-family declaration instead.
+ * leg of a requirement whose gate is conjoint and closed. This is cut #4. Cut #2 (17583cc3, the respin of cut #1 fed17c49)
+ * reads every field of the decision rows, walks every file outside three named exclusions and binds each contract part's
+ * class through a break of that part alone; cut #3 (6fe6865a) binds the record's first residual-family declaration. Cut #3
+ * was refused at PREP F on 2026-10-29 because 10 of 12 gate host mutants met every check on its 17 fixtures: an executable
+ * reader that skips arrays (U1) and five oracle clauses no fixture isolated (U2: feedback at the bound, a delta at or below
+ * the last applied sequence, identities scoped per endpoint, a rejected identity counted as seen, an ack that advances the
+ * sequence), beside four double-fault order swaps (F3). Cut #4 isolates each with a fixture member and a mutant authored
+ * red-first, isolates the further members of the same clauses its own sweep found (the CLASS TABLE), reads the seam's
+ * endpoint, value and order in the admit check, and names what the fixtures still leave unbound in NOT CLAIMED.
  * Statement (the bead's tracker-export title, verbatim): "Gating artifact: released FiberOpticsSDK PublicPortBridge
  * (unshipped) + a wb-x32 committing decision connecting a Pi runtime over it; then Pi supplies the full bridge contract
  * (visibility/schema/direction through resync on gaps), keeps one authority per runtime domain, admits no private endpoint
@@ -17,7 +21,7 @@
  *
  * MEASURED (read-only, by the cut #2 seat on 2026-10-28; re-read by the cut #3 seat on 2026-10-29: the same producer tip
  * 2099f193, charter blob and lines, tag count, bridge.py and code-roster blobs and ancestry, the same newest rf receipt,
- * and the Pi facts at its merge). Producer (the local FiberOpticsSDK clone, git show and rev-parse
+ * and the Pi facts at its merge; the cut #4 seat did not re-read the producer). Producer (the local FiberOpticsSDK clone, git show and rev-parse
  * only, its origin/master ref read as it stood, not fetched; this census never re-reads the producer, and the roster's
  * producer block carries every line and id it quotes): the charter docs/programs/universal-reactive-rendering-2026-10-18.md
  * is blob 5ae73cc3 at the filing pin dcc5b57c4aed and at origin/master 2099f193, and its lines :3 "design charter only",
@@ -83,36 +87,79 @@
  *    its JSON text, and no line of the decision log docs/workbench/18 mentions the bridge, and the row was read; a mention
  *    planted in each field any real export row carries, on the real wb-x32 row written as JSONL and parsed back, is read, as
  *    are a child, an edge and a log row planted the same way.
- *  C, O, P: the ARMED contract, binding the first host. A host is one function over a negotiated contract (the endpoints,
- *    each with an owner runtime, a visibility, a schema and a lane and invalidation disposition; the supported versions;
- *    each remote runtime's epoch; the feedback bound), the inbound messages in delivery order (kind, endpoint, source
- *    runtime, version, schema, content digest, epoch, sequence, message identity, source revision, feedback depth, value),
- *    Pi's local values and ONE injected seam, the only path by which an admitted message changes Pi's view. It answers one
- *    receipt per message (admitted, or rejected with a typed diagnostic), the endpoints it asks to resync, and the
- *    cross-runtime read (values per runtime domain and the rendered label). The census's oracle classifies every message in
- *    a fixed order: executable payload (a callable, or an executable key of the producer's set at any depth), unauthorized
- *    effect (a kind outside snapshot/delta/ack/gap/resync), private endpoint (undeclared or not public), foreign authority
- *    (a source that is not the endpoint's owner, or an endpoint Pi owns), missing disposition (no lane or no invalidation),
- *    bad version, schema mismatch, bad digest (the carried digest against the canonical bytes of the value), stale epoch,
- *    duplicate message (any admitted identity), missing basis (no or an empty source revision), unbounded feedback (absent
- *    or over the bound), and a gap (a delta that does not follow the last applied sequence, or follows an announced or
- *    detected gap before a snapshot or resync). Nine CHECKS judge a driven fixture: admit, reject (a rejected message
- *    reached the seam or was not rejected), diagnostic, resync (the endpoints asked to resync are exactly the gapped ones),
- *    aliased (the seam received an object the wire message holds), merged (the read is not each runtime's own values) and
- *    the three claim checks over the label. Seventeen fixtures; the honest host meets every check on every fixture, each of
- *    38 mutants fails at least one, every check fires, every check is the only check some mutant fails, and C1's witness
- *    holds each check's isolating mutants.
- *    C1 the full contract: the session fixture is admitted (the ack never applied), every class is the honest host's
- *    diagnostic (so the oracle's verdict) on some message, and the contract-field mutants each fail, among them a host that
- *    reads no lane, no invalidation, a non-canonical digest, only an adjacent duplicate or an empty basis as a basis, one
- *    that admits nothing (M-REFUSE-ALL) and one that applies the ack and gap signals (M-SIGNAL-APPLIED). C2 the gap: a
- *    detected and an announced gap are rejected until a resync, a snapshot after a gap re-bases the stream, each gap asks
- *    to resync once, no gapless stream is asked to resync, and six gap mutants fail. O1 one authority per runtime domain: a
- *    remote write into Pi's own endpoint, a write by a non-owner runtime and a write into Pi's endpoint sent as Pi are
- *    rejected, and the mutants dropping either authority clause fail. P1 a private and an undeclared endpoint are rejected
- *    (the undeclared one is the producer's own trap: FiberGraph answers public for an endpoint it does not hold). P2 a
- *    callable, a top-level and a nested executable key on the wire, and a remote effect request (the charter's :41
- *    unauthorized effect), are rejected.
+ *  C, O, P: the ARMED contract, binding the first host at the members its fixtures carry (the CLASS TABLE). A host is one
+ *    function over a negotiated contract (the endpoints, each with an owner runtime, a visibility, a schema and a lane and
+ *    invalidation disposition; the supported versions; each remote runtime's epoch; the feedback bound), the inbound messages
+ *    in delivery order (kind, endpoint, source runtime, version, schema, content digest, epoch, sequence, message identity,
+ *    source revision, feedback depth, value), Pi's local values and ONE injected seam, the only path by which an admitted
+ *    message changes Pi's view. It answers one receipt per message (admitted, or rejected with a typed diagnostic), the
+ *    endpoints it asks to resync, and the cross-runtime read (values per runtime domain and the rendered label). The census's
+ *    oracle computes each fixture's expectation: it classifies every message in a fixed order (CLASSES: executable payload,
+ *    unauthorized effect, private endpoint, foreign authority, missing disposition, bad version, schema mismatch, bad digest,
+ *    stale epoch, duplicate message, missing basis, unbounded feedback, gap) and keeps each endpoint's last applied sequence
+ *    and hold and the identities admitted so far. Nine CHECKS judge a driven fixture: admit (an admitted message was
+ *    rejected, a value message reached the seam other than once at its own endpoint with an equal value in delivery order,
+ *    or a signal reached it), reject (a rejected message reached the seam or was not rejected), diagnostic, resync (the
+ *    endpoints asked to resync are exactly the gapped ones, each once, in the order they gapped), aliased (the seam received
+ *    an object the wire message holds), merged (the read is not each runtime's own values) and the three claim checks over
+ *    the label. Twenty-seven fixtures; the honest host meets every check on every fixture, each of 81 mutants fails at least
+ *    one, every check fires, every check is the only check some mutant fails, and C1's witness holds each check's isolating
+ *    mutants and, per mutant, the messages whose receipt it departs on.
+ *    CLASS TABLE (a class's clause, then its members: fixture messages that each break one part, with the mutant each kills):
+ *    - executable payload, a callable or a key of the producer's set (code, handler, script, function) in any case at any
+ *      depth, walking records and arrays: a callable member x1 (M-EXECUTABLE), one nested in a record j1 and one inside an
+ *      array y1 (M-CALLABLES-TOP-ONLY), the value itself a callable j2 (M-CALLABLE-VALUE-BLIND); each key the only trigger of
+ *      one message: code y2 in a record inside an array (M-EXECUTABLE-NO-CODE, M-EXECUTABLE-NO-SEQUENCES with y1),
+ *      "Handler" x2 (M-EXECUTABLE-NO-HANDLER, M-EXECUTABLE-CASE-EXACT, M-CALLABLES-ONLY), script x4 in a nested record
+ *      (M-EXECUTABLE-NO-SCRIPT, M-EXECUTABLE-TOP-ONLY), "Function" j3 five records and arrays down (M-EXECUTABLE-NO-FUNCTION,
+ *      M-EXECUTABLE-SHALLOW); a string naming a key is data, admitted y4 (M-EXECUTABLE-STRING-VALUES).
+ *    - unauthorized effect, a kind off the wire's list (snapshot, delta, ack, gap, resync, each admitted somewhere): "effect"
+ *      f2 (M-EFFECT) and "invoke" f3 (M-EFFECT-NAMED-ONLY).
+ *    - private endpoint, undeclared or other than "public": private q1 (M-PRIVATE), undeclared q2 (M-UNDECLARED-OPEN),
+ *      internal q4 (M-PRIVATE-NAMED-ONLY).
+ *    - foreign authority, a source that is not the endpoint's owner, or an endpoint Pi owns: o1, o2 (M-FOREIGN, o2
+ *      M-SOURCE-BLIND), o4 sent as Pi (M-LOCAL-SPOOF).
+ *    - missing disposition, no lane or no invalidation: p1 neither (M-DISPOSITION), p2 no invalidation
+ *      (M-INVALIDATION-BLIND), p4 no lane (M-LANE-BLIND).
+ *    - bad version, one the contract does not support: above v2 (M-VERSION), below v3 (M-VERSION-NEWER-ONLY).
+ *    - schema mismatch, not the endpoint's own: another version h2 (M-SCHEMA), another endpoint's h3 (M-SCHEMA-ANY-DECLARED).
+ *    - bad digest, the carried digest against the value's canonical bytes (keys sorted, arrays in their own order): wrong d2
+ *      (M-DIGEST); reordered keys d3 (M-DIGEST-NONCANONICAL) and an unsorted array d4 (M-DIGEST-ARRAYS-SORTED) are admitted.
+ *    - stale epoch, below the sender runtime's own contract epoch: e2 (M-EPOCH), the second runtime's e4
+ *      (M-EPOCH-FIRST-RUNTIME); a newer epoch e3 is admitted (M-EPOCH-EXACT).
+ *    - duplicate message, any admitted identity: repeated u2 and non-adjacent u1 (M-DUPLICATE, u1 M-DUPLICATE-ADJACENT), on
+ *      another endpoint i1 (M-DUPLICATE-PER-ENDPOINT), borne by an ack i3 (M-DUPLICATE-VALUES-ONLY), after a snapshot, the
+ *      last i2 (M-DUPLICATE-REBASE-FORGETS); a rejected identity is none, so its resend i2 is admitted
+ *      (M-DUPLICATE-COUNTS-REJECTED).
+ *    - missing basis, no or an empty source revision: b2 (M-BASIS), b3 (M-BASIS-EMPTY).
+ *    - unbounded feedback, absent or over the bound: k2, k3 (M-FEEDBACK); at the bound k4 is admitted (M-FEEDBACK-AT-BOUND).
+ *    - gap, a delta that does not follow its endpoint's last applied sequence, or follows a detected or announced gap on that
+ *      endpoint before a snapshot or resync of it: a forward jump g2 (M-GAP-APPLY), at the last w3 (M-GAP-EQUAL-OK) and below
+ *      it w5 (M-GAP-LOWER-OK; both M-GAP-BACKWARD-OK), on an endpoint with no applied value z1 (M-GAP-NO-BASE), held after a
+ *      detected gap g3 (M-GAP-RESUME) or an announced one a3 (M-ANNOUNCED-IGNORED); each endpoint keeps its own sequence and
+ *      hold, across runtimes m3, m5 (M-GAP-GLOBAL-SEQUENCE, m5 M-GAP-GLOBAL-HOLD) and across one runtime's ports pp3, pp5
+ *      (M-GAP-DOMAIN-SEQUENCE, pp5 M-GAP-DOMAIN-HOLD); a snapshot re-bases n4 (M-SNAPSHOT-KEEPS-HOLD), a re-base lifts no
+ *      other endpoint's hold m7, m9 (M-SNAPSHOT-LIFTS-EVERY-HOLD, M-RESYNC-LIFTS-EVERY-HOLD), a resync no gap asked for
+ *      re-bases m8 (M-RESYNC-SOLICITED-ONLY), and an ack neither advances the sequence c3 (M-ACK-ADVANCES) nor lifts a hold
+ *      c6 (M-ACK-CLEARS-HOLD). Resync asks: every gapped endpoint once (M-GAP-SILENT, M-RESYNC-REPEATED), an announced gap
+ *      no delta follows sg2 (M-ANNOUNCED-SILENT), no endpoint that did not gap (M-RESYNC-SPURIOUS, M-RESYNC-ALL), in gap
+ *      order l3, l4 (M-RESYNC-SORTED).
+ *    The seam and the read: M-SIGNAL-APPLIED, M-DOUBLE-APPLY, M-REJECTED-APPLIED, M-SEAM-PORT, M-SEAM-BLANK, M-SEAM-REVERSED
+ *    (admit or reject), M-SHARED-REF (aliased), M-SIGNAL-READ (an ack's value kept in the read: F-GAP-ACK's closing ack c5,
+ *    merged); M-CODE-COLLAPSED (diagnostic), M-REFUSE-ALL. Two fixture messages break two parts each and bind two
+ *    precedences: o4 (foreign authority before stale epoch: M-LOCAL-SPOOF) and F-DUPLICATE's repeated u2 (duplicate message
+ *    before a gap: M-DUPLICATE).
+ *    C1 the full contract: the session fixture is admitted (the ack never applied) and its seam calls are pinned, every class
+ *    is the honest host's diagnostic (so the oracle's verdict) on some message, the version, schema, digest, epoch, identity
+ *    and feedback members' receipts are pinned in this file, and the contract-field and seam mutants each fail. C2 the gap: a
+ *    detected and an announced gap are rejected until a resync, a snapshot after a gap re-bases the stream, each gap asks to
+ *    resync once, no gapless stream is asked to resync, the other gap members' receipts and resync asks are pinned in this
+ *    file, and the 23 gap and resync mutants fail. O1 one authority per runtime domain: a remote write into Pi's own
+ *    endpoint, a write by a non-owner runtime and a write into Pi's endpoint sent as Pi are rejected, and the mutants dropping
+ *    either authority clause fail. P1 a private, an undeclared and an internal endpoint are rejected (the undeclared one is
+ *    the producer's own trap: FiberGraph answers public for an endpoint it does not hold). P2 the executable members, a
+ *    remote effect request (the charter's :41 unauthorized effect) and another kind off the list are rejected, and each key
+ *    of the producer's set is the only executable trigger of one fixture message.
  *  N, the falsifier, one pin per claim family: no file of any root spells the family (each root at its floor, every planted
  *    control read and every quiet control quiet), the honest host's label of a two-runtime read spells no claim and names
  *    each runtime's own epoch and sequence, and the family's mutants fail: N1 order (M-ORDER-LABEL), N2 shared memory
@@ -121,7 +168,7 @@
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and each residual family's
  * member count as literals, beside the classes, the contract parts and their breaks, the claim families, the checks, the
- * mutants, the fixtures, the words, the reading forms (script and markup extensions, named entities), the walks (roots,
+ * mutants, the fixtures, the contract's endpoints, the words, the reading forms (script and markup extensions, named entities), the walks (roots,
  * pathspecs, judges, floors, anchors and exclusions) and the hosts; the judged set (every row's id, label and pins, every
  * pin's quote, witness and readers, the residual members, every registered test title) is held to the out-of-file roster
  * test/fixtures/foa-public-port-bridge-roster.json. Every case names the readers it ran (READS: the walks, the closure, the
@@ -157,7 +204,24 @@
  * named entity or an exclusion removed from every literal of this file and the roster together; a part's break rewritten to
  * break another part; a pin's case replaced by one that echoes its roster witness and runs the same readers; a row-Q family
  * the record's first declaration does not list (the anchor binds the declared families into row Q, not the reverse; it
- * lists all five today).
+ * lists all five today). And, of the armed contract (each a host that meets every check on every fixture and departs
+ * from the oracle only off the CLASS TABLE's members): which class a host reports for a message that breaks two parts
+ * beyond the two bound precedences (the oracle decides in CLASSES order; a host deciding version and schema, digest and
+ * epoch, duplicate and basis, or authority and disposition the other way round meets every check, as does any other
+ * reordering, since no other fixture message breaks two parts); a class judged on a kind its members do not carry (a
+ * basis or a version on a snapshot, a digest on a resync, any check on an ack or an announced gap: every fixture signal
+ * is well formed); a message missing a field other than its source revision or its feedback depth (the oracle reads an
+ * absent field as the language does: an absent digest, version, schema or source mismatches, an absent epoch is not
+ * stale, an absent identity is seen once); a field spelled in another case or form (kinds, visibilities, owners,
+ * schemas, versions, digests and identities compare exactly, and only the executable keys compare in any case) and a
+ * value no member carries (another lane or invalidation word, a negative feedback depth, a whitespace source revision, a
+ * version spelled 1.0, a first delta on an unbased endpoint at a sequence other than 1); an executable payload nested
+ * deeper than j3, or held where JSON data cannot hold it (in a Set or a Map, under a symbol key, on a prototype: the
+ * oracle walks records' own keys and arrays, while the producer's gate also walks sets); an owner read from an
+ * endpoint's id rather than its declaration (every contract endpoint's owner is its id's runtime); a running epoch (each
+ * message is read against the contract's epoch, never a newer one seen earlier); state a host keeps across calls (each
+ * fixture is one call, and no identity repeats across fixtures); and the label's text beyond its claims (the checks read
+ * the claims; the epoch-and-sequence naming is the honest host's, pinned on F-READ by row N).
  * RESIDUALS (named families, each member a pinned quiet row; a reader that starts reading a member reds its row):
  * R-SPELLING (Q1, a spelling the mention judges do not read: an abbreviation, words split across statements, base64, a YAML
  * or TOML escape, a markdown link splitting the words, a homoglyph letter, a digit for a letter), R-INDIRECT-LOAD (Q2, a
@@ -670,6 +734,7 @@ const PART_CLASS: Readonly<Record<string, RejectionClass>> = {
 const CHARTER_ALIASES: Readonly<Record<string, RejectionClass>> = { "invalid-private-port-bridge": "private-endpoint" };
 /** The producer's executable-payload keys (FO-UI-05-a EXECUTABLE_PAYLOAD_KEYS), compared lower-cased. */
 const EXECUTABLE_KEYS = ["code", "handler", "script", "function"] as const;
+type ExecutableKey = (typeof EXECUTABLE_KEYS)[number];
 /** The wire kinds of charter :23 (snapshot/delta/ack/gap/resync); the value-bearing ones reach the seam. */
 const WIRE_KINDS: readonly string[] = ["snapshot", "delta", "ack", "gap", "resync"];
 const VALUE_KINDS: readonly string[] = ["snapshot", "delta", "resync"];
@@ -683,9 +748,11 @@ const CONTRACT: Contract = {
   feedbackBound: 2,
   endpoints: [
     { id: "browser/view", owner: "browser", visibility: PUBLIC, schema: "view/v1", ...DISPOSED },
+    { id: "browser/panel", owner: "browser", visibility: PUBLIC, schema: "view/v1", ...DISPOSED },
     { id: "server/view", owner: "server", visibility: PUBLIC, schema: "view/v1", ...DISPOSED },
     { id: "pi/status", owner: "pi", visibility: PUBLIC, schema: "status/v1", ...DISPOSED },
     { id: "browser/secret", owner: "browser", visibility: "private", schema: "view/v1", ...DISPOSED },
+    { id: "browser/internal", owner: "browser", visibility: "internal", schema: "view/v1", ...DISPOSED },
     { id: "browser/bare", owner: "browser", visibility: PUBLIC, schema: "view/v1" },
     { id: "browser/half", owner: "browser", visibility: PUBLIC, schema: "view/v1", lane: DISPOSED.lane },
     { id: "browser/unlaned", owner: "browser", visibility: PUBLIC, schema: "view/v1", invalidation: DISPOSED.invalidation },
@@ -693,23 +760,55 @@ const CONTRACT: Contract = {
 };
 const LOCAL_VALUES: Readonly<Record<string, Json>> = { status: { state: "idle" } };
 
-function canonical(value: unknown): string {
-  if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
+/** A value's canonical bytes: record keys sorted, callables dropped, arrays in their own order (sortArrays: M-DIGEST-ARRAYS-SORTED's reading). */
+function canonical(value: unknown, sortArrays = false): string {
+  if (Array.isArray(value)) {
+    const items = value.map(item => canonical(item, sortArrays));
+    return `[${(sortArrays ? [...items].sort() : items).join(",")}]`;
+  }
   if (record(value)) {
     const keys = Object.keys(value).filter(key => typeof value[key] !== "function").sort();
-    return `{${keys.map(key => `${JSON.stringify(key)}:${canonical(value[key])}`).join(",")}}`;
+    return `{${keys.map(key => `${JSON.stringify(key)}:${canonical(value[key], sortArrays)}`).join(",")}}`;
   }
   return typeof value === "function" || value === undefined ? "null" : JSON.stringify(value);
 }
 const sha256 = (text: string): string => `sha256:${createHash("sha256").update(text).digest("hex")}`;
 const digestOf = (value: unknown): string => sha256(canonical(value));
-/** A callable anywhere in the value, or (unless callables only are read) a key of EXECUTABLE_KEYS in any case at any depth (top: at the value's top level only). */
-function executable(value: unknown, callablesOnly = false, top = false): boolean {
-  if (typeof value === "function") return true;
-  if (Array.isArray(value)) return value.some(item => executable(item, callablesOnly, top));
+/** How a synthetic host's executable reader departs from the oracle's (an empty reading is the oracle's). */
+interface Reading {
+  /** Read no executable key, callables only. */
+  readonly callablesOnly?: boolean;
+  /** Read executable keys at the value's top level only. */
+  readonly keysTopOnly?: boolean;
+  /** Read a callable only as the value itself or one of its own members. */
+  readonly callablesTopOnly?: boolean;
+  /** Never descend into an array. */
+  readonly noSequences?: boolean;
+  /** Read the producer's keys less this one. */
+  readonly keyDropped?: ExecutableKey;
+  /** Compare keys in their own case. */
+  readonly caseExact?: boolean;
+  /** Read this many records and arrays below the value, and no deeper. */
+  readonly depth?: number;
+  /** Read no callable that is the whole value. */
+  readonly valueBlind?: boolean;
+  /** Also read a string value that names a key (data the oracle reads as data). */
+  readonly stringValues?: boolean;
+}
+/**
+ * The oracle's executable reading (an empty reading): a callable anywhere in the value, the value itself included, or a key of
+ * EXECUTABLE_KEYS in any case at any depth, walking records and arrays. level counts the records and arrays above the item read.
+ */
+function executable(value: unknown, reading: Reading = {}, level = 0): boolean {
+  if (reading.depth !== undefined && level > reading.depth) return false;
+  if (typeof value === "function") return !(reading.valueBlind === true && level === 0) && !(reading.callablesTopOnly === true && level > 1);
+  if (Array.isArray(value)) return reading.noSequences !== true && value.some(item => executable(item, reading, level + 1));
+  if (typeof value === "string") return reading.stringValues === true && (EXECUTABLE_KEYS as readonly string[]).includes(value.toLowerCase());
   if (!record(value)) return false;
-  const keyed = !callablesOnly && Object.keys(value).some(key => (EXECUTABLE_KEYS as readonly string[]).includes(key.toLowerCase()));
-  return keyed || Object.values(value).some(item => executable(item, callablesOnly || top, top));
+  const keys: readonly string[] = EXECUTABLE_KEYS.filter(key => key !== reading.keyDropped);
+  const keyed = reading.callablesOnly !== true && Object.keys(value).some(key => keys.includes(reading.caseExact === true ? key : key.toLowerCase()));
+  const below: Reading = reading.keysTopOnly === true ? { ...reading, callablesOnly: true } : reading;
+  return keyed || Object.values(value).some(item => executable(item, below, level + 1));
 }
 /** A deep copy of the data (a callable is not data and is carried as it is). */
 function copyOf(value: unknown): unknown {
@@ -745,6 +844,7 @@ function message(messageId: string, endpoint: string, kind: string, sequence: nu
 }
 const snap = (messageId: string): Message => message(messageId, "browser/view", "snapshot", 1, { rows: [1] });
 const delta = (messageId: string, change: Partial<Message> = {}): Message => message(messageId, "browser/view", "delta", 2, { rows: [2] }, change);
+const BAD_DIGEST = digestOf({ rows: [9] });
 interface Fixture {
   readonly id: string;
   readonly messages: readonly Message[];
@@ -760,11 +860,27 @@ const FIXTURES: readonly Fixture[] = [
     ],
   },
   { id: "F-READ", messages: [message("r1", "browser/view", "snapshot", 1, { rows: [1, 2] }), message("r2", "server/view", "snapshot", 1, { rows: [3] })] },
-  { id: "F-VERSION", messages: [snap("v1"), delta("v2", { version: "2" })] },
-  { id: "F-SCHEMA", messages: [snap("h1"), delta("h2", { schema: "view/v2" })] },
-  { id: "F-DIGEST", messages: [snap("d1"), delta("d2", { digest: digestOf({ rows: [9] }) }), message("d3", "browser/view", "delta", 2, { b: 1, a: 2 })] },
-  { id: "F-EPOCH", messages: [snap("e1"), delta("e2", { epoch: 2 })] },
+  { id: "F-VERSION", messages: [snap("v1"), delta("v2", { version: "2" }), delta("v3", { version: "0" })] },
+  { id: "F-SCHEMA", messages: [snap("h1"), delta("h2", { schema: "view/v2" }), delta("h3", { schema: "status/v1" })] },
+  {
+    id: "F-DIGEST",
+    messages: [snap("d1"), delta("d2", { digest: BAD_DIGEST }), message("d3", "browser/view", "delta", 2, { b: 1, a: 2 }), message("d4", "browser/view", "delta", 3, { rows: [3, 1, 2] })],
+  },
+  { id: "F-EPOCH", messages: [snap("e1"), delta("e2", { epoch: 2 }), delta("e3", { epoch: 4 }), message("e4", "server/view", "snapshot", 1, { rows: [3] }, { epoch: 4 })] },
   { id: "F-DUPLICATE", messages: [snap("u1"), delta("u2"), delta("u2"), message("u1", "browser/view", "delta", 3, { rows: [3] })] },
+  {
+    id: "F-DUPLICATE-SCOPE",
+    messages: [
+      snap("i1"),
+      message("i1", "server/view", "snapshot", 1, { rows: [3] }),
+      delta("i2", { digest: BAD_DIGEST }),
+      delta("i2"),
+      message("i3", "browser/view", "ack", 2, null),
+      message("i3", "browser/view", "delta", 3, { rows: [3] }),
+      message("i4", "browser/view", "snapshot", 5, { rows: [5] }),
+      message("i2", "browser/view", "delta", 6, { rows: [6] }),
+    ],
+  },
   { id: "F-BASIS", messages: [snap("b1"), delta("b2", { sourceRevision: undefined }), delta("b3", { sourceRevision: "" })] },
   {
     id: "F-DISPOSITION",
@@ -775,7 +891,7 @@ const FIXTURES: readonly Fixture[] = [
       snap("p3"),
     ],
   },
-  { id: "F-FEEDBACK", messages: [snap("k1"), delta("k2", { feedback: 3 }), delta("k3", { feedback: undefined })] },
+  { id: "F-FEEDBACK", messages: [snap("k1"), delta("k2", { feedback: 3 }), delta("k3", { feedback: undefined }), delta("k4", { feedback: 2 })] },
   {
     id: "F-GAP",
     messages: [
@@ -806,6 +922,72 @@ const FIXTURES: readonly Fixture[] = [
     ],
   },
   {
+    id: "F-GAP-BACKWARD",
+    messages: [
+      snap("w1"),
+      delta("w2"),
+      message("w3", "browser/view", "delta", 2, { rows: [22] }),
+      message("w4", "server/view", "snapshot", 5, { rows: [5] }),
+      message("w5", "server/view", "delta", 3, { rows: [3] }),
+    ],
+  },
+  {
+    id: "F-GAP-NO-BASE",
+    messages: [
+      message("z1", "server/view", "delta", 1, { rows: [1] }),
+      message("z2", "server/view", "snapshot", 1, { rows: [1] }),
+      message("z3", "server/view", "delta", 2, { rows: [2] }),
+    ],
+  },
+  {
+    id: "F-GAP-ENDPOINTS",
+    messages: [
+      snap("m1"),
+      message("m2", "server/view", "snapshot", 4, { rows: [4] }),
+      delta("m3"),
+      message("m4", "server/view", "delta", 6, { rows: [6] }),
+      message("m5", "browser/view", "delta", 3, { rows: [3] }),
+      message("m6", "browser/view", "snapshot", 7, { rows: [7] }),
+      message("m7", "server/view", "delta", 5, { rows: [5] }),
+      message("m8", "browser/view", "resync", 9, { rows: [9] }),
+      message("m9", "server/view", "delta", 5, { rows: [5] }),
+    ],
+  },
+  {
+    id: "F-GAP-ORDER",
+    messages: [
+      message("l1", "server/view", "snapshot", 1, { rows: [1] }),
+      snap("l2"),
+      message("l3", "server/view", "delta", 3, { rows: [3] }),
+      message("l4", "browser/view", "delta", 3, { rows: [3] }),
+    ],
+  },
+  {
+    id: "F-GAP-PORTS",
+    messages: [
+      snap("pp1"),
+      message("pp2", "browser/panel", "snapshot", 4, { rows: [4] }),
+      delta("pp3"),
+      message("pp4", "browser/panel", "delta", 6, { rows: [6] }),
+      message("pp5", "browser/view", "delta", 3, { rows: [3] }),
+    ],
+  },
+  {
+    id: "F-GAP-SIGNAL",
+    messages: [snap("sg1"), message("sg2", "browser/view", "gap", 1, null), message("sg3", "browser/view", "resync", 4, { rows: [4] }), message("sg4", "browser/view", "delta", 5, { rows: [5] })],
+  },
+  {
+    id: "F-GAP-ACK",
+    messages: [
+      snap("c1"),
+      message("c2", "browser/view", "ack", 5, null),
+      delta("c3"),
+      message("c4", "browser/view", "gap", 2, null),
+      message("c5", "browser/view", "ack", 2, null),
+      message("c6", "browser/view", "delta", 3, { rows: [3] }),
+    ],
+  },
+  {
     id: "F-AUTHORITY",
     messages: [
       message("o1", "pi/status", "snapshot", 1, { state: "busy" }, { source: "browser", epoch: 3 }),
@@ -814,7 +996,15 @@ const FIXTURES: readonly Fixture[] = [
       snap("o3"),
     ],
   },
-  { id: "F-PRIVATE", messages: [message("q1", "browser/secret", "snapshot", 1, { rows: [1] }), message("q2", "browser/undeclared", "snapshot", 1, { rows: [1] }), snap("q3")] },
+  {
+    id: "F-PRIVATE",
+    messages: [
+      message("q1", "browser/secret", "snapshot", 1, { rows: [1] }),
+      message("q2", "browser/undeclared", "snapshot", 1, { rows: [1] }),
+      message("q4", "browser/internal", "snapshot", 1, { rows: [1] }),
+      snap("q3"),
+    ],
+  },
   {
     id: "F-EXECUTABLE",
     messages: [
@@ -824,7 +1014,28 @@ const FIXTURES: readonly Fixture[] = [
       snap("x3"),
     ],
   },
-  { id: "F-EFFECT", messages: [snap("f1"), message("f2", "browser/view", "effect", 2, { verb: "stop" })] },
+  {
+    id: "F-EXECUTABLE-SEQUENCE",
+    messages: [
+      message("y1", "browser/view", "snapshot", 1, { rows: [() => 1] }),
+      message("y2", "browser/view", "snapshot", 1, { rows: [{ code: "rows => rows" }] }),
+      message("y4", "browser/view", "snapshot", 1, { rows: [1], tag: "Script", note: "rows => rows" }),
+      snap("y3"),
+    ],
+  },
+  {
+    id: "F-EXECUTABLE-DEPTH",
+    messages: [
+      message("j1", "browser/view", "snapshot", 1, { rows: [1], meta: { render: () => 1 } }),
+      message("j2", "browser/view", "snapshot", 1, () => 1),
+      message("j3", "browser/view", "snapshot", 1, { rows: [{ cells: [{ meta: { Function: "rows => rows" } }] }] }),
+      snap("j4"),
+    ],
+  },
+  {
+    id: "F-EFFECT",
+    messages: [snap("f1"), message("f2", "browser/view", "effect", 2, { verb: "stop" }), message("f3", "browser/view", "invoke", 2, { verb: "stop" })],
+  },
 ];
 const fixture = (id: string): Fixture => FIXTURES.find(entry => entry.id === id) ?? { id, messages: [] };
 
@@ -888,11 +1099,14 @@ function expectation(fixture: Fixture): Expected {
 interface Shape {
   /** Rejection classes whose check the host skips. */
   readonly skip?: readonly RejectionClass[];
-  readonly callablesOnly?: boolean;
-  /** Read executable keys at the value's top level only. */
-  readonly executableTopOnly?: boolean;
+  /** The host's executable reader (an empty reading is the oracle's). */
+  readonly reading?: Reading;
+  /** Refuse the kind "effect" only (a denylist where the wire's kinds are an allowlist). */
+  readonly effectNamedOnly?: boolean;
   /** Treat an undeclared endpoint as a public one owned by its sender (the producer graph's own answer for an endpoint it does not hold). */
   readonly undeclaredOpen?: boolean;
+  /** Refuse the visibility "private" only (a denylist where the contract reads "public" alone as public). */
+  readonly privateNamedOnly?: boolean;
   /** Drop the authority clause "a source that is not the endpoint's owner". */
   readonly ignoreSource?: boolean;
   /** Drop the authority clause "or an endpoint Pi owns". */
@@ -901,14 +1115,34 @@ interface Shape {
   readonly ignoreLane?: boolean;
   /** Read no invalidation disposition. */
   readonly ignoreInvalidation?: boolean;
+  /** Refuse only a version above the newest one the contract supports. */
+  readonly versionNewerOnly?: boolean;
+  /** Take any schema some endpoint of the contract declares. */
+  readonly schemaAnyDeclared?: boolean;
   /** Digest the value's JSON.stringify text instead of its canonical bytes. */
   readonly digestStringify?: boolean;
+  /** Digest arrays as sorted sets. */
+  readonly digestArraysSorted?: boolean;
+  /** Admit the sender runtime's contract epoch only (a newer one is refused as stale). */
+  readonly epochExact?: boolean;
+  /** Read the contract's first runtime epoch for every sender. */
+  readonly epochFirst?: boolean;
   /** Refuse only a repeat of the last admitted message id. */
   readonly duplicateAdjacent?: boolean;
+  /** endpoint: identities scoped per endpoint; rejected: a rejected message's identity counts as seen; values: value messages' identities only; rebase: identities forgotten at each snapshot or resync. */
+  readonly identity?: "endpoint" | "rejected" | "values" | "rebase";
   /** Take an empty source revision as a basis. */
   readonly emptyBasis?: boolean;
+  /** Refuse feedback at the bound (only feedback under it is bounded). */
+  readonly feedbackAtBound?: boolean;
   /** Keep a gap hold through a snapshot (only a resync clears it). */
   readonly snapshotKeepsHold?: boolean;
+  /** A snapshot (or a resync) on any endpoint lifts every endpoint's hold. */
+  readonly holdLift?: "snapshot" | "resync";
+  /** Hold an announced gap without asking to resync it. */
+  readonly announcedSilent?: boolean;
+  /** Refuse, as a gap, a resync no gap asked for. */
+  readonly resyncSolicitedOnly?: boolean;
   /** Every rejection under one code. */
   readonly collapse?: boolean;
   /** Reject every message: a host that admits nothing meets every refusal check trivially. */
@@ -921,8 +1155,21 @@ interface Shape {
   readonly doubleApply?: boolean;
   /** Hand the seam a rejected message's value after rejecting it. */
   readonly rejectedApplied?: boolean;
-  /** apply: no gap reading; silent: never ask to resync; resume: take the gapped sequence as the new base; ignore-announced: read no announced gap. */
-  readonly gap?: "apply" | "silent" | "resume" | "ignore-announced";
+  /** port: hand the seam the endpoint's port instead of its id; blank: hand the seam an empty value (the read is kept right); reversed: hand it every value at the end, last first. */
+  readonly seam?: "port" | "blank" | "reversed";
+  /** Keep an admitted ack's or gap's value in the read. */
+  readonly signalsRead?: boolean;
+  /**
+   * apply: no gap reading; silent: never ask to resync; resume: take the gapped sequence as the new base; ignore-announced: read no
+   * announced gap; backward-ok: only a forward jump is a gap; equal-ok: a delta at the last applied sequence is admitted; lower-ok:
+   * a delta below it is admitted; domain-hold: a gap holds every endpoint of its runtime; domain-sequence: one last applied
+   * sequence per runtime; no-base: a delta on an endpoint with no applied value is admitted; global-sequence: one last applied
+   * sequence across endpoints; global-hold: a gap holds every endpoint; ack-advances: an admitted ack advances the last applied
+   * sequence; ack-clears-hold: an admitted ack lifts a gap hold.
+   */
+  readonly gap?: "apply" | "silent" | "resume" | "ignore-announced" | "backward-ok" | "equal-ok" | "lower-ok" | "domain-hold" | "domain-sequence" | "no-base" | "global-sequence" | "global-hold" | "ack-advances" | "ack-clears-hold";
+  /** all: a gap also asks every endpoint with an applied value to resync; sorted: the endpoints asked come back sorted; repeated: every gapped message asks again. */
+  readonly resync?: "all" | "sorted" | "repeated";
   /** Hand the seam the wire's own value. */
   readonly alias?: boolean;
   /** Key the read by port across runtimes. */
@@ -936,6 +1183,8 @@ const CLAIM_SUFFIX: Readonly<Record<Family, string>> = { order: " (one globally 
 function hostOf(shape: Shape): BridgeHost {
   const skipped = new Set<RejectionClass>(shape.skip ?? []);
   const on = (check: RejectionClass): boolean => !skipped.has(check);
+  const sequenceKey = (id: string): string => (shape.gap === "global-sequence" ? "*" : shape.gap === "domain-sequence" ? split(id).domain : id);
+  const holdKey = (id: string): string => (shape.gap === "global-hold" ? "*" : shape.gap === "domain-hold" ? split(id).domain : id);
   return call => {
     const receipts: Receipt[] = [];
     const resync: string[] = [];
@@ -943,15 +1192,30 @@ function hostOf(shape: Shape): BridgeHost {
     let lastAdmitted: string | undefined;
     const last = new Map<string, number>();
     const held = new Set<string>();
+    const based: string[] = [];
     const views = new Map<string, Map<string, unknown>>();
     const marks = new Map<string, string>();
     let current: { readonly entry: Message; readonly index: number } | undefined;
+    const pending: (readonly [string, unknown, number])[] = [];
+    const toSeam = (id: string, value: unknown, index: number): void => {
+      if (shape.seam === "reversed") pending.unshift([id, value, index]);
+      else call.apply(id, value, index);
+    };
+    const remember = (id: string, value: unknown): void => {
+      const { domain, port } = split(id);
+      const view = views.get(domain) ?? new Map<string, unknown>();
+      view.set(port, value);
+      views.set(domain, view);
+    };
+    const identityOf = (entry: Message): string => (shape.identity === "endpoint" ? `${entry.endpoint} ${entry.messageId}` : entry.messageId);
     const reject = (found: RejectionClass): void => {
       receipts.push({ status: "rejected", diagnostic: shape.collapse === true ? "rejected" : found });
-      if (shape.rejectedApplied === true && current !== undefined) call.apply(current.entry.endpoint, copyOf(current.entry.value), current.index);
+      if (shape.identity === "rejected" && current !== undefined) seen.add(identityOf(current.entry));
+      if (shape.rejectedApplied === true && current !== undefined) toSeam(current.entry.endpoint, copyOf(current.entry.value), current.index);
     };
     const askResync = (id: string): void => {
-      if (shape.gap !== "silent" && !resync.includes(id)) resync.push(id);
+      if (shape.gap === "silent") return;
+      for (const asked of shape.resync === "all" ? [...based, id] : [id]) if (shape.resync === "repeated" || !resync.includes(asked)) resync.push(asked);
     };
     for (const [index, entry] of call.messages.entries()) {
       current = { entry, index };
@@ -962,29 +1226,32 @@ function hostOf(shape: Shape): BridgeHost {
       const declared = call.contract.endpoints.find(item => item.id === entry.endpoint);
       const open: Endpoint = { id: entry.endpoint, owner: entry.source, visibility: PUBLIC, schema: entry.schema, ...DISPOSED };
       const endpoint = declared ?? (shape.undeclaredOpen === true ? open : undefined);
-      if (on("executable-function-on-the-wire") && executable(entry.value, shape.callablesOnly === true, shape.executableTopOnly === true)) {
+      if (on("executable-function-on-the-wire") && executable(entry.value, shape.reading)) {
         reject("executable-function-on-the-wire");
         continue;
       }
-      if (on("unauthorized-effect") && !WIRE_KINDS.includes(entry.kind)) {
+      if (on("unauthorized-effect") && (shape.effectNamedOnly === true ? entry.kind === "effect" : !WIRE_KINDS.includes(entry.kind))) {
         reject("unauthorized-effect");
         continue;
       }
-      if (endpoint === undefined || (on("private-endpoint") && endpoint.visibility !== PUBLIC)) {
+      if (endpoint === undefined || (on("private-endpoint") && (shape.privateNamedOnly === true ? endpoint.visibility === "private" : endpoint.visibility !== PUBLIC))) {
         reject("private-endpoint");
         continue;
       }
-      const digest = shape.digestStringify === true ? sha256(JSON.stringify(entry.value) ?? "null") : digestOf(entry.value);
+      const digest =
+        shape.digestStringify === true ? sha256(JSON.stringify(entry.value) ?? "null") : shape.digestArraysSorted === true ? sha256(canonical(entry.value, true)) : digestOf(entry.value);
+      const supported = call.contract.versions.map(Number);
+      const epoch = shape.epochFirst === true ? Object.values(call.contract.epochs)[0] : call.contract.epochs[entry.source];
       const checks: readonly [RejectionClass, boolean][] = [
         ["foreign-authority", (shape.ignoreSource !== true && entry.source !== endpoint.owner) || (shape.ignoreLocal !== true && endpoint.owner === call.contract.local)],
         ["missing-disposition", (shape.ignoreLane !== true && endpoint.lane === undefined) || (shape.ignoreInvalidation !== true && endpoint.invalidation === undefined)],
-        ["bad-version", !call.contract.versions.includes(entry.version)],
-        ["schema-mismatch", entry.schema !== endpoint.schema],
+        ["bad-version", shape.versionNewerOnly === true ? Number(entry.version) > Math.max(...supported) : !call.contract.versions.includes(entry.version)],
+        ["schema-mismatch", shape.schemaAnyDeclared === true ? !call.contract.endpoints.some(item => item.schema === entry.schema) : entry.schema !== endpoint.schema],
         ["bad-digest", entry.digest !== digest],
-        ["stale-epoch", entry.epoch < (call.contract.epochs[entry.source] ?? Number.POSITIVE_INFINITY)],
-        ["duplicate-message", shape.duplicateAdjacent === true ? lastAdmitted === entry.messageId : seen.has(entry.messageId)],
+        ["stale-epoch", shape.epochExact === true ? entry.epoch !== (epoch ?? Number.NaN) : entry.epoch < (epoch ?? Number.POSITIVE_INFINITY)],
+        ["duplicate-message", shape.duplicateAdjacent === true ? lastAdmitted === entry.messageId : seen.has(identityOf(entry))],
         ["missing-basis", entry.sourceRevision === undefined || (shape.emptyBasis !== true && entry.sourceRevision === "")],
-        ["unbounded-feedback", entry.feedback === undefined || entry.feedback > call.contract.feedbackBound],
+        ["unbounded-feedback", entry.feedback === undefined || (shape.feedbackAtBound === true ? entry.feedback >= call.contract.feedbackBound : entry.feedback > call.contract.feedbackBound)],
       ];
       const failed = checks.find(([check, fails]) => fails && on(check));
       if (failed !== undefined) {
@@ -992,39 +1259,51 @@ function hostOf(shape: Shape): BridgeHost {
         continue;
       }
       if (entry.kind === "gap" && shape.gap !== "ignore-announced") {
-        held.add(endpoint.id);
-        askResync(endpoint.id);
+        held.add(holdKey(endpoint.id));
+        if (shape.announcedSilent !== true) askResync(endpoint.id);
+      }
+      if (shape.resyncSolicitedOnly === true && entry.kind === "resync" && !resync.includes(endpoint.id)) {
+        reject("gap-without-resync");
+        continue;
       }
       if (entry.kind === "delta" && shape.gap !== "apply") {
-        const prior = last.get(endpoint.id);
-        if (held.has(endpoint.id) || prior === undefined || entry.sequence !== prior + 1) {
+        const prior = last.get(sequenceKey(endpoint.id));
+        const late =
+          prior !== undefined &&
+          ((shape.gap === "backward-ok" && entry.sequence <= prior) || (shape.gap === "equal-ok" && entry.sequence === prior) || (shape.gap === "lower-ok" && entry.sequence < prior));
+        const follows = prior === undefined ? shape.gap === "no-base" : entry.sequence === prior + 1 || late;
+        if (held.has(holdKey(endpoint.id)) || !follows) {
           reject("gap-without-resync");
           askResync(endpoint.id);
-          if (shape.gap === "resume") last.set(endpoint.id, entry.sequence);
-          else held.add(endpoint.id);
+          if (shape.gap === "resume") last.set(sequenceKey(endpoint.id), entry.sequence);
+          else held.add(holdKey(endpoint.id));
           continue;
         }
       }
-      seen.add(entry.messageId);
+      if (shape.identity === "rebase" && (entry.kind === "snapshot" || entry.kind === "resync")) seen.clear();
+      if (shape.identity !== "values" || VALUE_KINDS.includes(entry.kind)) seen.add(identityOf(entry));
       lastAdmitted = entry.messageId;
       receipts.push({ status: "admitted" });
       if (entry.kind === "ack" || entry.kind === "gap") {
-        if (shape.applySignals === true) call.apply(endpoint.id, copyOf(entry.value), index);
+        if (shape.applySignals === true) toSeam(endpoint.id, copyOf(entry.value), index);
+        if (shape.signalsRead === true) remember(endpoint.id, copyOf(entry.value));
+        if (shape.gap === "ack-advances" && entry.kind === "ack") last.set(sequenceKey(endpoint.id), entry.sequence);
+        if (shape.gap === "ack-clears-hold" && entry.kind === "ack") held.delete(holdKey(endpoint.id));
         continue;
       }
       shape.side?.();
       const value = shape.alias === true ? entry.value : copyOf(entry.value);
-      call.apply(endpoint.id, value, index);
-      if (shape.doubleApply === true) call.apply(endpoint.id, copyOf(entry.value), index);
+      toSeam(shape.seam === "port" ? split(endpoint.id).port : endpoint.id, shape.seam === "blank" ? {} : value, index);
+      if (shape.doubleApply === true) toSeam(endpoint.id, copyOf(entry.value), index);
       if (shape.resyncSpurious === true && entry.kind === "snapshot") askResync(endpoint.id);
-      last.set(endpoint.id, entry.sequence);
-      if (shape.snapshotKeepsHold !== true || entry.kind !== "snapshot") held.delete(endpoint.id);
-      const { domain, port } = split(endpoint.id);
-      const view = views.get(domain) ?? new Map<string, unknown>();
-      view.set(port, value);
-      views.set(domain, view);
+      last.set(sequenceKey(endpoint.id), entry.sequence);
+      if (!based.includes(endpoint.id)) based.push(endpoint.id);
+      if (shape.snapshotKeepsHold !== true || entry.kind !== "snapshot") held.delete(holdKey(endpoint.id));
+      if (shape.holdLift === entry.kind) held.clear();
+      remember(endpoint.id, value);
       marks.set(endpoint.id, `epoch ${entry.epoch}, sequence ${entry.sequence}`);
     }
+    for (const [id, value, index] of pending) call.apply(id, value, index);
     const perDomain: Record<string, Record<string, unknown>> = { [call.contract.local]: { ...(copyOf(call.local) as Record<string, unknown>) } };
     for (const [domain, view] of views) perDomain[domain] = { ...perDomain[domain], ...Object.fromEntries(view) };
     const merged: Record<string, unknown> = {};
@@ -1032,18 +1311,30 @@ function hostOf(shape: Shape): BridgeHost {
     const values: Values = shape.merge === true ? { merged } : perDomain;
     const positions = [...marks].sort(([left], [right]) => left.localeCompare(right)).map(([id, mark]) => `${id}: ${mark}`);
     const label = `${[...positions, `${call.contract.local}: local`].join("; ")}${shape.claim === undefined ? "" : CLAIM_SUFFIX[shape.claim]}`;
-    return { receipts, resync, read: { values, label } };
+    return { receipts, resync: shape.resync === "sorted" ? [...resync].sort() : resync, read: { values, label } };
   };
 }
 const HONEST = hostOf({});
 /** The synthetic bindings that must each fail the armed check. */
 const MUTANTS: Readonly<Record<string, Shape>> = {
   "M-EXECUTABLE": { skip: ["executable-function-on-the-wire"] },
-  "M-CALLABLES-ONLY": { callablesOnly: true },
-  "M-EXECUTABLE-TOP-ONLY": { executableTopOnly: true },
+  "M-CALLABLES-ONLY": { reading: { callablesOnly: true } },
+  "M-EXECUTABLE-TOP-ONLY": { reading: { keysTopOnly: true } },
+  "M-CALLABLES-TOP-ONLY": { reading: { callablesTopOnly: true } },
+  "M-EXECUTABLE-NO-SEQUENCES": { reading: { noSequences: true } },
+  "M-EXECUTABLE-NO-CODE": { reading: { keyDropped: "code" } },
+  "M-EXECUTABLE-NO-HANDLER": { reading: { keyDropped: "handler" } },
+  "M-EXECUTABLE-NO-SCRIPT": { reading: { keyDropped: "script" } },
+  "M-EXECUTABLE-NO-FUNCTION": { reading: { keyDropped: "function" } },
+  "M-EXECUTABLE-CASE-EXACT": { reading: { caseExact: true } },
+  "M-EXECUTABLE-SHALLOW": { reading: { depth: 4 } },
+  "M-CALLABLE-VALUE-BLIND": { reading: { valueBlind: true } },
+  "M-EXECUTABLE-STRING-VALUES": { reading: { stringValues: true } },
   "M-EFFECT": { skip: ["unauthorized-effect"] },
+  "M-EFFECT-NAMED-ONLY": { effectNamedOnly: true },
   "M-PRIVATE": { skip: ["private-endpoint"] },
   "M-UNDECLARED-OPEN": { undeclaredOpen: true },
+  "M-PRIVATE-NAMED-ONLY": { privateNamedOnly: true },
   "M-FOREIGN": { skip: ["foreign-authority"] },
   "M-SOURCE-BLIND": { ignoreSource: true },
   "M-LOCAL-SPOOF": { ignoreLocal: true },
@@ -1051,26 +1342,57 @@ const MUTANTS: Readonly<Record<string, Shape>> = {
   "M-LANE-BLIND": { ignoreLane: true },
   "M-INVALIDATION-BLIND": { ignoreInvalidation: true },
   "M-VERSION": { skip: ["bad-version"] },
+  "M-VERSION-NEWER-ONLY": { versionNewerOnly: true },
   "M-SCHEMA": { skip: ["schema-mismatch"] },
+  "M-SCHEMA-ANY-DECLARED": { schemaAnyDeclared: true },
   "M-DIGEST": { skip: ["bad-digest"] },
   "M-DIGEST-NONCANONICAL": { digestStringify: true },
+  "M-DIGEST-ARRAYS-SORTED": { digestArraysSorted: true },
   "M-EPOCH": { skip: ["stale-epoch"] },
+  "M-EPOCH-EXACT": { epochExact: true },
+  "M-EPOCH-FIRST-RUNTIME": { epochFirst: true },
   "M-DUPLICATE": { skip: ["duplicate-message"] },
   "M-DUPLICATE-ADJACENT": { duplicateAdjacent: true },
+  "M-DUPLICATE-PER-ENDPOINT": { identity: "endpoint" },
+  "M-DUPLICATE-COUNTS-REJECTED": { identity: "rejected" },
+  "M-DUPLICATE-VALUES-ONLY": { identity: "values" },
+  "M-DUPLICATE-REBASE-FORGETS": { identity: "rebase" },
   "M-BASIS": { skip: ["missing-basis"] },
   "M-BASIS-EMPTY": { emptyBasis: true },
   "M-FEEDBACK": { skip: ["unbounded-feedback"] },
+  "M-FEEDBACK-AT-BOUND": { feedbackAtBound: true },
   "M-CODE-COLLAPSED": { collapse: true },
   "M-REFUSE-ALL": { refuseAll: true },
   "M-SIGNAL-APPLIED": { applySignals: true },
   "M-DOUBLE-APPLY": { doubleApply: true },
   "M-REJECTED-APPLIED": { rejectedApplied: true },
+  "M-SEAM-PORT": { seam: "port" },
+  "M-SEAM-BLANK": { seam: "blank" },
+  "M-SEAM-REVERSED": { seam: "reversed" },
+  "M-SIGNAL-READ": { signalsRead: true },
   "M-GAP-APPLY": { gap: "apply" },
   "M-GAP-SILENT": { gap: "silent" },
   "M-GAP-RESUME": { gap: "resume" },
   "M-ANNOUNCED-IGNORED": { gap: "ignore-announced" },
+  "M-ANNOUNCED-SILENT": { announcedSilent: true },
   "M-SNAPSHOT-KEEPS-HOLD": { snapshotKeepsHold: true },
+  "M-SNAPSHOT-LIFTS-EVERY-HOLD": { holdLift: "snapshot" },
+  "M-RESYNC-LIFTS-EVERY-HOLD": { holdLift: "resync" },
   "M-RESYNC-SPURIOUS": { resyncSpurious: true },
+  "M-GAP-BACKWARD-OK": { gap: "backward-ok" },
+  "M-GAP-EQUAL-OK": { gap: "equal-ok" },
+  "M-GAP-LOWER-OK": { gap: "lower-ok" },
+  "M-GAP-NO-BASE": { gap: "no-base" },
+  "M-GAP-GLOBAL-SEQUENCE": { gap: "global-sequence" },
+  "M-GAP-GLOBAL-HOLD": { gap: "global-hold" },
+  "M-GAP-DOMAIN-SEQUENCE": { gap: "domain-sequence" },
+  "M-GAP-DOMAIN-HOLD": { gap: "domain-hold" },
+  "M-ACK-ADVANCES": { gap: "ack-advances" },
+  "M-ACK-CLEARS-HOLD": { gap: "ack-clears-hold" },
+  "M-RESYNC-ALL": { resync: "all" },
+  "M-RESYNC-SORTED": { resync: "sorted" },
+  "M-RESYNC-REPEATED": { resync: "repeated" },
+  "M-RESYNC-SOLICITED-ONLY": { resyncSolicitedOnly: true },
   "M-SHARED-REF": { alias: true },
   "M-MERGE": { merge: true },
   "M-ORDER-LABEL": { claim: "order" },
@@ -1090,7 +1412,7 @@ function drive(host: BridgeHost, entry: Fixture): Drive {
 }
 const CHECKS = ["admit", "reject", "diagnostic", "resync", "aliased", "merged", "claim-order", "claim-shared", "claim-merge"] as const;
 type Check = (typeof CHECKS)[number];
-/** The checks one driven fixture fails, in CHECKS order. */
+/** The checks one driven fixture fails, in CHECKS order (admit: an admitted value message reached the seam once, at its own endpoint, with an equal value, in delivery order; an admitted signal never). */
 function violations(entry: Fixture, run: Drive): Check[] {
   const want = expectation(entry);
   const found = new Set<Check>();
@@ -1098,14 +1420,16 @@ function violations(entry: Fixture, run: Drive): Check[] {
   for (const [index, sent] of entry.messages.entries()) {
     const expected = want.receipts[index];
     const receipt = run.journal.receipts[index];
-    const applied = run.calls.filter(call => call.index === index).length;
+    const applied = run.calls.filter(call => call.index === index);
     if (expected?.status === "admitted") {
-      if (receipt?.status !== "admitted" || applied !== (VALUE_KINDS.includes(sent.kind) ? 1 : 0)) found.add("admit");
+      const once = applied.length === 1 && applied.every(call => call.endpoint === sent.endpoint && isDeepStrictEqual(call.value, sent.value));
+      if (receipt?.status !== "admitted" || (VALUE_KINDS.includes(sent.kind) ? !once : applied.length > 0)) found.add("admit");
       continue;
     }
-    if (receipt?.status !== "rejected" || applied > 0) found.add("reject");
+    if (receipt?.status !== "rejected" || applied.length > 0) found.add("reject");
     if (receipt?.diagnostic !== expected?.diagnostic) found.add("diagnostic");
   }
+  if (run.calls.some((call, at) => at > 0 && call.index <= (run.calls[at - 1]?.index ?? -1))) found.add("admit");
   if (!isDeepStrictEqual(run.journal.resync, want.resync)) found.add("resync");
   if (run.calls.some(call => aliases(call.value, entry.messages[call.index]?.value))) found.add("aliased");
   if (!isDeepStrictEqual(run.journal.read.values, want.values)) found.add("merged");
@@ -1424,27 +1748,90 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const session = drive(HONEST, fixture("F-SESSION"));
     expect(receiptsOf(session), "the session is admitted").toEqual(["admitted", "admitted", "admitted", "admitted"]);
     expect(indicesOf(session), "the ack is admitted and never applied").toEqual([0, 1, 3]);
+    const seam = session.calls.map(call => ({ endpoint: call.endpoint, value: call.value as Json, index: call.index }));
+    expect(seam, "the seam takes each admitted value at its own endpoint, equal to the wire's, in delivery order").toEqual([
+      { endpoint: "browser/view", value: { rows: [1] }, index: 0 },
+      { endpoint: "browser/view", value: { rows: [1, 2] }, index: 1 },
+      { endpoint: "browser/view", value: { rows: [1, 2, 3] }, index: 3 },
+    ]);
+    const members = {
+      version: receiptsOf(drive(HONEST, fixture("F-VERSION"))),
+      schema: receiptsOf(drive(HONEST, fixture("F-SCHEMA"))),
+      digest: receiptsOf(drive(HONEST, fixture("F-DIGEST"))),
+      epoch: receiptsOf(drive(HONEST, fixture("F-EPOCH"))),
+      identity: receiptsOf(drive(HONEST, fixture("F-DUPLICATE-SCOPE"))),
+      feedback: receiptsOf(drive(HONEST, fixture("F-FEEDBACK"))),
+    };
+    expect(members.version, "a version above and a version below the supported one are rejected").toEqual(["admitted", "rejected:bad-version", "rejected:bad-version"]);
+    expect(members.schema, "another version of the endpoint's schema and another endpoint's schema are rejected").toEqual(["admitted", "rejected:schema-mismatch", "rejected:schema-mismatch"]);
+    expect(members.digest, "a wrong digest is rejected; reordered keys and an unsorted array keep their canonical digest").toEqual(["admitted", "rejected:bad-digest", "admitted", "admitted"]);
+    expect(members.epoch, "an epoch below its own runtime's is rejected and a newer one admitted").toEqual(["admitted", "rejected:stale-epoch", "admitted", "rejected:stale-epoch"]);
+    expect(members.identity, "an admitted identity is a duplicate on another endpoint, after an ack bore it and after a snapshot; a rejected one is not").toEqual([
+      "admitted",
+      "rejected:duplicate-message",
+      "rejected:bad-digest",
+      "admitted",
+      "admitted",
+      "rejected:duplicate-message",
+      "admitted",
+      "rejected:duplicate-message",
+    ]);
+    expect(members.feedback, "feedback over the bound and absent feedback are rejected; feedback at the bound is admitted").toEqual(["admitted", "rejected:unbounded-feedback", "rejected:unbounded-feedback", "admitted"]);
     const fields = [
       "M-DISPOSITION",
       "M-LANE-BLIND",
       "M-INVALIDATION-BLIND",
       "M-VERSION",
+      "M-VERSION-NEWER-ONLY",
       "M-SCHEMA",
+      "M-SCHEMA-ANY-DECLARED",
       "M-DIGEST",
       "M-DIGEST-NONCANONICAL",
+      "M-DIGEST-ARRAYS-SORTED",
       "M-EPOCH",
+      "M-EPOCH-EXACT",
+      "M-EPOCH-FIRST-RUNTIME",
       "M-DUPLICATE",
       "M-DUPLICATE-ADJACENT",
+      "M-DUPLICATE-PER-ENDPOINT",
+      "M-DUPLICATE-COUNTS-REJECTED",
+      "M-DUPLICATE-VALUES-ONLY",
+      "M-DUPLICATE-REBASE-FORGETS",
       "M-BASIS",
       "M-BASIS-EMPTY",
       "M-FEEDBACK",
+      "M-FEEDBACK-AT-BOUND",
       "M-CODE-COLLAPSED",
       "M-REFUSE-ALL",
       "M-SIGNAL-APPLIED",
       "M-DOUBLE-APPLY",
       "M-REJECTED-APPLIED",
+      "M-SEAM-PORT",
+      "M-SEAM-BLANK",
+      "M-SEAM-REVERSED",
+      "M-SIGNAL-READ",
     ];
-    return { bound: bound.map(entry => entry.path), fixtures: FIXTURES.map(entry => entry.id), verdicts, fired, quiet, isolated, isolating, mutants: Object.fromEntries(fields.map(name => [name, judged[name] ?? {}])) };
+    const departures = mapOf(MUTANTS, shape => {
+      const host = hostOf(shape);
+      return FIXTURES.flatMap(entry => {
+        const want = formatted(expectation(entry).receipts);
+        const got = receiptsOf(drive(host, entry));
+        return entry.messages.flatMap((sent, index) => (want[index] === got[index] ? [] : [`${entry.id}#${index}:${sent.messageId}`]));
+      });
+    });
+    return {
+      bound: bound.map(entry => entry.path),
+      fixtures: FIXTURES.map(entry => entry.id),
+      verdicts,
+      fired,
+      quiet,
+      isolated,
+      isolating,
+      seam,
+      members,
+      mutants: Object.fromEntries(fields.map(name => [name, judged[name] ?? {}])),
+      departures,
+    };
   },
   C2: () => {
     const gap = drive(HONEST, fixture("F-GAP"));
@@ -1457,18 +1844,76 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect(receiptsOf(snapshot), "a snapshot after a gap re-bases the stream").toEqual(["admitted", "rejected:gap-without-resync", "admitted", "admitted"]);
     expect([gap.journal.resync, announced.journal.resync, snapshot.journal.resync], "each gap asks for one resync of its endpoint").toEqual([["browser/view"], ["browser/view"], ["browser/view"]]);
     expect([indicesOf(gap), indicesOf(announced), indicesOf(snapshot)], "no delta after a gap reaches the seam before the resync or snapshot").toEqual([[0, 3, 4], [0, 3, 4], [0, 2, 3]]);
+    const scoped = Object.fromEntries(
+      ["F-GAP-BACKWARD", "F-GAP-NO-BASE", "F-GAP-ENDPOINTS", "F-GAP-ORDER", "F-GAP-PORTS", "F-GAP-SIGNAL", "F-GAP-ACK"].map(id => {
+        const run = drive(HONEST, fixture(id));
+        return [id, { receipts: receiptsOf(run), resync: [...run.journal.resync], applied: indicesOf(run) }];
+      }),
+    );
+    expect(scoped["F-GAP-BACKWARD"]?.receipts, "a delta at and a delta below the last applied sequence are gaps").toEqual([
+      "admitted",
+      "admitted",
+      "rejected:gap-without-resync",
+      "admitted",
+      "rejected:gap-without-resync",
+    ]);
+    expect(scoped["F-GAP-NO-BASE"]?.receipts, "a delta on an endpoint with no applied value is a gap until a snapshot").toEqual(["rejected:gap-without-resync", "admitted", "admitted"]);
+    expect(scoped["F-GAP-ENDPOINTS"]?.receipts, "each endpoint keeps its own sequence and hold; a re-base on one lifts no other's hold, and a resync no gap asked for re-bases").toEqual([
+      "admitted",
+      "admitted",
+      "admitted",
+      "rejected:gap-without-resync",
+      "admitted",
+      "admitted",
+      "rejected:gap-without-resync",
+      "admitted",
+      "rejected:gap-without-resync",
+    ]);
+    expect(scoped["F-GAP-PORTS"]?.receipts, "two endpoints of one runtime keep their own sequences and holds").toEqual(["admitted", "admitted", "admitted", "rejected:gap-without-resync", "admitted"]);
+    expect(scoped["F-GAP-SIGNAL"]?.receipts, "an announced gap asks to resync though no delta follows it").toEqual(["admitted", "admitted", "admitted", "admitted"]);
+    expect(scoped["F-GAP-ACK"]?.receipts, "an ack neither advances the sequence nor lifts a hold").toEqual(["admitted", "admitted", "admitted", "admitted", "admitted", "rejected:gap-without-resync"]);
+    expect(
+      Object.fromEntries(Object.entries(scoped).map(([id, run]) => [id, run.resync])),
+      "the endpoints asked to resync are exactly the gapped ones, each once, in the order they gapped",
+    ).toEqual({
+      "F-GAP-BACKWARD": ["browser/view", "server/view"],
+      "F-GAP-NO-BASE": ["server/view"],
+      "F-GAP-ENDPOINTS": ["server/view"],
+      "F-GAP-ORDER": ["server/view", "browser/view"],
+      "F-GAP-PORTS": ["browser/panel"],
+      "F-GAP-SIGNAL": ["browser/view"],
+      "F-GAP-ACK": ["browser/view"],
+    });
     return {
       gap: receiptsOf(gap),
       announced: receiptsOf(announced),
       snapshot: receiptsOf(snapshot),
       resync: [gap.journal.resync, announced.journal.resync, snapshot.journal.resync],
       applied: [indicesOf(gap), indicesOf(announced), indicesOf(snapshot)],
+      scoped,
       "M-GAP-APPLY": mutant("M-GAP-APPLY"),
       "M-GAP-SILENT": mutant("M-GAP-SILENT"),
       "M-GAP-RESUME": mutant("M-GAP-RESUME"),
       "M-ANNOUNCED-IGNORED": mutant("M-ANNOUNCED-IGNORED"),
+      "M-ANNOUNCED-SILENT": mutant("M-ANNOUNCED-SILENT"),
       "M-SNAPSHOT-KEEPS-HOLD": mutant("M-SNAPSHOT-KEEPS-HOLD"),
+      "M-SNAPSHOT-LIFTS-EVERY-HOLD": mutant("M-SNAPSHOT-LIFTS-EVERY-HOLD"),
+      "M-RESYNC-LIFTS-EVERY-HOLD": mutant("M-RESYNC-LIFTS-EVERY-HOLD"),
       "M-RESYNC-SPURIOUS": mutant("M-RESYNC-SPURIOUS"),
+      "M-GAP-BACKWARD-OK": mutant("M-GAP-BACKWARD-OK"),
+      "M-GAP-EQUAL-OK": mutant("M-GAP-EQUAL-OK"),
+      "M-GAP-LOWER-OK": mutant("M-GAP-LOWER-OK"),
+      "M-GAP-NO-BASE": mutant("M-GAP-NO-BASE"),
+      "M-GAP-GLOBAL-SEQUENCE": mutant("M-GAP-GLOBAL-SEQUENCE"),
+      "M-GAP-GLOBAL-HOLD": mutant("M-GAP-GLOBAL-HOLD"),
+      "M-GAP-DOMAIN-SEQUENCE": mutant("M-GAP-DOMAIN-SEQUENCE"),
+      "M-GAP-DOMAIN-HOLD": mutant("M-GAP-DOMAIN-HOLD"),
+      "M-ACK-ADVANCES": mutant("M-ACK-ADVANCES"),
+      "M-ACK-CLEARS-HOLD": mutant("M-ACK-CLEARS-HOLD"),
+      "M-RESYNC-ALL": mutant("M-RESYNC-ALL"),
+      "M-RESYNC-SORTED": mutant("M-RESYNC-SORTED"),
+      "M-RESYNC-REPEATED": mutant("M-RESYNC-REPEATED"),
+      "M-RESYNC-SOLICITED-ONLY": mutant("M-RESYNC-SOLICITED-ONLY"),
     };
   },
   O1: () => {
@@ -1484,11 +1929,13 @@ const IMPL: Readonly<Record<string, () => Json>> = {
   },
   P1: () => {
     const run = drive(HONEST, fixture("F-PRIVATE"));
-    expect(receiptsOf(run), "a private and an undeclared endpoint are rejected").toEqual(["rejected:private-endpoint", "rejected:private-endpoint", "admitted"]);
-    return { receipts: receiptsOf(run), applied: indicesOf(run), "M-PRIVATE": mutant("M-PRIVATE"), "M-UNDECLARED-OPEN": mutant("M-UNDECLARED-OPEN") };
+    expect(receiptsOf(run), "a private, an undeclared and an internal endpoint are rejected").toEqual(["rejected:private-endpoint", "rejected:private-endpoint", "rejected:private-endpoint", "admitted"]);
+    return { receipts: receiptsOf(run), applied: indicesOf(run), "M-PRIVATE": mutant("M-PRIVATE"), "M-UNDECLARED-OPEN": mutant("M-UNDECLARED-OPEN"), "M-PRIVATE-NAMED-ONLY": mutant("M-PRIVATE-NAMED-ONLY") };
   },
   P2: () => {
     const payload = drive(HONEST, fixture("F-EXECUTABLE"));
+    const sequence = drive(HONEST, fixture("F-EXECUTABLE-SEQUENCE"));
+    const depth = drive(HONEST, fixture("F-EXECUTABLE-DEPTH"));
     const effect = drive(HONEST, fixture("F-EFFECT"));
     expect(receiptsOf(payload), "a callable, an executable key and a nested executable key on the wire are rejected").toEqual([
       "rejected:executable-function-on-the-wire",
@@ -1496,16 +1943,51 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "rejected:executable-function-on-the-wire",
       "admitted",
     ]);
-    expect(receiptsOf(effect), "a remote effect request is rejected").toEqual(["admitted", "rejected:unauthorized-effect"]);
+    expect(receiptsOf(sequence), "a callable and an executable key inside an array are rejected; a string naming a key is data").toEqual([
+      "rejected:executable-function-on-the-wire",
+      "rejected:executable-function-on-the-wire",
+      "admitted",
+      "admitted",
+    ]);
+    expect(receiptsOf(depth), "a callable nested in a record, a callable value and a key five records and arrays down are rejected").toEqual([
+      "rejected:executable-function-on-the-wire",
+      "rejected:executable-function-on-the-wire",
+      "rejected:executable-function-on-the-wire",
+      "admitted",
+    ]);
+    expect(receiptsOf(effect), "a remote effect request and any other kind off the wire's list are rejected").toEqual(["admitted", "rejected:unauthorized-effect", "rejected:unauthorized-effect"]);
+    const sole = Object.fromEntries(
+      EXECUTABLE_KEYS.map(key => [
+        key,
+        FIXTURES.flatMap(entry => entry.messages)
+          .filter(entry => executable(entry.value) && !executable(entry.value, { keyDropped: key }))
+          .map(entry => entry.messageId),
+      ]),
+    );
+    expect(sole, "each key of the producer's set is the only executable trigger of one fixture message").toEqual({ code: ["y2"], handler: ["x2"], script: ["x4"], function: ["j3"] });
     return {
       payload: receiptsOf(payload),
+      sequence: receiptsOf(sequence),
+      depth: receiptsOf(depth),
       effect: receiptsOf(effect),
-      applied: [indicesOf(payload), indicesOf(effect)],
+      applied: [indicesOf(payload), indicesOf(sequence), indicesOf(depth), indicesOf(effect)],
       keys: [...EXECUTABLE_KEYS],
+      sole,
       "M-EXECUTABLE": mutant("M-EXECUTABLE"),
       "M-CALLABLES-ONLY": mutant("M-CALLABLES-ONLY"),
       "M-EXECUTABLE-TOP-ONLY": mutant("M-EXECUTABLE-TOP-ONLY"),
+      "M-CALLABLES-TOP-ONLY": mutant("M-CALLABLES-TOP-ONLY"),
+      "M-EXECUTABLE-NO-SEQUENCES": mutant("M-EXECUTABLE-NO-SEQUENCES"),
+      "M-EXECUTABLE-NO-CODE": mutant("M-EXECUTABLE-NO-CODE"),
+      "M-EXECUTABLE-NO-HANDLER": mutant("M-EXECUTABLE-NO-HANDLER"),
+      "M-EXECUTABLE-NO-SCRIPT": mutant("M-EXECUTABLE-NO-SCRIPT"),
+      "M-EXECUTABLE-NO-FUNCTION": mutant("M-EXECUTABLE-NO-FUNCTION"),
+      "M-EXECUTABLE-CASE-EXACT": mutant("M-EXECUTABLE-CASE-EXACT"),
+      "M-EXECUTABLE-SHALLOW": mutant("M-EXECUTABLE-SHALLOW"),
+      "M-CALLABLE-VALUE-BLIND": mutant("M-CALLABLE-VALUE-BLIND"),
+      "M-EXECUTABLE-STRING-VALUES": mutant("M-EXECUTABLE-STRING-VALUES"),
       "M-EFFECT": mutant("M-EFFECT"),
+      "M-EFFECT-NAMED-ONLY": mutant("M-EFFECT-NAMED-ONLY"),
     };
   },
   N1: () => ({ ...falsifier("order"), "M-ORDER-LABEL": mutant("M-ORDER-LABEL") }),
@@ -1660,7 +2142,7 @@ describe(SUITE, () => {
     }
   }
 
-  it("rule 16: the rows, the residual families, the classes, the contract parts, the claim families, the checks, the mutants, the fixtures, the words, the reading forms (script and markup extensions, named entities), the walks (roots, pathspecs, judges, floors, anchors and exclusions) and the hosts are frozen at their measured shape", () => {
+  it("rule 16: the rows, the residual families, the classes, the contract parts, the claim families, the checks, the mutants, the fixtures, the contract's endpoints, the words, the reading forms (script and markup extensions, named entities), the walks (roots, pathspecs, judges, floors, anchors and exclusions) and the hosts are frozen at their measured shape", () => {
     expect(ROWS.map(entry => `${entry.id}:${entry.pins.length}`)).toEqual(["G:2", "C:2", "O:1", "P:2", "N:3", "Q:5"]);
     expect(Object.entries(RESIDUALS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:8", "Q2:4", "Q3:5", "Q4:1", "Q5:6"]);
     expect(Object.keys(QUOTES), "one quote per pin, in row order").toEqual(ROWS.flatMap(entry => entry.pins));
@@ -1708,9 +2190,21 @@ describe(SUITE, () => {
       "M-EXECUTABLE",
       "M-CALLABLES-ONLY",
       "M-EXECUTABLE-TOP-ONLY",
+      "M-CALLABLES-TOP-ONLY",
+      "M-EXECUTABLE-NO-SEQUENCES",
+      "M-EXECUTABLE-NO-CODE",
+      "M-EXECUTABLE-NO-HANDLER",
+      "M-EXECUTABLE-NO-SCRIPT",
+      "M-EXECUTABLE-NO-FUNCTION",
+      "M-EXECUTABLE-CASE-EXACT",
+      "M-EXECUTABLE-SHALLOW",
+      "M-CALLABLE-VALUE-BLIND",
+      "M-EXECUTABLE-STRING-VALUES",
       "M-EFFECT",
+      "M-EFFECT-NAMED-ONLY",
       "M-PRIVATE",
       "M-UNDECLARED-OPEN",
+      "M-PRIVATE-NAMED-ONLY",
       "M-FOREIGN",
       "M-SOURCE-BLIND",
       "M-LOCAL-SPOOF",
@@ -1718,26 +2212,57 @@ describe(SUITE, () => {
       "M-LANE-BLIND",
       "M-INVALIDATION-BLIND",
       "M-VERSION",
+      "M-VERSION-NEWER-ONLY",
       "M-SCHEMA",
+      "M-SCHEMA-ANY-DECLARED",
       "M-DIGEST",
       "M-DIGEST-NONCANONICAL",
+      "M-DIGEST-ARRAYS-SORTED",
       "M-EPOCH",
+      "M-EPOCH-EXACT",
+      "M-EPOCH-FIRST-RUNTIME",
       "M-DUPLICATE",
       "M-DUPLICATE-ADJACENT",
+      "M-DUPLICATE-PER-ENDPOINT",
+      "M-DUPLICATE-COUNTS-REJECTED",
+      "M-DUPLICATE-VALUES-ONLY",
+      "M-DUPLICATE-REBASE-FORGETS",
       "M-BASIS",
       "M-BASIS-EMPTY",
       "M-FEEDBACK",
+      "M-FEEDBACK-AT-BOUND",
       "M-CODE-COLLAPSED",
       "M-REFUSE-ALL",
       "M-SIGNAL-APPLIED",
       "M-DOUBLE-APPLY",
       "M-REJECTED-APPLIED",
+      "M-SEAM-PORT",
+      "M-SEAM-BLANK",
+      "M-SEAM-REVERSED",
+      "M-SIGNAL-READ",
       "M-GAP-APPLY",
       "M-GAP-SILENT",
       "M-GAP-RESUME",
       "M-ANNOUNCED-IGNORED",
+      "M-ANNOUNCED-SILENT",
       "M-SNAPSHOT-KEEPS-HOLD",
+      "M-SNAPSHOT-LIFTS-EVERY-HOLD",
+      "M-RESYNC-LIFTS-EVERY-HOLD",
       "M-RESYNC-SPURIOUS",
+      "M-GAP-BACKWARD-OK",
+      "M-GAP-EQUAL-OK",
+      "M-GAP-LOWER-OK",
+      "M-GAP-NO-BASE",
+      "M-GAP-GLOBAL-SEQUENCE",
+      "M-GAP-GLOBAL-HOLD",
+      "M-GAP-DOMAIN-SEQUENCE",
+      "M-GAP-DOMAIN-HOLD",
+      "M-ACK-ADVANCES",
+      "M-ACK-CLEARS-HOLD",
+      "M-RESYNC-ALL",
+      "M-RESYNC-SORTED",
+      "M-RESYNC-REPEATED",
+      "M-RESYNC-SOLICITED-ONLY",
       "M-SHARED-REF",
       "M-MERGE",
       "M-ORDER-LABEL",
@@ -1747,21 +2272,45 @@ describe(SUITE, () => {
     expect(FIXTURES.map(entry => `${entry.id}:${entry.messages.length}`)).toEqual([
       "F-SESSION:4",
       "F-READ:2",
-      "F-VERSION:2",
-      "F-SCHEMA:2",
-      "F-DIGEST:3",
-      "F-EPOCH:2",
+      "F-VERSION:3",
+      "F-SCHEMA:3",
+      "F-DIGEST:4",
+      "F-EPOCH:4",
       "F-DUPLICATE:4",
+      "F-DUPLICATE-SCOPE:8",
       "F-BASIS:3",
       "F-DISPOSITION:4",
-      "F-FEEDBACK:3",
+      "F-FEEDBACK:4",
       "F-GAP:5",
       "F-GAP-ANNOUNCED:5",
       "F-GAP-SNAPSHOT:4",
+      "F-GAP-BACKWARD:5",
+      "F-GAP-NO-BASE:3",
+      "F-GAP-ENDPOINTS:9",
+      "F-GAP-ORDER:4",
+      "F-GAP-PORTS:5",
+      "F-GAP-SIGNAL:4",
+      "F-GAP-ACK:6",
       "F-AUTHORITY:4",
-      "F-PRIVATE:3",
+      "F-PRIVATE:4",
       "F-EXECUTABLE:4",
-      "F-EFFECT:2",
+      "F-EXECUTABLE-SEQUENCE:4",
+      "F-EXECUTABLE-DEPTH:4",
+      "F-EFFECT:3",
+    ]);
+    expect(
+      CONTRACT.endpoints.map(entry => `${entry.id}:${entry.owner}:${entry.visibility}:${entry.lane === undefined ? "-" : "lane"}:${entry.invalidation === undefined ? "-" : "invalidation"}`),
+      "the contract's endpoints",
+    ).toEqual([
+      "browser/view:browser:public:lane:invalidation",
+      "browser/panel:browser:public:lane:invalidation",
+      "server/view:server:public:lane:invalidation",
+      "pi/status:pi:public:lane:invalidation",
+      "browser/secret:browser:private:lane:invalidation",
+      "browser/internal:browser:internal:lane:invalidation",
+      "browser/bare:browser:public:-:-",
+      "browser/half:browser:public:lane:-",
+      "browser/unlaned:browser:public:-:invalidation",
     ]);
     expect([BRIDGE_WORDS, SDK_WORDS, EXECUTABLE_KEYS, WIRE_KINDS, VALUE_KINDS]).toEqual([
       ["public", "port", "bridge"],
