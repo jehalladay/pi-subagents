@@ -58,6 +58,14 @@
    "RL-RQ7",
    "RL-RQ8"
   ],
+  "unbatteried": {
+   "RL-RQ3": "not in the battery: F-GENERATION's old generation of the same collection is the title's duty, not this wrong-source case",
+   "RL-RQ4": "not in the battery: no payload states valid_until (the residual R-EXPIRY)",
+   "RL-RQ5": "not in the battery: no payload states a missing source",
+   "RL-RQ6": "not in the battery: codec fixtures are no payload reading",
+   "RL-RQ7": "not in the battery: source IO is no payload reading",
+   "RL-RQ8": "not in the battery: installed-wheel evidence is no payload reading"
+  },
   "generation": "g2",
   "payloads": {
    "sealed": "4edf63fa0c74f5c8",
@@ -360,6 +368,26 @@
    ]
   },
   {
+   "id": "R-UNNAMED-SPEC",
+   "pin": "A1",
+   "quiet": [
+    "packageTarball"
+   ],
+   "twin": [
+    "packageAlias"
+   ]
+  },
+  {
+   "id": "R-UNFED-RENDER",
+   "pin": "A1",
+   "quiet": [
+    "rfTwoRowReader"
+   ],
+   "twin": [
+    "rfAnyRowReader"
+   ]
+  },
+  {
    "id": "R-OTHER-SHAPE",
    "pin": "A2",
    "quiet": [
@@ -454,23 +482,64 @@
         "rfRowKey": "hits=0 freshness_witness",
         "piCompleteness": "hits=0 completeness: 'complete'"
        },
+       "packages": {
+        "packageName": [
+         "dependencies.vibranium-reactive-lenses"
+        ],
+        "packageScoped": [
+         "devDependencies.@scope/reactive_lenses"
+        ],
+        "packageAlias": [
+         "dependencies.rl=npm:vibranium-reactive-lenses@0.1.1"
+        ],
+        "packageGit": [
+         "dependencies.rl=github:example/ReactiveLensesSDK#v0.1.1"
+        ],
+        "packageOverride": [
+         "overrides.some-tool.reactive-lenses"
+        ],
+        "packageScript": [
+         "scripts.probe=python -m reactive_lenses"
+        ],
+        "packageTarball": []
+       },
        "files": {
         "srcPlant": "judged=true hits=1 src/workbench/coverage-witness-plant.ts",
         "docsPlant": "judged=false hits=0 docs/coverage-witness-plant.md",
         "testPlant": "judged=false hits=0 test/coverage-witness-plant.test.ts",
         "rootPlant": "judged=false hits=0 coverage-witness-plant.ts"
+       },
+       "rfReaders": {
+        "rfTwoRowReader": [],
+        "rfAnyRowReader": [
+         "clean",
+         "undiagnosed",
+         "blocksOnly",
+         "necessityOnly",
+         "noBlock",
+         "withheld",
+         "reused",
+         "committedRender",
+         "committedSeq"
+        ]
        }
       },
       "package": {
-       "real": [],
-       "planted": [
-        "dependencies:vibranium-reactive-lenses",
-        "devDependencies:@scope/reactive_lenses"
-       ]
+       "real": []
       },
       "rf": {
-       "clean": "complete; witness keys identical; a read key differing",
-       "undiagnosed": "partial; witness keys identical; a read key differing"
+       "variants": {
+        "clean": "complete success | observations: 1 row, 0 reused; witness keys identical",
+        "undiagnosed": "partial unknown | inclusion not diagnosed: result.blocks and result.necessity absent: partial; witness keys identical",
+        "blocksOnly": "partial unknown | inclusion not diagnosed: result.necessity absent: partial; witness keys identical",
+        "necessityOnly": "partial unknown | inclusion not diagnosed: result.blocks absent: partial; witness keys identical",
+        "noBlock": "partial unknown | inclusion: 0 blocks included, 0 of 0 judged candidates withheld at host_necessity: partial; witness keys identical",
+        "withheld": "partial unknown | inclusion: 1 block included, 1 of 2 judged candidates withheld at host_necessity: partial; witness keys identical",
+        "reused": "partial unknown | observations: 1 row, 1 reused: partial; witness keys identical",
+        "committedRender": "refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.; witness keys identical",
+        "committedSeq": "refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.; witness keys identical"
+       },
+       "readKey": "differing"
       },
       "adoption": null
      }
@@ -674,6 +743,26 @@
         }
        }
       },
+      "judge": {
+       "ORACLE": "accepted",
+       "M-FRESHNESS": "refused F-FRESHNESS",
+       "M-PARTIAL": "refused F-PARTIAL",
+       "M-GENERATION": "refused F-GENERATION",
+       "M-NO-RECORDS": "refused F-NO-RECORDS",
+       "M-FIELDS": "refused F-FIELDS",
+       "M-CONSTANT": "refused L-SEALED",
+       "M-CAMEL": "accepted",
+       "M-SNAKE": "refused F-PARTIAL,F-GENERATION,F-NO-RECORDS",
+       "M-EXPIRY": "accepted",
+       "M-NO-EXPIRY": "refused F-PARTIAL,F-GENERATION,F-NO-RECORDS"
+      },
+      "registration": {
+       "outsideSrc": "its module is not below src/",
+       "noHit": "the trigger reads no hit in its module",
+       "notImported": "this file imports no value from its module statically",
+       "unnamed": "adoption() names no binding its module's import introduces",
+       "complete": "accepted"
+      },
       "adoption": null,
       "adopted": null
      }
@@ -751,6 +840,8 @@
       "rf": {
        "clean": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: complete success | observations: 1 row, 0 reused",
        "undiagnosed": "rows=[captured_at_render] blocks=absent necessity=absent withheld=0 render_id=null commit_seq=null: partial unknown | inclusion not diagnosed: result.blocks and result.necessity absent: partial",
+       "blocksOnly": "rows=[captured_at_render] blocks=1 necessity=absent withheld=0 render_id=null commit_seq=null: partial unknown | inclusion not diagnosed: result.necessity absent: partial",
+       "necessityOnly": "rows=[captured_at_render] blocks=absent necessity=1 withheld=0 render_id=null commit_seq=null: partial unknown | inclusion not diagnosed: result.blocks absent: partial",
        "noBlock": "rows=[captured_at_render] blocks=0 necessity=0 withheld=0 render_id=null commit_seq=null: partial unknown | inclusion: 0 blocks included, 0 of 0 judged candidates withheld at host_necessity: partial",
        "withheld": "rows=[captured_at_render] blocks=1 necessity=2 withheld=1 render_id=null commit_seq=null: partial unknown | inclusion: 1 block included, 1 of 2 judged candidates withheld at host_necessity: partial"
       },
@@ -839,7 +930,7 @@
      "id": "C2",
      "quote": "for current tasks",
      "witness": {
-      "current": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: complete success | observations: 1 row, 0 reused",
+      "clean": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: complete success | observations: 1 row, 0 reused",
       "reused": "rows=[reused] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: partial unknown | observations: 1 row, 1 reused: partial",
       "committedRender": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=\"rnd_aaaaaaaaaaaaaaaaaaaaaa\" commit_seq=null: refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.",
       "committedSeq": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=1: refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null."
