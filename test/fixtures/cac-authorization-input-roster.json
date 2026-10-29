@@ -326,8 +326,29 @@
        "member",
        "element",
        "binding",
+       "assignment",
        "in",
-       "own-key"
+       "literal"
+      ],
+      "controls": 53,
+      "plants": [
+       "P1",
+       "P2",
+       "P3",
+       "P4",
+       "P5",
+       "P6",
+       "P7",
+       "P8",
+       "P9",
+       "P10",
+       "P11",
+       "O1",
+       "O2",
+       "O3",
+       "O4",
+       "CORE-SCHEMA",
+       "CORE-MEMBER"
       ]
      }
     },
@@ -352,7 +373,8 @@
       ],
       "judged": 40,
       "family": 50,
-      "words": 0
+      "words": 0,
+      "wordNames": 90
      }
     }
    ]
@@ -371,7 +393,25 @@
       "status": "parked",
       "page": "docs/workbench/12-security.md",
       "section": "Authorization design",
-      "sentence": "absent"
+      "sentence": "absent",
+      "kinds": [
+       "list"
+      ],
+      "items": 8,
+      "sha256": "afc98664a6f9bb2d",
+      "plants": [
+       "D-CTRL",
+       "D-NESTED",
+       "D-PARA",
+       "D-BLOCKQUOTE",
+       "D-HTML",
+       "D-PARAPHRASE",
+       "IN-PLACE",
+       "TABLE",
+       "CODE",
+       "SUBSECTION",
+       "COMMENT"
+      ]
      }
     }
    ]
@@ -388,7 +428,7 @@
   },
   {
    "id": "R-DYNAMIC-KEY",
-   "family": "a field read through a key the source does not spell as a literal (a variable, a concatenation, a template with a substitution) escapes the name reading"
+   "family": "a field read through a key the source never spells whole, as a literal or as a word (a variable, a concatenation, a template with a substitution, a fragment matched by a string method or a pattern, a constant imported from outside src), escapes both the field reading and the word reading"
   },
   {
    "id": "R-PROSE-RECORD",
@@ -401,6 +441,14 @@
   {
    "id": "R-HOLLOW-BINDING",
    "family": "A1 binds the wb-pjj provenance cases by presence, registrations and reads, never by strength: a case hollowed in place still reads bound (A3 drives the same fixtures through the core itself)"
+  },
+  {
+   "id": "R-HOLLOW-IMPL",
+   "family": "SELF-READ judges each IMPL entry by the identifiers it names, never by use: an entry that names a reader beside a constant witness (void rfTopology) still reads bound"
+  },
+  {
+   "id": "R-OTHER-SECTION",
+   "family": "D1 reads the one section clause (d) names, docs/workbench/12-security.md 'Authorization design': the sentence on another section of the page, or on another page, is not read"
   }
  ]
 }

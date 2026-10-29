@@ -22,12 +22,14 @@
  * source denial), 14-belief-transport-approximation-v6.md:29 (failed/expired source checks remain FAIL/UNKNOWN, not probabilistic
  * success) and :44 (the harnesses keep admission and denial).
  *
- * MEASURED AT 04123dc0d0f2 (trunk tip at claim time, landing 671) and holding at e8e13f82bfd0 (landing 672, merged into the branch:
- * three test files and .beads, no src or docs path), not pinned: src/workbench/control.ts:255 declares the filing's
- * cited predicate (export function isCoreMintedDecision); src holds 117 files, every one a .ts module, no symlink; the core and the
+ * MEASURED AT 04123dc0d0f2 (trunk tip at the first cut's claim, landing 671) and re-measured for this cut at 57cb1c0ca9a4 (landing
+ * 677) and aa95f436d802 (landing 678), each merged into the branch, no src or docs path changed among the three, not pinned:
+ * src/workbench/control.ts:255 declares the filing's cited predicate (export function isCoreMintedDecision); src holds 117 files,
+ * every one a .ts module, no symlink; the core and the
  * six modules with a value import of it (claude-control, control-reply, control-tool, detached-control, forge-control and
  * furnace-control under src/workbench; src/workflow/task.ts imports a type only) form the admission/decision set; the three record
- * lines name 40 distinct camel- or Pascal-case members, none spelled in src as a word (git grep -w over src), and two one-word
+ * lines name 40 distinct camel- or Pascal-case members and the absence roster's lines 50 distinct schema names, none of the 90
+ * spelled in src as a word (git grep -w over src), and two one-word
  * members, principal (spelled on 169 src lines: Pi's own principal, a member of NativeControlRequest and ObservationScope) and
  * status (492 lines), which src reads as properties of its own and its producers' shapes; no src module reads any of the 40 as a
  * property. The filing measured 0 identifiers of the program at Pi d75b68d; the absence census holds the program's names at zero
@@ -51,13 +53,28 @@
  *   two source checks rf reports on an ok render, a failed one (an observation row that observed no value: denied, degraded) and an
  *   expired one (a row replayed from an earlier render: freshness reused), each with the PASS and the expired records planted at
  *   four positions.
- * - FIELDS (row C): the property reads a src module spells, from its TypeScript AST, in these forms: a member access (optional
- *   chains included), an element access with a literal key, an object binding pattern's key, an `in` test with a literal key, and
- *   an own-key call with a literal key (Object.hasOwn, Object.getOwnPropertyDescriptor, Reflect.get, Reflect.has,
- *   Reflect.getOwnPropertyDescriptor, hasOwnProperty and propertyIsEnumerable, called directly or through .call). A record-shaped
- *   field is one of the 40 members (the identifier members of the three record lines that list them) or a schema name of the
- *   absence roster's two line sets. The admission/decision set is derived: the core plus every src module with a value import that
- *   resolves to it.
+ * - FIELDS (row C): what a src module spells, from its TypeScript AST over decoded names (a unicode escape in an identifier or a
+ *   string reads as the character it encodes): the name of a member access (optional chains included) and the last part of a
+ *   qualified name (a type query such as typeof value.member); every object binding pattern's identifier key (a parameter, a
+ *   declaration, a for-of head or a catch clause; renamed or shorthand); an object literal's identifier key when a destructuring
+ *   assignment writes to the literal (the left of `=`, a default inside a pattern included, a for-of head, or a property value, an
+ *   element or an array spread inside such a target; renamed or shorthand); and EVERY string literal and no-substitution template
+ *   literal in the module's code (a comment, JSDoc included, is the WORDS reading's), wherever it sits, read through the parentheses
+ *   and the as, satisfies, non-null and angle-bracket type assertions around it and attributed by where it stands: an element access
+ *   key (element), an `in` test's left operand (in), a binding pattern's string or computed key (binding), an assignment pattern's
+ *   string or computed key (assignment), and any other position (literal: the key of an own-key call, direct, through .call or
+ *   .apply or through an alias, a comparison or case operand, a collection entry, a type). A record-shaped field is one of the 40
+ *   members (the identifier members of the three record lines that list them) or one of the 50 schema names of the absence roster's
+ *   two line sets. The admission/decision set is derived: the core plus every src module with a value import that resolves to it.
+ * - WORDS (row C): each src file's raw text, for every record-shaped name spelled as a word (not preceded or followed by an
+ *   identifier character), in code, strings, comments and patterns alike; it complements FIELDS, which reads decoded names that the
+ *   raw text does not spell.
+ * - DOCS (row D): the page's 'Authorization design' section through the shared rendered view (test/helpers/census.ts docsSection):
+ *   every block by what it states (a heading, a paragraph, a code block, a block quote or a table by its rendered text, each list
+ *   item, its nested items included, by its rendered text, and an HTML block by its source) for either of the parked sentence's two
+ *   terms ('authorization input', 'never softens', any case); and the section against its shape frozen at this cut's base: one list
+ *   of the eight bullets and no other block, HTML-free (no HTML block, tag or comment in it), the bullets' rendered text held to a
+ *   sha-256.
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label):
  *  A. A1 the wb-pjj provenance test (its header names wb-pjj) reads this roster by path and registers one describe for clause (a)
@@ -75,29 +92,45 @@
  *    reader's control). B3 no B reading surfaces a probability-shaped string or a success tone, and five probability texts planted
  *    in the refusal's text slots never surface (the matcher reads each).
  *  C. C1 the derived admission/decision set holds the core and its six readers, every member yields reads (the core's include
- *    principal), none reads a record-shaped field, and neither does any src module; the reader's controls flag each read form.
+ *    principal), none reads a record-shaped field, and neither does any src module; the reader's 53 controls (one synthetic module
+ *    each) flag every form, position, wrapper and escape FIELDS names, each at its form; and the reader flags each of refusal #1's
+ *    plants at its form (P1-P11 and O1-O4, the gate's modules verbatim) and both of its core plants inside the core's own text.
  *    C2 the tie to R2: the fixture record is the absence roster's own vendored line (held to the sha-256 this roster measured)
  *    and a schema name that census judges, as is each record line the members come from; its census names that roster; the
- *    three-valued status is the line's; the one-word members are exactly the shared names, each one src reads; the schema family
- *    of both line sets joins the field reading; and no src file spells one of the 40 members as a word.
+ *    three-valued status is the line's; the one-word members are exactly the shared names, each one src reads as a property (in a
+ *    form other than a bare literal); the schema family of both line sets joins the field reading; and the word reading covers
+ *    every record-shaped name (the 40 members and the 50 schema names), finds none spelled in src, and reads the name in each of
+ *    refusal #1's plants.
  *  D. PARKED, never counted satisfied: clause (d) asks for a sentence on the W19 security-design page; standing rule 3 (the user's
  *    W19 INPUT HYGIENE order) keeps agents to product input-hygiene tests, so the sentence and its wb-gs2.3 census row are the
- *    owner's. D1 holds the parked state: the row carries that reason, and the page's 'Authorization design' section states no such
- *    sentence, so the cut that adds one reds this row and binds it in the same commit.
+ *    owner's. D1 holds the parked state: the row carries that reason, no block of the section states either term, and the section
+ *    is its frozen shape, so any cut that changes what the section renders (a block or a bullet added, removed or reworded, or HTML
+ *    added) reds D1 and binds this row in the same commit, the clause (d) sentence in any form or wording included; an edit that
+ *    leaves every rendered block as it was (markup only) is not a change D1 reads. Its controls, each the page with one edit made in memory, red D1 by their causes: refusal #1's
+ *    docs plants (the sentence as a bullet, a nested item, a paragraph, a block quote and an HTML block, and the paraphrase as a
+ *    bullet), the paraphrase inside the eighth bullet, the sentence as a table cell, a code block and a subsection heading, and an
+ *    HTML comment in a bullet. D1 reads that one section (R-OTHER-SECTION).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` and `${id}:${status}` as literals and equals the roster's copy
  * (beside each pin's witness). OUTSIDE ANCHORS: the owner filing in the tracked export (its seven paragraphs, each trimmed, held to
  * the roster's sha-256): its acceptance clause is tiled by the labels, its clause (a) yields the fixture conditions, the cited
  * predicate and file, its quote paragraph yields the first vendored line's text and site, and it cites the Library pin, so a pin or
  * a row removed from every census literal and from the roster still reds against the owner's text; the absence roster's vendored
- * lines yield the records, their members and the statuses; the src tree yields the admission/decision set.
+ * lines yield the records, their members and the statuses; the src tree yields the admission/decision set; and the docs page's
+ * section yields D1's frozen shape.
  * SELF-READ: the judged set parses this file's IMPL and requires every pin to name one of READERS and not ROSTER (direct
- * identifiers only); each pin's witness carries the digest of its own quote; the records case requires every pin and every quiet
- * row to have run to its end.
+ * identifiers only, R-HOLLOW-IMPL); each pin's witness carries the digest of its own quote; the records case requires every pin and
+ * every quiet row to have run to its end; and the residual ids this header's RESIDUALS paragraph names, in order, must equal QUIET's
+ * keys and the roster's.
  * RESIDUALS (named families, each with a pinned quiet row in QUIET): R-OTHER-PRODUCER row B reads rf's refusal only; R-SHARED-NAME
- * a one-word member (principal, status) is not judged by name; R-DYNAMIC-KEY a key the source does not spell as a literal escapes
- * the name reading; R-PROSE-RECORD a member the program names only in prose is not read; R-UNVENDORED-MEMBERS the members of the
- * 18 records whose vendored line is a heading are not read; R-HOLLOW-BINDING A1 binds the provenance cases by presence and reads,
- * so a case hollowed in place still reads bound.
+ * a one-word member (principal, status) is not judged by name; R-DYNAMIC-KEY a key the source never spells whole (a variable, a
+ * concatenation, a template with a substitution, a fragment matched by a string method or a pattern, a constant imported from
+ * outside src) escapes both the field and the word reading; R-PROSE-RECORD a member the program names only in prose is not read;
+ * R-UNVENDORED-MEMBERS the members of the 18 records whose vendored line is a heading are not read; R-HOLLOW-BINDING A1 binds the
+ * provenance cases by presence and reads, so a case hollowed in place still reads bound; R-HOLLOW-IMPL SELF-READ judges an IMPL
+ * entry by the identifiers it names, so an entry that names a reader beside a constant witness still reads bound; R-OTHER-SECTION
+ * D1 reads the 'Authorization design' section only, so the sentence on another section of the page, or on another page, is not
+ * read. The list's anchors are this paragraph, QUIET and the roster, which one coordinated edit changes together: the program
+ * states no residual list to anchor it outside the cut.
  * Display paths added: none. Test-only: no scratch (every synthetic module is parsed in memory); src, the docs, both rosters, the
  * two test sources it binds and the bead export are only read.
  */
@@ -111,7 +144,7 @@ import { CapabilityError, type JsonValue } from "../src/workbench/capability-reg
 import { type ControlDecision, decideControl, isCoreMintedDecision, type NativeControlRequest } from "../src/workbench/control.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type Presentation } from "../src/workbench/observation.js";
 import { type ReactiveFiberProjectionTopology, type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
-import { docsSection, sourceStructure } from "./helpers/census.js";
+import { docsSection, type RenderedBlock, sourceStructure } from "./helpers/census.js";
 import { rfFixtureBlock, rfFixtureDecision } from "./helpers/rf-render-fixture.js";
 
 type JsonRecord = { [key: string]: JsonValue };
@@ -155,7 +188,7 @@ interface AbsenceRoster {
   readonly spans: readonly Span[];
   readonly extension: { readonly spans: readonly Span[] };
 }
-type ReadForm = "member" | "element" | "binding" | "in" | "own-key";
+type ReadForm = "member" | "element" | "binding" | "assignment" | "in" | "literal";
 interface FieldRead {
   readonly file: string;
   readonly line: number;
@@ -374,61 +407,154 @@ const SHAPED: ReadonlySet<string> = new Set([...JUDGED_FIELDS, ...schemaFamily()
 const shaped = (reads: readonly FieldRead[]): FieldRead[] => reads.filter(read => SHAPED.has(read.name));
 
 // --- the field reading ------------------------------------------------------------------------------------------------------------------
-const OWN_KEY_CALLS: Readonly<Record<string, readonly string[]>> = { Object: ["hasOwn", "getOwnPropertyDescriptor"], Reflect: ["get", "has", "getOwnPropertyDescriptor"] };
-const OWN_KEY_METHODS: readonly string[] = ["hasOwnProperty", "propertyIsEnumerable"];
-function literalKey(node: ts.Node | undefined): string | undefined {
-  return node !== undefined && (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) ? node.text : undefined;
+type Outer = ts.ParenthesizedExpression | ts.AsExpression | ts.SatisfiesExpression | ts.NonNullExpression | ts.TypeAssertion;
+/** The wrappers a key is read through: parentheses and the as, satisfies, non-null and angle-bracket type assertions. */
+const isOuter = (node: ts.Node): node is Outer =>
+  ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isNonNullExpression(node) || ts.isTypeAssertionExpression(node);
+/** The outermost expression a node stands as, through every wrapper around it. */
+function outermost(node: ts.Node): ts.Node {
+  let current = node;
+  while (isOuter(current.parent) && current.parent.expression === current) current = current.parent;
+  return current;
 }
-/** Every property read one module makes, read from its TypeScript AST (the FIELDS reading). */
+/** An object or array literal a destructuring assignment writes to: the left of `=` (a default inside a pattern included), a for-of
+ * head, or a property value, an element or a spread inside such a target. */
+function assignmentTarget(node: ts.Node): boolean {
+  const current = outermost(node);
+  const parent = current.parent;
+  if (ts.isBinaryExpression(parent)) return parent.operatorToken.kind === ts.SyntaxKind.EqualsToken && parent.left === current;
+  if (ts.isForOfStatement(parent)) return parent.initializer === current;
+  if (ts.isPropertyAssignment(parent)) return parent.initializer === current && assignmentTarget(parent.parent);
+  if (ts.isSpreadAssignment(parent) || ts.isSpreadElement(parent)) return assignmentTarget(parent.parent);
+  if (ts.isArrayLiteralExpression(parent)) return assignmentTarget(parent);
+  return false;
+}
+/** Where a string literal stands, through its wrappers: an element access key, an `in` test's left operand, a binding or
+ * assignment pattern's string or computed key, or any other position (literal). */
+function literalForm(node: ts.StringLiteral | ts.NoSubstitutionTemplateLiteral): ReadForm {
+  const key = outermost(node);
+  const parent = key.parent;
+  if (ts.isElementAccessExpression(parent) && parent.argumentExpression === key) return "element";
+  if (ts.isBinaryExpression(parent) && parent.operatorToken.kind === ts.SyntaxKind.InKeyword && parent.left === key) return "in";
+  const name = ts.isComputedPropertyName(parent) ? parent : key;
+  const holder = name.parent;
+  if (ts.isBindingElement(holder) && holder.propertyName === name && ts.isObjectBindingPattern(holder.parent)) return "binding";
+  if (ts.isPropertyAssignment(holder) && holder.name === name && assignmentTarget(holder.parent)) return "assignment";
+  return "literal";
+}
+/** Every property read and every string literal one module spells, read from its TypeScript AST over decoded names (the FIELDS
+ * reading). */
 function fieldReads(file: string, text: string): FieldRead[] {
   const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const reads: FieldRead[] = [];
-  const add = (node: ts.Node, name: string | undefined, form: ReadForm): void => {
-    if (name !== undefined) reads.push({ file, line: source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1, name, form });
+  const add = (node: ts.Node, name: string, form: ReadForm): void => {
+    reads.push({ file, line: source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1, name, form });
   };
   const visit = (node: ts.Node): void => {
     if (ts.isPropertyAccessExpression(node)) add(node.name, node.name.text, "member");
-    else if (ts.isElementAccessExpression(node)) add(node.argumentExpression, literalKey(node.argumentExpression), "element");
+    else if (ts.isQualifiedName(node)) add(node.right, node.right.text, "member");
     else if (ts.isBindingElement(node) && ts.isObjectBindingPattern(node.parent)) {
-      const key: ts.Node = node.propertyName ?? node.name;
-      add(key, ts.isIdentifier(key) ? key.text : ts.isComputedPropertyName(key) ? literalKey(key.expression) : literalKey(key), "binding");
-    } else if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.InKeyword) add(node.left, literalKey(node.left), "in");
-    else if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression)) {
-      const { expression: owner, name } = node.expression;
-      const calls = ts.isIdentifier(owner) && Object.hasOwn(OWN_KEY_CALLS, owner.text) ? OWN_KEY_CALLS[owner.text] : undefined;
-      if (calls?.includes(name.text)) add(node, literalKey(node.arguments[1]), "own-key");
-      else if (OWN_KEY_METHODS.includes(name.text)) add(node, literalKey(node.arguments[0]), "own-key");
-      else if (name.text === "call" && ts.isPropertyAccessExpression(owner) && OWN_KEY_METHODS.includes(owner.name.text)) add(node, literalKey(node.arguments[1]), "own-key");
-    }
+      const key = node.propertyName ?? node.name;
+      if (ts.isIdentifier(key)) add(key, key.text, "binding");
+    } else if (ts.isObjectLiteralExpression(node) && assignmentTarget(node)) {
+      for (const property of node.properties) {
+        if (ts.isShorthandPropertyAssignment(property)) add(property.name, property.name.text, "assignment");
+        else if (ts.isPropertyAssignment(property) && ts.isIdentifier(property.name)) add(property.name, property.name.text, "assignment");
+      }
+    } else if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) add(node, node.text, literalForm(node));
     ts.forEachChild(node, visit);
   };
   visit(source);
   return reads;
 }
-/** One synthetic module per read form, each reading one judged member: the reader's positive controls. */
+/** One synthetic module per read form and spelling, each reading one record-shaped name: the reader's positive controls. */
 const PLANTED_READS: readonly (readonly [ReadForm, string, string])[] = [
   ["member", "guardOrRelyReceipt", "export const read = (value: Record<string, unknown>) => value.guardOrRelyReceipt;\n"],
   ["member", "proofTier", "export const read = (value?: Record<string, unknown>) => value?.proofTier;\n"],
-  ["element", "modelCoverage", "export const read = (value: Record<string, unknown>) => value[\"modelCoverage\"];\n"],
-  ["element", "policyEpoch", "export const read = (value: Record<string, unknown>) => value[`policyEpoch`];\n"],
-  ["binding", "legalActionSets", "export const read = ({ legalActionSets }: Record<string, unknown>) => legalActionSets;\n"],
-  ["binding", "worldScope", "export const read = ({ worldScope: scope }: Record<string, unknown>) => scope;\n"],
-  ["in", "memorylessWitness", "export const read = (value: object) => \"memorylessWitness\" in value;\n"],
-  ["own-key", "supportUpdate", "export const read = (value: object) => Object.hasOwn(value, \"supportUpdate\");\n"],
-  ["own-key", "sourceId", "export const read = (value: object) => Reflect.get(value, \"sourceId\");\n"],
-  ["own-key", "initialBeliefSupport", "export const read = (value: object) => value.hasOwnProperty(\"initialBeliefSupport\");\n"],
-  ["own-key", "exactPredicateRef", "export const read = (value: object) => Object.prototype.hasOwnProperty.call(value, \"exactPredicateRef\");\n"],
-  ["own-key", "validityHorizon", "export const read = (value: object) => Object.getOwnPropertyDescriptor(value, \"validityHorizon\");\n"],
-  ["own-key", "revocationHandling", "export const read = (value: object) => Reflect.has(value, \"revocationHandling\");\n"],
-  ["own-key", "currentUsePredicate", "export const read = (value: object) => Reflect.getOwnPropertyDescriptor(value, \"currentUsePredicate\");\n"],
-  ["own-key", "branchRefs", "export const read = (value: object) => value.propertyIsEnumerable(\"branchRefs\");\n"],
-  ["own-key", "unionWrites", "export const read = (value: object) => Object.prototype.propertyIsEnumerable.call(value, \"unionWrites\");\n"],
-  ["binding", "checkerTier", "export const read = ({ [\"checkerTier\"]: tier }: Record<string, unknown>) => tier;\n"],
   ["member", "selectorTVBound", "export const read = (value: Record<string, unknown>) => value.selectorTVBound;\n"],
   ["member", "admissionVerdict", "export const read = (value: Record<string, unknown>) => value.admissionVerdict;\n"],
   ["member", "SourceBeliefSafetyCertificateV1", "export const read = (value: Record<string, unknown>) => value.SourceBeliefSafetyCertificateV1;\n"],
+  ["member", "worldScope", "declare const value: Record<string, unknown>;\nexport type Read = typeof value.worldScope;\n"],
+  ["member", "branchEffects", "export const read = (value: Record<string, unknown>) => value.branchEffect\\u0073;\n"],
+  ["element", "modelCoverage", 'export const read = (value: Record<string, unknown>) => value["modelCoverage"];\n'],
+  ["element", "policyEpoch", "export const read = (value: Record<string, unknown>) => value[`policyEpoch`];\n"],
+  ["element", "checkerPolicySnapshot", 'export const read = (value: Record<string, unknown>) => value[("checkerPolicySnapshot")];\n'],
+  ["element", "clientBoundaryVersion", 'export const read = (value: Record<string, unknown>) => value["clientBoundaryVersion" as const];\n'],
+  ["element", "currentUsePredicate", 'export const read = (value: Record<string, unknown>) => value["currentUsePredicate" satisfies string];\n'],
+  ["element", "exactPredicateRef", 'export const read = (value: Record<string, unknown>) => value["exactPredicateRef"!];\n'],
+  ["element", "inductiveInvariantRef", 'export const read = (value: Record<string, unknown>) => value[<const>"inductiveInvariantRef"];\n'],
+  ["element", "validityHorizon", 'export const read = (value?: Record<string, unknown>) => value?.["validityHorizon"];\n'],
+  ["element", "realizationRef", 'export const read = (value: Record<string, unknown>) => value["realizationR\\u0065f"];\n'],
+  ["binding", "legalActionSets", "export const read = ({ legalActionSets }: Record<string, unknown>) => legalActionSets;\n"],
+  ["binding", "originalEvidenceSnapshot", "export const read = ({ originalEvidenceSnapshot: snapshot }: Record<string, unknown>) => snapshot;\n"],
+  ["binding", "observableEventSchema", 'export const read = ({ ["observableEventSchema"]: schema }: Record<string, unknown>) => schema;\n'],
+  ["binding", "partialWriteDependencies", 'export const read = ({ "partialWriteDependencies": dependencies }: Record<string, unknown>) => dependencies;\n'],
+  ["binding", "revocationHandling", 'export const read = ({ [("revocationHandling" as const)]: handling }: Record<string, unknown>) => handling;\n'],
+  ["binding", "selectionKernelRef", "export const read = (list: Record<string, unknown>[]) => { for (const { selectionKernelRef } of list) return selectionKernelRef; };\n"],
+  ["binding", "ObserverDependenceV2", "export const read = (value: Record<string, unknown>) => { const { ObserverDependenceV2: dependence } = value; return dependence; };\n"],
+  ["binding", "ConcurrentSwapCertificateV1", "export const read = (run: () => void) => { try { run(); } catch ({ ConcurrentSwapCertificateV1 }) { return ConcurrentSwapCertificateV1; } };\n"],
+  ["assignment", "selectorOperationalReads", "export const read = (value: Record<string, unknown>) => { let reads: unknown; ({ selectorOperationalReads: reads } = value); return reads; };\n"],
+  ["assignment", "selectorSemanticDependencies", "export const read = (value: Record<string, unknown>) => { let selectorSemanticDependencies: unknown; ({ selectorSemanticDependencies } = value); return selectorSemanticDependencies; };\n"],
+  ["assignment", "sourceAuthorityRefs", 'export const read = (value: Record<string, unknown>) => { let refs: unknown; ({ ["sourceAuthorityRefs" as const]: refs } = value); return refs; };\n'],
+  ["assignment", "sourceGuardReceipt", 'export const read = (value: Record<string, unknown>) => { let receipt: unknown; ({ "sourceGuardReceipt": receipt } = value); return receipt; };\n'],
+  ["assignment", "sourceRevisions", "export const read = (list: Record<string, unknown>[]) => { let revisions: unknown; for ({ sourceRevisions: revisions } of list) break; return revisions; };\n"],
+  ["assignment", "unionWrites", "export const read = (list: Record<string, unknown>[]) => { let writes: unknown; [{ unionWrites: writes }] = list; return writes; };\n"],
+  ["assignment", "winningSupportFixedPoint", "export const read = (value: Record<string, unknown>) => { let point: unknown; ({ outer: { winningSupportFixedPoint: point } } = { outer: value }); return point; };\n"],
+  ["assignment", "ObserverQuotientCertificateV1", "export const read = (value: Record<string, unknown>) => { let quotient: unknown; ({ outer: { ObserverQuotientCertificateV1: quotient } = {} } = { outer: value }); return quotient; };\n"],
+  ["assignment", "DistinguishabilityHypergraphCertificateV1", "export const read = (list: unknown[]) => { let certificate: unknown; [...[{ DistinguishabilityHypergraphCertificateV1: certificate }]] = [list]; return certificate; };\n"],
+  ["in", "memorylessWitness", 'export const read = (value: object) => "memorylessWitness" in value;\n'],
+  ["in", "observableChoiceTraceRef", 'export const read = (value: object) => ("observableChoiceTraceRef" as const) in value;\n'],
+  ["literal", "supportUpdate", 'export const read = (value: object) => Object.hasOwn(value, "supportUpdate");\n'],
+  ["literal", "sourceId", 'export const read = (value: object) => Reflect.get(value, "sourceId");\n'],
+  ["literal", "initialBeliefSupport", 'export const read = (value: object) => value.hasOwnProperty("initialBeliefSupport");\n'],
+  ["literal", "exactOrApproximateLocalityBound", 'export const read = (value: object) => Object.prototype.hasOwnProperty.call(value, "exactOrApproximateLocalityBound");\n'],
+  ["literal", "completeTransitionSupportEvidence", 'export const read = (value: object) => Object.getOwnPropertyDescriptor(value, "completeTransitionSupportEvidence");\n'],
+  ["literal", "activeSupportPolicy", 'export const read = (value: object) => Reflect.has(value, "activeSupportPolicy");\n'],
+  ["literal", "HardOKProofRefs", 'export const read = (value: object) => Reflect.getOwnPropertyDescriptor(value, "HardOKProofRefs");\n'],
+  ["literal", "branchRefs", 'export const read = (value: object) => value.propertyIsEnumerable("branchRefs");\n'],
+  ["literal", "completenessProofRefOfEnvironmentTransitionRelation", 'export const read = (value: object) => Object.prototype.propertyIsEnumerable.call(value, "completenessProofRefOfEnvironmentTransitionRelation");\n'],
+  ["literal", "ChoiceCertificateV2", 'export const read = (value: object) => Object.hasOwn.call(null, value, "ChoiceCertificateV2");\n'],
+  ["literal", "TemporalRelianceCertificateV1", 'export const read = (value: object) => Reflect.get.apply(Reflect, [value, "TemporalRelianceCertificateV1"]);\n'],
+  ["literal", "ObservationCertificateV1", 'const own = Object.hasOwn;\nexport const read = (value: object) => own(value, "ObservationCertificateV1");\n'],
+  ["literal", "EvidenceCertificateV1", 'export const read = (value: object) => Object.keys(value).includes("EvidenceCertificateV1");\n'],
+  ["literal", "CapabilityBoundaryV1", 'export const read = (key: string) => key === ("CapabilityBoundaryV1" as string);\n'],
+  ["literal", "TypedEffectContractV2", 'export const read = (key: string) => { switch (key) { case "TypedEffectContractV2": return true; default: return false; } };\n'],
+  ["literal", "EvidenceClaimV2", 'export type Read = Record<string, unknown>["EvidenceClaimV2"];\n'],
+  ["literal", "ReplacementAssessmentV2", "export const read = (value: Record<string, unknown>) => value[String.raw`ReplacementAssessmentV2`];\n"],
+  ["literal", "ChoiceTransportCertificateV1", 'export const read = () => new Map([["ChoiceTransportCertificateV1", true]]);\n'],
 ];
+/** The refusal-#1 plants (gate s137 LEG 2: U1's P1-P11 and F3's O1-O4), each the gate's synthetic module verbatim, with the read the
+ * field reading must flag in it. */
+const GATE_HEAD = "export const read = (value: Record<string, unknown>): unknown => ";
+const REFUSAL_PLANTS: readonly (readonly [string, string, string])[] = [
+  ["P1", "element:guardOrRelyReceipt", `${GATE_HEAD}value[("guardOrRelyReceipt")];\n`],
+  ["P2", "element:policyEpoch", `${GATE_HEAD}value["policyEpoch" as const];\n`],
+  ["P3", "element:proofTier", `${GATE_HEAD}value["proofTier" as keyof typeof value];\n`],
+  ["P4", "element:modelCoverage", `${GATE_HEAD}value["modelCoverage"!];\n`],
+  ["P5", "in:memorylessWitness", 'export const read = (value: object): boolean => ("memorylessWitness") in value;\n'],
+  ["P6", "binding:checkerTier", 'export const read = ({ [("checkerTier")]: tier }: Record<string, unknown>): unknown => tier;\n'],
+  ["P7", "literal:supportUpdate", 'export const read = (value: object): unknown => Object.hasOwn.call(null, value, "supportUpdate");\n'],
+  ["P8", "literal:sourceId", 'export const read = (value: object): unknown => Reflect.get.call(Reflect, value, "sourceId");\n'],
+  ["P9", "element:SourceBeliefSafetyCertificateV1", `${GATE_HEAD}value[("SourceBeliefSafetyCertificateV1")];\n`],
+  ["P10", "element:TemporalRelianceCertificateV1", `${GATE_HEAD}value["TemporalRelianceCertificateV1" as const];\n`],
+  ["P11", "literal:ChoiceCertificateV2", 'export const read = (value: object): boolean => Object.hasOwn(value, "ChoiceCertificateV2" as const);\n'],
+  ["O1", "assignment:guardOrRelyReceipt", "export const read = (value: Record<string, unknown>): unknown => { let g: unknown; ({ guardOrRelyReceipt: g } = value); return g; };\n"],
+  ["O2", "assignment:SourceBeliefSafetyCertificateV1", "export const read = (value: Record<string, unknown>): unknown => { let s: unknown; ({ SourceBeliefSafetyCertificateV1: s } = value); return s; };\n"],
+  ["O3", "literal:admissionVerdict", 'export const read = (value: object): boolean => Object.keys(value).includes("admissionVerdict");\n'],
+  ["O4", "literal:ObservationCertificateV1", 'export const read = (value: object): unknown => Object.entries(value).find(([key]) => key === "ObservationCertificateV1");\n'],
+];
+/** The refusal-#1 core plants, each appended to the decision core's own text, where the gate measured both src-landable (tsc and
+ * biome rc 0): the schema-name read through an as-const key and the member read through a keyof key. */
+const CORE_PLANTS: readonly (readonly [string, string, string])[] = [
+  ["CORE-SCHEMA", "element:TemporalRelianceCertificateV1", '\nexport const gateProbeRead = (request: NativeControlRequest): unknown => (request as unknown as Record<string, unknown>)["TemporalRelianceCertificateV1" as const];\n'],
+  ["CORE-MEMBER", "element:guardOrRelyReceipt", '\nexport const gateProbeMember = (request: NativeControlRequest): unknown => request["guardOrRelyReceipt" as keyof NativeControlRequest];\n'],
+];
+/** The record-shaped reads one module makes, as form:name. */
+const flagged = (file: string, text: string): string[] => shaped(fieldReads(file, text)).map(read => `${read.form}:${read.name}`);
 const WORD = (name: string): RegExp => new RegExp(`(?<![A-Za-z0-9_$])${name}(?![A-Za-z0-9_$])`);
+/** The names the word reading reads. */
+const RECORD_WORDS: readonly string[] = [...SHAPED].sort();
+const wordsIn = (text: string): string[] => RECORD_WORDS.filter(name => WORD(name).test(text));
 
 // --- the src tree -----------------------------------------------------------------------------------------------------------------------
 function walkTree(dir: string, unread: string[]): string[] {
@@ -693,13 +819,53 @@ const PROBABILITY = /\d\s*%|\bprobab|\blikel(?:y|ihood)\b|\bchance\b|\bconfidenc
 const PROBABILITY_TEXTS: readonly string[] = ["success probability 0.97", "97% likely to succeed", "p=0.97", "confidence 0.9", "chance of success: high"];
 
 // --- the docs page --------------------------------------------------------------------------------------------------------------------
-/** The page's 'Authorization design' section through the shared rendered view: whether it binds, and its list items' rendered text. */
-function docsBinding(): { readonly ok: boolean; readonly items: readonly string[] } {
-  const section = docsSection(readRepo(DOCS_FILE), DOCS_HEADING, 2, [DOCS_PARENT]);
-  return { ok: section.ok, items: section.blocks.flatMap(block => (block.kind === "list" ? block.items.map(item => item.text) : [])) };
-}
-/** The parked sentence's two terms: a bullet stating either is the sentence clause (d) asks for. */
+/** The parked sentence's two terms: a block stating either is the sentence clause (d) asks for. */
 const PARKED_TERMS = /authorization input|never softens/i;
+/** What one block states: a heading, a paragraph, a code block, a block quote or a table by its rendered text, each list item (its
+ * nested items included) by its rendered text, and an HTML block by its source. */
+const blockTexts = (block: RenderedBlock): string[] => (block.kind === "list" ? block.items.map(item => item.text) : block.kind === "html" ? [block.raw] : [block.text]);
+/** The section's shape frozen at this cut's base (57cb1c0, the page unchanged at aa95f43): one list of the eight bullets and no other
+ * block, HTML-free, the bullets' rendered text (joined by newlines) held to this sha-256. */
+const FROZEN_SECTION = { kinds: ["list"], items: 8, sha256: "afc98664a6f9bb2d5ae8196d7745cbe41e90f7ea5de442c1515db6175b937ca5" } as const;
+interface DocsReading {
+  readonly ok: boolean;
+  readonly kinds: readonly string[];
+  readonly items: readonly string[];
+  readonly terms: readonly string[];
+  readonly frozen: boolean;
+}
+/** D1's reading of a page: its 'Authorization design' section through the shared rendered view, every block read for the parked
+ * sentence's terms, and the section held to its frozen shape. */
+function docsBinding(markdown: string = readRepo(DOCS_FILE)): DocsReading {
+  const section = docsSection(markdown, DOCS_HEADING, 2, [DOCS_PARENT]);
+  const kinds = section.blocks.map(block => block.kind);
+  const items = section.blocks.flatMap(block => (block.kind === "list" ? block.items.map(item => item.text) : []));
+  const frozen =
+    section.ok && !section.hasHtml && JSON.stringify(kinds) === JSON.stringify(FROZEN_SECTION.kinds) && items.length === FROZEN_SECTION.items && sha256(items.join("\n")) === FROZEN_SECTION.sha256;
+  return { ok: section.ok, kinds, items, terms: section.blocks.flatMap(blockTexts).filter(text => PARKED_TERMS.test(text)), frozen };
+}
+/** Why a reading reds D1: a block states a term, the section left its frozen shape, or both. */
+const docsCauses = (reading: DocsReading): string[] => [...(reading.terms.length > 0 ? ["terms"] : []), ...(reading.frozen ? [] : ["shape"])];
+/** The section's eighth bullet: each docs plant is inserted after it, in memory, never on disk. */
+const DOCS_ANCHOR = "- Source/deployment pin must be checked before loading; malformed schema/unsupported contract fails closed.\n";
+const PARKED_SENTENCE = "A design-program record is never an authorization input; UNKNOWN never softens a native denial.";
+const PARAPHRASE = "A design-program certificate is metadata that never authorizes a control, and an UNKNOWN never weakens a native denial.";
+/** The refusal-#1 docs plants (gate s137 LEG 2: D-CTRL, D-NESTED, D-PARA, D-BLOCKQUOTE, D-HTML and the rider D-PARAPHRASE, each
+ * the gate's edit verbatim) and the reader's further controls, each with the cause it reds D1 by. */
+const DOCS_PLANTS: readonly (readonly [string, string, readonly string[]])[] = [
+  ["D-CTRL", `${DOCS_ANCHOR}- ${PARKED_SENTENCE}\n`, ["terms", "shape"]],
+  ["D-NESTED", `${DOCS_ANCHOR}  - ${PARKED_SENTENCE}\n`, ["terms", "shape"]],
+  ["D-PARA", `${DOCS_ANCHOR}\n${PARKED_SENTENCE}\n`, ["terms", "shape"]],
+  ["D-BLOCKQUOTE", `${DOCS_ANCHOR}\n> ${PARKED_SENTENCE}\n`, ["terms", "shape"]],
+  ["D-HTML", `${DOCS_ANCHOR}\n<p>${PARKED_SENTENCE}</p>\n`, ["terms", "shape"]],
+  ["D-PARAPHRASE", `${DOCS_ANCHOR}- ${PARAPHRASE}\n`, ["shape"]],
+  ["IN-PLACE", DOCS_ANCHOR.replace("fails closed.", `fails closed; ${PARAPHRASE.charAt(0).toLowerCase()}${PARAPHRASE.slice(1)}`), ["shape"]],
+  ["TABLE", `${DOCS_ANCHOR}\n| Record rule |\n| --- |\n| ${PARKED_SENTENCE} |\n`, ["terms", "shape"]],
+  ["CODE", `${DOCS_ANCHOR}\n\`\`\`text\n${PARKED_SENTENCE}\n\`\`\`\n`, ["terms", "shape"]],
+  ["SUBSECTION", `${DOCS_ANCHOR}\n### A design-program record is never an authorization input\n`, ["terms", "shape"]],
+  ["COMMENT", DOCS_ANCHOR.replace("fails closed.", "fails closed. <!-- never softens a native denial -->"), ["shape"]],
+];
+
 
 // --- the cases ------------------------------------------------------------------------------------------------------------------------------
 const IMPL: Readonly<Record<string, () => JsonValue>> = {
@@ -824,9 +990,21 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     expect(reads[0]?.map(read => read.name), "the core's reads include Pi's own principal (the reader's control on real code)").toContain("principal");
     expect(reads.flatMap(shaped), "no admission/decision path reads a record-shaped field").toEqual([]);
     expect(src.flatMap(file => shaped(fieldReads(file, readRepo(file)))), "no src module reads one").toEqual([]);
-    const planted = PLANTED_READS.map(([, , text]) => shaped(fieldReads("plant.ts", text)).map(read => `${read.form}:${read.name}`));
-    expect(planted, "each planted read form is flagged once").toEqual(PLANTED_READS.map(([form, name]) => [`${form}:${name}`]));
-    return { claim: claim("C1"), core: CORE, anchors: ADMISSION_ANCHORS.length, modules: modules.length >= ADMISSION_ANCHORS.length + 1, src: true, judged: SHAPED.size, forms: [...new Set(PLANTED_READS.map(([form]) => form))] };
+    expect(REFUSAL_PLANTS.map(([id, , text]) => [id, flagged("plant.ts", text)]), "each refusal-#1 plant is flagged at its form").toEqual(REFUSAL_PLANTS.map(([id, read]) => [id, [read]]));
+    const core = readRepo(CORE);
+    expect(CORE_PLANTS.map(([id, , line]) => [id, flagged(CORE, core + line)]), "each core plant is flagged inside the core's own text").toEqual(CORE_PLANTS.map(([id, read]) => [id, [read]]));
+    expect(PLANTED_READS.map(([, , text]) => flagged("plant.ts", text)), "each planted read form is flagged once").toEqual(PLANTED_READS.map(([form, name]) => [`${form}:${name}`]));
+    return {
+      claim: claim("C1"),
+      core: CORE,
+      anchors: ADMISSION_ANCHORS.length,
+      modules: modules.length >= ADMISSION_ANCHORS.length + 1,
+      src: true,
+      judged: SHAPED.size,
+      forms: [...new Set(PLANTED_READS.map(([form]) => form))],
+      controls: PLANTED_READS.length,
+      plants: [...REFUSAL_PLANTS, ...CORE_PLANTS].map(([id]) => id),
+    };
   },
   C2: () => {
     const line = recordLine();
@@ -839,16 +1017,15 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     expect(line.statuses, "the three-valued status is the line's").toEqual(["PASS", "FAIL", "UNKNOWN"]);
     expect([...new Set(definitions.flatMap(entry => entry.words))].sort(), "the one-word members are the shared names").toEqual([...SHARED]);
     const { src } = admissionSet();
-    const read = new Set(src.flatMap(file => fieldReads(file, readRepo(file)).map(entry => entry.name)));
+    const read = new Set(src.flatMap(file => fieldReads(file, readRepo(file)).filter(entry => entry.form !== "literal").map(entry => entry.name)));
     expect(SHARED.filter(name => !read.has(name)), "src reads each shared name as a property").toEqual([]);
     expect(SHARED.filter(name => nativeMembers().includes(name)), "principal is a Pi-native interface member").toEqual(["principal"]);
     expect(family.every(name => SHAPED.has(name)) && JUDGED_FIELDS.every(name => SHAPED.has(name)), "the schema family joins the field reading").toBe(true);
-    const words = src.flatMap(file => {
-      const text = readRepo(file);
-      return JUDGED_FIELDS.filter(name => WORD(name).test(text)).map(name => `${file}:${name}`);
-    });
-    expect(words, "no src file spells a judged member as a word").toEqual([]);
-    expect(JUDGED_FIELDS.filter(name => !WORD(name).test(`const x = value.${name};`)), "the word reading reads each member (control)").toEqual([]);
+    const words = src.flatMap(file => wordsIn(readRepo(file)).map(name => `${file}:${name}`));
+    expect(words, "no src file spells a record-shaped name as a word").toEqual([]);
+    expect([...SHAPED].filter(name => !RECORD_WORDS.includes(name)), "the word reading reads every record-shaped name: the 40 members and the 50 schema names").toEqual([]);
+    expect(RECORD_WORDS.filter(name => !WORD(name).test(`const x = value.${name};`)), "the word reading reads each name (control)").toEqual([]);
+    expect([...REFUSAL_PLANTS, ...CORE_PLANTS].filter(([, , text]) => wordsIn(text).length === 0).map(([id]) => id), "and reads each refusal-#1 plant's name").toEqual([]);
     return {
       claim: claim("C2"),
       roster: ABSENCE_ROSTER_FILE,
@@ -861,6 +1038,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       judged: JUDGED_FIELDS.length,
       family: family.length,
       words: words.length,
+      wordNames: RECORD_WORDS.length,
     };
   },
   D1: () => {
@@ -868,9 +1046,14 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     expect([row?.status, row?.reason?.startsWith("standing rule 3 ")], "clause (d) is parked under standing rule 3").toEqual(["parked", true]);
     const docs = docsBinding();
     expect(docs.ok, "the page's section binds in the rendered view").toBe(true);
-    expect(docs.items.length, "the section's bullets are read").toBeGreaterThanOrEqual(8);
-    expect(docs.items.filter(item => PARKED_TERMS.test(item)), "the parked sentence is not on the page (this cut adds none)").toEqual([]);
-    return { claim: claim("D1"), status: "parked", page: DOCS_FILE, section: DOCS_HEADING, sentence: "absent" };
+    expect(docs.terms, "no block of the section states either term of the parked sentence (this cut adds none)").toEqual([]);
+    expect([docs.kinds, docs.items.length, docs.frozen], "the section is its frozen shape: one list of eight bullets, HTML-free, held to the sha-256").toEqual([[...FROZEN_SECTION.kinds], FROZEN_SECTION.items, true]);
+    const page = readRepo(DOCS_FILE);
+    expect(page.split(DOCS_ANCHOR).length, "the anchor bullet occurs once on the page").toBe(2);
+    const verdicts = DOCS_PLANTS.map(([id, edit]) => [id, docsCauses(docsBinding(page.replace(DOCS_ANCHOR, edit)))] as const);
+    expect(verdicts.filter(([, causes]) => causes.length === 0).map(([id]) => id), "every docs plant reds D1").toEqual([]);
+    expect(verdicts, "each by its cause").toEqual(DOCS_PLANTS.map(([id, , causes]) => [id, [...causes]]));
+    return { claim: claim("D1"), status: "parked", page: DOCS_FILE, section: DOCS_HEADING, sentence: "absent", kinds: [...docs.kinds], items: docs.items.length, sha256: FROZEN_SECTION.sha256.slice(0, 16), plants: DOCS_PLANTS.map(([id]) => id) };
   },
 };
 
@@ -891,12 +1074,15 @@ const QUIET: Readonly<Record<string, () => void>> = {
   },
   "R-DYNAMIC-KEY": () => {
     const quiet = [
+      'import { RECEIPT_KEY } from "outside-package";',
       'const key = "guardOr" + "RelyReceipt";',
-      `export const read = (value: Record<string, unknown>, name: string) => [value[key], value[name], value[\`${"$"}{"proof"}Tier\`]];`,
+      `export const read = (value: Record<string, unknown>, name: string) => [value[key], value[name], value[\`${"$"}{"proof"}Tier\`], value[RECEIPT_KEY]];`,
+      'export const find = (value: object) => Object.keys(value).find(name => name.endsWith("RelyReceipt") || /^admission/.test(name));',
       "",
     ].join("\n");
     expect(quiet).toContain("value[`$" + '{"proof"}Tier`]');
-    expect(shaped(fieldReads("quiet.ts", quiet)), "a key the source does not spell as a literal escapes").toEqual([]);
+    expect(shaped(fieldReads("quiet.ts", quiet)), "a key the source never spells whole escapes the field reading").toEqual([]);
+    expect(wordsIn(quiet), "and the word reading").toEqual([]);
     const literal = "export const read = (value: Record<string, unknown>) => [value[\"guardOrRelyReceipt\"], value[`proofTier`]];\n";
     expect(shaped(fieldReads("plant.ts", literal)).map(read => read.name), "the same keys spelled as literals are read").toEqual(["guardOrRelyReceipt", "proofTier"]);
   },
@@ -932,12 +1118,26 @@ const QUIET: Readonly<Record<string, () => void>> = {
     const binding = provenanceBinding(hollow);
     expect([binding.header, binding.roster, binding.suites, binding.registrations, binding.reads], "a hollowed block still reads bound").toEqual(["wb-pjj", 1, 1, 4, [...BLOCK_READS]]);
   },
+  "R-HOLLOW-IMPL": () => {
+    // An IMPL entry that names a reader without using it (a constant witness beside `void rfTopology`) still passes SELF-READ.
+    const hollow = 'const IMPL = { B3: () => { void rfTopology; return { claim: "0000000000000000", readings: 47 }; } };\n';
+    const reads = implReads(hollow);
+    expect(reads.B3, "the hollow entry names a reader").toContain("rfTopology");
+    expect(selfReadDefects(reads), "and the self-read reads it bound").toEqual([]);
+  },
+  "R-OTHER-SECTION": () => {
+    // The sentence on another section of the page leaves the 'Authorization design' reading as it was: D1 reads that one section.
+    const page = readRepo(DOCS_FILE);
+    const elsewhere = page.replace("\n## Credential boundaries\n", `\n## Credential boundaries\n\n${PARKED_SENTENCE}\n`);
+    expect([elsewhere === page, elsewhere.includes(PARKED_SENTENCE)], "the plant is on the page, under Credential boundaries").toEqual([false, true]);
+    expect(docsBinding(elsewhere), "and D1's reading of its section is the reading without it").toEqual(docsBinding(page));
+  },
 };
 
 // --- the self-read ------------------------------------------------------------------------------------------------------------------------
 /** The identifiers each IMPL entry names, read from this file's own source. */
-function implReads(): Record<string, string[]> {
-  const source = ts.createSourceFile(SELF, readFileSync(HERE, "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+function implReads(text: string = readFileSync(HERE, "utf8")): Record<string, string[]> {
+  const source = ts.createSourceFile(SELF, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const reads: Record<string, string[]> = {};
   const visit = (node: ts.Node): void => {
     if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === "IMPL" && node.initializer !== undefined && ts.isObjectLiteralExpression(node.initializer)) {
@@ -956,6 +1156,17 @@ function implReads(): Record<string, string[]> {
   };
   visit(source);
   return reads;
+}
+/** The pins whose IMPL entry names no reader, or names the roster (the SELF-READ judgement). */
+const selfReadDefects = (reads: Readonly<Record<string, readonly string[]>>): string[] =>
+  Object.entries(reads)
+    .filter(([, names]) => !names.some(name => READERS.includes(name)) || names.includes("ROSTER"))
+    .map(([pin]) => pin);
+/** The residual ids this file's header names, in order (its RESIDUALS paragraph): QUIET's and the roster's anchor outside both. */
+function headerResiduals(text: string = readFileSync(HERE, "utf8")): string[] {
+  const header = /^\/\*\*([\s\S]*?)\*\//.exec(text)?.[1] ?? "";
+  const paragraph = /\n \* RESIDUALS \(([\s\S]*?)\n \* Display paths added:/.exec(header)?.[1] ?? "";
+  return [...new Set(paragraph.match(/\bR-[A-Z]+(?:-[A-Z]+)*\b/g) ?? [])];
 }
 /** The labels tile the clause when each follows the last with only white space, commas, semicolons and list markers between. */
 const LIST_SEPARATOR = /^(?:[\s,;]|\([a-z]\)(?=\s))*$/;
@@ -989,6 +1200,7 @@ describe("wb-rdlh.1 Library design-program authorization-input census (LIBRARY-C
     expect([ROSTER.bead, ROSTER.producer, ROSTER.filing.export, ROSTER.record.roster]).toEqual([BEAD, "Library", EXPORT_FILE, ABSENCE_ROSTER_FILE]);
     expect(ROSTER.fixtures.map(fixture => fixture.id)).toEqual(["N1", "N2", "N3"]);
     expect(ROSTER.residuals.map(item => item.id)).toEqual(Object.keys(QUIET));
+    expect(headerResiduals(), "the header's RESIDUALS paragraph names exactly the quiet rows, in order").toEqual(Object.keys(QUIET));
   });
 
   it("judged set, outside anchors: the owner filing tiles the labels and yields the quote the first vendored line holds", () => {
@@ -1008,11 +1220,7 @@ describe("wb-rdlh.1 Library design-program authorization-input census (LIBRARY-C
   it("judged set, self-read: every IMPL entry names a reader and not the roster", () => {
     const reads = implReads();
     expect(Object.keys(reads).sort()).toEqual(pinIds());
-    expect(
-      Object.entries(reads)
-        .filter(([, names]) => !names.some(name => READERS.includes(name)) || names.includes("ROSTER"))
-        .map(([pin]) => pin),
-    ).toEqual([]);
+    expect(selfReadDefects(reads)).toEqual([]);
   });
 
   for (const row of ROWS) {
