@@ -101,7 +101,9 @@
  *
  * FOLLOW-UP, wb-t1jc (the R694 carry of the wb-ts6.1 landing-574 PASS-WITH-FINDING, gate cmd_1d17b59d455f: F1 leads,
  * F2-F5 ride; each is cured or pinned where named, and no landed row, pin, plant, control or literal is removed):
- *  F1, G1's README read (the U2 family): a copy of the roots table the page hides by an attribute is not read. Beyond
+ *  F1, G1's README read (the U2 family): a copy of the roots table the page hides by an attribute is not read (the
+ *    hidden attribute, or the open attribute a dialog or a details element lacks; the start tag as the page's
+ *    tokenizer reads it since wb-psx0 F1, and the limits named below and in Q12). Beyond
  *    the hidden stretches the read hides the content of an element carrying the hidden attribute, of a dialog without
  *    its open attribute and of a details element without its open attribute, save its first summary child
  *    (attributeStretches; a void element, VOID_ELEMENTS, hides nothing), so the gate's G1-DETAILS-COPY and
@@ -122,13 +124,55 @@
  *    direction the read of content a page may not show takes for each row (the stricter one for rows N and E, the
  *    lenient one for G1's README read, which therefore hides the attribute-decided members as well).
  *
+ * FOLLOW-UP, wb-psx0 (the R694 carry of the wb-t1jc landing-627 PASS-WITH-FINDING, gate cmd_a683e43d8d5b: F1 leads, F2
+ * rides; each is cured or pinned where named, and no landed row, pin, plant, control, witness entry or vocabulary entry
+ * is removed):
+ *  F1, the tag as the page's tokenizer reads it: every tag the view, the hold check and G1's README read meet is cut
+ *    (its name, its attributes and its end) as the HTML Standard's tokenizer cuts a start or end tag it meets in its
+ *    data state (TAG_NAME_SOURCE, ATTRIBUTE_NAME_SOURCE and ATTRIBUTE_VALUE_SOURCE: THE RENDERED VIEW below), so an
+ *    attribute that follows a quoted value with no white space before it (missing-whitespace-between-attributes) is
+ *    read; where the page's tokenizer cuts no tag at all (inside an element it reads as raw text or RCDATA, save that
+ *    element's own end tag) this read still cuts one, the parser's context of R-HTML-RENDERING (Q12's xmp member). The
+ *    gate's L2-NOSPACE (the copy inside '<div title="x"hidden>') and its template twin met in an html block
+ *    ('<template id="x"class="y">' after a div start tag; a template's contents are inert) read the visible table and
+ *    red G1 (G1 readmeControls noSpaceHiddenCopy and noSpaceTemplateCopy), and so do the tokenizer's other attribute
+ *    forms that carry the hidden attribute (tokenizerHiddenCopies: after a single-quoted value, after a solidus, after
+ *    a name opening with an equals sign, after a name holding a quote, after an unquoted value holding a quote, in
+ *    upper case, and on an element whose name holds an underscore, which marked takes for an html block). The read
+ *    controls: the open attribute read the same way opens a details element (noSpaceOpenDetailsCopy); a quote inside an
+ *    unquoted value is part of it, so the word after it is no attribute (unquotedRunCopy); a vertical tab is no white
+ *    space inside a tag, so the hidden after it is part of the tag's name (nameSpaceCopy; the earlier reader took it
+ *    for white space and hid the copy the page shows); and the template twin's start tag on a line of its own
+ *    (wrappedCopy's form) is no CommonMark open tag, so marked reads it as paragraph text and escapes it, the page
+ *    shows the tag as text and the copy after it, and the read reads that copy (paragraphTagCopy). The view rows N and
+ *    E judge cuts tags the same way, so the content of a script block whose start tag has no white space between two
+ *    attributes is hidden there too (Q9's tenth case), and a tag's name loses case in its ASCII letters alone, so an
+ *    element named with a Kelvin sign where blockquote has its k is no separator (M5's fifth fusing control). A start
+ *    tag left open past its html block's end (its closing angle bracket missing, or a quoted value left open) is read
+ *    as text, a member of R-HTML-RENDERING (Q12's fourth and fifth README copies).
+ *  F2, one control per attributeStretches sub-behaviour the gate's LEG 2 mutants hollowed (G1 readmeControls): an
+ *    element the hidden attribute hides, left unclosed, hides to the page's end, so a later label is not counted
+ *    (unclosedHiddenCopy, L2M1); a details element carrying the hidden attribute hides its summary too
+ *    (hiddenDetailsSummaryCopy, L2M2); a void element before the summary opens no element, so the summary is still the
+ *    details' first summary child and its label is counted (voidBeforeSummaryCopy, L2M3); the words of a quoted value
+ *    are no attribute names, so a details whose title says open stays closed and a div whose title says hidden hides
+ *    nothing (quotedValueOpenCopy and quotedValueHiddenCopy, L2M5); and a summary left unclosed shows to just before
+ *    the details' end tag, its label counted and its table read (unclosedSummaryCopy, L2M6).
+ *
  * THE RENDERED VIEW: a Markdown page of the population (a file whose extension, in any case, is one of
  * MARKDOWN_EXTENSIONS) is read in the rendered view, line by line, by the rules below: this census's own reading of the
  * page's Markdown and HTML, held to marked's own HTML by the hold check, never a browser's drawing of the page.
  * marked's lexer (the repo's pin, 18.0.11, the landed docs censuses' own) cuts the page, and each source line keeps
  * only what the rules paint on it: emphasis, strong, strike-through and link delimiters, code-span backticks,
  * block-quote and list markers, the table delimiter row, and every comment, processing instruction, declaration and
- * CDATA section paint nothing; a tag paints one space when the element its name builds (in any case, renamed as the
+ * CDATA section paint nothing; a tag is cut as the HTML Standard's tokenizer cuts a start or end tag (wb-psx0 F1: its
+ * name runs to white space, a solidus or its end, an attribute's name to white space, a solidus, an equals sign or the
+ * tag's end, a value is quoted, unquoted or empty, white space or a solidus separates two attributes and after a quoted
+ * value nothing need, white space is the tokenizer's tab, line feed, form feed, carriage return and space, and the tag
+ * ends at the first greater-than sign outside a quoted value in the HTML it is read from, so a tag left open there is
+ * text; inside an element the parser reads as raw text or RCDATA, where the page's tokenizer cuts no tag but that
+ * element's end tag, this read still cuts tags: R-HTML-RENDERING); a tag paints one space when the element its name
+ * builds (its ASCII letters in any case, renamed as the
  * parser renames it: TAG_ALIASES, so an image tag builds img) is one of SEPARATOR_ELEMENTS (the line break br, its end
  * tag included; the block-level and table elements; the ruby annotation elements rt and rtc; the replaced elements that
  * render a box, img and input among them, so a Markdown image and a task checkbox paint one space too), save the end
@@ -164,7 +208,12 @@
  *    twice, a table inside a template element is not read, the visible table after it is, and the same holds for a
  *    table inside an element the page hides by an attribute, a closed details element (its summary shown), an element
  *    carrying the hidden attribute or a dialog without its open attribute, while one inside an open details element is
- *    read: attributeStretches, wb-t1jc F1); G2 through the real
+ *    read: attributeStretches, wb-t1jc F1; the start tag read as the page's tokenizer reads it, so the hidden
+ *    attribute after a quoted value with no white space before it hides the table, as do the tokenizer's other
+ *    attribute forms, while a vertical tab in the tag is part of its name and a tag marked reads as paragraph text
+ *    shows as text: wb-psx0 F1; an unclosed hidden element hides to the page's end, a hidden details element hides
+ *    its summary, a void element before the summary leaves it the details' summary, the words of a quoted value are
+ *    no attributes, and an unclosed summary shows to the details' end tag: wb-psx0 F2); G2 through the real
  *    preloadSkills under a scratch HOME a stand-in hyper-unix skill planted at all ten targets still reads the
  *    not-found placeholder, while the same stand-in planted at each of the five roots in turn is found (the positive
  *    control); G3 the Claude host hands the SDK settingSources [] when none is configured (an injected query records
@@ -213,7 +262,9 @@
  *    keep the skill name, a slug, a decision class, the recipe page and the hx command apart from the next word, so
  *    each reads served or named and its view holds, while the fused view of the same page does not hold; the controls:
  *    an inline element (span, b) and a void separator's end tag still render nothing, so a word split by one reads
- *    whole; M6 the page names: a page holding the T4 form under every Markdown extension spelling, in lower, upper and
+ *    whole, as does an element whose name only a full case fold would make a separator's (a Kelvin sign for
+ *    blockquote's k, wb-psx0 F1); M6 the page names: a page holding the T4 form under every Markdown extension
+ *    spelling, in lower, upper and
  *    mixed case, is judged in the rendered view and reads served, while the same page named .txt is read raw; M7 the
  *    hidden content on blocks planted on the same page: the content of a HIDDEN_ELEMENTS element paints nothing (each
  *    of the nine elements; a script in upper case, with an attribute and holding tags; nested templates; a script in a
@@ -240,7 +291,8 @@
  *    Q9 R-HIDDEN-SOURCE the source the view paints nothing for is not read, so a recipe copy kept there is not seen: a
  *    comment (T13's comment-only command, and a comment block), a fence's info string, an image's alt text, a link's
  *    title, a tag's attribute, a link reference definition and a HIDDEN_ELEMENTS element's content (a command inside
- *    script content, the gate's H-SCRIPT-HIDES-CMD, and a template block holding one) each read none, while the same
+ *    script content, the gate's H-SCRIPT-HIDES-CMD, a template block holding one, and a script block whose start tag
+ *    has no white space between two attributes, wb-psx0 F1) each read none, while the same
  *    command as an element's text reads served; Q10 R-EXAMPLE-SHAPE a settingSources example written as a YAML block
  *    list or bound through a name (the gate's G3-Y and G3-B) is not read by G3, while the multi-line JSON array (G3-J)
  *    is; Q11 R-CONFUSABLE a token spelled with look-alike or compatibility characters (fullwidth, Cyrillic,
@@ -265,7 +317,12 @@
  *    out reads served (the paired controls); and G1's README read, which hides by an attribute as well
  *    (attributeStretches), reads a copy of the roots table the page hides by styling (a style attribute's
  *    display:none), by scripting (noscript content) or as an element's fallback (an audio element's content) in place
- *    of the visible table after it (the README copies, wb-t1jc F1); Q13 R-OTHER-MARKUP a page whose extension is not a
+ *    of the visible table after it (the README copies, wb-t1jc F1), and a copy after a start tag left open past its
+ *    html block's end (its closing angle bracket missing, or a quoted value left open), which the page's tokenizer
+ *    runs on into the copy's table start tag (read into the open tag's attribute name or value), so the page draws
+ *    that copy as no table, while the read takes the open tag as text and reads the copy as the first table (by the
+ *    HTML Standard's tokenizer and tree construction, cited, not measured in a browser: wb-psx0 F1); Q13
+ *    R-OTHER-MARKUP a page whose extension is not a
  *    Markdown one is read raw, so another
  *    markup's syntax (reStructuredText strong, AsciiDoc strong, an HTML page's tags) and Markdown named .txt or with no
  *    extension are read as written and a command marked up in them reads none, while the same page with the plain
@@ -654,19 +711,57 @@ function referenceValue(whole: string, decimal: string | undefined, hex: string 
 }
 const decodeReferences = (text: string): string =>
   text.replace(REFERENCE, (whole: string, decimal?: string, hex?: string, name?: string) => referenceValue(whole, decimal, hex, name));
-/** The parts of raw HTML a page never shows: comments, processing instructions, declarations, CDATA, and every tag with its attributes. */
-const HTML_HIDDEN =
-  /<!--[\s\S]*?(?:-->|$)|<\?[\s\S]*?(?:\?>|$)|<![A-Za-z][\s\S]*?(?:>|$)|<!\[CDATA\[[\s\S]*?(?:\]\]>|$)|<\/?[A-Za-z][A-Za-z0-9-]*(?:\s+[^\s"'>/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+))?)*\s*\/?>/g;
-/** A tag's closing slash and element name (a comment, an instruction, a declaration or CDATA has none). */
-const TAG_NAME = /^<(\/?)([A-Za-z][A-Za-z0-9-]*)/;
+/*
+ * A tag as the HTML Standard's tokenizer cuts a start or end tag (its tag open, end tag open, tag name and attribute
+ * states; wb-psx0 F1): a less-than sign, a solidus for an end tag, an ASCII letter, then the rest of the name, every
+ * character up to white space, a solidus or the greater-than sign; then the attributes, up to the greater-than sign. An
+ * attribute's name is every character up to white space, a solidus, an equals sign or the greater-than sign (a quote or
+ * a less-than sign inside it is part of it, and an equals sign may open it, as the before-attribute-name state takes
+ * one, save straight after another attribute's name and white space, where it opens that attribute's value); its value,
+ * after an equals sign with white space around it allowed, is double- or single-quoted (a greater-than sign inside the
+ * quotes is part of it), unquoted (every character up to white space or the greater-than sign, a quote, an equals sign,
+ * a less-than sign or a grave accent inside it included; it never opens with a quote) or empty before the greater-than
+ * sign. White space or a solidus separates two attributes (a solidus not before the greater-than sign is read as a
+ * separator: unexpected-solidus-in-tag), and after a quoted value nothing need (missing-whitespace-between-attributes).
+ * White space is the tokenizer's own: tab, line feed, form feed and space, and the carriage return the input stream's
+ * preprocessing turns into a line feed; a vertical tab or a no-break space is part of the name or the unquoted value it
+ * sits in. A tag's and an attribute's name lose case in their ASCII letters alone (asciiLowered). The tag ends at the
+ * first greater-than sign outside a quoted value in the HTML it is read from (an html token's source in the view,
+ * marked's HTML in the hold check); a tag that has none there, which the page's tokenizer runs on into the HTML after
+ * it, is read as text (R-HTML-RENDERING). The cut is the data state's: inside an element the parser reads as raw text
+ * or RCDATA the page's tokenizer cuts no tag but that element's end tag, while this read still cuts them (the parser's
+ * context, R-HTML-RENDERING; the stretch a HIDDEN_ELEMENTS raw-text element opens hides every tag cut inside it).
+ */
+const TAG_SPACE = "[\\t\\n\\f\\r ]";
+const TAG_NAME_SOURCE = "[A-Za-z][^\\t\\n\\f\\r />]*";
+const ATTRIBUTE_NAME_SOURCE = "[^\\t\\n\\f\\r />][^\\t\\n\\f\\r />=]*";
+/** What follows an attribute's name: an equals sign and its value, or nothing, its name ending at white space, a solidus or the greater-than sign with no equals sign after the white space. */
+const ATTRIBUTE_VALUE_SOURCE = `(?:${TAG_SPACE}*=${TAG_SPACE}*(?:"[^"]*"|'[^']*'|[^\\t\\n\\f\\r >"'][^\\t\\n\\f\\r >]*(?=[\\t\\n\\f\\r >])|(?=>))|(?!${TAG_SPACE}*=)(?=[\\t\\n\\f\\r />]))`;
+/** The parts of raw HTML a page never shows: comments, processing instructions, declarations, CDATA, and every tag with its attributes (the tokenizer's tag, above). */
+const HTML_HIDDEN = new RegExp(
+  [
+    "<!--[\\s\\S]*?(?:-->|$)",
+    "<\\?[\\s\\S]*?(?:\\?>|$)",
+    "<![A-Za-z][\\s\\S]*?(?:>|$)",
+    "<!\\[CDATA\\[[\\s\\S]*?(?:\\]\\]>|$)",
+    `<\\/?${TAG_NAME_SOURCE}(?=[\\t\\n\\f\\r />])(?:[\\t\\n\\f\\r /]|${ATTRIBUTE_NAME_SOURCE}${ATTRIBUTE_VALUE_SOURCE})*>`,
+  ].join("|"),
+  "g",
+);
+/** A tag's closing slash and name, as the tokenizer reads it (a comment, an instruction, a declaration or CDATA has none). */
+const TAG_NAME = new RegExp(`^<(\\/?)(${TAG_NAME_SOURCE})`);
+/** One step of a tag's text after its name, read in turn from the name's end: a separator (white space or a solidus), or an attribute, its name in group 1. */
+const TAG_STEP = new RegExp(`[\\t\\n\\f\\r /]|(${ATTRIBUTE_NAME_SOURCE})${ATTRIBUTE_VALUE_SOURCE}`, "gy");
+/** A name with its ASCII upper-case letters lowered, as the tokenizer lowers a tag's and an attribute's name (every other character is kept). */
+const asciiLowered = (name: string): string => name.replace(/[A-Z]+/g, upper => upper.toLowerCase());
 const ALIASES: ReadonlyMap<string, string> = new Map(
   TAG_ALIASES.map(entry => {
     const [name = "", element = ""] = entry.split("=");
     return [name, element] as const;
   }),
 );
-/** The element a tag name builds: the name lower-cased, then renamed as the parser renames it (TAG_ALIASES). */
-const elementOf = (name: string): string => ALIASES.get(name.toLowerCase()) ?? name.toLowerCase();
+/** The element a tag name builds: the name's ASCII letters lower-cased, then renamed as the parser renames it (TAG_ALIASES). */
+const elementOf = (name: string): string => ALIASES.get(asciiLowered(name)) ?? asciiLowered(name);
 /**
  * Whether one hidden-HTML match renders apart from the text around it (one space): a tag that builds a SEPARATOR_ELEMENTS
  * element (any case; an aliased name read as its element), save the end tag of a void separator other than br, which the
@@ -698,14 +793,12 @@ interface TagMet {
 }
 /** The tags each painted page met (paintPage registers a page's list; paintHtml appends to it). */
 const TAGS_MET = new WeakMap<Shown, TagMet[]>();
-/** One attribute of a tag matched by HTML_HIDDEN, after the tag's name: its name and its value, if any. */
-const ATTRIBUTE = /\s+([^\s"'>/=]+)(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+))?/g;
 function tagMet(hidden: string, from: number, to: number): TagMet | undefined {
   const tag = TAG_NAME.exec(hidden);
   if (tag === null) return undefined;
   const closing = tag[1] === "/";
-  /** A start tag's attribute names, lower-cased in source order (the parser ignores an end tag's). */
-  const attributes = closing ? [] : [...hidden.slice(tag[0].length).matchAll(ATTRIBUTE)].map(match => (match[1] ?? "").toLowerCase());
+  /** A start tag's attribute names, ASCII-lowered in source order, read step by step as the tokenizer reads them (the parser ignores an end tag's). */
+  const attributes = closing ? [] : [...hidden.slice(tag[0].length).matchAll(TAG_STEP)].flatMap(step => (step[1] === undefined ? [] : [asciiLowered(step[1])]));
   return { from, to, name: elementOf(tag[2] ?? ""), closing, separator: separates(hidden), attributes };
 }
 interface Stretch {
@@ -799,7 +892,9 @@ function summaryChildOf(tags: readonly TagMet[], at: number, limit: number, end:
  * counted), or to the page's end when no end tag closes it; a void element (VOID_ELEMENTS) holds no content and hides
  * nothing. The extent is the tags' own, as the hidden stretches' is: the parser's tree context (an implied or misnested
  * end tag) is R-HTML-RENDERING, and so is content the page hides by styling, by scripting or as an element's fallback,
- * which this read still reads (Q12's README copies). A stretch keeps one space at its start when its element separates.
+ * or a copy after a start tag left open past its html, which this read still reads (Q12's README copies). The tags are
+ * the tokenizer's (TAG_NAME_SOURCE above: an attribute after a quoted value with no white space before it is read,
+ * wb-psx0 F1). A stretch keeps one space at its start when its element separates.
  */
 function attributeStretches(tags: readonly TagMet[], end: number): Stretch[] {
   const hidden = hiddenStretches(tags, end);
@@ -1783,6 +1878,8 @@ const WORD_JOINER = String.fromCodePoint(0x2060);
 /** Default-ignorable but not a format character (a combining grapheme joiner), and a non-white-space control (BEL). */
 const GRAPHEME_JOINER = String.fromCodePoint(0x034f);
 const BELL = String.fromCodePoint(0x0007);
+/** A letter whose full case fold is an ASCII k, while the tokenizer lowers ASCII letters alone (M5's fusing controls). */
+const KELVIN_SIGN = String.fromCodePoint(0x212a);
 /** The gate's control T10 and the visible text every T-form below must render to. */
 const T10 = "Run hx git diff $TRUNK $BRANCH to compare the branch with trunk.";
 const SKILL_SENTENCE = "Agents can load the hyper-unix skill before a review.";
@@ -1838,6 +1935,7 @@ const HIDDEN_CASES: readonly string[] = [
   '\n[census]: https://example.invalid/hx "hx git diff $TRUNK $BRANCH"',
   "Agents read <script>hx git diff $TRUNK $BRANCH</script> nothing here.",
   "<template>\nRun hx git diff $TRUNK $BRANCH\n</template>",
+  '<script title="x"type="text/plain">\nhx git diff $TRUNK $BRANCH\n</script>',
 ];
 const HIDDEN_CONTROL = "<span>hx git diff $TRUNK $BRANCH</span>";
 /** Row Q10: the gate's G3-B (a binding through a name) and G3-Y (a YAML block list); its control G3-J (a multi-line JSON array). */
@@ -1885,12 +1983,18 @@ const SEPARATOR_CASES: ReadonlyArray<readonly [string, string, readonly string[]
   ["S-RUBY-RTC", "Agents can load <ruby>hyper-unix<rtc>x</rtc></ruby> before a review.", ["served@+1"]],
   ["S-RUBY-RP", "Agents can load <ruby>hyper-unix<rp>(</rp><rt>x</rt><rp>)</rp></ruby> before a review.", ["served@+1"]],
 ];
-/** Row M5's fusing controls: [block, the judged lines it adds]: an inline element and a void separator's end tag render nothing, so the word they split reads whole. */
+/**
+ * Row M5's fusing controls: [block, the judged lines it adds]: an inline element and a void separator's end tag render
+ * nothing, so the word they split reads whole; and so does an element whose name only a full case fold would make a
+ * separator's (the tokenizer lowers ASCII letters alone, so a Kelvin sign is no k there: wb-psx0 F1; met in an html
+ * block, which marked hands on as written).
+ */
 const FUSING_CASES: ReadonlyArray<readonly [string, readonly string[]]> = [
   ["Agents can load hyper<span></span>-unix before a review.", ["served@+1"]],
   ["Agents can load hyper<b></b>-unix before a review.", ["served@+1"]],
   ["Agents can load hyper</img>-unix before a review.", ["served@+1"]],
   ["Agents can load hyper</hr>-unix before a review.", ["served@+1"]],
+  [`<div>Agents can load hyper<bloc${KELVIN_SIGN}quote></bloc${KELVIN_SIGN}quote>-unix before a review.</div>`, ["served@+1"]],
 ];
 /** Row M5's hold controls: [page, its view with the separator painted as nothing]: the fused view of a page that shows the words apart does not hold. */
 const FUSED_VIEWS: ReadonlyArray<readonly [string, string]> = [
@@ -2037,8 +2141,73 @@ const NESTED_SUMMARY_COPY = wrappedCopy("<details><div><summary>", "</summary></
 const VOID_HIDDEN_COPY = `<img hidden alt="">\n\n${rootsTable(ROOTS_ROWS)}`;
 const TEMPLATE_HIDDEN_COPY = `<template><div hidden></template>\n\n${rootsTable(ROOTS_ROWS)}`;
 const NESTED_HIDDEN_COPY = wrappedCopy("<div hidden><div>x</div>", "</div>");
-/** Row Q12's README copies (wb-t1jc F1): the copy the page hides by styling, by scripting or as an element's fallback, which G1's read still reads in place of the visible table. */
-const README_RENDERING_COPIES: readonly string[] = [wrappedCopy('<div style="display:none">', "</div>"), wrappedCopy("<noscript>", "</noscript>"), wrappedCopy("<audio>", "</audio>")];
+/**
+ * G1's tokenizer controls (wb-psx0 F1): the copy inside an element whose start tag the page's tokenizer reads with no
+ * white space between two attributes is not read (the gate's L2-NOSPACE, the hidden attribute after a quoted value; and
+ * its template twin, a template start tag of that form met in an html block, whose contents are inert); the visible
+ * table is.
+ */
+const NO_SPACE_HIDDEN_COPY = wrappedCopy('<div title="x"hidden>', "</div>");
+const NO_SPACE_TEMPLATE_COPY = wrappedCopy('<div><template id="x"class="y">', "</template>\n</div>");
+/**
+ * The tokenizer's other attribute forms, each hiding the copy by the hidden attribute: after a single-quoted value with
+ * no white space, after a solidus (unexpected-solidus-in-tag), after a name opening with an equals sign
+ * (unexpected-equals-sign-before-attribute-name), after a name holding a quote
+ * (unexpected-character-in-attribute-name), after an unquoted value holding a quote
+ * (unexpected-character-in-unquoted-attribute-value), in ASCII upper case, and on an element whose name holds an
+ * underscore (a tag's name runs to white space, a solidus or its end; marked takes such a tag, alone on its line, for
+ * an html block).
+ */
+const TOKENIZER_HIDDEN_COPIES: readonly string[] = [
+  wrappedCopy("<div title='x'hidden>", "</div>"),
+  wrappedCopy('<div title="x"/hidden>', "</div>"),
+  wrappedCopy("<div =x hidden>", "</div>"),
+  wrappedCopy('<div a"b hidden>', "</div>"),
+  wrappedCopy('<div a=b"c hidden>', "</div>"),
+  wrappedCopy('<DIV TITLE="x"HIDDEN>', "</DIV>"),
+  wrappedCopy("<div_x hidden>", "</div_x>"),
+];
+/** A vertical tab, which the tokenizer reads as no white space inside a tag (built from its code point, never written raw). */
+const VERTICAL_TAB = String.fromCodePoint(0x000b);
+/**
+ * Their read controls: the open attribute after a quoted value with no white space opens the details element, so its
+ * body is read; a quote inside an unquoted value is part of the value, so the word after it is no attribute; a vertical
+ * tab is no white space in a tag, so the word after it is part of the tag's name; and a start tag with no white space
+ * between two attributes that marked reads as paragraph text (no CommonMark open tag: the template twin's start tag on
+ * a line of its own, wrappedCopy's form) shows as text, so the copy after it is read, as the page shows it.
+ */
+const NO_SPACE_OPEN_DETAILS_COPY = wrappedCopy('<details title="x"open><summary>Roots</summary>', "</details>");
+const UNQUOTED_RUN_COPY = wrappedCopy('<div title=x"hidden>', "</div>");
+const NAME_SPACE_COPY = wrappedCopy(`<div${VERTICAL_TAB}hidden>`, "</div>");
+const PARAGRAPH_TAG_COPY = wrappedCopy('<template id="x"class="y">', "</template>");
+/**
+ * G1's branch controls (wb-psx0 F2, one per attributeStretches sub-behaviour the gate's L2M1-L2M3, L2M5 and L2M6
+ * mutants hollow): an element the hidden attribute hides, left unclosed, hides to the page's end (the second label is
+ * not counted); a details element carrying the hidden attribute hides its summary too; a void element before the
+ * summary opens no element, so the summary is still the details' first summary child and shows; the words of a quoted
+ * value are never attribute names (a details whose title says open stays closed, a div whose title says hidden hides
+ * nothing); and a summary left unclosed shows to just before the details' end tag, its label and its table read.
+ */
+const UNCLOSED_HIDDEN_COPY = `${rootsTable(ROOTS_ROWS)}\n<div hidden>\n\n${rootsTable([SIXTH_ROOT, ...ROOTS_ROWS])}`;
+const HIDDEN_DETAILS_SUMMARY_COPY = `<details hidden><summary>\n\n**${ROOTS_LABEL}** (checked in this order, first match wins):\n\n</summary>\n\n| Scope | Path | Source |\n|---|---|---|\n${ROOTS_ROWS.join("\n")}\n\n</details>\n\n${rootsTable([SIXTH_ROOT, ...ROOTS_ROWS])}`;
+const VOID_BEFORE_SUMMARY_COPY = `<details><br><summary>\n\n**${ROOTS_LABEL}** (checked in this order, first match wins):\n\n</summary>\n\n| Scope | Path | Source |\n|---|---|---|\n${ROOTS_ROWS.join("\n")}\n\n</details>\n\n${rootsTable([SIXTH_ROOT, ...ROOTS_ROWS])}`;
+const QUOTED_VALUE_OPEN_COPY = wrappedCopy('<details title="is open"><summary>Roots</summary>', "</details>");
+const QUOTED_VALUE_HIDDEN_COPY = wrappedCopy('<div title="not hidden">', "</div>");
+const UNCLOSED_SUMMARY_COPY = `<details><summary>\n\n${rootsTable(ROOTS_ROWS)}\n</details>\n\n${rootsTable([SIXTH_ROOT, ...ROOTS_ROWS])}`;
+/**
+ * Row Q12's README copies (wb-t1jc F1; wb-psx0 F1): the copy the page hides by styling, by scripting or as an element's
+ * fallback, or one after a start tag left open past its html block's end (no closing angle bracket before the block's
+ * blank line; a quoted value left open, an equals sign after a name and white space opening that name's value): the
+ * page's tokenizer runs the tag on into the copy's table start tag, while this read takes the open tag as text. G1's
+ * read still reads each in place of the visible table.
+ */
+const README_RENDERING_COPIES: readonly string[] = [
+  wrappedCopy('<div style="display:none">', "</div>"),
+  wrappedCopy("<noscript>", "</noscript>"),
+  wrappedCopy("<audio>", "</audio>"),
+  wrappedCopy('<div title="x" hidden', "</div>"),
+  wrappedCopy('<div a ="x hidden>', "</div>"),
+];
 /** G3's controls: a prose example the view renders (emphasis inside the key, the source spelled with a reference), and one a comment hides. */
 const RENDERED_EXAMPLE = 'Set "setting*Sources*": ["&#117;ser"] to load the user skills.';
 const HIDDEN_EXAMPLE = '<!-- "settingSources": ["user"] -->';
@@ -2072,6 +2241,19 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
         voidHiddenCopy: readmeRootsOf(VOID_HIDDEN_COPY),
         templateHiddenCopy: readmeRootsOf(TEMPLATE_HIDDEN_COPY),
         nestedHiddenCopy: readmeRootsOf(NESTED_HIDDEN_COPY),
+        noSpaceHiddenCopy: readmeRootsOf(NO_SPACE_HIDDEN_COPY),
+        noSpaceTemplateCopy: readmeRootsOf(NO_SPACE_TEMPLATE_COPY),
+        tokenizerHiddenCopies: TOKENIZER_HIDDEN_COPIES.map(readmeRootsOf),
+        noSpaceOpenDetailsCopy: readmeRootsOf(NO_SPACE_OPEN_DETAILS_COPY),
+        unquotedRunCopy: readmeRootsOf(UNQUOTED_RUN_COPY),
+        nameSpaceCopy: readmeRootsOf(NAME_SPACE_COPY),
+        paragraphTagCopy: readmeRootsOf(PARAGRAPH_TAG_COPY),
+        unclosedHiddenCopy: readmeRootsOf(UNCLOSED_HIDDEN_COPY),
+        hiddenDetailsSummaryCopy: readmeRootsOf(HIDDEN_DETAILS_SUMMARY_COPY),
+        voidBeforeSummaryCopy: readmeRootsOf(VOID_BEFORE_SUMMARY_COPY),
+        quotedValueOpenCopy: readmeRootsOf(QUOTED_VALUE_OPEN_COPY),
+        quotedValueHiddenCopy: readmeRootsOf(QUOTED_VALUE_HIDDEN_COPY),
+        unclosedSummaryCopy: readmeRootsOf(UNCLOSED_SUMMARY_COPY),
       };
       const filing = gateFiling();
       const targets = [...roster().installTargets];
@@ -2098,6 +2280,35 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       expect(readmeControls.voidHiddenCopy, "a void element carrying the hidden attribute hides nothing past its own tag").toEqual(copiedTable);
       expect(readmeControls.templateHiddenCopy, "a tag carrying the hidden attribute inside a template's inert contents hides nothing on the page").toEqual(copiedTable);
       expect(readmeControls.nestedHiddenCopy, "a nested element of its name is counted, so the hidden element ends at its own end tag").toEqual(visibleTable);
+      expect(
+        [readmeControls.noSpaceHiddenCopy, readmeControls.noSpaceTemplateCopy],
+        "a table inside an element whose start tag has no white space between two attributes (the hidden attribute after a quoted value; a template met in an html block) is not read; the visible table is",
+      ).toEqual([visibleTable, visibleTable]);
+      expect(
+        readmeControls.tokenizerHiddenCopies,
+        "the hidden attribute after a single-quoted value, a solidus, a name opening with an equals sign, a name holding a quote, an unquoted value holding a quote, in upper case, and on an element named with an underscore hides the table",
+      ).toEqual(TOKENIZER_HIDDEN_COPIES.map(() => visibleTable));
+      expect(readmeControls.noSpaceOpenDetailsCopy, "the open attribute after a quoted value with no white space opens the details; its table is read").toEqual(copiedTable);
+      expect(readmeControls.unquotedRunCopy, "a quote inside an unquoted value is part of it, so the word after it is no attribute; the table is read").toEqual(copiedTable);
+      expect(readmeControls.nameSpaceCopy, "a vertical tab is no white space in a tag, so the word after it is part of the tag's name; the table is read").toEqual(copiedTable);
+      expect(readmeControls.paragraphTagCopy, "a start tag marked reads as paragraph text shows as text, so the table after it is read").toEqual(copiedTable);
+      expect(readmeControls.unclosedHiddenCopy, "an element the hidden attribute hides, left unclosed, hides to the page's end: the later label is not counted").toEqual({
+        labels: 1,
+        roots: ["<cwd>/.pi/skills", "~/.pi/agent/skills"],
+      });
+      expect(readmeControls.hiddenDetailsSummaryCopy, "a details element carrying the hidden attribute hides its summary too: its label is not counted").toEqual(visibleTable);
+      expect(readmeControls.voidBeforeSummaryCopy, "a void element before the summary opens no element, so the summary shows: its label is counted").toEqual({
+        labels: 2,
+        roots: ["~/.skills", "<cwd>/.pi/skills", "~/.pi/agent/skills"],
+      });
+      expect(
+        [readmeControls.quotedValueOpenCopy, readmeControls.quotedValueHiddenCopy],
+        "the words of a quoted value are no attributes: a details whose title says open stays closed, a div whose title says hidden hides nothing",
+      ).toEqual([visibleTable, copiedTable]);
+      expect(readmeControls.unclosedSummaryCopy, "a summary left unclosed shows to just before the details' end tag: its label is counted and its table read").toEqual({
+        labels: 2,
+        roots: ["<cwd>/.pi/skills", "~/.pi/agent/skills"],
+      });
       expect(filing.piRoots).toEqual(roots);
       expect(targets).toEqual(filing.hxTargets);
       expect(inside).toEqual([]);
@@ -2418,7 +2629,7 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     expect(quiet).toEqual(RENDERING_CASES.map(() => []));
     expect(control).toEqual(["served@+1"]);
     expect(paired, "each later member with its hiding construct taken out reads served").toEqual([["served@+3"], ["served@+1"], ["served@+1"]]);
-    expect(readme, "G1's README read reads the copy the page hides by styling, by scripting or as an element's fallback").toEqual(
+    expect(readme, "G1's README read reads the copy the page hides by styling, by scripting or as an element's fallback, or after a start tag left open").toEqual(
       README_RENDERING_COPIES.map(() => ["<cwd>/.pi/skills", "~/.pi/agent/skills"]),
     );
     return { quiet, control, paired, readme };
