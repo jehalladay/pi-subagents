@@ -64,6 +64,21 @@
  * failed (2 outside hits); with this cut both read green. THE TITLE READINGS (READINGS below) read a bead's own title text as data -
  * the R719 analogue of the holder reading, each with its pinned quiet row (R-TITLE, R-REQUIREMENT-ID) - and hold nothing else: they
  * narrow the filing's "zero matches" by exactly those two shapes (the delivery note carries the standing rule 22(d) reading).
+ * RESPIN (wb-ycue cut #2; the gate's refusal #1, U1 G-DESCRIBE-CALLEE): cut #1's describe-title reader held the first plain string of
+ * ANY describe-named call - a describe.runIf or describe.skipIf condition, describe?.runIf, a module-local describe - while its texts
+ * claimed suite titles only. The reader is now suiteTitles (TITLES below): a suite-title position, its describe bound to the vitest
+ * import by the checker. MEASURED on the merge of cut #1 with trunk aa95f43, the R-REQUIREMENT-ID places authored first: 9 of the
+ * first 17 places read held (GR1, GR1b, GR1c, GR2, a shadowed, a global and another module's describe, an optional call, an
+ * optional-chained flag) and the other 8 already read judged. The final table has 24 places; cut #1's reader replayed on the final
+ * bytes holds 13 of them (those 9, vitest's suite and it exports imported as describe, and both type-only imports). With suiteTitles
+ * all 24 read judged, and each title-flag and template title stays held.
+ * F2 (the 3-place residual hollow: a family's QUIET row, roster residual and residualSubjects line deleted together) read green for 8
+ * of the 9 families on cut #1's bytes (R-VERSION alone red, through the extension filing's version wording). Each family is now held
+ * to a condition read outside this file's literals (the judged set's implied table, the R-VERSION form). The wb-ycue filing (its first
+ * paragraph in the export, held to the roster's sha-256: followUp) names R-SIBLING and R-SCOPE by id and asks for the two title
+ * readings, each with a pinned quiet row, so those four families hold past the table, and R-VERSION holds past it through its landed
+ * version line. R-HOLDER, R-SPELLING, R-ENCODED and R-ALIAS are bound by the table alone (no outside source names them): a 4-place
+ * hollow that also deletes the family's table line reads green for those four (measured), and red for the other five.
  * F4 NOT TAKEN (measured): exempting qa/workbench/status-ledger.mjs:30 alone and judging the sibling training program's name would
  * refuse what the landed BEADS-TRAININGWORKS-R1 status census admits - its clause (a) reads every docs/workbench citation of that name
  * and owes the deposit's status phrase within 400 chars, never zero (80 lines in 3 files at e8e13f8: that ledger line, the census
@@ -92,9 +107,17 @@
  * - TITLES (wb-ycue F3): a hit inside a receipt's R539 title line - line 1 of docs/workbench/receipts/<id>.md (the shared receipts
  *   judge's RECEIPT_FILE) when it is exactly "# <id>: <title>" with that bead's own title in the tracked export (.beads/issues.jsonl
  *   of the tree read; a bead it carries twice has none) - or inside an export requirement id (a title's opening bracketed tag) spelled
- *   as one token in a comment or a describe title of a test/ source outside the holders, is the bead's title data, never a finding.
- *   A receipt's body, a paraphrased or another bead's title line, the line on another page, a nested receipt, an id in an it title,
- *   in a code string or a describe.each title, in product scope or a non-source file, and a longer or prefixed token stay judged.
+ *   as one token in a comment or a SUITE TITLE of a test/ source outside the holders, is the bead's title data, never a finding.
+ *   A suite title (suiteTitles, the wb-ycue respin's U1 cure) is the first argument, a string literal or a template without
+ *   substitutions, of a call, never an optional one, whose callee is the identifier describe, or describe.<flag> by a plain dot with
+ *   one of vitest's title-taking suite flags (SUITE_TITLE_FLAGS: concurrent, only, sequential, shuffle, skip, todo), when TypeScript's
+ *   checker over that one file resolves describe at the call to an import specifier binding vitest's describe export under its own
+ *   name in a value import declaration of "vitest" (import { describe } from "vitest"). Judged, never held: a receipt's body, a
+ *   paraphrased or another bead's title line, the line on another page, a nested receipt; an id in an it title or in any other string
+ *   of the code; the condition of describe.runIf or describe.skipIf and the title of the suite that call returns; a describe.each or
+ *   describe.for title; a describe that is module-local, shadowed at the call, global, type-only, aliased, namespace-read or another
+ *   module's, and vitest's suite export; an optional call or chain, element access, a parenthesized callee and a chain of two flags;
+ *   an id in product scope or in a non-source file; a longer or prefixed token.
  * - PACKAGES: every name and spec package.json and vendor/dependency-lock.json carry (the name, each dependency map's keys and values,
  *   the bundled list; for the lock every packages entry's path tail, name, maps, bundled list and resolved target). A Library or
  *   program package name: a scope or name part with a segment equal to the acronym (any case), the library scope, a name whose first
@@ -141,7 +164,9 @@
  * its acceptance clause is tiled by the row labels and its identifier-set clause and sentence yield the needles and the bound text,
  * so removing a pin or a row from every census literal and the roster still reds against the owner's text; the vendored lines are
  * sha-256 held and yield the schema names. The extension's filing is the second outside anchor: rows E-H tile its acceptance clause,
- * its member and range clauses yield the extension members, its count, first and last, and its pins are the roster's.
+ * its member and range clauses yield the extension members, its count, first and last, and its pins are the roster's. The wb-ycue
+ * filing is the third (F2): its first paragraph, held to the roster's sha-256, names two residual families by id and asks for the two
+ * title readings, and every residual family is held to a condition read outside this file (the implied table).
  * SELF-READ: the judged set parses this file's IMPL and requires every pin to name one of READERS and not ROSTER (direct identifiers
  * only); each pin's witness carries the digest of its own quote, so a pin swapped for another pin's case reds; the records case
  * requires every pin and every quiet row to have run to its end.
@@ -157,7 +182,7 @@
  * and derived at run time in WHITE_SPACE), and R-ENCODED reads the one extension member whose text spells a base member through that
  * member: encoded, it is still read (as the member it spells), so it is no escape. With wb-ycue, R-TITLE a needle on a receipt's R539
  * title line, the bead's own export title, is title data, and R-REQUIREMENT-ID a needle inside an export requirement id in a test's
- * comment or describe title is title data (THE TITLE READINGS); every family is held to its outside subjects (F5 above).
+ * comment or suite title is title data (THE TITLE READINGS); every family is held to its outside subjects (F5 above).
  * Gate behaviour: the day a source owner publishes an exported package or an adapter with a recorded adoption gate, the artifact is
  * triaged as its own program-triage epic and the cut that lands its adoption owes this census's update; until then it stays empty by
  * design. Display paths added: none. Test-only: synthetic trees live in makeScratch scratch with the leak guard installed; src, the
@@ -167,12 +192,13 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
+import { isDeepStrictEqual } from "node:util";
 import ts from "typescript";
 import { afterAll, describe, expect, it } from "vitest";
 import { RECEIPT_FILE } from "../qa/workbench/receipts-index.mjs";
 import { NATIVE_CONTROL_ACTIONS } from "../src/workbench/control.js";
 import { RECONCILE_EVIDENCE_READS } from "../src/workflow/reconcile.js";
-import { docsSection, type RenderedBlock, type SectionMatch, sectionMatches, sourceStructure } from "./helpers/census.js";
+import { docsSection, REGISTRATION_MEMBERS, type RenderedBlock, type SectionMatch, sectionMatches, sourceStructure } from "./helpers/census.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 installScratchLeakGuard(afterAll);
@@ -211,6 +237,8 @@ interface Roster {
     readonly spans: readonly Span[];
     readonly citations: readonly Span[];
   };
+  /** wb-ycue (its R694 filing, the F2 residual anchor's outside source): the filing's first paragraph in the export, held to its sha-256. */
+  readonly followUp: { readonly bead: string; readonly filing: { readonly export: string; readonly paragraphs: number; readonly sha256: string } };
 }
 type Family = "schema" | "status" | "program";
 interface Needle {
@@ -255,7 +283,7 @@ interface Census {
   readonly outside: readonly Hit[];
   readonly holder: readonly Hit[];
   /** wb-ycue F3: hits read as a bead's own title text - a receipt's R539 title line, an export requirement id inside a test's comment
-   * or describe title - data, never a finding. */
+   * or suite title - data, never a finding. */
   readonly titled: readonly Hit[];
   /** `${file}:${line}` of every bound-sentence occurrence in product scope. */
   readonly bound: readonly string[];
@@ -273,6 +301,7 @@ const EXPORT_FILE = ".beads/issues.jsonl";
 const LOCK_FILE = "vendor/dependency-lock.json";
 const BEAD = "wb-zzb4";
 const EXT_BEAD = "wb-rdlh.2";
+const FOLLOW_UP_BEAD = "wb-ycue";
 const DOCS_FILE = "docs/workbench/18-decisions-and-risks.md";
 const DOCS_PARENT = "18 — Decisions, risks, deliberate defaults and re-evaluation triggers";
 const DOCS_HEADING = "Library design programs";
@@ -407,6 +436,9 @@ const EXT_RANGE_CLAUSE = /(\d+) new V0\/V1\/V2 names \((\S+?)\.\.(\S+?); none at
 const EXT_HELD_CLAUSE = /, (\S+) already in it\)/;
 const EXT_PIN_CLAUSE = /\.md:\d+@([0-9a-f]{12})/;
 const EXT_ACCEPTANCE_CLAUSE = /Acceptance: (\(a\) [^\n]+)\./;
+/** The wb-ycue filing's F3 lead (the R694 follow-up of landing 543, its first paragraph in the export): the two title readings it asks
+ * for, each with a pinned quiet row (the parse anchor spells no needle). */
+const TITLE_READINGS_CLAUSE = /read (the R539 first line of each receipt) \(the title line only\) and (a test's requirement-id comment and describe title) as holder data, each with a pinned quiet row/;
 function extensionStatement(text: string): Extension {
   const set = EXT_SET_CLAUSE.exec(text);
   const range = EXT_RANGE_CLAUSE.exec(text);
@@ -574,16 +606,57 @@ function commentExtents(source: ts.SourceFile): Extent[] {
   visit(source);
   return [...found];
 }
-/** Every describe title: the first argument of describe(...) or describe.<member>(...) when it is a plain string literal, inside its
- * quotes (a template with substitutions, a describe.each table's title or any other call holds nothing). */
-function describeTitles(source: ts.SourceFile): Extent[] {
+/** vitest's title-taking suite flags (@vitest/runner createTaskCollector): describe.<flag>(title, ...) registers a suite titled by its
+ * first argument. SUITE_REGISTRARS are the other suite members: each takes a condition (runIf, skipIf) or a table (each, for) and
+ * returns a registrar. Together they are vitest's suite members (REGISTRATION_MEMBERS.suite of test/helpers/census.ts, pinned against
+ * the installed runtime by test/workbench-census-registration-model.test.ts). */
+const SUITE_TITLE_FLAGS: readonly string[] = ["concurrent", "only", "sequential", "shuffle", "skip", "todo"];
+const SUITE_REGISTRARS: readonly string[] = ["each", "for", "runIf", "skipIf"];
+/** A one-file program's checker, under the compiler options test/helpers/census.ts SourceAnalysis uses (noLib, noResolve): a name
+ * resolves inside the file alone, and an import binds its specifier, nothing past it. */
+function fileChecker(file: string, source: ts.SourceFile): ts.TypeChecker {
+  const host: ts.CompilerHost = {
+    getSourceFile: name => (name === file ? source : undefined),
+    getDefaultLibFileName: () => "lib.d.ts",
+    writeFile: () => undefined,
+    getCurrentDirectory: () => "",
+    getCanonicalFileName: name => name,
+    useCaseSensitiveFileNames: () => true,
+    getNewLine: () => "\n",
+    fileExists: name => name === file,
+    readFile: name => (name === file ? source.text : undefined),
+  };
+  const options: ts.CompilerOptions = { noLib: true, noResolve: true, allowJs: true, types: [], target: ts.ScriptTarget.Latest, module: ts.ModuleKind.ESNext };
+  return ts.createProgram({ rootNames: [file], options, host }).getTypeChecker();
+}
+/** Is this identifier vitest's describe where it is read: the checker resolves it to a specifier importing vitest's own describe
+ * export under that name, in a value import declaration of the module "vitest" (import { describe } from "vitest"). A module-local,
+ * shadowing or global describe, a type-only, aliased or namespace import, vitest's suite export and any other module's describe
+ * are not. */
+function vitestDescribe(id: ts.Identifier, checker: ts.TypeChecker): boolean {
+  const declaration = checker.getSymbolAtLocation(id)?.declarations?.[0];
+  if (declaration === undefined || !ts.isImportSpecifier(declaration) || declaration.isTypeOnly || (declaration.propertyName ?? declaration.name).text !== "describe") return false;
+  const clause = declaration.parent.parent;
+  return ts.isImportDeclaration(clause.parent) && clause.phaseModifier !== ts.SyntaxKind.TypeKeyword && ts.isStringLiteral(clause.parent.moduleSpecifier) && clause.parent.moduleSpecifier.text === "vitest";
+}
+/** Every SUITE TITLE (wb-ycue respin, U1), inside its quotes: the first argument, when it is a string literal or a template without
+ * substitutions, of a call (never an optional one) whose callee is the identifier describe, or describe.<flag> by a plain dot with
+ * one flag of SUITE_TITLE_FLAGS, and whose describe is vitest's at the call (vitestDescribe). A registrar's condition or table
+ * (runIf, skipIf, each, for) and the title of the suite a registrar returns, an optional chain, element access, a parenthesized
+ * callee, a chain of two flags and every other call hold nothing. */
+function suiteTitles(file: string, source: ts.SourceFile): Extent[] {
   const found: Extent[] = [];
+  let checker: ts.TypeChecker | undefined;
   const visit = (node: ts.Node): void => {
-    if (ts.isCallExpression(node)) {
+    if (ts.isCallExpression(node) && node.questionDotToken === undefined) {
       const callee = node.expression;
-      const named = (ts.isIdentifier(callee) && callee.text === "describe") || (ts.isPropertyAccessExpression(callee) && ts.isIdentifier(callee.expression) && callee.expression.text === "describe");
+      const flagged = ts.isPropertyAccessExpression(callee) && callee.questionDotToken === undefined && SUITE_TITLE_FLAGS.includes(callee.name.text);
+      const root = ts.isIdentifier(callee) ? callee : flagged && ts.isIdentifier(callee.expression) ? callee.expression : undefined;
       const title = node.arguments[0];
-      if (named && title !== undefined && (ts.isStringLiteral(title) || ts.isNoSubstitutionTemplateLiteral(title))) found.push([title.getStart(source) + 1, title.getEnd() - 1]);
+      if (root?.text === "describe" && title !== undefined && (ts.isStringLiteral(title) || ts.isNoSubstitutionTemplateLiteral(title))) {
+        checker ??= fileChecker(file, source);
+        if (vitestDescribe(root, checker)) found.push([title.getStart(source) + 1, title.getEnd() - 1]);
+      }
     }
     ts.forEachChild(node, visit);
   };
@@ -592,14 +665,15 @@ function describeTitles(source: ts.SourceFile): Extent[] {
 }
 /** A requirement id read as one token: no letter, digit, underscore or hyphen on either side. */
 const requirementPattern = (id: string): RegExp => new RegExp(`(?<![A-Za-z0-9_-])${escapeRe(id)}(?![A-Za-z0-9_-])`, "g");
-/** R-REQUIREMENT-ID's reading: the export requirement ids a test/ source (a file TypeScript parses; any other holds nothing) spells as
- * one token inside a comment or a describe title. Only an id that spells a judged needle can hold a hit, so only those are read. */
+/** R-REQUIREMENT-ID's reading: the export requirement ids a test/ source (a .js or .ts file, .cjs, .mjs, .cts and .mts included; any
+ * other file, .jsx and .tsx among them, holds nothing) spells as one token inside a comment or a suite title (suiteTitles). Only an
+ * id that spells a judged needle can hold a hit, so only those are read. */
 function requirementIds(file: string, text: string, titles: Titles): Extent[] {
   if (!/\.[cm]?[jt]s$/.test(file)) return [];
   const ids = titles.requirements.filter(id => ANY.test(id));
   if (ids.length === 0) return [];
   const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, /\.[cm]?js$/.test(file) ? ts.ScriptKind.JS : ts.ScriptKind.TS);
-  const places = [...commentExtents(source), ...describeTitles(source)];
+  const places = [...commentExtents(source), ...suiteTitles(file, source)];
   return ids
     .flatMap(id => [...text.matchAll(requirementPattern(id))].map((match): Extent => [match.index, match.index + id.length]))
     .filter(([from, to]) => places.some(([start, end]) => from >= start && to <= end));
@@ -1249,7 +1323,7 @@ const QUIET: Readonly<Record<string, () => void>> = {
       `// ${requirement} closes the plant.`,
     );
     const held = read({ [site]: plant });
-    expect(findings(held), "an export requirement id in a test's comment or describe title is title data").toEqual([]);
+    expect(findings(held), "an export requirement id in a test's comment or suite title is title data").toEqual([]);
     expect(held.titled, "every hit of the id is held where it sits").toEqual(hitsIn(site, plant));
     const unexported = `${requirement.replace(/-R\d+$/, "")}-R0`;
     expect(exportTitles(REPO).requirements.includes(unexported), "the control's id is no export requirement id").toBe(false);
@@ -1272,6 +1346,43 @@ const QUIET: Readonly<Record<string, () => void>> = {
     expect(findings(beside), "a bare needle beside a held id is a finding").toEqual([{ file: site, line: 3, needle: STATEMENT.word }]);
     expect(beside.titled.length, "and the id beside it is still held").toBe(spelled.length);
     expect(findings(read({ [site]: plant }, exportRows([["wb-zz1", "a title naming nothing"]]))), "an export that lacks the bead holds nothing").toEqual(hitsIn(site, plant));
+    // wb-ycue respin (U1, G-DESCRIBE-CALLEE): a SUITE TITLE is held only where vitest's describe registers a suite titled by it - the
+    // first argument of describe(...) or describe.<flag>(...), flag one of SUITE_TITLE_FLAGS, with describe bound at the call to the
+    // named vitest import. Every other place reads its own hit as a finding: the gate's GR1, GR1b, GR1c and GR2 first.
+    expect([...SUITE_TITLE_FLAGS, ...SUITE_REGISTRARS].sort(), "the title flags and the registrars are vitest's suite members, pinned against the runtime").toEqual(REGISTRATION_MEMBERS.suite);
+    const flagged = source(...SUITE_TITLE_FLAGS.map(flag => `describe.${flag}("${bead} ${requirement} ${flag}", () => {});`), `describe(\`${requirement} template title\`, () => {});`);
+    const titledFlags = read({ [site]: flagged });
+    expect([findings(titledFlags), titledFlags.titled], "a suite title under each title-taking flag, and a template title, is title data").toEqual([[], hitsIn(site, flagged)]);
+    const bare = (...lines: readonly string[]): string => [...lines, ""].join("\n");
+    const places: readonly (readonly [string, string])[] = [
+      ["GR1 a describe.runIf condition", source(`describe.runIf("${requirement}")("a plain suite", () => {});`)],
+      ["GR1b a describe.skipIf condition", source(`describe.skipIf("${requirement}")("a plain suite", () => {});`)],
+      ["GR1c an optional describe?.runIf condition", source(`describe?.runIf("${requirement}")("a plain suite", () => {});`)],
+      ["GR2 a module-local describe", bare("const describe = (name: string): string => name;", `export const plant = describe("${requirement}");`)],
+      ["the title of the suite describe.runIf returns", source(`describe.runIf(true)("${requirement} title of a conditional suite", () => {});`)],
+      ["a describe.for title", source(`describe.for([1])("${requirement} %s", () => {});`)],
+      ["a describe shadowed at the call", source(`export const run = (describe: (title: string) => void): void => describe("${requirement}");`)],
+      ["a global describe", bare(`describe("${requirement}", () => {});`)],
+      ["a describe imported from another module", bare('import { describe } from "./helpers/suite.js";', "", `describe("${requirement}", () => {});`)],
+      ["an aliased describe import", bare('import { describe as suiteOf } from "vitest";', "", `suiteOf("${requirement}", () => {});`)],
+      ["vitest's suite export", bare('import { suite } from "vitest";', "", `suite("${requirement}", () => {});`)],
+      ["vitest's suite export imported as describe", bare('import { suite as describe } from "vitest";', "", `describe("${requirement}", () => {});`)],
+      ["vitest's it export imported as describe", bare('import { it as describe } from "vitest";', "", `describe("${requirement}", () => {});`)],
+      ["a type-only import declaration", bare('import type { describe } from "vitest";', "", `describe("${requirement}", () => {});`)],
+      ["a type-only import specifier", bare('import { type describe } from "vitest";', "", `describe("${requirement}", () => {});`)],
+      ["a template with a substitution", source(`describe(\`${requirement} \${"x"}\`, () => {});`)],
+      ["a concatenated title", source(`describe("${requirement}" + "", () => {});`)],
+      ["a later argument of a suite call", source(`describe("a plain suite", "${requirement}", () => {});`)],
+      ["a namespace-read describe", bare('import * as vitest from "vitest";', "", `vitest.describe("${requirement}", () => {});`)],
+      ["an optional call", source(`describe?.("${requirement}", () => {});`)],
+      ["an optional-chained flag", source(`describe?.concurrent("${requirement}", () => {});`)],
+      ["an element-access flag", source(`describe["concurrent"]("${requirement}", () => {});`)],
+      ["a chain of two flags", source(`describe.concurrent.shuffle("${requirement}", () => {});`)],
+      ["a parenthesized callee", source(`(describe)("${requirement}", () => {});`)],
+    ];
+    expect(places.filter(([, text]) => hitsIn(site, text).length === 0).map(([why]) => why), "each place plants a hit").toEqual([]);
+    const misread = places.filter(([, text]) => !isDeepStrictEqual(findings(read({ [site]: text })), hitsIn(site, text))).map(([why]) => why);
+    expect(misread, "each place outside a suite title is judged, never held").toEqual([]);
   },
 };
 
@@ -1376,6 +1487,34 @@ describe("wb-zzb4 Library design-program absence census (LIBRARY-COMPOSITIONAL-A
     expect(ROSTER.excluded.map(item => item.residual)).toEqual(["R-SIBLING"]);
     expect(ROSTER.residuals.map(item => item.id)).toEqual(Object.keys(QUIET));
     expect(Object.keys(QUIET).includes("R-VERSION"), "the extension filing bounds its schema members by version, so another version is a named residual").toBe(/ V\d(?:\/V\d)+ names /.test(extension));
+    // wb-ycue respin (F2, the 3-place residual hollow): each family is present exactly when a source outside this file's literals
+    // implies it - the R-VERSION form above, for every family - so a family deleted from QUIET, the roster and residualSubjects
+    // together still reds here. The wb-ycue filing names two families by id and asks for two title readings, each with a pinned
+    // quiet row; those four hold past this table as well.
+    const implied: Readonly<Record<string, boolean>> = {
+      "R-SIBLING": STATEMENT.plus.some(member => !NEEDLES.some(needle => needle.text === member)),
+      "R-HOLDER": realCensus().holder.length > 0,
+      "R-SPELLING": /\bcase-sensitive\b/.test(EXT.acceptance),
+      "R-ENCODED": /\breads those trees as text\b/.test(STATEMENT.acceptance),
+      "R-SCOPE": outsideSites().length > 0,
+      "R-ALIAS": PROGRAM_STEMS.length > 0,
+      "R-VERSION": / V\d(?:\/V\d)+ names /.test(extension),
+      "R-TITLE": titledRows().length > 0,
+      "R-REQUIREMENT-ID": exportTitles(REPO).requirements.some(id => ANY.test(id)),
+    };
+    expect(Object.keys(QUIET).sort(), "each residual family is present exactly when a source outside this file implies it").toEqual(
+      Object.entries(implied)
+        .filter(([, yes]) => yes)
+        .map(([id]) => id)
+        .sort(),
+    );
+    const followUp = filing(FOLLOW_UP_BEAD, ROSTER.followUp.filing.paragraphs);
+    expect([ROSTER.followUp.bead, ROSTER.followUp.filing.export, sha256(followUp)], "the wb-ycue filing is the text the roster measured").toEqual([FOLLOW_UP_BEAD, EXPORT_FILE, ROSTER.followUp.filing.sha256]);
+    const named = [...new Set(followUp.match(/\bR-[A-Z]+(?:-[A-Z]+)*\b/g) ?? [])].sort();
+    expect([named.length > 0, named.filter(id => !Object.keys(QUIET).includes(id))], "every family the wb-ycue filing names by id is a named residual").toEqual([true, []]);
+    const readings = TITLE_READINGS_CLAUSE.exec(followUp)?.slice(1) ?? [];
+    const titleFamilies = ROSTER.residuals.filter(item => item.family.includes("is title data")).map(item => item.id);
+    expect([readings.length > 0, readings.length - titleFamilies.length, titleFamilies.filter(id => !Object.keys(QUIET).includes(id))], "each title reading the wb-ycue filing asks for is one named residual with a pinned quiet row").toEqual([true, 0, []]);
     const reads = implReads();
     expect(Object.keys(reads).sort()).toEqual(pinIds());
     expect(

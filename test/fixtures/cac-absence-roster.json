@@ -314,6 +314,14 @@
    }
   ]
  },
+ "followUp": {
+  "bead": "wb-ycue",
+  "filing": {
+   "export": ".beads/issues.jsonl",
+   "paragraphs": 1,
+   "sha256": "38ee2bc1958d710efaf8b1bcbfbbb13ec5b3f3bb90bd638f80b0fcdce33b0f74"
+  }
+ },
  "rows": [
   {
    "id": "A",
@@ -623,7 +631,7 @@
   },
   {
    "id": "R-REQUIREMENT-ID",
-   "family": "a needle inside an export requirement id (a title's opening bracketed tag) spelled whole in a comment or a describe title of a test/ source outside the holders is title data (wb-ycue F3)"
+   "family": "a needle inside an export requirement id (a title's opening bracketed tag) spelled whole in a comment or a vitest suite title (the first string argument of describe(...) or describe.<title flag>(...), describe bound to the named vitest import at the call) of a test/ source outside the holders is title data (wb-ycue F3; suite titles since the respin, U1)"
   }
  ]
 }
