@@ -76,18 +76,23 @@
    "split-statements",
    "base64",
    "yaml-escape",
+   "toml-escape",
+   "markdown-link-split",
    "homoglyph",
    "digit-substitution"
   ],
   "Q2": [
    "environment-specifier",
    "configured-subprocess",
-   "configured-binary"
+   "configured-binary",
+   "archive-content"
   ],
   "Q3": [
    "other-bead-row",
    "sdk-only",
-   "work-package"
+   "work-package",
+   "blocks-edge",
+   "grandchild-edge"
   ],
   "Q4": [
    "side-path-host"
@@ -103,14 +108,14 @@
  },
  "witnesses": {
   "G1": {
-   "manifest": [],
-   "lock": [],
    "sites": {
     "src": [],
     "qa": [],
     "examples": [],
+    "config": [],
     "docs": [],
-    "front": []
+    "front": [],
+    "other-md": []
    },
    "hosts": [],
    "bound": [],
@@ -127,6 +132,10 @@
      "floor": true,
      "anchor": true
     },
+    "config": {
+     "floor": true,
+     "anchor": true
+    },
     "docs": {
      "floor": true,
      "anchor": true
@@ -134,17 +143,19 @@
     "front": {
      "floor": true,
      "anchor": true
+    },
+    "other-md": {
+     "floor": true,
+     "anchor": true
     }
    },
+   "partition": {
+    "unwalked": [],
+    "doubled": [],
+    "excludedWalked": [],
+    "misrouted": []
+   },
    "controls": {
-    "manifest": [
-     "dependencies:fiber-optics-sdk",
-     "devDependencies:@public-port/bridge"
-    ],
-    "lock": [
-     "node_modules/fiberoptics",
-     "node_modules/a/node_modules/@x/public-port-bridge"
-    ],
     "code": {
      "specifier": [
       "sdk"
@@ -164,25 +175,86 @@
      "escaped-identifier": [
       "bridge"
      ],
+     "escaped-private-name": [
+      "bridge"
+     ],
+     "jsx-attribute": [
+      "bridge"
+     ],
+     "jsx-text": [
+      "bridge"
+     ],
      "normalized": [
       "bridge"
      ],
      "comment": [
       "bridge"
      ],
+     "path": [
+      "bridge"
+     ],
      "subprocess": [
+      "sdk"
+     ],
+     "qa-escaped": [
       "sdk"
      ],
      "examples-sdk": [
       "sdk"
      ],
-     "json": [
+     "json-key": [
       "sdk"
+     ],
+     "json-value": [
+      "bridge"
      ],
      "rf-identity-key": [
       "sdk"
      ],
      "quiet": []
+    },
+    "cooked": {
+     ".ts": [
+      "bridge"
+     ],
+     ".tsx": [
+      "bridge"
+     ],
+     ".js": [
+      "bridge"
+     ],
+     ".jsx": [
+      "bridge"
+     ],
+     ".mjs": [
+      "bridge"
+     ],
+     ".mts": [
+      "bridge"
+     ],
+     ".cjs": [
+      "bridge"
+     ],
+     ".cts": [
+      "bridge"
+     ]
+    },
+    "plural": {
+     "publics port bridge": [
+      "bridge"
+     ],
+     "public ports bridge": [
+      "bridge"
+     ],
+     "public port bridges": [
+      "bridge"
+     ],
+     "fibers optics": [
+      "sdk"
+     ],
+     "fiber opticss": [
+      "sdk"
+     ]
     },
     "pages": {
      "page": [
@@ -191,26 +263,120 @@
      "entity": [
       "bridge"
      ],
+     "entity-html": [
+      "bridge"
+     ],
+     "entity-htm": [
+      "bridge"
+     ],
+     "entity-xml": [
+      "bridge"
+     ],
+     "entity-svg": [
+      "bridge"
+     ],
+     "named-amp": [
+      "bridge"
+     ],
+     "named-lt": [
+      "bridge"
+     ],
+     "named-gt": [
+      "bridge"
+     ],
+     "named-quot": [
+      "bridge"
+     ],
+     "named-apos": [
+      "bridge"
+     ],
+     "named-nbsp": [
+      "bridge"
+     ],
+     "bare-decimal": [
+      "bridge"
+     ],
+     "bare-hex": [
+      "bridge"
+     ],
+     "bare-named": [
+      "bridge"
+     ],
+     "comment-split": [
+      "bridge"
+     ],
+     "tag-split": [
+      "bridge"
+     ],
      "quiet": [],
      "front": [
       "bridge"
      ],
-     "front-quiet": []
-    }
+     "front-quiet": [],
+     "other-md": [
+      "bridge"
+     ],
+     "other-md-quiet": []
+    },
+    "config": {
+     "manifest-peer": [
+      "sdk"
+     ],
+     "manifest-alias": [
+      "sdk"
+     ],
+     "lock-path": [
+      "sdk"
+     ],
+     "config-script": [
+      "sdk"
+     ],
+     "ci-step": [
+      "bridge"
+     ],
+     "archive-path": [
+      "sdk"
+     ],
+     "quiet": []
+    },
+    "walk": [
+     "src/tracked.ts",
+     "src/untracked.ts"
+    ]
    }
   },
   "G2": {
    "rowRead": true,
    "found": [],
-   "controls": {
-    "note": [
+   "fields": {
+    "title": [
+     "wb-x32:title"
+    ],
+    "description": [
+     "wb-x32:description"
+    ],
+    "notes": [
      "wb-x32:notes"
     ],
+    "comments": [
+     "wb-x32:comments"
+    ],
+    "acceptance": [
+     "wb-x32:acceptance_criteria"
+    ],
+    "close-reason": [
+     "wb-x32:close_reason"
+    ],
+    "labels": [
+     "wb-x32:labels"
+    ]
+   },
+   "controls": {
     "child": [
-     "wb-x32.9:title"
+     "wb-x32.9:description"
     ],
     "edge": [
-     "wb-zz01:description"
+     "wb-zz01:title"
     ],
     "log": [
      "docs/workbench/18-decisions-and-risks.md"
@@ -232,6 +398,7 @@
     "F-FEEDBACK",
     "F-GAP",
     "F-GAP-ANNOUNCED",
+    "F-GAP-SNAPSHOT",
     "F-AUTHORITY",
     "F-PRIVATE",
     "F-EXECUTABLE",
@@ -258,7 +425,8 @@
     ],
     "F-DIGEST": [
      "admitted",
-     "rejected:bad-digest"
+     "rejected:bad-digest",
+     "admitted"
     ],
     "F-EPOCH": [
      "admitted",
@@ -267,13 +435,16 @@
     "F-DUPLICATE": [
      "admitted",
      "admitted",
+     "rejected:duplicate-message",
      "rejected:duplicate-message"
     ],
     "F-BASIS": [
      "admitted",
+     "rejected:missing-basis",
      "rejected:missing-basis"
     ],
     "F-DISPOSITION": [
+     "rejected:missing-disposition",
      "rejected:missing-disposition",
      "rejected:missing-disposition",
      "admitted"
@@ -297,7 +468,14 @@
      "admitted",
      "admitted"
     ],
+    "F-GAP-SNAPSHOT": [
+     "admitted",
+     "rejected:gap-without-resync",
+     "admitted",
+     "admitted"
+    ],
     "F-AUTHORITY": [
+     "rejected:foreign-authority",
      "rejected:foreign-authority",
      "rejected:foreign-authority",
      "admitted"
@@ -308,6 +486,7 @@
      "admitted"
     ],
     "F-EXECUTABLE": [
+     "rejected:executable-function-on-the-wire",
      "rejected:executable-function-on-the-wire",
      "rejected:executable-function-on-the-wire",
      "admitted"
@@ -340,8 +519,54 @@
     "claim-shared",
     "claim-merge"
    ],
+   "isolating": {
+    "admit": [
+     "M-SIGNAL-APPLIED",
+     "M-DOUBLE-APPLY"
+    ],
+    "reject": [
+     "M-REJECTED-APPLIED"
+    ],
+    "diagnostic": [
+     "M-LOCAL-SPOOF",
+     "M-CODE-COLLAPSED"
+    ],
+    "resync": [
+     "M-GAP-SILENT",
+     "M-RESYNC-SPURIOUS"
+    ],
+    "aliased": [
+     "M-SHARED-REF"
+    ],
+    "merged": [
+     "M-MERGE"
+    ],
+    "claim-order": [
+     "M-ORDER-LABEL"
+    ],
+    "claim-shared": [
+     "M-SHARED-LABEL"
+    ],
+    "claim-merge": [
+     "M-MERGE-LABEL"
+    ]
+   },
    "mutants": {
     "M-DISPOSITION": {
+     "F-DISPOSITION": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-LANE-BLIND": {
+     "F-DISPOSITION": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-INVALIDATION-BLIND": {
      "F-DISPOSITION": [
       "reject",
       "diagnostic",
@@ -364,8 +589,16 @@
     },
     "M-DIGEST": {
      "F-DIGEST": [
+      "admit",
       "reject",
       "diagnostic",
+      "resync",
+      "merged"
+     ]
+    },
+    "M-DIGEST-NONCANONICAL": {
+     "F-DIGEST": [
+      "admit",
       "merged"
      ]
     },
@@ -382,7 +615,22 @@
       "resync"
      ]
     },
+    "M-DUPLICATE-ADJACENT": {
+     "F-DUPLICATE": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
     "M-BASIS": {
+     "F-BASIS": [
+      "reject",
+      "diagnostic",
+      "resync",
+      "merged"
+     ]
+    },
+    "M-BASIS-EMPTY": {
      "F-BASIS": [
       "reject",
       "diagnostic",
@@ -426,6 +674,9 @@
       "diagnostic"
      ],
      "F-GAP-ANNOUNCED": [
+      "diagnostic"
+     ],
+     "F-GAP-SNAPSHOT": [
       "diagnostic"
      ],
      "F-AUTHORITY": [
@@ -502,6 +753,12 @@
       "resync",
       "merged"
      ],
+     "F-GAP-SNAPSHOT": [
+      "admit",
+      "diagnostic",
+      "resync",
+      "merged"
+     ],
      "F-AUTHORITY": [
       "admit",
       "diagnostic",
@@ -567,6 +824,9 @@
      "F-GAP-ANNOUNCED": [
       "admit"
      ],
+     "F-GAP-SNAPSHOT": [
+      "admit"
+     ],
      "F-AUTHORITY": [
       "admit"
      ],
@@ -611,6 +871,9 @@
      "F-GAP-ANNOUNCED": [
       "reject"
      ],
+     "F-GAP-SNAPSHOT": [
+      "reject"
+     ],
      "F-AUTHORITY": [
       "reject"
      ],
@@ -641,7 +904,16 @@
     "admitted",
     "admitted"
    ],
+   "snapshot": [
+    "admitted",
+    "rejected:gap-without-resync",
+    "admitted",
+    "admitted"
+   ],
    "resync": [
+    [
+     "browser/view"
+    ],
     [
      "browser/view"
     ],
@@ -659,6 +931,11 @@
      0,
      3,
      4
+    ],
+    [
+     0,
+     2,
+     3
     ]
    ],
    "M-GAP-APPLY": {
@@ -670,6 +947,11 @@
     "F-GAP-ANNOUNCED": [
      "reject",
      "diagnostic"
+    ],
+    "F-GAP-SNAPSHOT": [
+     "reject",
+     "diagnostic",
+     "resync"
     ]
    },
    "M-GAP-SILENT": {
@@ -677,6 +959,9 @@
      "resync"
     ],
     "F-GAP-ANNOUNCED": [
+     "resync"
+    ],
+    "F-GAP-SNAPSHOT": [
      "resync"
     ]
    },
@@ -691,6 +976,12 @@
      "reject",
      "diagnostic",
      "resync"
+    ]
+   },
+   "M-SNAPSHOT-KEEPS-HOLD": {
+    "F-GAP-SNAPSHOT": [
+     "admit",
+     "merged"
     ]
    },
    "M-RESYNC-SPURIOUS": {
@@ -742,10 +1033,11 @@
    "receipts": [
     "rejected:foreign-authority",
     "rejected:foreign-authority",
+    "rejected:foreign-authority",
     "admitted"
    ],
    "applied": [
-    2
+    3
    ],
    "values": {
     "pi": {
@@ -767,13 +1059,25 @@
     "pi/status": "pi",
     "browser/secret": "browser",
     "browser/bare": "browser",
-    "browser/half": "browser"
+    "browser/half": "browser",
+    "browser/unlaned": "browser"
    },
    "M-FOREIGN": {
     "F-AUTHORITY": [
      "reject",
      "diagnostic",
      "merged"
+    ]
+   },
+   "M-SOURCE-BLIND": {
+    "F-AUTHORITY": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-LOCAL-SPOOF": {
+    "F-AUTHORITY": [
+     "diagnostic"
     ]
    }
   },
@@ -805,6 +1109,7 @@
    "payload": [
     "rejected:executable-function-on-the-wire",
     "rejected:executable-function-on-the-wire",
+    "rejected:executable-function-on-the-wire",
     "admitted"
    ],
    "effect": [
@@ -813,7 +1118,7 @@
    ],
    "applied": [
     [
-     2
+     3
     ],
     [
      0
@@ -837,6 +1142,12 @@
      "diagnostic"
     ]
    },
+   "M-EXECUTABLE-TOP-ONLY": {
+    "F-EXECUTABLE": [
+     "reject",
+     "diagnostic"
+    ]
+   },
    "M-EFFECT": {
     "F-EFFECT": [
      "reject",
@@ -850,8 +1161,10 @@
     "src": [],
     "qa": [],
     "examples": [],
+    "config": [],
     "docs": [],
-    "front": []
+    "front": [],
+    "other-md": []
    },
    "live": {
     "src": {
@@ -866,11 +1179,19 @@
      "floor": true,
      "anchor": true
     },
+    "config": {
+     "floor": true,
+     "anchor": true
+    },
     "docs": {
      "floor": true,
      "anchor": true
     },
     "front": {
+     "floor": true,
+     "anchor": true
+    },
+    "other-md": {
      "floor": true,
      "anchor": true
     }
@@ -934,6 +1255,9 @@
     "F-GAP-ANNOUNCED": [
      "claim-order"
     ],
+    "F-GAP-SNAPSHOT": [
+     "claim-order"
+    ],
     "F-AUTHORITY": [
      "claim-order"
     ],
@@ -953,8 +1277,10 @@
     "src": [],
     "qa": [],
     "examples": [],
+    "config": [],
     "docs": [],
-    "front": []
+    "front": [],
+    "other-md": []
    },
    "live": {
     "src": {
@@ -969,11 +1295,19 @@
      "floor": true,
      "anchor": true
     },
+    "config": {
+     "floor": true,
+     "anchor": true
+    },
     "docs": {
      "floor": true,
      "anchor": true
     },
     "front": {
+     "floor": true,
+     "anchor": true
+    },
+    "other-md": {
      "floor": true,
      "anchor": true
     }
@@ -1035,6 +1369,9 @@
     "F-GAP-ANNOUNCED": [
      "aliased"
     ],
+    "F-GAP-SNAPSHOT": [
+     "aliased"
+    ],
     "F-AUTHORITY": [
      "aliased"
     ],
@@ -1085,6 +1422,9 @@
     "F-GAP-ANNOUNCED": [
      "claim-shared"
     ],
+    "F-GAP-SNAPSHOT": [
+     "claim-shared"
+    ],
     "F-AUTHORITY": [
      "claim-shared"
     ],
@@ -1104,8 +1444,10 @@
     "src": [],
     "qa": [],
     "examples": [],
+    "config": [],
     "docs": [],
-    "front": []
+    "front": [],
+    "other-md": []
    },
    "live": {
     "src": {
@@ -1120,11 +1462,19 @@
      "floor": true,
      "anchor": true
     },
+    "config": {
+     "floor": true,
+     "anchor": true
+    },
     "docs": {
      "floor": true,
      "anchor": true
     },
     "front": {
+     "floor": true,
+     "anchor": true
+    },
+    "other-md": {
      "floor": true,
      "anchor": true
     }
@@ -1211,6 +1561,9 @@
     "F-GAP-ANNOUNCED": [
      "merged"
     ],
+    "F-GAP-SNAPSHOT": [
+     "merged"
+    ],
     "F-AUTHORITY": [
      "merged"
     ],
@@ -1261,6 +1614,9 @@
     "F-GAP-ANNOUNCED": [
      "claim-merge"
     ],
+    "F-GAP-SNAPSHOT": [
+     "claim-merge"
+    ],
     "F-AUTHORITY": [
      "claim-merge"
     ],
@@ -1280,18 +1636,23 @@
    "split-statements": [],
    "base64": [],
    "yaml-escape": [],
+   "toml-escape": [],
+   "markdown-link-split": [],
    "homoglyph": [],
    "digit-substitution": []
   },
   "Q2": {
    "environment-specifier": [],
    "configured-subprocess": [],
-   "configured-binary": []
+   "configured-binary": [],
+   "archive-content": []
   },
   "Q3": {
    "other-bead-row": [],
    "sdk-only": [],
-   "work-package": []
+   "work-package": [],
+   "blocks-edge": [],
+   "grandchild-edge": []
   },
   "Q4": {
    "violations": {},
@@ -1308,14 +1669,16 @@
  },
  "readers": {
   "G1": [
-   "manifest",
-   "lock",
    "src",
    "mention-judge",
    "qa",
    "examples",
+   "config",
    "docs",
-   "front"
+   "front",
+   "other-md",
+   "closure",
+   "scratch-walk"
   ],
   "G2": [
    "export",
@@ -1348,8 +1711,10 @@
    "claim-judge",
    "qa",
    "examples",
+   "config",
    "docs",
    "front",
+   "other-md",
    "host"
   ],
   "N2": [
@@ -1358,8 +1723,10 @@
    "claim-judge",
    "qa",
    "examples",
+   "config",
    "docs",
-   "front"
+   "front",
+   "other-md"
   ],
   "N3": [
    "host",
@@ -1367,8 +1734,10 @@
    "claim-judge",
    "qa",
    "examples",
+   "config",
    "docs",
-   "front"
+   "front",
+   "other-md"
   ],
   "Q1": [
    "mention-judge"
@@ -1377,6 +1746,7 @@
    "mention-judge"
   ],
   "Q3": [
+   "export",
    "decision-reader",
    "mention-judge"
   ],
@@ -1404,8 +1774,8 @@
   "Q3: R-DECISION-ELSEWHERE",
   "Q4: R-SIDE-PATH",
   "Q5: R-PARAPHRASE",
-  "rule 16: the rows, the residual families, the classes, the contract parts, the claim families, the checks, the mutants, the fixtures, the words, the walks (floors, pathspecs, code roots and anchors) and the hosts are frozen at their measured shape",
-  "the outside anchors: the bead's title binds the rows, the quotes, the words and the decision bead; the owner filing binds the derived classes, the contract parts, the claim families, the gate and the producer citation; the producer's :41, :17, :19 and :23 lines bind the charter-only classes, the three families, the unshipped heading and the record's own line",
+  "rule 16: the rows, the residual families, the classes, the contract parts, the claim families, the checks, the mutants, the fixtures, the words, the reading forms (script and markup extensions, named entities), the walks (roots, pathspecs, judges, floors, anchors and exclusions) and the hosts are frozen at their measured shape",
+  "the outside anchors: the bead's title binds the rows, the quotes, the words and the decision bead; the bead's own record binds the residual families; the owner filing binds the derived classes, the contract parts and the class each part's break draws, the claim families, the gate and the producer citation; TypeScript's extension table binds the script extensions; the producer's :41, :17, :19 and :23 lines bind the charter-only classes, the three families, the unshipped heading and the record's own line",
   "roster: the judged rows, the quotes, the residual members, the readers and the registered tests equal test/fixtures/foa-public-port-bridge-roster.json, in order and both ways; every pin reached its witness compare"
  ],
  "producer": {
