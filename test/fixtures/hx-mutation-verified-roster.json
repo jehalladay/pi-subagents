@@ -1,6 +1,6 @@
 {
  "bead": "wb-ts6.2",
- "basis": "The out-of-file roster of test/workbench-hx-mutation-verified-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the constants (controls, probes, reading shapes, residual families, the undelivered armed clauses) and the registered test titles, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Cut 1: witnesses measured by the cutting seat ws-04 (run g10-work-s125, 2026-10-28) on trunk 061c2ac. Respin 1 (refusal #1, U1-U6): every witness re-measured by seat ws-05 (run g10-work-s138, 2026-10-29) on trunk 04123dc with the vendored @hyperunix/sdk 0.1.0 (node_modules/@hyperunix/sdk/dist, installed by npm ci from vendor/hyperunix-sdk-0.1.0.tgz); the cut-1 readings each kept witness carries are unchanged, and every new or changed witness was reviewed by hand against the shipped declarations and src (the provider module's 13 SDK identifier references and src's 25 domainStatus places counted line by line).",
+ "basis": "The out-of-file roster of test/workbench-hx-mutation-verified-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the constants (controls, probes, reading shapes, residual families, the undelivered armed clauses) and the registered test titles, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Cut 1: witnesses measured by the cutting seat ws-04 (run g10-work-s125, 2026-10-28) on trunk 061c2ac. Respin 1 (refusal #1, U1-U6): every witness re-measured by seat ws-05 (run g10-work-s138, 2026-10-29) on trunk 04123dc with the vendored @hyperunix/sdk 0.1.0 (node_modules/@hyperunix/sdk/dist, installed by npm ci from vendor/hyperunix-sdk-0.1.0.tgz); the cut-1 readings each kept witness carries are unchanged, and every new or changed witness was reviewed by hand against the shipped declarations and src (the provider module's 13 SDK identifier references and src's 25 domainStatus places counted line by line). Respin 2 (refusal #2, U1-U4; the enumerate-the-resolvable form, orchestrator ruling R-B91): every witness re-measured by seat ws-03 (run g10-work-s141, 2026-10-29) on trunk aa95f43 with the same vendored SDK; every respin-1 witness key re-measured unchanged, and the new keys (A1/A3 products, A2 subsets, C1 loaders, C3 receipt carriers and subsets, C4 SDK binary names, client control and spellings, Q2 require load, Q4 widened site, Q8 host values and products) and the new rows Q10-Q14 were reviewed by hand against the shipped SDK (client.js resolveBinary, protocol/mutation.js receiptToJson, index.d.ts) and src; the product witnesses pin their readings by sha256 over the reading lines (A1 19136, A2 3328, A3 4416).",
  "constants": {
   "self": "test/workbench-hx-mutation-verified-census.test.ts",
   "sdk": "@hyperunix/sdk",
@@ -46,6 +46,175 @@
   ],
   "wordSeparators": "[\\s;|&()<>`'\"$={},\\\\]+",
   "hxCommand": "hx",
+  "sdkClient": "node_modules/@hyperunix/sdk/dist/client.js",
+  "hxWin32Extensions": [
+   ".exe",
+   ".com",
+   ".cmd",
+   ".bat",
+   ".ps1"
+  ],
+  "hxSpellingControls": {
+   "win32-path": "execFileSync(\"C:\\\\Tools\\\\hx\", [\"mutation\", \"apply\", plan]);",
+   "sdk-win32-name": "execFileSync(\"hx.exe\", [\"mutation\", \"apply\", plan], { encoding: \"utf8\" });",
+   "win32-name-case": "execFileSync(\"HX.EXE\", [\"mutation\", \"apply\", plan]);",
+   "posix-path-exe": "execFileSync(\"/opt/hyperunix/bin/hx.exe\", [\"mutation\", \"apply\", plan]);",
+   "win32-path-exe": "execFileSync(\"C:\\\\Program Files\\\\HyperUnix\\\\Hx.Exe\", [\"mutation\", \"apply\", plan]);",
+   "com": "spawn(\"hx.com\", [\"mutation\", \"apply\", plan]);",
+   "cmd-shim": "spawn(\"hx.cmd\", [\"mutation\", \"apply\", plan], { shell: true });",
+   "bat-shim": "exec(\"hx.bat mutation apply plan\");",
+   "ps1-shim": "spawn(\"powershell\", [\"-File\", \"hx.ps1\", \"mutation\", \"apply\", plan]);",
+   "template-win32": "exec(`${binDir}\\\\hx.exe mutation apply ${plan}`);"
+  },
+  "hostFoldedProbe": "spawn(\"HX\", [\"mutation\", \"apply\", plan]);\nexec(\"Hx mutation apply plan\");\nexecFileSync(\"/usr/local/bin/hX\", [\"mutation\", \"apply\"]);\nexecFileSync(\"hx.exe.\", [\"mutation\", \"apply\"]);\nexecFileSync(\"hx.\", [\"mutation\", \"apply\"]);\n",
+  "renamedBinaryProbe": "spawn(\"hyperunix\", [\"mutation\", \"apply\", plan]);\nexecFileSync(\"/opt/tools/hx-cli\", [\"mutation\", \"apply\", plan]);\nexec(\"hx2 mutation apply plan\");\nspawn(\"hx.sh\", [\"mutation\", \"apply\", plan]);\nspawn(\"wscript\", [\"hx.vbs\", \"mutation\", \"apply\", plan]);\n",
+  "shellJoinedProbe": "exec(\"h\\\\x mutation apply plan\");\nexec(\"'h'x mutation apply plan\");\nexec('\"h\"x mutation apply plan');\nexec(\"h''x mutation apply plan\");\nexec(\"${HX_BIN:-hx} mutation apply plan\");\nexec(\"[h]x mutation apply plan\");\n",
+  "loadingContexts": [
+   "import",
+   "export",
+   "dynamic-import",
+   "require",
+   "module-require",
+   "import-type",
+   "import-equals"
+  ],
+  "unreadConsumers": [
+   "call",
+   "new"
+  ],
+  "nodeModuleTypes": "node_modules/@types/node/module.d.ts",
+  "signatureLoaders": {
+   "Require": "require",
+   "Module.require": "module-require",
+   "RequireResolve": "require-resolve"
+  },
+  "loaderControls": {
+   "create-require-bound": "import { createRequire } from \"node:module\";\nconst load = createRequire(import.meta.url);\nexport const mutation = load(\"../../node_modules/@hyperunix/./sdk/dist/protocol/mutation.js\");\n",
+   "create-require-inline": "import { createRequire } from \"node:module\";\nexport const mutation = createRequire(import.meta.url)(\"../../node_modules/@hyperunix/sdk/dist/protocol/mutation.js\");\n",
+   "module-create-require": "import Module from \"node:module\";\nexport const sdk = Module.createRequire(import.meta.url)(\"@hyperunix/sdk\");\n",
+   "require-alias": "const load = require;\nexport const sdk = load(\"@hyperunix/sdk\");\n",
+   "module-require": "export const sdk = module.require(\"@hyperunix/sdk\");\n",
+   "main-require": "export const sdk = require.main?.require(\"@hyperunix/sdk\");\n",
+   "bound-create-require": "import { createRequire } from \"node:module\";\nconst MUTATION = \"../../node_modules/@hyperunix/./sdk/dist/protocol/mutation.js\";\nexport const mutation = createRequire(import.meta.url)(MUTATION);\n",
+   "win32-spelling": "import { createRequire } from \"node:module\";\nexport const mutation = createRequire(import.meta.url)(\"..\\\\..\\\\node_modules\\\\@hyperunix\\\\sdk\\\\dist\\\\protocol\\\\mutation.js\");\n",
+   "escaped-spelling": "import { createRequire } from \"node:module\";\nexport const mutation = createRequire(import.meta.url)(\"../../node_modules/%40hyperunix/sdk/dist/protocol/mutation.js\");\n",
+   "require-resolve": "export const path = require.resolve(\"@hyperunix/sdk\");\n",
+   "loader-resolve": "import { createRequire } from \"node:module\";\nexport const path = createRequire(import.meta.url).resolve(\"@hyperunix/sdk\");\n",
+   "retyped-loader": "import { createRequire } from \"node:module\";\nconst load: (id: string) => unknown = createRequire(import.meta.url);\nexport const sdk = load(\"../../node_modules/@hyperunix/./sdk/dist/index.js\");\n",
+   "worker": "import { Worker } from \"node:worker_threads\";\nexport const worker = new Worker(\"../../node_modules/@hyperunix/./sdk/dist/protocol/mutation.js\");\n",
+   "fork": "import { fork } from \"node:child_process\";\nexport const child = fork(\"../../node_modules/@hyperunix/sdk/dist/index.js\");\n",
+   "url": "export const url = new URL(\"../../node_modules/@hyperunix/./sdk/dist/protocol/mutation.js\", import.meta.url);\n",
+   "bound-call": "const SDK_NAME = \"@hyperunix/sdk\";\nexport const loaded = (load: (id: string) => unknown) => load(SDK_NAME);\n",
+   "template-specifier": "export const load = (version: string) => import(`../../node_modules/@hyperunix/sdk/dist/${version}.js`);\n"
+  },
+  "resolverControls": [
+   "require-resolve",
+   "loader-resolve"
+  ],
+  "requireLoadProbe": "import { createRequire } from \"node:module\";\nconst sdk = createRequire(import.meta.url)(\"@hyperunix/sdk\");\nexport const decode = sdk.receiptFromJson;\n",
+  "receiptSeed": {
+   "plan_id": "census-plan",
+   "execution_id": "census-execution",
+   "journal": {
+    "execution_id": "census-execution",
+    "ended": true,
+    "events": [
+     {
+      "seq": 1,
+      "body": {
+       "kind": "ActionCommitIntent",
+       "payload": {
+        "action": "census-action"
+       }
+      }
+     },
+     {
+      "seq": 2,
+      "body": {
+       "kind": "ActionApplied",
+       "payload": {
+        "action": "census-action"
+       }
+      }
+     },
+     {
+      "seq": 3,
+      "body": {
+       "kind": "VerificationStarted",
+       "payload": {}
+      }
+     },
+     {
+      "seq": 4,
+      "body": {
+       "kind": "PostconditionChecked",
+       "payload": {}
+      }
+     },
+     {
+      "seq": 5,
+      "body": {
+       "kind": "MutationVerified",
+       "payload": {
+        "coverage": "complete",
+        "unknown": 0
+       }
+      }
+     }
+    ]
+   },
+   "recovery": {
+    "execution_id": "census-execution",
+    "journal_status": "Verified",
+    "status_after_recovery": "Verified"
+   }
+  },
+  "sourceVariations": [
+   "receipt-fields",
+   "rows",
+   "not-retained",
+   "certified",
+   "operation",
+   "runtime",
+   "relayed"
+  ],
+  "hostValues": {
+   "principal": [
+    "local-operator:census",
+    "local-operator:census-other"
+   ],
+   "targetKind": [
+    "hx.fs/regular-file",
+    "hx.fs/directory",
+    "hx.fs/symlink",
+    "hx.fs/fifo",
+    "hx.fs/socket"
+   ],
+   "root": [
+    "src",
+    "test",
+    null
+   ],
+   "times": [
+    [
+     "2026-10-28T00:00:00Z",
+     "2026-10-28T00:00:01Z"
+    ],
+    [
+     "2026-10-28T00:00:02Z",
+     "2026-10-28T00:00:03Z"
+    ]
+   ],
+   "invocationId": [
+    null,
+    "census-invocation"
+   ],
+   "operationId": [
+    null,
+    "census-operation"
+   ]
+  },
+  "envFlag": "PI_HX_MUTATIONS",
   "workspace": "/hx-mutation-verified-census/workspace",
   "binary": "5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f",
   "context": {
@@ -62,15 +231,108 @@
   },
   "receiptSource": {
    "representation": "hyperunix.result/1",
-   "state": "Verified",
-   "verified": true,
-   "verification": {
-    "outcome": "verified"
-   },
    "execution_status": {
     "kind": "verified"
    },
-   "execution_id": "census-execution"
+   "plan_id": "census-plan",
+   "execution_id": "census-execution",
+   "state": "Verified",
+   "state_source": "hx mutation recover",
+   "terminal_event": "MutationVerified",
+   "journal": {
+    "execution_id": "census-execution",
+    "ended": true,
+    "events": [
+     {
+      "seq": 1,
+      "body": {
+       "kind": "ActionCommitIntent",
+       "payload": {
+        "action": "census-action"
+       }
+      }
+     },
+     {
+      "seq": 2,
+      "body": {
+       "kind": "ActionApplied",
+       "payload": {
+        "action": "census-action"
+       }
+      }
+     },
+     {
+      "seq": 3,
+      "body": {
+       "kind": "VerificationStarted",
+       "payload": {}
+      }
+     },
+     {
+      "seq": 4,
+      "body": {
+       "kind": "PostconditionChecked",
+       "payload": {}
+      }
+     },
+     {
+      "seq": 5,
+      "body": {
+       "kind": "MutationVerified",
+       "payload": {
+        "coverage": "complete",
+        "unknown": 0
+       }
+      }
+     }
+    ]
+   },
+   "journal_directory": null,
+   "actions_attempted": [
+    "census-action"
+   ],
+   "actions_applied": [
+    "census-action"
+   ],
+   "verification": {
+    "outcome": "verified",
+    "started": true,
+    "postconditions_checked": 1,
+    "verified_event": {
+     "coverage": "complete",
+     "unknown": 0
+    },
+    "failed_event": null,
+    "coverage": "complete",
+    "unknown": 0
+   },
+   "verified": true,
+   "recovery": {
+    "execution_id": "census-execution",
+    "journal_status": "Verified",
+    "status_after_recovery": "Verified"
+   },
+   "rejection": null,
+   "diagnostics": [],
+   "stderr_prose": [],
+   "exit_code": null,
+   "signal": null,
+   "argv": [],
+   "cancellation": {
+    "requested": false,
+    "policy": "defer-until-terminal",
+    "interrupted": false
+   },
+   "transport": {
+    "startedAt": "",
+    "durationMs": 0,
+    "startupLatencyMs": 0,
+    "processDurationMs": 0,
+    "stdoutBytes": 0,
+    "stderrBytes": 0,
+    "stderrBytesRetained": 0,
+    "frames": 0
+   }
   },
   "shapes": [
    {
@@ -184,10 +446,104 @@
    {
     "id": "receipt-fields",
     "source": {
+     "plan_id": "census-plan",
+     "execution_id": "census-execution",
      "state": "Verified",
-     "verified": true,
+     "state_source": "hx mutation recover",
+     "terminal_event": "MutationVerified",
+     "journal": {
+      "execution_id": "census-execution",
+      "ended": true,
+      "events": [
+       {
+        "seq": 1,
+        "body": {
+         "kind": "ActionCommitIntent",
+         "payload": {
+          "action": "census-action"
+         }
+        }
+       },
+       {
+        "seq": 2,
+        "body": {
+         "kind": "ActionApplied",
+         "payload": {
+          "action": "census-action"
+         }
+        }
+       },
+       {
+        "seq": 3,
+        "body": {
+         "kind": "VerificationStarted",
+         "payload": {}
+        }
+       },
+       {
+        "seq": 4,
+        "body": {
+         "kind": "PostconditionChecked",
+         "payload": {}
+        }
+       },
+       {
+        "seq": 5,
+        "body": {
+         "kind": "MutationVerified",
+         "payload": {
+          "coverage": "complete",
+          "unknown": 0
+         }
+        }
+       }
+      ]
+     },
+     "journal_directory": null,
+     "actions_attempted": [
+      "census-action"
+     ],
+     "actions_applied": [
+      "census-action"
+     ],
      "verification": {
-      "outcome": "verified"
+      "outcome": "verified",
+      "started": true,
+      "postconditions_checked": 1,
+      "verified_event": {
+       "coverage": "complete",
+       "unknown": 0
+      },
+      "failed_event": null,
+      "coverage": "complete",
+      "unknown": 0
+     },
+     "verified": true,
+     "recovery": {
+      "execution_id": "census-execution",
+      "journal_status": "Verified",
+      "status_after_recovery": "Verified"
+     },
+     "rejection": null,
+     "diagnostics": [],
+     "stderr_prose": [],
+     "exit_code": null,
+     "signal": null,
+     "argv": [],
+     "cancellation": {
+      "requested": false,
+      "policy": "defer-until-terminal",
+      "interrupted": false
+     },
+     "transport": {
+      "startedAt": "",
+      "durationMs": 0,
+      "startupLatencyMs": 0,
+      "processDurationMs": 0,
+      "stdoutBytes": 0,
+      "stderrBytes": 0,
+      "stderrBytesRetained": 0,
+      "frames": 0
      }
     },
     "summary": {},
@@ -196,6 +552,109 @@
    {
     "id": "all",
     "source": {
+     "plan_id": "census-plan",
+     "execution_id": "census-execution",
+     "state": "Verified",
+     "state_source": "hx mutation recover",
+     "terminal_event": "MutationVerified",
+     "journal": {
+      "execution_id": "census-execution",
+      "ended": true,
+      "events": [
+       {
+        "seq": 1,
+        "body": {
+         "kind": "ActionCommitIntent",
+         "payload": {
+          "action": "census-action"
+         }
+        }
+       },
+       {
+        "seq": 2,
+        "body": {
+         "kind": "ActionApplied",
+         "payload": {
+          "action": "census-action"
+         }
+        }
+       },
+       {
+        "seq": 3,
+        "body": {
+         "kind": "VerificationStarted",
+         "payload": {}
+        }
+       },
+       {
+        "seq": 4,
+        "body": {
+         "kind": "PostconditionChecked",
+         "payload": {}
+        }
+       },
+       {
+        "seq": 5,
+        "body": {
+         "kind": "MutationVerified",
+         "payload": {
+          "coverage": "complete",
+          "unknown": 0
+         }
+        }
+       }
+      ]
+     },
+     "journal_directory": null,
+     "actions_attempted": [
+      "census-action"
+     ],
+     "actions_applied": [
+      "census-action"
+     ],
+     "verification": {
+      "outcome": "verified",
+      "started": true,
+      "postconditions_checked": 1,
+      "verified_event": {
+       "coverage": "complete",
+       "unknown": 0
+      },
+      "failed_event": null,
+      "coverage": "complete",
+      "unknown": 0
+     },
+     "verified": true,
+     "recovery": {
+      "execution_id": "census-execution",
+      "journal_status": "Verified",
+      "status_after_recovery": "Verified"
+     },
+     "rejection": null,
+     "diagnostics": [
+      {
+       "code": "census-conflict"
+      }
+     ],
+     "stderr_prose": [],
+     "exit_code": null,
+     "signal": null,
+     "argv": [],
+     "cancellation": {
+      "requested": false,
+      "policy": "defer-until-terminal",
+      "interrupted": false
+     },
+     "transport": {
+      "startedAt": "",
+      "durationMs": 0,
+      "startupLatencyMs": 0,
+      "processDurationMs": 0,
+      "stdoutBytes": 0,
+      "stderrBytes": 0,
+      "stderrBytesRetained": 0,
+      "frames": 0
+     },
      "rows": [
       {
        "claim_id": "census-claim"
@@ -216,16 +675,6 @@
       "provider_versions": {
        "census-provider": "1.0.0"
       }
-     },
-     "diagnostics": [
-      {
-       "code": "census-conflict"
-      }
-     ],
-     "state": "Verified",
-     "verified": true,
-     "verification": {
-      "outcome": "verified"
      }
     },
     "summary": {
@@ -262,10 +711,104 @@
    }
   ],
   "receiptFields": {
+   "plan_id": "census-plan",
+   "execution_id": "census-execution",
    "state": "Verified",
-   "verified": true,
+   "state_source": "hx mutation recover",
+   "terminal_event": "MutationVerified",
+   "journal": {
+    "execution_id": "census-execution",
+    "ended": true,
+    "events": [
+     {
+      "seq": 1,
+      "body": {
+       "kind": "ActionCommitIntent",
+       "payload": {
+        "action": "census-action"
+       }
+      }
+     },
+     {
+      "seq": 2,
+      "body": {
+       "kind": "ActionApplied",
+       "payload": {
+        "action": "census-action"
+       }
+      }
+     },
+     {
+      "seq": 3,
+      "body": {
+       "kind": "VerificationStarted",
+       "payload": {}
+      }
+     },
+     {
+      "seq": 4,
+      "body": {
+       "kind": "PostconditionChecked",
+       "payload": {}
+      }
+     },
+     {
+      "seq": 5,
+      "body": {
+       "kind": "MutationVerified",
+       "payload": {
+        "coverage": "complete",
+        "unknown": 0
+       }
+      }
+     }
+    ]
+   },
+   "journal_directory": null,
+   "actions_attempted": [
+    "census-action"
+   ],
+   "actions_applied": [
+    "census-action"
+   ],
    "verification": {
-    "outcome": "verified"
+    "outcome": "verified",
+    "started": true,
+    "postconditions_checked": 1,
+    "verified_event": {
+     "coverage": "complete",
+     "unknown": 0
+    },
+    "failed_event": null,
+    "coverage": "complete",
+    "unknown": 0
+   },
+   "verified": true,
+   "recovery": {
+    "execution_id": "census-execution",
+    "journal_status": "Verified",
+    "status_after_recovery": "Verified"
+   },
+   "rejection": null,
+   "diagnostics": [],
+   "stderr_prose": [],
+   "exit_code": null,
+   "signal": null,
+   "argv": [],
+   "cancellation": {
+    "requested": false,
+    "policy": "defer-until-terminal",
+    "interrupted": false
+   },
+   "transport": {
+    "startedAt": "",
+    "durationMs": 0,
+    "startupLatencyMs": 0,
+    "processDurationMs": 0,
+    "stdoutBytes": 0,
+    "stderrBytes": 0,
+    "stderrBytesRetained": 0,
+    "frames": 0
    }
   },
   "boundLoadControl": "const SDK_NAME = \"@hyperunix/sdk\";\nexport const load = () => import(SDK_NAME);\nconst DIST = \"../../node_modules/@hyperunix/sdk/dist/protocol/mutation.js\";\nexport const loadDist = () => import(DIST);\nexport const loadTemplate = () => import(`@hyperunix/${\"sdk\"}`);\nconst OTHER = \"./other.js\";\nexport const loadOther = () => import(OTHER);\n",
@@ -291,7 +834,8 @@
    "evidence": "export function nativeEvidence(id: string) { switch (id) { case \"a.read\": break; case \"hyperunix.apply\": break; default: } }\nfunction other(id: string) { switch (id) { case \"z.read\": break; } }",
    "glyph": "const lit = node.domainStatus === \"verified\" || \"complete\" == entry.domainStatus || node.state === \"done\" || node.domainStatus !== \"failed\" || [\"complete-empty\", 7].includes(node.domainStatus ?? \"\") || new Set([\"incomplete\"]).has(entry.domainStatus) || domainStatus === \"cancelled\" || node[\"domainStatus\"] === \"usage-error\";\nswitch (node.domainStatus) { case \"provider-failed\": break; default: }\nconst other = [\"done\"].includes(node.state);",
    "places": "interface N { domainStatus?: string }\nconst a = node.domainStatus;\nconst { domainStatus } = node;\nconst b = node[\"domainStatus\"];\nconst c = { domainStatus: a, \"domainStatus\": b };\nconst d = { domainStatus };\nlabel(domainStatus);\nconst e = node.domainStatusText;",
-   "registration": "registerHyperUnixFind(registry, reader, root);\nhyperunix.registerNativeHyperUnixFind(registry, root);\nregisterOther(registry);"
+   "registration": "registerHyperUnixFind(registry, reader, root);\nhyperunix.registerNativeHyperUnixFind(registry, root);\nregisterOther(registry);",
+   "client": "function resolveBinary(state) {\n    const other = state.x ? \"y.exe\" : \"y\";\n    const name = process.platform === \"win32\" ? \"a.exe\" : \"a\";\n    return name;\n}\nfunction elsewhere() {\n    const name = cond ? \"b.exe\" : \"b\";\n}"
   },
   "siteControls": {
    "read-named": "import { Bounds, HyperUnix } from \"@hyperunix/sdk\";",
@@ -346,7 +890,7 @@
    "reflected": "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const read = Reflect.get(HyperUnix.open(\"/r\"), \"mutations\");\n"
   },
   "castProbe": "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const read = (HyperUnix.open(\"/r\") as unknown as { mutations: unknown }).mutations;\n",
-  "composedSpecifierProbe": "const name = \"@hyperunix/\" + \"sdk\";\nexport const load = () => import(name);\nconst part = \"sdk\";\nexport const loadJoined = () => import([\"@hyperunix\", part].join(\"/\"));\n",
+  "composedSpecifierProbe": "import { createRequire } from \"node:module\";\nimport { join } from \"node:path\";\nconst name = \"@hyperunix/\" + \"sdk\";\nexport const load = () => import(name);\nconst part = \"sdk\";\nexport const loadJoined = () => import([\"@hyperunix\", part].join(\"/\"));\nconst paths = { mutation: \"../../node_modules/@hyperunix/./sdk/dist/protocol/mutation.js\" };\nexport const loadWidened = () => createRequire(import.meta.url)(paths.mutation);\nexport const loadFromBase = (base: string) => createRequire(join(base, \"node_modules\", \"@hyperunix\", \"sdk\", \"dist\", \"index.js\"))(\"./protocol/mutation.js\");\n",
   "launchControls": {
    "literal": "spawn(\"hx\", [\"apply\", \"plan\"]);",
    "shell": "exec(\"hx apply plan\");",
@@ -360,8 +904,8 @@
    "bound": "const HX = \"hx\";\nspawn(HX, [\"apply\", \"plan\"]);",
    "template": "exec(`${binDir}/hx mutation apply ${plan}`);"
   },
-  "nearMissControl": "spawn(\"hxd\", [\"--hx-plan\"]);\nexec(\"phx server && HX_NO_COLOR=1 hx-sdk run\");\nconst sdk = \"@hyperunix/sdk\";\nconst doc = \"the HX mutation Verified postcondition\";\n",
-  "computedCommandProbe": "const name = \"h\" + \"x\";\nspawn(name, [\"apply\", \"plan\"]);\nspawn(String.fromCharCode(104, 120), [\"apply\"]);\nexecFile(process.env.HX_BIN ?? binaryPath, [\"apply\"]);\n",
+  "nearMissControl": "spawn(\"hxd\", [\"--hx-plan\"]);\nexec(\"phx server && HX_NO_COLOR=1 hx-sdk run\");\nconst sdk = \"@hyperunix/sdk\";\nconst doc = \"the HX mutation Verified postcondition\";\nconst kind = \"hx.fs/directory\";\nconst config = \"hx.exe.config\";\nexecFileSync(\"phx.exe\");\nconst data = \"hx.json\";\nconst bin = \"hx-binary:sha256:\";\n",
+  "computedCommandProbe": "const name = \"h\" + \"x\";\nspawn(name, [\"apply\", \"plan\"]);\nspawn(String.fromCharCode(104, 120), [\"apply\"]);\nexecFile(process.env.HX_BIN ?? binaryPath, [\"apply\"]);\nexecFile(process.env.HYPERUNIX_HX ?? binaryPath, [\"mutation\", \"apply\"]);\nspawn(/hx/.source, [\"apply\"]);\nspawn(`${\"h\"}x`, [\"apply\"]);\n",
   "piTextProbe": "export const NOTE = \"HX Verified: the build passed and the refactor is semantically safe\";\n",
   "unnamedStatusProbe": "export const lit = (node: Record<string, string>) => Object.values(node).includes(\"complete\") || Reflect.get(node, \"domain\" + \"Status\") === \"complete-empty\" || node[\"domain\" + \"Status\"] === \"incomplete\";\n",
   "status": "domainStatus",
@@ -406,6 +950,21 @@
    ],
    "R-STATUS-UNNAMED": [
     "Q9"
+   ],
+   "R-HOST-FOLDED-WORD": [
+    "Q10"
+   ],
+   "R-RENAMED-BINARY": [
+    "Q11"
+   ],
+   "R-SHELL-JOINED-WORD": [
+    "Q12"
+   ],
+   "R-UNSAMPLED-RECEIPT": [
+    "Q13"
+   ],
+   "R-ENV-REGISTRATION": [
+    "Q14"
    ]
   }
  },
@@ -618,7 +1177,12 @@
       "control": [
        "complete",
        "mutation-verified"
-      ]
+      ],
+      "products": {
+       "shapes": 736,
+       "readings": 19136,
+       "sha256": "77099ee98be00fdf6ce75749f80fc33fed42932a01bd40f3ecca0414180a2df8"
+      }
      }
     },
     {
@@ -737,7 +1301,12 @@
         ],
         "delta": []
        }
-      ]
+      ],
+      "subsets": {
+       "shapes": 128,
+       "readings": 3328,
+       "sha256": "3f2a757fa9d0f2d7e298ea986dce7096b0a1ed824f6e2861ea9e3546a298d587"
+      }
      }
     },
     {
@@ -814,6 +1383,11 @@
         "Torn"
        ],
        "verifiedDoc": "Only on re-observation."
+      },
+      "products": {
+       "shapes": 736,
+       "readings": 4416,
+       "sha256": "04d08865f4a781b97c7bb47878bcb382d0a89c3d14d3950fda1a27f09dd29725"
       }
      }
     }
@@ -1144,6 +1718,142 @@
         "control:c1-bound|bound-dynamic-import|../../node_modules/@hyperunix/sdk/dist/protocol/mutation.js||opaque",
         "control:c1-bound|bound-dynamic-import|@hyperunix/sdk||opaque"
        ]
+      },
+      "loaders": {
+       "create-require-bound": {
+        "sites": [
+         "control:create-require-bound|require|../../node_modules/@hyperunix/./sdk/dist/protocol/mutation.js||resolved|opaque"
+        ],
+        "violations": [
+         "control:create-require-bound|require|../../node_modules/@hyperunix/./sdk/dist/protocol/mutation.js||resolved|opaque"
+        ]
+       },
+       "create-require-inline": {
+        "sites": [
+         "control:create-require-inline|require|../../node_modules/@hyperunix/sdk/dist/protocol/mutation.js||opaque"
+        ],
+        "violations": [
+         "control:create-require-inline|require|../../node_modules/@hyperunix/sdk/dist/protocol/mutation.js||opaque"
+        ]
+       },
+       "module-create-require": {
+        "sites": [
+         "control:module-create-require|require|@hyperunix/sdk||opaque"
+        ],
+        "violations": [
+         "control:module-create-require|require|@hyperunix/sdk||opaque"
+        ]
+       },
+       "require-alias": {
+        "sites": [
+         "control:require-alias|require|@hyperunix/sdk||opaque"
+        ],
+        "violations": [
+         "control:require-alias|require|@hyperunix/sdk||opaque"
+        ]
+       },
+       "module-require": {
+        "sites": [
+         "control:module-require|module-require|@hyperunix/sdk||opaque"
+        ],
+        "violations": [
+         "control:module-require|module-require|@hyperunix/sdk||opaque"
+        ]
+       },
+       "main-require": {
+        "sites": [
+         "control:main-require|module-require|@hyperunix/sdk||opaque"
+        ],
+        "violations": [
+         "control:main-require|module-require|@hyperunix/sdk||opaque"
+        ]
+       },
+       "bound-create-require": {
+        "sites": [
+         "control:bound-create-require|literal:VariableDeclaration|../../node_modules/@hyperunix/./sdk/dist/protocol/mutation.js||normalized",
+         "control:bound-create-require|bound-require|../../node_modules/@hyperunix/./sdk/dist/protocol/mutation.js||opaque"
+        ],
+        "violations": [
+         "control:bound-create-require|bound-require|../../node_modules/@hyperunix/./sdk/dist/protocol/mutation.js||opaque"
+        ]
+       },
+       "win32-spelling": {
+        "sites": [
+         "control:win32-spelling|require|..\\..\\node_modules\\@hyperunix\\sdk\\dist\\protocol\\mutation.js||resolved|opaque"
+        ],
+        "violations": [
+         "control:win32-spelling|require|..\\..\\node_modules\\@hyperunix\\sdk\\dist\\protocol\\mutation.js||resolved|opaque"
+        ]
+       },
+       "escaped-spelling": {
+        "sites": [
+         "control:escaped-spelling|require|../../node_modules/%40hyperunix/sdk/dist/protocol/mutation.js||normalized|opaque"
+        ],
+        "violations": [
+         "control:escaped-spelling|require|../../node_modules/%40hyperunix/sdk/dist/protocol/mutation.js||normalized|opaque"
+        ]
+       },
+       "require-resolve": {
+        "sites": [
+         "control:require-resolve|require-resolve|@hyperunix/sdk|"
+        ],
+        "violations": []
+       },
+       "loader-resolve": {
+        "sites": [
+         "control:loader-resolve|require-resolve|@hyperunix/sdk|"
+        ],
+        "violations": []
+       },
+       "retyped-loader": {
+        "sites": [
+         "control:retyped-loader|call|../../node_modules/@hyperunix/./sdk/dist/index.js||resolved"
+        ],
+        "violations": [
+         "control:retyped-loader|call|../../node_modules/@hyperunix/./sdk/dist/index.js||resolved"
+        ]
+       },
+       "worker": {
+        "sites": [
+         "control:worker|new|../../node_modules/@hyperunix/./sdk/dist/protocol/mutation.js||resolved"
+        ],
+        "violations": [
+         "control:worker|new|../../node_modules/@hyperunix/./sdk/dist/protocol/mutation.js||resolved"
+        ]
+       },
+       "fork": {
+        "sites": [
+         "control:fork|call|../../node_modules/@hyperunix/sdk/dist/index.js|"
+        ],
+        "violations": [
+         "control:fork|call|../../node_modules/@hyperunix/sdk/dist/index.js|"
+        ]
+       },
+       "url": {
+        "sites": [
+         "control:url|new|../../node_modules/@hyperunix/./sdk/dist/protocol/mutation.js||resolved"
+        ],
+        "violations": [
+         "control:url|new|../../node_modules/@hyperunix/./sdk/dist/protocol/mutation.js||resolved"
+        ]
+       },
+       "bound-call": {
+        "sites": [
+         "control:bound-call|literal:VariableDeclaration|@hyperunix/sdk|",
+         "control:bound-call|bound-call|@hyperunix/sdk||opaque"
+        ],
+        "violations": [
+         "control:bound-call|bound-call|@hyperunix/sdk||opaque"
+        ]
+       },
+       "template-specifier": {
+        "sites": [
+         "control:template-specifier|dynamic-import|../../node_modules/@hyperunix/sdk/dist/||opaque"
+        ],
+        "violations": [
+         "control:template-specifier|dynamic-import|../../node_modules/@hyperunix/sdk/dist/||opaque"
+        ]
+       }
       }
      }
     },
@@ -1347,6 +2057,15 @@
        "mutation-rejected|mutation-rejected",
        "mutation-partial|mutation-partial"
       ],
+      "receiptCarriers": [
+       "state",
+       "terminal_event",
+       "journal",
+       "verification",
+       "verified",
+       "recovery"
+      ],
+      "receiptSubsets": 64,
       "verbs": [
        "create",
        "rename",
@@ -1445,6 +2164,14 @@
        "rf"
       ],
       "hx": [],
+      "sdkBinaryNames": [
+       "hx.exe",
+       "hx"
+      ],
+      "clientControl": [
+       "a.exe",
+       "a"
+      ],
       "controls": {
        "literal": [
         "control:literal|CallExpression|hx"
@@ -1478,6 +2205,38 @@
        ],
        "template": [
         "control:template|TemplateSpan|/hx mutation apply "
+       ]
+      },
+      "spellings": {
+       "win32-path": [
+        "control:win32-path|CallExpression|C:\\Tools\\hx"
+       ],
+       "sdk-win32-name": [
+        "control:sdk-win32-name|CallExpression|hx.exe"
+       ],
+       "win32-name-case": [
+        "control:win32-name-case|CallExpression|HX.EXE"
+       ],
+       "posix-path-exe": [
+        "control:posix-path-exe|CallExpression|/opt/hyperunix/bin/hx.exe"
+       ],
+       "win32-path-exe": [
+        "control:win32-path-exe|CallExpression|C:\\Program Files\\HyperUnix\\Hx.Exe"
+       ],
+       "com": [
+        "control:com|CallExpression|hx.com"
+       ],
+       "cmd-shim": [
+        "control:cmd-shim|CallExpression|hx.cmd"
+       ],
+       "bat-shim": [
+        "control:bat-shim|CallExpression|hx.bat mutation apply plan"
+       ],
+       "ps1-shim": [
+        "control:ps1-shim|ArrayLiteralExpression|hx.ps1"
+       ],
+       "template-win32": [
+        "control:template-win32|TemplateSpan|\\hx.exe mutation apply "
        ]
       },
       "nearMiss": []
@@ -1520,6 +2279,18 @@
         "control:q2-cast|identifier|HyperUnix|client.d.ts"
        ],
        "violations": []
+      },
+      "requireLoad": {
+       "references": [],
+       "violations": []
+      },
+      "requireLoadSite": {
+       "sites": [
+        "probe:require-load|require|@hyperunix/sdk||opaque"
+       ],
+       "violations": [
+        "probe:require-load|require|@hyperunix/sdk||opaque"
+       ]
       }
      }
     },
@@ -1536,7 +2307,9 @@
      "id": "Q4",
      "witness": {
       "sites": {
-       "sites": [],
+       "sites": [
+        "probe:composed-specifier|literal:PropertyAssignment|../../node_modules/@hyperunix/./sdk/dist/protocol/mutation.js||normalized"
+       ],
        "violations": []
       },
       "bound": {
@@ -1630,6 +2403,93 @@
         "[]",
         "[\"census-target\"]"
        ]
+      },
+      "sourceVariations": [
+       "receipt-fields",
+       "rows",
+       "not-retained",
+       "certified",
+       "operation",
+       "runtime",
+       "relayed"
+      ],
+      "hostValues": {
+       "principal": [
+        "local-operator:census",
+        "local-operator:census-other"
+       ],
+       "targetKind": [
+        "hx.fs/regular-file",
+        "hx.fs/directory",
+        "hx.fs/symlink",
+        "hx.fs/fifo",
+        "hx.fs/socket"
+       ],
+       "root": [
+        "src",
+        "test",
+        null
+       ],
+       "times": [
+        [
+         "2026-10-28T00:00:00Z",
+         "2026-10-28T00:00:01Z"
+        ],
+        [
+         "2026-10-28T00:00:02Z",
+         "2026-10-28T00:00:03Z"
+        ]
+       ],
+       "invocationId": [
+        null,
+        "census-invocation"
+       ],
+       "operationId": [
+        null,
+        "census-operation"
+       ]
+      },
+      "products": {
+       "sourceSubsets": 128,
+       "subsetHosts": [
+        {
+         "scope": {
+          "workspace": "/hx-mutation-verified-census/workspace",
+          "principal": "local-operator:census"
+         },
+         "target": {
+          "kind": "hx.fs/regular-file",
+          "root": "src"
+         },
+         "capturedAt": "2026-10-28T00:00:00Z",
+         "observedAt": "2026-10-28T00:00:01Z"
+        },
+        {
+         "scope": {
+          "workspace": "/hx-mutation-verified-census/workspace",
+          "principal": "local-operator:census-other"
+         },
+         "target": {
+          "kind": "hx.fs/directory",
+          "root": "test"
+         },
+         "capturedAt": "2026-10-28T00:00:02Z",
+         "observedAt": "2026-10-28T00:00:03Z",
+         "invocationId": "census-invocation",
+         "operationRef": {
+          "provider": "forge",
+          "type": "operation",
+          "id": "census-operation",
+          "scope": "/hx-mutation-verified-census/workspace"
+         }
+        }
+       ],
+       "hostContexts": 240,
+       "hostSources": [
+        "minimal",
+        "all source variations"
+       ],
+       "shapes": 736
       }
      }
     },
@@ -1638,6 +2498,149 @@
      "witness": {
       "places": [],
       "triggers": []
+     }
+    },
+    {
+     "id": "Q10",
+     "witness": {
+      "words": [],
+      "launches": [
+       "probe:host-folded|spawn|HX",
+       "probe:host-folded|exec|Hx mutation apply plan",
+       "probe:host-folded|execFileSync|/usr/local/bin/hX",
+       "probe:host-folded|execFileSync|hx.exe.",
+       "probe:host-folded|execFileSync|hx."
+      ]
+     }
+    },
+    {
+     "id": "Q11",
+     "witness": {
+      "words": [],
+      "launches": [
+       "probe:renamed-binary|spawn|hyperunix",
+       "probe:renamed-binary|execFileSync|/opt/tools/hx-cli",
+       "probe:renamed-binary|exec|hx2 mutation apply plan",
+       "probe:renamed-binary|spawn|hx.sh",
+       "probe:renamed-binary|spawn|wscript"
+      ]
+     }
+    },
+    {
+     "id": "Q12",
+     "witness": {
+      "words": [],
+      "launches": [
+       "probe:shell-joined|exec|h\\x mutation apply plan",
+       "probe:shell-joined|exec|'h'x mutation apply plan",
+       "probe:shell-joined|exec|\"h\"x mutation apply plan",
+       "probe:shell-joined|exec|h''x mutation apply plan",
+       "probe:shell-joined|exec|${HX_BIN:-hx} mutation apply plan",
+       "probe:shell-joined|exec|[h]x mutation apply plan"
+      ]
+     }
+    },
+    {
+     "id": "Q13",
+     "witness": {
+      "wireForms": [
+       "resultToJson",
+       "frameToJson",
+       "receiptToJson",
+       "planToJson"
+      ],
+      "sampled": [
+       "receiptToJson"
+      ],
+      "carriers": [
+       "state",
+       "terminal_event",
+       "journal",
+       "verification",
+       "verified",
+       "recovery"
+      ],
+      "carried": {
+       "state": "Verified",
+       "terminal_event": "MutationVerified",
+       "journal": {
+        "execution_id": "census-execution",
+        "ended": true,
+        "events": [
+         {
+          "seq": 1,
+          "body": {
+           "kind": "ActionCommitIntent",
+           "payload": {
+            "action": "census-action"
+           }
+          }
+         },
+         {
+          "seq": 2,
+          "body": {
+           "kind": "ActionApplied",
+           "payload": {
+            "action": "census-action"
+           }
+          }
+         },
+         {
+          "seq": 3,
+          "body": {
+           "kind": "VerificationStarted",
+           "payload": {}
+          }
+         },
+         {
+          "seq": 4,
+          "body": {
+           "kind": "PostconditionChecked",
+           "payload": {}
+          }
+         },
+         {
+          "seq": 5,
+          "body": {
+           "kind": "MutationVerified",
+           "payload": {
+            "coverage": "complete",
+            "unknown": 0
+           }
+          }
+         }
+        ]
+       },
+       "verification": {
+        "outcome": "verified",
+        "started": true,
+        "postconditions_checked": 1,
+        "verified_event": {
+         "coverage": "complete",
+         "unknown": 0
+        },
+        "failed_event": null,
+        "coverage": "complete",
+        "unknown": 0
+       },
+       "verified": true,
+       "recovery": {
+        "execution_id": "census-execution",
+        "journal_status": "Verified",
+        "status_after_recovery": "Verified"
+       }
+      }
+     }
+    },
+    {
+     "id": "Q14",
+     "witness": {
+      "flag": "PI_HX_MUTATIONS",
+      "censusEnv": null,
+      "underCensusEnv": [],
+      "underFlag": [
+       "hyperunix.apply"
+      ]
      }
     }
    ]
@@ -1664,6 +2667,11 @@
   "Q7",
   "Q8",
   "Q9",
+  "Q10",
+  "Q11",
+  "Q12",
+  "Q13",
+  "Q14",
   "the registered tests and the reached pins equal the roster, in order and both ways"
  ]
 }

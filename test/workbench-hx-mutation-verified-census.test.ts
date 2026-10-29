@@ -1,10 +1,10 @@
 /**
  * wb-ts6.2 (HXFS-PI-R6, program-triage-2026-10-18), the until-then leg: the HX mutation 'Verified' census.
- * Statement (bead title, as the tracker export holds it): "Before any Pi hyperunix capability with a non-read effect class
- * registers (gating artifact: the same Pi HX WRITE surface wb-tz2.8 gates), its reconcile/receipt path shall read an HX
- * mutation 'Verified' postcondition as filesystem-only - never as import/build/semantic success - and shall require an
- * independent build/import recheck before any semantic-success claim; the read adapter's refusal of mutation outcomes stays
- * until then."
+ * Statement (bead title, as the tracker export holds it, rendered in 7-bit ASCII: its two em dashes as ' - '): "Before any Pi
+ * hyperunix capability with a non-read effect class registers (gating artifact: the same Pi HX WRITE surface wb-tz2.8 gates), its
+ * reconcile/receipt path shall read an HX mutation 'Verified' postcondition as filesystem-only - never as import/build/semantic
+ * success - and shall require an independent build/import recheck before any semantic-success claim; the read adapter's refusal of
+ * mutation outcomes stays until then."
  * The owner filing (the bead's notes) grounds the until-then posture: "Today the class is unreachable: wb-6ze.7's landed
  * adapter refuses mutation outcomes and the wb-tz2.8 standing census pins every registered hyperunix descriptor to effectClass
  * read, so no Pi path can represent Verified at all", and closes its armed acceptance with "the wb-tz2.8 effect-class census
@@ -28,89 +28,132 @@
  * mutation receipt for a reconcile test to read. When B2 reads a descriptor armed, this census reds by design: re-measure, and
  * the armed acceptance applies.
  *
+ * CLAIM BOUNDARY (respin 2: the enumerate-the-resolvable form of standing rules 14 and 19(c), orchestrator ruling R-B91): this
+ * census claims exactly its pinned set. Rows A, B and C each quote one until-then clause of the bead's own text as the clause they
+ * judge, and each holds that clause only as far as its pins read. Every pin below states its reader's domain - the forms, values
+ * and positions it reads - and every enumerated form has a control or a probe the census runs and pins. Each mode a reader is
+ * known not to read is a named residual with a pinned quiet row (row Q, RESIDUALS); a mode found outside the readers' domains and
+ * outside the residuals is a residual addition to this list, never a reading these rows claim.
+ *
  * MEASURED (cut 1: the cutting seat ws-04, run g10-work-s125, 2026-10-28, on trunk 061c2ac and a423a25; respin 1: seat ws-05,
- * run g10-work-s138, 2026-10-29, re-measured on trunk 04123dc): the vendored @hyperunix/sdk 0.1.0 declares 13
- * ExecutionStatusKind members, two of them mutation outcomes (mutation-rejected, mutation-partial), and no Verified kind; the
- * adapter (src/workbench/hyperunix-observer.ts) refuses both mutation outcomes under either licence in every reading shape A
- * samples, and every Verified spelling the SDK's mutation protocol carries. Every registered hyperunix descriptor is the
- * hyperunix.find read, and src registers only the native one (twice: src/workbench/native-modules.ts and
- * src/workbench/hosts/local-detached.ts), never the injected-reader registration; the default gate tier (forge.toml's test step,
- * npm run test, vitest run with vitest.config.ts) lists the wb-tz2.8 guard among its 476 files. src's 117
- * module files (all .ts) name the SDK at five literals (the named import in src/workbench/providers/hyperunix.ts and that
- * module's two contractSource literals, the identity runtime-artifact list in src/index.ts, one import.meta.resolve in
- * src/workbench/hosts/local-detached.ts) and reference 23 SDK members and bindings, all in that provider module,
- * none of the mutation or argv class. nativeEvidence projects HX metadata for hyperunix.find only (domainStatus is the result's
- * kind, verbatim); drawn for every declared kind, the workflow card's and the dialog's verified glyph light on none ("verified",
- * which no declared kind spells, lights both), and src names domainStatus at 25 places. No src string literal
- * names hx as a word; src launches forge, git and rf by literal command.
+ * run g10-work-s138, 2026-10-29, on trunk 04123dc; respin 2: seat ws-03, run g10-work-s141, 2026-10-29, re-measured on trunk
+ * aa95f43): the vendored @hyperunix/sdk 0.1.0 declares 13 ExecutionStatusKind members, two of them mutation outcomes
+ * (mutation-rejected, mutation-partial), and no Verified kind; its client's PATH lookup spawns hx.exe on win32 and hx elsewhere;
+ * its receipt wire form carries a coherent Verified receipt in six fields (state, terminal_event, journal, verification,
+ * verified, recovery), and its index exports four wire-form writers (resultToJson, frameToJson, receiptToJson, planToJson). The
+ * adapter (src/workbench/hyperunix-observer.ts) refuses both mutation outcomes under either licence in each of row A's 10
+ * shapes and 736 product shapes, and accepts as a find kind none of the Verified spellings A3 reads from the protocol's
+ * declaration. Every registered hyperunix descriptor is the hyperunix.find read, and src registers only the native one (twice:
+ * src/workbench/native-modules.ts and src/workbench/hosts/local-detached.ts), never the injected-reader registration; the default
+ * gate tier (forge.toml's test step, npm run test, vitest run with vitest.config.ts) lists the wb-tz2.8 guard among its 480
+ * files. src's 117 module files (all .ts) name the SDK at five literals (the named import in
+ * src/workbench/providers/hyperunix.ts and that module's two contractSource literals, the identity runtime-artifact list in
+ * src/index.ts, one import.meta.resolve in src/workbench/hosts/local-detached.ts) and at no other C1 site, bound site or
+ * consumer, and reference 23 SDK members and bindings, all in that provider module, none of the mutation or argv class.
+ * nativeEvidence projects HX metadata for hyperunix.find only (domainStatus is the result's kind, verbatim); drawn for every
+ * declared kind, the workflow card's and the dialog's verified glyph light on none ("verified", which no declared kind spells,
+ * lights both), and src names domainStatus at 25 places. No word of a src string literal is an hx spelling; src launches forge,
+ * git and rf by literal command.
  *
  * REPRESENT, as the owner filing grounds it: a Pi path represents Verified when an HX mutation outcome - a receipt, its
  * verification evidence, a recovery classification or a raw hx run - can reach a Pi value. Pi's own wording about Verified is
  * the armed falsifier's subject (NOT DELIVERED), named here as the residual R-PI-TEXT.
  *
  * The census pins three judged rows and the residuals' quiet rows:
- *  A, the adapter's refusal, judged over every reading shape (SHAPES, respin 1, refusal #1 U4): the minimal reading, one
+ *  A, the adapter's refusal, judged over SHAPES and two products. SHAPES (respin 1, refusal #1 U4): the minimal reading, one
  *    variation of each field the adapter declares it consumes (HYPERUNIX_CONSUMED_FIELDS, src's own list: rows present, a
- *    non-retaining stream, a coverage certificate, another operation, another runtime identity, the relayed facets), another
- *    host context over the same workspace (principal, target, times, invocation, operation reference), the receipt fields a
- *    mutation receipt carries beside its kind (state Verified, verified, verification: fields the adapter does not consume)
- *    and all of them at once. Read by path, every consumed field but the three envelope identities (the contract, the
- *    representation, the workspace root: any other value is refused before a kind is read) moves in some shape or in the kind
- *    and licence loops.
+ *    non-retaining stream, a coverage certificate, another operation, another runtime identity, the relayed facets), another host
+ *    context over the same workspace (MOVED_HOST: principal, target, times, invocation, operation reference), the receipt fields
+ *    (respin 2, refusal #2 U3: the SDK's whole receipt wire form, RECEIPT_WIRE; the adapter consumes none of its fields but
+ *    diagnostics, an empty list there) and all of them at once. The products (respin 2, refusal #2 U4): (i) every subset of the
+ *    seven source and runtime variations (SOURCE_VARIATIONS: the receipt fields, rows, the non-retaining stream, the certificate,
+ *    the operation, the runtime, the relayed facets; 128 subsets) under the base and the moved host context, and (ii) every host
+ *    context of the HOST_VALUES cross product (two principals; five target kinds: regular-file, directory, symlink, fifo, socket;
+ *    the roots src, test and none; two clock pairs; an invocation id or none; an operation reference or none: 240 hosts) under
+ *    the minimal source and under all seven source variations at once - 736 product shapes. Read by path, every consumed field but
+ *    the three envelope identities moves in some shape or in the kind and licence loops; the envelope identities (the contract,
+ *    the representation, the workspace root) hold their one accepted value in every reading, so no reading that moves them is
+ *    judged here (refusal #2 F6, read from the adapter's source and not pinned: it refuses any other contract or representation
+ *    before it reads the kind, and another workspace root after the kind and the mutation refusal, as authorization).
  *    A1 every kind the shipped declaration (dist/result.d.ts, by the TypeScript AST) declares, in order, is the adapter's kind
  *    tuple; each kind under either licence in each shape, read by hyperunixTopology, projects (coverage and tone) or is refused
- *    (category and message): the SDK's mutation outcomes (the "mutation-" kinds) are refused in every shape and are exactly the
- *    refused kinds of the minimal reading; the declaration reader reads its control. A2 hxLiveInvariant over the same
- *    readings: in every shape only the mutation outcomes break the read-outcome clause, and none licenses absence. A3 the
- *    mutation protocol's Verified vocabulary, read from the shipped dist/protocol/mutation.d.ts (the VerificationEvidence outcome
- *    union, the receipt-state tokens the RecoveryClassification.journalStatus doc lists, the MutationReceipt.verified doc), each
- *    token as a find kind in every shape: declared or not, the adapter's answer and the invariant's; the vocabulary reader reads
- *    its control.
+ *    (category and message): the SDK's mutation outcomes (the "mutation-" kinds) are refused in every shape and every product
+ *    shape (the 19136 product readings pinned by their sha256) and are exactly the refused kinds of the minimal reading; the
+ *    declaration reader reads its control. A2 hxLiveInvariant (which reads no host context) over the shapes and the 128 source
+ *    subsets (3328 readings, by sha256): in each, only the mutation outcomes break the read-outcome clause, and none licenses
+ *    absence. A3 the mutation protocol's Verified vocabulary, read from the shipped dist/protocol/mutation.d.ts (the
+ *    VerificationEvidence outcome union, the receipt-state tokens the RecoveryClassification.journalStatus doc lists, the
+ *    MutationReceipt.verified doc), each token as a find kind in every shape and every product shape (4416 readings, by sha256):
+ *    declared or not, the adapter's answer and the invariant's; the vocabulary reader reads its control.
  *  B, the standing guard. B1 test/workbench-hyperunix-effect-class-census.test.ts is present, byte-identical to the measured
  *    guard (sha256), names wb-tz2.8 and registers its suite and six cases (titles by AST); the title reader reads its control.
- *    B2 the guard's condition, re-measured: the hyperunix descriptors (the reconcile core's producerOf) of the native and the
- *    injected-reader registrations each read hyperunix.find|read and the armed set (any other effect class) is empty, with the
- *    judge's controls (a write and an external hyperunix descriptor arm it; a read one and another producer's write do not);
- *    the provider module's exports and every src call of its registration exports (with the call reader's control). B3 the
- *    guard runs where its tier says (the title-census floor's tier truth, respin 1, refusal #1 U5): the default gate tier,
- *    resolved by the census helper's resolveTier (forge.toml's test step through its one npm hop to a vitest run), its argv
- *    read by vitest's parseCLI (pinned: no positional filter, no flag beyond the measured ones), its config resolved by
- *    vitest's resolveConfig (vitest.config.ts, no testNamePattern, its setup files pinned) and the files vitest's own glob
- *    lists for that config (createVitest): the guard and this census are listed, and the guard drops out of the list when the
- *    tier's exclude names it (the control).
+ *    B2 the guard's condition, re-measured under the census's own process environment: the hyperunix descriptors (the reconcile
+ *    core's producerOf) of the native and the injected-reader registrations each read hyperunix.find|read and the armed set (any
+ *    other effect class) is empty, with the judge's controls (a write and an external hyperunix descriptor arm it; a read one and
+ *    another producer's write do not); the provider module's exports and every src call of its registration exports (with the
+ *    call reader's control). B3 the guard runs where its tier says (the title-census floor's tier truth, respin 1, refusal #1
+ *    U5): the default gate tier, resolved by the census helper's resolveTier (forge.toml's test step through its one npm hop to a
+ *    vitest run), its argv read by vitest's parseCLI (pinned: no positional filter, no flag beyond the measured ones), its config
+ *    resolved by vitest's resolveConfig (vitest.config.ts, no testNamePattern, its setup files pinned) and the files vitest's own
+ *    glob lists for that config (createVitest): the guard and this census are listed, and the guard drops out of the list when
+ *    the tier's exclude names it (the control).
  *  C, the paths that could represent Verified. The src walk reads every module file below src (ts, tsx, mts, cts, js, jsx, mjs,
  *    cjs; the extension reader reads its control), and C2's program compiles exactly those (respin 1, refusal #1 U2: an
- *    imported .mts module is a program file and a walk module). C1 every src string literal naming the SDK - the package, a
- *    subpath, any spelling that carries the package name (a relative path into node_modules), or a module specifier the repo's
- *    own resolution (ts.resolveModuleName under tsconfig.json) maps into the installed package - read for its context (import,
- *    export, dynamic import, require, import type, import-equals, import.meta.resolve, other) and the names it brings, and
- *    every program load (a dynamic import or require) whose specifier is no literal but a value the checker narrows to string
- *    literals (a const binding) naming the SDK (a bound load); a loading site VIOLATES when it is opaque (namespace, default,
- *    side-effect, export *, dynamic, require, import-equals, a bound load, subpath, any spelling but the bare package name) or
- *    names one of the 39 exports the SDK's index re-exports from its two mutation modules (read from dist/index.d.ts); the site
- *    controls, the bound-load control and the surface reader's control read as pinned. C2 one type-checked program over src
- *    (the repo's tsconfig file list and options) plus virtual control modules: every reference to a vendored-SDK member or
- *    binding (a property access, an element access whose key type is a string literal, a destructured name, and an identifier -
- *    an imported binding used as a value or a type, its import specifier included) with its declaration file; a reference
- *    VIOLATES when it is of the MUTATION class (declared in dist/mutation.d.ts or dist/protocol/mutation.d.ts, or a member
- *    whose declared type is one of their exports: the mutations getter) or the ARGV class (a callable whose signature takes a
- *    caller argv: the raw escape hatch); the src reference list is pinned exactly (FAIL-CLOSED: a new SDK reference reds C2 for
- *    re-measure) and the controls (a member, a destructured name, a literal key, a const key, a namespace member, raw, a value
- *    flowed through another module, an imported binding called, one reached by a relative path, a type-only one, an .mts
- *    module) read as pinned. C3 the evidence projection: the nativeEvidence switch labels (by AST), each declared kind's
- *    projected domainStatus, a receipt-shaped output under each SDK mutation verb (the MutationOperation union and each
- *    MutationPlan method answering a MutationReceipt) projecting nothing, and a find reading carrying the receipt fields
- *    projecting its kind verbatim (refusal #1 F7: no receipt field becomes a domainStatus); the verified glyphs judged by
- *    drawing them (respin 1, refusal #1 U3): the workflow card (layoutWorkflowCard) and the dialog (layoutWorkflowDialog) over
- *    a done, current, evidenced node for every declared kind light no tick, and the control "verified" lights both; every src
- *    place naming domainStatus (an identifier, a member, a binding, an element key, a property key) with its consuming context,
- *    pinned exactly (FAIL-CLOSED: a new read - a helper call, a membership test, a destructure - reds C3 for re-measure); every
- *    src comparison of a domainStatus read with a literal (an equality, an includes/has/indexOf membership on a literal list, a
- *    switch case) and the declared kinds it would light (none); the case, verb, glyph and place readers read their controls. C4
- *    no src string literal (a string, a no-substitution template, a template's text) names hx as a word (split at white space
- *    and shell punctuation: hx, or a path ending /hx), whatever carries it - a launcher alias, a promisified launcher, a
- *    shell's -c script, an env-assignment prefix, npx, a binding (respin 1, refusal #1 U1); the launch reader still sees src's
- *    literal launches (forge, git, rf: the floor); the word controls are flagged and the near-miss control is not.
+ *    imported .mts module is a program file and a walk module).
+ *    C1 (respin 2, refusal #2 U2) reads, in every src module's program file (every walk module is one, asserted), each string
+ *    literal (a string or a no-substitution template) that spells the SDK package name as written, or spells it read as a path
+ *    (asPath: percent-escapes decoded, a backslash read as /, . and .. segments and doubled separators collapsed, lower case), or
+ *    stands in a specifier position or as a file-like argument (a separator, no white space) of a call or a construction and is
+ *    mapped into the installed package by the repo's own resolution (ts.resolveModuleName under tsconfig.json: a file below the
+ *    package directory, or a file whose nearest package.json is the SDK's own); and each text part of a template (its head,
+ *    middle or tail) that spells the SDK as written or as a path, read through its template's position. Each site is read for its consuming context,
+ *    enumerated: import, export, import-equals, import-type, dynamic-import, import-meta-resolve; by the checker's resolved
+ *    signature in @types/node's module.d.ts (SIGNATURE_LOADERS), require (a NodeJS.Require call: require itself, a createRequire
+ *    or Module.createRequire result - bound, inline or aliased), module-require (NodeJS.Module's require method: module.require,
+ *    require.main.require) and require-resolve (NodeJS.RequireResolve); call and new (any other call or construction taking
+ *    the literal as an argument: FAIL-CLOSED); and literal (any other position). Bound sites: every call and construction
+ *    argument that is no literal but a value the checker narrows to string literals (a const binding, a literal union, a
+ *    template of literals) whose value spells the SDK as a path or, as a loader's specifier or a file-like argument, resolves
+ *    into it - read as bound-<loader>, or bound-call and bound-new (FAIL-CLOSED). A site VIOLATES when its context loads (import,
+ *    export, import-equals, import-type, dynamic-import, require, module-require) and it is opaque (namespace, default,
+ *    side-effect, export *, a dynamic, require-made or bound load, subpath, any spelling but the bare package name, a template) or names one
+ *    of the 39 exports the SDK's index re-exports from its two mutation modules (read from dist/index.d.ts), or when its context
+ *    is call, new, bound-call or bound-new. The src site list is pinned exactly (FAIL-CLOSED: a new src literal or value that C1
+ *    reads, in any context, reds C1 for re-measure). The site controls (SITE_CONTROLS, parsed alone: their only checker-free
+ *    loader is the identifier require), the bound-load control, the loader controls (LOADER_CONTROLS, compiled with src: every
+ *    load form and fail-closed consumer violates, both resolvers read as sites that do not) and the surface reader's control read
+ *    as pinned. C2 one type-checked program over src (the repo's tsconfig file list and options) plus virtual control modules:
+ *    every reference to a vendored-SDK member or binding (a property access, an element access whose key type is a string
+ *    literal, a destructured name, and an identifier - an imported binding used as a value or a type, its import specifier
+ *    included) whose symbol the checker resolves to an SDK declaration file; a reference VIOLATES when it is of the MUTATION
+ *    class (declared in dist/mutation.d.ts or dist/protocol/mutation.d.ts, or a member whose declared type is one of their
+ *    exports: the mutations getter) or the ARGV class (a callable whose signature takes a caller argv: the raw escape hatch); the
+ *    src reference list is pinned exactly (FAIL-CLOSED: a new SDK reference reds C2 for re-measure) and the controls (a member, a
+ *    destructured name, a literal key, a const key, a namespace member, raw, a value flowed through another module, an imported
+ *    binding called, one reached by a relative path, a type-only one, an .mts module) read as pinned. C3 the evidence
+ *    projection: the nativeEvidence switch labels (by AST), each declared kind's projected domainStatus, a receipt-shaped output
+ *    (RECEIPT_SOURCE: the SDK's receipt wire form under a Verified kind) under each SDK mutation verb (the MutationOperation union
+ *    and each MutationPlan method answering a MutationReceipt) projecting nothing, a find reading carrying the receipt fields
+ *    projecting its kind verbatim (refusal #1 F7), and so does a find reading carrying each of the 64 subsets of the wire form's
+ *    six Verified-carrying fields (the key or its JSON value spells verified: state, terminal_event, journal, verification,
+ *    verified, recovery) beside its other fields (respin 2, refusal #2 U3); the receipt is the SDK's own: receiptToJson of the
+ *    receipt receiptFromJson recomputes from RECEIPT_SEED, coherent and verified. The verified glyphs judged by drawing them
+ *    (respin 1, refusal #1 U3): the workflow card (layoutWorkflowCard) and the dialog (layoutWorkflowDialog) over a done, current,
+ *    evidenced node for every declared kind light no tick, and the control "verified" lights both; every src place naming
+ *    domainStatus (an identifier, a member, a binding, an element key, a property key) with its consuming context, pinned exactly
+ *    (FAIL-CLOSED: a new read - a helper call, a membership test, a destructure - reds C3 for re-measure); every src comparison
+ *    of a domainStatus read with a literal (an equality, an includes/has/indexOf membership on a literal list, a switch case) and
+ *    the declared kinds it would light (none); the case, verb, glyph and place readers read their controls. C4 (respin 2, refusal
+ *    #2 U1) no word of a src string literal (a string, a no-substitution template, a template's head, middle or tail, split at
+ *    white space and shell punctuation, a backslash included) is an hx spelling: a word whose last path segment (after its last
+ *    /) is hx, or, in any letter case, hx followed by one of HX_WIN32_EXTENSIONS (.exe, .com, .cmd, .bat, .ps1). The SDK's own
+ *    binary names (its client's resolveBinary, read from the shipped dist/client.js: hx.exe on win32, hx elsewhere) are hx
+ *    spellings (asserted). The reader does not ask which call carries the literal: the carrier controls (LAUNCH_CONTROLS: a
+ *    launcher alias, a promisified launcher, a shell's -c script, an env-assignment prefix, npx, a binding, a template) and the
+ *    spelling controls (HX_SPELLING_CONTROLS: a win32 path, the SDK's win32 name, its letter cases, a POSIX and a win32 path to
+ *    it, .com, the .cmd, .bat and .ps1 shims, a win32 template) are each flagged, the near-miss control (hxd, phx, hx-sdk, the HX
+ *    prose name, an hx.fs/ target kind, hx.exe.config, hx.json, hx-binary:) is not, and the launch reader still sees src's
+ *    literal launches (forge, git, rf: the floor).
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and
  * pins, every pin's witness, the constants, the controls, the residual families and every registered test title - is held to
@@ -120,27 +163,48 @@
  * the pins that reached their witness.
  * NOT CLAIMED (edits of this file and the roster together): below row level, a pin removed from ROWS, the literal, IMPL and
  * the roster (the bead text anchors rows A, B and C, not their pins); a control removed from its list and the roster; a pin's
- * case replaced by one that echoes its roster witness. At row level, row Q (respin 1, refusal #1 U6): the residual
+ * case replaced by one that echoes its roster witness; a product reading the census and the roster move together (the roster
+ * pins the products' readings by digest, not one by one). At row level, row Q (respin 1, refusal #1 U6): the residual
  * enumeration is anchored by this file and its roster alone - no outside text names the residual families - so row Q removed
- * from both together (its ROWS line, the literal's entry, IMPL Q1-Q9, RESIDUALS and the roster's row, tests and
+ * from both together (its ROWS line, the literal's entry, IMPL Q1-Q14, RESIDUALS and the roster's row, tests and
  * constants.residuals) is not claimed; rows A, B and C are anchored outside both (the bead's own text, judged-set case).
- * RESIDUALS (named, each with its pinned quiet row): R-COMPUTED-KEY an SDK member reached by a key the checker cannot narrow
- * to a literal (a composed string) or by reflection (Reflect.get) is not read by C2 (Q1); R-CAST-AWAY an SDK value whose type
- * a cast replaces before the member is read is not an SDK reference (Q2); R-INJECTED-READER registerHyperUnixFind accepts any
- * reader and nativeEvidence copies a hyperunix.find kind unchecked, so a non-SDK reader's kind "verified" would project
- * domainStatus "verified" (the glyphs' trigger) although the adapter refuses it - src never calls that registration (B2) (Q3);
- * R-COMPOSED-SPECIFIER an SDK load whose specifier is built at run time (a concatenation, a joined list: any value the checker
- * types as plain string) is neither a C1 site nor a bound load (Q4; a template whose substitutions are literals is narrowed by
- * the checker to its literal and read as a bound load, the bound-load control); R-COMPUTED-COMMAND an hx launch
- * whose command no src literal spells as a word - composed at run time, built from char codes, read from the environment or
- * a resolved binary path - is not seen by C4 (Q5; it replaces cut 1's R-BOUND-LAUNCH, whose bound literal C4 now reads);
- * R-OUTSIDE-SRC the census reads src only: an operator's local provider module (DetachedLaunchRequest.localProvider, loaded at
- * run time from outside src) is not read, and C3 shows a receipt-shaped output under an unknown capability projects no
- * domainStatus (Q6); R-PI-TEXT a src string mapping Verified to build or semantic success is not read by rows A-C - judging it
- * is the undelivered falsifier (Q7); R-UNSAMPLED-VALUE A1-A3 sample one alternative value per consumed field, so a refusal
- * conditioned on another value of one (two or more rows, a third operation, a named runtime version) is not judged (Q8: the
- * values each consumed field is sampled at); R-STATUS-UNNAMED a status read that never names domainStatus (Object.values over
- * a node, a composed key, Reflect.get) in a module the render does not draw is neither a C3 place nor a trigger (Q9).
+ * RESIDUALS (named, each with its pinned quiet row): R-COMPUTED-KEY an SDK member reached by a key the checker cannot narrow to
+ * a literal (a composed string) or by reflection (Reflect.get) is not read by C2 (Q1); R-CAST-AWAY an SDK value whose type a
+ * cast replaces, or that the checker types any (a require-made load's result, respin 2), carries no SDK symbol, so C2 reads no
+ * reference on it - C1 reads the require-made load itself (Q2); R-INJECTED-READER registerHyperUnixFind accepts any reader and
+ * nativeEvidence copies a hyperunix.find kind unchecked, so a non-SDK reader's kind "verified" would project domainStatus
+ * "verified" (the glyphs' trigger) although the adapter refuses it - src never calls that registration (B2) (Q3);
+ * R-COMPOSED-SPECIFIER a load or a call argument the checker types as plain string and built from parts none of which spells
+ * the SDK as a path - fragments concatenated or joined ("@hyperunix/" + "sdk"), a function's return - or read through a widened
+ * value (a container member: the literal itself stays a C1 site), or a require-made loader whose base path is built at run time
+ * (its literal specifier resolves from that base, not from the module), is neither a C1 site nor a bound site (Q4; a part that
+ * spells the SDK is a C1 site, pinned exactly, and a template whose substitutions are literals is narrowed by the checker and
+ * read as a bound site, the bound-load control); R-COMPUTED-COMMAND an hx launch whose command is not the text of a src string literal - composed at run time, built
+ * from char codes, a regex's source or a template's substitution, read from the environment (the SDK's own HYPERUNIX_HX among
+ * them) or a resolved binary path - is not seen by C4 (Q5); R-OUTSIDE-SRC the census reads src only: an operator's local
+ * provider module (DetachedLaunchRequest.localProvider, loaded at run time from outside src) is not read, and C3 shows a
+ * receipt-shaped output under an unknown capability projects no domainStatus (Q6); R-PI-TEXT a src string mapping Verified to
+ * build or semantic success is not read by rows A-C - judging it is the undelivered falsifier (Q7); R-UNSAMPLED-VALUE A1-A3
+ * judge the shapes and the two products only: a refusal conditioned on a value outside the sampled sets (Q8 lists them: each
+ * consumed field's values across the shapes and each host-context field's in HOST_VALUES), or on a cross term outside the
+ * products (a source subset under a third host context, a host context under a partial source subset), is not judged (Q8);
+ * R-STATUS-UNNAMED a status read that never names domainStatus (Object.values over a node, a composed key, Reflect.get) in a
+ * module the render does not draw is neither a C3 place nor a trigger (Q9); R-HOST-FOLDED-WORD (respin 2) a spelling a host
+ * folds to the command - the bare name in another letter case (HX, Hx, hX, as a word or a path's last segment) on a
+ * case-insensitive host (win32, macOS by default), or a trailing dot win32 strips (hx., hx.exe.) - is no hx spelling: C4 reads
+ * the bare name case-sensitively, because src spells HX as the product's prose name in its messages (Q10: the probe's launches
+ * are seen, no hx word is); R-RENAMED-BINARY (respin 2) the hx binary or a wrapper of it under another file name - a copy, a
+ * link, a wrapper (hyperunix, hx-cli, hx2), or hx with an extension outside HX_WIN32_EXTENSIONS (hx.sh, hx.vbs) - is no hx
+ * spelling (Q11); R-SHELL-JOINED-WORD (respin 2) a shell command line that forms the command from other text - quoted or
+ * escaped parts (h\x, 'h'x, "h"x, h''x), a parameter expansion's default (${HX_BIN:-hx}), a glob pattern ([h]x) - yields no
+ * hx word (Q12); R-UNSAMPLED-RECEIPT
+ * (respin 2) C3 samples one receipt, the SDK's wire form of RECEIPT_SEED: a projection conditioned on another value of a
+ * receipt field (another journal event sequence, a rejection, a non-empty diagnostics list, an incoherent or a torn receipt), on
+ * a nested field's presence within a carrier, or on a field of the SDK's other wire forms (Q13 lists its writers:
+ * resultToJson, frameToJson and planToJson beside the sampled receiptToJson) is not judged (Q13); R-ENV-REGISTRATION (respin 2,
+ * refusal #2 F1) B2 reads the registrations under the census's own process environment, so a registration conditioned on
+ * another environment value is not re-measured by B2 (Q14: a write descriptor registered only under PI_HX_MUTATIONS=1 arms
+ * only under the flag) - the guard (B1, sha-pinned) reads its descriptor literal, and wb-gwr.1 A3 a host-registered one.
  * SCOPE: the clause judges this repo's src and the vendored SDK 0.1.0; the reconcile core's evidence-read table
  * (RECONCILE_EVIDENCE_READS, wb-gwr.1 row B) and the src-wide descriptor-literal scan (wb-gwr.1 A3) are pinned there and not
  * re-read; a refusal conditioned on a provider field outside HYPERUNIX_CONSUMED_FIELDS is a read outside the adapter's declared
@@ -154,14 +218,25 @@
  * judge a moved host context and the receipt fields (refusal #1 F7, the GC4 shape) as reading shapes, C3 holds a find reading
  * carrying those fields to its kind, C1 reads import-equals and loads through a const-bound specifier, and B3 pins the tier's
  * setup files.
+ * RESPIN 2 (refusal #2 of gate g10-gate-s139 at PREP F; rule 19's second-stage cap, ruling R-B91: this cut takes the
+ * enumerate-the-resolvable form; each unmet item cured red-first against the gate's own archived plants): U1 C4 reads the win32
+ * spellings and holds the SDK's own binary names to them (L2-C4-EXE, L2-C4-EXE-INPLACE red it); U2 C1 reads loaders by the
+ * checker's resolved signature, reads a literal as a path and a template's text parts, and fails closed on any other consumer (L2-C1-CREATEREQUIRE,
+ * L2-C1-CREATEREQUIRE-INPLACE); U3 C3 and row A read the SDK's own receipt wire form, C3 every subset of its Verified-carrying
+ * fields (L2-C3-RECOVERY, L2-C3-TERMINAL); U4 row A judges the two products (L2-A-COMBO, L2-A-HOST3) and R-UNSAMPLED-VALUE
+ * states exactly what they leave out. Beyond the named items, in their classes: R-HOST-FOLDED-WORD, R-RENAMED-BINARY and
+ * R-SHELL-JOINED-WORD (C4), R-UNSAMPLED-RECEIPT (C3) and R-ENV-REGISTRATION (B2, refusal #2 F1) are named with quiet rows,
+ * R-COMPOSED-SPECIFIER and R-CAST-AWAY carry probes of the forms U2 exposed, and refusal #2 F6's ordering sentence is corrected.
  *
  * Display paths added: none. Test-only: no scratch is allocated and nothing is written (the virtual modules live in memory);
- * src, the SDK's shipped declarations, one landed test file, forge.toml, package.json, vitest.config.ts and .beads are only read.
+ * src, the SDK's shipped declarations and client, @types/node's module declarations (through the program), one landed test
+ * file, forge.toml, package.json, vitest.config.ts and .beads are only read.
  */
 import { createHash } from "node:crypto";
-import { readdirSync, readFileSync, realpathSync } from "node:fs";
-import { dirname, join, relative, sep } from "node:path";
+import { existsSync, readdirSync, readFileSync, realpathSync } from "node:fs";
+import { dirname, join, posix, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+import { receiptFromJson, receiptToJson } from "@hyperunix/sdk";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { createVitest, parseCLI, resolveConfig } from "vitest/node";
@@ -221,8 +296,15 @@ const LAUNCH_NAMES = ["exec", "execFile", "execFileSync", "execSync", "fork", "s
 const LAUNCH_FLOOR = ["forge", "git", "rf"] as const;
 /** C4's word reader (respin 1, refusal #1 U1): a literal's text splits into words at white space and shell punctuation. */
 const WORD_SEPARATORS = /[\s;|&()<>`'"$={},\\]+/;
-/** The command C4 judges: a word that is hx, or a path ending in /hx. */
+/** The command C4 judges: the bare name hx (and its win32 forms, HX_WIN32_EXTENSIONS). */
 const HX_COMMAND = "hx";
+/** The vendored SDK's shipped client: its resolveBinary binds the per-platform binary name its PATH lookup spawns (C4's anchor
+ * outside this census, respin 2, refusal #2 U1: hx.exe on win32, hx elsewhere). */
+const SDK_CLIENT = `${SDK_DIST}/client.js`;
+/** The win32 forms C4 reads beside the bare name, in any letter case (respin 2, refusal #2 U1): the SDK's own win32 name's
+ * extension (.exe; C4 holds every SDK binary name to this family) and the other win32 executable and shim extensions .com, .cmd,
+ * .bat and .ps1. Any other extension is R-RENAMED-BINARY's. */
+const HX_WIN32_EXTENSIONS = [".exe", ".com", ".cmd", ".bat", ".ps1"] as const;
 /** The host-bound context and identity every synthetic find reading carries (no file, process or SDK access). */
 const WS = "/hx-mutation-verified-census/workspace";
 const BINARY = "5f".repeat(32);
@@ -232,15 +314,36 @@ const CONTEXT: HyperUnixTopologyContext = {
   capturedAt: "2026-10-28T00:00:00Z",
   observedAt: "2026-10-28T00:00:01Z",
 };
-/** A receipt-shaped producer output: every Verified spelling the SDK's mutation protocol carries, under one source. */
-const RECEIPT_SOURCE: JsonObject = {
-  representation: "hyperunix.result/1",
-  state: "Verified",
-  verified: true,
-  verification: { outcome: "verified" },
-  execution_status: { kind: "verified" },
+/** The census's own receipt seed (respin 2, refusal #2 U3): a coherent Verified apply journal and its recovery classification, as the
+ * SDK's receipt wire form carries them. C3 and row A read the SDK's own receiptToJson(receiptFromJson(seed)) (RECEIPT_WIRE), so the
+ * field set and every value the SDK recomputes are the SDK's, never this census's choice. */
+const RECEIPT_SEED: JsonObject = {
+  plan_id: "census-plan",
   execution_id: "census-execution",
+  journal: {
+    execution_id: "census-execution",
+    ended: true,
+    events: [
+      { seq: 1, body: { kind: "ActionCommitIntent", payload: { action: "census-action" } } },
+      { seq: 2, body: { kind: "ActionApplied", payload: { action: "census-action" } } },
+      { seq: 3, body: { kind: "VerificationStarted", payload: {} } },
+      { seq: 4, body: { kind: "PostconditionChecked", payload: {} } },
+      { seq: 5, body: { kind: "MutationVerified", payload: { coverage: "complete", unknown: 0 } } },
+    ],
+  },
+  recovery: { execution_id: "census-execution", journal_status: "Verified", status_after_recovery: "Verified" },
 };
+/** A JSON value the census requires to be an object (the SDK's receipt wire form). */
+function objectOf(value: JsonValue, what: string): JsonObject {
+  if (value === null || typeof value !== "object" || Array.isArray(value)) throw new Error(`${what} must be an object`);
+  return value;
+}
+/** The SDK's receipt wire form of RECEIPT_SEED: receiptFromJson recomputes the receipt (its verification, state and coherence from
+ * the carried evidence) and receiptToJson serializes every field it carries. */
+const RECEIPT_WIRE: JsonObject = objectOf(json(receiptToJson(receiptFromJson(RECEIPT_SEED))), "the SDK's receipt wire form");
+/** A receipt-shaped producer output: the SDK's receipt wire form beside the find envelope's representation and a kind that spells
+ * Verified. */
+const RECEIPT_SOURCE: JsonObject = { representation: "hyperunix.result/1", execution_status: { kind: "verified" }, ...RECEIPT_WIRE };
 /** The bead's own text: the sentence markers the clauses are read from (the owner filing in the tracker export). */
 const UNREACHABLE = "Today the class is unreachable: ";
 const ARMED = "Acceptance shape when armed: ";
@@ -266,6 +369,7 @@ const READER_CONTROLS: Readonly<Record<string, string>> = {
   glyph: `const lit = node.domainStatus === "verified" || "complete" == entry.domainStatus || node.state === "done" || node.domainStatus !== "failed" || ["complete-empty", 7].includes(node.domainStatus ?? "") || new Set(["incomplete"]).has(entry.domainStatus) || domainStatus === "cancelled" || node["domainStatus"] === "usage-error";\nswitch (node.domainStatus) { case "provider-failed": break; default: }\nconst other = ["done"].includes(node.state);`,
   places: `interface N { domainStatus?: string }\nconst a = node.domainStatus;\nconst { domainStatus } = node;\nconst b = node["domainStatus"];\nconst c = { domainStatus: a, "domainStatus": b };\nconst d = { domainStatus };\nlabel(domainStatus);\nconst e = node.domainStatusText;`,
   registration: "registerHyperUnixFind(registry, reader, root);\nhyperunix.registerNativeHyperUnixFind(registry, root);\nregisterOther(registry);",
+  client: `function resolveBinary(state) {\n    const other = state.x ? "y.exe" : "y";\n    const name = process.platform === "win32" ? "a.exe" : "a";\n    return name;\n}\nfunction elsewhere() {\n    const name = cond ? "b.exe" : "b";\n}`,
 };
 /** C1's controls: synthetic module bodies its SDK-site reader must read exactly as pinned (none is compiled or run). */
 const SITE_CONTROLS: Readonly<Record<string, string>> = {
@@ -314,8 +418,35 @@ const CAST_PROBE = `import { HyperUnix } from "@hyperunix/sdk";\nexport const re
 /** C1's bound-load control (compiled with src as a virtual module): SDK loads whose specifier is a const binding, never a literal in place. */
 const BOUND_LOAD_CONTROL = `const SDK_NAME = "@hyperunix/sdk";\nexport const load = () => import(SDK_NAME);\nconst DIST = "../../node_modules/@hyperunix/sdk/dist/protocol/mutation.js";\nexport const loadDist = () => import(DIST);\nexport const loadTemplate = () => import(\`@hyperunix/\${"sdk"}\`);\nconst OTHER = "./other.js";\nexport const loadOther = () => import(OTHER);\n`;
 /** R-COMPOSED-SPECIFIER's probe (Q4): the SDK loaded through a specifier built at run time. */
-const COMPOSED_SPECIFIER_PROBE = `const name = "@hyperunix/" + "sdk";\nexport const load = () => import(name);\nconst part = "sdk";\nexport const loadJoined = () => import(["@hyperunix", part].join("/"));\n`;
-/** C4's controls: hx named as a word in a literal, whatever carries it; its reader must flag each one. */
+const COMPOSED_SPECIFIER_PROBE = `import { createRequire } from "node:module";\nimport { join } from "node:path";\nconst name = "@hyperunix/" + "sdk";\nexport const load = () => import(name);\nconst part = "sdk";\nexport const loadJoined = () => import(["@hyperunix", part].join("/"));\nconst paths = { mutation: "../../node_modules/@hyperunix/./sdk/dist/protocol/mutation.js" };\nexport const loadWidened = () => createRequire(import.meta.url)(paths.mutation);\nexport const loadFromBase = (base: string) => createRequire(join(base, "node_modules", "@hyperunix", "sdk", "dist", "index.js"))("./protocol/mutation.js");\n`;
+/** C1's loader controls (respin 2, refusal #2 U2; compiled with src as virtual modules, so the checker types their callees): one per
+ * load form the signature reader enumerates, one per resolver, and one per fail-closed consumer; each must read as pinned. */
+const LOADER_CONTROLS: Readonly<Record<string, string>> = {
+  "create-require-bound": `import { createRequire } from "node:module";\nconst load = createRequire(import.meta.url);\nexport const mutation = load("../../node_modules/@hyperunix/./sdk/dist/protocol/mutation.js");\n`,
+  "create-require-inline": `import { createRequire } from "node:module";\nexport const mutation = createRequire(import.meta.url)("../../node_modules/@hyperunix/sdk/dist/protocol/mutation.js");\n`,
+  "module-create-require": `import Module from "node:module";\nexport const sdk = Module.createRequire(import.meta.url)("@hyperunix/sdk");\n`,
+  "require-alias": `const load = require;\nexport const sdk = load("@hyperunix/sdk");\n`,
+  "module-require": `export const sdk = module.require("@hyperunix/sdk");\n`,
+  "main-require": `export const sdk = require.main?.require("@hyperunix/sdk");\n`,
+  "bound-create-require": `import { createRequire } from "node:module";\nconst MUTATION = "../../node_modules/@hyperunix/./sdk/dist/protocol/mutation.js";\nexport const mutation = createRequire(import.meta.url)(MUTATION);\n`,
+  "win32-spelling": `import { createRequire } from "node:module";\nexport const mutation = createRequire(import.meta.url)("..\\\\..\\\\node_modules\\\\@hyperunix\\\\sdk\\\\dist\\\\protocol\\\\mutation.js");\n`,
+  "escaped-spelling": `import { createRequire } from "node:module";\nexport const mutation = createRequire(import.meta.url)("../../node_modules/%40hyperunix/sdk/dist/protocol/mutation.js");\n`,
+  "require-resolve": `export const path = require.resolve("@hyperunix/sdk");\n`,
+  "loader-resolve": `import { createRequire } from "node:module";\nexport const path = createRequire(import.meta.url).resolve("@hyperunix/sdk");\n`,
+  "retyped-loader": `import { createRequire } from "node:module";\nconst load: (id: string) => unknown = createRequire(import.meta.url);\nexport const sdk = load("../../node_modules/@hyperunix/./sdk/dist/index.js");\n`,
+  worker: `import { Worker } from "node:worker_threads";\nexport const worker = new Worker("../../node_modules/@hyperunix/./sdk/dist/protocol/mutation.js");\n`,
+  fork: `import { fork } from "node:child_process";\nexport const child = fork("../../node_modules/@hyperunix/sdk/dist/index.js");\n`,
+  url: `export const url = new URL("../../node_modules/@hyperunix/./sdk/dist/protocol/mutation.js", import.meta.url);\n`,
+  "bound-call": `const SDK_NAME = "@hyperunix/sdk";\nexport const loaded = (load: (id: string) => unknown) => load(SDK_NAME);\n`,
+  "template-specifier": `export const load = (version: string) => import(\`../../node_modules/@hyperunix/sdk/dist/\${version}.js\`);\n`,
+};
+/** The LOADER_CONTROLS that are resolvers: each names the SDK and must not violate (a resolution loads nothing). */
+const RESOLVER_CONTROLS: readonly string[] = ["require-resolve", "loader-resolve"];
+/** R-CAST-AWAY's second probe (Q2, respin 2, refusal #2 U2): a require-made load's result is typed any, so C2 reads no SDK member on
+ * it; C1 reads the load itself (its site violates). */
+const REQUIRE_LOAD_PROBE = `import { createRequire } from "node:module";\nconst sdk = createRequire(import.meta.url)("@hyperunix/sdk");\nexport const decode = sdk.receiptFromJson;\n`;
+/** C4's carrier controls: the bare name or a POSIX path to it in a literal under each carrier (the reader does not ask which call
+ * carries a literal); its reader must flag each one. */
 const LAUNCH_CONTROLS: Readonly<Record<string, string>> = {
   literal: `spawn("hx", ["apply", "plan"]);`,
   shell: `exec("hx apply plan");`,
@@ -329,10 +460,31 @@ const LAUNCH_CONTROLS: Readonly<Record<string, string>> = {
   bound: `const HX = "hx";\nspawn(HX, ["apply", "plan"]);`,
   template: `exec(\`\${binDir}/hx mutation apply \${plan}\`);`,
 };
+/** C4's spelling controls (respin 2, refusal #2 U1): one per enumerated spelling of the command beyond the bare word and the POSIX
+ * path (LAUNCH_CONTROLS literal and path); its reader must flag each one. */
+const HX_SPELLING_CONTROLS: Readonly<Record<string, string>> = {
+  "win32-path": `execFileSync("C:\\\\Tools\\\\hx", ["mutation", "apply", plan]);`,
+  "sdk-win32-name": `execFileSync("hx.exe", ["mutation", "apply", plan], { encoding: "utf8" });`,
+  "win32-name-case": `execFileSync("HX.EXE", ["mutation", "apply", plan]);`,
+  "posix-path-exe": `execFileSync("/opt/hyperunix/bin/hx.exe", ["mutation", "apply", plan]);`,
+  "win32-path-exe": `execFileSync("C:\\\\Program Files\\\\HyperUnix\\\\Hx.Exe", ["mutation", "apply", plan]);`,
+  com: `spawn("hx.com", ["mutation", "apply", plan]);`,
+  "cmd-shim": `spawn("hx.cmd", ["mutation", "apply", plan], { shell: true });`,
+  "bat-shim": `exec("hx.bat mutation apply plan");`,
+  "ps1-shim": `spawn("powershell", ["-File", "hx.ps1", "mutation", "apply", plan]);`,
+  "template-win32": `exec(\`\${binDir}\\\\hx.exe mutation apply \${plan}\`);`,
+};
 /** C4's near-miss control: words beside hx that its reader must not flag. */
-const NEAR_MISS_CONTROL = `spawn("hxd", ["--hx-plan"]);\nexec("phx server && HX_NO_COLOR=1 hx-sdk run");\nconst sdk = "@hyperunix/sdk";\nconst doc = "the HX mutation Verified postcondition";\n`;
+const NEAR_MISS_CONTROL = `spawn("hxd", ["--hx-plan"]);\nexec("phx server && HX_NO_COLOR=1 hx-sdk run");\nconst sdk = "@hyperunix/sdk";\nconst doc = "the HX mutation Verified postcondition";\nconst kind = "hx.fs/directory";\nconst config = "hx.exe.config";\nexecFileSync("phx.exe");\nconst data = "hx.json";\nconst bin = "hx-binary:sha256:";\n`;
 /** R-COMPUTED-COMMAND's probe (Q5): an hx launch whose command no literal spells as a word. */
-const COMPUTED_COMMAND_PROBE = `const name = "h" + "x";\nspawn(name, ["apply", "plan"]);\nspawn(String.fromCharCode(104, 120), ["apply"]);\nexecFile(process.env.HX_BIN ?? binaryPath, ["apply"]);\n`;
+const COMPUTED_COMMAND_PROBE = `const name = "h" + "x";\nspawn(name, ["apply", "plan"]);\nspawn(String.fromCharCode(104, 120), ["apply"]);\nexecFile(process.env.HX_BIN ?? binaryPath, ["apply"]);\nexecFile(process.env.HYPERUNIX_HX ?? binaryPath, ["mutation", "apply"]);\nspawn(/hx/.source, ["apply"]);\nspawn(\`\${"h"}x\`, ["apply"]);\n`;
+/** R-HOST-FOLDED-WORD's probe (Q10): spellings a host folds to the command - another letter case, a trailing dot. */
+const HOST_FOLDED_PROBE = `spawn("HX", ["mutation", "apply", plan]);\nexec("Hx mutation apply plan");\nexecFileSync("/usr/local/bin/hX", ["mutation", "apply"]);\nexecFileSync("hx.exe.", ["mutation", "apply"]);\nexecFileSync("hx.", ["mutation", "apply"]);\n`;
+/** R-RENAMED-BINARY's probe (Q11): the hx binary under another file name (a copy, a link, a wrapper). */
+const RENAMED_BINARY_PROBE = `spawn("hyperunix", ["mutation", "apply", plan]);\nexecFileSync("/opt/tools/hx-cli", ["mutation", "apply", plan]);\nexec("hx2 mutation apply plan");\nspawn("hx.sh", ["mutation", "apply", plan]);\nspawn("wscript", ["hx.vbs", "mutation", "apply", plan]);\n`;
+/** R-SHELL-JOINED-WORD's probe (Q12): a shell command line that forms hx from other text (quoting, an escape, a parameter
+ * expansion's default, a glob pattern). */
+const SHELL_JOINED_PROBE = `exec("h\\\\x mutation apply plan");\nexec("'h'x mutation apply plan");\nexec('"h"x mutation apply plan');\nexec("h''x mutation apply plan");\nexec("\${HX_BIN:-hx} mutation apply plan");\nexec("[h]x mutation apply plan");\n`;
 /** R-PI-TEXT's probe (Q7): Pi's own text mapping Verified to build and semantic success. */
 const PI_TEXT_PROBE = `export const NOTE = "HX Verified: the build passed and the refactor is semantically safe";\n`;
 /** R-STATUS-UNNAMED's probe (Q9): a status read that never names domainStatus. */
@@ -348,6 +500,11 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-PI-TEXT": ["Q7"],
   "R-UNSAMPLED-VALUE": ["Q8"],
   "R-STATUS-UNNAMED": ["Q9"],
+  "R-HOST-FOLDED-WORD": ["Q10"],
+  "R-RENAMED-BINARY": ["Q11"],
+  "R-SHELL-JOINED-WORD": ["Q12"],
+  "R-UNSAMPLED-RECEIPT": ["Q13"],
+  "R-ENV-REGISTRATION": ["Q14"],
 };
 
 interface Row {
@@ -360,7 +517,11 @@ const ROWS: readonly Row[] = [
   { id: "A", label: "the read adapter's refusal of mutation outcomes stays until then", pins: ["A1", "A2", "A3"] },
   { id: "B", label: "the wb-tz2.8 effect-class census remains the until-then standing guard", pins: ["B1", "B2", "B3"] },
   { id: "C", label: "no Pi path can represent Verified at all", pins: ["C1", "C2", "C3", "C4"] },
-  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9"] },
+  {
+    id: "Q",
+    label: "the residuals: each named family pinned by its quiet row",
+    pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12", "Q13", "Q14"],
+  },
 ];
 
 interface RosterPin {
@@ -599,8 +760,9 @@ const MOVED_HOST: HyperUnixTopologyContext = {
   invocationId: "census-invocation",
   operationRef: { provider: "forge", type: "operation", id: "census-operation", scope: WS },
 };
-/** The receipt fields RECEIPT_SOURCE carries beside its kind, none of them a field the adapter consumes (refusal #1 F7, GC4). */
-const RECEIPT_FIELDS: JsonObject = { state: "Verified", verified: true, verification: { outcome: "verified" } };
+/** The receipt fields a find reading carries in the receipt-fields shape (refusal #1 F7, GC4): the SDK's whole receipt wire form
+ * (respin 2, refusal #2 U3). Its one key the adapter consumes, diagnostics, is an empty list, so it moves no consumed field. */
+const RECEIPT_FIELDS: JsonObject = RECEIPT_WIRE;
 /** The reading shapes A1-A3 judge (respin 1, refusal #1 U4): the minimal reading, one variation per consumed field, another host
  * context, the receipt fields the adapter does not consume, and all of them at once. */
 const MINIMAL: Shape = { id: "minimal", source: {}, summary: {}, runtime: {} };
@@ -617,15 +779,106 @@ const SHAPES: readonly Shape[] = [
   RECEIPT_FIELDS_SHAPE,
   {
     id: "all",
-    source: { rows: [ROW_BODY], rows_retained: false, coverage: [{ batch_id: "census-batch" }], operation: "show", ...RELAYED, ...RECEIPT_FIELDS },
+    source: { ...RECEIPT_FIELDS, rows: [ROW_BODY], rows_retained: false, coverage: [{ batch_id: "census-batch" }], operation: "show", ...RELAYED },
     summary: REGIONS,
     runtime: MOVED_RUNTIME,
     host: MOVED_HOST,
   },
 ];
+/** Row A's source and runtime variations (respin 2, refusal #2 U4): every SHAPES member that moves the source or the runtime and not
+ * the host, the receipt fields first (a later variation's member wins a shared key, so the relayed diagnostics survive beside them). */
+const SOURCE_VARIATIONS: readonly Shape[] = [
+  RECEIPT_FIELDS_SHAPE,
+  ...SHAPES.filter(shape => shape !== MINIMAL && shape !== RECEIPT_FIELDS_SHAPE && shape.host === undefined && shape.id !== "all"),
+];
+/** The host-context values row A samples, per field (respin 2, refusal #2 U4). The host context is an open record - src calls the
+ * adapter nowhere and the provider's input kind is any non-empty string - so these are samples, never its domain. */
+const HOST_VALUES = {
+  principal: ["local-operator:census", "local-operator:census-other"],
+  targetKind: ["hx.fs/regular-file", "hx.fs/directory", "hx.fs/symlink", "hx.fs/fifo", "hx.fs/socket"],
+  root: ["src", "test", null],
+  times: [
+    ["2026-10-28T00:00:00Z", "2026-10-28T00:00:01Z"],
+    ["2026-10-28T00:00:02Z", "2026-10-28T00:00:03Z"],
+  ],
+  invocationId: [null, "census-invocation"],
+  operationId: [null, "census-operation"],
+} as const;
+/** Every subset of a list, in binary-counting order (the empty subset first, the whole list last). */
+function subsetsOf<T>(items: readonly T[]): T[][] {
+  return Array.from({ length: 2 ** items.length }, (_, mask) => items.filter((_, index) => Math.floor(mask / 2 ** index) % 2 === 1));
+}
+/** The shape a set of variations makes together (members of a later one win a shared key), under a host context when one is given. */
+function combined(variations: readonly Shape[], host?: HyperUnixTopologyContext): Shape {
+  const merge = (part: (shape: Shape) => JsonObject): JsonObject => Object.fromEntries(variations.flatMap(shape => Object.entries(part(shape))));
+  return {
+    id: variations.map(shape => shape.id).join("+") || "minimal",
+    source: merge(shape => shape.source),
+    summary: merge(shape => shape.summary),
+    runtime: merge(shape => shape.runtime),
+    ...(host === undefined ? {} : { host }),
+  };
+}
+/** Every host context of the HOST_VALUES cross product over the census workspace, field by field in HOST_VALUES order. */
+function hostContexts(): HyperUnixTopologyContext[] {
+  return HOST_VALUES.principal.flatMap(principal =>
+    HOST_VALUES.targetKind.flatMap(kind =>
+      HOST_VALUES.root.flatMap(root =>
+        HOST_VALUES.times.flatMap(([capturedAt, observedAt]) =>
+          HOST_VALUES.invocationId.flatMap(invocationId =>
+            HOST_VALUES.operationId.map(
+              (operationId): HyperUnixTopologyContext => ({
+                scope: { workspace: WS, principal },
+                target: root === null ? { kind } : { kind, root },
+                capturedAt,
+                observedAt,
+                ...(invocationId === null ? {} : { invocationId }),
+                ...(operationId === null ? {} : { operationRef: { provider: "forge", type: "operation", id: operationId, scope: WS } }),
+              }),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+/** Row A's judged products (respin 2, refusal #2 U4), each judged over every declared kind and both licences: every subset of
+ * SOURCE_VARIATIONS under the base and the moved host context, then every host of the HOST_VALUES cross product under the minimal
+ * source and under all source variations at once. */
+function judgedProducts(): Shape[] {
+  const everything = combined(SOURCE_VARIATIONS);
+  return [
+    ...subsetsOf(SOURCE_VARIATIONS).flatMap(subset => [CONTEXT, MOVED_HOST].map(host => combined(subset, host))),
+    ...hostContexts().flatMap(host => [combined([], host), { ...everything, host }]),
+  ];
+}
+/** A reading list's digest (sha256 over its lines): the products' witnesses pin every reading through it. */
+function digestOf(lines: readonly string[]): string {
+  return createHash("sha256").update(lines.join("\n")).digest("hex");
+}
+/** The receipt wire fields that carry a Verified spelling (the key or its JSON value spells verified, in any letter case). */
+function verifiedCarriers(wire: JsonObject): string[] {
+  return Object.keys(wire).filter(key => /verified/i.test(key) || /verified/i.test(JSON.stringify(wire[key])));
+}
+/** The SDK's wire-form writers: the names its index exports that end in ToJson (read from dist/index.d.ts). */
+function wireFormsIn(text: string): string[] {
+  const names: string[] = [];
+  for (const statement of parse("index.d.ts", text).statements) {
+    if (ts.isExportDeclaration(statement) && statement.exportClause !== undefined && ts.isNamedExports(statement.exportClause)) {
+      names.push(...statement.exportClause.elements.map(element => element.name.text).filter(name => name.endsWith("ToJson")));
+    }
+  }
+  return names;
+}
+/** R-ENV-REGISTRATION's probe (Q14): a registration that adds a write-class hyperunix descriptor only under an environment flag. */
+const ENV_FLAG = "PI_HX_MUTATIONS";
+function envGatedRegistry(env: Readonly<Record<string, string | undefined>>): CapabilityRegistry {
+  return env[ENV_FLAG] === "1" ? plantedRegistry({ id: "hyperunix.apply", effectClass: "write" }) : new CapabilityRegistry();
+}
 /** The consumed fields the kind and licence loops move (every shape samples each of them). */
 const LOOP_FIELDS = ["source.execution_status.kind", "source.coverage_summary.licenses_absence"] as const;
-/** The consumed fields whose use is the envelope's identity: any other value is refused before a kind is read. */
+/** The consumed fields whose use is the envelope's identity: each holds its one accepted value in every judged reading (refusal #2
+ * F6: this census judges no reading that moves one). */
 const ENVELOPE = "envelope";
 function findReading(kind: string, licensed: boolean, shape: Shape = MINIMAL): JsonValue {
   return json({
@@ -789,7 +1042,15 @@ interface SdkSite {
   readonly reading: string;
   readonly violates: boolean;
 }
-const LOADING_CONTEXTS: ReadonlySet<string> = new Set(["import", "export", "dynamic-import", "require", "import-type", "import-equals"]);
+const LOADING_CONTEXTS: ReadonlySet<string> = new Set(["import", "export", "dynamic-import", "require", "module-require", "import-type", "import-equals"]);
+/** The consumers C1 does not read through (respin 2, refusal #2 U2): an SDK-naming literal handed to any call or construction that is
+ * not an enumerated loader VIOLATES, fail-closed - the census cannot say what an unenumerated callee does with it. */
+const UNREAD_CONSUMERS: ReadonlySet<string> = new Set(["call", "new"]);
+/** The @types/node declaration file whose interfaces type Node's module loaders (C1's loader anchor outside this census). */
+const NODE_MODULE_TYPES = "node_modules/@types/node/module.d.ts";
+/** C1's checker-read loaders (respin 2, refusal #2 U2): the NODE_MODULE_TYPES interface (or interface.method) that declares a call's
+ * resolved signature, and the context the call reads as. */
+const SIGNATURE_LOADERS: Readonly<Record<string, string>> = { Require: "require", "Module.require": "module-require", RequireResolve: "require-resolve" };
 let tsconfig: ts.ParsedCommandLine | undefined;
 /** The repo's tsconfig.json, parsed once (its file list and options: the program C2 compiles, the resolution C1 asks). */
 function parsedTsconfig(): ts.ParsedCommandLine {
@@ -803,36 +1064,89 @@ function parsedTsconfig(): ts.ParsedCommandLine {
 const SDK_PACKAGE = join(REPO, "node_modules", SDK).split(sep).join("/");
 const SDK_PACKAGE_REAL = realpathSync(SDK_PACKAGE).split(sep).join("/");
 let resolutionCache: ts.ModuleResolutionCache | undefined;
-/** Whether the repo's own module resolution (tsconfig.json's options) maps a specifier, imported from a file, into the installed SDK package. */
+/** The name the package.json nearest above a file declares (null when that manifest names none, or no manifest is found). */
+function packageNameOf(file: string): string | null {
+  for (let directory = dirname(file); ; directory = dirname(directory)) {
+    const manifest = join(directory, "package.json");
+    if (existsSync(manifest)) {
+      const parsed: unknown = JSON.parse(readFileSync(manifest, "utf8"));
+      return isObject(parsed) && typeof parsed.name === "string" ? parsed.name : null;
+    }
+    if (dirname(directory) === directory) return null;
+  }
+}
+/** Whether the repo's own module resolution (tsconfig.json's options) maps a specifier, imported from a file, into the installed SDK
+ * package: a file below its directory (as spelled or as the file system resolves it), or a file whose nearest package.json is the
+ * SDK's own (respin 2: a copy or an npm alias of the package installed under another path). */
 function resolvesIntoSdk(specifier: string, from: string): boolean {
   const { options } = parsedTsconfig();
   resolutionCache ??= ts.createModuleResolutionCache(REPO, name => name, options);
   const resolved = ts.resolveModuleName(specifier, from, options, ts.sys, resolutionCache).resolvedModule?.resolvedFileName.split(sep).join("/");
-  return resolved !== undefined && [SDK_PACKAGE, SDK_PACKAGE_REAL].some(directory => resolved.startsWith(`${directory}/`));
+  if (resolved === undefined) return false;
+  return [SDK_PACKAGE, SDK_PACKAGE_REAL].some(directory => resolved.startsWith(`${directory}/`)) || packageNameOf(resolved) === SDK;
 }
-/** Whether a string literal stands where a module specifier is read (an import or export, import-equals, a dynamic import, require,
- * import type, import.meta.resolve). */
-function specifierPosition(node: ts.Node): boolean {
+/** A literal's text read as a path (respin 2, refusal #2 U2): percent-escapes decoded, a backslash read as /, . and .. segments and
+ * doubled separators collapsed (posix.normalize), in lower case. */
+function asPath(text: string): string {
+  let decoded = text;
+  try {
+    decoded = decodeURIComponent(text);
+  } catch {
+    decoded = text;
+  }
+  return posix.normalize(decoded.split("\\").join("/")).toLowerCase();
+}
+/** Whether a text, read as a path, spells the SDK package name. */
+function spellsSdk(text: string): boolean {
+  return asPath(text).includes(SDK);
+}
+/** Whether a text could name a file: read as a path it holds a separator, and it carries no white space. */
+function pathLike(text: string): boolean {
+  return asPath(text).includes("/") && !/\s/.test(text);
+}
+/** The call or construction that takes a node as one of its arguments, or undefined. */
+function argumentOf(node: ts.Node): ts.CallExpression | ts.NewExpression | undefined {
+  const parent = node.parent;
+  if (!ts.isCallExpression(parent) && !ts.isNewExpression(parent)) return undefined;
+  return (parent.arguments ?? []).some(argument => argument === node) ? parent : undefined;
+}
+/** The NODE_MODULE_TYPES interface (or interface.method) that declares a call's resolved signature, or "" for any other call. */
+function signatureOwner(call: ts.CallExpression, checker: ts.TypeChecker): string {
+  const declaration = checker.getResolvedSignature(call)?.declaration;
+  if (declaration === undefined || !repoPath(declaration.getSourceFile().fileName).endsWith(NODE_MODULE_TYPES)) return "";
+  const owner = declaration.parent;
+  if (!ts.isInterfaceDeclaration(owner)) return "";
+  return ts.isMethodSignature(declaration) && ts.isIdentifier(declaration.name) ? `${owner.name.text}.${declaration.name.text}` : owner.name.text;
+}
+/** Whether a string literal stands where a module specifier is read: an import or export, import-equals, import type, or the first
+ * argument of a loader call (loaderOf). */
+function specifierPosition(node: ts.Node, checker?: ts.TypeChecker): boolean {
   const parent = node.parent;
   if ((ts.isImportDeclaration(parent) || ts.isExportDeclaration(parent)) && parent.moduleSpecifier === node) return true;
   if (ts.isExternalModuleReference(parent)) return true;
   if (ts.isLiteralTypeNode(parent) && ts.isImportTypeNode(parent.parent)) return true;
-  if (!ts.isCallExpression(parent) || parent.arguments[0] !== node) return false;
-  const callee = parent.expression;
-  if (callee.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(callee) && callee.text === "require")) return true;
-  return ts.isPropertyAccessExpression(callee) && ts.isMetaProperty(callee.expression) && callee.name.text === "resolve";
+  return ts.isCallExpression(parent) && parent.arguments[0] === node && loaderOf(parent, checker) !== undefined;
 }
-/** One module's string literals that name the SDK - the package, a subpath, any spelling carrying the package name, or a specifier
- * the repo's resolution maps into the package - each read for its context and names (from: the file a specifier resolves from). */
-function sdkSites(module: string, source: ts.SourceFile, surface: ReadonlySet<string>, from: string): SdkSite[] {
+/** One module's string literals that name the SDK - a literal spelling the package name, as written or read as a path (asPath:
+ * normalized), or a literal in a specifier position or handed to a call or a construction as a file-like argument that the repo's
+ * resolution maps into the package - each read for its context and names (from: the file a specifier resolves from; checker: the
+ * program's, which reads loaders by signature - a control parsed alone reads the identifier require only). */
+function sdkSites(module: string, source: ts.SourceFile, surface: ReadonlySet<string>, from: string, checker?: ts.TypeChecker): SdkSite[] {
   const sites: SdkSite[] = [];
   each(source, node => {
-    const specifier = literalText(node);
+    const part = ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node);
+    const specifier = part ? node.text : literalText(node);
     if (specifier === undefined) return;
-    const resolvedOnly = !specifier.includes(SDK) && specifierPosition(node) && resolvesIntoSdk(specifier, from);
-    if (!specifier.includes(SDK) && !resolvedOnly) return;
-    const parent = node.parent;
-    let context = `literal:${ts.SyntaxKind[parent.kind]}`;
+    // A template's text part (respin 2) is read by its spelling only - a part is no whole specifier - and through its template.
+    const holder: ts.Node = part ? (ts.isTemplateHead(node) ? node.parent : node.parent.parent) : node;
+    const spelled = specifier.includes(SDK);
+    const consumer = argumentOf(holder);
+    const asked = !part && (specifierPosition(node, checker) || (consumer !== undefined && pathLike(specifier)));
+    const resolvedOnly = !spelled && asked && resolvesIntoSdk(specifier, from);
+    const normalized = !spelled && !resolvedOnly && spellsSdk(specifier);
+    if (!spelled && !resolvedOnly && !normalized) return;
+    const parent = holder.parent;
+    let context = `${part ? "template" : "literal"}:${ts.SyntaxKind[parent.kind]}`;
     let names: string[] = [];
     let opaque = false;
     if (ts.isImportDeclaration(parent) && parent.moduleSpecifier === node) {
@@ -851,54 +1165,57 @@ function sdkSites(module: string, source: ts.SourceFile, surface: ReadonlySet<st
     } else if (ts.isExternalModuleReference(parent)) {
       context = "import-equals";
       opaque = true;
-    } else if (ts.isCallExpression(parent) && parent.expression.kind === ts.SyntaxKind.ImportKeyword) {
-      context = "dynamic-import";
-      opaque = true;
-    } else if (ts.isCallExpression(parent) && ts.isIdentifier(parent.expression) && parent.expression.text === "require") {
-      context = "require";
-      opaque = true;
-    } else if (
-      ts.isCallExpression(parent) &&
-      ts.isPropertyAccessExpression(parent.expression) &&
-      ts.isMetaProperty(parent.expression.expression) &&
-      parent.expression.name.text === "resolve"
-    ) {
-      context = "import-meta-resolve";
     } else if (ts.isLiteralTypeNode(parent) && ts.isImportTypeNode(parent.parent)) {
       context = "import-type";
       let first: ts.EntityName | undefined = parent.parent.qualifier;
       while (first !== undefined && ts.isQualifiedName(first)) first = first.left;
       if (first === undefined) opaque = true;
       else names = [first.text];
+    } else if (consumer !== undefined) {
+      const loader = ts.isCallExpression(consumer) && consumer.arguments[0] === holder ? loaderOf(consumer, checker) : undefined;
+      context = loader ?? (ts.isNewExpression(consumer) ? "new" : "call");
+      if (context === "dynamic-import" || context === "require" || context === "module-require") opaque = true;
     }
     if (LOADING_CONTEXTS.has(context) && specifier !== SDK) opaque = true;
     const bare = names.map(name => name.replace(/^type /, ""));
-    const violates = LOADING_CONTEXTS.has(context) && (opaque || bare.some(name => surface.has(name)));
-    sites.push({ reading: `${module}|${context}|${specifier}|${names.join(",")}${resolvedOnly ? "|resolved" : ""}${opaque ? "|opaque" : ""}`, violates });
+    const violates = UNREAD_CONSUMERS.has(context) || (LOADING_CONTEXTS.has(context) && (opaque || bare.some(name => surface.has(name))));
+    const marks = `${resolvedOnly ? "|resolved" : ""}${normalized ? "|normalized" : ""}${opaque ? "|opaque" : ""}`;
+    sites.push({ reading: `${module}|${context}|${specifier}|${names.join(",")}${marks}`, violates });
   });
   return sites;
 }
-/** The loader a call is: a dynamic import, require, or import.meta.resolve; undefined for any other call. */
-function loaderOf(call: ts.CallExpression): string | undefined {
+/** The loader a call is (respin 2, refusal #2 U2): a dynamic import or import.meta.resolve by its syntax; with the program's checker,
+ * by the signature it resolves to in NODE_MODULE_TYPES (SIGNATURE_LOADERS: a NodeJS.Require call - require, a createRequire or
+ * Module.createRequire result, bound, inline or aliased - a NodeJS.Module require method, a NodeJS.RequireResolve call); without one
+ * (a control parsed alone), the identifier require. Undefined for any other call. */
+function loaderOf(call: ts.CallExpression, checker?: ts.TypeChecker): string | undefined {
   const callee = call.expression;
   if (callee.kind === ts.SyntaxKind.ImportKeyword) return "dynamic-import";
-  if (ts.isIdentifier(callee) && callee.text === "require") return "require";
-  return ts.isPropertyAccessExpression(callee) && ts.isMetaProperty(callee.expression) && callee.name.text === "resolve" ? "import-meta-resolve" : undefined;
+  if (ts.isPropertyAccessExpression(callee) && ts.isMetaProperty(callee.expression) && callee.name.text === "resolve") return "import-meta-resolve";
+  if (checker === undefined) return ts.isIdentifier(callee) && callee.text === "require" ? "require" : undefined;
+  const owner = signatureOwner(call, checker);
+  return Object.hasOwn(SIGNATURE_LOADERS, owner) ? SIGNATURE_LOADERS[owner] : undefined;
 }
-/** One program file's loads whose specifier is no literal but whose type the checker narrows to string literals (a const binding,
- * a literal union): each value naming the SDK, by spelling or by resolution, is a bound load, opaque by construction. */
+/** One program file's call and construction arguments that are no literal but a value the checker narrows to string literals (a const
+ * binding, a literal union, a template of literals): each value spelling the SDK (asPath) or, as a loader's specifier or a file-like
+ * argument, resolving into it is a bound site, opaque - a loader's first argument reads as bound-<loader> (a resolver's does not
+ * violate), any other argument as bound-call or bound-new (fail-closed: it violates). */
 function boundLoads(module: string, file: ts.SourceFile, checker: ts.TypeChecker): SdkSite[] {
   const sites: SdkSite[] = [];
   each(file, node => {
-    if (!ts.isCallExpression(node)) return;
-    const loader = loaderOf(node);
-    const argument = node.arguments[0];
-    if (loader === undefined || argument === undefined || literalText(argument) !== undefined) return;
-    const type = checker.getTypeAtLocation(argument);
-    const values = (type.isUnion() ? type.types : [type]).flatMap(member => (member.isStringLiteral() ? [member.value] : []));
-    for (const value of values) {
-      if (value.includes(SDK) || resolvesIntoSdk(value, file.fileName)) sites.push({ reading: `${module}|bound-${loader}|${value}||opaque`, violates: loader !== "import-meta-resolve" });
-    }
+    if (!ts.isCallExpression(node) && !ts.isNewExpression(node)) return;
+    (node.arguments ?? []).forEach((argument, index) => {
+      if (literalText(argument) !== undefined) return;
+      const type = checker.getTypeAtLocation(argument);
+      const values = (type.isUnion() ? type.types : [type]).flatMap(member => (member.isStringLiteral() ? [member.value] : []));
+      if (values.length === 0) return;
+      const loader = ts.isCallExpression(node) && index === 0 ? loaderOf(node, checker) : undefined;
+      const context = loader ?? (ts.isNewExpression(node) ? "new" : "call");
+      for (const value of values) {
+        if (!spellsSdk(value) && !((loader !== undefined || pathLike(value)) && resolvesIntoSdk(value, file.fileName))) continue;
+        sites.push({ reading: `${module}|bound-${context}|${value}||opaque`, violates: context !== "import-meta-resolve" && context !== "require-resolve" });
+      }
+    });
   });
   return sites;
 }
@@ -912,9 +1229,11 @@ const VIRTUAL_SOURCES: Readonly<Record<string, string>> = {
   ...MEMBER_CONTROLS,
   ...Object.fromEntries(Object.entries(COMPUTED_KEY_PROBES).map(([name, text]) => [`q1-${name}`, text])),
   "q2-cast": CAST_PROBE,
+  "q2-require-load": REQUIRE_LOAD_PROBE,
   "q4-composed": COMPOSED_SPECIFIER_PROBE,
   "q7-text": PI_TEXT_PROBE,
   "c1-bound": BOUND_LOAD_CONTROL,
+  ...Object.fromEntries(Object.entries(LOADER_CONTROLS).map(([name, text]) => [`c1-loader-${name}`, text])),
 };
 function virtualPath(name: string): string {
   return join(VIRTUAL_DIR, name.endsWith(".mts") ? name : `${name}.ts`);
@@ -1227,15 +1546,40 @@ function launches(module: string, source: ts.SourceFile): Launch[] {
   });
   return found;
 }
-/** One module's string literals that name hx as a word (a string, a no-substitution template, a template's head, middle or tail),
- * each read as module|context|text: the word reader does not ask which call carries the literal. */
+/** The hx spelling a word carries, or undefined (respin 2, refusal #2 U1): the word's last path segment (after its last /; the
+ * separators already split at a backslash) is the bare name hx exactly, or, in any letter case, hx followed by one of HX_WIN32_EXTENSIONS. */
+function hxSpelling(word: string): string | undefined {
+  const segment = word.slice(word.lastIndexOf("/") + 1);
+  if (segment === HX_COMMAND) return segment;
+  const lower = segment.toLowerCase();
+  return lower.startsWith(`${HX_COMMAND}.`) && (HX_WIN32_EXTENSIONS as readonly string[]).includes(lower.slice(HX_COMMAND.length)) ? lower : undefined;
+}
+/** One module's string literals with a word that is an hx spelling (a string, a no-substitution template, a template's head, middle
+ * or tail, split at WORD_SEPARATORS), each read as module|context|text: the word reader does not ask which call carries it. */
 function hxWords(module: string, source: ts.SourceFile): string[] {
   const found: string[] = [];
   each(source, node => {
     if (!ts.isStringLiteral(node) && !ts.isNoSubstitutionTemplateLiteral(node) && !ts.isTemplateHead(node) && !ts.isTemplateMiddle(node) && !ts.isTemplateTail(node)) return;
-    if (node.text.split(WORD_SEPARATORS).some(word => word === HX_COMMAND || word.endsWith(`/${HX_COMMAND}`))) found.push(`${module}|${kindName(node.parent)}|${node.text}`);
+    if (node.text.split(WORD_SEPARATORS).some(word => hxSpelling(word) !== undefined)) found.push(`${module}|${kindName(node.parent)}|${node.text}`);
   });
   return found;
+}
+/** The binary names a client's resolveBinary binds to name: the string literals of the conditional it initializes name with (the
+ * SDK's per-platform PATH lookup), read by the TypeScript AST from the shipped JavaScript; nothing outside that function is read. */
+function sdkBinaryNamesIn(text: string): string[] {
+  const names: string[] = [];
+  each(parse("client.js", text, ts.ScriptKind.JS), node => {
+    if (!ts.isFunctionDeclaration(node) || node.name?.text !== "resolveBinary") return;
+    each(node, inner => {
+      if (!ts.isVariableDeclaration(inner) || !ts.isIdentifier(inner.name) || inner.name.text !== "name" || inner.initializer === undefined) return;
+      if (!ts.isConditionalExpression(inner.initializer)) return;
+      for (const branch of [inner.initializer.whenTrue, inner.initializer.whenFalse]) {
+        const literal = literalText(branch);
+        if (literal !== undefined) names.push(literal);
+      }
+    });
+  });
+  return names;
 }
 
 // ---- the bead's own text ----
@@ -1302,7 +1646,23 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       judgedFields().filter(path => !moved.has(path)),
       "every field the adapter consumes, but the envelope's, moves in a reading shape or in the kind and licence loops",
     ).toStrictEqual([]);
-    return json({ declared, mutationOutcomes, readings, shapes, loopFields: LOOP_FIELDS, judgedFields: judgedFields(), control: declaredKindsIn(READER_CONTROLS.result ?? "") });
+    const products = judgedProducts();
+    const productAnswers = products.map(shape => answers(shape));
+    expect(
+      products.flatMap((shape, index) => mutationOutcomes.filter(kind => !refusedIn(productAnswers[index] ?? []).includes(kind)).map(kind => `${index}:${shape.id}|${kind}`)),
+      "every mutation outcome stays refused under either licence in every reading of the judged products",
+    ).toStrictEqual([]);
+    const productLines = productAnswers.flatMap((lines, index) => lines.map(line => `${index}|${line}`));
+    return json({
+      declared,
+      mutationOutcomes,
+      readings,
+      shapes,
+      loopFields: LOOP_FIELDS,
+      judgedFields: judgedFields(),
+      control: declaredKindsIn(READER_CONTROLS.result ?? ""),
+      products: { shapes: products.length, readings: productLines.length, sha256: digestOf(productLines) },
+    });
   },
   A2: async () => {
     const declared = declaredKinds();
@@ -1319,7 +1679,23 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       ).toStrictEqual([]);
       return { id: shape.id, readOutcomeBreaks, delta: delta(answers(shape), readings) };
     });
-    return json({ readings, readOutcomeBreaks: shapes[0]?.readOutcomeBreaks ?? [], shapes });
+    // The invariant reads no host context: the source subsets are its whole judged product.
+    const subsets = subsetsOf(SOURCE_VARIATIONS).map(subset => combined(subset));
+    expect(
+      subsets.flatMap(shape => {
+        const breaks = declared.filter(kind => hxLiveInvariant(findReading(kind, false, shape)).violations.includes("read-outcome"));
+        const licensing = breaks.filter(kind => hxLiveInvariant(findReading(kind, true, shape)).absenceLicensed);
+        return JSON.stringify(breaks) === JSON.stringify(mutationOutcomes) && licensing.length === 0 ? [] : [shape.id];
+      }),
+      "only the SDK's mutation outcomes break the read-outcome clause, and none licenses absence, in every subset of the source variations",
+    ).toStrictEqual([]);
+    const subsetLines = subsets.flatMap((shape, index) => answers(shape).map(line => `${index}|${line}`));
+    return json({
+      readings,
+      readOutcomeBreaks: shapes[0]?.readOutcomeBreaks ?? [],
+      shapes,
+      subsets: { shapes: subsets.length, readings: subsetLines.length, sha256: digestOf(subsetLines) },
+    });
   },
   A3: async () => {
     const { outcomes, stateTokens, verifiedDoc } = verificationVocabularyIn(textOf(MUTATION_PROTOCOL_DECLARATION));
@@ -1340,7 +1716,25 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       ).toStrictEqual([]);
       return { id: shape.id, delta: delta(answers(shape), readings) };
     });
-    return json({ outcomes, stateTokens, verifiedDoc, readings, shapes, control: verificationVocabularyIn(READER_CONTROLS.protocol ?? "") });
+    const products = judgedProducts();
+    expect(
+      products.flatMap((shape, index) =>
+        verifiedSpellings
+          .filter(token => declared.has(token) || !topologyReading(findReading(token, false, shape), shape.host).startsWith("refused:"))
+          .map(token => `${index}:${shape.id}|${token}`),
+      ),
+      "no Verified spelling is a find kind the adapter accepts in any reading of the judged products",
+    ).toStrictEqual([]);
+    const productLines = products.flatMap((shape, index) => answers(shape).map(line => `${index}|${line}`));
+    return json({
+      outcomes,
+      stateTokens,
+      verifiedDoc,
+      readings,
+      shapes,
+      control: verificationVocabularyIn(READER_CONTROLS.protocol ?? ""),
+      products: { shapes: products.length, readings: productLines.length, sha256: digestOf(productLines) },
+    });
   },
   B1: async () => {
     const text = textOf(GUARD);
@@ -1399,13 +1793,35 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(all.length, "the src walk reached the modules").toBeGreaterThanOrEqual(SRC_FLOOR);
     const { program, checker } = compiled();
     const programFiles = new Map(program.getSourceFiles().map(file => [repoPath(file.fileName), file]));
-    const bound = all.flatMap(module => {
+    expect(all.filter(module => !programFiles.has(module)), "every src walk module is a program file (C1 reads its loaders by the checker)").toStrictEqual([]);
+    const files = all.flatMap(module => {
       const file = programFiles.get(module);
-      return file === undefined ? [] : boundLoads(module, file, checker);
+      return file === undefined ? [] : [{ module, file }];
     });
-    const sites = [...all.flatMap(module => sdkSites(module, srcSource(module), surface, join(REPO, module))), ...bound];
+    const sites = [
+      ...files.flatMap(({ module, file }) => sdkSites(module, file, surface, file.fileName, checker)),
+      ...files.flatMap(({ module, file }) => boundLoads(module, file, checker)),
+    ];
     const boundFile = virtualFile("c1-bound");
-    expect(sites.filter(site => site.violates).map(site => site.reading), "no src site loads the SDK's mutation surface or an opaque SDK surface").toStrictEqual([]);
+    expect(
+      sites.filter(site => site.violates).map(site => site.reading),
+      "no src site loads the SDK's mutation surface or an opaque SDK surface, or hands an SDK-naming value to an unenumerated consumer",
+    ).toStrictEqual([]);
+    const loaders = Object.fromEntries(
+      Object.keys(LOADER_CONTROLS).map(name => {
+        const file = virtualFile(`c1-loader-${name}`);
+        return [name, file === undefined ? [] : [...sdkSites(`control:${name}`, file, surface, file.fileName, checker), ...boundLoads(`control:${name}`, file, checker)]];
+      }),
+    );
+    expect(
+      Object.entries(loaders)
+        .filter(([name, found]) => {
+          const violates = found.some(site => site.violates);
+          return RESOLVER_CONTROLS.includes(name) ? violates || found.length === 0 : !violates;
+        })
+        .map(([name]) => name),
+      "every load form's and fail-closed consumer's control violates, and every resolver's control is a site that does not",
+    ).toStrictEqual([]);
     return json({
       mutationSurface: [...surface],
       surfaceControl: mutationSurfaceIn(READER_CONTROLS.index ?? ""),
@@ -1418,6 +1834,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         Object.entries(SITE_CONTROLS).map(([name, text]) => [name, siteWitness(sdkSites(`control:${name}`, parse(name, text), surface, virtualPath(name)))]),
       ),
       boundControl: siteWitness(boundFile === undefined ? [] : boundLoads("control:c1-bound", boundFile, checker)),
+      loaders: Object.fromEntries(Object.entries(loaders).map(([name, found]) => [name, siteWitness(found)])),
     });
   },
   C2: async () => {
@@ -1441,6 +1858,17 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(declared.filter(kind => lit.has(kind) || lighting.includes(kind)), "no declared kind lights a verified glyph").toStrictEqual([]);
     const receiptFind = declared.map(kind => `${kind}|${nativeEvidence("hyperunix.find", findReading(kind, false, RECEIPT_FIELDS_SHAPE)).domainStatus ?? "none"}`);
     expect(receiptFind, "a find reading carrying the receipt fields projects its kind as domainStatus, verbatim").toStrictEqual(declared.map(kind => `${kind}|${kind}`));
+    expect([RECEIPT_WIRE.verified, RECEIPT_WIRE.state], "the SDK recomputes the census receipt as coherent and verified").toStrictEqual([true, "Verified"]);
+    const carriers = verifiedCarriers(RECEIPT_WIRE);
+    const others = Object.fromEntries(Object.entries(RECEIPT_WIRE).filter(([key]) => !carriers.includes(key)));
+    const receiptSubsets = subsetsOf(carriers);
+    expect(
+      receiptSubsets.flatMap(subset => {
+        const shape: Shape = { id: subset.join("+") || "none", source: { ...others, ...Object.fromEntries(subset.map(key => [key, RECEIPT_WIRE[key] ?? null])) }, summary: {}, runtime: {} };
+        return declared.filter(kind => nativeEvidence("hyperunix.find", findReading(kind, false, shape)).domainStatus !== kind).map(kind => `${shape.id}|${kind}`);
+      }),
+      "a find reading carrying any subset of the SDK receipt's Verified-carrying fields, beside its other fields, projects its kind as domainStatus, verbatim",
+    ).toStrictEqual([]);
     expect(
       verbs.filter(verb => Object.keys(nativeEvidence(`hyperunix.${verb}`, json({ contract: `hyperunix.${verb}/v1`, source: RECEIPT_SOURCE }))).length > 0),
       "a receipt-shaped output under a mutation verb projects nothing",
@@ -1451,6 +1879,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       caseControl: evidenceCasesIn(parse("evidence", READER_CONTROLS.evidence ?? "")),
       findStatus: declared.map(kind => `${kind}|${nativeEvidence("hyperunix.find", findReading(kind, false)).domainStatus ?? "none"}`),
       receiptFind,
+      receiptCarriers: carriers,
+      receiptSubsets: receiptSubsets.length,
       verbs,
       verbControl: mutationVerbsIn(READER_CONTROLS.mutation ?? ""),
       receipts: verbs.map(verb => {
@@ -1470,12 +1900,28 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const found = all.flatMap(module => launches(module, srcSource(module)));
     const commands = new Set(found.map(launch => launch.command));
     expect(LAUNCH_FLOOR.filter(command => !commands.has(command)), "the scan sees src's literal launches").toStrictEqual([]);
+    const sdkNames = sdkBinaryNamesIn(textOf(SDK_CLIENT));
+    expect(sdkNames.length, "the SDK's client names the binary its PATH lookup spawns").toBeGreaterThan(0);
+    expect(
+      sdkNames.filter(name => hxSpelling(name) === undefined),
+      "every binary name the SDK's PATH lookup spawns is an hx spelling C4 reads",
+    ).toStrictEqual([]);
+    const spellings = Object.fromEntries(Object.entries(HX_SPELLING_CONTROLS).map(([name, text]) => [name, hxWords(`control:${name}`, parse(name, text))]));
+    expect(
+      Object.entries(spellings)
+        .filter(([, words]) => words.length === 0)
+        .map(([name]) => name),
+      "every enumerated spelling's control is flagged",
+    ).toStrictEqual([]);
     const words = all.flatMap(module => hxWords(module, srcSource(module)));
-    expect(words, "no src string literal names hx as a word").toStrictEqual([]);
+    expect(words, "no word of a src string literal is an hx spelling").toStrictEqual([]);
     return json({
       floor: LAUNCH_FLOOR.filter(command => commands.has(command)),
       hx: words,
+      sdkBinaryNames: sdkNames,
+      clientControl: sdkBinaryNamesIn(READER_CONTROLS.client ?? ""),
       controls: Object.fromEntries(Object.entries(LAUNCH_CONTROLS).map(([name, text]) => [name, hxWords(`control:${name}`, parse(name, text))])),
+      spellings,
       nearMiss: hxWords("control:near-miss", parse("near-miss", NEAR_MISS_CONTROL)),
     });
   },
@@ -1483,7 +1929,14 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const { virtual } = memberReadings();
     return json(Object.fromEntries(Object.keys(COMPUTED_KEY_PROBES).map(name => [name, referenceWitness(virtual[`q1-${name}`] ?? [])])));
   },
-  Q2: async () => json({ cast: referenceWitness(memberReadings().virtual["q2-cast"] ?? []) }),
+  Q2: async () => {
+    const file = virtualFile("q2-require-load");
+    return json({
+      cast: referenceWitness(memberReadings().virtual["q2-cast"] ?? []),
+      requireLoad: referenceWitness(memberReadings().virtual["q2-require-load"] ?? []),
+      requireLoadSite: siteWitness(file === undefined ? [] : sdkSites("probe:require-load", file, new Set(mutationSurface()), file.fileName, compiled().checker)),
+    });
+  },
   Q3: async () => {
     const reading = findReading("verified", false);
     return json({
@@ -1526,17 +1979,54 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
           .filter(path => !(LOOP_FIELDS as readonly string[]).includes(path))
           .map(path => [path, [...new Set(SHAPES.map(shape => JSON.stringify(valuesAt(findReading("complete", false, shape), path))))]]),
       ),
+      sourceVariations: SOURCE_VARIATIONS.map(shape => shape.id),
+      hostValues: HOST_VALUES,
+      products: {
+        sourceSubsets: 2 ** SOURCE_VARIATIONS.length,
+        subsetHosts: [CONTEXT, MOVED_HOST],
+        hostContexts: hostContexts().length,
+        hostSources: ["minimal", "all source variations"],
+        shapes: judgedProducts().length,
+      },
     }),
   Q9: async () => {
     const probe = parse("unnamed-status", UNNAMED_STATUS_PROBE);
     return json({ places: statusPlacesIn("probe:unnamed-status", probe), triggers: glyphTriggersIn("probe:unnamed-status", probe) });
   },
+  Q10: async () => {
+    const probe = parse("host-folded", HOST_FOLDED_PROBE);
+    return json({ words: hxWords("probe:host-folded", probe), launches: launches("probe:host-folded", probe).map(launch => launch.reading) });
+  },
+  Q11: async () => {
+    const probe = parse("renamed-binary", RENAMED_BINARY_PROBE);
+    return json({ words: hxWords("probe:renamed-binary", probe), launches: launches("probe:renamed-binary", probe).map(launch => launch.reading) });
+  },
+  Q12: async () => {
+    const probe = parse("shell-joined", SHELL_JOINED_PROBE);
+    return json({ words: hxWords("probe:shell-joined", probe), launches: launches("probe:shell-joined", probe).map(launch => launch.reading) });
+  },
+  Q13: async () => {
+    const carriers = verifiedCarriers(RECEIPT_WIRE);
+    return json({
+      wireForms: wireFormsIn(textOf(INDEX_DECLARATION)),
+      sampled: ["receiptToJson"],
+      carriers,
+      carried: Object.fromEntries(carriers.map(key => [key, RECEIPT_WIRE[key] ?? null])),
+    });
+  },
+  Q14: async () =>
+    json({
+      flag: ENV_FLAG,
+      censusEnv: process.env[ENV_FLAG] ?? null,
+      underCensusEnv: armed(hyperunixReadings(envGatedRegistry(process.env))),
+      underFlag: armed(hyperunixReadings(envGatedRegistry({ [ENV_FLAG]: "1" }))),
+    }),
 };
 
 describe("wb-ts6.2 HX mutation Verified census (HXFS-PI-R6, until-then leg)", () => {
   // The judged set reads the whole tracker export (refusal #1 F2: tens of megabytes), so it carries its own timeout.
   it("the judged set: the frozen shape, the out-of-file roster, the bead's own text and the cases agree", { timeout: 60_000 }, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:3", "C:4", "Q:9"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:3", "C:4", "Q:14"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
@@ -1560,6 +2050,23 @@ describe("wb-ts6.2 HX mutation Verified census (HXFS-PI-R6, until-then leg)", ()
         launchFloor: LAUNCH_FLOOR,
         wordSeparators: WORD_SEPARATORS.source,
         hxCommand: HX_COMMAND,
+        sdkClient: SDK_CLIENT,
+        hxWin32Extensions: HX_WIN32_EXTENSIONS,
+        hxSpellingControls: HX_SPELLING_CONTROLS,
+        hostFoldedProbe: HOST_FOLDED_PROBE,
+        renamedBinaryProbe: RENAMED_BINARY_PROBE,
+        shellJoinedProbe: SHELL_JOINED_PROBE,
+        loadingContexts: [...LOADING_CONTEXTS],
+        unreadConsumers: [...UNREAD_CONSUMERS],
+        nodeModuleTypes: NODE_MODULE_TYPES,
+        signatureLoaders: SIGNATURE_LOADERS,
+        loaderControls: LOADER_CONTROLS,
+        resolverControls: RESOLVER_CONTROLS,
+        requireLoadProbe: REQUIRE_LOAD_PROBE,
+        receiptSeed: RECEIPT_SEED,
+        sourceVariations: SOURCE_VARIATIONS.map(shape => shape.id),
+        hostValues: HOST_VALUES,
+        envFlag: ENV_FLAG,
         workspace: WS,
         binary: BINARY,
         context: CONTEXT,
