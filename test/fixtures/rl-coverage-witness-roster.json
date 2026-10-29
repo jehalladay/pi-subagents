@@ -381,7 +381,7 @@
    "id": "R-UNFED-RENDER",
    "pin": "A1",
    "quiet": [
-    "rfTwoRowReader"
+    "rfThreeRowReader"
    ],
    "twin": [
     "rfAnyRowReader"
@@ -510,22 +510,53 @@
         "rootPlant": "judged=false hits=0 coverage-witness-plant.ts"
        },
        "rfReaders": {
-        "rfTwoRowReader": [],
+        "rfThreeRowReader": [],
         "rfAnyRowReader": [
          "clean",
          "undiagnosed",
          "blocksOnly",
          "necessityOnly",
          "noBlock",
+         "noBlockIncluded",
          "withheld",
+         "withheldFirst",
+         "withheldTwoBlocks",
+         "withheldBoth",
          "reused",
+         "reusedLast",
+         "reusedFirst",
+         "reusedBoth",
          "committedRender",
-         "committedSeq"
+         "renderIdEmpty",
+         "renderIdZero",
+         "renderIdAbsent",
+         "committedSeq",
+         "commitSeqZero",
+         "commitSeqEmpty"
         ]
        }
       },
       "package": {
        "real": []
+      },
+      "accounting": {
+       "unregistered": [
+        "src/workbench/coverage-witness-adapter.ts"
+       ],
+       "unregisteredManifest": [
+        "package.json"
+       ],
+       "registered": [],
+       "registeredManifest": [],
+       "secondModule": [
+        "src/workbench/coverage-witness-consumer.ts"
+       ],
+       "qaModule": [
+        "qa/workbench/coverage-witness-consumer.mjs"
+       ],
+       "registeredElsewhere": [
+        "src/workbench/coverage-witness-consumer.ts"
+       ]
       },
       "rf": {
        "variants": {
@@ -534,10 +565,22 @@
         "blocksOnly": "partial unknown | inclusion not diagnosed: result.necessity absent: partial; witness keys identical",
         "necessityOnly": "partial unknown | inclusion not diagnosed: result.blocks absent: partial; witness keys identical",
         "noBlock": "partial unknown | inclusion: 0 blocks included, 0 of 0 judged candidates withheld at host_necessity: partial; witness keys identical",
+        "noBlockIncluded": "partial unknown | inclusion: 0 blocks included, 0 of 1 judged candidate withheld at host_necessity: partial; witness keys identical",
         "withheld": "partial unknown | inclusion: 1 block included, 1 of 2 judged candidates withheld at host_necessity: partial; witness keys identical",
+        "withheldFirst": "partial unknown | inclusion: 1 block included, 1 of 2 judged candidates withheld at host_necessity: partial; witness keys identical",
+        "withheldTwoBlocks": "partial unknown | inclusion: 2 blocks included, 1 of 2 judged candidates withheld at host_necessity: partial; witness keys identical",
+        "withheldBoth": "partial unknown | inclusion: 1 block included, 2 of 2 judged candidates withheld at host_necessity: partial; witness keys identical",
         "reused": "partial unknown | observations: 1 row, 1 reused: partial; witness keys identical",
+        "reusedLast": "partial unknown | observations: 2 rows, 1 reused: partial; witness keys identical",
+        "reusedFirst": "partial unknown | observations: 2 rows, 1 reused: partial; witness keys identical",
+        "reusedBoth": "partial unknown | observations: 2 rows, 2 reused: partial; witness keys identical",
         "committedRender": "refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.; witness keys identical",
-        "committedSeq": "refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.; witness keys identical"
+        "renderIdEmpty": "refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.; witness keys identical",
+        "renderIdZero": "refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.; witness keys identical",
+        "renderIdAbsent": "refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.; witness keys identical",
+        "committedSeq": "refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.; witness keys identical",
+        "commitSeqZero": "refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.; witness keys identical",
+        "commitSeqEmpty": "refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.; witness keys identical"
        },
        "readKey": "differing"
       },
@@ -761,7 +804,20 @@
        "noHit": "the trigger reads no hit in its module",
        "notImported": "this file imports no value from its module statically",
        "unnamed": "adoption() names no binding its module's import introduces",
+       "typeBinding": "adoption() names no binding its module's import introduces",
        "complete": "accepted"
+      },
+      "exports": {
+       "one": "accepted",
+       "typeClause": "accepted",
+       "defaultOnly": "accepted",
+       "two": "its module exports 2 values (adapter, reads), not one: the registered module's one value export is its adapter",
+       "defaultAndNamed": "its module exports 2 values (default, reads), not one: the registered module's one value export is its adapter",
+       "clause": "its module exports 2 values (adapter, reads), not one: the registered module's one value export is its adapter",
+       "destructured": "its module exports 2 values (adapter, reads), not one: the registered module's one value export is its adapter",
+       "starReexport": "its module exports 2 values (adapter, *), not one: the registered module's one value export is its adapter",
+       "classBeside": "its module exports 2 values (adapter, Reader), not one: the registered module's one value export is its adapter",
+       "commonJs": "its module exports 0 values (), not one: the registered module's one value export is its adapter"
       },
       "adoption": null,
       "adopted": null
@@ -780,6 +836,14 @@
       "freshOnly": {
        "steps": [
         "refresh at=01s"
+       ],
+       "readings": [
+        "applied: current/unknown"
+       ]
+      },
+      "statedUnknown": {
+       "steps": [
+        "refresh at=01s coverage=unknown"
        ],
        "readings": [
         "applied: current/unknown"
@@ -811,6 +875,16 @@
         "applied: current/unknown"
        ]
       },
+      "fresherUnknown": {
+       "steps": [
+        "refresh at=01s coverage=complete",
+        "refresh at=02s coverage=unknown"
+       ],
+       "readings": [
+        "applied: current/complete",
+        "applied: current/unknown"
+       ]
+      },
       "eventsOnly": {
        "steps": [
         "event e1 seq=1",
@@ -819,6 +893,36 @@
        "readings": [
         "applied: unknown/unknown",
         "applied: unknown/unknown"
+       ]
+      },
+      "eventsOnlyVersioned": {
+       "steps": [
+        "event e1 seq=1 version=v1",
+        "event e2 seq=2 version=v2"
+       ],
+       "readings": [
+        "applied: unknown/unknown",
+        "applied: unknown/unknown"
+       ]
+      },
+      "eventsOnlyFull": {
+       "steps": [
+        "event e1 seq=1 version=v1 full",
+        "event e2 seq=2 version=v2 full"
+       ],
+       "readings": [
+        "applied: unknown/unknown",
+        "applied: unknown/unknown"
+       ]
+      },
+      "eventsOnlyUnsequenced": {
+       "steps": [
+        "event e1",
+        "event e2"
+       ],
+       "readings": [
+        "applied: unknown/unknown",
+        "applied: stale/unknown"
        ]
       },
       "failedRead": {
@@ -843,13 +947,47 @@
        "blocksOnly": "rows=[captured_at_render] blocks=1 necessity=absent withheld=0 render_id=null commit_seq=null: partial unknown | inclusion not diagnosed: result.necessity absent: partial",
        "necessityOnly": "rows=[captured_at_render] blocks=absent necessity=1 withheld=0 render_id=null commit_seq=null: partial unknown | inclusion not diagnosed: result.blocks absent: partial",
        "noBlock": "rows=[captured_at_render] blocks=0 necessity=0 withheld=0 render_id=null commit_seq=null: partial unknown | inclusion: 0 blocks included, 0 of 0 judged candidates withheld at host_necessity: partial",
-       "withheld": "rows=[captured_at_render] blocks=1 necessity=2 withheld=1 render_id=null commit_seq=null: partial unknown | inclusion: 1 block included, 1 of 2 judged candidates withheld at host_necessity: partial"
+       "noBlockIncluded": "rows=[captured_at_render] blocks=0 necessity=1 withheld=0 render_id=null commit_seq=null: partial unknown | inclusion: 0 blocks included, 0 of 1 judged candidate withheld at host_necessity: partial",
+       "withheld": "rows=[captured_at_render] blocks=1 necessity=2 withheld=1 render_id=null commit_seq=null: partial unknown | inclusion: 1 block included, 1 of 2 judged candidates withheld at host_necessity: partial",
+       "withheldFirst": "rows=[captured_at_render] blocks=1 necessity=2 withheld=1 render_id=null commit_seq=null: partial unknown | inclusion: 1 block included, 1 of 2 judged candidates withheld at host_necessity: partial",
+       "withheldTwoBlocks": "rows=[captured_at_render] blocks=2 necessity=2 withheld=1 render_id=null commit_seq=null: partial unknown | inclusion: 2 blocks included, 1 of 2 judged candidates withheld at host_necessity: partial",
+       "withheldBoth": "rows=[captured_at_render] blocks=1 necessity=2 withheld=2 render_id=null commit_seq=null: partial unknown | inclusion: 1 block included, 2 of 2 judged candidates withheld at host_necessity: partial"
       },
       "hx": {
-       "licensedEmpty": "complete-empty licensed=true rows=0: complete success | known-empty (runtime-licensed) \u00b7 rows 0",
-       "unlicensedEmpty": "complete licensed=false rows=0: partial unknown | complete \u00b7 rows 0 \u00b7 absence not licensed",
-       "unlicensedCompleteEmpty": "complete-empty licensed=false rows=0: partial unknown | complete-empty \u00b7 rows 0 \u00b7 absence not licensed",
-       "unlicensedRows": "complete licensed=false rows=2: partial unknown | complete \u00b7 rows 2 \u00b7 absence not licensed"
+       "complete licensed=true rows=0": "complete success | complete \u00b7 rows 0",
+       "complete licensed=false rows=0": "partial unknown | complete \u00b7 rows 0 \u00b7 absence not licensed",
+       "complete-empty licensed=true rows=0": "complete success | known-empty (runtime-licensed) \u00b7 rows 0",
+       "complete-empty licensed=false rows=0": "partial unknown | complete-empty \u00b7 rows 0 \u00b7 absence not licensed",
+       "incomplete licensed=true rows=0": "partial unknown | incomplete \u00b7 rows 0 \u00b7 absence not licensed",
+       "incomplete licensed=false rows=0": "partial unknown | incomplete \u00b7 rows 0 \u00b7 absence not licensed",
+       "budget-exhausted licensed=true rows=0": "partial unknown | budget-exhausted \u00b7 rows 0 \u00b7 absence not licensed",
+       "budget-exhausted licensed=false rows=0": "partial unknown | budget-exhausted \u00b7 rows 0 \u00b7 absence not licensed",
+       "cancelled licensed=true rows=0": "partial unknown | cancelled \u00b7 rows 0 \u00b7 absence not licensed",
+       "cancelled licensed=false rows=0": "partial unknown | cancelled \u00b7 rows 0 \u00b7 absence not licensed",
+       "view-invalidated licensed=true rows=0": "partial unknown | view-invalidated \u00b7 rows 0 \u00b7 absence not licensed",
+       "view-invalidated licensed=false rows=0": "partial unknown | view-invalidated \u00b7 rows 0 \u00b7 absence not licensed",
+       "provider-failed licensed=true rows=0": "unknown failure | provider-failed",
+       "provider-failed licensed=false rows=0": "unknown failure | provider-failed",
+       "schema-failed licensed=true rows=0": "unknown failure | schema-failed",
+       "schema-failed licensed=false rows=0": "unknown failure | schema-failed",
+       "internal-failed licensed=true rows=0": "unknown failure | internal-failed",
+       "internal-failed licensed=false rows=0": "unknown failure | internal-failed",
+       "protocol-failed licensed=true rows=0": "unknown failure | protocol-failed",
+       "protocol-failed licensed=false rows=0": "unknown failure | protocol-failed",
+       "usage-error licensed=true rows=0": "unknown failure | usage-error",
+       "usage-error licensed=false rows=0": "unknown failure | usage-error",
+       "mutation-rejected licensed=true rows=0": "refused validation: HyperUnix topology refused: mutation-rejected is a mutation outcome and this read adapter refuses mutation outcomes.",
+       "mutation-rejected licensed=false rows=0": "refused validation: HyperUnix topology refused: mutation-rejected is a mutation outcome and this read adapter refuses mutation outcomes.",
+       "mutation-partial licensed=true rows=0": "refused validation: HyperUnix topology refused: mutation-partial is a mutation outcome and this read adapter refuses mutation outcomes.",
+       "mutation-partial licensed=false rows=0": "refused validation: HyperUnix topology refused: mutation-partial is a mutation outcome and this read adapter refuses mutation outcomes.",
+       "complete licensed=true rows=2": "complete success | complete \u00b7 rows 2",
+       "complete licensed=false rows=2": "partial unknown | complete \u00b7 rows 2 \u00b7 absence not licensed",
+       "complete-empty licensed=true rows=2": "refused validation: HyperUnix topology refused: a complete-empty result carries rows.",
+       "complete-empty licensed=false rows=2": "refused validation: HyperUnix topology refused: a complete-empty result carries rows.",
+       "complete licensed=false rows=0 full": "partial unknown | complete \u00b7 rows 0 \u00b7 absence not licensed (rows not retained)",
+       "complete-empty licensed=false rows=0 full": "partial unknown | complete-empty \u00b7 rows 0 \u00b7 absence not licensed (rows not retained)",
+       "incomplete licensed=true rows=0 full": "partial unknown | incomplete \u00b7 rows 0 \u00b7 absence not licensed (rows not retained)",
+       "complete-empty licensed=true rows=0 full": "complete success | known-empty (runtime-licensed) \u00b7 rows 0 (rows not retained)"
       },
       "precedent": "wb-6ze.7 (absence must be runtime-licensed) and docs/workbench/07 HX known-empty vs incomplete/unknown"
      }
@@ -868,6 +1006,26 @@
        "steps": [
         "refresh at=02s",
         "refresh at=01s coverage=complete"
+       ],
+       "readings": [
+        "applied: current/unknown",
+        "out-of-order: current/unknown"
+       ]
+      },
+      "olderCaptureObservedLater": {
+       "steps": [
+        "refresh at=02s",
+        "refresh at=01s observed=04s coverage=complete"
+       ],
+       "readings": [
+        "applied: current/unknown",
+        "out-of-order: current/unknown"
+       ]
+      },
+      "higherSequenceOlderCapture": {
+       "steps": [
+        "refresh at=02s seq=3",
+        "refresh at=01s seq=4 coverage=complete"
        ],
        "readings": [
         "applied: current/unknown",
@@ -894,10 +1052,40 @@
         "out-of-order: current/unknown"
        ]
       },
+      "laterCapture": {
+       "steps": [
+        "refresh at=01s",
+        "refresh at=02s coverage=complete"
+       ],
+       "readings": [
+        "applied: current/unknown",
+        "applied: current/complete"
+       ]
+      },
+      "laterCaptureObservedEarlier": {
+       "steps": [
+        "refresh at=01s observed=03s",
+        "refresh at=02s coverage=complete"
+       ],
+       "readings": [
+        "applied: current/unknown",
+        "applied: current/complete"
+       ]
+      },
       "laterSeal": {
        "steps": [
         "refresh at=02s seq=3",
         "refresh at=03s seq=4 coverage=complete"
+       ],
+       "readings": [
+        "applied: current/unknown",
+        "applied: current/complete"
+       ]
+      },
+      "laterSealGap": {
+       "steps": [
+        "refresh at=02s seq=3",
+        "refresh at=03s seq=10 coverage=complete"
        ],
        "readings": [
         "applied: current/unknown",
@@ -932,8 +1120,16 @@
      "witness": {
       "clean": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: complete success | observations: 1 row, 0 reused",
       "reused": "rows=[reused] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: partial unknown | observations: 1 row, 1 reused: partial",
+      "reusedLast": "rows=[captured_at_render,reused] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: partial unknown | observations: 2 rows, 1 reused: partial",
+      "reusedFirst": "rows=[reused,captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: partial unknown | observations: 2 rows, 1 reused: partial",
+      "reusedBoth": "rows=[reused,reused] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: partial unknown | observations: 2 rows, 2 reused: partial",
       "committedRender": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=\"rnd_aaaaaaaaaaaaaaaaaaaaaa\" commit_seq=null: refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.",
-      "committedSeq": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=1: refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null."
+      "renderIdEmpty": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=\"\" commit_seq=null: refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.",
+      "renderIdZero": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=0 commit_seq=null: refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.",
+      "renderIdAbsent": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=absent commit_seq=null: refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.",
+      "committedSeq": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=1: refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.",
+      "commitSeqZero": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=0: refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.",
+      "commitSeqEmpty": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=\"\": refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null."
      }
     }
    ]

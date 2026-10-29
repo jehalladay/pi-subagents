@@ -1,6 +1,6 @@
 /**
  * wb-km7q.4 (SDK-REACTIVE-FIBER-ADAPTIVE-COMPUTATION-AND-CONTROL-R12, program-triage-2026-10-18 child of wb-km7q), the
- * CoverageWitness adoption census (cut #2). Statement (the bead's export title, read at run time): "If Pi ever consumes a
+ * CoverageWitness adoption census (cut #3). Statement (the bead's export title, read at run time): "If Pi ever consumes a
  * CoverageWitness (gated RL-RQ1..RL-RQ8; 'coverage is not freshness' amendment), the adapter carries all eight typed fields
  * (collection identity through invalidation conditions); a freshness witness never proves enumeration coverage, an
  * old-generation seal is stale for today's task, and source-only 'no records observed' never certifies absence." Acceptance
@@ -12,7 +12,9 @@
  * NO PI ADAPTER EXISTS: no judged Pi product file names the CoverageWitness vocabulary today (A1), so the title's duties have no
  * Pi subject yet. The acceptance is met in the form it names: falsifiers that run now (against model adapters, A2, and against
  * the Pi readers a witness would land in, B and C) and that run against Pi's adapter the moment a cut registers one
- * (adoption()), refusing the adoption when one of them fires (A2's adoption judge).
+ * (adoption()), refusing the adoption when one of them fires (A2's adoption judge). A1's accounting holds every judged file that
+ * names the vocabulary to the registered adapter's module, and A2 holds that module to one value export, its adapter, so a
+ * reading of the record in a second judged file, or exported beside the adapter, reds; what the battery cannot see is in LIMITS.
  *
  * ROWS (the labels joined by one space are the acceptance; each row's pin quotes joined by one space are its label; frozen
  * shape ["A:2", "B:2", "C:2"]):
@@ -28,14 +30,20 @@
  *     override, a script. The walk records symlinks (never followed), files that are not UTF-8 and listed paths missing on disk
  *     (each list is empty today); each root has a floor (src 100, qa 55, examples 5); two planted files ride last (a short src
  *     plant and a qa plant longer than every judged file with its term on its last line), and the hits are exactly the plants'.
- *     The planted texts, package texts and files below read through the same judge, each with its hit count in the witness. A
- *     hit while adoption() is null throws OWED: the trigger refuses whatever the roster holds, so a cut that re-measures the
- *     witnesses without registering an adapter still reds. The rf leg: on every render variant this census feeds the rf preview
- *     reader (reactivefiberTopology, which reads the reactivefiber.render.preview provider output) - B2's six and C2's four, the
- *     clean render shared (RF_VARIANTS) - the render whose observation rows carry coverage_witness (A2's sealed payload) and
- *     freshness_witness (A2's freshness payload) and whose result carries coverage_witness projects to the same JSON text, or the
- *     same refusal, as the render without them; a variant that differs throws, whatever the roster holds; the clean render with
- *     its row reused projects differently, so the compare sees a change.
+ *     The planted texts, package texts and files below read through the same judge, each with its hit count in the witness.
+ *     THE ACCOUNTING: a judged file holding a hit is accounted for by the registration - package.json by the registration of
+ *     any adapter (a manifest names no module), every other judged file only by the registration of its own module. An
+ *     unaccounted hit file throws whatever the roster holds - OWED while adoption() is null, UNACCOUNTED once it registers an
+ *     adapter - so a cut that re-measures the witnesses without registering, or that registers one module while another judged
+ *     file (below src/, qa/ or examples/) names the vocabulary, still reds. The accounting runs today on seven probes through
+ *     the walk's judge (a src adapter module, a second src module, a qa module and package.json naming the SDK, registered or
+ *     not); a probe that leaves other files unaccounted than it states throws, and the outcomes are in the witness. The rf leg:
+ *     on every render variant this census feeds the rf preview reader (reactivefiberTopology, which reads the
+ *     reactivefiber.render.preview provider output) - B2's ten and C2's twelve, the clean render shared (RF_VARIANTS) - the
+ *     render whose observation rows carry coverage_witness (A2's sealed payload) and freshness_witness (A2's freshness payload)
+ *     and whose result carries coverage_witness projects to the same JSON text, or the same refusal, as the render without
+ *     them; a variant that differs throws, whatever the roster holds; the clean render with its row reused projects
+ *     differently, so the compare sees a change.
  *   A2 "falsifiers", the BATTERY over the producer's JSON forms. PAYLOADS are this file's values in the producer's rosters
  *     (COVERAGE_WITNESS_FIELDS and its nested rosters, FRESHNESS_WITNESS_FIELDS; key order included): sealed (collection
  *     beads:issues, scope open, generation g2, a manifest of 20 observing 20, a sealed snapshot), partial (observing 4),
@@ -54,30 +62,50 @@
  *     falsifiers state, not on every violating adapter. THE ADOPTION JUDGE: an adapter is accepted when no falsifier fires on it
  *     and refused when one does; it runs today on ORACLE (accepted) and on every mutant (refused exactly when its battery
  *     fires), and the records case holds that every falsifier refused at least one of them. adoption() returns the adapter an
- *     adopting cut imports statically, with its module path (held to the roster's adoption block); A2 holds that registration
- *     (the module sits below src/, holds a trigger hit, is imported statically by this file with a value binding, and
- *     adoption()'s body names a binding that import introduces; each refusal branch runs today on probes) and then judges the
- *     adapter: a refused registration or a refused adoption throws, red whatever the roster holds. adoption() is null today, so
- *     no Pi adapter is run (A1's OWED forces the registration). No loader call with a computed specifier is used (the rc
- *     remote-component census pins those).
+ *     adopting cut imports statically, with its module path (held to the roster's adoption block). A2 holds that registration:
+ *     the module sits below src/, holds a trigger hit, is imported statically by this file, and adoption()'s body names a value
+ *     binding that import introduces (a type-only binding is none); then the module's text, read from its AST, exports exactly
+ *     one value (each name an exported declaration binds, a default export, each element of an export clause that is not
+ *     type-only and a whole-module re-export count; type aliases, interfaces, ambient declarations and type-only clauses do not,
+ *     and a CommonJS assignment is no export). Each refusal branch runs today on probes, the export count on ten module texts.
+ *     Then A2 judges the adapter: a refused registration or a refused adoption throws, red whatever the roster holds.
+ *     adoption() is null today, so no Pi adapter is run (A1's OWED forces the registration). No loader call with a computed
+ *     specifier is used (the rc remote-component census pins those).
  * - B, "that freshness-without-coverage never reads complete".
  *   B1 "that freshness-without-coverage", on ObservationProjection (src/workbench/observation.ts), the projection a Pi reader's
- *     snapshot lands in: a current refresh stating no coverage reads unknown, a partial one partial, a complete one complete; a
- *     later current refresh stating no coverage after a complete one reads unknown; a node seen only through events reads
- *     unknown; a failed read (markStale) after a complete refresh reads stale and unknown.
- *   B2 "never reads complete", on two readers that state a coverage reading: the rf preview reader, its one row fresh and
- *     observed, reads complete only with both inclusion records stated (result.blocks and result.necessity), a block included
- *     and none withheld (both records absent, either record absent alone, both empty, or one candidate withheld read partial);
- *     the HyperUnix reader (the filing's house precedent wb-6ze.7; docs/workbench/07 'known-empty vs incomplete/unknown') reads
- *     complete only on a runtime-licensed complete-empty answer here (a complete or complete-empty answer the runtime did not
- *     license, with zero rows or with rows, reads partial).
+ *     snapshot lands in. The node's completeness reads unknown after a current refresh stating no coverage or coverage unknown,
+ *     partial after a partial one and complete after a complete one; a later current refresh stating no coverage or coverage
+ *     unknown, after a complete one, reads unknown. A node seen only through events reads its completeness unknown (its
+ *     freshness unknown, or stale once an unsequenced event follows another): plain events, events stating a source version,
+ *     events stating every other optional event field (a source timestamp, a cursor chained to the previous event's, a
+ *     presentation reading success, a subject basis, evidence and payload references, an interval and a trace) under kind
+ *     native.snapshot with their sequences as strings, and events stating no sequence. A failed read (markStale) after a
+ *     complete refresh reads stale and unknown.
+ *   B2 "never reads complete", on two readers that state a coverage reading. The rf preview reader, its one row fresh and
+ *     observed, reads complete only with both inclusion records stated (result.blocks and result.necessity), a block in
+ *     result.blocks and no decision in result.necessity withheld (include false): both records absent, either record absent
+ *     alone, both empty, no block beside an include-true decision, one of two decisions withheld (the last, the first, or
+ *     beside two blocks) and both of two withheld read partial; the clean render (one block, one include-true decision) reads
+ *     complete. The HyperUnix reader (the filing's house precedent wb-6ze.7; docs/workbench/07 'known-empty vs
+ *     incomplete/unknown') reads complete exactly on an answer of a complete kind (complete or complete-empty) that the runtime
+ *     licensed, with zero rows or (complete) with two rows: the same answers unlicensed read partial; the four partial kinds
+ *     read partial and the five failure kinds unknown, licensed or not; the two mutation kinds and a complete-empty answer
+ *     carrying rows are refused (every ExecutionStatusKind of the vendored SDK with zero rows, licensed and not, and both
+ *     complete kinds with two rows, licensed and not). Four full answers, each also stating a coverage certificate, rows not
+ *     retained, a view, a provider version, a conflict diagnostic and an empty incomplete-region list, read the same way
+ *     (complete and complete-empty unlicensed and incomplete licensed read partial, complete-empty licensed reads complete).
  * - C, "and stale-generation seals are refused for current tasks".
- *   C1 "and stale-generation seals are refused", on ObservationProjection: after a current read stating no coverage, a complete
- *     snapshot captured earlier, or at a lower sequence, or with no sequence after a sequenced one, is refused out-of-order and
- *     the node keeps reading unknown; a complete snapshot at a higher sequence and a later capture applies and reads complete.
+ *   C1 "and stale-generation seals are refused", on ObservationProjection (sequences stated as numbers): after a current read
+ *     stating no coverage, a complete snapshot captured earlier than that read - unsequenced, observed later than that read, or
+ *     at a higher sequence - is refused out-of-order, and so is one at a lower sequence or with no sequence after a sequenced
+ *     read; the node keeps reading current and unknown. A complete snapshot captured later than that read applies and reads
+ *     complete: unsequenced (also when that read was observed after this capture), at the next sequence, or past a sequence
+ *     gap (3 to 10).
  *   C2 "for current tasks", on the rf preview reader: a row replayed from an earlier render (freshness reused) holds the render
- *     at partial, with or without the witness keys (A1's rf leg), and a committed render (render_id or commit_seq stated) is
- *     refused; the render with its row captured at render reads complete.
+ *     at partial - its one row, one of two rows (the last or the first), or both of two - with or without the witness keys
+ *     (A1's rf leg); a render whose result.render_id is not null (an id, the empty string, 0, or no render_id at all) is
+ *     refused, and so is one whose result.commit_seq is stated and not null (1, 0, the empty string); the render with its one
+ *     row captured at render reads complete.
  *
  * OUTSIDE ANCHOR: the wb-km7q.4 row of the tracked bead export (.beads/issues.jsonl): its title (the record, the gate list, the
  * field count and the four duty clauses are parsed from it) and the first span after each of the notes labels "Citations: ",
@@ -104,9 +132,9 @@
  * and UNBATTERIED, the payload digests, VERDICTS, the battery, the residual table, adoption() and every pin's witness are held to
  * the out-of-file roster (test/fixtures/rl-coverage-witness-roster.json). SELF-READ: no IMPL member names ROSTER (direct
  * identifiers only), the roster is deep-frozen when loaded, and the registration check reads this file's static imports and
- * adoption()'s identifiers from its AST. RECORDS: the last case holds that every registered pin ran to its compare and
- * re-digests each witness against its roster witness, that every falsifier refused an adapter in the adoption judge, and that
- * the HX reader read the precedent's licensed and unlicensed complete-empty answers.
+ * adoption()'s identifiers, and a registered module's exports, from their ASTs. RECORDS: the last case holds that every
+ * registered pin ran to its compare and re-digests each witness against its roster witness, that every falsifier refused an
+ * adapter in the adoption judge, and that the HX reader read the precedent's licensed and unlicensed complete-empty answers.
  * RESIDUALS (named; each has pinned quiet rows and a live twin among the planted inputs of its pin, read in that pin's case):
  *   R-COMPOSED (A1) a term assembled at run time (quiet: "Coverage" + "Witness"; twin: the one literal).
  *   R-SPACED (A1) a term's words apart (quiet: "the coverage witness", coverage.witness, "sealed snapshot"; twin: coverage_witness).
@@ -118,7 +146,7 @@
  *   R-UNNAMED-SPEC (A1) a package.json dependency whose spec reaches the SDK without spelling its name (quiet: a tarball URL
  *     under another name; twin: the npm-alias spec npm:vibranium-reactive-lenses@0.1.1).
  *   R-UNFED-RENDER (A1) an rf reader that reads a witness key only on a render shape no variant feeds (quiet: a stand-in reader
- *     that reads freshness_witness only on a render of two or more rows; twin: the stand-in that reads it on any row; each is
+ *     that reads freshness_witness only on a render of three or more rows; twin: the stand-in that reads it on any row; each is
  *     otherwise the real reader on the render with the witness keys taken off).
  *   R-OTHER-SHAPE (A2) a violation reached only through a payload shape the battery never feeds, such as a camelCase port
  *     (quiet: M-CAMEL, complete on a sealedSnapshot key; twin: M-SNAKE, complete on a sealed_snapshot key).
@@ -133,18 +161,22 @@
  * RL-RQ1 (L-SEALED) and RL-RQ2 (F-PARTIAL) only, and UNBATTERIED says why for each other gate (F-GENERATION's old generation of
  * the same collection is the title's duty, not RL-RQ3's wrong-source case); the payload values are this file's own, not a
  * producer fixture; VERDICTS are the producer's answers at cut #1, seen again only when a cut re-measures them; an adoption the
- * judge accepts has passed the battery, which is not a proof the adapter is right (R-OTHER-SHAPE, R-EXPIRY).
+ * judge accepts has passed the battery, which is not a proof the adapter is right (R-OTHER-SHAPE, R-EXPIRY); OWED and
+ * UNACCOUNTED are thrown on the real walk only, which holds no hit today, while the accounting itself runs on its probes.
  * LIMITS: a check deleted or rewritten in this file's code is not detected beyond the SELF-READ (a pin rewritten to return its
  * roster witness through a helper is not); a residual removed together with its planted inputs and their roster readings is not
  * detected (residuals are this census's own reading); a TERM other than the title's CoverageWitness removed from TERMS, its
  * planted text, the roster and the witnesses together is not detected (the producer's other names are measured into the roster,
  * not read at run time); a pin merged into another pin of its row (its words and body re-homed), or a pin's sub-case (a journey,
- * a render variant, an HX variant, a planted text or file, a mutant) removed from this file and its roster witness together, is
- * not detected, except where the outside anchor holds it: a falsifier (its title duty or gate), the adoption judge's refusals,
- * the precedent's two HX reads and a carrier pair; a registration that names its import's binding but runs a stand-in adapter is
- * not detected (the registration check holds the module path, the import and the name; the battery judges the behaviour);
- * ORACLE is a lookup and proves only that the battery can be passed; a filtered run (-t) reds the records case by design.
- * MEASURED (seat records, read-only; not assertions): cut #2 over trunk e3022a1, 2026-10-29: 192 judged files (src 117, qa 67,
+ * a render variant, an HX answer, a planted text or file, an accounting or export probe, a mutant) removed from this file and its
+ * roster witness together, is not detected, except where the outside anchor holds it: a falsifier (its title duty or gate), the
+ * adoption judge's refusals, the precedent's two HX reads and a carrier pair; a registration that names its import's binding but
+ * runs a stand-in adapter is not detected (the registration check holds the module path, the import, the name and the one value
+ * export; the battery judges the behaviour), and neither is a reading of the record reached through another member of the
+ * registered adapter's value or through the registered module's own top-level code (the battery calls the adapter's read; the
+ * export check counts ES export syntax); ORACLE is a lookup and proves only that the battery can be passed; a filtered run (-t)
+ * reds the records case by design.
+ * MEASURED (seat records, read-only; not assertions): cut #3 over trunk e8e13f8, 2026-10-29: 192 judged files (src 117, qa 67,
  * examples 7, package.json), 0 hits, 0 symlinks, 0 non-UTF-8, and package.json names reactive[-_]?lenses in no key or value. Cut
  * #1 (seat ws-01, trunk 1f8117a, 2026-10-28; the producer facts verified again by the gate's PREP, finding F1):
  * ReactiveLensesSDK's pin d75fe44948cd (2026-10-18) and origin/master 4efe999ceba2 (2026-10-24) hold the charter as one blob
@@ -156,8 +188,9 @@
  * 48f020fe625f (2026-10-28T12:09:10Z): context.render.schema.json (blob 3282323161f4) has no line matching coverage, witness or
  * seal (case-insensitive).
  *
- * Display paths added: none. Test-only: the renders, HX readings, projections and adapters live in memory (no scratch); the
- * only spawn is git ls-files; src, qa, examples, package.json, docs/workbench/07 and the bead export are only read.
+ * Display paths added: none. Test-only: the renders, HX readings, projections, adapters and the accounting and export probes live
+ * in memory (no scratch); the only spawn is git ls-files; src, qa, examples, package.json, docs/workbench/07, a registered
+ * module (none today) and the bead export are only read.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -167,12 +200,12 @@ import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
-import { type HyperUnixTopologyContext, hyperunixTopology } from "../src/workbench/hyperunix-observer.js";
+import { HYPERUNIX_EXECUTION_KINDS, type HyperUnixTopologyContext, hyperunixTopology } from "../src/workbench/hyperunix-observer.js";
 import { type NativeRef, type NativeSnapshot, type ObservationEvent, ObservationProjection, type ObservationScope, type Presentation } from "../src/workbench/observation.js";
 import { REACTIVEFIBER_RENDER_PREVIEW_CONTRACT } from "../src/workbench/providers/reactivefiber.js";
 import { type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
 import { docsSection } from "./helpers/census.js";
-import { fullShapeRf, type Json, rfFixtureDecision } from "./helpers/rf-render-fixture.js";
+import { fullShapeRf, type Json, rfFixtureBlock, rfFixtureDecision } from "./helpers/rf-render-fixture.js";
 
 type JsonObject = { [key: string]: Json };
 interface Pin { readonly id: string; readonly quote: string }
@@ -430,7 +463,42 @@ const PLANTED_FILES: Readonly<Record<string, TextFile>> = {
 };
 const BIG_PLANT = "qa/coverage-witness-plant-big.mjs";
 const OWED =
-  "OWED: a judged Pi product file names the CoverageWitness vocabulary (or package.json names the Lenses SDK in a key or string value) - the adopting cut registers its adapter in adoption() (imported statically from the src module the trigger hits) and in the roster's adoption block, so A2 runs the battery against it and refuses the adoption when a falsifier fires, and re-measures A1's and A2's witnesses";
+  "OWED: a judged Pi product file names the CoverageWitness vocabulary (or package.json names the Lenses SDK in a key or string value) - the adopting cut registers its adapter in adoption() (imported statically from the one src module the trigger hits, whose one value export is the adapter) and in the roster's adoption block, so A2 runs the battery against it and refuses the adoption when a falsifier fires, and re-measures A1's and A2's witnesses";
+const UNACCOUNTED =
+  "UNACCOUNTED: a judged Pi product file other than the registered adapter's module names the CoverageWitness vocabulary (package.json aside, which any registration accounts for) - every reading of the record in a judged file is the registered adapter's, so the adopting cut moves that reading into the registered module and re-measures A1's and A2's witnesses";
+/** The hit files no registration accounts for: package.json by the registration of any adapter (a manifest names no module), every
+ * other file only by the registration of its own module, so with no registration every hit file is unaccounted for. */
+const unaccounted = (files: readonly string[], registered: string | null): string[] => files.filter(file => registered === null || (file !== PACKAGE && file !== registered));
+/** A1's accounting probes, through the walk's judge: a src adapter module, a second src module and a qa module that each name the
+ * vocabulary (the second src module is the shape of refusal #2's G07x), and package.json naming the SDK. */
+const ACCOUNTING_FILES: Readonly<Record<string, TextFile>> = {
+  adapter: { path: "src/workbench/coverage-witness-adapter.ts", text: "export const adapter = { read: (witness: { sealed_snapshot?: string }) => witness.sealed_snapshot };\n" },
+  consumer: { path: "src/workbench/coverage-witness-consumer.ts", text: "export const reads = (witness: { sealed_snapshot?: string }) => witness.sealed_snapshot !== undefined;\n" },
+  qaConsumer: { path: "qa/workbench/coverage-witness-consumer.mjs", text: "export const reads = witness => witness.sealed_snapshot !== undefined;\n" },
+  manifest: { path: PACKAGE, text: PACKAGE_PLANTS.packageName ?? "{}" },
+};
+interface AccountingProbe { readonly files: readonly string[]; readonly registered: string | null; readonly open: readonly string[] }
+/** Each probe: the files judged (ACCOUNTING_FILES ids), the registered module's id (or none) and the files it must leave unaccounted. */
+const ACCOUNTING_PROBES: Readonly<Record<string, AccountingProbe>> = {
+  unregistered: { files: ["adapter"], registered: null, open: ["adapter"] },
+  unregisteredManifest: { files: ["manifest"], registered: null, open: ["manifest"] },
+  registered: { files: ["adapter"], registered: "adapter", open: [] },
+  registeredManifest: { files: ["adapter", "manifest"], registered: "adapter", open: [] },
+  secondModule: { files: ["adapter", "consumer"], registered: "adapter", open: ["consumer"] },
+  qaModule: { files: ["adapter", "qaConsumer"], registered: "adapter", open: ["qaConsumer"] },
+  registeredElsewhere: { files: ["consumer"], registered: "adapter", open: ["consumer"] },
+};
+const accountingPath = (id: string): string => ACCOUNTING_FILES[id]?.path ?? id;
+/** A1's accounting, live today: each probe's unaccounted files through the walk's judge; a probe that misreads throws. */
+function accountingLeg(): Json {
+  const outcomes = Object.fromEntries(Object.entries(ACCOUNTING_PROBES).map(([name, probe]) => {
+    const files = probe.files.map(id => ACCOUNTING_FILES[id]).filter((file): file is TextFile => file !== undefined);
+    return [name, unaccounted(hitFiles(files), probe.registered === null ? null : accountingPath(probe.registered))];
+  }));
+  const misread = Object.entries(ACCOUNTING_PROBES).filter(([name, probe]) => JSON.stringify(outcomes[name]) !== JSON.stringify(probe.open.map(accountingPath))).map(([name]) => name);
+  if (misread.length > 0) throw new Error(`the trigger's accounting misreads ${misread.join(", ")}`);
+  return outcomes;
+}
 /** The message of A1's roster compare: its witness reads the walk, the package rule, the planted inputs and the rf leg. */
 const A1_DIFFERS = `A1's witness differs from its roster witness (a judged file, the package rule, a planted input or an rf reading changed); when a trigger hit is the cause, ${OWED}`;
 
@@ -452,20 +520,35 @@ function rfRender(edit: (result: JsonObject) => JsonObject, rows: readonly Json[
   return { ...envelope, result: edit({ ...objectOf(envelope.result, "fullShapeRf result"), observations: [...rows] }) };
 }
 interface RfVariant { readonly rows: readonly Json[]; readonly edit: (result: JsonObject) => JsonObject }
-/** Every render this census feeds the rf reader: B2's six (one fresh observed row) and C2's four, the clean render shared. */
+const RF_EXTRA_KEY = "fixture.component:main::extra";
+/** A second block of the final document (the fixture's block at index 1 under the extra candidate's key). */
+const RF_SECOND_BLOCK: Json = { ...rfFixtureBlock(), final_index: 1, candidate_key: RF_EXTRA_KEY };
+/** Every render this census feeds the rf reader: B2's ten (one fresh observed row) and C2's twelve, the clean render shared. */
 const RF_VARIANTS: Readonly<Record<string, RfVariant>> = {
   clean: { rows: [RF_ROW], edit: result => result },
   undiagnosed: { rows: [RF_ROW], edit: result => without(result, "blocks", "necessity") },
   blocksOnly: { rows: [RF_ROW], edit: result => without(result, "necessity") },
   necessityOnly: { rows: [RF_ROW], edit: result => without(result, "blocks") },
   noBlock: { rows: [RF_ROW], edit: result => ({ ...result, blocks: [], necessity: [] }) },
-  withheld: { rows: [RF_ROW], edit: result => ({ ...result, necessity: [rfFixtureDecision(), rfFixtureDecision(false, "fixture.component:main::extra")] }) },
+  noBlockIncluded: { rows: [RF_ROW], edit: result => ({ ...result, blocks: [], necessity: [rfFixtureDecision()] }) },
+  withheld: { rows: [RF_ROW], edit: result => ({ ...result, necessity: [rfFixtureDecision(), rfFixtureDecision(false, RF_EXTRA_KEY)] }) },
+  withheldFirst: { rows: [RF_ROW], edit: result => ({ ...result, necessity: [rfFixtureDecision(false, RF_EXTRA_KEY), rfFixtureDecision()] }) },
+  withheldTwoBlocks: { rows: [RF_ROW], edit: result => ({ ...result, blocks: [rfFixtureBlock(), RF_SECOND_BLOCK], necessity: [rfFixtureDecision(), rfFixtureDecision(false, RF_EXTRA_KEY)] }) },
+  withheldBoth: { rows: [RF_ROW], edit: result => ({ ...result, necessity: [rfFixtureDecision(false), rfFixtureDecision(false, RF_EXTRA_KEY)] }) },
   reused: { rows: [RF_REUSED], edit: result => result },
+  reusedLast: { rows: [RF_ROW, RF_REUSED], edit: result => result },
+  reusedFirst: { rows: [RF_REUSED, RF_ROW], edit: result => result },
+  reusedBoth: { rows: [RF_REUSED, RF_REUSED], edit: result => result },
   committedRender: { rows: [RF_ROW], edit: result => ({ ...result, render_id: "rnd_aaaaaaaaaaaaaaaaaaaaaa" }) },
+  renderIdEmpty: { rows: [RF_ROW], edit: result => ({ ...result, render_id: "" }) },
+  renderIdZero: { rows: [RF_ROW], edit: result => ({ ...result, render_id: 0 }) },
+  renderIdAbsent: { rows: [RF_ROW], edit: result => without(result, "render_id") },
   committedSeq: { rows: [RF_ROW], edit: result => ({ ...result, commit_seq: 1 }) },
+  commitSeqZero: { rows: [RF_ROW], edit: result => ({ ...result, commit_seq: 0 }) },
+  commitSeqEmpty: { rows: [RF_ROW], edit: result => ({ ...result, commit_seq: "" }) },
 };
-const B2_RF: readonly string[] = ["clean", "undiagnosed", "blocksOnly", "necessityOnly", "noBlock", "withheld"];
-const C2_RF: readonly string[] = ["clean", "reused", "committedRender", "committedSeq"];
+const B2_RF: readonly string[] = ["clean", "undiagnosed", "blocksOnly", "necessityOnly", "noBlock", "noBlockIncluded", "withheld", "withheldFirst", "withheldTwoBlocks", "withheldBoth"];
+const C2_RF: readonly string[] = ["clean", "reused", "reusedLast", "reusedFirst", "reusedBoth", "committedRender", "renderIdEmpty", "renderIdZero", "renderIdAbsent", "committedSeq", "commitSeqZero", "commitSeqEmpty"];
 const variantRender = (name: string): JsonObject => {
   const variant = RF_VARIANTS[name];
   if (variant === undefined) throw new Error(`no rf variant ${name}`);
@@ -480,7 +563,8 @@ function renderShape(envelope: JsonObject): string {
   };
   const rows = Array.isArray(result.observations) ? result.observations.map(row => (isObject(row) ? String(row.freshness) : "?")).join(",") : "absent";
   const withheld = Array.isArray(result.necessity) ? result.necessity.filter(item => isObject(item) && item.include === false).length : 0;
-  return `rows=[${rows}] blocks=${length("blocks")} necessity=${length("necessity")} withheld=${withheld} render_id=${JSON.stringify(result.render_id ?? null)} commit_seq=${JSON.stringify(result.commit_seq ?? null)}`;
+  const stated = (key: string): string => (Object.hasOwn(result, key) ? JSON.stringify(result[key] ?? null) : "absent");
+  return `rows=[${rows}] blocks=${length("blocks")} necessity=${length("necessity")} withheld=${withheld} render_id=${stated("render_id")} commit_seq=${stated("commit_seq")}`;
 }
 /** What the rf reader makes of one render: coverage, tone and its inclusion and observations notes, or the refusal. */
 function rfReading(envelope: JsonObject): string {
@@ -526,11 +610,11 @@ function withoutWitnessKeys(envelope: JsonObject): JsonObject {
   const result = objectOf(envelope.result, "render result");
   return { ...envelope, result: { ...without(result, "coverage_witness"), observations: rowsOf(envelope).map(row => without(objectOf(row, "row"), "coverage_witness", "freshness_witness")) } };
 }
-/** A1's stand-in rf readers (R-UNFED-RENDER): complete when a row carries freshness_witness - on a render of two or more rows only
- * (no variant has two), or on any render (the twin) - and otherwise the real reader on the render with the witness keys taken off,
- * so a stand-in reads loud or quiet by its own rule, never by the real reader's. */
+/** A1's stand-in rf readers (R-UNFED-RENDER): complete when a row carries freshness_witness - on a render of three or more rows only
+ * (no variant has three), or on any render (the twin) - and otherwise the real reader on the render with the witness keys taken
+ * off, so a stand-in reads loud or quiet by its own rule, never by the real reader's. */
 const RF_READERS: Readonly<Record<string, RfReader>> = {
-  rfTwoRowReader: envelope => (rowsOf(envelope).length >= 2 && rowsOf(envelope).some(carriesFreshness) ? "complete" : RF_REAL(withoutWitnessKeys(envelope))),
+  rfThreeRowReader: envelope => (rowsOf(envelope).length >= 3 && rowsOf(envelope).some(carriesFreshness) ? "complete" : RF_REAL(withoutWitnessKeys(envelope))),
   rfAnyRowReader: envelope => (rowsOf(envelope).some(carriesFreshness) ? "complete" : RF_REAL(withoutWitnessKeys(envelope))),
 };
 /** A1's rf leg: each variant's reading and whether the witness keys change it; a read key (the clean render reused) must. */
@@ -554,11 +638,19 @@ const HX_CONTEXT: HyperUnixTopologyContext = {
 };
 /** The HX answers the HX reader has read, `<kind> licensed=<boolean>` (the records case holds the precedent's pair). */
 const HX_READ = new Set<string>();
+/** Every optional field a full HX answer states beside its kind, licence and rows: a coverage certificate, rows not retained, a view,
+ * a listed provider with its version, a conflict diagnostic and an empty incomplete-region list. */
+const HX_FULL: JsonObject = {
+  coverage: [{ batch_id: "batch-aaaa" }], rows_retained: false, view: "view-aaaa",
+  evidence: { providers: ["fs"], provider_versions: { fs: "1.0.0" } }, diagnostics: [{ code: "HX-SCHEMA-CONFLICT" }],
+};
 /** One hyperunix.find provider reading in the measured shape (test/workbench-native-ecosystem.test.ts), read by the HX reader. */
-function hxReading(kind: string, licensed: boolean, rows: readonly Json[]): string {
+function hxReading(kind: string, licensed: boolean, rows: readonly Json[], full = false): string {
+  const summary: JsonObject = full ? { licenses_absence: licensed, incomplete_regions: [] } : { licenses_absence: licensed };
+  const source: JsonObject = { representation: "hyperunix.result/1", execution_status: { kind }, coverage_summary: summary, rows: [...rows], rows_retained: true, operation: "find" };
   const reading: JsonValue = {
     contract: "hyperunix.find/v1",
-    source: { representation: "hyperunix.result/1", execution_status: { kind }, coverage_summary: { licenses_absence: licensed }, rows: [...rows], rows_retained: true, operation: "find" },
+    source: full ? { ...source, ...HX_FULL } : source,
     workspaceRoot: HX_ROOT,
     runtime: { version: "0.1.0", binarySha256: HX_BINARY },
   };
@@ -570,23 +662,46 @@ function hxReading(kind: string, licensed: boolean, rows: readonly Json[]): stri
     return `refused ${error instanceof CapabilityError ? error.category : "error"}: ${error instanceof Error ? error.message : String(error)}`;
   }
 }
+const HX_ROWS: readonly Json[] = [{ path: "src/a.ts" }, { path: "src/b.ts" }];
+type HxAnswer = readonly [kind: string, licensed: boolean, rows: readonly Json[], full: boolean];
+/** B2's HX answers: every ExecutionStatusKind of the vendored SDK with zero rows, licensed and not; the two complete kinds with two
+ * rows, licensed and not; and four full answers with zero rows (complete and complete-empty unlicensed, incomplete licensed,
+ * complete-empty licensed). */
+const HX_ANSWERS: readonly HxAnswer[] = [
+  ...HYPERUNIX_EXECUTION_KINDS.flatMap(kind => [true, false].map((licensed): HxAnswer => [kind, licensed, [], false])),
+  ...["complete", "complete-empty"].flatMap(kind => [true, false].map((licensed): HxAnswer => [kind, licensed, HX_ROWS, false])),
+  ["complete", false, [], true],
+  ["complete-empty", false, [], true],
+  ["incomplete", true, [], true],
+  ["complete-empty", true, [], true],
+];
 
 // -------------------------------------------------------------------------------------------------------- the projection
 const P_ROOT = "/workspace/km7q4-projection";
 const P_SCOPE: ObservationScope = { workspace: P_ROOT, principal: "local-operator:tester" };
 const P_REF: NativeRef = { provider: "coverage-census", type: "collection", id: "beads:issues", scope: P_ROOT };
 const PRESENTATION: Presentation = { title: "beads:issues open", type: "sdk-operation", statusText: "read", statusTone: "success" };
-const [T1, T2, T3] = ["2026-10-28T00:00:01Z", "2026-10-28T00:00:02Z", "2026-10-28T00:00:03Z"];
+const [T1, T2, T3, T4] = ["2026-10-28T00:00:01Z", "2026-10-28T00:00:02Z", "2026-10-28T00:00:03Z", "2026-10-28T00:00:04Z"];
 type Step =
-  | { readonly kind: "refresh"; readonly at: string; readonly coverage?: "complete" | "partial"; readonly sequence?: number; readonly version?: string }
-  | { readonly kind: "event"; readonly id: string; readonly sequence: number; readonly version?: string }
+  | { readonly kind: "refresh"; readonly at: string; readonly observed?: string; readonly coverage?: "complete" | "partial" | "unknown"; readonly sequence?: number; readonly version?: string }
+  | { readonly kind: "event"; readonly id: string; readonly sequence?: number; readonly version?: string; readonly full?: true }
   | { readonly kind: "markStale" };
+const secondOf = (instant: string): string => `${instant.slice(17, 19)}s`;
 function stepText(step: Step): string {
   if (step.kind === "markStale") return "markStale";
   const version = step.version === undefined ? "" : ` version=${step.version}`;
-  if (step.kind === "event") return `event ${step.id} seq=${step.sequence}${version}`;
-  return `refresh at=${step.at.slice(17, 19)}s${step.sequence === undefined ? "" : ` seq=${step.sequence}`}${version}${step.coverage === undefined ? "" : ` coverage=${step.coverage}`}`;
+  if (step.kind === "event") return `event ${step.id}${step.sequence === undefined ? "" : ` seq=${step.sequence}`}${version}${step.full === true ? " full" : ""}`;
+  const observed = step.observed === undefined ? "" : ` observed=${secondOf(step.observed)}`;
+  return `refresh at=${secondOf(step.at)}${observed}${step.sequence === undefined ? "" : ` seq=${step.sequence}`}${version}${step.coverage === undefined ? "" : ` coverage=${step.coverage}`}`;
 }
+/** Every optional field an event can state besides its version, for a full event (kind native.snapshot, its sequence stated as a
+ * string): a source timestamp, a cursor chained to the previous event's, a presentation reading success, a subject basis, evidence
+ * and payload references, an interval and a trace. */
+const fullEventFields = (sequence: number): Partial<ObservationEvent> => ({
+  kind: "native.snapshot", sourceTimestamp: T2, sourceCursor: `cursor-${sequence}`, ...(sequence > 1 ? { previousCursor: `cursor-${sequence - 1}` } : {}),
+  node: { presentation: PRESENTATION }, subjectBasis: "basis:aaaa", evidenceRefs: ["evidence:aaaa"], payloadRef: "payload:aaaa",
+  interval: { startedAt: T1, endedAt: T2 }, trace: { invocationId: "invocation-aaaa" },
+});
 /** One journey on a fresh projection: after each step, `<result>: <freshness>/<completeness>` of the one node. */
 function journey(steps: readonly Step[]): string[] {
   const projection = new ObservationProjection();
@@ -595,7 +710,7 @@ function journey(steps: readonly Step[]): string[] {
     let result: string;
     if (step.kind === "refresh") {
       const snapshot: NativeSnapshot = {
-        source: P_REF, scope: P_SCOPE, capturedAt: step.at, observedAt: step.at, node: PRESENTATION,
+        source: P_REF, scope: P_SCOPE, capturedAt: step.at, observedAt: step.observed ?? step.at, node: PRESENTATION,
         ...(step.coverage === undefined ? {} : { coverage: step.coverage }),
         ...(step.sequence === undefined ? {} : { sequence: step.sequence }),
         ...(step.version === undefined ? {} : { sourceVersion: step.version }),
@@ -603,8 +718,10 @@ function journey(steps: readonly Step[]): string[] {
       result = projection.refresh(snapshot);
     } else if (step.kind === "event") {
       const event: ObservationEvent = {
-        projectionEventId: step.id, source: P_REF, scope: P_SCOPE, observedAt: T3, kind: "native.event", sourceSequence: step.sequence,
+        projectionEventId: step.id, source: P_REF, scope: P_SCOPE, observedAt: T3, kind: "native.event",
+        ...(step.sequence === undefined ? {} : { sourceSequence: step.full === true ? String(step.sequence) : step.sequence }),
         ...(step.version === undefined ? {} : { sourceVersion: step.version }),
+        ...(step.full === true ? fullEventFields(step.sequence ?? 1) : {}),
       };
       result = projection.ingest(event);
     } else {
@@ -620,17 +737,27 @@ const journeyWitness = (journeys: Readonly<Record<string, readonly Step[]>>): Js
   Object.fromEntries(Object.entries(journeys).map(([name, steps]) => [name, { steps: steps.map(stepText), readings: journey(steps) }]));
 const B1_JOURNEYS: Readonly<Record<string, readonly Step[]>> = {
   freshOnly: [{ kind: "refresh", at: T1 }],
+  statedUnknown: [{ kind: "refresh", at: T1, coverage: "unknown" }],
   partial: [{ kind: "refresh", at: T1, coverage: "partial" }],
   stated: [{ kind: "refresh", at: T1, coverage: "complete" }],
   fresherRead: [{ kind: "refresh", at: T1, coverage: "complete" }, { kind: "refresh", at: T2 }],
+  fresherUnknown: [{ kind: "refresh", at: T1, coverage: "complete" }, { kind: "refresh", at: T2, coverage: "unknown" }],
   eventsOnly: [{ kind: "event", id: "e1", sequence: 1 }, { kind: "event", id: "e2", sequence: 2 }],
+  eventsOnlyVersioned: [{ kind: "event", id: "e1", sequence: 1, version: "v1" }, { kind: "event", id: "e2", sequence: 2, version: "v2" }],
+  eventsOnlyFull: [{ kind: "event", id: "e1", sequence: 1, version: "v1", full: true }, { kind: "event", id: "e2", sequence: 2, version: "v2", full: true }],
+  eventsOnlyUnsequenced: [{ kind: "event", id: "e1" }, { kind: "event", id: "e2" }],
   failedRead: [{ kind: "refresh", at: T1, coverage: "complete" }, { kind: "markStale" }],
 };
 const C1_JOURNEYS: Readonly<Record<string, readonly Step[]>> = {
   olderCapture: [{ kind: "refresh", at: T2 }, { kind: "refresh", at: T1, coverage: "complete" }],
+  olderCaptureObservedLater: [{ kind: "refresh", at: T2 }, { kind: "refresh", at: T1, observed: T4, coverage: "complete" }],
+  higherSequenceOlderCapture: [{ kind: "refresh", at: T2, sequence: 3 }, { kind: "refresh", at: T1, sequence: 4, coverage: "complete" }],
   lowerSequence: [{ kind: "refresh", at: T2, sequence: 3 }, { kind: "refresh", at: T3, sequence: 2, coverage: "complete" }],
   unsequenced: [{ kind: "refresh", at: T2, sequence: 3 }, { kind: "refresh", at: T3, coverage: "complete" }],
+  laterCapture: [{ kind: "refresh", at: T1 }, { kind: "refresh", at: T2, coverage: "complete" }],
+  laterCaptureObservedEarlier: [{ kind: "refresh", at: T1, observed: T3 }, { kind: "refresh", at: T2, coverage: "complete" }],
   laterSeal: [{ kind: "refresh", at: T2, sequence: 3 }, { kind: "refresh", at: T3, sequence: 4, coverage: "complete" }],
+  laterSealGap: [{ kind: "refresh", at: T2, sequence: 3 }, { kind: "refresh", at: T3, sequence: 10, coverage: "complete" }],
   eventKeepsSeal: [{ kind: "refresh", at: T1, sequence: 1, version: "v1", coverage: "complete" }, { kind: "event", id: "e2", sequence: 2, version: "v2" }],
   refreshDropsSeal: [{ kind: "refresh", at: T1, sequence: 1, version: "v1", coverage: "complete" }, { kind: "refresh", at: T2, sequence: 2, version: "v2" }],
 };
@@ -822,6 +949,57 @@ function registrationRefusal(module: string, triggered: readonly string[], self:
   if (!locals.some(local => self.adoptionNames.includes(local))) return "adoption() names no binding its module's import introduces";
   return null;
 }
+/** The names a binding pattern introduces, nested patterns included. */
+function boundNames(name: ts.BindingName): string[] {
+  if (ts.isIdentifier(name)) return [name.text];
+  return name.elements.flatMap(element => (ts.isOmittedExpression(element) ? [] : boundNames(element.name)));
+}
+const hasModifier = (node: ts.Node, kind: ts.SyntaxKind): boolean => ts.canHaveModifiers(node) && (ts.getModifiers(node) ?? []).some(modifier => modifier.kind === kind);
+/** The value exports of a module's text, read from its AST: each name an exported declaration binds (`default` for a default export
+ * or an export assignment), each element of an `export { ... }` clause that is not type-only, the name of `export * as`, and `*`
+ * for a whole-module re-export; type aliases, interfaces, ambient (declare) declarations and type-only clauses bind no value. */
+function valueExports(path: string, text: string): string[] {
+  const source = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, path.endsWith(".ts") ? ts.ScriptKind.TS : ts.ScriptKind.JS);
+  const names: string[] = [];
+  for (const statement of source.statements) {
+    if (ts.isExportAssignment(statement)) names.push("default");
+    else if (ts.isExportDeclaration(statement)) {
+      if (statement.isTypeOnly) continue;
+      const clause = statement.exportClause;
+      if (clause === undefined) names.push("*");
+      else if (ts.isNamespaceExport(clause)) names.push(clause.name.text);
+      else for (const element of clause.elements) if (!element.isTypeOnly) names.push(element.name.text);
+    } else if (hasModifier(statement, ts.SyntaxKind.ExportKeyword)) {
+      if (ts.isInterfaceDeclaration(statement) || ts.isTypeAliasDeclaration(statement) || hasModifier(statement, ts.SyntaxKind.DeclareKeyword)) continue;
+      if (hasModifier(statement, ts.SyntaxKind.DefaultKeyword)) names.push("default");
+      else if (ts.isVariableStatement(statement)) names.push(...statement.declarationList.declarations.flatMap(declaration => boundNames(declaration.name)));
+      else if (ts.isFunctionDeclaration(statement) || ts.isClassDeclaration(statement)) names.push(statement.name?.text ?? "default");
+      else if (ts.isEnumDeclaration(statement) || ts.isModuleDeclaration(statement)) names.push(statement.name.text);
+      else names.push("?");
+    }
+  }
+  return names;
+}
+/** Why a registered module's exports are refused, or null: its one value export is its adapter, so a second reading of the record
+ * cannot sit exported beside it. */
+function exportRefusal(path: string, text: string): string | null {
+  const names = valueExports(path, text);
+  return names.length === 1 ? null : `its module exports ${names.length} values (${names.join(", ")}), not one: the registered module's one value export is its adapter`;
+}
+/** A2's export probes, live today: module texts whose value exports the check must count (accepted exactly when there is one). */
+const EXPORT_PROBES: Readonly<Record<string, string>> = {
+  one: 'export const adapter = { read: () => "unknown" };\nexport type Reading = string;\nexport interface Shape { readonly kind: string }\nexport declare const ambient: number;\n',
+  typeClause: 'const adapter = { read: () => "unknown" };\ntype Reading = string;\nexport { adapter, type Reading };\nexport type { Reading as Alias };\n',
+  defaultOnly: 'export default { read: () => "unknown" };\n',
+  two: 'export const adapter = { read: () => "unknown" };\nexport const reads = () => "complete";\n',
+  defaultAndNamed: 'export default { read: () => "unknown" };\nexport function reads() { return "complete"; }\n',
+  clause: 'const adapter = { read: () => "unknown" };\nconst reads = () => "complete";\nexport { adapter, reads };\n',
+  destructured: 'const pair = { adapter: { read: () => "unknown" }, reads: () => "complete" };\nexport const { adapter, reads } = pair;\n',
+  starReexport: 'export const adapter = { read: () => "unknown" };\nexport * from "./other.js";\n',
+  classBeside: 'export const adapter = { read: () => "unknown" };\nexport class Reader {}\n',
+  commonJs: 'const adapter = { read: () => "unknown" };\nmodule.exports = { adapter };\n',
+};
+const EXPORT_ACCEPTED: readonly string[] = ["one", "typeClause", "defaultOnly"];
 /** The falsifiers the adoption judge has seen refuse an adapter (the records case holds that every falsifier did). */
 const JUDGED = new Set<string>();
 /** The adoption judge: the battery against one adapter; any falsifier that fires refuses the adoption. */
@@ -830,9 +1008,10 @@ function judgeAdoption(adapter: Adapter): { readonly run: BatteryRun; readonly r
   for (const id of run.fired) JUDGED.add(id);
   return { run, refused: run.fired.length > 0 };
 }
-/** A registered Pi adapter held at adoption: a refused registration or a refused adoption throws, whatever the roster holds. */
+/** A registered Pi adapter held at adoption: a refused registration (its module, import and name, then its exports) or a refused
+ * adoption throws, whatever the roster holds. */
 function holdAdoption(registered: Adoption, triggered: readonly string[], self: SelfRead): BatteryRun {
-  const why = registrationRefusal(registered.module, triggered, self);
+  const why = registrationRefusal(registered.module, triggered, self) ?? exportRefusal(registered.module, readFileSync(join(REPO, registered.module), "utf8"));
   if (why !== null) throw new Error(`REFUSED: the registration of ${registered.module}: ${why}`);
   const verdict = judgeAdoption(registered.adapter);
   if (verdict.refused) {
@@ -853,7 +1032,7 @@ const RESIDUALS: readonly Residual[] = [
   { id: "R-OTHER-NAME", pin: "A1", quiet: ["otherName", "otherCertificate"], twin: ["embedded"] },
   { id: "R-OUTSIDE-ROOTS", pin: "A1", quiet: ["docsPlant", "testPlant", "rootPlant"], twin: ["srcPlant"] },
   { id: "R-UNNAMED-SPEC", pin: "A1", quiet: ["packageTarball"], twin: ["packageAlias"] },
-  { id: "R-UNFED-RENDER", pin: "A1", quiet: ["rfTwoRowReader"], twin: ["rfAnyRowReader"] },
+  { id: "R-UNFED-RENDER", pin: "A1", quiet: ["rfThreeRowReader"], twin: ["rfAnyRowReader"] },
   { id: "R-OTHER-SHAPE", pin: "A2", quiet: ["M-CAMEL"], twin: ["M-SNAKE"] },
   { id: "R-EXPIRY", pin: "A2", quiet: ["M-EXPIRY"], twin: ["M-NO-EXPIRY"] },
   { id: "R-EVENT-KEEPS-SEAL", pin: "C1", quiet: ["eventKeepsSeal"], twin: ["refreshDropsSeal"] },
@@ -902,7 +1081,11 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const walk = readListed(paths);
     const count = (root: string): number => paths.filter(path => path.startsWith(`${root}/`)).length;
     const real = judgeFiles(walk.files);
-    if (real.hits.length > 0 && adoption() === null) throw new Error(`${OWED}. Hits: ${real.hits.join("; ")}`);
+    // The trigger: every hit file must be accounted for by the registration (none today, so any hit throws OWED).
+    const accounting = accountingLeg();
+    const registered = adoption();
+    const open = unaccounted(hitFiles(walk.files), registered === null ? null : registered.module);
+    if (open.length > 0) throw new Error(`${registered === null ? OWED : UNACCOUNTED}. Unaccounted: ${open.join(", ")}. Hits: ${real.hits.join("; ")}`);
     const longest = Math.max(0, ...walk.files.map(file => file.text.length));
     const big: TextFile = { path: BIG_PLANT, text: `${"/".repeat(2)} ${"x".repeat(longest)}\nexport const plant = "judge_coverage";\n` };
     const src = PLANTED_FILES.srcPlant ?? { path: "", text: "" };
@@ -926,6 +1109,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         rfReaders: Object.fromEntries(Object.entries(RF_READERS).map(([id, reader]) => [id, witnessKeyReads(reader)])),
       },
       package: { real: packageHits(realPackage) },
+      accounting,
       rf: rfWitnessLeg(),
       adoption: adoptionJson(),
     };
@@ -947,15 +1131,21 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const observation = "src/workbench/observation.ts";
     const srcPlant = PLANTED_FILES.srcPlant?.path ?? "";
     const probe = (module: string, triggered: readonly string[], names: readonly string[]): string => registrationRefusal(module, triggered, { ...self, adoptionNames: names }) ?? "accepted";
+    const hyperunix = "src/workbench/hyperunix-observer.ts";
     const registration = {
       outsideSrc: probe(BIG_PLANT, [BIG_PLANT], ["ObservationProjection"]),
       noHit: probe(observation, [], ["ObservationProjection"]),
       notImported: probe(srcPlant, [srcPlant], ["ObservationProjection"]),
       unnamed: probe(observation, [observation], []),
+      typeBinding: probe(hyperunix, [hyperunix], ["HyperUnixTopologyContext"]),
       complete: probe(observation, [observation], ["ObservationProjection"]),
     };
     const wrongProbes = Object.entries(registration).filter(([name, outcome]) => (name === "complete") !== (outcome === "accepted")).map(([name]) => name);
     if (wrongProbes.length > 0) throw new Error(`the registration check misreads ${wrongProbes.join(", ")}`);
+    // The export check, live today on module texts: a registered module is accepted exactly when it exports one value.
+    const exports = Object.fromEntries(Object.entries(EXPORT_PROBES).map(([name, text]) => [name, exportRefusal(`${name}.ts`, text) ?? "accepted"]));
+    const wrongExports = Object.entries(exports).filter(([name, outcome]) => EXPORT_ACCEPTED.includes(name) !== (outcome === "accepted")).map(([name]) => name);
+    if (wrongExports.length > 0) throw new Error(`the export check misreads ${wrongExports.join(", ")}`);
     const registered = adoption();
     const adopted = registered === null ? null : holdAdoption(registered, hitFiles(readListed(listedPaths()).files), self);
     return {
@@ -965,27 +1155,20 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       runs: Object.fromEntries(Object.entries(runs).map(([id, run]) => [id, { fired: [...run.fired], readings: { ...run.readings } }])),
       judge,
       registration,
+      exports,
       adoption: adoptionJson(),
       adopted: adopted === null ? null : { fired: [...adopted.fired], readings: { ...adopted.readings } },
     };
   },
   B1: async () => journeyWitness(B1_JOURNEYS),
-  B2: async () => {
-    const hx: Readonly<Record<string, readonly [string, boolean, readonly Json[]]>> = {
-      licensedEmpty: ["complete-empty", true, []],
-      unlicensedEmpty: ["complete", false, []],
-      unlicensedCompleteEmpty: ["complete-empty", false, []],
-      unlicensedRows: ["complete", false, [{ path: "src/a.ts" }, { path: "src/b.ts" }]],
-    };
-    return {
-      rf: Object.fromEntries(B2_RF.map(name => {
-        const envelope = variantRender(name);
-        return [name, `${renderShape(envelope)}: ${rfReading(envelope)}`];
-      })),
-      hx: Object.fromEntries(Object.entries(hx).map(([name, [kind, licensed, rows]]) => [name, `${kind} licensed=${licensed} rows=${rows.length}: ${hxReading(kind, licensed, rows)}`])),
-      precedent: PRECEDENT,
-    };
-  },
+  B2: async () => ({
+    rf: Object.fromEntries(B2_RF.map(name => {
+      const envelope = variantRender(name);
+      return [name, `${renderShape(envelope)}: ${rfReading(envelope)}`];
+    })),
+    hx: Object.fromEntries(HX_ANSWERS.map(([kind, licensed, rows, full]) => [`${kind} licensed=${licensed} rows=${rows.length}${full ? " full" : ""}`, hxReading(kind, licensed, rows, full)])),
+    precedent: PRECEDENT,
+  }),
   C1: async () => {
     holdResiduals("C1", id => {
       const readings = journey(C1_JOURNEYS[id] ?? []);
