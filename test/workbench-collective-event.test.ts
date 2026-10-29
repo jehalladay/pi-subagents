@@ -475,3 +475,85 @@ describe("wb-4ap.15 note 2026-10-17b rows: closed envelope, const status and aut
     expect(stored?.trace?.correlationIds?.episode_id).toBe("live:landing-queue:7:restack-first");
   });
 });
+
+/**
+ * wb-95tn (the R694 follow-up of wb-4ap.15's landing 644; gate cmd_af88b64da162, PREP F1-F3, CONFIRMED there by gate mutants G18,
+ * G23 and G26, each re-measured surviving this file's 84 cases at trunk 9ad61f3 before these rows were written). Three behaviours
+ * of the boundary that held but were unpinned:
+ * F1 THE NAMED RESIDUAL of the wb-4ap.15 park note's owed item 3, "(3) if the negotiation defines a producer pin, refuse a
+ *    well-formed but foreign producer_revision (today 'tampered' reads as outside the schema's ^sha256:[0-9a-f]{64}$ contract - a
+ *    well-formed foreign revision is the named residual)". Today such a revision is ADMITTED and applied in every mode (fixture,
+ *    replay and live) and carried verbatim; the quiet rows below assert exactly that admission, so the cut that adopts a producer
+ *    pin from the T0 freeze - for every mode or for live feeds only - flips them into refusal rows (they are the residual's pinned
+ *    rows: turned, never deleted).
+ * F2 the diagnostic order when the envelope and the host's receipt reference are both bad: the receipt is judged only after the
+ *    whole envelope reads, so the envelope's own refusal wins and a refused envelope never reports receipt-missing.
+ * F3 duplicate evidence references are kept as given, in order ("every value is the envelope's or the host's own, copied
+ *    verbatim", collectiveObservationEvent): the reading, the event handed to ingest(), the node and the stored event carry them.
+ */
+describe("wb-95tn: the named residual (a well-formed foreign producer_revision), the envelope-before-receipt order and verbatim duplicate evidence", () => {
+  const OWN_REVISION = String(envelope(1).producer_revision);
+  const OWN_EVIDENCE = String((envelope(1).evidence_refs as readonly unknown[])[0]);
+  const ROOT_DIGEST = String((envelope(1).episode_root as { readonly digest: unknown }).digest);
+  /** The vendored schema's own producer_revision pattern: the well-formedness anchor outside the boundary's constants. */
+  const SCHEMA_REVISION = new RegExp(member(SCHEMA, "producer_revision").pattern ?? "");
+  const FOREIGN: readonly (readonly [string, string])[] = [
+    ["the all-zero digest", `sha256:${"0".repeat(64)}`],
+    ["the all-f digest", `sha256:${"f".repeat(64)}`],
+    ["the producer's own revision with its last digit changed", `${OWN_REVISION.slice(0, -1)}${OWN_REVISION.endsWith("0") ? "1" : "0"}`],
+    ["the episode root's digest", ROOT_DIGEST],
+  ];
+  it.each(FOREIGN)("RESIDUAL F1 (quiet row): a well-formed foreign producer_revision, %s, is admitted and applied today in every mode and carried verbatim - a producer pin from the T0 freeze flips this row", (_name, foreign) => {
+    expect(SCHEMA_REVISION.test(foreign)).toBe(true);
+    expect(foreign).not.toBe(OWN_REVISION);
+    expect(COLLECTIVE_EVENT_MODES.length).toBeGreaterThan(0);
+    for (const mode of COLLECTIVE_EVENT_MODES) {
+      const value = { ...envelope(1), mode, producer_revision: foreign };
+      expect(readEvent(value).producer_revision).toBe(foreign);
+      const run = recorded();
+      expect(run.ingest(value)).toEqual({ admitted: true, ingest: "applied", ref: collectiveEventRef(String(envelope(1).event_id)), relations: [] });
+      expect(run.results).toEqual(["applied"]);
+      expect(run.ingested.map(event => [event.trace?.correlationIds?.mode, event.trace?.correlationIds?.producer_revision])).toEqual([[mode, foreign]]);
+      const [stored] = run.projection.events({ scope: SCOPE, limit: 10 }).events;
+      expect(stored?.trace?.correlationIds?.producer_revision).toBe(foreign);
+    }
+  });
+
+  const BAD_RECEIPTS: readonly string[] = ["", String.fromCodePoint(0x202e)];
+  const BOTH_BAD: readonly (readonly [string, unknown, CollectiveEventDiagnostic])[] = [
+    ["an unknown version (the first member the reading judges)", { ...envelope(1), schema: "collective.event.v2" }, refusal("schema", "schema-unrecognized")],
+    ["a null envelope", null, refusal("envelope", "wrong-type")],
+    ["a tampered producer_revision", { ...envelope(1), producer_revision: "sha256:abc" }, refusal("producer_revision", "revision-malformed")],
+    ["authority owner (the last member the reading judges)", { ...envelope(1), authority: "owner" }, refusal("authority", "authority-not-observation-only")],
+  ];
+  it.each(BOTH_BAD)("ORDER F2: %s beside a bad receipt reference - the envelope's own refusal wins over receipt-missing, and ingest() is not called", (_name, value, expected) => {
+    for (const receiptRef of BAD_RECEIPTS) {
+      const run = recorded();
+      expect(diagnosticOf(run.ingest(value, { ...OPTIONS, receiptRef }))).toEqual(expected);
+      untouched(run);
+    }
+  });
+
+  it("ORDER F2 control: the same bad receipt references beside a well-formed envelope read receipt-missing, so the order, not a lost receipt check, decides the rows above", () => {
+    for (const receiptRef of BAD_RECEIPTS) {
+      const run = recorded();
+      expect(diagnosticOf(run.ingest(envelope(1), { ...OPTIONS, receiptRef }))).toEqual(refusal("receipt", "receipt-missing"));
+      untouched(run);
+    }
+  });
+
+  it("DUPLICATES F3: duplicate evidence references are copied verbatim - kept, in order, by the reading, the event handed to ingest(), the node and the stored event", () => {
+    const second = `sha256:${"e".repeat(64)}`;
+    const refs = [OWN_EVIDENCE, OWN_EVIDENCE, second, OWN_EVIDENCE];
+    expect(new Set(refs).size).toBe(2);
+    const value = { ...envelope(1), evidence_refs: refs };
+    expect(readEvent(value).evidence_refs).toEqual(refs);
+    const run = recorded();
+    expect(run.ingest(value)).toMatchObject({ admitted: true, ingest: "applied" });
+    expect(run.ingested.map(event => event.evidenceRefs)).toEqual([refs]);
+    const [node] = run.projection.query({ scope: SCOPE, limit: 1 }).nodes;
+    expect(node?.evidenceRefs).toEqual(refs);
+    const [stored] = run.projection.events({ scope: SCOPE, limit: 1 }).events;
+    expect(stored?.evidenceRefs).toEqual(refs);
+  });
+});
