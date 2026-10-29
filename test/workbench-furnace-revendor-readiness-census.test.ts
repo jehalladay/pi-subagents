@@ -35,14 +35,35 @@
  * definition, image or raw HTML block; executor.js imports DurabilityProfile from ./durability.js, and its register method
  * initializes const profile = typeof nameOrDeclaration === "string" ? DurabilityProfile.fromDeclaration(options.durability) :
  * nameOrDeclaration.durability, then stores it once, this.#durability.set(identifier, profile).
+ * RE-MEASURED at cut #4 (read-only, by seat ws-06 of g10-work-s140, 2026-10-29T17:49:20Z, on trunk 27c968d): the cut #3 facts
+ * read the same (117 .ts scripts, the five spellings in three files, the two deep loads, 2 deep-path literals, both read, and
+ * no literal whose PATH reading alone spells the path); the tarball file package.json names hashes to sha256
+ * aaa57dcfb1c205ec1f23f07cdffd6af32901bc4b972d81301758a7467ea865a9, the value vendor/README.md's table records for it, and
+ * holds 128 entries, every one a regular file; executor.js's code spells DurabilityProfile three times (its import from
+ * ./durability.js and the objects of the two DurabilityProfile.fromDeclaration callees, defineExecutor's and register's) and
+ * #durability three times (its new Map() field, register's this.#durability.set callee and durability()'s
+ * this.#durability.get callee); its register method's code is 155 tokens; provenance.js exports SMITHY_MODEL_DIGEST once, a
+ * string literal equal to the manifest's digest; vendor/README.md holds no raw HTML token, image, character-reference opener
+ * or default-ignorable character.
+ *
+ * FAIL-CLOSED CORE (cut #4; ruling R-B84: "narrow each claim to exactly the forms the reader proves and fail closed outside
+ * it"): every row that reads the tarball - D2, D3, D4, U1 and U2 - opens with the PIN leg: the file package.json's spec names
+ * hashes to TARBALL_SHA256. A change to any of its bytes - an entry's text in any form, a tar header, a pax or GNU entry, an
+ * entry kind the text reads skip - reds all five rows on the real tree, whatever their AST and text reads read of the change,
+ * and each row's PIN finding names the re-measurement that row owes. The AST and text reads below claim exactly their listed
+ * forms; what they leave unread in the tarball is held by the PIN leg and never claimed for them.
  *
  * ROWS (each pin quotes the clause it binds, reads the real tree clean and reds each of its planted drifts):
  *  D, the deep imports (acceptance item 4, first half, and clause (b)):
  *  D1 every deep @furnace/sdk load in src/ is a DEEP row, read once, importing exactly the listed names. D1 reads exactly
- *   these forms, through the TypeScript AST (comments are never read, except the two triple-slash directives in (b)):
- *   (a) SPECIFIER: one string or no-substitution template literal that spells @furnace/sdk/<path>, by the package's name or
- *   after a node_modules/ segment; a call's specifier argument is read through WRAPPERS (parentheses, a comma sequence's last
- *   operand, and as, satisfies, non-null and type assertions);
+ *   these forms, through the TypeScript AST (comments are never read, except the two triple-slash directives in (b); the
+ *   shebang line is read by (e)):
+ *   (a) SPECIFIER: one string or no-substitution template literal whose cooked text, or that text's PATH reading, spells
+ *   @furnace/sdk/<path> by the package's name or after a node_modules/ segment. The PATH reading decodes every %XX escape,
+ *   reads every backslash as "/" and then applies posix.normalize (empty and "." segments dropped, ".." segments resolved), so
+ *   "@furnace/./sdk/", "@furnace//sdk/", a backslash-separated path, "%40furnace/sdk/" and "@furnace/kit/../sdk/" each read as
+ *   @furnace/sdk/. A call's specifier argument is read through WRAPPERS (parentheses, a comma sequence's last operand, and as,
+ *   satisfies, non-null and type assertions);
  *   (b) DECLARATIONS: import declarations, export declarations with a module specifier, import-equals declarations, import
  *   types, ambient module declarations (declare module "..."), and /// <reference types> and /// <reference path> directives;
  *   (c) CALLS whose callee, read through WRAPPERS, is the import keyword, the identifier require, a member named resolve or
@@ -50,61 +71,98 @@
  *   through WRAPPERS, is a CREATOR), or a LOADER name;
  *   (d) BINDINGS, read per script to a fixed point (per script, not per scope: an over-read only adds findings). A name is
  *   bound to a value by a variable declaration, a binding-element or parameter default, or an assignment (=, ||=, &&=,
- *   ??=) to the bare name, the value read through WRAPPERS. A CREATOR is the identifier createRequire, a member named
- *   createRequire, a name an import specifier binds to createRequire (aliased or not), a name destructured from a property
- *   named createRequire, or a name bound to a CREATOR. A LOADER name is require, a name destructured from a property named
- *   resolve or require, or a name bound to require, a LOADER name, a member named resolve or require, or a created require.
+ *   ??=) to the bare name, the value read through WRAPPERS. A name is DESTRUCTURED from a property when an object binding
+ *   pattern (a declaration's or a parameter's, at any depth) binds it from that property, or when an object-literal
+ *   assignment target does - the left side of an = assignment or a for-of head, read through WRAPPERS, its nested object
+ *   literals included, the property shorthand or renamed, a default allowed. A property is read by its name when that is an
+ *   identifier or a string or numeric literal (a computed name is not read); an array pattern binds no name by property and
+ *   a for-in head is not read, so a load through either is the BACKSTOP's. A CREATOR is the identifier createRequire, a
+ *   member named createRequire, a name an import specifier binds to createRequire (aliased or not), a name destructured from
+ *   a property named createRequire, or a name bound to a CREATOR. A LOADER name is require, a name destructured from a
+ *   property named resolve or require, or a name bound to require, a LOADER name, a member named resolve or require, or a
+ *   created require.
  *   (e) BACKSTOP (fail-closed outside (b)-(d)): every string or no-substitution template literal, template part (head,
- *   middle, tail) and JSX text in a src script whose cooked text holds @furnace/sdk/ (by name, after node_modules/, or
- *   escape-spelled) is the specifier node of a load (b)-(d) reads; any other such literal is a finding (an unread
- *   deep-path literal), so a loader D1 does not list (held in an object, passed in, returned, called through call, apply,
- *   bind or Reflect.apply, imported from another module) and a load spelled in source text that runs later (a worker or
- *   vm source, eval, new Function) both go red whenever a literal spells the path.
- *   Every other load form is a named residual with a pinned quiet row: R-COMPUTED-SPECIFIER (no single literal spells the
- *   path), R-COMMENT-REFERENCE (the path only in a comment) and R-MAPPED-SPECIFIER (the path only through a mapping).
- *  D2 each DEEP row resolves inside the vendored tarball to a regular entry whose declaration file exports the class, as text
- *   and as a class declaration in its code (AST).
- *  D3 no switch is owed: the tarball's package.json has no exports map and none of the typesVersions, typings, module and
- *   browser fields; neither index entry (types, main) names a deep-imported class (text, add-only); and the WALK (AST,
- *   comments never read) from each entry reaches no DEEP module and no DEEP class, so furnace-hosted.ts's header claim
- *   (HEADER_CLAIM) holds of the tarball. The WALK follows every export * and export * as declaration whose specifier resolves
- *   inside the tarball - a relative specifier, or the package's own name (@furnace/sdk/<path>) - trying, from a declaration
- *   file: an exact TypeScript path as written; a .js, .jsx, .mjs or .cjs path's .ts (.tsx for .js and .jsx), then .d.ts twin
- *   (.mts/.d.mts, .cts/.d.cts); an extensionless path's .ts, .tsx, .d.ts, /index.ts, /index.tsx and /index.d.ts; and from a
- *   JavaScript file: the exact path, then .js, then /index.js (bundler-style; an over-read only adds findings). In every
- *   module it reaches it reads: an export * or export * as whose target is a DEEP module; a named re-export (export { X }
- *   from ..., aliased or type-only) of a DEEP class, in a module past the entry (the entry's own text read covers the entry);
- *   and a local export (export { x }, aliased or not) of a name an import specifier binds by a DEEP class's own name (from
- *   any module), or of a name a default or namespace import of a DEEP module binds. Every other route is a named residual with a pinned quiet row (R-INDEX-INDIRECT,
- *   R-WALK-SPECIFIER).
- *  D4 the tarball still carries dist/src/durability.js and its declarations; executor.js still reads
- *   DurabilityProfile.fromDeclaration(options.durability) and documents every member false when none was (text); and in its
- *   code (AST, comments never read) executor.js imports DurabilityProfile from ./durability.js and binds that name nowhere
- *   else, and its one register method (DERIVATION): takes a third parameter named options with no default or an empty object
- *   default, which its body never targets with an assignment (any assignment operator), an update (++, --) or a delete (a
- *   target that mentions options anywhere: options itself, a member chain of it, a destructuring pattern holding it);
- *   declares profile once
- *   in its body, as a const that is a direct statement of the body, whose initializer (through parentheses) is
+ *   middle, tail), regular-expression literal, JSX text and JSX attribute string in a src script, and the script's shebang
+ *   line, whose cooked text, or that text's PATH reading, holds @furnace/sdk/ is the specifier node of a load (b)-(d)
+ *   reads; any other such literal is a finding (an unread deep-path literal). Cooked text: a string's or a template part's
+ *   escapes decoded (a unicode or hex escape of "@" and the like); a regular-expression literal's and the shebang line's
+ *   text as written; and a JSX text's or JSX attribute string's character references decoded the way TypeScript's own JSX
+ *   emit decodes them (numeric references and its named table, read through ts.transpileModule). So a loader D1 does not
+ *   list (held in an object, passed in, returned, called through call, apply, bind or Reflect.apply, imported from another
+ *   module), a destructuring form (d) does not read, and a load spelled in source text that runs later (a worker or vm
+ *   source, eval, new Function) all go red whenever a literal spells the path.
+ *   Every other load form is a named residual with a pinned quiet row: R-COMPUTED-SPECIFIER (no single literal (e) reads
+ *   spells the path, as cooked text or by its PATH reading), R-COMMENT-REFERENCE (the path only in a comment) and
+ *   R-MAPPED-SPECIFIER (the path reached only through a mapping or a link).
+ *  D2 the PIN leg; and each DEEP row resolves inside the vendored tarball to a regular entry whose declaration file exports
+ *   the class, as text and as a class declaration in its code (AST).
+ *  D3 the PIN leg; and no switch is owed: the tarball's package.json has no exports map and none of the typesVersions,
+ *   typings, module and browser fields; neither index entry (types, main) names a deep-imported class (text, add-only); and
+ *   the WALK (AST, comments never read) from each entry reaches no DEEP module and no DEEP class, so furnace-hosted.ts's
+ *   header claim (HEADER_CLAIM) holds of the tarball. The WALK follows every export * and export * as declaration whose
+ *   specifier resolves inside the tarball - a relative specifier, or the package's own name (@furnace/sdk/<path>) - trying,
+ *   from a declaration file: an exact TypeScript path as written; a .js, .jsx, .mjs or .cjs path's .ts (.tsx for .js and
+ *   .jsx), then .d.ts twin (.mts/.d.mts, .cts/.d.cts); an extensionless path's .ts, .tsx, .d.ts, /index.ts, /index.tsx and
+ *   /index.d.ts; and from a JavaScript file: the exact path, then .js, then /index.js (bundler-style; an over-read only adds
+ *   findings). In every module it reaches it reads: an export * or export * as whose target is a DEEP module; a named
+ *   re-export (export { X } from ..., aliased or type-only) of a DEEP class, in a module past the entry (the entry's own text
+ *   read covers the entry); and a local export (export { x }, aliased or not) of a name an import specifier binds by a DEEP
+ *   class's own name (from any module), or of a name a default or namespace import of a DEEP module binds. It reads top-level
+ *   statements only. Every other route is a named residual with a pinned quiet row (R-INDEX-INDIRECT, R-WALK-SPECIFIER).
+ *  D4 the PIN leg; the tarball still carries dist/src/durability.js and its declarations; executor.js still reads
+ *   DurabilityProfile.fromDeclaration(options.durability) and documents every member false when none was (text); and its code
+ *   (AST, comments never read) holds these syntactic facts, each read exactly as stated:
+ *   IMPORT: an import declaration from ./durability.js names DurabilityProfile unaliased, and no declaration of these kinds
+ *   binds that name a second time: a variable declaration, a binding element, a parameter, a function or class declaration,
+ *   an import clause, an import specifier, a namespace import or an import-equals declaration;
+ *   SITE (NAMES and FIELD, not V1's SITES table): a matched name's site is its nearest enclosing statement or class field, or
+ *   else its top-level statement, read by its code (its tokens, every leaf of the parser's own tree; comments and whitespace
+ *   never read);
+ *   NAMES: every identifier the module's code spells DurabilityProfile, in any position (a binding or not: a class or function
+ *   expression's name, a catch binding and a property name included), sits at one of three pinned sites, once each, every
+ *   site's code equal to the pinned tokens (NAME_SITES): the import declaration from ./durability.js, defineExecutor's return
+ *   statement and register's const profile declaration - so a second binding of the name in any form, a moved or reworded
+ *   call and a changed import each red;
+ *   FIELD: every #durability the module's code spells sits at one of three pinned sites, once each, every site's code equal to
+ *   the pinned tokens (FIELD_SITES): the field declaration #durability = new Map();, register's statement
+ *   this.#durability.set(identifier, profile); and durability()'s const profile = this.#durability.get(name); - so a
+ *   string-keyed member, an alias, a call through Map.prototype.set.call, a brand check, a second store and a changed field
+ *   initializer each red;
+ *   DERIVATION, of its one register method (a method declaration with a body): it takes a third parameter named options with
+ *   no default or an empty object default, which its body never targets with an assignment operator in a binary expression
+ *   (=, a compound or a logical assignment), a prefix or postfix ++ or --, or a delete, whose target mentions options anywhere
+ *   (options itself, a member chain of it, a destructuring pattern holding it); declares profile once in its body, as a const
+ *   that is a direct statement of the body, whose initializer (through parentheses) is
  *   typeof <its first parameter> === "string" ? <the call> : ..., the call itself (through parentheses) on that string-name
- *   branch; and stores that profile once - the body's one this.#durability.set(...) call is a direct statement whose second
- *   argument is profile. What DurabilityProfile.fromDeclaration does with its input, and anything a call does to the options
- *   or the profile object (Object.assign and the like), are a named residual with a pinned quiet row (R-DERIVATION-BODY): the
- *   hello-reply durability rows of wb-lrz.5 rest on this module and read them.
- *  ENUMERATION (wb-lrz.4 refusal #2's THIRD-CUT DISCLOSURE and its class-level guard (1)): D1, D3 and D4 claim exactly the
- *   forms listed for them above; every form outside a list that this cut knows is a named residual with a pinned quiet row;
- *   a form found later outside every list is a residual-list addition, unless it contradicts a listed form.
+ *   branch; and makes one this.#durability.set(...) call, a direct statement of the body whose second argument is profile;
+ *   CODE: the register method's code - its tokens, every leaf of the parser's own tree, comments, whitespace and JSDoc never
+ *   read - hashes (sha256 of the token list's JSON) to REGISTER_CODE, so any change to register's code in any form reds D4,
+ *   among them every write DERIVATION does not read (a for-of or for-in head, an alias of options, arguments, a rewritten first
+ *   parameter) and every call on the options or the profile object.
+ *   What these reads leave unread - what other code does at run time (DurabilityProfile.fromDeclaration's body, a patched
+ *   built-in, another module, the Map the field holds) - is not claimed for them: on the real tree each such edit moves the
+ *   tarball's bytes and reds the PIN leg. R-DERIVATION-BODY (the durability module's code) is their named residual, with a
+ *   pinned quiet row; the hello-reply durability rows of wb-lrz.5 rest on this module and read its behaviour.
+ *  ENUMERATION (rule 19's enumerate-the-resolvable form, kept at cut #4 under R-B84 for the CLAIMED-READ-FORMS class): D1, D3
+ *   and D4 claim exactly the forms listed for them above; every form outside a list that this cut knows is a named residual
+ *   with a pinned quiet row; a form found later outside every list is a residual-list addition, unless it contradicts a listed
+ *   form. On the tarball rows no such form keeps the census green on the real tree: the PIN leg reds it.
  *  V, the version literals (acceptance item 4, second half): V1 every versioned @furnace/sdk spelling in src/ (the at form
  *   "@furnace/sdk@X.Y.Z", the space form "@furnace/sdk X.Y.Z" and the tarball form "furnace-sdk-X.Y.Z.tgz") belongs to a
  *   SITES row read its listed number of times, and each one names the vendored version; V2 the observer's sdk member and sdk
  *   value (AST) each name it, once; V3 both furnace.run.inspect contractSource literals (AST) begin with it.
- *  U, the until-then clause: U1 the vendored version is the clause's own 0.1.0, on package.json's spec and inside the
- *   tarball, and vendor/README.md's page as marked renders it (every top-level block through marked's tokens - paragraphs,
- *   headings, lists, tables, quotes and code alike - with raw HTML (comments included), link-reference definitions and image
- *   alt text dropped: a comment, a definition and an image's alt text render no text) shows exactly one record of the tarball
- *   as wb-zby's repack, from Furnace revision 9970621d8 (the trigger has not fired); a raw HTML block's rendered text is a
- *   named residual with a pinned quiet row (R-HTML-BLOCK); U2 the tarball's contract manifest digest equals its generated
- *   provenance digest, the condition the hosted adapter's decodeContextValue preflight admits (acceptance item 3); the
- *   refusal itself is the hosted suite's.
+ *  U, the until-then clause: U1 the PIN leg (the vendored 0.1.0 pin's own bytes); the vendored version is the clause's own
+ *   0.1.0, on package.json's spec and inside the tarball; and vendor/README.md, read through marked's lexer, holds (REFUSALS,
+ *   fail-closed, each one a finding) no raw HTML token at any depth (block or inline, comments included), no image, no
+ *   character-reference opener (an "&" followed by "#" or an ASCII letter, anywhere in its source, code spans included) and no
+ *   default-ignorable character (anywhere in its source), and its text - every top-level block through marked's tokens
+ *   (paragraphs, headings, lists, tables, quotes and code alike), link-reference definitions dropped as marked renders none,
+ *   and raw HTML and images, refused above, dropped too -
+ *   shows exactly one record of the tarball as wb-zby's repack, from Furnace revision 9970621d8 (the trigger has not fired);
+ *   U2 the PIN leg; and the tarball's contract manifest digest equals its generated provenance digest - the provenance
+ *   module's one exported const SMITHY_MODEL_DIGEST, a string literal, read through the AST (its header comment is never
+ *   read) - the condition the hosted adapter's decodeContextValue preflight admits (acceptance item 3); the refusal itself is
+ *   the hosted suite's.
  *  Q, the residuals' pinned quiet rows (RESIDUALS below).
  * SCRIPTS: the rows read every script under src/ - .ts, .tsx, .mts, .cts, .js, .jsx, .mjs and .cjs - each parsed by its own
  * extension; the read set is anchored outside the census: it equals git ls-files src/ (tracked and untracked, ignore rules
@@ -119,8 +177,10 @@
  * is set to run, the case count is the fixed cases plus two cases per judged id, one per quiet id and the tally, and the
  * records equal the frozen literals, in order. A subset filtered, sliced or emptied, an it.each call site sliced, or a
  * plants loop cut short goes red at the subset's literal or at the tally. Both judged call sites judge the real tree (the
- * plants case judges it again before its plants) and record each judge by name against JUDGE_KEYS, so a judge swapped out
- * at either call site goes red.
+ * plants case judges it again before its plants) and record each judge by its name (Function.name) against JUDGE_KEYS, so
+ * a judge swapped at either call site for a function of another name goes red; the records read names only, so a stand-in
+ * that keeps the judge's name at a call site is an edit of the census's own instruments (NOT CLAIMED), while the plants case
+ * still judges the real tree and every plant with the pin's own judge.
  * OUTSIDE ANCHORS (their own registered case): acceptance item 4 is tiled in order by the quotes of D1, D2, D3, V1, V2 and V3,
  * and the statement's until-then parenthetical by U1 and U2, with nothing between two quotes but whitespace, comma,
  * semicolon, colon, period and parentheses; the description's ACCEPTANCE: [ and STATEMENT: lines are each read only when the
@@ -138,40 +198,55 @@
  * escape-spelled) is not read by V1 (Q1); R-OTHER-SPELLING spellings outside V1's three forms ("v9.9.9", "furnace sdk 9.9.9",
  * "version 9.9.9") are not read (Q2); R-OUTSIDE-SRC V1 and D1 read src/ only - docs, test and qa files keep the versions
  * they measured, and a receipt never moves with a re-vendor (Q3); R-COMPUTED-SPECIFIER a load whose specifier is not one
- * literal (D1 (a)) and no single literal of which spells @furnace/sdk/ - pieces joined at run time, a name, char codes - is
- * not read by D1 (Q4); R-INDEX-INDIRECT a deep-imported class a module of the walk reaches through anything but D3's listed
- * exports - a value or a type declared from it, or a default export of it - is not read by D3 (Q6); R-COMMENT-REFERENCE a
- * deep path named only in a comment other than the two triple-slash directives D1 reads (an /// <amd-dependency>
- * directive, a JSDoc type or @import tag, a line or block comment) is not read by D1 (Q7); R-WALK-SPECIFIER a specifier the
- * walk does not resolve (a directory resolved through a nested package.json, a path mapping, a symlink) is not followed by
- * D3 (Q8); R-HTML-BLOCK a record inside a raw HTML block, which a browser renders, is not read by U1 (Q9); R-DERIVATION-BODY
- * what DurabilityProfile.fromDeclaration does with its input, and anything a call does to the options or the derived
- * profile object, is not read by D4 (Q10); R-MAPPED-SPECIFIER a specifier that reaches @furnace/sdk/<path> only through a
- * mapping or a link defined outside the script's text (tsconfig paths, package.json imports, a bundler alias, a symlink) is
- * not read by D1 (Q11).
+ * literal (D1 (a)) and no single literal of which (of the kinds D1 (e) reads) spells @furnace/sdk/, as cooked text or by
+ * its PATH reading - pieces joined at run time, a name, char codes - is not read by D1 (Q4); R-INDEX-INDIRECT a
+ * deep-imported class a module of the walk reaches through anything but D3's listed exports - a value or a type declared
+ * from it, a default export of it, a module augmentation re-exporting it, a named re-export chain through a module the walk
+ * does not follow, a namespace import of a module that star-exports it exported locally, an import-equals of it exported
+ * locally - is not read by D3 (Q6, which plants each of these routes); R-COMMENT-REFERENCE a deep path named only in a
+ * comment other than the two triple-slash directives D1 reads (an /// <amd-dependency> directive, a JSDoc type or @import
+ * tag, a line or block comment) is not read by D1 (Q7); R-WALK-SPECIFIER a specifier the walk does not resolve (a directory
+ * resolved through a nested package.json, a TypeScript-extension specifier whose file the tarball lacks, a path mapping, a
+ * symlink) is not followed by D3 (Q8, which plants the first two); R-DERIVATION-BODY what the durability module's code does
+ * - DurabilityProfile.fromDeclaration's body included - is not read by D4, whose AST reads read executor.js only (Q10);
+ * R-MAPPED-SPECIFIER a specifier that reaches @furnace/sdk/<path> only through a mapping or a link defined outside the
+ * script's text (tsconfig paths, package.json imports, an npm alias, a bundler alias, a symlink) is not read by D1 (Q11).
+ * Every residual of a tarball row (Q6, Q8, Q10) is a tarball edit on the real tree, which the PIN leg reds: those residuals
+ * name what the AST reads leave unread, never an escape of the census.
  * RETIRED at cut #3: Q5 R-INDIRECT-LOADER (cut #2's quiet row). D1 (e) reads every literal form of an indirect loader, so
  * the family is no longer an escape: its quiet plant rides verbatim as a judged D1 plant that must red, and an indirect
  * loader with a computed specifier is R-COMPUTED-SPECIFIER (Q4). Q5's id stays unused so earlier records keep their sense.
+ * RETIRED at cut #4: Q9 R-HTML-BLOCK. U1 refuses raw HTML anywhere, so the family is no longer an escape: its quiet plant
+ * rides verbatim as a judged U1 plant that must red, and Q9's id stays unused. NARROWED at cut #4: R-DERIVATION-BODY - calls
+ * inside register on the options or the profile object are register's code, which CODE reads, so that half of cut #3's Q10
+ * quiet plant rides as a judged D4 plant and Q10 keeps the durability module's half.
  * NOT CLAIMED: what a re-vendor commit owes beyond these rows (acceptance items 1-3, 5 and 6: the vendor pins and the
  * dependency census pass on the new tarball, the live tiers re-run against a release-built binary, one re-vendor sequenced
  * with wb-zby); the hosted adapter's preflight refusal, which test/workbench-furnace-hosted.test.ts drives; a pin
  * re-authored together with its plants; a plant removed together with its PLANT_SHAPE count (plants are the census's own
  * inputs, which no outside anchor names); a residual row removed from ROWS and every literal together (no outside anchor
  * names the residual families, so the census stays green); the census's own instruments edited together with their own
- * literals (a fixed case removed with its FIXED_CASES key, or the closing tally itself removed). D4's "every member false when none was" is executor.js's own
- * documented contract, a doc comment by nature, read as text; how executor() reaches register, and what other methods do
- * with the registry, are the hosted suite's hello-reply durability rows (wb-lrz.5), not this census's. The text reads kept
- * beside the AST reads (D2's declaration text, D3's index mentions, D4's derivation text) only add findings: a comment can
- * satisfy a text read but never the AST read beside it, and a comment naming a deep-imported class in an index entry reds
- * D3 (an over-read). A tarball entry stored under a pax or GNU long name reads as absent, so a row that needs it reds.
- * READS (contacts): package.json, vendor/README.md, the tarball package.json names (today vendor/furnace-sdk-0.1.0.tgz),
- * every script under src/ and git ls-files src/ (SCRIPTS), and the wb-lrz.4 row of .beads/issues.jsonl (its description,
- * and the N5 paragraph of its notes: an appended note is safe; a notes replace that drops, doubles or weakens that
- * paragraph's clause (b) reds the anchor case).
+ * literals (a fixed case removed with its FIXED_CASES key, or the closing tally itself removed), a same-named judge stand-in at
+ * a call site among them. D4's "every member false when none was" is executor.js's own documented contract, a doc comment by
+ * nature, read as text; how executor() reaches register, and what other methods do with the registry, are the hosted suite's
+ * hello-reply durability rows (wb-lrz.5), not this census's. The text reads kept beside the AST reads (D2's declaration
+ * text, D3's index mentions, D4's derivation text) only add findings: a comment can satisfy a text read but never the AST
+ * read beside it, and a comment naming a deep-imported class in an index entry reds D3 (an over-read). A tarball entry
+ * stored under a pax or GNU long name reads as absent to the text and AST reads, so a row that needs it reds; and any pax or
+ * GNU entry moves the tarball's bytes, which the PIN leg reds. The PIN legs read the tarball file's bytes, which a plant
+ * keeps unless it moves them (the repacked plants), so each plant judges its row's AST and text reads alone; a real-tree
+ * repack reds the PIN leg of all five tarball rows beside whatever those reads find. A JSX character reference TypeScript's
+ * emit leaves undecoded (a named reference outside its table) is read as written, as the JSX runtime receives it; SDK code
+ * copied out of the package to another path is not a @furnace/sdk load.
+ * READS (contacts): package.json, vendor/README.md, the tarball package.json names (today vendor/furnace-sdk-0.1.0.tgz: its
+ * bytes for the PIN legs, its entries for the text and AST reads), every script under src/ and git ls-files src/ (SCRIPTS),
+ * and the wb-lrz.4 row of .beads/issues.jsonl (its description, and the N5 paragraph of its notes: an appended note is safe;
+ * a notes replace that drops, doubles or weakens that paragraph's clause (b) reds the anchor case).
  *
  * Display paths added: none (test-only; src/ is read, never edited). Scratch: none - every plant is an in-memory tree.
  */
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join, posix } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -236,9 +311,14 @@ const DEEP: readonly DeepImport[] = [
   { file: HOSTED, specifier: `${SDK}/dist/src/resident_session.js`, names: ["ResidentSession"] },
 ];
 
-/** What the rows read: package.json's spec, the tarball it names (regular entries as text), the scripts and vendor/README.md. */
+/**
+ * What the rows read: package.json's spec, the tarball it names (its bytes as read, which the PIN legs hash, and its regular
+ * entries as text, which the AST and text reads parse), the scripts and vendor/README.md. A plant edits the parsed views and
+ * keeps the real bytes unless it moves the bytes themselves (repacked); on the real tree an edit moves both.
+ */
 interface Tree {
   readonly spec: string | undefined;
+  readonly bytes: Buffer | undefined;
   readonly tarball: ReadonlyMap<string, string>;
   readonly files: ReadonlyMap<string, string>;
   readonly readme: string;
@@ -289,10 +369,11 @@ function readTree(): Tree {
   const dependencies = isRecord(manifest) && isRecord(manifest.dependencies) ? manifest.dependencies : {};
   const raw = dependencies[SDK];
   const spec = typeof raw === "string" ? raw : undefined;
-  const tarball = spec?.startsWith("file:") === true ? tarEntries(readFileSync(join(REPO, spec.slice("file:".length)))) : new Map<string, string>();
+  const bytes = spec?.startsWith("file:") === true ? readFileSync(join(REPO, spec.slice("file:".length))) : undefined;
   return {
     spec,
-    tarball,
+    bytes,
+    tarball: bytes === undefined ? new Map<string, string>() : tarEntries(bytes),
     files: new Map(scripts("src").map((file) => [file, readFileSync(join(REPO, file), "utf8")])),
     readme: readFileSync(join(REPO, "vendor/README.md"), "utf8"),
   };
@@ -307,6 +388,18 @@ function jsonEntry(tree: Tree, path: string): Record<string, unknown> | undefine
   } catch {
     return undefined;
   }
+}
+
+const sha256 = (data: string | Uint8Array): string => createHash("sha256").update(data).digest("hex");
+/** The vendored tarball's bytes as cut #4 measured them: the sha256 vendor/README.md's table records for furnace-sdk-0.1.0.tgz. */
+const TARBALL_SHA256 = "aaa57dcfb1c205ec1f23f07cdffd6af32901bc4b972d81301758a7467ea865a9";
+/**
+ * The PIN leg, the fail-closed core of every row that reads the tarball (D2, D3, D4, U1 and U2): the file package.json's spec
+ * names hashes to TARBALL_SHA256. A change to any byte - an entry's text, a tar header, an entry kind the text reads skip -
+ * reds the row, whatever its AST and text reads read of the change.
+ */
+function pinLeg(id: string, tree: Tree, owed: string): string[] {
+  return tree.bytes !== undefined && sha256(tree.bytes) === TARBALL_SHA256 ? [] : [`${id} PIN the vendored tarball's bytes no longer hash to the pinned sha256 ${TARBALL_SHA256}: ${owed}`];
 }
 
 const PARSED = new Map<string, Map<string, ts.SourceFile>>();
@@ -386,16 +479,33 @@ function loadersOf(source: ts.SourceFile): (callee: ts.Expression) => boolean {
   const creators = new Set(["createRequire"]);
   const loaders = new Set(["require"]);
   const bound: (readonly [string, ts.Expression])[] = [];
+  const destructured = (property: string | undefined, name: string): void => {
+    if (property === "createRequire") creators.add(name);
+    if (property !== undefined && LOADER_MEMBERS.has(property)) loaders.add(name);
+  };
+  /** An object-literal destructuring target's names by property (shorthand or renamed, a default allowed), its nested object literals included. */
+  const assignedPattern = (pattern: ts.ObjectLiteralExpression): void => {
+    for (const property of pattern.properties) {
+      if (ts.isShorthandPropertyAssignment(property)) destructured(property.name.text, property.name.text);
+      if (!ts.isPropertyAssignment(property)) continue;
+      const value = property.initializer;
+      const target = unwrap(ts.isBinaryExpression(value) && value.operatorToken.kind === ts.SyntaxKind.EqualsToken ? value.left : value);
+      if (ts.isObjectLiteralExpression(target)) assignedPattern(target);
+      else if (ts.isIdentifier(target)) destructured(nameOf(property.name), target.text);
+    }
+  };
   walk(source, (node) => {
     if (ts.isImportSpecifier(node) && (node.propertyName ?? node.name).text === "createRequire") creators.add(node.name.text);
     if (ts.isObjectBindingPattern(node)) {
       for (const element of node.elements) {
-        if (!ts.isIdentifier(element.name)) continue;
-        const property = element.propertyName === undefined ? element.name.text : nameOf(element.propertyName);
-        if (property === "createRequire") creators.add(element.name.text);
-        if (property !== undefined && LOADER_MEMBERS.has(property)) loaders.add(element.name.text);
+        if (ts.isIdentifier(element.name)) destructured(element.propertyName === undefined ? element.name.text : nameOf(element.propertyName), element.name.text);
       }
     }
+    // An object-literal destructuring ASSIGNMENT target: an = assignment's left side, or a for-of head (a for-in head is not read).
+    const head = ts.isForOfStatement(node) ? node.initializer : undefined;
+    const assigned = ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken ? node.left : head !== undefined && !ts.isVariableDeclarationList(head) ? head : undefined;
+    const pattern = assigned === undefined ? undefined : unwrap(assigned);
+    if (pattern !== undefined && ts.isObjectLiteralExpression(pattern)) assignedPattern(pattern);
     if ((ts.isVariableDeclaration(node) || ts.isBindingElement(node) || ts.isParameter(node)) && ts.isIdentifier(node.name) && node.initializer !== undefined) bound.push([node.name.text, node.initializer]);
     if (ts.isBinaryExpression(node) && ASSIGNMENTS.has(node.operatorToken.kind)) {
       const target = unwrap(node.left);
@@ -429,8 +539,15 @@ function loadersOf(source: ts.SourceFile): (callee: ts.Expression) => boolean {
   return isLoader;
 }
 
-/** D1 (a): a specifier's text when it spells a deep @furnace/sdk/<path>, by the package's name or after a node_modules/ segment. */
-const deepSpecifier = (text: string): string | undefined => (text.startsWith(`${SDK}/`) || /(?:^|\/)node_modules\/@furnace\/sdk\//.test(text) ? text : undefined);
+/**
+ * D1's PATH reading of a literal's cooked text: every %XX escape decoded, every backslash read as "/", then posix.normalize
+ * (empty and "." segments dropped, ".." segments resolved) - so "@furnace/./sdk/", "@furnace//sdk/", a backslash-separated
+ * path, "%40furnace/sdk/" and "@furnace/kit/../sdk/" each read as @furnace/sdk/.
+ */
+const asPath = (text: string): string => posix.normalize(text.replace(/%([0-9A-Fa-f]{2})/g, (_, hex: string) => String.fromCharCode(Number.parseInt(hex, 16))).replaceAll("\\", "/"));
+const spellsDeep = (text: string): boolean => text.startsWith(`${SDK}/`) || /(?:^|\/)node_modules\/@furnace\/sdk\//.test(text);
+/** D1 (a): a specifier's text when it, or its PATH reading, spells a deep @furnace/sdk/<path>, by the package's name or after a node_modules/ segment. */
+const deepSpecifier = (text: string): string | undefined => (spellsDeep(text) || spellsDeep(asPath(text)) ? text : undefined);
 
 /** One deep load, D1 (b)-(c): a declaration, or a call whose callee loads and whose specifier argument (through WRAPPERS) is deep. */
 function deepLoad(node: ts.Node, loads: (callee: ts.Expression) => boolean): { readonly specifier: string; readonly names: readonly string[]; readonly node: ts.Node } | undefined {
@@ -480,9 +597,30 @@ interface ScriptReads {
   readonly loads: readonly DeepImport[];
   readonly unread: readonly string[];
 }
-/** D1 (e): a string or no-substitution template literal, a template part or JSX text whose cooked text spells @furnace/sdk/. */
-const deepLiteral = (node: ts.Node): string | undefined =>
-  (ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node) || ts.isJsxText(node)) && node.text.includes(`${SDK}/`) ? node.text : undefined;
+/**
+ * What TypeScript's own JSX emit makes of a JSX text or a JSX attribute string: its character references decoded (numeric
+ * ones and TypeScript's named table), as the JSX runtime receives the text; text holding no "&" is read as written.
+ */
+function jsxCooked(node: ts.JsxText | ts.StringLiteral, source: ts.SourceFile): string {
+  if (!node.text.includes("&")) return node.text;
+  const module = ts.isJsxText(node) ? `export default <x>${node.text}</x>;\n` : `export default <x a=${node.getText(source)} />;\n`;
+  const emitted = ts.transpileModule(module, { compilerOptions: { jsx: ts.JsxEmit.React, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 }, fileName: "jsx-cooked.tsx" }).outputText;
+  const strings: string[] = [];
+  walk(ts.createSourceFile("jsx-cooked.js", emitted, ts.ScriptTarget.Latest, false), (inner) => {
+    if (ts.isStringLiteral(inner)) strings.push(inner.text);
+  });
+  return strings.at(-1) ?? node.text;
+}
+/** D1 (e): the cooked text of a string or no-substitution template literal, a template part, a regular-expression literal (its text as written), JSX text or a JSX attribute string, when it or its PATH reading holds @furnace/sdk/. */
+function deepLiteral(node: ts.Node, source: ts.SourceFile, attributes: ReadonlySet<ts.Node>): string | undefined {
+  const cooked =
+    ts.isJsxText(node) || (ts.isStringLiteral(node) && attributes.has(node))
+      ? jsxCooked(node, source)
+      : ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node) || ts.isRegularExpressionLiteral(node)
+        ? node.text
+        : undefined;
+  return cooked !== undefined && (cooked.includes(`${SDK}/`) || asPath(cooked).includes(`${SDK}/`)) ? cooked : undefined;
+}
 const READS = new WeakMap<ts.SourceFile, ScriptReads>();
 /** One script's reads: its triple-slash directives (D1 (b)), its AST loads in order, then the BACKSTOP's unread deep-path literals. */
 function scriptReads(file: string, source: ts.SourceFile): ScriptReads {
@@ -502,9 +640,15 @@ function scriptReads(file: string, source: ts.SourceFile): ScriptReads {
     loads.push({ file, specifier: load.specifier, names: load.names });
     taken.add(load.node);
   });
-  const unread: string[] = [];
+  const attributes = new Set<ts.Node>();
   walk(source, (node) => {
-    const text = deepLiteral(node);
+    if (ts.isJsxAttribute(node) && node.initializer !== undefined && ts.isStringLiteral(node.initializer)) attributes.add(node.initializer);
+  });
+  const unread: string[] = [];
+  const shebang = ts.getShebang(source.text);
+  if (shebang !== undefined && (shebang.includes(`${SDK}/`) || asPath(shebang).includes(`${SDK}/`))) unread.push(shebang);
+  walk(source, (node) => {
+    const text = deepLiteral(node, source, attributes);
     if (text !== undefined && !taken.has(node)) unread.push(text);
   });
   const reads = { loads, unread };
@@ -554,7 +698,7 @@ function declaresClass(path: string, text: string, name: string): { readonly tex
 
 /** D2: each DEEP row resolves to a regular tarball entry whose declaration file exports the imported class, as text and in its code. */
 function deepImportsResolve(tree: Tree): string[] {
-  const findings: string[] = [];
+  const findings: string[] = pinLeg("D2", tree, "re-measure each deep import against the new tarball (acceptance 4)");
   for (const row of DEEP) {
     const path = row.specifier.slice(`${SDK}/`.length);
     if (!tree.tarball.has(`package/${path}`)) {
@@ -669,9 +813,10 @@ function starExposures(tree: Tree, entry: string): Exposure[] {
 const OTHER_ENTRIES = ["typesVersions", "typings", "module", "browser"] as const;
 /** D3: no switch to index re-exports is owed - no exports map or other entry field, no index entry naming or exposing a deep-imported class, the header claim standing. */
 function noSwitchOwed(tree: Tree): string[] {
+  const pinned = pinLeg("D3", tree, "re-measure the switch to index re-exports on the new tarball (acceptance 4)");
   const pkg = jsonEntry(tree, "package/package.json");
-  if (pkg === undefined) return ["D3 the vendored tarball has no readable package/package.json"];
-  const findings: string[] = [];
+  if (pkg === undefined) return [...pinned, "D3 the vendored tarball has no readable package/package.json"];
+  const findings: string[] = [...pinned];
   if (Object.hasOwn(pkg, "exports")) findings.push("D3 the vendored SDK carries an exports map: switch the deep imports to index re-exports (acceptance 4)");
   for (const field of OTHER_ENTRIES) if (Object.hasOwn(pkg, field)) findings.push(`D3 the vendored SDK carries a ${field} field: re-measure its entries before keeping the deep imports (acceptance 4)`);
   for (const field of ["types", "main"] as const) {
@@ -724,6 +869,67 @@ function bindings(node: ts.Node, name: string): number {
   });
   return count;
 }
+/** Every node under `root` with its ancestors, nearest first (the census parses without parent pointers). */
+function walkUp(root: ts.Node, visit: (node: ts.Node, ancestors: readonly ts.Node[]) => void): void {
+  const step = (node: ts.Node, ancestors: readonly ts.Node[]): void => {
+    visit(node, ancestors);
+    const next = [node, ...ancestors];
+    ts.forEachChild(node, (child) => {
+      step(child, next);
+    });
+  };
+  step(root, []);
+}
+/** A node's code as its tokens in order: every leaf of the parser's own tree (comments, whitespace and JSDoc never read). */
+function codeTokens(node: ts.Node, source: ts.SourceFile): string[] {
+  const tokens: string[] = [];
+  const visit = (inner: ts.Node): void => {
+    if (inner.kind >= ts.SyntaxKind.FirstJSDocNode && inner.kind <= ts.SyntaxKind.LastJSDocNode) return;
+    const children = inner.getChildren(source);
+    if (children.length > 0) {
+      for (const child of children) visit(child);
+    } else if (inner.kind !== ts.SyntaxKind.SyntaxList) {
+      tokens.push(inner.getText(source));
+    }
+  };
+  visit(node);
+  return tokens;
+}
+/** A matched node's SITE: its nearest enclosing statement or class field, or else its top-level statement. */
+function siteOf(ancestors: readonly ts.Node[]): ts.Node | undefined {
+  const top = ancestors.findIndex((node) => ts.isSourceFile(node));
+  return ancestors.find((node, index) => (node.kind >= ts.SyntaxKind.FirstStatement && node.kind <= ts.SyntaxKind.LastStatement) || ts.isPropertyDeclaration(node) || index === top - 1);
+}
+/** D4 NAMES and FIELD: every node `matches` takes, labelled by its SITE - the pinned site whose code (tokens) the site's code equals, else "other (<its first two tokens>)" - sorted. */
+function siteLabels(source: ts.SourceFile, matches: (node: ts.Node) => boolean, pinned: Readonly<Record<string, readonly string[]>>): string {
+  const labels: string[] = [];
+  walkUp(source, (node, ancestors) => {
+    if (!matches(node)) return;
+    const site = siteOf(ancestors);
+    const tokens = site === undefined ? [] : codeTokens(site, source);
+    const name = Object.entries(pinned).find(([, pin]) => JSON.stringify(pin) === JSON.stringify(tokens))?.[0];
+    labels.push(name ?? `other (${tokens.slice(0, 2).join(" ")})`);
+  });
+  return labels.sort().join(", ");
+}
+/** NAMES' pinned sites, as cut #4 measured executor.js: where its code spells DurabilityProfile, each site once. */
+const NAME_SITES: Readonly<Record<string, readonly string[]>> = {
+  import: ["import", "{", "DurabilityProfile", ",", "normalizeContinuity", "}", "from", '"./durability.js"', ";"],
+  defineExecutor: [
+    ..."return Object . freeze ( { name : identifier , callback : validateCallback ( identifier , callback ) ,".split(" "),
+    ..."durability : DurabilityProfile . fromDeclaration ( options . durability ) ,".split(" "),
+    ..."continuity : normalizeContinuity ( identifier , options . continuity ) , } ) ;".split(" "),
+  ],
+  register: [..."const profile = typeof nameOrDeclaration ===".split(" "), '"string"', ..."? DurabilityProfile . fromDeclaration ( options . durability ) : nameOrDeclaration . durability ;".split(" ")],
+};
+/** FIELD's pinned sites: where executor.js's code spells #durability, each site once. */
+const FIELD_SITES: Readonly<Record<string, readonly string[]>> = {
+  field: "#durability = new Map ( ) ;".split(" "),
+  store: "this . #durability . set ( identifier , profile ) ;".split(" "),
+  lookup: "const profile = this . #durability . get ( name ) ;".split(" "),
+};
+/** The sha256 of executor.js's register method's tokens (JSON.stringify of codeTokens), as cut #4 measured it. */
+const REGISTER_CODE = "6d49d525980955185aec19e5a4fefec93a15576bec51011b91b7c2048083dc5e";
 function registerDerivation(text: string): string[] {
   const owed = (what: string): string => `D4 ${EXECUTOR}${what}: ${RERUN}`;
   const source = parsed(EXECUTOR, text);
@@ -734,6 +940,14 @@ function registerDerivation(text: string): string[] {
     return bindings !== undefined && ts.isNamedImports(bindings) && bindings.elements.some((element) => element.propertyName === undefined && element.name.text === "DurabilityProfile");
   });
   if (!imports || bindings(source, "DurabilityProfile") !== 1) findings.push(owed(" no longer imports DurabilityProfile from ./durability.js as its one binding of that name"));
+  const names = siteLabels(source, (node) => ts.isIdentifier(node) && node.text === "DurabilityProfile", NAME_SITES);
+  if (names !== Object.keys(NAME_SITES).sort().join(", ")) {
+    findings.push(owed(` spells DurabilityProfile at ${names || "no site"}, not once at each pinned site (its import, defineExecutor's return and register's const profile, each read by its tokens)`));
+  }
+  const uses = siteLabels(source, (node) => ts.isPrivateIdentifier(node) && node.text === "#durability", FIELD_SITES);
+  if (uses !== Object.keys(FIELD_SITES).sort().join(", ")) {
+    findings.push(owed(` spells #durability at ${uses || "no site"}, not once at each pinned site (its new Map() field, register's store and durability()'s lookup, each read by its tokens)`));
+  }
   const methods: ts.MethodDeclaration[] = [];
   walk(source, (node) => {
     if (ts.isMethodDeclaration(node) && nameOf(node.name) === "register" && node.body !== undefined) methods.push(node);
@@ -796,12 +1010,13 @@ function registerDerivation(text: string): string[] {
   if (stores.length !== 1 || !direct || stored === undefined || !ts.isIdentifier(stored) || stored.text !== "profile") {
     findings.push(owed("'s register method no longer stores that profile once (one this.#durability.set(..., profile) call, a direct statement of its body)"));
   }
+  if (sha256(JSON.stringify(codeTokens(method, source))) !== REGISTER_CODE) findings.push(owed("'s register method's code is no longer the measured code (its tokens, comments and whitespace never read)"));
   return findings;
 }
 
 /** D4: the durability module rides in the tarball, and executor.js derives an undeclared registration's profile through the call (DERIVATION). */
 function durabilityModule(tree: Tree): string[] {
-  const findings: string[] = [];
+  const findings: string[] = pinLeg("D4", tree, RERUN);
   for (const path of ["package/dist/src/durability.js", "package/dist/src/durability.d.ts"]) if (!tree.tarball.has(path)) findings.push(`D4 the vendored tarball has no ${path}`);
   const executor = tree.tarball.get(EXECUTOR) ?? "";
   for (const line of [DERIVATION, "every member false when none was"]) {
@@ -899,12 +1114,45 @@ function shownBlocks(markdown: string): string[] {
 const U1_QUOTE = "the vendored 0.1.0 pin remains correct";
 
 /** U1: the vendored version is the clause's own, and vendor/README.md's rendered page shows one record of the tarball as wb-zby's repack. */
-function untilThenPin(tree: Tree): string[] {
-  const { version, tarballName, problems } = vendored(tree);
-  if (version === undefined) return problems.map((problem) => `U1 ${problem}`);
+/** Every token of the page at any depth: blocks, inline tokens, list items and table cells. */
+function pageTokens(markdown: string): Token[] {
+  const all: Token[] = [];
+  const visit = (token: Token): void => {
+    all.push(token);
+    if (isList(token)) for (const item of token.items) visit(item);
+    if (isTable(token)) for (const cell of [...token.header, ...token.rows.flat()]) for (const inner of cell.tokens) visit(inner);
+    if ("tokens" in token && token.tokens !== undefined) for (const inner of token.tokens) visit(inner);
+  };
+  for (const token of marked.lexer(markdown)) visit(token);
+  return all;
+}
+/** An ampersand that opens a character reference - "&" then "#" or an ASCII letter - terminated by ";" or not (a browser decodes "&#40" without one). */
+const REFERENCE = /&[#A-Za-z]/g;
+const IGNORABLE = /\p{Default_Ignorable_Code_Point}/gu;
+/** U1's REFUSALS (fail-closed): raw HTML (any token, comments included), images, character-reference openers and default-ignorable characters, anywhere in the page. */
+function pageRefusals(markdown: string): string[] {
+  const tokens = pageTokens(markdown);
+  const count = (type: string): number => tokens.filter((token) => token.type === type).length;
   const findings: string[] = [];
+  const html = count("html");
+  if (html > 0) findings.push(`U1 vendor/README.md carries ${html} raw HTML tokens (comments included): U1 refuses raw HTML, which can show or hide text marked's tokens hold`);
+  const images = count("image");
+  if (images > 0) findings.push(`U1 vendor/README.md carries ${images} images: U1 refuses them, since a browser can show an image's alt text`);
+  const references = [...markdown.matchAll(REFERENCE)].length;
+  if (references > 0) findings.push(`U1 vendor/README.md opens ${references} character references: U1 refuses them, since a browser shows the character a reference names where marked's tokens hold the reference`);
+  const ignorable = [...markdown.matchAll(IGNORABLE)].length;
+  if (ignorable > 0) findings.push(`U1 vendor/README.md carries ${ignorable} default-ignorable characters: U1 refuses them, since a browser hides them inside the text a record is read from`);
+  return findings;
+}
+
+function untilThenPin(tree: Tree): string[] {
+  const pinned = pinLeg("U1", tree, TRIGGERED);
+  const { version, tarballName, problems } = vendored(tree);
+  if (version === undefined) return [...pinned, ...problems.map((problem) => `U1 ${problem}`)];
+  const findings: string[] = [...pinned];
   const clause = /\b(\d+\.\d+\.\d+)\b/.exec(U1_QUOTE)?.[1];
   if (version !== clause) findings.push(`U1 the vendored ${SDK} is ${version}, not the until-then ${String(clause)}: ${TRIGGERED}`);
+  findings.push(...pageRefusals(tree.readme));
   const records = shownBlocks(tree.readme).flatMap((block) => [...block.matchAll(PROVENANCE)]);
   const [recorded] = records;
   if (recorded === undefined) findings.push(`U1 vendor/README.md no longer records the vendored tarball as wb-zby's repack from Furnace revision ${ZBY_REVISION}: ${TRIGGERED}`);
@@ -917,13 +1165,28 @@ function untilThenPin(tree: Tree): string[] {
 }
 
 /** U2: the tarball's contract manifest digest equals its generated provenance digest (what the decodeContextValue preflight admits). */
+const PROVENANCE_JS = "package/dist/contract/furnace-executor-contract/provenance.js";
+/** U2's generated digest: the provenance module's one exported const SMITHY_MODEL_DIGEST, a string literal (AST, comments never read). */
+function generatedDigest(text: string | undefined): string | undefined {
+  if (text === undefined) return undefined;
+  const values: string[] = [];
+  for (const statement of parsed(PROVENANCE_JS, text).statements) {
+    if (!ts.isVariableStatement(statement) || !(statement.modifiers ?? []).some((modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword)) continue;
+    if ((statement.declarationList.flags & ts.NodeFlags.BlockScoped) !== ts.NodeFlags.Const) continue;
+    for (const declaration of statement.declarationList.declarations) {
+      if (ts.isIdentifier(declaration.name) && declaration.name.text === "SMITHY_MODEL_DIGEST" && declaration.initializer !== undefined && ts.isStringLiteral(declaration.initializer)) values.push(declaration.initializer.text);
+    }
+  }
+  return values.length === 1 ? values[0] : undefined;
+}
 function oneArtifact(tree: Tree): string[] {
+  const pinned = pinLeg("U2", tree, "re-measure the contract digest pair on the new tarball (acceptance 3)");
   const manifest = jsonEntry(tree, "package/contract/manifest.json");
   const declared = typeof manifest?.smithy_model_digest === "string" ? manifest.smithy_model_digest : undefined;
-  const generated = /sha256:[0-9a-f]{64}/.exec(tree.tarball.get("package/dist/contract/furnace-executor-contract/provenance.js") ?? "")?.[0];
-  if (declared === undefined || generated === undefined) return [`U2 the vendored tarball carries no readable contract digest pair (manifest ${String(declared)}, provenance ${String(generated)})`];
-  if (declared === generated) return [];
-  return [`U2 the vendored tarball's manifest digest ${declared} differs from its generated provenance digest ${generated}: the decodeContextValue preflight fails closed on it (acceptance 3, the wb-zby failure mode)`];
+  const generated = generatedDigest(tree.tarball.get(PROVENANCE_JS));
+  if (declared === undefined || generated === undefined) return [...pinned, `U2 the vendored tarball carries no readable contract digest pair (manifest ${String(declared)}, provenance ${String(generated)})`];
+  if (declared === generated) return pinned;
+  return [...pinned, `U2 the vendored tarball's manifest digest ${declared} differs from its generated provenance digest ${generated}: the decodeContextValue preflight fails closed on it (acceptance 3, the wb-zby failure mode)`];
 }
 
 // Plant builders: each returns a new tree and refuses a plant that changes nothing, so no plant is hollow.
@@ -957,8 +1220,12 @@ function editReadme(tree: Tree, edit: (text: string) => string): Tree {
   return { ...tree, readme };
 }
 /** An owner re-vendor to `version`: package.json's spec and the tarball's own package.json move together. */
+/** The tarball's bytes moved (a byte appended), every parsed entry kept: what the PIN legs read of a repack. */
+function repacked(tree: Tree): Tree {
+  return { ...tree, bytes: Buffer.concat([tree.bytes ?? Buffer.alloc(0), Buffer.from([0])]) };
+}
 function revendor(tree: Tree, version: string): Tree {
-  const moved = editEntry(tree, "package/package.json", (text) => text.replace(/"version": "[^"]+"/, `"version": "${version}"`));
+  const moved = editEntry(repacked(tree), "package/package.json", (text) => text.replace(/"version": "[^"]+"/, `"version": "${version}"`));
   return { ...moved, spec: `file:vendor/furnace-sdk-${version}.tgz` };
 }
 /** Moves every versioned spelling in `files` to `version`. */
@@ -1022,6 +1289,21 @@ const D4_STORE = owedD4("no longer stores that profile once (one this.#durabilit
 const D4_OPTIONS = owedD4("no longer takes options with no default or an empty object default");
 const D4_INPUT = owedD4("no longer reads its options as given (its body assigns, updates or deletes a target that mentions options)");
 const D4_IMPORT = `D4 ${EXECUTOR} no longer imports DurabilityProfile from ./durability.js as its one binding of that name: ${RERUN}`;
+const D4_CODE = `D4 ${EXECUTOR}'s register method's code is no longer the measured code (its tokens, comments and whitespace never read): ${RERUN}`;
+const d4Names = (labels: string): string =>
+  `D4 ${EXECUTOR} spells DurabilityProfile at ${labels}, not once at each pinned site (its import, defineExecutor's return and register's const profile, each read by its tokens): ${RERUN}`;
+const d4Field = (labels: string): string =>
+  `D4 ${EXECUTOR} spells #durability at ${labels}, not once at each pinned site (its new Map() field, register's store and durability()'s lookup, each read by its tokens): ${RERUN}`;
+/** A PIN leg's finding, as a repacked tarball reads (the plant keeps every parsed entry). */
+const pinFinding = (id: string, owed: string): string => `${id} PIN the vendored tarball's bytes no longer hash to the pinned sha256 ${TARBALL_SHA256}: ${owed}`;
+const REPACKED = "a repacked tarball: its bytes moved, every parsed entry kept (the PIN leg)";
+const htmlRefused = (count: number): string => `U1 vendor/README.md carries ${count} raw HTML tokens (comments included): U1 refuses raw HTML, which can show or hide text marked's tokens hold`;
+const imagesRefused = (count: number): string => `U1 vendor/README.md carries ${count} images: U1 refuses them, since a browser can show an image's alt text`;
+const referencesRefused = (count: number): string =>
+  `U1 vendor/README.md opens ${count} character references: U1 refuses them, since a browser shows the character a reference names where marked's tokens hold the reference`;
+const ignorableRefused = (count: number): string => `U1 vendor/README.md carries ${count} default-ignorable characters: U1 refuses them, since a browser hides them inside the text a record is read from`;
+const ZERO_WIDTH = String.fromCodePoint(0x200b);
+const REVISION_MOVED = `U1 vendor/README.md records the repack from Furnace revision 0123456789, not ${ZBY_REVISION}`;
 const PROFILE_LINE = 'const profile = typeof nameOrDeclaration === "string" ? DurabilityProfile.fromDeclaration(options.durability) : nameOrDeclaration.durability;';
 const STORE_LINE = "this.#durability.set(identifier, profile);";
 const RECORD_TEXT = "was re-packaged on 2026-10-17 (wb-zby) from Furnace revision 9970621d8";
@@ -1296,6 +1578,87 @@ const ROWS: readonly Row[] = [
             tree: (real) => withFile(real, "src/workbench/plant-d1-jsx.tsx", 'export const image = <img src="@furnace/sdk/dist/src/host_client.js" />;\nexport const label = <p>@furnace/sdk/dist/src/host_client.js</p>;\n'),
             findings: [unreadLiteral(CLIENT, "src/workbench/plant-d1-jsx.tsx"), unreadLiteral(CLIENT, "src/workbench/plant-d1-jsx.tsx")],
           },
+          {
+            name: "a deep load through node_modules spelled with a '.' segment (g-dotseg)",
+            tree: (real) => withFile(real, "src/workbench/plant-d1-dotseg.ts", 'import { HostClient } from "../../node_modules/@furnace/./sdk/dist/src/host_client.js";\nexport const PLANTED = HostClient;\n'),
+            findings: [unlisted("../../node_modules/@furnace/./sdk/dist/src/host_client.js", "src/workbench/plant-d1-dotseg.ts", "HostClient")],
+          },
+          {
+            name: "a deep load through node_modules spelled with a doubled separator (g-dblslash)",
+            tree: (real) => withFile(real, "src/workbench/plant-d1-dblslash.ts", 'import { HostClient } from "../../node_modules/@furnace//sdk/dist/src/host_client.js";\nexport const PLANTED = HostClient;\n'),
+            findings: [unlisted("../../node_modules/@furnace//sdk/dist/src/host_client.js", "src/workbench/plant-d1-dblslash.ts", "HostClient")],
+          },
+          {
+            name: "a deep load through node_modules spelled with backslash separators (g-backslash)",
+            tree: (real) =>
+              withFile(real, "src/workbench/plant-d1-backslash.ts", `${String.raw`import { HostClient } from "..\\..\\node_modules\\@furnace\\sdk\\dist\\src\\host_client.js";`}\nexport const PLANTED = HostClient;\n`),
+            findings: [unlisted(String.raw`..\..\node_modules\@furnace\sdk\dist\src\host_client.js`, "src/workbench/plant-d1-backslash.ts", "HostClient")],
+          },
+          {
+            name: "a deep load through node_modules whose '..' segment makes the path",
+            tree: (real) => withFile(real, "src/workbench/plant-d1-parent.ts", 'import { HostClient } from "../../node_modules/@furnace/kit/../sdk/dist/src/host_client.js";\nexport const PLANTED = HostClient;\n'),
+            findings: [unlisted("../../node_modules/@furnace/kit/../sdk/dist/src/host_client.js", "src/workbench/plant-d1-parent.ts", "HostClient")],
+          },
+          {
+            name: "a resolve load spelled with a %40 escape",
+            tree: (real) => withFile(real, "src/workbench/plant-d1-percent.ts", 'export const where = import.meta.resolve("../../node_modules/%40furnace/sdk/dist/src/host_client.js");\n'),
+            findings: [unlisted("../../node_modules/%40furnace/sdk/dist/src/host_client.js", "src/workbench/plant-d1-percent.ts", "*")],
+          },
+          {
+            name: "a %40-escaped deep path literal nothing loads (D1 (e) BACKSTOP, PATH reading)",
+            tree: (real) => withFile(real, "src/workbench/plant-d1-percent-literal.ts", 'export const where = new URL("../../node_modules/%40furnace/sdk/dist/src/host_client.js", import.meta.url);\n'),
+            findings: [unreadLiteral("../../node_modules/%40furnace/sdk/dist/src/host_client.js", "src/workbench/plant-d1-percent-literal.ts")],
+          },
+          {
+            name: "a deep path spelled with a character reference in JSX text (F6)",
+            tree: (real) => withFile(real, "src/workbench/plant-d1-jsx-text.tsx", "export const label = <p>&#64;furnace/sdk/dist/src/host_client.js</p>;\n"),
+            findings: [unreadLiteral(CLIENT, "src/workbench/plant-d1-jsx-text.tsx")],
+          },
+          {
+            name: "a deep path spelled with a character reference in a JSX attribute (F6)",
+            tree: (real) => withFile(real, "src/workbench/plant-d1-jsx-attribute.tsx", 'export const image = <img src="&#x40;furnace/sdk/dist/src/host_client.js" />;\n'),
+            findings: [unreadLiteral(CLIENT, "src/workbench/plant-d1-jsx-attribute.tsx")],
+          },
+          loadPlant(
+            "a loader a destructuring assignment binds from a property named resolve (F7)",
+            "assign-renamed",
+            'let where: (id: string) => string;\n({ resolve: where } = import.meta);\nexport const at = where("@furnace/sdk/dist/src/host_client.js");\n',
+          ),
+          loadPlant(
+            "a loader a destructuring assignment binds by shorthand",
+            "assign-shorthand",
+            'let resolve: (id: string) => string;\n({ resolve } = import.meta);\nexport const at = resolve("@furnace/sdk/dist/src/host_client.js");\n',
+          ),
+          loadPlant(
+            "a loader a destructuring assignment binds inside a nested object literal",
+            "assign-nested",
+            'let where: (id: string) => string;\n({ meta: { resolve: where } } = { meta: import.meta });\nexport const at = where("@furnace/sdk/dist/src/host_client.js");\n',
+          ),
+          loadPlant(
+            "a loader a destructuring assignment binds with a default",
+            "assign-default",
+            'let where: (id: string) => string;\n({ resolve: where = String } = import.meta);\nexport const at = where("@furnace/sdk/dist/src/host_client.js");\n',
+          ),
+          loadPlant(
+            "a loader a for-of head destructures",
+            "assign-for-of",
+            'let where: (id: string) => string = String;\nfor ({ resolve: where } of [import.meta]) break;\nexport const at = where("@furnace/sdk/dist/src/host_client.js");\n',
+          ),
+          {
+            name: "a deep path inside a regular-expression literal's class, sliced into a load at run time (D1 (e))",
+            tree: (real) => withFile(real, "src/workbench/plant-d1-regex.ts", "export const load = (): Promise<unknown> => import(/[@furnace/sdk/dist/src/host_client.js]/.source.slice(1, -1));\n"),
+            findings: [unreadLiteral("/[@furnace/sdk/dist/src/host_client.js]/", "src/workbench/plant-d1-regex.ts")],
+          },
+          {
+            name: "a deep path in the shebang line (D1 (e))",
+            tree: (real) => withFile(real, "src/workbench/plant-d1-shebang.ts", "#!/usr/bin/env -S node --import @furnace/sdk/dist/src/host_client.js\nexport {};\n"),
+            findings: [unreadLiteral("#!/usr/bin/env -S node --import @furnace/sdk/dist/src/host_client.js", "src/workbench/plant-d1-shebang.ts")],
+          },
+          loadPlant(
+            "a created require a destructuring assignment binds from a property named createRequire",
+            "assign-creator",
+            'import * as nodeModule from "node:module";\nlet make: typeof nodeModule.createRequire;\n({ createRequire: make } = nodeModule);\nexport const planted: unknown = make(import.meta.url)("@furnace/sdk/dist/src/host_client.js");\n',
+          ),
         ],
       },
       {
@@ -1324,6 +1687,7 @@ const ROWS: readonly Row[] = [
               editEntry(real, "package/dist/src/resident_session.d.ts", (text) => text.replace("export declare class ResidentSession", "/* export declare class ResidentSession */\nexport declare class ResidentChannel")),
             findings: ["D2 package/dist/src/resident_session.d.ts declares no exported class ResidentSession in its code (a comment declares nothing)"],
           },
+          { name: REPACKED, tree: repacked, findings: [pinFinding("D2", "re-measure each deep import against the new tarball (acceptance 4)")] },
         ],
       },
       {
@@ -1423,6 +1787,7 @@ const ROWS: readonly Row[] = [
             tree: (real) => editEntry(real, "package/dist/src/protocol.d.ts", (text) => `${text}\nimport Host from "./embedded.js";\nexport { Host };\n`),
             findings: [switchOwed("types", "dist/src/index.d.ts", "EmbeddedHost", "dist/src/index.d.ts -> dist/src/protocol.d.ts")],
           },
+          { name: REPACKED, tree: repacked, findings: [pinFinding("D3", "re-measure the switch to index re-exports on the new tarball (acceptance 4)")] },
         ],
       },
       {
@@ -1440,10 +1805,7 @@ const ROWS: readonly Row[] = [
           {
             name: "an executor that claims by default",
             tree: (real) => editEntry(real, "package/dist/src/executor.js", (text) => text.replaceAll(DERIVATION, "DurabilityProfile.fromDeclaration(options.durability ?? CLAIM_ALL)")),
-            findings: [
-              `D4 package/dist/src/executor.js no longer reads "${DERIVATION}": ${RERUN}`,
-              D4_INIT,
-            ],
+            findings: [`D4 package/dist/src/executor.js no longer reads "${DERIVATION}": ${RERUN}`, d4Names("import, other (const profile), other (return Object)"), D4_INIT, D4_CODE],
           },
           {
             name: "a tarball without the durability declarations",
@@ -1458,88 +1820,156 @@ const ROWS: readonly Row[] = [
           {
             name: "an executor that claims by default while a comment keeps the derivation's text",
             tree: (real) => editEntry(real, "package/dist/src/executor.js", (text) => `${text.replaceAll(DERIVATION, "DurabilityProfile.fromDeclaration(options.durability ?? CLAIM_ALL)")}\n// ${DERIVATION}\n`),
-            findings: [D4_INIT],
+            findings: [d4Names("import, other (const profile), other (return Object)"), D4_INIT, D4_CODE],
           },
           {
             name: "an executor whose string-name branch derives the profile, then discards it (RT27b)",
             tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(PROFILE_LINE, PROFILE_LINE.replace(DERIVATION, `(void ${DERIVATION}, CLAIM_ALL)`))),
-            findings: [D4_INIT],
+            findings: [d4Names("defineExecutor, import, other (const profile)"), D4_INIT, D4_CODE],
           },
           {
             name: "an executor whose profile is a let",
             tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(PROFILE_LINE, PROFILE_LINE.replace("const profile", "let profile"))),
-            findings: [D4_INIT],
+            findings: [d4Names("defineExecutor, import, other (let profile)"), D4_INIT, D4_CODE],
           },
           {
             name: "an executor whose string-name test is inverted",
             tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(PROFILE_LINE, PROFILE_LINE.replace('=== "string"', '!== "string"'))),
-            findings: [D4_INIT],
+            findings: [d4Names("defineExecutor, import, other (const profile)"), D4_INIT, D4_CODE],
           },
           {
             name: "an executor whose profile is shadowed in a nested block",
             tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(PROFILE_LINE, `${PROFILE_LINE}\n        { const profile = CLAIM_ALL; void profile; }`)),
-            findings: [D4_INIT],
+            findings: [D4_INIT, D4_CODE],
           },
           {
             name: "an executor that stores a second value after the profile",
             tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(STORE_LINE, `${STORE_LINE}\n        this.#durability.set(identifier, CLAIM_ALL);`)),
-            findings: [D4_STORE],
+            findings: [d4Field("field, lookup, other (this .), store"), D4_STORE, D4_CODE],
           },
           {
             name: "an executor that stores another value",
             tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(STORE_LINE, "this.#durability.set(identifier, CLAIM_ALL);")),
-            findings: [D4_STORE],
+            findings: [d4Field("field, lookup, other (this .)"), D4_STORE, D4_CODE],
           },
           {
             name: "an executor that stores the profile from inside a nested block",
             tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(STORE_LINE, `{ ${STORE_LINE} }`)),
-            findings: [D4_STORE],
+            findings: [D4_STORE, D4_CODE],
           },
           {
             name: "an executor whose options default declares durability",
             tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace("register(nameOrDeclaration, callback, options = {}) {", "register(nameOrDeclaration, callback, options = { durability: CLAIM_ALL }) {")),
-            findings: [D4_OPTIONS],
+            findings: [D4_OPTIONS, D4_CODE],
           },
           {
             name: "an executor that takes DurabilityProfile from another module",
             tree: (real) =>
               editEntry(real, EXECUTOR, (text) => text.replace('import { DurabilityProfile, normalizeContinuity } from "./durability.js";', 'import { normalizeContinuity } from "./durability.js";\nimport { DurabilityProfile } from "./claims.js";')),
-            findings: [D4_IMPORT],
+            findings: [D4_IMPORT, d4Names("defineExecutor, other (import {), register")],
           },
           {
             name: "an executor that shadows DurabilityProfile inside register",
             tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(PROFILE_LINE, `const DurabilityProfile = { fromDeclaration: () => CLAIM_ALL };\n        ${PROFILE_LINE}`)),
-            findings: [D4_IMPORT],
+            findings: [D4_IMPORT, d4Names("defineExecutor, import, other (const DurabilityProfile), register"), D4_CODE],
           },
           {
             name: "an executor whose register reassigns options",
             tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(PROFILE_LINE, `options = { durability: CLAIM_ALL };\n        ${PROFILE_LINE}`)),
-            findings: [D4_INPUT],
+            findings: [D4_INPUT, D4_CODE],
           },
           {
             name: "an executor whose register sets options.durability",
             tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(PROFILE_LINE, `options.durability = CLAIM_ALL;\n        ${PROFILE_LINE}`)),
-            findings: [D4_INPUT],
+            findings: [D4_INPUT, D4_CODE],
           },
           {
             name: "an executor whose register deletes options.durability",
             tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(PROFILE_LINE, `delete options.durability;\n        ${PROFILE_LINE}`)),
-            findings: [D4_INPUT],
+            findings: [D4_INPUT, D4_CODE],
           },
           {
             name: "an executor whose register sets a nested member of options",
             tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(PROFILE_LINE, `options.durability.checkpoint = true;\n        ${PROFILE_LINE}`)),
-            findings: [D4_INPUT],
+            findings: [D4_INPUT, D4_CODE],
           },
           {
             name: "an executor whose register destructures into options",
             tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(PROFILE_LINE, `({ durability: options.durability } = { durability: CLAIM_ALL });\n        ${PROFILE_LINE}`)),
-            findings: [D4_INPUT],
+            findings: [D4_INPUT, D4_CODE],
           },
           {
             name: "an executor whose register updates a member of options",
             tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(PROFILE_LINE, `options.revision++;\n        ${PROFILE_LINE}`)),
-            findings: [D4_INPUT],
+            findings: [D4_INPUT, D4_CODE],
+          },
+          { name: REPACKED, tree: repacked, findings: [pinFinding("D4", RERUN)] },
+          {
+            name: "an executor class a class expression names DurabilityProfile (G-D4-CLASSEXPR)",
+            tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace("export class ExecutorApp {", "export const ExecutorApp = class DurabilityProfile {\n    static fromDeclaration() {\n        return CLAIM_ALL;\n    }")),
+            findings: [d4Names("defineExecutor, import, other (export const), register")],
+          },
+          {
+            name: "a function expression named DurabilityProfile (G-D4-FUNCEXPR-NAME)",
+            tree: (real) => editEntry(real, EXECUTOR, (text) => `${text}\nexport const probe = function DurabilityProfile() {\n    return CLAIM_ALL;\n};\n`),
+            findings: [d4Names("defineExecutor, import, other (export const), register")],
+          },
+          {
+            name: "a string-keyed second store (G-D4-STRKEY)",
+            tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(STORE_LINE, `${STORE_LINE}\n        this.#durability["set"](identifier, CLAIM_ALL);`)),
+            findings: [d4Field("field, lookup, other (this .), store"), D4_CODE],
+          },
+          {
+            name: "a register that rewrites its first parameter for string names (G-D4-PARAM)",
+            tree: (real) =>
+              editEntry(real, EXECUTOR, (text) =>
+                text.replace(
+                  "        const name = typeof nameOrDeclaration",
+                  '        if (typeof nameOrDeclaration === "string") nameOrDeclaration = { name: nameOrDeclaration, callback, durability: CLAIM_ALL };\n        const name = typeof nameOrDeclaration',
+                ),
+              ),
+            findings: [D4_CODE],
+          },
+          {
+            name: "a for-of head that writes options.durability (G-D4-FOROF)",
+            tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(PROFILE_LINE, `for (options.durability of [CLAIM_ALL]);\n        ${PROFILE_LINE}`)),
+            findings: [D4_CODE],
+          },
+          {
+            name: "options written through an alias (G-D4-OPTALIAS)",
+            tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(PROFILE_LINE, `const given = options;\n        given.durability = CLAIM_ALL;\n        ${PROFILE_LINE}`)),
+            findings: [D4_CODE],
+          },
+          {
+            name: "options written through arguments (G-D4-ARGUMENTS)",
+            tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(PROFILE_LINE, `arguments[2].durability = CLAIM_ALL;\n        ${PROFILE_LINE}`)),
+            findings: [D4_CODE],
+          },
+          {
+            name: "a store through an alias of the registry (G-D4-ALIAS-STORE)",
+            tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(STORE_LINE, `${STORE_LINE}\n        const registry = this.#durability;\n        registry.set(identifier, CLAIM_ALL);`)),
+            findings: [d4Field("field, lookup, other (const registry), store"), D4_CODE],
+          },
+          {
+            name: "a store through Map.prototype.set.call (G-D4-SETCALL)",
+            tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(STORE_LINE, `${STORE_LINE}\n        Map.prototype.set.call(this.#durability, identifier, CLAIM_ALL);`)),
+            findings: [d4Field("field, lookup, other (Map .), store"), D4_CODE],
+          },
+          {
+            name: "a registry field that is not a plain new Map()",
+            tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace("#durability = new Map();", '#durability = new Map([["coder", CLAIM_ALL]]);')),
+            findings: [d4Field("lookup, other (#durability =), store")],
+          },
+          {
+            name: "register's own calls on the options and the profile (cut #3's R-DERIVATION-BODY quiet plant, its executor.js half, now read)",
+            tree: (real) =>
+              editEntry(real, EXECUTOR, (text) => text.replace(PROFILE_LINE, `Object.assign(options, { durability: CLAIM_ALL });\n        ${PROFILE_LINE}`).replace(STORE_LINE, `Object.assign(profile, CLAIM_ALL);\n        ${STORE_LINE}`)),
+            findings: [D4_CODE],
+          },
+          {
+            name: "control: a line comment and a JSDoc block inside register read nothing (CODE reads tokens, never comments)",
+            tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(PROFILE_LINE, `/** the profile, documented */\n        // derived below\n        ${PROFILE_LINE}`)),
+            findings: [],
           },
         ],
       },
@@ -1691,7 +2121,11 @@ const ROWS: readonly Row[] = [
           {
             name: "the trigger fires: a re-vendor to 0.2.0 with every site moved",
             tree: (real) => bump(revendor(real, NEXT), NEXT, OBSERVER, PROVIDER, HOSTED),
-            findings: [`U1 the vendored ${SDK} is ${NEXT}, not the until-then 0.1.0: ${TRIGGERED}`, `U1 vendor/README.md records furnace-sdk-0.1.0.tgz as wb-zby's repack, not the vendored furnace-sdk-${NEXT}.tgz`],
+            findings: [
+              pinFinding("U1", TRIGGERED),
+              `U1 the vendored ${SDK} is ${NEXT}, not the until-then 0.1.0: ${TRIGGERED}`,
+              `U1 vendor/README.md records furnace-sdk-0.1.0.tgz as wb-zby's repack, not the vendored furnace-sdk-${NEXT}.tgz`,
+            ],
           },
           {
             name: "the README records another provenance",
@@ -1711,7 +2145,7 @@ const ROWS: readonly Row[] = [
                   .replace("Furnace revision 9970621d8", "Furnace revision 0123456789")
                   .replace("Artifacts were packaged from", "<!-- furnace-sdk-0.1.0.tgz was re-packaged on 2026-10-17 (wb-zby) from Furnace revision 9970621d8 -->\n\nArtifacts were packaged from"),
               ),
-            findings: [`U1 vendor/README.md records the repack from Furnace revision 0123456789, not ${ZBY_REVISION}`],
+            findings: [htmlRefused(1), REVISION_MOVED],
           },
           {
             name: "the README shows a second record",
@@ -1724,7 +2158,7 @@ const ROWS: readonly Row[] = [
               editReadme(real, (text) =>
                 text.replace("from Furnace revision 9970621d8 (", "from Furnace revision 0123456789 <!-- furnace-sdk-0.1.0.tgz was re-packaged on 2026-10-17 (wb-zby) from Furnace revision 9970621d8 --> ("),
               ),
-            findings: [`U1 vendor/README.md records the repack from Furnace revision 0123456789, not ${ZBY_REVISION}`],
+            findings: [htmlRefused(1), REVISION_MOVED],
           },
           {
             name: "the README shows a second record as a list item",
@@ -1743,7 +2177,7 @@ const ROWS: readonly Row[] = [
                 real,
                 (text) => `${text.replace("Furnace revision 9970621d8", "Furnace revision 0123456789")}\n- note <!-- furnace-sdk-0.1.0.tgz was re-packaged on 2026-10-17 (wb-zby) from Furnace revision 9970621d8 -->\n`,
               ),
-            findings: [`U1 vendor/README.md records the repack from Furnace revision 0123456789, not ${ZBY_REVISION}`],
+            findings: [htmlRefused(1), REVISION_MOVED],
           },
           {
             name: "the README keeps the old record only inside a table cell's HTML comment, beside a changed one",
@@ -1753,7 +2187,7 @@ const ROWS: readonly Row[] = [
                 (text) =>
                   `${text.replace("Furnace revision 9970621d8", "Furnace revision 0123456789")}\n| Record |\n| --- |\n| note <!-- furnace-sdk-0.1.0.tgz was re-packaged on 2026-10-17 (wb-zby) from Furnace revision 9970621d8 --> |\n`,
               ),
-            findings: [`U1 vendor/README.md records the repack from Furnace revision 0123456789, not ${ZBY_REVISION}`],
+            findings: [htmlRefused(1), REVISION_MOVED],
           },
           {
             name: "the README keeps the old record only as a link-reference definition's title (RT08)",
@@ -1763,7 +2197,38 @@ const ROWS: readonly Row[] = [
           {
             name: "the README keeps the old record only as an image's alt text",
             tree: (real) => editReadme(real, (text) => `${text.replace(RECORD_TEXT, "was packed at a Furnace release commit")}\n![${OLD_RECORD}](record.png)\n`),
-            findings: [NO_RECORD],
+            findings: [imagesRefused(1), NO_RECORD],
+          },
+          { name: REPACKED, tree: repacked, findings: [pinFinding("U1", TRIGGERED)] },
+          {
+            name: "a second record spelled with character references (U5 (a))",
+            tree: (real) => editReadme(real, (text) => `${text}\nfurnace-sdk-0.1.0.tgz was re-packaged on 2026-10-18 &#40;wb-zby&#41; from Furnace revision 0123456789.\n`),
+            findings: [referencesRefused(2)],
+          },
+          {
+            name: "a second record spelled with unterminated numeric references, which a browser still decodes",
+            tree: (real) => editReadme(real, (text) => `${text}\nfurnace-sdk-0.1.0.tgz was re-packaged on 2026-10-18 &#40wb-zby&#41 from Furnace revision 0123456789.\n`),
+            findings: [referencesRefused(2)],
+          },
+          {
+            name: "the old record kept inside a hidden inline span while the visible, moved record is spelled with character references (U5 (b))",
+            tree: (real) => editReadme(real, (text) => text.replace(RECORD_TEXT, `was re-packaged on 2026-10-17 &#40;wb-zby&#41; from Furnace revision 0123456789 <span hidden>${OLD_RECORD}</span>`)),
+            findings: [htmlRefused(2), referencesRefused(2)],
+          },
+          {
+            name: "a second record inside a raw HTML block (cut #3's R-HTML-BLOCK quiet plant, now refused)",
+            tree: (real) => editReadme(real, (text) => `${text}\n<p>${SECOND_RECORD}</p>\n`),
+            findings: [htmlRefused(1)],
+          },
+          {
+            name: "a second record split by a zero-width space",
+            tree: (real) => editReadme(real, (text) => `${text}\nfurnace-sdk-0.1.0.tgz was re-packaged on 2026-10-18 (wb-z${ZERO_WIDTH}by) from Furnace revision 0123456789.\n`),
+            findings: [ignorableRefused(1)],
+          },
+          {
+            name: "a second record after an abruptly closed comment, which a browser shows",
+            tree: (real) => editReadme(real, (text) => `${text}\n<!--> ${SECOND_RECORD} -->\n`),
+            findings: [htmlRefused(1)],
           },
         ],
       },
@@ -1783,6 +2248,34 @@ const ROWS: readonly Row[] = [
             name: "a tarball without its contract manifest",
             tree: (real) => editEntry(real, "package/contract/manifest.json", () => undefined),
             findings: [`U2 the vendored tarball carries no readable contract digest pair (manifest undefined, provenance ${REAL_DIGEST(REAL)})`],
+          },
+          { name: REPACKED, tree: repacked, findings: [pinFinding("U2", "re-measure the contract digest pair on the new tarball (acceptance 3)")] },
+          {
+            name: "only the generated SMITHY_MODEL_DIGEST constant moved (G-U2-CODE; U5 (c))",
+            tree: (real) => editEntry(real, PROVENANCE_JS, (text) => text.replace(`SMITHY_MODEL_DIGEST = "${REAL_DIGEST(real)}"`, `SMITHY_MODEL_DIGEST = "${STALE_DIGEST}"`)),
+            findings: [
+              `U2 the vendored tarball's manifest digest ${REAL_DIGEST(REAL)} differs from its generated provenance digest ${STALE_DIGEST}: the decodeContextValue preflight fails closed on it (acceptance 3, the wb-zby failure mode)`,
+            ],
+          },
+          {
+            name: "control: only the provenance header comment's digest moved (a comment is never read)",
+            tree: (real) => editEntry(real, PROVENANCE_JS, (text) => text.replace(`// ${REAL_DIGEST(real)}`, `// ${STALE_DIGEST}`)),
+            findings: [],
+          },
+          {
+            name: "SMITHY_MODEL_DIGEST no longer exported",
+            tree: (real) => editEntry(real, PROVENANCE_JS, (text) => text.replace("export const SMITHY_MODEL_DIGEST", "const SMITHY_MODEL_DIGEST")),
+            findings: [`U2 the vendored tarball carries no readable contract digest pair (manifest ${REAL_DIGEST(REAL)}, provenance undefined)`],
+          },
+          {
+            name: "SMITHY_MODEL_DIGEST declared with let",
+            tree: (real) => editEntry(real, PROVENANCE_JS, (text) => text.replace("export const SMITHY_MODEL_DIGEST", "export let SMITHY_MODEL_DIGEST")),
+            findings: [`U2 the vendored tarball carries no readable contract digest pair (manifest ${REAL_DIGEST(REAL)}, provenance undefined)`],
+          },
+          {
+            name: "a second exported SMITHY_MODEL_DIGEST, its value stale",
+            tree: (real) => editEntry(real, PROVENANCE_JS, (text) => `${text}\nexport const SMITHY_MODEL_DIGEST = "${STALE_DIGEST}";\n`),
+            findings: [`U2 the vendored tarball carries no readable contract digest pair (manifest ${REAL_DIGEST(REAL)}, provenance undefined)`],
           },
         ],
       },
@@ -1834,11 +2327,24 @@ const ROWS: readonly Row[] = [
         residual: "R-INDEX-INDIRECT",
         judge: noSwitchOwed,
         quiet: (real) =>
-          editEntry(
-            editEntry(real, "package/dist/src/protocol.d.ts", (text) => `${text}\nimport { EmbeddedHost } from "./embedded.js";\nexport declare const Host: typeof EmbeddedHost;\nexport default EmbeddedHost;\n`),
-            "package/dist/src/protocol.js",
-            (text) => `${text}\nimport { ResidentSession } from "./resident_session.js";\nexport const Session = ResidentSession;\n`,
-          ),
+          [
+            (tree: Tree) =>
+              editEntry(tree, "package/dist/src/protocol.d.ts", (text) => `${text}\nimport { EmbeddedHost } from "./embedded.js";\nexport declare const Host: typeof EmbeddedHost;\nexport default EmbeddedHost;\n`),
+            (tree: Tree) => editEntry(tree, "package/dist/src/protocol.js", (text) => `${text}\nimport { ResidentSession } from "./resident_session.js";\nexport const Session = ResidentSession;\n`),
+            // G-D3-AUGMENT: a module augmentation in a starred module re-exports the embedded host.
+            (tree: Tree) =>
+              editEntry(tree, "package/dist/src/protocol.d.ts", (text) => `${text}\ndeclare module "@furnace/sdk" {\n  export { EmbeddedHost } from "@furnace/sdk/dist/src/embedded.js";\n}\n`),
+            // G-D3-NAMED-CHAIN2 and G-D3-NS-IMPORT2: a named re-export chain, and a namespace import of a module that star-exports the embedded module.
+            (tree: Tree) => addEntry(tree, "package/dist/src/zzchain.d.ts", 'export { EmbeddedHost as Host } from "./embedded.js";\n'),
+            (tree: Tree) => addEntry(tree, "package/dist/src/zzstar.d.ts", 'export * from "./embedded.js";\n'),
+            // G-D3-IMPORT-EQUALS beside them: an import-equals of the embedded module, exported locally.
+            (tree: Tree) =>
+              editEntry(
+                tree,
+                "package/dist/src/index.d.ts",
+                (text) => `${text}\nexport { Host } from "./zzchain.js";\nimport * as gatehost from "./zzstar.js";\nexport { gatehost };\nimport H = require("./embedded.js");\nexport { H };\n`,
+              ),
+          ].reduce((tree, step) => step(tree), real),
         control: (real) => editEntry(real, "package/dist/src/index.d.ts", (text) => `${text}\nexport * from "./embedded.js";\n`),
       },
       {
@@ -1867,28 +2373,16 @@ const ROWS: readonly Row[] = [
         id: "Q8",
         residual: "R-WALK-SPECIFIER",
         judge: noSwitchOwed,
-        quiet: (real) => editEntry(addEntry(real, "package/dist/src/sub/package.json", '{ "types": "../embedded.d.ts" }\n'), "package/dist/src/index.d.ts", (text) => `${text}\nexport * from "./sub";\n`),
+        quiet: (real) =>
+          editEntry(addEntry(real, "package/dist/src/sub/package.json", '{ "types": "../embedded.d.ts" }\n'), "package/dist/src/index.d.ts", (text) => `${text}\nexport * from "./sub";\nexport * from "./embedded.ts";\n`),
         control: (real) => editEntry(real, "package/dist/src/index.d.ts", (text) => `${text}\nexport * from "./embedded";\n`),
-      },
-      {
-        kind: "quiet",
-        id: "Q9",
-        residual: "R-HTML-BLOCK",
-        judge: untilThenPin,
-        quiet: (real) => editReadme(real, (text) => `${text}\n<p>${SECOND_RECORD}</p>\n`),
-        control: (real) => editReadme(real, (text) => `${text}\n${SECOND_RECORD}\n`),
       },
       {
         kind: "quiet",
         id: "Q10",
         residual: "R-DERIVATION-BODY",
         judge: durabilityModule,
-        quiet: (real) =>
-          editEntry(
-            editEntry(real, "package/dist/src/durability.js", (text) => text.replace("return new DurabilityProfile();", "return new DurabilityProfile(CLAIM_ALL);")),
-            EXECUTOR,
-            (text) => text.replace(PROFILE_LINE, `Object.assign(options, { durability: CLAIM_ALL });\n        ${PROFILE_LINE}`).replace(STORE_LINE, `Object.assign(profile, CLAIM_ALL);\n        ${STORE_LINE}`),
-          ),
+        quiet: (real) => editEntry(real, "package/dist/src/durability.js", (text) => text.replace("return new DurabilityProfile();", "return new DurabilityProfile(CLAIM_ALL);")),
         control: (real) => editEntry(real, EXECUTOR, (text) => text.replace(PROFILE_LINE, PROFILE_LINE.replace(DERIVATION, "CLAIM_ALL"))),
       },
       {
@@ -1916,13 +2410,13 @@ const quotesOf = (source: Source): string[] => JUDGED.filter((pin) => pin.source
 // ---- frozen shape and each-liveness (standing rule 16; the U1 cure of wb-lrz.4 refusal #1, kept at cut #3) -----------------
 
 /** Every row's pin ids, frozen at this cut: the one literal the subsets' ids, the call sites' records and the case count are read against. */
-const FROZEN_PINS = ["D:D1,D2,D3,D4", "V:V1,V2,V3", "U:U1,U2", "Q:Q1,Q2,Q3,Q4,Q6,Q7,Q8,Q9,Q10,Q11"] as const;
+const FROZEN_PINS = ["D:D1,D2,D3,D4", "V:V1,V2,V3", "U:U1,U2", "Q:Q1,Q2,Q3,Q4,Q6,Q7,Q8,Q10,Q11"] as const;
 const FROZEN_IDS = FROZEN_PINS.flatMap((entry) => entry.slice(entry.indexOf(":") + 1).split(","));
 /** The judged ids (rows D, V and U) and the quiet ids (row Q), taken from FROZEN_PINS - never from ROWS or a subset. */
 const JUDGED_IDS = FROZEN_IDS.filter((id) => !id.startsWith("Q"));
 const QUIET_IDS = FROZEN_IDS.filter((id) => id.startsWith("Q"));
 /** Each judged pin's plant count, frozen at this cut: a plant deleted, or a plants loop cut short, goes red. */
-const PLANT_SHAPE = ["D1:52", "D2:3", "D3:18", "D4:21", "V1:13", "V2:3", "V3:3", "U1:12", "U2:2"] as const;
+const PLANT_SHAPE = ["D1:68", "D2:4", "D3:19", "D4:34", "V1:13", "V2:3", "V3:3", "U1:19", "U2:8"] as const;
 /** Each judged pin's judge, by name, frozen at this cut: both judged call sites record it, so a judge swapped out at either one goes red. */
 const JUDGE_KEYS = ["D1:deepImportSet", "D2:deepImportsResolve", "D3:noSwitchOwed", "D4:durabilityModule", "V1:versionLiterals", "V2:observerSdk", "V3:providerContractSource", "U1:untilThenPin", "U2:oneArtifact"] as const;
 /** The key each plant records at its last line, in order: its pin id and its index, expanded from PLANT_SHAPE. */
@@ -2022,7 +2516,7 @@ const TALLY_TITLE =
 
 describe("wb-lrz.4 Furnace SDK re-vendor readiness census", () => {
   it("FROZEN SHAPE (standing rule 16): literals pin ROWS's shape and pin ids, the JUDGED and QUIET subsets' ids, each judged pin's plant count and judge, and V1's forms", () => {
-    expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(["D:4", "V:3", "U:2", "Q:10"]);
+    expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(["D:4", "V:3", "U:2", "Q:9"]);
     expect(ROWS.map((row) => `${row.id}:${row.pins.map((pin) => pin.id).join(",")}`)).toEqual([...FROZEN_PINS]);
     expect(JUDGED.map((pin) => pin.id)).toEqual(JUDGED_IDS);
     expect(QUIET.map((pin) => pin.id)).toEqual(QUIET_IDS);
