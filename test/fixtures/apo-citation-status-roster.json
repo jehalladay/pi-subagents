@@ -178,8 +178,34 @@
    ],
    "R-COMPUTED-KEY": [
     "Q16"
+   ],
+   "R-UNCUT": [
+    "Q17"
+   ],
+   "R-SUBST-VALUE": [
+    "Q18"
+   ],
+   "R-INLINE-COMMENT": [
+    "Q19"
+   ],
+   "R-JSX": [
+    "Q20"
+   ],
+   "R-ACCESSOR": [
+    "Q21"
+   ],
+   "R-RETILED": [
+    "Q22"
+   ],
+   "R-CONSTANT-WITNESS": [
+    "Q23"
    ]
-  }
+  },
+  "structuralResiduals": [
+   "R-SCOPE",
+   "R-RETILED",
+   "R-CONSTANT-WITNESS"
+  ]
  },
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster and the cases agree",
@@ -213,6 +239,13 @@
   "Q14",
   "Q15",
   "Q16",
+  "Q17",
+  "Q18",
+  "Q19",
+  "Q20",
+  "Q21",
+  "Q22",
+  "Q23",
   "the registered tests and the reached pins equal the roster, in order and both ways"
  ],
  "rows": [
@@ -345,6 +378,34 @@
         "path": "src/x.ts",
         "text": "// The APO view module.\nexport const D = { effectClass: \"read\" satisfies string };",
         "causes": []
+       },
+       {
+        "id": "read-non-null",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const D = { effectClass: \"read\"! };",
+        "causes": []
+       },
+       {
+        "id": "read-angle-assertion",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const D = { effectClass: <const>\"read\" };",
+        "causes": []
+       },
+       {
+        "id": "write-non-null",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const D = { effectClass: \"write\"! };",
+        "causes": [
+         "effect-class:write"
+        ]
+       },
+       {
+        "id": "write-angle-assertion",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const D = { effectClass: <string>\"write\" };",
+        "causes": [
+         "effect-class:write"
+        ]
        },
        {
         "id": "parenthesized",
@@ -692,6 +753,36 @@
         "causes": []
        },
        {
+        "id": "spans-block-list",
+        "path": "docs/workbench/x.md",
+        "text": "- note\n\n  <!-- open\n\n  adaptive-policy-organizations-2026-10-18 design-stage, non-effectful -->\n",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "spans-block-quote",
+        "path": "docs/workbench/x.md",
+        "text": "> note\n>\n> <!-- open\n>\n> adaptive-policy-organizations-2026-10-18 design-stage, non-effectful -->\n",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "code-verbatim-fence",
+        "path": "docs/workbench/x.md",
+        "text": "```\nadaptive-policy-organizations-2026-10-18 <b>design-stage</b>, non-effectful\n```\n",
+        "causes": []
+       },
+       {
+        "id": "code-verbatim-indent",
+        "path": "docs/workbench/x.md",
+        "text": "An example:\n\n    adaptive-policy-organizations-2026-10-18 ~~design-stage~~, non-effectful\n",
+        "causes": []
+       },
+       {
         "id": "root-page",
         "path": "README.md",
         "text": "Pi reads the adaptive-policy-organizations-2026-10-18 program.",
@@ -786,6 +877,48 @@
          "status",
          "scope"
         ]
+       },
+       {
+        "id": "substitution-literal",
+        "path": "src/x.ts",
+        "text": "export const T = `adaptive-policy-organizations-2026-10-18 ${\"design-stage, non-effectful\"}`;\n",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "substitution-call",
+        "path": "src/x.ts",
+        "text": "const hide = (text: string): string => text.slice(0, 0);\nexport const T = `adaptive-policy-organizations-2026-10-18 ${hide(\"design-stage, non-effectful\")}`;\n",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "substitution-comment",
+        "path": "src/x.ts",
+        "text": "export const T = `adaptive-policy-organizations-2026-10-18 ${/* design-stage, non-effectful */ \"\"}`;\n",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "substitution-cites",
+        "path": "src/x.ts",
+        "text": "const apoTitle = \"x\";\nexport const T = `The ${apoTitle} view`;\n",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "substitution-cites-qualified",
+        "path": "src/x.ts",
+        "text": "const apoTitle = \"x\";\nexport const T = `The ${apoTitle} view (design-stage, non-effectful)`;\n",
+        "causes": []
        },
        {
         "id": "cooked-escape",
@@ -1099,6 +1232,14 @@
         ]
        },
        {
+        "id": "not-two-words-before",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is not really design-stage; it is non-effectful.\n",
+        "causes": [
+         "status"
+        ]
+       },
+       {
         "id": "no-longer",
         "path": "docs/workbench/x.md",
         "text": "adaptive-policy-organizations-2026-10-18 is no longer design-stage; it is non-effectful.",
@@ -1244,6 +1385,30 @@
         ]
        },
        {
+        "id": "footnote-definition-line",
+        "path": "docs/workbench/x.md",
+        "text": "Pi reads the adaptive-policy-organizations-2026-10-18 program (non-effectful).\n[^n]: design-stage\n",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "reference-label",
+        "path": "docs/workbench/x.md",
+        "text": "Pi reads the adaptive-policy-organizations-2026-10-18 program [shown][design-stage] (non-effectful).\n\n[design-stage]: https://example.invalid\n",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "character-reference",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design&#45;stage and non-effectful.\n",
+        "causes": [
+         "status"
+        ]
+       },
+       {
         "id": "shown-link-text",
         "path": "docs/workbench/x.md",
         "text": "adaptive-policy-organizations-2026-10-18 is [design-stage](https://example.invalid) and non-effectful.",
@@ -1347,6 +1512,22 @@
         "id": "never",
         "path": "docs/workbench/x.md",
         "text": "adaptive-policy-organizations-2026-10-18 is design-stage, never non-effectful.",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "not-two-words-before",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design-stage and not really non-effectful.",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "character-reference",
+        "path": "docs/workbench/x.md",
+        "text": "adaptive-policy-organizations-2026-10-18 is design-stage and non&#45;effectful.",
         "causes": [
          "scope"
         ]
@@ -1536,6 +1717,13 @@
       ],
       "key": "docs/workbench/zz-wb-021.6-plant.md Pi reads the adaptive-policy-organizations-2026-10-18 program (design-stage, non-effectful).",
       "bound": [],
+      "spaced": {
+       "text": "Pi reads the adaptive-policy-organizations-2026-10-18\nprogram   (design-stage, non-effectful).\n",
+       "keys": [
+        "docs/workbench/zz-wb-021.6-plant.md Pi reads the adaptive-policy-organizations-2026-10-18 program (design-stage, non-effectful)."
+       ],
+       "binding": []
+      },
       "stale": [
        "docs/workbench/zz-wb-021.6-plant.md Pi reads the program. stale"
       ],
@@ -1560,7 +1748,12 @@
        "test/helpers/apo-ui-publish-census.ts",
        ".beads/issues.jsonl"
       ],
-      "listed": []
+      "listed": [],
+      "citingFiles": [
+       "test/workbench-apo-export-census.test.ts",
+       "test/workbench-apo-ui-publish-census.test.ts",
+       "test/helpers/apo-ui-publish-census.ts"
+      ]
      }
     },
     {
@@ -1631,7 +1824,7 @@
      "id": "Q10",
      "witness": {
       "path": "docs/workbench/x.md",
-      "text": "adaptive-policy-organizations-2026-10-18 is not, as of today, design-stage, nor is it, as written, non-effectful.",
+      "text": "adaptive-policy-organizations-2026-10-18 is not really very design-stage, nor is it non-effectful.",
       "causes": []
      }
     },
@@ -1681,6 +1874,189 @@
       "path": "src/x.ts",
       "text": "// The APO view module.\nimport { WRITE } from \"./descriptors.js\";\nexport const A = { [\"effect\" + \"Class\"]: \"write\" };\nexport const B: { effectClass?: string } = { ...WRITE };\nB.effectClass ??= \"write\";",
       "causes": []
+     }
+    },
+    {
+     "id": "Q17",
+     "witness": {
+      "probes": [
+       {
+        "id": "G-SETEXT-H1",
+        "path": "docs/workbench/x.md",
+        "text": "design-stage, non-effectful\n===========================\nThe adaptive-policy-organizations-2026-10-18 program binds Pi.\n",
+        "causes": []
+       },
+       {
+        "id": "G-SETEXT-H2",
+        "path": "docs/workbench/x.md",
+        "text": "The design-stage, non-effectful program\n---\nadaptive-policy-organizations-2026-10-18 binds Pi.\n",
+        "causes": []
+       },
+       {
+        "id": "G-PIPELESS-TABLE",
+        "path": "docs/workbench/x.md",
+        "text": "Program | Note\n--- | ---\nadaptive-policy-organizations-2026-10-18 | x\ndesign-stage, non-effectful | y\n",
+        "causes": []
+       },
+       {
+        "id": "G-PIPELESS-TABLE-1COL",
+        "path": "docs/workbench/x.md",
+        "text": "Program | Note\n:-- | --:\nadaptive-policy-organizations-2026-10-18 | x\ndesign-stage | non-effectful\n",
+        "causes": []
+       },
+       {
+        "id": "G-LIST-FENCE-4",
+        "path": "docs/workbench/x.md",
+        "text": "- adaptive-policy-organizations-2026-10-18 program\n    ```\n    design-stage, non-effectful\n    ```\n",
+        "causes": []
+       },
+       {
+        "id": "G-QUOTE-FENCE",
+        "path": "docs/workbench/x.md",
+        "text": "> adaptive-policy-organizations-2026-10-18 program\n> ```\n> design-stage, non-effectful\n> ```\n",
+        "causes": []
+       },
+       {
+        "id": "G-QUOTE-TABLE-GFM",
+        "path": "docs/workbench/x.md",
+        "text": "> | Program | Note |\n> | --- | --- |\n> | adaptive-policy-organizations-2026-10-18 | x |\n> | design-stage, non-effectful | y |\n",
+        "causes": []
+       },
+       {
+        "id": "G-QUOTE-TABLE",
+        "path": "docs/workbench/x.md",
+        "text": "> | adaptive-policy-organizations-2026-10-18 | x |\n> | design-stage, non-effectful | y |\n",
+        "causes": []
+       },
+       {
+        "id": "G-QUOTE-HEADING",
+        "path": "docs/workbench/x.md",
+        "text": "> ## The design-stage, non-effectful program\n> adaptive-policy-organizations-2026-10-18 binds Pi.\n",
+        "causes": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "Q18",
+     "witness": {
+      "probes": [
+       {
+        "id": "joined",
+        "path": "src/x.ts",
+        "text": "const x = \"\";\nexport const T = `adaptive-policy-organizations-2026-10-18 design-${x}stage, non-effectful`;\n",
+        "causes": []
+       },
+       {
+        "id": "touching",
+        "path": "src/x.ts",
+        "text": "const x = \"-ish\";\nexport const T = `adaptive-policy-organizations-2026-10-18 design-stage${x}, non-effectful`;\n",
+        "causes": []
+       },
+       {
+        "id": "negating",
+        "path": "src/x.ts",
+        "text": "const x = \"not\";\nexport const T = `adaptive-policy-organizations-2026-10-18 is ${x} design-stage and non-effectful`;\n",
+        "causes": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "Q19",
+     "witness": {
+      "probes": [
+       {
+        "id": "G-SPANS-BLANK-LIST",
+        "path": "docs/workbench/x.md",
+        "text": "- note <!-- open\n\n  adaptive-policy-organizations-2026-10-18 design-stage, non-effectful -->\n",
+        "causes": []
+       },
+       {
+        "id": "G-SPANS-BLANK-QUOTE",
+        "path": "docs/workbench/x.md",
+        "text": "> note <!-- open\n>\n> adaptive-policy-organizations-2026-10-18 design-stage, non-effectful -->\n",
+        "causes": []
+       },
+       {
+        "id": "G-TOPLEVEL-INLINE-COMMENT",
+        "path": "docs/workbench/x.md",
+        "text": "Pi notes <!-- open\n\nadaptive-policy-organizations-2026-10-18 design-stage, non-effectful -->\n",
+        "causes": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "Q20",
+     "witness": {
+      "probes": [
+       {
+        "id": "G-JSX-TEXT",
+        "path": "src/x.tsx",
+        "text": "export const V = () => <div>The adaptive-policy-organizations-2026-10-18 view</div>;\nexport const D = { effectClass: \"write\" };\n",
+        "causes": []
+       },
+       {
+        "id": "G-JSX-ATTR-EFFECT",
+        "path": "src/x.tsx",
+        "text": "// The APO view module.\nexport const V = () => <View effectClass=\"write\" />;\n",
+        "causes": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "Q21",
+     "witness": {
+      "probes": [
+       {
+        "id": "G-GETTER",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const D = { get effectClass() { return \"write\"; } };\n",
+        "causes": []
+       },
+       {
+        "id": "G-DEFINE-PROPERTY",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const D = {};\nObject.defineProperty(D, \"effectClass\", { value: \"write\" });\n",
+        "causes": []
+       },
+       {
+        "id": "G-PRIVATE-FIELD",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport class V { #effectClass = \"write\"; }\n",
+        "causes": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "Q22",
+     "witness": {
+      "residual": "R-RETILED",
+      "folds": {
+       "E1+E2": true,
+       "E2+E3": true,
+       "C1+C2": true,
+       "C2+C3": true,
+       "C3+C4": true,
+       "C4+C5": true,
+       "G1+G2": true,
+       "M1+M2": true
+      }
+     }
+    },
+    {
+     "id": "Q23",
+     "witness": {
+      "residual": "R-CONSTANT-WITNESS",
+      "standIn": {
+       "ran": true,
+       "witness": {
+        "constant": "a witness the stand-in did not compute"
+       }
+      }
      }
     }
    ]

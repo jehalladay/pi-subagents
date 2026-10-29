@@ -9,11 +9,11 @@
  * first lands." The filing measured "0 git-grep hits for adaptive-policy-organizations/APO- in the Pi tree at 4ae0470" and
  * cites the producer line 01-vision-decisions.md:21@4b8b974ca72b.
  *
- * MEASURED (read-only, by the cutting seat, 2026-10-29, at this census's base 04123dc, trunk at claim time). Producer (the local
- * MechanicalWorkflows checkout at 4b8b974ca72bf2ed36b99e315e45857c6181fbe8, git show; PRODUCER below and the roster's producer
- * block hold the lines and blobs, the hermetic census never re-reads them): README.md:3 (blob 512de7eeb579) reads "Date:
- * 2026-10-18. Status: accepted design direction; documentation only. ..."; 01-vision-decisions.md:20 (blob c0ae12b98481) is
- * "## Non-goals" and :21 lists seven non-goals, the last "effectful DevTools", then "All remain separate owners or deferred
+ * MEASURED (read-only, by the cutting seat, 2026-10-29, at this census's base 04123dc, trunk at cut #1's claim time). Producer
+ * (the local MechanicalWorkflows checkout at 4b8b974ca72bf2ed36b99e315e45857c6181fbe8, git show; PRODUCER below and the roster's
+ * producer block hold the lines and blobs, the hermetic census never re-reads them): README.md:3 (blob 512de7eeb579) reads
+ * "Date: 2026-10-18. Status: accepted design direction; documentation only. ..."; 01-vision-decisions.md:20 (blob c0ae12b98481)
+ * is "## Non-goals" and :21 lists seven non-goals, the last "effectful DevTools", then "All remain separate owners or deferred
  * research.". Pi: git would commit 329 files outside test/ and .beads/ (the product scope): 106 markdown files (docs/ 79, the
  * five root pages, new-feedback/ 18, examples/, .pi/agents/, .agents/skills/ and vendor/ one each), 198 scripts (src/ 117, all
  * .ts; qa/, examples/ and the root configs the rest), 18 other text files, 5 binaries (the two media files and the three
@@ -25,9 +25,14 @@
  * scope (R-SCOPE). At the filing tree 4ae0470 the same readers over all 707 files outside .beads/ (test/ included, the filing's
  * whole Pi tree) read no citing unit either. Two landed censuses of the family already hold the same absence for their own
  * requirements (wb-021.3 T1 and Z2 over src and the docs, wb-021.4 L3 over src), so a first mention reds those too. Trunk
- * e8e13f8 (landing 672, wb-021.5: three test/ files and the .beads export) was merged into the branch before handoff; the
- * product scope is unchanged, and this bead's export row keeps its title and notes. No src, docs or tracker text is edited
- * by this cut.
+ * e8e13f8 (landing 672) was merged into the branch before cut #1's handoff and trunk 57cb1c0 (landing 677) before cut #2's:
+ * between the base and 57cb1c0 the product scope changed in one file (docs/workbench/18-decisions-and-risks.md, two lines
+ * added, no citing unit; 329 files, 155479 units, 7449 doc units and 16809 strings at 57cb1c0), and this bead's export row
+ * keeps its title and its owner filing first. No src, docs or tracker text is edited by this cut.
+ * CUT #2 (the respin of refusal #1, gate s139): the unit claims are narrowed to the five patterns (U1, R-UNCUT), a template's
+ * carriers are read on its cooked parts (U2), each named judge mutant has a killing control (U3), and F1-F6 are cured or named
+ * below (R-RETILED, the run guard and R-CONSTANT-WITNESS, Q1's root reading, R-JSX and R-ACCESSOR, the character-reference
+ * over-read, R-INLINE-COMMENT).
  *
  * THE CITATION. A text CITES the program when the program family's shared ROLE reading (roleReading of
  * test/helpers/apo-ui-publish-census.ts, wb-021.4) reads it: the abbreviation APO as a word, or the slug's three words in order
@@ -35,35 +40,52 @@
  * (default-ignorable code points dropped, NFKD-folded, combining marks dropped, letter-digit runs split at case changes,
  * acronym boundaries and letter-digit boundaries, lower-cased). Every mention counts: a requirement id of the family, a source
  * tag, a path or link destination inside a unit, a comment. Citations are read on the raw text of a unit, so a citation only
- * the markup holds still cites (fail-closed); carriers are read on the carrier view.
- * THE UNITS. A markdown file (.md) is cut into units: a blank-line block, where a heading, a table row and each line inside a
- * code fence are units of their own and a list item opens one. A script (.ts, .js and their m/c and x forms) is read through the
- * TypeScript AST: each string literal by its cooked value, each regular-expression literal by its source, each template
- * expression (cooked parts with the raw substitutions), each comment (leading and same-line trailing ranges) and each
- * identifier as CODE. Any other file is read line by line. A file holding a NUL byte is a binary and is not read; the two
- * locks are set aside by name.
- * THE CARRIERS. A citing markdown unit (a Pi doc's) or a citing script string (a surfaced string) OWES both carriers in its
- * own text; a citing comment, identifier or other line owes none. The status carrier is "design-stage" (the statement's word)
- * as a whole word in any case, or the producer's status literal "accepted design direction; documentation only" (any case,
- * marks exact, any white-space run between its words); the scope carrier is "non-effectful" (the statement's word) as a whole
- * word in any case. A carrier counts unless a negation (not, never, nor, no, isn't, aren't, wasn't, weren't, formerly,
- * previously) sits in the two words before it or "no longer", "no more" or "anymore" follows it. A unit carrying no status is
- * a status finding, no scope a scope finding.
+ * the markup or a substitution's source text holds still cites (fail-closed); carriers are read on the carrier view.
+ * THE UNITS. White space means JavaScript's \s throughout. A markdown file (.md) is cut line by line by five patterns. A line
+ * FENCE reads (up to three white-space characters, then three or more backticks or three or more tildes) is a unit of its own
+ * and toggles the fence, whatever mark opened it, and every line read while the fence is open is a unit of its own. Outside a
+ * fence, a line BLANK reads (white space and '>' marks only) ends the open block; a line HEADING reads (up to three white-space
+ * characters, then one to six '#' and white space or the line's end) or TABLE_ROW reads (white space, then '|') is a unit of
+ * its own; a line LIST_ITEM reads (white space and '>' marks, then '-', '*', '+' or one to nine digits and '.' or ')', then
+ * white space) opens a block, and so does any line read while no block is open; every other line joins the open block. No other
+ * line is a boundary: a setext heading, a table row whose first character after its white space is not '|', a heading or a
+ * fence after four or more white-space characters, and a heading, a row or a fence behind a '>' mark are read inside their
+ * block (R-UNCUT). A script (.ts, .js and their m/c and x forms) is read through the TypeScript AST: each string literal by its
+ * cooked value, each regular-expression literal by its source, each template expression by its cooked parts with the source
+ * text of each substitution's expression (from its first token to its last) in place, each comment (leading and same-line
+ * trailing ranges) and each identifier as CODE; JSX text is not a unit (R-JSX). Any other file is read line by line. A file
+ * holding a NUL byte is a binary and is not read; the two locks are set aside by name.
+ * THE CARRIERS. A citing markdown unit (a Pi doc's) or a citing script string (a surfaced string) OWES both carriers in its own
+ * carrier view; a citing comment, identifier or other line owes none. The status carrier is "design-stage" (the statement's
+ * word) as a whole word in any case, or the producer's status literal "accepted design direction; documentation only" (any
+ * case, marks exact, any white-space run between its words); the scope carrier is "non-effectful" (the statement's word) as a
+ * whole word in any case (a whole word: no ASCII letter or digit, '_' or '-' touches it). A carrier counts unless one of the
+ * two words before it holds a negation - not, never, nor, no, isn't, aren't, wasn't, weren't, formerly or previously (the ASCII
+ * apostrophe), matched between word boundaries in any case, a word being a run of characters between white space, a lone
+ * punctuation mark included - or "no longer", "no more", "anymore" or "any more" follows it after non-word characters only. A
+ * unit carrying no status is a status finding, no scope a scope finding.
  * THE CARRIER VIEW (the wb-kku9.2 / wb-3cql F3 reading, ported): a markdown unit's carriers are read on what its rendered page
- * shows. marked's top-level tokens of the whole document place each line: a raw HTML block, a link reference definition and a
- * code fence delimiter show nothing; a code block's lines show verbatim; a list or quote whose raw HTML crosses a blank line is
- * opaque. The unit's remaining lines are rendered on their own (indentation removed, footnote syntax removed, the document's
- * definitions preloaded): HTML, images and their alt text, definitions, link destinations and titles and struck text show no
- * carrier, and a raw HTML element makes the view opaque, carrying nothing. A script string is shown as its cooked text.
+ * shows. marked's top-level tokens of the whole document place each line: a raw HTML block and a link reference definition show
+ * nothing, a code block's lines FENCE reads (its delimiters) show nothing and its other lines show as code, and a list or quote
+ * holding an HTML token whose raw text crosses a blank line (a line of spaces, tabs and '>' marks only; at any depth) is
+ * opaque. A unit whose lines all show as code or nothing shows its code lines verbatim; the remaining units are rendered on
+ * their own (their lines that show nothing dropped, indentation removed, every footnote definition line dropped and every
+ * footnote reference removed, the document's link definitions preloaded): HTML, images and their alt text, definitions, link
+ * destinations and titles (an autolink's text, which is its destination, shows) and struck text show no carrier, and a raw HTML
+ * element makes the view opaque, carrying nothing. A script string is shown as its cooked text, and a template as its cooked
+ * parts with each substitution shown as nothing: a carrier only a substitution holds (a value, a literal, a call or a comment)
+ * does not qualify, and what a substitution's value would show is not read (R-SUBST-VALUE).
  * THE BANNER AND THE EFFECT CLASS. A src script holding a citing unit (a string, a comment or an identifier) is under the
  * program's banner. In a banner module every effectClass it sets - a property assignment (an identifier, a quoted or a
  * literal computed key), a shorthand property, a class field with an initializer, or a plain assignment to a property or
- * element access named effectClass - whose value, its parentheses, assertions and satisfies clauses removed, is not the
- * string literal "read" is an effect-class finding naming the value (a non-literal value reads non-literal). The registry's
- * descriptor type (src/workbench/capability-registry.ts) holds read and the effect classes beside it.
- * THE BINDING. Every citing unit of the product scope, keyed by its path and its text with white space squeezed, must be held in
- * BOUND, and every BOUND entry must key a citing unit: BOUND is empty because no unit cites today, so the first mention lands
- * unbound and the cut that adds it binds it here in the same commit, where its carriers are judged by name.
+ * element access named effectClass - whose value, with its parentheses, its as, angle-bracket and non-null ('!') assertions
+ * and its satisfies clauses removed, is not the string literal "read" is an effect-class finding naming the value (a
+ * non-literal value reads non-literal). The registry's descriptor type (src/workbench/capability-registry.ts) holds read and
+ * the effect classes beside it.
+ * THE BINDING. Every citing unit of the product scope, keyed by its path and its text with white space squeezed (every run,
+ * line breaks included, read as one space, the ends trimmed), must be held in BOUND, and every BOUND entry must key a citing
+ * unit: BOUND is empty because no unit cites today, so the first mention lands unbound and the cut that adds it binds it here
+ * in the same commit, where its carriers are judged by name.
  *
  * ROWS (rows P, E and C tile the statement in order and rows G and M the acceptance; each row's pin quotes tile its label).
  * P, the premise: P1 the producer record - 01-vision-decisions.md:20 opens the Non-goals section, :21's last non-goal is
@@ -73,20 +95,25 @@
  * E, the effect-class duty: E1 the src walk - git's list below src/ equals the filesystem walk both ways, keeps its floor, the
  *    registry's descriptor type holds read, no live src module is under the banner and the same call finds a planted banner
  *    module's effect class and nothing else; E2 the effect-class judge - read quiet, every effect class the registry names
- *    beside read and an invented one flagged, each value and key form above read, a type-only declaration and a comparison
- *    quiet; E3 the banner reader - an uncited module quiet, a citing line comment, block comment, JSDoc, trailing comment,
- *    identifier, string and requirement id each put the module under the banner, and a qa/ or examples/ script and a src
- *    markdown file are no banner module.
+ *    beside read and an invented one flagged, each value and key form above read (an as, a satisfies, a non-null and an
+ *    angle-bracket assertion around read quiet, a non-null and an angle-bracket one around write flagged), a type-only
+ *    declaration and a comparison quiet; E3 the banner reader - an uncited module quiet, a citing line comment, block comment,
+ *    JSDoc, trailing comment, identifier, string and requirement id each put the module under the banner, and a qa/ or
+ *    examples/ script and a src markdown file are no banner module.
  * C, the citation duty: C1 every Pi doc - every markdown file of the product scope, its floor, docs/'s markdown list equal to
- *    the filesystem walk's both ways, every docs/workbench page opening with a level-1 heading unit and every receipt with its
- *    rule-15 first line, the doc unit floor, a planted unqualified doc found by the same call, and the unit-boundary controls
- *    (a carrier in another block, list item, heading, table row or fence line does not qualify; a root page, an agent page and a
- *    feedback page are docs); C2 every surfaced string - every script of the product scope, its floor and string floor, the
- *    schema literal "workflow-script/v1" a string unit of src/workbench/identity.ts alone among src files, a planted unqualified
- *    src string found by the same call, and the string controls (each carrier alone, a carrier only a substitution holds, a
- *    cooked escape, carriers split across two strings, a property key, a regular expression, a qa/, an examples/ and a root
- *    config string); C3 the citation reader, through the shared reader, on its spellings and its quiet words; C4 the status
- *    carriers on the carrier view; C5 the scope carrier on the carrier view and in a src string.
+ *    the filesystem walk's both ways, every docs/workbench page opening with a HEADING unit that reads '# ' and every receipt
+ *    with its rule-15 first line, the doc unit floor, a planted unqualified doc found by the same call, and the unit-boundary
+ *    and view controls (a carrier in another blank-line block, list item, HEADING line, TABLE_ROW line or fence line does not
+ *    qualify; a list's or a quote's HTML block that crosses a blank line hides the citing text it holds; a code line's tags and
+ *    marks show verbatim; a root page, an agent page and a feedback page are docs); C2 every surfaced string - every script of
+ *    the product scope, its floor and string floor, the schema literal "workflow-script/v1" a string unit of
+ *    src/workbench/identity.ts alone among src files, a planted unqualified src string found by the same call, and the string
+ *    controls (each carrier alone, a carrier only a substitution holds - a value, a literal, a call or a comment -, a citation
+ *    only a substitution's source text holds, a cooked escape, carriers split across two strings, a property key, a regular
+ *    expression, a qa/, an examples/ and a root config string); C3 the citation reader, through the shared reader, on its
+ *    spellings and its quiet words; C4 the status carriers on the carrier view (a negation two words before, a reference link's
+ *    label, a footnote definition line and a character reference among them); C5 the scope carrier on the carrier view and in
+ *    a src string.
  * G, the absence guard: G1 the live product scope - every file listed (the locks among them, no unread root), every listed file
  *    read or set aside once, no live unit citing the program while a qualified plant read by the same call cites, owes nothing
  *    and lands unbound against BOUND; G2 today - the filing tree 4ae0470 (every file outside .beads/) and this census's base
@@ -95,45 +122,68 @@
  * M, the armed census: M1 an unqualified doc and an unqualified, effect-class-write src module added to a scratch git
  *    repository's index (test/helpers/scratch.ts, leak guard installed) and read through the census's own git listing fail it,
  *    their qualified, read-class twins pass and still cite; M2 the binding - the first mention lands unbound, bound here it is
- *    quiet, a bound entry no unit carries is stale, and a reworded mention is unbound again beside its stale entry.
- * Q, the residuals' pinned quiet rows: each witness (but R-SCOPE's path list) is its probe's path, text and causes, and the
- *    probe is re-judged where the witness is compared.
+ *    quiet, a two-line, multi-space mention keys by its squeezed text and binds by it, a bound entry no unit carries is stale,
+ *    and a reworded mention is unbound again beside its stale entry.
+ * Q, the residuals' pinned quiet rows: a reading residual's witness carries its probes' paths, texts and causes, and each probe
+ *    is re-judged where the witness is compared; the witnesses of R-SCOPE (its path list and the readings of the files it sets
+ *    aside), R-RETILED (the folds it tiles) and R-CONSTANT-WITNESS (the run guard's reading of a stand-in) are structural.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and
  * pins, every pin's witness, the producer block, the constants and every registered test title - is held to the out-of-file
  * roster (test/fixtures/apo-citation-status-roster.json); the residual families are held to the RESIDUALS line of this header.
+ * THE RUN GUARD: every pin's case runs under a counter that the judge (judgeFiles) and the export reader (beadRow) raise, and
+ * its pin and the closing case red when neither ran while it ran, so a case that returns its witness as a constant without
+ * reading reds; what a witness is computed from is not read (R-CONSTANT-WITNESS). SELF-READ: no case's source text names
+ * ROSTER, ROSTER_PATH, rosterWitness, readRoster or the roster's file name (a name test, nothing more).
  * OUTSIDE ANCHORS (their own registered case): the bead's own row in the tracker export (.beads/issues.jsonl) - rows P, E and C
  * tile the statement and rows G and M the acceptance with nothing but separators between, and each row's pin quotes tile its
- * label, so a pin or a row removed from ROWS, the literal, QUOTES, IMPL and the roster together still reds; the scope and
- * status carriers are the statement's words; the program id is the statement's and reads as the slug; the abbreviation is the
- * statement's; the requirement id spells the slug; the statement's two quotes are carried by the producer's :21 line and by
- * P1's witness; the notes' producer citation names the producer file, line and sha; FILING_TREE is the notes' measuring tree
- * and G2's witness carries it; both of the notes' needles cite through the shared reader; C3, C4 and C5 name and carry the
- * program id and the two carrier words; and the src registry's descriptor type holds read and exactly the effect classes E2
- * judges. The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran before it) and
- * REACHED (every pin reached its witness compare, and each compare's own result).
+ * label, so a pin or a row removed from ROWS, the literal, QUOTES, IMPL and the roster together still reds (a pin folded into
+ * its neighbour does not: R-RETILED); the scope and status carriers are the statement's words; the program id is the
+ * statement's and reads as the slug; the abbreviation is the statement's; the requirement id spells the slug; the statement's
+ * two quotes are carried by the producer's :21 line and by P1's witness; the notes' producer citation names the producer file,
+ * line and sha; FILING_TREE is the notes' measuring tree and G2's witness carries it; both of the notes' needles cite through
+ * the shared reader; C3, C4 and C5 name and carry the program id and the two carrier words; and the src registry's descriptor
+ * type holds read and exactly the effect classes E2 judges. The last case reads the vitest task tree (every registered test,
+ * in roster order, in run mode, ran before it) and REACHED (every pin reached its witness compare under the run guard, and
+ * each compare's own result).
  * NOT CLAIMED (edits of this file and the roster together): a residual family removed from ROWS, the literal, IMPL, RESIDUALS,
- * this header's RESIDUALS line and the roster (no anchor outside this file and its roster names the residual families on a
- * first cut: CT6 on Q16 measured green at this cut; the landed record is the anchor a follow-up can bind, the wb-59u1 F3 form);
- * a control, plant or probe removed or edited in IMPL and the roster together while every remaining one holds; a floor or a
- * fixed tree's count changed in FLOORS or TREES and the roster together (git's list equal to the filesystem walk stays the
- * narrowing guard for src/ and docs/); a seat-added vocabulary member (a negation word, an effect-class key form) removed with
- * every control naming it; the outside-anchor case or the closing case removed with its roster title; the shared reader's own
- * readings (wb-021.4's census pins them; a change there moves this census's controls, which then red).
+ * this header's RESIDUALS line and the roster (no anchor outside this file and its roster names the residual families: CT6 on
+ * Q16 measured green at cuts #1 and #2; the landed record is the anchor a follow-up can bind, the wb-59u1 F3 form); a pin
+ * folded into its neighbour (R-RETILED); a control, plant or probe removed or edited in IMPL and the roster together while
+ * every remaining one holds; a floor or a fixed tree's count changed in FLOORS or TREES and the roster together (git's list
+ * equal to the filesystem walk stays the narrowing guard for src/ and docs/); a seat-added vocabulary member (a negation word,
+ * an effect-class key form) removed with every control naming it; the outside-anchor case or the closing case removed with its
+ * roster title; the shared reader's own readings (wb-021.4's census pins them; a change there moves this census's controls,
+ * which then red). Nor, in this file alone, a reader that tells the product scope's files from the files Q1 reads, the plants
+ * or M1's scratch repository (by path, by root or by content): Q1 reads three citing test/ files through readScope at the
+ * repository root, so a reader that neutralizes every file it reads from that root reds, and one that neutralizes only the
+ * product scope's files does not.
  * RESIDUALS (named, each with its pinned quiet row): R-SCOPE test/ and .beads/ are not read (Q1); R-LOCKFILE the two dependency
  * locks are set aside by name (Q2); R-BINARY a file holding a NUL byte is not read (Q3); R-PATH a file's path is not read (Q4);
  * R-PARAPHRASE-CITE a citation through none of the reader's spellings does not cite (Q5); R-GLUED the slug's words run together
  * in one case do not cite (Q6); R-PLURAL the abbreviation's plural does not cite (Q7); R-ENCODED a spelling through a character
  * reference does not cite (Q8); R-SPLIT-SOURCE a src citation split across a concatenation does not cite (Q9);
- * R-NEGATION-DISTANCE a negation more than two words before a carrier does not cancel it (Q10); R-NOT-SURFACED a citing comment
- * or identifier owes no carrier (Q11); R-OTHER-FILES a line of a file that is neither markdown nor a script owes no carrier
- * (Q12); R-CONTRADICTION a qualified citing unit is not judged for a claim against its carriers (Q13); R-REACH an effect a
- * banner module reaches through a call is not read (Q14); R-UNBANNERED a module that does not cite the program is not under the
- * banner (Q15); R-COMPUTED-KEY an effect class set through a computed key, a spread or a compound assignment is not read (Q16).
+ * R-NEGATION-DISTANCE a negation more than two words before a carrier does not cancel it, three words before included (Q10);
+ * R-NOT-SURFACED a citing comment or identifier owes no carrier (Q11); R-OTHER-FILES a line of a file that is neither markdown
+ * nor a script owes no carrier (Q12); R-CONTRADICTION a qualified citing unit is not judged for a claim against its carriers
+ * (Q13); R-REACH an effect a banner module reaches through a call is not read (Q14); R-UNBANNERED a module that does not cite
+ * the program is not under the banner (Q15); R-COMPUTED-KEY an effect class set through a computed key, a spread or a compound
+ * assignment is not read (Q16); R-UNCUT a heading, a table row or a fence line no pattern reads (a setext heading, a row that
+ * does not open with '|', a heading or a fence indented four or more, and a heading, a row or a fence behind a '>' mark) is
+ * read inside its block, so a carrier it holds qualifies a citing line beside it (Q17); R-SUBST-VALUE what a substitution's
+ * value shows is not read: a carrier the cooked parts spell across a substitution, beside one or after a negation one would
+ * show still counts (Q18); R-INLINE-COMMENT an HTML comment opened inside a paragraph, a list item or a quote and closed after
+ * a blank line is not read as hiding the blocks it spans (Q19); R-JSX JSX text is not a unit, and an effectClass set as a JSX
+ * attribute is not read (Q20); R-ACCESSOR an effect class set through a getter, Object.defineProperty or a private field is
+ * not read (Q21); R-RETILED the outside anchors bind the order and the words of the pin quotes, not where one quote ends: a
+ * pin folded into its neighbour (removed, the neighbour re-quoted over both, in this file and the roster together) still
+ * tiles the statement and the acceptance (Q22); R-CONSTANT-WITNESS the run guard reads that a case ran a reader, not what its
+ * witness was computed from: a case that runs the judge and returns a witness it did not compute passes it (Q23).
  * OVER-READS (disclosed; none live today): every mention cites, a requirement id or a path inside a doc included; a citing unit
- * whose status or scope is a paraphrase ("design stage", "read-only", "effectful DevTools is a non-goal") or sits in a
- * neighbouring unit, the page's heading or a substitution flags; a script string that is never displayed owes the carriers
- * like a surfaced one; and, from the carrier view, a carrier only a comment, a link destination or title, alt text, struck
- * text, an element or an HTML block holds does not qualify.
+ * whose status or scope is a paraphrase ("design stage", "read-only", "effectful DevTools is a non-goal"), sits in a
+ * neighbouring unit (the page's HEADING line among them) or is spelled through a character reference ("design&#45;stage", which
+ * the page shows as the carrier) flags, and so does a template whose carrier only a substitution holds; a script string that
+ * is never displayed owes the carriers like a surfaced one; and, from the carrier view, a carrier only a comment, a link
+ * destination or title, alt text, struck text, an element or an HTML block holds does not qualify.
  * SCOPE: the judges read words, not meaning. Display paths added: none (test-only; src/ and the docs are read, never edited).
  * Scratch: M1 composes makeScratch/removeScratch with the leak guard installed; the tree, .beads and git objects are otherwise
  * only read.
@@ -239,7 +289,16 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-REACH": ["Q14"],
   "R-UNBANNERED": ["Q15"],
   "R-COMPUTED-KEY": ["Q16"],
+  "R-UNCUT": ["Q17"],
+  "R-SUBST-VALUE": ["Q18"],
+  "R-INLINE-COMMENT": ["Q19"],
+  "R-JSX": ["Q20"],
+  "R-ACCESSOR": ["Q21"],
+  "R-RETILED": ["Q22"],
+  "R-CONSTANT-WITNESS": ["Q23"],
 };
+/** The residuals whose quiet rows pin a listing or the census's own structure rather than judge probes. */
+const STRUCTURAL_RESIDUALS: readonly string[] = ["R-SCOPE", "R-RETILED", "R-CONSTANT-WITNESS"];
 
 interface Row {
   readonly id: string;
@@ -257,7 +316,8 @@ const ROWS: readonly Row[] = [
   },
   { id: "G", label: "absence guard today", pins: ["G1", "G2"] },
   { id: "M", label: "citation-status census when a mention first lands", pins: ["M1", "M2"] },
-  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12", "Q13", "Q14", "Q15", "Q16"] },
+  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12", "Q13", "Q14", "Q15", "Q16", "Q17", "Q18", "Q19", "Q20", "Q21", "Q22", "Q23"],
+  },
 ];
 /** Each judged pin's quote: the quotes of a row tile its label (the anchor case). */
 const QUOTES: Readonly<Record<string, string>> = {
@@ -523,7 +583,9 @@ function sourceUnits(path: string, text: string): Unit[] {
       units.push({ line: lineOf(node.getStart(file)), kind: "string", text: node.text });
     } else if (ts.isTemplateExpression(node)) {
       const body = node.head.text + node.templateSpans.map(span => `\${${span.expression.getText(file)}}${span.literal.text}`).join("");
-      units.push({ line: lineOf(node.getStart(file)), kind: "string", text: body });
+      /** THE CARRIER VIEW of a template: its cooked parts, each substitution shown as nothing. */
+      const shown = node.head.text + node.templateSpans.map(span => span.literal.text).join("");
+      units.push({ line: lineOf(node.getStart(file)), kind: "string", text: body, view: () => ({ text: shown, opaque: false }) });
     } else if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) {
       units.push({ line: lineOf(node.getStart(file)), kind: "code", text: node.text });
     }
@@ -618,8 +680,17 @@ interface Judgement {
 function squeezed(text: string): string {
   return text.replace(/\s+/g, " ").trim();
 }
+/** The run guard's counter: the judge and the export reader raise it (THE RUN GUARD). */
+const READS = { calls: 0 };
+/** Runs one case under the run guard: its witness, and whether the judge or the export reader ran while it ran. */
+function guarded(run: () => JsonValue): { readonly witness: JsonValue; readonly ran: boolean } {
+  const before = READS.calls;
+  const witness = json(run());
+  return { witness, ran: READS.calls > before };
+}
 /** THE JUDGE: every unit of every file, the carriers a citing doc unit or string owes, then each banner module's effect classes. */
 function judgeFiles(files: readonly FileText[]): Judgement {
+  READS.calls += 1;
   const kinds: Record<FileKind, number> = { lock: 0, binary: 0, markdown: 0, script: 0, text: 0 };
   let units = 0;
   let strings = 0;
@@ -725,14 +796,31 @@ function quiet(path: string, text: string, why: string): JsonValue {
   expect(causes, why).toEqual([]);
   return json({ path, text, causes });
 }
-/** A quiet row's probe, read back from its witness (re-judged where the witness is compared). */
-function probeOf(witness: JsonValue): { path: string; text: string; causes: unknown } | undefined {
-  if (!isObject(witness) || typeof witness.path !== "string" || typeof witness.text !== "string" || !Object.hasOwn(witness, "causes")) return undefined;
-  return { path: witness.path, text: witness.text, causes: witness.causes };
+/** A residual's quiet row over several probes (each a named gate plant): every probe reads quiet, and the witness carries each. */
+function quietAll(why: string, probes: readonly { readonly id: string; readonly path: string; readonly text: string }[]): JsonValue {
+  return json({
+    probes: probes.map(probe => {
+      const causes = causesOf(probe.path, probe.text);
+      expect(causes, `${probe.id}: ${why}`).toEqual([]);
+      return { id: probe.id, path: probe.path, text: probe.text, causes };
+    }),
+  });
+}
+interface Probe {
+  readonly path: string;
+  readonly text: string;
+  readonly causes: unknown;
+}
+/** A quiet row's probes, read back from its witness (each re-judged where the witness is compared). */
+function probesOf(witness: JsonValue): Probe[] {
+  if (!isObject(witness)) return [];
+  if (typeof witness.path === "string" && typeof witness.text === "string" && Object.hasOwn(witness, "causes")) return [{ path: witness.path, text: witness.text, causes: witness.causes }];
+  return Array.isArray(witness.probes) ? witness.probes.flatMap(probe => probesOf(probe)) : [];
 }
 
 /** The bead's own row in the tracker export. */
 function beadRow(bead: string): { title: string; notes: string } {
+  READS.calls += 1;
   for (const line of textOf(EXPORT).split("\n")) {
     if (!line.includes(`"id":"${bead}"`)) continue;
     const row: unknown = JSON.parse(line);
@@ -782,6 +870,7 @@ function constantsOf(): JsonValue {
     quotes: QUOTES,
     plants: { qualified: PLANT_QUALIFIED, doc: PLANT_DOC, string: PLANT_STRING, banner: PLANT_BANNER },
     residuals: RESIDUALS,
+    structuralResiduals: STRUCTURAL_RESIDUALS,
   });
 }
 
@@ -800,7 +889,7 @@ function headerResiduals(): Record<string, string[]> {
 }
 
 /** The pins that reached their witness compare, in run order, each with the compare's own result. */
-const REACHED: { pin: string; same: boolean }[] = [];
+const REACHED: { pin: string; same: boolean; ran: boolean }[] = [];
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => JsonValue>> = {
@@ -844,6 +933,10 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "invented", path: "src/x.ts", text: `${banner}export const D = { effectClass: "admin" };`, causes: ["effect-class:admin"] },
       { id: "read-as-const", path: "src/x.ts", text: `${banner}export const D = { effectClass: "read" as const };`, causes: [] },
       { id: "read-satisfies", path: "src/x.ts", text: `${banner}export const D = { effectClass: "read" satisfies string };`, causes: [] },
+      { id: "read-non-null", path: "src/x.ts", text: `${banner}export const D = { effectClass: "read"! };`, causes: [] },
+      { id: "read-angle-assertion", path: "src/x.ts", text: `${banner}export const D = { effectClass: <const>"read" };`, causes: [] },
+      { id: "write-non-null", path: "src/x.ts", text: `${banner}export const D = { effectClass: "write"! };`, causes: ["effect-class:write"] },
+      { id: "write-angle-assertion", path: "src/x.ts", text: `${banner}export const D = { effectClass: <string>"write" };`, causes: ["effect-class:write"] },
       { id: "parenthesized", path: "src/x.ts", text: `${banner}export const D = { effectClass: ("write") };`, causes: ["effect-class:write"] },
       { id: "template", path: "src/x.ts", text: `${banner}export const D = { effectClass: \`write\` };`, causes: ["effect-class:write"] },
       { id: "variable", path: "src/x.ts", text: `${banner}const C = "read";\nexport const D = { effectClass: C };`, causes: ["effect-class:non-literal"] },
@@ -915,6 +1008,10 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "comment-across-blocks", text: `<!-- design-stage\n\nnote\n\nnon-effectful -->\nPi reads the ${cite} program.`, causes: ["status", "scope"] },
       { id: "html-block", text: `<div hidden>\nPi reads the ${cite} program (design-stage, non-effectful).\n</div>`, causes: ["status", "scope"] },
       { id: "code-block", text: `An example:\n\n    ${cite} (design-stage, non-effectful) <!-- -->`, causes: [] },
+      { id: "spans-block-list", text: `- note\n\n  <!-- open\n\n  ${cite} design-stage, non-effectful -->\n`, causes: ["status", "scope"] },
+      { id: "spans-block-quote", text: `> note\n>\n> <!-- open\n>\n> ${cite} design-stage, non-effectful -->\n`, causes: ["status", "scope"] },
+      { id: "code-verbatim-fence", text: `\`\`\`\n${cite} <b>design-stage</b>, non-effectful\n\`\`\`\n`, causes: [] },
+      { id: "code-verbatim-indent", text: `An example:\n\n    ${cite} ~~design-stage~~, non-effectful\n`, causes: [] },
       { id: "root-page", path: "README.md", text: `Pi reads the ${cite} program.`, causes: ["status", "scope"] },
       { id: "agent-page", path: ".pi/agents/x.md", text: `Pi reads the ${cite} program.`, causes: ["status", "scope"] },
       { id: "feedback-page", path: "new-feedback/x.md", text: `Pi reads the ${cite} program (design-stage, non-effectful).`, causes: [] },
@@ -939,6 +1036,16 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "single-quoted", path: "src/x.ts", text: `export const T = '${cite}';`, causes: ["status", "scope"] },
       { id: "template", path: "src/x.ts", text: `export const T = \`${cite} design-stage non-effectful\`;`, causes: [] },
       { id: "template-substitution", path: "src/x.ts", text: `const S = "design-stage, non-effectful";\nexport const T = \`${cite} \${S}\`;`, causes: ["status", "scope"] },
+      { id: "substitution-literal", path: "src/x.ts", text: `export const T = \`${cite} \${"design-stage, non-effectful"}\`;\n`, causes: ["status", "scope"] },
+      {
+        id: "substitution-call",
+        path: "src/x.ts",
+        text: `const hide = (text: string): string => text.slice(0, 0);\nexport const T = \`${cite} \${hide("design-stage, non-effectful")}\`;\n`,
+        causes: ["status", "scope"],
+      },
+      { id: "substitution-comment", path: "src/x.ts", text: `export const T = \`${cite} \${/* design-stage, non-effectful */ ""}\`;\n`, causes: ["status", "scope"] },
+      { id: "substitution-cites", path: "src/x.ts", text: `const apoTitle = "x";\nexport const T = \`The \${apoTitle} view\`;\n`, causes: ["status", "scope"] },
+      { id: "substitution-cites-qualified", path: "src/x.ts", text: `const apoTitle = "x";\nexport const T = \`The \${apoTitle} view (design-stage, non-effectful)\`;\n`, causes: [] },
       { id: "cooked-escape", path: "src/x.ts", text: 'export const T = "The \\u0041PO view";', causes: ["status", "scope"] },
       { id: "split-carriers", path: "src/x.ts", text: `export const T = "${cite} (design-stage)";\nexport const U = "non-effectful";`, causes: ["scope"] },
       { id: "property-key", path: "src/x.ts", text: 'export const T = { "apo.view": 1 };', causes: ["status", "scope"] },
@@ -986,6 +1093,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "absent", text: `${cite} is a ${scope} design.`, causes: ["status"] },
       { id: "unhyphenated", text: `${cite} is design stage and ${scope}.`, causes: ["status"] },
       { id: "not", text: `${cite} is not design-stage; it is ${scope}.`, causes: ["status"] },
+      { id: "not-two-words-before", text: `${cite} is not really design-stage; it is ${scope}.\n`, causes: ["status"] },
       { id: "no-longer", text: `${cite} is no longer design-stage; it is ${scope}.`, causes: ["status"] },
       { id: "trailing-no-longer", text: `${cite} is ${scope} and design-stage no longer.`, causes: ["status"] },
       { id: "prefixed", text: `${cite} is pre-design-stage and ${scope}.`, causes: ["status"] },
@@ -1005,6 +1113,9 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "element", text: `Pi reads the ${cite} program (${scope}). <span hidden>design-stage</span>`, causes: ["status", "scope"] },
       { id: "struck", text: `${cite} is ~~design-stage~~ and ${scope}.`, causes: ["status"] },
       { id: "footnote-label", text: `Pi reads the ${cite} program[^design-stage] (${scope}).\n\n[^design-stage]: A note.`, causes: ["status"] },
+      { id: "footnote-definition-line", text: `Pi reads the ${cite} program (${scope}).\n[^n]: design-stage\n`, causes: ["status"] },
+      { id: "reference-label", text: `Pi reads the ${cite} program [shown][design-stage] (${scope}).\n\n[design-stage]: https://example.invalid\n`, causes: ["status"] },
+      { id: "character-reference", text: `${cite} is design&#45;stage and ${scope}.\n`, causes: ["status"] },
       { id: "shown-link-text", text: `${cite} is [design-stage](https://example.invalid) and ${scope}.`, causes: [] },
       { id: "shown-code-span", text: `${cite} is \`design-stage\` and ${scope}.`, causes: [] },
       { id: "shown-emphasis", text: `${cite} is *design-stage* and ${scope}.`, causes: [] },
@@ -1026,6 +1137,8 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "paraphrase", text: `${cite} is ${status} and read-only, with no effect capability.`, causes: ["scope"] },
       { id: "not", text: `${cite} is ${status} and not non-effectful.`, causes: ["scope"] },
       { id: "never", text: `${cite} is ${status}, never non-effectful.`, causes: ["scope"] },
+      { id: "not-two-words-before", text: `${cite} is ${status} and not really non-effectful.`, causes: ["scope"] },
+      { id: "character-reference", text: `${cite} is ${status} and non&#45;effectful.`, causes: ["scope"] },
       { id: "no-longer", text: `${cite} is ${status} and no longer non-effectful.`, causes: ["scope"] },
       { id: "trailing-anymore", text: `${cite} is ${status} and non-effectful anymore.`, causes: ["scope"] },
       { id: "suffixed", text: `${cite} is ${status} and non-effectful-ish.`, causes: ["scope"] },
@@ -1128,6 +1241,11 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     expect(reading.citing.map(entry => entry.key), "its binding key is its path and its squeezed text").toEqual([key]);
     const bound = bindingOf(reading.citing, [...BOUND, key]);
     expect(bound, "bound here in the same commit, it is quiet").toEqual([]);
+    const spaced: FileText = { path: PLANT_QUALIFIED.path, text: "Pi reads the adaptive-policy-organizations-2026-10-18\nprogram   (design-stage, non-effectful).\n" };
+    const spacedCiting = judgeFiles([spaced]).citing;
+    expect(spacedCiting.map(entry => entry.key), "a two-line, multi-space mention keys by its squeezed text").toEqual([key]);
+    const spacedBinding = bindingOf(spacedCiting, [...BOUND, key]);
+    expect(spacedBinding, "and binds by it").toEqual([]);
     const stale = `${PLANT_QUALIFIED.path} Pi reads the program.`;
     const staleReading = bindingOf(reading.citing, [...BOUND, key, stale]);
     expect(staleReading, "a bound entry no unit carries is stale").toEqual([`${stale} stale`]);
@@ -1136,14 +1254,18 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       [...BOUND, key],
     );
     expect(reworded, "a reworded mention is unbound again and its old entry stale").toEqual([`${PLANT_QUALIFIED.path}:3 unbound`, `${key} stale`]);
-    return json({ unbound, key, bound, stale: staleReading, reworded });
+    return json({ unbound, key, bound, spaced: { text: spaced.text, keys: spacedCiting.map(entry => entry.key), binding: spacedBinding }, stale: staleReading, reworded });
   },
   Q1: () => {
     const outside = ["test/workbench-apo-export-census.test.ts", "test/workbench-apo-ui-publish-census.test.ts", "test/helpers/apo-ui-publish-census.ts", ".beads/issues.jsonl"];
     for (const path of outside) expect(textOf(path).length, `${path} exists`).toBeGreaterThan(0);
     const listed = productList(REPO);
     expect(outside.filter(path => listed.includes(path)), "the product scope lists none of them").toEqual([]);
-    return json({ outside, listed: outside.filter(path => listed.includes(path)) });
+    const tests = outside.filter(path => path.startsWith("test/"));
+    const reading = readScope(REPO, tests);
+    const citingFiles = tests.filter(path => reading.citing.some(entry => entry.at.startsWith(`${path}:`)));
+    expect(citingFiles, "each test/ file it sets aside cites the program, read through readScope at the repository root").toEqual(tests);
+    return json({ outside, listed: outside.filter(path => listed.includes(path)), citingFiles });
   },
   Q2: () => quiet("package-lock.json", '{ "name": "adaptive-policy-organizations-2026-10-18" }\n', "a dependency lock is set aside by name"),
   Q3: () => quiet("docs/workbench/x.md", `Pi reads the adaptive-policy-organizations-2026-10-18 program.${NUL}\n`, "a file holding a NUL byte is not read"),
@@ -1153,7 +1275,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
   Q7: () => quiet("docs/workbench/x.md", "Pi presents two APOs.", "the abbreviation's plural does not cite"),
   Q8: () => quiet("docs/workbench/x.md", "Pi reads the adaptive&#45;policy&#45;organizations program and A&#80;O.", "a spelling through a character reference does not cite"),
   Q9: () => quiet("src/x.ts", 'export const T = "adaptive-policy-" + "organizations";', "a src citation split across a concatenation does not cite"),
-  Q10: () => quiet("docs/workbench/x.md", "adaptive-policy-organizations-2026-10-18 is not, as of today, design-stage, nor is it, as written, non-effectful.", "a negation more than two words before a carrier does not cancel it"),
+  Q10: () => quiet("docs/workbench/x.md", "adaptive-policy-organizations-2026-10-18 is not really very design-stage, nor is it non-effectful.", "a negation three words before a carrier does not cancel it"),
   Q11: () => quiet("src/x.ts", "// The adaptive-policy-organizations-2026-10-18 view.\nexport const apoView = 1;", "a citing comment or identifier owes no carrier"),
   Q12: () => quiet("forge.toml", 'name = "adaptive-policy-organizations-2026-10-18"', "a line of a file that is neither markdown nor a script owes no carrier"),
   Q13: () => quiet("docs/workbench/x.md", "adaptive-policy-organizations-2026-10-18 (design-stage, non-effectful) ships effectful DevTools in Pi.", "a qualified citing unit is not judged for a claim against its carriers"),
@@ -1170,11 +1292,79 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       '// The APO view module.\nimport { WRITE } from "./descriptors.js";\nexport const A = { ["effect" + "Class"]: "write" };\nexport const B: { effectClass?: string } = { ...WRITE };\nB.effectClass ??= "write";',
       "an effect class set through a computed key, a spread or a compound assignment is not read",
     ),
+  Q17: () => {
+    const cite = "adaptive-policy-organizations-2026-10-18";
+    const doc = "docs/workbench/x.md";
+    return quietAll("a heading, a row or a fence line no pattern reads is read inside its block (R-UNCUT)", [
+      { id: "G-SETEXT-H1", path: doc, text: `design-stage, non-effectful\n===========================\nThe ${cite} program binds Pi.\n` },
+      { id: "G-SETEXT-H2", path: doc, text: `The design-stage, non-effectful program\n---\n${cite} binds Pi.\n` },
+      { id: "G-PIPELESS-TABLE", path: doc, text: `Program | Note\n--- | ---\n${cite} | x\ndesign-stage, non-effectful | y\n` },
+      { id: "G-PIPELESS-TABLE-1COL", path: doc, text: `Program | Note\n:-- | --:\n${cite} | x\ndesign-stage | non-effectful\n` },
+      { id: "G-LIST-FENCE-4", path: doc, text: `- ${cite} program\n    \`\`\`\n    design-stage, non-effectful\n    \`\`\`\n` },
+      { id: "G-QUOTE-FENCE", path: doc, text: `> ${cite} program\n> \`\`\`\n> design-stage, non-effectful\n> \`\`\`\n` },
+      { id: "G-QUOTE-TABLE-GFM", path: doc, text: `> | Program | Note |\n> | --- | --- |\n> | ${cite} | x |\n> | design-stage, non-effectful | y |\n` },
+      { id: "G-QUOTE-TABLE", path: doc, text: `> | ${cite} | x |\n> | design-stage, non-effectful | y |\n` },
+      { id: "G-QUOTE-HEADING", path: doc, text: `> ## The design-stage, non-effectful program\n> ${cite} binds Pi.\n` },
+    ]);
+  },
+  Q18: () =>
+    quietAll("what a substitution's value shows is not read (R-SUBST-VALUE)", [
+      { id: "joined", path: "src/x.ts", text: `const x = "";\nexport const T = \`adaptive-policy-organizations-2026-10-18 design-\${x}stage, non-effectful\`;\n` },
+      { id: "touching", path: "src/x.ts", text: `const x = "-ish";\nexport const T = \`adaptive-policy-organizations-2026-10-18 design-stage\${x}, non-effectful\`;\n` },
+      { id: "negating", path: "src/x.ts", text: `const x = "not";\nexport const T = \`adaptive-policy-organizations-2026-10-18 is \${x} design-stage and non-effectful\`;\n` },
+    ]),
+  Q19: () =>
+    quietAll("an HTML comment opened inline and closed after a blank line is not read as hiding the blocks it spans (R-INLINE-COMMENT)", [
+      { id: "G-SPANS-BLANK-LIST", path: "docs/workbench/x.md", text: "- note <!-- open\n\n  adaptive-policy-organizations-2026-10-18 design-stage, non-effectful -->\n" },
+      { id: "G-SPANS-BLANK-QUOTE", path: "docs/workbench/x.md", text: "> note <!-- open\n>\n> adaptive-policy-organizations-2026-10-18 design-stage, non-effectful -->\n" },
+      { id: "G-TOPLEVEL-INLINE-COMMENT", path: "docs/workbench/x.md", text: "Pi notes <!-- open\n\nadaptive-policy-organizations-2026-10-18 design-stage, non-effectful -->\n" },
+    ]),
+  Q20: () =>
+    quietAll("JSX text is not a unit, and an effectClass set as a JSX attribute is not read (R-JSX)", [
+      { id: "G-JSX-TEXT", path: "src/x.tsx", text: 'export const V = () => <div>The adaptive-policy-organizations-2026-10-18 view</div>;\nexport const D = { effectClass: "write" };\n' },
+      { id: "G-JSX-ATTR-EFFECT", path: "src/x.tsx", text: '// The APO view module.\nexport const V = () => <View effectClass="write" />;\n' },
+    ]),
+  Q21: () =>
+    quietAll("an effect class set through a getter, Object.defineProperty or a private field is not read (R-ACCESSOR)", [
+      { id: "G-GETTER", path: "src/x.ts", text: '// The APO view module.\nexport const D = { get effectClass() { return "write"; } };\n' },
+      { id: "G-DEFINE-PROPERTY", path: "src/x.ts", text: '// The APO view module.\nexport const D = {};\nObject.defineProperty(D, "effectClass", { value: "write" });\n' },
+      { id: "G-PRIVATE-FIELD", path: "src/x.ts", text: '// The APO view module.\nexport class V { #effectClass = "write"; }\n' },
+    ]),
+  Q22: () => {
+    const { title, notes } = beadRow(BEAD);
+    const folds: Record<string, boolean> = {};
+    for (const [text, ids] of [
+      [title.replace(TITLE_PREFIX, ""), ["P", "E", "C"]],
+      [acceptanceOf(notes), ["G", "M"]],
+    ] as const) {
+      const pins = ROWS.filter(row => (ids as readonly string[]).includes(row.id)).flatMap(row => row.pins.map(pin => ({ row: row.id, pin })));
+      const quotes = pins.map(entry => QUOTES[entry.pin] ?? "");
+      expect(tiles(text, quotes), "the pin quotes tile the text, in order").toBe(true);
+      for (let at = 0; at + 1 < pins.length; at += 1) {
+        const first = pins[at];
+        const second = pins[at + 1];
+        if (first === undefined || second === undefined || first.row !== second.row) continue;
+        const folded = [...quotes.slice(0, at), `${quotes[at] ?? ""} ${quotes[at + 1] ?? ""}`, ...quotes.slice(at + 2)];
+        folds[`${first.pin}+${second.pin}`] = tiles(text, folded);
+      }
+    }
+    expect(Object.values(folds), "every fold of two neighbouring pins still tiles (R-RETILED)").not.toContain(false);
+    return json({ residual: "R-RETILED", folds });
+  },
+  Q23: () => {
+    const standIn = (): JsonValue => {
+      causesOf("docs/workbench/x.md", "Pi reads the program.");
+      return json({ constant: "a witness the stand-in did not compute" });
+    };
+    const reading = guarded(standIn);
+    expect(reading.ran, "a stand-in that runs the judge and returns a constant passes the run guard (R-CONSTANT-WITNESS)").toBe(true);
+    return json({ residual: "R-CONSTANT-WITNESS", standIn: { ran: reading.ran, witness: reading.witness } });
+  },
 };
 
 describe("wb-021.6 APO citation-status census (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R8)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["P:1", "E:3", "C:5", "G:2", "M:2", "Q:16"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["P:1", "E:3", "C:5", "G:2", "M:2", "Q:23"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect(Object.keys(QUOTES).sort(), "every pin of rows P, E, C, G and M carries a quote").toEqual(ROWS.filter(row => row.id !== "Q").flatMap(row => row.pins).sort());
@@ -1185,10 +1375,13 @@ describe("wb-021.6 APO citation-status census (MW-ADAPTIVE-POLICY-ORGANIZATIONS-
     expect(Object.values(RESIDUALS).flat(), "the residual families' quiet rows are row Q's pins, in order").toEqual(ROWS.find(row => row.id === "Q")?.pins ?? []);
     expect(json(headerResiduals()), "this header's RESIDUALS line names exactly the residual families and their quiet rows").toStrictEqual(json(RESIDUALS));
     for (const [family, members] of Object.entries(RESIDUALS)) {
-      for (const member of members) if (family !== "R-SCOPE") expect(probeOf(rosterWitness(member)), `${member} (${family}) carries its own probe`).toBeDefined();
+      for (const member of members) if (!STRUCTURAL_RESIDUALS.includes(family)) expect(probesOf(rosterWitness(member)).length, `${member} (${family}) carries its own probes`).toBeGreaterThan(0);
     }
     for (const [pin, impl] of Object.entries(IMPL)) {
-      expect(/\bROSTER\b|rosterWitness|readRoster/.test(impl.toString()), `${pin}'s case reads no roster (SELF-READ)`).toBe(false);
+      expect(
+        /\bROSTER(?:_PATH)?\b|rosterWitness|readRoster|apo-citation-status-roster/.test(impl.toString()),
+        `${pin}'s case names none of ROSTER, ROSTER_PATH, rosterWitness, readRoster and the roster's file name (SELF-READ)`,
+      ).toBe(false);
     }
     for (const [pin, quote] of Object.entries(QUOTES)) {
       const witness = JSON.stringify(rosterWitness(pin));
@@ -1267,12 +1460,12 @@ describe("wb-021.6 APO citation-status census (MW-ADAPTIVE-POLICY-ORGANIZATIONS-
         it(pin, { timeout: 180_000 }, () => {
           const impl = IMPL[pin];
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
-          const witness = impl === undefined ? null : json(impl());
+          const { witness, ran } = impl === undefined ? { witness: null, ran: false } : guarded(impl);
           const expected = rosterWitness(pin);
-          REACHED.push({ pin, same: isDeepStrictEqual(witness, expected) });
+          REACHED.push({ pin, same: isDeepStrictEqual(witness, expected), ran });
+          expect(ran, `${pin}'s case ran the judge or read the export row (the run guard)`).toBe(true);
           expect(witness).toStrictEqual(expected);
-          const probe = probeOf(witness);
-          if (probe !== undefined) expect(causesOf(probe.path, probe.text), `${pin}'s causes are its own probe's`).toEqual(probe.causes);
+          for (const probe of probesOf(witness)) expect(causesOf(probe.path, probe.text), `${pin}'s causes are its own probe's`).toEqual(probe.causes);
         });
       }
     });
@@ -1308,6 +1501,10 @@ describe("wb-021.6 APO citation-status census (MW-ADAPTIVE-POLICY-ORGANIZATIONS-
     expect(
       REACHED.filter(entry => !entry.same).map(entry => entry.pin),
       "every compare matched its roster witness",
+    ).toEqual([]);
+    expect(
+      REACHED.filter(entry => !entry.ran).map(entry => entry.pin),
+      "every case ran the judge or read the export row (the run guard)",
     ).toEqual([]);
   });
 });
