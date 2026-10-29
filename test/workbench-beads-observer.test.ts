@@ -1,6 +1,8 @@
 /** wb-752.6 (W13-F/VC-4): the Beads Work readiness reader adapter. Pure projector plus an injected `bd show --json` argv seam;
  * fixtures are pinned to the shape measured with bd 1.1.0-rc.1 (2d9e4321c). No live bd runs in this suite. */
+import {createHash} from 'node:crypto';
 import {readFileSync} from 'node:fs';
+import {inflateRawSync} from 'node:zlib';
 import {describe, expect, expectTypeOf, it} from 'vitest';
 import {
   BEADS_WORK_CONTRACT,
@@ -484,7 +486,9 @@ describe('wb-752.6 Beads Work readiness reader', () => {
  * parent-child, conditional-blocks and waits-for: bd's readiness DAG. Fifteen live `bd show --json` reads of this
  * repository's store carried no attempt, producer, artifact, successor, readiness or demand key, at the top level or on a
  * dependency entry. The trigger has not fired, so the "On landing" leg (a measured envelope with the new types, each mapped
- * to one typed edge or a counted facet) stays with the released bd. */
+ * to one typed edge or a counted facet) stays with the released bd. ANCHORED (wb-vked): V2 at the end of this file reads
+ * BD_DEPENDENCY_TYPES against a byte-exact snapshot of that types.go (test/fixtures/bd-dependency-types-snapshot.json), and V3
+ * reads EDGED_BD_TYPES and OWNERSHIP_READINESS_CAUSE_TYPES against it. */
 const BD_DEPENDENCY_TYPES = [
   'blocks',
   'parent-child',
@@ -647,5 +651,229 @@ describe('wb-4ap.14 (COLLECTIVE-ADAPTATION-R14): until a released bd ships B1/B2
     await read(offering);
     expect(calls).toStrictEqual([`show:${workId}`]);
     expectTypeOf<keyof BeadsReadClient>().toEqualTypeOf<'show'>();
+  });
+});
+
+/** wb-vked (R694 follow-up of wb-4ap.14 landing 642, F1): the 19 literals of BD_DEPENDENCY_TYPES had no anchor outside this file
+ * (swapping 'validates' for 'validatez' kept it green, 0 failed | 50 passed (50), re-measured by the cutting seat on trunk 9ad61f3
+ * before this cut). The anchor is bd's own source: test/fixtures/bd-dependency-types-snapshot.json holds bd's
+ * internal/types/types.go byte-exact, the raw-deflate compression of git blob 5a3d2ff53a4b5a543421bcdc16d21e9a54f5dd33 (73812
+ * bytes). That blob is the path at the installed bd's commit 26d1cc9dd (`bd --version` read 1.1.0-rc.1 (26d1cc9dd)) and at
+ * ba381a58c and 088aff1ba, the revisions the wb-4ap.14 header and its gate cite (measured 2026-10-29T21:38:22Z with git rev-parse
+ * and git cat-file in the beads repository). The suite stays hermetic (it never reads upstream or runs bd): V1 holds the snapshot
+ * to the blob id written here, and a later bd is a new measurement with a new snapshot.
+ *
+ * THE READER (readBdDependencyTypes, over the inflated text split on newlines) reads three sites, each in one form, and throws at
+ * the first line of a site that is not in that form:
+ * - the DependencyType const block: exactly one line `type DependencyType string`; after it only blank lines and comment lines
+ *   (`//` after at most one tab) up to the line `const (`; then, up to the first line `)`, every line is blank, a comment line, or
+ *   one declaration: a tab, a name (Dep, a capital, then letters), spaces, `DependencyType = "`, a value (lowercase words joined
+ *   by single hyphens), `"`, then nothing or spaces and a `//` comment; a name or a value declared twice throws;
+ * - WellKnownDependencyTypes(): exactly one line `func WellKnownDependencyTypes() []DependencyType {`, then the line
+ *   `\treturn []DependencyType{`, then lines of two tabs and names, each name followed by a comma and entries separated by one
+ *   space, then the lines `\t}` and `}`;
+ * - AffectsReadyWork(): exactly one line `func (d DependencyType) AffectsReadyWork() bool {`, then one line
+ *   `\treturn d == <name>` with any further ` || d == <name>` operands, then the line `}`;
+ * and a name either list uses that the block does not declare, or that the same list uses twice, throws. FC1-FC24 each change
+ * the snapshot at one place (the row's text occurs exactly once in it) and pin the throw the reader gives for it.
+ *
+ * PINNED: V1 the snapshot's custody: the inflated bytes' length and recomputed git blob id equal the literals below, and so do
+ * the fixture's repo, commit, path, blob, bytes and sameBlobAt fields. V2 BD_DEPENDENCY_TYPES toStrictEqual the values of the
+ * names WellKnownDependencyTypes() returns, in its order, and those names are the block's 19 consts in declaration order: a
+ * literal changed to any other string (F1's 'validatez'), two literals exchanged, one dropped or one added reds V2. V3 every
+ * literal of EDGED_BD_TYPES and OWNERSHIP_READINESS_CAUSE_TYPES is a WellKnownDependencyTypes() value, AffectsReadyWork()'s
+ * operands are blocks, parent-child, conditional-blocks and waits-for, and the readiness gates in
+ * OWNERSHIP_READINESS_CAUSE_TYPES are exactly those operands outside EDGED_BD_TYPES, in AffectsReadyWork()'s order.
+ * NOT CLAIMED: which of U3's other five types bd's comments call authorship, assignment, approval, delegation or a trigger (the
+ * seat's reading of types.go:950-952, :960 and :964): one of them exchanged for another WellKnownDependencyTypes() value outside
+ * the readiness pair stays green; and a snapshot forged together with this file's blob literal and its roster literal for the
+ * same type stays green (the seat's battery measured both): a hermetic file has no upstream to compare with, so the blob id is
+ * the anchor a reviewer checks (git rev-parse 26d1cc9dd:internal/types/types.go in the beads repository).
+ */
+const BD_SNAPSHOT_FILE = new URL('./fixtures/bd-dependency-types-snapshot.json', import.meta.url);
+/** `git rev-parse <commit>:internal/types/types.go` in the beads repository at 26d1cc9dd, ba381a58c and 088aff1ba, read by the cutting seat. */
+const BD_SNAPSHOT_PIN = {
+  repo: 'jehalladay/beads',
+  commit: '26d1cc9dd2f86c7f39bc0d51d5c4fd43ab80bfee',
+  path: 'internal/types/types.go',
+  blob: '5a3d2ff53a4b5a543421bcdc16d21e9a54f5dd33',
+  bytes: 73812,
+  sameBlobAt: ['ba381a58cb4280016d36714269dd15869a3072c1', '088aff1ba7909911a0257da90577aa237d2e5ca4'],
+};
+interface BdSnapshotFixture {
+  repo: string;
+  commit: string;
+  installed: string;
+  sameBlobAt: string[];
+  measuredUtc: string;
+  path: string;
+  blob: string;
+  bytes: number;
+  deflated: number[];
+}
+function bdSnapshot(): {fixture: BdSnapshotFixture; source: Buffer} {
+  const fixture = JSON.parse(readFileSync(BD_SNAPSHOT_FILE, 'utf8')) as BdSnapshotFixture;
+  return {fixture, source: inflateRawSync(Buffer.from(fixture.deflated))};
+}
+const bdSourceText = (): string => bdSnapshot().source.toString('utf8');
+const gitBlobId = (bytes: Buffer): string => createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
+
+interface BdConstant {
+  name: string;
+  value: string;
+  line: number;
+}
+interface BdDependencyTypesReading {
+  /** The DependencyType const block, in declaration order. */
+  constants: BdConstant[];
+  /** The names WellKnownDependencyTypes() returns, in its order. */
+  wellKnown: BdConstant[];
+  /** The names AffectsReadyWork() compares with, in its order. */
+  affectsReadyWork: BdConstant[];
+}
+const BD_COMMENT_LINE = /^\t?\/\//;
+const BD_DECLARATION = /^\t(Dep[A-Z][A-Za-z]*) +DependencyType = "([a-z]+(?:-[a-z]+)*)"(?: +\/\/.*)?$/;
+const BD_NAME_LIST = /^\t\t(?:Dep[A-Z][A-Za-z]*, )*Dep[A-Z][A-Za-z]*,$/;
+const BD_READY_RETURN = /^\treturn d == Dep[A-Z][A-Za-z]*(?: \|\| d == Dep[A-Z][A-Za-z]*)*$/;
+/** bd's dependency-type roster read from its Go source in the one form per site the header lists; any other line there throws. */
+function readBdDependencyTypes(text: string): BdDependencyTypesReading {
+  const lines = text.split('\n');
+  const unread = (index: number): Error => new Error(`types.go: unread line ${index + 1}: ${JSON.stringify(lines[index] ?? null)}`);
+  const onlyLine = (wanted: string): number => {
+    const found = lines.flatMap((line, index) => (line === wanted ? [index] : []));
+    const [index] = found;
+    if (found.length !== 1 || index === undefined) throw new Error(`types.go: expected exactly one line ${JSON.stringify(wanted)}, found ${found.length}`);
+    return index;
+  };
+  const blankOrComment = (line: string): boolean => line === '' || BD_COMMENT_LINE.test(line);
+  const constants: BdConstant[] = [];
+  let at = onlyLine('type DependencyType string') + 1;
+  while (at < lines.length && blankOrComment(lines[at] ?? '')) at += 1;
+  if (lines[at] !== 'const (') throw unread(at);
+  for (at += 1; lines[at] !== ')'; at += 1) {
+    const line = lines[at];
+    if (line === undefined) throw new Error('types.go: the DependencyType const block never closes');
+    if (blankOrComment(line)) continue;
+    const declared = BD_DECLARATION.exec(line);
+    if (!declared) throw unread(at);
+    const [, name = '', value = ''] = declared;
+    if (constants.some((constant) => constant.name === name)) throw new Error(`types.go: the const block declares ${name} twice`);
+    if (constants.some((constant) => constant.value === value)) throw new Error(`types.go: the const block declares "${value}" twice`);
+    constants.push({name, value, line: at + 1});
+  }
+  const resolve = (name: string, list: BdConstant[], site: string): void => {
+    const constant = constants.find((candidate) => candidate.name === name);
+    if (!constant) throw new Error(`types.go: ${site} names ${name}, which the DependencyType const block does not declare`);
+    if (list.some((listed) => listed.name === name)) throw new Error(`types.go: ${site} lists ${name} twice`);
+    list.push(constant);
+  };
+  const wellKnown: BdConstant[] = [];
+  at = onlyLine('func WellKnownDependencyTypes() []DependencyType {') + 1;
+  if (lines[at] !== '\treturn []DependencyType{') throw unread(at);
+  for (at += 1; BD_NAME_LIST.test(lines[at] ?? ''); at += 1) {
+    for (const name of (lines[at] ?? '').trim().slice(0, -1).split(', ')) resolve(name, wellKnown, 'WellKnownDependencyTypes()');
+  }
+  if (lines[at] !== '\t}') throw unread(at);
+  if (lines[at + 1] !== '}') throw unread(at + 1);
+  const affectsReadyWork: BdConstant[] = [];
+  at = onlyLine('func (d DependencyType) AffectsReadyWork() bool {') + 1;
+  const ready = lines[at] ?? '';
+  if (!BD_READY_RETURN.test(ready)) throw unread(at);
+  for (const operand of ready.slice('\treturn '.length).split(' || ')) resolve(operand.slice('d == '.length), affectsReadyWork, 'AffectsReadyWork()');
+  if (lines[at + 1] !== '}') throw unread(at + 1);
+  return {constants, wellKnown, affectsReadyWork};
+}
+/** One place of the snapshot changed per row (its text occurs exactly once there); the reader must throw the row's message. */
+const BD_READER_PROBES: {id: string; form: string; from: string; to: string; message: RegExp}[] = [
+  {id: 'FC1', form: 'a second type line', from: 'type DependencyType string\n', to: 'type DependencyType string\ntype DependencyType string\n', message: /^types\.go: expected exactly one line "type DependencyType string", found 2$/},
+  {id: 'FC2', form: 'the const block opened another way', from: 'const (\n\t// Workflow types', to: 'var (\n\t// Workflow types', message: /^types\.go: unread line 932: "var \("$/},
+  {id: 'FC3', form: 'a const declared in another form', from: 'DepValidates DependencyType = "validates"', to: 'DepValidates = DependencyType("validates")', message: /^types\.go: unread line 961: /},
+  {id: 'FC4', form: 'a block comment in the const block', from: '\t// Association types', to: '\t/* Association types */', message: /^types\.go: unread line 939: /},
+  {id: 'FC5', form: 'a const name declared twice', from: 'DepTracks DependencyType = "tracks"', to: 'DepUntil DependencyType = "tracks"', message: /^types\.go: the const block declares DepUntil twice$/},
+  {id: 'FC6', form: 'a const value declared twice', from: '"relates-to"', to: '"related"', message: /^types\.go: the const block declares "related" twice$/},
+  {
+    id: 'FC7',
+    form: 'WellKnownDependencyTypes under another name',
+    from: 'func WellKnownDependencyTypes() []DependencyType {',
+    to: 'func BuiltinDependencyTypes() []DependencyType {',
+    message: /^types\.go: expected exactly one line "func WellKnownDependencyTypes\(\) \[\]DependencyType \{", found 0$/,
+  },
+  {id: 'FC8', form: 'the list built another way', from: '\treturn []DependencyType{', to: '\ttypes := []DependencyType{', message: /^types\.go: unread line 980: /},
+  {id: 'FC9', form: 'a list entry in another form', from: 'DepAttests, DepTracks,', to: 'DepAttests, DependencyType("tracks"),', message: /^types\.go: unread line 983: /},
+  {
+    id: 'FC10',
+    form: 'a list name the const block does not declare',
+    from: 'DepValidates, DepDelegatedFrom,',
+    to: 'DepValidates, DepDelegatedFrom, DepImplements,',
+    message: /^types\.go: WellKnownDependencyTypes\(\) names DepImplements, which the DependencyType const block does not declare$/,
+  },
+  {id: 'FC11', form: 'a list naming one const twice', from: 'DepValidates, DepDelegatedFrom,', to: 'DepValidates, DepValidates,', message: /^types\.go: WellKnownDependencyTypes\(\) lists DepValidates twice$/},
+  {id: 'FC12', form: 'the list closed another way', from: 'DepDelegatedFrom,\n\t}\n}', to: 'DepDelegatedFrom,\n\t}\n\treturn nil\n}', message: /^types\.go: unread line 986: "\\treturn nil"$/},
+  {
+    id: 'FC13',
+    form: 'AffectsReadyWork under another name',
+    from: 'func (d DependencyType) AffectsReadyWork() bool {',
+    to: 'func (d DependencyType) AffectsReady() bool {',
+    message: /^types\.go: expected exactly one line "func \(d DependencyType\) AffectsReadyWork\(\) bool \{", found 0$/,
+  },
+  {
+    id: 'FC14',
+    form: 'a readiness operand in another form',
+    from: 'DepParentChild || d == DepConditionalBlocks || d == DepWaitsFor',
+    to: 'DepParentChild || d == DepConditionalBlocks || d.IsBlockingEdge()',
+    message: /^types\.go: unread line 1002: /,
+  },
+  {
+    id: 'FC15',
+    form: 'a readiness operand the const block does not declare',
+    from: 'DepParentChild || d == DepConditionalBlocks || d == DepWaitsFor',
+    to: 'DepParentChild || d == DepConditionalBlocks || d == DepWaitsForever',
+    message: /^types\.go: AffectsReadyWork\(\) names DepWaitsForever, which the DependencyType const block does not declare$/,
+  },
+  {
+    id: 'FC16',
+    form: 'a readiness operand used twice',
+    from: 'DepParentChild || d == DepConditionalBlocks || d == DepWaitsFor',
+    to: 'DepParentChild || d == DepConditionalBlocks || d == DepParentChild',
+    message: /^types\.go: AffectsReadyWork\(\) lists DepParentChild twice$/,
+  },
+  {id: 'FC17', form: 'AffectsReadyWork closed another way', from: 'd == DepWaitsFor\n}\n\n// IsBlockingEdge', to: 'd == DepWaitsFor\n\treturn false\n}\n\n// IsBlockingEdge', message: /^types\.go: unread line 1003: "\\treturn false"$/},
+  {id: 'FC18', form: 'a const value outside the value form', from: '"waits-for"', to: '"waits_for"', message: /^types\.go: unread line 937: /},
+  {id: 'FC19', form: 'a const name outside the name form', from: 'DepAttests    DependencyType', to: 'depAttests    DependencyType', message: /^types\.go: unread line 953: /},
+  {id: 'FC20', form: 'a declaration tail that is not a comment', from: '"until"     //', to: '"until" + "" //', message: /^types\.go: unread line 959: /},
+  {id: 'FC21', form: 'list entries not separated by one space', from: 'DepRelated, DepDiscoveredFrom,', to: 'DepRelated,DepDiscoveredFrom,', message: /^types\.go: unread line 981: /},
+  {id: 'FC22', form: 'a const block comment after two tabs', from: '\t// Association types', to: '\t\t// Association types', message: /^types\.go: unread line 939: /},
+  {id: 'FC23', form: 'a readiness operand written without spaces', from: 'd == DepBlocks || d == DepParentChild || d == DepConditionalBlocks', to: 'd == DepBlocks || d==DepParentChild || d == DepConditionalBlocks', message: /^types\.go: unread line 1002: /},
+  {id: 'FC24', form: 'a tab between a const name and its type', from: 'DepRelated        DependencyType', to: 'DepRelated\tDependencyType', message: /^types\.go: unread line 940: /},
+];
+
+describe("wb-vked (R694 follow-up of wb-4ap.14, F1): BD_DEPENDENCY_TYPES, EDGED_BD_TYPES and OWNERSHIP_READINESS_CAUSE_TYPES are read against bd's own types.go", () => {
+  it("wb-vked V1: the snapshot is bd's internal/types/types.go byte-exact: its inflated length and git blob id, and its repo, commit, path, blob, bytes and sameBlobAt fields, equal the pin", () => {
+    const {fixture, source} = bdSnapshot();
+    expect(source.length).toBe(BD_SNAPSHOT_PIN.bytes);
+    expect(gitBlobId(source)).toBe(BD_SNAPSHOT_PIN.blob);
+    expect({repo: fixture.repo, commit: fixture.commit, path: fixture.path, blob: fixture.blob, bytes: fixture.bytes, sameBlobAt: fixture.sameBlobAt}).toStrictEqual(BD_SNAPSHOT_PIN);
+  });
+
+  it("wb-vked V2: BD_DEPENDENCY_TYPES is WellKnownDependencyTypes() read from the snapshot, in its order, and that list is the DependencyType const block's 19 consts in declaration order", () => {
+    const reading = readBdDependencyTypes(bdSourceText());
+    expect(BD_DEPENDENCY_TYPES).toStrictEqual(reading.wellKnown.map((constant) => constant.value));
+    expect(reading.wellKnown.map((constant) => constant.name)).toStrictEqual(reading.constants.map((constant) => constant.name));
+    expect(reading.constants).toHaveLength(19);
+  });
+
+  it("wb-vked V3: EDGED_BD_TYPES and OWNERSHIP_READINESS_CAUSE_TYPES name only WellKnownDependencyTypes() values, and U3's readiness gates are AffectsReadyWork()'s operands outside the edged pair", () => {
+    const reading = readBdDependencyTypes(bdSourceText());
+    const wellKnown = reading.wellKnown.map((constant) => constant.value);
+    const ready = reading.affectsReadyWork.map((constant) => constant.value);
+    expect([...EDGED_BD_TYPES, ...OWNERSHIP_READINESS_CAUSE_TYPES].filter((type) => !wellKnown.includes(type))).toStrictEqual([]);
+    expect(ready).toStrictEqual(['blocks', 'parent-child', 'conditional-blocks', 'waits-for']);
+    expect(OWNERSHIP_READINESS_CAUSE_TYPES.filter((type) => ready.includes(type))).toStrictEqual(ready.filter((type) => !EDGED_BD_TYPES.includes(type)));
+  });
+
+  it.each(BD_READER_PROBES.map((probe) => [probe.id, probe.form, probe] as const))('wb-vked %s: the reader throws on %s', (_id, _form, {from, to, message}) => {
+    const text = bdSourceText();
+    expect(text.split(from)).toHaveLength(2);
+    expect(() => readBdDependencyTypes(text.replace(from, () => to))).toThrow(message);
   });
 });
