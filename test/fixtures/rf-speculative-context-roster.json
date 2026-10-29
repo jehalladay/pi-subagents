@@ -210,7 +210,14 @@
    "rf.epistemic_status": "predicted_distribution"
   }
  },
- "docsSpeculativeSentences": [],
+ "docsSpeculativeSentences": [
+  "**RF speculation boundary:** rf's local default speculation policy stays passive/disabled and Pi documents no other default.",
+  "rf 0.1.845 ships `ResourceBrokerLimits` and `SpeculationBoundary` as values its host resource broker reads, with no CLI surface, and the one way an rf process opts into its speculative policy is the process-scoped `RF_ADAPTIVE` seat, which no rf child Pi launches receives: that child's environment holds only the `RF_CHILD_ENV_ALLOWLIST` names of `src/workbench/process-env.ts`.",
+  "Any Pi-declared SpeculationBoundary or broker-limit configuration may only tighten ResourceBrokerLimits and never overrides Pi host hard caps, the 60 s render deadline and the 256 KiB stdout and stderr bounds of `src/workbench/providers/reactivefiber.ts`.",
+  "RF speculation boundary:** rf's local default speculation policy stays passive/disabled and Pi documents no other default.",
+  "rf 0.1.845 ships ResourceBrokerLimits and SpeculationBoundary as values its host resource broker reads, with no CLI surface, and the one way an rf process opts into its speculative policy is the process-scoped RF_ADAPTIVE seat, which no rf child Pi launches receives: that child's environment holds only the RF_CHILD_ENV_ALLOWLIST names of src/workbench/process-env.ts.",
+  "Any Pi-declared SpeculationBoundary or broker-limit configuration may only tighten ResourceBrokerLimits and never overrides Pi host hard caps, the 60 s render deadline and the 256 KiB stdout and stderr bounds of src/workbench/providers/reactivefiber.ts."
+ ],
  "rows": [
   {
    "id": "A",
@@ -518,10 +525,21 @@
      "witness": {
       "floorMet": true,
       "walkAgreesWithGit": true,
-      "allowed": [],
+      "allowed": [
+       "**RF speculation boundary:** rf's local default speculation policy stays passive/disabled and Pi documents no other default.",
+       "rf 0.1.845 ships `ResourceBrokerLimits` and `SpeculationBoundary` as values its host resource broker reads, with no CLI surface, and the one way an rf process opts into its speculative policy is the process-scoped `RF_ADAPTIVE` seat, which no rf child Pi launches receives: that child's environment holds only the `RF_CHILD_ENV_ALLOWLIST` names of `src/workbench/process-env.ts`.",
+       "Any Pi-declared SpeculationBoundary or broker-limit configuration may only tighten ResourceBrokerLimits and never overrides Pi host hard caps, the 60 s render deadline and the 256 KiB stdout and stderr bounds of `src/workbench/providers/reactivefiber.ts`.",
+       "RF speculation boundary:** rf's local default speculation policy stays passive/disabled and Pi documents no other default.",
+       "rf 0.1.845 ships ResourceBrokerLimits and SpeculationBoundary as values its host resource broker reads, with no CLI surface, and the one way an rf process opts into its speculative policy is the process-scoped RF_ADAPTIVE seat, which no rf child Pi launches receives: that child's environment holds only the RF_CHILD_ENV_ALLOWLIST names of src/workbench/process-env.ts.",
+       "Any Pi-declared SpeculationBoundary or broker-limit configuration may only tighten ResourceBrokerLimits and never overrides Pi host hard caps, the 60 s render deadline and the 256 KiB stdout and stderr bounds of src/workbench/providers/reactivefiber.ts."
+      ],
       "hits": [],
+      "stale": [],
       "planted": [
        "planted/speculative-context.md: Pi serves speculative RF context."
+      ],
+      "stalePlanted": [
+       "A what-if view is labeled."
       ]
      }
     }
@@ -968,7 +986,7 @@
   "B6:3",
   "B7:3",
   "C1:6",
-  "C2:7",
+  "C2:9",
   "M1:3",
   "M2:3",
   "M3:3",
