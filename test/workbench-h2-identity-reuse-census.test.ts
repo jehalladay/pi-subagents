@@ -44,7 +44,10 @@
  *    F2, F3 and F6; a control per chain root - a type name, a type query of a name and of a qualified name, each root carrying a
  *    term word, and this and the this type - each reading control's SPELLING (the text its own reading read) held in A2's
  *    witness beside its reading, the identity-escape and brace-quantifier regex readings and the one finding step: wb-3w79, the
- *    landing-501 gate's F1, F3 and F4) and the TOKEN ANCHOR (wb-3wcm F4): the TypeScript compiler, outside this cut, is the anchor of
+ *    landing-501 gate's F1, F3 and F4; the type-name root's qualified form (a type name that is a qualified name, rec.Owner) and
+ *    the regex reading's separator family, every class escape (d D s S w W), assertion (b B) and control character escape
+ *    (f n r t v) spelled between the term's two words, one literal per member: wb-jdz6, the landing-594 gate's F1 and F2) and the
+ *    TOKEN ANCHOR (wb-3wcm F4): the TypeScript compiler, outside this cut, is the anchor of
  *    the token readings - every node of a src module's syntax tree that carries its own text (an identifier, a private name, a
  *    string, a template part, a regex, a number) must be one a token reading read, so a token reading removed together with its
  *    controls, the roster's scan and A2's witness reds (a text-carrying kind no reading reads, JSX text today, is the anchor's
@@ -102,7 +105,11 @@
  * comparison its OPERAND the same way (OPERANDS; wb-3w79, the landing-501 gate's F2: the pin case's witness rerouted in place to
  * the roster's own witness kept both comparisons comparing the roster against itself): the pin case's lookup of its IMPL entry,
  * the echo check over that entry's source, its witness declaration and its MEASURED record, each one statement spelled exactly
- * so and standing directly in the pin case's body, the list held to the roster's.
+ * so and standing directly in the pin case's body, the list held to the roster's. And it holds the pin case's whole BODY
+ * (PIN_CASE; wb-jdz6, the landing-594 gate's F3: an added statement, Object.assign(witness as object, rosterWitness(pin)) after
+ * the witness declaration, wrote the roster's witness into the measured one and kept both comparisons comparing the roster
+ * against itself): every statement of the pin case's callback body, of any kind and in order, spelled exactly so, the list held
+ * to the roster's, so a statement added to the pin case (a write to an operand among them), removed or reordered reds.
  * Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the filing anchors rows and clauses, not pins); a
  * term removed from IDENTITY_TERMS or WORK_PACKAGE_TERMS together with its controls, the roster's scan and A2's witness (the
  * filing anchors rows and clauses, not words, and no source outside this cut lists the vocabulary); an assertion removed from this
@@ -117,10 +124,11 @@
  * letters the pattern syntax splits - a class's contents, a quantifier or a group standing between two letters of one word
  * (/owner[E]poch/, /ownerE?poch/) - read as separate words (the pattern syntax reads as separators and a class's contents as text);
  * A2's src read narrowed, where it is declared or at the finding step's call, to the known spelling's own hits (the step then
- * holds the known spelling and finds nothing else; the token anchor holds tokens, not hits); a witness comparison or an operand
- * statement weakened in place together with its COMPARISONS or OPERANDS entry and the roster's, or a comparison hollowed
- * through its matcher, an expect.extend override (the SELF-READ holds the spelling and the place, and no source outside this cut
- * lists the comparisons or the operands).
+ * holds the known spelling and finds nothing else; the token anchor holds tokens, not hits); a witness comparison, an operand
+ * statement or the pin case's body edited in place together with its COMPARISONS, OPERANDS or PIN_CASE entry and the roster's;
+ * an operand written from outside the pin case's body (from a hook, from a helper either comparison calls, or from a case that
+ * keeps an alias of its witness); or a comparison hollowed through its matcher, an expect.extend override (the SELF-READ holds
+ * the spelling and the place, and no source outside this cut lists the comparisons, the operands or the pin case's body).
  * THE GATE-OPENING SIGNAL: A1 reds when an H2 producer package is declared, installed, loaded or named, and A2 when a src module
  * names a gating work package or an identity-record word: the H2 reader RL-H2-01/02, FO-H2-01/02, RC-H2-02 or RI-H2-02 calls for
  * reds this census first, and its cut re-pins (a) to (d) at that reader's own keys (B to E already pin the sites it would use).
@@ -229,7 +237,12 @@ const COMPOSED_CONTROL = 'const word = ["owner", "epoch"].join(" ");';
  * from scanModule reds its control. A2's witness also holds each control's SPELLING, the text its own reading read (wb-3w79, the
  * landing-501 gate's F1: the indexed-access-type and type-query controls spelled the term in their keys, so a chain read without
  * its root kept them true): a reading that still finds the term from another text reds. Each chain root has its own control, and
- * a type-name or type-query root carries a term word, so a root that is no longer read loses the term. */
+ * a type-name or type-query root carries a term word, so a root that is no longer read loses the term. The type-name root has a
+ * control for its qualified form too (wb-jdz6, the landing-594 gate's F1: a type-name root narrowed to identifier names kept every
+ * control true), and the regex reading's separator family has one control per kind - class escapes, assertions and control
+ * character escapes - each source spelling the term across every member of its kind, one literal per member, so a member read
+ * as an identity escape glues the two words and drops its literal's hit from the spelling (F2: the family's alternative removed
+ * kept every control true). */
 const READING_CONTROLS: readonly (readonly [string, string, string])[] = [
   ["identifier", "identifier", "let ownerEpoch = 0;"],
   ["private name", "identifier", "class Holder { #ownerEpoch = 0; }"],
@@ -263,11 +276,15 @@ const READING_CONTROLS: readonly (readonly [string, string, string])[] = [
   ["regex property escape", "regex", "const r = /owner\\p{P}epoch/u;"],
   ["regex named back-reference", "regex", "const r = /(?<dot>\\.)owner\\k<dot>epoch/;"],
   ["type name root", "chain", 'type E = Owner["epoch"];'],
+  ["type name qualified root", "chain", 'type E = rec.Owner["epoch"];'],
   ["type query name root", "chain", 'type E = (typeof owner)["epoch"];'],
   ["type query qualified root", "chain", 'type E = (typeof record.owner)["epoch"];'],
   ["this root", "chain", "class Holder { e = this.owner.epoch; }"],
   ["this type root", "chain", 'interface Holder { e: this["owner"]["epoch"]; }'],
   ["regex identity escape", "regex", "const r = /owner\\Epoch/;"],
+  ["regex class escapes", "regex", "const r = [/owner\\depoch/, /owner\\Depoch/, /owner\\sepoch/, /owner\\Sepoch/, /owner\\wepoch/, /owner\\Wepoch/];"],
+  ["regex assertions", "regex", "const r = [/owner\\bepoch/, /owner\\Bepoch/];"],
+  ["regex control character escapes", "regex", "const r = [/owner\\fepoch/, /owner\\nepoch/, /owner\\repoch/, /owner\\tepoch/, /owner\\vepoch/];"],
   ["regex count quantifier", "regex", "const r = /owner.{1}epoch/;"],
   ["regex range quantifier", "regex", "const r = /owner.{0,2}epoch/;"],
   ["regex open quantifier", "regex", "const r = /owner.{1,}epoch/;"],
@@ -300,6 +317,19 @@ const OPERANDS: readonly string[] = [
   `expect(String(impl), \`\${pin}'s case reads the roster's witnesses\`).not.toMatch(/\\brosterWitness\\b|\\bROSTER\\.rows\\b/);`,
   "const witness = impl === undefined ? null : await impl();",
   "MEASURED[pin] = witness;",
+];
+/** SELF-READ (wb-jdz6, the landing-594 gate's F3: Object.assign(witness as object, rosterWitness(pin)) added after the witness
+ * declaration wrote the roster's witness into the measured one, and both comparisons compared the roster against itself): the
+ * pin case's whole body, as the pin case spells it - every statement of its callback body, of any kind, in order - so a statement
+ * added to the pin case, a write to an operand among them, reds, as does one removed or reordered. */
+const PIN_CASE: readonly string[] = [
+  "const impl = IMPL[pin];",
+  `expect(impl, \`no case for \${pin}\`).toBeTypeOf("function");`,
+  `expect(String(impl), \`\${pin}'s case reads the roster's witnesses\`).not.toMatch(/\\brosterWitness\\b|\\bROSTER\\.rows\\b/);`,
+  "const witness = impl === undefined ? null : await impl();",
+  "expect(witness).toStrictEqual(rosterWitness(pin));",
+  "MEASURED[pin] = witness;",
+  "REACHED.push(endOf(pin));",
 ];
 /** R-SPLIT-NAMES' quiet row: a term split across two names that form no chain and no key path. */
 const SPLIT_CONTROLS: readonly string[] = [
@@ -400,6 +430,8 @@ interface Roster {
   readonly comparisons: readonly string[];
   /** The SELF-READ's operand statements. */
   readonly operands: readonly string[];
+  /** The SELF-READ's pin case body. */
+  readonly pinCase: readonly string[];
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
   /** The ends every case before the records case records, in run order (`${id}:${count}`). */
@@ -461,6 +493,7 @@ function readRoster(): Roster {
     residualRows: json(raw.residualRows) as JsonObject,
     comparisons: strings(raw.comparisons, "comparisons"),
     operands: strings(raw.operands, "operands"),
+    pinCase: strings(raw.pinCase, "pinCase"),
     rows,
     tests: strings(raw.tests, "tests"),
     reached: strings(raw.reached, "reached"),
@@ -1493,6 +1526,24 @@ function selfStatements(): string[] {
   visit(file);
   return statements;
 }
+/** SELF-READ (wb-jdz6 F3): the body of every test case whose title argument is the pin loop's `pin`, as the TypeScript compiler
+ * parses this file - each statement of its callback body, of any kind, in order, whitespace dropped (a callback without a block
+ * body reads as an empty one). */
+function pinCaseBodies(): string[][] {
+  const path = fileURLToPath(import.meta.url);
+  const file = ts.createSourceFile(path, readFileSync(path, "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const bodies: string[][] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "it" && node.arguments[0]?.getText(file) === "pin") {
+      const callback = node.arguments.at(-1);
+      const body = callback !== undefined && (ts.isArrowFunction(callback) || ts.isFunctionExpression(callback)) && ts.isBlock(callback.body) ? callback.body : undefined;
+      bodies.push(body === undefined ? [] : body.statements.map(statement => squeezed(statement.getText(file))));
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return bodies;
+}
 
 /** THE RECORD: each case's end, in run order, as `${id}:${count}` (vitest's tally of the case's assertions), pushed only after the
  * case's last assertion; a pin's right after its witness comparison. */
@@ -1543,14 +1594,17 @@ describe("wb-4nut.9 H2 identity and reuse census (TSX-HARNESS2-REACTIVE-EVOLUTIO
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:2", "C:3", "D:2", "E:2"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
-    expect({ bead: BEAD, scan: SCAN, residuals: RESIDUAL_FAMILIES, residualRows: RESIDUAL_ROWS, comparisons: COMPARISONS, operands: OPERANDS }).toStrictEqual({
+    expect({ bead: BEAD, scan: SCAN, residuals: RESIDUAL_FAMILIES, residualRows: RESIDUAL_ROWS, comparisons: COMPARISONS, operands: OPERANDS, pinCase: PIN_CASE }).toStrictEqual({
       bead: ROSTER.bead, scan: ROSTER.scan, residuals: [...ROSTER.residuals], residualRows: ROSTER.residualRows, comparisons: [...ROSTER.comparisons], operands: [...ROSTER.operands],
+      pinCase: [...ROSTER.pinCase],
     });
     // SELF-READ: each witness comparison, and each statement that gives a comparison its operand, is one statement standing
     // directly in a case's body, spelled exactly so.
     const statements = selfStatements();
     expect(COMPARISONS.map(comparison => statements.filter(statement => statement === squeezed(comparison)).length), "each witness comparison is spelled once, strict, directly in its case's body").toEqual(COMPARISONS.map(() => 1));
     expect(OPERANDS.map(operand => statements.filter(statement => statement === squeezed(operand)).length), "each witness comparison's operand is spelled once, directly in the pin case's body").toEqual(OPERANDS.map(() => 1));
+    // The pin case's whole body, statement for statement: an added write to an operand reds (wb-jdz6 F3).
+    expect(pinCaseBodies(), "the pin case's body is its operand statements, its witness comparison and its record, statement for statement, nothing added").toEqual([PIN_CASE.map(squeezed)]);
     // Every residual names a pin of the judged set, and that pin's roster witness carries its pinned quiet row.
     const quietRows = RESIDUAL_FAMILIES.map(family => {
       const pin = RESIDUAL_ROWS[family] ?? "";
