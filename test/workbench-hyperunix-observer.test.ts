@@ -806,3 +806,199 @@ describe('hxLiveReceipt: the live HX receipt line (wb-tz2.1 fold-in HXFS-PI-3)',
       violations: ['execution-kind', 'licence-boolean', 'binary-sha256', 'runtime-version']});
   });
 });
+
+/** wb-gwr.2 (HX-PREDICTIVE-WORLD-MODEL-ADAPTERS-R2, program-triage-2026-10-18). Statement (the bead title, verbatim): "When an HX
+ * result Pi consumes carries a view identity or consistency mode, provider versions, conflict or incomplete-region statuses (WM-002,
+ * 01-boundaries.md:6@694570cd00c2), the HX reader adapter shall carry each verbatim as its own facet, never folded into coverage or
+ * tone nor read as absence or source basis; a result lacking them projects byte-identically. Artifact: a measured read carrying
+ * them." Acceptance (the bead's notes, verbatim): "an adapter unit test feeds a hyperunix.result/1 fixture with a non-null view,
+ * non-empty provider_versions, non-empty incomplete_regions and a conflict diagnostic and asserts each surfaces verbatim as its own
+ * bounded, sanitized facet (typed field or diagnostic), coverage and statusTone unchanged by any of them, absence still requiring
+ * licenses_absence true on a complete kind (hyperunix-observer.ts:216-217), and no provider version or view ever used as
+ * sourceVersion or a source basis; a fixture without the fields projects toStrictEqual today's snapshot".
+ * THE ARTIFACT, measured read-only by the cutting seat (ws-01, run g10-work-s120, 2026-10-28T01:06:06Z): the vendored @hyperunix/sdk
+ * 0.1.0 find this provider issues (kind hx.fs/regular-file, root src, best effort) over this tree at trunk 216ed85, with hx 0.1.0
+ * (binary sha256 MEASURED_BINARY), returned view 'hx.view/workspace-head', providers ['hx.fs/builtin'], provider_versions
+ * {'hx.fs/builtin': '0.1.0'} and one incomplete region; the 2026-10-15 read above carried view null and provider_versions {}. No
+ * measured read carries a conflict diagnostic, so the conflict facet is pinned on HX's own code spelling (HX-SCHEMA-CONFLICT) from a
+ * fixture; hyperunix.result/1 has no consistency-mode field, so a consistency mode is a named residual that sequences behind the
+ * wb-tz2.3 successor re-vendor (R1-RESIDUAL below). Rows: G1 the measured read; G2 the acceptance fixture; G3 absence and basis;
+ * G4 a result lacking them; G5 bounds and sanitizing; G6 only the measured shapes; G7 frozen, lossless, deterministic. */
+describe('wb-gwr.2 HX result facets: view identity, provider versions, incomplete regions and conflicts relayed verbatim', () => {
+  const MEASURED_BINARY = '451221852d248a2d31398b6b18bee9f6e149e5561e30bb6efc5fadeb23dc2913';
+  const REGION_TARGET = 'hx.fs/directory-entry (coverage opportunistic (other:No_change_exclusion))';
+  const ESC = String.fromCodePoint(0x1b);
+  const BEL = String.fromCodePoint(0x07);
+  const RLO = String.fromCodePoint(0x202e);
+  /** The 2026-10-28 measured read as the SDK's hyperunix.result/1 document: the facet fields as measured, row, certificate and
+   * diagnostic bodies replaced by secret markers that must never surface. */
+  const measuredDocument = (overrides: Json = {}): Json => ({representation: 'hyperunix.result/1', operation: 'find',
+    rows: [{path: 'SECRET-ROW-BODY'}, {path: 'src/index.ts'}], rows_retained: true,
+    coverage: LIVE_BATCHES.map(id => certificate(id, {secret: 'SECRET-CERT'})),
+    status: {exit_code: 0, signal: null, streams: [{name: 'hx-fs', frames: 272, ended: true, mode: 'observation'}], terminal_reached: true, frames_total: 272},
+    execution_status: {kind: 'incomplete', diagnostic_code: 'HX-COVERAGE-INCOMPLETE'},
+    diagnostics: [{code: 'HX-COVERAGE-INCOMPLETE', severity: 'warning', message: 'licenses no absence SECRET-DIAGNOSTIC'}],
+    view: 'hx.view/workspace-head', cost: null,
+    transport: {started_at: '2026-10-28T01:06:06.000Z', startup_latency_s: 0.01, process_duration_s: 0.2, stdout_bytes: 1000, stderr_bytes: 0,
+      stderr_bytes_retained: 0, frames: 272},
+    workspace_root: WS, terminal: 'complete', truth: null,
+    coverage_summary: {modes: LIVE_BATCHES.map(() => 'opportunistic'), completeness: 'incomplete', licenses_absence: false,
+      certificates_license_absence: false, incomplete_regions: [{scope: `fs:${WS}/src`, target: REGION_TARGET}], result_coverage: null, answer_count: 116},
+    evidence: {support_ids: LIVE_BATCHES.map(id => `hx-fs/${id}/s1`), evidence_classes: ['observed'], derivation_handles: [],
+      providers: ['hx.fs/builtin'], provider_versions: {'hx.fs/builtin': '0.1.0'}},
+    digest: null, digest_source: 'absent', execution_id: null, budget_dimension: null, extensions: {}, ...overrides});
+  /** The same document with every facet field empty: view null, no provider, no region, no conflict code. */
+  const lacking = (overrides: Json = {}): Json => measuredDocument({view: null,
+    coverage_summary: {modes: LIVE_BATCHES.map(() => 'opportunistic'), completeness: 'incomplete', licenses_absence: false,
+      certificates_license_absence: false, incomplete_regions: [], result_coverage: null, answer_count: 116},
+    evidence: {support_ids: LIVE_BATCHES.map(id => `hx-fs/${id}/s1`), evidence_classes: ['observed'], derivation_handles: [], providers: [], provider_versions: {}},
+    ...overrides});
+  /** The provider's own path for a document: resultToJson over the SDK's decoded result, inside the hyperunix.find/v1 envelope. */
+  const reading = (document: Json, version = '0.1.0'): JsonValue => JSON.parse(JSON.stringify({contract: 'hyperunix.find/v1',
+    source: resultToJson(resultFromJson(document)), workspaceRoot: WS, runtime: {version, binarySha256: MEASURED_BINARY}})) as JsonValue;
+  const conflict: Json = {code: 'HX-SCHEMA-CONFLICT', severity: 'error', message: 'SECRET-CONFLICT-MESSAGE'};
+  /** The acceptance fixture: a non-null view, non-empty provider_versions, a non-empty incomplete_regions and a conflict diagnostic. */
+  const acceptance = (overrides: Json = {}): Json => measuredDocument({diagnostics: [...(measuredDocument().diagnostics as Json[]), conflict], ...overrides});
+  /** The statement's own order: view identity, provider versions, conflict, incomplete-region statuses. */
+  const ALL_FACETS = [
+    {kind: 'view', view: 'hx.view/workspace-head'},
+    {kind: 'provider-version', provider: 'hx.fs/builtin', version: '0.1.0'},
+    {kind: 'conflict', code: 'HX-SCHEMA-CONFLICT'},
+    {kind: 'incomplete-region', scope: `fs:${WS}/src`, target: REGION_TARGET},
+  ];
+  const MEASURED_FACETS = [ALL_FACETS[0], ALL_FACETS[1], ALL_FACETS[3]];
+  const withKind = (document: Json, kind: string, licenses_absence: boolean): Json => ({...document,
+    execution_status: {kind, diagnostic_code: null}, rows: kind === 'complete-empty' ? [] : document.rows,
+    coverage_summary: {...(document.coverage_summary as Json), licenses_absence}});
+  const PROJECTABLE = HYPERUNIX_EXECUTION_KINDS.filter(kind => !MUTATION.has(kind));
+  const withoutFacets = (topology: HyperUnixProjectionTopology): HyperUnixProjectionTopology => {
+    const {facets: _facets, ...rest} = topology;
+    return rest;
+  };
+
+  it('G1: the measured 2026-10-28 read relays its view, its provider version and its incomplete region verbatim, each as its own facet', async () => {
+    const registry = new CapabilityRegistry();
+    const native = resultFromJson(measuredDocument());
+    registerHyperUnixFind(registry, {find: async () => native, runtime: async () => ({version: '0.1.0', binarySha256: MEASURED_BINARY}), close: async () => {}}, WS);
+    const value = await registry.invoke('hyperunix.find', {kind: 'hx.fs/regular-file', root: 'src'},
+      {grants: ['hyperunix:read'], signal: new AbortController().signal});
+    expect(value).toEqual(reading(measuredDocument()));
+    const topology = hyperunixTopology(value, context);
+    expect(topology.facets).toStrictEqual(MEASURED_FACETS);
+    const [snapshot] = topology.snapshots;
+    expect(snapshot).toMatchObject({coverage: 'partial', sourceVersion: '0.1.0',
+      node: {title: 'HX find hx.fs/regular-file src', statusTone: 'unknown', statusText: 'incomplete · rows 2 · absence not licensed'}});
+    const text = JSON.stringify(topology);
+    for (const secret of ['SECRET-ROW-BODY', 'SECRET-CERT', 'SECRET-DIAGNOSTIC', 'src/index.ts', 'HX-COVERAGE-INCOMPLETE', 'hx-fs/b1/s1']) expect(text).not.toContain(secret);
+  });
+
+  it('G2: each acceptance field surfaces verbatim as its own facet, and coverage, tone and every other output field read as without them', () => {
+    let judged = 0;
+    for (const kind of PROJECTABLE) for (const licensed of [false, true]) {
+      const full = hyperunixTopology(reading(withKind(acceptance(), kind, licensed)), context);
+      const bare = hyperunixTopology(reading(withKind(lacking(), kind, licensed)), context);
+      expect(full.facets, `${kind} licensed=${licensed}`).toStrictEqual(ALL_FACETS);
+      expect(withoutFacets(full), `${kind} licensed=${licensed}`).toStrictEqual(bare);
+      expect(full.snapshots[0].coverage).toBe(bare.snapshots[0].coverage);
+      expect(full.snapshots[0].node.statusTone).toBe(bare.snapshots[0].node.statusTone);
+      judged++;
+    }
+    expect(judged).toBe(22);
+  });
+
+  it('G3: absence still needs the runtime licence on a complete kind, and no view or provider version is a source version or a source basis', () => {
+    for (const kind of ['complete', 'complete-empty']) {
+      const unlicensed = hyperunixTopology(reading(withKind(acceptance(), kind, false)), context).snapshots[0];
+      expect(unlicensed.coverage, kind).toBe('partial');
+      expect(unlicensed.node.statusTone, kind).toBe('unknown');
+      const licensed = hyperunixTopology(reading(withKind(acceptance(), kind, true)), context).snapshots[0];
+      expect(licensed.coverage, kind).toBe('complete');
+      expect(licensed.node.statusTone, kind).toBe('success');
+    }
+    const other = acceptance({view: 'hx.view/pinned-live', evidence: {support_ids: [], evidence_classes: [], derivation_handles: [],
+      providers: ['hx.fs/builtin'], provider_versions: {'hx.fs/builtin': '9.9.9'}}});
+    const topology = hyperunixTopology(reading(other, '0.1.0'), context);
+    const [snapshot] = topology.snapshots;
+    expect(snapshot.sourceVersion).toBe('0.1.0');
+    expect(snapshot.source).toStrictEqual(hyperunixTopology(reading(lacking()), context).snapshots[0].source);
+    for (const key of ['sourceRevision', 'subjectBasis', 'definitionDigest', 'cursor', 'sequence']) expect(snapshot, key).not.toHaveProperty(key);
+    expect(snapshot.evidenceRefs).toStrictEqual([`hx-binary:sha256:${MEASURED_BINARY}`, ...LIVE_BATCHES.map(id => `hx-coverage:${id}`)]);
+    expect(topology.facets).toStrictEqual([{kind: 'view', view: 'hx.view/pinned-live'},
+      {kind: 'provider-version', provider: 'hx.fs/builtin', version: '9.9.9'}, ...ALL_FACETS.slice(2)]);
+  });
+
+  it('G4: a result lacking them projects byte-identically: no facets member, the same projection as the facet-less read', () => {
+    const today = hyperunixTopology(measured(), context);
+    expect(Object.keys(today)).toStrictEqual(['snapshots', 'relations', 'diagnostics']);
+    const bare = hyperunixTopology(reading(lacking()), context);
+    expect(Object.keys(bare)).toStrictEqual(['snapshots', 'relations', 'diagnostics']);
+    // Each field at its empty value, and a result that omits the field, read exactly as the facet-less read.
+    const variants: JsonValue[] = [
+      reading(lacking({view: null})),
+      reading(lacking({diagnostics: [{code: 'HX-COVERAGE-INCOMPLETE', severity: 'warning', message: 'no conflict here'}]})),
+      reading(lacking({evidence: {support_ids: [], evidence_classes: [], derivation_handles: [], providers: [], provider_versions: {'hx.fs/unlisted': '9.9.9'}}})),
+      measured({view: null, evidence: {providers: [], provider_versions: {}}, coverage_summary: {licenses_absence: false, incomplete_regions: []}, diagnostics: []}),
+    ];
+    expect(hyperunixTopology(variants[3], context)).toStrictEqual(today);
+    for (const variant of variants.slice(0, 3)) expect(hyperunixTopology(variant, context)).toStrictEqual(bare);
+  });
+
+  it('G5: facets are bounded and sanitized: escapes and bidi marks stripped, credentials redacted, every string within 200, at most 16', () => {
+    const regions = Array.from({length: 20}, (_, index) => ({scope: `fs:${WS}/r${index}`, target: 'hx.fs/directory-entry'}));
+    const hostile = measuredDocument({view: `${ESC}[31mhx.view/x${RLO}`,
+      diagnostics: [{code: `HX-SCHEMA-CONFLICT${ESC}[2J`, severity: 'error', message: 'SECRET-CONFLICT-MESSAGE'}],
+      evidence: {support_ids: [], evidence_classes: [], derivation_handles: [], providers: ['Bearer abc123', 'hx.fs/builtin'],
+        provider_versions: {'Bearer abc123': `v${BEL}1`, 'hx.fs/builtin': `0.1.0 ${'k'.repeat(10_000)}`}},
+      coverage_summary: {modes: ['opportunistic'], completeness: 'incomplete', licenses_absence: false, certificates_license_absence: false,
+        incomplete_regions: [{scope: `fs:${WS}/src password=ghi789`, target: 't'.repeat(10_000)}, ...regions], result_coverage: null, answer_count: 1}});
+    const topology = hyperunixTopology(reading(hostile), context);
+    const facets = topology.facets ?? [];
+    // 25 facets (a view, two provider versions, one conflict, 21 regions): the first 16 are kept and the rest are counted.
+    expect(facets).toHaveLength(16);
+    expect(topology.diagnostics).toContain('result facets are capped at 16: 9 omitted');
+    expect(facets.map(facet => facet.kind)).toStrictEqual(['view', 'provider-version', 'provider-version', 'conflict', ...Array.from({length: 12}, () => 'incomplete-region')]);
+    expect(facets[0]).toStrictEqual({kind: 'view', view: 'hx.view/x'});
+    expect(facets[1]).toStrictEqual({kind: 'provider-version', provider: '[REDACTED]', version: 'v 1'});
+    expect(facets[2]).toMatchObject({kind: 'provider-version', provider: 'hx.fs/builtin'});
+    expect(facets[3]).toStrictEqual({kind: 'conflict', code: 'HX-SCHEMA-CONFLICT'});
+    expect(facets[4]).toMatchObject({kind: 'incomplete-region', scope: `fs:${WS}/src password=[REDACTED]`});
+    for (const facet of facets) for (const text of Object.values(facet)) {
+      expect(text.length).toBeGreaterThan(0);
+      expect(text.length).toBeLessThanOrEqual(200);
+      expect(text).not.toMatch(UNSAFE);
+    }
+    const text = JSON.stringify(topology);
+    for (const secret of ['abc123', 'ghi789', 'SECRET-CONFLICT-MESSAGE', 'k'.repeat(201), 't'.repeat(201)]) expect(text).not.toContain(secret);
+    boundedDiagnostics(topology);
+  });
+
+  it('G6: only the measured shapes are relayed: a region without a string scope and target, an unlisted provider, a non-string version and a non-conflict code never surface', () => {
+    const odd = measured({view: 42, diagnostics: [{code: 'HX-COVERAGE-INCOMPLETE', message: 'SECRET-DIAGNOSTIC'}, {code: 7}, conflict],
+      evidence: {providers: ['hx.fs/unversioned', 3, 'hx.num'], provider_versions: {'hx.fs/unlisted': '9.9.9', 'hx.num': 3}},
+      coverage_summary: {licenses_absence: false, incomplete_regions: [{scope: 'only-scope'}, 'a-string-region', {scope: 1, target: 2}, null]}});
+    const topology = hyperunixTopology(odd, context);
+    expect(topology.facets).toStrictEqual([{kind: 'conflict', code: 'HX-SCHEMA-CONFLICT'}]);
+    const text = JSON.stringify(topology);
+    for (const absent of ['only-scope', 'a-string-region', '9.9.9', 'hx.fs/unlisted', 'hx.fs/unversioned', 'hx.num', 'SECRET-']) expect(text).not.toContain(absent);
+    const {facets: _facets, ...rest} = topology;
+    expect(rest).toStrictEqual(hyperunixTopology(measured(), context));
+  });
+
+  it('G7: a facet-carrying projection is deeply frozen, JSON-lossless and deterministic, and leaves its input untouched', () => {
+    const value = deepFreeze(reading(acceptance()));
+    const first = hyperunixTopology(value, context);
+    expect(first.facets).toStrictEqual(ALL_FACETS);
+    expect(Object.isFrozen(first.facets)).toBe(true);
+    for (const facet of first.facets ?? []) expect(Object.isFrozen(facet)).toBe(true);
+    expect(JSON.parse(JSON.stringify(first))).toStrictEqual(first);
+    expect(hyperunixTopology(reading(acceptance()), context)).toStrictEqual(first);
+  });
+
+  it('R1-RESIDUAL: hyperunix.result/1 has no consistency-mode field, so no reading carries one and no facet kind names one', () => {
+    const declaration = readFileSync(new URL('../node_modules/@hyperunix/sdk/dist/result.d.ts', import.meta.url), 'utf8');
+    expect(declaration).toContain('readonly view: string | undefined;');
+    expect(declaration).not.toMatch(/consistency/i);
+    const kinds = new Set((hyperunixTopology(reading(acceptance()), context).facets ?? []).map(facet => facet.kind));
+    expect([...kinds].sort()).toStrictEqual(['conflict', 'incomplete-region', 'provider-version', 'view']);
+  });
+});

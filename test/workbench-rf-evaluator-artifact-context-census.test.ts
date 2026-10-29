@@ -66,12 +66,13 @@
  *    preview's spawn: every literal part (a string, a no-substitution template, and each head, middle and tail span of a
  *    template, a template part read both cooked and raw so a String.raw path counts) is found that names the binary as its
  *    leading word: rf, or a path whose final segment (after the last "/" or "\") is rf, optionally as rf.exe or rf.cmd, ended by
- *    whitespace, a quote, a shell operator (; & | ) < >) or the part's end, either bare or inside one pair of single or double
- *    quotes that may hold whitespace (a quoted word in any case); that holds such a path anywhere, its final segment ended the
- *    same way, in any case (a path holding whitespace, quoted, escaped or not, closing a quote an earlier span opened, or after
- *    another word); or that is one token (a bare name or a path, never prose) naming it in any case (conservative: an rf-led
- *    prose part, or a prose part naming an rf path, reads as a site too), with positive and quiet controls whose input digests
- *    the roster holds.
+ *    whitespace, a quote, a backquote, a closing brace, a shell operator (; & | ) < >) or the part's end, either bare or inside
+ *    one pair of single or double quotes that may hold whitespace (a quoted word in any case); that holds such a path anywhere,
+ *    its final segment ended the same way, in any case (a path holding whitespace, quoted, escaped or not, closing a quote an
+ *    earlier span opened, closing a command substitution or a parameter expansion, or after another word); or that is one token
+ *    (a bare name or a path, never prose) naming it in any case (conservative: an rf-led prose part, or a prose part naming an rf
+ *    path, reads as a site too, and so does a word the shell continues past a backquote or a closing brace), with positive and
+ *    quiet controls whose input digests the roster holds.
  *  M, the matcher rows C2 and C3 read: M1-M20 the spellings they must catch (words joined directly or by whitespace, "_", ".",
  *    "-", ":" or "/"; every JS string escape is read as what it spells first, left to right: a unicode escape (four hex digits,
  *    or braced with any number of hex digits up to U+10FFFF), a hex or a legacy octal escape as its character, a
@@ -100,11 +101,14 @@
  * leading token reads the sixteen landed "RF ..." messages of src/workbench/providers/reactivefiber.ts and
  * src/workbench/reactivefiber-observer.ts as sites, so only a one-token part, a quoted leading word and a path's final segment
  * are read in any case. R-SHELL a program word the shell assembles where a literal scan reads no rf word: rf glued after a group
- * opener ("(rf ...)"), or spelled in quoted or escaped pieces (r'f', "r"f, r\f) or in ANSI-C quotes ($'rf') (Q11): reading
- * those is shell parsing, beyond a scan of literal words; an rf path inside such a word is still read by its final segment. A
- * launch whose command line spells the receipt vocabulary ("rf graph test") is still caught by C3 under any of these
- * residuals. (R-KEYED, R-EMBEDDED and R-CASE measured at the wb-ofz4 cut; their narrowed forms and R-SHELL at the wb-sfo7 cut,
- * whose added C4 and A1 readings read no landed src part beyond the preview's spawn.)
+ * opener ("(rf ...)") or a backquote ("`rf`") or after a parameter expansion's default operator ("${RF_BIN:-rf}"), or spelled in
+ * quoted or escaped pieces (r'f', "r"f, r\f) or in ANSI-C quotes ($'rf') (Q11): reading those is shell parsing, beyond a scan
+ * of literal words; an rf path inside such a word, its final segment ended by one of C4's word ends (a closing backquote or
+ * brace included: "`/opt/bin/rf`", "${RF_BIN:-/opt/bin/rf}"), is still read by its final segment. A launch whose command line
+ * spells the receipt vocabulary ("rf graph test") is still caught by C3 under any of these residuals. (R-KEYED, R-EMBEDDED and
+ * R-CASE measured at the wb-ofz4 cut; their narrowed forms and R-SHELL at the wb-sfo7 cut, whose added C4 and A1 readings read
+ * no landed src part beyond the preview's spawn; R-SHELL's backquote and parameter-expansion members at the wb-0hkv cut, whose
+ * added word ends read none either.)
  * FOLLOW-UP wb-e9j2 (the wb-a9l2.6 gate's PREP F1 (i)-(v) and F2): A6; A3's whole frame; C2's three readings and id set; C4; the
  * git-covering walks of A1, C3 and C4; A1's every-reference invoke scan; the ":" and "/" separators, the escape reading, M10-M14, Q4.
  * FOLLOW-UP wb-ofz4 (the wb-e9j2 gate's F1-F3, landing 353): C4's final-path-segment, template-span, extension and one-token case
@@ -115,6 +119,11 @@
  * text (F2), each C4 reading pinned by a control only it reads; A1 reads a literal through its value-keeping wrappers (F3) and
  * climbs an array rest element (F4); a braced unicode escape takes any number of hex digits, M19 and M20 (F5); the roster holds
  * the input digest of every A1, C2 and C4 control (F6); the quiet rows Q10 (R-KEYED's expression keys) and Q11 (R-SHELL).
+ * FOLLOW-UP wb-0hkv (the wb-sfo7 gate's F1, landing 562): C4's word ends read a backquote and a closing brace (WORD_END), so a
+ * path closing a command substitution ("`/opt/bin/rf`") or a parameter expansion ("${RF_BIN:-/opt/bin/rf}") is a site; each of
+ * RF_LEAD, RF_QUOTED and RF_SEGMENT is pinned with each new end by a control only it reads, and the conservative read of a word
+ * the shell continues past one by two more; boundary quiet controls sit beside them inside backquotes and braces; R-SHELL names
+ * its backquote and parameter-expansion-default members and Q11 pins them quiet.
  * SCOPE: a workflow script authors its own prompts; A4 pins that what it receives is the producer-labelled reading, and what it
  * then writes is the script's. result.view_contract (the served --view outcome the observer notes, wb-973.2) is a landed reader
  * of a served context.render field, not an H2 evaluator artifact, and stays with its own pins. The vocabularies are producer
@@ -765,15 +774,20 @@ function walkCoversGit(files: readonly string[], tsOnly: boolean): boolean {
   const listed = listedSrc().filter(path => !tsOnly || path.endsWith(".ts"));
   return listed.length > 0 && listed.every(path => walked.has(path));
 }
+/** A backquote, built from its code point: a C4 word end (WORD_END), and the template delimiter the controls spell. */
+const TICK = String.fromCodePoint(0x60);
 /**
  * Row C4's readings of a literal part, each with a control only it reads. RF_LEAD: its leading word is rf, optionally as rf.exe
  * or rf.cmd (the command-line form; conservative: an "rf ..." prose part reads the same). RF_QUOTED: that word inside one pair of
  * single or double quotes, in any case. RF_SEGMENT: a path whose final segment (after the last "/" or "\") is rf, rf.exe or
  * rf.cmd, anywhere in the part and in any case (a leading path; a path holding whitespace, quoted, escaped or not; one closing a
- * quote an earlier span opened; one after another word). Each ends where a shell word ends: at whitespace, a quote, a shell
- * operator (; & | ) < >) or the part's end. RF_TOKEN: a one-token part that is the bare name, in any case.
+ * quote an earlier span opened; one after another word; one closing a command substitution or a parameter expansion). Each ends
+ * at one of C4's word ends (WORD_END) and at no other character: whitespace, a quote (' or "), a backquote, a closing brace, a
+ * shell operator (; & | ) < >) or the part's end (conservative, as for a quote and ")": a backquote or a closing brace reads as
+ * an end wherever it stands, so a word the shell continues past one, such as ${RF_HOME:-/opt/rf}/bin/tool or /opt/bin/rf`date`,
+ * reads as a site too). RF_TOKEN: a one-token part that is the bare name, in any case.
  */
-const WORD_END = String.raw`(?=[\s'";&|)<>]|$)`;
+const WORD_END = String.raw`(?=[\s'";&|)<>}${TICK}]|$)`;
 const RF_LEAD = new RegExp(String.raw`^rf(?:\.(?:exe|cmd))?${WORD_END}`);
 const RF_QUOTED = new RegExp(String.raw`^(['"])rf(?:\.(?:exe|cmd))?\1${WORD_END}`, "i");
 const RF_SEGMENT = new RegExp(String.raw`[\\/]rf(?:\.(?:exe|cmd))?${WORD_END}`, "i");
@@ -832,7 +846,6 @@ const PLANTED_DESCRIPTORS: readonly DescriptorFacts[] = [
   { id: "overlay.sdk", permissions: [], contract: "@reactivefiber/sdk@1.0.0:Rf.evaluate" },
   { id: "forge.gate.run", permissions: ["forge:inspect"], contract: "@forge/sdk@0.1.0:ServerConnection.request(gate.run)" },
 ];
-const TICK = String.fromCodePoint(0x60);
 /** The src modules other than the observer's own that name reactivefiberTopology (an import, a call or a re-export). */
 function observerCallers(files: readonly string[]): string[] {
   return files
@@ -909,7 +922,7 @@ const SCAN_RESIDUALS: readonly ScanResidual[] = [
     pin: "Q11",
     residual: "R-SHELL",
     scan: "launch",
-    text: `execSync("(rf context render --json)"); execSync("r'f' context render --json"); execSync('"r"f context render --json'); execSync("r${BACKSLASH}${BACKSLASH}f context render --json"); execSync("${"$"}'rf' context render --json");`,
+    text: `execSync("(rf context render --json)"); execSync("r'f' context render --json"); execSync('"r"f context render --json'); execSync("r${BACKSLASH}${BACKSLASH}f context render --json"); execSync("${"$"}'rf' context render --json"); execSync("${TICK}rf${TICK} --version"); execSync("${"$"}{RF_BIN:-rf} context render --json");`,
   },
 ];
 
@@ -935,10 +948,12 @@ const INVOKE_QUIET =
 const INVOKE_BOUNDARY_QUIET = 'const mode = ("invoke" as const); run(...[{ invoke }]); const copy = [...[{ invoke }]]; registry.dispatch(("invoke"), id);';
 /**
  * Row C4's controls. LAUNCH_CONTROLS and LAUNCH_QUIET are the landed bare-name controls; PATH_CONTROLS holds one probe per path,
- * quoting, word-end, case and raw-text reading, each read as one site (the last, one call per remaining shell operator, as four);
- * PATH_QUIET the landed path shapes that are no site; LAUNCH_BOUNDARY_QUIET the shapes beside the wb-sfo7 readings that stay no
- * site (another final segment or extension, an rf directory, a quoted other word, a word that continues past rf, a shell
- * function named rf).
+ * quoting, word-end, case and raw-text reading, each read as one site (the eight before the last are the wb-0hkv backquote and
+ * closing-brace word ends: the gate's two path shapes, RF_LEAD and RF_QUOTED with each closer, and the two conservative reads;
+ * the last, one call per remaining shell operator, as four); PATH_QUIET the landed path shapes that are no site;
+ * LAUNCH_BOUNDARY_QUIET the shapes beside the wb-sfo7 and wb-0hkv readings that stay no site, each with no word end after rf
+ * (another final segment or extension, an rf directory, a quoted other word, a word that continues past rf, a shell function
+ * named rf; the last four inside backquotes or braces).
  */
 const LAUNCH_CONTROLS: readonly string[] = [
   'spawn("rf", ["--workspace", "/w", "graph", "test", "--json"]);',
@@ -960,10 +975,14 @@ const PATH_CONTROLS: readonly string[] = [
   'execSync("rf&&echo done");', 'execSync("/opt/bin/rf;echo done");', `execSync(${TICK}'${"$"}{prefix}rf' context render${TICK});`,
   `spawn(String.raw${TICK}C:${BACKSLASH}Program Files${BACKSLASH}Tools${BACKSLASH}rf.exe${TICK}, argv);`,
   'spawn("Rf.exe", argv);', 'execSync("rf.cmd context render --json");', `execSync("'rf.exe' context render --json");`,
+  `execSync("${TICK}/opt/bin/rf${TICK}");`, `execSync("${"$"}{RF_BIN:-/opt/bin/rf} context render --json");`,
+  `execSync(${TICK}${BACKSLASH}${TICK}${"$"}{prefix}rf${BACKSLASH}${TICK} --version${TICK});`, `execSync(${TICK}${BACKSLASH}${"$"}{RF_BIN:-${"$"}{prefix}rf} context render${TICK});`,
+  `execSync(${TICK}${BACKSLASH}${TICK}${"$"}{prefix}'rf'${BACKSLASH}${TICK} --version${TICK});`, `execSync(${TICK}${BACKSLASH}${"$"}{RF_BIN:-${"$"}{prefix}'rf'} context render${TICK});`,
+  `execSync("${"$"}{RF_HOME:-/opt/rf}/bin/tool --json");`, `execSync("/opt/bin/rf${TICK}date${TICK} --json");`,
   'execSync("rf|jq .result"); execSync("rf<request.json"); execSync("/opt/bin/rf>out.json"); execSync("(cd /w && /opt/bin/rf)");',
 ];
 const PATH_QUIET = 'spawn("/usr/local/bin/rf-graph", argv); spawn("./surf", argv); const lib = "/opt/rf/lib"; const message = "RF preview cancelled.";';
-const LAUNCH_BOUNDARY_QUIET = `execSync("'rfc' context render"); spawn("/opt/bin/rf.bat", argv); const doc = "see /docs/rfc"; const path = "C:${BACKSLASH}${BACKSLASH}Program Files${BACKSLASH}${BACKSLASH}rf${BACKSLASH}${BACKSLASH}lib"; execSync("'/opt/rf/bin/tool' --json"); const note = "rf-graph|jq"; execSync("'rf'x context render"); execSync("rf() { :; }");`;
+const LAUNCH_BOUNDARY_QUIET = `execSync("'rfc' context render"); spawn("/opt/bin/rf.bat", argv); const doc = "see /docs/rfc"; const path = "C:${BACKSLASH}${BACKSLASH}Program Files${BACKSLASH}${BACKSLASH}rf${BACKSLASH}${BACKSLASH}lib"; execSync("'/opt/rf/bin/tool' --json"); const note = "rf-graph|jq"; execSync("'rf'x context render"); execSync("rf() { :; }"); execSync("${TICK}/opt/bin/rfc${TICK} --json"); execSync("${"$"}{RF_BIN:-/opt/bin/rf.bat} --json"); execSync("${TICK}/opt/rf/bin/tool${TICK} --json"); const home = "${"$"}{RF_HOME:-/opt/rf/lib}";`;
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
@@ -1257,16 +1276,17 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect(sites, "a second literal naming rf is a second path to rf (or an rf-led prose string): classify it and re-measure rows A-C").toEqual(["src/workbench/providers/reactivefiber.ts:spawn"]);
     expect(controls.map(found => found.length)).toEqual([1, 1, 1, 1]);
     expect(quiet).toEqual([]);
-    expect(pathControls, "a path-qualified, template-span, extension, one-token case, whitespace-bearing, quoted, quote- or operator-ended or raw spelling of the binary is a site").toEqual([
+    expect(pathControls, "a path-qualified, template-span, extension, one-token case, whitespace-bearing, quoted, quote-, operator-, backquote- or brace-ended or raw spelling of the binary is a site").toEqual([
       ["probe.ts:spawn"], ["probe.ts:spawn"], ["probe.ts:execSync"], ["probe.ts:execFile"], ["probe.ts:spawn"], ["probe.ts:spawn"], ["probe.ts:spawn"],
       ["probe.ts:spawn"], ["probe.ts:spawn"], ["probe.ts:spawn"],
       ...Array.from({ length: 11 }, () => ["probe.ts:execSync"]),
       ["probe.ts:TaggedTemplateExpression"],
       ["probe.ts:spawn"], ["probe.ts:execSync"], ["probe.ts:execSync"],
+      ...Array.from({ length: 8 }, () => ["probe.ts:execSync"]),
       ["probe.ts:execSync", "probe.ts:execSync", "probe.ts:execSync", "probe.ts:execSync"],
     ]);
-    expect(pathQuiet, "another final segment, an rf directory and a case-variant prose line are not sites").toEqual([]);
-    expect(boundaryQuiet, "a quoted other word, another extension, an rf directory, a word continuing past rf and a shell function named rf are not sites").toEqual([]);
+    expect(pathQuiet, "another final segment, an rf directory with no word end after rf and a case-variant prose line are not sites").toEqual([]);
+    expect(boundaryQuiet, "a quoted other word, another extension, an rf directory, a word continuing past rf and a shell function named rf, each with no word end after rf, are not sites, inside backquotes or braces too").toEqual([]);
     return {
       walkCoversGit: walkCovers, sites, controls, quiet, pathControls, pathQuiet, boundaryQuiet,
       controlDigests: LAUNCH_CONTROLS.map(digestOf), quietDigest: digestOf(LAUNCH_QUIET), pathControlDigests: PATH_CONTROLS.map(digestOf),
