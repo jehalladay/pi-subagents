@@ -24,16 +24,16 @@
  "producer": {
   "mw": {
    "repository": "https://github.com/jehalladay/MechanicalWorkflows",
-   "measuredUtc": "2026-10-28T08:49:16Z",
-   "measuredBy": "seat ws-06 of g10-work-s125, read-only: git show on the local MechanicalWorkflows checkout and a depth-1 scratch clone of the remote tip; this hermetic census never re-reads the producer",
+   "measuredUtc": "2026-10-29T09:15:22Z",
+   "measuredBy": "seat ws-06 of g10-work-s125 (2026-10-28T08:49:16Z: the filing pin, and the tip at f489cee4ce20), re-read by seat ws-02 of g10-work-s136 (the filing pin's blobs and :6, and the tip at cb45df94cd8e, whose program documents are blob-identical to f489cee4ce20's), read-only: git show on the local MechanicalWorkflows checkout and depth-1 scratch clones of the remote tip; this hermetic census never re-reads the producer",
    "filingPin": "4b8b974ca72bf2ed36b99e315e45857c6181fbe8",
    "filingBlobs": {
     "01-composition-contracts.md": "f006a4760ecbb8fb0ddcbba4db4066791b58f228",
     "README.md": "40774a7b36f6d0cfe79d908090a4fc9818bf9a22"
    },
    "filingLine6": "Use \\`CACWorkflowCompositionV0\\` as a concept only. It can point to existing workflow step and source artifact IDs, but it must not create new authoritative IDs for Beads tasks, Forge tests or Furnace attempts.",
-   "remoteTip": "f489cee4ce2088e25440c82ecc448cc0dc9a66ce",
-   "remoteTipCommitted": "2026-10-27T20:36:35Z",
+   "remoteTip": "cb45df94cd8e7d246b52861e8b88bc90de4f1975",
+   "remoteTipCommitted": "2026-10-28T23:14:59Z",
    "tipBlobs": {
     "01-composition-contracts.md": "937850d83fe6814cf93a02c66c923657cc1aea42",
     "README.md": "8724bfbef6638e8efa371e78a7c026c28ca2dc62"
@@ -58,6 +58,30 @@
    ],
    "twin": [
     "manifest-dependency"
+   ]
+  },
+  {
+   "id": "R-SPEC-FORM",
+   "pin": "T1",
+   "quiet": [
+    "manifest-git-spec",
+    "manifest-overrides"
+   ],
+   "twin": [
+    "manifest-npm-alias"
+   ]
+  },
+  {
+   "id": "R-LOAD-FORM",
+   "pin": "T1",
+   "quiet": [
+    "dynamic-specifier",
+    "require-alias",
+    "create-require-renamed",
+    "require-resolve"
+   ],
+   "twin": [
+    "create-require-bound"
    ]
   },
   {
@@ -122,6 +146,58 @@
    ]
   },
   {
+   "id": "R-COMPOUND",
+   "pin": "B1",
+   "quiet": [
+    "task-compound"
+   ],
+   "twin": [
+    "task-concat"
+   ]
+  },
+  {
+   "id": "R-VALUE-CHAIN",
+   "pin": "B2",
+   "quiet": [
+    "forge-value-chain"
+   ],
+   "twin": [
+    "forge-gate-ref"
+   ]
+  },
+  {
+   "id": "R-NAME-BINDING",
+   "pin": "B2",
+   "quiet": [
+    "forge-provider-import",
+    "forge-provider-let",
+    "forge-provider-member"
+   ],
+   "twin": [
+    "forge-provider-constant"
+   ]
+  },
+  {
+   "id": "R-KEY-ACCESSOR",
+   "pin": "B2",
+   "quiet": [
+    "forge-key-getter"
+   ],
+   "twin": [
+    "forge-id-key"
+   ]
+  },
+  {
+   "id": "R-COMPOUND-KEY",
+   "pin": "B2",
+   "quiet": [
+    "forge-compound-key"
+   ],
+   "twin": [
+    "forge-assignment"
+   ]
+  },
+  {
    "id": "R-ID-POSITION",
    "pin": "B2",
    "quiet": [
@@ -162,20 +238,41 @@
       "controls": {
        "manifest-dependency": 1,
        "manifest-dev": 1,
+       "manifest-optional": 1,
+       "manifest-peer": 1,
        "manifest-bundled": 1,
+       "manifest-bundled-spelling": 1,
+       "manifest-own-name": 1,
+       "manifest-npm-alias": 1,
+       "manifest-git-spec": 0,
+       "manifest-overrides": 0,
        "unscoped-name": 0,
        "near-scope": 0,
        "lock-path": 1,
        "lock-nested": 1,
        "lock-declared": 1,
+       "lock-entry-name": 1,
+       "lock-alias-spec": 1,
+       "lock-v1-dependencies": 1,
        "import-static": 1,
        "import-type": 1,
        "export-from": 1,
        "dynamic-import": 1,
        "require": 1,
+       "require-template": 1,
        "import-equals": 1,
        "import-type-node": 1,
-       "import-other": 0
+       "create-require-bound": 1,
+       "create-require-direct": 1,
+       "create-require-assigned": 1,
+       "create-require-member": 1,
+       "reference-types": 1,
+       "reference-path": 1,
+       "import-other": 0,
+       "dynamic-specifier": 0,
+       "require-alias": 0,
+       "create-require-renamed": 0,
+       "require-resolve": 0
       }
      }
     },
@@ -195,8 +292,15 @@
        "program-slug": 1,
        "snake-case": 1,
        "embedded": 1,
+       "spaced": 1,
        "requirement-id": 0,
        "unspelled-consumer": 0
+      },
+      "readerControls": {
+       "reader-literal": 1,
+       "reader-template": 1,
+       "reader-comment": 0,
+       "reader-longer": 0
       }
      }
     }
@@ -218,6 +322,77 @@
       "honest": {
        "F1": [],
        "F2": []
+      },
+      "projection": {
+       "F1": {
+        "refs": [
+         {
+          "row": "step:build",
+          "ref": {
+           "provider": "beads",
+           "type": "work",
+           "id": "wb-fx01"
+          }
+         },
+         {
+          "row": "step:verify",
+          "ref": {
+           "provider": "forge",
+           "type": "operation",
+           "id": "op-fx-0001"
+          }
+         },
+         {
+          "row": "step:supervise",
+          "ref": {
+           "provider": "furnace",
+           "type": "attempt",
+           "id": "frn-atm-fx-0001-1"
+          }
+         },
+         {
+          "row": "source:gate",
+          "ref": {
+           "provider": "forge",
+           "type": "gate-step",
+           "id": "op-fx-0001/lint"
+          }
+         }
+        ],
+        "unmapped": {
+         "count": 0,
+         "rows": []
+        }
+       },
+       "F2": {
+        "refs": [
+         {
+          "row": "step:build",
+          "ref": {
+           "provider": "beads",
+           "type": "work",
+           "id": "wb-fx02"
+          }
+         }
+        ],
+        "unmapped": {
+         "count": 3,
+         "rows": [
+          {
+           "row": "step:plan",
+           "reason": "unmapped"
+          },
+          {
+           "row": "source:context",
+           "reason": "unavailable"
+          },
+          {
+           "row": "source:lint",
+           "reason": "unavailable"
+          }
+         ]
+        }
+       }
       },
       "mutants": {
        "mint-task": {
@@ -283,6 +458,43 @@
         "F2": []
        },
        "miscount": {
+        "F1": [],
+        "F2": []
+       },
+       "retype": {
+        "F1": [
+         "foreign",
+         "lost"
+        ],
+        "F2": [
+         "foreign",
+         "lost"
+        ]
+       },
+       "ghost-row": {
+        "F1": [
+         "foreign"
+        ],
+        "F2": [
+         "foreign"
+        ]
+       },
+       "swap-rows": {
+        "F1": [
+         "foreign",
+         "lost"
+        ],
+        "F2": []
+       },
+       "reason-pending": {
+        "F1": [],
+        "F2": []
+       },
+       "mint-undefined-id": {
+        "F1": [],
+        "F2": []
+       },
+       "mint-empty-id": {
         "F1": [],
         "F2": []
        }
@@ -307,6 +519,77 @@
        "F1": [],
        "F2": []
       },
+      "projection": {
+       "F1": {
+        "refs": [
+         {
+          "row": "step:build",
+          "ref": {
+           "provider": "beads",
+           "type": "work",
+           "id": "wb-fx01"
+          }
+         },
+         {
+          "row": "step:verify",
+          "ref": {
+           "provider": "forge",
+           "type": "operation",
+           "id": "op-fx-0001"
+          }
+         },
+         {
+          "row": "step:supervise",
+          "ref": {
+           "provider": "furnace",
+           "type": "attempt",
+           "id": "frn-atm-fx-0001-1"
+          }
+         },
+         {
+          "row": "source:gate",
+          "ref": {
+           "provider": "forge",
+           "type": "gate-step",
+           "id": "op-fx-0001/lint"
+          }
+         }
+        ],
+        "unmapped": {
+         "count": 0,
+         "rows": []
+        }
+       },
+       "F2": {
+        "refs": [
+         {
+          "row": "step:build",
+          "ref": {
+           "provider": "beads",
+           "type": "work",
+           "id": "wb-fx02"
+          }
+         }
+        ],
+        "unmapped": {
+         "count": 3,
+         "rows": [
+          {
+           "row": "step:plan",
+           "reason": "unmapped"
+          },
+          {
+           "row": "source:context",
+           "reason": "unavailable"
+          },
+          {
+           "row": "source:lint",
+           "reason": "unavailable"
+          }
+         ]
+        }
+       }
+      },
       "mutants": {
        "mint-task": {
         "F1": [],
@@ -370,6 +653,32 @@
         "F2": [
          "miscounted"
         ]
+       },
+       "retype": {
+        "F1": [],
+        "F2": []
+       },
+       "ghost-row": {
+        "F1": [],
+        "F2": []
+       },
+       "swap-rows": {
+        "F1": [],
+        "F2": []
+       },
+       "reason-pending": {
+        "F1": [],
+        "F2": [
+         "uncounted"
+        ]
+       },
+       "mint-undefined-id": {
+        "F1": [],
+        "F2": []
+       },
+       "mint-empty-id": {
+        "F1": [],
+        "F2": []
        }
       },
       "fires": {
@@ -390,6 +699,77 @@
       "honest": {
        "F1": [],
        "F2": []
+      },
+      "projection": {
+       "F1": {
+        "refs": [
+         {
+          "row": "step:build",
+          "ref": {
+           "provider": "beads",
+           "type": "work",
+           "id": "wb-fx01"
+          }
+         },
+         {
+          "row": "step:verify",
+          "ref": {
+           "provider": "forge",
+           "type": "operation",
+           "id": "op-fx-0001"
+          }
+         },
+         {
+          "row": "step:supervise",
+          "ref": {
+           "provider": "furnace",
+           "type": "attempt",
+           "id": "frn-atm-fx-0001-1"
+          }
+         },
+         {
+          "row": "source:gate",
+          "ref": {
+           "provider": "forge",
+           "type": "gate-step",
+           "id": "op-fx-0001/lint"
+          }
+         }
+        ],
+        "unmapped": {
+         "count": 0,
+         "rows": []
+        }
+       },
+       "F2": {
+        "refs": [
+         {
+          "row": "step:build",
+          "ref": {
+           "provider": "beads",
+           "type": "work",
+           "id": "wb-fx02"
+          }
+         }
+        ],
+        "unmapped": {
+         "count": 3,
+         "rows": [
+          {
+           "row": "step:plan",
+           "reason": "unmapped"
+          },
+          {
+           "row": "source:context",
+           "reason": "unavailable"
+          },
+          {
+           "row": "source:lint",
+           "reason": "unavailable"
+          }
+         ]
+        }
+       }
       },
       "mutants": {
        "mint-task": {
@@ -443,6 +823,34 @@
        "miscount": {
         "F1": [],
         "F2": []
+       },
+       "retype": {
+        "F1": [],
+        "F2": []
+       },
+       "ghost-row": {
+        "F1": [],
+        "F2": []
+       },
+       "swap-rows": {
+        "F1": [],
+        "F2": []
+       },
+       "reason-pending": {
+        "F1": [],
+        "F2": []
+       },
+       "mint-undefined-id": {
+        "F1": [],
+        "F2": [
+         "minted"
+        ]
+       },
+       "mint-empty-id": {
+        "F1": [],
+        "F2": [
+         "minted"
+        ]
        }
       },
       "fires": {
@@ -475,17 +883,33 @@
        "task-template": 1,
        "task-bd-template": 1,
        "task-concat": 1,
+       "task-template-chain": 1,
+       "task-parenthesized-chain": 1,
        "task-split-literal": 1,
        "task-native-ref": 1,
        "task-id-key": 1,
+       "task-work-key": 1,
+       "task-beads-work-key": 1,
+       "task-issue-key": 1,
+       "task-hyphen-key": 1,
        "task-member-id": 1,
+       "task-nested-holder": 1,
+       "task-ids-member": 1,
+       "task-snake-field": 1,
+       "task-kebab-key": 1,
+       "task-plural-field": 1,
+       "task-composition-word": 1,
+       "task-prose-prefix": 1,
        "task-copy": 0,
        "task-no-field": 0,
+       "task-split-around-value": 0,
+       "task-embedded-prefix": 0,
        "qa-module": 0,
        "indirect-binding": 0,
        "concat-call": 0,
        "join-call": 0,
-       "prefix-constant": 0
+       "prefix-constant": 0,
+       "task-compound": 0
       }
      }
     },
@@ -505,12 +929,30 @@
       "controls": {
        "forge-native-ref": 1,
        "forge-gate-ref": 1,
+       "forge-provider-constant": 1,
+       "forge-shadowed-constant": 1,
        "forge-id-key": 1,
        "forge-gate-key": 1,
+       "forge-computed-key": 1,
+       "forge-key-constant": 1,
        "forge-assignment": 1,
+       "forge-element-assignment": 1,
+       "forge-element-key-constant": 1,
+       "forge-name-assignment": 1,
+       "forge-declaration": 1,
+       "forge-parameter-default": 1,
+       "forge-destructuring-default": 1,
+       "forge-destructuring-alias": 1,
+       "forge-class-property": 1,
        "forge-gate-step-name": 0,
        "forge-copy": 0,
-       "builder-argument": 0
+       "builder-argument": 0,
+       "forge-value-chain": 0,
+       "forge-provider-import": 0,
+       "forge-provider-let": 0,
+       "forge-provider-member": 0,
+       "forge-key-getter": 0,
+       "forge-compound-key": 0
       }
      }
     },
@@ -531,7 +973,9 @@
        "attempt-concat": 1,
        "attempt-native-ref": 1,
        "attempt-id-key": 1,
+       "attempt-furnace-key": 1,
        "attempt-element-id": 1,
+       "attempt-element-member": 1,
        "attempt-no-field": 0,
        "attempt-literal": 0,
        "other-field-name": 0,
@@ -555,7 +999,18 @@
       "plants": {
        "dropped": 0,
        "doubled": 2,
-       "moved": 0
+       "moved": 0,
+       "extended": 1,
+       "held": {
+        "dropped": false,
+        "doubled": false,
+        "moved": false,
+        "extended": false
+       },
+       "secondHeading": "",
+       "statusReplaced": false,
+       "statusEmbedded": false,
+       "twoSentences": 2
       }
      }
     },
@@ -579,7 +1034,43 @@
        "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > B (b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields | B1",
        "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > B (b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields | B2",
        "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > B (b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields | B3"
-      ]
+      ],
+      "plants": {
+       "shapes": {
+        "holder-test-suffix": {
+         "census": false,
+         "judge": true
+        },
+        "holder-no-header": {
+         "census": false,
+         "judge": true
+        },
+        "holder-no-judge": {
+         "census": true,
+         "judge": false
+        },
+        "holder-judge-elsewhere": {
+         "census": true,
+         "judge": false
+        },
+        "holder-judge-alias": {
+         "census": true,
+         "judge": true
+        }
+       },
+       "frozen": {
+        "frozen-literal": [
+         "quote | a",
+         "today | test"
+        ],
+        "frozen-non-literal": [
+         "<non-literal Identifier>",
+         "today | test"
+        ],
+        "frozen-other-name": null,
+        "frozen-not-array": null
+       }
+      }
      }
     }
    ]
