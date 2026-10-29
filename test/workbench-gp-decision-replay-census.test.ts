@@ -80,23 +80,31 @@
  *    duplicate, it adds no row naming its id and no application of it, and a fresh presentation is never refused duplicate)
  *    and worker-failure (a failed worker's verdict is refused or unavailable, and no row records its decision and applied()
  *    never holds it, at any step until its id is presented again).
- *    The honest REFERENCE host meets every check over the journal and every fixture; each of the twenty-eight MUTANTS fails
+ *    The honest REFERENCE host meets every check over the journal and every fixture; each of the thirty-three MUTANTS fails
  *    exactly its declared checks; every check is failed by some mutant and every check but four-fields by a mutant alone (each
- *    four-fields mutant leaves an expected-admitted decision without a replayable row, so it fails replay too).
+ *    four-fields mutant leaves an expected-admitted decision without a replayable row, so it fails replay too). Five MUTANTS
+ *    are TRANSIENT: each lists a row or an application only from the presentation it answers to the host's next event, and
+ *    reads as the reference at the last step (the same verdicts, last rows and last applications: settledBy), so only a check
+ *    that reads every step fails it, one per every-step reading: a phantom application d0 while the host answers the stale
+ *    presentation (replay), the stale decision's row and its application (stale), and each failed worker's row and its
+ *    application (worker-failure).
  *    A1 the honest rows, four-fields' reading of four planted rows (FIELD_CONTROLS) and the structural mutants; the pairs
  *    differing in one input differ in that field and the outcome only, a replay with one of d1's fields swapped for its pair's
  *    reads the pair's outcome, and the real gp receipt records the four as separate members. A2 the honest replays reconstruct
  *    every admitted presentation, and the value mutants (a checkpoint or digest read when rows() is read, a host action in place
  *    of the outcome) fail replay. A2b the replay input is the four fields alone, the snapshot store resolves a digest of exact
  *    bytes only, each unresolvable field reads its own reason, and an unprefixed digest, a row naming no presented decision and
- *    an application naming none fail replay. A3 the stale verdict, and the mutants that apply, rebase or mistype a stale
- *    decision, never move the basis, refuse the first fresh decision after a move stale, apply a stale decision once the basis
- *    returns to its digest, or apply one without a row. A4 the two duplicates and the mutants that re-admit, dedupe by content,
+ *    an application naming none fail replay, the last at any step (transient-phantom-application). A3 the stale verdict, and
+ *    the mutants that apply, rebase or mistype a stale decision, never move the basis, refuse the first fresh decision after a
+ *    move stale, apply a stale decision once the basis returns to its digest, apply one without a row, or record or apply one at
+ *    its own step only (transient-stale-record, transient-stale-application). A4 the two duplicates and the mutants that
+ *    re-admit, dedupe by content,
  *    answer admitted, re-apply, re-record the original row, refuse with the reason stale, or refuse a fresh decision duplicate
  *    for an admitted one's outcome on the same basis. A5 the four NEGATIVE_FIXTURES, named as the clause names them: each a
  *    frozen in-memory journal with one decision the reference admits, met by the reference and failed by its member mutant
- *    through exactly its check, while two more mutants (a row for a failed worker, an admitted verdict for one) fail
- *    worker-failure over the journal; two runs of each fixture are identical, and every digest each presents resolves in the
+ *    through exactly its check, while four more mutants (a row for a failed worker, an admitted verdict for one, and a row or
+ *    an application of a failed worker's decision at its own step only: transient-failure-record, transient-failure-application)
+ *    fail worker-failure over the journal; two runs of each fixture are identical, and every digest each presents resolves in the
  *    in-memory store. A5c the default gate: forge.toml's gate list (the gate key of its [build] table) and its test step's
  *    command; the package test script read against a closed flag list (vitest run with only reporter, outputFile,
  *    includeTaskLocation and expect.requireAssertions flags: any other flag or argument, a config, root, filter or exclude among
@@ -105,7 +113,9 @@
  *    file named vitest.config or vitest.<name>.config with a ts, mts, cts, js, mjs or cjs extension, at any depth) that names
  *    this file's base name or selects it by an include list of string literals, its globs read with * and ** only, where four
  *    in-memory config plants (the gate's root .mts and nested configs/ files naming this file, a glob include written without
- *    spaces, and a control selecting the census tier only) read three claiming it and the control not.
+ *    spaces, and a control selecting the census tier only) read three claiming it and the control not, each plant's path read
+ *    through the same filter as the listing (otherConfigs, the one filter A5c reads the listing through, so a change of that
+ *    filter, the gate's FX5 root-only reversion among them, reds the plants).
  *  S1 to S3, the standing anchors, each row's text pins read at the pin and at HEAD and its drive at HEAD: S1 the real
  *    control core mints a permit that isCoreMintedDecision accepts while its spread copy, its JSON round trip and its
  *    structured clone are refused, a GP receipt row is no minted decision, and the docs anchor and the export rows of wb-pjj;
@@ -124,12 +134,27 @@
  *    the control). At HEAD the section carries no HTML, the same one item renders the same text, and the whole section renders
  *    block for block as the pin's (sectionMatches: each block's kind and rendered text, and each paragraph's and list item's
  *    source with its whitespace collapsed), so at HEAD an anchor is read by its section, never by a line, and a later edit of
- *    either section that changes those blocks reds this census until it is re-measured (an edit of whitespace alone, a
- *    re-wrapped line or a blank line between list items, changes none of them). Three controls read at the pin (the anchor's
- *    line moved one down, the anchor's carrier text edited, and the pin's text with the carrier's source line doubled) each read
- *    their own reason, and seven in-memory plants over the HEAD text (DOCS_PLANTS: the gate's D1 to D5 as its refusal record
- *    describes them, D6 a second "Authorization design" section at the end of the page, D7 a level-1 heading re-homing the
- *    controls section) each read the reason pinned for it.
+ *    either section that changes those blocks reds this census until it is re-measured (a whitespace edit that leaves each
+ *    block's kind, rendered text and collapsed source as they were changes none of them: a re-wrapped or re-spaced line, or a
+ *    blank line between list items, as the gate's GD12 to GD14). Three controls read at the pin (the anchor's line moved one
+ *    down, the anchor's carrier text edited, and the pin's text with the carrier's source line doubled) each read their own
+ *    reason, and seven in-memory plants over the HEAD text (DOCS_PLANTS: the gate's D1 to D5 as its refusal record describes
+ *    them, D6 a second "Authorization design" section at the end of the page, D7 a level-1 heading re-homing the controls
+ *    section) each read the reason pinned for it. A plant edits the HEAD page at that page's own sites, never at the pin's line:
+ *    D1 to D4 at the section's own carrier source (ownSource: the whole lines of the page its one marker-carrying prose item
+ *    spans, its list marker kept, found by that item's source words with any whitespace run between them), D5 and D7 at the
+ *    line that renders the heading (headingLine: its words with any spacing, any whitespace but a line break, around and
+ *    between them) and the line break after it, and D6 at the page's end; a plant whose site or edit pattern does not occur
+ *    exactly once reads needle-miss, its own reason, at the witness compare, never a throw before it. The in-memory HEAD
+ *    re-spacing control, not a claim that every whitespace rewrite of the on-disk page leaves every other reader unchanged,
+ *    witnesses the sites and their plant readings: the HEAD page re-spaced at its plants' sites (its carrier re-wrapped across
+ *    two lines, broken at
+ *    the first space from its middle on with the continuation indented under its list marker; its heading's line re-spaced,
+ *    with the blank line after it dropped; every line break written CRLF) reads holds and each plant over it its pinned reason.
+ *    A second HEAD control with its carrier's source doubled reads each carrier plant needle-miss (D5 there reads carriers:2, D6
+ *    unbound:repeated and D7 unbound:parent). An edit that leaves a section holding while a site stops occurring exactly once
+ *    in its page (the carrier's source words repeated elsewhere in the page, the heading's line repeated inside a code fence or
+ *    an HTML comment, or the heading closed with a run of hashes) reds this census at that plant until it is re-measured.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS, the checks, every mutant with its
  * failed checks, the journal, the oracle's expectations, the fixtures, the vocabulary, the fields, the reasons, the holders, the
@@ -149,18 +174,26 @@
  * breaks); a pin merged into a neighbouring pin of its row leaves every anchor whole and is NOT CLAIMED (below). The last case
  * reads the vitest task tree (every registered test, in order, in run mode, ran before it) and REACHED (every pin reached its
  * witness compare, and each compare held).
- * NOT CLAIMED: qa/, test/ and docs/ (a test names the vocabulary as the text it judges, this census included); the seam's
+ * NOT CLAIMED: qa/, test/ and docs/ (a test names the vocabulary as the text it judges, this census included); real-file
+ * CRLF rewrites of docs/09 or docs/12 (other readers and the pin-side line reads can red them; the in-memory re-spacing
+ * control above tests its plants and section read on CRLF, not the whole file's other readings); the seam's
  * actual shape (the decision host above is this census's reading); the Furnace design text the filing cites (decisions:11,
  * README.md:25 and README.md:20 at Furnace 0f791db71b9d are outside this repository; only the slice-4 quote's four members are
  * held, to the fixtures); how many rows an admitted decision gets and whether a refusal keeps a row (R4's one row per decision,
- * wb-0lf.4; this census reads rows() as admitted decisions only); the order of rows and applications; a duplicate presented
+ * wb-0lf.4; this census reads rows() as admitted decisions only); how many applications an admitted decision gets (none, or
+ * more than one: at its own step, at a later fresh, stale or failed presentation or at a basis move, the gate's PA9, PA10,
+ * PA11 and PA24), beyond the duplicate check's reading that a duplicate presentation adds no application of its id, so an
+ * application under an id equal to an admitted decision's reads as that decision's re-application, which no check reads; the
+ * order of rows and applications; a duplicate presented
  * against a moved basis beyond row Q2; a re-presentation of a refused or unavailable id beyond row Q3; a fresh presentation's
  * verdict word beyond the two refusals (a fresh decision answered unavailable, or refused for another reason, while its row and
  * its application stand reads honest: the gate's PA7); a failed worker's cause (worker fault and worker kill are two fixtures;
  * the check reads both as one class); a site host's own purity (the fixtures are hermetic, and the census does not intercept a
  * host's clock, file, process or network use); a GP live tier added later (A5c reads forge.toml and the vitest configs at
  * HEAD), and a config edit that drops this file from the default tier (an include or exclude change) stops it from running at
- * all, so A5c cannot red that edit; a vitest config selecting this file through a computed include, a glob form beyond * and
+ * all, so A5c cannot red that edit; A5c's git listing itself (listed: tracked and untracked files, never ignored ones) and a
+ * listing call that stops reading through otherConfigs (the config plants read the filter, never the call); a vitest config
+ * selecting this file through a computed include, a glob form beyond * and
  * ** (braces, character classes, ?), a projects list or a workspace file, and a config file named otherwise than
  * vitest.config or vitest.<name>.config (one a tier names by --config under any other name); a mutant, a journal event or a
  * planted control removed from its table and the frozen literal together while every check keeps a mutant; a docs plant or a
@@ -389,7 +422,8 @@ type Twist =
   | "mapped-outcome" | "apply-stale" | "rebase-stale" | "untyped-stale" | "frozen-basis" | "settling-stale" | "retry-stale"
   | "silent-apply-stale" | "readmit" | "content-dedupe" | "idempotent-success" | "reapply" | "duplicate-row" | "duplicate-as-stale"
   | "outcome-dedupe" | "phantom-row" | "phantom-application" | "fault-admitted" | "kill-admitted" | "failure-recorded" | "failure-as-admitted"
-  | "stale-first" | "refuse-represented" | "sample-member";
+  | "transient-phantom-application" | "transient-stale-record" | "transient-stale-application" | "transient-failure-record"
+  | "transient-failure-application" | "stale-first" | "refuse-represented" | "sample-member";
 interface Mutant { readonly twist: Twist; readonly refusedBy: readonly Check[] }
 const MUTANTS: readonly Mutant[] = [
   { twist: "combined-basis", refusedBy: ["four-fields", "replay"] },
@@ -407,6 +441,8 @@ const MUTANTS: readonly Mutant[] = [
   { twist: "settling-stale", refusedBy: ["four-fields", "replay", "stale"] },
   { twist: "retry-stale", refusedBy: ["stale"] },
   { twist: "silent-apply-stale", refusedBy: ["stale"] },
+  { twist: "transient-stale-record", refusedBy: ["stale"] },
+  { twist: "transient-stale-application", refusedBy: ["stale"] },
   { twist: "readmit", refusedBy: ["replay", "duplicate"] },
   { twist: "content-dedupe", refusedBy: ["replay", "duplicate"] },
   { twist: "idempotent-success", refusedBy: ["duplicate"] },
@@ -416,12 +452,18 @@ const MUTANTS: readonly Mutant[] = [
   { twist: "outcome-dedupe", refusedBy: ["four-fields", "replay", "duplicate"] },
   { twist: "phantom-row", refusedBy: ["replay"] },
   { twist: "phantom-application", refusedBy: ["replay"] },
+  { twist: "transient-phantom-application", refusedBy: ["replay"] },
   { twist: "fault-admitted", refusedBy: ["worker-failure"] },
   { twist: "kill-admitted", refusedBy: ["worker-failure"] },
   { twist: "failure-recorded", refusedBy: ["worker-failure"] },
   { twist: "failure-as-admitted", refusedBy: ["worker-failure"] },
+  { twist: "transient-failure-record", refusedBy: ["worker-failure"] },
+  { twist: "transient-failure-application", refusedBy: ["worker-failure"] },
 ];
 
+/** What a transient twist lists from the presentation it answers to the next event: its rows and its applications. */
+interface Flash { readonly rows: readonly Row[]; readonly applied: readonly string[] }
+const NO_FLASH: Flash = { rows: [], applied: [] };
 const ADMITTED: Verdict = { verdict: "admitted" };
 const UNAVAILABLE: Verdict = { verdict: "unavailable" };
 const refusal = (reason: string): Verdict => ({ verdict: "refused", reason });
@@ -450,6 +492,7 @@ function reference(twist?: Twist): DecisionHost {
   const refusedStale = new Set<string>();
   const records: Row[] = [];
   const effects: string[] = [];
+  let flash = NO_FLASH;
   const admit = (event: PresentedEvent): Verdict => {
     admitted.set(event.decision, event);
     records.push(rowOf(event, twist));
@@ -458,6 +501,7 @@ function reference(twist?: Twist): DecisionHost {
   };
   return {
     basis(snapshotDigest) {
+      flash = NO_FLASH;
       if (twist === "frozen-basis" && current !== undefined) return;
       if (current !== undefined) moved = true;
       current = snapshotDigest;
@@ -467,6 +511,7 @@ function reference(twist?: Twist): DecisionHost {
       for (const event of ready) admit(event);
     },
     present(presentation) {
+      flash = NO_FLASH;
       latest = presentation.checkpointId;
       if (presentation.kind === "failed") {
         if ((twist === "fault-admitted" && presentation.worker === "fault") || (twist === "kill-admitted" && presentation.worker === "kill")) {
@@ -474,10 +519,11 @@ function reference(twist?: Twist): DecisionHost {
           return admit({ ...presentation, kind: "presented", sourceOutcome: guess });
         }
         if (twist === "failure-as-admitted") return ADMITTED;
-        if (twist === "failure-recorded") {
-          const { decision, programId, checkpointId, snapshotDigest } = presentation;
-          records.push({ decision, programId, checkpointId, snapshotDigest, sourceOutcome: "unavailable" });
-        }
+        const { decision, programId, checkpointId, snapshotDigest } = presentation;
+        const row: Row = { decision, programId, checkpointId, snapshotDigest, sourceOutcome: "unavailable" };
+        if (twist === "failure-recorded") records.push(row);
+        if (twist === "transient-failure-record") flash = { rows: [row], applied: [] };
+        if (twist === "transient-failure-application") flash = { rows: [], applied: [decision] };
         return UNAVAILABLE;
       }
       const prior = admitted.get(presentation.decision);
@@ -496,6 +542,9 @@ function reference(twist?: Twist): DecisionHost {
         if (twist === "rebase-stale" && current !== undefined) return admit(presented(presentation.decision, presentation.programId, presentation.checkpointId, current));
         if (twist === "retry-stale") deferred.push(presentation);
         if (twist === "silent-apply-stale") effects.push(presentation.decision);
+        if (twist === "transient-stale-record") flash = { rows: [rowOf(presentation, twist)], applied: [] };
+        if (twist === "transient-stale-application") flash = { rows: [], applied: [presentation.decision] };
+        if (twist === "transient-phantom-application") flash = { rows: [], applied: ["d0"] };
         refusedStale.add(presentation.decision);
         return refusal(twist === "untyped-stale" ? "basis-mismatch" : "stale");
       }
@@ -514,8 +563,9 @@ function reference(twist?: Twist): DecisionHost {
         return record;
       }),
       ...(twist === "phantom-row" ? [{ decision: "d0", programId: "program-x", checkpointId: "checkpoint-up", snapshotDigest: ONE, sourceOutcome: "exec-a" }] : []),
+      ...flash.rows,
     ],
-    applied: () => [...effects, ...(twist === "phantom-application" ? ["d0"] : [])],
+    applied: () => [...effects, ...(twist === "phantom-application" ? ["d0"] : []), ...flash.applied],
   };
 }
 
@@ -703,6 +753,8 @@ const escapeRegExp = (text: string): string => text.replace(/[.*+?^${}()|[\]\\]/
 const lineOf = (text: string, line: number): string => text.split("\n")[line - 1] ?? "";
 /** A vitest config file by its name, at any depth: vitest.config or vitest.<name>.config, with a ts, mts, cts, js, mjs or cjs extension. */
 const CONFIG_FILE = /^vitest(?:\.[^/]+)?\.config\.[cm]?[jt]s$/;
+/** The vitest config files of a listing other than the default config: A5c reads its listing and its config plants' paths through this one filter. */
+const otherConfigs = (files: readonly string[]): string[] => files.filter(file => file !== VITEST_CONFIG && CONFIG_FILE.test(basename(file)));
 /** The flags a default run's package script may carry (A5c's closed list): vitest run with any other flag or argument is no default run. */
 const SCRIPT_FLAG = /^--(?:reporter=[\w-]+|outputFile=\S+|includeTaskLocation|expect\.requireAssertions)$/;
 function defaultRun(script: unknown): boolean {
@@ -817,32 +869,68 @@ const docsAnchor = (pin: DocsAnchor["pin"]): DocsAnchor => {
   if (anchor === undefined) throw new Error(`no docs anchor ${pin}`);
   return anchor;
 };
-/** Replaces the one occurrence of a needle; a plant whose needle is absent or repeated throws, so no plant passes unapplied. */
+/** A plant's needle that does not occur exactly once in the text it edits. */
+class NeedleMiss extends Error {}
+/** Replaces the one occurrence of a needle; a needle absent or repeated throws a NeedleMiss (read as needle-miss), so no plant passes unapplied. */
 function once(text: string, needle: string, replacement: string): string {
   const index = text.indexOf(needle);
-  if (index < 0 || text.indexOf(needle, index + 1) >= 0) throw new Error(`a plant's needle does not occur exactly once: ${JSON.stringify(needle.slice(0, 60))}`);
+  if (index < 0 || text.indexOf(needle, index + 1) >= 0) throw new NeedleMiss(`a plant's needle does not occur exactly once: ${JSON.stringify(needle.slice(0, 60))}`);
   return `${text.slice(0, index)}${replacement}${text.slice(index + needle.length)}`;
 }
-/** An in-memory docs plant over the HEAD text of its anchor's page (source: the filing's line at the pin). */
-interface DocsPlant { readonly id: string; readonly anchor: DocsAnchor["pin"]; readonly apply: (text: string, source: string) => string }
+/** Replaces the match of a plant's edit pattern; a pattern that matches nothing throws a NeedleMiss, as an absent needle does. */
+function swap(text: string, pattern: RegExp, replacement: string): string {
+  if (!pattern.test(text)) throw new NeedleMiss(`a plant's edit pattern does not match: ${pattern.source}`);
+  return text.replace(pattern, replacement);
+}
+/** Where a plant edits its anchor's page: the section's own carrier source and its heading's own line, each found when the plant asks (a NeedleMiss unless exactly once). */
+interface PlantSites { readonly carrier: () => string; readonly heading: () => string }
+/** An in-memory docs plant over the HEAD text of its anchor's page, edited at that page's own sites (never at the pin's line). */
+interface DocsPlant { readonly id: string; readonly anchor: DocsAnchor["pin"]; readonly apply: (text: string, at: PlantSites) => string }
 const DOCS_PLANTS: readonly DocsPlant[] = [
   {
     id: "D1", anchor: "S1b",
-    apply: (text, source) => once(text, source, source.replace(/so a copy, .+$/, `so a copy and a hand-built look-alike are refused with the fixed text "${CONTROL_UNMINTED_REASON}" ` +
-      "however exact their shape, while a deserialized or audit/journal-replayed receipt is executed when its shape matches.")),
+    apply: (text, at) => {
+      const own = at.carrier();
+      return once(text, own, swap(own, /so\s+a\s+copy,\s[\s\S]+$/, `so a copy and a hand-built look-alike are refused with the fixed text "${CONTROL_UNMINTED_REASON}" ` +
+        "however exact their shape, while a deserialized or audit/journal-replayed receipt is executed when its shape matches."));
+    },
   },
-  { id: "D2", anchor: "S1b", apply: (text, source) => once(text, source, `<!-- ${source} -->`) },
-  { id: "D3", anchor: "S2b", apply: (text, source) => once(text, `${source}\n`, `<!--\n${source}\n-->\n`) },
+  {
+    id: "D2", anchor: "S1b",
+    apply: (text, at) => {
+      const own = at.carrier();
+      return once(text, own, `<!-- ${own} -->`);
+    },
+  },
+  {
+    id: "D3", anchor: "S2b",
+    apply: (text, at) => {
+      const own = at.carrier();
+      return once(text, `${own}\n`, `<!--\n${own}\n-->\n`);
+    },
+  },
   {
     id: "D4", anchor: "S2b",
-    apply: (text, source) => `${once(text, `${source}\n`, "").trimEnd()}\n\n## Retired controls\n\nThe controls below are retired and are not enforced.\n\n${source}\n`,
+    apply: (text, at) => {
+      const own = at.carrier();
+      return `${once(text, `${own}\n`, "").trimEnd()}\n\n## Retired controls\n\nThe controls below are retired and are not enforced.\n\n${own}\n`;
+    },
   },
   {
     id: "D5", anchor: "S2b",
-    apply: text => once(text, "## Acceptance/negative controls\n\n", "## Acceptance/negative controls\n\nThese controls describe a future design; none of them is enforced today.\n\n"),
+    apply: (text, at) => {
+      const line = at.heading();
+      return once(text, `${line}\n`, `${line}\n\nThese controls describe a future design; none of them is enforced today.\n`);
+    },
   },
   { id: "D6", anchor: "S1b", apply: text => `${text.trimEnd()}\n\n## Authorization design\n\n- A deserialized or audit/journal-replayed receipt is executed when its shape matches.\n` },
-  { id: "D7", anchor: "S2b", apply: text => once(text, "## Acceptance/negative controls\n", "# Appendix (non-normative, superseded drafts)\n\n## Acceptance/negative controls\n") },
+  {
+    id: "D7", anchor: "S2b",
+    apply: (text, at) => {
+      const line = at.heading();
+      return once(text, `${line}\n`, `# Appendix (non-normative, superseded drafts)\n\n${line}\n`);
+    },
+  },
 ];
 /** The prose items of a rendered section: each paragraph and each item of each list (a code block or an HTML block carries none). */
 const proseOf = (blocks: readonly RenderedBlock[]): readonly { readonly text: string; readonly markdown: string }[] =>
@@ -867,18 +955,83 @@ function anchorReading(text: string, anchor: DocsAnchor, pin?: string): string {
   if (pin === undefined) return sourceOf(lineOf(text, anchor.line)) === carrier.markdown ? "holds" : "line";
   return sectionMatches(section, docsSection(pin, anchor.heading, 2, [anchor.title]).blocks).ok ? "holds" : "section";
 }
-/** A docs anchor read at the pin and at HEAD, three controls over the pin's text, and each of its plants over the HEAD text. */
+/**
+ * The HEAD section's own carrier source: the whole lines of a page that its one marker-carrying prose item spans (its list
+ * marker kept), found by that item's source words with any whitespace run between them; a NeedleMiss unless the section
+ * binds, exactly one of its prose items carries the marker and those words occur exactly once in the page.
+ */
+function ownSource(text: string, anchor: DocsAnchor): string {
+  const section = docsSection(text, anchor.heading, 2, [anchor.title]);
+  const carriers = section.ok ? proseOf(section.blocks).filter(item => item.text.includes(anchor.marker)) : [];
+  const carrier = carriers[0];
+  if (carriers.length !== 1 || carrier === undefined) throw new NeedleMiss(`${anchor.pin}: the section has ${carriers.length} carriers to plant at`);
+  const spans = [...text.matchAll(new RegExp(carrier.markdown.split(" ").map(escapeRegExp).join("\\s+"), "g"))];
+  const span = spans[0];
+  if (spans.length !== 1 || span === undefined) throw new NeedleMiss(`${anchor.pin}: the carrier's source occurs ${spans.length} times in the page`);
+  const from = span.index ?? 0;
+  const end = text.indexOf("\n", from + span[0].length);
+  return text.slice(text.lastIndexOf("\n", from) + 1, end < 0 ? text.length : end);
+}
+/** The one source line of a page that renders its anchor's level-2 heading, found by the heading's words with any spacing (any whitespace but a line break) around and between them (a NeedleMiss unless exactly one). */
+function headingLine(text: string, anchor: DocsAnchor): string {
+  const lines = [...text.matchAll(new RegExp(`^ {0,3}##[^\\S\\n]+${anchor.heading.split(" ").map(escapeRegExp).join("[^\\S\\n]+")}[^\\S\\n]*$`, "gm"))];
+  const line = lines[0];
+  if (lines.length !== 1 || line === undefined) throw new NeedleMiss(`${anchor.pin}: the heading's line occurs ${lines.length} times in the page`);
+  return line[0];
+}
+/** A reading that plants: its value, or needle-miss (its own reason, never a throw) when a plant's site or edit pattern does not occur exactly once. */
+function needled<T>(read: () => T): T | "needle-miss" {
+  try {
+    return read();
+  } catch (error) {
+    if (error instanceof NeedleMiss) return "needle-miss";
+    throw error;
+  }
+}
+/**
+ * The page re-spaced at its plants' sites, every block left as it was: its carrier's source re-wrapped across two lines
+ * (broken at the first space from its middle on, the continuation indented under its list marker), its heading's line
+ * re-spaced (a second space after the hashes, a trailing space) with the blank line after it dropped, and every line break
+ * written CRLF.
+ */
+function respaced(text: string, anchor: DocsAnchor): string {
+  const own = ownSource(text, anchor);
+  const middle = own.indexOf(" ", Math.floor(own.length / 2));
+  if (middle < 0) throw new NeedleMiss(`${anchor.pin}: the carrier's source has no space to break at`);
+  const indent = " ".repeat(/^ *(?:\d+[.)]|[-*+]) +/.exec(own)?.[0].length ?? 0);
+  const wrapped = once(text, own, `${own.slice(0, middle)}\n${indent}${own.slice(middle + 1)}`);
+  const line = headingLine(wrapped, anchor);
+  return once(wrapped, `${line}\n\n`, `${line.replace("## ", "##  ")} \n`).split("\n").join("\r\n");
+}
+/**
+ * A docs anchor read at the pin and at HEAD, three controls over the pin's text, each of its plants over the HEAD text, and
+ * two HEAD controls: the HEAD page re-spaced at its plants' sites (its reading and the plants over it) and the plants over
+ * the HEAD page with its carrier's source doubled.
+ */
 function anchorWitness(anchor: DocsAnchor): Readonly<Record<string, unknown>> {
   const pin = pinText(anchor.path);
   const head = headText(anchor.path);
   const source = lineOf(pin, anchor.line);
+  /** Each of the anchor's plants over a page, at that page's own sites: the reason the planted page reads, or needle-miss. */
+  const plantsOver = (text: string): Record<string, string> => {
+    const at: PlantSites = { carrier: () => ownSource(text, anchor), heading: () => headingLine(text, anchor) };
+    return Object.fromEntries(DOCS_PLANTS.filter(plant => plant.anchor === anchor.pin).map(plant => [plant.id, needled(() => anchorReading(plant.apply(text, at), anchor, pin))]));
+  };
   return {
     pin: anchorReading(pin, anchor), head: anchorReading(head, anchor, pin),
     controls: {
       line: anchorReading(pin, { ...anchor, line: anchor.line + 1 }), carrier: anchorReading(pin, { ...anchor, carrier: `${anchor.carrier} (edited)` }),
       twice: anchorReading(once(pin, `${source}\n`, `${source}\n\n${source}\n`), anchor),
     },
-    plants: Object.fromEntries(DOCS_PLANTS.filter(plant => plant.anchor === anchor.pin).map(plant => [plant.id, anchorReading(plant.apply(head, source), anchor, pin)])),
+    plants: plantsOver(head),
+    respaced: needled(() => {
+      const page = respaced(head, anchor);
+      return { head: anchorReading(page, anchor, pin), plants: plantsOver(page) };
+    }),
+    doubled: needled(() => {
+      const own = ownSource(head, anchor);
+      return plantsOver(once(head, `${own}\n`, `${own}\n\n${own}\n`));
+    }),
   };
 }
 interface ExportFacts { readonly title: string; readonly notes: string }
@@ -1014,6 +1167,11 @@ function witness(pin: string, observed: unknown, expected: unknown): void {
 const honest = (journal: readonly JournalEvent[] = JOURNAL): Run => run(() => reference(), journal);
 const finalRows = (result: Run): readonly unknown[] => result.rows.at(-1) ?? [];
 const byTwist = (...twists: Twist[]): Record<string, Check[]> => Object.fromEntries(twists.map(twist => [twist, failsOf(twist)]));
+/** Whether each twist's run reads as the reference's at its last step (the same verdicts, last rows and last applications), so only an every-step read sees it. */
+const settledBy = (...twists: Twist[]): Record<string, boolean> => {
+  const last = (result: Run): unknown => ({ verdicts: result.verdicts, rows: result.rows.at(-1), applied: result.applied.at(-1) });
+  return Object.fromEntries(twists.map(twist => [twist, isDeepStrictEqual(last(run(() => reference(twist))), last(honest()))]));
+};
 const stepsOf = (want: Expectation, journal: readonly JournalEvent[] = JOURNAL): number[] =>
   expectations(journal).flatMap((expectation, step) => (expectation === want ? [step] : []));
 const presentationAt = (step: number, journal: readonly JournalEvent[] = JOURNAL): PresentedEvent => {
@@ -1116,11 +1274,13 @@ const PINS: Readonly<Record<string, () => void>> = {
       unresolved: [
         { ...fields, programId: "program-z" }, { ...fields, checkpointId: "checkpoint-z" }, { ...fields, snapshotDigest: digestOf(respelled) }, { ...fields, sourceOutcome: 7 },
       ].map(input => replay(input).unresolved),
-      ...byTwist("unprefixed-digest", "phantom-row", "phantom-application"),
+      ...byTwist("unprefixed-digest", "phantom-row", "phantom-application", "transient-phantom-application"),
+      settled: settledBy("transient-phantom-application"),
     }, {
       input: ["programId", "checkpointId", "snapshotDigest", "sourceOutcome"], store: [true, true], respelled: { sameDocument: true, resolves: false },
       unresolved: ["programId names no program", "checkpointId names no checkpoint", "snapshotDigest names no snapshot", "a field is not a string"],
-      "unprefixed-digest": ["replay"], "phantom-row": ["replay"], "phantom-application": ["replay"],
+      "unprefixed-digest": ["replay"], "phantom-row": ["replay"], "phantom-application": ["replay"], "transient-phantom-application": ["replay"],
+      settled: { "transient-phantom-application": true },
     });
   },
   A3a: () => {
@@ -1143,10 +1303,12 @@ const PINS: Readonly<Record<string, () => void>> = {
       appliedAtAnyStep: result.applied.some(list => list.includes("d6")), recordedAtAnyStep: result.rows.some(rows => rows.some(row => member(row, "decision") === "d6")),
       returned: { basis: JOURNAL[11]?.snapshotDigest === ONE, d8: result.verdicts[12], d8Fields: isDeepStrictEqual(decisionOf(presentationAt(12)), decisionOf(presentationAt(8))) },
       applied: result.applied.at(-1),
-      ...byTwist("rebase-stale", "retry-stale", "silent-apply-stale"),
+      ...byTwist("rebase-stale", "retry-stale", "silent-apply-stale", "transient-stale-record", "transient-stale-application"),
+      settled: settledBy("transient-stale-record", "transient-stale-application"),
     }, {
       appliedAtAnyStep: false, recordedAtAnyStep: false, returned: { basis: true, d8: { verdict: "admitted" }, d8Fields: true }, applied: ["d1", "d2", "d3", "d5", "d8"],
-      "rebase-stale": ["stale"], "retry-stale": ["stale"], "silent-apply-stale": ["stale"],
+      "rebase-stale": ["stale"], "retry-stale": ["stale"], "silent-apply-stale": ["stale"], "transient-stale-record": ["stale"], "transient-stale-application": ["stale"],
+      settled: { "transient-stale-record": true, "transient-stale-application": true },
     });
   },
   A4a: () => {
@@ -1183,7 +1345,8 @@ const PINS: Readonly<Record<string, () => void>> = {
       honest: NEGATIVE_FIXTURES.map(fixture => judge(honest(fixture.journal), fixture.journal)),
       verdicts: NEGATIVE_FIXTURES.map(fixture => honest(fixture.journal).verdicts.filter(verdict => verdict !== null)),
       members: NEGATIVE_FIXTURES.map(fixture => `${fixture.member}:${failsOf(fixture.member, fixture.journal).join("+")}`),
-      ...byTwist("failure-recorded", "failure-as-admitted"),
+      ...byTwist("failure-recorded", "failure-as-admitted", "transient-failure-record", "transient-failure-application"),
+      settled: settledBy("transient-failure-record", "transient-failure-application"),
     }, {
       names: ["worker fault", "stale basis", "worker kill", "duplicate replay"], honest: [[], [], [], []],
       verdicts: [
@@ -1191,7 +1354,8 @@ const PINS: Readonly<Record<string, () => void>> = {
         [{ verdict: "unavailable" }, { verdict: "admitted" }], [{ verdict: "admitted" }, { verdict: "refused", reason: "duplicate" }],
       ],
       members: ["fault-admitted:worker-failure", "apply-stale:stale", "kill-admitted:worker-failure", "readmit:duplicate"],
-      "failure-recorded": ["worker-failure"], "failure-as-admitted": ["worker-failure"],
+      "failure-recorded": ["worker-failure"], "failure-as-admitted": ["worker-failure"], "transient-failure-record": ["worker-failure"],
+      "transient-failure-application": ["worker-failure"], settled: { "transient-failure-record": true, "transient-failure-application": true },
     });
   },
   A5b: () => {
@@ -1214,14 +1378,14 @@ const PINS: Readonly<Record<string, () => void>> = {
     const config = headText(VITEST_CONFIG);
     const listIn = (name: string): string[] => (new RegExp(`\\b${name}: \\[([^\\]]*)\\]`).exec(config)?.[1] ?? "").split(",").map(item => item.trim().replace(/^"|"$/g, "")).filter(item => item !== "");
     const include = listIn("include");
-    const others = listed(".").filter(file => file !== VITEST_CONFIG && CONFIG_FILE.test(basename(file)));
+    const others = otherConfigs(listed("."));
     witness("A5c", {
       gate, table, test: /^\[build\.commands\.test\]\ncommand = "([^"\n]+)"$/m.exec(toml)?.[1],
       script: defaultRun(member(member(JSON.parse(headText(PACKAGE)), "scripts"), "test")),
       include, selected: include.some(glob => globMatches(glob, SELF)), excluded: listIn("exclude").includes(SELF),
       gpWords: GP_TIER_NAMES.filter(name => spells(toml, name)),
       others: { count: others.length >= 1, claiming: others.filter(file => claimsSelf(headText(file))) },
-      plants: { configs: CONFIG_PLANTS.map(([file, text]) => CONFIG_FILE.test(basename(file)) && claimsSelf(text)), scripts: SCRIPT_PLANTS.map(defaultRun) },
+      plants: { configs: CONFIG_PLANTS.map(([file, text]) => otherConfigs([file]).length === 1 && claimsSelf(text)), scripts: SCRIPT_PLANTS.map(defaultRun) },
     }, {
       gate: ["lint", "typing", "build", "test", "census", "workbench-shell", "package-smoke"], table: "[build]", test: "npm run test", script: true,
       include: ["test/**/*.test.ts"], selected: true, excluded: false, gpWords: [], others: { count: true, claiming: [] },
@@ -1248,7 +1412,9 @@ const PINS: Readonly<Record<string, () => void>> = {
       pjj: { pin: statusAt(pinText(EXPORT), "wb-pjj"), head: statusAt(headText(EXPORT), "wb-pjj") },
     }, {
       line: true, pin: "holds", head: "holds", controls: { line: "line", carrier: "carrier-text", twice: "carriers:2" },
-      plants: { D1: "carrier-text", D2: "html", D6: "unbound:repeated" }, pjj: { pin: "closed", head: "closed" },
+      plants: { D1: "carrier-text", D2: "html", D6: "unbound:repeated" },
+      respaced: { head: "holds", plants: { D1: "carrier-text", D2: "html", D6: "unbound:repeated" } },
+      doubled: { D1: "needle-miss", D2: "needle-miss", D6: "unbound:repeated" }, pjj: { pin: "closed", head: "closed" },
     });
   },
   S2a: () => {
@@ -1270,6 +1436,8 @@ const PINS: Readonly<Record<string, () => void>> = {
     witness("S2b", { line: lineOf(pinText(anchor.path), anchor.line), ...anchorWitness(anchor) }, {
       line: "2. Replay duplicate/out-of-order events; no double count or status regression.", pin: "holds", head: "holds",
       controls: { line: "line", carrier: "carrier-text", twice: "carriers:2" }, plants: { D3: "html", D4: "carriers:0", D5: "section", D7: "unbound:parent" },
+      respaced: { head: "holds", plants: { D3: "html", D4: "carriers:0", D5: "section", D7: "unbound:parent" } },
+      doubled: { D3: "needle-miss", D4: "needle-miss", D5: "carriers:2", D7: "unbound:parent" },
     });
   },
   S3a: () => {
@@ -1401,9 +1569,10 @@ describe(SUITE, () => {
       "combined-basis:four-fields+replay", "nested-fields:four-fields+replay", "missing-outcome:four-fields+replay", "aliased-checkpoint:four-fields+replay",
       "lazy-checkpoint:replay", "lazy-digest:replay", "unprefixed-digest:replay", "mapped-outcome:replay", "apply-stale:stale", "rebase-stale:stale",
       "untyped-stale:stale", "frozen-basis:four-fields+replay+stale", "settling-stale:four-fields+replay+stale", "retry-stale:stale", "silent-apply-stale:stale",
-      "readmit:replay+duplicate", "content-dedupe:replay+duplicate", "idempotent-success:duplicate", "reapply:duplicate", "duplicate-row:duplicate",
-      "duplicate-as-stale:duplicate", "outcome-dedupe:four-fields+replay+duplicate", "phantom-row:replay", "phantom-application:replay", "fault-admitted:worker-failure",
-      "kill-admitted:worker-failure", "failure-recorded:worker-failure", "failure-as-admitted:worker-failure",
+      "transient-stale-record:stale", "transient-stale-application:stale", "readmit:replay+duplicate", "content-dedupe:replay+duplicate", "idempotent-success:duplicate", "reapply:duplicate", "duplicate-row:duplicate",
+      "duplicate-as-stale:duplicate", "outcome-dedupe:four-fields+replay+duplicate", "phantom-row:replay", "phantom-application:replay",
+      "transient-phantom-application:replay", "fault-admitted:worker-failure", "kill-admitted:worker-failure", "failure-recorded:worker-failure",
+      "failure-as-admitted:worker-failure", "transient-failure-record:worker-failure", "transient-failure-application:worker-failure",
     ]);
     expect(failsOf(), "the reference meets every check over the journal").toEqual([]);
     expect(NEGATIVE_FIXTURES.map(fixture => failsOf(undefined, fixture.journal)), "and over every fixture").toEqual([[], [], [], []]);
