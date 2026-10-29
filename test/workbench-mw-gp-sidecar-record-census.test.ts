@@ -14,7 +14,8 @@
  * first one.
  *
  * MEASURED (read-only, by the cutting seats: cut #1 at trunk df37dac and cut #2 = respin 1 at e81d2b0 on 2026-10-28, cut #3 =
- * respin 2 at b3d410f on 2026-10-29). Pi: git's src listing holds 116 files at df37dac and 117 at e81d2b0 and at b3d410f, and
+ * respin 2 at b3d410f and cut #4 = respin 3 at 1ad30c3 on 2026-10-29). Pi: git's src listing holds 116 files at df37dac and
+ * 117 at e81d2b0, at b3d410f and at 1ad30c3, and
  * none names a word of the vocabulary below, in its path or its text; git grep -i over docs/ finds none of them either, so the
  * filing's "absence of any ... doc" still holds. "sidecar" is read as one word: its separator-tolerant spelling side car
  * reads src/workbench/designer.ts:308 ("one side carries"), a Pi word with another meaning. Producer (the local
@@ -43,7 +44,10 @@
  *   decision with behavior log probability is decision and behaviorLogProbability; proposed vs admitted vs executed action
  *   with resolver verdict is proposed, admitted, executed and resolverVerdict; each other item is one field. A field's name
  *   is the camel-case join of a contiguous run of its phrase's words (snapshotHash from "GP program/checkpoint snapshot
- *   hash", support from "legal support at sample time", executed from "executed action").
+ *   hash", support from "legal support at sample time", executed from "executed action"). How the items are cut into fields
+ *   is this census's own reading of the statement: no outside source fixes it (the title reads actor/selector and GP
+ *   program/checkpoint snapshot hash without saying how many fields each is), so no reading reads it (R-FIELD-PARTITION,
+ *   Q8), and clause B's three distinct fields alone hold the action item's two " vs " cuts.
  * - A field is PRESENT when the record holds it as an own key whose value is neither undefined nor null; any other field is
  *   MISSING, in one of three FORMS: its key absent, its value undefined or its value null. The first missing field in the
  *   required order is the typed refusal {ok: false, code: "missing-field", field}, never an accepted record with a value
@@ -142,7 +146,7 @@
  * admitted list, an abstain beside executed actions), R-COMPOSED-WORD (Q5: a word the src reading does not read: side-car,
  * the spelling behaviour, mw.decision-receipt.v1's logProb and sourceReceipt, a name joined at run time, an escaped letter,
  * and a word split by a line break, a colon, a slash or an invisible character), R-UNNAMED-SITE (Q6: a module that builds
- * the record under none of the words) and R-UNSEEN-CONTEXT (Q7: the controls are finite, so a validator that departs from
+ * the record under none of the words), R-UNSEEN-CONTEXT (Q7: the controls are finite, so a validator that departs from
  * the reference only on records no control holds passes every check; each member is such a validator with a context record
  * it reads otherwise than the reference, in four kinds: (i) a value no base carries - a feedback default under an unseen
  * actor, a receipt default under an unseen feedback status, a collapse under an unseen verifier outcome, an off verdict
@@ -151,8 +155,24 @@
  * rejection code beside divergent actions; (iii) a value or shape no list holds - an off verdict, an off status and a
  * success's number choice that the lists do not hold, each accepted; (iv) a fault combination the controls do not compose -
  * the second of three missing fields named when they are not a suffix, and the verdict read first beside an off status when
- * the verdict is an off value other than the order controls' rejected).
- * NOT CLAIMED: value shapes beyond presence, the two domains and the decision's chosen list (Q1, Q3); cross-field
+ * the verdict is an off value other than the order controls' rejected), R-FIELD-PARTITION (Q8: how an item is cut into
+ * fields; each member re-cuts one item with its moved phrase re-homed, so every reading the census's own model holds still
+ * holds - G19-SPLIT-SNAP, the first item cut at its slash into gpProgram and snapshotHash; G19-MERGE-ACTSEL, actor/selector
+ * read as one field, actorSelector; the decision item read as one field, decision; the resolver verdict read into executed
+ * - and its contrast, the same re-cut with the moved phrase left behind, reds join; clause B's three distinct fields hold
+ * the action item's two " vs " cuts, so no member merges two actions), R-FIELD-RUN (Q9: which contiguous run of its phrase
+ * a field name takes - G-REN-FP, featureProjection named projection, and S-FIELD-HASH, snapshotHash named hash, each a
+ * one-part name that leaves the vocabulary; behaviorLogProbability named logProbability; support named legalSupport, a
+ * two-part name that joins it - and its contrast, a name whose parts are no run, reds runs), R-PIN-PARTITION (Q10: a pin
+ * merged into its sibling, its quote re-homed there - C6A2, C6B2, C6C3, C6D2 and C6S1 - and its contrast, the same merge
+ * with the sibling's quote left in place, reds that row's tiling) and R-UNREAD (Q11: an edit of a model part no reading
+ * takes - S-DECISION-FIELD-RENAME, the decision's second field named choice; C6Q, row Q removed whole with every residual
+ * member; C6Q4, pin Q4 with its quote and members; C6-labelQ, row Q's label reworded; C6-quoteQ, Q3's quote reworded;
+ * C6-member, Q1's first member removed; S-PRODUCER-PHRASE, a phrase cut from P3's text; PL-blob, P5's blob id). Each
+ * member of Q8-Q11 is an edit of the anchor model (OUTSIDE ANCHORS): its quiet row asserts that the edit changes the model,
+ * that it reds no reading the census's own model holds, and that its contrast reds the reading named wherever the
+ * census's own model holds that reading.
+ * OUTSIDE THE CLAIM: value shapes beyond presence, the two domains and the decision's chosen list (Q1, Q3); cross-field
  * consistency (Q4); a departure on a record no control holds (Q7); the final feedback status's closed set and any reward
  * (R9 = wb-e66.4); the selector's naming and its log-probability rules (R3 = wb-e66.2) and the support's legality (R2 =
  * wb-e66.1); the R7 record's home, schema id or version, and conformance to mw.decision-receipt.v1 or any producer pin past
@@ -160,35 +180,60 @@
  * producer line reads the same past the pin; a skip over the whole suite (a skipped describe block or file: nothing runs,
  * so nothing reds; the gate's marker rule guards it).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and the shape of every table
- * as literals; the judged set (every row's id, label and pins, every pin's quote, witness and assertion count, the residual
+ * as literals (READINGS, the BOUND table as `${member}:${reading}` and each anchor-model family's contrast readings among
+ * them); the judged set (every row's id, label and pins, every pin's quote, witness and assertion count, the residual
  * members, each mutant's declared checks, every registered test title) is held to the out-of-file roster
  * test/fixtures/mw-gp-sidecar-record-roster.json (equal both ways, keys in order), and the records to the schema fixture
  * test/fixtures/mw-gp-sidecar-record-schema.json.
- * OUTSIDE ANCHORS (their own registered case; exactly what it binds): the bead's own row in the tracker export
- * (.beads/issues.jsonl) - its four acceptance clauses are the labels of rows A, B, C and D in order, and its title is the
- * requirement id, "(merge into R7)" and row S's label; each of those five rows' pin quotes tile its label with nothing but
- * separators (the quotes' text, never how a label is cut into pins); the title's nine items are ITEMS' items, each joined by
- * its fields' phrases (so each phrase is its item's own text); each field name's camel-case parts are a contiguous run of
- * its phrase's words (the anchor binds a name to its phrase, never which run of it the name takes); ACTIONS are clause B's
- * three words, ADMITTED and the six codes clause C's, STATUSES clause D's two words and "sidecar" the title's record noun;
- * the six codes are also wb-4ap.16's note list at the note's pin; the notes cite the producer block's pin and the paths and
- * lines of P1-P4; the vocabulary is composed as the title's record noun, then each field name of two or more parts; and
- * git's src listing, above its floor, holds no unregistered module naming a word of that vocabulary, so the src reading
- * does not live in a pin alone. The case also reads the roster's own copy of the producer block - its RejectionCode union
- * holds the six codes, P5 is the resolver's path, and the lines carry the phrases they are read to carry - and those reads
- * anchor nothing: the producer is never re-read.
- * CLAIMED (each measured red, the change made in every literal of this file, the roster and the schema fixture together):
- * removing a field (from its item, every literal, the records and the schema); rewording a field's phrase, or a field's
- * name to one whose parts are no contiguous run of its phrase's words; removing or rewording a code, a status, an action or
- * the record noun; removing one of rows A-D or S, or rewording a word of its label; removing one of those rows' pins together
- * with its quote, or rewording a pin quote. NOT CLAIMED (each measured surviving): renaming a field to another contiguous run
- * of its phrase's words (featureProjection to projection, snapshotHash to hash), with the vocabulary word such a rename
- * moves or drops (a one-part name leaves the vocabulary, so the src reading stops reading the old word); renaming the
- * decision's two fields (status, chosen), which no anchor binds; row Q, its families and their members (this census's
- * own enumeration; no source outside it lists them); the row and pin ids and the partition of a label into pins (a pin
- * merged into a sibling, its quote re-homed there); a pin's case replaced by another passing case with the roster
- * re-measured to it; the mutants, the checks, their controls, the value lists and the bases (this file's own tables); the
- * producer block's text and the phrases it is read to carry (the roster's copy, never re-read).
+ * OUTSIDE ANCHORS (their own registered case; exactly what it reads). The anchor model (AnchorModel; LIVE is the census's
+ * own) holds the census and roster literals the readings compare: the requirement id and the merge note, the rows and their
+ * pins, the pin quotes, ITEMS (each item's text and its fields' names and phrases), ACTIONS, ADMITTED, the six codes, the
+ * codes bead and its note pin, STATUSES, the record noun, the vocabulary's spellings, the decision's two fields, the residual
+ * members, the producer pin and the roster's producer block. The 23 READINGS read the model against files outside the census
+ * and its roster, except join and runs, which read its fields against the item texts the items reading holds to the title.
+ * The files: the bead's own row in the tracker export (.beads/issues.jsonl), read through its title and its notes (the owner
+ * filing's first "Acceptance shape: " sentence, split into its four clauses, and the producer pin and line citations
+ * wherever the notes carry them), wb-4ap.16's row there, and git's src listing. title (the title opens with the requirement
+ * id and the merge note and ends in a period); statement (the title's statement is row S's label); clauses (the four
+ * acceptance clauses are the labels of rows A, B, C and D, in order); tiling A, tiling B, tiling C, tiling D and tiling S (the
+ * row's pin quotes, in order, tile its label with nothing but separators); items (the title's nine items are the model's
+ * items, in order); join (each item is joined by its fields' phrases, one connector between each two); runs (each field
+ * name's camel-case parts are a contiguous run of its phrase's words); actions (clause B's three words are ACTIONS and its
+ * survivor's two are ACTIONS' last two); action fields (clause B's three words are three distinct field names); admitted,
+ * codes and codes bead (clause C's word, its list of codes and the bead it cites); note codes (that bead's note lists the
+ * codes at the note pin); statuses (clause D's two words); noun (the title's record noun); vocabulary (the title's record
+ * noun, then each field name of two or more parts); pin cited (the notes carry the producer pin's first twelve characters
+ * after an @); lines cited (the notes cite P1, P2 and P4 as file:line and P3 by its line); src (git's src listing, read as
+ * the src reading reads its words, names no word of the model's vocabulary unregistered). BOUND: each BOUND member is an
+ * edit of the anchor model, named for the coordinated census-and-roster edit it stands for, and the case asserts that each
+ * reds the reading the BOUND table names beside it; every reading is red under at least one member.
+ * So the readings hold by equality the labels of rows A-D and S, the requirement id and the merge note, the items' texts,
+ * ACTIONS, ADMITTED, the codes, the codes bead and its note pin, STATUSES, the record noun and the vocabulary's spellings;
+ * each pin quote's text once the row's split into pins is given; that each item is joined by its fields' phrases, that each
+ * field name is a contiguous run of its phrase's words and that clause B's three words are three distinct fields; the
+ * producer pin's first twelve characters, the files and lines of P1, P2 and P4 and P3's line; and git's src listing against
+ * the vocabulary. They do not read how an item is cut into fields (R-FIELD-PARTITION), which run of its phrase a field name
+ * takes (R-FIELD-RUN), the split of a label into pins (R-PIN-PARTITION), or the decision's two fields, row Q, the residual
+ * members and the producer block beyond that pin prefix and those cited lines - its texts, blobs and repo, P3's file and P5
+ * (R-UNREAD). The case also holds the census's own literals to the same outside sources directly, as cut #3's case did, and
+ * reads the roster's own copy of the producer block - its RejectionCode union holds the six codes, P5 is the resolver's
+ * path, and the lines carry the phrases they are read to carry - and those reads anchor nothing: the producer is never
+ * re-read.
+ * CLAIMED (each measured red, the change made in every literal of this file, the roster and the schema fixture together;
+ * after each, the outside reading that reds it): removing a field from its item while the item's text and its other fields
+ * stay, or rewording a field's phrase while its item's text stays (join); rewording an item's text, its phrase with it
+ * (items); renaming a field to one whose parts are no contiguous run of its phrase's words (runs); removing or rewording an
+ * action (actions), or merging one into a sibling field (action fields); removing or rewording a code (codes) or a status
+ * (statuses); rewording the record noun (noun), or dropping it from the vocabulary (vocabulary); removing one of rows A-D,
+ * or rewording a word of its label (clauses); removing row S (statement); removing one of rows A-D's or S's pins together
+ * with its quote, or rewording a pin quote (that row's tiling). How an item is cut into fields is not among them: a field
+ * merged into a sibling with its phrase re-homed there, or an item cut at a connector its phrase holds, keeps every reading
+ * (R-FIELD-PARTITION, Q8), as do the other model edits Q9-Q11 name.
+ * NOT CLAIMED (limits of this file's own literals, not reading modes: no source outside the census and its roster names
+ * them; each measured surviving): a pin's case replaced by another passing case with the roster re-measured to it; a
+ * mutant, a value-list entry with its controls, or a base removed from its table, the frozen literals and the roster; a
+ * residual member removed from its table, the frozen literal and the roster; and a row or pin id renamed everywhere it
+ * appears.
  * The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran before it), REACHED
  * (every pin reached its witness compare, and each compare's own result) and ASSERTED (each pin's case made the assertion
  * count the roster pins, its witness compare included).
@@ -994,14 +1039,15 @@ const VALIDATOR_RESIDUALS: Readonly<Record<string, readonly ValidatorMember[]>> 
     },
   ],
 };
-/** Every residual family's members by name: the records', the src texts' and the validators'. */
+/** Every residual family's members by name: the records', the src texts', the validators' and the anchor model's. */
 const residualMembers = (): Record<string, string[]> => ({
   ...Object.fromEntries(Object.entries(RECORD_RESIDUALS).map(([id, members]) => [id, members.map(member => member.id)])),
   ...Object.fromEntries(Object.entries(SRC_RESIDUALS).map(([id, members]) => [id, members.map(member => member.path)])),
   ...Object.fromEntries(Object.entries(VALIDATOR_RESIDUALS).map(([id, members]) => [id, members.map(member => member.id)])),
+  ...Object.fromEntries(Object.entries(MODEL_RESIDUALS).map(([id, members]) => [id, members.map(member => member.id)])),
 });
 
-/** A quiet row: every member of the residual family reads as accepted unchanged, as no src finding, or as no check refusing it. */
+/** A quiet row: every member of the residual family reads as accepted unchanged, as no src finding, as no check refusing it, or as an anchor-model edit no reading reds. */
 function quietRow(id: string): Json {
   const records = RECORD_RESIDUALS[id];
   if (records !== undefined) {
@@ -1025,6 +1071,36 @@ function quietRow(id: string): Json {
     expect(judged.filter(entry => entry.refused.length > 0).map(entry => entry.id), `${id}: no check refuses any member`).toEqual([]);
     expect(judged.filter(entry => entry.own === entry.reference).map(entry => entry.id), `${id}: each member reads its own context record otherwise than the reference`).toEqual([]);
     return { members: validators.map(member => member.id), readings: judged.map(entry => `${entry.id}: no check refuses it; its context record reads ${entry.own}, the reference ${entry.reference}`) };
+  }
+  const models = MODEL_RESIDUALS[id];
+  if (models !== undefined) {
+    expect(models.length, `${id} has members`).toBeGreaterThan(0);
+    const held = failing(LIVE);
+    const judged = models.map(member => {
+      const edited = member.edit(LIVE);
+      return {
+        id: member.id,
+        changed: !isDeepStrictEqual(edited, LIVE),
+        reds: failing(edited).filter(reading => !held.includes(reading)),
+        contrast: member.contrast === undefined ? [] : failing(member.contrast.edit(LIVE)),
+      };
+    });
+    expect(
+      judged.filter(entry => !entry.changed).map(entry => entry.id),
+      `${id}: each member edits the anchor model`,
+    ).toEqual([]);
+    expect(
+      judged.filter(entry => entry.reds.length > 0).map(entry => `${entry.id}: ${entry.reds.join(", ")}`),
+      `${id}: no member reds an outside reading the census's own model holds`,
+    ).toEqual([]);
+    expect(
+      models.filter((member, index) => member.contrast !== undefined && !held.includes(member.contrast.reds) && !(judged[index]?.contrast ?? []).includes(member.contrast.reds)).map(member => member.id),
+      `${id}: each member's contrast reds the reading it names, where the census's own model holds that reading`,
+    ).toEqual([]);
+    return {
+      members: models.map(member => member.id),
+      readings: models.map((member, index) => `${member.id}: reds ${judged[index]?.reds.join(", ") || "no reading"}${member.contrast === undefined ? "" : `; its contrast reds ${member.contrast.reds}`}`),
+    };
   }
   const texts = SRC_RESIDUALS[id] ?? [];
   expect(texts.length, `${id} has members`).toBeGreaterThan(0);
@@ -1062,6 +1138,10 @@ const QUOTES: Readonly<Record<string, string>> = {
   Q5: "R-COMPOSED-WORD",
   Q6: "R-UNNAMED-SITE",
   Q7: "R-UNSEEN-CONTEXT",
+  Q8: "R-FIELD-PARTITION",
+  Q9: "R-FIELD-RUN",
+  Q10: "R-PIN-PARTITION",
+  Q11: "R-UNREAD",
 };
 const ROWS: readonly Row[] = [
   { id: "A", label: "a schema fixture with one positive record and one negative per omitted field", pins: ["A1", "A2", "A3"] },
@@ -1081,8 +1161,9 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "Q",
-    label: "the residual families R-PLACEHOLDER-VALUE, R-OPEN-RECORD, R-VALUE-SHAPE, R-CROSS-FIELD, R-COMPOSED-WORD, R-UNNAMED-SITE and R-UNSEEN-CONTEXT, each member a pinned quiet row",
-    pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"],
+    label:
+      "the residual families R-PLACEHOLDER-VALUE, R-OPEN-RECORD, R-VALUE-SHAPE, R-CROSS-FIELD, R-COMPOSED-WORD, R-UNNAMED-SITE, R-UNSEEN-CONTEXT, R-FIELD-PARTITION, R-FIELD-RUN, R-PIN-PARTITION and R-UNREAD, each member a pinned quiet row",
+    pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11"],
   },
 ];
 
@@ -1118,6 +1199,375 @@ function noteCodes(): { readonly codes: readonly string[]; readonly pin: string 
 }
 /** The codes of the producer block's RejectionCode union line. */
 const unionCodes = (): string[] => [...(producerLine("P5")?.text ?? "").matchAll(/"(INTENT_[A-Z_]+)"/g)].map(match => match[1] ?? "");
+
+// ---- the anchor model: what the outside readings compare from this census and its roster ----
+
+/** The census and roster literals the outside readings compare (LIVE, below, is the census's own). */
+interface AnchorModel {
+  readonly requirement: string;
+  readonly mergeNote: string;
+  readonly rows: readonly Row[];
+  readonly quotes: Readonly<Record<string, string>>;
+  readonly items: readonly Item[];
+  readonly actions: readonly string[];
+  readonly admitted: string;
+  readonly codes: readonly string[];
+  readonly codesBead: string;
+  readonly codesNotePin: string;
+  readonly statuses: readonly string[];
+  readonly noun: string;
+  /** The vocabulary's spellings: the record noun, then each field name of two or more parts. */
+  readonly vocabulary: readonly string[];
+  /** The decision's own two fields: no reading takes them. */
+  readonly decisionFields: readonly string[];
+  /** The residual members by family: no reading takes them. */
+  readonly residuals: Readonly<Record<string, readonly string[]>>;
+  readonly producerPin: string;
+  /** The roster's producer block: the readings take the cited lines' files and numbers, never their texts or blobs. */
+  readonly producer: Roster["producer"];
+}
+type Edit = (model: AnchorModel) => AnchorModel;
+
+let exportCache: string | undefined;
+/** The tracker export's text, read once per run. */
+function exportText(): string {
+  if (exportCache === undefined) exportCache = textOf(EXPORT);
+  return exportCache;
+}
+const exportRows = new Map<string, ReturnType<typeof beadRow>>();
+/** A bead's row in the tracker export, read once per bead. */
+function exportRow(bead: string): ReturnType<typeof beadRow> {
+  if (!exportRows.has(bead)) exportRows.set(bead, beadRow(exportText(), bead));
+  return exportRows.get(bead);
+}
+/** A phrase's words: lower case, split at whitespace, slashes and hyphens. */
+const phraseWords = (phrase: string): string[] =>
+  phrase
+    .toLowerCase()
+    .split(/[\s/-]+/)
+    .filter(word => word !== "");
+/** The parts are a contiguous run of the words. */
+const runIn = (parts: readonly string[], words: readonly string[]): boolean => parts.length > 0 && words.some((_, start) => parts.every((part, offset) => words[start + offset] === part));
+/** The statement's items: its list split at ", " and the last piece at " and ". */
+function titleItems(statement: string): string[] {
+  const list = /shall carry as required: (.+); any missing field is a typed refusal, never a default$/.exec(statement)?.[1] ?? "";
+  const pieces = list.split(", ");
+  return [...pieces.slice(0, -1), ...(pieces.at(-1) ?? "").split(" and ")];
+}
+/** The src findings for a vocabulary's spellings, read as the src reading reads its own words. */
+function vocabularyFindings(vocabulary: readonly string[], entries: readonly Entry[], sites: readonly Site[]): string[] {
+  const words = vocabulary.map(wordOf);
+  const named = (entry: Entry): string[] => words.filter(word => word.pattern.test(entry.path) || word.pattern.test(entry.text)).map(word => word.spelling);
+  const registered = sites.map(site => site.path);
+  const findings = entries.filter(entry => !registered.includes(entry.path)).flatMap(entry => named(entry).map(word => `${entry.path}: names ${word}`));
+  for (const [index, path] of registered.entries()) {
+    if (registered.indexOf(path) !== index) findings.push(`${path}: registered twice`);
+    else if (!entries.some(entry => entry.path === path && named(entry).length > 0)) findings.push(`${path}: stale registration`);
+  }
+  return findings;
+}
+
+/** The outside readings, in order (each named in the header's OUTSIDE ANCHORS paragraph). */
+const READINGS = [
+  "title",
+  "statement",
+  "clauses",
+  "tiling A",
+  "tiling B",
+  "tiling C",
+  "tiling D",
+  "tiling S",
+  "items",
+  "join",
+  "runs",
+  "actions",
+  "action fields",
+  "admitted",
+  "codes",
+  "codes bead",
+  "note codes",
+  "statuses",
+  "noun",
+  "vocabulary",
+  "pin cited",
+  "lines cited",
+  "src",
+] as const;
+type AnchorReading = (typeof READINGS)[number];
+/** Every outside reading of a model: true where it holds. */
+function anchorReadings(model: AnchorModel): Readonly<Record<AnchorReading, boolean>> {
+  const row = exportRow(BEAD);
+  const title = row?.title ?? "";
+  const notes = row?.notes ?? "";
+  const statement = /^\[[^\]]+\] (?:\([^)]*\) )?(.*)\.$/.exec(title)?.[1] ?? "";
+  const tiled = (id: string): boolean => {
+    const entry = model.rows.find(candidate => candidate.id === id);
+    return entry !== undefined && tiles(entry.label, entry.pins.map(pin => model.quotes[pin] ?? ""));
+  };
+  const clauses = acceptanceClauses(notes);
+  const [, clauseB, clauseC, clauseD] = clauses;
+  const actionWords = /proving (\w+), (\w+) and (\w+) are three distinct fields \((\w+) != (\w+) survives\)$/.exec(clauseB ?? "")?.slice(1) ?? [];
+  const verdicts = /^the resolver verdict is either (\w+) or one of MW's stable rejection codes \((.+) per the (wb-[a-z0-9.]+) note\)$/.exec(clauseC ?? "");
+  const statuses = /^the (\w+) status is its own value, never (\w+)$/.exec(clauseD ?? "");
+  const noun = /^Each R7 (\w+) record shall carry/.exec(statement)?.[1];
+  const fields = model.items.flatMap(entry => entry.fields);
+  const names = fields.map(field => field.name);
+  const listed = /the stable rejection codes (INTENT_[A-Z_]+(?: \/ INTENT_[A-Z_]+)*) \(packages\/coordination\/README\.md@([0-9a-f]+)\)/.exec(exportRow(model.codesBead)?.notes ?? "");
+  const line = (id: string): ProducerLine | undefined => model.producer.lines.find(entry => entry.id === id);
+  const cite = (id: string): string => `${line(id)?.path.split("/").pop() ?? "-"}:${line(id)?.line ?? "-"}`;
+  const three = actionWords.slice(0, 3);
+  return {
+    title: title.startsWith(`[${model.requirement}] ${model.mergeNote}`) && title.endsWith("."),
+    statement: model.rows.find(entry => entry.label === statement)?.id === "S",
+    clauses: isDeepStrictEqual(
+      clauses.map(clause => model.rows.find(entry => entry.label === clause)?.id ?? "-"),
+      ["A", "B", "C", "D"],
+    ),
+    "tiling A": tiled("A"),
+    "tiling B": tiled("B"),
+    "tiling C": tiled("C"),
+    "tiling D": tiled("D"),
+    "tiling S": tiled("S"),
+    items: isDeepStrictEqual(
+      titleItems(statement),
+      model.items.map(entry => entry.item),
+    ),
+    join: model.items.length > 0 && model.items.every(entry => joined(entry.item, entry.fields.map(field => field.phrase))),
+    runs: fields.length > 0 && fields.every(field => runIn(partsOf(field.name), phraseWords(field.phrase))),
+    actions: isDeepStrictEqual(actionWords, [...model.actions, ...model.actions.slice(1)]),
+    "action fields": three.length === 3 && new Set(three).size === 3 && three.every(word => names.includes(word)),
+    admitted: verdicts?.[1] === model.admitted,
+    codes: isDeepStrictEqual(verdicts?.[2]?.split(" / "), [...model.codes]),
+    "codes bead": verdicts?.[3] === model.codesBead,
+    "note codes": isDeepStrictEqual(listed?.[1]?.split(" / "), [...model.codes]) && listed?.[2] === model.codesNotePin,
+    statuses: isDeepStrictEqual([statuses?.[2], statuses?.[1]], [...model.statuses]),
+    noun: noun !== undefined && noun === model.noun,
+    vocabulary: noun !== undefined && isDeepStrictEqual(model.vocabulary, [noun, ...names.filter(name => partsOf(name).length >= 2)]),
+    "pin cited": model.producerPin.length >= 12 && notes.includes(`@${model.producerPin.slice(0, 12)}`),
+    "lines cited": ["P1", "P2", "P3", "P4"].every(id => line(id) !== undefined) && ["P1", "P2", "P4"].every(id => notes.includes(cite(id))) && notes.includes(`and :${line("P3")?.line ?? "-"} (`),
+    src: vocabularyFindings(model.vocabulary, liveSrc(), SITES).length === 0,
+  };
+}
+/** The readings a model fails, in READINGS order. */
+function failing(model: AnchorModel): AnchorReading[] {
+  const readings = anchorReadings(model);
+  return READINGS.filter(reading => !readings[reading]);
+}
+
+function without<T>(table: Readonly<Record<string, T>>, keys: readonly string[]): Record<string, T> {
+  return Object.fromEntries(Object.entries(table).filter(([key]) => !keys.includes(key)));
+}
+const quoted = (model: AnchorModel, pin: string, quote: string): AnchorModel => ({ ...model, quotes: { ...model.quotes, [pin]: quote } });
+const relabeled = (model: AnchorModel, id: string, label: string): AnchorModel => ({ ...model, rows: model.rows.map(row => (row.id === id ? { ...row, label } : row)) });
+const labelIn = (model: AnchorModel, id: string): string => model.rows.find(row => row.id === id)?.label ?? "";
+function rowRemoved(model: AnchorModel, id: string): AnchorModel {
+  const pins = model.rows.find(row => row.id === id)?.pins ?? [];
+  return { ...model, rows: model.rows.filter(row => row.id !== id), quotes: without(model.quotes, pins) };
+}
+function pinRemoved(model: AnchorModel, id: string, pin: string): AnchorModel {
+  return { ...model, rows: model.rows.map(row => (row.id === id ? { ...row, pins: row.pins.filter(entry => entry !== pin) } : row)), quotes: without(model.quotes, [pin]) };
+}
+/** Pin `from` of a row merged into its sibling `into`, whose quote becomes `quote`. */
+const pinMerged = (model: AnchorModel, id: string, into: string, from: string, quote: string): AnchorModel => quoted(pinRemoved(model, id, from), into, quote);
+/** The vocabulary composed from a record noun and the items' fields. */
+const composedVocabulary = (noun: string, items: readonly Item[]): string[] => [
+  noun,
+  ...items
+    .flatMap(entry => entry.fields)
+    .map(field => field.name)
+    .filter(name => partsOf(name).length >= 2),
+];
+/** One item's fields replaced, its text kept, and the vocabulary composed from the new fields. */
+function refielded(model: AnchorModel, item: string, fields: readonly Field[]): AnchorModel {
+  const items = model.items.map(entry => (entry.item === item ? { item, fields } : entry));
+  return { ...model, items, vocabulary: composedVocabulary(model.noun, items) };
+}
+/** A field renamed, its phrase kept, and the vocabulary composed from the new names. */
+function renamed(model: AnchorModel, from: string, to: string): AnchorModel {
+  const items = model.items.map(entry => ({ ...entry, fields: entry.fields.map(field => (field.name === from ? { ...field, name: to } : field)) }));
+  return { ...model, items, vocabulary: composedVocabulary(model.noun, items) };
+}
+/** One producer line edited in the roster's producer block. */
+const lined = (model: AnchorModel, id: string, change: (line: ProducerLine) => ProducerLine): AnchorModel => ({ ...model, producer: { ...model.producer, lines: model.producer.lines.map(line => (line.id === id ? change(line) : line)) } });
+const ACTION_ITEM = "proposed vs admitted vs executed action with resolver verdict";
+
+/** A residual member of the anchor model: an edit no reading reds, and its contrast, a near edit that reds the reading named. */
+interface ModelMember {
+  readonly id: string;
+  readonly edit: Edit;
+  readonly contrast?: { readonly edit: Edit; readonly reds: AnchorReading };
+}
+/** R-FIELD-PARTITION (Q8), R-FIELD-RUN (Q9), R-PIN-PARTITION (Q10) and R-UNREAD (Q11): the gate's coordinated edits no reading takes. */
+const MODEL_RESIDUALS: Readonly<Record<string, readonly ModelMember[]>> = {
+  Q8: [
+    {
+      id: "G19-SPLIT-SNAP: the first item cut at its slash, gpProgram and snapshotHash",
+      edit: model =>
+        refielded(model, "GP program/checkpoint snapshot hash", [
+          { name: "gpProgram", phrase: "GP program" },
+          { name: "snapshotHash", phrase: "checkpoint snapshot hash" },
+        ]),
+      contrast: {
+        edit: model =>
+          refielded(model, "GP program/checkpoint snapshot hash", [
+            { name: "gpProgram", phrase: "GP program" },
+            { name: "snapshotHash", phrase: "GP program/checkpoint snapshot hash" },
+          ]),
+        reds: "join",
+      },
+    },
+    {
+      id: "G19-MERGE-ACTSEL: actor/selector read as one field, actorSelector",
+      edit: model => refielded(model, "actor/selector", [{ name: "actorSelector", phrase: "actor/selector" }]),
+      contrast: { edit: model => refielded(model, "actor/selector", [{ name: "actor", phrase: "actor" }]), reds: "join" },
+    },
+    {
+      id: "the decision item read as one field, decision",
+      edit: model => refielded(model, "sampled decision with behavior log probability", [{ name: "decision", phrase: "sampled decision with behavior log probability" }]),
+      contrast: { edit: model => refielded(model, "sampled decision with behavior log probability", [{ name: "decision", phrase: "sampled decision" }]), reds: "join" },
+    },
+    {
+      id: "the resolver verdict read into executed, executed",
+      edit: model =>
+        refielded(model, ACTION_ITEM, [
+          { name: "proposed", phrase: "proposed" },
+          { name: "admitted", phrase: "admitted" },
+          { name: "executed", phrase: "executed action with resolver verdict" },
+        ]),
+      contrast: {
+        edit: model =>
+          refielded(model, ACTION_ITEM, [
+            { name: "proposed", phrase: "proposed" },
+            { name: "admitted", phrase: "admitted" },
+            { name: "executed", phrase: "executed action" },
+          ]),
+        reds: "join",
+      },
+    },
+  ],
+  Q9: [
+    {
+      id: "G-REN-FP: featureProjection named projection",
+      edit: model => renamed(model, "featureProjection", "projection"),
+      contrast: { edit: model => renamed(model, "featureProjection", "projectionFeature"), reds: "runs" },
+    },
+    { id: "S-FIELD-HASH: snapshotHash named hash", edit: model => renamed(model, "snapshotHash", "hash"), contrast: { edit: model => renamed(model, "snapshotHash", "checkpointHash"), reds: "runs" } },
+    {
+      id: "behaviorLogProbability named logProbability",
+      edit: model => renamed(model, "behaviorLogProbability", "logProbability"),
+      contrast: { edit: model => renamed(model, "behaviorLogProbability", "behaviorProbability"), reds: "runs" },
+    },
+    { id: "support named legalSupport", edit: model => renamed(model, "support", "legalSupport"), contrast: { edit: model => renamed(model, "support", "supportTime"), reds: "runs" } },
+  ],
+  Q10: [
+    {
+      id: "C6A2: A2 merged into A1",
+      edit: model => pinMerged(model, "A", "A1", "A2", `${model.quotes.A1 ?? ""} ${model.quotes.A2 ?? ""}`),
+      contrast: { edit: model => pinMerged(model, "A", "A1", "A2", model.quotes.A1 ?? ""), reds: "tiling A" },
+    },
+    {
+      id: "C6B2: B2 merged into B1",
+      edit: model => pinMerged(model, "B", "B1", "B2", `${model.quotes.B1 ?? ""} (${model.quotes.B2 ?? ""}`),
+      contrast: { edit: model => pinMerged(model, "B", "B1", "B2", model.quotes.B1 ?? ""), reds: "tiling B" },
+    },
+    {
+      id: "C6C3: C3 merged into C2",
+      edit: model => pinMerged(model, "C", "C2", "C3", `${model.quotes.C2 ?? ""} (${model.quotes.C3 ?? ""}`),
+      contrast: { edit: model => pinMerged(model, "C", "C2", "C3", model.quotes.C2 ?? ""), reds: "tiling C" },
+    },
+    {
+      id: "C6D2: D2 merged into D1",
+      edit: model => pinMerged(model, "D", "D1", "D2", `${model.quotes.D1 ?? ""}, ${model.quotes.D2 ?? ""}`),
+      contrast: { edit: model => pinMerged(model, "D", "D1", "D2", model.quotes.D1 ?? ""), reds: "tiling D" },
+    },
+    {
+      id: "C6S1: S1 merged into S2",
+      edit: model => pinMerged(model, "S", "S2", "S1", `${model.quotes.S1 ?? ""}; ${model.quotes.S2 ?? ""}`),
+      contrast: { edit: model => pinMerged(model, "S", "S2", "S1", model.quotes.S2 ?? ""), reds: "tiling S" },
+    },
+  ],
+  Q11: [
+    { id: "S-DECISION-FIELD-RENAME: the decision's second field named choice", edit: model => ({ ...model, decisionFields: [model.decisionFields[0] ?? "", "choice"] }) },
+    { id: "C6Q: row Q removed whole, with every residual member", edit: model => ({ ...rowRemoved(model, "Q"), residuals: {} }) },
+    { id: "C6Q4: pin Q4 removed with its quote and members", edit: model => ({ ...pinRemoved(model, "Q", "Q4"), residuals: without(model.residuals, ["Q4"]) }) },
+    { id: "C6-labelQ: row Q's label reworded", edit: model => relabeled(model, "Q", labelIn(model, "Q").replace("each member a pinned quiet row", "each member a quiet row")) },
+    { id: "C6-quoteQ: Q3's quote reworded", edit: model => quoted(model, "Q3", "R-VALUE-SHAPES") },
+    { id: "C6-member: Q1's first member removed", edit: model => ({ ...model, residuals: { ...model.residuals, Q1: (model.residuals.Q1 ?? []).slice(1) } }) },
+    { id: "S-PRODUCER-PHRASE: a phrase cut from P3's text", edit: model => lined(model, "P3", line => ({ ...line, text: line.text.replace(" and external verifier outcome", " and external verifier") })) },
+    { id: "PL-blob: P5's blob id", edit: model => lined(model, "P5", line => ({ ...line, blob: "0".repeat(line.blob.length) })) },
+  ],
+};
+/** The census's own anchor model: its literals, and its roster's producer block. */
+const LIVE: AnchorModel = {
+  requirement: REQUIREMENT,
+  mergeNote: MERGE_NOTE,
+  rows: ROWS,
+  quotes: QUOTES,
+  items: ITEMS,
+  actions: ACTIONS,
+  admitted: ADMITTED,
+  codes: CODES,
+  codesBead: CODES_BEAD,
+  codesNotePin: CODES_NOTE_PIN,
+  statuses: STATUSES,
+  noun: RECORD_NOUN,
+  vocabulary: VOCABULARY.map(word => word.spelling),
+  decisionFields: DECISION_FIELDS,
+  residuals: residualMembers(),
+  producerPin: PRODUCER_PIN,
+  producer: ROSTER.producer,
+};
+/** BOUND: model edits, each named for the coordinated census-and-roster edit it stands for, and the reading it must red. */
+const BOUND: Readonly<Record<string, { readonly edit: Edit; readonly reds: AnchorReading }>> = {
+  "G-requirement": { edit: model => ({ ...model, requirement: model.requirement.replace(/R8$/, "R9") }), reds: "title" },
+  "G-merge-note": { edit: model => ({ ...model, mergeNote: model.mergeNote.replace("R7", "R9") }), reds: "title" },
+  "S-ROW-S": { edit: model => rowRemoved(model, "S"), reds: "statement" },
+  "S-LABEL-WORD": { edit: model => quoted(relabeled(model, "A", labelIn(model, "A").replace("positive", "valid")), "A2", (model.quotes.A2 ?? "").replace("positive", "valid")), reds: "clauses" },
+  "C6-rowD": { edit: model => rowRemoved(model, "D"), reds: "clauses" },
+  "S-QUOTE-REWORD": { edit: model => quoted(model, "A3", (model.quotes.A3 ?? "").replace("omitted", "missing")), reds: "tiling A" },
+  "C6-word-B2": { edit: model => quoted(model, "B2", (model.quotes.B2 ?? "").replace("survives", "survived")), reds: "tiling B" },
+  "C6-word-C1": { edit: model => quoted(model, "C1", (model.quotes.C1 ?? "").replace("either ", "")), reds: "tiling C" },
+  "S-PIN-DROP": { edit: model => pinRemoved(model, "D", "D2"), reds: "tiling D" },
+  "C6-word-S3": { edit: model => quoted(model, "S3", (model.quotes.S3 ?? "").replace("a default", "any default")), reds: "tiling S" },
+  "S-ITEM-REWORD": { edit: model => refielded({ ...model, items: model.items.map(entry => (entry.item === "feature projection" ? { ...entry, item: "feature projections" } : entry)) }, "feature projections", [{ name: "featureProjection", phrase: "feature projections" }]), reds: "items" },
+  "S-FIELD-DROP": { edit: model => refielded(model, "actor/selector", [{ name: "actor", phrase: "actor" }]), reds: "join" },
+  "S-PHRASE": {
+    edit: model =>
+      refielded(model, ACTION_ITEM, [
+        { name: "proposed", phrase: "proposed" },
+        { name: "admitted", phrase: "admitted" },
+        { name: "executed", phrase: "executed" },
+        { name: "resolverVerdict", phrase: "resolver verdict" },
+      ]),
+    reds: "join",
+  },
+  "S-FIELD-REWORD": { edit: model => renamed(model, "selector", "chooser"), reds: "runs" },
+  "G-REN-SNAP-v3": { edit: model => renamed(model, "snapshotHash", "checkpointHash"), reds: "runs" },
+  "G-REN-BLP": { edit: model => renamed(model, "behaviorLogProbability", "behaviorProbability"), reds: "runs" },
+  "S-ACTION-DROP": { edit: model => ({ ...model, actions: model.actions.slice(0, -1) }), reds: "actions" },
+  "S-ACTION-REWORD": { edit: model => ({ ...model, actions: model.actions.map(action => (action === "executed" ? "performed" : action)) }), reds: "actions" },
+  "G-ACTION-MERGE": {
+    edit: model =>
+      refielded(model, ACTION_ITEM, [
+        { name: "proposed", phrase: "proposed vs admitted" },
+        { name: "executed", phrase: "executed action" },
+        { name: "resolverVerdict", phrase: "resolver verdict" },
+      ]),
+    reds: "action fields",
+  },
+  "G-ADMITTED": { edit: model => ({ ...model, admitted: "accepted" }), reds: "admitted" },
+  "S-CODE-DROP-v3": { edit: model => ({ ...model, codes: model.codes.filter(code => code !== "INTENT_DUPLICATE") }), reds: "codes" },
+  "S-CODE-REWORD": { edit: model => ({ ...model, codes: model.codes.map(code => (code === "INTENT_DUPLICATE" ? "INTENT_DUPLICATED" : code)) }), reds: "codes" },
+  "G-codes-bead": { edit: model => ({ ...model, codesBead: "wb-4ap.15" }), reds: "codes bead" },
+  "G-note-pin": { edit: model => ({ ...model, codesNotePin: "cf21476" }), reds: "note codes" },
+  "S-STATUS-DROP": { edit: model => ({ ...model, statuses: model.statuses.slice(0, 1) }), reds: "statuses" },
+  "S-STATUS-REWORD": { edit: model => ({ ...model, statuses: [model.statuses[0] ?? "", ["ref", "rain"].join("")] }), reds: "statuses" },
+  "S-NOUN-REWORD": { edit: model => ({ ...model, noun: "sideload", vocabulary: composedVocabulary("sideload", model.items) }), reds: "noun" },
+  "S-NOUN-DROP": { edit: model => ({ ...model, vocabulary: model.vocabulary.slice(1) }), reds: "vocabulary" },
+  "G-noun-src": { edit: model => ({ ...model, noun: "workbench", vocabulary: composedVocabulary("workbench", model.items) }), reds: "src" },
+  "G-producer-pin": { edit: model => ({ ...model, producerPin: `${model.producerPin.startsWith("4") ? "5" : "4"}${model.producerPin.slice(1)}` }), reds: "pin cited" },
+  "G-producer-line": { edit: model => lined(model, "P1", line => ({ ...line, line: line.line - 1 })), reds: "lines cited" },
+};
 
 /** The pins that reached their witness compare, in run order, each with the compare's own result. */
 const REACHED: { pin: string; same: boolean }[] = [];
@@ -1397,7 +1847,7 @@ describe(SUITE, () => {
   }
 
   it("rule 16: the rows, the items and fields, the domains, the value lists, the vocabulary, the bases, the later faults, the checks and their controls, the mutants, the residual families and the registrations are frozen at their measured shape", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:2", "C:3", "D:2", "S:3", "Q:7"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:2", "C:3", "D:2", "S:3", "Q:11"]);
     expect(Object.keys(QUOTES), "one quote per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
     expect(ITEMS.map(entry => `${entry.item}:${entry.fields.length}`)).toEqual([
       "GP program/checkpoint snapshot hash:1",
@@ -1543,7 +1993,71 @@ describe(SUITE, () => {
       "M-NULLISH-AFTER-ABSENT",
       "M-OBJECT-CHOICE",
     ]);
-    expect(Object.entries(residualMembers()).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:5", "Q2:2", "Q3:5", "Q4:3", "Q5:9", "Q6:1", "Q7:12"]);
+    expect(Object.entries(residualMembers()).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:5", "Q2:2", "Q3:5", "Q4:3", "Q5:9", "Q6:1", "Q7:12", "Q8:4", "Q9:4", "Q10:5", "Q11:8"]);
+    expect([...READINGS]).toEqual([
+      "title",
+      "statement",
+      "clauses",
+      "tiling A",
+      "tiling B",
+      "tiling C",
+      "tiling D",
+      "tiling S",
+      "items",
+      "join",
+      "runs",
+      "actions",
+      "action fields",
+      "admitted",
+      "codes",
+      "codes bead",
+      "note codes",
+      "statuses",
+      "noun",
+      "vocabulary",
+      "pin cited",
+      "lines cited",
+      "src",
+    ]);
+    expect(Object.entries(BOUND).map(([name, bound]) => `${name}:${bound.reds}`)).toEqual([
+      "G-requirement:title",
+      "G-merge-note:title",
+      "S-ROW-S:statement",
+      "S-LABEL-WORD:clauses",
+      "C6-rowD:clauses",
+      "S-QUOTE-REWORD:tiling A",
+      "C6-word-B2:tiling B",
+      "C6-word-C1:tiling C",
+      "S-PIN-DROP:tiling D",
+      "C6-word-S3:tiling S",
+      "S-ITEM-REWORD:items",
+      "S-FIELD-DROP:join",
+      "S-PHRASE:join",
+      "S-FIELD-REWORD:runs",
+      "G-REN-SNAP-v3:runs",
+      "G-REN-BLP:runs",
+      "S-ACTION-DROP:actions",
+      "S-ACTION-REWORD:actions",
+      "G-ACTION-MERGE:action fields",
+      "G-ADMITTED:admitted",
+      "S-CODE-DROP-v3:codes",
+      "S-CODE-REWORD:codes",
+      "G-codes-bead:codes bead",
+      "G-note-pin:note codes",
+      "S-STATUS-DROP:statuses",
+      "S-STATUS-REWORD:statuses",
+      "S-NOUN-REWORD:noun",
+      "S-NOUN-DROP:vocabulary",
+      "G-noun-src:src",
+      "G-producer-pin:pin cited",
+      "G-producer-line:lines cited",
+    ]);
+    expect(Object.entries(MODEL_RESIDUALS).map(([id, members]) => `${id}:${members.map(member => member.contrast?.reds ?? "-").join(", ")}`)).toEqual([
+      "Q8:join, join, join, join",
+      "Q9:runs, runs, runs, runs",
+      "Q10:tiling A, tiling B, tiling C, tiling D, tiling S",
+      "Q11:-, -, -, -, -, -, -, -",
+    ]);
     expect(SITES).toEqual([]);
     expect(SRC_FLOOR).toBe(100);
   });
@@ -1570,7 +2084,7 @@ describe(SUITE, () => {
     expect(alone, "every check refuses one mutant alone").toEqual([]);
   });
 
-  it("the outside anchors: the bead's own row binds the labels of rows A-D (its acceptance clauses) and S (its title's statement), those rows' pin quotes' text, the items and each field's phrase, each field name to a contiguous run of its phrase's words, the actions, the codes, the statuses, the record noun and the vocabulary's composition; wb-4ap.16's note carries the six codes; the notes cite the producer pin and lines; git's src listing names no vocabulary word unregistered; the roster's producer copy, row Q, the pin partition and which run of its phrase a field name takes are not anchored", { timeout: 60_000 }, () => {
+  it("the outside anchors: every outside reading holds on the census's anchor model and every BOUND edit of that model reds the reading it names; the bead's own row binds the labels of rows A-D (its acceptance clauses) and S (its title's statement), those rows' pin quotes' text, each item's text and the join of its fields' phrases, each field name to a contiguous run of its phrase's words, the actions and their three distinct fields, ADMITTED, the codes, the statuses, the record noun and the vocabulary's composition; wb-4ap.16's note carries the six codes; the notes cite the producer pin and lines; git's src listing names no vocabulary word unregistered; how an item is cut into fields, which run of its phrase a field name takes, the pin partition, row Q, the decision's fields and the roster's producer copy are not anchored", { timeout: 60_000 }, () => {
     const row = beadRow(textOf(EXPORT), BEAD);
     expect(row, `${BEAD}'s row was read from the tracker export`).toBeDefined();
     const title = row?.title ?? "";
@@ -1635,6 +2149,13 @@ describe(SUITE, () => {
     const src = liveSrc();
     expect(src.length, "the src floor").toBeGreaterThanOrEqual(SRC_FLOOR);
     expect(srcFindings(src, SITES), "git's src listing names no vocabulary word unregistered").toEqual([]);
+    expect(Object.keys(anchorReadings(LIVE)), "the readings, in READINGS order").toEqual([...READINGS]);
+    expect(failing(LIVE), "every outside reading holds on the census's anchor model").toEqual([]);
+    for (const [name, bound] of Object.entries(BOUND)) expect(failing(bound.edit(LIVE)), `${name} reds ${bound.reds}`).toContain(bound.reds);
+    expect(
+      READINGS.filter(reading => !Object.values(BOUND).some(bound => bound.reds === reading)),
+      "every reading is red under some BOUND edit",
+    ).toEqual([]);
   });
 
   it("roster: the judged rows, the quotes, the residual members, the witness and mutant keys, the assertion counts and the registered tests equal test/fixtures/mw-gp-sidecar-record-roster.json, keys in order; every pin reached its witness compare and each compare held", ({ task }) => {

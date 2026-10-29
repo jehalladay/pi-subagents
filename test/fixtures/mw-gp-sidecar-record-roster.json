@@ -1,5 +1,5 @@
 {
- "comment": "wb-e66.3 (MW-GRAPH-POLICY-COORDINATION-R8): the judged set of test/workbench-mw-gp-sidecar-record-census.test.ts, held out of file (standing rule 16). rows, quotes, witnesses, asserted (each pin's assertion count, its witness compare included), residuals, mutants and tests are the census's measured shape at its cut (cut #1 base df37dac; cut #2, respin 1, base e81d2b0; cut #3, respin 2, base b3d410f); producer holds the filing's cited MechanicalWorkflows lines at the bead's pin 4b8b974ca72b (git show from the local checkout; the census never re-reads the producer).",
+ "comment": "wb-e66.3 (MW-GRAPH-POLICY-COORDINATION-R8): the judged set of test/workbench-mw-gp-sidecar-record-census.test.ts, held out of file (standing rule 16). rows, quotes, witnesses, asserted (each pin's assertion count, its witness compare included), residuals, mutants and tests are the census's measured shape at its cut (cut #1 base df37dac; cut #2, respin 1, base e81d2b0; cut #3, respin 2, base b3d410f; cut #4, respin 3, base 1ad30c3); producer holds the filing's cited MechanicalWorkflows lines at the bead's pin 4b8b974ca72b (git show from the local checkout; the census never re-reads the producer).",
  "bead": "wb-e66.3",
  "rows": [
   {
@@ -47,7 +47,7 @@
   },
   {
    "id": "Q",
-   "label": "the residual families R-PLACEHOLDER-VALUE, R-OPEN-RECORD, R-VALUE-SHAPE, R-CROSS-FIELD, R-COMPOSED-WORD, R-UNNAMED-SITE and R-UNSEEN-CONTEXT, each member a pinned quiet row",
+   "label": "the residual families R-PLACEHOLDER-VALUE, R-OPEN-RECORD, R-VALUE-SHAPE, R-CROSS-FIELD, R-COMPOSED-WORD, R-UNNAMED-SITE, R-UNSEEN-CONTEXT, R-FIELD-PARTITION, R-FIELD-RUN, R-PIN-PARTITION and R-UNREAD, each member a pinned quiet row",
    "pins": [
     "Q1",
     "Q2",
@@ -55,7 +55,11 @@
     "Q4",
     "Q5",
     "Q6",
-    "Q7"
+    "Q7",
+    "Q8",
+    "Q9",
+    "Q10",
+    "Q11"
    ]
   }
  ],
@@ -79,7 +83,11 @@
   "Q4": "R-CROSS-FIELD",
   "Q5": "R-COMPOSED-WORD",
   "Q6": "R-UNNAMED-SITE",
-  "Q7": "R-UNSEEN-CONTEXT"
+  "Q7": "R-UNSEEN-CONTEXT",
+  "Q8": "R-FIELD-PARTITION",
+  "Q9": "R-FIELD-RUN",
+  "Q10": "R-PIN-PARTITION",
+  "Q11": "R-UNREAD"
  },
  "witnesses": {
   "A1": {
@@ -648,6 +656,72 @@
     "the second of three missing fields named when they are not a suffix: no check refuses it; its context record reads refused missing-field support, the reference refused missing-field snapshotHash",
     "the verdict read first beside an off status when it is an off value other than rejected: no check refuses it; its context record reads refused verdict-domain \"accepted\", the reference refused status-domain \"skip\""
    ]
+  },
+  "Q8": {
+   "members": [
+    "G19-SPLIT-SNAP: the first item cut at its slash, gpProgram and snapshotHash",
+    "G19-MERGE-ACTSEL: actor/selector read as one field, actorSelector",
+    "the decision item read as one field, decision",
+    "the resolver verdict read into executed, executed"
+   ],
+   "readings": [
+    "G19-SPLIT-SNAP: the first item cut at its slash, gpProgram and snapshotHash: reds no reading; its contrast reds join",
+    "G19-MERGE-ACTSEL: actor/selector read as one field, actorSelector: reds no reading; its contrast reds join",
+    "the decision item read as one field, decision: reds no reading; its contrast reds join",
+    "the resolver verdict read into executed, executed: reds no reading; its contrast reds join"
+   ]
+  },
+  "Q9": {
+   "members": [
+    "G-REN-FP: featureProjection named projection",
+    "S-FIELD-HASH: snapshotHash named hash",
+    "behaviorLogProbability named logProbability",
+    "support named legalSupport"
+   ],
+   "readings": [
+    "G-REN-FP: featureProjection named projection: reds no reading; its contrast reds runs",
+    "S-FIELD-HASH: snapshotHash named hash: reds no reading; its contrast reds runs",
+    "behaviorLogProbability named logProbability: reds no reading; its contrast reds runs",
+    "support named legalSupport: reds no reading; its contrast reds runs"
+   ]
+  },
+  "Q10": {
+   "members": [
+    "C6A2: A2 merged into A1",
+    "C6B2: B2 merged into B1",
+    "C6C3: C3 merged into C2",
+    "C6D2: D2 merged into D1",
+    "C6S1: S1 merged into S2"
+   ],
+   "readings": [
+    "C6A2: A2 merged into A1: reds no reading; its contrast reds tiling A",
+    "C6B2: B2 merged into B1: reds no reading; its contrast reds tiling B",
+    "C6C3: C3 merged into C2: reds no reading; its contrast reds tiling C",
+    "C6D2: D2 merged into D1: reds no reading; its contrast reds tiling D",
+    "C6S1: S1 merged into S2: reds no reading; its contrast reds tiling S"
+   ]
+  },
+  "Q11": {
+   "members": [
+    "S-DECISION-FIELD-RENAME: the decision's second field named choice",
+    "C6Q: row Q removed whole, with every residual member",
+    "C6Q4: pin Q4 removed with its quote and members",
+    "C6-labelQ: row Q's label reworded",
+    "C6-quoteQ: Q3's quote reworded",
+    "C6-member: Q1's first member removed",
+    "S-PRODUCER-PHRASE: a phrase cut from P3's text",
+    "PL-blob: P5's blob id"
+   ],
+   "readings": [
+    "S-DECISION-FIELD-RENAME: the decision's second field named choice: reds no reading",
+    "C6Q: row Q removed whole, with every residual member: reds no reading",
+    "C6Q4: pin Q4 removed with its quote and members: reds no reading",
+    "C6-labelQ: row Q's label reworded: reds no reading",
+    "C6-quoteQ: Q3's quote reworded: reds no reading",
+    "C6-member: Q1's first member removed: reds no reading",
+    "S-PRODUCER-PHRASE: a phrase cut from P3's text: reds no reading",
+    "PL-blob: P5's blob id: reds no reading"
+   ]
   }
  },
  "asserted": [
@@ -670,7 +744,11 @@
   "Q4:4",
   "Q5:4",
   "Q6:4",
-  "Q7:5"
+  "Q7:5",
+  "Q8:6",
+  "Q9:6",
+  "Q10:6",
+  "Q11:6"
  ],
  "residuals": {
   "Q1": [
@@ -723,6 +801,35 @@
    "a success's number choice no list holds accepted",
    "the second of three missing fields named when they are not a suffix",
    "the verdict read first beside an off status when it is an off value other than rejected"
+  ],
+  "Q8": [
+   "G19-SPLIT-SNAP: the first item cut at its slash, gpProgram and snapshotHash",
+   "G19-MERGE-ACTSEL: actor/selector read as one field, actorSelector",
+   "the decision item read as one field, decision",
+   "the resolver verdict read into executed, executed"
+  ],
+  "Q9": [
+   "G-REN-FP: featureProjection named projection",
+   "S-FIELD-HASH: snapshotHash named hash",
+   "behaviorLogProbability named logProbability",
+   "support named legalSupport"
+  ],
+  "Q10": [
+   "C6A2: A2 merged into A1",
+   "C6B2: B2 merged into B1",
+   "C6C3: C3 merged into C2",
+   "C6D2: D2 merged into D1",
+   "C6S1: S1 merged into S2"
+  ],
+  "Q11": [
+   "S-DECISION-FIELD-RENAME: the decision's second field named choice",
+   "C6Q: row Q removed whole, with every residual member",
+   "C6Q4: pin Q4 removed with its quote and members",
+   "C6-labelQ: row Q's label reworded",
+   "C6-quoteQ: Q3's quote reworded",
+   "C6-member: Q1's first member removed",
+   "S-PRODUCER-PHRASE: a phrase cut from P3's text",
+   "PL-blob: P5's blob id"
   ]
  },
  "mutants": {
@@ -886,9 +993,13 @@
   "Q5: R-COMPOSED-WORD",
   "Q6: R-UNNAMED-SITE",
   "Q7: R-UNSEEN-CONTEXT",
+  "Q8: R-FIELD-PARTITION",
+  "Q9: R-FIELD-RUN",
+  "Q10: R-PIN-PARTITION",
+  "Q11: R-UNREAD",
   "rule 16: the rows, the items and fields, the domains, the value lists, the vocabulary, the bases, the later faults, the checks and their controls, the mutants, the residual families and the registrations are frozen at their measured shape",
   "the mutant battery: every subject passes every check, a planted registration is judged, every base is a control accepted unchanged, each mutant is refused by exactly its declared checks, and every check refuses one mutant alone",
-  "the outside anchors: the bead's own row binds the labels of rows A-D (its acceptance clauses) and S (its title's statement), those rows' pin quotes' text, the items and each field's phrase, each field name to a contiguous run of its phrase's words, the actions, the codes, the statuses, the record noun and the vocabulary's composition; wb-4ap.16's note carries the six codes; the notes cite the producer pin and lines; git's src listing names no vocabulary word unregistered; the roster's producer copy, row Q, the pin partition and which run of its phrase a field name takes are not anchored",
+  "the outside anchors: every outside reading holds on the census's anchor model and every BOUND edit of that model reds the reading it names; the bead's own row binds the labels of rows A-D (its acceptance clauses) and S (its title's statement), those rows' pin quotes' text, each item's text and the join of its fields' phrases, each field name to a contiguous run of its phrase's words, the actions and their three distinct fields, ADMITTED, the codes, the statuses, the record noun and the vocabulary's composition; wb-4ap.16's note carries the six codes; the notes cite the producer pin and lines; git's src listing names no vocabulary word unregistered; how an item is cut into fields, which run of its phrase a field name takes, the pin partition, row Q, the decision's fields and the roster's producer copy are not anchored",
   "roster: the judged rows, the quotes, the residual members, the witness and mutant keys, the assertion counts and the registered tests equal test/fixtures/mw-gp-sidecar-record-roster.json, keys in order; every pin reached its witness compare and each compare held"
  ],
  "producer": {
