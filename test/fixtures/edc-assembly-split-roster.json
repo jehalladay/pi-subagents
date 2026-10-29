@@ -109,7 +109,8 @@
     "Q4",
     "Q5",
     "Q6",
-    "Q7"
+    "Q7",
+    "Q8"
    ]
   }
  ],
@@ -146,7 +147,8 @@
   "Q4": "R-UNNAMED-SEAM",
   "Q5": "R-UNMODELED-EFFECT",
   "Q6": "R-OUTSIDE-SRC",
-  "Q7": "R-COORDINATED"
+  "Q7": "R-COORDINATED",
+  "Q8": "R-OUTSIDE-VALUE"
  },
  "cases": [
   "C1=blocks=s1,s2;unmet=-",
@@ -158,7 +160,8 @@
   "C7=blocks=s7;unmet=-",
   "C8=blocks=-;unmet=-",
   "C9=blocks=-;unmet=s8",
-  "C10=blocks=s1;unmet=s9,s10"
+  "C10=blocks=s1;unmet=s9,s10",
+  "C11=blocks=s1;unmet=s10,s9"
  ],
  "mutants": [
   "M01:wire-provider-query:K-WIRING",
@@ -194,7 +197,33 @@
   "M31:hand-inherited:K-WIRING",
   "M32:hand-proxy:K-WIRING",
   "M33:document-coverage:K-SPLIT",
-  "M34:block-coverage:K-SPLIT"
+  "M34:block-coverage:K-SPLIT",
+  "M35:blocks-listed-coverage:K-SPLIT",
+  "M36:unmet-listed-admission:K-SPLIT",
+  "M37:document-inherited-coverage:K-SPLIT",
+  "M38:block-inherited-coverage:K-SPLIT",
+  "M39:document-proxy-coverage:K-SPLIT",
+  "M40:evidence-hidden-coverage:K-SPLIT",
+  "M41:evidence-listed-coverage:K-SPLIT",
+  "M42:block-hidden-coverage:K-SPLIT",
+  "M43:evidence-array-hidden-coverage:K-SPLIT",
+  "M44:document-symbol-coverage:K-SPLIT",
+  "M45:document-accessor-coverage:K-SPLIT",
+  "M46:blocks-prototype-coverage:K-SPLIT",
+  "M47:text-object-coverage:K-SPLIT",
+  "M48:repeat-hidden-coverage:K-SPLIT",
+  "M49:hand-withdrawn:K-WIRING",
+  "M50:hand-on-repeat:K-WIRING",
+  "M51:mint-on-repeat:K-EFFECT",
+  "M52:owner-on-repeat:K-DEMAND",
+  "M53:unmet-numeric-order:K-DEMAND",
+  "M54:unmet-sourced-first:K-DEMAND",
+  "M55:owner-restored:K-DEMAND+K-PURE",
+  "M56:coverage-withdrawn:K-SPLIT",
+  "M57:hand-bare-accessor:K-WIRING",
+  "M58:unmet-holey:K-DEMAND+K-SPLIT",
+  "M59:text-drift:K-SPLIT",
+  "M60:order-drift:K-DEMAND"
  ],
  "residuals": {
   "Q1": [
@@ -215,7 +244,12 @@
    "digit-glued",
    "acronym-run",
    "small-capitals",
-   "docs-homoglyph-row"
+   "glued-lower",
+   "glued-context",
+   "glued-upper",
+   "docs-homoglyph-row",
+   "docs-soft-hyphen-row",
+   "docs-zero-width-row"
   ],
   "Q3": [
    "line-comment",
@@ -240,6 +274,12 @@
    "mutant",
    "residual-member",
    "control"
+  ],
+  "Q8": [
+   "attribute-flags",
+   "frozen-document",
+   "side-table-coverage",
+   "side-table-handle"
   ]
  },
  "witnesses": {
@@ -311,7 +351,8 @@
    "C7": "host:s7",
    "C8": "host:",
    "C9": "host:s8",
-   "C10": "host:s9,s1,s10"
+   "C10": "host:s9,s1,s10",
+   "C11": "host:s10,s1,s9"
   },
   "S1b": {
    "reference": [],
@@ -323,13 +364,21 @@
     "C2=demand:placed",
     "C3=demand:placed",
     "C9=demand:placed",
-    "C10=demand:placed"
+    "C10=demand:placed",
+    "C11=demand:placed"
    ],
    "M16": [
     "C6=demand:order"
    ],
    "M25": [
-    "C10=demand:order"
+    "C10=demand:order",
+    "C11=demand:order"
+   ],
+   "M53": [
+    "C11=demand:order"
+   ],
+   "M54": [
+    "C11=demand:order"
    ]
   },
   "S2a": {
@@ -343,7 +392,8 @@
     "C2=impure:input",
     "C5=impure:input",
     "C6=impure:input",
-    "C10=impure:input"
+    "C10=impure:input",
+    "C11=impure:input"
    ]
   },
   "S2b": {
@@ -357,7 +407,8 @@
     "C7": "blocks=s7;unmet=-",
     "C8": "blocks=-;unmet=-",
     "C9": "blocks=-;unmet=s8",
-    "C10": "blocks=s1;unmet=s9,s10"
+    "C10": "blocks=s1;unmet=s9,s10",
+    "C11": "blocks=s1;unmet=s10,s9"
    },
    "split": []
   },
@@ -372,7 +423,8 @@
     "C7": "ok",
     "C8": "ok",
     "C9": "ok",
-    "C10": "ok"
+    "C10": "ok",
+    "C11": "ok"
    },
    "effects": {
     "C1": "0",
@@ -384,7 +436,8 @@
     "C7": "0",
     "C8": "0",
     "C9": "0",
-    "C10": "0"
+    "C10": "0",
+    "C11": "0"
    }
   },
   "S3b": {
@@ -398,7 +451,8 @@
     "C7": "ok",
     "C8": "ok",
     "C9": "ok",
-    "C10": "ok"
+    "C10": "ok",
+    "C11": "ok"
    },
    "handles": {
     "C1": "0",
@@ -410,7 +464,8 @@
     "C7": "0",
     "C8": "0",
     "C9": "0",
-    "C10": "0"
+    "C10": "0",
+    "C11": "0"
    },
    "smuggled": {
     "M26": [
@@ -443,6 +498,287 @@
     "M30": "wired:function:wiring.evidence.query",
     "M31": "wired:prototype:wiring",
     "M32": "wired:proxy:wiring"
+   },
+   "everyRun": {
+    "M48": [
+     "K-SPLIT"
+    ],
+    "M50": [
+     "K-WIRING"
+    ],
+    "M51": [
+     "K-EFFECT"
+    ],
+    "M52": [
+     "K-DEMAND"
+    ],
+    "M59": [
+     "K-SPLIT"
+    ],
+    "M60": [
+     "K-DEMAND"
+    ]
+   },
+   "moment": {
+    "M49": [
+     "K-WIRING"
+    ],
+    "M55": [
+     "K-DEMAND",
+     "K-PURE"
+    ],
+    "M56": [
+     "K-SPLIT"
+    ]
+   },
+   "withdrawn": "wired:port:provider-query+function:wiring.ports.provider-query",
+   "bareAccessor": "wired:accessor:wiring.query",
+   "carriers": {
+    "table": {
+     "wiring": {
+      "listed": [
+       "K-WIRING"
+      ],
+      "hidden": [
+       "K-WIRING"
+      ],
+      "symbol": [
+       "K-WIRING"
+      ],
+      "accessor": [
+       "K-WIRING"
+      ],
+      "inherited": [
+       "K-WIRING"
+      ],
+      "proxy": [
+       "K-WIRING"
+      ],
+      "collection": [
+       "K-WIRING"
+      ],
+      "withdrawn": [
+       "K-WIRING"
+      ]
+     },
+     "demand": {
+      "listed": [
+       "K-WIRING"
+      ],
+      "hidden": [
+       "K-WIRING"
+      ],
+      "symbol": [
+       "K-WIRING"
+      ],
+      "accessor": [
+       "K-WIRING"
+      ],
+      "inherited": [
+       "K-WIRING"
+      ],
+      "proxy": [
+       "K-WIRING"
+      ],
+      "collection": [
+       "K-WIRING"
+      ],
+      "withdrawn": [
+       "K-WIRING"
+      ]
+     },
+     "subjects": {
+      "listed": [
+       "K-WIRING"
+      ],
+      "hidden": [
+       "K-WIRING"
+      ],
+      "symbol": [
+       "K-WIRING"
+      ],
+      "accessor": [
+       "K-WIRING"
+      ],
+      "inherited": [
+       "K-WIRING"
+      ],
+      "proxy": [
+       "K-WIRING"
+      ],
+      "collection": [
+       "K-WIRING"
+      ],
+      "withdrawn": [
+       "K-WIRING"
+      ]
+     },
+     "evidence": {
+      "listed": [
+       "K-WIRING"
+      ],
+      "hidden": [
+       "K-WIRING"
+      ],
+      "symbol": [
+       "K-WIRING"
+      ],
+      "accessor": [
+       "K-WIRING"
+      ],
+      "inherited": [
+       "K-WIRING"
+      ],
+      "proxy": [
+       "K-WIRING"
+      ],
+      "collection": [
+       "K-WIRING"
+      ],
+      "withdrawn": [
+       "K-WIRING"
+      ]
+     },
+     "item": {
+      "listed": [
+       "K-WIRING",
+       "K-SPLIT"
+      ],
+      "hidden": [
+       "K-WIRING",
+       "K-SPLIT"
+      ],
+      "symbol": [
+       "K-WIRING",
+       "K-SPLIT"
+      ],
+      "accessor": [
+       "K-WIRING",
+       "K-SPLIT"
+      ],
+      "inherited": [
+       "K-WIRING",
+       "K-SPLIT"
+      ],
+      "proxy": [
+       "K-WIRING",
+       "K-SPLIT"
+      ],
+      "collection": [
+       "K-WIRING",
+       "K-SPLIT"
+      ],
+      "withdrawn": [
+       "K-WIRING"
+      ]
+     },
+     "sources": {
+      "listed": [
+       "K-WIRING"
+      ],
+      "hidden": [
+       "K-WIRING"
+      ],
+      "symbol": [
+       "K-WIRING"
+      ],
+      "accessor": [
+       "K-WIRING"
+      ],
+      "inherited": [
+       "K-WIRING"
+      ],
+      "proxy": [
+       "K-WIRING"
+      ],
+      "collection": [
+       "K-WIRING"
+      ],
+      "withdrawn": [
+       "K-WIRING"
+      ]
+     },
+     "source": {
+      "listed": [
+       "K-WIRING"
+      ],
+      "hidden": [
+       "K-WIRING"
+      ],
+      "symbol": [
+       "K-WIRING"
+      ],
+      "accessor": [
+       "K-WIRING"
+      ],
+      "inherited": [
+       "K-WIRING"
+      ],
+      "proxy": [
+       "K-WIRING"
+      ],
+      "collection": [
+       "K-WIRING"
+      ],
+      "withdrawn": [
+       "K-WIRING"
+      ]
+     },
+     "ports": {
+      "listed": [
+       "K-WIRING"
+      ],
+      "hidden": [
+       "K-WIRING"
+      ],
+      "symbol": [
+       "K-WIRING"
+      ],
+      "accessor": [
+       "K-WIRING"
+      ],
+      "inherited": [
+       "K-WIRING"
+      ],
+      "proxy": [
+       "K-WIRING"
+      ],
+      "collection": [
+       "K-WIRING"
+      ],
+      "withdrawn": [
+       "K-WIRING"
+      ]
+     }
+    },
+    "bare": {
+     "wiring": {
+      "bare": [
+       "K-WIRING"
+      ]
+     },
+     "demand": {
+      "bare": [
+       "K-WIRING"
+      ]
+     },
+     "item": {
+      "bare": [
+       "K-WIRING",
+       "K-SPLIT"
+      ]
+     },
+     "source": {
+      "bare": [
+       "K-WIRING"
+      ]
+     },
+     "ports": {
+      "bare": [
+       "K-WIRING"
+      ]
+     }
+    }
    }
   },
   "S3c": {
@@ -467,10 +803,55 @@
     "M08": [
      "K-EFFECT"
     ],
+    "M51": [
+     "K-EFFECT"
+    ],
     "M33": [
      "K-SPLIT"
     ],
     "M34": [
+     "K-SPLIT"
+    ],
+    "M35": [
+     "K-SPLIT"
+    ],
+    "M37": [
+     "K-SPLIT"
+    ],
+    "M38": [
+     "K-SPLIT"
+    ],
+    "M39": [
+     "K-SPLIT"
+    ],
+    "M40": [
+     "K-SPLIT"
+    ],
+    "M41": [
+     "K-SPLIT"
+    ],
+    "M42": [
+     "K-SPLIT"
+    ],
+    "M43": [
+     "K-SPLIT"
+    ],
+    "M44": [
+     "K-SPLIT"
+    ],
+    "M45": [
+     "K-SPLIT"
+    ],
+    "M46": [
+     "K-SPLIT"
+    ],
+    "M47": [
+     "K-SPLIT"
+    ],
+    "M48": [
+     "K-SPLIT"
+    ],
+    "M56": [
      "K-SPLIT"
     ]
    },
@@ -480,7 +861,187 @@
     ],
     "M09": [
      "K-EFFECT"
+    ],
+    "M36": [
+     "K-SPLIT"
     ]
+   },
+   "readings": {
+    "M33": "split:key:document.coverage",
+    "M34": "split:key:document.blocks.0.coverage",
+    "M35": "split:key:document.blocks.coverage",
+    "M36": "split:key:document.unmet.admitted",
+    "M37": "split:prototype:document",
+    "M38": "split:prototype:document.blocks.0",
+    "M39": "split:proxy:document",
+    "M40": "split:key:document.blocks.0.evidence.0.coverage",
+    "M41": "split:key:document.blocks.0.evidence.0.coverage+evidence:s1",
+    "M42": "split:key:document.blocks.0.coverage",
+    "M43": "split:key:document.blocks.0.evidence.coverage",
+    "M44": "split:key:document.Symbol(coverage)",
+    "M45": "split:accessor:document.coverage",
+    "M46": "split:prototype:document.blocks",
+    "M47": "split:type:document.blocks.0.text+source:s1",
+    "M48": "split:key:document.coverage",
+    "M56": "split:key:document.coverage",
+    "M58": "split:holes:document.unmet"
+   },
+   "carried": {
+    "table": {
+     "document": {
+      "listed": [
+       "K-SPLIT"
+      ],
+      "hidden": [
+       "K-SPLIT"
+      ],
+      "symbol": [
+       "K-SPLIT"
+      ],
+      "accessor": [
+       "K-SPLIT"
+      ],
+      "inherited": [
+       "K-SPLIT"
+      ],
+      "proxy": [
+       "K-SPLIT"
+      ]
+     },
+     "blocks": {
+      "listed": [
+       "K-SPLIT"
+      ],
+      "hidden": [
+       "K-SPLIT"
+      ],
+      "symbol": [
+       "K-SPLIT"
+      ],
+      "accessor": [
+       "K-SPLIT"
+      ],
+      "inherited": [
+       "K-SPLIT"
+      ],
+      "proxy": [
+       "K-SPLIT"
+      ]
+     },
+     "unmet": {
+      "listed": [
+       "K-SPLIT"
+      ],
+      "hidden": [
+       "K-SPLIT"
+      ],
+      "symbol": [
+       "K-SPLIT"
+      ],
+      "accessor": [
+       "K-SPLIT"
+      ],
+      "inherited": [
+       "K-SPLIT"
+      ],
+      "proxy": [
+       "K-SPLIT"
+      ]
+     },
+     "block": {
+      "listed": [
+       "K-SPLIT"
+      ],
+      "hidden": [
+       "K-SPLIT"
+      ],
+      "symbol": [
+       "K-SPLIT"
+      ],
+      "accessor": [
+       "K-SPLIT"
+      ],
+      "inherited": [
+       "K-SPLIT"
+      ],
+      "proxy": [
+       "K-SPLIT"
+      ]
+     },
+     "evidence": {
+      "listed": [
+       "K-SPLIT"
+      ],
+      "hidden": [
+       "K-SPLIT"
+      ],
+      "symbol": [
+       "K-SPLIT"
+      ],
+      "accessor": [
+       "K-SPLIT"
+      ],
+      "inherited": [
+       "K-SPLIT"
+      ],
+      "proxy": [
+       "K-SPLIT"
+      ]
+     },
+     "item": {
+      "listed": [
+       "K-SPLIT"
+      ],
+      "hidden": [
+       "K-SPLIT"
+      ],
+      "symbol": [
+       "K-SPLIT"
+      ],
+      "accessor": [
+       "K-SPLIT"
+      ],
+      "inherited": [
+       "K-SPLIT"
+      ],
+      "proxy": [
+       "K-SPLIT"
+      ]
+     }
+    },
+    "bare": {
+     "document": {
+      "bare": [
+       "K-SPLIT"
+      ]
+     },
+     "block": {
+      "bare": [
+       "K-SPLIT"
+      ]
+     },
+     "item": {
+      "bare": [
+       "K-SPLIT"
+      ]
+     }
+    },
+    "leaves": {
+     "subject": [
+      "K-DEMAND",
+      "K-SPLIT"
+     ],
+     "text": [
+      "K-SPLIT"
+     ],
+     "unmet entry": [
+      "K-DEMAND",
+      "K-SPLIT"
+     ],
+     "claim": [
+      "K-SPLIT"
+     ]
+    }
    }
   },
   "S4a": {
@@ -520,7 +1081,8 @@
    ],
    "M22": [
     "K-SPLIT"
-   ]
+   ],
+   "dropped": "split:missing:document.blocks.0.evidence.0.evaluatedBy+missing:document.blocks.1.evidence.0.evaluatedBy+evidence:s1+evidence:s2"
   },
   "S4c": {
    "sourceless": "blocks=-;unmet=s4",
@@ -551,6 +1113,13 @@
    ],
    "M15": [
     "K-DEMAND"
+   ],
+   "M52": [
+    "K-DEMAND"
+   ],
+   "M55": [
+    "K-DEMAND",
+    "K-PURE"
    ]
   },
   "N1": {
@@ -734,7 +1303,8 @@
     "M08",
     "M09",
     "M10",
-    "M11"
+    "M11",
+    "M51"
    ]
   },
   "A2b": {
@@ -935,13 +1505,28 @@
     "homoglyph",
     "digit-glued",
     "acronym-run",
-    "small-capitals"
+    "small-capitals",
+    "glued-lower",
+    "glued-context",
+    "glued-upper"
    ],
    "findings": [],
    "gate": "CLOSED",
    "rows": [
     {
      "id": "docs-homoglyph-row",
+     "read": true,
+     "naming": [],
+     "unread": []
+    },
+    {
+     "id": "docs-soft-hyphen-row",
+     "read": true,
+     "naming": [],
+     "unread": []
+    },
+    {
+     "id": "docs-zero-width-row",
      "read": true,
      "naming": [],
      "unread": []
@@ -1024,7 +1609,37 @@
     "Q4",
     "Q5",
     "Q6",
-    "Q7"
+    "Q7",
+    "Q8"
+   ]
+  },
+  "Q8": {
+   "name": "R-OUTSIDE-VALUE",
+   "rows": [
+    {
+     "id": "attribute-flags",
+     "refused": [],
+     "answers": true,
+     "carried": true
+    },
+    {
+     "id": "frozen-document",
+     "refused": [],
+     "answers": true,
+     "carried": true
+    },
+    {
+     "id": "side-table-coverage",
+     "refused": [],
+     "answers": true,
+     "carried": true
+    },
+    {
+     "id": "side-table-handle",
+     "refused": [],
+     "answers": true,
+     "carried": true
+    }
    ]
   }
  },
@@ -1062,6 +1677,7 @@
   "Q5: R-UNMODELED-EFFECT",
   "Q6: R-OUTSIDE-SRC",
   "Q7: R-COORDINATED",
+  "Q8: R-OUTSIDE-VALUE",
   "rule 16: the rows, the tables, the vocabulary and the authority rows are frozen at their measured shape",
   "mutant battery: the reference and every registered site meet every check and answer every case, each mutant is refused by exactly its declared checks, and every check refuses a mutant alone",
   "the outside anchors: the bead's own row binds the rows, the pin quotes, the split, the ports, the vocabulary, the docs citation and the producer block",

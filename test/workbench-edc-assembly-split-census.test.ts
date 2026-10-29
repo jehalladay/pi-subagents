@@ -32,6 +32,19 @@
  * assembler a live handle outside the ports). Findings F1 (three src word edges, now R-COMPOSED members) and F2 (the open
  * document shape, now K-SPLIT's closed shape, mutants M33-M34) are taken too.
  *
+ * CUT #3 (seat ws-03, run g10-work-s140; answers refusal #2 of cut #2, gate run g10-gate-s137, whose one unmet item is cured
+ * here): U1 K-SPLIT reads each document whole against its closed shape - every own key (symbol and non-enumerable included)
+ * of every object and array reachable from it, every prototype, proxy, accessor and leaf type - so refusal #2's survivors
+ * GM8a-GM8f and GM8i, and its controls GM8g and GM8h, are declared mutants M35-M43, each refused by K-SPLIT alone, beside
+ * their kin M44-M48, M56 and M58 and row S3c's carrier table; the header's former 'so no coverage or admission rides in the
+ * document' is replaced by the reading itself, and what a value reading never reads is the named family R-OUTSIDE-VALUE (Q8).
+ * The class guard bound on the bead (the whole-value shape class, both halves) is answered too: K-WIRING refuses a null
+ * prototype and an accessor by its descriptor kind (row S3b's carrier table; M57, an accessor with no getter), K-PURE's
+ * two runs are read as THE CHECKS say (M48, M50-M52, M59, M60), and every wiring and document is read the moment its run makes it as
+ * well as once the runs are done (M49, M55, M56). Findings F1 (docs/03 named character references) and F3 (glued src
+ * compounds) are R-COMPOSED members now; F2 is case C11 (C10's unmet subjects in the reverse demand order) with mutants
+ * M53-M54.
+ *
  * MEASURED (read-only). Producer, by cut #1's seat (ws-06, run g10-work-s125, 2026-10-28, at trunk a423a25): the local
  * ReactiveComponentsSDK checkout, git show at the bead pin 44b72145b1756908585c94da2327ab8809a3ca9a:
  * docs/programs/evidence-directed-computation-2026-10-18.md (blob de04229d9cdad063e4704d732f3cbcee1f001e68, the same blob
@@ -40,7 +53,8 @@
  * run g10-work-s138, 2026-10-29, at trunk 04123dc): the src listing holds 117 modules and none names a vocabulary word through
  * the reading below; docs/03's Ownership boundaries section is one table of 13 body rows and none names EDC, an assembler or
  * demand; docs/01's Product mission section is one paragraph, the citation's line 5, whose last sentence carries row D3's
- * quote.
+ * quote. Re-read by cut #3's seat (ws-03, run g10-work-s140, 2026-10-29, at trunk 27c968d): unchanged - 117 src modules, and
+ * the trunk delta from 04123dc changes no src, docs/01, docs/03 or test/helpers/census.ts path.
  *
  * THE MODEL (this file; test-only, src untouched): an assembly SEAM in two halves. The HOST's half takes the host's request
  * (the subjects its context must answer, in its order, and the evidence and source already in hand) and WIRES the assembler:
@@ -49,18 +63,37 @@
  * verbatim), the rest unmet, both in demand order. A seam reaches its WORLD ambiently: the world records every effect on its
  * five PORTS - row A2's three (provider-query, coverage-mint, work-admission), then Fiber's publication and Agents'
  * verification (row S4's split) - and its providers answer a query, so an effect is tempting where evidence is missing.
- * THE CHECKS (each case of CASES run through a fresh world; a reading is "ok" or what was found):
- *  K-WIRING the wiring is plain data that hands the assembler no handle: its ports field carries no key at all, and nothing
- *  anywhere in the wiring value is a function, an accessor, a proxy or an object whose prototype is not Object's or Array's
- *  (every own key of every object and array reachable from the wiring is read, symbol and non-enumerable keys included);
- *  K-EFFECT the world records no effect; K-DEMAND the wiring's demand is the host's (owner host, the request's subjects in its
- *  order) and the document places exactly those subjects, each once, the blocks in demand order and the unmet in demand order
- *  (case C10 leaves two subjects unmet, so the unmet order is read); K-PURE two runs of one seam instance over fresh copies of
- *  the request give one document, and a run leaves its wiring's data untouched; K-SPLIT the document is exactly its blocks and
- *  its unmet subjects and each block exactly its subject, text and evidence (so no coverage or admission rides in the
- *  document), each block carries its subject's evidence and source verbatim, and a demanded subject is a block exactly when
- *  its evidence and source are both in hand. MUTANTS: 34 single-fault seams, each refused by exactly its declared checks
- *  (asserted); every check refuses one alone.
+ * THE RUNS: a case makes three runs, each over its own fresh copy of the request: R1, a fresh instance in a fresh world, run
+ * once; then R2 and R3, two runs of a second instance in a second fresh world (K-PURE's). Each run's wiring and document is
+ * read twice - the moment the run makes it (the wiring as the host's half handed it, before the assembler runs; the document
+ * as the assembler returned it) and again once the three runs are done. (The battery's 'answers every case' reads one more
+ * fresh instance's document.)
+ * THE CHECKS (a reading is "ok" or what was found):
+ *  K-WIRING every run's wiring: its ports field carries no own key at all, and no value reachable from it through any own key
+ *  (string or symbol, enumerable or not) is a function, a proxy, an accessor property, or an object whose prototype is not
+ *  Object's - an array's not Array's (a null prototype is another, refused).
+ *  K-EFFECT neither world's record holds an effect once the three runs are done.
+ *  K-DEMAND every run's wiring's demand is the host's (owner host, the request's subjects in its order), and R1's and R2's
+ *  documents place exactly those subjects, each once, the blocks in demand order and the unmet in demand order (cases C10 and
+ *  C11 leave two subjects unmet in opposite orders of their numbers, so the unmet order is read both ways).
+ *  K-PURE R2 leaves its wiring's data (its demand, evidence and sources, as JSON) untouched, and R3's document deep-strict-
+ *  equals R2's (node's util.isDeepStrictEqual: whatever it leaves unread of a document's keys, prototypes and proxies,
+ *  K-SPLIT reads on both; attribute flags and extensibility are R-OUTSIDE-VALUE's).
+ *  K-SPLIT every run's document, read whole against the closed shape
+ *  {blocks:[{subject,text,evidence:[{subject,claim,value,evaluatedBy}]}],unmet:[string]}: every object and array reachable
+ *  from it is not a proxy, has Object's prototype (an array Array's; a null prototype is another) and has exactly the shape's
+ *  own keys - string or symbol, enumerable or not; an array its indices, with no hole, and length - each a data property,
+ *  never an accessor; every leaf is a string primitive. And R1's and R2's documents carry each block's subject's evidence
+ *  (deep strict) and source verbatim, a demanded subject being a block exactly when its evidence and source are both in hand
+ *  (R3's content is K-PURE's: it equals R2's).
+ *  What K-WIRING and K-SPLIT read is a value: a property's attribute flags, a value's extensibility and a side table keyed by
+ *  a value lie outside it (R-OUTSIDE-VALUE, Q8).
+ * MUTANTS: 60 single-fault seams, each refused by exactly its declared checks (asserted); every check refuses one alone. The
+ * CARRIER TABLES (rows S3b and S3c) plant a handle on every wiring node and coverage on every document node by every carrier -
+ * an own key that is enumerable, non-enumerable or a symbol, an accessor, a prototype or a proxy; for the wiring also a
+ * collection and a listed handle the assembler removes as it starts - and a null prototype on every object node, and replace
+ * a block's subject, a block's text, an unmet entry and an evidence claim by an object carrying it; each case asserts that
+ * K-WIRING, or K-SPLIT, refuses every entry.
  * THE ARMED REGISTRATIONS (SITES, empty today): a src module that names the vocabulary must register its seam there (an
  * adapter onto this model), and every check then judges it beside the reference; an unregistered naming module, a stale
  * registration and a duplicate are findings. The GATE reads OPEN once a site is registered or a src module names the
@@ -98,20 +131,27 @@
  * RESIDUALS (named families, each member a pinned quiet row; a reading that starts reading a member reds its row):
  * R-SHARED-WORD (Q1: assemble, the rf reactive-context-assembly program id, on demand, coverage, admission, mint, a provider
  * query: Pi's words with other meanings), R-COMPOSED (Q2: a word the reading does not take out of its unit - split across code
- * units by a concatenation, a join, a template substitution or an operator; glued to a digit or to a second acronym inside
- * one unit, EDC2 and EDCAPIClient; spelled with a look-alike letter NFKC does not fold, another script's or a same-script small
- * capital - and a docs/03 row spelled with another script's look-alike letter), R-COMMENT (Q3: a word in a line, block or doc
+ * units by a concatenation, a join, a template substitution or an operator; glued to a digit, to a second acronym or to a
+ * second word in one case inside one unit, EDC2, EDCAPIClient, edcassembler, contextassembler and EDCASSEMBLER (the word
+ * reading splits only camel humps and runs outside a-z and 0-9); spelled with a look-alike letter NFKC does not fold, another
+ * script's or a same-script small capital - and a docs/03 row spelled with another script's look-alike letter, or split by a
+ * named character reference outside the house rule's seven, de&shy;mand and de&ZeroWidthSpace;mand, which the reading leaves
+ * undecoded), R-COMMENT (Q3: a word in a line, block or doc
  * comment), R-UNNAMED-SEAM (Q4: a module that assembles context and reaches a provider but names no vocabulary word, and a
  * docs/03 row that gives the host its demand in other words; what makes a consumer or an authority row without its words is
  * outside a text reading), R-UNMODELED-EFFECT (Q5: an effect through a channel outside the world's five ports - a provider
  * called directly - that leaves the document and the inputs unchanged is admitted by every check), R-OUTSIDE-SRC (Q6: files
  * outside src naming the vocabulary - this census and its roster included - are outside the src leg; docs, descriptors and
- * manifests are wb-pyel.4's) and R-COORDINATED (Q7: a pin, a case, a mutant, a residual member or a control removed from every
+ * manifests are wb-pyel.4's), R-COORDINATED (Q7: a pin, a case, a mutant, a residual member or a control removed from every
  * literal of this file and the roster at once is quiet unless an anchor outside them reads it; its pinned row computes the
  * pin partition - every pin of rows T to D4 removed that way is reported by the export's bindings, row Q's pins are the quiet
- * set - and no outside anchor reads a case, a mutant, a residual member or a control).
+ * set - and no outside anchor reads a case, a mutant, a residual member or a control) and R-OUTSIDE-VALUE (Q8: what a value
+ * reading never reads - a property's attribute flags (a document whose unmet key is read-only), a value's extensibility (a
+ * frozen document) and a side table keyed by a value (a WeakMap the seam keeps coverage in beside its document, or a live
+ * handle in beside its wiring); every check admits each member, which answers every case while it carries its coverage or
+ * its handle).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and the shape of every table
- * as literals; the judged set (every row's id, label and pins, every pin's quote and witness, the cases and their documents,
+ * as literals (the closed document shape and the carrier tables' nodes and carriers among them); the judged set (every row's id, label and pins, every pin's quote and witness, the cases and their documents,
  * the mutants and their declared checks, the residual members, every registered test title) is held to the out-of-file
  * roster test/fixtures/edc-assembly-split-roster.json, in order and both ways.
  * OUTSIDE ANCHORS (their own registered case): the bead's own row in the tracker export (.beads/issues.jsonl) - the title is
@@ -301,7 +341,33 @@ type Fault =
   | "hand-inherited"
   | "hand-proxy"
   | "document-coverage"
-  | "block-coverage";
+  | "block-coverage"
+  | "blocks-listed-coverage"
+  | "unmet-listed-admission"
+  | "document-inherited-coverage"
+  | "block-inherited-coverage"
+  | "document-proxy-coverage"
+  | "evidence-hidden-coverage"
+  | "evidence-listed-coverage"
+  | "block-hidden-coverage"
+  | "evidence-array-hidden-coverage"
+  | "document-symbol-coverage"
+  | "document-accessor-coverage"
+  | "blocks-prototype-coverage"
+  | "text-object-coverage"
+  | "repeat-hidden-coverage"
+  | "hand-withdrawn"
+  | "hand-on-repeat"
+  | "mint-on-repeat"
+  | "owner-on-repeat"
+  | "unmet-numeric-order"
+  | "unmet-sourced-first"
+  | "owner-restored"
+  | "coverage-withdrawn"
+  | "hand-bare-accessor"
+  | "unmet-holey"
+  | "text-drift"
+  | "order-drift";
 /** The fault that wires each port's handle into the assembler. */
 const WIRE_FAULTS: Readonly<Record<Port, Fault>> = {
   "provider-query": "wire-provider-query",
@@ -313,11 +379,65 @@ const WIRE_FAULTS: Readonly<Record<Port, Fault>> = {
 /** A ports key that is none of PORTS (the hand-unlisted-port fault). */
 const UNLISTED_PORT = "provider-lookup";
 const firstIndex = (evidence: readonly Evidence[], subject: string): number => evidence.findIndex(item => item.subject === subject);
+/** A subject's number (s10 reads 10): the unmet-numeric-order fault's key. */
+const numberOf = (subject: string): number => Number(subject.replace(/\D/g, ""));
+/** Whether the wiring holds a subject's source: the unmet-sourced-first fault's key. */
+const sourcedRank = (wiring: Wiring, subject: string): number => (wiring.sources.some(item => item.subject === subject) ? 0 : 1);
+/** The coverage the document-shape faults and the carrier tables plant, under a string or a symbol key. */
+const COVERAGE = "complete";
+const COVERAGE_SYMBOL = Symbol.for("coverage");
+const carriedPrototypes = new Map<string, object>();
+/** The one shared prototype an inherited carrier puts a member on, per key and kind, so every run's copies share it. */
+function carriedPrototype(key: string, member: unknown, array: boolean): object {
+  const id = `${key}:${array ? "array" : "object"}`;
+  const cached = carriedPrototypes.get(id);
+  if (cached !== undefined) return cached;
+  const prototype: object = Object.assign(Object.create(array ? Array.prototype : Object.prototype) as object, { [key]: member });
+  carriedPrototypes.set(id, prototype);
+  return prototype;
+}
+/** A value with a non-enumerable own coverage. */
+const hidden = <T extends object>(value: T): T => Object.defineProperty(value, "coverage", { value: COVERAGE, enumerable: false });
+/** A value behind a proxy that answers coverage. */
+const coverageProxy = <T extends object>(target: T): T =>
+  new Proxy(target, { get: (inner, key, receiver) => (key === "coverage" ? COVERAGE : Reflect.get(inner, key, receiver)) });
+/** The document-shape faults (refusal #2 U1's GM8a-GM8i shapes and their kin): each carries coverage or admission beside the closed shape. */
+function shapeFault(has: (fault: Fault) => boolean, runs: number, document: ContextDocument): ContextDocument {
+  const { blocks, unmet } = document;
+  if (has("blocks-listed-coverage")) return { blocks: Object.assign([...blocks], { coverage: blocks.map(block => `${block.subject}:covered`) }), unmet };
+  if (has("unmet-listed-admission")) return { blocks, unmet: Object.assign([...unmet], { admitted: [...unmet] }) };
+  if (has("document-inherited-coverage")) return Object.assign(Object.create(carriedPrototype("coverage", COVERAGE, false)) as object, document);
+  if (has("block-inherited-coverage")) return { blocks: blocks.map(block => Object.assign(Object.create(carriedPrototype("coverage", COVERAGE, false)) as object, block)), unmet };
+  if (has("document-proxy-coverage")) return coverageProxy({ blocks, unmet });
+  if (has("evidence-hidden-coverage")) return { blocks: blocks.map(block => ({ ...block, evidence: block.evidence.map(item => hidden({ ...item })) })), unmet };
+  if (has("evidence-listed-coverage")) return { blocks: blocks.map(block => ({ ...block, evidence: block.evidence.map(item => ({ ...item, coverage: COVERAGE })) })), unmet };
+  if (has("block-hidden-coverage")) return { blocks: blocks.map(block => hidden({ ...block })), unmet };
+  if (has("evidence-array-hidden-coverage")) return { blocks: blocks.map(block => ({ ...block, evidence: hidden([...block.evidence]) })), unmet };
+  if (has("document-symbol-coverage")) return Object.assign({ blocks, unmet }, { [COVERAGE_SYMBOL]: COVERAGE });
+  if (has("document-accessor-coverage")) return Object.defineProperty({ blocks, unmet }, "coverage", { get: () => COVERAGE, enumerable: false });
+  if (has("blocks-prototype-coverage")) return { blocks: Object.setPrototypeOf([...blocks], carriedPrototype("coverage", COVERAGE, true)) as Block[], unmet };
+  if (has("text-object-coverage")) return { blocks: blocks.map(block => ({ ...block, text: { text: block.text, coverage: COVERAGE } as unknown as string })), unmet };
+  if (has("repeat-hidden-coverage") && runs === 2) return hidden({ blocks, unmet });
+  if (has("unmet-holey")) return { blocks, unmet: Object.assign([...unmet], { length: unmet.length + 1 }) };
+  return document;
+}
 
 function seamWith(faults: ReadonlySet<Fault>): SeamFactory {
   const has = (fault: Fault): boolean => faults.has(fault);
+  /** The documents the coverage-withdrawn fault returned carrying coverage: stripped when the factory makes its next instance or an instance runs again. */
+  const carrying: object[] = [];
+  const withdraw = (): void => {
+    for (const document of carrying.splice(0)) Reflect.deleteProperty(document, "coverage");
+  };
+  /** The instances this factory made: a case's judge makes two per case in turn (R1's, then K-PURE's), so the drift faults misbehave in K-PURE's
+   * instance only (every factory is judged once, by verdictOf, before any other reading of it). */
+  let instances = 0;
   return world => {
+    instances += 1;
+    const drifting = instances % 2 === 0;
+    if (has("coverage-withdrawn")) withdraw();
     let runs = 0;
+    let wires = 0;
     const handle =
       (port: Port): Handle =>
       subject =>
@@ -326,12 +446,15 @@ function seamWith(faults: ReadonlySet<Fault>): SeamFactory {
     const smuggled = handle("provider-query");
     return {
       wire(request) {
+        wires += 1;
+        const repeat = wires === 2;
         const ports: Partial<Record<Port, Handle>> = {};
         for (const port of PORTS) {
-          if (has(WIRE_FAULTS[port]) || (port === "provider-query" && has("query-through-wired-port"))) ports[port] = handle(port);
+          const queried = port === "provider-query" && (has("query-through-wired-port") || has("hand-withdrawn") || (repeat && has("hand-on-repeat")));
+          if (has(WIRE_FAULTS[port]) || queried) ports[port] = handle(port);
         }
         const subjects = has("demand-from-evidence") ? distinct(request.evidence.map(item => item.subject)) : [...request.subjects];
-        const owner = has("demand-owner-assembler") ? "assembler" : "host";
+        const owner = has("demand-owner-assembler") || has("owner-restored") || (repeat && has("owner-on-repeat")) ? "assembler" : "host";
         const demand: Wiring["demand"] & { readonly query?: Handle } = has("hand-in-demand") ? { owner, subjects, query: smuggled } : { owner, subjects };
         const listed: Readonly<Partial<Record<string, Handle>>> = has("hand-unlisted-port") ? { ...ports, [UNLISTED_PORT]: smuggled } : ports;
         const evidence: readonly Evidence[] = has("hand-array-property") ? Object.assign([...request.evidence], { query: smuggled }) : request.evidence;
@@ -341,12 +464,16 @@ function seamWith(faults: ReadonlySet<Fault>): SeamFactory {
           wiring = extra;
         }
         if (has("hand-accessor")) Object.defineProperty(wiring, "query", { get: () => smuggled, enumerable: false });
+        if (has("hand-bare-accessor")) Object.defineProperty(wiring, "query", { get: undefined, enumerable: false });
         if (has("hand-inherited")) wiring = Object.assign(Object.create({ query: smuggled }) as object, wiring);
         if (has("hand-proxy")) wiring = new Proxy(wiring, { get: (target, key, receiver) => (key === "query" ? smuggled : Reflect.get(target, key, receiver)) });
         return wiring;
       },
       assemble(wiring) {
         runs += 1;
+        if (has("hand-withdrawn")) Reflect.deleteProperty(wiring.ports, "provider-query");
+        if (has("owner-restored")) (wiring.demand as { owner: string }).owner = "host";
+        if (runs === 2 && has("coverage-withdrawn")) withdraw();
         let subjects: readonly string[] = wiring.demand.subjects;
         if (has("widen-demand")) subjects = distinct([...subjects, ...wiring.evidence.map(item => item.subject)]);
         if (has("evidence-order")) subjects = [...subjects].sort((left, right) => firstIndex(wiring.evidence, left) - firstIndex(wiring.evidence, right));
@@ -365,19 +492,25 @@ function seamWith(faults: ReadonlySet<Fault>): SeamFactory {
           if (evidence.length > 0 && text !== undefined && !has("every-subject-unmet")) blocks.push({ subject, text, evidence });
           else if (!has("drop-unmet")) unmet.push(subject);
         }
-        if (has("mint-coverage")) for (const block of blocks) world.effect("coverage-mint", block.subject);
+        if (has("mint-coverage") || (runs === 2 && has("mint-on-repeat"))) for (const block of blocks) world.effect("coverage-mint", block.subject);
         if (has("admit-unmet-work")) for (const subject of unmet) world.effect("work-admission", subject);
         if (has("publish-document")) world.effect("publication", subjects.join(","));
         if (has("mutate-input")) (wiring.sources as Source[]).reverse();
         if (has("reverse-unmet")) unmet.reverse();
+        if (has("unmet-numeric-order")) unmet.sort((left, right) => numberOf(left) - numberOf(right));
+        if (has("unmet-sourced-first")) unmet.sort((left, right) => sourcedRank(wiring, left) - sourcedRank(wiring, right));
         if (has("empty-document")) return { blocks: [], unmet: [] };
-        const ordered = has("alternate-order") && runs % 2 === 0 ? [...blocks].reverse() : blocks;
+        const reversed = (has("alternate-order") && runs % 2 === 0) || (drifting && has("order-drift"));
+        const drifted = drifting && has("text-drift") ? blocks.map(block => ({ ...block, text: `${block.text} (covered)` })) : blocks;
+        const ordered = reversed ? [...drifted].reverse() : drifted;
         if (has("block-coverage")) return { blocks: ordered.map((block): Block & { readonly coverage: string } => ({ ...block, coverage: "complete" })), unmet };
         if (has("document-coverage")) {
           const covered: ContextDocument & { readonly coverage: readonly string[] } = { blocks: ordered, unmet, coverage: ordered.map(block => `${block.subject}:covered`) };
           return covered;
         }
-        return { blocks: ordered, unmet };
+        const shaped = shapeFault(has, runs, { blocks: ordered, unmet });
+        if (runs === 1 && has("coverage-withdrawn")) carrying.push(Object.defineProperty(shaped, "coverage", { value: COVERAGE, enumerable: false, configurable: true }));
+        return shaped;
       },
     };
   };
@@ -455,29 +588,24 @@ const CASES: readonly Case[] = [
     providers: { s10: [evidenceOf("s10", "s10 from a provider")] },
     expected: "blocks=s1;unmet=s9,s10",
   },
+  {
+    id: "C11",
+    label: "C10 with its unmet subjects in the reverse demand order",
+    request: { subjects: ["s10", "s1", "s9"], evidence: [evidenceOf("s1", "s1 holds")], sources: [sourceOf("s9"), sourceOf("s1")] },
+    providers: { s10: [evidenceOf("s10", "s10 from a provider")] },
+    expected: "blocks=s1;unmet=s10,s9",
+  },
 ];
 const caseLine = (entry: Case): string => `${entry.id}=${entry.expected}`;
 
 type Check = "K-WIRING" | "K-EFFECT" | "K-DEMAND" | "K-PURE" | "K-SPLIT";
 const CHECKS: readonly Check[] = ["K-WIRING", "K-EFFECT", "K-DEMAND", "K-PURE", "K-SPLIT"];
-interface Run {
-  readonly wiring: Wiring;
-  readonly document: ContextDocument;
-  readonly log: readonly string[];
-}
-/** One seam instance in a fresh world: the host wires a copy of the case's request and the assembler runs once. */
-function runOnce(factory: SeamFactory, entry: Case): Run {
-  const world = recordingWorld(entry.providers);
-  const seam = factory(world);
-  const wiring = seam.wire(clone(entry.request));
-  const document = seam.assemble(wiring);
-  return { wiring, document, log: [...world.log] };
-}
 const summaryOf = (document: ContextDocument): string =>
   `blocks=${document.blocks.map(block => block.subject).join(",") || "-"};unmet=${document.unmet.join(",") || "-"}`;
 const dataOf = (wiring: Wiring): string => JSON.stringify({ demand: wiring.demand, evidence: wiring.evidence, sources: wiring.sources });
 const reading = (findings: readonly string[], prefix: string): string => (findings.length === 0 ? "ok" : `${prefix}:${findings.join("+")}`);
-/** K-WIRING's reading of one wiring value: each key its ports carry, and each function, accessor, proxy and object of another prototype anywhere in it. */
+/** K-WIRING's reading of one wiring value: each own key its ports field carries, and each function, proxy, accessor property and object whose
+ * prototype is not Object's (an array's not Array's; a null prototype is another) reachable through any own key, string or symbol, enumerable or not. */
 function wiringFindings(wiring: Wiring): string[] {
   const findings: string[] = [];
   const ports: unknown = wiring.ports;
@@ -491,60 +619,171 @@ function wiringFindings(wiring: Wiring): string[] {
     if (typeof value !== "object" || value === null || seen.has(value)) return;
     seen.add(value);
     if (types.isProxy(value)) findings.push(`proxy:${path}`);
-    const prototype: unknown = Object.getPrototypeOf(value);
-    if (prototype !== Object.prototype && prototype !== Array.prototype && prototype !== null) findings.push(`prototype:${path}`);
+    if (Object.getPrototypeOf(value) !== (Array.isArray(value) ? Array.prototype : Object.prototype)) findings.push(`prototype:${path}`);
     for (const key of Reflect.ownKeys(value)) {
       const at = `${path}.${String(key)}`;
       const descriptor = Reflect.getOwnPropertyDescriptor(value, key);
-      if (descriptor !== undefined && (descriptor.get !== undefined || descriptor.set !== undefined)) findings.push(`accessor:${at}`);
+      if (descriptor !== undefined && !("value" in descriptor)) findings.push(`accessor:${at}`);
       else walk(descriptor?.value, at);
     }
   };
   walk(wiring, "wiring");
   return findings;
 }
-/** K-SPLIT's closed shape: the document's keys and each block's, sorted. */
-const DOCUMENT_KEYS: readonly string[] = ["blocks", "unmet"];
-const BLOCK_KEYS: readonly string[] = ["evidence", "subject", "text"];
-const keysOf = (value: object): string[] => Reflect.ownKeys(value).map(key => String(key)).sort();
-
-/** Each check's reading of one case. */
-function readingsOf(factory: SeamFactory, entry: Case): Readonly<Record<Check, string>> {
-  const { request } = entry;
-  const run = runOnce(factory, entry);
-  const blockSubjects = run.document.blocks.map(block => block.subject);
-  const unmet = [...run.document.unmet];
-  const demand: string[] = [];
-  if (run.wiring.demand.owner !== "host") demand.push("owner");
-  if (!isDeepStrictEqual([...run.wiring.demand.subjects], [...request.subjects])) demand.push("subjects");
-  const placed = [...blockSubjects, ...unmet];
-  if (placed.length !== request.subjects.length || request.subjects.some(subject => !placed.includes(subject))) demand.push("placed");
-  const inOrder = (subjects: readonly string[]): boolean => isDeepStrictEqual([...subjects], request.subjects.filter(subject => subjects.includes(subject)));
-  if (!inOrder(blockSubjects) || !inOrder(unmet)) demand.push("order");
-  const seam = factory(recordingWorld(entry.providers));
-  const first = seam.wire(clone(request));
-  const before = dataOf(first);
-  const once = seam.assemble(first);
-  const pure: string[] = [];
-  if (dataOf(first) !== before) pure.push("input");
-  if (!isDeepStrictEqual(seam.assemble(seam.wire(clone(request))), once)) pure.push("repeat");
-  const split: string[] = [];
-  if (!isDeepStrictEqual(keysOf(run.document), [...DOCUMENT_KEYS])) split.push("shape:document");
-  for (const block of run.document.blocks) {
-    if (!isDeepStrictEqual(keysOf(block), [...BLOCK_KEYS])) split.push(`shape:${block.subject}`);
-    if (!isDeepStrictEqual(block.evidence, request.evidence.filter(item => item.subject === block.subject))) split.push(`evidence:${block.subject}`);
-    if (block.text !== request.sources.find(item => item.subject === block.subject)?.text) split.push(`source:${block.subject}`);
+/** K-SPLIT's closed shape of a document: a string leaf, an array of one item shape, or an object of exactly its keys. */
+type Shape = { readonly leaf: "string" } | { readonly array: Shape } | { readonly object: Readonly<Record<string, Shape>> };
+const STRING_SHAPE: Shape = { leaf: "string" };
+const EVIDENCE_SHAPE: Shape = { object: { subject: STRING_SHAPE, claim: STRING_SHAPE, value: STRING_SHAPE, evaluatedBy: STRING_SHAPE } };
+const BLOCK_SHAPE: Shape = { object: { subject: STRING_SHAPE, text: STRING_SHAPE, evidence: { array: EVIDENCE_SHAPE } } };
+const DOCUMENT_SHAPE: Shape = { object: { blocks: { array: BLOCK_SHAPE }, unmet: { array: STRING_SHAPE } } };
+/** A shape as one line (the frozen-shape literal's form). */
+const shapeLine = (shape: Shape): string => {
+  if ("leaf" in shape) return shape.leaf;
+  if ("array" in shape) return `[${shapeLine(shape.array)}]`;
+  return `{${Object.entries(shape.object)
+    .map(([key, child]) => `${key}:${shapeLine(child)}`)
+    .join(",")}}`;
+};
+/** A canonical array index (an own key an array's items sit under). */
+const INDEX = /^(?:0|[1-9]\d*)$/;
+/** K-SPLIT's reading of a value against its closed shape: every own key (string or symbol, enumerable or not) of every object and array
+ * reachable from it is one the shape names (an array's: its indices, with no hole, and length) and a data property, never an accessor; every
+ * object's prototype is Object's and every array's Array's (a null prototype is another); no value is a proxy; every leaf is a string. */
+function shapeFindings(value: unknown, shape: Shape, path: string): string[] {
+  if ("leaf" in shape) return typeof value === "string" ? [] : [`type:${path}`];
+  if (typeof value !== "object" || value === null) return [`type:${path}`];
+  if (types.isProxy(value)) return [`proxy:${path}`];
+  if (Array.isArray(value) !== ("array" in shape)) return [`type:${path}`];
+  const findings: string[] = [];
+  if (Object.getPrototypeOf(value) !== ("array" in shape ? Array.prototype : Object.prototype)) findings.push(`prototype:${path}`);
+  const keys = Reflect.ownKeys(value);
+  let indices = 0;
+  for (const key of keys) {
+    const at = `${path}.${String(key)}`;
+    const descriptor = Reflect.getOwnPropertyDescriptor(value, key);
+    if (descriptor !== undefined && !("value" in descriptor)) {
+      findings.push(`accessor:${at}`);
+      continue;
+    }
+    let child: Shape | undefined;
+    if (typeof key === "string" && "array" in shape) {
+      if (key === "length") continue;
+      if (INDEX.test(key)) {
+        indices += 1;
+        child = shape.array;
+      }
+    } else if (typeof key === "string" && "object" in shape && Object.hasOwn(shape.object, key)) child = shape.object[key];
+    if (child === undefined) findings.push(`key:${at}`);
+    else findings.push(...shapeFindings(descriptor?.value, child, at));
+  }
+  if ("array" in shape && indices !== (value as readonly unknown[]).length) findings.push(`holes:${path}`);
+  if ("object" in shape) for (const key of Object.keys(shape.object)) if (!keys.includes(key)) findings.push(`missing:${path}.${key}`);
+  return findings;
+}
+/** K-SPLIT's reading of one document's content: each block carries its subject's evidence (deep strict) and source verbatim, and a demanded
+ * subject is a block exactly when its evidence and source are both in hand. */
+function contentFindings(document: ContextDocument, request: Request): string[] {
+  const findings: string[] = [];
+  const blockSubjects = document.blocks.map(block => block.subject);
+  for (const block of document.blocks) {
+    if (!isDeepStrictEqual(block.evidence, request.evidence.filter(item => item.subject === block.subject))) findings.push(`evidence:${block.subject}`);
+    if (block.text !== request.sources.find(item => item.subject === block.subject)?.text) findings.push(`source:${block.subject}`);
   }
   for (const subject of request.subjects) {
     const answerable = request.evidence.some(item => item.subject === subject) && request.sources.some(item => item.subject === subject);
-    if (answerable !== blockSubjects.includes(subject)) split.push(`placement:${subject}`);
+    if (answerable !== blockSubjects.includes(subject)) findings.push(`placement:${subject}`);
   }
+  return findings;
+}
+/** K-DEMAND's reading of a wiring's demand: the owner is the host, and the subjects are the request's, in its order. */
+function demandFindings(wiring: Wiring, request: Request): string[] {
+  const findings: string[] = [];
+  if (wiring.demand.owner !== "host") findings.push("owner");
+  if (!isDeepStrictEqual([...wiring.demand.subjects], [...request.subjects])) findings.push("subjects");
+  return findings;
+}
+/** K-DEMAND's reading of a document's placement: exactly the demanded subjects, each once, the blocks and the unmet each in demand order. */
+function placementFindings(document: ContextDocument, request: Request): string[] {
+  const findings: string[] = [];
+  const blockSubjects = document.blocks.map(block => block.subject);
+  const unmet = [...document.unmet];
+  const placed = [...blockSubjects, ...unmet];
+  if (placed.length !== request.subjects.length || request.subjects.some(subject => !placed.includes(subject))) findings.push("placed");
+  const inOrder = (subjects: readonly string[]): boolean => isDeepStrictEqual([...subjects], request.subjects.filter(subject => subjects.includes(subject)));
+  if (!inOrder(blockSubjects) || !inOrder(unmet)) findings.push("order");
+  return findings;
+}
+/** One reading of a run's two values: its wiring (K-WIRING; K-DEMAND's demand) and its document (K-DEMAND's placement; K-SPLIT's shape and content). */
+interface Readings {
+  readonly wired: readonly string[];
+  readonly demand: readonly string[];
+  readonly placement: readonly string[];
+  readonly shape: readonly string[];
+  readonly content: readonly string[];
+}
+const wiringReadings = (wiring: Wiring, request: Request): Pick<Readings, "wired" | "demand"> => ({ wired: wiringFindings(wiring), demand: demandFindings(wiring, request) });
+const documentReadings = (document: ContextDocument, request: Request): Pick<Readings, "placement" | "shape" | "content"> => ({
+  placement: placementFindings(document, request),
+  shape: shapeFindings(document, DOCUMENT_SHAPE, "document"),
+  content: contentFindings(document, request),
+});
+interface Run {
+  readonly wiring: Wiring;
+  readonly document: ContextDocument;
+  /** The readings taken the moment the run made each value: its wiring as the host's half handed it (before the assembler ran), its document as returned. */
+  readonly made: Readings;
+}
+/** One run of a seam instance: the host wires a fresh copy of the case's request (read as handed) and the assembler runs once (its document read as returned). */
+function runOf(seam: Seam, entry: Case): Run {
+  const wiring = seam.wire(clone(entry.request));
+  const handed = wiringReadings(wiring, entry.request);
+  const document = seam.assemble(wiring);
+  return { wiring, document, made: { ...handed, ...documentReadings(document, entry.request) } };
+}
+/** One seam instance in a fresh world, run once, with its world's record. */
+function runOnce(factory: SeamFactory, entry: Case): Run & { readonly log: readonly string[] } {
+  const world = recordingWorld(entry.providers);
+  const run = runOf(factory(world), entry);
+  return { ...run, log: [...world.log] };
+}
+/** Every run a case makes: R1 (a fresh instance in a fresh world, run once), then R2 and R3 (K-PURE's two runs of a second instance in a
+ * second fresh world); R2's wiring data just before and just after its run; and both worlds' records once the three runs are done. */
+interface Trial {
+  readonly runs: readonly [Run, Run, Run];
+  readonly log: readonly string[];
+  readonly before: string;
+  readonly after: string;
+}
+function trialOf(factory: SeamFactory, entry: Case): Trial {
+  const worlds = [recordingWorld(entry.providers), recordingWorld(entry.providers)] as const;
+  const first = runOf(factory(worlds[0]), entry);
+  const seam = factory(worlds[1]);
+  const wiring = seam.wire(clone(entry.request));
+  const handed = wiringReadings(wiring, entry.request);
+  const before = dataOf(wiring);
+  const document = seam.assemble(wiring);
+  const after = dataOf(wiring);
+  const second: Run = { wiring, document, made: { ...handed, ...documentReadings(document, entry.request) } };
+  const third = runOf(seam, entry);
+  return { runs: [first, second, third], log: [...worlds[0].log, ...worlds[1].log], before, after };
+}
+/** Each check's reading of one case: every run's wiring and document, each read the moment its run made it and again once the runs are done. */
+function readingsOf(factory: SeamFactory, entry: Case): Readonly<Record<Check, string>> {
+  const { request } = entry;
+  const trial = trialOf(factory, entry);
+  const [first, second, third] = trial.runs;
+  const twice = (run: Run): readonly Readings[] => [run.made, { ...wiringReadings(run.wiring, request), ...documentReadings(run.document, request) }];
+  const every = trial.runs.flatMap(twice);
+  const answered = [first, second].flatMap(twice);
+  const pure: string[] = [];
+  if (trial.after !== trial.before) pure.push("input");
+  if (!isDeepStrictEqual(third.document, second.document)) pure.push("repeat");
   return {
-    "K-WIRING": reading(wiringFindings(run.wiring), "wired"),
-    "K-EFFECT": reading(run.log, "effect"),
-    "K-DEMAND": reading(demand, "demand"),
+    "K-WIRING": reading(distinct(every.flatMap(read => read.wired)), "wired"),
+    "K-EFFECT": reading(distinct(trial.log), "effect"),
+    "K-DEMAND": reading(distinct([...every.flatMap(read => read.demand), ...answered.flatMap(read => read.placement)]), "demand"),
     "K-PURE": reading(pure, "impure"),
-    "K-SPLIT": reading(split, "split"),
+    "K-SPLIT": reading(distinct([...every.flatMap(read => read.shape), ...answered.flatMap(read => read.content)]), "split"),
   };
 }
 type Verdict = Readonly<Record<Check, readonly string[]>>;
@@ -611,6 +850,32 @@ const MUTANTS: readonly Mutant[] = [
   mutant("M32", "hand-proxy", ["K-WIRING"]),
   mutant("M33", "document-coverage", ["K-SPLIT"]),
   mutant("M34", "block-coverage", ["K-SPLIT"]),
+  mutant("M35", "blocks-listed-coverage", ["K-SPLIT"]),
+  mutant("M36", "unmet-listed-admission", ["K-SPLIT"]),
+  mutant("M37", "document-inherited-coverage", ["K-SPLIT"]),
+  mutant("M38", "block-inherited-coverage", ["K-SPLIT"]),
+  mutant("M39", "document-proxy-coverage", ["K-SPLIT"]),
+  mutant("M40", "evidence-hidden-coverage", ["K-SPLIT"]),
+  mutant("M41", "evidence-listed-coverage", ["K-SPLIT"]),
+  mutant("M42", "block-hidden-coverage", ["K-SPLIT"]),
+  mutant("M43", "evidence-array-hidden-coverage", ["K-SPLIT"]),
+  mutant("M44", "document-symbol-coverage", ["K-SPLIT"]),
+  mutant("M45", "document-accessor-coverage", ["K-SPLIT"]),
+  mutant("M46", "blocks-prototype-coverage", ["K-SPLIT"]),
+  mutant("M47", "text-object-coverage", ["K-SPLIT"]),
+  mutant("M48", "repeat-hidden-coverage", ["K-SPLIT"]),
+  mutant("M49", "hand-withdrawn", ["K-WIRING"]),
+  mutant("M50", "hand-on-repeat", ["K-WIRING"]),
+  mutant("M51", "mint-on-repeat", ["K-EFFECT"]),
+  mutant("M52", "owner-on-repeat", ["K-DEMAND"]),
+  mutant("M53", "unmet-numeric-order", ["K-DEMAND"]),
+  mutant("M54", "unmet-sourced-first", ["K-DEMAND"]),
+  mutant("M55", "owner-restored", ["K-DEMAND", "K-PURE"]),
+  mutant("M56", "coverage-withdrawn", ["K-SPLIT"]),
+  mutant("M57", "hand-bare-accessor", ["K-WIRING"]),
+  mutant("M58", "unmet-holey", ["K-DEMAND", "K-SPLIT"]),
+  mutant("M59", "text-drift", ["K-SPLIT"]),
+  mutant("M60", "order-drift", ["K-DEMAND"]),
 ];
 const mutantLine = (entry: Mutant): string => `${entry.id}:${entry.fault}:${entry.refusedBy.join("+")}`;
 const FALLBACK_MUTANT: Mutant = { id: "-", fault: "empty-document", refusedBy: [], factory: REFERENCE };
@@ -621,6 +886,114 @@ const caseById = (id: string): Case => CASES.find(entry => entry.id === id) ?? F
 const refusedOf = (ids: readonly string[]): Record<string, readonly Check[]> => Object.fromEntries(ids.map(id => [id, refusing(verdictOf(mutantById(id).factory))]));
 /** The mutants that hand the assembler a live handle outside its ports (refusal #1 U4's shapes and their kin). */
 const SMUGGLING: readonly string[] = ["M26", "M27", "M28", "M29", "M30", "M31", "M32"];
+/** The mutants that carry coverage or admission in the document beside its closed shape (refusal #2 U1's GM8a-GM8i shapes as M35-M43, and their kin). */
+const CARRYING: readonly string[] = ["M33", "M34", "M35", "M36", "M37", "M38", "M39", "M40", "M41", "M42", "M43", "M44", "M45", "M46", "M47", "M48", "M56"];
+/** The mutants that misbehave only in K-PURE's runs - R3, or both R2 and R3 (so every run is read). */
+const EVERY_RUN: readonly string[] = ["M48", "M50", "M51", "M52", "M59", "M60"];
+/** The mutants a value shows only the moment its run makes it: a handle or a demand the assembler takes back, coverage stripped before the runs are done. */
+const MOMENT: readonly string[] = ["M49", "M55", "M56"];
+
+// ---- the carrier tables ----
+
+/** Where a member rides beside a value's own data: an own key (enumerable, non-enumerable or a symbol), an accessor, a prototype or a proxy. */
+const CARRIERS = ["listed", "hidden", "symbol", "accessor", "inherited", "proxy"] as const;
+type Carrier = (typeof CARRIERS)[number];
+/** The wiring's carriers: CARRIERS, a collection holding the member, and a listed member the assembler removes as it starts. */
+const WIRING_CARRIERS = [...CARRIERS, "collection", "withdrawn"] as const;
+type WiringCarrier = (typeof WIRING_CARRIERS)[number];
+/** A copy of a value carrying a member under a key, by one carrier (bare: the copy with a null prototype and no member). */
+function carry<T extends object>(value: T, carrier: Carrier | "collection" | "bare", key: string, member: unknown): T {
+  const copy = (Array.isArray(value) ? [...value] : { ...value }) as T;
+  if (carrier === "listed") return Object.assign(copy, { [key]: member });
+  if (carrier === "hidden") return Object.defineProperty(copy, key, { value: member, enumerable: false });
+  if (carrier === "symbol") return Object.assign(copy, { [Symbol.for(key)]: member });
+  if (carrier === "accessor") return Object.defineProperty(copy, key, { get: () => member, enumerable: false });
+  if (carrier === "inherited") return Object.setPrototypeOf(copy, carriedPrototype(key, member, Array.isArray(copy))) as T;
+  if (carrier === "proxy") return new Proxy(copy, { get: (target, name, receiver) => (name === key ? member : Reflect.get(target, name, receiver)) });
+  if (carrier === "collection") return Object.assign(copy, { [key]: new Map([[key, member]]) });
+  return Object.setPrototypeOf(copy, null) as T;
+}
+/** The document's nodes a member can ride on, and its string leaves (row S3c's carrier table). */
+const DOCUMENT_NODES = ["document", "blocks", "unmet", "block", "evidence", "item"] as const;
+type DocumentNode = (typeof DOCUMENT_NODES)[number];
+const DOCUMENT_OBJECTS: readonly DocumentNode[] = ["document", "block", "item"];
+const LEAVES = ["subject", "text", "unmet entry", "claim"] as const;
+type Leaf = (typeof LEAVES)[number];
+/** The reference's document with coverage planted on every node of one kind, by one carrier. */
+function plantDocument(document: ContextDocument, node: DocumentNode, carrier: Carrier | "bare"): ContextDocument {
+  const put = <T extends object>(value: T): T => carry(value, carrier, "coverage", COVERAGE);
+  const { blocks, unmet } = document;
+  if (node === "document") return put({ blocks, unmet });
+  if (node === "blocks") return { blocks: put(blocks), unmet };
+  if (node === "unmet") return { blocks, unmet: put(unmet) };
+  if (node === "block") return { blocks: blocks.map(block => put(block)), unmet };
+  if (node === "evidence") return { blocks: blocks.map(block => ({ ...block, evidence: put(block.evidence) })), unmet };
+  return { blocks: blocks.map(block => ({ ...block, evidence: block.evidence.map(item => put(item)) })), unmet };
+}
+/** The reference's document with one kind of string leaf replaced by an object carrying the string and the coverage. */
+function plantLeaf(document: ContextDocument, leaf: Leaf): ContextDocument {
+  const boxed = (text: string): string => ({ text, coverage: COVERAGE }) as unknown as string;
+  const { blocks, unmet } = document;
+  if (leaf === "subject") return { blocks: blocks.map(block => ({ ...block, subject: boxed(block.subject) })), unmet };
+  if (leaf === "text") return { blocks: blocks.map(block => ({ ...block, text: boxed(block.text) })), unmet };
+  if (leaf === "unmet entry") return { blocks, unmet: unmet.map(subject => boxed(subject)) };
+  return { blocks: blocks.map(block => ({ ...block, evidence: block.evidence.map(item => ({ ...item, claim: boxed(item.claim) })) })), unmet };
+}
+/** A seam that is the reference with its document planted. */
+const plantedSeam =
+  (plant: (document: ContextDocument) => ContextDocument): SeamFactory =>
+  world => {
+    const inner = REFERENCE(world);
+    return { wire: request => inner.wire(request), assemble: wiring => plant(inner.assemble(wiring)) };
+  };
+/** A handle the carrier tables plant in the wiring (a function: K-WIRING refuses any; this one is never called). */
+const STUB_HANDLE: Handle = () => [];
+/** The wiring's nodes a handle can ride on (row S3b's carrier table). */
+const WIRING_NODES = ["wiring", "demand", "subjects", "evidence", "item", "sources", "source", "ports"] as const;
+type WiringNode = (typeof WIRING_NODES)[number];
+const WIRING_OBJECTS: readonly WiringNode[] = ["wiring", "demand", "item", "source", "ports"];
+/** The objects of a wiring that are one kind of node. */
+function nodesOf(wiring: Wiring, node: WiringNode): object[] {
+  if (node === "wiring") return [wiring];
+  if (node === "demand") return [wiring.demand];
+  if (node === "subjects") return [wiring.demand.subjects];
+  if (node === "evidence") return [wiring.evidence];
+  if (node === "item") return [...wiring.evidence];
+  if (node === "sources") return [wiring.sources];
+  if (node === "source") return [...wiring.sources];
+  return [wiring.ports];
+}
+/** The reference's wiring with a handle planted on every node of one kind, by one carrier (withdrawn plants it listed). */
+function plantWiring(wiring: Wiring, node: WiringNode, carrier: WiringCarrier | "bare"): Wiring {
+  const put = <T extends object>(value: T): T => carry(value, carrier === "withdrawn" ? "listed" : carrier, "query", STUB_HANDLE);
+  if (node === "wiring") return put(wiring);
+  if (node === "demand") return { ...wiring, demand: put(wiring.demand) };
+  if (node === "subjects") return { ...wiring, demand: { ...wiring.demand, subjects: put(wiring.demand.subjects) } };
+  if (node === "evidence") return { ...wiring, evidence: put(wiring.evidence) };
+  if (node === "item") return { ...wiring, evidence: wiring.evidence.map(item => put(item)) };
+  if (node === "sources") return { ...wiring, sources: put(wiring.sources) };
+  if (node === "source") return { ...wiring, sources: wiring.sources.map(item => put(item)) };
+  return { ...wiring, ports: put(wiring.ports) };
+}
+/** A seam that is the reference with its wiring planted; a withdrawn handle is removed by the assembler as it starts, before it assembles. */
+const wiredSeam =
+  (node: WiringNode, carrier: WiringCarrier | "bare"): SeamFactory =>
+  world => {
+    const inner = REFERENCE(world);
+    return {
+      wire: request => plantWiring(inner.wire(request), node, carrier),
+      assemble: wiring => {
+        if (carrier === "withdrawn") for (const target of nodesOf(wiring, node)) Reflect.deleteProperty(target, "query");
+        return inner.assemble(wiring);
+      },
+    };
+  };
+/** One carrier table: per node and carrier, the checks that refuse the planted seam. */
+const tableOf = <N extends string, C extends string>(nodes: readonly N[], carriers: readonly C[], seam: (node: N, carrier: C) => SeamFactory): Record<string, Record<string, Check[]>> =>
+  Object.fromEntries(nodes.map(node => [node, Object.fromEntries(carriers.map(carrier => [carrier, refusing(judge(seam(node, carrier)))]))]));
+/** The entries of a carrier table that the named check does not refuse. */
+const unrefused = (table: Readonly<Record<string, Readonly<Record<string, readonly Check[]>>>>, check: Check): string[] =>
+  Object.entries(table).flatMap(([node, row]) => Object.entries(row).filter(([, checks]) => !checks.includes(check)).map(([carrier]) => `${node}:${carrier}`));
 
 // ---- the armed registrations ----
 
@@ -1079,7 +1452,7 @@ const ROWS: readonly Row[] = [
   { id: "D2", label: "ReactiveFiberCLI owns context rendering/necessity/provenance", pins: ["D2"] },
   { id: "D3", label: "a derived lens over native state, never a competing execution authority", pins: ["D3"] },
   { id: "D4", label: "carries no EDC assembler/demand row", pins: ["D4"] },
-  { id: "Q", label: "the named residual families, each member a pinned quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"] },
+  { id: "Q", label: "the named residual families, each member a pinned quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8"] },
 ];
 /** Each pin's quote: a row's quotes tile its label. Q's pins name their residual families. */
 const QUOTES: Readonly<Record<string, string>> = {
@@ -1116,6 +1489,7 @@ const QUOTES: Readonly<Record<string, string>> = {
   Q5: "R-UNMODELED-EFFECT",
   Q6: "R-OUTSIDE-SRC",
   Q7: "R-COORDINATED",
+  Q8: "R-OUTSIDE-VALUE",
 };
 const labelOf = (id: string): string => ROWS.find(entry => entry.id === id)?.label ?? "-";
 
@@ -1161,8 +1535,15 @@ const RESIDUALS: readonly Residual[] = [
       { id: "digit-glued", text: "export const EDC2 = 1;" },
       { id: "acronym-run", text: "export const EDCAPIClient = 1;" },
       { id: "small-capitals", text: `export const word = "${SMALL_CAPITALS_EDC}";` },
+      { id: "glued-lower", text: "export const edcassembler = 1;" },
+      { id: "glued-context", text: "export const contextassembler = 1;" },
+      { id: "glued-upper", text: "export const EDCASSEMBLER = 1;" },
     ],
-    rows: [{ id: "docs-homoglyph-row", row: `| Context d${CYRILLIC_IE}mand | Pi (host) | declare the d${CYRILLIC_IE}mand it owns |` }],
+    rows: [
+      { id: "docs-homoglyph-row", row: `| Context d${CYRILLIC_IE}mand | Pi (host) | declare the d${CYRILLIC_IE}mand it owns |` },
+      { id: "docs-soft-hyphen-row", row: "| Context de&shy;mand | Pi (host) | declare the de&shy;mand it owns |" },
+      { id: "docs-zero-width-row", row: "| Context de&ZeroWidthSpace;mand | Pi (host) | declare the de&ZeroWidthSpace;mand it owns |" },
+    ],
   },
   {
     id: "Q3",
@@ -1185,11 +1566,56 @@ const RESIDUALS: readonly Residual[] = [
 const OUTSIDE_SRC: readonly string[] = [CENSUS_PATH, ROSTER_PATH, DOCS_03];
 /** What R-COORDINATED's removals range over. */
 const COORDINATED: readonly string[] = ["pin", "case", "mutant", "residual-member", "control"];
+/** R-OUTSIDE-VALUE (row Q8): what the value readings never read - a property's attribute flags, a value's extensibility and a side table keyed by the value - each member a seam every check admits while it carries coverage or a handle. */
+interface OutsideMember {
+  readonly id: string;
+  readonly seam: SeamFactory;
+  /** Whether one run's document or wiring carries the member (so the quiet row is not vacuous). */
+  readonly carried: (run: { readonly wiring: Wiring; readonly document: ContextDocument }) => boolean;
+}
+const COVERAGE_TABLE = new WeakMap<object, string>();
+const HANDLE_TABLE = new WeakMap<object, Handle>();
+const OUTSIDE_VALUE: readonly OutsideMember[] = [
+  {
+    id: "attribute-flags",
+    seam: plantedSeam(document => Object.defineProperty({ ...document }, "unmet", { value: document.unmet, writable: false })),
+    carried: run => Object.getOwnPropertyDescriptor(run.document, "unmet")?.writable === false,
+  },
+  {
+    id: "frozen-document",
+    seam: plantedSeam(document => Object.freeze({ blocks: Object.freeze([...document.blocks]), unmet: Object.freeze([...document.unmet]) })),
+    carried: run => Object.isFrozen(run.document),
+  },
+  {
+    id: "side-table-coverage",
+    seam: plantedSeam(document => {
+      COVERAGE_TABLE.set(document, COVERAGE);
+      return document;
+    }),
+    carried: run => COVERAGE_TABLE.get(run.document) === COVERAGE,
+  },
+  {
+    id: "side-table-handle",
+    seam: world => {
+      const inner = REFERENCE(world);
+      return {
+        wire: request => {
+          const wiring = inner.wire(request);
+          HANDLE_TABLE.set(wiring, subject => world.effect("provider-query", subject));
+          return wiring;
+        },
+        assemble: wiring => inner.assemble(wiring),
+      };
+    },
+    carried: run => typeof HANDLE_TABLE.get(run.wiring) === "function",
+  },
+];
 const RESIDUAL_MEMBERS: Readonly<Record<string, readonly string[]>> = {
   ...Object.fromEntries(RESIDUALS.map(family => [family.id, [...family.members.map(member => member.id), ...family.rows.map(member => member.id)]])),
   Q5: ["outside-provider-call"],
   Q6: OUTSIDE_SRC,
   Q7: COORDINATED,
+  Q8: OUTSIDE_VALUE.map(member => member.id),
 };
 /** A family's quiet row: every module member reads no vocabulary word, makes no finding and leaves the gate closed; every docs member is read (one row more) and names nothing. */
 function quietMembers(id: string): unknown {
@@ -1263,7 +1689,7 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
   S1a: () => perCase(entry => demandLine(runOnce(REFERENCE, entry).wiring)),
   S1b: () => ({
     reference: verdictOf(REFERENCE)["K-DEMAND"],
-    ...Object.fromEntries(["M12", "M13", "M16", "M25"].map(id => [id, verdictOf(mutantById(id).factory)["K-DEMAND"]])),
+    ...Object.fromEntries(["M12", "M13", "M16", "M25", "M53", "M54"].map(id => [id, verdictOf(mutantById(id).factory)["K-DEMAND"]])),
   }),
   S2a: () => ({
     reference: verdictOf(REFERENCE)["K-PURE"],
@@ -1276,21 +1702,43 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
     handles: perCase(entry => String(Object.keys(runOnce(REFERENCE, entry).wiring.ports).length)),
     smuggled: refusedOf(SMUGGLING),
     readings: Object.fromEntries(SMUGGLING.map(id => [id, readingsOf(mutantById(id).factory, caseById("C1"))["K-WIRING"]])),
+    everyRun: refusedOf(EVERY_RUN),
+    moment: refusedOf(MOMENT),
+    withdrawn: readingsOf(mutantById("M49").factory, caseById("C1"))["K-WIRING"],
+    bareAccessor: readingsOf(mutantById("M57").factory, caseById("C1"))["K-WIRING"],
+    carriers: (() => {
+      const table = tableOf(WIRING_NODES, WIRING_CARRIERS, wiredSeam);
+      const bare = tableOf(WIRING_OBJECTS, ["bare"] as const, wiredSeam);
+      expect([...unrefused(table, "K-WIRING"), ...unrefused(bare, "K-WIRING")], "K-WIRING refuses a handle on every wiring node by every carrier, and every null prototype").toEqual([]);
+      return { table, bare };
+    })(),
   }),
   S3c: () => ({
     "provider-query": refusedOf(["M01", "M06", "M07"]),
-    "coverage-mint": refusedOf(["M02", "M08", "M33", "M34"]),
-    "work-admission": refusedOf(["M03", "M09"]),
+    "coverage-mint": refusedOf(["M02", "M08", "M51", ...CARRYING.filter(id => id !== "M36")]),
+    "work-admission": refusedOf(["M03", "M09", "M36"]),
+    readings: Object.fromEntries([...CARRYING, "M58"].map(id => [id, readingsOf(mutantById(id).factory, caseById("C2"))["K-SPLIT"]])),
+    carried: (() => {
+      const table = tableOf(DOCUMENT_NODES, CARRIERS, (node, carrier) => plantedSeam(document => plantDocument(document, node, carrier)));
+      const bare = tableOf(DOCUMENT_OBJECTS, ["bare"] as const, (node, carrier) => plantedSeam(document => plantDocument(document, node, carrier)));
+      const leaves = Object.fromEntries(LEAVES.map(leaf => [leaf, refusing(judge(plantedSeam(document => plantLeaf(document, leaf))))]));
+      expect(
+        [...unrefused(table, "K-SPLIT"), ...unrefused(bare, "K-SPLIT"), ...unrefused({ leaves }, "K-SPLIT")],
+        "K-SPLIT refuses coverage on every document node by every carrier, every null prototype and every non-string leaf",
+      ).toEqual([]);
+      return { table, bare, leaves };
+    })(),
   }),
   S4a: () => ({ title: titleSplit(), producer: producerSplit(ROSTER.producer.text), constant: SPLIT.map(splitLine) }),
   S4b: () => ({
     carried: runOnce(REFERENCE, caseById("C4")).document.blocks.map(block => block.evidence.map(item => `${item.subject}:${item.value}:${item.evaluatedBy}`)),
     ...refusedOf(["M19", "M21", "M22"]),
+    dropped: readingsOf(mutantById("M21").factory, caseById("C1"))["K-SPLIT"],
   }),
   S4c: () => ({ sourceless: summaryOf(runOnce(REFERENCE, caseById("C3")).document), ...refusedOf(["M20"]) }),
   S4d: () => refusedOf(["M04", "M10"]),
   S4e: () => refusedOf(["M05", "M11"]),
-  S4f: () => refusedOf(["M14", "M15"]),
+  S4f: () => refusedOf(["M14", "M15", "M52", "M55"]),
   N1: () => {
     const naming: Entry = { path: "src/workbench/zz-edc-host.ts", text: "export const edcAssembler = {};" };
     const quiet: Entry = { path: "src/workbench/zz-quiet.ts", text: "export const reply = 1;" };
@@ -1438,6 +1886,17 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
     const reported = pins.filter(pin => exportFindings(without(pin), QUOTES, title, notes).length > 0);
     return { live: exportFindings(ROWS, QUOTES, title, notes), reported, quiet: pins.filter(pin => !reported.includes(pin)) };
   },
+  Q8: () => {
+    const rows = OUTSIDE_VALUE.map(member => {
+      const answers = CASES.map(entry => `${entry.id}=${summaryOf(runOnce(member.seam, entry).document)}`);
+      return { id: member.id, refused: refusing(judge(member.seam)), answers: isDeepStrictEqual(answers, CASES.map(caseLine)), carried: member.carried(runOnce(member.seam, caseById("C1"))) };
+    });
+    expect(
+      rows.filter(row => row.refused.length > 0 || !row.answers || !row.carried).map(row => row.id),
+      "R-OUTSIDE-VALUE: every check admits each member, which answers every case and carries its coverage or handle",
+    ).toEqual([]);
+    return { name: "R-OUTSIDE-VALUE", rows };
+  },
 };
 
 const REACHED: { readonly pin: string; readonly same: boolean }[] = [];
@@ -1459,7 +1918,7 @@ describe(SUITE, () => {
   }
 
   it(TITLE_FROZEN, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:2", "S1:2", "S2:2", "S3:3", "S4:6", "N:2", "A1:3", "A2:2", "D1:1", "D2:1", "D3:1", "D4:1", "Q:7"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:2", "S1:2", "S2:2", "S3:3", "S4:6", "N:2", "A1:3", "A2:2", "D1:1", "D2:1", "D3:1", "D4:1", "Q:8"]);
     expect(Object.keys(QUOTES), "one quote per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
     expect(Object.keys(IMPL), "one case per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
     expect(SPLIT.map(splitLine)).toEqual(["QuerySDK evaluates evidence", "Lenses supplies source", "Fiber publishes", "Agents owns verification/inference", "host owns demand"]);
@@ -1476,6 +1935,7 @@ describe(SUITE, () => {
       "C8=blocks=-;unmet=-",
       "C9=blocks=-;unmet=s8",
       "C10=blocks=s1;unmet=s9,s10",
+      "C11=blocks=s1;unmet=s10,s9",
     ]);
     expect(MUTANTS.map(mutantLine)).toEqual([
       "M01:wire-provider-query:K-WIRING",
@@ -1512,15 +1972,52 @@ describe(SUITE, () => {
       "M32:hand-proxy:K-WIRING",
       "M33:document-coverage:K-SPLIT",
       "M34:block-coverage:K-SPLIT",
+      "M35:blocks-listed-coverage:K-SPLIT",
+      "M36:unmet-listed-admission:K-SPLIT",
+      "M37:document-inherited-coverage:K-SPLIT",
+      "M38:block-inherited-coverage:K-SPLIT",
+      "M39:document-proxy-coverage:K-SPLIT",
+      "M40:evidence-hidden-coverage:K-SPLIT",
+      "M41:evidence-listed-coverage:K-SPLIT",
+      "M42:block-hidden-coverage:K-SPLIT",
+      "M43:evidence-array-hidden-coverage:K-SPLIT",
+      "M44:document-symbol-coverage:K-SPLIT",
+      "M45:document-accessor-coverage:K-SPLIT",
+      "M46:blocks-prototype-coverage:K-SPLIT",
+      "M47:text-object-coverage:K-SPLIT",
+      "M48:repeat-hidden-coverage:K-SPLIT",
+      "M49:hand-withdrawn:K-WIRING",
+      "M50:hand-on-repeat:K-WIRING",
+      "M51:mint-on-repeat:K-EFFECT",
+      "M52:owner-on-repeat:K-DEMAND",
+      "M53:unmet-numeric-order:K-DEMAND",
+      "M54:unmet-sourced-first:K-DEMAND",
+      "M55:owner-restored:K-DEMAND+K-PURE",
+      "M56:coverage-withdrawn:K-SPLIT",
+      "M57:hand-bare-accessor:K-WIRING",
+      "M58:unmet-holey:K-DEMAND+K-SPLIT",
+      "M59:text-drift:K-SPLIT",
+      "M60:order-drift:K-DEMAND",
     ]);
-    expect(CASES.filter(entry => entry.expected.split(";unmet=")[1]?.includes(",") === true).map(entry => entry.id), "a case leaves two or more subjects unmet").toEqual(["C10"]);
+    expect(CASES.filter(entry => entry.expected.split(";unmet=")[1]?.includes(",") === true).map(entry => entry.id), "cases leave two or more subjects unmet, in both orders of their numbers").toEqual(["C10", "C11"]);
     expect(SMUGGLING.map(id => mutantById(id).fault)).toEqual(["hand-extra-field", "hand-in-demand", "hand-unlisted-port", "hand-accessor", "hand-array-property", "hand-inherited", "hand-proxy"]);
-    expect([DOCUMENT_KEYS, BLOCK_KEYS]).toEqual([
-      ["blocks", "unmet"],
-      ["evidence", "subject", "text"],
+    expect([CARRYING, EVERY_RUN, MOMENT]).toEqual([
+      ["M33", "M34", "M35", "M36", "M37", "M38", "M39", "M40", "M41", "M42", "M43", "M44", "M45", "M46", "M47", "M48", "M56"],
+      ["M48", "M50", "M51", "M52", "M59", "M60"],
+      ["M49", "M55", "M56"],
+    ]);
+    expect(shapeLine(DOCUMENT_SHAPE), "the closed document shape").toBe("{blocks:[{subject:string,text:string,evidence:[{subject:string,claim:string,value:string,evaluatedBy:string}]}],unmet:[string]}");
+    expect([CARRIERS, WIRING_CARRIERS, DOCUMENT_NODES, DOCUMENT_OBJECTS, LEAVES, WIRING_NODES, WIRING_OBJECTS], "the carrier tables").toEqual([
+      ["listed", "hidden", "symbol", "accessor", "inherited", "proxy"],
+      ["listed", "hidden", "symbol", "accessor", "inherited", "proxy", "collection", "withdrawn"],
+      ["document", "blocks", "unmet", "block", "evidence", "item"],
+      ["document", "block", "item"],
+      ["subject", "text", "unmet entry", "claim"],
+      ["wiring", "demand", "subjects", "evidence", "item", "sources", "source", "ports"],
+      ["wiring", "demand", "item", "source", "ports"],
     ]);
     expect(RESIDUALS.map(family => `${family.id}:${family.name}`)).toEqual(["Q1:R-SHARED-WORD", "Q2:R-COMPOSED", "Q3:R-COMMENT", "Q4:R-UNNAMED-SEAM"]);
-    expect(Object.entries(RESIDUAL_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:7", "Q2:9", "Q3:3", "Q4:2", "Q5:1", "Q6:3", "Q7:5"]);
+    expect(Object.entries(RESIDUAL_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:7", "Q2:14", "Q3:3", "Q4:2", "Q5:1", "Q6:3", "Q7:5", "Q8:4"]);
     expect(VOCABULARY.map(word => `${word.id}:${word.spelling}:${word.reading}:${word.forms.join("|")}`)).toEqual([
       "V1:EDC:word:edc|edcs",
       "V2:evidence directed:joined:evidencedirected",
