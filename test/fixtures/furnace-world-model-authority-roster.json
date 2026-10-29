@@ -1,0 +1,838 @@
+{
+ "bead": "wb-b04.1",
+ "rows": [
+  {
+   "id": "A",
+   "label": "world-model record ingestion issues zero bd mutations (spawn-spy on frozen argv)",
+   "pins": [
+    {
+     "id": "A1",
+     "quote": "world-model record ingestion issues zero bd mutations",
+     "subjects": [
+      "BeadsProgramClient",
+      "BeadsReadClient"
+     ]
+    },
+    {
+     "id": "A2",
+     "quote": "spawn-spy on frozen argv",
+     "subjects": [
+      "BeadsProgramClient",
+      "BeadsReadClient"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "zero Furnace control verbs",
+   "pins": [
+    {
+     "id": "B1",
+     "quote": "zero Furnace control verbs",
+     "subjects": [
+      "FurnaceControlClient",
+      "FurnaceEvidenceRequest",
+      "FurnaceObserverClient",
+      "FurnaceReadClient"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "a projection fed only predicted records leaves Beads work nodes and run/attempt supervision state byte-identical to the record-free baseline",
+   "pins": [
+    {
+     "id": "C1",
+     "quote": "a projection fed only predicted records",
+     "subjects": [
+      "BeadsReadClient",
+      "FurnaceObserverClient"
+     ]
+    },
+    {
+     "id": "C2",
+     "quote": "leaves Beads work nodes",
+     "subjects": [
+      "BeadsProgramClient",
+      "BeadsReadClient"
+     ]
+    },
+    {
+     "id": "C3",
+     "quote": "run/attempt supervision state",
+     "subjects": [
+      "FurnaceObserverClient"
+     ]
+    },
+    {
+     "id": "C4",
+     "quote": "byte-identical to the record-free baseline",
+     "subjects": [
+      "BeadsProgramClient",
+      "BeadsReadClient",
+      "FurnaceObserverClient"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "Z",
+   "label": "released world-model record surface alongside live Beads/Furnace state",
+   "pins": [
+    {
+     "id": "Z1",
+     "quote": "released world-model record surface alongside live Beads/Furnace state",
+     "subjects": [
+      "@furnace/sdk",
+      "src"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the residuals' pinned quiet rows",
+   "pins": [
+    {
+     "id": "Q1",
+     "quote": "R-NATIVE-FIELD",
+     "subjects": [
+      "BeadsProgramClient",
+      "BeadsReadClient"
+     ]
+    },
+    {
+     "id": "Q2",
+     "quote": "R-NATIVE-RELAY",
+     "subjects": [
+      "FurnaceEvidenceRequest",
+      "FurnaceReadClient"
+     ]
+    },
+    {
+     "id": "Q3",
+     "quote": "R-VOCABULARY",
+     "subjects": [
+      "@furnace/sdk",
+      "src"
+     ]
+    },
+    {
+     "id": "Q4",
+     "quote": "R-UNPLANTED-KEY",
+     "subjects": [
+      "BeadsReadClient"
+     ]
+    },
+    {
+     "id": "Q5",
+     "quote": "R-UNNAMED-SEAM",
+     "subjects": [
+      "src"
+     ]
+    },
+    {
+     "id": "Q6",
+     "quote": "R-COMMENT-OR-SPLIT",
+     "subjects": [
+      "@furnace/sdk",
+      "src"
+     ]
+    }
+   ]
+  }
+ ],
+ "constants": {
+  "readVerbs": [
+   "show",
+   "dep list"
+  ],
+  "stems": [
+   "observedtransition",
+   "counterfactual",
+   "syntheticattempt",
+   "worldmodel",
+   "predicteddistribution"
+  ],
+  "plantKeys": [
+   "world_model",
+   "worldModel",
+   "prediction",
+   "predictions",
+   "predicted",
+   "counterfactual",
+   "counterfactual_candidate",
+   "CounterfactualCandidate",
+   "observed_transition",
+   "FurnaceObservedTransition",
+   "model_predicted",
+   "simulation"
+  ],
+  "records": [
+   {
+    "name": "FurnaceObservedTransition",
+    "fields": [
+     "source_revision",
+     "run_id",
+     "attempt_id",
+     "before_ref",
+     "event_ref",
+     "after_ref",
+     "exit_status",
+     "reason",
+     "native_receipt",
+     "capture_completeness",
+     "redaction_hash"
+    ]
+   },
+   {
+    "name": "CounterfactualCandidate",
+    "fields": [
+     "base_snapshot",
+     "intervention",
+     "predicted_distribution",
+     "scenario_id",
+     "authority"
+    ]
+   },
+   {
+    "name": "model-predicted",
+    "fields": [
+     "model",
+     "predicted_status",
+     "predicted_blockers",
+     "predicted_attempt_state",
+     "predicted_run_state"
+    ]
+   }
+  ],
+  "beadsPlacements": [
+   "issue-keys",
+   "issue-fields",
+   "dependency-keys",
+   "dependency-fields",
+   "text",
+   "envelope-tail",
+   "listing-keys",
+   "listing-fields"
+  ],
+  "furnacePlacements": [
+   "status-keys",
+   "status-fields",
+   "page-keys",
+   "attempt-keys",
+   "attempt-fields",
+   "log-keys",
+   "log-line"
+  ],
+  "scopedSeams": [
+   "src/workbench/furnace-control.ts:VendoredFurnaceControlClient",
+   "src/workbench/hosts/furnace-hosted.ts:FurnaceHostedClient"
+  ],
+  "z1Channels": [
+   "identifier",
+   "privateName",
+   "string",
+   "template",
+   "regex",
+   "regexHex",
+   "regexUnicode",
+   "regexCodePoint",
+   "releaseComment"
+  ],
+  "seamForms": [
+   "modifier-interface",
+   "modifier-alias",
+   "default-interface",
+   "default-assignment",
+   "clause-type",
+   "clause-alias",
+   "clause-value",
+   "clause-inline-type",
+   "clause-renamed",
+   "namespace",
+   "nested-namespace",
+   "namespace-clause",
+   "export-import",
+   "reexport-named",
+   "reexport-star",
+   "reexport-namespace",
+   "reexport-package",
+   "reexport-package-renamed",
+   "import-reexport-package",
+   "augmentation",
+   "augmentation-outside",
+   "declaration-file",
+   "name-digit",
+   "name-case"
+  ],
+  "residualSeams": [
+   "local",
+   "script",
+   "declare-global",
+   "ambient-module",
+   "class",
+   "enum",
+   "value",
+   "other-name",
+   "outside",
+   "star-package",
+   "extension"
+  ],
+  "residuals": [
+   "R-NATIVE-FIELD:Q1",
+   "R-NATIVE-RELAY:Q2",
+   "R-VOCABULARY:Q3",
+   "R-UNPLANTED-KEY:Q4",
+   "R-UNNAMED-SEAM:Q5",
+   "R-COMMENT-OR-SPLIT:Q6"
+  ],
+  "floors": {
+   "src": 100,
+   "sdk": 100
+  }
+ },
+ "witnesses": {
+  "A1": {
+   "cases": 24,
+   "seams": {
+    "BeadsReadClient": {
+     "members": [
+      "show"
+     ],
+     "verbs": [
+      "show"
+     ]
+    },
+    "BeadsProgramClient": {
+     "members": [
+      "dependents",
+      "show"
+     ],
+     "verbs": [
+      "dep list",
+      "show"
+     ]
+    }
+   },
+   "writes": 0,
+   "readVerbs": [
+    "show",
+    "dep list"
+   ]
+  },
+  "A2": {
+   "cases": 24,
+   "argv": {
+    "BeadsReadClient": [
+     {
+      "argv": [
+       "bd",
+       "show",
+       "wb-wm1",
+       "--json"
+      ],
+      "cwd": "<root>",
+      "timeoutMs": 5000
+     }
+    ],
+    "BeadsProgramClient": [
+     {
+      "argv": [
+       "bd",
+       "dep",
+       "list",
+       "wb-wmE",
+       "--direction=up",
+       "--json"
+      ],
+      "cwd": "<root>",
+      "timeoutMs": 5000
+     },
+     {
+      "argv": [
+       "bd",
+       "show",
+       "wb-wm1",
+       "--json"
+      ],
+      "cwd": "<root>",
+      "timeoutMs": 5000
+     },
+     {
+      "argv": [
+       "bd",
+       "show",
+       "wb-wmG",
+       "--json"
+      ],
+      "cwd": "<root>",
+      "timeoutMs": 5000
+     }
+    ]
+   },
+   "frozen": true
+  },
+  "B1": {
+   "watched": [
+    "attempts.stop",
+    "runs.get().pause",
+    "runs.get().resume",
+    "runs.get().stop",
+    "runs.pause",
+    "runs.resume",
+    "runs.stop"
+   ],
+   "observer": {
+    "reads": [
+     "attempts",
+     "attempts.list",
+     "logs",
+     "logs.read",
+     "runs",
+     "runs.get",
+     "runs.get().status"
+    ],
+    "control": 0
+   },
+   "inspect": {
+    "reads": [
+     "runs",
+     "runs.get",
+     "runs.get().inspect"
+    ],
+    "control": 0
+   },
+   "adapter": {
+    "refusals": [
+     "unvetted-decision"
+    ],
+    "decisions": 6,
+    "touched": 0,
+    "calls": 0
+   },
+   "core": {
+    "predictedOnly": "no-confirmed-ownership",
+    "deniedRefusal": "denied-decision",
+    "deniedCalls": 0,
+    "nativeOwnership": "permitted",
+    "nativeCalls": [
+     "runs.stop"
+    ]
+   },
+   "evidence": {
+    "reads": [
+     "logs",
+     "logs.read"
+    ],
+    "control": 0
+   }
+  },
+  "C1": {
+   "statements": 9,
+   "predictedOnlyNodes": 0,
+   "predictedOnlyIdentical": true,
+   "populatedNodes": [
+    1,
+    1,
+    1
+   ],
+   "populatedIdentical": true,
+   "edgesAdded": 9
+  },
+  "C2": {
+   "cases": 24,
+   "identical": 24,
+   "work": {
+    "statusText": "open",
+    "statusTone": "waiting"
+   },
+   "readiness": {
+    "ready": [],
+    "waitingOn": [
+     "wb-wmX"
+    ],
+    "gate": "ADOPT"
+   }
+  },
+  "C3": {
+   "cases": 21,
+   "identical": 21,
+   "nodes": [
+    {
+     "statusText": "active",
+     "statusTone": "active"
+    },
+    {
+     "statusText": "running",
+     "statusTone": "active"
+    }
+   ]
+  },
+  "C4": {
+   "baseline": {
+    "work": {
+     "statusText": "open",
+     "statusTone": "waiting"
+    },
+    "ready": [],
+    "nodes": [
+     {
+      "statusText": "active",
+      "statusTone": "active"
+     },
+     {
+      "statusText": "running",
+      "statusTone": "active"
+     }
+    ]
+   },
+   "changes": {
+    "blocker-closed": {
+     "differs": true,
+     "ready": [
+      "wb-wm1"
+     ]
+    },
+    "work-closed": {
+     "differs": true,
+     "work": {
+      "statusText": "closed",
+      "statusTone": "unknown"
+     }
+    },
+    "attempt-succeeded": {
+     "differs": true,
+     "nodes": [
+      {
+       "statusText": "active",
+       "statusTone": "active"
+      },
+      {
+       "statusText": "succeeded",
+       "statusTone": "success"
+      }
+     ]
+    },
+    "run-completed": {
+     "differs": true,
+     "nodes": [
+      {
+       "statusText": "completed",
+       "statusTone": "success"
+      },
+      {
+       "statusText": "running",
+       "statusTone": "active"
+      }
+     ]
+    }
+   },
+   "splices": {
+    "dependency-element": "unavailable",
+    "listing-element": "unknown (store unreachable)",
+    "attempt-element": "unavailable"
+   }
+  },
+  "Z1": {
+   "floors": {
+    "src": true,
+    "sdk": true
+   },
+   "release": "@furnace/sdk",
+   "mentions": [],
+   "plants": {
+    "identifier": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
+    "privateName": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
+    "string": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
+    "template": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
+    "regex": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
+    "regexHex": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
+    "regexUnicode": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
+    "regexCodePoint": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
+    "releaseComment": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ]
+   }
+  },
+  "Q1": {
+   "nativeStatus": {
+    "statusText": "closed",
+    "statusTone": "unknown"
+   },
+   "gateVerdict": "no-verdict"
+  },
+  "Q2": {
+   "inspect": {
+    "contract": "furnace.run.inspect/v1",
+    "relayed": 12
+   },
+   "evidence": {
+    "rows": 2,
+    "recordShown": true,
+    "truncated": false,
+    "lineCount": 1,
+    "sameRef": true,
+    "sameReceipt": true
+   },
+   "calls": 0
+  },
+  "Q3": {
+   "quiet": [
+    "WhatIfCandidate",
+    "ScenarioBranch",
+    "forecast record",
+    "simulated outcome",
+    "PredictedTransition",
+    "learned dynamics"
+   ],
+   "unspelled": [
+    "w.rld-model",
+    "synthetic\\w+attempt",
+    "counterf(?:a|4)ctual",
+    "\\167orld-model"
+   ]
+  },
+  "Q4": {
+   "cases": 24,
+   "quiet": 24,
+   "caught": true
+  },
+  "Q5": {
+   "module": "src/workbench/furnace-evidence.ts",
+   "clientType": "Pick<FurnaceObserverClient, \"logs\">",
+   "rosterEntries": 0,
+   "residual": {
+    "local": {
+     "quiet": [],
+     "paired": [
+      "src/workbench/world-model-seam-plant-local-paired.ts:FurnaceSeamPlantClient"
+     ]
+    },
+    "script": {
+     "quiet": [],
+     "paired": [
+      "src/workbench/world-model-seam-plant-script-paired.ts:FurnaceSeamPlantScriptClient"
+     ]
+    },
+    "declare-global": {
+     "quiet": [],
+     "paired": [
+      "src/workbench/world-model-seam-plant-declare-global-paired.ts:FurnaceSeamPlantGlobalClient"
+     ]
+    },
+    "ambient-module": {
+     "quiet": [],
+     "paired": [
+      "src/workbench/world-model-seam-plant-ambient-module-paired.ts:FurnaceSeamPlantClient"
+     ]
+    },
+    "class": {
+     "quiet": [],
+     "paired": [
+      "src/workbench/world-model-seam-plant-class-paired.ts:FurnaceSeamPlantClient"
+     ]
+    },
+    "enum": {
+     "quiet": [],
+     "paired": [
+      "src/workbench/world-model-seam-plant-enum-paired.ts:FurnaceSeamPlantClient"
+     ]
+    },
+    "value": {
+     "quiet": [],
+     "paired": [
+      "src/workbench/world-model-seam-plant-value-paired.ts:FurnaceSeamPlantClient"
+     ]
+    },
+    "other-name": {
+     "quiet": [],
+     "paired": [
+      "src/workbench/world-model-seam-plant-other-name-paired.ts:FurnaceSeamPlantClient"
+     ]
+    },
+    "outside": {
+     "quiet": [],
+     "paired": [
+      "src/world-model-seam-plant-source-outside-paired.ts:FurnaceSeamPlantClient"
+     ]
+    },
+    "star-package": {
+     "quiet": [],
+     "paired": [
+      "src/workbench/world-model-seam-plant-star-package-paired.ts:FurnaceSeamPlantClient"
+     ]
+    },
+    "extension": {
+     "quiet": [],
+     "paired": [
+      "src/workbench/world-model-seam-plant-extension-paired.ts:FurnaceSeamPlantClient"
+     ]
+    }
+   }
+  },
+  "Q6": {
+   "prose": {
+    "planted": 11,
+    "quiet": 11,
+    "foundByWholeText": 11
+   },
+   "split": {
+    "planted": 5,
+    "quiet": 5,
+    "foundByWholeText": 5
+   },
+   "stems": [
+    "observedtransition",
+    "counterfactual",
+    "syntheticattempt",
+    "worldmodel",
+    "predicteddistribution"
+   ]
+  }
+ }
+}

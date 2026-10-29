@@ -1,0 +1,1063 @@
+{
+ "bead": "wb-e66.4",
+ "rows": [
+  {
+   "id": "A1",
+   "label": "the schema refuses a reward value on pending/unknown status",
+   "pins": [
+    "A1a",
+    "A1b"
+   ]
+  },
+  {
+   "id": "A2",
+   "label": "a per-actor record whose reward equals a team-outcome-derived value with no actor-level verifier ref is refused",
+   "pins": [
+    "A2a",
+    "A2b"
+   ]
+  },
+  {
+   "id": "A3",
+   "label": "a correction appends a new record referencing the corrected one and the original bytes stay",
+   "pins": [
+    "A3a",
+    "A3b"
+   ]
+  },
+  {
+   "id": "A4",
+   "label": "a promotion decision is a separate operator fact, never a field the policy path writes",
+   "pins": [
+    "A4a",
+    "A4b"
+   ]
+  },
+  {
+   "id": "S1",
+   "label": "R7 feedback status shall be a closed set in which only an observed verifier/receipt outcome may carry reward",
+   "pins": [
+    "S1a",
+    "S1b"
+   ]
+  },
+  {
+   "id": "S2",
+   "label": "pending or unknown feedback never carries reward",
+   "pins": [
+    "S2"
+   ]
+  },
+  {
+   "id": "S3",
+   "label": "a team-level outcome is recorded once on the episode and never copied into per-actor reward or causal benefit",
+   "pins": [
+    "S3a",
+    "S3b"
+   ]
+  },
+  {
+   "id": "S4",
+   "label": "corrections and promotion are appended as operator facts outside the policy's own evaluation, never rewriting a decision",
+   "pins": [
+    "S4a",
+    "S4b"
+   ]
+  },
+  {
+   "id": "P",
+   "label": "inferred relationship is a hypothesis never authoritative; missing edges do not imply independence; STALE/UNKNOWN shown",
+   "pins": [
+    "P1",
+    "P2",
+    "P3"
+   ]
+  },
+  {
+   "id": "C",
+   "label": "distinguish declared/observed/inferred",
+   "pins": [
+    "C1"
+   ]
+  },
+  {
+   "id": "N",
+   "label": "no Pi text binds a reward or feedback-status field because none exists",
+   "pins": [
+    "N1",
+    "N2"
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the named residual families, each member a pinned quiet row",
+   "pins": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6"
+   ]
+  }
+ ],
+ "quotes": {
+  "A1a": "the schema refuses a reward value",
+  "A1b": "on pending/unknown status",
+  "A2a": "a per-actor record whose reward equals a team-outcome-derived value",
+  "A2b": "with no actor-level verifier ref is refused",
+  "A3a": "a correction appends a new record referencing the corrected one",
+  "A3b": "and the original bytes stay",
+  "A4a": "a promotion decision is a separate operator fact",
+  "A4b": "never a field the policy path writes",
+  "S1a": "R7 feedback status shall be a closed set",
+  "S1b": "in which only an observed verifier/receipt outcome may carry reward",
+  "S2": "pending or unknown feedback never carries reward",
+  "S3a": "a team-level outcome is recorded once on the episode",
+  "S3b": "and never copied into per-actor reward or causal benefit",
+  "S4a": "corrections and promotion are appended as operator facts outside the policy's own evaluation",
+  "S4b": "never rewriting a decision",
+  "P1": "inferred relationship is a hypothesis never authoritative",
+  "P2": "missing edges do not imply independence",
+  "P3": "STALE/UNKNOWN shown",
+  "C1": "distinguish declared/observed/inferred",
+  "N1": "no Pi text binds a reward or feedback-status field",
+  "N2": "because none exists",
+  "Q1": "R-COMPOSED",
+  "Q2": "R-SHARED-WORD",
+  "Q3": "R-UNNAMED-RECORD",
+  "Q4": "R-OTHER-DERIVATION",
+  "Q5": "R-TEST-MENTION",
+  "Q6": "R-COORDINATED"
+ },
+ "residuals": {
+  "Q1": [
+   "concatenated",
+   "commented",
+   "escaped",
+   "homoglyph",
+   "joined",
+   "slashed",
+   "middle-dot",
+   "optional-chain",
+   "comment-continuation"
+  ],
+  "Q2": [
+   "pending",
+   "causal",
+   "attribution"
+  ],
+  "Q3": [
+   "unnamed",
+   "feedback-interface"
+  ],
+  "Q4": [
+   "weighted",
+   "rounded",
+   "remainder"
+  ],
+  "Q5": [
+   "scratch-test-file",
+   "census-module",
+   "census-roster"
+  ],
+  "Q6": [
+   "pin",
+   "case",
+   "code",
+   "mutant",
+   "residual-member"
+  ]
+ },
+ "cases": {
+  "K-STATUS": [
+   "s-observed=ok",
+   "s-pending=ok",
+   "s-unknown=ok",
+   "s-other=status-outside-set",
+   "s-missing=status-outside-set",
+   "s-case=status-outside-set",
+   "s-empty=status-outside-set",
+   "s-team=status-outside-set",
+   "s-correction=status-outside-set",
+   "s-padded=status-outside-set"
+  ],
+  "K-REWARD": [
+   "r-verifier=ok",
+   "r-receipt=ok",
+   "r-pending-bare=ok",
+   "r-pending=reward-on-unobserved:reward",
+   "r-unknown=reward-on-unobserved:reward",
+   "r-pending-zero=reward-on-unobserved:reward",
+   "r-unknown-causal=reward-on-unobserved:causalBenefit",
+   "r-pending-receipt=reward-on-unobserved:reward",
+   "r-team-pending=reward-on-unobserved:reward",
+   "r-correction-unknown=reward-on-unobserved:reward",
+   "r-no-outcome=observed-without-outcome",
+   "r-empty-ref=observed-without-outcome",
+   "r-self-report=observed-without-outcome",
+   "r-observed-bare=observed-without-outcome",
+   "r-pending-negative=reward-on-unobserved:reward",
+   "r-empty-receipt-ref=observed-without-outcome",
+   "r-decision-reward=reward-on-statusless:reward",
+   "r-promotion-causal=reward-on-statusless:causalBenefit"
+  ],
+  "K-TEAM": [
+   "t-once=ok",
+   "t-twice=team-outcome-twice",
+   "t-twice-pending=team-outcome-twice",
+   "t-other-episode=ok",
+   "t-copy-reward=team-outcome-copied:reward",
+   "t-copy-share=team-outcome-copied:reward",
+   "t-copy-share-receipt=team-outcome-copied:reward",
+   "t-copy-causal=team-outcome-copied:causalBenefit",
+   "t-copy-causal-team=team-outcome-copied:causalBenefit",
+   "t-actor-verifier=ok",
+   "t-not-derived=ok",
+   "t-correction-copy=team-outcome-copied:reward",
+   "t-correction-team=ok",
+   "t-no-team=ok",
+   "t-twice-after-pending=team-outcome-twice",
+   "t-correction-copy-causal=team-outcome-copied:causalBenefit"
+  ],
+  "K-APPEND": [
+   "a-correct-feedback=ok",
+   "a-correct-decision=ok",
+   "a-first=ok",
+   "a-rewrite-decision=rewrite",
+   "a-rewrite-feedback=rewrite",
+   "a-rewrite-by-correction=rewrite",
+   "a-unreferenced=correction-unreferenced",
+   "a-dangling=correction-unreferenced"
+  ],
+  "K-OPERATOR": [
+   "o-promotion=ok",
+   "o-decision=ok",
+   "o-promotion-policy=operator-fact-writer",
+   "o-promotion-host=operator-fact-writer",
+   "o-correction-policy=operator-fact-writer",
+   "o-correction-host=operator-fact-writer",
+   "o-decision-promotion=operator-field:promotion",
+   "o-decision-corrects=operator-field:corrects",
+   "o-feedback-promotion=operator-field:promotion"
+  ]
+ },
+ "mutants": [
+  "M01:open-status:K-STATUS",
+  "M02:missing-status-observed:K-STATUS",
+  "M03:case-folded-status:K-STATUS",
+  "M04:reward-on-pending:K-REWARD",
+  "M05:reward-on-unknown:K-REWARD",
+  "M06:unobserved-causal-benefit-unread:K-REWARD",
+  "M07:outcome-optional:K-REWARD",
+  "M08:any-outcome-kind:K-REWARD",
+  "M09:empty-ref:K-REWARD",
+  "M10:zero-reward-absent:K-REWARD",
+  "M11:team-outcome-twice-admitted:K-TEAM",
+  "M12:team-copy-unread:K-TEAM",
+  "M13:team-level-ref:K-TEAM",
+  "M14:receipt-as-verifier:K-TEAM",
+  "M15:causal-benefit-uncopied:K-TEAM",
+  "M16:share-unread:K-TEAM",
+  "M17:correction-bypasses-team:K-TEAM",
+  "M18:rewrite-admitted:K-APPEND",
+  "M19:correction-in-place:K-TEAM+K-APPEND",
+  "M20:dangling-correction:K-APPEND",
+  "M21:unreferenced-correction:K-APPEND",
+  "M22:mutating-append:K-STATUS+K-REWARD+K-TEAM+K-APPEND+K-OPERATOR",
+  "M23:promotion-writer-unread:K-OPERATOR",
+  "M24:correction-writer-unread:K-OPERATOR",
+  "M25:promotion-field-unread:K-OPERATOR",
+  "M26:corrects-field-unread:K-OPERATOR",
+  "M27:untyped-refusal:K-STATUS+K-REWARD+K-TEAM+K-APPEND+K-OPERATOR",
+  "M28:refusal-unnamed:K-STATUS+K-REWARD+K-TEAM+K-APPEND+K-OPERATOR",
+  "M29:refuse-every-record:K-STATUS+K-REWARD+K-TEAM+K-APPEND+K-OPERATOR",
+  "M30:negative-unobserved-admitted:K-REWARD",
+  "M31:receipt-ref-unread:K-REWARD",
+  "M32:trimmed-status:K-STATUS",
+  "M33:twice-after-observed-only:K-TEAM",
+  "M34:correction-causal-uncopied:K-TEAM",
+  "M35:statusless-value-admitted:K-REWARD",
+  "M36:decision-value-unread:K-REWARD",
+  "M37:promotion-value-unread:K-REWARD",
+  "M38:statusless-causal-unread:K-REWARD"
+ ],
+ "witnesses": {
+  "A1a": {
+   "r-pending": "reward-on-unobserved:reward",
+   "r-unknown": "reward-on-unobserved:reward",
+   "r-pending-zero": "reward-on-unobserved:reward",
+   "r-pending-negative": "reward-on-unobserved:reward",
+   "r-unknown-causal": "reward-on-unobserved:causalBenefit",
+   "r-pending-receipt": "reward-on-unobserved:reward",
+   "r-team-pending": "reward-on-unobserved:reward",
+   "r-correction-unknown": "reward-on-unobserved:reward",
+   "r-verifier": "ok",
+   "r-receipt": "ok"
+  },
+  "A1b": {
+   "reward": {
+    "observed": "ok",
+    "pending": "reward-on-unobserved:reward",
+    "unknown": "reward-on-unobserved:reward"
+   },
+   "zero": {
+    "observed": "ok",
+    "pending": "reward-on-unobserved:reward",
+    "unknown": "reward-on-unobserved:reward"
+   },
+   "negative": {
+    "observed": "ok",
+    "pending": "reward-on-unobserved:reward",
+    "unknown": "reward-on-unobserved:reward"
+   },
+   "causalBenefit": {
+    "observed": "ok",
+    "pending": "reward-on-unobserved:causalBenefit",
+    "unknown": "reward-on-unobserved:causalBenefit"
+   },
+   "bare": {
+    "observed": "ok",
+    "pending": "ok",
+    "unknown": "ok"
+   }
+  },
+  "A2a": {
+   "derived": [
+    12,
+    4
+   ],
+   "read": {
+    "t-copy-reward": "team-outcome-copied:reward",
+    "t-copy-share": "team-outcome-copied:reward",
+    "t-not-derived": "ok",
+    "t-no-team": "ok",
+    "t-correction-team": "ok"
+   }
+  },
+  "A2b": {
+   "matrix": {
+    "actor verifier": "ok",
+    "actor receipt": "team-outcome-copied:reward",
+    "team verifier": "team-outcome-copied:reward",
+    "team receipt": "team-outcome-copied:reward",
+    "no outcome": "observed-without-outcome"
+   },
+   "read": {
+    "t-copy-causal": "team-outcome-copied:causalBenefit",
+    "t-actor-verifier": "ok",
+    "t-correction-copy": "team-outcome-copied:reward",
+    "t-correction-copy-causal": "team-outcome-copied:causalBenefit"
+   }
+  },
+  "A3a": {
+   "ids": [
+    "t1",
+    "d1",
+    "d2",
+    "f1",
+    "k1"
+   ],
+   "added": {
+    "id": "k1",
+    "kind": "correction",
+    "writer": "operator",
+    "corrects": "f1"
+   },
+   "read": {
+    "a-correct-feedback": "ok",
+    "a-correct-decision": "ok",
+    "a-unreferenced": "correction-unreferenced",
+    "a-dangling": "correction-unreferenced"
+   }
+  },
+  "A3b": {
+   "priorBytesSame": true,
+   "callerLogSame": true,
+   "correctedReward": 5,
+   "rewrites": {
+    "a-rewrite-decision": "rewrite",
+    "a-rewrite-feedback": "rewrite",
+    "a-rewrite-by-correction": "rewrite"
+   }
+  },
+  "A4a": {
+   "added": {
+    "id": "p1",
+    "kind": "promotion",
+    "writer": "operator",
+    "subject": "d1"
+   },
+   "subjectSame": true,
+   "read": {
+    "o-promotion": "ok",
+    "o-promotion-policy": "operator-fact-writer",
+    "o-promotion-host": "operator-fact-writer"
+   }
+  },
+  "A4b": {
+   "read": {
+    "o-decision-promotion": "operator-field:promotion",
+    "o-decision-corrects": "operator-field:corrects",
+    "o-feedback-promotion": "operator-field:promotion",
+    "o-decision": "ok"
+   },
+   "policyFields": [
+    [],
+    []
+   ]
+  },
+  "S1a": {
+   "statuses": [
+    "observed",
+    "pending",
+    "unknown"
+   ],
+   "read": {
+    "s-observed": "ok",
+    "s-pending": "ok",
+    "s-unknown": "ok",
+    "s-other": "status-outside-set",
+    "s-missing": "status-outside-set",
+    "s-case": "status-outside-set",
+    "s-empty": "status-outside-set",
+    "s-team": "status-outside-set",
+    "s-correction": "status-outside-set",
+    "s-padded": "status-outside-set"
+   }
+  },
+  "S1b": {
+   "read": {
+    "r-verifier": "ok",
+    "r-receipt": "ok",
+    "r-no-outcome": "observed-without-outcome",
+    "r-empty-ref": "observed-without-outcome",
+    "r-empty-receipt-ref": "observed-without-outcome",
+    "r-self-report": "observed-without-outcome",
+    "r-observed-bare": "observed-without-outcome",
+    "r-decision-reward": "reward-on-statusless:reward",
+    "r-promotion-causal": "reward-on-statusless:causalBenefit"
+   },
+   "statusless": {
+    "decision": {
+     "reward": "reward-on-statusless:reward",
+     "causalBenefit": "reward-on-statusless:causalBenefit"
+    },
+    "promotion": {
+     "reward": "reward-on-statusless:reward",
+     "causalBenefit": "reward-on-statusless:causalBenefit"
+    }
+   }
+  },
+  "S2": [
+   "team-outcome/pending/reward/no outcome: reward-on-unobserved:reward",
+   "team-outcome/pending/reward/actor verifier: reward-on-unobserved:reward",
+   "team-outcome/pending/causalBenefit/no outcome: reward-on-unobserved:causalBenefit",
+   "team-outcome/pending/causalBenefit/actor verifier: reward-on-unobserved:causalBenefit",
+   "team-outcome/unknown/reward/no outcome: reward-on-unobserved:reward",
+   "team-outcome/unknown/reward/actor verifier: reward-on-unobserved:reward",
+   "team-outcome/unknown/causalBenefit/no outcome: reward-on-unobserved:causalBenefit",
+   "team-outcome/unknown/causalBenefit/actor verifier: reward-on-unobserved:causalBenefit",
+   "feedback/pending/reward/no outcome: reward-on-unobserved:reward",
+   "feedback/pending/reward/actor verifier: reward-on-unobserved:reward",
+   "feedback/pending/causalBenefit/no outcome: reward-on-unobserved:causalBenefit",
+   "feedback/pending/causalBenefit/actor verifier: reward-on-unobserved:causalBenefit",
+   "feedback/unknown/reward/no outcome: reward-on-unobserved:reward",
+   "feedback/unknown/reward/actor verifier: reward-on-unobserved:reward",
+   "feedback/unknown/causalBenefit/no outcome: reward-on-unobserved:causalBenefit",
+   "feedback/unknown/causalBenefit/actor verifier: reward-on-unobserved:causalBenefit",
+   "correction/pending/reward/no outcome: reward-on-unobserved:reward",
+   "correction/pending/reward/actor verifier: reward-on-unobserved:reward",
+   "correction/pending/causalBenefit/no outcome: reward-on-unobserved:causalBenefit",
+   "correction/pending/causalBenefit/actor verifier: reward-on-unobserved:causalBenefit",
+   "correction/unknown/reward/no outcome: reward-on-unobserved:reward",
+   "correction/unknown/reward/actor verifier: reward-on-unobserved:reward",
+   "correction/unknown/causalBenefit/no outcome: reward-on-unobserved:causalBenefit",
+   "correction/unknown/causalBenefit/actor verifier: reward-on-unobserved:causalBenefit"
+  ],
+  "S3a": {
+   "read": {
+    "t-once": "ok",
+    "t-twice": "team-outcome-twice",
+    "t-twice-pending": "team-outcome-twice",
+    "t-twice-after-pending": "team-outcome-twice",
+    "t-other-episode": "ok"
+   },
+   "carriers": [
+    "t1:ep-1:3"
+   ]
+  },
+  "S3b": {
+   "t-copy-reward": "team-outcome-copied:reward",
+   "t-copy-share": "team-outcome-copied:reward",
+   "t-copy-share-receipt": "team-outcome-copied:reward",
+   "t-copy-causal": "team-outcome-copied:causalBenefit",
+   "t-copy-causal-team": "team-outcome-copied:causalBenefit",
+   "t-correction-copy": "team-outcome-copied:reward",
+   "t-correction-copy-causal": "team-outcome-copied:causalBenefit"
+  },
+  "S4a": {
+   "correction": {
+    "policy": "operator-fact-writer",
+    "host": "operator-fact-writer",
+    "operator": "ok"
+   },
+   "promotion": {
+    "policy": "operator-fact-writer",
+    "host": "operator-fact-writer",
+    "operator": "ok"
+   }
+  },
+  "S4b": {
+   "rewrite": "rewrite",
+   "correctionOfDecision": "ok",
+   "decisionSame": true,
+   "decisionCount": 1
+  },
+  "P1": {
+   "anchor": {
+    "line": 69,
+    "pin": true,
+    "head": true,
+    "pinSection": "",
+    "headSection": ""
+   },
+   "controls": {
+    "editedPin": false,
+    "editedSection": false,
+    "nextLinePin": false,
+    "otherCarrierSection": false,
+    "htmlBesideSection": false,
+    "duplicatedSection": false
+   },
+   "plants": {
+    "dropped": {
+     "head": false,
+     "section": false
+    },
+    "edited": {
+     "head": false,
+     "section": false
+    },
+    "markup": {
+     "head": false,
+     "section": false
+    },
+    "comment": {
+     "head": true,
+     "section": false
+    },
+    "fence": {
+     "head": true,
+     "section": false
+    },
+    "moved": {
+     "head": true,
+     "section": false
+    },
+    "withdrawal": {
+     "head": true,
+     "section": false
+    }
+   }
+  },
+  "P2": {
+   "anchor": {
+    "line": 71,
+    "pin": true,
+    "head": true,
+    "pinSection": "",
+    "headSection": ""
+   },
+   "controls": {
+    "editedPin": false,
+    "editedSection": false,
+    "nextLinePin": false,
+    "otherCarrierSection": false,
+    "htmlBesideSection": false,
+    "duplicatedSection": false
+   },
+   "plants": {
+    "dropped": {
+     "head": false,
+     "section": false
+    },
+    "edited": {
+     "head": false,
+     "section": false
+    },
+    "markup": {
+     "head": false,
+     "section": false
+    },
+    "comment": {
+     "head": true,
+     "section": false
+    },
+    "fence": {
+     "head": true,
+     "section": false
+    },
+    "moved": {
+     "head": true,
+     "section": false
+    },
+    "withdrawal": {
+     "head": true,
+     "section": false
+    }
+   }
+  },
+  "P3": {
+   "lines": [
+    {
+     "anchor": {
+      "line": 73,
+      "pin": true,
+      "head": true,
+      "pinSection": "",
+      "headSection": ""
+     },
+     "controls": {
+      "editedPin": false,
+      "editedSection": false,
+      "nextLinePin": false,
+      "otherCarrierSection": false,
+      "htmlBesideSection": false,
+      "duplicatedSection": false
+     },
+     "plants": {
+      "dropped": {
+       "head": false,
+       "section": false
+      },
+      "edited": {
+       "head": false,
+       "section": false
+      },
+      "markup": {
+       "head": false,
+       "section": false
+      },
+      "comment": {
+       "head": true,
+       "section": false
+      },
+      "fence": {
+       "head": true,
+       "section": false
+      },
+      "moved": {
+       "head": true,
+       "section": false
+      },
+      "withdrawal": {
+       "head": true,
+       "section": false
+      }
+     }
+    },
+    {
+     "anchor": {
+      "line": 75,
+      "pin": true,
+      "head": true,
+      "pinSection": "",
+      "headSection": ""
+     },
+     "controls": {
+      "editedPin": false,
+      "editedSection": false,
+      "nextLinePin": false,
+      "otherCarrierSection": false,
+      "htmlBesideSection": false,
+      "duplicatedSection": false
+     },
+     "plants": {
+      "dropped": {
+       "head": false,
+       "section": false
+      },
+      "edited": {
+       "head": false,
+       "section": false
+      },
+      "markup": {
+       "head": false,
+       "section": false
+      },
+      "comment": {
+       "head": true,
+       "section": false
+      },
+      "fence": {
+       "head": true,
+       "section": false
+      },
+      "moved": {
+       "head": true,
+       "section": false
+      },
+      "withdrawal": {
+       "head": true,
+       "section": false
+      }
+     }
+    }
+   ],
+   "blank": ""
+  },
+  "C1": {
+   "cited": {
+    "anchor": {
+     "line": 29,
+     "pin": true,
+     "head": true,
+     "pinSection": "",
+     "headSection": ""
+    },
+    "controls": {
+     "editedPin": false,
+     "editedSection": false,
+     "nextLinePin": false,
+     "otherCarrierSection": false,
+     "htmlBesideSection": false,
+     "duplicatedSection": false
+    },
+    "plants": {
+     "dropped": {
+      "head": false,
+      "section": false
+     },
+     "edited": {
+      "head": false,
+      "section": false
+     },
+     "markup": {
+      "head": false,
+      "section": false
+     },
+     "comment": {
+      "head": true,
+      "section": false
+     },
+     "fence": {
+      "head": true,
+      "section": false
+     },
+     "moved": {
+      "head": true,
+      "section": false
+     },
+     "withdrawal": {
+      "head": true,
+      "section": false
+     }
+    }
+   },
+   "cell": {
+    "tables": 1,
+    "rows": 14,
+    "risk": "Source graph conflated with trace",
+    "column": "Mitigation and test"
+   }
+  },
+  "N1": {
+   "floor": true,
+   "anchor": {
+    "read": true,
+    "words": []
+   },
+   "words": [],
+   "controls": {
+    "word": [
+     "reward"
+    ],
+    "upper": [
+     "reward"
+    ],
+    "inside a longer name": [
+     "reward"
+    ],
+    "camel team outcome": [
+     "team outcome"
+    ],
+    "kebab": [
+     "team outcome"
+    ],
+    "upper snake": [
+     "feedback status"
+    ],
+    "dotted": [
+     "feedback status"
+    ],
+    "spaced twice": [
+     "causal benefit"
+    ],
+    "format characters between the parts": [
+     "causal benefit"
+    ],
+    "hyphen U+2010": [
+     "team outcome"
+    ],
+    "non-breaking hyphen U+2011": [
+     "feedback status"
+    ],
+    "en dash U+2013": [
+     "causal benefit"
+    ],
+    "minus sign U+2212": [
+     "team outcome"
+    ],
+    "fullwidth low line U+FF3F": [
+     "feedback status"
+    ],
+    "soft hyphen U+00AD": [
+     "causal benefit"
+    ],
+    "no-break space U+00A0": [
+     "team outcome"
+    ],
+    "every word": [
+     "reward",
+     "team outcome",
+     "feedback status",
+     "causal benefit"
+    ],
+    "status alone": [],
+    "feedback alone": [],
+    "outcome alone": [],
+    "benefit alone": [],
+    "a word between the parts": [],
+    "shared words": []
+   },
+   "listing": {
+    "listed": [
+     "src/link.ts",
+     "src/nested/planted.ts",
+     "src/quiet.ts"
+    ],
+    "findings": [
+     "src/nested/planted.ts: names team outcome, no SITES registration"
+    ],
+    "unread": [
+     "src/link.ts"
+    ]
+   }
+  },
+  "N2": {
+   "sites": [],
+   "live": [],
+   "armed": {
+    "unregistered": [
+     "src/workbench/r7-feedback.ts: names reward, no SITES registration"
+    ],
+    "registered": [],
+    "stale": [
+     "src/workbench/r7-feedback.ts: registered, names no vocabulary word (stale)"
+    ],
+    "twice": [
+     "src/workbench/r7-feedback.ts: registered twice"
+    ],
+    "pathOnly": [
+     "src/workbench/team-outcome.ts: names team outcome, no SITES registration"
+    ],
+    "pathDash": [
+     "src/workbench/feedback\u2010status.ts: names feedback status, no SITES registration"
+    ],
+    "judged": []
+   },
+   "counts": {
+    "src": 115,
+    "test": 410,
+    "docs": 59
+   },
+   "pinWords": [],
+   "planted": [
+    "src/r7.ts: feedback status"
+   ]
+  },
+  "Q1": {
+   "name": "R-COMPOSED",
+   "members": [
+    "concatenated",
+    "commented",
+    "escaped",
+    "homoglyph",
+    "joined",
+    "slashed",
+    "middle-dot",
+    "optional-chain",
+    "comment-continuation"
+   ],
+   "findings": []
+  },
+  "Q2": {
+   "name": "R-SHARED-WORD",
+   "members": [
+    "pending",
+    "causal",
+    "attribution"
+   ],
+   "findings": []
+  },
+  "Q3": {
+   "name": "R-UNNAMED-RECORD",
+   "members": [
+    "unnamed",
+    "feedback-interface"
+   ],
+   "findings": []
+  },
+  "Q4": {
+   "name": "R-OTHER-DERIVATION",
+   "members": [
+    "weighted",
+    "rounded",
+    "remainder"
+   ],
+   "read": {
+    "weighted": "ok",
+    "rounded": "ok",
+    "remainder": "ok"
+   },
+   "derived": {
+    "base": [
+     12,
+     4
+    ],
+    "ten": [
+     10,
+     3.3333333333333335
+    ]
+   }
+  },
+  "Q5": {
+   "name": "R-TEST-MENTION",
+   "members": [
+    "scratch-test-file",
+    "census-module",
+    "census-roster"
+   ],
+   "mention": {
+    "listed": [
+     "src/quiet.ts"
+    ],
+    "findings": [],
+    "testWords": [
+     "reward",
+     "team outcome"
+    ]
+   },
+   "own": {
+    "census": [
+     "reward",
+     "team outcome",
+     "feedback status",
+     "causal benefit"
+    ],
+    "roster": [
+     "reward",
+     "team outcome",
+     "feedback status",
+     "causal benefit"
+    ],
+    "inSrc": false
+   }
+  },
+  "Q6": {
+   "name": "R-COORDINATED",
+   "members": [
+    "pin",
+    "case",
+    "code",
+    "mutant",
+    "residual-member"
+   ],
+   "partition": {
+    "caught": [
+     "A1a",
+     "A1b",
+     "A2a",
+     "A2b",
+     "A3a",
+     "A3b",
+     "A4a",
+     "A4b",
+     "S1a",
+     "S1b",
+     "S2",
+     "S3a",
+     "S3b",
+     "S4a",
+     "S4b",
+     "P1",
+     "P2",
+     "P3",
+     "C1",
+     "N1",
+     "N2"
+    ],
+    "quiet": [
+     "Q1",
+     "Q2",
+     "Q3",
+     "Q4",
+     "Q5",
+     "Q6"
+    ]
+   }
+  }
+ },
+ "tests": [
+  "A1a: the schema refuses a reward value",
+  "A1b: on pending/unknown status",
+  "A2a: a per-actor record whose reward equals a team-outcome-derived value",
+  "A2b: with no actor-level verifier ref is refused",
+  "A3a: a correction appends a new record referencing the corrected one",
+  "A3b: and the original bytes stay",
+  "A4a: a promotion decision is a separate operator fact",
+  "A4b: never a field the policy path writes",
+  "S1a: R7 feedback status shall be a closed set",
+  "S1b: in which only an observed verifier/receipt outcome may carry reward",
+  "S2: pending or unknown feedback never carries reward",
+  "S3a: a team-level outcome is recorded once on the episode",
+  "S3b: and never copied into per-actor reward or causal benefit",
+  "S4a: corrections and promotion are appended as operator facts outside the policy's own evaluation",
+  "S4b: never rewriting a decision",
+  "P1: inferred relationship is a hypothesis never authoritative",
+  "P2: missing edges do not imply independence",
+  "P3: STALE/UNKNOWN shown",
+  "C1: distinguish declared/observed/inferred",
+  "N1: no Pi text binds a reward or feedback-status field",
+  "N2: because none exists",
+  "Q1: R-COMPOSED",
+  "Q2: R-SHARED-WORD",
+  "Q3: R-UNNAMED-RECORD",
+  "Q4: R-OTHER-DERIVATION",
+  "Q5: R-TEST-MENTION",
+  "Q6: R-COORDINATED",
+  "rule 16: the rows, the tables and the vocabulary are frozen at their measured shape",
+  "mutant battery: the reference meets every check, each mutant is refused by exactly its declared checks, and every check refuses a mutant alone",
+  "the outside anchors: the bead's own row binds the rows, the pin quotes, the statuses, the vocabulary, the docs citation and the producer block",
+  "roster: the judged rows, the quotes, the cases, the residual members, the mutants and the registered tests equal test/fixtures/mw-gp-feedback-status-roster.json, in order and both ways; every pin reached its witness compare"
+ ],
+ "producer": {
+  "repo": "MechanicalWorkflows",
+  "sha": "4b8b974ca72bf2ed36b99e315e45857c6181fbe8",
+  "lines": [
+   {
+    "path": "docs/programs/graph-policy-coordination-2026-10-18/README.md",
+    "blob": "0dbff582a14c13e4b4b13cb1848a23b935d92697",
+    "line": 15,
+    "text": "Add an application-owned sidecar rather than changing `mw.training-export.v1` admission semantics. Record exact GP graph/program/checkpoint, feature projection, actor/selector, legal support at sample time, proposed vs admitted vs executed action, actual source receipt and final feedback status. Post-proposal admission is **not** original sampler support. Unknown/pending feedback cannot be invented as observed reward; global team outcome alone does not attribute causal benefit to each actor."
+   },
+   {
+    "path": "docs/programs/graph-policy-coordination-2026-10-18.md",
+    "blob": "01ff00d480ecd5e5f6999433612f0c713f1f72aa",
+    "line": 16,
+    "text": "6. Sidecar correlates observation, sampled decision and behavior log probability, resulting proposal, resolver verdict, source-owned effect receipt and external verifier outcome. Feedback corrections and promotion remain outside the policy's evaluation."
+   }
+  ]
+ }
+}

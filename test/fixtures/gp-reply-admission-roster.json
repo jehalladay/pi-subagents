@@ -1,0 +1,1072 @@
+{
+  "bead": "wb-0lf.3",
+  "statement": "[FURNACE-GRAPH-POLICY-DECISION-EXECUTOR-R3] When Pi admits a GraphPolicyCLI reply (artifact: released GP reply schema + a Pi decision point), the host shall independently check schema and checkpoint identity, snapshot-digest freshness vs the pinned basis, actor scope, action support and resource constraints before admission; a stale basis, unsupported action, worker timeout or crash yields a typed refusal, never a decision or success.",
+  "rows": [
+    {
+      "id": "T",
+      "label": "When Pi admits a GraphPolicyCLI reply (artifact: released GP reply schema + a Pi decision point)",
+      "pins": [
+        "T1",
+        "T2",
+        "T3"
+      ]
+    },
+    {
+      "id": "A",
+      "label": "a reader-adapter test over a fixture reply asserts admission requires schema id and checkpoint id in the pinned set, snapshotDigest === the digest Pi exported, actor in scope and proposed action inside the exported support",
+      "pins": [
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "A5"
+      ]
+    },
+    {
+      "id": "B",
+      "label": "each violation yields exactly one typed refusal naming only the field and no decision object",
+      "pins": [
+        "B1",
+        "B2",
+        "B3"
+      ]
+    },
+    {
+      "id": "C",
+      "label": "a GP worker timeout, non-zero exit or malformed stdout yields typed unavailable and no receipt row claims success",
+      "pins": [
+        "C1",
+        "C2"
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the residuals' pinned quiet rows",
+      "pins": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q6",
+        "Q7"
+      ]
+    }
+  ],
+  "quotes": {
+    "T1": "When Pi admits a GraphPolicyCLI reply",
+    "T2": "artifact: released GP reply schema",
+    "T3": "a Pi decision point",
+    "A1": "a reader-adapter test over a fixture reply asserts admission requires",
+    "A2": "schema id and checkpoint id in the pinned set",
+    "A3": "snapshotDigest === the digest Pi exported",
+    "A4": "actor in scope",
+    "A5": "and proposed action inside the exported support",
+    "B1": "each violation yields exactly one typed refusal",
+    "B2": "naming only the field",
+    "B3": "and no decision object",
+    "C1": "a GP worker timeout, non-zero exit or malformed stdout yields typed unavailable",
+    "C2": "and no receipt row claims success",
+    "Q1": "R-SPELLING",
+    "Q2": "R-MULTI-VIOLATION",
+    "Q3": "R-RESOURCE",
+    "Q4": "R-SIDE-PATH",
+    "Q5": "R-JUDGE",
+    "Q6": "R-PARTITION",
+    "Q7": "R-UNREAD"
+  },
+  "residuals": {
+    "Q1": [
+      "composed",
+      "concatenated",
+      "upper-snake",
+      "escaped-identifier",
+      "vocabulary-free-admitter",
+      "gp-spawning-admitter"
+    ],
+    "Q2": [
+      "two-field-reply"
+    ],
+    "Q3": [
+      "over-budget-reply"
+    ],
+    "Q4": [
+      "side-path-admitter"
+    ],
+    "Q5": [
+      "G1",
+      "G2",
+      "G3",
+      "G4",
+      "G5",
+      "G6",
+      "G7",
+      "G8",
+      "G9",
+      "G10",
+      "G11",
+      "G12",
+      "G13",
+      "G14"
+    ],
+    "Q6": [
+      "C6-mA",
+      "C6-mT",
+      "C6-mB",
+      "C6-mC"
+    ],
+    "Q7": [
+      "C6-labelQ",
+      "C6-quoteQ",
+      "C6-Q4",
+      "C6-Q",
+      "C6-member",
+      "PL1",
+      "PL2",
+      "PL4"
+    ]
+  },
+  "witnesses": {
+    "T1": {
+      "srcFloor": true,
+      "named": [],
+      "bound": [],
+      "readsCore": true,
+      "nearMiss": [],
+      "controls": {
+        "field": [
+          "graph_digest"
+        ],
+        "camel": [
+          "graphDigest",
+          "checkpointDigest",
+          "chosenId"
+        ],
+        "namespace": [
+          "namespace:graphpolicy"
+        ],
+        "all": [
+          "namespace:graphpolicy",
+          "graph_digest",
+          "checkpoint_digest",
+          "chosen_id",
+          "graphDigest",
+          "checkpointDigest",
+          "chosenId"
+        ],
+        "quiet": []
+      }
+    },
+    "T2": {
+      "generatedBy": "sample",
+      "accepted": true,
+      "sourceSha": "3f7d52cd17397d8ed22e2c768714a057fe098b62",
+      "receiptSchema": "graphpolicy.receipt.decision.v1",
+      "kind": "sampled-decision",
+      "reads": {
+        "checkpoint_digest": "string",
+        "graph_digest": "string",
+        "candidates": 3,
+        "proposal": "exec-a1-t1"
+      },
+      "graphDigestHashesSnapshot": true,
+      "checkpointIsGeneratorArgument": true
+    },
+    "T3": {
+      "registered": [],
+      "providers": [
+        "furnace",
+        "claude-agent-sdk",
+        "forge",
+        "local-detached"
+      ],
+      "denial": {
+        "decision": "denied",
+        "policy": "unknown-action",
+        "category": "validation"
+      }
+    },
+    "A1": {
+      "bound": [],
+      "outcomes": {
+        "F-ADMIT": "admitted:exec-a1-t1",
+        "F-SCHEMA": "refused:schema",
+        "F-CHECKPOINT": "refused:checkpoint",
+        "F-DIGEST-COMPACT": "refused:snapshotDigest",
+        "F-DIGEST-NEWLINE": "refused:snapshotDigest",
+        "F-DIGEST-CRLF": "refused:snapshotDigest",
+        "F-DIGEST-MOVED": "refused:snapshotDigest",
+        "F-ACTOR": "refused:actor",
+        "F-SUPPORT": "refused:support",
+        "F-TIMEOUT": "unavailable:timeout",
+        "F-EXIT-ERROR": "unavailable:exit",
+        "F-EXIT-CRASH": "unavailable:exit",
+        "F-MALFORMED-TRUNCATED": "unavailable:malformed",
+        "F-MALFORMED-EMPTY": "unavailable:malformed",
+        "F-MALFORMED-NO-DECISION": "unavailable:malformed"
+      },
+      "fired": [
+        "admitted-schema",
+        "admitted-checkpoint",
+        "admitted-snapshotDigest",
+        "admitted-actor",
+        "admitted-support",
+        "refusal-count",
+        "refusal-field",
+        "refusal-decision",
+        "unavailable",
+        "success-row",
+        "decision-kept"
+      ],
+      "quiet": [],
+      "M-ALWAYS-REFUSE": {
+        "F-ADMIT": [
+          "decision-kept"
+        ],
+        "F-CHECKPOINT": [
+          "refusal-field"
+        ],
+        "F-DIGEST-COMPACT": [
+          "refusal-field"
+        ],
+        "F-DIGEST-NEWLINE": [
+          "refusal-field"
+        ],
+        "F-DIGEST-CRLF": [
+          "refusal-field"
+        ],
+        "F-DIGEST-MOVED": [
+          "refusal-field"
+        ],
+        "F-ACTOR": [
+          "refusal-field"
+        ],
+        "F-SUPPORT": [
+          "refusal-field"
+        ]
+      },
+      "M-PROPOSAL-RESAMPLED": {
+        "F-ADMIT": [
+          "decision-kept"
+        ]
+      }
+    },
+    "A2": {
+      "outcomes": {
+        "F-SCHEMA": "refused:schema",
+        "F-CHECKPOINT": "refused:checkpoint"
+      },
+      "sharesPrefix": true,
+      "sharesFamily": true,
+      "M-NO-SCHEMA": {
+        "F-SCHEMA": [
+          "admitted-schema",
+          "refusal-count",
+          "refusal-decision",
+          "success-row"
+        ]
+      },
+      "M-SCHEMA-FAMILY": {
+        "F-SCHEMA": [
+          "admitted-schema",
+          "refusal-count",
+          "refusal-decision",
+          "success-row"
+        ]
+      },
+      "M-NO-CHECKPOINT": {
+        "F-CHECKPOINT": [
+          "admitted-checkpoint",
+          "refusal-count",
+          "refusal-decision",
+          "success-row"
+        ]
+      },
+      "M-CHECKPOINT-PREFIX": {
+        "F-CHECKPOINT": [
+          "admitted-checkpoint",
+          "refusal-count",
+          "refusal-decision",
+          "success-row"
+        ]
+      }
+    },
+    "A3": {
+      "exported": "sha256:06d3bcbb80f339636874630a8ae6c259ad14fb2251d485b72b4e28b62022fa2d",
+      "joinKeys": true,
+      "whitespaceOnly": {
+        "F-DIGEST-COMPACT": true,
+        "F-DIGEST-NEWLINE": true,
+        "F-DIGEST-CRLF": true,
+        "F-DIGEST-MOVED": false
+      },
+      "outcomes": {
+        "F-DIGEST-COMPACT": "refused:snapshotDigest",
+        "F-DIGEST-NEWLINE": "refused:snapshotDigest",
+        "F-DIGEST-CRLF": "refused:snapshotDigest",
+        "F-DIGEST-MOVED": "refused:snapshotDigest"
+      },
+      "M-NO-DIGEST": {
+        "F-DIGEST-COMPACT": [
+          "admitted-snapshotDigest",
+          "refusal-count",
+          "refusal-decision",
+          "success-row"
+        ],
+        "F-DIGEST-NEWLINE": [
+          "admitted-snapshotDigest",
+          "refusal-count",
+          "refusal-decision",
+          "success-row"
+        ],
+        "F-DIGEST-CRLF": [
+          "admitted-snapshotDigest",
+          "refusal-count",
+          "refusal-decision",
+          "success-row"
+        ],
+        "F-DIGEST-MOVED": [
+          "admitted-snapshotDigest",
+          "refusal-count",
+          "refusal-decision",
+          "success-row"
+        ]
+      },
+      "M-DIGEST-RESERIALIZED": {
+        "F-DIGEST-COMPACT": [
+          "admitted-snapshotDigest",
+          "refusal-count",
+          "refusal-decision",
+          "success-row"
+        ],
+        "F-DIGEST-NEWLINE": [
+          "admitted-snapshotDigest",
+          "refusal-count",
+          "refusal-decision",
+          "success-row"
+        ],
+        "F-DIGEST-CRLF": [
+          "admitted-snapshotDigest",
+          "refusal-count",
+          "refusal-decision",
+          "success-row"
+        ]
+      }
+    },
+    "A4": {
+      "proposal": "exec-a1-t1",
+      "actor": "agent-1",
+      "agents": [
+        "agent-1",
+        "agent-2"
+      ],
+      "scope": [
+        "agent-2"
+      ],
+      "outcomes": {
+        "F-ACTOR": "refused:actor"
+      },
+      "M-NO-ACTOR": {
+        "F-ACTOR": [
+          "admitted-actor",
+          "refusal-count",
+          "refusal-decision",
+          "success-row"
+        ]
+      }
+    },
+    "A5": {
+      "proposal": "exec-a2-t3",
+      "actor": "agent-2",
+      "offered": false,
+      "replyClaims": true,
+      "outcomes": {
+        "F-SUPPORT": "refused:support"
+      },
+      "M-NO-SUPPORT": {
+        "F-SUPPORT": [
+          "admitted-support",
+          "refusal-count",
+          "refusal-decision",
+          "success-row"
+        ]
+      },
+      "M-SUPPORT-FROM-REPLY": {
+        "F-SUPPORT": [
+          "admitted-support",
+          "refusal-count",
+          "refusal-decision",
+          "success-row"
+        ]
+      }
+    },
+    "B1": {
+      "violated": {
+        "F-SCHEMA": [
+          "schema"
+        ],
+        "F-CHECKPOINT": [
+          "checkpoint"
+        ],
+        "F-DIGEST-COMPACT": [
+          "snapshotDigest"
+        ],
+        "F-DIGEST-NEWLINE": [
+          "snapshotDigest"
+        ],
+        "F-DIGEST-CRLF": [
+          "snapshotDigest"
+        ],
+        "F-DIGEST-MOVED": [
+          "snapshotDigest"
+        ],
+        "F-ACTOR": [
+          "actor"
+        ],
+        "F-SUPPORT": [
+          "support"
+        ]
+      },
+      "counts": {
+        "F-SCHEMA": 1,
+        "F-CHECKPOINT": 1,
+        "F-DIGEST-COMPACT": 1,
+        "F-DIGEST-NEWLINE": 1,
+        "F-DIGEST-CRLF": 1,
+        "F-DIGEST-MOVED": 1,
+        "F-ACTOR": 1,
+        "F-SUPPORT": 1
+      },
+      "M-REFUSAL-TWICE": {
+        "F-SCHEMA": [
+          "refusal-count"
+        ],
+        "F-CHECKPOINT": [
+          "refusal-count"
+        ],
+        "F-DIGEST-COMPACT": [
+          "refusal-count"
+        ],
+        "F-DIGEST-NEWLINE": [
+          "refusal-count"
+        ],
+        "F-DIGEST-CRLF": [
+          "refusal-count"
+        ],
+        "F-DIGEST-MOVED": [
+          "refusal-count"
+        ],
+        "F-ACTOR": [
+          "refusal-count"
+        ],
+        "F-SUPPORT": [
+          "refusal-count"
+        ]
+      },
+      "M-REFUSAL-NONE": {
+        "F-SCHEMA": [
+          "refusal-count"
+        ],
+        "F-CHECKPOINT": [
+          "refusal-count"
+        ],
+        "F-DIGEST-COMPACT": [
+          "refusal-count"
+        ],
+        "F-DIGEST-NEWLINE": [
+          "refusal-count"
+        ],
+        "F-DIGEST-CRLF": [
+          "refusal-count"
+        ],
+        "F-DIGEST-MOVED": [
+          "refusal-count"
+        ],
+        "F-ACTOR": [
+          "refusal-count"
+        ],
+        "F-SUPPORT": [
+          "refusal-count"
+        ]
+      }
+    },
+    "B2": {
+      "keys": {
+        "F-SCHEMA": [
+          [
+            "outcome",
+            "field"
+          ]
+        ],
+        "F-CHECKPOINT": [
+          [
+            "outcome",
+            "field"
+          ]
+        ],
+        "F-DIGEST-COMPACT": [
+          [
+            "outcome",
+            "field"
+          ]
+        ],
+        "F-DIGEST-NEWLINE": [
+          [
+            "outcome",
+            "field"
+          ]
+        ],
+        "F-DIGEST-CRLF": [
+          [
+            "outcome",
+            "field"
+          ]
+        ],
+        "F-DIGEST-MOVED": [
+          [
+            "outcome",
+            "field"
+          ]
+        ],
+        "F-ACTOR": [
+          [
+            "outcome",
+            "field"
+          ]
+        ],
+        "F-SUPPORT": [
+          [
+            "outcome",
+            "field"
+          ]
+        ]
+      },
+      "M-REFUSAL-ECHO": {
+        "F-SCHEMA": [
+          "refusal-field"
+        ],
+        "F-CHECKPOINT": [
+          "refusal-field"
+        ],
+        "F-DIGEST-COMPACT": [
+          "refusal-field"
+        ],
+        "F-DIGEST-NEWLINE": [
+          "refusal-field"
+        ],
+        "F-DIGEST-CRLF": [
+          "refusal-field"
+        ],
+        "F-DIGEST-MOVED": [
+          "refusal-field"
+        ],
+        "F-ACTOR": [
+          "refusal-field"
+        ],
+        "F-SUPPORT": [
+          "refusal-field",
+          "refusal-decision"
+        ]
+      },
+      "M-REFUSAL-FIRST-FIELD": {
+        "F-CHECKPOINT": [
+          "refusal-field"
+        ],
+        "F-DIGEST-COMPACT": [
+          "refusal-field"
+        ],
+        "F-DIGEST-NEWLINE": [
+          "refusal-field"
+        ],
+        "F-DIGEST-CRLF": [
+          "refusal-field"
+        ],
+        "F-DIGEST-MOVED": [
+          "refusal-field"
+        ],
+        "F-ACTOR": [
+          "refusal-field"
+        ],
+        "F-SUPPORT": [
+          "refusal-field"
+        ]
+      }
+    },
+    "B3": {
+      "carries": {
+        "F-SCHEMA": false,
+        "F-CHECKPOINT": false,
+        "F-DIGEST-COMPACT": false,
+        "F-DIGEST-NEWLINE": false,
+        "F-DIGEST-CRLF": false,
+        "F-DIGEST-MOVED": false,
+        "F-ACTOR": false,
+        "F-SUPPORT": false
+      },
+      "M-REFUSAL-DECISION": {
+        "F-SCHEMA": [
+          "refusal-field",
+          "refusal-decision"
+        ],
+        "F-CHECKPOINT": [
+          "refusal-field",
+          "refusal-decision"
+        ],
+        "F-DIGEST-COMPACT": [
+          "refusal-field",
+          "refusal-decision"
+        ],
+        "F-DIGEST-NEWLINE": [
+          "refusal-field",
+          "refusal-decision"
+        ],
+        "F-DIGEST-CRLF": [
+          "refusal-field",
+          "refusal-decision"
+        ],
+        "F-DIGEST-MOVED": [
+          "refusal-field",
+          "refusal-decision"
+        ],
+        "F-ACTOR": [
+          "refusal-field",
+          "refusal-decision"
+        ],
+        "F-SUPPORT": [
+          "refusal-field",
+          "refusal-decision"
+        ]
+      }
+    },
+    "C1": {
+      "outcomes": {
+        "F-TIMEOUT": "unavailable:timeout",
+        "F-EXIT-ERROR": "unavailable:exit",
+        "F-EXIT-CRASH": "unavailable:exit",
+        "F-MALFORMED-TRUNCATED": "unavailable:malformed",
+        "F-MALFORMED-EMPTY": "unavailable:malformed",
+        "F-MALFORMED-NO-DECISION": "unavailable:malformed"
+      },
+      "measured": {
+        "rc": 2,
+        "schema": "graphpolicy.cli.v1",
+        "ok": false,
+        "code": "GP_CLI_PROGRAM_INVALID"
+      },
+      "completeStdout": true,
+      "M-TIMEOUT-READ": {
+        "F-TIMEOUT": [
+          "unavailable",
+          "success-row"
+        ]
+      },
+      "M-EXIT-IGNORED": {
+        "F-EXIT-ERROR": [
+          "unavailable"
+        ],
+        "F-EXIT-CRASH": [
+          "unavailable",
+          "success-row"
+        ]
+      },
+      "M-CAUSE-COLLAPSED": {
+        "F-TIMEOUT": [
+          "unavailable"
+        ],
+        "F-MALFORMED-TRUNCATED": [
+          "unavailable"
+        ],
+        "F-MALFORMED-EMPTY": [
+          "unavailable"
+        ],
+        "F-MALFORMED-NO-DECISION": [
+          "unavailable"
+        ]
+      },
+      "M-MALFORMED-REFUSED": {
+        "F-MALFORMED-TRUNCATED": [
+          "unavailable"
+        ],
+        "F-MALFORMED-EMPTY": [
+          "unavailable"
+        ],
+        "F-MALFORMED-NO-DECISION": [
+          "unavailable"
+        ]
+      },
+      "M-SALVAGED": {
+        "F-MALFORMED-TRUNCATED": [
+          "unavailable",
+          "success-row"
+        ]
+      }
+    },
+    "C2": {
+      "rows": {
+        "F-SCHEMA": [
+          "refused:failure"
+        ],
+        "F-CHECKPOINT": [
+          "refused:failure"
+        ],
+        "F-DIGEST-COMPACT": [
+          "refused:failure"
+        ],
+        "F-DIGEST-NEWLINE": [
+          "refused:failure"
+        ],
+        "F-DIGEST-CRLF": [
+          "refused:failure"
+        ],
+        "F-DIGEST-MOVED": [
+          "refused:failure"
+        ],
+        "F-ACTOR": [
+          "refused:failure"
+        ],
+        "F-SUPPORT": [
+          "refused:failure"
+        ],
+        "F-TIMEOUT": [
+          "unavailable:unknown"
+        ],
+        "F-EXIT-ERROR": [
+          "unavailable:unknown"
+        ],
+        "F-EXIT-CRASH": [
+          "unavailable:unknown"
+        ],
+        "F-MALFORMED-TRUNCATED": [
+          "unavailable:unknown"
+        ],
+        "F-MALFORMED-EMPTY": [
+          "unavailable:unknown"
+        ],
+        "F-MALFORMED-NO-DECISION": [
+          "unavailable:unknown"
+        ]
+      },
+      "M-SUCCESS-ROW": {
+        "F-SCHEMA": [
+          "success-row"
+        ],
+        "F-CHECKPOINT": [
+          "success-row"
+        ],
+        "F-DIGEST-COMPACT": [
+          "success-row"
+        ],
+        "F-DIGEST-NEWLINE": [
+          "success-row"
+        ],
+        "F-DIGEST-CRLF": [
+          "success-row"
+        ],
+        "F-DIGEST-MOVED": [
+          "success-row"
+        ],
+        "F-ACTOR": [
+          "success-row"
+        ],
+        "F-SUPPORT": [
+          "success-row"
+        ],
+        "F-TIMEOUT": [
+          "success-row"
+        ],
+        "F-EXIT-ERROR": [
+          "success-row"
+        ],
+        "F-EXIT-CRASH": [
+          "success-row"
+        ],
+        "F-MALFORMED-TRUNCATED": [
+          "success-row"
+        ],
+        "F-MALFORMED-EMPTY": [
+          "success-row"
+        ],
+        "F-MALFORMED-NO-DECISION": [
+          "success-row"
+        ]
+      },
+      "M-ADMITTED-ROW": {
+        "F-SCHEMA": [
+          "success-row"
+        ],
+        "F-CHECKPOINT": [
+          "success-row"
+        ],
+        "F-DIGEST-COMPACT": [
+          "success-row"
+        ],
+        "F-DIGEST-NEWLINE": [
+          "success-row"
+        ],
+        "F-DIGEST-CRLF": [
+          "success-row"
+        ],
+        "F-DIGEST-MOVED": [
+          "success-row"
+        ],
+        "F-ACTOR": [
+          "success-row"
+        ],
+        "F-SUPPORT": [
+          "success-row"
+        ],
+        "F-TIMEOUT": [
+          "success-row"
+        ],
+        "F-EXIT-ERROR": [
+          "success-row"
+        ],
+        "F-EXIT-CRASH": [
+          "success-row"
+        ],
+        "F-MALFORMED-TRUNCATED": [
+          "success-row"
+        ],
+        "F-MALFORMED-EMPTY": [
+          "success-row"
+        ],
+        "F-MALFORMED-NO-DECISION": [
+          "success-row"
+        ]
+      }
+    },
+    "Q1": {
+      "composed": [],
+      "concatenated": [],
+      "upper-snake": [],
+      "escaped-identifier": [],
+      "vocabulary-free-admitter": [],
+      "gp-spawning-admitter": []
+    },
+    "Q2": {
+      "violated": [
+        "schema",
+        "actor"
+      ],
+      "honest": "refused:schema",
+      "last": "refused:actor",
+      "violations": {
+        "honest": [],
+        "last": []
+      }
+    },
+    "Q3": {
+      "maxCandidates": 1,
+      "candidates": 3,
+      "honest": "admitted:exec-a1-t1",
+      "violations": []
+    },
+    "Q4": {
+      "violations": {
+        "F-ADMIT": [],
+        "F-SCHEMA": [],
+        "F-CHECKPOINT": [],
+        "F-DIGEST-COMPACT": [],
+        "F-DIGEST-NEWLINE": [],
+        "F-DIGEST-CRLF": [],
+        "F-DIGEST-MOVED": [],
+        "F-ACTOR": [],
+        "F-SUPPORT": [],
+        "F-TIMEOUT": [],
+        "F-EXIT-ERROR": [],
+        "F-EXIT-CRASH": [],
+        "F-MALFORMED-TRUNCATED": [],
+        "F-MALFORMED-EMPTY": [],
+        "F-MALFORMED-NO-DECISION": []
+      },
+      "leaked": 8
+    },
+    "Q5": {
+      "G1": {
+        "input": "D1",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:schema",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G2": {
+        "input": "D2",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:checkpoint",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G3": {
+        "input": "D3",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:schema",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G4": {
+        "input": "D4",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:schema",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G5": {
+        "input": "D5",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "unavailable:malformed",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G6": {
+        "input": "D6",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "unavailable:malformed",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G7": {
+        "input": "D7",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:support",
+        "member": "admitted:exec-a1-t",
+        "departs": true
+      },
+      "G8": {
+        "input": "D8",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:actor",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G9": {
+        "input": "D9",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:schema",
+        "member": "refused:schema",
+        "departs": true
+      },
+      "G10": {
+        "input": "D10",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "unavailable:malformed",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G11": {
+        "input": "D11",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "unavailable:exit",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G12": {
+        "input": "D12",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:snapshotDigest",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G13": {
+        "input": "D13",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:schema",
+        "member": "refused:schema",
+        "departs": true
+      },
+      "G14": {
+        "input": "D14",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "unavailable:timeout",
+        "member": "unavailable:timeout",
+        "departs": true
+      }
+    },
+    "Q6": {
+      "quiet": {
+        "C6-mA": [],
+        "C6-mT": [],
+        "C6-mB": [],
+        "C6-mC": []
+      },
+      "kept": {
+        "C6-mA": [
+          "tiling A",
+          "field pins"
+        ],
+        "C6-mT": [
+          "tiling T"
+        ],
+        "C6-mB": [
+          "tiling B"
+        ],
+        "C6-mC": [
+          "tiling C"
+        ]
+      }
+    },
+    "Q7": {
+      "C6-labelQ": [],
+      "C6-quoteQ": [],
+      "C6-Q4": [],
+      "C6-Q": [],
+      "C6-member": [],
+      "PL1": [],
+      "PL2": [],
+      "PL4": []
+    }
+  },
+  "tests": [
+    "T1: When Pi admits a GraphPolicyCLI reply",
+    "T2: artifact: released GP reply schema",
+    "T3: a Pi decision point",
+    "A1: a reader-adapter test over a fixture reply asserts admission requires",
+    "A2: schema id and checkpoint id in the pinned set",
+    "A3: snapshotDigest === the digest Pi exported",
+    "A4: actor in scope",
+    "A5: and proposed action inside the exported support",
+    "B1: each violation yields exactly one typed refusal",
+    "B2: naming only the field",
+    "B3: and no decision object",
+    "C1: a GP worker timeout, non-zero exit or malformed stdout yields typed unavailable",
+    "C2: and no receipt row claims success",
+    "Q1: R-SPELLING",
+    "Q2: R-MULTI-VIOLATION",
+    "Q3: R-RESOURCE",
+    "Q4: R-SIDE-PATH",
+    "Q5: R-JUDGE",
+    "Q6: R-PARTITION",
+    "Q7: R-UNREAD",
+    "rule 16: the rows, the residual families, the fields, the causes, the checks, the mutants, the fixtures, the field tokens, the admitters, the readings and the BOUND table are frozen at their measured shape",
+    "the outside anchors: every outside reading holds on the census's anchor model, every BOUND edit of that model reds the reading it names, and every reading is red under some BOUND edit",
+    "respin scope: the header carries the readings' summary and the not-read sentence, names each R-PARTITION and R-UNREAD member, and carries none of the retired summaries",
+    "respin scope: the header carries the fixture-boundary sentence and each R-JUDGE member's name with its description",
+    "respin scope: the header carries the T1 spelled-vocabulary sentence and the P4 and P5 sentence, P3's escaped spelling reads quiet, and the retired T1 sentence is absent",
+    "respin scope: no other registered title says bind or binds, four respin-scope cases are registered, one outside-anchor case title names the readings and the BOUND table, and the header carries the listed sentences and none of the retired ones",
+    "roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/gp-reply-admission-roster.json, in order and both ways; every pin reached its witness compare"
+  ],
+  "producer": {
+    "repo": "Furnace",
+    "sha": "0f791db71b9d96ba0c5d85cadbb566e09d3ea986",
+    "path": "docs/programs/graph-policy-decision-executor-2026-10-18/README.md",
+    "blob": "73135c2df014e5721fae3e2f82c872da183ae84c",
+    "lines": {
+      "11": "Application exports a permission-scoped, finite GraphDataIR snapshot containing workflow/task/resource/agent/artifact observations, explicit unknown vs absent, source revision and externally admissible candidate actions. A GP local worker evaluates within time/memory/graph-size budgets. Reply: schema and checkpoint identity, snapshot digest, source-keyed scores or sampled symbolic proposal, ordered pre-decision support and actual behavior log probability if stochastic, numerical profile, uncertainty, errors and timing.",
+      "13": "Furnace host checks schema, source freshness, actor scope, action support and resource constraints independently. It records admission/rejection, actual Attempt/effect, completed verifier outcome and any correction. Unknown feedback is **not** negative reward; killed Attempt is not successful. Retries remain governed by Furnace.",
+      "25": "No command execution from portable GraphFunctionIR; bounded inputs; no fabricated success on worker timeout, model crash or retry; exact legal support and sampled probability; replay reproducibility; state-revision consistency; no privilege escalation or Beads direct writes. Synthetic coordination fixtures are labeled synthetic."
+    }
+  }
+}
