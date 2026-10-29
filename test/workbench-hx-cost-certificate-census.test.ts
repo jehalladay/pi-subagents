@@ -46,6 +46,49 @@
  * census-suffixed module that is not TypeScript - reads outside (planted outside rows, each authored red-first against its mutant).
  * This cut changes no reading (fixtureNames, QUOTED_RUN, HOLDER_MODULE and the holder rule are byte-identical): measured at trunk
  * fced7bf, 98 of 149 fixtures are holders beside 131 census modules, the same set with the landed bytes of this file in place.
+ * THE CRITERION (wb-9clo: hop 4, the last, of the chain wb-z3ft.2 332 -> wb-xvmw 429 -> wb-p8lh 523 -> wb-9clo, the R694 follow-up of
+ * the landing-523 gate's F1 - its reader mutants G-CASE, G-STEM and G-SRCNAMER stayed green. Cut #3 answers refusal #2 of cut #2, whose
+ * thirteen gate reader survivors each admitted a split below a cut #2 member, with the loop cap engaged: rules 14 and 19(c), the
+ * enumerate-the-resolvable form): EXACT AND CENSUS-ONLY (the paragraph above, re-pinned here) claim exactly the PINNED SET - each
+ * designed-outside planted row of A3, which the reader keeps outside, authored red-first against a reader admitting it, so a reader
+ * that admits a pinned row reds A3 (planted). NEAR and NAMERS name the relation or module shape of each pinned row (A3's witness near
+ * and namedBy, each member floored at one row) and claim no instance beyond their rows. Every known unpinned mode is a NAMED RESIDUAL
+ * below with a pinned quiet row, and a newly found escape is a residual-list addition, not a refusal, unless it contradicts a pinned
+ * row. EXACT (NEAR, the relation a pinned row bears to a planted name): prefix - the name plus one extension (plant-short.json.bak,
+ * plant-joined.json.bak), an extensionless name plus one (plant-dir.json beside plant-dir) or plus one segment
+ * (plant-dir/plant-inner.json); shorter - the name is the row plus one extension (plant-long.json beside plant-long.json.bak; the
+ * extensionless plant-short and plant-joined) or plus one segment (plant-ghost beside the never-planted plant-ghost/plant-ghost.json);
+ * case - it differs from the name in case in exactly one part, the stem (Plant-Short.json, Plant-Jcase.json, plant-mirror.json), the
+ * directory (Plant-Cased/plant-dircase.json, plant-mirdir/plant-mirdir.json) or the extension (plant-extcase.JSON, plant-mirext.json),
+ * each beside a never-planted name, so a case-insensitive file system merges no two planted files; stem - both carry an extension and
+ * they differ beyond case (plant-short.yaml, plant-joined.yaml); basename - the name's last segment one level deeper
+ * (alias/plant-roster.json, alias/plant-joined.json), one level shallower (plant-nested.json beside nested/plant-nested.json) or at the
+ * same depth in a directory that is not a case variant of the name's (alias/plant-nested.json); mirror - a case row whose upper case is
+ * on the name (plant-mirror.json beside Plant-Mirror.json, plant-mirdir/plant-mirdir.json beside Plant-Mirdir/plant-mirdir.json,
+ * plant-mirext.json beside plant-mirext.JSON); joined - a row beside a name a HERE join spells, case (Plant-Jcase.json beside
+ * plant-jcase.json), prefix (plant-joined.json.bak), shorter (plant-joined) and stem (plant-joined.yaml). CENSUS-ONLY (NAMERS, the
+ * module beside the census modules whose text alone names a pinned row): plain - a top-level test module that is no census module,
+ * ending .test.ts (plant-reader.test.ts, the caseSuffix and workbench test namers and the form namers below) or .ts (plant-setup.ts), a
+ * near miss of either census suffix, -census.ts (plant-loose-census.ts) or .census.test.ts (plant-loose.census.test.ts), a case near
+ * miss of one (caseSuffix: plant-reader-Census.test.ts, plant-upper.CENSUS.ts), or a test module carrying the census modules'
+ * workbench- prefix (workbench: workbench-plant-reader.test.ts); nested - a census-suffixed TypeScript module one level below test/
+ * (helpers/plant-reader.census.ts, plant-sub/plant-sub-census.test.ts) or two (plant-deep/inner/plant-deep.census.ts,
+ * helpers/inner/plant-inner-census.test.ts); script - a top-level .census module ending .mjs, .js, .cjs, .mts or .cts
+ * (plant-reader.census.mjs and its four siblings); src - a product module at src/'s top level (plant-namer.ts), one or two levels below
+ * it (workbench/plant-namer.ts, workbench/plant-sub/plant-namer.ts) or census-suffixed at its top level (plant.census.ts); form - a
+ * plain test namer naming its row by a HERE join (plant-joiner.test.ts), a ROOT join (plant-rooter.test.ts), a URL
+ * (plant-urler.test.ts) or a prose citation (plant-citer.test.ts). Refusal #2 CURED (its survivors, each 10 passed (10) on cut #2's
+ * bytes and 2 failed | 8 passed here at A3's class check): U1 G3-S-SUFFIXCASE, G3-S-SUFFIXCASE-HOLDERS and G3-S-SUFFIXCASE-DASHONLY
+ * through plant-reader-Census.test.ts and G3-S-SUFFIXUPPER through plant-upper.CENSUS.ts; U2 G3-S-FORM-HERE and G3-S-FORM-JOIN through
+ * plant-joiner.test.ts and G3-S-FORM-PROSE through plant-citer.test.ts; U3 G3-N-LOWERNAMES-OR through the three mirror rows; U4
+ * G3-S-WBPREFIX through workbench-plant-reader.test.ts; U5 G3-N-JOINED-CASE, -PREFIXEXT, -SHORTER and -STEM through the four joined
+ * rows. Each family's rest is a named residual below (U1 R-NAMER-CASE, U2 R-NAMER-FORM, U4 R-NAMER-NAME, U5 R-NEAR-FORM); U3's side is
+ * pinned for every case part. near, namedBy and residuals are read from the planted tree, so a one-file edit that drops a planted name,
+ * re-points a namer or silences a page reds A3, and a member left with no row or page reds its floor. This cut changes no reading
+ * (fixtureNames, QUOTED_RUN, HOLDER_MODULE and the holder rule are byte-identical): measured at trunk e81d2b0 and again at 5fbe25e
+ * (merged into it), 117 of 171 fixtures are holders beside 153 census modules, the same set with the landed bytes of this file in
+ * place; the real tree's named set gains only the 97 paths this file's plant table spells beyond the landed bytes (pinned rows, quiet
+ * pages and never-planted names), all absent.
  *
  * The adapter (src/workbench/hyperunix-observer.ts) reads coverage items for batch_id only (measured :207) and builds evidenceRefs from
  * the runtime binary digest and those batch ids only (measured :229-235). The rows:
@@ -59,7 +102,9 @@
  *    templates whose heads are exactly the pattern's literal heads (planted: an extra head and an unresolved push read as detected). A3
  *    the needle grep by class, as above, with a positive control per alternative and a planted tree per class: a fixture named in each
  *    NAMING form reads holder, every alias NAMING refuses reads outside; and R-HOLDER's real-tree quiet row: every designed-outside
- *    planted fixture is a path this file spells, so the real tree names each while no file sits there (named and absent, pinned).
+ *    planted fixture is a path this file spells, so the real tree names each while no file sits there (named and absent, pinned);
+ *    and every member of NEAR and NAMERS keeps a pinned row, every member of a named residual family a quiet page (near, namedBy,
+ *    residuals: pinned, each member floored at one).
  *  B, acceptance (b). The fixtures are the upstream law record, the same record with its empty reference lists loaded with sentinels,
  *    and a cost certificate keyed by the excerpt's member names; each is placed at 14 carriers of a direct reading (spread fields and a
  *    nested record at the top level and in the source, every certificate's fields and body, an extra coverage item, the summary and its
@@ -84,6 +129,8 @@
  * representation and C1's the shipped declaration. SELF-READ: the judged set parses this file's IMPL and requires every pin to name one
  * of READERS and not ROSTER (direct identifiers only); each pin's witness carries the digest of its own quote, so a pin swapped for
  * another pin's case reds; and each pin records reaching the end of its own case, so a guarded early return reds the records case.
+ * NEAR, NAMERS and the residual tables pin their member counts the same way (`${group}:${members}`) beside the judged set, and the
+ * roster's residual ids follow the residual tables - in-file anchors only (NOT CLAIMED below).
  * RESIDUALS (named families, each with a pinned quiet row): R-SPELLING a needle in another case or separator escapes the clause's
  * case-sensitive literal pattern (A3 quiet row); R-COMPOSED a needle assembled at run time - this census's own technique - escapes the
  * line grep (A3 quiet row); R-SCOPE a needle outside src/ and test/ is not walked (A3 quiet row under qa/); R-HOLDER a census module or
@@ -91,13 +138,47 @@
  * the module's own directory; and a path a census's text spells names its fixture whether or not that file exists or is that census's
  * data, so a dangling or self-named path (another census's scratch or prose path; this file's own plant table, which spells every
  * designed-outside planted fixture) reads holder the day a needle file sits there (A3 holder rows, the based join among them, and A3's
- * real-tree quiet row, each designed-outside planted fixture named and absent in the real tree; a fixture no census names still reds,
- * and so does every alias NAMING refuses - A3 outside rows); R-COMPUTED-KEY a coverage
+ * real-tree quiet row, each designed-outside planted fixture named and absent in the real tree and each quiet page absent there; a
+ * fixture no census names still reds, and so does every alias NAMING refuses - A3 outside rows); R-COMPUTED-KEY a coverage
  * read through a computed key is invisible to A1's TypeScript read (A1 quiet row), A1's behaviour half being the backstop.
+ * The known unpinned modes of EXACT AND CENSUS-ONLY (wb-9clo cut #3: RESIDUAL_NEAR and RESIDUAL_NAMERS, each member stated at the grain
+ * of the needle-free quiet page that plants it; a page reads quiet whatever a reader admits, so the escape stays uncaught, each member
+ * measured 10 passed (10) against a reader admitting it, and A3's witness residuals pins every page, each member floored at one, so a
+ * silenced page reds its floor): R-NEAR-REACH a relation two or more steps from a name - two case parts (Plant-Reach/Plant-Reach.json),
+ * two segments below or above (plant-dir/inner/plant-grand.json; plant-far beside plant-far/inner/plant-far.json), two extensions
+ * added or dropped (plant-short.json.bak.old; plant-long beside plant-long.json.bak), a basename twin two levels apart
+ * (alias/deep/plant-roster.json), a continuation by another character (plant-short.json-old and the padded page; plant-lon);
+ * R-NEAR-AXIS which letters, extension or directory a twin varies - the first letter alone (Plant-letters.json), a sibling extension
+ * other than .yaml (plant-short.xml, plant-short.yml), an extension added other than .bak (plant-short.json.orig) or other than .json
+ * to an extensionless name (plant-dir.yaml), one dropped other than .bak (plant-drop.json beside plant-drop.json.orig) or other than
+ * .json to leave an extensionless file (plant-dropx beside plant-dropx.yaml), a deeper basename twin outside alias/
+ * (other/plant-roster.json); R-NEAR-FORM which naming form spelled the name a twin relates to beyond a literal and a HERE join - a URL
+ * (plant-url.json.bak), a prose citation (plant-cited.yaml), a ROOT join (plant-rooted.json.bak), and beside a HERE-joined name a
+ * relation no joined row bears (Plant-Jdir/plant-jdir.json, a directory-case twin); R-PATH-SPELLING an encoded,
+ * confusable, NFKC-normalized or padded spelling of a name (plant-short%2Ejson, pIant-short.json, a fullwidth hyphen for the hyphen,
+ * a trailing space); R-NAMER-SHAPE a namer of a shape no member states - a top-level .spec.ts or .d.ts module, a src .d.ts module, a
+ * census-suffixed module three levels below test/, a plain or a script module below test/'s top level, a top-level script with the
+ * -census.test suffix or ending .jsx, a src module three levels deep, census-suffixed below src/'s top level or -census suffixed (each
+ * a plant-quiet module naming its own page); R-NAMER-PLACE which directory holds a member's namer - a one-level .census.ts namer outside
+ * helpers/, a -census.test.ts namer inside it, a nested src namer outside workbench/; R-NAMER-CASE which letters of which census suffix
+ * differ in case beyond the caseSuffix rows - the dot form's first letter, the dash form's every letter, the test word, the extension
+ * (plant-dotcase.Census.ts, plant-dashcase-CENSUS.test.ts, plant-testcase-census.Test.ts, plant-extcase.census.TS); R-NAMER-NAME which
+ * name a namer of another member carries - the workbench- prefix on a plain non-test module or a src module (workbench-plant-quiet.ts
+ * in test/ and in src/); R-NAMER-FORM which naming form a namer of another member uses - a src module's HERE join, a nested module's
+ * prose citation, a script's URL, a plain namer's multi-line or based join; R-NAMER-SCOPE a namer outside src/ and test/
+ * (qa/plant-quiet-namer.mjs).
  * NOT CLAIMED (wb-p8lh, measured): an A3 planted row or quiet row is held by the roster witness alone - one removed from this file
  * and the roster together reads green (a planted outside row, the real-tree quiet row and the landed R-COMPOSED row each read 10/10
  * so removed: no outside source names them, and the planted-kinds floor reds only when a class has no row left), so the kill a
- * planted row carries is pinned against a one-file edit, not a coordinated one.
+ * planted row carries is pinned against a one-file edit, not a coordinated one. (wb-9clo, measured) That sentence read only the row
+ * itself: at the landed bytes a one-file edit of a planted name or a namer's path voided a row's kill while every class held; near and
+ * namedBy now pin both. Still not claimed (cut #3, measured): a coordinated edit of this file and the roster - a member's row or a
+ * residual member's page removed from the plant and the roster together while the member keeps another (alias/plant-joined.json so
+ * removed reads 10/10, basename deeper keeping alias/plant-roster.json; plant-short.json-old so removed reads 10/10, otherPrefix keeping
+ * the padded page), or a member or a residual member removed from its table, the shape literal and the roster together (case directory
+ * and R-NEAR-AXIS siblingYml so removed read 10/10, their rows and pages still in the plant). These are limits of this file's own
+ * literals, not reading modes: no source outside the census and its roster names a planted row, a page or a member, and a member's only
+ * row or page removed without its table entry reds the member's floor (plant-prose-named.json, plant-quiet-qa.json, each with its namer).
  * Display paths added: none. Test-only: planted trees live in makeScratch scratch with the leak guard installed; src, the roster, the
  * SDK declarations and the bead export are only read.
  */
@@ -496,6 +577,194 @@ function classify(tree: TreeCensus, file: string): string {
   if (!tree.testHits.includes(file)) return 'quiet';
   return tree.holders.has(file) ? 'holder' : 'outside';
 }
+/** A path's directory, its last segment, the path without its last extension, that extension ('' when none) and its segment count. */
+const dirOf = (path: string): string => path.slice(0, path.lastIndexOf('/'));
+const baseOf = (path: string): string => path.slice(path.lastIndexOf('/') + 1);
+const stemOf = (path: string): string => path.replace(/\.[^./]*$/, '');
+const extOf = (path: string): string => path.slice(stemOf(path).length);
+const depthOf = (path: string): number => path.split('/').length;
+/** Unequal as written, equal case-folded. */
+const folded = (left: string, right: string): boolean => left !== right && left.toLowerCase() === right.toLowerCase();
+/** `longer` is `shorter` plus exactly one more extension (a dot, then neither a dot nor a slash). */
+const plusExtension = (longer: string, shorter: string): boolean => longer.startsWith(shorter) && /^\.[^./]+$/.test(longer.slice(shorter.length));
+/** How a census module's text spells a name (wb-9clo cut #3): 'join' for a comma-joined quoted run ('join-root' when the run starts
+ * at test/), 'url' for one quoted ./fixtures/ literal, 'literal' for another quoted literal, 'prose' for a path token on a comment line
+ * only, and '' when the text does not spell it. */
+function spelling(text: string, name: string): string {
+  for (const run of text.match(QUOTED_RUN) ?? []) {
+    const path = run.split(/["'`]\s*,\s*["'`]/).join('/').slice(1, -1).replace(/^\.\//, '');
+    if ((path.startsWith('fixtures/') ? `test/${path}` : path) !== name) continue;
+    if (/["'`]\s*,\s*["'`]/.test(run)) return path.startsWith('test/') ? 'join-root' : 'join';
+    return run.slice(1).startsWith('./') ? 'url' : 'literal';
+  }
+  return text.split('\n').some(line => /^\s*\/\//.test(line) && fixtureNames(line).includes(name)) ? 'prose' : '';
+}
+/** A relation a planted fixture can bear to a planted name, given the naming form the planted census spells that name in. */
+type Bears = (file: string, name: string, form: string) => boolean;
+/** A module shape beside the census modules, given the module's text and the planted fixture its text names. */
+type Beside = (module: string, text: string, file: string) => boolean;
+const caseStem: Bears = (file, name) => dirOf(file) === dirOf(name) && extOf(file) === extOf(name) && folded(file, name);
+const caseDirectory: Bears = (file, name) => baseOf(file) === baseOf(name) && folded(dirOf(file), dirOf(name));
+const caseExtension: Bears = (file, name) => stemOf(file) === stemOf(name) && folded(extOf(file), extOf(name));
+const stemExtension: Bears = (file, name) => stemOf(file) === stemOf(name) && extOf(file) !== '' && extOf(name) !== '' && extOf(file).toLowerCase() !== extOf(name).toLowerCase();
+/** EXACT's members (wb-9clo, THE CRITERION): the relation each pinned row bears to a planted name, stated at the grain of the rows that
+ * witness it (A3's witness near, each member floored at one row); a member claims its rows, never another instance of its relation. */
+const NEAR: Readonly<Record<string, Readonly<Record<string, Bears>>>> = {
+  prefix: {
+    extension: (file, name) => extOf(name) !== '' && plusExtension(file, name),
+    extensionless: (file, name) => extOf(name) === '' && plusExtension(file, name),
+    child: (file, name) => dirOf(file) === name,
+  },
+  shorter: {
+    extension: (file, name) => extOf(file) !== '' && plusExtension(name, file),
+    extensionless: (file, name) => extOf(file) === '' && plusExtension(name, file),
+    parent: (file, name) => dirOf(name) === file,
+  },
+  case: {stem: caseStem, directory: caseDirectory, extension: caseExtension},
+  stem: {extension: stemExtension},
+  basename: {
+    deeper: (file, name) => baseOf(file) === baseOf(name) && depthOf(file) === depthOf(name) + 1,
+    shallower: (file, name) => baseOf(file) === baseOf(name) && depthOf(file) + 1 === depthOf(name),
+    sibling: (file, name) => baseOf(file) === baseOf(name) && depthOf(file) === depthOf(name) && dirOf(file).toLowerCase() !== dirOf(name).toLowerCase(),
+  },
+  mirror: {
+    stem: (file, name, form) => caseStem(file, name, form) && file === file.toLowerCase(),
+    directory: (file, name, form) => caseDirectory(file, name, form) && file === file.toLowerCase(),
+    extension: (file, name, form) => caseExtension(file, name, form) && file === file.toLowerCase(),
+  },
+  joined: {
+    case: (file, name, form) => form === 'join' && folded(file, name),
+    prefix: (file, name, form) => form === 'join' && extOf(name) !== '' && plusExtension(file, name),
+    shorter: (file, name, form) => form === 'join' && extOf(file) === '' && plusExtension(name, file),
+    stem: (file, name, form) => form === 'join' && stemExtension(file, name, form),
+  },
+};
+const plainTest: Beside = module => /^test\/[^/.]+\.test\.ts$/.test(module) && !HOLDER_MODULE.test(module);
+/** CENSUS-ONLY's members (wb-9clo): the module shape beside the census modules whose text alone names each pinned row, stated at the
+ * grain of the planted namers that witness it (A3's witness namedBy: the pinned rows its modules name, each member floored at one
+ * row); a member claims its rows, never another module of its shape. */
+const NAMERS: Readonly<Record<string, Readonly<Record<string, Beside>>>> = {
+  plain: {
+    test: plainTest,
+    module: module => /^test\/[^/.]+\.ts$/.test(module) && !module.endsWith('-census.ts'),
+    dash: module => /^test\/[^/.]+-census\.ts$/.test(module),
+    dot: module => /^test\/[^/.]+\.census\.test\.ts$/.test(module),
+    caseSuffix: module => new RegExp(HOLDER_MODULE.source, 'i').test(module) && !HOLDER_MODULE.test(module),
+    workbench: module => /^test\/workbench-[^/]+\.test\.ts$/.test(module) && !HOLDER_MODULE.test(module),
+  },
+  nested: {
+    census: module => /^test\/[^/]+\/[^/.]+\.census\.ts$/.test(module),
+    test: module => /^test\/[^/]+\/[^/.]+-census\.test\.ts$/.test(module),
+    deepCensus: module => /^test\/[^/]+\/[^/]+\/[^/.]+\.census\.ts$/.test(module),
+    deepTest: module => /^test\/[^/]+\/[^/]+\/[^/.]+-census\.test\.ts$/.test(module),
+  },
+  script: {
+    mjs: module => /^test\/[^/.]+\.census\.mjs$/.test(module),
+    js: module => /^test\/[^/.]+\.census\.js$/.test(module),
+    cjs: module => /^test\/[^/.]+\.census\.cjs$/.test(module),
+    mts: module => /^test\/[^/.]+\.census\.mts$/.test(module),
+    cts: module => /^test\/[^/.]+\.census\.cts$/.test(module),
+  },
+  src: {
+    top: module => /^src\/[^/.]+\.ts$/.test(module),
+    nested: module => /^src\/[^/]+\/[^/.]+\.ts$/.test(module),
+    deep: module => /^src\/[^/]+\/[^/]+\/[^/.]+\.ts$/.test(module),
+    census: module => /^src\/[^/.]+\.census\.ts$/.test(module),
+  },
+  form: {
+    join: (module, text, file) => plainTest(module, text, file) && spelling(text, file) === 'join',
+    joinRoot: (module, text, file) => plainTest(module, text, file) && spelling(text, file) === 'join-root',
+    url: (module, text, file) => plainTest(module, text, file) && spelling(text, file) === 'url',
+    prose: (module, text, file) => plainTest(module, text, file) && spelling(text, file) === 'prose',
+  },
+};
+/** A path decoded as a URI component, or itself when it does not decode. */
+function decoded(path: string): string {
+  try {
+    return decodeURIComponent(path);
+  } catch {
+    return path;
+  }
+}
+/** The NAMED RESIDUALS of EXACT and CENSUS-ONLY (wb-9clo cut #3, enumerate-the-resolvable): every known unpinned mode, each family's
+ * members stated at the grain of the needle-free quiet page that plants it - a fixture bearing the member's relation to a planted name
+ * (RESIDUAL_NEAR), or a fixture only a module of the member's shape names (RESIDUAL_NAMERS). A page carries no needle, so it reads
+ * quiet whatever a reader admits: a reader admitting the member moves no class A3 pins and the escape stays uncaught. A3's witness
+ * pins the pages (residuals), each member floored at one page, so a silenced page reds its floor. */
+const RESIDUAL_NEAR: Readonly<Record<string, Readonly<Record<string, Bears>>>> = {
+  'R-NEAR-REACH': {
+    caseParts: (file, name) => folded(file, name) && [dirOf, (path: string) => stemOf(baseOf(path)), extOf].filter(part => part(file) !== part(name)).length >= 2,
+    grandchild: (file, name) => file.startsWith(`${name}/`) && file.slice(name.length + 1).includes('/'),
+    grandparent: (file, name) => name.startsWith(`${file}/`) && name.slice(file.length + 1).includes('/'),
+    twoExtensions: (file, name) => file.startsWith(`${name}.`) && /^\.[^./]+\.[^/]+$/.test(file.slice(name.length)),
+    extendedTwice: (file, name) => name.startsWith(`${file}.`) && /^\.[^./]+\.[^/]+$/.test(name.slice(file.length)),
+    farBasename: (file, name) => baseOf(file) === baseOf(name) && Math.abs(depthOf(file) - depthOf(name)) >= 2,
+    otherPrefix: (file, name) => file !== name && file.startsWith(name) && !['.', '/'].includes(file.charAt(name.length)),
+    otherShorter: (file, name) => file !== name && name.startsWith(file) && !['.', '/'].includes(name.charAt(file.length)),
+  },
+  'R-NEAR-AXIS': {
+    caseLetters: (file, name) => file !== name && dirOf(file) === dirOf(name) && baseOf(file) === baseOf(name).charAt(0).toUpperCase() + baseOf(name).slice(1),
+    siblingXml: (file, name) => stemOf(file) === stemOf(name) && extOf(name) !== '' && extOf(file) === '.xml',
+    siblingYml: (file, name) => stemOf(file) === stemOf(name) && extOf(name) !== '' && extOf(file) === '.yml',
+    addedOrig: (file, name) => extOf(name) !== '' && file === `${name}.orig`,
+    resolvedYaml: (file, name) => extOf(name) === '' && file === `${name}.yaml`,
+    droppedOrig: (file, name) => extOf(file) !== '' && name === `${file}.orig`,
+    droppedYaml: (file, name) => extOf(file) === '' && name === `${file}.yaml`,
+    basenamePlace: (file, name) => baseOf(file) === baseOf(name) && depthOf(file) === depthOf(name) + 1 && !/^test\/fixtures\/alias\//.test(file),
+  },
+  'R-NEAR-FORM': {
+    url: (file, name, form) => form === 'url' && extOf(name) !== '' && plusExtension(file, name),
+    prose: (file, name, form) => form === 'prose' && stemExtension(file, name, form),
+    joinRoot: (file, name, form) => form === 'join-root' && extOf(name) !== '' && plusExtension(file, name),
+    joinedOther: (file, name, form) => form === 'join' && caseDirectory(file, name, form),
+  },
+  'R-PATH-SPELLING': {
+    encoded: (file, name) => file !== name && decoded(file) === name,
+    confusable: (file, name) => file !== name && file.replace(/[Il1|]/g, 'l') === name.replace(/[Il1|]/g, 'l'),
+    normalized: (file, name) => file !== name && file.normalize('NFKC') === name.normalize('NFKC'),
+    padded: (file, name) => file !== name && file.trim() === name.trim(),
+  },
+};
+const RESIDUAL_NAMERS: Readonly<Record<string, Readonly<Record<string, Beside>>>> = {
+  'R-NAMER-SHAPE': {
+    spec: module => /^test\/[^/]+\.spec\.ts$/.test(module),
+    declaration: module => /^test\/[^/]+\.d\.ts$/.test(module),
+    srcDeclaration: module => /^src\/[^/]+\.d\.ts$/.test(module),
+    threeDeep: module => /^test\/[^/]+\/[^/]+\/[^/]+\/[^/]+(?:-census\.test|\.census)\.ts$/.test(module),
+    nestedPlain: module => /^test\/(?!fixtures\/)[^/]+\/[^/.]+\.ts$/.test(module),
+    nestedScript: module => /^test\/[^/]+\/[^/]+(?:-census\.test|\.census)\.m?js$/.test(module),
+    scriptDash: module => /^test\/[^/]+-census\.test\.[cm]?js$/.test(module),
+    scriptJsx: module => /^test\/[^/]+\.census\.[jt]sx$/.test(module),
+    srcThree: module => /^src\/[^/]+\/[^/]+\/[^/]+\/[^/]+\.ts$/.test(module),
+    srcNestedCensus: module => /^src\/[^/]+\/[^/]+\.census\.ts$/.test(module),
+    srcDash: module => /^src\/[^/]+-census\.ts$/.test(module),
+  },
+  'R-NAMER-PLACE': {
+    nestedCensusOutsideHelpers: module => /^test\/(?!helpers\/)[^/]+\/[^/.]+\.census\.ts$/.test(module),
+    nestedTestInsideHelpers: module => /^test\/helpers\/[^/.]+-census\.test\.ts$/.test(module),
+    srcOutsideWorkbench: module => /^src\/(?!workbench\/)[^/]+\/[^/.]+\.ts$/.test(module),
+  },
+  'R-NAMER-CASE': {
+    dotFirstLetter: module => /^test\/[^/]+\.Census\.ts$/.test(module),
+    dashEveryLetter: module => /^test\/[^/]+-CENSUS\.test\.ts$/.test(module),
+    testWord: module => /^test\/[^/]+-census\.Test\.ts$/.test(module),
+    extension: module => /^test\/[^/]+(?:-census\.test|\.census)\.TS$/.test(module),
+  },
+  'R-NAMER-NAME': {
+    workbenchModule: module => /^test\/workbench-[^/.]+\.ts$/.test(module) && !HOLDER_MODULE.test(module),
+    workbenchSrc: module => /^src\/workbench-[^/]+\.ts$/.test(module),
+  },
+  'R-NAMER-FORM': {
+    srcJoin: (module, text, file) => module.startsWith('src/') && spelling(text, file) === 'join',
+    nestedProse: (module, text, file) => /^test\/[^/]+\/[^/]+\.ts$/.test(module) && spelling(text, file) === 'prose',
+    scriptUrl: (module, text, file) => /^test\/[^/]+\.census\.mjs$/.test(module) && spelling(text, file) === 'url',
+    plainMultiline: (module, text, file) => plainTest(module, text, file) && spelling(text, file) === 'join' && /join\(\s*\n/.test(text),
+    plainBased: (module, text, file) => plainTest(module, text, file) && spelling(text, file) === 'join' && /join\((?!HERE\b|ROOT\b)\w+, /.test(text),
+  },
+  'R-NAMER-SCOPE': {
+    outsideRoots: module => !module.startsWith('src/') && !module.startsWith('test/'),
+  },
+};
 /** The clause's literal command, run in the repository (tracked files only): exit and the files it lists. */
 function gitGrep(pattern: string): {status: number | null; files: string[]} {
   const run = spawnSync('git', ['grep', '-n', '-E', pattern, '--', 'src', 'test'], {cwd: REPO, encoding: 'utf8'});
@@ -512,7 +781,9 @@ const spellings = (alternatives: readonly string[]): string[] => [...new Set(alt
   .filter(spelling => !alternatives.includes(spelling)).sort();
 /** The planted census module (wb-xvmw): a fixture named in each NAMING form, the based join R-HOLDER keeps, the names whose basenames
  * alone the aliases below carry, a named path and a named directory whose longer twin and inner file the prefix aliases carry
- * (wb-p8lh), and a needle. */
+ * (wb-p8lh) - the never-planted names whose directory-case, extension-case and parent twins NEAR's case and shorter members carry
+ * (wb-9clo), the joined never-planted names the joined case row and a residual page twin, the upper-case names the mirror rows twin,
+ * the names the residual pages relate to (cut #3) - and a needle. */
 const plantCensus = (list: string): string => [
   "const ROSTER = 'test/fixtures/plant-roster.json';",
   "const DOSSIER = 'test/fixtures/plant-dossier.md';",
@@ -529,10 +800,24 @@ const plantCensus = (list: string): string => [
   "const LONGER = 'test/fixtures/plant-long.json.bak';",
   "const SHORTER = 'test/fixtures/plant-short.json';",
   "const DIRECTORY = readdirSync(join(HERE, 'fixtures', 'plant-dir'));",
+  "const CASED = 'test/fixtures/plant-cased/plant-dircase.json';",
+  "const EXTCASE = 'test/fixtures/plant-extcase.json';",
+  "const GHOST = 'test/fixtures/plant-ghost/plant-ghost.json';",
+  "const JCASE = join(HERE, 'fixtures', 'plant-jcase.json');",
+  "const JDIR = join(HERE, 'fixtures', 'plant-jdir', 'plant-jdir.json');",
+  "const MIRROR = 'test/fixtures/Plant-Mirror.json';",
+  "const MIRDIR = 'test/fixtures/Plant-Mirdir/plant-mirdir.json';",
+  "const MIREXT = 'test/fixtures/plant-mirext.JSON';",
+  "const REACH = 'test/fixtures/plant-reach/plant-reach.json';",
+  "const FAR = 'test/fixtures/plant-far/inner/plant-far.json';",
+  "const LETTERS = 'test/fixtures/plant-letters.json';",
+  "const DROP = 'test/fixtures/plant-drop.json.orig';",
+  "const DROPX = 'test/fixtures/plant-dropx.yaml';",
   "const BARE = 'plant-bare.json';",
   `const key = '${list}';`,
 ].join('\n') + '\n';
-/** The planted tree, needles composed from the owner's alternatives: each file's designed class. */
+/** The planted tree, needles composed from the owner's alternatives: each file's designed class - the pinned rows carry a needle and
+ * read outside, their namers and the residual pages (wb-9clo cut #3) carry none and read quiet. */
 function plant(root: string, alternatives: readonly string[]): Record<string, string> {
   const [field = '', list = '', type = ''] = alternatives;
   const files: Record<string, readonly [string, string]> = {
@@ -558,15 +843,149 @@ function plant(root: string, alternatives: readonly string[]): Record<string, st
     'test/fixtures/plant-long.json': [`{"key": "${field}"}\n`, 'outside'],
     'test/fixtures/plant-bare.json': [`{"key": "${field}"}\n`, 'outside'],
     'test/fixtures/plant-short.json.bak': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/Plant-Short.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-short.yaml': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/Plant-Cased/plant-dircase.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-extcase.JSON': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-dir.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-short': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-ghost': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-nested.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/alias/plant-nested.json': [`{"key": "${field}"}\n`, 'outside'],
     'test/fixtures/plant-dir/plant-inner.json': [`{"key": "${field}"}\n`, 'outside'],
     'test/fixtures/plant-noncensus.json': [`{"key": "${field}"}\n`, 'outside'],
     'test/fixtures/plant-helper-named.json': [`{"key": "${field}"}\n`, 'outside'],
     'test/fixtures/plant-mjs-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-src-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-setup-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-dash-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-dot-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-sub-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-deep-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-deeptest-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-js-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-cjs-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-mts-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-cts-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-wb-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-wbsub-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-srccensus-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/Plant-Jcase.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-joined.json.bak': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-joined': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-joined.yaml': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-mirror.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-mirdir/plant-mirdir.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-mirext.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-casesuffix-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-upper-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-wbprefix-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-here-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-root-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-urlform-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/plant-prose-named.json': [`{"key": "${field}"}\n`, 'outside'],
+    'test/fixtures/Plant-Reach/Plant-Reach.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-dir/inner/plant-grand.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-far': ['{}\n', 'quiet'],
+    'test/fixtures/plant-short.json.bak.old': ['{}\n', 'quiet'],
+    'test/fixtures/plant-long': ['{}\n', 'quiet'],
+    'test/fixtures/alias/deep/plant-roster.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-short.json-old': ['{}\n', 'quiet'],
+    'test/fixtures/plant-lon': ['{}\n', 'quiet'],
+    'test/fixtures/Plant-letters.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-short.xml': ['{}\n', 'quiet'],
+    'test/fixtures/plant-short.yml': ['{}\n', 'quiet'],
+    'test/fixtures/plant-short.json.orig': ['{}\n', 'quiet'],
+    'test/fixtures/plant-dir.yaml': ['{}\n', 'quiet'],
+    'test/fixtures/plant-drop.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-dropx': ['{}\n', 'quiet'],
+    'test/fixtures/other/plant-roster.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-url.json.bak': ['{}\n', 'quiet'],
+    'test/fixtures/plant-cited.yaml': ['{}\n', 'quiet'],
+    'test/fixtures/plant-rooted.json.bak': ['{}\n', 'quiet'],
+    'test/fixtures/Plant-Jdir/plant-jdir.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-short%2Ejson': ['{}\n', 'quiet'],
+    'test/fixtures/pIant-short.json': ['{}\n', 'quiet'],
+    [['test', 'fixtures', `plant${String.fromCodePoint(0xff0d)}short.json`].join('/')]: ['{}\n', 'quiet'],
+    'test/fixtures/plant-short.json ': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-spec.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-dts.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-srcdts.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-three.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-nestedplain.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-nestedscript.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-scriptdash.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-jsx.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-srcthree.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-srcnested.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-srcdash.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-place.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-helperstest.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-srcnotwb.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-dotcase.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-dashcase.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-testcase.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-extcase.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-wbmodule.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-wbsrc.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-srcjoin.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-nestedprose.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-scripturl.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-multiline.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-based.json': ['{}\n', 'quiet'],
+    'test/fixtures/plant-quiet-qa.json': ['{}\n', 'quiet'],
     'test/helpers/plant-helper.ts': [`export const key = '${list}';\n`, 'outside'],
     'test/plant-plain.test.ts': [`const name = '${type}';\n`, 'outside'],
     'test/plant-reader.test.ts': ["const DATA = 'test/fixtures/plant-noncensus.json';\n", 'quiet'],
     'test/helpers/plant-reader.census.ts': ["export const DATA = 'test/fixtures/plant-helper-named.json';\n", 'quiet'],
     'test/plant-reader.census.mjs': ["export const DATA = 'test/fixtures/plant-mjs-named.json';\n", 'quiet'],
+    'src/plant-namer.ts': ["export const DATA = 'test/fixtures/plant-src-named.json';\n", 'quiet'],
+    'test/plant-setup.ts': ["export const DATA = 'test/fixtures/plant-setup-named.json';\n", 'quiet'],
+    'test/plant-loose-census.ts': ["export const DATA = 'test/fixtures/plant-dash-named.json';\n", 'quiet'],
+    'test/plant-loose.census.test.ts': ["const DATA = 'test/fixtures/plant-dot-named.json';\n", 'quiet'],
+    'test/plant-sub/plant-sub-census.test.ts': ["const DATA = 'test/fixtures/plant-sub-named.json';\n", 'quiet'],
+    'test/plant-deep/inner/plant-deep.census.ts': ["export const DATA = 'test/fixtures/plant-deep-named.json';\n", 'quiet'],
+    'test/helpers/inner/plant-inner-census.test.ts': ["const DATA = 'test/fixtures/plant-deeptest-named.json';\n", 'quiet'],
+    'test/plant-reader.census.js': ["export const DATA = 'test/fixtures/plant-js-named.json';\n", 'quiet'],
+    'test/plant-reader.census.cjs': ["exports.DATA = 'test/fixtures/plant-cjs-named.json';\n", 'quiet'],
+    'test/plant-reader.census.mts': ["export const DATA = 'test/fixtures/plant-mts-named.json';\n", 'quiet'],
+    'test/plant-reader.census.cts': ["export const DATA = 'test/fixtures/plant-cts-named.json';\n", 'quiet'],
+    'src/workbench/plant-namer.ts': ["export const DATA = 'test/fixtures/plant-wb-named.json';\n", 'quiet'],
+    'src/workbench/plant-sub/plant-namer.ts': ["export const DATA = 'test/fixtures/plant-wbsub-named.json';\n", 'quiet'],
+    'src/plant.census.ts': ["export const DATA = 'test/fixtures/plant-srccensus-named.json';\n", 'quiet'],
+    'test/plant-reader-Census.test.ts': ["const DATA = 'test/fixtures/plant-casesuffix-named.json';\n", 'quiet'],
+    'test/plant-upper.CENSUS.ts': ["export const DATA = 'test/fixtures/plant-upper-named.json';\n", 'quiet'],
+    'test/workbench-plant-reader.test.ts': ["const DATA = 'test/fixtures/plant-wbprefix-named.json';\n", 'quiet'],
+    'test/plant-joiner.test.ts': ["const DATA = join(HERE, 'fixtures', 'plant-here-named.json');\n", 'quiet'],
+    'test/plant-rooter.test.ts': ["const DATA = join(ROOT, 'test', 'fixtures', 'plant-root-named.json');\n", 'quiet'],
+    'test/plant-urler.test.ts': ["const DATA = new URL('./fixtures/plant-urlform-named.json', import.meta.url);\n", 'quiet'],
+    'test/plant-citer.test.ts': ['// the capture this module reads: test/fixtures/plant-prose-named.json.\n', 'quiet'],
+    'test/plant-quiet.spec.ts': ["const DATA = 'test/fixtures/plant-quiet-spec.json';\n", 'quiet'],
+    'test/plant-quiet.d.ts': ["export declare const DATA: 'test/fixtures/plant-quiet-dts.json';\n", 'quiet'],
+    'src/plant-quiet.d.ts': ["export declare const DATA: 'test/fixtures/plant-quiet-srcdts.json';\n", 'quiet'],
+    'test/plant-a/plant-b/plant-c/plant-quiet.census.ts': ["export const DATA = 'test/fixtures/plant-quiet-three.json';\n", 'quiet'],
+    'test/plant-sub/plant-quiet.ts': ["export const DATA = 'test/fixtures/plant-quiet-nestedplain.json';\n", 'quiet'],
+    'test/plant-sub/plant-quiet.census.mjs': ["export const DATA = 'test/fixtures/plant-quiet-nestedscript.json';\n", 'quiet'],
+    'test/plant-quiet-census.test.js': ["const DATA = 'test/fixtures/plant-quiet-scriptdash.json';\n", 'quiet'],
+    'test/plant-quiet.census.jsx': ["export const DATA = 'test/fixtures/plant-quiet-jsx.json';\n", 'quiet'],
+    'src/plant-a/plant-b/plant-c/plant-quiet.ts': ["export const DATA = 'test/fixtures/plant-quiet-srcthree.json';\n", 'quiet'],
+    'src/plant-other/plant-quiet.census.ts': ["export const DATA = 'test/fixtures/plant-quiet-srcnested.json';\n", 'quiet'],
+    'src/plant-quiet-census.ts': ["export const DATA = 'test/fixtures/plant-quiet-srcdash.json';\n", 'quiet'],
+    'test/plant-sub/plant-place.census.ts': ["export const DATA = 'test/fixtures/plant-quiet-place.json';\n", 'quiet'],
+    'test/helpers/plant-place-census.test.ts': ["const DATA = 'test/fixtures/plant-quiet-helperstest.json';\n", 'quiet'],
+    'src/plant-other/plant-place.ts': ["export const DATA = 'test/fixtures/plant-quiet-srcnotwb.json';\n", 'quiet'],
+    'test/plant-dotcase.Census.ts': ["export const DATA = 'test/fixtures/plant-quiet-dotcase.json';\n", 'quiet'],
+    'test/plant-dashcase-CENSUS.test.ts': ["const DATA = 'test/fixtures/plant-quiet-dashcase.json';\n", 'quiet'],
+    'test/plant-testcase-census.Test.ts': ["const DATA = 'test/fixtures/plant-quiet-testcase.json';\n", 'quiet'],
+    'test/plant-extcase.census.TS': ["export const DATA = 'test/fixtures/plant-quiet-extcase.json';\n", 'quiet'],
+    'test/workbench-plant-quiet.ts': ["export const DATA = 'test/fixtures/plant-quiet-wbmodule.json';\n", 'quiet'],
+    'src/workbench-plant-quiet.ts': ["export const DATA = 'test/fixtures/plant-quiet-wbsrc.json';\n", 'quiet'],
+    'src/plant-joiner.ts': ["export const DATA = join(HERE, 'fixtures', 'plant-quiet-srcjoin.json');\n", 'quiet'],
+    'test/helpers/plant-citer.census.ts': ['// the capture this module reads: test/fixtures/plant-quiet-nestedprose.json.\n', 'quiet'],
+    'test/plant-urler.census.mjs': ["export const DATA = new URL('./fixtures/plant-quiet-scripturl.json', import.meta.url);\n", 'quiet'],
+    'test/plant-multiline.test.ts': ["const DATA = join(\n  HERE,\n  'fixtures',\n  'plant-quiet-multiline.json',\n);\n", 'quiet'],
+    'test/plant-based.test.ts': ["const DATA = join(ELSEWHERE, 'fixtures', 'plant-quiet-based.json');\n", 'quiet'],
+    'qa/plant-quiet-namer.mjs': ["export const DATA = 'test/fixtures/plant-quiet-qa.json';\n", 'unwalked'],
     'test/quiet-spelling.test.ts': [`${spellings(alternatives).map(spelling => `const name = '${spelling}';`).join('\n')}\n`, 'quiet'],
     'test/quiet-composed.test.ts': [`const key = [${[...field].map(letter => `'${letter}'`).join(', ')}].join('');\n`, 'quiet'],
     'qa/quiet-scope.mjs': [`export const key = '${field}';\n`, 'unwalked'],
@@ -656,11 +1075,24 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(classes).toEqual(designed);
     expect(['product', 'holder', 'outside', 'quiet', 'unwalked'].map(kind => Object.values(classes).includes(kind))).toEqual([true, true, true, true, true]);
     const outsideRows = Object.keys(designed).filter(file => designed[file] === 'outside' && file.startsWith('test/fixtures/')).sort();
-    const selfNamed = {named: outsideRows.filter(file => real.named.has(file)), absent: outsideRows.filter(file => !real.walked.includes(file))};
-    expect(selfNamed).toEqual({named: outsideRows, absent: outsideRows});
+    const pages = Object.keys(designed).filter(file => designed[file] === 'quiet' && file.startsWith('test/fixtures/')).sort();
+    const selfNamed = {named: outsideRows.filter(file => real.named.has(file)), absent: [...outsideRows, ...pages].filter(file => !real.walked.includes(file))};
+    expect(selfNamed).toEqual({named: outsideRows, absent: [...outsideRows, ...pages]});
+    const censusTexts = planted.walked.filter(file => HOLDER_MODULE.test(file)).map(file => readFileSync(join(root, file), 'utf8'));
+    const forms = new Map([...planted.named].map(name => [name, censusTexts.map(text => spelling(text, name)).find(form => form !== '') ?? '']));
+    const namers = [...planted.walked, ...Object.keys(designed).filter(file => designed[file] === 'unwalked')].map(module => [module, readFileSync(join(root, module), 'utf8')] as const);
+    const bearing = (rows: readonly string[], bears: Bears): string[] => rows.filter(file => [...forms].some(([name, form]) => bears(file, name, form)));
+    const namedOnly = (rows: readonly string[], beside: Beside): string[] => rows.filter(file => namers.some(([module, text]) => beside(module, text, file) && fixtureNames(text).includes(file)));
+    const table = <T>(groups: Readonly<Record<string, Readonly<Record<string, T>>>>, read: (test: T) => string[]): Record<string, Record<string, string[]>> =>
+      Object.fromEntries(Object.entries(groups).map(([group, members]) => [group, Object.fromEntries(Object.entries(members).map(([member, test]) => [member, read(test)]))]));
+    const near = table(NEAR, bears => bearing(outsideRows, bears));
+    const namedBy = table(NAMERS, beside => namedOnly(outsideRows, beside));
+    const residuals = {...table(RESIDUAL_NEAR, bears => bearing(pages, bears)), ...table(RESIDUAL_NAMERS, beside => namedOnly(pages, beside))};
+    const floored = [near, namedBy, residuals].flatMap(groups => Object.values(groups).flatMap(members => Object.values(members).map(rows => rows.length > 0)));
+    expect(floored).toEqual([NEAR, NAMERS, RESIDUAL_NEAR, RESIDUAL_NAMERS].flatMap(groups => Object.values(groups).flatMap(members => Object.keys(members).map(() => true))));
     JUDGED.add('A3');
     return {claim: claim('A3'), alternatives: alternatives.length, perAlternative, floors, srcHits: real.srcHits, outside: real.outside, own,
-      command: {ran: true, ...listed}, planted: classes, selfNamed};
+      command: {ran: true, ...listed}, planted: classes, selfNamed, near, namedBy, residuals};
   },
   B1: async () => {
     const leaks = leakTerms();
@@ -826,7 +1258,12 @@ describe('wb-z3ft.2 HX cost-certificate posture census (HX-CERTIFIED-STRUCTURAL-
     expect(lawRecord()[keys[1] ?? '']).toEqual(refs);
     expect(costCertificate().name.startsWith(alternatives[2] ?? '-')).toBe(true);
     expect(Object.keys(costCertificate().value)).toHaveLength(11);
-    expect(ROSTER.residuals.map(item => item.id)).toEqual(['R-COMPUTED-KEY', 'R-SPELLING', 'R-COMPOSED', 'R-SCOPE', 'R-HOLDER']);
+    const shape = (groups: Readonly<Record<string, Readonly<Record<string, unknown>>>>): string[] => Object.entries(groups).map(([group, members]) => `${group}:${Object.keys(members).length}`);
+    expect([...shape(NEAR), ...shape(NAMERS)]).toEqual(['prefix:3', 'shorter:3', 'case:3', 'stem:1', 'basename:3', 'mirror:3', 'joined:4', 'plain:6', 'nested:4', 'script:5', 'src:4', 'form:4']);
+    const families = [...shape(RESIDUAL_NEAR), ...shape(RESIDUAL_NAMERS)];
+    expect(families).toEqual(['R-NEAR-REACH:8', 'R-NEAR-AXIS:8', 'R-NEAR-FORM:4', 'R-PATH-SPELLING:4', 'R-NAMER-SHAPE:11', 'R-NAMER-PLACE:3', 'R-NAMER-CASE:4', 'R-NAMER-NAME:2', 'R-NAMER-FORM:5', 'R-NAMER-SCOPE:1']);
+    expect(ROSTER.residuals.map(item => item.id)).toEqual(['R-COMPUTED-KEY', 'R-SPELLING', 'R-COMPOSED', 'R-SCOPE', 'R-HOLDER', ...families.map(family => family.slice(0, family.indexOf(':')))]);
+    expect(ROSTER.residuals.filter(item => item.id.startsWith('R-NEAR-') || item.id.startsWith('R-NAMER-') || item.id === 'R-PATH-SPELLING').map(item => item.quietPin)).toEqual(families.map(() => 'A3'));
     expect(ROSTER.residuals.every(item => pinIds().includes(item.quietPin))).toBe(true);
     const reads = implReads();
     expect(Object.keys(reads).sort()).toEqual(pinIds());
