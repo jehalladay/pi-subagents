@@ -346,6 +346,14 @@
                 ],
                 "rawShort": [
                   "raw 3999 < 4000"
+                ],
+                "bothShortRenderedFewer": [
+                  "raw 3999 < 4000",
+                  "rendered 3998 < 4000"
+                ],
+                "bothShortRawFewer": [
+                  "raw 3998 < 4000",
+                  "rendered 3999 < 4000"
                 ]
               }
             }

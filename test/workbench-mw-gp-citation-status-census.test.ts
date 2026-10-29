@@ -97,14 +97,19 @@
  *    opening with a level-2 heading and a page whose level-1 heading comes after its first line, and receipts whose first line is a
  *    wrong title, its bead alone ('# wb-c'), its bead with no space after the colon, or another bead's first line, beside a good
  *    page and a good receipt; SENTENCE FLOOR a page one sentence short of SENTENCE_FLOOR in each leg (short), the same page read
- *    with a one-sentence plant (quiet), and each leg short alone: a sentence inside an HTML comment brings the raw leg to the floor
+ *    with a one-sentence plant (quiet), each leg short alone: a sentence inside an HTML comment brings the raw leg to the floor
  *    while the rendered view removes it (rendered short), and two sentences joined by a numeric space reference bring the rendered
- *    leg to it while the raw leg reads one sentence there (raw short). So an arm hollowed in this file - an empty both-ways list, a
- *    floor compared with 0, an emptied directory list, a hollowed heading, receipt or markdown check - reds A1 although the live
- *    tree still passes it, and so does each partial weakening those near-misses tell apart: the sentence floor judged for both legs
- *    by one leg's count, or reporting one leg's count for both; the page check read as any '#' opening, as any heading level or on
- *    any line; the receipt check read without its ': ', without the space after its colon, or as any bead's first line; a
- *    directory's own file read anywhere below it; '.md' read anywhere in a path.
+ *    leg to it while the raw leg reads one sentence there (raw short); and both legs short at different counts, each way round: the
+ *    comment page one sentence shorter (raw 3999, rendered 3998) and the reference page one sentence shorter (raw 3998, rendered
+ *    3999). So an arm hollowed in this file - an empty both-ways list, a floor compared with 0, an emptied directory list, a hollowed
+ *    heading, receipt or markdown check - reds A1 although the live tree still passes it, and so does each partial weakening those
+ *    near-misses tell apart: the sentence floor judged for both legs by the raw count, by the rendered count, by the lesser or the
+ *    greater of the two or by the legs' counts exchanged, or for one leg alone by the lesser or the greater; a short leg's count
+ *    reported as the raw count for both legs, as the rendered count for both, as the lesser or the greater of the two for both, as
+ *    the legs' counts exchanged, as the lesser or the greater for one leg alone, or as one fixed count for every short leg, or its
+ *    floor reported as one more than its count; the page check read as any '#' opening, as any heading level or on any line; the
+ *    receipt check read without its ': ', without the space after its colon, or as any bead's first line; a directory's own file
+ *    read anywhere below it; '.md' read anywhere in a path.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and pins,
  *    every pin's witness, the constants and every registered test title - is held to the out-of-file roster
  *    (test/fixtures/mw-gp-citation-status-roster.json). RECORD: each pin's case records how many assertions its own case made and
@@ -127,7 +132,9 @@
  *    together while every remaining one holds; a live arm's reading in A1 replaced by its expected empty list (THE ARM PLANTS hold
  *    each arm's function, not the live call that reads the tree through it); a partial weakening of an arm that none of THE ARM
  *    PLANTS' near-misses tells apart (they pin each arm at the near-misses they name, never every relaxation of its check: e.g. the
- *    markdown check read case-blind or as 'md' without its dot, or a heading read after leading spaces); a pin folded into a neighbour where neither quote carries a quoted element (the bead
+ *    markdown check read case-blind or as 'md' without its dot, a heading read after leading spaces or after leading blank lines, or
+ *    a short leg's count reported right only at the counts the plants read, 3999 and 3998, as when clamped from below at the floor
+ *    less two); a pin folded into a neighbour where neither quote carries a quoted element (the bead
  *    text anchors each clause and its quoted elements, not the boundary between two unquoted parts); a seat-added vocabulary member
  *    (the joiners, MW and GraphPolicy, production and deployed, schedul-, assign-, dispatch- and orchestrat-, the GUARD, GUARD_AFTER
  *    and negation words, the NUMBER and WORD_BREAK shapes, the RECEIPT form, the NAMED_REFERENCES) removed with every control naming
@@ -166,7 +173,10 @@
  *    each 30/30 green on the landed census - L2-SFL-COLLAPSE (sentenceShort judging both legs by the raw count), L2-OPEN-H2 (the
  *    page check read as startsWith('#')) and L2-RCPT-PREFIX (the receipt check read as '# <bead>', no ': ') - red A1 at THE ARM
  *    PLANTS' near-misses above (the cure shape's comment-sentence page, level-2 page and '# wb-c' receipt), as do the class's other
- *    members those near-misses tell apart; NOT CLAIMED names the rest of the class.
+ *    members those near-misses tell apart; NOT CLAIMED names the rest of the class. Respin 1 (refusal #1, U1): the claim 'reporting
+ *    one leg's count for both' was wider than the plants - no page had both legs short at different counts, so the gate's
+ *    G-SFL-PRINT-MIN (the lesser count reported for both legs) passed 30/30; the two pages with both legs short at different counts
+ *    red it, and THE ARM PLANTS now name each judgement and report form of the sentence floor those near-misses tell apart.
  * SCOPE: the judges read words, not meaning. Display paths added: none (test-only; docs/workbench is read, never edited). Scratch:
  *    A1's arm plants, D2 and D3 compose makeScratch/removeScratch with the leak guard installed; docs, .beads and the roster are
  *    otherwise only read, and the census reads no git history (the filing pin is the seat's measurement, held in the roster).
@@ -907,6 +917,8 @@ interface ArmPlants {
     readonly atFloor: readonly string[];
     readonly renderedShort: readonly string[];
     readonly rawShort: readonly string[];
+    readonly bothShortRenderedFewer: readonly string[];
+    readonly bothShortRawFewer: readonly string[];
   };
 }
 function armPlants(): ArmPlants {
@@ -962,6 +974,11 @@ function armPlants(): ArmPlants {
   // wb-fity: each leg short alone. A sentence inside an HTML comment brings the raw leg to the floor while the rendered view removes
   // it; two sentences joined by a numeric space reference bring the rendered leg to it while the raw leg reads one sentence there.
   const joined = `${Array.from({ length: SENTENCE_FLOOR - 3 }, () => "S.").join(" ")} S.&#32;S.`;
+  // wb-fity respin 1 (U1): both legs short at different counts, each way round - the comment page one sentence shorter (raw 3999,
+  // rendered 3998) and the reference page one sentence shorter (raw 3998, rendered 3999). No one count reported for both legs matches
+  // both legs of either page, and a leg reporting the lesser or the greater count misreports itself on one of the two.
+  const fewer = Array.from({ length: SENTENCE_FLOOR - 3 }, () => "S.").join(" ");
+  const joinedFewer = `${Array.from({ length: SENTENCE_FLOOR - 4 }, () => "S.").join(" ")} S.&#32;S.`;
   const sentenceFloor = {
     ...inScratchRepo("wb-59u1-sentences-", [{ path: "docs/workbench/s.md", text: `# S\n\n${sentences}\n` }], root => ({
       short: sentenceShort(readScope(root, [], BOUND).sentences),
@@ -971,6 +988,12 @@ function armPlants(): ArmPlants {
       sentenceShort(readScope(root, [], BOUND).sentences),
     ),
     rawShort: inScratchRepo("wb-fity-sentences-reference-", [{ path: "docs/workbench/s.md", text: `# S\n\n${joined}\n` }], root =>
+      sentenceShort(readScope(root, [], BOUND).sentences),
+    ),
+    bothShortRenderedFewer: inScratchRepo("wb-fity-sentences-apart-comment-", [{ path: "docs/workbench/s.md", text: `# S\n\n${fewer}\n\n<!--S.-->\n` }], root =>
+      sentenceShort(readScope(root, [], BOUND).sentences),
+    ),
+    bothShortRawFewer: inScratchRepo("wb-fity-sentences-apart-reference-", [{ path: "docs/workbench/s.md", text: `# S\n\n${joinedFewer}\n` }], root =>
       sentenceShort(readScope(root, [], BOUND).sentences),
     ),
   };
@@ -1037,11 +1060,16 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       "docs/workbench/receipts/wb-d.md",
       "docs/workbench/receipts/wb-e.md",
     ]);
-    expect(plants.sentenceFloor, "the sentence floor: one sentence short in each leg, quiet at the floor, and each leg short alone").toEqual({
+    expect(
+      plants.sentenceFloor,
+      "the sentence floor: one sentence short in each leg, quiet at the floor, each leg short alone, and both legs short at different counts each way round",
+    ).toEqual({
       short: ["raw 3999 < 4000", "rendered 3999 < 4000"],
       atFloor: [],
       renderedShort: ["rendered 3999 < 4000"],
       rawShort: ["raw 3999 < 4000"],
+      bothShortRenderedFewer: ["raw 3999 < 4000", "rendered 3998 < 4000"],
+      bothShortRawFewer: ["raw 3998 < 4000", "rendered 3999 < 4000"],
     });
     return json({
       root: SCOPE_ROOT,
