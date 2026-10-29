@@ -34,7 +34,17 @@
     "reversedLetterBefore",
     "reversedDigitBefore",
     "reversedLetterAfter",
-    "reversedDigitAfter"
+    "reversedDigitAfter",
+    "otherNumberBefore",
+    "otherNumberAfter",
+    "reversedOtherNumberBefore",
+    "reversedOtherNumberAfter",
+    "letterNumberBefore",
+    "letterNumberAfter",
+    "reversedLetterNumberBefore",
+    "reversedLetterNumberAfter",
+    "ideographicZeroBefore",
+    "aegeanOneBefore"
    ],
    "twin": [
     "glued",
@@ -46,10 +56,12 @@
    "quietPin": "A2",
    "quiet": [
     "cyrillic",
-    "dottedI"
+    "dottedI",
+    "composedLetter"
    ],
    "twin": [
-    "fullwidth"
+    "fullwidth",
+    "markAfterReversed"
    ]
   },
   {
@@ -81,7 +93,8 @@
     "minusSign",
     "middleDot",
     "brailleBlank",
-    "undertie"
+    "undertie",
+    "doubleLowLine"
    ],
    "twin": [
     "pd2010"
@@ -336,7 +349,10 @@
        "middleDot": 0,
        "brailleBlank": 0,
        "undertie": 0,
+       "doubleLowLine": 0,
        "dottedI": 0,
+       "composedLetter": 0,
+       "markAfterReversed": 1,
        "digitBefore": 0,
        "letterAfter": 0,
        "digitAfter": 0,
@@ -344,6 +360,16 @@
        "reversedDigitBefore": 0,
        "reversedLetterAfter": 0,
        "reversedDigitAfter": 0,
+       "otherNumberBefore": 0,
+       "otherNumberAfter": 0,
+       "reversedOtherNumberBefore": 0,
+       "reversedOtherNumberAfter": 0,
+       "letterNumberBefore": 0,
+       "letterNumberAfter": 0,
+       "reversedLetterNumberBefore": 0,
+       "reversedLetterNumberAfter": 0,
+       "ideographicZeroBefore": 0,
+       "aegeanOneBefore": 0,
        "reversedGlued": 1,
        "adverbForward": 1,
        "run": 1,
@@ -503,7 +529,10 @@
         "middleDot": "word=0 plain=0 display=0 VERIFIED\\u{b7}HISTORICAL",
         "brailleBlank": "word=0 plain=0 display=0 VERIFIED\\u{2800}HISTORICAL",
         "undertie": "word=0 plain=0 display=0 VERIFIED\\u{203f}HISTORICAL",
+        "doubleLowLine": "word=0 plain=0 display=0 VERIFIED\\u{2017}HISTORICAL",
         "dottedI": "word=0 plain=0 display=0 VER\\u{130}F\\u{130}ED_HISTORICAL",
+        "composedLetter": "word=0 plain=0 display=0 VERIFIED_HISTORICAL\\u{301}",
+        "markAfterReversed": "word=1 plain=1 display=1 HISTORICAL_VERIFIED\\u{301}",
         "digitBefore": "word=0 plain=0 display=0 2VERIFIED_HISTORICAL",
         "letterAfter": "word=0 plain=0 display=0 VerifiedHistoricalReceipt",
         "digitAfter": "word=0 plain=0 display=0 VERIFIED_HISTORICAL2",
@@ -511,6 +540,16 @@
         "reversedDigitBefore": "word=0 plain=0 display=0 2HISTORICAL_VERIFIED",
         "reversedLetterAfter": "word=0 plain=0 display=0 HistoricalVerifiedReceipt",
         "reversedDigitAfter": "word=0 plain=0 display=0 HISTORICAL_VERIFIED2",
+        "otherNumberBefore": "word=0 plain=0 display=0 \\u{bf0}VERIFIED_HISTORICAL",
+        "otherNumberAfter": "word=0 plain=0 display=0 VERIFIED_HISTORICAL\\u{bf0}",
+        "reversedOtherNumberBefore": "word=0 plain=0 display=0 \\u{bf0}HISTORICAL_VERIFIED",
+        "reversedOtherNumberAfter": "word=0 plain=0 display=0 HISTORICAL_VERIFIED\\u{bf0}",
+        "letterNumberBefore": "word=0 plain=0 display=0 \\u{16ee}VERIFIED_HISTORICAL",
+        "letterNumberAfter": "word=0 plain=0 display=0 VERIFIED_HISTORICAL\\u{16ee}",
+        "reversedLetterNumberBefore": "word=0 plain=0 display=0 \\u{16ee}HISTORICAL_VERIFIED",
+        "reversedLetterNumberAfter": "word=0 plain=0 display=0 HISTORICAL_VERIFIED\\u{16ee}",
+        "ideographicZeroBefore": "word=0 plain=0 display=0 \\u{3007}VERIFIED_HISTORICAL",
+        "aegeanOneBefore": "word=0 plain=0 display=0 \\u{10107}VERIFIED_HISTORICAL",
         "reversedGlued": "word=1 plain=1 display=1 HistoricalVerified",
         "adverbForward": "word=1 plain=1 display=1 verified historically",
         "run": "word=1 plain=1 display=1 verified - historical",

@@ -33,26 +33,31 @@
  *     a link) reds A1 with OWED, and an entry that cannot be read reds A1 with its read error instead: if the artifact
  *     shipped, the acceptance on landing is owed (A's and B's not-due spans, their fixtures replacing A1 and A2); if it did
  *     not, the roster's release reading is re-measured.
- *   A2 the "only" half of the title's rule, standing: while no receipt is read, no Pi-authored src text spells a member of
- *     WORD's family, and no output of the rendered set below holds one (they render the word-free READINGS and replies; B2
- *     shows a producer-supplied WORD quoted verbatim, never minted). WORD is the title's spelling, VERIFIED_HISTORICAL; its
+ *   A2 the "only" half of the title's rule, standing: while no receipt is read, no Pi-authored src module (each
+ *     src/**\/*.ts file git lists, which the src walk below reads whole) spells a member of WORD's family, and no output of
+ *     the rendered set below holds one (they render the word-free READINGS and replies; B2 shows a producer-supplied WORD
+ *     quoted verbatim, never minted). WORD is the title's spelling, VERIFIED_HISTORICAL; its
  *     family is its two words in either order (the second word, HISTORICAL, may read HISTORICALLY in either order), separated
  *     by nothing or by any run of whitespace (\s), the low line (U+005F) and dash punctuation (general category Pd in the
  *     runtime's Unicode data: the hyphen-minus, U+2010 HYPHEN, U+2011 NON-BREAKING HYPHEN and every other Pd hyphen or dash),
- *     case-insensitive, with no letter or digit just before or after, in two readings of a text (the text and Pi's label
- *     display of it, sanitizeWorkbenchText's label layout with no length bound, each after NFKC; a text holds the word when
- *     either reading does). The planted texts hold that definition at the instances they plant, each with its readings in the
- *     roster: every code point the runtime files under \s or Pd (SEPARATORS, enumerated from the runtime's Unicode tables: 25
- *     and 27 points on Node 24.20.0 with Unicode 17.0) and U+005F, each alone between the two words in both orders (fwd<hex>
- *     and rev<hex>, 106 texts); nothing between, in both orders; runs ("verified - historical", and all 53 of those points at
- *     once between the words in both orders); HISTORICALLY in both orders; upper, lower and mixed case; NFKC (fullwidth
- *     letters); a letter or a digit just before or just after, in both orders (R-EMBEDDED's quiet rows); a word that only the
- *     label display reads (an escape sequence between it and a letter, which the label layout alone renders as a space); a
- *     word that a display bounded below 4115 units does not read (4116 units, the word last with a zero-width space inside
- *     it, which the plain text does not read and the label display, 4115 units, does); and the R-OTHER-SEPARATOR characters,
- *     outside the three classes. A runtime whose tables file a point differently changes those texts and reds A2 (the
- *     roster's readings are then re-measured). The separator scan reads SEPARATORS again between the two words in both orders
- *     and records the points that read quiet (none) and that the counts met their floors (25 whitespace and 27 Pd points).
+ *     case-insensitive, with no letter or number just before or after (general categories L and N in the runtime's Unicode
+ *     data: letters, decimal digits, letter numbers and other numbers), in two readings of a text (the text and Pi's label
+ *     display of it, sanitizeWorkbenchText's label layout with no length bound, each after NFKC, so the separators and the
+ *     neighbours read are the ones NFKC leaves; a text holds the word when either reading does). The planted texts hold that
+ *     definition at the instances they plant, each with its readings in the roster: every code point the runtime files under
+ *     \s or Pd (SEPARATORS, enumerated from the runtime's Unicode tables: 25 and 27 points on Node 24.20.0 with Unicode 17.0)
+ *     and U+005F, each alone between the two words in both orders (fwd<hex> and rev<hex>, 106 texts); nothing between, in
+ *     both orders; runs ("verified - historical", and all 53 of those points at once between the words in both orders);
+ *     HISTORICALLY in both orders; upper, lower and mixed case; NFKC (fullwidth letters, and U+0301 COMBINING ACUTE ACCENT
+ *     just after the word, which NFKC composes with the last L of VERIFIED_HISTORICAL and with no D of HISTORICAL_VERIFIED:
+ *     R-LOOKALIKE's rows); a letter, a decimal digit, a letter number or an other number just before or just after, in both
+ *     orders (R-EMBEDDED's quiet rows); a word that only the label display reads (an escape sequence between it and a letter,
+ *     which the label layout alone renders as a space); a word that a display bounded below 4115 units does not read (4116
+ *     units, the word last with a zero-width space inside it, which the plain text does not read and the label display, 4115
+ *     units, does); and the R-OTHER-SEPARATOR characters, outside the three classes. A runtime whose tables file a point
+ *     differently changes those texts and reds A2 (the roster's readings are then re-measured). The separator scan reads
+ *     SEPARATORS again between the two words in both orders and records the points that read quiet (none) and that the
+ *     counts met their floors (25 whitespace and 27 Pd points).
  *     Among the planted texts ride, one at a time, the eleven Pd hyphens cut #1's gate found unread, and the residual table
  *     is checked against the planted texts. The src walk reads the whole text (literals, identifiers and comments) of every
  *     src/**\/*.ts module git lists (tracked or untracked, never ignored) plus two planted modules last: a short literal
@@ -124,19 +129,26 @@
  *     escape sequence only the cooked string spells it in (quiet: "VERIFIED_" + "HISTORICAL", and a literal spelling the
  *     underscore as the six-character escape backslash-u005f; twin: one literal). The rendered outputs see such a word only
  *     from the renderers they drive.
- *   R-EMBEDDED (A2) the word glued to a letter or a digit just before or just after it, in either order (quiet:
- *     isVerifiedHistorical, 2VERIFIED_HISTORICAL, VerifiedHistoricalReceipt, VERIFIED_HISTORICAL2, isHistoricalVerified,
- *     2HISTORICAL_VERIFIED, HistoricalVerifiedReceipt and HISTORICAL_VERIFIED2; twins: VerifiedHistorical and
- *     HistoricalVerified).
- *   R-LOOKALIKE (A2) confusable letters NFKC does not fold (quiet: Cyrillic lookalikes, and U+0130 LATIN CAPITAL LETTER I WITH
- *     DOT ABOVE for both of the first word's I's; twin: fullwidth letters, which it folds).
+ *   R-EMBEDDED (A2) the word glued to a letter or a number (general categories L and N: a letter, a decimal digit, a letter
+ *     number or an other number) just before or just after it, in either order (quiet: isVerifiedHistorical,
+ *     2VERIFIED_HISTORICAL, VerifiedHistoricalReceipt, VERIFIED_HISTORICAL2, isHistoricalVerified, 2HISTORICAL_VERIFIED,
+ *     HistoricalVerifiedReceipt and HISTORICAL_VERIFIED2; U+0BF0 TAMIL NUMBER TEN, an other number, and U+16EE RUNIC ARLAUG
+ *     SYMBOL, a letter number, each just before and just after VERIFIED_HISTORICAL and HISTORICAL_VERIFIED; U+3007
+ *     IDEOGRAPHIC NUMBER ZERO, a letter number, and U+10107 AEGEAN NUMBER ONE, an other number outside the BMP, each just
+ *     before VERIFIED_HISTORICAL; twins: VerifiedHistorical and HistoricalVerified).
+ *   R-LOOKALIKE (A2) a letter of the word that NFKC leaves as another letter: confusable letters NFKC does not fold, and a
+ *     combining mark just after the word that NFKC composes with its last letter (quiet: Cyrillic lookalikes; U+0130 LATIN
+ *     CAPITAL LETTER I WITH DOT ABOVE for both of the first word's I's; VERIFIED_HISTORICAL with U+0301 COMBINING ACUTE ACCENT
+ *     just after it, which NFKC composes with the last L into U+0139; twins: fullwidth letters, which it folds, and
+ *     HISTORICAL_VERIFIED with U+0301 just after it, which composes with no D and stays a mark, neither a letter nor a number).
  *   R-PARAPHRASE (A2) another wording of a historical verification (quiet: "historically passed", "verified at the declared
  *     snapshot"; twin: "historically verified").
  *   R-SIBLING (A2) the consumer rule's other word, VERIFIED_CURRENT, is not this bead's and is not judged (quiet: VERIFIED_CURRENT;
  *     twin: the title's word).
  *   R-OTHER-SEPARATOR (A2) the two words parted by a character outside whitespace, the low line and Pd, which neither reading
- *     turns into one of them (quiet: U+2043 HYPHEN BULLET, U+2212 MINUS SIGN, U+00B7 MIDDLE DOT, U+2800 BRAILLE PATTERN BLANK
- *     and U+203F UNDERTIE between the words; twin: U+2010 HYPHEN, which Pd holds).
+ *     turns into a run of them (quiet: U+2043 HYPHEN BULLET, U+2212 MINUS SIGN, U+00B7 MIDDLE DOT, U+2800 BRAILLE PATTERN
+ *     BLANK and U+203F UNDERTIE between the words, and U+2017 DOUBLE LOW LINE, which NFKC turns into a space and U+0333
+ *     COMBINING DOUBLE LOW LINE, a mark; twin: U+2010 HYPHEN, which Pd holds).
  *   R-OTHER-NAME (A1) a receipt type the release ships under another name, without the word and without both field words
  *     (quiet: a ForgeVerificationRecord declaration, and a ForgePredicateRecord declaration spelling "predicate" alone; twin:
  *     a declaration named after the artifact).
@@ -154,12 +166,15 @@
  *     that agrees with it on the planted inputs (A1's family counts taken from A2's judge instead of A1's reading, say); or
  *     together with its roster witness, its id, its quote and the PARK list kept (the anchors bind ids, labels and the clause
  *     partition, never what a pin computes). A narrowing paired with such a rewrite is not detected either;
- *   - a residual removed together with its planted inputs and their roster readings is not detected (residuals are this
- *     census's own reading and have no anchor outside it);
+ *   - a residual, or one quiet row of it, removed together with its planted inputs and their roster readings, and one twin
+ *     of a residual removed from the table and from the roster's copy of the table (its planted text kept or removed with
+ *     its roster readings), are not detected (residuals are this census's own reading and have no anchor outside it);
  *   - the word family is this census's own regular expression, held only at the instances the planted texts plant (A2,
  *     above). A narrowing that changes no planted text's readings is not detected: a run longer than 53 separators, a
- *     neighbour of a kind no planted text puts beside the word, or a display length bound of 4115 units or more (the label
- *     display length of the 4116-unit plant). A narrowing that changes a planted text's readings is detected, unless the
+ *     neighbour no planted text puts on that side of the word in that order (a decimal digit other than an ASCII one, or a
+ *     mark just before the word, say), a display length bound of 4115 units or more (the label display length of the
+ *     4116-unit plant), or the plain reading dropped from the either-reading rule (every planted text the plain reading
+ *     reads, the label display reads too). A narrowing that changes a planted text's readings is detected, unless the
  *     roster's readings of every planted text it changes are rewritten with it (and, where the scan or the quiet accounting
  *     reads those texts, the scan's unread list and the accounting's literals as well) or it is paired with a pin rewrite
  *     (the first LIMIT);
@@ -171,14 +186,16 @@
  *     over the freed words, with the word-count literal and the roster in step), the change is not detected; it relabels words
  *     and drops no pin;
  *   - C freezes the adapters over READINGS only;
+ *   - A2's src walk reads the src/**\/*.ts modules git lists and no other file: a src file of another kind is outside A2;
  *   - A1 reads the installed release's paths and bytes, never their metadata (mode, owner, timestamps), the vendored tarball,
  *     the lock file, Forge's tree or the installed forge executable: a re-vendor that changes only metadata, or one not yet
  *     installed, does not red A1, and a receipt Forge serves only as new gate.status payload keys with no client release
  *     spelling it does not fire A1 (B1 shows such keys unread today).
  *
  * MEASURED AT THE CUT (seat records, read-only, not assertions): cut #1 at trunk 061c2ac; cut #2 (the respin curing cut #1's
- * refusal items U1 and U2) at trunk 5fbe25e; this cut (#3, the respin curing cut #2's refusal items U1 and U2) at trunk
- * c843ed5, 2026-10-29. src holds 117 modules and 0 hits of WORD's family as A2 reads it now; at cut #1's base test, qa and
+ * refusal items U1 and U2) at trunk 5fbe25e; cut #3 (the respin curing cut #2's refusal items U1 and U2) at trunk c843ed5;
+ * this cut (#4, the enumerate-the-resolvable respin curing cut #3's refusal item U1) at trunk b3d410f, 2026-10-29. src
+ * holds 117 files, every one a .ts module, and 0 hits of WORD's family as A2 reads it now; at cut #1's base test, qa and
  * docs held 0 lines of the family as well (the census and roster spell it, as their own data). At cut #2, Forge origin/main
  * d248b17bd91f (2026-10-28T17:07:14Z) spelled ForgeCACReceiptV0 only in
  * docs/programs/cac-evidence-assurance-2026-10-18/01-contract-qa.md (its section heading :3 reads 'Proposed read-only export
@@ -446,7 +463,12 @@ const PLANTED_TEXTS: Readonly<Record<string, string>> = {
   middleDot: `${HEAD}${fromCodePoints(0xb7)}${TAIL}`,
   brailleBlank: `${HEAD}${fromCodePoints(0x2800)}${TAIL}`,
   undertie: `${HEAD}${fromCodePoints(0x203f)}${TAIL}`,
+  // NFKC turns U+2017 DOUBLE LOW LINE into a space and U+0333, a mark, so no separator run parts the words.
+  doubleLowLine: `${HEAD}${fromCodePoints(0x2017)}${TAIL}`,
   dottedI: `VER${fromCodePoints(0x130)}F${fromCodePoints(0x130)}ED_HISTORICAL`,
+  // NFKC composes U+0301 with the last L into U+0139, so the word is gone; after the last D it composes with nothing.
+  composedLetter: `VERIFIED_HISTORICAL${fromCodePoints(0x301)}`,
+  markAfterReversed: `HISTORICAL_VERIFIED${fromCodePoints(0x301)}`,
   digitBefore: "2VERIFIED_HISTORICAL",
   letterAfter: "VerifiedHistoricalReceipt",
   digitAfter: "VERIFIED_HISTORICAL2",
@@ -454,6 +476,18 @@ const PLANTED_TEXTS: Readonly<Record<string, string>> = {
   reversedDigitBefore: "2HISTORICAL_VERIFIED",
   reversedLetterAfter: "HistoricalVerifiedReceipt",
   reversedDigitAfter: "HISTORICAL_VERIFIED2",
+  // Numbers that are not decimal digits: an other number (U+0BF0) and a letter number (U+16EE) on both sides of both orders,
+  // then U+3007 (a letter number) and U+10107 (an other number outside the BMP) just before the word.
+  otherNumberBefore: `${fromCodePoints(0xbf0)}VERIFIED_HISTORICAL`,
+  otherNumberAfter: `VERIFIED_HISTORICAL${fromCodePoints(0xbf0)}`,
+  reversedOtherNumberBefore: `${fromCodePoints(0xbf0)}HISTORICAL_VERIFIED`,
+  reversedOtherNumberAfter: `HISTORICAL_VERIFIED${fromCodePoints(0xbf0)}`,
+  letterNumberBefore: `${fromCodePoints(0x16ee)}VERIFIED_HISTORICAL`,
+  letterNumberAfter: `VERIFIED_HISTORICAL${fromCodePoints(0x16ee)}`,
+  reversedLetterNumberBefore: `${fromCodePoints(0x16ee)}HISTORICAL_VERIFIED`,
+  reversedLetterNumberAfter: `HISTORICAL_VERIFIED${fromCodePoints(0x16ee)}`,
+  ideographicZeroBefore: `${fromCodePoints(0x3007)}VERIFIED_HISTORICAL`,
+  aegeanOneBefore: `${fromCodePoints(0x10107)}VERIFIED_HISTORICAL`,
   reversedGlued: "HistoricalVerified",
   adverbForward: "verified historically",
   run: "verified - historical",
@@ -973,13 +1007,17 @@ const RESIDUALS: readonly Residual[] = [
   {
     id: "R-EMBEDDED",
     quietPin: "A2",
-    quiet: ["embedded", "digitBefore", "letterAfter", "digitAfter", "reversedLetterBefore", "reversedDigitBefore", "reversedLetterAfter", "reversedDigitAfter"],
+    quiet: [
+      "embedded", "digitBefore", "letterAfter", "digitAfter", "reversedLetterBefore", "reversedDigitBefore", "reversedLetterAfter", "reversedDigitAfter",
+      "otherNumberBefore", "otherNumberAfter", "reversedOtherNumberBefore", "reversedOtherNumberAfter",
+      "letterNumberBefore", "letterNumberAfter", "reversedLetterNumberBefore", "reversedLetterNumberAfter", "ideographicZeroBefore", "aegeanOneBefore",
+    ],
     twin: ["glued", "reversedGlued"],
   },
-  { id: "R-LOOKALIKE", quietPin: "A2", quiet: ["cyrillic", "dottedI"], twin: ["fullwidth"] },
+  { id: "R-LOOKALIKE", quietPin: "A2", quiet: ["cyrillic", "dottedI", "composedLetter"], twin: ["fullwidth", "markAfterReversed"] },
   { id: "R-PARAPHRASE", quietPin: "A2", quiet: ["passed", "atSnapshot"], twin: ["adverb"] },
   { id: "R-SIBLING", quietPin: "A2", quiet: ["current"], twin: ["title"] },
-  { id: "R-OTHER-SEPARATOR", quietPin: "A2", quiet: ["hyphenBullet", "minusSign", "middleDot", "brailleBlank", "undertie"], twin: ["pd2010"] },
+  { id: "R-OTHER-SEPARATOR", quietPin: "A2", quiet: ["hyphenBullet", "minusSign", "middleDot", "brailleBlank", "undertie", "doubleLowLine"], twin: ["pd2010"] },
   { id: "R-OTHER-NAME", quietPin: "A1", quiet: ["otherName", "oneField"], twin: ["named"] },
   { id: "R-COMPOSED-RELEASE", quietPin: "A1", quiet: ["pieces", "unicodeEscape"], twin: ["spelled"] },
   { id: "R-UNPLANTED-SPELLING", quietPin: "B1", quiet: ["otherSpelling"], twin: ["readKey"] },
