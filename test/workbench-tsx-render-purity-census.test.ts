@@ -26,46 +26,68 @@
  * Pi authors no TSX component today. The landed wb-o4h0.4 census pins that no walked file is a .tsx or .jsx module, that no module
  * holds JSX and that no module loads the TSX SDK, so this census pins only what this bead adds: the proposed family's names and
  * the duties the filing arms. The trigger has not fired; acceptance (a) and (b) are owed by the cut that adopts. Rows:
- *  A the trigger (the title's If-clause), absent today. A1 no walked module names one of the nineteen (read off the roster's copies
- *    of :11 and :13) where the TypeScript compiler reads a name: an identifier in any position (an import or export specifier, a
- *    declaration, a reference, a property access, a JSX tag or attribute, a binding pattern, a type reference, a private name;
- *    escapes decoded by the compiler) or a string-named member (an element access, a quoted or computed member name, a quoted
- *    import or export name, an indexed access type, a type argument). Planted leg: the same judge over the live readings plus one
- *    planted component reads exactly the plant's findings. A2 the walk read every module git lists (the listing is taken before
- *    the walk; a file or directory gone since is skipped) above its floor, the rf provider and this file among them, and met no
- *    symlink and no failed read. A3 the producer gate reads closed over the roster's measured facts: no src/ or python/ site, no site in a
- *    published file and no export key beyond the measured six at any revision; each opening fact, planted alone, reads open.
+ *  A the trigger (the title's If-clause), absent today. A1 no walked module spells one of the nineteen (read off the roster's
+ *    copies of :11 and :13) in a read position. The judge is a parse by the TypeScript compiler under the module's own script
+ *    kind, never a type check, and its read positions are exactly these, each with P- controls: (i) an identifier in any
+ *    position, escapes decoded by the compiler (an import or export specifier, a declaration, a reference, a property access, a
+ *    JSX tag, attribute or namespaced name, a binding pattern, a type reference or qualified name, a label), or a private name;
+ *    (ii) a quoted name: a property, method, accessor, signature or enum member's, a binding pattern property's (in a variable,
+ *    a parameter or a catch clause), an import or export specifier's (either side) or a namespace export's; (iii) a key
+ *    expression (an element access's argument, a computed name's expression or an `in` operator's left operand) that is a
+ *    string literal or a no-substitution template, bare or under any nesting of parentheses, as, satisfies, non-null and
+ *    angle-bracket assertions (an angle-bracket assertion parses only in a TS-kind module); (iv) a key type (an indexed access
+ *    type's index, a mapped type's key or as-clause, or any type argument: of a type reference, an expression with type
+ *    arguments, a call, a new expression, a tagged template, a JSX element, an import type or a type query) that is a string
+ *    literal type (quoted or a no-substitution template), bare or under any nesting of parenthesized types, unions and
+ *    intersections. A literal's value is read with its escapes decoded. READ_POSITIONS names the twelve positions, and the
+ *    witness holds the positions the P- plants reach. A spelling in no read position is never a finding: each such form is a
+ *    named residual below. Planted leg: the same judge over the live readings plus one planted component reads exactly the
+ *    plant's findings. A2 the walk read every module git lists (the listing is taken before the walk; a file or directory gone
+ *    since is skipped) above its floor, the rf provider and this file among them, and met no symlink and no failed read. A3 the
+ *    producer gate reads closed over the roster's measured facts: no src/ or python/ site, no site in a published file and no
+ *    export key beyond the measured six at any revision; each opening fact, planted alone, reads open.
  *  B acceptance (a), armed at adoption. B1 the title's five forbidden acts in render, each traced to its :17 phrase; B2 the title's
- *    three useSpeculation callbacks, each traced to :19. Each reads disarmed over the live tree (A1's live reading names nothing)
- *    and, over a planted adoption, owes one falsifier per act.
- *  C acceptance (b), armed at adoption. C1 the title's unmount duty and the acceptance's unmount case, traced to :19; disarmed
- *    today, owed over a planted adoption.
+ *    three useSpeculation callbacks, each traced to :19. Both arm on A1's judge and on nothing else: a tree A1 reads as naming the
+ *    family arms them (each of A1's P- plants, planted alone, arms them: P-ARMS-ON-EVERY-READ) and a tree it reads as naming
+ *    nothing leaves them disarmed (no quiet row arms them: N-ARMS-ON-A-RESIDUAL), so A1's residuals are theirs too. Each reads
+ *    disarmed over the live tree (A1's live reading names nothing) and, armed, owes one falsifier per act.
+ *  C acceptance (b), armed at adoption on the same judge. C1 the title's unmount duty and the acceptance's unmount case, traced to
+ *    :19; disarmed today, owed once A1's judge reads an adoption.
  * NOT CLAIMED: the title's third duty (promotion declares demand, never guaranteeing scheduling or reuse): the acceptance owes no
  *   falsifier for it, so DUTIES maps it to no pin and the judged set holds only its :19 trace. Any reading of what a component does
  *   in render: until a Pi component exists there is nothing to run, and the cut that adds the first one reds A1 (and B1, B2, C1) by
  *   design and owes acceptance (a) and (b) with it. Name-level coverage beyond the four names the bead row spells (the hook range's
  *   two ends, the title's hook and boundary): a middle name removed from the roster's vendored line, its digest and every literal
- *   here together stays green, because the vendored copy is its only anchor.
+ *   here together stays green, because the vendored copy is its only anchor. Row A's pin set (A1, A2, A3) is held to this file and
+ *   the roster only, so a pin of row A removed from every literal of both stays green. The row states: ROW_STATE is held to the
+ *   roster's rowStates, so a state rewritten here alone reds, but one rewritten here and in the roster together stays green.
  * OUTSIDE ANCHORS (the judged-set case): the owner filing's row in the tracked bead export (row wb-km7q.5: its title, and its first
  *   line opening "Citations: ", so appended notes are safe). The trigger is row A's label; the acceptance, split at " plus ", is row
- *   B's and row C's labels; the title's four duties (split at "; ") are DUTIES; the five acts and the three callbacks are parsed off
- *   the title and each must match its producer phrase; the notes' cited lines are the roster's vendored lines (plus the two name
- *   lines), its two quotes sit in them, its hook range opens and closes the name list, and the title's hook and boundary are in it.
- *   So a row, a label, a duty or an act removed from every literal of this file and of the roster together still reds.
+ *   B's and row C's labels; the title's four duties (split at "; ") are DUTIES, and DUTIES' pins are derived from them (a duty that
+ *   ends "in render" is owed by row B's pins in order, the duty that opens "unmount" by row C's, any other by none); the five acts
+ *   and the three callbacks are parsed off the title and each must match its producer phrase; the notes' cited lines are the
+ *   roster's vendored lines (plus the two name lines), its two quotes sit in them, its hook range opens and closes the name list,
+ *   and the title's hook and boundary are in it. So a row, a label, a duty, a duty's pin or an act removed from every literal of
+ *   this file and of the roster together still reds.
  * POLARITY (asserted in code before the roster compare): a P- control reads true; a Q- control (a residual's quiet row) and an N-
  *   control (a closed or disarmed reading) read false.
- * RESIDUALS (named families, each with pinned quiet rows in the roster): R-NEEDLE a name in a string or template literal outside a
- *   member position, a regular expression or a comment; R-CASED another casing; R-AFFIXED a longer identifier holding a name;
- *   R-COMPOSED a name assembled at run time; R-EMBEDDED component source held in a literal (wb-o4h0.4's A3 collects the TSX module
- *   names censuses plant); R-SDK-LOAD a name reached through the SDK without spelling it, such as a re-export (wb-o4h0.4's A2
- *   refuses every SDK load); R-COMPOSITION the charter's convenience compositions (the two quoted names on :13); R-OTHER-FAMILY the
- *   shipped hooks and the 2026-10-17 amendment's adapter hooks and activity boundary (wb-km7q.3, wb-km7q.6); R-OWN-RENDER Pi's own
- *   render code, which is no rf component; R-OUTSIDE a file below a skipped root entry; R-NONMODULE a file that is no module (a page,
- *   a JSON fixture such as this census's roster, an extensionless script).
+ * RESIDUALS (named families, each with pinned quiet rows in the roster): R-NEEDLE a name in a string or template literal, a value or
+ *   a literal type, in no read position (a call argument such as a reflective key, an initializer, a type annotation, a module
+ *   specifier), a regular expression or a comment (JSDoc included: the judge never visits JSDoc, though a JS module's checker
+ *   reads its types); R-CASED another casing; R-AFFIXED a longer identifier holding a name; R-COMPOSED a name assembled from parts
+ *   (a `+` concatenation, a template expression or a template literal type with substitutions); R-TYPE-FLOW a name that reaches a
+ *   key position only through what a type check evaluates (a binding, a type alias, a type parameter's constraint or default, a
+ *   call's result, a comma, conditional or logical expression, a conditional or tuple type): the judge reads spellings, never
+ *   types; R-EMBEDDED component source held in a literal (wb-o4h0.4's A3 collects the TSX module names censuses plant); R-SDK-LOAD
+ *   a name reached through the SDK without spelling it, such as a re-export (wb-o4h0.4's A2 refuses every SDK load);
+ *   R-COMPOSITION the charter's convenience compositions (the two quoted names on :13); R-OTHER-FAMILY the shipped hooks and the
+ *   2026-10-17 amendment's adapter hooks and activity boundary (wb-km7q.3, wb-km7q.6); R-OWN-RENDER Pi's own render code, which is
+ *   no rf component; R-OUTSIDE a file below a skipped root entry; R-NONMODULE a file that is no module (a page, a JSON fixture
+ *   such as this census's roster, an extensionless script).
  * TITLES: each row's describe title carries its state (ROW_STATE: A absent today; B and C armed at adoption, owed by the adopting
  *   cut and not delivered here), so a report never reads a passing pin as a delivered falsifier; the pins are titled by their ids.
- * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the rows, every pin's witness, the residual
- *   families with their quiet rows and the registered test titles are held to the roster.
+ * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the rows, the row states, every pin's witness, the
+ *   residual families with their quiet rows and the registered test titles are held to the roster.
  * Display paths added: none. Test-only: every plant is an in-memory text; the tree, the roster and the bead export are only read.
  */
 import { execFileSync } from "node:child_process";
@@ -102,6 +124,21 @@ const ROLES: readonly string[] = ["program-pin", "mapped", "origin-main"];
 const NAME_LINES: readonly string[] = ["11", "13"];
 /** The family's size: :11's backticked hooks and :13's backticked boundaries. */
 const FAMILY_SIZE = { hooks: 14, boundaries: 5 } as const;
+/** A1's read positions, the header's (i)-(iv), as the judge labels its findings; every one is reached by a P- plant. */
+const READ_POSITIONS: readonly string[] = [
+  "computed name",
+  "element access",
+  "identifier",
+  "in key",
+  "indexed access type",
+  "mapped key",
+  "private name",
+  "quoted binding",
+  "quoted member",
+  "quoted namespace export",
+  "quoted specifier",
+  "type argument",
+];
 
 interface Row {
   readonly id: string;
@@ -144,10 +181,11 @@ const UNMOUNT_PHRASE = "Component unmount withdraws only its interest, not anoth
 const PROMOTION_PHRASE = "promotion declares actual demand but does not guarantee scheduling or reuse";
 /** The residual families, each with its quiet rows (held to the roster). */
 const QUIET: Readonly<Record<string, readonly string[]>> = {
-  "R-NEEDLE": ["Q-NEEDLE-ARG", "Q-NEEDLE-TEMPLATE", "Q-NEEDLE-REGEX", "Q-NEEDLE-COMMENT"],
+  "R-NEEDLE": ["Q-NEEDLE-ARG", "Q-NEEDLE-REFLECT", "Q-NEEDLE-VALUE", "Q-NEEDLE-TEMPLATE", "Q-NEEDLE-REGEX", "Q-NEEDLE-COMMENT", "Q-NEEDLE-JSDOC"],
   "R-CASED": ["Q-CASED"],
   "R-AFFIXED": ["Q-AFFIXED"],
-  "R-COMPOSED": ["Q-COMPOSED"],
+  "R-COMPOSED": ["Q-COMPOSED", "Q-COMPOSED-TYPE"],
+  "R-TYPE-FLOW": ["Q-FLOW-BINDING", "Q-FLOW-ALIAS", "Q-FLOW-EXPRESSION", "Q-FLOW-TYPE"],
   "R-EMBEDDED": ["Q-EMBEDDED"],
   "R-SDK-LOAD": ["Q-REEXPORT"],
   "R-COMPOSITION": ["Q-COMPOSITION"],
@@ -185,6 +223,7 @@ interface Roster {
     readonly rf: { readonly version: string; readonly mappedVersion: string; readonly lockSource: string; readonly hostBroker: readonly string[] };
   };
   readonly rows: readonly Row[];
+  readonly rowStates: Readonly<Record<string, string>>;
   readonly residuals: Readonly<Record<string, readonly string[]>>;
   readonly witness: Readonly<Record<string, Json>>;
   readonly tests: readonly string[];
@@ -320,49 +359,132 @@ function scriptKindOf(path: string): ts.ScriptKind {
   if (/\.[cm]?ts$/.test(path)) return ts.ScriptKind.TS;
   return ts.ScriptKind.JSX;
 }
-/** The string-named member positions: where the compiler reads a literal as a name. */
-function memberPosition(node: ts.StringLiteral | ts.NoSubstitutionTemplateLiteral): string | undefined {
-  const parent = node.parent;
-  if (ts.isElementAccessExpression(parent) && parent.argumentExpression === node) return "element access";
-  if (ts.isComputedPropertyName(parent)) return "computed name";
+type Spelled = ts.StringLiteral | ts.NoSubstitutionTemplateLiteral;
+type OnRead = (position: string, spelled: Spelled) => void;
+/** The syntax kinds, read once: each member of the compiler's namespace is a getter, so the per-node dispatch reads none. */
+const KIND = ts.SyntaxKind;
+/** A key expression without its transparent wrappers: parentheses, as, satisfies, non-null and angle-bracket assertions, any nesting. */
+function unwrapped(node: ts.Expression): ts.Expression {
+  return ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isNonNullExpression(node) || ts.isTypeAssertionExpression(node)
+    ? unwrapped(node.expression)
+    : node;
+}
+/** (iii) A key expression's spelling: a string literal or a no-substitution template, bare or under the transparent wrappers. */
+function keyExpression(position: string, node: ts.Expression, onRead: OnRead): void {
+  const inner = unwrapped(node);
+  if (ts.isStringLiteral(inner) || ts.isNoSubstitutionTemplateLiteral(inner)) onRead(position, inner);
+}
+/** (iv) A key type's spellings: string literal types, bare or under any nesting of parenthesized types, unions and intersections. */
+function keyType(position: string, node: ts.TypeNode | undefined, onRead: OnRead): void {
+  if (node === undefined) return;
+  if (ts.isParenthesizedTypeNode(node)) keyType(position, node.type, onRead);
+  else if (ts.isUnionTypeNode(node) || ts.isIntersectionTypeNode(node)) for (const member of node.types) keyType(position, member, onRead);
+  else if (ts.isLiteralTypeNode(node) && (ts.isStringLiteral(node.literal) || ts.isNoSubstitutionTemplateLiteral(node.literal))) onRead(position, node.literal);
+}
+/** (ii) A quoted name: the name node when it is a string literal. */
+function quoted(position: string, name: ts.Node | undefined, onRead: OnRead): void {
+  if (name !== undefined && ts.isStringLiteral(name)) onRead(position, name);
+}
+/** (iv) The type arguments a node passes: a call's, a type reference's, an expression with type arguments', a new expression's, a
+ * tagged template's, a JSX element's, an import type's or a type query's. */
+function typeArgumentsOf(node: ts.Node): readonly ts.TypeNode[] | undefined {
   if (
-    (ts.isPropertyAssignment(parent) ||
-      ts.isPropertySignature(parent) ||
-      ts.isPropertyDeclaration(parent) ||
-      ts.isMethodDeclaration(parent) ||
-      ts.isMethodSignature(parent) ||
-      ts.isGetAccessorDeclaration(parent) ||
-      ts.isSetAccessorDeclaration(parent) ||
-      ts.isEnumMember(parent)) &&
-    parent.name === node
+    ts.isCallExpression(node) ||
+    ts.isTypeReferenceNode(node) ||
+    ts.isExpressionWithTypeArguments(node) ||
+    ts.isNewExpression(node) ||
+    ts.isTaggedTemplateExpression(node) ||
+    ts.isJsxOpeningElement(node) ||
+    ts.isJsxSelfClosingElement(node) ||
+    ts.isImportTypeNode(node) ||
+    ts.isTypeQueryNode(node)
   )
-    return "quoted member";
-  if ((ts.isImportSpecifier(parent) || ts.isExportSpecifier(parent)) && (parent.name === node || parent.propertyName === node)) return "quoted specifier";
-  if (ts.isLiteralTypeNode(parent)) {
-    const holder = parent.parent;
-    if (ts.isIndexedAccessTypeNode(holder) && holder.indexType === parent) return "indexed access type";
-    if (ts.isTypeReferenceNode(holder) && holder.typeArguments?.some(argument => argument === parent) === true) return "type argument";
-  }
+    return node.typeArguments;
   return undefined;
+}
+/** Every spelling a node holds in a read position, (ii)-(iv), with its position; a node of any other kind holds none. */
+function readsOf(node: ts.Node, onRead: OnRead): void {
+  switch (node.kind) {
+    case KIND.PropertyAssignment:
+    case KIND.PropertySignature:
+    case KIND.PropertyDeclaration:
+    case KIND.MethodDeclaration:
+    case KIND.MethodSignature:
+    case KIND.GetAccessor:
+    case KIND.SetAccessor:
+    case KIND.EnumMember:
+      if (
+        ts.isPropertyAssignment(node) ||
+        ts.isPropertySignature(node) ||
+        ts.isPropertyDeclaration(node) ||
+        ts.isMethodDeclaration(node) ||
+        ts.isMethodSignature(node) ||
+        ts.isGetAccessorDeclaration(node) ||
+        ts.isSetAccessorDeclaration(node) ||
+        ts.isEnumMember(node)
+      )
+        quoted("quoted member", node.name, onRead);
+      return;
+    case KIND.BindingElement:
+      if (ts.isBindingElement(node)) quoted("quoted binding", node.propertyName, onRead);
+      return;
+    case KIND.ImportSpecifier:
+    case KIND.ExportSpecifier:
+      if (ts.isImportSpecifier(node) || ts.isExportSpecifier(node)) {
+        quoted("quoted specifier", node.propertyName, onRead);
+        quoted("quoted specifier", node.name, onRead);
+      }
+      return;
+    case KIND.NamespaceExport:
+      if (ts.isNamespaceExport(node)) quoted("quoted namespace export", node.name, onRead);
+      return;
+    case KIND.ElementAccessExpression:
+      if (ts.isElementAccessExpression(node)) keyExpression("element access", node.argumentExpression, onRead);
+      return;
+    case KIND.ComputedPropertyName:
+      if (ts.isComputedPropertyName(node)) keyExpression("computed name", node.expression, onRead);
+      return;
+    case KIND.BinaryExpression:
+      if (ts.isBinaryExpression(node) && node.operatorToken.kind === KIND.InKeyword) keyExpression("in key", node.left, onRead);
+      return;
+    case KIND.IndexedAccessType:
+      if (ts.isIndexedAccessTypeNode(node)) keyType("indexed access type", node.indexType, onRead);
+      return;
+    case KIND.MappedType:
+      if (ts.isMappedTypeNode(node)) {
+        keyType("mapped key", node.typeParameter.constraint, onRead);
+        keyType("mapped key", node.nameType, onRead);
+      }
+      return;
+    case KIND.CallExpression:
+    case KIND.TypeReference:
+    case KIND.ExpressionWithTypeArguments:
+    case KIND.NewExpression:
+    case KIND.TaggedTemplateExpression:
+    case KIND.JsxOpeningElement:
+    case KIND.JsxSelfClosingElement:
+    case KIND.ImportType:
+    case KIND.TypeQuery:
+      for (const argument of typeArgumentsOf(node) ?? []) keyType("type argument", argument, onRead);
+      return;
+  }
 }
 interface ModuleReading {
   readonly path: string;
   readonly findings: readonly string[];
 }
-/** One module's findings: each family name the compiler reads as a name, as `<path>:<line> <position>: <name>`. */
+/** One module's findings: each family name spelled in a read position, as `<path>:<line> <position>: <name>`. */
 function readModule(path: string, source: string, kind: ts.ScriptKind): ModuleReading {
   const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, kind);
   const findings: string[] = [];
   const hit = (node: ts.Node, position: string, value: string): void => {
     if (NAMES.has(value)) findings.push(`${path}:${file.getLineAndCharacterOfPosition(node.getStart(file)).line + 1} ${position}: ${value}`);
   };
+  const onRead: OnRead = (position, spelled) => hit(spelled, position, spelled.text);
   const visit = (node: ts.Node): void => {
     if (ts.isIdentifier(node)) hit(node, "identifier", ts.idText(node));
     else if (ts.isPrivateIdentifier(node)) hit(node, "private name", ts.idText(node).slice(1));
-    else if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) {
-      const position = memberPosition(node);
-      if (position !== undefined) hit(node, position, node.text);
-    }
+    else readsOf(node, onRead);
     ts.forEachChild(node, visit);
   };
   visit(file);
@@ -464,48 +586,131 @@ function adoptionText(): string {
 }
 const ADOPTION = "planted/adoption";
 const adoptionReading = (): ModuleReading => readModule(ADOPTION, adoptionText(), ts.ScriptKind.TSX);
-const reads = (source: string, kind: ts.ScriptKind = ts.ScriptKind.TS): boolean => readModule("planted/control", source, kind).findings.length > 0;
-/** A1's controls: one P- per read position (and one per family name), one Q- per residual quiet row. */
-function nameControls(): Controls {
-  const tsx = ts.ScriptKind.TSX;
-  const controls: Record<string, boolean> = {
-    "P-IMPORT": reads(`import { ${HOOK} } from "m";\n`),
-    "P-IMPORT-ALIAS": reads(`import { ${HOOK} as spec } from "m";\n`),
-    "P-EXPORT": reads(`export { ${HOOK} } from "m";\n`),
-    "P-DECLARATION": reads(`export function ${BOUNDARY}() {\n  return null;\n}\n`),
-    "P-REFERENCE": reads(`const view = ${HOOK}({});\n`),
-    "P-PROPERTY": reads(`const view = sdk.${HOOK}({});\n`),
-    "P-JSX-TAG": reads(`const view = <${BOUNDARY} maxConcurrent={2} />;\n`, tsx),
-    "P-JSX-MEMBER": reads(`const view = <sdk.${BOUNDARY} />;\n`, tsx),
-    "P-JSX-ATTRIBUTE": reads(`const view = <Box ${HOOK}={1} />;\n`, tsx),
-    "P-BINDING": reads(`const { ${HOOK} } = load("m");\n`, ts.ScriptKind.JSX),
-    "P-TYPE-REFERENCE": reads(`let boundary: ${BOUNDARY} | undefined;\n`),
-    "P-QUALIFIED": reads(`let boundary: sdk.${BOUNDARY} | undefined;\n`),
-    "P-PRIVATE": reads(`class Holder {\n  #${HOOK} = 1;\n}\n`),
-    "P-ESCAPED": reads(`const view = ${ESCAPED_HOOK}({});\n`),
-    "P-ELEMENT": reads(`const view = sdk["${HOOK}"]({});\n`),
-    "P-ELEMENT-TEMPLATE": reads(`const view = sdk[${"`"}${HOOK}${"`"}]({});\n`),
-    "P-QUOTED-MEMBER": reads(`const hooks = { "${HOOK}": 1 };\n`),
-    "P-COMPUTED": reads(`const hooks = { ["${HOOK}"]: 1 };\n`),
-    "P-QUOTED-SPECIFIER": reads(`import { "${HOOK}" as spec } from "m";\n`),
-    "P-INDEXED-TYPE": reads(`type Spec = Sdk["${HOOK}"];\n`),
-    "P-TYPE-ARGUMENT": reads(`type Spec = Pick<Sdk, "${HOOK}">;\n`),
-    "Q-NEEDLE-ARG": reads(`expect(text).toContain("${HOOK}");\n`),
-    "Q-NEEDLE-TEMPLATE": reads(`const text = ${"`"}<${BOUNDARY} />${"`"};\n`),
-    "Q-NEEDLE-REGEX": reads(`const pattern = /${HOOK}/;\n`),
-    "Q-NEEDLE-COMMENT": reads(`// ${HOOK}\n/** ${BOUNDARY} */\nconst value = 1;\n`),
-    "Q-CASED": reads(`const view = ${HOOK.toLowerCase()};\nconst other = ${BOUNDARY.toUpperCase()};\n`),
-    "Q-AFFIXED": reads(`const ${HOOK}Limits = 1;\nconst my${BOUNDARY} = 2;\n`),
-    "Q-COMPOSED": reads(`const view = sdk["use" + "${HOOK.slice(3)}"];\nconst other = sdk[${"`"}use${"${"}part}${"`"}];\n`),
-    "Q-EMBEDDED": reads(`const source = ${"`"}export function V() { const s = ${HOOK}({}); return <${BOUNDARY} />; }${"`"};\n`),
-    "Q-REEXPORT": reads('export * from "m";\nimport * as sdk from "m";\nconst view = sdk[name];\n'),
-    "Q-COMPOSITION": reads(FAMILY.compositions.map(name => `const ${name.toLowerCase()} = <${name} />;`).join("\n"), tsx),
-    "Q-SHIPPED-HOOKS": reads("const [state] = useState(0);\nconst memo = useMemo(() => 1, []);\nconst lens = useLens(spec);\nuseEffect(() => undefined);\n"),
-    "Q-AMENDMENT": reads('const query = useQuery(spec);\nconst absent = useAbsent(spec);\nconst all = useEvidenceAll(spec);\nconst view = <ActivityBoundary mode="WARM" />;\n', tsx),
-    "Q-OWN-RENDER": reads("export function render(width: number) {\n  const frame = fetchFrame(width);\n  return frame.lines;\n}\n"),
+interface Plant {
+  readonly source: string;
+  readonly kind: ts.ScriptKind;
+}
+/** A1's planted controls: P- plants, one per read position and form (READ_POSITIONS' twelve, (i)-(iv)) and one per family
+ * name; Q- plants, one per residual quiet row. Each is an in-memory text, parsed under its own script kind. */
+function namePlants(): Readonly<Record<string, Plant>> {
+  const tick = "`";
+  const open = "${";
+  const plants: Record<string, Plant> = {};
+  const plant = (id: string, source: string, kind: ts.ScriptKind = ts.ScriptKind.TS): void => {
+    plants[id] = { source, kind };
   };
-  for (const name of [...FAMILY.hooks, ...FAMILY.boundaries]) controls[`P-NAME-${name}`] = reads(`const view = ${name};\n`);
-  return controls;
+  const tsx = ts.ScriptKind.TSX;
+  const js = ts.ScriptKind.JSX;
+  // (i) identifiers, in any position, and private names
+  plant("P-IMPORT", `import { ${HOOK} } from "m";\n`);
+  plant("P-IMPORT-ALIAS", `import { ${HOOK} as spec } from "m";\n`);
+  plant("P-EXPORT", `export { ${HOOK} } from "m";\n`);
+  plant("P-DECLARATION", `export function ${BOUNDARY}() {\n  return null;\n}\n`);
+  plant("P-REFERENCE", `const view = ${HOOK}({});\n`);
+  plant("P-PROPERTY", `const view = sdk.${HOOK}({});\n`);
+  plant("P-JSX-TAG", `const view = <${BOUNDARY} maxConcurrent={2} />;\n`, tsx);
+  plant("P-JSX-MEMBER", `const view = <sdk.${BOUNDARY} />;\n`, tsx);
+  plant("P-JSX-ATTRIBUTE", `const view = <Box ${HOOK}={1} />;\n`, tsx);
+  plant("P-JSX-NAMESPACED", `const view = <Box sdk:${HOOK}="1" />;\n`, js);
+  plant("P-BINDING", `const { ${HOOK} } = load("m");\n`, js);
+  plant("P-TYPE-REFERENCE", `let boundary: ${BOUNDARY} | undefined;\n`);
+  plant("P-QUALIFIED", `let boundary: sdk.${BOUNDARY} | undefined;\n`);
+  plant("P-LABEL", `${HOOK}: for (;;) break ${HOOK};\n`);
+  plant("P-PRIVATE", `class Holder {\n  #${HOOK} = 1;\n}\n`);
+  plant("P-ESCAPED", `const view = ${ESCAPED_HOOK}({});\n`);
+  // (ii) quoted names
+  plant("P-QUOTED-MEMBER", `const hooks = { "${HOOK}": 1 };\n`);
+  plant("P-QUOTED-FIELD", `class Holder {\n  "${HOOK}" = 1;\n}\n`);
+  plant("P-QUOTED-METHOD", `class Holder {\n  "${HOOK}"() {\n    return 1;\n  }\n}\n`);
+  plant("P-QUOTED-ACCESSOR", `const hooks = {\n  get "${HOOK}"() {\n    return 1;\n  },\n};\n`);
+  plant("P-QUOTED-SETTER", `class Holder {\n  set "${HOOK}"(value: number) {\n    this.value = value;\n  }\n}\n`);
+  plant("P-QUOTED-SIGNATURE", `interface Sdk {\n  "${HOOK}": () => void;\n}\n`);
+  plant("P-QUOTED-METHOD-SIGNATURE", `interface Sdk {\n  "${BOUNDARY}"(): void;\n}\n`);
+  plant("P-QUOTED-ENUM", `enum Hooks {\n  "${HOOK}" = 1,\n}\n`);
+  plant("P-QUOTED-BINDING", `const { "${HOOK}": hook } = sdk;\n`);
+  plant("P-QUOTED-BINDING-BOUNDARY", `const { "${BOUNDARY}": Boundary } = sdk;\n`);
+  plant("P-QUOTED-PARAMETER", `function view({ "${HOOK}": hook }: Sdk) {\n  return hook;\n}\n`);
+  plant("P-QUOTED-CATCH", `try {\n  run();\n} catch ({ "${HOOK}": hook }) {\n  report(hook);\n}\n`);
+  plant("P-QUOTED-SPECIFIER", `import { "${HOOK}" as spec } from "m";\n`);
+  plant("P-QUOTED-EXPORT-SPECIFIER", `const spec = 1;\nexport { spec as "${HOOK}" };\n`);
+  plant("P-QUOTED-REEXPORT", `export { "${HOOK}" as spec } from "m";\n`);
+  plant("P-QUOTED-NAMESPACE-EXPORT", `export * as "${HOOK}" from "m";\n`);
+  // (iii) key expressions, bare or under the transparent wrappers
+  plant("P-ELEMENT", `const view = sdk["${HOOK}"]({});\n`);
+  plant("P-ELEMENT-TEMPLATE", `const view = sdk[${tick}${HOOK}${tick}]({});\n`);
+  plant("P-ELEMENT-OPTIONAL", `const view = sdk?.["${HOOK}"];\n`);
+  plant("P-ELEMENT-ESCAPED", `const view = sdk["${ESCAPED_HOOK}"];\n`);
+  plant("P-ELEMENT-PAREN", `const view = sdk[("${HOOK}")];\n`);
+  plant("P-ELEMENT-AS", `const view = sdk["${HOOK}" as const];\n`);
+  plant("P-ELEMENT-SATISFIES", `const view = sdk["${HOOK}" satisfies string];\n`);
+  plant("P-ELEMENT-NON-NULL", `const view = sdk["${HOOK}"!];\n`);
+  plant("P-ELEMENT-ASSERTION", `const view = sdk[<const>"${HOOK}"];\n`);
+  plant("P-ELEMENT-NESTED", `const view = sdk[((<const>"${HOOK}" as const) satisfies string)!];\n`);
+  plant("P-COMPUTED", `const hooks = { ["${HOOK}"]: 1 };\n`);
+  plant("P-COMPUTED-WRAPPED", `class Holder {\n  [("${HOOK}" as const)]() {\n    return 1;\n  }\n}\n`);
+  plant("P-COMPUTED-BINDING", `const { ["${HOOK}"]: hook } = sdk;\n`);
+  plant("P-IN-KEY", `const has = "${HOOK}" in sdk;\n`);
+  plant("P-IN-KEY-WRAPPED", `const has = ("${HOOK}" satisfies string) in sdk;\n`);
+  // (iv) key types, bare or under parenthesized types, unions and intersections
+  plant("P-INDEXED-TYPE", `type Spec = Sdk["${HOOK}"];\n`);
+  plant("P-INDEXED-UNION", `type Spec = Sdk["${HOOK}" | "other"];\n`);
+  plant("P-INDEXED-INTERSECTION", `type Spec = Sdk["${HOOK}" & string];\n`);
+  plant("P-INDEXED-PAREN", `type Spec = Sdk[("${HOOK}")];\n`);
+  plant("P-INDEXED-TEMPLATE", `type Spec = Sdk[${tick}${HOOK}${tick}];\n`);
+  plant("P-INDEXED-NESTED", `type Spec = Sdk[("other" | ("${HOOK}" & string))];\n`);
+  plant("P-MAPPED-KEY", `type Spec = { [Key in "${HOOK}"]: unknown };\n`);
+  plant("P-MAPPED-AS", `type Spec = { [Key in keyof Sdk as "${HOOK}"]: unknown };\n`);
+  plant("P-TYPE-ARGUMENT", `type Spec = Pick<Sdk, "${HOOK}">;\n`);
+  plant("P-TYPE-ARGUMENT-UNION", `type Spec = Pick<Sdk, "${HOOK}" | "other">;\n`);
+  plant("P-TYPE-ARGUMENT-PAREN", `type Spec = Pick<Sdk, ("${HOOK}")>;\n`);
+  plant("P-TYPE-ARGUMENT-TEMPLATE", `type Spec = Pick<Sdk, ${tick}${HOOK}${tick}>;\n`);
+  plant("P-TYPE-ARGUMENT-HERITAGE", `interface Spec extends Pick<Sdk, "${HOOK}"> {}\n`);
+  plant("P-TYPE-ARGUMENT-INSTANTIATION", `const read = pick<"${HOOK}">;\n`);
+  plant("P-TYPE-ARGUMENT-CALL", `const view = pick<"${HOOK}">(sdk);\n`);
+  plant("P-TYPE-ARGUMENT-NEW", `const views = new Map<"${HOOK}", number>();\n`);
+  plant("P-TYPE-ARGUMENT-TAGGED", `const view = tag<"${HOOK}">${tick}x${tick};\n`);
+  plant("P-TYPE-ARGUMENT-JSX", `const view = <Box<"${HOOK}"> />;\n`, tsx);
+  plant("P-TYPE-ARGUMENT-JSX-OPENING", `const view = <Box<"${HOOK}">>text</Box>;\n`, tsx);
+  plant("P-TYPE-ARGUMENT-IMPORT", `type Spec = import("m").Pick<"${HOOK}">;\n`);
+  plant("P-TYPE-ARGUMENT-QUERY", `type Spec = typeof pick<"${HOOK}">;\n`);
+  for (const name of [...FAMILY.hooks, ...FAMILY.boundaries]) plant(`P-NAME-${name}`, `const view = ${name};\n`);
+  // the residuals' quiet rows
+  plant("Q-NEEDLE-ARG", `expect(text).toContain("${HOOK}");\n`);
+  plant("Q-NEEDLE-REFLECT", `const view = Reflect.get(sdk, "${HOOK}");\nObject.defineProperty(target, "${BOUNDARY}", { value: 1 });\n`);
+  plant("Q-NEEDLE-VALUE", `import sdk from "${HOOK}";\nlet mode: "${HOOK}" = "${HOOK}";\ndeclare module "${BOUNDARY}" {}\n`);
+  plant("Q-NEEDLE-TEMPLATE", `const text = ${tick}<${BOUNDARY} />${tick};\n`);
+  plant("Q-NEEDLE-REGEX", `const pattern = /${HOOK}/;\n`);
+  plant("Q-NEEDLE-COMMENT", `// ${HOOK}\n/** ${BOUNDARY} */\nconst value = 1;\n`);
+  plant("Q-NEEDLE-JSDOC", `/** @type {import("m").${BOUNDARY}} */\nlet boundary;\n/** @param {Sdk["${HOOK}"]} spec */\nfunction take(spec) {\n  return spec;\n}\n`, js);
+  plant("Q-CASED", `const view = ${HOOK.toLowerCase()};\nconst other = ${BOUNDARY.toUpperCase()};\n`);
+  plant("Q-AFFIXED", `const ${HOOK}Limits = 1;\nconst my${BOUNDARY} = 2;\n`);
+  plant("Q-COMPOSED", `const view = sdk["use" + "${HOOK.slice(3)}"];\nconst other = sdk[${tick}use${open}part}${tick}];\n`);
+  plant("Q-COMPOSED-TYPE", `type Spec = Sdk[${tick}use${open}"${HOOK.slice(3)}"}${tick}];\ntype Pair = Pick<Sdk, ${tick}${open}"use"}${HOOK.slice(3)}${tick}>;\n`);
+  plant("Q-FLOW-BINDING", `const key = "${HOOK}";\nconst view = sdk[key];\n`);
+  plant("Q-FLOW-ALIAS", `type Key = "${HOOK}";\ntype View = Sdk[Key];\nfunction pick<K extends "${HOOK}" = "${HOOK}">(key: K) {\n  return sdk[key];\n}\n`);
+  plant("Q-FLOW-EXPRESSION", `const view = sdk[(0, "${HOOK}")];\nconst other = sdk[flag ? "${HOOK}" : "x"];\nconst third = sdk[name ?? "${HOOK}"];\nconst fourth = sdk[String("${HOOK}")];\n`);
+  plant("Q-FLOW-TYPE", `type View = Sdk[["${HOOK}"][0]];\ntype Other = Pick<Sdk, Flag extends true ? "${HOOK}" : never>;\n`);
+  plant("Q-EMBEDDED", `const source = ${tick}export function V() { const s = ${HOOK}({}); return <${BOUNDARY} />; }${tick};\n`);
+  plant("Q-REEXPORT", 'export * from "m";\nimport * as sdk from "m";\nconst view = sdk[name];\n');
+  plant("Q-COMPOSITION", FAMILY.compositions.map(name => `const ${name.toLowerCase()} = <${name} />;`).join("\n"), tsx);
+  plant("Q-SHIPPED-HOOKS", "const [state] = useState(0);\nconst memo = useMemo(() => 1, []);\nconst lens = useLens(spec);\nuseEffect(() => undefined);\n");
+  plant("Q-AMENDMENT", 'const query = useQuery(spec);\nconst absent = useAbsent(spec);\nconst all = useEvidenceAll(spec);\nconst view = <ActivityBoundary mode="WARM" />;\n', tsx);
+  plant("Q-OWN-RENDER", "export function render(width: number) {\n  const frame = fetchFrame(width);\n  return frame.lines;\n}\n");
+  return plants;
+}
+const plantReading = (plant: Plant): ModuleReading => readModule("planted/control", plant.source, plant.kind);
+/** A1's controls: each plant's reading, true when it names the family. */
+function nameControls(): Controls {
+  return Object.fromEntries(Object.entries(namePlants()).map(([id, plant]) => [id, plantReading(plant).findings.length > 0]));
+}
+/** The read positions A1's P- plants reach (each finding is `<path>:<line> <position>: <name>`). */
+function plantPositions(): string[] {
+  const positions = new Set<string>();
+  for (const [id, plant] of Object.entries(namePlants())) {
+    if (!id.startsWith("P-")) continue;
+    for (const finding of plantReading(plant).findings) positions.add(/^\S+ (.+): [^:]+$/.exec(finding)?.[1] ?? `(unparsed) ${finding}`);
+  }
+  return [...positions].sort();
 }
 /** A2's controls: what the walk's path predicate reads. */
 function walkControls(): Controls {
@@ -559,7 +764,8 @@ interface Armed {
   readonly armed: boolean;
   readonly owed: readonly string[];
 }
-/** An armed duty's reading: armed once the trigger reads a Pi component on the family; then it owes one falsifier per act. */
+/** An armed duty's reading: armed once A1's judge reads a Pi module naming the family, and only then; then it owes one falsifier
+ * per act. */
 function armedReading(trigger: readonly string[], owedOnAdoption: readonly string[]): Armed {
   const armed = trigger.length > 0;
   return { armed, owed: armed ? [...owedOnAdoption] : [] };
@@ -567,10 +773,14 @@ function armedReading(trigger: readonly string[], owedOnAdoption: readonly strin
 function armedControls(owedOnAdoption: readonly string[]): Controls {
   const live = armedReading(judgeNames(liveTree().readings), owedOnAdoption);
   const planted = armedReading(adoptionReading().findings, owedOnAdoption);
+  const plants = Object.entries(namePlants());
+  const arms = ([, plant]: readonly [string, Plant]): boolean => armedReading(plantReading(plant).findings, owedOnAdoption).armed;
   return {
     "N-LIVE": live.armed,
     "P-ADOPTION": planted.armed && planted.owed.length === owedOnAdoption.length && owedOnAdoption.length > 0,
     "N-NO-ADOPTION": armedReading([], owedOnAdoption).armed,
+    "P-ARMS-ON-EVERY-READ": plants.filter(([id]) => id.startsWith("P-")).every(arms),
+    "N-ARMS-ON-A-RESIDUAL": plants.filter(([id]) => id.startsWith("Q-")).some(arms),
   };
 }
 
@@ -589,7 +799,9 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const plant = adoptionReading();
     expect(plant.findings.length, "the planted adoption names the family").toBeGreaterThan(0);
     expect(judgeNames([...tree.readings, plant]), "the judge over the live readings plus the plant reads exactly the plant").toEqual(plant.findings);
-    return done("A1", { findings, planted: [...plant.findings], controls: nameControls() });
+    const positions = plantPositions();
+    expect(positions, "the read positions the P- plants reach are READ_POSITIONS, the header's (i)-(iv)").toEqual([...READ_POSITIONS]);
+    return done("A1", { findings, planted: [...plant.findings], positions, controls: nameControls() });
   },
   A2: () => {
     const tree = liveTree();
@@ -696,6 +908,11 @@ describe("wb-km7q.5 TSX render-purity census (SDK-REACTIVE-FIBER-ADAPTIVE-COMPUT
     expect(filing.duties, "the title's four duties are DUTIES").toEqual(DUTIES.map(entry => entry.duty));
     const armedPins = ROWS.slice(1).flatMap(entry => entry.pins);
     expect(DUTIES.flatMap(entry => (entry.pin === null ? [] : [entry.pin])), "each armed pin owns exactly one duty, in order").toEqual(armedPins);
+    // The duty-to-pin map, derived from the export's duties: a duty ending "in render" is owed by row B's pins in order, the duty
+    // opening "unmount" by row C's, any other duty by none; every pin of rows B and C is owed.
+    const owing = { B: [...(ROWS.find(entry => entry.id === "B")?.pins ?? [])], C: [...(ROWS.find(entry => entry.id === "C")?.pins ?? [])] };
+    const derivedPins = filing.duties.map(duty => (/ in render$/.test(duty) ? (owing.B.shift() ?? "(no row B pin left)") : /^unmount /.test(duty) ? (owing.C.shift() ?? "(no row C pin left)") : null));
+    expect({ pins: DUTIES.map(entry => entry.pin), unowned: [...owing.B, ...owing.C] }, "DUTIES' pins, derived from the title's duties").toStrictEqual({ pins: derivedPins, unowned: [] });
     expect(filing.acts, "the title's acts").toEqual(PRODUCER_ACTS.map(([act]) => act));
     expect(producerActsOf(line("17")), ":17's acts").toEqual(PRODUCER_ACTS.map(([, phrase]) => phrase));
     expect(filing.callbacks, "the title's callbacks are :19's").toEqual(producerCallbacksOf(line("19")));
@@ -714,6 +931,7 @@ describe("wb-km7q.5 TSX render-purity census (SDK-REACTIVE-FIBER-ADAPTIVE-COMPUT
     expect(Object.values(QUIET).flatMap(ids => (ids.length === 0 ? ["(none)"] : ids.filter(id => controls[id] !== false))), "quiet rows that are missing or not false").toEqual([]);
     // Every row's describe title states what its pins hold (last, so no check above is masked by it).
     expect(Object.keys(ROW_STATE), "every row carries a state for its describe title").toEqual(ROWS.map(entry => entry.id));
+    expect(ROW_STATE, "the row states are the roster's").toStrictEqual(ROSTER.rowStates);
   });
 
   for (const row of ROWS) {

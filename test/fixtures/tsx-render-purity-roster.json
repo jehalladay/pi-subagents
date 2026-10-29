@@ -241,12 +241,20 @@
    ]
   }
  ],
+ "rowStates": {
+  "A": "absent today, the trigger",
+  "B": "armed at adoption, owed by the adopting cut and not delivered here",
+  "C": "armed at adoption, owed by the adopting cut and not delivered here"
+ },
  "residuals": {
   "R-NEEDLE": [
    "Q-NEEDLE-ARG",
+   "Q-NEEDLE-REFLECT",
+   "Q-NEEDLE-VALUE",
    "Q-NEEDLE-TEMPLATE",
    "Q-NEEDLE-REGEX",
-   "Q-NEEDLE-COMMENT"
+   "Q-NEEDLE-COMMENT",
+   "Q-NEEDLE-JSDOC"
   ],
   "R-CASED": [
    "Q-CASED"
@@ -255,7 +263,14 @@
    "Q-AFFIXED"
   ],
   "R-COMPOSED": [
-   "Q-COMPOSED"
+   "Q-COMPOSED",
+   "Q-COMPOSED-TYPE"
+  ],
+  "R-TYPE-FLOW": [
+   "Q-FLOW-BINDING",
+   "Q-FLOW-ALIAS",
+   "Q-FLOW-EXPRESSION",
+   "Q-FLOW-TYPE"
   ],
   "R-EMBEDDED": [
    "Q-EMBEDDED"
@@ -289,6 +304,20 @@
     "planted/adoption:4 identifier: SpeculationBoundary",
     "planted/adoption:4 identifier: SpeculationBoundary"
    ],
+   "positions": [
+    "computed name",
+    "element access",
+    "identifier",
+    "in key",
+    "indexed access type",
+    "mapped key",
+    "private name",
+    "quoted binding",
+    "quoted member",
+    "quoted namespace export",
+    "quoted specifier",
+    "type argument"
+   ],
    "controls": {
     "P-IMPORT": true,
     "P-IMPORT-ALIAS": true,
@@ -299,31 +328,65 @@
     "P-JSX-TAG": true,
     "P-JSX-MEMBER": true,
     "P-JSX-ATTRIBUTE": true,
+    "P-JSX-NAMESPACED": true,
     "P-BINDING": true,
     "P-TYPE-REFERENCE": true,
     "P-QUALIFIED": true,
+    "P-LABEL": true,
     "P-PRIVATE": true,
     "P-ESCAPED": true,
+    "P-QUOTED-MEMBER": true,
+    "P-QUOTED-FIELD": true,
+    "P-QUOTED-METHOD": true,
+    "P-QUOTED-ACCESSOR": true,
+    "P-QUOTED-SETTER": true,
+    "P-QUOTED-SIGNATURE": true,
+    "P-QUOTED-METHOD-SIGNATURE": true,
+    "P-QUOTED-ENUM": true,
+    "P-QUOTED-BINDING": true,
+    "P-QUOTED-BINDING-BOUNDARY": true,
+    "P-QUOTED-PARAMETER": true,
+    "P-QUOTED-CATCH": true,
+    "P-QUOTED-SPECIFIER": true,
+    "P-QUOTED-EXPORT-SPECIFIER": true,
+    "P-QUOTED-REEXPORT": true,
+    "P-QUOTED-NAMESPACE-EXPORT": true,
     "P-ELEMENT": true,
     "P-ELEMENT-TEMPLATE": true,
-    "P-QUOTED-MEMBER": true,
+    "P-ELEMENT-OPTIONAL": true,
+    "P-ELEMENT-ESCAPED": true,
+    "P-ELEMENT-PAREN": true,
+    "P-ELEMENT-AS": true,
+    "P-ELEMENT-SATISFIES": true,
+    "P-ELEMENT-NON-NULL": true,
+    "P-ELEMENT-ASSERTION": true,
+    "P-ELEMENT-NESTED": true,
     "P-COMPUTED": true,
-    "P-QUOTED-SPECIFIER": true,
+    "P-COMPUTED-WRAPPED": true,
+    "P-COMPUTED-BINDING": true,
+    "P-IN-KEY": true,
+    "P-IN-KEY-WRAPPED": true,
     "P-INDEXED-TYPE": true,
+    "P-INDEXED-UNION": true,
+    "P-INDEXED-INTERSECTION": true,
+    "P-INDEXED-PAREN": true,
+    "P-INDEXED-TEMPLATE": true,
+    "P-INDEXED-NESTED": true,
+    "P-MAPPED-KEY": true,
+    "P-MAPPED-AS": true,
     "P-TYPE-ARGUMENT": true,
-    "Q-NEEDLE-ARG": false,
-    "Q-NEEDLE-TEMPLATE": false,
-    "Q-NEEDLE-REGEX": false,
-    "Q-NEEDLE-COMMENT": false,
-    "Q-CASED": false,
-    "Q-AFFIXED": false,
-    "Q-COMPOSED": false,
-    "Q-EMBEDDED": false,
-    "Q-REEXPORT": false,
-    "Q-COMPOSITION": false,
-    "Q-SHIPPED-HOOKS": false,
-    "Q-AMENDMENT": false,
-    "Q-OWN-RENDER": false,
+    "P-TYPE-ARGUMENT-UNION": true,
+    "P-TYPE-ARGUMENT-PAREN": true,
+    "P-TYPE-ARGUMENT-TEMPLATE": true,
+    "P-TYPE-ARGUMENT-HERITAGE": true,
+    "P-TYPE-ARGUMENT-INSTANTIATION": true,
+    "P-TYPE-ARGUMENT-CALL": true,
+    "P-TYPE-ARGUMENT-NEW": true,
+    "P-TYPE-ARGUMENT-TAGGED": true,
+    "P-TYPE-ARGUMENT-JSX": true,
+    "P-TYPE-ARGUMENT-JSX-OPENING": true,
+    "P-TYPE-ARGUMENT-IMPORT": true,
+    "P-TYPE-ARGUMENT-QUERY": true,
     "P-NAME-useSignal": true,
     "P-NAME-useDerivedSignal": true,
     "P-NAME-useWindow": true,
@@ -342,7 +405,28 @@
     "P-NAME-SpeculationBoundary": true,
     "P-NAME-ControlBoundary": true,
     "P-NAME-SnapshotBoundary": true,
-    "P-NAME-EffectBoundary": true
+    "P-NAME-EffectBoundary": true,
+    "Q-NEEDLE-ARG": false,
+    "Q-NEEDLE-REFLECT": false,
+    "Q-NEEDLE-VALUE": false,
+    "Q-NEEDLE-TEMPLATE": false,
+    "Q-NEEDLE-REGEX": false,
+    "Q-NEEDLE-COMMENT": false,
+    "Q-NEEDLE-JSDOC": false,
+    "Q-CASED": false,
+    "Q-AFFIXED": false,
+    "Q-COMPOSED": false,
+    "Q-COMPOSED-TYPE": false,
+    "Q-FLOW-BINDING": false,
+    "Q-FLOW-ALIAS": false,
+    "Q-FLOW-EXPRESSION": false,
+    "Q-FLOW-TYPE": false,
+    "Q-EMBEDDED": false,
+    "Q-REEXPORT": false,
+    "Q-COMPOSITION": false,
+    "Q-SHIPPED-HOOKS": false,
+    "Q-AMENDMENT": false,
+    "Q-OWN-RENDER": false
    }
   },
   "A2": {
@@ -445,7 +529,9 @@
    "controls": {
     "N-LIVE": false,
     "P-ADOPTION": true,
-    "N-NO-ADOPTION": false
+    "N-NO-ADOPTION": false,
+    "P-ARMS-ON-EVERY-READ": true,
+    "N-ARMS-ON-A-RESIDUAL": false
    }
   },
   "B2": {
@@ -470,7 +556,9 @@
    "controls": {
     "N-LIVE": false,
     "P-ADOPTION": true,
-    "N-NO-ADOPTION": false
+    "N-NO-ADOPTION": false,
+    "P-ARMS-ON-EVERY-READ": true,
+    "N-ARMS-ON-A-RESIDUAL": false
    }
   },
   "C1": {
@@ -484,7 +572,9 @@
    "controls": {
     "N-LIVE": false,
     "P-ADOPTION": true,
-    "N-NO-ADOPTION": false
+    "N-NO-ADOPTION": false,
+    "P-ARMS-ON-EVERY-READ": true,
+    "N-ARMS-ON-A-RESIDUAL": false
    }
   }
  },
