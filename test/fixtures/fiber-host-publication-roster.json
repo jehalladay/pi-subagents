@@ -94,6 +94,33 @@
    "execSync",
    "fork"
   ],
+  "rfWord": "(?<![\\w.-])rf(?![\\w-])",
+  "manifestNames": [
+   "package.json",
+   "package-lock.json",
+   "npm-shrinkwrap.json",
+   "yarn.lock",
+   "pnpm-lock.yaml",
+   "pyproject.toml",
+   "setup.py",
+   "setup.cfg",
+   "Pipfile",
+   "Pipfile.lock",
+   "poetry.lock",
+   "uv.lock",
+   "pdm.lock",
+   "environment.yml",
+   "environment.yaml",
+   "Cargo.toml",
+   "Cargo.lock"
+  ],
+  "pipRequirements": "^(?:requirements|constraints)[\\w.-]*\\.(?:txt|in)$",
+  "pipRequirementsDir": "(?:^|\\/)requirements\\/[^/]+\\.(?:txt|in)$",
+  "rootNpm": [
+   "package.json",
+   "package-lock.json"
+  ],
+  "testRoot": "test/",
   "settleMs": 3000,
   "lateMs": 600000,
   "floors": {
@@ -123,6 +150,10 @@
    "--no-commit",
    "nativeReactiveFiberRender",
    "fiber_signal_count"
+  ],
+  "recordLines": [
+   "FINDINGS (each a named residual with a pinned quiet row",
+   "OTHER RESIDUALS (quiet rows pinned)"
   ],
   "manifestControls": {
    "dependencies": {
@@ -194,6 +225,19 @@
    }
   },
   "shadowedManifest": "{ \"dependencies\": { \"fiber-optics\": \"1.0.0\" }, \"dependencies\": {} }",
+  "manifestTree": {
+   "package.json": "{ \"name\": \"host\" }\n",
+   "requirements.txt": "FiberOpticsSDK==0.1.0\n",
+   "requirements/base.txt": "fiber-optics==0.1.0\n",
+   "environment.yml": "dependencies:\n  - pip:\n    - FiberOpticsSDK==0.1.0\n",
+   "sidecar/requirements-dev.txt": "pytest>=8\nfiber_optics_research>=0.1\n",
+   "test/fixtures/host/requirements.txt": "FiberOpticsSDK==0.1.0\n",
+   "tools/value-host/pyproject.toml": "[project]\nname = \"value-host\"\ndependencies = [\"fiber-optics>=0.1\"]\n",
+   "rust/observer/Cargo.toml": "[dependencies]\nfiber-optics-replay-observer = \"0.1\"\n",
+   "examples/host/package.json": "{ \"dependencies\": { \"@fiber-optics/sdk\": \"0.1.0\" } }\n",
+   "constraints.txt": "reactive-fiber-cli==1.0.0\nfiber\noptics\n",
+   "Dockerfile": "RUN pip install FiberOpticsSDK\n"
+  },
   "sourceControls": {
    "importFrom": {
     "module": "import-from.ts",
@@ -235,9 +279,17 @@
     "module": "jsx-text.tsx",
     "source": "export const view = <p>FiberOptics</p>;\n"
    },
+   "classInPath": {
+    "module": "class-in-path.ts",
+    "source": "export const host = \"vendor/fiber_optics/FiberGraph.py\";\n"
+   },
    "nearMiss": {
     "module": "near-miss.ts",
     "source": "export const reactivefiber = 1;\nexport const fiber_signal_count = 0;\nexport const optics = \"fiber\";\n"
+   },
+   "rfLayout": {
+    "module": "rf-layout.ts",
+    "source": "export const RF_GRAPHS_DIR = \".reactive-fiber/graphs\";\n"
    }
   },
   "entryControls": {
@@ -278,7 +330,25 @@
    "otherBinary": {
     "module": "spawn-rg.ts",
     "source": "import { spawn } from \"node:child_process\";\nspawn(\"rg\", [\"-n\", \"rf\"]);\n"
+   },
+   "pythonLaunch": {
+    "module": "render-sidecar.py",
+    "source": "import subprocess\nsubprocess.run([\"rf\", \"context\", \"render\", \"--json\"], check=True)\n"
+   },
+   "shellLaunch": {
+    "module": "render.sh",
+    "source": "#!/bin/sh\nexec rf context render --json\n"
+   },
+   "rawNearMiss": {
+    "module": "notes.txt",
+    "source": "rfc 2119 terms; perf counters; surf-board; rf-cli; config.rf\n"
    }
+  },
+  "pipelineTree": {
+   "src/hosts/value-sidecar.ts": "import { spawn } from \"node:child_process\";\nspawn(\"python3\", [\"value-sidecar.py\"]);\n",
+   "src/hosts/value-sidecar.py": "from fiber_optics import FiberRuntime\nFiberRuntime().flush_value_publications()\nsubprocess.run([\"rf\", \"context\", \"render\"])\n",
+   "src/providers/value-host.json": "{ \"runtime\": \"FiberGraph\" }\n",
+   "src/providers/rf-layout.json": "{ \"graphs\": \".reactive-fiber/graphs\" }\n"
   },
   "descriptorControls": {
    "runtimeHost": {
@@ -413,6 +483,21 @@
     ],
     "id": "workbench.handle.read"
    },
+   "rfLayoutDescription": {
+    "version": "1.0.0",
+    "description": "reads .reactive-fiber/graphs/context.toml",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "read",
+    "permissions": [
+     "planted:read"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "workbench.layout.read"
+   },
    "neutral": {
     "version": "1.0.0",
     "description": "planted",
@@ -474,6 +559,23 @@
     "id": "context.engine.host"
    }
   ],
+  "splitSpelling": {
+   "module": "split-spelling.ts",
+   "source": "export const label = \"Fiber Optics\";\nexport const graph = \"fiber graph\";\nexport const path = \"fiber/optics\";\n"
+  },
+  "otherVocabularyMembers": [
+   "on",
+   "off",
+   "once",
+   "Symbol(Symbol.asyncIterator)"
+  ],
+  "outsideTree": {
+   "src/clean.ts": "export const clean = 1;\n",
+   "qa/host.mjs": "import { FiberRuntime } from \"fiber_optics\";\nnew FiberRuntime().flush_value_publications();\n",
+   "examples/host.ts": "import \"fiber-optics\";\n",
+   "Dockerfile": "FROM python:3.12-slim\nRUN pip install FiberOpticsSDK==0.1.0\n",
+   "scripts/setup-sidecar.sh": "#!/bin/sh\npip install fiber_optics\n"
+  },
   "residuals": {
    "R-COMPOSED": [
     "Q1"
@@ -497,6 +599,33 @@
     "Q7"
    ]
   }
+ },
+ "record": {
+  "pins": {
+   "A": [
+    "A1",
+    "A2",
+    "A3",
+    "A4"
+   ],
+   "B": [
+    "B1",
+    "B2"
+   ],
+   "C": [
+    "C1",
+    "C2"
+   ]
+  },
+  "residuals": [
+   "Q1 R-COMPOSED",
+   "Q2 R-NON-CODE",
+   "Q3 R-OUTSIDE-SRC",
+   "Q4 R-INJECTED-RELAY",
+   "Q5 R-UNREAD-MARKER",
+   "Q6 R-LATE-REACTION",
+   "Q7 R-OTHER-VOCABULARY"
+  ]
  },
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster, the bead's title, notes and acceptance and the cases agree",
@@ -530,6 +659,44 @@
       "packageJson": [],
       "lockPackagesAboveFloor": true,
       "lock": [],
+      "rootNpmSelected": true,
+      "npmIgnored": {
+       "test/": true,
+       "src/": false
+      },
+      "rawManifestHits": [],
+      "manifestTree": {
+       "selected": [
+        "constraints.txt",
+        "environment.yml",
+        "examples/host/package.json",
+        "package.json",
+        "requirements.txt",
+        "requirements/base.txt",
+        "rust/observer/Cargo.toml",
+        "sidecar/requirements-dev.txt",
+        "tools/value-host/pyproject.toml"
+       ],
+       "raw": [
+        "constraints.txt",
+        "environment.yml",
+        "examples/host/package.json",
+        "requirements.txt",
+        "requirements/base.txt",
+        "rust/observer/Cargo.toml",
+        "sidecar/requirements-dev.txt",
+        "tools/value-host/pyproject.toml"
+       ],
+       "hits": [
+        "environment.yml:3: fiberoptics",
+        "examples/host/package.json:1: fiberoptics",
+        "requirements.txt:1: fiberoptics",
+        "requirements/base.txt:1: fiberoptics",
+        "rust/observer/Cargo.toml:2: fiberoptics",
+        "sidecar/requirements-dev.txt:2: fiberoptics",
+        "tools/value-host/pyproject.toml:3: fiberoptics"
+       ]
+      },
       "manifestControls": {
        "dependencies": 1,
        "devDependencies": 1,
@@ -568,6 +735,31 @@
        "fiber_signal_count": true
       },
       "hosting": [],
+      "listsNonScript": {
+       "walk": true,
+       "git": true
+      },
+      "pipeline": {
+       "modules": [
+        "src/hosts/value-sidecar.py",
+        "src/hosts/value-sidecar.ts",
+        "src/providers/rf-layout.json",
+        "src/providers/value-host.json"
+       ],
+       "nonScript": [
+        "src/hosts/value-sidecar.py",
+        "src/providers/rf-layout.json",
+        "src/providers/value-host.json"
+       ],
+       "onlyWalked": [],
+       "onlyTracked": [],
+       "hosting": [
+        "src/hosts/value-sidecar.py:1: fiberoptics",
+        "src/hosts/value-sidecar.py:1: fiberruntime",
+        "src/hosts/value-sidecar.py:2: fiberruntime",
+        "src/providers/value-host.json:1: fibergraph"
+       ]
+      },
       "controls": {
        "importFrom": [
         "import-from.ts:1: fiberoptics"
@@ -600,7 +792,12 @@
        "jsxText": [
         "jsx-text.tsx:1: fiberoptics"
        ],
-       "nearMiss": []
+       "classInPath": [
+        "class-in-path.ts:1: fiberoptics",
+        "class-in-path.ts:1: fibergraph"
+       ],
+       "nearMiss": [],
+       "rfLayout": []
       }
      }
     },
@@ -711,6 +908,11 @@
          "fiberruntime"
         ]
        },
+       "rfLayoutDescription": {
+        "family": false,
+        "publishing": [],
+        "needles": []
+       },
        "neutral": {
         "family": false,
         "publishing": [],
@@ -727,6 +929,9 @@
       "launchRoster": [
        "src/workbench/providers/reactivefiber.ts: spawn"
       ],
+      "pipeline": [
+       "src/hosts/value-sidecar.py:3: rf"
+      ],
       "launchControls": {
        "spawnRf": [
         "spawn-rf.ts: spawn"
@@ -737,7 +942,14 @@
        "memberSpawnRf": [
         "member-spawn-rf.ts: spawn"
        ],
-       "otherBinary": []
+       "otherBinary": [],
+       "pythonLaunch": [
+        "render-sidecar.py:2: rf"
+       ],
+       "shellLaunch": [
+        "render.sh:2: rf"
+       ],
+       "rawNearMiss": []
       },
       "arms": {
        "legacy": "returned",
@@ -831,6 +1043,9 @@
       "surface": "src",
       "walkHeldToGit": true,
       "entries": [],
+      "pipeline": [
+       "src/hosts/value-sidecar.py:2: flushvaluepublications"
+      ],
       "controls": {
        "snakeCall": [
         "snake-call.ts:1: queuevaluepublication",
@@ -888,6 +1103,12 @@
        ],
        "inheritingRegistry": [
         "InheritingRegistry.subscribe: subscribe"
+       ],
+       "fieldRegistry": [
+        "FieldRegistry.subscribe: subscribe"
+       ],
+       "staticRegistry": [
+        "StaticRegistry.subscribe: subscribe"
        ],
        "pollingProvider": [
         "Timeout+1"
@@ -975,11 +1196,25 @@
        {
         "path": "qa/host.mjs",
         "walked": false,
+        "manifest": false,
         "needles": 4
        },
        {
         "path": "examples/host.ts",
         "walked": false,
+        "manifest": false,
+        "needles": 1
+       },
+       {
+        "path": "Dockerfile",
+        "walked": false,
+        "manifest": false,
+        "needles": 1
+       },
+       {
+        "path": "scripts/setup-sidecar.sh",
+        "walked": false,
+        "manifest": false,
         "needles": 1
        }
       ]
@@ -1029,6 +1264,8 @@
      "witness": {
       "residual": "R-OTHER-VOCABULARY",
       "hosting": [],
+      "split": [],
+      "members": [],
       "launches": [],
       "manifest": [],
       "descriptor": {
