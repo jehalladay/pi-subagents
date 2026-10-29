@@ -1,8 +1,10 @@
 /**
  * wb-2wiv.2 (SDK-UNIVERSAL-REACTIVE-RENDERING-R2, program-triage-2026-10-18), the public-port bridge census: the until-then
- * leg of a requirement whose gate is conjoint and closed. This is the respin of cut #1 (fed17c49, refused at PREP F on
- * 2026-10-28); it reads every field of the decision rows, walks every file outside three named exclusions, and binds each
- * contract part's class through a break of that part alone.
+ * leg of a requirement whose gate is conjoint and closed. This is cut #3. Cut #2 (17583cc3, the respin of cut #1 fed17c49,
+ * refused at PREP F on 2026-10-28) reads every field of the decision rows, walks every file outside three named exclusions,
+ * and binds each contract part's class through a break of that part alone; it was refused at PREP F on 2026-10-29 because
+ * its record anchor read every R-token of every note, so a later note naming one (its own delivery note did) reds the
+ * census once the tracker export carries it. Cut #3 binds the record's first residual-family declaration instead.
  * Statement (the bead's tracker-export title, verbatim): "Gating artifact: released FiberOpticsSDK PublicPortBridge
  * (unshipped) + a wb-x32 committing decision connecting a Pi runtime over it; then Pi supplies the full bridge contract
  * (visibility/schema/direction through resync on gaps), keeps one authority per runtime domain, admits no private endpoint
@@ -13,7 +15,9 @@
  * function on the wire, a bad version/digest, a stale epoch/duplicate message and a gap without resync", "plus a falsifier
  * that no Pi surface renders a cross-runtime read as globally ordered, shared-memory or auto-merged".
  *
- * MEASURED (read-only, by the respin seat, 2026-10-28). Producer (the local FiberOpticsSDK clone, git show and rev-parse
+ * MEASURED (read-only, by the cut #2 seat on 2026-10-28; re-read by the cut #3 seat on 2026-10-29: the same producer tip
+ * 2099f193, charter blob and lines, tag count, bridge.py and code-roster blobs and ancestry, the same newest rf receipt,
+ * and the Pi facts at its merge). Producer (the local FiberOpticsSDK clone, git show and rev-parse
  * only, its origin/master ref read as it stood, not fetched; this census never re-reads the producer, and the roster's
  * producer block carries every line and id it quotes): the charter docs/programs/universal-reactive-rendering-2026-10-18.md
  * is blob 5ae73cc3 at the filing pin dcc5b57c4aed and at origin/master 2099f193, and its lines :3 "design charter only",
@@ -29,8 +33,8 @@
  * charter's 'Required acceptance' names stable diagnostics for exactly these" does not hold as written: :41 names seven
  * members, four of them the notes' (the private-port bridge, bad version/digest, stale epoch, duplicate message), the notes'
  * executable function and gap come from :23 and :17, and :41's missing basis, unauthorized effect and unbounded feedback are
- * not in the notes' list; this census arms the union (the title's "full bridge contract"). Pi, at merge 8122c92 (trunk
- * 014d116 merged into cut #1): no file any walk reads mentions the SDK or the bridge (package.json and package-lock.json
+ * not in the notes' list; this census arms the union (the title's "full bridge contract"). Pi, at merge 1508e8b (trunk
+ * 4350926 merged into cut #2): no file any walk reads mentions the SDK or the bridge (package.json and package-lock.json
  * among them), no field of wb-x32's export row ("W10: ReactiveFiber provider/interop", open) mentions the bridge, it has no
  * child row, docs/workbench/18 mentions no bridge, and no walked file spells a claim of global ordering, shared memory or an
  * automatic, implicit or optimistic merge. Outside the walks, .beads/ records this very requirement and four receipts echo
@@ -126,8 +130,10 @@
  * OUTSIDE ANCHORS (their own registered case): the bead's export row - its title after the requirement prefix is tiled in
  * order by the five row labels with nothing but separators between them, each row's pin quotes tile its label, the bridge
  * words are the title's token after "released FiberOpticsSDK " split at its capitals, the SDK words are that token's
- * predecessor without "SDK", and the decision bead is the title's; the bead's own record (every note of its export row,
- * the verdicts' included) - each residual family it names (an R-WORD token) is a row-Q pin; the owner filing's PROGRAM line
+ * predecessor without "SDK", and the decision bead is the title's; the bead's own record - the first declaration in its
+ * export row's notes ("residual families <R-tokens> each carry pinned quiet rows", cut #1's delivery note) binds, as the
+ * PROGRAM line binds the filing, and each family it lists is a row-Q pin, while a later note (a verdict quoting an R-token,
+ * another actor's token, an appended declaration) changes no reading; the owner filing's PROGRAM line
  * - its acceptance-shape list derives seven classes (article dropped, a slash distributing the leading adjective), each a
  * class the census arms; its "requires" quote derives nine contract parts, which are PART_CLASS's keys and PERTURBATIONS'
  * keys, in order, and each part's break (the same messages with that part alone broken) draws PART_CLASS[part] from the
@@ -149,7 +155,9 @@
  * other); which judges a root's files get (a coordinated move of a code root's pages under a page root narrows them to the
  * BRIDGE judge); a mutant, a fixture, a check with its judge, a planted control, a residual member, a markup extension, a
  * named entity or an exclusion removed from every literal of this file and the roster together; a part's break rewritten to
- * break another part; a pin's case replaced by one that echoes its roster witness and runs the same readers.
+ * break another part; a pin's case replaced by one that echoes its roster witness and runs the same readers; a row-Q family
+ * the record's first declaration does not list (the anchor binds the declared families into row Q, not the reverse; it
+ * lists all five today).
  * RESIDUALS (named families, each member a pinned quiet row; a reader that starts reading a member reds its row):
  * R-SPELLING (Q1, a spelling the mention judges do not read: an abbreviation, words split across statements, base64, a YAML
  * or TOML escape, a markdown link splitting the words, a homoglyph letter, a digit for a letter), R-INDIRECT-LOAD (Q2, a
@@ -1598,8 +1606,14 @@ function filingReading(notes: string): {
     frozen: line.includes("Until both gates exist, no src or docs change."),
   };
 }
-/** The residual families the bead's own tracker record names (every note, the verdicts' included): each a pinned row-Q family. */
-const recordedFamilies = (notes: string): string[] => [...new Set(notes.match(/\bR(?:-[A-Z]{2,})+\b/g) ?? [])].sort();
+/** The record's residual-family declaration: the R-tokens listed before "each carry pinned quiet rows" (cut #1's delivery note). */
+const FAMILY_DECLARATION = /\bresidual families ((?:R(?:-[A-Z]{2,})+(?:, | and ))*R(?:-[A-Z]{2,})+) each carry pinned quiet rows\b/;
+/**
+ * The residual families the bead's own tracker record declares: the FIRST declaration in its notes binds, and only the
+ * families it lists (as the filing reader's PROGRAM line binds the filing), so a later note - a verdict quoting an R-token,
+ * another actor's token, an appended declaration - binds nothing.
+ */
+const recordedFamilies = (notes: string): string[] => [...new Set(FAMILY_DECLARATION.exec(notes)?.[1]?.match(/\bR(?:-[A-Z]{2,})+\b/g) ?? [])].sort();
 const kebab = (words: string): string => words.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 /** A list item's classes: its article dropped, a slash distributing the words before the slashed word ("bad version/digest"). */
 function classesOf(item: string): string[] {
@@ -1812,8 +1826,20 @@ describe(SUITE, () => {
     expect(tokens?.[3], "the decision bead is the title's").toBe(DECISION_BEAD);
     const recorded = recordedFamilies(notes);
     const families = ROWS.find(entry => entry.id === "Q")?.pins.map(pin => QUOTES[pin] ?? "") ?? [];
-    expect(recorded.length, "the bead's record names its residual families").toBeGreaterThan(0);
-    expect(recorded.filter(name => !families.includes(name)), "every residual family the bead's record names is a row-Q pin").toEqual([]);
+    expect(recorded.length, "the bead's record declares its residual families").toBeGreaterThan(0);
+    expect(recorded.filter(name => !families.includes(name)), "every residual family the bead's record declares is a row-Q pin").toEqual([]);
+    const quoting = `${notes}\n2026-10-29 appended note: a verdict quoting R-WORD, another actor's R-PLANTED-TOKEN, and R-SPELLING again.`;
+    expect(recordedFamilies(quoting), "a note appended after the declaration, naming R-tokens outside it, changes no reading").toEqual(recorded);
+    const redeclared = `${notes}\n- residual families R-WORD and R-PLANTED-TOKEN each carry pinned quiet rows (Q6-Q7).`;
+    expect(recordedFamilies(redeclared), "an appended declaration changes no reading (the first one binds)").toEqual(recorded);
+    const planted = [
+      "an owner filing naming R-WORD before any declaration",
+      "a refusal naming residual families R-WORD and R-OTHER, which no row pins",
+      "- residual families R-ALPHA, R-BETA-GAMMA and R-DELTA each carry pinned quiet rows (Q1-Q3; R-WORD names none of them).",
+      "- residual families R-LATER each carry pinned quiet rows (Q4).",
+      "a verdict quoting R-WORD",
+    ].join("\n");
+    expect(recordedFamilies(planted), "the first declaration binds, wherever it stands, and only the families it lists").toEqual(["R-ALPHA", "R-BETA-GAMMA", "R-DELTA"]);
     const filing = filingReading(notes);
     expect(filing.gate, "the owner filing's gate names the same record and decision bead").toEqual({ record: tokens?.[2] ?? "-", decision: DECISION_BEAD });
     expect(filing.frozen, "the owner filing freezes src and docs until both gates exist").toBe(true);
