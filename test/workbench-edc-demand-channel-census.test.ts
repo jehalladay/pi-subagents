@@ -42,12 +42,31 @@
  *   "context precision" is read as the channel; a page restating the posture keeps its marker.
  * - THE SURFACES (row B, the clause's three nouns):
  *   PROMPTS (B1): every git-listed JS or TS module below src/ and examples/ (tracked or untracked, never ignored), parsed with the
- *   TypeScript compiler, never a comment (a comment is no prompt): LEXEME each identifier, private name, string, template part and
- *   regular expression literal, and each template or concatenation as spelled (a non-constant part read as one space); ACCESS
- *   each property or element access and each destructured key as receiver.key; MEMBER each member name joined after its named
- *   enclosing declarations; IMPORT each imported or re-exported name joined after its module specifier. Every git-listed .md page
- *   below .pi/, .agents/ and examples/. And at run time: every default agent's configuration (DEFAULT_AGENTS), the curated Claude
- *   MCP server's instructions, every registered Pi tool's promptSnippet and promptGuidelines.
+ *   TypeScript compiler (.tsx as TSX, .jsx as JSX, the other TS extensions as TS, the other JS extensions as JS, which parses
+ *   JSX), never a comment (a comment is no prompt). The code reader reads exactly the forms below and no other; each form is
+ *   pinned by a plant in B1's forms witness (FORMS), and R-UNREAD-FORM names the forms it leaves unread:
+ *   LEXEME each identifier, private name, string literal (a no-substitution template too), template head, middle and tail,
+ *   regular expression literal and non-blank JSX text; each template literal type, its literal parts joined by spaces; and each
+ *   template expression and + concatenation as spelled (a non-constant part read as one space).
+ *   ACCESS as receiver.key (a computed key: its constant, else "?"): each property access (a.b) and qualified name (A.B), as
+ *   written; each element access (a[k]) and indexed access type (A["k"]); each key of an object binding pattern, the receiver
+ *   being the declaration's initializer, else the iterated expression of the for-of or for-in declaring it, or the parameter's
+ *   type annotation, else its default value, and in a nested pattern the enclosing element's path (receiver.key; an array
+ *   pattern's element, receiver.index); and each key of a destructuring assignment target (an object or array literal left of
+ *   "=", or the target of a for-of or for-in) after the assigned or iterated expression, likewise at depth.
+ *   MEMBER each member name (a computed name: its constant) joined after the names of its enclosing declarations - variables,
+ *   properties, methods, accessors, functions and classes (declared or expressions), interfaces, type aliases, enums and their
+ *   members, namespaces and modules, parameter properties; a member with none reads as its lexeme alone. The members: an object
+ *   literal's properties, shorthands, methods and accessors; a class's, an interface's and a type literal's properties, methods
+ *   and accessors, declared or as signatures; a constructor's parameter properties; an enum's members; and each declaration
+ *   directly in a namespace or module body (a variable an identifier names, a function, class, interface, type alias, enum or
+ *   nested namespace, a dotted namespace's inner name too).
+ *   IMPORT each name joined after its module specifier or module reference: an import declaration's default, namespace and named
+ *   bindings; an export declaration's named and namespace re-exports from a module specifier (an import or export specifier's
+ *   module name and its alias, both); and an import-equals declaration's name, after a require's specifier or the entity name as
+ *   written.
+ *   Every git-listed .md page below .pi/, .agents/ and examples/. And at run time: every default agent's configuration
+ *   (DEFAULT_AGENTS), the curated Claude MCP server's instructions, every registered Pi tool's promptSnippet and promptGuidelines.
  *   TOOL DESCRIPTIONS (B2), at run time: every Pi tool the real extension registers when booted hermetically with the workbench's
  *   Claude backend (its name, label and description), every curated Claude tool listed by an in-memory MCP client (every field but
  *   its input schema), and every capability descriptor of the native registration and of the four injected-client registrations
@@ -69,12 +88,15 @@
  *  A "If Pi-subagents adopts EDC context assembly": A1 the consumer reading over the live tree (the src walk equal to git's
  *    listing, its floors, the frozen pass at the cut's base); A2 the stems and the consumer reader's routes and near misses.
  *  B "so no Pi prompt, tool description or capability input becomes the demand channel": B1 the prompt surfaces (live findings,
- *    floors, the frozen pass); B2 the tool descriptions; B3 the capability inputs and the boundary; B4 the demand reading itself
- *    and its append quiet row (a note appended after the owner filing block, spelling every vocabulary word, leaves the whole B4
- *    witness unchanged; read past the block it would empty R-SYNONYM; a block edited in place is refused).
+ *    floors, the frozen pass) and the code reader's forms (a plant per form, its reading held); B2 the tool descriptions; B3 the
+ *    capability inputs and the boundary; B4 the demand reading itself and its append quiet row (a note appended after the owner
+ *    filing block, spelling every vocabulary word, leaves the whole B4 witness unchanged; read past the block it would empty
+ *    R-SYNONYM; a block edited in place is refused).
  *  C "Artifact: a Pi EDC context-assembly consumer (none exists)": C1 the gate and guard semantics, and a replica consumer read
- *    PRESENT and owed; C2 the live verdict - ONE pass over every surface and in-memory positives finds exactly the positives, the
- *    gate reads ABSENT, the guard reads pass, and the same pass over a scratch git repository finds exactly its plants.
+ *    PRESENT and owed; C2 the live verdict - ONE pass over every surface and in-memory positives (it reads the live tree's
+ *    modules, pages and readings plus exactly the positives' own) holds every finding of the positives read alone and, beyond
+ *    them, exactly the live findings (both directions asserted), the gate reads ABSENT, the guard reads pass, and the same pass
+ *    over a scratch git repository finds exactly its plants.
  * OUTSIDE ANCHORS (the judged-set case): the bead's row in the tracked export (.beads/issues.jsonl). Its title, after the id
  *   prefix, is tiled by the three labels and the two title duties U1 and U2 in title order with separator-only gaps (so every word
  *   of the title is claimed or unclaimed), and each label is tiled by its pins' quotes. Its OWNER FILING BLOCK - the byte-exact
@@ -96,11 +118,18 @@
  *   (test/fixtures/edc-demand-channel-roster.json); a last case reads that every pin ran to its witness.
  * RESIDUALS (named; each has a pinned quiet row): R-UNNAMED-ADOPTION (A2) an EDC consumer spelled without either stem (a
  *   ReactiveComponents import, a QueryView input) reads ABSENT - Pi's ReactiveComponents surface is pinned by
- *   test/workbench-rc-assembler-expectation-census.test.ts; R-SCOPE (B1) texts outside the surfaces: docs/ pages (claim pages,
- *   which test/workbench-edc-shipped-claim-census.test.ts reads for EDC claims), qa/ and test/ modules, root files, comments, YAML
+ *   test/workbench-rc-assembler-expectation-census.test.ts; R-GLUED-STEM (A2) a stem glued to a suffix the WORDS rule keeps in one
+ *   word or splits after the acronym's last capital names no stem and reads ABSENT (EDCv2Assembler reads ed, cv2, assembler;
+ *   EDC2Assembler and edc2_assembler read edc2), while each twin with the stem split off (EdcV2Assembler, EDC_2Assembler,
+ *   edc_2_assembler) names it; R-SCOPE (B1) texts outside the surfaces: docs/ pages (claim pages, which
+ *   test/workbench-edc-shipped-claim-census.test.ts reads for EDC claims), qa/ and test/ modules, root files, comments, YAML
  *   (.agents/skills/beads/agents/openai.yaml's default_prompt), an operator's own agent files and settings (workbench roles), model
- *   replies; R-COMPOSED (B1) a prompt composed at run time from a part that is no constant (a variable holding the family word) and
- *   prompts composed per call (buildAgentPrompt); R-UNNAMED-INPUT (B3) an input that steers context with no family word - the
+ *   replies; R-COMPOSED (B1) a prompt composed at run time from a part that is no constant (a variable holding the family word, a
+ *   += onto a variable, an array of parts joined by a call) and prompts composed per call (buildAgentPrompt); R-UNREAD-FORM (B1)
+ *   the code forms the reader leaves unread, each read as its lexemes alone: a binding pattern with no receiver (an untyped
+ *   parameter without a default value, such as a callback's ({ demand }) => ...), a require or a dynamic import bound to a name,
+ *   an export alias with no module specifier, and a key passed to a call (context.get("demand")) - each twin, the same words
+ *   through a read form, finds them; R-UNNAMED-INPUT (B3) an input that steers context with no family word - the
  *   Agent tool's inherit_context, measured: a Pi-native fork switch the model sets ("If true, fork parent conversation into the
  *   agent. Default: false (fresh context).") - reads quiet; R-PARAPHRASE (B4) demand or precision in other words ("Ask for more
  *   context when you need it.") - measured: a paraphrase family (request, ask, need, more, narrow, ...) beside the subject flags
@@ -420,6 +449,7 @@ function spelled(node: ts.Node): string {
   if (ts.isTemplateExpression(node)) return node.head.text + node.templateSpans.map(span => spelled(span.expression) + span.literal.text).join("");
   return " ";
 }
+/** The declarations whose own name a member path joins (with a constructor parameter property, see nameOf). */
 const NAMED_KINDS: ReadonlySet<ts.SyntaxKind> = new Set([
   ts.SyntaxKind.VariableDeclaration,
   ts.SyntaxKind.PropertyAssignment,
@@ -431,13 +461,16 @@ const NAMED_KINDS: ReadonlySet<ts.SyntaxKind> = new Set([
   ts.SyntaxKind.GetAccessor,
   ts.SyntaxKind.SetAccessor,
   ts.SyntaxKind.FunctionDeclaration,
+  ts.SyntaxKind.FunctionExpression,
   ts.SyntaxKind.ClassDeclaration,
+  ts.SyntaxKind.ClassExpression,
   ts.SyntaxKind.InterfaceDeclaration,
   ts.SyntaxKind.TypeAliasDeclaration,
   ts.SyntaxKind.EnumDeclaration,
   ts.SyntaxKind.EnumMember,
   ts.SyntaxKind.ModuleDeclaration,
 ]);
+/** The member kinds of an object literal, a class, an interface or type literal and an enum. */
 const MEMBER_KINDS: ReadonlySet<ts.SyntaxKind> = new Set([
   ts.SyntaxKind.PropertyAssignment,
   ts.SyntaxKind.ShorthandPropertyAssignment,
@@ -449,54 +482,129 @@ const MEMBER_KINDS: ReadonlySet<ts.SyntaxKind> = new Set([
   ts.SyntaxKind.SetAccessor,
   ts.SyntaxKind.EnumMember,
 ]);
-function nameOf(node: ts.Node): string | undefined {
-  if (!NAMED_KINDS.has(node.kind)) return undefined;
-  const name = (node as ts.NamedDeclaration).name;
-  if (name === undefined) return undefined;
-  if (ts.isIdentifier(name) || ts.isPrivateIdentifier(name) || ts.isStringLiteralLike(name) || ts.isNumericLiteral(name)) return name.text;
-  if (ts.isComputedPropertyName(name)) return constant(name.expression);
+/** The declaration kinds a namespace or module body holds as members. */
+const NAMESPACE_MEMBER_KINDS: ReadonlySet<ts.SyntaxKind> = new Set([
+  ts.SyntaxKind.VariableDeclaration,
+  ts.SyntaxKind.FunctionDeclaration,
+  ts.SyntaxKind.ClassDeclaration,
+  ts.SyntaxKind.InterfaceDeclaration,
+  ts.SyntaxKind.TypeAliasDeclaration,
+  ts.SyntaxKind.EnumDeclaration,
+  ts.SyntaxKind.ModuleDeclaration,
+]);
+/** A constructor parameter property (readonly, public, private, protected or override): a class member declared as a parameter. */
+const isParameterProperty = (node: ts.Node): node is ts.ParameterDeclaration => ts.isParameter(node) && ts.isParameterPropertyDeclaration(node, node.parent);
+/** A declaration directly in a namespace or module body: a variable named by an identifier whose statement sits in the body, or
+ * a function, class, interface, type alias, enum or namespace in the body (a dotted namespace's inner name in its outer one). */
+function inNamespaceBody(node: ts.Node): boolean {
+  if (!NAMESPACE_MEMBER_KINDS.has(node.kind)) return false;
+  if (ts.isVariableDeclaration(node)) {
+    const statement = node.parent.parent;
+    return ts.isIdentifier(node.name) && ts.isVariableStatement(statement) && ts.isModuleBlock(statement.parent);
+  }
+  return ts.isModuleBlock(node.parent) || ts.isModuleDeclaration(node.parent);
+}
+const isMember = (node: ts.Node): boolean => MEMBER_KINDS.has(node.kind) || isParameterProperty(node) || inNamespaceBody(node);
+/** A name or key as text: an identifier, private name, string or number; a computed name's constant; undefined otherwise. */
+function keyText(key: ts.Node): string | undefined {
+  if (ts.isIdentifier(key) || ts.isPrivateIdentifier(key) || ts.isStringLiteralLike(key) || ts.isNumericLiteral(key)) return key.text;
+  if (ts.isComputedPropertyName(key)) return constant(key.expression);
   return undefined;
 }
-/** Every code reading of one module (never a comment): lexemes, accesses, member paths and imports, each with its line. */
+function nameOf(node: ts.Node): string | undefined {
+  if (!NAMED_KINDS.has(node.kind) && !isParameterProperty(node)) return undefined;
+  const name = (node as ts.NamedDeclaration).name;
+  return name === undefined ? undefined : keyText(name);
+}
+/** The receiver a binding pattern destructures: its declaration's initializer, else the iterated expression of the for-of or
+ * for-in that declares it; its parameter's type annotation, else its default value; in a nested pattern, the enclosing element's
+ * path. undefined when there is none (an untyped parameter without a default value, a catch binding): R-UNREAD-FORM. */
+function receiverOf(pattern: ts.BindingPattern, source: ts.SourceFile): string | undefined {
+  const holder = pattern.parent;
+  if (ts.isBindingElement(holder)) return elementPath(holder, source);
+  if (ts.isParameter(holder)) return (holder.type ?? holder.initializer)?.getText(source);
+  if (!ts.isVariableDeclaration(holder)) return undefined;
+  if (holder.initializer !== undefined) return holder.initializer.getText(source);
+  const statement = holder.parent.parent;
+  return ts.isForOfStatement(statement) || ts.isForInStatement(statement) ? statement.expression.getText(source) : undefined;
+}
+/** A binding element's path: its pattern's receiver joined with its key (an object pattern) or its index (an array pattern). */
+function elementPath(element: ts.BindingElement, source: ts.SourceFile): string | undefined {
+  const pattern = element.parent;
+  const receiver = receiverOf(pattern, source);
+  if (receiver === undefined) return undefined;
+  const key = ts.isObjectBindingPattern(pattern) ? keyText(element.propertyName ?? element.name) : String(pattern.elements.indexOf(element));
+  return `${receiver}.${key ?? "?"}`;
+}
+/** The keys of a destructuring assignment target after its receiver: each object literal property or shorthand as receiver.key
+ * (a nested target deeper, an array literal's elements by index, a target's default value skipped). */
+function assignmentPaths(target: ts.Expression, receiver: string): { readonly node: ts.Node; readonly path: string }[] {
+  if (ts.isParenthesizedExpression(target)) return assignmentPaths(target.expression, receiver);
+  if (ts.isBinaryExpression(target) && target.operatorToken.kind === ts.SyntaxKind.EqualsToken) return assignmentPaths(target.left, receiver);
+  if (ts.isArrayLiteralExpression(target)) return target.elements.flatMap((element, index) => assignmentPaths(element, `${receiver}.${index}`));
+  if (!ts.isObjectLiteralExpression(target)) return [];
+  return target.properties.flatMap(property => {
+    if (!ts.isPropertyAssignment(property) && !ts.isShorthandPropertyAssignment(property)) return [];
+    const path = `${receiver}.${keyText(property.name) ?? "?"}`;
+    return [{ node: property, path }, ...(ts.isPropertyAssignment(property) ? assignmentPaths(property.initializer, path) : [])];
+  });
+}
+const isLiteralTarget = (node: ts.Node | undefined): node is ts.ObjectLiteralExpression | ts.ArrayLiteralExpression => node !== undefined && (ts.isObjectLiteralExpression(node) || ts.isArrayLiteralExpression(node));
+/** The parse kind of a module: TSX for .tsx, JSX for .jsx, TS for the other TS extensions, JS (which parses JSX) otherwise. */
+function scriptKindOf(path: string): ts.ScriptKind {
+  if (path.endsWith(".tsx")) return ts.ScriptKind.TSX;
+  if (path.endsWith(".jsx")) return ts.ScriptKind.JSX;
+  return /\.(?:ts|mts|cts)$/.test(path) ? ts.ScriptKind.TS : ts.ScriptKind.JS;
+}
+/** Every code reading of one module (never a comment): lexemes, accesses, member paths and imports, each with its line - exactly
+ * the forms the header's B1 paragraph lists, each pinned by its FORMS plant. */
 function codeSites(path: string, text: string): Site[] {
-  const kind = /\.(?:ts|tsx|mts|cts)$/.test(path) ? ts.ScriptKind.TS : ts.ScriptKind.JS;
-  const source = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, kind);
+  const source = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, scriptKindOf(path));
   const sites: Site[] = [];
   const lineOf = (position: number): number => source.getLineAndCharacterOfPosition(position).line + 1;
   const visit = (node: ts.Node): void => {
     const at = (): number => lineOf(node.getStart(source));
     if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) sites.push({ line: at(), via: "lexeme", text: node.text });
     else if (ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node) || ts.isRegularExpressionLiteral(node)) sites.push({ line: at(), via: "lexeme", text: node.text });
-    else if (ts.isTemplateLiteralTypeNode(node)) sites.push({ line: at(), via: "lexeme", text: node.head.text + node.templateSpans.map(span => ` ${span.literal.text}`).join("") });
+    else if (ts.isJsxText(node)) {
+      if (!node.containsOnlyTriviaWhiteSpaces) sites.push({ line: at(), via: "lexeme", text: node.text });
+    } else if (ts.isTemplateLiteralTypeNode(node)) sites.push({ line: at(), via: "lexeme", text: node.head.text + node.templateSpans.map(span => ` ${span.literal.text}`).join("") });
     else if (ts.isTemplateExpression(node) || (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken)) {
       const value = spelled(node);
       if (value.trim() !== "") sites.push({ line: at(), via: "lexeme", text: value });
-    } else if (ts.isPropertyAccessExpression(node)) sites.push({ line: at(), via: "access", text: node.getText(source) });
+    } else if (ts.isPropertyAccessExpression(node) || ts.isQualifiedName(node)) sites.push({ line: at(), via: "access", text: node.getText(source) });
     else if (ts.isElementAccessExpression(node)) sites.push({ line: at(), via: "access", text: `${node.expression.getText(source)}.${constant(node.argumentExpression) ?? "?"}` });
     else if (ts.isIndexedAccessTypeNode(node)) {
       const index = ts.isLiteralTypeNode(node.indexType) ? constant(node.indexType.literal) : undefined;
       sites.push({ line: at(), via: "access", text: `${node.objectType.getText(source)}.${index ?? "?"}` });
     } else if (ts.isBindingElement(node) && ts.isObjectBindingPattern(node.parent)) {
-      const holder = node.parent.parent;
-      const receiver = ts.isVariableDeclaration(holder) ? holder.initializer : ts.isParameter(holder) ? holder.type : undefined;
-      const key = node.propertyName ?? node.name;
-      const keyText = ts.isIdentifier(key) || ts.isStringLiteralLike(key) || ts.isPrivateIdentifier(key) ? key.text : ts.isComputedPropertyName(key) ? constant(key.expression) : undefined;
-      if (receiver !== undefined) sites.push({ line: at(), via: "access", text: `${receiver.getText(source)}.${keyText ?? "?"}` });
+      const elementAt = elementPath(node, source);
+      if (elementAt !== undefined) sites.push({ line: at(), via: "access", text: elementAt });
     } else if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier !== undefined && ts.isStringLiteralLike(node.moduleSpecifier)) {
       const from = node.moduleSpecifier.text;
       const names: string[] = [];
+      const specifier = (element: ts.ImportSpecifier | ts.ExportSpecifier): void => {
+        if (element.propertyName !== undefined) names.push(element.propertyName.text);
+        names.push(element.name.text);
+      };
       if (ts.isImportDeclaration(node)) {
         const clause = node.importClause;
         if (clause?.name !== undefined) names.push(clause.name.text);
         const bindings = clause?.namedBindings;
         if (bindings !== undefined && ts.isNamespaceImport(bindings)) names.push(bindings.name.text);
-        if (bindings !== undefined && ts.isNamedImports(bindings)) for (const element of bindings.elements) names.push((element.propertyName ?? element.name).text);
+        if (bindings !== undefined && ts.isNamedImports(bindings)) for (const element of bindings.elements) specifier(element);
       } else if (node.exportClause !== undefined && ts.isNamedExports(node.exportClause)) {
-        for (const element of node.exportClause.elements) names.push((element.propertyName ?? element.name).text);
-      }
+        for (const element of node.exportClause.elements) specifier(element);
+      } else if (node.exportClause !== undefined && ts.isNamespaceExport(node.exportClause)) names.push(node.exportClause.name.text);
       for (const name of names) sites.push({ line: at(), via: "import", text: `${from}.${name}` });
+    } else if (ts.isImportEqualsDeclaration(node)) {
+      const reference = node.moduleReference;
+      const from = ts.isExternalModuleReference(reference) && ts.isStringLiteralLike(reference.expression) ? reference.expression.text : reference.getText(source);
+      sites.push({ line: at(), via: "import", text: `${from}.${node.name.text}` });
     }
-    if (MEMBER_KINDS.has(node.kind)) {
+    const assigned = ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken && isLiteralTarget(node.left) ? { target: node.left, receiver: node.right } : (ts.isForOfStatement(node) || ts.isForInStatement(node)) && isLiteralTarget(node.initializer) ? { target: node.initializer, receiver: node.expression } : undefined;
+    if (assigned !== undefined) for (const key of assignmentPaths(assigned.target, assigned.receiver.getText(source))) sites.push({ line: lineOf(key.node.getStart(source)), via: "access", text: key.path });
+    if (isMember(node)) {
       const own = nameOf(node);
       const path: string[] = [];
       for (let parent: ts.Node | undefined = node.parent; parent !== undefined; parent = parent.parent) {
@@ -1022,6 +1130,92 @@ const HOLE = "$" + "{";
 const RC_SPECIFIER = ["@reactive", "components/sdk"].join("-");
 const PLANT = "Set the context demand before the render.";
 const PLANT_TWIN = "Never set the context demand before the render.";
+/** A plant for each form the header's B1 paragraph names (its LEXEME, ACCESS, MEMBER - the member kinds and the enclosing
+ * declarations - and IMPORT lists, in that order): each spells the subject and a family together through its form, so the form's
+ * reading is a finding no other reading of the plant spells (a reading's line or via tells it apart). A template head starts its
+ * template, so its finding is the template's own as spelled (findings are a set): the head is held by the readings counts and A2's
+ * template route, and the middle and tail rows carry the template parts. Among them the cut #2 refusal's four forms (U1: a nested
+ * binding key, a destructuring assignment key, a parameter property, an import-equals) and its riders (F3 a namespace's member,
+ * F5 JSX text in a .tsx module). */
+const FORMS: Readonly<Record<string, readonly [path: string, code: string]>> = {
+  "lexeme.identifier": ["src/plant.ts", "export const contextDemand = 1;\n"],
+  "lexeme.private-name": ["src/plant.ts", "export class Plant {\n  #contextDemand = 1;\n}\n"],
+  "lexeme.string": ["src/plant.ts", 'export const prompt = "Set the context demand first.";\n'],
+  "lexeme.no-substitution-template": ["src/plant.ts", "export const prompt = `Set the context demand first.`;\n"],
+  "lexeme.template-middle": ["src/plant.ts", `export const prompt = \`First line.\n${HOLE}name} set the context demand ${HOLE}place} last.\`;\n`],
+  "lexeme.template-tail": ["src/plant.ts", `export const prompt = \`First line.\n${HOLE}name} set the context demand.\`;\n`],
+  "lexeme.regular-expression": ["src/plant.ts", "export const pattern = /context demand/;\n"],
+  "lexeme.jsx-text-tsx": ["src/plant.tsx", "export const View = () => <p>Set the context demand first.</p>;\n"],
+  "lexeme.jsx-text-jsx": ["src/plant.jsx", "export const View = () => <p>Set the context demand first.</p>;\n"],
+  "lexeme.template-literal-type": ["src/plant.ts", `export type Prompt = \`context ${HOLE}string} demand\`;\n`],
+  "lexeme.template-as-spelled": ["src/plant.ts", `export const prompt = \`Set the context ${HOLE}name} demand.\`;\n`],
+  "lexeme.concatenation": ["src/plant.ts", 'export const prompt = "Set the context " + "demand.";\n'],
+  "access.property-access": ["src/plant.ts", "export const value = context.demand;\n"],
+  "access.qualified-name": ["src/plant.ts", "export type Value = Context.Demand;\n"],
+  "access.element-access": ["src/plant.ts", 'export const value = context["demand"];\n'],
+  "access.indexed-access-type": ["src/plant.ts", 'export type Value = Context["demand"];\n'],
+  "access.binding-initializer": ["src/plant.ts", "export function read(context: Options): unknown {\n  const { demand } = context;\n  return demand;\n}\n"],
+  "access.binding-for-of": ["src/plant.ts", "export function read(contexts: Options[]): unknown {\n  for (const { demand } of contexts) return demand;\n  return undefined;\n}\n"],
+  "access.binding-for-in": ["src/plant.ts", "export function read(contexts: Options): unknown {\n  for (const { demand } in contexts) return demand;\n  return undefined;\n}\n"],
+  "access.binding-parameter-type": ["src/plant.ts", "export function read({ demand }: Context): unknown {\n  return demand;\n}\n"],
+  "access.binding-parameter-default": ["src/plant.ts", "export function read({ demand } = context): unknown {\n  return demand;\n}\n"],
+  "access.binding-nested": ["src/plant.ts", "export function read(opts: Options): unknown {\n  const { context: { demand } } = opts;\n  return demand;\n}\n"],
+  "access.binding-computed-key": ["src/plant.ts", 'export function read(context: Options): unknown {\n  const { ["demand"]: wanted } = context;\n  return wanted;\n}\n'],
+  "access.binding-array-element": ["src/plant.ts", "export function read(contexts: Options[]): unknown {\n  const [{ demand }] = contexts;\n  return demand;\n}\n"],
+  "access.assignment": ["src/plant.ts", "export let demand: unknown;\n({ demand } = context);\n"],
+  "access.assignment-nested": ["src/plant.ts", "export let demand: unknown;\n({ inner: { demand } } = context);\n"],
+  "access.assignment-computed-key": ["src/plant.ts", 'export let wanted: unknown;\n({ ["demand"]: wanted } = context);\n'],
+  "access.assignment-array-element": ["src/plant.ts", "export let demand: unknown;\n[{ demand }] = contexts;\n"],
+  "access.assignment-for-of": ["src/plant.ts", "export let demand: unknown;\nfor ({ demand } of contexts) break;\n"],
+  "access.assignment-for-in": ["src/plant.ts", "export let demand: unknown;\nfor ({ demand } in contexts) break;\n"],
+  "member.property-assignment": ["src/plant.ts", "export const context = { demand: 1 };\n"],
+  "member.shorthand": ["src/plant.ts", "const demand = 1;\nexport const context = { demand };\n"],
+  "member.object-method": ["src/plant.ts", "export const context = {\n  demand(): number {\n    return 1;\n  },\n};\n"],
+  "member.object-accessor": ["src/plant.ts", "export const context = {\n  get demand(): number {\n    return 1;\n  },\n};\n"],
+  "member.computed-name": ["src/plant.ts", 'export const context = { ["demand"]: 1 };\n'],
+  "member.class-property": ["src/plant.ts", 'export class Context {\n  readonly demand: string = "";\n}\n'],
+  "member.class-method": ["src/plant.ts", "export class Context {\n  demand(): void {}\n}\n"],
+  "member.class-accessor": ["src/plant.ts", "export class Context {\n  get demand(): number {\n    return 1;\n  }\n}\n"],
+  "member.class-setter": ["src/plant.ts", "export class Context {\n  set demand(value: number) {}\n}\n"],
+  "member.class-expression": ["src/plant.ts", "export const Plant = class Context {\n  demand = 1;\n};\n"],
+  "member.function-expression": ["src/plant.ts", "export const Plant = function context() {\n  return { demand: 1 };\n};\n"],
+  "member.parameter-property": ["src/plant.ts", "export class Context {\n  constructor(readonly demand: string) {}\n}\n"],
+  "member.interface-property": ["src/plant.ts", "export interface Context {\n  demand: string;\n}\n"],
+  "member.interface-method": ["src/plant.ts", "export interface Context {\n  demand(): void;\n}\n"],
+  "member.type-literal": ["src/plant.ts", "export type Context = {\n  demand: string;\n};\n"],
+  "member.enum-member": ["src/plant.ts", "export enum Context {\n  Demand = 1,\n}\n"],
+  "member.namespace-variable": ["src/plant.ts", "export namespace Context {\n  export const demand = 1;\n}\n"],
+  "member.namespace-function": ["src/plant.ts", "export namespace Context {\n  export function demand(): void {}\n}\n"],
+  "member.namespace-class": ["src/plant.ts", "export namespace Context {\n  export class Demand {}\n}\n"],
+  "member.namespace-interface": ["src/plant.ts", "export namespace Context {\n  export interface Demand {}\n}\n"],
+  "member.namespace-type-alias": ["src/plant.ts", "export namespace Context {\n  export type Demand = string;\n}\n"],
+  "member.namespace-enum": ["src/plant.ts", "export namespace Context {\n  export enum Demand {}\n}\n"],
+  "member.namespace-namespace": ["src/plant.ts", "export namespace Context {\n  export namespace Demand {}\n}\n"],
+  "member.namespace-dotted": ["src/plant.ts", "export namespace Context.Demand {}\n"],
+  "member.module-body": ["src/plant.ts", 'declare module "context-store" {\n  export const demand: number;\n}\n'],
+  "member.enclosing-property": ["src/plant.ts", "export const plant = { context: { demand: 1 } };\n"],
+  "member.enclosing-shorthand": ["src/plant.ts", "export let context: unknown;\n({ context = { demand: 1 } } = source);\n"],
+  "member.enclosing-property-declaration": ["src/plant.ts", "export class Plant {\n  context = { demand: 1 };\n}\n"],
+  "member.enclosing-property-signature": ["src/plant.ts", "export interface Plant {\n  context: { demand: string };\n}\n"],
+  "member.enclosing-method": ["src/plant.ts", "export class Plant {\n  context() {\n    return { demand: 1 };\n  }\n}\n"],
+  "member.enclosing-method-signature": ["src/plant.ts", "export interface Plant {\n  context(): { demand: string };\n}\n"],
+  "member.enclosing-getter": ["src/plant.ts", "export class Plant {\n  get context() {\n    return { demand: 1 };\n  }\n}\n"],
+  "member.enclosing-setter": ["src/plant.ts", "export class Plant {\n  set context(value: { demand: string }) {}\n}\n"],
+  "member.enclosing-function": ["src/plant.ts", "export function context() {\n  return { demand: 1 };\n}\n"],
+  "member.enclosing-enum-member": ["src/plant.ts", "export enum Plant {\n  context = ({ demand: 1 }).demand,\n}\n"],
+  "member.enclosing-parameter-property": ["src/plant.ts", "export class Plant {\n  constructor(readonly context: { demand: string }) {}\n}\n"],
+  "import.default": ["src/plant.ts", 'import demand from "./context.js";\nexport { demand };\n'],
+  "import.namespace": ["src/plant.ts", 'import * as demand from "./context.js";\nexport { demand };\n'],
+  "import.named": ["src/plant.ts", 'import { demand } from "./context.js";\nexport { demand };\n'],
+  "import.named-module-name": ["src/plant.ts", 'import { demand as wanted } from "./context.js";\nexport { wanted };\n'],
+  "import.named-alias": ["src/plant.ts", 'import { wanted as demand } from "./context.js";\nexport { demand };\n'],
+  "import.re-export": ["src/plant.ts", 'export { demand } from "./context.js";\n'],
+  "import.re-export-module-name": ["src/plant.ts", 'export { demand as wanted } from "./context.js";\n'],
+  "import.re-export-alias": ["src/plant.ts", 'export { wanted as demand } from "./context.js";\n'],
+  "import.re-export-namespace": ["src/plant.ts", 'export * as demand from "./context.js";\n'],
+  "import.equals-require": ["src/plant.cts", 'import demand = require("./context.cjs");\nexport = demand;\n'],
+  "import.equals-entity": ["src/plant.ts", "import demand = Context.Inner;\nexport { demand };\n"],
+};
 
 // ------------------------------------------------------------------------------------------------------------------- the pins
 /** B4's witness over a bead row: the demand reading itself and its quiet rows; only R-SYNONYM reads the row, through its owner
@@ -1095,6 +1289,12 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     };
     const quiet = {
       "R-UNNAMED-ADOPTION": [consumerOfCode(`import { renderBlock } from "${RC_SPECIFIER}";\n`), consumerOfCode("export const verdicts = queryView.judgments;\n")],
+      // The cut #2 refusal, F4: a stem glued to a suffix the WORDS rule keeps in one word or splits after the acronym's last
+      // capital reads no stem; each twin, the same stem split off, does.
+      "R-GLUED-STEM": {
+        unread: [consumerOfCode("export const EDCv2Assembler = 1;\n"), consumerOfCode("export const EDC2Assembler = 1;\n"), consumerOfCode("export const edc2_assembler = 1;\n")],
+        readTwins: [consumerOfCode("export const EdcV2Assembler = 1;\n"), consumerOfCode("export const EDC_2Assembler = 1;\n"), consumerOfCode("export const edc_2_assembler = 1;\n")],
+      },
     };
     expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "A2").map(residual => residual.id));
     return { stems: { word: [...VOCABULARY.stems.word], joined: [...VOCABULARY.stems.joined] }, routes, nearMisses, quiet };
@@ -1120,7 +1320,30 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const read = survey(readTexts(replica, listed));
     const quiet = {
       "R-SCOPE": { listed, findings: read.findings, aloneWouldFind: Object.keys(outside).sort(byName).filter(path => !listed.includes(path)).map(path => textReadings(path, PLANT).findings.length) },
-      "R-COMPOSED": [codeOf(`const noun = pick();\nexport const prompt = \`Set the context ${HOLE}noun} first.\`;\n`), codeOf('const noun = pick();\nexport const prompt = "Raise the context " + noun + ".";\n')],
+      "R-COMPOSED": [
+        codeOf(`const noun = pick();\nexport const prompt = \`Set the context ${HOLE}noun} first.\`;\n`),
+        codeOf('const noun = pick();\nexport const prompt = "Raise the context " + noun + ".";\n'),
+        codeOf('let prompt = "Set the context ";\nprompt += "demand first.";\nexport { prompt };\n'),
+        codeOf('const parts = ["Set the context", "demand first."];\nexport const prompt = parts.join(" ");\n'),
+      ],
+      // The forms the code reader leaves unread (the cut #2 refusal, U1: the header names exactly what is read): each reads as its
+      // lexemes alone, so it finds nothing; each twin spells the same words through a read form and finds them.
+      "R-UNREAD-FORM": {
+        unread: {
+          untypedParameter: codeOf("export const read = (contexts: Options[]) => contexts.map(({ demand }) => demand);\n"),
+          requireBinding: codeOf('const demand = require("./context.cjs");\nmodule.exports = { value: demand };\n', "src/plant.cjs"),
+          dynamicImport: codeOf('export const demand = await import("./context.js");\n'),
+          localExportAlias: codeOf("const demand = 1;\nexport { demand as context };\n"),
+          callKey: codeOf('export const value = context.get("demand");\n'),
+        },
+        readTwins: {
+          untypedParameter: codeOf("export const read = (contexts: Options[]) => contexts.map(({ demand }: Context) => demand);\n"),
+          requireBinding: codeOf('import demand = require("./context.cjs");\nexport = demand;\n', "src/plant.cts"),
+          dynamicImport: codeOf('import * as demand from "./context.js";\nexport { demand };\n'),
+          localExportAlias: codeOf('export { demand as context } from "./context.js";\n'),
+          callKey: codeOf('export const value = context["demand"];\n'),
+        },
+      },
     };
     expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "B1").map(residual => residual.id));
     return {
@@ -1139,6 +1362,8 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       walkAgreesWithGit: walk.agrees,
       links: walk.links,
       frozen: { revision: CONSTANTS.frozenAt, ancestor: frozenIsAncestor(), modules: frozen.code.length, pages: frozen.pages.length, readings: frozen.readings, findings: frozen.findings, quieted: frozen.quieted },
+      // One plant per form the header lists: the reading each form composes (the cut #2 refusal, U1).
+      forms: Object.fromEntries(Object.entries(FORMS).map(([id, [path, code]]) => [id, codeOf(code, path)])),
       quiet,
     };
   },
@@ -1228,18 +1453,24 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const real = live();
     const surfaces = await runtime();
     const runtimeSites = [...surfaces.prompts, ...surfaces.descriptions, ...surfaces.inputs];
-    // ONE pass over every listed module and page, every runtime text and in-memory positives: exactly what the positives find alone.
+    // ONE pass over every listed module and page, every runtime text and in-memory positives: exactly what the positives find alone,
+    // asserted both ways (the cut #2 refusal, U2) - the pass holds every finding of the positives read alone, and beyond them it
+    // holds exactly the live findings - and the pass read the live tree and the positives together.
     const positives: readonly (readonly [string, string])[] = [
       ["src/zz-plant.ts", "export const contextDemand = 1;\n"],
       [".pi/agents/zz-plant.md", "Raise the context precision when unsure.\n"],
       ["examples/zz-plant.md", "Pass a projection requirement to the render.\n"],
     ];
     const runtimePositives: RuntimeSite[] = [{ where: "pi:zz_plant.description", text: "Use this tool to set the context demand." }];
-    const alone = [...survey(positives).findings, ...siteFindings(runtimePositives)];
+    const positivesAlone = survey(positives);
+    const alone = [...positivesAlone.findings, ...siteFindings(runtimePositives)];
     expect(alone.length).toBeGreaterThanOrEqual(positives.length + runtimePositives.length);
-    const pass = [...survey([...readTexts(REPO, gitList(REPO)), ...positives]).findings, ...siteFindings([...runtimeSites, ...runtimePositives])];
+    const onePass = survey([...readTexts(REPO, gitList(REPO)), ...positives]);
+    const pass = [...onePass.findings, ...siteFindings([...runtimeSites, ...runtimePositives])];
+    expect(alone.filter(finding => !pass.includes(finding)), "the one pass finds every finding of the positives").toEqual([]);
     const outside = pass.filter(finding => !alone.includes(finding));
-    expect(outside).toEqual([...real.findings, ...siteFindings(runtimeSites)]);
+    expect(outside, "beyond the positives, the one pass finds exactly the live findings").toEqual([...real.findings, ...siteFindings(runtimeSites)]);
+    expect([onePass.code.length - real.code.length, onePass.pages.length - real.pages.length, onePass.readings - real.readings], "the one pass read the live tree and the positives together").toEqual([positivesAlone.code.length, positivesAlone.pages.length, positivesAlone.readings]);
     // The same guard over a scratch git repository: a plant per root, each beside a negated twin that stays quiet.
     const plants: Record<string, string> = {
       "src/plant.ts": "export const contextDemand = 1;\n",
@@ -1431,7 +1662,7 @@ describe("wb-pyel.2 EDC demand-channel census (SDK-EVIDENCE-DIRECTED-COMPUTATION
     expect(verdict(producerLine.replace(/,? not\b/, ""))).toBe("demand+precision+carrier");
     // The residuals: each named once, each quiet row on a judged pin.
     const pins = ROWS.flatMap(row => row.pins.map(pin => pin.id));
-    expect(ROSTER.residuals.map(residual => residual.id)).toEqual(["R-UNNAMED-ADOPTION", "R-SCOPE", "R-COMPOSED", "R-UNNAMED-INPUT", "R-PARAPHRASE", "R-SUBJECTLESS", "R-SPLIT", "R-MARKER-ANYWHERE", "R-LOOKALIKE", "R-SYNONYM"]);
+    expect(ROSTER.residuals.map(residual => residual.id)).toEqual(["R-UNNAMED-ADOPTION", "R-GLUED-STEM", "R-SCOPE", "R-COMPOSED", "R-UNREAD-FORM", "R-UNNAMED-INPUT", "R-PARAPHRASE", "R-SUBJECTLESS", "R-SPLIT", "R-MARKER-ANYWHERE", "R-LOOKALIKE", "R-SYNONYM"]);
     expect(ROSTER.residuals.every(residual => pins.includes(residual.quietPin))).toBe(true);
   });
   for (const row of ROWS) {

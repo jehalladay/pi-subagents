@@ -110,7 +110,7 @@
               "revision": "864dff943711",
               "ancestor": true,
               "modules": 116,
-              "readings": 136007,
+              "readings": 136091,
               "sites": [],
               "dependencies": [],
               "tables": 3
@@ -188,7 +188,25 @@
               "R-UNNAMED-ADOPTION": [
                 [],
                 []
-              ]
+              ],
+              "R-GLUED-STEM": {
+                "unread": [
+                  [],
+                  [],
+                  []
+                ],
+                "readTwins": [
+                  [
+                    "src/plant.ts:1 lexeme edc"
+                  ],
+                  [
+                    "src/plant.ts:1 lexeme edc"
+                  ],
+                  [
+                    "src/plant.ts:1 lexeme edc"
+                  ]
+                ]
+              }
             }
           }
         }
@@ -225,11 +243,247 @@
               "ancestor": true,
               "modules": 122,
               "pages": 3,
-              "readings": 136731,
+              "readings": 136815,
               "findings": [],
               "quieted": [
                 "src/default-agents.ts:41 lexeme:28 subjectless:precision",
                 "src/workbench/claude-capability-tools.ts:127 lexeme:1 subjectless:demand"
+              ]
+            },
+            "forms": {
+              "lexeme.identifier": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.private-name": [
+                "src/plant.ts:2 member:1 demand",
+                "src/plant.ts:2 lexeme:1 demand"
+              ],
+              "lexeme.string": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.no-substitution-template": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.template-middle": [
+                "src/plant.ts:1 lexeme:2 demand",
+                "src/plant.ts:2 lexeme:1 demand"
+              ],
+              "lexeme.template-tail": [
+                "src/plant.ts:1 lexeme:2 demand",
+                "src/plant.ts:2 lexeme:1 demand"
+              ],
+              "lexeme.regular-expression": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.jsx-text-tsx": [
+                "src/plant.tsx:1 lexeme:1 demand"
+              ],
+              "lexeme.jsx-text-jsx": [
+                "src/plant.jsx:1 lexeme:1 demand"
+              ],
+              "lexeme.template-literal-type": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.template-as-spelled": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.concatenation": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "access.property-access": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.qualified-name": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.element-access": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.indexed-access-type": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.binding-initializer": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.binding-for-of": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.binding-for-in": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.binding-parameter-type": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.binding-parameter-default": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.binding-nested": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.binding-computed-key": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.binding-array-element": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.assignment": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.assignment-nested": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.assignment-computed-key": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.assignment-array-element": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.assignment-for-of": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.assignment-for-in": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "member.property-assignment": [
+                "src/plant.ts:1 member:1 demand"
+              ],
+              "member.shorthand": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.object-method": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.object-accessor": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.computed-name": [
+                "src/plant.ts:1 member:1 demand"
+              ],
+              "member.class-property": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.class-method": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.class-accessor": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.class-setter": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.class-expression": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.function-expression": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.parameter-property": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.interface-property": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.interface-method": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.type-literal": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.enum-member": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.namespace-variable": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.namespace-function": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.namespace-class": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.namespace-interface": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.namespace-type-alias": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.namespace-enum": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.namespace-namespace": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.namespace-dotted": [
+                "src/plant.ts:1 member:1 demand"
+              ],
+              "member.module-body": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.enclosing-property": [
+                "src/plant.ts:1 member:1 demand"
+              ],
+              "member.enclosing-shorthand": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.enclosing-property-declaration": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.enclosing-property-signature": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.enclosing-method": [
+                "src/plant.ts:3 member:1 demand"
+              ],
+              "member.enclosing-method-signature": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.enclosing-getter": [
+                "src/plant.ts:3 member:1 demand"
+              ],
+              "member.enclosing-setter": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.enclosing-function": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.enclosing-enum-member": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.enclosing-parameter-property": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "import.default": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "import.namespace": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "import.named": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "import.named-module-name": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "import.named-alias": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "import.re-export": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "import.re-export-module-name": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "import.re-export-alias": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "import.re-export-namespace": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "import.equals-require": [
+                "src/plant.cts:1 import:1 demand"
+              ],
+              "import.equals-entity": [
+                "src/plant.ts:1 import:1 demand"
               ]
             },
             "quiet": {
@@ -249,8 +503,36 @@
               },
               "R-COMPOSED": [
                 [],
+                [],
+                [],
                 []
-              ]
+              ],
+              "R-UNREAD-FORM": {
+                "unread": {
+                  "untypedParameter": [],
+                  "requireBinding": [],
+                  "dynamicImport": [],
+                  "localExportAlias": [],
+                  "callKey": []
+                },
+                "readTwins": {
+                  "untypedParameter": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "requireBinding": [
+                    "src/plant.cts:1 import:1 demand"
+                  ],
+                  "dynamicImport": [
+                    "src/plant.ts:1 import:1 demand"
+                  ],
+                  "localExportAlias": [
+                    "src/plant.ts:1 import:1 demand"
+                  ],
+                  "callKey": [
+                    "src/plant.ts:1 access:1 demand"
+                  ]
+                }
+              }
             }
           }
         },
@@ -667,11 +949,19 @@
       "quietPin": "A2"
     },
     {
+      "id": "R-GLUED-STEM",
+      "quietPin": "A2"
+    },
+    {
       "id": "R-SCOPE",
       "quietPin": "B1"
     },
     {
       "id": "R-COMPOSED",
+      "quietPin": "B1"
+    },
+    {
+      "id": "R-UNREAD-FORM",
       "quietPin": "B1"
     },
     {
