@@ -392,3 +392,57 @@
 | a fixture's rest parameter | context escape | 08cb76a80a92abed |
 | the cut-4 run forms | none | 5b52502a0728b3f1 |
 | the cut-4 non-claims | none | 24e32da32d53c419 |
+
+## 2026-10-29 the typed-status echo census judged set, cut 5: A1's key paths through call and construct signatures, a declaration's own return type, a thrown value, a callee, a tag, a class expression's members and a parameter property, type-level indexed access chains, and R-SPLIT-PATH's cut-5 twins (wb-1709, the wb-50dt gate's F1)
+
+- What binds here: test/workbench-rf-typed-status-echo-census.test.ts reads the table below through the same shared docs reader and refusals as the earlier tables (the table is the only block of its section, the section holds no HTML, the header row reads as below). A1's record of every control it reads is the cut-3 A1 table's rows, then the cut-4 A1 additions table's rows, then this table's, in order. Each control stands there by group, name, reading and the sha256/16 of its text.
+- F1, the signature spellings (inside the claim's wording, "a function or construct type's return type"): the key path of a nested object pattern, literal or type also runs through a call or construct signature's return type and through a type literal's call and construct signatures, so a function or construct type spelled by signature in any type literal reads as the `() => ...` and `new () => ...` forms do. The gate's GA17 (a call signature in a type literal, `type Rec = { publication: { (): { state: string } } };`), GA18 (a construct signature in a type literal, `type Rec = { publication: { new (): { state: string } } };`) and GA19 (a call signature in an interface member's type) each have a control, beside an interface member's construct signature and a generic call signature with a parameter.
+- F1, the members outside the claim's wording, now read: the key path also runs through a function declaration's own return type, which continues as the declaration's returned value does, from the function that holds a nested one (GA20, beside a declaration nested in a method; a module-level declaration's own name ends the path); a thrown value, which continues as a returned value does (GA25, beside a throw in a method; whether the value is caught is not read); a call's or a construction's callee, which now passes as the arguments do, so an immediately invoked arrow's or function expression's result (GA24) and a called call's result run on; and a tagged template's tag (GA23, a tag call's argument). A class expression is a container like an object literal: the key path of each of its members, its constructors' parameter properties included, is a unit when the class expression is nested under a member (GA22, beside a method member, a constructed class expression and a parameter property). A constructor's parameter property (a parameter with an accessibility, readonly or override modifier) names its own key in any class (GA21's member form: a defaulted and a typed parameter property). A type-level indexed access chain is a unit as a value-level access chain is: its head when a type name or a typeof query's name (each part of a qualified one), through parenthesized types, then each string-literal index type (GA28, `type State = Rec["publication"]["state"];`, beside a template-literal index, a head that is itself a field word, a qualified head and a typeof head).
+- F1, named in R-SPLIT-PATH, each with a quiet control in the table below: a function expression or an arrow held in a local (GA26, the local-binding member the gate names); a parameter's own name (GA21's binding form: a defaulted parameter, and a constructor's plain parameter beside the parameter-property reading); a member target inside a destructuring assignment's pattern, joined to its value only by position or key across the assignment (GA27: an array pattern and an object pattern); the own name of a module-level function declaration carrying a return type, of an interface or a type alias carrying a call signature, of a class declaration and of a variable holding a class expression; and a type-level index bound elsewhere (`Rec[Key]["state"]`). Non-claim: a tagged template's type arguments are not read.
+- Disclosure: the gate's plant texts were not available to this cut (the bead note quotes GA17 and GA18 verbatim and names GA19-GA28 by description), so every other control here is this cut's own spelling of the described form.
+- Red first, measured at trunk aa95f43: with this cut's controls, A1 witness keys, roster and table in place and A1's readers (passesThrough, enclosingKeys, codeUnits and memberKey) at their landed bytes, the census reads 2 failed of 26: A1 at its cut-5 key-path assertion, all 24 cut-5 key-path controls not caught, and the roster judge. Read through a harness that extracts the landed reader from the landed census, each of the 24 key-path controls and the 12 quiet controls reads 0, and so does this cut's spelling of each of GA17-GA28; GA29 (a class method's return type) and GA30 (an accessor signature in a type literal) read 1 under both readers.
+- Green, measured on the cut at trunk aa95f43: the census reads 26 of 26, and A1 walks 117 src files, every one a module, and 0 entries that are neither a file nor a directory, reading 121080 code units with 0 hits; the landed reader reads 120930. A differential read over the 117 src modules finds every landed code unit among the cut's. The cut adds 150 units, none a hit: 146 type-level indexed access chains (such as `ObservedNode.freshness`), 3 from thrown values in src/index.ts (`claude-agent-sdk.code` once, `local-detached.code` twice) and 1 from a class expression constructed and returned in a method of src/workbench/hosts/furnace-hosted.ts (`openHost.sessionClass`, read through the class-expression container and the construction's callee together).
+- Mutants, measured on the cut at trunk aa95f43, each applied to a throwaway copy of the census (and of its roster where the mutant edits it) and run in one batch beside a control copy that reads 26 of 26: all 37 are red. They are 19 branch mutants, at least one per new branch, each failing A1 at its cut-5 key-path assertion; 6 wider mutants at the readings' borders (every parameter keyed; a function declaration's, an interface's, a type alias's, or a class declaration's and a variable's own name keyed; a function expression or arrow held in a local continuing as a nested declaration does), each failing A1 at a quiet assertion; 5 anchoring hollows (a cut-5 key-path control, or a quiet control, removed alone with its roster witness; this table dropped from the record's hold; the throw reading removed together with its two controls and their roster witnesses; a control's text rewritten), each failing A1 at its record hold; and the CT battery's seven members.
+- CT-BATTERY v2 (measured on the cut at aa95f43): CT1 red=2; CT1b red=2; CT2 red=1; CT3 red=2; CT4 red=2; CT5 red=2; CT6 red=1 (CT5 kills through the first entry's judged-pin table and the roster judge; CT6, which also removes the pin from the roster, kills through the judged-pin table alone, outside the census and its roster).
+- Non-claims: this cut changes no src file and no shared helper or fixture beyond this census's roster; TRACEABILITY.md is frozen and untouched; the producer vocabularies are the wb-o4h0.7 cut's reads of the installed rf, not re-read here; the residual families named here and in the earlier entries are named, not closed.
+
+### A1 control additions, wb-d8io cut 5
+
+| Group | Control | Reads | Text sha256/16 |
+| --- | --- | --- | --- |
+| widened.keyPaths.cut5 | callSignature | 1 | b45c0725bb6dd207 |
+| widened.keyPaths.cut5 | constructSignature | 1 | 1833e1b4fba36266 |
+| widened.keyPaths.cut5 | interfaceCallSignature | 1 | b3bb497ba6be991f |
+| widened.keyPaths.cut5 | interfaceConstructSignature | 1 | ae06e7685dd040bf |
+| widened.keyPaths.cut5 | genericCallSignature | 1 | 6265e6c2ddd60e1f |
+| widened.keyPaths.cut5 | declarationReturnType | 1 | 067905b043ac1c7e |
+| widened.keyPaths.cut5 | methodDeclarationReturnType | 1 | 1190245c1cd4f271 |
+| widened.keyPaths.cut5 | thrown | 1 | c6f9e0d9d3bcfcb7 |
+| widened.keyPaths.cut5 | thrownFromMethod | 1 | df51a09ecbeffbf0 |
+| widened.keyPaths.cut5 | invokedArrow | 1 | 623173a08cb61601 |
+| widened.keyPaths.cut5 | invokedFunction | 1 | 0815cae1639da208 |
+| widened.keyPaths.cut5 | calledCall | 1 | f2f859cbbeb6d3b8 |
+| widened.keyPaths.cut5 | tagCall | 1 | 02dd30830433d13d |
+| widened.keyPaths.cut5 | classExpression | 1 | dad3320f85d5b39e |
+| widened.keyPaths.cut5 | classExpressionMethod | 1 | 5f63f7f93576f9b3 |
+| widened.keyPaths.cut5 | constructedClass | 1 | 869fbedcbadf0a5f |
+| widened.keyPaths.cut5 | classExpressionParameterProperty | 1 | f8a35e74cfdf9bd7 |
+| widened.keyPaths.cut5 | parameterProperty | 1 | 35be5e597bf32e18 |
+| widened.keyPaths.cut5 | parameterPropertyType | 1 | 402855dc0f68f63c |
+| widened.keyPaths.cut5 | indexedAccessType | 1 | 8ee38b5b3a5d2597 |
+| widened.keyPaths.cut5 | templateIndex | 1 | f16e112fad23f3fd |
+| widened.keyPaths.cut5 | typeHead | 1 | 58afca75505ab6a6 |
+| widened.keyPaths.cut5 | qualifiedTypeHead | 1 | 54d24b2f8c8ecb0d |
+| widened.keyPaths.cut5 | typeofHead | 1 | 964f5844057c70f9 |
+| quiet.splitPath.cut5 | localFunction | 0 | 883132605388fbb8 |
+| quiet.splitPath.cut5 | localArrow | 0 | c394dd48905f12db |
+| quiet.splitPath.cut5 | parameterDefault | 0 | 33cdf87891c98b48 |
+| quiet.splitPath.cut5 | constructorParameter | 0 | e1d480bbefebf7ee |
+| quiet.splitPath.cut5 | patternTarget | 0 | 6f1b9172ed33c3c0 |
+| quiet.splitPath.cut5 | patternKeyTarget | 0 | e0d4204e85697e9a |
+| quiet.splitPath.cut5 | declaredReturnType | 0 | 71916c5f793970eb |
+| quiet.splitPath.cut5 | interfaceSignature | 0 | e91e1881f9682e61 |
+| quiet.splitPath.cut5 | typeSignature | 0 | 37ae2bc5156da806 |
+| quiet.splitPath.cut5 | className | 0 | 43bbe2f2b5440aba |
+| quiet.splitPath.cut5 | boundClass | 0 | 131c71ac806d958f |
+| quiet.splitPath.cut5 | keyedIndexType | 0 | dd51d47d181b1865 |
