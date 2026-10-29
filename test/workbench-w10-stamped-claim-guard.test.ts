@@ -139,46 +139,72 @@
  * structural arms): T7 gains a stray and a doubled heading clause, T9 an engine split, a reworded slice and a look-alike copy
  * of the sentence, and TS1-TS7 refuse the arms no field, record or page site draws: the Evidence cell unreadable, the receipt
  * missing, raw HTML in it, no RF-TSX-RECEIPT line, a line that is not one JSON object, a row outside the R9 pair, a pair row
- * twice. TS6 also refuses six near names (TSX_NEAR_NAMES; wb-m14y, the wb-ojur gate's F2 J-g3: a prefix match accepted a
- * foreign "success-..." row silently), each one a comparison weaker than exact membership in the R9 pair would accept: an
- * R9 name with text after it (a prefix match) or before it (a suffix match), a proper prefix and a proper suffix of an R9
- * name (the two reverse matches), an R9 name in another case (a case-folded match) and one with trailing white space (a
- * trimmed match). T-ARMS anchors the TS rows outside the tables, in the judge's own code: it requires every finding of every
- * refused pin to read as exactly one arm (or as a finding of the shared W10 view), every arm to be drawn, the TS rows to be
- * exactly the arms no T row draws, in the judge's order, and no construct on the judge's diagnosis flow to be unread;
- * TS-SHAPE freezes the TS rows (standing rule 16).
- * FLOW READING (wb-m14y, the wb-ojur gate's F1: IP-E1 to IP-E5 each added one unpinned diagnosis in a form the landed reading
- * skipped - a push in a function not declared string[], a pushed const, a conditional return, an arrow helper, an unshift -
- * and stayed green): readJudgeArms() reads the judge with the TypeScript parser by following the diagnosis flow back from
- * judgeTsxRow's return statements. A diagnosis LIST is an array literal (each element one diagnosis, each spread a list), a
- * conditional of lists, a call of a function T-ARMS enters (each of its returns a list), a const declared inside the same
- * top-level function (its initializer, plus the arguments of every push() and unshift() on it: a spread argument a list, any
- * other one diagnosis), or a property of such a const holding a call of a function T-ARMS enters (that property of each of
- * the callee's returned object literals). One DIAGNOSIS is a string, no-substitution template or template literal (one arm;
- * each substitution reads as any text), a conditional of diagnoses, a const (of the function or of the module) whose
- * initializer is one, or a call of a function T-ARMS enters (each of its returns one). T-ARMS enters a function declaration
- * with a body or a const binding of an arrow or function expression, resolved by name: a binding anywhere inside the same
- * top-level function (its nested functions included) first, then the module's, a name bound twice there being no binding
- * T-ARMS traces; never the shared W10 view (SHARED_VIEW), whose findings the stamped-claim tables judge.
- * Arms are ordered as a source-order walk of judgeTsxRow reaches them: by the call sites that lead to an arm, then by its own
- * position. Declared return types are not read.
- * FAIL CLOSED: every other construct in a list or diagnosis position is unread (a call of a name T-ARMS does not enter, a
- * method call, an operator expression, a tagged template, a hole, a list that is module-level, let, a parameter, destructured
- * or bound twice, any property of the shared W10 view but its findings, a return without a value); so is every use of a
- * traced list other than push(), unshift(), a spread, or a return by the function declaring it (alone or as a returned object
- * literal's property): an alias, an argument, an iteration, an element or length write, a splice, a closure handing it out;
- * every use of a holder other than a property read, and every use of its list property other than a spread or such a
- * return; a returned object literal with a spread or without exactly one such property; a recursive flow, a list read inside
- * its own flow, and a diagnosis reached through more than 64 calls and const references. T-ARMS requires none, so a
- * diagnosis written in a form the reading cannot
- * read reds T-ARMS by itself. T-ARMS-FORMS pins the reading: each probe armProbe() writes into the judge's source with the
- * TypeScript parser reads back as its frozen reading: AF1-AF15 are read as arms where the judge's order puts them (the gate's
- * IP-E1 to IP-E5 among them; AF15's local helper takes the five arms of the one it shadows out of reach), AF16 (the gate's
- * IP-K1 re-annotation) leaves the reading unchanged, AU1-AU26 are unread, each with its reason (AU15 reads its own literal
- * too), and AR1 is the residual below, pinned quiet; FORMS-SHAPE freezes the probes (standing rule 16). T-ARMS-ANCHORED
- * pins every arm on a sample built from its literal pieces with a line break inside every substitution: the sample reads as
- * the arm, and no arm with a literal head (11 of 26) reads a character before it, none with a literal tail (20 of 26) one
- * after it (wb-m14y, the wb-ojur gate's F3 A4: no live finding exercised the anchoring).
+ * twice. TS6 also refuses seven near names (TSX_NEAR_NAMES; wb-m14y, the wb-ojur gate's F2 J-g3: a prefix match accepted a
+ * foreign "success-..." row silently; then this bead's gate's F1 G4: a start-trimmed match accepted a foreign " success" row),
+ * each one a comparison weaker than exact membership in the R9 pair would accept: an R9 name with text after it (a prefix
+ * match) or before it (a suffix match), a proper prefix and a proper suffix of an R9 name (the two reverse matches), an R9
+ * name in another case (a case-folded match), one with trailing white space (a trimmed match) and one with leading white
+ * space (a start-trimmed match). T-ARMS anchors the TS rows outside the tables, in the judge's own code: it requires every
+ * finding of every refused pin to read as exactly one arm (or as a finding of the shared W10 view), every arm to be drawn,
+ * the TS rows to be exactly the arms no T row draws, in the judge's order, and the reading to hold no unread entry; TS-SHAPE
+ * freezes the TS rows (standing rule 16).
+ * FLOW READING (wb-m14y: the wb-ojur gate's F1, where IP-E1 to IP-E5 each added one unpinned diagnosis in a form the landed
+ * reading skipped - a push in a function not declared string[], a pushed const, a conditional return, an arrow helper, an
+ * unshift - and stayed green; then this bead's gate's U1, where G1 and G1b left a generator through yield and G2 and G2b read
+ * a call through a same-named binding the call site cannot see): readJudgeArms() parses this file with the TypeScript parser
+ * and follows the diagnosis flow back from judgeTsxRow's return statements. Every name it follows resolves to the one
+ * declaration the TypeScript checker binds it to at that reference (bindingChecker(): the checker over this file alone, asked
+ * nothing else), so a binding in a scope that does not enclose the reference is never the one read; every expression it
+ * follows is read with its parentheses and type assertions (as, satisfies, !, <T>) taken off. A diagnosis LIST is an
+ * array literal (each element one diagnosis, each spread a list), a conditional of lists, a call of a name T-ARMS enters (each
+ * of its returns a list), a name of a const declared in the same top-level function (a TRACED LIST: its initializer, plus the
+ * arguments of every push() and unshift() called on it, a spread argument a list and any other one diagnosis), or a property
+ * read from a HOLDER, a const of the same top-level function bound to a call of a name T-ARMS enters (that property of each
+ * of the callee's returned object literals). One DIAGNOSIS is a string, no-substitution template or template literal (one
+ * arm; each substitution reads as any text), a conditional of diagnoses, a name of a const (of a function or of the module)
+ * whose initializer is one, or a call of a name T-ARMS enters (each of its returns one). T-ARMS enters a name whose one
+ * declaration is a function declaration with a body or a const bound to an arrow or function expression, neither a
+ * generator, and reads every return statement of that function's own body (never one of a function or class nested in it),
+ * or its expression body. It never enters the shared W10 view, the module-level SHARED_VIEW declaration itself (a function
+ * of another scope sharing its name is entered like any other): a holder of its call carries its findings, which the
+ * stamped-claim tables judge, so T-ARMS does not read them. Arms are ordered by the source positions of the calls, holder
+ * calls and const references the flow passes through to reach each, then by its own position, compared in turn; an arm
+ * reached along several flows keeps the earliest. Declared return types are not read. A TYPE POSITION is one under a type
+ * node (an annotation, a type argument, a typeof query), except the operand of a class's extends clause or of an instantiation
+ * expression, which is a value evaluated at run time (TypeScript parses both as type nodes).
+ * FAIL CLOSED: the reading refuses each of these as an unread entry with its reason, and T-ARMS requires none: in a list or
+ * diagnosis position, any expression the paragraph above does not name (for example a method call, an operator or comma
+ * expression, a tagged template, a hole); a call whose name resolves to something T-ARMS does not enter (for example a
+ * generator function, the shared W10 view, a function declaration without a body, a const bound to anything but an arrow or
+ * function expression, a let, a var, a parameter, an import, a class, a destructured or undeclared name, or a name with more
+ * than one declaration); a list name that is not a const of the same top-level function, and a diagnosis name that is not a
+ * const; every reference to a traced list, outside type positions, other than as the object of a push() or unshift() call, a
+ * spread in an array literal or an argument list, or a return by the function declaring it, alone or as the value of the one
+ * member of a returned object literal carrying it (so an alias, an argument, an iteration, an element or length write, a
+ * splice, a closure handing it out and a second member carrying it are each unread); a property read as a list from a name
+ * that is not a holder; every reference to a holder, outside type positions, other than as the object of a property read,
+ * and every read of its list property other than such a flow out; a return of a holder's callee that is not an object literal
+ * made only of identifier-named property and shorthand assignments with exactly one member of that name; any property but
+ * findings read as a list from a holder of the shared W10 view; a reference to a function declaration T-ARMS enters,
+ * anywhere in this file outside type positions, other than as the callee of a call (it could rebind or hand out the
+ * function); a call whose callee, its parentheses and type assertions aside, is the name eval, anywhere in this file (a direct
+ * eval can read and write any binding in scope); a return without a value in a function T-ARMS enters; a recursive flow, a
+ * list read inside its own flow, and a diagnosis reached through more than 64 calls, holder calls and const references; and a
+ * source with no module-level judgeTsxRow T-ARMS enters. So a diagnosis added in a form the FLOW READING names is read as an
+ * arm, which T-ARMS reds on until a refused pin's finding reads as it, and one written in a form this list names reds T-ARMS
+ * as unread; nothing beyond the two lists and the residual below is claimed.
+ * T-ARMS-FORMS pins the reading: each probe armProbe() writes into the judge's source with the TypeScript parser reads back
+ * as its frozen reading: AF1-AF15, AF17, AF19 and AF21 are read as arms where the judge's order puts them (the wb-ojur gate's
+ * IP-E1 to IP-E5 and this bead's gate's G2 among them; AF15's local helper takes the five arms of the one it shadows out of
+ * reach; AF19's const shares the shared view's name in a helper's own scope; AF21 pushes inside a class's extends
+ * expression), AF16 (the wb-ojur gate's IP-K1 re-annotation), AF18 (G2b's same-named copy in a closure that does not enclose
+ * the call) and AF20 (a reached helper named in a type position) leave the reading unchanged, AU1-AU41 are unread, each with
+ * its reason (AU15 reads its own literal too; AU27 and AU28 are G1 and G1b; AU41 rebinds a reached helper inside a class's
+ * extends expression), and AR1 is the residual below, pinned quiet; a source with no judgeTsxRow reads no arm and that one
+ * unread entry; FORMS-SHAPE freezes the probes (standing rule 16). T-ARMS-ANCHORED pins every arm on a sample built from its
+ * literal pieces with a line break inside every substitution: the sample reads as the arm, and no arm with a literal head (11
+ * of 26) reads a character before it, none with a literal tail (20 of 26) one after it (wb-m14y, the wb-ojur gate's F3 A4: no
+ * live finding exercised the anchoring).
  * T-ROSTER holds the T rows to the TSX receipt's claim of record ("rows T0 to T11"), so a T row removed from every literal of
  * this file, a residual row included, still reds (the gate's F2: its X-CT6-T10 and X-CT6-T11 coordinated hollows). It reads
  * the claim as the receipt RENDERS (rosterClaims()): T-ROSTER-RENDERED pins four receipt variants whose raw and rendered
@@ -187,12 +213,13 @@
  * NOT CLAIMED (pin grain): T-ARMS anchors arms, not pins, so a pin removed from every literal of this file stays green while
  * another pin draws each arm it draws: T1, T2 and T3 changed (beside emptied or zeroed), T7 removed or T7 doubled (one of the
  * two), T8 swapped (beside T7 swapped), T9 doubled or T9 lookalike (one of the two), T4 unknown, which draws none, and any one
- * of TS6's seven pins; every row keeps at least one pin. Likewise a T-ARMS-FORMS probe or a T-ROSTER-RENDERED variant removed
+ * of TS6's eight pins; every row keeps at least one pin. Likewise a T-ARMS-FORMS probe or a T-ROSTER-RENDERED variant removed
  * from every literal of this file stays green: those two tables are anchored by their own literals and counts only. The F, G,
  * K, H, J, W, X and RECORD rows keep their containment reading (each cause a part of a finding).
- * FLOW READING residual (named, pinned quiet by AR1): the reading assumes the standard semantics of what it reads (push() and
- * unshift() on an array, the conditional operator, string and template literals); a standard-library method replaced outside
- * the judge is never read.
+ * FLOW READING residual (named, pinned quiet by AR1): the reading assumes JavaScript's standard semantics for what it reads
+ * (push() and unshift() on an array, a spread of one, the conditional operator, string and template literals); a
+ * standard-library object altered anywhere, in the judge or outside it, is never read (AR1 replaces Array.prototype.push at
+ * module level).
  * Spawns nothing; writes nothing; reads two docs files, the receipts directory, the R8 tier file and this file's own source
  * (T-ARMS, T-ARMS-FORMS, T-ARMS-ANCHORED), and imports the carrier.
  */
@@ -1065,8 +1092,12 @@ function receiptTsxFields(markdown: string): string[] {
 const quotedPattern = (text: string): string => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 /** This file, whose TSX-era judge T-ARMS reads (the judge is the source of truth for which diagnoses a pin must draw). */
 const SELF = "test/workbench-w10-stamped-claim-guard.test.ts";
-/** The shared W10 view judgeTsxRow opens with: its arms are judged by the stamped-claim tables above, so T-ARMS never enters it. */
+/** The shared W10 view judgeTsxRow opens with (the module-level declaration of this name): its arms are judged by the stamped-claim
+ * tables above, so T-ARMS never enters it. */
 const SHARED_VIEW = "w10View";
+/** The name a direct eval is called by: T-ARMS refuses every call of it in this file (FAIL CLOSED), since a direct eval can read and
+ * write any binding in scope, the lists and functions T-ARMS reads included. */
+const DIRECT_EVAL = "eval";
 /** T-ROSTER's source: the TSX receipt's claim of record naming this guard's rows (wb-693.7: "... rows T0 to T<n>)"). */
 const TSX_ROSTER_CLAUSE_ALL = new RegExp(`${quotedPattern(SELF)} pins it whole and binds it to this entry \\(TSX-ERA RECEIPT ROW, rows T0 to T([0-9]+)\\)`, "g");
 /** T-ROSTER's reading: the last row each claim of record in `receipt` names, read as the receipt RENDERS (T-ROSTER-RENDERED). */
@@ -1079,8 +1110,8 @@ interface JudgeArm {
   pieces: readonly string[];
 }
 
-/** What T-ARMS reads from the judge's source: every arm in the judge's order, and every construct on a diagnosis flow it does
- * not read, each as `<reason> (line <n>): <statement>` (FAIL CLOSED: T-ARMS requires none). */
+/** What T-ARMS reads from the judge's source: every arm in the judge's order, and every refusal the header's FAIL CLOSED
+ * paragraph names, each as `<reason> (line <n>): <statement>` (T-ARMS requires none). */
 interface ArmsReading {
   arms: readonly JudgeArm[];
   unread: readonly string[];
@@ -1088,24 +1119,45 @@ interface ArmsReading {
 
 /** A function T-ARMS enters: a function declaration with a body, or a const binding of an arrow or function expression. */
 type ArmCallable = ts.FunctionDeclaration | ts.ArrowFunction | ts.FunctionExpression;
-/** A name as T-ARMS resolves it: a function it enters, a const with its initializer and the function it belongs to (undefined
- * at module level), or anything else (a let, a parameter, an import, a global, a destructured or twice-bound name). */
+/** A name as T-ARMS resolves it, from the one declaration the TypeScript checker binds the reference to: a function it enters, a
+ * generator function (never entered), a const with its initializer and the top-level function declaring it (undefined at module
+ * level), or anything else (a let, a var, a parameter, an import, a class, a destructured or undeclared name, a name with more
+ * than one declaration). */
 type ArmBinding =
   | { kind: "callable"; name: string; callable: ArmCallable }
+  | { kind: "generator"; name: string }
   | { kind: "const"; name: string; declared: ts.Identifier; initializer: ts.Expression; scope: ArmCallable | undefined }
-  | { kind: "other" };
+  | { kind: "other"; name: string };
 /** A reader of one flow position: a diagnosis list or one diagnosis. */
 type ArmFlow = (scope: ArmCallable | undefined, node: ts.Expression, path: readonly number[], chain: readonly ArmCallable[]) => void;
 
-/** The methods T-ARMS reads as adding diagnoses to a list it traces; every other use of such a list is unread. */
+/** The methods T-ARMS reads as adding diagnoses to a list it traces; a use of such a list other than these calls, a spread or a
+ * return the header's FAIL CLOSED paragraph admits is unread. */
 const ARM_ADDERS: readonly string[] = ["push", "unshift"];
 
-/** T-ARMS's source (FLOW READING, wb-m14y): every diagnosis the TSX-era judge can emit, read from `source` with the TypeScript
- * parser by following the diagnosis flow back from judgeTsxRow's return statements, in the order a source-order walk reaches
- * it (by the call sites that lead to it, then by its own position); and every construct on that flow it does not read (FAIL
- * CLOSED). The header's T-ARMS paragraph names the forms read and the uses refused. */
+/** The TypeScript checker over `file` alone (no lib, no module resolution). T-ARMS asks it one thing: which declaration a name is
+ * bound to at a reference, the binding the name's lexical scope there gives it (wb-m14y: its gate's G2 and G2b). */
+function bindingChecker(file: ts.SourceFile): ts.TypeChecker {
+  const host: ts.CompilerHost = {
+    getSourceFile: (name) => (name === file.fileName ? file : undefined),
+    getDefaultLibFileName: () => "lib.d.ts",
+    writeFile: () => undefined,
+    getCurrentDirectory: () => "",
+    getCanonicalFileName: (name) => name,
+    useCaseSensitiveFileNames: () => true,
+    getNewLine: () => "\n",
+    fileExists: (name) => name === file.fileName,
+    readFile: () => undefined,
+  };
+  return ts.createProgram({ rootNames: [file.fileName], options: { noLib: true, noResolve: true, types: [] }, host }).getTypeChecker();
+}
+
+/** T-ARMS's source (FLOW READING, wb-m14y): the TSX-era judge's arms, read from `source` with the TypeScript parser by following
+ * the diagnosis flow back from judgeTsxRow's return statements through exactly the forms the header's FLOW READING paragraph
+ * names, in the order it names; and, as an unread entry, every construct its FAIL CLOSED paragraph refuses. */
 function readJudgeArms(source: string): ArmsReading {
   const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const checker = bindingChecker(file);
   const unread = new Set<string>();
   const statementOf = (node: ts.Node): ts.Node => (node.parent === undefined || ts.isSourceFile(node.parent) || ts.isBlock(node.parent) ? node : statementOf(node.parent));
   const refuse = (node: ts.Node, why: string): void => {
@@ -1117,53 +1169,84 @@ function readJudgeArms(source: string): ArmsReading {
   const unwrapped = (node: ts.Expression): ts.Expression => (isWrapper(node) ? unwrapped(node.expression) : node);
   const outer = (node: ts.Node): ts.Node => (node.parent !== undefined && isWrapper(node.parent) ? outer(node.parent) : node);
   const ownerOf = (node: ts.Node): ts.Node | undefined => (node.parent === undefined || ts.isFunctionLike(node.parent) ? node.parent : ownerOf(node.parent));
-  const bindNames = (name: ts.BindingName, into: Map<string, ts.Node[]>, declaration: ts.Node): void => {
-    if (ts.isIdentifier(name)) {
-      into.set(name.text, [...(into.get(name.text) ?? []), declaration]);
-      return;
+  // A TYPE POSITION: under a type node, except the operand of a class's extends clause or of an instantiation expression, a value
+  // evaluated at run time (TypeScript parses both as type nodes); an implements clause and an interface's extends clause stay types.
+  const inType = (node: ts.Node): boolean => {
+    const parent = node.parent;
+    if (parent === undefined) return false;
+    if (ts.isExpressionWithTypeArguments(parent) && parent.expression === node) {
+      const clause = parent.parent;
+      return ts.isHeritageClause(clause) && (clause.token === ts.SyntaxKind.ImplementsKeyword || ts.isInterfaceDeclaration(clause.parent));
     }
-    for (const element of name.elements) if (!ts.isOmittedExpression(element)) bindNames(element.name, into, declaration);
+    return ts.isTypeNode(parent) || inType(parent);
   };
-  const moduleBindings = new Map<string, ts.Node[]>();
-  for (const statement of file.statements) {
-    if ((ts.isFunctionDeclaration(statement) || ts.isClassDeclaration(statement) || ts.isEnumDeclaration(statement)) && statement.name !== undefined) bindNames(statement.name, moduleBindings, statement);
-    else if (ts.isVariableStatement(statement)) for (const declaration of statement.declarationList.declarations) bindNames(declaration.name, moduleBindings, declaration);
-  }
-  // Every binding anywhere inside a top-level function (its nested functions included), by name: a name bound twice is ambiguous.
-  const localBindings = new Map<ArmCallable, Map<string, ts.Node[]>>();
-  const localsOf = (scope: ArmCallable): Map<string, ts.Node[]> => {
-    const known = localBindings.get(scope);
-    if (known !== undefined) return known;
-    const locals = new Map<string, ts.Node[]>();
-    const walk = (node: ts.Node): void => {
-      if (ts.isVariableDeclaration(node) || ts.isParameter(node)) bindNames(node.name, locals, node);
-      else if ((ts.isFunctionDeclaration(node) || ts.isClassDeclaration(node)) && node.name !== undefined) bindNames(node.name, locals, node);
-      ts.forEachChild(node, walk);
-    };
-    for (const parameter of scope.parameters) walk(parameter);
-    if (scope.body !== undefined) walk(scope.body);
-    localBindings.set(scope, locals);
-    return locals;
+  // The symbol the checker binds a name to (for a shorthand property, its value's, never the property's own).
+  const symbolOf = (name: ts.Identifier): ts.Symbol | undefined =>
+    ts.isShorthandPropertyAssignment(name.parent) && name.parent.name === name ? checker.getShorthandAssignmentValueSymbol(name.parent) : checker.getSymbolAtLocation(name);
+  // The outermost function T-ARMS could enter around `node`, or undefined at module level.
+  const topOf = (node: ts.Node): ArmCallable | undefined => {
+    let top: ArmCallable | undefined;
+    for (let at = node.parent; at !== undefined; at = at.parent) {
+      if (ts.isFunctionDeclaration(at) || ts.isArrowFunction(at) || ts.isFunctionExpression(at)) top = at;
+    }
+    return top;
   };
-  const classify = (nodes: readonly ts.Node[] | undefined, scope: ArmCallable | undefined): ArmBinding | undefined => {
-    if (nodes === undefined || nodes.length === 0) return undefined;
-    const [only] = nodes;
-    if (nodes.length !== 1 || only === undefined) return { kind: "other" };
-    if (ts.isFunctionDeclaration(only) && only.body !== undefined && only.name !== undefined) return { kind: "callable", name: only.name.text, callable: only };
-    if (!ts.isVariableDeclaration(only) || !ts.isIdentifier(only.name) || only.initializer === undefined || (only.parent.flags & ts.NodeFlags.Const) === 0) return { kind: "other" };
+  const scopeOf = (callable: ArmCallable): ArmCallable => topOf(callable) ?? callable;
+  const classify = (declarations: readonly ts.Declaration[], name: string): ArmBinding => {
+    const [only] = declarations;
+    if (declarations.length !== 1 || only === undefined) return { kind: "other", name };
+    if (ts.isFunctionDeclaration(only) && only.body !== undefined) return only.asteriskToken === undefined ? { kind: "callable", name, callable: only } : { kind: "generator", name };
+    if (!ts.isVariableDeclaration(only) || !ts.isIdentifier(only.name) || only.initializer === undefined || (ts.getCombinedNodeFlags(only) & ts.NodeFlags.BlockScoped) !== ts.NodeFlags.Const) {
+      return { kind: "other", name };
+    }
     const value = unwrapped(only.initializer);
-    if (ts.isArrowFunction(value) || ts.isFunctionExpression(value)) return { kind: "callable", name: only.name.text, callable: value };
-    return { kind: "const", name: only.name.text, declared: only.name, initializer: only.initializer, scope };
+    if (ts.isArrowFunction(value) || ts.isFunctionExpression(value)) return value.asteriskToken === undefined ? { kind: "callable", name, callable: value } : { kind: "generator", name };
+    return { kind: "const", name, declared: only.name, initializer: only.initializer, scope: topOf(only) };
   };
-  // Lexical resolution: the top-level function's own bindings first, then the module's.
-  const resolve = (scope: ArmCallable | undefined, name: string): ArmBinding =>
-    (scope === undefined ? undefined : classify(localsOf(scope).get(name), scope)) ?? classify(moduleBindings.get(name), undefined) ?? { kind: "other" };
-  const scopeOf = (callable: ArmCallable): ArmCallable => {
-    let scope = callable;
-    for (let at: ts.Node | undefined = callable.parent; at !== undefined; at = at.parent) {
-      if (ts.isFunctionDeclaration(at) || ts.isArrowFunction(at) || ts.isFunctionExpression(at)) scope = at;
+  // Resolution: the one declaration the checker binds the reference to (a binding in a scope that does not enclose the reference is never it).
+  const resolve = (reference: ts.Identifier): ArmBinding => classify(symbolOf(reference)?.declarations ?? [], reference.text);
+  // A module-level name, resolved at its own declaration (judgeTsxRow and the shared W10 view).
+  const atModule = (name: string): ArmBinding => {
+    for (const statement of file.statements) {
+      if (ts.isFunctionDeclaration(statement) && statement.name?.text === name) return resolve(statement.name);
+      if (ts.isVariableStatement(statement)) {
+        for (const declaration of statement.declarationList.declarations) if (ts.isIdentifier(declaration.name) && declaration.name.text === name) return resolve(declaration.name);
+      }
     }
-    return scope;
+    return { kind: "other", name };
+  };
+  // The shared W10 view is the module-level SHARED_VIEW declaration itself: a function of another scope sharing its name is entered like any other.
+  const shared = atModule(SHARED_VIEW);
+  const isShared = (bound: ArmBinding): boolean => bound.kind === "callable" && shared.kind === "callable" && bound.callable === shared.callable;
+  // One walk of the file, in source order: every identifier by its text, and every call of the name eval refused (a direct eval
+  // can read and write any binding in scope).
+  const named = new Map<string, ts.Identifier[]>();
+  const index = (node: ts.Node): void => {
+    if (ts.isIdentifier(node)) {
+      const same = named.get(node.text);
+      if (same === undefined) named.set(node.text, [node]);
+      else same.push(node);
+    } else if (ts.isCallExpression(node)) {
+      const callee = unwrapped(node.expression);
+      if (ts.isIdentifier(callee) && callee.text === DIRECT_EVAL) refuse(node, "a direct eval, whose code T-ARMS does not read");
+    }
+    ts.forEachChild(node, index);
+  };
+  // Every reference the checker binds to the declaration `declared` names, inside `within` (type positions aside), in source order.
+  const referencesOf = (within: ts.Node, declared: ts.Identifier): ts.Identifier[] => {
+    const target = symbolOf(declared);
+    if (target === undefined) return [];
+    return (named.get(declared.text) ?? []).filter((node) => node !== declared && node.pos >= within.pos && node.end <= within.end && !inType(node) && symbolOf(node) === target);
+  };
+  // A function declaration T-ARMS enters is referenced anywhere in the file (type positions aside) only as the callee of a call:
+  // any other reference (an assignment, a value read) could rebind or hand out the function, so it is refused.
+  const vetted = new Set<ArmCallable>();
+  const vet = (callable: ArmCallable, name: string): void => {
+    if (!ts.isFunctionDeclaration(callable) || callable.name === undefined || vetted.has(callable)) return;
+    vetted.add(callable);
+    for (const reference of referencesOf(file, callable.name)) {
+      if (!ts.isCallExpression(reference.parent) || reference.parent.expression !== reference) refuse(reference, `the function ${name} referenced other than as the callee of a call`);
+    }
   };
   const returnsOf = (callable: ArmCallable): ts.Expression[] => {
     const body = callable.body;
@@ -1181,48 +1264,27 @@ function readJudgeArms(source: string): ArmsReading {
     ts.forEachChild(body, walk);
     return found;
   };
-  const inType = (node: ts.Node): boolean => node.parent !== undefined && (ts.isTypeNode(node.parent) || inType(node.parent));
-  const isReference = (name: ts.Identifier): boolean => {
-    const parent = name.parent;
-    if (
-      (ts.isPropertyAccessExpression(parent) ||
-        ts.isPropertyAssignment(parent) ||
-        ts.isPropertyDeclaration(parent) ||
-        ts.isPropertySignature(parent) ||
-        ts.isMethodDeclaration(parent) ||
-        ts.isMethodSignature(parent) ||
-        ts.isGetAccessorDeclaration(parent) ||
-        ts.isSetAccessorDeclaration(parent) ||
-        ts.isEnumMember(parent)) &&
-      parent.name === name
-    ) {
-      return false;
-    }
-    if ((ts.isQualifiedName(parent) && parent.right === name) || (ts.isBindingElement(parent) && parent.propertyName === name)) return false;
-    if (ts.isLabeledStatement(parent) || ts.isBreakOrContinueStatement(parent)) return false;
-    return !inType(name);
+  // Two expressions naming the same traced value: one binding, or one property of one binding.
+  const sameValue = (a: ts.Expression, b: ts.Expression): boolean => {
+    const x = unwrapped(a);
+    const y = unwrapped(b);
+    if (ts.isIdentifier(x) && ts.isIdentifier(y)) return symbolOf(x) !== undefined && symbolOf(x) === symbolOf(y);
+    return ts.isPropertyAccessExpression(x) && ts.isPropertyAccessExpression(y) && x.name.text === y.name.text && sameValue(x.expression, y.expression);
   };
-  const referencesOf = (scope: ArmCallable, name: string): ts.Identifier[] => {
-    const found: ts.Identifier[] = [];
-    const walk = (node: ts.Node): void => {
-      if (ts.isIdentifier(node) && node.text === name && isReference(node)) found.push(node);
-      ts.forEachChild(node, walk);
-    };
-    for (const parameter of scope.parameters) walk(parameter);
-    if (scope.body !== undefined) walk(scope.body);
-    return found;
-  };
-  // A use where a list leaves unchanged: spread (a copy), or returned (alone or as a returned object literal's property) by the
-  // function that declares it; a closure handing it out is an alias, never a return.
-  const flowsOut = (node: ts.Node, declared: ts.Node): boolean => {
+  // A use where a list leaves unchanged: spread (a copy), or returned by the function that declares it - alone, or as the value of
+  // the one member of a returned object literal that carries it (a second member carrying it is an alias); a closure handing it
+  // out is an alias, never a return.
+  const flowsOut = (node: ts.Expression, declared: ts.Node): boolean => {
     const at = outer(node);
     const parent = at.parent;
     if (ts.isSpreadElement(parent)) return true;
     const own = (returned: ts.Node): boolean => ownerOf(returned) === ownerOf(declared);
     if (ts.isReturnStatement(parent) || (ts.isArrowFunction(parent) && parent.body === at)) return own(at);
-    const property = (ts.isShorthandPropertyAssignment(parent) && parent.name === at) || (ts.isPropertyAssignment(parent) && parent.initializer === at) ? parent : undefined;
-    const object = property === undefined ? undefined : outer(property.parent);
-    return object !== undefined && (ts.isReturnStatement(object.parent) || (ts.isArrowFunction(object.parent) && object.parent.body === object)) && own(object);
+    const member = (ts.isShorthandPropertyAssignment(parent) && parent.name === at) || (ts.isPropertyAssignment(parent) && parent.initializer === at) ? parent : undefined;
+    const object = member === undefined ? undefined : outer(member.parent);
+    if (member === undefined || object === undefined || !(ts.isReturnStatement(object.parent) || (ts.isArrowFunction(object.parent) && object.parent.body === object)) || !own(object)) return false;
+    const carriers = member.parent.properties.filter((other) => (ts.isShorthandPropertyAssignment(other) && sameValue(other.name, node)) || (ts.isPropertyAssignment(other) && sameValue(other.initializer, node)));
+    return carriers.length === 1;
   };
   const leaves = new Map<ts.Node, { key: readonly number[]; literal: ts.StringLiteral | ts.NoSubstitutionTemplateLiteral | ts.TemplateExpression }>();
   const before = (a: readonly number[], b: readonly number[]): number => {
@@ -1233,9 +1295,13 @@ function readJudgeArms(source: string): ArmsReading {
     return a.length - b.length;
   };
   const visiting = new Set<ts.Node>();
-  const enter = (scope: ArmCallable | undefined, call: ts.CallExpression, callee: ts.Identifier, path: readonly number[], chain: readonly ArmCallable[], next: ArmFlow): void => {
-    const bound = resolve(scope, callee.text);
-    if (bound.kind !== "callable" || bound.name === SHARED_VIEW) {
+  const enter = (call: ts.CallExpression, callee: ts.Identifier, path: readonly number[], chain: readonly ArmCallable[], next: ArmFlow): void => {
+    const bound = resolve(callee);
+    if (bound.kind === "generator") {
+      refuse(call, `a call of ${callee.text}, a generator function T-ARMS does not enter`);
+      return;
+    }
+    if (bound.kind !== "callable" || isShared(bound)) {
       refuse(call, `a call of ${callee.text}, not a function of this file T-ARMS enters`);
       return;
     }
@@ -1243,9 +1309,10 @@ function readJudgeArms(source: string): ArmsReading {
       refuse(call, `a recursive diagnosis flow through ${bound.name}`);
       return;
     }
+    vet(bound.callable, bound.name);
     for (const returned of returnsOf(bound.callable)) next(scopeOf(bound.callable), returned, [...path, call.getStart(file)], [...chain, bound.callable]);
   };
-  // A const list: its initializer, plus the arguments of every push() and unshift() on it; any other use is unread.
+  // A const list: its initializer, plus the arguments of every push() and unshift() on it; any other use but a flow out is unread.
   const variable = (scope: ArmCallable, bound: Extract<ArmBinding, { kind: "const" }>, path: readonly number[], chain: readonly ArmCallable[]): void => {
     if (visiting.has(bound.declared)) {
       refuse(bound.declared, `the diagnosis list ${bound.name} read inside its own flow`);
@@ -1253,8 +1320,7 @@ function readJudgeArms(source: string): ArmsReading {
     }
     visiting.add(bound.declared);
     list(scope, bound.initializer, path, chain);
-    for (const reference of referencesOf(scope, bound.name)) {
-      if (reference === bound.declared) continue;
+    for (const reference of referencesOf(scope, bound.declared)) {
       const access = reference.parent;
       const call = ts.isPropertyAccessExpression(access) && access.expression === reference && ARM_ADDERS.includes(access.name.text) ? access.parent : undefined;
       if (call !== undefined && ts.isCallExpression(call) && call.expression === access) {
@@ -1272,21 +1338,20 @@ function readJudgeArms(source: string): ArmsReading {
   // property of each of the callee's returned object literals. The holder is used only as the object of property reads, and
   // the property itself only where it flows out unchanged.
   const held = (scope: ArmCallable | undefined, access: ts.PropertyAccessExpression, holderName: ts.Identifier, path: readonly number[], chain: readonly ArmCallable[]): void => {
-    const holder = resolve(scope, holderName.text);
+    const holder = resolve(holderName);
     const value = holder.kind === "const" && scope !== undefined && holder.scope === scope ? unwrapped(holder.initializer) : undefined;
-    const callee = value !== undefined && ts.isCallExpression(value) && ts.isIdentifier(value.expression) ? resolve(scope, value.expression.text) : undefined;
+    const callee = value !== undefined && ts.isCallExpression(value) && ts.isIdentifier(value.expression) ? resolve(value.expression) : undefined;
     if (holder.kind !== "const" || scope === undefined || value === undefined || callee?.kind !== "callable") {
       refuse(access, "a diagnosis list read from a value T-ARMS does not trace");
       return;
     }
     const property = access.name.text;
-    for (const reference of referencesOf(scope, holder.name)) {
-      if (reference === holder.declared) continue;
+    for (const reference of referencesOf(scope, holder.declared)) {
       const read = reference.parent;
       if (!ts.isPropertyAccessExpression(read) || read.expression !== reference) refuse(reference, `the value ${holder.name} carrying a diagnosis list used outside a property read`);
       else if (read.name.text === property && !flowsOut(read, holder.declared)) refuse(read, `the diagnosis list ${holder.name}.${property} used outside the forms T-ARMS reads`);
     }
-    if (callee.name === SHARED_VIEW) {
+    if (isShared(callee)) {
       if (property !== "findings") refuse(access, `the shared W10 view's ${property} read as a diagnosis list`);
       return;
     }
@@ -1294,15 +1359,19 @@ function readJudgeArms(source: string): ArmsReading {
       refuse(access, `a recursive diagnosis flow through ${callee.name}`);
       return;
     }
+    vet(callee.callable, callee.name);
     for (const returned of returnsOf(callee.callable)) {
       const object = unwrapped(returned);
       const members: readonly ts.ObjectLiteralElementLike[] | undefined = ts.isObjectLiteralExpression(object) ? [...object.properties] : undefined;
+      // Identifier-named property and shorthand assignments only: a spread, a computed or literal name, a method or an accessor can
+      // put another value under the property.
+      const plain = members?.every((member) => (ts.isPropertyAssignment(member) || ts.isShorthandPropertyAssignment(member)) && ts.isIdentifier(member.name)) === true;
       const matches: Array<ts.PropertyAssignment | ts.ShorthandPropertyAssignment> = [];
       for (const member of members ?? []) {
         if ((ts.isPropertyAssignment(member) || ts.isShorthandPropertyAssignment(member)) && ts.isIdentifier(member.name) && member.name.text === property) matches.push(member);
       }
       const [match] = matches;
-      if (members === undefined || members.some((member) => ts.isSpreadAssignment(member)) || matches.length !== 1 || match === undefined) {
+      if (!plain || matches.length !== 1 || match === undefined) {
         refuse(returned, `a return of ${callee.name} that does not carry exactly one ${property}`);
         continue;
       }
@@ -1323,9 +1392,9 @@ function readJudgeArms(source: string): ArmsReading {
       list(scope, expression.whenTrue, path, chain);
       list(scope, expression.whenFalse, path, chain);
     } else if (ts.isCallExpression(expression) && ts.isIdentifier(expression.expression)) {
-      enter(scope, expression, expression.expression, path, chain, list);
+      enter(expression, expression.expression, path, chain, list);
     } else if (ts.isIdentifier(expression)) {
-      const bound = resolve(scope, expression.text);
+      const bound = resolve(expression);
       if (bound.kind === "const" && scope !== undefined && bound.scope === scope) variable(scope, bound, path, chain);
       else refuse(expression, `a diagnosis list ${expression.text} that is not a const of the function returning it`);
     } else if (ts.isPropertyAccessExpression(expression) && ts.isIdentifier(expression.expression)) {
@@ -1334,7 +1403,7 @@ function readJudgeArms(source: string): ArmsReading {
       refuse(expression, "a diagnosis list in a form T-ARMS does not trace");
     }
   };
-  // One diagnosis: a string, no-substitution template or template literal (an arm), a conditional of diagnoses, a const (of the
+  // One diagnosis: a string, no-substitution template or template literal (an arm), a conditional of diagnoses, a const (of a
   // function or the module) whose initializer is one, or a call of a function T-ARMS enters (each of its returns one).
   const item: ArmFlow = (scope, node, path, chain) => {
     const expression = unwrapped(node);
@@ -1348,18 +1417,23 @@ function readJudgeArms(source: string): ArmsReading {
       item(scope, expression.whenTrue, path, chain);
       item(scope, expression.whenFalse, path, chain);
     } else if (ts.isIdentifier(expression)) {
-      const bound = resolve(scope, expression.text);
+      const bound = resolve(expression);
       if (bound.kind === "const") item(bound.scope, bound.initializer, [...path, expression.getStart(file)], chain);
       else refuse(expression, `a diagnosis read from ${expression.text}, which is not a const value`);
     } else if (ts.isCallExpression(expression) && ts.isIdentifier(expression.expression)) {
-      enter(scope, expression, expression.expression, path, chain, item);
+      enter(expression, expression.expression, path, chain, item);
     } else {
       refuse(expression, "a diagnosis in a form T-ARMS does not read");
     }
   };
-  const judge = resolve(undefined, "judgeTsxRow");
-  if (judge.kind === "callable") for (const returned of returnsOf(judge.callable)) list(scopeOf(judge.callable), returned, [], [judge.callable]);
-  else refuse(file, "no judgeTsxRow function");
+  index(file);
+  const judge = atModule("judgeTsxRow");
+  if (judge.kind === "callable") {
+    vet(judge.callable, judge.name);
+    for (const returned of returnsOf(judge.callable)) list(scopeOf(judge.callable), returned, [], [judge.callable]);
+  } else {
+    refuse(file, "no judgeTsxRow function");
+  }
   const arms = [...leaves.values()]
     .sort((a, b) => before(a.key, b.key))
     .map(({ literal }) => {
@@ -2576,6 +2650,7 @@ type TsxOp =
   | "inner"
   | "cased"
   | "padded"
+  | "indented"
   | "duplicated";
 /** A TSX pin: refused with exactly its findings, each whole and in order, or accepted: neutral by design (a value R9's shape admits) or a named residual. */
 type TsxPin = { op: TsxOp; reading: "refused"; causes: readonly [string, ...string[]] } | { op: TsxOp; reading: "neutral" | "residual" };
@@ -2587,11 +2662,12 @@ interface TsxRow {
   pins: readonly TsxPin[];
 }
 
-/** TS6's near names (wb-m14y, the wb-ojur gate's F2 J-g3): six RF-TSX-RECEIPT row names, each one a comparison weaker than
- * exact membership in the R9 pair would accept: an R9 name with text after it (a prefix match) or before it (a suffix match),
- * a proper prefix and a proper suffix of an R9 name (the two reverse matches), an R9 name in another case (a case-folded
- * match) and one with trailing white space (a trimmed match). */
-const TSX_NEAR_NAMES = { extended: "success-retry", prefixed: "pre-success", truncated: "runtime", inner: "absent", cased: "Success", padded: "success " } as const;
+/** TS6's near names (wb-m14y, the wb-ojur gate's F2 J-g3, and the wb-m14y gate's F1 G4): seven RF-TSX-RECEIPT row names, each
+ * one a comparison weaker than exact membership in the R9 pair would accept: an R9 name with text after it (a prefix match) or
+ * before it (a suffix match), a proper prefix and a proper suffix of an R9 name (the two reverse matches), an R9 name in
+ * another case (a case-folded match), one with trailing white space (a trimmed match) and one with leading white space (a
+ * start-trimmed match). */
+const TSX_NEAR_NAMES = { extended: "success-retry", prefixed: "pre-success", truncated: "runtime", inner: "absent", cased: "Success", padded: "success ", indented: " success" } as const;
 
 /** TSX ROWS (wb-693.7), one per refused site of the binding in T-ANCHOR's order, then the named residuals. */
 const TSX_ROWS: readonly TsxRow[] = [
@@ -2752,6 +2828,7 @@ const TSX_STRUCTURE_ROWS: readonly TsxRow[] = [
       { op: "inner", reading: "refused", causes: ["receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"absent\", outside the R9 pair"] },
       { op: "cased", reading: "refused", causes: ["receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"Success\", outside the R9 pair"] },
       { op: "padded", reading: "refused", causes: ["receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"success \", outside the R9 pair"] },
+      { op: "indented", reading: "refused", causes: ["receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \" success\", outside the R9 pair"] },
     ],
   },
   {
@@ -2789,9 +2866,11 @@ interface ArmForm {
 /** The unread reason of a list T-ARMS traces used outside the forms it reads (FAIL CLOSED). */
 const UNREAD_LIST_USE = "the diagnosis list findings used outside the forms T-ARMS reads";
 
-/** T-ARMS-FORMS (wb-m14y): AF rows are diagnosis forms the flow reading reads as arms (AF2-AF6 are the gate's IP-E1 to IP-E5,
- * AF1/AF7/AF8 the landed forms IP-A1 to IP-A3, AF16 its IP-K1 re-annotation), AU rows are forms it refuses as unread (fail
- * closed), AR1 is the named residual pinned quiet: a standard-library method replaced outside the judge is never read. */
+/** T-ARMS-FORMS (wb-m14y): AF rows are forms the flow reading reads, as arms or as the live reading unchanged (AF2-AF6 are the
+ * wb-ojur gate's IP-E1 to IP-E5, AF1/AF7/AF8 the landed forms IP-A1 to IP-A3, AF16 its IP-K1 re-annotation; AF17 and AF18 are
+ * this bead's gate's G2 and G2b), AU rows are forms it refuses as unread, each with its FAIL CLOSED reason (AU27 and AU28 are
+ * the gate's G1 and G1b), AR1 is the named residual pinned quiet: a standard-library method replaced outside the judge is never
+ * read. */
 const ARM_FORMS: readonly ArmForm[] = [
   { id: "AF1", label: "a string pushed in judgeTsxRow (IP-A1)", into: "judgeTsxRow", code: 'findings.push("probe AF1");', at: "end", added: ["^probe AF1$"], unread: [] },
   { id: "AF2", label: "a push in tsxReceiptView, whose declared return is an object (IP-E1)", into: "tsxReceiptView", code: 'findings.push("probe AF2");', at: 6, added: ["^probe AF2$"], unread: [] },
@@ -2816,8 +2895,55 @@ const ARM_FORMS: readonly ArmForm[] = [
   { id: "AF12", label: "a conditional of two strings", into: "judgeTsxRow", code: 'findings.push(cmd === "" ? "probe AF12 when" : "probe AF12 otherwise");', at: "end", added: ["^probe AF12 when$", "^probe AF12 otherwise$"], unread: [] },
   { id: "AF13", label: "a push inside a callback", into: "judgeTsxRow", code: '[cmd].forEach(() => findings.push("probe AF13"));', at: "end", added: ["^probe AF13$"], unread: [] },
   { id: "AF14", label: "a local const list spread into a push", into: "judgeTsxRow", code: 'const probe_AF14 = ["probe AF14"];\n  findings.push(...probe_AF14);', at: "end", added: ["^probe AF14$"], unread: [] },
-  { id: "AF15", label: "a local helper shadowing a reached one is the one read (lexical resolution)", into: "judgeTsxRow", code: 'const tsxRecordFindings = (): string[] => ["probe AF15"];', at: 19, added: ["^probe AF15$"], drops: 5, unread: [] },
+  { id: "AF15", label: "a local helper shadowing a reached one in the scope of its call is the one read (the checker's lexical binding)", into: "judgeTsxRow", code: 'const tsxRecordFindings = (): string[] => ["probe AF15"];', at: 19, added: ["^probe AF15$"], drops: 5, unread: [] },
   { id: "AF16", label: "the declared return type is not read (IP-K1: tsxRowFindings re-annotated readonly string[])", into: "tsxRowFindings", retype: "readonly string[]", at: 0, added: [], unread: [] },
+  {
+    id: "AF17",
+    label: "a module-level helper the judge calls is read although a same-named const sits in a closure that does not enclose the call (the wb-m14y gate's G2)",
+    into: "judgeTsxRow",
+    declaration: 'function probe_AF17(): string[] {\n  return ["probe AF17"];\n}',
+    code: "findings.push(...probe_AF17());\n  const probe_AF17_scope = (): number => {\n    const probe_AF17 = (): string[] => [];\n    return probe_AF17().length;\n  };\n  void probe_AF17_scope;",
+    at: "end",
+    added: ["^probe AF17$"],
+    unread: [],
+  },
+  {
+    id: "AF18",
+    label: "a same-named copy of a reached helper in a closure that does not enclose its call leaves the reached helper read (the wb-m14y gate's G2b)",
+    into: "judgeTsxRow",
+    code: 'const probe_AF18_scope = (): number => {\n    function tsxRecordFindings(): string[] {\n      return ["probe AF18"];\n    }\n    return tsxRecordFindings().length;\n  };\n  void probe_AF18_scope;',
+    at: 0,
+    added: [],
+    unread: [],
+  },
+  {
+    id: "AF19",
+    label: "a const named like the shared W10 view, declared in a helper's own scope, is entered like any other function",
+    into: "judgeTsxRow",
+    declaration: 'function probe_AF19(): string[] {\n  const w10View = (): { findings: string[] } => ({ findings: ["probe AF19"] });\n  const shadowed = w10View();\n  return [...shadowed.findings];\n}',
+    code: "findings.push(...probe_AF19());",
+    at: "end",
+    added: ["^probe AF19$"],
+    unread: [],
+  },
+  {
+    id: "AF20",
+    label: "a reached helper named in a type position (typeof) leaves the reading unchanged",
+    into: "judgeTsxRow",
+    code: "const probe_AF20: ReturnType<typeof tsxRecordFindings> = [];\n  void probe_AF20;",
+    at: 0,
+    added: [],
+    unread: [],
+  },
+  {
+    id: "AF21",
+    label: "a push inside a class's extends expression is read (a value evaluated at run time, never a type position)",
+    into: "judgeTsxRow",
+    code: 'class probe_AF21 extends (findings.push("probe AF21"), Object) {}\n  void probe_AF21;',
+    at: "end",
+    added: ["^probe AF21$"],
+    unread: [],
+  },
   { id: "AU1", label: "a splice", into: "judgeTsxRow", code: 'findings.splice(0, 0, "probe AU1");', at: 0, added: [], unread: [UNREAD_LIST_USE] },
   { id: "AU2", label: "an element write", into: "judgeTsxRow", code: 'findings[findings.length] = "probe AU2";', at: 0, added: [], unread: [UNREAD_LIST_USE] },
   { id: "AU3", label: "an alias", into: "judgeTsxRow", code: 'const probe_AU3 = findings;\n  probe_AU3.push("probe AU3");', at: 0, added: [], unread: [UNREAD_LIST_USE] },
@@ -2887,7 +3013,7 @@ const ARM_FORMS: readonly ArmForm[] = [
   { id: "AU22", label: "the list spread into itself", into: "judgeTsxRow", code: "findings.push(...findings);", at: 0, added: [], unread: ["the diagnosis list findings read inside its own flow"] },
   {
     id: "AU23",
-    label: "a parameter shadowing a module-level const string (lexical resolution)",
+    label: "a parameter shadowing a module-level const string (the checker's lexical binding)",
     into: "judgeTsxRow",
     declaration: 'const PROBE_AU23 = "probe AU23";\nfunction probe_AU23(PROBE_AU23: string): string[] {\n  return [PROBE_AU23];\n}',
     code: 'findings.push(...probe_AU23("x"));',
@@ -2915,6 +3041,148 @@ const ARM_FORMS: readonly ArmForm[] = [
     at: 0,
     added: [],
     unread: ["a return of probe_AU26 that does not carry exactly one findings"],
+  },
+  {
+    id: "AU27",
+    label: "a generator helper whose diagnosis leaves through yield (the wb-m14y gate's G1)",
+    into: "judgeTsxRow",
+    declaration: 'function* probe_AU27(): Generator<string> {\n  yield "probe AU27";\n}',
+    code: "findings.push(...probe_AU27());",
+    at: 0,
+    added: [],
+    unread: ["a call of probe_AU27, a generator function T-ARMS does not enter"],
+  },
+  {
+    id: "AU28",
+    label: "a generator helper whose diagnosis leaves through yield*, spread twice (the wb-m14y gate's G1b)",
+    into: "judgeTsxRow",
+    declaration: 'function* probe_AU28(): Generator<string> {\n  yield* ["probe AU28"];\n}',
+    code: "findings.push(...[...probe_AU28()]);",
+    at: 0,
+    added: [],
+    unread: ["a call of probe_AU28, a generator function T-ARMS does not enter"],
+  },
+  {
+    id: "AU29",
+    label: "a const bound to a generator function expression",
+    into: "judgeTsxRow",
+    declaration: 'const probe_AU29 = function* (): Generator<string> {\n  yield "probe AU29";\n};',
+    code: "findings.push(...probe_AU29());",
+    at: 0,
+    added: [],
+    unread: ["a call of probe_AU29, a generator function T-ARMS does not enter"],
+  },
+  {
+    id: "AU30",
+    label: "a list carried by two members of a returned object literal, one of them written through",
+    into: "judgeTsxRow",
+    declaration: "function probe_AU30(): { findings: string[]; alias: string[] } {\n  const findings: string[] = [];\n  return { findings, alias: findings };\n}",
+    code: 'const probe_AU30_read = probe_AU30();\n  probe_AU30_read.alias.push("probe AU30");\n  findings.push(...probe_AU30_read.findings);',
+    at: 0,
+    added: [],
+    unread: [UNREAD_LIST_USE],
+  },
+  {
+    id: "AU31",
+    label: "a direct eval, which can write any binding in scope",
+    into: "judgeTsxRow",
+    code: `${DIRECT_EVAL}("0");`,
+    at: 0,
+    added: [],
+    unread: ["a direct eval, whose code T-ARMS does not read"],
+  },
+  {
+    id: "AU32",
+    label: "a reached helper referenced other than as a callee (reassigned)",
+    into: "judgeTsxRow",
+    code: 'tsxRecordFindings = (): string[] => ["probe AU32"];',
+    at: 0,
+    added: [],
+    unread: ["the function tsxRecordFindings referenced other than as the callee of a call"],
+  },
+  {
+    id: "AU33",
+    label: "a call of the shared W10 view in a list position",
+    into: "judgeTsxRow",
+    code: "findings.push(...w10View(page));",
+    at: 0,
+    added: [],
+    unread: ["a call of w10View, not a function of this file T-ARMS enters"],
+  },
+  {
+    id: "AU34",
+    label: "a property of the shared W10 view other than its findings",
+    into: "judgeTsxRow",
+    code: "findings.push(...view.probe_AU34);",
+    at: 0,
+    added: [],
+    unread: ["the shared W10 view's probe_AU34 read as a diagnosis list"],
+  },
+  {
+    id: "AU35",
+    label: "a hole in a diagnosis list",
+    into: "judgeTsxRow",
+    code: "findings.push(...[,]);",
+    at: 0,
+    added: [],
+    unread: ["a hole in a diagnosis list"],
+  },
+  {
+    id: "AU36",
+    label: "a helper with an overload signature (a name with two declarations)",
+    into: "judgeTsxRow",
+    declaration: 'function probe_AU36(): string[];\nfunction probe_AU36(flag?: boolean): string[] {\n  return flag === true ? [] : ["probe AU36"];\n}',
+    code: "findings.push(...probe_AU36());",
+    at: 0,
+    added: [],
+    unread: ["a call of probe_AU36, not a function of this file T-ARMS enters"],
+  },
+  {
+    id: "AU37",
+    label: "a destructured const diagnosis",
+    into: "judgeTsxRow",
+    code: 'const [probe_AU37] = ["probe AU37"];\n  findings.push(probe_AU37);',
+    at: 0,
+    added: [],
+    unread: ["a diagnosis read from probe_AU37, which is not a const value"],
+  },
+  {
+    id: "AU38",
+    label: "a return without a value",
+    into: "judgeTsxRow",
+    declaration: "function probe_AU38(): string[] {\n  return;\n}",
+    code: "findings.push(...probe_AU38());",
+    at: 0,
+    added: [],
+    unread: ["a return without a value"],
+  },
+  {
+    id: "AU39",
+    label: "a returned object literal with a computed member",
+    into: "judgeTsxRow",
+    declaration: 'function probe_AU39(): { findings: string[] } {\n  const findings: string[] = [];\n  return { findings, ["findings"]: ["probe AU39"] };\n}',
+    code: "const probe_AU39_read = probe_AU39();\n  findings.push(...probe_AU39_read.findings);",
+    at: 0,
+    added: [],
+    unread: ["a return of probe_AU39 that does not carry exactly one findings"],
+  },
+  {
+    id: "AU40",
+    label: "a property read as a list from a const not bound to a call",
+    into: "judgeTsxRow",
+    code: 'const probe_AU40 = { findings: ["probe AU40"] };\n  findings.push(...probe_AU40.findings);',
+    at: 0,
+    added: [],
+    unread: ["a diagnosis list read from a value T-ARMS does not trace"],
+  },
+  {
+    id: "AU41",
+    label: "a reached helper rebound inside a class's extends expression (a value, never a type position)",
+    into: "judgeTsxRow",
+    code: "class probe_AU41 extends ((tsxRecordFindings = (): string[] => []), Object) {}\n  void probe_AU41;",
+    at: 0,
+    added: [],
+    unread: ["the function tsxRecordFindings referenced other than as the callee of a call"],
   },
   {
     id: "AR1",
@@ -3118,7 +3386,8 @@ function tsxEdit(row: TsxRow, op: TsxOp): { page?: (source: string) => string; r
     case "entry:row-name/truncated":
     case "entry:row-name/inner":
     case "entry:row-name/cased":
-    case "entry:row-name/padded": {
+    case "entry:row-name/padded":
+    case "entry:row-name/indented": {
       const name = Object.entries(TSX_NEAR_NAMES).find(([near]) => near === op)?.[1];
       if (name === undefined) throw new Error(`mutant authoring: no TS6 near name for ${op}`);
       return { receipt: afterTsxLine("runtime-absent", () => `- \`${TSX_MARK}"row":${JSON.stringify(name)},"category":"unavailable"}\``) };
@@ -3712,12 +3981,12 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
           ran++;
         }
       }
-      expect(ran).toBe(13);
+      expect(ran).toBe(14);
     });
 
-    it("T-ARMS (outside anchor, the judge's own arms, read along its diagnosis flow and fail closed): no construct on the judge's diagnosis flow is unread, every diagnosis the TSX-era judge can emit is drawn by a refused pin, each finding reads as one arm or the shared W10 view, and the TS rows are exactly the arms no T row draws, in the judge's order", () => {
+    it("T-ARMS (outside anchor, the judge's own arms, read along its diagnosis flow with the header's FAIL CLOSED refusals): the reading holds no unread entry, every arm it reads is drawn by a refused pin, each finding reads as one arm or the shared W10 view, and the TS rows are exactly the arms no T row draws, in the judge's order", () => {
       const reading = readJudgeArms(readText(SELF));
-      expect(reading.unread, "every construct on the judge's diagnosis flow is one T-ARMS reads (FAIL CLOSED)").toEqual([]);
+      expect(reading.unread, "the reading holds no FAIL CLOSED refusal").toEqual([]);
       const arms = reading.arms.map((arm) => arm.pattern);
       expect(arms.length).toBeGreaterThan(0);
       const drawnBy = (rows: readonly TsxRow[]): string[][] =>
@@ -3742,7 +4011,7 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
       expect(arms.filter((arm) => !drawn.has(arm.source)).map((arm) => arm.source)).toEqual([]);
     }, 60_000);
 
-    it("T-ARMS-FORMS (wb-m14y, the wb-ojur gate's F1): each probe written into the judge's source reads back as its frozen reading - the arms it adds where the judge's order puts them, the live arms it takes out of reach, and each unread entry it raises, in order", () => {
+    it("T-ARMS-FORMS (wb-m14y, the wb-ojur gate's F1 and this bead's gate's U1): each probe written into the judge's source reads back as its frozen reading - the arms it adds where the judge's order puts them, the live arms it takes out of reach, and each unread entry it raises, in order", () => {
       const source = readText(SELF);
       const sources = readJudgeArms(source).arms.map((arm) => arm.pattern.source);
       expect(sources).toHaveLength(26);
@@ -3760,7 +4029,9 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
         ).toEqual(form.unread);
         ran++;
       }
-      expect(ran).toBe(43);
+      expect(ran).toBe(63);
+      const bare = readJudgeArms("");
+      expect([bare.arms.length, ...bare.unread.map((entry) => entry.slice(0, entry.indexOf(" (line ")))], "a source with no judgeTsxRow").toEqual([0, "no judgeTsxRow function"]);
     }, 120_000);
 
     it("T-ARMS-ANCHORED (wb-m14y, the wb-ojur gate's F3 A4): every arm reads a sample built from its literal pieces with a line break inside every substitution, and no arm reads that sample with one character before its literal head or after its literal tail", () => {
@@ -3849,30 +4120,31 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
       expect(TSX_STRUCTURE_ROWS).toHaveLength(7);
       expect(TSX_STRUCTURE_ROWS.map((row) => row.id)).toEqual(["TS1", "TS2", "TS3", "TS4", "TS5", "TS6", "TS7"]);
       expect(TSX_STRUCTURE_ROWS.filter((row) => row.pins.length === 0).map((row) => row.id), "every structure row keeps at least one pin").toEqual([]);
-      expect(TSX_STRUCTURE_ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(["TS1:1", "TS2:1", "TS3:1", "TS4:1", "TS5:1", "TS6:7", "TS7:1"]);
+      expect(TSX_STRUCTURE_ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(["TS1:1", "TS2:1", "TS3:1", "TS4:1", "TS5:1", "TS6:8", "TS7:1"]);
       expect(TSX_STRUCTURE_ROWS.map((row) => `${row.id} ${row.site} | ${row.label}: ${row.pins.map(tsxPinShape).join("; ")}`)).toEqual([
         "TS1 page:evidence-cell | the W10 claim row's Evidence cell the sentence is read from: unreadable refused: the W10 section holds 0 tables, not exactly its one committed table | the W10 claim row is not inside the W10 section | the W10 claim row's Evidence cell cannot be read, so no TSX-era receipt sentence is judged",
         "TS2 receipt:file | the receipt file the sentence names: absent refused: the TSX-era receipt sentence cites receipts/wb-693.7.md but that receipt file does not exist",
         "TS3 receipt:html | raw HTML anywhere in the TSX receipt: html refused: receipts/wb-693.7.md holds raw HTML \"<div hidden>\\n- `RF-TSX-RECEIPT {\\\"row\\\":\\\"success\\\",\\\"cli_version\" that can hide rendered text (only complete comments are admitted here)",
         "TS4 entry:marks | the RF-TSX-RECEIPT lines the receipt renders: unmarked refused: receipts/wb-693.7.md renders no RF-TSX-RECEIPT line",
         "TS5 entry:line-json | one RF-TSX-RECEIPT line's JSON object: malformed refused: receipts/wb-693.7.md: an RF-TSX-RECEIPT line of its newest TSX entry is not one JSON object",
-        "TS6 entry:row-name | an RF-TSX-RECEIPT row named outside the R9 pair, and one name per weaker comparison (TSX_NEAR_NAMES): foreign refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"partial\", outside the R9 pair; extended refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"success-retry\", outside the R9 pair; prefixed refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"pre-success\", outside the R9 pair; truncated refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"runtime\", outside the R9 pair; inner refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"absent\", outside the R9 pair; cased refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"Success\", outside the R9 pair; padded refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"success \", outside the R9 pair",
+        "TS6 entry:row-name | an RF-TSX-RECEIPT row named outside the R9 pair, and one name per weaker comparison (TSX_NEAR_NAMES): foreign refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"partial\", outside the R9 pair; extended refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"success-retry\", outside the R9 pair; prefixed refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"pre-success\", outside the R9 pair; truncated refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"runtime\", outside the R9 pair; inner refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"absent\", outside the R9 pair; cased refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"Success\", outside the R9 pair; padded refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"success \", outside the R9 pair; indented refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \" success\", outside the R9 pair",
         "TS7 entry:row-count | the R9 pair's one line per row: duplicated refused: receipts/wb-693.7.md: its newest TSX entry renders 2 success rows, not exactly one",
       ]);
-      expect([SELF, SHARED_VIEW, TSX_ROSTER_CLAUSE_ALL.source, ...ARM_ADDERS, UNREAD_LIST_USE, JSON.stringify(TSX_NEAR_NAMES)]).toEqual([
+      expect([SELF, SHARED_VIEW, DIRECT_EVAL, TSX_ROSTER_CLAUSE_ALL.source, ...ARM_ADDERS, UNREAD_LIST_USE, JSON.stringify(TSX_NEAR_NAMES)]).toEqual([
         "test/workbench-w10-stamped-claim-guard.test.ts",
         "w10View",
+        "eval",
         "test\\/workbench-w10-stamped-claim-guard\\.test\\.ts pins it whole and binds it to this entry \\(TSX-ERA RECEIPT ROW, rows T0 to T([0-9]+)\\)",
         "push",
         "unshift",
         "the diagnosis list findings used outside the forms T-ARMS reads",
-        '{"extended":"success-retry","prefixed":"pre-success","truncated":"runtime","inner":"absent","cased":"Success","padded":"success "}',
+        '{"extended":"success-retry","prefixed":"pre-success","truncated":"runtime","inner":"absent","cased":"Success","padded":"success ","indented":" success"}',
       ]);
     });
 
     it("U3 (EACH-LIVENESS) and FORMS-SHAPE (standing rule 16 frozen shape): the T-ARMS-FORMS and T-ROSTER-RENDERED tables hold exactly their named rows, each with its frozen probe and reading", () => {
-      expect(ARM_FORMS).toHaveLength(43);
-      expect(ARM_FORMS.map((form) => form.id)).toEqual(["AF1", "AF2", "AF3", "AF4", "AF5", "AF6", "AF7", "AF8", "AF9", "AF10", "AF11", "AF12", "AF13", "AF14", "AF15", "AF16", "AU1", "AU2", "AU3", "AU4", "AU5", "AU6", "AU7", "AU8", "AU9", "AU10", "AU11", "AU12", "AU13", "AU14", "AU15", "AU16", "AU17", "AU18", "AU19", "AU20", "AU21", "AU22", "AU23", "AU24", "AU25", "AU26", "AR1"]);
+      expect(ARM_FORMS).toHaveLength(63);
+      expect(ARM_FORMS.map((form) => form.id)).toEqual(["AF1", "AF2", "AF3", "AF4", "AF5", "AF6", "AF7", "AF8", "AF9", "AF10", "AF11", "AF12", "AF13", "AF14", "AF15", "AF16", "AF17", "AF18", "AF19", "AF20", "AF21", "AU1", "AU2", "AU3", "AU4", "AU5", "AU6", "AU7", "AU8", "AU9", "AU10", "AU11", "AU12", "AU13", "AU14", "AU15", "AU16", "AU17", "AU18", "AU19", "AU20", "AU21", "AU22", "AU23", "AU24", "AU25", "AU26", "AU27", "AU28", "AU29", "AU30", "AU31", "AU32", "AU33", "AU34", "AU35", "AU36", "AU37", "AU38", "AU39", "AU40", "AU41", "AR1"]);
       expect(ARM_FORMS.map(armFormShape)).toEqual([
         "AF1 a string pushed in judgeTsxRow (IP-A1) [judgeTsxRow]: \"\" + \"findings.push(\\\"probe AF1\\\");\" -> +^probe AF1$ at end, -0; unread none",
         "AF2 a push in tsxReceiptView, whose declared return is an object (IP-E1) [tsxReceiptView]: \"\" + \"findings.push(\\\"probe AF2\\\");\" -> +^probe AF2$ at 6, -0; unread none",
@@ -3888,8 +4160,13 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
         "AF12 a conditional of two strings [judgeTsxRow]: \"\" + \"findings.push(cmd === \\\"\\\" ? \\\"probe AF12 when\\\" : \\\"probe AF12 otherwise\\\");\" -> +^probe AF12 when$ +^probe AF12 otherwise$ at end, -0; unread none",
         "AF13 a push inside a callback [judgeTsxRow]: \"\" + \"[cmd].forEach(() => findings.push(\\\"probe AF13\\\"));\" -> +^probe AF13$ at end, -0; unread none",
         "AF14 a local const list spread into a push [judgeTsxRow]: \"\" + \"const probe_AF14 = [\\\"probe AF14\\\"];\\n  findings.push(...probe_AF14);\" -> +^probe AF14$ at end, -0; unread none",
-        "AF15 a local helper shadowing a reached one is the one read (lexical resolution) [judgeTsxRow]: \"\" + \"const tsxRecordFindings = (): string[] => [\\\"probe AF15\\\"];\" -> +^probe AF15$ at 19, -5; unread none",
+        "AF15 a local helper shadowing a reached one in the scope of its call is the one read (the checker's lexical binding) [judgeTsxRow]: \"\" + \"const tsxRecordFindings = (): string[] => [\\\"probe AF15\\\"];\" -> +^probe AF15$ at 19, -5; unread none",
         "AF16 the declared return type is not read (IP-K1: tsxRowFindings re-annotated readonly string[]) [tsxRowFindings retyped readonly string[]]: \"\" + \"\" -> +none at 0, -0; unread none",
+        "AF17 a module-level helper the judge calls is read although a same-named const sits in a closure that does not enclose the call (the wb-m14y gate's G2) [judgeTsxRow]: \"function probe_AF17(): string[] {\\n  return [\\\"probe AF17\\\"];\\n}\" + \"findings.push(...probe_AF17());\\n  const probe_AF17_scope = (): number => {\\n    const probe_AF17 = (): string[] => [];\\n    return probe_AF17().length;\\n  };\\n  void probe_AF17_scope;\" -> +^probe AF17$ at end, -0; unread none",
+        "AF18 a same-named copy of a reached helper in a closure that does not enclose its call leaves the reached helper read (the wb-m14y gate's G2b) [judgeTsxRow]: \"\" + \"const probe_AF18_scope = (): number => {\\n    function tsxRecordFindings(): string[] {\\n      return [\\\"probe AF18\\\"];\\n    }\\n    return tsxRecordFindings().length;\\n  };\\n  void probe_AF18_scope;\" -> +none at 0, -0; unread none",
+        "AF19 a const named like the shared W10 view, declared in a helper's own scope, is entered like any other function [judgeTsxRow]: \"function probe_AF19(): string[] {\\n  const w10View = (): { findings: string[] } => ({ findings: [\\\"probe AF19\\\"] });\\n  const shadowed = w10View();\\n  return [...shadowed.findings];\\n}\" + \"findings.push(...probe_AF19());\" -> +^probe AF19$ at end, -0; unread none",
+        "AF20 a reached helper named in a type position (typeof) leaves the reading unchanged [judgeTsxRow]: \"\" + \"const probe_AF20: ReturnType<typeof tsxRecordFindings> = [];\\n  void probe_AF20;\" -> +none at 0, -0; unread none",
+        "AF21 a push inside a class's extends expression is read (a value evaluated at run time, never a type position) [judgeTsxRow]: \"\" + \"class probe_AF21 extends (findings.push(\\\"probe AF21\\\"), Object) {}\\n  void probe_AF21;\" -> +^probe AF21$ at end, -0; unread none",
         "AU1 a splice [judgeTsxRow]: \"\" + \"findings.splice(0, 0, \\\"probe AU1\\\");\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads",
         "AU2 an element write [judgeTsxRow]: \"\" + \"findings[findings.length] = \\\"probe AU2\\\";\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads",
         "AU3 an alias [judgeTsxRow]: \"\" + \"const probe_AU3 = findings;\\n  probe_AU3.push(\\\"probe AU3\\\");\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads",
@@ -3912,10 +4189,25 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
         "AU20 a push through an element access [judgeTsxRow]: \"\" + \"findings[\\\"push\\\"](\\\"probe AU20\\\");\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads",
         "AU21 a closure handing the list out [judgeTsxRow]: \"\" + \"const probe_AU21 = (): string[] => findings;\\n  probe_AU21().push(\\\"probe AU21\\\");\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads",
         "AU22 the list spread into itself [judgeTsxRow]: \"\" + \"findings.push(...findings);\" -> +none at 0, -0; unread the diagnosis list findings read inside its own flow",
-        "AU23 a parameter shadowing a module-level const string (lexical resolution) [judgeTsxRow]: \"const PROBE_AU23 = \\\"probe AU23\\\";\\nfunction probe_AU23(PROBE_AU23: string): string[] {\\n  return [PROBE_AU23];\\n}\" + \"findings.push(...probe_AU23(\\\"x\\\"));\" -> +none at 0, -0; unread a diagnosis read from PROBE_AU23, which is not a const value",
+        "AU23 a parameter shadowing a module-level const string (the checker's lexical binding) [judgeTsxRow]: \"const PROBE_AU23 = \\\"probe AU23\\\";\\nfunction probe_AU23(PROBE_AU23: string): string[] {\\n  return [PROBE_AU23];\\n}\" + \"findings.push(...probe_AU23(\\\"x\\\"));\" -> +none at 0, -0; unread a diagnosis read from PROBE_AU23, which is not a const value",
         "AU24 two module-level consts naming each other [judgeTsxRow]: \"const PROBE_AU24A: string = PROBE_AU24B;\\nconst PROBE_AU24B: string = PROBE_AU24A;\" + \"findings.push(PROBE_AU24A);\" -> +none at 0, -0; unread a diagnosis flow deeper than T-ARMS reads",
         "AU25 the list carried by an object literal that is not returned [judgeTsxRow]: \"\" + \"const probe_AU25 = { findings };\\n  probe_AU25.findings.push(\\\"probe AU25\\\");\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads",
         "AU26 a returned object literal with a spread [judgeTsxRow]: \"function probe_AU26(): { findings: string[] } {\\n  const findings: string[] = [];\\n  return { ...{ findings: [\\\"probe AU26\\\"] }, findings };\\n}\" + \"const probe_AU26_read = probe_AU26();\\n  findings.push(...probe_AU26_read.findings);\" -> +none at 0, -0; unread a return of probe_AU26 that does not carry exactly one findings",
+        "AU27 a generator helper whose diagnosis leaves through yield (the wb-m14y gate's G1) [judgeTsxRow]: \"function* probe_AU27(): Generator<string> {\\n  yield \\\"probe AU27\\\";\\n}\" + \"findings.push(...probe_AU27());\" -> +none at 0, -0; unread a call of probe_AU27, a generator function T-ARMS does not enter",
+        "AU28 a generator helper whose diagnosis leaves through yield*, spread twice (the wb-m14y gate's G1b) [judgeTsxRow]: \"function* probe_AU28(): Generator<string> {\\n  yield* [\\\"probe AU28\\\"];\\n}\" + \"findings.push(...[...probe_AU28()]);\" -> +none at 0, -0; unread a call of probe_AU28, a generator function T-ARMS does not enter",
+        "AU29 a const bound to a generator function expression [judgeTsxRow]: \"const probe_AU29 = function* (): Generator<string> {\\n  yield \\\"probe AU29\\\";\\n};\" + \"findings.push(...probe_AU29());\" -> +none at 0, -0; unread a call of probe_AU29, a generator function T-ARMS does not enter",
+        "AU30 a list carried by two members of a returned object literal, one of them written through [judgeTsxRow]: \"function probe_AU30(): { findings: string[]; alias: string[] } {\\n  const findings: string[] = [];\\n  return { findings, alias: findings };\\n}\" + \"const probe_AU30_read = probe_AU30();\\n  probe_AU30_read.alias.push(\\\"probe AU30\\\");\\n  findings.push(...probe_AU30_read.findings);\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads",
+        `AU31 a direct eval, which can write any binding in scope [judgeTsxRow]: "" + "${DIRECT_EVAL}(\\"0\\");" -> +none at 0, -0; unread a direct eval, whose code T-ARMS does not read`,
+        "AU32 a reached helper referenced other than as a callee (reassigned) [judgeTsxRow]: \"\" + \"tsxRecordFindings = (): string[] => [\\\"probe AU32\\\"];\" -> +none at 0, -0; unread the function tsxRecordFindings referenced other than as the callee of a call",
+        "AU33 a call of the shared W10 view in a list position [judgeTsxRow]: \"\" + \"findings.push(...w10View(page));\" -> +none at 0, -0; unread a call of w10View, not a function of this file T-ARMS enters",
+        "AU34 a property of the shared W10 view other than its findings [judgeTsxRow]: \"\" + \"findings.push(...view.probe_AU34);\" -> +none at 0, -0; unread the shared W10 view's probe_AU34 read as a diagnosis list",
+        "AU35 a hole in a diagnosis list [judgeTsxRow]: \"\" + \"findings.push(...[,]);\" -> +none at 0, -0; unread a hole in a diagnosis list",
+        "AU36 a helper with an overload signature (a name with two declarations) [judgeTsxRow]: \"function probe_AU36(): string[];\\nfunction probe_AU36(flag?: boolean): string[] {\\n  return flag === true ? [] : [\\\"probe AU36\\\"];\\n}\" + \"findings.push(...probe_AU36());\" -> +none at 0, -0; unread a call of probe_AU36, not a function of this file T-ARMS enters",
+        "AU37 a destructured const diagnosis [judgeTsxRow]: \"\" + \"const [probe_AU37] = [\\\"probe AU37\\\"];\\n  findings.push(probe_AU37);\" -> +none at 0, -0; unread a diagnosis read from probe_AU37, which is not a const value",
+        "AU38 a return without a value [judgeTsxRow]: \"function probe_AU38(): string[] {\\n  return;\\n}\" + \"findings.push(...probe_AU38());\" -> +none at 0, -0; unread a return without a value",
+        "AU39 a returned object literal with a computed member [judgeTsxRow]: \"function probe_AU39(): { findings: string[] } {\\n  const findings: string[] = [];\\n  return { findings, [\\\"findings\\\"]: [\\\"probe AU39\\\"] };\\n}\" + \"const probe_AU39_read = probe_AU39();\\n  findings.push(...probe_AU39_read.findings);\" -> +none at 0, -0; unread a return of probe_AU39 that does not carry exactly one findings",
+        "AU40 a property read as a list from a const not bound to a call [judgeTsxRow]: \"\" + \"const probe_AU40 = { findings: [\\\"probe AU40\\\"] };\\n  findings.push(...probe_AU40.findings);\" -> +none at 0, -0; unread a diagnosis list read from a value T-ARMS does not trace",
+        "AU41 a reached helper rebound inside a class's extends expression (a value, never a type position) [judgeTsxRow]: \"\" + \"class probe_AU41 extends ((tsxRecordFindings = (): string[] => []), Object) {}\\n  void probe_AU41;\" -> +none at 0, -0; unread the function tsxRecordFindings referenced other than as the callee of a call",
         "AR1 residual, pinned quiet: Array.prototype.push replaced at module level is never read [judgeTsxRow]: \"Array.prototype.push = function probe_AR1(this: unknown[], ...items: unknown[]): number {\\n  return items.length;\\n};\" + \"\" -> +none at 0, -0; unread none",
       ]);
       expect(ROSTER_VARIANTS).toHaveLength(4);
