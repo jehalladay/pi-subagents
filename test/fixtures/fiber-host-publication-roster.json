@@ -114,7 +114,7 @@
    "Cargo.toml",
    "Cargo.lock"
   ],
-  "pipRequirements": "^(?:requirements|constraints)[\\w.-]*\\.(?:txt|in)$",
+  "pipRequirements": "^(?:(?:[\\w.-]*requirements[\\w.-]*|[\\w.-]*constraints[\\w.-]*)\\.(?:txt|in|lock)|pylock\\.toml)$",
   "pipRequirementsDir": "(?:^|\\/)requirements\\/[^/]+\\.(?:txt|in)$",
   "rootNpm": [
    "package.json",
@@ -236,7 +236,11 @@
    "rust/observer/Cargo.toml": "[dependencies]\nfiber-optics-replay-observer = \"0.1\"\n",
    "examples/host/package.json": "{ \"dependencies\": { \"@fiber-optics/sdk\": \"0.1.0\" } }\n",
    "constraints.txt": "reactive-fiber-cli==1.0.0\nfiber\noptics\n",
-   "Dockerfile": "RUN pip install FiberOpticsSDK\n"
+   "Dockerfile": "RUN pip install FiberOpticsSDK\n",
+   "dev-requirements.txt": "FiberOpticsSDK==0.1.0\n",
+   "test-requirements.txt": "fiber_optics==0.1.0\n",
+   "requirements.lock": "fiber_optics==0.1.0\n",
+   "pylock.toml": "[[packages]]\nname = \"fiber_optics\"\n"
   },
   "sourceControls": {
    "importFrom": {
@@ -574,7 +578,8 @@
    "qa/host.mjs": "import { FiberRuntime } from \"fiber_optics\";\nnew FiberRuntime().flush_value_publications();\n",
    "examples/host.ts": "import \"fiber-optics\";\n",
    "Dockerfile": "FROM python:3.12-slim\nRUN pip install FiberOpticsSDK==0.1.0\n",
-   "scripts/setup-sidecar.sh": "#!/bin/sh\npip install fiber_optics\n"
+   "scripts/setup-sidecar.sh": "#!/bin/sh\npip install fiber_optics\n",
+   "tools/value-host/deps.txt": "fiber_optics==0.1.0\n"
   },
   "residuals": {
    "R-COMPOSED": [
@@ -598,6 +603,9 @@
    "R-OTHER-VOCABULARY": [
     "Q7"
    ]
+  },
+  "registrationTree": {
+   "src/workbench/providers/value-publish.ts": "const DESCRIPTOR = { id: \"fiber.value.publish\", effectClass: \"write\" };\nexport function registerFiberValuePublish(registry: CapabilityRegistry): void {\n  registry.register({ descriptor: DESCRIPTOR, invoke: async () => null });\n}\n"
   }
  },
  "record": {
@@ -668,32 +676,44 @@
       "manifestTree": {
        "selected": [
         "constraints.txt",
+        "dev-requirements.txt",
         "environment.yml",
         "examples/host/package.json",
         "package.json",
+        "pylock.toml",
+        "requirements.lock",
         "requirements.txt",
         "requirements/base.txt",
         "rust/observer/Cargo.toml",
         "sidecar/requirements-dev.txt",
+        "test-requirements.txt",
         "tools/value-host/pyproject.toml"
        ],
        "raw": [
         "constraints.txt",
+        "dev-requirements.txt",
         "environment.yml",
         "examples/host/package.json",
+        "pylock.toml",
+        "requirements.lock",
         "requirements.txt",
         "requirements/base.txt",
         "rust/observer/Cargo.toml",
         "sidecar/requirements-dev.txt",
+        "test-requirements.txt",
         "tools/value-host/pyproject.toml"
        ],
        "hits": [
+        "dev-requirements.txt:1: fiberoptics",
         "environment.yml:3: fiberoptics",
         "examples/host/package.json:1: fiberoptics",
+        "pylock.toml:2: fiberoptics",
+        "requirements.lock:1: fiberoptics",
         "requirements.txt:1: fiberoptics",
         "requirements/base.txt:1: fiberoptics",
         "rust/observer/Cargo.toml:2: fiberoptics",
         "sidecar/requirements-dev.txt:2: fiberoptics",
+        "test-requirements.txt:1: fiberoptics",
         "tools/value-host/pyproject.toml:3: fiberoptics"
        ]
       },
@@ -918,7 +938,34 @@
         "publishing": [],
         "needles": []
        }
-      }
+      },
+      "staticSites": [
+       "src/agent-types.ts#export:registerAgents",
+       "src/cross-extension-rpc.ts#export:registerRpcHandlers",
+       "src/index.ts#registryFor:registerNativeProviders",
+       "src/workbench/hosts/local-detached.ts#(module):register",
+       "src/workbench/hosts/local-detached.ts#registryFor:register",
+       "src/workbench/providers/forge.ts#export:registerForgeGateStatus",
+       "src/workbench/providers/forge.ts#export:registerNativeForgeGateStatus",
+       "src/workbench/providers/forge.ts#registerForgeGateStatus:register",
+       "src/workbench/providers/forge.ts#registerNativeForgeGateStatus:register",
+       "src/workbench/providers/furnace.ts#export:registerFurnaceRunInspect",
+       "src/workbench/providers/furnace.ts#export:registerNativeFurnaceRunInspect",
+       "src/workbench/providers/furnace.ts#registerFurnaceRunInspect:register",
+       "src/workbench/providers/furnace.ts#registerNativeFurnaceRunInspect:register",
+       "src/workbench/providers/hyperunix.ts#export:registerHyperUnixFind",
+       "src/workbench/providers/hyperunix.ts#export:registerNativeHyperUnixFind",
+       "src/workbench/providers/hyperunix.ts#registerHyperUnixFind:register",
+       "src/workbench/providers/hyperunix.ts#registerNativeHyperUnixFind:register",
+       "src/workbench/providers/reactivefiber.ts#export:registerNativeReactiveFiberRender",
+       "src/workbench/providers/reactivefiber.ts#export:registerReactiveFiberRender",
+       "src/workbench/providers/reactivefiber.ts#registerNativeReactiveFiberRender:register",
+       "src/workbench/providers/reactivefiber.ts#registerReactiveFiberRender:register"
+      ],
+      "registrationControl": [
+       "src/workbench/providers/value-publish.ts#export:registerFiberValuePublish",
+       "src/workbench/providers/value-publish.ts#registerFiberValuePublish:register"
+      ]
      }
     },
     {
@@ -1213,6 +1260,12 @@
        },
        {
         "path": "scripts/setup-sidecar.sh",
+        "walked": false,
+        "manifest": false,
+        "needles": 1
+       },
+       {
+        "path": "tools/value-host/deps.txt",
         "walked": false,
         "manifest": false,
         "needles": 1
