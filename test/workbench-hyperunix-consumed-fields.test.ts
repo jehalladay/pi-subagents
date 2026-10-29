@@ -11,7 +11,9 @@
  *
  * THE INSTRUMENT. traced() wraps a provider output in proxies that record each field read through them as a dotted path from the
  * output root: an object member is '<path>.<key>' (a member the value lacks included), any element of a list is '<path>[]', a
- * list's length is the list's own path, and an enumeration of an object's keys is '<path>.*' ('*' at the root). A member
+ * list's length is the list's own path, and an enumeration of an object's keys is '<path>.*' ('*' at the root). A manifest path
+ * ending '.*' names every member of a map keyed by data (wb-gwr.2: a provider's version, read by the provider's name): any read
+ * below its prefix is inside it, and it is READ once any member is read or the keys are enumerated. A member
  * inherited from a prototype (a list method, an Object.prototype member) is not a field and is not recorded. Property gets, `in`
  * checks, own-descriptor reads and key enumerations are all recorded, and a descriptor's value is wrapped like a get. A read is
  * INSIDE the manifest when it is a manifest field or a container on the way to one; a manifest field is READ when its exact path
@@ -32,7 +34,10 @@
  *  M6 hxLiveInvariant, the live tier's verdict over the same output, reads only manifest fields.
  *  M7 the instrument itself: stand-in readers touching a row body, a producer diagnostic code or a key set, or testing a member
  *     the manifest does not name with an `in` check, read outside the manifest; one skipping the batch ids leaves that field
- *     unread, and a reader of exactly the manifest is quiet.
+ *     unread, and a reader of exactly the manifest is quiet; a map member read by its key is inside a '.*' field and a member of
+ *     a map the manifest does not name stays outside.
+ *  M1b the relayed entries (wb-gwr.2, the 'relayed' use): equal to that filing's facet list (RELAYED_LIST, verbatim from its
+ *     title), each phrase read onto the fields it names; M4 holds each relayed field to moving the facets and nothing else.
  *
  * Display paths added: none. Test-only: the one file read is the adapter module's own source (refusalSites, read-only, for M3);
  * no write, process, clock or network access; the provider row injects its reader. SPELLING (two landed censuses read this file):
@@ -76,6 +81,17 @@ const TITLE_FIELDS: readonly (readonly [string, readonly string[]])[] = [
   ['coverage batch ids', ['source.coverage[].batch_id']],
   ['runtime identity', ['runtime.binarySha256', 'runtime.version']],
 ];
+/** wb-gwr.2's facet list, verbatim from its title ("When an HX result Pi consumes carries ..."), each phrase read onto the fields
+ * the adapter relays for it. hyperunix.result/1 has no consistency-mode field, so that phrase names none (the observer suite's
+ * R1-RESIDUAL row pins the absence against the vendored declaration). */
+const RELAYED_LIST = 'a view identity or consistency mode, provider versions, conflict or incomplete-region statuses';
+const RELAYED_FIELDS: readonly (readonly [string, readonly string[]])[] = [
+  ['view identity', ['source.view']],
+  ['consistency mode', []],
+  ['provider versions', ['source.evidence.providers[]', 'source.evidence.provider_versions.*']],
+  ['conflict', ['source.diagnostics[].code']],
+  ['incomplete-region statuses', ['source.coverage_summary.incomplete_regions[].scope', 'source.coverage_summary.incomplete_regions[].target']],
+];
 /** The provider envelope's own top level (src/workbench/providers/hyperunix.ts:26; M5 reads it from the provider's output). */
 const ENVELOPE_KEYS = ['contract', 'source', 'workspaceRoot', 'runtime'];
 
@@ -85,9 +101,11 @@ const pathsOf = (use: HyperUnixConsumedField['use']): string[] => HYPERUNIX_CONS
 const isJsonRecord = (value: JsonValue | undefined): value is Json => typeof value === 'object' && value !== null && !Array.isArray(value);
 /** A read is inside the manifest when it names a manifest field or a container on the way to one. */
 const inside = (paths: readonly string[], read: string): boolean =>
-  paths.some(path => path === read || path.startsWith(`${read}.`) || path.startsWith(`${read}[]`));
+  paths.some(path => path === read || path.startsWith(`${read}.`) || path.startsWith(`${read}[]`) || (path.endsWith('.*') && read.startsWith(path.slice(0, -1))));
 const outside = (reads: ReadonlySet<string>, paths: readonly string[] = PATHS): string[] => [...reads].filter(read => !inside(paths, read)).sort();
-const unread = (reads: ReadonlySet<string>): string[] => PATHS.filter(path => !reads.has(path));
+/** A manifest field is read when its exact path was recorded; a map field ('.*') when any member of the map was read. */
+const unread = (reads: ReadonlySet<string>): string[] =>
+  PATHS.filter(path => !reads.has(path) && !(path.endsWith('.*') && [...reads].some(read => read.startsWith(path.slice(0, -1)))));
 /** "rows (length only)": any read below the row list's own path (an element, a row body) is a row-body read. */
 const rowBodyReads = (reads: ReadonlySet<string>): string[] => [...reads].filter(read => read.startsWith('source.rows[]')).sort();
 
@@ -138,8 +156,11 @@ function output(kind = 'incomplete', licenses_absence = false, source: Json = {}
     source: {representation: 'hyperunix.result/1', operation: 'find', rows: kind === 'complete-empty' ? [] : [ROW], rows_retained: true,
       coverage: [certificate('b1'), certificate('b2')], status: {exit_code: 0, terminal_reached: true},
       execution_status: {kind, diagnostic_code: 'HX-CODE'}, diagnostics: [{code: 'HX-CODE', severity: 'warning', message: 'producer text'}],
-      coverage_summary: {completeness: 'incomplete', licenses_absence, certificates_license_absence: false, answer_count: 1},
-      evidence: {support_ids: []}, digest: null, execution_id: null, ...source},
+      coverage_summary: {completeness: 'incomplete', licenses_absence, certificates_license_absence: false, answer_count: 1,
+        incomplete_regions: [{scope: `fs:${WS}/src`, target: 'hx.fs/directory-entry'}]},
+      // The facet fields wb-gwr.2 relays, at the values the 2026-10-28 measured read carried.
+      view: 'hx.view/workspace-head', evidence: {support_ids: [], providers: ['hx.fs/builtin'], provider_versions: {'hx.fs/builtin': '0.1.0'}},
+      digest: null, execution_id: null, ...source},
     workspaceRoot: WS, runtime: {version: '0.1.0', binarySha256: BINARY, path: '/usr/bin/hx'}};
 }
 const without = (value: Json, key: string): Json => Object.fromEntries(Object.entries(value).filter(([name]) => name !== key));
@@ -153,6 +174,10 @@ function setAt(value: JsonValue, path: string, next: JsonValue): JsonValue {
       if (!Array.isArray(node) || node.length === 0) throw new Error(`setAt: ${path} needs a non-empty list`);
       return node.map(item => apply(item, rest));
     }
+    if (step === '*') {
+      if (!isJsonRecord(node) || Object.keys(node).length === 0) throw new Error(`setAt: ${path} needs a non-empty map`);
+      return Object.fromEntries(Object.entries(node).map(([key, item]) => [key, apply(item, rest)]));
+    }
     const child = isJsonRecord(node) ? node[step] : undefined;
     if (!isJsonRecord(node) || child === undefined) throw new Error(`setAt: the value has no ${path}`);
     return {...node, [step]: apply(child, rest)};
@@ -164,11 +189,13 @@ function member(node: JsonValue | undefined, step: string): JsonValue | undefine
   if (Array.isArray(node)) return INDEX.test(step) ? node[Number(step)] : undefined;
   return isJsonRecord(node) ? node[step] : undefined;
 }
-/** Every value at path ('[]' walks every element, a numeric step one element), read by plain property access. */
+/** Every value at path ('[]' walks every element, '*' every member of a map, a numeric step one element), read by plain property
+ * access. */
 function readAll(value: JsonValue, path: string): JsonValue[] {
   let nodes: (JsonValue | undefined)[] = [value];
   for (const step of path.replace(/\[\]/g, '.[]').replace(/\[(\d+)\]/g, '.$1').split('.')) {
-    nodes = nodes.flatMap(node => step === '[]' ? (Array.isArray(node) ? [...node] : []) : [member(node, step)]);
+    nodes = nodes.flatMap(node => step === '[]' ? (Array.isArray(node) ? [...node] : [])
+      : step === '*' ? (isJsonRecord(node) ? Object.values(node) : []) : [member(node, step)]);
   }
   return nodes.filter((node): node is JsonValue => node !== undefined);
 }
@@ -238,6 +265,12 @@ const ALTERNATE: Readonly<Record<string, JsonValue>> = {
   workspaceRoot: '/tmp/hyperunix-consumed-other',
   'source.coverage[].batch_id': 'b9',
   'source.rows_retained': false,
+  'source.view': 'hx.view/pinned-live',
+  'source.evidence.providers[]': 'hx.fs/other',
+  'source.evidence.provider_versions.*': '0.2.0',
+  'source.coverage_summary.incomplete_regions[].scope': '/tmp/hyperunix-consumed-other/src',
+  'source.coverage_summary.incomplete_regions[].target': 'hx.fs/regular-file',
+  'source.diagnostics[].code': 'HX-SCHEMA-CONFLICT',
 };
 
 /** Every refusal branch hyperunixTopology takes on the provider output under the fixed host context, the mutation branch under
@@ -258,19 +291,20 @@ const REFUSALS: readonly (readonly [string, Json, string])[] = [
 ];
 
 /** M5's provider input: an SDK hyperunix.result/1 document shaped like the measured live read of this workspace
- * (test/workbench-hyperunix-observer.test.ts sdkDocument), here with one row and three certificates b1..b3. */
+ * (test/workbench-hyperunix-observer.test.ts sdkDocument), here with one row and three certificates b1..b3, and the view and
+ * provider version the 2026-10-28 measured read carried (wb-gwr.2: the observer suite's measuredDocument). */
 const sdkDocument = (): Json => ({representation: 'hyperunix.result/1', operation: 'find', rows: [{path: 'src/index.ts'}], rows_retained: true,
   coverage: ['b1', 'b2', 'b3'].map(certificate),
   status: {exit_code: 0, signal: null, streams: [{name: 'hx-fs', frames: 272, ended: true, mode: 'observation'}], terminal_reached: true, frames_total: 272},
   execution_status: {kind: 'incomplete', diagnostic_code: 'HX-COVERAGE-INCOMPLETE'},
   diagnostics: [{code: 'HX-COVERAGE-INCOMPLETE', severity: 'warning', message: 'licenses no absence'}],
-  view: null, cost: null,
+  view: 'hx.view/workspace-head', cost: null,
   transport: {started_at: '2026-10-15T08:39:59.000Z', startup_latency_s: 0.01, process_duration_s: 0.2, stdout_bytes: 1000, stderr_bytes: 0,
     stderr_bytes_retained: 0, frames: 272},
   workspace_root: WS, terminal: 'complete', truth: null,
   coverage_summary: {modes: ['opportunistic'], completeness: 'incomplete', licenses_absence: false, certificates_license_absence: false,
     incomplete_regions: [{scope: `fs:${WS}/src`, target: 'hx.fs/directory-entry'}], result_coverage: null, answer_count: 1},
-  evidence: {support_ids: [], evidence_classes: [], derivation_handles: [], providers: [], provider_versions: {}},
+  evidence: {support_ids: [], evidence_classes: [], derivation_handles: [], providers: ['hx.fs/builtin'], provider_versions: {'hx.fs/builtin': '0.1.0'}},
   digest: null, digest_source: 'absent', execution_id: null, budget_dimension: null, extensions: {}});
 async function providerOutput(): Promise<JsonValue> {
   const native = resultFromJson(sdkDocument());
@@ -285,6 +319,9 @@ describe('wb-3ht.1 HyperUnix consumed-field manifest (evidence-projection R5, st
       'contract:envelope', 'source.representation:envelope', 'source.execution_status.kind:observed',
       'source.coverage_summary.licenses_absence:observed', 'source.rows:rows', 'source.operation:observed', 'runtime.binarySha256:observed',
       'runtime.version:observed', 'workspaceRoot:envelope', 'source.coverage[].batch_id:observed', 'source.rows_retained:observed',
+      'source.view:relayed', 'source.evidence.providers[]:relayed', 'source.evidence.provider_versions.*:relayed',
+      'source.diagnostics[].code:relayed', 'source.coverage_summary.incomplete_regions[].scope:relayed',
+      'source.coverage_summary.incomplete_regions[].target:relayed',
     ]);
     expect(Object.isFrozen(HYPERUNIX_CONSUMED_FIELDS)).toBe(true);
     for (const field of HYPERUNIX_CONSUMED_FIELDS) {
@@ -296,13 +333,27 @@ describe('wb-3ht.1 HyperUnix consumed-field manifest (evidence-projection R5, st
     const filing = FILING_READS.split(', ').map(item => item.replace(' (length only)', ''))
       .map(item => ENVELOPE_KEYS.includes(item.split('.')[0] ?? '') ? item : `source.${item}`);
     expect(filing).toHaveLength(11);
-    expect([...PATHS].sort()).toStrictEqual([...filing].sort());
+    // wb-3ht.1's filing names the entries it measured; the relayed entries are wb-gwr.2's (M1b).
+    const relayed = pathsOf('relayed');
+    expect([...PATHS.filter(path => !relayed.includes(path))].sort()).toStrictEqual([...filing].sort());
     expect(TITLE_FIELDS.map(([word]) => word).join(', ')).toBe(TITLE_LIST);
     expect(pathsOf('observed').sort()).toStrictEqual(TITLE_FIELDS.flatMap(([, paths]) => paths).sort());
     // "beyond rows": the row list is consumed for its length only, and every other field is the provider's envelope.
     expect(pathsOf('rows')).toStrictEqual(['source.rows']);
     expect(FILING_READS).toContain('rows (length only)');
     expect(pathsOf('envelope')).toStrictEqual(['contract', 'source.representation', 'workspaceRoot']);
+  });
+
+  it("M1b: the relayed entries are wb-gwr.2's facet list, phrase by phrase, and only the relayed use names a field outside both filings", () => {
+    expect(RELAYED_FIELDS.map(([phrase, paths]) => `${phrase}:${paths.length}`)).toStrictEqual([
+      'view identity:1', 'consistency mode:0', 'provider versions:2', 'conflict:1', 'incomplete-region statuses:2',
+    ]);
+    for (const [phrase] of RELAYED_FIELDS) expect(RELAYED_LIST).toContain(phrase);
+    expect(RELAYED_LIST.indexOf('view identity')).toBeLessThan(RELAYED_LIST.indexOf('consistency mode'));
+    expect(RELAYED_LIST.indexOf('provider versions')).toBeLessThan(RELAYED_LIST.indexOf('conflict'));
+    expect(RELAYED_LIST.indexOf('conflict')).toBeLessThan(RELAYED_LIST.indexOf('incomplete-region statuses'));
+    expect([...pathsOf('relayed')].sort()).toStrictEqual(RELAYED_FIELDS.flatMap(([, paths]) => paths).sort());
+    expect(new Set(HYPERUNIX_CONSUMED_FIELDS.map(field => field.use))).toStrictEqual(new Set(['envelope', 'observed', 'rows', 'relayed']));
   });
 
   it('M2: every projectable kind under both licences reads exactly the manifest, and the traced projection equals the untraced one', () => {
@@ -369,6 +420,13 @@ describe('wb-3ht.1 HyperUnix consumed-field manifest (evidence-projection R5, st
       const result = outcomeOf(variant);
       if (field.use === 'envelope') {
         expect(result, `${field.path} at another value`).toHaveProperty('refused');
+      } else if (field.use === 'relayed') {
+        // A relayed field moves its facet and nothing else: snapshots (coverage, tone, id, versions), relations and diagnostics stay.
+        if (!('projection' in result) || !('projection' in base)) throw new Error(`${field.path}: expected two projections`);
+        const {facets: movedFacets, ...movedRest} = result.projection;
+        const {facets: baseFacets, ...baseRest} = base.projection;
+        expect(JSON.stringify(movedFacets), `${field.path} at another valid value moves the facets`).not.toBe(JSON.stringify(baseFacets));
+        expect(movedRest, `${field.path} moves nothing but the facets`).toStrictEqual(baseRest);
       } else {
         expect(result, `${field.path} at another valid value`).toHaveProperty('projection');
         expect(JSON.stringify(result), `${field.path} at another valid value moves the projection`).not.toBe(JSON.stringify(base));
@@ -439,5 +497,13 @@ describe('wb-3ht.1 HyperUnix consumed-field manifest (evidence-projection R5, st
     // A list method is inherited, never a field: walking the certificates records the list, its elements and the batch ids only.
     const listWalk = run(value => readAll(value, 'source.coverage').map(item => Array.isArray(item) ? item.map(entry => member(entry, 'batch_id')) : []));
     expect([...listWalk].sort()).toStrictEqual(['source', 'source.coverage', 'source.coverage[]', 'source.coverage[].batch_id']);
+    // A map member read by its key sits inside a '.*' field and reads it; a member of a map the manifest does not name stays outside.
+    const versionByKey = run(value => readAll(value, 'source.evidence.provider_versions').map(item => member(item, 'hx.fs/builtin')));
+    expect(versionByKey.has('source.evidence.provider_versions.hx.fs/builtin')).toBe(true);
+    expect(outside(versionByKey)).toStrictEqual([]);
+    expect(unread(versionByKey)).not.toContain('source.evidence.provider_versions.*');
+    expect(unread(run(value => readAll(value, 'source.evidence.provider_versions')))).toContain('source.evidence.provider_versions.*');
+    const otherMember = run(value => readAll(value, 'source.status').map(item => member(item, 'exit_code')));
+    expect(outside(otherMember)).toStrictEqual(['source.status', 'source.status.exit_code']);
   });
 });
