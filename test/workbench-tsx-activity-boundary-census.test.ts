@@ -14,69 +14,85 @@
  * producer to add, recorded in the producer facts and never judged here. The filing's "May fold with R14/R16" is not taken:
  * R14 is wb-km7q.5, its own bead and cut, and R16 has no Pi bead.
  *
- * THE ARTIFACT AT THE PIN (the roster's `producer` block, measured read-only by the cutting seat on 2026-10-28 in the local
- * ReactiveFiberTSXSDK checkout with git show; this census is hermetic and never re-reads it): the charter
- * docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md is one blob (01970950) at the bead pin
- * e7e6616d3d08 and at origin/main 94ae52c14aef of the local checkout (the pin is an ancestor of that tip). The roster vendors
- * its line 3 (the status line: "proposed extensions; none of the new exports claimed shipped") and line 66 (the amendment
- * paragraph the filing cites: the separation sentence, the WARM sentence, the TSX-RQ1..TSX-RQ7 test list and "DevTools only
- * consumes emitted host events."), each with its sha256 (UTF-8, no line end). At that tip the package is @reactive-fiber/tsx
- * 0.1.668, its export map names six entry points and none of its 159 src files names the subject; the producer's own triage
- * (docs/triage/programs-2026-10-21/requirements/ATOMIC-REQUIREMENTS.md:87, blob df7eec14, vendored with its sha256) requires
- * that ActivityBoundary and SpeculationBoundary be "marked PROPOSED (0 files at db7558552)" and names the host as the
- * lifecycle owner. producerOf reads UNSHIPPED unless all three flip (the status line stops reading proposed, the tip's src
- * names the subject, the triage line stops reading PROPOSED): it fails closed.
+ * THE ARTIFACT AT THE PIN (the roster's `producer` block, measured read-only with git show in the local ReactiveFiberTSXSDK
+ * checkout on 2026-10-28 and measured again, unchanged, on the roster's measuredAt; this census is hermetic and never re-reads
+ * it): the charter docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md is one blob (01970950) at the
+ * bead pin e7e6616d3d08 and at origin/main 94ae52c14aef of the local checkout (the pin is an ancestor of that tip). The
+ * roster vendors its line 3 (the status line: "proposed extensions; none of the new exports claimed shipped") and line 66
+ * (the amendment paragraph the filing cites: the separation sentence, the WARM sentence, the TSX-RQ1..TSX-RQ7 test list and
+ * "DevTools only consumes emitted host events."), each with its sha256 (UTF-8, no line end). At that tip the package is
+ * @reactive-fiber/tsx 0.1.668, its export map names six entry points and none of its 159 src files names the subject; the
+ * producer's own triage (docs/triage/programs-2026-10-21/requirements/ATOMIC-REQUIREMENTS.md:87, blob df7eec14, vendored with
+ * its sha256) requires that ActivityBoundary and SpeculationBoundary be "marked PROPOSED (0 files at db7558552)" and names
+ * the host as the lifecycle owner. producerOf reads SHIPPED only when all three conditions flip - the status line reads
+ * neither "proposed" nor "none of the new exports claimed shipped", the tip's src names the subject, the triage line stops
+ * reading PROPOSED - and UNSHIPPED otherwise: it fails closed. A1 holds five producer controls: all three flipped (SHIPPED),
+ * then each condition held back, the status line once per phrase (UNSHIPPED).
  * ADOPTION (row A): Pi adopts the boundary when a file Pi ships names it. The adoption reads PRESENT once a read file (below)
- * names the subject, ABSENT otherwise; a package.json dependency on a reactive-fiber package is recorded beside it (none
- * today: the boundary could reach Pi only through rf, a child process). The falsifier never stands down: every file that
- * names the subject is judged by rows A-C at every run, so the first adoption is judged the day it lands; today's live
- * reading is the empty adoption (no file to judge), held beside a scratch-repository adoption whose violations it finds
- * exactly.
+ * names the subject, ABSENT otherwise; each reactive-fiber package a package.json names in dependencies, devDependencies,
+ * optionalDependencies or peerDependencies (no other field is read) is recorded beside it (none today). The falsifier never
+ * stands down: every file that names the subject is judged by rows A-C at every run, so the first adoption is judged the day
+ * it lands; today's live reading is the empty adoption (no file to judge), held beside a scratch-repository adoption whose
+ * violations it finds exactly.
  *
- * READINGS
- * - WORDS: NFKC, a break at each lower-to-upper case change and before the last capital of an acronym run, lower case, the
- *   runs of a-z and 0-9 (ActivityBoundary reads activity boundary; queryView reads query view; DevTools reads dev tools;
- *   snake_case and kebab-case split at their separators).
+ * READINGS (each cut, branch and condition stated here has a pinned control; the pin holding it is named in brackets)
+ * - WORDS [B1 words]: NFKC, a break at each lower-to-upper case change and before the last capital of an acronym run, lower
+ *   case, the runs of a-z and 0-9 (ActivityBoundary reads activity boundary, queryView query view, DevTools dev tools,
+ *   WARMContext warm context; snake_case and kebab-case split at their separators; a fullwidth letter folds to its letter).
  * - THE SUBJECT: the adjacent pair activity boundary (or boundaries), or the folded word activityboundary(ies).
- * - THE READ SET: every file git would commit (tracked or untracked, never ignored) at the repository root or below .agents/,
- *   .pi/, docs/, examples/, qa/ and src/, read as text (a file holding a NUL byte is binary and not read). A file is ANCHORED
- *   when it names the subject anywhere; only an anchored file is judged (R-UNANCHORED keeps Pi's own senses of warm, state and
- *   inspector out of it).
- * - SENTENCES: a text cut after ".", "!", "?" or ";" before white space or the line end, and at a blank line; a .md page is
- *   also cut around a table row and a heading line and before a list item (a sentence wrapped over lines stays one). Code is
- *   read by the same cut, so a statement and the branch it opens read as one sentence up to their first terminator.
+ * - THE READ SET [A1]: every file git would commit (tracked or untracked, never ignored) at the repository root or below
+ *   .agents/, .pi/, docs/, examples/, qa/ and src/, read as text. A file holding a NUL byte is binary: listed, never read. A
+ *   listed path that cannot be read as a file is recorded unreadable; one gone before its read is dropped. A file is ANCHORED
+ *   when it names the subject anywhere; only an anchored file is judged (R-UNANCHORED keeps Pi's own senses of warm, state
+ *   and inspector out of it).
+ * - SENTENCES [A2 cuts]: a text cut after ".", "!", "?" or ";" before white space or the line end, and at a blank line; a .md
+ *   page (never another file) is also cut around a table row and a heading line and before a list item; a sentence wrapped
+ *   over lines stays one. Code is read by the same cut, so a statement and the branch it opens read as one sentence up to
+ *   their first terminator [A2 code].
  * - ROWS' READERS (each on one sentence of an anchored file; a finding is `<path>:<line> <row>:<families>`):
- *   A: the WARM word beside an inference word (inference, infer and their inflections) or an effect word (effect, effects,
- *      effectful), with no refusal marker (not, no, never, nor, neither, without, cannot, the refuse and reject forms, or the
- *      n't contraction): a WARM precompute that attempts inference or an effect, as Pi's text states it.
- *   B: a state word (state, states, active, warm, dormant, evicted) or the subject beside a QueryView word (the pair query
- *      view(s), queryview(s)) or a speculative-execution-ownership pair (speculative execution(s), execution owner(ship),
- *      speculation owner(ship)), with no separation marker (not, no, never, nor, neither, without, cannot, separate,
- *      separately, separated, distinct, independent, independently, apart, n't): boundary state aliased to either identity.
- *   C: a DevTools-style surface word (devtools, the pair dev tools, inspector, inspectors) beside a driving word (the mutate,
- *      command, control, write, dispatch, drive and transition families), with no read-only marker (not, no, never, nor,
- *      neither, without, cannot, the pair read only, n't): a surface that does more than consume.
- *   A modal (should, must, shall, will), an if/when condition or "only" alone is never a marker: "a WARM context only calls
- *   inference" is a finding.
- * - THE HOUSE ANALOG (row C, C2): Pi's DevTools-style surfaces are the src modules whose path names a surface word; today
- *   exactly src/ui/workflow-inspector.ts, whose header reads "Read-only terminal inspector over the bounded
- *   producer-qualified observation projection." Each surface's VALUE import closure (static imports and re-exports that are
- *   not type-only, import-equals requires, require() and import() of a string literal; relative specifiers followed to their
- *   .ts source, packages recorded and not followed) must hold no node builtin and no unresolved relative module: a surface that
- *   can launch, write or open a socket of its own is no longer a consumer of what the host hands it.
+ *   A [A2, A3]: the WARM word beside an inference word (inference, infer and their inflections) or an effect word (effect,
+ *      effects, effectful), with no refusal marker (not, no, never, nor, neither, without, cannot, the refuse and reject
+ *      forms, or the n't contraction, straight or curly): a WARM precompute that attempts inference or an effect, as Pi's text
+ *      states it.
+ *   B [B1, B2]: a state word (state, states, active, warm, dormant, evicted) or the subject itself (no state word needed)
+ *      beside a QueryView word (the pair query view(s), queryview(s)) or a speculative-execution-ownership pair (speculative
+ *      execution(s), execution owner(ship), speculation owner(ship)), with no separation marker (not, no, never, nor, neither,
+ *      without, cannot, separate, separately, separated, distinct, independent, independently, apart, n't): boundary state
+ *      aliased to either identity.
+ *   C [C1]: a DevTools-style surface word (devtools, the pair dev tools, inspector, inspectors) beside a driving word (the
+ *      mutate, command, control, write, dispatch, drive and transition families), with no read-only marker (not, no, never,
+ *      nor, neither, without, cannot, the pair read only, n't): a surface that does more than consume.
+ *   A modal (should, must, shall, will), an if/when condition or "only" alone is never a marker [A2]: "a WARM context only
+ *   calls inference" is a finding.
+ * - THE HOUSE ANALOG [C2]: Pi's DevTools-style surfaces are the src/ modules whose path names a surface word (a file that is
+ *   not a module, or a module outside src/, never is one); today exactly src/ui/workflow-inspector.ts, whose header reads
+ *   "Read-only terminal inspector over the bounded producer-qualified observation projection." Each surface's VALUE import
+ *   closure must hold no node builtin and no unresolved relative module. It follows static imports and re-exports that are
+ *   not type-only (one whose every named element is type-only counts as type-only: Pi's tsconfig does not set
+ *   verbatimModuleSyntax, so TypeScript erases it), import-equals requires that are not type-only, and require() and import()
+ *   of a string literal; a
+ *   relative specifier resolves to the first file of: .js read as .ts, .mjs read as .mts, the path as written, the path plus
+ *   .ts, the path's index.ts; packages are recorded and not followed. A surface whose closure reaches a builtin can launch,
+ *   write or open a socket of its own and is no longer only a consumer of what the host hands it; IO through an ambient
+ *   global is not read (R-AMBIENT-IO).
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label; every witness is held to the roster):
  *  A "adoption-time falsifier that a WARM precompute attempting inference or an effect is refused": A1 the adoption gate - the
- *    producer facts read UNSHIPPED, the live read set (floors per root) reads ABSENT with no finding, no unreadable file and
- *    no reactive-fiber dependency, ONE pass over the live set and in-memory positives finds exactly the positives,
- *    and the same pass over a scratch git repository holding an adoption finds exactly its plants (one per row and root,
- *    untracked files read, ignored files and test/ never); A2 the WARM-inference reader; A3 the WARM-effect reader, each over
- *    doc and code sentences with near misses.
- *  B "that boundary state never aliases QueryView identity or speculative execution ownership": B1 the QueryView reader; B2 the
- *    speculative-execution-ownership reader, each with its separation markers and near misses.
- *  C "and that DevTools-style surfaces stay read-only consumers": C1 the surface reader; C2 the house analog - the surface set,
- *    each surface's closure read pure, its direct value imports and packages, and the closure reader's controls over a
- *    scratch git repository (a builtin three modules deep, type-only, dynamic, require, re-export, unresolved).
+ *    producer facts read UNSHIPPED beside the five producer controls; the live read set (floors per root) reads ABSENT with no
+ *    finding, no unreadable file and no reactive-fiber dependency; ONE pass over the live set and in-memory positives finds
+ *    exactly the positives; the same pass over a scratch git repository holding an adoption finds exactly its plants (a
+ *    finding in every read root and for every row; untracked files read) and nothing from a file under each outside root, an
+ *    ignored file or a binary file, reads the four dependency fields of its package.json and no other, and records a listed
+ *    directory unreadable; A2 the WARM-inference reader with the sentence cuts; A3 the WARM-effect reader; each over doc and
+ *    code sentences with near misses.
+ *  B "that boundary state never aliases QueryView identity or speculative execution ownership": B1 the QueryView reader with
+ *    the word readings; B2 the speculative-execution-ownership reader and the outside load of every vocabulary member; each
+ *    with its separation markers and near misses.
+ *  C "and that DevTools-style surfaces stay read-only consumers": C1 the surface reader (a sentence may read in two rows, each
+ *    finding kept); C2 the house analog - the surface set, each surface's closure read pure, its direct value imports and
+ *    packages, and the closure reader's controls over a scratch git repository (a builtin three modules deep; each type-only
+ *    form beside its value and mixed twins; import-equals; dynamic; require; re-export; each resolution candidate;
+ *    unresolved; a non-module file and a module outside src/ named for a surface).
  * OUTSIDE ANCHORS (the judged-set case): the owner filing's row of wb-km7q.6 in the tracked bead export (.beads/issues.jsonl;
  *   the first notes line opening with its citation, so appended notes never move it): its acceptance clause is the three
  *   labels joined, each label tiled by its pins; label A reads quiet only by "refused" and, without it, as a finding of
@@ -84,30 +100,45 @@
  *   execution; the title's WARM clause is quiet only by "never", its state clause only by "separate", and its DevTools clause
  *   names the surface and no driving word; docs/10's controls sentence ("Mutating commands on separate explicit controls
  *   require confirmation and per-provider authorization.") read after label C's surface is a C finding, quiet once label C's
- *   read-only is kept; the inspector's header and docs/10's read-only sentence are present as recorded. ROLE PLACES: every
- *   subject, state, surface, family and marker word that the title, the filing line, docs/10 or the producer's lines spell at
- *   a fixed place reads in its role, and two readings no literal of this file sets hold beside it: no word at a role place
- *   reads without a role, and every lexicon (the subject, the row subjects, each family, each row's markers) keeps a member
- *   an outside text spells. The filing's citations name only recorded producer lines at the recorded pin. So a row, a pin or
- *   a vocabulary word removed from every literal of this file and of the roster together still reds, except the census-only
- *   words and pairs R-SYNONYM lists.
+ *   read-only is kept; line 66's separation sentence is quiet only by "separate" and its WARM sentence only by "not" (each,
+ *   without its marker, a finding of exactly its families); the
+ *   inspector's header and docs/10's read-only sentence are present as recorded. ROLE PLACES: every subject, state, surface,
+ *   family and marker word or pair that a place text spells (the title, the filing line, docs/10's two sentences and every
+ *   vendored producer line: line 3, line 66 and the triage line; the seven names are a literal of this case) is read at a
+ *   fixed place in its role (the two pairs of "speculative execution ownership" are also read apart, each alone), and four
+ *   readings no literal of this file sets hold beside them: no word at a role place reads without a role; UNCOVERED, with
+ *   every role place blanked, no place text spells a vocabulary member; ISOLATED, every member a group spells inside a longer
+ *   group is also a whole group of the same text (so a place deleted from this file's table reds); and every lexicon (the
+ *   subject, the row subjects, each family, each row's markers) keeps a member an outside text spells. B2 pins the two
+ *   coverage readings' controls. The filing's citations name only recorded producer lines at the recorded pin. A row or a
+ *   pin removed from every literal of this file and of the roster together reds this case: the clause equality and the
+ *   tiling hold the labels and their pins to the filing.
+ * OUTSIDE LOAD [B2]: a lexicon member (a word or adjacent pair of the subject, row-subject, family or marker lexicons) carries
+ *   load when taking it alone out of every lexicon that holds it moves one of the readings above (the labels, the title
+ *   clauses, line 66, the role places, the four structural readings). Each of those readings is held to a literal of this case,
+ *   so a member that carries load, removed from this file's vocabulary and the roster's together, reds the judged set.
+ *   R-SYNONYM is the computed rest: the members whose removal moves none of them, held by this file and the roster alone. With
+ *   UNCOVERED and ISOLATED holding, a member carries load exactly when a place text spells it (each is read alone at a place,
+ *   which reads without a role once it is gone); B2 checks the two computations agree and pins both: the R-SYNONYM list, and
+ *   each load-bearing member with the readings its removal moves.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; rows, vocabulary, constants, the producer
  *   facts, the unclaimed duties, the residuals and every pin's witness are held to the out-of-file roster
  *   (test/fixtures/tsx-activity-boundary-roster.json); a last case reads that every pin ran to its witness.
- * RESIDUALS (named; each has a pinned quiet row held beside its unsilenced twin, which reads as a finding):
- *   R-OUTSIDE-ROOTS (A1) a claim under test/, .beads/, .codex/, .github/, media/, new-feedback/ or vendor/, in an ignored file
- *   or in a binary file (a NUL byte), is never read; R-UNANCHORED (A2) a file that never names the subject is never judged (Pi's
- *   own senses of the words); R-SPLIT (A2) the WARM word and the family in different sentences (a pronoun: "It calls
- *   inference."); R-MARKER-ANYWHERE (A3) a marker anywhere in the sentence quiets it, whatever it qualifies (a code comment and
- *   the statement after it read as one sentence); R-PARAPHRASE (A3) inference or an effect named outside the families (the
- *   model, a completion, a side job); R-COMPOSED (B1) a word split into literal parts ("Que" + "ryView"); R-LOOKALIKE (B1) a
- *   look-alike letter or an inserted invisible inside a word (NFKC folds the fullwidth forms, which are read); R-SYNONYM (B2) a
- *   vocabulary word or adjacent pair no outside text spells (the inflections, the extra markers, the census's own driving stems)
- *   is held by this file and the roster alone - removed from both together it stays green; B2 lists them; R-SURFACE-OTHER (C1) a
- *   surface under another name (a panel, a viewer, a dashboard); R-UNNAMED-SURFACE (C2) a module whose path names no surface
- *   word is not a surface, whatever it renders; R-PACKAGE (C2) IO reached through a package's own code (packages are recorded,
- *   never followed); R-INJECTED (C2) a writing function the host hands a surface (a callback, the evidence store's read side);
- *   R-COMPUTED-LOAD (C2) a module loaded by a computed specifier, a createRequire loader or a global.
+ * RESIDUALS (named; each member has a pinned quiet row held beside its unsilenced twin, which reads as a finding, an impure
+ *   closure or, for R-SYNONYM, a moved reading): R-OUTSIDE-ROOTS (A1) a claim under .beads/, .codex/, .github/, media/,
+ *   new-feedback/, test/ or vendor/, in an ignored file or in a binary file (a NUL byte), is never judged; R-UNANCHORED (A2)
+ *   a file that never names the subject is never judged (Pi's own senses of the words); R-SPLIT (A2) the WARM word and the
+ *   family in different sentences (a pronoun: "It calls inference."); R-MARKER-ANYWHERE (A3) a marker anywhere in the
+ *   sentence quiets it, whatever it qualifies, in prose and in a code comment read with the statement after it; R-PARAPHRASE
+ *   (A3) inference or an effect named outside the families (the model, a completion, a side job); R-COMPOSED (B1) a word
+ *   split into literal parts ("Que" + "ryView"); R-LOOKALIKE (B1) a look-alike letter or an inserted invisible inside a word
+ *   (NFKC folds the fullwidth forms, which are read); R-SYNONYM (B2) a vocabulary member that carries no outside load is held
+ *   by this file and the roster alone (B2 lists them); R-SURFACE-OTHER (C1) a surface under another name (a panel, a viewer,
+ *   a dashboard); R-UNNAMED-SURFACE (C2) a module whose path names no surface word is not a surface, whatever it renders;
+ *   R-PACKAGE (C2) IO reached through a package's own code (packages are recorded, never followed); R-INJECTED (C2) IO the
+ *   host hands a surface (a callback, an object it calls); R-AMBIENT-IO (C2) IO through an ambient global with no import (a
+ *   global fetch, a process stream); R-COMPUTED-LOAD (C2) a module loaded by a computed specifier, by a createRequire loader
+ *   (only the loader's own node:module import is read) or by a global (process.getBuiltinModule).
  *
  * Display paths added: none. Test-only: the replica trees live in makeScratch scratch with the leak guard installed; Pi's
  * files, the bead export and docs/10 are only read; nothing is spawned but git.
@@ -118,6 +149,7 @@ import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "no
 import { isBuiltin } from "node:module";
 import { dirname, join, posix } from "node:path";
 import { fileURLToPath } from "node:url";
+import { isDeepStrictEqual } from "node:util";
 import ts from "typescript";
 import { afterAll, afterEach, describe, expect, it } from "vitest";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
@@ -292,7 +324,9 @@ const FLOORS = { files: 270, root: 25, src: 105, docs: 70, qa: 60, examples: 5 }
 // ---------------------------------------------------------------------------------------------------------------- the reader
 const ROW_IDS: readonly RowId[] = ["A", "B", "C"];
 const FAMILY_IDS: readonly FamilyId[] = ["inference", "effect", "query-view", "execution", "driving"];
-const CONTRACTION = /n['’]t(?![a-z0-9])/;
+/** The typeset apostrophe of a curly n't. */
+const CURLY = String.fromCodePoint(0x2019);
+const CONTRACTION = new RegExp(`n['${CURLY}]t(?![a-z0-9])`);
 const fold = (text: string): string => text.normalize("NFKC").toLowerCase();
 /** The words of a text: NFKC, a break at each case change and before the last capital of an acronym run, lower case. */
 function words(text: string): string[] {
@@ -306,18 +340,15 @@ function words(text: string): string[] {
 }
 const hasPair = (tokens: readonly string[], pairs: readonly Pair[]): boolean => tokens.some((word, index) => pairs.some(([first, second]) => word === first && tokens[index + 1] === second));
 const names = (tokens: readonly string[], lexicon: Lexicon): boolean => tokens.some(word => lexicon.words.includes(word)) || hasPair(tokens, lexicon.pairs);
-/** Each row's subject: A the WARM word; B a state word or the boundary itself; C a DevTools-style surface. */
-const SUBJECT_OF: Readonly<Record<RowId, (tokens: readonly string[]) => boolean>> = {
-  A: tokens => names(tokens, VOCABULARY.warm),
-  B: tokens => names(tokens, VOCABULARY.state) || names(tokens, VOCABULARY.subject),
-  C: tokens => names(tokens, VOCABULARY.surface),
+/** Each row's subject under a vocabulary: A the WARM word; B a state word or the boundary itself; C a DevTools-style surface. */
+const SUBJECT_OF: Readonly<Record<RowId, (tokens: readonly string[], vocab: Vocabulary) => boolean>> = {
+  A: (tokens, vocab) => names(tokens, vocab.warm),
+  B: (tokens, vocab) => names(tokens, vocab.state) || names(tokens, vocab.subject),
+  C: (tokens, vocab) => names(tokens, vocab.surface),
 };
-interface Reading {
-  readonly kind: "finding" | "marker" | "none";
-  readonly reason: string;
-}
-function markerOf(row: RowId, text: string, tokens: readonly string[]): string | undefined {
-  const lexicon = VOCABULARY.markers[row];
+type Reading = { readonly kind: "finding" | "marker" | "none"; readonly reason: string };
+function markerOf(row: RowId, text: string, tokens: readonly string[], vocab: Vocabulary): string | undefined {
+  const lexicon = vocab.markers[row];
   const word = tokens.find(token => lexicon.words.includes(token));
   if (word !== undefined) return word;
   const pair = lexicon.pairs.find(candidate => hasPair(tokens, [candidate]));
@@ -325,17 +356,17 @@ function markerOf(row: RowId, text: string, tokens: readonly string[]): string |
   return CONTRACTION.test(fold(text)) ? "n't" : undefined;
 }
 /** One row on one sentence: none (no family word or no subject), quiet by its marker, or a finding naming its families. */
-function readRow(row: RowId, text: string): Reading {
+function readRow(row: RowId, text: string, vocab: Vocabulary = VOCABULARY): Reading {
   const tokens = words(text);
-  const families = VOCABULARY.rows[row].filter(id => names(tokens, VOCABULARY.families[id]));
-  if (families.length === 0 || !SUBJECT_OF[row](tokens)) return { kind: "none", reason: "" };
-  const marker = markerOf(row, text, tokens);
+  const families = vocab.rows[row].filter(id => names(tokens, vocab.families[id]));
+  if (families.length === 0 || !SUBJECT_OF[row](tokens, vocab)) return { kind: "none", reason: "" };
+  const marker = markerOf(row, text, tokens, vocab);
   return marker === undefined ? { kind: "finding", reason: families.join("+") } : { kind: "marker", reason: marker };
 }
 /** The census verdict on one sentence: null (quiet) or every row's finding `<row>:<families>`, joined by a space. */
-function verdict(text: string): string | null {
+function verdict(text: string, vocab: Vocabulary = VOCABULARY): string | null {
   const found = ROW_IDS.flatMap(row => {
-    const reading = readRow(row, text);
+    const reading = readRow(row, text, vocab);
     return reading.kind === "finding" ? [`${row}:${reading.reason}`] : [];
   });
   return found.length === 0 ? null : found.join(" ");
@@ -468,6 +499,29 @@ function producerOf(producer: Pick<Producer, "lines" | "tip">): ProducerReading 
   return !proposed && producer.tip.subjectSrcFiles > 0 && !triageProposed ? "SHIPPED" : "UNSHIPPED";
 }
 const sha256 = (text: string): string => createHash("sha256").update(text, "utf8").digest("hex");
+/** The status phrase of line 3 at the pin: what a shipped producer would stop printing. */
+const PROPOSED_STATUS = "proposed extensions; none of the new exports claimed shipped";
+interface ProducerFlip {
+  readonly status: string;
+  readonly subjectSrcFiles: number;
+  readonly triage: string;
+}
+/** The producer controls: all three conditions flipped, then each one held back (the status line once per phrase). */
+const PRODUCER_FLIPS: Readonly<Record<string, ProducerFlip>> = {
+  "all three flipped": { status: "shipped extensions", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  "status still proposed": { status: "proposed extensions", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  "status still claims none shipped": { status: "shipped extensions; none of the new exports claimed shipped", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  "src still names no subject": { status: "shipped extensions", subjectSrcFiles: 0, triage: "marked SHIPPED" },
+  "triage still PROPOSED": { status: "shipped extensions", subjectSrcFiles: 1, triage: "marked PROPOSED" },
+};
+/** The recorded producer with line 3's status phrase, the tip's subject src count and the triage marking replaced. */
+function producerWith(flip: ProducerFlip): ProducerReading {
+  const { lines, tip } = ROSTER.producer;
+  return producerOf({
+    lines: lines.map(entry => (entry.line === 3 ? { ...entry, text: entry.text.replace(PROPOSED_STATUS, flip.status) } : entry)),
+    tip: { ...tip, subjectSrcFiles: flip.subjectSrcFiles, triage: { ...tip.triage, text: tip.triage.text.replace("marked PROPOSED", flip.triage) } },
+  });
+}
 
 // ------------------------------------------------------------------------------------------------------------ the closures
 interface Closure {
@@ -566,7 +620,41 @@ const ADAPTER = "// ActivityBoundary adapter.\n";
 const codeFindings = (body: string, path = "src/plant.ts"): string[] => [...survey([[path, `${ADAPTER}${body}`]]).findings];
 const docFindings = (text: string, path = "docs/plant.md"): string[] => [...survey([[path, text]]).findings];
 const verdicts = (texts: readonly string[]): Record<string, string | null> => Object.fromEntries(texts.map(text => [text, verdict(text)]));
-/** The adoption the A1 replica plants: one finding per row and root, a negated twin, an unanchored page, outside and ignored files. */
+/** A cut control: an anchored file whose line 3 opens a WARM-inference part and a marker part that only the cut keeps apart. */
+const cutFindings = (text: string, path: string): string[] => [...survey([[path, `The ActivityBoundary note.\n\n${text}\n`]]).findings];
+/** Each stated cut (read as a .md page and as another file): the WARM part is a finding only where the cut keeps it alone. */
+const CUTS: Readonly<Record<string, string>> = {
+  "after .": "A WARM context calls inference. The host never waits.",
+  "after ;": "A WARM context calls inference; the host never waits.",
+  "after !": "A WARM context calls inference! The host never waits.",
+  "after ?": "Does a WARM context call inference? The host never waits.",
+  "at a blank line": "A WARM context calls inference\n\nthe host never waits",
+  "around a table row": "| A WARM context calls inference |\n| the host never waits |",
+  "around a heading line": "# A WARM context calls inference\nthe host never waits",
+  "before a list item": "the host never waits\n- A WARM context calls inference",
+};
+/** The joined twins: one sentence (its marker quiets the WARM part), a sentence wrapped over two lines either way. */
+const JOINED: readonly string[] = ["A WARM context calls inference and the host never waits.", "A WARM context calls inference\nthe host never waits", "A WARM context\ncalls inference."];
+/** The WORDS statement's examples, each read by words(). */
+const WORD_CASES: Readonly<Record<string, string>> = {
+  "case change": "ActivityBoundary",
+  "lower first": "queryView",
+  "two capitals": "DevTools",
+  "acronym run": "WARMContext",
+  "snake case": "activity_boundary",
+  "kebab case": "activity-boundary",
+  "fullwidth letter": `${FULLWIDTH_Q}ueryView`,
+};
+/** One sentence that names the subject with a row-A violation: planted wherever a file must stay unjudged, and once where it is read. */
+const OUTSIDE_TEXT = "The ActivityBoundary keeps a WARM context that calls inference.\n";
+const READ_TWIN = "docs/read.md";
+const BINARY_PLANT = "docs/binary.md";
+/** A plant under each outside root, and the ignored one. */
+const UNREAD_PLANTS: readonly string[] = [...CONSTANTS.outside.map(root => `${root}/plant.md`), "docs/ignored.md"];
+/** The replica's manifest: one reactive-fiber package in each dependency field, and one in a field that is never read. */
+const REPLICA_MANIFEST = `${JSON.stringify({ dependencies: { "@reactive-fiber/tsx": "0.1.668" }, devDependencies: { "@reactive-fiber/zz-dev": "0.0.0" }, optionalDependencies: { "@reactive-fiber/zz-optional": "0.0.0" }, peerDependencies: { "@reactive-fiber/zz-peer": "0.0.0" }, overrides: { "@reactive-fiber/zz-override": "0.0.0" } }, null, 2)}\n`;
+/** The adoption the A1 replica plants: a finding in every read root and for every row, a negated twin, an unanchored page,
+ * the unread plants (one per outside root, an ignored file, a binary file) beside their read twin, and the manifest. */
 const ADOPTION_PLANTS: Readonly<Record<string, string>> = {
   "docs/plant.md": "# Plant\n\nThe ActivityBoundary keeps a WARM context.\n\nA WARM context calls inference for Pi.\n",
   "docs/plant-twin.md": "The ActivityBoundary keeps a WARM context.\n\nA WARM context never calls inference for Pi.\n",
@@ -575,26 +663,53 @@ const ADOPTION_PLANTS: Readonly<Record<string, string>> = {
   "src/plant.ts": '// ActivityBoundary adapter.\nexport function warm(state: string): void {\n  if (state === "WARM") {\n    runEffect();\n  }\n}\ndeclare function runEffect(): void;\n',
   "qa/plant.mjs": "// ActivityBoundary: the WARM state owns the speculative execution.\nexport {};\n",
   ".pi/agents/plant.md": "The ActivityBoundary DevTools panel transitions a context to WARM.\n",
+  ".agents/plant.md": "- The inspector dispatches the ActivityBoundary transition.\n",
   "README.md": "The inspector writes the ActivityBoundary state.\n",
-  "test/plant.md": "The ActivityBoundary keeps a WARM context that calls inference.\n",
-  "docs/ignored.md": "The ActivityBoundary keeps a WARM context that calls inference.\n",
+  ...Object.fromEntries(UNREAD_PLANTS.map(path => [path, OUTSIDE_TEXT])),
+  [READ_TWIN]: OUTSIDE_TEXT,
+  [BINARY_PLANT]: `${OUTSIDE_TEXT}${NUL}\n`,
   ".gitignore": "docs/ignored.md\n",
-  "package.json": '{ "dependencies": { "@reactive-fiber/tsx": "0.1.668" } }\n',
+  "package.json": REPLICA_MANIFEST,
 };
-/** The surfaces the C2 replica plants: a builtin three modules deep, type-only, dynamic, require, re-export, unresolved, and the residuals. */
+/** The surfaces the C2 replica plants: the closure forms beside their twins, each resolution candidate, two non-surfaces named
+ * for one, and the residuals. */
 const SURFACE_PLANTS: Readonly<Record<string, string>> = {
   "src/ui/plant-inspector.ts": 'import { a } from "./plant-a.js";\nexport const x = a;\n',
   "src/ui/plant-a.ts": 'import { b } from "../plant-b.js";\nexport const a = b;\n',
   "src/plant-b.ts": 'import { writeFileSync } from "node:fs";\nexport const b = writeFileSync;\n',
   "src/ui/plant-typed-inspector.ts": 'import type { Stats } from "node:fs";\nexport type S = Stats;\n',
+  "src/ui/plant-typed-names-inspector.ts": 'import { type Stats } from "node:fs";\nexport type S = Stats;\n',
+  "src/ui/plant-mixed-names-inspector.ts": 'import { type Stats, statSync } from "node:fs";\nexport type S = Stats;\nexport const s = statSync;\n',
+  "src/ui/plant-typed-export-inspector.ts": 'export type { Stats } from "node:fs";\n',
+  "src/ui/plant-typed-names-export-inspector.ts": 'export { type Stats } from "node:fs";\n',
+  "src/ui/plant-value-export-inspector.ts": 'export { Stats } from "node:fs";\n',
+  "src/ui/plant-mixed-export-inspector.ts": 'export { type Stats, statSync } from "node:fs";\n',
+  "src/ui/plant-equals-inspector.ts": 'import fs = require("node:fs");\nexport const e = fs;\n',
+  "src/ui/plant-typed-equals-inspector.ts": 'import type fs = require("node:fs");\nexport type F = typeof fs;\n',
   "src/ui/plant-dynamic-devtools.ts": 'export const load = () => import("node:child_process");\n',
   "src/ui/plant-require-dev-tools.ts": 'const cp = require("child_process");\nexport { cp };\n',
   "src/ui/plant-reexport-inspector.ts": 'export * from "node:net";\n',
   "src/ui/plant-unresolved-inspector.ts": 'import { z } from "./missing.js";\nexport const q = z;\n',
+  "src/ui/plant-mts-inspector.ts": 'import { m } from "./plant-m.mjs";\nexport const x = m;\n',
+  "src/ui/plant-m.mts": 'import { hostname } from "node:os";\nexport const m = hostname;\n',
+  "src/ui/plant-js-inspector.ts": 'import { j } from "./plant-j.js";\nexport const x = j;\n',
+  "src/ui/plant-j.js": 'import { release } from "node:os";\nexport const j = release;\n',
+  "src/ui/plant-bare-inspector.ts": 'import { k } from "./plant-k";\nexport const x = k;\n',
+  "src/ui/plant-k.ts": 'import { platform } from "node:os";\nexport const k = platform;\n',
+  "src/ui/plant-index-inspector.ts": 'import { d } from "./plant-d";\nexport const x = d;\n',
+  "src/ui/plant-d/index.ts": 'import { cpus } from "node:os";\nexport const d = cpus;\n',
+  "src/ui/plant-inspector-notes.md": "The inspector notes.\n",
+  "qa/plant-inspector.mjs": 'import { spawn } from "node:child_process";\nexport const run = spawn;\n',
   "src/ui/plant-panel.ts": 'import { writeFileSync } from "node:fs";\nexport const w = writeFileSync;\n',
   "src/ui/plant-package-inspector.ts": 'import { io } from "fake-io-lib";\nexport const y = io;\n',
   "src/ui/plant-injected-inspector.ts": 'export function render(write: (text: string) => void): void {\n  write("x");\n}\n',
+  "src/ui/plant-handed-inspector.ts": 'export function render(store: { append(text: string): void }): void {\n  store.append("x");\n}\n',
+  "src/ui/plant-fetch-inspector.ts": "export const send = (url: string): Promise<Response> => fetch(url);\n",
+  "src/ui/plant-http-inspector.ts": 'import { request } from "node:http";\nexport const send = request;\n',
+  "src/ui/plant-stream-inspector.ts": "export const say = (text: string): boolean => process.stdout.write(text);\n",
   "src/ui/plant-computed-inspector.ts": 'const name = "node:fs";\nexport const load = () => import(name);\n',
+  "src/ui/plant-loader-inspector.ts": 'import { createRequire } from "node:module";\nconst load = createRequire(import.meta.url);\nexport const cp = load("node:child_process");\n',
+  "src/ui/plant-global-load-inspector.ts": 'export const fs = (): unknown => process.getBuiltinModule("node:fs");\n',
 };
 const summary = (closure: Closure): { [key: string]: Json } => ({ pure: pure(closure), builtins: closure.builtins, unresolved: closure.unresolved, packages: closure.packages });
 
@@ -614,12 +729,13 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const files = real.survey.files;
     const count = (root: string): number => files.filter(path => (root === "" ? atRoot(path) : path.startsWith(`${root}/`))).length;
     const floors = { files: files.length >= FLOORS.files, root: count("") >= FLOORS.root, src: count("src") >= FLOORS.src, docs: count("docs") >= FLOORS.docs, qa: count("qa") >= FLOORS.qa, examples: count("examples") >= FLOORS.examples };
-    // The same pass over a scratch git repository holding an adoption: exactly its plants, never test/ or an ignored file.
+    // The same pass over a scratch git repository holding an adoption: exactly its plants, never an unread plant.
     const replica = gitReplica("km7q6-adopt-", ADOPTION_PLANTS);
     const listed = gitList(replica);
     const mirror = survey(readTexts(replica, listed).texts);
     return {
       producer: producerOf(ROSTER.producer),
+      producerControls: Object.fromEntries(Object.entries(PRODUCER_FLIPS).map(([name, flip]) => [name, producerWith(flip)])),
       adoption: adoptionOf(real.survey.anchored),
       anchored: [...real.survey.anchored],
       findings: [...real.survey.findings],
@@ -633,9 +749,15 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         anchored: [...mirror.anchored],
         findings: [...mirror.findings],
         tsxDependencies: tsxDependencies(readFileSync(join(replica, "package.json"), "utf8")),
+        // A listed directory cannot be read as a file (recorded); a path gone before its read is dropped.
+        unreadable: readTexts(replica, ["docs", "docs/gone.md"]).unreadable,
       },
       quiet: {
-        "R-OUTSIDE-ROOTS": [listed.filter(path => path.startsWith("test/") || path === "docs/ignored.md"), mirror.findings.filter(finding => finding.startsWith("docs/plant.md:"))],
+        "R-OUTSIDE-ROOTS": {
+          unread: Object.fromEntries(UNREAD_PLANTS.map(path => [path, listed.includes(path)])),
+          binary: [[...mirror.binary], mirror.anchored.includes(BINARY_PLANT)],
+          twin: mirror.findings.filter(finding => finding.startsWith(`${READ_TWIN}:`)),
+        },
       },
     };
   },
@@ -653,12 +775,21 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         "A WARM context doesn't call inference.",
         "An ACTIVE context calls inference.",
         "A WARM context calls the inferential layer.",
+        "A WARM context should call inference.",
+        "A WARM context must call inference.",
+        "A WARM context shall call inference.",
+        "A WARM context will call inference.",
+        "If the context is WARM it calls inference.",
+        "When the context is WARM it calls inference.",
       ]),
+      contraction: [verdict(`A WARM context doesn${CURLY}t call inference.`), verdict("A WARM context does call inference.")],
       code: [
         codeFindings('if (state === "WARM") {\n  await runInference(spec);\n}\n'),
         codeFindings('switch (state) {\n  case "WARM":\n    return infer(spec);\n}\n'),
         codeFindings('if (state === "WARM") throw new Error("a WARM precompute never calls inference");\n'),
       ],
+      cuts: Object.fromEntries(Object.entries(CUTS).map(([name, text]) => [name, [cutFindings(text, "docs/cut.md"), cutFindings(text, "docs/cut.txt")]])),
+      joined: JOINED.map(text => cutFindings(text, "docs/cut.md")),
       quiet: {
         "R-UNANCHORED": [docFindings(unanchored), docFindings(`The ActivityBoundary holds the context.\n\n${unanchored}`)],
         "R-SPLIT": [docFindings("The ActivityBoundary context is WARM. It calls inference.\n"), docFindings("The ActivityBoundary context is WARM and calls inference.\n")],
@@ -678,8 +809,15 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     ]),
     code: [codeFindings('switch (state) {\n  case "WARM":\n    runEffect(spec);\n}\n'), codeFindings('// A WARM precompute never runs an effect.\nif (state === "WARM") return;\n')],
     quiet: {
-      "R-MARKER-ANYWHERE": [verdict("A WARM context runs effects, not the host."), verdict("A WARM context runs effects for the host.")],
-      "R-PARAPHRASE": [verdict("A WARM context calls the model."), verdict("A WARM context calls the inference model.")],
+      "R-MARKER-ANYWHERE": {
+        prose: [verdict("A WARM context runs effects, not the host."), verdict("A WARM context runs effects for the host.")],
+        comment: [codeFindings('// warm path, never logged\nif (state === "WARM") runEffect(spec);\n'), codeFindings('// warm path, logged\nif (state === "WARM") runEffect(spec);\n')],
+      },
+      "R-PARAPHRASE": {
+        "the model": [verdict("A WARM context calls the model."), verdict("A WARM context calls the inference model.")],
+        "a completion": [verdict("A WARM context requests a completion."), verdict("A WARM context requests an inference completion.")],
+        "a side job": [verdict("A WARM context starts a side job."), verdict("A WARM context starts an effect job.")],
+      },
     },
   }),
   B1: () => ({
@@ -692,8 +830,11 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "The EVICTED state is distinct from the query view.",
       "The state names a query.",
       "The ActivityBoundary reads a view of the query.",
+      "The ActivityBoundary is the QueryView identity.",
+      "The ActivityBoundary is separate from the QueryView identity.",
     ]),
     code: [codeFindings(`export const key = \`${HOLE}activityState}:${HOLE}queryView.id}\`;\n`), codeFindings("export const keys = { state: 1, view: 2 };\n")],
+    words: Object.fromEntries(Object.entries(WORD_CASES).map(([name, text]) => [name, words(text).join(" ")])),
     quiet: {
       "R-COMPOSED": [codeFindings('export const name = "Que" + "ryView" + "State";\n'), codeFindings('export const name = "Query" + "View" + "State";\n')],
       "R-LOOKALIKE": [
@@ -714,7 +855,13 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "The WARM state owns the execution.",
     ]),
     code: [codeFindings("boundary.state = speculativeExecution.owner;\n")],
-    quiet: { "R-SYNONYM": synonymsOf() },
+    coverage: Object.fromEntries(
+      Object.entries(COVERAGE_PLACES).map(([name, entries]) => {
+        const texts = [["control", entries[0]?.[1] ?? COVERAGE_TEXT] as const];
+        return [name, [uncoveredIn(texts, entries, VOCABULARY), isolatedIn(entries, VOCABULARY)]];
+      }),
+    ),
+    quiet: { "R-SYNONYM": outsideLoad() },
   }),
   C1: () => ({
     doc: verdicts([
@@ -726,10 +873,15 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "The inspector never transitions the context.",
       "The inspector is a read-only view of the controls.",
       "The inspector shows the WARM state.",
+      "The inspector writes the WARM context that calls inference.",
     ]),
     code: [codeFindings('inspector.dispatch({ boundary: "WARM" });\n'), codeFindings("export const view = inspector.render(model);\n")],
     quiet: {
-      "R-SURFACE-OTHER": [verdict("The panel transitions the context to WARM."), verdict("The inspector panel transitions the context to WARM.")],
+      "R-SURFACE-OTHER": {
+        "a panel": [verdict("The panel transitions the context to WARM."), verdict("The inspector panel transitions the context to WARM.")],
+        "a viewer": [verdict("The viewer writes the WARM state."), verdict("The inspector viewer writes the WARM state.")],
+        "a dashboard": [verdict("The dashboard dispatches a WARM command."), verdict("The DevTools dashboard dispatches a WARM command.")],
+      },
     },
   }),
   C2: () => {
@@ -747,16 +899,29 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const replica = gitReplica("km7q6-surface-", SURFACE_PLANTS);
     const planted = surfacesOf(gitList(replica));
     const controls = Object.fromEntries(planted.map(surface => [surface, summary(closureOf(replica, surface))]));
+    const isPure = (path: string): boolean => pure(closureOf(replica, path));
     return {
       surfaces,
       closures,
       header: headerOf(readFileSync(join(REPO, CONSTANTS.inspector), "utf8")),
       controls,
+      notSurfaces: ["src/ui/plant-inspector-notes.md", "qa/plant-inspector.mjs"].map(path => planted.includes(path)),
       quiet: {
         "R-UNNAMED-SURFACE": [planted.includes("src/ui/plant-panel.ts"), closureOf(replica, "src/ui/plant-panel.ts").builtins],
-        "R-PACKAGE": [pure(closureOf(replica, "src/ui/plant-package-inspector.ts")), pure(closureOf(replica, "src/ui/plant-inspector.ts"))],
-        "R-INJECTED": [pure(closureOf(replica, "src/ui/plant-injected-inspector.ts")), pure(closureOf(replica, "src/plant-b.ts"))],
-        "R-COMPUTED-LOAD": [pure(closureOf(replica, "src/ui/plant-computed-inspector.ts")), pure(closureOf(replica, "src/ui/plant-dynamic-devtools.ts"))],
+        "R-PACKAGE": [isPure("src/ui/plant-package-inspector.ts"), isPure("src/ui/plant-inspector.ts")],
+        "R-INJECTED": {
+          "a callback": [isPure("src/ui/plant-injected-inspector.ts"), isPure("src/plant-b.ts")],
+          "an object it calls": [isPure("src/ui/plant-handed-inspector.ts"), isPure("src/plant-b.ts")],
+        },
+        "R-AMBIENT-IO": {
+          "a global fetch": [isPure("src/ui/plant-fetch-inspector.ts"), isPure("src/ui/plant-http-inspector.ts")],
+          "a process stream": [isPure("src/ui/plant-stream-inspector.ts"), isPure("src/plant-b.ts")],
+        },
+        "R-COMPUTED-LOAD": {
+          "a computed specifier": [isPure("src/ui/plant-computed-inspector.ts"), isPure("src/ui/plant-dynamic-devtools.ts")],
+          "a createRequire loader": [closureOf(replica, "src/ui/plant-loader-inspector.ts").builtins, closureOf(replica, "src/ui/plant-require-dev-tools.ts").builtins],
+          "a global": [isPure("src/ui/plant-global-load-inspector.ts"), isPure("src/ui/plant-dynamic-devtools.ts")],
+        },
       },
     };
   },
@@ -767,34 +932,27 @@ function outsideTexts(): string[] {
   const { title, filing } = beadRow();
   return [title, filing, CONSTANTS.docs10ReadOnly, CONSTANTS.docs10Controls];
 }
-/** Every lexicon of the vocabulary, by name: the subject, the row subjects, each family and each row's markers. */
-function lexicons(): (readonly [string, Lexicon])[] {
+/** Every lexicon of a vocabulary, by name: the subject, the row subjects, each family and each row's markers. */
+function lexicons(vocab: Vocabulary = VOCABULARY): (readonly [string, Lexicon])[] {
   return [
-    ["subject", VOCABULARY.subject],
-    ["warm", VOCABULARY.warm],
-    ["state", VOCABULARY.state],
-    ["surface", VOCABULARY.surface],
-    ...FAMILY_IDS.map(id => [`family:${id}`, VOCABULARY.families[id]] as const),
-    ...ROW_IDS.map(row => [`markers:${row}`, VOCABULARY.markers[row]] as const),
+    ["subject", vocab.subject],
+    ["warm", vocab.warm],
+    ["state", vocab.state],
+    ["surface", vocab.surface],
+    ...FAMILY_IDS.map(id => [`family:${id}`, vocab.families[id]] as const),
+    ...ROW_IDS.map(row => [`markers:${row}`, vocab.markers[row]] as const),
   ];
 }
-/** R-SYNONYM: every vocabulary word, and every adjacent pair, that no outside text spells: held by this file and the roster alone. */
-function synonymsOf(): string[] {
-  const outside = outsideTexts().map(words);
-  const spelledOutside = new Set(outside.flat());
-  const all = lexicons().flatMap(([, lexicon]) => [...lexicon.words.filter(word => !spelledOutside.has(word)), ...lexicon.pairs.filter(pair => !outside.some(tokens => hasPair(tokens, [pair]))).map(pair => pair.join(" "))]);
-  return [...new Set(all)].sort(byName);
-}
-/** A word's role in the reading: subject, surface, its families joined, warm, state, the rows it marks, or none. */
-function roleOf(text: string): string {
+/** A word's role in the reading under a vocabulary: subject, surface, its families joined, warm, state, the rows it marks, or none. */
+function roleOf(text: string, vocab: Vocabulary = VOCABULARY): string {
   const tokens = words(text);
-  if (names(tokens, VOCABULARY.subject)) return "subject";
-  if (names(tokens, VOCABULARY.surface)) return "surface";
-  const families = FAMILY_IDS.filter(id => names(tokens, VOCABULARY.families[id]));
+  if (names(tokens, vocab.subject)) return "subject";
+  if (names(tokens, vocab.surface)) return "surface";
+  const families = FAMILY_IDS.filter(id => names(tokens, vocab.families[id]));
   if (families.length > 0) return families.join("+");
-  if (names(tokens, VOCABULARY.warm)) return "warm";
-  if (names(tokens, VOCABULARY.state)) return "state";
-  const rows = ROW_IDS.filter(row => names(tokens, VOCABULARY.markers[row]));
+  if (names(tokens, vocab.warm)) return "warm";
+  if (names(tokens, vocab.state)) return "state";
+  const rows = ROW_IDS.filter(row => names(tokens, vocab.markers[row]));
   return rows.length > 0 ? `marker:${rows.join("")}` : "none";
 }
 let rowCache: { readonly title: string; readonly filing: string } | undefined;
@@ -811,6 +969,190 @@ function beadRow(): { readonly title: string; readonly filing: string } {
   }
   throw new Error("bead export lacks the owner filing");
 }
+const producerLine = (line: number): string => ROSTER.producer.lines.find(entry => entry.line === line)?.text ?? "";
+/** A role place: the outside text's name, the text, the place (each group a word or pair) and the role each group reads in. */
+type Place = readonly [string, string, RegExp, readonly string[]];
+/** The place texts, every outside text a role place reads, by name: the title, the filing line, docs/10's two recorded
+ * sentences and every producer line the roster vendors. UNCOVERED reads each of them whatever the places table holds. */
+function placeTexts(): readonly (readonly [string, string])[] {
+  const { title, filing } = beadRow();
+  return [
+    ["title", title],
+    ["filing", filing],
+    ["docs/10 controls", CONSTANTS.docs10Controls],
+    ["docs/10 read-only", CONSTANTS.docs10ReadOnly],
+    ...ROSTER.producer.lines.map(entry => [`line ${entry.line}`, entry.text] as const),
+    ["triage", ROSTER.producer.tip.triage.text],
+  ];
+}
+/** The role places, by outside text. Every member these texts spell is read at one (UNCOVERED), and every member read
+ * inside a longer group is also read alone in the same text (ISOLATED), so a place deleted from this table reds. */
+function places(): readonly Place[] {
+  const { title, filing } = beadRow();
+  const line3 = producerLine(3);
+  const line66 = producerLine(66);
+  const triage = ROSTER.producer.tip.triage.text;
+  return [
+    ["title", title, /^\[SDK-REACTIVE-FIBER-ADAPTIVE-COMPUTATION-AND-(\w+)-R17\] /d, ["driving"]],
+    ["title", title, /adopts rf TSX (\w+) \((\w+)\/(\w+)\/(\w+)\/(\w+); gated TSX-RQ7\), a (\w+) context precomputes only explicitly eligible (\w+-\w+) resources under the existing SpeculationBoundary and (\w+) calls (\w+) or (\w+);/d, ["subject", "state", "warm", "state", "state", "warm", "marker:C", "marker:ABC", "inference", "effect"]],
+    ["title", title, /; (\w+) (\w+) stays (\w+) from (\w+) identity and (\w+ \w+ \w+); (\w+) only consumes emitted host events\.$/d, ["subject", "state", "marker:B", "query-view", "execution", "surface"]],
+    ["title", title, /identity and (\w+ \w+) \w+; /d, ["execution"]],
+    ["title", title, /identity and \w+ (\w+ \w+); /d, ["execution"]],
+    ["filing", filing, /-computation-and-(\w+)-2026-10-17\.md:66@/d, ["driving"]],
+    ["filing", filing, /including existing \S+ '(\w+) premature optimizer/d, ["marker:ABC"]],
+    ["filing", filing, /Pi's (\w+) consumes emitted host events only/d, ["surface"]],
+    ["filing", filing, /but (\w+) bead binds (\w+) (\w+) or (\w+) eligibility \(bd search '(\w+)' empty\)/d, ["marker:ABC", "subject", "state", "warm", "subject"]],
+    ["filing", filing, /Acceptance: adoption-time falsifier that a (\w+) precompute attempting (\w+) or an (\w+) is (\w+), that boundary (\w+) (\w+) aliases (\w+) identity or (\w+ \w+ \w+), and that (\w+)-style surfaces stay (\w+-\w+) consumers\./d, ["warm", "inference", "effect", "marker:A", "state", "marker:ABC", "query-view", "execution", "surface", "marker:C"]],
+    ["filing", filing, /aliases QueryView identity or (\w+ \w+) \w+, and/d, ["execution"]],
+    ["filing", filing, /aliases QueryView identity or \w+ (\w+ \w+), and/d, ["execution"]],
+    ["docs/10 controls", CONSTANTS.docs10Controls, /^(\w+) (\w+) on (\w+) explicit (\w+) require/d, ["driving", "driving", "marker:B", "driving"]],
+    ["docs/10 read-only", CONSTANTS.docs10ReadOnly, /^A (\w+-\w+) rich (\w+) now offers/d, ["marker:C", "surface"]],
+    ["line 3", line3, /\[Adaptive Computation and (\w+)\]\(/d, ["driving"]],
+    ["line 3", line3, /\/adaptive-computation-and-(\w+)-2026-10-17\)/d, ["driving"]],
+    ["line 66", line66, /^(\w+) (\w+)\/(\w+)\/(\w+)\/(\w+) remains (\w+) from (\w+) identity and (\w+ \w+ \w+)\. A (\w+) context may precompute only explicitly eligible (\w+-\w+) resources under existing SpeculationBoundary, (\w+) call (\w+)\/(\w+)\./d, ["subject", "state", "warm", "state", "state", "marker:B", "query-view", "execution", "warm", "marker:C", "marker:ABC", "inference", "effect"]],
+    ["line 66", line66, /identity and (\w+ \w+) \w+\. A /d, ["execution"]],
+    ["line 66", line66, /identity and \w+ (\w+ \w+)\. A /d, ["execution"]],
+    ["line 66", line66, /aborted attempt (\w+) registration/d, ["marker:ABC"]],
+    ["line 66", line66, /share one host (\w+ \w+) (\w+) premature unsubscribe/d, ["query-view", "marker:ABC"]],
+    ["line 66", line66, /TSX-RQ7 existing \S+ (\w+) premature optimizer/d, ["marker:ABC"]],
+    ["line 66", line66, /(\w+) only consumes emitted host events\.$/d, ["surface"]],
+    ["triage", triage, /the Activity (\w+) (\w+)\/(\w+)\/(\w+)\/(\w+) exactly once/d, ["state", "state", "warm", "state", "state"]],
+    ["triage", triage, /declaring an (\w+) and reading a status \(ruling R-03\); (\w+) and SpeculationBoundary/d, ["subject", "subject"]],
+  ];
+}
+/** Whether a token run spells a member: a word, or an adjacent pair ("a b"). */
+function spells(tokens: readonly string[], member: string): boolean {
+  const space = member.indexOf(" ");
+  return space < 0 ? tokens.includes(member) : hasPair(tokens, [[member.slice(0, space), member.slice(space + 1)]]);
+}
+/** UNCOVERED: with every group of a text's places blanked, each vocabulary member the text still spells. */
+function uncoveredIn(texts: readonly (readonly [string, string])[], entries: readonly Place[], vocab: Vocabulary): string[] {
+  const spans = new Map<string, (readonly [number, number])[]>();
+  for (const [name, text, rx] of entries) {
+    const groups = (rx.exec(text)?.indices?.slice(1) ?? []).filter((span): span is [number, number] => span !== undefined);
+    spans.set(name, [...(spans.get(name) ?? []), ...groups]);
+  }
+  const all = members(vocab);
+  return texts.flatMap(([name, text]) => {
+    const mask = new Array<boolean>(text.length).fill(false);
+    for (const [start, end] of spans.get(name) ?? []) mask.fill(true, start, end);
+    let blanked = "";
+    for (let at = 0; at < text.length; at += 1) blanked += mask[at] ? " " : text[at];
+    const tokens = words(blanked);
+    return all.filter(member => spells(tokens, member)).map(member => `${name}:${member}`);
+  });
+}
+/** ISOLATED: each member a text's groups spell that no group of the same text reads alone (its whole group). */
+function isolatedIn(entries: readonly Place[], vocab: Vocabulary): string[] {
+  const all = members(vocab);
+  const inside = new Map<string, Set<string>>();
+  const alone = new Map<string, Set<string>>();
+  for (const [name, text, rx] of entries) {
+    for (const group of rx.exec(text)?.slice(1) ?? []) {
+      const tokens = words(group);
+      inside.set(name, new Set([...(inside.get(name) ?? []), ...all.filter(member => spells(tokens, member))]));
+      alone.set(name, new Set([...(alone.get(name) ?? []), ...all.filter(member => member === tokens.join(" "))]));
+    }
+  }
+  return [...inside].flatMap(([name, spelled]) => [...spelled].filter(member => !(alone.get(name)?.has(member) ?? false)).map(member => `${name}:${member}`));
+}
+/** The coverage controls: a text no group reads, a word read alone, a pair read only inside a longer group, and the same pair
+ * read apart too. */
+const COVERAGE_TEXT = "The QueryView state never calls inference.";
+const PHRASE_TEXT = "The speculative execution ownership never waits.";
+const COVERAGE_PLACES: Readonly<Record<string, readonly Place[]>> = {
+  "a text read nowhere": [],
+  "a word read alone": [["control", COVERAGE_TEXT, /^The (\w+) state/d, ["query-view"]]],
+  "a pair read inside a phrase only": [["control", PHRASE_TEXT, /^The (\w+ \w+ \w+) never/d, ["execution"]]],
+  "the pairs read apart too": [
+    ["control", PHRASE_TEXT, /^The (\w+ \w+ \w+) never/d, ["execution"]],
+    ["control", PHRASE_TEXT, /^The (\w+ \w+) \w+ never/d, ["execution"]],
+    ["control", PHRASE_TEXT, /^The \w+ (\w+ \w+) never/d, ["execution"]],
+  ],
+};
+const OUTSIDE_KEYS = ["labels", "title", "producer", "places", "roleless", "uncovered", "isolated", "unspelled"] as const;
+type OutsideReadings = Readonly<Record<(typeof OUTSIDE_KEYS)[number], Json>>;
+/** Every judged-set reading of an outside text under a vocabulary; the judged set holds each to a literal (OUTSIDE LOAD). */
+function outsideReadings(vocab: Vocabulary): OutsideReadings {
+  const { title } = beadRow();
+  const [labelA = "", labelB = "", labelC = ""] = ROWS.map(row => row.label);
+  const warmClause = /, (a WARM context precomputes .+? never calls inference or effects);/.exec(title)?.[1] ?? "";
+  const stateClause = /; (ActivityBoundary state stays separate from .+? ownership);/.exec(title)?.[1] ?? "";
+  const devtoolsClause = /; (DevTools only consumes emitted host events)\.$/.exec(title)?.[1] ?? "";
+  const [separation = "", warmSentence = "", testList = "", consumes = ""] = sentences(producerLine(66), false).map(sentence => sentence.text);
+  const read = places().map(([, text, rx]) => (rx.exec(text)?.slice(1) ?? []).map(word => roleOf(word, vocab)));
+  return {
+    labels: [
+      readRow("A", labelA, vocab),
+      readRow("A", labelA.replace(/ is refused$/, ""), vocab),
+      readRow("B", labelB, vocab),
+      readRow("B", labelB.replace(" never ", " "), vocab),
+      readRow("C", labelC, vocab),
+      readRow("C", `${labelC.replace(/ stay read-only consumers$/, "")} ${CONSTANTS.docs10Controls}`, vocab),
+      readRow("C", `${labelC} ${CONSTANTS.docs10Controls}`, vocab),
+    ],
+    title: [
+      readRow("A", warmClause, vocab),
+      readRow("A", warmClause.replace(" never ", " "), vocab),
+      readRow("B", stateClause, vocab),
+      readRow("B", stateClause.replace("stays separate from", "is"), vocab),
+      readRow("C", devtoolsClause, vocab),
+      names(words(devtoolsClause), vocab.surface),
+    ],
+    producer: [
+      readRow("B", separation, vocab),
+      readRow("B", separation.replace("remains separate from", "is"), vocab),
+      readRow("A", warmSentence, vocab),
+      readRow("A", warmSentence.replace(", not call", " and call"), vocab),
+      verdict(testList, vocab),
+      readRow("C", consumes, vocab),
+    ],
+    places: read,
+    roleless: read.flat().filter(role => role === "none"),
+    uncovered: uncoveredIn(placeTexts(), places(), vocab),
+    isolated: isolatedIn(places(), vocab),
+    unspelled: lexicons(vocab)
+      .filter(([, lexicon]) => !outsideTexts().some(text => names(words(text), lexicon)))
+      .map(([name]) => name),
+  };
+}
+/** Every distinct lexicon member, a word or an adjacent pair ("a b"), in lexicon order. */
+function members(vocab: Vocabulary): string[] {
+  return [...new Set(lexicons(vocab).flatMap(([, lexicon]) => [...lexicon.words, ...lexicon.pairs.map(pair => pair.join(" "))]))];
+}
+/** The vocabulary with one member taken out of every lexicon that holds it. */
+function without(vocab: Vocabulary, member: string): Vocabulary {
+  const strip = (lexicon: Lexicon): Lexicon => ({ words: lexicon.words.filter(word => word !== member), pairs: lexicon.pairs.filter(pair => pair.join(" ") !== member) });
+  const { families, markers } = vocab;
+  return {
+    ...vocab,
+    subject: strip(vocab.subject),
+    warm: strip(vocab.warm),
+    state: strip(vocab.state),
+    surface: strip(vocab.surface),
+    families: { inference: strip(families.inference), effect: strip(families.effect), "query-view": strip(families["query-view"]), execution: strip(families.execution), driving: strip(families.driving) },
+    markers: { A: strip(markers.A), B: strip(markers.B), C: strip(markers.C) },
+  };
+}
+/** OUTSIDE LOAD: each member's load (the readings its removal moves); R-SYNONYM is the members that move none. */
+function outsideLoad(): { [key: string]: Json } {
+  const base = outsideReadings(VOCABULARY);
+  const load = members(VOCABULARY).map(member => {
+    const moved = outsideReadings(without(VOCABULARY, member));
+    return [member, OUTSIDE_KEYS.filter(key => !isDeepStrictEqual(base[key], moved[key]))] as const;
+  });
+  const synonyms = load
+    .filter(([, moved]) => moved.length === 0)
+    .map(([member]) => member)
+    .sort(byName);
+  // With UNCOVERED and ISOLATED holding, a member carries load exactly when a place text spells it.
+  const texts = placeTexts().map(([, text]) => words(text));
+  expect(synonyms).toEqual(members(VOCABULARY).filter(member => !texts.some(tokens => spells(tokens, member))).sort(byName));
+  return {
+    synonyms,
+    load: Object.fromEntries(load.filter(([, moved]) => moved.length > 0).map(([member, moved]) => [member, [...moved]])),
+  };
+}
 const GAP = /^[\s,;:]*$/;
 function tiled(body: string, quotes: readonly string[]): boolean {
   let at = 0;
@@ -821,7 +1163,6 @@ function tiled(body: string, quotes: readonly string[]): boolean {
   }
   return GAP.test(body.slice(at));
 }
-const producerLine = (line: number): string => ROSTER.producer.lines.find(entry => entry.line === line)?.text ?? "";
 
 describe("wb-km7q.6 TSX ActivityBoundary adoption census (SDK-REACTIVE-FIBER-ADAPTIVE-COMPUTATION-AND-CONTROL-R17, the adoption-time falsifier)", () => {
   it("judged set: frozen shape, roster, the owner filing's acceptance and title, the producer lines and docs/10", { timeout: 180_000 }, () => {
@@ -836,24 +1177,27 @@ describe("wb-km7q.6 TSX ActivityBoundary adoption census (SDK-REACTIVE-FIBER-ADA
     const clause = /Acceptance: ([^.]+)\./.exec(filing)?.[1] ?? "";
     expect(clause).toBe(ROWS.map(row => row.label).join(", "));
     expect(ROWS.map(row => tiled(row.label, row.pins.map(pin => pin.quote)))).toEqual(ROWS.map(() => true));
+    // Every outside reading under this file's vocabulary, each held to a literal here (B2's OUTSIDE LOAD moves exactly these).
+    const outside = outsideReadings(VOCABULARY);
     // Each label: A quiet only by "refused", B only by "never"; C names the surface and no driving word until docs/10 supplies one.
-    const [labelA = "", labelB = "", labelC = ""] = ROWS.map(row => row.label);
-    expect(readRow("A", labelA)).toEqual({ kind: "marker", reason: "refused" });
-    expect(readRow("A", labelA.replace(/ is refused$/, ""))).toEqual({ kind: "finding", reason: "inference+effect" });
-    expect(readRow("B", labelB)).toEqual({ kind: "marker", reason: "never" });
-    expect(readRow("B", labelB.replace(" never ", " "))).toEqual({ kind: "finding", reason: "query-view+execution" });
-    expect(readRow("C", labelC)).toEqual({ kind: "none", reason: "" });
-    expect(readRow("C", `${labelC.replace(/ stay read-only consumers$/, "")} ${CONSTANTS.docs10Controls}`)).toEqual({ kind: "finding", reason: "driving" });
-    expect(readRow("C", `${labelC} ${CONSTANTS.docs10Controls}`)).toEqual({ kind: "marker", reason: "read only" });
+    expect(outside.labels).toEqual([
+      { kind: "marker", reason: "refused" },
+      { kind: "finding", reason: "inference+effect" },
+      { kind: "marker", reason: "never" },
+      { kind: "finding", reason: "query-view+execution" },
+      { kind: "none", reason: "" },
+      { kind: "finding", reason: "driving" },
+      { kind: "marker", reason: "read only" },
+    ]);
     // The title: its WARM clause is quiet only by "never", its state clause only by "separate"; its DevTools clause names the surface.
-    const warmClause = /, (a WARM context precomputes .+? never calls inference or effects);/.exec(title)?.[1] ?? "";
-    expect(readRow("A", warmClause)).toEqual({ kind: "marker", reason: "never" });
-    expect(readRow("A", warmClause.replace(" never ", " "))).toEqual({ kind: "finding", reason: "inference+effect" });
-    const stateClause = /; (ActivityBoundary state stays separate from .+? ownership);/.exec(title)?.[1] ?? "";
-    expect(readRow("B", stateClause)).toEqual({ kind: "marker", reason: "separate" });
-    expect(readRow("B", stateClause.replace("stays separate from", "is"))).toEqual({ kind: "finding", reason: "query-view+execution" });
-    const devtoolsClause = /; (DevTools only consumes emitted host events)\.$/.exec(title)?.[1] ?? "";
-    expect([readRow("C", devtoolsClause).kind, names(words(devtoolsClause), VOCABULARY.surface)]).toEqual(["none", true]);
+    expect(outside.title).toEqual([
+      { kind: "marker", reason: "never" },
+      { kind: "finding", reason: "inference+effect" },
+      { kind: "marker", reason: "separate" },
+      { kind: "finding", reason: "query-view+execution" },
+      { kind: "none", reason: "" },
+      true,
+    ]);
     expect(ROSTER.unclaimed.map(entry => title.includes(entry.duty) && entry.reason.length > 0)).toEqual(ROSTER.unclaimed.map(() => true));
     // The citations: every cited line of the producer is a recorded line, at the recorded bead pin.
     const cited = [...filing.matchAll(/:(\d+)@([0-9a-f]{12})/g)].map(match => [Number(match[1]), match[2] ?? ""] as const);
@@ -865,42 +1209,37 @@ describe("wb-km7q.6 TSX ActivityBoundary adoption census (SDK-REACTIVE-FIBER-ADA
     expect(recorded.map(entry => sha256(entry.text))).toEqual(recorded.map(entry => entry.sha256));
     expect(ROSTER.producer.reading).toBe(producerOf(ROSTER.producer));
     expect(ROSTER.producer.blob).toBe(ROSTER.producer.tip.blob);
-    const amendment = sentences(producerLine(66), false).map(sentence => sentence.text);
-    expect(amendment.length).toBe(4);
-    const [separation = "", warmSentence = "", testList = "", consumes = ""] = amendment;
-    expect(readRow("B", separation)).toEqual({ kind: "marker", reason: "separate" });
-    expect(readRow("A", warmSentence)).toEqual({ kind: "marker", reason: "not" });
-    expect(readRow("A", warmSentence.replace(", not call", " and call"))).toEqual({ kind: "finding", reason: "inference+effect" });
-    expect([verdict(testList), readRow("C", consumes).kind]).toEqual([null, "none"]);
+    expect(sentences(producerLine(66), false).length).toBe(4);
+    expect(outside.producer).toEqual([
+      { kind: "marker", reason: "separate" },
+      { kind: "finding", reason: "query-view+execution" },
+      { kind: "marker", reason: "not" },
+      { kind: "finding", reason: "inference+effect" },
+      null,
+      { kind: "none", reason: "" },
+    ]);
     // docs/10 and the inspector: the two recorded sentences and the header are present as recorded.
     const docs10 = sentences(readFileSync(join(REPO, CONSTANTS.docs10), "utf8"), true).map(sentence => sentence.text);
     expect([docs10.includes(CONSTANTS.docs10ReadOnly), docs10.includes(CONSTANTS.docs10Controls)]).toEqual([true, true]);
     expect(headerOf(readFileSync(join(REPO, CONSTANTS.inspector), "utf8"))).toBe(CONSTANTS.inspectorHeader);
     expect(filing.includes("(docs/workbench/10)") && CONSTANTS.docs10.startsWith("docs/workbench/10-")).toBe(true);
-    // Every subject, state, surface, family and marker word the filing, docs/10 or the producer spells at a fixed place reads in its role.
-    const places: readonly (readonly [string, RegExp, readonly string[]])[] = [
-      [title, /adopts rf TSX (\w+) \((\w+)\/(\w+)\/(\w+)\/(\w+); gated TSX-RQ7\), a (\w+) context precomputes only explicitly eligible (\w+-\w+) resources under the existing SpeculationBoundary and (\w+) calls (\w+) or (\w+);/, ["subject", "state", "warm", "state", "state", "warm", "marker:C", "marker:ABC", "inference", "effect"]],
-      [title, /; (\w+) (\w+) stays (\w+) from (\w+) identity and (\w+ \w+ \w+); (\w+) only consumes emitted host events\.$/, ["subject", "state", "marker:B", "query-view", "execution", "surface"]],
-      [filing, /Pi's (\w+) consumes emitted host events only/, ["surface"]],
-      [filing, /no bead binds (\w+) (\w+) or (\w+) eligibility/, ["subject", "state", "warm"]],
-      [filing, /Acceptance: adoption-time falsifier that a (\w+) precompute attempting (\w+) or an (\w+) is (\w+), that boundary (\w+) (\w+) aliases (\w+) identity or (\w+ \w+ \w+), and that (\w+)-style surfaces stay (\w+-\w+) consumers\./, ["warm", "inference", "effect", "marker:A", "state", "marker:ABC", "query-view", "execution", "surface", "marker:C"]],
-      [CONSTANTS.docs10Controls, /^(\w+) (\w+) on separate explicit (\w+) require/, ["driving", "driving", "driving"]],
-      [CONSTANTS.docs10ReadOnly, /^A (\w+-\w+) rich (\w+) now offers/, ["marker:C", "surface"]],
-      [producerLine(66), /^(\w+) (\w+)\/(\w+)\/(\w+)\/(\w+) remains (\w+) from (\w+) identity and (\w+ \w+ \w+)\. A (\w+) context may precompute only explicitly eligible (\w+-\w+) resources under existing SpeculationBoundary, (\w+) call (\w+)\/(\w+)\./, ["subject", "state", "warm", "state", "state", "marker:B", "query-view", "execution", "warm", "marker:C", "marker:ABC", "inference", "effect"]],
-      [producerLine(66), /(\w+) only consumes emitted host events\.$/, ["surface"]],
-      [ROSTER.producer.tip.triage.text, /the Activity (\w+) (\w+)\/(\w+)\/(\w+)\/(\w+) exactly once/, ["state", "state", "warm", "state", "state"]],
-    ];
-    const read = places.map(([text, rx]) => (rx.exec(text)?.slice(1) ?? []).map(roleOf));
-    expect(read).toEqual(places.map(([, , roles]) => roles));
-    // Two readings no literal of this file sets: every word an outside text spells at a role place has a role, and every
-    // lexicon keeps a member an outside text spells, so a vocabulary hollowed together with every expected value still reds.
-    expect(read.flat().filter(role => role === "none")).toEqual([]);
-    expect(lexicons().filter(([, lexicon]) => !outsideTexts().some(text => names(words(text), lexicon))).map(([name]) => name)).toEqual([]);
+    // Every subject, state, surface, family and marker word or pair an outside text spells at a fixed place reads in its role;
+    // the place texts are the seven recorded texts, and every place reads one of them.
+    expect(outside.places).toEqual(places().map(([, , , roles]) => [...roles]));
+    expect(placeTexts().map(([name]) => name)).toEqual(["title", "filing", "docs/10 controls", "docs/10 read-only", "line 3", "line 66", "triage"]);
+    expect(places().filter(([name, text]) => !placeTexts().some(([known, recorded]) => known === name && recorded === text)).map(([name]) => name)).toEqual([]);
+    // Four readings no literal of this file sets: every word an outside text spells at a role place has a role; with every
+    // role place blanked, no place text spells a member; every member read inside a longer group is also read alone in the
+    // same text; and every lexicon keeps a member an outside text spells.
+    expect(outside.roleless).toEqual([]);
+    expect(outside.uncovered).toEqual([]);
+    expect(outside.isolated).toEqual([]);
+    expect(outside.unspelled).toEqual([]);
     // The read set partitions Pi's tracked top level: every directory is read or outside, never both.
     expect(CONSTANTS.readRoots.filter(root => CONSTANTS.outside.includes(root))).toEqual([]);
     expect(trackedTop(REPO).filter(directory => CONSTANTS.readRoots.includes(directory) === CONSTANTS.outside.includes(directory))).toEqual([]);
     const pins = ROWS.flatMap(row => row.pins.map(pin => pin.id));
-    expect(ROSTER.residuals.map(residual => residual.id)).toEqual(["R-OUTSIDE-ROOTS", "R-UNANCHORED", "R-SPLIT", "R-MARKER-ANYWHERE", "R-PARAPHRASE", "R-COMPOSED", "R-LOOKALIKE", "R-SYNONYM", "R-SURFACE-OTHER", "R-UNNAMED-SURFACE", "R-PACKAGE", "R-INJECTED", "R-COMPUTED-LOAD"]);
+    expect(ROSTER.residuals.map(residual => residual.id)).toEqual(["R-OUTSIDE-ROOTS", "R-UNANCHORED", "R-SPLIT", "R-MARKER-ANYWHERE", "R-PARAPHRASE", "R-COMPOSED", "R-LOOKALIKE", "R-SYNONYM", "R-SURFACE-OTHER", "R-UNNAMED-SURFACE", "R-PACKAGE", "R-INJECTED", "R-AMBIENT-IO", "R-COMPUTED-LOAD"]);
     expect(ROSTER.residuals.every(residual => pins.includes(residual.quietPin))).toBe(true);
   });
   for (const row of ROWS) {

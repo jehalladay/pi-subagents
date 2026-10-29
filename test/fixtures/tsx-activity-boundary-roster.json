@@ -5,7 +5,7 @@
     "path": "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md",
     "beadPin": "e7e6616d3d0842af51ca6fa31164f33ac2d85bf3",
     "blob": "0197095027b82e38d062d334c6858b4c0a2971ff",
-    "measuredAt": "2026-10-28",
+    "measuredAt": "2026-10-29",
     "lines": [
       {
         "line": 3,
@@ -306,6 +306,13 @@
           "quote": "adoption-time falsifier",
           "witness": {
             "producer": "UNSHIPPED",
+            "producerControls": {
+              "all three flipped": "SHIPPED",
+              "status still proposed": "UNSHIPPED",
+              "status still claims none shipped": "UNSHIPPED",
+              "src still names no subject": "UNSHIPPED",
+              "triage still PROPOSED": "UNSHIPPED"
+            },
             "adoption": "ABSENT",
             "anchored": [],
             "findings": [],
@@ -325,11 +332,14 @@
             ],
             "replica": {
               "listed": [
+                ".agents/plant.md",
                 ".gitignore",
                 ".pi/agents/plant.md",
                 "README.md",
+                "docs/binary.md",
                 "docs/plant-twin.md",
                 "docs/plant.md",
+                "docs/read.md",
                 "docs/unanchored.md",
                 "examples/plant.md",
                 "package.json",
@@ -338,33 +348,58 @@
               ],
               "adoption": "PRESENT",
               "anchored": [
+                ".agents/plant.md",
                 ".pi/agents/plant.md",
                 "README.md",
                 "docs/plant-twin.md",
                 "docs/plant.md",
+                "docs/read.md",
                 "examples/plant.md",
                 "qa/plant.mjs",
                 "src/plant.ts"
               ],
               "findings": [
+                ".agents/plant.md:1 C:driving",
                 ".pi/agents/plant.md:1 C:driving",
                 "README.md:1 C:driving",
                 "docs/plant.md:5 A:inference",
+                "docs/read.md:1 A:inference",
                 "examples/plant.md:1 B:query-view",
                 "qa/plant.mjs:1 B:execution",
                 "src/plant.ts:2 A:effect"
               ],
               "tsxDependencies": [
-                "@reactive-fiber/tsx"
+                "@reactive-fiber/tsx",
+                "@reactive-fiber/zz-dev",
+                "@reactive-fiber/zz-optional",
+                "@reactive-fiber/zz-peer"
+              ],
+              "unreadable": [
+                "docs"
               ]
             },
             "quiet": {
-              "R-OUTSIDE-ROOTS": [
-                [],
-                [
-                  "docs/plant.md:5 A:inference"
+              "R-OUTSIDE-ROOTS": {
+                "unread": {
+                  ".beads/plant.md": false,
+                  ".codex/plant.md": false,
+                  ".github/plant.md": false,
+                  "media/plant.md": false,
+                  "new-feedback/plant.md": false,
+                  "test/plant.md": false,
+                  "vendor/plant.md": false,
+                  "docs/ignored.md": false
+                },
+                "binary": [
+                  [
+                    "docs/binary.md"
+                  ],
+                  false
+                ],
+                "twin": [
+                  "docs/read.md:1 A:inference"
                 ]
-              ]
+              }
             }
           }
         },
@@ -382,8 +417,18 @@
               "A WARM precompute attempting inference is refused.": null,
               "A WARM context doesn't call inference.": null,
               "An ACTIVE context calls inference.": null,
-              "A WARM context calls the inferential layer.": null
+              "A WARM context calls the inferential layer.": null,
+              "A WARM context should call inference.": "A:inference",
+              "A WARM context must call inference.": "A:inference",
+              "A WARM context shall call inference.": "A:inference",
+              "A WARM context will call inference.": "A:inference",
+              "If the context is WARM it calls inference.": "A:inference",
+              "When the context is WARM it calls inference.": "A:inference"
             },
+            "contraction": [
+              null,
+              "A:inference"
+            ],
             "code": [
               [
                 "src/plant.ts:2 A:inference"
@@ -392,6 +437,73 @@
                 "src/plant.ts:2 A:inference"
               ],
               []
+            ],
+            "cuts": {
+              "after .": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                [
+                  "docs/cut.txt:3 A:inference"
+                ]
+              ],
+              "after ;": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                [
+                  "docs/cut.txt:3 A:inference"
+                ]
+              ],
+              "after !": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                [
+                  "docs/cut.txt:3 A:inference"
+                ]
+              ],
+              "after ?": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                [
+                  "docs/cut.txt:3 A:inference"
+                ]
+              ],
+              "at a blank line": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                [
+                  "docs/cut.txt:3 A:inference"
+                ]
+              ],
+              "around a table row": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                []
+              ],
+              "around a heading line": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                []
+              ],
+              "before a list item": [
+                [
+                  "docs/cut.md:4 A:inference"
+                ],
+                []
+              ]
+            },
+            "joined": [
+              [],
+              [],
+              [
+                "docs/cut.md:3 A:inference"
+              ]
             ],
             "quiet": {
               "R-UNANCHORED": [
@@ -430,14 +542,32 @@
               []
             ],
             "quiet": {
-              "R-MARKER-ANYWHERE": [
-                null,
-                "A:effect"
-              ],
-              "R-PARAPHRASE": [
-                null,
-                "A:inference"
-              ]
+              "R-MARKER-ANYWHERE": {
+                "prose": [
+                  null,
+                  "A:effect"
+                ],
+                "comment": [
+                  [],
+                  [
+                    "src/plant.ts:2 A:effect"
+                  ]
+                ]
+              },
+              "R-PARAPHRASE": {
+                "the model": [
+                  null,
+                  "A:inference"
+                ],
+                "a completion": [
+                  null,
+                  "A:inference"
+                ],
+                "a side job": [
+                  null,
+                  "A:effect"
+                ]
+              }
             }
           }
         }
@@ -459,7 +589,9 @@
               "ActivityBoundary state stays separate from QueryView identity.": null,
               "The EVICTED state is distinct from the query view.": null,
               "The state names a query.": null,
-              "The ActivityBoundary reads a view of the query.": null
+              "The ActivityBoundary reads a view of the query.": null,
+              "The ActivityBoundary is the QueryView identity.": "B:query-view",
+              "The ActivityBoundary is separate from the QueryView identity.": null
             },
             "code": [
               [
@@ -467,6 +599,15 @@
               ],
               []
             ],
+            "words": {
+              "case change": "activity boundary",
+              "lower first": "query view",
+              "two capitals": "dev tools",
+              "acronym run": "warm context",
+              "snake case": "activity boundary",
+              "kebab case": "activity boundary",
+              "fullwidth letter": "query view"
+            },
             "quiet": {
               "R-COMPOSED": [
                 [],
@@ -506,74 +647,240 @@
                 "src/plant.ts:2 B:execution"
               ]
             ],
-            "quiet": {
-              "R-SYNONYM": [
-                "activity boundaries",
-                "activityboundaries",
-                "activityboundary",
-                "apart",
-                "cannot",
-                "command",
-                "commanded",
-                "commanding",
-                "controlled",
-                "controlling",
-                "devtools",
-                "dispatch",
-                "dispatched",
-                "dispatches",
-                "dispatching",
-                "distinct",
-                "drive",
-                "driven",
-                "drives",
-                "driving",
-                "drove",
-                "effectful",
-                "execution owner",
-                "independent",
-                "independently",
-                "infer",
-                "inferences",
-                "inferred",
-                "inferring",
-                "infers",
-                "inspectors",
-                "mutate",
-                "mutated",
-                "mutates",
-                "mutation",
-                "mutations",
-                "neither",
-                "nor",
-                "not",
-                "query views",
-                "queryview",
-                "queryviews",
-                "refusal",
-                "refuse",
-                "refuses",
-                "refusing",
-                "reject",
-                "rejected",
-                "rejecting",
-                "rejects",
-                "separated",
-                "separately",
-                "speculation owner",
-                "speculation ownership",
-                "speculative executions",
-                "transition",
-                "transitioned",
-                "transitioning",
-                "transitions",
-                "without",
-                "write",
-                "writes",
-                "writing",
-                "written",
-                "wrote"
+            "coverage": {
+              "a text read nowhere": [
+                [
+                  "control:state",
+                  "control:inference",
+                  "control:query view",
+                  "control:never"
+                ],
+                []
+              ],
+              "a word read alone": [
+                [
+                  "control:state",
+                  "control:inference",
+                  "control:never"
+                ],
+                []
+              ],
+              "a pair read inside a phrase only": [
+                [
+                  "control:never"
+                ],
+                [
+                  "control:speculative execution",
+                  "control:execution ownership"
+                ]
+              ],
+              "the pairs read apart too": [
+                [
+                  "control:never"
+                ],
+                []
               ]
+            },
+            "quiet": {
+              "R-SYNONYM": {
+                "synonyms": [
+                  "activity boundaries",
+                  "activityboundaries",
+                  "activityboundary",
+                  "apart",
+                  "cannot",
+                  "command",
+                  "commanded",
+                  "commanding",
+                  "controlled",
+                  "controlling",
+                  "devtools",
+                  "dispatch",
+                  "dispatched",
+                  "dispatches",
+                  "dispatching",
+                  "distinct",
+                  "drive",
+                  "driven",
+                  "drives",
+                  "driving",
+                  "drove",
+                  "effectful",
+                  "execution owner",
+                  "independent",
+                  "independently",
+                  "infer",
+                  "inferences",
+                  "inferred",
+                  "inferring",
+                  "infers",
+                  "inspectors",
+                  "mutate",
+                  "mutated",
+                  "mutates",
+                  "mutation",
+                  "mutations",
+                  "neither",
+                  "nor",
+                  "query views",
+                  "queryview",
+                  "queryviews",
+                  "refusal",
+                  "refuse",
+                  "refuses",
+                  "refusing",
+                  "reject",
+                  "rejected",
+                  "rejecting",
+                  "rejects",
+                  "separated",
+                  "separately",
+                  "speculation owner",
+                  "speculation ownership",
+                  "speculative executions",
+                  "transition",
+                  "transitioned",
+                  "transitioning",
+                  "transitions",
+                  "write",
+                  "writes",
+                  "writing",
+                  "written",
+                  "wrote"
+                ],
+                "load": {
+                  "activity boundary": [
+                    "places",
+                    "roleless",
+                    "unspelled"
+                  ],
+                  "warm": [
+                    "labels",
+                    "title",
+                    "producer",
+                    "places",
+                    "roleless",
+                    "unspelled"
+                  ],
+                  "state": [
+                    "labels",
+                    "places",
+                    "roleless"
+                  ],
+                  "states": [
+                    "places",
+                    "roleless"
+                  ],
+                  "active": [
+                    "places",
+                    "roleless"
+                  ],
+                  "dormant": [
+                    "places",
+                    "roleless"
+                  ],
+                  "evicted": [
+                    "places",
+                    "roleless"
+                  ],
+                  "inspector": [
+                    "places",
+                    "roleless"
+                  ],
+                  "dev tools": [
+                    "labels",
+                    "title",
+                    "places",
+                    "roleless"
+                  ],
+                  "inference": [
+                    "labels",
+                    "title",
+                    "producer",
+                    "places",
+                    "roleless",
+                    "unspelled"
+                  ],
+                  "effect": [
+                    "labels",
+                    "places",
+                    "roleless"
+                  ],
+                  "effects": [
+                    "title",
+                    "producer",
+                    "places",
+                    "roleless"
+                  ],
+                  "query view": [
+                    "labels",
+                    "title",
+                    "producer",
+                    "places",
+                    "roleless",
+                    "unspelled"
+                  ],
+                  "speculative execution": [
+                    "places",
+                    "roleless"
+                  ],
+                  "execution ownership": [
+                    "places",
+                    "roleless"
+                  ],
+                  "mutating": [
+                    "places",
+                    "roleless"
+                  ],
+                  "commands": [
+                    "places",
+                    "roleless"
+                  ],
+                  "control": [
+                    "places",
+                    "roleless"
+                  ],
+                  "controls": [
+                    "places",
+                    "roleless"
+                  ],
+                  "not": [
+                    "producer",
+                    "places",
+                    "roleless"
+                  ],
+                  "no": [
+                    "places",
+                    "roleless"
+                  ],
+                  "never": [
+                    "labels",
+                    "title",
+                    "places",
+                    "roleless"
+                  ],
+                  "without": [
+                    "places",
+                    "roleless"
+                  ],
+                  "refused": [
+                    "labels",
+                    "places",
+                    "roleless"
+                  ],
+                  "separate": [
+                    "title",
+                    "producer",
+                    "places",
+                    "roleless"
+                  ],
+                  "read only": [
+                    "labels",
+                    "places",
+                    "roleless"
+                  ]
+                }
+              }
             }
           }
         }
@@ -595,7 +902,8 @@
               "DevTools only consumes emitted host events.": null,
               "The inspector never transitions the context.": null,
               "The inspector is a read-only view of the controls.": null,
-              "The inspector shows the WARM state.": null
+              "The inspector shows the WARM state.": null,
+              "The inspector writes the WARM context that calls inference.": "A:inference C:driving"
             },
             "code": [
               [
@@ -604,10 +912,20 @@
               []
             ],
             "quiet": {
-              "R-SURFACE-OTHER": [
-                null,
-                "C:driving"
-              ]
+              "R-SURFACE-OTHER": {
+                "a panel": [
+                  null,
+                  "C:driving"
+                ],
+                "a viewer": [
+                  null,
+                  "C:driving"
+                ],
+                "a dashboard": [
+                  null,
+                  "C:driving"
+                ]
+              }
             }
           }
         },
@@ -638,6 +956,14 @@
             },
             "header": "Read-only terminal inspector over the bounded producer-qualified observation projection.",
             "controls": {
+              "src/ui/plant-bare-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-k.ts:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
               "src/ui/plant-computed-inspector.ts": {
                 "pure": true,
                 "builtins": [],
@@ -652,6 +978,48 @@
                 "unresolved": [],
                 "packages": []
               },
+              "src/ui/plant-equals-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-equals-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-fetch-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-global-load-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-handed-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-http-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-http-inspector.ts:node:http"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-index-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-d/index.ts:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
               "src/ui/plant-injected-inspector.ts": {
                 "pure": true,
                 "builtins": [],
@@ -662,6 +1030,46 @@
                 "pure": false,
                 "builtins": [
                   "src/plant-b.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-js-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-j.js:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-loader-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-loader-inspector.ts:node:module"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-mixed-export-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-mixed-export-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-mixed-names-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-mixed-names-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-mts-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-m.mts:node:os"
                 ],
                 "unresolved": [],
                 "packages": []
@@ -690,7 +1098,37 @@
                 "unresolved": [],
                 "packages": []
               },
+              "src/ui/plant-stream-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-typed-equals-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-typed-export-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
               "src/ui/plant-typed-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-typed-names-export-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-typed-names-inspector.ts": {
                 "pure": true,
                 "builtins": [],
                 "unresolved": [],
@@ -703,8 +1141,20 @@
                   "src/ui/plant-unresolved-inspector.ts:./missing.js"
                 ],
                 "packages": []
+              },
+              "src/ui/plant-value-export-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-value-export-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
               }
             },
+            "notSurfaces": [
+              false,
+              false
+            ],
             "quiet": {
               "R-UNNAMED-SURFACE": [
                 false,
@@ -716,14 +1166,44 @@
                 true,
                 false
               ],
-              "R-INJECTED": [
-                true,
-                false
-              ],
-              "R-COMPUTED-LOAD": [
-                true,
-                false
-              ]
+              "R-INJECTED": {
+                "a callback": [
+                  true,
+                  false
+                ],
+                "an object it calls": [
+                  true,
+                  false
+                ]
+              },
+              "R-AMBIENT-IO": {
+                "a global fetch": [
+                  true,
+                  false
+                ],
+                "a process stream": [
+                  true,
+                  false
+                ]
+              },
+              "R-COMPUTED-LOAD": {
+                "a computed specifier": [
+                  true,
+                  false
+                ],
+                "a createRequire loader": [
+                  [
+                    "src/ui/plant-loader-inspector.ts:node:module"
+                  ],
+                  [
+                    "src/ui/plant-require-dev-tools.ts:child_process"
+                  ]
+                ],
+                "a global": [
+                  true,
+                  false
+                ]
+              }
             }
           }
         }
@@ -787,6 +1267,10 @@
     },
     {
       "id": "R-INJECTED",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-AMBIENT-IO",
       "quietPin": "C2"
     },
     {
