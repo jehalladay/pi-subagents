@@ -12,9 +12,9 @@
  * DELIVERED HERE: (B) the falsifier - a law over a scope composer, (parent scope, child request) -> outcome, judged over a fixed
  * probe grid - shown to accept both lawful forms the acceptance names (a clamping and a refusing reference composer) and to red
  * every named mutant, among them one silent-widening mutant per axis; (C) the same narrowing read on two of Pi's own grant surfaces
- * (the capability registry's invoke grants and the curated Claude tools' bound ceilings); (A, D) the until-then gate - no src module
- * or manifest names an EDC stem and no src declaration or registered descriptor carries the freshness/precision/ceiling triple -
- * with its guard reading pass.
+ * (the capability registry's permission and invoke grants and the curated Claude tools' bound ceilings); (A, D) the until-then
+ * gate - no src module or manifest names an EDC stem and no src declaration or registered descriptor carries the
+ * freshness/precision/ceiling triple - with its guard reading pass.
  * NOT DELIVERED: binding the falsifier to a Pi composer - none exists (D1 reads the artifact ABSENT). An adoption ends the
  * until-then: the gate then reads PRESENT, the guard reads "owed" and this census reds by design (D2), so the adopting cut binds its
  * composer through falsify() (adapting a surface that throws typed errors, or answers asynchronously, into the synchronous
@@ -37,16 +37,21 @@
  *  - The grid (PROBES): one parent, each axis at a distinct bound; inherit (the empty request); each axis alone tighter (half the
  *    bound), equal and looser (twice the bound); all tighter; all looser; each axis looser with the other two tighter.
  * THE MIRROR (row C; the notes' "Pi binds the same monotone-narrowing rule for grants and tool surfaces"):
- *  - C1 grants: a CapabilityRegistry holding one planted read capability that needs a permission, and one with no permission (it
- *    needs its invoke grant), is invoked under child contexts (GRANT_CONTEXTS, INVOKE_CONTEXTS): only a context holding the needed
- *    grant, exactly or within a superset, dispatches; every other one is refused with a CapabilityError of category authorization
- *    before the provider runs (its call count stays 0); discovery lists a capability only under its discover grant.
+ *  - C1 grants: a CapabilityRegistry holding one planted read capability that needs one permission, one that needs two, and one
+ *    with no permission (it needs its invoke grant) is invoked under child contexts (GRANT_CONTEXTS, PAIR_CONTEXTS,
+ *    INVOKE_CONTEXTS): only a context holding every needed grant, exactly or within a superset, dispatches; every other one - a
+ *    disjoint or empty grant set, a discover grant alone, a permission capability's own invoke grant without its permission, one
+ *    of its two permissions alone, another capability's invoke grant - is refused with a CapabilityError of category
+ *    authorization before the provider runs (its call count stays 0); discovery lists a capability only under its discover grant.
  *  - C2 tool surfaces: createCuratedTools (src/workbench/claude-capability-tools.ts), the host adapter that bounds a Claude role
  *    session, is given each bound below (half), at and above (+1) its host ceiling (CURATED_CEILINGS): below and at are accepted,
- *    above is refused with a CapabilityError of category validation - a child bound tightens and never widens.
+ *    above is refused with a CapabilityError of category validation - at construction, a child's bound is accepted only within
+ *    the host's ceiling (the run-time enforcement of an accepted bound is not read here; see NOT CLAIMED).
  * THE GATE (rows A and D) - READINGS:
- *  - THE SRC WALK: every script module below src (.ts .mts .cts .tsx .js .mjs .cjs .jsx), held equal to git's tracked script
- *    modules below src both ways (git ls-files -z), each parsed by the TypeScript compiler, never a comment.
+ *  - THE SRC WALK: every script module below src (.ts .mts .cts .tsx .js .mjs .cjs .jsx), held equal both ways to git's tracked
+ *    script modules below src as git itself filters them (git ls-files -z with one glob pathspec per script extension, never the
+ *    walk's own scope predicate), each parsed by the TypeScript compiler, never a comment; the scope predicate is pinned by one
+ *    in-scope control per script extension (and by Q5's out-of-scope paths).
  *  - A, the adoption: each module's identifiers, private names, string, template and regular-expression literal texts and JSX
  *    text, and package.json read whole (every key and string, and its raw text), read for the two EDC stems (the notes' charter
  *    path: its slug's initials "edc" as a word or plural in the word fold, its modifier "evidencedirected" anywhere in the joined
@@ -55,12 +60,12 @@
  *    boundaries and every run outside a-z and 0-9). Any mention reads the adoption PRESENT.
  *  - D, the artifact: each name-carrying declaration (an interface, a type literal, a class, an object literal, an object binding
  *    pattern, an enum - its members' written names; a function-like declaration's parameter list, constructor parameter properties
- *    included; a union type's string-literal members; an array literal's string elements) and each object of each registered
- *    descriptor (the native registration
- *    and the four injected-client registrations; every object at any depth by its own keys, so a schema's properties object reads
- *    by its property names) is read for the triple: it carries an axis when one of its names has the axis word, or its plural, as a word of the word fold
- *    (requestFreshness, result_precision, Ceiling); it carries the triple when it carries all three. Any triple reads the artifact
- *    PRESENT.
+ *    included; a union type's string-literal members, plain or no-substitution template literal types; an array literal's string
+ *    elements) and each object of each registered descriptor (the native registration and the four injected-client
+ *    registrations; every object at any depth by its own keys, so a schema's properties object reads by its property names) is
+ *    read for the triple: it carries an axis when one of its names has the axis word, or its plural (es after a sibilant ending,
+ *    so freshnesses; s otherwise, so precisions and ceilings), as a word of the word fold (requestFreshness, result_precision,
+ *    Ceiling, freshnesses); it carries the triple when it carries all three. Any triple reads the artifact PRESENT.
  *  - The guard: guard(ABSENT, ABSENT) = pass; any PRESENT = owed. Each gate reads PRESENT on any one of its sources (a src
  *    reading, the manifest, either registration), pinned by composition controls; the live verdict is pinned.
  *
@@ -77,8 +82,9 @@
  *  Q the residuals, each named family pinned by its quiet row.
  * OUTSIDE ANCHORS (the judged-set case; the bead's own row in .beads/issues.jsonl): the title's statement after its requirement tag
  *   is tiled, in order and with separator-only gaps, by the labels of A, B, C and D, and A's and D's labels by their pins' quotes;
- *   the acceptance sentence after its lead ("a falsifier where ") is tiled by B's pins' quotes; the notes name C's pins' quotes as
- *   "for <C1> and <C2>". AXES equal the heads of the title's triple, the acceptance's looser list and the artifact's slash list;
+ *   the acceptance sentence after its lead ("a falsifier where ") is tiled by B's pins' quotes; the notes' mirror span (the owner
+ *   filing's text after its first "monotone-narrowing rule for ", up to the spaced em-dash terminator) is exactly C's pins' quotes
+ *   joined by " and ". AXES equal the heads of the title's triple, the acceptance's looser list and the artifact's slash list;
  *   CODES equal the acceptance's "clamped or refused"; FORBIDDEN is the acceptance's "never silently widened"; STEMS are the notes'
  *   charter-path initials and modifier. So a row, a pin of A-D, an axis, a code or a stem removed from every literal of this file
  *   and of the roster together still reds.
@@ -89,8 +95,9 @@
  *   residual families); git's listing replaced, in this file, by the walk it anchors together with a narrowing of that walk smaller
  *   than the module floor's margin; a pin's case replaced by one that echoes its roster witness; a capability registered at run time by
  *   any path other than the five registrations read (its literal src declaration is still read by the src walk); the rest of Pi's
- *   grant discipline (role exposure, inspect, observe and control grants), which its own suites
- *   pin; that any future composer is lawful - only that the falsifier reds the named mutants and accepts the two references.
+ *   grant discipline (role exposure, inspect, observe and control grants) and the curated tools' run-time enforcement of an
+ *   accepted bound (the call quota and the serialized byte limits), which their own suites pin; that any future composer is
+ *   lawful - only that the falsifier reds the named mutants and accepts the two references.
  * RESIDUALS (named; each with its pinned quiet row): R-LOOKALIKE an EDC stem written with a look-alike letter of another script
  *   reads no stem (Q1); R-PARTIAL a declaration or descriptor object carrying one or two axes of the triple reads no triple - an
  *   unnamed partial surface is not the artifact (Q2); R-VOCABULARY the triple in other words (maxAgeMs, staleness, tolerance,
@@ -98,7 +105,9 @@
  *   from parts are not read (Q4); R-SCOPE modules outside src (examples/, qa/, test/, scripts/), markdown, and the files below src
  *   that are no script module (a .json resource) are read by neither gate reader (Q5); R-GRID a composer that widens only outside the grid (beyond
  *   twice the bound) reads holds (Q6); R-STATEFUL a composer whose answers depend on its call history (lawful for the grid's calls,
- *   widening after them) reads holds (Q7).
+ *   widening after them) reads holds (Q7); R-SUFFIXED the acronym run into a lower-case-led suffix (EDCv2, GateEDCv2Client), which
+ *   the word fold splits before its last letter (ed, cv2), reads no stem (Q8); R-DOTTED a dotted acronym (E.D.C.), which the word
+ *   fold reads as single letters, reads no stem (Q9) - both inherited with the landed wb-pyel.4 vocabulary.
  *
  * Display paths added: none. Test-only: no scratch is allocated; src, package.json, .beads and git's index are only read, and the
  * mirror rows build in-memory registries and curated tool servers only.
@@ -157,6 +166,9 @@ const CLASSES = [
 type ViolationClass = (typeof CLASSES)[number];
 /** The acceptance sentence's lead, before the part B's pins quote. */
 const ACCEPTANCE_LEAD = "a falsifier where ";
+/** The owner filing's lead before the mirror span C's pins quote, and the span's terminator: a spaced em dash (U+2014). */
+const MIRROR_LEAD = "monotone-narrowing rule for ";
+const DASH = String.fromCodePoint(0x2014);
 
 type Scope = Readonly<Record<Axis, number>>;
 type ScopeRequest = Readonly<Partial<Record<Axis, number>>>;
@@ -445,17 +457,29 @@ function classifierControls(): Readonly<Record<string, unknown>> {
 
 // ---- the mirror (row C) ----
 
-/** The planted capabilities: one needs a permission; one, with no permission, needs its invoke grant. */
+/** The planted capabilities: one needs a permission; one needs two; one, with no permission, needs its invoke grant. */
 const PERMISSION_ID = "planted.scope.read";
+const PAIR_ID = "planted.pair.read";
 const INVOKE_ID = "planted.open.read";
 const PERMISSION = "planted:read";
-/** Child contexts for the permission capability: the exact grant, a superset, a disjoint grant, none, and its discover grant only. */
+const SECOND_PERMISSION = "planted:audit";
+/** Child contexts for the permission capability: the exact grant, a superset, a disjoint grant, none, its discover grant only, and
+ * its own invoke grant without the permission. */
 const GRANT_CONTEXTS: Readonly<Record<string, readonly string[]>> = {
   exact: [PERMISSION],
   superset: [PERMISSION, "planted:write"],
   disjoint: ["planted:write"],
   empty: [],
   "discover-only": [`discover:${PERMISSION_ID}`],
+  "own-invoke": [`invoke:${PERMISSION_ID}`],
+};
+/** Child contexts for the two-permission capability: both, a superset, each permission alone, and its own invoke grant with one. */
+const PAIR_CONTEXTS: Readonly<Record<string, readonly string[]>> = {
+  both: [PERMISSION, SECOND_PERMISSION],
+  superset: [PERMISSION, SECOND_PERMISSION, "planted:write"],
+  "first-only": [PERMISSION],
+  "second-only": [SECOND_PERMISSION],
+  "own-invoke-and-first": [`invoke:${PAIR_ID}`, PERMISSION],
 };
 /** Child contexts for the invoke-grant capability: its invoke grant, another capability's, none, and its discover grant only. */
 const INVOKE_CONTEXTS: Readonly<Record<string, readonly string[]>> = {
@@ -548,9 +572,13 @@ function stemsIn(text: string): string[] {
     .filter(([stem, kind]) => (kind === "word" ? words.has(stem) || words.has(`${stem}s`) : joined.includes(stem)))
     .map(([stem]) => stem);
 }
+/** A word's plural: es after a sibilant ending (freshness -> freshnesses), s otherwise (precisions, ceilings). */
+function pluralOf(word: string): string {
+  return /(?:s|x|z|ch|sh)$/.test(word) ? `${word}es` : `${word}s`;
+}
 /** The axes a set of names carries: an axis when one name has the axis word, or its plural, as a word of the word fold. */
 function axesOf(names: readonly string[]): Axis[] {
-  return AXES.filter(axis => names.some(name => wordsOf(name).some(word => word === axis || word === `${axis}s`)));
+  return AXES.filter(axis => names.some(name => wordsOf(name).some(word => word === axis || word === pluralOf(axis))));
 }
 
 /** Every script module kind below src, by extension, and the TypeScript script kind each one is parsed as. */
@@ -591,7 +619,8 @@ function writtenName(name: ts.PropertyName | ts.BindingName | undefined): string
 }
 /** A name-carrying declaration's written names: an interface, a type literal, a class, an object literal, an object binding pattern
  * or an enum (its members' names); a function-like declaration's parameter list (constructor parameter properties included); a
- * union type's string-literal members; an array literal's string elements. Any other node, or one that writes no name, is none. */
+ * union type's string-literal members (plain or no-substitution template literal types); an array literal's string elements. Any
+ * other node, or one that writes no name, is none. */
 function memberNames(node: ts.Node): { kind: string; names: string[] } | undefined {
   if (ts.isInterfaceDeclaration(node)) return { kind: "interface", names: node.members.flatMap(member => writtenName(member.name)) };
   if (ts.isTypeLiteralNode(node)) return { kind: "type-literal", names: node.members.flatMap(member => writtenName(member.name)) };
@@ -604,7 +633,7 @@ function memberNames(node: ts.Node): { kind: string; names: string[] } | undefin
   if (ts.isUnionTypeNode(node)) {
     return listed(
       "literal-union",
-      node.types.flatMap(type => (ts.isLiteralTypeNode(type) && ts.isStringLiteral(type.literal) ? [type.literal.text] : [])),
+      node.types.flatMap(type => (ts.isLiteralTypeNode(type) && ts.isStringLiteralLike(type.literal) ? [type.literal.text] : [])),
     );
   }
   if (ts.isArrayLiteralExpression(node)) {
@@ -665,9 +694,12 @@ function filesBelow(directory: string): string[] {
 function repoPath(path: string): string {
   return relative(REPO, path).split("\\").join("/");
 }
-/** git's tracked paths (its index, git ls-files -z, never quoted): the walk's independent anchor. */
-function trackedPaths(): string[] {
-  return execFileSync("git", ["ls-files", "-z"], { cwd: REPO, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 })
+/** git's tracked script modules below src (its index, git ls-files -z, never quoted), filtered by git itself - one glob pathspec per
+ * script extension - and never by inSrcScope: the walk's independent anchor, so a narrowed scope predicate leaves a tracked module
+ * unread. */
+function trackedModules(): string[] {
+  const pathspecs = Object.keys(SCRIPT_KINDS).map(extension => `:(glob)src/**/*${extension}`);
+  return execFileSync("git", ["ls-files", "-z", "--", ...pathspecs], { cwd: REPO, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 })
     .split("\0")
     .filter(path => path !== "");
 }
@@ -680,7 +712,7 @@ let src: SrcReading | undefined;
 function srcReading(): SrcReading {
   if (src !== undefined) return src;
   const modules = filesBelow(join(REPO, "src")).map(repoPath).filter(inSrcScope).sort();
-  const tracked = trackedPaths().filter(inSrcScope).sort();
+  const tracked = trackedModules().sort();
   const readings = modules.map(module => readModule(readFileSync(join(REPO, module), "utf8"), module));
   src = {
     modules,
@@ -809,8 +841,10 @@ async function artifactReading(): Promise<{ native: RegistryReading; injected: R
   return { native, injected, artifact: artifactOf(srcReading().triples, [native, injected]) };
 }
 
-/** Walk and reading floors, each well below the cut-time measure on trunk 7a0ab7f (modules 116, texts 100929, name-carrying
- * declarations 7623, written names 18793, package.json keys and strings 120, descriptor objects 24 in each read registration). */
+/** Walk and reading floors, each well below the cut-time measure: on trunk 7a0ab7f modules 116, texts 100929, name-carrying
+ * declarations 7623, written names 18793, package.json keys and strings 120, descriptor objects 24 in each read registration;
+ * re-measured for respin 1 on trunk 04123dc: modules 117, texts 101769, declarations 7694, written names 19003, package.json keys
+ * and strings 120, descriptor objects 24 in each. */
 const FLOORS = { modules: 100, texts: 60000, declarations: 2500, members: 7000, manifestTexts: 80, descriptorObjects: 16 } as const;
 const ZWSP = String.fromCodePoint(0x200b);
 /** A Latin word written in full-width letters (NFKC folds each back to its Latin letter). */
@@ -852,7 +886,9 @@ const TRIPLE_CONTROLS: Readonly<Record<string, string>> = {
   parameters: "function narrow(requestFreshness: number, resultPrecision: number, resourceCeiling: number) { return requestFreshness; }",
   "parameter-properties": "class Scope { constructor(readonly freshness: number, readonly precision: number, readonly ceiling: number) {} }",
   "literal-union": 'type Axis = "freshness" | "precision" | "ceiling";',
+  "template-union": "type Axis = `freshness` | `precision` | `ceiling`;",
   "string-array": 'const axes = ["freshness", "precision", "ceiling"] as const;',
+  plurals: "interface Scope { freshnesses: number[]; precisions: number[]; ceilings: number[] }",
   "zero-width": `interface Scope { "fresh${ZWSP}ness": number; precision: number; ceiling: number }`,
   "full-width": `interface Scope { ${fullWidth("freshness")}: number; precision: number; ceiling: number }`,
 };
@@ -930,6 +966,12 @@ function statefulComposer(lawful: number): Composer {
     return calls <= lawful ? CLAMPING(parent, request) : { kind: "scoped", scope: adopt(parent, request, AXES), diagnostics: [] };
   };
 }
+/** R-SUFFIXED's probe: the acronym run into a lower-case-led suffix, as an identifier and a string; and its spaced twin. */
+const SUFFIXED_SOURCE = 'export const GateEDCv2Client = "EDCv2";';
+const SUFFIXED_TWIN = 'export const GateEdcV2Client = "EDC v2";';
+/** R-DOTTED's probe: the dotted acronym; and its undotted twin. */
+const DOTTED_SOURCE = 'export const ASSEMBLY_LABEL = "E.D.C. assembly";';
+const DOTTED_TWIN = 'export const ASSEMBLY_LABEL = "EDC assembly";';
 /** Each residual family and the quiet row that pins it. */
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-LOOKALIKE": ["Q1"],
@@ -939,6 +981,8 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-SCOPE": ["Q5"],
   "R-GRID": ["Q6"],
   "R-STATEFUL": ["Q7"],
+  "R-SUFFIXED": ["Q8"],
+  "R-DOTTED": ["Q9"],
 };
 
 // ---- the rows and the roster ----
@@ -1032,6 +1076,7 @@ function constants(): JsonValue {
     forbidden: FORBIDDEN,
     classes: CLASSES,
     acceptanceLead: ACCEPTANCE_LEAD,
+    mirrorLead: MIRROR_LEAD,
     parent: PARENT,
     factors: FACTORS,
     probes: PROBES,
@@ -1042,8 +1087,9 @@ function constants(): JsonValue {
     silentMutants: Object.keys(SILENT_MUTANTS),
     controlProbe: CONTROL_PROBE,
     classifierControls: classifierControls(),
-    permission: [PERMISSION_ID, INVOKE_ID, PERMISSION],
+    permission: [PERMISSION_ID, PAIR_ID, INVOKE_ID, PERMISSION, SECOND_PERMISSION],
     grantContexts: GRANT_CONTEXTS,
+    pairContexts: PAIR_CONTEXTS,
     invokeContexts: INVOKE_CONTEXTS,
     curatedCeilings: CURATED_CEILINGS,
     scriptKinds: Object.keys(SCRIPT_KINDS),
@@ -1062,6 +1108,8 @@ function constants(): JsonValue {
     outOfScope: OUT_OF_SCOPE,
     outOfScopeModule: OUT_OF_SCOPE_MODULE,
     evaderFactor: EVADER_FACTOR,
+    suffixed: [SUFFIXED_SOURCE, SUFFIXED_TWIN],
+    dotted: [DOTTED_SOURCE, DOTTED_TWIN],
     residuals: RESIDUALS,
   });
 }
@@ -1083,6 +1131,13 @@ function statementOf(title: string): string {
 /** The acceptance sentence: the notes' text after "Acceptance: " up to the end of that sentence. */
 function acceptanceOf(notes: string): string {
   return /Acceptance: (.+?\.)(?:\s|$)/.exec(notes)?.[1] ?? "";
+}
+/** The notes' mirror span: the text after the first MIRROR_LEAD up to the next spaced em dash, or none. */
+function mirrorSpan(notes: string): string {
+  const start = notes.indexOf(MIRROR_LEAD);
+  if (start === -1) return "";
+  const end = notes.indexOf(` ${DASH} `, start + MIRROR_LEAD.length);
+  return end === -1 ? "" : notes.slice(start + MIRROR_LEAD.length, end);
 }
 /** Whether a text is exactly the quotes, in order, with separator-only gaps (spaces and , ; . :) between, before and after them. */
 function tiled(text: string, quotes: readonly string[]): boolean {
@@ -1152,6 +1207,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       manifest,
       adoption,
       controls: {
+        scope: Object.fromEntries(Object.keys(SCRIPT_KINDS).map(extension => [`src/workbench/module${extension}`, inSrcScope(`src/workbench/module${extension}`)])),
         sources: Object.fromEntries(Object.entries(SOURCE_CONTROLS).map(([name, text]) => [name, readModule(text, name).mentions])),
         manifests: Object.fromEntries(Object.entries(MANIFEST_CONTROLS).map(([name, text]) => [name, manifestMentions(text, name)])),
       },
@@ -1204,6 +1260,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   C1: async () => {
     const permission: Record<string, string> = {};
     for (const [name, grants] of Object.entries(GRANT_CONTEXTS)) permission[name] = await grantOutcome(PERMISSION_ID, [PERMISSION], grants);
+    const pair: Record<string, string> = {};
+    for (const [name, grants] of Object.entries(PAIR_CONTEXTS)) pair[name] = await grantOutcome(PAIR_ID, [PERMISSION, SECOND_PERMISSION], grants);
     const invoke: Record<string, string> = {};
     for (const [name, grants] of Object.entries(INVOKE_CONTEXTS)) invoke[name] = await grantOutcome(INVOKE_ID, [], grants);
     const registry = new CapabilityRegistry();
@@ -1212,6 +1270,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const listed = (grants: readonly string[]): string[] => registry.discover({ grants }).map(descriptor => descriptor.id);
     return json({
       permission,
+      pair,
       invoke,
       discover: {
         none: listed([]),
@@ -1333,11 +1392,13 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const second = falsify(composer);
     return json({ first: first.verdict, second: second.verdict, secondClasses: classesOf(second), secondViolations: second.violations.length });
   },
+  Q8: async () => json({ suffixed: readModule(SUFFIXED_SOURCE, "suffixed").mentions, twin: readModule(SUFFIXED_TWIN, "suffixed-twin").mentions }),
+  Q9: async () => json({ dotted: readModule(DOTTED_SOURCE, "dotted").mentions, twin: readModule(DOTTED_TWIN, "dotted-twin").mentions }),
 };
 
 describe("wb-pyel.6 EDC scope-narrowing census (SDK-EVIDENCE-DIRECTED-COMPUTATION-R14, until-then leg, falsifier armed)", () => {
   it("the judged set: the frozen shape, the out-of-file roster, the bead's title, acceptance and notes, and the cases agree", { timeout: 60_000 }, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:1", "B:4", "C:2", "D:2", "Q:7"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:1", "B:4", "C:2", "D:2", "Q:9"]);
     const shape = (rows: readonly { id: string; label: string; pins: readonly { id: string; quote: string }[] }[]) =>
       rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => ({ id: pin.id, quote: pin.quote })) }));
     expect(shape(ROWS)).toStrictEqual(shape(ROSTER.rows));
@@ -1356,7 +1417,7 @@ describe("wb-pyel.6 EDC scope-narrowing census (SDK-EVIDENCE-DIRECTED-COMPUTATIO
     const acceptance = acceptanceOf(notes);
     expect(acceptance.startsWith(ACCEPTANCE_LEAD), "the acceptance opens with its lead").toBe(true);
     expect(tiled(acceptance.slice(ACCEPTANCE_LEAD.length), quotes("B")), "B's pins' quotes tile the acceptance after its lead").toBe(true);
-    expect(notes, "the notes name C's pins' quotes").toContain(`for ${quotes("C").join(" and ")}`);
+    expect(mirrorSpan(notes), "the notes' mirror span is exactly C's pins' quotes, joined by ' and '").toBe(quotes("C").join(" and "));
     expect(tripleHeads(row("B").label), "the axes are the heads of the title's triple").toEqual([...AXES]);
     expect(looserList(acceptance), "the axes are the acceptance's looser list").toEqual([...AXES]);
     expect(slashList(row("D").label), "the axes are the artifact's slash list").toEqual([...AXES]);
@@ -1375,6 +1436,11 @@ describe("wb-pyel.6 EDC scope-narrowing census (SDK-EVIDENCE-DIRECTED-COMPUTATIO
     expect(forbiddenOf("held, never quietly grown; a mutant"), "the forbidden outcome").toBe("grown-quietly");
     expect(charterStems("Citation: docs/programs/alpha-beta-gamma-2026-01-02.md:1@abc"), "the charter stems").toStrictEqual(["abg", "alphabeta"]);
     expect(acceptanceOf("Owner. Acceptance: a b, c. More text."), "the acceptance sentence").toBe("a b, c.");
+    expect(mirrorSpan(`Owner. The ${MIRROR_LEAD}alpha and beta gamma ${DASH} more; ${MIRROR_LEAD}delta ${DASH} end`), "the first mirror span").toBe(
+      "alpha and beta gamma",
+    );
+    expect(mirrorSpan(`The ${MIRROR_LEAD}alpha and beta gamma.`), "a mirror span with no dash terminator reads none").toBe("");
+    expect(mirrorSpan(`alpha and beta gamma ${DASH} more`), "a text with no mirror lead reads none").toBe("");
   });
 
   for (const row of ROWS) {

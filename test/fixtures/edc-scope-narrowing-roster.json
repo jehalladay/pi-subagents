@@ -1,6 +1,6 @@
 {
  "bead": "wb-pyel.6",
- "comment": "wb-pyel.6 EDC scope-narrowing census roster: the judged set (rows, quotes, constants, every pin's witness) and the registered tests, measured by seat ws-04 (run g10-work-s125) on trunk 7a0ab7f plus the cut; the census holds its own literals to this file and its rows, quotes, axes, codes and stems to the bead's row in .beads/issues.jsonl",
+ "comment": "wb-pyel.6 EDC scope-narrowing census roster: the judged set (rows, quotes, constants, every pin's witness) and the registered tests, first measured by seat ws-04 (run g10-work-s125) on trunk 7a0ab7f plus the cut, re-measured for respin 1 by seat ws-05 (run g10-work-s136) on trunk 04123dc plus the cut; the census holds its own literals to this file and its rows, quotes, axes, codes and stems to the bead's row in .beads/issues.jsonl",
  "constants": {
   "stems": {
    "edc": "word",
@@ -34,6 +34,7 @@
    "threw"
   ],
   "acceptanceLead": "a falsifier where ",
+  "mirrorLead": "monotone-narrowing rule for ",
   "parent": {
    "freshness": 300,
    "precision": 20,
@@ -415,8 +416,10 @@
   },
   "permission": [
    "planted.scope.read",
+   "planted.pair.read",
    "planted.open.read",
-   "planted:read"
+   "planted:read",
+   "planted:audit"
   ],
   "grantContexts": {
    "exact": [
@@ -432,6 +435,30 @@
    "empty": [],
    "discover-only": [
     "discover:planted.scope.read"
+   ],
+   "own-invoke": [
+    "invoke:planted.scope.read"
+   ]
+  },
+  "pairContexts": {
+   "both": [
+    "planted:read",
+    "planted:audit"
+   ],
+   "superset": [
+    "planted:read",
+    "planted:audit",
+    "planted:write"
+   ],
+   "first-only": [
+    "planted:read"
+   ],
+   "second-only": [
+    "planted:audit"
+   ],
+   "own-invoke-and-first": [
+    "invoke:planted.pair.read",
+    "planted:read"
    ]
   },
   "invokeContexts": {
@@ -510,7 +537,9 @@
    "parameters": "function narrow(requestFreshness: number, resultPrecision: number, resourceCeiling: number) { return requestFreshness; }",
    "parameter-properties": "class Scope { constructor(readonly freshness: number, readonly precision: number, readonly ceiling: number) {} }",
    "literal-union": "type Axis = \"freshness\" | \"precision\" | \"ceiling\";",
+   "template-union": "type Axis = `freshness` | `precision` | `ceiling`;",
    "string-array": "const axes = [\"freshness\", \"precision\", \"ceiling\"] as const;",
+   "plurals": "interface Scope { freshnesses: number[]; precisions: number[]; ceilings: number[] }",
    "zero-width": "interface Scope { \"fresh\u200bness\": number; precision: number; ceiling: number }",
    "full-width": "interface Scope { \uff46\uff52\uff45\uff53\uff48\uff4e\uff45\uff53\uff53: number; precision: number; ceiling: number }"
   },
@@ -604,6 +633,14 @@
   ],
   "outOfScopeModule": "export interface EdcScope { freshness: number; precision: number; ceiling: number }",
   "evaderFactor": 3,
+  "suffixed": [
+   "export const GateEDCv2Client = \"EDCv2\";",
+   "export const GateEdcV2Client = \"EDC v2\";"
+  ],
+  "dotted": [
+   "export const ASSEMBLY_LABEL = \"E.D.C. assembly\";",
+   "export const ASSEMBLY_LABEL = \"EDC assembly\";"
+  ],
   "residuals": {
    "R-LOOKALIKE": [
     "Q1"
@@ -625,6 +662,12 @@
    ],
    "R-STATEFUL": [
     "Q7"
+   ],
+   "R-SUFFIXED": [
+    "Q8"
+   ],
+   "R-DOTTED": [
+    "Q9"
    ]
   }
  },
@@ -646,6 +689,8 @@
   "Q5",
   "Q6",
   "Q7",
+  "Q8",
+  "Q9",
   "the registered tests and the reached pins equal the roster, in order and both ways"
  ],
  "rows": [
@@ -666,6 +711,16 @@
       "manifest": [],
       "adoption": "ABSENT",
       "controls": {
+       "scope": {
+        "src/workbench/module.ts": true,
+        "src/workbench/module.mts": true,
+        "src/workbench/module.cts": true,
+        "src/workbench/module.tsx": true,
+        "src/workbench/module.js": true,
+        "src/workbench/module.mjs": true,
+        "src/workbench/module.cjs": true,
+        "src/workbench/module.jsx": true
+       },
        "sources": {
         "identifier": [
          "identifier:1|identifier|edc"
@@ -1132,7 +1187,15 @@
        "superset": "dispatched calls=1",
        "disjoint": "refused:authorization calls=0",
        "empty": "refused:authorization calls=0",
-       "discover-only": "refused:authorization calls=0"
+       "discover-only": "refused:authorization calls=0",
+       "own-invoke": "refused:authorization calls=0"
+      },
+      "pair": {
+       "both": "dispatched calls=1",
+       "superset": "dispatched calls=1",
+       "first-only": "refused:authorization calls=0",
+       "second-only": "refused:authorization calls=0",
+       "own-invoke-and-first": "refused:authorization calls=0"
       },
       "invoke": {
        "exact": "dispatched calls=1",
@@ -1251,8 +1314,14 @@
         "literal-union": [
          "literal-union:1|literal-union|freshness+precision+ceiling"
         ],
+        "template-union": [
+         "template-union:1|literal-union|freshness+precision+ceiling"
+        ],
         "string-array": [
          "string-array:1|string-array|freshness+precision+ceiling"
+        ],
+        "plurals": [
+         "plurals:1|interface|freshnesses+precisions+ceilings"
         ],
         "zero-width": [
          "zero-width:1|interface|fresh\u200bness+precision+ceiling"
@@ -1415,6 +1484,27 @@
        "widened-silently"
       ],
       "secondViolations": 9
+     }
+    },
+    {
+     "id": "Q8",
+     "quote": "R-SUFFIXED",
+     "witness": {
+      "suffixed": [],
+      "twin": [
+       "suffixed-twin:1|identifier|edc",
+       "suffixed-twin:1|string|edc"
+      ]
+     }
+    },
+    {
+     "id": "Q9",
+     "quote": "R-DOTTED",
+     "witness": {
+      "dotted": [],
+      "twin": [
+       "dotted-twin:1|string|edc"
+      ]
      }
     }
    ]
