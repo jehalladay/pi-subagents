@@ -50,7 +50,10 @@
  * src callee's parameter as its own body sees it, a type parameter through its constraint; a library parameter only as a
  * container's own element type in TypeScript's default library), a callback's own parameters and a holder's paths
  * included, and a call through a signature with no body of its own or a member standing in for another's signature is
- * judged where the body that runs is declared. So a generic accessor or alias over an unconstrained type parameter (a
+ * judged where the body that runs is declared (cut #7 restates this, ruling R-B60: a call through a class's own method is
+ * judged by that method's declaration alone, and a stand-in the heritage and literal readings do not read - a structural
+ * stand-in, a constructor parameter property, an overload set read through its visible signatures - fails closed instead;
+ * see CUT #7). So a generic accessor or alias over an unconstrained type parameter (a
  * module's own, a destructuring one, a cross-module utility, an explicit type argument, a src generic class; a generic
  * indexed-access alias, an infer-conditional alias, a src generic interface), a structural seam, an erasing cast, variable,
  * field, default or return, a library parameter (Reflect, Object, JSON, Promise, call, bind), a callback or holder that
@@ -99,7 +102,8 @@
  * kind's stand-in reading was syntactic: a field was judged only through a bare function-like initializer, so a field
  * initialized by a parenthesized or a cast arrow, by a function's name or by a call's result, or an ambient annotated field,
  * stood in unjudged): a stand-in receives what its base member hands it position by position, read through the checker - a
- * field through its own type, declared or inferred, and a getter through the type it returns, as every call signature of
+ * field through its own type, declared or inferred, and a getter through the type it returns (cut #7: a type whose call
+ * signatures are a src overload set's fails closed instead, R-OVERLOADS), as every call signature of
  * each union part takes it (never a union's combined signature, whose parameters intersect its parts'), each parameter as
  * the checker instantiates it; a method by its own declared parameters, a this parameter skipped; a rest parameter, the
  * stand-in's or the base's, at and past its own position. A field or a getter whose type has no call signature while its
@@ -116,12 +120,35 @@
  * name. Measured on src: the live reach map and src's forms and refused uses read byte for byte the same under this cut's
  * scans as under cut #5's (25 modules each, at e81d2b0).
  *
+ * CUT #7 (the respin of refusal #6, gate run g10-gate-s127; rule 19(c) engaged, the CUT #4 FORM, ruling R-B33 and ruling R-B41
+ * kept, and orchestrator ruling R-B60 binding: narrow the claim, never widen the reader). Cut #6's shape stands: 0 pins removed
+ * or changed; three NAMED RESIDUAL rows and families are added (R-OVERLOADS, R-PARAMETER-PROPERTIES, R-STRUCTURAL-STAND-IN),
+ * R-NARROWED-BRANCH gains three stand-in pages and R-ERASED-ACCESS one page, and the DISPATCH, STAND-IN-KINDS,
+ * STAND-IN-RECEIVERS, R-NARROWED-BRANCH and R-ERASED-ACCESS labels and the rule-16 title are restated to what is read. U1(a)-(c)
+ * (a stand-in or a callback was judged by its visible signature or its declared heritage while the body that runs is another):
+ * the readings are not widened; each shape whose running body they do not see fails closed where the projection is handed, by
+ * a typed row the FAIL_CLOSED roster names with the row that plants it - overload (a field, a getter or a static override
+ * typed, and a callback flowing, with a src overload set's visible signatures: the implementation that runs is never read
+ * through them, whether it hides the projection or keeps it), parameter-property (a constructor parameter property standing
+ * in for a base member of its name, whatever its declared type) and structural-stand-in (a class instance, or a class's
+ * static side, flowing into an object type its class does not declare, itself or through its extends and implements clauses
+ * transitively, where a member of that type it also has hands the projection, whatever its own member does). Each family's
+ * row pins the gate's plants (A0-A8, B1-B3 and B1t, D1-D6 and D2t) beside the read twins and its quiet pages, and each shape
+ * planted live in a SURFACES module reds RENDER TOUCHES and FORMS; a call through an overload set is still read through its
+ * implementation, and a class instance held inside another value (an array's element) entering such a type reads quiet
+ * (R-STRUCTURAL-STAND-IN's page). Refusal #6 F7: a field or a getter stand-in whose function a conditional or a ?? chooses
+ * reads quiet (R-NARROWED-BRANCH's stand-in pages); F8: a method stand-in that declares no parameter and reads arguments[0]
+ * reads quiet (R-ERASED-ACCESS's page). Measured on src: the live reach map and src's forms and refused uses read byte for
+ * byte the same under this cut's scans as under cut #6's (25 modules each, at trunk 4350926, whose src equals e81d2b0's), so
+ * src holds no overload stand-in, no parameter property standing in for a member that hands the projection and no
+ * structural stand-in.
+ *
  * MEASURED (read-only, by the cutting seats, 2026-10-27: cut #3 at trunk 79dadb2 and before it at db2d796; cut #4 re-measured at
  * trunk b92d7a1, and it merged b92d7a1, bda6c2a and 88086c9, none of which changes a src file after e61eaec and so none after
  * 79dadb2; cut #5 re-measured 2026-10-28 at trunk cf56481, and it merged cf56481 and df37dac, neither of which changes a src file after
  * 88086c9; cut #6 re-measured 2026-10-28 at trunk e81d2b0, merged, where src differs from df37dac by the wb-4ap.15 landing
  * (src/workbench/collective-event.ts, added) and the wb-gwr.2 landing (src/workbench/hyperunix-observer.ts, its reach
- * unchanged); src there differs from 3223843, cut #2's measured trunk, by those, the wb-4ap.17 landing (src/index.ts,
+ * unchanged); cut #7 re-measured 2026-10-29 at trunk 4350926, merged, whose src equals e81d2b0's; src there differs from 3223843, cut #2's measured trunk, by those, the wb-4ap.17 landing (src/index.ts,
  * src/workbench/forge-operation-observer.ts), the wb-jwc.4 landing (src/workbench/providers/reactivefiber.ts) and the wb-3ht.1
  * landing (src/workbench/hyperunix-observer.ts: a consumed-fields table that references no projection member), and the live
  * reach map over every src module reads byte for byte the same under cut #2's reach scan and cut #5's, at both of cut #5's trunks): src holds 117 TypeScript modules and none spells the program (the mention judge below:
@@ -191,8 +218,10 @@
  * class-element kind, instance and static, and a narrowed roster's refusal; STAND-IN-KINDS plants each kind's stand-in
  * reading, refused and quiet; STAND-IN-RECEIVERS plants how a field, a getter and a method receive what the base hands them,
  * position by position through the checker, refused, failing closed and quiet, and CALLBACK-RECEIVERS how a callback flowing
- * into a type that hands it the projection receives it, refused and quiet (cut #6). What
- * neither scan reads is named: R-ERASED-ACCESS, R-DEEP-CARRIER and R-NARROWED-BRANCH.
+ * into a type that hands it the projection receives it, refused and quiet (cut #6); R-OVERLOADS, R-PARAMETER-PROPERTIES
+ * and R-STRUCTURAL-STAND-IN plant the shapes whose running body the stand-in and flow readings never read, each refused with
+ * its typed row (FAIL_CLOSED) beside its read twins and quiet pages (cut #7). What neither scan reads is named:
+ * R-ERASED-ACCESS, R-DEEP-CARRIER and R-NARROWED-BRANCH, and the three fail-closed families.
  * NAMES, "issues no event admission and no invocation": planted classes and interfaces measure the member readers on the
  * name forms CLASS-NAME-FORMS plants, the member kinds CLASS-MEMBER-KINDS plants, the declaration shapes CLASS-MEMBER-SHAPES
  * plants, the interface forms INTERFACE-FORMS plants and the heritage and signature shapes INTERFACE-HERITAGE plants, and
@@ -250,7 +279,9 @@
  * DISPATCH), so in src no such module can be handed the projection without a refused row; and a typed holder's member
  * reached through an erasing step - Reflect, a cast through unknown, a cast to any, a prototype lookup, an Object property
  * call - is no member reference to the reach scan (the module reaches through its holder alone), while the forms judge
- * refuses the erasing step (RENDER TOUCHES and NON-RENDER red on it); R-DEEP-CARRIER a module that only relays a value
+ * refuses the erasing step (RENDER TOUCHES and NON-RENDER red on it), and an arguments object read by a function whose own
+ * parameters hold no projection (a method stand-in that declares none while its base member hands it) reads quiet, an any
+ * (cut #7); R-DEEP-CARRIER a module that only relays a value
  * whose carrier nests past the depth bound, or an object type whose property holds the projection, reads as reaching
  * nothing to the reach scan (REACH; any access through such a value exposes its holder), and the forms judge follows a
  * holder through at most CARRIER_DEPTH + 1 held-path steps (a property, a library generic's type argument, an index
@@ -260,7 +291,14 @@
  * (NAMES); R-NARROWED-BRANCH a callback or a holder that does not itself expose the projection, chosen by a conditional or a
  * ?? operand, is judged by that expression's type, which subtype reduction narrows to the branch that keeps the projection, so
  * a conditional or a ?? choosing a callback that hides it reads quiet to the forms judge, while the hiding callback's own
- * flow is refused (REACH).
+ * flow is refused, and so does a field or a getter stand-in whose function is so chosen (cut #7) (REACH); R-OVERLOADS the
+ * implementation behind a src overload set's visible signatures is never read through them: a field, a getter or a static
+ * override typed by them, and such a set flowing as a callback, fail closed where the projection is handed, whether the
+ * implementation keeps it or hides it (REACH); R-PARAMETER-PROPERTIES a constructor parameter property is never read as a
+ * stand-in: it fails closed where a base member of its name hands the projection, whatever its declared type (REACH);
+ * R-STRUCTURAL-STAND-IN a class instance flowing into an object type its class does not declare is never read as a stand-in:
+ * it fails closed where a member of that type it also has hands the projection, whatever its own member does, and an
+ * instance held inside another value (an array's element) entering such a type reads quiet (REACH).
  * NOT CLAIMED. In src: an instance member's own code - its body, initializer, parameters and types - is not read statically
  * (REPROJECTION's runtime reading and MEMBERS judge it), nor is a parameter decorator (the compiler refuses one under the
  * repo's standard decorators, TS1206). As edits of this file, its helper and the roster together: a plant row of IDENTITY, QUIET,
@@ -272,7 +310,8 @@
  * LIVE_FORMS and src's refused uses anchor the forms src itself exercises); a class-element kind's class-module or stand-in
  * reading (classInternal, STAND_IN) changed in the helper together with its REACH cases and the frozen literal (the src plants
  * recorded with the cut are its falsifiers; the kinds themselves, each with its SyntaxKind, are anchored by typescript's
- * declaration file); an assertion narrowed in this file (the SURFACES rows' QUIET comparison cut to fewer fields
+ * declaration file); a fail-closed check (FAIL_CLOSED) changed in the helper together with its residual row's pages and the
+ * roster (the src plants recorded with cut #7 are its falsifiers); an assertion narrowed in this file (the SURFACES rows' QUIET comparison cut to fewer fields
  * stays green, since every real surface reads QUIET on every field, and the anchor's section reading widened back to
  * the whole row stays green on the clean export: the src and export plants recorded with the cut are those readings'
  * falsifiers); a NON_RENDER reason's prose (its member references and the closure are measured, its words are not); the
@@ -280,7 +319,8 @@
  * observation beyond the window total.
  * FROZEN SHAPE (standing rule 16): the rule-16 row pins `${table}/${id}:${pins.length}` for every judged row, the NON_RENDER
  * entries, their refused uses and their typed writers, the residual families, the member sets, CARRIER_DEPTH, the marker, RESOLVABLE_FORMS,
- * REQUIREMENT_FIELDS, LIVE_FORMS and CLASS_ELEMENT_KINDS with each kind's SyntaxKind and STAND_IN reading as literals; test/fixtures/apo-rerender-roster.json holds every judged
+ * REQUIREMENT_FIELDS, LIVE_FORMS, CLASS_ELEMENT_KINDS with each kind's SyntaxKind and STAND_IN reading, and FAIL_CLOSED with the
+ * row that plants each shape refused beside a quiet page (cut #7) as literals; test/fixtures/apo-rerender-roster.json holds every judged
  * row (table, id, label, SHA-256 of each case, test), the NON_RENDER entries, every registered test title and the residual
  * families, judged by this file's last row in order and both ways.
  *
@@ -309,6 +349,7 @@ import {
   EFFECT,
   EFFECT_CLASSES,
   type EffectClass,
+  FAIL_CLOSED,
   type FormsReading,
   IDENTITY,
   INVOCATION,
@@ -729,7 +770,7 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
     }
   });
 
-  it("rule 16: every judged row, the non-render readers and their refused uses, the residual families, the member sets, the reach scan's depth bound and marker, the resolvable forms, the class-element kinds with their syntax and stand-in readings, the requirement fields and src's forms are frozen at their measured shape", () => {
+  it("rule 16: every judged row, the non-render readers and their refused uses, the residual families, the member sets, the reach scan's depth bound and marker, the resolvable forms, the class-element kinds with their syntax and stand-in readings, the fail-closed shapes with the rows that plant them, the requirement fields and src's forms are frozen at their measured shape", () => {
     expect(ROWS.map(entry => `${entry.table}/${entry.id}:${entry.pins.length}`)).toEqual([
       "SURFACES/GRAPH-VIEW:3",
       "SURFACES/TIMELINE:2",
@@ -770,7 +811,7 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "REACH/KEY-FORMS:15",
       "REACH/KEY-HOLDERS:9",
       "REACH/UNRESOLVED-KEYS:9",
-      "REACH/R-ERASED-ACCESS:9",
+      "REACH/R-ERASED-ACCESS:10",
       "REACH/R-DEEP-CARRIER:4",
       "REACH/RESOLVABLE-FORMS:8",
       "REACH/GENERIC-ACCESSORS:6",
@@ -785,7 +826,10 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "REACH/STAND-IN-KINDS:8",
       "REACH/STAND-IN-RECEIVERS:23",
       "REACH/CALLBACK-RECEIVERS:6",
-      "REACH/R-NARROWED-BRANCH:2",
+      "REACH/R-NARROWED-BRANCH:5",
+      "REACH/R-OVERLOADS:14",
+      "REACH/R-PARAMETER-PROPERTIES:8",
+      "REACH/R-STRUCTURAL-STAND-IN:17",
       "NAMES/CLASS-NAME-FORMS:6",
       "NAMES/CLASS-MEMBER-KINDS:9",
       "NAMES/CLASS-MEMBER-SHAPES:10",
@@ -824,7 +868,22 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "R-DEEP-CARRIER:REACH R-DEEP-CARRIER",
       "R-RUNTIME-MEMBER:NAMES R-RUNTIME-MEMBER",
       "R-NARROWED-BRANCH:REACH R-NARROWED-BRANCH",
+      "R-OVERLOADS:REACH R-OVERLOADS",
+      "R-PARAMETER-PROPERTIES:REACH R-PARAMETER-PROPERTIES",
+      "R-STRUCTURAL-STAND-IN:REACH R-STRUCTURAL-STAND-IN",
     ]);
+    // The fail-closed shapes (cut #7, ruling R-B60), each with the REACH row that plants it: the row reads it refused under its typed row and holds a quiet page beside it.
+    expect(Object.entries(FAIL_CLOSED).map(([kind, id]) => `${kind}:${id}`)).toEqual([
+      "unresolved-stand-in:STAND-IN-RECEIVERS",
+      "overload:R-OVERLOADS",
+      "parameter-property:R-PARAMETER-PROPERTIES",
+      "structural-stand-in:R-STRUCTURAL-STAND-IN",
+    ]);
+    for (const [kind, id] of Object.entries(FAIL_CLOSED)) {
+      const planted = REACH.rows.find(entry => entry.id === id)?.cases ?? [];
+      expect(planted.filter(item => item.forms?.refused.some(row => row.startsWith(`${kind}: `))).length > 0, `${id} plants ${kind} refused`).toBe(true);
+      expect(planted.filter(item => item.forms?.refused.length === 0).length > 0, `${id} holds a quiet page`).toBe(true);
+    }
     expect([
       READ_MEMBERS.join(","),
       ADMISSION_MEMBERS.join(","),
