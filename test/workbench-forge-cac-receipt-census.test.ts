@@ -14,29 +14,49 @@
  * - A, "a full-field receipt renders VERIFIED_HISTORICAL with the predicate and snapshot echoed verbatim". NOT DUE: no Pi reader
  *   consumes a receipt until the artifact ships, so the echo rule has nothing to judge.
  *   A1 is the TRIGGER, not the duty (ARMED). The installed Forge client release Pi reads Forge through (@forge/sdk, installed
- *     from vendor/forge-sdk-0.1.0.tgz) is read file by file, by path and by content: no file spells the gating artifact (the
- *     title's ForgeCACReceiptV0), none spells WORD's family (below), and none is receipt-shaped (spells both "predicate" and
- *     "checker", the title's own field words, case-insensitive). The content reading is proven live by the release's own
- *     CancelReceipt and source_snapshot_id files, and four planted release files ride last (a named receipt type, a file longer
- *     than every release file with the name at its end, a file whose path alone spells it, and a file spelling WORD with U+2010
- *     HYPHEN between its two words, which A1 reads through A2's family) beside R-OTHER-NAME's quiet row: the reader finds
- *     exactly the four plants. The witness carries the release's name, version and file count, so any re-vendor reds A1 with OWED: if the
- *     artifact shipped, the acceptance on landing is owed (A's and B's not-due spans, their fixtures replacing A1 and A2); if it
- *     did not, the roster's release reading is re-measured.
- *   A2 the "only" half of the title's rule, standing: while no receipt is read, no Pi surface renders a member of WORD's
- *     family. WORD is the title's spelling, VERIFIED_HISTORICAL; its family is its two words in either order (the second may
- *     read HISTORICALLY), separated by nothing or by any run of whitespace (\s), underscores and dash punctuation (general
- *     category Pd in the runtime's Unicode data: the hyphen-minus, U+2010 HYPHEN, U+2011 NON-BREAKING HYPHEN and every other Pd
- *     hyphen or dash), case-insensitive, with no letter or digit just before or after, in two readings of a text (the text and
- *     Pi's label display of it, sanitizeWorkbenchText's label layout with no length bound, each after NFKC; a text holds the
- *     word when either reading does). The separator classes are held to the runtime's Unicode tables, not to a list here: the
- *     separator scan plants every code point the runtime files under \s or Pd between the two words, in both orders, and the
- *     witness records the ones that read quiet (none) and that the scan met its floor (25 whitespace and 27 Pd points, the
- *     counts this cut measured on Node 24.20.0 with Unicode 17.0); a character outside the three classes is
- *     R-OTHER-SEPARATOR's. The witness carries the judge's planted texts with their readings (among them, one at a time, the
- *     eleven Pd hyphens cut #1's gate found unread), and the residual table is checked against them. The src walk reads the whole text (literals,
- *     identifiers and comments) of every src/**\/*.ts module git lists (tracked or untracked, never ignored) plus two planted
- *     modules last: a short literal plant, and one longer than every real module with the word in a comment on its last line.
+ *     at node_modules/@forge/sdk from vendor/forge-sdk-0.1.0.tgz) is read entry by entry: every regular file by its path and
+ *     its content, and every directory, symbolic link and other entry by its path. No file spells the gating artifact (the
+ *     title's ForgeCACReceiptV0) in its path or its text, none spells a member of WORD's family (below) in its path or its
+ *     text, and none is receipt-shaped (its text spells both "predicate" and "checker", the title's own field words,
+ *     case-insensitive). A1 judges the family with A2's own judge: each of A2's planted texts, planted alone as a release
+ *     file, reads in A1 as A2 reads it (A1's word count for each is in its witness, and the judged set holds the roster's copy
+ *     of those counts equal to A2's readings of the same texts). The content reading is proven live by the release's own
+ *     CancelReceipt and source_snapshot_id files, and eleven planted release files ride last through the same reading (a named
+ *     receipt type; a file longer than every release file with the name at its end; a file whose path alone spells the name;
+ *     one whose path alone spells WORD; one spelling WORD with U+2010 HYPHEN between its two words; one spelling WORD whole;
+ *     one spelling both field words in capitals; and the four quiet rows of R-OTHER-NAME and R-COMPOSED-RELEASE): the reader
+ *     finds exactly the seven loud plants, each in the readings the witness records. The witness carries the release's name
+ *     and version (read from its package.json), what its path is (a directory), every regular file's path with a sha-256/16
+ *     of its bytes and its byte length, every directory, symbolic link and other entry by path, every path the reading read
+ *     in order (the release's, then the plants'), and the trigger and liveness readings. So a re-vendor that changes the
+ *     installed paths or bytes (a path added, removed or renamed, a byte of a file changed, or the release gone or replaced by
+ *     a link) reds A1 with OWED, and an entry that cannot be read reds A1 with its read error instead: if the artifact
+ *     shipped, the acceptance on landing is owed (A's and B's not-due spans, their fixtures replacing A1 and A2); if it did
+ *     not, the roster's release reading is re-measured.
+ *   A2 the "only" half of the title's rule, standing: while no receipt is read, no Pi-authored src text spells a member of
+ *     WORD's family, and no output of the rendered set below holds one (they render the word-free READINGS and replies; B2
+ *     shows a producer-supplied WORD quoted verbatim, never minted). WORD is the title's spelling, VERIFIED_HISTORICAL; its
+ *     family is its two words in either order (the second word, HISTORICAL, may read HISTORICALLY in either order), separated
+ *     by nothing or by any run of whitespace (\s), the low line (U+005F) and dash punctuation (general category Pd in the
+ *     runtime's Unicode data: the hyphen-minus, U+2010 HYPHEN, U+2011 NON-BREAKING HYPHEN and every other Pd hyphen or dash),
+ *     case-insensitive, with no letter or digit just before or after, in two readings of a text (the text and Pi's label
+ *     display of it, sanitizeWorkbenchText's label layout with no length bound, each after NFKC; a text holds the word when
+ *     either reading does). The planted texts hold that definition at the instances they plant, each with its readings in the
+ *     roster: every code point the runtime files under \s or Pd (SEPARATORS, enumerated from the runtime's Unicode tables: 25
+ *     and 27 points on Node 24.20.0 with Unicode 17.0) and U+005F, each alone between the two words in both orders (fwd<hex>
+ *     and rev<hex>, 106 texts); nothing between, in both orders; runs ("verified - historical", and all 53 of those points at
+ *     once between the words in both orders); HISTORICALLY in both orders; upper, lower and mixed case; NFKC (fullwidth
+ *     letters); a letter or a digit just before or just after, in both orders (R-EMBEDDED's quiet rows); a word that only the
+ *     label display reads (an escape sequence between it and a letter, which the label layout alone renders as a space); a
+ *     word that a display bounded below 4115 units does not read (4116 units, the word last with a zero-width space inside
+ *     it, which the plain text does not read and the label display, 4115 units, does); and the R-OTHER-SEPARATOR characters,
+ *     outside the three classes. A runtime whose tables file a point differently changes those texts and reds A2 (the
+ *     roster's readings are then re-measured). The separator scan reads SEPARATORS again between the two words in both orders
+ *     and records the points that read quiet (none) and that the counts met their floors (25 whitespace and 27 Pd points).
+ *     Among the planted texts ride, one at a time, the eleven Pd hyphens cut #1's gate found unread, and the residual table
+ *     is checked against the planted texts. The src walk reads the whole text (literals, identifiers and comments) of every
+ *     src/**\/*.ts module git lists (tracked or untracked, never ignored) plus two planted modules last: a short literal
+ *     plant, and one longer than every real module with the word in a comment on its last line.
  *     The judged list equals the listing plus the plants, a filesystem walk lists the same modules, no symlink sits under src,
  *     the listing holds at least SRC_FLOOR modules, and the only hits are the plants'. The rendered outputs (forgeGateTopology,
  *     readForgeOperationEvidence and nativeEvidence over READINGS, forgeOperationStartedSnapshot, forgeGateStepTopology,
@@ -93,58 +113,81 @@
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal and NOT_DUE pins `${id}:${unquoted words}` as
  * another; rows, constants, residuals, the not-due spans and every pin's witness are held to the out-of-file roster
  * test/fixtures/forge-cac-receipt-roster.json. SELF-READ: the judged set parses this file's IMPL and requires that no pin body
- * names ROSTER or ROSTER_FILE or holds a string literal or template piece spelling the roster's file name (direct reads only; a
- * helper that reads the roster on a pin's behalf, or a path a pin composes from pieces, is not detected), with the parse proven
- * live on A1's own identifiers and strings, and the roster is
- * deep-frozen when it is loaded, so no case can rewrite a witness it is compared with. The records case reads that every
- * registered pin ran to its compare and re-compares each witness it produced with its roster witness by sha-256/16 (key order
- * included), so a pin case whose own compare is removed still reds there.
+ * names ROSTER, ROSTER_FILE or ROSTER_NAME or holds a string literal or template piece spelling the roster's file name (direct
+ * reads only: a helper or a module-level value that reads or holds the roster on a pin's behalf, or a path a pin composes from
+ * pieces none of which spells the file name, is not detected), with the parse proven live on A1's own identifiers and
+ * strings, and the roster is deep-frozen when it is loaded, so no case can rewrite a witness it is compared with. The records
+ * case reads that every registered pin ran to its compare and re-compares each witness it produced with its roster witness by
+ * sha-256/16 (key order included), so a pin case whose own compare is removed still reds there.
  * RESIDUALS (named; each has a pinned quiet row and a live twin among the planted inputs of the pin named):
  *   R-COMPOSED (A2) the word as a value no module text spells whole: assembled at run time from pieces, or written through an
  *     escape sequence only the cooked string spells it in (quiet: "VERIFIED_" + "HISTORICAL", and a literal spelling the
  *     underscore as the six-character escape backslash-u005f; twin: one literal). The rendered outputs see such a word only
  *     from the renderers they drive.
- *   R-EMBEDDED (A2) the word glued after a letter or digit (quiet: isVerifiedHistorical; twin: VerifiedHistorical).
- *   R-LOOKALIKE (A2) confusable letters NFKC does not fold (quiet: Cyrillic lookalikes; twin: fullwidth letters, which it folds).
+ *   R-EMBEDDED (A2) the word glued to a letter or a digit just before or just after it, in either order (quiet:
+ *     isVerifiedHistorical, 2VERIFIED_HISTORICAL, VerifiedHistoricalReceipt, VERIFIED_HISTORICAL2, isHistoricalVerified,
+ *     2HISTORICAL_VERIFIED, HistoricalVerifiedReceipt and HISTORICAL_VERIFIED2; twins: VerifiedHistorical and
+ *     HistoricalVerified).
+ *   R-LOOKALIKE (A2) confusable letters NFKC does not fold (quiet: Cyrillic lookalikes, and U+0130 LATIN CAPITAL LETTER I WITH
+ *     DOT ABOVE for both of the first word's I's; twin: fullwidth letters, which it folds).
  *   R-PARAPHRASE (A2) another wording of a historical verification (quiet: "historically passed", "verified at the declared
  *     snapshot"; twin: "historically verified").
  *   R-SIBLING (A2) the consumer rule's other word, VERIFIED_CURRENT, is not this bead's and is not judged (quiet: VERIFIED_CURRENT;
  *     twin: the title's word).
- *   R-OTHER-SEPARATOR (A2) the two words parted by a character outside whitespace, underscores and Pd, which neither reading
- *     turns into one of them (quiet: U+2043 HYPHEN BULLET, U+2212 MINUS SIGN, U+00B7 MIDDLE DOT and U+2800 BRAILLE PATTERN
- *     BLANK between the words; twin: U+2010 HYPHEN, which Pd holds).
+ *   R-OTHER-SEPARATOR (A2) the two words parted by a character outside whitespace, the low line and Pd, which neither reading
+ *     turns into one of them (quiet: U+2043 HYPHEN BULLET, U+2212 MINUS SIGN, U+00B7 MIDDLE DOT, U+2800 BRAILLE PATTERN BLANK
+ *     and U+203F UNDERTIE between the words; twin: U+2010 HYPHEN, which Pd holds).
  *   R-OTHER-NAME (A1) a receipt type the release ships under another name, without the word and without both field words
- *     (quiet: a ForgeVerificationRecord declaration; twin: a declaration named after the artifact).
+ *     (quiet: a ForgeVerificationRecord declaration, and a ForgePredicateRecord declaration spelling "predicate" alone; twin:
+ *     a declaration named after the artifact).
+ *   R-COMPOSED-RELEASE (A1) the word as a value no release file spells whole: assembled from pieces, or written through an
+ *     escape sequence (quiet: "VERIFIED_" + "HISTORICAL" in a release .js, and a release .d.ts spelling the underscore as the
+ *     six-character escape backslash-u005f; twin: a release .d.ts spelling the word whole).
  *   R-UNPLANTED-SPELLING (B1) a receipt under spellings no cell plants is not claimed by B1; its quiet row (one such record)
  *     reads identical, its twin (a read key) reads differing.
  * The judged set binds the table to the planted inputs: every planted text, module and release file A1 and A2 read quiet is a
  * named non-claim (NON_CLAIMS: the bare words, today's own labels and the gating artifact's name) or exactly one residual's
- * quiet row, so a residual dropped
- * from the table (and its literals) leaves its quiet row unaccounted for.
- * LIMITS (stated, not residuals): a pin rewritten to return its roster witness through a helper, or through a path it composes
- * from pieces, is not detected by the SELF-READ; a residual removed together with its planted inputs and their roster readings
- * is not detected (residuals are this census's own reading and have no anchor outside it); the separator classes, the scan and
- * its floors are this census's own reading too, held only to the runtime's Unicode tables and the roster's readings (narrowed
- * together with the floors and those readings, they are not detected); which of a row's pins carries which quote, where two
- * adjacent quotes of a row meet (A1|A2, C1|C2), and in row A (parked whole, so no parked quote binds its split) where its
- * quotes meet its not-due run, are this census's own reading: changed in every literal together (two pins' quotes swapped, or a
- * quote shortened and its neighbour or A's not-due run widened over the freed words, with the word-count literal and the
- * roster in step), the change is not detected; it relabels words and drops no pin; C freezes the adapters over READINGS only;
- * A1 reads the installed release,
- * never Forge's tree or the installed forge executable, and a receipt Forge serves only as new gate.status payload keys with no
- * client release spelling it does not fire A1 (B1 shows such keys unread today).
+ * quiet row, so a residual dropped from the table (and its literals) leaves its quiet row unaccounted for.
+ * LIMITS (stated, not residuals):
+ *   - a pin rewritten so that it still returns its roster witness is not detected: through a helper, a module-level value or
+ *     a path it composes from pieces (the SELF-READ reads a pin's own body only); with one of its readers replaced by another
+ *     that agrees with it on the planted inputs (A1's family counts taken from A2's judge instead of A1's reading, say); or
+ *     together with its roster witness, its id, its quote and the PARK list kept (the anchors bind ids, labels and the clause
+ *     partition, never what a pin computes). A narrowing paired with such a rewrite is not detected either;
+ *   - a residual removed together with its planted inputs and their roster readings is not detected (residuals are this
+ *     census's own reading and have no anchor outside it);
+ *   - the word family is this census's own regular expression, held only at the instances the planted texts plant (A2,
+ *     above). A narrowing that changes no planted text's readings is not detected: a run longer than 53 separators, a
+ *     neighbour of a kind no planted text puts beside the word, or a display length bound of 4115 units or more (the label
+ *     display length of the 4116-unit plant). A narrowing that changes a planted text's readings is detected, unless the
+ *     roster's readings of every planted text it changes are rewritten with it (and, where the scan or the quiet accounting
+ *     reads those texts, the scan's unread list and the accounting's literals as well) or it is paired with a pin rewrite
+ *     (the first LIMIT);
+ *   - SEPARATORS and the scan's floors are this census's own reading of the runtime's Unicode tables: a point dropped from
+ *     SEPARATORS together with the floors and the roster's readings of every planted text that drop changes is not detected;
+ *   - which of a row's pins carries which quote, where two adjacent quotes of a row meet (A1|A2, C1|C2), and in row A (parked
+ *     whole, so no parked quote binds its split) where its quotes meet its not-due run, are this census's own reading: changed
+ *     in every literal together (two pins' quotes swapped, or a quote shortened and its neighbour or A's not-due run widened
+ *     over the freed words, with the word-count literal and the roster in step), the change is not detected; it relabels words
+ *     and drops no pin;
+ *   - C freezes the adapters over READINGS only;
+ *   - A1 reads the installed release's paths and bytes, never their metadata (mode, owner, timestamps), the vendored tarball,
+ *     the lock file, Forge's tree or the installed forge executable: a re-vendor that changes only metadata, or one not yet
+ *     installed, does not red A1, and a receipt Forge serves only as new gate.status payload keys with no client release
+ *     spelling it does not fire A1 (B1 shows such keys unread today).
  *
- * MEASURED AT THE CUT (seat records, read-only, not assertions): cut #1 at trunk 061c2ac; this cut (#2, the respin curing cut
- * #1's refusal items U1 and U2) at trunk 5fbe25e (e81d2b0 at the claim, the moved tip merged in during the cut), 2026-10-28.
- * src holds 117 modules and 0 hits of WORD's family as A2 reads it
- * now; at cut #1's base test, qa and docs held 0 lines of the family as well (the census and roster spell it, as their own
- * data). Forge origin/main d248b17bd91f (2026-10-28T17:07:14Z) spells ForgeCACReceiptV0 only in
+ * MEASURED AT THE CUT (seat records, read-only, not assertions): cut #1 at trunk 061c2ac; cut #2 (the respin curing cut #1's
+ * refusal items U1 and U2) at trunk 5fbe25e; this cut (#3, the respin curing cut #2's refusal items U1 and U2) at trunk
+ * c843ed5, 2026-10-29. src holds 117 modules and 0 hits of WORD's family as A2 reads it now; at cut #1's base test, qa and
+ * docs held 0 lines of the family as well (the census and roster spell it, as their own data). At cut #2, Forge origin/main
+ * d248b17bd91f (2026-10-28T17:07:14Z) spelled ForgeCACReceiptV0 only in
  * docs/programs/cac-evidence-assurance-2026-10-18/01-contract-qa.md (its section heading :3 reads 'Proposed read-only export
  * (not shipped)'), and WORD's family only in docs: that file and docs/package-views/11-sdk-cli-and-developer-experience.md:16
  * ('verified historical result/refusal', a design view present at cut #1's a2ab95fa933b too); the installed forge 0.2.1 (rev
- * a2ab95fa933b) site-packages spell neither (6778 files); both by a case-insensitive PCRE grep for the family's two orders with
- * \s, underscore and Pd runs (plain text only, no NFKC or label reading). The installed @forge/sdk 0.1.0 holds 49 files and
- * spells neither (A1's own reading), and no file of it spells "predicate" or "checker". The label census of wb-b9n.3
+ * a2ab95fa933b) site-packages spelled neither (6778 files); both by a case-insensitive PCRE grep for the family's two orders
+ * with \s, underscore and Pd runs (plain text only, no NFKC or label reading); this cut did not re-measure Forge. The installed
+ * @forge/sdk 0.1.0 holds 49 regular files, one directory (dist) and no link or other entry, and spells neither (A1's own
+ * reading), and no file of it spells "predicate" or "checker". The label census of wb-b9n.3
  * (test/workbench-forge-cac-label-census.test.ts) holds the 'CAC verified' label and the src-side name trigger; this census
  * holds the receipt reader's word, the release-side trigger, the receipt cells and the byte-identical adapters.
  *
@@ -153,7 +196,7 @@
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { readdirSync, readFileSync } from "node:fs";
+import { lstatSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
@@ -344,8 +387,8 @@ const fromCodePoints = (...points: number[]): string => String.fromCodePoint(...
 const MIDDLE_DOT = fromCodePoints(0xb7);
 const SPACE_CLASS = /\s/u;
 const DASH_CLASS = /\p{Pd}/u;
-/** The separator scan: every code point the runtime files under \s or Pd, planted between the two words in both orders. */
-function separatorScan(): { floorMet: boolean; unread: string[] } {
+/** The runtime's separator points, read from its Unicode tables: every code point it files under \s, and every one under Pd. */
+function separatorPoints(): { space: number[]; dash: number[] } {
   const space: number[] = [];
   const dash: number[] = [];
   for (let point = 0; point <= 0x10ffff; point += 1) {
@@ -354,12 +397,24 @@ function separatorScan(): { floorMet: boolean; unread: string[] } {
     if (SPACE_CLASS.test(unit)) space.push(point);
     if (DASH_CLASS.test(unit)) dash.push(point);
   }
+  return { space, dash };
+}
+const SEPARATORS = separatorPoints();
+/** The low line, U+005F, the third separator class. */
+const LOW_LINE = 0x5f;
+/** Every separator point the family admits: the \s points, then the Pd points (each in code-point order), then the low line. */
+const SEPARATOR_POINTS: readonly number[] = [...SEPARATORS.space, ...SEPARATORS.dash, LOW_LINE];
+/** The separator scan: every point of SEPARATORS planted between the two words in both orders, and the floors under its counts. */
+function separatorScan(): { floorMet: boolean; unread: string[] } {
+  const { space, dash } = SEPARATORS;
   const reads = (point: number): boolean => [`${HEAD}${fromCodePoints(point)}${TAIL}`, `${TAIL}${fromCodePoints(point)}${HEAD}`].every(isWord);
   const unread = [...space, ...dash].filter(point => !reads(point)).map(point => `U+${point.toString(16).toUpperCase().padStart(4, "0")}`);
   return { floorMet: space.length >= SPACE_FLOOR && dash.length >= DASH_FLOOR, unread };
 }
 /** The eleven Pd hyphens cut #1's gate planted one at a time in a src comment and found unread (refusal U2). */
 const UNREAD_AT_CUT_ONE: readonly number[] = [0x58a, 0x1400, 0x1806, 0x2010, 0x2011, 0x2e17, 0x2e1a, 0x2e40, 0x2e5d, 0x30a0, 0x10ead];
+/** A code point as four or more lowercase hex digits, for the per-point planted texts' ids. */
+const hex4 = (point: number): string => point.toString(16).padStart(4, "0");
 /** A planted input as a witness carries it: ASCII only, every other code point as \u{hex}. */
 const shownText = (text: string): string => [...text].map(unit => ((unit.codePointAt(0) ?? 0) < 0x80 ? unit : `\\u{${(unit.codePointAt(0) ?? 0).toString(16)}}`)).join("");
 /** A2's planted texts: claims the judge must read, the named non-claims, and each residual's quiet row and twin. */
@@ -390,6 +445,30 @@ const PLANTED_TEXTS: Readonly<Record<string, string>> = {
   minusSign: `${HEAD}${fromCodePoints(0x2212)}${TAIL}`,
   middleDot: `${HEAD}${fromCodePoints(0xb7)}${TAIL}`,
   brailleBlank: `${HEAD}${fromCodePoints(0x2800)}${TAIL}`,
+  undertie: `${HEAD}${fromCodePoints(0x203f)}${TAIL}`,
+  dottedI: `VER${fromCodePoints(0x130)}F${fromCodePoints(0x130)}ED_HISTORICAL`,
+  digitBefore: "2VERIFIED_HISTORICAL",
+  letterAfter: "VerifiedHistoricalReceipt",
+  digitAfter: "VERIFIED_HISTORICAL2",
+  reversedLetterBefore: "isHistoricalVerified",
+  reversedDigitBefore: "2HISTORICAL_VERIFIED",
+  reversedLetterAfter: "HistoricalVerifiedReceipt",
+  reversedDigitAfter: "HISTORICAL_VERIFIED2",
+  reversedGlued: "HistoricalVerified",
+  adverbForward: "verified historically",
+  run: "verified - historical",
+  runEvery: `${HEAD}${fromCodePoints(...SEPARATOR_POINTS)}${TAIL}`,
+  runEveryReversed: `${TAIL}${fromCodePoints(...SEPARATOR_POINTS)}${HEAD}`,
+  // Only the label display reads it: the layout renders the escape sequence's gap as a space, the plain text glues the word to a letter.
+  labelOnly: `receipt${fromCodePoints(0x1b)}[1m${WORD}${fromCodePoints(0x1b)}[0m`,
+  // Only an unbounded display reads it: the zero-width space breaks the plain text's word, and a bounded display cuts the word off.
+  unbounded: `${"x ".repeat(2048)}${HEAD}${fromCodePoints(0x200b)}_${TAIL}`,
+  ...Object.fromEntries(
+    SEPARATOR_POINTS.flatMap(point => [
+      [`fwd${hex4(point)}`, `${HEAD}${fromCodePoints(point)}${TAIL}`],
+      [`rev${hex4(point)}`, `${TAIL}${fromCodePoints(point)}${HEAD}`],
+    ]),
+  ),
 };
 const PLANTED_MODULES: Readonly<Record<string, string>> = {
   literal: `export const shown = "${WORD}";\n`,
@@ -452,10 +531,52 @@ function bigPlant(path: string, files: readonly TextFile[], tail: string): TextF
 const RECEIPT_WORDS: readonly RegExp[] = [/predicate/i, /checker/i];
 /** The release's own spellings the content reading must find: its one receipt type, and the basis field Pi reads off gate.status. */
 const LIVENESS: readonly string[] = ["CancelReceipt", "source_snapshot_id"];
-function releaseFiles(): { files: TextFile[]; links: string[] } {
-  const walked = walkFiles(join(REPO, RELEASE), "", () => true);
-  return { files: walked.files.map(path => ({ path, text: readFileSync(join(REPO, RELEASE, path), "utf8") })), links: walked.links };
+interface ReleaseFile extends TextFile { readonly bytes: Buffer }
+interface ReleaseEntries {
+  readonly root: string;
+  readonly files: readonly ReleaseFile[];
+  readonly directories: string[];
+  readonly links: string[];
+  readonly others: string[];
 }
+/**
+ * Every entry under an installed release: each regular file with its bytes, each directory, each symbolic link and each other
+ * kind of entry, by path, and what the release path itself is ("absent" when nothing is installed there).
+ */
+function releaseEntries(release: string): ReleaseEntries {
+  const files: ReleaseFile[] = [];
+  const directories: string[] = [];
+  const links: string[] = [];
+  const others: string[] = [];
+  const visit = (directory: string): void => {
+    for (const entry of readdirSync(join(REPO, release, directory), { withFileTypes: true })) {
+      const path = directory === "" ? entry.name : `${directory}/${entry.name}`;
+      if (entry.isSymbolicLink()) links.push(path);
+      else if (entry.isDirectory()) {
+        directories.push(path);
+        visit(path);
+      } else if (entry.isFile()) {
+        const bytes = readFileSync(join(REPO, release, path));
+        files.push({ path, text: bytes.toString("utf8"), bytes });
+      } else others.push(path);
+    }
+  };
+  const stat = lstatSync(join(REPO, release), { throwIfNoEntry: false });
+  const root = stat === undefined ? "absent" : stat.isDirectory() ? "directory" : stat.isSymbolicLink() ? "link" : "other";
+  if (root === "directory") visit("");
+  return { root, files: files.sort((a, b) => byName(a.path, b.path)), directories: directories.sort(byName), links: links.sort(byName), others: others.sort(byName) };
+}
+/** A file's JSON value, or undefined when it is missing or does not parse. */
+function parsedJson(text: string | undefined): unknown {
+  if (text === undefined) return undefined;
+  try {
+    return JSON.parse(text);
+  } catch {
+    return undefined;
+  }
+}
+/** The sha-256/16 of raw bytes. */
+const bytesDigest = (bytes: Buffer): string => createHash("sha256").update(bytes).digest("hex").slice(0, 16);
 /** The trigger reading: every file read, and the files whose path or content spells the gating artifact, the word, or both field words. */
 function releaseReading(files: readonly TextFile[]): { read: string[]; gating: string[]; word: string[]; receiptShaped: string[]; live: Record<string, string[]> } {
   const read: string[] = [];
@@ -476,10 +597,16 @@ const PLANTED_RELEASE: Readonly<Record<string, TextFile>> = {
   named: { path: "dist/zz-plant-receipt.d.ts", text: `export interface ${GATING} { readonly interpretation: "${WORD}"; readonly predicate: string; readonly checker: string }\n` },
   pathOnly: { path: `dist/${GATING}.d.ts`, text: "export {};\n" },
   otherName: { path: "dist/zz-plant-other.d.ts", text: "export interface ForgeVerificationRecord { readonly verdict: string; readonly subject: string }\n" },
+  oneField: { path: "dist/zz-plant-one-field.d.ts", text: "export interface ForgePredicateRecord { readonly predicate: string }\n" },
   hyphen: { path: "dist/zz-plant-hyphen.d.ts", text: `// ${HEAD}${fromCodePoints(0x2010)}${TAIL}\nexport {};\n` },
+  wordPath: { path: "dist/verified-historical.d.ts", text: "export {};\n" },
+  spelled: { path: "dist/zz-plant-spelled.d.ts", text: `export declare const shown: "${WORD}";\n` },
+  fieldCase: { path: "dist/zz-plant-field-case.d.ts", text: "export interface CacRecord { readonly PREDICATE: string; readonly CHECKER: string }\n" },
+  pieces: { path: "dist/zz-plant-pieces.js", text: 'export const shown = "VERIFIED_" + "HISTORICAL";\n' },
+  unicodeEscape: { path: "dist/zz-plant-unicode-escape.d.ts", text: 'export declare const shown: "VERIFIED\\u005fHISTORICAL";\n' },
 };
 const RELEASE_BIG = "dist/zz-plant-receipt-big.d.ts";
-const OWED = `ARMED (${BEAD}): the installed @forge/sdk differs from the release this census measured. If ${GATING} shipped in it, the acceptance on landing is owed: ${ROWS[0]?.label ?? ""}; ${ROWS[1]?.label ?? ""} (fixtures replacing A1 and A2). If it did not, re-measure the roster's release reading and say so.`;
+const OWED = `ARMED (${BEAD}): A1's witness differs from the roster's (the installed @forge/sdk's paths or bytes, or A1's reading of them or of its planted files, changed). If ${GATING} shipped in it, the acceptance on landing is owed: ${ROWS[0]?.label ?? ""}; ${ROWS[1]?.label ?? ""} (fixtures replacing A1 and A2). If it did not, re-measure the roster's release reading and say so.`;
 
 // ----------------------------------------------------------------------------------------------------------- the fixtures
 const OPERATION = "op_b9n1";
@@ -660,9 +787,9 @@ const REACHED = new Map<string, string>();
 const digestOf = (value: unknown): string => createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0, 16);
 const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A1: async () => {
-    const release = releaseFiles();
-    const packageJson: unknown = JSON.parse(readFileSync(join(REPO, RELEASE, "package.json"), "utf8"));
-    const identity = packageJson !== null && typeof packageJson === "object" && "name" in packageJson && "version" in packageJson ? `${String(packageJson.name)}@${String(packageJson.version)}` : "";
+    const release = releaseEntries(RELEASE);
+    const manifest = parsedJson(release.files.find(file => file.path === "package.json")?.text);
+    const identity = manifest !== null && typeof manifest === "object" && "name" in manifest && "version" in manifest ? `${String(manifest.name)}@${String(manifest.version)}` : "";
     const plants = Object.values(PLANTED_RELEASE);
     const big = bigPlant(RELEASE_BIG, release.files, `export type Receipt = ${GATING};\n`);
     // The plants ride last through the same reading: the release itself must add no trigger site of its own.
@@ -678,12 +805,17 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       const silent = residual.twin.filter(id => reads(plantOf(id) ?? { path: "", text: "" }) === "gating=0 word=0 receiptShaped=0");
       if (loud.length > 0 || silent.length > 0) throw new Error(`${residual.id}: quiet rows read loud (${loud.join(", ")}) or twins read silent (${silent.join(", ")})`);
     }
+    // A1's reading of WORD's family is data: each A2 planted text, planted alone as a release file, with the word count A1 reads.
+    const family = Object.fromEntries(Object.entries(PLANTED_TEXTS).map(([id, text]) => [id, releaseReading([{ path: `dist/zz-family-${id}.d.ts`, text }]).word.length]));
     return {
-      release: identity, files: release.files.length, links: release.links,
-      readEqualsReleasePlusPlants: JSON.stringify(reading.read) === JSON.stringify([...release.files.map(file => file.path), ...plants.map(file => file.path), big.path]),
+      release: identity, root: release.root, files: release.files.length,
+      contents: Object.fromEntries(release.files.map(file => [file.path, `${bytesDigest(file.bytes)} ${file.bytes.length} bytes`])),
+      directories: release.directories, links: release.links, others: release.others,
+      read: reading.read,
       bigPlantLongest: big.text.length > Math.max(0, ...release.files.map(file => file.text.length)),
       gating: reading.gating, word: reading.word, receiptShaped: reading.receiptShaped, live: reading.live,
       planted: Object.fromEntries(Object.entries(PLANTED_RELEASE).map(([id, file]) => [id, `${reads(file)} ${file.path}`])),
+      family,
     };
   },
   A2: async () => {
@@ -838,12 +970,18 @@ const NON_CLAIMS: readonly string[] = ["bareVerified", "bareHistorical", "todayL
 /** Each residual's quiet rows and twins are planted inputs of the pin that reads them. */
 const RESIDUALS: readonly Residual[] = [
   { id: "R-COMPOSED", quietPin: "A2", quiet: ["composed", "escaped"], twin: ["composedTwin"] },
-  { id: "R-EMBEDDED", quietPin: "A2", quiet: ["embedded"], twin: ["glued"] },
-  { id: "R-LOOKALIKE", quietPin: "A2", quiet: ["cyrillic"], twin: ["fullwidth"] },
+  {
+    id: "R-EMBEDDED",
+    quietPin: "A2",
+    quiet: ["embedded", "digitBefore", "letterAfter", "digitAfter", "reversedLetterBefore", "reversedDigitBefore", "reversedLetterAfter", "reversedDigitAfter"],
+    twin: ["glued", "reversedGlued"],
+  },
+  { id: "R-LOOKALIKE", quietPin: "A2", quiet: ["cyrillic", "dottedI"], twin: ["fullwidth"] },
   { id: "R-PARAPHRASE", quietPin: "A2", quiet: ["passed", "atSnapshot"], twin: ["adverb"] },
   { id: "R-SIBLING", quietPin: "A2", quiet: ["current"], twin: ["title"] },
-  { id: "R-OTHER-SEPARATOR", quietPin: "A2", quiet: ["hyphenBullet", "minusSign", "middleDot", "brailleBlank"], twin: ["pd2010"] },
-  { id: "R-OTHER-NAME", quietPin: "A1", quiet: ["otherName"], twin: ["named"] },
+  { id: "R-OTHER-SEPARATOR", quietPin: "A2", quiet: ["hyphenBullet", "minusSign", "middleDot", "brailleBlank", "undertie"], twin: ["pd2010"] },
+  { id: "R-OTHER-NAME", quietPin: "A1", quiet: ["otherName", "oneField"], twin: ["named"] },
+  { id: "R-COMPOSED-RELEASE", quietPin: "A1", quiet: ["pieces", "unicodeEscape"], twin: ["spelled"] },
   { id: "R-UNPLANTED-SPELLING", quietPin: "B1", quiet: ["otherSpelling"], twin: ["readKey"] },
 ];
 
@@ -882,7 +1020,7 @@ describe("wb-b9n.1 Forge CAC receipt census (FORGE-CAC-EVIDENCE-ASSURANCE-R2)", 
     // The title's word is read by the family and its gating artifact is not; the neutral word is the word's byte length and read by none.
     expect([isWord(WORD), isWord(GATING), GATING.length > 0, WORD.includes("_"), Buffer.byteLength(NEUTRAL) === Buffer.byteLength(WORD), isWord(NEUTRAL)]).toEqual([true, false, true, true, true, false]);
     expect(Object.keys(FIELD_KEYS)).toEqual(FIELDS);
-    expect(RESIDUALS.map(residual => residual.id)).toEqual(["R-COMPOSED", "R-EMBEDDED", "R-LOOKALIKE", "R-PARAPHRASE", "R-SIBLING", "R-OTHER-SEPARATOR", "R-OTHER-NAME", "R-UNPLANTED-SPELLING"]);
+    expect(RESIDUALS.map(residual => residual.id)).toEqual(["R-COMPOSED", "R-EMBEDDED", "R-LOOKALIKE", "R-PARAPHRASE", "R-SIBLING", "R-OTHER-SEPARATOR", "R-OTHER-NAME", "R-COMPOSED-RELEASE", "R-UNPLANTED-SPELLING"]);
     expect(ROSTER.residuals).toEqual(RESIDUALS);
     const plantedOf: Readonly<Record<string, readonly string[]>> = {
       A1: Object.keys(PLANTED_RELEASE), A2: [...Object.keys(PLANTED_TEXTS), ...Object.keys(PLANTED_MODULES)], B1: Object.keys(UNPLANTED),
@@ -899,13 +1037,17 @@ describe("wb-b9n.1 Forge CAC receipt census (FORGE-CAC-EVIDENCE-ASSURANCE-R2)", 
     });
     expect([...quietTexts, ...quietModules].sort(byName)).toEqual([...NON_CLAIMS, ...quietOf("A2")].sort(byName));
     expect(quietRelease).toEqual(quietOf("A1"));
+    // A1 judges the family with A2's own judge: the roster's A1 family readings equal A2's readings of the same planted texts.
+    const familyHeld = ROSTER.rows.flatMap(row => row.pins).find(pin => pin.id === "A1")?.witness;
+    const familyOf = familyHeld !== null && typeof familyHeld === "object" && !Array.isArray(familyHeld) ? familyHeld.family : undefined;
+    expect(familyOf).toEqual(Object.fromEntries(Object.entries(PLANTED_TEXTS).map(([id, text]) => [id, isWord(text) ? 1 : 0])));
     expect(NON_CLAIMS.filter(id => quietOf("A2").includes(id))).toEqual([]);
     // SELF-READ: no pin body names the roster or its file or spells its file name (the parse proven live on A1's own reads),
     // and the roster cannot be rewritten in memory.
     const reads = implReads();
     expect(Object.keys(reads).sort(byName)).toEqual(Object.keys(IMPL).sort(byName));
     expect([reads.A1?.names.includes("RELEASE"), reads.A1?.texts.includes("package.json")]).toEqual([true, true]);
-    const rosterReaders = Object.entries(reads).filter(([, read]) => read.names.includes("ROSTER") || read.names.includes("ROSTER_FILE") || read.texts.some(text => text.includes(ROSTER_NAME)));
+    const rosterReaders = Object.entries(reads).filter(([, read]) => read.names.includes("ROSTER") || read.names.includes("ROSTER_FILE") || read.names.includes("ROSTER_NAME") || read.texts.some(text => text.includes(ROSTER_NAME)));
     expect(rosterReaders.map(([id]) => id)).toEqual([]);
     expect([Object.isFrozen(ROSTER), Object.isFrozen(ROSTER.rows), ROSTER.rows.every(row => row.pins.every(pin => Object.isFrozen(pin)))]).toEqual([true, true, true]);
   });
