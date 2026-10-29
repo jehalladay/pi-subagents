@@ -281,9 +281,100 @@ Named residuals of test/workbench-rf-definition-source-census.test.ts, the until
 | A20 | R-MARKER-RUN | page cure |
 | T4 | R-NESTED | names rule |
 
+## HX licensed-complete census read forms
+
+Read forms of test/workbench-hx-licensed-complete-census.test.ts, the until-then census of the HX licensed-complete branch (wb-tz2.9): one row per form its live-set reader reads (surfaces membership, registration and fail-closed, beside the quiet controls) and per form its route reader reads (surface route), each a falsifier module the census runs. A membership or registration form reads live with the HX cases it registers and nothing unresolved or outside, a fail-closed form reads something unresolved or outside, a control reads quiet, and every route form but the intact one reads a route list other than the intact one's. The census holds this table to its form lists in both directions and in table order, so a form dropped, renamed, reordered or moved to another surface on either side reads red.
+
+| Surface | Form |
+| --- | --- |
+| membership | named |
+| membership | aliased |
+| membership | named-elsewhere |
+| membership | type-only |
+| membership | client |
+| membership | namespace |
+| membership | namespace-element |
+| membership | namespace-sdk |
+| membership | namespace-bare-path |
+| membership | default |
+| membership | dynamic |
+| membership | dynamic-destructured |
+| membership | dynamic-inline |
+| membership | dynamic-module |
+| membership | dynamic-unawaited |
+| membership | alias |
+| membership | alias-member |
+| membership | alias-destructured |
+| membership | alias-chain |
+| membership | assigned |
+| membership | assigned-in-case |
+| membership | destructuring-assigned |
+| membership | stored |
+| registration | root-test |
+| registration | import-alias |
+| registration | const-alias |
+| registration | flag-concurrent |
+| registration | flag-fails |
+| registration | flag-only |
+| registration | flag-sequential |
+| registration | flag-skip |
+| registration | flag-todo |
+| registration | method-each |
+| registration | method-extend |
+| registration | method-for |
+| registration | method-override |
+| registration | method-runIf |
+| registration | method-scoped |
+| registration | method-skipIf |
+| registration | flags-chained |
+| registration | method-after-flag |
+| registration | flag-after-method |
+| registration | extended-alias |
+| registration | options-position |
+| registration | timeout-position |
+| registration | function-body |
+| registration | nested-describe |
+| registration | template-title |
+| registration | computed-title |
+| fail-closed | require |
+| fail-closed | import-actual |
+| fail-closed | held-specifier |
+| fail-closed | export-from |
+| fail-closed | meta-resolve |
+| fail-closed | unread-binding |
+| fail-closed | unread-alias-binding |
+| fail-closed | unread-assignment-pattern |
+| fail-closed | array-held |
+| fail-closed | hook |
+| fail-closed | helper-function |
+| fail-closed | named-body |
+| fail-closed | describe-body |
+| fail-closed | fixture |
+| fail-closed | table |
+| fail-closed | bound |
+| fail-closed | object-api |
+| fail-closed | dynamic-outside |
+| control | no-hx |
+| control | sdk-non-entry |
+| control | provider-non-entry |
+| control | comment |
+| control | title-text |
+| control | side-effect |
+| route | intact |
+| route | negated |
+| route | bare |
+| route | other-matcher |
+| route | other-expected |
+| route | soft |
+| route | other-subject |
+| route | outside-case |
+| route | twice |
+| route | aliased |
+| route | held |
+
 ## HX licensed-complete census residuals
 
-Named residuals of test/workbench-hx-licensed-complete-census.test.ts, the until-then census of the HX licensed-complete branch (wb-tz2.9): one row per member of each claim family its scanner names and does not read, so a claim spelled that way in a native-read file is not caught by it. Each row names the census quiet row that pins the family, the family's name and the member, a statement the census reads quiet. The census holds this table to its residual pins and members in both directions and in table order, so a family or member dropped, renamed, reordered or moved to another quiet row on either side reads red.
+Named residuals of test/workbench-hx-licensed-complete-census.test.ts, the until-then census of the HX licensed-complete branch (wb-tz2.9): one row per member of each family its claim scanner (Q1 to Q6), its live-set reader (Q7) or its route reader (Q8) names and does not read, so a claim, a live HX drive or a hollowed route spelled that way in a native-read file is not caught by it. Each row names the census quiet row that pins the family, the family's name and the member, a statement or module the census reads quiet. The census holds this table to its residual pins and members in both directions and in table order, so a family or member dropped, renamed, reordered or moved to another quiet row on either side reads red.
 
 | Quiet row | Residual family | Member |
 | --- | --- | --- |
@@ -314,3 +405,12 @@ Named residuals of test/workbench-hx-licensed-complete-census.test.ts, the until
 | Q6 | R-TEXT-FRAGMENT | `expect(snapshot.node.statusText).toMatch(/known.empty/);` |
 | Q6 | R-TEXT-FRAGMENT | `expect(snapshot.node.statusText).toMatch(/known[-]empty/);` |
 | Q6 | R-TEXT-FRAGMENT | `expect(snapshot.node.statusText).toContain('known-emp');` |
+| Q7 | R-LIVE-INDIRECT | `import {liveFind} from "./helpers/hx-live.js"; it("HX probe", async () => { await liveFind(); });` |
+| Q7 | R-LIVE-INDIRECT | `import {runHx} from "@hyperunix/sdk/raw"; it("HX probe", async () => { await runHx(["find", "--kind", "hx.fs/regular-file", "src"]); });` |
+| Q7 | R-LIVE-INDIRECT | `it("HX probe", async () => { const hxProvider = await import("../src/workbench/providers/" + "hyperunix.js"); await hxProvider.nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file", "src"); });` |
+| Q7 | R-LIVE-INDIRECT | `import {registry} from "./helpers/live-registry.js"; it("HX probe", async () => { await registry.invoke("hyperunix.find", {kind: "hx.fs/regular-file", root: "src"}, {grants: ["hyperunix:read"]}); });` |
+| Q7 | R-LIVE-INDIRECT | `import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; const stash: (() => Promise<unknown>)[] = []; it("HX hand-off", () => { stash.push(() => nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file", "src")); }); it("HX probe", async () => { await stash[0]?.(); });` |
+| Q8 | R-ROUTE-RUNTIME | `import {hxLiveInvariant} from "../src/workbench/hyperunix-observer.js"; import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; it("HX probe", async () => { const result = await nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file", "src"); if (Date.now() < 0) expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); });` |
+| Q8 | R-ROUTE-RUNTIME | `import {hxLiveInvariant} from "../src/workbench/hyperunix-observer.js"; import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; it("HX probe", async () => { const result = await nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file", "src"); return; expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); });` |
+| Q8 | R-ROUTE-RUNTIME | `import {hxLiveInvariant} from "../src/workbench/hyperunix-observer.js"; import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; it("HX probe", async () => { const result = await nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file", "src"); const never = () => expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); });` |
+| Q8 | R-ROUTE-RUNTIME | `import {hxLiveInvariant} from "../src/workbench/hyperunix-observer.js"; import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; it("HX probe", async () => { const live = await nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file", "src"); { const result = {runtime: live}; expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); } });` |

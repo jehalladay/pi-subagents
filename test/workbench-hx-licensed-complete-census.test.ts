@@ -20,19 +20,22 @@
  * establishes a witness. No Pi-runnable fixture licenses absence, so the "On landing" leg is NOT delivered and NOT claimed here:
  * no live witness, no fixture workspace and no receipt row. Re-measured at cut #2 (2026-10-29, the roster's gate.remeasured) on a
  * newly installed build of the same version string (binary sha-256 fa81093d2bb3...): unchanged - nativeHyperUnixFind reads
- * incomplete, opportunistic and unlicensed over an empty src, a one-file src and this checkout.
+ * incomplete, opportunistic and unlicensed over an empty src, a one-file src and this checkout. At cut #3 the installed binary is
+ * that same build (sha-256 fa81093d2bb3...), so no new probe was owed.
  *
  * ROWS (W, S, T and N: each label is one clause of the bead's own text, read back from the tracker export, and each pin's quote
- * tiles its label; Q: the residual families, anchored in docs/14):
+ * tiles its label; Q: the residual families of the census's three readers, anchored in docs/14):
  *  W, the obligation, armed and pending. W1: the native-read tier (forge.toml native-read names vitest.native.config.ts) and its HX
- *    live set - the files that import an HX entry point (a function export of src/workbench/providers/hyperunix.ts, or the SDK's
- *    HyperUnix client) - with their HX cases and the cases among them whose body states a claim in a READ SET form: none today. W2:
- *    the R1 route: each live file holds one expect(hxLiveInvariant(...)) call (the literal route; a verdict held in a variable is
- *    not counted), and the predicate, fed through the registered provider path, licenses absence on a runtime-licensed
- *    complete-empty reading (whose projection reads complete coverage and the known-empty text) and not on an unlicensed incomplete
- *    one. The scanner's claim vocabulary is DERIVED there, from the predicate, the projection and the adapter's consumed-field
- *    list: the verdict field that flips, the licence field whose flip un-licenses, the kinds that license and the projection's
- *    coverage and first status word.
+ *    live set as the LIVE SET reader below reads it - the files that bind an HX entry in a MEMBERSHIP form - with each live file's
+ *    HX cases and their registration chains, the HX cases whose body states a claim in a READ SET form (none today), every HX
+ *    module mention and every HX reference the reader cannot place (FAIL CLOSED: both lists empty today), and the reading of every
+ *    LIVE SET form. W2: the R1 route as the ROUTE reader below reads it - each live file's route chains, each chain's text and the
+ *    case holding it, and the reading of every ROUTE form - and the predicate, fed through the registered provider path with every
+ *    execution kind under both licence states (the EXCLUSIVITY matrix), licenses absence on exactly the runtime-licensed complete
+ *    and complete-empty readings and on no other reading; the projection of the licensed complete-empty reading reads complete
+ *    coverage and the known-empty text. The scanner's claim vocabulary is DERIVED there, from the predicate, the projection and the
+ *    adapter's consumed-field list: the verdict field that flips, the licence field whose flip un-licenses, the kinds that license
+ *    (the matrix's licensed column) and the projection's coverage and first status word.
  *  S, until then. S1: no file of the native-read tier states a licensed-complete claim in a READ SET form; the scanner flags every
  *    falsifier and every conservative row and no benign statement; and over docs/14's HX default-gate evidence cases (outside this
  *    file) it reads a claim in the body of each positive-half case and none in the negative-half case. S2: the docs/14 evidence
@@ -42,13 +45,56 @@
  *    a live, native or scale pass, so any edit of that sentence, or a block added beside the table, reds S2).
  *  T, tier labels. T1: every HX evidence row's tier names the config that selects its file and the default config agrees
  *    (default-gate: vitest.config.ts selects it and the native-read config does not; native-read: the reverse), and its case is
- *    registered there by its verbatim title. T2: the line its quote cites (git show 9df9a03, line 25) is the current HX row of the
- *    "Matrix by subsystem" table, cell for cell. T3: the complete gate runs a census step that resolves to vitest.census.config.ts,
- *    which selects exactly one file whose lead opens with the bead id its quote names (wb-cax.25:
- *    test/workbench-subsystem-matrix.census.ts), and that file carries the "Matrix by subsystem" heading as a string literal.
+ *    registered there by its verbatim title, through the registration chain the roster pins (REGISTRATION below). T2: the line its
+ *    quote cites (git show 9df9a03, line 25) is the current HX row of the "Matrix by subsystem" table, cell for cell. T3: the
+ *    complete gate runs a census step that resolves to vitest.census.config.ts, which selects exactly one file whose lead opens with
+ *    the bead id its quote names (wb-cax.25: test/workbench-subsystem-matrix.census.ts), and that file carries the "Matrix by
+ *    subsystem" heading as a string literal.
  *  N, never counted. N1: the one sentence of TRACEABILITY.md:76 that carries "do not count it as native evidence" is the roster's,
  *    verbatim; the default config selects no native-read file, and the native-read config selects no file of S2's fixture cases.
- *  Q, the residual families (RESIDUALS): each a pin whose every member reads quiet.
+ *  Q, the residual families (RESIDUALS): each a pin whose every member reads quiet to its family's reader.
+ *
+ * LIVE SET (W1's reader; W2 reads the files it reads live). Active code only: comments are trivia. An HX MODULE is a module
+ * specifier naming the provider module (a path ending in providers/hyperunix, bare or with a .js, .ts, .mjs, .cjs, .mts or .cts
+ * extension) or the SDK package root (@hyperunix/sdk). An HX ENTRY is a function export of src/workbench/providers/hyperunix.ts or
+ * the SDK's HyperUnix client (W1's entryPoints, read from both modules). An HX LOCAL is a name one of these MEMBERSHIP forms binds:
+ *   M1 a static import of an entry by its exported name, from any module (named; a type-only import included);
+ *   M2 the same under another local name (aliased);
+ *   M3 a static namespace import of an HX module (namespace), and M4 its default import (default);
+ *   M5 a dynamic import() of an HX module by a literal specifier, awaited or not: bound whole to a name (dynamic), destructured
+ *      into entries (destructured), or used in place (inline: no local, the call itself is the reference);
+ *   M6 an alias, to any depth: a variable declared from an HX local, from an entry member of an M3, M4 or M5 local, or
+ *      destructured from such a local; or a name assigned so (=, ||=, &&=, ??=, anywhere, a case body included), a destructuring
+ *      assignment from such a local included (alias); or a member store - an assignment of one to a member of a value, whose
+ *      root name then reads as an HX local (store).
+ * A file is LIVE when it binds an HX local or holds an M5 import. REGISTRATION: a CASE is a call whose callee is a test API - it or
+ * test, bare or imported from vitest under any local name, or a variable declared from a test API - extended by any number of
+ * vitest's case flags (CASE_FLAGS) and calls of its case methods (CASE_METHODS), in any order. Those two lists and the members that
+ * register no case (NON_CASE_MEMBERS: the suite switch and the hooks) partition vitest's own test-API members (REGISTRATION_MEMBERS
+ * of test/helpers/census.ts, pinned against the installed vitest there), and this file derives the same partition from vitest's
+ * runtime objects. A case's title is its first argument (a literal; any other expression is recorded as computed), its body the
+ * first function argument after it; its registration chain is the callee's text with the arguments beside the title and the body (an
+ * options object, a timeout), whitespace removed. An HX CASE is a case whose body references an HX local or holds an M5 import. FAIL
+ * CLOSED: a string literal naming an HX module that is neither a static import's specifier nor an M5 import()'s is UNRESOLVED (a
+ * require, a vi.importActual, a held specifier, an export-from, an import.meta.resolve), and so is an M5 or M6 binding or assignment
+ * pattern with an element the reader cannot name; a REFERENCE to an HX local (an identifier, type positions included; never a
+ * binding site - the name a declaration, parameter or binding element introduces, or its property key) or an M5 import that lies
+ * outside every case body and outside its own import, binding or assignment is OUTSIDE (a hook, a describe body, a helper or a named
+ * function, a fixture, a table, an array or other value holding it, a registration through an unread form). W1 pins both lists
+ * empty, so an HX entry driven in a native-read file in a form this reader does not read reds W1. FORMS: every membership,
+ * registration and fail-closed form above has its own falsifier in LIVE_FORMS (each membership and registration falsifier reads live
+ * with the HX cases it registers - one, or two for a form that carries the entry from one case into another - and nothing unresolved
+ * or outside; each fail-closed falsifier reads something unresolved or outside), beside controls that read quiet (not live, no case,
+ * nothing unresolved or outside): no HX import, a non-entry SDK import, a non-entry provider import, an entry named only in a
+ * comment or a title, a side-effect import.
+ * ROUTE (W2's reader). A ROUTE is a chain whose head is expect(...) or expect.soft(...) of a direct call of hxLiveInvariant (the bare
+ * name: a verdict held in a variable or the predicate under another name is no route); the reader records the whole chain's text,
+ * whitespace removed, and the title of the innermost case holding it (null outside every case). W2 pins one route per live file,
+ * in its HX case, the same chain in both. Every ROUTE_FORMS hollowing (negated, bare, another matcher, another expected object,
+ * soft, another subject, outside the case, twice, an aliased predicate, a held verdict) reads a route list other than the intact
+ * form's, and the intact form reads the live files' chain.
+ * EXCLUSIVITY (W2's matrix): every HYPERUNIX_EXECUTION_KINDS member, runtime-licensed and unlicensed, as an SDK document through the
+ * registered provider path and then the predicate: its holds and absenceLicensed, pinned cell for cell.
  *
  * READ SET (S1's scanner, and W1's over a case body). Active code only: comments are trivia. UNWRAP: every value, key, subject and
  * path is read through parentheses, `as`, `satisfies`, the non-null `!` and a `<T>` assertion, any number of them in any order. A
@@ -73,46 +119,60 @@
  * The vocabulary (verdict and licence fields, licensing kinds, coverage word, known-empty word) is derived from src (W2).
  * CONSERVATIVE READINGS, each a pinned row the scanner flags: prose is never parsed, so a positive literal carrying the word reds even
  * when its words deny it (a title, a message); a literal is read where it is written, never where a variable carries it; a chain
- * nested in another chain is read on its own polarity; only expect chains and asymmetric matchers negate.
- * RESIDUALS (named families the scanner does not read, each member a pinned quiet row; outside this file, docs/14's table "HX
- * licensed-complete census residuals" holds every family, its quiet row and every member, both ways and in order): Q1
- * R-RUNTIME-VALUE (a value, key or subject computed at run time: an operator, a call, a binding, a shorthand property, a getter,
- * a promise subject), Q2 R-HELPER (a claim made inside a helper defined outside the native-read files), Q3 R-OTHER-API (a C2-C4
- * claim through another assertion API or name: assert, expect.poll, an aliased expect), Q4 R-OTHER-MATCHER (a vocabulary claim
- * through a matcher C2-C4 do not read: toSatisfy, toMatch, toContain, toBeOneOf, or the value as the subject of toContain), Q5
- * R-UNCONSUMED-FIELD (a claim spelled only on a field the vocabulary does not derive: the SDK's completeness, modes or certificate
- * verdict, the projection's status tone) and Q6 R-TEXT-FRAGMENT (the known-empty word not whole in one literal: concatenated, cut
- * short, or broken by pattern syntax). They are the known unread forms, not an exhaustive list: a claim outside the READ SET is not
- * claimed caught.
+ * nested in another chain is read on its own polarity; only expect chains and asymmetric matchers negate; and a literal inside a
+ * negated chain's head arguments takes that negation even inside a callback (a false verdict under not.toThrow reds).
+ * RESIDUALS (named families a reader does not read, each member a pinned quiet row; outside this file, docs/14's table "HX
+ * licensed-complete census residuals" holds every family, its quiet row and every member, both ways and in order). The scanner's: Q1
+ * R-RUNTIME-VALUE (a value, a key or a subject's leaf computed or carried at run time rather than written: an operator, a call, a
+ * binding, a shorthand property, a getter, a promise subject), Q2 R-HELPER (a claim made inside a helper defined outside the
+ * native-read files), Q3 R-OTHER-API (a C2-C4 claim through another assertion API or name: assert, expect.poll, an aliased expect),
+ * Q4 R-OTHER-MATCHER (a pairing through a matcher C2-C4 do not read: toSatisfy, toMatch, toContain, toBeOneOf, or the value as the
+ * subject of toContain; C1 properties and C5 text stay read inside any matcher), Q5 R-UNCONSUMED-FIELD (a claim spelled only on a
+ * field the vocabulary does not derive: the SDK's completeness, modes or certificate verdict, the projection's status tone) and Q6
+ * R-TEXT-FRAGMENT (the known-empty word not whole in one literal: concatenated, cut short, or broken by pattern syntax). The LIVE
+ * SET reader's: Q7 R-LIVE-INDIRECT (an hx drive through no HX module mention and no HX local: a helper's wrapper under another name,
+ * the SDK's raw transport @hyperunix/sdk/raw, a computed import specifier, a capability invoked by its registered name, an entry
+ * handed into a container inside one case and called from another; each member's "HX probe" case reads as no HX case, with nothing
+ * unresolved or outside). The ROUTE reader's: Q8 R-ROUTE-RUNTIME (the route chain held verbatim in the HX case but not run over the
+ * live read: on a path that never runs - under a false condition, after a return, in a function never called - or over a subject
+ * rebound to another value; each member reads the intact route). They are the known unread forms, not an exhaustive list: a form
+ * outside a reader's read set is not claimed caught.
  *
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS, each residual family's member count,
- * the falsifier roster (`${id}:${form}`), the benign and conservative rosters, the probe preamble and the claim vocabulary as
- * literals; the judged set (every row's id, label and pins, every pin's quote, reading and witness, the residual members, the gate
- * block and every registered test title) is held to the out-of-file roster test/fixtures/hx-licensed-complete-roster.json.
+ * the falsifier roster (`${id}:${form}`), the benign and conservative rosters, the probe preamble, the claim vocabulary, the LIVE SET
+ * forms (`${surface}:${id}`), the ROUTE forms and the registration partition as literals; the judged set (every row's id, label
+ * and pins, every pin's quote, reading and witness, the residual members, the gate block and every registered test title) is held
+ * to the out-of-file roster test/fixtures/hx-licensed-complete-roster.json.
  * ANCHORS OUTSIDE THIS FILE (their own registered cases): rows W, S, T and N are the bead's own description (the tracker export
  * .beads/issues.jsonl, the description only - never the notes, so a later park, delivery or gate note binds nothing): the
  * statement's two clauses and the standing item's two clauses, in order; row N's citation is the line N1 reads; the gate block's
  * condition, citations and on-landing text are the description's. Every citation and bead id a row label carries is carried by
  * exactly one pin quote of that row, no quote carries two, and the carrier's witness names it (T2 the docs/14 citation, T3
  * wb-cax.25), so merging an atom-carrying pin into a sibling reds. Row Q, each family's name and quiet row and every member are
- * docs/14's residual table. The claim vocabulary is src's, and each vocabulary form has a falsifier spelling its derived value
- * that the scanner flags. The HX evidence rows, S1's fixture cases and S2's lead paragraph are docs/14's; N1's sentence is
- * TRACEABILITY.md's. So a row, a residual family or member, an atom-carrying pin, a kind or an HX row removed from every literal of
- * this file and the roster together still reds. SELF-ANCHORED (held only by the frozen-shape literal, the roster and this file's own
- * lists; a coordinated removal from all of them reads green, and that is NOT claimed): a falsifier of a form that keeps another
- * flagged falsifier of it, each benign and each conservative member, the probe preamble, and the split of the atom-free clauses
- * into pins (W1 with W2, S1 with S2, and T1 into the citation-carrying T2: their quotes are held by tiling only, so two of them
- * merged into one re-tiling quote read green). The last case reads the vitest task tree (every registered test, in roster order,
- * in run mode, ran before it) and REACHED (every pin reached its witness compare, and each compare's own result).
- * FLIP: when the gate artifact exists, the cut that adds the live witness sets the roster's gate state to present, re-measures W1
- * and S1 with it (one case witnessing the branch, through hxLiveInvariant) and moves the docs/14 rows; until then a licensed-complete
- * claim in a READ SET form in any native-read file reds S1 here, although the complete gate never runs the native tier.
+ * docs/14's residual table. Every LIVE SET and ROUTE form, with its surface, is docs/14's table "HX licensed-complete census read
+ * forms", both ways and in order; the registration partition is vitest's runtime test API's (a flag is a member that is itself the
+ * whole chainable API, a member that registers no case is vitest's own describe or hook export, a method is any other member). The
+ * claim vocabulary is src's, and each vocabulary form has a falsifier spelling its derived value that the scanner flags. The HX
+ * evidence rows, S1's fixture cases and S2's lead paragraph are docs/14's; N1's sentence is TRACEABILITY.md's. So a row, a residual
+ * family or member, a LIVE SET or ROUTE form, a registration flag or method, an atom-carrying pin, a kind or an HX row removed from
+ * every literal of this file and the roster together still reds. SELF-ANCHORED (held only by the frozen-shape literal, the roster
+ * and this file's own lists; a coordinated removal from all of them reads green, and that is NOT claimed): a falsifier of a
+ * vocabulary form that keeps another flagged falsifier of it, each benign and each conservative member, the probe preamble, and the
+ * split of the atom-free clauses into pins (W1 with W2, S1 with S2, and T1 into the citation-carrying T2: their quotes are held by
+ * tiling only, so two of them merged into one re-tiling quote read green). The last case reads the vitest task tree (every
+ * registered test, in roster order, in run mode, ran before it) and REACHED (every pin reached its witness compare, and each
+ * compare's own result).
+ * FLIP: when the gate artifact exists, the cut that adds the live witness sets the roster's gate state to present, re-measures W1,
+ * W2 and S1 with it (one case witnessing the branch, through hxLiveInvariant) and moves the docs/14 rows; until then a
+ * licensed-complete claim in a READ SET form in a native-read file reds S1 here, and an HX entry driven there in a form the LIVE SET
+ * reader reads or fails closed on reds W1 here, although the complete gate never runs the native tier.
  * NOT CLAIMED: the On-landing leg; any hx behaviour (the native tier's receipt owns that); that the native tier ran (this census
- * reads sources, configs and docs); a claim outside the READ SET (RESIDUALS names the known families); that prose is understood
- * (CONSERVATIVE READINGS); the coordinated removal of a SELF-ANCHORED member.
+ * reads sources, configs and docs) or how a case runs beyond its written registration chain (a skip decided inside the body, a
+ * condition's run-time value); a claim, an hx drive or a route hollowing outside a reader's read set (RESIDUALS names the known
+ * families); that prose is understood (CONSERVATIVE READINGS); the coordinated removal of a SELF-ANCHORED member.
  *
- * Display paths added: none. Test and docs only: no src change, no live case, no fixture workspace and no receipt; docs/14 gains the
- * residual section this census reads.
+ * Display paths added: none. Test and docs only: no src change, no live case, no fixture workspace and no receipt; docs/14 carries
+ * the read-forms and residual sections this census reads.
  */
 import { execFileSync } from "node:child_process";
 import { readdirSync, readFileSync } from "node:fs";
@@ -121,6 +181,7 @@ import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 import { HyperUnix, resultFromJson } from "@hyperunix/sdk";
 import ts from "typescript";
+import * as vitestApi from "vitest";
 import { describe, expect, it } from "vitest";
 import { CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import { HYPERUNIX_CONSUMED_FIELDS, HYPERUNIX_EXECUTION_KINDS, hxLiveInvariant, hyperunixTopology } from "../src/workbench/hyperunix-observer.js";
@@ -128,7 +189,7 @@ import * as hyperunixProvider from "../src/workbench/providers/hyperunix.js";
 import censusConfig from "../vitest.census.config.js";
 import defaultConfig from "../vitest.config.js";
 import nativeConfig from "../vitest.native.config.js";
-import { DEFAULT_GATE_TIER, docsSection, resolveTier, sectionTables } from "./helpers/census.js";
+import { DEFAULT_GATE_TIER, docsSection, REGISTRATION_MEMBERS, resolveTier, sectionTables } from "./helpers/census.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BEAD = "wb-tz2.9";
@@ -143,9 +204,14 @@ const MATRIX = "Matrix by subsystem";
 const EVIDENCE = "Matrix by subsystem evidence";
 const RESIDUAL_HEADING = "HX licensed-complete census residuals";
 const RESIDUAL_COLUMNS: readonly string[] = ["Quiet row", "Residual family", "Member"];
-/** The residual section's lead paragraph, verbatim (rendered text; it carries no inline markup). */
+/** The residual section's lead paragraph, verbatim (rendered text and markdown alike: it carries no inline markup). */
 const RESIDUAL_LEAD =
-  "Named residuals of test/workbench-hx-licensed-complete-census.test.ts, the until-then census of the HX licensed-complete branch (wb-tz2.9): one row per member of each claim family its scanner names and does not read, so a claim spelled that way in a native-read file is not caught by it. Each row names the census quiet row that pins the family, the family's name and the member, a statement the census reads quiet. The census holds this table to its residual pins and members in both directions and in table order, so a family or member dropped, renamed, reordered or moved to another quiet row on either side reads red.";
+  "Named residuals of test/workbench-hx-licensed-complete-census.test.ts, the until-then census of the HX licensed-complete branch (wb-tz2.9): one row per member of each family its claim scanner (Q1 to Q6), its live-set reader (Q7) or its route reader (Q8) names and does not read, so a claim, a live HX drive or a hollowed route spelled that way in a native-read file is not caught by it. Each row names the census quiet row that pins the family, the family's name and the member, a statement or module the census reads quiet. The census holds this table to its residual pins and members in both directions and in table order, so a family or member dropped, renamed, reordered or moved to another quiet row on either side reads red.";
+const FORMS_HEADING = "HX licensed-complete census read forms";
+const FORMS_COLUMNS: readonly string[] = ["Surface", "Form"];
+/** The read-forms section's lead paragraph, verbatim (rendered text and markdown alike: it carries no inline markup). */
+const FORMS_LEAD =
+  "Read forms of test/workbench-hx-licensed-complete-census.test.ts, the until-then census of the HX licensed-complete branch (wb-tz2.9): one row per form its live-set reader reads (surfaces membership, registration and fail-closed, beside the quiet controls) and per form its route reader reads (surface route), each a falsifier module the census runs. A membership or registration form reads live with the HX cases it registers and nothing unresolved or outside, a fail-closed form reads something unresolved or outside, a control reads quiet, and every route form but the intact one reads a route list other than the intact one's. The census holds this table to its form lists in both directions and in table order, so a form dropped, renamed, reordered or moved to another surface on either side reads red.";
 const TRACEABILITY = "docs/workbench/TRACEABILITY.md";
 const TRACE_LINE = 76;
 const NOT_NATIVE = "do not count it as native evidence";
@@ -170,7 +236,7 @@ const ROWS: readonly Row[] = [
   { id: "S", label: "until then the licensed-complete branch remains explicitly fixture-labelled", pins: ["S1", "S2"] },
   { id: "T", label: `tier labels stay explicit ${EM_DASH} the docs/14 HX row (docs/workbench/14-qa-and-benchmarks.md:25@9df9a03) is bound by the wb-cax.25 census`, pins: ["T1", "T2", "T3"] },
   { id: "N", label: "fixture passes are never counted as native evidence", pins: ["N1"] },
-  { id: "Q", label: "the claim scanner's named residual families, each member a pinned quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6"] },
+  { id: "Q", label: "the census readers' named residual families, each member a pinned quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8"] },
 ];
 const QUOTES: Readonly<Record<string, string>> = {
   W1: "Pi shall add one live licensed-complete/known-empty witness to the native tier",
@@ -187,23 +253,27 @@ const QUOTES: Readonly<Record<string, string>> = {
   Q4: "R-OTHER-MATCHER",
   Q5: "R-UNCONSUMED-FIELD",
   Q6: "R-TEXT-FRAGMENT",
+  Q7: "R-LIVE-INDIRECT",
+  Q8: "R-ROUTE-RUNTIME",
 };
 /** What each pin measures, stated in its test title. */
 const READING: Readonly<Record<string, string>> = {
-  W1: "pending: the native-read tier's HX live set is its two files that import an HX entry point, and no HX case body there states a claim in a read form",
-  W2: "both live files assert through hxLiveInvariant, which licenses absence on the provider path's runtime-licensed complete-empty reading only",
+  W1: "pending: the native-read tier's HX live set is its two files that bind an HX entry in a membership form, each with one HX case in a read registration chain; no HX case body states a claim in a read form, nothing reads unresolved or outside, and every LIVE SET form reads as the roster pins it",
+  W2: "each live file's HX case holds the one route chain both share, every ROUTE form reads as the roster pins it, and over every execution kind under both licence states the provider path's predicate licenses absence on exactly the runtime-licensed complete and complete-empty readings",
   S1: "no native-read file states a licensed-complete claim in a read form, the scanner flags every falsifier and conservative row and no benign statement, and it reads each docs/14 positive HX fixture case and not the negative one",
   S2: "every HX row of the positive half in the docs/14 evidence table carries the default-gate tier, and the section's lead paragraph is pinned verbatim with no HTML",
   T1: "each HX evidence row's tier names the config that selects its file, and its case is registered there by its verbatim title",
   T2: "the line this quote cites at 9df9a03 is the current HX row of the docs/14 matrix, cell for cell",
   T3: "the complete gate's census step selects exactly one census whose lead opens with the bead this quote names, and it carries the docs/14 matrix heading",
   N1: "TRACEABILITY.md:76 keeps its never-count sentence verbatim, the default config selects no native-read file and the native-read config selects no licensed-complete fixture file",
-  Q1: "quiet: the scanner reads no value, key or subject computed at run time",
+  Q1: "quiet: the scanner reads values, keys and subject leaves only as written, never as computed or carried at run time",
   Q2: "quiet: the scanner follows no helper",
   Q3: "quiet: the scanner reads no assertion API or name but expect and expect.soft",
-  Q4: "quiet: the scanner reads no vocabulary claim through a matcher C2-C4 do not name",
+  Q4: "quiet: the scanner reads no pairing through a matcher C2-C4 do not read; C1 properties and C5 text stay read inside any matcher",
   Q5: "quiet: the scanner reads no field its vocabulary does not derive",
   Q6: "quiet: the scanner reads no known-empty word that is not whole in one literal",
+  Q7: "quiet: the live-set reader reads no HX probe case whose hx drive reaches it through no HX module mention and no HX local",
+  Q8: "quiet: the route reader reads a route chain held verbatim but not run over the live read as the intact route",
 };
 
 const textOf = (path: string): string => readFileSync(join(ROOT, path), "utf8");
@@ -241,8 +311,10 @@ function configOf(tier: string): string {
 function nativeTier(): { readonly config: string; readonly files: readonly string[] } {
   return { config: configOf(NATIVE_TIER), files: testFiles().filter(file => selects(nativeConfig, file)) };
 }
+/** The native-read files the LIVE SET reader reads live. */
+const liveFiles = (): string[] => nativeTier().files.filter(file => liveReading(parseRepo(file)).live);
 
-// ---- sources: imports, registered cases and the R1 route ----
+// ---- sources: the LIVE SET reader (membership, registration, fail closed), the ROUTE reader and vitest's registration partition ----
 
 /** The HX entry points a live case drives: every function export of the provider module, and the SDK's client class. */
 const HX_ENTRIES: readonly string[] = [
@@ -251,61 +323,328 @@ const HX_ENTRIES: readonly string[] = [
     .map(([name]) => name),
   HyperUnix.name,
 ].sort();
-/** The local names a source imports, by name, of an HX entry point from the provider module or the SDK. */
-function hxImports(sf: ts.SourceFile): string[] {
-  const names: string[] = [];
+/** An HX MODULE specifier: the provider module (bare or with any script extension) or the SDK package root. */
+const HX_PROVIDER_PATH = /(?:^|\/)providers\/hyperunix(?:\.[cm]?[jt]s)?$/;
+const isHxModule = (specifier: string): boolean => specifier === "@hyperunix/sdk" || HX_PROVIDER_PATH.test(specifier);
+/** The test API's roots, and vitest's test-API members partitioned (REGISTRATION_MEMBERS.test; derived again at run time). */
+const TEST_ROOTS: readonly string[] = ["it", "test"];
+const CASE_FLAGS: readonly string[] = ["concurrent", "fails", "only", "sequential", "skip", "todo"];
+const CASE_METHODS: readonly string[] = ["each", "extend", "for", "override", "runIf", "scoped", "skipIf"];
+const NON_CASE_MEMBERS: readonly string[] = ["afterAll", "afterEach", "aroundAll", "aroundEach", "beforeAll", "beforeEach", "describe", "suite"];
+/** The local-name forms whose member is an entry (M3, M4, M5 bound whole). */
+const NAMESPACE_FORMS: readonly string[] = ["namespace", "default", "dynamic"];
+
+/** Every node of a tree, the root first. */
+function nodesOf(root: ts.Node): ts.Node[] {
+  const out: ts.Node[] = [];
+  const visit = (node: ts.Node): void => {
+    out.push(node);
+    ts.forEachChild(node, visit);
+  };
+  visit(root);
+  return out;
+}
+const lineOf = (sf: ts.SourceFile, node: ts.Node): number => sf.getLineAndCharacterOfPosition(node.getStart(sf)).line + 1;
+const within = (node: ts.Node, outer: ts.Node): boolean => outer.pos <= node.pos && node.end <= outer.end;
+/** A node's source text with every whitespace character removed. */
+const squeeze = (node: ts.Node, sf: ts.SourceFile): string => node.getText(sf).replace(/\s+/g, "");
+
+/** Whether an expression is a test API: a test API local, a case flag of one, or a call of a case method of one. */
+function isTestApi(node: ts.Expression, apis: ReadonlySet<string>): boolean {
+  const value = unwrap(node);
+  if (ts.isIdentifier(value)) return apis.has(value.text);
+  if (ts.isCallExpression(value)) {
+    const method = memberOf(value.expression);
+    return method !== undefined && CASE_METHODS.includes(method.name) && isTestApi(method.base, apis);
+  }
+  const flag = memberOf(value);
+  return flag !== undefined && CASE_FLAGS.includes(flag.name) && isTestApi(flag.base, apis);
+}
+/** A source's test API locals: it and test, their imports from vitest under any name, and variables declared from a test API. */
+function testApis(sf: ts.SourceFile): Set<string> {
+  const apis = new Set<string>(TEST_ROOTS);
   for (const statement of sf.statements) {
-    if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier)) continue;
-    const from = statement.moduleSpecifier.text;
-    if (!from.endsWith("/providers/hyperunix.js") && from !== "@hyperunix/sdk") continue;
+    if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier) || statement.moduleSpecifier.text !== "vitest") continue;
     const bindings = statement.importClause?.namedBindings;
     if (bindings === undefined || !ts.isNamedImports(bindings)) continue;
-    for (const element of bindings.elements) {
-      if (HX_ENTRIES.includes((element.propertyName ?? element.name).text)) names.push(element.name.text);
+    for (const element of bindings.elements) if (TEST_ROOTS.includes((element.propertyName ?? element.name).text)) apis.add(element.name.text);
+  }
+  const declarations = nodesOf(sf).filter(ts.isVariableDeclaration);
+  for (let grown = true; grown; ) {
+    grown = false;
+    for (const declaration of declarations) {
+      const { name, initializer } = declaration;
+      if (!ts.isIdentifier(name) || apis.has(name.text) || initializer === undefined || !isTestApi(initializer, apis)) continue;
+      apis.add(name.text);
+      grown = true;
     }
   }
-  return names;
+  return apis;
 }
 interface Case {
   readonly title: string;
+  readonly registration: string;
   readonly body: ts.Node;
 }
-/** The it/test registrations of a source that carry a literal title, with their callbacks. */
+/** Every case of a source (REGISTRATION): a test API called with a function body; its title, registration chain and body. */
 function casesOf(sf: ts.SourceFile): Case[] {
+  const apis = testApis(sf);
   const out: Case[] = [];
-  const visit = (node: ts.Node): void => {
-    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && (node.expression.text === "it" || node.expression.text === "test")) {
-      const [title, ...rest] = node.arguments;
-      const body = rest.find(argument => ts.isArrowFunction(argument) || ts.isFunctionExpression(argument));
-      if (title !== undefined && (ts.isStringLiteral(title) || ts.isNoSubstitutionTemplateLiteral(title)) && body !== undefined) out.push({ title: title.text, body });
-    }
-    ts.forEachChild(node, visit);
-  };
-  visit(sf);
+  for (const node of nodesOf(sf)) {
+    if (!ts.isCallExpression(node) || !isTestApi(node.expression, apis)) continue;
+    const [title, ...rest] = node.arguments;
+    const body = rest.find(argument => ts.isArrowFunction(argument) || ts.isFunctionExpression(argument));
+    if (title === undefined || body === undefined) continue;
+    const beside = rest.filter(argument => argument !== body).map(argument => squeeze(argument, sf));
+    out.push({ title: stringOf(title) ?? `<computed: ${squeeze(title, sf)}>`, registration: [squeeze(node.expression, sf), ...beside].join(" "), body });
+  }
   return out;
 }
-function references(root: ts.Node, names: readonly string[]): boolean {
-  let found = false;
-  const visit = (node: ts.Node): void => {
-    if (found) return;
-    if (ts.isIdentifier(node) && names.includes(node.text)) found = true;
-    else ts.forEachChild(node, visit);
-  };
-  visit(root);
-  return found;
+/** An M5 import: a dynamic import() of an HX module by a literal specifier. */
+function isHxImport(node: ts.Node): node is ts.CallExpression {
+  if (!ts.isCallExpression(node) || node.expression.kind !== ts.SyntaxKind.ImportKeyword) return false;
+  const specifier = stringOf(node.arguments[0]);
+  return specifier !== undefined && isHxModule(specifier);
 }
-/** expect(hxLiveInvariant(...)) calls in a source: the R1 predicate route (the literal route only). */
-function predicateExpectations(sf: ts.SourceFile): number {
-  let count = 0;
-  const visit = (node: ts.Node): void => {
-    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "expect") {
-      const [subject] = node.arguments;
-      if (subject !== undefined && ts.isCallExpression(subject) && ts.isIdentifier(subject.expression) && subject.expression.text === hxLiveInvariant.name) count++;
+/** The variable declaration an expression initializes, through parentheses, await and the type wrappers. */
+function declarationOf(node: ts.Node): ts.VariableDeclaration | undefined {
+  let current = node;
+  while (
+    ts.isParenthesizedExpression(current.parent) ||
+    ts.isAwaitExpression(current.parent) ||
+    ts.isAsExpression(current.parent) ||
+    ts.isSatisfiesExpression(current.parent) ||
+    ts.isNonNullExpression(current.parent) ||
+    ts.isTypeAssertionExpression(current.parent)
+  ) {
+    current = current.parent;
+  }
+  return ts.isVariableDeclaration(current.parent) && current.parent.initializer === current ? current.parent : undefined;
+}
+/** The locals an object binding pattern takes from a namespace: one per entry (a rest element takes the namespace), or undefined
+ * when an element cannot be named. */
+function destructured(pattern: ts.BindingName): string[] | undefined {
+  if (!ts.isObjectBindingPattern(pattern)) return undefined;
+  const locals: string[] = [];
+  for (const element of pattern.elements) {
+    if (!ts.isIdentifier(element.name)) return undefined;
+    if (element.dotDotDotToken !== undefined) {
+      locals.push(element.name.text);
+      continue;
     }
-    ts.forEachChild(node, visit);
+    const key = element.propertyName === undefined ? element.name.text : keyOf(element.propertyName);
+    if (key === undefined) return undefined;
+    if (HX_ENTRIES.includes(key)) locals.push(element.name.text);
+  }
+  return locals;
+}
+/** The assignment operators an M6 alias may be written with. */
+const ASSIGNMENTS: readonly ts.SyntaxKind[] = [ts.SyntaxKind.EqualsToken, ts.SyntaxKind.BarBarEqualsToken, ts.SyntaxKind.AmpersandAmpersandEqualsToken, ts.SyntaxKind.QuestionQuestionEqualsToken];
+/** The identifier a member chain is rooted at (`root.a['b'].c`), read through UNWRAP. */
+function rootOf(node: ts.Expression): ts.Identifier | undefined {
+  let current = unwrap(node);
+  for (let member = memberOf(current); member !== undefined; member = memberOf(current)) current = unwrap(member.base);
+  return ts.isIdentifier(current) ? current : undefined;
+}
+/** The locals an object-literal assignment target takes from a namespace: one per entry, or undefined when one cannot be named. */
+function assignedFrom(target: ts.ObjectLiteralExpression): string[] | undefined {
+  const locals: string[] = [];
+  for (const property of target.properties) {
+    if (ts.isShorthandPropertyAssignment(property)) {
+      if (HX_ENTRIES.includes(property.name.text)) locals.push(property.name.text);
+      continue;
+    }
+    if (!ts.isPropertyAssignment(property)) return undefined;
+    const key = keyOf(property.name);
+    const value = unwrap(property.initializer);
+    if (key === undefined || !ts.isIdentifier(value)) return undefined;
+    if (HX_ENTRIES.includes(key)) locals.push(value.text);
+  }
+  return locals;
+}
+/** A binding site: the name a declaration, parameter or binding element introduces, or a binding element's property key. */
+function isBindingSite(node: ts.Identifier): boolean {
+  const { parent } = node;
+  if (ts.isBindingElement(parent)) return parent.name === node || parent.propertyName === node;
+  const named = ts.isVariableDeclaration(parent) || ts.isParameter(parent) || ts.isFunctionDeclaration(parent) || ts.isFunctionExpression(parent) || ts.isClassDeclaration(parent) || ts.isClassExpression(parent);
+  return named && parent.name === node;
+}
+interface LiveReading {
+  readonly live: boolean;
+  readonly entries: readonly string[];
+  readonly cases: readonly { readonly title: string; readonly registration: string }[];
+  readonly witnessing: readonly string[];
+  readonly unresolved: readonly string[];
+  readonly outside: readonly string[];
+}
+/** The LIVE SET reading of one source: its HX locals (`<form> <name>`), HX cases, witnessing cases, UNRESOLVED and OUTSIDE lists. */
+function liveReading(sf: ts.SourceFile): LiveReading {
+  const locals = new Map<string, string>();
+  const declared: ts.Node[] = [];
+  const unresolved: string[] = [];
+  const bind = (name: string, form: string): void => {
+    if (!locals.has(name)) locals.set(name, form);
   };
-  visit(sf);
-  return count;
+  const unread = (node: ts.Node): void => {
+    unresolved.push(`${lineOf(sf, node)}: an unread binding: ${squeeze(node, sf)}`);
+  };
+  const specifiers = new Set<ts.Node>();
+  for (const statement of sf.statements) {
+    if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier)) continue;
+    declared.push(statement);
+    specifiers.add(statement.moduleSpecifier);
+    const hx = isHxModule(statement.moduleSpecifier.text);
+    const clause = statement.importClause;
+    if (hx && clause?.name !== undefined) bind(clause.name.text, "default");
+    const bindings = clause?.namedBindings;
+    if (bindings === undefined) continue;
+    if (ts.isNamespaceImport(bindings)) {
+      if (hx) bind(bindings.name.text, "namespace");
+      continue;
+    }
+    for (const element of bindings.elements) {
+      if (HX_ENTRIES.includes((element.propertyName ?? element.name).text)) bind(element.name.text, element.propertyName === undefined ? "named" : "aliased");
+    }
+  }
+  const nodes = nodesOf(sf);
+  const imports = nodes.filter(isHxImport);
+  const inline = new Set<ts.Node>();
+  for (const call of imports) {
+    const [first] = call.arguments;
+    if (first !== undefined) specifiers.add(unwrap(first));
+    const declaration = declarationOf(call);
+    if (declaration === undefined) {
+      inline.add(call);
+      continue;
+    }
+    declared.push(declaration);
+    if (ts.isIdentifier(declaration.name)) bind(declaration.name.text, "dynamic");
+    else {
+      const names = destructured(declaration.name);
+      if (names === undefined) unread(declaration);
+      else for (const name of names) bind(name, "destructured");
+    }
+  }
+  /** What an alias's source reads as: the form of a whole HX local, or "entry" for an entry member of a namespace-form local. */
+  const sourceOf = (expression: ts.Expression): string | undefined => {
+    const value = unwrap(expression);
+    if (ts.isIdentifier(value)) return locals.get(value.text);
+    const member = memberOf(value);
+    const base = member === undefined ? undefined : unwrap(member.base);
+    const from = base !== undefined && ts.isIdentifier(base) ? locals.get(base.text) : undefined;
+    return member !== undefined && from !== undefined && NAMESPACE_FORMS.includes(from) && HX_ENTRIES.includes(member.name) ? "entry" : undefined;
+  };
+  const declarations = nodes.filter(ts.isVariableDeclaration);
+  const assignments = nodes.filter((node): node is ts.BinaryExpression => ts.isBinaryExpression(node) && ASSIGNMENTS.includes(node.operatorToken.kind));
+  for (let grown = true; grown; ) {
+    grown = false;
+    for (const declaration of declarations) {
+      if (declared.includes(declaration) || declaration.initializer === undefined) continue;
+      const whole = sourceOf(declaration.initializer);
+      if (whole === undefined) continue;
+      declared.push(declaration);
+      grown = true;
+      if (ts.isIdentifier(declaration.name)) bind(declaration.name.text, "alias");
+      else {
+        const names = NAMESPACE_FORMS.includes(whole) ? destructured(declaration.name) : undefined;
+        if (names === undefined) unread(declaration);
+        else for (const name of names) bind(name, "alias");
+      }
+    }
+    for (const assignment of assignments) {
+      if (declared.includes(assignment)) continue;
+      const whole = sourceOf(assignment.right);
+      if (whole === undefined) continue;
+      declared.push(assignment);
+      grown = true;
+      const target = unwrap(assignment.left);
+      const root = memberOf(target) === undefined ? undefined : rootOf(target);
+      if (ts.isIdentifier(target)) bind(target.text, "alias");
+      else if (root !== undefined) bind(root.text, "store");
+      else {
+        const names = ts.isObjectLiteralExpression(target) && NAMESPACE_FORMS.includes(whole) ? assignedFrom(target) : undefined;
+        if (names === undefined) unread(assignment);
+        else for (const name of names) bind(name, "alias");
+      }
+    }
+  }
+  const cases = casesOf(sf);
+  const isReference = (node: ts.Node): boolean => (ts.isIdentifier(node) && locals.has(node.text) && !isBindingSite(node)) || inline.has(node);
+  const holds = (root: ts.Node): boolean => nodesOf(root).some(node => isReference(node) || isHxImport(node));
+  const placed = (node: ts.Node): boolean => cases.some(entry => within(node, entry.body)) || declared.some(declaration => within(node, declaration));
+  const outside = nodes.filter(node => isReference(node) && !placed(node)).map(node => `${lineOf(sf, node)}: ${squeeze(node, sf)}`);
+  for (const node of nodes) {
+    if ((ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) && isHxModule(node.text) && !specifiers.has(node)) unresolved.push(`${lineOf(sf, node)}: ${node.getText(sf)}`);
+  }
+  const hxCases = cases.filter(entry => holds(entry.body));
+  return {
+    live: locals.size > 0 || imports.length > 0,
+    entries: [...locals].map(([name, form]) => `${form} ${name}`),
+    cases: hxCases.map(entry => ({ title: entry.title, registration: entry.registration })),
+    witnessing: hxCases.filter(entry => claimsIn(entry.body, sf, CLAIM_VOCABULARY).length > 0).map(entry => entry.title),
+    unresolved,
+    outside,
+  };
+}
+/** A LIVE SET reading as a form's witness: whether it reads live, its HX cases (`<registration chain, its members space-separated>
+ * :: <title>`) and its unresolved and outside counts. */
+function liveSummary(source: string): Json {
+  const reading = liveReading(parse("form.ts", source));
+  return plain({
+    live: reading.live,
+    cases: reading.cases.map(entry => `${entry.registration.split(".").join(" ")} :: ${entry.title}`),
+    unresolved: reading.unresolved.length,
+    outside: reading.outside.length,
+  });
+}
+/** Whether a call heads a ROUTE: expect(...) or expect.soft(...) of a direct hxLiveInvariant call. */
+function isRouteHead(call: ts.CallExpression): boolean {
+  const soft = memberOf(call.expression);
+  const headed = isExpect(call.expression) || (soft !== undefined && HEADS.includes(soft.name) && isExpect(soft.base));
+  const subject = call.arguments[0] === undefined ? undefined : unwrap(call.arguments[0]);
+  return headed && subject !== undefined && ts.isCallExpression(subject) && ts.isIdentifier(subject.expression) && subject.expression.text === hxLiveInvariant.name;
+}
+/** Whether a node continues the chain it heads: a member read or a call of it. */
+function continued(node: ts.Node): boolean {
+  const { parent } = node;
+  return (ts.isPropertyAccessExpression(parent) || ts.isElementAccessExpression(parent) || ts.isCallExpression(parent)) && parent.expression === node;
+}
+interface Route {
+  readonly case: string | null;
+  readonly chain: string;
+}
+/** The ROUTE reading of one source: each route's whole chain text and the title of the innermost case holding it. */
+function routesOf(sf: ts.SourceFile): Route[] {
+  const cases = casesOf(sf);
+  return nodesOf(sf)
+    .filter((node): node is ts.CallExpression => ts.isCallExpression(node) && isRouteHead(node))
+    .map(head => {
+      let chain: ts.Node = head;
+      while (continued(chain)) chain = chain.parent;
+      return { case: cases.filter(entry => within(head, entry.body)).at(-1)?.title ?? null, chain: squeeze(chain, sf) };
+    });
+}
+/** vitest's own partition of its test-API members: a flag is the whole chainable API again, a non-case member is vitest's own
+ * describe or hook export, a method is any other member. */
+function registrationPartition(): { readonly flags: readonly string[]; readonly methods: readonly string[]; readonly other: readonly string[] } {
+  const api = it as unknown as Readonly<Record<string, unknown>>;
+  const exported = vitestApi as unknown as Readonly<Record<string, unknown>>;
+  const membersOf = (value: unknown): string[] =>
+    typeof value === "function"
+      ? Object.getOwnPropertyNames(value)
+          .filter(name => REGISTRATION_MEMBERS.test.includes(name))
+          .sort()
+      : [];
+  const flags: string[] = [];
+  const methods: string[] = [];
+  const other: string[] = [];
+  for (const name of REGISTRATION_MEMBERS.test) {
+    const member = api[name];
+    if (member === describe || (member !== undefined && member === exported[name])) other.push(name);
+    else if (isDeepStrictEqual(membersOf(member), REGISTRATION_MEMBERS.test)) flags.push(name);
+    else methods.push(name);
+  }
+  return { flags, methods, other };
 }
 
 // ---- the claim scanner: the READ SET of the header (C1-C5), active code only, literal values only ----
@@ -585,8 +924,112 @@ const CONSERVATIVE: readonly { readonly id: string; readonly statement: string }
   { id: "held-then-negated", statement: "const expected = {absenceLicensed: true}; expect(verdict).not.toMatchObject(expected);" },
   { id: "nested-under-throw", statement: "expect(() => expect(verdict.absenceLicensed).toBe(true)).toThrow();" },
   { id: "other-api-negation", statement: "assert.notDeepEqual(verdict, {absenceLicensed: true});" },
+  { id: "negated-head-false", statement: "expect(() => ({absenceLicensed: false})).not.toThrow();" },
 ];
-/** The named residual families (RESIDUALS in the header): every member is a claim in its words that the scanner reads quiet. */
+/** The LIVE SET forms' building blocks: the provider specifier, the live call's arguments, its named import and the call itself. */
+const PROVIDER_SPECIFIER = "../src/workbench/providers/hyperunix.js";
+const FIND_ARGUMENTS = 'process.cwd(), "hx.fs/regular-file", "src"';
+const NAMED_IMPORT = `import {nativeHyperUnixFind} from "${PROVIDER_SPECIFIER}";`;
+const FIND = `await nativeHyperUnixFind(${FIND_ARGUMENTS});`;
+/** A one-line module: its top-level statements, then one case registered through `register`, titled `title`, whose body is `body`. */
+const moduleOf = (top: string, register: string, body: string, title = '"HX probe"'): string => `${top} ${register}(${title}, async () => { ${body} });`.trim();
+/** The argument a case method takes before it returns the next registration function. */
+const METHOD_ARGUMENT: Readonly<Record<string, string>> = { each: "[[1]]", extend: "{}", for: "[[1]]", override: "{}", runIf: "true", scoped: "{}", skipIf: "false" };
+interface LiveForm {
+  readonly id: string;
+  readonly surface: "membership" | "registration" | "fail-closed" | "control";
+  readonly source: string;
+  /** The HX cases the form registers, when not one (a form that carries the entry from one case into another). */
+  readonly cases?: number;
+}
+/** One falsifier per LIVE SET form (membership M1-M6, registration, fail closed) and the quiet controls (header: LIVE SET). */
+const LIVE_FORMS: readonly LiveForm[] = [
+  { id: "named", surface: "membership", source: moduleOf(NAMED_IMPORT, "it", FIND) },
+  { id: "aliased", surface: "membership", source: moduleOf(`import {nativeHyperUnixFind as find} from "${PROVIDER_SPECIFIER}";`, "it", `await find(${FIND_ARGUMENTS});`) },
+  { id: "named-elsewhere", surface: "membership", source: moduleOf('import {nativeHyperUnixFind} from "./helpers/hx-barrel.js";', "it", FIND) },
+  { id: "type-only", surface: "membership", source: moduleOf('import type {HyperUnix} from "@hyperunix/sdk";', "it", "const open: typeof HyperUnix.open = async () => { throw new Error('none'); }; await open({workspace: process.cwd()});") },
+  { id: "client", surface: "membership", source: moduleOf('import {HyperUnix} from "@hyperunix/sdk";', "it", "await HyperUnix.open({workspace: process.cwd()});") },
+  { id: "namespace", surface: "membership", source: moduleOf(`import * as hxProvider from "${PROVIDER_SPECIFIER}";`, "it", `await hxProvider.nativeHyperUnixFind(${FIND_ARGUMENTS});`) },
+  { id: "namespace-element", surface: "membership", source: moduleOf(`import * as hxProvider from "${PROVIDER_SPECIFIER}";`, "it", `await hxProvider["nativeHyperUnixFind"](${FIND_ARGUMENTS});`) },
+  { id: "namespace-sdk", surface: "membership", source: moduleOf('import * as sdk from "@hyperunix/sdk";', "it", "await sdk.HyperUnix.open({workspace: process.cwd()});") },
+  { id: "namespace-bare-path", surface: "membership", source: moduleOf('import * as hxProvider from "../src/workbench/providers/hyperunix";', "it", `await hxProvider.nativeHyperUnixFind(${FIND_ARGUMENTS});`) },
+  { id: "default", surface: "membership", source: moduleOf(`import hxProvider from "${PROVIDER_SPECIFIER}";`, "it", `await hxProvider.nativeHyperUnixFind(${FIND_ARGUMENTS});`) },
+  { id: "dynamic", surface: "membership", source: moduleOf("", "it", `const hxProvider = await import("${PROVIDER_SPECIFIER}"); await hxProvider.nativeHyperUnixFind(${FIND_ARGUMENTS});`) },
+  { id: "dynamic-destructured", surface: "membership", source: moduleOf("", "it", `const {nativeHyperUnixFind: find} = await import("${PROVIDER_SPECIFIER}"); await find(${FIND_ARGUMENTS});`) },
+  { id: "dynamic-inline", surface: "membership", source: moduleOf("", "it", `await (await import("${PROVIDER_SPECIFIER}")).nativeHyperUnixFind(${FIND_ARGUMENTS});`) },
+  { id: "dynamic-module", surface: "membership", source: moduleOf(`const hxProvider = await import("${PROVIDER_SPECIFIER}");`, "it", `await hxProvider.nativeHyperUnixFind(${FIND_ARGUMENTS});`) },
+  { id: "dynamic-unawaited", surface: "membership", source: moduleOf(`const loading = import("${PROVIDER_SPECIFIER}");`, "it", `await (await loading).nativeHyperUnixFind(${FIND_ARGUMENTS});`) },
+  { id: "alias", surface: "membership", source: moduleOf(`${NAMED_IMPORT} const zzFind = nativeHyperUnixFind;`, "it", `await zzFind(${FIND_ARGUMENTS});`) },
+  { id: "alias-member", surface: "membership", source: moduleOf(`import * as hxProvider from "${PROVIDER_SPECIFIER}"; const find = hxProvider.nativeHyperUnixFind;`, "it", `await find(${FIND_ARGUMENTS});`) },
+  { id: "alias-destructured", surface: "membership", source: moduleOf(`import * as hxProvider from "${PROVIDER_SPECIFIER}"; const {nativeHyperUnixFind: find} = hxProvider;`, "it", `await find(${FIND_ARGUMENTS});`) },
+  { id: "alias-chain", surface: "membership", source: moduleOf(`${NAMED_IMPORT} const first = nativeHyperUnixFind; const second = first;`, "it", `await second(${FIND_ARGUMENTS});`) },
+  { id: "assigned", surface: "membership", source: moduleOf(`${NAMED_IMPORT} let find; find = nativeHyperUnixFind;`, "it", `await find(${FIND_ARGUMENTS});`) },
+  { id: "assigned-in-case", surface: "membership", cases: 2, source: `${NAMED_IMPORT} let find; it("HX probe", async () => { await find(${FIND_ARGUMENTS}); }); test("setup", () => { find ??= nativeHyperUnixFind; });` },
+  { id: "destructuring-assigned", surface: "membership", source: moduleOf(`import * as hxProvider from "${PROVIDER_SPECIFIER}"; let find; ({nativeHyperUnixFind: find} = hxProvider);`, "it", `await find(${FIND_ARGUMENTS});`) },
+  { id: "stored", surface: "membership", source: moduleOf(`${NAMED_IMPORT} const holder = {find: undefined}; holder.find = nativeHyperUnixFind;`, "it", `await holder.find(${FIND_ARGUMENTS});`) },
+  { id: "root-test", surface: "registration", source: moduleOf(NAMED_IMPORT, "test", FIND) },
+  { id: "import-alias", surface: "registration", source: moduleOf(`import {it as liveIt} from "vitest"; ${NAMED_IMPORT}`, "liveIt", FIND) },
+  { id: "const-alias", surface: "registration", source: moduleOf(`${NAMED_IMPORT} const liveIt = it;`, "liveIt", FIND) },
+  ...CASE_FLAGS.map((flag): LiveForm => ({ id: `flag-${flag}`, surface: "registration", source: moduleOf(NAMED_IMPORT, `it.${flag}`, FIND) })),
+  ...CASE_METHODS.map((method): LiveForm => ({ id: `method-${method}`, surface: "registration", source: moduleOf(NAMED_IMPORT, `it.${method}(${METHOD_ARGUMENT[method] ?? ""})`, FIND) })),
+  { id: "flags-chained", surface: "registration", source: moduleOf(NAMED_IMPORT, `test.${CASE_FLAGS.join(".")}`, FIND) },
+  { id: "method-after-flag", surface: "registration", source: moduleOf(NAMED_IMPORT, `it.${CASE_FLAGS[0] ?? ""}.${CASE_METHODS[0] ?? ""}(${METHOD_ARGUMENT[CASE_METHODS[0] ?? ""] ?? ""})`, FIND) },
+  { id: "flag-after-method", surface: "registration", source: moduleOf(NAMED_IMPORT, `it.runIf(true).${CASE_FLAGS[0] ?? ""}`, FIND) },
+  { id: "extended-alias", surface: "registration", source: moduleOf(`${NAMED_IMPORT} const liveIt = it.extend({});`, "liveIt", FIND) },
+  { id: "options-position", surface: "registration", source: `${NAMED_IMPORT} it("HX probe", {timeout: 60000}, async () => { ${FIND} });` },
+  { id: "timeout-position", surface: "registration", source: `${NAMED_IMPORT} it("HX probe", async () => { ${FIND} }, 60000);` },
+  { id: "function-body", surface: "registration", source: `${NAMED_IMPORT} it("HX probe", async function () { ${FIND} });` },
+  { id: "nested-describe", surface: "registration", source: `${NAMED_IMPORT} describe("outer", () => { describe("inner", () => { it("HX probe", async () => { ${FIND} }); }); });` },
+  { id: "template-title", surface: "registration", source: moduleOf(NAMED_IMPORT, "it", FIND, "`HX probe`") },
+  { id: "computed-title", surface: "registration", source: moduleOf(NAMED_IMPORT, "it", FIND, '"HX " + "probe"') },
+  { id: "require", surface: "fail-closed", source: moduleOf(`const hxProvider = require("${PROVIDER_SPECIFIER}");`, "it", `await hxProvider.nativeHyperUnixFind(${FIND_ARGUMENTS});`) },
+  { id: "import-actual", surface: "fail-closed", source: moduleOf("", "it", `const hxProvider = await vi.importActual("${PROVIDER_SPECIFIER}"); await hxProvider.nativeHyperUnixFind(${FIND_ARGUMENTS});`) },
+  { id: "held-specifier", surface: "fail-closed", source: moduleOf(`const specifier = "${PROVIDER_SPECIFIER}";`, "it", `const hxProvider = await import(specifier); await hxProvider.nativeHyperUnixFind(${FIND_ARGUMENTS});`) },
+  { id: "export-from", surface: "fail-closed", source: moduleOf(`export {nativeHyperUnixFind} from "${PROVIDER_SPECIFIER}";`, "it", "expect(1).toBe(1);") },
+  { id: "meta-resolve", surface: "fail-closed", source: moduleOf(`const resolved = import.meta.resolve("${PROVIDER_SPECIFIER}");`, "it", "expect(resolved).toBeTruthy();") },
+  { id: "unread-binding", surface: "fail-closed", source: moduleOf("", "it", `const {[key]: find} = await import("${PROVIDER_SPECIFIER}"); await find(${FIND_ARGUMENTS});`) },
+  { id: "unread-alias-binding", surface: "fail-closed", source: moduleOf(`import * as hxProvider from "${PROVIDER_SPECIFIER}"; const {[key]: find} = hxProvider;`, "it", `await find(${FIND_ARGUMENTS});`) },
+  { id: "unread-assignment-pattern", surface: "fail-closed", source: moduleOf(`import * as hxProvider from "${PROVIDER_SPECIFIER}"; let find; ({[key]: find} = hxProvider);`, "it", `await find(${FIND_ARGUMENTS});`) },
+  { id: "array-held", surface: "fail-closed", source: moduleOf(`${NAMED_IMPORT} const [find] = [nativeHyperUnixFind];`, "it", `await find(${FIND_ARGUMENTS});`) },
+  { id: "hook", surface: "fail-closed", source: moduleOf(`${NAMED_IMPORT} let result: unknown; beforeAll(async () => { result = ${FIND} });`, "it", "expect(result).toBeDefined();") },
+  { id: "helper-function", surface: "fail-closed", source: moduleOf(`${NAMED_IMPORT} async function readHx() { return nativeHyperUnixFind(${FIND_ARGUMENTS}); }`, "it", "await readHx();") },
+  { id: "named-body", surface: "fail-closed", source: `${NAMED_IMPORT} const hxCase = async () => { ${FIND} }; it("HX probe", hxCase);` },
+  { id: "describe-body", surface: "fail-closed", source: `${NAMED_IMPORT} describe("probe", () => { const pending = nativeHyperUnixFind(${FIND_ARGUMENTS}); it("HX probe", async () => { await pending; }); });` },
+  { id: "fixture", surface: "fail-closed", source: `${NAMED_IMPORT} const liveIt = it.extend({find: async ({}, use) => use(nativeHyperUnixFind)}); liveIt("HX probe", async ({find}) => { await find(${FIND_ARGUMENTS}); });` },
+  { id: "table", surface: "fail-closed", source: `${NAMED_IMPORT} it.each([nativeHyperUnixFind])("HX probe", async find => { await find(${FIND_ARGUMENTS}); });` },
+  { id: "bound", surface: "fail-closed", source: moduleOf(`${NAMED_IMPORT} const find = nativeHyperUnixFind.bind(undefined);`, "it", `await find(${FIND_ARGUMENTS});`) },
+  { id: "object-api", surface: "fail-closed", source: `${NAMED_IMPORT} const api = {it}; api.it("HX probe", async () => { ${FIND} });` },
+  { id: "dynamic-outside", surface: "fail-closed", source: moduleOf(`void import("${PROVIDER_SPECIFIER}");`, "it", "expect(1).toBe(1);") },
+  { id: "no-hx", surface: "control", source: moduleOf("", "it", "expect(1).toBe(1);", '"probe"') },
+  { id: "sdk-non-entry", surface: "control", source: moduleOf('import {resultFromJson} from "@hyperunix/sdk";', "it", 'expect(resultFromJson).toBeTypeOf("function");', '"probe"') },
+  { id: "provider-non-entry", surface: "control", source: moduleOf(`import {HYPERUNIX_FIND_CONTRACT} from "${PROVIDER_SPECIFIER}";`, "it", 'expect(HYPERUNIX_FIND_CONTRACT).toBe("hyperunix.find/v1");', '"probe"') },
+  { id: "comment", surface: "control", source: moduleOf("/* nativeHyperUnixFind lands here once the gate opens */", "it", "expect(1).toBe(1);", '"probe"') },
+  { id: "title-text", surface: "control", source: moduleOf("", "it", "expect(1).toBe(1);", '"HX nativeHyperUnixFind probe"') },
+  { id: "side-effect", surface: "control", source: moduleOf(`import "${PROVIDER_SPECIFIER}";`, "it", "expect(1).toBe(1);", '"probe"') },
+];
+/** The ROUTE forms: the intact route, then each hollowing (header: ROUTE). */
+const ROUTE_CHAIN = "expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []});";
+const ROUTE_TOP = `import {hxLiveInvariant} from "../src/workbench/hyperunix-observer.js"; ${NAMED_IMPORT}`;
+const routeModule = (body: string): string => moduleOf(ROUTE_TOP, "it", `const result = ${FIND} ${body}`);
+const ROUTE_FORMS: readonly { readonly id: string; readonly source: string }[] = [
+  { id: "intact", source: routeModule(ROUTE_CHAIN) },
+  { id: "negated", source: routeModule("expect(hxLiveInvariant(result)).not.toMatchObject({holds: true, violations: []});") },
+  { id: "bare", source: routeModule("expect(hxLiveInvariant(result));") },
+  { id: "other-matcher", source: routeModule("expect(hxLiveInvariant(result)).toBeDefined();") },
+  { id: "other-expected", source: routeModule("expect(hxLiveInvariant(result)).toMatchObject({holds: true});") },
+  { id: "soft", source: routeModule("expect.soft(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []});") },
+  { id: "other-subject", source: routeModule("expect(hxLiveInvariant({})).toMatchObject({holds: true, violations: []});") },
+  { id: "outside-case", source: `${ROUTE_TOP} describe("probe", () => { const result = {}; ${ROUTE_CHAIN} it("HX probe", async () => { ${FIND} }); });` },
+  { id: "twice", source: routeModule(`${ROUTE_CHAIN} ${ROUTE_CHAIN}`) },
+  {
+    id: "aliased",
+    source: moduleOf(`import {hxLiveInvariant as invariant} from "../src/workbench/hyperunix-observer.js"; ${NAMED_IMPORT}`, "it", `const result = ${FIND} expect(invariant(result)).toMatchObject({holds: true, violations: []});`),
+  },
+  { id: "held", source: routeModule("const verdict = hxLiveInvariant(result); expect(verdict).toMatchObject({holds: true, violations: []});") },
+];
+const routeReading = (source: string): Json => plain(routesOf(parse("route.ts", source)));
+/** The named residual families (RESIDUALS in the header): every member is, in its words, a claim, a live HX drive or a hollowed route
+ * that its family's reader reads quiet. */
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   Q1: [
     "expect(verdict).toMatchObject({absenceLicensed: !0});",
@@ -625,8 +1068,41 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
     "expect(snapshot.node.statusText).toMatch(/known[-]empty/);",
     "expect(snapshot.node.statusText).toContain('known-emp');",
   ],
+  Q7: [
+    'import {liveFind} from "./helpers/hx-live.js"; it("HX probe", async () => { await liveFind(); });',
+    'import {runHx} from "@hyperunix/sdk/raw"; it("HX probe", async () => { await runHx(["find", "--kind", "hx.fs/regular-file", "src"]); });',
+    `it("HX probe", async () => { const hxProvider = await import("../src/workbench/providers/" + "hyperunix.js"); await hxProvider.nativeHyperUnixFind(${FIND_ARGUMENTS}); });`,
+    'import {registry} from "./helpers/live-registry.js"; it("HX probe", async () => { await registry.invoke("hyperunix.find", {kind: "hx.fs/regular-file", root: "src"}, {grants: ["hyperunix:read"]}); });',
+    `${NAMED_IMPORT} const stash: (() => Promise<unknown>)[] = []; it("HX hand-off", () => { stash.push(() => nativeHyperUnixFind(${FIND_ARGUMENTS})); }); it("HX probe", async () => { await stash[0]?.(); });`,
+  ],
+  Q8: [
+    routeModule(`if (Date.now() < 0) ${ROUTE_CHAIN}`),
+    routeModule(`return; ${ROUTE_CHAIN}`),
+    routeModule(`const never = () => ${ROUTE_CHAIN.slice(0, -1)};`),
+    moduleOf(ROUTE_TOP, "it", `const live = ${FIND} { const result = {runtime: live}; ${ROUTE_CHAIN} }`),
+  ],
 };
-const quietRow = (pin: string): Json => plain((RESIDUALS[pin] ?? []).map(member => probeClaims([member])));
+/** Which reader each residual family names a blind spot of. */
+const RESIDUAL_READER: Readonly<Record<string, string>> = { Q1: "scanner", Q2: "scanner", Q3: "scanner", Q4: "scanner", Q5: "scanner", Q6: "scanner", Q7: "live set", Q8: "route" };
+const QUIET_LIVE: Json = plain({ live: false, cases: [], unresolved: 0, outside: 0 });
+/** A residual member's reading by its family's reader: the scanner's claims, the LIVE SET summary or the ROUTE list. */
+function memberReading(pin: string, member: string): Json {
+  const reader = RESIDUAL_READER[pin];
+  if (reader === "live set") return liveSummary(member);
+  if (reader === "route") return routeReading(member);
+  return plain(probeClaims([member]));
+}
+/** Quiet: the scanner reads no claim; the LIVE SET reader reads no HX case titled "HX probe" and nothing unresolved or outside; the
+ * ROUTE reader reads the intact route. */
+function readsQuiet(pin: string, member: string): boolean {
+  const reader = RESIDUAL_READER[pin];
+  if (reader === "live set") {
+    const read = liveReading(parse("member.ts", member));
+    return !read.cases.some(entry => entry.title === "HX probe") && read.unresolved.length === 0 && read.outside.length === 0;
+  }
+  return isDeepStrictEqual(memberReading(pin, member), reader === "route" ? routeReading(ROUTE_FORMS[0]?.source ?? "") : plain([]));
+}
+const quietRow = (pin: string): Json => plain((RESIDUALS[pin] ?? []).map(member => memberReading(pin, member)));
 
 // ---- the R1 predicate over the registered provider path, and the vocabulary it yields ----
 
@@ -688,7 +1164,17 @@ function setPath(value: Json, path: string, next: Json): JsonValue {
   at[keys.at(-1) ?? ""] = next;
   return copy as JsonValue;
 }
-/** The armed verdicts and the claim vocabulary they yield, read from src (the predicate, the projection, the consumed fields). */
+/** One EXCLUSIVITY cell: the predicate's holds and absenceLicensed over the provider path's reading of a kind under a licence state. */
+interface Cell {
+  readonly holds: boolean;
+  readonly absenceLicensed: boolean;
+}
+async function cellOf(kind: string, licence: boolean): Promise<Cell> {
+  const verdict = hxLiveInvariant(await providerRead(sdkDocument(kind, licence)));
+  return { holds: verdict.holds, absenceLicensed: verdict.absenceLicensed };
+}
+/** The armed verdicts, the EXCLUSIVITY matrix and the claim vocabulary they yield, read from src (the predicate, the projection,
+ * the consumed fields). */
 async function armed(): Promise<{ readonly vocabulary: ClaimVocabulary; readonly witness: Json }> {
   const licensedKind = "complete-empty";
   const licensed = plain(await providerRead(sdkDocument(licensedKind, true)));
@@ -703,7 +1189,9 @@ async function armed(): Promise<{ readonly vocabulary: ClaimVocabulary; readonly
       const flipped = hxLiveInvariant(setPath(licensed, path, false));
       return flipped.holds && !flipped.absenceLicensed;
     }) ?? "";
-  const completeKinds = HYPERUNIX_EXECUTION_KINDS.filter(kind => hxLiveInvariant(setPath(licensed, kindPath, kind)).absenceLicensed);
+  const matrix: { readonly kind: string; readonly licensed: Cell; readonly unlicensed: Cell }[] = [];
+  for (const kind of HYPERUNIX_EXECUTION_KINDS) matrix.push({ kind, licensed: await cellOf(kind, true), unlicensed: await cellOf(kind, false) });
+  const completeKinds = matrix.filter(row => row.licensed.absenceLicensed).map(row => row.kind);
   const flips = isRecord(licensedVerdict) && isRecord(unlicensedVerdict) ? Object.keys(licensedVerdict).filter(key => !isDeepStrictEqual(licensedVerdict[key], unlicensedVerdict[key])) : [];
   const context = { scope: { workspace: WS, principal: "local-operator:census" }, target: { kind: "hx.fs/regular-file", root: "src" }, capturedAt: "2026-10-28T00:00:00Z", observedAt: "2026-10-28T00:00:01Z" };
   const [snapshot] = hyperunixTopology(licensed as JsonValue, context).snapshots;
@@ -721,6 +1209,7 @@ async function armed(): Promise<{ readonly vocabulary: ClaimVocabulary; readonly
       verdicts: { licensed: licensedVerdict, unlicensed: unlicensedVerdict },
       projection: { coverage: snapshot?.coverage, statusTone: snapshot?.node.statusTone, statusText },
       paths: { kind: kindPath, licence: licencePath },
+      matrix,
       vocabulary,
     }),
   };
@@ -757,18 +1246,28 @@ function fixtureReads(): readonly { readonly half: string; readonly file: string
       return { half: row.half, file: row.file, title: row.title, reads: found === undefined ? null : claimsIn(found.body, sf, CLAIM_VOCABULARY).length > 0 };
     });
 }
-/** docs/14's residual section: its binding, HTML, non-table blocks, columns and rows (`<quiet row> | <family> | <member>`). */
-function residualDocs(): { readonly ok: boolean; readonly why: string; readonly html: boolean; readonly lead: readonly string[]; readonly columns: readonly string[]; readonly rows: readonly string[] } {
+/** A docs/14 census section: its binding, HTML, non-table blocks (a paragraph as its rendered text and markdown), columns and rows
+ * (cells joined by ` | `, one code span unwrapped). */
+function censusSection(heading: string): {
+  readonly ok: boolean;
+  readonly why: string;
+  readonly html: boolean;
+  readonly lead: readonly Json[];
+  readonly columns: readonly string[];
+  readonly rows: readonly string[];
+} {
   const markdown = textOf(DOCS_14);
-  const section = docsSection(markdown, RESIDUAL_HEADING, 2, [DOCS_PARENT]);
-  const tables = sectionTables(markdown, RESIDUAL_HEADING, 2, [DOCS_PARENT]);
+  const section = docsSection(markdown, heading, 2, [DOCS_PARENT]);
+  const tables = sectionTables(markdown, heading, 2, [DOCS_PARENT]);
   const [grid, ...others] = tables.grids;
   const [header, ...body] = grid ?? [];
   return {
     ok: section.ok && tables.ok && grid !== undefined && others.length === 0,
     why: section.ok ? tables.why : section.why,
     html: section.hasHtml,
-    lead: section.blocks.filter(block => block.kind !== "other" || block.type !== "table").map(block => (block.kind === "paragraph" ? block.text : `${block.kind} block`)),
+    lead: section.blocks
+      .filter(block => block.kind !== "other" || block.type !== "table")
+      .map((block): Json => (block.kind === "paragraph" ? { text: block.text, markdown: block.markdown } : `${block.kind} block`)),
     columns: header ?? [],
     rows: body.map(cells => cells.map(cell => /^`(.*)`$/.exec(cell)?.[1] ?? cell).join(" | ")),
   };
@@ -796,19 +1295,25 @@ function openingLine(file: string): string {
 const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
   W1: () => {
     const tier = nativeTier();
-    const live = tier.files.flatMap(file => {
-      const sf = parseRepo(file);
-      const entries = hxImports(sf);
-      if (entries.length === 0) return [];
-      const cases = casesOf(sf).filter(entry => references(entry.body, entries));
-      return [{ file, entries, cases: cases.map(entry => entry.title), witnessing: cases.filter(entry => claimsIn(entry.body, sf, CLAIM_VOCABULARY).length > 0).map(entry => entry.title) }];
+    const readings = tier.files.map(file => ({ file, reading: liveReading(parseRepo(file)) }));
+    return plain({
+      config: tier.config,
+      files: tier.files,
+      entryPoints: HX_ENTRIES,
+      live: readings
+        .filter(({ reading }) => reading.live)
+        .map(({ file, reading }) => ({ file, entries: reading.entries, cases: reading.cases, witnessing: reading.witnessing })),
+      unresolved: readings.flatMap(({ file, reading }) => reading.unresolved.map(entry => `${file}:${entry}`)),
+      outside: readings.flatMap(({ file, reading }) => reading.outside.map(entry => `${file}:${entry}`)),
+      forms: Object.fromEntries(LIVE_FORMS.map(form => [form.id, liveSummary(form.source)])),
     });
-    return plain({ config: tier.config, files: tier.files, entryPoints: HX_ENTRIES, live });
   },
-  W2: async () => {
-    const live = nativeTier().files.filter(file => hxImports(parseRepo(file)).length > 0);
-    return plain({ route: live.map(file => ({ file, predicateExpectations: predicateExpectations(parseRepo(file)) })), armed: (await armed()).witness });
-  },
+  W2: async () =>
+    plain({
+      route: liveFiles().map(file => ({ file, routes: routesOf(parseRepo(file)) })),
+      routeForms: Object.fromEntries(ROUTE_FORMS.map(form => [form.id, routeReading(form.source)])),
+      armed: (await armed()).witness,
+    }),
   S1: () =>
     plain({
       files: Object.fromEntries(nativeTier().files.map(file => [file, claimsOfSource(file, textOf(file))])),
@@ -837,7 +1342,7 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
         tier: row.tier,
         file: row.file,
         selectedBy: { default: selects(defaultConfig, row.file), [NATIVE_TIER]: selects(nativeConfig, row.file) },
-        registered: casesOf(parseRepo(row.file)).some(entry => entry.title === row.title),
+        registration: casesOf(parseRepo(row.file)).find(entry => entry.title === row.title)?.registration ?? null,
       })),
     });
   },
@@ -878,6 +1383,8 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
   Q4: () => quietRow("Q4"),
   Q5: () => quietRow("Q5"),
   Q6: () => quietRow("Q6"),
+  Q7: () => quietRow("Q7"),
+  Q8: () => quietRow("Q8"),
 };
 
 // ---- the outside anchors' readers: the bead's own description in the tracker export ----
@@ -947,9 +1454,10 @@ describe(SUITE, () => {
     }
   }
 
-  it("rule 16: the rows, the residual families, the falsifier, benign and conservative rosters, the probe preamble and the claim vocabulary are frozen at their measured shape", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["W:2", "S:2", "T:3", "N:1", "Q:6"]);
-    expect(Object.entries(RESIDUALS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:9", "Q2:1", "Q3:4", "Q4:5", "Q5:4", "Q6:4"]);
+  it("rule 16: the rows, the residual families and their readers, the falsifier, benign and conservative rosters, the probe preamble, the claim vocabulary, the LIVE SET and ROUTE forms and the registration partition are frozen at their measured shape", () => {
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["W:2", "S:2", "T:3", "N:1", "Q:8"]);
+    expect(Object.entries(RESIDUALS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:9", "Q2:1", "Q3:4", "Q4:5", "Q5:4", "Q6:4", "Q7:5", "Q8:4"]);
+    expect(RESIDUAL_READER).toEqual({ Q1: "scanner", Q2: "scanner", Q3: "scanner", Q4: "scanner", Q5: "scanner", Q6: "scanner", Q7: "live set", Q8: "route" });
     expect(Object.keys(QUOTES), "one quote per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
     expect(Object.keys(READING), "one reading per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
     expect(Object.keys(IMPL), "one case per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
@@ -1026,9 +1534,91 @@ describe(SUITE, () => {
       "known-empty-describe:knownEmpty",
     ]);
     expect(BENIGN).toHaveLength(22);
-    expect(CONSERVATIVE.map(entry => entry.id)).toEqual(["prose-negated-title", "prose-negated-message", "held-then-negated", "nested-under-throw", "other-api-negation"]);
+    expect(CONSERVATIVE.map(entry => entry.id)).toEqual(["prose-negated-title", "prose-negated-message", "held-then-negated", "nested-under-throw", "other-api-negation", "negated-head-false"]);
     expect(LIVE_PREAMBLE).toHaveLength(8);
     expect(CLAIM_VOCABULARY).toEqual({ verdictField: "absenceLicensed", licenceField: "licenses_absence", completeKinds: ["complete", "complete-empty"], coverage: "complete", knownEmpty: "known-empty" });
+    expect(LIVE_FORMS.map(form => `${form.surface}:${form.id}`)).toEqual([
+      "membership:named",
+      "membership:aliased",
+      "membership:named-elsewhere",
+      "membership:type-only",
+      "membership:client",
+      "membership:namespace",
+      "membership:namespace-element",
+      "membership:namespace-sdk",
+      "membership:namespace-bare-path",
+      "membership:default",
+      "membership:dynamic",
+      "membership:dynamic-destructured",
+      "membership:dynamic-inline",
+      "membership:dynamic-module",
+      "membership:dynamic-unawaited",
+      "membership:alias",
+      "membership:alias-member",
+      "membership:alias-destructured",
+      "membership:alias-chain",
+      "membership:assigned",
+      "membership:assigned-in-case",
+      "membership:destructuring-assigned",
+      "membership:stored",
+      "registration:root-test",
+      "registration:import-alias",
+      "registration:const-alias",
+      "registration:flag-concurrent",
+      "registration:flag-fails",
+      "registration:flag-only",
+      "registration:flag-sequential",
+      "registration:flag-skip",
+      "registration:flag-todo",
+      "registration:method-each",
+      "registration:method-extend",
+      "registration:method-for",
+      "registration:method-override",
+      "registration:method-runIf",
+      "registration:method-scoped",
+      "registration:method-skipIf",
+      "registration:flags-chained",
+      "registration:method-after-flag",
+      "registration:flag-after-method",
+      "registration:extended-alias",
+      "registration:options-position",
+      "registration:timeout-position",
+      "registration:function-body",
+      "registration:nested-describe",
+      "registration:template-title",
+      "registration:computed-title",
+      "fail-closed:require",
+      "fail-closed:import-actual",
+      "fail-closed:held-specifier",
+      "fail-closed:export-from",
+      "fail-closed:meta-resolve",
+      "fail-closed:unread-binding",
+      "fail-closed:unread-alias-binding",
+      "fail-closed:unread-assignment-pattern",
+      "fail-closed:array-held",
+      "fail-closed:hook",
+      "fail-closed:helper-function",
+      "fail-closed:named-body",
+      "fail-closed:describe-body",
+      "fail-closed:fixture",
+      "fail-closed:table",
+      "fail-closed:bound",
+      "fail-closed:object-api",
+      "fail-closed:dynamic-outside",
+      "control:no-hx",
+      "control:sdk-non-entry",
+      "control:provider-non-entry",
+      "control:comment",
+      "control:title-text",
+      "control:side-effect",
+    ]);
+    expect(ROUTE_FORMS.map(form => form.id)).toEqual(["intact", "negated", "bare", "other-matcher", "other-expected", "soft", "other-subject", "outside-case", "twice", "aliased", "held"]);
+    expect({ roots: TEST_ROOTS, flags: CASE_FLAGS, methods: CASE_METHODS, other: NON_CASE_MEMBERS }).toEqual({
+      roots: ["it", "test"],
+      flags: ["concurrent", "fails", "only", "sequential", "skip", "todo"],
+      methods: ["each", "extend", "for", "override", "runIf", "scoped", "skipIf"],
+      other: ["afterAll", "afterEach", "aroundAll", "aroundEach", "beforeAll", "beforeEach", "describe", "suite"],
+    });
   });
 
   it("the description anchors: the bead's own description binds the rows, row N's citation, every label atom's carrier pin and the gate block", { timeout: BUDGET_MS }, async () => {
@@ -1065,20 +1655,18 @@ describe(SUITE, () => {
   });
 
   it("the docs and src anchors: docs/14's residual table binds row Q and every member, src binds the claim vocabulary and every falsifier form, and docs/14's HX fixture cases bind the scanner's sense", { timeout: BUDGET_MS }, async () => {
-    const docs = residualDocs();
+    const docs = censusSection(RESIDUAL_HEADING);
     expect(docs.ok, `docs/14 holds one '${RESIDUAL_HEADING}' section under its parent heading, with one table: ${docs.why}`).toBe(true);
     expect(docs.html, "the residual section carries no HTML").toBe(false);
-    expect(docs.lead, "its lead paragraph, verbatim, is its only other block").toEqual([RESIDUAL_LEAD]);
+    expect(docs.lead, "its lead paragraph, verbatim in rendered text and markdown, is its only other block").toEqual([{ text: RESIDUAL_LEAD, markdown: RESIDUAL_LEAD }]);
     expect(docs.columns, "the residual table's columns").toEqual(RESIDUAL_COLUMNS);
     const quiet = ROWS.find(entry => entry.id === "Q")?.pins ?? [];
     expect(docs.rows, "row Q: every residual family, its quiet row and every member, both ways and in table order").toEqual(
       quiet.flatMap(pin => (RESIDUALS[pin] ?? []).map(member => `${pin} | ${QUOTES[pin] ?? ""} | ${member}`)),
     );
     expect(
-      Object.values(RESIDUALS)
-        .flat()
-        .filter(member => probeClaims([member]).length > 0),
-      "every residual member reads quiet",
+      Object.entries(RESIDUALS).flatMap(([pin, members]) => members.filter(member => !readsQuiet(pin, member)).map(member => `${pin}: ${member}`)),
+      "every residual member reads quiet to its family's reader",
     ).toEqual([]);
     const derived = (await armed()).vocabulary;
     expect(CLAIM_VOCABULARY, "the scanner's vocabulary is the one the predicate, the projection and the consumed fields yield").toEqual(derived);
@@ -1107,6 +1695,59 @@ describe(SUITE, () => {
       fixtures.map(entry => entry.half),
       "docs/14 holds both halves",
     ).toEqual(expect.arrayContaining(["positive", "negative"]));
+  });
+
+  it("the live-set anchors: docs/14's read-forms table binds every LIVE SET and ROUTE form, vitest's own test API binds the registration partition, every form reads as its surface requires, and the intact route is the live files' chain", { timeout: BUDGET_MS }, () => {
+    const docs = censusSection(FORMS_HEADING);
+    expect(docs.ok, `docs/14 holds one '${FORMS_HEADING}' section under its parent heading, with one table: ${docs.why}`).toBe(true);
+    expect(docs.html, "the read-forms section carries no HTML").toBe(false);
+    expect(docs.lead, "its lead paragraph, verbatim in rendered text and markdown, is its only other block").toEqual([{ text: FORMS_LEAD, markdown: FORMS_LEAD }]);
+    expect(docs.columns, "the read-forms table's columns").toEqual(FORMS_COLUMNS);
+    expect(docs.rows, "every LIVE SET form and every ROUTE form with its surface, both ways and in table order").toEqual([
+      ...LIVE_FORMS.map(form => `${form.surface} | ${form.id}`),
+      ...ROUTE_FORMS.map(form => `route | ${form.id}`),
+    ]);
+    expect(registrationPartition(), "vitest's runtime test API: its case flags, its case methods and the members that register no case").toEqual({
+      flags: CASE_FLAGS,
+      methods: CASE_METHODS,
+      other: NON_CASE_MEMBERS,
+    });
+    expect([...CASE_FLAGS, ...CASE_METHODS, ...NON_CASE_MEMBERS].sort(), "the three lists are the shared helper's REGISTRATION_MEMBERS.test").toEqual(REGISTRATION_MEMBERS.test);
+    const reading = (form: LiveForm): LiveReading => liveReading(parse(`${form.id}.ts`, form.source));
+    const placed = (form: LiveForm): boolean => {
+      const read = reading(form);
+      return read.live && read.cases.length === (form.cases ?? 1) && read.unresolved.length === 0 && read.outside.length === 0;
+    };
+    expect(
+      LIVE_FORMS.filter(form => (form.surface === "membership" || form.surface === "registration") && !placed(form)).map(form => form.id),
+      "every membership and registration form reads live with the HX cases it registers and nothing unresolved or outside",
+    ).toEqual([]);
+    expect(
+      LIVE_FORMS.filter(form => form.surface === "fail-closed" && reading(form).unresolved.length + reading(form).outside.length === 0).map(form => form.id),
+      "every fail-closed form reads something unresolved or outside",
+    ).toEqual([]);
+    expect(
+      LIVE_FORMS.filter(form => form.surface === "control" && !isDeepStrictEqual(liveSummary(form.source), QUIET_LIVE)).map(form => form.id),
+      "every control reads quiet",
+    ).toEqual([]);
+    const chainOfForm = (id: string): string => reading(LIVE_FORMS.find(form => form.id === id) ?? { id, surface: "registration", source: "" }).cases[0]?.registration ?? "";
+    expect(
+      [...CASE_FLAGS.map(flag => ["flag", flag]), ...CASE_METHODS.map(method => ["method", method])].filter(([kind, member]) => !chainOfForm(`${kind}-${member}`).startsWith(`it.${member}`)).map(([kind, member]) => `${kind}-${member}`),
+      "every case flag and case method has its registration form, read through that member",
+    ).toEqual([]);
+    const intact = routeReading(ROUTE_FORMS[0]?.source ?? "");
+    const [chain] = routesOf(parse("intact.ts", ROUTE_FORMS[0]?.source ?? "")).map(route => route.chain);
+    expect(intact, "the intact ROUTE form reads one route, in its HX case").toEqual([{ case: "HX probe", chain }]);
+    expect(
+      liveFiles().map(file => routesOf(parseRepo(file)).map(route => route.chain)),
+      "each live file holds exactly the intact form's chain, once",
+    ).toEqual(liveFiles().map(() => [chain]));
+    expect(
+      ROUTE_FORMS.slice(1)
+        .filter(form => isDeepStrictEqual(routeReading(form.source), intact))
+        .map(form => form.id),
+      "every other ROUTE form reads a route list other than the intact one's",
+    ).toEqual([]);
   });
 
   it("roster: the judged rows, the quotes, the readings, the residual members and the registered tests equal test/fixtures/hx-licensed-complete-roster.json, in order and both ways; every pin reached its witness compare", ({ task }) => {
