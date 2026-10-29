@@ -1,5 +1,5 @@
 {
- "comment": "wb-e66.3 (MW-GRAPH-POLICY-COORDINATION-R8): the judged set of test/workbench-mw-gp-sidecar-record-census.test.ts, held out of file (standing rule 16). rows, quotes, witnesses, asserted (each pin's assertion count, its witness compare included), residuals, mutants and tests are the census's measured shape at its cut (cut #1 base df37dac; cut #2, respin 1, base e81d2b0); producer holds the filing's cited MechanicalWorkflows lines at the bead's pin 4b8b974ca72b (git show from the local checkout; the census never re-reads the producer).",
+ "comment": "wb-e66.3 (MW-GRAPH-POLICY-COORDINATION-R8): the judged set of test/workbench-mw-gp-sidecar-record-census.test.ts, held out of file (standing rule 16). rows, quotes, witnesses, asserted (each pin's assertion count, its witness compare included), residuals, mutants and tests are the census's measured shape at its cut (cut #1 base df37dac; cut #2, respin 1, base e81d2b0; cut #3, respin 2, base b3d410f); producer holds the filing's cited MechanicalWorkflows lines at the bead's pin 4b8b974ca72b (git show from the local checkout; the census never re-reads the producer).",
  "bead": "wb-e66.3",
  "rows": [
   {
@@ -145,11 +145,28 @@
     "failed-execution: fail accepted",
     "unexecuted: not-run accepted"
    ],
+   "holding": {
+    "all": [
+     "three-distinct",
+     "failed-execution",
+     "unexecuted"
+    ],
+    "two": [
+     "admitted-not-executed",
+     "substituted",
+     "verified-not-executed"
+    ]
+   },
    "outcomes": [
     "fail",
     "not-run",
     "partial",
     "pass"
+   ],
+   "pairs": [
+    "proposed/admitted",
+    "proposed/executed",
+    "admitted/executed"
    ],
    "collapsing": [
     "M-COLLAPSE-EXECUTED: accepted-rewritten; refused by K-PARITY",
@@ -196,14 +213,37 @@
     "INTENT_AUTHORITY_EXCEEDED: accepted"
    ],
    "off": [
-    "refused verdict-domain \"rejected\"",
-    "refused verdict-domain \"accepted\"",
-    "refused verdict-domain \"substituted\"",
     "refused verdict-domain \"ADMITTED\"",
     "refused verdict-domain \"Admitted\"",
     "refused verdict-domain \" admitted\"",
+    "refused verdict-domain \"admitted \"",
     "refused verdict-domain \"intent_basis_stale\"",
+    "refused verdict-domain \"Intent_basis_stale\"",
+    "refused verdict-domain \" INTENT_BASIS_STALE\"",
     "refused verdict-domain \"INTENT_BASIS_STALE \"",
+    "refused verdict-domain \"intent_scope_protected\"",
+    "refused verdict-domain \"Intent_scope_protected\"",
+    "refused verdict-domain \" INTENT_SCOPE_PROTECTED\"",
+    "refused verdict-domain \"INTENT_SCOPE_PROTECTED \"",
+    "refused verdict-domain \"intent_write_conflict\"",
+    "refused verdict-domain \"Intent_write_conflict\"",
+    "refused verdict-domain \" INTENT_WRITE_CONFLICT\"",
+    "refused verdict-domain \"INTENT_WRITE_CONFLICT \"",
+    "refused verdict-domain \"intent_budget_exceeded\"",
+    "refused verdict-domain \"Intent_budget_exceeded\"",
+    "refused verdict-domain \" INTENT_BUDGET_EXCEEDED\"",
+    "refused verdict-domain \"INTENT_BUDGET_EXCEEDED \"",
+    "refused verdict-domain \"intent_duplicate\"",
+    "refused verdict-domain \"Intent_duplicate\"",
+    "refused verdict-domain \" INTENT_DUPLICATE\"",
+    "refused verdict-domain \"INTENT_DUPLICATE \"",
+    "refused verdict-domain \"intent_authority_exceeded\"",
+    "refused verdict-domain \"Intent_authority_exceeded\"",
+    "refused verdict-domain \" INTENT_AUTHORITY_EXCEEDED\"",
+    "refused verdict-domain \"INTENT_AUTHORITY_EXCEEDED \"",
+    "refused verdict-domain \"rejected\"",
+    "refused verdict-domain \"accepted\"",
+    "refused verdict-domain \"substituted\"",
     "refused verdict-domain \"INTENT_UNKNOWN\"",
     "refused verdict-domain \"INTENT_\"",
     "refused verdict-domain \"\"",
@@ -212,7 +252,47 @@
     "refused verdict-domain true",
     "refused verdict-domain [\"admitted\"]",
     "refused verdict-domain {\"code\":\"INTENT_DUPLICATE\"}"
-   ]
+   ],
+   "bases": [
+    "positive: 39 of 39 off-domain values refused",
+    "single: 39 of 39 off-domain values refused",
+    "admitted-not-executed: 39 of 39 off-domain values refused",
+    "substituted: 39 of 39 off-domain values refused",
+    "three-distinct: 39 of 39 off-domain values refused",
+    "verified-not-executed: 39 of 39 off-domain values refused",
+    "failed-execution: 39 of 39 off-domain values refused",
+    "unexecuted: 39 of 39 off-domain values refused",
+    "INTENT_BASIS_STALE: 39 of 39 off-domain values refused",
+    "INTENT_SCOPE_PROTECTED: 39 of 39 off-domain values refused",
+    "INTENT_WRITE_CONFLICT: 39 of 39 off-domain values refused",
+    "INTENT_BUDGET_EXCEEDED: 39 of 39 off-domain values refused",
+    "INTENT_DUPLICATE: 39 of 39 off-domain values refused",
+    "INTENT_AUTHORITY_EXCEEDED: 39 of 39 off-domain values refused",
+    "decline: 39 of 39 off-domain values refused"
+   ],
+   "mutants": {
+    "M-OPEN-VERDICT": [
+     "K-VERDICT"
+    ],
+    "M-FIVE-CODES": [
+     "K-VERDICT"
+    ],
+    "M-CASE-VERDICT": [
+     "K-VERDICT"
+    ],
+    "M-NO-ADMITTED": [
+     "K-POSITIVE",
+     "K-PARITY",
+     "K-VERDICT",
+     "K-STATUS"
+    ],
+    "M-OPEN-VERDICT-UNADMITTED": [
+     "K-VERDICT"
+    ],
+    "M-LATER-CODE-UNADMITTED": [
+     "K-VERDICT"
+    ]
+   }
   },
   "C3": {
    "note": [
@@ -231,18 +311,23 @@
     "INTENT_DUPLICATE",
     "INTENT_AUTHORITY_EXCEEDED"
    ],
-   "later": "refused verdict-domain \"INTENT_CLAIM_INVALID\""
+   "later": "refused verdict-domain \"INTENT_CLAIM_INVALID\"",
+   "laterBases": 15
   },
   "D1": {
    "statuses": "success and abstain",
    "record": "accepted",
    "decision": "status abstain, chosen []",
    "off": [
-    "refused status-domain \"abstained\"",
+    "refused status-domain \"SUCCESS\"",
+    "refused status-domain \"Success\"",
+    "refused status-domain \" success\"",
+    "refused status-domain \"success \"",
     "refused status-domain \"ABSTAIN\"",
     "refused status-domain \"Abstain\"",
+    "refused status-domain \" abstain\"",
     "refused status-domain \"abstain \"",
-    "refused status-domain \"SUCCESS\"",
+    "refused status-domain \"abstained\"",
     "refused status-domain \"sampled\"",
     "refused status-domain \"skip\"",
     "refused status-domain \"none\"",
@@ -250,27 +335,33 @@
     "refused status-domain \"\"",
     "refused status-domain 1",
     "refused status-domain true",
-    "refused status-domain [\"abstain\"]"
+    "refused status-domain [\"abstain\"]",
+    "refused status-domain {\"status\":\"success\"}"
+   ],
+   "families": [
+    "off over 15 bases",
+    "choice over 15 bases",
+    "order over 15 bases"
    ]
   },
   "D2": {
    "kept": "kept abstain",
-   "statusForms": 60,
-   "forms": [
-    "decision.status absent: refused missing-field decision.status",
-    "decision.status undefined: refused missing-field decision.status",
-    "decision.status null: refused missing-field decision.status",
-    "decision a bare word: refused missing-field decision.status",
-    "decline: decision.status absent: refused missing-field decision.status",
-    "decline: decision.status undefined: refused missing-field decision.status",
-    "decline: decision.status null: refused missing-field decision.status",
-    "decline: decision a bare word: refused missing-field decision.status"
-   ],
+   "statusForms": 255,
+   "choices": 195,
    "shapes": [
     "success choosing nothing: refused success-without-choice",
-    "abstain choosing a pair: refused decline-with-choice",
     "success choosing a bare word: refused success-without-choice",
-    "abstain choosing a bare word: refused decline-with-choice"
+    "success choosing an empty word: refused success-without-choice",
+    "success choosing a number: refused success-without-choice",
+    "success choosing a flag: refused success-without-choice",
+    "success choosing an object: refused success-without-choice",
+    "abstain choosing a pair: refused decline-with-choice",
+    "abstain choosing two pairs: refused decline-with-choice",
+    "abstain choosing a bare word: refused decline-with-choice",
+    "abstain choosing an empty word: refused decline-with-choice",
+    "abstain choosing a number: refused decline-with-choice",
+    "abstain choosing a flag: refused decline-with-choice",
+    "abstain choosing an object: refused decline-with-choice"
    ],
    "mutants": {
     "M-DECLINE-AS-SUCCESS": [
@@ -286,6 +377,15 @@
      "K-STATUS"
     ],
     "M-STRING-CHOICE": [
+     "K-STATUS"
+    ],
+    "M-EMPTY-SUCCESS-UNPROPOSED": [
+     "K-STATUS"
+    ],
+    "M-DECLINE-CHOICE-REJECTED": [
+     "K-STATUS"
+    ],
+    "M-OBJECT-CHOICE": [
      "K-STATUS"
     ]
    }
@@ -322,6 +422,14 @@
    "pathOnly": [
     "src/workbench/gp-sidecar/index.ts: names sidecar"
    ],
+   "separated": [
+    "src/workbench/gp-record-keys.ts: names snapshotHash",
+    "src/workbench/gp-record-keys.ts: names featureProjection",
+    "src/workbench/gp-record-keys.ts: names resolverVerdict",
+    "src/workbench/gp-record-keys.ts: names effectReceiptRef",
+    "src/workbench/gp-record-keys.ts: names verifierOutcome",
+    "src/workbench/gp-record-keys.ts: names feedbackStatus"
+   ],
    "registered": [],
    "stale": [
     "src/workbench/gp-sidecar.ts: stale registration"
@@ -331,76 +439,58 @@
    ]
   },
   "S2": {
-   "positive": [
-    "snapshotHash undefined: refused missing-field snapshotHash",
-    "snapshotHash null: refused missing-field snapshotHash",
-    "featureProjection undefined: refused missing-field featureProjection",
-    "featureProjection null: refused missing-field featureProjection",
-    "actor undefined: refused missing-field actor",
-    "actor null: refused missing-field actor",
-    "selector undefined: refused missing-field selector",
-    "selector null: refused missing-field selector",
-    "support undefined: refused missing-field support",
-    "support null: refused missing-field support",
-    "decision undefined: refused missing-field decision",
-    "decision null: refused missing-field decision",
-    "behaviorLogProbability undefined: refused missing-field behaviorLogProbability",
-    "behaviorLogProbability null: refused missing-field behaviorLogProbability",
-    "proposed undefined: refused missing-field proposed",
-    "proposed null: refused missing-field proposed",
-    "admitted undefined: refused missing-field admitted",
-    "admitted null: refused missing-field admitted",
-    "executed undefined: refused missing-field executed",
-    "executed null: refused missing-field executed",
-    "resolverVerdict undefined: refused missing-field resolverVerdict",
-    "resolverVerdict null: refused missing-field resolverVerdict",
-    "effectReceiptRef undefined: refused missing-field effectReceiptRef",
-    "effectReceiptRef null: refused missing-field effectReceiptRef",
-    "verifierOutcome undefined: refused missing-field verifierOutcome",
-    "verifierOutcome null: refused missing-field verifierOutcome",
-    "feedbackStatus undefined: refused missing-field feedbackStatus",
-    "feedbackStatus null: refused missing-field feedbackStatus",
-    "decision.status absent: refused missing-field decision.status",
-    "decision.status undefined: refused missing-field decision.status",
-    "decision.status null: refused missing-field decision.status",
-    "decision.chosen absent: refused missing-field decision.chosen",
-    "decision.chosen undefined: refused missing-field decision.chosen",
-    "decision.chosen null: refused missing-field decision.chosen",
-    "decision a bare word: refused missing-field decision.status"
+   "negative": [
+    "positive: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "single: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "admitted-not-executed: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "substituted: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "three-distinct: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "verified-not-executed: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "failed-execution: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "unexecuted: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "INTENT_BASIS_STALE: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "INTENT_SCOPE_PROTECTED: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "INTENT_WRITE_CONFLICT: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "INTENT_BUDGET_EXCEEDED: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "INTENT_DUPLICATE: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "INTENT_AUTHORITY_EXCEEDED: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78",
+    "decline: single 14 of 14, pair 455 of 455, suffix 13 of 13, beside 78 of 78"
    ],
-   "bases": [
-    "positive: 14 of 14 absent and 35 of 35 other forms refused naming their field",
-    "single: 14 of 14 absent and 35 of 35 other forms refused naming their field",
-    "admitted-not-executed: 14 of 14 absent and 35 of 35 other forms refused naming their field",
-    "substituted: 14 of 14 absent and 35 of 35 other forms refused naming their field",
-    "three-distinct: 14 of 14 absent and 35 of 35 other forms refused naming their field",
-    "verified-not-executed: 14 of 14 absent and 35 of 35 other forms refused naming their field",
-    "failed-execution: 14 of 14 absent and 35 of 35 other forms refused naming their field",
-    "unexecuted: 14 of 14 absent and 35 of 35 other forms refused naming their field",
-    "INTENT_BASIS_STALE: 14 of 14 absent and 35 of 35 other forms refused naming their field",
-    "INTENT_SCOPE_PROTECTED: 14 of 14 absent and 35 of 35 other forms refused naming their field",
-    "INTENT_WRITE_CONFLICT: 14 of 14 absent and 35 of 35 other forms refused naming their field",
-    "INTENT_BUDGET_EXCEEDED: 14 of 14 absent and 35 of 35 other forms refused naming their field",
-    "INTENT_DUPLICATE: 14 of 14 absent and 35 of 35 other forms refused naming their field",
-    "INTENT_AUTHORITY_EXCEEDED: 14 of 14 absent and 35 of 35 other forms refused naming their field",
-    "decline: 14 of 14 absent and 35 of 35 other forms refused naming their field"
+   "forms": [
+    "positive: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "single: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "admitted-not-executed: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "substituted: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "three-distinct: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "verified-not-executed: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "failed-execution: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "unexecuted: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "INTENT_BASIS_STALE: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "INTENT_SCOPE_PROTECTED: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "INTENT_WRITE_CONFLICT: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "INTENT_BUDGET_EXCEEDED: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "INTENT_DUPLICATE: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "INTENT_AUTHORITY_EXCEEDED: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22",
+    "decline: single 28 of 28, pair 364 of 364, beside 156 of 156, decision 22 of 22"
    ],
-   "order": [
-    "omit snapshotHash and every later field: refused missing-field snapshotHash",
-    "omit featureProjection and every later field: refused missing-field featureProjection",
-    "omit actor and every later field: refused missing-field actor",
-    "omit selector and every later field: refused missing-field selector",
-    "omit support and every later field: refused missing-field support",
-    "omit decision and every later field: refused missing-field decision",
-    "omit behaviorLogProbability and every later field: refused missing-field behaviorLogProbability",
-    "omit proposed and every later field: refused missing-field proposed",
-    "omit admitted and every later field: refused missing-field admitted",
-    "omit executed and every later field: refused missing-field executed",
-    "omit resolverVerdict and every later field: refused missing-field resolverVerdict",
-    "omit effectReceiptRef and every later field: refused missing-field effectReceiptRef",
-    "omit verifierOutcome and every later field: refused missing-field verifierOutcome",
-    "omit feedbackStatus beside a decision lacking its status: refused missing-field feedbackStatus",
-    "omit feedbackStatus beside an off verdict: refused missing-field feedbackStatus"
+   "faults": [
+    "a decision lacking its status (in decision)",
+    "a decision lacking its choice (in decision)",
+    "the decision a bare word (in decision)",
+    "the off status (in decision)",
+    "the choice its status refuses (in decision)",
+    "the off verdict (in resolverVerdict)"
+   ],
+   "mixes": [
+    "absent and absent",
+    "absent and undefined",
+    "absent and null",
+    "undefined and absent",
+    "undefined and undefined",
+    "undefined and null",
+    "null and absent",
+    "null and undefined",
+    "null and null"
    ]
   },
   "S3": {
@@ -450,7 +540,7 @@
      "K-FORMS"
     ]
    },
-   "forms": 750,
+   "forms": 16950,
    "shapes": [
     "ok,code,field ok=false"
    ]
@@ -533,12 +623,30 @@
    "members": [
     "a feedback default under an unseen actor",
     "a receipt default under an unseen feedback status",
-    "a collapse under an unseen verifier outcome"
+    "a collapse under an unseen verifier outcome",
+    "an off verdict accepted under an unseen selector",
+    "a status default under a rejection code beside a passed verifier",
+    "an abstain recorded as success beside a rejection code",
+    "a collapse under a rejection code beside divergent actions",
+    "an off verdict no list holds accepted",
+    "an off status no list holds accepted",
+    "a success's number choice no list holds accepted",
+    "the second of three missing fields named when they are not a suffix",
+    "the verdict read first beside an off status when it is an off value other than rejected"
    ],
    "readings": [
     "a feedback default under an unseen actor: no check refuses it; its context record reads accepted-rewritten, the reference refused missing-field feedbackStatus",
     "a receipt default under an unseen feedback status: no check refuses it; its context record reads accepted-rewritten, the reference refused missing-field effectReceiptRef",
-    "a collapse under an unseen verifier outcome: no check refuses it; its context record reads accepted-rewritten, the reference accepted"
+    "a collapse under an unseen verifier outcome: no check refuses it; its context record reads accepted-rewritten, the reference accepted",
+    "an off verdict accepted under an unseen selector: no check refuses it; its context record reads accepted, the reference refused verdict-domain \"rejected\"",
+    "a status default under a rejection code beside a passed verifier: no check refuses it; its context record reads accepted-rewritten, the reference refused missing-field decision.status",
+    "an abstain recorded as success beside a rejection code: no check refuses it; its context record reads accepted-rewritten, the reference accepted",
+    "a collapse under a rejection code beside divergent actions: no check refuses it; its context record reads accepted-rewritten, the reference accepted",
+    "an off verdict no list holds accepted: no check refuses it; its context record reads accepted, the reference refused verdict-domain \"approved\"",
+    "an off status no list holds accepted: no check refuses it; its context record reads accepted, the reference refused status-domain \"succeeded\"",
+    "a success's number choice no list holds accepted: no check refuses it; its context record reads accepted, the reference refused success-without-choice",
+    "the second of three missing fields named when they are not a suffix: no check refuses it; its context record reads refused missing-field support, the reference refused missing-field snapshotHash",
+    "the verdict read first beside an off status when it is an off value other than rejected: no check refuses it; its context record reads refused verdict-domain \"accepted\", the reference refused status-domain \"skip\""
    ]
   }
  },
@@ -549,12 +657,12 @@
   "B1:8",
   "B2:5",
   "C1:3",
-  "C2:3",
-  "C3:5",
-  "D1:5",
+  "C2:5",
+  "C3:7",
+  "D1:6",
   "D2:7",
-  "S1:11",
-  "S2:4",
+  "S1:12",
+  "S2:6",
   "S3:4",
   "Q1:4",
   "Q2:4",
@@ -605,7 +713,16 @@
   "Q7": [
    "a feedback default under an unseen actor",
    "a receipt default under an unseen feedback status",
-   "a collapse under an unseen verifier outcome"
+   "a collapse under an unseen verifier outcome",
+   "an off verdict accepted under an unseen selector",
+   "a status default under a rejection code beside a passed verifier",
+   "an abstain recorded as success beside a rejection code",
+   "a collapse under a rejection code beside divergent actions",
+   "an off verdict no list holds accepted",
+   "an off status no list holds accepted",
+   "a success's number choice no list holds accepted",
+   "the second of three missing fields named when they are not a suffix",
+   "the verdict read first beside an off status when it is an off value other than rejected"
   ]
  },
  "mutants": {
@@ -625,9 +742,11 @@
    "K-FORMS"
   ],
   "M-NULL-PRESENT": [
+   "K-NEGATIVE",
    "K-FORMS"
   ],
   "M-UNDEFINED-PRESENT": [
+   "K-NEGATIVE",
    "K-FORMS"
   ],
   "M-UNTYPED-REFUSAL": [
@@ -676,6 +795,7 @@
    "K-STATUS"
   ],
   "M-REFUSE-DECLINE": [
+   "K-VERDICT",
    "K-STATUS"
   ],
   "M-EMPTY-SUCCESS": [
@@ -706,12 +826,42 @@
    "K-PARITY"
   ],
   "M-LAST-MISSING": [
-   "K-NEGATIVE"
+   "K-NEGATIVE",
+   "K-FORMS"
   ],
   "M-STRING-CHOICE": [
    "K-STATUS"
   ],
   "M-VERDICT-FIRST": [
+   "K-STATUS"
+  ],
+  "M-OPEN-VERDICT-UNADMITTED": [
+   "K-VERDICT"
+  ],
+  "M-LATER-CODE-UNADMITTED": [
+   "K-VERDICT"
+  ],
+  "M-OPEN-STATUS-UNPROPOSED": [
+   "K-STATUS"
+  ],
+  "M-EMPTY-SUCCESS-UNPROPOSED": [
+   "K-STATUS"
+  ],
+  "M-DECLINE-CHOICE-REJECTED": [
+   "K-STATUS"
+  ],
+  "M-LAST-MISSING-REJECTED": [
+   "K-NEGATIVE",
+   "K-FORMS"
+  ],
+  "M-STATUS-BEFORE-MISSING": [
+   "K-NEGATIVE",
+   "K-FORMS"
+  ],
+  "M-NULLISH-AFTER-ABSENT": [
+   "K-NEGATIVE"
+  ],
+  "M-OBJECT-CHOICE": [
    "K-STATUS"
   ]
  },
@@ -736,10 +886,10 @@
   "Q5: R-COMPOSED-WORD",
   "Q6: R-UNNAMED-SITE",
   "Q7: R-UNSEEN-CONTEXT",
-  "rule 16: the rows, the items and fields, the domains, the vocabulary, the bases, the checks, the mutants, the residual families and the registrations are frozen at their measured shape",
-  "the mutant battery: every subject passes every check, each mutant is refused by exactly its declared checks, and every check refuses one mutant alone",
-  "the outside anchors: the bead's own row binds the labels of rows A-D (its acceptance clauses) and S (its title), those rows' pin quotes' text, the items, the field names and phrases, the actions, the codes, the statuses, the record noun and the vocabulary; wb-4ap.16's note and the producer union carry the six codes; the notes cite the producer lines; git's src listing names no anchored word unregistered; row Q and the pin partition are not anchored",
-  "roster: the judged rows, the quotes, the residual members, the assertion counts and the registered tests equal test/fixtures/mw-gp-sidecar-record-roster.json, in order and both ways; every pin reached its witness compare"
+  "rule 16: the rows, the items and fields, the domains, the value lists, the vocabulary, the bases, the later faults, the checks and their controls, the mutants, the residual families and the registrations are frozen at their measured shape",
+  "the mutant battery: every subject passes every check, a planted registration is judged, every base is a control accepted unchanged, each mutant is refused by exactly its declared checks, and every check refuses one mutant alone",
+  "the outside anchors: the bead's own row binds the labels of rows A-D (its acceptance clauses) and S (its title's statement), those rows' pin quotes' text, the items and each field's phrase, each field name to a contiguous run of its phrase's words, the actions, the codes, the statuses, the record noun and the vocabulary's composition; wb-4ap.16's note carries the six codes; the notes cite the producer pin and lines; git's src listing names no vocabulary word unregistered; the roster's producer copy, row Q, the pin partition and which run of its phrase a field name takes are not anchored",
+  "roster: the judged rows, the quotes, the residual members, the witness and mutant keys, the assertion counts and the registered tests equal test/fixtures/mw-gp-sidecar-record-roster.json, keys in order; every pin reached its witness compare and each compare held"
  ],
  "producer": {
   "repo": "MechanicalWorkflows",
