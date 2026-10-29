@@ -13,17 +13,22 @@
  * budget is refused with a typed unavailable, never truncated silently." The filing closes "Tracked gate, never a blocker."
  *
  * THE GATE (measured read-only by the cutting seat on 2026-10-28 at trunk ade68d6 and after each trunk merge into the cut, by the
- * first respin seat at trunk e81d2b0, and by the second respin seat at trunk 014d116, whose delta from e81d2b0, landings
- * 649-651, touches no src, qa or docs file; row G re-reads it live):
- * Pi has no exporter to test. docs/workbench/03's Ownership boundaries section holds one GraphPolicyCLI row, in a table headed
- * "Concern | Authoritative owner | Workbench may do", whose "Workbench may do" cell opens "nothing today (no gp seam is
- * registered)", and no other block of that section names GraphPolicyCLI in its source; its GraphPolicyCLI boundary section's
+ * first respin seat at trunk e81d2b0, by the second respin seat at trunk 014d116, whose delta from e81d2b0, landings 649-651,
+ * touches no src, qa or docs file, and by the third respin seat at trunk 4350926, whose delta from 06a280b, landings 657-660,
+ * touches no src, qa or docs file either; row G re-reads it live):
+ * Pi has no exporter to test. docs/workbench/03's Ownership boundaries section holds one GraphPolicyCLI row (one body row of
+ * its top-level tables whose owner cell, its second cell whatever the table's header names, as it shows in the document,
+ * names GraphPolicy; G3 counts rows by that cell only),
+ * whose owner cell's source is exactly GraphPolicyCLI, in a table headed "Concern | Authoritative owner | Workbench may do",
+ * whose "Workbench may do" cell's source opens "nothing today (no gp seam is registered)", and no other block of that section
+ * outside its top-level tables names GraphPolicyCLI in its source; its GraphPolicyCLI boundary section's
  * first rendered block is a paragraph that opens, as rendered and in its source, "Pi carries no GraphPolicyCLI (gp)
  * integration today." (G3, read through the landed docs binding sectionTables/docsSection of test/helpers/census.ts, each
- * heading once under the page title); no src module names GraphPolicy or GraphDataIR (G1; the landed wb-e66.5, wb-1xvp.2 and
+ * heading once under the page title); no src module names GraphPolicy or GraphDataIR (G1, its reader proven on each of the
+ * two words; the landed wb-e66.5, wb-1xvp.2 and
  * wb-gxd7.4 guards pin the same absence by their own readings, and wb-gxd7.4's filing names this bead's exporter as unbuilt).
  * So this suite PINS TODAY'S ABSENCE and ARMS the acceptance for the first exporter: the judge (exportFindings, driveFindings)
- * is written now, proven on a reference exporter over real ObservationProjection fixtures and on seventy-three mutants, each
+ * is written now, proven on a reference exporter over real ObservationProjection fixtures and on seventy-seven mutants, each
  * refused with exactly its rules, and every EXPORT_SITES registration (none today) must pass it on every CASES row. A src
  * module that names a site word without a registration reds G1, so the cut that adds the exporter registers it here, with a
  * drive, and meets the judge.
@@ -52,12 +57,17 @@
  *   relation a kind, a features object and incidences naming exported entities, one id space for entities, relations and
  *   incidences. The vendored fixture itself reads clean (A2).
  * - PURITY (driveFindings): each drive runs twice, each time on a fresh projection behind a view (watched) that records every
- *   call of a projection method outside READ_METHODS, with fresh copies of the scope and the budget. Once both drives have
+ *   call of a projection method outside READ_METHODS that it hands out through its get trap (a call reached past the view,
+ *   Object.prototype.toString.call(view), is R-OUTSIDE's), with fresh copies of the scope and the budget, which the judge keeps
+ *   in its own record. Once both drives have
  *   settled, a drive is impure on any of five legs: it called such a method (each of the six public writes has an A1 member,
  *   M-WRITE-NOOP one that changes nothing and M-OTHER-CALL an inherited toString); the class (its prototype and its
  *   constructor) no longer reads as it did before the drives (the judge puts the class back, prototypes included, and A1
  *   holds both member lists and the prototype's prototype to the ones this module loaded with); a projection it read no longer
- *   reads as a fresh twin; the scope or the budget it was handed no longer reads as a fresh copy; or its two outcomes read
+ *   reads as a fresh twin; the scope or the budget object it was handed, as the judge kept it, no longer reads as a fresh copy
+ *   (refusal #3's U2 cure: the judge walks the two objects it handed, never the request's fields as read after the drives, so
+ *   the four M-REBIND members, an edit of a handed object followed by a rebind of the request's field to a fresh copy, are
+ *   impure; the request object itself is R-REQUEST's); or its two outcomes read
  *   unlike each other. Every leg after the first reads through one strict walk (structureOf, refusal #2's U2 cure): from each
  *   root, every object reachable through own properties (Reflect.ownKeys: string and symbol keys, enumerable or not) and map
  *   and set entries, and per object its kind (internal-slot brand checks that run none of its own code), its prototype by
@@ -90,26 +100,38 @@
  *   or holds a text for that does not hash to git's blob id (a dropped, blanked or shortened file), extra every mapped path the
  *   listing lacks, and missed, at each of three places (start, middle, end), every listed path the reader does not name when
  *   each mapped text carries the reader's word there on a line of its own (a reader that skips an entry or reads part of a
- *   text). Each witness holds its proof (all empty), and PROOF_CONTROLS proves the proof itself on a fixed three-file listing:
+ *   text). G1 runs it once per site word through its own reader (refusal #3's U1 cure; its first word's proof and anchor proof
+ *   stay as they were). Each witness holds its proof (all empty), and PROOF_CONTROLS proves the proof itself on a fixed three-file listing:
  *   a blanked, a shortened, a dropped and an extra map entry, and readers that read only the last entry, the first entry, the
  *   first 64 or the last 64 characters, or nothing, each named exactly; G1's anchor proof blanks control.ts in a read map of
  *   its own and must name it unread, so ids taken from the read map instead of git's reading red.
  *
  * ROWS. A-F, the acceptance clauses, each pin a quote of its clause with its own case: the reference conforms where the pin
  * names a case, and each of the pin's MUTANTS is refused with exactly its rules while the reference conforms on the same case.
- * G, the statement's gate slice: G1 the live leg (the src listing against the walk less git's ignored set, its read proof and
- * PROOF_CONTROLS, the registration judge on the tree and on a planted exporter, SITE_CASES, the composed word reader's
- * controls, and every registration's drive on every case), G2 the namespace the judge reads is the vendored producer
+ * G, the statement's gate slice: G1 the live leg (the src listing against the walk less git's ignored set, its read proof once
+ * per site word and PROOF_CONTROLS, the registration judge on the tree, on a planted exporter and on one planted module per
+ * site word, SITE_CASES, the composed word reader's controls read through siteWords and through G1's own reader, and every
+ * registration's drive on every case), G2 the namespace the judge reads is the vendored producer
  * fixture's and no src or qa file names it, G3 docs/03's two sentences. Each absence reader is proven live inside its own case
- * twice: by a planted positive read after the tracked files in the same call (G1's planted exporter; D3's planted src module
+ * twice: by a planted positive read after the tracked files in the same call (G1's planted exporter and one planted module per
+ * site word naming that word only; D3's planted src module
  * declaring an ExecutorRequest, plus its pinned spellings and near misses; G2's planted qa script naming the namespace) and by
- * its read proof over every listed file's own text. G3 holds the page it read to git's reading of docs/03 and is proven live
- * by DOCS_PLANTS: the same reading of twenty-five in-memory edits of the live page (each plant's rules and what its two
+ * its read proof over every listed file's own text (G1's once per site word). G3 holds the page it read to git's reading of
+ * docs/03, holds the owner cells' shown view to the binding's own rendered text of every top-level table of the Ownership
+ * section (tableViews, on the page and on every plant, with a control renderer that shows each cell source held unequal on
+ * the page), and is proven live
+ * by DOCS_PLANTS: the same reading of thirty-five in-memory edits of the live page (each plant's rules, the GraphPolicyCLI rows
+ * it counts and what its two
  * views of the opening read, so a blinded view reds even where the other view still refuses the plant), refusal #1's five falsifiers D-MOVE,
  * D-LEAD, D-COMMENT, D-FENCE and D-ROW-DUP and its two controls, refusal #2's seven gate-authored docs falsifiers (the header
- * rename D-HEADER-SWAP among them) and the further rendered shapes (a struck "no" in markdown or HTML, a visible HTML block
- * leading the section, a GraphPolicyCLI row in a quoted, an HTML or a listed table), each refused with exactly its docs rules,
- * and two quiet plants (HTML comments). Q, the residuals' pinned quiet rows.
+ * rename D-HEADER-SWAP among them), the further rendered shapes (a struck "no" in markdown or HTML, a visible HTML block
+ * leading the section, a GraphPolicyCLI row in a quoted, an HTML or a listed table), refusal #3's four gate-authored rows
+ * (D-GP-BOLD-ROW, D-GP-CODE-ROW, D-GP-LINK-ROW, D-GP-ALIAS-ROW: a second row of the same table whose owner cell shows
+ * GraphPolicyCLI through markup or beside an alias), an HTML-marked, an escaped and a reference-linked owner row
+ * (D-GP-HTML-ROW, D-GP-ESCAPE-ROW, read by the shown view alone, and D-GP-REFLINK-ROW, shown through the page's link
+ * definitions, which a shownIn that drops them fails on tableViews' hold) and two edits of the one row's owner cell (D-OWNER-BOLD, D-OWNER-ALIAS), each
+ * refused with exactly its docs rules, and three quiet plants (HTML comments, one inside another row's owner cell). Q, the
+ * residuals' pinned quiet rows.
  * RESIDUALS (named families, each member a pinned quiet row; a reader or judge that starts reading a member reds its row):
  * R-UNNAMED (Q1, a module that builds a GraphDataIR-shaped document without naming a site word is no site), R-COMPOSED (Q2,
  * a reader's word built at run time or spelled through an escape; the Q1 and Q2 rows run each member through all three
@@ -119,9 +141,52 @@
  * incidence roles; kind labels are wb-gxd7.4's), R-SNAPSHOT-REVISIONS (Q5, the snapshot-level observation block: the trace
  * carries each element's revision, and an observation.revisions list that is empty or guessed is not judged), R-DEFERRED (Q6,
  * refusal #2's F4: a write or an edit a drive defers past its own settlement, on a timer, which every leg reads too early to
- * see), R-OUTSIDE (Q7, what a drive keeps outside the projection's object graph and its class: a global mark, a module record
- * of the projection, and an outcome that changes from its third call on, refusal #1's F4, which two drives never reach).
- * NOT CLAIMED: the grants half of the statement ("within the caller's grants": the filing places the GP call's grant and
+ * see), R-OUTSIDE (Q7, what a drive does outside what the five legs read: a global mark, a module record of the projection,
+ * an outcome that changes from its third call on, refusal #1's F4, which two drives never reach, and an effect-free inherited
+ * call reached past the view, Object.prototype.toString.call(view), refusal #3's F4, which the view never hands out),
+ * R-REQUEST (Q8, the request object itself, which the request leg does not read since it walks the objects the judge handed: a
+ * field rebound to an equal fresh copy with no edit, the gate's CTRL-REBIND-ONLY, a key added to the request, the request
+ * frozen), R-OWNER-CELL (Q9, G3 counts rows by each body row's second cell as it shows, through the vocabulary's GraphPolicy
+ * word: a row naming GraphPolicyCLI only in another cell, refusal #3's F5 D-GP-CONCERN-ROW in its Concern cell, the same in its
+ * Workbench cell, and in the first cell of a table whose header moves the owner column there; a header row naming it in its
+ * second cell; and a second cell that shows gp by a spelling the word does not read: the binary's name gp, a numeric character
+ * reference the binding's rendering rule leaves undecoded, an invisible or a confusable character inside the word; each
+ * member lands in the section's tables, which the quiet row holds to differ from the live page's as the binding renders them;
+ * the residual is the reading's: G3's witness also pins the live page's owner cells as they show, so a Q9 form written into
+ * docs/03 itself reds G3's witness compare although docs03Findings counts no second GraphPolicyCLI row for it).
+ * THE PINNED SET (closed form, refusal #3's CUT #4 FORM in the enumerate-the-resolvable shape: this list is what the census
+ * claims, each reading a pinned case; any other form is outside the claim, and the forms known to be outside are the residual
+ * families Q1-Q9, each member a pinned quiet row, and the NOT CLAIMED list):
+ *  - G1 reads two site words, GraphPolicy and GraphDataIR (SITE_WORDS: the landed vocabulary's V1 and V2 through namedWords,
+ *    any case, any run of space, tab, dot, underscore or hyphen between their parts), with one reader, sitePaths over
+ *    siteFindings, proven on each word: its read proof once per word over every walked src module at start, middle and end,
+ *    one planted module per word naming that word only (PLANTED_WORD_SITES) in the same call, and SITE_WORD_HITS and
+ *    SITE_WORD_QUIET read through sitePaths as well as through siteWords; the planted exporter, the first word's proof, the
+ *    anchor proof, PROOF_CONTROLS and SITE_CASES stay.
+ *  - D3 reads EXECUTOR_REQUEST over every git-listed src module (executorRequestNamers), proven by its read proof
+ *    (ExecutorRequest), its planted ExecutorRequest module, EXECUTOR_REQUEST_HITS read through that reader and the near
+ *    spellings EXECUTOR_REQUEST_QUIET; G2 reads the namespace literal graphpolicy.data.v1 over git's src listing and the qa walk
+ *    (namespaceNamers), proven by its read proof and its planted qa script.
+ *  - A1's five legs, each read once both drives have settled: the write leg compares nothing, it names the projection methods
+ *    outside READ_METHODS the view handed out and the drive called; the class leg, the walk of the class (prototype and
+ *    constructor) before against after the drives; the state leg, the walk of each projection a drive read against a fresh
+ *    twin's; the request leg, the walk of the scope and budget objects the judge handed each drive and kept, against fresh
+ *    copies (never the request's fields as read after the drives); the determinism leg, the walk of the two outcomes against
+ *    each other.
+ *  - G3's ownership-row reading: the body rows of the Ownership boundaries section's top-level tables as the landed binding
+ *    bounds them (sectionTables), each body row's owner cell, its second cell whatever its table's header names (a header row
+ *    is never counted), read as it shows in the document (shownIn: the
+ *    binding's rendering rule over the cell's source lexed with the page's link definitions, held to the binding's own rendered
+ *    tables by tableViews), a row counting when that shown text names GraphPolicy (namesGraphPolicy); then, in order, exactly
+ *    one such row (ownership-rows), its owner cell's source exactly GraphPolicyCLI (ownership-owner), its table headed
+ *    "Concern | Authoritative owner | Workbench may do" (ownership-header), its third cell's first clause (its source up to
+ *    its first "; ") exactly "nothing today (no gp seam is registered)" (ownership-cell), and no block of the section outside its top-level
+ *    tables naming GraphPolicyCLI in its source, a block of HTML comments only passed over (ownership-other). G3's
+ *    boundary-opening reading: the GraphPolicyCLI boundary section bound once under the page title (boundary-bound), whose
+ *    first block that renders (a block of HTML comments only passed over) is a paragraph (boundary-first) whose first sentence
+ *    is the no-integration sentence both as rendered and in its source (boundary-opening).
+ * NOT CLAIMED: what docs/03 says outside its Ownership boundaries and GraphPolicyCLI boundary sections (G3 is section-bound:
+ * a GraphPolicyCLI row in another section's table, such as D-ROW-DUP's earlier table, is unread); the grants half of the statement ("within the caller's grants": the filing places the GP call's grant and
  * registry bounds on the standing host rules, docs/workbench/12-security.md:19 and 06-capability-registry.md:81, and names the
  * export shape as the new duty); that gp graph check accepts the reference document (Pi holds no GraphDataIR schema
  * document); the typed-executor-request half of the admissible set (D3: src declares no executor request today, so a listed
@@ -140,7 +205,7 @@
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS, every residual family's member
  * count, the mutant and case ids per pin, the rule list, the registry, the docs plants with their rules, the docs rules,
  * READ_METHODS, the walk's probes with their facets, its facets and walked kinds, the equivalence controls, the read proof's
- * places and controls as literals; the judged set (every row's id, label
+ * places and controls, the site words and their planted modules as literals; the judged set (every row's id, label
  * and pins, every pin's quote and witness, the residual members, every registered test title) is held to the out-of-file
  * roster test/fixtures/gp-snapshot-export-roster.json.
  * OUTSIDE ANCHORS (their own registered case): the bead's own row in the tracker export (.beads/issues.jsonl) - each
@@ -201,10 +266,12 @@ import {
   MUTANTS,
   namespaceNamers,
   OVER_BUDGET_CODE,
+  ownerCells,
   PADDED_REVISION,
   PLACES,
   PLANTED_EXECUTOR_REQUEST,
   PLANTED_NAMESPACE,
+  PLANTED_WORD_SITES,
   PROOF_CONTROLS,
   PURE_RECIPES,
   presentedBytes,
@@ -235,6 +302,7 @@ import {
   sitePaths,
   siteWords,
   structureOf,
+  tableViews,
   tiles,
   truthOf,
   UNHELD_PROVIDER,
@@ -542,10 +610,23 @@ const IMPL: Readonly<Record<string, (context: TestContext) => Json | Promise<Jso
     }
     for (const word of SITE_WORD_HITS) expect(siteWords(word).length, `${word} reads as a site word`).toBeGreaterThan(0);
     for (const word of SITE_WORD_QUIET) expect(siteWords(word), `${word} is no site word`).toEqual([]);
+    // Refusal #3's U1: G1's own reader (sitePaths over siteFindings) is proven on every site word G1 claims, not on the first only.
+    const wordProofs: Record<string, Json> = {};
+    for (const word of SITE_WORDS) wordProofs[word] = proofOver(listed, texts, word, sitePaths);
+    expect(wordProofs, "G1's reader is proven on each site word: its read proof once per SITE_WORDS member, through sitePaths, over every walked src module").toEqual(Object.fromEntries(SITE_WORDS.map(word => [word, json(FULL_READ)])));
+    expect(PLANTED_WORD_SITES.map(plant => [plant.word, siteWords(plant.text)]), "one planted module per site word, each naming that word only").toEqual(SITE_WORDS.map(word => [word, [word]]));
+    const wordPlants = siteFindings(EXPORT_SITES, new Map([...texts, ...PLANTED_WORD_SITES.map(plant => [plant.path, plant.text] as const)]));
+    const plantedOrder = [...PLANTED_WORD_SITES].sort((left, right) => (left.path < right.path ? -1 : left.path > right.path ? 1 : 0));
+    expect(wordPlants, "the same call, one planted module per site word after the tracked modules: exactly their findings, each naming its word").toEqual(plantedOrder.map(plant => `S-UNREGISTERED ${plant.path} names ${plant.word} with no EXPORT_SITES registration`));
+    const hitPath = "src/workbench/zz-hit.ts";
+    const hitFindings = SITE_WORD_HITS.map(word => siteFindings([], new Map([[hitPath, word]])).join(" | "));
+    expect(SITE_WORD_HITS.filter(word => !isDeepStrictEqual(sitePaths(new Map([[hitPath, word]])), [hitPath])), "every listed spelling is read by G1's own reader (sitePaths over siteFindings), not only by siteWords").toEqual([]);
+    const quietPaths = SITE_WORD_QUIET.filter(word => sitePaths(new Map([["src/workbench/zz-quiet.ts", word]])).length > 0);
+    expect(quietPaths, "and no near spelling is").toEqual([]);
     const drives: string[] = [];
     for (const site of EXPORT_SITES) for (const row of CASES) drives.push(...(await driveFindings(site.drive, row)).map(finding => `${site.file} ${row.id} ${finding}`));
     expect(drives, "every registered exporter conforms on every case").toEqual([]);
-    return { touched, proof, anchor, controls, planted: plantedFindings, sites, hits: SITE_WORD_HITS.map(word => siteWords(word).join(",")), quiet: SITE_WORD_QUIET.length, drives };
+    return { touched, proof, anchor, controls, planted: plantedFindings, sites, hits: SITE_WORD_HITS.map(word => siteWords(word).join(",")), quiet: SITE_WORD_QUIET.length, drives, wordProofs, wordPlants, hitFindings, quietPaths };
   },
   G2: () => {
     const producer = vendored() as { readonly schema_ref?: { readonly namespace?: unknown } };
@@ -573,17 +654,29 @@ const IMPL: Readonly<Record<string, (context: TestContext) => Json | Promise<Jso
     expect(docs03Findings(reading), "docs/03: one GraphPolicyCLI ownership row registering no gp seam, and a GraphPolicyCLI boundary section opening with Pi's no-integration sentence").toEqual([]);
     const plants: Record<string, Json> = {};
     const views: Record<string, Json> = {};
+    const counts: Record<string, Json> = {};
     for (const plant of DOCS_PLANTS) {
       const planted = docs03Reading(plant.edit(page));
       plants[plant.id] = docs03Findings(planted).map(ruleOf);
       views[plant.id] = [planted.boundary.opening === BOUNDARY_SENTENCE, planted.boundary.source === BOUNDARY_SENTENCE];
+      counts[plant.id] = planted.ownership.rows;
     }
     expect(plants, "the same reader on each planted page: exactly the plant's docs rules").toEqual(Object.fromEntries(DOCS_PLANTS.map(plant => [plant.id, [...plant.expect]])));
-    return { reading: json(reading), plants, views, page: unread };
+    // Refusal #3's U3: the owner cell is read as it shows, and that view is the binding's own rendering of the section's tables.
+    const owners = ownerCells(page).cells.map(cell => cell.shown);
+    const unlike = [["the live page", page] as const, ...DOCS_PLANTS.map(plant => [plant.id, plant.edit(page)] as const)].flatMap(([id, text]) => {
+      const tables = tableViews(text);
+      return isDeepStrictEqual(tables.bound, tables.shown) ? [] : [id];
+    });
+    expect(unlike, "every top-level table of the Ownership section shows, cell by cell, what the binding renders for it, on the live page and on every plant").toEqual([]);
+    const sourceTables = tableViews(page, () => cell => cell);
+    const control = isDeepStrictEqual(sourceTables.bound, sourceTables.shown);
+    expect(control, "the control renderer that shows each cell's source differs from the binding on the live page, so the comparison is live").toBe(false);
+    return { reading: json(reading), plants, views, page: unread, counts, owners, unlike, control };
   },
 };
 
-/** A quiet row: every member of the residual family reads as no finding (a drive member is judged by driveFindings on K-FITS). */
+/** A quiet row: every member of the residual family reads as no finding (a drive member is judged by driveFindings on K-FITS, a docs member by G3's reading of the edited live page). */
 const quietRow = async (id: string): Promise<Json> => {
   const members = RESIDUALS[id] ?? [];
   expect(members.length, `${id} has members`).toBeGreaterThan(0);
@@ -593,6 +686,11 @@ const quietRow = async (id: string): Promise<Json> => {
     if (member.kind === "source") {
       const files = new Map([[member.path, member.text]]);
       findings.push(...siteWords(member.text), ...siteFindings([], files), ...namespaceNamers(files), ...executorRequestNamers(files));
+    } else if (member.kind === "docs") {
+      const page = textOf(DOCS_03);
+      const edited = member.edit(page);
+      expect(tableViews(edited).bound, `${member.id} lands in the Ownership section's tables as the binding renders them`).not.toEqual(tableViews(page).bound);
+      findings.push(...docs03Findings(docs03Reading(edited)));
     } else if (member.kind === "drive") {
       try {
         findings.push(...(await driveFindings(member.drive(), caseRow("K-FITS"))));
@@ -621,12 +719,12 @@ describe(SUITE, () => {
   }
 
   it("rule 16: the rows, the residual families, the mutants and cases per pin, the rules and the registry are frozen at their measured shape", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:3", "C:3", "D:3", "E:4", "F:1", "G:3", "Q:7"]);
-    expect(Object.entries(RESIDUALS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:2", "Q2:3", "Q3:2", "Q4:2", "Q5:2", "Q6:2", "Q7:3"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:3", "C:3", "D:3", "E:4", "F:1", "G:3", "Q:9"]);
+    expect(Object.entries(RESIDUALS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:2", "Q2:3", "Q3:2", "Q4:2", "Q5:2", "Q6:2", "Q7:4", "Q8:3", "Q9:8"]);
     expect(Object.keys(QUOTES), "one quote per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
     const perPin = ROWS.flatMap(row => row.pins).map(pin => `${pin}:${MUTANTS.filter(mutant => mutant.pin === pin).map(mutant => mutant.id).join(",")}`);
     expect(perPin).toEqual([
-      "A1:M-MUTATES,M-COUNTER-IDS,M-DISCONNECT-UNHELD,M-RECONNECT-UNHELD,M-IDENTITY-REFUSAL,M-DISCONNECT-HELD,M-WRITE-NOOP,M-BYPASS-WRITE,M-CLASS-PATCH,M-CLASS-STATIC,M-REFRESH-WRITE,M-RELATE-WRITE,M-INGEST-WRITE,M-OTHER-CALL,M-NONENUM-MEMO,M-FREEZE,M-PREVENT-EXTENSIONS,M-SYMBOL-FIELD,M-FIXED-REVISION,M-REVISION-ACCESSOR,M-PROTO-SWAP,M-FROZEN-NODE,M-SCOPE-REORDER,M-SHADOW-CONNECTIONS,M-KEY-ORDER,M-CLASS-PROTO,M-BUDGET-EDIT,M-SCOPE-EDIT",
+      "A1:M-MUTATES,M-COUNTER-IDS,M-DISCONNECT-UNHELD,M-RECONNECT-UNHELD,M-IDENTITY-REFUSAL,M-DISCONNECT-HELD,M-WRITE-NOOP,M-BYPASS-WRITE,M-CLASS-PATCH,M-CLASS-STATIC,M-REFRESH-WRITE,M-RELATE-WRITE,M-INGEST-WRITE,M-OTHER-CALL,M-NONENUM-MEMO,M-FREEZE,M-PREVENT-EXTENSIONS,M-SYMBOL-FIELD,M-FIXED-REVISION,M-REVISION-ACCESSOR,M-PROTO-SWAP,M-FROZEN-NODE,M-SCOPE-REORDER,M-SHADOW-CONNECTIONS,M-KEY-ORDER,M-CLASS-PROTO,M-BUDGET-EDIT,M-SCOPE-EDIT,M-REBIND-BUDGET,M-REBIND-BUDGET-REFLECT,M-REBIND-SCOPE,M-REBIND-SCOPE-ACCESSOR",
       "A2:M-NAMESPACE,M-DUPLICATE-ID,M-DANGLING",
       "A3:",
       "A4:M-UNTRACED,M-GHOST,M-REF-SWAP,M-EDGE-REVERSED,M-EDGE-KIND",
@@ -655,8 +753,10 @@ describe(SUITE, () => {
       "Q5:",
       "Q6:",
       "Q7:",
+      "Q8:",
+      "Q9:",
     ]);
-    expect(MUTANTS.length, "every mutant belongs to a pin").toBe(73);
+    expect(MUTANTS.length, "every mutant belongs to a pin").toBe(77);
     expect(CASES.map(row => `${row.id}:${row.scope}:${row.over.join("+") || "fits"}`)).toEqual([
       "K-FITS:A:fits",
       "K-OTHER-PRINCIPAL:B:fits",
@@ -698,8 +798,18 @@ describe(SUITE, () => {
       "D-HTML-ROW:ownership-other",
       "D-LISTED-ROW:ownership-other",
       "D-OWNER-COMMENT:",
+      "D-GP-BOLD-ROW:ownership-rows",
+      "D-GP-CODE-ROW:ownership-rows",
+      "D-GP-LINK-ROW:ownership-rows",
+      "D-GP-ALIAS-ROW:ownership-rows",
+      "D-GP-HTML-ROW:ownership-rows",
+      "D-GP-ESCAPE-ROW:ownership-rows",
+      "D-GP-REFLINK-ROW:ownership-rows",
+      "D-OWNER-BOLD:ownership-owner",
+      "D-OWNER-ALIAS:ownership-owner",
+      "D-OWNER-CELL-COMMENT:",
     ]);
-    expect([...DOCS_RULES]).toEqual(["ownership-bound", "ownership-rows", "ownership-header", "ownership-cell", "ownership-other", "boundary-bound", "boundary-first", "boundary-opening"]);
+    expect([...DOCS_RULES]).toEqual(["ownership-bound", "ownership-rows", "ownership-owner", "ownership-header", "ownership-cell", "ownership-other", "boundary-bound", "boundary-first", "boundary-opening"]);
     expect(DOCS_RULES.filter(rule => !DOCS_PLANTS.some(plant => plant.expect.includes(rule))), "every docs rule is some plant's").toEqual([]);
     expect([...READ_METHODS]).toEqual(["aggregate", "aggregateStats", "events", "identityRefusals", "indexOf", "query", "relationRevision", "relations", "relationsPage", "stats", "truncation", "window"]);
     expect(STRUCTURE_PROBES.map(probe => `${probe.id}:${probe.expect}`)).toEqual([
@@ -730,6 +840,8 @@ describe(SUITE, () => {
     expect(PURE_RECIPES.map(row => row.id)).toEqual(["E-EVERY-READ", "E-READ-RESULT-EDIT"]);
     expect([...PLACES]).toEqual(["start", "middle", "end"]);
     expect(PROOF_CONTROLS.map(control => control.id)).toEqual(["P-WHOLE", "P-MAP-BLANK", "P-MAP-SHORT", "P-MAP-DROP", "P-MAP-EXTRA", "P-READER-LAST", "P-READER-FIRST", "P-READER-HEAD", "P-READER-TAIL", "P-READER-BLANK"]);
+    expect([...SITE_WORDS]).toEqual(["GraphPolicy", "GraphDataIR"]);
+    expect(PLANTED_WORD_SITES.map(plant => `${plant.word}:${plant.path}`)).toEqual(["GraphPolicy:src/workbench/zz-gp-site-policy.ts", "GraphDataIR:src/workbench/zz-gp-site-data-ir.ts"]);
   });
 
   it("the outside anchors: the bead's own row binds the rows and the pin quotes; the vendored producer fixture, the registry and the live control import bind the judge's spellings", () => {

@@ -75,7 +75,9 @@
         "Q4",
         "Q5",
         "Q6",
-        "Q7"
+        "Q7",
+        "Q8",
+        "Q9"
       ]
     }
   ],
@@ -108,7 +110,9 @@
     "Q4": "R-LABELS",
     "Q5": "R-SNAPSHOT-REVISIONS",
     "Q6": "R-DEFERRED",
-    "Q7": "R-OUTSIDE"
+    "Q7": "R-OUTSIDE",
+    "Q8": "R-REQUEST",
+    "Q9": "R-OWNER-CELL"
   },
   "witnesses": {
     "A1": {
@@ -195,6 +199,18 @@
           "impure"
         ],
         "M-SCOPE-EDIT": [
+          "impure"
+        ],
+        "M-REBIND-BUDGET": [
+          "impure"
+        ],
+        "M-REBIND-BUDGET-REFLECT": [
+          "impure"
+        ],
+        "M-REBIND-SCOPE": [
+          "impure"
+        ],
+        "M-REBIND-SCOPE-ACCESSOR": [
           "impure"
         ]
       },
@@ -309,6 +325,22 @@
           "impure drive 2 edited the scope or budget of its request (value)"
         ],
         "M-SCOPE-EDIT": [
+          "impure drive 1 edited the scope or budget of its request (value)",
+          "impure drive 2 edited the scope or budget of its request (value)"
+        ],
+        "M-REBIND-BUDGET": [
+          "impure drive 1 edited the scope or budget of its request (value)",
+          "impure drive 2 edited the scope or budget of its request (value)"
+        ],
+        "M-REBIND-BUDGET-REFLECT": [
+          "impure drive 1 edited the scope or budget of its request (value)",
+          "impure drive 2 edited the scope or budget of its request (value)"
+        ],
+        "M-REBIND-SCOPE": [
+          "impure drive 1 edited the scope or budget of its request (value)",
+          "impure drive 2 edited the scope or budget of its request (value)"
+        ],
+        "M-REBIND-SCOPE-ACCESSOR": [
           "impure drive 1 edited the scope or budget of its request (value)",
           "impure drive 2 edited the scope or budget of its request (value)"
         ]
@@ -1031,7 +1063,41 @@
         "GraphDataIR"
       ],
       "quiet": 8,
-      "drives": []
+      "drives": [],
+      "wordProofs": {
+        "GraphPolicy": {
+          "unread": [],
+          "extra": [],
+          "missed": {
+            "start": [],
+            "middle": [],
+            "end": []
+          }
+        },
+        "GraphDataIR": {
+          "unread": [],
+          "extra": [],
+          "missed": {
+            "start": [],
+            "middle": [],
+            "end": []
+          }
+        }
+      },
+      "wordPlants": [
+        "S-UNREGISTERED src/workbench/zz-gp-site-data-ir.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-gp-site-policy.ts names GraphPolicy with no EXPORT_SITES registration"
+      ],
+      "hitFindings": [
+        "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration"
+      ],
+      "quietPaths": []
     },
     "G2": {
       "namespace": "graphpolicy.data.v1",
@@ -1054,6 +1120,7 @@
         "ownership": {
           "refused": null,
           "rows": 1,
+          "owner": "GraphPolicyCLI",
           "header": [
             "Concern",
             "Authoritative owner",
@@ -1140,7 +1207,35 @@
         "D-LISTED-ROW": [
           "ownership-other"
         ],
-        "D-OWNER-COMMENT": []
+        "D-OWNER-COMMENT": [],
+        "D-GP-BOLD-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-CODE-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-LINK-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-ALIAS-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-HTML-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-ESCAPE-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-REFLINK-ROW": [
+          "ownership-rows"
+        ],
+        "D-OWNER-BOLD": [
+          "ownership-owner"
+        ],
+        "D-OWNER-ALIAS": [
+          "ownership-owner"
+        ],
+        "D-OWNER-CELL-COMMENT": []
       },
       "views": {
         "D-MOVE": [
@@ -1242,9 +1337,103 @@
         "D-OWNER-COMMENT": [
           true,
           true
+        ],
+        "D-GP-BOLD-ROW": [
+          true,
+          true
+        ],
+        "D-GP-CODE-ROW": [
+          true,
+          true
+        ],
+        "D-GP-LINK-ROW": [
+          true,
+          true
+        ],
+        "D-GP-ALIAS-ROW": [
+          true,
+          true
+        ],
+        "D-GP-HTML-ROW": [
+          true,
+          true
+        ],
+        "D-GP-ESCAPE-ROW": [
+          true,
+          true
+        ],
+        "D-GP-REFLINK-ROW": [
+          true,
+          true
+        ],
+        "D-OWNER-BOLD": [
+          true,
+          true
+        ],
+        "D-OWNER-ALIAS": [
+          true,
+          true
+        ],
+        "D-OWNER-CELL-COMMENT": [
+          true,
+          true
         ]
       },
-      "page": []
+      "page": [],
+      "counts": {
+        "D-MOVE": 1,
+        "D-LEAD": 1,
+        "D-COMMENT": 1,
+        "D-FENCE": 1,
+        "D-ROW-DUP": 1,
+        "D-CELL-ONLY": 1,
+        "D-SENTENCE-EDIT": 1,
+        "D-ROW-SAME-TABLE": 2,
+        "D-OWNERSHIP-DUP": 0,
+        "D-HEADING-DUP": 1,
+        "D-REHOME": 1,
+        "D-COMMENT-ABOVE": 1,
+        "D-HEADER-SWAP": 1,
+        "D-BLOCKQUOTE": 1,
+        "D-LIST-LEAD": 1,
+        "D-SECOND-TABLE": 2,
+        "D-STRIKE": 1,
+        "D-STRIKE-HTML": 1,
+        "D-SETEXT-DUP": 1,
+        "D-CELL-STRIKE": 1,
+        "D-HTML-LEAD": 1,
+        "D-QUOTED-ROW": 1,
+        "D-HTML-ROW": 1,
+        "D-LISTED-ROW": 1,
+        "D-OWNER-COMMENT": 1,
+        "D-GP-BOLD-ROW": 2,
+        "D-GP-CODE-ROW": 2,
+        "D-GP-LINK-ROW": 2,
+        "D-GP-ALIAS-ROW": 2,
+        "D-GP-HTML-ROW": 2,
+        "D-GP-ESCAPE-ROW": 2,
+        "D-GP-REFLINK-ROW": 2,
+        "D-OWNER-BOLD": 1,
+        "D-OWNER-ALIAS": 1,
+        "D-OWNER-CELL-COMMENT": 1
+      },
+      "owners": [
+        "Pi",
+        "Claude Agent SDK",
+        "Forked interpreter",
+        "Function's package/source",
+        "Furnace",
+        "Beads",
+        "Forge",
+        "HyperUnix",
+        "ReactiveFiberCLI",
+        "GraphPolicyCLI",
+        "RCP + implementing runtime",
+        "Workbench",
+        "Git/Forge artifact"
+      ],
+      "unlike": [],
+      "control": false
     },
     "Q1": {
       "members": [
@@ -1293,7 +1482,29 @@
       "members": [
         "q7-global-write",
         "q7-module-record",
-        "q7-third-call"
+        "q7-third-call",
+        "q7-past-view-call"
+      ],
+      "findings": []
+    },
+    "Q8": {
+      "members": [
+        "q8-rebind-equal",
+        "q8-request-key",
+        "q8-request-freeze"
+      ],
+      "findings": []
+    },
+    "Q9": {
+      "members": [
+        "q9-concern-cell",
+        "q9-workbench-cell",
+        "q9-owner-column-moved",
+        "q9-header-row",
+        "q9-owner-gp",
+        "q9-owner-reference",
+        "q9-owner-invisible",
+        "q9-owner-confusable"
       ],
       "findings": []
     }
@@ -1327,7 +1538,23 @@
     "Q7": [
       "q7-global-write",
       "q7-module-record",
-      "q7-third-call"
+      "q7-third-call",
+      "q7-past-view-call"
+    ],
+    "Q8": [
+      "q8-rebind-equal",
+      "q8-request-key",
+      "q8-request-freeze"
+    ],
+    "Q9": [
+      "q9-concern-cell",
+      "q9-workbench-cell",
+      "q9-owner-column-moved",
+      "q9-header-row",
+      "q9-owner-gp",
+      "q9-owner-reference",
+      "q9-owner-invisible",
+      "q9-owner-confusable"
     ]
   },
   "tests": [
@@ -1360,6 +1587,8 @@
     "Q5: R-SNAPSHOT-REVISIONS",
     "Q6: R-DEFERRED",
     "Q7: R-OUTSIDE",
+    "Q8: R-REQUEST",
+    "Q9: R-OWNER-CELL",
     "rule 16: the rows, the residual families, the mutants and cases per pin, the rules and the registry are frozen at their measured shape",
     "the outside anchors: the bead's own row binds the rows and the pin quotes; the vendored producer fixture, the registry and the live control import bind the judge's spellings",
     "roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/gp-snapshot-export-roster.json, in order and both ways; every pin reached its witness compare"

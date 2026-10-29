@@ -4,16 +4,17 @@
  * the bead, the measured facts and every reading). Everything here is pure over the inputs it is handed: the fixtures are
  * real ObservationProjection instances built through the class's public methods, the reference exporter only reads them,
  * and so do its mutants except the A1 purity members, which write to the projection, edit its objects or edit the class on
- * purpose (the judge refuses each one and puts the class back), and the drive residuals of Q6 and Q7; nothing here starts
+ * purpose (the judge refuses each one and puts the class back), and the drive residuals of Q6, Q7 and Q8; nothing here starts
  * gp, fakes a GraphPolicyCLI binary, adds a dependency or implements a Pi exporter. The read proof (readProof) is pure over
  * the git blob ids the census hands it (git hash-object, read in the census file).
  * The census's own reads compose the landed wb-e66.5 vocabulary reader and listers (test/helpers/gp-mw-coordination-census.ts),
  * the landed wb-gxd7.3 export reader (test/helpers/gp-snapshot-join-census.ts) and the landed docs binding
- * (docsSection/sectionTables of test/helpers/census.ts).
+ * (docsSection/sectionTables of test/helpers/census.ts); a table cell's shown text follows the landed binding's own rendering
+ * rule (inlineText, copied verbatim as the landed control-loop audit's test/helpers/gp-control-loop-audit.ts copies it).
  */
 import { createHash } from "node:crypto";
 import { isDeepStrictEqual, types } from "node:util";
-import { marked, type Tokens } from "marked";
+import { Lexer, type Links, marked, type Token, type Tokens } from "marked";
 import { NATIVE_CONTROL_ACTIONS } from "../../src/workbench/control.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type Presentation, type RelationKind } from "../../src/workbench/observation.js";
 import { docsSection, sectionTables } from "./census.js";
@@ -743,7 +744,10 @@ export const judgeCaseOf = (row: CaseRow): JudgeCase => {
  * reads as it did before the drives; each projection it read reads as a fresh twin (the walk from the instance: every own
  * property, enumerable or not, string- or symbol-keyed, with its attributes, the prototype, the integrity level, and every
  * object reachable from it, the connection map, the indexes and the identity-refusal log among them, maps and sets in
- * order); the scope and budget of each request read as fresh copies; and its two outcomes read alike. Each impure finding
+ * order); the scope and the budget object it handed each drive read as fresh copies (refusal #3's U2: the judge keeps the
+ * two objects it hands each drive in its own record and walks those, never the request's fields as read after the drives,
+ * so a drive that edits a handed object and rebinds the request's field to a fresh copy is read; the request object itself,
+ * its field bindings, keys and integrity, is unread: R-REQUEST, Q8); and its two outcomes read alike. Each impure finding
  * names the facet of its first difference.
  */
 export async function driveFindings(drive: Drive, row: CaseRow): Promise<string[]> {
@@ -752,10 +756,12 @@ export async function driveFindings(drive: Drive, row: CaseRow): Promise<string[
   const shape = classShape();
   const before = classStructure();
   const writes: string[] = [];
-  const requests: { readonly scope: ObservationScope; readonly budget: ExportBudget }[] = [];
+  /** The scope and budget objects handed to each drive, held here and never re-read from the request (refusal #3's U2). */
+  const handed: { readonly scope: ObservationScope; readonly budget: ExportBudget }[] = [];
   const run = async (target: ObservationProjection): Promise<{ readonly threw: false; readonly value: unknown } | { readonly threw: true; readonly value: string }> => {
-    const request = { projection: watched(target, writes), scope: { ...scope }, budget: { ...row.budget } };
-    requests.push(request);
+    const objects = { scope: { ...scope }, budget: { ...row.budget } };
+    handed.push(objects);
+    const request = { projection: watched(target, writes), scope: objects.scope, budget: objects.budget };
     try {
       return { threw: false, value: await drive(request) };
     } catch (error) {
@@ -776,8 +782,8 @@ export async function driveFindings(drive: Drive, row: CaseRow): Promise<string[
     const drift = facetDrift(structureOf([projection]), structureOf([buildProjection()]));
     if (drift !== undefined) findings.push(`impure drive ${index + 1} left the projection it read unlike a fresh twin (${drift})`);
   });
-  requests.forEach((request, index) => {
-    const drift = facetDrift(structureOf([request.scope, request.budget]), structureOf([{ ...scope }, { ...row.budget }]));
+  handed.forEach((objects, index) => {
+    const drift = facetDrift(structureOf([objects.scope, objects.budget]), structureOf([{ ...scope }, { ...row.budget }]));
     if (drift !== undefined) findings.push(`impure drive ${index + 1} edited the scope or budget of its request (${drift})`);
   });
   const differs = facetDrift(structureOf([first]), structureOf([second]));
@@ -862,6 +868,12 @@ export interface Recipe {
   readonly editReads?: boolean;
   /** After the export, edits the request it was handed: its budget's node limit, or its scope's principal. */
   readonly editRequest?: "budget" | "scope";
+  /**
+   * After the export, makes M-BUDGET-EDIT's or M-SCOPE-EDIT's edit of the handed object, then rebinds the request's field to
+   * a fresh equal copy taken before the edit: by assignment, through Reflect.set, or as an accessor answering a fresh copy
+   * (refusal #3's U2 members, the gate's P-REBIND-BUDGET, P-REBIND-BUDGET-REFLECT, P-REBIND-SCOPE, P-REBIND-SCOPE-ACCESSOR).
+   */
+  readonly rebindRequest?: "budget" | "budget-reflect" | "scope" | "scope-accessor";
 }
 
 /** One call of each READ_METHODS method over a scope, its arguments valid (E-EVERY-READ; A1 holds the names to READ_METHODS). */
@@ -968,7 +980,25 @@ export function referenceExport(request: ExportRequest, recipe: Recipe = {}, nex
   afterExport(projection, scope, recipe);
   if (recipe.editRequest === "budget") Reflect.set(budget, "maxNodes", 0);
   if (recipe.editRequest === "scope") Reflect.set(scope, "principal", "operator-z");
+  if (recipe.rebindRequest !== undefined) rebindRequest(request, recipe.rebindRequest);
   return outcome;
+}
+
+/** The A1 rebind members: the handed object edited as M-BUDGET-EDIT or M-SCOPE-EDIT edits it, the request's field then rebound. */
+function rebindRequest(request: ExportRequest, form: NonNullable<Recipe["rebindRequest"]>): void {
+  if (form === "budget" || form === "budget-reflect") {
+    const handed = request.budget;
+    const copy = { ...handed };
+    Reflect.set(handed, "maxNodes", 0);
+    if (form === "budget") (request as { budget: ExportBudget }).budget = copy;
+    else Reflect.set(request, "budget", copy);
+    return;
+  }
+  const handed = request.scope;
+  const copy = { ...handed };
+  Reflect.set(handed, "principal", "operator-z");
+  if (form === "scope") (request as { scope: ObservationScope }).scope = copy;
+  else Object.defineProperty(request, "scope", { get: (): ObservationScope => ({ ...copy }), configurable: true, enumerable: true });
 }
 
 /** The A1 members that edit the projection's objects after the export (and the read-result equivalence control). */
@@ -1159,6 +1189,11 @@ export const MUTANTS: readonly MutantRow[] = [
   { id: "M-CLASS-PROTO", pin: "A1", case: "K-FITS", recipe: { classProto: true }, expect: ["impure"] },
   { id: "M-BUDGET-EDIT", pin: "A1", case: "K-FITS", recipe: { editRequest: "budget" }, expect: ["impure"] },
   { id: "M-SCOPE-EDIT", pin: "A1", case: "K-FITS", recipe: { editRequest: "scope" }, expect: ["impure"] },
+  // Refusal #3's U2 members (class (b), the request leg): the handed object edited, the request's field rebound to a fresh copy.
+  { id: "M-REBIND-BUDGET", pin: "A1", case: "K-FITS", recipe: { rebindRequest: "budget" }, expect: ["impure"] },
+  { id: "M-REBIND-BUDGET-REFLECT", pin: "A1", case: "K-FITS", recipe: { rebindRequest: "budget-reflect" }, expect: ["impure"] },
+  { id: "M-REBIND-SCOPE", pin: "A1", case: "K-FITS", recipe: { rebindRequest: "scope" }, expect: ["impure"] },
+  { id: "M-REBIND-SCOPE-ACCESSOR", pin: "A1", case: "K-FITS", recipe: { rebindRequest: "scope-accessor" }, expect: ["impure"] },
   { id: "M-NAMESPACE", pin: "A2", case: "K-FITS", recipe: { namespace: true }, expect: ["graphdatair"] },
   { id: "M-DUPLICATE-ID", pin: "A2", case: "K-FITS", recipe: { duplicateId: true }, expect: ["graphdatair"] },
   { id: "M-DANGLING", pin: "A2", case: "K-FITS", recipe: { dangling: true }, expect: ["graphdatair", "relation"] },
@@ -1265,6 +1300,15 @@ export const SITE_CASES: readonly SiteCase[] = [
   },
   { id: "S-UNEXPORTED", files: { "src/workbench/gp-export.ts": PLANTED_EXPORTER }, sites: [{ file: "src/workbench/gp-export.ts", exporter: "exportGraph" }], expect: ["S-UNEXPORTED"] },
 ];
+/**
+ * G1's planted positive per site word (refusal #3's U1): one src module per SITE_WORDS member naming that word only, read
+ * after the tracked modules in the same siteFindings call, so G1's reader is proven on every word it claims (the planted
+ * exporter above names graphpolicy.data.v1, which reads as GraphPolicy alone). The GraphDataIR text is the gate's plant.
+ */
+export const PLANTED_WORD_SITES: readonly { readonly word: string; readonly path: string; readonly text: string }[] = [
+  { word: "GraphPolicy", path: "src/workbench/zz-gp-site-policy.ts", text: "export type GraphPolicyRequest = Readonly<Record<string, unknown>>;\n" },
+  { word: "GraphDataIR", path: "src/workbench/zz-gp-site-data-ir.ts", text: "export type GraphDataIR = Readonly<Record<string, unknown>>;\n" },
+];
 /** The spellings the composed reader reads as a site word, and Pi words it must not. */
 export const SITE_WORD_HITS: readonly string[] = ["GraphDataIR", "graph_data_ir", "graph-data-ir", "graphpolicy.data.v1", "GraphPolicyCLI", "graph-policy-cli", "toGraphDataIR"];
 export const SITE_WORD_QUIET: readonly string[] = ["ObservationProjection", "graph", "policy", "GraphQL", "graphDataIndex", "dataflow graph", "MicroPolicy", "mw.training-export"];
@@ -1284,7 +1328,11 @@ export const PLANTED_NAMESPACE = { path: "qa/zz-gp-namespace.mjs", text: `export
 /** The spellings D3's reader reads (each one's match is in D3's witness), and near spellings outside its reading (pinned quiet). */
 export const EXECUTOR_REQUEST_HITS: readonly string[] = ["ExecutorRequest", "executor request", "executor_request", "executor-request", "EXECUTOR_REQUEST", "typedExecutorRequests"];
 export const EXECUTOR_REQUEST_QUIET: readonly string[] = ["executor.request", "ExecRequest", "executorsRequest", "request executor"];
-/** G1's reader as the read proof drives it: the files siteFindings names unregistered, with no registration (every site word is a hit). */
+/**
+ * G1's reader as the read proof drives it: the files siteFindings names unregistered, with no registration (every site word is
+ * a hit). G1 runs its read proof once per SITE_WORDS member through this reader, and SITE_WORD_HITS and SITE_WORD_QUIET read
+ * through it as well as through siteWords (refusal #3's U1: a word siteFindings stops reading reds G1).
+ */
 export const sitePaths = (texts: ReadonlyMap<string, string>): string[] => siteFindings([], texts).flatMap(finding => (finding.startsWith("S-UNREGISTERED ") ? [finding.slice("S-UNREGISTERED ".length).split(" names ", 1)[0] ?? ""] : []));
 
 // ---- the absence readers' read proof (G1, G2, D3; refusal #2's U1: class (a) of its CLASS-LEVEL GUARD) ----
@@ -1374,7 +1422,11 @@ export const controlProof = (control: ProofControl): ReadProof => {
 export const DOCS_03_TITLE = `03 ${String.fromCodePoint(0x2014)} High-level architecture, module ownership and dataflow`;
 export const OWNERSHIP_HEADING = "Ownership boundaries";
 export const BOUNDARY_HEADING = "GraphPolicyCLI boundary";
-/** The ownership table's owner cell (its second column, "Authoritative owner") on GraphPolicyCLI's row. */
+/**
+ * The ownership table's owner cell (its second column, "Authoritative owner") on GraphPolicyCLI's row: a row counts as a
+ * GraphPolicyCLI row when its owner cell, as it shows in the document, names GraphPolicy (namesGraphPolicy), and the one such
+ * row's owner cell source must be exactly this (ownership-owner, refusal #3's U3).
+ */
 export const GP_OWNER = "GraphPolicyCLI";
 /** The first clause ("; "-cut) of that row's third cell ("Workbench may do"). */
 export const OWNERSHIP_CELL = "nothing today (no gp seam is registered)";
@@ -1384,15 +1436,19 @@ export const OWNERSHIP_HEADER: readonly string[] = ["Concern", "Authoritative ow
 export const NEXT_HEADING = "Package dependency direction";
 export const BOUNDARY_SENTENCE = "Pi carries no GraphPolicyCLI (gp) integration today.";
 
-/** What G3 read: the ownership row (how many GraphPolicyCLI rows, the one row's first clause) and the boundary section's opening. */
+/** What G3 read: the ownership row (how many GraphPolicyCLI rows, the one row's owner cell and first clause) and the boundary section's opening. */
 export interface Docs03Reading {
-  /** other: the kinds of the section's blocks outside its tables that name GraphPolicyCLI (a row in a quoted or an HTML table among them). */
-  readonly ownership: { readonly refused: string | null; readonly rows: number; readonly header: readonly string[] | null; readonly cell: string | null; readonly other: readonly string[] };
+  /**
+   * rows: the body rows whose owner cell, as it shows in the document, names GraphPolicy; owner: the one such row's owner cell
+   * source; other: the kinds of the section's blocks outside its tables that name GraphPolicyCLI (a row in a quoted or an HTML
+   * table among them).
+   */
+  readonly ownership: { readonly refused: string | null; readonly rows: number; readonly owner: string | null; readonly header: readonly string[] | null; readonly cell: string | null; readonly other: readonly string[] };
   /** The opening's first sentence as rendered (inline marks removed) and in its markdown source (marks kept). */
   readonly boundary: { readonly refused: string | null; readonly first: string | null; readonly opening: string | null; readonly source: string | null };
 }
 /** The docs rules, in report order; a finding is its rule, one space, and what it found. */
-export const DOCS_RULES = ["ownership-bound", "ownership-rows", "ownership-header", "ownership-cell", "ownership-other", "boundary-bound", "boundary-first", "boundary-opening"] as const;
+export const DOCS_RULES = ["ownership-bound", "ownership-rows", "ownership-owner", "ownership-header", "ownership-cell", "ownership-other", "boundary-bound", "boundary-first", "boundary-opening"] as const;
 
 /** An HTML block whose source is HTML comments only: it renders nothing, so the reading passes over it (any other HTML block renders). */
 export const commentOnly = (raw: string): boolean => /^(?:\s*<!--[\s\S]*?-->)+\s*$/.test(raw);
@@ -1415,6 +1471,76 @@ export function sectionSources(page: string, heading: string): { readonly type: 
   return sources;
 }
 
+// ---- what a table cell shows (refusal #3's U3: G3 reads the owner cell as it shows, not only its source) ----
+
+const textOf = (token: Token): string => {
+  const value: unknown = (token as { text?: unknown }).text;
+  return typeof value === "string" ? value : "";
+};
+const childrenOf = (token: Token): readonly Token[] => {
+  const value: unknown = (token as { tokens?: unknown }).tokens;
+  return Array.isArray(value) ? (value as Token[]) : [];
+};
+const ENTITIES: Readonly<Record<string, string>> = { "&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"', "&#39;": "'", "&#x27;": "'", "&nbsp;": " " };
+const decode = (text: string): string => text.replace(/&(?:amp|lt|gt|quot|nbsp|#39|#x27);/g, entity => ENTITIES[entity] ?? entity);
+const clean = (text: string): string => text.replace(/\s+/g, " ").trim();
+/** What a reader sees of inline tokens: the landed census rendering rule (test/helpers/census.ts inlineText), verbatim. */
+function inlineText(tokens: readonly Token[]): string {
+  let out = "";
+  for (const token of tokens) {
+    if (token.type === "html") continue;
+    if (token.type === "br") out += "\n";
+    else if (token.type === "codespan" || token.type === "escape") out += decode(textOf(token));
+    else if (childrenOf(token).length > 0) out += inlineText(childrenOf(token));
+    else out += decode(textOf(token));
+  }
+  return out;
+}
+/**
+ * What a table cell shows in the document: its source (sectionTables' grid cell) lexed inline with the document's link
+ * reference definitions (as marked's lexer records them over the whole page), the way the binding's own lex of the page
+ * renders the bound section's cells, read by the binding's rendering rule (markup and HTML show no text of their own),
+ * whitespace collapsed: the landed control-loop audit's shownIn (test/helpers/gp-control-loop-audit.ts).
+ */
+export function shownIn(links: Links): (cell: string) => string {
+  return cell => {
+    const lexer = new Lexer();
+    lexer.tokens.links = links;
+    return clean(inlineText(lexer.inlineTokens(cell)));
+  };
+}
+/** A text names GraphPolicy: the landed vocabulary's V1 word through namedWords (any case, any run of space, tab, dot, underscore or hyphen between graph and policy). */
+export const namesGraphPolicy = (text: string): boolean => namedWords(text).includes("GraphPolicy");
+/** A body row of a top-level table of the Ownership boundaries section, its owner cell (the second cell) in both views. */
+export interface OwnerCell {
+  readonly header: readonly string[];
+  readonly row: readonly string[];
+  /** The owner cell's source: the binding's grid cell (marked's cell text, inline markup kept). */
+  readonly source: string;
+  /** What the owner cell shows in the document (shownIn). */
+  readonly shown: string;
+}
+/** Every body row's owner cell of the Ownership boundaries section's top-level tables as the landed binding bounds them (sectionTables), in both views. */
+export function ownerCells(page: string): { readonly ok: boolean; readonly why: string; readonly cells: readonly OwnerCell[] } {
+  const tables = sectionTables(page, OWNERSHIP_HEADING, 2, [DOCS_03_TITLE]);
+  const shown = shownIn(marked.lexer(page).links);
+  return { ok: tables.ok, why: tables.why, cells: tables.grids.flatMap(grid => grid.slice(1).map(row => ({ header: grid[0] ?? [], row, source: row[1] ?? "", shown: shown(row[1] ?? "") }))) };
+}
+/**
+ * The anchor that holds shownIn to the binding's own rendering: each top-level table of the Ownership boundaries section as
+ * the binding renders it (docsSection's table blocks: its inlineText over the cells its own lex of the page made), beside the
+ * same tables' cells as a renderer (shownIn unless a control hands another) renders them from sectionTables' sources, joined
+ * the binding's way. G3 holds the two equal on the live page and on every plant, so a shownIn that stops rendering as the
+ * binding renders reds G3, and holds a control renderer that shows each cell's source unequal on the live page (its GraphPolicyCLI
+ * row's third cell carries a code span), so the comparison itself is live.
+ */
+export function tableViews(page: string, renderer: (links: Links) => (cell: string) => string = shownIn): { readonly bound: readonly string[]; readonly shown: readonly string[] } {
+  const section = docsSection(page, OWNERSHIP_HEADING, 2, [DOCS_03_TITLE]);
+  const tables = sectionTables(page, OWNERSHIP_HEADING, 2, [DOCS_03_TITLE]);
+  const shown = renderer(marked.lexer(page).links);
+  return { bound: section.blocks.flatMap(block => (block.kind === "other" && block.type === "table" ? [block.text] : [])), shown: tables.grids.map(grid => clean(grid.flat().map(shown).join(" "))) };
+}
+
 /** A rendered paragraph's first sentence: its text up to the first ". ", or the whole text. */
 const firstSentence = (text: string): string => {
   const end = text.indexOf(". ");
@@ -1422,9 +1548,13 @@ const firstSentence = (text: string): string => {
 };
 /**
  * G3's reading of docs/03 through the landed docs binding (test/helpers/census.ts): ONE binding per heading, each heading once
- * in the rendered view under the page title. The ownership rows are sectionTables' cells of the Ownership boundaries
- * section only (every table row whose owner cell is GraphPolicyCLI), with the header of the one row's table (refusal #2's
- * header-rename falsifier: the cell is read under the header that names it), and every other block of that section whose
+ * in the rendered view under the page title. The ownership rows are the body rows of the Ownership boundaries section's
+ * top-level tables (sectionTables) whose owner cell, the second cell, names GraphPolicy as it shows in the document (shownIn,
+ * then namesGraphPolicy: bold, code, link, HTML or escaped markup, or other words beside it as in "GraphPolicyCLI (gp)", all
+ * count, refusal #3's U3); the one such row's owner cell source must be exactly GraphPolicyCLI (ownership-owner); its table's
+ * header is read (refusal #2's header-rename falsifier: the cell is read under the header that names it), its third cell's
+ * source is read up to its first "; "; rows are counted by the owner cell only (a row naming GraphPolicyCLI in another cell,
+ * a header row, or an owner cell that shows gp by a spelling namedWords does not read, is R-OWNER-CELL, Q9); and every other block of that section whose
  * source names GraphPolicyCLI (sectionSources: a row in a quoted, listed or HTML table renders as a row the top-level grids
  * never hold; a block of HTML comments only is passed over);
  * the opening is the first sentence of the boundary section's first rendered block (an HTML block of comments only renders
@@ -1433,10 +1563,10 @@ const firstSentence = (text: string): string => {
  * so a struck "no" (~~no~~ or <del>no</del>, refusal #2's strike falsifier), which renders the same characters, is read.
  */
 export function docs03Reading(page: string): Docs03Reading {
-  const tables = sectionTables(page, OWNERSHIP_HEADING, 2, [DOCS_03_TITLE]);
-  const held = tables.grids.flatMap(grid => grid.slice(1).filter(cells => cells[1] === GP_OWNER).map(cells => ({ header: grid[0] ?? [], cells })));
-  const rows = held.map(entry => entry.cells);
-  const row = rows.length === 1 ? rows[0] : undefined;
+  const tables = ownerCells(page);
+  const held = tables.cells.filter(cell => namesGraphPolicy(cell.shown));
+  const one = held.length === 1 ? held[0] : undefined;
+  const row = one?.row;
   const other = tables.ok
     ? sectionSources(page, OWNERSHIP_HEADING)
         .filter(block => block.type !== "table" && !(block.type === "html" && commentOnly(block.raw)) && block.raw.includes(GP_OWNER))
@@ -1445,7 +1575,7 @@ export function docs03Reading(page: string): Docs03Reading {
   const section = docsSection(page, BOUNDARY_HEADING, 2, [DOCS_03_TITLE]);
   const first = section.blocks.find(block => !(block.kind === "html" && commentOnly(block.raw)));
   return {
-    ownership: { refused: tables.ok ? null : tables.why, rows: rows.length, header: held.length === 1 ? [...(held[0]?.header ?? [])] : null, cell: row === undefined ? null : ((row[2] ?? "").split("; ")[0] ?? ""), other },
+    ownership: { refused: tables.ok ? null : tables.why, rows: held.length, owner: one === undefined ? null : one.source, header: one === undefined ? null : [...one.header], cell: row === undefined ? null : ((row[2] ?? "").split("; ")[0] ?? ""), other },
     boundary: { refused: section.ok ? null : section.why, first: first?.kind ?? null, opening: first?.kind === "paragraph" ? firstSentence(first.text) : null, source: first?.kind === "paragraph" ? firstSentence(first.markdown) : null },
   };
 }
@@ -1456,6 +1586,7 @@ export function docs03Findings(reading: Docs03Reading): string[] {
   const { ownership, boundary } = reading;
   if (ownership.refused !== null) findings.push(`ownership-bound ${ownership.refused}`);
   else if (ownership.rows !== 1) findings.push(`ownership-rows the ${OWNERSHIP_HEADING} section holds ${ownership.rows} ${GP_OWNER} rows, not one`);
+  else if (ownership.owner !== GP_OWNER) findings.push(`ownership-owner the ${GP_OWNER} row's owner cell reads ${JSON.stringify(ownership.owner)} in its source, not exactly ${JSON.stringify(GP_OWNER)}`);
   else if (!isDeepStrictEqual(ownership.header, OWNERSHIP_HEADER)) findings.push(`ownership-header the table holding the ${GP_OWNER} row is headed ${JSON.stringify(ownership.header)}, not ${JSON.stringify(OWNERSHIP_HEADER)}`);
   else if (ownership.cell !== OWNERSHIP_CELL) findings.push(`ownership-cell the ${GP_OWNER} row's Workbench cell opens ${JSON.stringify(ownership.cell)}, not ${JSON.stringify(OWNERSHIP_CELL)}`);
   if (ownership.other.length > 0) findings.push(`ownership-other the ${OWNERSHIP_HEADING} section names ${GP_OWNER} outside its tables, in ${ownership.other.join(", ")}`);
@@ -1488,6 +1619,9 @@ function lineIn(page: string, anchor: string, make: (line: string) => readonly s
 const ROW_ANCHOR = `| ${GP_OWNER} | ${OWNERSHIP_CELL}`;
 const SEAM_CELL = `| ${GP_OWNER} | the gp seam at src/workbench/gp-seam.ts`;
 const seamRow = (page: string): string => onceIn(page, ROW_ANCHOR, SEAM_CELL);
+/** A second row in the GraphPolicyCLI row's own table, right after it, registering a gp seam under the given owner cell (refusal #3's U3 plants). */
+const seamRowOwnedBy = (owner: string): string => `| Policy decision seams | ${owner} | the gp seam at src/workbench/gp-seam.ts |`;
+const afterGpRow = (page: string, row: string): string => lineIn(page, ROW_ANCHOR, line => [line, row]);
 export const DOCS_PLANTS: readonly DocsPlant[] = [
   // Refusal #1's five falsifiers (U1), each read conforming by the refused cut's raw-line reading.
   { id: "D-MOVE", edit: page => onceIn(onceIn(page, `${BOUNDARY_SENTENCE} `, ""), `\n## ${BOUNDARY_HEADING}\n`, `\n${BOUNDARY_SENTENCE}\n\n## ${BOUNDARY_HEADING}\n`), expect: ["boundary-opening"] },
@@ -1525,6 +1659,22 @@ export const DOCS_PLANTS: readonly DocsPlant[] = [
   { id: "D-LISTED-ROW", edit: page => onceIn(page, `\n## ${NEXT_HEADING}\n`, `\n- | Listed concern | Owner | Workbench may do |\n  | --- | --- | --- |\n  | Policy scores | ${GP_OWNER} | the gp seam at src/workbench/gp-seam.ts |\n\n## ${NEXT_HEADING}\n`), expect: ["ownership-other"] },
   // Quiet: an HTML comment naming GraphPolicyCLI in the Ownership section renders nothing.
   { id: "D-OWNER-COMMENT", edit: page => onceIn(page, `\n## ${NEXT_HEADING}\n`, `\n<!-- ${GP_OWNER}: an editor's note -->\n\n## ${NEXT_HEADING}\n`), expect: [] },
+  // Refusal #3's U3 members: a second row of the same table whose owner cell shows GraphPolicyCLI through markup or beside an alias.
+  { id: "D-GP-BOLD-ROW", edit: page => afterGpRow(page, seamRowOwnedBy(`**${GP_OWNER}**`)), expect: ["ownership-rows"] },
+  { id: "D-GP-CODE-ROW", edit: page => afterGpRow(page, seamRowOwnedBy(`\`${GP_OWNER}\``)), expect: ["ownership-rows"] },
+  { id: "D-GP-LINK-ROW", edit: page => afterGpRow(page, seamRowOwnedBy(`[${GP_OWNER}](#graphpolicycli-boundary)`)), expect: ["ownership-rows"] },
+  { id: "D-GP-ALIAS-ROW", edit: page => afterGpRow(page, seamRowOwnedBy(`${GP_OWNER} (gp)`)), expect: ["ownership-rows"] },
+  // Further shapes of the same class: HTML markup, and an escape only the shown view reads (the source names no vocabulary word).
+  { id: "D-GP-HTML-ROW", edit: page => afterGpRow(page, seamRowOwnedBy(`<b>${GP_OWNER}</b>`)), expect: ["ownership-rows"] },
+  { id: "D-GP-ESCAPE-ROW", edit: page => afterGpRow(page, seamRowOwnedBy("Graph\\_PolicyCLI")), expect: ["ownership-rows"] },
+  // A reference-style link whose definition sits at the page's end: the cell shows its link text only through the page's link
+  // definitions, so a shownIn that drops them shows the brackets and reds tableViews' same-view hold.
+  { id: "D-GP-REFLINK-ROW", edit: page => `${afterGpRow(page, seamRowOwnedBy(`[${GP_OWNER}][gp-boundary]`)).trimEnd()}\n\n[gp-boundary]: #graphpolicycli-boundary\n`, expect: ["ownership-rows"] },
+  // The one GraphPolicyCLI row's owner cell must be exactly GraphPolicyCLI in its source.
+  { id: "D-OWNER-BOLD", edit: page => onceIn(page, ROW_ANCHOR, `| **${GP_OWNER}** | ${OWNERSHIP_CELL}`), expect: ["ownership-owner"] },
+  { id: "D-OWNER-ALIAS", edit: page => onceIn(page, ROW_ANCHOR, `| ${GP_OWNER} (gp) | ${OWNERSHIP_CELL}`), expect: ["ownership-owner"] },
+  // Quiet: an HTML comment naming GraphPolicyCLI inside another row's owner cell shows nothing, so that row shows Pi's.
+  { id: "D-OWNER-CELL-COMMENT", edit: page => afterGpRow(page, `| Editor notes | <!-- ${GP_OWNER} -->Pi | register commands/tools/components |`), expect: [] },
 ];
 
 // ---- the judged rows (rule 16) ----
@@ -1566,6 +1716,8 @@ export const QUOTES: Readonly<Record<string, string>> = {
   Q5: "R-SNAPSHOT-REVISIONS",
   Q6: "R-DEFERRED",
   Q7: "R-OUTSIDE",
+  Q8: "R-REQUEST",
+  Q9: "R-OWNER-CELL",
 };
 export const ROWS: readonly Row[] = [
   { id: "A", label: "a pure exporter test builds GraphDataIR from an ObservationProjection fixture and asserts every node and edge traces to a native ref inside the caller's scope", pins: ["A1", "A2", "A3", "A4", "A5"] },
@@ -1575,7 +1727,7 @@ export const ROWS: readonly Row[] = [
   { id: "E", label: "and a snapshot over the declared node/edge/byte budget is refused with a typed unavailable", pins: ["E1", "E2", "E3", "E4"] },
   { id: "F", label: "never truncated silently", pins: ["F1"] },
   { id: "G", label: "When Pi exports a request to GraphPolicyCLI (artifact: released GraphDataIR schema + an owner-decided Pi decision point)", pins: ["G1", "G2", "G3"] },
-  { id: "Q", label: "the named residual families, each member a pinned quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"] },
+  { id: "Q", label: "the named residual families, each member a pinned quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9"] },
 ];
 
 /** The quotes tile the label in order, with nothing but separators (white space, , ; : ( ) / +) between and around them. */
@@ -1631,7 +1783,13 @@ export interface DriveResidual {
   /** Undo what the member leaves outside the projection, once its row has judged it. */
   readonly after?: () => void;
 }
-export type Residual = SourceResidual | OutcomeResidual | DriveResidual;
+export interface DocsResidual {
+  readonly kind: "docs";
+  readonly id: string;
+  /** An in-memory edit of the live docs/03 that G3's reading does not count, read by docs03Reading and judged by docs03Findings. */
+  readonly edit: (page: string) => string;
+}
+export type Residual = SourceResidual | OutcomeResidual | DriveResidual | DocsResidual;
 /** The global mark of the q7-global-write member (a registered symbol on globalThis, removed by its row). */
 export const GLOBAL_MARK = Symbol.for("wb-0lf.2 R-OUTSIDE");
 /** The module record of the q7-module-record member: a drive's own state outside the projection. */
@@ -1687,9 +1845,10 @@ export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
       },
     },
   ],
-  // What a drive keeps outside the projection's object graph and its class (global and module state), read only through the
-  // outcomes of two drives: a global mark, a module record of the projection, and an outcome that changes from the third call on
-  // (refusal #1's F4).
+  // What a drive does outside what the five legs read (global and module state, and calls the view never hands out), read only
+  // through the outcomes of two drives: a global mark, a module record of the projection, an outcome that changes from the third
+  // call on (refusal #1's F4), and an effect-free inherited call reached past the view (refusal #3's F4): the view records only the
+  // calls it hands out through its get trap, so Object.prototype.toString.call(view) is never recorded and changes nothing.
   Q7: [
     {
       kind: "drive",
@@ -1722,6 +1881,66 @@ export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
         };
       },
     },
+    {
+      kind: "drive",
+      id: "q7-past-view-call",
+      drive: () => request => {
+        Object.prototype.toString.call(request.projection);
+        return referenceExport(request);
+      },
+    },
+  ],
+  // The request object itself (refusal #3's U2 cure reads the scope and budget objects the judge handed, never the request's
+  // fields after the drives): a field rebound to an equal fresh copy with no edit (the gate's CTRL-REBIND-ONLY), a key added to
+  // the request, and the request frozen, each leaving both handed objects fresh copies, read pure.
+  Q8: [
+    {
+      kind: "drive",
+      id: "q8-rebind-equal",
+      drive: () => request => {
+        const outcome = referenceExport(request);
+        Reflect.set(request, "budget", { ...request.budget });
+        return outcome;
+      },
+    },
+    {
+      kind: "drive",
+      id: "q8-request-key",
+      drive: () => request => {
+        const outcome = referenceExport(request);
+        Reflect.set(request, "exportedBy", "pi");
+        return outcome;
+      },
+    },
+    {
+      kind: "drive",
+      id: "q8-request-freeze",
+      drive: () => request => {
+        const outcome = referenceExport(request);
+        Object.freeze(request);
+        return outcome;
+      },
+    },
+  ],
+  // G3 counts GraphPolicyCLI rows by each body row's second cell as it shows, through the vocabulary's GraphPolicy word: a row
+  // naming GraphPolicyCLI only in another cell (the gate's D-GP-CONCERN-ROW in its Concern cell, its Workbench cell, or the first
+  // cell of a table whose header moves the owner column there), a header row (a table of one header row naming it in its second
+  // cell), and a second cell that shows gp by a spelling the word does not read (the binary's name, a numeric character
+  // reference the binding's rendering rule leaves undecoded, an invisible or a confusable character inside the word) are not
+  // counted. Each member lands in the section's tables (the census holds the binding's rendered tables to differ).
+  Q9: [
+    { kind: "docs", id: "q9-concern-cell", edit: page => afterGpRow(page, `| ${GP_OWNER} decision seams | Pi | the gp seam at src/workbench/gp-seam.ts |`) },
+    { kind: "docs", id: "q9-workbench-cell", edit: page => afterGpRow(page, `| Policy decision seams | Pi | delegates to ${GP_OWNER} through the gp seam at src/workbench/gp-seam.ts |`) },
+    {
+      kind: "docs",
+      id: "q9-owner-column-moved",
+      edit: page => onceIn(page, `\n## ${NEXT_HEADING}\n`, `\n| Authoritative owner | Concern | Workbench may do |\n| --- | --- | --- |\n| ${GP_OWNER} | Policy decision seams | the gp seam at src/workbench/gp-seam.ts |\n\n## ${NEXT_HEADING}\n`),
+    },
+    { kind: "docs", id: "q9-header-row", edit: page => onceIn(page, `\n## ${NEXT_HEADING}\n`, `\n${seamRowOwnedBy(GP_OWNER)}\n| --- | --- | --- |\n\n## ${NEXT_HEADING}\n`) },
+    { kind: "docs", id: "q9-owner-gp", edit: page => afterGpRow(page, seamRowOwnedBy("gp")) },
+    { kind: "docs", id: "q9-owner-reference", edit: page => afterGpRow(page, seamRowOwnedBy("&#71;raphPolicyCLI")) },
+    { kind: "docs", id: "q9-owner-invisible", edit: page => afterGpRow(page, seamRowOwnedBy(`Graph${String.fromCodePoint(0x200b)}PolicyCLI`)) },
+    { kind: "docs", id: "q9-owner-confusable", edit: page => afterGpRow(page, seamRowOwnedBy(`Gr${String.fromCodePoint(0x430)}phPolicyCLI`)) },
   ],
 };
 export const residualId = (member: Residual): string => (member.kind === "source" ? member.path : member.id);
