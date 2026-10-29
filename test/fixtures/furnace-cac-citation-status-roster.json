@@ -277,7 +277,9 @@
      "Residual family",
      "Witness sha-256"
     ]
-   ]
+   ],
+   "rule": "Witness rule: ",
+   "definition": "a witness read as its JSON text (JSON.stringify) after readRoster resolves its {{record-2:<form>}} tokens"
   }
  },
  "tests": [
@@ -330,9 +332,9 @@
   "the registered tests and the reached pins equal the roster, in order and both ways"
  ],
  "ends": [
-  "judged-set:75",
+  "judged-set:78",
   "outside-anchors:136",
-  "receipt-anchor:8"
+  "receipt-anchor:12"
  ],
  "rows": [
   {

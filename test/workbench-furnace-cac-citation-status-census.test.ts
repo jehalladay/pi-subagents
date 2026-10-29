@@ -52,11 +52,25 @@
  * (docs/workbench/receipts/wb-xfkx.md, append-only under standing rule 15, a document this census also judges): its last dated entry
  * holds three tables, read through marked's tokens - every row's id, pins and label digest; every judged pin's quote digest; every
  * residual family with its quiet row and the digest of that row's roster witness (its probe's path, text and causes) - each digest a
- * sha-256 of the UTF-8 bytes, a witness read as its JSON text, so the receipt cites nothing and spells no record. The receipt-anchor
- * case holds the three tables to ROWS, QUOTES, RESIDUALS and the roster witnesses, in order and both ways; a later cut that changes
- * any of them appends a new dated entry carrying the three tables for its state and never edits a landed line. Four in-case controls
- * pin the reader: only the last dated entry is read, a table before any dated entry is not, and a table inside an HTML comment or a
- * code block is no table.
+ * sha-256 of the UTF-8 bytes, a witness read as its JSON text (JSON.stringify) after readRoster resolves its {{record-2:<form>}}
+ * tokens, so the receipt cites nothing and spells no record. The receipt-anchor case holds the three tables to ROWS, QUOTES,
+ * RESIDUALS and the roster witnesses, in order and both ways; a later cut that changes any of them appends a new dated entry
+ * carrying the three tables for its state and never edits a landed line. Four in-case controls pin the reader: only the last dated
+ * entry is read, a table before any dated entry is not, and a table inside an HTML comment or a code block is no table.
+ * THE WITNESS RULE (wb-pnn8, the R694 follow-up of landing 615: its F2 leads). The receipt's 2026-10-27 entry stated the witness
+ * digest over a witness read as its JSON text with no token resolution, so the six witnesses that carry a {{record-2:<form>}} token
+ * (Q3, Q5, Q6, Q7, Q9 and Q14) could not be re-derived from the roster by its rule (an independent recomputation: 8 of 14 without the
+ * resolution, 14 of 14 with it); its 2026-10-29 entry restates the rule and carries the three tables again, unchanged. The rule's
+ * clause is ANCHOR.definition. The receipt-anchor case holds it EQUAL, both ways, to the one block of the last dated entry that opens
+ * with ANCHOR.rule ('Witness rule: '), read past that lead with one closing period dropped (anchorRules), every block read by
+ * anchorProse through shownText, the carrier view's token reading: top-level paragraphs and list items only, a code span shows its
+ * code, struck text and the other unshown types show nothing, and a block holding a raw HTML element is opaque. So an entry appended
+ * without the resolution, with a second or no rule block, or with words added around the clause in its block reds, and so does the
+ * clause shortened in this file and the roster together, against the unchanged receipt. The case also holds this header to contain
+ * the clause (headerOf: the leading doc comment, comment prefixes removed, whitespace squeezed), so a header that drops it reds.
+ * In-case controls pin the three readers: only the last dated entry's prose is read, none before any dated entry, none inside an HTML
+ * comment or a code block, a block with a raw HTML element is opaque, only blocks opening with the lead are rules, and the header is
+ * the file's leading doc comment only.
  *
  * THE UNITS. A unit is the smallest text the judges read as one "paragraph". Markdown (every document is .md): a blank-line-delimited
  * block, where a heading, a table row and each line inside a code fence are units of their own and a list item starts a new unit (its
@@ -126,8 +140,10 @@
  * ENDS (the judged-set, outside-anchors and receipt-anchor cases each recorded its own end with its assertion count, held to the
  * roster's ends, so an early return or a cut tail in any of them reds).
  * NOT CLAIMED (edits of this file and the roster together): every edit the receipt anchor would catch, made in the anchor too - a later
- * dated entry appended to docs/workbench/receipts/wb-xfkx.md whose tables carry it (the census reads the last entry; the append is
- * the visible act a gate judges) - and a sha-256 collision; a non-pin case's tail cut together with its count in the roster's ends;
+ * dated entry appended to docs/workbench/receipts/wb-xfkx.md whose tables and witness rule carry it (the census reads the last entry;
+ * the append is the visible act a gate judges) - and a sha-256 collision; what the receipt's other prose says (of the last dated entry
+ * the census reads its tables and its one rule block, never its other blocks); a non-pin case's tail cut, or any one of its
+ * assertions removed, together with its count in the roster's ends;
  * a control removed from IMPL and the roster together while every remaining control holds; a plant edited in IMPL and the roster
  * together; a floor lowered in FLOORS and the
  * roster together (git's list equal to the filesystem walk stays the narrowing guard for docs/ and src/; the documents outside docs/
@@ -355,7 +371,11 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-EVIDENCE-TAIL": ["Q13"],
   "R-CARRIER-PLACEMENT": ["Q14"],
 };
-/** THE RECEIPT ANCHOR: the record of this census's shape outside its two files - its bead's receipt, the path, and its last dated entry's three table headers, in order. */
+/**
+ * THE RECEIPT ANCHOR: the record of this census's shape outside its two files - its bead's receipt, the path, its last dated entry's
+ * three table headers, in order, and the witness rule (wb-pnn8): the lead of the entry's one block that states it, and its clause,
+ * which that block and this file's header both state.
+ */
 const ANCHOR = {
   bead: "wb-xfkx",
   receipt: "docs/workbench/receipts/wb-xfkx.md",
@@ -364,6 +384,8 @@ const ANCHOR = {
     ["Pin", "Quote sha-256"],
     ["Quiet row", "Residual family", "Witness sha-256"],
   ],
+  rule: "Witness rule: ",
+  definition: "a witness read as its JSON text (JSON.stringify) after readRoster resolves its {{record-2:<form>}} tokens",
 } as const;
 
 interface Row {
@@ -1019,6 +1041,36 @@ function anchorTables(text: string): string[][][] {
     .filter(isTable)
     .map(table => [table.header.map(cell => cell.text), ...table.rows.map(row => row.map(cell => cell.text))]);
 }
+/**
+ * The prose of a receipt's last dated entry (the part after its last level-2 heading): each top-level paragraph and each item of a
+ * top-level list, in order, read through marked's tokens by shownText (the carrier view's reading: a code span shows its code, the
+ * unshown types - struck text among them - show nothing, and a raw HTML element makes its block opaque, so the block reads as
+ * nothing) and whitespace-squeezed. Prose only the raw markup holds - inside an HTML comment or a code block - is no prose, and
+ * prose before the first level-2 heading belongs to no entry.
+ */
+function anchorProse(text: string): string[] {
+  const tokens = marked.lexer(text);
+  const entries = tokens.flatMap((token, index) => (isHeading(token) && token.depth === 2 ? [index] : []));
+  const last = entries.at(-1);
+  if (last === undefined) return [];
+  return tokens
+    .slice(last + 1)
+    .flatMap(token => (isList(token) ? token.items.map(item => item.tokens) : token.type === "paragraph" ? [[token]] : []))
+    .flatMap(block => {
+      const view = { opaque: false };
+      const shown = shownText(block, " ", view).replace(/\s+/g, " ").trim();
+      return view.opaque ? [] : [shown];
+    });
+}
+/** The witness rules a receipt's last dated entry states: each prose block opening with ANCHOR's rule lead, read past it, one closing period dropped. */
+function anchorRules(text: string): string[] {
+  return anchorProse(text).flatMap(block => (block.startsWith(ANCHOR.rule) ? [block.slice(ANCHOR.rule.length).replace(/\.$/, "")] : []));
+}
+/** A source file's header as its reader sees it: the leading doc comment, each line's comment prefix removed, whitespace-squeezed. */
+function headerOf(source: string): string {
+  const end = source.startsWith("/**") ? source.indexOf("*/") : -1;
+  return end < 0 ? "" : source.slice(3, end).replace(/^[ \t]*\* ?/gm, "").replace(/\s+/g, " ").trim();
+}
 
 /** The pins that reached their witness compare, in run order, each with the compare's own result. */
 const REACHED: { pin: string; same: boolean }[] = [];
@@ -1581,7 +1633,7 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
     for (const [family, members] of Object.entries(RESIDUALS)) {
       for (const member of members) if (family !== "R-SCOPE") expect(probeOf(rosterWitness(member)), `${member} (${family}) carries its own probe`).toBeDefined();
     }
-    const readers: readonly ((...args: never[]) => unknown)[] = [...Object.values(IMPL), recordCase, scopeLeg, controlsHold, quiet, readScope, judgeFiles, judgeUnit, anchorTables];
+    const readers: readonly ((...args: never[]) => unknown)[] = [...Object.values(IMPL), recordCase, scopeLeg, controlsHold, quiet, readScope, judgeFiles, judgeUnit, anchorTables, anchorProse, anchorRules, headerOf];
     for (const reader of readers) expect(/\bROSTER\b|rosterWitness|readRoster/.test(reader.toString()), `${reader.name || "a case"} reads no roster (SELF-READ)`).toBe(false);
     expect(formsOf(FIRST_RECORD), "formsOf reads the first record's forms as spelled (the second record's come from the same function)").toEqual({
       spelling: "FurnaceAttemptCapabilityV0",
@@ -1717,6 +1769,15 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
     expect(residuals, "the residuals table: every family's quiet row, the family and the digest of that row's roster witness, in order, both ways").toEqual(
       Object.entries(RESIDUALS).flatMap(([family, members]) => members.map(member => [member, family, sha256(JSON.stringify(rosterWitness(member)))])),
     );
+    expect(
+      anchorRules(textOf(ANCHOR.receipt)),
+      `the last dated entry states its witness rule once, in its own paragraph or list item opening '${ANCHOR.rule}', and that rule is the token-resolving one, exactly`,
+    ).toEqual([ANCHOR.definition]);
+    expect(headerOf(readFileSync(fileURLToPath(import.meta.url), "utf8")), "this census's header states the same witness rule").toContain(ANCHOR.definition);
+    expect(
+      [headerOf('/**\n * a leading\n * doc comment\n */\nconst rule = "not the header";\n'), headerOf("const rule = 1;\n/** not leading */\n")],
+      "the header reader: the file's leading doc comment only, its comment prefixes removed",
+    ).toEqual(["a leading doc comment", ""]);
     const entry = (heading: string, cell: string): string => `## ${heading}\n\n| Pin | Quote sha-256 |\n| --- | --- |\n| ${cell} | 0 |`;
     const page = (...blocks: string[]): string => `# wb-x: a receipt\n\n${blocks.join("\n\n")}\n`;
     const controls = {
@@ -1730,6 +1791,26 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
       noEntry: [],
       comment: [],
       codeBlock: [],
+    });
+    const stated = (heading: string, block: string): string => `## ${heading}\n\n${block}`;
+    const prose = {
+      lastEntry: anchorProse(page(stated("2026-10-27 first", "- first rule"), stated("2026-10-28 second", "- second `rule`\n- third ~~struck~~ rule"))),
+      noEntry: anchorProse(page("- a rule before any entry")),
+      comment: anchorProse(page(stated("2026-10-28 second", "<!--\n- a rule\n-->"))),
+      codeBlock: anchorProse(page(stated("2026-10-28 second", "```\n- a rule\n```"))),
+      element: anchorProse(page(stated("2026-10-28 second", '- a <span style="display:none">rule</span>'))),
+      rules: anchorRules(page(stated("2026-10-28 second", `- ${ANCHOR.rule}one.\n- a later ${ANCHOR.rule}two\n- ${ANCHOR.rule}three`))),
+    };
+    expect(
+      prose,
+      "the prose reader: the last dated entry's paragraphs and list items only, a code span as its code and struck text unshown; none before an entry, none inside a comment or a code block, and a block with a raw HTML element opaque; the rule reader: only blocks opening with the lead, read past it, one closing period dropped",
+    ).toEqual({
+      lastEntry: ["second rule", "third rule"],
+      noEntry: [],
+      comment: [],
+      codeBlock: [],
+      element: [],
+      rules: ["one", "three"],
     });
     ENDS.push(endOf("receipt-anchor"));
   });
