@@ -1,7 +1,7 @@
 {
   "bead": "wb-a9l2.6",
   "pin": "6a251bf73af5",
-  "basis": "The out-of-file roster of test/workbench-rf-evaluator-artifact-context-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the receipt vocabulary and the producer fixture facts, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read at ReactiveFiberCLI 6a251bf73af5 (read-only git show): checkIds is the graph.test.schema.json $defs.check_id enum in schema order; receiptFields are the command and the receipt keys only a receipt reader would name; artifactPhrases are the program's own names for its evaluator artifacts (harness2-federated-peer-2026-10-20/README.md:34, :37, :51); receiptSha256 is the sha256 of JSON.stringify of the result object of schemas/fixtures/graph.test/valid/ok_shadow.json as parsed; the two invalid fixtures are each one field away from it (checks[0].status failed; valid false). carriers are constructed additive context.render result keys, named by no shipped rf schema. wb-e9j2 (the follow-up of the wb-a9l2.6 gate's PREP F1 (i)-(v) and F2) adds A6, C4, M10-M14 and Q4, and widens the witnesses of A1 (every invoke member reference; the walk covers every src file git lists), A3 (the whole reconcile frame, its EVIDENCE_GUIDANCE lines included), B4 (the two refusals' reply shapes), C2 (rf read off id, permission and contractSource; the native id set) and C3 (the git-covering walk); row M's label states the matcher's definition. wb-ofz4 (the follow-up of the wb-e9j2 gate's F1-F3, landing 353) adds M15-M18 and row S (Q5-Q9, the pinned quiet rows of the R-KEYED, R-EMBEDDED, R-CASE and R-COMPOSED residuals of the A1 and C4 scans), widens the witnesses of A1 (eleven destructuring and reflective controls, a quiet control) and C4 (seven path-qualified, template-span, extension and one-token case controls, a path quiet control), and row M's label states the full JS string-escape reading. wb-sfo7 (the follow-up of the wb-ofz4 gate's F1-F6, landing 454) adds M19, M20 and the R-KEYED and R-SHELL quiet rows Q10 and Q11, widens the witnesses of A1 (eleven wrapped-literal, wrapped-key and rest-element controls, a boundary quiet control) and C4 (nineteen whitespace-bearing, any-case, quoted, quote- or operator-ended, escaped-space, after-a-word, raw-text, one-token-case and extension path controls, a boundary quiet control), and records the input digest (sha256, first 16 hex) of every A1, C2 and C4 control, so a census-only edit that swaps a control's text for another reading the same way reds against this file.",
+  "basis": "The out-of-file roster of test/workbench-rf-evaluator-artifact-context-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the receipt vocabulary and the producer fixture facts, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read at ReactiveFiberCLI 6a251bf73af5 (read-only git show): checkIds is the graph.test.schema.json $defs.check_id enum in schema order; receiptFields are the command and the receipt keys only a receipt reader would name; artifactPhrases are the program's own names for its evaluator artifacts (harness2-federated-peer-2026-10-20/README.md:34, :37, :51); receiptSha256 is the sha256 of JSON.stringify of the result object of schemas/fixtures/graph.test/valid/ok_shadow.json as parsed; the two invalid fixtures are each one field away from it (checks[0].status failed; valid false). carriers are constructed additive context.render result keys, named by no shipped rf schema. wb-e9j2 (the follow-up of the wb-a9l2.6 gate's PREP F1 (i)-(v) and F2) adds A6, C4, M10-M14 and Q4, and widens the witnesses of A1 (every invoke member reference; the walk covers every src file git lists), A3 (the whole reconcile frame, its EVIDENCE_GUIDANCE lines included), B4 (the two refusals' reply shapes), C2 (rf read off id, permission and contractSource; the native id set) and C3 (the git-covering walk); row M's label states the matcher's definition. wb-ofz4 (the follow-up of the wb-e9j2 gate's F1-F3, landing 353) adds M15-M18 and row S (Q5-Q9, the pinned quiet rows of the R-KEYED, R-EMBEDDED, R-CASE and R-COMPOSED residuals of the A1 and C4 scans), widens the witnesses of A1 (eleven destructuring and reflective controls, a quiet control) and C4 (seven path-qualified, template-span, extension and one-token case controls, a path quiet control), and row M's label states the full JS string-escape reading. wb-sfo7 (the follow-up of the wb-ofz4 gate's F1-F6, landing 454) adds M19, M20 and the R-KEYED and R-SHELL quiet rows Q10 and Q11, widens the witnesses of A1 (eleven wrapped-literal, wrapped-key and rest-element controls, a boundary quiet control) and C4 (nineteen whitespace-bearing, any-case, quoted, quote- or operator-ended, escaped-space, after-a-word, raw-text, one-token-case and extension path controls, a boundary quiet control), and records the input digest (sha256, first 16 hex) of every A1, C2 and C4 control, so a census-only edit that swaps a control's text for another reading the same way reds against this file. wb-0hkv (the follow-up of the wb-sfo7 gate's F1, landing 562) widens the witnesses of C4 (eight backquote- and closing-brace-ended path controls: the gate's two path shapes, RF_LEAD and RF_QUOTED with each closer, and the two conservative reads of a word the shell continues past one; four boundary quiet shapes inside backquotes and braces) and Q11 (R-SHELL's backquote and parameter-expansion-default members), each control's input digest held here.",
   "checkIds": [
     "graph_schema",
     "compilability",
@@ -785,6 +785,30 @@
                 "probe.ts:execSync"
               ],
               [
+                "probe.ts:execSync"
+              ],
+              [
+                "probe.ts:execSync"
+              ],
+              [
+                "probe.ts:execSync"
+              ],
+              [
+                "probe.ts:execSync"
+              ],
+              [
+                "probe.ts:execSync"
+              ],
+              [
+                "probe.ts:execSync"
+              ],
+              [
+                "probe.ts:execSync"
+              ],
+              [
+                "probe.ts:execSync"
+              ],
+              [
                 "probe.ts:execSync",
                 "probe.ts:execSync",
                 "probe.ts:execSync",
@@ -826,10 +850,18 @@
               "c4e40da6b74cb28f",
               "72b0792a85d47176",
               "a2ce5de5c1707ef4",
+              "e5b1cc0b85f0f327",
+              "81c55a16cdbbf8bc",
+              "51565457898584b6",
+              "832c8ada90ebfff6",
+              "05f094b486f8aae3",
+              "b6eeb0c184f0fa32",
+              "e8999a05dc538662",
+              "67f113291b21647c",
               "8492112e8d699587"
             ],
             "pathQuietDigest": "74bdb9bd66a11d11",
-            "boundaryQuietDigest": "f2c37b959e854176"
+            "boundaryQuietDigest": "8f79e0abded2dbcc"
           }
         }
       ]
@@ -1071,7 +1103,7 @@
           "witness": {
             "residual": "R-SHELL",
             "scan": "launch",
-            "digest": "95cf1c5068f34160",
+            "digest": "50bc2cfb6d089990",
             "sites": []
           }
         }

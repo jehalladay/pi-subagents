@@ -23,6 +23,7 @@
     "schemaLiteral": "workflow-script/v1",
     "docs09": "docs/workbench/09-observation-and-provenance.md",
     "docs09Section": "## Experimental projection implementation",
+    "docs09Title": "09 \u2014 Observation, telemetry, provenance and derived graph",
     "sdk": "@furnace/sdk",
     "tarball": "vendor/furnace-sdk-0.1.0.tgz",
     "lockKey": "node_modules/@furnace/sdk",
@@ -31,8 +32,10 @@
       "piFiles": 900,
       "piScripts": 650,
       "piBinaries": 3,
+      "piBytes": 25000000,
       "sdkEntries": 100,
-      "pinFiles": 700
+      "pinFiles": 700,
+      "pinBytes": 13000000
     },
     "sdkPlants": {
       "declaration": {
@@ -72,9 +75,40 @@
       "qa/zz-boundary.mjs": "// reads FurnaceObserverBoundaryV0\nexport {};\n",
       "test/fixtures/zz-boundary-escaped.json": "{ \"record\": \"Furnace\\u004fbserver\\u0042oundaryV0\" }\n",
       "docs/workbench/zz-boundary-entity.md": "The Furnace &#79;bserver&#32;Boundary record.\n",
-      "docs/workbench/zz-observer-boundary.md": "# Plant\n\nThis page's text names nothing.\n"
+      "docs/workbench/zz-observer-boundary.md": "# Plant\n\nThis page's text names nothing.\n",
+      "config/zz-boundary.yml": "record: \"Furnace\\u004fbserverBoundaryV0\"\n",
+      "config/zz-boundary.toml": "record = \"Furnace\\U0000004fbserverBoundaryV0\"\n",
+      "src/workbench/zz-boundary-identifier.ts": "export const Furnace\\u004fbserverBoundaryV0 = 0;\n"
     },
     "pinPlant": "docs/workbench/zz-pin-plant.md",
+    "augmentationPlant": {
+      "path": "src/workbench/zz-observer-augmentation.ts",
+      "text": "declare module \"./furnace-observer.js\" {\n  interface FurnaceObserverClient {\n    runs: { get(runId: string): { events(call?: { timeoutMs?: number }): AsyncIterable<unknown> } };\n  }\n}\nexport {};\n"
+    },
+    "anchors": [
+      "src/workbench/identity.ts",
+      "docs/workbench/09-observation-and-provenance.md",
+      "src/workbench/furnace-observer.ts"
+    ],
+    "readers": [
+      "sdkRelease",
+      "sdkVerdict",
+      "tarball",
+      "vendoredPath",
+      "piListing",
+      "piVerdict",
+      "pinVerdict",
+      "augmentations",
+      "observer",
+      "observerText",
+      "textOf",
+      "exportRow",
+      "ownerFiling",
+      "docs09Furnace",
+      "verdictOf",
+      "mentions",
+      "git"
+    ],
     "residuals": {
       "R-TRACKER": "Q1",
       "R-HOLDER": "Q2",
@@ -126,7 +160,8 @@
             "Furnace": [
               "package",
               "version",
-              "observerTypesDeclared"
+              "observerTypesDeclared",
+              "typesPlant"
             ],
             "ships": [
               "entriesAtFloor",
@@ -141,6 +176,9 @@
             "package": "@furnace/sdk",
             "version": "0.1.0",
             "observerTypesDeclared": true,
+            "typesPlant": [
+              "NotInTheRelease"
+            ],
             "entriesAtFloor": true,
             "skippedEntries": [],
             "binaryEntries": [],
@@ -229,14 +267,18 @@
           "quote": "never widening",
           "claims": {
             "never": [
-              "widenedPlant"
+              "widenedPlant",
+              "augmentationPlant",
+              "docsPlants"
             ],
             "widening": [
               "interfaceName",
               "interfaceDeclarations",
               "interfaceExtends",
               "clientParameterTypes",
+              "augmentations",
               "readPaths",
+              "docsBinding",
               "docsReads",
               "pairs"
             ]
@@ -248,11 +290,23 @@
             "clientParameterTypes": [
               "FurnaceObserverClient"
             ],
+            "augmentations": [],
             "readPaths": [
               "attempts.list",
               "logs.read",
               "runs.get.status"
             ],
+            "docsBinding": {
+              "binds": true,
+              "why": "",
+              "html": false,
+              "readsClauses": [
+                "status/attempt/log-reference"
+              ],
+              "verbsClauses": [
+                "create, resume or stop"
+              ]
+            },
             "docsReads": [
               "status",
               "attempt",
@@ -274,7 +328,94 @@
             ],
             "widenedPlant": [
               "runs.get.events"
-            ]
+            ],
+            "augmentationPlant": [
+              "runs.get.events"
+            ],
+            "docsPlants": {
+              "hiddenCopy": {
+                "binds": true,
+                "why": "",
+                "html": true,
+                "readsClauses": [
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create or resume"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "decoyHeading": {
+                "binds": false,
+                "why": "the heading \"Experimental projection implementation\" occurs 2 times in the rendered view; a pinned section needs it exactly once",
+                "html": false,
+                "readsClauses": [],
+                "verbsClauses": [],
+                "reads": [],
+                "verbs": []
+              },
+              "appendix": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "readsClauses": [],
+                "verbsClauses": [],
+                "reads": [],
+                "verbs": []
+              },
+              "fenced": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "readsClauses": [],
+                "verbsClauses": [],
+                "reads": [],
+                "verbs": []
+              },
+              "widened": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "readsClauses": [
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [
+                  "status",
+                  "attempt",
+                  "log-reference",
+                  "event-stream"
+                ],
+                "verbs": [
+                  "create",
+                  "resume",
+                  "stop"
+                ]
+              },
+              "narrowed": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create or resume"
+                ],
+                "reads": [
+                  "status",
+                  "attempt",
+                  "log-reference"
+                ],
+                "verbs": [
+                  "create",
+                  "resume"
+                ]
+              }
+            }
           }
         },
         {
@@ -329,6 +470,7 @@
               "clientChains",
               "unchainedClientUses",
               "sdkRuntimeImports",
+              "runtimeImportPlant",
               "closeReads",
               "excludedVerbs",
               "excludedVerbCalls",
@@ -346,6 +488,10 @@
             ],
             "unchainedClientUses": 0,
             "sdkRuntimeImports": [],
+            "runtimeImportPlant": [
+              "export FurnaceClient",
+              "furnaceRuntime = require"
+            ],
             "closeReads": [],
             "excludedVerbs": [
               "create",
@@ -388,6 +534,8 @@
               "filedAtPin",
               "absentBeforePin",
               "pinFilesAtFloor",
+              "pinBytesAtFloor",
+              "pinLiveness",
               "pinMentions",
               "pinPlant"
             ]
@@ -398,6 +546,12 @@
             "filedAtPin": true,
             "absentBeforePin": true,
             "pinFilesAtFloor": true,
+            "pinBytesAtFloor": true,
+            "pinLiveness": {
+              "identitySchemaLiteral": true,
+              "docs09Polling": true,
+              "observerClient": true
+            },
             "pinMentions": {},
             "pinPlant": {
               "docs/workbench/zz-pin-plant.md": [
@@ -419,6 +573,7 @@
               "filesAtFloor",
               "scriptsAtFloor",
               "binariesAtFloor",
+              "bytesAtFloor",
               "liveness"
             ],
             "mentions": [
@@ -431,6 +586,7 @@
             "filesAtFloor": true,
             "scriptsAtFloor": true,
             "binariesAtFloor": true,
+            "bytesAtFloor": true,
             "liveness": {
               "identitySchemaLiteral": true,
               "docs09Polling": true,
@@ -462,6 +618,15 @@
               ],
               "docs/workbench/zz-observer-boundary.md": [
                 "path"
+              ],
+              "config/zz-boundary.yml": [
+                "decoded"
+              ],
+              "config/zz-boundary.toml": [
+                "decoded"
+              ],
+              "src/workbench/zz-boundary-identifier.ts": [
+                "cooked"
               ]
             }
           }
@@ -586,7 +751,8 @@
               "formCharacter": true,
               "confusable": true,
               "entityOutsideMarkup": true,
-              "markup": true
+              "markup": true,
+              "escapeOutsideDecodedKinds": true
             }
           }
         },

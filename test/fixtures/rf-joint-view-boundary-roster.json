@@ -1,0 +1,943 @@
+{
+  "bead": "wb-ae7u",
+  "citation": "docs/programs/cac-context-refinement-2026-10-18/01-contracts-and-qa.md:4,:9,:12,:21@82bd879eee52",
+  "producer": {
+    "citationPin": "82bd879eee5200e609628f691faa2c0be71e0c41",
+    "measuredPin": "48f020fe625ff09b0056134711a77bf1dbcad72c",
+    "docBlob": "4a64d3b3f08b96283f7e3125c204a488c61b1e93",
+    "registryBlob": "6ba8bb84db9177370117ff24eda6da83ccbe8cea",
+    "trustDeniedExit": 5,
+    "trustDeniedCount": 20,
+    "citationPinCount": 16,
+    "excerpts": [
+      {
+        "site": "docs/programs/cac-context-refinement-2026-10-18/01-contracts-and-qa.md:4",
+        "textBase64": "XGBSRkNvbnRleHRCb3VuZGFyeVYwXGA6IHRhc2svY2xpZW50IElELCByZW5kZXJlci9sZW5zL3F1ZXJ5IHZlcnNpb24sIHNvdXJjZSBhdXRob3JpdHkgc2V0IGFuZCByZXZpc2lvbiB2ZWN0b3IsIGRlY2xhcmVkIHB1YmxpYyBjb250ZXh0IGFuZCB0cmFjZSBmaWVsZHMsIGV2aWRlbmNlL3JlZiBjb25zdHJhaW50cywgZnJlc2huZXNzIGludmFsaWRhdGlvbiBkZXBlbmRlbmNpZXMsIGRpc2Nsb3N1cmUvcGVybWlzc2lvbiBjb25kaXRpb25zLCB0b2tlbi9yZXNvdXJjZSBidWRnZXQsIGFsbG93ZWQgY29udGludWF0aW9uIHZvY2FidWxhcnku",
+        "sha256": "0d25f628f196dd7882e8fdc4d1831db2a7c419f0a7d0432ee98e5bd0bc5f3238"
+      },
+      {
+        "site": "docs/programs/cac-context-refinement-2026-10-18/01-contracts-and-qa.md:6",
+        "textBase64": "XGBSRkNvbnRleHRSZWZpbmVtZW50VjBcYDogcmVmZXJlbmNlL2NhbmRpZGF0ZSBzZWxlY3RvciBJRHMsIGV4YWN0IGpvaW50LW9ic2VydmFibGUga2VybmVsIG9yIGVzdGltYXRlZCBkaXN0YW5jZSB3aXRoIGZ1bGwgZG9tYWluL2hvcml6b24vY29uZmlkZW5jZSwgaGFyZCBwZXJtaXNzaW9uL2V2aWRlbmNlIHN0YXR1cywgY291bnRlcmV4YW1wbGUgcmVmcywgcHJvdmVuYW5jZSBhbmQgbmF0aXZlIHZhbGlkYXRpb24gdGllci4gVGhlc2UgYXJlIG5vdCBzaGlwcGVkIGNvbW1hbmRzIG9yIHNjaGVtYSBleHBvcnRzLg==",
+        "sha256": "2a383f5c2860c0a077280446bdb5fdf431d507f5d5aab5a9b5ffa628cbba05d6"
+      },
+      {
+        "site": "docs/programs/cac-context-refinement-2026-10-18/01-contracts-and-qa.md:9",
+        "textBase64": "KDEpIHByb2plY3Qgc291cmNlIG9ic2VydmF0aW9ucyB3aXRoIGltbXV0YWJsZSByZWZzOyAoMikgbWFpbnRhaW4gZGVyaXZlZCBkZXBlbmRlbmN5L2ZyZXNobmVzcyBncmFwaDsgKDMpIGVtaXQgY29udGV4dCB3aXRoIHZpc2libGUgcHJvdmVuYW5jZSwgbm90IG1lcmVseSBjb25jYXRlbmF0ZWQgdGV4dDsgKDQpIHZhbGlkYXRlIHNvdXJjZSB2ZXJzaW9uL2NvbnNpc3RlbmN5IGFzc3VtcHRpb25zIGZvciBDVVJSRU5UIHN0YXR1czsgKDUpIGNvbXBhcmUgKmpvaW50KiBvdXRwdXQtY29udGV4dCwgcHVibGljLXN0YXRlIGFuZCB2aXNpYmxlLXRyYWNlIGJlaGF2aW9yIGFjcm9zcyBpbXBsZW1lbnRhdGlvbnM7ICg2KSBlbmZvcmNlIHJlYWQgYWRtaXNzaW9uIGluZGVwZW5kZW50bHkgb2Ygc2ltaWxhcml0eSBzY29yaW5nLg==",
+        "sha256": "4d9a69ce81ac98dc41b7da917275ce9758c1895e8d7303e5d76fd4f45bbdcf64"
+      },
+      {
+        "site": "docs/programs/cac-context-refinement-2026-10-18/01-contracts-and-qa.md:12",
+        "textBase64": "T3V0cHV0cyBtYXRjaCBidXQgb25lIHNlbGVjdG9yIG9taXRzIHJlcXVpcmVkIGV2aWRlbmNlOyB0d28gdmlld3Mgam9pbnRseSByZXZlYWwgYSBoaWRkZW4gY29ycmVsYXRpb247IGNhY2hlZCBjb250ZXh0IGlzIHN0YWxlIGFmdGVyIHNvdXJjZSBjaGFuZ2VzOyBhbiBMTE0gc2VsZWN0b3IgcmVhZHMgdW5hdXRob3JpemVkIHByaXZhdGUgc291cmNlIHRoZW4gZGlzY2FyZHMgaXQ7IHJlcGxhY2VtZW50IGhhcyByYXJlIHByaXZpbGVnZWQtc3RhdGUgZGl2ZXJnZW5jZTsgdG9rZW4gc2F2aW5nIGRlc3Ryb3lzIGEgcG9saWN5LXN1ZmZpY2llbnQgZGlzdGluY3Rpb24u",
+        "sha256": "a384d12467d3340b1e30fc50bf1d34df0d9a3a37502db6ee73262425e5bb50cc"
+      },
+      {
+        "site": "docs/programs/cac-context-refinement-2026-10-18/01-contracts-and-qa.md:21",
+        "textBase64": "Tm8gc291cmNlIGF1dGhvcml0eSBncmFudGVkIGJ5IGNvbnRleHQ7IG5vIGZhbHNlIENVUlJFTlQgY2xhaW07IG5vIGhpZGRlbiBwZXJtaXNzaW9uIGZhaWx1cmU7IG9ic2VydmFiaWxpdHkgdGhlb3JlbSBhc3N1bXB0aW9ucyBzdGF0ZWQ7IG5vIGltcG9ydCBjb3VwbGluZyB0byBNZWNoYW5pY2FsIEZpYmVyLCBGb3JnZSwgRnVybmFjZSBvciBMZWFybmluZyB3aXRob3V0IGFuIGV4cGxpY2l0IGFkYXB0ZXIgY29udHJhY3Qu",
+        "sha256": "737de9e48af80656d76a5b4f5ceedfbbd2c2447d396e89c83dd9eb3c771d625f"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:2036",
+        "textBase64": "X0VYSVRfVFJVU1RfREVOSUVEOiBGaW5hbCA9IDU=",
+        "sha256": "b0fc6633ee08802023f19e60cd8cf95bb47cca6168b31481c638c4d4373fa5be"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:2190",
+        "textBase64": "RGlhZ25vc3RpY0NvZGUuUkZfQlJPS0VSX0RFTUFORF9OT1RfT1dORUQ6IF9lcnJvcl9zcGVjKAogICAgICAgICAgICA1LA==",
+        "sha256": "c9875f4d47f6083e2c1d364388db19cef3929ab9421e6fcc13d8984e9e95466e"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:2220",
+        "textBase64": "RGlhZ25vc3RpY0NvZGUuUkZfQlJPS0VSX1JJR0hUU19ERU5JRUQ6IF9lcnJvcl9zcGVjKAogICAgICAgICAgICA1LA==",
+        "sha256": "01807ab87c8305c21947c16aa6765809b9285bb2af179d4f64d9212bcac2ef71"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:2489",
+        "textBase64": "RGlhZ25vc3RpY0NvZGUuUkZfQ09ORklHX0xBWUVSX1JFQURPTkxZOiBfZXJyb3Jfc3BlYyg1LA==",
+        "sha256": "ce65bd8e3a1206e79b4a693ba82270148f8ebe7f3fb16b7038f97931d30113f6"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:2884",
+        "textBase64": "RGlhZ25vc3RpY0NvZGUuUkZfR1JBUEhfT1ZFUkxBWV9TQ09QRV9ERU5JRUQ6IF9lcnJvcl9zcGVjKAogICAgICAgICAgICA1LA==",
+        "sha256": "3ecda352fec3bd3f1f10cbd7bed2440f6b7db0f8dbd2850c89594cd5d2b068ab"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:2896",
+        "textBase64": "RGlhZ25vc3RpY0NvZGUuUkZfR1JBUEhfT1ZFUkxBWV9QUk9URUNURURfVEFSR0VUOiBfZXJyb3Jfc3BlYygKICAgICAgICAgICAgNSw=",
+        "sha256": "6f4595a332fa9256a4f56f91f32d62a7aa6faa51227303bf048bc05c5d8511c8"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:3186",
+        "textBase64": "RGlhZ25vc3RpY0NvZGUuUkZfTEVOU19CSU5ESU5HX0RFTklFRDogX2Vycm9yX3NwZWMoCiAgICAgICAgICAgIDUs",
+        "sha256": "d71e66271d6c9e22eb991fb455844aca8c05920d8cb56bbf9b45c5d6e191920f"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:3241",
+        "textBase64": "RGlhZ25vc3RpY0NvZGUuUkZfT0JTRVJWQVRJT05fREVOSUVEOiBfZXJyb3Jfc3BlYygKICAgICAgICAgICAgNSw=",
+        "sha256": "6571f79dfe1f9cedb138e7fe1da594ecabda5d5a2ab98a24ef3da3c65df1b772"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:3484",
+        "textBase64": "RGlhZ25vc3RpY0NvZGUuUkZfT1BUSUNfRVhFQ1VUSU9OX0RFTklFRDogX2Vycm9yX3NwZWMoCiAgICAgICAgICAgIDUs",
+        "sha256": "46d97050a903fef63cf5e62895d61644f828d5e70a7c3e433f7ff60bd379ec4f"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:3543",
+        "textBase64": "RGlhZ25vc3RpY0NvZGUuUkZfUE9MSUNZX0NBUEFCSUxJVFlfREVGQVVMVF9NSVNTSU5HOiBfZXJyb3Jfc3BlYyg1LA==",
+        "sha256": "4a49707298aa12dd6118017a397ff074a03395b80c4181f7a734208ea5208927"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:3620",
+        "textBase64": "RGlhZ25vc3RpY0NvZGUuUkZfUFVCTElDQVRJT05fSU1QQUNUX1VOS05PV046IF9lcnJvcl9zcGVjKAogICAgICAgICAgICA1LA==",
+        "sha256": "9d70d4cc8fd0ab8e730fb3051041bceb3e29e9830ba725f4f80d61e81fa19e47"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:3632",
+        "textBase64": "RGlhZ25vc3RpY0NvZGUuUkZfUFVCTElDQVRJT05fVU5BVVRIT1JJWkVEOiBfZXJyb3Jfc3BlYygKICAgICAgICAgICAgNSw=",
+        "sha256": "6384f3e1fb94e7e554bd650a3b9f57011eae4e15ced4dafb2db4803e53499b60"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:3875",
+        "textBase64": "RGlhZ25vc3RpY0NvZGUuUkZfUkVQTEFZX1RSVVNUX0RFTklFRDogX2Vycm9yX3NwZWMoCiAgICAgICAgICAgIF9FWElUX1RSVVNUX0RFTklFRCw=",
+        "sha256": "363cc8c7a6bcd67e867f008549e91ecfb9d9e1408ac639915a28baff7fcea46f"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:3925",
+        "textBase64": "RGlhZ25vc3RpY0NvZGUuUkZfU0NFTkFSSU9fTU9ERUxfQVVESUVOQ0VfUkVGVVNFRDogX2Vycm9yX3NwZWMoCiAgICAgICAgICAgIF9FWElUX1RSVVNUX0RFTklFRCw=",
+        "sha256": "a0ae347ad8bea1834bfdb07ade12e2d64a1277d8c9fb8244e4cedbfda4703073"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:3939",
+        "textBase64": "RGlhZ25vc3RpY0NvZGUuUkZfU0NFTkFSSU9fUFVCTElTSF9SRUZVU0VEOiBfZXJyb3Jfc3BlYygKICAgICAgICAgICAgX0VYSVRfVFJVU1RfREVOSUVELA==",
+        "sha256": "c25c482059ccf40067c5ac34e1ef4d0648089dc1bd8cc9670cc08d2f18dbbe98"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:4110",
+        "textBase64": "RGlhZ25vc3RpY0NvZGUuUkZfU09VUkNFX1BBVEhfT1VUU0lERV9ST09UOiBfZXJyb3Jfc3BlYygKICAgICAgICAgICAgX0VYSVRfVFJVU1RfREVOSUVELA==",
+        "sha256": "c5444cbcce1364f8634687099caef93d85467ff9a7435d4825611770992a6392"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:4116",
+        "textBase64": "RGlhZ25vc3RpY0NvZGUuUkZfU09VUkNFX1NZTUxJTktfRVNDQVBFOiBfZXJyb3Jfc3BlYygKICAgICAgICAgICAgX0VYSVRfVFJVU1RfREVOSUVELA==",
+        "sha256": "a5c8c2faaacda7056c117c65cf8aaaa1644e25e336fee46afeca5836af12022e"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:4121",
+        "textBase64": "RGlhZ25vc3RpY0NvZGUuUkZfU09VUkNFX0NBUEFCSUxJVFlfREVOSUVEOiBfZXJyb3Jfc3BlYyg1LA==",
+        "sha256": "8db1e531fa2f4d0826ca5a6c1beac3763e9f69fa6bd9edb4b61bbaac5988f278"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:4203",
+        "textBase64": "RGlhZ25vc3RpY0NvZGUuUkZfU1RBVEVfTkFNRVNQQUNFX1BST1RFQ1RFRDogX2Vycm9yX3NwZWMoCiAgICAgICAgICAgIDUs",
+        "sha256": "a2192499b5bb262bbcaf66d4feff873986c128debfcea768f898d223f74691ba"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:4449",
+        "textBase64": "RGlhZ25vc3RpY0NvZGUuUkZfVFJVU1RfREVOSUVEOiBfZXJyb3Jfc3BlYygKICAgICAgICAgICAgNSw=",
+        "sha256": "28cb5b6e029487df4ae29c754cece8030a3d89e7e4799b3b377366daea706299"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:4506",
+        "textBase64": "RGlhZ25vc3RpY0NvZGUuUkZfVFNYX1JFU09VUkNFX0RFTklFRDogX3RzeF9zcGVjKDUs",
+        "sha256": "da39b068827629925ffb2768a5935a4dc0b4492e98aff1fd537e5b7849745de1"
+      },
+      {
+        "site": "src/reactive_fiber_cli/domain/diagnostics.py:4140",
+        "textBase64": "RGlhZ25vc3RpY0NvZGUuUkZfU09VUkNFX1NFQ1JFVF9XSVRISEVMRDogX2luZm9fc3BlYyg=",
+        "sha256": "18d6fd90be898e6e0f10db294cfa6711c877b335ebec54f95640b8f7483d351e"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) two individually-permitted fixture views whose composition exposes a correlated hidden field read as a boundary violation under the declared joint conditions",
+      "pins": [
+        {
+          "id": "A1",
+          "quote": "two individually-permitted fixture views",
+          "witness": {
+            "two individually-permitted": {
+              "values": {
+                "native": [
+                  true,
+                  true
+                ],
+                "injected": [
+                  true,
+                  true
+                ]
+              },
+              "coverage": {
+                "native": [
+                  "complete",
+                  "complete"
+                ],
+                "injected": [
+                  "complete",
+                  "complete"
+                ]
+              },
+              "tones": {
+                "native": [
+                  "success",
+                  "success"
+                ],
+                "injected": [
+                  "success",
+                  "success"
+                ]
+              }
+            },
+            "fixture views": {
+              "views": [
+                "fixture.alpha",
+                "fixture.beta"
+              ],
+              "launches": [
+                [
+                  "--workspace",
+                  "<root>",
+                  "context",
+                  "render",
+                  "--view",
+                  "fixture.alpha",
+                  "--task-id",
+                  "joint-fixture",
+                  "--no-commit",
+                  "--no-input",
+                  "--json"
+                ],
+                [
+                  "--workspace",
+                  "<root>",
+                  "context",
+                  "render",
+                  "--view",
+                  "fixture.beta",
+                  "--task-id",
+                  "joint-fixture",
+                  "--no-commit",
+                  "--no-input",
+                  "--json"
+                ]
+              ],
+              "contractNotes": {
+                "native": [
+                  "view contract: satisfied (fixture.alpha)",
+                  "view contract: satisfied (fixture.beta)"
+                ],
+                "injected": [
+                  "view contract: satisfied (fixture.alpha)",
+                  "view contract: satisfied (fixture.beta)"
+                ]
+              }
+            }
+          },
+          "claims": [
+            {
+              "term": "two individually-permitted",
+              "facts": [
+                "values",
+                "coverage",
+                "tones"
+              ]
+            },
+            {
+              "term": "fixture views",
+              "facts": [
+                "views",
+                "launches",
+                "contractNotes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "A2",
+          "quote": "whose composition exposes a correlated hidden field",
+          "witness": {
+            "whose composition": {
+              "composedEqualsSolo": true,
+              "projectionsEqualSolo": true,
+              "refreshedPair": {
+                "applied": [
+                  "applied",
+                  "applied"
+                ],
+                "nodes": 2,
+                "equalsSolo": true
+              }
+            },
+            "exposes a correlated hidden field": {
+              "valueTexts": [
+                "fixture.alpha constructed half 17",
+                "fixture.beta constructed half 25"
+              ],
+              "hiddenField": {
+                "inEither": false,
+                "derivedFromPair": true
+              },
+              "projectionCarriesText": false
+            }
+          },
+          "claims": [
+            {
+              "term": "whose composition",
+              "facts": [
+                "composedEqualsSolo",
+                "projectionsEqualSolo",
+                "refreshedPair"
+              ]
+            },
+            {
+              "term": "exposes a correlated hidden field",
+              "facts": [
+                "valueTexts",
+                "hiddenField",
+                "projectionCarriesText"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "A3",
+          "quote": "read as a boundary violation under the declared joint conditions",
+          "witness": {
+            "read as a boundary violation": {
+              "boundaryRead": false,
+              "pairTones": [
+                "success",
+                "success"
+              ],
+              "pairCoverage": [
+                "complete",
+                "complete"
+              ]
+            },
+            "under the declared joint conditions": {
+              "srcFindings": [],
+              "floorMet": true,
+              "controlHits": [
+                [
+                  "contextboundary"
+                ],
+                [
+                  "disclosureconditions"
+                ],
+                [
+                  "permissionconditions"
+                ],
+                [
+                  "jointview"
+                ],
+                [
+                  "contextrefinement"
+                ],
+                [
+                  "jointview"
+                ],
+                [
+                  "jointconditions"
+                ],
+                [
+                  "boundaryviolation"
+                ],
+                [
+                  "hiddencorrelation"
+                ],
+                [
+                  "contextboundary"
+                ],
+                [
+                  "contextrefinement"
+                ],
+                [
+                  "jointconditions"
+                ],
+                [
+                  "boundaryviolation"
+                ],
+                [
+                  "disclosureconditions"
+                ],
+                [
+                  "hiddencorrelation"
+                ],
+                [
+                  "permissionconditions"
+                ],
+                [
+                  "jointview"
+                ]
+              ],
+              "quiet": [
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                []
+              ],
+              "boundaryCarriedOpaque": true,
+              "producerShipped": false
+            }
+          },
+          "claims": [
+            {
+              "term": "read as a boundary violation",
+              "facts": [
+                "pairTones",
+                "pairCoverage",
+                "boundaryRead"
+              ]
+            },
+            {
+              "term": "under the declared joint conditions",
+              "facts": [
+                "srcFindings",
+                "floorMet",
+                "controlHits",
+                "quiet",
+                "boundaryCarriedOpaque",
+                "producerShipped"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) a permission/disclosure failure in any composed view surfaces in the projection (failureSnapshot precedent), never swallowed",
+      "pins": [
+        {
+          "id": "B1",
+          "quote": "a permission/disclosure failure in any composed view",
+          "witness": {
+            "a permission/disclosure failure": {
+              "codes": [
+                "RF_BROKER_DEMAND_NOT_OWNED",
+                "RF_BROKER_RIGHTS_DENIED",
+                "RF_CONFIG_LAYER_READONLY",
+                "RF_GRAPH_OVERLAY_SCOPE_DENIED",
+                "RF_GRAPH_OVERLAY_PROTECTED_TARGET",
+                "RF_LENS_BINDING_DENIED",
+                "RF_OBSERVATION_DENIED",
+                "RF_OPTIC_EXECUTION_DENIED",
+                "RF_POLICY_CAPABILITY_DEFAULT_MISSING",
+                "RF_PUBLICATION_IMPACT_UNKNOWN",
+                "RF_PUBLICATION_UNAUTHORIZED",
+                "RF_REPLAY_TRUST_DENIED",
+                "RF_SCENARIO_MODEL_AUDIENCE_REFUSED",
+                "RF_SCENARIO_PUBLISH_REFUSED",
+                "RF_SOURCE_PATH_OUTSIDE_ROOT",
+                "RF_SOURCE_SYMLINK_ESCAPE",
+                "RF_SOURCE_CAPABILITY_DENIED",
+                "RF_STATE_NAMESPACE_PROTECTED",
+                "RF_TRUST_DENIED",
+                "RF_TSX_RESOURCE_DENIED"
+              ],
+              "exitClass": 5
+            },
+            "in any composed view": {
+              "native": {
+                "pairs": 40,
+                "refused": [
+                  "refused"
+                ],
+                "categories": [
+                  "unavailable"
+                ],
+                "namingCode": 40,
+                "others": [
+                  "value"
+                ],
+                "othersAsSolo": 40,
+                "positions": [
+                  0,
+                  1
+                ]
+              },
+              "injected": {
+                "pairs": 40,
+                "ok": [
+                  false
+                ],
+                "primaryIsCode": 40,
+                "refusalsWhole": 40,
+                "othersOk": [
+                  true
+                ],
+                "othersAsSolo": 40
+              }
+            }
+          },
+          "claims": [
+            {
+              "term": "a permission/disclosure failure",
+              "facts": [
+                "codes",
+                "exitClass"
+              ]
+            },
+            {
+              "term": "in any composed view",
+              "facts": [
+                "native",
+                "injected"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "B2",
+          "quote": "surfaces in the projection (failureSnapshot precedent)",
+          "witness": {
+            "surfaces in the projection": {
+              "refused": {
+                "coverage": [
+                  "unknown"
+                ],
+                "tones": [
+                  "failure"
+                ],
+                "statusNamingCode": 20,
+                "notesNamingCode": 20,
+                "topologies": [
+                  {
+                    "snapshots": [
+                      {
+                        "source": {
+                          "provider": "reactivefiber",
+                          "type": "context-preview",
+                          "id": "rfo_cccccccccccccccccccccc",
+                          "scope": "<root>"
+                        },
+                        "scope": {
+                          "workspace": "<root>",
+                          "principal": "fixture"
+                        },
+                        "capturedAt": "2026-10-28T00:00:00Z",
+                        "observedAt": "2026-10-28T00:00:01Z",
+                        "coverage": "unknown",
+                        "node": {
+                          "title": "RF context preview rfo_cccccccccccccccccccccc",
+                          "type": "sdk-operation",
+                          "statusText": "refused · <code>",
+                          "statusTone": "failure"
+                        },
+                        "kind": "reactivefiber.render.preview.snapshot",
+                        "evidenceRefs": [
+                          "rf-workspace:rfw_aaaaaaaaaaaaaaaaaaaaaa"
+                        ]
+                      }
+                    ],
+                    "relations": [],
+                    "diagnostics": [
+                      "render refused with <code>",
+                      "diagnostic message, hint and metadata withheld",
+                      "no native interval supplied"
+                    ]
+                  }
+                ]
+              },
+              "composed": {
+                "pairs": 20,
+                "applied": [
+                  [
+                    "applied",
+                    "applied"
+                  ]
+                ],
+                "nodes": [
+                  2
+                ],
+                "failureNodes": [
+                  [
+                    "rfo_cccccccccccccccccccccc"
+                  ]
+                ],
+                "successNodes": [
+                  [
+                    "rfo_bbbbbbbbbbbbbbbbbbbbbb"
+                  ]
+                ]
+              }
+            },
+            "(failureSnapshot precedent)": {
+              "precedent": "failureSnapshot",
+              "precedentDeclared": true
+            }
+          },
+          "claims": [
+            {
+              "term": "surfaces in the projection",
+              "facts": [
+                "refused",
+                "composed"
+              ]
+            },
+            {
+              "term": "(failureSnapshot precedent)",
+              "facts": [
+                "precedent",
+                "precedentDeclared"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "B3",
+          "quote": "never swallowed",
+          "witness": {
+            "never swallowed": {
+              "orderIndependent": 20,
+              "soloEqual": 20,
+              "twoRefusals": {
+                "failureNodes": [
+                  2
+                ],
+                "soloEqual": 20
+              },
+              "nonfatal": [
+                {
+                  "severity": "info",
+                  "summaryWarnings": 0,
+                  "coverage": "complete",
+                  "tone": "success",
+                  "warnings": 0,
+                  "named": false,
+                  "equalsClean": true
+                },
+                {
+                  "severity": "warning",
+                  "summaryWarnings": 0,
+                  "coverage": "complete",
+                  "tone": "success",
+                  "warnings": 0,
+                  "named": false,
+                  "equalsClean": true
+                },
+                {
+                  "severity": "warning",
+                  "summaryWarnings": 1,
+                  "coverage": "complete",
+                  "tone": "success",
+                  "warnings": 1,
+                  "named": false,
+                  "equalsClean": false
+                }
+              ]
+            }
+          },
+          "claims": [
+            {
+              "term": "never swallowed",
+              "facts": [
+                "orderIndependent",
+                "soloEqual",
+                "twoRefusals",
+                "nonfatal"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) an equivalence/similarity verdict input never short-circuits capability permission checks or observer workspace-scope checks (read admission independent of scoring)",
+      "pins": [
+        {
+          "id": "C1",
+          "quote": "an equivalence/similarity verdict input",
+          "witness": {
+            "an equivalence/similarity verdict": {
+              "words": [
+                "equivalence",
+                "similarity"
+              ],
+              "keys": [
+                "equivalence",
+                "equivalence_verdict",
+                "similarity",
+                "similarity_verdict"
+              ],
+              "values": [
+                true,
+                false,
+                1,
+                0,
+                "equivalent",
+                "divergent",
+                "substitutable"
+              ],
+              "forms": 28
+            },
+            "input": {
+              "arms": [
+                {
+                  "properties": [
+                    "model",
+                    "task"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "properties": [
+                    "view",
+                    "taskId",
+                    "model"
+                  ],
+                  "additionalProperties": false
+                }
+              ],
+              "schemasEqual": true,
+              "nativeOutcomes": {
+                "kinds": [
+                  "refused"
+                ],
+                "categories": [
+                  "validation"
+                ],
+                "messages": [
+                  "Invalid input schema for capability reactivefiber.render.preview."
+                ],
+                "launches": 0
+              },
+              "injectedOutcomes": {
+                "kinds": [
+                  "refused"
+                ],
+                "categories": [
+                  "validation"
+                ],
+                "messages": [
+                  "Invalid input schema for capability reactivefiber.render.preview."
+                ],
+                "calls": 0
+              },
+              "controlLaunches": {
+                "kinds": [
+                  "value"
+                ],
+                "launches": 2,
+                "relayedKinds": [
+                  "value"
+                ],
+                "clientCalls": 2
+              }
+            }
+          },
+          "claims": [
+            {
+              "term": "an equivalence/similarity verdict",
+              "facts": [
+                "words",
+                "keys",
+                "values",
+                "forms"
+              ]
+            },
+            {
+              "term": "input",
+              "facts": [
+                "arms",
+                "schemasEqual",
+                "nativeOutcomes",
+                "injectedOutcomes",
+                "controlLaunches"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "C2",
+          "quote": "never short-circuits capability permission checks",
+          "witness": {
+            "never short-circuits": {
+              "nativeRefusals": {
+                "calls": 696,
+                "categories": [
+                  "authorization"
+                ],
+                "messages": [
+                  "Permission denied for capability reactivefiber.render.preview (invoke)."
+                ],
+                "launches": 0
+              },
+              "injectedRefusals": {
+                "calls": 696,
+                "categories": [
+                  "authorization"
+                ],
+                "messages": [
+                  "Permission denied for capability reactivefiber.render.preview (invoke)."
+                ],
+                "clientCalls": 0
+              },
+              "precedesValidation": true
+            },
+            "capability permission checks": {
+              "permissions": [
+                [
+                  "reactivefiber:render"
+                ]
+              ],
+              "grantSets": 12
+            }
+          },
+          "claims": [
+            {
+              "term": "never short-circuits",
+              "facts": [
+                "nativeRefusals",
+                "injectedRefusals",
+                "precedesValidation"
+              ]
+            },
+            {
+              "term": "capability permission checks",
+              "facts": [
+                "permissions",
+                "grantSets"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "C3",
+          "quote": "or observer workspace-scope checks (read admission independent of scoring)",
+          "witness": {
+            "or observer workspace-scope checks": {
+              "outOfScope": {
+                "readings": 57,
+                "kinds": [
+                  "refused"
+                ],
+                "categories": [
+                  "authorization"
+                ],
+                "messages": [
+                  "RF reading workspace differs from observer scope."
+                ]
+              },
+              "authorizedRoot": {
+                "readings": 57,
+                "kinds": [
+                  "refused"
+                ],
+                "categories": [
+                  "authorization"
+                ],
+                "messages": [
+                  "RF reading workspace differs from observer scope."
+                ]
+              }
+            },
+            "(read admission independent of scoring)": {
+              "positions": [
+                "reading",
+                "result"
+              ],
+              "keys": [
+                "equivalence",
+                "equivalence_verdict",
+                "similarity",
+                "similarity_verdict"
+              ],
+              "forms": 28,
+              "inScopeEqual": {
+                "readings": 57,
+                "equal": 57,
+                "projected": "projected"
+              }
+            }
+          },
+          "claims": [
+            {
+              "term": "or observer workspace-scope checks",
+              "facts": [
+                "outOfScope",
+                "authorizedRoot"
+              ]
+            },
+            {
+              "term": "(read admission independent of scoring)",
+              "facts": [
+                "positions",
+                "keys",
+                "forms",
+                "inScopeEqual"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "vocabulary": [
+    "contextboundary",
+    "contextrefinement",
+    "disclosureconditions",
+    "permissionconditions",
+    "jointview",
+    "boundaryviolation",
+    "jointconditions",
+    "hiddencorrelation"
+  ],
+  "verdictWords": [
+    "equivalence",
+    "similarity"
+  ],
+  "denialCodes": [
+    "RF_BROKER_DEMAND_NOT_OWNED",
+    "RF_BROKER_RIGHTS_DENIED",
+    "RF_CONFIG_LAYER_READONLY",
+    "RF_GRAPH_OVERLAY_SCOPE_DENIED",
+    "RF_GRAPH_OVERLAY_PROTECTED_TARGET",
+    "RF_LENS_BINDING_DENIED",
+    "RF_OBSERVATION_DENIED",
+    "RF_OPTIC_EXECUTION_DENIED",
+    "RF_POLICY_CAPABILITY_DEFAULT_MISSING",
+    "RF_PUBLICATION_IMPACT_UNKNOWN",
+    "RF_PUBLICATION_UNAUTHORIZED",
+    "RF_REPLAY_TRUST_DENIED",
+    "RF_SCENARIO_MODEL_AUDIENCE_REFUSED",
+    "RF_SCENARIO_PUBLISH_REFUSED",
+    "RF_SOURCE_PATH_OUTSIDE_ROOT",
+    "RF_SOURCE_SYMLINK_ESCAPE",
+    "RF_SOURCE_CAPABILITY_DENIED",
+    "RF_STATE_NAMESPACE_PROTECTED",
+    "RF_TRUST_DENIED",
+    "RF_TSX_RESOURCE_DENIED"
+  ],
+  "infoCode": "RF_SOURCE_SECRET_WITHHELD",
+  "residuals": [
+    {
+      "id": "R-CALLER-COMPOSITION",
+      "quietPin": "A2",
+      "fact": "composedEqualsSolo"
+    },
+    {
+      "id": "R-COMPUTED",
+      "quietPin": "A3",
+      "fact": "quiet"
+    },
+    {
+      "id": "R-PARAPHRASE",
+      "quietPin": "A3",
+      "fact": "quiet"
+    },
+    {
+      "id": "R-NONFATAL-DENIAL",
+      "quietPin": "B3",
+      "fact": "nonfatal"
+    }
+  ],
+  "claimsBound": {
+    "pairs": 72,
+    "accepted": []
+  }
+}
