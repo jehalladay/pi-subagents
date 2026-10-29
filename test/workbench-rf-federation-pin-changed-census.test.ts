@@ -44,10 +44,16 @@
  *    and a launcher's binding each read through parentheses and type and non-null assertions (wb-29wk F1: spawn("rf" as string,
  *    argv), (spawn as typeof spawn)("rf", argv), const run = spawn as typeof spawn); an argv is read through inline spreads,
  *    literal .concat chains, type and non-null assertions, and every later push that completes a declared array literal in its
- *    scope (wb-s4j3 F3): a .push or ["push"] call, its callee and receiver read through the same wrappers, made on the literal's
- *    name ((argv as string[]).push, argv!.push) or on a variable declared to that name in its scope after it (const same = argv,
- *    let and var too, a wrapped initializer, an alias of an alias; wb-29wk F1); a render is a "context" word with a later "render"
- *    word (flags may sit between), and a '+' chain of string literals is read as one text (wb-w1g3 F1(iv): G15, G17); A2 a
+ *    scope (wb-s4j3 F3) - a literal a declaration binds to a name: a variable's initializer, a parameter's default or the
+ *    default of a binding element in a declaration's or a parameter's destructuring pattern (function f(w, argv = [...]),
+ *    const { argv = [...] } = opts, const [argv = [...]] = lists; a parameter's scope, its pattern's included, is its function;
+ *    wb-shnw F1): a .push or ["push"] call, its callee and receiver read through the same wrappers, made on the literal's name
+ *    ((argv as string[]).push, argv!.push) or on a name declared to that name in its scope after it (const same = argv, let and
+ *    var too, a wrapped initializer, an alias of an alias; wb-29wk F1; a parameter's or a binding element's default too:
+ *    function f(argv = [...], same = argv), const { same = argv } = opts; wb-shnw F1), never a push made or an alias declared
+ *    before the literal's declaration nor a push after its scope ends (wb-shnw F4: earlierPush, earlierAlias and laterPush, each
+ *    a quiet control); a render is a "context" word with a later "render" word (flags may sit between), and a '+' chain of
+ *    string literals is read as one text (wb-w1g3 F1(iv): G15, G17); A2 a
  *    stand-in rf on PATH sees --no-commit on both
  *    input arms; A3 the rf roster stays the read preview: native and injected registrations selected by id, permission or an rf
  *    contractSource (rf@ release or the reactive-fiber.cli schema), never the id prefix alone (wb-w1g3 F1(iv): G14), and by reach
@@ -119,17 +125,25 @@
  *   capability A3 binds by neither marker nor reach - one relaying the read preview through the registry, or one reaching the
  *   launcher through a name assembled at runtime - is not selected (quiet rows: A3's registryRelay and assembledName controls);
  *   R-MUTATED-ARGV a render argv completed by a mutation other than a push in its declaring scope (unshift, splice, an index write,
- *   a reassignment) is read as its declared literal alone (quiet row: A1's unshiftArgv control); R-INDIRECT-PUSH a push reached
+ *   a reassignment) is read as its declared literal alone (quiet rows: A1's unshiftArgv control and its element twin
+ *   elementUnshift, argv["unshift"](...), wb-shnw F4); R-INDIRECT-PUSH a push reached
  *   other than as a .push or ["push"] call on the literal's name, a wrapper of it or a variable declared to it - through
  *   Array.prototype.push.call or .apply, Reflect.apply, a helper the argv is passed to, or an alias made by assignment rather than
  *   by a declaration - is not folded, so the argv is read as its declared literal alone (quiet row: A1's indirectPush control,
- *   wb-29wk F1); R-VACUOUS-PAYLOAD a case that
+ *   wb-29wk F1); its members also include, each named with a pinned quiet row (wb-shnw F2, F3), an alias declared to an
+ *   expression other than the bare name read through wrappers - among them a comma (const same = (0, argv)), a conditional
+ *   (flag ? argv : argv) and a nullish expression (argv ?? []) - a name destructured from a literal holding the argv or the
+ *   literal itself (const [same] = [argv], const { argv } = { argv: [...] }), a literal bound by an assignment rather than by a
+ *   declaration (let argv; argv = [...], and an assignment pattern's default, ({ argv = [...] } = opts)), a member receiver
+ *   (const box = { argv }; box.argv.push(...)) and a bound push (argv.push.bind(argv)(...)) (quiet rows: A1's commaAlias,
+ *   conditionalAlias, nullishAlias, arrayPatternAlias, objectPatternLiteral, assignedLiteral, assignmentPatternDefault,
+ *   memberReceiver and boundPush controls); R-VACUOUS-PAYLOAD a case that
  *   makes its pinned number of assertions on values it never measured and returns a deep copy of its witness, read from the
  *   roster's rows directly or written out as a literal, keeps its reached count and passes the witness guard (quiet row HQ1).
  * NOT CLAIMED: a coordinated edit of this file and the roster that drops a residual the landed note did not name or re-maps a
- * residual to other quiet pins, that drops a control together with its entry in the pin's roster witness (A1's wb-29wk
- * controls among them), or that rewrites a pin's assertion count: the tracker export anchors only the eight residuals the landed
- * note named and the clause tags of rows B to D; nor an edit of the per-pin wrapper's own guard lines.
+ * residual to other quiet pins, that drops a control together with its entry in the pin's roster witness (A1's wb-29wk and
+ * wb-shnw controls among them), or that rewrites a pin's assertion count: the tracker export anchors only the eight residuals
+ * the landed note named and the clause tags of rows B to D; nor an edit of the per-pin wrapper's own guard lines.
  * SCOPE: the code, metadata shape and record fields are producer facts at the pin; Pi vendors no rf schema, so a producer-side
  * change is seen only when the roster is re-read. The armed half (a committing capability with --idempotency-key and rf operation
  * show reconciliation) is owner-reserved under wb-jwc.5: no committing capability, argv or reader is added here, and the committing
@@ -928,6 +942,19 @@ function scopeOf(node: ts.Node): ts.Node {
   while (!(ts.isBlock(at) || ts.isModuleBlock(at) || ts.isSourceFile(at)) && at.parent !== undefined) at = at.parent;
   return at;
 }
+/** A declaration pushFolded reads (wb-shnw F1): a variable, a parameter, or a binding element of a destructuring pattern in either,
+ * its name bound to its initializer - for a parameter or a binding element, its default. */
+type Declaration = ts.VariableDeclaration | ts.ParameterDeclaration | ts.BindingElement;
+function isDeclaration(node: ts.Node): node is Declaration {
+  return ts.isVariableDeclaration(node) || ts.isParameter(node) || ts.isBindingElement(node);
+}
+/** The node a declared name is visible in (wb-shnw F1): a parameter's function, for the parameter and for every binding element of
+ * its pattern; otherwise the block, module block or source file around the declaration. */
+function declarationScope(node: Declaration): ts.Node {
+  let at: ts.Node = node;
+  while (ts.isBindingElement(at) || ts.isObjectBindingPattern(at) || ts.isArrayBindingPattern(at)) at = at.parent;
+  return ts.isParameter(at) ? at.parent : scopeOf(at);
+}
 /** The name a push call is made on (wb-29wk F1): a `.push(...)` or `["push"](...)` call, its callee and its receiver each read
  * through parentheses and type and non-null assertions ((argv as string[]).push, argv!.push, (argv.push)(...)), when the receiver
  * is a bare name; undefined for any other call (Array.prototype.push.call(argv, ...) among them: R-INDIRECT-PUSH). */
@@ -940,22 +967,28 @@ function pushReceiver(call: ts.CallExpression): string | undefined {
   const name = unwrapped(receiver);
   return ts.isIdentifier(name) ? name.text : undefined;
 }
-/** The argvs a push completes (wb-s4j3 F3; wb-29wk F1): each array literal bound to a local name (its initializer read through
- * wrappers), followed by the words of every later push call on it in the declaring scope, in source order - a pushReceiver call on
- * the name, or on a variable declared to it after it in that scope (its initializer the name, read through wrappers; let and var
- * too; an alias of an alias the same way), each alias's pushes read in its own scope after its declaration; a pushed part that is
- * no string literal reads null (composed). Any other mutation (unshift, splice, an index write, a reassignment) is not folded:
- * R-MUTATED-ARGV; nor is a push reached any other way (push.call or .apply, Reflect.apply, a helper the argv is passed to, an alias
- * made by assignment): R-INDIRECT-PUSH. */
+/** The argvs a push completes (wb-s4j3 F3; wb-29wk F1; wb-shnw F1): each array literal a declaration binds to a local name - a
+ * variable's initializer, a parameter's default or a destructuring binding element's default, in a declaration or a parameter, read
+ * through wrappers - followed by the words of every later push call on it in the declaring scope (a parameter's, its pattern's
+ * included, is its function), in source order - a pushReceiver call on the name, or on a name a later declaration of the same kinds
+ * binds to it in that scope (its initializer or default the name, read through wrappers: const same = argv, let and var too,
+ * function f(argv = [...], same = argv), const { same = argv } = opts; an alias of an alias the same way), each alias's pushes read
+ * in its own scope after its declaration; a pushed part that is no string literal reads null (composed). Any other mutation
+ * (unshift, splice, an index write, a reassignment) is not folded: R-MUTATED-ARGV; nor is a push reached any other way (push.call,
+ * .apply or a bound push, Reflect.apply, a member receiver, a helper the argv is passed to, an alias made by assignment, an alias
+ * declared to any expression other than the name (a comma, conditional or nullish one among them), a name destructured from a
+ * literal holding the argv or the literal itself, a literal bound by an assignment or by an assignment pattern's default):
+ * R-INDIRECT-PUSH. */
 function pushFolded(file: ts.SourceFile): Map<ts.Node, (string | null)[]> {
   const declared: { readonly name: string; readonly scope: ts.Node; readonly end: number; readonly literal: ts.ArrayLiteralExpression }[] = [];
   const aliases: { readonly name: string; readonly target: string; readonly scope: ts.Node; readonly start: number; readonly end: number }[] = [];
   const pushes: { readonly name: string; readonly call: ts.CallExpression }[] = [];
   const visit = (node: ts.Node): void => {
-    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined) {
+    if (isDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined) {
       const literal = unwrapped(node.initializer);
-      if (ts.isArrayLiteralExpression(literal)) declared.push({ name: node.name.text, scope: scopeOf(node), end: node.end, literal });
-      if (ts.isIdentifier(literal)) aliases.push({ name: node.name.text, target: literal.text, scope: scopeOf(node), start: node.getStart(), end: node.end });
+      const scope = declarationScope(node);
+      if (ts.isArrayLiteralExpression(literal)) declared.push({ name: node.name.text, scope, end: node.end, literal });
+      if (ts.isIdentifier(literal)) aliases.push({ name: node.name.text, target: literal.text, scope, start: node.getStart(), end: node.end });
     }
     if (ts.isCallExpression(node)) {
       const receiver = pushReceiver(node);
@@ -966,8 +999,8 @@ function pushFolded(file: ts.SourceFile): Map<ts.Node, (string | null)[]> {
   visit(file);
   const folded = new Map<ts.Node, (string | null)[]>();
   for (const { name, scope, end, literal } of declared) {
-    // The names the literal is reached by, in source order: its own, then every variable declared to one of them in that name's
-    // scope after its declaration (wb-29wk F1).
+    // The names the literal is reached by, in source order: its own, then every name a declaration - a variable, a parameter
+    // default or a destructuring default - binds to one of them in that name's scope after its declaration (wb-29wk F1; wb-shnw F1).
     const handles: { readonly name: string; readonly scope: ts.Node; readonly end: number }[] = [{ name, scope, end }];
     for (const alias of aliases) {
       if (handles.some(handle => handle.name === alias.target && alias.start >= handle.end && alias.end <= handle.scope.end)) handles.push(alias);
@@ -1292,6 +1325,38 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       constantAlias: control('const RF = "rf";\nconst argv = ["--workspace", w, "context"];\nconst same = argv;\nsame.push("render", "--json");\nspawn(RF, argv);'),
       // R-INDIRECT-PUSH, its pinned quiet row: a push reached through Array.prototype.push.call is not folded.
       indirectPush: control('const argv = ["context"];\nArray.prototype.push.call(argv, "render", "--json");\nspawn("rf", argv);'),
+      // wb-shnw F1: a literal a parameter default or a destructuring default declares - the gate's E-PARAM-DEFAULT and
+      // E-DESTRUCT-DEFAULT double escapes (each launching through the constant program, R-WRAPPED-LAUNCH) and
+      // E-PARAM-DEFAULT-LITLAUNCH, a parameter's own pattern and an array pattern - and a name a parameter default or a
+      // destructuring default declares to the argv.
+      paramDefault: control('function f(w: string, argv = ["--workspace", w, "context"]) {\n  const RF = "rf";\n  argv.push("render", "--json");\n  return spawn(RF, argv);\n}'),
+      destructDefault: control('const { argv = ["--workspace", w, "context"] } = opts;\nconst RF = "rf";\nargv.push("render", "--json");\nspawn(RF, argv);'),
+      paramDefaultLaunch: control('function f(w: string, argv = ["--workspace", w, "context"]) {\n  argv.push("render", "--json");\n  return spawn("rf", argv);\n}'),
+      patternParamDefault: control('function f({ argv = ["context"] }: Options) {\n  argv.push("render", "--json");\n  return spawn("rf", argv);\n}'),
+      arrayDefault: control('const [argv = ["context"]] = lists;\nargv.push("render", "--json");\nspawn("rf", argv);'),
+      paramAlias: control('function f(argv = ["context"], same = argv) {\n  same.push("render", "--json");\n  return spawn("rf", argv);\n}'),
+      bindingAlias: control('const argv = ["context"];\nconst { same = argv } = opts;\nsame.push("render", "--json");\nspawn("rf", argv);'),
+      // wb-shnw F1, quiet: a parameter's literal, its pattern's too, is completed only inside its own function.
+      paramScoped: control('function f(argv = ["context"]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      patternScoped: control('function f({ argv = ["context"] }: Options) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      // R-INDIRECT-PUSH members named, each a pinned quiet row: wb-shnw F2's aliases declared to a comma, conditional or nullish
+      // expression or destructured from a literal holding the argv, F3's member receiver and bound push, and beside them the
+      // literal itself destructured from a literal holding it and a literal bound by an assignment or an assignment pattern.
+      commaAlias: control('const argv = ["context"];\nconst same = (0, argv);\nsame.push("render", "--json");\nspawn("rf", argv);'),
+      conditionalAlias: control('const argv = ["context"];\nconst same = flag ? argv : argv;\nsame.push("render", "--json");\nspawn("rf", argv);'),
+      nullishAlias: control('const argv = ["context"];\nconst same = argv ?? [];\nsame.push("render", "--json");\nspawn("rf", argv);'),
+      arrayPatternAlias: control('const argv = ["context"];\nconst [same] = [argv];\nsame.push("render", "--json");\nspawn("rf", argv);'),
+      objectPatternLiteral: control('const { argv } = { argv: ["context"] };\nargv.push("render", "--json");\nspawn("rf", argv);'),
+      assignedLiteral: control('let argv;\nargv = ["context"];\nargv.push("render", "--json");\nspawn("rf", argv);'),
+      assignmentPatternDefault: control('let argv;\n({ argv = ["context"] } = opts);\nargv.push("render", "--json");\nspawn("rf", argv);'),
+      memberReceiver: control('const argv = ["context"];\nconst box = { argv };\nbox.argv.push("render", "--json");\nspawn("rf", argv);'),
+      boundPush: control('const argv = ["context"];\nargv.push.bind(argv)("render", "--json");\nspawn("rf", argv);'),
+      // wb-shnw F4, the guards no control pinned, each a quiet row: an alias declared before the literal, a push before it or
+      // after its scope ends, and an element call other than ["push"] (the element twin of unshiftArgv, R-MUTATED-ARGV).
+      earlierAlias: control('const same = argv;\n{ const argv = ["context"]; same.push("render", "--json"); spawn("rf", argv); }'),
+      earlierPush: control('argv.push("render", "--json");\n{ const argv = ["context"]; spawn("rf", argv); }'),
+      laterPush: control('{ const argv = ["context"]; spawn("rf", argv); }\nargv.push("render", "--json");'),
+      elementUnshift: control('const argv = ["--workspace", w];\nargv["unshift"]("context", "render");\nspawn("rf", argv);'),
     };
     expect(controls).toStrictEqual({
       uncommittedArgv: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, noCommitArgv: { render: 1, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
@@ -1315,6 +1380,17 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       assertedBoth: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, nonNullBoth: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
       constantAsserted: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 }, constantAlias: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
       indirectPush: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      paramDefault: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 }, destructDefault: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      paramDefaultLaunch: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, patternParamDefault: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      arrayDefault: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, paramAlias: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      bindingAlias: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, paramScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      patternScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, commaAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      conditionalAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, nullishAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      arrayPatternAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, objectPatternLiteral: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      assignedLiteral: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, assignmentPatternDefault: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      memberReceiver: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, boundPush: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      earlierAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, earlierPush: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      laterPush: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, elementUnshift: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
     });
     return { srcFloorMet, ...found, controls };
   },

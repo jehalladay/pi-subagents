@@ -33,11 +33,11 @@ export interface HyperUnixTopologyContext {
   invocationId?: string;
   operationRef?: NativeRef;
 }
-/** Deeply frozen: one query snapshot, at most one grouping edge and at most 8 sanitized diagnostics. */
+/** Deeply frozen: one query snapshot, at most one grouping edge, at most 8 sanitized diagnostics and, only when the result carries any, at most 16 relayed facets (wb-gwr.2, resultFacets). */
 export interface HyperUnixProjectionTopology {
   snapshots: readonly NativeSnapshot[];
   relations: readonly HyperUnixObservedRelation[];
-  diagnostics: readonly string[];
+  diagnostics: readonly string[]; facets?: readonly HyperUnixResultFacet[];
 }
 /** One clause of the runtime-licence invariant hxLiveInvariant checks, in check order. */
 export type HyperUnixLiveClause =
@@ -246,16 +246,18 @@ export function hyperunixTopology(reading: JsonValue, context: HyperUnixTopology
   // Display grouping only: the result names no lifecycle owner, so no native confirmation reference is ever stated.
   const relations: HyperUnixObservedRelation[] = operationRef === undefined ? [] : [{scope: {...host.scope}, from: {...operationRef}, to: {...ref},
     kind: 'grouping', provenance: {source: 'hyperunix', observedAt: host.observedAt}}];
-  return frozen({snapshots: [snapshot], relations, diagnostics: diagnostics.slice(0, MAX_DIAGNOSTICS).map(text => shown(text, DIAGNOSTIC))});
+  return finish(snapshot, relations, diagnostics, source);
 }
 
 /** How hyperunixTopology uses one field of the hyperunix.find provider output. 'observed': an evidence field the projection is
  * built from (the execution kind, the runtime licence, row retention, the operation, each certified batch id, the runtime
  * identity) that a rewritten query plan must keep; 'rows': the answer rows, read for their count only and never for a row body;
  * 'envelope': the provider contract, the SDK representation tag and the workspace root, checked for identity and refused at any
- * other value. */
-export type HyperUnixFieldUse = 'observed' | 'rows' | 'envelope';
-/** One consumed field: a dotted path from the provider output root, '[]' standing for every element of a list. */
+ * other value; 'relayed' (wb-gwr.2): a field carried verbatim into its own facet (the view identity, a listed provider and its
+ * version, a conflict diagnostic's code, an incomplete region's scope and target) that moves the facets and nothing else. */
+export type HyperUnixFieldUse = 'observed' | 'rows' | 'envelope' | 'relayed';
+/** One consumed field: a dotted path from the provider output root, '[]' standing for every element of a list and a closing '.*'
+ * for every member of a map keyed by data (a provider's version, read by the provider's name). */
 export interface HyperUnixConsumedField {
   readonly path: string;
   readonly use: HyperUnixFieldUse;
@@ -264,7 +266,8 @@ export interface HyperUnixConsumedField {
  * which result fields a query plan must keep observable (its query-observer contract, design only); the vendored @hyperunix/sdk
  * 0.1.0 declares none. Until the SDK ships that declaration, test/workbench-hyperunix-consumed-fields.test.ts pins this set to
  * the adapter's measured reads both ways: a read outside it, or a listed field the adapter never reads or never lets move its
- * outcome, fails there. Once it ships, the 'observed' entries are what Pi declares on every find. */
+ * outcome, fails there. Once it ships, the 'observed' entries are what Pi declares on every find, with the 'relayed' entries beside
+ * them (wb-gwr.2: a plan rewrite that dropped one would drop its facet). */
 export const HYPERUNIX_CONSUMED_FIELDS: readonly HyperUnixConsumedField[] = frozen([
   {path: 'contract', use: 'envelope'},
   {path: 'source.representation', use: 'envelope'},
@@ -277,4 +280,89 @@ export const HYPERUNIX_CONSUMED_FIELDS: readonly HyperUnixConsumedField[] = froz
   {path: 'workspaceRoot', use: 'envelope'},
   {path: 'source.coverage[].batch_id', use: 'observed'},
   {path: 'source.rows_retained', use: 'observed'},
+  {path: 'source.view', use: 'relayed'},
+  {path: 'source.evidence.providers[]', use: 'relayed'},
+  {path: 'source.evidence.provider_versions.*', use: 'relayed'},
+  {path: 'source.diagnostics[].code', use: 'relayed'},
+  {path: 'source.coverage_summary.incomplete_regions[].scope', use: 'relayed'},
+  {path: 'source.coverage_summary.incomplete_regions[].target', use: 'relayed'},
 ]);
+
+/** One field of the HX result relayed verbatim as its own facet (wb-gwr.2, HX-PREDICTIVE-WORLD-MODEL-ADAPTERS-R2; HX WM-002 names
+ * them: the view identity, the provider versions, conflict and incomplete-region statuses). Each string is the producer's own,
+ * through the shared display sanitizer (shown: sanitizeWorkbenchText, label layout) and bounded; a facet whose string sanitizes to
+ * nothing is not relayed. A display reading only: no facet is coverage, tone, absence, a query id, a source version, an evidence
+ * reference or a source basis. hyperunix.result/1 has no consistency-mode field, so no facet names one. */
+export type HyperUnixResultFacet =
+  | {readonly kind: 'view'; readonly view: string}
+  | {readonly kind: 'provider-version'; readonly provider: string; readonly version: string}
+  | {readonly kind: 'conflict'; readonly code: string}
+  | {readonly kind: 'incomplete-region'; readonly scope: string; readonly target: string};
+
+/** The bound on each relayed facet string, and on the facets one projection carries (wb-gwr.2). */
+const FACET = 200;
+const MAX_FACETS = 16;
+/** A producer diagnostic is a conflict status when its code names CONFLICT as a whole segment, as HX's registry spells conflicts
+ * (HX-SCHEMA-CONFLICT, HX-CONTENT-EDIT-ORIGIN-CONFLICT). */
+const CONFLICT_CODE = /(?:^|[^A-Z0-9])CONFLICT(?:[^A-Z0-9]|$)/;
+
+/** The result's facets in the statement's order (view, provider versions, conflicts, incomplete regions) and how many past
+ * MAX_FACETS were not kept. Only the measured shapes are read: a string view; a provider the result lists in evidence.providers,
+ * with its string version from evidence.provider_versions (an entry for a provider the result does not list is not relayed); a
+ * diagnostic whose string code names a conflict (its message is never read); an incomplete region with a string scope and a
+ * string target (any other region shape stays unread, as an unknown producer field). */
+function resultFacets(source: JsonRecord): {facets: HyperUnixResultFacet[]; omitted: number} {
+  const found: HyperUnixResultFacet[] = [];
+  const view = source.view;
+  if (typeof view === 'string') {
+    const shownView = shown(view, FACET);
+    if (shownView !== '') found.push({kind: 'view', view: shownView});
+  }
+  // Local names stay distinct from hyperunixTopology's own (evidence, version): a name-keyed source reading must not conflate them.
+  const summary = record(source.evidence);
+  const providers = summary?.providers;
+  const versions = record(summary?.provider_versions);
+  if (Array.isArray(providers)) {
+    for (const provider of providers) {
+      if (typeof provider !== 'string') continue;
+      const providerVersion = versions !== undefined && Object.hasOwn(versions, provider) ? versions[provider] : undefined;
+      if (typeof providerVersion !== 'string') continue;
+      const shownProvider = shown(provider, FACET);
+      const shownVersion = shown(providerVersion, FACET);
+      if (shownProvider !== '' && shownVersion !== '') found.push({kind: 'provider-version', provider: shownProvider, version: shownVersion});
+    }
+  }
+  const producerDiagnostics = source.diagnostics;
+  if (Array.isArray(producerDiagnostics)) {
+    for (const item of producerDiagnostics) {
+      const code = record(item)?.code;
+      if (typeof code !== 'string' || !CONFLICT_CODE.test(code)) continue;
+      const shownCode = shown(code, FACET);
+      if (shownCode !== '') found.push({kind: 'conflict', code: shownCode});
+    }
+  }
+  const regions = record(source.coverage_summary)?.incomplete_regions;
+  if (Array.isArray(regions)) {
+    for (const item of regions) {
+      const region = record(item);
+      if (region === undefined) continue;
+      const scope = region.scope;
+      const target = region.target;
+      if (typeof scope !== 'string' || typeof target !== 'string') continue;
+      const shownScope = shown(scope, FACET);
+      const shownTarget = shown(target, FACET);
+      if (shownScope !== '' && shownTarget !== '') found.push({kind: 'incomplete-region', scope: shownScope, target: shownTarget});
+    }
+  }
+  return {facets: found.slice(0, MAX_FACETS), omitted: Math.max(0, found.length - MAX_FACETS)};
+}
+
+/** hyperunixTopology's frozen result: the snapshot, its relations and its bounded diagnostics, with the result's facets relayed
+ * beside the snapshot and never into it (wb-gwr.2) - coverage, tone, the id, the source version and evidence are already fixed. A
+ * result carrying no facet projects without a facets member, byte for byte as before. */
+function finish(snapshot: NativeSnapshot, relations: HyperUnixObservedRelation[], diagnostics: string[], source: JsonRecord): HyperUnixProjectionTopology {
+  const relayed = resultFacets(source);
+  if (relayed.omitted > 0) diagnostics.push(`result facets are capped at ${MAX_FACETS}: ${relayed.omitted} omitted`);
+  return frozen({snapshots: [snapshot], relations, diagnostics: diagnostics.slice(0, MAX_DIAGNOSTICS).map(text => shown(text, DIAGNOSTIC)),
+    ...(relayed.facets.length > 0 ? {facets: relayed.facets} : {})});
+}
