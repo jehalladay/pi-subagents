@@ -1,5 +1,5 @@
 {
-  "comment": "wb-1xvp.3 (RF-GRAPH-POLICY-MACHINE-CONTROL-R2; the hk9l/5jha roster pattern, as wb-1xvp.4 uses it; extended by wb-66f7, wb-rdv6, wb-lx6m and wb-2xd5): the OUT-OF-FILE anchor of test/workbench-gp-control-loop-audit.test.ts. rows: every judged row of test/helpers/gp-control-loop-audit-cases.ts in table order (CALL_SITES, NOT_CALL_SITES, RESIDUALS, ANNOTATED, UNANNOTATED, MISATTRIBUTED, FALSIFIERS, STAGES) - table, positional id, label and the SHA-256 of each pin as written (each input and each expectation). residuals: the named residual families, each pinned by its row (the RESIDUALS quiet rows, then the MISATTRIBUTED rows that read today's credit). tests: every test the suite registers, in order. Written from the rows and the registered tests as measured at the cut; the suite judges its tables, its residual families and its registered tests (vitest task tree, run modes) against this file at test time, in order and both ways.",
+  "comment": "wb-1xvp.3 (RF-GRAPH-POLICY-MACHINE-CONTROL-R2; the hk9l/5jha roster pattern, as wb-1xvp.4 uses it; extended by wb-66f7, wb-rdv6, wb-lx6m, wb-2xd5 and wb-1cyt): the OUT-OF-FILE anchor of test/workbench-gp-control-loop-audit.test.ts. rows: every judged row of test/helpers/gp-control-loop-audit-cases.ts in table order (CALL_SITES, NOT_CALL_SITES, RESIDUALS, ANNOTATED, UNANNOTATED, MISATTRIBUTED, FALSIFIERS, STAGES) - table, positional id, label and the SHA-256 of each pin as written (each input and each expectation). residuals: the named residual families, each pinned by its row (the RESIDUALS quiet rows, then the MISATTRIBUTED rows that read today's credit). tests: every test the suite registers, in order. Written from the rows and the registered tests as measured at the cut; the suite judges its tables, its residual families and its registered tests (vitest task tree, run modes) against this file at test time, in order and both ways.",
   "rows": [
     {
       "table": "CALL_SITES",
@@ -612,6 +612,24 @@
       ]
     },
     {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-17",
+      "label": "a marker on its own line inside an ambient module declaration's module block, above the statement that holds the literal: a statement of a module block is a unit (wb-1cyt, wb-2xd5 gate P-MODBLOCK-INSIDE)",
+      "pins": [
+        "6109c90002b9548dbcd83df3388ba0b27cccc71ce7c6e591aebb9b1ff8e87a7d",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-18",
+      "label": "a marker on its own line inside a default clause, above the statement that holds the literal: a statement of a default clause is a unit (wb-1cyt, wb-2xd5 gate P-DEFAULT-INSIDE)",
+      "pins": [
+        "c8383e9fae4ec9bb9d5891191eb646361dec9279f74af2ee267604f667718120",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
       "table": "UNANNOTATED",
       "id": "UNANNOTATED-01",
       "label": "no comment at all",
@@ -817,6 +835,70 @@
       "label": "a marker above an enum declaration whose member holds the literal: the unit is the member, not the enum (wb-2xd5)",
       "pins": [
         "cca594041fe9f8214dd888340eb85f4a0bdfe1ee018a4c952c04d071c70b7454"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-27",
+      "label": "a marker inside an interface declaration that is the blockless body of the if statement whose condition holds the literal: a nested interface is a member holder (wb-1cyt, wb-2xd5 gate P-IF-IFACE)",
+      "pins": [
+        "e549a18c063c3c0d399b3c26e4fc9519535e5d533f9fe38adb3352ff2e1807d2"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-28",
+      "label": "a marker inside an enum declaration that is the blockless body of the if statement whose condition holds the literal: a nested enum is a member holder (wb-1cyt, wb-2xd5 gate P-IF-ENUM)",
+      "pins": [
+        "d5389795956d90c8b19be08a3bababa667a5964318304c43899f1984278f352a"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-29",
+      "label": "a marker above an ambient module declaration whose module block holds the statement that holds the literal: the unit is that statement, not the module declaration (wb-1cyt, wb-2xd5 gate P-MODBLOCK-ABOVE)",
+      "pins": [
+        "6c2588aef4d7ae637ab353c5b8482fc3c42ce1f07ece8ff658eb9f14565631a5"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-30",
+      "label": "a marker above a default clause whose statement holds the literal: the unit is that statement, not the switch (wb-1cyt, wb-2xd5 gate P-DEFAULT-ABOVE)",
+      "pins": [
+        "a6c889f93757a0d8a56bcea69257ba4fdcedff680bccc2c41c006ac58b6f00b2"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-31",
+      "label": "a marker above a class declaration whose type parameter holds the literal: the unit is the type parameter, not the class (wb-1cyt, wb-2xd5 gate P-CLASS-TYPEPARAM)",
+      "pins": [
+        "08062dac95d5d702ccbfe9d4b94bc2ab99825916575ca88af9cc91978c798e65"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-32",
+      "label": "a marker inside the body of a class whose decorator holds the literal, on the literal's line: the unit is the decorator, not the class (wb-1cyt, wb-2xd5 gate P-CLASS-DECORATOR)",
+      "pins": [
+        "81314fc745a2b5fd82e5b86a7f013c56036cd92037e557f0090f31b46fc9083f"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-33",
+      "label": "a marker above an interface declaration whose heritage clause holds the literal: the unit is the heritage clause, not the interface (wb-1cyt, wb-2xd5 gate P-IFACE-HERITAGE)",
+      "pins": [
+        "ad214aeffec35c11b4add1e2ae0875b6a4803b1cf4963c96e02a5b773f641336"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-34",
+      "label": "a marker above an interface declaration whose type parameter holds the literal: the unit is the type parameter, not the interface (wb-1cyt, wb-2xd5 gate P-IFACE-TYPEPARAM)",
+      "pins": [
+        "b5e744b31fffd22d30c98799b8d177122b000346163c74e7e090a5f191ea880c"
       ]
     },
     {
@@ -2180,6 +2262,8 @@
     "a comment after else, above the branch that holds the literal names it",
     "a marker after // on a JSDoc tag line, credited once (a JSDoc block is read whole, never entered) names it",
     "a comment after a labeled for statement's header, before the blockless body that holds the literal (wb-2xd5, wb-lx6m gate G-C14) names it",
+    "a marker on its own line inside an ambient module declaration's module block, above the statement that holds the literal: a statement of a module block is a unit (wb-1cyt, wb-2xd5 gate P-MODBLOCK-INSIDE) names it",
+    "a marker on its own line inside a default clause, above the statement that holds the literal: a statement of a default clause is a unit (wb-1cyt, wb-2xd5 gate P-DEFAULT-INSIDE) names it",
     "no comment at all does not name one",
     "a marker inside a string on the line above does not name one",
     "a marker trailing the previous statement does not name one",
@@ -2206,6 +2290,14 @@
     "a marker above a case clause whose label is the literal: the unit is the label, not the case clause (wb-2xd5) does not name one",
     "a marker above an interface declaration whose member holds the literal: the unit is the member, not the interface (wb-2xd5) does not name one",
     "a marker above an enum declaration whose member holds the literal: the unit is the member, not the enum (wb-2xd5) does not name one",
+    "a marker inside an interface declaration that is the blockless body of the if statement whose condition holds the literal: a nested interface is a member holder (wb-1cyt, wb-2xd5 gate P-IF-IFACE) does not name one",
+    "a marker inside an enum declaration that is the blockless body of the if statement whose condition holds the literal: a nested enum is a member holder (wb-1cyt, wb-2xd5 gate P-IF-ENUM) does not name one",
+    "a marker above an ambient module declaration whose module block holds the statement that holds the literal: the unit is that statement, not the module declaration (wb-1cyt, wb-2xd5 gate P-MODBLOCK-ABOVE) does not name one",
+    "a marker above a default clause whose statement holds the literal: the unit is that statement, not the switch (wb-1cyt, wb-2xd5 gate P-DEFAULT-ABOVE) does not name one",
+    "a marker above a class declaration whose type parameter holds the literal: the unit is the type parameter, not the class (wb-1cyt, wb-2xd5 gate P-CLASS-TYPEPARAM) does not name one",
+    "a marker inside the body of a class whose decorator holds the literal, on the literal's line: the unit is the decorator, not the class (wb-1cyt, wb-2xd5 gate P-CLASS-DECORATOR) does not name one",
+    "a marker above an interface declaration whose heritage clause holds the literal: the unit is the heritage clause, not the interface (wb-1cyt, wb-2xd5 gate P-IFACE-HERITAGE) does not name one",
+    "a marker above an interface declaration whose type parameter holds the literal: the unit is the type parameter, not the interface (wb-1cyt, wb-2xd5 gate P-IFACE-TYPEPARAM) does not name one",
     "residual RES-13 a marker inside an expression-bodied arrow, annotating its body, is credited to a gp literal later in the same call (gate B01) (named, not cured: today's credit is pinned)",
     "residual RES-14 a marker inside a nested call's argument list is credited to a gp literal later in the outer call (gate B02) (named, not cured: today's credit is pinned)",
     "residual RES-15 a marker on a ternary's first branch is credited to a gp literal in its second branch (gate B03) (named, not cured: today's credit is pinned)",
