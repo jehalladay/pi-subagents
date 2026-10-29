@@ -157,7 +157,8 @@
   "C6=blocks=s2,s1;unmet=-",
   "C7=blocks=s7;unmet=-",
   "C8=blocks=-;unmet=-",
-  "C9=blocks=-;unmet=s8"
+  "C9=blocks=-;unmet=s8",
+  "C10=blocks=s1;unmet=s9,s10"
  ],
  "mutants": [
   "M01:wire-provider-query:K-WIRING",
@@ -183,7 +184,17 @@
   "M21:drop-provenance:K-SPLIT",
   "M22:first-evidence-only:K-SPLIT",
   "M23:every-subject-unmet:K-SPLIT",
-  "M24:empty-document:K-DEMAND+K-SPLIT"
+  "M24:empty-document:K-DEMAND+K-SPLIT",
+  "M25:reverse-unmet:K-DEMAND",
+  "M26:hand-extra-field:K-WIRING",
+  "M27:hand-in-demand:K-WIRING",
+  "M28:hand-unlisted-port:K-WIRING",
+  "M29:hand-accessor:K-WIRING",
+  "M30:hand-array-property:K-WIRING",
+  "M31:hand-inherited:K-WIRING",
+  "M32:hand-proxy:K-WIRING",
+  "M33:document-coverage:K-SPLIT",
+  "M34:block-coverage:K-SPLIT"
  ],
  "residuals": {
   "Q1": [
@@ -200,7 +211,11 @@
    "joined-at-run-time",
    "template-substitution",
    "operator-split",
-   "homoglyph"
+   "homoglyph",
+   "digit-glued",
+   "acronym-run",
+   "small-capitals",
+   "docs-homoglyph-row"
   ],
   "Q3": [
    "line-comment",
@@ -208,7 +223,8 @@
    "doc-comment"
   ],
   "Q4": [
-   "unnamed-seam"
+   "unnamed-seam",
+   "docs-other-words-row"
   ],
   "Q5": [
    "outside-provider-call"
@@ -294,7 +310,8 @@
    "C6": "host:s2,s1",
    "C7": "host:s7",
    "C8": "host:",
-   "C9": "host:s8"
+   "C9": "host:s8",
+   "C10": "host:s9,s1,s10"
   },
   "S1b": {
    "reference": [],
@@ -305,10 +322,14 @@
    "M13": [
     "C2=demand:placed",
     "C3=demand:placed",
-    "C9=demand:placed"
+    "C9=demand:placed",
+    "C10=demand:placed"
    ],
    "M16": [
     "C6=demand:order"
+   ],
+   "M25": [
+    "C10=demand:order"
    ]
   },
   "S2a": {
@@ -321,7 +342,8 @@
     "C1=impure:input",
     "C2=impure:input",
     "C5=impure:input",
-    "C6=impure:input"
+    "C6=impure:input",
+    "C10=impure:input"
    ]
   },
   "S2b": {
@@ -334,7 +356,8 @@
     "C6": "blocks=s2,s1;unmet=-",
     "C7": "blocks=s7;unmet=-",
     "C8": "blocks=-;unmet=-",
-    "C9": "blocks=-;unmet=s8"
+    "C9": "blocks=-;unmet=s8",
+    "C10": "blocks=s1;unmet=s9,s10"
    },
    "split": []
   },
@@ -348,7 +371,8 @@
     "C6": "ok",
     "C7": "ok",
     "C8": "ok",
-    "C9": "ok"
+    "C9": "ok",
+    "C10": "ok"
    },
    "effects": {
     "C1": "0",
@@ -359,7 +383,8 @@
     "C6": "0",
     "C7": "0",
     "C8": "0",
-    "C9": "0"
+    "C9": "0",
+    "C10": "0"
    }
   },
   "S3b": {
@@ -372,7 +397,8 @@
     "C6": "ok",
     "C7": "ok",
     "C8": "ok",
-    "C9": "ok"
+    "C9": "ok",
+    "C10": "ok"
    },
    "handles": {
     "C1": "0",
@@ -383,7 +409,40 @@
     "C6": "0",
     "C7": "0",
     "C8": "0",
-    "C9": "0"
+    "C9": "0",
+    "C10": "0"
+   },
+   "smuggled": {
+    "M26": [
+     "K-WIRING"
+    ],
+    "M27": [
+     "K-WIRING"
+    ],
+    "M28": [
+     "K-WIRING"
+    ],
+    "M29": [
+     "K-WIRING"
+    ],
+    "M30": [
+     "K-WIRING"
+    ],
+    "M31": [
+     "K-WIRING"
+    ],
+    "M32": [
+     "K-WIRING"
+    ]
+   },
+   "readings": {
+    "M26": "wired:function:wiring.query",
+    "M27": "wired:function:wiring.demand.query",
+    "M28": "wired:port:provider-lookup+function:wiring.ports.provider-lookup",
+    "M29": "wired:accessor:wiring.query",
+    "M30": "wired:function:wiring.evidence.query",
+    "M31": "wired:prototype:wiring",
+    "M32": "wired:proxy:wiring"
    }
   },
   "S3c": {
@@ -407,6 +466,12 @@
     ],
     "M08": [
      "K-EFFECT"
+    ],
+    "M33": [
+     "K-SPLIT"
+    ],
+    "M34": [
+     "K-SPLIT"
     ]
    },
    "work-admission": {
@@ -560,11 +625,14 @@
    "closedComplete": []
   },
   "A1c": {
-   "found": true,
-   "header": [
-    "Concern",
-    "Authoritative owner",
-    "Workbench may do"
+   "ok": true,
+   "why": "",
+   "headers": [
+    [
+     "Concern",
+     "Authoritative owner",
+     "Workbench may do"
+    ]
    ],
    "floor": true,
    "owners": [
@@ -572,10 +640,84 @@
     1,
     1
    ],
+   "unread": [],
    "planted": [],
-   "fenced": false,
-   "otherHeading": false,
-   "afterNextHeading": false
+   "fenced": {
+    "ok": true,
+    "why": "",
+    "tables": 0,
+    "rows": 0,
+    "naming": [],
+    "unread": []
+   },
+   "otherHeading": {
+    "ok": false,
+    "why": "the rendered view has no level-2 heading \"Ownership boundaries\"",
+    "tables": 0,
+    "rows": 0,
+    "naming": [],
+    "unread": []
+   },
+   "afterNextHeading": {
+    "ok": true,
+    "why": "",
+    "tables": 0,
+    "rows": 0,
+    "naming": [],
+    "unread": []
+   },
+   "subsection": {
+    "ok": true,
+    "why": "",
+    "tables": 2,
+    "rows": 14,
+    "naming": [
+     "Pi (host)"
+    ],
+    "unread": []
+   },
+   "secondTable": {
+    "ok": true,
+    "why": "",
+    "tables": 2,
+    "rows": 14,
+    "naming": [
+     "Pi (host)"
+    ],
+    "unread": []
+   },
+   "duplicateAtEnd": {
+    "ok": false,
+    "why": "the heading \"Ownership boundaries\" occurs 2 times in the rendered view; a pinned section needs it exactly once",
+    "tables": 0,
+    "rows": 0,
+    "naming": [],
+    "unread": []
+   },
+   "duplicateAbove": {
+    "ok": false,
+    "why": "the heading \"Ownership boundaries\" occurs 2 times in the rendered view; a pinned section needs it exactly once",
+    "tables": 0,
+    "rows": 0,
+    "naming": [],
+    "unread": []
+   },
+   "reHomed": {
+    "ok": false,
+    "why": "the heading \"Ownership boundaries\" sits under the parent heading path [\"Appendix\"]; the census binds it under [\"03 \u2014 High-level architecture, module ownership and dataflow\"]",
+    "tables": 0,
+    "rows": 0,
+    "naming": [],
+    "unread": []
+   },
+   "crossChecked": {
+    "ok": false,
+    "why": "table 1: the rendered cells disagree with the shared rendered view (1 tables read, 1 rendered)",
+    "tables": 0,
+    "rows": 0,
+    "naming": [],
+    "unread": []
+   }
   },
   "A2a": {
    "reference": [],
@@ -603,15 +745,15 @@
    ],
    "provider-query": {
     "effect": "effect:provider-query:s3",
-    "wired": "wired:provider-query"
+    "wired": "wired:port:provider-query+function:wiring.ports.provider-query"
    },
    "coverage-mint": {
     "effect": "effect:coverage-mint:s1+coverage-mint:s2",
-    "wired": "wired:coverage-mint"
+    "wired": "wired:port:coverage-mint+function:wiring.ports.coverage-mint"
    },
    "work-admission": {
     "effect": "effect:work-admission:s3",
-    "wired": "wired:work-admission"
+    "wired": "wired:port:work-admission+function:wiring.ports.work-admission"
    }
   },
   "D1": {
@@ -645,15 +787,128 @@
   "D3": {
    "page": "docs/workbench/01-product-vision-and-user-journeys.md",
    "line": 5,
-   "held": true
+   "heading": "Product mission",
+   "reading": {
+    "ok": true,
+    "why": "",
+    "hasHtml": false,
+    "blocks": [
+     {
+      "kind": "paragraph",
+      "text": "Give Pi a native workflow laboratory: it can design, run, observe, debug and improve both Claude-style scripts and real workflows assembled from MechanicalWorkflows and the broader SDK ecosystem. Scripted agent() calls execute through the real Claude Agent SDK. Deterministic SDK operations execute through narrow host-side providers. Workbench observation is a derived lens over native state, never a competing execution authority.",
+      "markdown": "Give Pi a native workflow laboratory: it can *design*, *run*, *observe*, *debug* and *improve* both Claude-style scripts and real workflows assembled from MechanicalWorkflows and the broader SDK ecosystem. Scripted agent() calls execute through the **real Claude Agent SDK**. Deterministic SDK operations execute through narrow host-side providers. Workbench observation is a derived lens over native state, never a competing execution authority."
+     }
+    ],
+    "holding": [
+     "Workbench observation is a derived lens over native state, never a competing execution authority."
+    ],
+    "equal": true,
+    "onLine": true
+   },
+   "inSentence": {
+    "section": false,
+    "equal": false,
+    "onLine": false
+   },
+   "afterSentence": {
+    "section": false,
+    "equal": true,
+    "onLine": false
+   },
+   "belowLine": {
+    "section": false,
+    "equal": true,
+    "onLine": true
+   }
   },
   "D4": {
    "floor": true,
    "naming": [],
+   "unread": [],
    "planted": [
     "Pi (host)",
     "EDC assembler"
-   ]
+   ],
+   "subsection": {
+    "ok": true,
+    "why": "",
+    "tables": 2,
+    "rows": 14,
+    "naming": [
+     "Pi (host)"
+    ],
+    "unread": []
+   },
+   "secondTable": {
+    "ok": true,
+    "why": "",
+    "tables": 2,
+    "rows": 14,
+    "naming": [
+     "Pi (host)"
+    ],
+    "unread": []
+   },
+   "markupSplit": {
+    "ok": true,
+    "why": "",
+    "tables": 1,
+    "rows": 14,
+    "naming": [
+     "Pi (host)"
+    ],
+    "unread": []
+   },
+   "references": {
+    "ok": true,
+    "why": "",
+    "tables": 1,
+    "rows": 14,
+    "naming": [
+     "Pi (host)"
+    ],
+    "unread": []
+   },
+   "folded": {
+    "ok": true,
+    "why": "",
+    "tables": 1,
+    "rows": 14,
+    "naming": [
+     "Pi (host)"
+    ],
+    "unread": []
+   },
+   "blockquote": {
+    "ok": true,
+    "why": "",
+    "tables": 1,
+    "rows": 13,
+    "naming": [],
+    "unread": [
+     "other:blockquote"
+    ]
+   },
+   "list": {
+    "ok": true,
+    "why": "",
+    "tables": 1,
+    "rows": 13,
+    "naming": [],
+    "unread": [
+     "list"
+    ]
+   },
+   "comment": {
+    "ok": true,
+    "why": "",
+    "tables": 1,
+    "rows": 13,
+    "naming": [],
+    "unread": [
+     "html"
+    ]
+   }
   },
   "Q1": {
    "name": "R-SHARED-WORD",
@@ -667,7 +922,8 @@
     "provider-query"
    ],
    "findings": [],
-   "gate": "CLOSED"
+   "gate": "CLOSED",
+   "rows": []
   },
   "Q2": {
    "name": "R-COMPOSED",
@@ -676,10 +932,21 @@
     "joined-at-run-time",
     "template-substitution",
     "operator-split",
-    "homoglyph"
+    "homoglyph",
+    "digit-glued",
+    "acronym-run",
+    "small-capitals"
    ],
    "findings": [],
-   "gate": "CLOSED"
+   "gate": "CLOSED",
+   "rows": [
+    {
+     "id": "docs-homoglyph-row",
+     "read": true,
+     "naming": [],
+     "unread": []
+    }
+   ]
   },
   "Q3": {
    "name": "R-COMMENT",
@@ -689,7 +956,8 @@
     "doc-comment"
    ],
    "findings": [],
-   "gate": "CLOSED"
+   "gate": "CLOSED",
+   "rows": []
   },
   "Q4": {
    "name": "R-UNNAMED-SEAM",
@@ -697,7 +965,15 @@
     "unnamed-seam"
    ],
    "findings": [],
-   "gate": "CLOSED"
+   "gate": "CLOSED",
+   "rows": [
+    {
+     "id": "docs-other-words-row",
+     "read": true,
+     "naming": [],
+     "unread": []
+    }
+   ]
   },
   "Q5": {
    "refused": [],
