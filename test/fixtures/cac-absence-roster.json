@@ -616,6 +616,14 @@
   {
    "id": "R-VERSION",
    "family": "a schema member under another version suffix is another identifier and escapes the exact-name reading"
+  },
+  {
+   "id": "R-TITLE",
+   "family": "a needle on a receipt's R539 title line - line 1 of docs/workbench/receipts/<id>.md, exactly '# <id>: <title>' with that bead's own title in the tracked export - is title data (wb-ycue F3)"
+  },
+  {
+   "id": "R-REQUIREMENT-ID",
+   "family": "a needle inside an export requirement id (a title's opening bracketed tag) spelled whole in a comment or a describe title of a test/ source outside the holders is title data (wb-ycue F3)"
   }
  ]
 }

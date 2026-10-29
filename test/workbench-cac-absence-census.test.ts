@@ -53,6 +53,31 @@
  * MEASURED FOR wb-8ccl AT 8d458c6 (trunk tip at claim time, landing 586): the two-word member written with a tab and with a no-break
  * space in place of its space, planted in one src file of the live tree, reads quiet (25 of 25, the gate's landing-579 F2 escape), so
  * both are R-SPELLING members, which its quiet row now plants with every other white-space character (RESIDUALS below).
+ * FOLLOW-UP (wb-ycue, the R694 follow-up of the landing-543 gate's F3 lead; F4 and F5 ride). F3: rule 15 (R539) fixes a receipt's first
+ * line as "# <bead>: <bead title>" and test/ is judged by holder class, so a bead whose title spells a needle reds this census the day
+ * it ships a receipt, and so does a non-census test carrying its requirement id (the gate's F1 and F2 contacts were the first two
+ * members). MEASURED AT e8e13f8 (trunk tip at claim time, landing 672), again at bcc41fc (landing 673) and a4cf24c (landing 674), each
+ * merged into the branch, every count below unchanged: the export titles 18 beads with a needle and carries 13 requirement ids that
+ * spell one (of 234); 41 of the 52 receipts open with exactly "# <id>: <export title>" and none spells a needle; every test/ hit sits
+ * in a holder. On the untouched census a temporary R539 receipt for one of those beads reads 3 failed (A2, C2 and the records case; 3
+ * product hits on its line 1) and a temporary non-holder test whose doc comment and describe title carry a requirement id reads 3
+ * failed (2 outside hits); with this cut both read green. THE TITLE READINGS (READINGS below) read a bead's own title text as data -
+ * the R719 analogue of the holder reading, each with its pinned quiet row (R-TITLE, R-REQUIREMENT-ID) - and hold nothing else: they
+ * narrow the filing's "zero matches" by exactly those two shapes (the delivery note carries the standing rule 22(d) reading).
+ * F4 NOT TAKEN (measured): exempting qa/workbench/status-ledger.mjs:30 alone and judging the sibling training program's name would
+ * refuse what the landed BEADS-TRAININGWORKS-R1 status census admits - its clause (a) reads every docs/workbench citation of that name
+ * and owes the deposit's status phrase within 400 chars, never zero (80 lines in 3 files at e8e13f8: that ledger line, the census
+ * module and the roster it names) - so the member stays EXCLUDED under R-SIBLING.
+ * F5 (the residual anchor): a family removed from QUIET and the roster together read green (R-SCOPE: 24 of 24 on the untouched census
+ * at e8e13f8), the enumeration's only anchors being its own literals. Each family now owes SUBJECTS derived outside this file's
+ * literals (residualSubjects): R-SIBLING each member the roster excludes from the filing's set, in product scope; R-HOLDER a census
+ * module and a fixture it names, while the live census reads holder hits; R-SPELLING each needle's other case and the two-word member
+ * under each separator of the engine's \s class; R-ENCODED each free needle's base64; R-SCOPE each live root entry outside the five
+ * trees and docs/ past docs/workbench (38 in this worktree unbuilt; the git-ignored dist/ and .forge/ a build and a default-tier run
+ * leave make 40 - these subjects follow the checkout); R-ALIAS each program file the vendored lines come from, by stem (13); R-VERSION
+ * each schema member's other version; R-TITLE a live export title that spells a needle, on a receipt's line 1; R-REQUIREMENT-ID a live
+ * requirement id that spells one, in a test/ source outside the holders. Every write a quiet row makes is recorded (PLANTED) and the
+ * residual-anchor case requires each subject planted (320 unbuilt, 322 built), so a family's row deleted with its roster entry reds.
  *
  * READINGS. A tree is walked from the repository root by directory entries: a regular file is read, a directory recursed (hidden
  * entries included), anything else (a symlink, a socket) is UNREAD and recorded. Every file is read as latin1 bytes, so the ASCII
@@ -64,6 +89,12 @@
  *   path (the wb-xvmw NAMING reading, fixtureNames: the same expressions and reading as the wb-z3ft.2 census) - is the census's data,
  *   never a finding; a hit anywhere else under test/ is a finding.
  * - SELF: this file and its roster are holders, and still read at zero raw hits.
+ * - TITLES (wb-ycue F3): a hit inside a receipt's R539 title line - line 1 of docs/workbench/receipts/<id>.md (the shared receipts
+ *   judge's RECEIPT_FILE) when it is exactly "# <id>: <title>" with that bead's own title in the tracked export (.beads/issues.jsonl
+ *   of the tree read; a bead it carries twice has none) - or inside an export requirement id (a title's opening bracketed tag) spelled
+ *   as one token in a comment or a describe title of a test/ source outside the holders, is the bead's title data, never a finding.
+ *   A receipt's body, a paraphrased or another bead's title line, the line on another page, a nested receipt, an id in an it title,
+ *   in a code string or a describe.each title, in product scope or a non-source file, and a longer or prefixed token stay judged.
  * - PACKAGES: every name and spec package.json and vendor/dependency-lock.json carry (the name, each dependency map's keys and values,
  *   the bundled list; for the lock every packages entry's path tail, name, maps, bundled list and resolved target). A Library or
  *   program package name: a scope or name part with a segment equal to the acronym (any case), the library scope, a name whose first
@@ -124,7 +155,9 @@
  * separators (underscore, hyphen, two spaces and, since wb-8ccl, each other white-space character: the engine's \s class over the BMP,
  * 24 characters with a line break, the tab and the no-break space U+00A0 among them, pinned by code point in SPACE_SEPARATOR_POINTS
  * and derived at run time in WHITE_SPACE), and R-ENCODED reads the one extension member whose text spells a base member through that
- * member: encoded, it is still read (as the member it spells), so it is no escape.
+ * member: encoded, it is still read (as the member it spells), so it is no escape. With wb-ycue, R-TITLE a needle on a receipt's R539
+ * title line, the bead's own export title, is title data, and R-REQUIREMENT-ID a needle inside an export requirement id in a test's
+ * comment or describe title is title data (THE TITLE READINGS); every family is held to its outside subjects (F5 above).
  * Gate behaviour: the day a source owner publishes an exported package or an adapter with a recorded adoption gate, the artifact is
  * triaged as its own program-triage epic and the cut that lands its adoption owes this census's update; until then it stays empty by
  * design. Display paths added: none. Test-only: synthetic trees live in makeScratch scratch with the leak guard installed; src, the
@@ -136,6 +169,7 @@ import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { afterAll, describe, expect, it } from "vitest";
+import { RECEIPT_FILE } from "../qa/workbench/receipts-index.mjs";
 import { NATIVE_CONTROL_ACTIONS } from "../src/workbench/control.js";
 import { RECONCILE_EVIDENCE_READS } from "../src/workflow/reconcile.js";
 import { docsSection, type RenderedBlock, type SectionMatch, sectionMatches, sourceStructure } from "./helpers/census.js";
@@ -220,6 +254,9 @@ interface Census {
   readonly product: readonly Hit[];
   readonly outside: readonly Hit[];
   readonly holder: readonly Hit[];
+  /** wb-ycue F3: hits read as a bead's own title text - a receipt's R539 title line, an export requirement id inside a test's comment
+   * or describe title - data, never a finding. */
+  readonly titled: readonly Hit[];
   /** `${file}:${line}` of every bound-sentence occurrence in product scope. */
   readonly bound: readonly string[];
 }
@@ -239,6 +276,8 @@ const EXT_BEAD = "wb-rdlh.2";
 const DOCS_FILE = "docs/workbench/18-decisions-and-risks.md";
 const DOCS_PARENT = "18 — Decisions, risks, deliberate defaults and re-evaluation triggers";
 const DOCS_HEADING = "Library design programs";
+/** The R539 receipts directory: an entry named <bead id>.md (RECEIPT_FILE, the shared receipts judge's file grammar) is a receipt. */
+const RECEIPTS_DIR = "docs/workbench/receipts/";
 const ROSTER = JSON.parse(readFileSync(join(REPO, ROSTER_FILE), "utf8")) as Roster;
 /** The five trees, in the filing's order. */
 const ROOTS: readonly string[] = ["src", "test", "qa", "docs/workbench", "examples"];
@@ -420,14 +459,24 @@ const escapeRe = (text: string): string => text.replace(/[.*+?^${}()|[\]\\]/g, "
 const alternative = (needle: Needle): string => (needle.word ? `(?<![A-Za-z0-9_])${escapeRe(needle.text)}(?![A-Za-z0-9_])` : escapeRe(needle.text));
 const MATCHER = new RegExp(NEEDLES.map(alternative).join("|"), "g");
 const ANY = new RegExp(MATCHER.source);
-function hitsIn(file: string, text: string): Hit[] {
+/** A hit with its offsets in the text read (the title readings hold a hit by where it sits). */
+interface Located {
+  readonly hit: Hit;
+  readonly at: number;
+  readonly end: number;
+}
+function locatedHits(file: string, text: string): Located[] {
   if (!ANY.test(text)) return [];
-  const hits: Hit[] = [];
-  const lines = text.split("\n");
-  for (let index = 0; index < lines.length; index += 1) {
-    for (const match of (lines[index] ?? "").matchAll(MATCHER)) hits.push({ file, line: index + 1, needle: match[0] });
+  const found: Located[] = [];
+  let start = 0;
+  for (const [index, line] of text.split("\n").entries()) {
+    for (const match of line.matchAll(MATCHER)) found.push({ hit: { file, line: index + 1, needle: match[0] }, at: start + match.index, end: start + match.index + match[0].length });
+    start += line.length + 1;
   }
-  return hits;
+  return found;
+}
+function hitsIn(file: string, text: string): Hit[] {
+  return locatedHits(file, text).map(item => item.hit);
 }
 const rawHits = (file: string): Hit[] => hitsIn(file, readFileSync(join(REPO, file), "latin1"));
 const latin1 = (text: string): string => Buffer.from(text, "utf8").toString("latin1");
@@ -477,6 +526,84 @@ function fixtureNames(text: string): string[] {
   const runs = (text.match(QUOTED_RUN) ?? []).map(run => run.split(/["'`]\s*,\s*["'`]/).join("/").slice(1, -1).replace(/^\.\//, ""));
   return [...tokens.filter(token => token.startsWith("test/fixtures/")), ...runs.flatMap(run => (run.startsWith("fixtures/") ? [`test/${run}`] : run.startsWith("test/fixtures/") ? [run] : []))];
 }
+/** wb-ycue F3, the export a tree carries (.beads/issues.jsonl under its root; absent, it reads none): each bead's title by id - a bead
+ * the export carries in more than one row has none, as filing() refuses such a row - and the requirement ids, each title's opening
+ * bracketed tag (REQUIREMENT_TAG: the furnace citation-status census's id form, a digit admitted inside a segment). */
+const REQUIREMENT_TAG = /^\[([A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*-R\d+)\] /;
+interface Titles {
+  readonly byId: ReadonlyMap<string, string>;
+  readonly requirements: readonly string[];
+}
+function exportTitles(root: string): Titles {
+  const file = join(root, EXPORT_FILE);
+  const rows = new Map<string, string[]>();
+  if (existsSync(file)) {
+    for (const line of readFileSync(file, "utf8").split("\n")) {
+      if (line.trim() === "") continue;
+      const row = JSON.parse(line) as { readonly id?: unknown; readonly title?: unknown };
+      if (typeof row.id === "string" && typeof row.title === "string") rows.set(row.id, [...(rows.get(row.id) ?? []), row.title]);
+    }
+  }
+  const byId = new Map([...rows].flatMap(([id, titles]) => (titles.length === 1 ? [[id, titles[0] ?? ""] as const] : [])));
+  return { byId, requirements: [...new Set([...byId.values()].flatMap(title => REQUIREMENT_TAG.exec(title)?.[1] ?? []))].sort() };
+}
+/** A [from, to) extent of a file's text. */
+type Extent = readonly [number, number];
+/** R-TITLE's reading: a receipt's R539 title line (rule 15: "# <bead>: <bead title>"), line 1 of docs/workbench/receipts/<id>.md, held
+ * whole when it is exactly "# <id>: <title>" with <title> that bead's own title in the export. A body line, a paraphrased or another
+ * bead's title, a bead the export lacks or carries twice, a nested or misnamed file and the same line on another page hold nothing. */
+function titleLine(file: string, text: string, titles: Titles): Extent[] {
+  const id = file.startsWith(RECEIPTS_DIR) ? RECEIPT_FILE.exec(file.slice(RECEIPTS_DIR.length))?.[1] : undefined;
+  const title = id === undefined ? undefined : titles.byId.get(id);
+  const first = text.split("\n", 1)[0] ?? "";
+  return title !== undefined && first === latin1(`# ${id}: ${title}`) ? [[0, first.length]] : [];
+}
+/** Every comment of a source, read as test/helpers/gp-control-loop-audit.ts commentsOf reads them: the leading and trailing trivia of
+ * every node and token (getChildren, whose last child of the SourceFile is its EndOfFileToken, so the end-of-file trivia is read by the
+ * walk itself), a JSDoc block read whole and never entered. */
+function commentExtents(source: ts.SourceFile): Extent[] {
+  const found = new Map<number, number>();
+  const add = (ranges: readonly ts.CommentRange[] | undefined): void => {
+    for (const range of ranges ?? []) found.set(range.pos, range.end);
+  };
+  const visit = (node: ts.Node): void => {
+    add(ts.getLeadingCommentRanges(source.text, node.pos));
+    add(ts.getTrailingCommentRanges(source.text, node.end));
+    for (const child of node.getChildren(source)) if (!ts.isJSDoc(child)) visit(child);
+  };
+  visit(source);
+  return [...found];
+}
+/** Every describe title: the first argument of describe(...) or describe.<member>(...) when it is a plain string literal, inside its
+ * quotes (a template with substitutions, a describe.each table's title or any other call holds nothing). */
+function describeTitles(source: ts.SourceFile): Extent[] {
+  const found: Extent[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isCallExpression(node)) {
+      const callee = node.expression;
+      const named = (ts.isIdentifier(callee) && callee.text === "describe") || (ts.isPropertyAccessExpression(callee) && ts.isIdentifier(callee.expression) && callee.expression.text === "describe");
+      const title = node.arguments[0];
+      if (named && title !== undefined && (ts.isStringLiteral(title) || ts.isNoSubstitutionTemplateLiteral(title))) found.push([title.getStart(source) + 1, title.getEnd() - 1]);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return found;
+}
+/** A requirement id read as one token: no letter, digit, underscore or hyphen on either side. */
+const requirementPattern = (id: string): RegExp => new RegExp(`(?<![A-Za-z0-9_-])${escapeRe(id)}(?![A-Za-z0-9_-])`, "g");
+/** R-REQUIREMENT-ID's reading: the export requirement ids a test/ source (a file TypeScript parses; any other holds nothing) spells as
+ * one token inside a comment or a describe title. Only an id that spells a judged needle can hold a hit, so only those are read. */
+function requirementIds(file: string, text: string, titles: Titles): Extent[] {
+  if (!/\.[cm]?[jt]s$/.test(file)) return [];
+  const ids = titles.requirements.filter(id => ANY.test(id));
+  if (ids.length === 0) return [];
+  const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, /\.[cm]?js$/.test(file) ? ts.ScriptKind.JS : ts.ScriptKind.TS);
+  const places = [...commentExtents(source), ...describeTitles(source)];
+  return ids
+    .flatMap(id => [...text.matchAll(requirementPattern(id))].map((match): Extent => [match.index, match.index + id.length]))
+    .filter(([from, to]) => places.some(([start, end]) => from >= start && to <= end));
+}
 function walk(root: string, dir: string, unread: string[]): string[] {
   if (!existsSync(join(root, dir))) return [];
   return readdirSync(join(root, dir), { withFileTypes: true })
@@ -507,7 +634,9 @@ function treeCensus(root: string): Census {
   const product: Hit[] = [];
   const outside: Hit[] = [];
   const holder: Hit[] = [];
+  const titled: Hit[] = [];
   const sites: string[] = [];
+  let titles: Titles | undefined;
   for (const file of files) {
     let text = texts.get(file) ?? "";
     const inProduct = PRODUCT.some(dir => file.startsWith(`${dir}/`));
@@ -518,12 +647,21 @@ function treeCensus(root: string): Census {
       }
       if (file === DOCS_FILE) text = text.replaceAll(bound, " ".repeat(bound.length));
     }
-    const hits = hitsIn(file, text);
-    if (inProduct) product.push(...hits);
-    else if (holders.has(file)) holder.push(...hits);
-    else outside.push(...hits);
+    const hits = locatedHits(file, text);
+    if (holders.has(file)) {
+      holder.push(...hits.map(item => item.hit));
+      continue;
+    }
+    if (hits.length === 0) continue;
+    titles ??= exportTitles(root);
+    const held = inProduct ? titleLine(file, text, titles) : requirementIds(file, text, titles);
+    for (const { hit, at, end } of hits) {
+      if (held.some(([from, to]) => at >= from && end <= to)) titled.push(hit);
+      else if (inProduct) product.push(hit);
+      else outside.push(hit);
+    }
   }
-  return { files, perRoot, unread, product, outside, holder, bound: sites };
+  return { files, perRoot, unread, product, outside, holder, titled, bound: sites };
 }
 let REAL: Census | undefined;
 /** The live repository's reading, read once. */
@@ -614,9 +752,18 @@ function registryNames(): { readonly read: Readonly<Record<string, number>>; rea
 }
 
 // --- synthetic trees ----------------------------------------------------------------------------------------------------------------------
+/** wb-ycue F5, the plant record: every file a quiet row writes, by row (the residual anchor reads it). */
+interface Plant {
+  readonly quiet: string;
+  readonly file: string;
+  readonly text: string;
+}
+const PLANTED: Plant[] = [];
+let planting: string | undefined;
 const write = (root: string, file: string, text: string): void => {
   mkdirSync(dirname(join(root, file)), { recursive: true });
   writeFileSync(join(root, file), text);
+  if (planting !== undefined) PLANTED.push({ quiet: planting, file, text });
 };
 const BOUND_PAGE = `# ${DOCS_PARENT}\n\n## ${DOCS_HEADING}\n\n${PARAGRAPH}\n`;
 /** The walked shape in miniature: one clean file per tree, the bound page, a census module and the roster it names. */
@@ -918,6 +1065,34 @@ const swaps = (text: string): string[] =>
     text.replaceAll("-", " "),
     ...["_", "-", "  ", ...WHITE_SPACE].map(separator => text.replaceAll(" ", separator)),
   ].filter(variant => variant !== text);
+/** The live export's rows whose title spells a judged needle, by id - the beads the two title readings exist for (wb-ycue F3). */
+function titledRows(): (readonly [string, string])[] {
+  return [...exportTitles(REPO).byId].filter(([, title]) => ANY.test(title)).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+}
+/** A synthetic tree's export: one row per bead, an id and a title (all the title readings read). */
+const exportRows = (rows: readonly (readonly [string, string])[]): string => rows.map(([id, title]) => `${JSON.stringify({ id, title })}\n`).join("");
+/** The other judged members a member's own text spells, each by its own reading. */
+const spells = (needle: Needle): string[] => NEEDLES.filter(other => other !== needle && new RegExp(alternative(other)).test(needle.text)).map(other => other.text);
+/** The live repository's entries outside the five trees, each as the site a plant takes - a directory's plant.txt, a file itself - read
+ * from its root and from docs/ past docs/workbench (the VCS store is skipped: no reader edits it). R-SCOPE's subjects. */
+function outsideSites(): string[] {
+  const sites = (dir: string): string[] =>
+    readdirSync(join(REPO, dir), { withFileTypes: true })
+      .filter(entry => entry.name !== ".git")
+      .map(entry => `${dir}${entry.name}${entry.isDirectory() ? "/plant.txt" : ""}`);
+  const walked = new Set([...ROOTS, "docs"].map(dir => `${dir}/plant.txt`));
+  return [...sites(""), ...sites("docs/")].filter(site => !walked.has(site)).sort();
+}
+/** The program's files by stem: each vendored or cited line's file at either pin (README.md aside), its number, extension and version
+ * suffix dropped - the names an adapter would likeliest carry. R-ALIAS's subjects. */
+const PROGRAM_STEMS: readonly string[] = [
+  ...new Set(
+    [...ROSTER.spans, ...ROSTER.extension.spans, ...ROSTER.extension.citations]
+      .map(span => span.site.slice(0, span.site.lastIndexOf(":")))
+      .filter(file => /^\d{2}-.+\.md$/.test(file))
+      .map(file => file.replace(/^\d{2}-/, "").replace(/\.md$/, "").replace(/-v\d+(?:-\d+)*$/, "")),
+  ),
+].sort();
 const QUIET: Readonly<Record<string, () => void>> = {
   "R-SIBLING": () => {
     expect(EXCLUDED.length > 0 && EXCLUDED.every(member => STATEMENT.plus.includes(member)), "each excluded member is a filing member").toBe(true);
@@ -961,10 +1136,8 @@ const QUIET: Readonly<Record<string, () => void>> = {
       Buffer.from(needle.text, "utf8").toString("base64"),
       `${needle.text.slice(0, 1)}" + "${needle.text.slice(1)}`,
     ];
-    /** The other judged members a member's own text spells, each by its own reading. */
-    const spelled = (needle: Needle): string[] => NEEDLES.filter(other => other !== needle && new RegExp(alternative(other)).test(needle.text)).map(other => other.text);
-    const free = NEEDLES.filter(needle => spelled(needle).length === 0);
-    const holding = NEEDLES.filter(needle => spelled(needle).length > 0);
+    const free = NEEDLES.filter(needle => spells(needle).length === 0);
+    const holding = NEEDLES.filter(needle => spells(needle).length > 0);
     expect(
       [NEEDLES.filter(needle => needle.source === "base").every(needle => free.includes(needle)), holding.every(needle => needle.source === "extension")],
       "every base member spells no other member; only an extension member can",
@@ -975,12 +1148,14 @@ const QUIET: Readonly<Record<string, () => void>> = {
       for (const needle of holding) {
         write(root, "src/plant.ts", encode(needle).map(code).join(""));
         const read = findings(treeCensus(root));
-        expect(read.length > 0 && read.every(hit => spelled(needle).includes(hit.needle)), "a member that spells another member is still read through it, encoded").toBe(true);
+        expect(read.length > 0 && read.every(hit => spells(needle).includes(hit.needle)), "a member that spells another member is still read through it, encoded").toBe(true);
       }
     });
   },
   "R-SCOPE": () => {
-    const sites = ["docs/plant.md", "README.md", ".agents/plant.md", "vendor/plant.txt"];
+    const outside = outsideSites();
+    expect(outside.length, "the live repository holds entries outside the five trees").toBeGreaterThan(0);
+    const sites = [...new Set(["docs/plant.md", "README.md", ".agents/plant.md", "vendor/plant.txt", ...outside])];
     withTree(root => {
       for (const site of sites) write(root, site, NEEDLES.map(needle => code(needle.text)).join(""));
       const read = treeCensus(root);
@@ -991,6 +1166,14 @@ const QUIET: Readonly<Record<string, () => void>> = {
   "R-ALIAS": () => {
     expect(packageFindings(manifestRead({ dependencies: { "@acme/certified-composition": "1.0.0", [`lib${ACRONYM}`]: "file:vendor/library-free.tgz" } })), "an alias package reads quiet").toEqual([]);
     expect(["certified-composition", "composition.read"].filter(idNamed), "an alias evidence read or provider reads quiet").toEqual([]);
+    expect(PROGRAM_STEMS.length, "the vendored lines come from the program's numbered files").toBeGreaterThanOrEqual(8);
+    const aliases = PROGRAM_STEMS.map(stem => `@acme/${stem}`);
+    expect(packageFindings(manifestRead({ dependencies: Object.fromEntries(aliases.map(name => [name, "1.0.0"])) })), "a package named for a program file reads quiet").toEqual([]);
+    expect(PROGRAM_STEMS.filter(idNamed), "an evidence read or provider named for a program file reads quiet").toEqual([]);
+    withTree(root => {
+      write(root, "src/plant.ts", [...aliases, ...PROGRAM_STEMS].map(code).join(""));
+      expect(findings(treeCensus(root)), "an alias carries no judged member, so the line reading is quiet too").toEqual([]);
+    });
   },
   "R-VERSION": () => {
     const schema = NEEDLES.filter(needle => needle.family === "schema");
@@ -1001,7 +1184,129 @@ const QUIET: Readonly<Record<string, () => void>> = {
       expect(findings(treeCensus(root)), "a schema member under another version suffix reads quiet").toEqual([]);
     });
   },
+  "R-TITLE": () => {
+    const [id = "", title = ""] = titledRows()[0] ?? [];
+    expect(hitsIn(id, title).length, "the live export titles a bead with a judged needle").toBeGreaterThan(0);
+    const line = `# ${id}: ${title}`;
+    const receipt = `${RECEIPTS_DIR}${id}.md`;
+    const page = (first: string, body = "The receipt body."): string => `${first}\n\n## 2026-10-29 receipt\n\n${body}\n`;
+    const dashed = `${STATEMENT.word} ${String.fromCodePoint(0x2014)} a title past ASCII`;
+    const exported = exportRows([
+      [id, title],
+      ["wb-zz1", "a title naming nothing"],
+      ["wb-zz3", dashed],
+    ]);
+    const read = (plants: Readonly<Record<string, string>>): Census =>
+      withTree(root => {
+        write(root, EXPORT_FILE, exported);
+        for (const [file, text] of Object.entries(plants)) write(root, file, text);
+        return treeCensus(root);
+      });
+    const held = read({ [receipt]: page(line) });
+    expect(findings(held), "a receipt's R539 title line, the bead's own title in the export, is title data").toEqual([]);
+    expect(held.titled, "every hit of that line is held, and only on line 1").toEqual(hitsIn(receipt, latin1(line)));
+    const past = read({ [`${RECEIPTS_DIR}wb-zz3.md`]: page(`# wb-zz3: ${dashed}`) });
+    expect([findings(past), past.titled.length], "a title past ASCII is held through its UTF-8 bytes").toEqual([[], 1]);
+    const onLine = (file: string, text: string, at: number): Hit[] => hitsIn(file, latin1(text)).filter(hit => hit.line === at);
+    const other = `${RECEIPTS_DIR}wb-zz1.md`;
+    const absent = `${RECEIPTS_DIR}wb-zz2.md`;
+    const nested = `${RECEIPTS_DIR}sub/${id}.md`;
+    const controls: readonly (readonly [string, Readonly<Record<string, string>>, readonly Hit[]])[] = [
+      ["a body line", { [receipt]: page(line, title) }, onLine(receipt, page(line, title), 5)],
+      ["a paraphrased title line", { [receipt]: page(`${line} (paraphrased)`) }, onLine(receipt, page(`${line} (paraphrased)`), 1)],
+      ["another bead's receipt carrying the title", { [other]: page(`# wb-zz1: ${title}`) }, onLine(other, page(`# wb-zz1: ${title}`), 1)],
+      ["a bead the export lacks", { [absent]: page(`# wb-zz2: ${title}`) }, onLine(absent, page(`# wb-zz2: ${title}`), 1)],
+      ["the line on another page", { "docs/workbench/plant.md": page(line) }, onLine("docs/workbench/plant.md", page(line), 1)],
+      ["a nested receipt", { [nested]: page(line) }, onLine(nested, page(line), 1)],
+      ["a bead the export carries twice", { [EXPORT_FILE]: `${exported}${exportRows([[id, title]])}`, [receipt]: page(line) }, onLine(receipt, page(line), 1)],
+    ];
+    for (const [why, plants, expected] of controls) {
+      expect(expected.length, `${why}: the control plants a hit`).toBeGreaterThan(0);
+      expect(findings(read(plants)), `${why} is judged, never held`).toEqual(expected);
+    }
+  },
+  "R-REQUIREMENT-ID": () => {
+    const [bead = "", title = ""] = titledRows().find(([, text]) => ANY.test(REQUIREMENT_TAG.exec(text)?.[1] ?? "")) ?? [];
+    const requirement = REQUIREMENT_TAG.exec(title)?.[1] ?? "";
+    const spelled = hitsIn(requirement, requirement);
+    expect(spelled.length, "the live export carries a requirement id that spells a judged needle").toBeGreaterThan(0);
+    const exported = exportRows([[bead, title]]);
+    const site = "test/plant.test.ts";
+    const source = (...lines: readonly string[]): string => ['import { describe, expect, it } from "vitest";', "", ...lines, ""].join("\n");
+    const read = (plants: Readonly<Record<string, string>>, exportText = exported): Census =>
+      withTree(root => {
+        write(root, EXPORT_FILE, exportText);
+        for (const [file, text] of Object.entries(plants)) write(root, file, text);
+        return treeCensus(root);
+      });
+    const plant = source(
+      `/** ${bead} (${requirement}): the plant. */`,
+      `describe("${bead} ${requirement} plant", () => {`,
+      '  it("runs", () => {',
+      `    expect(1).toBe(1); // ${requirement} trails a statement`,
+      "  });",
+      "});",
+      `// ${requirement} closes the plant.`,
+    );
+    const held = read({ [site]: plant });
+    expect(findings(held), "an export requirement id in a test's comment or describe title is title data").toEqual([]);
+    expect(held.titled, "every hit of the id is held where it sits").toEqual(hitsIn(site, plant));
+    const unexported = `${requirement.replace(/-R\d+$/, "")}-R0`;
+    expect(exportTitles(REPO).requirements.includes(unexported), "the control's id is no export requirement id").toBe(false);
+    const cases: readonly (readonly [string, string, string])[] = [
+      ["an it title", site, source(`it("${requirement} runs", () => {`, "  expect(1).toBe(1);", "});")],
+      ["a code string", site, source(`export const plant = "${requirement}";`)],
+      ["an id the export lacks", site, source(`// ${unexported} is no exported id`)],
+      ["a describe.each title", site, source(`describe.each([1])("${bead} ${requirement} %s", () => {});`)],
+      ["a longer token", site, source(`// ${requirement}9 is another token`)],
+      ["a prefixed token", site, source(`// X-${requirement} is another token`)],
+      ["a product-scope comment", "src/plant.ts", `// ${requirement}\n`],
+      ["a comment-shaped line in a non-source file", "test/fixtures/stray.txt", `// ${requirement}\n`],
+    ];
+    for (const [why, file, text] of cases) {
+      const expected = hitsIn(file, text);
+      expect(expected.length, `${why}: the control plants a hit`).toBeGreaterThan(0);
+      expect(findings(read({ [file]: text })), `${why} is judged, never held`).toEqual(expected);
+    }
+    const beside = read({ [site]: source(`// ${requirement} and ${STATEMENT.word} alone`) });
+    expect(findings(beside), "a bare needle beside a held id is a finding").toEqual([{ file: site, line: 3, needle: STATEMENT.word }]);
+    expect(beside.titled.length, "and the id beside it is still held").toBe(spelled.length);
+    expect(findings(read({ [site]: plant }, exportRows([["wb-zz1", "a title naming nothing"]]))), "an export that lacks the bead holds nothing").toEqual(hitsIn(site, plant));
+  },
 };
+
+// --- the residual anchor (wb-ycue F5) ---------------------------------------------------------------------------------------------------
+/** Every residual family's subjects, each derived from a source outside this file's literals - the filings and the vendored lines
+ * (NEEDLES), the engine's \s class (WHITE_SPACE), the roster's exclusion of a filing member, the files the vendored lines come from,
+ * the live repository's root, the live census's holder hits and the live export's titles - each paired with whether a quiet row
+ * planted it (PLANTED). A family removed from QUIET and the roster together leaves its subjects unplanted, and the anchor case reds. */
+function residualSubjects(): { readonly subject: string; readonly planted: boolean }[] {
+  const has = (test: (plant: Plant) => boolean): boolean => PLANTED.some(test);
+  const spelt = (text: string): boolean => has(plant => plant.text.includes(text));
+  const inProduct = (file: string): boolean => PRODUCT.some(dir => file.startsWith(`${dir}/`));
+  const firstLine = (plant: Plant): string => (plant.file.startsWith(RECEIPTS_DIR) && RECEIPT_FILE.test(plant.file.slice(RECEIPTS_DIR.length)) ? (plant.text.split("\n", 1)[0] ?? "") : "");
+  const rows = titledRows();
+  const requirements = rows.flatMap(([, title]) => REQUIREMENT_TAG.exec(title)?.[1] ?? []).filter(id => ANY.test(id));
+  const other = (texts: readonly string[]): string[] => texts.filter(text => !NEEDLES.some(needle => needle.text === text));
+  return [
+    ...EXCLUDED.map(member => ({ subject: `excluded member ${member}`, planted: has(plant => inProduct(plant.file) && plant.text.includes(member)) })),
+    ...(realCensus().holder.length > 0
+      ? [{ subject: "a census module and a fixture it names, each spelling a needle", planted: has(plant => HOLDER_MODULE.test(plant.file) && ANY.test(plant.text)) && has(plant => plant.file.startsWith("test/fixtures/") && ANY.test(plant.text)) }]
+      : []),
+    ...other(NEEDLES.flatMap(needle => [needle.text.toLowerCase(), needle.text.toUpperCase()])).map(text => ({ subject: `other case ${text}`, planted: spelt(text) })),
+    ...NEEDLES.filter(needle => needle.text.includes(" "))
+      .flatMap(needle => ["_", "-", "  ", ...WHITE_SPACE].map(separator => needle.text.replaceAll(" ", separator)))
+      .map(text => ({ subject: `other separator ${points(text)}`, planted: spelt(text) })),
+    ...NEEDLES.filter(needle => spells(needle).length === 0).map(needle => ({ subject: `encoded ${needle.text}`, planted: spelt(Buffer.from(needle.text, "utf8").toString("base64")) })),
+    ...outsideSites().map(site => ({ subject: `outside site ${site}`, planted: has(plant => plant.file === site) })),
+    ...PROGRAM_STEMS.map(stem => ({ subject: `alias ${stem}`, planted: spelt(stem) })),
+    ...other(NEEDLES.filter(needle => needle.family === "schema").map(needle => needle.text.replace(/V\d+$/, "V9"))).map(text => ({ subject: `other version ${text}`, planted: spelt(text) })),
+    ...(rows.length > 0 ? [{ subject: "a live export title spelling a needle, on a receipt's title line", planted: has(plant => rows.some(([, title]) => firstLine(plant).includes(title))) }] : []),
+    ...(requirements.length > 0
+      ? [{ subject: "a live export requirement id spelling a needle, in a test/ source outside the holders", planted: has(plant => plant.file.startsWith("test/") && !HOLDER_MODULE.test(plant.file) && requirements.some(id => plant.text.includes(id))) }]
+      : []),
+  ];
+}
 
 // --- the self-read ------------------------------------------------------------------------------------------------------------------------
 /** The identifiers each IMPL entry names, read from this file's own source. */
@@ -1043,6 +1348,7 @@ function tiled(text: string, parts: readonly string[], separator: RegExp = SEPAR
 const JUDGED = new Set<string>();
 const REACHED = new Set<string>();
 const QUIETED = new Set<string>();
+let ANCHORED = false;
 
 describe("wb-zzb4 Library design-program absence census (LIBRARY-COMPOSITIONAL-AUTONOMOUS-COMPUTATION-R1, gate half pending)", () => {
   it("judged set: frozen shape, roster, the owner filing, the vendored lines and this file's IMPL", { timeout: 60_000 }, () => {
@@ -1099,15 +1405,28 @@ describe("wb-zzb4 Library design-program absence census (LIBRARY-COMPOSITIONAL-A
   describe("residuals: each named family's quiet row", () => {
     for (const [id, quiet] of Object.entries(QUIET)) {
       it(id, { timeout: 60_000 }, () => {
-        quiet();
+        planting = id;
+        try {
+          quiet();
+        } finally {
+          planting = undefined;
+        }
         QUIETED.add(id);
       });
     }
   });
 
-  it("records: every pin and every quiet row ran its own case to the end", () => {
+  it("residual anchor: every family's subjects, derived outside this file's literals, were planted by a quiet row", () => {
+    const subjects = residualSubjects();
+    expect(subjects.length, "the outside sources yield the families' subjects").toBeGreaterThan(NEEDLES.length);
+    expect(subjects.filter(item => !item.planted).map(item => item.subject)).toEqual([]);
+    ANCHORED = true;
+  });
+
+  it("records: every pin, every quiet row and the residual anchor ran its own case to the end", () => {
     expect([...JUDGED].sort()).toEqual(pinIds());
     expect([...REACHED].sort()).toEqual(pinIds());
     expect([...QUIETED].sort()).toEqual(Object.keys(QUIET).sort());
+    expect(ANCHORED, "the residual anchor ran to its end").toBe(true);
   });
 });
