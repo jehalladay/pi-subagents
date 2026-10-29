@@ -7,6 +7,30 @@
  * Until-then clause (owner filing notes, verbatim): "Until both gates exist, no src or docs change and no Pi claim of an embedded
  * Fiber core; rf CLI envelope consumption stays owned by the wb-x32/wb-973/wb-693 families."
  *
+ * CUT #5 (the respin of refusal #4, gate run g10-gate-s137 on cut #4 cf9796dc; seat ws-02, run g10-work-s138), under orchestrator
+ * ruling R-B76 (the rule 19 second-stage cap on class (c)) and still in the CUT #4 FORM. Cut #4's frozen shape is kept and only
+ * added to: THE HTML READ (below) and its controls, two named residuals with their pinned quiet rows (Q17, Q18), a member each of
+ * Q6 and Q10, FAIL-CLOSED controls. Each of refusal #4's items, by the one cure option it takes:
+ *  U1, class (c), B1, B2 and D1, by R-B76's second option (the claim narrowed to exactly the forms the reader strips, failing
+ *    closed outside it): THE RENDERED LEG's "an HTML block renders its text with its comments (an unclosed one to its end) and tags
+ *    removed" was wider than its reader (HTML_TAG's names and "<!--" comments only). Every raw HTML token - an HTML block and, new
+ *    at cut #5, each of marked's inline html tokens, whose extent marked and an HTML parser can read apart (a processing instruction
+ *    or a CDATA section an HTML parser closes at its first ">", a comment it closes at "--!>") - is read by THE HTML READ: its
+ *    grammar's comments and tags are removed and every other markup is REFUSED. So G8-D1a to G8-D1e and G8-D1j to G8-D1m red D1,
+ *    G8-B2a reds B2 and D1, and G8-B1a reds B1, each as a refusal except G8-D1k, whose quoted ">" is read, so its claim reads.
+ *    HTML_FORMS pins one checkable item per form on D1 (an HTML block and a paragraph), B2 and B1.
+ *  Class (c)'s wider surface, enumerated by the seat, routes each further form a reader sees that cut #4 did not read: an element or
+ *    attribute whose text an HTML reader does not show in place as written is refused (REFUSED_ELEMENTS, REFUSED_ATTRIBUTES); an
+ *    image's other rendering (an HTML image tag's alt text in place, a Markdown image shown) is read as its unit's twin, and more than
+ *    IMAGE_LIMIT images in a unit are refused; a bidirectional control in a rendered unit, raw or behind a reference, is refused; a
+ *    reader's own stylesheet and an image's pixels are R-READER-RENDERING (Q18); a core name spelled with a confusable letter is a
+ *    member of R-OTHER-VOCABULARY (Q6).
+ *  F1 (G8-D1i), FAIL-CLOSED: a shell line's trailing comment is read with the line's last command, one unit (THE FORMS' .sh bullet
+ *    and FAIL-CLOSED name it), pinned as the D1 control shellTrailingComment.
+ *  F2 (G8-C1c, G8-C1d), NAMED: a word that holds rf only after the shell's expansion inside it - bash ANSI-C quoting, a parameter
+ *    expansion - is R-EXPANDED-WORD, its pinned quiet row Q17 (both words quiet as written, each read as the shell expands it).
+ *  F3 (G8-A4a), NAMED: the four members across an intersection of type literals are a member of R-OTHER-SHAPE (Q10).
+ *
  * CUT #4 (the respin of refusal #3, gate run g10-gate-s135 on cut #3 c16ea39b; seat ws-01, run g10-work-s136), authored in the
  * enumerate-the-resolvable form refusal #3 bound on this bead (its CUT #4 FORM: standing rule 19(c), the rule 14 shape). Cut #3's
  * shape is frozen: every title, row, pin, control and residual row it pins is kept and no pinned reading is removed or weakened;
@@ -76,19 +100,22 @@
  * protocol_message_set.json, the scenario schema, the Rust capability traits of rust/fiber-model/src/capabilities.rs) and the tree
  * holds no package.json, no .wasm file and no wasm-pack output: no released WASM artifact or capability-set package exists.
  *
- * MEASURED AT BASE (trunk 04123dc, landing 671, merged into the branch; seat ws-01, run g10-work-s136, 2026-10-29; every count
- * re-measured there - each equal to cut #3's at trunk 4350926 except git's listing, and the indented and prose-read code block
- * counts new): src holds 117
+ * MEASURED AT BASE (trunk 499fb36, landing 675, merged into the branch; seat ws-02, run g10-work-s138, 2026-10-29, with the cut #5
+ * readers; every count re-measured there - each equal to cut #4's at trunk 04123dc except git's listing, the raw sentence and
+ * rendered unit counts and the decisions page's, which the trunk's new docs/18 paragraph moves, and the raw HTML token counts
+ * new): src holds 117
  * tracked script modules (101769 judged AST texts, 6482 member-bearing declarations, 618 module specifiers) and none spells a stem,
  * crate, WebAssembly, ABI or capability-set name, declares the four members together or loads an RF or Fiber SDK; C1's rf census
  * holds 42 texts in 3 modules and its SDK census 27 texts in 8 modules, and the one rf text a launcher call takes is the
- * provider's spawn binary; git tracks 1087 files (the trunk's 1085, this census and its roster), none a .wasm file or a path naming
+ * provider's spawn binary; git tracks 1094 files (the trunk's 1092, this census and its roster), none a .wasm file or a path naming
  * the core; package.json (120 texts) and the two lockfiles (372 packages each) name none; the 306 product texts (88 Markdown, 8
- * JSON - each strict JSON -, 198 scripts, 4 shell, 7 line and 1 prose text; 174885 raw sentences, 9042 rendered units; 67 fenced
- * code blocks, 39 of them read by their form, and 19 indented code blocks, so 47 prose-read code blocks) carry no claim and no
- * unknown named reference - the only stem spellings are the
+ * JSON - each strict JSON -, 198 scripts, 4 shell, 7 line and 1 prose text; 174889 raw sentences, 9043 rendered units; 67 fenced
+ * code blocks, 39 of them read by their form, and 19 indented code blocks, so 47 prose-read code blocks; 16 raw HTML tokens, 6
+ * HTML blocks - four comments and two image tags - and 10 inline tags, none refused) carry no claim, no unknown named reference
+ * and no form THE HTML READ refuses - the only stem spellings are the
  * rf_identity sdk_versions keys of four rf receipts, rf's own identity echoed through its CLI envelope; the wb-x32 row (2161
- * characters across its 28 members) and the decisions page (65 raw sentences, 58 rendered units) state no decision. So the gate
+ * characters across its 28 members, no raw HTML) and the decisions page (69 raw sentences, 59 rendered units, no raw HTML) state no
+ * decision. So the gate
  * has not fired, and until it does Pi's RF surface is the rf CLI envelope: the native preview admits only the reactive-fiber.cli/v1
  * envelope and Pi says so in three places.
  *
@@ -116,7 +143,8 @@
  *    template whole (its literal parts joined at each substitution), and each comment run as prose (a block comment, or line
  *    comments each alone on consecutive lines; a comment trailing code is a run of its own);
  *    a .sh text by line: a run of comment lines as prose; every other line's simple commands (cut at ";", "&", "|" and line end
- *    outside quotes), each command's leading assignments alone and its remaining words as one unit;
+ *    outside quotes), each command's leading assignments alone and its remaining words as one unit (a trailing comment among them,
+ *    FAIL-CLOSED: cut #5);
  *    a .yml, .yaml or .toml text, and an extensionless dotfile (.gitignore), by line: a run of comment lines as prose; every other
  *    line a unit, a flow collection's pieces (cut at each comma inside braces or brackets outside quotes) each one;
  *    any other text (LICENSE) as prose sentences.
@@ -130,19 +158,48 @@
  * path and source line.
  * THE RENDERED LEG (Markdown, rows B and D): marked 18.0.11 lexes the text once; a unit is a heading, a paragraph, a list item's
  * text, a table cell, a block quote's blocks or an HTML block, placed at its first source line (top-level raws concatenate to the
- * source exactly, so the line is measured, never estimated). A unit renders what a reader sees: an inline HTML token (a tag or a
- * comment) and a task checkbox render nothing, a code span and an escape show their text as written, a hard break is a line end,
- * an HTML block renders its text with its comments (an unclosed one to its end) and tags removed, and a character reference is
+ * source exactly, so the line is measured, never estimated). A unit renders what a reader sees as THE HTML READ (below) reads its
+ * markup (restated by cut #5): an inline html token renders nothing (THE HTML READ admits a tag or a comment of its grammar there
+ * and refuses any other form) and a task checkbox renders nothing, a code span and an escape show their text as written, a hard
+ * break is a line end, an HTML block renders its text with THE HTML READ's comments and tags removed (any other markup refused),
+ * a Markdown image shows its alt text in place and an HTML image tag nothing (each image's other rendering is its unit's twin),
+ * and a character reference is
  * decoded by CommonMark's rule (REFERENCE: "&#" and 1 to 7 decimal digits, "&#x" and 1 to 6 hexadecimal digits, or "&" and a name,
  * each closed by ";") - a numeric one whose code point is at most 0x10FFFF, a named one when it is a NAMED_REFERENCES name; any
  * other named reference so written is REFUSED (a finding of its own, since the census cannot say what it renders), and every other
  * reference stays as written (restated by cut #4: one an HTML parser decodes in an HTML block or an attribute value beyond that
  * rule - no closing ";", more than 7 decimal digits, a legacy name without ";" - is R-HTML-REFERENCE). Beside a unit's text run,
  * what a reader may ALSO see is read as units of their own at the unit's line, references decoded by the same rule: every
- * attribute value of its HTML (a block or an inline tag; comments removed first) and every
- * link's or image's destination, each percent-decoded where it decodes, and every link's or image's title (an image's alt text is
- * its children, read in the run). A code block shows its text as written and is left to the raw leg. A rendered unit cuts into sentences after every ".",
+ * attribute value of a tag THE HTML READ reads (an HTML block's or an inline token's) and every
+ * link's or image's destination, each percent-decoded where it decodes, and every link's or image's title (a Markdown image's alt
+ * text is its children, read in the run). A code block shows its text as written and is left to the raw leg. A rendered unit cuts into sentences after every ".",
  * "!", "?" or ";" followed by white space, and its findings carry the leg: "<path>:<line>: rendered <families>".
+ * THE HTML READ (cut #5, refusal #4's U1 under ruling R-B76; rows B and D, every raw HTML token - an HTML block and each of marked's
+ * inline html tokens): the only markup the rendered leg reads, left to right. Its white space is the HTML Standard's ASCII
+ * whitespace (tab, line feed, form feed, carriage return, space; a vertical tab or a no-break space is none). A COMMENT is "<!--",
+ * its text, the first "-->". A TAG is CommonMark's raw HTML tag over that white space: a start tag is "<", a name (an ASCII
+ * letter, then ASCII letters, digits or hyphens), attributes (each after white space: a name of [A-Za-z_:][A-Za-z0-9_.:-]*, then
+ * optionally "=" and a value - unquoted, or single- or double-quoted, a quoted value holding any character but its quote, ">" and
+ * a line end among them), optional white space, an optional "/" and ">"; an end tag is "</", a name, optional white space and
+ * ">". Each comment and tag is removed and every other character is text; every attribute value is read as a unit of its own; a
+ * tag carrying an alt attribute is an image (its alt text in place in its unit's twin). REFUSED (FAIL-CLOSED; recorded as
+ * written, "<path>:<line>: rendered unknown <markup>", a finding of its own, as the census cannot say what a reader sees): a
+ * comment opened as "<!-->" or "<!--->", one whose text holds "--!>" (an HTML reader closes it there) and one unterminated in
+ * its token (a reader closes it past the token); a "<" before an ASCII letter, "/", "!" or "?" that opens no comment or tag
+ * of the grammar - a processing instruction (<?x?>), a markup declaration or DOCTYPE (<!x>, <!DOCTYPE x>), a CDATA section, an
+ * end tag outside the grammar (</ x>, </>, </span title="x">), a tag outside it (<o:p>, <x_y>, <x.y>, <x/y>, attributes with no
+ * white space between them, a no-break space or a vertical tab for white space, an unterminated tag); a start tag of an element
+ * whose text an HTML reader does not show in place as written (REFUSED_ELEMENTS: the tokenizer reads its text otherwise - iframe,
+ * noembed, noframes, noscript, plaintext, script, style, textarea, title, xmp -, it is foreign content - math, svg -, the tree
+ * builder moves text out of it - table -, the default rendering hides, replaces or moves its content - applet, audio, canvas,
+ * datalist, details, dialog, fencedframe, frameset, meter, object, progress, rp, rt, rtc, select, template, video -, it reorders
+ * its content - bdo - or it restyles the page - body, link); a tag carrying an attribute that hides, reorders or styles text
+ * (REFUSED_ATTRIBUTES: color, dir, hidden, popover, style); a unit holding more than IMAGE_LIMIT (8) images; and a rendered unit
+ * holding a bidirectional control (wb-era's class, raw or behind a reference: the census cannot say in what order a reader sees
+ * it). A unit holding images is read once more for every other combination of their two renderings - an HTML image tag's alt
+ * text in place, as when the image is not shown; a Markdown image shown, its alt text gone - each such twin adding only the
+ * findings its unit lacks. Beyond THE HTML READ: a reader's own rendering beyond the HTML Standard's (R-READER-RENDERING) and a
+ * reference an HTML parser decodes beyond CommonMark's rule (R-HTML-REFERENCE).
  * THE CENSUS (row C1): every tracked src script module is read through its AST. The RF CENSUS holds every text that is no name -
  * a string-like literal, a template's head, middle or tail, a regular-expression pattern, a JSX text - whose tokens include
  * RF_WORD; the SDK CENSUS every such text whose fold holds reactivefiber, the stem or a crate (a name and a comment are read by
@@ -183,11 +240,13 @@
  *    description and notes were read; controls read (a no-break-space decision rendered, an unknown reference refused), near misses
  *    quiet, each control text also read as a member of a planted decision-bead row; member controls read a decision in a bd
  *    comment, a label, a nested record, a key, a shadowed duplicate member, a shadowed duplicate id and a key behind a reference,
- *    beside two near misses (another bead's row, neutral members).
+ *    beside two near misses (another bead's row, neutral members); and (cut #5) each HTML_FORMS form in a decision-bead comment and
+ *    an image twin (an HTML image tag's alt text completing the decision).
  *    B2 THE DECISIONS PAGE: docs/workbench/18-decisions-and-risks.md (the notes' cited page), read raw and rendered, holds no
  *    decision and no unknown named reference; table rows, cells and list items are units of their own (controls: a decision behind
  *    a no-break-space reference, an inline tag, a numeric reference, an unknown reference refused, a pipe paragraph read as one;
- *    a code span, a split table and split items quiet).
+ *    a code span, a split table and split items quiet; and, cut #5, each HTML_FORMS form in an HTML block on a decisions page and an
+ *    image twin and an HTML block's title attribute).
  *  C, the until-then clause ("until then Pi's RF surface stays the rf CLI envelope only").
  *    C1 NO RF SDK: no src module specifier outside the relative ones names reactivefiber, the stem or a crate (import, export,
  *    import-equals, import type, dynamic import, require, or a call through a createRequire loader: a name the module binds to
@@ -229,7 +288,10 @@
  *    nested, a script's string, name, template, comment run, property pair and JSX text, a JSON fence's shadowed key, an unlabeled
  *    fence's wrapped prose, an unclosed fence read as prose, a shell comment run, echo and quoted pipe, an img alt and an inline title behind a reference, a link destination, an HTML link, a link title and an image
  *    title, and - FAIL-CLOSED, cut #4 - a script object literal read as prose in an unlabeled fence, in an indented code block and
- *    in an HTML <pre> block)
+ *    in an HTML <pre> block; and - cut #5 - a shell line's trailing comment, read with its command (FAIL-CLOSED), an HTML image
+ *    tag's alt text in an HTML block and in a paragraph, a Markdown image shown and an image pair (image twins), images over the
+ *    limit and a bidirectional control raw and behind a reference (refused), each HTML_FORMS form in an HTML block and in a
+ *    paragraph, each REFUSED_ELEMENTS element and each REFUSED_ATTRIBUTES attribute, and an HTML block's title attribute)
  *    and near
  *    misses stay quiet (a receipt's rf_identity sdk_versions key, the workflow VM's wasm option, split sentences, a table's rows,
  *    list items, a code span, a lock whose embed and wasm words sit in different values, YAML lines that pair them only as prose
@@ -240,9 +302,9 @@
  *    read whole (every key and string at any depth, each one unit), states no claim; planted descriptors read, a neutral one quiet.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  *
- * THE PINNED SET, in closed form (cut #4; the CUT #4 FORM (4)): each pin of rows A to D reads exactly the surfaces, by exactly the
- * forms, legs and readers, named here; any other surface, form, leg or reader is outside its claim, and each form known to escape
- * them is a NAMED RESIDUAL (Q1 to Q16, each with its pinned quiet row) or a FAIL-CLOSED unit.
+ * THE PINNED SET, in closed form (cut #4, extended by cut #5; the CUT #4 FORM (4)): each pin of rows A to D reads exactly the
+ * surfaces, by exactly the forms, legs and readers, named here; any other surface, form, leg or reader is outside its claim, and
+ * each form known to escape them is a NAMED RESIDUAL (Q1 to Q18, each with its pinned quiet row) or a FAIL-CLOSED unit.
  *  A1: package.json parsed (every key and string at any depth) and by raw line, and the installed package paths and name fields
  *    of package-lock.json and vendor/dependency-lock.json, each text read for a stem or crate fold and the wasm token.
  *  A2: git's whole listing (git ls-files), each path read for a .wasm extension (any case), a stem or crate fold and the wasm token.
@@ -253,9 +315,10 @@
  *  A4: the same modules and texts, read for HostCapabilitySet's fold, and the member names of every interface, type literal, class,
  *    object literal, enum, object binding pattern and function-like parameter list, read for all four members by fold.
  *  B1: the tracked export's lines one of whose top-level id members is the title's decision bead, by THE JSON READER: every key and
- *    every string value at any depth, each alone, each read as a Markdown text - raw (THE FORMS) and rendered (THE RENDERED LEG) -
- *    for a decision and an unknown named reference.
- *  B2: the notes' cited page, read as a Markdown text raw and rendered, for a decision and an unknown named reference.
+ *    every string value at any depth, each alone, each read as a Markdown text - raw (THE FORMS) and rendered (THE RENDERED LEG,
+ *    its markup by THE HTML READ) - for a decision, an unknown named reference and a form THE HTML READ refuses.
+ *  B2: the notes' cited page, read as a Markdown text raw and rendered (its markup by THE HTML READ), for a decision, an unknown
+ *    named reference and a form THE HTML READ refuses.
  *  C1: every tracked file below src (one that is no script module reds), each module parsed by TypeScript: its module specifiers
  *    (the load forms ROW C1 names; never a relative one) for reactivefiber, the stem or a crate; its texts and property-access
  *    chains for the three spellings; and THE CENSUS (its two censuses and the launch roster).
@@ -265,8 +328,8 @@
  *    table rows also through sectionTables) and by THE STATED SOURCE at marked's lexing grain; the cited row as written; the
  *    provider module's leading comments.
  *  D1: every tracked file below the nine roots and at the repository root (held both ways to a walk) whose extension is a measured
- *    text extension, decoded as strict UTF-8, by THE FORMS (raw) and, for Markdown, THE RENDERED LEG, for a claim and an unknown
- *    named reference.
+ *    text extension, decoded as strict UTF-8, by THE FORMS (raw) and, for Markdown, THE RENDERED LEG (its markup by THE HTML READ),
+ *    for a claim, an unknown named reference and a form THE HTML READ refuses.
  *  D2: every descriptor of the native and the four injected registrations, every key and string at any depth each one unit, for a
  *    claim.
  *
@@ -294,12 +357,17 @@
  * file or a ts fence it reads quiet; any
  * edit of a stated section's pinned lines (as marked lexes them: R-LEXED-GRAIN) or of a parent heading line, and a link definition
  * added anywhere on docs/18 or vendor/README.md, reds C3 (each file changed twice in the trunk's history), and the editing cut
- * re-pins the section; a src text that newly holds the word rf or an SDK name - a launch or
+ * re-pins the section; every form THE HTML READ refuses (cut #5: a raw HTML token's markup outside its grammar, a REFUSED_ELEMENTS
+ * element, a REFUSED_ATTRIBUTES attribute, more than IMAGE_LIMIT images in a unit, a bidirectional control in a rendered unit)
+ * reds B1, B2 or D1 wherever it sits, so a product page, the decisions page or a decision-bead member that adds such markup reds
+ * at its landing and the editing cut judges it; a shell line's trailing comment ("echo embed # wasm") is read with the line's
+ * last command as one unit, so its words lend themselves to the command's (refusal #4's G8-D1i, pinned as the D1 control
+ * shellTrailingComment); a src text that newly holds the word rf or an SDK name - a launch or
  * not, a near miss of the old command grammar included - and a pinned text whose module, context or text changes red C1, and the
  * editing cut judges and re-pins the entry; and a tracked file below src that is no script module reds C1.
  * NOT CLAIMED (edits of this file and the roster together below row level): a pin removed from ROWS, the literal, IMPL and the
  * roster where no anchor of the bead text holds it - D2 and every Q pin (the cut-time CT6 sweep removed each pin from every literal
- * and the roster: A1-A4, B1, B2, C1-C3 and D1 red through the bead text, D2 and Q1-Q16 stay green); a control removed from its
+ * and the roster: A1-A4, B1, B2, C1-C3 and D1 red through the bead text, D2 and Q1-Q18 stay green); a control removed from its
  * list and the roster; a pin's case replaced by one that echoes its roster witness; git's listing replaced by the walk it anchors.
  * RESIDUALS (named, each with its pinned quiet row): R-COMPOSED a name composed at run time from parts no one of which holds it
  * ("Host" + "CapabilitySet", a join, a split template, "r" + "f", String.fromCharCode) is read by no scan and by neither census
@@ -308,14 +376,15 @@
  * files) is not read (Q3); R-INJECTED-RELAY the injected registration relays its host client's value unchecked, so an injected
  * client returning a ChangedViewReceipt is returned as a value (Q4; the native preview is the admission point);
  * R-DECISION-ELSEWHERE a decision recorded on another bead, or outside the export and the decisions page, is not read (Q5);
- * R-OTHER-VOCABULARY the core under other names (another package, another ABI verb, renamed capability members, another phrase)
- * is read by no surface (Q6); R-OUTSIDE-TEXT an rf launch or an SDK load whose binary, command or specifier is no src text (the
+ * R-OTHER-VOCABULARY the core under other names (another package, another ABI verb, renamed capability members, another phrase,
+ * and - cut #5 - a core name spelled with a confusable letter, Fiber with a Cyrillic i) is read by no surface (Q6); R-OUTSIDE-TEXT an rf launch or an SDK load whose binary, command or specifier is no src text (the
  * environment, argv, a file outside src read at run time, a name's text such as a property key read by Object.keys; a file below
  * src that is no script module reds C1 instead) is read by neither census (Q7); R-PINNED-REUSE a launch or a load that reaches a pinned census text through its binding (an import of the binding through
  * a module path that names no SDK, a new use of it in its own module), the text's own entry unchanged, is not re-judged (Q8);
  * R-SPLIT-CODE a claim whose words sit in different AST texts of one script (a verb's name beside a string argument, two strings
  * of one array) is read by no unit (Q9); R-OTHER-SHAPE the four members together in a construct A4 does not read (a union of
- * string literal types, an array, a Map, a named tuple, a namespace's exports, an array binding pattern) are not read (Q10);
+ * string literal types, an array, a Map, a named tuple, a namespace's exports, an array binding pattern, and - cut #5, refusal #4's
+ * G8-A4a - an intersection of type literals, no one of which declares all four) are not read (Q10);
  * R-RETRACTED-ELSEWHERE a retraction of a stated surface written outside its bound section or leading comment (another section of
  * the page, a later section of the README, a later comment of the provider) is not read (Q11); R-ENCODED-SOURCE a character
  * reference or an inline tag in a text that is not Markdown (a source comment, a YAML line, a JSON value) is read raw, never
@@ -333,7 +402,12 @@
  * feed of a stated section's line other than the cited row (docs/18:33, which C3 also reads as written, so a CR there reds C3) -
  * leaves the stated reading unchanged, so C3 reds then only when the edited line is one a C3 control anchors on as written
  * (docs/18's title :1, heading :20, header row :22 and the row cellsResplit re-splits :34; vendor/README.md's title :1 and the row
- * readmeRowStruck strikes :7), through that control's digest (Q16; refusal #3's G3-C3a at :34 and G3-C3b at :35).
+ * readmeRowStruck strikes :7), through that control's digest (Q16; refusal #3's G3-C3a at :34 and G3-C3b at :35);
+ * R-EXPANDED-WORD (cut #5) a word that holds rf only after the shell's expansion inside it - bash ANSI-C quoting ($'\x72'f), a
+ * parameter expansion (R=r; ${R}f) - holds no rf token, so neither census holds its text and no launch of it reads (Q17; refusal
+ * #4's G8-C1c and G8-C1d); R-READER-RENDERING (cut #5) what a reader's own rendering shows beyond the HTML Standard's - its
+ * stylesheet hiding an element by a class, an id or an element selector, an image's pixels - is read as THE HTML READ yields it,
+ * so a claim whose word such a stylesheet joins, or that only a picture shows, is not read (Q18).
  * NOT DELIVERED (the armed half, parked on the bead with its external target): the conformance tier that initializes an embedded
  * core with an explicit HostCapabilitySet (real and deterministic fake; errors, cycles and subscriptions under fakes) and the
  * import/manifest census of the portable core (no ambient DOM, JS or network API reaches it from Pi) need the released artifact
@@ -947,17 +1021,161 @@ function rawSentences(text: string, path: string): RawSentence[] {
 // ---- the rendered leg (rows B and D, Markdown only): what a reader of the rendered page sees (marked 18.0.11's lexer) ----
 
 const REFERENCE = /&(?:#(\d{1,7})|#[xX]([0-9a-fA-F]{1,6})|([A-Za-z][A-Za-z0-9]{1,31}));/g;
-const HTML_COMMENT = /<!--[\s\S]*?(?:-->|$)/g;
-const HTML_TAG = /<\/?[A-Za-z][A-Za-z0-9-]*(?:\s[^>]*)?\/?>/g;
-/** An HTML attribute: its name, then a double-quoted, single-quoted or unquoted value. */
-const HTML_ATTRIBUTE = /([^\s"'=<>/`]+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+))/g;
 /**
- * The attribute values of an HTML text, its comments removed first (refusal #2's F3 cure): alt text, a title, a label, a link - what a
+ * THE HTML READ (cut #5, refusal #4's U1 under ruling R-B76's second option): the only markup the rendered leg reads in a raw HTML
+ * token (an HTML block, or one of marked's inline html tokens). Its white space is the HTML Standard's ASCII whitespace (tab, line
+ * feed, form feed, carriage return and space; a vertical tab or a no-break space is none). A tag is CommonMark's raw HTML open or
+ * closing tag over that white space: a name of an ASCII letter then ASCII letters, digits or hyphens; a start tag's attributes,
+ * each after white space, a name of [A-Za-z_:][A-Za-z0-9_.:-]* with an optional value (unquoted, or single- or double-quoted, a
+ * quoted value holding any character but its quote, ">" and a line end among them), then an optional "/" and ">"; an end tag's
+ * name then optional white space and ">". A comment is "<!--", then its text, then the first "-->".
+ */
+const HTML_SPACE = "[\\t\\n\\f\\r ]";
+const HTML_NAME = "[A-Za-z][A-Za-z0-9-]*";
+const HTML_ATTRIBUTE_NAME = "[A-Za-z_:][A-Za-z0-9_.:-]*";
+const HTML_VALUE = `[^\\t\\n\\f\\r "'=<>\`]+|'[^']*'|"[^"]*"`;
+/** One attribute of a tag THE HTML READ reads: its name and its value as written (a quoted value with its quotes). */
+const HTML_ATTRIBUTE = new RegExp(`${HTML_SPACE}+(${HTML_ATTRIBUTE_NAME})(?:${HTML_SPACE}*=${HTML_SPACE}*(${HTML_VALUE}))?`, "g");
+/** A start tag (its name and its attributes) or an end tag (its name) of THE HTML READ, matched where a "<" opens. */
+const HTML_TAG = new RegExp(
+  `<(${HTML_NAME})((?:${HTML_SPACE}+${HTML_ATTRIBUTE_NAME}(?:${HTML_SPACE}*=${HTML_SPACE}*(?:${HTML_VALUE}))?)*)${HTML_SPACE}*\\/?>|<\\/(${HTML_NAME})${HTML_SPACE}*>`,
+  "y",
+);
+/**
+ * The elements whose start tag THE HTML READ refuses (FAIL-CLOSED), each because an HTML reader does not show its text in place as
+ * written: the tokenizer reads its text otherwise (iframe, noembed, noframes, noscript, plaintext, script, style, textarea, title,
+ * xmp), it is foreign content (math, svg), the tree builder moves text out of it (table), the default rendering hides, replaces or
+ * moves its content (applet, audio, canvas, datalist, details, dialog, fencedframe, frameset, meter, object, progress, rp, rt, rtc,
+ * select, template, video), it reorders it (bdo), or it restyles the page (body, link).
+ */
+const REFUSED_ELEMENTS = [
+  "applet",
+  "audio",
+  "bdo",
+  "body",
+  "canvas",
+  "datalist",
+  "details",
+  "dialog",
+  "fencedframe",
+  "frameset",
+  "iframe",
+  "link",
+  "math",
+  "meter",
+  "noembed",
+  "noframes",
+  "noscript",
+  "object",
+  "plaintext",
+  "progress",
+  "rp",
+  "rt",
+  "rtc",
+  "script",
+  "select",
+  "style",
+  "svg",
+  "table",
+  "template",
+  "textarea",
+  "title",
+  "video",
+  "xmp",
+] as const;
+/** The attributes THE HTML READ refuses on any tag (FAIL-CLOSED): the HTML Standard's hiding (hidden, popover) and reordering (dir) attributes, inline style and a font colour. */
+const REFUSED_ATTRIBUTES = ["color", "dir", "hidden", "popover", "style"] as const;
+/** The attribute that makes a tag an image of THE HTML READ: a reader sees its value in the tag's place when the image is not shown. */
+const ALT_ATTRIBUTE = "alt";
+/** The most images one rendered unit is read with (every combination of their two renderings); a unit holding more is REFUSED. */
+const IMAGE_LIMIT = 8;
+/** The bidirectional controls (wb-era's class): a rendered unit holding one is REFUSED, since the census cannot say in what order a reader sees it. */
+const BIDI_CONTROL = /[\u061C\u200E\u200F\u202A-\u202E\u2066-\u2069]/gu;
+/**
+ * A rendered run as pieces: text, or an image with its two renderings - as the run first shows it (a Markdown image's alt text in
+ * place; an HTML image tag, removed) and the other (a Markdown image shown, so its alt text gone; an HTML image tag's alt text in
+ * place, as when the image is not shown).
+ */
+type Piece = string | { readonly first: string; readonly other: string };
+/** A refused form as the census records it: the markup as written from its "<", each white space run shown as one space and the ends trimmed, at most 40 characters. */
+function writtenForm(markup: string): string {
+  const shown = markup.replace(/\s+/g, " ").trim();
+  return shown.length > 40 ? `${shown.slice(0, 40)}...` : shown;
+}
+/** An attribute value as written, its quotes removed. */
+function unquoted(value: string): string {
+  return value.startsWith('"') || value.startsWith("'") ? value.slice(1, -1) : value;
+}
+interface HtmlRead {
+  /** What THE HTML READ shows: every character outside the comments and tags it removes, an image tag as an image piece. */
+  readonly pieces: readonly Piece[];
+  /** Every non-empty attribute value of every tag read, percent-decoded where it decodes (what a reader may also see). */
+  readonly values: readonly string[];
+}
+/**
+ * THE HTML READ of one raw HTML token, left to right: a comment and a tag of the grammar are removed, a tag carrying an alt
+ * attribute becomes an image piece, and every other character is text. Any other markup is REFUSED, recorded in unknown as written
+ * (a finding of its own, since the census cannot say what a reader sees): a comment opened as "<!-->" or "<!--->", one whose text
+ * holds "--!>" (an HTML reader closes it there) and one unterminated in its token (a reader closes it past the token); a "<" before
+ * an ASCII letter, "/", "!" or "?" that opens no comment or tag of the grammar (a processing instruction, a markup declaration or
+ * DOCTYPE, a CDATA section, an end tag such as "</ x>" or "</>", a tag the grammar does not read such as "<o:p>", "<x_y>", "<x.y>"
+ * or "<x/y>"); a start tag of a REFUSED_ELEMENTS element; and a tag carrying a REFUSED_ATTRIBUTES attribute.
+ */
+function htmlRead(raw: string, unknown: string[]): HtmlRead {
+  const pieces: Piece[] = [];
+  const values: string[] = [];
+  const refusedElements: readonly string[] = REFUSED_ELEMENTS;
+  const refusedAttributes: readonly string[] = REFUSED_ATTRIBUTES;
+  let at = 0;
+  while (at < raw.length) {
+    const open = raw.indexOf("<", at);
+    pieces.push(raw.slice(at, open === -1 ? raw.length : open));
+    if (open === -1) break;
+    if (raw.startsWith("<!--", open)) {
+      if (raw.startsWith("<!-->", open) || raw.startsWith("<!--->", open)) {
+        const end = raw.indexOf(">", open) + 1;
+        unknown.push(writtenForm(raw.slice(open, end)));
+        at = end;
+        continue;
+      }
+      const close = raw.indexOf("-->", open + 4);
+      if (close === -1) {
+        unknown.push(writtenForm(raw.slice(open)));
+        break;
+      }
+      const bang = raw.indexOf("--!>", open + 4);
+      if (bang !== -1 && bang < close) unknown.push(writtenForm(raw.slice(open, bang + 4)));
+      at = close + 3;
+      continue;
+    }
+    HTML_TAG.lastIndex = open;
+    const tag = HTML_TAG.exec(raw);
+    if (tag !== null) {
+      const name = (tag[1] ?? "").toLowerCase();
+      const attributes = [...(tag[2] ?? "").matchAll(HTML_ATTRIBUTE)].map(match => ({ name: (match[1] ?? "").toLowerCase(), value: unquoted(match[2] ?? "") }));
+      if (refusedElements.includes(name) || attributes.some(attribute => refusedAttributes.includes(attribute.name))) unknown.push(writtenForm(tag[0]));
+      for (const attribute of attributes) if (attribute.value.length > 0) values.push(destinationText(attribute.value));
+      const alt = attributes.find(attribute => attribute.name === ALT_ATTRIBUTE);
+      if (alt !== undefined) pieces.push({ first: "", other: alt.value });
+      at = open + tag[0].length;
+      continue;
+    }
+    if (/^<[A-Za-z/!?]/.test(raw.slice(open, open + 2))) {
+      const end = raw.indexOf(">", open);
+      unknown.push(writtenForm(raw.slice(open, end === -1 ? raw.length : end + 1)));
+    }
+    pieces.push("<");
+    at = open + 1;
+  }
+  return { pieces, values };
+}
+/**
+ * The attribute values of an HTML text (THE HTML READ's tags only; comments are no tags): alt text, a title, a label, a link - what a
  * reader may see when the page renders - each percent-decoded where it decodes and read by the rendered leg as a unit of its own,
  * its references decoded there.
  */
 function attributeValues(html: string): string[] {
-  return [...html.replace(HTML_COMMENT, "").matchAll(HTML_ATTRIBUTE)].map(match => destinationText(match[2] ?? match[3] ?? match[4] ?? "")).filter(value => value.length > 0);
+  return [...htmlRead(html, []).values];
 }
 /** A link or image destination as a reader may see it (a status bar, a copied link): percent-decoded where it decodes. */
 function destinationText(href: string): string {
@@ -977,6 +1195,10 @@ function decodeReferences(text: string, unknown: string[]): string {
     return value ?? whole;
   });
 }
+/** THE HTML READ's pieces with their text decoded (its references recorded once, in unknown); an image's alt text decoded quietly (its own unit records it). */
+function decodedPieces(pieces: readonly Piece[], unknown: string[]): Piece[] {
+  return pieces.map(piece => (typeof piece === "string" ? decodeReferences(piece, unknown) : { first: piece.first, other: decodeReferences(piece.other, []) }));
+}
 function tokenText(token: Token): string {
   const value: unknown = (token as { text?: unknown }).text;
   return typeof value === "string" ? value : "";
@@ -989,47 +1211,88 @@ function newlines(text: string): number {
   return text.split("\n").length - 1;
 }
 /**
- * What a reader sees of inline tokens: an inline HTML token (a tag or a comment) and a task checkbox render nothing, a code span
- * and an escape show their text as written, a hard break is a line end, and every other text renders with its references decoded.
+ * What a reader sees of inline tokens, as pieces: an inline HTML token (a tag or a comment) renders nothing beyond THE HTML READ's
+ * image pieces, a task checkbox renders nothing, a code span and an escape show their text as written, a hard break is a line end,
+ * a Markdown image is an image piece (its alt text in place, or gone), and every other text renders with its references decoded.
  * Beside the run, extras collects what a reader may also see: an inline tag's attribute values and a link's or image's destination
- * and title (an image's alt text is its children, rendered in the run).
+ * and title (an image's alt text is its children, rendered in the run); unknown collects THE HTML READ's refused forms.
  */
-function inlineRendered(tokens: readonly Token[], unknown: string[], extras: string[]): string {
-  let out = "";
+function inlineRendered(tokens: readonly Token[], unknown: string[], extras: string[]): Piece[] {
+  const out: Piece[] = [];
   for (const token of tokens) {
-    if (token.type === "html") extras.push(...attributeValues(token.raw));
+    if (token.type === "html") {
+      const read = htmlRead(token.raw, unknown);
+      extras.push(...read.values);
+      out.push(...read.pieces.filter(piece => typeof piece !== "string").map(piece => ({ first: piece.first, other: decodeReferences(piece.other, []) })));
+    }
     if (token.type === "link" || token.type === "image") {
       const { href, title } = token as Tokens.Link | Tokens.Image;
       extras.push(destinationText(href), ...(typeof title === "string" && title.length > 0 ? [title] : []));
     }
     if (token.type === "html" || token.type === "checkbox") continue;
-    if (token.type === "br") out += "\n";
-    else if (token.type === "codespan" || token.type === "escape") out += tokenText(token);
-    else if (tokenChildren(token).length > 0) out += inlineRendered(tokenChildren(token), unknown, extras);
-    else out += decodeReferences(tokenText(token), unknown);
+    if (token.type === "br") out.push("\n");
+    else if (token.type === "codespan" || token.type === "escape") out.push(tokenText(token));
+    else if (token.type === "image") out.push({ first: runText(tokenChildren(token).length > 0 ? inlineRendered(tokenChildren(token), unknown, extras) : [decodeReferences(tokenText(token), unknown)]), other: "" });
+    else if (tokenChildren(token).length > 0) out.push(...inlineRendered(tokenChildren(token), unknown, extras));
+    else out.push(decodeReferences(tokenText(token), unknown));
   }
   return out;
+}
+/** A run's text with each image piece shown as the run first shows it. */
+function runText(pieces: readonly Piece[]): string {
+  return pieces.map(piece => (typeof piece === "string" ? piece : piece.first)).join("");
+}
+/** A run's text with its images shown by the bits of mask: image i in its other rendering when bit i is set. */
+function runVariant(pieces: readonly Piece[], mask: number): string {
+  let image = 0;
+  return pieces
+    .map(piece => {
+      if (typeof piece === "string") return piece;
+      const other = ((mask >> image) & 1) === 1;
+      image += 1;
+      return other ? piece.other : piece.first;
+    })
+    .join("");
+}
+/** The bidirectional controls a text holds, each as U+XXXX. */
+function bidiControls(text: string): string[] {
+  return [...text.matchAll(BIDI_CONTROL)].map(match => `U+${(match[0].codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")}`);
 }
 interface RenderedUnit {
   readonly line: number;
   readonly text: string;
   readonly unknown: readonly string[];
+  /** A twin of the unit before it: the same run with some image in its other rendering (its findings beyond the unit's are read). */
+  readonly twin: boolean;
 }
 /**
  * A Markdown text's rendered units, each with its first source line: a heading, a paragraph, a list item's text, a table cell, a
- * block quote's blocks and an HTML block (its comments, an unclosed one to its end, and its tags removed, its references decoded).
- * A code block shows its text as written, which the raw leg reads; a link destination and an HTML attribute are never rendered.
+ * block quote's blocks and an HTML block (THE HTML READ: its comments and tags removed, its references decoded, any other markup
+ * refused). A unit holding images is read once more for every other combination of their renderings (its twins), and one holding
+ * more than IMAGE_LIMIT images or a bidirectional control is refused. A code block shows its text as written, which the raw leg
+ * reads; a link destination and an HTML attribute are never rendered.
  */
 function renderedUnits(markdown: string): RenderedUnit[] {
   const units: RenderedUnit[] = [];
-  const push = (line: number, render: (unknown: string[], extras: string[]) => string): void => {
+  const push = (line: number, render: (unknown: string[], extras: string[]) => Piece[]): void => {
     const unknown: string[] = [];
     const extras: string[] = [];
-    const text = render(unknown, extras);
-    units.push({ line, text, unknown });
+    const pieces = render(unknown, extras);
+    const text = runText(pieces);
+    const images = pieces.filter(piece => typeof piece !== "string").length;
+    if (images > IMAGE_LIMIT) unknown.push(`images ${images}`);
+    units.push({ line, text, unknown: [...unknown, ...bidiControls(text)], twin: false });
+    const read = [text.trim(), ...extras.map(extra => decodeReferences(extra, []).trim())];
+    for (let mask = 1; images <= IMAGE_LIMIT && mask < 2 ** images; mask += 1) {
+      const variant = runVariant(pieces, mask);
+      if (variant.trim().length === 0 || read.includes(variant.trim())) continue;
+      read.push(variant.trim());
+      units.push({ line, text: variant, unknown: bidiControls(variant), twin: true });
+    }
     for (const extra of extras) {
       const unknownExtra: string[] = [];
-      units.push({ line, text: decodeReferences(extra, unknownExtra), unknown: unknownExtra });
+      const shown = decodeReferences(extra, unknownExtra);
+      units.push({ line, text: shown, unknown: [...unknownExtra, ...bidiControls(shown)], twin: false });
     }
   };
   const walk = (tokens: readonly Token[], first: number): void => {
@@ -1037,7 +1300,7 @@ function renderedUnits(markdown: string): RenderedUnit[] {
     for (const token of tokens) {
       const start = line;
       if (token.type === "heading" || token.type === "paragraph" || token.type === "text") {
-        push(start, (unknown, extras) => (tokenChildren(token).length > 0 ? inlineRendered(tokenChildren(token), unknown, extras) : decodeReferences(tokenText(token), unknown)));
+        push(start, (unknown, extras) => (tokenChildren(token).length > 0 ? inlineRendered(tokenChildren(token), unknown, extras) : [decodeReferences(tokenText(token), unknown)]));
       } else if (token.type === "list") {
         let itemLine = start;
         for (const item of (token as Tokens.List).items) {
@@ -1055,7 +1318,7 @@ function renderedUnits(markdown: string): RenderedUnit[] {
       } else if (token.type === "html") {
         push(start, (unknown, extras) => {
           extras.push(...attributeValues(token.raw));
-          return decodeReferences(token.raw.replace(HTML_COMMENT, "").replace(HTML_TAG, ""), unknown);
+          return decodedPieces(htmlRead(token.raw, unknown).pieces, unknown);
         });
       }
       line += newlines(token.raw);
@@ -1064,15 +1327,31 @@ function renderedUnits(markdown: string): RenderedUnit[] {
   walk(marked.lexer(markdown), 1);
   return units;
 }
-/** A Markdown text's rendered findings, `<label>:<line>: rendered <families>`; an unknown named reference is refused as a finding of its own. */
+/**
+ * A Markdown text's rendered findings, `<label>:<line>: rendered <families>`; an unknown named reference and a form THE HTML READ
+ * refuses are each refused as a finding of its own (`rendered unknown <as written>`), and a twin adds only findings its unit lacks.
+ */
 function renderedFindings(markdown: string, label: string, families: (text: string) => string[]): string[] {
-  return renderedUnits(markdown).flatMap(unit => [
-    ...unit.unknown.map(reference => `${label}:${unit.line}: rendered unknown ${reference}`),
-    ...cutSentences(unit.text).flatMap(sentence => {
-      const found = families(sentence);
-      return found.length === 0 ? [] : [`${label}:${unit.line}: rendered ${found.join(",")}`];
-    }),
-  ]);
+  const out: string[] = [];
+  let unitFindings: string[] = [];
+  for (const unit of renderedUnits(markdown)) {
+    const found = [
+      ...unit.unknown.map(reference => `${label}:${unit.line}: rendered unknown ${reference}`),
+      ...cutSentences(unit.text).flatMap(sentence => {
+        const named = families(sentence);
+        return named.length === 0 ? [] : [`${label}:${unit.line}: rendered ${named.join(",")}`];
+      }),
+    ];
+    if (!unit.twin) {
+      out.push(...found);
+      unitFindings = found;
+    } else {
+      const added = found.filter(finding => !unitFindings.includes(finding));
+      out.push(...added);
+      unitFindings = [...unitFindings, ...added];
+    }
+  }
+  return out;
 }
 /** A text's claims: every raw sentence (by its form) holding one, `<path>:<at>: <families>`, and for Markdown the rendered leg's beside them. */
 function claimsOf(text: string, path: string): string[] {
@@ -1279,6 +1558,7 @@ const MEMBER_CONTROLS: Readonly<Record<string, string>> = {
   entityKey: '{"id":"<bead>","metadata":{"embed the Fiber&nbsp;core":true}}',
   nearMissOtherBead: '{"id":"wb-other","notes":"OWNER DECISION: Pi will embed the portable Fiber core."}',
   nearMissNeutral: '{"id":"<bead>","comments":[{"text":"The fixture is embedded in the test."}],"labels":["wasm-free"]}',
+  imageAlt: '{"id":"<bead>","comments":[{"text":"<div>OWNER DECISION: Pi will embed the portable Fib<img src=\\"x.png\\" alt=\\"e\\">r core.</div>"}]}',
 };
 /** B2's decision reader's controls: decisions-page Markdown, read raw and rendered (table rows, cells and list items are units of their own). */
 const PAGE_CONTROLS: Readonly<Record<string, string>> = {
@@ -1292,6 +1572,8 @@ const PAGE_CONTROLS: Readonly<Record<string, string>> = {
   splitRows: "| step | owner |\n| --- | --- |\n| embed | first |\n| Fiber core | second |",
   splitItems: "- embed the receipt\n- the Fiber core stays outside",
   codeSpanQuiet: "The page writes `embed the Fiber&nbsp;core` as an example.",
+  imageAltDecision: '<div>OWNER DECISION: Pi will embed the portable Fib<img src="x.png" alt="e">r core behind W10.</div>',
+  blockTitleDecision: '<div title="OWNER DECISION: Pi will embed the Fi&#98;er core behind W10.">x</div>',
 };
 /** Row D's claim reader's controls: a text and the path it is read under (which sets the Markdown rules). */
 interface PlantedText {
@@ -1372,7 +1654,77 @@ const CLAIM_CONTROLS: Readonly<Record<string, PlantedText>> = {
   nearMissYamlFlow: { path: ".github/flow.yml", text: "labels: {embed: pane, engine: wasm}\n" },
   nearMissTomlInline: { path: "docs/inline.toml", text: 'x = { embed = "pane", engine = "wasm" }\n' },
   nearMissTrailingComments: { path: "qa/trailing.mjs", text: "foo(); // embed the preview\nbar(); // engine: wasm\n" },
+  // FAIL-CLOSED (cut #5, refusal #4's F1, G8-D1i): a shell line's trailing comment is read with the line's last command, one unit.
+  shellTrailingComment: { path: "qa/trailing-comment.sh", text: "echo embed # wasm\n" },
+  // THE HTML READ's image twins (cut #5): an image's other rendering - an HTML image tag's alt text in place, a Markdown image shown -
+  // joins the word, and two images are read in every combination of their renderings.
+  htmlImageAlt: { path: "docs/image-alt.md", text: '<div>Pi embeds the Fib<img src="x.png" alt="e">r core.</div>\n' },
+  inlineImageAlt: { path: "docs/inline-image-alt.md", text: 'Pi embeds the Fib<img src="x.png" alt="e">r core.\n' },
+  markdownImageShown: { path: "docs/image-shown.md", text: "Pi embeds the Fib![x](tiny.png)er core.\n" },
+  imagePair: { path: "docs/image-pair.md", text: '<div>Pi embeds the Fi<img alt="b">e<img alt="r"> core.</div>\n' },
+  // FAIL-CLOSED (cut #5): more than IMAGE_LIMIT images in one unit, and a bidirectional control raw or behind a reference, are refused.
+  imagesOverLimit: { path: "docs/images.md", text: `<div>${'<img alt="x">'.repeat(9)}</div>\n` },
+  bidiControl: { path: "docs/bidi.md", text: `Pi embeds the ${at(0x202e)}eroc rebiF.\n` },
+  bidiReference: { path: "docs/bidi-reference.md", text: "Pi embeds the &#x202E;eroc rebiF.\n" },
+  // THE HTML READ's twin rule (cut #5): a twin adds only the findings its unit lacks, so a claim beside an image reads once per leg.
+  imageTwinDeduped: { path: "docs/image-twin.md", text: "Pi embeds the Fiber core with ![x](a.png).\n" },
+  // THE HTML READ's attribute values (cut #5): an HTML block's attribute is read as a unit of its own, beside an image's twin.
+  blockTitle: { path: "docs/block-title.md", text: '<div title="Pi hosts the Fi&#98;er core">x</div>\n' },
 };
+/**
+ * THE HTML READ's forms (cut #5, refusal #4's U1 under ruling R-B76; one checkable item per form): each written inside the word
+ * "Fiber" ("Fib" + form + "er") of a claim (D1: in an HTML block and in a paragraph, where marked makes it an inline html token) and
+ * of a decision (B2: an HTML block on a decisions page; B1: a decision-bead comment). A read form is removed, so the word joins and
+ * the claim or the decision reads in the rendered leg; a refused form is REFUSED wherever it is raw HTML (FAIL-CLOSED). G8-D1a to
+ * G8-D1e and G8-D1j to G8-D1m are namespacedName, processingInstruction, markupDeclaration, cdata, underscoreName, dotName,
+ * quotedGreater, bogusEndTag and solidusAttribute; G8-B2a and G8-B1a are namespacedName on B2 and B1.
+ */
+const HTML_FORMS: Readonly<Record<string, string>> = {
+  tag: "<span></span>",
+  tagAttributes: '<span title="a" lang=en translate></span>',
+  quotedGreater: '<span title="a>b"></span>',
+  singleQuotedGreater: "<span title='a>b'></span>",
+  tagWhitespace: "<span\ttitle=a\nlang=en\f></span\t>",
+  selfClosing: "<br/>",
+  comment: "<!-- x -->",
+  emptyComment: "<!---->",
+  namespacedName: "<o:p></o:p>",
+  underscoreName: "<x_y></x_y>",
+  dotName: "<x.y></x.y>",
+  solidusAttribute: "<x/y>",
+  unseparatedAttributes: '<span title="a"lang="b"></span>',
+  noBreakSpace: `<span${at(0xa0)}title="a>b"></span>`,
+  verticalTab: `<span${at(0x0b)}title="a>b"></span>`,
+  processingInstruction: "<?x?>",
+  markupDeclaration: "<!x>",
+  doctype: "<!DOCTYPE x>",
+  cdata: "<![CDATA[x]]>",
+  bogusEndTag: "</ x>",
+  emptyEndTag: "</>",
+  endTagAttribute: '</span title="a>b">',
+  openedEmptyComment: "<!-->",
+  openedDashComment: "<!--->",
+  bangComment: "<!-- x --!>y-->",
+  unterminatedComment: "<!-- x",
+  unterminatedTag: '<span title="a',
+  refusedElement: "<template>x</template>",
+  refusedAttribute: "<span hidden>x</span>",
+};
+/** The path D1 reads each HTML_FORMS text under. */
+const HTML_FORM_PATH = "docs/html-form.md";
+/** A claim whose word holds a form: in an HTML block, or in a paragraph. */
+function htmlFormClaim(markup: string, inline: boolean): string {
+  return inline ? `Pi embeds the Fib${markup}er core.\n` : `<div>Pi embeds the Fib${markup}er core.</div>\n`;
+}
+/** A decision whose word holds a form, in an HTML block (B2's page text, B1's comment text). */
+function htmlFormDecision(markup: string): string {
+  return `<div>OWNER DECISION (2026-10-29): Pi will embed the portable Fib${markup}er core behind the W10 provider.</div>\n`;
+}
+/** A decision-bead export line whose one comment is the form's decision (G8-B1a's shape). */
+function htmlFormMember(markup: string, bead: string): string {
+  const comment = { id: "c-html", issue_id: bead, author: "owner", text: htmlFormDecision(markup).trimEnd(), created_at: "2026-10-29T12:00:00Z" };
+  return JSON.stringify({ id: bead, comments: [comment], comment_count: 1 });
+}
 const NEVER = (): never => {
   throw new Error("census: a planted or injected capability is never invoked here");
 };
@@ -1444,6 +1796,7 @@ const OTHER_VOCABULARY: {
   readonly manifest: Json;
   readonly text: PlantedText;
   readonly descriptor: CapabilityDescriptor;
+  readonly confusable: PlantedText;
 } = {
   module: {
     module: "other-vocabulary.ts",
@@ -1453,6 +1806,8 @@ const OTHER_VOCABULARY: {
   manifest: { dependencies: { "@acme/reactive-core-runtime": "1.0.0" } },
   text: { path: "docs/other.md", text: "Pi hosts the reactive core runtime in-process.\n" },
   descriptor: plantedDescriptor({ id: "workbench.core.host", description: "Hosts the reactive core runtime in-process." }),
+  // cut #5: a core name spelled with a confusable letter (CYRILLIC SMALL LETTER BYELORUSSIAN-UKRAINIAN I for the i of Fiber).
+  confusable: { path: "docs/confusable.md", text: `Pi embeds the F${at(0x456)}ber core.\n` },
 };
 
 /** Q7 R-OUTSIDE-TEXT: an rf launch or an SDK load whose binary, command or specifier is no src text (the environment, argv, a file read at run time, a name's text). */
@@ -1471,11 +1826,11 @@ const PINNED_REUSE = {
 } as const;
 /** Q9 R-SPLIT-CODE: a claim whose words sit in different AST texts of one script (a verb's name beside a string, two strings of one array). */
 const SPLIT_CODE: PlantedText = { path: "qa/split-code.mjs", text: 'embed("fiber-optics");\nexport const pair = ["embed", "wasm"];\n' };
-/** Q10 R-OTHER-SHAPE: the four members together in a construct A4 does not read (a union of literal types, an array, a Map, a named tuple, a namespace's exports, an array binding pattern). */
+/** Q10 R-OTHER-SHAPE: the four members together in a construct A4 does not read (a union of literal types, an array, a Map, a named tuple, a namespace's exports, an array binding pattern, an intersection of type literals). */
 const OTHER_SHAPE_MODULE: PlantedModule = {
   module: "other-shape.ts",
   source:
-    'export type Member = "clock" | "timer" | "randomness" | "spawner";\nexport const members = ["clock", "timer", "randomness", "spawner"];\nexport const table = new Map([["clock", 0], ["timer", 0], ["randomness", 0], ["spawner", 0]]);\nexport type Tuple = [clock: number, timer: number, randomness: number, spawner: number];\nexport namespace Host {\n  export const clock = 0;\n  export const timer = 0;\n  export const randomness = 0;\n  export const spawner = 0;\n}\ndeclare const caps: number[];\nexport const [clock, timer, randomness, spawner] = caps;\n',
+    'export type Member = "clock" | "timer" | "randomness" | "spawner";\nexport const members = ["clock", "timer", "randomness", "spawner"];\nexport const table = new Map([["clock", 0], ["timer", 0], ["randomness", 0], ["spawner", 0]]);\nexport type Tuple = [clock: number, timer: number, randomness: number, spawner: number];\nexport namespace Host {\n  export const clock = 0;\n  export const timer = 0;\n  export const randomness = 0;\n  export const spawner = 0;\n}\ndeclare const caps: number[];\nexport const [clock, timer, randomness, spawner] = caps;\nexport type Parts = { clock: number } & { timer: number } & { randomness: number } & { spawner: number };\n',
 };
 /** Q11 R-RETRACTED-ELSEWHERE: a retraction of each stated surface written outside its bound section or leading comment. */
 const RETRACTIONS = {
@@ -1551,6 +1906,44 @@ function terminatedText(text: string): string {
  * page already holds.
  */
 const LEXED_GRAIN = { afterCited: [1, 2], insertion: "\r" } as const;
+/**
+ * Q17 R-EXPANDED-WORD (cut #5, refusal #4's F2, G8-C1c and G8-C1d): a word that holds rf only after the shell's expansion inside it -
+ * bash ANSI-C quoting ($'\x72'f) or a parameter expansion (R=r; ${R}f) - holds no rf token, so neither census holds its text and no
+ * launch of it reads. The quiet row reads both words as written and again as the shell expands them, which reds.
+ */
+const EXPANDED_WORD = {
+  module: "expanded-word.ts",
+  words: ["$'\\x72'f context show", ["R=r; $", "{R}f context show"].join("")],
+  expanded: ["rf context show", "R=r; rf context show"],
+} as const;
+/** Q17's planted module: each word an execSync command. */
+function expandedWordModule(words: readonly string[]): PlantedModule {
+  return { module: EXPANDED_WORD.module, source: `import { execSync } from "node:child_process";\n${words.map(word => `execSync(${JSON.stringify(word)});\n`).join("")}` };
+}
+/**
+ * Q18 R-READER-RENDERING (cut #5): what a reader's own rendering shows beyond the HTML Standard's - its stylesheet hiding an element
+ * by a class, an id or an element selector, and an image's pixels - is read as THE HTML READ yields it, so a claim whose word such a
+ * stylesheet joins, or that only a picture shows, is not read. The quiet row reads each member, and again as such a reader shows it
+ * (the styled element's text removed; the picture's claim written as its alt text), which reds.
+ */
+const READER_RENDERING: Readonly<Record<string, { readonly read: PlantedText; readonly shown: string }>> = {
+  styledClass: {
+    read: { path: "docs/styled-class.md", text: '<div>Pi embeds the Fib<span class="hidden">x</span>er core.</div>\n' },
+    shown: "<div>Pi embeds the Fiber core.</div>\n",
+  },
+  styledId: {
+    read: { path: "docs/styled-id.md", text: '<div>Pi embeds the Fib<span id="hidden">x</span>er core.</div>\n' },
+    shown: "<div>Pi embeds the Fiber core.</div>\n",
+  },
+  styledElement: {
+    read: { path: "docs/styled-element.md", text: "<div>Pi embeds the Fib<abbr>x</abbr>er core.</div>\n" },
+    shown: "<div>Pi embeds the Fiber core.</div>\n",
+  },
+  picture: {
+    read: { path: "docs/picture.md", text: '<img src="figure-1.png">\n' },
+    shown: '<img src="figure-1.png" alt="Pi embeds the Fiber core.">\n',
+  },
+};
 /** The residual families, each named by the quiet-row pin that holds it. */
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-COMPOSED": ["Q1"],
@@ -1569,6 +1962,8 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-QUOTED-WORD": ["Q14"],
   "R-HTML-REFERENCE": ["Q15"],
   "R-LEXED-GRAIN": ["Q16"],
+  "R-EXPANDED-WORD": ["Q17"],
+  "R-READER-RENDERING": ["Q18"],
 };
 
 // ---- the judged rows ----
@@ -1587,7 +1982,7 @@ const ROWS: readonly Row[] = [
   {
     id: "Q",
     label: "the residuals: each named family pinned by its quiet row",
-    pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12", "Q13", "Q14", "Q15", "Q16"],
+    pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12", "Q13", "Q14", "Q15", "Q16", "Q17", "Q18"],
   },
 ];
 
@@ -2724,6 +3119,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       controls: Object.fromEntries(Object.entries(DECISION_CONTROLS).map(([name, text]) => [name, pageDecisions(text, name)])),
       rowControls: beadDecisions([JSON.stringify({ id: decisionBead, ...DECISION_CONTROLS })], decisionBead).decisions,
       memberControls: Object.fromEntries(Object.entries(MEMBER_CONTROLS).map(([name, line]) => [name, beadDecisions([line.replaceAll("<bead>", decisionBead)], decisionBead).decisions])),
+      htmlForms: Object.fromEntries(Object.entries(HTML_FORMS).map(([name, markup]) => [name, beadDecisions([htmlFormMember(markup, decisionBead)], decisionBead).decisions])),
     });
   },
   B2: async () => {
@@ -2736,6 +3132,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       renderedUnitsAboveFloor: renderedUnits(text).length >= FLOORS.pageUnits,
       decisions: pageDecisions(text, page),
       controls: Object.fromEntries(Object.entries(PAGE_CONTROLS).map(([name, text]) => [name, pageDecisions(text, name)])),
+      htmlForms: Object.fromEntries(Object.entries(HTML_FORMS).map(([name, markup]) => [name, pageDecisions(htmlFormDecision(markup), name)])),
     });
   },
   C1: async () => {
@@ -2815,6 +3212,11 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       otherExtensions: reading.otherExtensions,
       claims: reading.claims,
       controls: Object.fromEntries(Object.entries(CLAIM_CONTROLS).map(([name, planted]) => [name, claimsOf(planted.text, planted.path)])),
+      htmlForms: Object.fromEntries(
+        Object.entries(HTML_FORMS).map(([name, markup]) => [name, { block: claimsOf(htmlFormClaim(markup, false), HTML_FORM_PATH), inline: claimsOf(htmlFormClaim(markup, true), HTML_FORM_PATH) }]),
+      ),
+      refusedElements: Object.fromEntries(REFUSED_ELEMENTS.map(name => [name, claimsOf(htmlFormClaim(`<${name}></${name}>`, false), HTML_FORM_PATH)])),
+      refusedAttributes: Object.fromEntries(REFUSED_ATTRIBUTES.map(name => [name, claimsOf(htmlFormClaim(`<span ${name}="x"></span>`, false), HTML_FORM_PATH)])),
       plantedTree: { roots: plantedReading.roots, claims: plantedReading.claims },
     });
   },
@@ -2872,6 +3274,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       sdk: sdkHits(read, OTHER_VOCABULARY.module.module),
       manifest: manifestHits(OTHER_VOCABULARY.manifest, undefined, "planted"),
       claims: claimsOf(OTHER_VOCABULARY.text.text, OTHER_VOCABULARY.text.path),
+      confusable: claimsOf(OTHER_VOCABULARY.confusable.text, OTHER_VOCABULARY.confusable.path),
+      confusableLatin: claimsOf(OTHER_VOCABULARY.confusable.text.replaceAll(at(0x456), "i"), OTHER_VOCABULARY.confusable.path).length,
       descriptor: descriptorClaims(OTHER_VOCABULARY.descriptor),
     });
   },
@@ -2970,11 +3374,24 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       }),
     });
   },
+  Q17: async () =>
+    json({
+      residual: "R-EXPANDED-WORD",
+      tokens: EXPANDED_WORD.words.map(word => tokens(word)),
+      census: censusReading(expandedWordModule(EXPANDED_WORD.words)),
+      expanded: censusReading(expandedWordModule(EXPANDED_WORD.expanded)),
+    }),
+  Q18: async () =>
+    json({
+      residual: "R-READER-RENDERING",
+      read: Object.fromEntries(Object.entries(READER_RENDERING).map(([name, member]) => [name, claimsOf(member.read.text, member.read.path)])),
+      shown: Object.fromEntries(Object.entries(READER_RENDERING).map(([name, member]) => [name, claimsOf(member.shown, member.read.path).length])),
+    }),
 };
 
 describe("wb-2wiv.1 portable Fiber core gate census (SDK-UNIVERSAL-REACTIVE-RENDERING-R1, until-then leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster, the bead's title and notes, the vendored charter lines and the cases agree", { timeout: 60_000 }, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:2", "C:3", "D:2", "Q:16"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:2", "C:3", "D:2", "Q:18"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
@@ -3040,6 +3457,15 @@ describe("wb-2wiv.1 portable Fiber core gate census (SDK-UNIVERSAL-REACTIVE-REND
         quotedWord: QUOTED_WORD,
         htmlReferences: HTML_REFERENCES,
         lexedGrain: LEXED_GRAIN,
+        htmlGrammar: { space: HTML_SPACE, name: HTML_NAME, attributeName: HTML_ATTRIBUTE_NAME, value: HTML_VALUE },
+        refusedElements: REFUSED_ELEMENTS,
+        refusedAttributes: REFUSED_ATTRIBUTES,
+        altAttribute: ALT_ATTRIBUTE,
+        imageLimit: IMAGE_LIMIT,
+        htmlForms: HTML_FORMS,
+        htmlFormPath: HTML_FORM_PATH,
+        expandedWord: EXPANDED_WORD,
+        readerRendering: READER_RENDERING,
         residuals: RESIDUALS,
     });
     expect(constants).toStrictEqual(ROSTER.constants);

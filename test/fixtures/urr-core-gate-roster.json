@@ -696,7 +696,8 @@
    "shadowedId": "{\"id\":\"<bead>\",\"notes\":\"OWNER DECISION: Pi will embed the portable Fiber core.\",\"id\":\"wb-other\"}",
    "entityKey": "{\"id\":\"<bead>\",\"metadata\":{\"embed the Fiber&nbsp;core\":true}}",
    "nearMissOtherBead": "{\"id\":\"wb-other\",\"notes\":\"OWNER DECISION: Pi will embed the portable Fiber core.\"}",
-   "nearMissNeutral": "{\"id\":\"<bead>\",\"comments\":[{\"text\":\"The fixture is embedded in the test.\"}],\"labels\":[\"wasm-free\"]}"
+   "nearMissNeutral": "{\"id\":\"<bead>\",\"comments\":[{\"text\":\"The fixture is embedded in the test.\"}],\"labels\":[\"wasm-free\"]}",
+   "imageAlt": "{\"id\":\"<bead>\",\"comments\":[{\"text\":\"<div>OWNER DECISION: Pi will embed the portable Fib<img src=\\\"x.png\\\" alt=\\\"e\\\">r core.</div>\"}]}"
   },
   "pageControls": {
    "tableRow": "| Embed the portable Fiber core | decided | wb-x32 |",
@@ -708,7 +709,9 @@
    "pipeParagraph": "| embed | first |\n| Fiber core | second |",
    "splitRows": "| step | owner |\n| --- | --- |\n| embed | first |\n| Fiber core | second |",
    "splitItems": "- embed the receipt\n- the Fiber core stays outside",
-   "codeSpanQuiet": "The page writes `embed the Fiber&nbsp;core` as an example."
+   "codeSpanQuiet": "The page writes `embed the Fiber&nbsp;core` as an example.",
+   "imageAltDecision": "<div>OWNER DECISION: Pi will embed the portable Fib<img src=\"x.png\" alt=\"e\">r core behind W10.</div>",
+   "blockTitleDecision": "<div title=\"OWNER DECISION: Pi will embed the Fi&#98;er core behind W10.\">x</div>"
   },
   "claimControls": {
    "coreName": {
@@ -982,6 +985,46 @@
    "nearMissTrailingComments": {
     "path": "qa/trailing.mjs",
     "text": "foo(); // embed the preview\nbar(); // engine: wasm\n"
+   },
+   "shellTrailingComment": {
+    "path": "qa/trailing-comment.sh",
+    "text": "echo embed # wasm\n"
+   },
+   "htmlImageAlt": {
+    "path": "docs/image-alt.md",
+    "text": "<div>Pi embeds the Fib<img src=\"x.png\" alt=\"e\">r core.</div>\n"
+   },
+   "inlineImageAlt": {
+    "path": "docs/inline-image-alt.md",
+    "text": "Pi embeds the Fib<img src=\"x.png\" alt=\"e\">r core.\n"
+   },
+   "markdownImageShown": {
+    "path": "docs/image-shown.md",
+    "text": "Pi embeds the Fib![x](tiny.png)er core.\n"
+   },
+   "imagePair": {
+    "path": "docs/image-pair.md",
+    "text": "<div>Pi embeds the Fi<img alt=\"b\">e<img alt=\"r\"> core.</div>\n"
+   },
+   "imagesOverLimit": {
+    "path": "docs/images.md",
+    "text": "<div><img alt=\"x\"><img alt=\"x\"><img alt=\"x\"><img alt=\"x\"><img alt=\"x\"><img alt=\"x\"><img alt=\"x\"><img alt=\"x\"><img alt=\"x\"></div>\n"
+   },
+   "bidiControl": {
+    "path": "docs/bidi.md",
+    "text": "Pi embeds the \u202eeroc rebiF.\n"
+   },
+   "bidiReference": {
+    "path": "docs/bidi-reference.md",
+    "text": "Pi embeds the &#x202E;eroc rebiF.\n"
+   },
+   "imageTwinDeduped": {
+    "path": "docs/image-twin.md",
+    "text": "Pi embeds the Fiber core with ![x](a.png).\n"
+   },
+   "blockTitle": {
+    "path": "docs/block-title.md",
+    "text": "<div title=\"Pi hosts the Fi&#98;er core\">x</div>\n"
    }
   },
   "descriptorControls": {
@@ -1138,6 +1181,10 @@
      "invoke"
     ],
     "id": "workbench.core.host"
+   },
+   "confusable": {
+    "path": "docs/confusable.md",
+    "text": "Pi embeds the F\u0456ber core.\n"
    }
   },
   "outsideText": {
@@ -1157,7 +1204,7 @@
   },
   "otherShape": {
    "module": "other-shape.ts",
-   "source": "export type Member = \"clock\" | \"timer\" | \"randomness\" | \"spawner\";\nexport const members = [\"clock\", \"timer\", \"randomness\", \"spawner\"];\nexport const table = new Map([[\"clock\", 0], [\"timer\", 0], [\"randomness\", 0], [\"spawner\", 0]]);\nexport type Tuple = [clock: number, timer: number, randomness: number, spawner: number];\nexport namespace Host {\n  export const clock = 0;\n  export const timer = 0;\n  export const randomness = 0;\n  export const spawner = 0;\n}\ndeclare const caps: number[];\nexport const [clock, timer, randomness, spawner] = caps;\n"
+   "source": "export type Member = \"clock\" | \"timer\" | \"randomness\" | \"spawner\";\nexport const members = [\"clock\", \"timer\", \"randomness\", \"spawner\"];\nexport const table = new Map([[\"clock\", 0], [\"timer\", 0], [\"randomness\", 0], [\"spawner\", 0]]);\nexport type Tuple = [clock: number, timer: number, randomness: number, spawner: number];\nexport namespace Host {\n  export const clock = 0;\n  export const timer = 0;\n  export const randomness = 0;\n  export const spawner = 0;\n}\ndeclare const caps: number[];\nexport const [clock, timer, randomness, spawner] = caps;\nexport type Parts = { clock: number } & { timer: number } & { randomness: number } & { spawner: number };\n"
   },
   "retractions": {
    "page": {
@@ -1252,6 +1299,129 @@
    ],
    "insertion": "\r"
   },
+  "htmlGrammar": {
+   "space": "[\\t\\n\\f\\r ]",
+   "name": "[A-Za-z][A-Za-z0-9-]*",
+   "attributeName": "[A-Za-z_:][A-Za-z0-9_.:-]*",
+   "value": "[^\\t\\n\\f\\r \"'=<>`]+|'[^']*'|\"[^\"]*\""
+  },
+  "refusedElements": [
+   "applet",
+   "audio",
+   "bdo",
+   "body",
+   "canvas",
+   "datalist",
+   "details",
+   "dialog",
+   "fencedframe",
+   "frameset",
+   "iframe",
+   "link",
+   "math",
+   "meter",
+   "noembed",
+   "noframes",
+   "noscript",
+   "object",
+   "plaintext",
+   "progress",
+   "rp",
+   "rt",
+   "rtc",
+   "script",
+   "select",
+   "style",
+   "svg",
+   "table",
+   "template",
+   "textarea",
+   "title",
+   "video",
+   "xmp"
+  ],
+  "refusedAttributes": [
+   "color",
+   "dir",
+   "hidden",
+   "popover",
+   "style"
+  ],
+  "altAttribute": "alt",
+  "imageLimit": 8,
+  "htmlForms": {
+   "tag": "<span></span>",
+   "tagAttributes": "<span title=\"a\" lang=en translate></span>",
+   "quotedGreater": "<span title=\"a>b\"></span>",
+   "singleQuotedGreater": "<span title='a>b'></span>",
+   "tagWhitespace": "<span\ttitle=a\nlang=en\f></span\t>",
+   "selfClosing": "<br/>",
+   "comment": "<!-- x -->",
+   "emptyComment": "<!---->",
+   "namespacedName": "<o:p></o:p>",
+   "underscoreName": "<x_y></x_y>",
+   "dotName": "<x.y></x.y>",
+   "solidusAttribute": "<x/y>",
+   "unseparatedAttributes": "<span title=\"a\"lang=\"b\"></span>",
+   "noBreakSpace": "<span\u00a0title=\"a>b\"></span>",
+   "verticalTab": "<span\u000btitle=\"a>b\"></span>",
+   "processingInstruction": "<?x?>",
+   "markupDeclaration": "<!x>",
+   "doctype": "<!DOCTYPE x>",
+   "cdata": "<![CDATA[x]]>",
+   "bogusEndTag": "</ x>",
+   "emptyEndTag": "</>",
+   "endTagAttribute": "</span title=\"a>b\">",
+   "openedEmptyComment": "<!-->",
+   "openedDashComment": "<!--->",
+   "bangComment": "<!-- x --!>y-->",
+   "unterminatedComment": "<!-- x",
+   "unterminatedTag": "<span title=\"a",
+   "refusedElement": "<template>x</template>",
+   "refusedAttribute": "<span hidden>x</span>"
+  },
+  "htmlFormPath": "docs/html-form.md",
+  "expandedWord": {
+   "module": "expanded-word.ts",
+   "words": [
+    "$'\\x72'f context show",
+    "R=r; ${R}f context show"
+   ],
+   "expanded": [
+    "rf context show",
+    "R=r; rf context show"
+   ]
+  },
+  "readerRendering": {
+   "styledClass": {
+    "read": {
+     "path": "docs/styled-class.md",
+     "text": "<div>Pi embeds the Fib<span class=\"hidden\">x</span>er core.</div>\n"
+    },
+    "shown": "<div>Pi embeds the Fiber core.</div>\n"
+   },
+   "styledId": {
+    "read": {
+     "path": "docs/styled-id.md",
+     "text": "<div>Pi embeds the Fib<span id=\"hidden\">x</span>er core.</div>\n"
+    },
+    "shown": "<div>Pi embeds the Fiber core.</div>\n"
+   },
+   "styledElement": {
+    "read": {
+     "path": "docs/styled-element.md",
+     "text": "<div>Pi embeds the Fib<abbr>x</abbr>er core.</div>\n"
+    },
+    "shown": "<div>Pi embeds the Fiber core.</div>\n"
+   },
+   "picture": {
+    "read": {
+     "path": "docs/picture.md",
+     "text": "<img src=\"figure-1.png\">\n"
+    },
+    "shown": "<img src=\"figure-1.png\" alt=\"Pi embeds the Fiber core.\">\n"
+   }
+  },
   "residuals": {
    "R-COMPOSED": [
     "Q1"
@@ -1300,6 +1470,12 @@
    ],
    "R-LEXED-GRAIN": [
     "Q16"
+   ],
+   "R-EXPANDED-WORD": [
+    "Q17"
+   ],
+   "R-READER-RENDERING": [
+    "Q18"
    ]
   }
  },
@@ -1374,6 +1550,8 @@
   "Q14",
   "Q15",
   "Q16",
+  "Q17",
+  "Q18",
   "the registered tests and the reached pins equal the roster, in order and both ways"
  ],
  "rows": [
@@ -1686,7 +1864,110 @@
         "wb-x32.metadata{embed the Fiber&nbsp;core} key:1: rendered embed+fibercore"
        ],
        "nearMissOtherBead": [],
-       "nearMissNeutral": []
+       "nearMissNeutral": [],
+       "imageAlt": [
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ]
+      },
+      "htmlForms": {
+       "tag": [
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "tagAttributes": [
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "quotedGreater": [
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "singleQuotedGreater": [
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "tagWhitespace": [
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "selfClosing": [
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "comment": [
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "emptyComment": [
+        "wb-x32.comments[0].text:1: embed+fibercore",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "namespacedName": [
+        "wb-x32.comments[0].text:1: rendered unknown <o:p>",
+        "wb-x32.comments[0].text:1: rendered unknown </o:p>"
+       ],
+       "underscoreName": [
+        "wb-x32.comments[0].text:1: rendered unknown <x_y>",
+        "wb-x32.comments[0].text:1: rendered unknown </x_y>"
+       ],
+       "dotName": [
+        "wb-x32.comments[0].text:1: rendered unknown <x.y>",
+        "wb-x32.comments[0].text:1: rendered unknown </x.y>"
+       ],
+       "solidusAttribute": [
+        "wb-x32.comments[0].text:1: rendered unknown <x/y>"
+       ],
+       "unseparatedAttributes": [
+        "wb-x32.comments[0].text:1: rendered unknown <span title=\"a\"lang=\"b\">"
+       ],
+       "noBreakSpace": [
+        "wb-x32.comments[0].text:1: rendered unknown <span title=\"a>"
+       ],
+       "verticalTab": [
+        "wb-x32.comments[0].text:1: rendered unknown <span title=\"a>"
+       ],
+       "processingInstruction": [
+        "wb-x32.comments[0].text:1: rendered unknown <?x?>"
+       ],
+       "markupDeclaration": [
+        "wb-x32.comments[0].text:1: rendered unknown <!x>"
+       ],
+       "doctype": [
+        "wb-x32.comments[0].text:1: rendered unknown <!DOCTYPE x>"
+       ],
+       "cdata": [
+        "wb-x32.comments[0].text:1: rendered unknown <![CDATA[x]]>"
+       ],
+       "bogusEndTag": [
+        "wb-x32.comments[0].text:1: rendered unknown </ x>"
+       ],
+       "emptyEndTag": [
+        "wb-x32.comments[0].text:1: embed+fibercore",
+        "wb-x32.comments[0].text:1: rendered unknown </>",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "endTagAttribute": [
+        "wb-x32.comments[0].text:1: rendered unknown </span title=\"a>"
+       ],
+       "openedEmptyComment": [
+        "wb-x32.comments[0].text:1: embed+fibercore",
+        "wb-x32.comments[0].text:1: rendered unknown <!-->",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "openedDashComment": [
+        "wb-x32.comments[0].text:1: embed+fibercore",
+        "wb-x32.comments[0].text:1: rendered unknown <!--->",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "bangComment": [
+        "wb-x32.comments[0].text:1: rendered unknown <!-- x --!>",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "unterminatedComment": [
+        "wb-x32.comments[0].text:1: rendered unknown <!-- xer core behind the W10 provider.</..."
+       ],
+       "unterminatedTag": [
+        "wb-x32.comments[0].text:1: rendered unknown <span title=\"aer core behind the W10 pro..."
+       ],
+       "refusedElement": [
+        "wb-x32.comments[0].text:1: rendered unknown <template>"
+       ],
+       "refusedAttribute": [
+        "wb-x32.comments[0].text:1: rendered unknown <span hidden>"
+       ]
       }
      }
     },
@@ -1724,7 +2005,113 @@
        ],
        "splitRows": [],
        "splitItems": [],
-       "codeSpanQuiet": []
+       "codeSpanQuiet": [],
+       "imageAltDecision": [
+        "imageAltDecision:1: rendered embed+fibercore"
+       ],
+       "blockTitleDecision": [
+        "blockTitleDecision:1: rendered embed+fibercore"
+       ]
+      },
+      "htmlForms": {
+       "tag": [
+        "tag:1: rendered embed+fibercore"
+       ],
+       "tagAttributes": [
+        "tagAttributes:1: rendered embed+fibercore"
+       ],
+       "quotedGreater": [
+        "quotedGreater:1: rendered embed+fibercore"
+       ],
+       "singleQuotedGreater": [
+        "singleQuotedGreater:1: rendered embed+fibercore"
+       ],
+       "tagWhitespace": [
+        "tagWhitespace:1: rendered embed+fibercore"
+       ],
+       "selfClosing": [
+        "selfClosing:1: rendered embed+fibercore"
+       ],
+       "comment": [
+        "comment:1: rendered embed+fibercore"
+       ],
+       "emptyComment": [
+        "emptyComment:1: embed+fibercore",
+        "emptyComment:1: rendered embed+fibercore"
+       ],
+       "namespacedName": [
+        "namespacedName:1: rendered unknown <o:p>",
+        "namespacedName:1: rendered unknown </o:p>"
+       ],
+       "underscoreName": [
+        "underscoreName:1: rendered unknown <x_y>",
+        "underscoreName:1: rendered unknown </x_y>"
+       ],
+       "dotName": [
+        "dotName:1: rendered unknown <x.y>",
+        "dotName:1: rendered unknown </x.y>"
+       ],
+       "solidusAttribute": [
+        "solidusAttribute:1: rendered unknown <x/y>"
+       ],
+       "unseparatedAttributes": [
+        "unseparatedAttributes:1: rendered unknown <span title=\"a\"lang=\"b\">"
+       ],
+       "noBreakSpace": [
+        "noBreakSpace:1: rendered unknown <span title=\"a>"
+       ],
+       "verticalTab": [
+        "verticalTab:1: rendered unknown <span title=\"a>"
+       ],
+       "processingInstruction": [
+        "processingInstruction:1: rendered unknown <?x?>"
+       ],
+       "markupDeclaration": [
+        "markupDeclaration:1: rendered unknown <!x>"
+       ],
+       "doctype": [
+        "doctype:1: rendered unknown <!DOCTYPE x>"
+       ],
+       "cdata": [
+        "cdata:1: rendered unknown <![CDATA[x]]>"
+       ],
+       "bogusEndTag": [
+        "bogusEndTag:1: rendered unknown </ x>"
+       ],
+       "emptyEndTag": [
+        "emptyEndTag:1: embed+fibercore",
+        "emptyEndTag:1: rendered unknown </>",
+        "emptyEndTag:1: rendered embed+fibercore"
+       ],
+       "endTagAttribute": [
+        "endTagAttribute:1: rendered unknown </span title=\"a>"
+       ],
+       "openedEmptyComment": [
+        "openedEmptyComment:1: embed+fibercore",
+        "openedEmptyComment:1: rendered unknown <!-->",
+        "openedEmptyComment:1: rendered embed+fibercore"
+       ],
+       "openedDashComment": [
+        "openedDashComment:1: embed+fibercore",
+        "openedDashComment:1: rendered unknown <!--->",
+        "openedDashComment:1: rendered embed+fibercore"
+       ],
+       "bangComment": [
+        "bangComment:1: rendered unknown <!-- x --!>",
+        "bangComment:1: rendered embed+fibercore"
+       ],
+       "unterminatedComment": [
+        "unterminatedComment:1: rendered unknown <!-- xer core behind the W10 provider.</..."
+       ],
+       "unterminatedTag": [
+        "unterminatedTag:1: rendered unknown <span title=\"aer core behind the W10 pro..."
+       ],
+       "refusedElement": [
+        "refusedElement:1: rendered unknown <template>"
+       ],
+       "refusedAttribute": [
+        "refusedAttribute:1: rendered unknown <span hidden>"
+       ]
       }
      }
     }
@@ -2785,7 +3172,437 @@
        "nearMissDotfile": [],
        "nearMissYamlFlow": [],
        "nearMissTomlInline": [],
-       "nearMissTrailingComments": []
+       "nearMissTrailingComments": [],
+       "shellTrailingComment": [
+        "qa/trailing-comment.sh:1: embed+core"
+       ],
+       "htmlImageAlt": [
+        "docs/image-alt.md:1: rendered fibercore,embed+core"
+       ],
+       "inlineImageAlt": [
+        "docs/inline-image-alt.md:1: rendered fibercore,embed+core"
+       ],
+       "markdownImageShown": [
+        "docs/image-shown.md:1: rendered fibercore,embed+core"
+       ],
+       "imagePair": [
+        "docs/image-pair.md:1: rendered fibercore,embed+core"
+       ],
+       "imagesOverLimit": [
+        "docs/images.md:1: rendered unknown images 9"
+       ],
+       "bidiControl": [
+        "docs/bidi.md:1: rendered unknown U+202E"
+       ],
+       "bidiReference": [
+        "docs/bidi-reference.md:1: rendered unknown U+202E"
+       ],
+       "imageTwinDeduped": [
+        "docs/image-twin.md:1: fibercore,embed+core",
+        "docs/image-twin.md:1: rendered fibercore,embed+core"
+       ],
+       "blockTitle": [
+        "docs/block-title.md:1: rendered fibercore"
+       ]
+      },
+      "htmlForms": {
+       "tag": {
+        "block": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "tagAttributes": {
+        "block": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "quotedGreater": {
+        "block": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "singleQuotedGreater": {
+        "block": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "tagWhitespace": {
+        "block": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "selfClosing": {
+        "block": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "comment": {
+        "block": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "emptyComment": {
+        "block": [
+         "docs/html-form.md:1: fibercore,embed+core",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: fibercore,embed+core",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "namespacedName": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <o:p>",
+         "docs/html-form.md:1: rendered unknown </o:p>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown </o:p>"
+        ]
+       },
+       "underscoreName": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <x_y>",
+         "docs/html-form.md:1: rendered unknown </x_y>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <x_y>",
+         "docs/html-form.md:1: rendered unknown </x_y>",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "dotName": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <x.y>",
+         "docs/html-form.md:1: rendered unknown </x.y>"
+        ],
+        "inline": []
+       },
+       "solidusAttribute": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <x/y>"
+        ],
+        "inline": []
+       },
+       "unseparatedAttributes": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <span title=\"a\"lang=\"b\">"
+        ],
+        "inline": []
+       },
+       "noBreakSpace": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <span title=\"a>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <span title=\"a>",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "verticalTab": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <span title=\"a>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <span title=\"a>",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "processingInstruction": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <?x?>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <?x?>",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "markupDeclaration": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <!x>"
+        ],
+        "inline": []
+       },
+       "doctype": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <!DOCTYPE x>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <!DOCTYPE x>",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "cdata": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <![CDATA[x]]>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <![CDATA[x]]>",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "bogusEndTag": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown </ x>"
+        ],
+        "inline": []
+       },
+       "emptyEndTag": {
+        "block": [
+         "docs/html-form.md:1: fibercore,embed+core",
+         "docs/html-form.md:1: rendered unknown </>",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: fibercore,embed+core",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "endTagAttribute": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown </span title=\"a>"
+        ],
+        "inline": []
+       },
+       "openedEmptyComment": {
+        "block": [
+         "docs/html-form.md:1: fibercore,embed+core",
+         "docs/html-form.md:1: rendered unknown <!-->",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: fibercore,embed+core",
+         "docs/html-form.md:1: rendered unknown <!-->",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "openedDashComment": {
+        "block": [
+         "docs/html-form.md:1: fibercore,embed+core",
+         "docs/html-form.md:1: rendered unknown <!--->",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: fibercore,embed+core",
+         "docs/html-form.md:1: rendered unknown <!--->",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "bangComment": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <!-- x --!>",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <!-- x --!>",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "unterminatedComment": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <!-- xer core.</div>"
+        ],
+        "inline": []
+       },
+       "unterminatedTag": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <span title=\"aer core.</div>"
+        ],
+        "inline": []
+       },
+       "refusedElement": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <template>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <template>"
+        ]
+       },
+       "refusedAttribute": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <span hidden>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <span hidden>"
+        ]
+       }
+      },
+      "refusedElements": {
+       "applet": [
+        "docs/html-form.md:1: rendered unknown <applet>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "audio": [
+        "docs/html-form.md:1: rendered unknown <audio>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "bdo": [
+        "docs/html-form.md:1: rendered unknown <bdo>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "body": [
+        "docs/html-form.md:1: rendered unknown <body>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "canvas": [
+        "docs/html-form.md:1: rendered unknown <canvas>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "datalist": [
+        "docs/html-form.md:1: rendered unknown <datalist>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "details": [
+        "docs/html-form.md:1: rendered unknown <details>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "dialog": [
+        "docs/html-form.md:1: rendered unknown <dialog>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "fencedframe": [
+        "docs/html-form.md:1: rendered unknown <fencedframe>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "frameset": [
+        "docs/html-form.md:1: rendered unknown <frameset>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "iframe": [
+        "docs/html-form.md:1: rendered unknown <iframe>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "link": [
+        "docs/html-form.md:1: rendered unknown <link>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "math": [
+        "docs/html-form.md:1: rendered unknown <math>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "meter": [
+        "docs/html-form.md:1: rendered unknown <meter>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "noembed": [
+        "docs/html-form.md:1: rendered unknown <noembed>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "noframes": [
+        "docs/html-form.md:1: rendered unknown <noframes>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "noscript": [
+        "docs/html-form.md:1: rendered unknown <noscript>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "object": [
+        "docs/html-form.md:1: rendered unknown <object>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "plaintext": [
+        "docs/html-form.md:1: rendered unknown <plaintext>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "progress": [
+        "docs/html-form.md:1: rendered unknown <progress>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "rp": [
+        "docs/html-form.md:1: rendered unknown <rp>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "rt": [
+        "docs/html-form.md:1: rendered unknown <rt>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "rtc": [
+        "docs/html-form.md:1: rendered unknown <rtc>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "script": [
+        "docs/html-form.md:1: rendered unknown <script>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "select": [
+        "docs/html-form.md:1: rendered unknown <select>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "style": [
+        "docs/html-form.md:1: rendered unknown <style>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "svg": [
+        "docs/html-form.md:1: rendered unknown <svg>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "table": [
+        "docs/html-form.md:1: rendered unknown <table>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "template": [
+        "docs/html-form.md:1: rendered unknown <template>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "textarea": [
+        "docs/html-form.md:1: rendered unknown <textarea>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "title": [
+        "docs/html-form.md:1: rendered unknown <title>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "video": [
+        "docs/html-form.md:1: rendered unknown <video>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "xmp": [
+        "docs/html-form.md:1: rendered unknown <xmp>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ]
+      },
+      "refusedAttributes": {
+       "color": [
+        "docs/html-form.md:1: rendered unknown <span color=\"x\">",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "dir": [
+        "docs/html-form.md:1: rendered unknown <span dir=\"x\">",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "hidden": [
+        "docs/html-form.md:1: rendered unknown <span hidden=\"x\">",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "popover": [
+        "docs/html-form.md:1: rendered unknown <span popover=\"x\">",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "style": [
+        "docs/html-form.md:1: rendered unknown <span style=\"x\">",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ]
       },
       "plantedTree": {
        "roots": {
@@ -2970,6 +3787,8 @@
       },
       "manifest": [],
       "claims": [],
+      "confusable": [],
+      "confusableLatin": 2,
       "descriptor": []
      }
     },
@@ -3161,6 +3980,62 @@
         "quiet": true
        }
       ]
+     }
+    },
+    {
+     "id": "Q17",
+     "witness": {
+      "residual": "R-EXPANDED-WORD",
+      "tokens": [
+       [
+        "x72",
+        "f",
+        "context",
+        "show"
+       ],
+       [
+        "r",
+        "r",
+        "r",
+        "f",
+        "context",
+        "show"
+       ]
+      ],
+      "census": {
+       "rfTexts": [],
+       "sdkTexts": [],
+       "launches": []
+      },
+      "expanded": {
+       "rfTexts": [
+        "expanded-word.ts | StringLiteral < CallExpression execSync #0 | \"rf context show\"",
+        "expanded-word.ts | StringLiteral < CallExpression execSync #0 | \"R=r; rf context show\""
+       ],
+       "sdkTexts": [],
+       "launches": [
+        "expanded-word.ts: execSync",
+        "expanded-word.ts: execSync"
+       ]
+      }
+     }
+    },
+    {
+     "id": "Q18",
+     "witness": {
+      "residual": "R-READER-RENDERING",
+      "read": {
+       "styledClass": [],
+       "styledId": [],
+       "styledElement": [],
+       "picture": []
+      },
+      "shown": {
+       "styledClass": 2,
+       "styledId": 2,
+       "styledElement": 2,
+       "picture": 2
+      }
      }
     }
    ]
