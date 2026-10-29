@@ -115,7 +115,8 @@
      "id": "Q3",
      "quote": "R-VOCABULARY",
      "subjects": [
-      "fold"
+      "@furnace/sdk",
+      "src"
      ]
     },
     {
@@ -136,7 +137,8 @@
      "id": "Q6",
      "quote": "R-COMMENT-OR-SPLIT",
      "subjects": [
-      "tokens"
+      "@furnace/sdk",
+      "src"
      ]
     }
    ]
@@ -228,6 +230,56 @@
   "scopedSeams": [
    "src/workbench/furnace-control.ts:VendoredFurnaceControlClient",
    "src/workbench/hosts/furnace-hosted.ts:FurnaceHostedClient"
+  ],
+  "z1Channels": [
+   "identifier",
+   "privateName",
+   "string",
+   "template",
+   "regex",
+   "regexHex",
+   "regexUnicode",
+   "regexCodePoint",
+   "releaseComment"
+  ],
+  "seamForms": [
+   "modifier-interface",
+   "modifier-alias",
+   "default-interface",
+   "default-assignment",
+   "clause-type",
+   "clause-alias",
+   "clause-value",
+   "clause-inline-type",
+   "clause-renamed",
+   "namespace",
+   "nested-namespace",
+   "namespace-clause",
+   "export-import",
+   "reexport-named",
+   "reexport-star",
+   "reexport-namespace",
+   "reexport-package",
+   "reexport-package-renamed",
+   "import-reexport-package",
+   "augmentation",
+   "augmentation-outside",
+   "declaration-file",
+   "name-digit",
+   "name-case"
+  ],
+  "residualSeams": [
+   "local",
+   "script",
+   "declare-global",
+   "ambient-module",
+   "class",
+   "enum",
+   "value",
+   "other-name",
+   "outside",
+   "star-package",
+   "extension"
   ],
   "residuals": [
    "R-NATIVE-FIELD:Q1",
@@ -577,6 +629,57 @@
       "predicteddistribution"
      ]
     ],
+    "regexHex": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
+    "regexUnicode": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
+    "regexCodePoint": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
     "releaseComment": [
      [
       "observedtransition"
@@ -626,6 +729,12 @@
     "simulated outcome",
     "PredictedTransition",
     "learned dynamics"
+   ],
+   "unspelled": [
+    "w.rld-model",
+    "synthetic\\w+attempt",
+    "counterf(?:a|4)ctual",
+    "\\167orld-model"
    ]
   },
   "Q4": {
@@ -636,7 +745,75 @@
   "Q5": {
    "module": "src/workbench/furnace-evidence.ts",
    "clientType": "Pick<FurnaceObserverClient, \"logs\">",
-   "rosterEntries": 0
+   "rosterEntries": 0,
+   "residual": {
+    "local": {
+     "quiet": [],
+     "paired": [
+      "src/workbench/world-model-seam-plant-local-paired.ts:FurnaceSeamPlantClient"
+     ]
+    },
+    "script": {
+     "quiet": [],
+     "paired": [
+      "src/workbench/world-model-seam-plant-script-paired.ts:FurnaceSeamPlantScriptClient"
+     ]
+    },
+    "declare-global": {
+     "quiet": [],
+     "paired": [
+      "src/workbench/world-model-seam-plant-declare-global-paired.ts:FurnaceSeamPlantGlobalClient"
+     ]
+    },
+    "ambient-module": {
+     "quiet": [],
+     "paired": [
+      "src/workbench/world-model-seam-plant-ambient-module-paired.ts:FurnaceSeamPlantClient"
+     ]
+    },
+    "class": {
+     "quiet": [],
+     "paired": [
+      "src/workbench/world-model-seam-plant-class-paired.ts:FurnaceSeamPlantClient"
+     ]
+    },
+    "enum": {
+     "quiet": [],
+     "paired": [
+      "src/workbench/world-model-seam-plant-enum-paired.ts:FurnaceSeamPlantClient"
+     ]
+    },
+    "value": {
+     "quiet": [],
+     "paired": [
+      "src/workbench/world-model-seam-plant-value-paired.ts:FurnaceSeamPlantClient"
+     ]
+    },
+    "other-name": {
+     "quiet": [],
+     "paired": [
+      "src/workbench/world-model-seam-plant-other-name-paired.ts:FurnaceSeamPlantClient"
+     ]
+    },
+    "outside": {
+     "quiet": [],
+     "paired": [
+      "src/world-model-seam-plant-source-outside-paired.ts:FurnaceSeamPlantClient"
+     ]
+    },
+    "star-package": {
+     "quiet": [],
+     "paired": [
+      "src/workbench/world-model-seam-plant-star-package-paired.ts:FurnaceSeamPlantClient"
+     ]
+    },
+    "extension": {
+     "quiet": [],
+     "paired": [
+      "src/workbench/world-model-seam-plant-extension-paired.ts:FurnaceSeamPlantClient"
+     ]
+    }
+   }
   },
   "Q6": {
    "prose": {
