@@ -7,31 +7,54 @@
  * <never>.") gives clauses statement.1-3; its ACCEPTANCE list gives acceptance.1-4; its SURFACES line gives the surface files.
  * Each clause maps to exactly one judged row or to the PARKED remainder (CLAUSE_ROWS), and every row's pins are generated from
  * an anchor outside this file:
- *   G statement.1, the trigger: the gate's Pi-side conjunct (wb-x32's committing decision) is still closed. One pin per rf
- *     capability id a src string literal names. An rf capability id is a whole token whose producer (src producerOf, the first
- *     `.`/`-` segment) is reactivefiber and which the real CapabilityRegistry accepts as a descriptor id: the registry's own
- *     grammar judges every token, so no census copy of it can be narrower than what the registry registers (respin U3). Today
- *     that is only reactivefiber.render.preview: its naming sites, and through both src registrars its read effect class and
- *     read-scoped permission (a token held by an observation `kind` property passes the same test - the observer's
- *     reactivefiber.render.preview.snapshot - and is listed in that witness, never counted as a capability). And one pin per src
- *     declaration holding a whole string token that names the rf binary (rf itself, a path whose last segment is rf, or a
- *     command text whose first word is either), whatever call spawns it or const carries it (respin F1): the token's use is
- *     measured, the "--" flags its file spells carry --no-commit, and no src string text names --idempotency-key. A committing
- *     rf capability, a receipt-read id or a committing argv generates a pin this table does not hold or moves a witness: the
- *     tripwire that re-arms the PARKED remainder.
+ *   G statement.1, the trigger: the gate's Pi-side conjunct (wb-x32's committing decision) is still closed. Three readers, each
+ *     reading only what it names:
+ *     IDS - one pin per rf capability id a whole src string token spells (a string literal or a template with no
+ *     substitution). An rf capability id is a token whose producer (src producerOf, the first `.`/`-` segment) is reactivefiber
+ *     and which the real CapabilityRegistry accepts as a descriptor id: the registry's own grammar judges every token, so no
+ *     census copy of it can be narrower than what the registry registers (respin 1 U3). Today that is only
+ *     reactivefiber.render.preview, and its naming sites are listed (a token held by an observation `kind` property passes the
+ *     same test - the observer's reactivefiber.render.preview.snapshot - and is listed in that witness, never counted as a
+ *     capability).
+ *     REGISTRATIONS (respin 2 U2) - every src spelling of a member named `register` is read: each identifier `register` and
+ *     each whole string token `register`, wherever it stands. A spelling is JUDGED only as the property-access callee of a
+ *     one-argument call whose argument is a provider object literal with no spread or computed key, holding exactly one
+ *     `descriptor` property assignment whose value is an object literal with no spread or computed key and exactly one `id`
+ *     property assignment written as a whole string token; the registry judges that id. The functions whose judged
+ *     registrations carry an rf id are exactly the two src registrars this census runs, and each registers the preview
+ *     read-only under a read-scoped permission. Every other spelling is UNJUDGED and listed by owner and syntax, so a new one
+ *     moves the witness: an id held by reference or shorthand, concatenated, templated with substitutions or computed by a
+ *     call; a provider or descriptor held by reference, spread or computed key; an alias, a bind, an element access, an
+ *     assignment, a type member, the method's own declaration. Today the unjudged spellings are CapabilityRegistry's own
+ *     declaration and registryFor's local-provider pass-through in src/workbench/hosts/local-detached.ts, which re-registers
+ *     the ids an outside local provider module declares and spells none.
+ *     BINARY AND ARGV (respin 1 F1, respin 2 U1) - one pin per src declaration holding a whole string token that names the rf
+ *     binary (rf itself, a path whose last segment is rf, or a command text whose first word is either), whatever call spawns
+ *     it or const carries it; the token's use is measured. For the call that takes the binary as argument 1, the argv it
+ *     spawns is read, never the file's flag spellings: argument 2 is one const the spawning function reads nowhere else (or is
+ *     written in place), its value is an array literal or a call of one same-file function declaration, and every return of
+ *     that function is an array literal holding the whole token --no-commit as a direct element - never behind a spread, a
+ *     conditional, a filter, a call or an identifier. Any other shape is written into the witness instead, so it fails closed.
+ *     The witness lists each returned literal's elements and the builder's string tokens, and counts the src string tokens
+ *     naming --idempotency-key (none).
+ *     Within those three readers, a committing rf capability, a receipt-read id or a spawned argv without --no-commit generates
+ *     a pin this table does not hold or moves a witness: the tripwire that re-arms the PARKED remainder.
  *   S statement.2, the duty's standing leg: one pin per file of the filing's SURFACES line, what that surface holds until the
  *     duty lands. reactivefiber's reconcile reads are the preview alone (acceptance.1 adds the receipt read beside it); the rf
  *     branch of nativeEvidence projects the preview envelope's own operation_id as nativeId and no domainStatus under two
  *     receipt-shaped results - the minimal receipt, and every result key the shipped receipt carries plus each status field a
- *     sibling branch projects domainStatus from (respin F4) - and is the only rf branch (acceptance.2 adds the receipt branch);
- *     the runtime journals no rf native reference: a run of a test-only committing rf stand-in records its dispatch marker and a
- *     settled write row with no nativeRefs and no value, so reconciling it can only come out operator-asserted (the filing's
- *     rationale); docs/workbench/08's operator reconcile journey, read through the shared helper's rendered view
- *     (test/helpers/census.ts docsSection: the unique level-2 heading under the page's level-1 heading, bounded at the next
- *     level-1/2 heading or EOF, HTML refused), holds exactly one evidence allowlist sentence, in paragraph prose; the ids it
- *     names (every rendered word the registry accepts as an id, src's EvidenceBinding words aside) are exactly
+ *     sibling branch projects domainStatus from (respin 1 F4) - and is the only rf case label of nativeEvidence's switch, where
+ *     every case label is a whole string token (a label in any other syntax is listed unjudged, so it fails closed; respin 2)
+ *     (acceptance.2 adds the receipt branch); the runtime journals no rf native reference: a run of a test-only committing rf
+ *     stand-in records its dispatch marker and a settled write row with no nativeRefs and no value, so reconciling it can only
+ *     come out operator-asserted (the filing's rationale); docs/workbench/08's operator reconcile journey, read through the
+ *     shared helper's rendered view (test/helpers/census.ts docsSection: the unique level-2 heading under the page's level-1
+ *     heading, bounded at the next level-1/2 heading or EOF, HTML refused; and here a rendered text that keeps a character
+ *     reference the helper leaves undecoded is refused too, respin 2 F1), holds exactly one evidence allowlist sentence, in
+ *     paragraph prose; the ids it names (every rendered word the registry accepts as an id, src's EvidenceBinding words aside;
+ *     a word splits at a run of hyphens and loses its leading and trailing dots and hyphens first, respin 2 F2) are exactly
  *     RECONCILE_EVIDENCE_READS, and no other sentence of the section names a read (its other dotted or producer-namespaced ids
- *     are each the name of src's ACKNOWLEDGEMENT_VALUE_CONTRACT) (respin U2; acceptance.4 updates it with acceptance.1).
+ *     are each the name of src's ACKNOWLEDGEMENT_VALUE_CONTRACT) (respin 1 U2; acceptance.4 updates it with acceptance.1).
  *   N statement.3, never commit evidence: with only a genuine preview read in hand (fresh, failed or unprojected) no effect-absent
  *     acknowledgement is producer-confirmed, so an override after it carries possible-duplicate and must accept that risk - the
  *     preview never certifies that a commit did not happen.
@@ -56,21 +79,33 @@
  *   `${id} | ${requirement} | ${witness}` (PIN_LINES, the witness measured from the subject) are literals; one case per pin runs
  *   against its line. Pins are generated from the anchors above, so a member dropped from a table here leaves its generated pin
  *   without an entry, and a line dropped alone leaves a generated pin without its line; both red. The N and H requirements are
- *   the filing's own words, read from the export. EACH-LIVENESS (respin U1): every row case and every pin case records its id as
- *   its last statement, and the case declared last walks the collected tasks: both it.each sites must have registered exactly
- *   one run-mode case per SHAPE row and per PIN_LINES key, in order, and every one must have reached its last statement, so an
- *   it.each argument emptied, filtered or sliced at its call site reds.
+ *   the filing's own words, read from the export. EACH-LIVENESS (respin 1 U1): every row case and every pin case records its id
+ *   as its last statement, and the case declared last walks the collected tasks: both it.each sites must have registered
+ *   exactly one run-mode case per SHAPE row and per PIN_LINES key, in order, and every one must have reached its last statement,
+ *   so an it.each argument emptied, filtered or sliced at its call site reds.
  * RESPIN 1 (gate verdict on cut #1 4df64c6, refusal #1, unmet U1-U3): U1 is the each-liveness record above; U2 reads the docs
  *   allowlist through the rendered, section-bounded, heading-unique view (no raw-document regex, no first match), one sentence
  *   only, every id it names; U3 lets the registry judge the rf id grammar. The cut also closes the gate's F1 (the rf binary is
  *   recognised through any call or const) and F4 (the second receipt-shaped input).
+ * RESPIN 2 (gate verdict on cut #2 e9ffe9d, refusal #2, unmet U1-U2): U1 reads the argv the rf spawn receives (BINARY AND ARGV
+ *   above), so a conditional, spread or filtered --no-commit fails closed; U2 reads every register spelling and lists each
+ *   unjudged one (REGISTRATIONS above), so an id held by reference, concatenated or computed fails closed. The cut also takes the
+ *   record's LOW items F1 (a journey whose rendered text keeps an undecoded character reference such as &#46; is refused, so an
+ *   entity can never hide an id) and F2 (the hyphen-run word split), and puts the same class guard on the census's other
+ *   literal readers: a nativeEvidence case label that is not a whole string token is listed unjudged, and a src union member
+ *   that is not a string literal type refuses the union's reading.
  * Not claimed: the rf-side conjuncts (measured at the cut, not here); the receipt projection's five-state vocabulary (the bead's
- *   2026-10-17b note, owed with acceptance.2); rf capability ids spelled by a template with substitutions or held by a `kind`
- *   property; an rf binary name assembled at runtime (concatenation, a template with substitutions, or a value read from the
- *   environment or a config with no rf literal in src); a docs id written outside the registry grammar (it names nothing the
- *   registry registers); a hyphen-only id under a producer RECONCILE_EVIDENCE_READS does not key, named outside the allowlist
- *   sentence; a host path other than the Claude workflow host's node() journaling; the echo case (R); row-level existence and
- *   the census-authored G, S and R requirement labels, which are self-anchored (gate findings F2, F3).
+ *   2026-10-17b note, owed with acceptance.2); an rf capability id that no whole string token spells (concatenation, a template
+ *   with substitutions) or that a `kind` property holds, except where a reader above reads every spelling - a register call's
+ *   descriptor id and a nativeEvidence case label are listed unjudged, and RECONCILE_EVIDENCE_READS is measured at runtime; a
+ *   register member reached through a name src never spells (one assembled at runtime); an rf binary name assembled at runtime
+ *   (concatenation, a template with substitutions, or a value read from the environment or a config with no rf literal in
+ *   src); a commit effected by anything but the spawned argv (the child's environment, working directory or a config rf
+ *   reads); an rf branch of nativeEvidence written outside its switch's case labels; a docs id written outside the registry
+ *   grammar (it names nothing the registry registers); a hyphen-only id under a producer RECONCILE_EVIDENCE_READS does not key,
+ *   named outside the allowlist sentence; a host path other than the Claude workflow host's node() journaling; the echo case
+ *   (R); row-level existence and the census-authored G, S and R requirement labels, which are self-anchored (gate findings F2,
+ *   F3 on cut #1 and F4 on cut #2).
  *
  * Display paths added: none. Test-only: spawns nothing, writes nothing, allocates no scratch (WS is a string, never created);
  * reads the bead export, the src tree and docs/workbench/08-lifecycle-and-recovery.md.
@@ -234,12 +269,12 @@ function enclosingDeclaration(node: ts.Node): string {
   }
   return variable ?? "<top>";
 }
-function visitAll(source: ts.SourceFile, visit: (node: ts.Node) => void): void {
+function visitAll(root: ts.Node, visit: (node: ts.Node) => void): void {
   const walk = (node: ts.Node): void => {
     visit(node);
     ts.forEachChild(node, walk);
   };
-  walk(source);
+  walk(root);
 }
 let tokens: Token[] | undefined;
 /** Every whole string-literal token in src (not a template with substitutions), with its enclosing declaration. */
@@ -305,41 +340,183 @@ function rfBinarySites(): { readonly file: string; readonly name: string; readon
     return found;
   });
 }
-function objectProperty(object: ts.ObjectLiteralExpression, name: string): ts.Expression | undefined {
-  for (const property of object.properties) {
-    if (ts.isPropertyAssignment(property) && ts.isIdentifier(property.name) && property.name.text === name) return property.initializer;
-  }
-  return undefined;
+/** A whole string token: a string literal or a template with no substitution. */
+const isWholeToken = (node: ts.Node): node is ts.StringLiteral | ts.NoSubstitutionTemplateLiteral => ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node);
+/** The key a property is declared under, or undefined for a spread or a computed key. */
+function propertyKey(property: ts.ObjectLiteralElementLike): string | undefined {
+  const name = property.name;
+  return name !== undefined && (ts.isIdentifier(name) || ts.isStringLiteral(name) || ts.isNumericLiteral(name)) ? name.text : undefined;
 }
-/** Every src function that registers a descriptor whose id literal is an rf capability id, in file then source order. */
-function rfRegistrars(): string[] {
-  return srcFiles().flatMap(file => {
-    const found: string[] = [];
+/** The value of an object literal's one plain `key` assignment, or why the literal cannot be read for it (respin 2 U2). */
+function soleAssignment(object: ts.ObjectLiteralExpression, key: string): ts.Expression | string {
+  if (object.properties.some(property => propertyKey(property) === undefined)) return "a spread or computed key";
+  const named = object.properties.filter(property => propertyKey(property) === key);
+  const [only] = named;
+  if (only === undefined || named.length !== 1) return `${named.length} ${key} properties`;
+  return ts.isPropertyAssignment(only) ? only.initializer : `${key} ${ts.SyntaxKind[only.kind]}`;
+}
+/** A register call's descriptor id when its provider is a literal the census can read (respin 2 U2), else why it is not. */
+function judgedId(call: ts.CallExpression): { readonly id: string } | { readonly why: string } {
+  const [provider] = call.arguments;
+  if (provider === undefined || call.arguments.length !== 1) return { why: `${call.arguments.length} arguments` };
+  if (!ts.isObjectLiteralExpression(provider)) return { why: `provider ${ts.SyntaxKind[provider.kind]}` };
+  const descriptor = soleAssignment(provider, "descriptor");
+  if (typeof descriptor === "string") return { why: `provider: ${descriptor}` };
+  if (!ts.isObjectLiteralExpression(descriptor)) return { why: `descriptor ${ts.SyntaxKind[descriptor.kind]}` };
+  const id = soleAssignment(descriptor, "id");
+  if (typeof id === "string") return { why: `descriptor: ${id}` };
+  return isWholeToken(id) ? { id: id.text } : { why: `id ${ts.SyntaxKind[id.kind]}` };
+}
+/** Who holds a node: the function, or the Class.method, it sits in, else its class, else the outermost variable it initializes, else <top>. */
+function ownerOf(node: ts.Node): string {
+  let variable: string | undefined;
+  for (let at: ts.Node | undefined = node.parent; at !== undefined; at = at.parent) {
+    if (ts.isFunctionDeclaration(at) && at.name !== undefined) return at.name.text;
+    if (ts.isMethodDeclaration(at) && at.name !== node && ts.isClassDeclaration(at.parent) && at.parent.name !== undefined) return `${at.parent.name.text}.${at.name.getText()}`;
+    if (ts.isClassDeclaration(at) && at.name !== undefined) return at.name.text;
+    if (ts.isVariableDeclaration(at) && ts.isIdentifier(at.name)) variable = at.name.text;
+  }
+  return variable ?? "<top>";
+}
+interface RegisterSpelling {
+  readonly file: string;
+  readonly owner: string;
+  /** The descriptor id of a judged register call; absent when the spelling is unjudged. */
+  readonly id?: string;
+  /** How an unjudged spelling stands: the syntax holding it, or why its register call is not judged. */
+  readonly syntax: string;
+}
+let spellings: RegisterSpelling[] | undefined;
+/**
+ * Every src spelling of a member named `register` (respin 2 U2): each identifier `register` and each whole string token
+ * `register`, in file then source order. Only the property-access callee of a call whose provider soleAssignment reads plainly
+ * down to a whole-token id is judged; every other spelling is unjudged, whatever it holds.
+ */
+function registerSpellings(): RegisterSpelling[] {
+  spellings ??= srcFiles().flatMap(file => {
+    const found: RegisterSpelling[] = [];
     visitAll(parsed(file), node => {
-      if (!ts.isCallExpression(node) || !ts.isPropertyAccessExpression(node.expression) || node.expression.name.text !== "register") return;
-      const [first] = node.arguments;
-      const descriptor = first !== undefined && ts.isObjectLiteralExpression(first) ? objectProperty(first, "descriptor") : undefined;
-      const id = descriptor !== undefined && ts.isObjectLiteralExpression(descriptor) ? objectProperty(descriptor, "id") : undefined;
-      if (id !== undefined && ts.isStringLiteralLike(id) && isRfCapabilityId(id.text)) found.push(enclosingDeclaration(node));
+      if (!(ts.isIdentifier(node) || isWholeToken(node)) || node.text !== "register") return;
+      const parent = node.parent;
+      const access = (ts.isPropertyAccessExpression(parent) && parent.name === node) || (ts.isElementAccessExpression(parent) && parent.argumentExpression === node) ? parent : node;
+      const holder = access.parent;
+      const owner = ownerOf(node);
+      if (ts.isPropertyAccessExpression(access) && ts.isCallExpression(holder) && holder.expression === access) {
+        const verdict = judgedId(holder);
+        found.push("id" in verdict ? { file, owner, id: verdict.id, syntax: "judged register call" } : { file, owner, syntax: `register call, ${verdict.why}` });
+      } else found.push({ file, owner, syntax: ts.SyntaxKind[holder.kind] });
     });
     return found;
   });
+  return spellings;
 }
-/** The string-literal case labels of nativeEvidence's switch that name an rf capability id. */
-function rfBranches(): string[] {
+/** Every src function whose judged register call carries an rf capability id, in file then source order. */
+const rfRegistrars = (): string[] => registerSpellings().filter(spelling => spelling.id !== undefined && isRfCapabilityId(spelling.id)).map(spelling => spelling.owner);
+/** Every register spelling the census does not judge, as file#owner syntax (respin 2 U2: a new one moves the G:id witness). */
+const unjudgedRegisterSpellings = (): string[] => registerSpellings().filter(spelling => spelling.id === undefined).map(spelling => `${spelling.file}#${spelling.owner} ${spelling.syntax}`);
+/** Every whole string token under a node, in source order. */
+function wholeTokens(root: ts.Node): string[] {
   const found: string[] = [];
-  visitAll(parsed("src/workbench/native-evidence.ts"), node => {
-    if (ts.isCaseClause(node) && ts.isStringLiteralLike(node.expression) && isRfCapabilityId(node.expression.text) && enclosingDeclaration(node) === "nativeEvidence") found.push(node.expression.text);
-  });
+  const walk = (node: ts.Node): void => {
+    if (isWholeToken(node)) found.push(node.text);
+    ts.forEachChild(node, walk);
+  };
+  walk(root);
   return found;
 }
-/** The string members of a src/workflow/reconcile.ts union type (EffectDetermination, EvidenceBinding), in declaration order. */
+/** The return statements of a function itself, never of a function nested in it. */
+function ownReturns(fn: ts.FunctionDeclaration): ts.ReturnStatement[] {
+  const found: ts.ReturnStatement[] = [];
+  const walk = (node: ts.Node): void => {
+    if (ts.isReturnStatement(node)) found.push(node);
+    if (!ts.isFunctionLike(node)) ts.forEachChild(node, walk);
+  };
+  if (fn.body !== undefined) ts.forEachChild(fn.body, walk);
+  return found;
+}
+/**
+ * The argv the rf spawn receives (respin 2 U1): the one call in `site` taking the rf binary as argument 1, its argument 2 resolved
+ * through one const the spawning function reads nowhere else to the array literals that can reach the child, and whether each
+ * holds --no-commit as a direct element. A shape outside that reading is written into the text instead, so it fails closed.
+ */
+function spawnedArgv(file: string, site: string): string {
+  const source = parsed(file);
+  const calls: ts.CallExpression[] = [];
+  visitAll(source, node => {
+    if (isWholeToken(node) && RF_BINARY.test(node.text) && enclosingDeclaration(node) === site && ts.isCallExpression(node.parent) && node.parent.arguments[0] === node) calls.push(node.parent);
+  });
+  const [call] = calls;
+  if (call === undefined || calls.length !== 1) return `<${calls.length} calls of ${site} take the rf binary as argument 1>`;
+  let argv = call.arguments[1];
+  if (argv === undefined) return "<the spawn passes no argument 2>";
+  let origin = "written in place";
+  if (ts.isIdentifier(argv)) {
+    const name = argv.text;
+    const passed = argv;
+    let spawner: ts.Node = call;
+    while (!ts.isFunctionLike(spawner) && spawner.parent !== undefined) spawner = spawner.parent;
+    const declarations: ts.VariableDeclaration[] = [];
+    let reads = 0;
+    visitAll(spawner, node => {
+      if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === name) declarations.push(node);
+      else if (ts.isIdentifier(node) && node.text === name && node !== passed && !(ts.isVariableDeclaration(node.parent) && node.parent.name === node)) reads += 1;
+    });
+    const [declaration] = declarations;
+    if (declaration === undefined || declarations.length !== 1 || (ts.getCombinedNodeFlags(declaration) & ts.NodeFlags.Const) === 0 || declaration.initializer === undefined) return `<argument 2 ${name} is not one initialized const of ${site}>`;
+    if (reads > 0) return `<${site} reads ${name} ${reads} more times>`;
+    argv = declaration.initializer;
+    origin = `const ${name}, read only by the spawn`;
+  }
+  let arrays: ts.ArrayLiteralExpression[];
+  let tokens: string[];
+  let builder = "an array literal";
+  if (ts.isArrayLiteralExpression(argv)) {
+    arrays = [argv];
+    tokens = wholeTokens(argv);
+  } else if (ts.isCallExpression(argv) && ts.isIdentifier(argv.expression)) {
+    const callee = argv.expression.text;
+    const builders = source.statements.filter((statement): statement is ts.FunctionDeclaration => ts.isFunctionDeclaration(statement) && statement.name?.text === callee && statement.body !== undefined);
+    const [fn] = builders;
+    if (fn === undefined || builders.length !== 1) return `<argv from ${callee}(), not one same-file function declaration>`;
+    const returns = ownReturns(fn);
+    arrays = returns.flatMap(statement => (statement.expression !== undefined && ts.isArrayLiteralExpression(statement.expression) ? [statement.expression] : []));
+    const other = returns.find(statement => statement.expression === undefined || !ts.isArrayLiteralExpression(statement.expression));
+    if (returns.length === 0 || other !== undefined) return `<a return of ${callee} is ${other?.expression === undefined ? "missing or empty" : `a ${ts.SyntaxKind[other.expression.kind]}`}>`;
+    tokens = wholeTokens(fn);
+    builder = `${callee}()`;
+  } else return `<argv ${origin} is a ${ts.SyntaxKind[argv.kind]}>`;
+  const element = (node: ts.Expression): string => (isWholeToken(node) ? node.text : ts.isSpreadElement(node) ? `...${node.expression.getText(source)}` : node.getText(source));
+  const direct = arrays.every(array => array.elements.some(node => isWholeToken(node) && node.text === "--no-commit"));
+  return `argv=${origin}, from ${builder}; returns=${arrays.map(array => `[${array.elements.map(element).join(" ")}]`).join(" | ")}; --no-commit a direct element of every returned array=${direct}; builder string tokens=${tokens.join(" ")}`;
+}
+/** nativeEvidence's switch case labels (respin 2, the U2 class guard): the whole-token labels naming an rf id, and every label in any other syntax. */
+function nativeEvidenceLabels(): { readonly rf: readonly string[]; readonly unjudged: readonly string[] } {
+  const rf: string[] = [];
+  const unjudged: string[] = [];
+  visitAll(parsed("src/workbench/native-evidence.ts"), node => {
+    if (!ts.isCaseClause(node) || enclosingDeclaration(node) !== "nativeEvidence") return;
+    if (!isWholeToken(node.expression)) unjudged.push(ts.SyntaxKind[node.expression.kind]);
+    else if (isRfCapabilityId(node.expression.text)) rf.push(node.expression.text);
+  });
+  return { rf, unjudged };
+}
+/**
+ * The string members of a src/workflow/reconcile.ts union type (EffectDetermination, EvidenceBinding), in declaration order. The
+ * alias must be declared once and every member must be a string literal type (respin 2, the U2 class guard): any other member
+ * refuses the reading, so a determination or binding word added by reference can never go unread.
+ */
 function srcUnion(alias: string): string[] {
   const found: string[] = [];
+  let declared = 0;
   visitAll(parsed(RECONCILE_TS), node => {
-    if (!ts.isTypeAliasDeclaration(node) || node.name.text !== alias || !ts.isUnionTypeNode(node.type)) return;
-    for (const member of node.type.types) if (ts.isLiteralTypeNode(member) && ts.isStringLiteral(member.literal)) found.push(member.literal.text);
+    if (!ts.isTypeAliasDeclaration(node) || node.name.text !== alias) return;
+    declared += 1;
+    for (const member of ts.isUnionTypeNode(node.type) ? node.type.types : [node.type]) {
+      if (!ts.isLiteralTypeNode(member) || !ts.isStringLiteral(member.literal)) throw new Error(`${alias} holds a member that is not a string literal type (${ts.SyntaxKind[member.kind]}): the census refuses to read it`);
+      found.push(member.literal.text);
+    }
   });
+  if (declared !== 1) throw new Error(`${RECONCILE_TS} declares ${alias} ${declared} times`);
   return found;
 }
 
@@ -458,8 +635,14 @@ function blockSentences(block: RenderedBlock): string[] {
   const texts = block.kind === "list" ? block.items.map(item => item.text) : block.kind === "html" ? [] : [block.text];
   return texts.flatMap(text => text.split(/(?<=[.!?])\s+/));
 }
-/** The rendered words of a text the registry accepts as capability ids (case is kept, so a capitalised word is never one). */
-const idWords = (text: string): string[] => text.split(/[^A-Za-z0-9.-]+/).map(word => word.replace(/\.+$/, "")).filter(word => word.length > 0 && registryAcceptsId(word));
+/**
+ * The rendered words of a text the registry accepts as capability ids (case is kept, so a capitalised word is never one). A run
+ * of hyphens splits words, and each word loses its leading and trailing dots and hyphens before the registry judges it (respin 2
+ * F2), so a dash written as `--` or a trailing hyphen can never glue an id into a word the registry refuses.
+ */
+const idWords = (text: string): string[] => text.split(/[^A-Za-z0-9.-]+|-{2,}/).map(word => word.replace(/^[.-]+|[.-]+$/g, "")).filter(word => word.length > 0 && registryAcceptsId(word));
+/** A character reference the shared helper's decode leaves in rendered text (it maps only a fixed few); a browser renders it. */
+const CHARACTER_REFERENCE = /&(?:#[0-9]+|#x[0-9a-f]+|[a-z][a-z0-9]*);/i;
 interface JourneyReading {
   /** Why the reading is refused; empty when the section binds, carries no HTML and holds exactly one allowlist sentence in paragraph prose. */
   readonly why: string;
@@ -477,6 +660,7 @@ function journeyReading(): JourneyReading {
   if (!section.ok) return refuse(section.why);
   if (section.hasHtml) return refuse("the section carries HTML, whose rendered text can hide what its source says");
   const sentences = section.blocks.flatMap(block => blockSentences(block).map(text => ({ kind: block.kind, text })));
+  if (sentences.some(sentence => CHARACTER_REFERENCE.test(sentence.text))) return refuse("the section's rendered text keeps a character reference the shared helper leaves undecoded, whose rendered text can hide an id");
   const allowlist = sentences.filter(sentence => sentence.text.includes(ALLOWLIST));
   const [only] = allowlist;
   if (only === undefined || allowlist.length !== 1) return refuse(`the section holds ${allowlist.length} evidence allowlist sentences, not exactly one`);
@@ -504,10 +688,10 @@ const NEVER_QUERY: ClaudeQuery = () => {
 /** G: one pin per rf capability id src names, one per src function spawning rf. */
 const G_PINS: Readonly<Record<string, PinBody>> = {
   [`id:${PREVIEW_ID}`]: {
-    requirement: "the one rf capability src names is the preview: every naming site is listed and every src registrar registers it read-only under a read-scoped permission",
+    requirement: "the one rf capability id a whole src string token spells is the preview: every naming site is listed, the functions whose judged register calls carry an rf id are the registrars measured here and each registers it read-only under a read-scoped permission, and every unjudged register spelling is listed by owner and syntax",
     witness: async () => {
       expect(registryAcceptsId(PREVIEW_ID), "the id-grammar probe descriptor is valid: the registry accepts the preview id under it").toBe(true);
-      expect(rfRegistrars(), "every src function registering an rf descriptor is measured here").toStrictEqual(Object.keys(REGISTRARS));
+      expect(rfRegistrars(), "every src function whose judged register call carries an rf id is measured here").toStrictEqual(Object.keys(REGISTRARS));
       const sites = srcTokens().filter(token => token.text === PREVIEW_ID).map(token => `${token.file}#${token.site}`);
       const registered = Object.entries(REGISTRARS).map(([name, register]) => {
         const registry = new CapabilityRegistry();
@@ -516,17 +700,16 @@ const G_PINS: Readonly<Record<string, PinBody>> = {
         return `${name}:${descriptors.map(descriptor => `${descriptor.effectClass}/${descriptor.permissions.join("+")}`).join(",")}`;
       });
       const kinds = rfKindTokens().map(token => `${token.text}@${token.file}#${token.site}`);
-      return `sites=${sites.join(", ")}; registered=${registered.join(", ")}; id-shaped kinds (not capabilities)=${kinds.join(", ")}`;
+      return `sites=${sites.join(", ")}; registered=${registered.join(", ")}; id-shaped kinds (not capabilities)=${kinds.join(", ")}; unjudged register spellings=${unjudgedRegisterSpellings().join(", ")}`;
     },
   },
   "bin:nativeReactiveFiberRender": {
-    requirement: "the one src declaration naming the rf binary is the noncommitted render, which spawns it: its file spells --no-commit, and no src string text names --idempotency-key",
+    requirement: "the one src declaration naming the rf binary is the noncommitted render, which spawns it: the argv it spawns is one const read only by the spawn, built by one same-file function whose every return is an array literal holding --no-commit as a direct element, and no src string token names --idempotency-key",
     witness: async () => {
       const site = rfBinarySites().find(entry => entry.name === "nativeReactiveFiberRender");
       if (site === undefined) return "<nativeReactiveFiberRender names no rf binary>";
-      const flags = srcTokens().filter(token => token.file === site.file && /^--[a-z]/.test(token.text)).map(token => token.text);
       const keyed = srcTokens().filter(token => token.text.includes("--idempotency-key")).length;
-      return `${site.file} use=${site.use} flags=${flags.join(" ")}; src texts naming --idempotency-key=${keyed}`;
+      return `${site.file} use=${site.use}; ${spawnedArgv(site.file, site.name)}; src string tokens naming --idempotency-key=${keyed}`;
     },
   },
 };
@@ -537,7 +720,7 @@ const S_PINS: Readonly<Record<string, PinBody>> = {
     witness: async () => `RECONCILE_EVIDENCE_READS.reactivefiber=${JSON.stringify(RECONCILE_EVIDENCE_READS.reactivefiber ?? null)}`,
   },
   "src/workbench/native-evidence.ts": {
-    requirement: "the rf branch projects the preview envelope's own operation_id as nativeId and no domainStatus under both receipt-shaped results, and is the only rf branch",
+    requirement: "the rf branch projects the preview envelope's own operation_id as nativeId and no domainStatus under both receipt-shaped results, and is the only rf case label of nativeEvidence's switch, where every case label is a whole string token",
     witness: async () => {
       const results: Readonly<Record<string, JsonValue>> = { minimal: { operation_id: JOURNALED, state: "committed" }, shipped: SHIPPED_RECEIPT_RESULT };
       const parts: string[] = [];
@@ -545,7 +728,8 @@ const S_PINS: Readonly<Record<string, PinBody>> = {
         const evidence = nativeEvidence(PREVIEW_ID, await previewReading(previewEnvelope(FRESH, result)));
         parts.push(`${name} receipt: projection=${JSON.stringify(evidence)} domainStatus=${evidence.domainStatus ?? "absent"}`);
       }
-      return `${parts.join("; ")}; rf branches=${rfBranches().join(",")}`;
+      const labels = nativeEvidenceLabels();
+      return `${parts.join("; ")}; rf branches=${labels.rf.join(",")}; unjudged case labels=${labels.unjudged.length === 0 ? "none" : labels.unjudged.join(",")}`;
     },
   },
   "src/workflow/runtime.ts": {
@@ -664,13 +848,13 @@ const CLAUSE_ROWS: Readonly<Record<string, RowId | "PARKED">> = {
 const SHAPE = ["G:statement.1:2", "S:statement.2:4", "N:statement.3:1", "H:acceptance.3:2", "R:residual:1"];
 const PIN_LINES: Readonly<Record<string, string>> = {
   "G:id:reactivefiber.render.preview":
-    "G:id:reactivefiber.render.preview | the one rf capability src names is the preview: every naming site is listed and every src registrar registers it read-only under a read-scoped permission | sites=src/workbench/hosts/local-detached.ts#NATIVE_CAPABILITIES, src/workbench/native-evidence.ts#nativeEvidence, src/workbench/providers/reactivefiber.ts#registerReactiveFiberRender, src/workbench/providers/reactivefiber.ts#registerNativeReactiveFiberRender, src/workflow/reconcile.ts#RECONCILE_EVIDENCE_READS; registered=registerReactiveFiberRender:read/reactivefiber:render, registerNativeReactiveFiberRender:read/reactivefiber:render; id-shaped kinds (not capabilities)=reactivefiber.render.preview.snapshot@src/workbench/reactivefiber-observer.ts#reactivefiberTopology",
+    "G:id:reactivefiber.render.preview | the one rf capability id a whole src string token spells is the preview: every naming site is listed, the functions whose judged register calls carry an rf id are the registrars measured here and each registers it read-only under a read-scoped permission, and every unjudged register spelling is listed by owner and syntax | sites=src/workbench/hosts/local-detached.ts#NATIVE_CAPABILITIES, src/workbench/native-evidence.ts#nativeEvidence, src/workbench/providers/reactivefiber.ts#registerReactiveFiberRender, src/workbench/providers/reactivefiber.ts#registerNativeReactiveFiberRender, src/workflow/reconcile.ts#RECONCILE_EVIDENCE_READS; registered=registerReactiveFiberRender:read/reactivefiber:render, registerNativeReactiveFiberRender:read/reactivefiber:render; id-shaped kinds (not capabilities)=reactivefiber.render.preview.snapshot@src/workbench/reactivefiber-observer.ts#reactivefiberTopology; unjudged register spellings=src/workbench/capability-registry.ts#CapabilityRegistry MethodDeclaration, src/workbench/hosts/local-detached.ts#registryFor PropertySignature, src/workbench/hosts/local-detached.ts#registryFor TypeOfExpression, src/workbench/hosts/local-detached.ts#registryFor VariableDeclaration, src/workbench/hosts/local-detached.ts#registryFor PropertyAccessExpression, src/workbench/hosts/local-detached.ts#registryFor BinaryExpression, src/workbench/hosts/local-detached.ts#registryFor CallExpression, src/workbench/hosts/local-detached.ts#registryFor register call, provider Identifier",
   "G:bin:nativeReactiveFiberRender":
-    "G:bin:nativeReactiveFiberRender | the one src declaration naming the rf binary is the noncommitted render, which spawns it: its file spells --no-commit, and no src string text names --idempotency-key | src/workbench/providers/reactivefiber.ts use=spawn argument 1 flags=--view --task-id --model --model --task --workspace --no-commit --no-input --json; src texts naming --idempotency-key=0",
+    "G:bin:nativeReactiveFiberRender | the one src declaration naming the rf binary is the noncommitted render, which spawns it: the argv it spawns is one const read only by the spawn, built by one same-file function whose every return is an array literal holding --no-commit as a direct element, and no src string token names --idempotency-key | src/workbench/providers/reactivefiber.ts use=spawn argument 1; argv=const argv, read only by the spawn, from renderArgv(); returns=[--workspace workspaceRoot context render ...select --no-commit --no-input --json]; --no-commit a direct element of every returned array=true; builder string tokens=view --view --task-id --model --model --task --workspace context render --no-commit --no-input --json; src string tokens naming --idempotency-key=0",
   "S:src/workflow/reconcile.ts":
     "S:src/workflow/reconcile.ts | reactivefiber's reconcile evidence reads are the preview alone until the receipt read is admitted beside it | RECONCILE_EVIDENCE_READS.reactivefiber=[\"reactivefiber.render.preview\"]",
   "S:src/workbench/native-evidence.ts":
-    "S:src/workbench/native-evidence.ts | the rf branch projects the preview envelope's own operation_id as nativeId and no domainStatus under both receipt-shaped results, and is the only rf branch | minimal receipt: projection={\"provider\":\"reactivefiber\",\"nativeId\":\"rfo_freshpreview0000000000\"} domainStatus=absent; shipped receipt: projection={\"provider\":\"reactivefiber\",\"nativeId\":\"rfo_freshpreview0000000000\"} domainStatus=absent; rf branches=reactivefiber.render.preview",
+    "S:src/workbench/native-evidence.ts | the rf branch projects the preview envelope's own operation_id as nativeId and no domainStatus under both receipt-shaped results, and is the only rf case label of nativeEvidence's switch, where every case label is a whole string token | minimal receipt: projection={\"provider\":\"reactivefiber\",\"nativeId\":\"rfo_freshpreview0000000000\"} domainStatus=absent; shipped receipt: projection={\"provider\":\"reactivefiber\",\"nativeId\":\"rfo_freshpreview0000000000\"} domainStatus=absent; rf branches=reactivefiber.render.preview; unjudged case labels=none",
   "S:src/workflow/runtime.ts":
     "S:src/workflow/runtime.ts | no rf effect is journaled with a native reference, so reconciling one can only come out operator-asserted | run=completed; rows=dispatched:write:refs=0:value=none, settled:write:refs=0:value=none; inspect=0:reactivefiber.render.commit:recorded=0:reads=reactivefiber.render.preview; preview receipt=returned/operator-asserted",
   "S:docs/workbench/08-lifecycle-and-recovery.md":
