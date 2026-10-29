@@ -1,5 +1,5 @@
 {
-  "provenance": "wb-kku9.3 census roster, cut by ws-03 (run g10-work-s64) on trunk caad9514303e63d9bd771bcc2462e12ad39adb2d (the landing-310 ledger hop). Producer facts: read-only git show at the pins named below - the MechanicalWorkflows line verbatim, and two verbatim excerpts of the flywheel work-lane generation (generations/g10-work.js blob 21587f9b, the generationBlob of the dispatch args), each beside its sha256. Pin witnesses: measured by test/workbench-beads-claim-recheck-census.test.ts on caad951 plus the cut, each reviewed against the bead's acceptance before it was written here. A literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. Re-measured for wb-xogu (the R694 follow-up of the wb-kku9.3 gate) by ws-03 (run g10-work-s86) on trunk 3a713726f28dea84a57981d1bc65443a7424bc6d (the landing-383 ledger hop): the constants (scanRoots gains .beads/hooks; rootManifests, seamInterface and residualStatement are added) and the B1, B3, Q4 and Q5 witnesses, measured by the census on 3a71372 plus the cut and each reviewed against the wb-xogu notes (F1-F8) before it was written here; every other witness, the producer texts and the test titles are unchanged from the wb-kku9.3 cut. Re-measured for wb-dugi (the R694 follow-up of the wb-xogu gate) by ws-01 (run g10-work-s104) on trunk fced7bfda63e6975d331fd4f31ff4463b2c9136e (the landing-439 ledger hop): the B1, B3, Q4 and Q5 witnesses, measured by the census on fced7bf plus the cut and each reviewed against the wb-dugi notes (F1-F5) before it was written here; every other witness, the constants, the producer texts and the test titles are unchanged from the wb-xogu cut. Re-measured for wb-dcsb (the R694 follow-up of the wb-dugi gate) by ws-02 (run g10-work-s118) on trunk b92d7a12a2926cb12ed1e5b5e680117840f85dc3 (the landing-578..580 ledger hop): the constants (tsconfig, voidElements, rawTextElements and hidingElements are added) and the B1, B3, Q4 and Q5 witnesses (each gains its wb-dcsb fields; every landed field and constant was measured unchanged), measured by the census on b92d7a1 plus the cut and each reviewed against the wb-dcsb notes (F1-F4) before it was written here; every other witness, the producer texts and the test titles are unchanged from the wb-dugi cut.",
+  "provenance": "wb-kku9.3 census roster, cut by ws-03 (run g10-work-s64) on trunk caad9514303e63d9bd771bcc2462e12ad39adb2d (the landing-310 ledger hop). Producer facts: read-only git show at the pins named below - the MechanicalWorkflows line verbatim, and two verbatim excerpts of the flywheel work-lane generation (generations/g10-work.js blob 21587f9b, the generationBlob of the dispatch args), each beside its sha256. Pin witnesses: measured by test/workbench-beads-claim-recheck-census.test.ts on caad951 plus the cut, each reviewed against the bead's acceptance before it was written here. A literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. Re-measured for wb-xogu (the R694 follow-up of the wb-kku9.3 gate) by ws-03 (run g10-work-s86) on trunk 3a713726f28dea84a57981d1bc65443a7424bc6d (the landing-383 ledger hop): the constants (scanRoots gains .beads/hooks; rootManifests, seamInterface and residualStatement are added) and the B1, B3, Q4 and Q5 witnesses, measured by the census on 3a71372 plus the cut and each reviewed against the wb-xogu notes (F1-F8) before it was written here; every other witness, the producer texts and the test titles are unchanged from the wb-kku9.3 cut. Re-measured for wb-dugi (the R694 follow-up of the wb-xogu gate) by ws-01 (run g10-work-s104) on trunk fced7bfda63e6975d331fd4f31ff4463b2c9136e (the landing-439 ledger hop): the B1, B3, Q4 and Q5 witnesses, measured by the census on fced7bf plus the cut and each reviewed against the wb-dugi notes (F1-F5) before it was written here; every other witness, the constants, the producer texts and the test titles are unchanged from the wb-xogu cut. Re-measured for wb-dcsb (the R694 follow-up of the wb-dugi gate) by ws-02 (run g10-work-s118) on trunk b92d7a12a2926cb12ed1e5b5e680117840f85dc3 (the landing-578..580 ledger hop): the constants (tsconfig, voidElements, rawTextElements and hidingElements are added) and the B1, B3, Q4 and Q5 witnesses (each gains its wb-dcsb fields; every landed field and constant was measured unchanged), measured by the census on b92d7a1 plus the cut and each reviewed against the wb-dcsb notes (F1-F4) before it was written here; every other witness, the producer texts and the test titles are unchanged from the wb-dugi cut. Re-measured for wb-38nd (the R694 follow-up of the wb-dcsb gate) by ws-04 (run g10-work-s140) on trunk 27c968d43d094d7deada67c3add83b80b4bea5c6 (the landing-676 ledger hop): the constants (importNonCode and formattingElements are added) and the B3, Q4 and Q5 witnesses (each gains its wb-38nd fields; every landed field and constant was measured unchanged), measured by the census on 27c968d plus the cut and each reviewed against the wb-38nd notes (F1, F2) before it was written here; every other witness, the producer texts and the test titles are unchanged from the wb-dcsb cut.",
   "bead": "wb-kku9.3",
   "programPin": "5ce2a07f891f5b165125d26739ec79720c295dd1",
   "producer": {
@@ -108,6 +108,11 @@
       "qa",
       "examples"
     ],
+    "importNonCode": {
+      "floor": 4,
+      "anchorFile": "qa/workbench/smoke.sh",
+      "anchorToken": "node qa/workbench/smoke.mjs"
+    },
     "seamInterface": "BeadsReadClient",
     "readerModule": "src/workbench/beads-observer.ts",
     "instructionFiles": [
@@ -246,6 +251,22 @@
       "svg",
       "math",
       "bdo"
+    ],
+    "formattingElements": [
+      "a",
+      "b",
+      "big",
+      "code",
+      "em",
+      "font",
+      "i",
+      "nobr",
+      "s",
+      "small",
+      "strike",
+      "strong",
+      "tt",
+      "u"
     ],
     "contract": "beads.work.readiness/v1"
   },
@@ -1022,6 +1043,22 @@
               "quiet": [
                 0
               ]
+            },
+            "nonCode": {
+              "importers": [
+                "qa/workbench/zz-gate-eval.sh",
+                "qa/workbench/zz-gate-probe.json",
+                "examples/zz-reader.md"
+              ],
+              "reads": [
+                "qa/workbench/zz-gate-ready.sh",
+                "qa/workbench/zz-gate-show.json",
+                "examples/zz-queue.md"
+              ]
+            },
+            "nonCodeWalk": {
+              "floor": true,
+              "anchor": true
             }
           }
         },
@@ -1285,7 +1322,15 @@
               "yamlEscape": 0,
               "tomlEscape": 0
             },
-            "composedControl": 1
+            "composedControl": 1,
+            "rawOnlyB3": {
+              "shellQuotesRead": 0,
+              "shellQuotesVerb": 0,
+              "evalEscapedSpecifier": 0,
+              "yamlEscapeRead": 0,
+              "plainRead": 1,
+              "plainSpecifier": 1
+            }
           }
         },
         {
@@ -1373,6 +1418,54 @@
               "presentationalColour": 1,
               "impliedEnd": 0,
               "closedSummary": 0
+            },
+            "reconstruction": {
+              "leftOpen:a": 0,
+              "leftOpen:b": 0,
+              "leftOpen:big": 0,
+              "leftOpen:code": 0,
+              "leftOpen:em": 0,
+              "leftOpen:font": 0,
+              "leftOpen:i": 0,
+              "leftOpen:nobr": 0,
+              "leftOpen:s": 0,
+              "leftOpen:small": 0,
+              "leftOpen:strike": 0,
+              "leftOpen:strong": 0,
+              "leftOpen:tt": 0,
+              "leftOpen:u": 0,
+              "popover": 0,
+              "acrossDivision": 0,
+              "innerFormatting": 0,
+              "beforeFormatting": 0,
+              "xmpBody": 0,
+              "plaintextBody": 0,
+              "endedWaiting": 0,
+              "endedWaitingRaw": 0,
+              "nestedSameName": 0,
+              "spanControl": 1,
+              "endedInside": 1,
+              "endedAfter": 1,
+              "endedReopened": 1,
+              "shownFormatting": 1,
+              "textareaBody": 1
+            },
+            "reconstructionOverHide": {
+              "markerCell": 0,
+              "markerCaption": 0,
+              "markerMarquee": 0,
+              "secondAnchor": 0,
+              "secondNobr": 0,
+              "openedWhileWaiting": 0
+            },
+            "endTagRecovery": {
+              "scopeButton": 1,
+              "scopeList": 1,
+              "scopeCell": 1,
+              "specialStop": 1,
+              "formEnd": 1,
+              "furthestBlock": 1,
+              "pastMarker": 1
             }
           }
         },
