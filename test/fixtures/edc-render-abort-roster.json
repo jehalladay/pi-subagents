@@ -17,6 +17,8 @@
       "--json"
     ],
     "registryDeadlineMs": 250,
+    "waitMs": 45000,
+    "standInBoundMs": 60000,
     "passes": [
       "native-registry",
       "native-direct",
@@ -111,7 +113,22 @@
       "commit_seq",
       "render_id",
       "ephemeral",
-      "storage_write_count"
+      "storage_write_count",
+      "ephemeral-absent",
+      "ephemeral-null",
+      "ephemeral-string",
+      "ephemeral-number",
+      "render_id-empty",
+      "render_id-absent",
+      "render_id-number",
+      "commit_seq-zero",
+      "commit_seq-string",
+      "storage_write_count-absent",
+      "storage_write_count-string",
+      "storage_write_count-null",
+      "storage_write_count-negative",
+      "work-absent",
+      "result-absent"
     ],
     "controls": {
       "dropped-signal": [
@@ -134,6 +151,51 @@
       "committed-form-storage_write_count": [
         "committed-proposal"
       ],
+      "committed-form-ephemeral-absent": [
+        "committed-proposal"
+      ],
+      "committed-form-ephemeral-null": [
+        "committed-proposal"
+      ],
+      "committed-form-ephemeral-string": [
+        "committed-proposal"
+      ],
+      "committed-form-ephemeral-number": [
+        "committed-proposal"
+      ],
+      "committed-form-render_id-empty": [
+        "committed-proposal"
+      ],
+      "committed-form-render_id-absent": [
+        "committed-proposal"
+      ],
+      "committed-form-render_id-number": [
+        "committed-proposal"
+      ],
+      "committed-form-commit_seq-zero": [
+        "committed-proposal"
+      ],
+      "committed-form-commit_seq-string": [
+        "committed-proposal"
+      ],
+      "committed-form-storage_write_count-absent": [
+        "committed-proposal"
+      ],
+      "committed-form-storage_write_count-string": [
+        "committed-proposal"
+      ],
+      "committed-form-storage_write_count-null": [
+        "committed-proposal"
+      ],
+      "committed-form-storage_write_count-negative": [
+        "committed-proposal"
+      ],
+      "committed-form-work-absent": [
+        "committed-proposal"
+      ],
+      "committed-form-result-absent": [
+        "committed-proposal"
+      ],
       "committing-argv": [
         "committing-launch"
       ],
@@ -143,11 +205,26 @@
       "misplaced-tail": [
         "committing-launch"
       ],
+      "committing-noun": [
+        "committing-launch"
+      ],
+      "committing-workspace": [
+        "committing-launch"
+      ],
+      "swapped-tail": [
+        "committing-launch"
+      ],
       "started-after-abort": [
         "started-after-abort"
       ],
       "started-reader": [
         "started-after-abort"
+      ],
+      "started-queued": [
+        "started-after-abort"
+      ],
+      "extra-read": [
+        "extra-launch"
       ],
       "suspended-returned": [
         "committed-after-abort"
@@ -175,17 +252,20 @@
       "execSync",
       "execFile",
       "execFileSync",
-      "fork"
+      "fork",
+      "execve"
     ],
-    "childProcess": [
-      "node:child_process",
-      "child_process"
-    ],
+    "childProcess": "child_process",
     "loaderCalls": [
       "require",
       "getBuiltinModule"
     ],
+    "loaderFactories": [
+      "createRequire"
+    ],
     "resolveDepth": 8,
+    "pathDepth": 3,
+    "traceRounds": 16,
     "ioGlobals": [
       "fetch",
       "XMLHttpRequest",
@@ -225,6 +305,7 @@
     ],
     "tsxSdk": "@reactive-fiber/tsx",
     "hookName": "/^use[A-Z]/",
+    "hookWord": "/(?:^|[^A-Za-z0-9_$])(use[A-Z][A-Za-z0-9_$]*)/",
     "descriptorName": "pureProjectRequirement",
     "scriptModule": "/\\.(?:ts|mts|cts|tsx|js|mjs|cjs|jsx)$/",
     "componentModule": "/\\.(?:tsx|jsx)$/i",
@@ -281,16 +362,252 @@
       "A5": "zero tool/model/host effects from a render pass",
       "A6": "a committed-after-abort attempt going red"
     },
-    "otherHooks": "export function evidenceHook() { return describeRequirement(view); }\nconst makeEvidenceDescriptor = () => ({ need: 1 });\n",
+    "otherHooks": "export function evidenceHook() { return describeRequirement(view); }\nconst makeEvidenceDescriptor = () => ({ need: 1 });\nconst composedHook = \"use\" + \"Provider\";\nconst pattern = /useQuery/;\n// useCommit\n",
     "otherPhrases": "states an evidence need and a resource demand for the next render",
     "otherComposed": "export const description = \"Describes a logical evidence \" + \"requirement for the next render\";\n",
-    "otherLoader": "import { createRequire } from \"node:module\";\nconst tsx = createRequire(import.meta.url)(\"@reactive-fiber/tsx\");\n",
+    "otherLoader": "import { createRequire } from \"node:module\";\nconst tsx = createRequire(import.meta.url)([\"@reactive-fiber\", \"tsx\"].join(\"/\"));\n",
+    "otherLookalike": "export function us\u0435Provider(): void {}\nexport const description = \"Describes a logical \u0435vidence requirement\";\n",
     "staticResidue": {
       "unbound-api-launch": "export function run(api: { exec(command: string): void }, command: string): void { api.exec(command); }\n",
       "unbound-value-launch": "export function run(pick: () => (command: string) => void): void { const launch = pick(); launch(\"rf\"); }\n",
       "package-launcher": "import { execa } from \"execa\";\nexport const run = (): unknown => execa(\"rf\");\n",
       "constructor-chain-global": "export const reach = (): unknown => \"\".constructor.constructor(\"return this\")();\n",
-      "env-write": "export function run(): void { process.env.PLANTED = \"1\"; }\n"
+      "env-write": "export function run(): void { process.env.PLANTED = \"1\"; }\n",
+      "argument-carried": "import { spawn } from \"node:child_process\";\nexport const run = (): unknown => spawn(\"sh\", [\"-c\", \"rf context render --json\"]);\n",
+      "other-builtin-launch": "import cluster from \"node:cluster\";\nexport const run = (): unknown => cluster.fork();\n",
+      "unparsed-loader": "export const load = (name: string): unknown => Reflect.apply(require, undefined, [name]);\n",
+      "composed-code": "export const run = (code: string): unknown => new Function(code)();\n",
+      "process-binding": "export const raw = (): unknown => process.binding(\"spawn_sync\");\n"
+    },
+    "reachForms": {
+      "named-import": {
+        "probe": "import { spawn } from \"node:child_process\";\nspawn(\"rf\", []);\n",
+        "reads": "rf"
+      },
+      "renamed-import": {
+        "probe": "import { spawn as go } from \"node:child_process\";\ngo(\"rf\", []);\n",
+        "reads": "rf"
+      },
+      "string-named-import": {
+        "probe": "import { \"spawn\" as go } from \"node:child_process\";\ngo(\"rf\", []);\n",
+        "reads": "rf"
+      },
+      "default-named-import": {
+        "probe": "import { default as cp } from \"node:child_process\";\ncp.spawn(command, []);\n",
+        "reads": "<expression>"
+      },
+      "namespace-import": {
+        "probe": "import * as cp from \"node:child_process\";\ncp.spawn(command, []);\n",
+        "reads": "<expression>"
+      },
+      "default-import": {
+        "probe": "import cp from \"child_process\";\ncp.spawn(command, []);\n",
+        "reads": "<expression>"
+      },
+      "import-equals": {
+        "probe": "import cp = require(\"child_process\");\ncp.spawn(command, []);\n",
+        "reads": "<expression>"
+      },
+      "require-whole": {
+        "probe": "const cp = require(\"node:child_process\");\ncp.spawn(command, []);\n",
+        "reads": "<expression>"
+      },
+      "require-destructured": {
+        "probe": "const { spawn: go } = require(\"node:child_process\");\ngo(\"rf\", []);\n",
+        "reads": "rf"
+      },
+      "require-member-call": {
+        "probe": "require(\"node:child_process\").spawn(command, []);\n",
+        "reads": "<expression>"
+      },
+      "import-whole": {
+        "probe": "const cp = await import(\"node:child_process\");\ncp.spawn(command, []);\n",
+        "reads": "<expression>"
+      },
+      "import-destructured": {
+        "probe": "const { spawn: go } = await import(\"node:child_process\");\ngo(\"rf\", []);\n",
+        "reads": "rf"
+      },
+      "import-nested-destructured": {
+        "probe": "const { default: { spawn: go } } = await import(\"node:child_process\");\ngo(\"rf\", []);\n",
+        "reads": "rf"
+      },
+      "import-member-bound": {
+        "probe": "const go = (await import(\"node:child_process\")).spawn;\ngo(\"rf\", []);\n",
+        "reads": "rf"
+      },
+      "import-member-call": {
+        "probe": "(await import(\"node:child_process\")).spawn(command, []);\n",
+        "reads": "<expression>"
+      },
+      "import-default-member": {
+        "probe": "const m = await import(\"node:child_process\");\nm.default.spawn(command, []);\n",
+        "reads": "<expression>"
+      },
+      "assigned-whole": {
+        "probe": "let cp;\ncp = await import(\"node:child_process\");\ncp.spawn(command, []);\n",
+        "reads": "<expression>"
+      },
+      "assigned-logical": {
+        "probe": "let cp;\ncp ??= require(\"node:child_process\");\ncp.exec(command);\n",
+        "reads": "<expression>"
+      },
+      "assigned-destructured": {
+        "probe": "let go;\n({ spawn: go } = await import(\"node:child_process\"));\ngo(\"rf\", []);\n",
+        "reads": "rf"
+      },
+      "builtin-module": {
+        "probe": "const cp = process.getBuiltinModule(\"node:child_process\");\ncp.spawn(command, []);\n",
+        "reads": "<expression>"
+      },
+      "create-require-call": {
+        "probe": "import { createRequire } from \"node:module\";\nconst go = createRequire(import.meta.url)(\"node:child_process\").spawn;\ngo(\"rf\", []);\n",
+        "reads": "rf"
+      },
+      "create-require-bound": {
+        "probe": "import { createRequire } from \"node:module\";\nconst load = createRequire(import.meta.url);\nconst { spawn: go } = load(\"child_process\");\ngo(\"rf\", []);\n",
+        "reads": "rf"
+      },
+      "create-require-assigned": {
+        "probe": "import { createRequire } from \"node:module\";\nlet load;\nload = createRequire(import.meta.url);\nload(\"child_process\").spawn(command, []);\n",
+        "reads": "<expression>"
+      },
+      "const-specifier": {
+        "probe": "const CP = \"node:child_process\";\nconst { spawn: go } = await import(CP);\ngo(\"rf\", []);\n",
+        "reads": "rf"
+      },
+      "alias": {
+        "probe": "import { spawn } from \"node:child_process\";\nconst go = spawn;\ngo(\"rf\", []);\n",
+        "reads": "rf"
+      },
+      "alias-destructured": {
+        "probe": "const cp = require(\"node:child_process\");\nconst { spawn: go } = cp;\ngo(\"rf\", []);\n",
+        "reads": "rf"
+      },
+      "hoisted-alias": {
+        "probe": "import * as cp from \"node:child_process\";\nexport function later(): void {\n  go(\"rf\", []);\n}\nconst go = cp.spawn;\n",
+        "reads": "rf"
+      },
+      "self-deepening": {
+        "probe": "let cp = require(\"node:child_process\");\ncp = cp.promises;\n",
+        "reads": "<reference>"
+      },
+      "rest-destructured": {
+        "probe": "const { ...cp } = await import(\"node:child_process\");\ncp.spawn(command, []);\n",
+        "reads": "<expression>"
+      },
+      "element-access": {
+        "probe": "import * as cp from \"node:child_process\";\ncp[\"spawn\"](command, []);\n",
+        "reads": "<expression>"
+      },
+      "optional-call": {
+        "probe": "import * as cp from \"node:child_process\";\ncp?.spawn?.(command, []);\n",
+        "reads": "<expression>"
+      },
+      "coalesced": {
+        "probe": "import * as cp from \"node:child_process\";\nconst go = cp.spawn ?? fallback;\ngo(\"rf\", []);\n",
+        "reads": "rf"
+      },
+      "conditional-binding": {
+        "probe": "import * as cp from \"node:child_process\";\nconst go = flag ? cp.spawn : cp.spawnSync;\ngo(\"rf\", []);\n",
+        "reads": "rf"
+      },
+      "const-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"rf\";\ngo(TOOL, []);\n",
+        "reads": "rf"
+      },
+      "indexed-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"rf\"];\ngo(TOOLS[0], []);\n",
+        "reads": "rf"
+      },
+      "conditional-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\ngo(flag ? \"rf\" : \"forge\", []);\n",
+        "reads": "rf"
+      },
+      "process-execve": {
+        "probe": "process.execve(\"rf\", [\"rf\"]);\n",
+        "reads": "rf"
+      },
+      "argument-escape": {
+        "probe": "import { spawn } from \"node:child_process\";\nhand(spawn);\n",
+        "reads": "<reference>"
+      },
+      "returned": {
+        "probe": "export function launcher(): unknown {\n  return require(\"node:child_process\");\n}\n",
+        "reads": "<reference>"
+      },
+      "stored-property": {
+        "probe": "holder.cp = require(\"node:child_process\");\n",
+        "reads": "<reference>"
+      },
+      "class-field": {
+        "probe": "export class Holder {\n  cp = require(\"node:child_process\");\n}\n",
+        "reads": "<reference>"
+      },
+      "then-callback": {
+        "probe": "import(\"node:child_process\").then(cp => cp.spawn(command, []));\n",
+        "reads": "<reference>"
+      },
+      "call-apply": {
+        "probe": "import { spawn } from \"node:child_process\";\nspawn.call(undefined, \"rf\", []);\n",
+        "reads": "<reference>"
+      },
+      "computed-member": {
+        "probe": "import * as cp from \"node:child_process\";\ncp[pick()](command, []);\n",
+        "reads": "<reference>"
+      },
+      "re-export": {
+        "probe": "export { spawn } from \"node:child_process\";\n",
+        "reads": "<re-export>"
+      },
+      "re-export-all": {
+        "probe": "export * from \"node:child_process\";\n",
+        "reads": "<re-export>"
+      },
+      "exported-binding": {
+        "probe": "export const cp = await import(\"node:child_process\");\n",
+        "reads": "<re-export>"
+      },
+      "exported-import-equals": {
+        "probe": "export import cp = require(\"child_process\");\n",
+        "reads": "<re-export>"
+      },
+      "local-export": {
+        "probe": "import { spawn } from \"node:child_process\";\nexport { spawn as launch };\n",
+        "reads": "<re-export>"
+      },
+      "default-export": {
+        "probe": "import * as cp from \"node:child_process\";\nexport default cp;\n",
+        "reads": "<re-export>"
+      },
+      "untraced-string": {
+        "probe": "export const code = 'require(\"child_process\").spawn(\"rf\")';\n",
+        "reads": "<untraced>"
+      },
+      "unparsed-loader-literal": {
+        "probe": "loader._load(\"child_process\");\n",
+        "reads": "<untraced>"
+      },
+      "composed-specifier": {
+        "probe": "const cp = await import(`node:${\"child_process\"}`);\n",
+        "reads": "<untraced>"
+      },
+      "computed-import": {
+        "probe": "const cp = await import(pick());\ncp.spawn(command, []);\n",
+        "reads": "<load>"
+      },
+      "computed-require": {
+        "probe": "const cp = require(name);\n",
+        "reads": "<load>"
+      },
+      "computed-builtin": {
+        "probe": "const cp = process.getBuiltinModule(name);\n",
+        "reads": "<load>"
+      },
+      "computed-create-require": {
+        "probe": "import { createRequire } from \"node:module\";\nconst cp = createRequire(import.meta.url)(name);\n",
+        "reads": "<load>"
+      }
     },
     "unreadHomeProbes": [
       "test/helpers/edc-evidence-hooks.ts",
@@ -307,6 +624,8 @@
     ],
     "plantedSource": "import { useQuery } from \"@reactive-fiber/tsx\";\nexport function useRequirement(view: unknown) { return pureProjectRequirement(view); }\nconst panel = () => useProvider(\"evidence-view\", {});\n",
     "plantedRequire": "const tsx = require(\"@reactive-fiber/tsx\");\n",
+    "plantedStringHooks": "export const hooks = { \"useProvider\": (): number => 1 };\nregistry.hook(\"useQuery\", () => 2);\nexport const note = \"call usePlanted() first\";\n",
+    "plantedLoader": "import { createRequire } from \"node:module\";\nconst tsx = createRequire(import.meta.url)(\"@reactive-fiber/tsx\");\n",
     "plantedManifest": {
       "name": "planted",
       "dependencies": {
@@ -433,7 +752,37 @@
               "native-registry/ephemeral: refused transport: RF preview returned an unrecognized or contradictory envelope.",
               "native-direct/ephemeral: refused transport: RF preview returned an unrecognized or contradictory envelope.",
               "native-registry/storage_write_count: refused transport: RF preview returned an unrecognized or contradictory envelope.",
-              "native-direct/storage_write_count: refused transport: RF preview returned an unrecognized or contradictory envelope."
+              "native-direct/storage_write_count: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/ephemeral-absent: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/ephemeral-absent: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/ephemeral-null: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/ephemeral-null: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/ephemeral-string: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/ephemeral-string: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/ephemeral-number: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/ephemeral-number: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/render_id-empty: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/render_id-empty: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/render_id-absent: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/render_id-absent: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/render_id-number: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/render_id-number: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/commit_seq-zero: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/commit_seq-zero: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/commit_seq-string: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/commit_seq-string: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/storage_write_count-absent: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/storage_write_count-absent: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/storage_write_count-string: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/storage_write_count-string: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/storage_write_count-null: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/storage_write_count-null: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/storage_write_count-negative: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/storage_write_count-negative: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/work-absent: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/work-absent: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/result-absent: refused transport: RF preview returned an unrecognized native envelope.",
+              "native-direct/result-absent: refused transport: RF preview returned an unrecognized native envelope."
             ]
           }
         },
@@ -474,7 +823,11 @@
               "injected-direct/before: launches 0, reader 0, foreign 0, host unchanged, stopped false | []",
               "injected-direct/proposed: launches 0, reader 1, foreign 0, host unchanged, stopped false | []",
               "injected-direct/settled: launches 0, reader 1, foreign 0, host unchanged, stopped false | []"
-            ]
+            ],
+            "abandoned": {
+              "reaped": 1,
+              "signal": "SIGKILL"
+            }
           }
         },
         {
@@ -525,6 +878,7 @@
                 "src/workbench/providers/hyperunix.ts"
               ],
               "externals": [
+                "<expression>",
                 "@anthropic-ai/claude-agent-sdk",
                 "@forge/sdk",
                 "@furnace/sdk",
@@ -546,6 +900,125 @@
                 "callee": "spawn",
                 "command": "<expression>"
               }
+            ],
+            "unresolvedLoadsInSrc": [
+              "src/workbench/hosts/local-detached.ts:createRequire()()"
+            ],
+            "srcSites": [
+              {
+                "module": "src/env.ts",
+                "callee": "exec",
+                "command": "git"
+              },
+              {
+                "module": "src/env.ts",
+                "callee": "exec",
+                "command": "git"
+              },
+              {
+                "module": "src/index.ts",
+                "callee": "execFileSync",
+                "command": "git"
+              },
+              {
+                "module": "src/index.ts",
+                "callee": "execFileSync",
+                "command": "git"
+              },
+              {
+                "module": "src/index.ts",
+                "callee": "execFileSync",
+                "command": "git"
+              },
+              {
+                "module": "src/workbench/hosts/local-detached.ts",
+                "callee": "spawn",
+                "command": "<expression>"
+              },
+              {
+                "module": "src/workbench/providers/forge.ts",
+                "callee": "spawn",
+                "command": "forge"
+              },
+              {
+                "module": "src/workbench/providers/forge.ts",
+                "callee": "spawn",
+                "command": "forge"
+              },
+              {
+                "module": "src/workbench/providers/reactivefiber.ts",
+                "callee": "spawn",
+                "command": "rf"
+              },
+              {
+                "module": "src/workflow/host.ts",
+                "callee": "exec",
+                "command": "cmd|sh"
+              },
+              {
+                "module": "src/worktree.ts",
+                "callee": "exec",
+                "command": "git"
+              }
+            ],
+            "forms": [
+              "named-import: spawn rf",
+              "renamed-import: spawn rf",
+              "string-named-import: spawn rf",
+              "default-named-import: spawn <expression>",
+              "namespace-import: spawn <expression>",
+              "default-import: spawn <expression>",
+              "import-equals: spawn <expression>",
+              "require-whole: spawn <expression>",
+              "require-destructured: spawn rf",
+              "require-member-call: spawn <expression>",
+              "import-whole: spawn <expression>",
+              "import-destructured: spawn rf",
+              "import-nested-destructured: spawn rf",
+              "import-member-bound: spawn rf",
+              "import-member-call: spawn <expression>",
+              "import-default-member: spawn <expression>",
+              "assigned-whole: spawn <expression>",
+              "assigned-logical: exec <expression>",
+              "assigned-destructured: spawn rf",
+              "builtin-module: spawn <expression>",
+              "create-require-call: spawn rf",
+              "create-require-bound: spawn rf",
+              "create-require-assigned: spawn <expression>",
+              "const-specifier: <string> <untraced> spawn rf",
+              "alias: spawn rf",
+              "alias-destructured: spawn rf",
+              "hoisted-alias: spawn rf",
+              "self-deepening: promises.promises.promises.promises <reference>",
+              "rest-destructured: spawn <expression>",
+              "element-access: spawn <expression>",
+              "optional-call: spawn <expression>",
+              "coalesced: spawn rf",
+              "conditional-binding: spawn rf spawnSync rf",
+              "const-command: spawn rf",
+              "indexed-command: spawn rf",
+              "conditional-command: spawn forge|rf",
+              "process-execve: execve rf",
+              "argument-escape: spawn <reference>",
+              "returned: <module> <reference>",
+              "stored-property: <module> <reference>",
+              "class-field: <module> <reference>",
+              "then-callback: then <reference>",
+              "call-apply: spawn.call <reference>",
+              "computed-member: <computed> <reference>",
+              "re-export: spawn <re-export>",
+              "re-export-all: * <re-export>",
+              "exported-binding: <module> <re-export>",
+              "exported-import-equals: <module> <re-export>",
+              "local-export: spawn <re-export>",
+              "default-export: <module> <re-export>",
+              "untraced-string: <string> <untraced>",
+              "unparsed-loader-literal: <string> <untraced>",
+              "composed-specifier: <string> <untraced> load import()",
+              "computed-import: load import()",
+              "computed-require: load require()",
+              "computed-builtin: load getBuiltinModule()",
+              "computed-create-require: load createRequire()()"
             ],
             "controls": {
               "launches": [
@@ -598,11 +1071,6 @@
                   "module": "planted/reach.ts",
                   "callee": "spawn",
                   "command": "rf"
-                },
-                {
-                  "module": "planted/reach.ts",
-                  "callee": "spawn",
-                  "command": "<reference>"
                 }
               ],
               "namedLaunches": [
@@ -701,11 +1169,6 @@
                 {
                   "module": "planted/reach.ts",
                   "callee": "spawn",
-                  "command": "<reference>"
-                },
-                {
-                  "module": "planted/reach.ts",
-                  "callee": "spawn",
                   "command": "forge"
                 },
                 {
@@ -787,6 +1250,51 @@
               "committed-form-storage_write_count": [
                 "committed-proposal"
               ],
+              "committed-form-ephemeral-absent": [
+                "committed-proposal"
+              ],
+              "committed-form-ephemeral-null": [
+                "committed-proposal"
+              ],
+              "committed-form-ephemeral-string": [
+                "committed-proposal"
+              ],
+              "committed-form-ephemeral-number": [
+                "committed-proposal"
+              ],
+              "committed-form-render_id-empty": [
+                "committed-proposal"
+              ],
+              "committed-form-render_id-absent": [
+                "committed-proposal"
+              ],
+              "committed-form-render_id-number": [
+                "committed-proposal"
+              ],
+              "committed-form-commit_seq-zero": [
+                "committed-proposal"
+              ],
+              "committed-form-commit_seq-string": [
+                "committed-proposal"
+              ],
+              "committed-form-storage_write_count-absent": [
+                "committed-proposal"
+              ],
+              "committed-form-storage_write_count-string": [
+                "committed-proposal"
+              ],
+              "committed-form-storage_write_count-null": [
+                "committed-proposal"
+              ],
+              "committed-form-storage_write_count-negative": [
+                "committed-proposal"
+              ],
+              "committed-form-work-absent": [
+                "committed-proposal"
+              ],
+              "committed-form-result-absent": [
+                "committed-proposal"
+              ],
               "committing-argv": [
                 "committing-launch"
               ],
@@ -796,11 +1304,26 @@
               "misplaced-tail": [
                 "committing-launch"
               ],
+              "committing-noun": [
+                "committing-launch"
+              ],
+              "committing-workspace": [
+                "committing-launch"
+              ],
+              "swapped-tail": [
+                "committing-launch"
+              ],
               "started-after-abort": [
                 "started-after-abort"
               ],
               "started-reader": [
                 "started-after-abort"
+              ],
+              "started-queued": [
+                "started-after-abort"
+              ],
+              "extra-read": [
+                "extra-launch"
               ],
               "suspended-returned": [
                 "committed-after-abort"
@@ -830,11 +1353,31 @@
               "committed-form-render_id": "returned",
               "committed-form-ephemeral": "returned",
               "committed-form-storage_write_count": "returned",
+              "committed-form-ephemeral-absent": "returned",
+              "committed-form-ephemeral-null": "returned",
+              "committed-form-ephemeral-string": "returned",
+              "committed-form-ephemeral-number": "returned",
+              "committed-form-render_id-empty": "returned",
+              "committed-form-render_id-absent": "returned",
+              "committed-form-render_id-number": "returned",
+              "committed-form-commit_seq-zero": "returned",
+              "committed-form-commit_seq-string": "returned",
+              "committed-form-storage_write_count-absent": "returned",
+              "committed-form-storage_write_count-string": "returned",
+              "committed-form-storage_write_count-null": "returned",
+              "committed-form-storage_write_count-negative": "returned",
+              "committed-form-work-absent": "returned",
+              "committed-form-result-absent": "returned",
               "committing-argv": "returned",
               "committing-verb": "returned",
               "misplaced-tail": "returned",
+              "committing-noun": "returned",
+              "committing-workspace": "returned",
+              "swapped-tail": "returned",
               "started-after-abort": "refused transport: census control: cancelled after it launched",
               "started-reader": "refused transport: census control: cancelled after it read",
+              "started-queued": "refused transport: census control: cancelled in the queue after it launched",
+              "extra-read": "returned",
               "suspended-returned": "returned",
               "extra-launch": "returned",
               "foreign-launch": "returned",
@@ -915,15 +1458,24 @@
             "read": [
               "planted/panel.ts",
               "planted/hooks.cjs",
-              "planted/evidence.ts"
+              "planted/evidence.ts",
+              "planted/string-hooks.ts",
+              "planted/loader.ts"
             ],
             "hooks": [
               "planted/panel.ts:useQuery",
+              "planted/panel.ts:string @reactive-fiber/tsx",
               "planted/panel.ts:useRequirement",
               "planted/panel.ts:pureProjectRequirement",
               "planted/panel.ts:useProvider",
               "planted/panel.ts:import @reactive-fiber/tsx",
-              "planted/hooks.cjs:import @reactive-fiber/tsx"
+              "planted/hooks.cjs:string @reactive-fiber/tsx",
+              "planted/hooks.cjs:import @reactive-fiber/tsx",
+              "planted/string-hooks.ts:string useProvider",
+              "planted/string-hooks.ts:string useQuery",
+              "planted/string-hooks.ts:string usePlanted",
+              "planted/loader.ts:string @reactive-fiber/tsx",
+              "planted/loader.ts:import @reactive-fiber/tsx"
             ],
             "written": [
               "planted/evidence.ts:string|evidencerequirement",
@@ -988,7 +1540,8 @@
             "hooks": [],
             "descriptor": [],
             "composed": [],
-            "loader": []
+            "loader": [],
+            "lookalike": []
           }
         },
         {
@@ -1012,11 +1565,16 @@
         {
           "id": "Q6",
           "witness": [
-            "unbound-api-launch: specifiers 0, childProcess 0, launchSites 0, ioGlobals 0, processReach 0",
-            "unbound-value-launch: specifiers 0, childProcess 0, launchSites 0, ioGlobals 0, processReach 0",
-            "package-launcher: specifiers 1, childProcess 0, launchSites 0, ioGlobals 0, processReach 0",
-            "constructor-chain-global: specifiers 0, childProcess 0, launchSites 0, ioGlobals 0, processReach 0",
-            "env-write: specifiers 0, childProcess 0, launchSites 0, ioGlobals 0, processReach 0"
+            "unbound-api-launch: specifiers 0, childProcess 0, launchSites 0, loads 0, ioGlobals 0, processReach 0, rf 0",
+            "unbound-value-launch: specifiers 0, childProcess 0, launchSites 0, loads 0, ioGlobals 0, processReach 0, rf 0",
+            "package-launcher: specifiers 1, childProcess 0, launchSites 0, loads 0, ioGlobals 0, processReach 0, rf 0",
+            "constructor-chain-global: specifiers 0, childProcess 0, launchSites 0, loads 0, ioGlobals 0, processReach 0, rf 0",
+            "env-write: specifiers 0, childProcess 0, launchSites 0, loads 0, ioGlobals 0, processReach 0, rf 0",
+            "argument-carried: specifiers 1, childProcess 1, launchSites 1, loads 0, ioGlobals 0, processReach 0, rf 0",
+            "other-builtin-launch: specifiers 1, childProcess 0, launchSites 0, loads 0, ioGlobals 0, processReach 0, rf 0",
+            "unparsed-loader: specifiers 0, childProcess 0, launchSites 0, loads 0, ioGlobals 1, processReach 0, rf 0",
+            "composed-code: specifiers 0, childProcess 0, launchSites 0, loads 0, ioGlobals 1, processReach 0, rf 0",
+            "process-binding: specifiers 0, childProcess 0, launchSites 0, loads 0, ioGlobals 0, processReach 1, rf 0"
           ]
         },
         {

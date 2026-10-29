@@ -26,7 +26,10 @@
  * directory that holds the root alone) and a hermetic PATH holding one directory, whose `rf` is a stand-in (absolute node
  * interpreter) that logs its argv, marks its progress in files beside itself and exits 0 on SIGTERM (the clean exit is the
  * hard case: a complete proposal on stdout and exit code 0). The same directory holds a logging stand-in for every other
- * command Pi's src launches by name (derived from src: each resolved command of both launch readers, A5). The scenarios:
+ * command Pi's src launches by name (derived from src: each resolved command of both launch readers, A5). Every stand-in
+ * records its pid in the bench, and the teardown stops any stand-in of a bench that still runs (its /proc command line must
+ * name the bench), so a pass that ignores its abort leaves no process behind (A4 holds that stop to a control). As hygiene no
+ * case holds, a stand-in also exits by itself (unmarked) past STAND_IN_BOUND_MS or when its parent is gone. The scenarios:
  *  - ABORTED (the title's "aborted"): before (the signal fired before the pass starts); running (native passes: the stand-in
  *    started and wrote nothing); proposed (the stand-in wrote a complete, valid, uncommitted proposal and waits; for the
  *    injected passes the reader is pending at the abort and resolves that proposal after it).
@@ -38,47 +41,66 @@
  *  - SETTLED: no abort; the stand-in prints the proposal and exits.
  * Every wait on a pass is bounded (WAIT_MS): a pass that never settles reds naming itself. The verdict (falsify) names seven
  * violation classes: committed-after-abort (an aborted or suspended pass returned a proposal), committed-proposal (a settled
- * native pass returned a reading that does not state the uncommitted form: ephemeral not true, render_id set, commit_seq
- * set, or a store write), committing-launch (an rf launch outside the `context render ... --no-commit --no-input --json`
- * form: another verb, or the three flags not last), started-after-abort (a pass aborted before it started, or held in the
- * queue, launched or read anyway), extra-launch (more than one launch or read), foreign-launch (any other stand-in launched)
- * and host-write (the bench home's tree - the workspace root and the directory holding it: names, kinds and bytes -
- * changed). A1-A4 hold every driven pass and scenario to an empty verdict; A5 holds the pass's static reach as its readers
- * parse it (below); A6 is the acceptance's "committed-after-abort attempt going red": a control for every class and for
- * every clause of its classifier (each committed form, the launch form's verb and its tail, a read before the start, a
- * suspended pass that returned, a rewritten workspace file, a write beside the root in the bench home), each tripping
- * exactly its class (a render that drops its signal and so returns its proposal after the abort leads), plus one
- * signal-ignoring provider read three ways - bare (red: committed-after-abort), through a registry with the proposal
- * arriving after the abort (refused by the registry's race), and through a registry with the proposal settling inside the
- * abort's own tick (refused only by the registry's post-race guard; without that guard the census reds).
+ * native pass returned a reading that does not state the uncommitted form - ephemeral exactly true, render_id exactly null,
+ * commit_seq absent or exactly null, and a work object whose storage_write_count is exactly 0 - so every other value of each
+ * of those fields is a committed form), committing-launch (an rf launch outside the `--workspace <root> context render ...
+ * --no-commit --no-input --json` form: a leading flag other than --workspace, another noun or verb, or the three flags not
+ * last and in that order), started-after-abort (a pass aborted before it started, or held in the queue, launched or read anyway), extra-launch
+ * (more than one launch or read, counted together), foreign-launch (any other stand-in launched) and host-write (the bench home's tree - the workspace root and the directory holding it: names, kinds
+ * and bytes - changed). A1-A4 hold every driven pass and scenario to an empty verdict (A4 also holds the teardown's stop of a
+ * stand-in left waiting); A5 holds the pass's static reach as its readers parse it (below); A6 is the acceptance's
+ * "committed-after-abort attempt going red": a control for every class and for every clause of its classifier - one
+ * committed form per form each clause names (COMMITTED_FORMS: ephemeral false, absent, null, a string, a number; render_id an
+ * id, empty, absent, a number; commit_seq a count, zero, a string; storage_write_count a count, absent, a string, null,
+ * negative; work absent; result absent), the launch form's leading workspace, noun, verb and tail (dropped, misplaced,
+ * swapped), a read before the start, a launch from the queue, a second read, a suspended pass that returned, a rewritten
+ * workspace file, a write beside the root in the bench home - each tripping exactly its class (a render
+ * that drops its signal and so returns its proposal after the abort leads), plus one signal-ignoring provider read three
+ * ways - bare (red: committed-after-abort), through a registry with the proposal arriving after the abort (refused by the
+ * registry's race), and through a registry with the proposal settling inside the abort's own tick (refused only by the
+ * registry's post-race guard; without that guard the census reds). A3 drives every committed form through the
+ * native-registry and native-direct passes and holds each to a refusal.
  *
  * A5, THE STATIC REACH, AS ITS READERS PARSE IT (a form outside these is R-STATIC-FORMS, Q6, and is not claimed): the render
- * module's closure through src's relative imports (every static import and export, import-equals, and every import(),
- * require() and getBuiltinModule() call; a specifier that does not resolve reads <expression>), held disjoint from the tool
- * providers, model host and tool SDKs native-modules.ts loads; its I/O builtins by specifier; every reference to an I/O
- * global by name (fetch, XMLHttpRequest, WebSocket, EventSource, BroadcastChannel, console, localStorage, sessionStorage,
- * require, module, eval, Function) and every reference to a global object (globalThis, global, self, window - so an I/O
- * global reached through one, aliased or computed, reads too); every reference to process other than its env read
- * (getBuiltinModule, binding, dlopen, kill, a stdio write, the object aliased); and every value reference to a child_process
- * binding (a named, renamed, namespace, default or import-equals import, or a variable bound by require(), import() or
- * getBuiltinModule() of child_process, whole or destructured) - a launch call reads its command, any other use reads
- * <reference> - and every re-export of one. Commands and specifiers resolve through string literals, the module's const
- * bindings, literal indexes into const array literals and both arms of a conditional, and read <expression> otherwise. Read
- * that way, the pass reaches no tool provider, model host or tool SDK native-modules.ts loads, no I/O global, no global
- * object, no process member but env, one I/O builtin (node:child_process, in the render module) and one launch site,
- * spawn("rf"). Src outside anchor: over every tracked src module, both launch readers (the child_process reader, and every
- * call spelled as a launch call whose command resolves) read exactly one rf launch site, the render module's, and the
- * child_process sites whose command does not resolve are pinned by name (any of them could launch rf).
+ * module's closure through src's relative imports (every static import and export, import-equals, and every loader call -
+ * import(), require(), getBuiltinModule() and a createRequire result, called directly or through the name a declaration or
+ * an assignment binds it to; a specifier that does not resolve reads <expression>), held disjoint from the tool providers, model host and
+ * tool SDKs native-modules.ts loads; its I/O builtins by specifier; every reference to an I/O global by name (fetch,
+ * XMLHttpRequest, WebSocket, EventSource, BroadcastChannel, console, localStorage, sessionStorage, require, module, eval,
+ * Function) and every reference to a global object (globalThis, global, self, window - so an I/O global reached through one,
+ * aliased or computed, reads too); every reference to process other than its env read (getBuiltinModule, binding, dlopen,
+ * kill, execve, a stdio write, the object aliased); and the child_process tracer, which is fail-closed - it never drops a
+ * value it does not follow. Its entries are every import, import-equals and re-export whose specifier names child_process and
+ * every loader call whose specifier does (any text containing "child_process"). It follows each value derived from an entry
+ * through parentheses, type wrappers and await; member reads (by name, by a key that resolves; a computed key that does not
+ * reads <computed>; a default read is the module itself); declarations and assignments (=, ||=, &&=, ??=) to a name or to a
+ * destructuring pattern at any depth, rest elements included; aliases; and the result of ??, ||, && and a conditional's arms.
+ * A call of a launch member reads its command; an export of a held value reads <re-export>; a value a statement discards
+ * reads nothing; every other use - a call of the module or of another member, an argument, a return, a property store, a
+ * class field, an object or array element, a member path deeper than PATH_DEPTH - reads <reference>; and a string that names
+ * child_process outside a specifier slot (types excepted) reads <untraced>. REACH_FORMS is the roster of forms the tracer is
+ * proven on, one probe each, every one held by A5 to what it must read (a launch form its rf or <expression> launch, a
+ * fail-closed form its <reference>, <re-export> or <untraced> site, a computed load its unresolved loader call). Commands and
+ * specifiers resolve through string literals, the module's const bindings, literal indexes into const array literals and
+ * both arms of a conditional, and read <expression> otherwise. Read that way, the pass reaches no tool provider, model host
+ * or tool SDK native-modules.ts loads, no I/O global, no global object, no process member but env, one I/O builtin
+ * (node:child_process, in the render module) and one launch site, spawn("rf"). Src outside anchor: over every tracked src
+ * module, every site the two launch readers read (the tracer, and every call spelled as a launch call - LAUNCH_CALLS,
+ * process.execve included - whose command resolves) is pinned by module, callee and command (srcSites), and exactly one of
+ * them launches rf: the render module's spawn. The sites whose command does not resolve are among them (any of them could
+ * launch rf), and every loader call in src whose specifier does not resolve is pinned by name (any of them could load
+ * child_process).
  *
  * THE UNTIL-THEN TRIGGER (row T), in these homes and forms: T1 no tracked .tsx/.jsx module anywhere in git's index; T2 no
  * tracked script module outside test/ (src, qa, examples, the root configs; src read equal to the src walk both ways) names
- * a hook (an identifier of the use-prefixed form - the charter's useProvider, useQuery, useAbsent, useRequirement,
- * useEffect, useCommit fit it) or the charter's descriptor pureProjectRequirement, or names @reactive-fiber/tsx as a
- * specifier (A5's specifier reader), and neither manifest names that package; T3 neither the descriptors the native and
- * injected registrations register (read at run time) nor any string, template part, identifier or key of a module T2 reads
- * (read statically, so a descriptor registered by a module neither registration wires in reads too) spells either of the
- * title's two interests (evidence requirement, resource interest, joined fold); T4 each reader's own controls. A red row T
- * is the trigger, not a defect.
+ * a hook - an identifier of the use-prefixed form (the charter's useProvider, useQuery, useAbsent, useRequirement,
+ * useEffect, useCommit fit it) or a use-prefixed word in any string or template part (a key, an argument, prose) - or the
+ * charter's descriptor pureProjectRequirement (as an identifier or in any string), or names @reactive-fiber/tsx (as a
+ * specifier, A5's specifier reader, or in any string), and neither manifest names that package; T3 neither the descriptors
+ * the native and injected registrations register (read at run time) nor any string, template part, identifier or key of a
+ * module T2 reads (read statically, so a descriptor registered by a module neither registration wires in reads too) spells
+ * either of the title's two interests (evidence requirement, resource interest, joined fold); T4 each reader's own controls.
+ * A red row T is the trigger, not a defect.
  *
  * RESPIN (cut #2; refusal #1 on cut #1 a2572832, seat gate-prep-25, lane g10-gate-s128): U1 A5's readers parse the
  * global-object, process, default-import, renamed-binding and const-command forms of gate plants GX1, GX2, GX3, GX5 and GX5b,
@@ -86,14 +108,23 @@
  * every tracked script module outside test/ and every string in them (GT1, GT5), and its armed claim names the homes it
  * reads. Riders: F4 a computed import() reads <expression>; F5 a control per masked classifier clause (G04, G05, G07, G08,
  * G09); F6 every wait on a pass is bounded; F7 the stand-ins derive from the resolved commands of both launch readers.
+ * RESPIN (cut #3; refusal #2 on cut #2 e0c90322, seat gate-prep-10, lane g10-gate-s137): U1 the child_process reader is the
+ * fail-closed tracer above - nested destructuring (GA1), assignment-bound loader results (GA3) and member-of-loader-result
+ * initializers (GA2) are followed, and every value it does not follow reads a site - with its roster of forms (REACH_FORMS),
+ * and the src anchor pins every src site and every unresolved loader call; U2 one committed-form control per form each clause
+ * of the uncommitted reading names, the clauses stated exactly (MB2, PR-E2); riders: GA2 (in REACH_FORMS), GC2 (row T reads
+ * hook names spelled as text), F15 (the stand-ins bound their own life and the teardown stops any left running).
  *
- * MEASURED (by the respin seat ws-06, run g10-work-s136, 2026-10-29, on merge 13b5c644: trunk 04123dc into cut #1): all 21
+ * MEASURED (by the respin seat ws-06, run g10-work-s138, 2026-10-29, on merge a4c58228: trunk bcc41fc into cut #2): all 21
  * driven pass/scenario observations read an empty verdict, the 5 settled native renders return the uncommitted form and the
- * 8 committed-form renders are refused; each of the 19 controls trips exactly its expected classes; the render closure is 4
- * src modules and 2 externals with one launch site, no I/O global, no global object and no process member but env; over src
- * the launch readers read one rf site and one unresolved child_process site (the detached host's spawn of process.execPath),
- * and 4 stand-ins beside the rf stand-in (cmd, forge, git, sh); 0 tracked .tsx/.jsx of 1087 tracked paths; 0 hook names
- * over 198 read modules (117 in src); 0 interest phrases in 8 descriptors and over the 198 read modules.
+ * 38 committed-form renders (19 forms, two native passes) are refused; each of the 39 controls trips exactly its expected
+ * classes and the abandoned stand-in is stopped at teardown; the render closure is 4 src modules and 2 externals with one
+ * launch site, no I/O global, no global object and no process member but env; over src the launch readers read 11 sites -
+ * one rf site and one child_process site whose command does not resolve (the detached host's spawn of process.execPath) -
+ * and one loader call whose specifier does not resolve (the detached host's createRequire result), and 4 stand-ins beside the
+ * rf stand-in (cmd, forge, git, sh); each of the 57 REACH_FORMS forms reads what it must; 0 tracked .tsx/.jsx of 1091 tracked
+ * paths; 0 hook names (identifiers or strings) over 198 read modules (117 in src); 0 interest phrases in 8 descriptors and
+ * over the 198 read modules.
  *
  * The census pins the rows and the residuals' quiet rows:
  *  A, the acceptance: A1 aborted passes, A2 suspended passes (both: no proposal reaches the caller), A3 a settled native
@@ -116,27 +147,36 @@
  * that reached their witness.
  * NOT CLAIMED (edits of this file and the roster together below row level): a pin removed from ROWS, the literal, IMPL and
  * the roster where no outside anchor names it (A4, T1-T4, Q1-Q7 with their RESIDUALS entry); a constant edited in this file
- * and the roster together; T1's listing narrowed while it still holds REQUIRED_TRACKED and its floor, and T2's read set
- * narrowed while it still holds REQUIRED_READ and its floor; a launch killed before the stand-in's first statement runs (the
- * SIGTERM lands during the interpreter's start) leaves no log line, so the launch ledger reads it as none - the outcome and
- * the at-abort mark still record such a pass.
+ * and the roster together (a REACH_FORMS form, a committed form with its control, or a Q6 probe removed from both included);
+ * T1's listing narrowed while it still holds REQUIRED_TRACKED and its floor, and T2's read set narrowed while it still holds
+ * REQUIRED_READ and its floor; a launch killed before the stand-in's first statement runs (the SIGTERM lands during the
+ * interpreter's start) leaves no log line, so the launch ledger reads it as none - the outcome and the at-abort mark still
+ * record such a pass.
  * RESIDUALS (named, each with its pinned quiet row): R-INJECTED-RELAY the injected registration relays its reader's
  * envelope without the native admission checks - a reader stating commit_seq 1 is returned unchanged by both injected passes,
  * so the committed-proposal class judges native passes only (Q1); R-STATED-EFFECTS the native admission reads ephemeral,
  * render_id, commit_seq and the store write count, never rf's own result.effects or result.plan statements - a settled
  * native pass whose envelope states an effect and would_commit true is returned (Q2); R-HOOK-VOCABULARY a hook spelled
- * outside the use-prefixed form, a descriptor describing an interest in other words or only in pieces composed at run time,
- * or the TSX SDK loaded through a call the specifier reader does not read (a createRequire result called directly), is not
- * read by T2/T3 (Q3); R-STAND-IN the falsifier drives stand-ins, never the installed rf (its TSX Suspense, abort handling and
- * the cache-plane writes the descriptor discloses are rf's and are not measured here; the rf-preview live tier holds the
+ * outside the use-prefixed form (as an identifier or as a word in a string), named only in pieces composed at run time, only
+ * in a comment or a regular-expression literal, or with a look-alike letter NFKC does not fold; a descriptor describing an
+ * interest in other words, only in pieces composed at run time, or with a look-alike letter; or the TSX SDK named only in
+ * pieces joined at run time - is not read by T2/T3 (Q3); R-STAND-IN the falsifier drives stand-ins, never the installed rf (its TSX Suspense, abort handling and the
+ * cache-plane writes the descriptor discloses are rf's and are not measured here; the rf-preview live tier holds the
  * installed rf to the envelope) - during a pass PATH holds the bench directory alone (Q4); R-HOST-ELSEWHERE the host-write
  * reading fingerprints the bench home only - a write elsewhere (the stand-ins' directory, the host's temp or home
  * directories) reads no violation (Q5); A5 bounds the render closure statically for the forms its readers parse, and
- * R-STATIC-FORMS names the rest; R-STATIC-FORMS the forms A5's readers do not parse read nothing (Q6: one probe per form, its
- * reading by every A5 reader pinned) - a launch through an API that is no child_process binding (pi.exec, a connection's
- * spawn) whose command does not resolve, a launch through a value the module does not bind (a function a call returns), a
- * launch through a package's own launcher (read by its specifier alone), a global reached without its name (a constructor
- * chain), and a write through the allowed process.env read; R-UNREAD-HOMES row T's static readers read every tracked script
+ * R-STATIC-FORMS names the rest; R-STATIC-FORMS the forms A5's readers do not parse (Q6: one probe per form, its reading by
+ * every A5 reader pinned, the rf launches read included) - a launch-named call on a value the tracer does not hold whose
+ * command does not resolve (pi.exec, a connection's spawn); a launch through a value the module does not bind from
+ * child_process (a parameter, a function a call returns); a package's own launcher (read by its specifier alone); a global
+ * reached without its name (a constructor chain); a write through the allowed process.env read; a launch whose arguments
+ * carry rf through a shell or launcher the readers read by its command alone (sh -c, npx); a launch through another
+ * builtin's process or thread API (cluster.fork, a worker_threads Worker); a loader reached through a call the loader reader
+ * does not parse (Reflect.apply over require, require.call, module.constructor._load) whose specifier does not resolve; code
+ * evaluated at run time from a text that names no child_process (Function, eval, vm, a Worker's eval source); and a
+ * process-internal binding (process.binding, _linkedBinding, dlopen) - over src the launch readers and the loader reader read
+ * no rf launch for any of them, and inside the render closure the I/O-global and process readers flag the ones that need a
+ * global or process (the per-probe counts show which); R-UNREAD-HOMES row T's static readers read every tracked script
  * module outside test/ - test/ (this census's own plants and the vitest timer API's use-prefixed names live there) and
  * non-script files (JSON, YAML, Markdown) are not read (Q7 pins the read-home verdict of one probe path per unread home).
  * SCOPE: the falsifier judges the host boundary Pi owns; rf's own render semantics are rf's, and the closure's one package
@@ -145,7 +185,7 @@
  * Display paths added: none. Test-only: the stand-ins and workspace roots live in makeScratch scratch; src, the manifests,
  * .beads and git's index are only read.
  */
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawn } from "node:child_process";
 import { createHash } from "node:crypto";
 import { chmodSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { builtinModules } from "node:module";
@@ -197,6 +237,9 @@ const UNCOMMITTED_TAIL = ["--no-commit", "--no-input", "--json"];
 const REGISTRY_DEADLINE_MS = 250;
 /** A bound on every wait for a stand-in's progress mark (ms); a pass that never reaches its mark reds by name. */
 const WAIT_MS = 45_000;
+/** A bound on every stand-in's own life (ms), past WAIT_MS: a stand-in nobody stopped exits by itself (unmarked), and so does
+ * one whose parent is gone. */
+const STAND_IN_BOUND_MS = WAIT_MS + 15_000;
 
 /** Every entry of the render module that runs a render, as the falsifier drives it. */
 const PASSES = ["native-registry", "native-direct", "native-preview", "injected-registry", "injected-direct"] as const;
@@ -251,12 +294,37 @@ const CLAUSE_OF: Readonly<Record<Violation, "commit" | "effect">> = {
   "foreign-launch": "effect",
   "host-write": "effect",
 };
-/** The committed forms a settled native pass must refuse: each edits one field of the uncommitted proposal. */
-const COMMITTED_FORMS = ["commit_seq", "render_id", "ephemeral", "storage_write_count"] as const;
+/** The committed forms a settled native pass must refuse: each edits the uncommitted proposal into one form a clause of the
+ * uncommitted reading names (ephemeral exactly true: false, absent, null, a string, a number; render_id exactly null: an id,
+ * empty, absent, a number; commit_seq absent or exactly null: a count, zero, a string; a work object whose
+ * storage_write_count is exactly 0: a count, absent, a string, null, negative; work absent; result absent). The first four
+ * are cut #2's. */
+const COMMITTED_FORMS = [
+  "commit_seq",
+  "render_id",
+  "ephemeral",
+  "storage_write_count",
+  "ephemeral-absent",
+  "ephemeral-null",
+  "ephemeral-string",
+  "ephemeral-number",
+  "render_id-empty",
+  "render_id-absent",
+  "render_id-number",
+  "commit_seq-zero",
+  "commit_seq-string",
+  "storage_write_count-absent",
+  "storage_write_count-string",
+  "storage_write_count-null",
+  "storage_write_count-negative",
+  "work-absent",
+  "result-absent",
+] as const;
 type CommittedForm = (typeof COMMITTED_FORMS)[number];
 /** The calls that launch a process, by the name the callee is spelled with. */
-const LAUNCH_CALLS = ["spawn", "spawnSync", "exec", "execSync", "execFile", "execFileSync", "fork"];
-const CHILD_PROCESS = ["node:child_process", "child_process"];
+const LAUNCH_CALLS = ["spawn", "spawnSync", "exec", "execSync", "execFile", "execFileSync", "fork", "execve"];
+/** The name every child_process specifier contains (node:child_process, child_process, and any other spelling of it). */
+const CHILD_PROCESS = "child_process";
 /** Globals a module can reach the network, the host's stdio or storage, or load code through without an import. */
 const IO_GLOBALS = ["fetch", "XMLHttpRequest", "WebSocket", "EventSource", "BroadcastChannel", "console", "localStorage", "sessionStorage", "require", "module", "eval", "Function"];
 /** The global objects: every reference to one is read, so an I/O global reached through one (aliased or computed) reads too. */
@@ -268,6 +336,8 @@ const IO_BUILTINS = ["child_process", "cluster", "dgram", "dns", "fs", "fs/promi
 /** The TSX SDK's package (ReactiveFiberTSXSDK package.json name) and the charter's hook and descriptor forms. */
 const TSX_SDK = "@reactive-fiber/tsx";
 const HOOK_NAME = /^use[A-Z]/;
+/** A use-prefixed word inside a text: the charter's hook names spelled as a key, an argument or prose. */
+const HOOK_WORD = /(?:^|[^A-Za-z0-9_$])(use[A-Z][A-Za-z0-9_$]*)/;
 const DESCRIPTOR_NAME = "pureProjectRequirement";
 const SCRIPT_MODULE = /\.(?:ts|mts|cts|tsx|js|mjs|cjs|jsx)$/;
 const COMPONENT_MODULE = /\.(?:tsx|jsx)$/i;
@@ -343,13 +413,86 @@ const STATIC_RESIDUE: Readonly<Record<string, string>> = {
   "package-launcher": 'import { execa } from "execa";\nexport const run = (): unknown => execa("rf");\n',
   "constructor-chain-global": 'export const reach = (): unknown => "".constructor.constructor("return this")();\n',
   "env-write": 'export function run(): void { process.env.PLANTED = "1"; }\n',
+  "argument-carried": 'import { spawn } from "node:child_process";\nexport const run = (): unknown => spawn("sh", ["-c", "rf context render --json"]);\n',
+  "other-builtin-launch": 'import cluster from "node:cluster";\nexport const run = (): unknown => cluster.fork();\n',
+  "unparsed-loader": "export const load = (name: string): unknown => Reflect.apply(require, undefined, [name]);\n",
+  "composed-code": "export const run = (code: string): unknown => new Function(code)();\n",
+  "process-binding": 'export const raw = (): unknown => process.binding("spawn_sync");\n',
+};
+/** A5's form roster: every form A5's child_process tracer is proven on, one probe each, with what it must read - a launch
+ * form reads a launch site whose command is rf (or <expression>, a launch whose command does not resolve), a fail-closed form
+ * the site it names (a value the tracer does not follow further reads <reference>, an export <re-export>, a child_process
+ * name spelled outside a specifier slot <untraced>), a computed load one unresolved loader call (<load>). */
+const REACH_FORMS: Readonly<Record<string, { readonly probe: string; readonly reads: string }>> = {
+  "named-import": { probe: 'import { spawn } from "node:child_process";\nspawn("rf", []);\n', reads: "rf" },
+  "renamed-import": { probe: 'import { spawn as go } from "node:child_process";\ngo("rf", []);\n', reads: "rf" },
+  "string-named-import": { probe: 'import { "spawn" as go } from "node:child_process";\ngo("rf", []);\n', reads: "rf" },
+  "default-named-import": { probe: 'import { default as cp } from "node:child_process";\ncp.spawn(command, []);\n', reads: "<expression>" },
+  "namespace-import": { probe: 'import * as cp from "node:child_process";\ncp.spawn(command, []);\n', reads: "<expression>" },
+  "default-import": { probe: 'import cp from "child_process";\ncp.spawn(command, []);\n', reads: "<expression>" },
+  "import-equals": { probe: 'import cp = require("child_process");\ncp.spawn(command, []);\n', reads: "<expression>" },
+  "require-whole": { probe: 'const cp = require("node:child_process");\ncp.spawn(command, []);\n', reads: "<expression>" },
+  "require-destructured": { probe: 'const { spawn: go } = require("node:child_process");\ngo("rf", []);\n', reads: "rf" },
+  "require-member-call": { probe: 'require("node:child_process").spawn(command, []);\n', reads: "<expression>" },
+  "import-whole": { probe: 'const cp = await import("node:child_process");\ncp.spawn(command, []);\n', reads: "<expression>" },
+  "import-destructured": { probe: 'const { spawn: go } = await import("node:child_process");\ngo("rf", []);\n', reads: "rf" },
+  "import-nested-destructured": { probe: 'const { default: { spawn: go } } = await import("node:child_process");\ngo("rf", []);\n', reads: "rf" },
+  "import-member-bound": { probe: 'const go = (await import("node:child_process")).spawn;\ngo("rf", []);\n', reads: "rf" },
+  "import-member-call": { probe: '(await import("node:child_process")).spawn(command, []);\n', reads: "<expression>" },
+  "import-default-member": { probe: 'const m = await import("node:child_process");\nm.default.spawn(command, []);\n', reads: "<expression>" },
+  "assigned-whole": { probe: 'let cp;\ncp = await import("node:child_process");\ncp.spawn(command, []);\n', reads: "<expression>" },
+  "assigned-logical": { probe: 'let cp;\ncp ??= require("node:child_process");\ncp.exec(command);\n', reads: "<expression>" },
+  "assigned-destructured": { probe: 'let go;\n({ spawn: go } = await import("node:child_process"));\ngo("rf", []);\n', reads: "rf" },
+  "builtin-module": { probe: 'const cp = process.getBuiltinModule("node:child_process");\ncp.spawn(command, []);\n', reads: "<expression>" },
+  "create-require-call": { probe: 'import { createRequire } from "node:module";\nconst go = createRequire(import.meta.url)("node:child_process").spawn;\ngo("rf", []);\n', reads: "rf" },
+  "create-require-bound": { probe: 'import { createRequire } from "node:module";\nconst load = createRequire(import.meta.url);\nconst { spawn: go } = load("child_process");\ngo("rf", []);\n', reads: "rf" },
+  "create-require-assigned": { probe: 'import { createRequire } from "node:module";\nlet load;\nload = createRequire(import.meta.url);\nload("child_process").spawn(command, []);\n', reads: "<expression>" },
+  "const-specifier": { probe: 'const CP = "node:child_process";\nconst { spawn: go } = await import(CP);\ngo("rf", []);\n', reads: "rf" },
+  alias: { probe: 'import { spawn } from "node:child_process";\nconst go = spawn;\ngo("rf", []);\n', reads: "rf" },
+  "alias-destructured": { probe: 'const cp = require("node:child_process");\nconst { spawn: go } = cp;\ngo("rf", []);\n', reads: "rf" },
+  "hoisted-alias": { probe: 'import * as cp from "node:child_process";\nexport function later(): void {\n  go("rf", []);\n}\nconst go = cp.spawn;\n', reads: "rf" },
+  "self-deepening": { probe: 'let cp = require("node:child_process");\ncp = cp.promises;\n', reads: "<reference>" },
+  "rest-destructured": { probe: 'const { ...cp } = await import("node:child_process");\ncp.spawn(command, []);\n', reads: "<expression>" },
+  "element-access": { probe: 'import * as cp from "node:child_process";\ncp["spawn"](command, []);\n', reads: "<expression>" },
+  "optional-call": { probe: 'import * as cp from "node:child_process";\ncp?.spawn?.(command, []);\n', reads: "<expression>" },
+  coalesced: { probe: 'import * as cp from "node:child_process";\nconst go = cp.spawn ?? fallback;\ngo("rf", []);\n', reads: "rf" },
+  "conditional-binding": { probe: 'import * as cp from "node:child_process";\nconst go = flag ? cp.spawn : cp.spawnSync;\ngo("rf", []);\n', reads: "rf" },
+  "const-command": { probe: 'import { spawn as go } from "node:child_process";\nconst TOOL = "rf";\ngo(TOOL, []);\n', reads: "rf" },
+  "indexed-command": { probe: 'import { spawn as go } from "node:child_process";\nconst TOOLS = ["rf"];\ngo(TOOLS[0], []);\n', reads: "rf" },
+  "conditional-command": { probe: 'import { spawn as go } from "node:child_process";\ngo(flag ? "rf" : "forge", []);\n', reads: "rf" },
+  "process-execve": { probe: 'process.execve("rf", ["rf"]);\n', reads: "rf" },
+  "argument-escape": { probe: 'import { spawn } from "node:child_process";\nhand(spawn);\n', reads: "<reference>" },
+  returned: { probe: 'export function launcher(): unknown {\n  return require("node:child_process");\n}\n', reads: "<reference>" },
+  "stored-property": { probe: 'holder.cp = require("node:child_process");\n', reads: "<reference>" },
+  "class-field": { probe: 'export class Holder {\n  cp = require("node:child_process");\n}\n', reads: "<reference>" },
+  "then-callback": { probe: 'import("node:child_process").then(cp => cp.spawn(command, []));\n', reads: "<reference>" },
+  "call-apply": { probe: 'import { spawn } from "node:child_process";\nspawn.call(undefined, "rf", []);\n', reads: "<reference>" },
+  "computed-member": { probe: 'import * as cp from "node:child_process";\ncp[pick()](command, []);\n', reads: "<reference>" },
+  "re-export": { probe: 'export { spawn } from "node:child_process";\n', reads: "<re-export>" },
+  "re-export-all": { probe: 'export * from "node:child_process";\n', reads: "<re-export>" },
+  "exported-binding": { probe: 'export const cp = await import("node:child_process");\n', reads: "<re-export>" },
+  "exported-import-equals": { probe: 'export import cp = require("child_process");\n', reads: "<re-export>" },
+  "local-export": { probe: 'import { spawn } from "node:child_process";\nexport { spawn as launch };\n', reads: "<re-export>" },
+  "default-export": { probe: 'import * as cp from "node:child_process";\nexport default cp;\n', reads: "<re-export>" },
+  "untraced-string": { probe: "export const code = 'require(\"child_process\").spawn(\"rf\")';\n", reads: "<untraced>" },
+  "unparsed-loader-literal": { probe: 'loader._load("child_process");\n', reads: "<untraced>" },
+  "composed-specifier": { probe: `const cp = await import(\`node:\${"child_process"}\`);\n`, reads: "<untraced>" },
+  "computed-import": { probe: "const cp = await import(pick());\ncp.spawn(command, []);\n", reads: "<load>" },
+  "computed-require": { probe: "const cp = require(name);\n", reads: "<load>" },
+  "computed-builtin": { probe: "const cp = process.getBuiltinModule(name);\n", reads: "<load>" },
+  "computed-create-require": { probe: 'import { createRequire } from "node:module";\nconst cp = createRequire(import.meta.url)(name);\n', reads: "<load>" },
 };
 /** Q3's probes: hooks and descriptors spelled outside the forms T2 and T3 read. */
-const OTHER_HOOKS = "export function evidenceHook() { return describeRequirement(view); }\nconst makeEvidenceDescriptor = () => ({ need: 1 });\n";
+const OTHER_HOOKS =
+  'export function evidenceHook() { return describeRequirement(view); }\nconst makeEvidenceDescriptor = () => ({ need: 1 });\nconst composedHook = "use" + "Provider";\nconst pattern = /useQuery/;\n// useCommit\n';
+/** A hook and an interest spelled with a look-alike letter NFKC does not fold (U+0435 for the Latin e), composed at run time
+ * so this file stays ASCII. */
+const LOOKALIKE_E = String.fromCodePoint(0x0435);
+const OTHER_LOOKALIKE = `export function us${LOOKALIKE_E}Provider(): void {}\nexport const description = "Describes a logical ${LOOKALIKE_E}vidence requirement";\n`;
 const OTHER_PHRASES = "states an evidence need and a resource demand for the next render";
-/** A descriptor text composed from pieces at run time, and the TSX SDK loaded through a createRequire result called directly. */
+/** A descriptor text composed from pieces at run time, and the TSX SDK named only in pieces joined at run time. */
 const OTHER_COMPOSED = 'export const description = "Describes a logical evidence " + "requirement for the next render";\n';
-const OTHER_LOADER = 'import { createRequire } from "node:module";\nconst tsx = createRequire(import.meta.url)("@reactive-fiber/tsx");\n';
+const OTHER_LOADER = 'import { createRequire } from "node:module";\nconst tsx = createRequire(import.meta.url)(["@reactive-fiber", "tsx"].join("/"));\n';
 /** Q7's probes: one path per home row T's static readers do not read (test/, and non-script files anywhere). */
 const UNREAD_HOME_PROBES = ["test/helpers/edc-evidence-hooks.ts", "test/workbench-edc-descriptor.test.ts", "src/workbench/edc/descriptor.json", "examples/edc/hooks.md", "qa/workbench/edc-descriptor.yaml"];
 /** T4's planted samples, each of which its reader must find. */
@@ -375,6 +518,10 @@ const PLANTED_DESCRIPTOR_SOURCE =
   'export function registerEvidence(registry: Registry): void {\n  registry.register({ descriptor: { id: "edc.evidence", description: "Describes a logical evidence requirement for the next render", inputSchema: { properties: { prospectiveResourceInterest: {} } } } });\n}\n';
 /** The TSX SDK loaded through a require call: T2's specifier reader must read it. */
 const PLANTED_REQUIRE = `const tsx = require("${TSX_SDK}");\n`;
+/** Hook names spelled as text (a key, an argument, a word in prose) and the TSX SDK loaded through a createRequire result
+ * called directly: T2's hook reader must read each. */
+const PLANTED_STRING_HOOKS = 'export const hooks = { "useProvider": (): number => 1 };\nregistry.hook("useQuery", () => 2);\nexport const note = "call usePlanted() first";\n';
+const PLANTED_LOADER = `import { createRequire } from "node:module";\nconst tsx = createRequire(import.meta.url)("${TSX_SDK}");\n`;
 
 interface Row {
   readonly id: string;
@@ -470,12 +617,41 @@ interface Launch {
 }
 const oldPath = process.env.PATH;
 const scratches: string[] = [];
+/** Stops every stand-in a bench directory's pids file names that still runs - only a process whose /proc command line names
+ * that directory, so a reused pid is never touched - and returns how many it stopped: a pass that ignored its abort leaves no
+ * process behind. */
+function reap(dir: string): number {
+  const file = join(dir, "pids");
+  if (!existsSync(file)) return 0;
+  let stopped = 0;
+  for (const line of readFileSync(file, "utf8").split("\n")) {
+    const pid = Number(line);
+    if (!Number.isInteger(pid) || pid <= 0) continue;
+    let command: string;
+    try {
+      command = readFileSync(`/proc/${pid}/cmdline`, "utf8");
+    } catch {
+      continue;
+    }
+    if (!command.includes(dir)) continue;
+    try {
+      process.kill(pid, "SIGKILL");
+      stopped += 1;
+    } catch {
+      // the stand-in exited between the read and the stop
+    }
+  }
+  return stopped;
+}
 afterEach(() => {
   process.env.PATH = oldPath;
-  removeScratch(...scratches.splice(0));
+  const removed = scratches.splice(0);
+  for (const dir of removed) reap(dir);
+  removeScratch(...removed);
 });
 
-/** A stand-in command in the bench: it logs {bin, argv}, marks `stopped.<tag>` and exits 0 on SIGTERM, then runs `body`. */
+/** A stand-in command in the bench: it logs {bin, argv}, marks `stopped.<tag>` and exits 0 on SIGTERM, appends its pid to the
+ * bench's pids file, exits by itself (code 3) past STAND_IN_BOUND_MS or when its parent is gone, then runs `body`. */
 function standIn(bench: Bench, name: string, body: string): void {
   const script = join(bench.bin, name);
   writeFileSync(
@@ -491,6 +667,10 @@ function standIn(bench: Bench, name: string, body: string): void {
       'const tag = at === -1 ? "untagged" : argv[at + 1];',
       'const mark = name => fs.writeFileSync(dir + "/" + name + "." + tag, "");',
       'process.on("SIGTERM", () => { mark("stopped"); process.exit(0); });',
+      'fs.appendFileSync(dir + "/pids", process.pid + "\\n");',
+      "const parent = process.ppid;",
+      "const born = Date.now();",
+      `setInterval(() => { if (process.ppid !== parent || Date.now() - born > ${STAND_IN_BOUND_MS}) process.exit(3); }, 250).unref();`,
       body,
       "",
     ].join("\n"),
@@ -811,15 +991,71 @@ function effectLine(seen: Observation): string {
     `foreign ${seen.foreign.length}, host ${seen.hostChanged ? "changed" : "unchanged"}, stopped ${seen.stopped} | [${verdict.join(", ")}]`
   );
 }
-/** The uncommitted proposal with one field edited into a committed form. */
+/** The uncommitted proposal edited into one committed form. */
 function committedForm(form: CommittedForm): (root: string) => JsonValue {
   return root => {
     const envelope = fullShapeRf(root) as JsonObject;
     const result = envelope.result as JsonObject;
-    if (form === "commit_seq") result.commit_seq = 1;
-    if (form === "render_id") result.render_id = "rnd_committed";
-    if (form === "ephemeral") result.ephemeral = false;
-    if (form === "storage_write_count") (result.work as JsonObject).storage_write_count = 1;
+    const work = result.work as JsonObject;
+    switch (form) {
+      case "commit_seq":
+        result.commit_seq = 1;
+        break;
+      case "render_id":
+        result.render_id = "rnd_committed";
+        break;
+      case "ephemeral":
+        result.ephemeral = false;
+        break;
+      case "storage_write_count":
+        work.storage_write_count = 1;
+        break;
+      case "ephemeral-absent":
+        Reflect.deleteProperty(result, "ephemeral");
+        break;
+      case "ephemeral-null":
+        result.ephemeral = null;
+        break;
+      case "ephemeral-string":
+        result.ephemeral = "true";
+        break;
+      case "ephemeral-number":
+        result.ephemeral = 1;
+        break;
+      case "render_id-empty":
+        result.render_id = "";
+        break;
+      case "render_id-absent":
+        Reflect.deleteProperty(result, "render_id");
+        break;
+      case "render_id-number":
+        result.render_id = 0;
+        break;
+      case "commit_seq-zero":
+        result.commit_seq = 0;
+        break;
+      case "commit_seq-string":
+        result.commit_seq = "1";
+        break;
+      case "storage_write_count-absent":
+        Reflect.deleteProperty(work, "storage_write_count");
+        break;
+      case "storage_write_count-string":
+        work.storage_write_count = "0";
+        break;
+      case "storage_write_count-null":
+        work.storage_write_count = null;
+        break;
+      case "storage_write_count-negative":
+        work.storage_write_count = -1;
+        break;
+      case "work-absent":
+        Reflect.deleteProperty(result, "work");
+        break;
+      case "result-absent":
+        Reflect.deleteProperty(envelope, "result");
+        break;
+    }
     return envelope;
   };
 }
@@ -845,18 +1081,21 @@ async function settledNative(id: PassId, envelope: (root: string) => JsonValue, 
 // ---- the controls (A6) and the quiet rows' passes ----
 
 /** The argv shapes a hand-built control launches rf with: the uncommitted form, or one edit of it that the form forbids
- * (--no-commit dropped, another verb, the uncommitted flags present but not last). */
-type ArgvShape = "uncommitted" | "committing" | "other-verb" | "misplaced-tail";
+ * (--no-commit dropped, another verb, another noun, a leading flag other than --workspace, the uncommitted flags present but
+ * not last, or last but out of order). */
+type ArgvShape = "uncommitted" | "committing" | "other-verb" | "other-noun" | "other-lead" | "misplaced-tail" | "swapped-tail";
 function launchRf(made: Bench, tag: string, shape: ArgvShape): JsonValue {
   const select = ["--model", "m", "--task", tag];
-  const argv =
-    shape === "uncommitted"
-      ? ["--workspace", made.root, ...RENDER_VERB, ...select, ...UNCOMMITTED_TAIL]
-      : shape === "committing"
-        ? ["--workspace", made.root, ...RENDER_VERB, ...select, "--no-input", "--json"]
-        : shape === "other-verb"
-          ? ["--workspace", made.root, "context", "commit", ...select, ...UNCOMMITTED_TAIL]
-          : ["--workspace", made.root, ...RENDER_VERB, ...UNCOMMITTED_TAIL, ...select];
+  const shapes: Readonly<Record<ArgvShape, readonly string[]>> = {
+    uncommitted: ["--workspace", made.root, ...RENDER_VERB, ...select, ...UNCOMMITTED_TAIL],
+    committing: ["--workspace", made.root, ...RENDER_VERB, ...select, "--no-input", "--json"],
+    "other-verb": ["--workspace", made.root, "context", "commit", ...select, ...UNCOMMITTED_TAIL],
+    "other-noun": ["--workspace", made.root, "graph", "render", ...select, ...UNCOMMITTED_TAIL],
+    "other-lead": ["--profile", made.root, ...RENDER_VERB, ...select, ...UNCOMMITTED_TAIL],
+    "misplaced-tail": ["--workspace", made.root, ...RENDER_VERB, ...UNCOMMITTED_TAIL, ...select],
+    "swapped-tail": ["--workspace", made.root, ...RENDER_VERB, ...select, "--no-commit", "--json", "--no-input"],
+  };
+  const argv = [...shapes[shape]];
   const stdout = execFileSync("rf", argv, { encoding: "utf8", env: { PATH: made.bin } });
   return { contract: REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, workspaceRoot: made.root, source: JSON.parse(stdout) as JsonValue };
 }
@@ -993,6 +1232,21 @@ const CONTROLS: Readonly<Record<string, Control>> = {
   "committed-form-render_id": committedFormControl("render_id"),
   "committed-form-ephemeral": committedFormControl("ephemeral"),
   "committed-form-storage_write_count": committedFormControl("storage_write_count"),
+  "committed-form-ephemeral-absent": committedFormControl("ephemeral-absent"),
+  "committed-form-ephemeral-null": committedFormControl("ephemeral-null"),
+  "committed-form-ephemeral-string": committedFormControl("ephemeral-string"),
+  "committed-form-ephemeral-number": committedFormControl("ephemeral-number"),
+  "committed-form-render_id-empty": committedFormControl("render_id-empty"),
+  "committed-form-render_id-absent": committedFormControl("render_id-absent"),
+  "committed-form-render_id-number": committedFormControl("render_id-number"),
+  "committed-form-commit_seq-zero": committedFormControl("commit_seq-zero"),
+  "committed-form-commit_seq-string": committedFormControl("commit_seq-string"),
+  "committed-form-storage_write_count-absent": committedFormControl("storage_write_count-absent"),
+  "committed-form-storage_write_count-string": committedFormControl("storage_write_count-string"),
+  "committed-form-storage_write_count-null": committedFormControl("storage_write_count-null"),
+  "committed-form-storage_write_count-negative": committedFormControl("storage_write_count-negative"),
+  "committed-form-work-absent": committedFormControl("work-absent"),
+  "committed-form-result-absent": committedFormControl("result-absent"),
   "committing-argv": {
     expected: ["committing-launch"],
     run: () => controlObservation("committing-argv", "settled", "settled", async (made, tag) => launchRf(made, tag, "committing")),
@@ -1004,6 +1258,18 @@ const CONTROLS: Readonly<Record<string, Control>> = {
   "misplaced-tail": {
     expected: ["committing-launch"],
     run: () => controlObservation("misplaced-tail", "settled", "settled", async (made, tag) => launchRf(made, tag, "misplaced-tail")),
+  },
+  "committing-noun": {
+    expected: ["committing-launch"],
+    run: () => controlObservation("committing-noun", "settled", "settled", async (made, tag) => launchRf(made, tag, "other-noun")),
+  },
+  "committing-workspace": {
+    expected: ["committing-launch"],
+    run: () => controlObservation("committing-workspace", "settled", "settled", async (made, tag) => launchRf(made, tag, "other-lead")),
+  },
+  "swapped-tail": {
+    expected: ["committing-launch"],
+    run: () => controlObservation("swapped-tail", "settled", "settled", async (made, tag) => launchRf(made, tag, "swapped-tail")),
   },
   "started-after-abort": {
     expected: ["started-after-abort"],
@@ -1019,6 +1285,23 @@ const CONTROLS: Readonly<Record<string, Control>> = {
       controlObservation("started-reader", "before", "settled", async (_made, _tag, _controller, reader) => {
         void reader.read();
         throw new CapabilityError("transport", "census control: cancelled after it read");
+      }),
+  },
+  "started-queued": {
+    expected: ["started-after-abort"],
+    run: () =>
+      controlObservation("started-queued", "queued", "settled", async (made, tag) => {
+        launchRf(made, tag, "uncommitted");
+        throw new CapabilityError("transport", "census control: cancelled in the queue after it launched");
+      }),
+  },
+  "extra-read": {
+    expected: ["extra-launch"],
+    run: () =>
+      controlObservation("extra-read", "settled", "settled", async (made, _tag, _controller, reader) => {
+        await reader.read();
+        await reader.read();
+        return { contract: REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, workspaceRoot: made.root, source: fullShapeRf(made.root) };
       }),
   },
   "suspended-returned": {
@@ -1189,13 +1472,39 @@ function calleeName(call: ts.CallExpression): string | undefined {
   if (ts.isElementAccessExpression(callee) && ts.isStringLiteralLike(callee.argumentExpression)) return callee.argumentExpression.text;
   return undefined;
 }
-/** The calls that load a module or a builtin by specifier besides import(). */
+/** The calls that load a module or a builtin by specifier besides import(): require (module.require too) and getBuiltinModule
+ * by the name the callee is spelled with, and a loader factory's result (createRequire) - called directly, or through a name a
+ * declaration binds it to. */
 const LOADER_CALLS = ["require", "getBuiltinModule"];
-function isLoaderCall(node: ts.Node): node is ts.CallExpression {
-  return ts.isCallExpression(node) && (node.expression.kind === ts.SyntaxKind.ImportKeyword || LOADER_CALLS.includes(calleeName(node) ?? ""));
+const LOADER_FACTORIES = ["createRequire"];
+const loaderNamesOf = new WeakMap<ts.SourceFile, ReadonlySet<string>>();
+/** The names one module binds a loader factory's result to, by a declaration or an assignment (`const load =
+ * createRequire(...)`, `load = createRequire(...)`). */
+function loaderNames(source: ts.SourceFile): ReadonlySet<string> {
+  const cached = loaderNamesOf.get(source);
+  if (cached !== undefined) return cached;
+  const names = new Set<string>();
+  const factory = (expression: ts.Expression): boolean => {
+    const value = unwrap(expression);
+    return ts.isCallExpression(value) && LOADER_FACTORIES.includes(calleeName(value) ?? "");
+  };
+  visit(source, node => {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined && factory(node.initializer)) names.add(node.name.text);
+    const assigned = ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken ? unwrap(node.left) : undefined;
+    if (ts.isBinaryExpression(node) && assigned !== undefined && ts.isIdentifier(assigned) && factory(node.right)) names.add(assigned.text);
+  });
+  loaderNamesOf.set(source, names);
+  return names;
 }
-/** Every module specifier a source names: static imports and exports, import-equals, and every import(), require() and
- * getBuiltinModule() call - its argument read through resolveTexts, <expression> when it does not resolve. */
+function isLoaderCall(node: ts.Node, source: ts.SourceFile): node is ts.CallExpression {
+  if (!ts.isCallExpression(node)) return false;
+  if (node.expression.kind === ts.SyntaxKind.ImportKeyword || LOADER_CALLS.includes(calleeName(node) ?? "")) return true;
+  const callee = unwrap(node.expression);
+  return (ts.isCallExpression(callee) && LOADER_FACTORIES.includes(calleeName(callee) ?? "")) || (ts.isIdentifier(callee) && loaderNames(source).has(callee.text));
+}
+/** Every module specifier a source names: static imports and exports, import-equals, and every loader call (import(),
+ * require(), getBuiltinModule(), a createRequire result) - its argument read through resolveTexts, <expression> when it does
+ * not resolve. */
 function specifiers(source: ts.SourceFile): string[] {
   const found: string[] = [];
   visit(source, node => {
@@ -1203,7 +1512,7 @@ function specifiers(source: ts.SourceFile): string[] {
       found.push(node.moduleSpecifier.text);
     } else if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference) && ts.isStringLiteral(node.moduleReference.expression)) {
       found.push(node.moduleReference.expression.text);
-    } else if (isLoaderCall(node)) {
+    } else if (isLoaderCall(node, source)) {
       const first = node.arguments[0];
       found.push(...((first === undefined ? undefined : resolveTexts(source, first)) ?? ["<expression>"]));
     }
@@ -1315,84 +1624,246 @@ function launchSitesAt(module: string, source: ts.SourceFile = parse(module)): L
 function launchSites(module: string, source?: ts.SourceFile): LaunchSite[] {
   return launchSitesAt(module, source).map(entry => entry.site);
 }
-/** The child_process bindings of one module: named (local name to imported name) and namespace-like (namespace, default and
- * import-equals imports, and a variable bound by require(), import() or getBuiltinModule() of child_process, whole or
- * destructured). Type-only imports bind nothing. */
-function childProcessBindings(source: ts.SourceFile): { named: Map<string, string>; namespaces: Set<string> } {
-  const named = new Map<string, string>();
-  const namespaces = new Set<string>();
-  const isChildProcess = (expression: ts.Expression | undefined): boolean =>
-    expression !== undefined && (resolveTexts(source, expression) ?? []).some(text => CHILD_PROCESS.includes(text));
-  visit(source, node => {
-    if (ts.isImportDeclaration(node) && isChildProcess(node.moduleSpecifier) && node.importClause !== undefined && !node.importClause.isTypeOnly) {
-      const clause = node.importClause;
-      if (clause.name !== undefined) namespaces.add(clause.name.text);
-      const bindings = clause.namedBindings;
-      if (bindings !== undefined && ts.isNamespaceImport(bindings)) namespaces.add(bindings.name.text);
-      if (bindings !== undefined && ts.isNamedImports(bindings)) {
-        for (const element of bindings.elements) if (!element.isTypeOnly) named.set(element.name.text, (element.propertyName ?? element.name).text);
-      }
-    } else if (ts.isImportEqualsDeclaration(node) && !node.isTypeOnly && ts.isExternalModuleReference(node.moduleReference) && isChildProcess(node.moduleReference.expression)) {
-      namespaces.add(node.name.text);
-    } else if (ts.isVariableDeclaration(node) && node.initializer !== undefined) {
-      let value: ts.Expression = unwrap(node.initializer);
-      if (ts.isAwaitExpression(value)) value = unwrap(value.expression);
-      if (!isLoaderCall(value) || !isChildProcess(value.arguments[0])) return;
-      if (ts.isIdentifier(node.name)) namespaces.add(node.name.text);
-      else if (ts.isObjectBindingPattern(node.name)) {
-        for (const element of node.name.elements) {
-          if (!ts.isIdentifier(element.name)) continue;
-          const key = element.propertyName;
-          named.set(element.name.text, key === undefined ? element.name.text : ts.isIdentifier(key) || ts.isStringLiteral(key) ? key.text : "<computed>");
-        }
-      }
-    }
-  });
-  return { named, namespaces };
+/** A child_process value's member path below the module object: [] is the module itself (a namespace, a default import, a
+ * loader's result), ["spawn"] its spawn member. */
+type MemberPath = readonly string[];
+/** A member path longer than this reads <reference>: a value the tracer does not follow further. */
+const PATH_DEPTH = 3;
+/** The tracer's rounds over a module's references (aliases bind new names); a module still binding after them reads
+ * <reference> at its start. */
+const TRACE_ROUNDS = 16;
+/** A member read off a value at `path` (the default export of a builtin module is the module itself). */
+function memberOf(path: MemberPath, member: string): MemberPath {
+  return path.length === 0 && member === "default" ? path : [...path, member];
 }
-/** Every value reference to a child_process binding in one module: a call of a launch member reads its command (resolved,
- * or <expression>), any other use reads <reference> (an alias, an argument, a non-launch member, the namespace itself), and
- * every re-export of child_process or of a binding reads <re-export>. Name slots and types are not references. */
+function pathLabel(path: MemberPath): string {
+  return path.length === 0 ? "<module>" : path.join(".");
+}
+/** The member an element access names: a key that resolves to one text (resolveTexts), <computed> otherwise. */
+function elementKey(source: ts.SourceFile, argument: ts.Expression): string {
+  const texts = resolveTexts(source, argument);
+  return texts !== undefined && texts.length === 1 && texts[0] !== undefined ? texts[0] : "<computed>";
+}
+/** The member a written property name or binding key names. */
+function propertyKey(source: ts.SourceFile, name: ts.PropertyName): string {
+  if (ts.isComputedPropertyName(name)) return elementKey(source, name.expression);
+  return ts.isIdentifier(name) || ts.isPrivateIdentifier(name) || ts.isStringLiteralLike(name) || ts.isNumericLiteral(name) ? name.text : "<computed>";
+}
+/** The assignments that hand their right side to their target, and the operators whose result may be either operand. */
+const BINDING_ASSIGNMENTS: readonly ts.SyntaxKind[] = [ts.SyntaxKind.EqualsToken, ts.SyntaxKind.BarBarEqualsToken, ts.SyntaxKind.AmpersandAmpersandEqualsToken, ts.SyntaxKind.QuestionQuestionEqualsToken];
+const EITHER_OPERAND: readonly ts.SyntaxKind[] = [ts.SyntaxKind.QuestionQuestionToken, ts.SyntaxKind.BarBarToken, ts.SyntaxKind.AmpersandAmpersandToken];
+/** Whether an expression is written, not read: an assignment's target, an element of a destructuring assignment's target, a
+ * for-in/for-of target or an increment's operand. */
+function isWriteTarget(node: ts.Node): boolean {
+  let at: ts.Node = node;
+  let parent: ts.Node | undefined = node.parent;
+  while (parent !== undefined) {
+    if (ts.isParenthesizedExpression(parent) || ts.isArrayLiteralExpression(parent) || ts.isObjectLiteralExpression(parent) || ts.isSpreadAssignment(parent) || ts.isSpreadElement(parent)) {
+      // the element of a literal that may itself be a destructuring target: keep climbing
+    } else if (ts.isPropertyAssignment(parent)) {
+      if (parent.initializer !== at) return false;
+    } else if (ts.isShorthandPropertyAssignment(parent)) {
+      if (parent.name !== at) return false;
+    } else if (ts.isBinaryExpression(parent)) {
+      const kind = parent.operatorToken.kind;
+      return parent.left === at && kind >= ts.SyntaxKind.FirstAssignment && kind <= ts.SyntaxKind.LastAssignment;
+    } else if (ts.isForInStatement(parent) || ts.isForOfStatement(parent)) {
+      return parent.initializer === at;
+    } else if (ts.isPrefixUnaryExpression(parent) || ts.isPostfixUnaryExpression(parent)) {
+      return parent.operator === ts.SyntaxKind.PlusPlusToken || parent.operator === ts.SyntaxKind.MinusMinusToken;
+    } else {
+      return false;
+    }
+    at = parent;
+    parent = parent.parent;
+  }
+  return false;
+}
+function exportedNode(node: ts.Node): boolean {
+  return ts.canHaveModifiers(node) && (ts.getModifiers(node)?.some(modifier => modifier.kind === ts.SyntaxKind.ExportKeyword) ?? false);
+}
+/** The child_process tracer over one module (fail-closed: it never drops a value it does not follow). Entries: every import,
+ * import-equals and re-export whose specifier names child_process, and every loader call (isLoaderCall) whose specifier does
+ * (resolveTexts; any text containing CHILD_PROCESS). Each value derived from an entry is followed through parentheses, type
+ * wrappers and await; member reads (by name, by a key that resolves, <computed> otherwise; a default read is the module
+ * itself); declarations and assignments (=, ||=, &&=, ??=) to a name or to a destructuring pattern at any depth (rest
+ * included); aliases (a held name assigned or declared again); and the result of ??, ||, && and a conditional's arms. A call
+ * of a launch member (LAUNCH_CALLS) reads its command (resolveTexts; <expression> otherwise); a value a statement discards
+ * reads nothing; an export of a held value reads <re-export>; every other use - a call of the module or of another member, an
+ * argument, a return, a property store, a class field, an object or array element, a path deeper than PATH_DEPTH - reads
+ * <reference>. A string that names child_process outside a specifier slot (types excepted) reads <untraced>. Name slots,
+ * write targets and types are not references. */
 function childProcessLaunchesAt(module: string, source: ts.SourceFile = parse(module)): Located[] {
-  const { named, namespaces } = childProcessBindings(source);
-  const found: Located[] = [];
+  const found = new Map<string, Located>();
   const add = (node: ts.Node, callee: string, command: string): void => {
-    found.push({ at: node.getStart(source), site: { module, callee, command } });
+    const at = node.getStart(source);
+    const key = `${at}:${callee}:${command}`;
+    if (!found.has(key)) found.set(key, { at, site: { module, callee, command } });
   };
-  const use = (node: ts.Node, callee: string): void => {
-    const call = ts.isCallExpression(node.parent) && node.parent.expression === node ? node.parent : undefined;
-    const first = call?.arguments[0];
-    if (call === undefined || !LAUNCH_CALLS.includes(callee)) add(node, callee, "<reference>");
-    else add(node, callee, (first === undefined ? undefined : resolveTexts(source, first))?.join("|") ?? "<expression>");
+  const bindings = new Map<string, Map<string, MemberPath>>();
+  let grew = false;
+  const bind = (name: string, path: MemberPath): void => {
+    const paths = bindings.get(name) ?? new Map<string, MemberPath>();
+    const key = JSON.stringify(path);
+    if (paths.has(key)) return;
+    paths.set(key, path);
+    bindings.set(name, paths);
+    grew = true;
+  };
+  const bindName = (name: ts.BindingName, path: MemberPath): void => {
+    if (ts.isIdentifier(name)) {
+      bind(name.text, path);
+    } else if (ts.isObjectBindingPattern(name)) {
+      for (const element of name.elements) {
+        const key = element.propertyName !== undefined ? propertyKey(source, element.propertyName) : ts.isIdentifier(element.name) ? element.name.text : "<computed>";
+        bindName(element.name, element.dotDotDotToken !== undefined ? path : memberOf(path, key));
+      }
+    } else {
+      name.elements.forEach((element, index) => {
+        if (ts.isBindingElement(element)) bindName(element.name, memberOf(path, element.dotDotDotToken !== undefined ? "[...]" : `[${index}]`));
+      });
+    }
+  };
+  const bindTarget = (target: ts.Expression, path: MemberPath): void => {
+    const node = unwrap(target);
+    if (ts.isIdentifier(node)) {
+      bind(node.text, path);
+    } else if (ts.isObjectLiteralExpression(node)) {
+      for (const property of node.properties) {
+        if (ts.isPropertyAssignment(property)) bindTarget(property.initializer, memberOf(path, propertyKey(source, property.name)));
+        else if (ts.isShorthandPropertyAssignment(property)) bind(property.name.text, memberOf(path, property.name.text));
+        else if (ts.isSpreadAssignment(property)) bindTarget(property.expression, path);
+        else add(property, pathLabel(path), "<reference>");
+      }
+    } else if (ts.isArrayLiteralExpression(node)) {
+      node.elements.forEach((element, index) => {
+        if (ts.isSpreadElement(element)) bindTarget(element.expression, memberOf(path, "[...]"));
+        else if (!ts.isOmittedExpression(element)) bindTarget(element, memberOf(path, `[${index}]`));
+      });
+    } else if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken) {
+      bindTarget(node.left, path);
+    } else {
+      // a property store (this.cp = ..., holder.cp = ...): the tracer does not follow the value there
+      add(node, pathLabel(path), "<reference>");
+    }
+  };
+  const consume = (value: ts.Expression, path: MemberPath): void => {
+    if (path.length > PATH_DEPTH) {
+      add(value, pathLabel(path), "<reference>");
+      return;
+    }
+    let at: ts.Expression = value;
+    for (;;) {
+      const wrapper = at.parent;
+      const wraps =
+        (ts.isParenthesizedExpression(wrapper) || ts.isAsExpression(wrapper) || ts.isSatisfiesExpression(wrapper) || ts.isTypeAssertionExpression(wrapper) || ts.isNonNullExpression(wrapper) || ts.isAwaitExpression(wrapper)) &&
+        wrapper.expression === at;
+      if (!wraps) break;
+      at = wrapper;
+    }
+    const parent = at.parent;
+    if (ts.isPropertyAccessExpression(parent) && parent.expression === at) {
+      consume(parent, memberOf(path, parent.name.text));
+    } else if (ts.isElementAccessExpression(parent) && parent.expression === at) {
+      consume(parent, memberOf(path, elementKey(source, parent.argumentExpression)));
+    } else if (ts.isCallExpression(parent) && parent.expression === at) {
+      const member = path.length === 1 ? path[0] : undefined;
+      const first = parent.arguments[0];
+      if (member !== undefined && LAUNCH_CALLS.includes(member)) add(parent, member, (first === undefined ? undefined : resolveTexts(source, first))?.join("|") ?? "<expression>");
+      else add(parent, pathLabel(path), "<reference>");
+    } else if (ts.isVariableDeclaration(parent) && parent.initializer === at) {
+      bindName(parent.name, path);
+      if (exportedNode(parent.parent.parent)) add(parent, pathLabel(path), "<re-export>");
+    } else if (ts.isBinaryExpression(parent) && parent.right === at && BINDING_ASSIGNMENTS.includes(parent.operatorToken.kind)) {
+      bindTarget(parent.left, path);
+      consume(parent, path);
+    } else if (ts.isBinaryExpression(parent) && (EITHER_OPERAND.includes(parent.operatorToken.kind) || (parent.operatorToken.kind === ts.SyntaxKind.CommaToken && parent.right === at))) {
+      consume(parent, path);
+    } else if (ts.isConditionalExpression(parent) && parent.condition !== at) {
+      consume(parent, path);
+    } else if (ts.isExportAssignment(parent)) {
+      add(parent, pathLabel(path), "<re-export>");
+    } else if (!(ts.isExpressionStatement(parent) || ts.isVoidExpression(parent) || (ts.isBinaryExpression(parent) && parent.operatorToken.kind === ts.SyntaxKind.CommaToken))) {
+      add(at, pathLabel(path), "<reference>");
+    }
+  };
+  const names = (expression: ts.Expression | undefined): boolean => expression !== undefined && (resolveTexts(source, expression) ?? []).some(text => text.includes(CHILD_PROCESS));
+  const specifierSlot = (node: ts.Node): boolean => {
+    const parent = node.parent;
+    return (
+      ((ts.isImportDeclaration(parent) || ts.isExportDeclaration(parent)) && parent.moduleSpecifier === node) ||
+      (ts.isExternalModuleReference(parent) && parent.expression === node) ||
+      (ts.isModuleDeclaration(parent) && parent.name === node) ||
+      (ts.isCallExpression(parent) && parent.arguments[0] === node && isLoaderCall(parent, source))
+    );
   };
   visit(source, node => {
-    if (ts.isExportDeclaration(node) && node.moduleSpecifier !== undefined && (resolveTexts(source, node.moduleSpecifier) ?? []).some(text => CHILD_PROCESS.includes(text))) {
+    if (ts.isImportDeclaration(node) && names(node.moduleSpecifier) && node.importClause !== undefined && !node.importClause.isTypeOnly) {
+      const clause = node.importClause;
+      if (clause.name !== undefined) bind(clause.name.text, []);
+      const imported = clause.namedBindings;
+      if (imported !== undefined && ts.isNamespaceImport(imported)) bind(imported.name.text, []);
+      if (imported !== undefined && ts.isNamedImports(imported)) {
+        for (const element of imported.elements) if (!element.isTypeOnly) bind(element.name.text, memberOf([], (element.propertyName ?? element.name).text));
+      }
+    } else if (ts.isImportEqualsDeclaration(node) && !node.isTypeOnly && ts.isExternalModuleReference(node.moduleReference) && names(node.moduleReference.expression)) {
+      bind(node.name.text, []);
+      if (exportedNode(node)) add(node, "<module>", "<re-export>");
+    } else if (ts.isExportDeclaration(node) && node.moduleSpecifier !== undefined && names(node.moduleSpecifier)) {
       const clause = node.exportClause;
-      const names = clause !== undefined && ts.isNamedExports(clause) ? clause.elements.map(element => (element.propertyName ?? element.name).text) : ["*"];
-      for (const name of names) add(node, name, "<re-export>");
-      return;
+      const exported = clause !== undefined && ts.isNamedExports(clause) ? clause.elements.map(element => (element.propertyName ?? element.name).text) : ["*"];
+      for (const name of exported) add(node, name, "<re-export>");
+    } else if (isLoaderCall(node, source) && names(node.arguments[0])) {
+      consume(node, []);
+    } else if (
+      (ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)) &&
+      node.text.includes(CHILD_PROCESS) &&
+      !specifierSlot(node) &&
+      !inType(node)
+    ) {
+      add(node, "<string>", "<untraced>");
     }
-    if (ts.isExportSpecifier(node) && node.parent.parent.moduleSpecifier === undefined) {
-      const local = (node.propertyName ?? node.name).text;
-      const imported = named.get(local) ?? (namespaces.has(local) ? "<namespace>" : undefined);
-      if (imported !== undefined) add(node, imported, "<re-export>");
-      return;
-    }
-    if (!ts.isIdentifier(node) || isNameSlot(node) || inType(node)) return;
-    const imported = named.get(node.text);
-    if (imported !== undefined) {
-      use(node, imported);
-      return;
-    }
-    if (!namespaces.has(node.text)) return;
-    const member = memberRead(node);
-    if (member === "") add(node, "<namespace>", "<reference>");
-    else use(node.parent, member.startsWith(".") ? member.slice(1) : member.slice(1, -1));
   });
-  return found;
+  for (let round = 0; ; round += 1) {
+    if (round === TRACE_ROUNDS) {
+      add(source, "<module>", "<reference>");
+      break;
+    }
+    grew = false;
+    visit(source, node => {
+      if (!ts.isIdentifier(node) || isNameSlot(node) || inType(node) || isWriteTarget(node)) return;
+      // A snapshot of the name's paths: a binding this reference adds is read in the next round, so each round deepens a
+      // path by at most one step and TRACE_ROUNDS bounds the tracer whatever PATH_DEPTH is.
+      for (const path of [...(bindings.get(node.text)?.values() ?? [])]) consume(node, path);
+    });
+    if (!grew) break;
+  }
+  visit(source, node => {
+    if (!ts.isExportSpecifier(node) || node.parent.parent.moduleSpecifier !== undefined) return;
+    const local = node.propertyName ?? node.name;
+    if (!ts.isIdentifier(local)) return;
+    for (const path of bindings.get(local.text)?.values() ?? []) add(node, pathLabel(path), "<re-export>");
+  });
+  return [...found.values()].sort((a, b) => a.at - b.at);
 }
 function childProcessLaunches(module: string, source?: ts.SourceFile): LaunchSite[] {
   return childProcessLaunchesAt(module, source).map(entry => entry.site);
+}
+/** A loader call as spelled: import(), require(), getBuiltinModule(), a createRequire result called directly or by name. */
+function loaderLabel(call: ts.CallExpression): string {
+  if (call.expression.kind === ts.SyntaxKind.ImportKeyword) return "import()";
+  const callee = unwrap(call.expression);
+  return ts.isCallExpression(callee) ? `${calleeName(callee) ?? "<call>"}()()` : `${calleeName(call) ?? "<call>"}()`;
+}
+/** Every loader call in one module whose specifier does not resolve (any of them could load child_process). */
+function unresolvedLoads(module: string, source: ts.SourceFile = parse(module)): string[] {
+  const found: string[] = [];
+  visit(source, node => {
+    if (!isLoaderCall(node, source)) return;
+    const first = node.arguments[0];
+    if (first === undefined || resolveTexts(source, first) === undefined) found.push(`${module}:${loaderLabel(node)}`);
+  });
+  return found;
 }
 /** Every launch site both readers read in one module, one per call (the child_process reader's reading first). */
 function launchUnion(module: string, source: ts.SourceFile = parse(module)): LaunchSite[] {
@@ -1497,11 +1968,18 @@ function exportedFunctions(module: string): string[] {
 function componentModules(paths: readonly string[]): string[] {
   return paths.filter(path => COMPONENT_MODULE.test(path));
 }
-/** Hook-form and descriptor-name identifiers and TSX SDK specifiers in one source text. */
+/** Hook-form and descriptor-name identifiers; every string and template part that spells a use-prefixed word (a hook's name
+ * as a key, an argument or prose), the descriptor's name or the TSX SDK; and TSX SDK specifiers - in one source text. */
 function hookMentions(module: string, source: ts.SourceFile = parse(module)): string[] {
   const found: string[] = [];
   visit(source, node => {
     if (ts.isIdentifier(node) && (HOOK_NAME.test(node.text) || node.text === DESCRIPTOR_NAME)) found.push(`${module}:${node.text}`);
+    if (ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)) {
+      const word = HOOK_WORD.exec(node.text)?.[1];
+      if (word !== undefined) found.push(`${module}:string ${word}`);
+      if (node.text.includes(DESCRIPTOR_NAME)) found.push(`${module}:string ${DESCRIPTOR_NAME}`);
+      if (node.text.includes(TSX_SDK)) found.push(`${module}:string ${TSX_SDK}`);
+    }
   });
   for (const specifier of specifiers(source)) if (specifier === TSX_SDK || specifier.startsWith(`${TSX_SDK}/`)) found.push(`${module}:import ${specifier}`);
   return found;
@@ -1677,12 +2155,28 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         committed.push(`${id}/${form}: ${outcomeText(outcome)}`);
       }
     }
+    expect(
+      committed.filter(line => !line.includes(": refused ")),
+      "a settled native pass refuses each committed form",
+    ).toEqual([]);
     return json({ clause: SERVES.A3, kind: "settled", settled, committed });
   },
   A4: async () => {
     const seen = await sweepOnce();
     for (const entry of seen) expect(falsify(entry), `${entry.pass}/${entry.scenario}: the falsifier's verdict`).toEqual([]);
-    return json({ clause: SERVES.A4, judges: ["tool", "host"], stand_ins: ["rf", ...foreignCommands()], passes: seen.map(effectLine) });
+    // Bench hygiene: a waiting stand-in left behind (as a pass that ignores its abort leaves it) is stopped by the teardown's reap.
+    const left = bench("running");
+    const child = spawn(join(left.bin, "rf"), ["--task", "abandoned"], { stdio: "ignore", env: { PATH: left.bin } });
+    await until(() => marked(left, "started", "abandoned"), "the abandoned stand-in's started mark");
+    const reaped = reap(left.bin);
+    await until(() => child.exitCode !== null || child.signalCode !== null, "the abandoned stand-in's exit");
+    return json({
+      clause: SERVES.A4,
+      judges: ["tool", "host"],
+      stand_ins: ["rf", ...foreignCommands()],
+      passes: seen.map(effectLine),
+      abandoned: { reaped, signal: child.signalCode },
+    });
   },
   A5: async () => {
     const reach = closure(RENDER_MODULE);
@@ -1696,12 +2190,28 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(reading.processReach, "the render pass reaches process beyond its env read").toEqual([]);
     // src's rf launch sites, read by both launch readers over every tracked src module, and the child_process sites whose
     // command does not resolve (any of them could launch rf).
-    const rfSites = srcLaunchSites().filter(site => site.command.split("|").includes("rf"));
+    const srcSites = srcLaunchSites();
+    const rfSites = srcSites.filter(site => site.command.split("|").includes("rf"));
     expect(
       rfSites.map(site => site.module),
       "src's only rf launch site is the render module's",
     ).toEqual([RENDER_MODULE]);
     const unresolvedInSrc = trackedScriptModules().flatMap(module => childProcessLaunches(module).filter(site => site.command.startsWith("<")));
+    const unresolvedLoadsInSrc = trackedScriptModules().flatMap(module => unresolvedLoads(module));
+    // The form roster: each form's probe through both launch readers and the loader reader, held to what it must read.
+    const forms = Object.entries(REACH_FORMS).map(([form, { probe, reads }]) => {
+      const module = `forms/${form}.ts`;
+      const source = parse(module, probe);
+      return { form, reads, sites: launchUnion(module, source), loads: unresolvedLoads(module, source) };
+    });
+    expect(
+      forms
+        .filter(({ reads, sites, loads }) =>
+          reads === "<load>" ? loads.length === 0 : !sites.some(site => (reads === "rf" ? site.command.split("|").includes("rf") : site.command === reads)),
+        )
+        .map(({ form, reads }) => `${form} (reads ${reads})`),
+      "A5's tracer reads every form of its roster (REACH_FORMS)",
+    ).toEqual([]);
     return json({
       clause: SERVES.A5,
       judges: ["tool", "model", "host"],
@@ -1716,6 +2226,11 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       overlap,
       rfSitesInSrc: rfSites,
       unresolvedInSrc,
+      unresolvedLoadsInSrc,
+      srcSites,
+      forms: forms.map(({ form, sites, loads }) =>
+        [`${form}:`, ...sites.map(site => `${site.callee} ${site.command}`), ...loads.map(load => `load ${load.slice(load.indexOf(":") + 1)}`)].join(" "),
+      ),
       controls,
     });
   },
@@ -1796,8 +2311,18 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   T4: async () => {
     const { phrases } = titleParts(exportRow().title);
     // The planted homes go through the same pipeline T2 and T3 read the real homes with.
-    const texts: Readonly<Record<string, string>> = { "planted/panel.ts": PLANTED_SOURCE, "planted/hooks.cjs": PLANTED_REQUIRE, "planted/evidence.ts": PLANTED_DESCRIPTOR_SOURCE };
+    const texts: Readonly<Record<string, string>> = {
+      "planted/panel.ts": PLANTED_SOURCE,
+      "planted/hooks.cjs": PLANTED_REQUIRE,
+      "planted/evidence.ts": PLANTED_DESCRIPTOR_SOURCE,
+      "planted/string-hooks.ts": PLANTED_STRING_HOOKS,
+      "planted/loader.ts": PLANTED_LOADER,
+    };
     const planted = homeReading(Object.keys(texts), module => parse(module, texts[module]), phrases);
+    expect(
+      ["planted/panel.ts", "planted/hooks.cjs", "planted/string-hooks.ts", "planted/loader.ts"].filter(module => !planted.hooks.some(mention => mention.startsWith(`${module}:`))),
+      "T2's hook reader reads every planted hook sample",
+    ).toEqual([]);
     return json({
       components: componentModules(PLANTED_PATHS),
       read: planted.read,
@@ -1844,6 +2369,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       descriptor: phraseMentions({ id: "probe.render", description: OTHER_PHRASES }, "probe", phrases),
       composed: sourcePhraseMentions("probe/composed.ts", phrases, parse("probe/composed.ts", OTHER_COMPOSED)),
       loader: hookMentions("probe/loader.ts", parse("probe/loader.ts", OTHER_LOADER)),
+      lookalike: [
+        ...hookMentions("probe/lookalike.ts", parse("probe/lookalike.ts", OTHER_LOOKALIKE)),
+        ...sourcePhraseMentions("probe/lookalike.ts", phrases, parse("probe/lookalike.ts", OTHER_LOOKALIKE)),
+      ],
     });
   },
   Q4: async () => {
@@ -1868,8 +2397,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
           specifiers: specifiers(source).length,
           childProcess: childProcessLaunches(module, source).length,
           launchSites: launchSites(module, source).length,
+          loads: unresolvedLoads(module, source).length,
           ioGlobals: ioGlobalReferences(module, source).length,
           processReach: processReferences(module, source).length,
+          rf: launchUnion(module, source).filter(site => site.command.split("|").includes("rf")).length,
         };
         return `${form}: ${Object.entries(counts)
           .map(([reader, count]) => `${reader} ${count}`)
@@ -1895,6 +2426,8 @@ describe("wb-pyel.5 render-abort falsifier (SDK-EVIDENCE-DIRECTED-COMPUTATION-R1
         renderVerb: RENDER_VERB,
         uncommittedTail: UNCOMMITTED_TAIL,
         registryDeadlineMs: REGISTRY_DEADLINE_MS,
+        waitMs: WAIT_MS,
+        standInBoundMs: STAND_IN_BOUND_MS,
         passes: PASSES,
         entry: ENTRY,
         nativePasses: NATIVE_PASSES,
@@ -1909,13 +2442,17 @@ describe("wb-pyel.5 render-abort falsifier (SDK-EVIDENCE-DIRECTED-COMPUTATION-R1
         launchCalls: LAUNCH_CALLS,
         childProcess: CHILD_PROCESS,
         loaderCalls: LOADER_CALLS,
+        loaderFactories: LOADER_FACTORIES,
         resolveDepth: RESOLVE_DEPTH,
+        pathDepth: PATH_DEPTH,
+        traceRounds: TRACE_ROUNDS,
         ioGlobals: IO_GLOBALS,
         globalObjects: GLOBAL_OBJECTS,
         processReads: PROCESS_READS,
         ioBuiltins: IO_BUILTINS,
         tsxSdk: TSX_SDK,
         hookName: `/${HOOK_NAME.source}/${HOOK_NAME.flags}`,
+        hookWord: `/${HOOK_WORD.source}/${HOOK_WORD.flags}`,
         descriptorName: DESCRIPTOR_NAME,
         scriptModule: `/${SCRIPT_MODULE.source}/${SCRIPT_MODULE.flags}`,
         componentModule: `/${COMPONENT_MODULE.source}/${COMPONENT_MODULE.flags}`,
@@ -1930,11 +2467,15 @@ describe("wb-pyel.5 render-abort falsifier (SDK-EVIDENCE-DIRECTED-COMPUTATION-R1
         otherPhrases: OTHER_PHRASES,
         otherComposed: OTHER_COMPOSED,
         otherLoader: OTHER_LOADER,
+        otherLookalike: OTHER_LOOKALIKE,
         staticResidue: STATIC_RESIDUE,
+        reachForms: REACH_FORMS,
         unreadHomeProbes: UNREAD_HOME_PROBES,
         plantedPaths: PLANTED_PATHS,
         plantedSource: PLANTED_SOURCE,
         plantedRequire: PLANTED_REQUIRE,
+        plantedStringHooks: PLANTED_STRING_HOOKS,
+        plantedLoader: PLANTED_LOADER,
         plantedManifest: PLANTED_MANIFEST,
         plantedLock: PLANTED_LOCK,
         plantedDescription: PLANTED_DESCRIPTION,
