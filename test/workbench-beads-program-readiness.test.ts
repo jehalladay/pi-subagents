@@ -70,6 +70,26 @@
  * REACH_PLANTS rows that must read their reach (R2-DOOR, R2-DESCRIPTOR), beside the class members the resolvable form closes
  * beyond them (R2-ARROW, a composed key on a value the code builds; R2-DESTRUCT, that key in a binding pattern; GM33-ALIAS, a
  * built-in aliased).
+ * WB-K2VJ (the R694 follow-up of wb-2fb4's landing 645, hop 5 of the landing-381 chain: F1 leads here). F1: an ambient
+ * declaration got past D3's reach scan with no 'constructor' spelling, no key and no other form: the binder binds a read to a
+ * file-local `declare const Function` (G1-AMBIENT-FUNCTION), `declare const Reflect` (G1-AMBIENT-REFLECT), `declare const
+ * process` (G1-AMBIENT-PROCESS) or a `declare global` block's `var process` (G1-AMBIENT-GLOBAL-BLOCK), while the emitter erases
+ * the declaration, so the code reads the built-in. The free-read test now leaves a read free when the file declares its name only
+ * in scope declarations of an erased form, each of which binds nothing: a type-only import, an interface, a type alias, a
+ * function signature with no body, a namespace that is not instantiated, and a variable, function, class, enum or namespace in an
+ * ambient context (a `declare` modifier on it or on a declaration enclosing it). The installed esbuild transform emitted no
+ * binding for any of them at cut time (measured by the seat; this census pins the scan, not the emitter). A member declared in an
+ * ambient context (a property, an enum member) still names a member, never a read, and a namespace's own name is a declaration
+ * (no `global` read). Each erased form is a REACH_PLANTS row that must read its reach: the four G1-AMBIENT plants, and the
+ * ERASED-* rows this cut found - an ambient declaration in a function body, a declared class, namespace, enum and function with a
+ * body, a signature, both type-only import shapes, and an interface, a type alias and a type-only namespace merged with the
+ * ambient value (measured at cut time: a filter that drops ambient declarations alone leaves the signature, the type-only imports
+ * and the three merges reading nothing). Beside them sit the verdict's two controls (G1-FREE-FUNCTION and G1-FREE-PROCESS, each
+ * its plant with the declaration removed) and four quiet rows (ERASED-quiet-*: a local binding, an interface merged with a local
+ * value, an overload with its implementation and an instantiated namespace each bind their reads). Every G1 plant the landing-645
+ * verdict's F1 line names in wb-2fb4's tracked export notes is one of the table's rows, and each G1-AMBIENT plant carries every
+ * code span that line quotes for it (whitespace collapsed, an elided `...` read as any text). The ERASED-* rows are this cut's
+ * own finds: the frozen id literal alone holds them, and no anchor outside this file holds their code.
  * NAMED RESIDUALS (row R; each pin is the residual's quiet row, its quiet set derived from the run and pinned as its witness):
  *  R1 R-SHARED-SUBCLAUSE where pins share one acceptance sub-clause and none holds a pinned map or the maps' union, removing one
  *    from every literal at once (its pin, its ROWS entry, the frozen count) leaves the structural holds green. The quiet set is
@@ -440,7 +460,7 @@ function gatedStore(map: ProgramMap, packet: string, label: string, form: GateFo
 /** The language built-ins the reader's code names today; none reaches the host (no process, file system, network or evaluator). */
 const ALLOWED_GLOBALS: readonly string[] = ['Array', 'JSON', 'Map', 'Number', 'Object', 'RegExp', 'Set', 'undefined'];
 interface Reach {
-  /** Every free value name the code reads (no declaration in the file binds it where it is read), sorted. */
+  /** Every free value name the code reads (no declaration in the file binds it where it is read; one of an erased form never binds), sorted. */
   globals: string[];
   /** import() calls, import.meta reads and import-require declarations. */
   dynamicImports: number;
@@ -459,7 +479,7 @@ interface Reach {
 const RESOLVABLE: readonly string[] = ['Array.isArray', 'JSON.parse', 'Number.isSafeInteger', 'Object.entries', 'key tuple element', 'new Map', 'new RegExp', 'new Set', 'undefined'];
 /** The methods whose callback's first parameter the tuple form resolves: the one the reader calls on its tuple today. */
 const TUPLE_METHODS: readonly string[] = ['flatMap'];
-/** A name the node binds (a declaration's own name), never a read. */
+/** A name the node binds (a declaration's own name), never a read; a namespace's name included (wb-k2vj: `declare global`). */
 function declaresName(node: ts.Identifier): boolean {
   const parent = node.parent;
   return (
@@ -472,6 +492,7 @@ function declaresName(node: ts.Identifier): boolean {
       ts.isImportSpecifier(parent) ||
       ts.isImportClause(parent) ||
       ts.isNamespaceImport(parent) ||
+      ts.isModuleDeclaration(parent) ||
       ts.isTypeParameterDeclaration(parent)) &&
     parent.name === node
   );
@@ -491,19 +512,39 @@ function keysMember(node: ts.Identifier): boolean {
 }
 /** The free-read test for one module, from the TypeScript binder over that file alone (no lib, nothing resolved; wb-52th F2): a
  * name is free where no declaration in the file is its symbol's, so a parameter that shadows a built-in binds only the reads
- * inside its own function, never a read elsewhere in the file (the L2-M33sh door of a file-wide declared set). */
+ * inside its own function, never a read elsewhere in the file (the L2-M33sh door of a file-wide declared set). A declaration of an
+ * erased form is no binding (wb-k2vj F1): the read it seems to bind reads the built-in. */
 function checkerOf(file: ts.SourceFile): ts.TypeChecker {
   const options: ts.CompilerOptions = {noLib: true, noResolve: true, types: [], target: ts.ScriptTarget.Latest};
   const host = ts.createCompilerHost(options);
   host.getSourceFile = (name) => (name === file.fileName ? file : undefined);
   return ts.createProgram([file.fileName], options, host).getTypeChecker();
 }
+/** A `declare` modifier on the node or on a declaration enclosing it: an ambient context, which the emitter erases. */
+function ambient(node: ts.Node): boolean {
+  for (let at: ts.Node | undefined = node; at !== undefined; at = at.parent) {
+    if (ts.canHaveModifiers(at) && (ts.getModifiers(at) ?? []).some((modifier) => modifier.kind === ts.SyntaxKind.DeclareKeyword)) return true;
+  }
+  return false;
+}
+/** A scope declaration of a form the emitter erases (wb-k2vj F1), so it binds no runtime name: a type-only import, an interface, a
+ * type alias, a function signature with no body, a namespace that is not instantiated, and a variable, function, class, enum or
+ * namespace declared in an ambient context. A member declared there (a property, an enum member) names a member, so it stays one. */
+function erased(declaration: ts.Declaration, symbol: ts.Symbol): boolean {
+  if (ts.isTypeOnlyImportDeclaration(declaration) || ts.isInterfaceDeclaration(declaration) || ts.isTypeAliasDeclaration(declaration)) return true;
+  if (ts.isFunctionDeclaration(declaration) && declaration.body === undefined) return true;
+  if (ts.isModuleDeclaration(declaration) && (symbol.flags & ts.SymbolFlags.ValueModule) === 0) return true;
+  const scoped = ts.isVariableDeclaration(declaration) || ts.isFunctionDeclaration(declaration) || ts.isClassDeclaration(declaration) || ts.isEnumDeclaration(declaration) || ts.isModuleDeclaration(declaration);
+  return scoped && ambient(declaration);
+}
 function freeReads(checker: ts.TypeChecker, file: ts.SourceFile): (node: ts.Identifier) => boolean {
   return (node) => {
     const parent = node.parent;
     // A shorthand property's name is the property's own declaration; the value it reads is the name's symbol (GM33h).
     const symbol = ts.isShorthandPropertyAssignment(parent) && parent.name === node ? checker.getShorthandAssignmentValueSymbol(parent) : checker.getSymbolAtLocation(node);
-    return (symbol?.declarations ?? []).every((declaration) => declaration.getSourceFile() !== file);
+    if (symbol === undefined) return true;
+    // A name the file declares only in declarations of an erased form is free (wb-k2vj F1).
+    return !(symbol.declarations ?? []).some((declaration) => declaration.getSourceFile() === file && !erased(declaration, symbol));
   };
 }
 /** A class's extends clause: TypeScript parses it as a type node, but the class evaluates it (wb-52th GM33f). */
@@ -617,6 +658,12 @@ const REFLECTIVE_DOOR = "  try {\n    const door = ['constr', 'uctor'].join('');
 /** The former R2's second door (wb-52th F2; cured by wb-2fb4): the same composed name handed to a descriptor read. */
 const DESCRIPTOR_DOOR =
   "  try {\n    const door = ['constr', 'uctor'].join('');\n    void (Object.getOwnPropertyDescriptor(Object.getPrototypeOf(() => 0), door)?.value as ((code: string) => () => unknown) | undefined)?.('return this')();\n  } catch {}\n";
+/** wb-k2vj (the landing-645 verdict's F1): a file-local ambient declaration of a built-in's name, then a read of that name; the
+ * binder binds the read to the declaration, which the emitter erases. */
+const AMBIENT_FUNCTION = "declare const Function: new (code: string) => () => unknown;\nexport async function plantedReach(): Promise<void> {\n  try {\n    void new Function('return this')();\n  } catch {}\n}\n";
+const AMBIENT_PROCESS = 'declare const process: {env?: unknown};\nexport async function plantedReach(): Promise<void> {\n  void process.env;\n}\n';
+/** The verdict's control for an ambient plant: the same code with its declaration, the first line, removed. */
+const undeclared = (code: string): string => code.slice(code.indexOf('\n') + 1);
 /** The gate's GM33 (wb-4nut.5 cut #1, landing-381 F17) and the class members this cut found, each with the reach it must read;
  * GM34 is the gate's control the text bans already killed. Every plant discards its result: the scan reads reach, not use. */
 const REACH_PLANTS: readonly ReachPlant[] = [
@@ -715,6 +762,69 @@ const REACH_PLANTS: readonly ReachPlant[] = [
   {id: 'KEY-TUPLE-REST', code: "  const fields = ['title', 'notes'] as const;\n  const record: Record<string, unknown> = {};\n  void fields.flatMap((...field) => [record[field]]);\n", reads: 'form key field'},
   {id: 'KEY-TUPLE-INDEX', code: "  const fields = ['title', 'notes'] as const;\n  const record: Record<string, unknown> = {};\n  void fields.flatMap((_, index) => [record[index]]);\n", reads: 'form key index'},
   {id: 'KEY-TUPLE-THISARG', code: "  const fields = ['title', 'notes'] as const;\n  const record: Record<string, unknown> = {};\n  void fields.flatMap((name: string) => [name], (field: string) => [record[field]]);\n", reads: 'form key field'},
+  // wb-k2vj (the landing-645 verdict's F1, filed from wb-2fb4): the four ambient plants and the verdict's two controls, the erased
+  // forms this cut found beside them, and the quiet rows where a declaration the emitted code keeps binds the read.
+  {id: 'G1-AMBIENT-FUNCTION', code: AMBIENT_FUNCTION, reads: 'global Function', module: true},
+  {
+    id: 'G1-AMBIENT-REFLECT',
+    code: "declare const Reflect: {get: (target: object, key: string) => (code: string) => () => unknown; getPrototypeOf: (value: object) => object};\nexport async function plantedReach(): Promise<void> {\n  try {\n    void Reflect.get(Reflect.getPrototypeOf(() => 0), ['constr', 'uctor'].join(''))('return this')();\n  } catch {}\n}\n",
+    reads: 'global Reflect',
+    module: true,
+  },
+  {id: 'G1-AMBIENT-PROCESS', code: AMBIENT_PROCESS, reads: 'global process', module: true},
+  {id: 'G1-AMBIENT-GLOBAL-BLOCK', code: 'declare global { var process: {env?: unknown} | undefined }\nexport async function plantedReach(): Promise<void> {\n  void process?.env;\n}\n', reads: 'global process', module: true},
+  {id: 'G1-FREE-FUNCTION', code: undeclared(AMBIENT_FUNCTION), reads: 'global Function', module: true},
+  {id: 'G1-FREE-PROCESS', code: undeclared(AMBIENT_PROCESS), reads: 'global process', module: true},
+  {id: 'ERASED-INNER', code: '  declare const process: {env?: unknown};\n  void process.env;\n', reads: 'global process'},
+  {
+    id: 'ERASED-CLASS',
+    code: "declare class Function {\n  constructor(code: string);\n  readonly code: string;\n}\nexport async function plantedReach(): Promise<void> {\n  try {\n    void new Function('return this');\n  } catch {}\n}\n",
+    reads: 'global Function',
+    module: true,
+  },
+  {id: 'ERASED-NAMESPACE', code: 'declare namespace process {\n  const env: unknown;\n}\nexport async function plantedReach(): Promise<void> {\n  void process.env;\n}\n', reads: 'global process', module: true},
+  {id: 'ERASED-ENUM', code: 'declare enum process {\n  env = 1,\n}\nexport async function plantedReach(): Promise<void> {\n  void process.env;\n}\n', reads: 'global process', module: true},
+  {
+    id: 'ERASED-DECLARED-BODY',
+    code: "declare function Function(code: string): () => unknown {\n  return () => code;\n}\nexport async function plantedReach(): Promise<void> {\n  try {\n    void Function('return this')();\n  } catch {}\n}\n",
+    reads: 'global Function',
+    module: true,
+  },
+  {
+    id: 'ERASED-SIGNATURE',
+    code: "function Function(code: string): () => unknown;\nexport async function plantedReach(): Promise<void> {\n  try {\n    void Function('return this')();\n  } catch {}\n}\n",
+    reads: 'global Function',
+    module: true,
+  },
+  {
+    id: 'ERASED-TYPE-SPECIFIER',
+    code: "import {type CapabilityError as process} from './capability-registry.js';\nexport async function plantedReach(): Promise<void> {\n  void (process as unknown as {env?: unknown}).env;\n}\n",
+    reads: 'global process',
+    module: true,
+  },
+  {
+    id: 'ERASED-TYPE-IMPORT',
+    code: "import type {ObservationScope as process} from './observation.js';\nexport async function plantedReach(): Promise<void> {\n  void (process as unknown as {env?: unknown}).env;\n}\n",
+    reads: 'global process',
+    module: true,
+  },
+  {id: 'ERASED-INTERFACE-MERGE', code: `interface Function {\n  readonly code?: string;\n}\n${AMBIENT_FUNCTION}`, reads: 'global Function', module: true},
+  {id: 'ERASED-TYPE-MERGE', code: `type Function = unknown;\n${AMBIENT_FUNCTION}`, reads: 'global Function', module: true},
+  {id: 'ERASED-NAMESPACE-MERGE', code: `namespace Function {\n  export type Code = string;\n}\n${AMBIENT_FUNCTION}`, reads: 'global Function', module: true},
+  {id: 'ERASED-quiet-local', code: '  const process = {env: {}};\n  void process.env;\n', reads: ''},
+  {
+    id: 'ERASED-quiet-merge',
+    code: "interface Door {\n  readonly code?: string;\n}\nconst Door = (code: string): Door => ({code});\nexport async function plantedReach(): Promise<void> {\n  void Door('return this');\n}\n",
+    reads: '',
+    module: true,
+  },
+  {
+    id: 'ERASED-quiet-overload',
+    code: "function door(code: string): unknown;\nfunction door(code: string): unknown {\n  return code;\n}\nexport async function plantedReach(): Promise<void> {\n  void door('return this');\n}\n",
+    reads: '',
+    module: true,
+  },
+  {id: 'ERASED-quiet-namespace', code: 'namespace process {\n  export const env = {};\n}\nexport async function plantedReach(): Promise<void> {\n  void process.env;\n}\n', reads: '', module: true},
 ];
 /** The bead whose filing names the L2 reach plants (wb-k888's landing-498 R694 follow-up). */
 const FOLLOW_UP = 'wb-52th';
@@ -729,6 +839,29 @@ function verdictReachPlants(): string[] {
   const line = /^- F1 (?:LOW|MEDIUM|HIGH) (?:LEADS|RIDES): (.*)$/m.exec(notesOf(FOLLOW_UP))?.[1] ?? '';
   return [...new Set(line.match(/(?<![\w-])GM33-[A-Z]+(?![\w-])/g) ?? [])];
 }
+/** The bead whose tracked export notes carry the landing-645 verdict (wb-k2vj's filing carries its F1 line byte-identically). */
+const AMBIENT_FOLLOW_UP = 'wb-2fb4';
+/** The landing-645 verdict's F1 line: the first `- F1 <grade> <role>:` line at column 0 in wb-2fb4's tracked export notes. */
+const ambientVerdict = (): string => /^- F1 (?:LOW|MEDIUM|HIGH) (?:LEADS|RIDES): (.*)$/m.exec(notesOf(AMBIENT_FOLLOW_UP))?.[1] ?? '';
+/** The G1 plants that line names, in order. */
+const ambientVerdictPlants = (): string[] => [...new Set(ambientVerdict().match(/(?<![\w-])G1-[A-Z]+(?:-[A-Z]+)*(?![\w-])/g) ?? [])];
+/** The code spans that line quotes for each G1-AMBIENT plant: every backquoted span between the plant's first mention and the next
+ * G1 plant's. */
+function quotedSpans(): [string, string[]][] {
+  const line = ambientVerdict();
+  const plants = ambientVerdictPlants();
+  return plants
+    .filter((id) => id.startsWith('G1-AMBIENT-'))
+    .map((id) => {
+      const from = line.indexOf(id) + id.length;
+      const next = plants.map((other) => line.indexOf(other, from)).filter((at) => at !== -1);
+      const text = line.slice(from, next.length > 0 ? Math.min(...next) : undefined);
+      return [id, [...text.matchAll(/`([^`]+)`/g)].map((match) => match[1] ?? '')];
+    });
+}
+/** A quoted span holds in a plant's code with whitespace runs collapsed, each elided `...` read as any text. */
+const quotes = (code: string, span: string): boolean =>
+  new RegExp(span.split('...').map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('[\\s\\S]*?')).test(code.replace(/\s+/g, ' '));
 
 // ---------------------------------------------------------------------------------------------------------------------------
 // The judged set: rows A-D quote the bead's acceptance; every pin covers one of its sub-clauses and is registered exactly once.
@@ -1189,6 +1322,27 @@ describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-H
       'KEY-TUPLE-REST',
       'KEY-TUPLE-INDEX',
       'KEY-TUPLE-THISARG',
+      'G1-AMBIENT-FUNCTION',
+      'G1-AMBIENT-REFLECT',
+      'G1-AMBIENT-PROCESS',
+      'G1-AMBIENT-GLOBAL-BLOCK',
+      'G1-FREE-FUNCTION',
+      'G1-FREE-PROCESS',
+      'ERASED-INNER',
+      'ERASED-CLASS',
+      'ERASED-NAMESPACE',
+      'ERASED-ENUM',
+      'ERASED-DECLARED-BODY',
+      'ERASED-SIGNATURE',
+      'ERASED-TYPE-SPECIFIER',
+      'ERASED-TYPE-IMPORT',
+      'ERASED-INTERFACE-MERGE',
+      'ERASED-TYPE-MERGE',
+      'ERASED-NAMESPACE-MERGE',
+      'ERASED-quiet-local',
+      'ERASED-quiet-merge',
+      'ERASED-quiet-overload',
+      'ERASED-quiet-namespace',
     ]);
     const filed = filedReachPlants();
     expect(filed, `the L2 reach plants ${FOLLOW_UP}'s filing names`).toEqual(['L2-M33p', 'L2-M33d2', 'L2-M33sh']);
@@ -1197,6 +1351,29 @@ describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-H
     const verdict = verdictReachPlants();
     expect(verdict, `the GM33 plants the landing-590 verdict's F1 names in ${FOLLOW_UP}'s notes`).toEqual(['GM33-ENUMKEY', 'GM33-VALUES', 'GM33-TPLKEY', 'GM33-CDESTRUCT']);
     expect(verdict.filter((id) => !REACH_PLANTS.some((plant) => plant.id === id))).toEqual([]);
+    // wb-k2vj: every G1 plant the landing-645 verdict's F1 line names in wb-2fb4's tracked export notes is one of the table's rows,
+    // each G1-AMBIENT plant carries every code span that line quotes for it, and each control is its plant with no declaration.
+    const ambient = ambientVerdictPlants();
+    expect(ambient, `the G1 plants the landing-645 verdict's F1 names in ${AMBIENT_FOLLOW_UP}'s notes`).toEqual([
+      'G1-AMBIENT-FUNCTION',
+      'G1-AMBIENT-REFLECT',
+      'G1-AMBIENT-PROCESS',
+      'G1-AMBIENT-GLOBAL-BLOCK',
+      'G1-FREE-FUNCTION',
+      'G1-FREE-PROCESS',
+    ]);
+    expect(ambient.filter((id) => !REACH_PLANTS.some((plant) => plant.id === id))).toEqual([]);
+    const spans = quotedSpans();
+    expect(spans.map(([id, quoted]) => `${id}: ${quoted.join(' | ')}`)).toEqual([
+      'G1-AMBIENT-FUNCTION: declare const Function: new (code: string) => () => unknown; | try { void new Function(\'return this\')(); } catch {}',
+      'G1-AMBIENT-REFLECT: declare const Reflect: {...}',
+      'G1-AMBIENT-PROCESS: declare const process: {...} | void process.env',
+      'G1-AMBIENT-GLOBAL-BLOCK: declare global { var process: ... } | void process?.env',
+    ]);
+    const plantCode = (id: string): string => REACH_PLANTS.find((plant) => plant.id === id)?.code ?? '';
+    expect(spans.flatMap(([id, quoted]) => quoted.filter((span) => !quotes(plantCode(id), span)).map((span) => `${id}: ${span}`))).toEqual([]);
+    const controls = REACH_PLANTS.filter((plant) => plant.id.startsWith('G1-FREE-'));
+    expect(controls.map((plant) => `${plant.id} ${plant.code === undeclared(plantCode(plant.id.replace('G1-FREE-', 'G1-AMBIENT-')))}`)).toEqual(['G1-FREE-FUNCTION true', 'G1-FREE-PROCESS true']);
     // No Beads reader is imported in any form: the work reader arrives injected (the wb-kku9.3 claim re-check census contract).
     witness('D3', specifiers, ['./capability-registry.js', './observation.js']);
     for (const banned of [/node:/, /readFile|readdir|existsSync/, /BEADS-|\.md\b/, /child_process|spawn|exec\(/, /\bbd ready\b/]) expect(source).not.toMatch(banned);
