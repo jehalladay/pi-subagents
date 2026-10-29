@@ -280,3 +280,37 @@ Named residuals of test/workbench-rf-definition-source-census.test.ts, the until
 | A19 | R-NEGATION-PHRASE | judge |
 | A20 | R-MARKER-RUN | page cure |
 | T4 | R-NESTED | names rule |
+
+## HX licensed-complete census residuals
+
+Named residuals of test/workbench-hx-licensed-complete-census.test.ts, the until-then census of the HX licensed-complete branch (wb-tz2.9): one row per member of each claim family its scanner names and does not read, so a claim spelled that way in a native-read file is not caught by it. Each row names the census quiet row that pins the family, the family's name and the member, a statement the census reads quiet. The census holds this table to its residual pins and members in both directions and in table order, so a family or member dropped, renamed, reordered or moved to another quiet row on either side reads red.
+
+| Quiet row | Residual family | Member |
+| --- | --- | --- |
+| Q1 | R-RUNTIME-VALUE | `expect(verdict).toMatchObject({absenceLicensed: !0});` |
+| Q1 | R-RUNTIME-VALUE | `const yes = true; expect(verdict).toMatchObject({absenceLicensed: yes});` |
+| Q1 | R-RUNTIME-VALUE | `expect(verdict).toMatchObject({['absence' + 'Licensed']: true});` |
+| Q1 | R-RUNTIME-VALUE | `expect(verdict.absenceLicensed === true).toBe(true);` |
+| Q1 | R-RUNTIME-VALUE | `expect(Boolean(result.source.coverage_summary.licenses_absence)).toBe(true);` |
+| Q1 | R-RUNTIME-VALUE | `await expect(Promise.resolve(verdict.absenceLicensed)).resolves.toBe(true);` |
+| Q1 | R-RUNTIME-VALUE | `const {absenceLicensed: ok} = verdict; expect(ok).toBe(true);` |
+| Q1 | R-RUNTIME-VALUE | `expect(verdict).toMatchObject({get absenceLicensed() { return true; }});` |
+| Q1 | R-RUNTIME-VALUE | `const absenceLicensed = true; expect(verdict).toMatchObject({absenceLicensed});` |
+| Q2 | R-HELPER | `assertLicensedComplete(result);` |
+| Q3 | R-OTHER-API | `assert.isTrue(verdict.absenceLicensed);` |
+| Q3 | R-OTHER-API | `assert.strictEqual(verdict.absenceLicensed, true);` |
+| Q3 | R-OTHER-API | `await expect.poll(() => verdict.absenceLicensed).toBe(true);` |
+| Q3 | R-OTHER-API | `const check = expect; check(verdict.absenceLicensed).toBe(true);` |
+| Q4 | R-OTHER-MATCHER | `expect(verdict.absenceLicensed).toSatisfy((value: boolean) => value);` |
+| Q4 | R-OTHER-MATCHER | `expect(result.source.execution_status.kind).toMatch(/^complete/);` |
+| Q4 | R-OTHER-MATCHER | `expect(snapshot.coverage).toContain('complete');` |
+| Q4 | R-OTHER-MATCHER | `expect(result.source.execution_status.kind).toBeOneOf(['complete', 'complete-empty']);` |
+| Q4 | R-OTHER-MATCHER | `expect(['complete', 'complete-empty']).toContain(result.source.execution_status.kind);` |
+| Q5 | R-UNCONSUMED-FIELD | `expect(result).toMatchObject({source: {coverage_summary: {completeness: 'complete'}}});` |
+| Q5 | R-UNCONSUMED-FIELD | `expect(result.source.coverage_summary.modes).toContain('complete-within-scope');` |
+| Q5 | R-UNCONSUMED-FIELD | `expect(result).toMatchObject({source: {coverage_summary: {certificates_license_absence: true}}});` |
+| Q5 | R-UNCONSUMED-FIELD | `expect(snapshot.node.statusTone).toBe('success');` |
+| Q6 | R-TEXT-FRAGMENT | `expect(snapshot.node.statusText).toContain('known' + '-empty');` |
+| Q6 | R-TEXT-FRAGMENT | `expect(snapshot.node.statusText).toMatch(/known.empty/);` |
+| Q6 | R-TEXT-FRAGMENT | `expect(snapshot.node.statusText).toMatch(/known[-]empty/);` |
+| Q6 | R-TEXT-FRAGMENT | `expect(snapshot.node.statusText).toContain('known-emp');` |

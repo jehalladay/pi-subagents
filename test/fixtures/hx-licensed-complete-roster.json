@@ -1,5 +1,5 @@
 {
-  "comment": "wb-tz2.9 (HX-ORIGINAL-GOALS-CLOSURE-R9): the OUT-OF-FILE anchor of test/workbench-hx-licensed-complete-census.test.ts (the hk9l/5jha roster pattern). rows, quotes, readings and residuals: the census's judged set, held to the census both ways and in order; witnesses: one per pin, each the value its case MEASURED at the cut (base cd8927fbdbc6, re-measured unchanged on the merged base bb96515d2744), computed by the census from the docs, the configs, forge.toml, package.json, the live sources and src; tests: every registered test title in registration order; gate: the R9 gate artifact's state, its condition, citations and on-landing text (each equal to the bead's own description in the tracker export), and the cutting seat's read-only measurement, which the census never re-reads.",
+  "comment": "wb-tz2.9 (HX-ORIGINAL-GOALS-CLOSURE-R9): the OUT-OF-FILE anchor of test/workbench-hx-licensed-complete-census.test.ts (the hk9l/5jha roster pattern), cut #2 (the respin of refusal #1). rows, quotes, readings and residuals: the census's judged set, held to the census both ways and in order (row Q's families and members are also held, both ways, to docs/14's 'HX licensed-complete census residuals' table); witnesses: one per pin, each the value its case MEASURED at the cut (trunk 04123dc0d0f2 merged into the branch), computed by the census from the docs, the configs, forge.toml, package.json, the live sources, the docs/14 fixture cases and src; tests: every registered test title in registration order; gate: the R9 gate artifact's state, its condition, citations and on-landing text (each equal to the bead's own description in the tracker export), and the first cutting seat's read-only measurement, which the census never re-reads.",
   "bead": "wb-tz2.9",
   "rows": [
     {
@@ -39,7 +39,11 @@
       "label": "the claim scanner's named residual families, each member a pinned quiet row",
       "pins": [
         "Q1",
-        "Q2"
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q6"
       ]
     }
   ],
@@ -53,28 +57,67 @@
     "T3": "is bound by the wb-cax.25 census",
     "N1": "fixture passes are never counted as native evidence",
     "Q1": "R-RUNTIME-VALUE",
-    "Q2": "R-HELPER"
+    "Q2": "R-HELPER",
+    "Q3": "R-OTHER-API",
+    "Q4": "R-OTHER-MATCHER",
+    "Q5": "R-UNCONSUMED-FIELD",
+    "Q6": "R-TEXT-FRAGMENT"
   },
   "readings": {
-    "W1": "pending: the native-read tier's HX live set is its two files that import an HX entry point, and no HX case there witnesses the licensed-complete branch",
+    "W1": "pending: the native-read tier's HX live set is its two files that import an HX entry point, and no HX case body there states a claim in a read form",
     "W2": "both live files assert through hxLiveInvariant, which licenses absence on the provider path's runtime-licensed complete-empty reading only",
-    "S1": "no native-read file states a licensed-complete claim, and the claim scanner flags every falsifier and no benign statement",
-    "S2": "every HX row of the positive half in the docs/14 evidence table carries the default-gate tier, beside the section's no-live-pass sentence",
+    "S1": "no native-read file states a licensed-complete claim in a read form, the scanner flags every falsifier and conservative row and no benign statement, and it reads each docs/14 positive HX fixture case and not the negative one",
+    "S2": "every HX row of the positive half in the docs/14 evidence table carries the default-gate tier, and the section's lead paragraph is pinned verbatim with no HTML",
     "T1": "each HX evidence row's tier names the config that selects its file, and its case is registered there by its verbatim title",
-    "T2": "the cited line at 9df9a03 is the current HX row of the docs/14 matrix, cell for cell",
-    "T3": "the complete gate's census step selects the wb-cax.25 census, which binds the docs/14 matrix section",
-    "N1": "TRACEABILITY.md:76 keeps its sentence, the default config selects no native-read file and the native-read config selects no licensed-complete fixture file",
-    "Q1": "quiet: the scanner reads no licence or verdict value computed at run time",
-    "Q2": "quiet: the scanner follows no helper"
+    "T2": "the line this quote cites at 9df9a03 is the current HX row of the docs/14 matrix, cell for cell",
+    "T3": "the complete gate's census step selects exactly one census whose lead opens with the bead this quote names, and it carries the docs/14 matrix heading",
+    "N1": "TRACEABILITY.md:76 keeps its never-count sentence verbatim, the default config selects no native-read file and the native-read config selects no licensed-complete fixture file",
+    "Q1": "quiet: the scanner reads no value, key or subject computed at run time",
+    "Q2": "quiet: the scanner follows no helper",
+    "Q3": "quiet: the scanner reads no assertion API or name but expect and expect.soft",
+    "Q4": "quiet: the scanner reads no vocabulary claim through a matcher C2-C4 do not name",
+    "Q5": "quiet: the scanner reads no field its vocabulary does not derive",
+    "Q6": "quiet: the scanner reads no known-empty word that is not whole in one literal"
   },
   "residuals": {
     "Q1": [
       "expect(verdict).toMatchObject({absenceLicensed: !0});",
       "const yes = true; expect(verdict).toMatchObject({absenceLicensed: yes});",
-      "expect(verdict).toMatchObject({['absence' + 'Licensed']: true});"
+      "expect(verdict).toMatchObject({['absence' + 'Licensed']: true});",
+      "expect(verdict.absenceLicensed === true).toBe(true);",
+      "expect(Boolean(result.source.coverage_summary.licenses_absence)).toBe(true);",
+      "await expect(Promise.resolve(verdict.absenceLicensed)).resolves.toBe(true);",
+      "const {absenceLicensed: ok} = verdict; expect(ok).toBe(true);",
+      "expect(verdict).toMatchObject({get absenceLicensed() { return true; }});",
+      "const absenceLicensed = true; expect(verdict).toMatchObject({absenceLicensed});"
     ],
     "Q2": [
       "assertLicensedComplete(result);"
+    ],
+    "Q3": [
+      "assert.isTrue(verdict.absenceLicensed);",
+      "assert.strictEqual(verdict.absenceLicensed, true);",
+      "await expect.poll(() => verdict.absenceLicensed).toBe(true);",
+      "const check = expect; check(verdict.absenceLicensed).toBe(true);"
+    ],
+    "Q4": [
+      "expect(verdict.absenceLicensed).toSatisfy((value: boolean) => value);",
+      "expect(result.source.execution_status.kind).toMatch(/^complete/);",
+      "expect(snapshot.coverage).toContain('complete');",
+      "expect(result.source.execution_status.kind).toBeOneOf(['complete', 'complete-empty']);",
+      "expect(['complete', 'complete-empty']).toContain(result.source.execution_status.kind);"
+    ],
+    "Q5": [
+      "expect(result).toMatchObject({source: {coverage_summary: {completeness: 'complete'}}});",
+      "expect(result.source.coverage_summary.modes).toContain('complete-within-scope');",
+      "expect(result).toMatchObject({source: {coverage_summary: {certificates_license_absence: true}}});",
+      "expect(snapshot.node.statusTone).toBe('success');"
+    ],
+    "Q6": [
+      "expect(snapshot.node.statusText).toContain('known' + '-empty');",
+      "expect(snapshot.node.statusText).toMatch(/known.empty/);",
+      "expect(snapshot.node.statusText).toMatch(/known[-]empty/);",
+      "expect(snapshot.node.statusText).toContain('known-emp');"
     ]
   },
   "witnesses": {
@@ -175,21 +218,101 @@
         "verdict-tobe": 1,
         "verdict-not-false": 1,
         "verdict-truthy": 1,
+        "verdict-as-const": 1,
+        "verdict-soft": 1,
+        "verdict-paren": 1,
+        "verdict-satisfies": 1,
+        "verdict-tobe-paren": 1,
+        "verdict-non-null": 1,
+        "verdict-type-assertion": 1,
+        "verdict-computed-key": 1,
+        "verdict-element-matcher": 1,
+        "verdict-reversed": 1,
+        "verdict-optional-chain": 1,
+        "verdict-message": 1,
+        "verdict-destructured": 1,
+        "verdict-held-object": 1,
+        "verdict-object-containing": 1,
+        "verdict-resolves-path": 1,
+        "verdict-rejects-path": 1,
+        "verdict-not-property-false": 1,
+        "verdict-asymmetric-not-false": 1,
+        "verdict-nested-assertion": 1,
+        "verdict-class-field": 1,
         "licence-property": 1,
         "licence-quoted-key": 1,
         "licence-element": 1,
         "licence-not-falsy": 1,
         "licence-dotted-path": 1,
         "licence-array-path": 1,
+        "licence-resolves-path": 1,
+        "licence-as-const": 1,
+        "licence-toequal-as": 1,
+        "licence-path-paren": 1,
+        "licence-soft-path": 1,
+        "licence-not-path-false": 1,
+        "licence-template-key": 1,
+        "licence-reversed-not": 1,
+        "licence-member-assignment": 1,
         "kind-complete": 1,
+        "kind-quoted-complete": 1,
+        "kind-resolves-path": 1,
+        "kind-reversed": 1,
+        "kind-element-assignment": 1,
         "kind-complete-empty": 1,
         "kind-matcher": 1,
+        "kind-path": 1,
+        "kind-as-const": 1,
+        "kind-soft": 1,
+        "kind-computed-key": 1,
+        "kind-array-path": 1,
         "coverage-complete": 1,
+        "coverage-as-const": 1,
+        "coverage-paren": 1,
+        "coverage-matcher": 1,
+        "coverage-path": 1,
+        "coverage-element-subject": 1,
         "known-empty-text": 1,
         "known-empty-template": 1,
-        "known-empty-title": 1
+        "known-empty-title": 1,
+        "known-empty-regex": 1,
+        "known-empty-regex-anchored": 1,
+        "known-empty-string-matching": 1,
+        "known-empty-case": 1,
+        "known-empty-escaped": 1,
+        "known-empty-string-containing": 1,
+        "known-empty-held": 1,
+        "known-empty-double-negation": 1,
+        "known-empty-describe": 1
       },
-      "benign": []
+      "benign": [],
+      "conservative": {
+        "prose-negated-title": 1,
+        "prose-negated-message": 1,
+        "held-then-negated": 1,
+        "nested-under-throw": 1,
+        "other-api-negation": 1
+      },
+      "fixtures": [
+        {
+          "half": "positive",
+          "file": "test/workbench-hyperunix-observer.test.ts",
+          "title": "H2: only a runtime-licensed complete-empty answer is known-empty, complete coverage and a success",
+          "reads": true
+        },
+        {
+          "half": "positive",
+          "file": "test/workbench-hyperunix-observer.test.ts",
+          "title": "keeps a provider-failed result failed and reads a runtime-licensed complete-empty result as the one known-empty success",
+          "reads": true
+        },
+        {
+          "half": "negative",
+          "file": "test/workbench-hyperunix-observer.test.ts",
+          "title": "H2: a 0-row incomplete answer that does not license absence stays partial and never reads as known-empty",
+          "reads": false
+        }
+      ]
     },
     "S2": {
       "table": "one table",
@@ -207,7 +330,15 @@
           "title": "keeps a provider-failed result failed and reads a runtime-licensed complete-empty result as the one known-empty success"
         }
       ],
-      "noLivePass": true
+      "section": "bound",
+      "html": false,
+      "lead": [
+        {
+          "kind": "paragraph",
+          "text": "Evidence of record for the thirteen \"Matrix by subsystem\" rows, one row per pinned case: each row names the subsystem, the half of its cell the case answers, the tier whose own report vouches for the case, and the case by file and verbatim title, with its bound describe path or its it.each minimum where one is bound. test/workbench-subsystem-matrix.census.ts judges the default-gate rows in the report of the default gate and checks the rows of the other tiers at tier level only; no row of this table is read as a live, native or scale pass, and a half no landed case binds is listed as unpinned with its open beads and is never counted as passed. The census judges this table against its own pins in both directions and in table order, so a pin dropped from the census, together with every census literal edited to match, still reads red against this table.",
+          "markdown": "Evidence of record for the thirteen \"Matrix by subsystem\" rows, one row per pinned case: each row names the subsystem, the half of its cell the case answers, the tier whose own report vouches for the case, and the case by file and verbatim title, with its bound describe path or its it.each minimum where one is bound. test/workbench-subsystem-matrix.census.ts judges the default-gate rows in the report of the default gate and checks the rows of the other tiers at tier level only; no row of this table is read as a live, native or scale pass, and a half no landed case binds is listed as unpinned with its open beads and is never counted as passed. The census judges this table against its own pins in both directions and in table order, so a pin dropped from the census, together with every census literal edited to match, still reads red against this table."
+        }
+      ]
     },
     "T1": {
       "configs": {
@@ -268,6 +399,7 @@
       ]
     },
     "T2": {
+      "atom": "docs/workbench/14-qa-and-benchmarks.md:25@9df9a03",
       "citation": {
         "path": "docs/workbench/14-qa-and-benchmarks.md",
         "line": 25,
@@ -287,14 +419,18 @@
       ]
     },
     "T3": {
+      "atom": "wb-cax.25",
       "gateRunsCensus": true,
       "config": "vitest.census.config.ts",
-      "selectsBinder": true,
-      "leadNamesBead": true,
+      "binders": [
+        "test/workbench-subsystem-matrix.census.ts"
+      ],
       "bindsSection": true
     },
     "N1": {
-      "cited": true,
+      "sentences": [
+        "The portable default suite excludes live-binary tests; do not count it as native evidence."
+      ],
       "nativeSelectedByDefault": [],
       "fixtures": [
         {
@@ -307,25 +443,61 @@
     "Q1": [
       [],
       [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
       []
     ],
     "Q2": [
       []
+    ],
+    "Q3": [
+      [],
+      [],
+      [],
+      []
+    ],
+    "Q4": [
+      [],
+      [],
+      [],
+      [],
+      []
+    ],
+    "Q5": [
+      [],
+      [],
+      [],
+      []
+    ],
+    "Q6": [
+      [],
+      [],
+      [],
+      []
     ]
   },
   "tests": [
-    "W1: Pi shall add one live licensed-complete/known-empty witness to the native tier - pending: the native-read tier's HX live set is its two files that import an HX entry point, and no HX case there witnesses the licensed-complete branch",
+    "W1: Pi shall add one live licensed-complete/known-empty witness to the native tier - pending: the native-read tier's HX live set is its two files that import an HX entry point, and no HX case body there states a claim in a read form",
     "W2: asserted through the R1 invariant predicate - both live files assert through hxLiveInvariant, which licenses absence on the provider path's runtime-licensed complete-empty reading only",
-    "S1: until then the licensed-complete branch remains - no native-read file states a licensed-complete claim, and the claim scanner flags every falsifier and no benign statement",
-    "S2: explicitly fixture-labelled - every HX row of the positive half in the docs/14 evidence table carries the default-gate tier, beside the section's no-live-pass sentence",
+    "S1: until then the licensed-complete branch remains - no native-read file states a licensed-complete claim in a read form, the scanner flags every falsifier and conservative row and no benign statement, and it reads each docs/14 positive HX fixture case and not the negative one",
+    "S2: explicitly fixture-labelled - every HX row of the positive half in the docs/14 evidence table carries the default-gate tier, and the section's lead paragraph is pinned verbatim with no HTML",
     "T1: tier labels stay explicit - each HX evidence row's tier names the config that selects its file, and its case is registered there by its verbatim title",
-    "T2: the docs/14 HX row (docs/workbench/14-qa-and-benchmarks.md:25@9df9a03) - the cited line at 9df9a03 is the current HX row of the docs/14 matrix, cell for cell",
-    "T3: is bound by the wb-cax.25 census - the complete gate's census step selects the wb-cax.25 census, which binds the docs/14 matrix section",
-    "N1: fixture passes are never counted as native evidence - TRACEABILITY.md:76 keeps its sentence, the default config selects no native-read file and the native-read config selects no licensed-complete fixture file",
-    "Q1: R-RUNTIME-VALUE - quiet: the scanner reads no licence or verdict value computed at run time",
+    "T2: the docs/14 HX row (docs/workbench/14-qa-and-benchmarks.md:25@9df9a03) - the line this quote cites at 9df9a03 is the current HX row of the docs/14 matrix, cell for cell",
+    "T3: is bound by the wb-cax.25 census - the complete gate's census step selects exactly one census whose lead opens with the bead this quote names, and it carries the docs/14 matrix heading",
+    "N1: fixture passes are never counted as native evidence - TRACEABILITY.md:76 keeps its never-count sentence verbatim, the default config selects no native-read file and the native-read config selects no licensed-complete fixture file",
+    "Q1: R-RUNTIME-VALUE - quiet: the scanner reads no value, key or subject computed at run time",
     "Q2: R-HELPER - quiet: the scanner follows no helper",
-    "rule 16: the rows, the residual families, the falsifier and benign rosters and the claim vocabulary are frozen at their measured shape",
-    "the outside anchors: the bead's own description binds the rows, row N's citation and the gate block; src binds the claim vocabulary and every falsifier form",
+    "Q3: R-OTHER-API - quiet: the scanner reads no assertion API or name but expect and expect.soft",
+    "Q4: R-OTHER-MATCHER - quiet: the scanner reads no vocabulary claim through a matcher C2-C4 do not name",
+    "Q5: R-UNCONSUMED-FIELD - quiet: the scanner reads no field its vocabulary does not derive",
+    "Q6: R-TEXT-FRAGMENT - quiet: the scanner reads no known-empty word that is not whole in one literal",
+    "rule 16: the rows, the residual families, the falsifier, benign and conservative rosters, the probe preamble and the claim vocabulary are frozen at their measured shape",
+    "the description anchors: the bead's own description binds the rows, row N's citation, every label atom's carrier pin and the gate block",
+    "the docs and src anchors: docs/14's residual table binds row Q and every member, src binds the claim vocabulary and every falsifier form, and docs/14's HX fixture cases bind the scanner's sense",
     "roster: the judged rows, the quotes, the readings, the residual members and the registered tests equal test/fixtures/hx-licensed-complete-roster.json, in order and both ways; every pin reached its witness compare"
   ],
   "gate": {
@@ -409,6 +581,74 @@
         "text": "meets a request with Partial under cause No_change_exclusion, so every live listing reads opportunistic, nothing licenses absence, and a Strict listing exits 3 -- the fact cmd_fs.ml states beside [probe]. A constant of the build, computed from the probe record rather than spelled."
       },
       "reading": "no Pi-runnable fixture licenses absence on this build: every live hx.fs find reads opportunistic, and hx find binds no pinned view (HX-VIEW-013), so the gate artifact does not exist and the on-landing leg is not delivered"
+    },
+    "remeasured": {
+      "recordedUtc": "2026-10-29T12:12:08Z",
+      "seat": "ws-06, run g10-work-s136 (cut #2)",
+      "hx": {
+        "onPath": "/home/jehallad/.local/bin/hx",
+        "version": "0.1.0",
+        "versionClass": "unstamped",
+        "binarySha256": "fa81093d2bb324c0864e3896ef0f746fcffe965033511264e4cb29a3da3797d0",
+        "note": "a new build of the same version string, installed 2026-10-29T10:31 local; cut #1 measured binary sha-256 451221852d248a2d31398b6b18bee9f6e149e5561e30bb6efc5fadeb23dc2913"
+      },
+      "sdkCall": "nativeHyperUnixFind(<workspace>, 'hx.fs/regular-file', 'src') from the built dist (bestEffort, wall 30s), the live tier's own call",
+      "probes": [
+        {
+          "workspace": "a fresh scratch workspace with an empty src",
+          "executionKind": "incomplete",
+          "diagnosticCode": "HX-COVERAGE-INCOMPLETE",
+          "licensesAbsence": false,
+          "completeness": "incomplete",
+          "modes": [
+            "opportunistic",
+            "opportunistic"
+          ],
+          "rows": 1,
+          "verdict": {
+            "holds": true,
+            "absenceLicensed": false
+          }
+        },
+        {
+          "workspace": "a fresh scratch workspace with one file under src",
+          "executionKind": "incomplete",
+          "diagnosticCode": "HX-COVERAGE-INCOMPLETE",
+          "licensesAbsence": false,
+          "completeness": "incomplete",
+          "modes": [
+            "opportunistic",
+            "opportunistic"
+          ],
+          "rows": 2,
+          "verdict": {
+            "holds": true,
+            "absenceLicensed": false
+          }
+        },
+        {
+          "workspace": "this checkout",
+          "executionKind": "incomplete",
+          "diagnosticCode": "HX-COVERAGE-INCOMPLETE",
+          "licensesAbsence": false,
+          "completeness": "incomplete",
+          "modes": [
+            "opportunistic",
+            "opportunistic",
+            "opportunistic",
+            "opportunistic",
+            "opportunistic",
+            "opportunistic",
+            "opportunistic"
+          ],
+          "rows": 128,
+          "verdict": {
+            "holds": true,
+            "absenceLicensed": false
+          }
+        }
+      ],
+      "reading": "unchanged on the new build: every live hx.fs find reads incomplete and opportunistic and licenses no absence, so the gate artifact still does not exist and the on-landing leg stays undelivered"
     }
   }
 }
