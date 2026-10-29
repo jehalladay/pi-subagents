@@ -59,10 +59,13 @@
      "unavailable text"
     ],
     "findings": [],
-    "dependencies": [],
+    "manifest": [],
+    "manifestArmed": [
+     "dependencies.qe-adapter: reactive components"
+    ],
+    "verbatimCases": 10,
     "baselineCases": 8,
-    "baselineDiffs": [],
-    "verbatimCases": 10
+    "baselineDiffs": []
    }
   },
   "A2": {
@@ -72,6 +75,9 @@
     "pin": "A2",
     "charterBlob": "45e623203565741f5b205b7e6930406bf21c4ac1",
     "adapterBlob": "c8a2f15491585c2e567c85032c310359f1d83192",
+    "section": "## 2026-10-17 amendment \u2014 query evidence into context composition",
+    "arms": 3,
+    "gateItem": "RC-RQ2 unknown not pass",
     "verdicts": [
      "TRUE",
      "FALSE",
@@ -81,6 +87,16 @@
      "pass",
      "fail",
      "unknown"
+    ],
+    "stems": {
+     "pass": "pass",
+     "fail": "fail"
+    },
+    "attested": [
+     "failed",
+     "pass",
+     "passed",
+     "passing"
     ],
     "policies": [
      "defer",
@@ -99,8 +115,8 @@
      "unknown-empty"
     ],
     "records": {
-     "TRUE": "true",
      "FALSE": "false",
+     "TRUE": "true",
      "UNKNOWN": "unknown-empty"
     },
     "deferPolicy": [
@@ -135,9 +151,9 @@
     "cases": 10,
     "fired": {
      "F1": 8,
-     "F2": 24,
-     "F3": 36,
-     "quiet": 9
+     "F2": 40,
+     "F3": 63,
+     "quiet": 6
     },
     "f3Plants": [
      "TRUE",
@@ -149,14 +165,22 @@
      "passed",
      "passes",
      "passing",
+     "fail",
      "failed",
      "fails",
-     "failing"
+     "failing",
+     "PASS",
+     "PASSED",
+     "PASSES",
+     "PASSING",
+     "FAIL",
+     "FAILED",
+     "FAILS",
+     "FAILING"
     ],
     "f3Quiet": [
      "UNKNOWN",
-     "Test status not established (results incomplete).",
-     "fail"
+     "Test status not established (results incomplete)."
     ]
    }
   },
@@ -459,12 +483,12 @@
   {
    "id": "R-OTHER-ROUTE",
    "quiet": "Q7",
-   "family": "an adoption naming no adapter sequence and no RC outside the envelope readers is no trigger"
+   "family": "an adoption spelling no adapter sequence (a generic reader of rendered rows) is no trigger"
   },
   {
    "id": "R-NON-MODULE",
    "quiet": "Q8",
-   "family": "a file that is not a JS or TS module (a doc page, a Python or shell script, a configuration file) is not read by A1"
+   "family": "a file that is not a JS or TS module (a doc page, a Python or shell script, a configuration file, the lockfile) is not read by A1, which reads package.json alone among them"
   },
   {
    "id": "R-COMPOSED",
@@ -475,6 +499,36 @@
    "id": "R-LOOKALIKE",
    "quiet": "Q10",
    "family": "a look-alike letter or an inserted invisible inside a word is not folded (NFKC folds the fullwidth forms)"
+  },
+  {
+   "id": "R-ABBREVIATION",
+   "quiet": "Q11",
+   "family": "an abbreviation of the producer or its adapter (RC, rc, RC_ADAPTER; an rc package in the manifest) is not read: every sequence spells two words or more"
+  },
+  {
+   "id": "R-RUN-TOGETHER",
+   "quiet": "Q12",
+   "family": "a sequence run together inside one word (QUERYEVIDENCE) is no run of words: a word breaks only at a case change, an acronym's last capital or a character outside a-z and 0-9"
+  },
+  {
+   "id": "R-JOIN",
+   "quiet": "Q13",
+   "family": "a name joined at run time from an array of literal parts is read part by part, never folded"
+  },
+  {
+   "id": "R-UNNAMED-READER",
+   "quiet": "Q14",
+   "family": "an envelope reader whose code does not name REACTIVE_FIBER_CLI_SCHEMA (a generic reader of a provider output's source.result.blocks) is not found by A3"
+  },
+  {
+   "id": "R-S-INFLECTION",
+   "quiet": "Q15",
+   "family": "no outside text spells the -s forms (passes, fails): the paradigm rule alone reads them, so removing its -s branch together with both -s words from every literal stays green"
+  },
+  {
+   "id": "R-COINCIDENT",
+   "quiet": "Q16",
+   "family": "a reading a surface computed that equals one the producer emitted for the case reads as consuming it: F3 judges readings, not how a surface made them"
   }
  ]
 }
