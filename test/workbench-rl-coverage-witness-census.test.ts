@@ -1,6 +1,6 @@
 /**
  * wb-km7q.4 (SDK-REACTIVE-FIBER-ADAPTIVE-COMPUTATION-AND-CONTROL-R12, program-triage-2026-10-18 child of wb-km7q), the
- * CoverageWitness adoption census (cut #3). Statement (the bead's export title, read at run time): "If Pi ever consumes a
+ * CoverageWitness adoption census (cut #4). Statement (the bead's export title, read at run time): "If Pi ever consumes a
  * CoverageWitness (gated RL-RQ1..RL-RQ8; 'coverage is not freshness' amendment), the adapter carries all eight typed fields
  * (collection identity through invalidation conditions); a freshness witness never proves enumeration coverage, an
  * old-generation seal is stale for today's task, and source-only 'no records observed' never certifies absence." Acceptance
@@ -39,7 +39,7 @@
  *     the walk's judge (a src adapter module, a second src module, a qa module and package.json naming the SDK, registered or
  *     not); a probe that leaves other files unaccounted than it states throws, and the outcomes are in the witness. The rf leg:
  *     on every render variant this census feeds the rf preview reader (reactivefiberTopology, which reads the
- *     reactivefiber.render.preview provider output) - B2's ten and C2's twelve, the clean render shared (RF_VARIANTS) - the
+ *     reactivefiber.render.preview provider output) - B2's renders and C2's, the clean render shared (RF_VARIANTS) - the
  *     render whose observation rows carry coverage_witness (A2's sealed payload) and freshness_witness (A2's freshness payload)
  *     and whose result carries coverage_witness projects to the same JSON text, or the same refusal, as the render without
  *     them; a variant that differs throws, whatever the roster holds; the clean render with its row reused projects
@@ -73,39 +73,65 @@
  *     specifier is used (the rc remote-component census pins those).
  * - B, "that freshness-without-coverage never reads complete".
  *   B1 "that freshness-without-coverage", on ObservationProjection (src/workbench/observation.ts), the projection a Pi reader's
- *     snapshot lands in. The node's completeness reads unknown after a current refresh stating no coverage or coverage unknown,
- *     partial after a partial one and complete after a complete one; a later current refresh stating no coverage or coverage
- *     unknown, after a complete one, reads unknown. A node seen only through events reads its completeness unknown (its
- *     freshness unknown, or stale once an unsequenced event follows another): plain events, events stating a source version,
- *     events stating every other optional event field (a source timestamp, a cursor chained to the previous event's, a
- *     presentation reading success, a subject basis, evidence and payload references, an interval and a trace) under kind
- *     native.snapshot with their sequences as strings, and events stating no sequence. A failed read (markStale) after a
- *     complete refresh reads stale and unknown.
- *   B2 "never reads complete", on two readers that state a coverage reading. The rf preview reader, its one row fresh and
- *     observed, reads complete only with both inclusion records stated (result.blocks and result.necessity), a block in
- *     result.blocks and no decision in result.necessity withheld (include false): both records absent, either record absent
- *     alone, both empty, no block beside an include-true decision, one of two decisions withheld (the last, the first, or
- *     beside two blocks) and both of two withheld read partial; the clean render (one block, one include-true decision) reads
- *     complete. The HyperUnix reader (the filing's house precedent wb-6ze.7; docs/workbench/07 'known-empty vs
- *     incomplete/unknown') reads complete exactly on an answer of a complete kind (complete or complete-empty) that the runtime
- *     licensed, with zero rows or (complete) with two rows: the same answers unlicensed read partial; the four partial kinds
- *     read partial and the five failure kinds unknown, licensed or not; the two mutation kinds and a complete-empty answer
- *     carrying rows are refused (every ExecutionStatusKind of the vendored SDK with zero rows, licensed and not, and both
- *     complete kinds with two rows, licensed and not). Four full answers, each also stating a coverage certificate, rows not
- *     retained, a view, a provider version, a conflict diagnostic and an empty incomplete-region list, read the same way
- *     (complete and complete-empty unlicensed and incomplete licensed read partial, complete-empty licensed reads complete).
+ *     snapshot lands in. B1 feeds exactly the journeys of B1_JOURNEYS and pins, after each step, its result and the one node's
+ *     freshness and completeness (the roster holds every reading); its claims are those readings on those journeys, nothing wider.
+ *     REFRESHES: one refresh stating no coverage or coverage unknown reads current and unknown, partial reads partial and complete
+ *     reads complete. After a complete refresh at T1, a later refresh stating no coverage reads current and unknown in each of
+ *     these journeys: it restates nothing (captured at T2); it is captured at the same instant T1; both refreshes state the same
+ *     value of exactly one optional NativeSnapshot member other than coverage, one journey per member (sequence, cursor,
+ *     sourceRevision, nativePayloadRef, kind, definitionDigest, trace with every ObservationTrace member, subjectBasis,
+ *     sourceVersion, evidenceRefs, interval with both members); both state the same value of every one of those members. The
+ *     plain journey, each one-member journey and the every-member journey run again with the later refresh stating coverage
+ *     unknown, and read the same. The member list is held to observation.ts: B1 reads the optional members its one NativeSnapshot
+ *     declaration states in the module's AST, and throws when one (coverage aside) is not restated or a restated one is not
+ *     declared, and when the interface is declared twice, extends another or is missing (fail closed).
+ *     EVENTS ONLY: two events, e1 at sequence 1 and e2 at sequence 2, read completeness unknown and freshness unknown in each of
+ *     these journeys: they state nothing else; a source version each; exactly one optional ObservationEvent member each, one
+ *     journey per member, with node, trace and interval expanded to their members and each stated beside its parent's required
+ *     members (sourceCursor, previousCursor, sourceTimestamp, node.presentation, node.definitionDigest, trace.invocationId,
+ *     trace.parentSpan, trace.spanId, trace.correlationIds, subjectBasis, sourceVersion, evidenceRefs, payloadRef,
+ *     interval.startedAt, interval.endedAt); their sequences as strings; kind native.snapshot; every one of those members together
+ *     under kind native.snapshot with string sequences. Two unsequenced events read unknown and unknown, then stale and unknown.
+ *     The member list is held to observation.ts the same way: B1 throws when ObservationEvent's one declaration states an optional
+ *     member (sourceSequence aside, fed as a number, a string and absent) that no journey states alone, or a journey states one it
+ *     does not declare, when the restated trace or interval leaves out a member ObservationTrace or Interval declares, and when
+ *     any of those four interfaces is declared twice, extends another or is missing.
+ *     A failed read (markStale) after a complete refresh reads stale and unknown.
+ *   B2 "never reads complete", on two readers that state a coverage reading; B2 feeds exactly the inputs below and pins each
+ *     reading. The rf preview reader (reactivefiberTopology), every render with its one observation row fresh and observed: the
+ *     clean render (one block in result.blocks, one include-true decision in result.necessity) reads complete. It reads partial
+ *     with both inclusion records absent, either absent alone, both empty, no block beside one include-true decision, one block
+ *     beside n decisions of which exactly one is withheld (include false, necessity class task_conditional) for n = 1, 2, 3 and 4
+ *     at each of the n positions, two blocks beside two decisions the second withheld, and one block beside two decisions both
+ *     withheld. The HyperUnix reader (the filing's house precedent wb-6ze.7; docs/workbench/07 'known-empty vs
+ *     incomplete/unknown') on every ExecutionStatusKind of the vendored SDK with zero rows, licensed and not; both complete kinds
+ *     with two rows, licensed and not; complete-empty with one row, licensed and not; and four full answers (complete and
+ *     complete-empty unlicensed, incomplete licensed, complete-empty licensed, each also stating a coverage certificate, rows not
+ *     retained, a view, a provider version, a conflict diagnostic and an empty incomplete-region list). With zero rows, complete
+ *     and complete-empty read complete when licensed and partial when not, the four partial kinds read partial and the five
+ *     failure kinds unknown, licensed or not, and the two mutation kinds are refused; complete with two rows reads complete
+ *     licensed and partial unlicensed; complete-empty with one row or two is refused, licensed or not; of the four full answers,
+ *     complete-empty licensed reads complete and the other three read partial.
  * - C, "and stale-generation seals are refused for current tasks".
- *   C1 "and stale-generation seals are refused", on ObservationProjection (sequences stated as numbers): after a current read
- *     stating no coverage, a complete snapshot captured earlier than that read - unsequenced, observed later than that read, or
- *     at a higher sequence - is refused out-of-order, and so is one at a lower sequence or with no sequence after a sequenced
- *     read; the node keeps reading current and unknown. A complete snapshot captured later than that read applies and reads
- *     complete: unsequenced (also when that read was observed after this capture), at the next sequence, or past a sequence
- *     gap (3 to 10).
- *   C2 "for current tasks", on the rf preview reader: a row replayed from an earlier render (freshness reused) holds the render
- *     at partial - its one row, one of two rows (the last or the first), or both of two - with or without the witness keys
- *     (A1's rf leg); a render whose result.render_id is not null (an id, the empty string, 0, or no render_id at all) is
- *     refused, and so is one whose result.commit_seq is stated and not null (1, 0, the empty string); the render with its one
- *     row captured at render reads complete.
+ *   C1 "and stale-generation seals are refused", on ObservationProjection; C1 feeds exactly the journeys of C1_JOURNEYS (sequences
+ *     as numbers) and pins each reading. After a read stating no coverage, a complete snapshot is refused out-of-order, the node
+ *     reading current and unknown, when it is captured earlier than the read: unsequenced (both instants as Z texts), observed
+ *     later than the read, at a higher sequence, with its instant in a +01:00 offset, with the read's in a -01:00 offset, with
+ *     both in those offsets, or at T2 beside a read at T2 plus half a second (.500Z); and when it is at a lower sequence or states
+ *     no sequence after a sequenced read. It applies and reads current and complete when it is captured later: unsequenced, after
+ *     a read observed after this capture, at the next sequence, past a sequence gap (3 to 10), with its instant in a -01:00
+ *     offset, with the read's in a +01:00 offset, with both in those offsets, or at T2 plus half a second beside a read at T2;
+ *     and when it is captured at the read's instant, written the same way or in a +01:00 offset.
+ *   C2 "for current tasks", on the rf preview reader; C2 feeds exactly the renders of C2_RF and pins each reading. Partial: one row
+ *     replayed from an earlier render (freshness reused) alone, one replayed among two rows, three rows or four rows at each
+ *     position, and both of two rows replayed, with or without the witness keys (A1's rf leg). Refused: result.render_id stated as
+ *     a value of each JSON kind other than null (true, false, 0, 1, the empty string, an id, [], a one-id list, {} and an object
+ *     holding an id), and a render with no render_id at all; result.commit_seq stated as a value of each JSON kind other than null
+ *     (true, false, 0, 1, the empty string, the string "1", [], [1], {} and {seq: 1}). Complete: the clean render (its one row
+ *     captured at render, render_id and commit_seq null) and the same render with no commit_seq. C2 throws when its renders leave
+ *     a non-null JSON kind (boolean, number, string, array, object) of render_id or commit_seq without its empty member (false, 0,
+ *     the empty string, [], {}) or without a non-empty one, or leave render_id null, commit_seq null or commit_seq absent unfed
+ *     (fail closed over the JSON grammar's kinds).
  *
  * OUTSIDE ANCHOR: the wb-km7q.4 row of the tracked bead export (.beads/issues.jsonl): its title (the record, the gate list, the
  * field count and the four duty clauses are parsed from it) and the first span after each of the notes labels "Citations: ",
@@ -135,7 +161,11 @@
  * adoption()'s identifiers, and a registered module's exports, from their ASTs. RECORDS: the last case holds that every
  * registered pin ran to its compare and re-digests each witness against its roster witness, that every falsifier refused an
  * adapter in the adoption judge, and that the HX reader read the precedent's licensed and unlicensed complete-empty answers.
- * RESIDUALS (named; each has pinned quiet rows and a live twin among the planted inputs of its pin, read in that pin's case):
+ * RESIDUALS (named; each has pinned quiet rows and a live twin among the planted inputs of its pin, read in that pin's case; for
+ * the B1, B2 and C2 residuals and C1's R-CAPTURE-NOTATION those inputs are stand-in readers, while R-EVENT-KEEPS-SEAL's are C1
+ * journeys: a stand-in reads as the real reader does except on its region, where it reads its family's escape, and it reads loud
+ * exactly when its region holds a fed input of its pin whose reading the escape changes, so a quiet row pins a region no fed input
+ * reaches and its twin a region one does; the judged set holds that every quiet stand-in is one residual's quiet row of its pin):
  *   R-COMPOSED (A1) a term assembled at run time (quiet: "Coverage" + "Witness"; twin: the one literal).
  *   R-SPACED (A1) a term's words apart (quiet: "the coverage witness", coverage.witness, "sealed snapshot"; twin: coverage_witness).
  *   R-ESCAPED (A1) a term spelled through a source escape (quiet: CoverageWitness as written; twin: the title's word).
@@ -146,37 +176,68 @@
  *   R-UNNAMED-SPEC (A1) a package.json dependency whose spec reaches the SDK without spelling its name (quiet: a tarball URL
  *     under another name; twin: the npm-alias spec npm:vibranium-reactive-lenses@0.1.1).
  *   R-UNFED-RENDER (A1) an rf reader that reads a witness key only on a render shape no variant feeds (quiet: a stand-in reader
- *     that reads freshness_witness only on a render of three or more rows; twin: the stand-in that reads it on any row; each is
+ *     that reads freshness_witness only on a render of five or more rows; twin: the stand-in that reads it on any row; each is
  *     otherwise the real reader on the render with the witness keys taken off).
  *   R-OTHER-SHAPE (A2) a violation reached only through a payload shape the battery never feeds, such as a camelCase port
  *     (quiet: M-CAMEL, complete on a sealedSnapshot key; twin: M-SNAKE, complete on a sealed_snapshot key).
  *   R-EXPIRY (A2) an expired or clockless proof (RL-RQ4): no payload states valid_until (quiet: M-EXPIRY, complete on a stated
  *     valid_until; twin: M-NO-EXPIRY, complete on a null one).
+ *   R-REFRESH-COMBINATION (B1) a seal kept on a later refresh stating no coverage or coverage unknown under a condition on the two
+ *     refreshes that no journey meets: a combination of restated and differing NativeSnapshot members (each restating journey
+ *     restates one member, or every one), other member values, or capture and observation instants other than T1 then T2 or T1
+ *     twice (quiet: a stand-in that keeps it when the later refresh restates the source version beside a cursor of its own; twin:
+ *     the stand-in that keeps it when the later refresh restates the source version).
+ *   R-EVENT-COMBINATION (B1) an events-only node read complete under a condition no journey meets: a combination of event members
+ *     that is neither one member alone nor every member, other member values, or sequences other than 1 then 2 (quiet: a stand-in
+ *     that does so on an event stating a definition digest and a span id without a source timestamp; twin: the stand-in that does
+ *     so on an event stating a definition digest).
+ *   R-WIDE-NECESSITY (B2) a withheld decision among five or more decisions (quiet: a stand-in that reads a render of five or more
+ *     decisions as if none were withheld; twin: the same stand-in from four decisions).
+ *   R-WIDE-BLOCKS (B2) a withheld decision beside three or more blocks (quiet: a stand-in that reads a render of three or more
+ *     blocks as if no decision were withheld; twin: the same stand-in from two blocks).
+ *   R-DECISION-FIELDS (B2) a withheld decision told apart by a decision field other than include; every fed withheld decision is of
+ *     necessity class task_conditional (quiet: a stand-in that reads a render holding a withheld decision of class always as if no
+ *     decision were withheld; twin: the same stand-in on a withheld decision of class task_conditional).
+ *   R-HX-WIDE-ROWS (B2) a complete-empty HX answer carrying three or more rows (quiet: a stand-in that reads such an answer as the
+ *     same answer carrying no rows; twin: the same stand-in from one row).
  *   R-EVENT-KEEPS-SEAL (C1) an in-order event stating a new source version after a complete snapshot leaves the node complete
  *     and current: the projection withdraws no seal on a source revision change (charter:39 gives that to the producer's ledger)
  *     (quiet: that journey ends complete; twin: a refresh at the new version stating no coverage ends unknown).
+ *   R-CAPTURE-NOTATION (C1) capture instants in a notation no journey states: minute precision, a fraction of another length, an
+ *     offset other than +01:00 and -01:00, or another text the parser accepts (quiet: a stand-in that reverses the order outcome of
+ *     a journey holding a capture stated without seconds; twin: the same stand-in on a journey holding a capture in an offset).
+ *   R-WIDE-ROWS (C2) a replayed row among five or more rows (quiet: a stand-in that reads a render of five or more rows as if none
+ *     were replayed; twin: the same stand-in from four rows).
+ *   R-VALUE-WITHIN-KIND (C2) a render_id or commit_seq value of a fed JSON kind that no render states, such as another number,
+ *     string, list or object (quiet: a stand-in that reads a render with commit_seq 2 as one with commit_seq null; twin: the same
+ *     stand-in on commit_seq 1).
  * NOT CLAIMED: Pi's other coverage readers (beads, claude, detached, forge, forge-operation, furnace) are not judged by B or C;
+ * B1 and C1 claim the readings of their journeys, and B2 and C2 the readings of their renders and HX answers, and nothing of an
+ * input outside them (the families of such inputs this census knows of are the residuals above; any other is unclaimed);
  * the filing's Authority sentence ("no second freshness implementation in QuerySDK and none in Pi") is not judged here (A1's rf
  * leg reads only that the witness keys change no projection on the variants it feeds); of the gate list the battery holds
  * RL-RQ1 (L-SEALED) and RL-RQ2 (F-PARTIAL) only, and UNBATTERIED says why for each other gate (F-GENERATION's old generation of
  * the same collection is the title's duty, not RL-RQ3's wrong-source case); the payload values are this file's own, not a
  * producer fixture; VERDICTS are the producer's answers at cut #1, seen again only when a cut re-measures them; an adoption the
  * judge accepts has passed the battery, which is not a proof the adapter is right (R-OTHER-SHAPE, R-EXPIRY); OWED and
- * UNACCOUNTED are thrown on the real walk only, which holds no hit today, while the accounting itself runs on its probes.
+ * UNACCOUNTED are thrown on the real walk only, which holds no hit today, while the accounting itself runs on its probes; a
+ * stand-in reader is a model of its family, not the product reader, so a quiet row shows only that no fed input reaches its region.
  * LIMITS: a check deleted or rewritten in this file's code is not detected beyond the SELF-READ (a pin rewritten to return its
  * roster witness through a helper is not); a residual removed together with its planted inputs and their roster readings is not
  * detected (residuals are this census's own reading); a TERM other than the title's CoverageWitness removed from TERMS, its
  * planted text, the roster and the witnesses together is not detected (the producer's other names are measured into the roster,
  * not read at run time); a pin merged into another pin of its row (its words and body re-homed), or a pin's sub-case (a journey,
  * a render variant, an HX answer, a planted text or file, an accounting or export probe, a mutant) removed from this file and its
- * roster witness together, is not detected, except where the outside anchor holds it: a falsifier (its title duty or gate), the
- * adoption judge's refusals, the precedent's two HX reads and a carrier pair; a registration that names its import's binding but
- * runs a stand-in adapter is not detected (the registration check holds the module path, the import, the name and the one value
- * export; the battery judges the behaviour), and neither is a reading of the record reached through another member of the
- * registered adapter's value or through the registered module's own top-level code (the battery calls the adapter's read; the
- * export check counts ES export syntax); ORACLE is a lookup and proves only that the battery can be passed; a filtered run (-t)
- * reds the records case by design.
- * MEASURED (seat records, read-only; not assertions): cut #3 over trunk e8e13f8, 2026-10-29: 192 judged files (src 117, qa 67,
+ * roster witness together, is not detected, except where an anchor outside the literals holds it: a falsifier (its title duty or
+ * gate), the adoption judge's refusals, the precedent's two HX reads, a carrier pair, a B1 member journey (observation.ts's
+ * declared members) and a C2 render whose JSON kind or empty-or-not member no other render states; a registration that names its
+ * import's binding but runs a stand-in adapter is not detected (the registration check holds the module path, the import, the
+ * name and the one value export; the battery judges the behaviour), and neither is a reading of the record reached through
+ * another member of the registered adapter's value or through the registered module's own top-level code (the battery calls the
+ * adapter's read; the export check counts ES export syntax); ORACLE is a lookup and proves only that the battery can be passed;
+ * a filtered run (-t) reds the records case by design; a member another module adds to observation.ts's interfaces by
+ * declaration merging (module augmentation) is not read by B1's member check, which reads that one module.
+ * MEASURED (seat records, read-only; not assertions): cut #4 over trunk 57cb1c0, 2026-10-29: 192 judged files (src 117, qa 67,
  * examples 7, package.json), 0 hits, 0 symlinks, 0 non-UTF-8, and package.json names reactive[-_]?lenses in no key or value. Cut
  * #1 (seat ws-01, trunk 1f8117a, 2026-10-28; the producer facts verified again by the gate's PREP, finding F1):
  * ReactiveLensesSDK's pin d75fe44948cd (2026-10-18) and origin/master 4efe999ceba2 (2026-10-24) hold the charter as one blob
@@ -188,9 +249,9 @@
  * 48f020fe625f (2026-10-28T12:09:10Z): context.render.schema.json (blob 3282323161f4) has no line matching coverage, witness or
  * seal (case-insensitive).
  *
- * Display paths added: none. Test-only: the renders, HX readings, projections, adapters and the accounting and export probes live
- * in memory (no scratch); the only spawn is git ls-files; src, qa, examples, package.json, docs/workbench/07, a registered
- * module (none today) and the bead export are only read.
+ * Display paths added: none. Test-only: the renders, HX readings, projections, adapters, stand-in readers and the accounting and
+ * export probes live in memory (no scratch); the only spawn is git ls-files; src, qa, examples, package.json, docs/workbench/07, a
+ * registered module (none today) and the bead export are only read.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -201,7 +262,7 @@ import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
 import { HYPERUNIX_EXECUTION_KINDS, type HyperUnixTopologyContext, hyperunixTopology } from "../src/workbench/hyperunix-observer.js";
-import { type NativeRef, type NativeSnapshot, type ObservationEvent, ObservationProjection, type ObservationScope, type Presentation } from "../src/workbench/observation.js";
+import { type NativeRef, type NativeSnapshot, type ObservationEvent, ObservationProjection, type ObservationScope, type ObservationTrace, type Presentation } from "../src/workbench/observation.js";
 import { REACTIVEFIBER_RENDER_PREVIEW_CONTRACT } from "../src/workbench/providers/reactivefiber.js";
 import { type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
 import { docsSection } from "./helpers/census.js";
@@ -523,7 +584,38 @@ interface RfVariant { readonly rows: readonly Json[]; readonly edit: (result: Js
 const RF_EXTRA_KEY = "fixture.component:main::extra";
 /** A second block of the final document (the fixture's block at index 1 under the extra candidate's key). */
 const RF_SECOND_BLOCK: Json = { ...rfFixtureBlock(), final_index: 1, candidate_key: RF_EXTRA_KEY };
-/** Every render this census feeds the rf reader: B2's ten (one fresh observed row) and C2's twelve, the clean render shared. */
+/** n decisions in result.necessity, the one at `position` withheld (include false, class task_conditional) and the rest included;
+ * the first included decision is the fixture's (the fixture block's candidate key), every other one carries a key of its own. */
+function decisionsWithheldAt(n: number, position: number): Json[] {
+  const first = position === 0 ? 1 : 0;
+  return Array.from({ length: n }, (_, index) =>
+    index === position ? rfFixtureDecision(false, `${RF_EXTRA_KEY}-${index}`) : index === first ? rfFixtureDecision() : rfFixtureDecision(true, `${RF_EXTRA_KEY}-${index}`),
+  );
+}
+/** n observation rows, the one at `position` replayed (freshness reused) and the rest captured at render. */
+const rowsReusedAt = (n: number, position: number): Json[] => Array.from({ length: n }, (_, index) => (index === position ? RF_REUSED : RF_ROW));
+/** One variant per position of each count in `counts`, named `<prefix><n>at<position>`. */
+function atPositions(prefix: string, counts: readonly number[], variant: (n: number, position: number) => RfVariant): [string, RfVariant][] {
+  return counts.flatMap(n => Array.from({ length: n }, (_, position): [string, RfVariant] => [`${prefix}${n}at${position}`, variant(n, position)]));
+}
+/** B2's withheld decision at each position of one, three and four decisions (two decisions: withheld and withheldFirst). */
+const WITHHELD_AT = atPositions("withheld", [1, 3, 4], (n, position) => ({ rows: [RF_ROW], edit: result => ({ ...result, necessity: decisionsWithheldAt(n, position) }) }));
+/** C2's replayed row at each position of three and four rows (one and two rows: reused, reusedLast, reusedFirst). */
+const REUSED_AT = atPositions("reused", [3, 4], (n, position) => ({ rows: rowsReusedAt(n, position), edit: result => result }));
+/** C2's render_id and commit_seq values beside the cut #3 ones (an id, the empty string and 0; 1, 0 and the empty string): with
+ * them each JSON kind other than null is stated with its empty member and a non-empty one. */
+const RENDER_IDS: Readonly<Record<string, Json>> = {
+  renderIdTrue: true, renderIdFalse: false, renderIdOne: 1, renderIdList: ["rnd_aaaaaaaaaaaaaaaaaaaaaa"], renderIdArray: [], renderIdRecord: { id: "rnd_aaaaaaaaaaaaaaaaaaaaaa" }, renderIdObject: {},
+};
+const COMMIT_SEQS: Readonly<Record<string, Json>> = {
+  commitSeqTrue: true, commitSeqFalse: false, commitSeqText: "1", commitSeqList: [1], commitSeqArray: [], commitSeqRecord: { seq: 1 }, commitSeqObject: {},
+};
+const stating = (key: string, values: Readonly<Record<string, Json>>): [string, RfVariant][] =>
+  Object.entries(values).map(([name, value]): [string, RfVariant] => [name, { rows: [RF_ROW], edit: result => ({ ...result, [key]: value }) }]);
+const RENDER_ID_AT = stating("render_id", RENDER_IDS);
+const COMMIT_SEQ_AT = stating("commit_seq", COMMIT_SEQS);
+const namesOf = (entries: readonly (readonly [string, RfVariant])[]): string[] => entries.map(([name]) => name);
+/** Every render this census feeds the rf reader: B2's (one fresh observed row) and C2's, the clean render shared. */
 const RF_VARIANTS: Readonly<Record<string, RfVariant>> = {
   clean: { rows: [RF_ROW], edit: result => result },
   undiagnosed: { rows: [RF_ROW], edit: result => without(result, "blocks", "necessity") },
@@ -535,20 +627,29 @@ const RF_VARIANTS: Readonly<Record<string, RfVariant>> = {
   withheldFirst: { rows: [RF_ROW], edit: result => ({ ...result, necessity: [rfFixtureDecision(false, RF_EXTRA_KEY), rfFixtureDecision()] }) },
   withheldTwoBlocks: { rows: [RF_ROW], edit: result => ({ ...result, blocks: [rfFixtureBlock(), RF_SECOND_BLOCK], necessity: [rfFixtureDecision(), rfFixtureDecision(false, RF_EXTRA_KEY)] }) },
   withheldBoth: { rows: [RF_ROW], edit: result => ({ ...result, necessity: [rfFixtureDecision(false), rfFixtureDecision(false, RF_EXTRA_KEY)] }) },
+  ...Object.fromEntries(WITHHELD_AT),
   reused: { rows: [RF_REUSED], edit: result => result },
   reusedLast: { rows: [RF_ROW, RF_REUSED], edit: result => result },
   reusedFirst: { rows: [RF_REUSED, RF_ROW], edit: result => result },
   reusedBoth: { rows: [RF_REUSED, RF_REUSED], edit: result => result },
+  ...Object.fromEntries(REUSED_AT),
   committedRender: { rows: [RF_ROW], edit: result => ({ ...result, render_id: "rnd_aaaaaaaaaaaaaaaaaaaaaa" }) },
   renderIdEmpty: { rows: [RF_ROW], edit: result => ({ ...result, render_id: "" }) },
   renderIdZero: { rows: [RF_ROW], edit: result => ({ ...result, render_id: 0 }) },
   renderIdAbsent: { rows: [RF_ROW], edit: result => without(result, "render_id") },
+  ...Object.fromEntries(RENDER_ID_AT),
   committedSeq: { rows: [RF_ROW], edit: result => ({ ...result, commit_seq: 1 }) },
   commitSeqZero: { rows: [RF_ROW], edit: result => ({ ...result, commit_seq: 0 }) },
   commitSeqEmpty: { rows: [RF_ROW], edit: result => ({ ...result, commit_seq: "" }) },
+  ...Object.fromEntries(COMMIT_SEQ_AT),
+  commitSeqAbsent: { rows: [RF_ROW], edit: result => without(result, "commit_seq") },
 };
-const B2_RF: readonly string[] = ["clean", "undiagnosed", "blocksOnly", "necessityOnly", "noBlock", "noBlockIncluded", "withheld", "withheldFirst", "withheldTwoBlocks", "withheldBoth"];
-const C2_RF: readonly string[] = ["clean", "reused", "reusedLast", "reusedFirst", "reusedBoth", "committedRender", "renderIdEmpty", "renderIdZero", "renderIdAbsent", "committedSeq", "commitSeqZero", "commitSeqEmpty"];
+const B2_RF: readonly string[] = ["clean", "undiagnosed", "blocksOnly", "necessityOnly", "noBlock", "noBlockIncluded", "withheld", "withheldFirst", "withheldTwoBlocks", "withheldBoth", ...namesOf(WITHHELD_AT)];
+const C2_RF: readonly string[] = [
+  "clean", "reused", "reusedLast", "reusedFirst", "reusedBoth", ...namesOf(REUSED_AT),
+  "committedRender", "renderIdEmpty", "renderIdZero", "renderIdAbsent", ...namesOf(RENDER_ID_AT),
+  "committedSeq", "commitSeqZero", "commitSeqEmpty", ...namesOf(COMMIT_SEQ_AT), "commitSeqAbsent",
+];
 const variantRender = (name: string): JsonObject => {
   const variant = RF_VARIANTS[name];
   if (variant === undefined) throw new Error(`no rf variant ${name}`);
@@ -610,11 +711,11 @@ function withoutWitnessKeys(envelope: JsonObject): JsonObject {
   const result = objectOf(envelope.result, "render result");
   return { ...envelope, result: { ...without(result, "coverage_witness"), observations: rowsOf(envelope).map(row => without(objectOf(row, "row"), "coverage_witness", "freshness_witness")) } };
 }
-/** A1's stand-in rf readers (R-UNFED-RENDER): complete when a row carries freshness_witness - on a render of three or more rows only
- * (no variant has three), or on any render (the twin) - and otherwise the real reader on the render with the witness keys taken
+/** A1's stand-in rf readers (R-UNFED-RENDER): complete when a row carries freshness_witness - on a render of five or more rows only
+ * (no variant has five), or on any render (the twin) - and otherwise the real reader on the render with the witness keys taken
  * off, so a stand-in reads loud or quiet by its own rule, never by the real reader's. */
 const RF_READERS: Readonly<Record<string, RfReader>> = {
-  rfThreeRowReader: envelope => (rowsOf(envelope).length >= 3 && rowsOf(envelope).some(carriesFreshness) ? "complete" : RF_REAL(withoutWitnessKeys(envelope))),
+  rfFiveRowReader: envelope => (rowsOf(envelope).length >= 5 && rowsOf(envelope).some(carriesFreshness) ? "complete" : RF_REAL(withoutWitnessKeys(envelope))),
   rfAnyRowReader: envelope => (rowsOf(envelope).some(carriesFreshness) ? "complete" : RF_REAL(withoutWitnessKeys(envelope))),
 };
 /** A1's rf leg: each variant's reading and whether the witness keys change it; a read key (the clean render reused) must. */
@@ -663,13 +764,15 @@ function hxReading(kind: string, licensed: boolean, rows: readonly Json[], full 
   }
 }
 const HX_ROWS: readonly Json[] = [{ path: "src/a.ts" }, { path: "src/b.ts" }];
+const HX_ONE_ROW: readonly Json[] = [{ path: "src/a.ts" }];
 type HxAnswer = readonly [kind: string, licensed: boolean, rows: readonly Json[], full: boolean];
 /** B2's HX answers: every ExecutionStatusKind of the vendored SDK with zero rows, licensed and not; the two complete kinds with two
- * rows, licensed and not; and four full answers with zero rows (complete and complete-empty unlicensed, incomplete licensed,
- * complete-empty licensed). */
+ * rows, licensed and not; complete-empty with one row, licensed and not; and four full answers with zero rows (complete and
+ * complete-empty unlicensed, incomplete licensed, complete-empty licensed). */
 const HX_ANSWERS: readonly HxAnswer[] = [
   ...HYPERUNIX_EXECUTION_KINDS.flatMap(kind => [true, false].map((licensed): HxAnswer => [kind, licensed, [], false])),
   ...["complete", "complete-empty"].flatMap(kind => [true, false].map((licensed): HxAnswer => [kind, licensed, HX_ROWS, false])),
+  ...[true, false].map((licensed): HxAnswer => ["complete-empty", licensed, HX_ONE_ROW, false]),
   ["complete", false, [], true],
   ["complete-empty", false, [], true],
   ["incomplete", true, [], true],
@@ -683,25 +786,80 @@ const P_REF: NativeRef = { provider: "coverage-census", type: "collection", id: 
 const PRESENTATION: Presentation = { title: "beads:issues open", type: "sdk-operation", statusText: "read", statusTone: "success" };
 const [T1, T2, T3, T4] = ["2026-10-28T00:00:01Z", "2026-10-28T00:00:02Z", "2026-10-28T00:00:03Z", "2026-10-28T00:00:04Z"];
 type Step =
-  | { readonly kind: "refresh"; readonly at: string; readonly observed?: string; readonly coverage?: "complete" | "partial" | "unknown"; readonly sequence?: number; readonly version?: string }
-  | { readonly kind: "event"; readonly id: string; readonly sequence?: number; readonly version?: string; readonly full?: true }
+  | { readonly kind: "refresh"; readonly at: string; readonly observed?: string; readonly coverage?: "complete" | "partial" | "unknown"; readonly sequence?: number; readonly version?: string; readonly restated?: readonly string[] }
+  | { readonly kind: "event"; readonly id: string; readonly sequence?: number | string; readonly version?: string; readonly full?: true; readonly member?: string; readonly eventKind?: string }
   | { readonly kind: "markStale" };
-const secondOf = (instant: string): string => `${instant.slice(17, 19)}s`;
+/** An instant as a step's text shows it: `<ss>s` for 2026-10-28T00:00:<ss>Z, every other notation in full. */
+const instantText = (instant: string): string => {
+  const second = /^2026-10-28T00:00:(\d\d)Z$/u.exec(instant)?.[1];
+  return second === undefined ? instant : `${second}s`;
+};
 function stepText(step: Step): string {
   if (step.kind === "markStale") return "markStale";
   const version = step.version === undefined ? "" : ` version=${step.version}`;
-  if (step.kind === "event") return `event ${step.id}${step.sequence === undefined ? "" : ` seq=${step.sequence}`}${version}${step.full === true ? " full" : ""}`;
-  const observed = step.observed === undefined ? "" : ` observed=${secondOf(step.observed)}`;
-  return `refresh at=${secondOf(step.at)}${observed}${step.sequence === undefined ? "" : ` seq=${step.sequence}`}${version}${step.coverage === undefined ? "" : ` coverage=${step.coverage}`}`;
+  const sequence = step.sequence === undefined ? "" : typeof step.sequence === "string" ? ` seq="${step.sequence}"` : ` seq=${step.sequence}`;
+  if (step.kind === "event") {
+    return `event ${step.id}${sequence}${version}${step.full === true ? " full" : ""}${step.member === undefined ? "" : ` with=${step.member}`}${step.eventKind === undefined ? "" : ` kind=${step.eventKind}`}`;
+  }
+  const observed = step.observed === undefined ? "" : ` observed=${instantText(step.observed)}`;
+  const restated = step.restated === undefined ? "" : ` restated=${step.restated.join(",")}`;
+  return `refresh at=${instantText(step.at)}${observed}${sequence}${version}${restated}${step.coverage === undefined ? "" : ` coverage=${step.coverage}`}`;
 }
-/** Every optional field an event can state besides its version, for a full event (kind native.snapshot, its sequence stated as a
- * string): a source timestamp, a cursor chained to the previous event's, a presentation reading success, a subject basis, evidence
- * and payload references, an interval and a trace. */
-const fullEventFields = (sequence: number): Partial<ObservationEvent> => ({
-  kind: "native.snapshot", sourceTimestamp: T2, sourceCursor: `cursor-${sequence}`, ...(sequence > 1 ? { previousCursor: `cursor-${sequence - 1}` } : {}),
-  node: { presentation: PRESENTATION }, subjectBasis: "basis:aaaa", evidenceRefs: ["evidence:aaaa"], payloadRef: "payload:aaaa",
-  interval: { startedAt: T1, endedAt: T2 }, trace: { invocationId: "invocation-aaaa" },
+/** Every member ObservationTrace declares, stated: the trace a restated refresh carries (B1 holds its keys to the module's). */
+const TRACE_FULL: ObservationTrace = { invocationId: "invocation-aaaa", parentSpan: "span-parent-aaaa", spanId: "span-aaaa", correlationIds: { request: "request-aaaa" } };
+/** B1's restated refresh members: each optional NativeSnapshot member but coverage, with the value both refreshes of a journey state
+ * (trace and interval with every member). B1 holds the keys to the optional members observation.ts declares. */
+const RESTATED: Readonly<Record<string, Partial<NativeSnapshot>>> = {
+  sequence: { sequence: 1 },
+  cursor: { cursor: "cursor-aaaa" },
+  sourceRevision: { sourceRevision: "revision-aaaa" },
+  nativePayloadRef: { nativePayloadRef: "payload:aaaa" },
+  kind: { kind: "coverage.snapshot" },
+  definitionDigest: { definitionDigest: "digest:aaaa" },
+  trace: { trace: TRACE_FULL },
+  subjectBasis: { subjectBasis: "basis:aaaa" },
+  sourceVersion: { sourceVersion: "v1" },
+  evidenceRefs: { evidenceRefs: ["evidence:aaaa"] },
+  interval: { interval: { startedAt: T1, endedAt: T1 } },
+};
+const RESTATED_MEMBERS: readonly string[] = Object.keys(RESTATED);
+function restatedFields(members: readonly string[]): Partial<NativeSnapshot> {
+  let fields: Partial<NativeSnapshot> = {};
+  for (const member of members) fields = { ...fields, ...(RESTATED[member] ?? {}) };
+  return fields;
+}
+/** B1's event members: each optional ObservationEvent member but sourceSequence (fed as a number, a string and absent), by its path,
+ * node, trace and interval expanded to their members and each stated beside its parent's required members, as the event at
+ * `sequence` states it. B1 holds the paths to the optional members observation.ts declares. */
+const EVENT_MEMBERS: Readonly<Record<string, (sequence: number) => Partial<ObservationEvent>>> = {
+  sourceCursor: sequence => ({ sourceCursor: `cursor-${sequence}` }),
+  previousCursor: sequence => ({ previousCursor: `cursor-${sequence - 1}` }),
+  sourceTimestamp: () => ({ sourceTimestamp: T2 }),
+  "node.presentation": () => ({ node: { presentation: PRESENTATION } }),
+  "node.definitionDigest": () => ({ node: { presentation: PRESENTATION, definitionDigest: "digest:aaaa" } }),
+  "trace.invocationId": () => ({ trace: { invocationId: "invocation-aaaa" } }),
+  "trace.parentSpan": () => ({ trace: { parentSpan: "span-parent-aaaa" } }),
+  "trace.spanId": () => ({ trace: { spanId: "span-aaaa" } }),
+  "trace.correlationIds": () => ({ trace: { correlationIds: { request: "request-aaaa" } } }),
+  subjectBasis: () => ({ subjectBasis: "basis:aaaa" }),
+  sourceVersion: sequence => ({ sourceVersion: `v${sequence}` }),
+  evidenceRefs: () => ({ evidenceRefs: ["evidence:aaaa"] }),
+  payloadRef: () => ({ payloadRef: "payload:aaaa" }),
+  "interval.startedAt": () => ({ interval: { startedAt: T1 } }),
+  "interval.endedAt": () => ({ interval: { startedAt: T1, endedAt: T2 } }),
+};
+/** Two partial events merged, the node, the trace and the interval member by member. */
+const mergeEvent = (a: Partial<ObservationEvent>, b: Partial<ObservationEvent>): Partial<ObservationEvent> => ({
+  ...a,
+  ...b,
+  ...(a.node !== undefined && b.node !== undefined ? { node: { ...a.node, ...b.node } } : {}),
+  ...(a.trace !== undefined && b.trace !== undefined ? { trace: { ...a.trace, ...b.trace } } : {}),
+  ...(a.interval !== undefined && b.interval !== undefined ? { interval: { ...a.interval, ...b.interval } } : {}),
 });
+/** The event members a step states: every one for a full event, its one member otherwise. */
+const eventMembersOf = (step: Step): readonly string[] => (step.kind !== "event" ? [] : step.full === true ? Object.keys(EVENT_MEMBERS) : step.member === undefined ? [] : [step.member]);
+const eventFields = (members: readonly string[], sequence: number): Partial<ObservationEvent> =>
+  members.reduce<Partial<ObservationEvent>>((fields, member) => mergeEvent(fields, EVENT_MEMBERS[member]?.(sequence) ?? {}), {});
 /** One journey on a fresh projection: after each step, `<result>: <freshness>/<completeness>` of the one node. */
 function journey(steps: readonly Step[]): string[] {
   const projection = new ObservationProjection();
@@ -711,6 +869,7 @@ function journey(steps: readonly Step[]): string[] {
     if (step.kind === "refresh") {
       const snapshot: NativeSnapshot = {
         source: P_REF, scope: P_SCOPE, capturedAt: step.at, observedAt: step.observed ?? step.at, node: PRESENTATION,
+        ...restatedFields(step.restated ?? []),
         ...(step.coverage === undefined ? {} : { coverage: step.coverage }),
         ...(step.sequence === undefined ? {} : { sequence: step.sequence }),
         ...(step.version === undefined ? {} : { sourceVersion: step.version }),
@@ -718,10 +877,10 @@ function journey(steps: readonly Step[]): string[] {
       result = projection.refresh(snapshot);
     } else if (step.kind === "event") {
       const event: ObservationEvent = {
-        projectionEventId: step.id, source: P_REF, scope: P_SCOPE, observedAt: T3, kind: "native.event",
+        projectionEventId: step.id, source: P_REF, scope: P_SCOPE, observedAt: T3, kind: step.full === true ? "native.snapshot" : (step.eventKind ?? "native.event"),
         ...(step.sequence === undefined ? {} : { sourceSequence: step.full === true ? String(step.sequence) : step.sequence }),
         ...(step.version === undefined ? {} : { sourceVersion: step.version }),
-        ...(step.full === true ? fullEventFields(step.sequence ?? 1) : {}),
+        ...eventFields(eventMembersOf(step), Number(step.sequence ?? 1)),
       };
       result = projection.ingest(event);
     } else {
@@ -735,29 +894,64 @@ function journey(steps: readonly Step[]): string[] {
 }
 const journeyWitness = (journeys: Readonly<Record<string, readonly Step[]>>): Json =>
   Object.fromEntries(Object.entries(journeys).map(([name, steps]) => [name, { steps: steps.map(stepText), readings: journey(steps) }]));
+/** A complete refresh at T1, then a later refresh (at T2 unless `at`) stating no coverage, or the coverage `coverage` names, both
+ * stating the `restated` members' values. */
+const fresherJourney = (restated: readonly string[], later: { readonly coverage?: "unknown"; readonly at?: string } = {}): Step[] => [
+  { kind: "refresh", at: T1, coverage: "complete", ...(restated.length === 0 ? {} : { restated }) },
+  { kind: "refresh", at: later.at ?? T2, ...(later.coverage === undefined ? {} : { coverage: later.coverage }), ...(restated.length === 0 ? {} : { restated }) },
+];
+/** Two sequenced events, e1 at 1 and e2 at 2, each stating `member`. */
+const eventsStating = (member: string): Step[] => [{ kind: "event", id: "e1", sequence: 1, member }, { kind: "event", id: "e2", sequence: 2, member }];
 const B1_JOURNEYS: Readonly<Record<string, readonly Step[]>> = {
   freshOnly: [{ kind: "refresh", at: T1 }],
   statedUnknown: [{ kind: "refresh", at: T1, coverage: "unknown" }],
   partial: [{ kind: "refresh", at: T1, coverage: "partial" }],
   stated: [{ kind: "refresh", at: T1, coverage: "complete" }],
-  fresherRead: [{ kind: "refresh", at: T1, coverage: "complete" }, { kind: "refresh", at: T2 }],
-  fresherUnknown: [{ kind: "refresh", at: T1, coverage: "complete" }, { kind: "refresh", at: T2, coverage: "unknown" }],
+  fresherRead: fresherJourney([]),
+  fresherUnknown: fresherJourney([], { coverage: "unknown" }),
+  fresherSameCapture: fresherJourney([], { at: T1 }),
+  ...Object.fromEntries(
+    RESTATED_MEMBERS.flatMap((member): [string, Step[]][] => [
+      [`fresherRestated:${member}`, fresherJourney([member])],
+      [`fresherRestated:${member}:unknown`, fresherJourney([member], { coverage: "unknown" })],
+    ]),
+  ),
+  "fresherRestated:all": fresherJourney(RESTATED_MEMBERS),
+  "fresherRestated:all:unknown": fresherJourney(RESTATED_MEMBERS, { coverage: "unknown" }),
   eventsOnly: [{ kind: "event", id: "e1", sequence: 1 }, { kind: "event", id: "e2", sequence: 2 }],
   eventsOnlyVersioned: [{ kind: "event", id: "e1", sequence: 1, version: "v1" }, { kind: "event", id: "e2", sequence: 2, version: "v2" }],
+  ...Object.fromEntries(Object.keys(EVENT_MEMBERS).map((member): [string, Step[]] => [`eventsOnly:${member}`, eventsStating(member)])),
+  eventsOnlyTextSequence: [{ kind: "event", id: "e1", sequence: "1" }, { kind: "event", id: "e2", sequence: "2" }],
+  eventsOnlyKind: [{ kind: "event", id: "e1", sequence: 1, eventKind: "native.snapshot" }, { kind: "event", id: "e2", sequence: 2, eventKind: "native.snapshot" }],
   eventsOnlyFull: [{ kind: "event", id: "e1", sequence: 1, version: "v1", full: true }, { kind: "event", id: "e2", sequence: 2, version: "v2", full: true }],
   eventsOnlyUnsequenced: [{ kind: "event", id: "e1" }, { kind: "event", id: "e2" }],
   failedRead: [{ kind: "refresh", at: T1, coverage: "complete" }, { kind: "markStale" }],
 };
+/** C1's other notations of T1, T2 and T3: in a +01:00 or a -01:00 zone offset (`second` the instant's second), and T2 plus half a
+ * second. Each journey below that uses one sets text order against time order. */
+const plusOffset = (second: string): string => `2026-10-28T01:00:${second}+01:00`;
+const minusOffset = (second: string): string => `2026-10-27T23:00:${second}-01:00`;
+const T2_HALF = "2026-10-28T00:00:02.500Z";
 const C1_JOURNEYS: Readonly<Record<string, readonly Step[]>> = {
   olderCapture: [{ kind: "refresh", at: T2 }, { kind: "refresh", at: T1, coverage: "complete" }],
   olderCaptureObservedLater: [{ kind: "refresh", at: T2 }, { kind: "refresh", at: T1, observed: T4, coverage: "complete" }],
   higherSequenceOlderCapture: [{ kind: "refresh", at: T2, sequence: 3 }, { kind: "refresh", at: T1, sequence: 4, coverage: "complete" }],
+  olderCaptureOffset: [{ kind: "refresh", at: T2 }, { kind: "refresh", at: plusOffset("01"), coverage: "complete" }],
+  olderCaptureReadOffset: [{ kind: "refresh", at: minusOffset("02") }, { kind: "refresh", at: T1, coverage: "complete" }],
+  olderCaptureBothOffsets: [{ kind: "refresh", at: minusOffset("02") }, { kind: "refresh", at: plusOffset("01"), coverage: "complete" }],
+  olderCaptureFraction: [{ kind: "refresh", at: T2_HALF }, { kind: "refresh", at: T2, coverage: "complete" }],
   lowerSequence: [{ kind: "refresh", at: T2, sequence: 3 }, { kind: "refresh", at: T3, sequence: 2, coverage: "complete" }],
   unsequenced: [{ kind: "refresh", at: T2, sequence: 3 }, { kind: "refresh", at: T3, coverage: "complete" }],
   laterCapture: [{ kind: "refresh", at: T1 }, { kind: "refresh", at: T2, coverage: "complete" }],
   laterCaptureObservedEarlier: [{ kind: "refresh", at: T1, observed: T3 }, { kind: "refresh", at: T2, coverage: "complete" }],
   laterSeal: [{ kind: "refresh", at: T2, sequence: 3 }, { kind: "refresh", at: T3, sequence: 4, coverage: "complete" }],
   laterSealGap: [{ kind: "refresh", at: T2, sequence: 3 }, { kind: "refresh", at: T3, sequence: 10, coverage: "complete" }],
+  laterCaptureOffset: [{ kind: "refresh", at: T2 }, { kind: "refresh", at: minusOffset("03"), coverage: "complete" }],
+  laterCaptureReadOffset: [{ kind: "refresh", at: plusOffset("02") }, { kind: "refresh", at: T3, coverage: "complete" }],
+  laterCaptureBothOffsets: [{ kind: "refresh", at: plusOffset("02") }, { kind: "refresh", at: minusOffset("03"), coverage: "complete" }],
+  laterCaptureFraction: [{ kind: "refresh", at: T2 }, { kind: "refresh", at: T2_HALF, coverage: "complete" }],
+  sameCapture: [{ kind: "refresh", at: T2 }, { kind: "refresh", at: T2, coverage: "complete" }],
+  sameCaptureOffset: [{ kind: "refresh", at: T2 }, { kind: "refresh", at: plusOffset("02"), coverage: "complete" }],
   eventKeepsSeal: [{ kind: "refresh", at: T1, sequence: 1, version: "v1", coverage: "complete" }, { kind: "event", id: "e2", sequence: 2, version: "v2" }],
   refreshDropsSeal: [{ kind: "refresh", at: T1, sequence: 1, version: "v1", coverage: "complete" }, { kind: "refresh", at: T2, sequence: 2, version: "v2" }],
 };
@@ -1021,6 +1215,192 @@ function holdAdoption(registered: Adoption, triggered: readonly string[], self: 
   return verdict.run;
 }
 
+// ------------------------------------------------------------------------------------------ the stand-in readers (B and C)
+/** A stand-in projection reader (the B1 residuals and C1's R-CAPTURE-NOTATION): the real journey's readings, except on a journey
+ * its region holds, whose last reading it reads as its family's escape. It reads loud exactly when its region holds a fed journey
+ * of its pin whose last reading the escape changes, so a quiet stand-in pins a region no fed journey reaches and its twin a region
+ * one does. */
+interface JourneyStandIn { readonly region: (steps: readonly Step[]) => boolean; readonly escape: (last: string) => string }
+/** The seal kept: the last reading's completeness read complete. */
+const sealKept = (last: string): string => last.replace(/\/[a-z]+$/u, "/complete");
+/** The capture order reversed: an applied snapshot read refused out-of-order, a refused one read applied and complete. */
+const orderReversed = (last: string): string => (last.startsWith("applied") ? "out-of-order: current/unknown" : "applied: current/complete");
+/** What a refresh step states of NativeSnapshot's optional members: its restated members, its sequence and its version. */
+const refreshStated = (step: Step): Partial<NativeSnapshot> =>
+  step.kind !== "refresh"
+    ? {}
+    : { ...restatedFields(step.restated ?? []), ...(step.sequence === undefined ? {} : { sequence: step.sequence }), ...(step.version === undefined ? {} : { sourceVersion: step.version }) };
+/** Whether the last step is a refresh stating no coverage or coverage unknown that follows a complete refresh, `keep` holding of the two. */
+function laterRefreshKeeps(steps: readonly Step[], keep: (earlier: Partial<NativeSnapshot>, later: Partial<NativeSnapshot>) => boolean): boolean {
+  const last = steps.at(-1);
+  if (last?.kind !== "refresh" || (last.coverage !== undefined && last.coverage !== "unknown")) return false;
+  const later = refreshStated(last);
+  return steps.slice(0, -1).some(step => step.kind === "refresh" && step.coverage === "complete" && keep(refreshStated(step), later));
+}
+const sameVersion = (earlier: Partial<NativeSnapshot>, later: Partial<NativeSnapshot>): boolean => earlier.sourceVersion !== undefined && earlier.sourceVersion === later.sourceVersion;
+const eventStates = (step: Step, member: string): boolean => eventMembersOf(step).includes(member);
+const B1_STAND_INS: Readonly<Record<string, JourneyStandIn>> = {
+  refreshKeepsVersionNewCursor: {
+    region: steps => laterRefreshKeeps(steps, (earlier, later) => sameVersion(earlier, later) && earlier.cursor !== undefined && later.cursor !== undefined && earlier.cursor !== later.cursor),
+    escape: sealKept,
+  },
+  refreshKeepsVersion: { region: steps => laterRefreshKeeps(steps, sameVersion), escape: sealKept },
+  eventUpgradesDigestSpanUntimed: {
+    region: steps => steps.some(step => eventStates(step, "node.definitionDigest") && eventStates(step, "trace.spanId") && !eventStates(step, "sourceTimestamp")),
+    escape: sealKept,
+  },
+  eventUpgradesDigest: { region: steps => steps.some(step => eventStates(step, "node.definitionDigest")), escape: sealKept },
+};
+/** A capture instant with a zone offset, and one stated without seconds. */
+const OFFSET_NOTATION = /[+-]\d\d:\d\d$/u;
+const MINUTE_NOTATION = /T\d\d:\d\d(?:Z|[+-]\d\d:\d\d)$/u;
+const capturedIn = (steps: readonly Step[], notation: RegExp): boolean => steps.some(step => step.kind === "refresh" && notation.test(step.at));
+const C1_STAND_INS: Readonly<Record<string, JourneyStandIn>> = {
+  textOrderMinute: { region: steps => capturedIn(steps, MINUTE_NOTATION), escape: orderReversed },
+  textOrderOffset: { region: steps => capturedIn(steps, OFFSET_NOTATION), escape: orderReversed },
+};
+function journeyLoud(standIn: JourneyStandIn | undefined, journeys: Readonly<Record<string, readonly Step[]>>): boolean {
+  if (standIn === undefined) return false;
+  return Object.values(journeys).some(steps => {
+    if (!standIn.region(steps)) return false;
+    const last = journey(steps).at(-1) ?? "";
+    return standIn.escape(last) !== last;
+  });
+}
+/** A stand-in rf reader (the rf residuals of B2 and C2): the real reader's reading of a render, except on a render its region
+ * holds, which it reads as the real reader reads the render `clean` makes of it (its family's escape). Loud exactly when its region
+ * holds a fed render of its pin whose reading the escape changes. */
+interface RenderStandIn { readonly region: (result: JsonObject) => boolean; readonly clean: (result: JsonObject) => JsonObject }
+const listOf = (result: JsonObject, key: string): readonly Json[] => {
+  const value = result[key];
+  return Array.isArray(value) ? value : [];
+};
+/** Every decision of result.necessity included. */
+const noneWithheld = (result: JsonObject): JsonObject => ({ ...result, necessity: listOf(result, "necessity").map(item => (isObject(item) ? { ...item, include: true } : item)) });
+/** Every observation row captured at render. */
+const noneReplayed = (result: JsonObject): JsonObject => ({ ...result, observations: listOf(result, "observations").map(() => RF_ROW) });
+const commitSeqNull = (result: JsonObject): JsonObject => ({ ...result, commit_seq: null });
+const withheldOfClass = (result: JsonObject, necessityClass: string): boolean =>
+  listOf(result, "necessity").some(item => isObject(item) && item.include === false && item.necessity_class === necessityClass);
+const B2_STAND_INS: Readonly<Record<string, RenderStandIn>> = {
+  rfFiveDecisionReader: { region: result => listOf(result, "necessity").length >= 5, clean: noneWithheld },
+  rfFourDecisionReader: { region: result => listOf(result, "necessity").length >= 4, clean: noneWithheld },
+  rfThreeBlockReader: { region: result => listOf(result, "blocks").length >= 3, clean: noneWithheld },
+  rfTwoBlockReader: { region: result => listOf(result, "blocks").length >= 2, clean: noneWithheld },
+  rfAlwaysWithheldReader: { region: result => withheldOfClass(result, "always"), clean: noneWithheld },
+  rfConditionalWithheldReader: { region: result => withheldOfClass(result, "task_conditional"), clean: noneWithheld },
+};
+const C2_STAND_INS: Readonly<Record<string, RenderStandIn>> = {
+  rfFiveRowReplayReader: { region: result => listOf(result, "observations").length >= 5, clean: noneReplayed },
+  rfFourRowReplayReader: { region: result => listOf(result, "observations").length >= 4, clean: noneReplayed },
+  rfCommitSeqTwoReader: { region: result => result.commit_seq === 2, clean: commitSeqNull },
+  rfCommitSeqOneReader: { region: result => result.commit_seq === 1, clean: commitSeqNull },
+};
+function renderLoud(standIn: RenderStandIn | undefined, names: readonly string[]): boolean {
+  if (standIn === undefined) return false;
+  return names.some(name => {
+    const envelope = variantRender(name);
+    const result = objectOf(envelope.result, "render result");
+    return standIn.region(result) && rfReading({ ...envelope, result: standIn.clean(result) }) !== rfReading(envelope);
+  });
+}
+/** A stand-in HX reader (B2's R-HX-WIDE-ROWS): the real reader's reading of an answer, except on an answer its region holds, which it
+ * reads as the real reader reads the same answer carrying no rows. Loud exactly when its region holds a fed answer whose reading that
+ * changes. */
+interface AnswerStandIn { readonly region: (answer: HxAnswer) => boolean }
+const HX_STAND_INS: Readonly<Record<string, AnswerStandIn>> = {
+  hxThreeRowReader: { region: answer => answer[0] === "complete-empty" && answer[2].length >= 3 },
+  hxOneRowReader: { region: answer => answer[0] === "complete-empty" && answer[2].length >= 1 },
+};
+function answerLoud(standIn: AnswerStandIn | undefined): boolean {
+  if (standIn === undefined) return false;
+  return HX_ANSWERS.some(([kind, licensed, rows, full]) => standIn.region([kind, licensed, rows, full]) && hxReading(kind, licensed, [], full) !== hxReading(kind, licensed, rows, full));
+}
+const b1Loud = (id: string): boolean => journeyLoud(B1_STAND_INS[id], B1_JOURNEYS);
+const b2Loud = (id: string): boolean => (Object.hasOwn(HX_STAND_INS, id) ? answerLoud(HX_STAND_INS[id]) : renderLoud(B2_STAND_INS[id], B2_RF));
+const c1Loud = (id: string): boolean => (Object.hasOwn(C1_STAND_INS, id) ? journeyLoud(C1_STAND_INS[id], C1_JOURNEYS) : !(journey(C1_JOURNEYS[id] ?? []).at(-1) ?? "").endsWith("/complete"));
+const c2Loud = (id: string): boolean => renderLoud(C2_STAND_INS[id], C2_RF);
+/** Each pin's stand-in readers. */
+const STAND_INS_OF: Readonly<Record<string, readonly string[]>> = {
+  B1: Object.keys(B1_STAND_INS),
+  B2: [...Object.keys(B2_STAND_INS), ...Object.keys(HX_STAND_INS)],
+  C1: Object.keys(C1_STAND_INS),
+  C2: Object.keys(C2_STAND_INS),
+};
+const LOUD_OF: Readonly<Record<string, (id: string) => boolean>> = { B1: b1Loud, B2: b2Loud, C1: c1Loud, C2: c2Loud };
+
+// ---------------------------------------------------------------------------------------------- the fail-closed checks (B1, C2)
+const OBSERVATION_MODULE = "src/workbench/observation.ts";
+interface ObservationMembers { readonly snapshot: readonly string[]; readonly event: readonly string[] }
+/** The optional members of ObservationProjection's two inputs, read from observation.ts's AST in declaration order: NativeSnapshot's,
+ * and ObservationEvent's with each member typed by a type literal or by an interface of the module expanded to `<member>.<inner>`
+ * (every inner member, required or not). An interface is read only from its one declaration in the module, with no extends clause;
+ * a merged (twice-declared) or extending interface, or none, reads `?`, and so does a member that is no plain property, so none
+ * of those shapes ever matches an enumeration (fail closed). Members another module adds by augmentation are not read. */
+function observationMembers(): ObservationMembers {
+  const source = ts.createSourceFile(OBSERVATION_MODULE, readFileSync(join(REPO, OBSERVATION_MODULE), "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const declarations = new Map<string, ts.InterfaceDeclaration[]>();
+  for (const statement of source.statements) {
+    if (ts.isInterfaceDeclaration(statement)) declarations.set(statement.name.text, [...(declarations.get(statement.name.text) ?? []), statement]);
+  }
+  /** An interface's members, from its one heritage-free declaration; undefined for any other shape. */
+  const declared = (name: string): ts.NodeArray<ts.TypeElement> | undefined => {
+    const found = declarations.get(name) ?? [];
+    const only = found.length === 1 ? found[0] : undefined;
+    return only !== undefined && only.heritageClauses === undefined ? only.members : undefined;
+  };
+  const nameOf = (member: ts.TypeElement): string => (ts.isPropertySignature(member) && ts.isIdentifier(member.name) ? member.name.text : "?");
+  const optionalNames = (name: string, expand: (member: ts.TypeElement) => string[]): string[] => {
+    const members = declared(name);
+    return members === undefined ? ["?"] : members.filter(member => !ts.isPropertySignature(member) || member.questionToken !== undefined).flatMap(expand);
+  };
+  const inner = (member: ts.TypeElement): string[] => {
+    const type = ts.isPropertySignature(member) ? member.type : undefined;
+    const literal = type !== undefined && ts.isTypeLiteralNode(type) ? type.members : undefined;
+    const reference = type !== undefined && ts.isTypeReferenceNode(type) && ts.isIdentifier(type.typeName) && declarations.has(type.typeName.text) ? type.typeName.text : undefined;
+    if (literal !== undefined) return literal.map(innerMember => `${nameOf(member)}.${nameOf(innerMember)}`);
+    if (reference !== undefined) return (declared(reference) ?? []).map(innerMember => `${nameOf(member)}.${nameOf(innerMember)}`).concat(declared(reference) === undefined ? [`${nameOf(member)}.?`] : []);
+    return [nameOf(member)];
+  };
+  return { snapshot: optionalNames("NativeSnapshot", member => [nameOf(member)]), event: optionalNames("ObservationEvent", inner) };
+}
+/** B1's fail-closed check: the restated refresh members are NativeSnapshot's optional members (coverage aside), the event members are
+ * ObservationEvent's (sourceSequence aside), and the restated trace and interval state every member their interfaces declare. */
+function holdMembers(members: ObservationMembers): void {
+  const sorted = (names: readonly string[]): string => JSON.stringify([...names].sort(byName));
+  const within = (parent: string): string[] => members.event.filter(name => name.startsWith(`${parent}.`)).map(name => name.slice(parent.length + 1));
+  const owed: readonly (readonly [string, readonly string[], readonly string[]])[] = [
+    ["NativeSnapshot's optional members (coverage aside) against the restated refresh members", members.snapshot.filter(name => name !== "coverage"), RESTATED_MEMBERS],
+    ["ObservationEvent's optional members (sourceSequence aside) against the event members", members.event.filter(name => name !== "sourceSequence"), Object.keys(EVENT_MEMBERS)],
+    ["ObservationTrace's members against the restated trace", within("trace"), Object.keys(TRACE_FULL)],
+    ["Interval's members against the restated interval", within("interval"), Object.keys(RESTATED.interval?.interval ?? {})],
+  ];
+  const differ = owed.filter(([, declared, fed]) => sorted(declared) !== sorted(fed));
+  if (differ.length > 0) {
+    throw new Error(`B1's enumeration differs from ${OBSERVATION_MODULE} - ${differ.map(([what, declared, fed]) => `${what}: declared ${sorted(declared)}, fed ${sorted(fed)}`).join("; ")}; the cut that changes the module's members feeds each one and re-measures B1's witness`);
+  }
+}
+/** The JSON kind of a value, and whether it is its kind's empty member (false, 0, the empty string, [] or {}). */
+const kindOf = (value: Json): string => (value === null ? "null" : Array.isArray(value) ? "array" : typeof value);
+const isEmptyMember = (value: Json): boolean => value === false || value === 0 || value === "" || (Array.isArray(value) && value.length === 0) || (isObject(value) && Object.keys(value).length === 0);
+const NON_NULL_KINDS: readonly string[] = ["boolean", "number", "string", "array", "object"];
+/** C2's fail-closed check over the JSON grammar's kinds: its renders state render_id, and commit_seq, as a value of every kind other
+ * than null with that kind's empty member and a non-empty one, render_id and commit_seq null, render_id absent and commit_seq absent. */
+function holdKinds(): void {
+  const results = C2_RF.map(name => objectOf(variantRender(name).result, "render result"));
+  const stated = (key: string): Json[] => results.flatMap(result => (Object.hasOwn(result, key) ? [result[key] ?? null] : []));
+  const gapsOf = (key: string): string[] => [
+    ...NON_NULL_KINDS.flatMap(kind => {
+      const values = stated(key).filter(value => kindOf(value) === kind);
+      return [...(values.some(isEmptyMember) ? [] : [`${key} ${kind} (its empty member)`]), ...(values.some(value => !isEmptyMember(value)) ? [] : [`${key} ${kind} (a non-empty member)`])];
+    }),
+    ...(stated(key).includes(null) ? [] : [`${key} null`]),
+    ...(results.some(result => !Object.hasOwn(result, key)) ? [] : [`${key} absent`]),
+  ];
+  const gaps = [...gapsOf("render_id"), ...gapsOf("commit_seq")];
+  if (gaps.length > 0) throw new Error(`C2 feeds no render stating ${gaps.join(", ")}: its render_id and commit_seq forms cover every JSON kind (fail closed)`);
+}
+
 // ------------------------------------------------------------------------------------------------------- the residual table
 /** A1's planted texts that read quiet and are no residual's: Pi's own coverage words, which hold no claim. */
 const NON_CLAIMS: readonly string[] = ["hxCoverage", "rfRowKey", "piCompleteness"];
@@ -1032,10 +1412,19 @@ const RESIDUALS: readonly Residual[] = [
   { id: "R-OTHER-NAME", pin: "A1", quiet: ["otherName", "otherCertificate"], twin: ["embedded"] },
   { id: "R-OUTSIDE-ROOTS", pin: "A1", quiet: ["docsPlant", "testPlant", "rootPlant"], twin: ["srcPlant"] },
   { id: "R-UNNAMED-SPEC", pin: "A1", quiet: ["packageTarball"], twin: ["packageAlias"] },
-  { id: "R-UNFED-RENDER", pin: "A1", quiet: ["rfThreeRowReader"], twin: ["rfAnyRowReader"] },
+  { id: "R-UNFED-RENDER", pin: "A1", quiet: ["rfFiveRowReader"], twin: ["rfAnyRowReader"] },
   { id: "R-OTHER-SHAPE", pin: "A2", quiet: ["M-CAMEL"], twin: ["M-SNAKE"] },
   { id: "R-EXPIRY", pin: "A2", quiet: ["M-EXPIRY"], twin: ["M-NO-EXPIRY"] },
+  { id: "R-REFRESH-COMBINATION", pin: "B1", quiet: ["refreshKeepsVersionNewCursor"], twin: ["refreshKeepsVersion"] },
+  { id: "R-EVENT-COMBINATION", pin: "B1", quiet: ["eventUpgradesDigestSpanUntimed"], twin: ["eventUpgradesDigest"] },
+  { id: "R-WIDE-NECESSITY", pin: "B2", quiet: ["rfFiveDecisionReader"], twin: ["rfFourDecisionReader"] },
+  { id: "R-WIDE-BLOCKS", pin: "B2", quiet: ["rfThreeBlockReader"], twin: ["rfTwoBlockReader"] },
+  { id: "R-DECISION-FIELDS", pin: "B2", quiet: ["rfAlwaysWithheldReader"], twin: ["rfConditionalWithheldReader"] },
+  { id: "R-HX-WIDE-ROWS", pin: "B2", quiet: ["hxThreeRowReader"], twin: ["hxOneRowReader"] },
   { id: "R-EVENT-KEEPS-SEAL", pin: "C1", quiet: ["eventKeepsSeal"], twin: ["refreshDropsSeal"] },
+  { id: "R-CAPTURE-NOTATION", pin: "C1", quiet: ["textOrderMinute"], twin: ["textOrderOffset"] },
+  { id: "R-WIDE-ROWS", pin: "C2", quiet: ["rfFiveRowReplayReader"], twin: ["rfFourRowReplayReader"] },
+  { id: "R-VALUE-WITHIN-KIND", pin: "C2", quiet: ["rfCommitSeqTwoReader"], twin: ["rfCommitSeqOneReader"] },
 ];
 const residualsOf = (pin: string): readonly Residual[] => RESIDUALS.filter(residual => residual.pin === pin);
 /** An A1 planted input's hit count: a text through the judge, a package text through the package rule, a file through the walk's
@@ -1160,27 +1549,37 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       adopted: adopted === null ? null : { fired: [...adopted.fired], readings: { ...adopted.readings } },
     };
   },
-  B1: async () => journeyWitness(B1_JOURNEYS),
-  B2: async () => ({
-    rf: Object.fromEntries(B2_RF.map(name => {
-      const envelope = variantRender(name);
-      return [name, `${renderShape(envelope)}: ${rfReading(envelope)}`];
-    })),
-    hx: Object.fromEntries(HX_ANSWERS.map(([kind, licensed, rows, full]) => [`${kind} licensed=${licensed} rows=${rows.length}${full ? " full" : ""}`, hxReading(kind, licensed, rows, full)])),
-    precedent: PRECEDENT,
-  }),
+  B1: async () => {
+    // Fail closed: the journeys restate, and state, exactly the optional members observation.ts declares.
+    const members = observationMembers();
+    holdMembers(members);
+    holdResiduals("B1", b1Loud);
+    return { members: { snapshot: [...members.snapshot], event: [...members.event] }, journeys: journeyWitness(B1_JOURNEYS) };
+  },
+  B2: async () => {
+    holdResiduals("B2", b2Loud);
+    return {
+      rf: Object.fromEntries(B2_RF.map(name => {
+        const envelope = variantRender(name);
+        return [name, `${renderShape(envelope)}: ${rfReading(envelope)}`];
+      })),
+      hx: Object.fromEntries(HX_ANSWERS.map(([kind, licensed, rows, full]) => [`${kind} licensed=${licensed} rows=${rows.length}${full ? " full" : ""}`, hxReading(kind, licensed, rows, full)])),
+      precedent: PRECEDENT,
+    };
+  },
   C1: async () => {
-    holdResiduals("C1", id => {
-      const readings = journey(C1_JOURNEYS[id] ?? []);
-      return !(readings.at(-1) ?? "").endsWith("/complete");
-    });
+    holdResiduals("C1", c1Loud);
     return journeyWitness(C1_JOURNEYS);
   },
-  C2: async () =>
-    Object.fromEntries(C2_RF.map(name => {
+  C2: async () => {
+    // Fail closed over the JSON grammar: render_id and commit_seq are fed as every kind's empty and non-empty members.
+    holdKinds();
+    holdResiduals("C2", c2Loud);
+    return Object.fromEntries(C2_RF.map(name => {
       const envelope = variantRender(name);
       return [name, `${renderShape(envelope)}: ${rfReading(envelope)}`];
-    })),
+    }));
+  },
 };
 
 const REACHED = new Map<string, string>();
@@ -1247,13 +1646,18 @@ describe("wb-km7q.4 CoverageWitness adoption census (SDK-REACTIVE-FIBER-ADAPTIVE
     expect(ROSTER.adoption).toEqual(adoptionJson());
     // The residual table: held to the roster, each quiet row and twin a planted input of its pin.
     expect(RESIDUALS.map(residual => residual.id)).toEqual([
-      "R-COMPOSED", "R-SPACED", "R-ESCAPED", "R-LOOKALIKE", "R-OTHER-NAME", "R-OUTSIDE-ROOTS", "R-UNNAMED-SPEC", "R-UNFED-RENDER", "R-OTHER-SHAPE", "R-EXPIRY", "R-EVENT-KEEPS-SEAL",
+      "R-COMPOSED", "R-SPACED", "R-ESCAPED", "R-LOOKALIKE", "R-OTHER-NAME", "R-OUTSIDE-ROOTS", "R-UNNAMED-SPEC", "R-UNFED-RENDER", "R-OTHER-SHAPE", "R-EXPIRY",
+      "R-REFRESH-COMBINATION", "R-EVENT-COMBINATION", "R-WIDE-NECESSITY", "R-WIDE-BLOCKS", "R-DECISION-FIELDS", "R-HX-WIDE-ROWS", "R-EVENT-KEEPS-SEAL", "R-CAPTURE-NOTATION",
+      "R-WIDE-ROWS", "R-VALUE-WITHIN-KIND",
     ]);
     expect(ROSTER.residuals).toEqual(RESIDUALS);
     const plantedOf: Readonly<Record<string, readonly string[]>> = {
       A1: [...Object.keys(PLANTED_TEXTS), ...Object.keys(PACKAGE_PLANTS), ...Object.keys(PLANTED_FILES), ...Object.keys(RF_READERS)],
       A2: Object.keys(MUTANTS),
-      C1: Object.keys(C1_JOURNEYS),
+      B1: STAND_INS_OF.B1 ?? [],
+      B2: STAND_INS_OF.B2 ?? [],
+      C1: [...Object.keys(C1_JOURNEYS), ...(STAND_INS_OF.C1 ?? [])],
+      C2: STAND_INS_OF.C2 ?? [],
     };
     expect(RESIDUALS.flatMap(residual => [...residual.quiet, ...residual.twin].filter(id => !(plantedOf[residual.pin] ?? []).includes(id)).map(id => `${residual.id}:${id}`))).toEqual([]);
     // Every A1 planted input that reads quiet is a named non-claim or one residual's quiet row, never both; every mutant that
@@ -1262,6 +1666,10 @@ describe("wb-km7q.4 CoverageWitness adoption census (SDK-REACTIVE-FIBER-ADAPTIVE
     expect(plantedOf.A1?.filter(id => !a1Loud(id)).sort(byName)).toEqual([...NON_CLAIMS, ...quietOf("A1")].sort(byName));
     expect(NON_CLAIMS.filter(id => quietOf("A1").includes(id))).toEqual([]);
     expect(Object.keys(MUTANTS).filter(id => runBattery(MUTANTS[id] ?? ORACLE).fired.length === 0)).toEqual(quietOf("A2"));
+    // Every stand-in reader of B1, B2, C1 and C2 that reads quiet is one residual's quiet row of its pin, the same way.
+    expect(Object.entries(STAND_INS_OF).map(([pin, ids]) => `${pin}: ${ids.filter(id => !(LOUD_OF[pin]?.(id) ?? false)).sort(byName).join(", ")}`)).toEqual(
+      Object.entries(STAND_INS_OF).map(([pin, ids]) => `${pin}: ${quietOf(pin).filter(id => ids.includes(id)).sort(byName).join(", ")}`),
+    );
     // SELF-READ: no pin body names the roster, and the roster cannot be rewritten in memory.
     const identifiers = selfRead().impl;
     expect(Object.keys(identifiers).sort(byName)).toEqual(Object.keys(IMPL).sort(byName));

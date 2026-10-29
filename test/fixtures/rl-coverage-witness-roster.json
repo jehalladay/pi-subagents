@@ -381,7 +381,7 @@
    "id": "R-UNFED-RENDER",
    "pin": "A1",
    "quiet": [
-    "rfThreeRowReader"
+    "rfFiveRowReader"
    ],
    "twin": [
     "rfAnyRowReader"
@@ -408,6 +408,66 @@
    ]
   },
   {
+   "id": "R-REFRESH-COMBINATION",
+   "pin": "B1",
+   "quiet": [
+    "refreshKeepsVersionNewCursor"
+   ],
+   "twin": [
+    "refreshKeepsVersion"
+   ]
+  },
+  {
+   "id": "R-EVENT-COMBINATION",
+   "pin": "B1",
+   "quiet": [
+    "eventUpgradesDigestSpanUntimed"
+   ],
+   "twin": [
+    "eventUpgradesDigest"
+   ]
+  },
+  {
+   "id": "R-WIDE-NECESSITY",
+   "pin": "B2",
+   "quiet": [
+    "rfFiveDecisionReader"
+   ],
+   "twin": [
+    "rfFourDecisionReader"
+   ]
+  },
+  {
+   "id": "R-WIDE-BLOCKS",
+   "pin": "B2",
+   "quiet": [
+    "rfThreeBlockReader"
+   ],
+   "twin": [
+    "rfTwoBlockReader"
+   ]
+  },
+  {
+   "id": "R-DECISION-FIELDS",
+   "pin": "B2",
+   "quiet": [
+    "rfAlwaysWithheldReader"
+   ],
+   "twin": [
+    "rfConditionalWithheldReader"
+   ]
+  },
+  {
+   "id": "R-HX-WIDE-ROWS",
+   "pin": "B2",
+   "quiet": [
+    "hxThreeRowReader"
+   ],
+   "twin": [
+    "hxOneRowReader"
+   ]
+  },
+  {
    "id": "R-EVENT-KEEPS-SEAL",
    "pin": "C1",
    "quiet": [
@@ -415,6 +475,36 @@
    ],
    "twin": [
     "refreshDropsSeal"
+   ]
+  },
+  {
+   "id": "R-CAPTURE-NOTATION",
+   "pin": "C1",
+   "quiet": [
+    "textOrderMinute"
+   ],
+   "twin": [
+    "textOrderOffset"
+   ]
+  },
+  {
+   "id": "R-WIDE-ROWS",
+   "pin": "C2",
+   "quiet": [
+    "rfFiveRowReplayReader"
+   ],
+   "twin": [
+    "rfFourRowReplayReader"
+   ]
+  },
+  {
+   "id": "R-VALUE-WITHIN-KIND",
+   "pin": "C2",
+   "quiet": [
+    "rfCommitSeqTwoReader"
+   ],
+   "twin": [
+    "rfCommitSeqOneReader"
    ]
   }
  ],
@@ -510,7 +600,7 @@
         "rootPlant": "judged=false hits=0 coverage-witness-plant.ts"
        },
        "rfReaders": {
-        "rfThreeRowReader": [],
+        "rfFiveRowReader": [],
         "rfAnyRowReader": [
          "clean",
          "undiagnosed",
@@ -522,17 +612,47 @@
          "withheldFirst",
          "withheldTwoBlocks",
          "withheldBoth",
+         "withheld1at0",
+         "withheld3at0",
+         "withheld3at1",
+         "withheld3at2",
+         "withheld4at0",
+         "withheld4at1",
+         "withheld4at2",
+         "withheld4at3",
          "reused",
          "reusedLast",
          "reusedFirst",
          "reusedBoth",
+         "reused3at0",
+         "reused3at1",
+         "reused3at2",
+         "reused4at0",
+         "reused4at1",
+         "reused4at2",
+         "reused4at3",
          "committedRender",
          "renderIdEmpty",
          "renderIdZero",
          "renderIdAbsent",
+         "renderIdTrue",
+         "renderIdFalse",
+         "renderIdOne",
+         "renderIdList",
+         "renderIdArray",
+         "renderIdRecord",
+         "renderIdObject",
          "committedSeq",
          "commitSeqZero",
-         "commitSeqEmpty"
+         "commitSeqEmpty",
+         "commitSeqTrue",
+         "commitSeqFalse",
+         "commitSeqText",
+         "commitSeqList",
+         "commitSeqArray",
+         "commitSeqRecord",
+         "commitSeqObject",
+         "commitSeqAbsent"
         ]
        }
       },
@@ -570,17 +690,47 @@
         "withheldFirst": "partial unknown | inclusion: 1 block included, 1 of 2 judged candidates withheld at host_necessity: partial; witness keys identical",
         "withheldTwoBlocks": "partial unknown | inclusion: 2 blocks included, 1 of 2 judged candidates withheld at host_necessity: partial; witness keys identical",
         "withheldBoth": "partial unknown | inclusion: 1 block included, 2 of 2 judged candidates withheld at host_necessity: partial; witness keys identical",
+        "withheld1at0": "partial unknown | inclusion: 1 block included, 1 of 1 judged candidate withheld at host_necessity: partial; witness keys identical",
+        "withheld3at0": "partial unknown | inclusion: 1 block included, 1 of 3 judged candidates withheld at host_necessity: partial; witness keys identical",
+        "withheld3at1": "partial unknown | inclusion: 1 block included, 1 of 3 judged candidates withheld at host_necessity: partial; witness keys identical",
+        "withheld3at2": "partial unknown | inclusion: 1 block included, 1 of 3 judged candidates withheld at host_necessity: partial; witness keys identical",
+        "withheld4at0": "partial unknown | inclusion: 1 block included, 1 of 4 judged candidates withheld at host_necessity: partial; witness keys identical",
+        "withheld4at1": "partial unknown | inclusion: 1 block included, 1 of 4 judged candidates withheld at host_necessity: partial; witness keys identical",
+        "withheld4at2": "partial unknown | inclusion: 1 block included, 1 of 4 judged candidates withheld at host_necessity: partial; witness keys identical",
+        "withheld4at3": "partial unknown | inclusion: 1 block included, 1 of 4 judged candidates withheld at host_necessity: partial; witness keys identical",
         "reused": "partial unknown | observations: 1 row, 1 reused: partial; witness keys identical",
         "reusedLast": "partial unknown | observations: 2 rows, 1 reused: partial; witness keys identical",
         "reusedFirst": "partial unknown | observations: 2 rows, 1 reused: partial; witness keys identical",
         "reusedBoth": "partial unknown | observations: 2 rows, 2 reused: partial; witness keys identical",
+        "reused3at0": "partial unknown | observations: 3 rows, 1 reused: partial; witness keys identical",
+        "reused3at1": "partial unknown | observations: 3 rows, 1 reused: partial; witness keys identical",
+        "reused3at2": "partial unknown | observations: 3 rows, 1 reused: partial; witness keys identical",
+        "reused4at0": "partial unknown | observations: 4 rows, 1 reused: partial; witness keys identical",
+        "reused4at1": "partial unknown | observations: 4 rows, 1 reused: partial; witness keys identical",
+        "reused4at2": "partial unknown | observations: 4 rows, 1 reused: partial; witness keys identical",
+        "reused4at3": "partial unknown | observations: 4 rows, 1 reused: partial; witness keys identical",
         "committedRender": "refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.; witness keys identical",
         "renderIdEmpty": "refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.; witness keys identical",
         "renderIdZero": "refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.; witness keys identical",
         "renderIdAbsent": "refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.; witness keys identical",
+        "renderIdTrue": "refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.; witness keys identical",
+        "renderIdFalse": "refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.; witness keys identical",
+        "renderIdOne": "refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.; witness keys identical",
+        "renderIdList": "refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.; witness keys identical",
+        "renderIdArray": "refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.; witness keys identical",
+        "renderIdRecord": "refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.; witness keys identical",
+        "renderIdObject": "refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.; witness keys identical",
         "committedSeq": "refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.; witness keys identical",
         "commitSeqZero": "refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.; witness keys identical",
-        "commitSeqEmpty": "refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.; witness keys identical"
+        "commitSeqEmpty": "refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.; witness keys identical",
+        "commitSeqTrue": "refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.; witness keys identical",
+        "commitSeqFalse": "refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.; witness keys identical",
+        "commitSeqText": "refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.; witness keys identical",
+        "commitSeqList": "refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.; witness keys identical",
+        "commitSeqArray": "refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.; witness keys identical",
+        "commitSeqRecord": "refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.; witness keys identical",
+        "commitSeqObject": "refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.; witness keys identical",
+        "commitSeqAbsent": "complete success | observations: 1 row, 0 reused; witness keys identical"
        },
        "readKey": "differing"
       },
@@ -833,107 +983,563 @@
      "id": "B1",
      "quote": "that freshness-without-coverage",
      "witness": {
-      "freshOnly": {
-       "steps": [
-        "refresh at=01s"
+      "members": {
+       "snapshot": [
+        "sequence",
+        "cursor",
+        "sourceRevision",
+        "coverage",
+        "nativePayloadRef",
+        "kind",
+        "definitionDigest",
+        "trace",
+        "subjectBasis",
+        "sourceVersion",
+        "evidenceRefs",
+        "interval"
        ],
-       "readings": [
-        "applied: current/unknown"
+       "event": [
+        "sourceSequence",
+        "sourceCursor",
+        "previousCursor",
+        "sourceTimestamp",
+        "node.presentation",
+        "node.definitionDigest",
+        "trace.invocationId",
+        "trace.parentSpan",
+        "trace.spanId",
+        "trace.correlationIds",
+        "subjectBasis",
+        "sourceVersion",
+        "evidenceRefs",
+        "payloadRef",
+        "interval.startedAt",
+        "interval.endedAt"
        ]
       },
-      "statedUnknown": {
-       "steps": [
-        "refresh at=01s coverage=unknown"
-       ],
-       "readings": [
-        "applied: current/unknown"
-       ]
-      },
-      "partial": {
-       "steps": [
-        "refresh at=01s coverage=partial"
-       ],
-       "readings": [
-        "applied: current/partial"
-       ]
-      },
-      "stated": {
-       "steps": [
-        "refresh at=01s coverage=complete"
-       ],
-       "readings": [
-        "applied: current/complete"
-       ]
-      },
-      "fresherRead": {
-       "steps": [
-        "refresh at=01s coverage=complete",
-        "refresh at=02s"
-       ],
-       "readings": [
-        "applied: current/complete",
-        "applied: current/unknown"
-       ]
-      },
-      "fresherUnknown": {
-       "steps": [
-        "refresh at=01s coverage=complete",
-        "refresh at=02s coverage=unknown"
-       ],
-       "readings": [
-        "applied: current/complete",
-        "applied: current/unknown"
-       ]
-      },
-      "eventsOnly": {
-       "steps": [
-        "event e1 seq=1",
-        "event e2 seq=2"
-       ],
-       "readings": [
-        "applied: unknown/unknown",
-        "applied: unknown/unknown"
-       ]
-      },
-      "eventsOnlyVersioned": {
-       "steps": [
-        "event e1 seq=1 version=v1",
-        "event e2 seq=2 version=v2"
-       ],
-       "readings": [
-        "applied: unknown/unknown",
-        "applied: unknown/unknown"
-       ]
-      },
-      "eventsOnlyFull": {
-       "steps": [
-        "event e1 seq=1 version=v1 full",
-        "event e2 seq=2 version=v2 full"
-       ],
-       "readings": [
-        "applied: unknown/unknown",
-        "applied: unknown/unknown"
-       ]
-      },
-      "eventsOnlyUnsequenced": {
-       "steps": [
-        "event e1",
-        "event e2"
-       ],
-       "readings": [
-        "applied: unknown/unknown",
-        "applied: stale/unknown"
-       ]
-      },
-      "failedRead": {
-       "steps": [
-        "refresh at=01s coverage=complete",
-        "markStale"
-       ],
-       "readings": [
-        "applied: current/complete",
-        "marked: stale/unknown"
-       ]
+      "journeys": {
+       "freshOnly": {
+        "steps": [
+         "refresh at=01s"
+        ],
+        "readings": [
+         "applied: current/unknown"
+        ]
+       },
+       "statedUnknown": {
+        "steps": [
+         "refresh at=01s coverage=unknown"
+        ],
+        "readings": [
+         "applied: current/unknown"
+        ]
+       },
+       "partial": {
+        "steps": [
+         "refresh at=01s coverage=partial"
+        ],
+        "readings": [
+         "applied: current/partial"
+        ]
+       },
+       "stated": {
+        "steps": [
+         "refresh at=01s coverage=complete"
+        ],
+        "readings": [
+         "applied: current/complete"
+        ]
+       },
+       "fresherRead": {
+        "steps": [
+         "refresh at=01s coverage=complete",
+         "refresh at=02s"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherUnknown": {
+        "steps": [
+         "refresh at=01s coverage=complete",
+         "refresh at=02s coverage=unknown"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherSameCapture": {
+        "steps": [
+         "refresh at=01s coverage=complete",
+         "refresh at=01s"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:sequence": {
+        "steps": [
+         "refresh at=01s restated=sequence coverage=complete",
+         "refresh at=02s restated=sequence"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:sequence:unknown": {
+        "steps": [
+         "refresh at=01s restated=sequence coverage=complete",
+         "refresh at=02s restated=sequence coverage=unknown"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:cursor": {
+        "steps": [
+         "refresh at=01s restated=cursor coverage=complete",
+         "refresh at=02s restated=cursor"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:cursor:unknown": {
+        "steps": [
+         "refresh at=01s restated=cursor coverage=complete",
+         "refresh at=02s restated=cursor coverage=unknown"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:sourceRevision": {
+        "steps": [
+         "refresh at=01s restated=sourceRevision coverage=complete",
+         "refresh at=02s restated=sourceRevision"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:sourceRevision:unknown": {
+        "steps": [
+         "refresh at=01s restated=sourceRevision coverage=complete",
+         "refresh at=02s restated=sourceRevision coverage=unknown"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:nativePayloadRef": {
+        "steps": [
+         "refresh at=01s restated=nativePayloadRef coverage=complete",
+         "refresh at=02s restated=nativePayloadRef"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:nativePayloadRef:unknown": {
+        "steps": [
+         "refresh at=01s restated=nativePayloadRef coverage=complete",
+         "refresh at=02s restated=nativePayloadRef coverage=unknown"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:kind": {
+        "steps": [
+         "refresh at=01s restated=kind coverage=complete",
+         "refresh at=02s restated=kind"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:kind:unknown": {
+        "steps": [
+         "refresh at=01s restated=kind coverage=complete",
+         "refresh at=02s restated=kind coverage=unknown"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:definitionDigest": {
+        "steps": [
+         "refresh at=01s restated=definitionDigest coverage=complete",
+         "refresh at=02s restated=definitionDigest"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:definitionDigest:unknown": {
+        "steps": [
+         "refresh at=01s restated=definitionDigest coverage=complete",
+         "refresh at=02s restated=definitionDigest coverage=unknown"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:trace": {
+        "steps": [
+         "refresh at=01s restated=trace coverage=complete",
+         "refresh at=02s restated=trace"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:trace:unknown": {
+        "steps": [
+         "refresh at=01s restated=trace coverage=complete",
+         "refresh at=02s restated=trace coverage=unknown"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:subjectBasis": {
+        "steps": [
+         "refresh at=01s restated=subjectBasis coverage=complete",
+         "refresh at=02s restated=subjectBasis"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:subjectBasis:unknown": {
+        "steps": [
+         "refresh at=01s restated=subjectBasis coverage=complete",
+         "refresh at=02s restated=subjectBasis coverage=unknown"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:sourceVersion": {
+        "steps": [
+         "refresh at=01s restated=sourceVersion coverage=complete",
+         "refresh at=02s restated=sourceVersion"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:sourceVersion:unknown": {
+        "steps": [
+         "refresh at=01s restated=sourceVersion coverage=complete",
+         "refresh at=02s restated=sourceVersion coverage=unknown"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:evidenceRefs": {
+        "steps": [
+         "refresh at=01s restated=evidenceRefs coverage=complete",
+         "refresh at=02s restated=evidenceRefs"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:evidenceRefs:unknown": {
+        "steps": [
+         "refresh at=01s restated=evidenceRefs coverage=complete",
+         "refresh at=02s restated=evidenceRefs coverage=unknown"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:interval": {
+        "steps": [
+         "refresh at=01s restated=interval coverage=complete",
+         "refresh at=02s restated=interval"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:interval:unknown": {
+        "steps": [
+         "refresh at=01s restated=interval coverage=complete",
+         "refresh at=02s restated=interval coverage=unknown"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:all": {
+        "steps": [
+         "refresh at=01s restated=sequence,cursor,sourceRevision,nativePayloadRef,kind,definitionDigest,trace,subjectBasis,sourceVersion,evidenceRefs,interval coverage=complete",
+         "refresh at=02s restated=sequence,cursor,sourceRevision,nativePayloadRef,kind,definitionDigest,trace,subjectBasis,sourceVersion,evidenceRefs,interval"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "fresherRestated:all:unknown": {
+        "steps": [
+         "refresh at=01s restated=sequence,cursor,sourceRevision,nativePayloadRef,kind,definitionDigest,trace,subjectBasis,sourceVersion,evidenceRefs,interval coverage=complete",
+         "refresh at=02s restated=sequence,cursor,sourceRevision,nativePayloadRef,kind,definitionDigest,trace,subjectBasis,sourceVersion,evidenceRefs,interval coverage=unknown"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "applied: current/unknown"
+        ]
+       },
+       "eventsOnly": {
+        "steps": [
+         "event e1 seq=1",
+         "event e2 seq=2"
+        ],
+        "readings": [
+         "applied: unknown/unknown",
+         "applied: unknown/unknown"
+        ]
+       },
+       "eventsOnlyVersioned": {
+        "steps": [
+         "event e1 seq=1 version=v1",
+         "event e2 seq=2 version=v2"
+        ],
+        "readings": [
+         "applied: unknown/unknown",
+         "applied: unknown/unknown"
+        ]
+       },
+       "eventsOnly:sourceCursor": {
+        "steps": [
+         "event e1 seq=1 with=sourceCursor",
+         "event e2 seq=2 with=sourceCursor"
+        ],
+        "readings": [
+         "applied: unknown/unknown",
+         "applied: unknown/unknown"
+        ]
+       },
+       "eventsOnly:previousCursor": {
+        "steps": [
+         "event e1 seq=1 with=previousCursor",
+         "event e2 seq=2 with=previousCursor"
+        ],
+        "readings": [
+         "applied: unknown/unknown",
+         "applied: unknown/unknown"
+        ]
+       },
+       "eventsOnly:sourceTimestamp": {
+        "steps": [
+         "event e1 seq=1 with=sourceTimestamp",
+         "event e2 seq=2 with=sourceTimestamp"
+        ],
+        "readings": [
+         "applied: unknown/unknown",
+         "applied: unknown/unknown"
+        ]
+       },
+       "eventsOnly:node.presentation": {
+        "steps": [
+         "event e1 seq=1 with=node.presentation",
+         "event e2 seq=2 with=node.presentation"
+        ],
+        "readings": [
+         "applied: unknown/unknown",
+         "applied: unknown/unknown"
+        ]
+       },
+       "eventsOnly:node.definitionDigest": {
+        "steps": [
+         "event e1 seq=1 with=node.definitionDigest",
+         "event e2 seq=2 with=node.definitionDigest"
+        ],
+        "readings": [
+         "applied: unknown/unknown",
+         "applied: unknown/unknown"
+        ]
+       },
+       "eventsOnly:trace.invocationId": {
+        "steps": [
+         "event e1 seq=1 with=trace.invocationId",
+         "event e2 seq=2 with=trace.invocationId"
+        ],
+        "readings": [
+         "applied: unknown/unknown",
+         "applied: unknown/unknown"
+        ]
+       },
+       "eventsOnly:trace.parentSpan": {
+        "steps": [
+         "event e1 seq=1 with=trace.parentSpan",
+         "event e2 seq=2 with=trace.parentSpan"
+        ],
+        "readings": [
+         "applied: unknown/unknown",
+         "applied: unknown/unknown"
+        ]
+       },
+       "eventsOnly:trace.spanId": {
+        "steps": [
+         "event e1 seq=1 with=trace.spanId",
+         "event e2 seq=2 with=trace.spanId"
+        ],
+        "readings": [
+         "applied: unknown/unknown",
+         "applied: unknown/unknown"
+        ]
+       },
+       "eventsOnly:trace.correlationIds": {
+        "steps": [
+         "event e1 seq=1 with=trace.correlationIds",
+         "event e2 seq=2 with=trace.correlationIds"
+        ],
+        "readings": [
+         "applied: unknown/unknown",
+         "applied: unknown/unknown"
+        ]
+       },
+       "eventsOnly:subjectBasis": {
+        "steps": [
+         "event e1 seq=1 with=subjectBasis",
+         "event e2 seq=2 with=subjectBasis"
+        ],
+        "readings": [
+         "applied: unknown/unknown",
+         "applied: unknown/unknown"
+        ]
+       },
+       "eventsOnly:sourceVersion": {
+        "steps": [
+         "event e1 seq=1 with=sourceVersion",
+         "event e2 seq=2 with=sourceVersion"
+        ],
+        "readings": [
+         "applied: unknown/unknown",
+         "applied: unknown/unknown"
+        ]
+       },
+       "eventsOnly:evidenceRefs": {
+        "steps": [
+         "event e1 seq=1 with=evidenceRefs",
+         "event e2 seq=2 with=evidenceRefs"
+        ],
+        "readings": [
+         "applied: unknown/unknown",
+         "applied: unknown/unknown"
+        ]
+       },
+       "eventsOnly:payloadRef": {
+        "steps": [
+         "event e1 seq=1 with=payloadRef",
+         "event e2 seq=2 with=payloadRef"
+        ],
+        "readings": [
+         "applied: unknown/unknown",
+         "applied: unknown/unknown"
+        ]
+       },
+       "eventsOnly:interval.startedAt": {
+        "steps": [
+         "event e1 seq=1 with=interval.startedAt",
+         "event e2 seq=2 with=interval.startedAt"
+        ],
+        "readings": [
+         "applied: unknown/unknown",
+         "applied: unknown/unknown"
+        ]
+       },
+       "eventsOnly:interval.endedAt": {
+        "steps": [
+         "event e1 seq=1 with=interval.endedAt",
+         "event e2 seq=2 with=interval.endedAt"
+        ],
+        "readings": [
+         "applied: unknown/unknown",
+         "applied: unknown/unknown"
+        ]
+       },
+       "eventsOnlyTextSequence": {
+        "steps": [
+         "event e1 seq=\"1\"",
+         "event e2 seq=\"2\""
+        ],
+        "readings": [
+         "applied: unknown/unknown",
+         "applied: unknown/unknown"
+        ]
+       },
+       "eventsOnlyKind": {
+        "steps": [
+         "event e1 seq=1 kind=native.snapshot",
+         "event e2 seq=2 kind=native.snapshot"
+        ],
+        "readings": [
+         "applied: unknown/unknown",
+         "applied: unknown/unknown"
+        ]
+       },
+       "eventsOnlyFull": {
+        "steps": [
+         "event e1 seq=1 version=v1 full",
+         "event e2 seq=2 version=v2 full"
+        ],
+        "readings": [
+         "applied: unknown/unknown",
+         "applied: unknown/unknown"
+        ]
+       },
+       "eventsOnlyUnsequenced": {
+        "steps": [
+         "event e1",
+         "event e2"
+        ],
+        "readings": [
+         "applied: unknown/unknown",
+         "applied: stale/unknown"
+        ]
+       },
+       "failedRead": {
+        "steps": [
+         "refresh at=01s coverage=complete",
+         "markStale"
+        ],
+        "readings": [
+         "applied: current/complete",
+         "marked: stale/unknown"
+        ]
+       }
       }
      }
     },
@@ -951,7 +1557,15 @@
        "withheld": "rows=[captured_at_render] blocks=1 necessity=2 withheld=1 render_id=null commit_seq=null: partial unknown | inclusion: 1 block included, 1 of 2 judged candidates withheld at host_necessity: partial",
        "withheldFirst": "rows=[captured_at_render] blocks=1 necessity=2 withheld=1 render_id=null commit_seq=null: partial unknown | inclusion: 1 block included, 1 of 2 judged candidates withheld at host_necessity: partial",
        "withheldTwoBlocks": "rows=[captured_at_render] blocks=2 necessity=2 withheld=1 render_id=null commit_seq=null: partial unknown | inclusion: 2 blocks included, 1 of 2 judged candidates withheld at host_necessity: partial",
-       "withheldBoth": "rows=[captured_at_render] blocks=1 necessity=2 withheld=2 render_id=null commit_seq=null: partial unknown | inclusion: 1 block included, 2 of 2 judged candidates withheld at host_necessity: partial"
+       "withheldBoth": "rows=[captured_at_render] blocks=1 necessity=2 withheld=2 render_id=null commit_seq=null: partial unknown | inclusion: 1 block included, 2 of 2 judged candidates withheld at host_necessity: partial",
+       "withheld1at0": "rows=[captured_at_render] blocks=1 necessity=1 withheld=1 render_id=null commit_seq=null: partial unknown | inclusion: 1 block included, 1 of 1 judged candidate withheld at host_necessity: partial",
+       "withheld3at0": "rows=[captured_at_render] blocks=1 necessity=3 withheld=1 render_id=null commit_seq=null: partial unknown | inclusion: 1 block included, 1 of 3 judged candidates withheld at host_necessity: partial",
+       "withheld3at1": "rows=[captured_at_render] blocks=1 necessity=3 withheld=1 render_id=null commit_seq=null: partial unknown | inclusion: 1 block included, 1 of 3 judged candidates withheld at host_necessity: partial",
+       "withheld3at2": "rows=[captured_at_render] blocks=1 necessity=3 withheld=1 render_id=null commit_seq=null: partial unknown | inclusion: 1 block included, 1 of 3 judged candidates withheld at host_necessity: partial",
+       "withheld4at0": "rows=[captured_at_render] blocks=1 necessity=4 withheld=1 render_id=null commit_seq=null: partial unknown | inclusion: 1 block included, 1 of 4 judged candidates withheld at host_necessity: partial",
+       "withheld4at1": "rows=[captured_at_render] blocks=1 necessity=4 withheld=1 render_id=null commit_seq=null: partial unknown | inclusion: 1 block included, 1 of 4 judged candidates withheld at host_necessity: partial",
+       "withheld4at2": "rows=[captured_at_render] blocks=1 necessity=4 withheld=1 render_id=null commit_seq=null: partial unknown | inclusion: 1 block included, 1 of 4 judged candidates withheld at host_necessity: partial",
+       "withheld4at3": "rows=[captured_at_render] blocks=1 necessity=4 withheld=1 render_id=null commit_seq=null: partial unknown | inclusion: 1 block included, 1 of 4 judged candidates withheld at host_necessity: partial"
       },
       "hx": {
        "complete licensed=true rows=0": "complete success | complete \u00b7 rows 0",
@@ -984,6 +1598,8 @@
        "complete licensed=false rows=2": "partial unknown | complete \u00b7 rows 2 \u00b7 absence not licensed",
        "complete-empty licensed=true rows=2": "refused validation: HyperUnix topology refused: a complete-empty result carries rows.",
        "complete-empty licensed=false rows=2": "refused validation: HyperUnix topology refused: a complete-empty result carries rows.",
+       "complete-empty licensed=true rows=1": "refused validation: HyperUnix topology refused: a complete-empty result carries rows.",
+       "complete-empty licensed=false rows=1": "refused validation: HyperUnix topology refused: a complete-empty result carries rows.",
        "complete licensed=false rows=0 full": "partial unknown | complete \u00b7 rows 0 \u00b7 absence not licensed (rows not retained)",
        "complete-empty licensed=false rows=0 full": "partial unknown | complete-empty \u00b7 rows 0 \u00b7 absence not licensed (rows not retained)",
        "incomplete licensed=true rows=0 full": "partial unknown | incomplete \u00b7 rows 0 \u00b7 absence not licensed (rows not retained)",
@@ -1026,6 +1642,46 @@
        "steps": [
         "refresh at=02s seq=3",
         "refresh at=01s seq=4 coverage=complete"
+       ],
+       "readings": [
+        "applied: current/unknown",
+        "out-of-order: current/unknown"
+       ]
+      },
+      "olderCaptureOffset": {
+       "steps": [
+        "refresh at=02s",
+        "refresh at=2026-10-28T01:00:01+01:00 coverage=complete"
+       ],
+       "readings": [
+        "applied: current/unknown",
+        "out-of-order: current/unknown"
+       ]
+      },
+      "olderCaptureReadOffset": {
+       "steps": [
+        "refresh at=2026-10-27T23:00:02-01:00",
+        "refresh at=01s coverage=complete"
+       ],
+       "readings": [
+        "applied: current/unknown",
+        "out-of-order: current/unknown"
+       ]
+      },
+      "olderCaptureBothOffsets": {
+       "steps": [
+        "refresh at=2026-10-27T23:00:02-01:00",
+        "refresh at=2026-10-28T01:00:01+01:00 coverage=complete"
+       ],
+       "readings": [
+        "applied: current/unknown",
+        "out-of-order: current/unknown"
+       ]
+      },
+      "olderCaptureFraction": {
+       "steps": [
+        "refresh at=2026-10-28T00:00:02.500Z",
+        "refresh at=02s coverage=complete"
        ],
        "readings": [
         "applied: current/unknown",
@@ -1092,6 +1748,66 @@
         "applied: current/complete"
        ]
       },
+      "laterCaptureOffset": {
+       "steps": [
+        "refresh at=02s",
+        "refresh at=2026-10-27T23:00:03-01:00 coverage=complete"
+       ],
+       "readings": [
+        "applied: current/unknown",
+        "applied: current/complete"
+       ]
+      },
+      "laterCaptureReadOffset": {
+       "steps": [
+        "refresh at=2026-10-28T01:00:02+01:00",
+        "refresh at=03s coverage=complete"
+       ],
+       "readings": [
+        "applied: current/unknown",
+        "applied: current/complete"
+       ]
+      },
+      "laterCaptureBothOffsets": {
+       "steps": [
+        "refresh at=2026-10-28T01:00:02+01:00",
+        "refresh at=2026-10-27T23:00:03-01:00 coverage=complete"
+       ],
+       "readings": [
+        "applied: current/unknown",
+        "applied: current/complete"
+       ]
+      },
+      "laterCaptureFraction": {
+       "steps": [
+        "refresh at=02s",
+        "refresh at=2026-10-28T00:00:02.500Z coverage=complete"
+       ],
+       "readings": [
+        "applied: current/unknown",
+        "applied: current/complete"
+       ]
+      },
+      "sameCapture": {
+       "steps": [
+        "refresh at=02s",
+        "refresh at=02s coverage=complete"
+       ],
+       "readings": [
+        "applied: current/unknown",
+        "applied: current/complete"
+       ]
+      },
+      "sameCaptureOffset": {
+       "steps": [
+        "refresh at=02s",
+        "refresh at=2026-10-28T01:00:02+01:00 coverage=complete"
+       ],
+       "readings": [
+        "applied: current/unknown",
+        "applied: current/complete"
+       ]
+      },
       "eventKeepsSeal": {
        "steps": [
         "refresh at=01s seq=1 version=v1 coverage=complete",
@@ -1123,13 +1839,35 @@
       "reusedLast": "rows=[captured_at_render,reused] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: partial unknown | observations: 2 rows, 1 reused: partial",
       "reusedFirst": "rows=[reused,captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: partial unknown | observations: 2 rows, 1 reused: partial",
       "reusedBoth": "rows=[reused,reused] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: partial unknown | observations: 2 rows, 2 reused: partial",
+      "reused3at0": "rows=[reused,captured_at_render,captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: partial unknown | observations: 3 rows, 1 reused: partial",
+      "reused3at1": "rows=[captured_at_render,reused,captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: partial unknown | observations: 3 rows, 1 reused: partial",
+      "reused3at2": "rows=[captured_at_render,captured_at_render,reused] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: partial unknown | observations: 3 rows, 1 reused: partial",
+      "reused4at0": "rows=[reused,captured_at_render,captured_at_render,captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: partial unknown | observations: 4 rows, 1 reused: partial",
+      "reused4at1": "rows=[captured_at_render,reused,captured_at_render,captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: partial unknown | observations: 4 rows, 1 reused: partial",
+      "reused4at2": "rows=[captured_at_render,captured_at_render,reused,captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: partial unknown | observations: 4 rows, 1 reused: partial",
+      "reused4at3": "rows=[captured_at_render,captured_at_render,captured_at_render,reused] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=null: partial unknown | observations: 4 rows, 1 reused: partial",
       "committedRender": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=\"rnd_aaaaaaaaaaaaaaaaaaaaaa\" commit_seq=null: refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.",
       "renderIdEmpty": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=\"\" commit_seq=null: refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.",
       "renderIdZero": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=0 commit_seq=null: refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.",
       "renderIdAbsent": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=absent commit_seq=null: refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.",
+      "renderIdTrue": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=true commit_seq=null: refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.",
+      "renderIdFalse": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=false commit_seq=null: refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.",
+      "renderIdOne": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=1 commit_seq=null: refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.",
+      "renderIdList": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=[\"rnd_aaaaaaaaaaaaaaaaaaaaaa\"] commit_seq=null: refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.",
+      "renderIdArray": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=[] commit_seq=null: refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.",
+      "renderIdRecord": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id={\"id\":\"rnd_aaaaaaaaaaaaaaaaaaaaaa\"} commit_seq=null: refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.",
+      "renderIdObject": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id={} commit_seq=null: refused validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.",
       "committedSeq": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=1: refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.",
       "commitSeqZero": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=0: refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.",
-      "commitSeqEmpty": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=\"\": refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null."
+      "commitSeqEmpty": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=\"\": refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.",
+      "commitSeqTrue": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=true: refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.",
+      "commitSeqFalse": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=false: refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.",
+      "commitSeqText": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=\"1\": refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.",
+      "commitSeqList": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=[1]: refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.",
+      "commitSeqArray": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=[]: refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.",
+      "commitSeqRecord": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq={\"seq\":1}: refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.",
+      "commitSeqObject": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq={}: refused validation: ReactiveFiber topology refused: result.commit_seq must be absent or null.",
+      "commitSeqAbsent": "rows=[captured_at_render] blocks=1 necessity=1 withheld=0 render_id=null commit_seq=absent: complete success | observations: 1 row, 0 reused"
      }
     }
    ]
