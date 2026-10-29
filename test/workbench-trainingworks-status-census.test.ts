@@ -69,6 +69,27 @@
  * text can begin with what holds a table tag (a strong, an image tag), and RESPIN 1's first and last elements are those of the
  * collections POSITION names.
  *
+ * FOLLOW-UP (wb-tcak, the R694 follow-up of the landing-573 gate's F1 and F3; test-only: census, roster). F1: seven census-only
+ * class mutants of Q12's closure reading stayed green on cut #3 - N33 an HTML block counted only when its visible text holds a
+ * letter, number, punctuation or symbol; E01 and E02 a paragraph's children after a hard or a soft line break skipped; E04 the
+ * name's lookahead without the Unicode spaces U+1680, U+2000-U+200A, U+2028, U+2029, U+202F, U+205F, U+3000 and U+FEFF; E05 ordered
+ * lists from 10 with "." skipped; E06 ordered lists from 2 skipped; E07 the first child of a heading other than level 2 skipped. Q12
+ * adds the gate's seven plants as route controls, byte for byte, so each of those mutants now reds Q12, and five more in their
+ * families: a backslash hard line break, a hard and a soft line break in item texts, table tags after every one of those Unicode
+ * spaces (each code point JavaScript's white space holds past the ones pinned before), an ordered list from 2 with ")", and table
+ * tags opening ATX headings of levels 3 to 6. F3: a browser ends a comment at "--!>" as well as at "-->", and the rendered view did
+ * not - HIDDEN_HTML ran an HTML block's comment to its next "-->", and an inline comment token (marked ends one at its first "-->")
+ * rendered nothing - so a citation or a sentence after a comment ended at "--!>" was hidden from clauses (a) and (c) while a browser
+ * shows it; an inline processing instruction or CDATA section, which a browser ends at its first ">" and marked at "?>" or "]]>",
+ * hid the text between the same way. HIDDEN_HTML now ends a comment at "--!>" too, and an inline comment, processing instruction,
+ * declaration or CDATA section renders what HIDDEN_HTML leaves of it (INLINE_NON_TAG); A2 and C2 pin both forms, each in both
+ * directions, and quiet controls hold that a complete inline comment, an inline processing instruction ending at its only ">", a
+ * comment holding "--!" without a ">" and an inline tag's attribute value holding tags still hide what they hold (a tag renders
+ * nothing inline, whatever its attribute values hold). R-COMMENT-BANG (wb-325x cut #3), the same comment-end family read
+ * through Q12's closure reading, is cured with them: HTML_COMMENT ends a comment where a browser does (the form the residual's quiet
+ * row read its page with, HTML_COMMENT_AS_HTML, now the one comment pattern), the residual's page is a flagged route control with
+ * its counts pinned beside the same table tag after a "--!>" end inside an inline comment token, and the residual leaves RESIDUALS.
+ *
  * MEASURED (read-only, by the cutting seats, 2026-10-23 and 2026-10-24; the producer facts ride the roster with their blob ids):
  * each deposit's README.md:3 at its pin is its status line, and DEPOSITS holds that line's status clause verbatim: HX "no new HX
  * code implemented", Forge "proposed additive source adapter, not implemented", Furnace "no simulator or policy hooks implemented by
@@ -89,13 +110,18 @@
  * Re-measured for R-HTML-TABLE (wb-9chv, at trunk 799eebe): TRACEABILITY.md holds no html token and feature-matrix.md two, the
  * inline <id> placeholders of its invoke:<id> cells; neither renders an HTML block or holds a table tag. Re-measured for wb-325x (at
  * trunk 215c025, marked 18.0.11): both documents still read 0 HTML blocks and 0 table tags; at its cut #3 (trunk 39570b6) as well.
+ * Re-measured for wb-tcak (at trunk 8d458c6, marked 18.0.11): both documents read 0 HTML blocks and 0 table tags, and none of the
+ * 77 tracked docs pages spells "<!" or "<?" (so no comment, declaration, CDATA section or processing instruction), so the view's
+ * new comment ends and its inline rule change no real reading (A1, B1 and C2's walks read as before).
  *
  * RENDERED VIEW. What a reader sees of a markdown page, read through marked's lexer (the repository's marked devDependency, 18.0.11
  * at this cut, the renderer the refusal's readings used). A PIECE is one rendered block: a heading, a paragraph, a list item's own
  * text, a table row (its rendered cells joined by " | "), one line of a code block, or the visible text of an HTML block. Raw HTML
- * renders no text of its own (HIDDEN_HTML): a tag, a comment (an unterminated one runs to the end of its HTML block, as CommonMark
- * reads it), a processing instruction, a declaration or a CDATA section (each to its first ">", as a browser reads them); the
- * text between tags renders. Inline markup renders its
+ * renders no text of its own (HIDDEN_HTML): a tag, a comment (to its first "-->" or "--!>", or abruptly, as a browser ends one; an
+ * unterminated one runs to the end of its HTML block, as CommonMark reads it), a processing instruction, a declaration or a CDATA
+ * section (each to its first ">", as a browser reads them); the text between tags renders. Inline, a tag renders nothing, and a
+ * comment, processing instruction, declaration or CDATA section renders what HIDDEN_HTML leaves of marked's token (INLINE_NON_TAG:
+ * marked can end one past where a browser does, and a browser shows the text after the end). Inline markup renders its
  * text, so emphasis, a tag or a comment inside a word does not split it; a code span or a code block renders its literal text; a
  * link renders its text, not its destination; an image renders its alt text (as test/helpers/census.ts reads it). Outside code,
  * character references are decoded (every numeric one, and the named ones in NAMED_REFERENCES), format characters (Unicode Cf:
@@ -134,8 +160,13 @@
  *    the HX x GP family, the unattributed namesake, a line-wrapped phrase, and the rendered view: a phrase, an attribution or a
  *    mention only inside a comment, a name split by markup, a reference or an invisible character, an unterminated comment (one
  *    holding a ">" too), an empty comment, a CDATA section, processing instruction or declaration, an HTML block's text, code, a
- *    blockquote, a table header cell, a named reference in the HX x GP title, a phrase split across list items, and a finding's
- *    source line). B, (b): B1 the real ledger and matrix - every rendered table row read (each document's own table-line count
+ *    blockquote, a table header cell, a named reference in the HX x GP title, a phrase split across list items, a finding's source
+ *    line, and wb-tcak's: a mention, a phrase or a referenced name after a comment a browser ends at "--!>" - opening an HTML block,
+ *    inside a div block or inside an inline comment token marked runs to a later "-->" - and a mention after an inline processing
+ *    instruction or CDATA section a browser ends at its first ">", flagged or quiet as a browser shows them, beside a mention inside
+ *    a complete inline comment, an inline processing instruction to its only ">", a comment holding "--!" without a ">" and an
+ *    inline tag's attribute value holding tags, quiet).
+ *    B, (b): B1 the real ledger and matrix - every rendered table row read (each document's own table-line count
  *    outside code and HTML blocks), the product parser's 50 WB rows among them with their statuses, every matrix status a legend
  *    word, no finding; B2 the judge on ledger and matrix controls (with a bare and a short cmd_ token, and the rendered view: a
  *    subject split by a comment, an emphasized status, a receipt or a claim word only inside a comment, and a row only inside a
@@ -144,9 +175,10 @@
  *    second vocabulary line, a renamed heading, a comment between the vocabulary line and its list, a malformed item). C, (c): C1
  *    the guard through the product module - each claim status refused on fixture-tier receipts alone (live cell or a labelled cmd_
  *    clause), a mixed row and non-claim rows accepted, the live ledger clean; C2 the real docs walk (git-tracked, exact) - no
- *    finding - and the sentence judge on controls (with two adjacent list items and a heading line, and the rendered view). Q, the
- *    residuals' pinned quiet rows (RESIDUALS); Q12 also pins its closure reading on flagged and quiet controls and a matrix, and
- *    R-COMMENT-BANG's quiet row.
+ *    finding - and the sentence judge on controls (with two adjacent list items and a heading line, and the rendered view, wb-tcak's
+ *    an equation after a comment a browser ends at "--!>", opening an HTML block and inside an inline comment token, and a negation
+ *    there that a browser shows). Q, the residuals' pinned quiet rows (RESIDUALS); Q12 also pins its closure reading on flagged and
+ *    quiet controls and a matrix.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and pins,
  * every pin's witness, the constants and every registered test title - is held to the out-of-file roster
  * (test/fixtures/trainingworks-status-roster.json). OUTSIDE ANCHORS (their own registered case): the bead's own row in the tracker
@@ -157,17 +189,20 @@
  * helper, binds MATRIX_LEGEND and MATRIX_CLAIMS. The last case reads the vitest task tree (every registered test, in roster order,
  * in run mode, ran before it) and the pins reached.
  * NOT CLAIMED (edits of this file and the roster together below row level): a pin removed from ROWS, the literal, IMPL and the
- * roster (the bead text anchors rows, not pins); a control removed while every remaining control still holds; a pin's case replaced
- * by one that echoes its roster witness; the outside-anchor case or the closing case removed with its roster title; a constant
- * narrowed in both, such as a cited guard's spelling rewritten in both. (Until wb-325x an element dropped from TABLE_TAG in both was
- * the example - td dropped from both with a <td> tag planted in a matrix cell: 22 of 22 pass; Q12's every-element closure control
- * now reads fewer table tags for any element dropped. Until its cut #2 the comment pattern narrowed to complete comments in both was
- * one too, 22 of 22; Q12's unterminated-comment control now reads a table tag under it.) Of Q12's closure reading, the bounds past
- * what SCOPE claims (each measured: a reader that stops just past one stays 22 of 22, and each sits above both judged documents): a
- * nesting deeper than the chain's (htmlRaws recursion depth 11; the documents reach 2); a collection longer than its long case (100
- * items, blocks, rows or a row's cells, 203 inline children, 202 in a cell; the documents' largest is a 50-row table); more than
- * 1,000 table-tag tokens or 100 HTML blocks in one page (the documents hold none); a page longer than the long-page control, and a
- * table tag later in one token than the deep-block control's, both built at run time past the longer judged document.
+ * roster (the bead text anchors rows, not pins); a control removed while every remaining control still holds; a control's text
+ * replaced by another of the same reading, which needs no roster edit (wb-tcak's cured R-COMMENT-BANG page closed as a complete
+ * comment reads 1/1 as well: 22 of 22; the comment-end cure stays held by the inline-token control, A2 and C2); a pin's case
+ * replaced by one that echoes its roster witness; the outside-anchor case or the closing case removed with its roster title; a
+ * constant narrowed in both, such as a cited guard's spelling rewritten in both. (Until wb-325x an element dropped from TABLE_TAG in
+ * both was the example - td dropped from both with a <td> tag planted in a matrix cell: 22 of 22 pass; Q12's every-element closure
+ * control now reads fewer table tags for any element dropped. Until its cut #2 the comment pattern narrowed to complete comments in
+ * both was one too, 22 of 22; Q12's unterminated-comment control now reads a table tag under it.) Of Q12's closure reading, the
+ * bounds past what SCOPE claims (each measured: a reader that stops just past one stays 22 of 22, and each sits above both judged
+ * documents): a nesting deeper than the chain's (htmlRaws recursion depth 11; the documents reach 2); a collection longer than its
+ * long case (100 items, blocks, rows or a row's cells, 203 inline children, 202 in a cell; the documents' largest is a 50-row
+ * table); more than 1,000 table-tag tokens or 100 HTML blocks in one page (the documents hold none); a page longer than the
+ * long-page control, and a table tag later in one token than the deep-block control's, both built at run time past the longer judged
+ * document.
  * RESIDUALS (named, each with its pinned quiet row): R-ATTRIBUTED-FILE a GraphPolicy mention without a family mark in a page that
  * names the graph-policy-machine-control program is attributed to that program, so an HX x GP citation spelled there without its
  * directory, title or "HX GP" is not held to "design only" (Q1); R-UNPINNED a TrainingWorks citation pinning no deposit sha is held
@@ -190,13 +225,10 @@
  * the W10 stamped-claim guard (test/workbench-w10-stamped-claim-guard.test.ts) refuses every raw HTML token on the matrix but a
  * complete comment, and the TRACEABILITY freeze (test/workbench-traceability-freeze.test.ts) pins the ledger byte-exact - and Q12
  * cites both (the guard's page check applied to the matrix; the freeze's pinned hash equal to the ledger's sha256) and holds both
- * documents to render no HTML block and no table tag. R-COMMENT-BANG (Q12's closure reading): a browser ends a comment at "--!>" as
- * well as at "-->", but HTML_COMMENT and the rendered view's HIDDEN_HTML end one only at "-->" (or abruptly, or at the token's end),
- * and marked runs an HTML block that opens with a comment to the next "-->"; so a table after a comment ended that way renders, yet
- * the closure reading reads its block quiet. Q12's residual row pins that page's quiet reading beside the table tag it holds once
- * its comments end where a browser ends them (HTML_COMMENT_AS_HTML), so a silenced page reds. The route is closed for both judged
- * documents the same way: the W10 guard ends comments as a browser does (a comment body holding "--!>" is no complete comment to it)
- * and refuses such a page on the matrix, and the freeze pins the ledger.
+ * documents to render no HTML block and no table tag. R-COMMENT-BANG, named at wb-325x cut #3 (a browser ends a comment at "--!>"
+ * as well as at "-->", but HTML_COMMENT and HIDDEN_HTML ended one only at "-->", so a table after a comment ended that way read
+ * quiet), is cured by wb-tcak (FOLLOW-UP): both patterns end a comment where a browser does, and its page is a flagged route
+ * control.
  * SCOPE: the tier is read from the ledger's own words, never from the producer: a receipt's tier is what its clause says. The
  * sentence judge reads words, not meaning: an affirmative sentence that names both sides around a copula (OVER-READ, disclosed;
  * none today) reads as an equation. The 400-character window counts UTF-16 code units of the rendered text. A row's subject and
@@ -205,44 +237,50 @@
  * matrix text is edited by this cut; the guard is the only product change.
  * Q12 reads a document's HTML blocks in the rendered view (a complete comment renders nothing and is no HTML block there) and its
  * table tags in the html tokens htmlRaws collects, a table tag inside a comment excepted. What it claims of that reading (wb-325x
- * cut #3, in the enumerate-the-resolvable form) is exactly the reading of its route controls and its closure matrix - each text in
- * Q12, each reading pinned in the roster's Q12 witness - and nothing past them; the members named here are what those texts
- * exercise, each claimed only as far as its texts spell it. DESCENT: an html token is read in a paragraph, a heading, the middle
- * item of a tight list, a header cell and a body cell, each alone and inside strong (**), em (_), del (~~), an inline link's text
- * and an inline image's alt text; in each of those five wrappers inside each of the five in a paragraph, but a link in a link
- * (marked never nests one); in a paragraph also inside __ strong, * em, ~ del and a full-reference link's text and image's alt text;
- * in each holder and in an HTML block inside a blockquote and inside the later block of a loose list's middle item, one or two deep
- * in either order; along one fourteen-container chain; in a nested list item and a nested blockquote; in ordered lists from 0, 1 and
- * 3 with "." and from 1 and 10 with ")"; in "-", "*" and "+" bullet lists; in unchecked and checked task items ([ ], [x] and [X]);
- * in headings of every level (ATX and setext); in aligned cells; in a pre block, script, style and textarea blocks, a block that
- * opens with a comment, a type-7 block (a span tag alone on its line) and blocks that open with a processing instruction, a
- * declaration and a CDATA section; and inside an inline code element (marked's raw-block state). POSITION: besides the middle ones
- * the matrix uses, in the first and the last of a page's, a blockquote's and a list item's blocks, a list's items, a table's header
- * cells, body rows and a row's cells, and a heading's and each matrix inline wrapper's children; last among a paragraph's and an
- * item text's children, and first among them (a strong holding table tags, and an image tag holding one); after 99 quiet elements of
- * each of those collections and of a paragraph's, an item text's and a cell's children; and in the last block of a page longer than
- * either judged document. COUNT: one per html token, for each of the ten table elements in lower case, in upper case and in one
- * mixed-case spelling of each (td also as <Td> and </tD>), followed by a space, a tab, a line break or a form feed, "/", ">" or the
- * token's end, at any offset of the token up to the deep block's (past the longer judged document), to 1,000 tokens in a paragraph;
- * excepted inside a comment as HTML_COMMENT spans it (a complete one, an unterminated one, each of two in one token), and read
- * beside one (after a complete one, after an abrupt <!--> or <!--->) and between two in one token (in a div block and in a block
- * that opens with one); a custom element whose name begins like a table element's, and a malformed tag marked keeps as text, are
- * none; code spans, fenced and indented code, escaped tags and character references in text hold no html token, and named, decimal
- * and hex references in an attribute value read no table tag. These readings differ from what renders and are pinned as read: a
- * table tag in an image's alt text; in another tag's double- or single-quoted attribute value; inside a CDATA section, a declaration
- * or a processing instruction (none of which a browser reads a tag in); in a script, style or textarea block; one a comment splits
- * (<t<!-- -->d>, read once the comment is removed); a table element's name followed by a vertical tab or a no-break space (white
- * space to TABLE_TAG, not to HTML); an unclosed tag ending an HTML block (read as a table tag and as visible text); and, the other
- * way, a table tag after a comment opener inside an attribute value of an HTML block, which HTML_COMMENT runs to the token's end
- * (the block still reads as an HTML block). HTML BLOCKS: a block is counted when its visible text holds Latin letters, digits alone
- * (<div>42</div>), hyphens alone (<div>--</div>), a plus sign alone or a Cyrillic letter alone; each script, style or textarea
- * block, its text between the tags read as visible (a browser shows none of a script's or a style's: R-HIDDEN-HTML's family); each
- * block that opens with a processing instruction, a declaration or a CDATA section, the text after its first ">" visible as a
- * browser shows it; two on later lines and a hundred in one page, in a blockquote and in a later list item; none for a block of tags
- * or comments alone. KNOWN PAST THE CLAIM: the NOT CLAIMED bounds above (each measured) and the NAMED RESIDUAL R-COMMENT-BANG
- * (RESIDUALS); no other member is known: of the 299 census-only class mutants this cut's battery runs on cut #2 and on this cut (the
- * refusal-#2 gate's PREP set of 59, cut #2's 202 and this cut's 38), every one reds Q12 here but 21 bound probes past those bounds
- * and 3 equivalents (a list-item branch htmlRaws never reaches). An escape found later is a residual-list addition. It reads the two
+ * cut #3, in the enumerate-the-resolvable form, and wb-tcak) is exactly the reading of its route controls and its closure matrix -
+ * each text in Q12, each reading pinned in the roster's Q12 witness - and nothing past them; the members named here are what those
+ * texts exercise, each claimed only as far as its texts spell it. DESCENT: an html token is read in a paragraph, a heading, the
+ * middle item of a tight list, a header cell and a body cell, each alone and inside strong (**), em (_), del (~~), an inline link's
+ * text and an inline image's alt text; in each of those five wrappers inside each of the five in a paragraph, but a link in a link
+ * (marked never nests one); in a paragraph also inside __ strong, * em, ~ del and a full-reference link's text and image's alt text,
+ * and after a hard line break (two spaces or a backslash) and a soft line break, and in an item's text after a two-space hard line
+ * break and a soft line break; in each holder and in an HTML block inside a blockquote and inside the later block of a loose list's
+ * middle item, one or two deep in either order; along one fourteen-container chain; in a nested list item and a nested blockquote;
+ * in ordered lists from 0, 1, 2, 3 and 10 with "." and from 1, 2 and 10 with ")"; in "-", "*" and "+" bullet lists; in unchecked and
+ * checked task items ([ ], [x] and [X]); in headings of every level (ATX and setext); in aligned cells; in a pre block, script,
+ * style and textarea blocks, a block that opens with a comment, a type-7 block (a span tag alone on its line) and blocks that open
+ * with a processing instruction, a declaration and a CDATA section; and inside an inline code element (marked's raw-block state).
+ * POSITION: besides the middle ones the matrix uses, in the first and the last of a page's, a blockquote's and a list item's blocks,
+ * a list's items, a table's header cells, body rows and a row's cells, and a heading's (the first at every ATX level, 1 to 6) and
+ * each matrix inline wrapper's children; last among a paragraph's and an item text's children, and first among them (a strong
+ * holding table tags, and an image tag holding one); after 99 quiet elements of each of those collections and of a paragraph's, an
+ * item text's and a cell's children; and in the last block of a page longer than either judged document. COUNT: one per html token,
+ * for each of the ten table elements in lower case, in upper case and in one mixed-case spelling of each (td also as <Td> and
+ * </tD>), followed by a space, a tab, a line break or a form feed, "/", ">" or the token's end, at any offset of the token up to the
+ * deep block's (past the longer judged document), to 1,000 tokens in a paragraph; excepted inside a comment as HTML_COMMENT spans it
+ * (a complete one, an unterminated one, each of two in one token, one holding "--!" without a ">"), and read beside one (after a
+ * complete one, after an abrupt <!--> or <!--->, after one ended at "--!>" in a block that opens with it and inside an inline
+ * comment token marked runs to a later "-->") and between two in one token (in a div block and in a block that opens with one); a
+ * custom element whose name begins like a table element's, and a malformed tag marked keeps as text, are none; code spans, fenced
+ * and indented code, escaped tags and character references in text hold no html token, and named, decimal and hex references in an
+ * attribute value read no table tag. These readings differ from what renders and are pinned as read: a table tag in an image's alt
+ * text; in another tag's double- or single-quoted attribute value; inside a CDATA section, a declaration or a processing instruction
+ * (none of which a browser reads a tag in); in a script, style or textarea block; one a comment splits (<t<!-- -->d>, read once the
+ * comment is removed); a table element's name followed by a vertical tab, a no-break space or any other white space JavaScript's \s
+ * holds (U+1680, U+2000 to U+200A, U+2028, U+2029, U+202F, U+205F, U+3000, U+FEFF: white space to TABLE_TAG, not to HTML; a carriage
+ * return reaches no token, marked reads one as a line feed); an unclosed tag ending an HTML block (read as a table tag and as
+ * visible text); and, the other way, a table tag after a comment opener inside an attribute value of an HTML block, which
+ * HTML_COMMENT runs to the token's end (the block still reads as an HTML block). HTML BLOCKS: a block is counted when its visible
+ * text holds Latin letters, digits alone (<div>42</div>), hyphens alone (<div>--</div>), a plus sign alone, a Cyrillic letter alone
+ * or a combining mark alone (U+0301), and when that text follows a comment it opens with and a browser ends at "--!>"; each script,
+ * style or textarea block, its text between the tags read as visible (a browser shows none of a script's or a style's:
+ * R-HIDDEN-HTML's family); each block that opens with a processing instruction, a declaration or a CDATA section, the text after its
+ * first ">" visible as a browser shows it; two on later lines and a hundred in one page, in a blockquote and in a later list item;
+ * none for a block of tags or comments alone. KNOWN PAST THE CLAIM: the NOT CLAIMED bounds above (each measured); no other member is
+ * known: of the 299 census-only class mutants cut #3's battery ran on cut #2 and on cut #3 (the refusal-#2 gate's PREP set of 59,
+ * cut #2's 202 and cut #3's 38), every one red Q12 at cut #3 but 21 bound probes past those bounds and 3 equivalents (a list-item
+ * branch htmlRaws never reaches); wb-tcak's battery replays the archived sets with the landing-573 gate's 39 LEG 2 mutants on trunk
+ * 8d458c6 and on this cut (its counts ride the delivery note). An escape found later is a residual-list addition. It reads the two
  * guards it cites by their source spellings, so a cut renaming the W10 guard's page check or the freeze's target or hash constant
  * re-measures Q12 in the same commit.
  *
@@ -393,8 +431,10 @@ const NAMED_REFERENCES: Readonly<Record<string, string>> = {
   hellip: cp(0x2026),
 };
 const REFERENCE = /&(?:#(\d{1,7})|#[xX]([0-9A-Fa-f]{1,6})|([A-Za-z][A-Za-z0-9]{1,31}));/g;
-/** Raw HTML that renders no text: a comment (an empty one, or to its --> or the end), a declaration, processing instruction or CDATA section (to its first >, as a browser reads them), a tag. */
-const HIDDEN_HTML = /<!--(?:-?>|[\s\S]*?(?:-->|$))|<[!?][^>]*(?:>|$)|<\/?[A-Za-z][^<>]*>/g;
+/** Raw HTML that renders no text: a comment (an empty one, or to its first --> or --!> as a browser ends one, or the end), a declaration, processing instruction or CDATA section (to its first >, as a browser reads them), a tag. */
+const HIDDEN_HTML = /<!--(?:-?>|[\s\S]*?(?:--!?>|$))|<[!?][^>]*(?:>|$)|<\/?[A-Za-z][^<>]*>/g;
+/** An inline html token that is no tag - a comment, a declaration or a CDATA section (<!) or a processing instruction (<?): marked can end one past where a browser does, so it renders what HIDDEN_HTML leaves of it (wb-tcak). */
+const INLINE_NON_TAG = /^<[!?]/;
 /** Format characters (Unicode Cf) render nothing. */
 const FORMAT = /\p{Cf}/gu;
 /** The white space a status phrase may hold between its words: inside one piece only. */
@@ -406,9 +446,8 @@ const LEGEND_LEAD = "Status vocabulary (exactly one per row):";
 const LEGEND_ITEM = /^([a-z-]+): (.*)$/;
 /** R-HTML-TABLE (Q12): a table-structure tag, a comment (no tag inside one counts), and each judged document's gate-level guard with the source spellings Q12 cites it by. */
 const TABLE_TAG = /<\/?(?:table|caption|colgroup|col|thead|tbody|tfoot|tr|th|td)(?=[\s/>]|$)/i;
-const HTML_COMMENT = /<!--(?:-?>|[\s\S]*?(?:-->|$))/g;
-/** A comment as a browser ends it - abruptly (<!--> or <!--->), at the first --> or --!>, or at the end: R-COMMENT-BANG's pinned quiet row reads its page with it (wb-325x cut #3). */
-const HTML_COMMENT_AS_HTML = /<!--(?:-?>|[\s\S]*?(?:--!?>|$))/g;
+/** A comment as a browser ends it - abruptly (<!--> or <!--->), at the first --> or --!>, or at the end (wb-tcak: R-COMMENT-BANG cured). */
+const HTML_COMMENT = /<!--(?:-?>|[\s\S]*?(?:--!?>|$))/g;
 const W10_GUARD = "test/workbench-w10-stamped-claim-guard.test.ts";
 const W10_MATRIX = /^const MATRIX = "([^"\n]+)";$/m;
 const W10_PAGE_CHECK = "htmlRefusals(tokens, MATRIX,";
@@ -429,7 +468,6 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-LINK-TARGET": ["Q10"],
   "R-HIDDEN-HTML": ["Q11"],
   "R-HTML-TABLE": ["Q12"],
-  "R-COMMENT-BANG": ["Q12"],
 };
 
 interface Row {
@@ -600,11 +638,14 @@ function referencesDecoded(text: string): string {
 function clean(text: string): string {
   return text.replace(FORMAT, "").replace(/\s+/g, " ").trim();
 }
-/** What a reader sees of inline tokens: raw HTML (a tag, a complete comment) renders nothing, markup its text, code its literal text. */
+/** What a reader sees of inline tokens: a tag renders nothing, a comment, processing instruction, declaration or CDATA section what a browser shows after its end (INLINE_NON_TAG), markup its text, code its literal text. */
 function inlineOf(tokens: readonly Token[]): string {
   let out = "";
   for (const token of tokens) {
-    if (token.type === "html") continue;
+    if (token.type === "html") {
+      if (INLINE_NON_TAG.test(token.raw)) out += referencesDecoded(token.raw.replace(HIDDEN_HTML, ""));
+      continue;
+    }
     if (token.type === "br") out += "\n";
     else if (token.type === "codespan" || token.type === "escape") out += tokenText(token);
     else if (childrenOf(token).length > 0) out += inlineOf(childrenOf(token));
@@ -1117,6 +1158,18 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "phrase-in-a-declaration", path: "docs/workbench/x.md", text: "TrainingWorks (Forge @3ce473386133).\n\n<!NOTE proposed additive source adapter, not implemented>", flagged: true },
       { id: "text-after-an-empty-comment", path: "docs/workbench/x.md", text: "<!--> Pi reads the TrainingWorks export.", flagged: true },
       { id: "title-with-a-named-reference", path: "docs/workbench/x.md", text: "HyperUnix &times; GraphPolicyCLI ranks physical plans.", flagged: true },
+      // wb-tcak F3: a comment a browser ends at "--!>", and an inline processing instruction or CDATA section it ends at its first ">".
+      { id: "text-after-a-comment-a-browser-ends-at-bang", path: "docs/workbench/x.md", text: "<!-- note --!> Pi reads the TrainingWorks export.", flagged: true },
+      { id: "text-after-a-bang-ended-comment-inside-an-html-block", path: "docs/workbench/x.md", text: "<div>\n<!-- note --!> Pi reads the TrainingWorks export.\n</div>", flagged: true },
+      { id: "text-after-a-bang-ended-comment-inside-an-inline-comment-token", path: "docs/workbench/x.md", text: "Pi notes <!-- note --!> Pi reads the TrainingWorks export. --> here.", flagged: true },
+      { id: "name-spelled-by-a-reference-after-a-bang-ended-comment-inside-an-inline-comment-token", path: "docs/workbench/x.md", text: "Pi notes <!-- note --!> Pi reads the Training&#87;orks export. --> here.", flagged: true },
+      { id: "phrase-after-a-comment-a-browser-ends-at-bang", path: "docs/workbench/x.md", text: "TrainingWorks (Forge @3ce473386133).\n\n<!-- note --!> proposed additive source adapter, not implemented", flagged: false },
+      { id: "text-after-an-inline-processing-instruction-a-browser-ends-at-its-first-bracket", path: "docs/workbench/x.md", text: "Pi notes <?note a > Pi reads the TrainingWorks export. ?> here.", flagged: true },
+      { id: "text-after-an-inline-cdata-section-a-browser-ends-at-its-first-bracket", path: "docs/workbench/x.md", text: "Pi notes <![CDATA[ a > Pi reads the TrainingWorks export. ]]> here.", flagged: true },
+      { id: "mention-inside-a-complete-inline-comment", path: "docs/workbench/x.md", text: "Pi notes <!-- Pi reads the TrainingWorks export. --> here.", flagged: false },
+      { id: "mention-inside-an-inline-processing-instruction", path: "docs/workbench/x.md", text: "Pi notes <?note Pi reads the TrainingWorks export. ?> here.", flagged: false },
+      { id: "mention-inside-a-comment-holding-a-bang-without-a-bracket", path: "docs/workbench/x.md", text: "<!-- note --! Pi reads the TrainingWorks export. -->", flagged: false },
+      { id: "mention-inside-an-attribute-value-of-an-inline-tag", path: "docs/workbench/x.md", text: 'Pi notes <span title="<b>Pi reads the TrainingWorks export.</b>">x</span> here.', flagged: false },
     ];
     const readings = controls.map(control => {
       const reading = citationsIn(control.path, control.text);
@@ -1283,6 +1336,10 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "html-block-text", text: "<div>A fixture run equals live Furnace success.</div>", flagged: true },
       { id: "equation-in-code", text: "```\nA fixture run equals live Furnace success.\n```", flagged: true },
       { id: "equation-in-a-blockquote", text: "> A fixture run equals live Furnace success.", flagged: true },
+      // wb-tcak F3: a sentence after a comment a browser ends at "--!>", in an HTML block and inside an inline comment token.
+      { id: "equation-after-a-comment-a-browser-ends-at-bang", text: "<!-- note --!> A fixture run equals live Furnace success.", flagged: true },
+      { id: "equation-after-a-bang-ended-comment-inside-an-inline-comment-token", text: "Pi notes. <!-- note --!> A fixture run equals live Furnace success. --> Done.", flagged: true },
+      { id: "negation-after-a-bang-ended-comment-inside-an-inline-comment-token", text: "A fixture run <!-- a --!> never --> equals live Furnace success.", flagged: false },
     ];
     const readings = controls.map(control => {
       const found = sentenceFindings("docs/workbench/x.md", control.text);
@@ -1395,6 +1452,12 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     const longPage = `${quietBlock.repeat(Math.ceil(longest / quietBlock.length) + 1)}Pi notes <td>landed-gated</td>`;
     const quietTag = "<p>quiet</p>\n";
     const deepBlock = `<div>\n${quietTag.repeat(Math.ceil(longest / quietTag.length) + 1)}<td>landed-gated</td>\n</div>`;
+    const unicodeSpaces = [0x1680, 0x2000, 0x2001, 0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x2007, 0x2008, 0x2009, 0x200a, 0x2028, 0x2029, 0x202f, 0x205f, 0x3000, 0xfeff];
+    const elsewhere = [0x9, 0xa, 0xb, 0xc, 0xd, 0x20, 0xa0];
+    expect(
+      unicodeSpaces,
+      "the E04 family's code points are every one TABLE_TAG's white space (\\s) matches but a tab, a line feed, a vertical tab, a form feed, a carriage return (marked reads one as a line feed), a space and a no-break space",
+    ).toEqual(Array.from({ length: 0x10000 }, (_, point) => point).filter(point => /\s/.test(cp(point)) && !elsewhere.includes(point)));
     expect(
       judged.every(page => page.length < longPage.length && page.split("\n").length < longPage.split("\n").length),
       "the long page is longer than either judged document, in characters and in lines",
@@ -1507,6 +1570,23 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "table-tags-inside-script-style-and-textarea-html-blocks", text: "<script>\n<td>a</td>\n</script>\n\n<style>\n<td>b</td>\n</style>\n\n<textarea>\n<td>c</td>\n</textarea>", flagged: true },
       { id: "table-tags-in-ordered-lists-starting-at-0-and-at-10", text: "0. quiet <td>a</td>\n\n10) quiet <td>b</td>", flagged: true },
       { id: "a-table-tag-inside-an-attribute-value", text: 'Pi notes <img alt="<td>landed-gated</td>"> here', flagged: true },
+      // wb-tcak F1: the landing-573 gate's plants for N33, E01, E02, E04, E05, E06 and E07, byte for byte, then their families.
+      { id: "an-html-block-of-a-combining-mark-alone", text: `<div>${cp(0x301)}</div>`, flagged: true },
+      { id: "table-tags-after-a-hard-line-break", text: "Pi notes  \nquiet <td>x</td> here", flagged: true },
+      { id: "table-tags-after-a-soft-line-break", text: "Pi notes\nquiet <td>x</td> here", flagged: true },
+      { id: "a-table-tag-after-a-line-separator", text: `Pi notes <td${cp(0x2028)}class="x">y</td> here`, flagged: true },
+      { id: "table-tags-in-an-ordered-list-from-10-with-a-dot", text: "10. quiet <td>x</td>", flagged: true },
+      { id: "table-tags-in-an-ordered-list-from-2", text: "2. quiet <td>x</td>", flagged: true },
+      { id: "a-table-tag-opening-a-level-1-heading", text: "# <td>a</td> heading", flagged: true },
+      { id: "table-tags-after-a-backslash-hard-line-break", text: "Pi notes\\\nquiet <td>x</td> here", flagged: true },
+      { id: "table-tags-after-a-hard-and-a-soft-line-break-in-item-texts", text: "- Pi notes  \n  quiet <td>x</td>\n- Pi notes\n  quiet <td>y</td>", flagged: true },
+      { id: "table-tags-after-every-other-unicode-white-space", text: `Pi notes ${unicodeSpaces.map(point => `<td${cp(point)}class="x">y</td>`).join(" ")} here`, flagged: true },
+      { id: "table-tags-in-an-ordered-list-from-2-with-a-paren", text: "2) quiet <td>x</td>", flagged: true },
+      { id: "table-tags-opening-atx-headings-of-levels-3-to-6", text: "### <td>3</td> c\n\n#### <td>4</td> d\n\n##### <td>5</td> e\n\n###### <td>6</td> f", flagged: true },
+      // wb-tcak F3 (R-COMMENT-BANG cured): a comment ends where a browser ends it, at "--!>" too, and not at "--!" alone.
+      { id: "a-table-after-a-comment-a-browser-ends-at-bang", text: "<!-- a --!>\n<table><tr><td>x</td></tr></table>", flagged: true },
+      { id: "a-table-tag-after-a-bang-ended-comment-inside-an-inline-comment-token", text: "Pi notes <!-- a --!> <td>x</td> --> here", flagged: true },
+      { id: "a-table-tag-inside-a-comment-holding-a-bang-without-a-bracket", text: "<div>\n<!-- a --! <td>x</td> -->\n</div>", flagged: false },
     ];
     const routes = routeControls.map(control => {
       const reading = htmlTableRoutes(control.text);
@@ -1538,15 +1618,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     expect(guards.matrix.pageChecks, "and applies its raw-HTML page check to it once").toBe(1);
     expect(guards.ledger.document, "the TRACEABILITY freeze reads the ledger").toBe(LEDGER);
     expect(guards.ledger.frozenSha256, "and its pinned hash is the ledger's sha256").toBe(sha256Of(LEDGER));
-    const residuals = [{ family: "R-COMMENT-BANG", text: "<!-- a --!>\n<table><tr><td>x</td></tr></table>" }].map(row => {
-      const reading = htmlTableRoutes(row.text);
-      const asHtml = htmlRaws(marked.lexer(row.text)).filter(raw => TABLE_TAG.test(raw.replace(HTML_COMMENT_AS_HTML, ""))).length;
-      expect(RESIDUALS[row.family], `${row.family} is a named residual whose quiet row Q12 pins`).toEqual(["Q12"]);
-      expect(reading.htmlBlocks + reading.tableTags, `${row.family}: the closure reading is quiet on its page`).toBe(0);
-      expect(asHtml, `${row.family}: yet the page holds a table tag once its comments end where a browser ends them`).toBeGreaterThan(0);
-      return { family: row.family, ...reading, tableTagsOnceCommentsEndAsHtml: asHtml };
-    });
-    return { controls: readings, routes, matrix, documents, guards, residuals };
+    return { controls: readings, routes, matrix, documents, guards };
   },
 };
 
@@ -1576,7 +1648,7 @@ describe("wb-4wmu.1 TrainingWorks status census (BEADS-TRAININGWORKS-R1)", () =>
         receipt: RECEIPT.source,
         fixtureTier: FIXTURE_TIER.source,
         sentence: [LIVE.source, NATIVE.source, SUCCESS.source, EQUATING.source, NEGATION_BEFORE.source, NEGATION_AFTER.source, CLAUSE_BREAK.source, SENTENCE_BREAK.source],
-        rendered: { namedReferences: NAMED_REFERENCES, reference: REFERENCE.source, hiddenHtml: HIDDEN_HTML.source, format: FORMAT.source, phraseSpace: PHRASE_SPACE },
+        rendered: { namedReferences: NAMED_REFERENCES, reference: REFERENCE.source, hiddenHtml: HIDDEN_HTML.source, inlineNonTag: INLINE_NON_TAG.source, format: FORMAT.source, phraseSpace: PHRASE_SPACE },
         legend: { heading: LEGEND_HEADING, parents: LEGEND_PARENTS, lead: LEGEND_LEAD, item: LEGEND_ITEM.source },
         residuals: RESIDUALS,
         htmlTable: {
