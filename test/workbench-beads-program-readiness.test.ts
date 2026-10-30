@@ -70,26 +70,70 @@
  * REACH_PLANTS rows that must read their reach (R2-DOOR, R2-DESCRIPTOR), beside the class members the resolvable form closes
  * beyond them (R2-ARROW, a composed key on a value the code builds; R2-DESTRUCT, that key in a binding pattern; GM33-ALIAS, a
  * built-in aliased).
- * WB-K2VJ (the R694 follow-up of wb-2fb4's landing 645, hop 5 of the landing-381 chain: F1 leads here). F1: an ambient
- * declaration got past D3's reach scan with no 'constructor' spelling, no key and no other form: the binder binds a read to a
- * file-local `declare const Function` (G1-AMBIENT-FUNCTION), `declare const Reflect` (G1-AMBIENT-REFLECT), `declare const
- * process` (G1-AMBIENT-PROCESS) or a `declare global` block's `var process` (G1-AMBIENT-GLOBAL-BLOCK), while the emitter erases
- * the declaration, so the code reads the built-in. The free-read test now leaves a read free when the file declares its name only
- * in scope declarations of an erased form, each of which binds nothing: a type-only import, an interface, a type alias, a
- * function signature with no body, a namespace that is not instantiated, and a variable, function, class, enum or namespace in an
- * ambient context (a `declare` modifier on it or on a declaration enclosing it). The installed esbuild transform emitted no
- * binding for any of them at cut time (measured by the seat; this census pins the scan, not the emitter). A member declared in an
- * ambient context (a property, an enum member) still names a member, never a read, and a namespace's own name is a declaration
- * (no `global` read). Each erased form is a REACH_PLANTS row that must read its reach: the four G1-AMBIENT plants, and the
- * ERASED-* rows this cut found - an ambient declaration in a function body, a declared class, namespace, enum and function with a
+ * WB-K2VJ (the R694 follow-up of wb-2fb4's landing 645, hop 5 of the landing-381 chain: F1 leads here). F1: an ambient declaration
+ * got past D3's reach scan with no 'constructor' spelling, no key and no other form: the binder binds a read to a file-local
+ * `declare const Function` (G1-AMBIENT-FUNCTION), `declare const Reflect` (G1-AMBIENT-REFLECT), `declare const process`
+ * (G1-AMBIENT-PROCESS) or a `declare global` block's `var process` (G1-AMBIENT-GLOBAL-BLOCK), while the emitter erases the
+ * declaration, so the code reads the built-in. The free-read test leaves a read free when the file declares its name only in
+ * declarations of an erased form, read fail closed against each emitter that loads this module - tsc (the build, under
+ * tsconfig.json), OXC (vitest's transform, through Vite 8), jiti's Babel (the loader the installed Pi runs this extension with on
+ * Node, package.json pi.extensions) - and the installed esbuild (cut #1's frame and the refusal's): a type-only import, an
+ * interface, a type alias, a function signature with no body, a const enum (tsc erases it: the project sets neither
+ * preserveConstEnums nor isolatedModules), a variable, function, class or enum in an ambient context (a `declare` modifier on it
+ * or on a declaration enclosing it), an import alias of a name (`import x = a.b`) whose leftmost name reads free, and a namespace
+ * that does not bind. A namespace binds only outside an ambient context, holding a statement of a kept kind (a variable statement,
+ * a function with a body, a class, an enum that is not const, an expression statement, or a namespace that binds; a dotted
+ * namespace through its inner one), and sharing its name with no ambient or body-less function, class, enum or namespace
+ * declaration. A member declared in an ambient context (a property, an enum member) still names a member, never a read; a
+ * namespace's, an enum's and an import alias's own name is a declaration, never a read; and the member an alias of a name reads
+ * (`b` of `import x = a.b`) keys a member. Each erased form is a REACH_PLANTS row that must read its reach: the four G1-AMBIENT
+ * plants, cut #1's ERASED-* rows (an ambient declaration in a function body, a declared class, namespace, enum and function with a
  * body, a signature, both type-only import shapes, and an interface, a type alias and a type-only namespace merged with the
- * ambient value (measured at cut time: a filter that drops ambient declarations alone leaves the signature, the type-only imports
- * and the three merges reading nothing). Beside them sit the verdict's two controls (G1-FREE-FUNCTION and G1-FREE-PROCESS, each
- * its plant with the declaration removed) and four quiet rows (ERASED-quiet-*: a local binding, an interface merged with a local
- * value, an overload with its implementation and an instantiated namespace each bind their reads). Every G1 plant the landing-645
- * verdict's F1 line names in wb-2fb4's tracked export notes is one of the table's rows, and each G1-AMBIENT plant carries every
- * code span that line quotes for it (whitespace collapsed, an elided `...` read as any text). The ERASED-* rows are this cut's
- * own finds: the frozen id literal alone holds them, and no anchor outside this file holds their code.
+ * ambient value; at cut #1 a filter that drops ambient declarations alone left the signature, the type-only imports and the three
+ * merges reading nothing) and cut #2's below. Beside them sit the verdict's two controls (G1-FREE-FUNCTION and G1-FREE-PROCESS,
+ * each its plant with the declaration removed) and the ERASED-quiet-* rows, whose reads reach no built-in under any of the four
+ * (cut #2 below). Every G1 plant the landing-645 verdict's F1 line names in wb-2fb4's tracked export notes is one of the table's
+ * rows, and each G1-AMBIENT plant carries every code span that line quotes for it (whitespace collapsed, an elided `...` read as
+ * any text). The ERASED-*, FREE-*, OVER-* and TYPE-PARAMETER-* rows are the cuts' own finds: the frozen id literal holds them (and
+ * D3's tsc-frame list the ten namespaces and two const enums TypeScript's own predicates erase, and the ten plant and row ids
+ * refusal #1's U1 and U2 lines name in wb-k2vj's tracked export notes the seven rows that cure them), and no anchor outside this
+ * file holds their code: outside the tsc frame a clause of the scan removed together with the re-pinned reads of the rows it
+ * decides stays green (measured at cut #2 for the ambient-statement clause and OXC's merge clause; in the tsc frame TypeScript's
+ * predicates red it).
+ * WB-K2VJ CUT #2 (refusal #1 on cut #1: U1 and U2 MEDIUM, F3-F5 riding). Measured by the seat at this cut over all four emitters
+ * (each row emitted as a module, loaded and run, reading whether its read reached the host's Function constructor or process.env);
+ * this census pins the scan, not the emitters. U1 CURED: tsc emits no namespace holding only const enums and no const enum, so
+ * ERASED-NS-CONST-ENUM, -CONST-ENUM-FUNCTION and -CONST-ENUM-MERGE (the refusal's MP3, MP1 and MP8, its LEG2-P7 rows),
+ * -NESTED-CONST-ENUM, -DOTTED-CONST-ENUM, ERASED-CONST-ENUM (TS2475; tsc still emits the bare read), ERASED-ALIAS-CONST-ENUM-NS
+ * and ERASED-ALIAS-TYPE-MEMBER (aliases tsc elides with their targets; the member an alias reads keys a member, never a read) read
+ * their reach (every plant and full row id refusal #1's U1 and U2 lines name maps to the row that cures it), and D3 reads the tsc
+ * frame from TypeScript itself: under the project's own options (no const enum kept) its isInstantiatedModule and isEnumConst
+ * erase exactly the top-level namespaces and const enums outside an ambient context that D3 lists, and each reads as the built-in
+ * it names. U2 CURED: esbuild erases a namespace holding only declare statements or signatures (ERASED-NS-DECLARE-CONST,
+ * -DECLARE-FUNCTION and -DECLARE-MERGE are the refusal's MP4, MP2 and MP7; -DECLARE-CLASS, -DECLARE-ENUM, -SIGNATURE and
+ * -NESTED-DECLARE its LEG2-P1 rows; jiti's Babel erases the declare-function and signature ones too), jiti's Babel one holding
+ * only export declare statements or an export import alias (ERASED-NS-EXPORT-DECLARE, -EXPORT-DECLARE-FUNCTION, -EXPORT-ALIAS: cut
+ * #1 read them as bound while Pi's loader reaches the built-in), and OXC emits no binding for a namespace that an ambient or
+ * body-less declaration of its name precedes, so the namespace's code runs on the built-in (the ERASED-MERGE-* rows; tsc too for
+ * the signature, TS2391); an empty namespace reaches under all four (ERASED-NS-EMPTY, TS2708). F3 CURED: an enum's own name is a
+ * declaration, so ERASED-NS-DECLARE-ENUM reads 'global process' alone and ERASED-ENUM-NO-READ (ERASED-ENUM without its read) reads
+ * nothing. F4 DISCLOSED as a true reach: an exported ambient member of a kept namespace, read inside it
+ * (ERASED-NS-MEMBER-EXPORT-DECLARE), is a member read under tsc and esbuild, but OXC and jiti's Babel leave the bare read, which
+ * reaches host process.env. F5 CURED: FREE-REFLECT and FREE-GLOBAL-BLOCK are the two missing control-equality twins; each
+ * G1-AMBIENT plant opens with the declaration its twin drops and reads what its twin reads, and the quoted-span matcher has its
+ * negative control (no plant's quoted declaration holds in its twin). Under all four emitters no ERASED-quiet-ns-*, -merge-*,
+ * -enum or -alias* row's read reaches the built-in: each keeps the binding, makes it a member read (tsc and esbuild for
+ * ERASED-quiet-ns-member) or inlines it (OXC for ERASED-quiet-enum). FAIL-CLOSED OVER-READS (no emitter reaches; the scan reads
+ * the built-in): a const enum's member read that tsc and OXC inline (OVER-CONST-ENUM-MEMBER), a namespace holding only statements
+ * the kept list does not name (OVER-NS-IF; an empty statement alike, measured, not pinned), a namespace written before the ambient
+ * declaration of its name (OVER-MERGE-NAMESPACE-FIRST: OXC binds it then), an ambient declaration in a function body over an outer
+ * binding the emitters keep (OVER-INNER-DECLARE-SHADOW, TS1184), a merge TypeScript refuses (OVER-MERGE-REFUSED, TS2451; TS2300
+ * and TS2567 merges alike, measured, not pinned), and an alias of a namespace only esbuild or jiti's Babel erases
+ * (OVER-ALIAS-DECLARE-NS, esbuild's: the erasing emitter's module throws a ReferenceError at load; jiti's Babel alike, measured,
+ * not pinned). An unused alias of a type-only namespace reads its target free and never its own name (OVER-ALIAS-NAME: every
+ * emitter drops it), and an alias of itself binds nothing (OVER-ALIAS-CYCLE, TS2303). TYPE-PARAMETER-FUNCTION and -CLASS pin the
+ * gate's positive reading: a type parameter binds no value. NOT MEASURED: a Pi run on Bun from its own TypeScript source loads the
+ * extension natively (Bun's transpiler; no Bun on the measuring host).
  * NAMED RESIDUALS (row R; each pin is the residual's quiet row, its quiet set derived from the run and pinned as its witness):
  *  R1 R-SHARED-SUBCLAUSE where pins share one acceptance sub-clause and none holds a pinned map or the maps' union, removing one
  *    from every literal at once (its pin, its ROWS entry, the frozen count) leaves the structural holds green. The quiet set is
@@ -479,7 +523,8 @@ interface Reach {
 const RESOLVABLE: readonly string[] = ['Array.isArray', 'JSON.parse', 'Number.isSafeInteger', 'Object.entries', 'key tuple element', 'new Map', 'new RegExp', 'new Set', 'undefined'];
 /** The methods whose callback's first parameter the tuple form resolves: the one the reader calls on its tuple today. */
 const TUPLE_METHODS: readonly string[] = ['flatMap'];
-/** A name the node binds (a declaration's own name), never a read; a namespace's name included (wb-k2vj: `declare global`). */
+/** A name the node binds (a declaration's own name), never a read; a namespace's name included (wb-k2vj: `declare global`), and
+ * (wb-k2vj cut #2, F3) an enum's and an import alias's. */
 function declaresName(node: ts.Identifier): boolean {
   const parent = node.parent;
   return (
@@ -487,6 +532,8 @@ function declaresName(node: ts.Identifier): boolean {
       ts.isFunctionDeclaration(parent) ||
       ts.isFunctionExpression(parent) ||
       ts.isClassDeclaration(parent) ||
+      ts.isEnumDeclaration(parent) ||
+      ts.isImportEqualsDeclaration(parent) ||
       ts.isParameter(parent) ||
       ts.isBindingElement(parent) ||
       ts.isImportSpecifier(parent) ||
@@ -497,11 +544,13 @@ function declaresName(node: ts.Identifier): boolean {
     parent.name === node
   );
 }
-/** A name that keys a member or a label, never a value read: `a.name`, `{name: v}`, a method name, an import alias. */
+/** A name that keys a member or a label, never a value read: `a.name`, `{name: v}`, a method name, an import alias, and (wb-k2vj
+ * cut #2) the member an import alias of a name reads (`b` of `import x = a.b`). */
 function keysMember(node: ts.Identifier): boolean {
   const parent = node.parent;
   return (
     (ts.isPropertyAccessExpression(parent) && parent.name === node) ||
+    (ts.isQualifiedName(parent) && parent.right === node) ||
     (ts.isPropertyAssignment(parent) && parent.name === node) ||
     (ts.isMethodDeclaration(parent) && parent.name === node) ||
     (ts.isBindingElement(parent) && parent.propertyName === node) ||
@@ -520,6 +569,13 @@ function checkerOf(file: ts.SourceFile): ts.TypeChecker {
   host.getSourceFile = (name) => (name === file.fileName ? file : undefined);
   return ts.createProgram([file.fileName], options, host).getTypeChecker();
 }
+/** TypeScript's own emit predicates, which its declaration file does not export (wb-k2vj cut #2, the tsc frame's anchor): whether
+ * tsc emits a namespace, whether an enum is const, and whether a project's options keep its const enums. */
+const TS_EMIT = ts as unknown as {
+  isInstantiatedModule: (node: ts.ModuleDeclaration, preserveConstEnums: boolean) => boolean;
+  isEnumConst: (node: ts.EnumDeclaration) => boolean;
+  shouldPreserveConstEnums: (options: ts.CompilerOptions) => boolean;
+};
 /** A `declare` modifier on the node or on a declaration enclosing it: an ambient context, which the emitter erases. */
 function ambient(node: ts.Node): boolean {
   for (let at: ts.Node | undefined = node; at !== undefined; at = at.parent) {
@@ -527,25 +583,76 @@ function ambient(node: ts.Node): boolean {
   }
   return false;
 }
-/** A scope declaration of a form the emitter erases (wb-k2vj F1), so it binds no runtime name: a type-only import, an interface, a
- * type alias, a function signature with no body, a namespace that is not instantiated, and a variable, function, class, enum or
- * namespace declared in an ambient context. A member declared there (a property, an enum member) names a member, so it stays one. */
-function erased(declaration: ts.Declaration, symbol: ts.Symbol): boolean {
+/** A const enum: tsc erases it under this project's tsconfig.json (neither preserveConstEnums nor isolatedModules is set, which D3
+ * reads from TypeScript itself), so for the build it binds nothing (wb-k2vj cut #2, U1). */
+const constEnum = (node: ts.EnumDeclaration): boolean => (ts.getModifiers(node) ?? []).some((modifier) => modifier.kind === ts.SyntaxKind.ConstKeyword);
+/** A declaration OXC (vitest's transform) reads as already declaring its name though every emitter erases it - an ambient function,
+ * class, enum or namespace, or a function signature with no body - so OXC emits no binding for a namespace of that name and the
+ * namespace's code runs on the built-in (wb-k2vj cut #2, measured). */
+const claimsName = (declaration: ts.Declaration): boolean =>
+  (ts.isFunctionDeclaration(declaration) || ts.isClassDeclaration(declaration) || ts.isEnumDeclaration(declaration) || ts.isModuleDeclaration(declaration)) &&
+  (ambient(declaration) || (ts.isFunctionDeclaration(declaration) && declaration.body === undefined));
+/** A namespace statement every emitter the project runs keeps (wb-k2vj cut #2, ENUMERATE-THE-RESOLVABLE): a variable statement, a
+ * function with a body, a class, an enum that is not const, an expression statement, or a namespace that binds, none of them in an
+ * ambient context. Every other statement keeps nothing - an interface or type alias, an import alias, a signature with no body, a
+ * const enum (tsc erases it), a declare statement (esbuild), an export declare statement or export import alias (jiti's Babel),
+ * and any statement this list does not name (an if, an empty statement: fail closed). */
+function keeps(statement: ts.Statement, binds: (namespace: ts.ModuleDeclaration) => boolean): boolean {
+  if (ambient(statement)) return false;
+  if (ts.isVariableStatement(statement) || ts.isClassDeclaration(statement) || ts.isExpressionStatement(statement)) return true;
+  if (ts.isFunctionDeclaration(statement)) return statement.body !== undefined;
+  if (ts.isEnumDeclaration(statement)) return !constEnum(statement);
+  return ts.isModuleDeclaration(statement) && binds(statement);
+}
+/** A namespace every emitter the project runs keeps as a binding of its name (wb-k2vj cut #2, U1/U2): holding a statement every
+ * emitter keeps (a dotted namespace through its inner one; every statement of an ambient namespace is itself ambient, so an
+ * ambient namespace keeps nothing), and sharing its name with no declaration OXC reads as declaring it. */
+function namespaceBinds(namespace: ts.ModuleDeclaration, checker: ts.TypeChecker): boolean {
+  if ((checker.getSymbolAtLocation(namespace.name)?.declarations ?? []).some((other) => other !== namespace && claimsName(other))) return false;
+  const body = namespace.body;
+  if (body !== undefined && ts.isModuleDeclaration(body)) return namespaceBinds(body, checker);
+  return body !== undefined && ts.isModuleBlock(body) && body.statements.some((statement) => keeps(statement, (inner) => namespaceBinds(inner, checker)));
+}
+/** The leftmost name of an entity name: `a` of `a.b.c`. */
+function leftmost(name: ts.EntityName): ts.Identifier {
+  let at = name;
+  while (ts.isQualifiedName(at)) at = at.left;
+  return at;
+}
+/** A declaration of a form an emitter the project runs erases (wb-k2vj), so it binds no runtime name: a type-only import, an
+ * interface, a type alias, a function signature with no body, a const enum (tsc), a namespace that does not bind (above), an import
+ * alias of a name whose leftmost name reads free (tsc elides an alias of a value it erases; cut #2), and a variable, function,
+ * class or enum declared in an ambient context. A member declared there (a property, an enum member) names a member, so it stays
+ * one. */
+function erased(declaration: ts.Declaration, checker: ts.TypeChecker, free: (node: ts.Identifier) => boolean): boolean {
   if (ts.isTypeOnlyImportDeclaration(declaration) || ts.isInterfaceDeclaration(declaration) || ts.isTypeAliasDeclaration(declaration)) return true;
   if (ts.isFunctionDeclaration(declaration) && declaration.body === undefined) return true;
-  if (ts.isModuleDeclaration(declaration) && (symbol.flags & ts.SymbolFlags.ValueModule) === 0) return true;
-  const scoped = ts.isVariableDeclaration(declaration) || ts.isFunctionDeclaration(declaration) || ts.isClassDeclaration(declaration) || ts.isEnumDeclaration(declaration) || ts.isModuleDeclaration(declaration);
+  if (ts.isEnumDeclaration(declaration) && constEnum(declaration)) return true;
+  if (ts.isModuleDeclaration(declaration)) return !namespaceBinds(declaration, checker);
+  if (ts.isImportEqualsDeclaration(declaration) && !ts.isExternalModuleReference(declaration.moduleReference)) return free(leftmost(declaration.moduleReference));
+  const scoped = ts.isVariableDeclaration(declaration) || ts.isFunctionDeclaration(declaration) || ts.isClassDeclaration(declaration) || ts.isEnumDeclaration(declaration);
   return scoped && ambient(declaration);
 }
 function freeReads(checker: ts.TypeChecker, file: ts.SourceFile): (node: ts.Identifier) => boolean {
-  return (node) => {
+  // The declarations being resolved: an import alias that resolves through itself binds nothing (fail closed).
+  const resolving = new Set<ts.Declaration>();
+  const free = (node: ts.Identifier): boolean => {
     const parent = node.parent;
     // A shorthand property's name is the property's own declaration; the value it reads is the name's symbol (GM33h).
     const symbol = ts.isShorthandPropertyAssignment(parent) && parent.name === node ? checker.getShorthandAssignmentValueSymbol(parent) : checker.getSymbolAtLocation(node);
     if (symbol === undefined) return true;
     // A name the file declares only in declarations of an erased form is free (wb-k2vj F1).
-    return !(symbol.declarations ?? []).some((declaration) => declaration.getSourceFile() === file && !erased(declaration, symbol));
+    return !(symbol.declarations ?? []).some((declaration) => {
+      if (declaration.getSourceFile() !== file || resolving.has(declaration)) return false;
+      resolving.add(declaration);
+      try {
+        return !erased(declaration, checker, free);
+      } finally {
+        resolving.delete(declaration);
+      }
+    });
   };
+  return free;
 }
 /** A class's extends clause: TypeScript parses it as a type node, but the class evaluates it (wb-52th GM33f). */
 const extendsValue = (node: ts.Node): boolean =>
@@ -662,8 +769,14 @@ const DESCRIPTOR_DOOR =
  * binder binds the read to the declaration, which the emitter erases. */
 const AMBIENT_FUNCTION = "declare const Function: new (code: string) => () => unknown;\nexport async function plantedReach(): Promise<void> {\n  try {\n    void new Function('return this')();\n  } catch {}\n}\n";
 const AMBIENT_PROCESS = 'declare const process: {env?: unknown};\nexport async function plantedReach(): Promise<void> {\n  void process.env;\n}\n';
+const AMBIENT_REFLECT =
+  "declare const Reflect: {get: (target: object, key: string) => (code: string) => () => unknown; getPrototypeOf: (value: object) => object};\nexport async function plantedReach(): Promise<void> {\n  try {\n    void Reflect.get(Reflect.getPrototypeOf(() => 0), ['constr', 'uctor'].join(''))('return this')();\n  } catch {}\n}\n";
+const AMBIENT_GLOBAL_BLOCK = 'declare global { var process: {env?: unknown} | undefined }\nexport async function plantedReach(): Promise<void> {\n  void process?.env;\n}\n';
 /** The verdict's control for an ambient plant: the same code with its declaration, the first line, removed. */
 const undeclared = (code: string): string => code.slice(code.indexOf('\n') + 1);
+/** wb-k2vj cut #2: the namespace rows' reads - the Function constructor and host process.env, each through a cast of the name. */
+const FUNCTION_REACH = "export async function plantedReach(): Promise<void> {\n  try {\n    void new (Function as unknown as new (code: string) => () => unknown)('return this')();\n  } catch {}\n}\n";
+const PROCESS_REACH = 'export async function plantedReach(): Promise<void> {\n  void (process as unknown as {env?: unknown}).env;\n}\n';
 /** The gate's GM33 (wb-4nut.5 cut #1, landing-381 F17) and the class members this cut found, each with the reach it must read;
  * GM34 is the gate's control the text bans already killed. Every plant discards its result: the scan reads reach, not use. */
 const REACH_PLANTS: readonly ReachPlant[] = [
@@ -765,16 +878,14 @@ const REACH_PLANTS: readonly ReachPlant[] = [
   // wb-k2vj (the landing-645 verdict's F1, filed from wb-2fb4): the four ambient plants and the verdict's two controls, the erased
   // forms this cut found beside them, and the quiet rows where a declaration the emitted code keeps binds the read.
   {id: 'G1-AMBIENT-FUNCTION', code: AMBIENT_FUNCTION, reads: 'global Function', module: true},
-  {
-    id: 'G1-AMBIENT-REFLECT',
-    code: "declare const Reflect: {get: (target: object, key: string) => (code: string) => () => unknown; getPrototypeOf: (value: object) => object};\nexport async function plantedReach(): Promise<void> {\n  try {\n    void Reflect.get(Reflect.getPrototypeOf(() => 0), ['constr', 'uctor'].join(''))('return this')();\n  } catch {}\n}\n",
-    reads: 'global Reflect',
-    module: true,
-  },
+  {id: 'G1-AMBIENT-REFLECT', code: AMBIENT_REFLECT, reads: 'global Reflect', module: true},
   {id: 'G1-AMBIENT-PROCESS', code: AMBIENT_PROCESS, reads: 'global process', module: true},
-  {id: 'G1-AMBIENT-GLOBAL-BLOCK', code: 'declare global { var process: {env?: unknown} | undefined }\nexport async function plantedReach(): Promise<void> {\n  void process?.env;\n}\n', reads: 'global process', module: true},
+  {id: 'G1-AMBIENT-GLOBAL-BLOCK', code: AMBIENT_GLOBAL_BLOCK, reads: 'global process', module: true},
   {id: 'G1-FREE-FUNCTION', code: undeclared(AMBIENT_FUNCTION), reads: 'global Function', module: true},
   {id: 'G1-FREE-PROCESS', code: undeclared(AMBIENT_PROCESS), reads: 'global process', module: true},
+  // wb-k2vj cut #2 (F5): the control-equality twins of the two G1-AMBIENT plants the verdict gave none, this cut's own rows.
+  {id: 'FREE-REFLECT', code: undeclared(AMBIENT_REFLECT), reads: 'global Reflect', module: true},
+  {id: 'FREE-GLOBAL-BLOCK', code: undeclared(AMBIENT_GLOBAL_BLOCK), reads: 'global process', module: true},
   {id: 'ERASED-INNER', code: '  declare const process: {env?: unknown};\n  void process.env;\n', reads: 'global process'},
   {
     id: 'ERASED-CLASS',
@@ -784,6 +895,7 @@ const REACH_PLANTS: readonly ReachPlant[] = [
   },
   {id: 'ERASED-NAMESPACE', code: 'declare namespace process {\n  const env: unknown;\n}\nexport async function plantedReach(): Promise<void> {\n  void process.env;\n}\n', reads: 'global process', module: true},
   {id: 'ERASED-ENUM', code: 'declare enum process {\n  env = 1,\n}\nexport async function plantedReach(): Promise<void> {\n  void process.env;\n}\n', reads: 'global process', module: true},
+  {id: 'ERASED-ENUM-NO-READ', code: 'declare enum process {\n  env = 1,\n}\nexport async function plantedReach(): Promise<void> {}\n', reads: '', module: true},
   {
     id: 'ERASED-DECLARED-BODY',
     code: "declare function Function(code: string): () => unknown {\n  return () => code;\n}\nexport async function plantedReach(): Promise<void> {\n  try {\n    void Function('return this')();\n  } catch {}\n}\n",
@@ -825,6 +937,101 @@ const REACH_PLANTS: readonly ReachPlant[] = [
     module: true,
   },
   {id: 'ERASED-quiet-namespace', code: 'namespace process {\n  export const env = {};\n}\nexport async function plantedReach(): Promise<void> {\n  void process.env;\n}\n', reads: '', module: true},
+  // wb-k2vj cut #2 (refusal #1: U1, U2; F3 and F4 ride): a namespace binds a read only when every emitter the project runs keeps
+  // it. U1, tsc (the build) erases a namespace holding only const enums, and a const enum; U2, esbuild erases one holding only
+  // declare statements or signatures; jiti's Babel (Pi's loader) one holding only export declare statements or export import
+  // aliases; OXC (vitest's transform) gives no binding to a namespace an ambient or body-less declaration of its name shares. Each
+  // kill row is a form one of them erases, each quiet row a namespace all four keep, each OVER row a fail-closed over-read.
+  {id: 'ERASED-NS-CONST-ENUM', code: `namespace process {\n  const enum Env {\n    A = 1,\n  }\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-NS-CONST-ENUM-FUNCTION', code: `namespace Function {\n  const enum Door {\n    A = 1,\n  }\n}\n${FUNCTION_REACH}`, reads: 'global Function', module: true},
+  {id: 'ERASED-NS-CONST-ENUM-MERGE', code: `declare function process(): void;\nnamespace process {\n  const enum Env {\n    A = 1,\n  }\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-NS-NESTED-CONST-ENUM', code: `namespace process {\n  namespace inner {\n    const enum Env {\n      A = 1,\n    }\n  }\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-NS-DOTTED-CONST-ENUM', code: `namespace process.inner {\n  const enum Env {\n    A = 1,\n  }\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-NS-EMPTY', code: `namespace process {}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-CONST-ENUM', code: `const enum Function {\n  A = 1,\n}\n${FUNCTION_REACH}`, reads: 'global Function', module: true},
+  {id: 'ERASED-ALIAS-CONST-ENUM-NS', code: `namespace Types {\n  const enum Door {\n    A = 1,\n  }\n}\nimport Function = Types;\n${FUNCTION_REACH}`, reads: 'global Function, global Types', module: true},
+  {id: 'ERASED-ALIAS-TYPE-MEMBER', code: `namespace Types {\n  export type Code = string;\n}\nimport Function = Types.Code;\n${FUNCTION_REACH}`, reads: 'global Function, global Types', module: true},
+  {id: 'ERASED-NS-DECLARE-CONST', code: `namespace process {\n  declare const env: unknown;\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-NS-DECLARE-FUNCTION', code: `namespace Function {\n  declare function door(): void;\n}\n${FUNCTION_REACH}`, reads: 'global Function', module: true},
+  {id: 'ERASED-NS-DECLARE-MERGE', code: `declare function process(): void;\nnamespace process {\n  declare const env: unknown;\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-NS-DECLARE-CLASS', code: `namespace process {\n  declare class Env {}\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-NS-DECLARE-ENUM', code: `namespace process {\n  declare enum Env {\n    A = 1,\n  }\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-NS-SIGNATURE', code: `namespace process {\n  function env(): void;\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-NS-NESTED-DECLARE', code: `namespace process {\n  declare namespace inner {\n    const env: unknown;\n  }\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-NS-EXPORT-DECLARE', code: `namespace process {\n  export declare const env: unknown;\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-NS-EXPORT-DECLARE-FUNCTION', code: `namespace Function {\n  export declare function door(): void;\n}\n${FUNCTION_REACH}`, reads: 'global Function', module: true},
+  {id: 'ERASED-NS-EXPORT-ALIAS', code: `namespace Values {\n  export const env = {};\n}\nnamespace process {\n  export import env = Values.env;\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-MERGE-DECLARE-FUNCTION', code: `declare function process(): void;\nnamespace process {\n  export const env = {};\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-MERGE-DECLARE-CLASS', code: `declare class process {}\nnamespace process {\n  export const env = {};\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-MERGE-DECLARE-ENUM', code: `declare enum process {\n  A = 1,\n}\nnamespace process {\n  export const env = {};\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-MERGE-DECLARE-NAMESPACE', code: `declare namespace process {\n  const door: unknown;\n}\nnamespace process {\n  export const env = {};\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-MERGE-SIGNATURE', code: `function process(): void;\nnamespace process {\n  export const env = {};\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {
+    id: 'ERASED-MERGE-IN-NAMESPACE',
+    code: 'namespace host {\n  declare function process(): void;\n  namespace process {\n    export const env = {};\n  }\n  export function reach(): unknown {\n    return process.env;\n  }\n}\nexport async function plantedReach(): Promise<void> {\n  void host.reach();\n}\n',
+    reads: 'global process',
+    module: true,
+  },
+  {
+    id: 'ERASED-NS-MEMBER-EXPORT-DECLARE',
+    code: 'namespace host {\n  export declare const process: {env?: unknown};\n  export function reach(): unknown {\n    return process.env;\n  }\n}\nexport async function plantedReach(): Promise<void> {\n  void host.reach();\n}\n',
+    reads: 'global process',
+    module: true,
+  },
+  {
+    id: 'ERASED-NS-MEMBER-DECLARE',
+    code: 'namespace host {\n  declare const process: {env?: unknown};\n  export function reach(): unknown {\n    return process.env;\n  }\n}\nexport async function plantedReach(): Promise<void> {\n  void host.reach();\n}\n',
+    reads: 'global process',
+    module: true,
+  },
+  {id: 'ERASED-quiet-ns-variable', code: `namespace process {\n  const door = 0;\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'ERASED-quiet-ns-function', code: `namespace process {\n  export function env(): void {}\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'ERASED-quiet-ns-class', code: `namespace process {\n  export class Env {}\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'ERASED-quiet-ns-enum', code: `namespace process {\n  export enum Env {\n    A = 1,\n  }\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'ERASED-quiet-ns-expression', code: `namespace process {\n  void 0;\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'ERASED-quiet-ns-nested', code: `namespace process {\n  export namespace inner {\n    export const env = {};\n  }\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'ERASED-quiet-ns-dotted', code: `namespace process.inner {\n  export const env = {};\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'ERASED-quiet-ns-declare-and-value', code: `namespace process {\n  declare const door: unknown;\n  export const env = {};\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'ERASED-quiet-ns-const-enum-and-value', code: `namespace process {\n  const enum Env {\n    A = 1,\n  }\n  export const env = {};\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {
+    id: 'ERASED-quiet-ns-member',
+    code: 'namespace host {\n  export const process = {env: {}};\n  export function reach(): unknown {\n    return process.env;\n  }\n}\nexport async function plantedReach(): Promise<void> {\n  void host.reach();\n}\n',
+    reads: '',
+    module: true,
+  },
+  {id: 'ERASED-quiet-merge-function', code: `function process(): void {}\nnamespace process {\n  export const env = {};\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'ERASED-quiet-merge-class', code: `class process {}\nnamespace process {\n  export const env = {};\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'ERASED-quiet-merge-enum', code: `enum process {\n  A = 1,\n}\nnamespace process {\n  export const env = {};\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'ERASED-quiet-merge-interface', code: `interface process {\n  readonly door?: unknown;\n}\nnamespace process {\n  export const env = {};\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'ERASED-quiet-merge-namespaces', code: `namespace process {\n  declare const door: unknown;\n}\nnamespace process {\n  export const env = {};\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'ERASED-quiet-enum', code: 'enum process {\n  env = 1,\n}\nexport async function plantedReach(): Promise<void> {\n  void process.env;\n}\n', reads: '', module: true},
+  {id: 'ERASED-quiet-alias', code: `namespace Values {\n  export const env = {};\n}\nimport process = Values;\n${PROCESS_REACH}`, reads: '', module: true},
+  {
+    id: 'ERASED-quiet-alias-member',
+    code: 'namespace Values {\n  export const env = {};\n}\nimport process = Values.env;\nexport async function plantedReach(): Promise<void> {\n  void process;\n}\n',
+    reads: '',
+    module: true,
+  },
+  {id: 'OVER-CONST-ENUM-MEMBER', code: 'const enum process {\n  env = 1,\n}\nexport async function plantedReach(): Promise<void> {\n  void process.env;\n}\n', reads: 'global process', module: true},
+  {id: 'OVER-NS-IF', code: `namespace process {\n  if (Number.isSafeInteger(1)) {\n  }\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'OVER-MERGE-NAMESPACE-FIRST', code: `namespace process {\n  export const env = {};\n}\ndeclare function process(): void;\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {
+    id: 'OVER-INNER-DECLARE-SHADOW',
+    code: "const process = {env: 'local'};\nexport async function plantedReach(): Promise<void> {\n  declare const process: {env?: unknown};\n  void process.env;\n}\n",
+    reads: 'global process',
+    module: true,
+  },
+  {id: 'OVER-MERGE-REFUSED', code: `declare const process: {env?: unknown};\nnamespace process {\n  export const env = {};\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'OVER-ALIAS-DECLARE-NS', code: `namespace Types {\n  declare const door: unknown;\n}\nimport Function = Types;\n${FUNCTION_REACH}`, reads: 'global Function, global Types', module: true},
+  {id: 'OVER-ALIAS-NAME', code: 'namespace Types {\n  export type Code = string;\n}\nimport door = Types;\nexport async function plantedReach(): Promise<void> {}\n', reads: 'global Types', module: true},
+  {id: 'OVER-ALIAS-CYCLE', code: `import process = process.env;\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'TYPE-PARAMETER-FUNCTION', code: "export async function plantedReach<Function>(): Promise<void> {\n  try {\n    void new Function('return this')();\n  } catch {}\n}\n", reads: 'global Function', module: true},
+  {
+    id: 'TYPE-PARAMETER-CLASS',
+    code: 'class Door<process> {\n  read(): unknown {\n    return (process as unknown as {env?: unknown}).env;\n  }\n}\nexport async function plantedReach(): Promise<void> {\n  void new Door().read();\n}\n',
+    reads: 'global process',
+    module: true,
+  },
 ];
 /** The bead whose filing names the L2 reach plants (wb-k888's landing-498 R694 follow-up). */
 const FOLLOW_UP = 'wb-52th';
@@ -845,6 +1052,27 @@ const AMBIENT_FOLLOW_UP = 'wb-2fb4';
 const ambientVerdict = (): string => /^- F1 (?:LOW|MEDIUM|HIGH) (?:LEADS|RIDES): (.*)$/m.exec(notesOf(AMBIENT_FOLLOW_UP))?.[1] ?? '';
 /** The G1 plants that line names, in order. */
 const ambientVerdictPlants = (): string[] => [...new Set(ambientVerdict().match(/(?<![\w-])G1-[A-Z]+(?:-[A-Z]+)*(?![\w-])/g) ?? [])];
+/** The bead whose tracked export notes carry its own refusal #1 (wb-k2vj cut #2): the U1 and U2 unmet items this cut cures. */
+const RESPIN_BEAD = 'wb-k2vj';
+/** The module plants (MPn) and the full census row ids (LEG2-*) refusal #1's unmet items name: from the first column-0 `U1-` and
+ * `U2-` lines of that bead's notes, each id once, in order (a list's elided `-SUFFIX` is no id). */
+function refusalIds(): string[] {
+  const lines = notesOf(RESPIN_BEAD).split('\n');
+  return [...new Set(['U1-', 'U2-'].flatMap((head) => lines.find((line) => line.startsWith(head))?.match(/(?<![\w-])(?:MP\d+|LEG2-[A-Z0-9]+(?:-[A-Z0-9]+)*)(?![\w-])/g) ?? []))];
+}
+/** The REACH_PLANTS row that cures each plant and census row refusal #1 names (wb-k2vj cut #2). */
+const REFUSAL_ROWS: Readonly<Record<string, string>> = {
+  MP1: 'ERASED-NS-CONST-ENUM-FUNCTION',
+  MP3: 'ERASED-NS-CONST-ENUM',
+  MP8: 'ERASED-NS-CONST-ENUM-MERGE',
+  'LEG2-P7-NS-CONST-ENUM': 'ERASED-NS-CONST-ENUM',
+  'LEG2-P7-NS-CONST-ENUM-FUNCTION-REACH': 'ERASED-NS-CONST-ENUM-FUNCTION',
+  MP2: 'ERASED-NS-DECLARE-FUNCTION',
+  MP4: 'ERASED-NS-DECLARE-CONST',
+  MP7: 'ERASED-NS-DECLARE-MERGE',
+  'LEG2-P1-NS-DECLARE-CONST': 'ERASED-NS-DECLARE-CONST',
+  'LEG2-P1-NS-DECLARE-ENUM': 'ERASED-NS-DECLARE-ENUM',
+};
 /** The code spans that line quotes for each G1-AMBIENT plant: every backquoted span between the plant's first mention and the next
  * G1 plant's. */
 function quotedSpans(): [string, string[]][] {
@@ -1328,10 +1556,13 @@ describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-H
       'G1-AMBIENT-GLOBAL-BLOCK',
       'G1-FREE-FUNCTION',
       'G1-FREE-PROCESS',
+      'FREE-REFLECT',
+      'FREE-GLOBAL-BLOCK',
       'ERASED-INNER',
       'ERASED-CLASS',
       'ERASED-NAMESPACE',
       'ERASED-ENUM',
+      'ERASED-ENUM-NO-READ',
       'ERASED-DECLARED-BODY',
       'ERASED-SIGNATURE',
       'ERASED-TYPE-SPECIFIER',
@@ -1343,6 +1574,61 @@ describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-H
       'ERASED-quiet-merge',
       'ERASED-quiet-overload',
       'ERASED-quiet-namespace',
+      'ERASED-NS-CONST-ENUM',
+      'ERASED-NS-CONST-ENUM-FUNCTION',
+      'ERASED-NS-CONST-ENUM-MERGE',
+      'ERASED-NS-NESTED-CONST-ENUM',
+      'ERASED-NS-DOTTED-CONST-ENUM',
+      'ERASED-NS-EMPTY',
+      'ERASED-CONST-ENUM',
+      'ERASED-ALIAS-CONST-ENUM-NS',
+      'ERASED-ALIAS-TYPE-MEMBER',
+      'ERASED-NS-DECLARE-CONST',
+      'ERASED-NS-DECLARE-FUNCTION',
+      'ERASED-NS-DECLARE-MERGE',
+      'ERASED-NS-DECLARE-CLASS',
+      'ERASED-NS-DECLARE-ENUM',
+      'ERASED-NS-SIGNATURE',
+      'ERASED-NS-NESTED-DECLARE',
+      'ERASED-NS-EXPORT-DECLARE',
+      'ERASED-NS-EXPORT-DECLARE-FUNCTION',
+      'ERASED-NS-EXPORT-ALIAS',
+      'ERASED-MERGE-DECLARE-FUNCTION',
+      'ERASED-MERGE-DECLARE-CLASS',
+      'ERASED-MERGE-DECLARE-ENUM',
+      'ERASED-MERGE-DECLARE-NAMESPACE',
+      'ERASED-MERGE-SIGNATURE',
+      'ERASED-MERGE-IN-NAMESPACE',
+      'ERASED-NS-MEMBER-EXPORT-DECLARE',
+      'ERASED-NS-MEMBER-DECLARE',
+      'ERASED-quiet-ns-variable',
+      'ERASED-quiet-ns-function',
+      'ERASED-quiet-ns-class',
+      'ERASED-quiet-ns-enum',
+      'ERASED-quiet-ns-expression',
+      'ERASED-quiet-ns-nested',
+      'ERASED-quiet-ns-dotted',
+      'ERASED-quiet-ns-declare-and-value',
+      'ERASED-quiet-ns-const-enum-and-value',
+      'ERASED-quiet-ns-member',
+      'ERASED-quiet-merge-function',
+      'ERASED-quiet-merge-class',
+      'ERASED-quiet-merge-enum',
+      'ERASED-quiet-merge-interface',
+      'ERASED-quiet-merge-namespaces',
+      'ERASED-quiet-enum',
+      'ERASED-quiet-alias',
+      'ERASED-quiet-alias-member',
+      'OVER-CONST-ENUM-MEMBER',
+      'OVER-NS-IF',
+      'OVER-MERGE-NAMESPACE-FIRST',
+      'OVER-INNER-DECLARE-SHADOW',
+      'OVER-MERGE-REFUSED',
+      'OVER-ALIAS-DECLARE-NS',
+      'OVER-ALIAS-NAME',
+      'OVER-ALIAS-CYCLE',
+      'TYPE-PARAMETER-FUNCTION',
+      'TYPE-PARAMETER-CLASS',
     ]);
     const filed = filedReachPlants();
     expect(filed, `the L2 reach plants ${FOLLOW_UP}'s filing names`).toEqual(['L2-M33p', 'L2-M33d2', 'L2-M33sh']);
@@ -1374,6 +1660,77 @@ describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-H
     expect(spans.flatMap(([id, quoted]) => quoted.filter((span) => !quotes(plantCode(id), span)).map((span) => `${id}: ${span}`))).toEqual([]);
     const controls = REACH_PLANTS.filter((plant) => plant.id.startsWith('G1-FREE-'));
     expect(controls.map((plant) => `${plant.id} ${plant.code === undeclared(plantCode(plant.id.replace('G1-FREE-', 'G1-AMBIENT-')))}`)).toEqual(['G1-FREE-FUNCTION true', 'G1-FREE-PROCESS true']);
+    // wb-k2vj cut #2 (F5): each G1-AMBIENT plant has its control-equality twin (the verdict's two controls and this cut's
+    // FREE-REFLECT and FREE-GLOBAL-BLOCK), opens with the declaration its twin drops and reads what its twin reads; and the
+    // quoted-span matcher's negative control: the declaration span the verdict quotes for a plant does not hold in its twin.
+    const twins: readonly (readonly [string, string])[] = [
+      ['G1-AMBIENT-FUNCTION', 'G1-FREE-FUNCTION'],
+      ['G1-AMBIENT-REFLECT', 'FREE-REFLECT'],
+      ['G1-AMBIENT-PROCESS', 'G1-FREE-PROCESS'],
+      ['G1-AMBIENT-GLOBAL-BLOCK', 'FREE-GLOBAL-BLOCK'],
+    ];
+    const readsOf = (id: string): string | undefined => REACH_PLANTS.find((plant) => plant.id === id)?.reads;
+    expect(twins.map(([id, twin]) => `${twin} ${plantCode(twin) === undeclared(plantCode(id))} ${plantCode(id).startsWith('declare ')} ${readsOf(twin) === readsOf(id)}`)).toEqual([
+      'G1-FREE-FUNCTION true true true',
+      'FREE-REFLECT true true true',
+      'G1-FREE-PROCESS true true true',
+      'FREE-GLOBAL-BLOCK true true true',
+    ]);
+    expect(spans.map(([id, quoted]) => `${id} ${quotes(plantCode(twins.find(([ambient]) => ambient === id)?.[1] ?? ''), quoted[0] ?? '')}`)).toEqual([
+      'G1-AMBIENT-FUNCTION false',
+      'G1-AMBIENT-REFLECT false',
+      'G1-AMBIENT-PROCESS false',
+      'G1-AMBIENT-GLOBAL-BLOCK false',
+    ]);
+    // wb-k2vj cut #2 (U1): the tsc frame read from TypeScript itself - under this project's tsconfig.json (no preserveConstEnums,
+    // no isolatedModules) its emitter keeps no const enum and no const-enum-only or type-only namespace, and every such top-level
+    // declaration outside an ambient context in the table reads as the built-in it names.
+    const options = ts.convertCompilerOptionsFromJson(JSON.parse(readFileSync(join(REPO, 'tsconfig.json'), 'utf8')).compilerOptions, REPO).options;
+    const preserve = TS_EMIT.shouldPreserveConstEnums(options);
+    expect(preserve).toBe(false);
+    const outsideAmbient = (declaration: ts.Declaration): boolean => (ts.getCombinedModifierFlags(declaration) & ts.ModifierFlags.Ambient) === 0;
+    const tscErasedBy = (statement: ts.Statement): string | undefined => {
+      if (ts.isModuleDeclaration(statement) && ts.isIdentifier(statement.name) && outsideAmbient(statement) && !TS_EMIT.isInstantiatedModule(statement, preserve)) return statement.name.text;
+      if (ts.isEnumDeclaration(statement) && outsideAmbient(statement) && TS_EMIT.isEnumConst(statement) && !preserve) return statement.name.text;
+      return undefined;
+    };
+    const tscErased = REACH_PLANTS.flatMap((plant) =>
+      ts
+        .createSourceFile('plant.ts', plantText(plant), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS)
+        .statements.flatMap((statement) => tscErasedBy(statement) ?? [])
+        .map((name) => [plant, name] as const),
+    );
+    expect(tscErased.map(([plant, name]) => `${plant.id} ${name}`)).toEqual([
+      'ERASED-NAMESPACE-MERGE Function',
+      'ERASED-NS-CONST-ENUM process',
+      'ERASED-NS-CONST-ENUM-FUNCTION Function',
+      'ERASED-NS-CONST-ENUM-MERGE process',
+      'ERASED-NS-NESTED-CONST-ENUM process',
+      'ERASED-NS-DOTTED-CONST-ENUM process',
+      'ERASED-NS-EMPTY process',
+      'ERASED-CONST-ENUM Function',
+      'ERASED-ALIAS-CONST-ENUM-NS Types',
+      'ERASED-ALIAS-TYPE-MEMBER Types',
+      'OVER-CONST-ENUM-MEMBER process',
+      'OVER-ALIAS-NAME Types',
+    ]);
+    expect(tscErased.filter(([plant, name]) => !reachViolations(reachOf(plantText(plant))).includes(`global ${name}`)).map(([plant, name]) => `${plant.id} ${name}`)).toEqual([]);
+    // wb-k2vj cut #2: every module plant and census row refusal #1's U1 and U2 lines name in this bead's tracked export notes is
+    // cured by a REACH_PLANTS row.
+    const refused = refusalIds();
+    expect(refused, `the plants and rows refusal #1's U1 and U2 name in ${RESPIN_BEAD}'s notes`).toEqual([
+      'MP1',
+      'MP3',
+      'MP8',
+      'LEG2-P7-NS-CONST-ENUM',
+      'LEG2-P7-NS-CONST-ENUM-FUNCTION-REACH',
+      'MP2',
+      'MP4',
+      'MP7',
+      'LEG2-P1-NS-DECLARE-CONST',
+      'LEG2-P1-NS-DECLARE-ENUM',
+    ]);
+    expect(refused.filter((id) => !REACH_PLANTS.some((plant) => plant.id === REFUSAL_ROWS[id]))).toEqual([]);
     // No Beads reader is imported in any form: the work reader arrives injected (the wb-kku9.3 claim re-check census contract).
     witness('D3', specifiers, ['./capability-registry.js', './observation.js']);
     for (const banned of [/node:/, /readFile|readdir|existsSync/, /BEADS-|\.md\b/, /child_process|spawn|exec\(/, /\bbd ready\b/]) expect(source).not.toMatch(banned);
