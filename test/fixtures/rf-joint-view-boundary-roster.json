@@ -834,6 +834,14 @@
                 "messages": [
                   "RF reading workspace differs from observer scope."
                 ]
+              },
+              "atAuthorizedRoot": {
+                "readings": 57,
+                "kinds": [
+                  "projected"
+                ],
+                "equal": 57,
+                "differsFromScope": true
               }
             },
             "(read admission independent of scoring)": {
@@ -860,7 +868,8 @@
               "term": "or observer workspace-scope checks",
               "facts": [
                 "outOfScope",
-                "authorizedRoot"
+                "authorizedRoot",
+                "atAuthorizedRoot"
               ]
             },
             {
