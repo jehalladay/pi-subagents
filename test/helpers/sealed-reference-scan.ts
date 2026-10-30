@@ -12,10 +12,18 @@
  * expression, which the old visit read as a part of a type (P18-HER1b, P18-HER2b), and the leaf reader's analogs
  * (P18-LEAF-IE, P18-LEAF-HER) - refusal #5. This scan follows every one of those channels.
  *
- * THE CLAIM is SEALED_CLAIM, composed from SEALED_FORMS (the channels a visited reference is followed through) and
- * SEALED_USES (what a use other than a read is). test/workbench-sealed-reference-scan-census.test.ts holds SEALED_CLAIM
- * byte-for-byte in its header and proves each form and each use with planted trees; a channel this scan does not follow
- * is not claimed (the census names the known ones as residuals).
+ * THE CLAIM is SEALED_CLAIM, composed from SEALED_ROOT (what a sealed literal is), SEALED_VISIT (which identifiers the
+ * scan visits), SEALED_FORMS (the channels a visited reference is followed through) and SEALED_USES (what a use other
+ * than a read is). Each part is composed from its words: connective text and the sub-forms it names (ClaimPart.subforms,
+ * each a phrase of its text), so the sub-forms a part claims are exactly the ones it lists.
+ * test/workbench-sealed-reference-scan-census.test.ts holds SEALED_CLAIM (and READER_CLAIM, LITERAL_READER's words)
+ * byte-for-byte in its header and names, for each listed sub-form, the planted pins that prove it; a channel this scan
+ * does not follow is not claimed (the census names the known ones as residuals).
+ *
+ * wb-jwc.8 refusal #1 (gate s149) cured here: an exported import-equals alias of a module, and an export of such an
+ * alias, re-export the module (use 5); only the global Object's freeze is transparent; a default export of a name is
+ * followed (form 3); a literal a const's literal spreads is nested in it; the sub-forms are listed and pinned one by one;
+ * isSealed (an unpinned export) is dropped - a caller reads { rootOf, open } itself, as wb-jwc.5's census does.
  *
  * READER: whether a visited reference only reads is the caller's question (ScanReader): a census passes its own value
  * reader (wb-jwc.5's raw-view readString), and LITERAL_READER is the default. The scan returns the same { rootOf, open }
@@ -116,21 +124,55 @@ function isConst(flags: ts.NodeFlags): boolean {
 
 type Literal = ts.ObjectLiteralExpression | ts.ArrayLiteralExpression;
 
-/** A const initializer's own literal: an object or array literal, through wrappers and `.freeze(...)` calls. */
+const objectBinders = new WeakMap<ts.SourceFile, boolean>();
+/** Whether a module binds the name Object at any scope (a declared name, a parameter or binding, an import or an alias of that name). */
+function bindsObject(file: ts.SourceFile): boolean {
+  const cached = objectBinders.get(file);
+  if (cached !== undefined) return cached;
+  let found = false;
+  visit(file, (node) => {
+    if (found || !ts.isIdentifier(node) || node.text !== "Object") return;
+    const parent = node.parent;
+    found =
+      (ts.isVariableDeclaration(parent) ||
+        ts.isParameter(parent) ||
+        ts.isBindingElement(parent) ||
+        ts.isFunctionDeclaration(parent) ||
+        ts.isFunctionExpression(parent) ||
+        ts.isClassDeclaration(parent) ||
+        ts.isClassExpression(parent) ||
+        ts.isEnumDeclaration(parent) ||
+        ts.isModuleDeclaration(parent) ||
+        ts.isImportClause(parent) ||
+        ts.isNamespaceImport(parent) ||
+        ts.isImportSpecifier(parent) ||
+        ts.isImportEqualsDeclaration(parent)) &&
+      parent.name === node;
+  });
+  objectBinders.set(file, found);
+  return found;
+}
+/** Whether a call is the global Object's freeze: the callee written `Object.freeze`, one argument, in a module that binds no Object of its own. */
+function isGlobalFreeze(value: ts.Expression): value is ts.CallExpression {
+  if (!ts.isCallExpression(value) || value.arguments.length !== 1) return false;
+  const callee = value.expression;
+  return ts.isPropertyAccessExpression(callee) && ts.isIdentifier(callee.expression) && callee.expression.text === "Object" && callee.name.text === "freeze" && !bindsObject(value.getSourceFile());
+}
+/** A const initializer's own literal (SEALED_ROOT): an object or array literal, bare, behind wrappers or handed to the global Object.freeze, those nested in one another. */
 export function literalOf(node: ts.Expression | undefined): Literal | undefined {
   let value = node === undefined ? undefined : unwrap(node);
   for (let step = 0; value !== undefined && step <= MAX_STEPS; step++) {
     if (ts.isObjectLiteralExpression(value) || ts.isArrayLiteralExpression(value)) return value;
-    value = ts.isCallExpression(value) && value.arguments.length === 1 && ts.isPropertyAccessExpression(value.expression) && value.expression.name.text === "freeze" ? unwrap(value.arguments[0]) : undefined;
+    value = isGlobalFreeze(value) ? unwrap(value.arguments[0]) : undefined;
   }
   return undefined;
 }
-/** Map a root literal, and every object or array literal nested in its members or elements, to that root. */
+/** Map a root literal, and every object or array literal nested in it (a property's value, an array element, a member or element of a literal it spreads, at any depth, behind wrappers or Object.freeze), to that root. */
 function nest(literal: Literal, root: Literal, rootOf: Map<ts.Node, ts.Node>): void {
   rootOf.set(literal, root);
   const children = ts.isObjectLiteralExpression(literal)
-    ? literal.properties.flatMap((member) => (ts.isPropertyAssignment(member) ? [member.initializer] : []))
-    : literal.elements.filter((element) => !ts.isSpreadElement(element));
+    ? literal.properties.flatMap((member) => (ts.isPropertyAssignment(member) ? [member.initializer] : ts.isSpreadAssignment(member) ? [member.expression] : []))
+    : literal.elements.map((element) => (ts.isSpreadElement(element) ? element.expression : element));
   for (const child of children) {
     const inner = literalOf(child);
     if (inner !== undefined && !rootOf.has(inner)) nest(inner, root, rootOf);
@@ -240,44 +282,49 @@ export type UseId = "written" | "other" | "spread" | "whole" | "export-form";
 export interface ClaimPart<T extends string> {
   readonly id: T;
   readonly text: string;
+  /** The sub-forms the part names, in order: each a phrase of its text (the census names the pins proving each one). */
+  readonly subforms: readonly string[];
 }
+
+/** Compose a claim part from its words: each `${...}` of the template is a sub-form the part names, the rest connects them. */
+function claimPart<T extends string>(id: T): (words: TemplateStringsArray, ...subforms: string[]) => ClaimPart<T> {
+  return (words, ...subforms) => ({ id, text: words.reduce((text, word, index) => text + word + (subforms[index] ?? ""), ""), subforms });
+}
+
+/** THE ROOT: what a sealed literal is (literalOf and nest). */
+export const SEALED_ROOT: ClaimPart<"root"> = claimPart("root")`a ${"const"}'s own ${"object literal"} or ${"array literal"}, written ${"bare"} or behind ${"parentheses"}, ${"as"}, ${"satisfies"}, ${"!"} or ${"a <T> type assertion"}, or handed to ${"a call written Object.freeze(...)"} (${"the global Object's freeze only, in a module that binds no Object at any scope"}; ${"no other callee named freeze"}), ${"those wrappers and calls nested in one another"}, and every object or array literal nested in it as ${"a property's value"}, ${"an array element"} or ${"a member or element of a literal it spreads"}, ${"at any depth"} and ${"behind those same wrappers and calls"}`;
+
+/** THE VISIT: which identifiers the scan visits (isValueReference). */
+export const SEALED_VISIT: ClaimPart<"visit"> = claimPart("visit")`The scan visits every identifier of every module of the tree that is ${"a value reference"}: not ${"a part of a type"} (${"an implements clause"}, ${"an interface's extends clause"} and ${"a class extends clause's type arguments"} included), ${"a declared name"}, ${"a property or member name"} (${"a shorthand member's name is its value, and is visited"}), ${"a part of a qualified name"}, ${"an import, export or import-equals name or entity"} (${"export default X visits X"}), ${"a meta-property's name"} or ${"a label"}.`;
 
 /** THE FORMS, in claim order. Each is proven by the census's planted rows; hollowing one in this module reds them. */
 export const SEALED_FORMS: readonly ClaimPart<FormId>[] = [
-  { id: "name", text: "its name in its own module, at any scope (a name stands for every const literal, namespace, import-equals alias and import of that name the module holds)" },
-  { id: "import", text: "an import of it, named, aliased or default" },
-  { id: "export-alias", text: "a local export alias (export { X }, export { X as Y }, export { X as default })" },
-  { id: "re-export", text: "a named re-export (export { X } from, export { X as Y } from)" },
-  { id: "export-star", text: "export * from, for every name but default" },
-  { id: "namespace-import", text: "a member of a namespace import of its module (import * as M, or import M = require of a relative module), read by name or through an element access whose argument reads" },
-  { id: "namespace", text: "a member of a TypeScript namespace that exports it (merged, nested and dotted namespaces included), read by name or through an element access whose argument reads, the namespace reached by any form here" },
-  { id: "import-equals", text: "an import-equals alias (import A = E at any scope, export import included) whose entity E is followed part by part through these forms, an alias of an alias included" },
-  { id: "heritage", text: "any of these from an identifier inside a class extends expression (its type arguments aside), which runs when the class is defined and so is a value reference" },
+  claimPart("name")`its ${"name"} in its own module, ${"at any scope"} (a name stands for ${"every const literal"}, ${"every namespace"}, ${"every import-equals alias"} and ${"the import"} of that name the module holds)`,
+  claimPart("import")`an import of it, ${"named"}, ${"aliased"} or ${"default"}`,
+  claimPart("export-alias")`a local export alias (${"export { X }"}, ${"export { X as Y }"}, ${"export { X as default }"}) or ${"export default X"}`,
+  claimPart("re-export")`a named re-export (${"export { X } from"}, ${"export { X as Y } from"}), ${"a chain of them"} included`,
+  claimPart("export-star")`${"export * from"}, for ${"every name but default"}`,
+  claimPart("namespace-import")`a member of a namespace import of its module (${"import * as M"}, or ${"import M = require of a relative module"}), read ${"by name"} or through ${"an element access whose argument reads"}`,
+  claimPart("namespace")`a member of a TypeScript namespace that ${"exports it"} (${"merged"}, ${"nested"} and ${"dotted"} namespaces included, and ${"an export import member"}), read ${"by name"} or through ${"an element access whose argument reads"}, the namespace reached by ${"its name"}, ${"an import"}, ${"a local export alias"}, ${"a named re-export"}, ${"export * from"}, ${"a namespace import's member"} or ${"an import-equals alias"}`,
+  claimPart("import-equals")`an import-equals alias (${"import A = E"} ${"at any scope"}, ${"export import"} included) whose entity E is followed ${"part by part"} through these forms, ${"an alias of an alias"} included`,
+  claimPart("heritage")`any of these from an identifier inside ${"a class declaration's"} or ${"a class expression's"} extends expression (${"its type arguments aside"}), which runs when the class is defined and so is a value reference`,
 ];
 
 /** THE USES: what opens a literal (and every literal nested in it). A reference that is none of these only reads. */
 export const SEALED_USES: readonly ClaimPart<UseId>[] = [
-  { id: "written", text: "its member read chain is the target of an assignment of any operator, of ++ or --, of delete, of a destructuring assignment or of a for-in or for-of head" },
-  { id: "other", text: "it is used other than as a member read chain that reads as a string where it is used (passed, bound, returned, placed in a literal, called, or read as anything but a string)" },
-  { id: "spread", text: "it is spread and not every value it copies reads as a string" },
-  { id: "whole", text: "a namespace or a namespace import it reaches through is used other than through member reads whose names read, which opens every literal that namespace or module reaches" },
-  { id: "export-form", text: "a namespace import is re-exported or its module is re-exported by export * as, which opens every literal the module reaches" },
+  claimPart("written")`its member read chain (${"a property read"} or ${"an element access"}, the chain ${"behind wrappers"} or ${"through them"}) is the target of ${"="}, of ${"a compound assignment (+=, -=, *=, /=, %=, **=, <<=, >>=, >>>=, &=, |=, ^=, &&=, ||=, ??=)"}, of ${"++ or --, prefix or postfix"} or of ${"delete"}, or is ${"an element"}, ${"a rest element"}, ${"a property's value"} or ${"a rest property"} of the pattern, ${"at any depth"}, of ${"a destructuring assignment"} or of ${"a for-in or for-of head"}, or is ${"such a head itself"}`,
+  claimPart("other")`it is used other than as a member read chain that ${"reads as a string"} where it is used (${"passed"}, ${"bound"}, ${"returned"}, ${"exported as default"}, placed in a literal as ${"a value"} or ${"a shorthand member"}, ${"called"}, or ${"read as anything but a string"})`,
+  claimPart("spread")`it is ${"spread"} and not every value it copies reads as a string (${"a member or element that is not a string"}, or ${"an object or array it shares"})`,
+  claimPart("whole")`${"a namespace"} or ${"a namespace import"} it reaches through is used other than through member reads whose names read (${"bare"}, or through ${"an element access whose argument does not read"}), which opens every literal that namespace or module reaches (${"its own const literals at any scope"}, ${"its import-equals aliases' targets"}, ${"the modules it re-exports"} and ${"what it imports"})`,
+  claimPart("export-form")`a namespace import, or an import-equals alias of a module, is re-exported (${"export { M }"}, ${"export { M as N }"}, ${"export import A = M"} at ${"module scope"} or ${"namespace scope"}, ${"export { A } of such an alias"}, ${"export import M = require(...)"}), or its module is re-exported by ${"export * as"}, which opens ${"every literal the module reaches"}`,
 ];
 
 function joined(parts: readonly ClaimPart<string>[]): string {
   return parts.map((part, index) => `(${index + 1}) ${part.text}`).join("; ");
 }
 
-/** THE CLAIM, byte-for-byte: the census's header holds this paragraph, and its planted rows prove each part. */
-export const SEALED_CLAIM =
-  "SEALED: a const's own object or array literal (through wrappers and .freeze(...)), and every object or array literal " +
-  "nested in its members or elements, is sealed while no reference the scan visits opens it. The scan visits every " +
-  "identifier of every module of the tree that is a value reference: not a part of a type (an implements clause, an " +
-  "interface's extends clause and a class extends clause's type arguments included), a declared name, a property or member " +
-  "name, a part of a qualified name, an import, export or import-equals name or entity, or a label. From each it follows " +
-  `exactly these forms to a const literal: ${joined(SEALED_FORMS)}. A reference reaching a literal opens it when ` +
-  `${joined(SEALED_USES)}. Any other reference only reads, as the caller's reader decides; a reference the scan does not ` +
-  "follow is not judged, and SEALED claims nothing about it.";
+/** THE CLAIM, byte-for-byte: the census's header holds this paragraph, and its planted rows prove each listed sub-form. */
+export const SEALED_CLAIM = `SEALED: ${SEALED_ROOT.text}, is sealed while no reference the scan visits opens it. ${SEALED_VISIT.text} From each it follows exactly these forms to a const literal: ${joined(SEALED_FORMS)}. A reference reaching a literal opens it when ${joined(SEALED_USES)}. Any other reference only reads, as the caller's reader decides; a reference the scan does not follow is not judged, and SEALED claims nothing about it.`;
 
 /* ---------------------------------------------------------------- resolution */
 
@@ -418,7 +465,7 @@ function namespaceMember(r: Resolver, decls: readonly ts.ModuleDeclaration[], na
   if (inner.length > 0) out.push({ entity: { kind: "namespace", decls: inner }, via: [] });
   return out;
 }
-/** What a module's export of a name denotes: an exported const, namespace or import-equals alias, a local export alias, a named re-export, export * (never for default), or export * as (the module's namespace object). */
+/** What a module's export of a name denotes: an exported const, namespace or import-equals alias, a local export alias (export default X of a bare name included), a named re-export, export * (never for default), or export * as (the module's namespace object). */
 function exportReaches(r: Resolver, path: string | undefined, name: string, steps: number): Reach[] {
   const file = path === undefined || steps > MAX_STEPS ? undefined : r.tree.module(path);
   if (file === undefined) return [];
@@ -441,6 +488,8 @@ function exportReaches(r: Resolver, path: string | undefined, name: string, step
           out.push(...(statement.moduleSpecifier === undefined ? prefixed("export-alias", nameReaches(r, file, local, steps + 1)) : prefixed("re-export", exportReaches(r, from, local, steps + 1))));
         }
       }
+    } else if (ts.isExportAssignment(statement) && !statement.isExportEquals && name === "default" && ts.isIdentifier(statement.expression)) {
+      out.push(...prefixed("export-alias", nameReaches(r, file, statement.expression.text, steps + 1)));
     }
   }
   return out;
@@ -532,13 +581,10 @@ function reachesOf(r: Resolver, node: ts.Expression, file: ts.SourceFile, steps:
   const name = ts.isPropertyAccessExpression(node) ? node.name.text : literalText(node.argumentExpression);
   return name === undefined ? [] : memberReaches(r, owners, name, steps + 1);
 }
-/**
- * LITERAL_READER, the default: a chain reads as a string when it denotes a string or no-substitution template literal as
- * written - a member of a const literal (the last member of its key, in a literal whose keys all read and that holds no
- * spread, accessor or method member) reached through the scan's own forms, an element access choosing the member its
- * string or no-substitution template literal argument names; a spread copies strings when its value is such a literal, or
- * a literal every member or element of which is one. Nothing else reads.
- */
+/** LITERAL_READER's words, byte-for-byte in the census's header; each listed sub-form is proven by the census's READER pins. */
+export const READER_CLAIM: ClaimPart<"reader"> = claimPart("reader")`a member read chain reads as a string when it denotes ${"a string literal"} or ${"a no-substitution template"} as written: ${"a member of a const literal reached through the scan's own forms"}, ${"the last member of its key"}, in a literal ${"whose keys all read"} and that holds no ${"spread"}, ${"accessor"} or ${"method"} member, ${"an element access"} choosing the member its ${"string"} or ${"no-substitution template"} literal argument names; a spread copies strings when its value is ${"such a string"}, or ${"a literal every member or element of which is one"}. Nothing else reads.`;
+
+/** LITERAL_READER, the default reader (READER_CLAIM). */
 export const LITERAL_READER: ScanReader = {
   readsString: (chain, file, tree) => {
     const value = denotedValue(resolverFor(tree), chain, file, 0);
@@ -622,15 +668,25 @@ export function sealedScan(tree: ModuleTree, reader: ScanReader = LITERAL_READER
   const openWhole = (owner: Reach, file: ts.SourceFile, at: ts.Node, heritage: boolean, use: UseId): void => {
     for (const root of everyRoot(r, owner.entity, new Set())) record(root, file, at, owner.via, heritage, use);
   };
+  /** The module namespace objects an import-equals alias's entity denotes, with the channels followed to each. */
+  const aliasModules = (alias: ts.ImportEqualsDeclaration): Reach[] => prefixed("import-equals", aliasReaches(r, alias, 0)).filter((reach) => reach.entity.kind === "module");
   for (const file of files) {
     const index = indexOf(tree, file);
     visit(file, (node) => {
-      // THE EXPORT FORMS: a namespace import re-exported, and a module re-exported by export * as, open every literal the module reaches.
+      // THE EXPORT FORMS (use 5): a namespace import, or an import-equals alias of a module, re-exported, and a module
+      // re-exported by export * as, open every literal the module reaches.
       if (ts.isExportDeclaration(node) && node.exportClause !== undefined && ts.isNamespaceExport(node.exportClause)) {
         openWhole({ entity: { kind: "module", path: moduleOf(tree, file.fileName, node.moduleSpecifier) }, via: ["namespace-import"] }, file, node, false, "export-form");
       }
       if (ts.isExportSpecifier(node) && node.parent.parent.moduleSpecifier === undefined) {
-        for (const path of index.spaces.get((node.propertyName ?? node.name).text) ?? []) openWhole({ entity: { kind: "module", path }, via: ["namespace-import"] }, file, node, false, "export-form");
+        const local = (node.propertyName ?? node.name).text;
+        for (const path of index.spaces.get(local) ?? []) openWhole({ entity: { kind: "module", path }, via: ["namespace-import"] }, file, node, false, "export-form");
+        for (const alias of index.aliases.get(local) ?? []) for (const reach of aliasModules(alias)) openWhole(reach, file, node, false, "export-form");
+      }
+      if (ts.isImportEqualsDeclaration(node) && !node.isTypeOnly && hasModifier(node, ts.SyntaxKind.ExportKeyword)) {
+        const reference = node.moduleReference;
+        const modules: Reach[] = ts.isExternalModuleReference(reference) ? [{ entity: { kind: "module", path: moduleOf(tree, file.fileName, reference.expression) }, via: ["namespace-import"] }] : aliasModules(node);
+        for (const reach of modules) openWhole(reach, file, node, false, "export-form");
       }
       if (!ts.isIdentifier(node) || !isValueReference(node)) return;
       const heritage = inClassExtends(node);
@@ -662,10 +718,4 @@ export function sealedScan(tree: ModuleTree, reader: ScanReader = LITERAL_READER
     });
   }
   return seals;
-}
-
-/** Whether a literal's members or elements read under a scan: an inline literal's always; a const's literal, or one nested in it, while its root is not open. */
-export function isSealed(seals: Seals, literal: ts.Node): boolean {
-  const root = seals.rootOf.get(literal);
-  return root === undefined || !seals.open.has(root);
 }
