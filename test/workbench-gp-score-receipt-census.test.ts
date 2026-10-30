@@ -11,7 +11,10 @@
  * FOLLOW-UP wb-yswd (the R694 carry of wb-0lf.5's landing 661, finding F1, which leads): E2's naming term widens from the two
  * whole words to the two stems (AUDIT_WORD), so a lookAlikes label, an audit case title or any other text that names the audit
  * or the journal through an inflection or a join is read, and eleven stem plants keep that reading live at each place it reads
- * (row E2 below). The rows, pins, quotes, residuals and registered test titles are unchanged.
+ * (row E2 below). Respin 1 (refusal #1, unmet U1-U6) pins the term on the stem spellings E2 lists, each at each place it reads
+ * (STEM_PLANTS), pins the net on each string and template text kind, reads an audit case from which no statement is read as
+ * an unread form, and narrows E2's naming and OVER-READS sentences to the pinned spellings. The rows, pins, quotes, residuals
+ * and registered test titles are unchanged.
  *
  * ROWS. T is the title's trigger, "When Pi consumes GP scores". A to E are the owner filing's five Acceptance clauses (the
  * first "Citation: " line of the bead's tracker row, cut at "; "), verbatim. Each row's pins quote its clause in order: a
@@ -67,17 +70,18 @@
  *    jsonRoundTrip and deepFreeze helpers, whose declarations E2 holds to the suite's text.
  *  E2: the replay forms are the landed wb-pjj suite's, read through the TypeScript parser by a reader that fails closed. The
  *    suite names an audit replay form in two places: (a) an entry of its lookAlikes table whose label names the audit or the
- *    journal (either stem, any ASCII letter case), and (b) a look-alike that a case whose title names the audit or the journal
+ *    journal (under the NAMING TERM below), and (b) a look-alike that a case whose title names the audit or the journal
  *    drives. The reader reads (a) only as one top-level function declaration lookAlikes(genuine) whose body is one return of an
  *    array of [label, value] pairs with string labels, and (b) only as a call it(title, fn) with a string title and exactly
  *    those two arguments, fn a parameterless arrow or function expression with a block body that is `const genuine =
- *    subject.permit();` followed by `expectUnminted(await subject.attempt(<value>), <label>);` statements with string labels.
- *    A value is read as a call chain over the genuine permit: nested single-argument calls of plain identifiers (no type
- *    arguments, no optional call) ending at the identifier genuine. Every input in either place outside that grammar (a table
- *    or a case of another shape, an entry or a statement of another shape, a label that is not a string, a value that is not
- *    such a chain), every it or test call whose title is not a string, and every string or template text naming the audit or
- *    the journal outside those read positions is recorded as an unread form ("<unread>" and its source text, under its label
- *    or "<unlabelled>"), so E2 reds. The read forms, the table's first and then the cases' in source order, are exactly
+ *    subject.permit();` followed by one or more `expectUnminted(await subject.attempt(<value>), <label>);` statements with
+ *    string labels. A value is read as a call chain over the genuine permit: nested single-argument calls of plain identifiers
+ *    (no type arguments, no optional call) ending at the identifier genuine. Every input in either place outside that grammar
+ *    (a table or a case of another shape, an entry or a statement of another shape, an audit case from which no statement is
+ *    read - its body empty, or the genuine declaration alone - a label that is not a string, a value that is not such a
+ *    chain), every it or test call whose title is not a string, and every string or template text naming the audit or the
+ *    journal outside those read positions is recorded as an unread form ("<unread>" and its source text, under its label or
+ *    "<unlabelled>"), so E2 reds. The read forms, the table's first and then the cases' in source order, are exactly
  *    LOOK_ALIKES's entries, and every helper a read chain names is declared once in the suite with the text of this census's
  *    own declaration, the copy E1 drives. AUDIT_PLANTS keeps the reader live on in-memory variants of the suite: refusal #2's
  *    four plants (an inline round trip, a variable-bound replay, a frozen inline round trip and a lookAlikes entry whose value
@@ -87,11 +91,24 @@
  *    reads, a lookAlikes label, an audit case title and a text outside the read positions: landing 661 PREP's four survivors
  *    verbatim (the plural journals, the inflection audited and the underscore join audit_log in a label, the inflection
  *    journaled in a title), a join before the stem in each place (decisionJournal, replay_journal, controlAudit), a plural in
- *    a text outside them (journals), and an upper-case or capitalized stem in each place (AUDIT, Journal, JOURNAL); each is
- *    read as an unread form, an added or a missing form, or a changed helper. A text names the audit or the journal when it
- *    holds either stem, the letters audit or journal in sequence in any ASCII letter case, anywhere in it (AUDIT_WORD): the
- *    whole word, an inflection (audits, audited, journals, journaled), a join after the stem or before it (audit_log,
- *    auditLog, replay_journal, decisionJournal) and any longer word that holds a stem.
+ *    a text outside them (journals), and an upper-case or capitalized stem in each place (AUDIT, Journal, JOURNAL), then
+ *    (respin 1) the stem, net and case plants the NAMING TERM below names; each is read as an unread form, an added or a
+ *    missing form, or a changed helper.
+ *    NAMING TERM (respin 1): a text names the audit or the journal when AUDIT_WORD, /audit|journal/i, matches it. The reader
+ *    reads the term at three places, a lookAlikes label, an audit case title and the net over every other string or template
+ *    text, and the census pins its reading at each of the three places on exactly these spellings, each planted as its text's
+ *    only stem: the whole words audit and journal (the start and middle plants below; the landed suite's own label and title
+ *    hold both words); STEM_SPELLINGS, each ending its text (STEM_PLANTS: one lookAlikes label, one audit case title and one
+ *    label in the spent-receipt case, which is not an audit case, per spelling) - the plurals audits and journals, the
+ *    inflections audited and journaled, the joins after the stem audit_log, journal_entry, auditLog and journalEntry, the
+ *    joins before it control_audit, replay_journal, controlAudit and decisionJournal, the longer words plaudit, photojournal,
+ *    unaudited, auditorium and journalism, and the letter cases Audit, Journal, AUDIT, JOURNAL, aUdIt and jOuRnAl; each stem
+ *    at its text's start and in its middle (audit-start, audit-middle, journal-start, journal-middle); and a stem whose first
+ *    letter the suite's source writes as a Unicode escape sequence (escaped: the reader reads a text's value, in which the
+ *    escape is the letter it stands for). The net plants pin the net on each kind of text it reads, each holding a stem once:
+ *    a string (in a case, at module level and in a type), a no-substitution template, and a template's head, middle and tail
+ *    texts. The case plants pin the unread audit case on two cases whose body is the genuine declaration alone (refusal #1's
+ *    G-OR4 and G-OR4b titles: auditorium, audit) and on one with an empty body. A spelling outside that list is NOT CLAIMED.
  *  Q1, Q2: the RESIDUALS below.
  * RESIDUALS (named families, each with pinned quiet rows; a reader that starts reading a pinned member reds its row):
  *  R-SYNTHETIC-DETERMINISTIC (Q1): B judges a synthetic deterministic reply, the vendored stochastic receipt's own candidates
@@ -105,10 +122,10 @@
  *    (abbreviated-client) and a launch whose program name comes from the environment (env-launch, refusal #2's PREP plant
  *    T-env-launch).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and each residual family's member
- * count as literals, beside the mutants, the prohibitions, the replay forms, the audit plants, the near misses, the plants, the
- * grant sets, the receipt tokens (read from the fixture, so the literal is held by it) and the bindings; the judged set (every
- * row's id, label and pins, every pin's quote and witness, the residual members, every registered test title) is held to the
- * out-of-file roster test/fixtures/gp-score-receipt-roster.json.
+ * count as literals, beside the mutants, the prohibitions, the replay forms, the audit plants, the stem spellings, the near
+ * misses, the plants, the grant sets, the receipt tokens (read from the fixture, so the literal is held by it) and the
+ * bindings; the judged set (every row's id, label and pins, every pin's quote and witness, the residual members, every
+ * registered test title) is held to the out-of-file roster test/fixtures/gp-score-receipt-roster.json.
  * OUTSIDE ANCHORS (their own registered case): the bead's own row in the tracker export (.beads/issues.jsonl): the title opens
  * with the requirement tag and row T's label before its artifact parenthetical; the first notes line opening "Citation: "
  * names the producer pins, says "Design-only; no Pi surface named" and holds the Acceptance sentence, whose five clauses are
@@ -130,10 +147,12 @@
  * confirmation and the rest: the control core's own suite, test/workbench-control.test.ts), since C1 exercises the exact-grant
  * and observer-only denials only; a replay the suite builds under a label and a case title that name neither the audit nor the
  * journal (the suite's own naming defines its audit replay forms; a text that holds neither stem names neither: a synonym, an
- * abbreviation, or a stem split by any other character or spelled with a letter outside ASCII); a replay form the suite does
- * not name (for example a frozen decision over an unfrozen receipt, refusal #2 F5: E1 drives exactly LOOK_ALIKES, and E2 reds
- * once the suite names another); the liveness of the suite's cases beyond E2's grammar (a describe-level modifier: E2 reads
- * names); a mutant, a near miss, a plant, an audit plant, a grant set, a residual member or row Q removed from its table, the
+ * abbreviation, or a stem split by any other character or spelled with a letter outside ASCII); E2's reading of a spelling
+ * outside its NAMING TERM list, and of a string at a position its net plants do not pin (the net walks the whole parse tree;
+ * its plants pin a string in a case, at module level and in a type); a replay form the suite does not name (for example a
+ * frozen decision over an unfrozen receipt, refusal #2 F5: E1 drives exactly LOOK_ALIKES, and E2 reds once the suite names
+ * another); the liveness of the suite's cases beyond E2's grammar (a describe-level modifier: E2 reads names); a mutant, a
+ * near miss, a plant, an audit plant, a stem spelling, a grant set, a residual member or row Q removed from its table, the
  * frozen literal and the roster together (no source outside this cut names them); a pin's case replaced by one that echoes its
  * roster witness (the witness form, refusal #1 F3); and the armed host's own shape: the first Pi consumer binds its module in
  * SRC_BINDINGS and re-measures rows A to E against it.
@@ -141,11 +160,13 @@
  * src comment or message that merely names a member reds T1 (disclosed: no src module spells one today). E2 reds on any landed
  * edit of the wb-pjj suite that leaves its grammar, reorders or repeats its audit forms, changes a helper's declaration text
  * or adds an audit- or journal-named text elsewhere, by design: a reader that fails closed refuses what it cannot read.
- * AUDIT_WORD reads a stem inside any longer word, so a text that holds one without naming the audit or the journal (plaudit,
- * auditorium, audition, journalism) is read as well and E2 reds on it: a lookAlikes label or a case title holding one is read
- * as naming an audit replay form, under the grammar above, and any other string or template text holding one is an unread form
- * (disclosed: the landed suite's only string or template texts holding a stem are its audit-named lookAlikes label and its
- * audit case's title).
+ * AUDIT_WORD reads a stem inside a longer word, so a text that holds one without naming the audit or the journal is read as
+ * well, as the longer words of the NAMING TERM list pin at each place (plaudit, photojournal, unaudited, auditorium,
+ * journalism): a lookAlikes label holding one is read as an audit replay form's label, a case titled with one is read under
+ * the grammar above (an audit case from which no statement is read is itself an unread form, the case plants), and any other
+ * string or template text holding one is an unread form, so E2 reds on a landed edit that adds any of them (disclosed: the
+ * landed suite's only string or template texts holding a stem are its audit-named lookAlikes label and its audit case's
+ * title).
  *
  * Display paths added: none. Test-only: no src change, no GraphPolicyCLI dependency, adapter, seam or fake binary.
  */
@@ -485,8 +506,8 @@ async function attempt(decision: unknown): Promise<Reading> {
 // ---- row E2: the reader of the landed wb-pjj suite's audit replay forms (it fails closed) ----
 
 /**
- * A text names the audit replay vocabulary when it holds either stem, the letters audit or journal in sequence in any ASCII
- * letter case, anywhere in it: the whole word, an inflection, a join after the stem or before it, and any longer word.
+ * E2's naming term: a text names the audit replay vocabulary when this expression matches it. The census pins its reading on
+ * the spellings the header's NAMING TERM lists, each at each place the reader reads a text (STEM_PLANTS and the net plants).
  */
 const AUDIT_WORD = /audit|journal/i;
 const UNREAD_MARK = "<unread>";
@@ -587,8 +608,9 @@ function unmintedStatement(statement: ts.Statement): { readonly label: ts.String
 /**
  * Row E2's reader of the landed wb-pjj suite, in the grammar the header states: its audit replay forms as [label, call chain]
  * pairs (the table's, then the cases' in source order) and the declaration text of every helper a read chain names. It fails
- * closed: whatever it cannot read in its two places, every it or test call whose title is not a string, and every string or
- * template text naming the audit or the journal outside its read positions is recorded as an unread form.
+ * closed: whatever it cannot read in its two places (among them an audit case from which no statement is read), every it or
+ * test call whose title is not a string, and every string or template text naming the audit or the journal outside its read
+ * positions is recorded as an unread form.
  */
 function landedAuditReading(text: string): AuditReading {
   const source = sourceFileOf(PJJ_SUITE, text);
@@ -631,7 +653,7 @@ function landedAuditReading(text: string): AuditReading {
       const body = ts.isIdentifier(node.expression) && node.expression.text === "it" && node.arguments.length === 2 ? caseBody(node.arguments[1]) : undefined;
       if (title !== undefined && titleText !== undefined && AUDIT_WORD.test(titleText) && body !== undefined) {
         placed.add(title);
-        if (body.statements.length === 0) unread(titleText, body);
+        const before = forms.length;
         for (const [index, statement] of body.statements.entries()) {
           if (index === 0 && isGenuineDeclaration(statement)) continue;
           const unminted = index === 0 ? undefined : unmintedStatement(statement);
@@ -641,6 +663,8 @@ function landedAuditReading(text: string): AuditReading {
             form(unminted.label.text, unminted.value, statement);
           }
         }
+        // An audit case from which no statement is read (its body empty, or the genuine declaration alone) is unread itself.
+        if (forms.length === before) unread(titleText, body);
       }
     }
     ts.forEachChild(node, cases);
@@ -664,6 +688,35 @@ const SPENT_PROBE_LINE = '    expectUnminted(await subject.attempt(Object.freeze
 const DOLLAR = "$";
 type Edit = readonly [string, string];
 const after = (anchor: string, added: string): Edit => [anchor, `${anchor}${added}`];
+/** The audit case's last statement and its closing line: a case planted after them is the audit case's next sibling. */
+const AUDIT_CASE_END = `${AUDIT_CASE_LAST}  });\n`;
+/**
+ * The stem spellings (wb-yswd respin 1, refusal #1 U1-U4): each is planted once at each place AUDIT_WORD reads a text, where
+ * it ends the text and is the text's only stem, so a reader that leaves one spelling unread at one place reds E2.
+ */
+const STEM_SPELLINGS: readonly string[] = [
+  "audits", "journals", "audited", "journaled", "audit_log", "journal_entry", "auditLog", "journalEntry", "control_audit", "replay_journal",
+  "controlAudit", "decisionJournal", "plaudit", "photojournal", "unaudited", "auditorium", "journalism", "Audit", "Journal", "AUDIT",
+  "JOURNAL", "aUdIt", "jOuRnAl",
+];
+/** One text per place, each holding a stem once: a lookAlikes label, an audit case's title and a label in a case that is not one. */
+function atEachPlace(name: string, label: string, title: string, other: string): (readonly [string, readonly Edit[]])[] {
+  return [
+    [`${name}@label`, [after(AUDIT_ENTRY, `    ["${label}", deepFreeze(jsonRoundTrip(genuine))],\n`)]],
+    [`${name}@title`, [after(AUDIT_CASE_END, `\n  it("${title}", async () => {\n    const genuine = subject.permit();\n    expectUnminted(await subject.attempt(deepFreeze(jsonRoundTrip(genuine))), "deep-frozen JSON round-trip");\n  });\n`)]],
+    [`${name}@elsewhere`, [after(SPENT_PROBE_LINE, `    expectUnminted(await subject.attempt(deepFreeze(jsonRoundTrip(genuine))), "${other}");\n`)]],
+  ];
+}
+/** Every stem spelling at each place, then each stem at a text's start and in its middle, then a stem whose first letter is an escape. */
+const STEM_PLANTS: Readonly<Record<string, readonly Edit[]>> = Object.fromEntries([
+  ...STEM_SPELLINGS.flatMap(spelling =>
+    atEachPlace(spelling, `deep-frozen JSON round-trip read back from the ${spelling}`, `refuses a deep-frozen JSON round-trip read back from the ${spelling}`, `a decision read back from the ${spelling}`)),
+  ...["audit", "journal"].flatMap(stem => [
+    ...atEachPlace(`${stem}-start`, `${stem} replay: a deep-frozen JSON round-trip`, `${stem} replay: refuses a deep-frozen JSON round-trip`, `${stem} replay: a decision read back`),
+    ...atEachPlace(`${stem}-middle`, `a deep-frozen JSON round-trip the ${stem} hands back`, `refuses a deep-frozen JSON round-trip the ${stem} hands back`, `a decision the ${stem} hands back`),
+  ]),
+  ...atEachPlace("escaped", "deep-frozen JSON round-trip read back from the \\u006aournal", "refuses a deep-frozen JSON round-trip read back from the \\u006aournal", "a decision read back from the \\u006aournal"),
+]);
 /** In-memory variants of the landed suite that row E2's reader must read (refusal #2's PE2 plants first). */
 const AUDIT_PLANTS: Readonly<Record<string, readonly Edit[]>> = {
   inline: [after(AUDIT_CASE_LAST, '    expectUnminted(await subject.attempt(JSON.parse(JSON.stringify(genuine))), "inline JSON round-trip");\n')],
@@ -691,6 +744,16 @@ const AUDIT_PLANTS: Readonly<Record<string, readonly Edit[]>> = {
   "letter-case-label": [after(AUDIT_ENTRY, '    ["deep-frozen JSON round-trip (a decision replayed from the AUDIT)", deepFreeze(jsonRoundTrip(genuine))],\n')],
   "letter-case-title": [after(`${AUDIT_CASE_LAST}  });\n`, '\n  it("refuses a deep-frozen JSON round-trip as the Journal would hand it back", async () => {\n    const genuine = subject.permit();\n    expectUnminted(await subject.attempt(deepFreeze(jsonRoundTrip(genuine))), "deep-frozen JSON round-trip");\n  });\n')],
   "letter-case-elsewhere": [after(SPENT_PROBE_LINE, '    expectUnminted(await subject.attempt(deepFreeze(jsonRoundTrip(genuine))), "a decision read back from the JOURNAL");\n')],
+  ...STEM_PLANTS,
+  "template-nosub@elsewhere": [after(SPENT_PROBE_LINE, "    expectUnminted(await subject.attempt(deepFreeze(jsonRoundTrip(genuine))), `a decision read back from the journaling store`);\n")],
+  "template-head@elsewhere": [after(SPENT_PROBE_LINE, `    expectUnminted(await subject.attempt(deepFreeze(jsonRoundTrip(genuine))), \`a decision read back from the audit_trail ${DOLLAR}{"store"}\`);\n`)],
+  "template-middle@elsewhere": [after(SPENT_PROBE_LINE, `    expectUnminted(await subject.attempt(deepFreeze(jsonRoundTrip(genuine))), \`a decision ${DOLLAR}{"read"} back from the journal ${DOLLAR}{"store"}\`);\n`)],
+  "template-tail@elsewhere": [after(SPENT_PROBE_LINE, `    expectUnminted(await subject.attempt(deepFreeze(jsonRoundTrip(genuine))), \`a decision ${DOLLAR}{"read"} back from the audit\`);\n`)],
+  "type-string@module": [after(ROUND_TRIP_LINE, 'type ReplaySource = "journaled";\n')],
+  "value-string@module": [after(ROUND_TRIP_LINE, 'const replaySource = "a decision read back from the audit";\n')],
+  "zero-form-title": [after(AUDIT_CASE_END, '\n  it("refuses a replay handed back by the auditorium desk", async () => {\n    const genuine = subject.permit();\n  });\n')],
+  "zero-form-audit-title": [after(AUDIT_CASE_END, '\n  it("refuses a replay handed back by the audit desk", async () => {\n    const genuine = subject.permit();\n  });\n')],
+  "empty-audit-case": [after(AUDIT_CASE_END, '\n  it("refuses nothing the audit hands back", async () => {});\n')],
 };
 /** The suite's text with each edit's anchor (exactly one occurrence) replaced. */
 function planted(text: string, edits: readonly Edit[]): string {
@@ -1053,6 +1116,26 @@ describe(suite, () => {
       "computed-title", "spread-entry", "helper-redefined", "journal-label-elsewhere", "journals-label", "audited-label", "audit_log-label",
       "journaled-title", "joined-label", "joined-title", "journals-elsewhere", "joined-elsewhere", "letter-case-label", "letter-case-title",
       "letter-case-elsewhere",
+      "audits@label", "audits@title", "audits@elsewhere", "journals@label", "journals@title", "journals@elsewhere", "audited@label", "audited@title",
+      "audited@elsewhere", "journaled@label", "journaled@title", "journaled@elsewhere", "audit_log@label", "audit_log@title", "audit_log@elsewhere",
+      "journal_entry@label", "journal_entry@title", "journal_entry@elsewhere", "auditLog@label", "auditLog@title", "auditLog@elsewhere",
+      "journalEntry@label", "journalEntry@title", "journalEntry@elsewhere", "control_audit@label", "control_audit@title", "control_audit@elsewhere",
+      "replay_journal@label", "replay_journal@title", "replay_journal@elsewhere", "controlAudit@label", "controlAudit@title",
+      "controlAudit@elsewhere", "decisionJournal@label", "decisionJournal@title", "decisionJournal@elsewhere", "plaudit@label", "plaudit@title",
+      "plaudit@elsewhere", "photojournal@label", "photojournal@title", "photojournal@elsewhere", "unaudited@label", "unaudited@title",
+      "unaudited@elsewhere", "auditorium@label", "auditorium@title", "auditorium@elsewhere", "journalism@label", "journalism@title",
+      "journalism@elsewhere", "Audit@label", "Audit@title", "Audit@elsewhere", "Journal@label", "Journal@title", "Journal@elsewhere", "AUDIT@label",
+      "AUDIT@title", "AUDIT@elsewhere", "JOURNAL@label", "JOURNAL@title", "JOURNAL@elsewhere", "aUdIt@label", "aUdIt@title", "aUdIt@elsewhere",
+      "jOuRnAl@label", "jOuRnAl@title", "jOuRnAl@elsewhere", "audit-start@label", "audit-start@title", "audit-start@elsewhere", "audit-middle@label",
+      "audit-middle@title", "audit-middle@elsewhere", "journal-start@label", "journal-start@title", "journal-start@elsewhere", "journal-middle@label",
+      "journal-middle@title", "journal-middle@elsewhere", "escaped@label", "escaped@title", "escaped@elsewhere", "template-nosub@elsewhere",
+      "template-head@elsewhere", "template-middle@elsewhere", "template-tail@elsewhere", "type-string@module", "value-string@module",
+      "zero-form-title", "zero-form-audit-title", "empty-audit-case",
+    ]);
+    expect(STEM_SPELLINGS).toEqual([
+      "audits", "journals", "audited", "journaled", "audit_log", "journal_entry", "auditLog", "journalEntry", "control_audit", "replay_journal",
+      "controlAudit", "decisionJournal", "plaudit", "photojournal", "unaudited", "auditorium", "journalism", "Audit", "Journal", "AUDIT", "JOURNAL",
+      "aUdIt", "jOuRnAl",
     ]);
     expect(Object.keys(NEAR)).toEqual(["unknown", "letter-case", "prefix", "extension", "padding", "widened-support"]);
     expect(Object.keys(PLANTS)).toEqual(["eval-consumer", "rpc-reply", "module-import", "client-name", "producer-names", "receipt-member", "near-tokens"]);

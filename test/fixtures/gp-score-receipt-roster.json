@@ -629,6 +629,750 @@
           "added": [],
           "missing": [],
           "helpers": []
+        },
+        "audits@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the audits: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "audits@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "audits@elsewhere": {
+          "unread": [
+            "a decision read back from the audits <- \"a decision read back from the audits\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journals@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the journals: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "journals@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "journals@elsewhere": {
+          "unread": [
+            "a decision read back from the journals <- \"a decision read back from the journals\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "audited@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the audited: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "audited@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "audited@elsewhere": {
+          "unread": [
+            "a decision read back from the audited <- \"a decision read back from the audited\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journaled@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the journaled: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "journaled@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "journaled@elsewhere": {
+          "unread": [
+            "a decision read back from the journaled <- \"a decision read back from the journaled\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "audit_log@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the audit_log: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "audit_log@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "audit_log@elsewhere": {
+          "unread": [
+            "a decision read back from the audit_log <- \"a decision read back from the audit_log\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journal_entry@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the journal_entry: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "journal_entry@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "journal_entry@elsewhere": {
+          "unread": [
+            "a decision read back from the journal_entry <- \"a decision read back from the journal_entry\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "auditLog@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the auditLog: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "auditLog@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "auditLog@elsewhere": {
+          "unread": [
+            "a decision read back from the auditLog <- \"a decision read back from the auditLog\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journalEntry@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the journalEntry: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "journalEntry@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "journalEntry@elsewhere": {
+          "unread": [
+            "a decision read back from the journalEntry <- \"a decision read back from the journalEntry\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "control_audit@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the control_audit: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "control_audit@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "control_audit@elsewhere": {
+          "unread": [
+            "a decision read back from the control_audit <- \"a decision read back from the control_audit\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "replay_journal@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the replay_journal: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "replay_journal@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "replay_journal@elsewhere": {
+          "unread": [
+            "a decision read back from the replay_journal <- \"a decision read back from the replay_journal\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "controlAudit@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the controlAudit: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "controlAudit@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "controlAudit@elsewhere": {
+          "unread": [
+            "a decision read back from the controlAudit <- \"a decision read back from the controlAudit\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "decisionJournal@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the decisionJournal: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "decisionJournal@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "decisionJournal@elsewhere": {
+          "unread": [
+            "a decision read back from the decisionJournal <- \"a decision read back from the decisionJournal\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "plaudit@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the plaudit: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "plaudit@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "plaudit@elsewhere": {
+          "unread": [
+            "a decision read back from the plaudit <- \"a decision read back from the plaudit\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "photojournal@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the photojournal: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "photojournal@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "photojournal@elsewhere": {
+          "unread": [
+            "a decision read back from the photojournal <- \"a decision read back from the photojournal\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "unaudited@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the unaudited: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "unaudited@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "unaudited@elsewhere": {
+          "unread": [
+            "a decision read back from the unaudited <- \"a decision read back from the unaudited\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "auditorium@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the auditorium: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "auditorium@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "auditorium@elsewhere": {
+          "unread": [
+            "a decision read back from the auditorium <- \"a decision read back from the auditorium\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journalism@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the journalism: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "journalism@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "journalism@elsewhere": {
+          "unread": [
+            "a decision read back from the journalism <- \"a decision read back from the journalism\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "Audit@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the Audit: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "Audit@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "Audit@elsewhere": {
+          "unread": [
+            "a decision read back from the Audit <- \"a decision read back from the Audit\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "Journal@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the Journal: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "Journal@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "Journal@elsewhere": {
+          "unread": [
+            "a decision read back from the Journal <- \"a decision read back from the Journal\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "AUDIT@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the AUDIT: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "AUDIT@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "AUDIT@elsewhere": {
+          "unread": [
+            "a decision read back from the AUDIT <- \"a decision read back from the AUDIT\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "JOURNAL@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the JOURNAL: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "JOURNAL@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "JOURNAL@elsewhere": {
+          "unread": [
+            "a decision read back from the JOURNAL <- \"a decision read back from the JOURNAL\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "aUdIt@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the aUdIt: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "aUdIt@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "aUdIt@elsewhere": {
+          "unread": [
+            "a decision read back from the aUdIt <- \"a decision read back from the aUdIt\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "jOuRnAl@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the jOuRnAl: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "jOuRnAl@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "jOuRnAl@elsewhere": {
+          "unread": [
+            "a decision read back from the jOuRnAl <- \"a decision read back from the jOuRnAl\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "audit-start@label": {
+          "unread": [],
+          "added": [
+            "audit replay: a deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "audit-start@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "audit-start@elsewhere": {
+          "unread": [
+            "audit replay: a decision read back <- \"audit replay: a decision read back\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "audit-middle@label": {
+          "unread": [],
+          "added": [
+            "a deep-frozen JSON round-trip the audit hands back: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "audit-middle@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "audit-middle@elsewhere": {
+          "unread": [
+            "a decision the audit hands back <- \"a decision the audit hands back\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journal-start@label": {
+          "unread": [],
+          "added": [
+            "journal replay: a deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "journal-start@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "journal-start@elsewhere": {
+          "unread": [
+            "journal replay: a decision read back <- \"journal replay: a decision read back\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journal-middle@label": {
+          "unread": [],
+          "added": [
+            "a deep-frozen JSON round-trip the journal hands back: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "journal-middle@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "journal-middle@elsewhere": {
+          "unread": [
+            "a decision the journal hands back <- \"a decision the journal hands back\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "escaped@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the journal: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "escaped@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "escaped@elsewhere": {
+          "unread": [
+            "a decision read back from the journal <- \"a decision read back from the \\u006aournal\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "template-nosub@elsewhere": {
+          "unread": [
+            "a decision read back from the journaling store <- `a decision read back from the journaling store`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "template-head@elsewhere": {
+          "unread": [
+            "a decision read back from the audit_trail  <- `a decision read back from the audit_trail ${"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "template-middle@elsewhere": {
+          "unread": [
+            " back from the journal  <- } back from the journal ${"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "template-tail@elsewhere": {
+          "unread": [
+            " back from the audit <- } back from the audit`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "type-string@module": {
+          "unread": [
+            "journaled <- \"journaled\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "value-string@module": {
+          "unread": [
+            "a decision read back from the audit <- \"a decision read back from the audit\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "zero-form-title": {
+          "unread": [
+            "refuses a replay handed back by the auditorium desk <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "zero-form-audit-title": {
+          "unread": [
+            "refuses a replay handed back by the audit desk <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "empty-audit-case": {
+          "unread": [
+            "refuses nothing the audit hands back <- {}"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
         }
       }
     },
