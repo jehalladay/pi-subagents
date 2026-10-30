@@ -1,0 +1,503 @@
+{
+ "bead": "wb-jwc.9",
+ "provenance": "wb-jwc.9 falsifier roster for test/workbench-rf-operation-receipt-honesty-census.test.ts (readers and probe vocabulary: test/helpers/rf-operation-receipt-honesty.ts). rows restates every row, clause and pin requirement of the census byte for byte; falsifiers lists each src plant (edits: the 1-based occurrence of anchor in file replaced by plant) with the pins whose claim it contradicts; residuals maps each named residual to its quiet pin. The census reads rows, the falsified pin ids and the residual map; the edits are for replay on a throwaway copy, never applied by the census.",
+ "rows": [
+  {
+   "id": "G",
+   "clause": "wb-jwc.9 U2",
+   "pins": [
+    {
+     "id": "G:literal:registerReactiveFiberRender",
+     "requirement": "the judged register call in registerReactiveFiberRender names an rf capability id, and its descriptor literal spells effectClass as the whole token read and permissions as an array literal of the one whole token reactivefiber:render, so in every run that reaches it the call hands the registry that id read under reactivefiber:render whatever the registrar's arguments, workspace root or environment; any other syntax there is written into the witness instead of a word, so it fails closed"
+    },
+    {
+     "id": "G:literal:registerNativeReactiveFiberRender",
+     "requirement": "the judged register call in registerNativeReactiveFiberRender names an rf capability id, and its descriptor literal spells effectClass as the whole token read and permissions as an array literal of the one whole token reactivefiber:render, so in every run that reaches it the call hands the registry that id read under reactivefiber:render whatever the registrar's arguments, workspace root or environment; any other syntax there is written into the witness instead of a word, so it fails closed"
+    },
+    {
+     "id": "G:unjudged",
+     "requirement": "every other src spelling of a member named register is listed by file, owner and syntax, so a registration made through any other spelling moves the witness"
+    },
+    {
+     "id": "G:runs",
+     "requirement": "each src rf registrar, run with a fresh registry in each stated run form (the census workspace root; process.cwd() as the workspace root; the census root with every environment name src reads set to each effect class word src's CapabilityDescriptor declares but read), leaves the registry holding its rf id read under reactivefiber:render: what the registry holds for rf ids when it returns is listed per run form"
+    }
+   ]
+  },
+  {
+   "id": "F",
+   "clause": "R-B109 U1",
+   "pins": [
+    {
+     "id": "F:injectable:bare",
+     "requirement": "a fresh read through the injectable registration: a reactive-fiber.cli/v1 context.render envelope carrying the fresh rfo_ around the bare result (output text alone): no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+    },
+    {
+     "id": "F:injectable:minimal",
+     "requirement": "a fresh read through the injectable registration: a reactive-fiber.cli/v1 context.render envelope carrying the fresh rfo_ around the smallest result the native preview admits (exactly the keys isPreviewEnvelope requires): no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+    },
+    {
+     "id": "F:injectable:full",
+     "requirement": "a fresh read through the injectable registration: a reactive-fiber.cli/v1 context.render envelope carrying the fresh rfo_ around the full rf 0.1.845 result (every key of test/fixtures/rf-result-keys.json): no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+    },
+    {
+     "id": "F:native:minimal",
+     "requirement": "a fresh read through the native registration: a stand-in rf printing a reactive-fiber.cli/v1 context.render envelope carrying the fresh rfo_ around the smallest result the native preview admits (exactly the keys isPreviewEnvelope requires), exit 0: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+    },
+    {
+     "id": "F:native:full",
+     "requirement": "a fresh read through the native registration: a stand-in rf printing a reactive-fiber.cli/v1 context.render envelope carrying the fresh rfo_ around the full rf 0.1.845 result (every key of test/fixtures/rf-result-keys.json), exit 0: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "clause": "wb-jwc.9 U1",
+   "pins": [
+    {
+     "id": "C:injectable:validation",
+     "requirement": "a read failed with validation: the injectable seam throws a CapabilityError of category validation: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+    },
+    {
+     "id": "C:injectable:authorization",
+     "requirement": "a read failed with authorization: the injectable seam throws a CapabilityError of category authorization: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+    },
+    {
+     "id": "C:injectable:unavailable",
+     "requirement": "a read failed with unavailable: the injectable seam throws a CapabilityError of category unavailable: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+    },
+    {
+     "id": "C:injectable:transport",
+     "requirement": "a read failed with transport: the injectable seam throws a CapabilityError of category transport: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+    },
+    {
+     "id": "C:injectable:uncertain-effect",
+     "requirement": "a read failed with uncertain-effect: the injectable seam throws a CapabilityError of category uncertain-effect: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+    },
+    {
+     "id": "C:native:malformed",
+     "requirement": "a read failed through the native registration: a stand-in rf printing a line that is not JSON, exit 0: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+    },
+    {
+     "id": "C:native:refused",
+     "requirement": "a read failed through the native registration: a stand-in rf printing an rf refusal (ok false, one RF_ error diagnostic, result null), exit 1: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+    }
+   ]
+  },
+  {
+   "id": "U",
+   "clause": "R-B109 U2",
+   "pins": [
+    {
+     "id": "U:injectable:show-bare",
+     "requirement": "an unprojected read through the injectable registration: a context.show envelope around the bare result: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+    },
+    {
+     "id": "U:injectable:show-full",
+     "requirement": "an unprojected read through the injectable registration: a context.show envelope around the full rf 0.1.845 result: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+    },
+    {
+     "id": "U:injectable:drift-bare",
+     "requirement": "an unprojected read through the injectable registration: a context.render envelope under schema reactive-fiber.cli/v2 around the bare result: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+    },
+    {
+     "id": "U:injectable:drift-full",
+     "requirement": "an unprojected read through the injectable registration: a context.render envelope under schema reactive-fiber.cli/v2 around the full rf 0.1.845 result: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+    },
+    {
+     "id": "U:injectable:no-source",
+     "requirement": "an unprojected read through the injectable registration: no envelope at all (the seam answers null): no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+    },
+    {
+     "id": "U:injectable:no-identity",
+     "requirement": "an unprojected read through the injectable registration: a reactive-fiber.cli/v1 context.render envelope around the full rf 0.1.845 result with no operation_id: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+    }
+   ]
+  },
+  {
+   "id": "R",
+   "clause": "residual",
+   "pins": [
+    {
+     "id": "R:fresh-shape",
+     "requirement": "NAMED RESIDUAL R-FRESH-SHAPE, not claimed: row F probes exactly the fresh reads it lists, each carrying the fresh rfo_, so a fresh read in any other shape (another subset of the optional result keys the native preview admits, observation rows, another release, digest, workspace or id value) is not probed; each fed read's result keys and projection are listed, and the full result is held to the rf result-key roster"
+    },
+    {
+     "id": "R:unprojected-form",
+     "requirement": "NAMED RESIDUAL R-UNPROJECTED-FORM, not claimed: row U probes exactly the unprojected reads it lists, so a returned read projecting no native reference in any other form (another schema id or command, another malformed identity, another result, another workspace root) is not probed; each fed form's schema, command, operation_id and projection are listed"
+    },
+    {
+     "id": "R:echo",
+     "requirement": "NAMED RESIDUAL R-ECHO, not claimed: an envelope under the preview contract that echoes the journaled rfo_ binds journal-recorded and confirms, because Pi takes the envelope's operation_id as given and never checks it is fresh; today's behaviour is pinned"
+    },
+    {
+     "id": "R:run-form",
+     "requirement": "NAMED RESIDUAL R-RUN-FORM, not claimed: a registration is read through its descriptor literal (G:literal) and measured in the stated run forms (G:runs) only, so a rewrite of what the registry holds after a judged call (CapabilityRegistry.register's own body, or code reaching the descriptors the registry holds), a register member reached through a name src never spells, or an environment read src makes by a computed name or through a whole use of process.env, conditioned on another workspace root, environment value or argument, is not read; src's environment reads are listed by name, computed access and whole use, with the run forms"
+    },
+    {
+     "id": "R:probe-context",
+     "requirement": "NAMED RESIDUAL R-PROBE-CONTEXT, not claimed: every read of rows F, C and U is fed in one request context against one journaled row, so a binding conditioned on any other task, position, principal, session, workspace, grant set, clock or journaled row is not probed; the context and the row are listed"
+    }
+   ]
+  }
+ ],
+ "falsifiers": [
+  {
+   "id": "R1",
+   "origin": "wb-jwc.6 refusal #4 G20L2-R1: the native registrar's effect class read from the workspace root",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "effectClass:\"read\"",
+     "occurrence": 2,
+     "plant": "effectClass:workspaceRoot===process.cwd()?\"write\":\"read\""
+    }
+   ],
+   "falsifies": [
+    "G:literal:registerNativeReactiveFiberRender",
+    "G:runs"
+   ]
+  },
+  {
+   "id": "R1c",
+   "origin": "wb-jwc.6 refusal #4 G20L2-R1c, the kill control: the native registrar writes unconditionally",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "effectClass:\"read\"",
+     "occurrence": 2,
+     "plant": "effectClass:\"write\""
+    }
+   ],
+   "falsifies": [
+    "G:literal:registerNativeReactiveFiberRender",
+    "G:runs"
+   ]
+  },
+  {
+   "id": "R2",
+   "origin": "wb-jwc.6 refusal #4 G20L2-R2: the injectable registrar's effect class read from an environment variable",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "effectClass:\"read\"",
+     "occurrence": 1,
+     "plant": "effectClass:process.env.PI_RF_PREVIEW_EFFECT===\"write\"?\"write\":\"read\""
+    }
+   ],
+   "falsifies": [
+    "G:literal:registerReactiveFiberRender",
+    "G:runs",
+    "R:run-form"
+   ]
+  },
+  {
+   "id": "R2c",
+   "origin": "wb-jwc.6 refusal #4 G20L2-R2c, the kill control: the injectable registrar writes unconditionally",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "effectClass:\"read\"",
+     "occurrence": 1,
+     "plant": "effectClass:\"write\""
+    }
+   ],
+   "falsifies": [
+    "G:literal:registerReactiveFiberRender",
+    "G:runs"
+   ]
+  },
+  {
+   "id": "H10-validation",
+   "origin": "wb-jwc.9 U1: the per-category falsifier for validation",
+   "file": "src/workbench/reconcile-decision.ts",
+   "edits": [
+    {
+     "anchor": "const nativeRef = nativeRefOf(evidence);",
+     "occurrence": 1,
+     "plant": "const nativeRef = input.failure === \"validation\" ? input.recordedNativeRefs[0] : nativeRefOf(evidence);"
+    },
+    {
+     "anchor": "outcome: input.failure ?? \"returned\",",
+     "occurrence": 1,
+     "plant": "outcome: input.failure === \"validation\" ? \"returned\" : (input.failure ?? \"returned\"),"
+    }
+   ],
+   "falsifies": [
+    "C:injectable:validation"
+   ]
+  },
+  {
+   "id": "H10-authorization",
+   "origin": "wb-jwc.9 U1: the per-category falsifier for authorization",
+   "file": "src/workbench/reconcile-decision.ts",
+   "edits": [
+    {
+     "anchor": "const nativeRef = nativeRefOf(evidence);",
+     "occurrence": 1,
+     "plant": "const nativeRef = input.failure === \"authorization\" ? input.recordedNativeRefs[0] : nativeRefOf(evidence);"
+    },
+    {
+     "anchor": "outcome: input.failure ?? \"returned\",",
+     "occurrence": 1,
+     "plant": "outcome: input.failure === \"authorization\" ? \"returned\" : (input.failure ?? \"returned\"),"
+    }
+   ],
+   "falsifies": [
+    "C:injectable:authorization"
+   ]
+  },
+  {
+   "id": "H10-unavailable",
+   "origin": "wb-jwc.9 U1: the per-category falsifier for unavailable",
+   "file": "src/workbench/reconcile-decision.ts",
+   "edits": [
+    {
+     "anchor": "const nativeRef = nativeRefOf(evidence);",
+     "occurrence": 1,
+     "plant": "const nativeRef = input.failure === \"unavailable\" ? input.recordedNativeRefs[0] : nativeRefOf(evidence);"
+    },
+    {
+     "anchor": "outcome: input.failure ?? \"returned\",",
+     "occurrence": 1,
+     "plant": "outcome: input.failure === \"unavailable\" ? \"returned\" : (input.failure ?? \"returned\"),"
+    }
+   ],
+   "falsifies": [
+    "C:injectable:unavailable",
+    "C:native:refused"
+   ]
+  },
+  {
+   "id": "H10-transport",
+   "origin": "wb-jwc.6 refusal #4 G20L2-H10 (a transport-failed read binds and confirms)",
+   "file": "src/workbench/reconcile-decision.ts",
+   "edits": [
+    {
+     "anchor": "const nativeRef = nativeRefOf(evidence);",
+     "occurrence": 1,
+     "plant": "const nativeRef = input.failure === \"transport\" ? input.recordedNativeRefs[0] : nativeRefOf(evidence);"
+    },
+    {
+     "anchor": "outcome: input.failure ?? \"returned\",",
+     "occurrence": 1,
+     "plant": "outcome: input.failure === \"transport\" ? \"returned\" : (input.failure ?? \"returned\"),"
+    }
+   ],
+   "falsifies": [
+    "C:injectable:transport",
+    "C:native:malformed"
+   ]
+  },
+  {
+   "id": "H10-uncertain-effect",
+   "origin": "wb-jwc.6 refusal #4 G20L2-H10u (the uncertain-effect member)",
+   "file": "src/workbench/reconcile-decision.ts",
+   "edits": [
+    {
+     "anchor": "const nativeRef = nativeRefOf(evidence);",
+     "occurrence": 1,
+     "plant": "const nativeRef = input.failure === \"uncertain-effect\" ? input.recordedNativeRefs[0] : nativeRefOf(evidence);"
+    },
+    {
+     "anchor": "outcome: input.failure ?? \"returned\",",
+     "occurrence": 1,
+     "plant": "outcome: input.failure === \"uncertain-effect\" ? \"returned\" : (input.failure ?? \"returned\"),"
+    }
+   ],
+   "falsifies": [
+    "C:injectable:uncertain-effect"
+   ]
+  },
+  {
+   "id": "H10c",
+   "origin": "wb-jwc.6 refusal #4 G20L2-H10c, the kill control: every failed read binds and confirms",
+   "file": "src/workbench/reconcile-decision.ts",
+   "edits": [
+    {
+     "anchor": "const nativeRef = nativeRefOf(evidence);",
+     "occurrence": 1,
+     "plant": "const nativeRef = input.failure !== undefined ? input.recordedNativeRefs[0] : nativeRefOf(evidence);"
+    },
+    {
+     "anchor": "outcome: input.failure ?? \"returned\",",
+     "occurrence": 1,
+     "plant": "outcome: \"returned\","
+    }
+   ],
+   "falsifies": [
+    "C:injectable:validation",
+    "C:injectable:authorization",
+    "C:injectable:unavailable",
+    "C:injectable:transport",
+    "C:injectable:uncertain-effect",
+    "C:native:malformed",
+    "C:native:refused"
+   ]
+  },
+  {
+   "id": "F1",
+   "origin": "wb-jwc.6 refusal #5 G20s142-F1: a fresh read stating a producer release binds the journaled rfo_",
+   "file": "src/workbench/reconcile-decision.ts",
+   "edits": [
+    {
+     "anchor": "const nativeRef = nativeRefOf(evidence);",
+     "occurrence": 1,
+     "plant": "const nativeRef = evidence.producerRelease !== undefined && input.recordedNativeRefs.length > 0 ? input.recordedNativeRefs[0] : nativeRefOf(evidence);"
+    }
+   ],
+   "falsifies": [
+    "F:injectable:full",
+    "F:native:full",
+    "U:injectable:no-identity"
+   ]
+  },
+  {
+   "id": "F2",
+   "origin": "wb-jwc.6 refusal #5 G20s142-F2: a render whose result carries the replay_of_operation_id key binds the journaled rfo_",
+   "file": "src/workbench/reconcile-decision.ts",
+   "edits": [
+    {
+     "anchor": "const nativeRef = nativeRefOf(evidence);",
+     "occurrence": 1,
+     "plant": "const nativeRef = input.result !== undefined && JSON.stringify(input.result).includes('\"replay_of_operation_id\"') && input.recordedNativeRefs.length > 0 ? input.recordedNativeRefs[0] : nativeRefOf(evidence);"
+    }
+   ],
+   "falsifies": [
+    "F:injectable:full",
+    "F:native:full",
+    "U:injectable:show-full",
+    "U:injectable:drift-full",
+    "U:injectable:no-identity"
+   ]
+  },
+  {
+   "id": "F3",
+   "origin": "wb-jwc.6 refusal #5 G20s142-F3: every rf read with a source basis (every read the native preview admits) binds the journaled rfo_",
+   "file": "src/workbench/reconcile-decision.ts",
+   "edits": [
+    {
+     "anchor": "const nativeRef = nativeRefOf(evidence);",
+     "occurrence": 1,
+     "plant": "const nativeRef = evidence.provider === \"reactivefiber\" && evidence.sourceBasis !== undefined && input.recordedNativeRefs.length > 0 ? input.recordedNativeRefs[0] : nativeRefOf(evidence);"
+    }
+   ],
+   "falsifies": [
+    "F:injectable:minimal",
+    "F:injectable:full",
+    "F:native:minimal",
+    "F:native:full",
+    "U:injectable:no-identity"
+   ]
+  },
+  {
+   "id": "F1c",
+   "origin": "the kill control for F1-F3 and U1-U4: every returned read binds the journaled rfo_",
+   "file": "src/workbench/reconcile-decision.ts",
+   "edits": [
+    {
+     "anchor": "const nativeRef = nativeRefOf(evidence);",
+     "occurrence": 1,
+     "plant": "const nativeRef = input.result !== undefined && input.recordedNativeRefs.length > 0 ? input.recordedNativeRefs[0] : nativeRefOf(evidence);"
+    }
+   ],
+   "falsifies": [
+    "F:injectable:bare",
+    "F:injectable:minimal",
+    "F:injectable:full",
+    "F:native:minimal",
+    "F:native:full",
+    "U:injectable:show-bare",
+    "U:injectable:show-full",
+    "U:injectable:drift-bare",
+    "U:injectable:drift-full",
+    "U:injectable:no-source",
+    "U:injectable:no-identity"
+   ]
+  },
+  {
+   "id": "U1",
+   "origin": "wb-jwc.6 refusal #5 G20s142-U1: an unprojected render under another schema id binds the journaled rfo_",
+   "file": "src/workbench/reconcile-decision.ts",
+   "edits": [
+    {
+     "anchor": "const nativeRef = nativeRefOf(evidence);",
+     "occurrence": 1,
+     "plant": "const nativeRef = evidence.provider === undefined && JSON.stringify(input.result ?? null).includes('\"command\":\"context.render\"') && input.recordedNativeRefs.length > 0 ? input.recordedNativeRefs[0] : nativeRefOf(evidence);"
+    }
+   ],
+   "falsifies": [
+    "U:injectable:drift-bare",
+    "U:injectable:drift-full"
+   ]
+  },
+  {
+   "id": "U2",
+   "origin": "wb-jwc.9 (R-B109 U2): an unprojected context.show read binds the journaled rfo_",
+   "file": "src/workbench/reconcile-decision.ts",
+   "edits": [
+    {
+     "anchor": "const nativeRef = nativeRefOf(evidence);",
+     "occurrence": 1,
+     "plant": "const nativeRef = evidence.provider === undefined && JSON.stringify(input.result ?? null).includes('\"command\":\"context.show\"') && input.recordedNativeRefs.length > 0 ? input.recordedNativeRefs[0] : nativeRefOf(evidence);"
+    }
+   ],
+   "falsifies": [
+    "U:injectable:show-bare",
+    "U:injectable:show-full"
+   ]
+  },
+  {
+   "id": "U3",
+   "origin": "wb-jwc.9 (R-B109 U2): a reading with no envelope binds the journaled rfo_",
+   "file": "src/workbench/reconcile-decision.ts",
+   "edits": [
+    {
+     "anchor": "const nativeRef = nativeRefOf(evidence);",
+     "occurrence": 1,
+     "plant": "const nativeRef = evidence.provider === undefined && JSON.stringify(input.result ?? null).includes('\"source\":null') && input.recordedNativeRefs.length > 0 ? input.recordedNativeRefs[0] : nativeRefOf(evidence);"
+    }
+   ],
+   "falsifies": [
+    "U:injectable:no-source"
+   ]
+  },
+  {
+   "id": "U4",
+   "origin": "wb-jwc.9 (R-B109 U2): an rf reading with no operation_id binds the journaled rfo_",
+   "file": "src/workbench/reconcile-decision.ts",
+   "edits": [
+    {
+     "anchor": "const nativeRef = nativeRefOf(evidence);",
+     "occurrence": 1,
+     "plant": "const nativeRef = evidence.provider === \"reactivefiber\" && evidence.nativeId === undefined && input.recordedNativeRefs.length > 0 ? input.recordedNativeRefs[0] : nativeRefOf(evidence);"
+    }
+   ],
+   "falsifies": [
+    "U:injectable:no-identity"
+   ]
+  }
+ ],
+ "residuals": [
+  {
+   "id": "R-FRESH-SHAPE",
+   "quietPin": "R:fresh-shape"
+  },
+  {
+   "id": "R-UNPROJECTED-FORM",
+   "quietPin": "R:unprojected-form"
+  },
+  {
+   "id": "R-ECHO",
+   "quietPin": "R:echo"
+  },
+  {
+   "id": "R-RUN-FORM",
+   "quietPin": "R:run-form"
+  },
+  {
+   "id": "R-PROBE-CONTEXT",
+   "quietPin": "R:probe-context"
+  }
+ ]
+}
