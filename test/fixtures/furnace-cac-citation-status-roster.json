@@ -285,7 +285,7 @@
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster and the cases agree",
   "the outside anchors: the bead's own row binds the rows, the pin quotes, the needles, the program, the records, the gradings, the subjects, the scopes, the labels and the predicate words; the producer block carries the filing's status lines",
-  "the receipt anchor: the wb-xfkx receipt's last dated entry records every row's pins and label, every judged pin's quote and every residual family with its quiet row and witness, in order and both ways",
+  "the receipt anchor: the wb-xfkx receipt's last entry records every row's pins and label, every judged pin's quote and every residual family with its quiet row and witness, in order and both ways",
   "A1",
   "A2",
   "A3",
@@ -334,7 +334,7 @@
  "ends": [
   "judged-set:78",
   "outside-anchors:136",
-  "receipt-anchor:16"
+  "receipt-anchor:44"
  ],
  "rows": [
   {

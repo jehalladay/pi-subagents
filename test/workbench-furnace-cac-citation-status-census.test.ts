@@ -49,45 +49,74 @@
  * residual row removed, a quiet row's probe swapped or row Q's label shortened in every literal and the roster together read green
  * (the gate's G-CT6-Q4 45/45, G-CT3-Q4-COORD and G-CT2-Q-COORD 46/46), and so did a pin folded into its neighbour when its quote names
  * no anchored term (G-MERGE-A4, G-MERGE-K2 and G-MERGE-Z2 45/45). The record now lives in the wb-xfkx receipt
- * (docs/workbench/receipts/wb-xfkx.md, append-only under standing rule 15, a document this census also judges): its last dated entry
- * holds three tables, read through marked's tokens - every row's id, pins and label digest; every judged pin's quote digest; every
+ * (docs/workbench/receipts/wb-xfkx.md, append-only under standing rule 15, a document this census also judges): its last entry
+ * (THE READERS: the part after its last level-2 heading; today its 2026-10-30 entry) holds three tables, read through marked's
+ * tokens - every row's id, pins and label digest; every judged pin's quote digest; every
  * residual family with its quiet row and the digest of that row's roster witness (its probe's path, text and causes) - each digest a
  * sha-256 of the UTF-8 bytes, a witness read as its JSON text (JSON.stringify) after readRoster resolves its {{record-2:<form>}}
  * tokens, so the receipt cites nothing and spells no record. The receipt-anchor case holds the three tables to ROWS, QUOTES,
  * RESIDUALS and the roster witnesses, in order and both ways; a later cut that changes any of them appends a new dated entry
- * carrying the three tables for its state and never edits a landed line. Four in-case controls pin the reader: only the last dated
- * entry is read, a table before any dated entry is not, and a table inside an HTML comment or a code block is no table; a fifth (THE
- * WITNESS RULE's tables depth control) pins that a heading of any other level inside that entry neither ends it nor starts one.
+ * carrying the three tables for its state and never edits a landed line. How the tables are read is THE READERS' Entries and Tables
+ * readings, each pinned by the in-case control named beside it.
  * THE WITNESS RULE (wb-pnn8, the R694 follow-up of landing 615: its F2 leads). The receipt's 2026-10-27 entry stated the witness
  * digest over a witness read as its JSON text with no token resolution, so the six witnesses that carry a {{record-2:<form>}} token
  * (Q3, Q5, Q6, Q7, Q9 and Q14) could not be re-derived from the roster by its rule (an independent recomputation: 8 of 14 without the
  * resolution, 14 of 14 with it); its 2026-10-30 entry restates the rule and carries the three tables again, unchanged. The rule's
- * clause is ANCHOR.definition. The receipt-anchor case holds the last dated entry's rule blocks EQUAL to [ANCHOR.definition], so the
- * entry holds exactly one rule block and it states exactly the clause. A rule block (anchorRules) is a prose block that opens with
- * ANCHOR.rule ('Witness rule: ') exactly - in that case, its closing space included - read past that lead with one closing period
- * dropped and any other closing mark kept. The prose blocks (anchorProse) are those after the receipt's last level-2 heading (a
- * heading of any other level neither ends that entry nor starts one): each top-level paragraph and each item of every top-level list,
- * in document order, an item read whole, its nested lists and its further paragraphs included; a blockquote, a heading, a table, a
- * thematic break, a link reference definition, an HTML block and a code block are no prose block. Each block is read through
- * shownText, the carrier view's token reading, whitespace-squeezed and trimmed: a code span shows its code; a task item's checkbox,
- * struck text, an image (its alt text included) and a link's destination and title show nothing; a block holding a raw HTML element
- * is opaque and is dropped. So an entry appended without the resolution, with a second or no rule block, or with words added around
- * the clause in its block reds, and so does the clause shortened in this file and the roster together, against the unchanged receipt.
- * The case also holds this header to CONTAIN the clause, never to state it exactly (headerOf: the doc comment that opens the file at
- * its first byte, read from its opening '/**' to its first closing delimiter, each line's comment prefix - indentation, one '*' and
- * one space - removed, whitespace squeezed; no header otherwise), so a header that drops it reds. In-case controls pin every reading
- * this paragraph names. anchorProse (cut #1's prose control, then the forms control): the last dated entry only, none before any
- * dated entry, none inside an HTML comment or a code block, an element block dropped, a code span shown and struck text unshown; a
- * paragraph over two lines, a nested item and a loose item's second paragraph read with their block, a second top-level list read, a
- * blockquote, a heading of each other level (1, 3, 4, 5 and 6), a table, a thematic break, a link reference definition and an HTML
- * block not read and no such heading ending the entry, a task checkbox, an image with its alt text and a link's destination and title
- * unshown, each block trimmed, all in document order. anchorRules (cut #1's rule control, then the rule forms control): only blocks
- * opening with the lead; a rule paragraph read; of two closing periods one kept, a closing '!' kept, an inner period kept; a lead in
- * lower case or without its closing space no rule; a task item's rule read. headerOf (cut #1's header control, then the header forms
- * control): the leading doc comment only, its prefixes removed; a later doc comment not read, a bare '*' line a removed prefix, one
- * '*' of two removed, a tab indent removed; a plain block comment, and a doc comment after a blank first line, no header.
- * anchorTables (the tables depth control): a heading of each other level (1, 3, 4, 5 and 6) inside the last dated entry neither ends
- * it nor starts one.
+ * clause is ANCHOR.definition. The receipt-anchor case holds the last entry's rule blocks (anchorRules) EQUAL to [ANCHOR.definition],
+ * so that entry holds exactly one rule block and it states exactly the clause, and it holds this header (headerOf) to CONTAIN the
+ * clause, never to state it exactly. So an entry appended without the resolution, with a second or no rule block, or with words that
+ * show added around the clause in its rule block reds, and so does the clause shortened in this file and the roster together,
+ * against the unchanged receipt; and a header that drops the clause reds.
+ * THE READERS (wb-pnn8 cut #3, the enumerate-the-resolvable form ruling R-B126 binds): of its four receipt-anchor readers the census
+ * claims exactly the readings listed here and no other, each pinned by the in-case control of the receipt-anchor case named beside
+ * it, so a reader that departs from a listed reading reds that control on the unmodified census and receipt.
+ * Entries (anchorTables, anchorProse and anchorRules, the entry forms control reading all three): an entry starts at a top-level
+ * level-2 heading - ATX, ATX with a closing sequence, ATX indented by two spaces, or setext; dated or not - and runs to the next one or
+ * to the end, and the readers read the last entry only (the entry forms control; lastEntry of the tables reader and prose reader
+ * controls; the rule entries control); nothing before the first such heading belongs to an entry (noEntry of the tables reader and
+ * prose reader controls; beforeEntries of the rule entries control); a heading of level 1 (ATX or setext), 3, 4, 5 or 6, and a level-2
+ * heading inside a blockquote, a list item, an HTML comment, a fenced code block or an indented code block, neither ends an entry nor
+ * starts one (the entry forms and tables depth controls; the prose forms control for levels 1 and 3 to 6).
+ * Tables (anchorTables): the entry's top-level tables, in document order, each as its header row then its body rows of cell texts
+ * as written, their markup kept (the table cells and tables depth controls); a table inside a blockquote or a list item (the table
+ * nesting control), an HTML comment or a code block (comment and codeBlock of the tables reader control) is no table.
+ * Prose (anchorProse): the entry's top-level paragraphs and the items of its top-level lists, bullet ('-', '*' and '+') and ordered
+ * ('1.' and '1)'), in document order (the prose forms and lists controls); an item is read whole, its parts joined by a space: its
+ * text, a nested list, a further paragraph, a nested blockquote, a nested code block, a nested table and a nested heading (the item
+ * whole and prose forms controls); a top-level blockquote (a list inside it included), heading, table, thematic break, link reference
+ * definition, HTML block (an element or a comment) and code block (fenced or indented) is no prose block (the prose forms and
+ * not-prose controls; comment and codeBlock of the prose reader control). Each block is read whitespace-squeezed and trimmed, with
+ * these inline readings (the inline forms and prose forms controls; lastEntry of the prose reader control): text, emphasis and strong
+ * text (asterisks or underscores), a code span's code, an escaped character, the text of an inline link, a reference link and an
+ * autolink, and a bare URL show themselves; a hard break (two trailing spaces or a backslash) reads as a space; struck text, an image
+ * (its alt text included), an inline HTML comment, a link's destination and title and a task item's checkbox show nothing; a block
+ * holding a raw HTML element (an opening or a closing tag) is opaque and is dropped, that block only, and the next block is read
+ * (element of the prose reader control; the opacity control).
+ * Rules (anchorRules): a rule block is a prose block that opens with ANCHOR.rule ('Witness rule: ') exactly: a lead one character off
+ * it - a case flip, a deletion, an inserted 'x' or a substituted 'x' at any place before its end - and the lead in all upper case or
+ * with every letter's case inverted are no lead (the rule leads control: 54 leads, the exact lead read), and so are a lead in lower
+ * case, one without its closing space and one later in its block (the rule forms control; rules of the prose reader control); a rule
+ * paragraph, a list item's rule and a task item's rule are read (the rule forms control); a rule reads past its lead with one closing
+ * period dropped - of two, one stays and an inner period stays (the rule forms control); after a space, the period goes and the space
+ * stays (the closing marks control) - and with every other closing ASCII punctuation mark kept (the closing marks control: the 31
+ * printable ASCII characters that are neither a letter, a digit nor the period; the rule forms control for '!'); and only the last
+ * entry's rule blocks are read, none from an earlier entry or from before the first (the rule entries control).
+ * Header (headerOf; the header reader and header forms controls): the doc comment that opens the file at its first byte, read from its
+ * opening '/**' to its first closing delimiter, each line's comment prefix - indentation, one '*' and one space - removed, whitespace
+ * squeezed: a later doc comment not read, a bare '*' line a removed prefix, one '*' of two removed, a tab indent removed; a plain block
+ * comment, and a doc comment after a blank first line, no header.
+ * READER RESIDUALS (named families, each pinned by its quiet rows in the receipt-anchor case; they are not row Q's residual families,
+ * which the receipt's residuals table holds). An RR-SECOND-RULE-UNREAD or RR-UNSHOWN-WORDS quiet row is a synthetic receipt whose last
+ * entry holds the rule 'one' and whose page holds one escaping form carrying the word 'two' (a second rule beside 'one' or before the
+ * first entry, or words inside the rule 'one' itself); the row pins both that the page carries 'two' once and that the rule reader
+ * reads ['one'] only, so it reds when its page is silenced or when its form starts to be read. RR-SECOND-RULE-UNREAD: a second,
+ * contradicting rule where the rule reader reads no rule block - in a blockquote, in a level-3 heading, in an HTML block, in an HTML
+ * comment, in a fenced code block, in a link reference definition's title, in an item nested under another item, in another item's
+ * further paragraph, in a block holding a raw HTML element, behind a lead in another case ('Witness Rule: '), behind other words in
+ * its block, or before the first entry (twelve rows). RR-UNSHOWN-WORDS: words around the clause carried only by text that shows
+ * nothing - struck text, an image, an inline HTML comment, a link's title (four rows). RR-HEADER-WORDS: words around the clause in
+ * this header, a negation before it or an exception after it (one row: a synthetic header carrying 'two' once in such words is pinned
+ * to still contain the clause, since the case holds containment only).
  *
  * THE UNITS. A unit is the smallest text the judges read as one "paragraph". Markdown (every document is .md): a blank-line-delimited
  * block, where a heading, a table row and each line inside a code fence are units of their own and a list item starts a new unit (its
@@ -158,15 +187,11 @@
  * roster's ends, so an early return or a cut tail in any of them reds).
  * NOT CLAIMED (edits of this file and the roster together): every edit the receipt anchor would catch, made in the anchor too - a later
  * dated entry appended to docs/workbench/receipts/wb-xfkx.md whose tables and witness rule carry it (the census reads the last entry;
- * the append is the visible act a gate judges) - and a sha-256 collision; what the receipt's other prose says (of the last dated entry
- * the census reads its tables and its one rule block, never its other blocks); a second, contradicting rule placed where the prose
- * reader reads no rule block - in a blockquote, in a heading, in an HTML block, nested under another item (it reads as part of that
- * item's block, which opens otherwise), in a block holding a raw HTML element (dropped as opaque), or behind a lead in another case
- * ('Witness Rule: '); words around the clause carried only by text that shows nothing (an image, struck text); words around the
- * clause in this header, such as a negation before it or an exception after it (the header is held to contain the clause, never to
- * state it exactly); an in-case control of the receipt-anchor case edited together with its expected reading (the roster's ends
- * catch an assertion removed, never one edited); a non-pin case's tail cut, or any one of its assertions removed, together with its
- * count in the roster's ends;
+ * the append is the visible act a gate judges) - and a sha-256 collision; what the receipt's other prose says (of the last entry the
+ * census reads its tables and its rule blocks, never its other blocks); the escapes the READER RESIDUALS name (each pinned by its quiet
+ * rows); a reading of the four receipt-anchor readers that THE READERS do not list; an in-case control of the receipt-anchor case, a
+ * reader residual's quiet row included, edited together with its expected reading (the roster's ends catch an assertion removed,
+ * never one edited); a non-pin case's tail cut, or any one of its assertions removed, together with its count in the roster's ends;
  * a control removed from IMPL and the roster together while every remaining control holds; a plant edited in IMPL and the roster
  * together; a floor lowered in FLOORS and the
  * roster together (git's list equal to the filesystem walk stays the narrowing guard for docs/ and src/; the documents outside docs/
@@ -395,7 +420,7 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-CARRIER-PLACEMENT": ["Q14"],
 };
 /**
- * THE RECEIPT ANCHOR: the record of this census's shape outside its two files - its bead's receipt, the path, its last dated entry's
+ * THE RECEIPT ANCHOR: the record of this census's shape outside its two files - its bead's receipt, the path, its last entry's
  * three table headers, in order, and the witness rule (wb-pnn8): the lead of the entry's one block that states it, and its clause,
  * which that block and this file's header both state.
  */
@@ -1049,11 +1074,7 @@ function sha256(text: string): string {
   return createHash("sha256").update(text, "utf8").digest("hex");
 }
 const isHeading = (token: Token): token is Tokens.Heading => token.type === "heading";
-/**
- * The tables of a receipt's last dated entry (the part after its last level-2 heading; a heading of any other level neither ends it
- * nor starts one), each as its header row then its body rows of cell texts, read through marked's tokens: a table only the raw markup
- * holds - inside an HTML comment or a code block - is no table, and a table before the first level-2 heading belongs to no entry.
- */
+/** The tables of a receipt's last entry, read through marked's tokens: THE READERS' Entries and Tables readings (header), each pinned by its in-case control; no other reading is claimed. */
 function anchorTables(text: string): string[][][] {
   const tokens = marked.lexer(text);
   const entries = tokens.flatMap((token, index) => (isHeading(token) && token.depth === 2 ? [index] : []));
@@ -1064,15 +1085,7 @@ function anchorTables(text: string): string[][][] {
     .filter(isTable)
     .map(table => [table.header.map(cell => cell.text), ...table.rows.map(row => row.map(cell => cell.text))]);
 }
-/**
- * The prose blocks of a receipt's last dated entry (the part after its last level-2 heading; a heading of any other level neither
- * ends it nor starts one): each top-level paragraph and each item of every top-level list, in document order, an item read whole (its
- * nested lists and further paragraphs included), read through marked's tokens by shownText (the carrier view's reading: a code span
- * shows its code; a task checkbox, struck text, an image and a link's destination and title show nothing; a raw HTML element makes
- * its block opaque, and an opaque block is dropped), whitespace-squeezed and trimmed. A blockquote, a heading, a table, a thematic
- * break, a link reference definition, an HTML block and a code block are no prose block; prose only the raw markup holds - inside an
- * HTML comment or a code block - is no prose, and prose before the first level-2 heading belongs to no entry.
- */
+/** The prose blocks of a receipt's last entry, read through marked's tokens by shownText, whitespace-squeezed and trimmed: THE READERS' Entries and Prose readings (header), each pinned by its in-case control; no other reading is claimed. */
 function anchorProse(text: string): string[] {
   const tokens = marked.lexer(text);
   const entries = tokens.flatMap((token, index) => (isHeading(token) && token.depth === 2 ? [index] : []));
@@ -1087,7 +1100,7 @@ function anchorProse(text: string): string[] {
       return view.opaque ? [] : [shown];
     });
 }
-/** The witness rules a receipt's last dated entry states: each prose block opening with ANCHOR's rule lead exactly (its case and closing space included), read past it, one closing period dropped and any other closing mark kept. */
+/** The witness rules a receipt's last entry states: THE READERS' Rules readings (header), each pinned by its in-case control; no other reading is claimed. */
 function anchorRules(text: string): string[] {
   return anchorProse(text).flatMap(block => (block.startsWith(ANCHOR.rule) ? [block.slice(ANCHOR.rule.length).replace(/\.$/, "")] : []));
 }
@@ -1775,14 +1788,14 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
     ENDS.push(endOf("outside-anchors"));
   });
 
-  it("the receipt anchor: the wb-xfkx receipt's last dated entry records every row's pins and label, every judged pin's quote and every residual family with its quiet row and witness, in order and both ways", () => {
+  it("the receipt anchor: the wb-xfkx receipt's last entry records every row's pins and label, every judged pin's quote and every residual family with its quiet row and witness, in order and both ways", () => {
     expect(ANCHOR.receipt, "the anchor is its bead's receipt (standing rule 15: append-only)").toBe(`${RECEIPTS}${ANCHOR.bead}.md`);
     expect(scopeList(REPO, SCOPES.documents), "git lists the anchor among the documents this census judges").toContain(ANCHOR.receipt);
     expect(textOf(ANCHOR.receipt).startsWith(`# ${ANCHOR.bead}: `), "the anchor opens with its rule-15 first line").toBe(true);
     const tables = anchorTables(textOf(ANCHOR.receipt));
     expect(
       tables.map(table => table[0]),
-      "the last dated entry holds the three anchor tables, in order",
+      "the last entry holds the three anchor tables, in order",
     ).toEqual(ANCHOR.tables.map(header => [...header]));
     const [rows, pins, residuals] = tables.map(table => table.slice(1));
     expect(rows, "the rows table: every row's id, its pins and the digest of its label, in row order, both ways").toEqual(ROWS.map(row => [row.id, row.pins.join(", "), sha256(row.label)]));
@@ -1796,7 +1809,7 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
     );
     expect(
       anchorRules(textOf(ANCHOR.receipt)),
-      `the last dated entry states its witness rule once, in its own paragraph or list item opening '${ANCHOR.rule}', and that rule is the token-resolving one, exactly`,
+      `the last entry states its witness rule once, in its own paragraph or list item opening '${ANCHOR.rule}', and that rule is the token-resolving one, exactly`,
     ).toEqual([ANCHOR.definition]);
     expect(headerOf(readFileSync(fileURLToPath(import.meta.url), "utf8")), "this census's header contains the witness rule's clause (contains it; the header's exact wording is not held)").toContain(ANCHOR.definition);
     expect(
@@ -1821,7 +1834,7 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
       comment: anchorTables(page(entry("2026-10-27 first", "A1"), "## 2026-10-28 second\n\n<!--\n| Pin | Quote sha-256 |\n| --- | --- |\n| B1 | 0 |\n-->")),
       codeBlock: anchorTables(page("## 2026-10-28 second\n\n```\n| Pin | Quote sha-256 |\n| --- | --- |\n| B1 | 0 |\n```")),
     };
-    expect(controls, "the reader: the last dated entry's tables only, none before an entry, none inside a comment or a code block").toEqual({
+    expect(controls, "the tables reader control: the last entry's tables only (lastEntry), none before an entry (noEntry), none inside a comment or a code block (comment, codeBlock)").toEqual({
       lastEntry: [[["Pin", "Quote sha-256"], ["B1", "0"]]],
       noEntry: [],
       comment: [],
@@ -1831,7 +1844,7 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
       anchorTables(
         page(`${entry("2026-10-28 second", "B1")}\n\n### a deeper heading\n\n#### a level-4 heading\n\n##### a level-5 heading\n\n###### a level-6 heading\n\n| Pin | Quote sha-256 |\n| --- | --- |\n| B2 | 0 |\n\n# a level-1 heading\n\n| Pin | Quote sha-256 |\n| --- | --- |\n| B3 | 0 |`),
       ),
-      "the tables depth control: a heading of each other level (1, 3, 4, 5 and 6) inside the last dated entry neither ends it nor starts one",
+      "the tables depth control: a heading of each other level (1, 3, 4, 5 and 6) inside the last entry neither ends it nor starts one; its tables read in document order",
     ).toEqual([
       [
         ["Pin", "Quote sha-256"],
@@ -1857,7 +1870,7 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
     };
     expect(
       prose,
-      "the prose reader: the last dated entry's paragraphs and list items only, a code span as its code and struck text unshown; none before an entry, none inside a comment or a code block, and a block with a raw HTML element opaque; the rule reader: only blocks opening with the lead, read past it, one closing period dropped",
+      "the prose reader control: the last entry's paragraphs and list items only, a code span as its code and struck text unshown (lastEntry); none before an entry (noEntry), none inside a comment or a code block (comment, codeBlock), and a block with a raw HTML element opaque (element); the rule reader: only blocks opening with the lead, read past it, one closing period dropped (rules)",
     ).toEqual({
       lastEntry: ["second rule", "third rule"],
       noEntry: [],
@@ -1899,6 +1912,132 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
       anchorRules(page(stated("2026-10-28 second", `${ANCHOR.rule}in a paragraph.\n\n${ruleForms.join("\n")}`))),
       "the rule forms: a rule paragraph read; of two closing periods one dropped, a closing '!' kept, an inner period kept; a lead in lower case or without its closing space no rule; a task item's rule read (its checkbox unshown, the block trimmed)",
     ).toEqual(["in a paragraph", "two closing periods.", "a closing exclamation!", "a task item", "an inner. period"]);
+    // THE READERS (wb-pnn8 cut #3, R-B126): the controls of the listed readings the controls above do not pin, then the READER RESIDUALS' quiet rows.
+    const quoteTable = (cell: string): string => `| Pin | Quote sha-256 |\n| --- | --- |\n| ${cell} | 0 |`;
+    const entryForms = ["## Notes", "## 2026-10-29 dated", "## Closed ##", "  ## Indented", "Setext entry\n---", "# level 1", "Setext one\n===", "### level 3", "#### level 4", "##### level 5", "###### level 6", "> ## quoted heading", "- ## item heading", "<!--\n## commented\n-->", "```\n## fenced\n```", "    ## indented code"];
+    expect(
+      entryForms.map(form => {
+        const text = page(stated("2026-10-27 first", `${ANCHOR.rule}one\n\n${quoteTable("A1")}`), `${form}\n\n${ANCHOR.rule}two\n\n${quoteTable("B1")}`);
+        return [form, anchorProse(text), anchorRules(text), anchorTables(text).map(table => table.slice(1).map(row => row[0]).join(", "))];
+      }),
+      "the entry forms control (prose, rules, tables): after an entry holding the rule 'one' and table A1, each form then the rule 'two' and table B1 - a level-2 heading (ATX, closed ATX, ATX indented by two spaces, setext; dated or not) starts the last entry; a heading of level 1 (ATX or setext), 3, 4, 5 or 6, and a level-2 heading inside a blockquote, a list item, an HTML comment, a fenced or an indented code block, starts none",
+    ).toEqual([
+      ["## Notes", ["Witness rule: two"], ["two"], ["B1"]],
+      ["## 2026-10-29 dated", ["Witness rule: two"], ["two"], ["B1"]],
+      ["## Closed ##", ["Witness rule: two"], ["two"], ["B1"]],
+      ["  ## Indented", ["Witness rule: two"], ["two"], ["B1"]],
+      ["Setext entry\n---", ["Witness rule: two"], ["two"], ["B1"]],
+      ["# level 1", ["Witness rule: one", "Witness rule: two"], ["one", "two"], ["A1", "B1"]],
+      ["Setext one\n===", ["Witness rule: one", "Witness rule: two"], ["one", "two"], ["A1", "B1"]],
+      ["### level 3", ["Witness rule: one", "Witness rule: two"], ["one", "two"], ["A1", "B1"]],
+      ["#### level 4", ["Witness rule: one", "Witness rule: two"], ["one", "two"], ["A1", "B1"]],
+      ["##### level 5", ["Witness rule: one", "Witness rule: two"], ["one", "two"], ["A1", "B1"]],
+      ["###### level 6", ["Witness rule: one", "Witness rule: two"], ["one", "two"], ["A1", "B1"]],
+      ["> ## quoted heading", ["Witness rule: one", "Witness rule: two"], ["one", "two"], ["A1", "B1"]],
+      ["- ## item heading", ["Witness rule: one", "item heading", "Witness rule: two"], ["one", "two"], ["A1", "B1"]],
+      ["<!--\n## commented\n-->", ["Witness rule: one", "Witness rule: two"], ["one", "two"], ["A1", "B1"]],
+      ["```\n## fenced\n```", ["Witness rule: one", "Witness rule: two"], ["one", "two"], ["A1", "B1"]],
+      ["    ## indented code", ["Witness rule: one", "Witness rule: two"], ["one", "two"], ["A1", "B1"]],
+    ]);
+    expect(
+      {
+        earlierOnly: anchorRules(page(stated("2026-10-27 first", `- ${ANCHOR.rule}one`), stated("2026-10-28 second", "- no rule"))),
+        both: anchorRules(page(stated("2026-10-27 first", `- ${ANCHOR.rule}one`), stated("2026-10-28 second", `- ${ANCHOR.rule}two`))),
+        beforeEntries: anchorRules(page(`- ${ANCHOR.rule}zero`, stated("2026-10-28 second", "- no rule"))),
+      },
+      "the rule entries control: only the last entry's rule blocks are read, none from an earlier entry (earlierOnly, both) or from before the first entry (beforeEntries)",
+    ).toEqual({ earlierOnly: [], both: ["two"], beforeEntries: [] });
+    expect(
+      anchorProse(page(stated("2026-10-28 second", ["- a dash item", "* a star item", "+ a plus item", "1. an ordered item\n2. a second ordered item", "3) a paren-ordered item"].join("\n\n")))),
+      "the lists control: the items of every top-level list, bullet ('-', '*' and '+') and ordered ('1.' and '1)'), in document order",
+    ).toEqual(["a dash item", "a star item", "a plus item", "an ordered item", "a second ordered item", "a paren-ordered item"]);
+    expect(
+      anchorProse(page(stated("2026-10-28 second", "- an item\n  > its nested quote\n\n  ```\n  its nested code\n  ```\n\n  | its | table |\n  | --- | --- |\n  | its | row |\n\n  ### its nested heading\n\n  its further paragraph\n  - its nested item"))),
+      "the item whole control: an item read whole, its parts joined by a space - its text, a nested blockquote, a nested code block, a nested table, a nested heading, a further paragraph and a nested list",
+    ).toEqual(["an item its nested quote its nested code its table its row its nested heading its further paragraph its nested item"]);
+    expect(
+      anchorProse(page(stated("2026-10-28 second", ["before", "> - a quoted item", "    an indented code block", "after"].join("\n\n")))),
+      "the not-prose control: a list inside a blockquote and an indented code block are no prose block",
+    ).toEqual(["before", "after"]);
+    expect(
+      anchorProse(
+        page(
+          stated(
+            "2026-10-28 second",
+            '*emphasis* and **strong** and _under_ and __double__ and `code` and \\*escaped\\* and [link text](https://example.invalid/x "a title") and [ref text][r] and <https://example.invalid/auto> and https://example.invalid/bare and an <!-- inline comment --> gap and a hard  \nbreak and a back\\\nslash break and ~~struck~~ and ![alt text](x.png) end\n\n[r]: https://example.invalid/r',
+          ),
+        ),
+      ),
+      "the inline forms control: emphasis and strong text (asterisks or underscores), a code span's code, an escaped character, an inline, a reference and an autolink's text and a bare URL shown; a link's destination and title, an inline HTML comment (the block kept), struck text and an image with its alt text unshown; a hard break (two spaces or a backslash) a space; the block squeezed and trimmed",
+    ).toEqual(["emphasis and strong and under and double and code and *escaped* and link text and ref text and https://example.invalid/auto and https://example.invalid/bare and an gap and a hard break and a back slash break and and end"]);
+    expect(
+      anchorProse(page(stated("2026-10-28 second", ["a <b>marked</b> paragraph", "a later paragraph", "a stray </i> closing tag", "a next paragraph", "- an <i>item</i>\n- a later item"].join("\n\n")))),
+      "the opacity control: a block holding a raw HTML element, an opening or a closing tag, is dropped, that block only - the next block is read",
+    ).toEqual(["a later paragraph", "a next paragraph", "a later item"]);
+    expect(
+      anchorTables(page(stated("2026-10-28 second", "> | Pin | Quote sha-256 |\n> | --- | --- |\n> | Q1 | 0 |\n\n- | Pin | Quote sha-256 |\n  | --- | --- |\n  | Q2 | 0 |\n\n| Pin | Quote sha-256 |\n| --- | --- |\n| B1 | 0 |"))),
+      "the table nesting control: a table inside a blockquote or a list item is no table; the top-level one is read",
+    ).toEqual([
+      [
+        ["Pin", "Quote sha-256"],
+        ["B1", "0"],
+      ],
+    ]);
+    expect(
+      anchorTables(page(stated("2026-10-28 second", "| Pin | Quote sha-256 |\n| --- | --- |\n| `B1` | *0* |"))),
+      "the table cells control: a cell's text as written, its markup kept",
+    ).toEqual([
+      [
+        ["Pin", "Quote sha-256"],
+        ["`B1`", "*0*"],
+      ],
+    ]);
+    const flip = (letter: string): string => (letter === letter.toLowerCase() ? letter.toUpperCase() : letter.toLowerCase());
+    const leads = new Set<string>();
+    for (const [at, letter] of [...ANCHOR.rule].entries()) {
+      const head = ANCHOR.rule.slice(0, at);
+      const tail = ANCHOR.rule.slice(at + 1);
+      leads.add(`${head}${tail}`).add(`${head}${flip(letter)}${tail}`).add(`${head}x${tail}`).add(`${head}x${letter}${tail}`);
+    }
+    leads.add(ANCHOR.rule.toUpperCase()).add([...ANCHOR.rule].map(flip).join(""));
+    leads.delete(ANCHOR.rule);
+    expect(
+      { leads: leads.size, read: anchorRules(page(stated("2026-10-28 second", [`- ${ANCHOR.rule}the exact lead`, ...[...leads].map(lead => `- ${lead}a near lead`)].join("\n")))) },
+      "the rule leads control: every lead one character off ANCHOR.rule (a case flip, a deletion, an inserted or a substituted 'x', at any place before its end), the lead in all upper case and the lead with every letter's case inverted are no lead; the exact lead is",
+    ).toEqual({ leads: 54, read: ["the exact lead"] });
+    const marks = Array.from({ length: 0x7e - 0x21 + 1 }, (_, at) => String.fromCodePoint(0x21 + at)).filter(character => !/[A-Za-z0-9.]/.test(character));
+    expect(
+      { marks: marks.join(""), read: anchorRules(page(stated("2026-10-28 second", [...marks.map(mark => `- ${ANCHOR.rule}closes with ${mark}`), `- ${ANCHOR.rule}a period after a space .`].join("\n")))) },
+      "the closing marks control: every printable ASCII character that is neither a letter, a digit nor the period, closing a rule, is kept; a closing period after a space goes and the space stays",
+    ).toEqual({ marks: "!\"#$%&'()*+,-/:;<=>?@[\\]^_`{|}~", read: [...marks.map(mark => `closes with ${mark}`), "a period after a space "] });
+    const beside = (block: string): string => page(stated("2026-10-28 second", `- ${ANCHOR.rule}one.\n\n${block}`));
+    const around = (rule: string): string => page(stated("2026-10-28 second", `- ${ANCHOR.rule}${rule}`));
+    const quietRows: readonly (readonly [string, string, string])[] = [
+      ["RR-SECOND-RULE-UNREAD", "in a blockquote", beside(`> ${ANCHOR.rule}two.`)],
+      ["RR-SECOND-RULE-UNREAD", "in a level-3 heading", beside(`### ${ANCHOR.rule}two.`)],
+      ["RR-SECOND-RULE-UNREAD", "in an HTML block", beside(`<p>${ANCHOR.rule}two.</p>`)],
+      ["RR-SECOND-RULE-UNREAD", "in an HTML comment", beside(`<!--\n${ANCHOR.rule}two.\n-->`)],
+      ["RR-SECOND-RULE-UNREAD", "in a fenced code block", beside(`\`\`\`\n${ANCHOR.rule}two.\n\`\`\``)],
+      ["RR-SECOND-RULE-UNREAD", "in a link reference definition's title", beside(`[note]: https://example.invalid/n "${ANCHOR.rule}two."`)],
+      ["RR-SECOND-RULE-UNREAD", "in an item nested under another item", beside(`- a change\n  - ${ANCHOR.rule}two.`)],
+      ["RR-SECOND-RULE-UNREAD", "in another item's further paragraph", beside(`- a change\n\n  ${ANCHOR.rule}two.`)],
+      ["RR-SECOND-RULE-UNREAD", "in a block holding a raw HTML element", beside(`- ${ANCHOR.rule}<b>two</b>.`)],
+      ["RR-SECOND-RULE-UNREAD", "behind a lead in another case", beside("- Witness Rule: two.")],
+      ["RR-SECOND-RULE-UNREAD", "behind other words in its block", beside(`- Note: ${ANCHOR.rule}two.`)],
+      ["RR-SECOND-RULE-UNREAD", "before the first entry", page(`- ${ANCHOR.rule}two.`, stated("2026-10-28 second", `- ${ANCHOR.rule}one.`))],
+      ["RR-UNSHOWN-WORDS", "in struck text", around("one~~except two~~.")],
+      ["RR-UNSHOWN-WORDS", "in an image", around("one![except two](x.png).")],
+      ["RR-UNSHOWN-WORDS", "in an inline HTML comment", around("one<!-- except two -->.")],
+      ["RR-UNSHOWN-WORDS", "in a link's title", around('[one](https://example.invalid/n "except two").')],
+    ];
+    for (const [family, form, text] of quietRows) {
+      expect({ two: text.split("two").length - 1, rules: anchorRules(text) }, `${family} quiet row (${form}): the page carries 'two' once and the rule reader reads ['one'] only`).toEqual({ two: 1, rules: ["one"] });
+    }
+    const negated = `/**\n * never ${ANCHOR.definition}, except two\n */\n`;
+    expect(
+      { two: negated.split("two").length - 1, holds: headerOf(negated).includes(ANCHOR.definition) },
+      "RR-HEADER-WORDS quiet row (a negation before the clause, an exception after it): the header carries 'two' once and still contains the clause",
+    ).toEqual({ two: 1, holds: true });
     ENDS.push(endOf("receipt-anchor"));
   });
 
