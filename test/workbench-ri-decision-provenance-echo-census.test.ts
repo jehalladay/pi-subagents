@@ -61,7 +61,9 @@
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (each pin with its quote),
  * every pin's witness, the constants, the harness, the record, the hooks, the carrier, the native result, the placements, the
  * probes, the registered test titles and each pin's assertion count are held to the out-of-file roster (test/fixtures/ri-decision-provenance-echo-roster.json),
- * which readRoster freezes through every member (THE FREEZE), so no in-place write this file makes changes what they are held to. OUTSIDE
+ * which readRoster reads before any other statement of this file's module body runs (THE ORDER) and freezes through every member (THE
+ * FREEZE), so no in-place write this file makes changes what they are held to; ROWS and the object and list constants held to it are
+ * frozen where they are declared too (THE FREEZE, wb-5333). OUTSIDE
  * ANCHOR: the owner filing's row in the tracked bead export (.beads/issues.jsonl, row wb-tz4r.3): each acceptance clause is
  * exactly one row label, the trigger sits in row A's, and the quote pin, the quote and the gating artifacts are in its notes.
  * PIN ANCHOR (wb-3xmr F1): each row's pin quotes, in pin order, tile its owner text with separator-only gaps (the wb-if7q.2 and
@@ -127,10 +129,39 @@
  * rewritten to the dropped assertion's count. THE FREEZE holds the roster: every pin case's comparison target, and the target of
  * the record's and the judged set's roster comparisons. Values this file computes from the roster, such as CARRIER (a copy of its
  * envelope) and BASE (today's projections of CARRIER), are its own and are not frozen.
+ * THE FREEZE holds the in-file side too (wb-5333 F1: the wb-b93c gate's F1 - row B's label cut in ROWS, or D3's quote, then restored
+ * by the judged set through Object.assign before its roster comparison, stayed 18/18, since the SELF-READ reads names and THE FREEZE
+ * held the roster alone): ROWS and each object or list constant the judged set compares against the roster (GATING_ARTIFACTS, FIELDS,
+ * REF_KIND, MEMBER, INVOCATION, HARNESS, RECORD and HOOKS; BEAD, QUOTE_PIN and QUOTE are strings) are frozen through every member where
+ * they are declared, as are the patterns the judged set and the cases read through (SEPARATOR, which the PIN ANCHOR reads every gap
+ * with, RI_ROOT, FIELD_SPELLINGS and REF_PREFIX), so an in-place write to any of them, from the judged set or anywhere else in this
+ * file, throws a TypeError or is refused. The judged set pins it: no unfrozen object or list is reachable from them; the six write
+ * forms are each refused on every member of row B and of D3's pin in ROWS and on the first member of ROWS and of each constant, which
+ * read the same after them; and a test method set on each pattern is refused. Nor does the judged set bind a name this file's top
+ * level binds: the SELF-READ refuses a variable, parameter, function or class of the judged set that bears the name of a top-level
+ * import, function, class, enum or variable (two planted blocks pin it beside a control), so the judged set never compares the roster
+ * against itself under an in-file name. Measured on the landed census (2211bdf), each 0 failed there and red now: the gate's e11 and
+ * e12; row B's label restored through Object.defineProperty; row B's id; INVOCATION's task; a gating artifact dropped and pushed back;
+ * a ref kind; a member name (each restored by the judged set before its comparison); the label restored through a top-level helper;
+ * CT6 beside a SEPARATOR.test reading every gap that holds no quote as a separator (17/17 there); and 'const ROWS = ROSTER.rows;' as
+ * the judged set's first statement beside the label cut (refused at collection). Values this file keeps for its own readers stay
+ * unfrozen (NOT CLAIMED).
+ * THE ORDER (wb-5333 F2: the wb-b93c gate's e10 - top-level statements placed before ROSTER's declaration read the roster file through
+ * a composed path, dropped a mutant from D3's witness through a computed key, wrote the file back, let readRoster read it and restored
+ * the bytes, beside a D3 measuring one mutant fewer, and stayed 18/18; a file write, which THE FREEZE does not see): ROSTER's
+ * declaration is this file's first statement after its imports and reads READ_FIRST, `const ROSTER = readRoster();`, and readRoster
+ * computes ROSTER_PATH and reads the file before it calls anything of this file. The SELF-READ pins the order in any source that
+ * declares ROSTER: each statement before that declaration that is not an import, an interface or a type alias (a function declaration
+ * included, though it runs nothing) is refused, and so is a declaration other than READ_FIRST; three planted sources pin it (two
+ * refusals, a control reading clean). readRoster is named only for ROSTER (above), so the roster is read once, and a rewrite of the
+ * file after that read reaches nothing the cases compare (measured: e10's rewrite placed after the read, beside D3's dropped mutant,
+ * reds D3 and the record). Measured on the landed census, each 0 failed there and failing at collection now: e10 (verbatim it reads
+ * HERE, now declared after ROSTER, and fails on HERE's temporal dead zone; re-anchored without HERE it fails at THE GUARD) and the same
+ * rewrite run inside ROSTER's initializer by a helper readRoster is handed to. Code that runs before the module body is R-PRE-READ.
  * RECORDS: the last case walks this file's registered tests: each roster title once, in order, in run mode, not inverted, ran;
  * every pin's witness again, no two pins sharing one (so a case moved under another pin's id, its roster witness rewritten to
  * match, reds); every pin reached its end with its pinned assertion count. It is RECORD (THE RUNNER), so it compares and never writes,
- * and the roster it compares against is frozen (THE FREEZE).
+ * and the roster it compares against is frozen (THE FREEZE), as is ROWS, whose pin ids its second title comparison reads (wb-5333).
  * NOT CLAIMED: the three placements, the probe lists and the reference adoption's kinds and member names are this fixture's
  * choices (no producer placement, default or slot exists), so a placement or probe removed from the roster and from every
  * witness together is anchored by nothing outside these two files; the four fields are anchored (the quote's words, clause (a)).
@@ -146,7 +177,16 @@
  * pins, beside a write of the D3 witness, is a change of the reader (measured: it kept a broken D3 at 18/18; the freeze dropped alone
  * reds the judged set, as it does beside that write, and with either of the judged set's two roster pins dropped the other reds it -
  * the write probes, writing through, red D3 and the record as well).
- * RESIDUALS (named families, each with a pinned quiet row: D4's for the first five and R-RUNTIME, A1's for R-READ-SITE): R-COINCIDENT a
+ * Likewise the in-file freeze and THE ORDER (wb-5333): a constant's freeze dropped together with its entry in the judged set's in-file
+ * pin, readRoster's own body edited (what it reads, parses, keeps or freezes), or the judged set's own comparisons removed or made
+ * unreachable is a change of the reader (measured on the cut: INVOCATION's freeze and its entry dropped, beside INVOCATION's task cut
+ * and restored, kept 18/18, and with its entry kept it reds the judged set; readRoster dropping a mutant from D3's witness, beside a
+ * D3 measuring one mutant fewer, kept 18/18; row B's label cut beside 'if (ROWS.length > 0) return;' after the judged set's first
+ * assertion kept 18/18). Nor are the values this file keeps for its own readers frozen: CARRIER, BASE, CONTEXTS, ABSENT, SEAMS,
+ * SURFACES, GRANTS, IMPL, the native descriptor cache, the SELF-READ's tables and planted pins, THE GUARD's inputs and reading, and
+ * the records MEASURED, REACHED and scratches. THE FREEZE holds exactly the roster, ROWS, the constants and the patterns named above.
+ * RESIDUALS (named families, each with a pinned quiet row: D4's for the first five, R-RUNTIME and R-PRE-READ, A1's for R-READ-SITE):
+ * R-COINCIDENT a
  * "default" that restates the value today's projection already holds at that path is no change and reads quiet; R-KIND the
  * judge binds a field to its value, never to a ref kind or member name (those are the adopter's to choose), so two fields filed
  * under each other's kinds read quiet; R-ORDER where an adopted entry sits among the refs is not pinned; R-REBIND a pin removed
@@ -164,12 +204,22 @@
  * file reader) changed before it reads - so that a comparison passes whatever it compares or a result is rewritten, is beyond the
  * SELF-READ and THE GUARD, which read this file's names, never the runtime's behaviour (D4: a chai plugin answering toStrictEqual
  * with the value compared against itself and an aliased expect extending toStrictEqual read clean; measured on the cut, each kept a
- * broken D3 at 18/18).
+ * broken D3 at 18/18);
+ * R-PRE-READ (wb-5333) a rewrite of the roster file made by code that runs before this file's module body - a call vitest hoists above
+ * the imports (vi.hoisted, a mock factory), an imported module's top-level code, a setup file, another test file or another process -
+ * is beyond THE ORDER, which reads this file's statements in their written order (D4: a vi.hoisted callback rewriting the roster file,
+ * written after ROSTER's declaration, reads clean; measured on the cut: such a callback, vi imported, dropping a mutant from D3's
+ * witness beside a D3 measuring one mutant fewer, stayed 18/18, and alone reds D3 and the record).
  * THE FREEZE trusts the runtime too (wb-b93c): Object.freeze, Object.isFrozen and the write forms it probes are builtins, so their
  * replacement is R-RUNTIME (D4: Object.freeze and Object.isFrozen replaced read clean; measured on the wb-b93c cut, each beside a
  * write of the D3 witness: Object.freeze replaced reds the judged set (its walker reads the roster unfrozen), as it does with
  * Object.isFrozen replaced too (the walker's perturbed-input pin) and with the six write forms replaced as well (the walker reads the
  * written witness unfrozen), and only with that witness passed through the replaced Object.freeze did a broken D3 stay at 18/18).
+ * Since THE ORDER (wb-5333), a statement of this file replacing those builtins stands after readRoster froze the roster: the wb-b93c
+ * seat's n06-n08c, replayed on the wb-5333 cut where they stood (before ROSTER's declaration), fail at collection, and placed after the
+ * read n06 and n08c each red 3 (the roster's D3 witness is frozen by the builtin). The in-file sides trust the same builtins
+ * (R-RUNTIME): measured on the wb-5333 cut, n08c's replacements placed after the read, beside row B's label cut restored through the
+ * Object.assign they saved, kept 18/18.
  * SCOPE: the RI facts are read at their pins and Pi vendors no RI source, so a producer change is seen only when a re-probe re-reads
  * them; when RI ships the envelope (RI-DEC-06/08) and rf surfaces it, the adopter's projection replaces the reference adoption and
  * B4 reds by its findings alone, the cue to re-cut this census to the shipped shape. No reader is added or faked here.
@@ -194,6 +244,9 @@ import { type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src
 import { RECONCILE_EVIDENCE_READS } from "../src/workflow/reconcile.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
+/** THE ORDER (wb-5333 F2): the roster, read by readRoster() alone before any other statement of this file runs (SELF-READ). */
+const ROSTER = readRoster();
+
 installScratchLeakGuard(afterAll);
 
 type JsonObject = { [key: string]: JsonValue };
@@ -201,7 +254,6 @@ type Path = readonly (string | number)[];
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
-const ROSTER_PATH = join(HERE, "fixtures", "ri-decision-provenance-echo-roster.json");
 /** This file's own source text, read for the SELF-READ. */
 const SELF_TEXT = readFileSync(fileURLToPath(import.meta.url), "utf8");
 const EXPORT_PATH = join(REPO, ".beads", "issues.jsonl");
@@ -211,39 +263,39 @@ const PROGRAM_TAG = "[RI-UNIFIED-DECISION-INFERENCE-R3]";
 const TRIGGER = "Pi carries no decision envelope today (census 0)";
 const QUOTE_PIN = "docs/programs/unified-decision-inference-2026-10-21/01-contracts.md:14@485f3615db1e";
 const QUOTE = "Preserve endpoint/model revision, sampling policy and complete native evidence where available.";
-const GATING_ARTIFACTS = ["RI-DEC-06", "RI-DEC-08"];
+const GATING_ARTIFACTS: readonly string[] = deepFrozen(["RI-DEC-06", "RI-DEC-08"]);
 const PREVIEW_ID = "reactivefiber.render.preview";
 const GRANTS = ["reactivefiber:render"];
 const FIXTURE_ROOT = "/fixture/rf-workspace";
 /** Pi's own preview input: a model name no producer field states, so a surface that echoed it as a revision would show it. */
-const INVOCATION = { model: "pi-invocation-model-9d2", task: "summarise the notes" };
+const INVOCATION = deepFrozen({ model: "pi-invocation-model-9d2", task: "summarise the notes" });
 /** The four fields of 01-contracts.md:14, in the sentence's order. */
-const FIELDS = ["endpoint", "model_revision", "sampling_policy", "native_evidence"] as const;
+const FIELDS = deepFrozen(["endpoint", "model_revision", "sampling_policy", "native_evidence"] as const);
 type Field = (typeof FIELDS)[number];
 /** The reference adoption's slots: one evidence-ref kind per field on the topology, one member per field on the metadata. */
-const REF_KIND: Readonly<Record<Field, string>> = {
+const REF_KIND: Readonly<Record<Field, string>> = deepFrozen({
   endpoint: "ri-endpoint",
   model_revision: "ri-model-revision",
   sampling_policy: "ri-sampling-policy",
   native_evidence: "ri-native-evidence",
-};
-const MEMBER: Readonly<Record<Field, string>> = {
+});
+const MEMBER: Readonly<Record<Field, string>> = deepFrozen({
   endpoint: "riEndpoint",
   model_revision: "riModelRevision",
   sampling_policy: "riSamplingPolicy",
   native_evidence: "riNativeEvidence",
-};
+});
 /** The RI module root in any spelling a consumer would write: joined, separated, or spaced. */
-const RI_ROOT = /reactive[\s_.-]?inference/i;
+const RI_ROOT = deepFrozen(/reactive[\s_.-]?inference/i);
 /**
  * The native result's fields as a src reader would write them (wb-3xmr F3): model revision and sampling policy as one identifier,
  * joined or with one underscore, dot or dash (prose with a space is not read), and native evidence as native_evidence only (its
  * spaced, dashed and camel forms are Pi's own: native-evidence.ts and nativeEvidence()). endpoint is not read: src spells it for
  * graph edges (R-READ-SITE).
  */
-const FIELD_SPELLINGS: readonly RegExp[] = [/model[_.-]?revision/i, /sampling[_.-]?policy/i, /native_evidence/i];
+const FIELD_SPELLINGS: readonly RegExp[] = deepFrozen([/model[_.-]?revision/i, /sampling[_.-]?policy/i, /native_evidence/i]);
 /** A bare ref kind: what may precede a verbatim field value in an evidence ref. */
-const REF_PREFIX = /^[a-z][a-z0-9-]*:$/;
+const REF_PREFIX = deepFrozen(/^[a-z][a-z0-9-]*:$/);
 const SEAMS = ["rf-cli", "injected-fixture"] as const;
 type Seam = (typeof SEAMS)[number];
 const JUDGED_TITLE = "the judged set: the frozen shape, the out-of-file roster, the bead export's acceptance clauses and the cases agree";
@@ -261,12 +313,13 @@ interface Row {
 }
 
 /**
- * The judged rows; their shape is pinned below and held to the roster and to the bead export. Each pin's quote is the part of its
+ * The judged rows, frozen where declared (THE FREEZE, wb-5333); their shape is pinned below and held to the roster and to the bead
+ * export. Each pin's quote is the part of its
  * row's owner text it proves; in pin order the quotes tile that text with separator-only gaps (the PIN ANCHOR). B5, the landed
  * wb-2j3.1 carrier, owns "when present" (C4 is its absent twin); D3 owns "to any literal", carrying the default to every other
  * slot and form; D4 owns "fails", since a refusal reads as one only beside the quiet twins D4 pins.
  */
-const ROWS: readonly Row[] = [
+const ROWS: readonly Row[] = deepFrozen([
   {
     id: "A",
     label: `(trigger, absent today) ${TRIGGER}: no package.json dependency or src file spells the ReactiveInference module root, no src file spells model revision or sampling policy as one identifier (joined or with one underscore, dot or dash) or native_evidence, the rf roster is the preview alone, and its gating envelope (RI-DEC-06/08) is measured unshipped at the pin and at the probe`,
@@ -307,7 +360,7 @@ const ROWS: readonly Row[] = [
       { id: "D4", quote: "fails" },
     ],
   },
-];
+]);
 
 interface Envelope {
   schema: string;
@@ -407,7 +460,10 @@ function envelopeOf(value: unknown, name: string): Envelope {
   };
 }
 
-/** THE FREEZE (wb-b93c F1): `value` returned as given, with it and every object and list reached from it through its members frozen. */
+/**
+ * THE FREEZE (wb-b93c F1): `value` returned as given, with it and every object and list reached from it through its members frozen;
+ * applied to the roster at read and, where they are declared, to ROWS, the constants and the patterns (wb-5333 F1).
+ */
 function deepFrozen<T>(value: T): T {
   const members: readonly unknown[] = Array.isArray(value) ? value : isObject(value) ? Object.values(value) : [];
   for (const member of members) deepFrozen(member);
@@ -420,6 +476,7 @@ function deepFrozen<T>(value: T): T {
  * against.
  */
 function readRoster(): Roster {
+  const ROSTER_PATH = join(dirname(fileURLToPath(import.meta.url)), "fixtures", "ri-decision-provenance-echo-roster.json");
   const raw: unknown = JSON.parse(readFileSync(ROSTER_PATH, "utf8"));
   if (!isObject(raw) || !Array.isArray(raw.rows) || !Array.isArray(raw.placements)) throw new Error("roster must be an object with rows and placements");
   const rows = raw.rows.map((row: unknown, index: number): RosterRow => {
@@ -471,7 +528,6 @@ function readRoster(): Roster {
   });
 }
 
-const ROSTER = readRoster();
 /** The measured carrier with this run's root in place of the fixture root (its one occurrence: workspace.root). */
 const CARRIER: Envelope = { ...envelopeOf(json(ROSTER.carrier), "carrier"), workspace: { id: ROSTER.carrier.workspace.id, root: ROOT } };
 const NATIVE: JsonObject = ROSTER.native;
@@ -544,7 +600,7 @@ function ownerTextOf(row: Row, title: string, clauses: Readonly<Record<string, s
   return letter === undefined ? conditionOf(title) : (clauses[letter] ?? "");
 }
 /** A gap between two quotes that names nothing: separators and at most one joining or/and (the wb-if7q.2 and wb-z3ft.2 form). */
-const SEPARATOR = /^[\s,;:]*(?:(?:or|and)[\s,;:]+)?$/;
+const SEPARATOR = deepFrozen(/^[\s,;:]*(?:(?:or|and)[\s,;:]+)?$/);
 /** Whether the quotes, in order, tile the text: each found after the previous one, every gap a separator; the gaps that are not. */
 function tiles(body: string, quotes: readonly string[]): { covered: boolean; untiled: string[] } {
   let at = 0;
@@ -1002,20 +1058,20 @@ const UNMEASURED_CASE = [
  * THE HARNESS (wb-hiwv F1): every pin case's statements, whitespace-normalized, held to the roster. A pin's witness is its own
  * case's measurement, recorded in MEASURED, then compared once against the roster's; the case's end is recorded in REACHED.
  */
-const HARNESS: readonly string[] = [
+const HARNESS: readonly string[] = deepFrozen([
   "const impl = IMPL[pin];",
   `expect(impl, \`no case for \${pin}\`).toBeTypeOf("function");`,
   "const witness = impl === undefined ? null : await impl();",
   "MEASURED[pin] = witness;",
   "expect(witness).toStrictEqual(rosterWitness(pin));",
   `REACHED.push(\`\${pin}:\${expect.getState().assertionCalls}\`);`,
-];
+]);
 /**
  * THE RECORD (wb-yi2o F1): the record's context and statements, whitespace-normalized, held to the roster. It only reads MEASURED
  * and REACHED and drops none of its comparisons, so a record that copies the roster's witness and reached list in (the third part
  * of the wb-hiwv gate's L2-REBOUND-IT-SKIP-D3) or compares less reds.
  */
-const RECORD: RecordPin = {
+const RECORD: RecordPin = deepFrozen({
   context: "{ task }",
   statements: [
     "const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];",
@@ -1036,15 +1092,15 @@ const RECORD: RecordPin = {
     `expect(shared, "no two pins share one witness (a case moved under another pin's id, its witness rewritten to match)").toEqual([]);`,
     'expect(REACHED, "every pin reached its end, in row order, with its pinned assertion count").toEqual([...ROSTER.reached]);',
   ],
-};
+});
 /**
  * THE HOOKS (wb-yi2o F1): every statement of this file that names a hook, whitespace-normalized, held to the roster - the scratch
  * leak guard and the afterEach that restores PATH and removes scratch. A hook rewriting a task's result reds wherever it sits.
  */
-const HOOKS: readonly string[] = [
+const HOOKS: readonly string[] = deepFrozen([
   "installScratchLeakGuard(afterAll);",
   "afterEach(() => { process.env.PATH = oldPath; removeScratch(...scratches.splice(0)); });",
-];
+]);
 /** vitest's hooks, named only in the HOOKS statements outside the describe block and never inside it (wb-yi2o F1). */
 const HOOK_NAMES: readonly string[] = ["afterAll", "afterEach", "aroundAll", "aroundEach", "beforeAll", "beforeEach", "onTestFailed", "onTestFinished"];
 /**
@@ -1070,6 +1126,20 @@ const RUNTIME_CASE = [
   'check.extend({ toStrictEqual: () => ({ pass: true, message: () => "" }) });',
   "Object.freeze = <T>(value: T): T => value;",
   "Object.isFrozen = (): boolean => true;",
+  "",
+].join("\n");
+/**
+ * R-PRE-READ's quiet row (wb-5333 F2): code that runs before this file's module body - here a vi.hoisted callback, which vitest runs
+ * above the imports - rewriting the roster file. Written after ROSTER's declaration it reads clean, since THE ORDER reads this file's
+ * statements in their written order and never vitest's hoisting.
+ */
+const PRE_READ_CASE = [
+  'import { vi } from "vitest";',
+  "const ROSTER = readRoster();",
+  "vi.hoisted(() => {",
+  '  const fs = process.getBuiltinModule("node:fs");',
+  '  fs.writeFileSync(new URL("fixtures/roster.json", import.meta.url), "{}");',
+  "});",
   "",
 ].join("\n");
 /**
@@ -1117,6 +1187,31 @@ function boundNames(node: ts.Node): string[] {
   if (ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) || ts.isClassDeclaration(node) || ts.isClassExpression(node)) return node.name === undefined ? [] : [node.name.text];
   return [];
 }
+/** The names one top-level statement declares: a variable statement's bindings, or a function's or class's name (wb-5333). */
+function declaredBy(statement: ts.Statement): string[] {
+  return ts.isVariableStatement(statement) ? statement.declarationList.declarations.flatMap(boundNames) : boundNames(statement);
+}
+/** The names a source's top-level statements bind (wb-5333 F1): its imports, functions, classes, enums and variables. */
+function topLevelNames(file: ts.SourceFile): Set<string> {
+  const names = new Set<string>();
+  for (const statement of file.statements) {
+    if (ts.isImportDeclaration(statement)) {
+      const clause = statement.importClause;
+      const bindings = clause?.namedBindings;
+      if (clause?.name !== undefined) names.add(clause.name.text);
+      if (bindings !== undefined && ts.isNamespaceImport(bindings)) names.add(bindings.name.text);
+      else if (bindings !== undefined) for (const element of bindings.elements) names.add(element.name.text);
+    } else if (ts.isEnumDeclaration(statement)) names.add(statement.name.text);
+    else for (const name of declaredBy(statement)) names.add(name);
+  }
+  return names;
+}
+/** Whether a top-level statement emits no code of its own: an import, an interface or a type alias (wb-5333 F2). */
+function typeOrImport(statement: ts.Statement): boolean {
+  return ts.isImportDeclaration(statement) || ts.isInterfaceDeclaration(statement) || ts.isTypeAliasDeclaration(statement);
+}
+/** THE ORDER (wb-5333 F2): the one form ROSTER's declaration takes, whitespace-normalized. */
+const READ_FIRST = "const ROSTER = readRoster();";
 /** Whether a node reads a witness member: `x.witness`, `x["witness"]` or a `witness` binding. */
 function readsWitness(node: ts.Node): boolean {
   if (ts.isPropertyAccessExpression(node)) return node.name.text === WITNESS_MEMBER;
@@ -1192,10 +1287,11 @@ function registrationOf(node: ts.Node): { readonly call: ts.CallExpression; read
  * is a pin case, which takes no parameters and whose statements must be the HARNESS (its title and options are read as scaffolding).
  * Outside the pin cases each DESCRIBE_NAMES name is used only in its listed regions (it never, since a registration's callee is not
  * visited, and a hook nowhere), describe and expect only as a call's callee, IMPL in the judged set only for its keys, and a witness
- * member is read only by the record; the scaffolding binds only SCAFFOLD_BINDINGS. Returns the refused reads, by region (a pin case
+ * member is read only by the record; the scaffolding binds only SCAFFOLD_BINDINGS and the judged set no name in `topLevel` (wb-5333
+ * F1). Returns the refused reads, by region (a pin case
  * as it(<title>)).
  */
-function describeReads(file: ts.SourceFile, block: ts.CallExpression): string[] {
+function describeReads(file: ts.SourceFile, block: ts.CallExpression, topLevel: ReadonlySet<string>): string[] {
   const found: string[] = [];
   const visit = (node: ts.Node, region: Region): void => {
     const registration = registrationOf(node);
@@ -1232,6 +1328,8 @@ function describeReads(file: ts.SourceFile, block: ts.CallExpression): string[] 
     }
     if (readsWitness(node) && region !== "the record") found.push(`${region} reads a ${WITNESS_MEMBER}`);
     if (region === "describe") for (const name of boundNames(node)) if (!SCAFFOLD_BINDINGS.includes(name)) found.push(`describe binds ${name}`);
+    // wb-5333 F1: the judged set re-binds no name a top-level statement binds, so no in-file name it compares is the roster's own.
+    if (region === "the judged set") for (const name of boundNames(node)) if (topLevel.has(name)) found.push(`the judged set binds ${name}`);
     ts.forEachChild(node, child => visit(child, region));
   };
   visit(block, "describe");
@@ -1242,17 +1340,26 @@ function describeReads(file: ts.SourceFile, block: ts.CallExpression): string[] 
  * every IMPL case names one of READERS; IMPL, rosterWitness, MEASURED and REACHED are named only where declared, ROSTER_PATH only in
  * readRoster and readRoster only for ROSTER; a witness member is read only in readRoster and rosterWitness; ROSTER is read only
  * through SUBJECT_MEMBERS (its rows in rosterWitness alone, GUARDED_MEMBERS in GUARD_MISSES alone); it is never named, describe and
- * expect only as a call's callee, and a hook only in the HOOKS statements. Inside it, describeReads. Returns the refused reads, by
+ * expect only as a call's callee, and a hook only in the HOOKS statements; and in a source that declares ROSTER, THE ORDER (wb-5333
+ * F2): no statement before that declaration but an import, an interface or a type alias, and the declaration READ_FIRST. Inside it,
+ * describeReads. Returns the refused reads, by
  * declaration (an IMPL case as IMPL.<pin>) or by region.
  */
 function selfRead(text: string): string[] {
   const file = ts.createSourceFile("self-read.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const found: string[] = [];
+  const topLevel = topLevelNames(file);
+  // THE ORDER (wb-5333 F2): in a source that declares ROSTER, no statement before that declaration emits code (imports, interfaces
+  // and type aliases aside), and the declaration is READ_FIRST, so nothing of the source runs before readRoster reads the roster.
+  const rosterAt = file.statements.findIndex(statement => declaredBy(statement).includes("ROSTER"));
+  for (const statement of rosterAt < 0 ? [] : file.statements.slice(0, rosterAt)) if (!typeOrImport(statement)) found.push(`${ownerOf(statement)} runs before readRoster`);
+  const declared = file.statements[rosterAt];
+  if (declared !== undefined && normalized(declared.getText(file)) !== READ_FIRST) found.push("ROSTER is not readRoster() alone");
   for (const statement of file.statements) {
     if (ts.isInterfaceDeclaration(statement) || ts.isTypeAliasDeclaration(statement) || ts.isImportDeclaration(statement)) continue;
     const call = ts.isExpressionStatement(statement) && ts.isCallExpression(statement.expression) ? statement.expression : undefined;
     if (call !== undefined && ts.isIdentifier(call.expression) && call.expression.text === "describe") {
-      found.push(...describeReads(file, call));
+      found.push(...describeReads(file, call, topLevel));
       continue;
     }
     const impl = ts.isVariableStatement(statement) ? statement.declarationList.declarations.find(entry => ts.isIdentifier(entry.name) && entry.name.text === "IMPL") : undefined;
@@ -1329,6 +1436,26 @@ const PLANTED_SOURCES: Readonly<Record<string, Pinned>> = {
   "the roster's pinned constants read outside THE GUARD, and its rows read by THE GUARD": {
     source: "const OTHER = [ROSTER.harness, ROSTER.record, ROSTER.hooks];\nfunction guardMisses(): unknown[] {\n  return [ROSTER.rows];\n}\n",
     reads: ["OTHER reads ROSTER.harness", "OTHER reads ROSTER.record", "OTHER reads ROSTER.hooks", "guardMisses reads ROSTER.rows"],
+  },
+  // THE ORDER (wb-5333 F2): the roster is read before any other statement of this file runs, and by readRoster() alone.
+  "the roster rewritten on disk before readRoster reads it (the wb-b93c PREP's e10)": {
+    source: [
+      'const PRE_FILE = join(dirname(fileURLToPath(import.meta.url)), "fixtures", ["ri-decision-provenance-echo", "roster.json"].join("-"));',
+      'const PRE_TEXT = readFileSync(PRE_FILE, "utf8");',
+      "writeFileSync(PRE_FILE, JSON.stringify(JSON.parse(PRE_TEXT)));",
+      "const ROSTER = readRoster();",
+      "writeFileSync(PRE_FILE, PRE_TEXT);",
+      "",
+    ].join("\n"),
+    reads: ["PRE_FILE runs before readRoster", "PRE_TEXT runs before readRoster", "<statement> runs before readRoster"],
+  },
+  "readRoster handed to a helper in ROSTER's own initializer": {
+    source: "const ROSTER = preRead(readRoster);\nfunction preRead(read: () => unknown): unknown {\n  return read();\n}\n",
+    reads: ["ROSTER is not readRoster() alone"],
+  },
+  "the roster read first, imports and types before it (control)": {
+    source: 'import { join } from "node:path";\ninterface Kept {\n  readonly id: string;\n}\ntype Also = Kept;\nconst ROSTER = readRoster();\nconst AFTER = join("a", "b");\n',
+    reads: [],
   },
 };
 /** THE SELF-READ's pins inside the describe block (wb-hiwv F1, wb-yi2o F1): planted blocks showing each refusal, beside controls reading clean. */
@@ -1432,6 +1559,20 @@ const PLANTED_BLOCKS: Readonly<Record<string, Pinned>> = {
   "the record forging through a parameter default": {
     source: plantedBlock(HARNESS, [], "", "", plantedRecord(RECORD.statements, "{ task }, _forged = REACHED.splice(0, REACHED.length, ...ROSTER.reached)")),
     reads: ["it(RECORD_TITLE) is not the record"],
+  },
+  // The judged set's bindings (wb-5333 F1): it re-binds no name a top-level statement binds, so it never compares the roster against
+  // itself under an in-file name.
+  "the judged set re-binding ROWS to the roster's rows (wb-5333 F1)": {
+    source: `const ROWS: unknown[] = [];\n${plantedJudgedSet(["const ROWS = ROSTER.rows;", "expect(ROWS).toHaveLength(4);"])}`,
+    reads: ["the judged set binds ROWS"],
+  },
+  "a parameter of the judged set re-binding a top-level name and a variable re-binding an import": {
+    source: `import { join } from "node:path";\nconst ROWS: unknown[] = [];\n${plantedJudgedSet(["[ROSTER.rows].forEach(ROWS => expect(ROWS).toHaveLength(4));", 'const join = (...parts: string[]): string => parts.join("/");', 'expect(join("a")).toBe("a");'])}`,
+    reads: ["the judged set binds ROWS", "the judged set binds join"],
+  },
+  "the judged set binding names of its own (control)": {
+    source: `const ROWS: unknown[] = [];\n${plantedJudgedSet(["const rows = ROSTER.rows;", "expect(rows).toHaveLength(4);"])}`,
+    reads: [],
   },
 };
 /** Each pin's reading by the SELF-READ, by name. */
@@ -1789,9 +1930,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       "R-REBIND": tiles(clause, rebind).untiled,
       "R-UNMEASURED": selfRead(UNMEASURED_CASE),
       "R-RUNTIME": selfRead(RUNTIME_CASE),
+      "R-PRE-READ": selfRead(PRE_READ_CASE),
     };
     expect(Object.values(quiet).every(found => JSON.stringify(found) === "[]")).toBe(true);
-    expect(residuals).toStrictEqual({ "R-COINCIDENT": [], "R-KIND": [], "R-ORDER": [], "R-REBIND": [], "R-UNMEASURED": [], "R-RUNTIME": [] });
+    expect(residuals).toStrictEqual({ "R-COINCIDENT": [], "R-KIND": [], "R-ORDER": [], "R-REBIND": [], "R-UNMEASURED": [], "R-RUNTIME": [], "R-PRE-READ": [] });
     return { quiet, residuals, rebind };
   },
 };
@@ -1830,6 +1972,30 @@ describe("wb-tz4r.3 RI native result provenance echo census (RI-UNIFIED-DECISION
     expect(Object.fromEntries(members.map(member => [member, writesTo(pinD3, member)])), "each write to a D3 pin member is refused").toStrictEqual(Object.fromEntries(members.map(member => [member, refused])));
     expect(writesTo(ROSTER.reached, "0"), "each write to the reached list's first entry is refused").toStrictEqual(refused);
     expect(JSON.stringify(ROSTER), "the roster after the refused writes").toBe(rosterText);
+    // THE FREEZE over the in-file sides (wb-5333 F1: the wb-b93c gate's F1 - row B's label cut in ROWS, or D3's quote, then restored
+    // by the judged set through Object.assign before its roster comparison, stayed 18/18): ROWS and each constant the judged set
+    // compares against the roster are frozen where they are declared, so no in-place write reaches the in-file side of a roster
+    // comparison either. Each of the six write forms is refused on every member of row B and of D3's pin in ROWS and on the first
+    // member of each in-file side, and the in-file sides read the same after them.
+    const inFile = { rows: ROWS, gatingArtifacts: GATING_ARTIFACTS, fields: FIELDS, refKinds: REF_KIND, members: MEMBER, invocation: INVOCATION, harness: HARNESS, record: RECORD, hooks: HOOKS };
+    expect(Object.entries(inFile).flatMap(([name, value]) => unfrozen(value, `$.${name}`)), "every object and list reached from the in-file side of a roster comparison is frozen").toEqual([]);
+    const inFileText = JSON.stringify(inFile);
+    const refusedInFile = { "Object.assign": "TypeError", "Object.defineProperty": "TypeError", "Object.setPrototypeOf": "TypeError", "Reflect.defineProperty": "false", "Reflect.deleteProperty": "false", "Reflect.set": "false" };
+    const rowB = ROWS.find(row => row.id === "B") ?? {};
+    const pinD3InRows = ROWS.flatMap(row => row.pins).find(entry => entry.id === "D3") ?? {};
+    expect(Object.keys(rowB), "row B's members in ROWS").toEqual(["id", "label", "pins"]);
+    expect(Object.keys(pinD3InRows), "the D3 pin's members in ROWS").toEqual(["id", "quote"]);
+    expect(Object.fromEntries(Object.keys(rowB).map(member => [member, writesTo(rowB, member)])), "each write to a member of row B in ROWS is refused").toStrictEqual(Object.fromEntries(Object.keys(rowB).map(member => [member, refusedInFile])));
+    expect(Object.fromEntries(Object.keys(pinD3InRows).map(member => [member, writesTo(pinD3InRows, member)])), "each write to a member of the D3 pin in ROWS is refused").toStrictEqual(Object.fromEntries(Object.keys(pinD3InRows).map(member => [member, refusedInFile])));
+    expect(Object.fromEntries(Object.entries(inFile).map(([name, value]) => [name, writesTo(value, Object.keys(value)[0] ?? "")])), "each write to the first member of each in-file side is refused").toStrictEqual(Object.fromEntries(Object.keys(inFile).map(name => [name, refusedInFile])));
+    expect(JSON.stringify(inFile), "the in-file sides after the refused writes").toBe(inFileText);
+    // The patterns the judged set and the cases read through (wb-5333 F1): SEPARATOR, which the PIN ANCHOR's tiling reads every gap
+    // with, and the cases' RI_ROOT, FIELD_SPELLINGS and REF_PREFIX are frozen too, so no test method set on one of them (the wb-5333
+    // seat's SEP1: CT6 beside a SEPARATOR.test reading every gap that holds no quote as a separator stayed 17/17) is taken.
+    const patterns = { separator: SEPARATOR, riRoot: RI_ROOT, fieldSpellings: FIELD_SPELLINGS, refPrefix: REF_PREFIX };
+    expect(Object.entries(patterns).flatMap(([name, value]) => unfrozen(value, `$.${name}`)), "every pattern the judged set and the cases read through is frozen").toEqual([]);
+    const regexps = [SEPARATOR, RI_ROOT, ...FIELD_SPELLINGS, REF_PREFIX];
+    expect(regexps.map(pattern => [Reflect.set(pattern, "test", () => true), Reflect.defineProperty(pattern, "test", { value: () => true })]), "a test method set on each pattern is refused").toEqual(regexps.map(() => [false, false]));
     // The anchor outside this file and its roster: the owner filing in the tracked bead export.
     const { title, notes } = exportRow();
     const clauses = acceptanceClauses(notes);

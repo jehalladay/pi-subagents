@@ -1213,7 +1213,8 @@
        "R-ORDER": [],
        "R-REBIND": [],
        "R-UNMEASURED": [],
-       "R-RUNTIME": []
+       "R-RUNTIME": [],
+       "R-PRE-READ": []
       },
       "rebind": [
        "mutant: defaulting an absent model revision",
