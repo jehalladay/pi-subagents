@@ -51,7 +51,8 @@
  *    plant's findings. A2 the walk read every module git lists (the listing is taken before the walk; a file or directory gone
  *    since is skipped) above its floor, the rf provider and this file among them, and met no symlink and no failed read. An
  *    entry whose name is not UTF-8 is a failed read (its name decodes lossily, so neither the walk nor the compiler can open it
- *    by that name: P-NAME-NOT-UTF8), and so is a module the compiler's reader reads no text from. A3 the
+ *    by that name: P-NAME-NOT-UTF8), and so is a module the compiler's reader reads no text from (P-NO-TEXT: a planted module
+ *    whose mode denies every read, which the compiler host's getSourceFile reads no text from either). A3 the
  *    producer gate reads closed over the roster's measured facts: no src/ or python/ site, no site in a published file and no
  *    export key beyond the measured six at any revision; each opening fact, planted alone, reads open.
  *  B acceptance (a), armed at adoption. B1 the title's five forbidden acts in render, each traced to its :17 phrase; B2 the title's
@@ -73,6 +74,10 @@
  *   roster's rowStates, so a state rewritten here alone reds, but one rewritten here and in the roster together stays green.
  *   The encoding set: DECODINGS and R-UNDECODED's encodings are held to this file and the roster (each member's text is held to
  *   the compiler host's, P-DECODE-AS-HOST), so an encoding removed from every literal of both together stays green.
+ *   The walk's failed-read controls: P-NAME-NOT-UTF8 and P-NO-TEXT are held to this file and the roster (P-NO-TEXT's module is
+ *   held to the compiler host's reading, which reads no text from it either), so a control removed from every literal of both
+ *   together stays green. The converse of P-NO-TEXT's read, a module gone since the walk read as skipped and not as a failed
+ *   read, has no control: a reader that reads such a module as a failed read stays green.
  * OUTSIDE ANCHORS (the judged-set case): the owner filing's row in the tracked bead export (row wb-km7q.5: its title, and its first
  *   line opening "Citations: ", so appended notes are safe). The trigger is row A's label; the acceptance, split at " plus ", is row
  *   B's and row C's labels; the title's four duties (split at "; ") are DUTIES, and DUTIES' pins are derived from them (a duty that
@@ -106,13 +111,13 @@
  *   cut and not delivered here), so a report never reads a passing pin as a delivered falsifier; the pins are titled by their ids.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the rows, the row states, every pin's witness, the
  *   residual families with their quiet rows and the registered test titles are held to the roster.
- * Display paths added: none. Test-only: every plant is an in-memory text except the planted trees (DECODINGS', R-UNDECODED's and
- * P-NAME-NOT-UTF8's modules), written once to rule-11 scratch (test/helpers/scratch.ts) and removed after they are read; the
- * tree, the roster and the bead export are only read.
+ * Display paths added: none. Test-only: every plant is an in-memory text except the planted trees (DECODINGS', R-UNDECODED's,
+ * P-NAME-NOT-UTF8's and P-NO-TEXT's modules), written once to rule-11 scratch (test/helpers/scratch.ts) and removed after they
+ * are read; the tree, the roster and the bead export are only read.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { type Dirent, lstatSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, type Dirent, lstatSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
@@ -266,6 +271,10 @@ const UNDECODED: readonly Encoding[] = [
 const PLANTED_MODULE = "src/planted.tsx";
 /** The planted tree whose one module is named by bytes that are not UTF-8 (A2's P-NAME-NOT-UTF8). */
 const NAME_TREE = "name-not-utf8";
+/** The planted tree whose one module the compiler's reader reads no text from (A2's P-NO-TEXT): the adoption is written at
+ * PLANTED_MODULE, then the module's mode is set to deny every read, so ts.sys.readFile and the compiler host read nothing while
+ * lstat still reads a regular file. A runner that ignores file modes (root) reads the module, and the control reads false there. */
+const NO_TEXT_TREE = "no-text";
 
 // ---- the roster ----
 
@@ -815,7 +824,8 @@ interface PlantedTree {
 let plantedTreesReading: Readonly<Record<string, PlantedTree>> | undefined;
 /** The planted trees, written once to rule-11 scratch and each read by readTree, the live tree's own reader: one tree per
  * encoding of DECODINGS and UNDECODED, holding the adoption's text in it at PLANTED_MODULE, and one tree holding the adoption
- * in a module named by bytes that are not UTF-8 (NAME_TREE). */
+ * in a module named by bytes that are not UTF-8 (NAME_TREE), and one tree holding it in a module whose mode denies every read
+ * (NO_TEXT_TREE). */
 function plantedTrees(): Readonly<Record<string, PlantedTree>> {
   if (plantedTreesReading !== undefined) return plantedTreesReading;
   const scratch = makeScratch("tsx-render-purity-");
@@ -833,6 +843,11 @@ function plantedTrees(): Readonly<Record<string, PlantedTree>> {
     mkdirSync(named, { recursive: true });
     writeFileSync(Buffer.concat([Buffer.from(`${named}/planted-`), Buffer.from([0xff]), Buffer.from(".tsx")]), adoptionText());
     trees[NAME_TREE] = { reading: readTree(join(scratch, NAME_TREE)), text: undefined, hostText: undefined };
+    const unreadable = join(scratch, NO_TEXT_TREE, PLANTED_MODULE);
+    mkdirSync(dirname(unreadable), { recursive: true });
+    writeFileSync(unreadable, adoptionText());
+    chmodSync(unreadable, 0o000);
+    trees[NO_TEXT_TREE] = { reading: readTree(join(scratch, NO_TEXT_TREE)), text: moduleText(unreadable), hostText: host.getSourceFile(unreadable, ts.ScriptTarget.Latest)?.text };
     plantedTreesReading = trees;
     return trees;
   } finally {
@@ -862,14 +877,24 @@ function decodingControls(): Controls {
   controls["P-DECODE-AS-HOST"] = [...DECODINGS, ...UNDECODED].every(({ id }) => trees[id]?.text !== undefined && trees[id]?.text === trees[id]?.hostText);
   return controls;
 }
-/** A2's controls: what the walk's path predicate reads, and the failed read a name that is not UTF-8 makes. */
+/** A2's controls: what the walk's path predicate reads, the failed read a name that is not UTF-8 makes, and the failed read a
+ * module the compiler's reader reads no text from makes (that module's text read by the judge's reader and by the compiler
+ * host's getSourceFile: none). */
 function walkControls(): Controls {
-  const named = plantedTrees()[NAME_TREE]?.reading;
+  const trees = plantedTrees();
+  const named = trees[NAME_TREE]?.reading;
+  const noText = trees[NO_TEXT_TREE];
   return {
     "P-MODULE-KINDS": [".ts", ".tsx", ".mts", ".cts", ".d.ts", ".js", ".jsx", ".mjs", ".cjs"].every(extension => walkReads(`src/x${extension}`)),
     "P-NESTED-SKIPPED-NAME": walkReads("examples/app/node_modules/x.ts") && walkReads("test/fixtures/dist/x.js"),
     "P-ROOT-MODULE": walkReads("vitest.config.ts"),
     "P-NAME-NOT-UTF8": named !== undefined && named.readings.length === 0 && named.failures.length === 1 && named.failures.every(failure => failure.includes("a name that is not UTF-8")),
+    "P-NO-TEXT":
+      noText !== undefined &&
+      noText.text === undefined &&
+      noText.hostText === undefined &&
+      noText.reading.readings.length === 0 &&
+      JSON.stringify(noText.reading.failures) === JSON.stringify([`${PLANTED_MODULE}: the compiler's reader read no text`]),
     "Q-OUTSIDE": SKIPPED_ROOTS.some(root => walkReads(`${root}/x.ts`)),
     "Q-NONMODULE": ["docs/workbench/x.md", ROSTER_FILE, "bin/script", "notes.txt"].some(walkReads),
   };

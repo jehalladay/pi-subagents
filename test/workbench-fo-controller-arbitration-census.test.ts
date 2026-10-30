@@ -21,6 +21,14 @@
  *   code, an empty code thrown or returned, a numeric code, a thrown null, a thrown string, an apply that carries a code). F1 an
  *   acronym-run plant (A1). F2 a non-finite number, a non-finite number inside an array and a Map among the malformed rows (B1).
  *   Two reading limits are named with quiet plants (R-RUN-ON; the escapes of R-COMPOSED).
+ * FOLLOW-UP wb-m4eo (the R694 follow-up of this census's landing 669, PASS-WITH-FINDING at gate cmd_46eaa7716472; F1 leads, F2 to
+ *   F5 ride; trunk ee48709 merged): F1 the tiling's refusals are live on term-agnostic probes (an uncovered tail, an interior
+ *   word, a quote out of order, a quote the body lacks). F2 each part of B2's arbiter check is held by its own host (claims-apply:
+ *   an applied answer naming the row while the state stays; silent-apply: a moved state its answer names no controller for;
+ *   refused-apply: a refused answer over a moved state). F3 a host applying malformed rows one macrotask after submit fails
+ *   (lax-timer), and R-LATE-APPLY's later-timer limit is pinned for malformed rows too (lax-late-timer). F4 an accessor inside a
+ *   nested object and an undefined value join the malformed rows. F5 A1's control tree adds a symlinked root and a symlinked
+ *   module at the root.
  *
  * THE ARTIFACT AT THE PIN (the roster's `producer` block, measured read-only by the cutting seat on 2026-10-28 with git show and
  * git rev-parse in the local FiberOpticsSDK checkout; this census is hermetic and never re-reads it): the charter
@@ -48,20 +56,22 @@
  * - READ SET (row A, "adoption-time"): every git-listed module (tracked or untracked, never ignored) of a code kind (.cjs .cts .js
  *   .jsx .mjs .mts .py .sh .ts .tsx) below src/, qa/ and examples/ and at the repository root, and the root package.json (its
  *   dependency names and scripts). A finding is `<path>:<line> <term>`. The files read are exactly the files Node's own recursive
- *   listing names below the roots and at the root, less what git ignores (whole). The walk follows no symlink and reports each;
- *   a symlinked module git lists is read through its link but makes the scan not whole, and the live pass requires none (A1's
- *   control tree shows both).
+ *   listing names below the roots and at the root, less what git ignores (whole). The walk follows no symlink and reports each -
+ *   a linked module below a root, a linked root and a linked module at the root; a symlinked module git lists is read through
+ *   its link but makes the scan not whole, git lists nothing below a linked root, and the live pass requires no link (A1's
+ *   control tree shows each).
  * - FALSIFIER (rows B to D; falsify, over a HostBinding: make() builds the host, admissible() the row it should apply): submit the
  *   row and wait one macrotask - the controller state must not move and the row must not change (B2: applied-at-submit,
  *   row-mutated); run one emit whose callback, while emit has not returned, attempts the one mutation path (arbitrate) - the
  *   callback must run inside emit (C1: emit-skipped-callback, callback-not-reentrant), the attempt must end in a typed refusal (a
  *   returned attempt of kind refused, or a thrown value - either one an object carrying a non-empty string code) and the state
  *   must not move across emit (C2: reentrant-attempt-not-refused, state-mutated-in-emit); arbitrate outside emit must apply the
- *   row (B2: arbiter-applied-nothing); a fresh host given each malformed row (one of the seven fields missing, an extra key, a
- *   field that is not data - a function, a non-finite number, a non-finite number inside an array, a value of another
- *   prototype) must never move its state (B1: malformed-applied:<variant>); and every member of the host's ControlDirective must
- *   be the producer's one field (D1: directive-grown:<member>), a grown member naming a proposal field or a seam verb reading as a
- *   second engine (D2: directive-engine:<member>).
+ *   row - an attempt of kind applied that names the row's controller, with the state moved (B2: arbiter-applied-nothing); a
+ *   fresh host given each malformed row (one of the seven fields missing, an extra key, a field that is not data - a function, a
+ *   non-finite number, a non-finite number inside an array, a value of another prototype, an accessor inside a nested object,
+ *   an undefined value) must not have moved its state one macrotask after its arbitration (B1: malformed-applied:<variant>);
+ *   and every member of the host's ControlDirective must be the producer's one field (D1: directive-grown:<member>), a grown
+ *   member naming a proposal field or a seam verb reading as a second engine (D2: directive-engine:<member>).
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label; every witness is held to the roster):
  *  A "adoption-time falsifier": A1 the trigger - one scan of Pi's read set finds no term, with floors per root, the whole check and
@@ -69,14 +79,18 @@
  *    code, an import, a string, a template, a line and a block comment, Python, shell, package.json, a nested path, a fullwidth
  *    spelling, an acronym run, three long plants whose term sits last, first or in the middle of filler runs longer than the
  *    longest read module in lines and in UTF-8 bytes, and a long-line plant whose term sits mid-line between runs longer than the
- *    longest read line in bytes) and reads quiet every quiet plant, and over a control tree whose one module is a symlink it reads
- *    that module through its link, reports the link and calls itself not whole; A2 the binding - the modules the scan finds and
+ *    longest read line in bytes) and reads quiet every quiet plant, and over a control tree holding a symlinked module below a
+ *    root, a symlinked root and a symlinked module at the root it reads each linked module git lists through its link, reports
+ *    every link and calls itself not whole; A2 the binding - the modules the scan finds and
  *    ARBITER_HOSTS name the same set (empty today, both ways) and every bound host meets the falsifier; the same report over
  *    synthetic findings and bindings names the unbound module, the stale binding and the failing host.
  *  B "that a proposal row is applied only via the host arbiter seam": B1 the row - the seven fields (held to the filing and the
  *    charter), the producer's shipped spellings admitted, each malformed variant's shape (a field missing, an extra key, a
- *    function, a non-finite number, one inside an array, a Map), and a host that applies malformed rows fails; B2 the seam - hosts
- *    that apply at submit, on a timer, inside emit, or not at all, or that change the row, fail.
+ *    function, a non-finite number, one inside an array, a Map, an accessor inside a nested object, an undefined value), and a
+ *    host that applies malformed rows, at its arbitration or one macrotask after submit, fails; B2 the seam - hosts that apply at
+ *    submit, on a timer, inside emit, or not at all, or that change the row, fail, and so does each host whose answer and state
+ *    disagree: an applied answer naming the row while the state stays, a moved state its answer names no controller for, and a
+ *    refused answer over a moved state.
  *  C "and a mutation attempted inside a FiberRuntime.emit reentrant callback is refused,": C1 the attempt - the honest host runs the
  *    falsifier's callback inside emit and the attempt reaches it; hosts that never run the callback or run it after emit returns
  *    fail; C2 the refusal - a host that applies inside emit, or ends the attempt untyped, fails: a throw with no code, an empty
@@ -114,9 +128,9 @@
  *   proposal-disposition - is held by this file and the roster alone, so removed from every literal of both it stays green; A1
  *   lists them, read from the export; R-ADAPTER-TRUST (A2) the falsifier reads a host only through its
  *   binding's adapter, so an adapter that hides the state it moved passes; R-LATE-APPLY (B2) an apply on a timer later than one
- *   macrotask is not seen; R-ANY-CODE (C2) a refusal is read by its non-empty code alone, whatever the code names;
- *   R-DIRECTIVE-PAYLOAD (D1) the directive is read by its member names, so a controller payload carried inside the shipped member's
- *   value passes.
+ *   macrotask is not seen - of the admissible row after its submit, or of a malformed row after its arbitration; R-ANY-CODE (C2)
+ *   a refusal is read by its non-empty code alone, whatever the code names; R-DIRECTIVE-PAYLOAD (D1) the directive is read by its
+ *   member names, so a controller payload carried inside the shipped member's value passes.
  * NOT CLAIMED: that the producer's own arbiter, registry or commit boundary meet the falsifier (the producer's tests own them); the
  *   FO-AC3 gate's state; a Pi doc's description of the seam (docs are not hosts and are not read); an edit of this file and the
  *   roster together beyond the outside anchors - among them a reader edited to skip a place or a shape together with ANCHORS and
@@ -456,7 +470,11 @@ const attemptJson = (attempt: Attempt): Json => (attempt.kind === "refused" ? { 
 const canonical = (value: unknown): string => JSON.stringify(value, (_key, inner: unknown) => (inner !== null && typeof inner === "object" && !Array.isArray(inner) ? Object.fromEntries(Object.entries(inner).sort(([a], [b]) => byName(a, b))) : inner));
 /** A typed refusal: an object carrying a non-empty string code (a returned refusal or a thrown one). */
 const typedRefusal = (value: unknown): boolean => value !== null && typeof value === "object" && "code" in value && typeof value.code === "string" && value.code !== "";
-/** Plain data: null, a boolean, a finite number, a string, or an array or plain object of plain data held in data properties. */
+/**
+ * Plain data: null, a boolean, a finite number, a string, an array each of whose elements is plain data, or an object of
+ * Object.prototype or null each of whose enumerable own properties is a data property holding plain data - so an object's accessor
+ * property, at any depth, and undefined are not data.
+ */
 function isData(value: unknown): boolean {
   if (value === null || typeof value === "boolean" || typeof value === "string") return true;
   if (typeof value === "number") return Number.isFinite(value);
@@ -490,6 +508,9 @@ function malformed(row: Readonly<Record<string, unknown>>): (readonly [string, R
   out.push(["not-data:state_epoch", { ...row, state_epoch: Number.NaN }]);
   out.push(["not-data:requested_range", { ...row, requested_range: [0.25, Number.POSITIVE_INFINITY] }]);
   out.push(["not-data:observed_versions", { ...row, observed_versions: new Map([["node-a", 3]]) }]);
+  // An accessor inside a nested object (a getter computes the interval when read) and a field whose value is undefined.
+  out.push(["not-data:min_interval", { ...row, min_interval: { get ns(): number { return 1_000_000; } } }]);
+  out.push(["not-data:actuator_id", { ...row, actuator_id: undefined }]);
   return out;
 }
 /** A grown directive member that names a proposal field or a seam verb: a second controller engine. */
@@ -580,7 +601,12 @@ type Flaw =
   | "mutates-row"
   | "flush-on-emit"
   | "inert-arbiter"
+  | "claims-apply"
+  | "silent-apply"
+  | "refused-apply"
   | "lax-shape"
+  | "lax-timer"
+  | "lax-late-timer"
   | "swallow-callback"
   | "defer-callback"
   | "apply-in-emit"
@@ -608,6 +634,8 @@ class HostRefusal extends Error {
 const LATE_MS = 50;
 /** An attempt of kind applied that carries a code, which the coded-apply host returns inside emit without applying anything. */
 const CODED_APPLY: Attempt & { readonly code: string } = { kind: "applied", controllers: [], code: "COMMIT_IN_EMIT" };
+/** An attempt of kind refused that names the controllers it applied, which the refused-apply host returns outside emit. */
+const refusedApply = (controllers: readonly string[]): Attempt & { readonly controllers: readonly string[] } => ({ kind: "refused", code: "APPLIED_ANYWAY", controllers });
 const ADMISSIBLE = (): Record<string, unknown> => ({ controller_id: "ctl-1", observed_versions: { "node-a": 3 }, state_epoch: 0, actuator_id: "act-1", requested_range: [0.25, 0.75], reason: "load above the band", min_interval: 1_000_000 });
 /** A host of one flaw over the honest one: rows queue at submit, the arbiter applies them, and refuses while an emit runs. */
 class SyntheticHost implements ArbiterHost {
@@ -621,6 +649,12 @@ class SyntheticHost implements ArbiterHost {
   }
   submit(row: Readonly<Record<string, unknown>>): void {
     if (this.flaw === "mutates-row") Reflect.set(row, "reason", "seen by the host");
+    // The lax timer hosts take a malformed row without refusing it and apply it on a timer, never through the arbiter: one
+    // macrotask later (lax-timer) or later than one macrotask (lax-late-timer, R-LATE-APPLY).
+    if ((this.flaw === "lax-timer" || this.flaw === "lax-late-timer") && rowShape(row) !== "ok") {
+      setTimeout(() => this.apply(row), this.flaw === "lax-timer" ? 0 : LATE_MS);
+      return;
+    }
     if (this.flaw !== "lax-shape" && rowShape(row) !== "ok") throw new HostRefusal("ROW_INVALID");
     if (this.flaw === "apply-at-submit") this.apply(row);
     if (this.flaw === "timer-apply") setTimeout(() => this.apply(row), 0);
@@ -639,11 +673,16 @@ class SyntheticHost implements ArbiterHost {
     if (this.emitting > 0 && this.flaw === "any-code-throw") throw new HostRefusal("ENOENT");
     if (this.emitting > 0 && this.flaw !== "apply-in-emit") return { kind: "refused", code: "COMMIT_IN_EMIT" };
     if (this.flaw === "inert-arbiter") return { kind: "applied", controllers: [] };
+    // claims-apply answers the rows applied and moves nothing; silent-apply moves the state and names no controller;
+    // refused-apply moves the state and answers refused (naming the controllers it applied).
+    if (this.flaw === "claims-apply") return { kind: "applied", controllers: this.pending.splice(0).map(row => String(row.controller_id)) };
     const controllers: string[] = [];
     for (const row of this.pending.splice(0)) {
       this.apply(row);
       controllers.push(String(row.controller_id));
     }
+    if (this.flaw === "silent-apply") return { kind: "applied", controllers: [] };
+    if (this.flaw === "refused-apply") return refusedApply(controllers);
     return { kind: "applied", controllers };
   }
   emit(callback: () => void): void {
@@ -819,13 +858,19 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect([...new Set(planted.findings.map(finding => finding.slice(finding.indexOf(" ") + 1)))].sort(byName)).toEqual(TERMS.map(term => term.id).sort(byName));
     expect([planted.whole, planted.unreadable.length, planted.links.length]).toEqual([true, 0, 0]);
     // The whole check and the link report are live: a symlinked module git lists is read through its link, and the walk reports
-    // the link, so this control tree's scan is not whole.
+    // the link, so this control tree's scan is not whole. The tree holds each link form the walk reports: a module below a root
+    // (src/zz-link.ts), a root (examples, linked to a directory whose module git does not list, so nothing reads it) and a module
+    // at the root (zz-root-link.mjs).
     const control = makeScratch("fo-arbitration-whole-");
     scratches.push(control);
     execFileSync("git", ["init", "-q"], { cwd: control, stdio: "pipe" });
     mkdirSync(join(control, "src"), { recursive: true });
     writeFileSync(join(control, "zz-target.txt"), "export const directive = ControlDirective;\n");
     symlinkSync("../zz-target.txt", join(control, "src", "zz-link.ts"));
+    mkdirSync(join(control, "zz-linked-root"), { recursive: true });
+    writeFileSync(join(control, "zz-linked-root", "zz-module.js"), "export const runtime = FiberRuntime;\n");
+    symlinkSync("zz-linked-root", join(control, "examples"));
+    symlinkSync("zz-target.txt", join(control, "zz-root-link.mjs"));
     const linked = scan(control);
     // The quiet plants: in the roots they are read and quiet; outside them, ignored or of another kind they are not read - and
     // each spells its residual's construct: the outside ones a term, the composed and look-alike ones a term once resolved.
@@ -881,19 +926,28 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       fields: [...PROPOSAL_FIELDS],
       shippedAs: PROPOSAL_FIELDS.map(shippedAs),
       shapes: { admissible: rowShape(ADMISSIBLE()), shipped: rowShape(shipped), ...Object.fromEntries(variants.map(([name, variant]) => [name, rowShape(variant)])) },
-      hosts: await hostsOf(["honest", "lax-shape"]),
+      hosts: await hostsOf(["honest", "lax-shape", "lax-timer"]),
     };
   },
   B2: async () => {
     // R-LATE-APPLY: a host applying on a timer later than one macrotask passes, though it moved the state outside the arbiter:
-    // once the timer has fired its state carries two applies of the one row, the arbiter's and the timer's.
+    // once the timer has fired its state carries two applies of the one row, the arbiter's and the timer's. A lax host applying
+    // each malformed row on such a timer passes too, though once its timers have fired every fresh host it was given moved.
     const late = kept("late-timer");
     const result = await falsify(late.binding);
+    const lateLax = kept("lax-late-timer");
+    const laxResult = await falsify(lateLax.binding);
     await new Promise(resolve => setTimeout(resolve, LATE_MS * 3));
     const held: unknown = JSON.parse(late.hosts[0]?.snapshot() ?? "null");
+    const pristine = new SyntheticHost("honest").snapshot();
+    const fresh = lateLax.hosts.slice(1);
     return {
-      hosts: await hostsOf(["honest", "apply-at-submit", "timer-apply", "mutates-row", "flush-on-emit", "inert-arbiter"]),
-      lateApply: { violations: [...result.violations], appliesAfterTheTimer: held !== null && typeof held === "object" && "applied" in held && Array.isArray(held.applied) ? held.applied.length : -1 },
+      hosts: await hostsOf(["honest", "apply-at-submit", "timer-apply", "mutates-row", "flush-on-emit", "inert-arbiter", "claims-apply", "silent-apply", "refused-apply"]),
+      lateApply: {
+        violations: [...result.violations],
+        appliesAfterTheTimer: held !== null && typeof held === "object" && "applied" in held && Array.isArray(held.applied) ? held.applied.length : -1,
+        malformed: { violations: [...laxResult.violations], freshHosts: fresh.length, movedAfterTheTimers: fresh.filter(host => host.snapshot() !== pristine).length },
+      },
     };
   },
   C1: async () => {
@@ -1006,6 +1060,10 @@ describe("wb-km7q.1 FiberOptics controller arbitration census (SDK-REACTIVE-FIBE
     const spelled = TERMS.map(term => term.words.join(" "));
     expect(unanchored(spelled.flatMap(text => [text, `the ${text}`, `${text} seam`, `${text} ${text}`]))).toEqual(spelled.flatMap(text => [`the ${text}`, `${text} seam`, `${text} ${text}`]));
     expect(unanchored([..."PriorityHint priority_hint FO-AC9 min_interval".matchAll(CODE_SHAPE)].map(match => match[0]))).toEqual(["PriorityHint", "priority_hint", "FO-AC9"]);
+    // The tiling's refusals are live on term-agnostic probes too: quotes joined by gap characters tile their body, and an uncovered
+    // tail, an interior word between two quotes, a quote out of order (re-reading text an earlier quote already tiled) and a quote
+    // the body lacks do not.
+    expect([tiled("one two, three", ["one", "two,", "three"]), tiled("one two three", ["one", "two"]), tiled("one gap two", ["one", "two"]), tiled("one two", ["one two", "two"]), tiled("one", ["one", "one two"])]).toEqual([true, false, false, false, false]);
     // The citations: every cited line is a vendored charter line at the bead pin.
     const cited = [...filing.matchAll(/:(\d+)@([0-9a-f]{12})/g)].map(match => [Number(match[1]), match[2] ?? ""] as const);
     expect(cited.map(([line]) => line)).toEqual([20, 22, 40]);
