@@ -65,52 +65,104 @@
  *   sentences after ".", "!", "?" or ";" before white space or the line end, at a line holding only white space, around a
  *   line that opens with a pipe after white space and an ATX heading line (one to six # after at most three white-space
  *   characters, then white space or the line end), and before a line that opens, after white space, with -, + or * or with
- *   digits and . or ), then white space; a sentence otherwise runs on across line breaks. A finding is `<path>:<line>
- *   <families>`. Each alternative of that cut is held by an A3 cutter row beside its near miss, in the clause's order
- *   (wb-ro24, the R694 follow-up of landing 654): cutter.terminator each of the four marks before a space, a mark before a
- *   tab and at the line end, a mark before a letter (no cut); cutter.blank a line holding a space and a tab; cutter.pipe a
- *   pipe after spaces and after a tab, and the line after a pipe line; cutter.heading six #, seven # (no cut), three
- *   spaces, four spaces (no cut), a tab before the #, a tab after it, a # alone, a # before a letter (no cut), and the
- *   lines on both sides of a heading; cutter.list -, +, *, digits and ., digits and ), two digits, after spaces, after a
- *   tab, a tab after the marker, a marker before a letter (no cut), and the line after a list marker's line (no cut).
+ *   ASCII digits and . or ), then white space (a marker alone before the line end is no list cut); a sentence otherwise runs
+ *   on across line breaks. A finding is `<path>:<line> <families>`. WHITE SPACE, here and in COMMENTS OUT (3), is
+ *   JavaScript's \s, the set String.prototype.trim strips: cutter.space.engine reads both from the engine over every code
+ *   point, the same 25 (U+0009-U+000D, U+0020, U+00A0, U+1680, U+2000-U+200A, U+2028, U+2029, U+202F, U+205F, U+3000 and
+ *   U+FEFF), scanning all 1,112,064 code points but the surrogates (scanned); the line feed is the line break itself, so
+ *   white space inside a line is the other 24. Every run this rule names is claimed only within the bound COUNTS gives it.
+ *   The cut is held by A3 cutter rows (wb-ro24, the R694 follow-up of landing 654, and the respin of its refusal #1), in the
+ *   clause's order. SWEEPS put every BMP code point but the surrogates and the line feed into one page shape each and sort
+ *   the cuts into the readings this clause predicts for that shape (run-on counted, every other reading listed by code
+ *   point, and a code point no prediction reads listed under other, held empty): cutter.marks (Next, the code point, a
+ *   space) cuts after exactly the four marks; cutter.space cuts at exactly the 24 inline white-space code points at each of
+ *   the seven places white space is read - after a mark (terminator), on a line holding only it, twice (blank), before a
+ *   pipe (pipe), before a heading's # (headingLead), after the # run (headingTrail), before a list marker (listLead) and
+ *   after it (listTrail) - and lists the code points that make a line of their own there (whole: ## and || at blank, | at
+ *   pipe and listLead, # and | at headingLead; mark: at blank, a line holding a mark twice ends the sentence after it);
+ *   cutter.openers (the code point then a space, opening a line) cuts before exactly -, + and *, around exactly # and |,
+ *   after exactly the four marks, and trims exactly the 24; cutter.digitsFirst (the code point then ")", opening a line) and
+ *   cutter.digits (1, the code point, then ")") read exactly the ten ASCII digits as digits, first and after a digit, so no
+ *   other script's digit and no fullwidth digit is one (digitsFirst also lists | as a pipe line, whole, and trims the 24);
+ *   cutter.delimiters (1 and the code point, then a space) cuts before exactly ")", before and after exactly "." (the
+ *   terminator cuts after it), and after exactly !, ? and ;. COUNTS are bounded runs, each claimed only within its bound: of
+ *   the runs of one to twelve #, exactly one to six cut (cutter.counts.hashes); of zero to eight spaces and of zero to eight
+ *   tabs before a #, exactly zero to three cut, the count being of characters, never of tab stops (headingLead); every run
+ *   of one to thirty-two ASCII digits before ")" and before "." cuts (digits); and every run of zero to thirty-two spaces
+ *   and of zero to eight tabs before a list marker and before a pipe cuts (listLead, pipeLead). ROWS beside their near
+ *   misses: cutter.terminator each of the four marks before a space, a mark before a tab and at the line end, a mark before
+ *   a letter (no cut); cutter.blank a line holding a space and a tab; cutter.pipe a pipe after spaces and after a tab, and
+ *   the line after a pipe line; cutter.heading six #, seven # (no cut), three spaces, four spaces (no cut), a tab before the
+ *   #, a tab after it, a # alone, a # before a letter (no cut), and the lines on both sides of a heading; cutter.list -, +,
+ *   *, digits and ., digits and ), two digits, after spaces, after a tab, a tab after the marker, a marker before a letter
+ *   (no cut), and the line after a list marker's line (no cut); cutter.alone -, +, * and 1) alone before the line end (no
+ *   cut), and 1. alone, which only the terminator cuts after.
  * - COMMENTS OUT (wb-cppf, the R694 follow-up of landing 553): the doc reading is the page source with its placed comments
  *   taken out, never the rendered view - no clause of this file claims what a rendered page shows, and each clause names the
  *   A3 rows that hold it. (1) TAKEN OUT: every span from `<!--` to the next `-->` (an empty `<!-->` or `<!--->` included, so
  *   the text after it is read: comments.empty, each form opening a comment block and inline before a later `-->`; an
  *   unterminated one runs to the end of its token) in the source of a token that marked (the markdown grammar
  *   test/helpers/census.ts reads pages with) lexes as HTML, once placed (5): a marker only such a span holds quiets nothing
- *   (comments.hiddenMarker), and a claim only it holds is not read (R-COMMENT-HIDDEN). (2) BLANKED: a comment block's opening
- *   comment - the span an HTML block token's source opens with after at most three spaces, at any depth, as (5) confirms it -
- *   reads as spaces with its line breaks kept, so a line holding nothing else but white space is a blank line
- *   (comments.lines[0-1], comments.blanked: one opened after three spaces and one after none, R-SPLIT's third row); the rest
- *   of its lines is read as written, but for another comment there, removed as (3) says (R-COMMENT-BLOCK). (3) JOINED: every
- *   other placed span is removed with its line breaks, so the text before it and after it read as one line (comments.joined,
- *   comments.lines[2-3]), and a line a span touched that is left with nothing but white space is dropped, never read as a
- *   blank line (comments.joined[1] and [3], R-COMMENT-BLOCK's second rows). (4) UNLEXED: comment-shaped text that marked does
- *   not lex as HTML - in a code span or a code block, after a backslash, an opener left unterminated in a paragraph - is read
- *   as written (comments.unlexed). (5) PLACED: walking each top-level block's tokens in page order (a list's items, a table's
- *   header cells and then its body cells, any other token's own tokens; comments.cells: a comment in a header cell before a
- *   body row), a cursor moves past each leaf token's source as found in the block, and each span is found within its HTML
- *   token's source as found there; source over several lines is found with each line break followed by spaces or tabs, then
- *   quote marks each followed by at most one space or tab. A span so found is placed only when marked, lexing the page again
- *   with a sentinel (a run of Q the page does not hold) written just inside its `<!--`, keeps the sentinel inside an HTML
- *   token; it is a comment block's opening comment (2) when that token is a block whose source opens with it after at most
- *   three spaces. A page's CRLF line ends are read as line feeds first, so a CRLF page tiles and its spans are placed
- *   (comments.crlf). Placed shapes held (comments.containers): a list item's space-indented lines, a block quote's lines, a
- *   block quote in a list item, nested block quotes, a block quote's line whose quote mark is followed by a tab, a block
- *   quote in a list item whose continuation line is indented with a tab before its quote mark; and two identical comments in
- *   one paragraph, each placed (the last comments.unplaced row). A span the reader cannot place is not taken out: it is read
- *   as written and listed as unplaced, and A3 holds the live and frozen lists empty. Unplaced shapes held
- *   (comments.unplaced): a comment spelling an escaped pipe in a table cell; every span on a page whose top-level blocks do
- *   not tile its source (a lone carriage return); a list item in a block quote whose continuation line repeats the quote mark
- *   before the item's indentation, bulleted or ordered; a list item's continuation line indented with a tab; and a span the
- *   cursor found in other text spelled the same way, which marked does not confirm - a link destination just before the
- *   comment (also on a page that spells QQ elsewhere, so neither Q nor QQ is the sentinel), a code span past an escaped pipe
- *   in its table cell, a code span on a later line after a tab-indented line; and an inline empty comment, `<!-->` or
- *   `<!--->`, with no later `-->` in its inline run, which the sentinel turns into text marked does not lex as HTML (with a
- *   later `-->` it is placed: comments.empty). (6) LINES: each kept line keeps the page line it starts on, so a finding names
- *   the page line its sentence starts on, and text after a span removed with its line breaks stays on the line the span opens
- *   on (comments.lines).
+ *   (comments.hiddenMarker), and a claim only it holds is not read (R-COMMENT-HIDDEN). (2) BLANKED: a comment block's
+ *   opening comment - the span an HTML block token's source opens with after at most three spaces, at any depth, as (5)
+ *   confirms it - reads as spaces with its line breaks kept, so a line holding nothing else but white space is a blank line
+ *   (comments.lines[0-1], comments.blanked: one opened after three spaces and one after none, R-SPLIT's third row, then one
+ *   after one space and one after two; the last comments.blanked row opens after four spaces, a code block, so its comment
+ *   is read as written: (4)); the rest of its lines is read as written, but for another comment there, removed as (3) says
+ *   (R-COMMENT-BLOCK). (3) JOINED: every other placed span is removed with its line breaks, so the text before it and after
+ *   it read as one line (comments.joined, comments.lines[2-3]), and a line a span touched that is left with nothing but
+ *   white space is dropped, never read as a blank line (comments.joined[1] and [3], R-COMMENT-BLOCK's second rows;
+ *   comments.dropped, a line a removed comment leaves holding one code point: dropped for each of the 24 inline white-space
+ *   code points DOC defines, but for the carriage return, whose page does not tile and so is unplaced (5), and kept as text
+ *   for the near misses U+0085, U+00AD, U+180E, U+200B and U+2060). (4) UNLEXED: comment-shaped text that marked does not
+ *   lex as HTML - in a code span or a code block, after a backslash, an opener left unterminated in a paragraph - is read as
+ *   written (comments.unlexed). (5) PLACED: walking each top-level block's tokens in page order - a list's items in order, a
+ *   table's header cells in order and then its body rows in order, each body row's cells in order, and any other token's own
+ *   tokens in order (comments.cells: a comment in a header cell before a body row; comments.order: a comment in the first of
+ *   two list items, in a body row's first cell before another cell, in the last cell of the first of two body rows, in a
+ *   block quote's first paragraph before its second, and in a list item's first paragraph before its second, each placed) -
+ *   a cursor moves past each leaf token's source as found in the block (comments.cursor[0]: two identical comments side by
+ *   side in a paragraph, each placed), and each span is found within its HTML token's source as found there, after the span
+ *   before it (comments.cursor[1]-[2]: two identical comments in one comment block's line, spaced and side by side, each
+ *   placed); source over several lines is found with each line break followed by a run of spaces or tabs, then quote marks
+ *   each followed by at most one space or tab. The runs held (comments.runs, each claimed only within its bound; each page's
+ *   comment is placed unless named otherwise): a paragraph's continuation line opened with zero to thirty-two spaces, one to
+ *   eight tabs, or one to four space-tab pairs (paragraph); a list item's continuation line opened with zero to sixteen
+ *   spaces (item), and an item numbered 10.'s (ordered); the continuation line of the innermost of one to twelve nested list
+ *   items, opened with the two to twenty-four spaces their indentation takes out of the token's source (nested), and of one
+ *   to eight with a block quote in the innermost item (nestedQuote); the continuation line of two to twelve nested items
+ *   opened with the one to six tabs their indentation covers whole (tabStops), and the mixed runs an indentation covers
+ *   whole - a tab and two spaces under three items, two spaces, a tab and four spaces under four, a tab under an item
+ *   numbered 1. whose text opens after two spaces, and two tabs under an item numbered 123456. (mixedStops); a list item's
+ *   continuation line opened with one to four tabs is unplaced (item: the item's two-column indentation takes only part of
+ *   the first tab, and marked spells the rest as spaces in its token's source); one to eight quote marks, unspaced and
+ *   spaced, opening both lines (depth, spacedDepth); zero to eight spaces and zero to four tabs after one quote mark
+ *   (afterQuote); a block quote in a list item whose continuation line opens with zero to eight spaces or zero to four tabs
+ *   before its quote mark (itemQuote: with fewer than two spaces, or no tab, the line is not the item's, so the opener is
+ *   left unterminated and read as written, unlexed (4); from two tabs on the comment is unplaced, marked spelling the tabs
+ *   past the item's indentation as spaces), and with a space and a tab in either order or a tab between two spaces (mixed);
+ *   and a span over three lines in a block quote and in a list item (lines). A span so found is placed only when marked,
+ *   lexing the page again with a sentinel (a run of Q the page does not hold, claimed for pages spelling runs of up to
+ *   sixty-four Q) written just inside its `<!--`, keeps the sentinel inside an HTML token (comments.sentinel: the
+ *   link-destination misplacement page below, spelling each run of zero to sixty-four Q in a tag's attribute, lists its
+ *   comment unplaced every time, so no run of up to sixty-four Q stands in for the sentinel); it is a comment block's
+ *   opening comment (2) when that token is a block whose source opens with it after at most three spaces. A page's CRLF line
+ *   ends are read as line feeds first, so a CRLF page tiles and its spans are placed (comments.crlf). Placed shapes held
+ *   (comments.containers): a list item's space-indented lines, a block quote's lines, a block quote in a list item, nested
+ *   block quotes, a block quote's line whose quote mark is followed by a tab, a block quote in a list item whose
+ *   continuation line is indented with one tab before its quote mark; and two identical comments in one paragraph, each
+ *   placed (the last comments.unplaced row). A span the reader cannot place is not taken out: it is read as written and
+ *   listed as unplaced, and A3 holds the live and frozen lists empty. Unplaced shapes held (comments.unplaced): a comment
+ *   spelling an escaped pipe in a table cell; every span on a page whose top-level blocks do not tile its source (a lone
+ *   carriage return); a list item in a block quote whose continuation line repeats the quote mark before the item's
+ *   indentation, bulleted or ordered; a list item's continuation line indented with a tab; and a span the cursor found in
+ *   other text spelled the same way, which marked does not confirm - a link destination just before the comment (also on a
+ *   page that spells QQ elsewhere, so neither Q nor QQ is the sentinel), a code span past an escaped pipe in its table cell,
+ *   a code span on a later line after a tab-indented line; and an inline empty comment, `<!-->` or `<!--->`, with no later
+ *   `-->` in its inline run, which the sentinel turns into text marked does not lex as HTML (with a later `-->` it is
+ *   placed: comments.empty). (6) LINES: each kept line keeps the page line it starts on, so a finding names the page line
+ *   its sentence starts on, and text after a span removed with its line breaks stays on the line the span opens on
+ *   (comments.lines).
  * - SEAM (row C, "an actual Pi seam"): the one path by which assembled context reaches Pi is the registered
  *   reactivefiber.render.preview capability (read), spawned at the one rf launch site in src (a child-process launcher whose
  *   first argument's constant names rf: exactly the provider's spawn). Its spawned argv for both input arms and the
@@ -430,6 +482,45 @@ function sentences(text: string): { readonly line: number; readonly text: string
   return out;
 }
 
+// --------------------------------------------------------------------------------------- the cutter's sweeps (wb-ro24, respin 1)
+/** Every BMP code point but the surrogates and the line feed (the line break itself): the domain every cutter sweep reads. */
+const SWEPT: readonly number[] = Array.from({ length: 0x10000 }, (_, cp) => cp).filter(cp => (cp < 0xd800 || cp > 0xdfff) && cp !== 0x0a);
+/** The near misses COMMENTS OUT (3)'s rows hold: invisible or space-like code points that are not white space to JavaScript. */
+const NOT_WHITE_SPACE: readonly number[] = [0x0085, 0x00ad, 0x180e, 0x200b, 0x2060];
+/** A code point spelled U+XXXX, so every witness stays printable ASCII. */
+const codeLabel = (cp: number): string => `U+${cp.toString(16).toUpperCase().padStart(4, "0")}`;
+/** A text with each character outside printable ASCII spelled as its code point label. */
+const shown = (text: string): string => text.replace(/[^\x20-\x7e]/gu, char => `<${codeLabel(char.codePointAt(0) ?? 0)}>`);
+/** A page cut into sentences, each `<line>:<text>`: the reading every A3 cutter row holds. */
+const cutOf = (page: string): string[] => sentences(page).map(sentence => `${sentence.line}:${sentence.text}`);
+type Predicted<T> = (item: T) => readonly string[];
+/** One sweep: every swept code point put in one page shape and cut, each cut sorted into the readings the DOC clause predicts
+ * for that shape - run-on counted, every other prediction listed by code point, a code point no prediction reads under other. */
+function sweep(page: (char: string) => string, runOn: Predicted<string>, predictions: Readonly<Record<string, Predicted<string>>>): Json {
+  const names = Object.keys(predictions);
+  const listed: Record<string, string[]> = Object.fromEntries([...names, "other"].map(name => [name, []]));
+  let runs = 0;
+  for (const cp of SWEPT) {
+    const char = String.fromCodePoint(cp);
+    const got = JSON.stringify(cutOf(page(char)));
+    if (got === JSON.stringify(runOn(char))) runs += 1;
+    else listed[names.find(name => JSON.stringify(predictions[name]?.(char)) === got) ?? "other"]?.push(codeLabel(cp));
+  }
+  return { runOn: runs, ...listed };
+}
+/** A bounded count sweep: each count's page cut and listed under the prediction it equals, or under other. */
+function counted(counts: readonly number[], page: (count: number) => string, predictions: Readonly<Record<string, Predicted<number>>>): Json {
+  const names = Object.keys(predictions);
+  const listed: Record<string, number[]> = Object.fromEntries([...names, "other"].map(name => [name, []]));
+  for (const count of counts) {
+    const got = JSON.stringify(cutOf(page(count)));
+    listed[names.find(name => JSON.stringify(predictions[name]?.(count)) === got) ?? "other"]?.push(count);
+  }
+  return listed;
+}
+/** The counts first, first + 1, ..., last. */
+const upTo = (last: number, first = 0): number[] => Array.from({ length: last - first + 1 }, (_, index) => first + index);
+
 // --------------------------------------------------------------------------------------------------------------- the comments
 /** marked's own HTML comment form: an empty <!--> or <!---> included, an unterminated one running to the end of its text. */
 const HTML_COMMENT = /<!--(?:-?>|[\s\S]*?(?:-->|$))/g;
@@ -744,6 +835,28 @@ function docSurvey(path: string, text: string): Survey {
     else if (reading.kind !== "none") quieted.push(`${path}:${line} ${reading.kind}:${reading.reason}`);
   }
   return { findings, quieted, readings: cut.length, named, unplaced: page.unplaced.map(comment => `${path} ${JSON.stringify(comment)}`) };
+}
+/** COMMENTS OUT's reading of a page whose one comment hides `marker` before a claim at :1: placed (taken out, so the claim is a
+ * finding), unplaced (read as written, so the marker quiets it, and listed), unlexed (read as written, nothing listed: (4)), or
+ * other. */
+function placement(page: string, marker: string): "placed" | "unplaced" | "unlexed" | "other" {
+  const one = docSurvey("docs/plant.md", page);
+  const quiet = one.findings.length === 0 && one.quieted.length === 1 && one.quieted[0] === `docs/plant.md:1 marker:${marker}`;
+  if (one.findings.length === 1 && one.findings[0] === "docs/plant.md:1 acquire" && one.quieted.length === 0 && one.unplaced.length === 0) return "placed";
+  if (quiet && one.unplaced.length === 1) return "unplaced";
+  if (quiet && one.unplaced.length === 0) return "unlexed";
+  return "other";
+}
+/** Bounded runs of one page shape, each count listed under its placement. */
+function placements(counts: readonly number[], page: (count: number) => string, marker: string): Json {
+  const listed: Record<string, number[]> = { placed: [], unplaced: [], unlexed: [], other: [] };
+  for (const count of counts) listed[placement(page(count), marker)]?.push(count);
+  return listed;
+}
+/** A page's doc sentences once its placed comments are out, each `<page line>:<text>` shown in printable ASCII. */
+function docCut(page: string): string[] {
+  const free = commentFreePage(page);
+  return sentences(free.text).map(sentence => `${free.lines?.[sentence.line - 1] ?? sentence.line}:${shown(sentence.text)}`);
 }
 const isModule = (path: string): boolean => /\.(?:ts|tsx|mts|cts|js|mjs|cjs)$/.test(path);
 const isPage = (path: string): boolean => /\.md$/.test(path);
@@ -1172,8 +1285,22 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       docOf("The assembler\n\nacquires."),
       docOf("# The assembler\nacquires."),
     ];
+    // WHITE SPACE (wb-ro24 respin 1): JavaScript's \s and the set String.prototype.trim strips, read from the engine.
+    const whiteSpace: number[] = [];
+    const trimmed: number[] = [];
+    let scanned = 0;
+    for (let cp = 0; cp <= 0x10ffff; cp += 1) {
+      if (cp >= 0xd800 && cp <= 0xdfff) continue;
+      scanned += 1;
+      const char = String.fromCodePoint(cp);
+      if (/^\s$/.test(char)) whiteSpace.push(cp);
+      if (char.trim() === "") trimmed.push(cp);
+    }
+    const headingCut = { cut: () => ["1:The assembler", "2:# acquires", "3:the resources."], runOn: () => ["1:The assembler # acquires the resources."] };
+    const listCut = { cut: () => ["1:The assembler", "2:- acquires the resources."] };
+    const pipeCut = { cut: () => ["1:The assembler", "2:| acquires |", "3:the resources."] };
+    const digitRun = "1234567890".repeat(4);
     // DOC's cutter (wb-ro24): one row per alternative the header's DOC clause restates, in its order, beside its near miss.
-    const cutOf = (page: string): string[] => sentences(page).map(sentence => `${sentence.line}:${sentence.text}`);
     const cutter = {
       terminator: ["Next. The assembler acquires.", "Next! The assembler acquires.", "Next? The assembler acquires.", "Next; the assembler acquires.", "Next.\tThe assembler acquires.", "Next.\nThe assembler acquires.", "Next.The assembler acquires."].map(cutOf),
       blank: ["The assembler\n \t\nacquires."].map(cutOf),
@@ -1202,6 +1329,117 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
         "The assembler\n-acquires",
         "- The assembler\nacquires.",
       ].map(cutOf),
+      // A list marker alone before the line end (wb-ro24 respin 1): no list cut; 1. alone only the terminator cuts after.
+      alone: ["The assembler\n-\nacquires.", "The assembler\n+\nacquires.", "The assembler\n*\nacquires.", "The assembler\n1)\nacquires.", "The assembler\n1.\nacquires."].map(cutOf),
+      // SWEEPS (wb-ro24 respin 1): every BMP code point but the surrogates and the line feed, in one page shape each, sorted
+      // into the readings the DOC clause predicts for that shape.
+      marks: sweep(
+        char => `Next${char} The assembler acquires.`,
+        char => [`1:Next${char} The assembler acquires.`],
+        { cut: char => [`1:Next${char}`, "1:The assembler acquires."] },
+      ),
+      space: {
+        engine: { scanned, whiteSpace: whiteSpace.map(codeLabel), trimmed: trimmed.map(codeLabel) },
+        terminator: sweep(
+          char => `Next.${char}The assembler acquires.`,
+          char => [`1:Next.${char}The assembler acquires.`],
+          { cut: () => ["1:Next.", "1:The assembler acquires."] },
+        ),
+        blank: sweep(
+          char => `The assembler\n${char}${char}\nacquires.`,
+          char => [`1:The assembler ${char}${char} acquires.`],
+          {
+            cut: () => ["1:The assembler", "3:acquires."],
+            mark: char => [`1:The assembler ${char}${char}`, "3:acquires."],
+            whole: char => ["1:The assembler", `2:${char}${char}`, "3:acquires."],
+          },
+        ),
+        pipe: sweep(
+          char => `The assembler\n${char}| acquires |\nthe resources.`,
+          char => [`1:The assembler ${char}| acquires | the resources.`],
+          { cut: () => ["1:The assembler", "2:| acquires |", "3:the resources."], whole: char => ["1:The assembler", `2:${char}| acquires |`, "3:the resources."] },
+        ),
+        headingLead: sweep(
+          char => `The assembler\n${char}# acquires\nthe resources.`,
+          char => [`1:The assembler ${char}# acquires the resources.`],
+          { cut: () => ["1:The assembler", "2:# acquires", "3:the resources."], whole: char => ["1:The assembler", `2:${char}# acquires`, "3:the resources."] },
+        ),
+        headingTrail: sweep(
+          char => `The assembler\n#${char}acquires\nthe resources.`,
+          char => [`1:The assembler #${char}acquires the resources.`],
+          { cut: char => ["1:The assembler", `2:#${char}acquires`, "3:the resources."] },
+        ),
+        listLead: sweep(
+          char => `The assembler\n${char}- acquires\nthe resources.`,
+          char => [`1:The assembler ${char}- acquires the resources.`],
+          { cut: () => ["1:The assembler", "2:- acquires the resources."], whole: char => ["1:The assembler", `2:${char}- acquires`, "3:the resources."] },
+        ),
+        listTrail: sweep(
+          char => `The assembler\n-${char}acquires\nthe resources.`,
+          char => [`1:The assembler -${char}acquires the resources.`],
+          { cut: char => ["1:The assembler", `2:-${char}acquires the resources.`] },
+        ),
+      },
+      openers: sweep(
+        char => `The assembler\n${char} acquires\nthe resources.`,
+        char => [`1:The assembler ${char} acquires the resources.`],
+        {
+          list: char => ["1:The assembler", `2:${char} acquires the resources.`],
+          whole: char => ["1:The assembler", `2:${char} acquires`, "3:the resources."],
+          mark: char => [`1:The assembler ${char}`, "2:acquires the resources."],
+          trimmed: () => ["1:The assembler acquires the resources."],
+        },
+      ),
+      digitsFirst: sweep(
+        char => `The assembler\n${char}) acquires\nthe resources.`,
+        char => [`1:The assembler ${char}) acquires the resources.`],
+        {
+          list: char => ["1:The assembler", `2:${char}) acquires the resources.`],
+          whole: char => ["1:The assembler", `2:${char}) acquires`, "3:the resources."],
+          trimmed: () => ["1:The assembler ) acquires the resources."],
+        },
+      ),
+      digits: sweep(
+        char => `The assembler\n1${char}) acquires\nthe resources.`,
+        char => [`1:The assembler 1${char}) acquires the resources.`],
+        { list: char => ["1:The assembler", `2:1${char}) acquires the resources.`] },
+      ),
+      delimiters: sweep(
+        char => `The assembler\n1${char} acquires\nthe resources.`,
+        char => [`1:The assembler 1${char} acquires the resources.`],
+        {
+          list: char => ["1:The assembler", `2:1${char} acquires the resources.`],
+          listMark: char => ["1:The assembler", `2:1${char}`, "2:acquires the resources."],
+          mark: char => [`1:The assembler 1${char}`, "2:acquires the resources."],
+        },
+      ),
+      // COUNTS (wb-ro24 respin 1): bounded runs, each claimed only within its bound.
+      counts: {
+        hashes: counted(upTo(12, 1), count => `The assembler\n${"#".repeat(count)} acquires\nthe resources.`, {
+          cut: count => ["1:The assembler", `2:${"#".repeat(count)} acquires`, "3:the resources."],
+          runOn: count => [`1:The assembler ${"#".repeat(count)} acquires the resources.`],
+        }),
+        headingLead: {
+          spaces: counted(upTo(8), count => `The assembler\n${" ".repeat(count)}# acquires\nthe resources.`, headingCut),
+          tabs: counted(upTo(8), count => `The assembler\n${"\t".repeat(count)}# acquires\nthe resources.`, headingCut),
+        },
+        digits: {
+          paren: counted(upTo(32, 1), count => `The assembler\n${digitRun.slice(0, count)}) acquires\nthe resources.`, {
+            cut: count => ["1:The assembler", `2:${digitRun.slice(0, count)}) acquires the resources.`],
+          }),
+          dot: counted(upTo(32, 1), count => `The assembler\n${digitRun.slice(0, count)}. acquires\nthe resources.`, {
+            cut: count => ["1:The assembler", `2:${digitRun.slice(0, count)}.`, "2:acquires the resources."],
+          }),
+        },
+        listLead: {
+          spaces: counted(upTo(32), count => `The assembler\n${" ".repeat(count)}- acquires\nthe resources.`, listCut),
+          tabs: counted(upTo(8), count => `The assembler\n${"\t".repeat(count)}- acquires\nthe resources.`, listCut),
+        },
+        pipeLead: {
+          spaces: counted(upTo(32), count => `The assembler\n${" ".repeat(count)}| acquires |\nthe resources.`, pipeCut),
+          tabs: counted(upTo(8), count => `The assembler\n${"\t".repeat(count)}| acquires |\nthe resources.`, pipeCut),
+        },
+      },
     };
     // R-OUTSIDE-ROOTS quiet row: the same claim in every outside directory, in a root text file and in a non-module code file.
     const outsideFiles: Record<string, string> = { "docs/plant.md": `${PLANT}\n` };
@@ -1330,13 +1568,23 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
         "The assembler <!-->never--> acquires resources.\n",
         "The assembler <!--->never--> acquires resources.\n",
       ].map(surveyed),
-      blanked: ["   <!-- a\nb --> never\nThe assembler acquires resources.\n", "<!-- a\nb --> never\nThe assembler acquires resources.\n"].map(surveyed),
+      blanked: [
+        "   <!-- a\nb --> never\nThe assembler acquires resources.\n",
+        "<!-- a\nb --> never\nThe assembler acquires resources.\n",
+        " <!-- a\nb --> never\nThe assembler acquires resources.\n",
+        "  <!-- a\nb --> never\nThe assembler acquires resources.\n",
+        "    <!-- a\nb --> never\nThe assembler acquires resources.\n",
+      ].map(surveyed),
       joined: [
         docOf("The assembler <!-- not\nnever -->\nacquires resources.\n"),
         docOf("The assembler\n  <!-- never -->\nacquires resources.\n"),
         docOf("The assem<!-- -->bler acquires resources.\n"),
         docOf("<div>\nThe assembler\n<!-- never -->\nacquires resources.\n</div>\n"),
       ],
+      // COMMENTS OUT (3)'s white space (wb-ro24 respin 1): a line a removed comment leaves holding one code point.
+      dropped: Object.fromEntries(
+        [...whiteSpace.filter(cp => cp !== 0x0a), ...NOT_WHITE_SPACE].map(cp => [codeLabel(cp), docCut(`The assembler\n${String.fromCodePoint(cp)}<!-- never -->\nacquires resources.\n`)]),
+      ),
       lines: [
         docOf("<!--\nnot\n-->\nThe assembler acquires resources.\n"),
         docOf("<!-- not --> The assembler acquires resources.\n"),
@@ -1360,9 +1608,60 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
         docOf("> The assembler <!-- not\n>\tnever --> acquires resources.\n"),
         docOf("- > The assembler <!-- not\n\t> never --> acquires resources.\n"),
       ],
+      // COMMENTS OUT (5)'s line breaks (wb-ro24 respin 1): bounded runs, each claimed only within its bound.
+      runs: {
+        paragraph: {
+          spaces: placements(upTo(32), count => `The assembler <!-- not\n${" ".repeat(count)}never --> acquires resources.\n`, "not"),
+          tabs: placements(upTo(8, 1), count => `The assembler <!-- not\n${"\t".repeat(count)}never --> acquires resources.\n`, "not"),
+          spaceTabs: placements(upTo(4, 1), count => `The assembler <!-- not\n${" \t".repeat(count)}never --> acquires resources.\n`, "not"),
+        },
+        item: {
+          spaces: placements(upTo(16), count => `- The assembler <!-- not\n${" ".repeat(count)}never --> acquires resources.\n`, "not"),
+          tabs: placements(upTo(4, 1), count => `- The assembler <!-- not\n${"\t".repeat(count)}never --> acquires resources.\n`, "not"),
+        },
+        ordered: placements(upTo(16), count => `10. The assembler <!-- not\n${" ".repeat(count)}never --> acquires resources.\n`, "not"),
+        nested: placements(upTo(12, 1), count => `${"- ".repeat(count)}The assembler <!-- not\n${"  ".repeat(count)}never --> acquires resources.\n`, "not"),
+        nestedQuote: placements(upTo(8, 1), count => `${"- ".repeat(count)}> The assembler <!-- not\n${"  ".repeat(count)}> never --> acquires resources.\n`, "not"),
+        tabStops: placements(upTo(6, 1), count => `${"- - ".repeat(count)}The assembler <!-- not\n${"\t".repeat(count)}never --> acquires resources.\n`, "not"),
+        mixedStops: [
+          "- - - The assembler <!-- not\n\t  never --> acquires resources.\n",
+          "- - - - The assembler <!-- not\n  \t    never --> acquires resources.\n",
+          "1.  The assembler <!-- not\n\tnever --> acquires resources.\n",
+          "123456. The assembler <!-- not\n\t\tnever --> acquires resources.\n",
+        ].map(page => placement(page, "not")),
+        depth: placements(upTo(8, 1), count => `${">".repeat(count)} The assembler <!-- not\n${">".repeat(count)} never --> acquires resources.\n`, "not"),
+        spacedDepth: placements(upTo(8, 1), count => `${"> ".repeat(count)}The assembler <!-- not\n${"> ".repeat(count)}never --> acquires resources.\n`, "not"),
+        afterQuote: {
+          spaces: placements(upTo(8), count => `> The assembler <!-- not\n>${" ".repeat(count)}never --> acquires resources.\n`, "not"),
+          tabs: placements(upTo(4), count => `> The assembler <!-- not\n>${"\t".repeat(count)}never --> acquires resources.\n`, "not"),
+        },
+        itemQuote: {
+          spaces: placements(upTo(8), count => `- > The assembler <!-- not\n${" ".repeat(count)}> never --> acquires resources.\n`, "not"),
+          tabs: placements(upTo(4), count => `- > The assembler <!-- not\n${"\t".repeat(count)}> never --> acquires resources.\n`, "not"),
+          mixed: [" \t", "\t ", " \t "].map(lead => placement(`- > The assembler <!-- not\n${lead}> never --> acquires resources.\n`, "not")),
+        },
+        lines: ["> The assembler <!-- a\n> b\n> c --> acquires resources.\n", "- The assembler <!-- a\n  b\n  c --> acquires resources.\n"].map(surveyed),
+      },
       cells: ["| x <!-- never --> | y |\n| --- | --- |\n| The assembler | acquires resources |\n"].map(surveyed),
+      // COMMENTS OUT (5)'s walk order (wb-ro24 respin 1): each comment placed in page order.
+      order: [
+        "- <!-- never --> The assembler acquires resources\n- x\n",
+        "| a | b |\n| --- | --- |\n| <!-- never --> The assembler acquires resources | x |\n",
+        "| a | b |\n| --- | --- |\n| x | <!-- never --> The assembler acquires resources |\n| y | z |\n",
+        "> <!-- never --> The assembler acquires resources.\n>\n> x\n",
+        "- <!-- never --> The assembler acquires resources.\n\n  x\n",
+      ].map(surveyed),
+      // COMMENTS OUT (5)'s cursor (wb-ro24 respin 1): two identical comments side by side, each placed past the one before.
+      cursor: [
+        "The assembler <!-- never --><!-- never --> acquires resources.\n",
+        "The assembler acquires resources\n<!-- never --> <!-- never -->\nx.\n",
+        "The assembler acquires resources\n<!-- never --><!-- never -->\nx.\n",
+      ].map(surveyed),
       crlf: ["The assembler <!-- never -->\r\nacquires resources.\r\n"].map(surveyed),
       unplaced,
+      // COMMENTS OUT (5)'s sentinel (wb-ro24 respin 1): the link-destination misplacement page spelling every run of zero to
+      // sixty-four Q lists its comment unplaced.
+      sentinel: placements(upTo(64), count => `<span title="${"Q".repeat(count)}"></span>See [x](<!--never-->)<!--never--> the assembler acquires resources.\n`, "never"),
     };
     expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "A3").map(residual => residual.id));
     return {

@@ -541,7 +541,684 @@
                 [
                   "1:- The assembler acquires."
                 ]
-              ]
+              ],
+              "alone": [
+                [
+                  "1:The assembler - acquires."
+                ],
+                [
+                  "1:The assembler + acquires."
+                ],
+                [
+                  "1:The assembler * acquires."
+                ],
+                [
+                  "1:The assembler 1) acquires."
+                ],
+                [
+                  "1:The assembler 1.",
+                  "3:acquires."
+                ]
+              ],
+              "marks": {
+                "runOn": 63483,
+                "cut": [
+                  "U+0021",
+                  "U+002E",
+                  "U+003B",
+                  "U+003F"
+                ],
+                "other": []
+              },
+              "space": {
+                "engine": {
+                  "scanned": 1112064,
+                  "whiteSpace": [
+                    "U+0009",
+                    "U+000A",
+                    "U+000B",
+                    "U+000C",
+                    "U+000D",
+                    "U+0020",
+                    "U+00A0",
+                    "U+1680",
+                    "U+2000",
+                    "U+2001",
+                    "U+2002",
+                    "U+2003",
+                    "U+2004",
+                    "U+2005",
+                    "U+2006",
+                    "U+2007",
+                    "U+2008",
+                    "U+2009",
+                    "U+200A",
+                    "U+2028",
+                    "U+2029",
+                    "U+202F",
+                    "U+205F",
+                    "U+3000",
+                    "U+FEFF"
+                  ],
+                  "trimmed": [
+                    "U+0009",
+                    "U+000A",
+                    "U+000B",
+                    "U+000C",
+                    "U+000D",
+                    "U+0020",
+                    "U+00A0",
+                    "U+1680",
+                    "U+2000",
+                    "U+2001",
+                    "U+2002",
+                    "U+2003",
+                    "U+2004",
+                    "U+2005",
+                    "U+2006",
+                    "U+2007",
+                    "U+2008",
+                    "U+2009",
+                    "U+200A",
+                    "U+2028",
+                    "U+2029",
+                    "U+202F",
+                    "U+205F",
+                    "U+3000",
+                    "U+FEFF"
+                  ]
+                },
+                "terminator": {
+                  "runOn": 63463,
+                  "cut": [
+                    "U+0009",
+                    "U+000B",
+                    "U+000C",
+                    "U+000D",
+                    "U+0020",
+                    "U+00A0",
+                    "U+1680",
+                    "U+2000",
+                    "U+2001",
+                    "U+2002",
+                    "U+2003",
+                    "U+2004",
+                    "U+2005",
+                    "U+2006",
+                    "U+2007",
+                    "U+2008",
+                    "U+2009",
+                    "U+200A",
+                    "U+2028",
+                    "U+2029",
+                    "U+202F",
+                    "U+205F",
+                    "U+3000",
+                    "U+FEFF"
+                  ],
+                  "other": []
+                },
+                "blank": {
+                  "runOn": 63457,
+                  "cut": [
+                    "U+0009",
+                    "U+000B",
+                    "U+000C",
+                    "U+000D",
+                    "U+0020",
+                    "U+00A0",
+                    "U+1680",
+                    "U+2000",
+                    "U+2001",
+                    "U+2002",
+                    "U+2003",
+                    "U+2004",
+                    "U+2005",
+                    "U+2006",
+                    "U+2007",
+                    "U+2008",
+                    "U+2009",
+                    "U+200A",
+                    "U+2028",
+                    "U+2029",
+                    "U+202F",
+                    "U+205F",
+                    "U+3000",
+                    "U+FEFF"
+                  ],
+                  "mark": [
+                    "U+0021",
+                    "U+002E",
+                    "U+003B",
+                    "U+003F"
+                  ],
+                  "whole": [
+                    "U+0023",
+                    "U+007C"
+                  ],
+                  "other": []
+                },
+                "pipe": {
+                  "runOn": 63462,
+                  "cut": [
+                    "U+0009",
+                    "U+000B",
+                    "U+000C",
+                    "U+000D",
+                    "U+0020",
+                    "U+00A0",
+                    "U+1680",
+                    "U+2000",
+                    "U+2001",
+                    "U+2002",
+                    "U+2003",
+                    "U+2004",
+                    "U+2005",
+                    "U+2006",
+                    "U+2007",
+                    "U+2008",
+                    "U+2009",
+                    "U+200A",
+                    "U+2028",
+                    "U+2029",
+                    "U+202F",
+                    "U+205F",
+                    "U+3000",
+                    "U+FEFF"
+                  ],
+                  "whole": [
+                    "U+007C"
+                  ],
+                  "other": []
+                },
+                "headingLead": {
+                  "runOn": 63461,
+                  "cut": [
+                    "U+0009",
+                    "U+000B",
+                    "U+000C",
+                    "U+000D",
+                    "U+0020",
+                    "U+00A0",
+                    "U+1680",
+                    "U+2000",
+                    "U+2001",
+                    "U+2002",
+                    "U+2003",
+                    "U+2004",
+                    "U+2005",
+                    "U+2006",
+                    "U+2007",
+                    "U+2008",
+                    "U+2009",
+                    "U+200A",
+                    "U+2028",
+                    "U+2029",
+                    "U+202F",
+                    "U+205F",
+                    "U+3000",
+                    "U+FEFF"
+                  ],
+                  "whole": [
+                    "U+0023",
+                    "U+007C"
+                  ],
+                  "other": []
+                },
+                "headingTrail": {
+                  "runOn": 63463,
+                  "cut": [
+                    "U+0009",
+                    "U+000B",
+                    "U+000C",
+                    "U+000D",
+                    "U+0020",
+                    "U+00A0",
+                    "U+1680",
+                    "U+2000",
+                    "U+2001",
+                    "U+2002",
+                    "U+2003",
+                    "U+2004",
+                    "U+2005",
+                    "U+2006",
+                    "U+2007",
+                    "U+2008",
+                    "U+2009",
+                    "U+200A",
+                    "U+2028",
+                    "U+2029",
+                    "U+202F",
+                    "U+205F",
+                    "U+3000",
+                    "U+FEFF"
+                  ],
+                  "other": []
+                },
+                "listLead": {
+                  "runOn": 63462,
+                  "cut": [
+                    "U+0009",
+                    "U+000B",
+                    "U+000C",
+                    "U+000D",
+                    "U+0020",
+                    "U+00A0",
+                    "U+1680",
+                    "U+2000",
+                    "U+2001",
+                    "U+2002",
+                    "U+2003",
+                    "U+2004",
+                    "U+2005",
+                    "U+2006",
+                    "U+2007",
+                    "U+2008",
+                    "U+2009",
+                    "U+200A",
+                    "U+2028",
+                    "U+2029",
+                    "U+202F",
+                    "U+205F",
+                    "U+3000",
+                    "U+FEFF"
+                  ],
+                  "whole": [
+                    "U+007C"
+                  ],
+                  "other": []
+                },
+                "listTrail": {
+                  "runOn": 63463,
+                  "cut": [
+                    "U+0009",
+                    "U+000B",
+                    "U+000C",
+                    "U+000D",
+                    "U+0020",
+                    "U+00A0",
+                    "U+1680",
+                    "U+2000",
+                    "U+2001",
+                    "U+2002",
+                    "U+2003",
+                    "U+2004",
+                    "U+2005",
+                    "U+2006",
+                    "U+2007",
+                    "U+2008",
+                    "U+2009",
+                    "U+200A",
+                    "U+2028",
+                    "U+2029",
+                    "U+202F",
+                    "U+205F",
+                    "U+3000",
+                    "U+FEFF"
+                  ],
+                  "other": []
+                }
+              },
+              "openers": {
+                "runOn": 63454,
+                "list": [
+                  "U+002A",
+                  "U+002B",
+                  "U+002D"
+                ],
+                "whole": [
+                  "U+0023",
+                  "U+007C"
+                ],
+                "mark": [
+                  "U+0021",
+                  "U+002E",
+                  "U+003B",
+                  "U+003F"
+                ],
+                "trimmed": [
+                  "U+0009",
+                  "U+000B",
+                  "U+000C",
+                  "U+000D",
+                  "U+0020",
+                  "U+00A0",
+                  "U+1680",
+                  "U+2000",
+                  "U+2001",
+                  "U+2002",
+                  "U+2003",
+                  "U+2004",
+                  "U+2005",
+                  "U+2006",
+                  "U+2007",
+                  "U+2008",
+                  "U+2009",
+                  "U+200A",
+                  "U+2028",
+                  "U+2029",
+                  "U+202F",
+                  "U+205F",
+                  "U+3000",
+                  "U+FEFF"
+                ],
+                "other": []
+              },
+              "digitsFirst": {
+                "runOn": 63452,
+                "list": [
+                  "U+0030",
+                  "U+0031",
+                  "U+0032",
+                  "U+0033",
+                  "U+0034",
+                  "U+0035",
+                  "U+0036",
+                  "U+0037",
+                  "U+0038",
+                  "U+0039"
+                ],
+                "whole": [
+                  "U+007C"
+                ],
+                "trimmed": [
+                  "U+0009",
+                  "U+000B",
+                  "U+000C",
+                  "U+000D",
+                  "U+0020",
+                  "U+00A0",
+                  "U+1680",
+                  "U+2000",
+                  "U+2001",
+                  "U+2002",
+                  "U+2003",
+                  "U+2004",
+                  "U+2005",
+                  "U+2006",
+                  "U+2007",
+                  "U+2008",
+                  "U+2009",
+                  "U+200A",
+                  "U+2028",
+                  "U+2029",
+                  "U+202F",
+                  "U+205F",
+                  "U+3000",
+                  "U+FEFF"
+                ],
+                "other": []
+              },
+              "digits": {
+                "runOn": 63477,
+                "list": [
+                  "U+0030",
+                  "U+0031",
+                  "U+0032",
+                  "U+0033",
+                  "U+0034",
+                  "U+0035",
+                  "U+0036",
+                  "U+0037",
+                  "U+0038",
+                  "U+0039"
+                ],
+                "other": []
+              },
+              "delimiters": {
+                "runOn": 63482,
+                "list": [
+                  "U+0029"
+                ],
+                "listMark": [
+                  "U+002E"
+                ],
+                "mark": [
+                  "U+0021",
+                  "U+003B",
+                  "U+003F"
+                ],
+                "other": []
+              },
+              "counts": {
+                "hashes": {
+                  "cut": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "runOn": [
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                  ],
+                  "other": []
+                },
+                "headingLead": {
+                  "spaces": {
+                    "cut": [
+                      0,
+                      1,
+                      2,
+                      3
+                    ],
+                    "runOn": [
+                      4,
+                      5,
+                      6,
+                      7,
+                      8
+                    ],
+                    "other": []
+                  },
+                  "tabs": {
+                    "cut": [
+                      0,
+                      1,
+                      2,
+                      3
+                    ],
+                    "runOn": [
+                      4,
+                      5,
+                      6,
+                      7,
+                      8
+                    ],
+                    "other": []
+                  }
+                },
+                "digits": {
+                  "paren": {
+                    "cut": [
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                      10,
+                      11,
+                      12,
+                      13,
+                      14,
+                      15,
+                      16,
+                      17,
+                      18,
+                      19,
+                      20,
+                      21,
+                      22,
+                      23,
+                      24,
+                      25,
+                      26,
+                      27,
+                      28,
+                      29,
+                      30,
+                      31,
+                      32
+                    ],
+                    "other": []
+                  },
+                  "dot": {
+                    "cut": [
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                      10,
+                      11,
+                      12,
+                      13,
+                      14,
+                      15,
+                      16,
+                      17,
+                      18,
+                      19,
+                      20,
+                      21,
+                      22,
+                      23,
+                      24,
+                      25,
+                      26,
+                      27,
+                      28,
+                      29,
+                      30,
+                      31,
+                      32
+                    ],
+                    "other": []
+                  }
+                },
+                "listLead": {
+                  "spaces": {
+                    "cut": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                      10,
+                      11,
+                      12,
+                      13,
+                      14,
+                      15,
+                      16,
+                      17,
+                      18,
+                      19,
+                      20,
+                      21,
+                      22,
+                      23,
+                      24,
+                      25,
+                      26,
+                      27,
+                      28,
+                      29,
+                      30,
+                      31,
+                      32
+                    ],
+                    "other": []
+                  },
+                  "tabs": {
+                    "cut": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8
+                    ],
+                    "other": []
+                  }
+                },
+                "pipeLead": {
+                  "spaces": {
+                    "cut": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                      10,
+                      11,
+                      12,
+                      13,
+                      14,
+                      15,
+                      16,
+                      17,
+                      18,
+                      19,
+                      20,
+                      21,
+                      22,
+                      23,
+                      24,
+                      25,
+                      26,
+                      27,
+                      28,
+                      29,
+                      30,
+                      31,
+                      32
+                    ],
+                    "other": []
+                  },
+                  "tabs": {
+                    "cut": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8
+                    ],
+                    "other": []
+                  }
+                }
+              }
             },
             "comments": {
               "hiddenMarker": [
@@ -613,6 +1290,27 @@
                     "docs/plant.md:2 marker:never"
                   ],
                   "unplaced": []
+                },
+                {
+                  "findings": [],
+                  "quieted": [
+                    "docs/plant.md:2 marker:never"
+                  ],
+                  "unplaced": []
+                },
+                {
+                  "findings": [],
+                  "quieted": [
+                    "docs/plant.md:2 marker:never"
+                  ],
+                  "unplaced": []
+                },
+                {
+                  "findings": [],
+                  "quieted": [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  "unplaced": []
                 }
               ],
               "joined": [
@@ -629,6 +1327,95 @@
                   "docs/plant.md:1 acquire"
                 ]
               ],
+              "dropped": {
+                "U+0009": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+000B": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+000C": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+000D": [
+                  "1:The assembler <!-- never --> acquires resources."
+                ],
+                "U+0020": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+00A0": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+1680": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+2000": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+2001": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+2002": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+2003": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+2004": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+2005": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+2006": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+2007": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+2008": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+2009": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+200A": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+2028": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+2029": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+202F": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+205F": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+3000": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+FEFF": [
+                  "1:The assembler acquires resources."
+                ],
+                "U+0085": [
+                  "1:The assembler <U+0085> acquires resources."
+                ],
+                "U+00AD": [
+                  "1:The assembler <U+00AD> acquires resources."
+                ],
+                "U+180E": [
+                  "1:The assembler <U+180E> acquires resources."
+                ],
+                "U+200B": [
+                  "1:The assembler <U+200B> acquires resources."
+                ],
+                "U+2060": [
+                  "1:The assembler <U+2060> acquires resources."
+                ]
+              },
               "lines": [
                 [
                   "docs/plant.md:4 acquire"
@@ -680,10 +1467,368 @@
                   "docs/plant.md:1 acquire"
                 ]
               ],
+              "runs": {
+                "paragraph": {
+                  "spaces": {
+                    "placed": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                      10,
+                      11,
+                      12,
+                      13,
+                      14,
+                      15,
+                      16,
+                      17,
+                      18,
+                      19,
+                      20,
+                      21,
+                      22,
+                      23,
+                      24,
+                      25,
+                      26,
+                      27,
+                      28,
+                      29,
+                      30,
+                      31,
+                      32
+                    ],
+                    "unplaced": [],
+                    "unlexed": [],
+                    "other": []
+                  },
+                  "tabs": {
+                    "placed": [
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8
+                    ],
+                    "unplaced": [],
+                    "unlexed": [],
+                    "other": []
+                  },
+                  "spaceTabs": {
+                    "placed": [
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "unplaced": [],
+                    "unlexed": [],
+                    "other": []
+                  }
+                },
+                "item": {
+                  "spaces": {
+                    "placed": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                      10,
+                      11,
+                      12,
+                      13,
+                      14,
+                      15,
+                      16
+                    ],
+                    "unplaced": [],
+                    "unlexed": [],
+                    "other": []
+                  },
+                  "tabs": {
+                    "placed": [],
+                    "unplaced": [
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "unlexed": [],
+                    "other": []
+                  }
+                },
+                "ordered": {
+                  "placed": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16
+                  ],
+                  "unplaced": [],
+                  "unlexed": [],
+                  "other": []
+                },
+                "nested": {
+                  "placed": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                  ],
+                  "unplaced": [],
+                  "unlexed": [],
+                  "other": []
+                },
+                "nestedQuote": {
+                  "placed": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8
+                  ],
+                  "unplaced": [],
+                  "unlexed": [],
+                  "other": []
+                },
+                "tabStops": {
+                  "placed": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "unplaced": [],
+                  "unlexed": [],
+                  "other": []
+                },
+                "mixedStops": [
+                  "placed",
+                  "placed",
+                  "placed",
+                  "placed"
+                ],
+                "depth": {
+                  "placed": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8
+                  ],
+                  "unplaced": [],
+                  "unlexed": [],
+                  "other": []
+                },
+                "spacedDepth": {
+                  "placed": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8
+                  ],
+                  "unplaced": [],
+                  "unlexed": [],
+                  "other": []
+                },
+                "afterQuote": {
+                  "spaces": {
+                    "placed": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8
+                    ],
+                    "unplaced": [],
+                    "unlexed": [],
+                    "other": []
+                  },
+                  "tabs": {
+                    "placed": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "unplaced": [],
+                    "unlexed": [],
+                    "other": []
+                  }
+                },
+                "itemQuote": {
+                  "spaces": {
+                    "placed": [
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8
+                    ],
+                    "unplaced": [],
+                    "unlexed": [
+                      0,
+                      1
+                    ],
+                    "other": []
+                  },
+                  "tabs": {
+                    "placed": [
+                      1
+                    ],
+                    "unplaced": [
+                      2,
+                      3,
+                      4
+                    ],
+                    "unlexed": [
+                      0
+                    ],
+                    "other": []
+                  },
+                  "mixed": [
+                    "placed",
+                    "placed",
+                    "placed"
+                  ]
+                },
+                "lines": [
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  }
+                ]
+              },
               "cells": [
                 {
                   "findings": [
                     "docs/plant.md:3 acquire"
+                  ],
+                  "quieted": [],
+                  "unplaced": []
+                }
+              ],
+              "order": [
+                {
+                  "findings": [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  "quieted": [],
+                  "unplaced": []
+                },
+                {
+                  "findings": [
+                    "docs/plant.md:3 acquire"
+                  ],
+                  "quieted": [],
+                  "unplaced": []
+                },
+                {
+                  "findings": [
+                    "docs/plant.md:3 acquire"
+                  ],
+                  "quieted": [],
+                  "unplaced": []
+                },
+                {
+                  "findings": [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  "quieted": [],
+                  "unplaced": []
+                },
+                {
+                  "findings": [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  "quieted": [],
+                  "unplaced": []
+                }
+              ],
+              "cursor": [
+                {
+                  "findings": [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  "quieted": [],
+                  "unplaced": []
+                },
+                {
+                  "findings": [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  "quieted": [],
+                  "unplaced": []
+                },
+                {
+                  "findings": [
+                    "docs/plant.md:1 acquire"
                   ],
                   "quieted": [],
                   "unplaced": []
@@ -805,7 +1950,79 @@
                   "quieted": [],
                   "unplaced": []
                 }
-              ]
+              ],
+              "sentinel": {
+                "placed": [],
+                "unplaced": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31,
+                  32,
+                  33,
+                  34,
+                  35,
+                  36,
+                  37,
+                  38,
+                  39,
+                  40,
+                  41,
+                  42,
+                  43,
+                  44,
+                  45,
+                  46,
+                  47,
+                  48,
+                  49,
+                  50,
+                  51,
+                  52,
+                  53,
+                  54,
+                  55,
+                  56,
+                  57,
+                  58,
+                  59,
+                  60,
+                  61,
+                  62,
+                  63,
+                  64
+                ],
+                "unlexed": [],
+                "other": []
+              }
             },
             "quiet": {
               "R-OUTSIDE-ROOTS": {
