@@ -12,7 +12,8 @@
  * (NATIVE_CONTROL_ACTIONS at control.ts:30-37 or typed executor requests), and a snapshot over the declared node/edge/byte
  * budget is refused with a typed unavailable, never truncated silently." The filing closes "Tracked gate, never a blocker."
  * wb-0lf.8 (the rule-19 structural-exit child ruling R-B73 filed beside wb-0lf.2's fail-closed core) adds the full-surface
- * row: every form that core left outside the G1, D3, G3 and S2 claims, pinned through the claim's own reader (FULL SURFACE).
+ * row: the forms its tables list (FULL SURFACE), each outside that core's G1, D3, G3 and S2 pinned sets and each pinned
+ * through the claim's own reader; a form outside those tables is claimed by no reading (NOT CLAIMED).
  *
  * THE GATE (measured read-only by the cutting seat on 2026-10-28 at trunk ade68d6 and after each trunk merge into the cut, by the
  * first respin seat at trunk e81d2b0, by the second respin seat at trunk 014d116, whose delta from e81d2b0, landings 649-651,
@@ -125,13 +126,16 @@
  *   (?) character of the class [ _-], case folded, so EXECUTOR_REQUEST_SPELLINGS is its 4 joiners x 3 case forms = 12
  *   spellings, and EXECUTOR_REQUEST_OUTSIDE is the other 4 joiners' 12 (a tab, a dot, a repeated run, a mixed run), pinned quiet.
  *   The patterns match more than these tables spell. The full-surface tables (FULL SURFACE, wb-0lf.8) spell a lower-first
- *   camelCase and a sentence-case word over every joiner, runs of three of each class character, of four of each and two
- *   mixed runs of four and of eight characters in each of WORD_CASES' three case forms, and every GraphDataIR spelling whose
- *   two gaps hold two different joiners of at most one character, in each of the three case forms (SURFACE_SITE_SPELLINGS,
- *   194), and D3's camelCase and sentence case over its four joiners (SURFACE_REQUEST_SPELLINGS, 8): each is read by its word
- *   reader and refused whole by its fail-closed reader. Any other match (another mixed case such as GRAPHpolicy, another run,
- *   another pair of gaps) is claimed by no reading, and G1's and D3's fail-closed readers refuse each match outside
- *   SITE_WORD_SPELLINGS and EXECUTOR_REQUEST_SPELLINGS (FAIL CLOSED).
+ *   camelCase and a sentence-case word over every joiner, runs of three of each class character, of each SURFACE_RUN_LENGTHS
+ *   length (four to eight) of each and two mixed runs of four and of eight characters in each of WORD_CASES' three case
+ *   forms, every GraphDataIR spelling whose two gaps hold two different WORD_JOINERS joiners, in each of the three case
+ *   forms, and each word's per-part case mixes (each part in its own WORD_CASES form, such as GRAPHpolicy or graphDATAir) over
+ *   every joiner (SURFACE_SITE_SPELLINGS, 528), and D3's camelCase and sentence case and its per-part case mixes (such as
+ *   EXECUTORrequest) over its four joiners (SURFACE_REQUEST_SPELLINGS, 24): each is read by its word reader and refused whole
+ *   by its fail-closed reader. Any other match (a run longer than eight characters or a run the runs table does not write, a
+ *   GraphDataIR gap pair holding a run other than WORD_JOINERS' two, a case mix over two different joiners or over a run, a
+ *   part cased letter by letter such as gRaphPolicy) is claimed by no reading, and G1's and D3's fail-closed readers refuse
+ *   each match outside SITE_WORD_SPELLINGS and EXECUTOR_REQUEST_SPELLINGS (FAIL CLOSED).
  *
  * ROWS. A-F, the acceptance clauses, each pin a quote of its clause with its own case: the reference conforms where the pin
  * names a case, and each of the pin's MUTANTS is refused with exactly its rules while the reference conforms on the same case.
@@ -215,10 +219,10 @@
  *    planted once per place a module names a word in (WORD_PLACES: a line, a block and a doc comment, a double-quoted, a
  *    single-quoted and a template string, and code) in one call after the tracked modules; the planted exporter, the first
  *    word's proof, the anchor proof, PROOF_CONTROLS and SITE_CASES stay; and, in the full-surface row, SURFACE_SITE_SPELLINGS'
- *    194 spellings (THE SPELLINGS above), each read through siteFindings and sitePaths as exactly its word and refused whole
+ *    528 spellings (THE SPELLINGS above), each read through siteFindings and sitePaths as exactly its word and refused whole
  *    by the fail-closed reader, alone and as one planted module per spelling in one call after the tracked modules, its runs
- *    and gaps held to the live class. Any other spelling its live pattern matches (another case form, another run, another
- *    pair of gaps) is outside G1's claim, and the census fails closed on it (FAIL CLOSED).
+ *    and gaps held to the live class and the table held to the product of the tables it is built from. Any other spelling its
+ *    live pattern matches (THE SPELLINGS' other matches) is outside G1's claim, and the census fails closed on it (FAIL CLOSED).
  *  - D3 reads EXECUTOR_REQUEST over every git-listed src module (executorRequestNamers) and claims exactly the spellings it is
  *    pinned on (R-B73): EXECUTOR_REQUEST_SPELLINGS' 12 ("executor request" in lower case, in upper case or as written, joined
  *    by nothing or by one space, "_" or "-"), each read whole, and EXECUTOR_REQUEST_HITS' 6 words, each read; and, quiet, the
@@ -227,10 +231,12 @@
  *    EXECUTOR_REQUEST_HITS read through that reader, every spelling of EXECUTOR_REQUEST_SPELLINGS (each of WORD_CASES' three
  *    case forms over its four joiners), each read whole, alone and as one planted module per spelling in one call after the
  *    tracked modules, the quiet spellings above, and it is planted once per place of WORD_PLACES in one call after the tracked
- *    modules; and, in the full-surface row, SURFACE_REQUEST_SPELLINGS' 8 (camelCase and sentence case over its four joiners:
- *    executorRequest, Executor request and their underscore, hyphen and unjoined forms), each read whole and refused whole by
- *    D3's fail-closed reader, alone and planted in one call after the tracked modules. A match of its pattern in another case
- *    form (EXECUTORrequest) is outside D3's claim, and the census fails closed on it (FAIL CLOSED). G2 reads the namespace
+ *    modules; and, in the full-surface row, SURFACE_REQUEST_SPELLINGS' 24 (camelCase and sentence case over its four joiners:
+ *    executorRequest, Executor request and their underscore, hyphen and unjoined forms, and the four per-part case mixes over
+ *    each of them: EXECUTORrequest, executorREQUEST, EXECUTORRequest and ExecutorREQUEST), each read whole and refused whole by
+ *    D3's fail-closed reader, alone and planted in one call after the tracked modules, the table held to the product of the
+ *    tables it is built from. A match of its pattern in another case form (a part cased letter by letter, such as
+ *    eXecutorRequest) is outside D3's claim, and the census fails closed on it (FAIL CLOSED). G2 reads the namespace
  *    literal graphpolicy.data.v1
  *    over git's src listing and the qa walk (namespaceNamers), proven by its read proof, its planted qa script and the
  *    namespace planted once per place of WORD_PLACES but code (the namespace is no name) in one call after the tracked files.
@@ -262,23 +268,27 @@
  *    on the blocks pinned: after the section's table a paragraph, a fenced code block, a lower heading, a link reference
  *    definition, a blockquote, a list and an HTML block (DOCS_PLANTS), and between its heading and its table a paragraph
  *    (FAIL_CLOSED's FC-G3-OTHER-LEAD), each refused, and a block of HTML comments only passed over (quiet); the reader reads
- *    every top-level block of the section; and, in the full-surface row, SURFACE_OTHERS' 24 blocks holding GraphPolicyCLI, one
- *    for each gfm block rule that can sit in the section (marked's Lexer.rules.block.gfm less OTHER_RULES_OUTSIDE: a blockquote,
- *    indented and fenced code, a link reference definition, a lower heading, an HTML block, a list and a paragraph) at each of
- *    three places (between the heading and the table, between the table and a second top-level table, after the last table),
- *    each in the one form the table writes it in, lexed by its rule, at its place in the section's blocks, the one block
- *    ownership-other names beside the one
- *    GraphPolicyCLI row, and refused; another arrangement of the section's tables is outside the claim (FAIL CLOSED). G3's
+ *    every top-level block of the section; and, in the full-surface row, SURFACE_OTHERS' 32 blocks holding GraphPolicyCLI, one
+ *    for each gfm block rule but OTHER_RULES_OUTSIDE (marked's Lexer.rules.block.gfm less hr, a thematic break that holds no
+ *    text, lheading, a setext heading of level 1 or 2 that ends the section, table, a top-level table whose body rows are
+ *    ownership-rows', and newline and text, which lex no block of their own: so a blockquote, indented and fenced code, a link
+ *    reference definition, a lower heading, an HTML block, a list and a paragraph) at each of four places (between the heading
+ *    and the table, between the table and a second top-level table, after the one table, and after a second top-level table
+ *    that follows the table), each in the one form the table writes it in, lexed by its rule, at its place in the section's
+ *    blocks, the one block ownership-other names beside the one
+ *    GraphPolicyCLI row, and refused; another arrangement of the section's tables or another syntax form of a block is outside
+ *    the claim (FAIL CLOSED). G3's
  *    boundary-opening reading: the GraphPolicyCLI boundary section bound once under the page title (boundary-bound), whose
  *    first block in the binding's view, a block of HTML comments only passed over, is a paragraph (boundary-first), claimed
  *    exactly on the leads pinned: a list, an HTML block, a fenced code block or a blockquote leading, or the sentence
  *    commented out (DOCS_PLANTS), and a lower heading or a thematic break leading (FAIL_CLOSED's FC-G3-LEAD-HEADING and
  *    FC-G3-LEAD-BREAK), each refused, and an HTML comment above the sentence passed over (quiet); and, in the full-surface row,
- *    SURFACE_LEADS' 21 leads, one or more for each gfm block rule but LEAD_RULES_OUTSIDE (headings of levels 3 to 6, the three
+ *    SURFACE_LEADS' 23 leads, one or more for each gfm block rule but LEAD_RULES_OUTSIDE (headings of levels 3 to 6, the three
  *    thematic-break markers, a setext heading of level 2 and of level 1, which ends the section before any block, indented code,
- *    fenced code with backticks and with tildes, a blockquote, lists led by -, *, + and 1., a visible and an empty HTML block,
- *    a table and a link reference definition), each in the form the table writes it in, lexed by its rule, read by the binding
- *    as its block (boundaryLead) and refused; a lead in another syntax form is outside the claim (FAIL CLOSED); and whose first
+ *    fenced code with backticks and with tildes, each holding a line and empty, a blockquote, lists led by -, *, + and 1., a
+ *    visible and an empty HTML block, a table and a link reference definition), each in the form the table writes it in, lexed
+ *    by its rule, read by the binding as its block (boundaryLead) and refused; a lead in another syntax form is outside the
+ *    claim (FAIL CLOSED); and whose first
  *    sentence
  *    is the no-integration sentence both as rendered and in its source, case included (boundary-opening: D-SENTENCE-CASE among
  *    its plants).
@@ -309,28 +319,37 @@
  * each word), each refused with exactly its typed refusals in one call after the tracked files; a match in another
  * unpinned spelling is refused by the same tests but pinned on no form. The fail-closed row claims those fourteen refusals;
  * the full-surface pinning of the families they come from (U1-U5) is the full-surface row's (FULL SURFACE, wb-0lf.8).
- * FULL SURFACE (wb-0lf.8, the rule-19 structural-exit child R-B73 filed; one registered row, after the fail-closed row): every
- * form the fail-closed core left outside a claim, each a pinned falsifier through that claim's own reader, each family
- * answering its item of wb-0lf.8's own row in the tracker export (its U1-U4 lines name refusal #5's reader hollowings, its U5
- * line the residual families Q1 and Q2): U1, SURFACE_SITE_SPELLINGS' 194 G1 spellings (RH-CAMEL and RH-SENTENCE: camelCase
- * and sentence case over every WORD_JOINERS joiner; RH-RUN3-SAME and RH-RUN-LONG: SURFACE_RUNS' runs in WORD_CASES' three
- * forms; RH-UNEVEN: every SURFACE_GAPS pair in GraphDataIR's two gaps in the three forms), each read by siteFindings as
- * exactly its word and through sitePaths and refused whole by the fail-closed reader, alone and as one planted module per
- * spelling in one call after the tracked modules, its runs and gaps held to the live class; U2, SURFACE_REQUEST_SPELLINGS' 8
- * (RH-D3-CAMEL, RH-D3-SENTENCE), each read whole and refused whole the same way; U3, SURFACE_LEADS' 21 boundary leads
- * (RH-FIRST-HEADING, RH-FIRST-HR and a lead by every other gfm rule but LEAD_RULES_OUTSIDE), each refused with exactly
- * boundary-first; U4, SURFACE_OTHERS' 24 ownership blocks (RH-OTHER-LEAD: the eight rules before the table; the same eight
- * between two tables and after the last), each refused with exactly ownership-other, and, for symmetry with U1 (refusal #5's
- * F5), SURFACE_OWNERS' 16 owner-cell spellings of GraphPolicy, each a second row's owner cell counted beside the GraphPolicyCLI
- * row (ownership-rows); U5, every Q1 and Q2 source member read
- * live through the code reader and, silenced in each SILENCINGS place (a line, a block and a doc comment, a double-quoted, a
- * single-quoted and a template string, a regular expression literal), read as defining nothing through it, with the raw
- * proxy's reading recorded beside (most silencings fool it). Two named residuals carry their pinned quiet readings in the
- * same row: R-NON-ASCII-PART (G1, refusal #5's F6: a site-word part with one letter written outside ASCII, another script's
- * look-alike or a fullwidth form, built through String.fromCodePoint, reads as no site word through either G1 reader, while
- * its Latin spelling reads as the word) and
+ * FULL SURFACE (wb-0lf.8, the rule-19 structural-exit child R-B73 filed; one registered row, after the fail-closed row): the
+ * forms the tables below list and no other, each outside the fail-closed core's pinned sets and each a pinned falsifier
+ * through its claim's own reader, each family answering its item of wb-0lf.8's own row in the tracker export (its U1-U4 lines
+ * name refusal #5's reader hollowings and its U5 line the residual families Q1 and Q2; a family wb-0lf.8's row names no
+ * hollowing for answers its item itself), each item naming exactly the hollowings its forms answer: U1,
+ * SURFACE_SITE_SPELLINGS' 528 G1 spellings (RH-CAMEL and RH-SENTENCE, 16 each: camelCase and sentence case over every
+ * WORD_JOINERS joiner; RH-RUN3-SAME, 30, and RH-RUN-LONG, 162: SURFACE_RUNS' runs, three of each class character, each
+ * SURFACE_RUN_LENGTHS length of each and the two mixed runs, in WORD_CASES' three forms, one run in every gap; RH-UNEVEN,
+ * 168: every SURFACE_GAPS pair of two different WORD_JOINERS joiners in GraphDataIR's two gaps, in the three forms; and U1's
+ * per-part case mixes, 136: each part in its own WORD_CASES form over every WORD_JOINERS joiner, less every spelling a
+ * uniform or a SURFACE_CASES form already spells), each read by siteFindings as exactly its word and through sitePaths and
+ * refused whole by the fail-closed reader, alone and as one planted module per spelling in one call after the tracked
+ * modules, its runs and gaps held to the live class and the table held to the product of the tables it is built from; U2,
+ * SURFACE_REQUEST_SPELLINGS' 24 (RH-D3-CAMEL and RH-D3-SENTENCE, 4 each, and U2's per-part case mixes, 16), each read whole
+ * and refused whole the same way, the table held to its product likewise; U3, SURFACE_LEADS' 23 boundary leads
+ * (RH-FIRST-HEADING, RH-FIRST-HR and a lead by every other gfm rule but LEAD_RULES_OUTSIDE, an empty fenced code block of
+ * each fence marker among them), each refused with exactly boundary-first; U4, SURFACE_OTHERS' 32 ownership blocks
+ * (RH-OTHER-LEAD: the eight rules before the table; the same eight between two tables, after the one table and after a
+ * second table), each refused with exactly ownership-other, and, for symmetry with U1 (refusal #5's F5), SURFACE_OWNERS' 16
+ * owner-cell spellings of GraphPolicy (camelCase and sentence case over every WORD_JOINERS joiner, the table held to that
+ * product), each a second row's owner cell counted beside the GraphPolicyCLI row (ownership-rows); U5, every Q1 and Q2 source
+ * member read live through the code reader and, silenced in each SILENCINGS place (a line, a block and a doc comment, a
+ * double-quoted, a single-quoted and a template string, a regular expression literal), read as defining nothing through it,
+ * with the raw proxy's reading recorded beside (most silencings fool it), and a template literal's content read as no
+ * composed part (a plant whose word only a template literal completes composes none, refusal #1's F5). Two named residuals
+ * carry their pinned quiet readings in the same row: R-NON-ASCII-PART (G1, refusal #5's F6: a site-word part with one letter
+ * written outside ASCII, another script's look-alike or a fullwidth form, built through String.fromCodePoint, reads as no
+ * site word through either G1 reader, while its Latin spelling reads as the word) and
  * R-UNREACHABLE (S2: a member placed after a top-level throw still reads live through the code reader, which reads syntax,
- * not reachability). Every reading is held to the roster (fullSurface).
+ * not reachability). Every reading is held to the roster (fullSurface). A form outside these tables is claimed by no reading
+ * (NOT CLAIMED).
  * NOT CLAIMED: what docs/03 says outside its Ownership boundaries and GraphPolicyCLI boundary sections (G3 is section-bound:
  * a GraphPolicyCLI row in another section's table, such as D-ROW-DUP's earlier table, is unread); the grants half of the statement ("within the caller's grants": the filing places the GP call's grant and
  * registry bounds on the standing host rules, docs/workbench/12-security.md:19 and 06-capability-registry.md:81, and names the
@@ -360,9 +379,18 @@
  * word reader and its fail-closed reader (siteFindings with unpinnedSiteFindings, executorRequestNamers with
  * unpinnedExecutorRequestFindings) in these files; a site-word part spelled with a confusable or other non-ASCII letter
  * (refusal #5's F6: the live patterns match ASCII letters only, so neither G1 reader reads it; R-NON-ASCII-PART, its pinned
- * quiet reading in the full-surface row); a residual member whose code is made unreachable (R-UNREACHABLE, likewise); a
- * full-surface form outside the tables FULL SURFACE lists (another mixed case, run, pair of gaps, lead syntax or arrangement
- * of tables: refused by the fail-closed readers or by G3's default-deny rules, pinned on no form); a src entry listed as a
+ * quiet reading in the full-surface row); a residual member whose code is made unreachable or that is silenced in a place
+ * SILENCINGS does not list (R-UNREACHABLE, likewise: the code reader reads syntax); a form outside the tables FULL SURFACE
+ * lists (a run longer than eight characters or a run the runs table does not write; a GraphDataIR gap pair holding a run
+ * other than WORD_JOINERS' two; a case mix over two different joiners or over a run, or a part cased letter by letter such as
+ * gRaphPolicy or eXecutorRequest; a GraphPolicy owner cell in a case mix such as GRAPHpolicyCLI; a lead or an ownership block
+ * in another syntax form; another arrangement of the section's tables: refused by the fail-closed readers or by G3's
+ * default-deny rules, pinned on no form); a coordinated removal, from every literal of these files and from the roster
+ * together, of a residual member, of a FAIL_CLOSED form, of the fail-closed row, or of a full-surface member whose rule or
+ * family another member of its table still covers (a lead of SURFACE_LEADS beside another lead of its gfm rule, one of
+ * SURFACE_RUN_LENGTHS' lengths or of the two mixed runs, a SURFACE_POSITIONS place after the first, a NON_ASCII_PARTS member,
+ * the regular-expression silencing): the census's own choices, whose rules, families and characters marked's grammar, the
+ * live class, wb-0lf.8's row and WORD_PLACES anchor but not those members (refusal #1's F1); a src entry listed as a
  * symlink (the landed listers read regular files only), the block-comment half of R-COMMENTED and an exported anchor for
  * FAIL_CLOSED's forms (landing 677's carried findings, the follow-up bead wb-0x41's).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS, every residual family's member
@@ -371,8 +399,8 @@
  * places and controls, the site words and their planted modules, the joiners, the case forms, the word places, the spelled words' parts, every
  * spelling of SITE_WORD_SPELLINGS, EXECUTOR_REQUEST_SPELLINGS and EXECUTOR_REQUEST_OUTSIDE, each residual member's liveness
  * (a source member's kind, a drive member's effect) and FAIL_CLOSED's forms (each one's id, claim and word with its match,
- * docs rules or member) and the full surface's tables (its case forms, runs, gaps, spellings with their family counts, D3's
- * spellings, the non-ASCII residual's members, the leads, the ownership blocks with their places, the owner-cell spellings, the rules outside, the
+ * docs rules or member) and the full surface's tables (its case forms, run lengths, runs, gaps, spellings with their family
+ * counts, D3's spellings, the non-ASCII residual's members, the leads, the ownership blocks with their places, the owner-cell spellings, the rules outside, the
  * silencings and the unreachable form) as literals; the judged set (every row's id, label
  * and pins, every pin's quote and witness, each residual source member's comment-opener count among them, the residual
  * members, FAIL_CLOSED's refusals, one reading per form, the full-surface row's readings, each source member's code
@@ -387,9 +415,15 @@
  * vocabulary's live patterns (VOCABULARY) and D3's pattern hold the joiners and the case folding every spelling table pins
  * (readPattern reads them back in G1 and D3) and the characters of the full surface's runs and gaps; the vendored fixture's
  * keys hold what Q1's members name; wb-0lf.8's own row names the hollowings and residual families the full-surface families
- * answer (the full-surface row reads it); marked's gfm block grammar (Lexer.rules.block.gfm) holds the rules every
- * full-surface lead and ownership block is pinned by. So a pin or a row
- * removed from every literal of this file, the helper and the roster together still reds. The last case reads the vitest task
+ * answer (the full-surface row reads it) and, listing its items, binds the full-surface row's registration (the last case
+ * reads it); marked's gfm block grammar (Lexer.rules.block.gfm) holds the rules every full-surface lead and ownership block
+ * is pinned by. So a judged row of ROWS (A-G) removed from every literal of this file, the helper and the roster together
+ * still reds, and so do the full-surface row, a member of a generated full-surface spelling table (SURFACE_SITE_SPELLINGS,
+ * SURFACE_REQUEST_SPELLINGS, SURFACE_OWNERS), which the full-surface row derives again from the word parts and the tables it
+ * is built from, a full-surface lead or ownership block that is its gfm rule's only one at its place, a silencing of a
+ * WORD_PLACES place and a SURFACE_CASES form, which wb-0lf.8's row names; these anchors bind the full surface's rules,
+ * families and generated products, not a member another member of its table still covers, the residual members, the
+ * fail-closed row or FAIL_CLOSED's forms (NOT CLAIMED, refusal #1's F1). The last case reads the vitest task
  * tree (every registered test, in roster order, in run mode, ran before it) and REACHED (every pin reached its witness
  * compare, and each compare's result).
  *
@@ -509,6 +543,7 @@ import {
   SURFACE_OWNERS,
   SURFACE_POSITIONS,
   SURFACE_REQUEST_SPELLINGS,
+  SURFACE_RUN_LENGTHS,
   SURFACE_RUNS,
   SURFACE_SITE_SPELLINGS,
   scopeSpec,
@@ -579,7 +614,7 @@ interface Roster {
   readonly residuals: Readonly<Record<string, readonly string[]>>;
   /** FAIL_CLOSED's refusals, one reading per form (R-B73): the fail-closed row's judged set, held out of file like the rows. */
   readonly failClosed: Readonly<Record<string, Json>>;
-  /** The full-surface row's readings (wb-0lf.8): every form R-B73 left outside a claim, each reading held out of file like the rows. */
+  /** The full-surface row's readings (wb-0lf.8): the forms FULL SURFACE's tables list, each reading held out of file like the rows. */
   readonly fullSurface: Readonly<Record<string, Json>>;
   readonly tests: readonly string[];
 }
@@ -1281,15 +1316,16 @@ describe(SUITE, () => {
     ]);
     // wb-0lf.8's full surface, each table frozen at its measured shape.
     expect(SURFACE_CASES.map(form => `${form.id}:${["Ab", "Cd", "Ef"].map(form.of).join("")}`)).toEqual(["camel:abCdEf", "sentence:Abcdef"]);
-    expect(SURFACE_RUNS.map(run => `${run.id}:${run.answers}:${JSON.stringify(run.text)}`)).toEqual(["spacex3:RH-RUN3-SAME:\"   \"", "tabx3:RH-RUN3-SAME:\"\\t\\t\\t\"", "dotx3:RH-RUN3-SAME:\"...\"", "underscorex3:RH-RUN3-SAME:\"___\"", "hyphenx3:RH-RUN3-SAME:\"---\"", "spacex4:RH-RUN-LONG:\"    \"", "tabx4:RH-RUN-LONG:\"\\t\\t\\t\\t\"", "dotx4:RH-RUN-LONG:\"....\"", "underscorex4:RH-RUN-LONG:\"____\"", "hyphenx4:RH-RUN-LONG:\"----\"", "mixed4:RH-RUN-LONG:\" -- \"", "mixed8:RH-RUN-LONG:\" .-_\\t_-.\""]);
-    expect(SURFACE_GAPS.map(gap => gap.id)).toEqual(["none+space", "none+tab", "none+dot", "none+underscore", "none+hyphen", "space+none", "space+tab", "space+dot", "space+underscore", "space+hyphen", "tab+none", "tab+space", "tab+dot", "tab+underscore", "tab+hyphen", "dot+none", "dot+space", "dot+tab", "dot+underscore", "dot+hyphen", "underscore+none", "underscore+space", "underscore+tab", "underscore+dot", "underscore+hyphen", "hyphen+none", "hyphen+space", "hyphen+tab", "hyphen+dot", "hyphen+underscore"]);
-    expect(SURFACE_SITE_SPELLINGS.map(entry => entry.spelling)).toEqual(["graphPolicy", "Graphpolicy", "graph Policy", "Graph policy", "graph\tPolicy", "Graph\tpolicy", "graph.Policy", "Graph.policy", "graph_Policy", "Graph_policy", "graph-Policy", "Graph-policy", "graph..Policy", "Graph..policy", "graph - Policy", "Graph - policy", "graphDataIR", "Graphdatair", "graph Data IR", "Graph data ir", "graph\tData\tIR", "Graph\tdata\tir", "graph.Data.IR", "Graph.data.ir", "graph_Data_IR", "Graph_data_ir", "graph-Data-IR", "Graph-data-ir", "graph..Data..IR", "Graph..data..ir", "graph - Data - IR", "Graph - data - ir", "graph   policy", "GRAPH   POLICY", "Graph   Policy", "graph\t\t\tpolicy", "GRAPH\t\t\tPOLICY", "Graph\t\t\tPolicy", "graph...policy", "GRAPH...POLICY", "Graph...Policy", "graph___policy", "GRAPH___POLICY", "Graph___Policy", "graph---policy", "GRAPH---POLICY", "Graph---Policy", "graph    policy", "GRAPH    POLICY", "Graph    Policy", "graph\t\t\t\tpolicy", "GRAPH\t\t\t\tPOLICY", "Graph\t\t\t\tPolicy", "graph....policy", "GRAPH....POLICY", "Graph....Policy", "graph____policy", "GRAPH____POLICY", "Graph____Policy", "graph----policy", "GRAPH----POLICY", "Graph----Policy", "graph -- policy", "GRAPH -- POLICY", "Graph -- Policy", "graph .-_\t_-.policy", "GRAPH .-_\t_-.POLICY", "Graph .-_\t_-.Policy", "graph   data   ir", "GRAPH   DATA   IR", "Graph   Data   IR", "graph\t\t\tdata\t\t\tir", "GRAPH\t\t\tDATA\t\t\tIR", "Graph\t\t\tData\t\t\tIR", "graph...data...ir", "GRAPH...DATA...IR", "Graph...Data...IR", "graph___data___ir", "GRAPH___DATA___IR", "Graph___Data___IR", "graph---data---ir", "GRAPH---DATA---IR", "Graph---Data---IR", "graph    data    ir", "GRAPH    DATA    IR", "Graph    Data    IR", "graph\t\t\t\tdata\t\t\t\tir", "GRAPH\t\t\t\tDATA\t\t\t\tIR", "Graph\t\t\t\tData\t\t\t\tIR", "graph....data....ir", "GRAPH....DATA....IR", "Graph....Data....IR", "graph____data____ir", "GRAPH____DATA____IR", "Graph____Data____IR", "graph----data----ir", "GRAPH----DATA----IR", "Graph----Data----IR", "graph -- data -- ir", "GRAPH -- DATA -- IR", "Graph -- Data -- IR", "graph .-_\t_-.data .-_\t_-.ir", "GRAPH .-_\t_-.DATA .-_\t_-.IR", "Graph .-_\t_-.Data .-_\t_-.IR", "graphdata ir", "GRAPHDATA IR", "GraphData IR", "graphdata\tir", "GRAPHDATA\tIR", "GraphData\tIR", "graphdata.ir", "GRAPHDATA.IR", "GraphData.IR", "graphdata_ir", "GRAPHDATA_IR", "GraphData_IR", "graphdata-ir", "GRAPHDATA-IR", "GraphData-IR", "graph datair", "GRAPH DATAIR", "Graph DataIR", "graph data\tir", "GRAPH DATA\tIR", "Graph Data\tIR", "graph data.ir", "GRAPH DATA.IR", "Graph Data.IR", "graph data_ir", "GRAPH DATA_IR", "Graph Data_IR", "graph data-ir", "GRAPH DATA-IR", "Graph Data-IR", "graph\tdatair", "GRAPH\tDATAIR", "Graph\tDataIR", "graph\tdata ir", "GRAPH\tDATA IR", "Graph\tData IR", "graph\tdata.ir", "GRAPH\tDATA.IR", "Graph\tData.IR", "graph\tdata_ir", "GRAPH\tDATA_IR", "Graph\tData_IR", "graph\tdata-ir", "GRAPH\tDATA-IR", "Graph\tData-IR", "graph.datair", "GRAPH.DATAIR", "Graph.DataIR", "graph.data ir", "GRAPH.DATA IR", "Graph.Data IR", "graph.data\tir", "GRAPH.DATA\tIR", "Graph.Data\tIR", "graph.data_ir", "GRAPH.DATA_IR", "Graph.Data_IR", "graph.data-ir", "GRAPH.DATA-IR", "Graph.Data-IR", "graph_datair", "GRAPH_DATAIR", "Graph_DataIR", "graph_data ir", "GRAPH_DATA IR", "Graph_Data IR", "graph_data\tir", "GRAPH_DATA\tIR", "Graph_Data\tIR", "graph_data.ir", "GRAPH_DATA.IR", "Graph_Data.IR", "graph_data-ir", "GRAPH_DATA-IR", "Graph_Data-IR", "graph-datair", "GRAPH-DATAIR", "Graph-DataIR", "graph-data ir", "GRAPH-DATA IR", "Graph-Data IR", "graph-data\tir", "GRAPH-DATA\tIR", "Graph-Data\tIR", "graph-data.ir", "GRAPH-DATA.IR", "Graph-Data.IR", "graph-data_ir", "GRAPH-DATA_IR", "Graph-Data_IR"]);
-    expect([...new Set(SURFACE_SITE_SPELLINGS.map(entry => entry.answers))].map(answers => `${answers}:${SURFACE_SITE_SPELLINGS.filter(entry => entry.answers === answers).length}`)).toEqual(["RH-CAMEL:16", "RH-SENTENCE:16", "RH-RUN3-SAME:30", "RH-RUN-LONG:42", "RH-UNEVEN:90"]);
-    expect(SURFACE_REQUEST_SPELLINGS.map(entry => `${entry.answers}:${entry.spelling}`)).toEqual(["RH-D3-CAMEL:executorRequest", "RH-D3-SENTENCE:Executorrequest", "RH-D3-CAMEL:executor Request", "RH-D3-SENTENCE:Executor request", "RH-D3-CAMEL:executor_Request", "RH-D3-SENTENCE:Executor_request", "RH-D3-CAMEL:executor-Request", "RH-D3-SENTENCE:Executor-request"]);
+    expect(SURFACE_RUNS.map(run => `${run.id}:${run.answers}:${JSON.stringify(run.text)}`)).toEqual(["spacex3:RH-RUN3-SAME:\"   \"", "tabx3:RH-RUN3-SAME:\"\\t\\t\\t\"", "dotx3:RH-RUN3-SAME:\"...\"", "underscorex3:RH-RUN3-SAME:\"___\"", "hyphenx3:RH-RUN3-SAME:\"---\"", "spacex4:RH-RUN-LONG:\"    \"", "tabx4:RH-RUN-LONG:\"\\t\\t\\t\\t\"", "dotx4:RH-RUN-LONG:\"....\"", "underscorex4:RH-RUN-LONG:\"____\"", "hyphenx4:RH-RUN-LONG:\"----\"", "spacex5:RH-RUN-LONG:\"     \"", "tabx5:RH-RUN-LONG:\"\\t\\t\\t\\t\\t\"", "dotx5:RH-RUN-LONG:\".....\"", "underscorex5:RH-RUN-LONG:\"_____\"", "hyphenx5:RH-RUN-LONG:\"-----\"", "spacex6:RH-RUN-LONG:\"      \"", "tabx6:RH-RUN-LONG:\"\\t\\t\\t\\t\\t\\t\"", "dotx6:RH-RUN-LONG:\"......\"", "underscorex6:RH-RUN-LONG:\"______\"", "hyphenx6:RH-RUN-LONG:\"------\"", "spacex7:RH-RUN-LONG:\"       \"", "tabx7:RH-RUN-LONG:\"\\t\\t\\t\\t\\t\\t\\t\"", "dotx7:RH-RUN-LONG:\".......\"", "underscorex7:RH-RUN-LONG:\"_______\"", "hyphenx7:RH-RUN-LONG:\"-------\"", "spacex8:RH-RUN-LONG:\"        \"", "tabx8:RH-RUN-LONG:\"\\t\\t\\t\\t\\t\\t\\t\\t\"", "dotx8:RH-RUN-LONG:\"........\"", "underscorex8:RH-RUN-LONG:\"________\"", "hyphenx8:RH-RUN-LONG:\"--------\"", "mixed4:RH-RUN-LONG:\" -- \"", "mixed8:RH-RUN-LONG:\" .-_\\t_-.\""]);
+    expect([...SURFACE_RUN_LENGTHS]).toEqual([4, 5, 6, 7, 8]);
+    expect(SURFACE_GAPS.map(gap => gap.id)).toEqual(["none+space", "none+tab", "none+dot", "none+underscore", "none+hyphen", "none+repeated", "none+mixed", "space+none", "space+tab", "space+dot", "space+underscore", "space+hyphen", "space+repeated", "space+mixed", "tab+none", "tab+space", "tab+dot", "tab+underscore", "tab+hyphen", "tab+repeated", "tab+mixed", "dot+none", "dot+space", "dot+tab", "dot+underscore", "dot+hyphen", "dot+repeated", "dot+mixed", "underscore+none", "underscore+space", "underscore+tab", "underscore+dot", "underscore+hyphen", "underscore+repeated", "underscore+mixed", "hyphen+none", "hyphen+space", "hyphen+tab", "hyphen+dot", "hyphen+underscore", "hyphen+repeated", "hyphen+mixed", "repeated+none", "repeated+space", "repeated+tab", "repeated+dot", "repeated+underscore", "repeated+hyphen", "repeated+mixed", "mixed+none", "mixed+space", "mixed+tab", "mixed+dot", "mixed+underscore", "mixed+hyphen", "mixed+repeated"]);
+    expect(SURFACE_SITE_SPELLINGS.map(entry => entry.spelling)).toEqual(["graphPolicy", "Graphpolicy", "graph Policy", "Graph policy", "graph\tPolicy", "Graph\tpolicy", "graph.Policy", "Graph.policy", "graph_Policy", "Graph_policy", "graph-Policy", "Graph-policy", "graph..Policy", "Graph..policy", "graph - Policy", "Graph - policy", "graphDataIR", "Graphdatair", "graph Data IR", "Graph data ir", "graph\tData\tIR", "Graph\tdata\tir", "graph.Data.IR", "Graph.data.ir", "graph_Data_IR", "Graph_data_ir", "graph-Data-IR", "Graph-data-ir", "graph..Data..IR", "Graph..data..ir", "graph - Data - IR", "Graph - data - ir", "graph   policy", "GRAPH   POLICY", "Graph   Policy", "graph\t\t\tpolicy", "GRAPH\t\t\tPOLICY", "Graph\t\t\tPolicy", "graph...policy", "GRAPH...POLICY", "Graph...Policy", "graph___policy", "GRAPH___POLICY", "Graph___Policy", "graph---policy", "GRAPH---POLICY", "Graph---Policy", "graph    policy", "GRAPH    POLICY", "Graph    Policy", "graph\t\t\t\tpolicy", "GRAPH\t\t\t\tPOLICY", "Graph\t\t\t\tPolicy", "graph....policy", "GRAPH....POLICY", "Graph....Policy", "graph____policy", "GRAPH____POLICY", "Graph____Policy", "graph----policy", "GRAPH----POLICY", "Graph----Policy", "graph     policy", "GRAPH     POLICY", "Graph     Policy", "graph\t\t\t\t\tpolicy", "GRAPH\t\t\t\t\tPOLICY", "Graph\t\t\t\t\tPolicy", "graph.....policy", "GRAPH.....POLICY", "Graph.....Policy", "graph_____policy", "GRAPH_____POLICY", "Graph_____Policy", "graph-----policy", "GRAPH-----POLICY", "Graph-----Policy", "graph      policy", "GRAPH      POLICY", "Graph      Policy", "graph\t\t\t\t\t\tpolicy", "GRAPH\t\t\t\t\t\tPOLICY", "Graph\t\t\t\t\t\tPolicy", "graph......policy", "GRAPH......POLICY", "Graph......Policy", "graph______policy", "GRAPH______POLICY", "Graph______Policy", "graph------policy", "GRAPH------POLICY", "Graph------Policy", "graph       policy", "GRAPH       POLICY", "Graph       Policy", "graph\t\t\t\t\t\t\tpolicy", "GRAPH\t\t\t\t\t\t\tPOLICY", "Graph\t\t\t\t\t\t\tPolicy", "graph.......policy", "GRAPH.......POLICY", "Graph.......Policy", "graph_______policy", "GRAPH_______POLICY", "Graph_______Policy", "graph-------policy", "GRAPH-------POLICY", "Graph-------Policy", "graph        policy", "GRAPH        POLICY", "Graph        Policy", "graph\t\t\t\t\t\t\t\tpolicy", "GRAPH\t\t\t\t\t\t\t\tPOLICY", "Graph\t\t\t\t\t\t\t\tPolicy", "graph........policy", "GRAPH........POLICY", "Graph........Policy", "graph________policy", "GRAPH________POLICY", "Graph________Policy", "graph--------policy", "GRAPH--------POLICY", "Graph--------Policy", "graph -- policy", "GRAPH -- POLICY", "Graph -- Policy", "graph .-_\t_-.policy", "GRAPH .-_\t_-.POLICY", "Graph .-_\t_-.Policy", "graph   data   ir", "GRAPH   DATA   IR", "Graph   Data   IR", "graph\t\t\tdata\t\t\tir", "GRAPH\t\t\tDATA\t\t\tIR", "Graph\t\t\tData\t\t\tIR", "graph...data...ir", "GRAPH...DATA...IR", "Graph...Data...IR", "graph___data___ir", "GRAPH___DATA___IR", "Graph___Data___IR", "graph---data---ir", "GRAPH---DATA---IR", "Graph---Data---IR", "graph    data    ir", "GRAPH    DATA    IR", "Graph    Data    IR", "graph\t\t\t\tdata\t\t\t\tir", "GRAPH\t\t\t\tDATA\t\t\t\tIR", "Graph\t\t\t\tData\t\t\t\tIR", "graph....data....ir", "GRAPH....DATA....IR", "Graph....Data....IR", "graph____data____ir", "GRAPH____DATA____IR", "Graph____Data____IR", "graph----data----ir", "GRAPH----DATA----IR", "Graph----Data----IR", "graph     data     ir", "GRAPH     DATA     IR", "Graph     Data     IR", "graph\t\t\t\t\tdata\t\t\t\t\tir", "GRAPH\t\t\t\t\tDATA\t\t\t\t\tIR", "Graph\t\t\t\t\tData\t\t\t\t\tIR", "graph.....data.....ir", "GRAPH.....DATA.....IR", "Graph.....Data.....IR", "graph_____data_____ir", "GRAPH_____DATA_____IR", "Graph_____Data_____IR", "graph-----data-----ir", "GRAPH-----DATA-----IR", "Graph-----Data-----IR", "graph      data      ir", "GRAPH      DATA      IR", "Graph      Data      IR", "graph\t\t\t\t\t\tdata\t\t\t\t\t\tir", "GRAPH\t\t\t\t\t\tDATA\t\t\t\t\t\tIR", "Graph\t\t\t\t\t\tData\t\t\t\t\t\tIR", "graph......data......ir", "GRAPH......DATA......IR", "Graph......Data......IR", "graph______data______ir", "GRAPH______DATA______IR", "Graph______Data______IR", "graph------data------ir", "GRAPH------DATA------IR", "Graph------Data------IR", "graph       data       ir", "GRAPH       DATA       IR", "Graph       Data       IR", "graph\t\t\t\t\t\t\tdata\t\t\t\t\t\t\tir", "GRAPH\t\t\t\t\t\t\tDATA\t\t\t\t\t\t\tIR", "Graph\t\t\t\t\t\t\tData\t\t\t\t\t\t\tIR", "graph.......data.......ir", "GRAPH.......DATA.......IR", "Graph.......Data.......IR", "graph_______data_______ir", "GRAPH_______DATA_______IR", "Graph_______Data_______IR", "graph-------data-------ir", "GRAPH-------DATA-------IR", "Graph-------Data-------IR", "graph        data        ir", "GRAPH        DATA        IR", "Graph        Data        IR", "graph\t\t\t\t\t\t\t\tdata\t\t\t\t\t\t\t\tir", "GRAPH\t\t\t\t\t\t\t\tDATA\t\t\t\t\t\t\t\tIR", "Graph\t\t\t\t\t\t\t\tData\t\t\t\t\t\t\t\tIR", "graph........data........ir", "GRAPH........DATA........IR", "Graph........Data........IR", "graph________data________ir", "GRAPH________DATA________IR", "Graph________Data________IR", "graph--------data--------ir", "GRAPH--------DATA--------IR", "Graph--------Data--------IR", "graph -- data -- ir", "GRAPH -- DATA -- IR", "Graph -- Data -- IR", "graph .-_\t_-.data .-_\t_-.ir", "GRAPH .-_\t_-.DATA .-_\t_-.IR", "Graph .-_\t_-.Data .-_\t_-.IR", "graphdata ir", "GRAPHDATA IR", "GraphData IR", "graphdata\tir", "GRAPHDATA\tIR", "GraphData\tIR", "graphdata.ir", "GRAPHDATA.IR", "GraphData.IR", "graphdata_ir", "GRAPHDATA_IR", "GraphData_IR", "graphdata-ir", "GRAPHDATA-IR", "GraphData-IR", "graphdata..ir", "GRAPHDATA..IR", "GraphData..IR", "graphdata - ir", "GRAPHDATA - IR", "GraphData - IR", "graph datair", "GRAPH DATAIR", "Graph DataIR", "graph data\tir", "GRAPH DATA\tIR", "Graph Data\tIR", "graph data.ir", "GRAPH DATA.IR", "Graph Data.IR", "graph data_ir", "GRAPH DATA_IR", "Graph Data_IR", "graph data-ir", "GRAPH DATA-IR", "Graph Data-IR", "graph data..ir", "GRAPH DATA..IR", "Graph Data..IR", "graph data - ir", "GRAPH DATA - IR", "Graph Data - IR", "graph\tdatair", "GRAPH\tDATAIR", "Graph\tDataIR", "graph\tdata ir", "GRAPH\tDATA IR", "Graph\tData IR", "graph\tdata.ir", "GRAPH\tDATA.IR", "Graph\tData.IR", "graph\tdata_ir", "GRAPH\tDATA_IR", "Graph\tData_IR", "graph\tdata-ir", "GRAPH\tDATA-IR", "Graph\tData-IR", "graph\tdata..ir", "GRAPH\tDATA..IR", "Graph\tData..IR", "graph\tdata - ir", "GRAPH\tDATA - IR", "Graph\tData - IR", "graph.datair", "GRAPH.DATAIR", "Graph.DataIR", "graph.data ir", "GRAPH.DATA IR", "Graph.Data IR", "graph.data\tir", "GRAPH.DATA\tIR", "Graph.Data\tIR", "graph.data_ir", "GRAPH.DATA_IR", "Graph.Data_IR", "graph.data-ir", "GRAPH.DATA-IR", "Graph.Data-IR", "graph.data..ir", "GRAPH.DATA..IR", "Graph.Data..IR", "graph.data - ir", "GRAPH.DATA - IR", "Graph.Data - IR", "graph_datair", "GRAPH_DATAIR", "Graph_DataIR", "graph_data ir", "GRAPH_DATA IR", "Graph_Data IR", "graph_data\tir", "GRAPH_DATA\tIR", "Graph_Data\tIR", "graph_data.ir", "GRAPH_DATA.IR", "Graph_Data.IR", "graph_data-ir", "GRAPH_DATA-IR", "Graph_Data-IR", "graph_data..ir", "GRAPH_DATA..IR", "Graph_Data..IR", "graph_data - ir", "GRAPH_DATA - IR", "Graph_Data - IR", "graph-datair", "GRAPH-DATAIR", "Graph-DataIR", "graph-data ir", "GRAPH-DATA IR", "Graph-Data IR", "graph-data\tir", "GRAPH-DATA\tIR", "Graph-Data\tIR", "graph-data.ir", "GRAPH-DATA.IR", "Graph-Data.IR", "graph-data_ir", "GRAPH-DATA_IR", "Graph-Data_IR", "graph-data..ir", "GRAPH-DATA..IR", "Graph-Data..IR", "graph-data - ir", "GRAPH-DATA - IR", "Graph-Data - IR", "graph..datair", "GRAPH..DATAIR", "Graph..DataIR", "graph..data ir", "GRAPH..DATA IR", "Graph..Data IR", "graph..data\tir", "GRAPH..DATA\tIR", "Graph..Data\tIR", "graph..data.ir", "GRAPH..DATA.IR", "Graph..Data.IR", "graph..data_ir", "GRAPH..DATA_IR", "Graph..Data_IR", "graph..data-ir", "GRAPH..DATA-IR", "Graph..Data-IR", "graph..data - ir", "GRAPH..DATA - IR", "Graph..Data - IR", "graph - datair", "GRAPH - DATAIR", "Graph - DataIR", "graph - data ir", "GRAPH - DATA IR", "Graph - Data IR", "graph - data\tir", "GRAPH - DATA\tIR", "Graph - Data\tIR", "graph - data.ir", "GRAPH - DATA.IR", "Graph - Data.IR", "graph - data_ir", "GRAPH - DATA_IR", "Graph - Data_IR", "graph - data-ir", "GRAPH - DATA-IR", "Graph - Data-IR", "graph - data..ir", "GRAPH - DATA..IR", "Graph - Data..IR", "graphPOLICY", "GRAPHpolicy", "GRAPHPolicy", "GraphPOLICY", "graph POLICY", "GRAPH policy", "GRAPH Policy", "Graph POLICY", "graph\tPOLICY", "GRAPH\tpolicy", "GRAPH\tPolicy", "Graph\tPOLICY", "graph.POLICY", "GRAPH.policy", "GRAPH.Policy", "Graph.POLICY", "graph_POLICY", "GRAPH_policy", "GRAPH_Policy", "Graph_POLICY", "graph-POLICY", "GRAPH-policy", "GRAPH-Policy", "Graph-POLICY", "graph..POLICY", "GRAPH..policy", "GRAPH..Policy", "Graph..POLICY", "graph - POLICY", "GRAPH - policy", "GRAPH - Policy", "Graph - POLICY", "graphdataIR", "graphDATAir", "graphDATAIR", "graphDatair", "GRAPHdatair", "GRAPHdataIR", "GRAPHDATAir", "GRAPHDatair", "GRAPHDataIR", "GraphdataIR", "GraphDATAir", "GraphDATAIR", "GraphDatair", "graph data IR", "graph DATA ir", "graph DATA IR", "graph Data ir", "GRAPH data ir", "GRAPH data IR", "GRAPH DATA ir", "GRAPH Data ir", "GRAPH Data IR", "Graph data IR", "Graph DATA ir", "Graph DATA IR", "Graph Data ir", "graph\tdata\tIR", "graph\tDATA\tir", "graph\tDATA\tIR", "graph\tData\tir", "GRAPH\tdata\tir", "GRAPH\tdata\tIR", "GRAPH\tDATA\tir", "GRAPH\tData\tir", "GRAPH\tData\tIR", "Graph\tdata\tIR", "Graph\tDATA\tir", "Graph\tDATA\tIR", "Graph\tData\tir", "graph.data.IR", "graph.DATA.ir", "graph.DATA.IR", "graph.Data.ir", "GRAPH.data.ir", "GRAPH.data.IR", "GRAPH.DATA.ir", "GRAPH.Data.ir", "GRAPH.Data.IR", "Graph.data.IR", "Graph.DATA.ir", "Graph.DATA.IR", "Graph.Data.ir", "graph_data_IR", "graph_DATA_ir", "graph_DATA_IR", "graph_Data_ir", "GRAPH_data_ir", "GRAPH_data_IR", "GRAPH_DATA_ir", "GRAPH_Data_ir", "GRAPH_Data_IR", "Graph_data_IR", "Graph_DATA_ir", "Graph_DATA_IR", "Graph_Data_ir", "graph-data-IR", "graph-DATA-ir", "graph-DATA-IR", "graph-Data-ir", "GRAPH-data-ir", "GRAPH-data-IR", "GRAPH-DATA-ir", "GRAPH-Data-ir", "GRAPH-Data-IR", "Graph-data-IR", "Graph-DATA-ir", "Graph-DATA-IR", "Graph-Data-ir", "graph..data..IR", "graph..DATA..ir", "graph..DATA..IR", "graph..Data..ir", "GRAPH..data..ir", "GRAPH..data..IR", "GRAPH..DATA..ir", "GRAPH..Data..ir", "GRAPH..Data..IR", "Graph..data..IR", "Graph..DATA..ir", "Graph..DATA..IR", "Graph..Data..ir", "graph - data - IR", "graph - DATA - ir", "graph - DATA - IR", "graph - Data - ir", "GRAPH - data - ir", "GRAPH - data - IR", "GRAPH - DATA - ir", "GRAPH - Data - ir", "GRAPH - Data - IR", "Graph - data - IR", "Graph - DATA - ir", "Graph - DATA - IR", "Graph - Data - ir"]);
+    expect([...new Set(SURFACE_SITE_SPELLINGS.map(entry => entry.answers))].map(answers => `${answers}:${SURFACE_SITE_SPELLINGS.filter(entry => entry.answers === answers).length}`)).toEqual(["RH-CAMEL:16", "RH-SENTENCE:16", "RH-RUN3-SAME:30", "RH-RUN-LONG:162", "RH-UNEVEN:168", "U1:136"]);
+    expect(SURFACE_REQUEST_SPELLINGS.map(entry => `${entry.answers}:${entry.spelling}`)).toEqual(["RH-D3-CAMEL:executorRequest", "RH-D3-SENTENCE:Executorrequest", "RH-D3-CAMEL:executor Request", "RH-D3-SENTENCE:Executor request", "RH-D3-CAMEL:executor_Request", "RH-D3-SENTENCE:Executor_request", "RH-D3-CAMEL:executor-Request", "RH-D3-SENTENCE:Executor-request", "U2:executorREQUEST", "U2:EXECUTORrequest", "U2:EXECUTORRequest", "U2:ExecutorREQUEST", "U2:executor REQUEST", "U2:EXECUTOR request", "U2:EXECUTOR Request", "U2:Executor REQUEST", "U2:executor_REQUEST", "U2:EXECUTOR_request", "U2:EXECUTOR_Request", "U2:Executor_REQUEST", "U2:executor-REQUEST", "U2:EXECUTOR-request", "U2:EXECUTOR-Request", "U2:Executor-REQUEST"]);
     expect(NON_ASCII_PARTS.map(entry => `${entry.id}:${entry.word}:${visible(entry.spelling)}:${entry.latin}`)).toEqual(["cyrillic-a-in-graph:GraphPolicy:Gr<U+0430>phPolicy:a", "greek-omicron-in-policy:GraphPolicy:GraphP<U+03BF>licy:o", "cyrillic-a-in-data:GraphDataIR:GraphD<U+0430>taIR:a", "fullwidth-p-in-policy:GraphPolicy:Graph<U+FF30>olicy:P"]);
-    expect(SURFACE_LEADS.map(form => `${form.id}:${form.answers}:${form.rule}:${form.reads}:${JSON.stringify(form.block)}`)).toEqual(["L-HEADING-3:RH-FIRST-HEADING:heading:heading:\"### Status\"", "L-HEADING-4:RH-FIRST-HEADING:heading:heading:\"#### Status\"", "L-HEADING-5:RH-FIRST-HEADING:heading:heading:\"##### Status\"", "L-HEADING-6:RH-FIRST-HEADING:heading:heading:\"###### Status\"", "L-BREAK-DASHES:RH-FIRST-HR:hr:other:hr:\"---\"", "L-BREAK-STARS:RH-FIRST-HR:hr:other:hr:\"***\"", "L-BREAK-UNDERSCORES:RH-FIRST-HR:hr:other:hr:\"___\"", "L-SETEXT-2:U3:lheading:nothing:\"Status\\n------\"", "L-SETEXT-1:U3:lheading:nothing:\"Status\\n======\"", "L-CODE-INDENTED:U3:code:code:\"    Status: no exporter\"", "L-FENCE-BACKTICKS:U3:fences:code:\"```\\nStatus: no exporter\\n```\"", "L-FENCE-TILDES:U3:fences:code:\"~~~\\nStatus: no exporter\\n~~~\"", "L-BLOCKQUOTE:U3:blockquote:other:blockquote:\"> Status: no exporter\"", "L-LIST-DASH:U3:list:list:\"- Status: no exporter\"", "L-LIST-STAR:U3:list:list:\"* Status: no exporter\"", "L-LIST-PLUS:U3:list:list:\"+ Status: no exporter\"", "L-LIST-ORDERED:U3:list:list:\"1. Status: no exporter\"", "L-HTML:U3:html:html:\"<div>Status: no exporter</div>\"", "L-HTML-EMPTY:U3:html:html:\"<div></div>\"", "L-TABLE:U3:table:other:table:\"| Field | Value |\\n| --- | --- |\\n| status | none |\"", "L-DEF:U3:def:other:def:\"[gp-status]: #graphpolicycli-boundary\""]);
-    expect(SURFACE_OTHERS.map(form => `${form.id}:${form.answers}:${form.rule}:${form.position}:${form.reads}`)).toEqual(["O-BEFORE-BLOCKQUOTE:RH-OTHER-LEAD:blockquote:before:blockquote", "O-BEFORE-CODE:RH-OTHER-LEAD:code:before:code", "O-BEFORE-DEF:RH-OTHER-LEAD:def:before:def", "O-BEFORE-FENCES:RH-OTHER-LEAD:fences:before:code", "O-BEFORE-HEADING:RH-OTHER-LEAD:heading:before:heading", "O-BEFORE-HTML:RH-OTHER-LEAD:html:before:html", "O-BEFORE-LIST:RH-OTHER-LEAD:list:before:list", "O-BEFORE-PARAGRAPH:RH-OTHER-LEAD:paragraph:before:paragraph", "O-BETWEEN-BLOCKQUOTE:U4:blockquote:between:blockquote", "O-BETWEEN-CODE:U4:code:between:code", "O-BETWEEN-DEF:U4:def:between:def", "O-BETWEEN-FENCES:U4:fences:between:code", "O-BETWEEN-HEADING:U4:heading:between:heading", "O-BETWEEN-HTML:U4:html:between:html", "O-BETWEEN-LIST:U4:list:between:list", "O-BETWEEN-PARAGRAPH:U4:paragraph:between:paragraph", "O-AFTER-BLOCKQUOTE:U4:blockquote:after:blockquote", "O-AFTER-CODE:U4:code:after:code", "O-AFTER-DEF:U4:def:after:def", "O-AFTER-FENCES:U4:fences:after:code", "O-AFTER-HEADING:U4:heading:after:heading", "O-AFTER-HTML:U4:html:after:html", "O-AFTER-LIST:U4:list:after:list", "O-AFTER-PARAGRAPH:U4:paragraph:after:paragraph"]);
-    expect([...SURFACE_POSITIONS]).toEqual(["before", "between", "after"]);
+    expect(SURFACE_LEADS.map(form => `${form.id}:${form.answers}:${form.rule}:${form.reads}:${JSON.stringify(form.block)}`)).toEqual(["L-HEADING-3:RH-FIRST-HEADING:heading:heading:\"### Status\"", "L-HEADING-4:RH-FIRST-HEADING:heading:heading:\"#### Status\"", "L-HEADING-5:RH-FIRST-HEADING:heading:heading:\"##### Status\"", "L-HEADING-6:RH-FIRST-HEADING:heading:heading:\"###### Status\"", "L-BREAK-DASHES:RH-FIRST-HR:hr:other:hr:\"---\"", "L-BREAK-STARS:RH-FIRST-HR:hr:other:hr:\"***\"", "L-BREAK-UNDERSCORES:RH-FIRST-HR:hr:other:hr:\"___\"", "L-SETEXT-2:U3:lheading:nothing:\"Status\\n------\"", "L-SETEXT-1:U3:lheading:nothing:\"Status\\n======\"", "L-CODE-INDENTED:U3:code:code:\"    Status: no exporter\"", "L-FENCE-BACKTICKS:U3:fences:code:\"```\\nStatus: no exporter\\n```\"", "L-FENCE-TILDES:U3:fences:code:\"~~~\\nStatus: no exporter\\n~~~\"", "L-FENCE-EMPTY-BACKTICKS:U3:fences:code:\"```\\n```\"", "L-FENCE-EMPTY-TILDES:U3:fences:code:\"~~~\\n~~~\"", "L-BLOCKQUOTE:U3:blockquote:other:blockquote:\"> Status: no exporter\"", "L-LIST-DASH:U3:list:list:\"- Status: no exporter\"", "L-LIST-STAR:U3:list:list:\"* Status: no exporter\"", "L-LIST-PLUS:U3:list:list:\"+ Status: no exporter\"", "L-LIST-ORDERED:U3:list:list:\"1. Status: no exporter\"", "L-HTML:U3:html:html:\"<div>Status: no exporter</div>\"", "L-HTML-EMPTY:U3:html:html:\"<div></div>\"", "L-TABLE:U3:table:other:table:\"| Field | Value |\\n| --- | --- |\\n| status | none |\"", "L-DEF:U3:def:other:def:\"[gp-status]: #graphpolicycli-boundary\""]);
+    expect(SURFACE_OTHERS.map(form => `${form.id}:${form.answers}:${form.rule}:${form.position}:${form.reads}`)).toEqual(["O-BEFORE-BLOCKQUOTE:RH-OTHER-LEAD:blockquote:before:blockquote", "O-BEFORE-CODE:RH-OTHER-LEAD:code:before:code", "O-BEFORE-DEF:RH-OTHER-LEAD:def:before:def", "O-BEFORE-FENCES:RH-OTHER-LEAD:fences:before:code", "O-BEFORE-HEADING:RH-OTHER-LEAD:heading:before:heading", "O-BEFORE-HTML:RH-OTHER-LEAD:html:before:html", "O-BEFORE-LIST:RH-OTHER-LEAD:list:before:list", "O-BEFORE-PARAGRAPH:RH-OTHER-LEAD:paragraph:before:paragraph", "O-BETWEEN-BLOCKQUOTE:U4:blockquote:between:blockquote", "O-BETWEEN-CODE:U4:code:between:code", "O-BETWEEN-DEF:U4:def:between:def", "O-BETWEEN-FENCES:U4:fences:between:code", "O-BETWEEN-HEADING:U4:heading:between:heading", "O-BETWEEN-HTML:U4:html:between:html", "O-BETWEEN-LIST:U4:list:between:list", "O-BETWEEN-PARAGRAPH:U4:paragraph:between:paragraph", "O-AFTER-BLOCKQUOTE:U4:blockquote:after:blockquote", "O-AFTER-CODE:U4:code:after:code", "O-AFTER-DEF:U4:def:after:def", "O-AFTER-FENCES:U4:fences:after:code", "O-AFTER-HEADING:U4:heading:after:heading", "O-AFTER-HTML:U4:html:after:html", "O-AFTER-LIST:U4:list:after:list", "O-AFTER-PARAGRAPH:U4:paragraph:after:paragraph", "O-AFTER-SECOND-BLOCKQUOTE:U4:blockquote:after-second:blockquote", "O-AFTER-SECOND-CODE:U4:code:after-second:code", "O-AFTER-SECOND-DEF:U4:def:after-second:def", "O-AFTER-SECOND-FENCES:U4:fences:after-second:code", "O-AFTER-SECOND-HEADING:U4:heading:after-second:heading", "O-AFTER-SECOND-HTML:U4:html:after-second:html", "O-AFTER-SECOND-LIST:U4:list:after-second:list", "O-AFTER-SECOND-PARAGRAPH:U4:paragraph:after-second:paragraph"]);
+    expect([...SURFACE_POSITIONS]).toEqual(["before", "between", "after", "after-second"]);
     expect(SURFACE_OWNERS.map(form => `${form.id}:${JSON.stringify(form.spelling)}`)).toEqual(["G3-OWNER-none-camel:\"graphPolicy\"", "G3-OWNER-none-sentence:\"Graphpolicy\"", "G3-OWNER-space-camel:\"graph Policy\"", "G3-OWNER-space-sentence:\"Graph policy\"", "G3-OWNER-tab-camel:\"graph\\tPolicy\"", "G3-OWNER-tab-sentence:\"Graph\\tpolicy\"", "G3-OWNER-dot-camel:\"graph.Policy\"", "G3-OWNER-dot-sentence:\"Graph.policy\"", "G3-OWNER-underscore-camel:\"graph_Policy\"", "G3-OWNER-underscore-sentence:\"Graph_policy\"", "G3-OWNER-hyphen-camel:\"graph-Policy\"", "G3-OWNER-hyphen-sentence:\"Graph-policy\"", "G3-OWNER-repeated-camel:\"graph..Policy\"", "G3-OWNER-repeated-sentence:\"Graph..policy\"", "G3-OWNER-mixed-camel:\"graph - Policy\"", "G3-OWNER-mixed-sentence:\"Graph - policy\""]);
     expect([[...LEAD_RULES_OUTSIDE], [...OTHER_RULES_OUTSIDE]]).toEqual([["newline", "paragraph", "text"], ["hr", "lheading", "newline", "table", "text"]]);
     expect(SILENCINGS.map(form => `${form.id}:${JSON.stringify(form.silence("a = 1;\n"))}`)).toEqual(["line-comment:\"// a = 1;\\n\"", "block-comment:\"/*\\na = 1;\\n*/\\n\"", "doc-comment:\"/**\\n * a = 1;\\n*/\\n\"", "double-quoted:\"export const silenced = \\\"a = 1;\\\\n\\\";\\n\"", "single-quoted:\"export const silenced = 'a = 1;\\\\n';\\n\"", "template:\"export const silenced = `a = 1;\\n`;\\n\"", "regex:\"export const silenced = /a = 1;\\\\n/;\\n\""]);
@@ -1371,7 +1407,7 @@ describe(SUITE, () => {
     expect(refused, "and each form's refusals equal the roster's (failClosed), so a form deleted from the table and its frozen literal still reds").toStrictEqual(ROSTER.failClosed);
   });
 
-  it("full surface (wb-0lf.8): every form R-B73 left outside the G1, D3, G3 and S2 claims is pinned through the claim's own reader, each family answering its item of wb-0lf.8's own row", () => {
+  it("full surface (wb-0lf.8): the forms FULL SURFACE lists, each pinned through its claim's own reader, each family answering its item of wb-0lf.8's own row", () => {
     const texts = liveSrc();
     expect(texts.size >= SRC_FLOOR && texts.has(CONTROL), "the src listing read the tree").toBe(true);
     // The outside anchor: wb-0lf.8's row in the tracker export, whose U1-U4 lines name refusal #5's reader hollowings and whose
@@ -1394,16 +1430,45 @@ describe(SUITE, () => {
     // U1 (G1): the runs and the gaps are built from the live joiner class (read back from the landed vocabulary's pattern), and no
     // full-surface spelling is one of G1's 48 or spelled twice.
     const classChars = readPattern(VOCABULARY.find(entry => entry.spelling === "GraphPolicy")?.pattern ?? /(?!)/).chars;
-    expect(SURFACE_RUNS.map(run => run.text), "U1's runs: three of each character of the live class, four of each, and two mixed runs").toEqual([...classChars.map(character => character.repeat(3)), ...classChars.map(character => character.repeat(4)), " -- ", " .-_\t_-."]);
+    expect(SURFACE_RUNS.map(run => run.text), "U1's runs: three of each character of the live class, each SURFACE_RUN_LENGTHS length of each, and two mixed runs").toEqual([
+      ...classChars.map(character => character.repeat(3)),
+      ...SURFACE_RUN_LENGTHS.flatMap(length => classChars.map(character => character.repeat(length))),
+      " -- ",
+      " .-_\t_-.",
+    ]);
     expect(SURFACE_RUNS.filter(run => run.text.length < 3 || ![...run.text].every(character => classChars.includes(character))).map(run => run.id), "every run is three or more characters of the live class").toEqual([]);
-    expect(SURFACE_GAPS.map(gap => [gap.first, gap.second]), "U1's gaps: every ordered pair of two different joiners of at most one character (none, or one character of the live class)").toEqual(
-      ["", ...classChars].flatMap(first => ["", ...classChars].filter(second => second !== first).map(second => [first, second])),
+    const joinerTexts = ["", ...classChars, "..", " - "];
+    expect(SURFACE_GAPS.map(gap => [gap.first, gap.second]), "U1's gaps: every ordered pair of two different joiners (none, one character of the live class, the repeated run or the mixed run)").toEqual(
+      joinerTexts.flatMap(first => joinerTexts.filter(second => second !== first).map(second => [first, second])),
     );
     const baseSpellings = new Set(SITE_WORD_SPELLINGS.map(entry => entry.spelling));
     expect(
       SURFACE_SITE_SPELLINGS.filter((entry, index) => baseSpellings.has(entry.spelling) || SURFACE_SITE_SPELLINGS.findIndex(other => other.spelling === entry.spelling) !== index).map(entry => entry.id),
       "each full-surface spelling of G1 is spelled once, and none is one of G1's 48",
     ).toEqual([]);
+    // Refusal #1's F1 (member-level anchors): each generated spelling table equals the product of the tables it is built from,
+    // derived here again from the word parts, so a member filtered out of a generator, its frozen literal and the roster
+    // together still reds.
+    const spelled = (word: string, of: (part: string, index: number) => string, gaps: readonly string[]): string =>
+      (WORD_PARTS[word] ?? []).map((part, index) => `${index === 0 ? "" : (gaps[index - 1] ?? "")}${of(part, index)}`).join("");
+    const caseSets = (count: number): (typeof WORD_CASES)[number][][] => (count <= 0 ? [[]] : caseSets(count - 1).flatMap(prefix => WORD_CASES.map(form => [...prefix, form])));
+    const mixes = (word: string, joiners: typeof WORD_JOINERS): string[] =>
+      joiners.flatMap(joiner => {
+        const gaps = [joiner.text, joiner.text];
+        const seen = new Set([...WORD_CASES, ...SURFACE_CASES].map(form => spelled(word, form.of, gaps)));
+        return caseSets((WORD_PARTS[word] ?? []).length).flatMap(forms => {
+          const spelling = spelled(word, (part, index) => forms[index]?.of(part) ?? part, gaps);
+          if (seen.has(spelling)) return [];
+          seen.add(spelling);
+          return [`${word}/${joiner.id}/${forms.map(form => form.id).join("+")}=${spelling}`];
+        });
+      });
+    expect(SURFACE_SITE_SPELLINGS.map(entry => `${entry.id}=${entry.spelling}`), "G1's full surface is exactly the product of the tables it is built from, derived again").toEqual([
+      ...SITE_WORDS.flatMap(word => WORD_JOINERS.flatMap(joiner => SURFACE_CASES.map(form => `${word}/${joiner.id}/${form.id}=${spelled(word, form.of, [joiner.text, joiner.text])}`))),
+      ...SITE_WORDS.flatMap(word => SURFACE_RUNS.flatMap(run => WORD_CASES.map(form => `${word}/${run.id}/${form.id}=${spelled(word, form.of, [run.text, run.text])}`))),
+      ...SURFACE_GAPS.flatMap(gap => WORD_CASES.map(form => `GraphDataIR/${gap.id}/${form.id}=${spelled("GraphDataIR", form.of, [gap.first, gap.second])}`)),
+      ...SITE_WORDS.flatMap(word => mixes(word, WORD_JOINERS)),
+    ]);
     const hitPath = "src/workbench/zz-hit.ts";
     const site = Object.fromEntries(
       SURFACE_SITE_SPELLINGS.map(entry => {
@@ -1436,7 +1501,10 @@ describe(SUITE, () => {
       Object.fromEntries(NON_ASCII_PARTS.map(entry => [entry.id, { read: [], latin: [entry.word] }])),
     );
     // U2 (D3): camelCase and sentence case over D3's joiners, none of them one of D3's 12.
-    expect(SURFACE_REQUEST_SPELLINGS.map(entry => entry.id), "D3's full surface: each of SURFACE_CASES' two case forms over each of D3's joiners").toEqual(EXECUTOR_JOINERS.flatMap(joiner => SURFACE_CASES.map(form => `ExecutorRequest/${joiner.id}/${form.id}`)));
+    expect(SURFACE_REQUEST_SPELLINGS.map(entry => `${entry.id}=${entry.spelling}`), "D3's full surface: each of SURFACE_CASES' two case forms over each of D3's joiners, then its per-part case mixes over them, derived again").toEqual([
+      ...EXECUTOR_JOINERS.flatMap(joiner => SURFACE_CASES.map(form => `ExecutorRequest/${joiner.id}/${form.id}=${spelled("ExecutorRequest", form.of, [joiner.text])}`)),
+      ...mixes("ExecutorRequest", EXECUTOR_JOINERS),
+    ]);
     const baseRequests = new Set(EXECUTOR_REQUEST_SPELLINGS.map(entry => entry.spelling));
     expect(SURFACE_REQUEST_SPELLINGS.filter(entry => baseRequests.has(entry.spelling)).map(entry => entry.id), "none of them is one of D3's 12").toEqual([]);
     const request = Object.fromEntries(
@@ -1472,8 +1540,9 @@ describe(SUITE, () => {
       Object.fromEntries(SURFACE_LEADS.map(form => [form.id, { rule: form.rule, reads: form.reads, refused: [...form.expect] }])),
     );
     expect([...new Set(SURFACE_LEADS.map(form => form.rule))].sort(), "a lead by every gfm block rule of marked's lexer (Lexer.rules.block.gfm) but newline, paragraph and text").toEqual(gfmBlockRules().filter(rule => !LEAD_RULES_OUTSIDE.includes(rule)));
-    // U4 (G3 ownership-other): a block of every gfm block rule that can sit in the section holding GraphPolicyCLI, before, between
-    // and after the section's top-level tables, each the one block ownership-other names, and refused with exactly that rule.
+    // U4 (G3 ownership-other): a block of every gfm block rule but OTHER_RULES_OUTSIDE holding GraphPolicyCLI, before, between
+    // and after the section's top-level tables and after a second one, each the one block ownership-other names, and refused
+    // with exactly that rule.
     expect(sectionSources(page, OWNERSHIP_HEADING).map(block => block.type), "the live Ownership boundaries section holds one top-level block, its table").toEqual(["table"]);
     const others = Object.fromEntries(
       SURFACE_OTHERS.map(form => {
@@ -1490,7 +1559,10 @@ describe(SUITE, () => {
       "at every place, a block of every gfm block rule but OTHER_RULES_OUTSIDE",
     ).toEqual(Object.fromEntries(SURFACE_POSITIONS.map(position => [position, gfmBlockRules().filter(rule => !OTHER_RULES_OUTSIDE.includes(rule))])));
     // U1's case forms in G3's owner cell (refusal #5's F5, for symmetry): each read by namesGraphPolicy and counted in place as a
-    // second GraphPolicyCLI row.
+    // second GraphPolicyCLI row; the table is exactly GraphPolicy's two SURFACE_CASES forms over every joiner, derived again.
+    expect(SURFACE_OWNERS.map(form => `${form.id}=${form.spelling}`), "G3's owner-cell spellings: GraphPolicy in SURFACE_CASES' two forms over every WORD_JOINERS joiner").toEqual(
+      WORD_JOINERS.flatMap(joiner => SURFACE_CASES.map(form => `G3-OWNER-${joiner.id}-${form.id}=${spelled("GraphPolicy", form.of, [joiner.text])}`)),
+    );
     const owners = Object.fromEntries(
       SURFACE_OWNERS.map(form => {
         const reading = docs03Reading(form.edit(page));
@@ -1525,7 +1597,12 @@ describe(SUITE, () => {
         .map(([id]) => id),
       "every Q1 and Q2 source member silenced in every SILENCINGS place reads as defining nothing through the code reader",
     ).toEqual([]);
-    const readings = json({ items, site, sitePlants: { site: sitePlants.site.length, unpinned: sitePlants.unpinned.length }, nonAscii, request, requestPlants: { named: requestPlants.named.length, unpinned: requestPlants.unpinned.length }, leads, others, owners, silenced, unreached });
+    // Refusal #1's F5: a template literal's content is no composed part (only double-quoted literals compose), so a word that only
+    // a template literal completes composes no site word through the code reader.
+    const templated = 'export const head = `Graph`;\nexport const tail = "Policy";\n';
+    const template = { composed: codeComposedOf(templated), words: siteWords(codeComposedOf(templated)) };
+    expect(template, "a template literal's content is no composed part: the word it would complete reads as no site word").toEqual({ composed: "Policy", words: [] });
+    const readings = json({ items, site, sitePlants: { site: sitePlants.site.length, unpinned: sitePlants.unpinned.length }, nonAscii, request, requestPlants: { named: requestPlants.named.length, unpinned: requestPlants.unpinned.length }, leads, others, owners, silenced, unreached, template });
     expect(readings, "and every reading equals the roster's (fullSurface), so a form removed from its table and from its frozen literal still reds").toStrictEqual(ROSTER.fullSurface);
   });
 
@@ -1550,6 +1627,9 @@ describe(SUITE, () => {
     walk(task.file.tasks);
     const titles = walked.map(entry => entry.name);
     expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual(ROSTER.tests);
+    // Refusal #1's F1: wb-0lf.8's own row in the tracker export, listing its items, binds the full-surface row's registration.
+    const surfaceListed = Object.keys(surfaceItems(descriptionOf(textOf(EXPORT), SURFACE_BEAD) ?? "")).length > 0;
+    expect([surfaceListed, titles.filter(name => name.startsWith(`full surface (${SURFACE_BEAD}): `)).length], `${SURFACE_BEAD}'s row lists its items, so exactly one registered test is its full-surface row`).toEqual([true, 1]);
     expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice").toEqual([]);
     const here = walked.findIndex(entry => entry.self);
     expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);

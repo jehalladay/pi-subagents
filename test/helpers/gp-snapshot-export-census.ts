@@ -12,9 +12,10 @@
  * the landed wb-gxd7.3 export reader (test/helpers/gp-snapshot-join-census.ts) and the landed docs binding
  * (docsSection/sectionTables of test/helpers/census.ts); a table cell's shown text follows the landed binding's own rendering
  * rule (inlineText, copied verbatim as the landed control-loop audit's test/helpers/gp-control-loop-audit.ts copies it).
- * The last section (wb-0lf.8, the rule-19 structural-exit child ruling R-B73 filed) holds the full surface: every form the
- * R-B73 fail-closed core left outside the G1, D3, G3 and S2 claims, each a pinned falsifier through the claim's own reader,
- * and the code reader (codeShapeKeysOf, codeComposedOf: the TypeScript parse of a residual source member) that reads S2's
+ * The last section (wb-0lf.8, the rule-19 structural-exit child ruling R-B73 filed) holds the full surface: the forms its
+ * tables list, each outside the R-B73 fail-closed core's G1, D3, G3 and S2 pinned sets and each a pinned falsifier through the
+ * claim's own reader (a form outside these tables is outside every claim, where the fail-closed readers refuse it), and the
+ * code reader (codeShapeKeysOf, codeComposedOf: the TypeScript parse of a residual source member) that reads S2's
  * liveness from code, never from a comment or a string's content.
  */
 import { createHash } from "node:crypto";
@@ -2334,8 +2335,8 @@ export const FAIL_CLOSED: readonly FailClosedForm[] = [
   { kind: "member", id: "FC-S2-Q2-COMMENTED", claim: "S2", member: "src/workbench/q2-joined.ts", edit: commentedOut },
 ];
 
-// ---- the full surface (wb-0lf.8, the rule-19 structural-exit child R-B73 filed): each form R-B73's fail-closed core left
-// outside a claim, pinned through the claim's own reader in the full-surface row ----
+// ---- the full surface (wb-0lf.8, the rule-19 structural-exit child R-B73 filed): the forms these tables list, each outside
+// R-B73's pinned sets and pinned through the claim's own reader in the full-surface row; no form outside them is claimed ----
 
 /** The bead whose row in the tracker export enumerates the full surface: its description's U1-U5 lines. */
 export const SURFACE_BEAD = "wb-0lf.8";
@@ -2356,7 +2357,7 @@ export const surfaceItems = (description: string): Record<string, readonly strin
 /** A full-surface spelling: outside its claim's R-B73 pinned set, the wb-0lf.8 item it belongs to and the hollowing it kills. */
 export interface SurfaceSpelling extends Spelling {
   readonly item: "U1" | "U2";
-  /** Refusal #5's reader hollowing (wb-0lf.8's member name) that this spelling is a pinned falsifier of. */
+  /** Refusal #5's reader hollowing (wb-0lf.8's member name) that this spelling is a pinned falsifier of, or the item itself (U1, U2) where wb-0lf.8's row names no hollowing for its family (the per-part case mixes). */
   readonly answers: string;
 }
 /** U1's and U2's case forms: lower-first camelCase (the first part lower case, the others as written) and sentence case (the first part capitalized, the others lower case). */
@@ -2366,24 +2367,45 @@ export const SURFACE_CASES: readonly { readonly id: string; readonly of: (part: 
 ];
 /** WORD_JOINERS' joiners of one character: the characters of the landed vocabulary's joiner class, which the census reads back from the live patterns. */
 const CLASS_JOINERS = WORD_JOINERS.filter(joiner => joiner.text.length === 1);
-/** U1's runs: three of one class character (each character in turn), four of one, and mixed runs of four and of eight characters. */
+/** U1's long runs' lengths (RH-RUN-LONG, stated bound): four to eight of one class character; a run of three is RH-RUN3-SAME's. */
+export const SURFACE_RUN_LENGTHS: readonly number[] = [4, 5, 6, 7, 8];
+/** U1's runs: three of one class character (each character in turn), each SURFACE_RUN_LENGTHS length of one, and mixed runs of four and of eight characters. */
 export const SURFACE_RUNS: readonly { readonly id: string; readonly answers: string; readonly text: string }[] = [
   ...CLASS_JOINERS.map(joiner => ({ id: `${joiner.id}x3`, answers: "RH-RUN3-SAME", text: joiner.text.repeat(3) })),
-  ...CLASS_JOINERS.map(joiner => ({ id: `${joiner.id}x4`, answers: "RH-RUN-LONG", text: joiner.text.repeat(4) })),
+  ...SURFACE_RUN_LENGTHS.flatMap(length => CLASS_JOINERS.map(joiner => ({ id: `${joiner.id}x${length}`, answers: "RH-RUN-LONG", text: joiner.text.repeat(length) }))),
   { id: "mixed4", answers: "RH-RUN-LONG", text: " -- " },
   { id: "mixed8", answers: "RH-RUN-LONG", text: " .-_\t_-." },
 ];
-/** U1's uneven gaps: GraphDataIR's two gaps filled by two different joiners of at most one character (none or a class character), every ordered pair. */
-export const SURFACE_GAPS: readonly { readonly id: string; readonly first: string; readonly second: string }[] = WORD_JOINERS.filter(joiner => joiner.text.length <= 1).flatMap(first =>
-  WORD_JOINERS.filter(second => second.text.length <= 1 && second !== first).map(second => ({ id: `${first.id}+${second.id}`, first: first.text, second: second.text })),
+/** U1's uneven gaps: GraphDataIR's two gaps filled by two different WORD_JOINERS joiners (none, a class character, the repeated run or the mixed run), every ordered pair. */
+export const SURFACE_GAPS: readonly { readonly id: string; readonly first: string; readonly second: string }[] = WORD_JOINERS.flatMap(first =>
+  WORD_JOINERS.filter(second => second !== first).map(second => ({ id: `${first.id}+${second.id}`, first: first.text, second: second.text })),
 );
 /** A word's parts in one case form, the gap before the index-th part (from the second on) taken from gaps. */
 const spelledWith = (word: string, form: { readonly of: (part: string, index: number) => string }, gaps: readonly string[]): string =>
   (WORD_PARTS[word] ?? []).map((part, index) => `${index === 0 ? "" : (gaps[index - 1] ?? "")}${form.of(part, index)}`).join("");
+/** Every assignment of one WORD_CASES case form to each of count parts, the first part's form varying slowest. */
+const caseAssignments = (count: number): (typeof WORD_CASES)[number][][] => (count <= 0 ? [[]] : caseAssignments(count - 1).flatMap(prefix => WORD_CASES.map(form => [...prefix, form])));
+/**
+ * U1's and U2's per-part case mixes: a word's parts each in its own WORD_CASES form (every assignment, caseAssignments' order),
+ * joined by one joiner in every gap, less every spelling a uniform WORD_CASES form or a SURFACE_CASES form already spells over
+ * that joiner, each spelling once (the first assignment that spells it names it): GRAPHpolicy, graphDATAir, EXECUTORrequest.
+ */
+export const caseMixesOf = (word: string, joiner: { readonly id: string; readonly text: string }): { readonly id: string; readonly spelling: string }[] => {
+  const parts = WORD_PARTS[word] ?? [];
+  const gaps = parts.map(() => joiner.text);
+  const spelled = new Set([...WORD_CASES, ...SURFACE_CASES].map(form => spelledWith(word, form, gaps)));
+  return caseAssignments(parts.length).flatMap(forms => {
+    const spelling = spelledWith(word, { of: (part, index) => forms[index]?.of(part) ?? part }, gaps);
+    if (spelled.has(spelling)) return [];
+    spelled.add(spelling);
+    return [{ id: `${word}/${joiner.id}/${forms.map(form => form.id).join("+")}`, spelling }];
+  });
+};
 /**
  * G1's full surface (U1): each site word's parts in SURFACE_CASES' two forms over every WORD_JOINERS joiner (RH-CAMEL,
- * RH-SENTENCE), in WORD_CASES' three forms over every SURFACE_RUNS run (RH-RUN3-SAME, RH-RUN-LONG), and GraphDataIR's parts in
- * WORD_CASES' three forms over every SURFACE_GAPS pair (RH-UNEVEN): 32 + 72 + 90 spellings, none of them SITE_WORD_SPELLINGS'.
+ * RH-SENTENCE), in WORD_CASES' three forms over every SURFACE_RUNS run (RH-RUN3-SAME, RH-RUN-LONG), GraphDataIR's parts in
+ * WORD_CASES' three forms over every SURFACE_GAPS pair (RH-UNEVEN), and each site word's per-part case mixes over every
+ * WORD_JOINERS joiner (caseMixesOf, answering U1): 32 + 192 + 168 + 136 spellings, none of them SITE_WORD_SPELLINGS'.
  */
 export const SURFACE_SITE_SPELLINGS: readonly SurfaceSpelling[] = [
   ...SITE_WORDS.flatMap(word =>
@@ -2391,11 +2413,18 @@ export const SURFACE_SITE_SPELLINGS: readonly SurfaceSpelling[] = [
   ),
   ...SITE_WORDS.flatMap(word => SURFACE_RUNS.flatMap(run => WORD_CASES.map(form => ({ id: `${word}/${run.id}/${form.id}`, word, spelling: spelledWith(word, form, [run.text, run.text]), item: "U1" as const, answers: run.answers })))),
   ...SURFACE_GAPS.flatMap(gap => WORD_CASES.map(form => ({ id: `GraphDataIR/${gap.id}/${form.id}`, word: "GraphDataIR", spelling: spelledWith("GraphDataIR", form, [gap.first, gap.second]), item: "U1" as const, answers: "RH-UNEVEN" }))),
+  ...SITE_WORDS.flatMap(word => WORD_JOINERS.flatMap(joiner => caseMixesOf(word, joiner).map(mix => ({ ...mix, word, item: "U1" as const, answers: "U1" })))),
 ];
-/** D3's full surface (U2): "executor request" in SURFACE_CASES' two forms over each EXECUTOR_JOINERS joiner (RH-D3-CAMEL, RH-D3-SENTENCE). */
-export const SURFACE_REQUEST_SPELLINGS: readonly SurfaceSpelling[] = EXECUTOR_JOINERS.flatMap(joiner =>
-  SURFACE_CASES.map(form => ({ id: `ExecutorRequest/${joiner.id}/${form.id}`, word: "ExecutorRequest", spelling: spelledWith("ExecutorRequest", form, [joiner.text]), item: "U2" as const, answers: form.id === "camel" ? "RH-D3-CAMEL" : "RH-D3-SENTENCE" })),
-);
+/**
+ * D3's full surface (U2): "executor request" in SURFACE_CASES' two forms over each EXECUTOR_JOINERS joiner (RH-D3-CAMEL,
+ * RH-D3-SENTENCE), and its per-part case mixes over each of them (caseMixesOf, answering U2): 8 + 16 spellings.
+ */
+export const SURFACE_REQUEST_SPELLINGS: readonly SurfaceSpelling[] = [
+  ...EXECUTOR_JOINERS.flatMap(joiner =>
+    SURFACE_CASES.map(form => ({ id: `ExecutorRequest/${joiner.id}/${form.id}`, word: "ExecutorRequest", spelling: spelledWith("ExecutorRequest", form, [joiner.text]), item: "U2" as const, answers: form.id === "camel" ? "RH-D3-CAMEL" : "RH-D3-SENTENCE" })),
+  ),
+  ...EXECUTOR_JOINERS.flatMap(joiner => caseMixesOf("ExecutorRequest", joiner).map(mix => ({ ...mix, word: "ExecutorRequest", item: "U2" as const, answers: "U2" }))),
+];
 /**
  * G3's owner-cell analog of U1's case forms (refusal #5's F5, pinned for symmetry with U1): GraphPolicy in SURFACE_CASES' two
  * forms over every WORD_JOINERS joiner, each the owner cell of a second row of the GraphPolicyCLI table (the D-GP-SPELLED form),
@@ -2458,12 +2487,12 @@ export interface SurfaceDocs {
   /** A boundary lead: boundaryLead's reading; an ownership block: its token type in sectionSources. */
   readonly reads: string;
   /** An ownership block's place among the section's top-level tables (U4). */
-  readonly position?: "before" | "between" | "after";
+  readonly position?: (typeof SURFACE_POSITIONS)[number];
   readonly block: string;
   readonly edit: (page: string) => string;
   readonly expect: readonly string[];
 }
-/** U3's leads: a block of each gfm rule but LEAD_RULES_OUTSIDE planted first in the boundary section, each in the syntax forms marked lexes it by. */
+/** U3's leads: a block of each gfm rule but LEAD_RULES_OUTSIDE planted first in the boundary section, each in the syntax forms marked lexes it by, an empty fenced code block of each fence marker among them. */
 const LEAD_BLOCKS: readonly { readonly id: string; readonly answers: string; readonly rule: string; readonly reads: string; readonly block: string }[] = [
   { id: "L-HEADING-3", answers: "RH-FIRST-HEADING", rule: "heading", reads: "heading", block: "### Status" },
   { id: "L-HEADING-4", answers: "RH-FIRST-HEADING", rule: "heading", reads: "heading", block: "#### Status" },
@@ -2477,6 +2506,8 @@ const LEAD_BLOCKS: readonly { readonly id: string; readonly answers: string; rea
   { id: "L-CODE-INDENTED", answers: "U3", rule: "code", reads: "code", block: "    Status: no exporter" },
   { id: "L-FENCE-BACKTICKS", answers: "U3", rule: "fences", reads: "code", block: "```\nStatus: no exporter\n```" },
   { id: "L-FENCE-TILDES", answers: "U3", rule: "fences", reads: "code", block: "~~~\nStatus: no exporter\n~~~" },
+  { id: "L-FENCE-EMPTY-BACKTICKS", answers: "U3", rule: "fences", reads: "code", block: "```\n```" },
+  { id: "L-FENCE-EMPTY-TILDES", answers: "U3", rule: "fences", reads: "code", block: "~~~\n~~~" },
   { id: "L-BLOCKQUOTE", answers: "U3", rule: "blockquote", reads: "other:blockquote", block: "> Status: no exporter" },
   { id: "L-LIST-DASH", answers: "U3", rule: "list", reads: "list", block: "- Status: no exporter" },
   { id: "L-LIST-STAR", answers: "U3", rule: "list", reads: "list", block: "* Status: no exporter" },
@@ -2504,14 +2535,21 @@ const OTHER_BLOCKS: readonly { readonly rule: string; readonly reads: string; re
   { rule: "list", reads: "list", block: `- ${GP_OWNER} decides policy scores` },
   { rule: "paragraph", reads: "paragraph", block: `${GP_OWNER} decides policy scores through the gp seam at src/workbench/gp-seam.ts.` },
 ];
-/** The places an ownership-other block is planted at: between the section's heading and its table, between its table and a second top-level table, and after its last table. */
-export const SURFACE_POSITIONS = ["before", "between", "after"] as const;
-/** The second top-level table a between plant adds after its block: no body row's second cell names GraphPolicy. */
+/**
+ * The places an ownership-other block is planted at: between the section's heading and its table, between its table and a
+ * second top-level table, after its one table, and after a second top-level table that follows its table (after-second).
+ */
+export const SURFACE_POSITIONS = ["before", "between", "after", "after-second"] as const;
+/** The second top-level table a between plant adds after its block and an after-second plant before it: no body row's second cell names GraphPolicy. */
 const SECOND_TABLE = "| Added concern | Owner | Workbench may do |\n| --- | --- | --- |\n| Status reports | Workbench | none |";
 const otherAt = (page: string, position: (typeof SURFACE_POSITIONS)[number], block: string): string =>
   position === "before"
     ? onceIn(page, `## ${OWNERSHIP_HEADING}\n\n`, `## ${OWNERSHIP_HEADING}\n\n${block}\n\n`)
-    : onceIn(page, `\n## ${NEXT_HEADING}\n`, position === "after" ? `\n${block}\n\n## ${NEXT_HEADING}\n` : `\n${block}\n\n${SECOND_TABLE}\n\n## ${NEXT_HEADING}\n`);
+    : onceIn(
+        page,
+        `\n## ${NEXT_HEADING}\n`,
+        position === "after" ? `\n${block}\n\n## ${NEXT_HEADING}\n` : position === "between" ? `\n${block}\n\n${SECOND_TABLE}\n\n## ${NEXT_HEADING}\n` : `\n${SECOND_TABLE}\n\n${block}\n\n## ${NEXT_HEADING}\n`,
+      );
 export const SURFACE_OTHERS: readonly SurfaceDocs[] = SURFACE_POSITIONS.flatMap(position =>
   OTHER_BLOCKS.map(other => ({
     id: `O-${position.toUpperCase()}-${other.rule.toUpperCase()}`,
@@ -2525,8 +2563,9 @@ export const SURFACE_OTHERS: readonly SurfaceDocs[] = SURFACE_POSITIONS.flatMap(
     expect: ["ownership-other"],
   })),
 );
-/** The top-level block types sectionSources reads for a planted ownership block at its place: the section's one table, the block, and a between plant's second table. */
-export const otherBlocks = (form: SurfaceDocs): string[] => (form.position === "before" ? [form.reads, "table"] : form.position === "after" ? ["table", form.reads] : ["table", form.reads, "table"]);
+/** The top-level block types sectionSources reads for a planted ownership block at its place: the section's one table, the block, and a between or after-second plant's second table. */
+export const otherBlocks = (form: SurfaceDocs): string[] =>
+  form.position === "before" ? [form.reads, "table"] : form.position === "after" ? ["table", form.reads] : form.position === "between" ? ["table", form.reads, "table"] : ["table", "table", form.reads];
 
 /** A residual source member's code as TypeScript parses it (wb-0lf.8 U5): a comment is trivia and a string's content is no code. */
 const memberCode = (text: string): ts.SourceFile => ts.createSourceFile("member.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
