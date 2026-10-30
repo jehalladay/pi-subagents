@@ -90,6 +90,24 @@
  * row read its page with, HTML_COMMENT_AS_HTML, now the one comment pattern), the residual's page is a flagged route control with
  * its counts pinned beside the same table tag after a "--!>" end inside an inline comment token, and the residual leaves RESIDUALS.
  *
+ * FOLLOW-UP (wb-m883, the R694 follow-up of the landing-636 gate's F1; test-only: census, roster). Four census-only class mutants of
+ * INLINE_NON_TAG's rendering stayed green on wb-tcak's cut (0 failed | 22 passed): G01 an inline non-tag token rendered as the text
+ * after its first ">", G01h the same for a comment token holding no "--!>", G01e an inline CDATA section rendered as its content and
+ * G01g an inline declaration rendered as its content. A2's quiet controls held a complete inline comment only with no ">" inside it,
+ * and wb-tcak's quiet-control sentence above ("quiet controls hold that a complete inline comment, ...") claimed no inline CDATA
+ * section or declaration quiet. A2 adds the gate's three plants as quiet controls, byte for byte - a complete inline comment holding
+ * a ">" before its end, and an inline CDATA section and an inline declaration that each end at their only ">" - and one more in
+ * G01's family, a complete inline comment holding a "->", so each of those mutants now reds A2, each falsifier at its control (G01
+ * and G01h at mention-inside-an-inline-comment-holding-a-bracket; S01, the seat's mutant rendering a complete inline comment after
+ * an inner "->", at mention-inside-an-inline-comment-holding-a-dash-and-a-bracket; G01e at
+ * mention-inside-a-complete-inline-cdata-section; G01g at mention-inside-an-inline-declaration). That sentence and this paragraph
+ * claim each shape only as A2's quiet controls spell it, and nothing past them: a complete inline comment whose body holds no ">",
+ * one whose body holds " > " and one whose body holds " -> " ahead of the mention; an inline processing instruction, CDATA section
+ * and declaration, each ending at its only ">"; a comment holding "--!" without a ">"; and an inline tag's attribute value holding
+ * tags - each still hiding the mention it holds. Any spelling of these shapes other than the controls' own texts (such as a ">"
+ * in a complete inline comment's body other than " > " or " -> " ahead of the mention, or a CDATA section or declaration holding
+ * other text) is NOT CLAIMED by this census. No reader changes.
+ *
  * MEASURED (read-only, by the cutting seats, 2026-10-23 and 2026-10-24; the producer facts ride the roster with their blob ids):
  * each deposit's README.md:3 at its pin is its status line, and DEPOSITS holds that line's status clause verbatim: HX "no new HX
  * code implemented", Forge "proposed additive source adapter, not implemented", Furnace "no simulator or policy hooks implemented by
@@ -112,7 +130,9 @@
  * trunk 215c025, marked 18.0.11): both documents still read 0 HTML blocks and 0 table tags; at its cut #3 (trunk 39570b6) as well.
  * Re-measured for wb-tcak (at trunk 8d458c6, marked 18.0.11): both documents read 0 HTML blocks and 0 table tags, and none of the
  * 77 tracked docs pages spells "<!" or "<?" (so no comment, declaration, CDATA section or processing instruction), so the view's
- * new comment ends and its inline rule change no real reading (A1, B1 and C2's walks read as before).
+ * new comment ends and its inline rule change no real reading (A1, B1 and C2's walks read as before). Re-measured for wb-m883 (at
+ * trunk 9ad61f3, marked 18.0.11): none of the 79 tracked docs pages spells "<!" or "<?", and the cut changes no reader, so no real
+ * reading changes.
  *
  * RENDERED VIEW. What a reader sees of a markdown page, read through marked's lexer (the repository's marked devDependency, 18.0.11
  * at this cut, the renderer the refusal's readings used). A PIECE is one rendered block: a heading, a paragraph, a list item's own
@@ -165,7 +185,8 @@
  *    inside a div block or inside an inline comment token marked runs to a later "-->" - and a mention after an inline processing
  *    instruction or CDATA section a browser ends at its first ">", flagged or quiet as a browser shows them, beside a mention inside
  *    a complete inline comment, an inline processing instruction to its only ">", a comment holding "--!" without a ">" and an
- *    inline tag's attribute value holding tags, quiet).
+ *    inline tag's attribute value holding tags, quiet; and wb-m883's: a mention inside a complete inline comment holding a ">" or a
+ *    "->", and inside an inline CDATA section and an inline declaration that each end at their only ">", quiet).
  *    B, (b): B1 the real ledger and matrix - every rendered table row read (each document's own table-line count
  *    outside code and HTML blocks), the product parser's 50 WB rows among them with their statuses, every matrix status a legend
  *    word, no finding; B2 the judge on ledger and matrix controls (with a bare and a short cmd_ token, and the rendered view: a
@@ -280,7 +301,9 @@
  * known: of the 299 census-only class mutants cut #3's battery ran on cut #2 and on cut #3 (the refusal-#2 gate's PREP set of 59,
  * cut #2's 202 and cut #3's 38), every one red Q12 at cut #3 but 21 bound probes past those bounds and 3 equivalents (a list-item
  * branch htmlRaws never reaches); wb-tcak's battery replays the archived sets with the landing-573 gate's 39 LEG 2 mutants on trunk
- * 8d458c6 and on this cut (its counts ride the delivery note). An escape found later is a residual-list addition. It reads the two
+ * 8d458c6 and on this cut (its counts ride the delivery note); wb-m883's replays the landing-636 gate's four (G01, G01h, G01e, G01g)
+ * and the seat's S01 (a complete inline comment rendered after an inner "->") on trunk 9ad61f3 and on its cut (its counts ride the
+ * delivery note). An escape found later is a residual-list addition. It reads the two
  * guards it cites by their source spellings, so a cut renaming the W10 guard's page check or the freeze's target or hash constant
  * re-measures Q12 in the same commit.
  *
@@ -1170,6 +1193,11 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "mention-inside-an-inline-processing-instruction", path: "docs/workbench/x.md", text: "Pi notes <?note Pi reads the TrainingWorks export. ?> here.", flagged: false },
       { id: "mention-inside-a-comment-holding-a-bang-without-a-bracket", path: "docs/workbench/x.md", text: "<!-- note --! Pi reads the TrainingWorks export. -->", flagged: false },
       { id: "mention-inside-an-attribute-value-of-an-inline-tag", path: "docs/workbench/x.md", text: 'Pi notes <span title="<b>Pi reads the TrainingWorks export.</b>">x</span> here.', flagged: false },
+      // wb-m883 (the landing-636 gate's F1: its three plants byte for byte, and one more in G01's family): a mention inside a complete inline comment holding " > " or " -> ", or inside an inline CDATA section or declaration ending at its only ">", reads quiet as spelled here.
+      { id: "mention-inside-an-inline-comment-holding-a-bracket", path: "docs/workbench/x.md", text: "Pi notes <!-- a > Pi reads the TrainingWorks export. --> here.", flagged: false },
+      { id: "mention-inside-an-inline-comment-holding-a-dash-and-a-bracket", path: "docs/workbench/x.md", text: "Pi notes <!-- a -> Pi reads the TrainingWorks export. --> here.", flagged: false },
+      { id: "mention-inside-a-complete-inline-cdata-section", path: "docs/workbench/x.md", text: "Pi notes <![CDATA[ Pi reads the TrainingWorks export. ]]> here.", flagged: false },
+      { id: "mention-inside-an-inline-declaration", path: "docs/workbench/x.md", text: "Pi notes <!NOTE Pi reads the TrainingWorks export.> here.", flagged: false },
     ];
     const readings = controls.map(control => {
       const reading = citationsIn(control.path, control.text);
