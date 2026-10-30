@@ -213,14 +213,52 @@
  * pinned (a residual-list addition under ruling R-B67 (4)). THE CLAIM, restated: CUT #8's closed roster stands with these
  * readings added - a constructor parameter property as a field; a field, a getter or a callback typed by a src overload set
  * through the set's implementation; a return under the written type of a function that is no generator, an async function's
- * against the awaited type - and with the two FAIL_CLOSED kinds this cut retires removed (parameter-property, async-return);
- * every other stand-in the readings meet, outside the named residuals' quiet pages (R-INDEX-STAND-IN added), fails closed with
- * its typed row, and any other stand-in shape is outside the claim. The other escape families R-B67 (1) names - structural
+ * against the awaited type; and, at cut #2, an object literal's own method, getter, setter and shorthand property against the
+ * member of its name in each part of its contextual type, and of the declared target of the flow it is written at, that declares
+ * one - and with the two FAIL_CLOSED kinds this cut retires removed (parameter-property, async-return); every other stand-in the
+ * readings meet, outside the named residuals' quiet pages (R-INDEX-STAND-IN added, and R-INTERFACE-REDECLARATION at cut #2),
+ * fails closed with its typed row, and any other stand-in shape is outside the claim. The other escape families R-B67 (1) names -
+ * structural
  * stand-ins, inherited implementations, context-less literals, spreads, hiding callbacks returned under a written type - and
  * cut #8's generator-yield and unlisted-stand-in still fail closed here, unread: this cut is partial for bead wb-021.7 and
  * names them as its remainder. Measured on src: the live reach map and src's forms and refused uses read byte for byte the
  * same under this cut's scans as under cut #8's (25 modules each, of 117 src files, at trunk 577493f, whose src equals
  * 4350926's; the four refused uses are detached-control's), so src holds none of the shapes this cut reads anew or narrows.
+ *
+ * WB-021.7 CUT #2 (the respin of refusal #1, gate run g10-gate-s148; the CUT #4 FORM and rulings R-B33, R-B41, R-B60 and R-B67
+ * kept; 0 rows, pins or old cases removed, 0 old cases changed, six labels restated, 59 pages and one row added). U1 and U2 (an
+ * object literal's method, getter, setter and shorthand property were read against the union's own members, which are only those
+ * every part declares, so each read quiet under an async function's return, whose contextual type is the awaited type united with
+ * a PromiseLike of it, and under any union contextual type, where only a property assignment, which the checker types through the
+ * union, was read): each is read against the member of its name in each part of the literal's contextual type, and of the
+ * declared target of the flow it is written at, that declares one (contextualParts, literalBases), as its twin under the type
+ * alone is, a shorthand with one row per kind at its site; so a literal passed to a src callee's generic parameter, which the
+ * checker types by what the call infers from the literal itself, is read through the parameter's constraint (pre-existing in the
+ * landed core and at cut #1, found at this cut). ASYNC-RETURNS pins a method returned by an async function (an arrow's body, a
+ * function's, a class method's, under an alias, as an argument's callback and from a block beside an undefined branch), a getter,
+ * a setter and a shorthand, each refused (property) beside its sync twin, and a keeping literal read quiet; DISPATCH pins a
+ * method under Sink | undefined, under a union with an object part, as the argument of a union parameter and under a type
+ * parameter constrained to a union, a getter, a setter and a shorthand under a union, each refused beside its twin under the type
+ * alone, a method whose hiding parameter only the first, or only the second, of two declaring parts catches, a shorthand both
+ * parts declare, one part or both handing it the projection where it receives it (one row), a method and a shorthand passed to a
+ * generic parameter (constrained to the type or to a union; a function's, a generic method's and a generic constructor's; reached
+ * through parentheses and through a conditional branch too), each refused, and keeping literals read quiet; the ASYNC-RETURNS and
+ * DISPATCH labels and THE CLAIM are restated to that reading. U3: R-OVERLOADS pins sets of three declarations, the visible
+ * signature that hands the projection first or second, a function and a method alike (arguments). U4: ASYNC-RETURNS pins a hiding
+ * callback that exposes the projection through its own return, returned as a promise's value, refused (return) beside its sync
+ * twin. U5: CALLBACK-RETURNS and STAND-IN-RETURNS pin an intersection with an object part that neither is the type nor declares
+ * it, as a callback's return and as a field stand-in's call-signature result and value, refused (callback-return,
+ * stand-in-return). F3: R-INDEX-STAND-IN pins its further shapes (a number and a template-pattern index signature, an extended
+ * class's, a Record-extending interface's, a getter, an object literal's method under an interface's and a Record's index
+ * signature) and the literal property its flow reads, and its label names them. F4: one residual family is added,
+ * R-INTERFACE-REDECLARATION (an extending interface that redeclares the handing member with a type that hides the projection: its
+ * implementing class reads quiet in three positions), pinned. F5: CALLBACK-RETURNS pins a void hand-back refused
+ * (callback-return) and restates its quiet clause to its pinned page (a target whose return hands nothing). F6: the R-OVERLOADS
+ * parenthetical is narrowed to the declarations isOverloadSignature reads, and a field typed by an interface's method signatures
+ * is pinned as read through its visible signatures. F2: CT6-w's survival stays disclosed under NOT CLAIMED. Measured on src: the
+ * live reach map and src's forms and refused uses read byte for byte the same under this cut's scans as under cut #1's (25
+ * modules each, of 117 src files, at trunk c947b21, whose src equals 4350926's), so this cut's reader changes no src module's
+ * reading (no form and no refused use added).
  *
  * MEASURED (read-only, by the cutting seats, 2026-10-27: cut #3 at trunk 79dadb2 and before it at db2d796; cut #4 re-measured at
  * trunk b92d7a1, and it merged b92d7a1, bda6c2a and 88086c9, none of which changes a src file after e61eaec and so none after
@@ -229,7 +267,8 @@
  * (src/workbench/collective-event.ts, added) and the wb-gwr.2 landing (src/workbench/hyperunix-observer.ts, its reach
  * unchanged); cut #7 re-measured 2026-10-29 at trunk 4350926, merged, whose src equals e81d2b0's; cut #8 re-measured
  * 2026-10-29 at trunk 93133f0 and at trunks e3022a1, 9fdd6d9 and 1ad30c3, each merged, whose src equals 4350926's; wb-021.7
- * re-measured 2026-10-30 at trunk 577493f, whose src equals 4350926's; src there differs from 3223843, cut #2's measured trunk, by those, the wb-4ap.17 landing (src/index.ts,
+ * re-measured 2026-10-30 at trunk 577493f, whose src equals 4350926's, and its cut #2 2026-10-30 at trunk c947b21, merged, whose src
+ * equals 4350926's too; src there differs from 3223843, cut #2's measured trunk, by those, the wb-4ap.17 landing (src/index.ts,
  * src/workbench/forge-operation-observer.ts), the wb-jwc.4 landing (src/workbench/providers/reactivefiber.ts) and the wb-3ht.1
  * landing (src/workbench/hyperunix-observer.ts: a consumed-fields table that references no projection member), and the live
  * reach map over every src module reads byte for byte the same under cut #2's reach scan and cut #5's, at both of cut #5's trunks): src holds 117 TypeScript modules and none spells the program (the mention judge below:
@@ -308,7 +347,7 @@
  * beside its read twins and quiet pages, UNLISTED-STAND-INS pins that a stand-in whose type the readings do not list refuses
  * (cut #8, the fail-closed core), and ASYNC-RETURNS plants the reading wb-021.7 gives an async function's return. What neither
  * scan reads is named: R-ERASED-ACCESS, R-DEEP-CARRIER and R-NARROWED-BRANCH, the fail-closed family R-STRUCTURAL-STAND-IN, and
- * R-INDEX-STAND-IN (wb-021.7).
+ * R-INDEX-STAND-IN (wb-021.7) and R-INTERFACE-REDECLARATION (wb-021.7 cut #2).
  * NAMES, "issues no event admission and no invocation": planted classes and interfaces measure the member readers on the
  * name forms CLASS-NAME-FORMS plants, the member kinds CLASS-MEMBER-KINDS plants, the declaration shapes CLASS-MEMBER-SHAPES
  * plants, the interface forms INTERFACE-FORMS plants and the heritage and signature shapes INTERFACE-HERITAGE plants, and
@@ -382,10 +421,16 @@
  * and R-PARAMETER-PROPERTIES are read since wb-021.7 and are no residuals; R-STRUCTURAL-STAND-IN a class instance, or a class's static side, flowing into an object type its class does not declare is never read as a stand-in:
  * it fails closed where a member of that type it also has hands the projection, whatever its own member does, and an
  * instance held inside another value (an array's element, a library generic's type argument such as a promise's: cut #8) entering such a type reads quiet (REACH);
- * R-INDEX-STAND-IN a member a base names only through an index signature (an implemented interface's string index signature) is
- * matched to no base member by the stand-in readings, which match a base member by its name, so a field, a method or a
- * constructor parameter property standing in for it reads quiet whether it hides the projection or keeps it (REACH; wb-021.7,
- * found at its cut).
+ * R-INDEX-STAND-IN a member a base names only through an index signature (an implemented interface's string, number or
+ * template-pattern index signature, an extended class's, a Record-extending interface's, an object literal's contextual type's,
+ * an interface's or a Record's: cut #2) is matched to no base member by the stand-in readings, which match a base member by its
+ * name, so a field, a method, a getter or a constructor parameter property standing in for it, and an object literal's method,
+ * reads quiet whether it hides the projection or keeps it (REACH; wb-021.7, found at its cut #1, its shapes pinned at cut #2);
+ * R-INTERFACE-REDECLARATION an interface that extends a type whose member hands the projection and redeclares that member with a
+ * type that hides it is read as declaring the extended type, and no reading judges an interface's member as a stand-in, so a class
+ * implementing it is judged against the redeclared member, which hands nothing, and its instance reads quiet handed back under the
+ * redeclaring type into a callback typed by the extended type, held by a field stand-in so typed, or flowing into the extended
+ * type (REACH; wb-021.7 cut #2, refusal #1 F4, pre-existing in the landed core).
  * NOT CLAIMED. In src: an instance member's own code - its body, initializer, parameters and types - is not read statically
  * (REPROJECTION's runtime reading and MEMBERS judge it), nor is a parameter decorator (the compiler refuses one under the
  * repo's standard decorators, TS1206). As edits of this file, its helper and the roster together: a plant row of IDENTITY, QUIET,
@@ -399,7 +444,7 @@
  * recorded with the cut are its falsifiers; the kinds themselves, each with its SyntaxKind, are anchored by typescript's
  * declaration file); a fail-closed check (FAIL_CLOSED) changed in the helper together with its row's pages and the
  * roster (the src plants recorded with cuts #7 and #8 and with wb-021.7 are its falsifiers), and so is a reading wb-021.7
- * adds (runningSignature, judgeParameterProperties, the awaited flow, provenReturn's narrowed proof) changed in the helper
+ * adds (runningSignature, judgeParameterProperties, the awaited flow, provenReturn's narrowed proof, contextualParts and literalBases at cut #2) changed in the helper
  * together with its row's pages and the roster; an assertion narrowed in this file (the SURFACES rows' QUIET comparison cut to fewer fields
  * stays green, since every real surface reads QUIET on every field, and the anchor's section reading widened back to
  * the whole row stays green on the clean export: the src and export plants recorded with the cut are those readings'
@@ -909,25 +954,26 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "REACH/ERASING-FLOWS:9",
       "REACH/LIBRARY-FLOWS:8",
       "REACH/RELAYS:13",
-      "REACH/DISPATCH:9",
+      "REACH/DISPATCH:32",
       "REACH/UNLISTED-FORMS:10",
       "REACH/CLASS-ELEMENT-KINDS:4",
       "REACH/STAND-IN-KINDS:8",
       "REACH/STAND-IN-RECEIVERS:23",
       "REACH/CALLBACK-RECEIVERS:6",
       "REACH/R-NARROWED-BRANCH:5",
-      "REACH/R-OVERLOADS:32",
+      "REACH/R-OVERLOADS:37",
       "REACH/R-PARAMETER-PROPERTIES:16",
       "REACH/R-STRUCTURAL-STAND-IN:22",
-      "REACH/ASYNC-RETURNS:29",
+      "REACH/ASYNC-RETURNS:45",
       "REACH/GENERATOR-YIELDS:6",
       "REACH/INHERITED-IMPLEMENTATIONS:14",
       "REACH/CONTEXT-LESS-LITERALS:12",
       "REACH/SPREADS:7",
-      "REACH/CALLBACK-RETURNS:14",
-      "REACH/STAND-IN-RETURNS:11",
+      "REACH/CALLBACK-RETURNS:16",
+      "REACH/STAND-IN-RETURNS:13",
       "REACH/UNLISTED-STAND-INS:10",
-      "REACH/R-INDEX-STAND-IN:3",
+      "REACH/R-INDEX-STAND-IN:11",
+      "REACH/R-INTERFACE-REDECLARATION:3",
       "NAMES/CLASS-NAME-FORMS:6",
       "NAMES/CLASS-MEMBER-KINDS:9",
       "NAMES/CLASS-MEMBER-SHAPES:10",
@@ -968,6 +1014,7 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "R-NARROWED-BRANCH:REACH R-NARROWED-BRANCH",
       "R-STRUCTURAL-STAND-IN:REACH R-STRUCTURAL-STAND-IN",
       "R-INDEX-STAND-IN:REACH R-INDEX-STAND-IN",
+      "R-INTERFACE-REDECLARATION:REACH R-INTERFACE-REDECLARATION",
     ]);
     // The fail-closed shapes (cut #7, ruling R-B60; cut #8, ruling R-B67), each with the REACH row that plants it: the row reads it refused under its typed row and holds a quiet page beside it.
     expect(Object.entries(FAIL_CLOSED).map(([kind, id]) => `${kind}:${id}`)).toEqual([
