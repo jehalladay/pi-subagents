@@ -1029,6 +1029,34 @@
    "nestedInline": {
     "path": "docs/nested-inline.md",
     "text": "Pi embeds the [*Fi&#98;*](x)[**&#101;r**](y) [~~co&#114;e~~](z).\n"
+   },
+   "altBreakItem": {
+    "path": "docs/alt-item.md",
+    "text": "- Pi embeds a ![wa  \nsm](x.png) runtime.\n"
+   },
+   "altEmphasisJoin": {
+    "path": "docs/alt-emphasis.md",
+    "text": "Pi embeds a ![*wa*sm](x.png) runtime.\n"
+   },
+   "altStrongBreak": {
+    "path": "docs/alt-strong-break.md",
+    "text": "Pi embeds a ![**wa  \nsm**](x.png) runtime.\n"
+   },
+   "paragraphBreak": {
+    "path": "docs/break.md",
+    "text": "Pi will embed wa  \nsm.\n"
+   },
+   "paragraphBackslashBreak": {
+    "path": "docs/break-backslash.md",
+    "text": "Pi will embed wa\\\nsm.\n"
+   },
+   "rawStateReference": {
+    "path": "docs/raw-reference.md",
+    "text": "Pi embeds the <code>[Fib<o:p>er core]</code>.\n"
+   },
+   "rawStateReferenceClaim": {
+    "path": "docs/raw-reference-claim.md",
+    "text": "Pi embeds the <code>[Fiber core]</code>.\n"
    }
   },
   "descriptorControls": {
@@ -1342,6 +1370,7 @@
    "iframe",
    "input",
    "link",
+   "marquee",
    "math",
    "meter",
    "noembed",
@@ -1408,7 +1437,8 @@
    "refusedElement": "<template>x</template>",
    "refusedAttribute": "<span hidden>x</span>",
    "upperElement": "<TEMPLATE>x</TEMPLATE>",
-   "upperAttribute": "<span HIDDEN>x</span>"
+   "upperAttribute": "<span HIDDEN>x</span>",
+   "marquee": "<marquee width=\"0\">x</marquee>"
   },
   "htmlFormPath": "docs/html-form.md",
   "rawStateForms": {
@@ -1501,6 +1531,18 @@
    "imageAltSplit": "<img src=\"x.png\" alt=\"WA\u200bSM\">"
   },
   "invisibleFormPath": "docs/invisible.md",
+  "altForms": {
+   "spaceBreak": "![wa  \nsm](x.png)",
+   "backslashBreak": "![wa\\\nsm](x.png)",
+   "codeSpanReference": "![`wa&#115;m`](x.png)",
+   "htmlAttribute": "![<span title=\"wa&#115;m\">](x.png)",
+   "emDestination": "![*[x](wa&#115;m)*](x.png)",
+   "strongDestination": "![**[x](wa&#115;m)**](x.png)",
+   "delDestination": "![~~[x](wa&#115;m)~~](x.png)",
+   "linkCodeSpan": "![[`wa&#115;m`](u)](x.png)"
+  },
+  "altFormPath": "docs/alt-form.md",
+  "imageAlt": "image alt",
   "expandedWord": {
    "module": "expanded-word.ts",
    "words": [
@@ -2093,6 +2135,9 @@
        ],
        "upperAttribute": [
         "wb-x32.comments[0].text:1: rendered unknown <span HIDDEN>"
+       ],
+       "marquee": [
+        "wb-x32.comments[0].text:1: rendered unknown <marquee width=\"0\">"
        ]
       },
       "rawStateForms": {
@@ -2187,6 +2232,32 @@
        "imageAltSplit": [
         "wb-x32.comments[0].text:1: rendered unknown invisible U+200B",
         "wb-x32.comments[0].text:1: rendered unknown invisible U+200B"
+       ]
+      },
+      "altForms": {
+       "spaceBreak": [
+        "wb-x32.comments[0].text:1: rendered unknown image alt \"wasm\""
+       ],
+       "backslashBreak": [
+        "wb-x32.comments[0].text:1: rendered unknown image alt \"wasm\""
+       ],
+       "codeSpanReference": [
+        "wb-x32.comments[0].text:1: rendered unknown image alt \"wasm\""
+       ],
+       "htmlAttribute": [
+        "wb-x32.comments[0].text:1: rendered unknown image alt \"<span title=\"wasm\">\""
+       ],
+       "emDestination": [
+        "wb-x32.comments[0].text:1: rendered unknown image alt \"[x](wasm)\""
+       ],
+       "strongDestination": [
+        "wb-x32.comments[0].text:1: rendered unknown image alt \"[x](wasm)\""
+       ],
+       "delDestination": [
+        "wb-x32.comments[0].text:1: rendered unknown image alt \"[x](wasm)\""
+       ],
+       "linkCodeSpan": [
+        "wb-x32.comments[0].text:1: rendered unknown image alt \"`wasm`\""
        ]
       }
      }
@@ -2337,6 +2408,9 @@
        ],
        "upperAttribute": [
         "upperAttribute:1: rendered unknown <span HIDDEN>"
+       ],
+       "marquee": [
+        "marquee:1: rendered unknown <marquee width=\"0\">"
        ]
       },
       "rawStateForms": {
@@ -2431,6 +2505,32 @@
        "imageAltSplit": [
         "imageAltSplit:1: rendered unknown invisible U+200B",
         "imageAltSplit:1: rendered unknown invisible U+200B"
+       ]
+      },
+      "altForms": {
+       "spaceBreak": [
+        "spaceBreak:1: rendered unknown image alt \"wasm\""
+       ],
+       "backslashBreak": [
+        "backslashBreak:1: rendered unknown image alt \"wasm\""
+       ],
+       "codeSpanReference": [
+        "codeSpanReference:1: rendered unknown image alt \"wasm\""
+       ],
+       "htmlAttribute": [
+        "htmlAttribute:1: rendered unknown image alt \"<span title=\"wasm\">\""
+       ],
+       "emDestination": [
+        "emDestination:1: rendered unknown image alt \"[x](wasm)\""
+       ],
+       "strongDestination": [
+        "strongDestination:1: rendered unknown image alt \"[x](wasm)\""
+       ],
+       "delDestination": [
+        "delDestination:1: rendered unknown image alt \"[x](wasm)\""
+       ],
+       "linkCodeSpan": [
+        "linkCodeSpan:1: rendered unknown image alt \"`wasm`\""
        ]
       }
      }
@@ -3526,6 +3626,20 @@
        ],
        "nestedInline": [
         "docs/nested-inline.md:1: rendered fibercore,embed+core"
+       ],
+       "altBreakItem": [
+        "docs/alt-item.md:1: rendered unknown image alt \"wasm\""
+       ],
+       "altEmphasisJoin": [
+        "docs/alt-emphasis.md:1: rendered embed+core"
+       ],
+       "altStrongBreak": [],
+       "paragraphBreak": [],
+       "paragraphBackslashBreak": [],
+       "rawStateReference": [],
+       "rawStateReferenceClaim": [
+        "docs/raw-reference-claim.md:1: fibercore,embed+core",
+        "docs/raw-reference-claim.md:1: rendered fibercore,embed+core"
        ]
       },
       "htmlForms": {
@@ -3785,6 +3899,14 @@
         "inline": [
          "docs/html-form.md:1: rendered unknown <span HIDDEN>"
         ]
+       },
+       "marquee": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <marquee width=\"0\">"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <marquee width=\"0\">"
+        ]
        }
       },
       "refusedElements": {
@@ -3838,6 +3960,10 @@
        ],
        "link": [
         "docs/html-form.md:1: rendered unknown <link>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "marquee": [
+        "docs/html-form.md:1: rendered unknown <marquee>",
         "docs/html-form.md:1: rendered fibercore,embed+core"
        ],
        "math": [
@@ -4047,6 +4173,32 @@
        "imageAltSplit": [
         "docs/invisible.md:1: rendered unknown invisible U+200B",
         "docs/invisible.md:1: rendered unknown invisible U+200B"
+       ]
+      },
+      "altForms": {
+       "spaceBreak": [
+        "docs/alt-form.md:1: rendered unknown image alt \"wasm\""
+       ],
+       "backslashBreak": [
+        "docs/alt-form.md:1: rendered unknown image alt \"wasm\""
+       ],
+       "codeSpanReference": [
+        "docs/alt-form.md:1: rendered unknown image alt \"wasm\""
+       ],
+       "htmlAttribute": [
+        "docs/alt-form.md:1: rendered unknown image alt \"<span title=\"wasm\">\""
+       ],
+       "emDestination": [
+        "docs/alt-form.md:1: rendered unknown image alt \"[x](wasm)\""
+       ],
+       "strongDestination": [
+        "docs/alt-form.md:1: rendered unknown image alt \"[x](wasm)\""
+       ],
+       "delDestination": [
+        "docs/alt-form.md:1: rendered unknown image alt \"[x](wasm)\""
+       ],
+       "linkCodeSpan": [
+        "docs/alt-form.md:1: rendered unknown image alt \"`wasm`\""
        ]
       },
       "plantedTree": {

@@ -7,6 +7,30 @@
  * Until-then clause (owner filing notes, verbatim): "Until both gates exist, no src or docs change and no Pi claim of an embedded
  * Fiber core; rf CLI envelope consumption stays owned by the wb-x32/wb-973/wb-693 families."
  *
+ * WB-NNM7 (the R694 follow-up of this census's landing 699, gate cmd_fbf6b74bc489 PASS-WITH-FINDING: PREP F1 leads, F2, F3 and F4
+ * ride; seat ws-01, run g10-work-s151, on trunk 09276d0). Cut #6's frozen shape is kept and only added to: no title, row, pin,
+ * control, form, residual row or reading is removed or weakened. Each finding, by the one cure option it takes:
+ *  F1 (ALT-BR, class (c)), B1, B2 and D1, FAIL-CLOSED (the route's second option, taken for the whole class): marked 18.0.11 writes a
+ *    Markdown image's alt through its text renderer, a hard break as nothing, so "Pi ![embed wa  \nsm](x.png) core." renders the alt
+ *    "embed wasm" while the children's reading cuts the wasm token at a line end. THE ALT READ (below) computes the alt as marked
+ *    writes it and REFUSES an image whose alt, so written, differs from its children's reading, so PREP's GP2-D1a to GP2-D1c, GP2-B2a and
+ *    GP2-B1a red as refusals; ALT_FORMS pins one checkable item per form on D1, B2 and B1 - both hard breaks and the class's other
+ *    members the seat measured: a code span's reference, an inline html token's markup, an em's, a strong's and a del's text as its
+ *    source spells it (a link's destination in it) and a link's text as its source spells it (a code span's reference in it) -, and
+ *    the D1 controls altBreakItem (GP2-D1c's list item, refused), altEmphasisJoin (read in place) and altStrongBreak (quiet) pin its
+ *    edges.
+ *  F2 (MARQUEE), B1, B2 and D1, FAIL-CLOSED (the route's first option): marquee is a REFUSED_ELEMENTS name (its default rendering
+ *    clips its content to its width and scrolls it); HTML_FORMS' marquee form (a width-0 marquee: PREP's GP2-D1m1 in a paragraph,
+ *    GP2-D1m2 in an HTML block, GP2-B2m and GP2-B1m) and D1's refusedElements row pin it.
+ *  F3, D1, PINNED: THE RENDERED LEG's "a hard break is a line end" holds the D1 controls paragraphBreak and paragraphBackslashBreak (a
+ *    hard break between "wa" and "sm" of a paragraph reads quiet, so gate mutant G2-M01, a hard break read as nothing, reds them).
+ *  F4, B1, B2 and D1, STATED: THE RAW STATE's sentence on marked's escaped mark is restated to the lexer's rule (a failed reference's
+ *    "[" after a token that is no text token starts a text token without the mark, the raw-state text after it merges into it, and
+ *    marked writes it escaped), and the D1 controls rawStateReference (quiet, PREP's GP2-I2) and rawStateReferenceClaim (read) and two
+ *    judged-set premises pin it.
+ *  MEASURED AT BASE (09276d0): the 88 product Markdown texts and the wb-x32 row's 51 keys and strings hold no Markdown image token,
+ *    so THE ALT READ refuses nothing on the live tree, and no tracked file below the nine roots or at the root holds a marquee tag.
+ *
  * CUT #6 (the FINAL cut: the respin of refusal #5, gate run g10-gate-s142 on cut #5 b70da137; seat ws-03, run g10-work-s141), bound
  * by orchestrator ruling R-B93 (rule 19's structural exit) to the FAIL-CLOSED CORE: the rendered-reading claim restated to exactly
  * the HTML forms the reader strips, every form outside the pinned set refused, no claim word without a falsifier; the full
@@ -186,9 +210,11 @@
  * (restated by cut #6 to the token kinds read, R-B93's fail-closed core; cut #5 said a unit "renders what a reader sees"): an html
  * token - an HTML block, or one of marked's inline html tokens - is read by THE HTML READ (below), an inline one adding to its run
  * only THE HTML READ's image pieces; an inline text token is its text, its references decoded (below), and one marked lexes in its
- * raw state is REFUSED (THE RAW STATE, below); a code span and an escape are their text as written; a hard break is a line end; a
- * task checkbox is nothing; a Markdown image is an image piece, its alt text (its children's reading) in place, gone in the twin
- * that shows the image; a link, em, strong or del token is its children's reading; a code block is left to the raw leg. A
+ * raw state is REFUSED (THE RAW STATE, below); a code span and an escape are their text as written; a hard break is a line end
+ * (wb-nnm7: the D1 controls paragraphBreak and paragraphBackslashBreak); a task checkbox is nothing; a Markdown image is an image
+ * piece, its alt text (its children's reading) in place, gone in the twin that shows the image, and REFUSED besides when marked
+ * writes its alt otherwise (THE ALT READ, wb-nnm7); a link, em, strong or del token is its children's reading; a code block is left
+ * to the raw leg. A
  * character reference is
  * decoded by CommonMark's rule (REFERENCE: "&#" and 1 to 7 decimal digits, "&#x" and 1 to 6 hexadecimal digits, or "&" and a name,
  * each closed by ";") - a numeric one whose code point is at most 0x10FFFF, a named one when it is a NAMED_REFERENCES name; any
@@ -203,10 +229,24 @@
  * "!", "?" or ";" followed by white space, and its findings carry the leg: "<path>:<line>: rendered <families>".
  * THE RAW STATE (cut #6, refusal #5's U1 under ruling R-B93; rows B and D): marked 18.0.11's lexer enters its raw state at an inline
  * html token that opens a pre, code, kbd or script element (/^<(pre|code|kbd|script)(\s|>)/i) and leaves it at one that closes such
- * an element (/^<\/(pre|code|kbd|script)(\s|>)/i), carrying it across the blocks of the text between them, and marks every inline
- * text token it reads in that state escaped; its renderer writes an escaped text token's text to the page unescaped, as raw HTML.
- * The rendered leg reads no HTML out of a text token: every inline text token marked escaped is REFUSED (FAIL-CLOSED), recorded as
- * "<path>:<line>: rendered unknown raw-state text "<its text by writtenForm>"", its text still read in the run beside the refusal.
+ * an element (/^<\/(pre|code|kbd|script)(\s|>)/i), carrying it across the blocks of the text between them, and marks escaped each
+ * inline text token its text rule lexes in that state (restated by wb-nnm7, landing 699's F4: cut #6 said every inline text token it
+ * reads there); its renderer writes a text token's text to the page unescaped, as raw HTML, exactly when the token is so marked, and
+ * escaped otherwise. A text token another rule starts in the state carries no mark: a failed reference's "[" after a token that is no
+ * text token starts one, the raw-state text lexed after it merges into it, and marked writes it escaped ("<code>[Fib<o:p>er
+ * core]</code>" renders "<code>[Fib&lt;o:p&gt;er core]</code>"). The rendered leg reads no HTML out of a text token: every inline text
+ * token marked escaped is REFUSED (FAIL-CLOSED), recorded as "<path>:<line>: rendered unknown raw-state text "<its text by
+ * writtenForm>"", its text still read in the run beside the refusal, and any other text token is read as its text (the D1 controls
+ * rawStateReference, quiet, and rawStateReferenceClaim, read).
+ * THE ALT READ (wb-nnm7, landing 699's F1 under R694; rows B and D): marked 18.0.11 writes a Markdown image's alt attribute through its
+ * text renderer - its image renderer's call, the Parser's inline pass over the image's child tokens with a TextRenderer: each child's
+ * text as its source spells it (a link's, an em's, a strong's, a del's and a nested image's text, an inline html token's markup, a
+ * code span's and an escape's text), a hard break as nothing -, and a reader who is not shown the image sees that text, its
+ * references decoded. The census computes it with marked's own Parser and TextRenderer (writtenAlt), decodes its references by
+ * CommonMark's rule (REFERENCE; beyond it, R-HTML-REFERENCE) and, where it differs from the image's children's reading once each white
+ * space run of both is read as one space, REFUSES the image (FAIL-CLOSED), recorded as "<path>:<line>: rendered unknown image alt
+ * "<the written alt by writtenForm>"", the children's reading still read in place beside the refusal (ALT_FORMS on D1, B2 and B1; the
+ * D1 controls altBreakItem, altEmphasisJoin and altStrongBreak).
  * THE HTML READ (cut #5, refusal #4's U1 under ruling R-B76; rows B and D; restated by cut #6 to the token kinds read: exactly
  * marked's html tokens - an HTML block and each of marked's inline html tokens -, the only tokens whose markup the rendered leg
  * reads, the raw HTML an escaped text token carries being THE RAW STATE's refusal): their markup, left to right. Its white space is the HTML Standard's ASCII
@@ -223,11 +263,12 @@
  * of the grammar - a processing instruction (<?x?>), a markup declaration or DOCTYPE (<!x>, <!DOCTYPE x>), a CDATA section, an
  * end tag outside the grammar (</ x>, </>, </span title="x">), a tag outside it (<o:p>, <x_y>, <x.y>, <x/y>, attributes with no
  * white space between them, a no-break space or a vertical tab for white space, an unterminated tag); a start tag whose name, in
- * any case, is one of REFUSED_ELEMENTS (restated by cut #6 to its list: exactly these 36 names, each listed because the tokenizer
- * reads its text otherwise - iframe, noembed, noframes, noscript, plaintext, script, style, textarea, title, xmp -, it is foreign
- * content - math, svg -, the tree builder moves text out of it - table -, the default rendering hides, replaces or moves its
- * content - applet, audio, canvas, datalist, details, dialog, fencedframe, frameset, meter, object, progress, rp, rt, rtc, select,
- * template, video -, an attribute's text stands in its place - cut #6, refusal #5's U2: input, a value, a placeholder or a button's
+ * any case, is one of REFUSED_ELEMENTS (restated by cut #6 to its list, and by wb-nnm7 to 37 names: exactly these, each listed
+ * because the tokenizer reads its text otherwise - iframe, noembed, noframes, noscript, plaintext, script, style, textarea, title,
+ * xmp -, it is foreign content - math, svg -, the tree builder moves text out of it - table -, the default rendering hides,
+ * replaces or moves its content - applet, audio, canvas, datalist, details, dialog, fencedframe, frameset, marquee (wb-nnm7,
+ * landing 699's F2), meter, object, progress, rp, rt, rtc, select, template, video -, an attribute's text stands in its place - cut
+ * #6, refusal #5's U2: input, a value, a placeholder or a button's
  * label, and option and optgroup, a label in a select -, it reorders its content - bdo - or it restyles the page - body, link); a
  * tag carrying an attribute whose name, in any case, is one of REFUSED_ATTRIBUTES (restated by cut #6 to its list: exactly color,
  * dir, hidden, popover and style); a unit holding more than IMAGE_LIMIT (8) images; a rendered unit holding a bidirectional
@@ -281,13 +322,14 @@
  *    comment, a label, a nested record, a key, a shadowed duplicate member, a shadowed duplicate id and a key behind a reference,
  *    beside two near misses (another bead's row, neutral members); and (cut #5) each HTML_FORMS form in a decision-bead comment and
  *    an image twin (an HTML image tag's alt text completing the decision); and (cut #6) each RAW_STATE_FORMS, INPUT_FORMS and
- *    INVISIBLE_FORMS form in a decision-bead comment, each refused.
+ *    INVISIBLE_FORMS form in a decision-bead comment, each refused; and (wb-nnm7) each ALT_FORMS form and HTML_FORMS' marquee form in a
+ *    decision-bead comment, each refused.
  *    B2 THE DECISIONS PAGE: docs/workbench/18-decisions-and-risks.md (the notes' cited page), read raw and rendered, holds no
  *    decision and no unknown named reference; table rows, cells and list items are units of their own (controls: a decision behind
  *    a no-break-space reference, an inline tag, a numeric reference, an unknown reference refused, a pipe paragraph read as one;
  *    a code span, a split table and split items quiet; and, cut #5, each HTML_FORMS form in an HTML block on a decisions page and an
  *    image twin and an HTML block's title attribute; and, cut #6, each RAW_STATE_FORMS, INPUT_FORMS and INVISIBLE_FORMS form on a
- *    decisions page, each refused).
+ *    decisions page, each refused; and, wb-nnm7, each ALT_FORMS form and HTML_FORMS' marquee form on a decisions page, each refused).
  *  C, the until-then clause ("until then Pi's RF surface stays the rf CLI envelope only").
  *    C1 NO RF SDK: no src module specifier outside the relative ones names reactivefiber, the stem or a crate (import, export,
  *    import-equals, import type, dynamic import, require, or a call through a createRequire loader: a name the module binds to
@@ -334,7 +376,10 @@
  *    limit and a bidirectional control raw and behind a reference (refused), each HTML_FORMS form in an HTML block and in a
  *    paragraph, each REFUSED_ELEMENTS element and each REFUSED_ATTRIBUTES attribute, and an HTML block's title attribute; and - cut
  *    #6 - each RAW_STATE_FORMS form (refused, beside the state its end tag ends), each INPUT_FORMS form (refused), each
- *    INVISIBLE_FORMS form (refused) and a claim joined through a link's, an em's, a strong's and a del's children)
+ *    INVISIBLE_FORMS form (refused) and a claim joined through a link's, an em's, a strong's and a del's children; and - wb-nnm7 -
+ *    each ALT_FORMS form and HTML_FORMS' marquee form (refused), an image alt's hard break in a list item (refused), an alt marked writes
+ *    as its children read it (read in place), a strong's hard break in an alt and a paragraph's two hard breaks (quiet), and a failed
+ *    reference's merged raw-state text (quiet, and read as a claim when it holds the words))
  *    and near
  *    misses stay quiet (a receipt's rf_identity sdk_versions key, the workflow VM's wasm option, split sentences, a table's rows,
  *    list items, a code span, a lock whose embed and wasm words sit in different values, YAML lines that pair them only as prose
@@ -359,11 +404,11 @@
  *    object literal, enum, object binding pattern and function-like parameter list, read for all four members by fold.
  *  B1: the tracked export's lines one of whose top-level id members is the title's decision bead, by THE JSON READER: every key and
  *    every string value at any depth, each alone, each read as a Markdown text - raw (THE FORMS) and rendered (THE RENDERED LEG:
- *    its html tokens' markup by THE HTML READ, its raw-state text tokens refused by THE RAW STATE; restated by cut #6) - for a
- *    decision, an unknown named reference and a form THE RENDERED LEG refuses.
+ *    its html tokens' markup by THE HTML READ, its raw-state text tokens refused by THE RAW STATE; restated by cut #6; its Markdown
+ *    images' alts by THE ALT READ, wb-nnm7) - for a decision, an unknown named reference and a form THE RENDERED LEG refuses.
  *  B2: the notes' cited page, read as a Markdown text raw and rendered (THE RENDERED LEG: its html tokens' markup by THE HTML READ,
- *    its raw-state text tokens refused by THE RAW STATE; restated by cut #6), for a decision, an unknown named reference and a form
- *    THE RENDERED LEG refuses.
+ *    its raw-state text tokens refused by THE RAW STATE; restated by cut #6; its Markdown images' alts by THE ALT READ, wb-nnm7), for a
+ *    decision, an unknown named reference and a form THE RENDERED LEG refuses.
  *  C1: every tracked file below src (one that is no script module reds), each module parsed by TypeScript: its module specifiers
  *    (the load forms ROW C1 names; never a relative one) for reactivefiber, the stem or a crate; its texts and property-access
  *    chains for the three spellings; and THE CENSUS (its two censuses and the launch roster).
@@ -374,8 +419,8 @@
  *    provider module's leading comments.
  *  D1: every tracked file below the nine roots and at the repository root (held both ways to a walk) whose extension is a measured
  *    text extension, decoded as strict UTF-8, by THE FORMS (raw) and, for Markdown, THE RENDERED LEG (its html tokens' markup by
- *    THE HTML READ, its raw-state text tokens refused by THE RAW STATE; restated by cut #6), for a claim, an unknown named reference
- *    and a form THE RENDERED LEG refuses.
+ *    THE HTML READ, its raw-state text tokens refused by THE RAW STATE; restated by cut #6; its Markdown images' alts by THE ALT READ,
+ *    wb-nnm7), for a claim, an unknown named reference and a form THE RENDERED LEG refuses.
  *  D2: every descriptor of the native and the four injected registrations, every key and string at any depth each one unit, for a
  *    claim.
  *
@@ -405,8 +450,9 @@
  * added anywhere on docs/18 or vendor/README.md, reds C3 (each file changed twice in the trunk's history), and the editing cut
  * re-pins the section; every form THE HTML READ refuses (cut #5: a raw HTML token's markup outside its grammar, a REFUSED_ELEMENTS
  * element, a REFUSED_ATTRIBUTES attribute, more than IMAGE_LIMIT images in a unit, a bidirectional control in a rendered unit;
- * cut #6: an inline text token marked's lexer reads in its raw state, an input, option or optgroup start tag, an invisible split
- * in a rendered unit) reds B1, B2 or D1 wherever it sits, so a product page, the decisions page or a decision-bead member that
+ * cut #6: an inline text token marked's lexer marks escaped in its raw state, an input, option or optgroup start tag, an invisible
+ * split in a rendered unit; wb-nnm7: a marquee start tag, a Markdown image whose alt marked writes otherwise than its children's
+ * reading) reds B1, B2 or D1 wherever it sits, so a product page, the decisions page or a decision-bead member that
  * adds such markup - an inline <code>, <kbd> or <pre> element included, which opens the raw state for the text it holds - reds
  * at its landing and the editing cut judges it; a shell line's trailing comment ("echo embed # wasm") is read with the line's
  * last command as one unit, so its words lend themselves to the command's (refusal #4's G8-D1i, pinned as the D1 control
@@ -471,7 +517,7 @@ import { createHash } from "node:crypto";
 import { chmodSync, existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import { dirname, extname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
-import { marked, type Token, type Tokens } from "marked";
+import { marked, Parser, TextRenderer, type Token, type Tokens } from "marked";
 import ts from "typescript";
 import { afterAll, afterEach, describe, expect, it } from "vitest";
 import { type CapabilityDescriptor, CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
@@ -1093,12 +1139,13 @@ const HTML_TAG = new RegExp(
   "y",
 );
 /**
- * The elements whose start tag (its name in any case) THE HTML READ refuses (FAIL-CLOSED): exactly these 36 names (restated by cut
- * #6 to the list), each listed because the tokenizer reads its text otherwise (iframe, noembed, noframes, noscript, plaintext,
- * script, style, textarea, title, xmp), it is foreign content (math, svg), the tree builder moves text out of it (table), the
- * default rendering hides, replaces or moves its content (applet, audio, canvas, datalist, details, dialog, fencedframe, frameset,
- * meter, object, progress, rp, rt, rtc, select, template, video), an attribute's text stands in its place (cut #6: input, its value,
- * placeholder or button label; option and optgroup, a label in a select), it reorders it (bdo), or it restyles the page (body, link).
+ * The elements whose start tag (its name in any case) THE HTML READ refuses (FAIL-CLOSED): exactly these 37 names (restated by cut
+ * #6 to the list; wb-nnm7 adds marquee), each listed because the tokenizer reads its text otherwise (iframe, noembed, noframes,
+ * noscript, plaintext, script, style, textarea, title, xmp), it is foreign content (math, svg), the tree builder moves text out of it
+ * (table), the default rendering hides, replaces or moves its content (applet, audio, canvas, datalist, details, dialog, fencedframe,
+ * frameset, marquee - wb-nnm7, landing 699's F2: clipped to its width and scrolled -, meter, object, progress, rp, rt, rtc, select,
+ * template, video), an attribute's text stands in its place (cut #6: input, its value, placeholder or button label; option and
+ * optgroup, a label in a select), it reorders it (bdo), or it restyles the page (body, link).
  */
 const REFUSED_ELEMENTS = [
   "applet",
@@ -1114,6 +1161,7 @@ const REFUSED_ELEMENTS = [
   "iframe",
   "input",
   "link",
+  "marquee",
   "math",
   "meter",
   "noembed",
@@ -1147,12 +1195,20 @@ const IMAGE_LIMIT = 8;
 /** The bidirectional controls (wb-era's class): a rendered unit holding one is REFUSED, since the census cannot say in what order a reader sees it. */
 const BIDI_CONTROL = /[\u061C\u200E\u200F\u202A-\u202E\u2066-\u2069]/gu;
 /**
- * THE RAW STATE (cut #6, refusal #5's U1 under ruling R-B93's fail-closed core): marked 18.0.11 marks an inline text token escaped
- * when its lexer reads it in its raw state, and its renderer then writes that token's text to the page unescaped, as raw HTML. The
- * rendered leg reads no HTML out of a text token: it REFUSES every inline text token marked escaped (FAIL-CLOSED), recorded as
- * `raw-state text "<the token's text as written>"`.
+ * THE RAW STATE (cut #6, refusal #5's U1 under ruling R-B93's fail-closed core; restated by wb-nnm7, landing 699's F4): marked 18.0.11's
+ * lexer marks escaped each inline text token its text rule lexes in its raw state, and its renderer writes a text token's text to the
+ * page unescaped, as raw HTML, exactly when the token is so marked (escaped, as text, otherwise). A text token another rule starts
+ * there carries no mark - the "[" of a failed reference after a token that is no text token, the raw-state text lexed after it merging
+ * into it - so its text is written escaped. The rendered leg reads no HTML out of a text token: it REFUSES every inline text token
+ * marked escaped (FAIL-CLOSED), recorded as `raw-state text "<the token's text as written>"`, and reads any other as its text.
  */
 const RAW_STATE = "raw-state text";
+/**
+ * THE ALT READ (wb-nnm7, landing 699's F1 under R694): a Markdown image whose alt text marked 18.0.11 writes otherwise than its
+ * children's reading (writtenAlt), once each white space run is read as one space, is REFUSED (FAIL-CLOSED), recorded as
+ * `image alt "<the alt as marked writes it, its references decoded, by writtenForm>"`.
+ */
+const IMAGE_ALT = "image alt";
 /**
  * An invisible split (cut #6, FAIL-CLOSED): a run of default-ignorable code points (Unicode's Default_Ignorable_Code_Point property)
  * between two ASCII letters of a rendered unit's text after NFKC, where THE VOCABULARY's tokens cut the word. A rendered unit (its
@@ -1284,12 +1340,26 @@ function newlines(text: string): number {
   return text.split("\n").length - 1;
 }
 /**
+ * THE ALT READ (wb-nnm7, landing 699's F1): a Markdown image's alt text as marked 18.0.11 writes it, by its image renderer's own call -
+ * the Parser's inline pass over the image's child tokens with a TextRenderer, which writes each child's text as its source spells it (a
+ * link's, an em's, a strong's, a del's and a nested image's text, an inline html token's markup, a code span's and an escape's text)
+ * and a hard break as nothing.
+ */
+function writtenAlt(image: Tokens.Image): string {
+  return new Parser({}).parseInline(image.tokens, new TextRenderer());
+}
+/** A text with each white space run read as one space, as a reader is shown an image's alt text (THE ALT READ's comparison). */
+function spaced(text: string): string {
+  return text.replace(/\s+/g, " ");
+}
+/**
  * Inline tokens read kind by kind, as pieces (THE RENDERED LEG, restated by cut #6): an inline html token adds only THE HTML READ's
  * image pieces, a task checkbox nothing, a code span and an escape their text as written, a hard break a line end, a Markdown image
- * an image piece (its alt text in place, or gone), a link, em, strong or del token its children's reading, and an inline text token
+ * an image piece (its alt text in place, or gone) - REFUSED besides when marked writes its alt otherwise than that reading, white space
+ * runs read as one space (THE ALT READ, wb-nnm7) -, a link, em, strong or del token its children's reading, and an inline text token
  * its text with its references decoded - one marked lexed in its raw state also REFUSED (THE RAW STATE). Beside the run, extras
  * collects an inline tag's attribute values and a link's or image's destination and title (an image's alt text is its children,
- * read in the run); unknown collects THE HTML READ's and THE RAW STATE's refused forms.
+ * read in the run); unknown collects THE HTML READ's, THE RAW STATE's and THE ALT READ's refused forms.
  */
 function inlineRendered(tokens: readonly Token[], unknown: string[], extras: string[]): Piece[] {
   const out: Piece[] = [];
@@ -1306,7 +1376,12 @@ function inlineRendered(tokens: readonly Token[], unknown: string[], extras: str
     if (token.type === "html" || token.type === "checkbox") continue;
     if (token.type === "br") out.push("\n");
     else if (token.type === "codespan" || token.type === "escape") out.push(tokenText(token));
-    else if (token.type === "image") out.push({ first: runText(tokenChildren(token).length > 0 ? inlineRendered(tokenChildren(token), unknown, extras) : [decodeReferences(tokenText(token), unknown)]), other: "" });
+    else if (token.type === "image") {
+      const read = runText(tokenChildren(token).length > 0 ? inlineRendered(tokenChildren(token), unknown, extras) : [decodeReferences(tokenText(token), unknown)]);
+      const written = decodeReferences(writtenAlt(token as Tokens.Image), []);
+      if (spaced(written) !== spaced(read)) unknown.push(`${IMAGE_ALT} "${writtenForm(written)}"`);
+      out.push({ first: read, other: "" });
+    }
     else if (tokenChildren(token).length > 0) out.push(...inlineRendered(tokenChildren(token), unknown, extras));
     else {
       if (inRawState(token)) unknown.push(`${RAW_STATE} "${writtenForm(tokenText(token))}"`);
@@ -1757,6 +1832,18 @@ const CLAIM_CONTROLS: Readonly<Record<string, PlantedText>> = {
   // THE RENDERED LEG's token kinds (cut #6): a link's, an em's, a strong's and a del's text is its children's reading (each holding a
   // reference only that reading decodes), joined in the run; the raw leg reads the references as written, so it reads no claim.
   nestedInline: { path: "docs/nested-inline.md", text: "Pi embeds the [*Fi&#98;*](x)[**&#101;r**](y) [~~co&#114;e~~](z).\n" },
+  // THE ALT READ (wb-nnm7, landing 699's F1): a hard break in a list item's image alt (PREP's GP2-D1c) is refused; an alt whose markup
+  // marked writes as the children read it is read in place, and one whose break marked writes as white space (inside a strong) is quiet.
+  altBreakItem: { path: "docs/alt-item.md", text: "- Pi embeds a ![wa  \nsm](x.png) runtime.\n" },
+  altEmphasisJoin: { path: "docs/alt-emphasis.md", text: "Pi embeds a ![*wa*sm](x.png) runtime.\n" },
+  altStrongBreak: { path: "docs/alt-strong-break.md", text: "Pi embeds a ![**wa  \nsm**](x.png) runtime.\n" },
+  // THE RENDERED LEG's hard break (wb-nnm7, landing 699's F3): a hard break in a paragraph is a line end, so neither break joins the word.
+  paragraphBreak: { path: "docs/break.md", text: "Pi will embed wa  \nsm.\n" },
+  paragraphBackslashBreak: { path: "docs/break-backslash.md", text: "Pi will embed wa\\\nsm.\n" },
+  // THE RAW STATE's flag (wb-nnm7, landing 699's F4): a failed reference's "[" after a token that is no text token starts a text token
+  // without the flag, the raw-state text after it merges into it, and marked writes it escaped: read as its text, never refused or dropped.
+  rawStateReference: { path: "docs/raw-reference.md", text: "Pi embeds the <code>[Fib<o:p>er core]</code>.\n" },
+  rawStateReferenceClaim: { path: "docs/raw-reference-claim.md", text: "Pi embeds the <code>[Fiber core]</code>.\n" },
 };
 /**
  * THE HTML READ's forms (cut #5, refusal #4's U1 under ruling R-B76; one checkable item per form): each written inside the word
@@ -1799,6 +1886,9 @@ const HTML_FORMS: Readonly<Record<string, string>> = {
   // cut #6: a REFUSED_ELEMENTS name and a REFUSED_ATTRIBUTES name are refused in any case.
   upperElement: "<TEMPLATE>x</TEMPLATE>",
   upperAttribute: "<span HIDDEN>x</span>",
+  // wb-nnm7 (landing 699's F2: PREP's GP2-D1m1 inline, GP2-D1m2 in an HTML block, GP2-B2m and GP2-B1m): a marquee's default rendering
+  // clips its content to its width (0 here) and scrolls it, so marquee is a REFUSED_ELEMENTS name.
+  marquee: '<marquee width="0">x</marquee>',
 };
 /** The path D1 reads each HTML_FORMS text under. */
 const HTML_FORM_PATH = "docs/html-form.md";
@@ -1879,6 +1969,27 @@ const INVISIBLE_FORMS: Readonly<Record<string, string>> = {
 };
 /** The path D1 reads each INVISIBLE_FORMS text under. */
 const INVISIBLE_FORM_PATH = "docs/invisible.md";
+/**
+ * THE ALT READ's forms (wb-nnm7, landing 699's F1 under R694; one checkable item per form, each read on D1, B2 and B1): the wasm word of a
+ * claim or a decision (invisibleClaim, invisibleDecision) written, in a paragraph, as a Markdown image whose alt marked 18.0.11 writes
+ * otherwise than its children's reading - a hard break, written as nothing (spaceBreak: PREP F1's GP2-D1a, and GP2-B2a and GP2-B1a on B2
+ * and B1; backslashBreak: GP2-D1b), a code span's reference, an inline html token's markup, the text of an em, a strong or a del as its
+ * source spells it (a link's destination included) and a link's text as its source spells it (a code span's reference included). Each
+ * spells the word only in the alt marked writes, once a reader is shown it (its references decoded), so neither the raw leg's tokens nor
+ * the children's reading hold it; each is REFUSED.
+ */
+const ALT_FORMS: Readonly<Record<string, string>> = {
+  spaceBreak: "![wa  \nsm](x.png)",
+  backslashBreak: "![wa\\\nsm](x.png)",
+  codeSpanReference: "![`wa&#115;m`](x.png)",
+  htmlAttribute: '![<span title="wa&#115;m">](x.png)',
+  emDestination: "![*[x](wa&#115;m)*](x.png)",
+  strongDestination: "![**[x](wa&#115;m)**](x.png)",
+  delDestination: "![~~[x](wa&#115;m)~~](x.png)",
+  linkCodeSpan: "![[`wa&#115;m`](u)](x.png)",
+};
+/** The path D1 reads each ALT_FORMS text under. */
+const ALT_FORM_PATH = "docs/alt-form.md";
 /** A claim (D1) and a decision (B1, B2) around the words a RAW_STATE_FORMS or INPUT_FORMS form writes for "Fiber core". */
 function formClaim(words: string): string {
   return `Pi embeds the ${words}.`;
@@ -1886,7 +1997,7 @@ function formClaim(words: string): string {
 function formDecision(words: string): string {
   return `OWNER DECISION (2026-10-29): Pi will embed the portable ${words} behind the W10 provider.`;
 }
-/** A claim (D1) and a decision (B1, B2) around an INVISIBLE_FORMS spelling of the wasm word. */
+/** A claim (D1) and a decision (B1, B2) around an INVISIBLE_FORMS or (wb-nnm7) ALT_FORMS spelling of the wasm word. */
 function invisibleClaim(word: string): string {
   return `Pi embeds a ${word} runtime.`;
 }
@@ -1929,6 +2040,11 @@ function cutSixForms(decision: boolean): CutSixForms {
 /** Each form's reading, by name. */
 function formReadings(texts: Readonly<Record<string, string>>, read: (text: string, name: string) => string[]): Record<string, string[]> {
   return Object.fromEntries(Object.entries(texts).map(([name, text]) => [name, read(text, name)]));
+}
+/** Each ALT_FORMS form's Markdown text, as a claim (D1) or as a decision (B1, B2), in a paragraph (wb-nnm7). */
+function altFormTexts(decision: boolean): Record<string, string> {
+  const sentence = decision ? invisibleDecision : invisibleClaim;
+  return Object.fromEntries(Object.entries(ALT_FORMS).map(([name, word]) => [name, `${sentence(word)}\n`]));
 }
 const NEVER = (): never => {
   throw new Error("census: a planted or injected capability is never invoked here");
@@ -3336,6 +3452,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       rawStateForms: formReadings(forms.rawState, memberDecisions),
       inputForms: formReadings(forms.input, memberDecisions),
       invisibleForms: formReadings(forms.invisible, memberDecisions),
+      altForms: formReadings(altFormTexts(true), memberDecisions),
     });
   },
   B2: async () => {
@@ -3353,6 +3470,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       rawStateForms: formReadings(forms.rawState, pageDecisions),
       inputForms: formReadings(forms.input, pageDecisions),
       invisibleForms: formReadings(forms.invisible, pageDecisions),
+      altForms: formReadings(altFormTexts(true), pageDecisions),
     });
   },
   C1: async () => {
@@ -3441,6 +3559,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       rawStateForms: formReadings(forms.rawState, text => claimsOf(text, RAW_STATE_PATH)),
       inputForms: formReadings(forms.input, text => claimsOf(text, INPUT_FORM_PATH)),
       invisibleForms: formReadings(forms.invisible, text => claimsOf(text, INVISIBLE_FORM_PATH)),
+      altForms: formReadings(altFormTexts(false), text => claimsOf(text, ALT_FORM_PATH)),
       plantedTree: { roots: plantedReading.roots, claims: plantedReading.claims },
     });
   },
@@ -3700,6 +3819,9 @@ describe("wb-2wiv.1 portable Fiber core gate census (SDK-UNIVERSAL-REACTIVE-REND
         inputFormPath: INPUT_FORM_PATH,
         invisibleForms: INVISIBLE_FORMS,
         invisibleFormPath: INVISIBLE_FORM_PATH,
+        altForms: ALT_FORMS,
+        altFormPath: ALT_FORM_PATH,
+        imageAlt: IMAGE_ALT,
         expandedWord: EXPANDED_WORD,
         readerRendering: READER_RENDERING,
         residuals: RESIDUALS,
@@ -3712,6 +3834,12 @@ describe("wb-2wiv.1 portable Fiber core gate census (SDK-UNIVERSAL-REACTIVE-REND
     // THE RAW STATE's premise (cut #6): marked's renderer writes an escaped (raw-state) text token unescaped and any other text escaped.
     expect(marked.parse("Pi embeds the <code>Fib<o:p>er core</code>.", { async: false }), "marked writes raw-state text as raw HTML").toContain("<code>Fib<o:p>er core</code>");
     expect(marked.parse("Pi embeds the Fib<o:p>er core.", { async: false }), "marked escapes text outside its raw state").toContain("Fib&lt;o:p&gt;er core");
+    // THE ALT READ's premise (wb-nnm7): marked writes a Markdown image's alt through its text renderer, a hard break as nothing.
+    expect(marked.parse("Pi ![embed wa  \nsm](x.png) core.", { async: false }), "marked writes a hard break in an image's alt as nothing").toContain('alt="embed wasm"');
+    // THE RAW STATE's flag (wb-nnm7): a failed reference's "[" opening a text token in the raw state leaves it unflagged, written escaped.
+    expect(marked.parse("Pi embeds the <code>[Fib<o:p>er core]</code>.", { async: false }), "marked writes a failed reference's merged raw-state text escaped").toContain(
+      "<code>[Fib&lt;o:p&gt;er core]</code>",
+    );
 
     // The outside anchor: the bead's own title and owner-filing notes in the tracked export.
     const { title, notes } = beadText();
