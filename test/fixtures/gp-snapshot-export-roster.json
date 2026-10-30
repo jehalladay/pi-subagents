@@ -1998,6 +1998,19 @@
       "code": {
         "src/workbench/q1-shape.ts": 0,
         "src/workbench/q1-incidences.ts": 0
+      },
+      "codeLive": {
+        "src/workbench/q1-shape.ts": [
+          "schema_ref",
+          "namespace",
+          "entities",
+          "relations"
+        ],
+        "src/workbench/q1-incidences.ts": [
+          "incidences",
+          "participant",
+          "role"
+        ]
       }
     },
     "Q2": {
@@ -2026,6 +2039,21 @@
         "src/workbench/q2-joined.ts": 0,
         "src/workbench/q2-escape.ts": 0,
         "src/workbench/q2-request.ts": 0
+      },
+      "codeLive": {
+        "src/workbench/q2-joined.ts": [
+          "graphpolicy.data.v1",
+          "GraphPolicy",
+          "src/workbench/q2-joined.ts"
+        ],
+        "src/workbench/q2-escape.ts": [
+          "GraphDataIR",
+          "GraphDataIR"
+        ],
+        "src/workbench/q2-request.ts": [
+          "ExecutorRequest",
+          "src/workbench/q2-request.ts"
+        ]
       }
     },
     "Q3": {
@@ -2427,6 +2455,1144 @@
       "proxy": true
     }
   },
+  "fullSurface": {
+    "items": {
+      "U1": [
+        "RH-CAMEL",
+        "RH-SENTENCE",
+        "RH-RUN-LONG",
+        "RH-RUN3-SAME",
+        "RH-UNEVEN"
+      ],
+      "U2": [
+        "RH-D3-CAMEL",
+        "RH-D3-SENTENCE"
+      ],
+      "U3": [
+        "RH-FIRST-HEADING",
+        "RH-FIRST-HR"
+      ],
+      "U4": [
+        "RH-OTHER-LEAD"
+      ],
+      "U5": [
+        "Q1",
+        "Q2"
+      ]
+    },
+    "site": {
+      "GraphPolicy/none/camel": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"graphPolicy\", a spelling outside G1's pinned set",
+      "GraphPolicy/none/sentence": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"Graphpolicy\", a spelling outside G1's pinned set",
+      "GraphPolicy/space/camel": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"graph Policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/space/sentence": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"Graph policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/tab/camel": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"graph\\tPolicy\", a spelling outside G1's pinned set",
+      "GraphPolicy/tab/sentence": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"Graph\\tpolicy\", a spelling outside G1's pinned set",
+      "GraphPolicy/dot/camel": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"graph.Policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/dot/sentence": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"Graph.policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/underscore/camel": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"graph_Policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/underscore/sentence": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"Graph_policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/hyphen/camel": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"graph-Policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/hyphen/sentence": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"Graph-policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/repeated/camel": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"graph..Policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/repeated/sentence": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"Graph..policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/mixed/camel": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"graph - Policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/mixed/sentence": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"Graph - policy\", a spelling outside G1's pinned set",
+      "GraphDataIR/none/camel": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graphDataIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/none/sentence": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graphdatair\", a spelling outside G1's pinned set",
+      "GraphDataIR/space/camel": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph Data IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/space/sentence": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph data ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/tab/camel": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph\\tData\\tIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/tab/sentence": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph\\tdata\\tir\", a spelling outside G1's pinned set",
+      "GraphDataIR/dot/camel": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph.Data.IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/dot/sentence": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph.data.ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscore/camel": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph_Data_IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscore/sentence": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph_data_ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphen/camel": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph-Data-IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphen/sentence": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph-data-ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/repeated/camel": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph..Data..IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/repeated/sentence": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph..data..ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/mixed/camel": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph - Data - IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/mixed/sentence": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph - data - ir\", a spelling outside G1's pinned set",
+      "GraphPolicy/spacex3/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"graph   policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/spacex3/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"GRAPH   POLICY\", a spelling outside G1's pinned set",
+      "GraphPolicy/spacex3/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"Graph   Policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/tabx3/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"graph\\t\\t\\tpolicy\", a spelling outside G1's pinned set",
+      "GraphPolicy/tabx3/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"GRAPH\\t\\t\\tPOLICY\", a spelling outside G1's pinned set",
+      "GraphPolicy/tabx3/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"Graph\\t\\t\\tPolicy\", a spelling outside G1's pinned set",
+      "GraphPolicy/dotx3/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"graph...policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/dotx3/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"GRAPH...POLICY\", a spelling outside G1's pinned set",
+      "GraphPolicy/dotx3/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"Graph...Policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/underscorex3/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"graph___policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/underscorex3/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"GRAPH___POLICY\", a spelling outside G1's pinned set",
+      "GraphPolicy/underscorex3/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"Graph___Policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/hyphenx3/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"graph---policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/hyphenx3/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"GRAPH---POLICY\", a spelling outside G1's pinned set",
+      "GraphPolicy/hyphenx3/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"Graph---Policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/spacex4/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"graph    policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/spacex4/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"GRAPH    POLICY\", a spelling outside G1's pinned set",
+      "GraphPolicy/spacex4/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"Graph    Policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/tabx4/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"graph\\t\\t\\t\\tpolicy\", a spelling outside G1's pinned set",
+      "GraphPolicy/tabx4/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"GRAPH\\t\\t\\t\\tPOLICY\", a spelling outside G1's pinned set",
+      "GraphPolicy/tabx4/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"Graph\\t\\t\\t\\tPolicy\", a spelling outside G1's pinned set",
+      "GraphPolicy/dotx4/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"graph....policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/dotx4/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"GRAPH....POLICY\", a spelling outside G1's pinned set",
+      "GraphPolicy/dotx4/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"Graph....Policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/underscorex4/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"graph____policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/underscorex4/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"GRAPH____POLICY\", a spelling outside G1's pinned set",
+      "GraphPolicy/underscorex4/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"Graph____Policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/hyphenx4/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"graph----policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/hyphenx4/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"GRAPH----POLICY\", a spelling outside G1's pinned set",
+      "GraphPolicy/hyphenx4/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"Graph----Policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/mixed4/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"graph -- policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/mixed4/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"GRAPH -- POLICY\", a spelling outside G1's pinned set",
+      "GraphPolicy/mixed4/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"Graph -- Policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/mixed8/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"graph .-_\\t_-.policy\", a spelling outside G1's pinned set",
+      "GraphPolicy/mixed8/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"GRAPH .-_\\t_-.POLICY\", a spelling outside G1's pinned set",
+      "GraphPolicy/mixed8/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphPolicy as \"Graph .-_\\t_-.Policy\", a spelling outside G1's pinned set",
+      "GraphDataIR/spacex3/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph   data   ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/spacex3/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH   DATA   IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/spacex3/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph   Data   IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/tabx3/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph\\t\\t\\tdata\\t\\t\\tir\", a spelling outside G1's pinned set",
+      "GraphDataIR/tabx3/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH\\t\\t\\tDATA\\t\\t\\tIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/tabx3/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph\\t\\t\\tData\\t\\t\\tIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/dotx3/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph...data...ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/dotx3/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH...DATA...IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/dotx3/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph...Data...IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscorex3/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph___data___ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscorex3/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH___DATA___IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscorex3/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph___Data___IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphenx3/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph---data---ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphenx3/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH---DATA---IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphenx3/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph---Data---IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/spacex4/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph    data    ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/spacex4/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH    DATA    IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/spacex4/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph    Data    IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/tabx4/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph\\t\\t\\t\\tdata\\t\\t\\t\\tir\", a spelling outside G1's pinned set",
+      "GraphDataIR/tabx4/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH\\t\\t\\t\\tDATA\\t\\t\\t\\tIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/tabx4/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph\\t\\t\\t\\tData\\t\\t\\t\\tIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/dotx4/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph....data....ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/dotx4/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH....DATA....IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/dotx4/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph....Data....IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscorex4/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph____data____ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscorex4/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH____DATA____IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscorex4/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph____Data____IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphenx4/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph----data----ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphenx4/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH----DATA----IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphenx4/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph----Data----IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/mixed4/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph -- data -- ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/mixed4/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH -- DATA -- IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/mixed4/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph -- Data -- IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/mixed8/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph .-_\\t_-.data .-_\\t_-.ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/mixed8/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH .-_\\t_-.DATA .-_\\t_-.IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/mixed8/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph .-_\\t_-.Data .-_\\t_-.IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/none+space/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graphdata ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/none+space/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPHDATA IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/none+space/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GraphData IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/none+tab/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graphdata\\tir\", a spelling outside G1's pinned set",
+      "GraphDataIR/none+tab/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPHDATA\\tIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/none+tab/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GraphData\\tIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/none+dot/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graphdata.ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/none+dot/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPHDATA.IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/none+dot/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GraphData.IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/none+underscore/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graphdata_ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/none+underscore/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPHDATA_IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/none+underscore/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GraphData_IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/none+hyphen/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graphdata-ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/none+hyphen/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPHDATA-IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/none+hyphen/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GraphData-IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/space+none/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph datair\", a spelling outside G1's pinned set",
+      "GraphDataIR/space+none/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH DATAIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/space+none/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph DataIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/space+tab/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph data\\tir\", a spelling outside G1's pinned set",
+      "GraphDataIR/space+tab/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH DATA\\tIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/space+tab/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph Data\\tIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/space+dot/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph data.ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/space+dot/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH DATA.IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/space+dot/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph Data.IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/space+underscore/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph data_ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/space+underscore/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH DATA_IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/space+underscore/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph Data_IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/space+hyphen/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph data-ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/space+hyphen/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH DATA-IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/space+hyphen/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph Data-IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/tab+none/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph\\tdatair\", a spelling outside G1's pinned set",
+      "GraphDataIR/tab+none/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH\\tDATAIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/tab+none/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph\\tDataIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/tab+space/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph\\tdata ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/tab+space/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH\\tDATA IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/tab+space/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph\\tData IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/tab+dot/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph\\tdata.ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/tab+dot/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH\\tDATA.IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/tab+dot/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph\\tData.IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/tab+underscore/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph\\tdata_ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/tab+underscore/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH\\tDATA_IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/tab+underscore/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph\\tData_IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/tab+hyphen/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph\\tdata-ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/tab+hyphen/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH\\tDATA-IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/tab+hyphen/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph\\tData-IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/dot+none/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph.datair\", a spelling outside G1's pinned set",
+      "GraphDataIR/dot+none/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH.DATAIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/dot+none/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph.DataIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/dot+space/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph.data ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/dot+space/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH.DATA IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/dot+space/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph.Data IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/dot+tab/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph.data\\tir\", a spelling outside G1's pinned set",
+      "GraphDataIR/dot+tab/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH.DATA\\tIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/dot+tab/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph.Data\\tIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/dot+underscore/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph.data_ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/dot+underscore/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH.DATA_IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/dot+underscore/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph.Data_IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/dot+hyphen/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph.data-ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/dot+hyphen/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH.DATA-IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/dot+hyphen/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph.Data-IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscore+none/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph_datair\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscore+none/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH_DATAIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscore+none/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph_DataIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscore+space/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph_data ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscore+space/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH_DATA IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscore+space/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph_Data IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscore+tab/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph_data\\tir\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscore+tab/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH_DATA\\tIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscore+tab/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph_Data\\tIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscore+dot/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph_data.ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscore+dot/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH_DATA.IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscore+dot/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph_Data.IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscore+hyphen/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph_data-ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscore+hyphen/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH_DATA-IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/underscore+hyphen/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph_Data-IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphen+none/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph-datair\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphen+none/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH-DATAIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphen+none/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph-DataIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphen+space/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph-data ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphen+space/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH-DATA IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphen+space/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph-Data IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphen+tab/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph-data\\tir\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphen+tab/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH-DATA\\tIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphen+tab/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph-Data\\tIR\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphen+dot/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph-data.ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphen+dot/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH-DATA.IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphen+dot/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph-Data.IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphen+underscore/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"graph-data_ir\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphen+underscore/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"GRAPH-DATA_IR\", a spelling outside G1's pinned set",
+      "GraphDataIR/hyphen+underscore/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration | S-UNPINNED src/workbench/zz-hit.ts names GraphDataIR as \"Graph-Data_IR\", a spelling outside G1's pinned set"
+    },
+    "sitePlants": {
+      "site": 194,
+      "unpinned": 194
+    },
+    "nonAscii": {
+      "cyrillic-a-in-graph": {
+        "read": [],
+        "latin": [
+          "GraphPolicy"
+        ]
+      },
+      "greek-omicron-in-policy": {
+        "read": [],
+        "latin": [
+          "GraphPolicy"
+        ]
+      },
+      "cyrillic-a-in-data": {
+        "read": [],
+        "latin": [
+          "GraphDataIR"
+        ]
+      },
+      "fullwidth-p-in-policy": {
+        "read": [],
+        "latin": [
+          "GraphPolicy"
+        ]
+      }
+    },
+    "request": {
+      "ExecutorRequest/none/camel": "src/workbench/zz-hit.ts reads \"executorRequest\" | D3-UNPINNED src/workbench/zz-hit.ts names a typed executor request as \"executorRequest\", a spelling outside D3's pinned set",
+      "ExecutorRequest/none/sentence": "src/workbench/zz-hit.ts reads \"Executorrequest\" | D3-UNPINNED src/workbench/zz-hit.ts names a typed executor request as \"Executorrequest\", a spelling outside D3's pinned set",
+      "ExecutorRequest/space/camel": "src/workbench/zz-hit.ts reads \"executor Request\" | D3-UNPINNED src/workbench/zz-hit.ts names a typed executor request as \"executor Request\", a spelling outside D3's pinned set",
+      "ExecutorRequest/space/sentence": "src/workbench/zz-hit.ts reads \"Executor request\" | D3-UNPINNED src/workbench/zz-hit.ts names a typed executor request as \"Executor request\", a spelling outside D3's pinned set",
+      "ExecutorRequest/underscore/camel": "src/workbench/zz-hit.ts reads \"executor_Request\" | D3-UNPINNED src/workbench/zz-hit.ts names a typed executor request as \"executor_Request\", a spelling outside D3's pinned set",
+      "ExecutorRequest/underscore/sentence": "src/workbench/zz-hit.ts reads \"Executor_request\" | D3-UNPINNED src/workbench/zz-hit.ts names a typed executor request as \"Executor_request\", a spelling outside D3's pinned set",
+      "ExecutorRequest/hyphen/camel": "src/workbench/zz-hit.ts reads \"executor-Request\" | D3-UNPINNED src/workbench/zz-hit.ts names a typed executor request as \"executor-Request\", a spelling outside D3's pinned set",
+      "ExecutorRequest/hyphen/sentence": "src/workbench/zz-hit.ts reads \"Executor-request\" | D3-UNPINNED src/workbench/zz-hit.ts names a typed executor request as \"Executor-request\", a spelling outside D3's pinned set"
+    },
+    "requestPlants": {
+      "named": 8,
+      "unpinned": 8
+    },
+    "leads": {
+      "L-HEADING-3": {
+        "rule": "heading",
+        "reads": "heading",
+        "refused": [
+          "boundary-first"
+        ]
+      },
+      "L-HEADING-4": {
+        "rule": "heading",
+        "reads": "heading",
+        "refused": [
+          "boundary-first"
+        ]
+      },
+      "L-HEADING-5": {
+        "rule": "heading",
+        "reads": "heading",
+        "refused": [
+          "boundary-first"
+        ]
+      },
+      "L-HEADING-6": {
+        "rule": "heading",
+        "reads": "heading",
+        "refused": [
+          "boundary-first"
+        ]
+      },
+      "L-BREAK-DASHES": {
+        "rule": "hr",
+        "reads": "other:hr",
+        "refused": [
+          "boundary-first"
+        ]
+      },
+      "L-BREAK-STARS": {
+        "rule": "hr",
+        "reads": "other:hr",
+        "refused": [
+          "boundary-first"
+        ]
+      },
+      "L-BREAK-UNDERSCORES": {
+        "rule": "hr",
+        "reads": "other:hr",
+        "refused": [
+          "boundary-first"
+        ]
+      },
+      "L-SETEXT-2": {
+        "rule": "lheading",
+        "reads": "nothing",
+        "refused": [
+          "boundary-first"
+        ]
+      },
+      "L-SETEXT-1": {
+        "rule": "lheading",
+        "reads": "nothing",
+        "refused": [
+          "boundary-first"
+        ]
+      },
+      "L-CODE-INDENTED": {
+        "rule": "code",
+        "reads": "code",
+        "refused": [
+          "boundary-first"
+        ]
+      },
+      "L-FENCE-BACKTICKS": {
+        "rule": "fences",
+        "reads": "code",
+        "refused": [
+          "boundary-first"
+        ]
+      },
+      "L-FENCE-TILDES": {
+        "rule": "fences",
+        "reads": "code",
+        "refused": [
+          "boundary-first"
+        ]
+      },
+      "L-BLOCKQUOTE": {
+        "rule": "blockquote",
+        "reads": "other:blockquote",
+        "refused": [
+          "boundary-first"
+        ]
+      },
+      "L-LIST-DASH": {
+        "rule": "list",
+        "reads": "list",
+        "refused": [
+          "boundary-first"
+        ]
+      },
+      "L-LIST-STAR": {
+        "rule": "list",
+        "reads": "list",
+        "refused": [
+          "boundary-first"
+        ]
+      },
+      "L-LIST-PLUS": {
+        "rule": "list",
+        "reads": "list",
+        "refused": [
+          "boundary-first"
+        ]
+      },
+      "L-LIST-ORDERED": {
+        "rule": "list",
+        "reads": "list",
+        "refused": [
+          "boundary-first"
+        ]
+      },
+      "L-HTML": {
+        "rule": "html",
+        "reads": "html",
+        "refused": [
+          "boundary-first"
+        ]
+      },
+      "L-HTML-EMPTY": {
+        "rule": "html",
+        "reads": "html",
+        "refused": [
+          "boundary-first"
+        ]
+      },
+      "L-TABLE": {
+        "rule": "table",
+        "reads": "other:table",
+        "refused": [
+          "boundary-first"
+        ]
+      },
+      "L-DEF": {
+        "rule": "def",
+        "reads": "other:def",
+        "refused": [
+          "boundary-first"
+        ]
+      }
+    },
+    "others": {
+      "O-BEFORE-BLOCKQUOTE": {
+        "rule": "blockquote",
+        "blocks": [
+          "blockquote",
+          "table"
+        ],
+        "other": [
+          "blockquote"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-BEFORE-CODE": {
+        "rule": "code",
+        "blocks": [
+          "code",
+          "table"
+        ],
+        "other": [
+          "code"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-BEFORE-DEF": {
+        "rule": "def",
+        "blocks": [
+          "def",
+          "table"
+        ],
+        "other": [
+          "def"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-BEFORE-FENCES": {
+        "rule": "fences",
+        "blocks": [
+          "code",
+          "table"
+        ],
+        "other": [
+          "code"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-BEFORE-HEADING": {
+        "rule": "heading",
+        "blocks": [
+          "heading",
+          "table"
+        ],
+        "other": [
+          "heading"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-BEFORE-HTML": {
+        "rule": "html",
+        "blocks": [
+          "html",
+          "table"
+        ],
+        "other": [
+          "html"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-BEFORE-LIST": {
+        "rule": "list",
+        "blocks": [
+          "list",
+          "table"
+        ],
+        "other": [
+          "list"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-BEFORE-PARAGRAPH": {
+        "rule": "paragraph",
+        "blocks": [
+          "paragraph",
+          "table"
+        ],
+        "other": [
+          "paragraph"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-BETWEEN-BLOCKQUOTE": {
+        "rule": "blockquote",
+        "blocks": [
+          "table",
+          "blockquote",
+          "table"
+        ],
+        "other": [
+          "blockquote"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-BETWEEN-CODE": {
+        "rule": "code",
+        "blocks": [
+          "table",
+          "code",
+          "table"
+        ],
+        "other": [
+          "code"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-BETWEEN-DEF": {
+        "rule": "def",
+        "blocks": [
+          "table",
+          "def",
+          "table"
+        ],
+        "other": [
+          "def"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-BETWEEN-FENCES": {
+        "rule": "fences",
+        "blocks": [
+          "table",
+          "code",
+          "table"
+        ],
+        "other": [
+          "code"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-BETWEEN-HEADING": {
+        "rule": "heading",
+        "blocks": [
+          "table",
+          "heading",
+          "table"
+        ],
+        "other": [
+          "heading"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-BETWEEN-HTML": {
+        "rule": "html",
+        "blocks": [
+          "table",
+          "html",
+          "table"
+        ],
+        "other": [
+          "html"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-BETWEEN-LIST": {
+        "rule": "list",
+        "blocks": [
+          "table",
+          "list",
+          "table"
+        ],
+        "other": [
+          "list"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-BETWEEN-PARAGRAPH": {
+        "rule": "paragraph",
+        "blocks": [
+          "table",
+          "paragraph",
+          "table"
+        ],
+        "other": [
+          "paragraph"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-AFTER-BLOCKQUOTE": {
+        "rule": "blockquote",
+        "blocks": [
+          "table",
+          "blockquote"
+        ],
+        "other": [
+          "blockquote"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-AFTER-CODE": {
+        "rule": "code",
+        "blocks": [
+          "table",
+          "code"
+        ],
+        "other": [
+          "code"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-AFTER-DEF": {
+        "rule": "def",
+        "blocks": [
+          "table",
+          "def"
+        ],
+        "other": [
+          "def"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-AFTER-FENCES": {
+        "rule": "fences",
+        "blocks": [
+          "table",
+          "code"
+        ],
+        "other": [
+          "code"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-AFTER-HEADING": {
+        "rule": "heading",
+        "blocks": [
+          "table",
+          "heading"
+        ],
+        "other": [
+          "heading"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-AFTER-HTML": {
+        "rule": "html",
+        "blocks": [
+          "table",
+          "html"
+        ],
+        "other": [
+          "html"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-AFTER-LIST": {
+        "rule": "list",
+        "blocks": [
+          "table",
+          "list"
+        ],
+        "other": [
+          "list"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      },
+      "O-AFTER-PARAGRAPH": {
+        "rule": "paragraph",
+        "blocks": [
+          "table",
+          "paragraph"
+        ],
+        "other": [
+          "paragraph"
+        ],
+        "rows": 1,
+        "refused": [
+          "ownership-other"
+        ]
+      }
+    },
+    "owners": {
+      "G3-OWNER-none-camel": {
+        "word": true,
+        "rows": 2,
+        "refused": [
+          "ownership-rows"
+        ]
+      },
+      "G3-OWNER-none-sentence": {
+        "word": true,
+        "rows": 2,
+        "refused": [
+          "ownership-rows"
+        ]
+      },
+      "G3-OWNER-space-camel": {
+        "word": true,
+        "rows": 2,
+        "refused": [
+          "ownership-rows"
+        ]
+      },
+      "G3-OWNER-space-sentence": {
+        "word": true,
+        "rows": 2,
+        "refused": [
+          "ownership-rows"
+        ]
+      },
+      "G3-OWNER-tab-camel": {
+        "word": true,
+        "rows": 2,
+        "refused": [
+          "ownership-rows"
+        ]
+      },
+      "G3-OWNER-tab-sentence": {
+        "word": true,
+        "rows": 2,
+        "refused": [
+          "ownership-rows"
+        ]
+      },
+      "G3-OWNER-dot-camel": {
+        "word": true,
+        "rows": 2,
+        "refused": [
+          "ownership-rows"
+        ]
+      },
+      "G3-OWNER-dot-sentence": {
+        "word": true,
+        "rows": 2,
+        "refused": [
+          "ownership-rows"
+        ]
+      },
+      "G3-OWNER-underscore-camel": {
+        "word": true,
+        "rows": 2,
+        "refused": [
+          "ownership-rows"
+        ]
+      },
+      "G3-OWNER-underscore-sentence": {
+        "word": true,
+        "rows": 2,
+        "refused": [
+          "ownership-rows"
+        ]
+      },
+      "G3-OWNER-hyphen-camel": {
+        "word": true,
+        "rows": 2,
+        "refused": [
+          "ownership-rows"
+        ]
+      },
+      "G3-OWNER-hyphen-sentence": {
+        "word": true,
+        "rows": 2,
+        "refused": [
+          "ownership-rows"
+        ]
+      },
+      "G3-OWNER-repeated-camel": {
+        "word": true,
+        "rows": 2,
+        "refused": [
+          "ownership-rows"
+        ]
+      },
+      "G3-OWNER-repeated-sentence": {
+        "word": true,
+        "rows": 2,
+        "refused": [
+          "ownership-rows"
+        ]
+      },
+      "G3-OWNER-mixed-camel": {
+        "word": true,
+        "rows": 2,
+        "refused": [
+          "ownership-rows"
+        ]
+      },
+      "G3-OWNER-mixed-sentence": {
+        "word": true,
+        "rows": 2,
+        "refused": [
+          "ownership-rows"
+        ]
+      }
+    },
+    "silenced": {
+      "src/workbench/q1-shape.ts line-comment": {
+        "code": [],
+        "raw": [
+          "entities",
+          "schema_ref",
+          "namespace",
+          "relations"
+        ]
+      },
+      "src/workbench/q1-shape.ts block-comment": {
+        "code": [],
+        "raw": [
+          "entities",
+          "schema_ref",
+          "namespace",
+          "relations"
+        ]
+      },
+      "src/workbench/q1-shape.ts doc-comment": {
+        "code": [],
+        "raw": [
+          "entities",
+          "schema_ref",
+          "namespace",
+          "relations"
+        ]
+      },
+      "src/workbench/q1-shape.ts double-quoted": {
+        "code": [],
+        "raw": [
+          "entities",
+          "schema_ref",
+          "namespace",
+          "relations"
+        ]
+      },
+      "src/workbench/q1-shape.ts single-quoted": {
+        "code": [],
+        "raw": [
+          "entities",
+          "schema_ref",
+          "namespace",
+          "relations"
+        ]
+      },
+      "src/workbench/q1-shape.ts template": {
+        "code": [],
+        "raw": [
+          "entities",
+          "schema_ref",
+          "namespace",
+          "relations"
+        ]
+      },
+      "src/workbench/q1-shape.ts regex": {
+        "code": [],
+        "raw": [
+          "entities",
+          "schema_ref",
+          "namespace",
+          "relations"
+        ]
+      },
+      "src/workbench/q1-incidences.ts line-comment": {
+        "code": [],
+        "raw": [
+          "incidences",
+          "participant",
+          "role"
+        ]
+      },
+      "src/workbench/q1-incidences.ts block-comment": {
+        "code": [],
+        "raw": [
+          "incidences",
+          "participant",
+          "role"
+        ]
+      },
+      "src/workbench/q1-incidences.ts doc-comment": {
+        "code": [],
+        "raw": [
+          "incidences",
+          "participant",
+          "role"
+        ]
+      },
+      "src/workbench/q1-incidences.ts double-quoted": {
+        "code": [],
+        "raw": [
+          "incidences",
+          "participant",
+          "role"
+        ]
+      },
+      "src/workbench/q1-incidences.ts single-quoted": {
+        "code": [],
+        "raw": [
+          "incidences",
+          "participant",
+          "role"
+        ]
+      },
+      "src/workbench/q1-incidences.ts template": {
+        "code": [],
+        "raw": [
+          "incidences",
+          "participant",
+          "role"
+        ]
+      },
+      "src/workbench/q1-incidences.ts regex": {
+        "code": [],
+        "raw": [
+          "incidences",
+          "participant",
+          "role"
+        ]
+      },
+      "src/workbench/q2-joined.ts line-comment": {
+        "code": [],
+        "raw": [
+          "GraphPolicy",
+          "src/workbench/q2-joined.ts"
+        ]
+      },
+      "src/workbench/q2-joined.ts block-comment": {
+        "code": [],
+        "raw": [
+          "GraphPolicy",
+          "src/workbench/q2-joined.ts"
+        ]
+      },
+      "src/workbench/q2-joined.ts doc-comment": {
+        "code": [],
+        "raw": [
+          "GraphPolicy",
+          "src/workbench/q2-joined.ts"
+        ]
+      },
+      "src/workbench/q2-joined.ts double-quoted": {
+        "code": [],
+        "raw": []
+      },
+      "src/workbench/q2-joined.ts single-quoted": {
+        "code": [],
+        "raw": [
+          "GraphPolicy",
+          "src/workbench/q2-joined.ts"
+        ]
+      },
+      "src/workbench/q2-joined.ts template": {
+        "code": [],
+        "raw": [
+          "GraphPolicy",
+          "src/workbench/q2-joined.ts"
+        ]
+      },
+      "src/workbench/q2-joined.ts regex": {
+        "code": [],
+        "raw": [
+          "GraphPolicy"
+        ]
+      },
+      "src/workbench/q2-escape.ts line-comment": {
+        "code": [],
+        "raw": [
+          "GraphDataIR"
+        ]
+      },
+      "src/workbench/q2-escape.ts block-comment": {
+        "code": [],
+        "raw": [
+          "GraphDataIR"
+        ]
+      },
+      "src/workbench/q2-escape.ts doc-comment": {
+        "code": [],
+        "raw": [
+          "GraphDataIR"
+        ]
+      },
+      "src/workbench/q2-escape.ts double-quoted": {
+        "code": [],
+        "raw": []
+      },
+      "src/workbench/q2-escape.ts single-quoted": {
+        "code": [],
+        "raw": []
+      },
+      "src/workbench/q2-escape.ts template": {
+        "code": [],
+        "raw": []
+      },
+      "src/workbench/q2-escape.ts regex": {
+        "code": [],
+        "raw": []
+      },
+      "src/workbench/q2-request.ts line-comment": {
+        "code": [],
+        "raw": [
+          "src/workbench/q2-request.ts"
+        ]
+      },
+      "src/workbench/q2-request.ts block-comment": {
+        "code": [],
+        "raw": [
+          "src/workbench/q2-request.ts"
+        ]
+      },
+      "src/workbench/q2-request.ts doc-comment": {
+        "code": [],
+        "raw": [
+          "src/workbench/q2-request.ts"
+        ]
+      },
+      "src/workbench/q2-request.ts double-quoted": {
+        "code": [],
+        "raw": []
+      },
+      "src/workbench/q2-request.ts single-quoted": {
+        "code": [],
+        "raw": [
+          "src/workbench/q2-request.ts"
+        ]
+      },
+      "src/workbench/q2-request.ts template": {
+        "code": [],
+        "raw": [
+          "src/workbench/q2-request.ts"
+        ]
+      },
+      "src/workbench/q2-request.ts regex": {
+        "code": [],
+        "raw": [
+          "src/workbench/q2-request.ts"
+        ]
+      }
+    },
+    "unreached": {
+      "src/workbench/q1-shape.ts": [
+        "schema_ref",
+        "namespace",
+        "entities",
+        "relations"
+      ],
+      "src/workbench/q1-incidences.ts": [
+        "incidences",
+        "participant",
+        "role"
+      ],
+      "src/workbench/q2-joined.ts": [
+        "GraphPolicy",
+        "src/workbench/q2-joined.ts"
+      ],
+      "src/workbench/q2-escape.ts": [
+        "GraphDataIR"
+      ],
+      "src/workbench/q2-request.ts": [
+        "src/workbench/q2-request.ts"
+      ]
+    }
+  },
   "tests": [
     "A1: a pure exporter test",
     "A2: builds GraphDataIR",
@@ -2462,6 +3628,7 @@
     "rule 16: the rows, the residual families, the mutants and cases per pin, the rules and the registry are frozen at their measured shape",
     "the outside anchors: the bead's own row binds the rows and the pin quotes; the vendored producer fixture, the registry and the live control import bind the judge's spellings",
     "fail closed (R-B73): each FAIL_CLOSED form, outside its claim's pinned set, refuses with exactly its typed refusals, and the fail-closed readers refuse no pinned spelling and nothing on today's tree",
+    "full surface (wb-0lf.8): every form R-B73 left outside the G1, D3, G3 and S2 claims is pinned through the claim's own reader, each family answering its item of wb-0lf.8's own row",
     "roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/gp-snapshot-export-roster.json, in order and both ways; every pin reached its witness compare"
   ]
 }
