@@ -381,6 +381,30 @@
    "collision-relay",
    "collision-relay-earlier",
    "collision-earlier-declaration",
+   "string-named-method",
+   "string-named-class-method",
+   "string-named-static-method",
+   "const-named-method",
+   "const-named-class-method",
+   "literal-named-method",
+   "template-named-method",
+   "sum-named-method",
+   "template-expression-named-method",
+   "call-string-named-relay",
+   "apply-string-named-relay",
+   "satisfied-for-of-target",
+   "non-null-for-of-target",
+   "angle-asserted-for-of-target",
+   "collision-third-declaration",
+   "class-expression-method-helper",
+   "let-helper",
+   "var-helper",
+   "call-named-method",
+   "apply-named-method",
+   "array-binding-default",
+   "reflect-get-const-key",
+   "wrapped-helper-initializer",
+   "member-callee-function",
    "reflective-Object.values",
    "reflective-Object.entries",
    "reflective-Object.assign",
@@ -433,7 +457,18 @@
    "reflective-optional-callee",
    "reflective-alias",
    "imported-key",
-   "numeric-key"
+   "numeric-key",
+   "rest-parameter",
+   "rest-parameter-later",
+   "spread-before-argument",
+   "apply-list-spread",
+   "getter-helper",
+   "destructured-helper",
+   "parameter-default-helper",
+   "conditional-helper",
+   "new-function-declaration",
+   "numeric-named-method",
+   "unresolved-named-method"
   ],
   "surfacePins": {
    "Pi type": "C2",
@@ -1484,6 +1519,78 @@
         "collision-earlier-declaration": [
          "8 member blocks"
         ],
+        "string-named-method": [
+         "3 member blocks"
+        ],
+        "string-named-class-method": [
+         "3 member blocks"
+        ],
+        "string-named-static-method": [
+         "3 member blocks"
+        ],
+        "const-named-method": [
+         "4 member blocks"
+        ],
+        "const-named-class-method": [
+         "4 member blocks"
+        ],
+        "literal-named-method": [
+         "3 member blocks"
+        ],
+        "template-named-method": [
+         "3 member blocks"
+        ],
+        "sum-named-method": [
+         "3 member blocks"
+        ],
+        "template-expression-named-method": [
+         "4 member blocks"
+        ],
+        "call-string-named-relay": [
+         "3 member blocks"
+        ],
+        "apply-string-named-relay": [
+         "3 member blocks"
+        ],
+        "satisfied-for-of-target": [
+         "3 member blocks"
+        ],
+        "non-null-for-of-target": [
+         "3 member blocks"
+        ],
+        "angle-asserted-for-of-target": [
+         "3 member blocks"
+        ],
+        "collision-third-declaration": [
+         "12 member blocks"
+        ],
+        "class-expression-method-helper": [
+         "3 member blocks"
+        ],
+        "let-helper": [
+         "1 member blocks"
+        ],
+        "var-helper": [
+         "2 member blocks"
+        ],
+        "call-named-method": [
+         "3 member blocks"
+        ],
+        "apply-named-method": [
+         "3 member blocks"
+        ],
+        "array-binding-default": [
+         "2 member blocks"
+        ],
+        "reflect-get-const-key": [
+         "2 reflective Reflect.get blocks"
+        ],
+        "wrapped-helper-initializer": [
+         "1 member blocks"
+        ],
+        "member-callee-function": [
+         "2 member blocks"
+        ],
         "reflective-Object.values": [
          "1 reflective Object.values"
         ],
@@ -1550,7 +1657,18 @@
         "reflective-optional-callee": [],
         "reflective-alias": [],
         "imported-key": [],
-        "numeric-key": []
+        "numeric-key": [],
+        "rest-parameter": [],
+        "rest-parameter-later": [],
+        "spread-before-argument": [],
+        "apply-list-spread": [],
+        "getter-helper": [],
+        "destructured-helper": [],
+        "parameter-default-helper": [],
+        "conditional-helper": [],
+        "new-function-declaration": [],
+        "numeric-named-method": [],
+        "unresolved-named-method": []
        }
       },
       "reactivefiberLoader": false,
