@@ -541,6 +541,94 @@
           "added": [],
           "missing": [],
           "helpers": []
+        },
+        "journals-label": {
+          "unread": [
+            "deep-frozen spread of a JSON round-trip (a decision replayed from the journals) <- [\"deep-frozen spread of a JSON round-trip (a decision replayed from the journals)\", deepFreeze({ ...(jsonRoundTrip(genuine) as object) })]"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "audited-label": {
+          "unread": [
+            "deep-frozen spread of a JSON round-trip (an audited decision, replayed) <- [\"deep-frozen spread of a JSON round-trip (an audited decision, replayed)\", deepFreeze({ ...(jsonRoundTrip(genuine) as object) })]"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "audit_log-label": {
+          "unread": [
+            "deep-frozen spread of a JSON round-trip (a decision replayed from the audit_log) <- [\"deep-frozen spread of a JSON round-trip (a decision replayed from the audit_log)\", deepFreeze({ ...(jsonRoundTrip(genuine) as object) })]"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journaled-title": {
+          "unread": [
+            "frozen JSON round-trip <- expectUnminted(await subject.attempt(Object.freeze(jsonRoundTrip(genuine))), \"frozen JSON round-trip\");"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "joined-label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip (a decision replayed from the decisionJournal): deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "joined-title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "journals-elsewhere": {
+          "unread": [
+            "a decision read back from the journals <- \"a decision read back from the journals\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "joined-elsewhere": {
+          "unread": [
+            "a decision read back from the controlAudit <- \"a decision read back from the controlAudit\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "letter-case-label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip (a decision replayed from the AUDIT): deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "letter-case-title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "letter-case-elsewhere": {
+          "unread": [
+            "a decision read back from the JOURNAL <- \"a decision read back from the JOURNAL\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
         }
       }
     },
