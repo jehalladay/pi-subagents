@@ -283,33 +283,64 @@ Named residuals of test/workbench-rf-definition-source-census.test.ts, the until
 
 ## HX licensed-complete census read forms
 
-Read forms of test/workbench-hx-licensed-complete-census.test.ts, the until-then census of the HX licensed-complete branch (wb-tz2.9): one row per form its live-set reader reads (surfaces membership, registration and fail-closed, beside the quiet controls) and per form its route reader reads (surface route), each a falsifier module the census runs. A membership or registration form reads live with the HX cases it registers and nothing unresolved or outside, a fail-closed form reads something unresolved or outside, a control reads quiet, and every route form but the intact one reads a route list other than the intact one's. The census holds this table to its form lists in both directions and in table order, so a form dropped, renamed, reordered or moved to another surface on either side reads red.
+Read forms of test/workbench-hx-licensed-complete-census.test.ts, the until-then census of the HX licensed-complete branch (wb-tz2.9): one row per form its live-set reader reads (surfaces membership, registration and fail-closed, beside the quiet controls) and per form its route reader reads (surface route), each a falsifier module the census runs. A membership or registration form reads live with the HX cases it registers and nothing unresolved or outside, a fail-closed form reads something unresolved or outside, a control reads quiet, and every route form but the intact one reads a route list other than the intact one's. A fail-closed form writes its HX reference directly where it stands; an hx drive carried there by the value of an M6 assignment is the residual family R-LIVE-ASSIGNED-VALUE (Q9), which the census reads quiet. The census holds this table to its form lists in both directions and in table order, so a form dropped, renamed, reordered or moved to another surface on either side reads red.
 
 | Surface | Form |
 | --- | --- |
 | membership | named |
 | membership | aliased |
+| membership | aliased-string-name |
 | membership | named-elsewhere |
 | membership | type-only |
+| membership | type-only-specifier |
 | membership | client |
 | membership | namespace |
 | membership | namespace-element |
 | membership | namespace-sdk |
 | membership | namespace-bare-path |
+| membership | namespace-ts-path |
+| membership | namespace-mts-path |
+| membership | namespace-cts-path |
+| membership | namespace-mjs-path |
+| membership | namespace-cjs-path |
+| membership | namespace-unprefixed-path |
 | membership | default |
 | membership | dynamic |
+| membership | dynamic-template-specifier |
+| membership | dynamic-parenthesized |
+| membership | dynamic-as |
+| membership | dynamic-satisfies |
+| membership | dynamic-non-null |
+| membership | dynamic-type-assertion |
+| membership | dynamic-typed |
 | membership | dynamic-destructured |
+| membership | dynamic-destructured-shorthand |
+| membership | dynamic-destructured-rest |
 | membership | dynamic-inline |
 | membership | dynamic-module |
 | membership | dynamic-unawaited |
 | membership | alias |
 | membership | alias-member |
+| membership | alias-member-default |
+| membership | alias-member-dynamic |
+| membership | alias-member-element |
 | membership | alias-destructured |
+| membership | alias-destructured-default |
+| membership | alias-destructured-dynamic |
 | membership | alias-chain |
+| membership | alias-after-assignment |
 | membership | assigned |
+| membership | assigned-or |
+| membership | assigned-and |
+| membership | assigned-member |
 | membership | assigned-in-case |
 | membership | destructuring-assigned |
+| membership | destructuring-assigned-shorthand |
+| membership | destructuring-assigned-default |
+| membership | destructuring-assigned-dynamic |
 | membership | stored |
+| membership | stored-deep |
+| membership | stored-element |
 | registration | root-test |
 | registration | import-alias |
 | registration | const-alias |
@@ -329,6 +360,9 @@ Read forms of test/workbench-hx-licensed-complete-census.test.ts, the until-then
 | registration | flags-chained |
 | registration | method-after-flag |
 | registration | flag-after-method |
+| registration | flag-element |
+| registration | method-element |
+| registration | callee-whitespace |
 | registration | extended-alias |
 | registration | options-position |
 | registration | timeout-position |
@@ -337,6 +371,7 @@ Read forms of test/workbench-hx-licensed-complete-census.test.ts, the until-then
 | registration | template-title |
 | registration | computed-title |
 | fail-closed | require |
+| fail-closed | require-template |
 | fail-closed | import-actual |
 | fail-closed | held-specifier |
 | fail-closed | export-from |
@@ -346,7 +381,9 @@ Read forms of test/workbench-hx-licensed-complete-census.test.ts, the until-then
 | fail-closed | unread-assignment-pattern |
 | fail-closed | array-held |
 | fail-closed | hook |
+| fail-closed | hook-iife-entry |
 | fail-closed | helper-function |
+| fail-closed | helper-returns-entry |
 | fail-closed | named-body |
 | fail-closed | describe-body |
 | fail-closed | fixture |
@@ -371,10 +408,13 @@ Read forms of test/workbench-hx-licensed-complete-census.test.ts, the until-then
 | route | twice |
 | route | aliased |
 | route | held |
+| route | member-predicate |
+| route | nested-case |
+| route | parenthesized-subject |
 
 ## HX licensed-complete census residuals
 
-Named residuals of test/workbench-hx-licensed-complete-census.test.ts, the until-then census of the HX licensed-complete branch (wb-tz2.9): one row per member of each family its claim scanner (Q1 to Q6), its live-set reader (Q7) or its route reader (Q8) names and does not read, so a claim, a live HX drive or a hollowed route spelled that way in a native-read file is not caught by it. Each row names the census quiet row that pins the family, the family's name and the member, a statement or module the census reads quiet. The census holds this table to its residual pins and members in both directions and in table order, so a family or member dropped, renamed, reordered or moved to another quiet row on either side reads red.
+Named residuals of test/workbench-hx-licensed-complete-census.test.ts, the until-then census of the HX licensed-complete branch (wb-tz2.9): one row per member of each family its claim scanner (Q1 to Q6 and Q10), its live-set reader (Q7 and Q9) or its route reader (Q8) names and does not read, so a claim, a live HX drive or a hollowed route spelled that way in a native-read file is not caught by it. Each row names the census quiet row that pins the family, the family's name and the member, a statement or module the census reads quiet. The census holds this table to its residual pins and members in both directions and in table order, so a family or member dropped, renamed, reordered or moved to another quiet row on either side reads red.
 
 | Quiet row | Residual family | Member |
 | --- | --- | --- |
@@ -410,7 +450,30 @@ Named residuals of test/workbench-hx-licensed-complete-census.test.ts, the until
 | Q7 | R-LIVE-INDIRECT | `it("HX probe", async () => { const hxProvider = await import("../src/workbench/providers/" + "hyperunix.js"); await hxProvider.nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file", "src"); });` |
 | Q7 | R-LIVE-INDIRECT | `import {registry} from "./helpers/live-registry.js"; it("HX probe", async () => { await registry.invoke("hyperunix.find", {kind: "hx.fs/regular-file", root: "src"}, {grants: ["hyperunix:read"]}); });` |
 | Q7 | R-LIVE-INDIRECT | `import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; const stash: (() => Promise<unknown>)[] = []; it("HX hand-off", () => { stash.push(() => nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file", "src")); }); it("HX probe", async () => { await stash[0]?.(); });` |
+| Q7 | R-LIVE-INDIRECT | `import {streamFind} from "@hyperunix/sdk"; it("HX probe", async () => { const execution = streamFind({kind: "hx.fs/regular-file", root: "src"}, {binary: "hx", cwd: process.cwd()}); await execution.result(); });` |
+| Q7 | R-LIVE-INDIRECT | `import {stream} from "@hyperunix/sdk"; it("HX probe", async () => { const execution = stream({operation: "find", options: [["--kind", "hx.fs/regular-file"]], operands: ["src"]}, {binary: "hx"}); await execution.result(); });` |
+| Q7 | R-LIVE-INDIRECT | `import {runPlanStream} from "@hyperunix/sdk"; it("HX probe", async () => { await runPlanStream(new Uint8Array(), ["exec"], {hx: "hx"}); });` |
+| Q7 | R-LIVE-INDIRECT | `import {executePlanStream, query} from "@hyperunix/sdk"; it("HX probe", async () => { await executePlanStream(query("hx.fs/regular-file"), {hx: "hx"}); });` |
+| Q7 | R-LIVE-INDIRECT | `import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; beforeAll(() => { (nativeHyperUnixFind as unknown as {constructor: {prototype: Record<string, unknown>}}).constructor.prototype.hxCarry = nativeHyperUnixFind; }); it("HX probe", async () => { await (describe as unknown as {hxCarry: (...args: string[]) => Promise<unknown>}).hxCarry(process.cwd(), "hx.fs/regular-file", "src"); });` |
 | Q8 | R-ROUTE-RUNTIME | `import {hxLiveInvariant} from "../src/workbench/hyperunix-observer.js"; import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; it("HX probe", async () => { const result = await nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file", "src"); if (Date.now() < 0) expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); });` |
 | Q8 | R-ROUTE-RUNTIME | `import {hxLiveInvariant} from "../src/workbench/hyperunix-observer.js"; import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; it("HX probe", async () => { const result = await nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file", "src"); return; expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); });` |
 | Q8 | R-ROUTE-RUNTIME | `import {hxLiveInvariant} from "../src/workbench/hyperunix-observer.js"; import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; it("HX probe", async () => { const result = await nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file", "src"); const never = () => expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); });` |
 | Q8 | R-ROUTE-RUNTIME | `import {hxLiveInvariant} from "../src/workbench/hyperunix-observer.js"; import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; it("HX probe", async () => { const live = await nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file", "src"); { const result = {runtime: live}; expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); } });` |
+| Q8 | R-ROUTE-RUNTIME | `import {hxLiveInvariant} from "../src/workbench/hyperunix-observer.js"; import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; it("HX probe", async () => { const result = await nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file", "src"); try { expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); } catch { /* swallowed */ } });` |
+| Q8 | R-ROUTE-RUNTIME | `import {hxLiveInvariant} from "../src/workbench/hyperunix-observer.js"; import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; it("HX probe", async () => { const result = await nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file", "src"); await Promise.resolve().then(() => { expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); }).catch(() => undefined); });` |
+| Q8 | R-ROUTE-RUNTIME | `import {hxLiveInvariant} from "../src/workbench/hyperunix-observer.js"; import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; it("HX probe", async () => { const result = await nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file", "src"); setTimeout(() => { expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); }, 0); });` |
+| Q8 | R-ROUTE-RUNTIME | `import {hxLiveInvariant} from "../src/workbench/hyperunix-observer.js"; import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; it("HX probe", async () => { const result = await nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file", "src"); const hxLiveInvariant = (_: unknown) => ({holds: true, violations: []}); expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); });` |
+| Q8 | R-ROUTE-RUNTIME | `import {hxLiveInvariant} from "../src/workbench/hyperunix-observer.js"; import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; it("HX probe", async () => { const result = await nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file", "src"); const expect = (_: unknown) => ({toMatchObject: (_e: unknown) => undefined}); expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); });` |
+| Q9 | R-LIVE-ASSIGNED-VALUE | `import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; let result: unknown; beforeAll(async () => { result = await (() => ((nativeHyperUnixFind as unknown as Record<string, unknown>).hxCarry = nativeHyperUnixFind))()(process.cwd(), "hx.fs/regular-file", "src"); }, 60_000); it("HX probe", () => { expect(result).toBeDefined(); });` |
+| Q9 | R-LIVE-ASSIGNED-VALUE | `import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; describe("probe", () => { const pending = (() => ((nativeHyperUnixFind as unknown as Record<string, unknown>).hxCarry = nativeHyperUnixFind))()(process.cwd(), "hx.fs/regular-file", "src"); it("HX probe", async () => { await pending; }); });` |
+| Q9 | R-LIVE-ASSIGNED-VALUE | `import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; const pending = (() => ((nativeHyperUnixFind as unknown as Record<string, unknown>).hxCarry = nativeHyperUnixFind))()(process.cwd(), "hx.fs/regular-file", "src"); it("HX probe", async () => { await pending; });` |
+| Q9 | R-LIVE-ASSIGNED-VALUE | `import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; const carry = () => ((nativeHyperUnixFind as unknown as Record<string, unknown>).hxCarry = nativeHyperUnixFind); let result: unknown; beforeAll(async () => { result = await carry()(process.cwd(), "hx.fs/regular-file", "src"); }, 60_000); it("HX probe", () => { expect(result).toBeDefined(); });` |
+| Q9 | R-LIVE-ASSIGNED-VALUE | `import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; function carry() { return ((nativeHyperUnixFind as unknown as Record<string, unknown>).hxCarry = nativeHyperUnixFind); } let result: unknown; beforeAll(async () => { result = await carry()(process.cwd(), "hx.fs/regular-file", "src"); }, 60_000); it("HX probe", () => { expect(result).toBeDefined(); });` |
+| Q9 | R-LIVE-ASSIGNED-VALUE | `import {HyperUnix} from "@hyperunix/sdk"; beforeAll(async () => { const reader = await (() => ((HyperUnix as unknown as Record<string, unknown>).hxCarry = HyperUnix))().open({workspace: process.cwd()}); await reader.close(); }); it("HX probe", () => { expect(1).toBe(1); });` |
+| Q9 | R-LIVE-ASSIGNED-VALUE | `import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; let result: unknown; beforeAll(async () => { result = await ((nativeHyperUnixFind as unknown as Record<string, unknown>).hxCarry = nativeHyperUnixFind)(process.cwd(), "hx.fs/regular-file", "src"); }, 60_000); it("HX probe", () => { expect(result).toBeDefined(); });` |
+| Q9 | R-LIVE-ASSIGNED-VALUE | `import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; describe("probe", () => { void ((nativeHyperUnixFind as unknown as Record<string, unknown>).hxCarry = nativeHyperUnixFind)(process.cwd(), "hx.fs/regular-file", "src"); it("HX probe", () => { expect(1).toBe(1); }); });` |
+| Q9 | R-LIVE-ASSIGNED-VALUE | `import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; let find; beforeAll(async () => { await (find = nativeHyperUnixFind)(process.cwd(), "hx.fs/regular-file", "src"); }); it("HX probe", () => { expect(1).toBe(1); });` |
+| Q9 | R-LIVE-ASSIGNED-VALUE | `import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js"; let carried; const find = (carried = nativeHyperUnixFind); it("HX probe", async () => { await find(process.cwd(), "hx.fs/regular-file", "src"); });` |
+| Q10 | R-UNREAD-SHAPE | `(expect(verdict.absenceLicensed)).toBe(true);` |
+| Q10 | R-UNREAD-SHAPE | `Object.defineProperty(verdict, 'absenceLicensed', {value: true});` |
+| Q10 | R-UNREAD-SHAPE | `Reflect.set(verdict, 'absenceLicensed', true);` |

@@ -1,5 +1,5 @@
 {
-  "comment": "wb-tz2.9 (HX-ORIGINAL-GOALS-CLOSURE-R9): the OUT-OF-FILE anchor of test/workbench-hx-licensed-complete-census.test.ts (the hk9l/5jha roster pattern), cut #3 (the respin of refusal #2 in the enumerate-the-resolvable form, orchestrator ruling R-B82). rows, quotes, readings and residuals: the census's judged set, held to the census both ways and in order (row Q's families and members are also held, both ways, to docs/14's 'HX licensed-complete census residuals' table, and every LIVE SET and ROUTE form to its 'HX licensed-complete census read forms' table); witnesses: one per pin, each the value its case MEASURED at the cut (trunk 57cb1c0ca9a4 merged into the branch), computed by the census from the docs, the configs, forge.toml, package.json, the live sources, the docs/14 fixture cases, the census's own form modules read by its readers, and src; tests: every registered test title in registration order; gate: the R9 gate artifact's state, its condition, citations and on-landing text (each equal to the bead's own description in the tracker export), and the first cutting seat's read-only measurement, which the census never re-reads.",
+  "comment": "wb-tz2.9 (HX-ORIGINAL-GOALS-CLOSURE-R9): the OUT-OF-FILE anchor of test/workbench-hx-licensed-complete-census.test.ts (the hk9l/5jha roster pattern), cut #4 (the FAIL-CLOSED CORE that orchestrator ruling R-B103 binds after refusal #3: W1's FAIL CLOSED clause restated to the placement the reader implements, the outside-form hole named as residual family Q9 and every claimed sub-form falsified or its claim word dropped). rows, quotes, readings and residuals: the census's judged set, held to the census both ways and in order (row Q's families and members are also held, both ways, to docs/14's 'HX licensed-complete census residuals' table, and every LIVE SET and ROUTE form to its 'HX licensed-complete census read forms' table); witnesses: one per pin, each the value its case MEASURED at the cut (trunk ee4870967eb3 merged into the branch), computed by the census from the docs, the configs, forge.toml, package.json, the live sources, the docs/14 fixture cases, the census's own form modules read by its readers, and src; tests: every registered test title in registration order; gate: the R9 gate artifact's state, its condition, citations and on-landing text (each equal to the bead's own description in the tracker export), and the first cutting seat's read-only measurement, which the census never re-reads.",
   "bead": "wb-tz2.9",
   "rows": [
     {
@@ -45,7 +45,9 @@
         "Q5",
         "Q6",
         "Q7",
-        "Q8"
+        "Q8",
+        "Q9",
+        "Q10"
       ]
     }
   ],
@@ -65,7 +67,9 @@
     "Q5": "R-UNCONSUMED-FIELD",
     "Q6": "R-TEXT-FRAGMENT",
     "Q7": "R-LIVE-INDIRECT",
-    "Q8": "R-ROUTE-RUNTIME"
+    "Q8": "R-ROUTE-RUNTIME",
+    "Q9": "R-LIVE-ASSIGNED-VALUE",
+    "Q10": "R-UNREAD-SHAPE"
   },
   "readings": {
     "W1": "pending: the native-read tier's HX live set is its two files that bind an HX entry in a membership form, each with one HX case in a read registration chain; no HX case body states a claim in a read form, nothing reads unresolved or outside, and every LIVE SET form reads as the roster pins it",
@@ -82,8 +86,10 @@
     "Q4": "quiet: the scanner reads no pairing through a matcher C2-C4 do not read; C1 properties and C5 text stay read inside any matcher",
     "Q5": "quiet: the scanner reads no field its vocabulary does not derive",
     "Q6": "quiet: the scanner reads no known-empty word that is not whole in one literal",
-    "Q7": "quiet: the live-set reader reads no HX probe case whose hx drive reaches it through no HX module mention and no HX local",
-    "Q8": "quiet: the route reader reads a route chain held verbatim but not run over the live read as the intact route"
+    "Q7": "quiet: the live-set reader reads no HX probe case whose hx drive reaches it through no HX local",
+    "Q8": "quiet: the route reader reads a route chain held verbatim but not run, or run defeated, over the live read as the intact route",
+    "Q9": "quiet: the live-set reader follows no M6 assignment's value, so an hx drive carried by one reads no HX probe case and nothing unresolved or outside",
+    "Q10": "quiet: the scanner reads no pairing written in a shape C1-C4 do not parse"
   },
   "residuals": {
     "Q1": [
@@ -130,13 +136,40 @@
       "import {runHx} from \"@hyperunix/sdk/raw\"; it(\"HX probe\", async () => { await runHx([\"find\", \"--kind\", \"hx.fs/regular-file\", \"src\"]); });",
       "it(\"HX probe\", async () => { const hxProvider = await import(\"../src/workbench/providers/\" + \"hyperunix.js\"); await hxProvider.nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });",
       "import {registry} from \"./helpers/live-registry.js\"; it(\"HX probe\", async () => { await registry.invoke(\"hyperunix.find\", {kind: \"hx.fs/regular-file\", root: \"src\"}, {grants: [\"hyperunix:read\"]}); });",
-      "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const stash: (() => Promise<unknown>)[] = []; it(\"HX hand-off\", () => { stash.push(() => nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\")); }); it(\"HX probe\", async () => { await stash[0]?.(); });"
+      "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const stash: (() => Promise<unknown>)[] = []; it(\"HX hand-off\", () => { stash.push(() => nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\")); }); it(\"HX probe\", async () => { await stash[0]?.(); });",
+      "import {streamFind} from \"@hyperunix/sdk\"; it(\"HX probe\", async () => { const execution = streamFind({kind: \"hx.fs/regular-file\", root: \"src\"}, {binary: \"hx\", cwd: process.cwd()}); await execution.result(); });",
+      "import {stream} from \"@hyperunix/sdk\"; it(\"HX probe\", async () => { const execution = stream({operation: \"find\", options: [[\"--kind\", \"hx.fs/regular-file\"]], operands: [\"src\"]}, {binary: \"hx\"}); await execution.result(); });",
+      "import {runPlanStream} from \"@hyperunix/sdk\"; it(\"HX probe\", async () => { await runPlanStream(new Uint8Array(), [\"exec\"], {hx: \"hx\"}); });",
+      "import {executePlanStream, query} from \"@hyperunix/sdk\"; it(\"HX probe\", async () => { await executePlanStream(query(\"hx.fs/regular-file\"), {hx: \"hx\"}); });",
+      "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; beforeAll(() => { (nativeHyperUnixFind as unknown as {constructor: {prototype: Record<string, unknown>}}).constructor.prototype.hxCarry = nativeHyperUnixFind; }); it(\"HX probe\", async () => { await (describe as unknown as {hxCarry: (...args: string[]) => Promise<unknown>}).hxCarry(process.cwd(), \"hx.fs/regular-file\", \"src\"); });"
     ],
     "Q8": [
       "import {hxLiveInvariant} from \"../src/workbench/hyperunix-observer.js\"; import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", async () => { const result = await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); if (Date.now() < 0) expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); });",
       "import {hxLiveInvariant} from \"../src/workbench/hyperunix-observer.js\"; import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", async () => { const result = await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); return; expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); });",
       "import {hxLiveInvariant} from \"../src/workbench/hyperunix-observer.js\"; import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", async () => { const result = await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); const never = () => expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); });",
-      "import {hxLiveInvariant} from \"../src/workbench/hyperunix-observer.js\"; import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", async () => { const live = await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); { const result = {runtime: live}; expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); } });"
+      "import {hxLiveInvariant} from \"../src/workbench/hyperunix-observer.js\"; import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", async () => { const live = await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); { const result = {runtime: live}; expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); } });",
+      "import {hxLiveInvariant} from \"../src/workbench/hyperunix-observer.js\"; import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", async () => { const result = await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); try { expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); } catch { /* swallowed */ } });",
+      "import {hxLiveInvariant} from \"../src/workbench/hyperunix-observer.js\"; import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", async () => { const result = await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); await Promise.resolve().then(() => { expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); }).catch(() => undefined); });",
+      "import {hxLiveInvariant} from \"../src/workbench/hyperunix-observer.js\"; import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", async () => { const result = await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); setTimeout(() => { expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); }, 0); });",
+      "import {hxLiveInvariant} from \"../src/workbench/hyperunix-observer.js\"; import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", async () => { const result = await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); const hxLiveInvariant = (_: unknown) => ({holds: true, violations: []}); expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); });",
+      "import {hxLiveInvariant} from \"../src/workbench/hyperunix-observer.js\"; import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", async () => { const result = await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); const expect = (_: unknown) => ({toMatchObject: (_e: unknown) => undefined}); expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []}); });"
+    ],
+    "Q9": [
+      "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let result: unknown; beforeAll(async () => { result = await (() => ((nativeHyperUnixFind as unknown as Record<string, unknown>).hxCarry = nativeHyperUnixFind))()(process.cwd(), \"hx.fs/regular-file\", \"src\"); }, 60_000); it(\"HX probe\", () => { expect(result).toBeDefined(); });",
+      "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; describe(\"probe\", () => { const pending = (() => ((nativeHyperUnixFind as unknown as Record<string, unknown>).hxCarry = nativeHyperUnixFind))()(process.cwd(), \"hx.fs/regular-file\", \"src\"); it(\"HX probe\", async () => { await pending; }); });",
+      "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const pending = (() => ((nativeHyperUnixFind as unknown as Record<string, unknown>).hxCarry = nativeHyperUnixFind))()(process.cwd(), \"hx.fs/regular-file\", \"src\"); it(\"HX probe\", async () => { await pending; });",
+      "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const carry = () => ((nativeHyperUnixFind as unknown as Record<string, unknown>).hxCarry = nativeHyperUnixFind); let result: unknown; beforeAll(async () => { result = await carry()(process.cwd(), \"hx.fs/regular-file\", \"src\"); }, 60_000); it(\"HX probe\", () => { expect(result).toBeDefined(); });",
+      "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; function carry() { return ((nativeHyperUnixFind as unknown as Record<string, unknown>).hxCarry = nativeHyperUnixFind); } let result: unknown; beforeAll(async () => { result = await carry()(process.cwd(), \"hx.fs/regular-file\", \"src\"); }, 60_000); it(\"HX probe\", () => { expect(result).toBeDefined(); });",
+      "import {HyperUnix} from \"@hyperunix/sdk\"; beforeAll(async () => { const reader = await (() => ((HyperUnix as unknown as Record<string, unknown>).hxCarry = HyperUnix))().open({workspace: process.cwd()}); await reader.close(); }); it(\"HX probe\", () => { expect(1).toBe(1); });",
+      "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let result: unknown; beforeAll(async () => { result = await ((nativeHyperUnixFind as unknown as Record<string, unknown>).hxCarry = nativeHyperUnixFind)(process.cwd(), \"hx.fs/regular-file\", \"src\"); }, 60_000); it(\"HX probe\", () => { expect(result).toBeDefined(); });",
+      "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; describe(\"probe\", () => { void ((nativeHyperUnixFind as unknown as Record<string, unknown>).hxCarry = nativeHyperUnixFind)(process.cwd(), \"hx.fs/regular-file\", \"src\"); it(\"HX probe\", () => { expect(1).toBe(1); }); });",
+      "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let find; beforeAll(async () => { await (find = nativeHyperUnixFind)(process.cwd(), \"hx.fs/regular-file\", \"src\"); }); it(\"HX probe\", () => { expect(1).toBe(1); });",
+      "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let carried; const find = (carried = nativeHyperUnixFind); it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });"
+    ],
+    "Q10": [
+      "(expect(verdict.absenceLicensed)).toBe(true);",
+      "Object.defineProperty(verdict, 'absenceLicensed', {value: true});",
+      "Reflect.set(verdict, 'absenceLicensed', true);"
     ]
   },
   "witnesses": {
@@ -202,6 +235,14 @@
           "unresolved": 0,
           "outside": 0
         },
+        "aliased-string-name": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
         "named-elsewhere": {
           "live": true,
           "cases": [
@@ -211,6 +252,14 @@
           "outside": 0
         },
         "type-only": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "type-only-specifier": {
           "live": true,
           "cases": [
             "it :: HX probe"
@@ -258,6 +307,54 @@
           "unresolved": 0,
           "outside": 0
         },
+        "namespace-ts-path": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "namespace-mts-path": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "namespace-cts-path": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "namespace-mjs-path": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "namespace-cjs-path": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "namespace-unprefixed-path": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
         "default": {
           "live": true,
           "cases": [
@@ -274,7 +371,79 @@
           "unresolved": 0,
           "outside": 0
         },
+        "dynamic-template-specifier": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "dynamic-parenthesized": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "dynamic-as": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "dynamic-satisfies": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "dynamic-non-null": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "dynamic-type-assertion": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "dynamic-typed": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
         "dynamic-destructured": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "dynamic-destructured-shorthand": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "dynamic-destructured-rest": {
           "live": true,
           "cases": [
             "it :: HX probe"
@@ -322,7 +491,47 @@
           "unresolved": 0,
           "outside": 0
         },
+        "alias-member-default": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "alias-member-dynamic": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "alias-member-element": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
         "alias-destructured": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "alias-destructured-default": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "alias-destructured-dynamic": {
           "live": true,
           "cases": [
             "it :: HX probe"
@@ -338,7 +547,39 @@
           "unresolved": 0,
           "outside": 0
         },
+        "alias-after-assignment": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
         "assigned": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "assigned-or": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "assigned-and": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "assigned-member": {
           "live": true,
           "cases": [
             "it :: HX probe"
@@ -363,7 +604,47 @@
           "unresolved": 0,
           "outside": 0
         },
+        "destructuring-assigned-shorthand": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "destructuring-assigned-default": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "destructuring-assigned-dynamic": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
         "stored": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "stored-deep": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "stored-element": {
           "live": true,
           "cases": [
             "it :: HX probe"
@@ -523,6 +804,30 @@
           "unresolved": 0,
           "outside": 0
         },
+        "flag-element": {
+          "live": true,
+          "cases": [
+            "it[\"concurrent\"] :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "method-element": {
+          "live": true,
+          "cases": [
+            "it[\"each\"]([[1]]) :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "callee-whitespace": {
+          "live": true,
+          "cases": [
+            "it each([[1],[2]]) :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
         "extended-alias": {
           "live": true,
           "cases": [
@@ -585,6 +890,12 @@
           "unresolved": 1,
           "outside": 0
         },
+        "require-template": {
+          "live": false,
+          "cases": [],
+          "unresolved": 1,
+          "outside": 0
+        },
         "import-actual": {
           "live": false,
           "cases": [],
@@ -641,7 +952,19 @@
           "unresolved": 0,
           "outside": 1
         },
+        "hook-iife-entry": {
+          "live": true,
+          "cases": [],
+          "unresolved": 0,
+          "outside": 1
+        },
         "helper-function": {
+          "live": true,
+          "cases": [],
+          "unresolved": 0,
+          "outside": 1
+        },
+        "helper-returns-entry": {
           "live": true,
           "cases": [],
           "unresolved": 0,
@@ -808,7 +1131,20 @@
           }
         ],
         "aliased": [],
-        "held": []
+        "held": [],
+        "member-predicate": [],
+        "nested-case": [
+          {
+            "case": "HX inner",
+            "chain": "expect(hxLiveInvariant(result)).toMatchObject({holds:true,violations:[]})"
+          }
+        ],
+        "parenthesized-subject": [
+          {
+            "case": "HX probe",
+            "chain": "expect((hxLiveInvariant(result))).toMatchObject({holds:true,violations:[]})"
+          }
+        ]
       },
       "armed": {
         "verdicts": {
@@ -1010,6 +1346,7 @@
         "verdict-tobe-paren": 1,
         "verdict-non-null": 1,
         "verdict-type-assertion": 1,
+        "verdict-stacked-unwrap": 1,
         "verdict-computed-key": 1,
         "verdict-element-matcher": 1,
         "verdict-reversed": 1,
@@ -1023,6 +1360,7 @@
         "verdict-not-property-false": 1,
         "verdict-asymmetric-not-false": 1,
         "verdict-nested-assertion": 1,
+        "verdict-nested-property": 1,
         "verdict-class-field": 1,
         "licence-property": 1,
         "licence-quoted-key": 1,
@@ -1057,8 +1395,12 @@
         "coverage-matcher": 1,
         "coverage-path": 1,
         "coverage-element-subject": 1,
+        "coverage-template": 1,
         "known-empty-text": 1,
         "known-empty-template": 1,
+        "known-empty-plain-template": 1,
+        "known-empty-template-middle": 1,
+        "known-empty-template-tail": 1,
         "known-empty-title": 1,
         "known-empty-regex": 1,
         "known-empty-regex-anchored": 1,
@@ -1077,7 +1419,8 @@
         "held-then-negated": 1,
         "nested-under-throw": 1,
         "other-api-negation": 1,
-        "negated-head-false": 1
+        "negated-head-false": 1,
+        "doubled-not": 1
       },
       "fixtures": [
         {
@@ -1297,6 +1640,36 @@
         ],
         "unresolved": 0,
         "outside": 0
+      },
+      {
+        "live": false,
+        "cases": [],
+        "unresolved": 0,
+        "outside": 0
+      },
+      {
+        "live": false,
+        "cases": [],
+        "unresolved": 0,
+        "outside": 0
+      },
+      {
+        "live": false,
+        "cases": [],
+        "unresolved": 0,
+        "outside": 0
+      },
+      {
+        "live": false,
+        "cases": [],
+        "unresolved": 0,
+        "outside": 0
+      },
+      {
+        "live": true,
+        "cases": [],
+        "unresolved": 0,
+        "outside": 0
       }
     ],
     "Q8": [
@@ -1323,7 +1696,104 @@
           "case": "HX probe",
           "chain": "expect(hxLiveInvariant(result)).toMatchObject({holds:true,violations:[]})"
         }
+      ],
+      [
+        {
+          "case": "HX probe",
+          "chain": "expect(hxLiveInvariant(result)).toMatchObject({holds:true,violations:[]})"
+        }
+      ],
+      [
+        {
+          "case": "HX probe",
+          "chain": "expect(hxLiveInvariant(result)).toMatchObject({holds:true,violations:[]})"
+        }
+      ],
+      [
+        {
+          "case": "HX probe",
+          "chain": "expect(hxLiveInvariant(result)).toMatchObject({holds:true,violations:[]})"
+        }
+      ],
+      [
+        {
+          "case": "HX probe",
+          "chain": "expect(hxLiveInvariant(result)).toMatchObject({holds:true,violations:[]})"
+        }
+      ],
+      [
+        {
+          "case": "HX probe",
+          "chain": "expect(hxLiveInvariant(result)).toMatchObject({holds:true,violations:[]})"
+        }
       ]
+    ],
+    "Q9": [
+      {
+        "live": true,
+        "cases": [],
+        "unresolved": 0,
+        "outside": 0
+      },
+      {
+        "live": true,
+        "cases": [],
+        "unresolved": 0,
+        "outside": 0
+      },
+      {
+        "live": true,
+        "cases": [],
+        "unresolved": 0,
+        "outside": 0
+      },
+      {
+        "live": true,
+        "cases": [],
+        "unresolved": 0,
+        "outside": 0
+      },
+      {
+        "live": true,
+        "cases": [],
+        "unresolved": 0,
+        "outside": 0
+      },
+      {
+        "live": true,
+        "cases": [],
+        "unresolved": 0,
+        "outside": 0
+      },
+      {
+        "live": true,
+        "cases": [],
+        "unresolved": 0,
+        "outside": 0
+      },
+      {
+        "live": true,
+        "cases": [],
+        "unresolved": 0,
+        "outside": 0
+      },
+      {
+        "live": true,
+        "cases": [],
+        "unresolved": 0,
+        "outside": 0
+      },
+      {
+        "live": true,
+        "cases": [],
+        "unresolved": 0,
+        "outside": 0
+      }
+    ],
+    "Q10": [
+      [],
+      [],
+      []
     ]
   },
   "tests": [
@@ -1341,12 +1811,14 @@
     "Q4: R-OTHER-MATCHER - quiet: the scanner reads no pairing through a matcher C2-C4 do not read; C1 properties and C5 text stay read inside any matcher",
     "Q5: R-UNCONSUMED-FIELD - quiet: the scanner reads no field its vocabulary does not derive",
     "Q6: R-TEXT-FRAGMENT - quiet: the scanner reads no known-empty word that is not whole in one literal",
-    "Q7: R-LIVE-INDIRECT - quiet: the live-set reader reads no HX probe case whose hx drive reaches it through no HX module mention and no HX local",
-    "Q8: R-ROUTE-RUNTIME - quiet: the route reader reads a route chain held verbatim but not run over the live read as the intact route",
+    "Q7: R-LIVE-INDIRECT - quiet: the live-set reader reads no HX probe case whose hx drive reaches it through no HX local",
+    "Q8: R-ROUTE-RUNTIME - quiet: the route reader reads a route chain held verbatim but not run, or run defeated, over the live read as the intact route",
+    "Q9: R-LIVE-ASSIGNED-VALUE - quiet: the live-set reader follows no M6 assignment's value, so an hx drive carried by one reads no HX probe case and nothing unresolved or outside",
+    "Q10: R-UNREAD-SHAPE - quiet: the scanner reads no pairing written in a shape C1-C4 do not parse",
     "rule 16: the rows, the residual families and their readers, the falsifier, benign and conservative rosters, the probe preamble, the claim vocabulary, the LIVE SET and ROUTE forms and the registration partition are frozen at their measured shape",
     "the description anchors: the bead's own description binds the rows, row N's citation, every label atom's carrier pin and the gate block",
     "the docs and src anchors: docs/14's residual table binds row Q and every member, src binds the claim vocabulary and every falsifier form, and docs/14's HX fixture cases bind the scanner's sense",
-    "the live-set anchors: docs/14's read-forms table binds every LIVE SET and ROUTE form, vitest's own test API binds the registration partition, every form reads as its surface requires, and the intact route is the live files' chain",
+    "the live-set anchors: docs/14's read-forms table binds every LIVE SET and ROUTE form, vitest's own test API binds the registration partition, every form reads as its surface requires, W1's witnessing reader reads every falsifier and no benign statement, and the intact route is the live files' chain",
     "roster: the judged rows, the quotes, the readings, the residual members and the registered tests equal test/fixtures/hx-licensed-complete-roster.json, in order and both ways; every pin reached its witness compare"
   ],
   "gate": {
