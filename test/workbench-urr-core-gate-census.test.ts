@@ -7,6 +7,35 @@
  * Until-then clause (owner filing notes, verbatim): "Until both gates exist, no src or docs change and no Pi claim of an embedded
  * Fiber core; rf CLI envelope consumption stays owned by the wb-x32/wb-973/wb-693 families."
  *
+ * wb-2wiv.4 (the child bead orchestrator ruling R-B93 moved the full-surface rendered reading to, out of cut #6's fail-closed core:
+ * "Rendered-reading HTML strip claims cover exactly the forms the reader strips (class-c survivors of three enumerate rounds)"; seat
+ * ws-01, run g10-work-s151, cut on trunk 1c48d8e and merged with trunk 09276d0, landing 700). Cut #6's frozen shape is kept and
+ * only added to: no title, row, pin, control,
+ * residual row, refusal or reading is removed or weakened - THE RAW STATE's refusal of every raw-state text token and the input,
+ * option and optgroup refusals stand, and every unit's run reads as before. What a reader sees behind refusal #5's surviving forms
+ * is read beside those refusals, in the unit's page twin (THE PAGE TWIN, below):
+ *  RB, refusal #5's U1 (ten plants): marked writes a raw-state text token to the page as raw HTML, and the page twin reads that text
+ *    as the page holds it - its markup removed and its numeric references decoded as the HTML Standard's tokenizer reads them (THE
+ *    PAGE READ, below) - so "Pi embeds the <code>Fib<o:p>er core</code>." reads "Pi embeds the Fiber core." there.
+ *  IV, refusal #5's U2 (three plants): an input start tag shows text in its place - a text entry its value, or its placeholder; a
+ *    button its value - and the page twin reads that text in the tag's place (THE INPUT READ, below).
+ *  THE SURVIVORS, the falsifier roster: one executable falsifier per surviving form - refusal #5's plants GP1-D1a, GP1-D1b,
+ *    GP1-D1c, GP1-D1d, GP1-D1e, GP1-D1f, GP1-D1g, GP1-D1h, GP1-B2a, GP1-B1a, GP1-D1i2, GP1-D1j2 and GP1-D1k2, each as the gate wrote
+ *    it and read on each leg the gate named; its roster reading holds the refusal beside the claim or decision its reader sees, and
+ *    its reader view (every unit's page twin text, joined, white space collapsed) equals the gate's recorded reader text byte for
+ *    byte. The census as cut #6 left it reds at all fourteen of these readings, and at 42 of the 54 RAW_STATE_FORMS and INPUT_FORMS
+ *    readings on D1, B2 and B1, each now read with its page twin (markupFree, closedState, optionLabel and groupLabel read no page
+ *    twin and are unchanged); the plants' ids and texts and the two families' counts are held to refusal #5's PLANTS sections in
+ *    the tracked export, and the table's frozen shape is pinned.
+ *  CLAIM WORDS -> FALSIFIERS: each rule THE PAGE TWIN, THE PAGE READ and THE INPUT READ state (below) is a D1 control, one
+ *    checkable item per rule, pinned in the roster: PAGE_TWIN_FORMS (5 Markdown texts, read by D1 and by their reader view),
+ *    PAGE_READ_FORMS (41 raw-state texts, each read by THE PAGE READ alone) and INPUT_READ_FORMS (26 input start tags, each read
+ *    in an HTML block by its reader view), so a reader that breaks a stated rule reds its item.
+ *  Found by the seat (no refusal item; FAIL-CLOSED): THE RENDERED LEG's reference reading looked a name up in NAMED_REFERENCES
+ *    without asking whether it is one of its own names, so &constructor; and &toString; decoded to their function's source text and
+ *    were neither refused nor left as written, against its claim that any other named reference is REFUSED. A NAMED_REFERENCES name
+ *    is now one of its own; each inherited name is refused and stays as written (INHERITED_REFERENCE_FORMS on D1).
+ *
  * CUT #6 (the FINAL cut: the respin of refusal #5, gate run g10-gate-s142 on cut #5 b70da137; seat ws-03, run g10-work-s141), bound
  * by orchestrator ruling R-B93 (rule 19's structural exit) to the FAIL-CLOSED CORE: the rendered-reading claim restated to exactly
  * the HTML forms the reader strips, every form outside the pinned set refused, no claim word without a falsifier; the full
@@ -16,8 +45,9 @@
  * of refusal #5's items, by the one cure option it takes:
  *  U1, class (c), B1, B2 and D1, FAIL-CLOSED (the route's first option): marked 18.0.11 writes an inline text token it lexes in its
  *    raw state to the page unescaped, so the markup and the references in it (refusal #5's family RB) reached an HTML parser outside
- *    every html token THE HTML READ reads. The rendered leg now reads no HTML out of a text token: every inline text token marked
- *    escaped is REFUSED (THE RAW STATE, below), and THE RENDERED LEG and THE HTML READ are restated to exactly the token kinds read.
+ *    every html token THE HTML READ reads. The rendered leg's run now reads no HTML out of a text token (restated by wb-2wiv.4: the
+ *    unit's page twin reads it, by THE PAGE READ): every inline text token marked escaped is REFUSED (THE RAW STATE, below), and THE
+ *    RENDERED LEG and THE HTML READ are restated to exactly the token kinds read.
  *    So GP1-D1a to GP1-D1h red D1, GP1-B2a reds B2 and D1, and GP1-B1a reds B1, each as a refusal; RAW_STATE_FORMS pins each RB
  *    form on D1, B2 and B1 (one checkable item per form) beside the raw state's other openings, a markup-free raw run and the end
  *    tag that ends the state.
@@ -139,7 +169,10 @@
  * and no form THE RENDERED LEG refuses - the only stem spellings are the
  * rf_identity sdk_versions keys of four rf receipts, rf's own identity echoed through its CLI envelope; the wb-x32 row (2161
  * characters across its 28 members, no raw HTML) and the decisions page (69 raw sentences, 59 rendered units, no raw HTML) state no
- * decision. So the gate
+ * decision (wb-2wiv.4, re-measured with its readers at trunk 1c48d8e and again at 09276d0: the 88 product Markdown texts and the
+ * wb-x32 row's 28 members still hold 17520 inline text tokens, none in marked's raw state, no input start tag and no inherited-name
+ * reference, so no unit of them is read with a twin, no page twin is read on Pi's own texts and the own-name guard refuses
+ * nothing there). So the gate
  * has not fired, and until it does Pi's RF surface is the rf CLI envelope: the native preview admits only the reactive-fiber.cli/v1
  * envelope and Pi says so in three places.
  *
@@ -185,13 +218,16 @@
  * source exactly, so the line is measured, never estimated). A unit's text is read from marked's tokens kind by kind, exactly so
  * (restated by cut #6 to the token kinds read, R-B93's fail-closed core; cut #5 said a unit "renders what a reader sees"): an html
  * token - an HTML block, or one of marked's inline html tokens - is read by THE HTML READ (below), an inline one adding to its run
- * only THE HTML READ's image pieces; an inline text token is its text, its references decoded (below), and one marked lexes in its
- * raw state is REFUSED (THE RAW STATE, below); a code span and an escape are their text as written; a hard break is a line end; a
+ * only THE HTML READ's image pieces and (wb-2wiv.4) its input pieces; an inline text token is its text, its references decoded
+ * (below), and one marked lexes in its raw state is REFUSED (THE RAW STATE, below), its page reading read in the unit's page twin
+ * (wb-2wiv.4, THE PAGE READ); a code span and an escape are their text as written; a hard break is a line end; a
  * task checkbox is nothing; a Markdown image is an image piece, its alt text (its children's reading) in place, gone in the twin
  * that shows the image; a link, em, strong or del token is its children's reading; a code block is left to the raw leg. A
  * character reference is
  * decoded by CommonMark's rule (REFERENCE: "&#" and 1 to 7 decimal digits, "&#x" and 1 to 6 hexadecimal digits, or "&" and a name,
- * each closed by ";") - a numeric one whose code point is at most 0x10FFFF, a named one when it is a NAMED_REFERENCES name; any
+ * each closed by ";") - a numeric one whose code point is at most 0x10FFFF, a named one when it is a NAMED_REFERENCES name (one of
+ * its own names - wb-2wiv.4: an inherited object name such as constructor or toString, decoded before to its function's source
+ * text, is no such name, INHERITED_REFERENCE_FORMS); any
  * other named reference so written is REFUSED (a finding of its own, since the census cannot say what it renders), and every other
  * reference stays as written (restated by cut #4: one an HTML parser decodes in an HTML block or an attribute value beyond that
  * rule - no closing ";", more than 7 decimal digits, a legacy name without ";" - is R-HTML-REFERENCE). Beside a unit's text run,
@@ -205,18 +241,21 @@
  * html token that opens a pre, code, kbd or script element (/^<(pre|code|kbd|script)(\s|>)/i) and leaves it at one that closes such
  * an element (/^<\/(pre|code|kbd|script)(\s|>)/i), carrying it across the blocks of the text between them, and marks every inline
  * text token it reads in that state escaped; its renderer writes an escaped text token's text to the page unescaped, as raw HTML.
- * The rendered leg reads no HTML out of a text token: every inline text token marked escaped is REFUSED (FAIL-CLOSED), recorded as
- * "<path>:<line>: rendered unknown raw-state text "<its text by writtenForm>"", its text still read in the run beside the refusal.
+ * The rendered leg's run reads no HTML out of a text token: every inline text token marked escaped is REFUSED (FAIL-CLOSED), recorded
+ * as "<path>:<line>: rendered unknown raw-state text "<its text by writtenForm>"", its text still read in the run beside the refusal;
+ * (wb-2wiv.4) the unit's page twin reads that text as the page holds it, by THE PAGE READ (below).
  * THE HTML READ (cut #5, refusal #4's U1 under ruling R-B76; rows B and D; restated by cut #6 to the token kinds read: exactly
- * marked's html tokens - an HTML block and each of marked's inline html tokens -, the only tokens whose markup the rendered leg
- * reads, the raw HTML an escaped text token carries being THE RAW STATE's refusal): their markup, left to right. Its white space is the HTML Standard's ASCII
+ * marked's html tokens - an HTML block and each of marked's inline html tokens -, the only tokens whose markup the rendered leg's
+ * run reads, the raw HTML an escaped text token carries being THE RAW STATE's refusal and, wb-2wiv.4, THE PAGE READ's in the unit's
+ * page twin): their markup, left to right. Its white space is the HTML Standard's ASCII
  * whitespace (tab, line feed, form feed, carriage return, space; a vertical tab or a no-break space is none). A COMMENT is "<!--",
  * its text, the first "-->". A TAG is CommonMark's raw HTML tag over that white space: a start tag is "<", a name (an ASCII
  * letter, then ASCII letters, digits or hyphens), attributes (each after white space: a name of [A-Za-z_:][A-Za-z0-9_.:-]*, then
  * optionally "=" and a value - unquoted, or single- or double-quoted, a quoted value holding any character but its quote, ">" and
  * a line end among them), optional white space, an optional "/" and ">"; an end tag is "</", a name, optional white space and
  * ">". Each comment and tag is removed and every other character is text; every attribute value is read as a unit of its own; a
- * tag carrying an alt attribute is an image (its alt text in place in its unit's twin). REFUSED (FAIL-CLOSED; recorded as
+ * tag carrying an alt attribute is an image (its alt text in place in its unit's twin); and (wb-2wiv.4) an input start tag shows
+ * THE INPUT READ's text in its place in its unit's page twin. REFUSED (FAIL-CLOSED; recorded as
  * written, "<path>:<line>: rendered unknown <markup>", a finding of its own, as the census cannot say what a reader sees): a
  * comment opened as "<!-->" or "<!--->", one whose text holds "--!>" (an HTML reader closes it there) and one unterminated in
  * its token (a reader closes it past the token); a "<" before an ASCII letter, "/", "!" or "?" that opens no comment or tag
@@ -228,7 +267,8 @@
  * content - math, svg -, the tree builder moves text out of it - table -, the default rendering hides, replaces or moves its
  * content - applet, audio, canvas, datalist, details, dialog, fencedframe, frameset, meter, object, progress, rp, rt, rtc, select,
  * template, video -, an attribute's text stands in its place - cut #6, refusal #5's U2: input, a value, a placeholder or a button's
- * label, and option and optgroup, a label in a select -, it reorders its content - bdo - or it restyles the page - body, link); a
+ * label (wb-2wiv.4: that text also read, by THE INPUT READ, in the page twin), and option and optgroup, a label in a select -, it
+ * reorders its content - bdo - or it restyles the page - body, link); a
  * tag carrying an attribute whose name, in any case, is one of REFUSED_ATTRIBUTES (restated by cut #6 to its list: exactly color,
  * dir, hidden, popover and style); a unit holding more than IMAGE_LIMIT (8) images; a rendered unit holding a bidirectional
  * control (wb-era's class, raw or behind a reference: the census cannot say in what order a reader sees it); and (cut #6) a
@@ -239,6 +279,37 @@
  * text in place, as when the image is not shown; a Markdown image shown, its alt text gone - each such twin adding only the
  * findings its unit lacks. Beyond THE HTML READ: a reader's own rendering beyond the HTML Standard's (R-READER-RENDERING) and a
  * reference an HTML parser decodes beyond CommonMark's rule (R-HTML-REFERENCE).
+ * THE PAGE TWIN (wb-2wiv.4, refusal #5's RB and IV families; rows B and D): a unit holding a page piece - a raw-state text token, or
+ * an input start tag that shows text - is read once more with each page piece in its page reading (THE PAGE READ's text in the
+ * token's place, THE INPUT READ's in the tag's) and each image as the run first shows it, adding only the findings its unit lacks; a
+ * bidirectional control or an invisible split in it is refused as in every twin. Its refusals stay the run's. A raw-state text
+ * token in a Markdown image's alt text is no page piece: it is read in the image's reading as written, and refused (marked escapes
+ * the alt text into the attribute, so a reader shows it as written).
+ * THE PAGE READ (wb-2wiv.4, the RB family): a raw-state text token's text as the page holds it - marked writes it there unescaped,
+ * as raw HTML - read within the token as the HTML Standard's tokenizer reads text in its data state. MARKUP is removed, as the page
+ * shows none of it: from a "<" before an ASCII letter, "/", "!" or "?", a comment ("<!--") to its first "-->" or "--!>" ("<!-->"
+ * and "<!--->" ending at once); a start or end tag ("<", or "</", before an ASCII letter) to its first ">" outside a quoted
+ * attribute value, by the tokenizer's tag states (a value is quoted only by a quote that opens it after an attribute name's "=",
+ * white space between allowed); any other markup ("</" before another character, "<!", "<?": a bogus comment, a markup declaration,
+ * a DOCTYPE, a CDATA section) to its first ">"; each to the token's end when the token does not close it (a reader carries it on
+ * into the page beyond the token). Every other "<" is text. REFERENCES: a numeric character reference ("&#" and decimal digits,
+ * "&#x" or "&#X" and hexadecimal digits) is decoded with or without its closing ";" by the HTML Standard's rule (0, a surrogate or a
+ * value above 0x10FFFF reads as U+FFFD; 0x80 to 0x9F through NUMERIC_REPLACEMENTS, the windows-1252 table, where it maps one; any
+ * other value as its code point); a named one only by REFERENCE's rule (a NAMED_REFERENCES name closed by ";"), and any other "&" is
+ * text (a reader decodes the HTML Standard's whole table, legacy names without ";" among them). It reads the data state alone: the
+ * states a reader's tree builder switches its tokenizer to after a start tag - RCDATA (textarea, title), RAWTEXT (style, xmp,
+ * iframe, noembed, noframes, noscript), script data (script), PLAINTEXT (plaintext) - and a CDATA section in foreign content are
+ * not followed, so such a tag in the token is removed like any other and the text after it read in the data state, though a reader
+ * shows a script's or a style's text not at all and an xmp's or a textarea's markup as written. A raw-state token inside a script
+ * element (its start tag a REFUSED_ELEMENTS refusal) is read the same way, though a reader shows no script text. The token stays
+ * refused whatever it holds.
+ * THE INPUT READ (wb-2wiv.4, the IV family): an input start tag THE HTML READ reads shows, in its place, the text of its state - its
+ * type attribute (the first one, references decoded by REFERENCE's rule, in ASCII lower case; absent, or no INPUT_TYPES keyword:
+ * the Text state): an INPUT_SHOWN entry state (text, search, tel, url, email) its value attribute as written (the first one, the
+ * HTML Standard's value sanitization not applied), or its placeholder (the first one) when the value is absent or empty; a button
+ * state (submit, reset, button) its value (none when it is absent: the user agent's default label is not read); any other state nothing. That
+ * text, its references decoded as an image's alt text is, stands in the tag's place in the unit's page twin; the tag stays a
+ * REFUSED_ELEMENTS refusal, and each of its attribute values is still read as a unit of its own.
  * THE CENSUS (row C1): every tracked src script module is read through its AST. The RF CENSUS holds every text that is no name -
  * a string-like literal, a template's head, middle or tail, a regular-expression pattern, a JSX text - whose tokens include
  * RF_WORD; the SDK CENSUS every such text whose fold holds reactivefiber, the stem or a crate (a name and a comment are read by
@@ -281,13 +352,15 @@
  *    comment, a label, a nested record, a key, a shadowed duplicate member, a shadowed duplicate id and a key behind a reference,
  *    beside two near misses (another bead's row, neutral members); and (cut #5) each HTML_FORMS form in a decision-bead comment and
  *    an image twin (an HTML image tag's alt text completing the decision); and (cut #6) each RAW_STATE_FORMS, INPUT_FORMS and
- *    INVISIBLE_FORMS form in a decision-bead comment, each refused.
+ *    INVISIBLE_FORMS form in a decision-bead comment, each refused; and (wb-2wiv.4) THE SURVIVORS' GP1-B1a, refused and read with
+ *    its decision, and each RAW_STATE_FORMS and INPUT_FORMS form's decision in its page twin.
  *    B2 THE DECISIONS PAGE: docs/workbench/18-decisions-and-risks.md (the notes' cited page), read raw and rendered, holds no
  *    decision and no unknown named reference; table rows, cells and list items are units of their own (controls: a decision behind
  *    a no-break-space reference, an inline tag, a numeric reference, an unknown reference refused, a pipe paragraph read as one;
  *    a code span, a split table and split items quiet; and, cut #5, each HTML_FORMS form in an HTML block on a decisions page and an
  *    image twin and an HTML block's title attribute; and, cut #6, each RAW_STATE_FORMS, INPUT_FORMS and INVISIBLE_FORMS form on a
- *    decisions page, each refused).
+ *    decisions page, each refused; and, wb-2wiv.4, THE SURVIVORS' GP1-B2a, refused and read with its decision, and each
+ *    RAW_STATE_FORMS and INPUT_FORMS form's decision in its page twin).
  *  C, the until-then clause ("until then Pi's RF surface stays the rf CLI envelope only").
  *    C1 NO RF SDK: no src module specifier outside the relative ones names reactivefiber, the stem or a crate (import, export,
  *    import-equals, import type, dynamic import, require, or a call through a createRequire loader: a name the module binds to
@@ -334,7 +407,10 @@
  *    limit and a bidirectional control raw and behind a reference (refused), each HTML_FORMS form in an HTML block and in a
  *    paragraph, each REFUSED_ELEMENTS element and each REFUSED_ATTRIBUTES attribute, and an HTML block's title attribute; and - cut
  *    #6 - each RAW_STATE_FORMS form (refused, beside the state its end tag ends), each INPUT_FORMS form (refused), each
- *    INVISIBLE_FORMS form (refused) and a claim joined through a link's, an em's, a strong's and a del's children)
+ *    INVISIBLE_FORMS form (refused) and a claim joined through a link's, an em's, a strong's and a del's children; and -
+ *    wb-2wiv.4 - THE SURVIVORS read on D1 (GP1-D1a to GP1-D1h, GP1-B2a and GP1-D1i2 to GP1-D1k2), each refused and read with its
+ *    claim, each RAW_STATE_FORMS and INPUT_FORMS form's claim in its page twin, and the claim-word falsifiers PAGE_TWIN_FORMS,
+ *    PAGE_READ_FORMS and INPUT_READ_FORMS)
  *    and near
  *    misses stay quiet (a receipt's rf_identity sdk_versions key, the workflow VM's wasm option, split sentences, a table's rows,
  *    list items, a code span, a lock whose embed and wasm words sit in different values, YAML lines that pair them only as prose
@@ -359,11 +435,12 @@
  *    object literal, enum, object binding pattern and function-like parameter list, read for all four members by fold.
  *  B1: the tracked export's lines one of whose top-level id members is the title's decision bead, by THE JSON READER: every key and
  *    every string value at any depth, each alone, each read as a Markdown text - raw (THE FORMS) and rendered (THE RENDERED LEG:
- *    its html tokens' markup by THE HTML READ, its raw-state text tokens refused by THE RAW STATE; restated by cut #6) - for a
- *    decision, an unknown named reference and a form THE RENDERED LEG refuses.
- *  B2: the notes' cited page, read as a Markdown text raw and rendered (THE RENDERED LEG: its html tokens' markup by THE HTML READ,
- *    its raw-state text tokens refused by THE RAW STATE; restated by cut #6), for a decision, an unknown named reference and a form
+ *    its html tokens' markup by THE HTML READ, its raw-state text tokens refused by THE RAW STATE; restated by cut #6; and,
+ *    wb-2wiv.4, each unit's page twin by THE PAGE READ and THE INPUT READ) - for a decision, an unknown named reference and a form
  *    THE RENDERED LEG refuses.
+ *  B2: the notes' cited page, read as a Markdown text raw and rendered (THE RENDERED LEG: its html tokens' markup by THE HTML READ,
+ *    its raw-state text tokens refused by THE RAW STATE; restated by cut #6; and, wb-2wiv.4, each unit's page twin by THE PAGE READ
+ *    and THE INPUT READ), for a decision, an unknown named reference and a form THE RENDERED LEG refuses.
  *  C1: every tracked file below src (one that is no script module reds), each module parsed by TypeScript: its module specifiers
  *    (the load forms ROW C1 names; never a relative one) for reactivefiber, the stem or a crate; its texts and property-access
  *    chains for the three spellings; and THE CENSUS (its two censuses and the launch roster).
@@ -374,8 +451,8 @@
  *    provider module's leading comments.
  *  D1: every tracked file below the nine roots and at the repository root (held both ways to a walk) whose extension is a measured
  *    text extension, decoded as strict UTF-8, by THE FORMS (raw) and, for Markdown, THE RENDERED LEG (its html tokens' markup by
- *    THE HTML READ, its raw-state text tokens refused by THE RAW STATE; restated by cut #6), for a claim, an unknown named reference
- *    and a form THE RENDERED LEG refuses.
+ *    THE HTML READ, its raw-state text tokens refused by THE RAW STATE; restated by cut #6; and, wb-2wiv.4, each unit's page twin
+ *    by THE PAGE READ and THE INPUT READ), for a claim, an unknown named reference and a form THE RENDERED LEG refuses.
  *  D2: every descriptor of the native and the four injected registrations, every key and string at any depth each one unit, for a
  *    claim.
  *
@@ -390,6 +467,11 @@
  * pin reads both trees the notes keep unchanged (src, docs); the decision bead is an owner family the notes name; the roster
  * vendors the notes' cited charter lines at the notes' pin, the Authority quote is line 15's, both halves of the status quote are
  * line 3's, and lines 11, 21, 22 and 24 name the census's crates, ABI names, capability set and members, and receipt fields.
+ * (wb-2wiv.4) THE SURVIVORS pin their own shape as a literal (`${id}:${legs}`), and the tracked export holds them from outside the
+ * census (wb-2wiv.1's notes, the first match of refusal #5's two PLANTS sections and their READER VIEW paragraphs, and the record's
+ * own "LEG 2 survivors" counts; wb-2wiv.4's own row): every plant id in order, each survivor's legs (its plant line's, else its
+ * id's), each quote of its plant line within its text, its reader text as each READER VIEW states it, and the RB and IV counts;
+ * so a survivor removed, re-legged, re-texted or re-read in every literal and the roster reds through the export.
  * FAIL-CLOSED (by design, not a residual; the census reds and its reader judges): a negated sentence ("no decision to embed the
  * Fiber core yet") on the decision bead, on the decisions page or in a product text reads as a decision or a claim; an unknown
  * named reference in a Markdown text (its run, an attribute value, a destination or a title) and any HTML in a stated section's
@@ -1072,9 +1154,9 @@ function rawSentences(text: string, path: string): RawSentence[] {
 
 const REFERENCE = /&(?:#(\d{1,7})|#[xX]([0-9a-fA-F]{1,6})|([A-Za-z][A-Za-z0-9]{1,31}));/g;
 /**
- * THE HTML READ (cut #5, refusal #4's U1 under ruling R-B76's second option; restated by cut #6): the markup the rendered leg reads,
- * in exactly marked's html tokens (an HTML block, or one of marked's inline html tokens) and in no other token (an escaped text
- * token's raw HTML is THE RAW STATE's refusal). Its white space is the HTML Standard's ASCII whitespace (tab, line
+ * THE HTML READ (cut #5, refusal #4's U1 under ruling R-B76's second option; restated by cut #6): the markup the rendered leg's run
+ * reads, in exactly marked's html tokens (an HTML block, or one of marked's inline html tokens) and in no other token (an escaped
+ * text token's raw HTML is THE RAW STATE's refusal and, wb-2wiv.4, THE PAGE READ's in the unit's page twin). Its white space is the HTML Standard's ASCII whitespace (tab, line
  * feed, form feed, carriage return and space; a vertical tab or a no-break space is none). A tag is CommonMark's raw HTML open or
  * closing tag over that white space: a name of an ASCII letter then ASCII letters, digits or hyphens; a start tag's attributes,
  * each after white space, a name of [A-Za-z_:][A-Za-z0-9_.:-]* with an optional value (unquoted, or single- or double-quoted, a
@@ -1149,10 +1231,76 @@ const BIDI_CONTROL = /[\u061C\u200E\u200F\u202A-\u202E\u2066-\u2069]/gu;
 /**
  * THE RAW STATE (cut #6, refusal #5's U1 under ruling R-B93's fail-closed core): marked 18.0.11 marks an inline text token escaped
  * when its lexer reads it in its raw state, and its renderer then writes that token's text to the page unescaped, as raw HTML. The
- * rendered leg reads no HTML out of a text token: it REFUSES every inline text token marked escaped (FAIL-CLOSED), recorded as
- * `raw-state text "<the token's text as written>"`.
+ * rendered leg's run reads no HTML out of a text token: it REFUSES every inline text token marked escaped (FAIL-CLOSED), recorded as
+ * `raw-state text "<the token's text as written>"`; (wb-2wiv.4) the unit's page twin reads the token as the page holds it, by THE
+ * PAGE READ.
  */
 const RAW_STATE = "raw-state text";
+/**
+ * THE PAGE READ's numeric replacements (wb-2wiv.4): the HTML Standard's table for a numeric character reference whose value is 0x80
+ * to 0x9F, each value it maps to the windows-1252 character (the five values the table leaves out - 0x81, 0x8D, 0x8F, 0x90 and 0x9D -
+ * stay their own code points).
+ */
+const NUMERIC_REPLACEMENTS: Readonly<Record<number, string>> = {
+  128: at(0x20ac),
+  130: at(0x201a),
+  131: at(0x0192),
+  132: at(0x201e),
+  133: at(0x2026),
+  134: at(0x2020),
+  135: at(0x2021),
+  136: at(0x02c6),
+  137: at(0x2030),
+  138: at(0x0160),
+  139: at(0x2039),
+  140: at(0x0152),
+  142: at(0x017d),
+  145: at(0x2018),
+  146: at(0x2019),
+  147: at(0x201c),
+  148: at(0x201d),
+  149: at(0x2022),
+  150: at(0x2013),
+  151: at(0x2014),
+  152: at(0x02dc),
+  153: at(0x2122),
+  154: at(0x0161),
+  155: at(0x203a),
+  156: at(0x0153),
+  158: at(0x017e),
+  159: at(0x0178),
+};
+/** The HTML Standard's 22 input type keywords (wb-2wiv.4): a type attribute holding none of them, in any case, or no type attribute, is the Text state. */
+const INPUT_TYPES = [
+  "hidden",
+  "text",
+  "search",
+  "tel",
+  "url",
+  "email",
+  "password",
+  "date",
+  "month",
+  "week",
+  "time",
+  "datetime-local",
+  "number",
+  "range",
+  "color",
+  "checkbox",
+  "radio",
+  "file",
+  "submit",
+  "image",
+  "reset",
+  "button",
+] as const;
+/**
+ * THE INPUT READ's states (wb-2wiv.4): an input start tag in one of the entry states shows its value in its place (its placeholder
+ * when the value is absent or empty, as a text entry does), one in a button state shows its value (the button's label); an input in
+ * any other state shows no text the census reads.
+ */
+const INPUT_SHOWN = { entry: ["text", "search", "tel", "url", "email"], button: ["submit", "reset", "button"] } as const;
 /**
  * An invisible split (cut #6, FAIL-CLOSED): a run of default-ignorable code points (Unicode's Default_Ignorable_Code_Point property)
  * between two ASCII letters of a rendered unit's text after NFKC, where THE VOCABULARY's tokens cut the word. A rendered unit (its
@@ -1165,11 +1313,18 @@ function inRawState(token: Token): boolean {
   return token.type === "text" && (token as Tokens.Text).escaped === true;
 }
 /**
- * A rendered run as pieces: text, or an image with its two renderings - as the run first shows it (a Markdown image's alt text in
+ * A rendered run as pieces: text; an image with its two renderings - as the run first shows it (a Markdown image's alt text in
  * place; an HTML image tag, removed) and the other (a Markdown image shown, so its alt text gone; an HTML image tag's alt text in
- * place, as when the image is not shown).
+ * place, as when the image is not shown); or (wb-2wiv.4) a page piece, text the page shows otherwise than the run reads it - a
+ * raw-state text token (written: its text, its references decoded; page: THE PAGE READ of its text) or an input start tag's shown
+ * text (written: nothing; page: THE INPUT READ) - its page reading read in the unit's page twin.
  */
-type Piece = string | { readonly first: string; readonly other: string };
+type ImagePiece = { readonly first: string; readonly other: string };
+type PagePiece = { readonly written: string; readonly page: string; readonly kind: "raw-state" | "input" };
+type Piece = string | ImagePiece | PagePiece;
+function isImage(piece: Piece): piece is ImagePiece {
+  return typeof piece !== "string" && "first" in piece;
+}
 /** A refused form as the census records it: the markup as written from its "<", each white space run shown as one space and the ends trimmed, at most 40 characters. */
 function writtenForm(markup: string): string {
   const shown = markup.replace(/\s+/g, " ").trim();
@@ -1187,7 +1342,8 @@ interface HtmlRead {
 }
 /**
  * THE HTML READ of one of marked's html tokens, left to right: a comment and a tag of the grammar are removed, a tag carrying an alt
- * attribute becomes an image piece, and every other character is text. Any other markup is REFUSED, recorded in unknown as written
+ * attribute becomes an image piece, an input start tag that shows text an input piece (wb-2wiv.4, THE INPUT READ), and every other
+ * character is text. Any other markup is REFUSED, recorded in unknown as written
  * (a finding of its own, since the census cannot say what a reader sees): a comment opened as "<!-->" or "<!--->", one whose text
  * holds "--!>" (an HTML reader closes it there) and one unterminated in its token (a reader closes it past the token); a "<" before
  * an ASCII letter, "/", "!" or "?" that opens no comment or tag of the grammar (a processing instruction, a markup declaration or
@@ -1230,6 +1386,8 @@ function htmlRead(raw: string, unknown: string[]): HtmlRead {
       for (const attribute of attributes) if (attribute.value.length > 0) values.push(destinationText(attribute.value));
       const alt = attributes.find(attribute => attribute.name === ALT_ATTRIBUTE);
       if (alt !== undefined) pieces.push({ first: "", other: alt.value });
+      const shown = name === "input" ? inputShown(attributes) : "";
+      if (shown.length > 0) pieces.push({ written: "", page: shown, kind: "input" });
       at = open + tag[0].length;
       continue;
     }
@@ -1241,6 +1399,30 @@ function htmlRead(raw: string, unknown: string[]): HtmlRead {
     at = open + 1;
   }
   return { pieces, values };
+}
+/** A text in ASCII lower case (the HTML Standard's ASCII case-insensitive match; any other character as written). */
+function asciiLower(text: string): string {
+  return text.replace(/[A-Z]+/g, upper => upper.toLowerCase());
+}
+/**
+ * THE INPUT READ (wb-2wiv.4, refusal #5's IV family): the text an input start tag of THE HTML READ shows in its place, by its state -
+ * its type attribute's value (the first type attribute, references decoded by REFERENCE's rule, in ASCII lower case), the Text state
+ * when it is absent or no INPUT_TYPES keyword. An INPUT_SHOWN entry state shows its value attribute as written (the first one, the
+ * HTML Standard's value sanitization not applied), or its placeholder (the first one) when the value is absent or empty; a button
+ * state its value
+ * (none when it is absent: the user agent's default label is not read); any other state nothing. The tag stays a REFUSED_ELEMENTS
+ * refusal; this text is read in the unit's page twin, in the tag's place, its references decoded as an image's alt text is.
+ */
+function inputShown(attributes: readonly { readonly name: string; readonly value: string }[]): string {
+  const attribute = (name: string): string | undefined => attributes.find(entry => entry.name === name)?.value;
+  const types: readonly string[] = INPUT_TYPES;
+  const entry: readonly string[] = INPUT_SHOWN.entry;
+  const button: readonly string[] = INPUT_SHOWN.button;
+  const written = asciiLower(decodeReferences(attribute("type") ?? "", []));
+  const type = types.includes(written) ? written : "text";
+  const value = attribute("value");
+  if (entry.includes(type)) return value !== undefined && value.length > 0 ? value : (attribute("placeholder") ?? "");
+  return button.includes(type) ? (value ?? "") : "";
 }
 /**
  * The attribute values of an HTML text (THE HTML READ's tags only; comments are no tags): alt text, a title, a label, a link - what a
@@ -1258,19 +1440,115 @@ function destinationText(href: string): string {
     return href;
   }
 }
-/** A text with every numeric reference and each NAMED_REFERENCES name decoded; any other named reference stays as written and is recorded. */
+/** A text with every numeric reference and each NAMED_REFERENCES name (its own names only, wb-2wiv.4) decoded; any other named reference stays as written and is recorded. */
 function decodeReferences(text: string, unknown: string[]): string {
   return text.replace(REFERENCE, (whole: string, decimal?: string, hex?: string, name?: string) => {
     const code = decimal !== undefined ? Number.parseInt(decimal, 10) : hex !== undefined ? Number.parseInt(hex, 16) : undefined;
     if (code !== undefined) return code <= 0x10ffff ? at(code) : whole;
-    const value = name === undefined ? undefined : NAMED_REFERENCES[name];
+    const value = name === undefined || !Object.hasOwn(NAMED_REFERENCES, name) ? undefined : NAMED_REFERENCES[name];
     if (value === undefined) unknown.push(whole);
     return value ?? whole;
   });
 }
-/** THE HTML READ's pieces with their text decoded (its references recorded once, in unknown); an image's alt text decoded quietly (its own unit records it). */
+/**
+ * THE HTML READ's pieces with their text decoded (its references recorded once, in unknown); an image's alt text and an input's
+ * shown text decoded quietly (the attribute value's own unit records it).
+ */
 function decodedPieces(pieces: readonly Piece[], unknown: string[]): Piece[] {
-  return pieces.map(piece => (typeof piece === "string" ? decodeReferences(piece, unknown) : { first: piece.first, other: decodeReferences(piece.other, []) }));
+  return pieces.map(piece =>
+    typeof piece === "string"
+      ? decodeReferences(piece, unknown)
+      : isImage(piece)
+        ? { first: piece.first, other: decodeReferences(piece.other, []) }
+        : { written: piece.written, page: decodeReferences(piece.page, []), kind: piece.kind },
+  );
+}
+/** The tag states THE PAGE READ follows from a tag's name to the ">" that ends it (the HTML Standard's tokenizer, its tag states). */
+type TagState = "name" | "beforeAttribute" | "attribute" | "afterAttribute" | "beforeValue" | "doubleQuoted" | "singleQuoted" | "unquoted" | "afterQuoted" | "selfClosing";
+/**
+ * Where a start or end tag opened at raw[open] ends under THE PAGE READ (the index after its ">"; the text's end when none ends it):
+ * the HTML Standard's tag states, so a ">" ends the tag anywhere but inside a quoted attribute value, and a value is quoted only when
+ * its quote opens it after an attribute name's "=" (white space between allowed).
+ */
+function tagEnd(raw: string, open: number): number {
+  let state: TagState = "name";
+  for (let index = raw[open + 1] === "/" ? open + 2 : open + 1; index < raw.length; index += 1) {
+    const character = raw[index] ?? "";
+    const space = character === "\t" || character === "\n" || character === "\f" || character === "\r" || character === " ";
+    if (state === "doubleQuoted" || state === "singleQuoted") {
+      if (character === (state === "doubleQuoted" ? '"' : "'")) state = "afterQuoted";
+      continue;
+    }
+    if (character === ">") return index + 1;
+    if (state === "name") state = space ? "beforeAttribute" : character === "/" ? "selfClosing" : "name";
+    else if (state === "beforeAttribute" || state === "selfClosing") state = space ? "beforeAttribute" : character === "/" ? "selfClosing" : "attribute";
+    else if (state === "attribute" || state === "afterAttribute") state = space ? "afterAttribute" : character === "/" ? "selfClosing" : character === "=" ? "beforeValue" : "attribute";
+    else if (state === "beforeValue") state = space ? "beforeValue" : character === '"' ? "doubleQuoted" : character === "'" ? "singleQuoted" : "unquoted";
+    else if (state === "unquoted") state = space ? "beforeAttribute" : "unquoted";
+    else state = space ? "beforeAttribute" : character === "/" ? "selfClosing" : "attribute";
+  }
+  return raw.length;
+}
+/**
+ * Where markup opened at raw[open] (a "<" before an ASCII letter, "/", "!" or "?") ends under THE PAGE READ: a comment ("<!--") at its
+ * first "-->" or "--!>" ("<!-->" and "<!--->" at once); a start or end tag ("<" or "</" before an ASCII letter) by tagEnd; any other
+ * ("</" before another character, "<!", "<?") at its first ">" - each at the text's end when the text does not close it.
+ */
+function markupEnd(raw: string, open: number): number {
+  if (raw.startsWith("<!--", open)) {
+    if (raw.startsWith("<!-->", open)) return open + 5;
+    if (raw.startsWith("<!--->", open)) return open + 6;
+    const ends = [raw.indexOf("-->", open + 4), raw.indexOf("--!>", open + 4)].filter(index => index !== -1);
+    if (ends.length === 0) return raw.length;
+    const close = Math.min(...ends);
+    return close + (raw.startsWith("--!>", close) ? 4 : 3);
+  }
+  const next = raw[open + 1] ?? "";
+  if (/^[A-Za-z]$/.test(next) || (next === "/" && /^[A-Za-z]$/.test(raw[open + 2] ?? ""))) return tagEnd(raw, open);
+  const close = raw.indexOf(">", open + 2);
+  return close === -1 ? raw.length : close + 1;
+}
+/** The text a numeric character reference's value decodes to by the HTML Standard's rule (THE PAGE READ). */
+function numericText(value: number): string {
+  if (value === 0 || value > 0x10ffff || (value >= 0xd800 && value <= 0xdfff)) return at(0xfffd);
+  return NUMERIC_REPLACEMENTS[value] ?? at(value);
+}
+/** The character reference the "&" at raw[open] opens, as THE PAGE READ decodes it: its text and the index after it (the "&" alone when it opens none THE PAGE READ decodes). */
+function pageReference(raw: string, open: number): { text: string; end: number } {
+  const numeric = /^&#(?:[xX]([0-9A-Fa-f]+)|([0-9]+));?/.exec(raw.slice(open));
+  if (numeric !== null) {
+    const value = numeric[1] !== undefined ? Number.parseInt(numeric[1], 16) : Number.parseInt(numeric[2] ?? "", 10);
+    return { text: numericText(value), end: open + numeric[0].length };
+  }
+  const named = /^&([A-Za-z][A-Za-z0-9]{1,31});/.exec(raw.slice(open));
+  const name = named?.[1] ?? "";
+  return named !== null && Object.hasOwn(NAMED_REFERENCES, name) ? { text: NAMED_REFERENCES[name] ?? "", end: open + named[0].length } : { text: "&", end: open + 1 };
+}
+/**
+ * THE PAGE READ (wb-2wiv.4, refusal #5's RB family): the text a raw-state text token puts on the page - marked writes it there
+ * unescaped, as raw HTML - read within the token as the HTML Standard's tokenizer reads it in its data state. Markup (a "<" before an
+ * ASCII letter, "/", "!" or "?") is removed to its end (markupEnd), as the page shows none of it; every other "<" is text. A numeric
+ * character reference ("&#" and decimal digits, "&#x" or "&#X" and hexadecimal digits) is decoded with or without its closing ";"
+ * (numericText); a named one by REFERENCE's rule (a NAMED_REFERENCES name closed by ";"); any other "&" is text. It reads the data
+ * state alone (no RCDATA, RAWTEXT, script data, PLAINTEXT or CDATA section state a reader's tree builder switches its tokenizer to).
+ */
+function pageRead(raw: string): string {
+  let out = "";
+  let cursor = 0;
+  while (cursor < raw.length) {
+    const character = raw[cursor] ?? "";
+    if (character === "<" && /^[A-Za-z/!?]$/.test(raw[cursor + 1] ?? "")) {
+      cursor = markupEnd(raw, cursor);
+    } else if (character === "&") {
+      const reference = pageReference(raw, cursor);
+      out += reference.text;
+      cursor = reference.end;
+    } else {
+      out += character;
+      cursor += 1;
+    }
+  }
+  return out;
 }
 function tokenText(token: Token): string {
   const value: unknown = (token as { text?: unknown }).text;
@@ -1285,9 +1563,10 @@ function newlines(text: string): number {
 }
 /**
  * Inline tokens read kind by kind, as pieces (THE RENDERED LEG, restated by cut #6): an inline html token adds only THE HTML READ's
- * image pieces, a task checkbox nothing, a code span and an escape their text as written, a hard break a line end, a Markdown image
+ * image pieces and (wb-2wiv.4) its input pieces, a task checkbox nothing, a code span and an escape their text as written, a hard break a line end, a Markdown image
  * an image piece (its alt text in place, or gone), a link, em, strong or del token its children's reading, and an inline text token
- * its text with its references decoded - one marked lexed in its raw state also REFUSED (THE RAW STATE). Beside the run, extras
+ * its text with its references decoded - one marked lexed in its raw state also REFUSED (THE RAW STATE), and read as a page piece
+ * whose page reading is THE PAGE READ's (wb-2wiv.4). Beside the run, extras
  * collects an inline tag's attribute values and a link's or image's destination and title (an image's alt text is its children,
  * read in the run); unknown collects THE HTML READ's and THE RAW STATE's refused forms.
  */
@@ -1297,7 +1576,7 @@ function inlineRendered(tokens: readonly Token[], unknown: string[], extras: str
     if (token.type === "html") {
       const read = htmlRead(token.raw, unknown);
       extras.push(...read.values);
-      out.push(...read.pieces.filter(piece => typeof piece !== "string").map(piece => ({ first: piece.first, other: decodeReferences(piece.other, []) })));
+      out.push(...decodedPieces(read.pieces.filter(piece => typeof piece !== "string"), []));
     }
     if (token.type === "link" || token.type === "image") {
       const { href, title } = token as Tokens.Link | Tokens.Image;
@@ -1308,16 +1587,20 @@ function inlineRendered(tokens: readonly Token[], unknown: string[], extras: str
     else if (token.type === "codespan" || token.type === "escape") out.push(tokenText(token));
     else if (token.type === "image") out.push({ first: runText(tokenChildren(token).length > 0 ? inlineRendered(tokenChildren(token), unknown, extras) : [decodeReferences(tokenText(token), unknown)]), other: "" });
     else if (tokenChildren(token).length > 0) out.push(...inlineRendered(tokenChildren(token), unknown, extras));
-    else {
-      if (inRawState(token)) unknown.push(`${RAW_STATE} "${writtenForm(tokenText(token))}"`);
-      out.push(decodeReferences(tokenText(token), unknown));
-    }
+    else if (inRawState(token)) {
+      unknown.push(`${RAW_STATE} "${writtenForm(tokenText(token))}"`);
+      out.push({ written: decodeReferences(tokenText(token), unknown), page: pageRead(tokenText(token)), kind: "raw-state" });
+    } else out.push(decodeReferences(tokenText(token), unknown));
   }
   return out;
 }
-/** A run's text with each image piece shown as the run first shows it. */
+/** A run's text with each image piece shown as the run first shows it and each page piece as written. */
 function runText(pieces: readonly Piece[]): string {
-  return pieces.map(piece => (typeof piece === "string" ? piece : piece.first)).join("");
+  return pieces.map(piece => (typeof piece === "string" ? piece : isImage(piece) ? piece.first : piece.written)).join("");
+}
+/** A run's page twin text (wb-2wiv.4, THE PAGE TWIN): each page piece in its page reading, each image piece as the run first shows it. */
+function pageView(pieces: readonly Piece[]): string {
+  return pieces.map(piece => (typeof piece === "string" ? piece : isImage(piece) ? piece.first : piece.page)).join("");
 }
 /** A run's text with its images shown by the bits of mask: image i in its other rendering when bit i is set. */
 function runVariant(pieces: readonly Piece[], mask: number): string {
@@ -1325,11 +1608,29 @@ function runVariant(pieces: readonly Piece[], mask: number): string {
   return pieces
     .map(piece => {
       if (typeof piece === "string") return piece;
+      if (!isImage(piece)) return piece.written;
       const other = ((mask >> image) & 1) === 1;
       image += 1;
       return other ? piece.other : piece.first;
     })
     .join("");
+}
+/** A run as the reader view writes it (wb-2wiv.4's falsifier roster): its page twin text, an input's shown text written [input:<text>] as the gate's reader view writes it. */
+function readerText(pieces: readonly Piece[]): string {
+  return pieces.map(piece => (typeof piece === "string" ? piece : isImage(piece) ? piece.first : piece.kind === "input" ? `[input:${piece.page}]` : piece.page)).join("");
+}
+/**
+ * A Markdown text's reader view (wb-2wiv.4's falsifier roster, compared byte for byte with the gate's reader text): every rendered
+ * unit as readerText writes its run - not its twins, not the units read beside its run - joined by one space, white space collapsed.
+ */
+function readerView(markdown: string): string {
+  const views: string[] = [];
+  renderedUnits(markdown, views);
+  return views
+    .join(" ")
+    .split(/\s+/)
+    .filter(part => part.length > 0)
+    .join(" ");
 }
 /** The bidirectional controls a text holds, each as U+XXXX. */
 function bidiControls(text: string): string[] {
@@ -1345,25 +1646,27 @@ interface RenderedUnit {
   readonly line: number;
   readonly text: string;
   readonly unknown: readonly string[];
-  /** A twin of the unit before it: the same run with some image in its other rendering (its findings beyond the unit's are read). */
+  /** A twin of the unit before it: the same run with some image in its other rendering, or (wb-2wiv.4) its page twin (its findings beyond the unit's are read). */
   readonly twin: boolean;
 }
 /**
  * A Markdown text's rendered units, each with its first source line: a heading, a paragraph, a list item's text, a table cell, a
  * block quote's blocks and an HTML block (THE HTML READ: its comments and tags removed, its references decoded, any other markup
- * refused). A unit holding images is read once more for every other combination of their renderings (its twins), and one holding
+ * refused). A unit holding images is read once more for every other combination of their renderings (its twins), a unit holding a
+ * page piece once more with each in its page reading (its page twin, wb-2wiv.4), and one holding
  * more than IMAGE_LIMIT images is refused, as is a unit, a twin or a unit read beside the run holding a bidirectional control or
  * (cut #6) an invisible split. A code block is left to the raw leg; a link destination and an HTML attribute value are read beside
  * the run as units of their own.
  */
-function renderedUnits(markdown: string): RenderedUnit[] {
+function renderedUnits(markdown: string, views?: string[]): RenderedUnit[] {
   const units: RenderedUnit[] = [];
   const push = (line: number, render: (unknown: string[], extras: string[]) => Piece[]): void => {
     const unknown: string[] = [];
     const extras: string[] = [];
     const pieces = render(unknown, extras);
+    views?.push(readerText(pieces));
     const text = runText(pieces);
-    const images = pieces.filter(piece => typeof piece !== "string").length;
+    const images = pieces.filter(isImage).length;
     if (images > IMAGE_LIMIT) unknown.push(`images ${images}`);
     units.push({ line, text, unknown: [...unknown, ...bidiControls(text), ...invisibleSplits(text)], twin: false });
     const read = [text.trim(), ...extras.map(extra => decodeReferences(extra, []).trim())];
@@ -1372,6 +1675,13 @@ function renderedUnits(markdown: string): RenderedUnit[] {
       if (variant.trim().length === 0 || read.includes(variant.trim())) continue;
       read.push(variant.trim());
       units.push({ line, text: variant, unknown: [...bidiControls(variant), ...invisibleSplits(variant)], twin: true });
+    }
+    if (pieces.some(piece => typeof piece !== "string" && !isImage(piece))) {
+      const page = pageView(pieces);
+      if (page.trim().length > 0 && !read.includes(page.trim())) {
+        read.push(page.trim());
+        units.push({ line, text: page, unknown: [...bidiControls(page), ...invisibleSplits(page)], twin: true });
+      }
     }
     for (const extra of extras) {
       const unknownExtra: string[] = [];
@@ -1825,6 +2135,8 @@ type RawStateShape = "paragraph" | "heading" | "cell" | "item" | "carried";
  * unclosed inline <code> in the paragraph before), cellDeclaration (GP1-D1f), itemEndSpace (GP1-D1g) and codeReference (GP1-D1h);
  * scriptState and upperAttributes open the state with marked's other start tag forms (script; a tag name in upper case with an
  * attribute), markupFree holds no markup or reference in the raw text, and closedState writes the words after the end tag.
+ * (wb-2wiv.4) Each form is also read in its page twin (THE PAGE READ), so all but markupFree and closedState, whose page reading
+ * is their run's, read the claim or decision there.
  */
 const RAW_STATE_FORMS: Readonly<Record<string, { readonly shape: RawStateShape; readonly words: string }>> = {
   codeNamespaced: { shape: "paragraph", words: "<code>Fib<o:p>er core</code>" },
@@ -1847,7 +2159,8 @@ const RAW_STATE_PATH = "docs/raw-state.md";
  * REFUSED_ELEMENTS refuses (cut #6) whose attribute value completes the words "Fiber core" - refusal #5's IV plants buttonValue
  * (GP1-D1i2, an HTML block), textValue (GP1-D1j2, a paragraph) and placeholder (GP1-D1k2, an HTML block), each with a second
  * attribute after the value so the raw leg's fold does not join the words, upperInput (the tag in upper case), and optionLabel and
- * groupLabel, an option's and an optgroup's label.
+ * groupLabel, an option's and an optgroup's label. (wb-2wiv.4) Each input form is also read in its page twin (THE INPUT READ), so it
+ * reads the claim or decision there; optionLabel and groupLabel, no input, read no page twin.
  */
 const INPUT_FORMS: Readonly<Record<string, { readonly block: boolean; readonly words: string }>> = {
   buttonValue: { block: true, words: '<input type="button" value="Fiber" title="x"> core' },
@@ -1879,6 +2192,126 @@ const INVISIBLE_FORMS: Readonly<Record<string, string>> = {
 };
 /** The path D1 reads each INVISIBLE_FORMS text under. */
 const INVISIBLE_FORM_PATH = "docs/invisible.md";
+/**
+ * THE PAGE READ's forms (wb-2wiv.4; one checkable item per rule its claim states, each read by pageRead alone and pinned as a D1
+ * control, so a reader that breaks a rule reds its form): markup outside CommonMark's grammar (a namespaced or dotted tag, an end
+ * tag a space opens, an empty end tag, a lower-case declaration), markup the grammar holds that marked lexes as an html token of its
+ * own (a processing instruction, a CDATA section, the comment forms, one holding ">"), the tag states (a ">" in a double- or single-quoted value of a
+ * start or an end tag, white space around "=", a quote that opens no value - after an "=" in a tag's name or an "=" that opens an
+ * attribute's name -, an unquoted value ended by ">" or by white space), markup the text does not close, a "<" that opens none, the
+ * numeric references (without and with ";", hexadecimal in either case, every digit read - "&#x62e" is U+062E -, more than 7
+ * digits, 0, a surrogate, above 0x10FFFF, a windows-1252 value, a value the table leaves out, no digits), the named ones (closed, legacy, unknown, an inherited object name)
+ * and a raw-text element read in the data state.
+ */
+const PAGE_READ_FORMS: Readonly<Record<string, string>> = {
+  namespacedTag: "Fib<o:p>er core",
+  dottedTag: "Fib<x.y>er core",
+  spacedEndTag: "Fib</ x>er core",
+  emptyEndTag: "Fib</>er core",
+  declaration: "Fib<!x>er core",
+  instruction: "Fib<?x?>er core",
+  cdata: "Fib<![CDATA[x]]>er core",
+  comment: "Fib<!-- c -->er core",
+  commentHoldsGreaterThan: "Fib<!-- a>b -->er core",
+  emptyComment: "Fib<!-->er core",
+  dashComment: "Fib<!--->er core",
+  bangComment: "Fib<!-- c --!>er core",
+  quotedValue: 'Fib<x title="a>b"c>er core',
+  singleQuotedValue: "Fib<x title='a>b'c>er core",
+  spacedValue: 'Fib<x title = "a>b"c>er core',
+  nameQuote: 'Fib<x "a>b">er core',
+  unquotedValue: "Fib<x a=b>c>er core",
+  unquotedThenQuoted: 'Fib<x a=b c="d>e">er core',
+  endTagValue: 'Fib</x title="a>b">er core',
+  nameEquals: 'Fib<x="a>b">er core',
+  spaceEquals: 'Fib<x ="a>b">er core',
+  unclosedTag: "Fib<o:p er core",
+  unclosedComment: "Fib<!-- er core",
+  otherLessThan: "Fib< er<1 core",
+  decimalReference: "Fi&#98er core",
+  closedDecimal: "Fi&#98;er core",
+  hexReference: "Fib&#x65r core",
+  greedyHexDigits: "Fi&#x62er core",
+  upperHexReference: "Fi&#X62;er core",
+  longDecimal: "Fi&#00000098;er core",
+  nullReference: "x&#0;y",
+  surrogateReference: "x&#xD800;y",
+  overReference: "x&#x110000;y",
+  windowsReference: "x&#128;y",
+  unmappedReference: "x&#129;y",
+  emptyNumeric: "x&#;y&#x;z",
+  namedReference: "Fi&amp;er",
+  legacyName: "Fi&ampber",
+  unknownName: "Fi&foo;er",
+  inheritedName: "Fi&toString;er",
+  rawTextElement: "Fib<style>x</style>er core",
+};
+/**
+ * THE INPUT READ's forms (wb-2wiv.4; one checkable item per state rule its claim states, each an input start tag read by D1 in an
+ * HTML block, "Pi embeds the <tag> core.", and pinned by its reader view): the Text state without a type, by each entry keyword, in
+ * upper case, by an unknown or empty type; a type matched in any case (HIDDEN) and behind a reference (hidd&#101;n), and the first
+ * of two types, each hiding the value; a placeholder alone, behind an
+ * empty value, under a value; the first of two values; a value behind a reference; each button state, a button's placeholder and a
+ * submit button's default label (neither read); and the states that show nothing (hidden, password, checkbox, number).
+ */
+const INPUT_READ_FORMS: Readonly<Record<string, string>> = {
+  noType: '<input value="Fiber" size="6">',
+  textType: '<input type="text" value="Fiber" size="6">',
+  searchType: '<input type="search" value="Fiber" size="6">',
+  telType: '<input type="tel" value="Fiber" size="6">',
+  urlType: '<input type="url" value="Fiber" size="6">',
+  emailType: '<input type="email" value="Fiber" size="6">',
+  upperType: '<input type="TEXT" value="Fiber" size="6">',
+  upperHiddenType: '<input type="HIDDEN" value="Fiber" size="6">',
+  unknownType: '<input type="fancy" value="Fiber" size="6">',
+  emptyType: '<input type="" value="Fiber" size="6">',
+  referenceType: '<input type="hidd&#101;n" value="Fiber" size="6">',
+  firstType: '<input type="hidden" type="text" value="Fiber" size="6">',
+  placeholderOnly: '<input placeholder="Fiber" size="6">',
+  emptyValue: '<input value="" placeholder="Fiber" size="6">',
+  valueOverPlaceholder: '<input value="Fiber" placeholder="x" size="6">',
+  firstValue: '<input value="Fiber" value="x" size="6">',
+  referenceValue: '<input value="Fib&#101;r" size="6">',
+  buttonType: '<input type="button" value="Fiber" size="6">',
+  submitType: '<input type="submit" value="Fiber" size="6">',
+  resetType: '<input type="reset" value="Fiber" size="6">',
+  buttonPlaceholder: '<input type="button" placeholder="Fiber" size="6">',
+  submitDefault: '<input type="submit" size="6">',
+  hiddenType: '<input type="hidden" value="Fiber" size="6">',
+  passwordType: '<input type="password" value="Fiber" size="6">',
+  checkboxType: '<input type="checkbox" value="Fiber" size="6">',
+  numberType: '<input type="number" value="Fiber" size="6">',
+};
+/** The HTML block D1 reads each INPUT_READ_FORMS tag in. */
+function inputReadPage(tag: string): string {
+  return `<div>Pi embeds the ${tag} core.</div>\n`;
+}
+/**
+ * THE PAGE TWIN's forms (wb-2wiv.4; one checkable item per rule its claim states, each a Markdown text read on D1 and by its reader
+ * view): a bidirectional control and an invisible split that only the page reading decodes (refused in the twin), an image beside a
+ * raw-state token (shown as the run first shows it), a raw-state token in an image's alt text (no page piece) and a raw-state token in
+ * a link's children (its page reading in the run's).
+ */
+const PAGE_TWIN_FORMS: Readonly<Record<string, string>> = {
+  bidiReference: "Pi embeds the <code>a&#x202Ez</code>.\n",
+  invisibleReference: "Pi embeds a <code>WA&#x200BSM</code> runtime.\n",
+  imageBeside: "Pi embeds the <code>Fib<o:p>er</code> ![core](a.png).\n",
+  imageAlt: "Pi embeds the ![<code>Fib<o:p>er core</code>](x.png).\n",
+  linkChildren: "Pi embeds the [<code>Fib<o:p>er core</code>](x).\n",
+};
+/** The path D1 reads each PAGE_TWIN_FORMS text under. */
+const PAGE_TWIN_PATH = "docs/page-twin.md";
+/**
+ * The inherited names (wb-2wiv.4, found by the seat; FAIL-CLOSED): a named reference whose name is no NAMED_REFERENCES name of its own
+ * but a name every object inherits (constructor, toString) is an unknown named reference like any other, so the rendered leg refuses
+ * it and leaves it as written (a reader shows it as written); each is read on D1 and pinned.
+ */
+const INHERITED_REFERENCE_FORMS: Readonly<Record<string, string>> = {
+  constructorName: "Pi embeds the &constructor; core.\n",
+  toStringName: "Pi embeds the &toString; core.\n",
+};
+/** The path D1 reads each INHERITED_REFERENCE_FORMS text under. */
+const INHERITED_REFERENCE_PATH = "docs/inherited-reference.md";
 /** A claim (D1) and a decision (B1, B2) around the words a RAW_STATE_FORMS or INPUT_FORMS form writes for "Fiber core". */
 function formClaim(words: string): string {
   return `Pi embeds the ${words}.`;
@@ -1929,6 +2362,73 @@ function cutSixForms(decision: boolean): CutSixForms {
 /** Each form's reading, by name. */
 function formReadings(texts: Readonly<Record<string, string>>, read: (text: string, name: string) => string[]): Record<string, string[]> {
   return Object.fromEntries(Object.entries(texts).map(([name, text]) => [name, read(text, name)]));
+}
+/** The legs a survivor is read on (the gate's expect list): D1 a product text, B2 the decisions page, B1 a decision-bead comment. */
+type SurvivorLeg = "D1" | "B2" | "B1";
+interface Survivor {
+  readonly legs: readonly SurvivorLeg[];
+  readonly path: string;
+  readonly text: string;
+  readonly reader: string;
+}
+/**
+ * THE SURVIVORS (wb-2wiv.4's falsifier roster, one executable falsifier per surviving form): refusal #5's thirteen surviving plants
+ * on cut #5 b70da137 (gate run g10-gate-s142, O:1350; U1's ten RB plants, then U2's three IV plants), each by its gate id as the
+ * gate wrote it - its legs (the gate's expect list), its path and its text byte for byte (tools/cases-gp1-leg2.json and
+ * tools/cases-gp1-leg2b.json of the PREP archive; GP1-B2a's text is the gate's append to the decisions page, GP1-B1a's the wb-x32
+ * comment it set) - and the reader text the gate's reader view recorded for its page (ev/reader-view-gp1.txt and
+ * ev/reader-view-gp1b.txt: marked's page through Python's html.parser, white space collapsed, an input's shown text written
+ * [input:<text>]). Each falsifier reads its plant on each of its legs, and the roster pins the reading - the fail-closed core's
+ * refusal beside the claim or decision its reader sees - and its reader view, so the census as cut #6 left it (which refuses each
+ * form and reads no claim or decision behind it) reds at every one. The ids and texts are held to the tracked export (refusal #5's
+ * two PLANTS sections in wb-2wiv.1's notes, SURVIVOR_SECTIONS).
+ */
+const SURVIVORS: Readonly<Record<string, Survivor>> = {
+  "GP1-D1a": { legs: ["D1"], path: "docs/zz-gp1-code-colon.md", text: "Pi embeds the <code>Fib<o:p>er core</code>.\n", reader: "Pi embeds the Fiber core." },
+  "GP1-D1b": { legs: ["D1"], path: "docs/zz-gp1-kbd-bogus.md", text: "Pi embeds the <kbd>Fib<!x>er core</kbd>.\n", reader: "Pi embeds the Fiber core." },
+  "GP1-D1c": { legs: ["D1"], path: "docs/zz-gp1-pre-endspace.md", text: "Pi embeds the <pre>Fib</ x>er core</pre>.\n", reader: "Pi embeds the Fiber core." },
+  "GP1-D1d": { legs: ["D1"], path: "docs/zz-gp1-heading-dot.md", text: "## Pi embeds the <code>Fib<x.y>er core</code>\n", reader: "Pi embeds the Fiber core" },
+  "GP1-D1e": { legs: ["D1"], path: "docs/zz-gp1-carry.md", text: "Intro <code>x\n\nPi embeds the Fib<o:p>er core.\n", reader: "Intro x Pi embeds the Fiber core." },
+  "GP1-D1f": { legs: ["D1"], path: "docs/zz-gp1-cell.md", text: "| a | b |\n| --- | --- |\n| <kbd>Fib<!x>er core</kbd> | y |\n", reader: "a b Fiber core y" },
+  "GP1-D1g": { legs: ["D1"], path: "docs/zz-gp1-item.md", text: "- Pi embeds the <code>Fib</ x>er core</code>\n", reader: "Pi embeds the Fiber core" },
+  "GP1-D1h": { legs: ["D1"], path: "docs/zz-gp1-ref.md", text: "Pi embeds the <code>Fi&#98er core</code>.\n", reader: "Pi embeds the Fiber core." },
+  "GP1-B2a": {
+    legs: ["B2", "D1"],
+    path: "docs/workbench/18-decisions-and-risks.md",
+    text: "\nOWNER DECISION (2026-10-29): Pi will embed the portable <code>Fib<o:p>er core</code> behind the W10 provider.\n",
+    reader: "OWNER DECISION (2026-10-29): Pi will embed the portable Fiber core behind the W10 provider.",
+  },
+  "GP1-B1a": {
+    legs: ["B1"],
+    path: ".beads/issues.jsonl",
+    text: "OWNER DECISION (2026-10-29): Pi will embed the portable <code>Fib<o:p>er core</code> behind the W10 provider.",
+    reader: "OWNER DECISION (2026-10-29): Pi will embed the portable Fiber core behind the W10 provider.",
+  },
+  "GP1-D1i2": { legs: ["D1"], path: "docs/zz-gp1-input-block2.md", text: '<div>Pi embeds the <input type="button" value="Fiber" title="x"> core.</div>\n', reader: "Pi embeds the [input:Fiber] core." },
+  "GP1-D1j2": { legs: ["D1"], path: "docs/zz-gp1-input-inline2.md", text: 'Pi embeds the <input value="Fiber" size="6"> core.\n', reader: "Pi embeds the [input:Fiber] core." },
+  "GP1-D1k2": { legs: ["D1"], path: "docs/zz-gp1-input-placeholder2.md", text: '<div>Pi embeds the <input placeholder="Fiber" size="6"> core.</div>\n', reader: "Pi embeds the [input:Fiber] core." },
+};
+/** The headings of refusal #5's two PLANTS sections in wb-2wiv.1's notes (U1's RB plants, then U2's IV plants), each read at its first match. */
+const SURVIVOR_SECTIONS = ["PLANTS (gate-authored, probe tree 998ef8c9 in worktree -mut).", "PLANTS (probe tree, -mut)."] as const;
+/** The child bead the survivors are the falsifier roster of: R-B93 moved the full-surface rendered reading to it (read from the tracked export). */
+const CHILD = "wb-2wiv.4";
+/** GP1-B1a's row edit as the gate wrote it: the decision bead's comments set to its one comment and comment_count 1, in a row of its own (B1 reads every member). */
+function survivorMember(text: string, bead: string): string {
+  return JSON.stringify({ id: bead, comments: [{ id: "c-gp1", issue_id: bead, author: "owner", text, created_at: "2026-10-29T20:00:00Z" }], comment_count: 1 });
+}
+/** A survivor's reading on one of its legs: its findings there (D1 a claim, B2 and B1 a decision) and its reader view. */
+function survivorReading(survivor: Survivor, leg: SurvivorLeg, bead: string): JsonValue {
+  const findings =
+    leg === "D1"
+      ? claimsOf(survivor.text, survivor.path)
+      : leg === "B2"
+        ? pageDecisions(survivor.text, survivor.path)
+        : beadDecisions([survivorMember(survivor.text, bead)], bead).decisions;
+  return json({ findings, page: readerView(survivor.text) });
+}
+/** Every survivor's reading on a leg, by id, in roster order. */
+function survivorReadings(leg: SurvivorLeg, bead: string): JsonValue {
+  return json(Object.fromEntries(Object.entries(SURVIVORS).flatMap(([id, survivor]) => (survivor.legs.includes(leg) ? [[id, survivorReading(survivor, leg, bead)]] : []))));
 }
 const NEVER = (): never => {
   throw new Error("census: a planted or injected capability is never invoked here");
@@ -3012,6 +3512,69 @@ function notesUnchanged(notes: string): string[] {
   const match = /no (\w+) or (\w+) change/.exec(notes);
   return match === null ? [] : [match[1] ?? "", match[2] ?? ""];
 }
+/**
+ * Refusal #5's surviving plants as the tracked export holds them: each "- <id> ..." line of SURVIVOR_SECTIONS (each section to its
+ * first blank line), with its section, its single-quoted texts, whether it names "the same decision", and its legs - the legs its
+ * line says read it ("B2 and D1 both read quiet"), else the one its id names (GP1-D1a: D1).
+ */
+function survivorPlants(notes: string): { id: string; section: number; quoted: string[]; same: boolean; legs: string[] }[] {
+  return SURVIVOR_SECTIONS.flatMap((heading, section) => {
+    const start = notes.indexOf(heading);
+    if (start === -1) return [];
+    return (notes.slice(start).split("\n\n")[0] ?? "").split("\n").flatMap(line => {
+      const match = /^- (GP1-([A-D]\d)[A-Za-z0-9]*):? (.+)$/.exec(line);
+      if (match === null) return [];
+      const rest = match[3] ?? "";
+      const named = /([A-D]\d(?: and [A-D]\d)*) (?:both )?reads? quiet/.exec(rest)?.[1];
+      return [
+        {
+          id: match[1] ?? "",
+          section,
+          quoted: [...rest.matchAll(/'([^']+)'/g)].map(quote => quote[1] ?? ""),
+          same: rest.includes("the same decision"),
+          legs: named === undefined ? [match[2] ?? ""] : named.split(" and "),
+        },
+      ];
+    });
+  });
+}
+/**
+ * Refusal #5's reader texts as the tracked export states them, by plant id: each PLANTS section's READER VIEW paragraph (to its first
+ * blank line) - its first quote read by every plant of the section, then its exceptions: the plants "without the period", a plant
+ * whose "cell reads" a quote (held within its reader text, exact false), and a plant or plants that "reads" or "read" a quote.
+ */
+function survivorReaders(notes: string): Map<string, { text: string; exact: boolean }> {
+  const out = new Map<string, { text: string; exact: boolean }>();
+  const plants = survivorPlants(notes);
+  SURVIVOR_SECTIONS.forEach((heading, section) => {
+    const start = notes.indexOf(heading);
+    const view = start === -1 ? -1 : notes.indexOf("READER VIEW:", start);
+    if (view === -1) return;
+    const paragraph = notes.slice(view).split("\n\n")[0] ?? "";
+    const first = /reads '([^']+)'/.exec(paragraph)?.[1] ?? "";
+    for (const plant of plants) if (plant.section === section) out.set(plant.id, { text: first, exact: true });
+    const periodless = /\(([^;)]+?) without the period/.exec(paragraph)?.[1];
+    for (const id of periodless === undefined ? [] : periodless.split(" and ")) out.set(id, { text: first.replace(/\.$/, ""), exact: true });
+    for (const match of paragraph.matchAll(/(GP1-[A-Za-z0-9]+)'s cell reads '([^']+)'/g)) out.set(match[1] ?? "", { text: match[2] ?? "", exact: false });
+    for (const match of paragraph.matchAll(/(GP1-[A-Za-z0-9]+(?: and GP1-[A-Za-z0-9]+)*) reads? '([^']+)'/g)) {
+      for (const id of (match[1] ?? "").split(" and ")) out.set(id, { text: match[2] ?? "", exact: true });
+    }
+  });
+  return out;
+}
+/** Refusal #5's own survivor count per family, as the export states it ("LEG 2 survivors: RB <n> of <n> and IV <n> of <n>"). */
+function survivorCounts(notes: string): number[] {
+  const match = /LEG 2 survivors: RB (\d+) of \d+ and IV (\d+) of \d+/.exec(notes);
+  return match === null ? [] : [Number(match[1]), Number(match[2])];
+}
+/** A survivor's roster reading on a leg (the leg's pin witness, its survivors member). */
+function rosterSurvivor(leg: SurvivorLeg, id: string): { findings: string[]; page: string } | undefined {
+  const witness = rosterWitness(leg);
+  const survivors = isObject(witness) ? witness.survivors : undefined;
+  const reading = isObject(survivors) ? survivors[id] : undefined;
+  if (!isObject(reading)) return undefined;
+  return { findings: strings(reading.findings, `${leg} survivor ${id} findings`), page: typeof reading.page === "string" ? reading.page : "" };
+}
 /** The roster witnesses of a row's pins, as ROWS lists them (an object witness; any other reads as an empty object). */
 function witnessesOf(row: string): { [key: string]: JsonValue }[] {
   return (ROWS.find(entry => entry.id === row)?.pins ?? []).map(pin => {
@@ -3336,6 +3899,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       rawStateForms: formReadings(forms.rawState, memberDecisions),
       inputForms: formReadings(forms.input, memberDecisions),
       invisibleForms: formReadings(forms.invisible, memberDecisions),
+      survivors: survivorReadings("B1", decisionBead),
     });
   },
   B2: async () => {
@@ -3353,6 +3917,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       rawStateForms: formReadings(forms.rawState, pageDecisions),
       inputForms: formReadings(forms.input, pageDecisions),
       invisibleForms: formReadings(forms.invisible, pageDecisions),
+      survivors: survivorReadings("B2", ""),
     });
   },
   C1: async () => {
@@ -3441,6 +4006,13 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       rawStateForms: formReadings(forms.rawState, text => claimsOf(text, RAW_STATE_PATH)),
       inputForms: formReadings(forms.input, text => claimsOf(text, INPUT_FORM_PATH)),
       invisibleForms: formReadings(forms.invisible, text => claimsOf(text, INVISIBLE_FORM_PATH)),
+      survivors: survivorReadings("D1", ""),
+      pageReadForms: Object.fromEntries(Object.entries(PAGE_READ_FORMS).map(([name, raw]) => [name, pageRead(raw)])),
+      inputReadForms: Object.fromEntries(Object.entries(INPUT_READ_FORMS).map(([name, tag]) => [name, readerView(inputReadPage(tag))])),
+      pageTwinForms: Object.fromEntries(
+        Object.entries(PAGE_TWIN_FORMS).map(([name, markdown]) => [name, { findings: claimsOf(markdown, PAGE_TWIN_PATH), page: readerView(markdown) }]),
+      ),
+      inheritedReferenceForms: Object.fromEntries(Object.entries(INHERITED_REFERENCE_FORMS).map(([name, markdown]) => [name, claimsOf(markdown, INHERITED_REFERENCE_PATH)])),
       plantedTree: { roots: plantedReading.roots, claims: plantedReading.claims },
     });
   },
@@ -3703,6 +4275,17 @@ describe("wb-2wiv.1 portable Fiber core gate census (SDK-UNIVERSAL-REACTIVE-REND
         expandedWord: EXPANDED_WORD,
         readerRendering: READER_RENDERING,
         residuals: RESIDUALS,
+        numericReplacements: Object.fromEntries(Object.entries(NUMERIC_REPLACEMENTS).map(([value, shown]) => [value, shown.codePointAt(0) ?? 0])),
+        inputTypes: INPUT_TYPES,
+        inputShown: INPUT_SHOWN,
+        survivors: SURVIVORS,
+        survivorSections: SURVIVOR_SECTIONS,
+        pageReadForms: PAGE_READ_FORMS,
+        inputReadForms: INPUT_READ_FORMS,
+        pageTwinForms: PAGE_TWIN_FORMS,
+        pageTwinPath: PAGE_TWIN_PATH,
+        inheritedReferenceForms: INHERITED_REFERENCE_FORMS,
+        inheritedReferencePath: INHERITED_REFERENCE_PATH,
     });
     expect(constants).toStrictEqual(ROSTER.constants);
     for (const members of Object.values(RESIDUALS)) {
@@ -3764,6 +4347,63 @@ describe("wb-2wiv.1 portable Fiber core gate census (SDK-UNIVERSAL-REACTIVE-REND
       witnessesOf("D").some(witness => Array.isArray(witness.roots) && unchanged.every(root => (witness.roots as JsonValue[]).includes(root))),
       "a row D pin reads both trees the notes keep unchanged",
     ).toBe(true);
+
+    // wb-2wiv.4's falsifier roster: its frozen shape, refusal #5's surviving plants in the tracked export (the outside anchor), the
+    // child bead's two families, and each survivor's roster reading - its claim or decision read as its reader sees it, beside the
+    // fail-closed core's refusal, and its reader view equal to the gate's reader text byte for byte.
+    expect(Object.entries(SURVIVORS).map(([id, survivor]) => `${id}:${survivor.legs.join("+")}`)).toEqual([
+      "GP1-D1a:D1",
+      "GP1-D1b:D1",
+      "GP1-D1c:D1",
+      "GP1-D1d:D1",
+      "GP1-D1e:D1",
+      "GP1-D1f:D1",
+      "GP1-D1g:D1",
+      "GP1-D1h:D1",
+      "GP1-B2a:B2+D1",
+      "GP1-B1a:B1",
+      "GP1-D1i2:D1",
+      "GP1-D1j2:D1",
+      "GP1-D1k2:D1",
+    ]);
+    const plants = survivorPlants(notes);
+    expect(plants.map(plant => plant.id), "the survivors are refusal #5's surviving plants in the tracked export, in its order").toEqual(Object.keys(SURVIVORS));
+    expect(
+      plants.map(plant => `${plant.id}:${plant.legs.join("+")}`),
+      "each survivor is read on the legs its plant line names (else its id's)",
+    ).toEqual(Object.entries(SURVIVORS).map(([id, survivor]) => `${id}:${survivor.legs.join("+")}`));
+    const readers = survivorReaders(notes);
+    for (const [id, survivor] of Object.entries(SURVIVORS)) {
+      const stated = readers.get(id);
+      expect(stated?.text.length ?? 0, `the export's READER VIEW states ${id}'s reader text`).toBeGreaterThan(0);
+      if (stated?.exact === true) expect(survivor.reader, `${id}'s reader text is the export's, byte for byte`).toBe(stated.text);
+      else expect(survivor.reader.includes(stated?.text ?? survivor.reader + survivor.text), `${id}'s reader text holds the export's`).toBe(true);
+    }
+    expect(
+      SURVIVOR_SECTIONS.map((_, section) => plants.filter(plant => plant.section === section).length),
+      "each PLANTS section holds refusal #5's own survivor count for its family (RB, then IV)",
+    ).toEqual(survivorCounts(notes));
+    plants.forEach((plant, index) => {
+      const quoted = plant.quoted.length > 0 ? plant.quoted : plant.same ? (plants[index - 1]?.quoted.slice(0, 1) ?? []) : [];
+      expect(quoted.length, `${plant.id}'s plant line quotes its text`).toBeGreaterThan(0);
+      for (const quote of quoted) expect(SURVIVORS[plant.id]?.text ?? "", `${plant.id}'s text holds the export's quote byte for byte`).toContain(quote);
+    });
+    const child = exportRows().get(CHILD);
+    expect(typeof child?.title === "string" ? child.title : "", `${CHILD} is the child bead R-B93 moved the full-surface rendered reading to`).toContain("narrowed out of wb-2wiv.1's fail-closed core");
+    for (const family of ["U1 (RB, ", "U2 (IV)"]) {
+      expect(typeof child?.description === "string" ? child.description : "", `${CHILD}'s description carries refusal #5's ${family.slice(0, 2)} family`).toContain(family);
+    }
+    for (const [id, survivor] of Object.entries(SURVIVORS)) {
+      if (survivor.legs.includes("B2")) expect(survivor.path, `${id} sits on the notes' cited decisions page`).toBe(notesEvidence(notes).page);
+      for (const leg of survivor.legs) {
+        const reading = rosterSurvivor(leg, id);
+        expect(reading?.page, `${id}'s ${leg} reader view is the gate's reader text, byte for byte`).toBe(survivor.reader);
+        expect(
+          (reading?.findings ?? []).some(finding => / rendered (?!unknown )/.test(finding)),
+          `${id}'s ${leg} reading reads its ${leg === "D1" ? "claim" : "decision"} as its reader sees it`,
+        ).toBe(true);
+      }
+    }
 
     // The vendored producer lines: the notes' program citation, its quotes and the census's vocabulary.
     const program = notesProgram(notes);
