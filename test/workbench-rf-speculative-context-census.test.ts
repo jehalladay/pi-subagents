@@ -36,22 +36,29 @@
  * here can read (NAMED_REFERENCE_LIST), so the gate's P-D16 to P-D19 read in C1 and C2 (M5's positive controls); A2, C1 and C2
  * each judge a planted unit after the real ones, so the gate's hollowing mutants G09, G12, G13 and G14 red (PLANTED LEGS).
  * wb-eu94 (R694 follow-up from the wb-dkru landing 613 gate cmd_dc3281ed8867, hop 3 of the wb-grmo.1 chain, cut in the R739
- * TERMINAL enumerate-the-resolvable form; its F1 leads, its F3 rides; cut #2 cures refusal #1's U1 and U2): the normalized view
- * claims exactly the forms READ_FORMS enumerates (M6) beside M5's marks and references. It reads a code span on one line as
- * marked renders it (its backtick strings dropped, one padding space stripped at each end: spec` ul `ative), a numeric reference
- * with or without its ";" as an HTML5 parser decodes it (spe&#99ulative inside an HTML block; the 0x80-0x9F Windows-1252 table:
- * what&#150;if), a default-ignorable code point or a format character dropped, and the markup a browser drops in one pass read
- * as the HTML5 tokenizer reads it from its data state (withoutMarkup): a comment (the empty <!--> and <!---> and the "--!>" close
- * included), a processing instruction, a declaration, a CDATA section or a "</" before anything but a letter dropped as a browser
- * drops a bogus comment (to its first ">"), and a tag dropped through the ">" an HTML5 tokenizer closes it at (a ">" inside a
- * quoted attribute value does not: spec<span title="a>b">ul</span>ative). The pass resumes past each form it drops, so an opener
- * inside an attribute value or a comment is never read as a form of its own (spec<span title="<!x">ul</span>ative; refusal #1's
- * U1 plants G01-G17 and its 42 sweep members are joined READ_FORMS rows, its U2 witnesses split or joined rows). Its joined rows
- * are one word on the page and C1 and C2 read them, its split rows are split on the page and stay split, and its over-read rows
- * are split on the page yet joined by the view (marked shows the form as written - it escapes the run, leaves a mark unpaired, an
- * HTML block holds the markdown, or a code span shows it - or a br breaks the line, and the view still removes or decodes it). The
- * known forms it does not read are named residuals, each with a pinned quiet row (R-LEGACY-REFERENCE, R-MULTILINE-CODE-SPAN,
- * R-HIDDEN-CONTENT, R-ESCAPED-MARKUP and, cut #2, R-EDGE-GLUE); a form neither READ_FORMS nor a residual names is not claimed.
+ * TERMINAL enumerate-the-resolvable form; its F1 leads, its F3 rides; cut #2 cures refusal #1's U1 and U2; cut #3 cures refusal
+ * #2's U1 and U2 under ruling R-B131): the normalized view claims exactly the forms READ_FORMS enumerates (M6) beside M5's marks
+ * and references, and the decoded values M7 holds. It reads a code span on one line as marked renders it (its backtick strings
+ * dropped, one padding space stripped at each end: spec` ul `ative), a numeric reference with or without its ";" as an HTML5
+ * parser decodes it (decimal, or hex after an "x" or an "X" with hex digits of either case: spe&#99ulative inside an HTML block,
+ * spec&#XAD;ulative, spec&#xad;ulative; the 0x80-0x9F Windows-1252 table: what&#150;if), a default-ignorable code point or a
+ * format character dropped, and the markup a browser drops in one pass read as the HTML5 tokenizer reads it from its data state
+ * (withoutMarkup): a comment (the empty <!--> and <!---> and the "--!>" close included), a processing instruction, a declaration,
+ * a CDATA section or a "</" before anything but a letter dropped as a browser drops a bogus comment (to its first ">"), and a tag
+ * dropped through the ">" an HTML5 tokenizer closes it at (a ">" inside a quoted attribute value does not: spec<span
+ * title="a>b">ul</span>ative), while a "<" that opens no markup stays as written (what<-if). The pass resumes past each form it
+ * drops, so an opener inside an attribute value or a comment is never read as a form of its own (spec<span
+ * title="<!x">ul</span>ative). Each behaviour a reader doc comment below states is held by a READ_FORMS row whose reading turns
+ * on it or by M7, or the comment states that no reading turns on it; refusal #2's seven surviving gate mutants each have their
+ * falsifier rows (GP01 an uppercase X, GP03 lowercase hex digits, GP46 an empty <!---> before a later comment, GP10-99 a
+ * reference to 0x99 before a word, GP48 a "<" opening no markup in the joint, GP33 white space before an "=" that opens an
+ * attribute name, GP32 a "/" inside an unquoted value). Its joined rows are one word on the page and C1 and C2 read them, its
+ * split rows are split on the page and stay split, and its over-read rows are split on the page yet joined by the view (marked
+ * shows the form as written - it escapes the run, leaves a mark unpaired, an HTML block holds the markdown, or a code span shows
+ * it - or a br breaks the line, and the view still removes or decodes it). The known forms it does not read are named residuals,
+ * each with a pinned quiet row (R-LEGACY-REFERENCE, R-MULTILINE-CODE-SPAN, R-HIDDEN-CONTENT, R-ESCAPED-MARKUP, cut #2's
+ * R-EDGE-GLUE and cut #3's R-REDECODE, R-BLOCK-BREAK and R-PUNCTUATION-EMPHASIS); a form neither READ_FORMS nor a residual names
+ * is not claimed.
  *
  * ROWS (each pin's witness is held to the roster):
  *  A, the trigger as it reaches Pi. A1 the contractSource carrier states the --no-commit render contract, names no --scenario and
@@ -75,7 +82,9 @@
  *    co-occurrence, not polarity: a refusal sentence names its refusal ('refuses'), never a served word.
  *  M, the matchers rows A to C read: M1-M6 the spellings each must catch and pass (M5 the rendered text of inline marks and named
  *    references: the gate's P-D16 to P-D19 and their class read, a mark or a reference a reader sees shown stays, and the decoded
- *    table's size and digest; M6 every READ_FORMS row read as the page shows it, wb-eu94); Q1-Q14 the pinned quiet rows.
+ *    table's size and digest; M6 every READ_FORMS row read as the page shows it, wb-eu94); M7 the decoded value codePoint gives
+ *    each DECODE_PROBES code and the C1_REFERENCES table's size and digest, held to the roster's parse5 reading (wb-eu94 cut #3);
+ *    Q1-Q17 the pinned quiet rows.
  *  PLANTED LEGS (wb-dkru F4): A2, C1 and C2 each run their own judge (srcHits, servedHits, speculativeHits) over the real units and
  *    then over the real units with a planted one after them, and hold the planted run's hits to exactly the plant's, so a judge
  *    forced quiet, a literal reader emptied or C2's allowlist read inverted reds although the real tree is clean. C2's stale-entry
@@ -99,16 +108,32 @@
  * brackets (spec[ul](./notes.md)ative), is not resolved, so a term it splits escapes C1 and C2 (Q9); R-LEGACY-REFERENCE a legacy
  * name written without its ";" (spec&shyulative) is read as written, while a browser decodes it inside an HTML block and wherever
  * marked passes it through (a ";" closing the run of letters, digits or "_" it opens: spec&shyulative;), so a term it splits
- * there escapes C1 and C2 (Q10); R-MULTILINE-CODE-SPAN a code span whose content crosses a line ending is not read as one, so the
- * line endings marked strips as its padding (spec`\nul\n`ative) still split a word (Q11); R-HIDDEN-CONTENT the content of an
+ * there escapes C1 and C2 (Q10); R-MULTILINE-CODE-SPAN a code span whose content crosses a line ending is not read as marked reads
+ * it: across a line feed it is not read as one, so the line endings marked strips as its padding (spec`\nul\n`ative) still split
+ * a word, and a backtick marked pairs across the line is left to the one-line pass, which can pair a later one instead (a word
+ * marked splits then reads joined); across a carriage return it is read as one with the carriage return as content, which marked
+ * strips as padding too (spec`\rul\r`ative) (Q11); R-HIDDEN-CONTENT the content of an
  * element a browser does not show (the hidden attribute, <template>) is read as text, so a hidden part inside a word splits it
- * (Q12); R-ESCAPED-MARKUP a tag-like run marked shows as written (outside its raw-HTML grammar) is still removed as markup, so a
- * term inside it that a code span or a reference splits (<b spec` ul `ative >) escapes C1 and C2 (Q13); R-EDGE-GLUE a form the
- * view removes while the page shows it (an unpaired mark; a tag, a comment or a bogus comment marked escapes in text; a code span
- * an HTML block holds) joins inside a word, but at a word's edge it glues the letter or digit beside it to the term it borders
- * (x*spec&shy;ulative, the what&#45;if*x view), so the term loses its word boundary and a term the raw text splits too escapes C1
- * and C2; its comment, bogus-comment and code-span members read correctly at base, where the view removed none of those forms
- * (Q14).
+ * (Q12); R-ESCAPED-MARKUP a tag-like run, a comment opener or a bogus-comment opener marked shows as written (outside its raw-HTML
+ * grammar) is still removed as markup, through the first ">" after it even where that ">" closes later markup, so a term inside
+ * the run that a code span or a reference splits (<b spec` ul `ative >), or that the run reaches into (x<!spec<b></b>ulative),
+ * escapes C1 and C2; its comment and bogus-comment members read correctly at base, where the view removed neither form (Q13);
+ * R-EDGE-GLUE a form the view removes or decodes while the page shows it (an unpaired mark; a tag, a comment or a bogus comment
+ * marked escapes in text; a code span or emphasis an HTML block holds; a reference marked shows as written), or a form the page
+ * reads as a break while the view removes it (a br, a block or a replaced element such as <p> or <img>, and the tags an RCDATA
+ * element such as <textarea> shows as its text), joins inside a word, but at a word's edge it glues the letter or digit beside it
+ * to the term it borders (x*spec&shy;ulative, the what&#45;if*x view, x<br>spec&shy;ulative), so the term loses its word boundary
+ * and a term the raw text splits too escapes C1 and C2; beside a sentence's punctuation a code span an HTML block holds likewise
+ * joins the punctuation to the white space after it (x`?` spec&shy;ulative in a div block), a sentence break the page does not
+ * show, so C1 misses the claim the page states; its comment, bogus-comment and code-span members read correctly at base, where
+ * the view removed none of those forms (Q14); R-REDECODE a character a reference decodes is read again by a later step - a
+ * decoded "&" opens a named reference (&#38;shy;), a decoded backslash escapes the character after it (&#92;-), and a backslash
+ * an HTML block shows escapes a reference's decoded character (-\&#45;-) - so the view joins inside a word, or glues at its edge,
+ * what the page shows as written (Q15); R-BLOCK-BREAK a blank line inside markup in an HTML block ends marked's block there, and
+ * the browser then reads the markup on across the paragraph marked opens (spec<?, a blank line, ulative in a div block shows one
+ * word), while the view reads it through the next ">" (Q16); R-PUNCTUATION-EMPHASIS emphasis no letter or digit borders (between
+ * the two hyphens of the scenario flag: -*&#173;*-scenario, -_&#173;_-scenario) is read as written, while marked renders it, so a
+ * term it splits escapes C1 and C2 (Q17).
  * SCOPE: the marker names are producer facts read off the installed rf and RFCLI; Pi vendors no rf schema, so a marker rf adds
  * later is seen only when a re-measure re-reads them into the roster. No speculative reader, refusal or capability is added or
  * faked here; the cut that adds them flips this census (the FLIP of the freeze-and-flip).
@@ -273,8 +298,8 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "M",
-    label: "the matchers rows A to C read: M1-M6 the spellings each must catch and pass, Q1-Q14 the pinned quiet rows of the named residuals",
-    pins: ["M1", "M2", "M3", "M4", "M5", "M6", "Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12", "Q13", "Q14"],
+    label: "the matchers rows A to C read: M1-M6 the spellings each must catch and pass, M7 the decoded values, Q1-Q17 the pinned quiet rows of the named residuals",
+    pins: ["M1", "M2", "M3", "M4", "M5", "M6", "M7", "Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12", "Q13", "Q14", "Q15", "Q16", "Q17"],
   },
 ];
 
@@ -435,21 +460,31 @@ function failuresOf(roster: rfFixture.RfResultRoster, result: JsonObject): strin
   return [...rfFixture.diffAgainstRoster(roster, result).failures];
 }
 
-/** An HTML comment as a browser closes it, read at its "<!--" (markupEnd): through the first "-->" or "--!>" after it, or the
- * empty "<!-->" and "<!--->". */
+/** An HTML comment as a browser closes it, read at its "<!--" (markupEnd): through the first "-->" or "--!>" after it, across
+ * line endings, or the empty "<!-->" and "<!--->"; READ_FORMS reads each empty form before a later comment, where BOGUS_COMMENT,
+ * which reads a "<!--" no close follows to its first ">", could not read it in its place. */
 const HTML_COMMENT = /<!--(?:-?>|[\s\S]*?--!?>)/y;
 /** A bogus comment as an HTML5 tokenizer reads one, at its "<" (markupEnd, after HTML_COMMENT): "<!" (a declaration, a DOCTYPE,
- * a CDATA section, or a "<!--" no comment close follows), "<?" (a processing instruction) or "</" before anything but a letter,
- * through its first ">", so "<?a>b?>" leaves "b?>" shown and "</>" goes whole. */
+ * a CDATA section, a "<!-" or a "<!--" no comment close follows), "<?" (a processing instruction) or "</" before anything but an
+ * ASCII letter of either case, through its first ">", across line endings, so "<?a>b?>" leaves "b?>" shown and "</>" goes whole;
+ * with no ">" after it, it is no bogus comment and stays as written. */
 const BOGUS_COMMENT = /<(?:[!?]|\/(?![A-Za-z]))[^>]*>/y;
-/** The white space an HTML5 tokenizer reads between a tag's parts: tab, line feed, form feed, carriage return and space. */
+/** The white space an HTML5 tokenizer reads between a tag's parts: tab, line feed, form feed, carriage return and space, and no
+ * other code point (a vertical tab, a no-break space, a line separator or a next-line control is part of the name it sits in). */
 const TAG_SPACE: ReadonlySet<string> = new Set(["\t", "\n", "\f", "\r", " "]);
 /** A tag's tokenizer states (the HTML Standard's tag name, attribute and self-closing states). */
 type TagState = "tagName" | "beforeName" | "attrName" | "afterName" | "beforeValue" | "doubleQuoted" | "singleQuoted" | "unquoted" | "afterQuoted" | "selfClosing";
-/** The index just past the ">" that closes the tag opening at `start` ("<" or "</", then a letter), read as an HTML5 tokenizer
- * reads it: only an attribute value after "=" is quoted (a '"' or "'" opens it, the same quote closes it), so a ">" inside a
- * quoted value does not close the tag, while a quote anywhere else and an "=" that opens an attribute name (<a ="x>) are
- * ordinary characters of the tag; -1 when the text ends first (a browser then shows nothing of the rest). */
+/** The index just past the ">" that closes the tag opening at `start` ("<" or "</", then a letter), read in the HTML Standard's
+ * tag states as an HTML5 tokenizer reads them, end tags as start tags: a ">" closes the tag in every state but a quoted value's,
+ * a ">" right after "=" included; TAG_SPACE ends the tag name, an attribute name or an unquoted value, and is skipped before a
+ * name and on either side of "="; a "/" outside a value opens the self-closing state, which reads white space, a "/" or any other
+ * character as it reads them before a name; an "=" after a name opens its value, while an "=" where a name starts is the name's
+ * first character (<a ="x>); a '"' or "'" as a value's first character starts a quoted value only the same quote closes, so a ">"
+ * inside it does not close the tag; any other first character starts an unquoted value, which TAG_SPACE ends and in which "/", "=" and
+ * quotes are ordinary; after a quoted value any character but TAG_SPACE and "/" starts the next name (<a="1"b>, <a="1"="x>); a
+ * quote anywhere else is an ordinary character of the tag. -1 when the text ends first (a browser then shows nothing of the rest).
+ * The attribute-name and after-name states make the same move on every character, as do the before-name and self-closing states
+ * and the after-value and before-name states, so no reading turns on which state of such a pair a tag is in. */
 function tagEnd(text: string, start: number): number {
   let state: TagState = "tagName";
   for (let at = start + (text[start + 1] === "/" ? 2 : 1); at < text.length; at += 1) {
@@ -501,8 +536,8 @@ function tagEnd(text: string, start: number): number {
   return -1;
 }
 /** The index just past the markup opening at the "<" at `start`, read as an HTML5 tokenizer reads it from its data state: an
- * HTML_COMMENT, else a BOGUS_COMMENT, else a tag ("<" or "</" before a letter) through the ">" tagEnd finds; -1 when the "<"
- * opens none of them or the text ends inside the tag. */
+ * HTML_COMMENT, else a BOGUS_COMMENT, else a tag ("<" or "</" before an ASCII letter of either case) through the ">" tagEnd
+ * finds; -1 when the "<" opens none of them or the text ends inside the tag. */
 function markupEnd(text: string, start: number): number {
   for (const markup of [HTML_COMMENT, BOGUS_COMMENT]) {
     markup.lastIndex = start;
@@ -514,9 +549,9 @@ function markupEnd(text: string, start: number): number {
 /** The text with its comments, bogus comments and tags removed in one pass, as an HTML5 tokenizer reads them from its data state:
  * markupEnd reads each "<" the pass reaches, and the pass resumes just past the markup it removes, so an opener inside a tag's
  * attribute value or inside a comment ("<!", "<!--", "<?" or "</": spec<span title="<!x">ul</span>ative) is never read as
- * markup of its own. A "<" that opens no markup, and a tag the text ends inside (a quoted value that never closes), are kept as
- * written and the pass goes on from the next "<": a browser shows nothing of the rest of such a tag, so there the view reads
- * more than the page, never less. */
+ * markup of its own. A "<" that opens no markup (what<-if, scenario<.view: a browser shows it) and a tag the text ends inside (a
+ * quoted value that never closes: a browser shows nothing of the rest) are kept as written, each "<" in place, and the pass goes
+ * on from the next "<". */
 function withoutMarkup(text: string): string {
   let kept = "";
   let from = 0;
@@ -529,35 +564,48 @@ function withoutMarkup(text: string): string {
   }
   return kept + text.slice(from);
 }
-/** A code span on one line, as marked 18.0.11's codespan rule reads one there: a backtick string that no backtick and no odd run
- * of backslashes precedes (an even run is escaped backslashes, so a code span still opens after it), a content that neither
- * opens nor closes with a backtick, then the first backtick string of the same length. */
+/** A code span on one line (its content holds no line feed; a carriage return, which marked reads as a line ending, is content
+ * here: R-MULTILINE-CODE-SPAN), as marked 18.0.11's codespan rule reads one there: a backtick string that no backtick and no odd run
+ * of backslashes precedes (an even run is escaped backslashes, so a code span still opens after it), a content of one character
+ * or more that neither opens nor closes with a backtick, then the first backtick string of the same length. The lookahead after
+ * the opening string and the content's first character both keep a backtick out of the content's start, so no reading turns on
+ * either one alone. */
 const CODE_SPAN = /(?<!`)(?<!(?<!\\)\\(?:\\\\)*)(`+)(?!`)([^`\n]|[^`\n][^\n]*?[^`\n])\1(?!`)/g;
 /** A code span's rendered text, as marked renders it: its content, less one space at each end when the content both opens and
  * closes with a space and is not all spaces (CommonMark's padding rule); a tab or any other white space is never stripped. */
 function codeSpanText(content: string): string {
   return content.startsWith(" ") && content.endsWith(" ") && /[^ ]/.test(content) ? content.slice(1, -1) : content;
 }
-/** An inline mark beside a letter or digit, read after CODE_SPAN: a run of "*", "~" or "`" that a letter or digit precedes or
- * follows. marked 18.0.11 renders such a run inside a word as emphasis or strikethrough (spec*ul*ative shows as one word), so the
+/** An inline mark beside a letter or digit, read after CODE_SPAN: a run of "*", "~" or "`" that a letter or digit of any script
+ * (Unicode L or N: a fullwidth letter NFKC folds included) precedes or follows. marked 18.0.11 renders such a run inside a word as emphasis or strikethrough (spec*ul*ative shows as one word), so the
  * normalized view removes it before any reference is decoded (a reference is never markup); an unpaired run there, or a backtick
  * a code span shows (spec`` `ul` ``ative), is removed too: inside a word an over-read that joins, at a word's edge a glue that can
  * cost the word its boundary (R-EDGE-GLUE, Q14). "_" stays, as marked shows an intraword "_" as written. */
 const INLINE_MARKS = /[*~`]+(?=[\p{L}\p{N}])|(?<=[\p{L}\p{N}])[*~`]+/gu;
-/** A numeric character reference, decimal or hex, with or without its ";": an HTML5 parser decodes one written without it
- * (spe&#99ulative inside an HTML block), consuming every digit. */
+/** A numeric character reference with or without its ";", as an HTML5 parser reads one: "&#" and one or more ASCII digits
+ * (decimal), or "&#x" or "&#X" and one or more ASCII hex digits of either case (hex), every digit consumed, then at most one ";".
+ * An HTML5 parser decodes one written without its ";" too (spe&#99ulative inside an HTML block). */
 const NUMERIC_REFERENCE = /&#(?:([0-9]+)|[xX]([0-9A-Fa-f]+));?/g;
 /** The Windows-1252 code points an HTML5 parser puts in place of a numeric reference to 0x80-0x9F (the HTML Standard's numeric
- * character reference end state), so what&#150;if shows an en dash; the five codes it leaves as they are (0x81, 0x8D, 0x8F,
- * 0x90, 0x9D) are not listed. */
+ * character reference end state), so what&#150;if shows an en dash: 27 entries; the five codes it leaves as they are (0x81, 0x8D,
+ * 0x8F, 0x90, 0x9D) are not listed. M7 holds the decoded value of every code 0x80-0x9F, and the table's size and digest, to the
+ * roster. A C1 or C2 verdict turns on five of the entries: 0x85 (an ellipsis, NFKC "..."), 0x96 and 0x97 (an en and an em dash,
+ * JOINT marks) and 0x99 (a trade mark sign, NFKC "TM", letters that glue to a word beside it) each have READ_FORMS rows, and 0x98
+ * (a small tilde, which NFKC opens with a space, so after a sentence's period it starts a new sentence unit) changes a C1 verdict
+ * alone, which no READ_FORMS row can hold, so M7 holds it. At the positions the cutting seat measured (both edges of every
+ * SPECULATIVE_TERM alternative, inside a word, the joint, a separator, before and after a sentence end; decimal and hex, with,
+ * without and with a doubled ";"; in text and in p and div blocks) every other entry decodes to a code point each matcher reads
+ * as it reads the C1 control in its place. */
 const C1_REFERENCES: ReadonlyMap<number, number> = new Map([
   [0x80, 0x20ac], [0x82, 0x201a], [0x83, 0x0192], [0x84, 0x201e], [0x85, 0x2026], [0x86, 0x2020], [0x87, 0x2021], [0x88, 0x02c6],
   [0x89, 0x2030], [0x8a, 0x0160], [0x8b, 0x2039], [0x8c, 0x0152], [0x8e, 0x017d], [0x91, 0x2018], [0x92, 0x2019], [0x93, 0x201c],
   [0x94, 0x201d], [0x95, 0x2022], [0x96, 0x2013], [0x97, 0x2014], [0x98, 0x02dc], [0x99, 0x2122], [0x9a, 0x0161], [0x9b, 0x203a],
   [0x9c, 0x0153], [0x9e, 0x017e], [0x9f, 0x0178],
 ]);
-/** The decoded value of a numeric character reference as an HTML5 parser decodes it: U+FFFD for 0, a surrogate or a value past
- * 0x10FFFF, the C1_REFERENCES code point for one it lists, otherwise the code point itself. */
+/** The decoded value of a numeric character reference as an HTML5 parser decodes it: U+FFFD for 0, a surrogate (0xD800-0xDFFF)
+ * or a value past 0x10FFFF, the C1_REFERENCES code point for one it lists, otherwise the code point itself; M7 holds its value
+ * at each DECODE_PROBES code to the roster's parse5 reading. A value past Number.MAX_SAFE_INTEGER is also past 0x10FFFF, so no
+ * reading turns on the safe-integer test. */
 function codePoint(code: number): string {
   if (!Number.isSafeInteger(code) || code === 0 || code > 0x10ffff || (code >= 0xd800 && code <= 0xdfff)) return String.fromCodePoint(0xfffd);
   return String.fromCodePoint(C1_REFERENCES.get(code) ?? code);
@@ -568,17 +616,21 @@ const INVISIBLE = /[\p{Cf}\p{Default_Ignorable_Code_Point}]/gu;
 /** The normalized view: the text marked 18.0.11 and an HTML5 parser show of a page, for exactly the forms M5 and READ_FORMS (M6)
  * read, built in this order: the HTML a browser drops removed in one pass (withoutMarkup: comments, bogus comments and tags);
  * each CODE_SPAN replaced by its codeSpanText; the INLINE_MARKS left removed; every NUMERIC_REFERENCE decoded by codePoint, then
- * the NAMED_REFERENCES; backslash escapes resolved; INVISIBLE code points removed; NFKC applied. So emphasis, strikethrough, a
- * code span on one line, a comment, a bogus comment, a tag the tokenizer closes (an opener or a ">" inside its quoted values
- * included), a numeric reference, a listed named reference or an invisible code point inside a word cannot split it. Where
- * marked shows such a form as written (it escapes the run, leaves a mark unpaired, an HTML block holds the markdown, or a code
- * span shows it), or a br breaks the line, the view still removes or decodes it, so inside a word it reads joined what the page
- * shows split: READ_FORMS' over-read rows. Not read, each a named residual with its pinned quiet row: a look-alike letter
- * (R-HOMOGLYPH, Q8), a link or an
- * image inside a word (R-INTRAWORD-LINK, Q9), a legacy name written without its ";" (R-LEGACY-REFERENCE, Q10), a code span
- * across a line ending (R-MULTILINE-CODE-SPAN, Q11), an element a browser hides (R-HIDDEN-CONTENT, Q12), a term inside a
- * tag-like run marked shows as written (R-ESCAPED-MARKUP, Q13) and a term such a shown form borders, glued to the letter or digit
- * beside it (R-EDGE-GLUE, Q14). */
+ * the NAMED_REFERENCES (a name the list does not hold stays as written); a backslash before ASCII punctuation dropped
+ * (CommonMark's backslash escapes; a reading turns on it at the hyphens of the scenario flag, READ_FORMS' escaped flag, while
+ * every other ASCII punctuation character is read by SEP, JOINT and SENTENCE_BREAK alike with the backslash before it, or by no
+ * matcher); INVISIBLE code points removed; NFKC applied. Each READ_FORMS row reads as the page shows it: its joined rows
+ * (emphasis, strikethrough, a code span on one line, a comment, a bogus comment, a tag the tokenizer closes, a numeric reference,
+ * a listed named reference or an invisible code point inside a word or the joint) in C1 and C2, its split rows in neither, and
+ * its over-read rows - where marked shows the form as written (it escapes the run, leaves a mark unpaired, an HTML block holds
+ * the markdown, or a code span shows it), or a br breaks the line, and the view still removes or decodes it - in both. Not read,
+ * each a named residual with its pinned quiet row: a look-alike letter (R-HOMOGLYPH, Q8), a link or an image inside a word
+ * (R-INTRAWORD-LINK, Q9), a legacy name written without its ";" (R-LEGACY-REFERENCE, Q10), a code span across a line ending
+ * (R-MULTILINE-CODE-SPAN, Q11), an element a browser hides (R-HIDDEN-CONTENT, Q12), a term inside or reached by a tag-like,
+ * comment or bogus-comment run marked shows as written (R-ESCAPED-MARKUP, Q13), a term such a shown form or a break the page
+ * reads borders, glued to the letter or digit beside it, and a sentence break a removed form exposes (R-EDGE-GLUE, Q14), a
+ * character a reference decodes read again (R-REDECODE, Q15), markup across a blank line in an HTML block (R-BLOCK-BREAK, Q16)
+ * and emphasis no letter or digit borders (R-PUNCTUATION-EMPHASIS, Q17). */
 function normalized(body: string): string {
   return withoutMarkup(body)
     .replace(CODE_SPAN, (_match, _run: string, content: string) => codeSpanText(content))
@@ -749,9 +801,17 @@ interface ReadForm {
  * refusal #1 gate's U1 plants G01-G17, its sweep members (each a tag whose attribute value holds a comment or bogus-comment
  * opener, in text, a div block and a p block; three of them over-reads in text), its U2 witnesses of the eight surviving
  * mutants, then the seat's witnesses of the documented steps (the pass's resume and its sticky reads, the tag states, the step
- * order, the code-span opener and closer, the escapes, the marks beside a reference). The cutting seats measured every page
- * reading through marked 18.0.11 and parse5 7.1.2 (the roster's basis); the census does not re-render. Invisible, control and
- * other non-ASCII code points are built from their code points. */
+ * order, the code-span opener and closer, the escapes, the marks beside a reference). Cut #3 appends refusal #2's falsifiers:
+ * first the gate's own witnesses of its seven surviving mutants (GP01 a hex reference opened by an uppercase X, GP03 lowercase hex
+ * digits, GP46 an empty <!---> before a later comment, GP10-99 a reference to 0x99 before a word, GP48 a "<" opening no markup,
+ * GP33 white space before an "=" that opens an attribute name, GP32 a "/" inside an unquoted value), then the cutting seat's
+ * falsifiers of the survivors of its own battery (a tag state, a tag space, a comment or bogus-comment rule, a code-span, mark,
+ * reference or decode rule each; tag rows sit in an HTML block, where the browser reads the tag), then rows that hold each
+ * character class the reader reads against an added member, one character to a word (the ASCII punctuation INLINE_MARKS keeps,
+ * the white space TAG_SPACE does not read, the code points INVISIBLE keeps, the characters after a "<" that open no markup), and
+ * the dash look-alikes SEP and JOINT read that NFKC folds into no other member. The cutting seats measured
+ * every page reading through marked 18.0.11 and parse5 7.1.2 (the roster's basis); the census does not re-render. Invisible,
+ * control and other non-ASCII code points are built from their code points. */
 const READ_FORMS: readonly ReadForm[] = [
   { page: "joined", form: "padded code span", text: "Pi serves spec` ul `ative RF context." },
   { page: "joined", form: "padded code span of two backticks", text: "Pi serves spec`` ul ``ative RF context." },
@@ -938,6 +998,83 @@ const READ_FORMS: readonly ReadForm[] = [
   { page: "over-read", form: "mark after a reference, before a letter", text: "Pi serves spec&shy;*ulative RF context." },
   { page: "split", form: "invisible between a letter and a combining mark NFKC composes", text: `Pi serves the scenario vi${String.fromCodePoint(0x200b)}ew${String.fromCodePoint(0x200d)}${String.fromCodePoint(0x0301)}.` },
   { page: "joined", form: "code span whose content opens with a longer backtick string", text: "Pi serves ` ``spec `ulative RF context." },
+  { page: "joined", form: "hex reference opened by an uppercase X", text: "Pi serves spec&#XAD;ulative RF context." },
+  { page: "joined", form: "hex reference opened by an uppercase X, without its ; in a div block", text: "<div>Pi serves spe&#X63ulative RF context.</div>" },
+  { page: "joined", form: "hex reference opened by an uppercase X in the joint", text: "Pi serves the what&#X2D;if view." },
+  { page: "joined", form: "hex reference with lowercase hex digits", text: "Pi serves spec&#xad;ulative RF context." },
+  { page: "joined", form: "hex reference with lowercase hex digits, without its ; in a p block", text: "<p>Pi serves spec&#xadulative RF context.</p>" },
+  { page: "joined", form: "hex reference with lowercase hex digits in the joint", text: "Pi serves the what&#x2d;if view." },
+  { page: "joined", form: "empty comment <!---> before a later comment", text: "Pi serves spec<!--->ulative RF context. <!-- b -->" },
+  { page: "joined", form: "empty comment <!---> before a later comment, in a div block", text: "<div>Pi serves spec<!--->ulative RF context. <!-- b --></div>" },
+  { page: "split", form: "empty comment <!---> before a --> the page shows", text: "Pi serves spec<!--->-->ulative RF context." },
+  { page: "split", form: "reference to 0x99 without its ; before a word, in a p block", text: "<p>Pi serves x&#153speculative RF context.</p>" },
+  { page: "split", form: "reference to 0x99 before a word", text: "Pi serves the x&#153what-if view." },
+  { page: "split", form: "< opening no markup inside the joint", text: "Pi serves the what<-if view." },
+  { page: "split", form: "< opening no markup inside the joint, in a div block", text: "<div>Pi serves the what<-if view.</div>" },
+  { page: "split", form: "< opening no markup between two words of a spelling", text: "Pi serves the scenario<.view." },
+  { page: "split", form: "white space before an = that opens an attribute name, in a div block", text: '<div>Pi serves spec<span  ="x>y">ulative RF context.</div>' },
+  { page: "split", form: "white space after a slash before an = that opens an attribute name, in a div block", text: '<div>Pi serves spec<span/ ="x>y">ulative RF context.</div>' },
+  { page: "split", form: "white space after a quoted value before an = that opens an attribute name, in a div block", text: '<div>Pi serves spec<span a="1"  ="x>y">ulative RF context.</div>' },
+  { page: "split", form: "slash inside an unquoted value before =, in a div block", text: '<div>Pi serves spec<span title=a/=="x>y">ul</span>ative RF context.</div>' },
+  { page: "joined", form: "hex reference opened by an uppercase X, its lowercase digit f in the joint", text: "Pi serves the what&#X5f;if view." },
+  { page: "joined", form: "hex reference of seven digits, a leading zero, before a word, in a p block", text: "<p>Pi serves the x&#x010ffffwhat-if view.</p>" },
+  { page: "split", form: "> right after = ends the tag, in a div block", text: "<div>Pi serves spec<span a=>>ulative RF context.</div>" },
+  { page: "split", form: "quote opening an attribute name, in a div block", text: '<div>Pi serves spec<span "a>b">ul</span>ative RF context.</div>' },
+  { page: "joined", form: "attribute name, two spaces, then = and a quoted value holding >, in a div block", text: '<div>Pi serves spec<span title  ="a>b">ul</span>ative RF context.</div>' },
+  { page: "split", form: "unquoted value ended by a space before an = that opens an attribute name, in a div block", text: '<div>Pi serves spec<span title=a ="x>y">ul</span>ative RF context.</div>' },
+  { page: "split", form: "unquoted value holding = and a quote, in a div block", text: '<div>Pi serves spec<span title=a="x>y">ul</span>ative RF context.</div>' },
+  { page: "split", form: "single-quoted value followed by = and a quoted value holding >, in a div block", text: "<div>Pi serves spec<span title='a'=\"x>y\">ul</span>ative RF context.</div>" },
+  { page: "split", form: "double-quoted value followed by = and a quoted value holding >, in a div block", text: '<div>Pi serves spec<span title="a"="x>y">ul</span>ative RF context.</div>' },
+  { page: "joined", form: "end tag's attribute name, a space, then a name holding a quote, in a p block", text: '<p>Pi serves spec<b>ul</b a a">ative RF context.</p>' },
+  { page: "split", form: "vertical tab inside a tag name before a quoted value holding >, in a div block", text: `<div>Pi serves spec<span${String.fromCodePoint(0x0b)}title="a>b">ul</span>ative RF context.</div>` },
+  { page: "split", form: "line separator inside a tag name before a quoted value holding >, in a div block", text: `<div>Pi serves spec<span${String.fromCodePoint(0x2028)}title="a>b">ul</span>ative RF context.</div>` },
+  { page: "split", form: "next-line control inside a tag name before a quoted value holding >, in a div block", text: `<div>Pi serves spec<span${String.fromCodePoint(0x85)}title="a>b">ul</span>ative RF context.</div>` },
+  { page: "joined", form: "uppercase end tag whose quoted value holds >, in a div block", text: '<div>Pi serves spec<b>ul</B title="a>b">ative RF context.</div>' },
+  { page: "joined", form: "processing instruction across a line, in a div block", text: "<div>Pi serves spec<?\n?>ulative RF context.</div>" },
+  { page: "joined", form: "bogus-comment opener no > follows", text: "Pi serves the x<!what&#45;if view." },
+  { page: "joined", form: "comment across a line holding >, in a div block", text: "<div>Pi serves spec<!-- a\n> b -->ulative RF context.</div>" },
+  { page: "joined", form: "comment holding -> before its -->, in a div block", text: "<div>Pi serves spec<!-- a -> b -->ulative RF context.</div>" },
+  { page: "split", form: "bogus comment opening <!- holding > before a -->, in a div block", text: "<div>Pi serves spec<!- a > b -->ulative RF context.</div>" },
+  { page: "split", form: "code span padded on its left side only, in the joint", text: "Pi serves the what` u`if view." },
+  { page: "split", form: "code span holding one space before a backtick the page shows, in the joint", text: "Pi serves the what` ` `if view." },
+  { page: "joined", form: "emphasis between fullwidth letters", text: `Pi serves spe${String.fromCodePoint(0xff43)}*${String.fromCodePoint(0xff55)}${String.fromCodePoint(0xff4c)}*${String.fromCodePoint(0xff41)}tive RF context.` },
+  { page: "split", form: "unknown named reference in the joint", text: "Pi serves the what&s;if view." },
+  { page: "split", form: "reference followed by a second ; in the joint", text: "Pi serves the what&#45;;if view." },
+  { page: "split", form: "reference to 0 between two words of a spelling", text: "Pi serves the scenario&#0view." },
+  { page: "split", form: "reference past 0xFF whose low byte the table lists, in the joint", text: "Pi serves the what&#389;if view." },
+  { page: "split", form: "ASCII punctuation the view keeps inside a word, one character to a word", text: "Pi serves spec!ulative, spec\"ulative, spec#ulative, spec$ulative, spec%ulative, spec'ulative, spec(ulative, spec)ulative, spec+ulative, spec,ulative, spec-ulative, spec.ulative, spec/ulative, spec:ulative, spec;ulative, spec=ulative, spec?ulative, spec@ulative, spec[ulative, spec]ulative, spec^ulative, spec{ulative, spec|ulative, spec}ulative RF context." },
+  { page: "split", form: "white space no tokenizer reads, in a tag name before a quoted value holding >, in a div block", text: `<div>Pi serves spec<span${String.fromCodePoint(0x0b)}${String.fromCodePoint(0x85)}${String.fromCodePoint(0xa0)}${String.fromCodePoint(0x1680)}${String.fromCodePoint(0x2000)}${String.fromCodePoint(0x2001)}${String.fromCodePoint(0x2002)}${String.fromCodePoint(0x2003)}${String.fromCodePoint(0x2004)}${String.fromCodePoint(0x2005)}${String.fromCodePoint(0x2006)}${String.fromCodePoint(0x2007)}${String.fromCodePoint(0x2008)}${String.fromCodePoint(0x2009)}${String.fromCodePoint(0x200a)}${String.fromCodePoint(0x200b)}${String.fromCodePoint(0x2028)}${String.fromCodePoint(0x2029)}${String.fromCodePoint(0x202f)}${String.fromCodePoint(0x205f)}${String.fromCodePoint(0x3000)}${String.fromCodePoint(0xfeff)}title="a>b">ul</span>ative RF context.</div>` },
+  { page: "split", form: "code points the view keeps inside a word, one to a word", text: `Pi serves spec ulative, spec${String.fromCodePoint(0xa0)}ulative, spec${String.fromCodePoint(0x2000)}ulative, spec${String.fromCodePoint(0x3000)}ulative, spec${String.fromCodePoint(0x2028)}ulative, spec${String.fromCodePoint(0x0301)}ulative, spec${String.fromCodePoint(0x01)}ulative, spec${String.fromCodePoint(0x07)}ulative, spec${String.fromCodePoint(0x7f)}ulative, spec${String.fromCodePoint(0xe000)}ulative, spec${String.fromCodePoint(0xb7)}ulative, spec${String.fromCodePoint(0xfffd)}ulative, spec${String.fromCodePoint(0x0378)}ulative, spec${String.fromCodePoint(0x2027)}ulative, spec${String.fromCodePoint(0x02dc)}ulative RF context.` },
+  { page: "split", form: "< before a character no tag, comment or bogus comment opens with, one to a word, in a div block", text: "<div>Pi serves spec<#x>ulative, spec<$x>ulative, spec<%x>ulative, spec<=x>ulative, spec<@x>ulative, spec<[x>ulative, spec<^x>ulative, spec<{x>ulative, spec<|x>ulative, spec<+x>ulative, spec<-x>ulative, spec<.x>ulative, spec<&x>ulative, spec<1x>ulative, spec<:x>ulative, spec<~x>ulative, spec<'x>ulative, spec<\"x>ulative, spec<;x>ulative, spec<,x>ulative, spec<(x>ulative, spec<)x>ulative, spec<]x>ulative, spec<}x>ulative, spec<0x>ulative, spec<_x>ulative RF context.</div>" },
+  { page: "joined", form: "comment holding -- > before its -->, in a div block", text: "<div>Pi serves spec<!-- a -- > b -->ulative RF context.</div>" },
+  { page: "joined", form: "empty comment <!----> closed by its own -->, before a later -->, in a div block", text: "<div>Pi serves spec<!---->ulative RF context. A later note --></div>" },
+  { page: "joined", form: "padded code span of three backticks", text: "Pi serves spec``` ul ```ative RF context." },
+  { page: "split", form: "hex reference followed by a letter past f, in the joint", text: "Pi serves the what&#x2dg;if view." },
+  { page: "joined", form: "decimal reference without its ; before a hex letter, in a p block", text: "<p>Pi serves sp&#101culative RF context.</p>" },
+  { page: "split", form: "hex digits after &# with no x, in the joint", text: "Pi serves the what&#ad;if view." },
+  { page: "split", form: "reference followed by a comma in the joint", text: "Pi serves the what&#45,if view." },
+  { page: "joined", form: "hyphen U+2010 in the joint", text: `Pi serves the what${String.fromCodePoint(0x2010)}if view.` },
+  { page: "joined", form: "figure dash U+2012 in the joint", text: `Pi serves the what${String.fromCodePoint(0x2012)}if view.` },
+  { page: "joined", form: "horizontal bar U+2015 in the joint", text: `Pi serves the what${String.fromCodePoint(0x2015)}if view.` },
+  { page: "joined", form: "minus sign U+2212 in the joint", text: `Pi serves the what${String.fromCodePoint(0x2212)}if view.` },
+  { page: "joined", form: "code span holding a carriage return before a padded code span", text: `Pi serves x\` ${String.fromCodePoint(0x0d)}\` spec\` ul \`ative RF context.` },
+  { page: "joined", form: "two decimal references inside a word", text: "Pi serves spec&#173;ul&#173;ative RF context." },
+  { page: "joined", form: "two named references inside a word", text: "Pi serves spec&shy;ul&shy;ative RF context." },
+  { page: "split", form: "& before a hex spelling with no #, or with another character in its place, one to a word", text: "Pi serves the what&x2d;if, what&$x2d;if, what&%x2d;if, what&!x2d;if, what&@x2d;if view." },
+  { page: "split", form: "markup a removed tag leaves behind, in a div block", text: "<div>Pi serves spec<<b>b>ulative RF context.</div>" },
+  { page: "split", form: "code span showing a padded code span", text: "Pi serves spec`` ` ul ` ``ative RF context." },
+  { page: "split", form: "quote inside a tag name, in a div block", text: "<div>Pi serves spec<span'a>b'>ul</span>ative RF context.</div>" },
+  { page: "joined", form: "comment holding a tag, in a div block", text: "<div>Pi serves spec<!-- <b> -->ulative RF context.</div>" },
+  { page: "split", form: "marks between combining grapheme joiners inside a word, one run to a word", text: `Pi serves spec${String.fromCodePoint(0x034f)}*${String.fromCodePoint(0x034f)}ulative, spec${String.fromCodePoint(0x034f)}\`\`${String.fromCodePoint(0x034f)}ulative RF context.` },
+  { page: "split", form: "code span padded by no-break spaces in the joint", text: `Pi serves the what\`${String.fromCodePoint(0xa0)}-${String.fromCodePoint(0xa0)}\`if view.` },
+  { page: "joined", form: "variation selector from the supplement, default-ignorable but not a format character, inside a word", text: `Pi serves spec${String.fromCodePoint(0xe0100)}ulative RF context.` },
+];
+/** M7's probes (wb-eu94 cut #3): the codes codePoint decodes at its boundaries (0, both ends of the surrogates, 0x10FFFF and past
+ * it), every code of the 0x80-0x9F table's range, and codes past 0xFF whose low byte the table lists; the roster holds each one's
+ * decoded value as parse5 7.1.2 decodes "&#x<hex>;" in a p element. */
+const DECODE_PROBES: readonly number[] = [
+  0x0, 0x9, 0xd, 0x7f, ...Array.from({ length: 0x20 }, (_, index) => 0x80 + index), 0xa0, 0xad, 0x185, 0x196, 0xd7ff, 0xd800, 0xdbff,
+  0xdc00, 0xdfff, 0xe000, 0xfffd, 0xffff, 0x10ffff, 0x110000, 0x7fffffff,
 ];
 
 /** A matcher's verdict on each control, asserted against the expected verdict; the list is the witness. */
@@ -1192,6 +1329,14 @@ const IMPL: Record<string, () => Json | Promise<Json>> = {
     );
     return read;
   },
+  M7: () => {
+    const hex = (value: string): string => [...value].map(char => (char.codePointAt(0) ?? 0).toString(16)).join(" ");
+    const decoded = DECODE_PROBES.map(code => `${code.toString(16)}:${hex(codePoint(code))}`);
+    const entries = [...C1_REFERENCES].map(([code, value]) => `${code.toString(16)}=${value.toString(16)}`);
+    const table = { size: C1_REFERENCES.size, sha256: createHash("sha256").update(entries.join("\n")).digest("hex") };
+    expect(table.size, "the table lists the 27 codes of 0x80-0x9F the HTML Standard replaces").toBe(27);
+    return { decoded, table };
+  },
   Q1: () => {
     const clean = cleanResult();
     const record = diffRecord({
@@ -1291,9 +1436,9 @@ const IMPL: Record<string, () => Json | Promise<Json>> = {
     return read;
   },
   Q11: () => {
-    const read = ["Pi serves spec`\nul\n`ative RF context.", "Pi serves spec` ul\n`ative RF context."].map(text => ({ text, ...docsVerdict(text) }));
-    expect(read.map(({ c1, c2 }) => ({ c1, c2 })), "R-MULTILINE-CODE-SPAN: a code span whose content crosses a line ending is not read as one, so the line endings marked strips as its padding still split the word").toStrictEqual([
-      { c1: false, c2: false }, { c1: false, c2: false },
+    const read = ["Pi serves spec`\nul\n`ative RF context.", "Pi serves spec` ul\n`ative RF context.", "Pi serves x` a\nspec` ul `ative RF context.", "Pi serves spec`\rul\r`ative RF context."].map(text => ({ text, ...docsVerdict(text) }));
+    expect(read.map(({ c1, c2 }) => ({ c1, c2 })), "R-MULTILINE-CODE-SPAN: a code span whose content crosses a line ending is not read as one, so the line endings marked strips as its padding still split the word, and the backtick marked pairs across the line is left to the one-line pass, which pairs a later one instead (a word marked splits reads joined), and a carriage return is read as content").toStrictEqual([
+      { c1: false, c2: false }, { c1: false, c2: false }, { c1: true, c2: true }, { c1: false, c2: false },
     ]);
     return read;
   },
@@ -1305,9 +1450,16 @@ const IMPL: Record<string, () => Json | Promise<Json>> = {
     return read;
   },
   Q13: () => {
-    const read = ["Pi serves <b spec` ul `ative > RF context.", "Pi serves <b spe&#99;ulative > RF context."].map(text => ({ text, ...docsVerdict(text) }));
-    expect(read.map(({ c1, c2 }) => ({ c1, c2 })), "R-ESCAPED-MARKUP: a tag-like run marked shows as written is removed as markup, so a term inside it that a code span or a reference splits is not read").toStrictEqual([
-      { c1: false, c2: false }, { c1: false, c2: false },
+    const read = [
+      "Pi serves <b spec` ul `ative > RF context.",
+      "Pi serves <b spe&#99;ulative > RF context.",
+      "Pi serves x<spec<b></b>ulative RF context.",
+      "Pi serves x<!spec<b></b>ulative RF context.",
+      "Pi serves x<?spec<b></b>ulative RF context.",
+      "Pi serves x<!--spec<b></b>ulative RF context.",
+    ].map(text => ({ text, ...docsVerdict(text) }));
+    expect(read.map(({ c1, c2 }) => ({ c1, c2 })), "R-ESCAPED-MARKUP: a tag-like, comment or bogus-comment run marked shows as written is removed as markup through the first > after it, so a term inside it or reached by it is not read").toStrictEqual([
+      { c1: false, c2: false }, { c1: false, c2: false }, { c1: false, c2: false }, { c1: false, c2: false }, { c1: false, c2: false }, { c1: false, c2: false },
     ]);
     return read;
   },
@@ -1322,10 +1474,44 @@ const IMPL: Record<string, () => Json | Promise<Json>> = {
       "Pi serves x</1>spec&shy;ulative RF context.",
       "Pi serves x<!-- a --!>spec&shy;ulative RF context.",
       "<div>Pi serves x` y `spec&shy;ulative RF context.</div>",
+      "Pi serves x<br>spec&shy;ulative RF context.",
+      "Pi serves x<p>spec&shy;ulative RF context.",
+      'Pi serves x<img src="a.png">spec&shy;ulative RF context.',
+      "<div>Pi serves 1<textarea>ul</b>spec&shy;ulative RF context.</textarea></div>",
+      "<div>Pi serves x*spec&shy;ulative RF context.</div>",
+      "Pi serves 1&#x00000000063;spec&shy;ulative RF context.",
+      "<div>Pi serves x`?` spec&shy;ulative RF context.</div>",
     ].map(text => ({ text, ...docsVerdict(text) }));
-    expect(read.map(({ c1, c2 }) => ({ c1, c2 })), "R-EDGE-GLUE: a form the view removes while the page shows it glues the letter or digit beside it to the term it borders, so a term the raw text splits too is not read").toStrictEqual([
+    expect(read.map(({ c1, c2 }) => ({ c1, c2 })), "R-EDGE-GLUE: a form the view removes or decodes while the page shows it, or a break the page reads where the view removes a form, glues the letter or digit beside it to the term it borders, so a term the raw text splits too is not read, and a removed code span can expose a sentence break").toStrictEqual([
       { c1: false, c2: false }, { c1: false, c2: false }, { c1: false, c2: false }, { c1: false, c2: false }, { c1: false, c2: false }, { c1: false, c2: false },
-      { c1: false, c2: false }, { c1: false, c2: false }, { c1: false, c2: false },
+      { c1: false, c2: false }, { c1: false, c2: false }, { c1: false, c2: false }, { c1: false, c2: false }, { c1: false, c2: false }, { c1: false, c2: false },
+      { c1: false, c2: false }, { c1: false, c2: false }, { c1: false, c2: false }, { c1: false, c2: true },
+    ]);
+    return read;
+  },
+  Q15: () => {
+    const read = [
+      "Pi serves 1&#38;shy;spec&shy;ulative RF context.",
+      "Pi serves rf context render y&#92;-&#45;scenario plan.json.",
+      "<div>Pi serves rf context render -\\&#45;-scenario plan.json.</div>",
+      "Pi serves spe&#38;shy;culative RF context.",
+    ].map(text => ({ text, ...docsVerdict(text) }));
+    expect(read.map(({ c1, c2 }) => ({ c1, c2 })), "R-REDECODE: a character a reference decodes is read again (a decoded & opens a named reference, a decoded backslash escapes), so the view glues at an edge and joins inside a word what the page shows as written").toStrictEqual([
+      { c1: false, c2: false }, { c1: false, c2: false }, { c1: false, c2: false }, { c1: true, c2: true },
+    ]);
+    return read;
+  },
+  Q16: () => {
+    const read = ["<div>Pi serves spec<?\n\nulative RF context.</div>", "<div>Pi serves spec<!\n\nulative RF context.</div>"].map(text => ({ text, ...docsVerdict(text) }));
+    expect(read.map(({ c1, c2 }) => ({ c1, c2 })), "R-BLOCK-BREAK: markup a blank line crosses in an HTML block is read through the next >, while the browser reads it on across the paragraph marked opens").toStrictEqual([
+      { c1: false, c2: false }, { c1: false, c2: false },
+    ]);
+    return read;
+  },
+  Q17: () => {
+    const read = ["Pi serves rf context render -*&#173;*-scenario plan.json.", "Pi serves rf context render -_&#173;_-scenario plan.json."].map(text => ({ text, ...docsVerdict(text) }));
+    expect(read.map(({ c1, c2 }) => ({ c1, c2 })), "R-PUNCTUATION-EMPHASIS: emphasis no letter or digit borders is read as written, while marked renders it, so a term it splits is not read").toStrictEqual([
+      { c1: false, c2: false }, { c1: false, c2: false },
     ]);
     return read;
   },
@@ -1338,7 +1524,7 @@ const REACHED: string[] = [];
 
 describe("wb-grmo.1 rf speculative context census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R1, until-then leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:7", "C:2", "M:20"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:7", "C:2", "M:24"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
