@@ -193,6 +193,40 @@
  *  marked 18.0.11's HTML), and equals G1's read. The claim sentences (F1 above, THE RENDERED VIEW's tag clause, row G's
  *  description and the grammar comment at TAG_SPACE) are narrowed to the PINNED list at TAG_SPACE.
  *
+ * RESPIN, wb-psx0 CUT #3 (refusal #2 of cut #2 c7030c67 at PREP F, bound 2026-10-30 by gate-prep-12 of g10-gate-s152:
+ * rule 16 LEG 2 and record honesty, the R514/R515 claim-wider-than-pins class under R739, 7 non-equivalent gate members
+ * hollowing four PINNED forms at 0 failed | 35 passed; the class frozen by the rule-19 second-stage cap R-B142, so this
+ * cut takes the enumerate-the-resolvable form on the frozen cut #2 shape: no landed, cut #1 or cut #2 row, pin, plant,
+ * control, witness entry or vocabulary entry is removed or narrowed, each unmet item is cured by cure form (a), one G1
+ * readmeControls control per surviving form killed by its member, the gate's twins taken verbatim with invisibles
+ * built by String.fromCodePoint, and every other member of the gate's single-edit battery is a killed control, a
+ * killed quiet row or EQUIVALENT, as the PINNED list at TAG_SPACE states body by body):
+ *  U1, white space before an equals sign: a tab, a line feed or a form feed after an attribute's name ends the name,
+ *    so hidden is the attribute and the equals sign opens its value (nameEndCopies, the gate's twins with the hidden
+ *    attribute's name before the equals sign, the white space on one side or both and the value unquoted or quoted;
+ *    G12-DEL-TAB-3, G12-DEL-LF-3 and G12-DEL-FF-3).
+ *  U2, the no-break space after a quoted value opens the next attribute's name, so an attribute after that name and a
+ *    space is read (nameOpenCopies, the gate's twin; G12-ADD-NBSP-2).
+ *  U3, a vertical tab or a no-break space inside an unquoted value is part of it, so an attribute after that value and
+ *    a space is read (unquotedHoldCopies, the gate's twins; G12-ADD-NBSP-5 and G12-ADD-VT-5).
+ *  U4, a vertical tab inside a tag's name is part of it, so an attribute after that name and a space is read
+ *    (tagNameHoldCopies, the gate's append twin; G12-ADD-VT-1).
+ *  F5, the rest of the battery the gate classified (its 77 members re-typed from its generator, run on throwaway copies
+ *    of this census): the 17 members at positions cut #2 left NOT CLAIMED - a tab, a line feed or a form feed after a
+ *    tag's name (tagNameEndCopies), after an unquoted value (unquotedEndCopies) and after a valueless name
+ *    (valuelessEndCopies), and a vertical tab or a no-break space inside an attribute's name (nameHoldCopies) - and
+ *    the 3 scope-ambiguous ones - a vertical tab after a quoted value opening a name (nameOpenCopies) and separating
+ *    nothing (verticalTabNameCopy), and a no-break space inside a tag's name (tagNameHoldCopies) - are G1 controls; of
+ *    the 21 the gate's twins read alike, the 6 this seat's twins read apart are G1 controls too (a vertical tab or a
+ *    no-break space after an equals sign opening an unquoted value: unquotedOpenCopies; and separating nothing in the
+ *    tag's cut after a quoted value: nameValueCopies), the 12 this seat's twins read apart only on a start tag whose
+ *    quoted value is left open (white space opening an attribute's name or an unquoted value; a vertical tab or a
+ *    no-break space ending an unquoted value or a tag's name) are R-HTML-RENDERING quiet rows (Q12's open-tag copies),
+ *    and 3 are EQUIVALENT with the gate's 10 carriage-return members (the PINNED list's EQUIVALENT clause).
+ *  Each new control's page reading is measured by this respin seat with the gate's instrument (parse5 7.1.2 over
+ *  marked 18.0.11's HTML) and equals G1's read; each quiet row's page draws no table there, while G1's read reads the
+ *  copy. The claim sentences are the PINNED list at TAG_SPACE, restated body by body, and no further.
+ *
  * THE RENDERED VIEW: a Markdown page of the population (a file whose extension, in any case, is one of
  * MARKDOWN_EXTENSIONS) is read in the rendered view, line by line, by the rules below: this census's own reading of the
  * page's Markdown and HTML, held to marked's own HTML by the hold check, never a browser's drawing of the page.
@@ -359,7 +393,12 @@
  *    html block's end (its closing angle bracket missing, or a quoted value left open), which the page's tokenizer
  *    runs on into the copy's table start tag (read into the open tag's attribute name or value), so the page draws
  *    that copy as no table, while the read takes the open tag as text and reads the copy as the first table (by the
- *    HTML Standard's tokenizer and tree construction, cited, not measured in a browser: wb-psx0 F1); Q13
+ *    HTML Standard's tokenizer and tree construction, cited, not measured in a browser: wb-psx0 F1), and the open-tag
+ *    copies, a start tag with a quoted value left open in each form where a read that took another of the grammar's
+ *    alternatives on backtracking would cut the tag (white space opening an attribute's name after a quoted value or
+ *    an unquoted value after an equals sign; a vertical tab or a no-break space ending an unquoted value or a tag's
+ *    name), which the page's tokenizer runs on to the page's end, so it draws neither table, while the read takes the
+ *    open tag as text and reads the copy (parse5 7.1.2 over marked 18.0.11's HTML, measured: wb-psx0 cut #3); Q13
  *    R-OTHER-MARKUP a page whose extension is not a
  *    Markdown one is read raw, so another
  *    markup's syntax (reStructuredText strong, AsciiDoc strong, an HTML page's tags) and Markdown named .txt or with no
@@ -750,9 +789,11 @@ function referenceValue(whole: string, decimal: string | undefined, hex: string 
 const decodeReferences = (text: string): string =>
   text.replace(REFERENCE, (whole: string, decimal?: string, hex?: string, name?: string) => referenceValue(whole, decimal, hex, name));
 /*
- * A tag as the HTML Standard's tokenizer cuts a start or end tag (its tag open, end tag open, tag name and attribute
- * states; wb-psx0 F1): a less-than sign, a solidus for an end tag, an ASCII letter, then the rest of the name, every
- * character up to white space, a solidus or the greater-than sign; then the attributes, up to the greater-than sign. An
+ * A tag as this census cuts a start or end tag, its grammar written to the HTML Standard's tokenizer (its tag open, end
+ * tag open, tag name and attribute states; wb-psx0 F1; its fidelity to the page's tokenizer is claimed for the PINNED
+ * readings below and no further): a less-than sign, a solidus for an end tag, an ASCII letter, then the rest of the
+ * name, every character up to white space, a solidus or the greater-than sign; then the attributes, up to the
+ * greater-than sign. An
  * attribute's name is every character up to white space, a solidus, an equals sign or the greater-than sign (a quote or
  * a less-than sign inside it is part of it, and an equals sign may open it, as the before-attribute-name state takes
  * one, save straight after another attribute's name and white space, where it opens that attribute's value); its value,
@@ -769,29 +810,59 @@ const decodeReferences = (text: string): string =>
  * it, is read as text (R-HTML-RENDERING). The cut is the data state's: inside an element the parser reads as raw text
  * or RCDATA the page's tokenizer cuts no tag but that element's end tag, while this read still cuts them (the parser's
  * context, R-HTML-RENDERING; the stretch a HIDDEN_ELEMENTS raw-text element opens hides every tag cut inside it).
- * PINNED (wb-psx0; G1 readmeControls unless another row is named; every form below is a control whose reading equals
- * the page's, parse5 over marked's HTML, and each cut #2 form is reddened by a single-edit member of its class, the
- * respin battery on throwaway copies of this census): white space after a quoted value: none (noSpaceHiddenCopy,
- * noSpaceTemplateCopy, noSpaceOpenDetailsCopy), a space (valueHiddenCopies[0-2]), a tab, a line feed or a form feed
- * (whiteSpaceHiddenCopies); white space around an equals sign: a space (valueHiddenCopies[0], spacedValueCopies[0]),
- * a tab, a line feed or a form feed (spacedValueCopies[1-3]); a vertical tab or a no-break space as no white space: in
- * a tag's name (nameSpaceCopy), after a quoted value (noBreakSpaceCopy) and inside an unquoted value
- * (unquotedSpaceCopies); a solidus separating two attributes (tokenizerHiddenCopies[1]) and ending a name before the
- * greater-than sign (nameHiddenCopies[5]); an equals sign opening a name (tokenizerHiddenCopies[2]); a less-than sign
- * or either quote inside an attribute's name or opening one (tokenizerHiddenCopies[3], nameHiddenCopies[0-4]); a
- * value double- or single-quoted (noSpaceHiddenCopy, tokenizerHiddenCopies[0]) with a greater-than sign inside it
- * (valueHiddenCopies[1-2]), empty before the greater-than sign (valueHiddenCopies[3]), or unquoted with a quote inside
- * it (tokenizerHiddenCopies[4], unquotedRunCopy) or a less-than sign, an equals sign or a grave accent inside it or
- * opening it (valueHiddenCopies[4-9]); a tag's name holding an underscore (tokenizerHiddenCopies[6]), an equals sign,
- * either quote or a less-than sign (tagNameCopies) or a non-ASCII letter (M5's Kelvin case), and opened by an ASCII
- * letter (notTagCopy: a less-than sign before a digit opens none); names lowered in their ASCII letters alone
- * (tokenizerHiddenCopies[5], openDetailsCopy, M5's Kelvin case); a start tag left open past its html block's end, or
- * with a quoted value left open, read as text (Q12's fourth and fifth README copies, R-HTML-RENDERING). EQUIVALENT:
- * the carriage return in each class - marked's lexer rewrites it, so a page holding one does not rebuild from its
- * tokens (G1's read refuses it: carriageReturnRefusal; the view names the page unmapped and reads it raw: M4), and
- * marked's HTML, which the hold check reads, holds none: no read meets one. NOT CLAIMED: any other character of these
- * classes, and a pinned character in a position no control names (a tab straight after a tag's name, say); each is
- * read by the same classes, unpinned.
+ * PINNED (wb-psx0 cuts #2 and #3; G1 readmeControls unless another row is named; each named form is a control whose
+ * reading equals the page's, parse5 7.1.2 over marked 18.0.11's HTML, measured by the respin seats, or, where named,
+ * one of Q12's quiet rows; and each reading below is reddened by the single edit that flips its character in its body,
+ * the respin battery on throwaway copies of this census). The eleven class bodies the grammar's white space appears
+ * in, in grammar order (the gate-prep-12 battery's numbering), each with the reading of white space (tab, line feed,
+ * form feed and space) and of the vertical tab and the no-break space (no white space in a tag) in it:
+ *  0 TAG_SPACE, around an equals sign: white space there is skipped, so the value after it is the name's before it
+ *    (spacedValueCopies, valueHiddenCopies[0]); a vertical tab or a no-break space after it is none, so it opens an
+ *    unquoted value and a quote after it opens no quoted value (unquotedOpenCopies).
+ *  1 a tag name's rest: white space ends the name (tagNameEndCopies; a space, every control); a vertical tab or a
+ *    no-break space is part of it (tagNameHoldCopies).
+ *  2 an attribute name's first character: a vertical tab or a no-break space after a quoted value opens a name
+ *    (nameOpenCopies, nameValueCopies); white space opens none, a separator taking it first (bodies 9 and 10): Q12's
+ *    open-tag copies.
+ *  3 an attribute name's rest: white space ends the name (nameEndCopies, valuelessEndCopies; a space, nameHiddenCopies
+ *    and nameHoldCopies); a vertical tab or a no-break space is part of it (nameHoldCopies).
+ *  4 an unquoted value's first character: a vertical tab or a no-break space opens a value (unquotedOpenCopies); white
+ *    space opens none, body 0 skipping it first: Q12's open-tag copies.
+ *  5 an unquoted value's rest: white space ends the value (unquotedEndCopies; a space, valueHiddenCopies[4-9] and
+ *    unquotedHoldCopies); a vertical tab or a no-break space is part of it (unquotedHoldCopies).
+ *  6 after an unquoted value: white space ends it (unquotedEndCopies; a space, valueHiddenCopies[4-9] and
+ *    unquotedHoldCopies); a vertical tab or a no-break space ends none, the value's rest holding it: Q12's open-tag
+ *    copies.
+ *  7 after a valueless name: white space ends it (valuelessEndCopies; a space, nameHiddenCopies and nameHoldCopies); a
+ *    vertical tab or a no-break space is EQUIVALENT (below).
+ *  8 after a tag's name: white space ends it (tagNameEndCopies; a space, every control); a vertical tab or a no-break
+ *    space ends none, the name's rest holding it: Q12's open-tag copies.
+ *  9 the tag's separator and 10 the attribute read's separator: white space separates (whiteSpaceHiddenCopies,
+ *    tagNameEndCopies, valuelessEndCopies, unquotedEndCopies; a space, every control); a vertical tab or a no-break
+ *    space separates nothing (nameValueCopies; in body 10 also verticalTabNameCopy and noBreakSpaceCopy).
+ * The forms cut #2 pinned beside them: after a quoted value no white space need follow (noSpaceHiddenCopy,
+ * noSpaceTemplateCopy, noSpaceOpenDetailsCopy); a solidus separating two attributes (tokenizerHiddenCopies[1]) and
+ * ending a name before the greater-than sign (nameHiddenCopies[5]); an equals sign opening a name
+ * (tokenizerHiddenCopies[2]); a less-than sign or either quote inside an attribute's name or opening one
+ * (tokenizerHiddenCopies[3], nameHiddenCopies[0-4]); a value double- or single-quoted (noSpaceHiddenCopy,
+ * tokenizerHiddenCopies[0]) with a greater-than sign inside it (valueHiddenCopies[1-2]), empty before the greater-than
+ * sign (valueHiddenCopies[3]), or unquoted with a quote inside it (tokenizerHiddenCopies[4], unquotedRunCopy) or a
+ * less-than sign, an equals sign or a grave accent inside it or opening it (valueHiddenCopies[4-9]); a tag's name
+ * holding an underscore (tokenizerHiddenCopies[6]), an equals sign, either quote or a less-than sign (tagNameCopies)
+ * or a non-ASCII letter (M5's Kelvin case); a less-than sign before a digit opening no tag (notTagCopy); names lowered
+ * in their ASCII letters alone (tokenizerHiddenCopies[5], openDetailsCopy, M5's Kelvin case); a start tag left open
+ * past its html block's end, or with a quoted value left open, read as text (Q12's fourth and fifth README copies and
+ * its open-tag copies, R-HTML-RENDERING).
+ * EQUIVALENT (the single edit changes no reading a page can meet): the carriage return in every body - marked's lexer
+ * rewrites it, so a page holding one does not rebuild from its tokens (G1's read refuses it: carriageReturnRefusal; the
+ * view names the page unmapped and reads it raw: M4), and marked's HTML, which the hold check reads, holds none; a
+ * vertical tab or a no-break space ending a valueless name (body 7) - a name's rest holds either, so the name runs on
+ * through it, and a name cut short before it leaves the same text to the same classes from that character on, which
+ * match or fail alike, so no tag is cut otherwise and the attribute read reads the same names; and the attribute
+ * read's lowering by toLowerCase in place of asciiLowered - of every code point, U+0130 alone lowers to a string
+ * holding a letter of hidden or open, and it lowers to i and U+0307, so neither name is met otherwise.
+ * NOT CLAIMED: any other character in these bodies (one no body names, an ideographic space for one), and any other
+ * position of a character this list names; each is read by the same classes, unpinned.
  */
 const TAG_SPACE = "[\\t\\n\\f\\r ]";
 const TAG_NAME_SOURCE = "[A-Za-z][^\\t\\n\\f\\r />]*";
@@ -2304,6 +2375,40 @@ const tagOpenCopy = (open: string): string => `${rootsTable(ROOTS_ROWS)}\n<div>\
 const TAG_NAME_COPIES: readonly string[] = ["<div=x hidden>", '<div"x hidden>', "<div'x hidden>", "<div<1 hidden>"].map(tagOpenCopy);
 /** And a tag's first character: a less-than sign before a digit opens no tag (invalid-first-character-of-tag-name), so it is text, nothing hides and both labels are counted. */
 const NOT_TAG_COPY = tagOpenCopy("<1 hidden>");
+/**
+ * G1's grammar controls, wb-psx0 cut #3 (refusal #2's U1-U4, one control per form a surviving gate member hollowed,
+ * and every other member of the gate's single-edit battery a page can tell apart; the gate's twins taken verbatim
+ * where it named one; each reading equals the page's, parse5 7.1.2 over marked 18.0.11's HTML, measured by the respin
+ * seat). A tab, a line feed or a form feed ends a name or an unquoted value and separates what follows, each form
+ * keeping the hidden attribute, so the copy is hidden: after an attribute's name before an equals sign, the white space
+ * on one side or both and the value unquoted or quoted (U1: hidden is the attribute, the equals sign opens its value);
+ * after a valueless attribute's name; after a tag's name; and after an unquoted value.
+ */
+const ENDING_SPACES = [TAB, LINE_FEED, FORM_FEED];
+const NAME_END_COPIES: readonly string[] = ENDING_SPACES.flatMap(space => [`<div hidden${space}=x>`, `<div hidden${space}=${space}x>`, `<div hidden${space}=${space}"x">`]).map(open =>
+  wrappedCopy(open, "</div>"),
+);
+const VALUELESS_END_COPIES: readonly string[] = ENDING_SPACES.map(space => wrappedCopy(`<div a${space}hidden>`, "</div>"));
+const TAG_NAME_END_COPIES: readonly string[] = ENDING_SPACES.map(space => wrappedCopy(`<div${space}hidden>`, "</div>"));
+const UNQUOTED_END_COPIES: readonly string[] = ENDING_SPACES.map(space => wrappedCopy(`<div a=b${space}hidden>`, "</div>"));
+/**
+ * The vertical tab and the no-break space, no white space in a tag, each form's reading the copy's fate: after a quoted
+ * value either opens the next attribute's name (U2), so an attribute after that name and a space is read, and
+ * separates nothing, so a word straight after it is part of that name (the vertical tab's twin of noBreakSpaceCopy:
+ * the copy shows), while an equals sign after it opens that name's value, read to its closing quote past a
+ * greater-than sign inside it (the hidden attribute after the value is read); inside an attribute's name or an
+ * unquoted value either is part of it (U3), and after an equals sign either opens an unquoted value, so a quote after
+ * it opens no quoted value; and inside a tag's name either is part of it (U4, the append form: the element carries the
+ * hidden attribute and, left unclosed, hides the later label).
+ */
+const SPACE_LIKE = [VERTICAL_TAB, NO_BREAK_SPACE];
+const NAME_OPEN_COPIES: readonly string[] = SPACE_LIKE.map(space => wrappedCopy(`<div title="x"${space}a hidden>`, "</div>"));
+const VERTICAL_TAB_NAME_COPY = wrappedCopy(`<div title="x"${VERTICAL_TAB}hidden>`, "</div>");
+const NAME_VALUE_COPIES: readonly string[] = SPACE_LIKE.map(space => wrappedCopy(`<div title="x"${space}="a>b" hidden>`, "</div>"));
+const NAME_HOLD_COPIES: readonly string[] = SPACE_LIKE.map(space => wrappedCopy(`<div a${space}b hidden>`, "</div>"));
+const UNQUOTED_HOLD_COPIES: readonly string[] = SPACE_LIKE.map(space => wrappedCopy(`<div a=b${space}c hidden>`, "</div>"));
+const UNQUOTED_OPEN_COPIES: readonly string[] = SPACE_LIKE.flatMap(space => [`<div a=${space}x hidden>`, `<div a=${space}"x hidden y">`]).map(open => wrappedCopy(open, "</div>"));
+const TAG_NAME_HOLD_COPIES: readonly string[] = SPACE_LIKE.map(space => tagOpenCopy(`<div${space}x hidden>`));
 /** G1's read of a page it refuses: the refusal's message, or "read" when the read reads the page. */
 function refusalOf(text: string): string {
   try {
@@ -2341,6 +2446,18 @@ const README_RENDERING_COPIES: readonly string[] = [
   wrappedCopy('<div title="x" hidden', "</div>"),
   wrappedCopy('<div a ="x hidden>', "</div>"),
 ];
+/**
+ * Row Q12's open-tag copies (wb-psx0 cut #3): a start tag with a quoted value left open, in each form where a read that
+ * took another of the grammar's alternatives on backtracking would cut the tag and hide the copy: white space (a tab, a
+ * line feed, a form feed or a space) opening an attribute's name after a quoted value, or opening an unquoted value
+ * after an equals sign; a vertical tab or a no-break space ending an unquoted value, or ending a tag's name (the tag met
+ * in an html block a div start tag opens). The page's tokenizer runs each on to the page's end, so the page draws
+ * neither table, while G1's read takes the open tag as text and reads the copy.
+ */
+const OPEN_TAG_COPIES: readonly string[] = [
+  ...[TAB, LINE_FEED, FORM_FEED, " "].flatMap(space => [`<div hidden a="b"${space}="x y="z>`, `<div hidden a=${space}"x y>`]),
+  ...SPACE_LIKE.flatMap(space => [`<div hidden a=b${space}c="x y="z>`, `<div>\n<div${space}x="a hidden c="d>`]),
+].map(open => wrappedCopy(open, "</div>"));
 /** G3's controls: a prose example the view renders (emphasis inside the key, the source spelled with a reference), and one a comment hides. */
 const RENDERED_EXAMPLE = 'Set "setting*Sources*": ["&#117;ser"] to load the user skills.';
 const HIDDEN_EXAMPLE = '<!-- "settingSources": ["user"] -->';
@@ -2396,6 +2513,17 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
         nameHiddenCopies: NAME_HIDDEN_COPIES.map(readmeRootsOf),
         tagNameCopies: TAG_NAME_COPIES.map(readmeRootsOf),
         notTagCopy: readmeRootsOf(NOT_TAG_COPY),
+        nameEndCopies: NAME_END_COPIES.map(readmeRootsOf),
+        valuelessEndCopies: VALUELESS_END_COPIES.map(readmeRootsOf),
+        tagNameEndCopies: TAG_NAME_END_COPIES.map(readmeRootsOf),
+        unquotedEndCopies: UNQUOTED_END_COPIES.map(readmeRootsOf),
+        nameOpenCopies: NAME_OPEN_COPIES.map(readmeRootsOf),
+        verticalTabNameCopy: readmeRootsOf(VERTICAL_TAB_NAME_COPY),
+        nameValueCopies: NAME_VALUE_COPIES.map(readmeRootsOf),
+        nameHoldCopies: NAME_HOLD_COPIES.map(readmeRootsOf),
+        unquotedHoldCopies: UNQUOTED_HOLD_COPIES.map(readmeRootsOf),
+        unquotedOpenCopies: UNQUOTED_OPEN_COPIES.map(readmeRootsOf),
+        tagNameHoldCopies: TAG_NAME_HOLD_COPIES.map(readmeRootsOf),
       };
       const filing = gateFiling();
       const targets = [...roster().installTargets];
@@ -2483,6 +2611,50 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
         labels: 2,
         roots: ["<cwd>/.pi/skills", "~/.pi/agent/skills"],
       });
+      expect(
+        readmeControls.nameEndCopies,
+        "a tab, a line feed or a form feed after an attribute's name ends the name before an equals sign, so hidden is the attribute and the equals sign opens its value: the table is hidden",
+      ).toEqual(NAME_END_COPIES.map(() => visibleTable));
+      expect(
+        readmeControls.valuelessEndCopies,
+        "a tab, a line feed or a form feed after a valueless attribute's name ends it and separates, so the hidden after it is an attribute: the table is hidden",
+      ).toEqual(VALUELESS_END_COPIES.map(() => visibleTable));
+      expect(
+        readmeControls.tagNameEndCopies,
+        "a tab, a line feed or a form feed after a tag's name ends the name and separates, so the hidden after it is an attribute: the table is hidden",
+      ).toEqual(TAG_NAME_END_COPIES.map(() => visibleTable));
+      expect(
+        readmeControls.unquotedEndCopies,
+        "a tab, a line feed or a form feed after an unquoted value ends the value and separates, so the hidden after it is an attribute: the table is hidden",
+      ).toEqual(UNQUOTED_END_COPIES.map(() => visibleTable));
+      expect(
+        readmeControls.nameOpenCopies,
+        "a vertical tab or a no-break space after a quoted value opens the next attribute's name, so the hidden after that name and a space is an attribute: the table is hidden",
+      ).toEqual(NAME_OPEN_COPIES.map(() => visibleTable));
+      expect(
+        readmeControls.verticalTabNameCopy,
+        "a vertical tab after a quoted value separates nothing, so the word straight after it is part of the name it opens: the table is read",
+      ).toEqual(copiedTable);
+      expect(
+        readmeControls.nameValueCopies,
+        "an equals sign after the name a vertical tab or a no-break space opens after a quoted value opens its value, read to its closing quote past a greater-than sign inside it, so the hidden after it is an attribute: the table is hidden",
+      ).toEqual(NAME_VALUE_COPIES.map(() => visibleTable));
+      expect(
+        readmeControls.nameHoldCopies,
+        "a vertical tab or a no-break space inside an attribute's name is part of it, so the hidden after that name and a space is an attribute: the table is hidden",
+      ).toEqual(NAME_HOLD_COPIES.map(() => visibleTable));
+      expect(
+        readmeControls.unquotedHoldCopies,
+        "a vertical tab or a no-break space inside an unquoted value is part of it, so the hidden after that value and a space is an attribute: the table is hidden",
+      ).toEqual(UNQUOTED_HOLD_COPIES.map(() => visibleTable));
+      expect(
+        readmeControls.unquotedOpenCopies,
+        "a vertical tab or a no-break space after an equals sign opens an unquoted value, so a quote after it opens no quoted value and the hidden after that value is an attribute: the table is hidden",
+      ).toEqual(UNQUOTED_OPEN_COPIES.map(() => visibleTable));
+      expect(
+        readmeControls.tagNameHoldCopies,
+        "a vertical tab or a no-break space inside a tag's name is part of it, so the element carries the hidden attribute and, left unclosed, hides the later label",
+      ).toEqual(TAG_NAME_HOLD_COPIES.map(() => copiedTable));
       expect(filing.piRoots).toEqual(roots);
       expect(targets).toEqual(filing.hxTargets);
       expect(inside).toEqual([]);
@@ -2800,13 +2972,17 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     const control = plantChanges(RENDERING_CONTROL);
     const paired = RENDERING_PAIRED_CONTROLS.map(plantChanges);
     const readme = README_RENDERING_COPIES.map(copy => readmeRootsOf(copy).roots);
+    const openTags = OPEN_TAG_COPIES.map(copy => readmeRootsOf(copy).roots);
     expect(quiet).toEqual(RENDERING_CASES.map(() => []));
     expect(control).toEqual(["served@+1"]);
     expect(paired, "each later member with its hiding construct taken out reads served").toEqual([["served@+3"], ["served@+1"], ["served@+1"]]);
     expect(readme, "G1's README read reads the copy the page hides by styling, by scripting or as an element's fallback, or after a start tag left open").toEqual(
       README_RENDERING_COPIES.map(() => ["<cwd>/.pi/skills", "~/.pi/agent/skills"]),
     );
-    return { quiet, control, paired, readme };
+    expect(openTags, "G1's README read takes a start tag whose quoted value is left open as text and reads the copy after it, the page running the tag on").toEqual(
+      OPEN_TAG_COPIES.map(() => ["<cwd>/.pi/skills", "~/.pi/agent/skills"]),
+    );
+    return { quiet, control, paired, readme, openTags };
   },
   Q13: () => {
     const quiet = OTHER_MARKUP_CASES.map(([path, text]) => {
