@@ -37,19 +37,25 @@
  * - THE REFERENCE validator appends a record to a log or refuses it typed, {ok: false, code, record, field?}, reading in
  *   order: rewrite (the id is already in the log), operator-fact-writer (a correction or promotion not written by the
  *   operator), operator-field (a promotion field on any record, or a corrects field off a correction: a promotion is its
- *   own record), reward-on-statusless (a reward or causal benefit, zero included, on a decision or a promotion: neither
- *   kind carries a feedback status, so neither has an observed outcome to carry a value), correction-unreferenced (a
- *   correction naming no record of the log), status-outside-set (a feedback-bearing record whose status is missing or
- *   outside the set, compared exactly: a case variant or a padded status is outside), reward-on-unobserved (a reward or
- *   causal benefit, zero and negative values included, on pending or unknown), observed-without-outcome (observed with no
- *   verifier or receipt outcome carrying a non-empty reference, for either kind), team-outcome-twice (a second team outcome
- *   for one episode, whatever the first one's status) and team-outcome-copied (a per-actor reward or causal benefit - on
- *   feedback, or on a correction of a per-actor record, the two fields alike - equal to the episode's team reward or its
- *   even share over the episode's actors, with no actor-level verifier reference). An admitted record is appended: the log
- *   returned is the input plus the record, every prior record byte-identical, and the caller's log untouched.
- * - THE CHECKS (judged by value, each over its own hand-authored cases): K-STATUS (10 cases), K-REWARD (18), K-TEAM (16),
+ *   own record), reward-on-statusless (a reward or causal benefit, zero and negative values included, on a decision or a
+ *   promotion: neither kind carries a feedback status, so neither has an observed outcome to carry a value),
+ *   correction-unreferenced (a correction naming no record of the log), status-outside-set (a feedback-bearing record
+ *   whose status is missing or outside the set, compared exactly: a case variant, a status padded at either end and a
+ *   status that only begins with a member are outside), reward-on-unobserved (a reward or causal benefit, zero and
+ *   negative values included, on pending or unknown), observed-without-outcome (observed with no verifier or receipt
+ *   outcome carrying a non-empty reference, for either kind, on each feedback-bearing kind: a team outcome, feedback and a
+ *   correction), team-outcome-twice (a second team outcome for one episode, whatever the first one's status and whatever
+ *   either one's actors) and team-outcome-copied (a per-actor reward or causal benefit - on feedback, or on a correction
+ *   of a per-actor record, directly or through a chain of corrections, the two fields alike - equal to a team-level reward
+ *   of the episode or its even share over the team outcome's actors, with no actor-level verifier reference, any actor's).
+ *   A correction's actor is its own, else the first one named along its chain of corrected records. The team-level
+ *   rewards of an episode are its team outcome's and every correction's whose chain of corrected records ends at that
+ *   team outcome, the original kept beside its corrections; another episode's team outcome derives nothing. An admitted
+ *   record is appended: the log returned is the input plus the record, every prior record byte-identical, and the
+ *   caller's log untouched.
+ * - THE CHECKS (judged by value, each over its own hand-authored cases): K-STATUS (24 cases), K-REWARD (30), K-TEAM (27),
  *   K-APPEND (8), K-OPERATOR (9). A case reads "ok", the typed refusal as code or code:field, or what went wrong (a caller
- *   log mutated, an admitted log that is not the input plus the record, a refusal naming another record). MUTANTS: 38
+ *   log mutated, an admitted log that is not the input plus the record, a refusal naming another record). MUTANTS: 52
  *   validators, one fault each, each refused by exactly its declared checks; every check refuses one alone, and every
  *   typed refusal is some case's.
  * - THE ARMED REGISTRATIONS (SITES, empty today): a src module that names the vocabulary must register its validator
@@ -87,15 +93,17 @@
  * R-UNNAMED-RECORD (Q3: a module that shapes a score or feedback record and names no vocabulary word - a score object, a
  * Feedback interface with a status field: what an R7 record means without its words is outside a text reading),
  * R-OTHER-DERIVATION (Q4: a per-actor value derived from the team outcome by other arithmetic - a weighted share, a
- * rounded share, the team reward less another actor's - is admitted: the check reads equality with the team reward and
- * its even share only), R-TEST-MENTION (Q5: a test file naming the vocabulary as text, this cut's census and roster
+ * rounded share, the team reward less another actor's - is admitted: the check reads equality with a team-level reward
+ * and its even share only), R-TEST-MENTION (Q5: a test file naming the vocabulary as text, this cut's census and roster
  * included, is outside the src leg) and R-COORDINATED (Q6: a pin, a case, a code, a mutant or a residual member removed from
  * every literal of this file and the roster at once is quiet unless an anchor outside those literals reads it; its pinned
  * row computes the pin partition - every pin of rows A, S, P, C and N removed that way is reported by the export's bindings,
  * row Q's pins are the quiet set - and no outside anchor reads a case, a code, a mutant or a residual member).
  * NOT CLAIMED: an R7 record in Pi or its full field list (R8 = wb-e66.3 owns the field list; this census judges the
  * honesty clause on a test-only record); who may write per-actor feedback beyond the operator facts; what a promotion's
- * subject names (it need not be a record of the log); that a verifier or receipt reference resolves; the vocabulary in
+ * subject names (it need not be a record of the log); that a verifier or receipt reference resolves; that an
+ * actor-level verifier reference names the record's own actor (the acceptance's "actor-level verifier ref" names no
+ * actor: any actor's admits, and A2b pins another actor's); the vocabulary in
  * live docs or test text (the live vocabulary leg reads src; the live docs leg reads the three cited sections only); that
  * a producer line reads the same past the pin; the members of R-COORDINATED (the labels, the statuses, the vocabulary,
  * the shared words, the docs lines and the producer lines are anchored outside this file).
@@ -208,13 +216,44 @@ const VALUE_FIELDS = ["reward", "causalBenefit"] as const;
 type ValueField = (typeof VALUE_FIELDS)[number];
 const fieldValue = (record: FeedbackRecord, field: ValueField): number | undefined => (field === "reward" ? record.reward : record.causalBenefit);
 
-/** The values a per-actor record could copy from the episode's team outcome: the team's reward and its even share. */
-function derivedValues(log: Log, episode: string, shareUnread = false): number[] {
-  const team = log.find(entry => entry.kind === "team-outcome" && entry.episode === episode);
-  const reward = team?.reward;
-  if (reward === undefined) return [];
-  const count = team?.actors?.length ?? 0;
-  return count > 0 && !shareUnread ? [reward, reward / count] : [reward];
+/**
+ * A record and the records its chain of corrections names, in order: the walk ends at a record that is not a correction,
+ * at a name the log does not hold, or after as many steps as the log has records.
+ */
+function chainOf(log: Log, record: FeedbackRecord): FeedbackRecord[] {
+  const chain: FeedbackRecord[] = [record];
+  let current: FeedbackRecord | undefined = record;
+  while (current?.kind === "correction" && current.corrects !== undefined && chain.length <= log.length) {
+    const named: string = current.corrects;
+    current = log.find(entry => entry.id === named);
+    if (current !== undefined) chain.push(current);
+  }
+  return chain;
+}
+const NO_FAULTS: ReadonlySet<Fault> = new Set();
+/**
+ * The values a per-actor record could copy from its episode's team outcome: every team-level reward - the team outcome's
+ * and each correction's whose chain ends at it, the original kept beside its corrections - and its even share over the
+ * team outcome's actors. Another episode's team outcome derives nothing.
+ */
+function derivedValues(log: Log, episode: string, faults: ReadonlySet<Fault> = NO_FAULTS): number[] {
+  const has = (fault: Fault): boolean => faults.has(fault);
+  const team = log.find(entry => entry.kind === "team-outcome" && (entry.episode === episode || has("episode-blind-derivation")));
+  if (team === undefined) return [];
+  const corrections = log.filter(entry => {
+    if (entry.kind !== "correction" || has("team-correction-unread")) return false;
+    if (has("chained-team-correction-unread")) return entry.corrects === team.id;
+    const root = chainOf(log, entry).slice(-1)[0];
+    return has("correction-root-any-team-outcome") ? root?.kind === "team-outcome" : root === team;
+  });
+  const read = has("latest-team-correction-only") ? corrections.slice(-1) : corrections;
+  const sources = has("original-dropped-once-corrected") && read.length > 0 ? read : [team, ...read];
+  const count = team.actors?.length ?? 0;
+  return sources.flatMap(source => {
+    const reward = source.reward;
+    if (reward === undefined) return [];
+    return count > 0 && !has("share-unread") ? [reward, reward / count] : [reward];
+  });
 }
 
 // ---- the reference validator and its faults ----
@@ -258,7 +297,21 @@ type Fault =
   | "statusless-value-admitted"
   | "decision-value-unread"
   | "promotion-value-unread"
-  | "statusless-causal-unread";
+  | "statusless-causal-unread"
+  | "outcome-read-on-feedback-only"
+  | "trailing-trimmed-status"
+  | "prefix-status"
+  | "negative-statusless-admitted"
+  | "twice-same-actors-only"
+  | "episode-blind-derivation"
+  | "team-correction-unread"
+  | "chained-team-correction-unread"
+  | "latest-team-correction-only"
+  | "original-dropped-once-corrected"
+  | "chained-actor-unread"
+  | "zero-statusless-admitted"
+  | "correction-root-any-team-outcome"
+  | "correction-actor-from-root";
 
 function validatorWith(faults: ReadonlySet<Fault>): Validator {
   const has = (fault: Fault): boolean => faults.has(fault);
@@ -272,12 +325,14 @@ function validatorWith(faults: ReadonlySet<Fault>): Validator {
   const unobservedValue = (value: number | undefined): boolean => present(value) && !(has("negative-unobserved-admitted") && value !== undefined && value < 0);
   const statusOf = (record: FeedbackRecord): string | undefined => {
     const status = record.status === undefined && has("missing-status-observed") ? "observed" : record.status;
-    return has("trimmed-status") ? status?.trim() : status;
+    if (has("trimmed-status")) return status?.trim();
+    return has("trailing-trimmed-status") ? status?.trimEnd() : status;
   };
   const inSet = (status: string | undefined): boolean => {
     if (status === undefined) return false;
     if (has("open-status")) return status !== "";
-    return STATUSES.includes(has("case-folded-status") ? status.toLowerCase() : status);
+    const read = has("case-folded-status") ? status.toLowerCase() : status;
+    return has("prefix-status") ? STATUSES.some(member => read.startsWith(member)) : STATUSES.includes(read);
   };
   const observedBasis = (outcome: Outcome | undefined): boolean =>
     outcome !== undefined &&
@@ -301,7 +356,9 @@ function validatorWith(faults: ReadonlySet<Fault>): Validator {
         const unread = has("statusless-value-admitted") || (record.kind === "decision" && has("decision-value-unread")) || (record.kind === "promotion" && has("promotion-value-unread"));
         for (const field of VALUE_FIELDS) {
           if (unread || (field === "causalBenefit" && has("statusless-causal-unread"))) continue;
-          if (fieldValue(record, field) !== undefined) return refuse(record, "reward-on-statusless", field);
+          const value = fieldValue(record, field);
+          const admitted = (has("negative-statusless-admitted") && value !== undefined && value < 0) || (has("zero-statusless-admitted") && value === 0);
+          if (value !== undefined && !admitted) return refuse(record, "reward-on-statusless", field);
         }
       }
       const corrected = record.corrects === undefined ? undefined : log.find(entry => entry.id === record.corrects);
@@ -319,16 +376,25 @@ function validatorWith(faults: ReadonlySet<Fault>): Validator {
             if (unobservedValue(fieldValue(record, field))) return refuse(record, "reward-on-unobserved", field);
           }
         }
-        if (status === "observed" && !has("outcome-optional") && !observedBasis(record.outcome)) return refuse(record, "observed-without-outcome");
+        const basisRead = !has("outcome-optional") && (record.kind === "feedback" || !has("outcome-read-on-feedback-only"));
+        if (status === "observed" && basisRead && !observedBasis(record.outcome)) return refuse(record, "observed-without-outcome");
       }
       const counted = (entry: FeedbackRecord): boolean => !has("twice-after-observed-only") || entry.status === "observed";
-      if (record.kind === "team-outcome" && !has("team-outcome-twice-admitted") && log.some(entry => entry.kind === "team-outcome" && entry.episode === record.episode && counted(entry))) {
+      const sameActors = (entry: FeedbackRecord): boolean => !has("twice-same-actors-only") || isDeepStrictEqual(entry.actors, record.actors);
+      if (
+        record.kind === "team-outcome" &&
+        !has("team-outcome-twice-admitted") &&
+        log.some(entry => entry.kind === "team-outcome" && entry.episode === record.episode && counted(entry) && sameActors(entry))
+      ) {
         return refuse(record, "team-outcome-twice");
       }
-      const actor =
-        record.kind === "correction" ? (has("correction-bypasses-team") ? undefined : (record.actor ?? corrected?.actor)) : record.kind === "feedback" ? record.actor : undefined;
+      // A correction's actor is its own, else the first one named along its chain of corrected records; chained-actor-unread
+      // reads the correction and the record it names only, correction-actor-from-root the chain's last record only.
+      const chain = has("chained-actor-unread") ? [record, ...(corrected === undefined ? [] : [corrected])] : chainOf(log, record);
+      const named = has("correction-actor-from-root") ? chain.slice(-1)[0]?.actor : chain.find(entry => entry.actor !== undefined)?.actor;
+      const actor = record.kind === "correction" ? (has("correction-bypasses-team") ? undefined : named) : record.kind === "feedback" ? record.actor : undefined;
       if (actor !== undefined && !has("team-copy-unread")) {
-        const derived = derivedValues(log, record.episode, has("share-unread"));
+        const derived = derivedValues(log, record.episode, faults);
         for (const field of VALUE_FIELDS) {
           if (field === "causalBenefit" && (has("causal-benefit-uncopied") || (record.kind === "correction" && has("correction-causal-uncopied")))) continue;
           const value = fieldValue(record, field);
@@ -372,6 +438,23 @@ const D2 = decision("d2", "a2");
 const F1 = feedback("f1", { actor: "a1", status: "observed", reward: 5, outcome: actorVerifier("a1") });
 /** The base log: the episode's team outcome, two policy decisions and a1's observed feedback. */
 const BASE: Log = [TEAM, D1, D2, F1];
+/** The operator's corrections of the team outcome: t1 corrected to 15 (even share 5), that correction corrected to 18 (share 6), and t1 corrected to 18 directly. */
+const TEAM_FIX = correction("k15", { corrects: "t1", status: "observed", reward: 15, outcome: teamVerifier(EPISODE) });
+const TEAM_FIX_OF_FIX = correction("k18", { corrects: "k15", status: "observed", reward: 18, outcome: teamVerifier(EPISODE) });
+const TEAM_FIX_DIRECT = correction("k18", { corrects: "t1", status: "observed", reward: 18, outcome: teamVerifier(EPISODE) });
+/** The base log with t1 corrected to 15. */
+const CORRECTED: Log = [...BASE, TEAM_FIX];
+/** The operator's correction of a1's feedback, on a1's own verifier: the chained per-actor case corrects it. */
+const F1_FIX = correction("k6", { corrects: "f1", status: "observed", reward: 6, outcome: actorVerifier("a1") });
+/** The base log with another episode's team outcome (ep-13, reward 20) corrected to 22: neither derives for ep-1. */
+const OTHER_FIXED: Log = [
+  ...BASE,
+  teamOutcome("t13", "ep-13", ["h1", "h2"], { status: "observed", reward: 20, outcome: teamVerifier("ep-13") }),
+  correction("k22", { episode: "ep-13", corrects: "t13", status: "observed", reward: 22, outcome: teamVerifier("ep-13") }),
+];
+/** An observed outcome whose reference is empty, of either kind. */
+const EMPTY_VERIFIER: Outcome = { kind: "verifier", ref: "", level: "actor" };
+const EMPTY_RECEIPT: Outcome = { kind: "receipt", ref: "", level: "actor" };
 
 // ---- the cases ----
 
@@ -395,6 +478,20 @@ const STATUS_CASES: readonly Case[] = [
   at("s-team", [], teamOutcome("t9", "ep-9", ["b1"], { status: "final" }), "status-outside-set"),
   at("s-correction", BASE, correction("s8", { corrects: "f1", status: "corrected" }), "status-outside-set"),
   at("s-padded", BASE, feedback("s9", { status: " observed", reward: 2, outcome: actorReceipt("a2") }), "status-outside-set"),
+  at("s-trailing", BASE, feedback("s10", { status: "observed ", reward: 2, outcome: actorReceipt("a2") }), "status-outside-set"),
+  at("s-extended", BASE, feedback("s11", { status: "observedX", reward: 2, outcome: actorReceipt("a2") }), "status-outside-set"),
+  at("s-team-missing", [], teamOutcome("t21", "ep-21", ["b1"], { reward: 8, outcome: teamVerifier("ep-21") }), "status-outside-set"),
+  at("s-team-case", [], teamOutcome("t22", "ep-22", ["b1"], { status: "Observed", reward: 8, outcome: teamVerifier("ep-22") }), "status-outside-set"),
+  at("s-team-empty", [], teamOutcome("t23", "ep-23", ["b1"], { status: "" }), "status-outside-set"),
+  at("s-team-padded", [], teamOutcome("t24", "ep-24", ["b1"], { status: " observed", reward: 8, outcome: teamVerifier("ep-24") }), "status-outside-set"),
+  at("s-team-trailing", [], teamOutcome("t25", "ep-25", ["b1"], { status: "observed ", reward: 8, outcome: teamVerifier("ep-25") }), "status-outside-set"),
+  at("s-team-extended", [], teamOutcome("t26", "ep-26", ["b1"], { status: "observedX", reward: 8, outcome: teamVerifier("ep-26") }), "status-outside-set"),
+  at("s-correction-missing", BASE, correction("s21", { corrects: "f1", reward: 6, outcome: actorVerifier("a1") }), "status-outside-set"),
+  at("s-correction-case", BASE, correction("s22", { corrects: "f1", status: "Observed", reward: 6, outcome: actorVerifier("a1") }), "status-outside-set"),
+  at("s-correction-empty", BASE, correction("s23", { corrects: "f1", status: "" }), "status-outside-set"),
+  at("s-correction-padded", BASE, correction("s24", { corrects: "f1", status: " observed", reward: 6, outcome: actorVerifier("a1") }), "status-outside-set"),
+  at("s-correction-trailing", BASE, correction("s25", { corrects: "f1", status: "observed ", reward: 6, outcome: actorVerifier("a1") }), "status-outside-set"),
+  at("s-correction-extended", BASE, correction("s26", { corrects: "f1", status: "observedX", reward: 6, outcome: actorVerifier("a1") }), "status-outside-set"),
 ];
 const REWARD_CASES: readonly Case[] = [
   at("r-verifier", BASE, feedback("r1", { status: "observed", reward: 5, outcome: actorVerifier("a2") }), "ok"),
@@ -415,6 +512,18 @@ const REWARD_CASES: readonly Case[] = [
   at("r-empty-receipt-ref", BASE, feedback("r15", { status: "observed", reward: 5, outcome: { kind: "receipt", ref: "", level: "actor" } }), "observed-without-outcome"),
   at("r-decision-reward", BASE, decision("r16", "a2", { reward: 5 }), "reward-on-statusless:reward"),
   at("r-promotion-causal", BASE, promotion("r17", { causalBenefit: 2 }), "reward-on-statusless:causalBenefit"),
+  at("r-team-no-outcome", [], teamOutcome("t11", "ep-11", ["g1", "g2"], { status: "observed", reward: 8 }), "observed-without-outcome"),
+  at("r-correction-no-outcome", BASE, correction("r18", { corrects: "f1", status: "observed", reward: 6 }), "observed-without-outcome"),
+  at("r-decision-negative", BASE, decision("r19", "a2", { reward: -5 }), "reward-on-statusless:reward"),
+  at("r-promotion-negative", BASE, promotion("r20", { causalBenefit: -2 }), "reward-on-statusless:causalBenefit"),
+  at("r-team-empty-ref", [], teamOutcome("t31", "ep-31", ["g1", "g2"], { status: "observed", reward: 8, outcome: EMPTY_VERIFIER }), "observed-without-outcome"),
+  at("r-team-empty-receipt-ref", [], teamOutcome("t32", "ep-32", ["g1", "g2"], { status: "observed", reward: 8, outcome: EMPTY_RECEIPT }), "observed-without-outcome"),
+  at("r-team-self-report", [], teamOutcome("t33", "ep-33", ["g1", "g2"], { status: "observed", reward: 8, outcome: SELF_REPORT }), "observed-without-outcome"),
+  at("r-correction-empty-ref", BASE, correction("r21", { corrects: "f1", status: "observed", reward: 6, outcome: EMPTY_VERIFIER }), "observed-without-outcome"),
+  at("r-correction-empty-receipt-ref", BASE, correction("r22", { corrects: "f1", status: "observed", reward: 6, outcome: EMPTY_RECEIPT }), "observed-without-outcome"),
+  at("r-correction-self-report", BASE, correction("r23", { corrects: "f1", status: "observed", reward: 6, outcome: SELF_REPORT }), "observed-without-outcome"),
+  at("r-decision-causal-zero", BASE, decision("r24", "a2", { causalBenefit: 0 }), "reward-on-statusless:causalBenefit"),
+  at("r-promotion-reward-zero", BASE, promotion("r25", { reward: 0 }), "reward-on-statusless:reward"),
 ];
 const TEAM_CASES: readonly Case[] = [
   at("t-once", [], teamOutcome("t2", "ep-2", ["b1", "b2"], { status: "observed", reward: 8, outcome: teamVerifier("ep-2") }), "ok"),
@@ -438,6 +547,22 @@ const TEAM_CASES: readonly Case[] = [
     "team-outcome-twice",
   ),
   at("t-correction-copy-causal", BASE, correction("c11", { corrects: "f1", status: "observed", causalBenefit: 4, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-twice-other-actors", BASE, teamOutcome("t12", EPISODE, ["b1"], { status: "observed", reward: 9, outcome: teamReceipt(EPISODE) }), "team-outcome-twice"),
+  at("t-other-episode-copy", BASE, feedback("c12", { episode: "ep-12", status: "observed", reward: 12, outcome: actorReceipt("a2") }), "ok"),
+  at("t-corrected-share", CORRECTED, feedback("c13", { status: "observed", reward: 5, outcome: actorReceipt("a2") }), "team-outcome-copied:reward"),
+  at("t-corrected-chain", [...CORRECTED, TEAM_FIX_OF_FIX], feedback("c14", { status: "observed", reward: 18, outcome: actorReceipt("a2") }), "team-outcome-copied:reward"),
+  at("t-corrected-earlier", [...CORRECTED, TEAM_FIX_DIRECT], feedback("c15", { status: "observed", reward: 5, outcome: actorReceipt("a2") }), "team-outcome-copied:reward"),
+  at("t-corrected-original", CORRECTED, feedback("c16", { status: "observed", reward: 4, outcome: actorReceipt("a2") }), "team-outcome-copied:reward"),
+  at("t-correction-chain-copy", [...BASE, F1_FIX], correction("c17", { corrects: "k6", status: "observed", reward: 4, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-other-episode-correction", OTHER_FIXED, feedback("c19", { status: "observed", reward: 22, outcome: actorReceipt("a2") }), "ok"),
+  at("t-correction-chain-copy-causal", [...BASE, F1_FIX], correction("c18", { corrects: "k6", status: "observed", causalBenefit: 4, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-correction-own-actor", BASE, correction("c20", { corrects: "t1", actor: "a2", status: "observed", reward: 4, outcome: actorReceipt("a2") }), "team-outcome-copied:reward"),
+  at(
+    "t-correction-chain-actor",
+    [...BASE, correction("k23", { corrects: "t1", actor: "a3", status: "unknown" })],
+    correction("c21", { corrects: "k23", status: "observed", reward: 4, outcome: actorReceipt("a3") }),
+    "team-outcome-copied:reward",
+  ),
 ];
 const APPEND_CASES: readonly Case[] = [
   at("a-correct-feedback", BASE, correction("k1", { corrects: "f1", status: "observed", reward: 6, outcome: actorVerifier("a1") }), "ok"),
@@ -558,6 +683,20 @@ const MUTANTS: readonly Mutant[] = [
   mutant("M36", "decision-value-unread", ["K-REWARD"]),
   mutant("M37", "promotion-value-unread", ["K-REWARD"]),
   mutant("M38", "statusless-causal-unread", ["K-REWARD"]),
+  mutant("M39", "outcome-read-on-feedback-only", ["K-REWARD"]),
+  mutant("M40", "trailing-trimmed-status", ["K-STATUS"]),
+  mutant("M41", "prefix-status", ["K-STATUS"]),
+  mutant("M42", "negative-statusless-admitted", ["K-REWARD"]),
+  mutant("M43", "twice-same-actors-only", ["K-TEAM"]),
+  mutant("M44", "episode-blind-derivation", ["K-TEAM"]),
+  mutant("M45", "team-correction-unread", ["K-TEAM"]),
+  mutant("M46", "chained-team-correction-unread", ["K-TEAM"]),
+  mutant("M47", "latest-team-correction-only", ["K-TEAM"]),
+  mutant("M48", "original-dropped-once-corrected", ["K-TEAM"]),
+  mutant("M49", "chained-actor-unread", ["K-TEAM"]),
+  mutant("M50", "zero-statusless-admitted", ["K-REWARD"]),
+  mutant("M51", "correction-root-any-team-outcome", ["K-TEAM"]),
+  mutant("M52", "correction-actor-from-root", ["K-TEAM"]),
 ];
 const mutantLine = (entry: Mutant): string => `${entry.id}:${entry.fault}:${entry.refusedBy.join("+")}`;
 
@@ -1132,38 +1271,91 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
   A2a: () => {
     const derived = derivedValues(BASE, EPISODE);
     expect(derived, "the episode's team reward and its even share over three actors").toEqual([12, 4]);
-    const read = readingsOf(["t-copy-reward", "t-copy-share", "t-not-derived", "t-no-team", "t-correction-team"]);
-    expect(read, "a per-actor value equal to a derived value is refused; another value, an episode with no team outcome and the team outcome's own correction are not").toEqual({
+    const fixes = {
+      "t1 corrected": readingOf(REFERENCE, at("fix", BASE, TEAM_FIX, "")),
+      "the correction corrected": readingOf(REFERENCE, at("fix", CORRECTED, TEAM_FIX_OF_FIX, "")),
+      "t1 corrected again": readingOf(REFERENCE, at("fix", CORRECTED, TEAM_FIX_DIRECT, "")),
+    };
+    expect(fixes, "the operator's corrections of the team outcome, direct or chained, are appended: they name no actor").toEqual({
+      "t1 corrected": "ok",
+      "the correction corrected": "ok",
+      "t1 corrected again": "ok",
+    });
+    const corrected = {
+      once: derivedValues(CORRECTED, EPISODE),
+      chained: derivedValues([...CORRECTED, TEAM_FIX_OF_FIX], EPISODE),
+      direct: derivedValues([...CORRECTED, TEAM_FIX_DIRECT], EPISODE),
+      otherEpisode: derivedValues(CORRECTED, "ep-12"),
+      otherEpisodeFixed: derivedValues(OTHER_FIXED, EPISODE),
+    };
+    expect(
+      corrected,
+      "every team-level reward derives - the team outcome's and each correction's whose chain ends at it, the original kept - with its even share over the team outcome's actors; another episode, and another episode's corrected team outcome, derive nothing",
+    ).toEqual({
+      once: [12, 4, 15, 5],
+      chained: [12, 4, 15, 5, 18, 6],
+      direct: [12, 4, 15, 5, 18, 6],
+      otherEpisode: [],
+      otherEpisodeFixed: [12, 4],
+    });
+    const read = readingsOf(["t-copy-reward", "t-copy-share", "t-not-derived", "t-no-team", "t-correction-team", "t-other-episode-copy", "t-other-episode-correction"]);
+    expect(
+      read,
+      "a per-actor value equal to a derived value is refused; another value, an episode with no team outcome (another episode's team reward included) and the team outcome's own correction are not",
+    ).toEqual({
       "t-copy-reward": "team-outcome-copied:reward",
       "t-copy-share": "team-outcome-copied:reward",
       "t-not-derived": "ok",
       "t-no-team": "ok",
       "t-correction-team": "ok",
+      "t-other-episode-copy": "ok",
+      "t-other-episode-correction": "ok",
     });
-    return { derived, read };
+    return { derived, fixes, corrected, read };
   },
   A2b: () => {
     const bases: readonly (readonly [string, Fields])[] = [
       ["actor verifier", { outcome: actorVerifier("a2") }],
+      ["another actor's verifier", { outcome: actorVerifier("a1") }],
       ["actor receipt", { outcome: actorReceipt("a2") }],
       ["team verifier", { outcome: teamVerifier(EPISODE) }],
       ["team receipt", { outcome: teamReceipt(EPISODE) }],
       ["no outcome", {}],
     ];
     const matrix = Object.fromEntries(bases.map(([label, fields]) => [label, readingOf(REFERENCE, at(label, BASE, feedback("v1", { status: "observed", reward: 4, ...fields }), ""))]));
-    expect(matrix, "the even share as a2's reward: only a2's own verifier reference admits it").toEqual({
+    expect(
+      matrix,
+      "the even share as a2's reward: an actor-level verifier reference admits it, a2's own or another actor's (the acceptance names no actor); an actor receipt, a team-level reference or no outcome does not",
+    ).toEqual({
       "actor verifier": "ok",
+      "another actor's verifier": "ok",
       "actor receipt": "team-outcome-copied:reward",
       "team verifier": "team-outcome-copied:reward",
       "team receipt": "team-outcome-copied:reward",
       "no outcome": "observed-without-outcome",
     });
-    const read = readingsOf(["t-copy-causal", "t-actor-verifier", "t-correction-copy", "t-correction-copy-causal"]);
-    expect(read, "the causal benefit and a correction of a per-actor record, in either field, are held to the same reference").toEqual({
+    const read = readingsOf([
+      "t-copy-causal",
+      "t-actor-verifier",
+      "t-correction-copy",
+      "t-correction-copy-causal",
+      "t-correction-chain-copy",
+      "t-correction-chain-copy-causal",
+      "t-correction-own-actor",
+      "t-correction-chain-actor",
+    ]);
+    expect(
+      read,
+      "the causal benefit, and a correction of a per-actor record - directly or through a chain of corrections, in either field, or naming its actor itself or along its chain - are held to the same reference",
+    ).toEqual({
       "t-copy-causal": "team-outcome-copied:causalBenefit",
       "t-actor-verifier": "ok",
       "t-correction-copy": "team-outcome-copied:reward",
       "t-correction-copy-causal": "team-outcome-copied:causalBenefit",
+      "t-correction-chain-copy": "team-outcome-copied:reward",
+      "t-correction-chain-copy-causal": "team-outcome-copied:causalBenefit",
+      "t-correction-own-actor": "team-outcome-copied:reward",
+      "t-correction-chain-actor": "team-outcome-copied:reward",
     });
     return { matrix, read };
   },
@@ -1239,7 +1431,10 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
   S1a: () => {
     expect(STATUSES.length, "the set holds three statuses").toBe(3);
     const read = readingsOf(STATUS_CASES.map(entry => entry.id));
-    expect(read, "every status of the set is admitted; another, a missing, a case-variant, a padded or an empty status is refused on every feedback-bearing kind").toEqual({
+    expect(
+      read,
+      "every status of the set is admitted; another, a missing, a case-variant, a padded (at either end), an extended or an empty status is refused on every feedback-bearing kind",
+    ).toEqual({
       "s-observed": "ok",
       "s-pending": "ok",
       "s-unknown": "ok",
@@ -1250,6 +1445,20 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       "s-team": "status-outside-set",
       "s-correction": "status-outside-set",
       "s-padded": "status-outside-set",
+      "s-trailing": "status-outside-set",
+      "s-extended": "status-outside-set",
+      "s-team-missing": "status-outside-set",
+      "s-team-case": "status-outside-set",
+      "s-team-empty": "status-outside-set",
+      "s-team-padded": "status-outside-set",
+      "s-team-trailing": "status-outside-set",
+      "s-team-extended": "status-outside-set",
+      "s-correction-missing": "status-outside-set",
+      "s-correction-case": "status-outside-set",
+      "s-correction-empty": "status-outside-set",
+      "s-correction-padded": "status-outside-set",
+      "s-correction-trailing": "status-outside-set",
+      "s-correction-extended": "status-outside-set",
     });
     return { statuses: [...STATUSES], read };
   },
@@ -1262,10 +1471,25 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       "r-empty-receipt-ref",
       "r-self-report",
       "r-observed-bare",
+      "r-team-no-outcome",
+      "r-team-empty-ref",
+      "r-team-empty-receipt-ref",
+      "r-team-self-report",
+      "r-correction-no-outcome",
+      "r-correction-empty-ref",
+      "r-correction-empty-receipt-ref",
+      "r-correction-self-report",
       "r-decision-reward",
       "r-promotion-causal",
+      "r-decision-negative",
+      "r-promotion-negative",
+      "r-decision-causal-zero",
+      "r-promotion-reward-zero",
     ]);
-    expect(read, "observed needs a verifier or receipt outcome with a reference, and a decision or a promotion, which carries no status, carries no value").toEqual({
+    expect(
+      read,
+      "observed needs a verifier or receipt outcome with a reference on feedback, a team outcome and a correction alike, and a decision or a promotion, which carries no status, carries no value, zero and negative ones included",
+    ).toEqual({
       "r-verifier": "ok",
       "r-receipt": "ok",
       "r-no-outcome": "observed-without-outcome",
@@ -1273,26 +1497,50 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       "r-empty-receipt-ref": "observed-without-outcome",
       "r-self-report": "observed-without-outcome",
       "r-observed-bare": "observed-without-outcome",
+      "r-team-no-outcome": "observed-without-outcome",
+      "r-team-empty-ref": "observed-without-outcome",
+      "r-team-empty-receipt-ref": "observed-without-outcome",
+      "r-team-self-report": "observed-without-outcome",
+      "r-correction-no-outcome": "observed-without-outcome",
+      "r-correction-empty-ref": "observed-without-outcome",
+      "r-correction-empty-receipt-ref": "observed-without-outcome",
+      "r-correction-self-report": "observed-without-outcome",
       "r-decision-reward": "reward-on-statusless:reward",
       "r-promotion-causal": "reward-on-statusless:causalBenefit",
+      "r-decision-negative": "reward-on-statusless:reward",
+      "r-promotion-negative": "reward-on-statusless:causalBenefit",
+      "r-decision-causal-zero": "reward-on-statusless:causalBenefit",
+      "r-promotion-reward-zero": "reward-on-statusless:reward",
     });
-    const statusless = Object.fromEntries(
-      (["decision", "promotion"] as const).map(kind => [
-        kind,
-        Object.fromEntries(
-          VALUE_FIELDS.map(field => {
-            const fields: Fields = field === "reward" ? { reward: 0 } : { causalBenefit: 0 };
-            const record = kind === "decision" ? decision("y1", "a2", fields) : promotion("y1", fields);
-            return [field, readingOf(REFERENCE, at("y", BASE, record, ""))];
-          }),
-        ),
-      ]),
-    );
+    const statuslessAt = (value: number): Record<string, Record<string, string>> =>
+      Object.fromEntries(
+        (["decision", "promotion"] as const).map(kind => [
+          kind,
+          Object.fromEntries(
+            VALUE_FIELDS.map(field => {
+              const fields: Fields = field === "reward" ? { reward: value } : { causalBenefit: value };
+              const record = kind === "decision" ? decision("y1", "a2", fields) : promotion("y1", fields);
+              return [field, readingOf(REFERENCE, at("y", BASE, record, ""))];
+            }),
+          ),
+        ]),
+      );
+    const statusless = statuslessAt(0);
     expect(statusless, "a value, zero included, on either statusless kind is refused naming its field").toEqual({
       decision: { reward: "reward-on-statusless:reward", causalBenefit: "reward-on-statusless:causalBenefit" },
       promotion: { reward: "reward-on-statusless:reward", causalBenefit: "reward-on-statusless:causalBenefit" },
     });
-    return { read, statusless };
+    const negative = statuslessAt(-1);
+    expect(negative, "and a negative value, in either field, on either statusless kind").toEqual({
+      decision: { reward: "reward-on-statusless:reward", causalBenefit: "reward-on-statusless:causalBenefit" },
+      promotion: { reward: "reward-on-statusless:reward", causalBenefit: "reward-on-statusless:causalBenefit" },
+    });
+    const positive = statuslessAt(2);
+    expect(positive, "and a positive value, in either field, on either statusless kind").toEqual({
+      decision: { reward: "reward-on-statusless:reward", causalBenefit: "reward-on-statusless:causalBenefit" },
+      promotion: { reward: "reward-on-statusless:reward", causalBenefit: "reward-on-statusless:causalBenefit" },
+    });
+    return { read, statusless, negative, positive };
   },
   S2: () => {
     const readings: string[] = [];
@@ -1319,12 +1567,13 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
     return readings;
   },
   S3a: () => {
-    const read = readingsOf(["t-once", "t-twice", "t-twice-pending", "t-twice-after-pending", "t-other-episode"]);
-    expect(read, "one team outcome per episode; a second is refused whatever its status or the first one's").toEqual({
+    const read = readingsOf(["t-once", "t-twice", "t-twice-pending", "t-twice-after-pending", "t-twice-other-actors", "t-other-episode"]);
+    expect(read, "one team outcome per episode; a second is refused whatever its status, its actors or the first one's").toEqual({
       "t-once": "ok",
       "t-twice": "team-outcome-twice",
       "t-twice-pending": "team-outcome-twice",
       "t-twice-after-pending": "team-outcome-twice",
+      "t-twice-other-actors": "team-outcome-twice",
       "t-other-episode": "ok",
     });
     const carriers = BASE.filter(record => record.kind === "team-outcome").map(record => `${record.id}:${record.episode}:${record.actors?.length ?? 0}`);
@@ -1332,8 +1581,23 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
     return { read, carriers };
   },
   S3b: () => {
-    const read = readingsOf(["t-copy-reward", "t-copy-share", "t-copy-share-receipt", "t-copy-causal", "t-copy-causal-team", "t-correction-copy", "t-correction-copy-causal"]);
-    expect(read, "the team reward and its share, copied into a per-actor reward or causal benefit, are refused naming the field").toEqual({
+    const read = readingsOf([
+      "t-copy-reward",
+      "t-copy-share",
+      "t-copy-share-receipt",
+      "t-copy-causal",
+      "t-copy-causal-team",
+      "t-correction-copy",
+      "t-correction-copy-causal",
+      "t-corrected-share",
+      "t-corrected-chain",
+      "t-corrected-earlier",
+      "t-corrected-original",
+    ]);
+    expect(
+      read,
+      "a team-level reward and its share - the team outcome's, or a correction's whose chain ends at it, the original kept beside it - copied into a per-actor reward or causal benefit, are refused naming the field",
+    ).toEqual({
       "t-copy-reward": "team-outcome-copied:reward",
       "t-copy-share": "team-outcome-copied:reward",
       "t-copy-share-receipt": "team-outcome-copied:reward",
@@ -1341,6 +1605,10 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       "t-copy-causal-team": "team-outcome-copied:causalBenefit",
       "t-correction-copy": "team-outcome-copied:reward",
       "t-correction-copy-causal": "team-outcome-copied:causalBenefit",
+      "t-corrected-share": "team-outcome-copied:reward",
+      "t-corrected-chain": "team-outcome-copied:reward",
+      "t-corrected-earlier": "team-outcome-copied:reward",
+      "t-corrected-original": "team-outcome-copied:reward",
     });
     return read;
   },
@@ -1612,7 +1880,7 @@ describe(SUITE, () => {
       "team-outcome-copied",
     ]);
     expect(BASE.map(record => `${record.id}:${record.kind}:${record.writer}`)).toEqual(["t1:team-outcome:host", "d1:decision:policy", "d2:decision:policy", "f1:feedback:host"]);
-    expect(CHECKS.map(check => `${check}:${CASES[check].length}`)).toEqual(["K-STATUS:10", "K-REWARD:18", "K-TEAM:16", "K-APPEND:8", "K-OPERATOR:9"]);
+    expect(CHECKS.map(check => `${check}:${CASES[check].length}`)).toEqual(["K-STATUS:24", "K-REWARD:30", "K-TEAM:27", "K-APPEND:8", "K-OPERATOR:9"]);
     expect(MUTANTS.map(mutantLine)).toEqual([
       "M01:open-status:K-STATUS",
       "M02:missing-status-observed:K-STATUS",
@@ -1652,6 +1920,20 @@ describe(SUITE, () => {
       "M36:decision-value-unread:K-REWARD",
       "M37:promotion-value-unread:K-REWARD",
       "M38:statusless-causal-unread:K-REWARD",
+      "M39:outcome-read-on-feedback-only:K-REWARD",
+      "M40:trailing-trimmed-status:K-STATUS",
+      "M41:prefix-status:K-STATUS",
+      "M42:negative-statusless-admitted:K-REWARD",
+      "M43:twice-same-actors-only:K-TEAM",
+      "M44:episode-blind-derivation:K-TEAM",
+      "M45:team-correction-unread:K-TEAM",
+      "M46:chained-team-correction-unread:K-TEAM",
+      "M47:latest-team-correction-only:K-TEAM",
+      "M48:original-dropped-once-corrected:K-TEAM",
+      "M49:chained-actor-unread:K-TEAM",
+      "M50:zero-statusless-admitted:K-REWARD",
+      "M51:correction-root-any-team-outcome:K-TEAM",
+      "M52:correction-actor-from-root:K-TEAM",
     ]);
     expect(Object.entries(RESIDUAL_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:9", "Q2:3", "Q3:2", "Q4:3", "Q5:3", "Q6:5"]);
     expect(RESIDUALS.map(family => `${family.id}:${family.name}`)).toEqual(["Q1:R-COMPOSED", "Q2:R-SHARED-WORD", "Q3:R-UNNAMED-RECORD"]);
