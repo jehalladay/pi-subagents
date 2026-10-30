@@ -33,6 +33,14 @@
  * relation sourced as furnace (FS6), a Z1 walk that reads stems only for paths starting world-model- (GH1) or only each
  * module's first 400 characters (GH2), and a src identifier spelling world model with a Cyrillic o (GZ4) - each kept the
  * census 17 passed (17); this cut adds ROLL-UP (C1), BESIDE (Z1) and CONFUSABLES (Q3) for them.
+ * RE-MEASURED by the respin seat ws-02 (run g10-work-s151, wb-a7ud refusal #1's U1 and U2 with its riders F1 and F2) on
+ * trunk c947b21: the same 117 .ts modules under src (57 under src/workbench) in 6 directories, the release unchanged (128
+ * files in 9 directories, 16 classes of a directory with an extension); refusal #1's walks G-W1 (no stems under
+ * src/workbench/), G-W2 (src/workbench/providers/ never visited) and G-W3 (no stems under the release's dist/), with or
+ * without a module naming a record in the skipped directory, its node stores G-F1d (a hypothesis from an unheld record ref
+ * onto a held node stores a node for the record ref) and G-F1e2 (a hypothesis between two held nodes stores a prediction
+ * node), and its ordering survivors G-F1f and G-F1f2 (a snapshot refreshed after a hypothesis onto its key takes a success
+ * tone) each kept the census 17 passed (17); this cut adds BESIDE's class plants (Z1), LISTING and ORDER (C1) for them.
  * Pi's Beads and Furnace readers take their native clients as parameters, the seams this census drives: the Beads work reader
  * (src/workbench/beads-observer.ts,
  * seam BeadsReadClient: show) and the program readiness reader (src/workbench/beads-program-readiness.ts, seam
@@ -78,15 +86,22 @@
  *    work, run and attempt refs, the projection's only channel for a model statement) holds no node, as the record-free empty
  *    projection holds none, and the same statements added to the natively populated projection leave every node
  *    byte-identical; ROLL-UP: every record stated between the native refs themselves (a hypothesis relation for each
- *    ordered pair of the work, run and attempt refs, under each authority's name as its source: CROSS_SOURCES), onto the
- *    projection holding only the native snapshots and onto the natively populated one (under C1's statements too), leaves
- *    each native node's bytes, its aggregate() roll-up and its parent and dependency views (query by parent, by dependency)
- *    as the statement-free projection read them. The roll-up is compared without the aggregate's two change counters
- *    (revision, topologyRevision), which relate() moves for every accepted statement, a hypothesis one included; the
- *    witness pins that they moved. The populated run's natively owned attempt (the run's direct children 1, where only the
- *    snapshots are held 0) is the roll-up's own non-vacuity; C2 the Beads work reading, its projection, the projected work
- *    node and the program readiness answer are byte-identical (JSON text) to the baseline's under every record in every
- *    Beads placement; C3 the run reading, its
+ *    ordered pair of two different refs among the work, run and attempt refs, under each authority's name as its source:
+ *    CROSS_SOURCES), onto the projection holding only the native snapshots and onto the natively populated one (under C1's
+ *    statements too), leaves each native node's bytes, its aggregate() roll-up and its parent and dependency views (query
+ *    by parent, by dependency) as the statement-free projection read them. The roll-up is compared without the aggregate's
+ *    two change counters (revision, topologyRevision), which relate() moves for every accepted statement, a hypothesis one
+ *    included; the witness pins that they moved. The populated run's natively owned attempt (the run's direct children 1,
+ *    where only the snapshots are held 0) is the roll-up's own non-vacuity. LISTING: each projection's full node listing
+ *    (query by scope, with stats().nodes) - the populated one's before C1's statements, after them and after ROLL-UP's, and
+ *    the snapshots-only one's before and after ROLL-UP's - stays byte-identical at 3 nodes (the work, run and attempt
+ *    nodes), so a statement C1 makes that stores a node of its own (for a record's ref, or a prediction between two held
+ *    nodes) reds. ORDER: the same 45 statements made BEFORE the native snapshots and relations, onto a fourth projection,
+ *    and the populated projection's native snapshots refreshed again after all of its statements (each refresh applied)
+ *    leave each projection's node listing and each native node's ROLL-UP surfaces as the statement-free populated
+ *    projection read them, so a refresh that reads a hypothesis already stated onto its key reds; C2 the Beads work
+ *    reading, its projection, the projected work node and the program readiness answer are byte-identical (JSON text) to
+ *    the baseline's under every record in every Beads placement; C3 the run reading, its
  *    topology and the projected run and attempt nodes are byte-identical under every record in every Furnace placement (the
  *    reader's clock fixed); C4 the comparison is live: the baseline is a real native reading, each native change (the blocker
  *    closed, the work closed, the attempt succeeded, the run completed) is a byte difference the same comparison reports,
@@ -101,10 +116,16 @@
  *    is no reader), with floors on the modules the walk read. The walk that reads the tree reads Z1's plants in the same
  *    call: a planted spelling of each stem is found as an identifier, a private name, a string, a template, a
  *    regular-expression literal and a regular expression whose every character is escaped (in each of the three forms) by
- *    the src arm, and inside a comment by the release arm. BESIDE: each plant's path sits under its arm's own root (src, the
- *    release's directory) beside the tree's modules, and the head and tail channels put the src arm's identifier and the
- *    release arm's comment before and after the whole text of the longest module that arm reads, so a walk that reads only
- *    the paths outside one directory, or only each module's first or last characters, loses those plants' readings too.
+ *    the src arm, and inside a comment by the release arm. BESIDE: each channel plant's path sits under its arm's own root
+ *    (src, the release's directory) beside the tree's modules; every class of module the tree's listing hands an arm (a
+ *    module's own directory with its extension, the file name from its first dot: src 6 classes, the release 16 at c947b21,
+ *    each arm held to a floor, CLASS_FLOORS) holds one class plant per stem in that directory with that extension, of the
+ *    arm's own kind (the src identifier, the release comment), and the witness lists by arm every class whose plants the
+ *    walk did not read as their stems (none); and the head and tail channels put the src arm's identifier and the release
+ *    arm's comment before and after the whole text of the longest module that arm reads. So a walk that reads no module of
+ *    one class - and so one that reads no module of one directory the listing hands it (by its path or by a path prefix:
+ *    src/workbench, src/workbench/providers, the release's dist or any other) or of one extension - or computes no stems
+ *    for those modules, or reads only each module's first or last characters, loses those plants' readings too.
  *    ARMED: when a release file or the code of a .ts module under src names one, Z1 reds: the reader that arrives joins the
  *    spies of A, B and C before the census is re-measured.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
@@ -167,11 +188,19 @@
  * plant form, residual seam kind, cross source or record field removed from its table and the roster together (no outside
  * anchor names the placements, spellings, channels, forms, kinds or sources; the record names are anchored to the title); a
  * floor lowered with the roster; a residual row removed from ROWS, the literal, IMPL, RESIDUALS and the roster (no outside
- * anchor names the residual families); and a walk that tells Z1's plants from the tree's modules by any other mark and
- * reads stems from the plants alone - a path segment such as the plants' own directory name, a plant's place in the call, a
- * text only plants carry, or a reading of only part of each long module other than its first characters alone or its last
- * characters alone (its head and its tail together, skipping the middle): BESIDE removes a path prefix, a module's head
- * and a module's tail as such marks, not every mark a walk could read.
+ * anchor names the residual families); a walk that tells Z1's plants from the tree's modules by any other mark and reads
+ * stems from the plants alone - a path segment such as the plants' own directory or file name, a plant's place in the call,
+ * a text only plants carry, or a reading of only part of each long module other than its first characters alone or its
+ * last characters alone (its head and its tail together, skipping the middle): BESIDE removes a path prefix, a directory,
+ * an extension, a module's head and a module's tail as such marks, not every mark a walk could read; a walk that skips some
+ * but not all of one class's modules (by a file name, a size, a text or any other mark the class's plants do not carry): a
+ * class plant shows that its class is read, not that each module of it is (measured: no stems for the src modules whose
+ * file name starts furnace- keeps the census 17 passed (17), also with a src/workbench/furnace-* module naming a record,
+ * which alone reds Z1); and a module the tree's listing never hands the walk (the listing narrowed before the walk): the
+ * walk never reads it, and a class the listing drops whole holds no plant, so the floors and O's seam roster, which reads
+ * the same listing, are its only guards (measured: a listing without src/workbench/providers reds O; one without src/ui
+ * and one without the release's contract/registry each keep 17 passed (17), the first also with a src/ui module naming
+ * a record, which alone reds Z1).
  * SCOPE: the census judges the readers Pi has, through their seams; a host that binds a seam (the open wb-752.12 bd client)
  * is not judged until it lands, when its launch argv is the frozen argv A2 maps each call to (and wb-kku9.3's census already
  * holds the work reader's seam to show alone). The furnace-hosted execution host (FurnaceHostedClient, runs.start on an
@@ -179,18 +208,23 @@
  * text, never supervision state, so C3 does not compare it (B1 holds its reads, Q2 its relay). The projection core cannot tell a
  * reader that states a prediction as a snapshot or an ownership relation: Z1 holds that no such reader exists. C1 holds the
  * hypothesis channel as far as it reads it: under the statements C1 makes (onto the work, run and attempt refs from the
- * records' own refs, and ROLL-UP's between those refs), the nodes a projection holds, and each native node's bytes,
- * aggregate() roll-up (its two change counters aside) and parent and dependency views; the projection's other read surfaces
- * (the relation listing, which lists every accepted statement as a hypothesis edge by design, the event log, the invocation
- * viewports and the edge and aggregate counters) are not compared. Z1's src arm reads a string literal whatever it says, so a
- * src message or label that cites the program by name (a bead tag inside a string) reds Z1 as an arriving reader would, and
- * is re-measured the same way. tsconfig.json compiles the .ts files under src, so Z1's src arm and the seam reader read .ts
- * modules only; a file under src with any other extension is not read (none exists at b3d410f or at 71b2807).
+ * records' own refs, and ROLL-UP's between two different ones of those refs; none from a ref onto itself, so a hypothesis
+ * from a held ref onto itself that stores a node of its own keeps the census 17 passed (17), measured), made after the
+ * native snapshots and, in ORDER, before them and before a second refresh of them, it reads each projection's full node
+ * listing (the predicted-only projection's against the empty one's, LISTING's against each projection's own statement-free
+ * listing, ORDER's against the statement-free populated one's) and each native node's bytes, aggregate() roll-up (its two
+ * change counters aside) and parent and dependency views; the projection's other read surfaces (the relation listing,
+ * which lists every accepted statement as a hypothesis edge by design, the event log, the invocation viewports and the
+ * edge and aggregate counters) are not compared, and no other order is made (statements interleaved between the snapshots,
+ * or a snapshot of another state refreshed after them). Z1's src arm reads a string literal whatever it says, so a src
+ * message or label that cites the program by name (a bead tag inside a string) reds Z1 as an arriving reader would, and is
+ * re-measured the same way. tsconfig.json compiles the .ts files under src, so Z1's src arm and the seam reader read .ts
+ * modules only; a file under src with any other extension is not read (none exists at b3d410f, at 71b2807 or at c947b21).
  *
  * Display paths added: none. Test-only: no scratch is allocated; src, the installed release and .beads are only read.
  */
 import { readdirSync, readFileSync } from "node:fs";
-import { dirname, join, relative } from "node:path";
+import { basename, dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { describe, expect, it, vi } from "vitest";
@@ -242,6 +276,8 @@ const STEMS = ["observedtransition", "counterfactual", "syntheticattempt", "worl
 /** The src modules Z1 walks (116 at the first cut, 117 since 5fbe25e) and the release files (128): floors, not exact sets. */
 const SRC_FLOOR = 100;
 const SDK_FLOOR = 100;
+/** The floors on the classes BESIDE plants (a module's directory and extension each; at c947b21 src has 6, the release 16). */
+const CLASS_FLOORS = { src: 5, sdk: 12 } as const;
 /** Each case's timeout: the seam reader builds a checker program over every src module, about a second on an idle host. */
 const CASE_TIMEOUT_MS = 60_000;
 /** Exported seams of src/workbench this census does not drive, each with its reason. */
@@ -663,6 +699,11 @@ function rollUpsOf(projection: ObservationProjection): { readonly surfaces: stri
   });
   return { surfaces: JSON.stringify(read.map(entry => entry.surfaces)), counters: JSON.stringify(read.map(entry => entry.counters)) };
 }
+/** A projection's full node listing (query by scope) as JSON text, with its node count (stats().nodes): LISTING's and
+ * ORDER's reading of every node the projection holds, native or not. */
+function listingOf(projection: ObservationProjection): { readonly bytes: string; readonly nodes: number } {
+  return { bytes: JSON.stringify(projection.query({ scope: SCOPE, limit: 100 }).nodes), nodes: projection.stats().nodes };
+}
 /** The direct children of a node's aggregate() roll-up, or null when the projection holds no such node. */
 function directChildren(projection: ObservationProjection, ref: NativeRef): number | null {
   const key = nodeOf(projection, ref)[0]?.key;
@@ -792,6 +833,23 @@ function z1Plants(longest: Readonly<Record<Arm, string>>): readonly Z1Plant[] {
   return Object.entries(Z1_CHANNELS).flatMap(([channel, { arm, text }]) =>
     STEMS.map((_stem, index) => ({ channel, arm, module: { path: join(Z1_ROOTS[arm], "world-model-z1-plant", `${channel}-${index}.ts`), text: text(index, longest[arm]) } })),
   );
+}
+/** BESIDE's class of a module: its own directory and its extension (its file name from the first dot; empty for none). */
+const extensionOf = (path: string): string => {
+  const name = basename(path);
+  const dot = name.indexOf(".");
+  return dot < 0 ? "" : name.slice(dot);
+};
+const classOf = (path: string): string => join(dirname(path), `*${extensionOf(path)}`);
+/** A class plant's path: the class's own directory, a plant file name, the class's own extension. */
+const classPlantPath = (path: string, index: number): string => join(dirname(path), `world-model-z1-plant-${index}${extensionOf(path)}`);
+/** The text of a class plant of each arm: the src arm's identifier, the release arm's comment. */
+const CLASS_PLANTS: Readonly<Record<Arm, (index: number) => string>> = { src: identifierPlant, "@furnace/sdk": releaseCommentPlant };
+/** BESIDE's class plants for one arm: one plant per stem in every class of module the tree's listing hands the arm. */
+function z1ClassPlants(arm: Arm, modules: readonly Module[]): readonly Z1Plant[] {
+  const members = new Map<string, string>();
+  for (const entry of modules) if (!members.has(classOf(entry.path))) members.set(classOf(entry.path), entry.path);
+  return [...members.values()].flatMap(path => STEMS.map((_stem, index) => ({ channel: "class", arm, module: { path: classPlantPath(path, index), text: CLASS_PLANTS[arm](index) } })));
 }
 /** R-VOCABULARY's plants (Q3): the family in other words, and regular expressions that match a record name without
  * spelling it (a wildcard, a character class, an alternation, an escape other than \x, \u and \u{}). */
@@ -1116,6 +1174,7 @@ const IMPL: Readonly<Record<string, (live: Live) => Promise<Json>>> = {
     snapshotsOnly.refresh(projected.snapshot);
     for (const snapshot of furnace.topology.snapshots) snapshotsOnly.refresh(snapshot);
     const rollUpsBefore = { snapshotsOnly: rollUpsOf(snapshotsOnly), populated: rollUpsOf(populated) };
+    const listingsBefore = { snapshotsOnly: listingOf(snapshotsOnly), populated: listingOf(populated) };
     const runChildren = { snapshotsOnly: directChildren(snapshotsOnly, runRef), populated: directChildren(populated, runRef) };
     const refs = [workRef, runRef, attemptRef];
     const before = JSON.stringify(refs.map(ref => nodeOf(populated, ref)));
@@ -1124,6 +1183,7 @@ const IMPL: Readonly<Record<string, (live: Live) => Promise<Json>>> = {
     const after = JSON.stringify(refs.map(ref => nodeOf(populated, ref)));
     const populatedNodes = refs.map(ref => nodeOf(populated, ref).length);
     const edgesAdded = populated.stats().edges - edgesBefore;
+    const listingAfterStatements = listingOf(populated);
     // ROLL-UP: every record stated between the native refs themselves, onto both projections.
     const crossed = crossStatements();
     const edgesBeforeCrossed = { snapshotsOnly: snapshotsOnly.stats().edges, populated: populated.stats().edges };
@@ -1132,6 +1192,16 @@ const IMPL: Readonly<Record<string, (live: Live) => Promise<Json>>> = {
       populated.relate(statement);
     }
     const rollUpsAfter = { snapshotsOnly: rollUpsOf(snapshotsOnly), populated: rollUpsOf(populated) };
+    const listingsAfter = { snapshotsOnly: listingOf(snapshotsOnly), populated: listingOf(populated) };
+    // ORDER: every statement made BEFORE the native snapshots and relations, onto a fourth projection; then the populated
+    // projection's native snapshots refreshed again, after all of its statements.
+    const statementsFirst = new ObservationProjection();
+    for (const statement of [...statements, ...crossed]) statementsFirst.relate(statement);
+    statementsFirst.refresh(projected.snapshot);
+    for (const relation of projected.relations) statementsFirst.relate(relation);
+    for (const snapshot of furnace.topology.snapshots) statementsFirst.refresh(snapshot);
+    for (const relation of furnace.topology.relations) statementsFirst.relate(relation);
+    const refreshedAgain = [projected.snapshot, ...furnace.topology.snapshots].map(snapshot => populated.refresh(snapshot));
     return {
       statements: statements.length,
       predictedOnlyNodes: fed.stats().nodes,
@@ -1151,6 +1221,21 @@ const IMPL: Readonly<Record<string, (live: Live) => Promise<Json>>> = {
           snapshotsOnly: rollUpsAfter.snapshotsOnly.counters !== rollUpsBefore.snapshotsOnly.counters,
           populated: rollUpsAfter.populated.counters !== rollUpsBefore.populated.counters,
         },
+      },
+      listing: {
+        populated: {
+          nodes: [listingsBefore.populated.nodes, listingAfterStatements.nodes, listingsAfter.populated.nodes],
+          identical: [listingAfterStatements.bytes === listingsBefore.populated.bytes, listingsAfter.populated.bytes === listingsBefore.populated.bytes],
+        },
+        snapshotsOnly: {
+          nodes: [listingsBefore.snapshotsOnly.nodes, listingsAfter.snapshotsOnly.nodes],
+          identical: [listingsAfter.snapshotsOnly.bytes === listingsBefore.snapshotsOnly.bytes],
+        },
+      },
+      order: {
+        statements: statements.length + crossed.length,
+        before: { nodes: listingOf(statementsFirst).nodes, listing: listingOf(statementsFirst).bytes === listingsBefore.populated.bytes, rollUp: rollUpsOf(statementsFirst).surfaces === rollUpsBefore.populated.surfaces },
+        again: { refreshed: refreshedAgain, listing: listingOf(populated).bytes === listingsBefore.populated.bytes, rollUp: rollUpsOf(populated).surfaces === rollUpsBefore.populated.surfaces },
       },
     };
   },
@@ -1216,9 +1301,11 @@ const IMPL: Readonly<Record<string, (live: Live) => Promise<Json>>> = {
       { arm: "src", modules: srcModules },
       { arm: "@furnace/sdk", modules: sdkModules },
     ];
-    // The plants go through the same walk call as the tree, beside its modules (BESIDE): a walk that stops reading stems,
-    // reads only the paths outside one directory, or reads only each module's first or last characters loses plant readings.
-    const plants = z1Plants({ src: longestText(srcModules), "@furnace/sdk": longestText(sdkModules) });
+    // The plants go through the same walk call as the tree, beside its modules (BESIDE): the channel plants under each arm's
+    // own root, and one class plant per stem in every class (a directory with an extension) the listing hands the arm. So a
+    // walk that stops reading stems, reads no module of one class (so none of one directory or of one extension the listing
+    // hands it), or reads only each module's first or last characters loses plant readings.
+    const plants = [...z1Plants({ src: longestText(srcModules), "@furnace/sdk": longestText(sdkModules) }), ...tree.flatMap(({ arm, modules }) => z1ClassPlants(arm, modules))];
     const readings = z1Walk(
       tree.map(({ arm, modules }) => ({ arm, modules: [...modules, ...plants.filter(plant => plant.arm === arm).map(plant => plant.module)] })),
       live,
@@ -1230,11 +1317,16 @@ const IMPL: Readonly<Record<string, (live: Live) => Promise<Json>>> = {
     expect(mentions, "ARMED: a release or src module names a world-model record; drive its reader through A, B and C, then re-measure").toEqual([]);
     const count = (arm: Arm): number => read.filter(reading => reading.arm === arm).length;
     const stems = new Map(readings.map(reading => [reading.path, reading.stems]));
+    const classes = (arm: Arm): number => distinct(tree.filter(entry => entry.arm === arm).flatMap(entry => entry.modules.map(listed => classOf(listed.path)))).length;
+    // Every class whose plants the walk did not read as their stems, by arm (BESIDE).
+    const unread = (modules: readonly Module[]): readonly string[] =>
+      distinct(modules.filter(entry => STEMS.some((stem, index) => JSON.stringify(stems.get(classPlantPath(entry.path, index)) ?? null) !== JSON.stringify([stem]))).map(entry => classOf(entry.path)));
     return {
-      floors: { src: count("src") >= SRC_FLOOR, sdk: count("@furnace/sdk") >= SDK_FLOOR },
+      floors: { src: count("src") >= SRC_FLOOR, sdk: count("@furnace/sdk") >= SDK_FLOOR, srcClasses: classes("src") >= CLASS_FLOORS.src, sdkClasses: classes("@furnace/sdk") >= CLASS_FLOORS.sdk },
       release: isObject(version) && typeof version.name === "string" ? version.name : null,
       mentions,
       plants: Object.fromEntries(Object.keys(Z1_CHANNELS).map(channel => [channel, plants.filter(plant => plant.channel === channel).map(plant => stems.get(plant.module.path) ?? null)])),
+      classesUnread: Object.fromEntries(tree.map(({ arm, modules }) => [arm, unread(modules)])),
     };
   },
   async Q1(live) {
@@ -1440,7 +1532,7 @@ const CONSTANTS: Json = {
   seamForms: SEAM_PLANTS.map(plant => plant.form),
   residualSeams: RESIDUAL_SEAMS.map(kind => kind.kind),
   residuals: Object.entries(RESIDUALS).map(([family, pin]) => `${family}:${pin}`),
-  floors: { src: SRC_FLOOR, sdk: SDK_FLOOR },
+  floors: { src: SRC_FLOOR, sdk: SDK_FLOOR, srcClasses: CLASS_FLOORS.src, sdkClasses: CLASS_FLOORS.sdk },
 };
 
 // ---- the outside anchors ----

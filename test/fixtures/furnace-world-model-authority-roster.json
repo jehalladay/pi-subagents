@@ -299,7 +299,9 @@
   ],
   "floors": {
    "src": 100,
-   "sdk": 100
+   "sdk": 100,
+   "srcClasses": 5,
+   "sdkClasses": 12
   }
  },
  "witnesses": {
@@ -467,6 +469,45 @@
      "snapshotsOnly": true,
      "populated": true
     }
+   },
+   "listing": {
+    "populated": {
+     "nodes": [
+      3,
+      3,
+      3
+     ],
+     "identical": [
+      true,
+      true
+     ]
+    },
+    "snapshotsOnly": {
+     "nodes": [
+      3,
+      3
+     ],
+     "identical": [
+      true
+     ]
+    }
+   },
+   "order": {
+    "statements": 45,
+    "before": {
+     "nodes": 3,
+     "listing": true,
+     "rollUp": true
+    },
+    "again": {
+     "refreshed": [
+      "applied",
+      "applied",
+      "applied"
+     ],
+     "listing": true,
+     "rollUp": true
+    }
    }
   },
   "C2": {
@@ -566,7 +607,9 @@
   "Z1": {
    "floors": {
     "src": true,
-    "sdk": true
+    "sdk": true,
+    "srcClasses": true,
+    "sdkClasses": true
    },
    "release": "@furnace/sdk",
    "mentions": [],
@@ -792,6 +835,10 @@
       "predicteddistribution"
      ]
     ]
+   },
+   "classesUnread": {
+    "src": [],
+    "@furnace/sdk": []
    }
   },
   "Q1": {
