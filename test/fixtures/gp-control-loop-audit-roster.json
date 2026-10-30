@@ -614,7 +614,7 @@
     {
       "table": "ANNOTATED",
       "id": "ANNOTATED-17",
-      "label": "a marker on its own line inside an ambient module declaration's module block, above the statement that holds the literal: a statement of a module block is a unit (wb-1cyt, wb-2xd5 gate P-MODBLOCK-INSIDE)",
+      "label": "a marker on its own line inside an ambient module declaration's module block, above the statement that holds the literal: that statement is the unit (wb-1cyt, wb-2xd5 gate P-MODBLOCK-INSIDE)",
       "pins": [
         "6109c90002b9548dbcd83df3388ba0b27cccc71ce7c6e591aebb9b1ff8e87a7d",
         "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
@@ -623,7 +623,7 @@
     {
       "table": "ANNOTATED",
       "id": "ANNOTATED-18",
-      "label": "a marker on its own line inside a default clause, above the statement that holds the literal: a statement of a default clause is a unit (wb-1cyt, wb-2xd5 gate P-DEFAULT-INSIDE)",
+      "label": "a marker on its own line inside a default clause, above the statement that holds the literal: that statement is the unit (wb-1cyt, wb-2xd5 gate P-DEFAULT-INSIDE)",
       "pins": [
         "c8383e9fae4ec9bb9d5891191eb646361dec9279f74af2ee267604f667718120",
         "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
@@ -671,6 +671,105 @@
       "label": "a marker on its own line inside a case clause, directly above the call statement that is the clause's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G15-R08)",
       "pins": [
         "96ba8d5c0f1993e2848bf4196e7d156d204ea5d0906b51e46740aa7864fe3c1c",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-24",
+      "label": "a marker on its own line inside an ambient module declaration's module block, directly above the type alias declaration that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G3-P02)",
+      "pins": [
+        "1a8d082f3e285e5bfd76327b75822518439ec05d8f9b20e2d2b98d5ecf884182",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-25",
+      "label": "a marker on its own line inside a namespace declaration's module block, directly above the exported const declaration that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G3-P04)",
+      "pins": [
+        "4fea0e4f53236867c72180ccc55954ab73cf1e4316b4eaa9a158eb16229e5bda",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-26",
+      "label": "a marker on its own line inside an exported namespace declaration's module block, directly above the const declaration that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G3-P06)",
+      "pins": [
+        "8bd5588d630fe898f2a723488d589c3bef2f6b2cf05c14a940fe3fa34a200840",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-27",
+      "label": "a marker on its own line inside the module block of a namespace declared with the module keyword, directly above the const declaration that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, seat probe X-MODULE-KW-INSIDE)",
+      "pins": [
+        "7d4d491ee5420b04956c6dc9abdde0e55a1471a4994f3c805077d6bffc97ae69",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-28",
+      "label": "a marker on its own line inside the module block of a declare global augmentation, directly above the const declaration that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, seat probe X-GLOBAL-INSIDE)",
+      "pins": [
+        "4813cecf2dd72a393ea3340d313939094656c62354724f76102c85419b4ac090",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-29",
+      "label": "a marker on its own line inside a namespace declaration's module block, directly above the call statement that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, seat probe X-NS-EXPR-INSIDE)",
+      "pins": [
+        "f3cbec22d83229a7b7216aed45ba023e8f4548ab3707efdf8a070fa2c4966614",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-30",
+      "label": "a marker on its own line inside a namespace declaration's module block, below its first statement and directly above the const declaration that is its second statement and holds the literal: that statement is the unit (wb-1cyt, seat probe X-NS-2ND-INSIDE)",
+      "pins": [
+        "5479b775e0ebb11f0d74d2bb51cf820d04ad2dfdfce7e6529628bb196c1330ea",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-31",
+      "label": "a marker on its own line inside a default clause, directly above the assignment statement that is the clause's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G3-P09)",
+      "pins": [
+        "b15efe9fe8a28d5a92ba7171f6dcf616bf5e4f49faad9a985641d064b560a12b",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-32",
+      "label": "a marker on its own line inside a case clause whose label is a string literal, directly above the call statement that is the clause's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G3-P11)",
+      "pins": [
+        "835cd8dd3b091e8d54cd080780748ead050905abc9f077c6828d2b5c1e472054",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-33",
+      "label": "a marker on its own line inside a case clause whose label is an identifier, directly above the call statement that is the clause's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G3-P13)",
+      "pins": [
+        "1d0220e95564327922a1da7043a61b767b4011037402fd941d3ac3e7f56cc8fa",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-34",
+      "label": "a marker on its own line inside a case clause, below its first statement and directly above the call statement that is its second statement and holds the literal: that statement is the unit (wb-1cyt, seat probe X-CASE-2ND-STMT-INSIDE)",
+      "pins": [
+        "850df98a9b020b66e42eb6273c09fd4d4972d47f3df5f43f2e3de73c89f4375c",
         "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
       ]
     },
@@ -885,7 +984,7 @@
     {
       "table": "UNANNOTATED",
       "id": "UNANNOTATED-27",
-      "label": "a marker inside an interface declaration that is the blockless body of the if statement whose condition holds the literal: a nested interface is a member holder (wb-1cyt, wb-2xd5 gate P-IF-IFACE)",
+      "label": "a marker inside an interface declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-2xd5 gate P-IF-IFACE)",
       "pins": [
         "e549a18c063c3c0d399b3c26e4fc9519535e5d533f9fe38adb3352ff2e1807d2"
       ]
@@ -893,7 +992,7 @@
     {
       "table": "UNANNOTATED",
       "id": "UNANNOTATED-28",
-      "label": "a marker inside an enum declaration that is the blockless body of the if statement whose condition holds the literal: a nested enum is a member holder (wb-1cyt, wb-2xd5 gate P-IF-ENUM)",
+      "label": "a marker inside an enum declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-2xd5 gate P-IF-ENUM)",
       "pins": [
         "d5389795956d90c8b19be08a3bababa667a5964318304c43899f1984278f352a"
       ]
@@ -1080,6 +1179,270 @@
       "label": "a marker between the default keyword and the colon of a default clause of the switch statement whose discriminant holds the literal: it lies in that clause's span (wb-1cyt, wb-1cyt gate G15-R36)",
       "pins": [
         "61c7407e3f2bac2f1d8e0e43395755c7c765aef05ee784e7c87079d843fe49e1"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-52",
+      "label": "a marker above an ambient module declaration whose module block's only statement, a type alias declaration, holds the literal: the unit is that statement, not the module declaration (wb-1cyt, wb-1cyt gate G3-P01)",
+      "pins": [
+        "47f6bef7f8c2e3ad01d2e9684cb951c175a873faa167ed2d19c7555a37601176"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-53",
+      "label": "a marker above a namespace declaration whose module block's only statement, an exported const declaration, holds the literal: the unit is that statement, not the namespace declaration (wb-1cyt, wb-1cyt gate G3-P03)",
+      "pins": [
+        "5af5ef5b2ffb34d4f89588c7407f7c1ef203304aa37b496470435d287dc7b53f"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-54",
+      "label": "a marker above an exported namespace declaration whose module block's only statement, a const declaration, holds the literal: the unit is that statement, not the namespace declaration (wb-1cyt, wb-1cyt gate G3-P05)",
+      "pins": [
+        "6cc08f6ddc108d615b1d40cf155eabe90dbf5e96c299a40cb79f8ebee0897ef8"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-55",
+      "label": "a marker above an ambient module declaration named by a single-quoted string, whose module block's only statement, a const declaration, holds the literal: the unit is that statement, not the module declaration (wb-1cyt, wb-1cyt gate G3-P07)",
+      "pins": [
+        "e6158e900024e8a90ad2828186ade30c9713cdb782d6a4fefe2134eb8d1c8d62"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-56",
+      "label": "a marker above a namespace declared with the module keyword, whose module block's only statement, a const declaration, holds the literal: the unit is that statement, not the namespace declaration (wb-1cyt, seat probe X-MODULE-KW-ABOVE)",
+      "pins": [
+        "337f2b10865eeee4eb4dfeab8e54b8a09e775d0076e8e6578a78f3f6967d9fda"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-57",
+      "label": "a marker above a declare global augmentation whose module block's only statement, a const declaration, holds the literal: the unit is that statement, not the augmentation (wb-1cyt, seat probe X-GLOBAL-ABOVE)",
+      "pins": [
+        "f062ac6cc10806df49e46eb716a312eb24560204b5fbde790e2c146d18e08d3f"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-58",
+      "label": "a marker above a namespace declaration whose module block's only statement, a call statement, holds the literal: the unit is that statement, not the namespace declaration (wb-1cyt, seat probe X-NS-EXPR-ABOVE)",
+      "pins": [
+        "320b9a239d4793a7b4ac16abd11e202443ef26d076d274564fb2de11470224ce"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-59",
+      "label": "a marker above a namespace declaration whose module block's second statement, a const declaration, holds the literal: the unit is that statement, not the namespace declaration (wb-1cyt, seat probe X-NS-2ND-ABOVE)",
+      "pins": [
+        "4fd937ed0875925e8424cb48beba08bed34b9b56ccd916945c27b4b2cedbce04"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-60",
+      "label": "a marker above a default clause whose only statement, an assignment statement, holds the literal: the unit is that statement, not the switch (wb-1cyt, wb-1cyt gate G3-P08)",
+      "pins": [
+        "e9d050ae5b02629b2216a9f83789583b7e8d0d0ffc0054ac7f8ebada819c6038"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-61",
+      "label": "a marker above a case clause whose label is a string literal and whose only statement, a call statement, holds the literal: the unit is that statement, not the switch (wb-1cyt, wb-1cyt gate G3-P10)",
+      "pins": [
+        "3dea4c5564a922116e5cf360f501cc462be1f3dc5648545b4b9f64324791630b"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-62",
+      "label": "a marker above a case clause whose label is an identifier and whose only statement, a call statement, holds the literal: the unit is that statement, not the switch (wb-1cyt, wb-1cyt gate G3-P12)",
+      "pins": [
+        "ca77e86cb91c44538875da030a23cad9f22009b42171faf8bbca9827293741e8"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-63",
+      "label": "a marker above a case clause whose second statement, a call statement, holds the literal: the unit is that statement, not the switch (wb-1cyt, seat probe X-CASE-2ND-STMT-ABOVE)",
+      "pins": [
+        "41c334c7644a7984f6d0fbc3dbe018cde6578afb959d576c0bc0a989f49c0fcf"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-64",
+      "label": "a marker above an exported class declaration whose type parameter's constraint holds the literal: the unit is the type parameter, not the class (wb-1cyt, wb-1cyt gate G3-P14)",
+      "pins": [
+        "f1a487dff71076dadfe58b59f5dc057939fdefd160495dc4dc97d045b16050c8"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-65",
+      "label": "a marker above an abstract class declaration whose type parameter's constraint holds the literal: the unit is the type parameter, not the class (wb-1cyt, wb-1cyt gate G3-P15)",
+      "pins": [
+        "3ab544c400fb87bee60e294c961331faf107f4571df927a63655b6ccb01fe72d"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-66",
+      "label": "a marker above an anonymous default-exported class declaration whose type parameter's constraint holds the literal: the unit is the type parameter, not the class (wb-1cyt, wb-1cyt gate G3-P23)",
+      "pins": [
+        "866e91b8ef77e1fc9900f1ce7dc4502d26f8154a93f7fc5bb4a0722feb9dad36"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-67",
+      "label": "a marker above a class declaration whose type parameter's default holds the literal: the unit is the type parameter, not the class (wb-1cyt, wb-1cyt gate G3-P16)",
+      "pins": [
+        "8416884bee41d4f4d4a3eea9a41a099b92ff8bf0980c13f008733486664c13b5"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-68",
+      "label": "a marker on its own line between the = of a const declaration and the anonymous class expression it initializes, whose type parameter's default holds the literal: the unit is the type parameter, not the class expression (wb-1cyt, wb-1cyt gate G3-P17)",
+      "pins": [
+        "34485035658acd0970fbb098c6cdfe16d7c105c64a80c56bb6ebd09da72681a3"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-69",
+      "label": "a marker on its own line between the = of a const declaration and the named class expression it initializes, whose type parameter's constraint holds the literal: the unit is the type parameter, not the class expression (wb-1cyt, wb-1cyt gate G3-P19)",
+      "pins": [
+        "4deb74b045418ed43f09b954aaacde8ea202c5626df72ce27c495e5d30aeed04"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-70",
+      "label": "a marker on its own line above an anonymous class expression that is a call's only argument, whose type parameter's constraint holds the literal: the unit is the type parameter, not the class expression (wb-1cyt, seat probe X-CLASSEXPR-ARG-TYPEPARAM)",
+      "pins": [
+        "556a389146b1d469a5aa528c7b030d3dfbdf5569efbc474d10853f9e54984d2f"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-71",
+      "label": "a marker on its own line inside the parentheses of a return statement, above the anonymous class expression it returns, whose type parameter's constraint holds the literal: the unit is the type parameter, not the class expression (wb-1cyt, seat probe X-CLASSEXPR-RET-TYPEPARAM)",
+      "pins": [
+        "04c42f37564c0fb1434b0638a738e6cb5ba2d757c65c6de0af0a748116bc08b6"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-72",
+      "label": "a marker above an interface declaration whose type parameter's constraint holds the literal: the unit is the type parameter, not the interface (wb-1cyt, wb-1cyt gate G3-P18)",
+      "pins": [
+        "daee32de71edf37590897b13db41e9ec8cf466015b977b1c55dfdbc32638ba74"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-73",
+      "label": "a marker on its own line between the = of a const declaration and the named class expression it initializes, whose extends clause holds the literal: the unit is the heritage clause, not the class expression (wb-1cyt, wb-1cyt gate G3-P21)",
+      "pins": [
+        "97f25ac6b9520b08d5729d7a816508206870f08c7e27f07857f28452f1569d26"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-74",
+      "label": "a marker above an interface declaration whose extends clause names two types, the first holding the literal: the unit is the heritage clause, not the interface (wb-1cyt, wb-1cyt gate G3-P22)",
+      "pins": [
+        "0effd115895df495c93b962b03754ff9c71552b4c3b15df79a74614b88658ab5"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-75",
+      "label": "a marker inside the body of a named class expression that initializes a const declaration and whose decorator holds the literal, on the literal's line: the unit is the decorator, not the class expression (wb-1cyt, wb-1cyt gate G3-P20)",
+      "pins": [
+        "200de68206dfe912acbee227464de0a843a32d81f737b3be6b707f1157877302"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-76",
+      "label": "a marker inside the body of an anonymous class expression that is a call's only argument and whose decorator holds the literal, on the literal's line: the unit is the decorator, not the class expression (wb-1cyt, seat probe X-CLASSEXPR-ARG-DECORATOR)",
+      "pins": [
+        "2770e9394aff9dd31bc9c4060845f77225913248886cd722f1b2aa71c744d45f"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-77",
+      "label": "a marker inside a const enum declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-1cyt gate G3-P24)",
+      "pins": [
+        "01bf6280982fb58c3151f8ead8b74ab232f77b629ff3346d144dd3b8ab3dd394"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-78",
+      "label": "a marker after the enum keyword of a const enum declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-1cyt gate G3-P25)",
+      "pins": [
+        "c4c31ab228d65a65ca0ecb944595b80fe44217309db9cf33ea9258d4ae368cd3"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-79",
+      "label": "a marker between the name and the body of a const enum declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-1cyt gate G3-P26)",
+      "pins": [
+        "e6efdbf148d9390110a9e33af51ea1aa52c3a4b8c288182af0c7f1d3411c5b2f"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-80",
+      "label": "a marker after the type parameter in the type parameter list of an interface declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-1cyt gate G3-P28)",
+      "pins": [
+        "b4daac749324cce71b5497cbbe2af1dd39785ed7db20c6d022b99471677d37e3"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-81",
+      "label": "a marker between the type parameter list and the body of an interface declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-1cyt gate G3-P27)",
+      "pins": [
+        "12921a3c919b0495892bac571d1e07606969e35ba5f08b9cb8921e492e209cc4"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-82",
+      "label": "a marker between the heritage clause and the body of an interface declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-1cyt gate G3-P31)",
+      "pins": [
+        "0bd73bd1f39128cbad036aeb5044c4a2aa59cab8bfcfa7981bd38e538163315b"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-83",
+      "label": "a marker after the case keyword of a case clause whose label is a string literal, of the switch statement whose discriminant holds the literal: it lies in that clause's span (wb-1cyt, wb-1cyt gate G3-P30)",
+      "pins": [
+        "2bf61eb24c6c76f697d7bd89f60ef9dc409b8a0d2a6b5d3eebdcc60bc2ebaf28"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-84",
+      "label": "a marker between the label and the colon of a case clause of the switch statement whose discriminant holds the literal: it lies in that clause's span (wb-1cyt, wb-1cyt gate G3-P29)",
+      "pins": [
+        "1561e5eaa9f837e78d7fc389f8f3274611198b8e31b6578dbf9e26e7902c9305"
       ]
     },
     {
@@ -1682,6 +2045,24 @@
       "label": "RES-79 a marker inside a dynamic import call in a preceding argument is credited to a gp literal later in the outer call (wb-2xd5, wb-lx6m gate G-C18)",
       "pins": [
         "c61bde036f89530c565b288a196709e4eafbf1d425d2b7e59503f07eb49a69d1",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-68",
+      "label": "RES-80 a marker before the interface keyword of an interface declaration that is the blockless body of an if statement, annotating that declaration, is credited to a gp literal in the if statement's condition (wb-1cyt, seat probe X-IFACE-BEFORE-KW)",
+      "pins": [
+        "80e250be0e8f75dd2382919eabb1c2f8c2be5aea9f0a27ed122ead7b0ea5cb16",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-69",
+      "label": "RES-81 a marker before the enum keyword of an enum declaration that is the blockless body of an if statement, annotating that declaration, is credited to a gp literal in the if statement's condition (wb-1cyt, seat probe X-ENUM-BEFORE-KW)",
+      "pins": [
+        "f42df01b5a945c3775100b81e753bc5e751d51c7ba606c97f8d7588d7c905935",
         "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
       ]
     },
@@ -2365,7 +2746,9 @@
     "RES-76 a marker after a non-null assertion in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C15)",
     "RES-77 a marker after a nullish-coalescing operator in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C16)",
     "RES-78 a marker after the opening parenthesis of the call an export default statement holds, annotating a preceding argument, is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C17)",
-    "RES-79 a marker inside a dynamic import call in a preceding argument is credited to a gp literal later in the outer call (wb-2xd5, wb-lx6m gate G-C18)"
+    "RES-79 a marker inside a dynamic import call in a preceding argument is credited to a gp literal later in the outer call (wb-2xd5, wb-lx6m gate G-C18)",
+    "RES-80 a marker before the interface keyword of an interface declaration that is the blockless body of an if statement, annotating that declaration, is credited to a gp literal in the if statement's condition (wb-1cyt, seat probe X-IFACE-BEFORE-KW)",
+    "RES-81 a marker before the enum keyword of an enum declaration that is the blockless body of an if statement, annotating that declaration, is credited to a gp literal in the if statement's condition (wb-1cyt, seat probe X-ENUM-BEFORE-KW)"
   ],
   "tests": [
     "src/ carries no gp call site: the census over every src module is empty",
@@ -2443,13 +2826,24 @@
     "a comment after else, above the branch that holds the literal names it",
     "a marker after // on a JSDoc tag line, credited once (a JSDoc block is read whole, never entered) names it",
     "a comment after a labeled for statement's header, before the blockless body that holds the literal (wb-2xd5, wb-lx6m gate G-C14) names it",
-    "a marker on its own line inside an ambient module declaration's module block, above the statement that holds the literal: a statement of a module block is a unit (wb-1cyt, wb-2xd5 gate P-MODBLOCK-INSIDE) names it",
-    "a marker on its own line inside a default clause, above the statement that holds the literal: a statement of a default clause is a unit (wb-1cyt, wb-2xd5 gate P-DEFAULT-INSIDE) names it",
+    "a marker on its own line inside an ambient module declaration's module block, above the statement that holds the literal: that statement is the unit (wb-1cyt, wb-2xd5 gate P-MODBLOCK-INSIDE) names it",
+    "a marker on its own line inside a default clause, above the statement that holds the literal: that statement is the unit (wb-1cyt, wb-2xd5 gate P-DEFAULT-INSIDE) names it",
     "a marker on its own line inside a namespace declaration's module block, directly above the const declaration that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G15-R02) names it",
     "a marker on its own line inside the module block of a dotted namespace declaration's innermost name, directly above the const declaration that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, seat probe X-NSDOT-INSIDE) names it",
     "a marker on its own line inside an ambient namespace declaration's module block, directly above the const declaration that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, seat probe X-DECLNS-INSIDE) names it",
     "a marker on its own line inside the module block of a namespace declaration that is the only statement of an ambient module declaration's block, directly above the const declaration that is the inner block's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G15-R19) names it",
     "a marker on its own line inside a case clause, directly above the call statement that is the clause's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G15-R08) names it",
+    "a marker on its own line inside an ambient module declaration's module block, directly above the type alias declaration that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G3-P02) names it",
+    "a marker on its own line inside a namespace declaration's module block, directly above the exported const declaration that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G3-P04) names it",
+    "a marker on its own line inside an exported namespace declaration's module block, directly above the const declaration that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G3-P06) names it",
+    "a marker on its own line inside the module block of a namespace declared with the module keyword, directly above the const declaration that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, seat probe X-MODULE-KW-INSIDE) names it",
+    "a marker on its own line inside the module block of a declare global augmentation, directly above the const declaration that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, seat probe X-GLOBAL-INSIDE) names it",
+    "a marker on its own line inside a namespace declaration's module block, directly above the call statement that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, seat probe X-NS-EXPR-INSIDE) names it",
+    "a marker on its own line inside a namespace declaration's module block, below its first statement and directly above the const declaration that is its second statement and holds the literal: that statement is the unit (wb-1cyt, seat probe X-NS-2ND-INSIDE) names it",
+    "a marker on its own line inside a default clause, directly above the assignment statement that is the clause's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G3-P09) names it",
+    "a marker on its own line inside a case clause whose label is a string literal, directly above the call statement that is the clause's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G3-P11) names it",
+    "a marker on its own line inside a case clause whose label is an identifier, directly above the call statement that is the clause's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G3-P13) names it",
+    "a marker on its own line inside a case clause, below its first statement and directly above the call statement that is its second statement and holds the literal: that statement is the unit (wb-1cyt, seat probe X-CASE-2ND-STMT-INSIDE) names it",
     "no comment at all does not name one",
     "a marker inside a string on the line above does not name one",
     "a marker trailing the previous statement does not name one",
@@ -2476,8 +2870,8 @@
     "a marker above a case clause whose label is the literal: the unit is the label, not the case clause (wb-2xd5) does not name one",
     "a marker above an interface declaration whose member holds the literal: the unit is the member, not the interface (wb-2xd5) does not name one",
     "a marker above an enum declaration whose member holds the literal: the unit is the member, not the enum (wb-2xd5) does not name one",
-    "a marker inside an interface declaration that is the blockless body of the if statement whose condition holds the literal: a nested interface is a member holder (wb-1cyt, wb-2xd5 gate P-IF-IFACE) does not name one",
-    "a marker inside an enum declaration that is the blockless body of the if statement whose condition holds the literal: a nested enum is a member holder (wb-1cyt, wb-2xd5 gate P-IF-ENUM) does not name one",
+    "a marker inside an interface declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-2xd5 gate P-IF-IFACE) does not name one",
+    "a marker inside an enum declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-2xd5 gate P-IF-ENUM) does not name one",
     "a marker above an ambient module declaration whose module block holds the statement that holds the literal: the unit is that statement, not the module declaration (wb-1cyt, wb-2xd5 gate P-MODBLOCK-ABOVE) does not name one",
     "a marker above a default clause whose statement holds the literal: the unit is that statement, not the switch (wb-1cyt, wb-2xd5 gate P-DEFAULT-ABOVE) does not name one",
     "a marker above a class declaration whose type parameter holds the literal: the unit is the type parameter, not the class (wb-1cyt, wb-2xd5 gate P-CLASS-TYPEPARAM) does not name one",
@@ -2501,6 +2895,39 @@
     "a marker on its own line between the = of a const declaration and the class expression it initializes, whose extends clause holds the literal: the unit is the heritage clause, not the class expression (wb-1cyt, wb-1cyt gate G15-R38) does not name one",
     "a marker after the case keyword of a case clause of the switch statement whose discriminant holds the literal: it lies in that clause's span (wb-1cyt, wb-1cyt gate G15-R35) does not name one",
     "a marker between the default keyword and the colon of a default clause of the switch statement whose discriminant holds the literal: it lies in that clause's span (wb-1cyt, wb-1cyt gate G15-R36) does not name one",
+    "a marker above an ambient module declaration whose module block's only statement, a type alias declaration, holds the literal: the unit is that statement, not the module declaration (wb-1cyt, wb-1cyt gate G3-P01) does not name one",
+    "a marker above a namespace declaration whose module block's only statement, an exported const declaration, holds the literal: the unit is that statement, not the namespace declaration (wb-1cyt, wb-1cyt gate G3-P03) does not name one",
+    "a marker above an exported namespace declaration whose module block's only statement, a const declaration, holds the literal: the unit is that statement, not the namespace declaration (wb-1cyt, wb-1cyt gate G3-P05) does not name one",
+    "a marker above an ambient module declaration named by a single-quoted string, whose module block's only statement, a const declaration, holds the literal: the unit is that statement, not the module declaration (wb-1cyt, wb-1cyt gate G3-P07) does not name one",
+    "a marker above a namespace declared with the module keyword, whose module block's only statement, a const declaration, holds the literal: the unit is that statement, not the namespace declaration (wb-1cyt, seat probe X-MODULE-KW-ABOVE) does not name one",
+    "a marker above a declare global augmentation whose module block's only statement, a const declaration, holds the literal: the unit is that statement, not the augmentation (wb-1cyt, seat probe X-GLOBAL-ABOVE) does not name one",
+    "a marker above a namespace declaration whose module block's only statement, a call statement, holds the literal: the unit is that statement, not the namespace declaration (wb-1cyt, seat probe X-NS-EXPR-ABOVE) does not name one",
+    "a marker above a namespace declaration whose module block's second statement, a const declaration, holds the literal: the unit is that statement, not the namespace declaration (wb-1cyt, seat probe X-NS-2ND-ABOVE) does not name one",
+    "a marker above a default clause whose only statement, an assignment statement, holds the literal: the unit is that statement, not the switch (wb-1cyt, wb-1cyt gate G3-P08) does not name one",
+    "a marker above a case clause whose label is a string literal and whose only statement, a call statement, holds the literal: the unit is that statement, not the switch (wb-1cyt, wb-1cyt gate G3-P10) does not name one",
+    "a marker above a case clause whose label is an identifier and whose only statement, a call statement, holds the literal: the unit is that statement, not the switch (wb-1cyt, wb-1cyt gate G3-P12) does not name one",
+    "a marker above a case clause whose second statement, a call statement, holds the literal: the unit is that statement, not the switch (wb-1cyt, seat probe X-CASE-2ND-STMT-ABOVE) does not name one",
+    "a marker above an exported class declaration whose type parameter's constraint holds the literal: the unit is the type parameter, not the class (wb-1cyt, wb-1cyt gate G3-P14) does not name one",
+    "a marker above an abstract class declaration whose type parameter's constraint holds the literal: the unit is the type parameter, not the class (wb-1cyt, wb-1cyt gate G3-P15) does not name one",
+    "a marker above an anonymous default-exported class declaration whose type parameter's constraint holds the literal: the unit is the type parameter, not the class (wb-1cyt, wb-1cyt gate G3-P23) does not name one",
+    "a marker above a class declaration whose type parameter's default holds the literal: the unit is the type parameter, not the class (wb-1cyt, wb-1cyt gate G3-P16) does not name one",
+    "a marker on its own line between the = of a const declaration and the anonymous class expression it initializes, whose type parameter's default holds the literal: the unit is the type parameter, not the class expression (wb-1cyt, wb-1cyt gate G3-P17) does not name one",
+    "a marker on its own line between the = of a const declaration and the named class expression it initializes, whose type parameter's constraint holds the literal: the unit is the type parameter, not the class expression (wb-1cyt, wb-1cyt gate G3-P19) does not name one",
+    "a marker on its own line above an anonymous class expression that is a call's only argument, whose type parameter's constraint holds the literal: the unit is the type parameter, not the class expression (wb-1cyt, seat probe X-CLASSEXPR-ARG-TYPEPARAM) does not name one",
+    "a marker on its own line inside the parentheses of a return statement, above the anonymous class expression it returns, whose type parameter's constraint holds the literal: the unit is the type parameter, not the class expression (wb-1cyt, seat probe X-CLASSEXPR-RET-TYPEPARAM) does not name one",
+    "a marker above an interface declaration whose type parameter's constraint holds the literal: the unit is the type parameter, not the interface (wb-1cyt, wb-1cyt gate G3-P18) does not name one",
+    "a marker on its own line between the = of a const declaration and the named class expression it initializes, whose extends clause holds the literal: the unit is the heritage clause, not the class expression (wb-1cyt, wb-1cyt gate G3-P21) does not name one",
+    "a marker above an interface declaration whose extends clause names two types, the first holding the literal: the unit is the heritage clause, not the interface (wb-1cyt, wb-1cyt gate G3-P22) does not name one",
+    "a marker inside the body of a named class expression that initializes a const declaration and whose decorator holds the literal, on the literal's line: the unit is the decorator, not the class expression (wb-1cyt, wb-1cyt gate G3-P20) does not name one",
+    "a marker inside the body of an anonymous class expression that is a call's only argument and whose decorator holds the literal, on the literal's line: the unit is the decorator, not the class expression (wb-1cyt, seat probe X-CLASSEXPR-ARG-DECORATOR) does not name one",
+    "a marker inside a const enum declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-1cyt gate G3-P24) does not name one",
+    "a marker after the enum keyword of a const enum declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-1cyt gate G3-P25) does not name one",
+    "a marker between the name and the body of a const enum declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-1cyt gate G3-P26) does not name one",
+    "a marker after the type parameter in the type parameter list of an interface declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-1cyt gate G3-P28) does not name one",
+    "a marker between the type parameter list and the body of an interface declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-1cyt gate G3-P27) does not name one",
+    "a marker between the heritage clause and the body of an interface declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-1cyt gate G3-P31) does not name one",
+    "a marker after the case keyword of a case clause whose label is a string literal, of the switch statement whose discriminant holds the literal: it lies in that clause's span (wb-1cyt, wb-1cyt gate G3-P30) does not name one",
+    "a marker between the label and the colon of a case clause of the switch statement whose discriminant holds the literal: it lies in that clause's span (wb-1cyt, wb-1cyt gate G3-P29) does not name one",
     "residual RES-13 a marker inside an expression-bodied arrow, annotating its body, is credited to a gp literal later in the same call (gate B01) (named, not cured: today's credit is pinned)",
     "residual RES-14 a marker inside a nested call's argument list is credited to a gp literal later in the outer call (gate B02) (named, not cured: today's credit is pinned)",
     "residual RES-15 a marker on a ternary's first branch is credited to a gp literal in its second branch (gate B03) (named, not cured: today's credit is pinned)",
@@ -2568,6 +2995,8 @@
     "residual RES-77 a marker after a nullish-coalescing operator in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C16) (named, not cured: today's credit is pinned)",
     "residual RES-78 a marker after the opening parenthesis of the call an export default statement holds, annotating a preceding argument, is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C17) (named, not cured: today's credit is pinned)",
     "residual RES-79 a marker inside a dynamic import call in a preceding argument is credited to a gp literal later in the outer call (wb-2xd5, wb-lx6m gate G-C18) (named, not cured: today's credit is pinned)",
+    "residual RES-80 a marker before the interface keyword of an interface declaration that is the blockless body of an if statement, annotating that declaration, is credited to a gp literal in the if statement's condition (wb-1cyt, seat probe X-IFACE-BEFORE-KW) (named, not cured: today's credit is pinned)",
+    "residual RES-81 a marker before the enum keyword of an enum declaration that is the blockless body of an if statement, annotating that declaration, is credited to a gp literal in the if statement's condition (wb-1cyt, seat probe X-ENUM-BEFORE-KW) (named, not cured: today's credit is pinned)",
     "reads each module's own comments: the unannotated module read first lends none of its comments to the next (wb-rdv6)",
     "control: an audit covering all eleven stages, with an annotated call site, an exported entrypoint, the measured gp version, the schema's keys, a fallback and a two-status inventory, reads no finding",
     "an audit beside a tree with no call site is still judged: the control reads clean, and a defect in it is a finding before any wiring",

@@ -109,22 +109,30 @@ export const ANNOTATED: ReadonlyArray<readonly [string, string, readonly (readon
   // literal, the shape of that gate's D05 control (a marker after else, before the branch that holds the literal), so
   // the credit is the attachment rule's intent and the row is pinned here, not in MISATTRIBUTED.
   ["a comment after a labeled for statement's header, before the blockless body that holds the literal (wb-2xd5, wb-lx6m gate G-C14)", 'label: for (;;) /* gp-decision-point: DP-01 */ spawn("gp", []);', [["DP-01"]]],
-  // wb-1cyt (each row a probe verbatim: the wb-2xd5 gate's F1 P-MODBLOCK-INSIDE and P-DEFAULT-INSIDE, the wb-1cyt
-  // gate's G15-R02, G15-R19 and G15-R08, and the seat's X-NSDOT-INSIDE and X-DECLNS-INSIDE): the inside side of the
-  // statement unit at exactly these holders, each holding the literal in its only statement - the module block of
-  // declare module "m", of namespace N, of namespace A.B's innermost name, of declare namespace N and of namespace N as
-  // the only statement of declare module "m"'s block (each statement a const declaration), and a default clause and a
-  // case clause, each its switch's only clause (each statement a call). A marker on its own line inside the holder,
-  // directly above that statement, is credited; a unit walk that passes the holder (the gates' A-MODBLOCK, A-DEFAULT,
-  // G15-A-MODBLOCK-NS, G15-A-CASE-STMT) reads [[]] here. The other side, a marker above the declaration or the clause,
-  // is in UNANNOTATED.
-  ["a marker on its own line inside an ambient module declaration's module block, above the statement that holds the literal: a statement of a module block is a unit (wb-1cyt, wb-2xd5 gate P-MODBLOCK-INSIDE)", 'declare module "m" {\n  // gp-decision-point: DP-01\n  const bin = "gp";\n}', [["DP-01"]]],
-  ["a marker on its own line inside a default clause, above the statement that holds the literal: a statement of a default clause is a unit (wb-1cyt, wb-2xd5 gate P-DEFAULT-INSIDE)", 'switch (x) {\n  default:\n    // gp-decision-point: DP-01\n    spawn("gp", []);\n}', [["DP-01"]]],
+  // wb-1cyt: the inside side of the statement unit in a module block and in a case or a default clause, each row a
+  // probe verbatim (the wb-2xd5 gate's F1 P-*, the wb-1cyt gates' G15-R* and G3-P*, the seats' X-*). Each row claims
+  // its own reading of its own text and nothing wider: the forms are the closed wb-1cyt lists of the suite header
+  // (test/workbench-gp-control-loop-audit.test.ts), and a form no listed row spells is NOT CLAIMED.
+  ["a marker on its own line inside an ambient module declaration's module block, above the statement that holds the literal: that statement is the unit (wb-1cyt, wb-2xd5 gate P-MODBLOCK-INSIDE)", 'declare module "m" {\n  // gp-decision-point: DP-01\n  const bin = "gp";\n}', [["DP-01"]]],
+  ["a marker on its own line inside a default clause, above the statement that holds the literal: that statement is the unit (wb-1cyt, wb-2xd5 gate P-DEFAULT-INSIDE)", 'switch (x) {\n  default:\n    // gp-decision-point: DP-01\n    spawn("gp", []);\n}', [["DP-01"]]],
   ["a marker on its own line inside a namespace declaration's module block, directly above the const declaration that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G15-R02)", 'namespace N {\n  // gp-decision-point: DP-01\n  const bin = "gp";\n}', [["DP-01"]]],
   ["a marker on its own line inside the module block of a dotted namespace declaration's innermost name, directly above the const declaration that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, seat probe X-NSDOT-INSIDE)", 'namespace A.B {\n  // gp-decision-point: DP-01\n  const bin = "gp";\n}', [["DP-01"]]],
   ["a marker on its own line inside an ambient namespace declaration's module block, directly above the const declaration that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, seat probe X-DECLNS-INSIDE)", 'declare namespace N {\n  // gp-decision-point: DP-01\n  const bin = "gp";\n}', [["DP-01"]]],
   ["a marker on its own line inside the module block of a namespace declaration that is the only statement of an ambient module declaration's block, directly above the const declaration that is the inner block's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G15-R19)", 'declare module "m" {\n  namespace N {\n    // gp-decision-point: DP-01\n    const bin = "gp";\n  }\n}', [["DP-01"]]],
   ["a marker on its own line inside a case clause, directly above the call statement that is the clause's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G15-R08)", 'switch (x) {\n  case 1:\n    // gp-decision-point: DP-01\n    spawn("gp", []);\n}', [["DP-01"]]],
+  // wb-1cyt (cut #3): the wb-1cyt refusal #2 gate's G3 probes and the cut #2 seat's further X probes, under the same
+  // closed lists.
+  ["a marker on its own line inside an ambient module declaration's module block, directly above the type alias declaration that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G3-P02)", 'declare module "m" {\n  // gp-decision-point: DP-01\n  type T = "gp";\n}', [["DP-01"]]],
+  ["a marker on its own line inside a namespace declaration's module block, directly above the exported const declaration that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G3-P04)", 'namespace N {\n  // gp-decision-point: DP-01\n  export const bin = "gp";\n}', [["DP-01"]]],
+  ["a marker on its own line inside an exported namespace declaration's module block, directly above the const declaration that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G3-P06)", 'export namespace N {\n  // gp-decision-point: DP-01\n  const bin = "gp";\n}', [["DP-01"]]],
+  ["a marker on its own line inside the module block of a namespace declared with the module keyword, directly above the const declaration that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, seat probe X-MODULE-KW-INSIDE)", 'module N {\n  // gp-decision-point: DP-01\n  const bin = "gp";\n}', [["DP-01"]]],
+  ["a marker on its own line inside the module block of a declare global augmentation, directly above the const declaration that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, seat probe X-GLOBAL-INSIDE)", 'declare global {\n  // gp-decision-point: DP-01\n  const bin = "gp";\n}', [["DP-01"]]],
+  ["a marker on its own line inside a namespace declaration's module block, directly above the call statement that is the block's only statement and holds the literal: that statement is the unit (wb-1cyt, seat probe X-NS-EXPR-INSIDE)", 'namespace N {\n  // gp-decision-point: DP-01\n  spawn("gp", []);\n}', [["DP-01"]]],
+  ["a marker on its own line inside a namespace declaration's module block, below its first statement and directly above the const declaration that is its second statement and holds the literal: that statement is the unit (wb-1cyt, seat probe X-NS-2ND-INSIDE)", 'namespace N {\n  f();\n  // gp-decision-point: DP-01\n  const bin = "gp";\n}', [["DP-01"]]],
+  ["a marker on its own line inside a default clause, directly above the assignment statement that is the clause's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G3-P09)", 'switch (x) {\n  default:\n    // gp-decision-point: DP-01\n    x = "gp";\n}', [["DP-01"]]],
+  ["a marker on its own line inside a case clause whose label is a string literal, directly above the call statement that is the clause's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G3-P11)", 'switch (x) {\n  case "a":\n    // gp-decision-point: DP-01\n    spawn("gp", []);\n}', [["DP-01"]]],
+  ["a marker on its own line inside a case clause whose label is an identifier, directly above the call statement that is the clause's only statement and holds the literal: that statement is the unit (wb-1cyt, wb-1cyt gate G3-P13)", 'switch (x) {\n  case K:\n    // gp-decision-point: DP-01\n    spawn("gp", []);\n}', [["DP-01"]]],
+  ["a marker on its own line inside a case clause, below its first statement and directly above the call statement that is its second statement and holds the literal: that statement is the unit (wb-1cyt, seat probe X-CASE-2ND-STMT-INSIDE)", 'switch (x) {\n  case 1:\n    f();\n    // gp-decision-point: DP-01\n    spawn("gp", []);\n}', [["DP-01"]]],
 ];
 
 export const UNANNOTATED: readonly Quiet[] = [
@@ -164,35 +172,18 @@ export const UNANNOTATED: readonly Quiet[] = [
   ["a marker above a case clause whose label is the literal: the unit is the label, not the case clause (wb-2xd5)", 'switch (x) {\n  // gp-decision-point: DP-01\n  case "gp":\n    break;\n}'],
   ["a marker above an interface declaration whose member holds the literal: the unit is the member, not the interface (wb-2xd5)", '// gp-decision-point: DP-01\ninterface Tool {\n  bin: "gp";\n}'],
   ["a marker above an enum declaration whose member holds the literal: the unit is the member, not the enum (wb-2xd5)", '// gp-decision-point: DP-01\nenum E {\n  Bin = "gp",\n}'],
-  // wb-1cyt (the wb-2xd5 gate's F1 probes verbatim; each reads [[]] under this judge and is credited under the
-  // gate-authored mutant named here, which the census survived before these rows), at exactly these forms: a marker in
-  // the body of an interface or an enum declaration that is the blockless body of the if statement whose condition
-  // holds the literal lies in that declaration's span (S-IFACE, S-ENUM); a marker on its own line above declare module
-  // "m", or above a default clause that is its switch's only clause, does not reach the statement that holds the
-  // literal, the holder's only statement (A-MODBLOCK, A-DEFAULT; the inside side is in ANNOTATED); a marker on its own
-  // line above a class declaration does not reach its only type parameter, nor one above an interface declaration its
-  // only heritage clause or only type parameter (U-CLASSTYPEPARAM, U-IFACEHEAD); and a marker in a class declaration's
-  // body, on the literal's line, does not reach the class's only decorator (U-CLASSDECORATOR).
-  ["a marker inside an interface declaration that is the blockless body of the if statement whose condition holds the literal: a nested interface is a member holder (wb-1cyt, wb-2xd5 gate P-IF-IFACE)", 'if (spawn("gp", [])) interface I { /* gp-decision-point: DP-01 */ a: 1 }'],
-  ["a marker inside an enum declaration that is the blockless body of the if statement whose condition holds the literal: a nested enum is a member holder (wb-1cyt, wb-2xd5 gate P-IF-ENUM)", 'if (spawn("gp", [])) enum E { /* gp-decision-point: DP-01 */ A }'],
+  // wb-1cyt: the other side of that boundary and the spans, each row a probe verbatim (the wb-2xd5 gate's F1 P-*, the
+  // wb-1cyt gates' G15-R* and G3-P*, the seats' X-*). Each row claims its own reading of its own text and nothing
+  // wider: the forms are the closed wb-1cyt lists of the suite header, and a form no listed row spells is NOT CLAIMED.
+  ["a marker inside an interface declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-2xd5 gate P-IF-IFACE)", 'if (spawn("gp", [])) interface I { /* gp-decision-point: DP-01 */ a: 1 }'],
+  ["a marker inside an enum declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-2xd5 gate P-IF-ENUM)", 'if (spawn("gp", [])) enum E { /* gp-decision-point: DP-01 */ A }'],
   ["a marker above an ambient module declaration whose module block holds the statement that holds the literal: the unit is that statement, not the module declaration (wb-1cyt, wb-2xd5 gate P-MODBLOCK-ABOVE)", '// gp-decision-point: DP-01\ndeclare module "m" {\n  const bin = "gp";\n}'],
   ["a marker above a default clause whose statement holds the literal: the unit is that statement, not the switch (wb-1cyt, wb-2xd5 gate P-DEFAULT-ABOVE)", 'switch (x) {\n  // gp-decision-point: DP-01\n  default:\n    spawn("gp", []);\n}'],
   ["a marker above a class declaration whose type parameter holds the literal: the unit is the type parameter, not the class (wb-1cyt, wb-2xd5 gate P-CLASS-TYPEPARAM)", '// gp-decision-point: DP-01\nclass A<T extends "gp"> {}'],
   ["a marker inside the body of a class whose decorator holds the literal, on the literal's line: the unit is the decorator, not the class (wb-1cyt, wb-2xd5 gate P-CLASS-DECORATOR)", '@dec("gp") class A { /* gp-decision-point: DP-01 */ }'],
   ["a marker above an interface declaration whose heritage clause holds the literal: the unit is the heritage clause, not the interface (wb-1cyt, wb-2xd5 gate P-IFACE-HERITAGE)", '// gp-decision-point: DP-01\ninterface I extends Foo<"gp"> {}'],
   ["a marker above an interface declaration whose type parameter holds the literal: the unit is the type parameter, not the interface (wb-1cyt, wb-2xd5 gate P-IFACE-TYPEPARAM)", '// gp-decision-point: DP-01\ninterface I<T = "gp"> {}'],
-  // wb-1cyt (the wb-1cyt gate's G15 probes verbatim and the seat's X probes; each reads [[]] under this judge and is
-  // credited under the member named here, which the census survived before these rows), at exactly these further forms:
-  // a marker on its own line above namespace N, namespace A.B or declare namespace N, or above namespace N as the only
-  // statement of declare module "m"'s block, does not reach the const declaration that is the module block's only
-  // statement (G15-A-MODBLOCK-NS; the inside side is in ANNOTATED); one above a case clause that is its switch's only
-  // clause does not reach the call that is the clause's only statement (G15-A-CASE-STMT); one on its own line between
-  // the = of a const declaration and the class expression it initializes does not reach that class expression's only
-  // type parameter, nor one in that class expression's body, on the literal's line, its only decorator
-  // (G15-U-CLASSEXPR-TYPEPARAM, G15-U-CLASSEXPR-DECORATOR); and a marker after the interface or enum keyword, between
-  // the name and the body, in the interface's type parameter list or in its heritage clause, of an interface or an enum
-  // declaration that is the blockless body of the if statement whose condition holds the literal, lies in that
-  // declaration's span (G15-SH-IFACE, G15-SH-ENUM).
+  // wb-1cyt (cut #2): the wb-1cyt gate's G15 probes and the seat's X probes, under the same closed lists.
   ["a marker above a namespace declaration whose module block holds the const declaration that holds the literal: the unit is that declaration, not the namespace declaration (wb-1cyt, wb-1cyt gate G15-R01)", '// gp-decision-point: DP-01\nnamespace N {\n  const bin = "gp";\n}'],
   ["a marker above a dotted namespace declaration whose innermost name's module block holds the const declaration that holds the literal: the unit is that declaration, not the namespace declaration (wb-1cyt, wb-1cyt gate G15-R03)", '// gp-decision-point: DP-01\nnamespace A.B {\n  const bin = "gp";\n}'],
   ["a marker above an ambient namespace declaration whose module block holds the const declaration that holds the literal: the unit is that declaration, not the namespace declaration (wb-1cyt, wb-1cyt gate G15-R32)", '// gp-decision-point: DP-01\ndeclare namespace N {\n  const bin = "gp";\n}'],
@@ -206,17 +197,46 @@ export const UNANNOTATED: readonly Quiet[] = [
   ["a marker between the name and the body of an enum declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, seat probe X-ENUM-NAME-BRACE)", 'if (spawn("gp", [])) enum E /* gp-decision-point: DP-01 */ { A }'],
   ["a marker inside the type parameter list of an interface declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, seat probe X-IFACE-TYPEPARAM-HEAD)", 'if (spawn("gp", [])) interface I</* gp-decision-point: DP-01 */ T> { a: T }'],
   ["a marker inside the heritage clause of an interface declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-1cyt gate G15-R22)", 'if (spawn("gp", [])) interface I extends /* gp-decision-point: DP-01 */ Foo {}'],
-  // wb-1cyt (the wb-1cyt gate's F2 probes verbatim; each reads [[]] under this judge and is credited under the member
-  // named here, which the census survived before these rows): two more forms of each of two landed boundaries - a
-  // marker on its own line above a class declaration does not reach its only heritage clause, an implements clause
-  // (G15-U-CLASS-IMPLEMENTS), nor one on its own line between the = of a const declaration and the class expression it
-  // initializes that class expression's only heritage clause, an extends clause (G15-U-CLASSEXPR-HERITAGE); and a
-  // marker after a case clause's case keyword, or between a default clause's default keyword and its colon, each the
-  // only clause of the switch whose discriminant holds the literal, lies in that clause's span (G15-SH-CLAUSE).
+  // wb-1cyt (cut #2): the wb-1cyt gate's F2 probes, under the same closed lists.
   ["a marker above a class declaration whose implements clause holds the literal: the unit is the heritage clause, not the class (wb-1cyt, wb-1cyt gate G15-R31)", '// gp-decision-point: DP-01\nclass A implements Foo<"gp"> {}'],
   ["a marker on its own line between the = of a const declaration and the class expression it initializes, whose extends clause holds the literal: the unit is the heritage clause, not the class expression (wb-1cyt, wb-1cyt gate G15-R38)", 'const A =\n  // gp-decision-point: DP-01\n  class extends mixin("gp") {};'],
   ["a marker after the case keyword of a case clause of the switch statement whose discriminant holds the literal: it lies in that clause's span (wb-1cyt, wb-1cyt gate G15-R35)", 'switch (spawn("gp", [])) { case /* gp-decision-point: DP-01 */ 1: break; }'],
   ["a marker between the default keyword and the colon of a default clause of the switch statement whose discriminant holds the literal: it lies in that clause's span (wb-1cyt, wb-1cyt gate G15-R36)", 'switch (spawn("gp", [])) { default /* gp-decision-point: DP-01 */: break; }'],
+  // wb-1cyt (cut #3): the wb-1cyt refusal #2 gate's G3 probes and the cut #2 seat's further X probes, under the same
+  // closed lists.
+  ["a marker above an ambient module declaration whose module block's only statement, a type alias declaration, holds the literal: the unit is that statement, not the module declaration (wb-1cyt, wb-1cyt gate G3-P01)", '// gp-decision-point: DP-01\ndeclare module "m" {\n  type T = "gp";\n}'],
+  ["a marker above a namespace declaration whose module block's only statement, an exported const declaration, holds the literal: the unit is that statement, not the namespace declaration (wb-1cyt, wb-1cyt gate G3-P03)", '// gp-decision-point: DP-01\nnamespace N {\n  export const bin = "gp";\n}'],
+  ["a marker above an exported namespace declaration whose module block's only statement, a const declaration, holds the literal: the unit is that statement, not the namespace declaration (wb-1cyt, wb-1cyt gate G3-P05)", '// gp-decision-point: DP-01\nexport namespace N {\n  const bin = "gp";\n}'],
+  ["a marker above an ambient module declaration named by a single-quoted string, whose module block's only statement, a const declaration, holds the literal: the unit is that statement, not the module declaration (wb-1cyt, wb-1cyt gate G3-P07)", "// gp-decision-point: DP-01\ndeclare module 'm' {\n  const bin = \"gp\";\n}"],
+  ["a marker above a namespace declared with the module keyword, whose module block's only statement, a const declaration, holds the literal: the unit is that statement, not the namespace declaration (wb-1cyt, seat probe X-MODULE-KW-ABOVE)", '// gp-decision-point: DP-01\nmodule N {\n  const bin = "gp";\n}'],
+  ["a marker above a declare global augmentation whose module block's only statement, a const declaration, holds the literal: the unit is that statement, not the augmentation (wb-1cyt, seat probe X-GLOBAL-ABOVE)", '// gp-decision-point: DP-01\ndeclare global {\n  const bin = "gp";\n}'],
+  ["a marker above a namespace declaration whose module block's only statement, a call statement, holds the literal: the unit is that statement, not the namespace declaration (wb-1cyt, seat probe X-NS-EXPR-ABOVE)", '// gp-decision-point: DP-01\nnamespace N {\n  spawn("gp", []);\n}'],
+  ["a marker above a namespace declaration whose module block's second statement, a const declaration, holds the literal: the unit is that statement, not the namespace declaration (wb-1cyt, seat probe X-NS-2ND-ABOVE)", '// gp-decision-point: DP-01\nnamespace N {\n  f();\n  const bin = "gp";\n}'],
+  ["a marker above a default clause whose only statement, an assignment statement, holds the literal: the unit is that statement, not the switch (wb-1cyt, wb-1cyt gate G3-P08)", 'switch (x) {\n  // gp-decision-point: DP-01\n  default:\n    x = "gp";\n}'],
+  ["a marker above a case clause whose label is a string literal and whose only statement, a call statement, holds the literal: the unit is that statement, not the switch (wb-1cyt, wb-1cyt gate G3-P10)", 'switch (x) {\n  // gp-decision-point: DP-01\n  case "a":\n    spawn("gp", []);\n}'],
+  ["a marker above a case clause whose label is an identifier and whose only statement, a call statement, holds the literal: the unit is that statement, not the switch (wb-1cyt, wb-1cyt gate G3-P12)", 'switch (x) {\n  // gp-decision-point: DP-01\n  case K:\n    spawn("gp", []);\n}'],
+  ["a marker above a case clause whose second statement, a call statement, holds the literal: the unit is that statement, not the switch (wb-1cyt, seat probe X-CASE-2ND-STMT-ABOVE)", 'switch (x) {\n  // gp-decision-point: DP-01\n  case 1:\n    f();\n    spawn("gp", []);\n}'],
+  ["a marker above an exported class declaration whose type parameter's constraint holds the literal: the unit is the type parameter, not the class (wb-1cyt, wb-1cyt gate G3-P14)", '// gp-decision-point: DP-01\nexport class A<T extends "gp"> {}'],
+  ["a marker above an abstract class declaration whose type parameter's constraint holds the literal: the unit is the type parameter, not the class (wb-1cyt, wb-1cyt gate G3-P15)", '// gp-decision-point: DP-01\nabstract class A<T extends "gp"> {}'],
+  ["a marker above an anonymous default-exported class declaration whose type parameter's constraint holds the literal: the unit is the type parameter, not the class (wb-1cyt, wb-1cyt gate G3-P23)", '// gp-decision-point: DP-01\nexport default class<T extends "gp"> {}'],
+  ["a marker above a class declaration whose type parameter's default holds the literal: the unit is the type parameter, not the class (wb-1cyt, wb-1cyt gate G3-P16)", '// gp-decision-point: DP-01\nclass A<T = "gp"> {}'],
+  ["a marker on its own line between the = of a const declaration and the anonymous class expression it initializes, whose type parameter's default holds the literal: the unit is the type parameter, not the class expression (wb-1cyt, wb-1cyt gate G3-P17)", 'const A =\n  // gp-decision-point: DP-01\n  class<T = "gp"> {};'],
+  ["a marker on its own line between the = of a const declaration and the named class expression it initializes, whose type parameter's constraint holds the literal: the unit is the type parameter, not the class expression (wb-1cyt, wb-1cyt gate G3-P19)", 'const A =\n  // gp-decision-point: DP-01\n  class B<T extends "gp"> {};'],
+  ["a marker on its own line above an anonymous class expression that is a call's only argument, whose type parameter's constraint holds the literal: the unit is the type parameter, not the class expression (wb-1cyt, seat probe X-CLASSEXPR-ARG-TYPEPARAM)", 'run(\n  // gp-decision-point: DP-01\n  class<T extends "gp"> {},\n);'],
+  ["a marker on its own line inside the parentheses of a return statement, above the anonymous class expression it returns, whose type parameter's constraint holds the literal: the unit is the type parameter, not the class expression (wb-1cyt, seat probe X-CLASSEXPR-RET-TYPEPARAM)", 'function f() {\n  return (\n    // gp-decision-point: DP-01\n    class<T extends "gp"> {}\n  );\n}'],
+  ["a marker above an interface declaration whose type parameter's constraint holds the literal: the unit is the type parameter, not the interface (wb-1cyt, wb-1cyt gate G3-P18)", '// gp-decision-point: DP-01\ninterface I<T extends "gp"> {}'],
+  ["a marker on its own line between the = of a const declaration and the named class expression it initializes, whose extends clause holds the literal: the unit is the heritage clause, not the class expression (wb-1cyt, wb-1cyt gate G3-P21)", 'const A =\n  // gp-decision-point: DP-01\n  class B extends mixin("gp") {};'],
+  ["a marker above an interface declaration whose extends clause names two types, the first holding the literal: the unit is the heritage clause, not the interface (wb-1cyt, wb-1cyt gate G3-P22)", '// gp-decision-point: DP-01\ninterface I extends Foo<"gp">, Bar {}'],
+  ["a marker inside the body of a named class expression that initializes a const declaration and whose decorator holds the literal, on the literal's line: the unit is the decorator, not the class expression (wb-1cyt, wb-1cyt gate G3-P20)", 'const A = @dec("gp") class B { /* gp-decision-point: DP-01 */ };'],
+  ["a marker inside the body of an anonymous class expression that is a call's only argument and whose decorator holds the literal, on the literal's line: the unit is the decorator, not the class expression (wb-1cyt, seat probe X-CLASSEXPR-ARG-DECORATOR)", 'run(@dec("gp") class { /* gp-decision-point: DP-01 */ });'],
+  ["a marker inside a const enum declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-1cyt gate G3-P24)", 'if (spawn("gp", [])) const enum E { /* gp-decision-point: DP-01 */ A }'],
+  ["a marker after the enum keyword of a const enum declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-1cyt gate G3-P25)", 'if (spawn("gp", [])) const enum /* gp-decision-point: DP-01 */ E { A }'],
+  ["a marker between the name and the body of a const enum declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-1cyt gate G3-P26)", 'if (spawn("gp", [])) const enum E /* gp-decision-point: DP-01 */ { A }'],
+  ["a marker after the type parameter in the type parameter list of an interface declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-1cyt gate G3-P28)", 'if (spawn("gp", [])) interface I<T /* gp-decision-point: DP-01 */> { a: T }'],
+  ["a marker between the type parameter list and the body of an interface declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-1cyt gate G3-P27)", 'if (spawn("gp", [])) interface I<T> /* gp-decision-point: DP-01 */ { a: T }'],
+  ["a marker between the heritage clause and the body of an interface declaration that is the blockless body of the if statement whose condition holds the literal: it lies in that declaration's span (wb-1cyt, wb-1cyt gate G3-P31)", 'if (spawn("gp", [])) interface I extends Foo /* gp-decision-point: DP-01 */ {}'],
+  ["a marker after the case keyword of a case clause whose label is a string literal, of the switch statement whose discriminant holds the literal: it lies in that clause's span (wb-1cyt, wb-1cyt gate G3-P30)", 'switch (spawn("gp", [])) { case /* gp-decision-point: DP-01 */ "a": break; }'],
+  ["a marker between the label and the colon of a case clause of the switch statement whose discriminant holds the literal: it lies in that clause's span (wb-1cyt, wb-1cyt gate G3-P29)", 'switch (spawn("gp", [])) { case 1 /* gp-decision-point: DP-01 */: break; }'],
 ];
 
 /**
@@ -239,13 +259,14 @@ export const UNANNOTATED: readonly Quiet[] = [
  * probe of the corpus that reads a misattribution and is credited), RES-44..58 seat-found kinds, RES-59..62 the
  * case-block region and the enum, interface and type-literal member units (wb-2xd5: the wb-lx6m gate's G-B05 and G-B08
  * verbatim, RES-61 and RES-62 seat-found), RES-63..79 the wb-lx6m gate's PREP LEG 2 G-C probes verbatim (its G-C14 is a
- * correct credit, pinned in ANNOTATED) - so a cut that changes the rule reds the row and retires the residual in the
+ * correct credit, pinned in ANNOTATED), RES-80 and RES-81 wb-1cyt's two members (the cut #2 seat's X-IFACE-BEFORE-KW
+ * and X-ENUM-BEFORE-KW) - so a cut that changes the rule reds the row and retires the residual in the
  * open. The family's boundary is pinned in UNANNOTATED: a marker inside a member holder nested in the unit annotates
  * that holder's own members (a block, a type literal, a class expression's body or head, a case or default clause of
  * the switch that holds the literal, an object literal, a module block), and a marker above the enclosing declaration
  * or clause does not reach a unit that is its heritage clause, label, or interface or enum member.
- * wb-1cyt's rows pin that boundary at further forms, each form named beside its rows in UNANNOTATED and ANNOTATED
- * and in the suite header (test/workbench-gp-control-loop-audit.test.ts), and no wider.
+ * wb-1cyt's rows pin that boundary at exactly their own texts, whose forms the closed wb-1cyt lists of the suite
+ * header name (test/workbench-gp-control-loop-audit.test.ts); a form no listed row spells is NOT CLAIMED.
  */
 export const MISATTRIBUTED: ReadonlyArray<readonly [string, string, readonly (readonly string[])[]]> = [
   ["RES-13 a marker inside an expression-bodied arrow, annotating its body, is credited to a gp literal later in the same call (gate B01)", 'run(\n  () =>\n    // gp-decision-point: DP-01\n    prepare(),\n  "gp",\n);', [["DP-01"]]],
@@ -328,6 +349,10 @@ export const MISATTRIBUTED: ReadonlyArray<readonly [string, string, readonly (re
   ["RES-77 a marker after a nullish-coalescing operator in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C16)", 'run(a ?? /* gp-decision-point: DP-01 */ b, "gp");', [["DP-01"]]],
   ["RES-78 a marker after the opening parenthesis of the call an export default statement holds, annotating a preceding argument, is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C17)", 'export default run(/* gp-decision-point: DP-01 */ x, "gp");', [["DP-01"]]],
   ["RES-79 a marker inside a dynamic import call in a preceding argument is credited to a gp literal later in the outer call (wb-2xd5, wb-lx6m gate G-C18)", 'run(import(/* gp-decision-point: DP-01 */ "m"), "gp");', [["DP-01"]]],
+  // wb-1cyt (cut #3): the cut #2 seat's X-IFACE-BEFORE-KW and X-ENUM-BEFORE-KW verbatim, the two texts at which a marker
+  // before the keyword of the declaration that is an if statement's blockless body lies outside that declaration's span.
+  ["RES-80 a marker before the interface keyword of an interface declaration that is the blockless body of an if statement, annotating that declaration, is credited to a gp literal in the if statement's condition (wb-1cyt, seat probe X-IFACE-BEFORE-KW)", 'if (spawn("gp", [])) /* gp-decision-point: DP-01 */ interface I { a: 1 }', [["DP-01"]]],
+  ["RES-81 a marker before the enum keyword of an enum declaration that is the blockless body of an if statement, annotating that declaration, is credited to a gp literal in the if statement's condition (wb-1cyt, seat probe X-ENUM-BEFORE-KW)", 'if (spawn("gp", [])) /* gp-decision-point: DP-01 */ enum E { A }', [["DP-01"]]],
 ];
 
 // ---- the synthetic gp-wired module and its audit document ----
