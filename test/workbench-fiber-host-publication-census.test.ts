@@ -19,9 +19,10 @@
  * FiberOpticsSDK (pyproject.toml [project].name; packages src/FiberOpticsSDK, src/fiber_optics, src/fiber_optics_research)
  * and the crate fiber-optics-replay-observer (rust/replay_observer/Cargo.toml). The roster vendors line 17 with its SHA256.
  *
- * MEASURED AT BASE (04123dc, landing 671; seat ws-02, run g10-work-s138, 2026-10-29; cut #1 measured 864dff9): no tracked file
- * below src, no tracked dependency manifest, package.json or package-lock.json spells the producer's stem, a hosted class or a
- * publication entry (git grep, 0 rows each), and every tracked file below src (117) is a script module. Pi's one Fiber surface
+ * MEASURED AT BASE (c2695d7, landing 686; seat ws-02, run g10-work-s146, 2026-10-30; cut #1 measured 864dff9, cut #2 04123dc,
+ * cut #3 57cb1c0): no tracked file below src, no tracked dependency manifest, package.json or package-lock.json spells the
+ * producer's stem, a hosted class or a publication entry (git grep, 0 rows each), and every tracked file below src (117) is a
+ * script module. Pi's one Fiber surface
  * is rf: the two reactivefiber.render.preview registrations (effectClass read, supportedModes [invoke], the carrier contract
  * ending --no-commit) and their one launch, nativeReactiveFiberRender's spawn of renderArgv, which always ends --no-commit
  * --no-input --json; the native preview admits a noncommitted envelope only (isPreviewEnvelope). CapabilityRegistry's entries
@@ -34,6 +35,16 @@
  * the delivery record in the tracker export; U3 the segmented fold keeps rf's own layout ".reactive-fiber/graphs" quiet; the
  * F4 rider: C1 also reads an instance's own keys and the static members. U4 is the delivery note's clean-claim line.
  *
+ * CUT #3 (respin 2, ruling R-B87's enumerate form) answered refusal #2; refusal #3 (BIND 2026-10-30T02:24:40Z) measured A1's pip
+ * claim and A3's registration claim wider than their readers. CUT #4 (respin 3, the FINAL cut, ruling R-B105's fail-closed core)
+ * answers refusal #3's unmet U1-U4: U1 A1's claim is restated to exactly the three name forms isManifest selects, each planted,
+ * and A1 fails closed outside them (a candidate reds by its presence); U2 A3's static reading no longer keys calls to callee
+ * names: it pins every judged text spelling a REGISTRATION_WORDS word, whatever call surrounds it, and every REGISTER_NAME
+ * declaration or import of a DECLARATION_KINDS kind (cut #3's two plant-named callees are gone), and A3's claim and the armed
+ * clause say exactly that; U3 the
+ * dynamic register alias is now read (its bind spells register) and leaves R-OTHER-VOCABULARY, and every residual member named
+ * below has a quiet reading in its Q row; U4 is the delivery note. The full-surface readers are wb-pyel.7's.
+ *
  * THE VOCABULARY. Every reading compares the SEGMENTED FOLD of a text with three needle sets: the text is cut at whitespace and
  * at path separators (/ and \) into segments, each segment takes the joined fold (NFKC, lower case, every character outside a-z
  * and 0-9 removed; so fiber_optics, fiber-optics, FiberOptics and "@fiber-optics/sdk" all hold it), and a text holds a needle
@@ -44,36 +55,65 @@
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin returns a measured witness held to the roster):
  *  A, the trigger ("before any Fiber-hosting capability registers"), absent today, and the title's artifact.
  *    A1 THE MANIFESTS: package.json read whole (every key and string at any depth, parsed, and every raw line, so a shadowed
- *    duplicate key is read), package-lock.json's installed package paths and name fields, and every other tracked dependency
- *    manifest at any depth outside test/ (a base name in MANIFEST_NAMES, a pip requirements or constraints file with requirements/constraints in its name, or a file of
- *    pip's requirements/ directory: the npm, Python and Rust ecosystems, since Pi is an npm package and the producer ships a
- *    Python wheel and a Rust crate) read as raw lines, name no STEM; test/ is left out because .npmignore keeps it out of the
- *    published package (the witness reads that line), so a fixture manifest declares nothing of Pi's; the readers' controls: one planted dependency per dependency
- *    list, a nested value, a raw shadowed duplicate key, a lock path and a lock name read, two near misses quiet, and a scratch
- *    tree read through the same pipeline (a manifest of each ecosystem read at the root and at depth, a near miss quiet, a
- *    Dockerfile and a fixture below test/ not selected). An arbitrary pip -r/--requirement filename lacking requirements/constraints, and a generated lock format outside the named set are not selected. The witness pins needle hits, never the list of manifests, so an
- *    unrelated manifest a later cut adds reds nothing.
+ *    duplicate key is read), package-lock.json's installed package paths and name fields, and the raw lines of every other
+ *    tracked file outside test/ that isManifest selects, name no STEM. isManifest selects exactly three name forms: a base name
+ *    in MANIFEST_NAMES (exact case); a base name PIP_REQUIREMENTS matches (any case: word characters, dots and hyphens around
+ *    requirements or constraints, then .txt, .in or .lock; or pylock.toml); a path PIP_REQUIREMENTS_DIR matches (exact case: one
+ *    .txt or .in file directly below a directory named requirements, at any depth). MANIFEST_TREE plants each form (every
+ *    MANIFEST_NAMES entry; each PIP_REQUIREMENTS word, extension and character class, upper case among them, and pylock.toml;
+ *    each PIP_REQUIREMENTS_DIR extension at the root and at depth), so a form the reader stops selecting reds. FAIL-CLOSED: A1
+ *    lists by path, whatever it holds, every tracked path outside test/ that isManifest does not select but that is a CANDIDATE
+ *    (a path segment holding a PIP_FAMILY word, requirements, constraints or pylock, in any case; or a base name equal to a
+ *    MANIFEST_NAMES entry in another case), and the list is pinned (on the live tree the one markdown page
+ *    docs/workbench/02-atomic-requirements.md), so a new candidate reds A1; a candidate's lines are not read. MANIFEST_TREE plants
+ *    the candidates refusal #3 measured (requirements.pip, an extensionless requirements, requirements/base.pip,
+ *    requirements/env/dev.txt, pylock.dev.toml) and more (an upper-case requirements directory, constraints.pip, a constraints
+ *    directory, a name with a space, a markdown page, a manifest name in another case); A1 lists each. test/ is left out because
+ *    .npmignore keeps it out of the published package (the witness reads that line), so a fixture manifest declares nothing of
+ *    Pi's; the readers' controls: one planted dependency per dependency list, a nested value, a raw shadowed duplicate key, a
+ *    lock path and a lock name read, two near misses quiet, and MANIFEST_TREE read through the same pipeline (a Dockerfile, and
+ *    below test/ a fixture manifest and a candidate-shaped fixture, neither selected nor candidates). On the live tree the witness pins needle hits and the candidate
+ *    list, never the list of selected manifests, so an unrelated manifest a later cut adds reds nothing.
  *    A2 THE SRC FILES: every tracked file below src (git ls-files, held both ways to a filesystem walk of src that records and
  *    never follows a symlink) is read: a script module through its TypeScript AST (identifiers, private names, string, template
  *    and regular-expression literal texts, so every import, export, dynamic import, require and spawn argument, and JSX text;
  *    never a comment), any other file (a Python sidecar, a JSON host manifest, a binary) as raw lines, comments included; none
  *    holds a STEM or HOSTED_CLASSES fold (needle hits are pinned, never the list of files, so an unrelated file a later cut adds
  *    below src reds nothing); anchors in the provider show the reader reads the live tree; the walk and git's
- *    listing both list a non-script file (the roster); planted modules (one per reading position) read, near misses (rf's
- *    layout among them) quiet; a scratch src tree (a launcher, a Python sidecar, a JSON host manifest, rf's layout as JSON) read
- *    through the same pipeline.
+ *    listing both list a non-script file (the roster); planted modules (one per reading position; template head, middle,
+ *    tail and no-substitution parts and an export-from among them) read, near misses (rf's layout among them) quiet; a
+ *    scratch src tree (a launcher, a Python sidecar, a JSON host manifest, rf's layout as JSON, and a symlink to a directory
+ *    outside it holding a needle, which the walk records and never follows) read through the same pipeline.
  *    A3 THE REGISTERED CAPABILITIES (the title's artifact, "(none exists)"): every descriptor the native registration and the
- *    four injected-client registrations register, read whole, holds no needle of any set; A3 also pins every exported register* function and every `registry.register`/native bridge call in tracked src to a static roster, so a new registration site or function reds. Its Fiber family (a descriptor
+ *    four injected-client registrations register, read whole, holds no needle of any set. Its Fiber family (a descriptor
  *    whose id, a permission or its contract folds to hold "fiber", or whose contract is rf's, rf@...) is exactly the read
  *    preview: effectClass read, supportedModes [invoke], the carrier contract ending --no-commit; each leg states its
  *    preview's own description, so a leg read from the other registration reds; planted descriptors (a hosted runtime, a
  *    flush, a committing render, an observe mode, an rf contract naming no fiber and lacking the flag, a publication entry in
  *    a description, a hosted class nested in an input schema) read as they must and the neutral ones (rf's layout in a
- *    description among them) quiet.
- *    A4 THE LAUNCH (the title's "today's --no-commit rf previews"): src's rf launch roster (in a script module, a launcher call,
- *    by name or as a member, whose first argument is the literal rf; in any other file below src, a line naming rf as a word,
- *    a conservative launch-candidate reading: such a file reds A4 for a look even when it only mentions rf) is the provider alone, and through a stand-in rf (the ONLY PATH entry, logging each argv) both input arms of the native
- *    preview spawn exactly one render each, every argv `context render ... --no-commit --no-input --json`.
+ *    description among them) quiet. A3's STATIC READING pins every tracked file below src: in a script module, every judged
+ *    text (the A2 positions) one of whose word segments (cut at every character outside A-Z, a-z, 0-9, _ and $) is a
+ *    REGISTRATION_WORDS entry (register, the registry's method; registerNativeProviders, the native bridge), one entry per
+ *    segment, so each of these call spellings is read: direct, optional, .call, .apply, .bind, an element access by a string
+ *    or template key, a Reflect.apply argument, a parenthesized callee, a destructured binding; and every name REGISTER_NAME
+ *    matches (register, then no lower-case letter) that names a declaration of a DECLARATION_KINDS kind or is an import or
+ *    export specifier's property name, spelled as an identifier, a string literal, a private name (its # dropped) or a string
+ *    or template literal computed property name, so a new register* declaration or import of those kinds is read; each as
+ *    `<module>#<owner>:<text>@<parent kind>`; in any other file, every raw line's REGISTRATION_WORDS segments. The list is
+ *    pinned with duplicates, so a new, moved or removed text reds A3. REGISTRATION_TREE plants each spelling, each judged-text
+ *    position, each DECLARATION_KINDS kind, both specifier property names, each name spelling and a register_value and a
+ *    register2 name, the bridge and a non-script file, and near misses
+ *    (registered, RegisterHost, unregister, a pi.registerTool call, a registering string, and $register, register_x, register2
+ *    and registerX in a string) A3 does not read. Not read (Q1, Q3 and Q7 pin each quiet): a member name composed at run time, a write to the
+ *    registry's private provider map, a call of a register* function by reference (a further call of a name its module
+ *    declares or imports, a namespace member), whose declaration is read where it is declared, and a registration performed
+ *    by code outside src (a namespace member or an imported function called with the registry, an alias bound outside src).
+ *    A4 THE LAUNCH (the title's "today's --no-commit rf previews"): src's rf launch roster (in a script module, a LAUNCHERS
+ *    call, by name or as a member, whose first argument is the literal rf, each launcher planted; in any other file below src,
+ *    a line naming rf as a word, a conservative launch-candidate reading: such a file reds A4 for a look even when it only
+ *    mentions rf) is the provider alone, and through a stand-in rf (the ONLY PATH entry, logging each argv) both input arms of
+ *    the native preview spawn exactly one render each, every argv `context render ... --no-commit --no-input --json`. Not read
+ *    (Q7 pins it quiet): a launch whose first argument is not the literal rf (a command string, a constant holding rf).
  *  B, "a falsifier proves publication happens only through an explicit host flush call", read where Pi could publish today.
  *    B1 THE COMMITTED FORMS: through the stand-in rf each commit marker a committing render states (transaction_id,
  *    result.render_id, result.ephemeral false, result.commit_seq, result.work.storage_write_count 1; the bead notes name three
@@ -88,8 +128,8 @@
  *    REACTIVE_WORDS fold, the registry still serves invoke and inspect, and registering either preview creates no async
  *    resource (an async_hooks init hook enabled for exactly the synchronous registration counts none: no timer, ref'd or
  *    unref'd, no immediate, tick, promise, watcher or child), so nothing exists that could run on a change; controls: a
- *    registry member named subscribe (declared, inherited through a subclass, a class field and a static member) and a
- *    provider polling an interval read.
+ *    registry member named subscribe (declared, inherited through a subclass, a class field and a static member), a provider
+ *    polling an interval and an action creating one resource of each named kind read, each counted by kind.
  *    C2 A QUERY CHANGE ALONE: after registration the rf workspace is edited (a definition rewritten, a component added, a
  *    source removed) and over SETTLE_MS the stand-in logs no launch and the injected client no call; one explicit invoke,
  *    its selector mutated before the call, then launches exactly one render carrying the mutated selector, --no-commit, whose
@@ -114,24 +154,30 @@
  * NOT CLAIMED (edits of this file and the roster together): a pin or a residual family a later cut adds beyond the delivery
  * record (none today), removed whole; a control removed from its list and the roster; a pin's case replaced by one that echoes
  * its roster witness; git's listing replaced by the walk it anchors.
- * RESIDUALS (named, each with its pinned quiet row): R-COMPOSED a stem, class or entry composed at run time from parts is not
- * read by the source scans (Q1); R-NON-CODE a comment in a src script module naming one is not read (a non-script file below
- * src is read whole, comments included) (Q2); R-OUTSIDE-SRC a hosting module outside src (qa/, examples/, an operator's local
- * provider module, a vendored dist), or a dependency stated outside src in a file of no manifest name (a Dockerfile, a setup
- * script, a tox.ini), a pip -r file with an arbitrary name, a generated lock of an unlisted format, or a manifest below test/ (never published), is not read (Q3); R-INJECTED-RELAY the injected registration relays its host client's envelope unchecked, so a
- * committed envelope from an injected client is returned as a value (Q4; the native preview is the admission point);
- * R-UNREAD-MARKER the native admission reads the five markers of B1, so a noncommitted envelope stating plan.would_commit true
- * or a non-empty effects list is admitted (Q5); R-LATE-REACTION C2's window is SETTLE_MS, so a reaction delayed past it is not
- * seen there: one armed at registration is seen by C1's created-resource reading (Q6 pins both readings), one armed by an
- * invocation is read by neither; R-OTHER-VOCABULARY Fiber hosting spelled with none of the needles (another package name,
- * another verb, or a needle's words split by whitespace or a path separator, "Fiber Optics", "fiber/optics"), a dynamic registry.register alias whose call text has no register name, or a reactive
+ * RESIDUALS (named, each member with its pinned quiet reading in its row): R-COMPOSED a stem, class or entry composed at run
+ * time from parts is not read by the source scans, nor a registry member name composed at run time by A3's static reading
+ * (Q1); R-NON-CODE a comment in a src script module naming one is not read (a non-script file below src is read whole,
+ * comments included) (Q2); R-OUTSIDE-SRC a hosting module outside src (qa/, examples/, an operator's local provider module, a
+ * vendored dist), a registration performed by code outside src (a namespace member or an imported function called with the
+ * registry, an alias bound outside src), a dependency stated outside src in a file isManifest does not select and that is no candidate (a
+ * Dockerfile, a setup script, a tox.ini, a pip -r file of another name, a lock of an unlisted format, a manifest of an
+ * unlisted name), or a manifest below test/ (never published), is not read (Q3); R-INJECTED-RELAY the injected registration
+ * relays its host client's envelope unchecked, so a committed envelope from an injected client is returned as a value (Q4;
+ * the native preview is the admission point); R-UNREAD-MARKER the native admission reads the five markers of B1, so a
+ * noncommitted envelope stating plan.would_commit true or a non-empty effects list is admitted (Q5); R-LATE-REACTION C2's
+ * window is SETTLE_MS, so a reaction delayed past it is not seen there: one armed at registration is seen by C1's
+ * created-resource reading, one armed by an invocation is read by neither (Q6 pins both, the second beside a twin armed at
+ * once that launches); R-OTHER-VOCABULARY Fiber hosting spelled with none of the needles (another package name, another
+ * verb, or a needle's words split by whitespace or a path separator, "Fiber Optics", "fiber/optics"), a registration A3's
+ * static reading does not read (a write to the registry's private provider map, a call of a register* function by reference: a
+ * further call of a name its module declares or imports, a namespace member), an rf launch whose first argument is not the literal rf (a command string, a constant holding rf), or a reactive
  * member named with none of the REACTIVE_WORDS (an emitter's on, off or once, a symbol-keyed async iterator), is not read (Q7).
  * NOT DELIVERED (the armed half): the falsifier that drives a registered Fiber-hosting capability - queued publications with no
  * flush deliver nothing, one explicit flush delivers them, and a query change alone delivers nothing - needs that capability,
- * and none exists. A cut that registers one through the native or an injected-client registration, adds a static registration site or
- * exported register* function in tracked src (as A3 reads them), or names a needle the readings read (in any tracked file
- * below src, or a tracked dependency manifest whose filename is selected by isManifest outside test/), reds
- * A (or B2) by design and must bring that falsifier with it; wb-jwc.5 holds the committing-render posture if the rf commit path
+ * and none exists. A cut that registers one through the native or an injected-client registration, adds, moves or removes a
+ * text A3's static reading pins (a REGISTRATION_WORDS spelling, or a REGISTER_NAME declaration or import, in any tracked file
+ * below src), names a needle the readings read (in any tracked file below src, or a tracked file outside test/ that
+ * isManifest selects), or adds a candidate outside test/, reds A (or B2) by design and must bring that falsifier with it; wb-jwc.5 holds the committing-render posture if the rf commit path
  * is the vehicle.
  *
  * Display paths added: none. Test-only: the stand-in rf, its argv log, the seeded rf workspace and the planted trees live in
@@ -140,7 +186,7 @@
 import { createHook } from "node:async_hooks";
 import { execFileSync, spawn } from "node:child_process";
 import { createHash } from "node:crypto";
-import { chmodSync, existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, unlinkSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, symlinkSync, unlinkSync, watch, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
@@ -218,6 +264,43 @@ const MANIFEST_NAMES = [
 const PIP_REQUIREMENTS = /^(?:(?:[\w.-]*requirements[\w.-]*|[\w.-]*constraints[\w.-]*)\.(?:txt|in|lock)|pylock\.toml)$/i;
 /** pip's requirements directory form (requirements/base.txt, requirements/dev.in): manifests at any depth. */
 const PIP_REQUIREMENTS_DIR = /(?:^|\/)requirements\/[^/]+\.(?:txt|in)$/;
+/** A1's fail-closed net: a path one of whose segments holds one of these words, in any case, is in pip's requirements family. */
+const PIP_FAMILY = /requirements|constraints|pylock/i;
+/** A3's static reading, its words: a judged text one of whose word segments is one of these is read (the registry's method, the native bridge). */
+const REGISTRATION_WORDS = ["register", "registerNativeProviders"] as const;
+/** A3's static reading, its names: a declared or imported name matching this is read (register, then no lower-case letter). */
+const REGISTER_NAME = /^register(?![a-z])/;
+/** A3's static reading, the declarations whose name it reads: TypeScript's named-declaration kinds. */
+const DECLARATION_KINDS: readonly ts.SyntaxKind[] = [
+  ts.SyntaxKind.FunctionDeclaration,
+  ts.SyntaxKind.FunctionExpression,
+  ts.SyntaxKind.ClassDeclaration,
+  ts.SyntaxKind.ClassExpression,
+  ts.SyntaxKind.MethodDeclaration,
+  ts.SyntaxKind.PropertyDeclaration,
+  ts.SyntaxKind.GetAccessor,
+  ts.SyntaxKind.SetAccessor,
+  ts.SyntaxKind.VariableDeclaration,
+  ts.SyntaxKind.Parameter,
+  ts.SyntaxKind.BindingElement,
+  ts.SyntaxKind.PropertyAssignment,
+  ts.SyntaxKind.ShorthandPropertyAssignment,
+  ts.SyntaxKind.MethodSignature,
+  ts.SyntaxKind.PropertySignature,
+  ts.SyntaxKind.InterfaceDeclaration,
+  ts.SyntaxKind.TypeAliasDeclaration,
+  ts.SyntaxKind.EnumDeclaration,
+  ts.SyntaxKind.EnumMember,
+  ts.SyntaxKind.ModuleDeclaration,
+  ts.SyntaxKind.ImportClause,
+  ts.SyntaxKind.NamespaceImport,
+  ts.SyntaxKind.ImportSpecifier,
+  ts.SyntaxKind.ExportSpecifier,
+  ts.SyntaxKind.NamespaceExport,
+  ts.SyntaxKind.ImportEqualsDeclaration,
+  ts.SyntaxKind.TypeParameter,
+];
+const DECLARATION_KIND_SET: ReadonlySet<ts.SyntaxKind> = new Set(DECLARATION_KINDS);
 /** The test tree: .npmignore keeps it out of the published package, so a manifest below it (a fixture) declares no dependency of Pi's. */
 const TEST_ROOT = "test/";
 /** The root's npm pair, each read by its own reader (package.json whole, package-lock.json by paths and names), never as raw lines. */
@@ -226,7 +309,7 @@ const ROOT_NPM = ["package.json", "package-lock.json"] as const;
 const SETTLE_MS = 3000;
 /** Q6's delay (ms): a reaction scheduled this far out is never seen inside SETTLE_MS. */
 const LATE_MS = 600_000;
-/** Floors below the counts measured at base 04123dc (src 117 tracked files, every one a script module, 101769 judged texts; package.json 120 texts; 372 lock packages). */
+/** Floors below the counts measured at base 04123dc and again at c2695d7, the same four (src 117 tracked files, every one a script module, 101769 judged texts; package.json 120 texts; 372 lock packages). */
 const FLOORS = { modules: 100, texts: 60000, manifestTexts: 80, lockPackages: 300 } as const;
 const SCRIPT_KINDS: Readonly<Record<string, ts.ScriptKind>> = {
   ".ts": ts.ScriptKind.TS,
@@ -288,7 +371,16 @@ const LOCK_CONTROLS: Readonly<Record<string, Json>> = {
   lockName: { packages: { "node_modules/alias": { name: "FiberOpticsSDK", version: "0.1.0" } } },
   lockQuiet: { packages: { "node_modules/reactive-fiber": { version: "1.0.0" } } },
 };
-/** A1's scratch tree, read through the manifest pipeline: a manifest of each ecosystem at the root and at depth, a near miss, a Dockerfile. */
+/**
+ * A1's scratch tree, read through the manifest pipeline. Selected (each form isManifest selects, planted holding the stem but the
+ * constraints.txt near miss): every MANIFEST_NAMES entry (the root package.json, an npm pair outside the root's own reader among
+ * them), each PIP_REQUIREMENTS word, extension and character class (upper case, an underscore, a dot, a hyphen) and pylock.toml,
+ * and each PIP_REQUIREMENTS_DIR extension at the root and at depth. Candidates (isManifest selects none of them; A1 lists each):
+ * requirements.pip, an extensionless requirements, requirements/base.pip, a nested requirements/env/dev.txt, a requirements
+ * directory in upper case, pylock.dev.toml, constraints.pip, a constraints directory, a requirements file with a space, a
+ * markdown page and a manifest name in another case. Neither (left out): a Dockerfile, and below test/ a fixture manifest and a
+ * candidate-shaped fixture.
+ */
 const MANIFEST_TREE: Readonly<Record<string, string>> = {
   "package.json": '{ "name": "host" }\n',
   "requirements.txt": "FiberOpticsSDK==0.1.0\n",
@@ -300,11 +392,42 @@ const MANIFEST_TREE: Readonly<Record<string, string>> = {
   "requirements.lock": "fiber_optics==0.1.0\n",
   "pylock.toml": "[[packages]]\nname = \"fiber_optics\"\n",
   "test/fixtures/host/requirements.txt": "FiberOpticsSDK==0.1.0\n",
+  "test/fixtures/host/requirements.pip": "FiberOpticsSDK==0.1.0\n",
   "tools/value-host/pyproject.toml": '[project]\nname = "value-host"\ndependencies = ["fiber-optics>=0.1"]\n',
   "rust/observer/Cargo.toml": '[dependencies]\nfiber-optics-replay-observer = "0.1"\n',
   "examples/host/package.json": '{ "dependencies": { "@fiber-optics/sdk": "0.1.0" } }\n',
   "constraints.txt": "reactive-fiber-cli==1.0.0\nfiber\noptics\n",
   Dockerfile: "RUN pip install FiberOpticsSDK\n",
+  "examples/host/package-lock.json": '{ "packages": { "node_modules/fiber-optics": { "version": "0.1.0" } } }\n',
+  "examples/host/npm-shrinkwrap.json": '{ "packages": { "node_modules/@fiber-optics/sdk": { "version": "0.1.0" } } }\n',
+  "examples/host/yarn.lock": '"fiber-optics@^0.1.0":\n  version "0.1.0"\n',
+  "examples/host/pnpm-lock.yaml": "packages:\n  fiber-optics@0.1.0: {}\n",
+  "py/host/setup.py": 'setup(install_requires=["fiber_optics>=0.1"])\n',
+  "py/host/setup.cfg": "[options]\ninstall_requires = FiberOpticsSDK\n",
+  "py/host/Pipfile": '[packages]\nfiber-optics = "*"\n',
+  "py/host/Pipfile.lock": '{ "default": { "fiber-optics": { "version": "==0.1.0" } } }\n',
+  "py/host/poetry.lock": '[[package]]\nname = "fiber-optics"\n',
+  "py/host/uv.lock": '[[package]]\nname = "fiber-optics"\n',
+  "py/host/pdm.lock": '[[package]]\nname = "fiber-optics"\n',
+  "py/host/environment.yaml": "dependencies:\n  - fiber_optics\n",
+  "rust/observer/Cargo.lock": '[[package]]\nname = "fiber-optics-replay-observer"\n',
+  "requirements.in": "fiber-optics\n",
+  "constraints.in": "fiber_optics<1\n",
+  "build.constraints.lock": "fiber_optics==0.1.0\n",
+  "Requirements_Docs.TXT": "FiberOpticsSDK\n",
+  "requirements/dev.in": "fiber-optics\n",
+  "py/requirements/test.txt": "fiber_optics\n",
+  "requirements.pip": "FiberOpticsSDK==0.1.0\n",
+  "sidecar/requirements": "FiberOpticsSDK==0.1.0\n",
+  "requirements/base.pip": "FiberOpticsSDK==0.1.0\n",
+  "requirements/env/dev.txt": "FiberOpticsSDK==0.1.0\n",
+  "py/Requirements/base.txt": "FiberOpticsSDK==0.1.0\n",
+  "pylock.dev.toml": "[[packages]]\nname = \"fiber_optics\"\n",
+  "constraints.pip": "fiber_optics<1\n",
+  "constraints/base.txt": "fiber_optics<1\n",
+  "requirements copy.txt": "FiberOpticsSDK==0.1.0\n",
+  "docs/requirements.md": "# requirements\n",
+  "web/Package.json": '{ "dependencies": { "fiber-optics": "0.1.0" } }\n',
 };
 /** A planted module: its file name (which sets the script kind) and its text. */
 interface PlantedModule {
@@ -325,6 +448,8 @@ const SOURCE_CONTROLS: Readonly<Record<string, PlantedModule>> = {
   classInPath: { module: "class-in-path.ts", source: 'export const host = "vendor/fiber_optics/FiberGraph.py";\n' },
   nearMiss: { module: "near-miss.ts", source: 'export const reactivefiber = 1;\nexport const fiber_signal_count = 0;\nexport const optics = "fiber";\n' },
   rfLayout: { module: "rf-layout.ts", source: 'export const RF_GRAPHS_DIR = ".reactive-fiber/graphs";\n' },
+  templateParts: { module: "template-parts.ts", source: `declare const a: string;\ndeclare const b: string;\nexport const path = \`fiber_optics/\${a}/FiberGraph/\${b}\`;\nexport const name = \`FiberRuntime\`;\n` },
+  exportFrom: { module: "export-from.ts", source: 'export { open } from "fiber_optics";\nexport * from "@fiber-optics/sdk";\n' },
 };
 const ENTRY_CONTROLS: Readonly<Record<string, PlantedModule>> = {
   snakeCall: { module: "snake-call.ts", source: "declare const runtime: { queue_value_publication(port: string, value: number): void };\nruntime.queue_value_publication(\"port\", 1);\n" },
@@ -340,6 +465,10 @@ const LAUNCH_CONTROLS: Readonly<Record<string, PlantedModule>> = {
   spawnRf: { module: "spawn-rf.ts", source: 'import { spawn } from "node:child_process";\nspawn("rf", ["graph", "show"]);\n' },
   execFileSyncRf: { module: "exec-rf.ts", source: 'import { execFileSync } from "node:child_process";\nexecFileSync("rf", ["--version"]);\n' },
   memberSpawnRf: { module: "member-spawn-rf.ts", source: 'import * as cp from "node:child_process";\ncp.spawn("rf", ["context", "show"]);\n' },
+  launcherNames: {
+    module: "launcher-names.ts",
+    source: 'import * as cp from "node:child_process";\ncp.spawnSync("rf", ["graph", "show"]);\ncp.execFile("rf", ["graph", "show"]);\ncp.exec("rf");\ncp.execSync("rf");\ncp.fork("rf");\n',
+  },
   otherBinary: { module: "spawn-rg.ts", source: 'import { spawn } from "node:child_process";\nspawn("rg", ["-n", "rf"]);\n' },
   pythonLaunch: { module: "render-sidecar.py", source: 'import subprocess\nsubprocess.run(["rf", "context", "render", "--json"], check=True)\n' },
   shellLaunch: { module: "render.sh", source: "#!/bin/sh\nexec rf context render --json\n" },
@@ -352,7 +481,15 @@ const PIPELINE_TREE: Readonly<Record<string, string>> = {
   "src/providers/value-host.json": '{ "runtime": "FiberGraph" }\n',
   "src/providers/rf-layout.json": '{ "graphs": ".reactive-fiber/graphs" }\n',
 };
-/** A new exported injected-client capability whose descriptor lives in a constant, not in the register call. */
+/** A2's symlink control: a link below the pipeline tree's src to a directory outside it that holds a needle; the walk records the link and never follows it. */
+const PIPELINE_LINK = { path: "src/linked", target: "../outside", files: { "outside/value.ts": "export const runtime = new FiberRuntime();\n" } } as const;
+/**
+ * A3's static reading's planted src tree: a new exported injected-client capability whose descriptor lives in a constant; each
+ * spelling of a register call and each judged-text position; each DECLARATION_KINDS kind, both specifier property names, each
+ * name spelling (string literal, private, computed) and a register_value and a register2 name; the native bridge; a non-script
+ * file; and near misses that stay unread (registered, RegisterHost, unregister, a pi.registerTool call, a registering string,
+ * and $register, register_x, register2 and registerX in a string).
+ */
 const REGISTRATION_TREE: Readonly<Record<string, string>> = {
   "src/workbench/providers/value-publish.ts": [
     'const DESCRIPTOR = { id: "fiber.value.publish", effectClass: "write" };',
@@ -360,6 +497,106 @@ const REGISTRATION_TREE: Readonly<Record<string, string>> = {
     '  registry.register({ descriptor: DESCRIPTOR, invoke: async () => null });',
     '}',
     '',
+  ].join("\n"),
+  "src/workbench/providers/value-spellings.ts": [
+    "declare const registry: { register(provider: unknown): void };",
+    "declare const PROVIDER: unknown;",
+    "export const registerValueSpellings = (): void => {",
+    "  registry.register(PROVIDER);",
+    "  registry.register.call(registry, PROVIDER);",
+    "  registry.register.apply(registry, [PROVIDER]);",
+    '  registry["register"](PROVIDER);',
+    "  registry[`register`](PROVIDER);",
+    "  Reflect.apply(registry.register, registry, [PROVIDER]);",
+    "  (registry.register)(PROVIDER);",
+    "  registry?.register(PROVIDER);",
+    "  const add = registry.register.bind(registry);",
+    "  add(PROVIDER);",
+    "  const { register } = registry;",
+    "  register.call(registry, PROVIDER);",
+    "};",
+    "",
+  ].join("\n"),
+  "src/workbench/providers/value-positions.tsx": [
+    "declare const n: number;",
+    "export class Host {",
+    "  #register(): void {}",
+    "}",
+    `export const head = \`register\${n}\`;`,
+    `export const middle = \`a\${n}register\${n}\`;`,
+    `export const tail = \`a\${n}register\`;`,
+    'export const both = "register, then registerNativeProviders";',
+    "export const pattern = /register/;",
+    "export const view = <b>register</b>;",
+    "",
+  ].join("\n"),
+  "src/workbench/providers/value-names.ts": [
+    'import registerValueDefault, { registerValueImported, registerValueOriginal as renamed } from "./value-publish.js";',
+    'import * as registerValueStar from "./value-publish.js";',
+    'import registerValueRequire = require("./value-publish.js");',
+    'export * as registerValueReexport from "./value-publish.js";',
+    "declare const host: { registerValueBinding: number };",
+    "export function registerValueDeclared(): void {}",
+    "export const registerValueArrow = (): void => {};",
+    "export const named = function registerValueNamed(): void {};",
+    "class registerValueClass {}",
+    "export const expression = class registerValueClassExpression {};",
+    "export class Members {",
+    "  registerValueMethod(): void {}",
+    "  registerValueField = 1;",
+    "  get registerValueGetter(): number {",
+    "    return 1;",
+    "  }",
+    "  set registerValueSetter(value: number) {}",
+    "}",
+    "function install(registerValueParameter: () => void): void {}",
+    "const { registerValueBinding } = host;",
+    "export const assigned = { registerValueAssigned: 1, registerValueArrow };",
+    "interface Shape {",
+    "  registerValueSignature(): void;",
+    "  registerValueProperty: number;",
+    "}",
+    "interface registerValueInterface {}",
+    "type registerValueAlias = number;",
+    "enum registerValueEnum {",
+    "  A,",
+    "}",
+    "enum Kinds {",
+    "  registerValueMember,",
+    "}",
+    "namespace registerValueNamespace {}",
+    "function generic<registerValueType>(): void {}",
+    "export { install as registerValueExported, registerValueArrow as installArrow };",
+    'export const quoted = { "registerValueQuoted": 1, ["registerValueComputed"]: 2, [`registerValueComputedTemplate`]: 3 };',
+    "export class Privates {",
+    "  #registerValuePrivate(): void {}",
+    "}",
+    "enum Quoted {",
+    '  "registerValueQuotedMember" = 1,',
+    "}",
+    'import { "registerValueString" as stringImport } from "./value-publish.js";',
+    'export { install as "registerValueStringExport" };',
+    'declare module "registerValueModule" {}',
+    "const register_value = 1;",
+    "const register2 = 2;",
+    "",
+  ].join("\n"),
+  "src/workbench/hosts/value-bridge.ts": [
+    "declare const modules: { registerNativeProviders(registry: unknown, root: string): void };",
+    'modules.registerNativeProviders({}, "/");',
+    'modules["registerNativeProviders"].call(modules, {}, "/");',
+    "",
+  ].join("\n"),
+  "src/workbench/providers/value-host.json": '{ "register": "fiber.value.publish", "bridge": "registerNativeProviders" }\n',
+  "src/workbench/providers/value-near-miss.ts": [
+    "declare const pi: Record<string, (tool: unknown) => void>;",
+    "export const registered = true;",
+    "export class RegisterHost {}",
+    "export function unregister(): void {}",
+    'pi.registerTool({ name: "value" });',
+    'export const note = "registering is refused; preregister";',
+    'export const separators = "$register register_x register2 registerX";',
+    "",
   ].join("\n"),
 };
 const NEVER = (): never => {
@@ -405,7 +642,7 @@ const DESCRIPTOR_CONTROLS: Readonly<Record<string, CapabilityDescriptor>> = {
 /** Q1 R-COMPOSED, Q2 R-NON-CODE, Q7 R-OTHER-VOCABULARY: modules the source scans read quiet. */
 const COMPOSED_MODULE: PlantedModule = {
   module: "composed.ts",
-  source: 'export const name = "fiber" + "_optics";\nexport const entry = ["flush", "value", "publications"].join("_");\nexport const host = "Fiber" + "Runtime";\n',
+  source: 'export const name = "fiber" + "_optics";\nexport const entry = ["flush", "value", "publications"].join("_");\nexport const host = "Fiber" + "Runtime";\ndeclare const registry: Record<string, (provider: unknown) => void>;\nregistry[["regi", "ster"].join("")]({});\n',
 };
 const COMMENT_MODULE: PlantedModule = { module: "comment.ts", source: "// new FiberRuntime() over fiber_optics\n/* flush_value_publications */\nexport {};\n" };
 const OTHER_VOCABULARY_MODULE: PlantedModule = {
@@ -420,6 +657,29 @@ const SPLIT_SPELLING_MODULE: PlantedModule = {
   module: "split-spelling.ts",
   source: 'export const label = "Fiber Optics";\nexport const graph = "fiber graph";\nexport const path = "fiber/optics";\n',
 };
+/** Q7: registration A3's static reading does not read: a write to the registry's private provider map, and calls of a register* function by reference (further calls of a name the module imports or declares, a namespace member); only the import and the declaration are read. */
+const REGISTRATION_VOCABULARY_MODULE: PlantedModule = {
+  module: "registration-vocabulary.ts",
+  source: [
+    'import { registerNativeReactiveFiberRender } from "./providers/reactivefiber.js";',
+    "declare const registry: { providers: Map<string, unknown> };",
+    "declare const PROVIDER: unknown;",
+    'registry.providers.set("fiber.value.publish", PROVIDER);',
+    'registerNativeReactiveFiberRender(registry as never, "/a");',
+    'registerNativeReactiveFiberRender(registry as never, "/b");',
+    "function registerLocalValue(): void {}",
+    "registerLocalValue();",
+    "registerLocalValue();",
+    'import * as providers from "./providers/reactivefiber.js";',
+    'providers.registerNativeReactiveFiberRender(registry as never, "/c");',
+    "",
+  ].join("\n"),
+};
+/** Q7: rf launches A4's roster does not read: a command string, and a constant holding rf as the first argument. */
+const OTHER_LAUNCH_MODULE: PlantedModule = {
+  module: "other-launch.ts",
+  source: 'import { execSync, spawnSync } from "node:child_process";\nconst RF_BIN = "rf";\nexecSync("rf context render --json");\nspawnSync(RF_BIN, ["context", "render", "--json"]);\n',
+};
 /** Q3: a tree whose hosting module and dependency statements sit outside src and outside every manifest name. */
 const OUTSIDE_TREE: Readonly<Record<string, string>> = {
   "src/clean.ts": "export const clean = 1;\n",
@@ -428,6 +688,13 @@ const OUTSIDE_TREE: Readonly<Record<string, string>> = {
   Dockerfile: "FROM python:3.12-slim\nRUN pip install FiberOpticsSDK==0.1.0\n",
   "scripts/setup-sidecar.sh": "#!/bin/sh\npip install fiber_optics\n",
   "tools/value-host/deps.txt": "fiber_optics==0.1.0\n",
+  "src/hand-off.ts": 'import * as host from "value-host";\nimport { add, plug } from "value-host";\ndeclare const registry: unknown;\nhost.registerValueHost(registry);\nplug(registry);\nadd({});\n',
+  "providers/local-value.cjs": 'exports.register = registry => registry.register({ descriptor: { id: "fiber.value.publish" }, runtime: "FiberRuntime" });\n',
+  "vendor/value-host/dist/index.js": 'module.exports = require("fiber_optics");\n',
+  "tox.ini": "[testenv]\ndeps = fiber_optics\n",
+  "web/bun.lock": '{ "packages": { "fiber-optics": ["fiber-optics@0.1.0"] } }\n',
+  "web/package.yaml": "dependencies:\n  fiber-optics: ^0.1.0\n",
+  "test/fixtures/host/pyproject.toml": '[project]\ndependencies = ["fiber-optics>=0.1"]\n',
 };
 
 /** The residual families, each named by the quiet-row pin that holds it. */
@@ -556,42 +823,89 @@ function isManifest(path: string): boolean {
   const names: readonly string[] = MANIFEST_NAMES;
   return names.includes(name) || PIP_REQUIREMENTS.test(name) || PIP_REQUIREMENTS_DIR.test(path);
 }
-/** Every exported register* function and every call spelling a capability registration, from the live tracked src tree.
- * New exported providers and new registration sites refuse even before a descriptor reaches the native registry.
- * The runtime native and injected registries independently check the registered descriptors' shape. */
-function registrationSites(root: string, listed: readonly string[]): string[] {
-  const sites: string[] = [];
-  for (const module of listed.filter(path => isScript(path))) {
-    const file = parse(readFileSync(join(root, module), "utf8"), module);
-    const visit = (node: ts.Node): void => {
-      if (ts.isFunctionDeclaration(node) && node.modifiers?.some(modifier => modifier.kind === ts.SyntaxKind.ExportKeyword) && node.name?.text.startsWith("register")) {
-        sites.push(`${module}#export:${node.name.text}`);
-      }
-      if (ts.isCallExpression(node)) {
-        const name = calleeName(node.expression);
-        if (name === "register" || name === "registerNativeProviders" || name === "registerNativeFiberValuePublish" || name === "registerFiberValuePublish") {
-          let owner: ts.Node | undefined = node.parent;
-          while (owner !== undefined && !ts.isFunctionDeclaration(owner) && !ts.isMethodDeclaration(owner) && !ts.isArrowFunction(owner)) owner = owner.parent;
-          let label = "(module)";
-          if (owner !== undefined) {
-            if ((ts.isFunctionDeclaration(owner) || ts.isMethodDeclaration(owner)) && owner.name !== undefined) label = owner.name.getText(file);
-            else if (ts.isArrowFunction(owner) && ts.isVariableDeclaration(owner.parent)) label = owner.parent.name.getText(file);
-          }
-          sites.push(`${module}#${label}:${name}`);
-        }
-      }
-      ts.forEachChild(node, visit);
-    };
-    visit(file);
-  }
-  return sites.sort();
+/** A declaration node's simple name (an identifier, a private name or a string), when its kind is a DECLARATION_KINDS kind. */
+function declarationName(node: ts.Node): string | undefined {
+  if (!DECLARATION_KIND_SET.has(node.kind)) return undefined;
+  const name = (node as ts.NamedDeclaration).name;
+  return name !== undefined && (ts.isIdentifier(name) || ts.isPrivateIdentifier(name) || ts.isStringLiteral(name)) ? name.text : undefined;
 }
-/** The listed dependency manifests below a root outside the test tree: every one selected by name, those read as raw lines (all but the root npm pair) and their STEM hits. */
-function readManifests(root: string, listed: readonly string[]): { selected: string[]; raw: string[]; hits: string[] } {
+/**
+ * The name a node spells when it names a DECLARATION_KINDS declaration (an identifier, a string or template literal, a private
+ * name with its # dropped, or a literal inside a computed property name) or is an import or export specifier's property name.
+ */
+function declaredName(node: ts.Node): string | undefined {
+  const text = ts.isPrivateIdentifier(node) ? node.text.slice(1) : ts.isIdentifier(node) || ts.isStringLiteralLike(node) ? node.text : undefined;
+  if (text === undefined) return undefined;
+  const parent = node.parent;
+  if ((ts.isImportSpecifier(parent) || ts.isExportSpecifier(parent)) && parent.propertyName === node) return text;
+  const name = ts.isComputedPropertyName(parent) ? parent : node;
+  const declaration = name.parent;
+  return DECLARATION_KIND_SET.has(declaration.kind) && (declaration as ts.NamedDeclaration).name === name ? text : undefined;
+}
+/** The nearest named declaration enclosing a node (the declaration the node names left out), or (module). */
+function ownerOf(node: ts.Node): string {
+  let at: ts.Node | undefined = node.parent;
+  if (at !== undefined && declarationName(at) !== undefined && (at as ts.NamedDeclaration).name === node) at = at.parent;
+  for (; at !== undefined; at = at.parent) {
+    const name = declarationName(at);
+    if (name !== undefined) return name;
+  }
+  return "(module)";
+}
+/** A text's REGISTRATION_WORDS segments (cut at every character outside A-Z, a-z, 0-9, _ and $). */
+function registrationWordsIn(text: string): string[] {
+  const words: readonly string[] = REGISTRATION_WORDS;
+  return text.split(/[^A-Za-z0-9_$]+/).filter(segment => words.includes(segment));
+}
+/**
+ * A3's static reading of one file below src. In a script module every judged text (the A2 positions) holding a REGISTRATION_WORDS
+ * segment, one entry per segment, and every REGISTER_NAME name a declaration or a specifier property spells (declaredName), each
+ * `<module>#<owner>:<text>@<parent kind>`; in any other file every raw line's REGISTRATION_WORDS segments, `<module>:<line>: <word>`.
+ */
+function registrationTexts(text: string, module: string): string[] {
+  if (!isScript(module)) return rawLines(text).flatMap(({ line, text: read }) => registrationWordsIn(read).map(word => `${module}:${line}: ${word}`));
+  const file = parse(text, module);
+  const out: string[] = [];
+  const visit = (node: ts.Node): void => {
+    const read = judgedText(node);
+    if (read !== undefined) {
+      const at = `${module}#${ownerOf(node)}`;
+      const kind = ts.SyntaxKind[node.parent.kind];
+      const words = registrationWordsIn(read);
+      const named = declaredName(node);
+      if (words.length > 0) out.push(...words.map(word => `${at}:${word}@${kind}`));
+      else if (named !== undefined && REGISTER_NAME.test(named)) out.push(`${at}:${named}@${kind}`);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return out;
+}
+/** A3's static reading of every listed file below a root, sorted, duplicates kept: the pinned list, so a new, moved or removed text reds. */
+function registrationSites(root: string, listed: readonly string[]): string[] {
+  return listed.flatMap(module => registrationTexts(readFileSync(join(root, module), "utf8"), module)).sort();
+}
+/** A1's fail-closed net: a path isManifest does not select one of whose segments holds a PIP_FAMILY word, or whose base name is a MANIFEST_NAMES entry in another case. */
+function isCandidate(path: string): boolean {
+  if (isManifest(path)) return false;
+  const name = path.slice(path.lastIndexOf("/") + 1).toLowerCase();
+  return path.split("/").some(segment => PIP_FAMILY.test(segment)) || MANIFEST_NAMES.some(entry => entry.toLowerCase() === name);
+}
+/**
+ * The listed paths below a root outside the test tree: every dependency manifest isManifest selects, those read as raw lines (all
+ * but the root npm pair) and their STEM hits, and every candidate (listed by path whatever it holds; its lines are not read).
+ */
+function readManifests(root: string, listed: readonly string[]): { selected: string[]; raw: string[]; hits: string[]; candidates: string[] } {
   const rootNpm: readonly string[] = ROOT_NPM;
-  const selected = listed.filter(path => !path.startsWith(TEST_ROOT) && isManifest(path));
+  const outside = listed.filter(path => !path.startsWith(TEST_ROOT));
+  const selected = outside.filter(path => isManifest(path));
   const raw = selected.filter(path => !rootNpm.includes(path));
-  return { selected, raw, hits: raw.flatMap(path => hitsIn(rawLines(readFileSync(join(root, path), "utf8")), path, STEM_NEEDLES)) };
+  return {
+    selected,
+    raw,
+    hits: raw.flatMap(path => hitsIn(rawLines(readFileSync(join(root, path), "utf8")), path, STEM_NEEDLES)),
+    candidates: outside.filter(path => isCandidate(path)),
+  };
 }
 
 /** Whether the root .npmignore names an entry, exactly, on a line of its own. */
@@ -756,6 +1070,8 @@ function pipelineReading(): SrcReading {
   if (pipelineCache === undefined) {
     const root = scratchDir("fiber-host-publication-pipeline-");
     plantTree(root, PIPELINE_TREE);
+    plantTree(root, PIPELINE_LINK.files);
+    symlinkSync(PIPELINE_LINK.target, join(root, PIPELINE_LINK.path));
     pipelineCache = readSrc(root, Object.keys(PIPELINE_TREE).sort());
   }
   return pipelineCache;
@@ -1018,6 +1334,41 @@ function registerReactiveControl(registry: CapabilityRegistry, root: string, del
   });
   registry.register({ descriptor: plantedDescriptor({ id: "fiber.reactive.control" }), invoke: async () => NEVER() });
 }
+/** C1's kinds control: one of each async resource C1's reading names (a ref'd and an unref'd timer, an immediate, a tick, a promise, a watcher, a child); its cleanup ends them. */
+function createEachResourceKind(dir: string): void {
+  const refTimer = setTimeout(() => {}, LATE_MS);
+  const unrefTimer = setTimeout(() => {}, LATE_MS).unref();
+  setImmediate(() => {});
+  process.nextTick(() => {});
+  void Promise.resolve();
+  const watcher = watch(dir);
+  const child = spawn(process.execPath, ["-e", ""], { stdio: "ignore" });
+  child.on("error", () => {});
+  cleanups.push(() => {
+    clearTimeout(refTimer);
+    clearTimeout(unrefTimer);
+    watcher.close();
+    child.kill();
+  });
+}
+/** Q6's invocation-armed twins: one arms its launch LATE_MS out (the residual), one at once (the channel's positive). */
+const ARMED_IDS = { late: "fiber.reactive.invoked-late", now: "fiber.reactive.invoked-now" } as const;
+/** An invocation-armed twin: registering it arms nothing; its invoke arms a launch, naming its id, `delay` ms out. Its cleanup clears the timer. */
+function registerInvocationArmed(registry: CapabilityRegistry, root: string, id: string, delay: number): void {
+  let armed: ReturnType<typeof setTimeout> | undefined;
+  cleanups.push(() => {
+    if (armed !== undefined) clearTimeout(armed);
+  });
+  registry.register({
+    descriptor: plantedDescriptor({ id }),
+    invoke: async () => {
+      armed ??= setTimeout(() => {
+        spawn("rf", ["--workspace", root, "context", "render", "--armed", id], { stdio: "ignore" }).on("error", () => {});
+      }, delay);
+      return null;
+    },
+  });
+}
 /** Registers through `register` on a fresh registry, edits the workspace, waits SETTLE_MS: what launched, what was added. */
 async function changeAlone(register: (registry: RecordingRegistry, root: string) => void): Promise<{ record: Recorder; registry: RecordingRegistry; registration: string[]; changes: string[]; spawns: number }> {
   const record = recorder(root => fullShapeRf(root));
@@ -1123,6 +1474,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       rootNpmSelected: ROOT_NPM.every(path => manifests.selected.includes(path)),
       npmIgnored: Object.fromEntries([TEST_ROOT, "src/"].map(entry => [entry, npmIgnores(entry)])),
       rawManifestHits: manifests.hits,
+      candidates: manifests.candidates,
       manifestTree: readManifests(tree, Object.keys(MANIFEST_TREE).sort()),
       manifestControls: Object.fromEntries(Object.entries(MANIFEST_CONTROLS).map(([name, manifest]) => [name, manifestHits(manifest, undefined, name).length])),
       shadowedKey: { parsed: manifestHits(JSON.parse(SHADOWED_MANIFEST), undefined, "shadowed").length, raw: manifestHits(JSON.parse(SHADOWED_MANIFEST), SHADOWED_MANIFEST, "shadowed").length },
@@ -1143,7 +1495,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       anchors: src.anchors,
       hosting: src.hosting,
       listsNonScript: { walk: walkFiles(REPO, "test/fixtures").files.includes(ROSTER_FILE), git: trackedFiles("test/fixtures").includes(ROSTER_FILE) },
-      pipeline: { modules: tree.modules, nonScript: tree.nonScript, onlyWalked: tree.onlyWalked, onlyTracked: tree.onlyTracked, hosting: tree.hosting },
+      pipeline: { modules: tree.modules, nonScript: tree.nonScript, symlinks: tree.symlinks, onlyWalked: tree.onlyWalked, onlyTracked: tree.onlyTracked, hosting: tree.hosting },
       controls: plantedHits(SOURCE_CONTROLS, HOSTING_NEEDLES),
     });
   },
@@ -1154,7 +1506,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       native: registryReading(await nativeRegistry()),
       injected: registryReading(injectedRegistry()),
       staticSites: registrationSites(REPO, trackedFiles("src")),
-      registrationControl: registrationSites(scratchRegistrationTree(), Object.keys(REGISTRATION_TREE)),
+      registrationControl: registrationSites(scratchRegistrationTree(), Object.keys(REGISTRATION_TREE).sort()),
       controls: Object.fromEntries(Object.entries(DESCRIPTOR_CONTROLS).map(([name, descriptor]) => [name, descriptorReading(descriptor)])),
     });
   },
@@ -1238,6 +1590,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         fieldRegistry: reactiveMembers("FieldRegistry", classMembers(FieldRegistry, new FieldRegistry())),
         staticRegistry: reactiveMembers("StaticRegistry", classMembers(StaticRegistry, new StaticRegistry())),
         pollingProvider: createdResources(() => registerReactiveControl(polling, controlRoot, LATE_MS)),
+        resourceKinds: createdResources(() => createEachResourceKind(controlRoot)),
       },
     });
   },
@@ -1284,17 +1637,30 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       reactiveControl: { registration: reactive.registration, spawnsAfterChange: reactive.spawns },
     });
   },
-  Q1: async () => json({ residual: "R-COMPOSED", hosting: sourceHits(COMPOSED_MODULE.source, COMPOSED_MODULE.module, HOSTING_NEEDLES), entries: sourceHits(COMPOSED_MODULE.source, COMPOSED_MODULE.module, ENTRY_NEEDLES) }),
+  Q1: async () =>
+    json({
+      residual: "R-COMPOSED",
+      hosting: sourceHits(COMPOSED_MODULE.source, COMPOSED_MODULE.module, HOSTING_NEEDLES),
+      entries: sourceHits(COMPOSED_MODULE.source, COMPOSED_MODULE.module, ENTRY_NEEDLES),
+      registration: registrationTexts(COMPOSED_MODULE.source, COMPOSED_MODULE.module),
+    }),
   Q2: async () => json({ residual: "R-NON-CODE", hosting: sourceHits(COMMENT_MODULE.source, COMMENT_MODULE.module, HOSTING_NEEDLES), entries: sourceHits(COMMENT_MODULE.source, COMMENT_MODULE.module, ENTRY_NEEDLES) }),
   Q3: async () => {
     const root = scratchDir("fiber-host-publication-tree-");
     plantTree(root, OUTSIDE_TREE);
     const walk = walkFiles(root, "src");
     const hits = walk.files.flatMap(module => sourceHits(readFileSync(join(root, module), "utf8"), module, ALL_NEEDLES));
+    const manifests = readManifests(root, Object.keys(OUTSIDE_TREE).sort());
     const outside = Object.keys(OUTSIDE_TREE)
       .filter(path => !path.startsWith("src/"))
-      .map(path => ({ path, walked: walk.files.includes(path), manifest: isManifest(path), needles: sourceHits(OUTSIDE_TREE[path] ?? "", path, ALL_NEEDLES).length }));
-    return json({ residual: "R-OUTSIDE-SRC", walked: walk.files, hits, outside });
+      .map(path => ({
+        path,
+        walked: walk.files.includes(path),
+        selected: manifests.selected.includes(path),
+        candidate: manifests.candidates.includes(path),
+        needles: sourceHits(OUTSIDE_TREE[path] ?? "", path, ALL_NEEDLES).length,
+      }));
+    return json({ residual: "R-OUTSIDE-SRC", walked: walk.files, hits, registration: registrationSites(root, walk.files), outside });
   },
   Q4: async () => {
     const registry = new CapabilityRegistry();
@@ -1310,7 +1676,21 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
   Q6: async () => {
     const late = await changeAlone((registry, root) => registerReactiveControl(registry, root, LATE_MS));
-    return json({ residual: "R-LATE-REACTION", registration: late.registration, spawnsAfterChange: late.spawns });
+    const armedRegistry = new CapabilityRegistry();
+    const armedRegistration = createdResources(() => {
+      registerInvocationArmed(armedRegistry, late.record.root, ARMED_IDS.late, LATE_MS);
+      registerInvocationArmed(armedRegistry, late.record.root, ARMED_IDS.now, 0);
+    });
+    for (const id of [ARMED_IDS.late, ARMED_IDS.now]) await armedRegistry.invoke(id, {}, { grants: ["planted:read"], signal: new AbortController().signal });
+    changeWorkspace(late.record.root, 2);
+    await sleep(SETTLE_MS);
+    const armedSpawns = (id: string): number => spawnsOf(late.record).filter(argv => argv.includes(id)).length;
+    return json({
+      residual: "R-LATE-REACTION",
+      registration: late.registration,
+      spawnsAfterChange: late.spawns,
+      invocationArmed: { registration: armedRegistration, late: armedSpawns(ARMED_IDS.late), now: armedSpawns(ARMED_IDS.now) },
+    });
   },
   Q7: async () =>
     json({
@@ -1319,6 +1699,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       split: sourceHits(SPLIT_SPELLING_MODULE.source, SPLIT_SPELLING_MODULE.module, ALL_NEEDLES),
       members: reactiveMembers("OtherVocabularyRegistry", OTHER_VOCABULARY_MEMBERS),
       launches: rfLaunches(OTHER_VOCABULARY_MODULE.source, OTHER_VOCABULARY_MODULE.module),
+      launchSpellings: rfLaunches(OTHER_LAUNCH_MODULE.source, OTHER_LAUNCH_MODULE.module),
+      registration: registrationTexts(REGISTRATION_VOCABULARY_MODULE.source, REGISTRATION_VOCABULARY_MODULE.module),
       manifest: manifestHits({ dependencies: { "@reactive/fo-runtime": "1.0.0", "fibre-optics": "1.0.0" } }, undefined, "planted"),
       descriptor: descriptorReading(OTHER_VOCABULARY_DESCRIPTOR),
     }),
@@ -1345,6 +1727,10 @@ describe("wb-pyel.1 Fiber host-publication census (SDK-EVIDENCE-DIRECTED-COMPUTA
         manifestNames: MANIFEST_NAMES,
         pipRequirements: PIP_REQUIREMENTS.source,
         pipRequirementsDir: PIP_REQUIREMENTS_DIR.source,
+        pipFamily: PIP_FAMILY.source,
+        registrationWords: REGISTRATION_WORDS,
+        registerName: REGISTER_NAME.source,
+        declarationKinds: DECLARATION_KINDS.map(kind => ts.SyntaxKind[kind]),
         rootNpm: ROOT_NPM,
         testRoot: TEST_ROOT,
         settleMs: SETTLE_MS,
@@ -1362,6 +1748,7 @@ describe("wb-pyel.1 Fiber host-publication census (SDK-EVIDENCE-DIRECTED-COMPUTA
         entryControls: ENTRY_CONTROLS,
         launchControls: LAUNCH_CONTROLS,
         pipelineTree: PIPELINE_TREE,
+        pipelineLink: PIPELINE_LINK,
         registrationTree: REGISTRATION_TREE,
         descriptorControls: DESCRIPTOR_CONTROLS,
         committedForms: Object.keys(COMMITTED_FORMS),
@@ -1370,6 +1757,9 @@ describe("wb-pyel.1 Fiber host-publication census (SDK-EVIDENCE-DIRECTED-COMPUTA
         composed: COMPOSED_MODULE,
         comment: COMMENT_MODULE,
         otherVocabulary: [OTHER_VOCABULARY_MODULE, OTHER_VOCABULARY_DESCRIPTOR],
+        registrationVocabulary: REGISTRATION_VOCABULARY_MODULE,
+        otherLaunch: OTHER_LAUNCH_MODULE,
+        armedIds: ARMED_IDS,
         splitSpelling: SPLIT_SPELLING_MODULE,
         otherVocabularyMembers: OTHER_VOCABULARY_MEMBERS,
         outsideTree: OUTSIDE_TREE,
