@@ -259,6 +259,20 @@
               "shellExpandedEscapedDoubleQuote": 1,
               "coalesceSpan": 1,
               "orSpan": 1,
+              "shellSubstitutedSingleQuotedBackslash": 1,
+              "shellExpandedSingleQuotedBackslash": 1,
+              "shellExpandedQuotedEscapedQuote": 1,
+              "conditionalSpanFalse": 1,
+              "coalesceSpanLeft": 1,
+              "orSpanLeft": 1,
+              "letTemplateLiteralSpanPrefix": 1,
+              "letLiteralSpanPrefix": 1,
+              "conditionalSpanTruePrefix": 1,
+              "conditionalSpanFalsePrefix": 1,
+              "coalesceSpanLeftPrefix": 1,
+              "coalesceSpanRightPrefix": 1,
+              "orSpanLeftPrefix": 1,
+              "orSpanRightPrefix": 1,
               "wrappedShell": 0,
               "wrappedEnv": 0,
               "chained": 0,
@@ -281,7 +295,10 @@
               "boundAssigned": 0,
               "boundLoop": 0,
               "boundSpread": 0,
-              "boundTagged": 0
+              "boundTagged": 0,
+              "expansionNestedQuoted": 0,
+              "expansionAnsiQuoted": 0,
+              "expansionSubstitutedBrace": 0
             }
           }
         },

@@ -31,16 +31,18 @@
  *    naming the rf program, whatever its callee or binding, is exactly the provider's spawn (a src floor). The literal is the
  *    argument itself or a module-local const, let or var read through its initializer (wb-3l7x F1 and its PREP F2: every
  *    declaration of the name at any depth, a cycle reading nothing), through parentheses, type assertions (as, satisfies, angle
- *    brackets) and non-null marks, either operand of ?? or ||, either branch of a conditional, or the leading literal piece of a
- *    concatenation or template (a span folded while it reads whole: a literal, a binding, or a fallback or conditional of them);
+ *    brackets) and non-null marks, either operand of ?? or ||, either branch of a conditional (the ARGUMENT sub-forms of the
+ *    TERMINAL FORM below), or the leading literal piece of a concatenation or template (a template span read, and while it reads
+ *    whole folded in so the text reads on past it, over exactly the SPAN sub-forms of the TERMINAL FORM below);
  *    it names rf whole (a bare name or a path, an .exe or .cmd suffix included) or as the program word of a shell-command line's
  *    first simple command (wb-bstx F1: `execSync("rf --json status")`), read with its quoting removed (single and double quotes
  *    and their $-prefixed forms, backslashes, a backslash-newline joining the lines) and raw, so a backslash path separator stays
  *    (wb-3l7x U1 M2: `C:\tools\rf.exe`, `.\rf`), after any opener (a subshell or group, !, if, while, until) and command prefix
  *    (NAME=value assignments, a quoted value included, and redirections), every unquoted operator ending a word (wb-3l7x F2) while
  *    a command or arithmetic substitution, a parameter expansion or a backquoted command stays inside the word it sits in (wb-3l7x
- *    U1 M1: `RF_HOME=$(pwd) rf ...`): inside $(...) and ${...} its own nested brackets, quoted strings and backslash escapes never
- *    close it, and a backquoted command ends at its first backquote that no backslash escapes (wb-kls1, the wb-3l7x gate's F4).
+ *    U1 M1: `RF_HOME=$(pwd) rf ...`), its end read over exactly the EXPANSION sub-forms of the TERMINAL FORM below - inside $(...)
+ *    and ${...} none of them closes it (R-NESTED-QUOTING names forms whose end the reader misplaces; no other form is claimed) -
+ *    and a backquoted command ends at its first backquote that no backslash escapes (wb-kls1, the wb-3l7x gate's F4).
  *    Beside that reading A2 keeps the landed one verbatim (landing 372: the literal through a const bound to a literal or a
  *    template's text to its first span that is no literal, and the text's first whitespace word that is no NAME=value), so the
  *    cut only adds kills to the landed census (wb-3l7x U1). Controls: bare, aliased, namespace, method, template, path and const
@@ -67,7 +69,13 @@
  *    closing brace; inside $(...) and inside ${...} an escaped opening bracket, an escaped single quote and an escaped double
  *    quote, each with a word break inside the expansion; a let template's no-substitution template literal span, a let bound
  *    to a no-substitution template literal, and a template span that is a ?? or a || fallback to a literal (the template
- *    passed as the argument itself); A3 no string or template
+ *    passed as the argument itself), and one kill per claimed reading the wb-9heo gate's reader mutants found unpinned (wb-2mv7,
+ *    that gate's F1, each its PREP probe) or this seat's mutants of the same readings found unpinned beside them: inside $(...)
+ *    and inside ${...} a backslash inside a single-quoted string, and inside ${...} a backslash-escaped double quote inside a
+ *    double-quoted string, each with a word break inside the expansion; a template span's false conditional branch and the left
+ *    operand of its ?? or || fallback, each naming the program; a let template's no-substitution template literal span and its
+ *    string-literal span, each before the program (the kept landed reading masks both argument forms); and each branch of a
+ *    conditional span and each operand of a ?? or a || span, each folded before the program; A3 no string or template
  *    literal of any src module
  *    spells an rf replay verb (a template read with its literal and const spans folded in), no array literal or argument list
  *    has "context" before "replay" (a flag between them, a module-local const resolved), and no literal of an rf launch module
@@ -109,6 +117,32 @@
  * echoes source_id on its typed refusal waits for rfc-bak67.12 (FW-CFRR-04c); no reader is added or faked here. Pi reads no
  * federation export, so the exported owner identity it would carry is held to the identities it already reads: the workspace id
  * and root, the operation id and the refusal's source_id (B3, B4, C3).
+ * TERMINAL FORM (wb-2mv7: the R694 follow-up of the wb-9heo gate's F1, filed in the R739 enumerate-the-resolvable form at hop 7
+ * of the landing-275 chain): A2's expansion and span readings, and the operands and branches A2 reads, are claimed over exactly the
+ * sub-forms below, each pinned by the A2 kill control(s) in its brackets, and over no other sub-form, so a reader change confined
+ * to an unlisted sub-form contradicts no claim of this census; forms the reader is known to misread are R-NESTED-QUOTING.
+ * EXPANSION ($(...) control first, then the ${...} one): none of these closes the expansion - a nested pair of its own brackets
+ * [shellArithmeticSpaced; shellExpandedNested]; a backslash-escaped closing bracket [shellSubstitutedEscaped;
+ * shellExpandedEscapedClose], opening bracket [shellSubstitutedEscapedOpen; shellExpandedEscapedOpen], single quote
+ * [shellSubstitutedEscapedSingleQuote; shellExpandedEscapedSingleQuote] or double quote [shellSubstitutedEscapedDoubleQuote;
+ * shellExpandedEscapedDoubleQuote]; an escaped backslash right before the closing bracket [shellSubstitutedEscapedBackslash;
+ * shellExpandedEscapedBackslash]; a single-quoted string ('...', not $'...') holding the closing bracket [shellSubstitutedQuoted;
+ * shellExpandedSingleQuotedClose] or a backslash, which it keeps literal [shellSubstitutedSingleQuotedBackslash;
+ * shellExpandedSingleQuotedBackslash, the gate's G19]; a double-quoted string with no expansion inside it holding the closing
+ * bracket [shellSubstitutedQuoted; shellExpandedQuotedClose] or a backslash-escaped double quote [shellSubstitutedQuoted;
+ * shellExpandedQuotedEscapedQuote, the gate's G20]. SPAN (each template span sub-form read, and where marked folded in whole, so
+ * the text reads on past it to the program): a string literal [read: letLiteralSpan; read and folded: letLiteralSpanPrefix]; a
+ * no-substitution template literal [read: letTemplateLiteralSpan; read and folded: letTemplateLiteralSpanPrefix, the gate's G25];
+ * a const bound to a fallback naming the program [read: constSpan]; a let bound to a literal [read and folded: letSpanPrefix]; a
+ * conditional of two string literals, each branch [both naming rf: conditionalSpan; the true branch read and folded:
+ * conditionalSpanTruePrefix; the false branch read: conditionalSpanFalse, the gate's G21, read and folded:
+ * conditionalSpanFalsePrefix]; a ?? or a || fallback of one string literal and one non-literal, the literal on either side [??
+ * right read: coalesceSpan, read and folded: coalesceSpanRightPrefix; ?? left read: coalesceSpanLeft, the gate's G23, read and
+ * folded: coalesceSpanLeftPrefix; || right read: orSpan, read and folded: orSpanRightPrefix; || left read: orSpanLeft, the gate's
+ * G24, read and folded: orSpanLeftPrefix]; and a concatenation, read as its leading piece [spanLeadingPiece].
+ * ARGUMENT (outside a span, each read through a binding; the kept landed reading masks the argument forms): either operand of ??
+ * [letCoalesceLeft; constFallback] and of || [letOrLeft; letOrRight], and either branch of a conditional [letConditionalTrue;
+ * letConditionalFalse].
  * RESIDUALS (named, each with a pinned quiet row): R-WITHHELD the native typed refusal and the adapter's projection carry the code
  * and withhold source_id with the producer's message and hint (quiet rows B2 and B4: no value named, sentinel invariance), so the
  * source_id rides only the registered reading (B3); R-COMPOSED a program name, verb, port name or label that no literal of its
@@ -129,7 +163,12 @@
  * let or var initializer - through a destructuring pattern (an object or an array), a parameter (its default value included), an
  * assignment after the declaration, a loop binding, a spread argument list or a template tag (String.raw) - is not read by A2, so
  * its call is no A2 site and its module no A3 launch module (wb-3l7x PREP F2; quiet controls boundObject, boundArray,
- * boundParameter, boundAssigned, boundLoop, boundSpread and boundTagged stay 0); R-UNLISTED a
+ * boundParameter, boundAssigned, boundLoop, boundSpread and boundTagged stay 0); R-NESTED-QUOTING (wb-2mv7, seat-found beside the
+ * wb-9heo gate's members) A2's expansion reading does not track a substitution nested inside a double-quoted string, the escapes
+ * of an ANSI-C $'...' string or a command substitution inside ${...}, so it can misplace an expansion's end: three such forms
+ * after which bash runs rf (measured) name no A2 site - `RF_HOME=$(echo "$(echo ")")" x) rf ...`, `RF_HOME=$(echo $'\'' x) rf
+ * ...` and `RF_HOME=${A:-$(echo }) x} rf ...` (quiet controls expansionNestedQuoted, expansionAnsiQuoted and
+ * expansionSubstitutedBrace stay 0), and whether another such form is read is not claimed; R-UNLISTED a
  * port outside the listed network globals, network modules and child_process launchers (a worker, a native addon,
  * process.binding) is not read by B6 (its `unlisted`, `worker` and `addon` controls stay quiet); R-LOADER an edge loaded through
  * a runtime-bound loader (a createRequire result, module.require) is neither followed nor refused by B6 (its edge controls
@@ -1213,6 +1252,31 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       shellExpandedEscapedDoubleQuote: control(['execSync("RF_HOME=$', '{A:-\\\\\\" x} rf --json status");'].join("")),
       coalesceSpan: control(['execSync(`$', '{process.env.RF_BIN ?? "rf"} --json status`);'].join("")),
       orSpan: control(['execSync(`$', '{process.env.RF_BIN || "rf"} --json status`);'].join("")),
+      // wb-2mv7 (R694 follow-up of the wb-9heo gate's F1, filed in the R739 TERMINAL enumerate-the-resolvable form; the header's
+      // TERMINAL FORM lists every sub-form these controls pin): one kill control per reader mutant that gate left surviving, each
+      // its PREP probe verbatim. Inside $(...) and inside ${...} a single-quoted string keeps a backslash literal, so it never
+      // escapes the string's closing quote (G19, one control per arm); inside ${...} a double-quoted string holding a
+      // backslash-escaped double quote never ends at that quote (G20); a template span that is a conditional reads its false
+      // branch as well as its true one (G21), and a ?? or a || fallback its left operand as well as its right one (G23, G24); a
+      // let template folds a no-substitution template literal span in whole, so its text reads on to the program (G25).
+      shellSubstitutedSingleQuotedBackslash: control(`execSync("RF_HOME=$(echo '\\\\' x) rf --json status");`),
+      shellExpandedSingleQuotedBackslash: control(['execSync("RF_HOME=$', `{A:-'\\\\' x} rf --json status");`].join("")),
+      shellExpandedQuotedEscapedQuote: control(["execSync('RF_HOME=$", `{A:-"\\\\"}" x} rf --json status');`].join("")),
+      conditionalSpanFalse: control(['execSync(`$', '{ci ? "x" : "rf"} --json status`);'].join("")),
+      coalesceSpanLeft: control(['execSync(`$', '{"rf" ?? process.env.RF_BIN} --json status`);'].join("")),
+      orSpanLeft: control(['execSync(`$', '{"rf" || process.env.RF_BIN} --json status`);'].join("")),
+      letTemplateLiteralSpanPrefix: control(["let CMD = `$", "{`A=1`} rf --json status`; execSync(CMD);"].join("")),
+      // wb-2mv7, beside the gate's members: the span sub-forms the same claim names that this seat's mutants found unpinned, each
+      // span reading whole so the program after it is read: a string-literal span (through a let; the kept landed reading masks
+      // the argument form), each branch of a conditional span and each operand of a ?? or a || span (the argument form, which the
+      // kept landed reading cuts at the span).
+      letLiteralSpanPrefix: control(["let CMD = `$", '{"A=1"} rf --json status`; execSync(CMD);'].join("")),
+      conditionalSpanTruePrefix: control(['execSync(`$', '{ci ? "A=1" : "x"} rf --json status`);'].join("")),
+      conditionalSpanFalsePrefix: control(['execSync(`$', '{ci ? "x" : "A=1"} rf --json status`);'].join("")),
+      coalesceSpanLeftPrefix: control(['execSync(`$', '{"A=1" ?? process.env.RF_ENV} rf --json status`);'].join("")),
+      coalesceSpanRightPrefix: control(['execSync(`$', '{process.env.RF_ENV ?? "A=1"} rf --json status`);'].join("")),
+      orSpanLeftPrefix: control(['execSync(`$', '{"A=1" || process.env.RF_ENV} rf --json status`);'].join("")),
+      orSpanRightPrefix: control(['execSync(`$', '{process.env.RF_ENV || "A=1"} rf --json status`);'].join("")),
       // R-WRAPPED quiet rows: rf behind a wrapper program or after another shell command is no A2 site.
       wrappedShell: control('spawn("sh", ["-c", "rf --json status"]);'),
       wrappedEnv: control('spawn("env", ["rf", "--json", "status"]);'),
@@ -1244,6 +1308,13 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       boundLoop: control('for (const cmd of ["rf --json status"]) execSync(cmd);'),
       boundSpread: control('execSync(...["rf --json status"]);'),
       boundTagged: control("execSync(String.raw`rf --json status`);"),
+      // R-NESTED-QUOTING quiet rows (wb-2mv7, seat-found beside the gate's members; bash runs rf after each): three expansion
+      // forms whose end the reader misplaces, so A2 names no site - a double-quoted string around a nested substitution whose
+      // own double-quoted string holds the closing parenthesis, an ANSI-C $'...' string holding an escaped single quote, and a
+      // command substitution inside ${...} holding the closing brace.
+      expansionNestedQuoted: control(`execSync('RF_HOME=$(echo "$(echo ")")" x) rf --json status');`),
+      expansionAnsiQuoted: control(`execSync("RF_HOME=$(echo $'\\\\'' x) rf --json status");`),
+      expansionSubstitutedBrace: control(['execSync("RF_HOME=$', '{A:-$(echo }) x} rf --json status");'].join("")),
     };
     return { srcFloorMet, sites, controls };
   },
