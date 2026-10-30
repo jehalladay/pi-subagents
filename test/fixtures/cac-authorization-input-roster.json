@@ -394,6 +394,7 @@
       "page": "docs/workbench/12-security.md",
       "section": "Authorization design",
       "sentence": "absent",
+      "tiled": true,
       "kinds": [
        "list"
       ],
@@ -401,6 +402,18 @@
       "attributes": 0,
       "sha256": "afc98664a6f9bb2d",
       "source": "481acac650cbfb49",
+      "length": 1121,
+      "checks": [
+       "view",
+       "tokens",
+       "untiled",
+       "html",
+       "blocks",
+       "bullets",
+       "rendered",
+       "source",
+       "terms"
+      ],
       "plants": [
        "D-CTRL",
        "D-NESTED",
@@ -413,6 +426,16 @@
        "L2-D3",
        "L2-D2",
        "L2-D4",
+       "L2G-DUPDEF",
+       "L2G-CR-BULLET2",
+       "L2G-CR-BLANK",
+       "L2G-CRLF-BODY",
+       "LONE-CR",
+       "L2G-DUPDEF-NOOUT",
+       "L2G-SPACE-BULLET2",
+       "L2G-SPACE-BLANK",
+       "CR-OUTSIDE",
+       "DUPDEF-OUTSIDE",
        "IN-PLACE",
        "TABLE",
        "CODE",
@@ -428,14 +451,27 @@
        "NESTED-TITLE",
        "QUOTE-TITLE",
        "TABLE-TITLE",
+       "TERM-CASE",
+       "TITLE-NEWLINE",
+       "TITLE-SPACES",
+       "DEFINITION-TITLE-TAB",
+       "TITLE-NBSP",
+       "HTML-ATTR-NEWLINE",
+       "CODE-NEWLINE",
        "ENTITY",
        "ESCAPED-DESTINATION",
        "TITLE-PARAPHRASE",
+       "TITLE-INVISIBLE",
        "EMPHASIS",
        "HARD-BREAK",
        "TASK-BOX",
        "HEADING-CLOSE",
-       "HEADING-ENTITY"
+       "REMOVE-BULLET",
+       "REMOVE-LIST",
+       "HEADING-ENTITY",
+       "DUP-HEADING",
+       "RE-HOMED",
+       "NESTED-HEADING"
       ]
      }
     }
@@ -453,7 +489,7 @@
   },
   {
    "id": "R-DYNAMIC-KEY",
-   "family": "a field read through a key the source never spells whole, as a literal or as a word (a variable, a concatenation, a template with a substitution, its head spelling the name whole included, a fragment matched by a string method or a pattern, a constant imported from outside src), escapes both the field reading and the word reading"
+   "family": "a field read through a key the source never spells whole, as a literal or as a word (a variable, a concatenation, a template with a substitution, its head spelling the name whole included, a fragment matched by a string method or a pattern, the whole name in a pattern before its end anchor, a constant imported from outside src), escapes both the field reading and the word reading"
   },
   {
    "id": "R-PROSE-RECORD",
@@ -473,7 +509,7 @@
   },
   {
    "id": "R-OTHER-SECTION",
-   "family": "D1 reads the one section clause (d) names, docs/workbench/12-security.md 'Authorization design' (a definition elsewhere only as a link of the section resolves to it): the sentence placed outside the section's source, on another section of the page (a level-1 or level-2 heading placed after the section's last block starts one; HTML wrapped around the section sits in its neighbours) or on another page, is not read"
+   "family": "D1 reads the one section clause (d) names, docs/workbench/12-security.md 'Authorization design' (a definition elsewhere only as a link of the section resolves to it, and the tiling page-wide): on a page its tokens tile, the sentence placed outside the section's source, on another section of the page (a level-1 or level-2 heading placed after the section's last block starts one, and the section's heading text set as a level-3 heading starts none; HTML wrapped around the section sits in its neighbours) or on another page, is not read"
   }
  ]
 }
