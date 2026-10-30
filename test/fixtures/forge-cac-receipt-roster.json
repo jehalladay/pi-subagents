@@ -101,6 +101,17 @@
    ]
   },
   {
+   "id": "R-SRC-ENCODING",
+   "quietPin": "A2",
+   "quiet": [
+    "utf16leNoBom",
+    "utf32le"
+   ],
+   "twin": [
+    "utf16le"
+   ]
+  },
+  {
    "id": "R-OTHER-NAME",
    "quietPin": "A1",
    "quiet": [
@@ -686,7 +697,29 @@
        "hits": [
         "src/workbench/forge-cac-receipt-plant.ts VERIFIED_HISTORICAL",
         "src/workbench/forge-cac-receipt-plant-big.ts VERIFIED_HISTORICAL"
-       ]
+       ],
+       "paths": {
+        "plain": "listed src/workbench/zz-plant.ts",
+        "space": "listed src/workbench/zz plant.ts",
+        "lineFeed": "listed src/workbench/zz\nplant.ts",
+        "carriageReturn": "listed src/workbench/zz\rplant.ts",
+        "lineSeparator": "listed src/workbench/zz\\u{2028}plant.ts",
+        "paragraphSeparator": "listed src/workbench/zz\\u{2029}plant.ts",
+        "declaration": "listed src/workbench/zz-plant.d.ts",
+        "tsx": "unlisted src/workbench/zz-plant.tsx",
+        "mts": "unlisted src/workbench/zz-plant.mts",
+        "afterExtension": "unlisted src/workbench/zz-plant.ts\n",
+        "outsideSrc": "unlisted test/zz-plant.ts"
+       },
+       "encodings": {
+        "utf8": "hits=1 decodes=1 e22bc93d5bb0ed2e 76 bytes",
+        "utf8Bom": "hits=1 decodes=1 5b2eb1979f7ba778 79 bytes",
+        "utf16le": "hits=1 decodes=1 5bab8a221919af67 154 bytes",
+        "utf16be": "hits=1 decodes=1 5fa435288cae0e78 154 bytes",
+        "utf16leNoBom": "hits=0 decodes=0 2c6f1c68cecf313a 152 bytes",
+        "utf32le": "hits=0 decodes=0 f2d30dd5593feb0c 308 bytes"
+       },
+       "decodedAsTypeScript": true
       },
       "rendered": {
        "tags": [
