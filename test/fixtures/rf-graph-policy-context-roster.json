@@ -119,6 +119,83 @@
     "headingProbe": "probe",
     "emphasizedHeading": "## *GraphPolicyCLI* boundary",
     "emphasizedTitle": "# 03 \u2014 *High-level* architecture, module ownership and dataflow",
+    "markups": {
+      "emphasis-asterisk": {
+        "heading": "## *GraphPolicyCLI* boundary",
+        "title": "# 03 \u2014 *High-level* architecture, module ownership and dataflow",
+        "sentence": "Pi carries no *GraphPolicyCLI* (gp) integration today."
+      },
+      "emphasis-underscore": {
+        "heading": "## _GraphPolicyCLI_ boundary",
+        "title": "# 03 \u2014 _High-level_ architecture, module ownership and dataflow",
+        "sentence": "Pi carries no _GraphPolicyCLI_ (gp) integration today."
+      },
+      "strong-asterisk": {
+        "heading": "## **GraphPolicyCLI** boundary",
+        "title": "# 03 \u2014 **High-level** architecture, module ownership and dataflow",
+        "sentence": "Pi carries no **GraphPolicyCLI** (gp) integration today."
+      },
+      "strong-underscore": {
+        "heading": "## __GraphPolicyCLI__ boundary",
+        "title": "# 03 \u2014 __High-level__ architecture, module ownership and dataflow",
+        "sentence": "Pi carries no __GraphPolicyCLI__ (gp) integration today."
+      },
+      "code-span": {
+        "heading": "## `GraphPolicyCLI` boundary",
+        "title": "# 03 \u2014 `High-level` architecture, module ownership and dataflow",
+        "sentence": "Pi carries no `GraphPolicyCLI` (gp) integration today."
+      },
+      "link": {
+        "heading": "## [GraphPolicyCLI](https://example.invalid/wb-b4lg) boundary",
+        "title": "# 03 \u2014 [High-level](https://example.invalid/wb-b4lg) architecture, module ownership and dataflow",
+        "sentence": "Pi carries no [GraphPolicyCLI](https://example.invalid/wb-b4lg) (gp) integration today."
+      },
+      "image": {
+        "heading": "## ![GraphPolicyCLI](https://example.invalid/wb-b4lg) boundary",
+        "title": "# 03 \u2014 ![High-level](https://example.invalid/wb-b4lg) architecture, module ownership and dataflow",
+        "sentence": "Pi carries no ![GraphPolicyCLI](https://example.invalid/wb-b4lg) (gp) integration today."
+      },
+      "strikethrough": {
+        "heading": "## ~~GraphPolicyCLI~~ boundary",
+        "title": "# 03 \u2014 ~~High-level~~ architecture, module ownership and dataflow",
+        "sentence": "Pi carries no ~~GraphPolicyCLI~~ (gp) integration today."
+      },
+      "inline-html": {
+        "heading": "## <span>GraphPolicyCLI</span> boundary",
+        "title": "# 03 \u2014 <span>High-level</span> architecture, module ownership and dataflow",
+        "sentence": null
+      },
+      "escape": {
+        "heading": null,
+        "title": "# 03 \u2014 High\\-level architecture, module ownership and dataflow",
+        "sentence": "Pi carries no GraphPolicyCLI \\(gp\\) integration today."
+      },
+      "hard-break": {
+        "heading": null,
+        "title": null,
+        "sentence": "Pi carries no GraphPolicyCLI  \n(gp) integration today."
+      },
+      "soft-break": {
+        "heading": null,
+        "title": null,
+        "sentence": "Pi carries no GraphPolicyCLI\n(gp) integration today."
+      },
+      "whitespace": {
+        "heading": " ##  GraphPolicyCLI  boundary",
+        "title": " #  03 \u2014 High-level architecture,  module ownership and dataflow",
+        "sentence": " Pi carries  no GraphPolicyCLI (gp) integration today."
+      },
+      "atx-closing": {
+        "heading": "## GraphPolicyCLI boundary ##",
+        "title": "# 03 \u2014 High-level architecture, module ownership and dataflow #",
+        "sentence": null
+      },
+      "setext": {
+        "heading": "GraphPolicyCLI\nboundary\n-----------------------",
+        "title": "03 \u2014 High-level architecture,\nmodule ownership and dataflow\n===========================================================",
+        "sentence": null
+      }
+    },
     "piPlants": {
       "src/workbench/zz-plant-raw.ts": "// reads the GraphPolicy score of a render\nexport const plantRaw = 1;\n",
       "src/workbench/zz-plant-cooked.ts": "export const plantCooked = \"graph\\u005fpolicy\";\n",
@@ -148,17 +225,30 @@
       "docs/workbench/zz-plant-twice.md": "## GraphPolicyCLI boundary\n\nPi carries no GraphPolicyCLI (gp) integration today.\n\n## GraphPolicyCLI boundary\n\nPi reads GraphPolicy scores from the rf render envelope.\n",
       "docs/workbench/zz-plant-commented-row.md": "<!--\n| Learned scores | GraphPolicyCLI | nothing today; Pi reads GraphPolicy scores |\n-->\n",
       "test/zz-plant-data.test.ts": "import { fullShapeRf } from \"./helpers/rf-render-fixture.js\";\nexport const data = \"zz-plant-data.json\";\nvoid fullShapeRf;\n",
-      "test/fixtures/zz-plant-data.json": "{\"graph_policy\": {\"score\": 1}}\n"
+      "test/fixtures/zz-plant-data.json": "{\"graph_policy\": {\"score\": 1}}\n",
+      "docs/workbench/zz-plant-html-section.md": "## GraphPolicyCLI boundary\n\nPi reads <em>GraphPolicy</em> scores from the rf render envelope.\n",
+      "docs/workbench/zz-plant-marked-row.md": "| Subject | Owner | Pi |\n| --- | --- | --- |\n| Learned scores | **GraphPolicyCLI** | nothing today; Pi reads GraphPolicy scores |\n",
+      "docs/workbench/zz-plant-reflink.md": "## [GraphPolicyCLI][posture] boundary\n\nPi reads GraphPolicy scores from the rf render envelope.\n\n[posture]: https://example.invalid/wb-b4lg\n"
     },
     "vocabularyPlants": [
+      "plant:transaction_id",
       "plant:result.blocks[0].candidate_key",
       "plant:result.blocks[0].component_id",
       "plant:result.provenance.graphPolicyReceipt",
+      "plant:result.judge_context.task_tags[0]",
+      "plant:result.judge_context.explicit_requests[0]",
+      "plant:result.judge_context_layers.task.tags",
+      "plant:result.judge_context_layers.agent.role",
+      "plant:result.superseded_transaction_ids[0]",
+      "plant:result.fiber_transaction_refs[0]",
       "plant:result.graph_policy",
       "plant:result.gp",
       "plant:diagnostics[0].metadata.graph-data-ir",
+      "plant:diagnostics[0].metadata.GP",
+      "plant:diagnostics[0].metadata.gpLayer",
       "plant:diagnostics[1].message",
       "plant:diagnostics[1].source",
+      "plant:graph_data_ir",
       "plant-roster:result.graphpolicy_rank"
     ],
     "fieldPlants": [
@@ -292,14 +382,24 @@
             "diagnosticsRead": true,
             "vocabularyFindings": [],
             "vocabularyPlants": [
+              "plant:transaction_id",
               "plant:result.blocks[0].candidate_key",
               "plant:result.blocks[0].component_id",
               "plant:result.provenance.graphPolicyReceipt",
+              "plant:result.judge_context.task_tags[0]",
+              "plant:result.judge_context.explicit_requests[0]",
+              "plant:result.judge_context_layers.task.tags",
+              "plant:result.judge_context_layers.agent.role",
+              "plant:result.superseded_transaction_ids[0]",
+              "plant:result.fiber_transaction_refs[0]",
               "plant:result.graph_policy",
               "plant:result.gp",
               "plant:diagnostics[0].metadata.graph-data-ir",
+              "plant:diagnostics[0].metadata.GP",
+              "plant:diagnostics[0].metadata.gpLayer",
               "plant:diagnostics[1].message",
               "plant:diagnostics[1].source",
+              "plant:graph_data_ir",
               "plant-roster:result.graphpolicy_rank"
             ]
           }
@@ -390,7 +490,8 @@
               "readerLeaks",
               "strictObjects",
               "deepPlanted",
-              "outerPlanted"
+              "outerPlanted",
+              "plantedAt"
             ]
           },
           "witness": {
@@ -494,6 +595,295 @@
                 "envelope.diagnostics[0]",
                 "envelope.diagnostics[0].metadata"
               ]
+            },
+            "plantedAt": {
+              "clean": {
+                "topology": [
+                  "envelope.result",
+                  "envelope.result.output",
+                  "envelope.result.budget",
+                  "envelope.result.budget.formula_terms",
+                  "envelope.result.diagnostics_summary",
+                  "envelope.result.blocks[0]",
+                  "envelope.result.blocks[0].token_cost",
+                  "envelope.result.provenance",
+                  "envelope.result.provenance.sdk_versions",
+                  "envelope.result.provenance.sdk_versions.fiber_optics",
+                  "envelope.result.provenance.sdk_versions.reactive_lenses",
+                  "envelope.result.provenance.sdk_versions.reactive_components",
+                  "envelope.result.provenance.sdk_versions.reactive_inference",
+                  "envelope.result.provenance.storage",
+                  "envelope.result.work_metrics",
+                  "envelope.result.necessity[0]",
+                  "envelope.result.judge_context",
+                  "envelope.result.judge_context.workspace_facts",
+                  "envelope.result.judge_context_layers",
+                  "envelope.result.retry_work",
+                  "envelope.result.plan",
+                  "envelope.result.graph_policy",
+                  "envelope.diagnostics[0].metadata"
+                ],
+                "evidence": [
+                  "envelope",
+                  "envelope.workspace",
+                  "envelope.result",
+                  "envelope.result.output",
+                  "envelope.result.budget",
+                  "envelope.result.budget.formula_terms",
+                  "envelope.result.diagnostics_summary",
+                  "envelope.result.blocks[0]",
+                  "envelope.result.blocks[0].token_cost",
+                  "envelope.result.provenance",
+                  "envelope.result.provenance.sdk_versions",
+                  "envelope.result.provenance.sdk_versions.fiber_optics",
+                  "envelope.result.provenance.sdk_versions.reactive_lenses",
+                  "envelope.result.provenance.sdk_versions.reactive_components",
+                  "envelope.result.provenance.sdk_versions.reactive_inference",
+                  "envelope.result.provenance.storage",
+                  "envelope.result.work_metrics",
+                  "envelope.result.work",
+                  "envelope.result.engine_metrics",
+                  "envelope.result.necessity[0]",
+                  "envelope.result.judge_context",
+                  "envelope.result.judge_context.workspace_facts",
+                  "envelope.result.judge_context_layers",
+                  "envelope.result.retry_work",
+                  "envelope.result.plan",
+                  "envelope.result.graph_policy",
+                  "envelope.diagnostics[0]",
+                  "envelope.diagnostics[0].metadata"
+                ]
+              },
+              "flagged": {
+                "topology": [
+                  "envelope.result",
+                  "envelope.result.output",
+                  "envelope.result.budget",
+                  "envelope.result.budget.formula_terms",
+                  "envelope.result.diagnostics_summary",
+                  "envelope.result.blocks[0]",
+                  "envelope.result.blocks[0].token_cost",
+                  "envelope.result.provenance",
+                  "envelope.result.provenance.sdk_versions",
+                  "envelope.result.provenance.sdk_versions.fiber_optics",
+                  "envelope.result.provenance.sdk_versions.reactive_lenses",
+                  "envelope.result.provenance.sdk_versions.reactive_components",
+                  "envelope.result.provenance.sdk_versions.reactive_inference",
+                  "envelope.result.provenance.storage",
+                  "envelope.result.work_metrics",
+                  "envelope.result.necessity[0]",
+                  "envelope.result.judge_context",
+                  "envelope.result.judge_context.workspace_facts",
+                  "envelope.result.judge_context_layers",
+                  "envelope.result.retry_work",
+                  "envelope.result.plan",
+                  "envelope.result.graph_policy",
+                  "envelope.diagnostics[0].metadata"
+                ],
+                "evidence": [
+                  "envelope",
+                  "envelope.workspace",
+                  "envelope.result",
+                  "envelope.result.output",
+                  "envelope.result.budget",
+                  "envelope.result.budget.formula_terms",
+                  "envelope.result.diagnostics_summary",
+                  "envelope.result.blocks[0]",
+                  "envelope.result.blocks[0].token_cost",
+                  "envelope.result.provenance",
+                  "envelope.result.provenance.sdk_versions",
+                  "envelope.result.provenance.sdk_versions.fiber_optics",
+                  "envelope.result.provenance.sdk_versions.reactive_lenses",
+                  "envelope.result.provenance.sdk_versions.reactive_components",
+                  "envelope.result.provenance.sdk_versions.reactive_inference",
+                  "envelope.result.provenance.storage",
+                  "envelope.result.work_metrics",
+                  "envelope.result.work",
+                  "envelope.result.engine_metrics",
+                  "envelope.result.necessity[0]",
+                  "envelope.result.judge_context",
+                  "envelope.result.judge_context.workspace_facts",
+                  "envelope.result.judge_context_layers",
+                  "envelope.result.retry_work",
+                  "envelope.result.plan",
+                  "envelope.result.graph_policy",
+                  "envelope.diagnostics[0]",
+                  "envelope.diagnostics[0].metadata"
+                ]
+              },
+              "overBudget": {
+                "topology": [
+                  "envelope.result",
+                  "envelope.result.output",
+                  "envelope.result.budget",
+                  "envelope.result.budget.formula_terms",
+                  "envelope.result.diagnostics_summary",
+                  "envelope.result.blocks[0]",
+                  "envelope.result.blocks[0].token_cost",
+                  "envelope.result.provenance",
+                  "envelope.result.provenance.sdk_versions",
+                  "envelope.result.provenance.sdk_versions.fiber_optics",
+                  "envelope.result.provenance.sdk_versions.reactive_lenses",
+                  "envelope.result.provenance.sdk_versions.reactive_components",
+                  "envelope.result.provenance.sdk_versions.reactive_inference",
+                  "envelope.result.provenance.storage",
+                  "envelope.result.work_metrics",
+                  "envelope.result.necessity[0]",
+                  "envelope.result.judge_context",
+                  "envelope.result.judge_context.workspace_facts",
+                  "envelope.result.judge_context_layers",
+                  "envelope.result.retry_work",
+                  "envelope.result.plan",
+                  "envelope.result.graph_policy",
+                  "envelope.diagnostics[0].metadata"
+                ],
+                "evidence": [
+                  "envelope",
+                  "envelope.workspace",
+                  "envelope.result",
+                  "envelope.result.output",
+                  "envelope.result.budget",
+                  "envelope.result.budget.formula_terms",
+                  "envelope.result.diagnostics_summary",
+                  "envelope.result.blocks[0]",
+                  "envelope.result.blocks[0].token_cost",
+                  "envelope.result.provenance",
+                  "envelope.result.provenance.sdk_versions",
+                  "envelope.result.provenance.sdk_versions.fiber_optics",
+                  "envelope.result.provenance.sdk_versions.reactive_lenses",
+                  "envelope.result.provenance.sdk_versions.reactive_components",
+                  "envelope.result.provenance.sdk_versions.reactive_inference",
+                  "envelope.result.provenance.storage",
+                  "envelope.result.work_metrics",
+                  "envelope.result.work",
+                  "envelope.result.engine_metrics",
+                  "envelope.result.necessity[0]",
+                  "envelope.result.judge_context",
+                  "envelope.result.judge_context.workspace_facts",
+                  "envelope.result.judge_context_layers",
+                  "envelope.result.retry_work",
+                  "envelope.result.plan",
+                  "envelope.result.graph_policy",
+                  "envelope.diagnostics[0]",
+                  "envelope.diagnostics[0].metadata"
+                ]
+              },
+              "notObserved": {
+                "topology": [
+                  "envelope.result",
+                  "envelope.result.output",
+                  "envelope.result.budget",
+                  "envelope.result.budget.formula_terms",
+                  "envelope.result.diagnostics_summary",
+                  "envelope.result.blocks[0]",
+                  "envelope.result.blocks[0].token_cost",
+                  "envelope.result.provenance",
+                  "envelope.result.provenance.sdk_versions",
+                  "envelope.result.provenance.sdk_versions.fiber_optics",
+                  "envelope.result.provenance.sdk_versions.reactive_lenses",
+                  "envelope.result.provenance.sdk_versions.reactive_components",
+                  "envelope.result.provenance.sdk_versions.reactive_inference",
+                  "envelope.result.provenance.storage",
+                  "envelope.result.work_metrics",
+                  "envelope.result.observations[0]",
+                  "envelope.result.necessity[0]",
+                  "envelope.result.judge_context",
+                  "envelope.result.judge_context.workspace_facts",
+                  "envelope.result.judge_context_layers",
+                  "envelope.result.retry_work",
+                  "envelope.result.plan",
+                  "envelope.result.graph_policy",
+                  "envelope.diagnostics[0].metadata"
+                ],
+                "evidence": [
+                  "envelope",
+                  "envelope.workspace",
+                  "envelope.result",
+                  "envelope.result.output",
+                  "envelope.result.budget",
+                  "envelope.result.budget.formula_terms",
+                  "envelope.result.diagnostics_summary",
+                  "envelope.result.blocks[0]",
+                  "envelope.result.blocks[0].token_cost",
+                  "envelope.result.provenance",
+                  "envelope.result.provenance.sdk_versions",
+                  "envelope.result.provenance.sdk_versions.fiber_optics",
+                  "envelope.result.provenance.sdk_versions.reactive_lenses",
+                  "envelope.result.provenance.sdk_versions.reactive_components",
+                  "envelope.result.provenance.sdk_versions.reactive_inference",
+                  "envelope.result.provenance.storage",
+                  "envelope.result.work_metrics",
+                  "envelope.result.work",
+                  "envelope.result.engine_metrics",
+                  "envelope.result.observations[0]",
+                  "envelope.result.necessity[0]",
+                  "envelope.result.judge_context",
+                  "envelope.result.judge_context.workspace_facts",
+                  "envelope.result.judge_context_layers",
+                  "envelope.result.retry_work",
+                  "envelope.result.plan",
+                  "envelope.result.graph_policy",
+                  "envelope.diagnostics[0]",
+                  "envelope.diagnostics[0].metadata"
+                ]
+              },
+              "fixtureSeam": {
+                "topology": [
+                  "envelope.result",
+                  "envelope.result.output",
+                  "envelope.result.budget",
+                  "envelope.result.budget.formula_terms",
+                  "envelope.result.diagnostics_summary",
+                  "envelope.result.blocks[0]",
+                  "envelope.result.blocks[0].token_cost",
+                  "envelope.result.provenance",
+                  "envelope.result.provenance.sdk_versions",
+                  "envelope.result.provenance.sdk_versions.fiber_optics",
+                  "envelope.result.provenance.sdk_versions.reactive_lenses",
+                  "envelope.result.provenance.sdk_versions.reactive_components",
+                  "envelope.result.provenance.sdk_versions.reactive_inference",
+                  "envelope.result.provenance.storage",
+                  "envelope.result.work_metrics",
+                  "envelope.result.necessity[0]",
+                  "envelope.result.judge_context",
+                  "envelope.result.judge_context.workspace_facts",
+                  "envelope.result.judge_context_layers",
+                  "envelope.result.retry_work",
+                  "envelope.result.plan",
+                  "envelope.result.graph_policy",
+                  "envelope.diagnostics[0].metadata"
+                ],
+                "evidence": [
+                  "envelope",
+                  "envelope.workspace",
+                  "envelope.result",
+                  "envelope.result.output",
+                  "envelope.result.budget",
+                  "envelope.result.budget.formula_terms",
+                  "envelope.result.diagnostics_summary",
+                  "envelope.result.blocks[0]",
+                  "envelope.result.blocks[0].token_cost",
+                  "envelope.result.provenance",
+                  "envelope.result.provenance.sdk_versions",
+                  "envelope.result.provenance.sdk_versions.fiber_optics",
+                  "envelope.result.provenance.sdk_versions.reactive_lenses",
+                  "envelope.result.provenance.sdk_versions.reactive_components",
+                  "envelope.result.provenance.sdk_versions.reactive_inference",
+                  "envelope.result.provenance.storage",
+                  "envelope.result.work_metrics",
+                  "envelope.result.work",
+                  "envelope.result.engine_metrics",
+                  "envelope.result.necessity[0]",
+                  "envelope.result.judge_context",
+                  "envelope.result.judge_context.workspace_facts",
+                  "envelope.result.judge_context_layers",
+                  "envelope.result.retry_work",
+                  "envelope.result.plan",
+                  "envelope.result.graph_policy",
+                  "envelope.diagnostics[0]",
+                  "envelope.diagnostics[0].metadata"
+                ]
+              }
             }
           }
         },
@@ -555,7 +945,129 @@
               "levelOneAbove": false,
               "appendixRead": true,
               "emphasisHeading": "bound",
-              "emphasisTitle": "bound"
+              "emphasisTitle": "bound",
+              "markup": {
+                "emphasis-asterisk": {
+                  "respelled": true,
+                  "home": "bound",
+                  "stated": true,
+                  "decoyCommentBeforeChanged": false,
+                  "changedSentence": false,
+                  "levelOneAbove": false
+                },
+                "emphasis-underscore": {
+                  "respelled": true,
+                  "home": "bound",
+                  "stated": true,
+                  "decoyCommentBeforeChanged": false,
+                  "changedSentence": false,
+                  "levelOneAbove": false
+                },
+                "strong-asterisk": {
+                  "respelled": true,
+                  "home": "bound",
+                  "stated": true,
+                  "decoyCommentBeforeChanged": false,
+                  "changedSentence": false,
+                  "levelOneAbove": false
+                },
+                "strong-underscore": {
+                  "respelled": true,
+                  "home": "bound",
+                  "stated": true,
+                  "decoyCommentBeforeChanged": false,
+                  "changedSentence": false,
+                  "levelOneAbove": false
+                },
+                "code-span": {
+                  "respelled": true,
+                  "home": "bound",
+                  "stated": true,
+                  "decoyCommentBeforeChanged": false,
+                  "changedSentence": false,
+                  "levelOneAbove": false
+                },
+                "link": {
+                  "respelled": true,
+                  "home": "bound",
+                  "stated": true,
+                  "decoyCommentBeforeChanged": false,
+                  "changedSentence": false,
+                  "levelOneAbove": false
+                },
+                "image": {
+                  "respelled": true,
+                  "home": "bound",
+                  "stated": true,
+                  "decoyCommentBeforeChanged": false,
+                  "changedSentence": false,
+                  "levelOneAbove": false
+                },
+                "strikethrough": {
+                  "respelled": true,
+                  "home": "bound",
+                  "stated": true,
+                  "decoyCommentBeforeChanged": false,
+                  "changedSentence": false,
+                  "levelOneAbove": false
+                },
+                "inline-html": {
+                  "respelled": true,
+                  "home": "bound",
+                  "stated": true,
+                  "decoyCommentBeforeChanged": false,
+                  "changedSentence": false,
+                  "levelOneAbove": false
+                },
+                "escape": {
+                  "respelled": true,
+                  "home": "bound",
+                  "stated": true,
+                  "decoyCommentBeforeChanged": false,
+                  "changedSentence": false,
+                  "levelOneAbove": false
+                },
+                "hard-break": {
+                  "respelled": true,
+                  "home": "bound",
+                  "stated": true,
+                  "decoyCommentBeforeChanged": false,
+                  "changedSentence": false,
+                  "levelOneAbove": false
+                },
+                "soft-break": {
+                  "respelled": true,
+                  "home": "bound",
+                  "stated": true,
+                  "decoyCommentBeforeChanged": false,
+                  "changedSentence": false,
+                  "levelOneAbove": false
+                },
+                "whitespace": {
+                  "respelled": true,
+                  "home": "bound",
+                  "stated": true,
+                  "decoyCommentBeforeChanged": false,
+                  "changedSentence": false,
+                  "levelOneAbove": false
+                },
+                "atx-closing": {
+                  "respelled": true,
+                  "home": "bound",
+                  "stated": true,
+                  "decoyCommentBeforeChanged": false,
+                  "changedSentence": false,
+                  "levelOneAbove": false
+                },
+                "setext": {
+                  "respelled": true,
+                  "home": "bound",
+                  "stated": true,
+                  "decoyCommentBeforeChanged": false,
+                  "changedSentence": false,
+                  "levelOneAbove": false
+                }
+              }
             },
             "claimFindings": {},
             "claimPlants": {
@@ -613,6 +1125,18 @@
                 "decoded"
               ],
               "docs/workbench/zz-plant-twice.md": [
+                "raw",
+                "decoded"
+              ],
+              "docs/workbench/zz-plant-html-section.md": [
+                "raw",
+                "decoded"
+              ],
+              "docs/workbench/zz-plant-marked-row.md": [
+                "raw",
+                "decoded"
+              ],
+              "docs/workbench/zz-plant-reflink.md": [
                 "raw",
                 "decoded"
               ]
@@ -727,6 +1251,19 @@
               "docs/workbench/zz-quiet-row.md",
               "docs/workbench/zz-quiet-emphasis.md",
               "docs/workbench/zz-quiet-titled.md",
+              "docs/workbench/zz-quiet-markup-emphasis-asterisk.md",
+              "docs/workbench/zz-quiet-markup-emphasis-underscore.md",
+              "docs/workbench/zz-quiet-markup-strong-asterisk.md",
+              "docs/workbench/zz-quiet-markup-strong-underscore.md",
+              "docs/workbench/zz-quiet-markup-code-span.md",
+              "docs/workbench/zz-quiet-markup-link.md",
+              "docs/workbench/zz-quiet-markup-image.md",
+              "docs/workbench/zz-quiet-markup-strikethrough.md",
+              "docs/workbench/zz-quiet-markup-inline-html.md",
+              "docs/workbench/zz-quiet-markup-escape.md",
+              "docs/workbench/zz-quiet-markup-whitespace.md",
+              "docs/workbench/zz-quiet-markup-atx-closing.md",
+              "docs/workbench/zz-quiet-markup-setext.md",
               "test/zz-quiet-echo.test.ts",
               "test/fixtures/zz-quiet-echo.json"
             ],
@@ -788,7 +1325,8 @@
           "claims": null,
           "witness": {
             "residual": "R-RELAY",
-            "verbatim": true
+            "verbatim": true,
+            "plantedRelayed": 28
           }
         },
         {

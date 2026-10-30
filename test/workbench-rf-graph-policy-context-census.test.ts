@@ -68,31 +68,56 @@
  *   planted in Z3; a computed name stays unread (R-GUARDS, Q3). F8 ACCEPTANCE and UNTIL_THEN are read from the owner filing only
  *   (the gate's G17), a weakened-and-quoted control of each asserted.
  *
- * FOLLOW-UP wb-b4lg (R694, from the wb-r63c gate cmd_8fd73ae79032 at landing 617; F1 leads, F2 and F3 ride; seat ws-01 of
- * g10-work-s141, 2026-10-29, on trunk 57cb1c0). This is hop 3 of the landing-550 chain (wb-e9dy, wb-r63c, wb-b4lg), so the cut
- * takes the R739 TERMINAL enumerate-the-resolvable form: each class below is listed by its resolvable surface, every member is
- * pinned or is a named residual with its pinned quiet row, and the claims of this header are re-pinned to exactly that set. The
- * chain is terminal: a later survivor outside these classes is record-only unless it contradicts a re-pinned claim.
+ * FOLLOW-UP wb-b4lg (R694, from the wb-r63c gate cmd_8fd73ae79032 at landing 617; F1 leads, F2 and F3 ride; cut #1 by seat ws-01
+ * of g10-work-s141, 2026-10-29, on trunk 57cb1c0; cut #2, the respin of refusal #1 (gate-prep-12 of g10-gate-s144: UNMET U1-U3, the
+ * claims wider than their pins), by seat ws-04 of g10-work-s145, 2026-10-30, on trunk c2695d7). This is hop 3 of the landing-550
+ * chain (wb-e9dy, wb-r63c, wb-b4lg), so the cut takes the R739 TERMINAL enumerate-the-resolvable form: each class below is listed
+ * by its resolvable surface, every member is pinned or is a named residual with its pinned quiet row, and the claims of this header
+ * are re-pinned to exactly that set. The chain is terminal: a later survivor outside these classes is record-only unless it
+ * contradicts a re-pinned claim.
  * - F1, THE RECORD ITEM FORMS (the wb-e9dy F5 class): the record judge reads two item forms - every key (the envelope's at any
- *   depth, arrays by index, and the roster's four key lists) and every string value of the envelope - and applies each reading to
- *   the forms it names: a MENTION to keys and values; the abbreviation gp as a word to keys and values (the value side is new: a
- *   diagnostic whose message is the acceptance's own ref form rf-gp:program:checkpoint:backend and whose source is gp, and a block
- *   value gp.scorer, planted in T3); a field word to keys only. A value is never a field: a string value naming a field word, and
- *   a number, boolean or null value (no words), is no GraphPolicy output field (R-FIELD-VALUE, Q13).
+ *   depth, its root's included, arrays by index, and the roster's four key lists) and every string value of the envelope (its
+ *   root's, an object member's and an array element's) - and applies each reading to the forms it names: a MENTION to keys and
+ *   values; the abbreviation gp as one of a term's words (wordsOf: split at non-letters and at camel-case humps, each word
+ *   lowercased, so gp, GP and the gp of gpLayer read while gP is the words g and p) to keys and values; a field word to keys only.
+ *   T3 pins each form by a plant found in the same call as the real record: MENTION keys at the result, in
+ *   provenance (camel case), in a planted diagnostic's metadata, at the root and in the roster, and MENTION values on a block and as
+ *   an array element; the abbreviation as a key (gp at the result; GP and gpLayer in the metadata) and as a value - the acceptance's
+ *   own ref form rf-gp:program:checkpoint:backend as a diagnostic message and as an array element, gp as a diagnostic source and as
+ *   an array element, gp.scorer on a block, GP and gpLayer as values, gp-txn-1 at the root, rfo_01gp3x (gp between digits) as an
+ *   array element - while gpu-runner and gpuCount (gp inside a longer word) stay quiet (cut #2 cures U1: the gate's DJ1
+ *   array-element and DJ2 case- and camel-blind members each red T3). A value is never a field: a string value naming a field word,
+ *   and a number, boolean or null value (no words), is no GraphPolicy output field (R-FIELD-VALUE, Q13).
  * - F2, THE PLANTED POSITIONS (the wb-e9dy F6 class): Z2 plants the four fields on every object of the envelope - its root, its
  *   workspace object, the planted diagnostic's own keys and its metadata, and every result-tree object - that the reader under
- *   comparison does not hold exactly, and runs and compares each src reader on its own plants. strictObjects is measured per
- *   reader on the clean render: the observer holds the root, the workspace object, the diagnostic, result.work and
- *   result.engine_metrics exactly; nativeEvidence holds none, so its plants reach the root it reads loosely (outerPlanted).
+ *   comparison does not hold exactly, and runs and compares each src reader on its own plants. The planted positions are read off
+ *   the very envelope each reader is handed (plantedRun: the paths of its objects carrying all four leak-marked fields), per reader
+ *   and per render variant, and pinned (plantedAt); outerPlanted (the clean render's positions outside the result tree) and
+ *   deepPlanted (every reader's and variant's count at the floor) are counted from them, and Q10 counts the positions on the
+ *   envelope the provider relays (plantedRelayed) (cut #2 cures U2: the gate's DP0, DP00, DP1, DP3 and DP4 members each change
+ *   plantedAt). strictObjects is measured per reader on the clean render: the observer holds the root, the workspace object, the
+ *   diagnostic, result.work and result.engine_metrics exactly; nativeEvidence holds none, so its plants reach the root it reads
+ *   loosely.
  * - F3, THE DOCS LOCATES (the same-view class): every docs element this file matches or locates on a page it reads is read by
  *   the binding's rendered text (renderedHeading: a heading's inline source bound by docsSection in a one-heading probe section),
  *   never by marked's token text or a source spelling - postureHomes' section opening and the page title it binds that section
  *   under, and the posture heading and opening paragraph Z3's in-memory docs/03 controls edit at (renderedHeadingAt,
- *   respelledOpening) - so markup that leaves a rendered heading, title or sentence unchanged keeps the home bound and every
- *   control on it (Q4 plants and Z3's postureControls on EMPHASIZED_HEADING and EMPHASIZED_TITLE; the sentence by the gate-style
- *   mutant on docs/03). A control's own inserted text (the decoy comment, the appendix heading it splits on) is located by the
- *   spelling the control wrote. Rows match cells as sectionTables reads them (marked's cell source, inline markup kept), the one
- *   table reading the binding has, so a posture row with markup in its owner or Pi cell is read (OVER-READS).
+ *   respelledOpening, through locateControls). The re-spellings that leave the binding's rendered text unchanged are pinned as
+ *   MARKUPS enumerates them, by what the binding normalizes: one per inline token kind it renders as its content's text (emphasis
+ *   and strong, each by asterisks and by underscores; a code span; a link; an image, read as its alt text; a strikethrough; inline
+ *   HTML; a backslash escape; a hard line break), whitespace (indentation and doubled spaces), a soft line break, and the ATX
+ *   closing sequence and setext heading forms (the setext heading and title split over two lines), each on the posture heading,
+ *   docs/03's title and the posture sentence where the form can spell it (the heading holds no punctuation to escape; an ATX heading
+ *   or title holds no line break; inline HTML and the heading forms spell no sentence: HTML in the section reads it whole,
+ *   OVER-READS). Q4 plants a page with each form's title and heading, and Z3 re-spells docs/03 with each form - the heading and the
+ *   title replaced whole, the opening paragraph replaced by the form's sentence, each located through the rendered view and read
+ *   back the same way (respelled) - and reads the home, the stated sentence and the decoy, changed-sentence and level-1-above locate
+ *   controls on that copy through docs/03's own control path (postureControls.markup), beside the asterisk-only heading and title
+ *   controls; nothing is located by docs/03's own source spelling, so a docs/03 already carrying one of these forms keeps every
+ *   control (cut #2 cures U3: the gate's DF3a token-text and DF3b source-spelling members each red Q4 or Z3). A control's own
+ *   inserted text (the decoy comment, the appendix heading it splits on) is located by the spelling the control wrote. Rows match
+ *   cells as sectionTables reads them (marked's cell source, inline markup kept), the one table reading the binding has, so a
+ *   posture row with markup in its owner or Pi cell is read (OVER-READS, planted in Z3).
  *
  * THE JUDGE. A MENTION is the until-then pattern's words in order - "graph" then "policy", or "graph", "data" and "ir" - with any
  * run of characters that are neither letters nor digits between them (none, spaces, newlines, underscores, hyphens, dots, quotes,
@@ -107,10 +132,11 @@
  * octal escapes decoded ("decoded"). judgeScope reads an entry list in one call, so every leg judges its planted entries after the
  * real ones: the findings must be exactly the plants', so a real mention, a hollowed judge or a result forced empty reds; it also
  * counts the bytes each entry's judge decoded. THE RECORD JUDGE (T) reads the record's items: every key of the fixture envelope at
- * any depth (arrays by index) and every string value, and every key of the roster's four key lists; a key or string value holding a
- * MENTION, or whose words include the abbreviation gp, is a GraphPolicy output (wb-b4lg F1: values too), and a key whose words
- * (split at non-letters and camel-case humps) include one of the title's field words (score, ranking, embedding, receipt) or its
- * plural is a GraphPolicy output field (a value never is: R-FIELD-VALUE). Z3 judges each rf reading test and each data file it names with the content of every ownership-row echo blanked
+ * any depth (its root's included, arrays by index) and every string value (the root's, an object member's and an array element's),
+ * and every key of the roster's four key lists; a key or string value holding a MENTION, or whose words (split at non-letters and
+ * camel-case humps, each lowercased) include the abbreviation gp, is a GraphPolicy output (wb-b4lg F1: values too), and a key whose
+ * words include one of the title's field words (score, ranking, embedding, receipt) or its plural is a GraphPolicy output field (a
+ * value never is: R-FIELD-VALUE). Z3 judges each rf reading test and each data file it names with the content of every ownership-row echo blanked
  * first (R-POSTURE: a string literal naming the owner as docs/03's ownership row spells it, each of its words a word of that row's
  * owner or subject cell, one of them the subject's alone), and each docs page with its rendered posture homes blanked.
  *
@@ -118,15 +144,16 @@
  * output or field, T1 reds naming the acceptance on landing as owed; T2 the record is the installed rf's capture (a captured
  * roster with a command receipt, and the fixture's cli_version and the provider's contract source on the roster's release),
  * compared as relations, so a consistent rf re-pin keeps T2 and re-reads T1, T3 and T4 on the new record; T3 the envelope, its
- * diagnostics and the roster read at floors, and the vocabulary plants (the abbreviation's on keys and on values included) found by
- * the same call; T4
+ * diagnostics and the roster read at floors, and the vocabulary plants (the abbreviation's on keys and on values, array elements,
+ * uppercase and camel-case humps and the root's items included) found by the same call; T4
  * the field words and their plants found, and the schema pin the title records. Z, the until-then duty: Z1 the literal held at
  * the filing pin, its judged bytes an exact count, a pin plant found by the same call; Z2 every listed src and qa file spells no
  * MENTION (file, script and byte floors, every file judged whole, a plant of each reading found), and each src reader ignores the
  * GraphPolicy plants - on every envelope object it does not hold exactly, root and diagnostic included, the strict objects measured
- * and pinned per reader - on every render variant with nothing leaked; Z3 the rf reading tests, the data files they name and docs/workbench outside the rendered posture
+ * and pinned per reader, and the planted positions read off the envelope each reader is handed and pinned per reader and per
+ * variant - on every render variant with nothing leaked; Z3 the rf reading tests, the data files they name and docs/workbench outside the rendered posture
  * homes spell none, at file and byte floors, every file judged whole, docs/03's home bound and its posture sentence stated, the
- * rendered-view controls and plants found; Z4 the vocabulary: the notes' pattern, its words, every spelling form read and the
+ * rendered-view controls and plants found, and the locate controls read again on docs/03 re-spelled in each markup form; Z4 the vocabulary: the notes' pattern, its words, every spelling form read and the
  * near words quiet. Q, the residuals' pinned quiet rows.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and
  * pins, every pin's quote, claims and witness, the constants (READERS included) and every registered test title - is held to the
@@ -160,7 +187,8 @@
  * hides it, and so does a backslash escape in a file kind whose escapes are not decoded (plain text and every kind but scripts,
  * .json, markup entities and shell scripts) or an escape kind the decoders do not read (a regex octal or control escape, a shell
  * \c or named escape) (Q8); R-BINARY a file holding a NUL byte is not read (Q9); R-RELAY the provider relays the whole envelope
- * to its caller, additive keys included, and that pass-through is not read as Pi reading them (Q10); R-GENERIC a src module
+ * to its caller, additive keys included, and that pass-through is not read as Pi reading them (Q10, which counts the planted positions
+ * off the envelope relayed); R-GENERIC a src module
  * naming a field word (score, ranking, embedding, receipt) is no MENTION: field words are read on the record (T4) and the two
  * readers' outputs (Z2) only (Q11); R-NEAR-FIELD a record key naming a near form of a field word (rank, ranked, vector, scored)
  * outside the vocabulary and the abbreviation is no GraphPolicy output field: T4 reads the title's four words and their plurals
@@ -178,12 +206,14 @@
  * GraphPolicy reader is added or faked here. T1 binds it: the census reds with ACCEPTANCE the moment the record carries one.
  * OVER-READS (disclosed; none today): any "graph ... policy" prose reads as a mention, across a line break or punctuation
  * included ("the dependency graph. Policy ..."), and so does "graph data ir" opening a longer word; a shell backslash escape is
- * decoded wherever it stands (inside single quotes too); a posture section carrying HTML, or one the blanked source does not render
- * as block for block, is read whole; a data file is in the surface when any read member spells its file name, a comment included;
- * a record string value whose words include gp reads as a GraphPolicy output wherever it stands (an id whose letters between digits
- * run gp, such as rfo_01gp3x, included; none today); a heading whose rendered text needs the rest of its page (a reference link
- * defined elsewhere on it) is probed alone by renderedHeading, so a posture section under it is read whole; a posture row whose
- * owner or Pi cell carries inline markup is read (wb-b4lg F3).
+ * decoded wherever it stands (inside single quotes too); a posture section carrying HTML (planted in Z3, wb-b4lg U3), or one the
+ * blanked source does not render as block for block, is read whole; a data file is in the surface when any read member spells its
+ * file name, a comment included; a record string value whose words include gp reads as a GraphPolicy output wherever it stands (an
+ * id whose letters between digits run gp, such as rfo_01gp3x, included and planted in T3; none today); a heading whose rendered text
+ * needs the rest of its page (a reference link defined elsewhere on it) is probed alone by renderedHeading, so a posture section
+ * under it is read whole (planted in Z3); a posture row whose owner or Pi cell carries inline markup is read (planted in Z3); a
+ * character reference the binding does not decode (any but the amp, lt, gt, quot, nbsp, #39 and #x27 references) re-spells a
+ * heading, title or sentence in the binding's reading, so its home is unbound and read whole (wb-b4lg F3).
  * ECHO BOUND (disclosed): an echo literal is blanked whatever its test does with it, so a literal made only of the ownership row's
  * words ("GraphPolicyCLI learned scores") used as a key or a lookup would go unread by Z3; at df1ce2a the one echo in the surface
  * is wb-grmo.1's quiet-control sentence (and, from wb-r63c, its roster's copy of it). A comment, an identifier, a template with a
@@ -314,6 +344,52 @@ const HEADING_PROBE = "probe";
  * emphasis that leaves its rendered text unchanged (held to the roster, so a plant or control stripped of its markup reds). */
 const EMPHASIZED_HEADING = `## ${POSTURE_HEADING.replace(POSTURE_OWNER, `*${POSTURE_OWNER}*`)}`;
 const EMPHASIZED_TITLE = `# ${DOCS03_TITLE.replace("High-level", "*High-level*")}`;
+/** The link and image re-spellings' target: an identity string, never fetched (wb-b4lg U3). */
+const LINK_TARGET = "https://example.invalid/wb-b4lg";
+/** docs/03's title word the inline re-spellings wrap. */
+const TITLE_WORD = "High-level";
+/** One re-spelling of the three docs elements this file locates (wb-b4lg U3): the posture heading's source line, docs/03's title
+ * line and the posture sentence, each null where the form cannot spell it. */
+interface Markup {
+  readonly heading: string | null;
+  readonly title: string | null;
+  readonly sentence: string | null;
+}
+/** The three elements with one word each wrapped in inline markup: the owner in the heading and the sentence, TITLE_WORD in the title. */
+function wrapped(open: string, close: string): Markup {
+  const wrap = (text: string, word: string): string => text.replace(word, `${open}${word}${close}`);
+  return { heading: `## ${wrap(POSTURE_HEADING, POSTURE_OWNER)}`, title: `# ${wrap(DOCS03_TITLE, TITLE_WORD)}`, sentence: wrap(POSTURE_SENTENCE, POSTURE_OWNER) };
+}
+/**
+ * The re-spellings that leave the binding's rendered text unchanged (wb-b4lg U3, the F3 enumeration), by what the binding normalizes:
+ * one per inline token kind it renders as its content's text - emphasis and strong by both delimiters, a code span, a link, an image
+ * (its alt text), a strikethrough, inline HTML, a backslash escape and a hard line break - plus whitespace (indentation and doubled
+ * spaces, which its clean() collapses), a soft line break, and the ATX closing sequence and setext heading forms (the setext heading
+ * and title each split over two lines). A form spells no element it cannot: the heading holds no punctuation to escape, an ATX
+ * heading or title holds no line break, inline HTML in the section reads it whole (OVER-READS), and the heading forms spell no
+ * sentence. Held to the roster, so a plant or control stripped of its markup reds.
+ */
+const MARKUPS: Readonly<Record<string, Markup>> = {
+  "emphasis-asterisk": wrapped("*", "*"),
+  "emphasis-underscore": wrapped("_", "_"),
+  "strong-asterisk": wrapped("**", "**"),
+  "strong-underscore": wrapped("__", "__"),
+  "code-span": wrapped("`", "`"),
+  link: wrapped("[", `](${LINK_TARGET})`),
+  image: wrapped("![", `](${LINK_TARGET})`),
+  strikethrough: wrapped("~~", "~~"),
+  "inline-html": { ...wrapped("<span>", "</span>"), sentence: null },
+  escape: { heading: null, title: `# ${DOCS03_TITLE.replace("-", "\\-")}`, sentence: POSTURE_SENTENCE.replace("(gp)", "\\(gp\\)") },
+  "hard-break": { heading: null, title: null, sentence: POSTURE_SENTENCE.replace(" (gp)", "  \n(gp)") },
+  "soft-break": { heading: null, title: null, sentence: POSTURE_SENTENCE.replace(" (gp)", "\n(gp)") },
+  whitespace: { heading: ` ##  ${POSTURE_HEADING.replace(" ", "  ")}`, title: ` #  ${DOCS03_TITLE.replace(", ", ",  ")}`, sentence: ` ${POSTURE_SENTENCE.replace(" no ", "  no ")}` },
+  "atx-closing": { heading: `${POSTURE_SECTION} ##`, title: `# ${DOCS03_TITLE} #`, sentence: null },
+  setext: {
+    heading: `${POSTURE_HEADING.replace(" ", "\n")}\n${"-".repeat(POSTURE_HEADING.length)}`,
+    title: `${DOCS03_TITLE.replace(", ", ",\n")}\n${"=".repeat(DOCS03_TITLE.length)}`,
+    sentence: null,
+  },
+};
 /** Distinct leak markers the GraphPolicy plants carry: a text prefix and three numbers no reader computes. */
 const LEAK_TEXT = "SECRET-GP-";
 const LEAK_SCORE = 0.918273645;
@@ -366,7 +442,7 @@ const CLAIMS: Readonly<Record<string, Readonly<Record<string, readonly string[]>
   Z1: { "until then": ["filingPin", "filedAtPin", "absentBeforePin", "pinFiles", "pinBytes", "pinFindings", "pinPlant"] },
   Z2: {
     Pi: ["scope", "filesAtFloor", "scriptsAtFloor", "bytesRead", "bytesAtFloor"],
-    reads: ["piFindings", "piPlants", "readersUnchanged", "variantsLive", "readerControls", "readerLeaks", "strictObjects", "deepPlanted", "outerPlanted"],
+    reads: ["piFindings", "piPlants", "readersUnchanged", "variantsLive", "readerControls", "readerLeaks", "strictObjects", "deepPlanted", "outerPlanted", "plantedAt"],
   },
   Z3: {
     "and claims": ["claimScope", "surfaceAtFloor", "recordRead", "dataRead", "docsAtFloor", "bytesRead", "bytesAtFloor", "postureStated", "postureHome", "postureControls"],
@@ -808,28 +884,69 @@ function renderedHeading(heading: Tokens.Heading): string {
   const block = docsSection(`## ${HEADING_PROBE}\n\n###### ${heading.text.replace(/\n/g, " ")}\n`, HEADING_PROBE, 2, []).blocks[0];
   return block?.kind === "heading" ? block.text : "";
 }
-/** The source offset of the first top-level heading of `depth` whose rendered text (renderedHeading) is `heading`, or -1: a heading
- * located through the rendered view, never by its source spelling (wb-b4lg F3). */
-function renderedHeadingAt(text: string, depth: number, heading: string): number {
+/** The first top-level heading of `depth` whose rendered text (renderedHeading) is `heading`, at its source offset with its source
+ * (trailing line breaks dropped; both lines and the underline of a setext heading kept), or undefined: a heading located through the
+ * rendered view, never by its source spelling (wb-b4lg F3). */
+function renderedHeadingToken(text: string, depth: number, heading: string): { readonly start: number; readonly raw: string } | undefined {
   const found = (renderedTokens(text) ?? []).find(({ token }) => token.type === "heading" && (token as Tokens.Heading).depth === depth && renderedHeading(token as Tokens.Heading) === heading);
-  return found?.start ?? -1;
+  return found === undefined ? undefined : { start: found.start, raw: found.token.raw.trimEnd() };
 }
-/** The text with the source line of that rendered heading replaced by `line` (the text unchanged when none renders). */
+/** The source offset of that rendered heading, or -1. */
+function renderedHeadingAt(text: string, depth: number, heading: string): number {
+  return renderedHeadingToken(text, depth, heading)?.start ?? -1;
+}
+/** The text with the whole source of that rendered heading replaced by `line` (a setext heading's underline included, so a re-spelled
+ * setext heading leaves no stray underline; the text unchanged when none renders). */
 function respelledHeading(text: string, depth: number, heading: string, line: string): string {
-  const at = renderedHeadingAt(text, depth, heading);
-  if (at < 0) return text;
-  const end = text.indexOf("\n", at);
-  return `${text.slice(0, at)}${line}${end < 0 ? "" : text.slice(end)}`;
+  const found = renderedHeadingToken(text, depth, heading);
+  return found === undefined ? text : `${text.slice(0, found.start)}${line}${text.slice(found.start + found.raw.length)}`;
 }
 /** The text with the opening rendered paragraph under that rendered heading (the first top-level block after it) replaced by
  * `paragraph`, located through the rendered view, never by the paragraph's source spelling (the text unchanged when none renders). */
 function respelledOpening(text: string, depth: number, heading: string, paragraph: string): string {
+  const opening = openingParagraph(text, depth, heading);
+  return opening === undefined ? text : `${text.slice(0, opening.start)}${paragraph}${text.slice(opening.start + opening.raw.length)}`;
+}
+/** The opening rendered paragraph under that rendered heading (the first top-level block after it) at its source offset with its
+ * source, located through the rendered view, never by the paragraph's source spelling; undefined when none renders. */
+function openingParagraph(text: string, depth: number, heading: string): { readonly start: number; readonly raw: string } | undefined {
   const tokens = renderedTokens(text) ?? [];
   const at = renderedHeadingAt(text, depth, heading);
   const index = tokens.findIndex(({ start }) => start === at);
   const next = index < 0 ? undefined : tokens.slice(index + 1).find(({ token }) => token.type !== "space");
-  if (next === undefined || next.token.type !== "paragraph") return text;
-  return `${text.slice(0, next.start)}${paragraph}${text.slice(next.start + next.token.raw.trimEnd().length)}`;
+  return next === undefined || next.token.type !== "paragraph" ? undefined : { start: next.start, raw: next.token.raw.trimEnd() };
+}
+/** A page re-spelled in one MARKUPS form (wb-b4lg U3): the posture heading and the title, each located through the rendered view,
+ * replaced whole by the form's spelling, and the posture section's opening paragraph (located the same way) replaced by the form's
+ * sentence; an element the form spells as null is kept. Nothing is located by docs/03's own source spelling, so a page already
+ * carrying markup is re-spelled the same way. */
+function markedUp(text: string, markup: Markup): string {
+  let out = markup.heading === null ? text : respelledHeading(text, 2, POSTURE_HEADING, markup.heading);
+  if (markup.title !== null) out = respelledHeading(out, 1, DOCS03_TITLE, markup.title);
+  return markup.sentence === null ? out : respelledOpening(out, 2, POSTURE_HEADING, markup.sentence);
+}
+/** Whether a re-spelled copy carries each of the form's spellings where it re-spells, read back through the rendered view: the
+ * posture heading's and the title's sources and the opening paragraph's source (wb-b4lg U3: a re-spelling that fails to apply reds,
+ * whatever the page's own spelling). */
+function respelledIn(copy: string, markup: Markup): boolean {
+  return (
+    (markup.heading === null || renderedHeadingToken(copy, 2, POSTURE_HEADING)?.raw === markup.heading) &&
+    (markup.title === null || renderedHeadingToken(copy, 1, DOCS03_TITLE)?.raw === markup.title) &&
+    (markup.sentence === null || openingParagraph(copy, 2, POSTURE_HEADING)?.raw === markup.sentence)
+  );
+}
+/** The locate controls on one page (wb-r63c F1's shapes; wb-b4lg U3: docs/03 and each of its re-spelled copies take this one path):
+ * whether the posture sentence is still stated under a decoy commented section placed before a changed real one, under a changed
+ * sentence, and under a level-1 heading inserted above the section - the heading and its opening paragraph located through the
+ * rendered view. */
+function locateControls(text: string): { readonly decoyCommentBeforeChanged: boolean; readonly changedSentence: boolean; readonly levelOneAbove: boolean } {
+  const at = renderedHeadingAt(text, 2, POSTURE_HEADING);
+  const changed = respelledOpening(text, 2, POSTURE_HEADING, "Pi reads GraphPolicyCLI scores today.");
+  return {
+    decoyCommentBeforeChanged: postureStatedIn(`${changed.slice(0, at)}<!--\n${POSTURE_SECTION}\n\n${POSTURE_SENTENCE}\n-->\n\n${changed.slice(at)}`),
+    changedSentence: postureStatedIn(changed),
+    levelOneAbove: postureStatedIn(`${text.slice(0, at)}# Appendix\n\n${text.slice(at)}`),
+  };
 }
 /**
  * A page's posture homes (R-POSTURE) over ONE rendered view (wb-r63c F1): the "## GraphPolicyCLI boundary" section only where its
@@ -1001,6 +1118,11 @@ const CLAIM_PLANTS: Readonly<Record<string, string>> = {
   "docs/workbench/zz-plant-commented-row.md": `<!--\n| Learned scores | ${POSTURE_OWNER} | ${POSTURE_CELL}; Pi reads GraphPolicy scores |\n-->\n`,
   "test/zz-plant-data.test.ts": 'import { fullShapeRf } from "./helpers/rf-render-fixture.js";\nexport const data = "zz-plant-data.json";\nvoid fullShapeRf;\n',
   "test/fixtures/zz-plant-data.json": '{"graph_policy": {"score": 1}}\n',
+  // The F3 over-reads, pinned (wb-b4lg U3): a posture section carrying HTML, a posture heading whose rendered text needs a reference
+  // link defined elsewhere on its page, and a posture-shaped row whose owner cell carries markup - each page read whole.
+  "docs/workbench/zz-plant-html-section.md": `${POSTURE_SECTION}\n\nPi reads <em>GraphPolicy</em> scores from the rf render envelope.\n`,
+  "docs/workbench/zz-plant-reflink.md": `## [${POSTURE_OWNER}][posture] boundary\n\nPi reads GraphPolicy scores from the rf render envelope.\n\n[posture]: ${LINK_TARGET}\n`,
+  "docs/workbench/zz-plant-marked-row.md": `| Subject | Owner | Pi |\n| --- | --- | --- |\n| Learned scores | **${POSTURE_OWNER}** | ${POSTURE_CELL}; Pi reads GraphPolicy scores |\n`,
 };
 const claimVerdict = lazy((): ClaimReading => claimReading(CLAIM_PLANTS));
 
@@ -1090,15 +1212,32 @@ function plantedItems(envelope: JsonObject, roster: KeyLists): RecordItem[] {
 const NO_KEYS: KeyLists = { resultKeys: [], provenanceKeys: [], workKeys: [], workMetricsKeys: [] };
 /** The record's vocabulary plants (T3): a key at the result, a camel-case key in provenance, a key in a diagnostic's metadata, a
  * string value of a block, a roster key, and a block under the abbreviation whose own keys are near forms (wb-r63c F5, the gate's
- * G13/G13b shape); and the abbreviation on string values (wb-b4lg F1, the gate's P1 shapes): a second diagnostic whose message is
- * the acceptance's own ref form and whose source is gp, and a block value gp.scorer. The planted diagnostics' other keys and values
- * and the near forms are quiet. */
+ * G13/G13b shape); the abbreviation on string values (wb-b4lg F1, the gate's P1 shapes): a second diagnostic whose message is
+ * the acceptance's own ref form and whose source is gp, and a block value gp.scorer; and the item forms the F1 claim names beside
+ * them (wb-b4lg U1, the gate's DJ1 and DJ2 twins and their neighbours): string array elements carrying the abbreviation (gp, the ref
+ * form, rfo_01gp3x with gp between digits) and a MENTION, the abbreviation as an uppercase and a camel-hump value and key (GP,
+ * gpLayer), a root key and a root value. The planted diagnostics' other keys and values, the near forms and gp inside a longer word
+ * (gpu-runner, gpuCount) are quiet. */
 function vocabularyPlantItems(): RecordItem[] {
   const envelope = plantedEnvelope((source, result) => {
+    source.transaction_id = "gp-txn-1";
+    source.graph_data_ir = null;
     result.graph_policy = { kind: "x" };
     result.gp = { rank: 1, vector: [0.5], program: "x", checkpoint: "x", backend: "x" };
     member(result, "provenance").graphPolicyReceipt = "x";
-    source.diagnostics = [infoDiagnostic({ "graph-data-ir": 1 }), { ...infoDiagnostic({}), message: GP_REF_FORM, source: ABBREVIATION }];
+    const context = member(result, "judge_context");
+    context.task_tags = [ABBREVIATION];
+    context.explicit_requests = ["use the GraphPolicy program"];
+    context.agent_role = "gpu-runner";
+    const layers = member(result, "judge_context_layers");
+    layers["task.tags"] = "gpLayer";
+    layers["agent.role"] = "GP";
+    result.superseded_transaction_ids = [GP_REF_FORM];
+    result.fiber_transaction_refs = ["rfo_01gp3x"];
+    source.diagnostics = [
+      infoDiagnostic({ "graph-data-ir": 1, GP: 1, gpLayer: 1, gpuCount: 1 }),
+      { ...infoDiagnostic({}), message: GP_REF_FORM, source: ABBREVIATION },
+    ];
     const blocks = result.blocks;
     if (Array.isArray(blocks) && isObject(blocks[0])) {
       (blocks[0] as JsonObject).component_id = "GraphPolicy.scorer";
@@ -1109,14 +1248,24 @@ function vocabularyPlantItems(): RecordItem[] {
 }
 /** What T3's judge must find among the planted items, and nothing else. */
 const VOCABULARY_PLANTS: readonly string[] = [
+  "plant:transaction_id",
   "plant:result.blocks[0].candidate_key",
   "plant:result.blocks[0].component_id",
   "plant:result.provenance.graphPolicyReceipt",
+  "plant:result.judge_context.task_tags[0]",
+  "plant:result.judge_context.explicit_requests[0]",
+  "plant:result.judge_context_layers.task.tags",
+  "plant:result.judge_context_layers.agent.role",
+  "plant:result.superseded_transaction_ids[0]",
+  "plant:result.fiber_transaction_refs[0]",
   "plant:result.graph_policy",
   "plant:result.gp",
   "plant:diagnostics[0].metadata.graph-data-ir",
+  "plant:diagnostics[0].metadata.GP",
+  "plant:diagnostics[0].metadata.gpLayer",
   "plant:diagnostics[1].message",
   "plant:diagnostics[1].source",
+  "plant:graph_data_ir",
   "plant-roster:result.graphpolicy_rank",
 ];
 /** The record's field plants (T4): one key per field word, a plural, a camel-case key in a diagnostic's metadata and a roster key;
@@ -1206,7 +1355,7 @@ const strictObjects = lazy((): Readonly<Record<ReaderKind, readonly string[]>> =
  * receipt), the four generic fields on every envelope object outside `strict` (wb-r63c F6: a block's, an observation row's or a
  * nested object's field is planted, not only the result's; wb-b4lg F2: the root, the workspace object and a diagnostic's own keys
  * too), a graph_policy object carrying every output the bead names and a provenance receipt. Z2 passes one reader's strict objects;
- * Q10 passes none, so every object is planted. */
+ * Q10 passes none, so every object is planted. Where the plants landed is read back off the copy (plantedPositions, wb-b4lg U2). */
 function gpPlanted(envelope: JsonObject, strict: readonly string[]): JsonObject {
   const copy = noted(envelope);
   for (const { path, object } of envelopeObjects(copy)) if (!strict.includes(path)) plantFields(object, path);
@@ -1242,6 +1391,30 @@ function readerOn(reader: ReaderKind, source: JsonObject, variant: Variant): Jso
 /** Both src readers on one envelope. */
 function readersOn(source: JsonObject, variant: Variant): ReaderOutputs {
   return { topology: readerOn("topology", source, variant), evidence: readerOn("evidence", source, variant) };
+}
+/** Whether an envelope object carries the four GraphPolicy plants with their leak markers (plantFields' shape or gpPlanted's own). */
+function carriesPlants(object: JsonObject): boolean {
+  const receipt = object.receipt;
+  return (
+    object.score === LEAK_SCORE &&
+    isDeepStrictEqual(object.ranking, [`${LEAK_TEXT}RANK`]) &&
+    isDeepStrictEqual(object.embedding, [...LEAK_EMBEDDING]) &&
+    isObject(receipt) &&
+    typeof receipt.id === "string" &&
+    receipt.id.startsWith(`${LEAK_TEXT}RECEIPT`)
+  );
+}
+/** The planted positions of an envelope, read off that envelope itself: the paths of its objects that carry the four plants (wb-b4lg U2). */
+function plantedPositions(envelope: JsonObject): string[] {
+  return envelopeObjects(envelope)
+    .filter(entry => carriesPlants(entry.object))
+    .map(entry => entry.path);
+}
+/** One src reader on its planted envelope: the reader's output and the planted positions read off the very envelope the reader was
+ * handed, never off a recomputed listing, so a plant that never reaches the reader changes the positions (wb-b4lg U2). */
+function plantedRun(reader: ReaderKind, source: JsonObject, variant: Variant): { readonly output: JsonValue; readonly planted: readonly string[] } {
+  const output = readerOn(reader, source, variant);
+  return { output, planted: plantedPositions(source) };
 }
 interface ReaderOutputs {
   readonly topology: JsonValue;
@@ -1363,15 +1536,19 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     const leaked = new Set<string>();
     const clean = readersOn(variantEnvelope("clean"), "clean");
     const inert: string[] = [];
+    // Where the plants landed, per variant and reader, read off the very envelope each reader was handed (wb-b4lg U2).
+    const plantedAt: Partial<Record<Variant, Record<ReaderKind, readonly string[]>>> = {};
     for (const variant of VARIANTS) {
       const base = variantEnvelope(variant);
       const plain = readersOn(base, variant);
       if (variant !== "clean" && isDeepStrictEqual(plain.topology, clean.topology)) inert.push(variant);
       // Each reader runs on its own plants (wb-b4lg F2): the observer's refusal of a root plant never hides nativeEvidence's read of it.
-      const planted: ReaderOutputs = {
-        topology: readerOn("topology", gpPlanted(base, strictObjects().topology), variant),
-        evidence: readerOn("evidence", gpPlanted(base, strictObjects().evidence), variant),
+      const runs = {
+        topology: plantedRun("topology", gpPlanted(base, strictObjects().topology), variant),
+        evidence: plantedRun("evidence", gpPlanted(base, strictObjects().evidence), variant),
       };
+      const planted: ReaderOutputs = { topology: runs.topology.output, evidence: runs.evidence.output };
+      plantedAt[variant] = { topology: runs.topology.planted, evidence: runs.evidence.planted };
       readersUnchanged[variant] = json(compareReaders(plain, planted));
       for (const marker of leaksIn(JSON.stringify(planted))) leaked.add(`${variant}: ${marker}`);
     }
@@ -1385,9 +1562,8 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       leaks: [...leaksIn(JSON.stringify(leakyEvidence)), ...leaksIn(JSON.stringify(leakyTopology))],
     };
     const judged = bytesJudged(verdict, plants);
-    const positions = envelopeObjects(noted(variantEnvelope("clean"))).map(entry => entry.path);
     const resultTree = `${ENVELOPE_ROOT}.result`;
-    const plantedFor = (reader: ReaderKind): string[] => positions.filter(path => !strictObjects()[reader].includes(path));
+    const landed = (variant: Variant, reader: ReaderKind): readonly string[] => plantedAt[variant]?.[reader] ?? [];
     return json({
       scope: [...PI_SCOPES],
       filesAtFloor: verdict.files - plants.length >= FLOORS.piFiles,
@@ -1401,9 +1577,11 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       readerControls,
       readerLeaks: sorted(leaked),
       strictObjects: strictObjects(),
-      deepPlanted: READER_KINDS.every(reader => plantedFor(reader).length >= FLOORS.deepObjects),
-      // The planted positions outside the result tree, per reader: the root and a diagnostic's own keys reach nativeEvidence (wb-b4lg F2).
-      outerPlanted: Object.fromEntries(READER_KINDS.map(reader => [reader, plantedFor(reader).filter(path => path !== resultTree && !path.startsWith(`${resultTree}.`))])),
+      deepPlanted: VARIANTS.every(variant => READER_KINDS.every(reader => landed(variant, reader).length >= FLOORS.deepObjects)),
+      // The clean render's planted positions outside the result tree, per reader, read off the planted copies: the root and a
+      // diagnostic's own keys reach nativeEvidence (wb-b4lg F2, U2).
+      outerPlanted: Object.fromEntries(READER_KINDS.map(reader => [reader, landed("clean", reader).filter(path => path !== resultTree && !path.startsWith(`${resultTree}.`))])),
+      plantedAt,
     });
   },
   Z3: () => {
@@ -1419,13 +1597,28 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     // sentence, a second rendered heading or a level-1 heading inserted above each un-states it, and a level-1 appendix after the
     // section bounds it, so the appendix's claim is read.
     // The posture heading and its opening paragraph are located through the rendered view, never by their source spelling (wb-b4lg
-    // F3), so a markup-only edit of docs/03's heading, title or sentence leaves every control on the section it binds.
-    const at = renderedHeadingAt(docs03, 2, POSTURE_HEADING);
-    const changed = respelledOpening(docs03, 2, POSTURE_HEADING, "Pi reads GraphPolicyCLI scores today.");
+    // F3, locateControls), so a markup-only edit of docs/03's heading, title or sentence leaves every control on the section it binds.
     // The heading-read controls (wb-b4lg F3): docs/03's rendered posture heading and page title re-spelled with inline emphasis.
     const emphasized = respelledHeading(docs03, 2, POSTURE_HEADING, EMPHASIZED_HEADING);
     const titled = respelledHeading(docs03, 1, DOCS03_TITLE, EMPHASIZED_TITLE);
     const appended = postureHomes(`${docs03}\n# Appendix\n\nPi reads GraphPolicy scores from the rf render envelope.\n`).masked;
+    // The F3 enumeration on docs/03 itself (wb-b4lg U3): each MARKUPS form re-spells its heading, title and sentence where it can (the
+    // opening paragraph replaced by the form's sentence), and the home, the stated sentence and the locate controls are read on that
+    // copy through docs/03's own control path.
+    const markup = Object.fromEntries(
+      Object.entries(MARKUPS).map(([form, spelled]) => {
+        const copy = markedUp(docs03, spelled);
+        return [
+          form,
+          {
+            respelled: respelledIn(copy, spelled),
+            home: postureHomes(copy).section,
+            stated: postureStatedIn(copy),
+            ...locateControls(copy),
+          },
+        ];
+      }),
+    );
     return json({
       claimScope: {
         docs: DOCS_SCOPE,
@@ -1442,13 +1635,12 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       postureStated: postureStatedIn(docs03),
       postureHome: { section: home.section, rows: home.rows },
       postureControls: {
-        decoyCommentBeforeChanged: postureStatedIn(`${changed.slice(0, at)}<!--\n${POSTURE_SECTION}\n\n${POSTURE_SENTENCE}\n-->\n\n${changed.slice(at)}`),
-        changedSentence: postureStatedIn(changed),
+        ...locateControls(docs03),
         headingTwice: postureStatedIn(`${docs03}\n${POSTURE_SECTION}\n\n${POSTURE_SENTENCE}\n`),
-        levelOneAbove: postureStatedIn(`${docs03.slice(0, at)}# Appendix\n\n${docs03.slice(at)}`),
         appendixRead: mentions(appended.split("\n# Appendix\n")[1] ?? ""),
         emphasisHeading: postureHomes(emphasized).section,
         emphasisTitle: postureHomes(titled).section,
+        markup,
       },
       claimFindings,
       claimPlants: findingsFor(reading.verdict, plants, true),
@@ -1498,6 +1690,15 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       // page title carrying markup that the section is bound under.
       "docs/workbench/zz-quiet-emphasis.md": `${EMPHASIZED_HEADING}\n\nPi reads GraphPolicy scores from the rf render envelope.\n`,
       "docs/workbench/zz-quiet-titled.md": `${EMPHASIZED_TITLE}\n\n${POSTURE_SECTION}\n\nPi reads GraphPolicy scores from the rf render envelope.\n`,
+      // One page per MARKUPS form that spells a title or a heading (wb-b4lg U3): its title and posture heading, plain where it spells none.
+      ...Object.fromEntries(
+        Object.entries(MARKUPS)
+          .filter(([, spelled]) => spelled.heading !== null || spelled.title !== null)
+          .map(([form, spelled]) => [
+            `docs/workbench/zz-quiet-markup-${form}.md`,
+            `${spelled.title ?? `# ${DOCS03_TITLE}`}\n\n${spelled.heading ?? POSTURE_SECTION}\n\nPi reads GraphPolicy scores from the rf render envelope.\n`,
+          ]),
+      ),
       "test/zz-quiet-echo.test.ts": [
         'import { fullShapeRf } from "./helpers/rf-render-fixture.js";\n',
         'const controls = [{ text: "GraphPolicyCLI predictions and policy distributions.", hit: false }];\n',
@@ -1555,7 +1756,9 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     type Injected = Awaited<ReturnType<Parameters<typeof registerReactiveFiberRender>[1]>>;
     registerReactiveFiberRender(registry, async () => gpPlanted(fixtureEnvelope(), []) as unknown as Injected, WORKSPACE);
     const relayed = await registry.invoke(PREVIEW_ID, { model: "m", task: "t" }, { grants: [...GRANTS], signal: new AbortController().signal });
-    return json({ residual: "R-RELAY", verbatim: isDeepStrictEqual(relayed, expected) });
+    // The planted positions on the envelope relayed, read off it (wb-b4lg U2): a plant that never reaches the relay changes the count.
+    const relayedEnvelope = member(objectOf(relayed, "the relayed reading"), "source");
+    return json({ residual: "R-RELAY", verbatim: isDeepStrictEqual(relayed, expected), plantedRelayed: plantedPositions(relayedEnvelope).length });
   },
   Q11: () => {
     const verdict = judgeScope([
@@ -1657,6 +1860,7 @@ describe("wb-e9dy rf GraphPolicy-context census (RF-GRAPH-POLICY-CONTEXT-R1, unt
         headingProbe: HEADING_PROBE,
         emphasizedHeading: EMPHASIZED_HEADING,
         emphasizedTitle: EMPHASIZED_TITLE,
+        markups: MARKUPS,
         piPlants: PI_PLANTS,
         claimPlants: CLAIM_PLANTS,
         vocabularyPlants: [...VOCABULARY_PLANTS],
