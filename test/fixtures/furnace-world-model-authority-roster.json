@@ -227,6 +227,10 @@
    "log-keys",
    "log-line"
   ],
+  "crossSources": [
+   "furnace",
+   "beads"
+  ],
   "scopedSeams": [
    "src/workbench/furnace-control.ts:VendoredFurnaceControlClient",
    "src/workbench/hosts/furnace-hosted.ts:FurnaceHostedClient"
@@ -240,7 +244,11 @@
    "regexHex",
    "regexUnicode",
    "regexCodePoint",
-   "releaseComment"
+   "head",
+   "tail",
+   "releaseComment",
+   "releaseHead",
+   "releaseTail"
   ],
   "seamForms": [
    "modifier-interface",
@@ -440,7 +448,26 @@
     1
    ],
    "populatedIdentical": true,
-   "edgesAdded": 9
+   "edgesAdded": 9,
+   "rollUp": {
+    "statements": 36,
+    "edges": {
+     "snapshotsOnly": 12,
+     "populated": 12
+    },
+    "identical": {
+     "snapshotsOnly": true,
+     "populated": true
+    },
+    "runChildren": {
+     "snapshotsOnly": 0,
+     "populated": 1
+    },
+    "countersMoved": {
+     "snapshotsOnly": true,
+     "populated": true
+    }
+   }
   },
   "C2": {
    "cases": 24,
@@ -680,7 +707,75 @@
       "predicteddistribution"
      ]
     ],
+    "head": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
+    "tail": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
     "releaseComment": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
+    "releaseHead": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
+    "releaseTail": [
      [
       "observedtransition"
      ],
@@ -735,6 +830,16 @@
     "synthetic\\w+attempt",
     "counterf(?:a|4)ctual",
     "\\167orld-model"
+   ],
+   "confusable": [
+    "cyrillic-o",
+    "greek-omicron",
+    "cyrillic-a"
+   ],
+   "twins": [
+    "cyrillic-o",
+    "greek-omicron",
+    "cyrillic-a"
    ]
   },
   "Q4": {
