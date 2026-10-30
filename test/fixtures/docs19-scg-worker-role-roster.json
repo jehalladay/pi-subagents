@@ -63,6 +63,32 @@
     "R-CONTROL-VALUE docs/r-control-textarea-placeholder.md",
     "R-ENCLOSED-STOP docs/r-enclosed-substitution-bracket.md"
   ],
+  "gb3cResidualBasis": "The out-of-file anchors of the wb-gb3c residual case in test/workbench-role-capabilities-settings.test.ts (the R694 follow-up of landing 650: F1's members of four named cures' own stated rules and its two neighbors, F2's three members outside them, and F2's U+17B4 page, an R-LEAF-SPELLING shape, and two seat-added rows (a nested parenthetical, and a textarea holding a line feed written as a reference), pinned as quiet rows of six cures widened to flag them, with four pinned non-members those cures leave unflagged; the same rule 16 CT5/CT6 kill shape as residualRows): every quiet row of that case as '<family> <page>', in row order (gb3cResidualRows), and every non-member the same way (gb3cNonMemberRows), so a row removed from the case and from every literal in it still reds here. The census reads none of it. Written by the cutting seat (ws-06, g10-work-s143) at the wb-gb3c cut, 2026-10-29.",
+  "gb3cResidualRows": [
+    "R-HIDDEN-CONTENT docs/r-hidden-style-decimal-colon.md",
+    "R-HIDDEN-CONTENT docs/r-hidden-style-named-colon.md",
+    "R-HIDDEN-CONTENT docs/r-hidden-style-decimal-letter.md",
+    "R-HIDDEN-CONTENT docs/r-hidden-style-hex-letter.md",
+    "R-HIDDEN-CONTENT docs/r-hidden-style-css-comment.md",
+    "R-CONTROL-VALUE docs/r-control-textarea-lone-cr.md",
+    "R-CONTROL-VALUE docs/r-control-textarea-reference-lf.md",
+    "R-ENCLOSED-STOP docs/r-enclosed-close-before-open.md",
+    "R-ENCLOSED-STOP docs/r-enclosed-emoticon-close.md",
+    "R-ENCLOSED-STOP docs/r-enclosed-nested-parenthesis.md",
+    "R-ENCLOSED-STOP docs/r-enclosed-possessive-apostrophe.md",
+    "R-SPLIT-HTML-ROW docs/r-split-html-row-two-blank-lines.md",
+    "R-SPLIT-HTML-ROW docs/r-split-html-row-crlf.md",
+    "R-RAW-ALT-TEXT docs/r-raw-alt-image-tag.md",
+    "R-ENCLOSED-STOP docs/r-enclosed-ornament-quote.md",
+    "R-BLANK-GLYPH docs/r-blank-glyph-null-notehead.md",
+    "R-LEAF-SPELLING docs/r-leaf-spelling-dropped-mark.md"
+  ],
+  "gb3cNonMemberRows": [
+    "R-RAW-ALT-TEXT docs/n-raw-alt-legacy-name-before-letter.md",
+    "R-CONTROL-VALUE docs/n-control-written-reference.md",
+    "R-HIDDEN-CONTENT docs/n-hidden-comment-in-name.md",
+    "R-ENCLOSED-STOP docs/n-enclosed-closed-quote.md"
+  ],
   "rows": [
     {
       "id": "R1",
