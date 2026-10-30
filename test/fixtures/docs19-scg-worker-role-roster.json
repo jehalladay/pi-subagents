@@ -89,6 +89,22 @@
     "R-HIDDEN-CONTENT docs/n-hidden-comment-in-name.md",
     "R-ENCLOSED-STOP docs/n-enclosed-closed-quote.md"
   ],
+  "iuhzResidualBasis": "The out-of-file anchors of the wb-iuhz residual case in test/workbench-role-capabilities-settings.test.ts (the R694 follow-up of landing 700: F6's two R-ENCLOSED-STOP members, an emoticon's close mark inside an open parenthetical and a straight single quotation mark right after a digit, with a seat-added U+2019 right after a digit and the gate's U+2019 right after a letter beside them, pinned as quiet rows of that family's cure widened to flag them, with three seat-added non-members it leaves unflagged, and F6's two fail-closed rows, each refused by one leg; the same rule 16 CT5/CT6 kill shape as residualRows): every quiet row of that case as '<family> <page>', in row order (iuhzResidualRows), every non-member the same way (iuhzNonMemberRows) and every fail-closed row the same way (iuhzFailClosedRows), so a row removed from the case and from every literal in it still reds here. The census reads none of it. Written by the cutting seat (ws-06, g10-work-s151) at the wb-iuhz cut, 2026-10-30.",
+  "iuhzResidualRows": [
+    "R-ENCLOSED-STOP docs/r-enclosed-emoticon-inside-open.md",
+    "R-ENCLOSED-STOP docs/r-enclosed-digit-prime.md",
+    "R-ENCLOSED-STOP docs/r-enclosed-digit-right-quote.md",
+    "R-ENCLOSED-STOP docs/r-enclosed-possessive-right-quote.md"
+  ],
+  "iuhzNonMemberRows": [
+    "R-ENCLOSED-STOP docs/n-enclosed-emoticon-closing.md",
+    "R-ENCLOSED-STOP docs/n-enclosed-closed-after-digit.md",
+    "R-ENCLOSED-STOP docs/n-enclosed-question-close.md"
+  ],
+  "iuhzFailClosedRows": [
+    "R-CONTROL-VALUE docs/f-control-textarea-named-newline.md",
+    "R-SPLIT-HTML-ROW docs/f-split-html-row-lone-cr.md"
+  ],
   "rows": [
     {
       "id": "R1",
