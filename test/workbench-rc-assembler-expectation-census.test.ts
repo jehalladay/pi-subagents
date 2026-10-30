@@ -66,38 +66,51 @@
  *   line that opens with a pipe after white space and an ATX heading line (one to six # after at most three white-space
  *   characters, then white space or the line end), and before a line that opens, after white space, with -, + or * or with
  *   digits and . or ), then white space; a sentence otherwise runs on across line breaks. A finding is `<path>:<line>
- *   <families>`.
+ *   <families>`. Each alternative of that cut is held by an A3 cutter row beside its near miss, in the clause's order
+ *   (wb-ro24, the R694 follow-up of landing 654): cutter.terminator each of the four marks before a space, a mark before a
+ *   tab and at the line end, a mark before a letter (no cut); cutter.blank a line holding a space and a tab; cutter.pipe a
+ *   pipe after spaces and after a tab, and the line after a pipe line; cutter.heading six #, seven # (no cut), three
+ *   spaces, four spaces (no cut), a tab before the #, a tab after it, a # alone, a # before a letter (no cut), and the
+ *   lines on both sides of a heading; cutter.list -, +, *, digits and ., digits and ), two digits, after spaces, after a
+ *   tab, a tab after the marker, a marker before a letter (no cut), and the line after a list marker's line (no cut).
  * - COMMENTS OUT (wb-cppf, the R694 follow-up of landing 553): the doc reading is the page source with its placed comments
  *   taken out, never the rendered view - no clause of this file claims what a rendered page shows, and each clause names the
- *   A3 rows that hold it. (1) TAKEN OUT: every span from `<!--` to the next `-->` (an empty `<!-->` or `<!--->` included; an
+ *   A3 rows that hold it. (1) TAKEN OUT: every span from `<!--` to the next `-->` (an empty `<!-->` or `<!--->` included, so
+ *   the text after it is read: comments.empty, each form opening a comment block and inline before a later `-->`; an
  *   unterminated one runs to the end of its token) in the source of a token that marked (the markdown grammar
  *   test/helpers/census.ts reads pages with) lexes as HTML, once placed (5): a marker only such a span holds quiets nothing
  *   (comments.hiddenMarker), and a claim only it holds is not read (R-COMMENT-HIDDEN). (2) BLANKED: a comment block's opening
  *   comment - the span an HTML block token's source opens with after at most three spaces, at any depth, as (5) confirms it -
  *   reads as spaces with its line breaks kept, so a line holding nothing else but white space is a blank line
- *   (comments.lines[0-1], R-SPLIT's third row); the rest of its lines is read as written, but for another comment there,
- *   removed as (3) says (R-COMMENT-BLOCK). (3) JOINED: every other placed span is removed with its line breaks, so the text
- *   before it and after it read as one line (comments.joined, comments.lines[2-3]), and a line a span touched that is left
- *   with nothing but white space is dropped, never read as a blank line (comments.joined[1] and [3], R-COMMENT-BLOCK's second
- *   rows). (4) UNLEXED: comment-shaped text that marked does not lex as HTML - in a code span or a code block, after a
- *   backslash, an opener left unterminated in a paragraph - is read as written (comments.unlexed). (5) PLACED: walking each
- *   top-level block's tokens in page order (a list's items, a table's header cells and then its body cells, any other token's
- *   own tokens), a cursor moves past each leaf token's source as found in the block, and each span is found within its HTML
+ *   (comments.lines[0-1], comments.blanked: one opened after three spaces and one after none, R-SPLIT's third row); the rest
+ *   of its lines is read as written, but for another comment there, removed as (3) says (R-COMMENT-BLOCK). (3) JOINED: every
+ *   other placed span is removed with its line breaks, so the text before it and after it read as one line (comments.joined,
+ *   comments.lines[2-3]), and a line a span touched that is left with nothing but white space is dropped, never read as a
+ *   blank line (comments.joined[1] and [3], R-COMMENT-BLOCK's second rows). (4) UNLEXED: comment-shaped text that marked does
+ *   not lex as HTML - in a code span or a code block, after a backslash, an opener left unterminated in a paragraph - is read
+ *   as written (comments.unlexed). (5) PLACED: walking each top-level block's tokens in page order (a list's items, a table's
+ *   header cells and then its body cells, any other token's own tokens; comments.cells: a comment in a header cell before a
+ *   body row), a cursor moves past each leaf token's source as found in the block, and each span is found within its HTML
  *   token's source as found there; source over several lines is found with each line break followed by spaces or tabs, then
  *   quote marks each followed by at most one space or tab. A span so found is placed only when marked, lexing the page again
- *   with a sentinel (the shortest run of Q the page does not hold) written just inside its `<!--`, keeps the sentinel inside
- *   an HTML token; it is a comment block's opening comment (2) when that token is a block whose source opens with it after at
- *   most three spaces. Placed shapes held (comments.containers): a list item's space-indented lines, a block quote's lines, a
- *   block quote in a list item, nested block quotes; and two identical comments in one paragraph, each placed (the last
- *   comments.unplaced row). A span the reader cannot place is not taken out: it is read as written and listed as unplaced,
- *   and A3 holds the live and frozen lists empty. Unplaced shapes held (comments.unplaced): a comment spelling an escaped
- *   pipe in a table cell; every span on a page whose top-level blocks do not tile its source (a lone carriage return); a list
- *   item in a block quote whose continuation line repeats the quote mark before the item's indentation, bulleted or ordered;
- *   a list item's continuation line indented with a tab; and a span the cursor found in other text spelled the same way,
- *   which marked does not confirm - a link destination just before the comment, a code span past an escaped pipe in its table
- *   cell, a code span on a later line after a tab-indented line. (6) LINES: each kept line keeps the page line it starts on,
- *   so a finding names the page line its sentence starts on, and text after a span removed with its line breaks stays on the
- *   line the span opens on (comments.lines).
+ *   with a sentinel (a run of Q the page does not hold) written just inside its `<!--`, keeps the sentinel inside an HTML
+ *   token; it is a comment block's opening comment (2) when that token is a block whose source opens with it after at most
+ *   three spaces. A page's CRLF line ends are read as line feeds first, so a CRLF page tiles and its spans are placed
+ *   (comments.crlf). Placed shapes held (comments.containers): a list item's space-indented lines, a block quote's lines, a
+ *   block quote in a list item, nested block quotes, a block quote's line whose quote mark is followed by a tab, a block
+ *   quote in a list item whose continuation line is indented with a tab before its quote mark; and two identical comments in
+ *   one paragraph, each placed (the last comments.unplaced row). A span the reader cannot place is not taken out: it is read
+ *   as written and listed as unplaced, and A3 holds the live and frozen lists empty. Unplaced shapes held
+ *   (comments.unplaced): a comment spelling an escaped pipe in a table cell; every span on a page whose top-level blocks do
+ *   not tile its source (a lone carriage return); a list item in a block quote whose continuation line repeats the quote mark
+ *   before the item's indentation, bulleted or ordered; a list item's continuation line indented with a tab; and a span the
+ *   cursor found in other text spelled the same way, which marked does not confirm - a link destination just before the
+ *   comment (also on a page that spells QQ elsewhere, so neither Q nor QQ is the sentinel), a code span past an escaped pipe
+ *   in its table cell, a code span on a later line after a tab-indented line; and an inline empty comment, `<!-->` or
+ *   `<!--->`, with no later `-->` in its inline run, which the sentinel turns into text marked does not lex as HTML (with a
+ *   later `-->` it is placed: comments.empty). (6) LINES: each kept line keeps the page line it starts on, so a finding names
+ *   the page line its sentence starts on, and text after a span removed with its line breaks stays on the line the span opens
+ *   on (comments.lines).
  * - SEAM (row C, "an actual Pi seam"): the one path by which assembled context reaches Pi is the registered
  *   reactivefiber.render.preview capability (read), spawned at the one rf launch site in src (a child-process launcher whose
  *   first argument's constant names rf: exactly the provider's spawn). Its spawned argv for both input arms and the
@@ -457,7 +470,7 @@ function htmlTokens(page: string): (Tokens.HTML | Tokens.Tag)[] {
   for (const token of marked.lexer(page)) visit(token);
   return out;
 }
-/** COMMENTS OUT (5): marked lexes the page again with a sentinel (the shortest run of Q the page does not hold) written just inside
+/** COMMENTS OUT (5): marked lexes the page again with a sentinel (a run of Q the page does not hold) written just inside
  * the `<!--` at `start`. No HTML token holding the sentinel: undefined (the span is not placed). Otherwise whether that token is a
  * block whose source opens with this comment after at most three spaces (a comment block's opening comment, blanked by (2)). */
 function htmlKindAt(page: string, start: number): boolean | undefined {
@@ -1159,6 +1172,37 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       docOf("The assembler\n\nacquires."),
       docOf("# The assembler\nacquires."),
     ];
+    // DOC's cutter (wb-ro24): one row per alternative the header's DOC clause restates, in its order, beside its near miss.
+    const cutOf = (page: string): string[] => sentences(page).map(sentence => `${sentence.line}:${sentence.text}`);
+    const cutter = {
+      terminator: ["Next. The assembler acquires.", "Next! The assembler acquires.", "Next? The assembler acquires.", "Next; the assembler acquires.", "Next.\tThe assembler acquires.", "Next.\nThe assembler acquires.", "Next.The assembler acquires."].map(cutOf),
+      blank: ["The assembler\n \t\nacquires."].map(cutOf),
+      pipe: ["The assembler\n  | acquires |", "The assembler\n\t| acquires |", "| x |\nThe assembler acquires."].map(cutOf),
+      heading: [
+        "The assembler\n###### acquires",
+        "The assembler\n####### acquires",
+        "The assembler\n   # acquires",
+        "The assembler\n    # acquires",
+        "The assembler\n\t# acquires",
+        "The assembler\n#\tacquires",
+        "The assembler\n#\nacquires.",
+        "The assembler\n#acquires",
+        "The assembler\n# x\nacquires.",
+      ].map(cutOf),
+      list: [
+        "The assembler\n- acquires",
+        "The assembler\n+ acquires",
+        "The assembler\n* acquires",
+        "The assembler\n1. acquires",
+        "The assembler\n1) acquires",
+        "The assembler\n10. acquires",
+        "The assembler\n  - acquires",
+        "The assembler\n\t- acquires",
+        "The assembler\n-\tacquires",
+        "The assembler\n-acquires",
+        "- The assembler\nacquires.",
+      ].map(cutOf),
+    };
     // R-OUTSIDE-ROOTS quiet row: the same claim in every outside directory, in a root text file and in a non-module code file.
     const outsideFiles: Record<string, string> = { "docs/plant.md": `${PLANT}\n` };
     for (const directory of CONSTANTS.outside) outsideFiles[`${directory}/plant.md`] = `${PLANT}\n`;
@@ -1261,16 +1305,32 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       "See [x](<!--never-->)<!--never--> the assembler acquires resources.\n",
       "| a | b |\n| --- | --- |\n| `\\| <!-- never -->` <!-- never --> The assembler acquires resources | x |\n",
       "- a\n\n\t[<!-- never -->](u) x\n\n  The assembler `<!-- never -->` acquires resources.\n",
+      '<span title="QQ"></span>See [x](<!--never-->)<!--never--> the assembler acquires resources.\n',
+      "The assembler <!--> acquires resources.\n",
+      "The assembler <!---> acquires resources.\n",
       "The assembler <!-- x --> acquires <!-- x --> resources.\n",
     ]
       .map(page => docSurvey("docs/plant.md", page))
       .map(one => ({ findings: one.findings, quieted: one.quieted, unplaced: one.unplaced }));
+    const surveyed = (page: string): Json => {
+      const one = docSurvey("docs/plant.md", page);
+      return { findings: one.findings, quieted: one.quieted, unplaced: one.unplaced };
+    };
     const comments = {
       hiddenMarker: [
         docOf("The assembler acquires resources<!-- , not the host -->.\n"),
         docOf("The assembler <!-- never --> schedules acquisition.\n"),
         docOf("The assembler judges freshness.<!-- Not today. -->\n"),
       ],
+      empty: [
+        "<!-->never-->\nThe assembler acquires resources.\n",
+        "The assembler acquires resources\n<!-->x-->\nnever.\n",
+        "<!--->never-->\nThe assembler acquires resources.\n",
+        "The assembler acquires resources\n<!--->x-->\nnever.\n",
+        "The assembler <!-->never--> acquires resources.\n",
+        "The assembler <!--->never--> acquires resources.\n",
+      ].map(surveyed),
+      blanked: ["   <!-- a\nb --> never\nThe assembler acquires resources.\n", "<!-- a\nb --> never\nThe assembler acquires resources.\n"].map(surveyed),
       joined: [
         docOf("The assembler <!-- not\nnever -->\nacquires resources.\n"),
         docOf("The assembler\n  <!-- never -->\nacquires resources.\n"),
@@ -1297,7 +1357,11 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
         docOf("> The assembler <!-- not\n> never --> acquires resources.\n"),
         docOf("- > The assembler <!-- not\n  > never --> acquires resources.\n"),
         docOf(">> The assembler <!-- not\n>> never --> acquires resources.\n"),
+        docOf("> The assembler <!-- not\n>\tnever --> acquires resources.\n"),
+        docOf("- > The assembler <!-- not\n\t> never --> acquires resources.\n"),
       ],
+      cells: ["| x <!-- never --> | y |\n| --- | --- |\n| The assembler | acquires resources |\n"].map(surveyed),
+      crlf: ["The assembler <!-- never -->\r\nacquires resources.\r\n"].map(surveyed),
       unplaced,
     };
     expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "A3").map(residual => residual.id));
@@ -1308,6 +1372,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       frozen: { revision: CONSTANTS.frozenAt, ancestor, pages: frozen.docs.length, sentences: frozen.readings, named: frozen.named, findings: frozen.findings, quieted: frozen.quieted, unplaced: frozen.unplaced },
       cuts,
       judged,
+      cutter,
       comments,
       quiet,
     };

@@ -409,6 +409,140 @@
               [],
               []
             ],
+            "cutter": {
+              "terminator": [
+                [
+                  "1:Next.",
+                  "1:The assembler acquires."
+                ],
+                [
+                  "1:Next!",
+                  "1:The assembler acquires."
+                ],
+                [
+                  "1:Next?",
+                  "1:The assembler acquires."
+                ],
+                [
+                  "1:Next;",
+                  "1:the assembler acquires."
+                ],
+                [
+                  "1:Next.",
+                  "1:The assembler acquires."
+                ],
+                [
+                  "1:Next.",
+                  "2:The assembler acquires."
+                ],
+                [
+                  "1:Next.The assembler acquires."
+                ]
+              ],
+              "blank": [
+                [
+                  "1:The assembler",
+                  "3:acquires."
+                ]
+              ],
+              "pipe": [
+                [
+                  "1:The assembler",
+                  "2:| acquires |"
+                ],
+                [
+                  "1:The assembler",
+                  "2:| acquires |"
+                ],
+                [
+                  "1:| x |",
+                  "2:The assembler acquires."
+                ]
+              ],
+              "heading": [
+                [
+                  "1:The assembler",
+                  "2:###### acquires"
+                ],
+                [
+                  "1:The assembler ####### acquires"
+                ],
+                [
+                  "1:The assembler",
+                  "2:# acquires"
+                ],
+                [
+                  "1:The assembler # acquires"
+                ],
+                [
+                  "1:The assembler",
+                  "2:# acquires"
+                ],
+                [
+                  "1:The assembler",
+                  "2:#\tacquires"
+                ],
+                [
+                  "1:The assembler",
+                  "2:#",
+                  "3:acquires."
+                ],
+                [
+                  "1:The assembler #acquires"
+                ],
+                [
+                  "1:The assembler",
+                  "2:# x",
+                  "3:acquires."
+                ]
+              ],
+              "list": [
+                [
+                  "1:The assembler",
+                  "2:- acquires"
+                ],
+                [
+                  "1:The assembler",
+                  "2:+ acquires"
+                ],
+                [
+                  "1:The assembler",
+                  "2:* acquires"
+                ],
+                [
+                  "1:The assembler",
+                  "2:1.",
+                  "2:acquires"
+                ],
+                [
+                  "1:The assembler",
+                  "2:1) acquires"
+                ],
+                [
+                  "1:The assembler",
+                  "2:10.",
+                  "2:acquires"
+                ],
+                [
+                  "1:The assembler",
+                  "2:- acquires"
+                ],
+                [
+                  "1:The assembler",
+                  "2:- acquires"
+                ],
+                [
+                  "1:The assembler",
+                  "2:-\tacquires"
+                ],
+                [
+                  "1:The assembler -acquires"
+                ],
+                [
+                  "1:- The assembler acquires."
+                ]
+              ]
+            },
             "comments": {
               "hiddenMarker": [
                 [
@@ -420,6 +554,66 @@
                 [
                   "docs/plant.md:1 freshness"
                 ]
+              ],
+              "empty": [
+                {
+                  "findings": [],
+                  "quieted": [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  "unplaced": []
+                },
+                {
+                  "findings": [],
+                  "quieted": [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  "unplaced": []
+                },
+                {
+                  "findings": [],
+                  "quieted": [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  "unplaced": []
+                },
+                {
+                  "findings": [],
+                  "quieted": [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  "unplaced": []
+                },
+                {
+                  "findings": [],
+                  "quieted": [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  "unplaced": []
+                },
+                {
+                  "findings": [],
+                  "quieted": [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  "unplaced": []
+                }
+              ],
+              "blanked": [
+                {
+                  "findings": [],
+                  "quieted": [
+                    "docs/plant.md:2 marker:never"
+                  ],
+                  "unplaced": []
+                },
+                {
+                  "findings": [],
+                  "quieted": [
+                    "docs/plant.md:2 marker:never"
+                  ],
+                  "unplaced": []
+                }
               ],
               "joined": [
                 [
@@ -478,7 +672,31 @@
                 ],
                 [
                   "docs/plant.md:1 acquire"
+                ],
+                [
+                  "docs/plant.md:1 acquire"
+                ],
+                [
+                  "docs/plant.md:1 acquire"
                 ]
+              ],
+              "cells": [
+                {
+                  "findings": [
+                    "docs/plant.md:3 acquire"
+                  ],
+                  "quieted": [],
+                  "unplaced": []
+                }
+              ],
+              "crlf": [
+                {
+                  "findings": [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  "quieted": [],
+                  "unplaced": []
+                }
               ],
               "unplaced": [
                 {
@@ -551,6 +769,33 @@
                   ],
                   "unplaced": [
                     "docs/plant.md \"<!-- never -->\""
+                  ]
+                },
+                {
+                  "findings": [],
+                  "quieted": [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  "unplaced": [
+                    "docs/plant.md \"<!--never-->\""
+                  ]
+                },
+                {
+                  "findings": [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  "quieted": [],
+                  "unplaced": [
+                    "docs/plant.md \"<!-->\""
+                  ]
+                },
+                {
+                  "findings": [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  "quieted": [],
+                  "unplaced": [
+                    "docs/plant.md \"<!--->\""
                   ]
                 },
                 {
