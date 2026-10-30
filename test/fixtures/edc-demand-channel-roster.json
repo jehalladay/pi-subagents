@@ -180,6 +180,7 @@
             },
             "nearMisses": {
               "comment": [],
+              "innerComment": [],
               "inner": [],
               "evidenceAlone": [],
               "testModule": []
@@ -221,6 +222,20 @@
           "quote": "so no Pi prompt",
           "witness": {
             "findings": [],
+            "liveQuiet": [
+              "src/default-agents.ts lexeme subjectless:precision precise",
+              "src/workbench/claude-capability-tools.ts lexeme subjectless:demand demand"
+            ],
+            "quietRule": [
+              ".pi/agents/plant.md subjectless:precision precise",
+              "src/plant-marker.ts lexeme marker:never projection requirement",
+              "src/plant-marker.ts lexeme marker:not demand",
+              "src/plant-unread.ts lexeme subjectless:demand demand",
+              "src/plant-unread.ts lexeme subjectless:demand demand",
+              "src/plant.ts lexeme subjectless:precision precise",
+              "src/plant.ts lexeme subjectless:precision precise",
+              "src/plant.ts lexeme subjectless:precision precise precisely"
+            ],
             "floors": {
               "srcModules": true,
               "exampleModules": true,
@@ -255,7 +270,6 @@
                 "src/plant.ts:1 lexeme:1 demand"
               ],
               "lexeme.private-name": [
-                "src/plant.ts:2 member:1 demand",
                 "src/plant.ts:2 lexeme:1 demand"
               ],
               "lexeme.string": [
@@ -264,13 +278,14 @@
               "lexeme.no-substitution-template": [
                 "src/plant.ts:1 lexeme:1 demand"
               ],
+              "lexeme.template-head": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
               "lexeme.template-middle": [
-                "src/plant.ts:1 lexeme:2 demand",
-                "src/plant.ts:2 lexeme:1 demand"
+                "src/plant.ts:1 lexeme:1 demand"
               ],
               "lexeme.template-tail": [
-                "src/plant.ts:1 lexeme:2 demand",
-                "src/plant.ts:2 lexeme:1 demand"
+                "src/plant.ts:1 lexeme:1 demand"
               ],
               "lexeme.regular-expression": [
                 "src/plant.ts:1 lexeme:1 demand"
@@ -290,6 +305,30 @@
               "lexeme.concatenation": [
                 "src/plant.ts:1 lexeme:1 demand"
               ],
+              "lexeme.concatenation-parenthesized": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.concatenation-as": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.concatenation-satisfies": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.concatenation-non-null": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.concatenation-type-assertion": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.concatenation-nested-wrappers": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.concatenation-wrapped-spelled": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.template-span-as": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
               "access.property-access": [
                 "src/plant.ts:1 access:1 demand"
               ],
@@ -299,7 +338,13 @@
               "access.element-access": [
                 "src/plant.ts:1 access:1 demand"
               ],
+              "access.element-access-as": [
+                "src/plant.ts:1 access:1 demand"
+              ],
               "access.indexed-access-type": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.indexed-access-parenthesized": [
                 "src/plant.ts:1 access:1 demand"
               ],
               "access.binding-initializer": [
@@ -323,7 +368,16 @@
               "access.binding-computed-key": [
                 "src/plant.ts:2 access:1 demand"
               ],
+              "access.binding-computed-as": [
+                "src/plant.ts:2 access:1 demand"
+              ],
               "access.binding-array-element": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.binding-array-rest": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.binding-object-rest": [
                 "src/plant.ts:2 access:1 demand"
               ],
               "access.assignment": [
@@ -335,14 +389,74 @@
               "access.assignment-computed-key": [
                 "src/plant.ts:2 access:1 demand"
               ],
+              "access.assignment-computed-as": [
+                "src/plant.ts:2 access:1 demand"
+              ],
               "access.assignment-array-element": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.assignment-array-rest": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.assignment-object-rest": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.assignment-object-rest-target": [
                 "src/plant.ts:2 access:1 demand"
               ],
               "access.assignment-for-of": [
                 "src/plant.ts:2 access:1 demand"
               ],
+              "access.assignment-for-of-rest": [
+                "src/plant.ts:2 access:1 demand"
+              ],
               "access.assignment-for-in": [
                 "src/plant.ts:2 access:1 demand"
+              ],
+              "access.comment-property-access-block": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.comment-property-access-line": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.comment-qualified-name": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.comment-element-receiver": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.comment-indexed-object": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.comment-binding-initializer": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.comment-binding-for-of": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.comment-binding-for-in": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.comment-binding-parameter-type": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.comment-binding-parameter-default": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.comment-assignment": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.comment-assignment-for-of": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.comment-assignment-for-in": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.comment-jsdoc-cast": [
+                "src/plant.js:1 access:1 demand"
+              ],
+              "access.comment-between-words": [
+                "src/plant.ts:1 access:1 demand"
               ],
               "member.property-assignment": [
                 "src/plant.ts:1 member:1 demand"
@@ -357,6 +471,9 @@
                 "src/plant.ts:2 member:1 demand"
               ],
               "member.computed-name": [
+                "src/plant.ts:1 member:1 demand"
+              ],
+              "member.computed-name-as": [
                 "src/plant.ts:1 member:1 demand"
               ],
               "member.class-property": [
@@ -484,6 +601,309 @@
               ],
               "import.equals-entity": [
                 "src/plant.ts:1 import:1 demand"
+              ],
+              "import.comment-equals-entity": [
+                "src/plant.ts:1 import:1 demand"
+              ]
+            },
+            "comments": {
+              "plants": {
+                "property-access": [],
+                "qualified-name": [],
+                "element-receiver": [],
+                "indexed-object": [],
+                "binding-initializer": [],
+                "binding-for-of": [],
+                "binding-for-in": [],
+                "binding-parameter-type": [],
+                "binding-parameter-default": [],
+                "assignment": [],
+                "assignment-for-of": [],
+                "assignment-for-in": [],
+                "import-equals-entity": []
+              },
+              "twins": {
+                "property-access": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "qualified-name": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "element-receiver": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "indexed-object": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "binding-initializer": [
+                  "src/plant.ts:2 access:1 demand"
+                ],
+                "binding-for-of": [
+                  "src/plant.ts:2 access:1 demand"
+                ],
+                "binding-for-in": [
+                  "src/plant.ts:2 access:1 demand"
+                ],
+                "binding-parameter-type": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "binding-parameter-default": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "assignment": [
+                  "src/plant.ts:2 access:1 demand"
+                ],
+                "assignment-for-of": [
+                  "src/plant.ts:2 access:1 demand"
+                ],
+                "assignment-for-in": [
+                  "src/plant.ts:2 access:1 demand"
+                ],
+                "import-equals-entity": [
+                  "src/plant.ts:1 import:1 demand",
+                  "src/plant.ts:1 access:1 demand"
+                ]
+              }
+            },
+            "constants": {
+              "concatenation.parentheses": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "concatenation.as": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "concatenation.satisfies": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "concatenation.nonNull": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "concatenation.typeAssertion": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "templateSpan.parentheses": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "templateSpan.as": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "templateSpan.satisfies": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "templateSpan.nonNull": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "templateSpan.typeAssertion": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "concatenationKey.parentheses": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "concatenationKey.as": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "concatenationKey.satisfies": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "concatenationKey.nonNull": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "concatenationKey.typeAssertion": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "templateKey.parentheses": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "templateKey.as": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "templateKey.satisfies": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "templateKey.nonNull": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "templateKey.typeAssertion": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "elementKey.parentheses": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "elementKey.as": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "elementKey.satisfies": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "elementKey.nonNull": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "elementKey.typeAssertion": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "bindingKey.parentheses": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingKey.as": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingKey.satisfies": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingKey.nonNull": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingKey.typeAssertion": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentKey.parentheses": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentKey.as": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentKey.satisfies": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentKey.nonNull": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentKey.typeAssertion": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "memberName.parentheses": [
+                "src/plant.ts:1 member:1 demand"
+              ],
+              "memberName.as": [
+                "src/plant.ts:1 member:1 demand"
+              ],
+              "memberName.satisfies": [
+                "src/plant.ts:1 member:1 demand"
+              ],
+              "memberName.nonNull": [
+                "src/plant.ts:1 member:1 demand"
+              ],
+              "memberName.typeAssertion": [
+                "src/plant.ts:1 member:1 demand"
+              ]
+            },
+            "commentMatrix": {
+              "propertyAccess.block": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "propertyAccess.line": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "propertyAccess.jsdocStyle": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "qualifiedName.block": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "qualifiedName.line": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "qualifiedName.jsdocStyle": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "elementReceiver.block": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "elementReceiver.line": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "elementReceiver.jsdocStyle": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "indexedObject.block": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "indexedObject.line": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "indexedObject.jsdocStyle": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "bindingInitializer.block": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingInitializer.line": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingInitializer.jsdocStyle": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingForOf.block": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingForOf.line": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingForOf.jsdocStyle": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingForIn.block": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingForIn.line": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingForIn.jsdocStyle": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "parameterType.block": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "parameterType.line": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "parameterType.jsdocStyle": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "parameterDefault.block": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "parameterDefault.line": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "parameterDefault.jsdocStyle": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "assignment.block": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignment.line": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignment.jsdocStyle": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentForOf.block": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentForOf.line": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentForOf.jsdocStyle": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentForIn.block": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentForIn.line": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentForIn.jsdocStyle": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "importEntity.block": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "importEntity.line": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "importEntity.jsdocStyle": [
+                "src/plant.ts:1 import:1 demand"
               ]
             },
             "quiet": {
@@ -505,6 +925,9 @@
                 [],
                 [],
                 [],
+                [],
+                [],
+                [],
                 []
               ],
               "R-UNREAD-FORM": {
@@ -513,7 +936,20 @@
                   "requireBinding": [],
                   "dynamicImport": [],
                   "localExportAlias": [],
-                  "callKey": []
+                  "callKey": [],
+                  "inOperator": [],
+                  "catchBinding": [],
+                  "ambientBinding": [],
+                  "namespaceBindingPattern": [],
+                  "forInTarget": [],
+                  "bindingDefaultMember": [],
+                  "parameterDefaultMember": [],
+                  "signatureParameter": [],
+                  "indexSignature": [],
+                  "mappedTypeKey": [],
+                  "unionIndex": [],
+                  "jsxAttribute": [],
+                  "jsxNamespacedName": []
                 },
                 "readTwins": {
                   "untypedParameter": [
@@ -530,6 +966,45 @@
                   ],
                   "callKey": [
                     "src/plant.ts:1 access:1 demand"
+                  ],
+                  "inOperator": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "catchBinding": [
+                    "src/plant.ts:4 access:1 demand"
+                  ],
+                  "ambientBinding": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "namespaceBindingPattern": [
+                    "src/plant.ts:2 member:1 demand"
+                  ],
+                  "forInTarget": [
+                    "src/plant.ts:2 access:1 demand"
+                  ],
+                  "bindingDefaultMember": [
+                    "src/plant.ts:2 member:1 demand"
+                  ],
+                  "parameterDefaultMember": [
+                    "src/plant.ts:2 member:1 demand"
+                  ],
+                  "signatureParameter": [
+                    "src/plant.ts:2 member:1 demand"
+                  ],
+                  "indexSignature": [
+                    "src/plant.ts:2 member:1 demand"
+                  ],
+                  "mappedTypeKey": [
+                    "src/plant.ts:1 member:1 demand"
+                  ],
+                  "unionIndex": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "jsxAttribute": [
+                    "src/plant.tsx:1 member:1 demand"
+                  ],
+                  "jsxNamespacedName": [
+                    "src/plant.tsx:1 lexeme:1 demand"
                   ]
                 }
               }

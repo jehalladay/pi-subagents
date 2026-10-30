@@ -43,20 +43,38 @@
  * - THE SURFACES (row B, the clause's three nouns):
  *   PROMPTS (B1): every git-listed JS or TS module below src/ and examples/ (tracked or untracked, never ignored), parsed with the
  *   TypeScript compiler (.tsx as TSX, .jsx as JSX, the other TS extensions as TS, the other JS extensions as JS, which parses
- *   JSX), never a comment (a comment is no prompt). The code reader reads exactly the forms below and no other; each form is
- *   pinned by a plant in B1's forms witness (FORMS), and R-UNREAD-FORM names the forms it leaves unread:
+ *   JSX). THE CODE READER, in the enumerate-the-resolvable form (ruling R-B97): it claims exactly the forms below and no other.
+ *   Each claimed form is pinned by its row in B1's forms witness (FORMS: one plant per row, read to exactly one finding through the
+ *   row's own reading, both asserted); each form known to be left unread is a member of R-UNREAD-FORM, a quiet row beside a read
+ *   twin (R-COMPOSED holds the parts no constant reads); a form found later that the reader leaves unread is an addition to that
+ *   list unless it contradicts a claim below; and on the live tree B1 fails closed (LIVE QUIET).
+ *   COMMENTS: no comment is read. A reading that takes a node as written - a property access, a qualified name, an element
+ *   access's receiver, an indexed access type's object type, a binding pattern's or an assignment target's receiver, an
+ *   import-equals entity name - reads it with every comment inside it (a JSDoc comment too) read as one space: a marker in an inner
+ *   comment keeps the reading's finding (FORMS access.comment-* and import.comment-equals-entity; B1's commentMatrix: every such
+ *   reading with a block, a line and a JSDoc-style comment, one finding each), and a family word in one finds nothing (B1's
+ *   comments witness: a plant per such reading, each beside its twin with the word as code, which finds).
+ *   CONSTANT: a string literal or no-substitution template, or a + concatenation or template expression whose every part is a
+ *   constant, each read through parentheses, as, satisfies, a non-null "!" and a "<T>" assertion at any depth (FORMS
+ *   lexeme.concatenation-*, lexeme.template-span-as, access.*-as, member.computed-name-as; B1's constants matrix: every
+ *   constant-reading site with every wrapper, one finding each); nothing else is a constant (R-COMPOSED).
  *   LEXEME each identifier, private name, string literal (a no-substitution template too), template head, middle and tail,
  *   regular expression literal and non-blank JSX text; each template literal type, its literal parts joined by spaces; and each
- *   template expression and + concatenation as spelled (a non-constant part read as one space).
- *   ACCESS as receiver.key (a computed key: its constant, else "?"): each property access (a.b) and qualified name (A.B), as
- *   written; each element access (a[k]) and indexed access type (A["k"]); each key of an object binding pattern, the receiver
- *   being the declaration's initializer, else the iterated expression of the for-of or for-in declaring it, or the parameter's
- *   type annotation, else its default value, and in a nested pattern the enclosing element's path (receiver.key; an array
- *   pattern's element, receiver.index); and each key of a destructuring assignment target (an object or array literal left of
- *   "=", or the target of a for-of or for-in) after the assigned or iterated expression, likewise at depth.
- *   MEMBER each member name (a computed name: its constant) joined after the names of its enclosing declarations - variables,
- *   properties, methods, accessors, functions and classes (declared or expressions), interfaces, type aliases, enums and their
- *   members, namespaces and modules, parameter properties; a member with none reads as its lexeme alone. The members: an object
+ *   template expression and + concatenation as spelled (a constant part as its constant, any other part read as one space, both
+ *   through the CONSTANT wrappers).
+ *   ACCESS as receiver.key (a computed key: its constant, else "?"; every receiver as written, COMMENTS applied): each property
+ *   access (a.b) and qualified name (A.B); each element access (a[k]) after its receiver; each indexed access type (A["k"]) after
+ *   its object type, its key a literal type, parenthesized or not (any other key type: "?"); each key of an object binding pattern
+ *   (a rest element's name too), the receiver being the declaration's initializer, else the iterated expression of the for-of or
+ *   for-in declaring it, or the parameter's type annotation, else its default value, and in a nested pattern the enclosing
+ *   element's path (receiver.key; an array pattern's element or rest element, receiver.index); and each key of a destructuring
+ *   assignment target (an object or array literal left of "=", or the target of a for-of or for-in) after the assigned or
+ *   iterated expression, likewise at depth, a rest element's target too (an array literal's at its index, an object literal's at
+ *   the receiver, a rest name as the key).
+ *   MEMBER each member name (a computed name: its constant) joined after the names of its enclosing declarations of exactly these
+ *   kinds: a variable an identifier names, a property, method or accessor, a function or class (declared or an expression), an
+ *   interface, a type alias, an enum and its members, a namespace or module, a parameter property (a destructured binding
+ *   element and a plain parameter join no name: R-UNREAD-FORM); a member with none reads as its lexeme alone. The members: an object
  *   literal's properties, shorthands, methods and accessors; a class's, an interface's and a type literal's properties, methods
  *   and accessors, declared or as signatures; a constructor's parameter properties; an enum's members; and each declaration
  *   directly in a namespace or module body (a variable an identifier names, a function, class, interface, type alias, enum or
@@ -64,9 +82,15 @@
  *   IMPORT each name joined after its module specifier or module reference: an import declaration's default, namespace and named
  *   bindings; an export declaration's named and namespace re-exports from a module specifier (an import or export specifier's
  *   module name and its alias, both); and an import-equals declaration's name, after a require's specifier or the entity name as
- *   written.
+ *   written (COMMENTS applied).
  *   Every git-listed .md page below .pi/, .agents/ and examples/. And at run time: every default agent's configuration
  *   (DEFAULT_AGENTS), the curated Claude MCP server's instructions, every registered Pi tool's promptSnippet and promptGuidelines.
+ *   LIVE QUIET (fail closed): every quiet reading of the live code and page pass (a family word or the carrier with no subject
+ *   word, or beside a marker), each occurrence, is held with its lines dropped as path, via, kind, reason and the family words and
+ *   carrier pairs it spells (B1's liveQuiet; the live findings are held too). So a family word or carrier pair added to or dropped
+ *   from any text the reader reads - a lexeme of a listed module in any form, every R-UNREAD-FORM member's included, or a
+ *   sentence of a listed page - changes a held finding or quiet entry and reds B1, until the cut that adds it re-measures this
+ *   file; a word the reader reads in no text (a comment, a part composed at run time) is outside it (R-SCOPE, R-COMPOSED).
  *   TOOL DESCRIPTIONS (B2), at run time: every Pi tool the real extension registers when booted hermetically with the workbench's
  *   Claude backend (its name, label and description), every curated Claude tool listed by an in-memory MCP client (every field but
  *   its input schema), and every capability descriptor of the native registration and of the four injected-client registrations
@@ -87,8 +111,9 @@
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label; every witness is held to the roster):
  *  A "If Pi-subagents adopts EDC context assembly": A1 the consumer reading over the live tree (the src walk equal to git's
  *    listing, its floors, the frozen pass at the cut's base); A2 the stems and the consumer reader's routes and near misses.
- *  B "so no Pi prompt, tool description or capability input becomes the demand channel": B1 the prompt surfaces (live findings,
- *    floors, the frozen pass) and the code reader's forms (a plant per form, its reading held); B2 the tool descriptions; B3 the
+ *  B "so no Pi prompt, tool description or capability input becomes the demand channel": B1 the prompt surfaces (live findings
+ *    and live quiet readings, floors, the frozen pass) and the code reader's forms (a plant per form, one finding each, its reading
+ *    held; the comments witness; the residual rows); B2 the tool descriptions; B3 the
  *    capability inputs and the boundary; B4 the demand reading itself and its append quiet row (a note appended after the owner
  *    filing block, spelling every vocabulary word, leaves the whole B4 witness unchanged; read past the block it would empty
  *    R-SYNONYM; a block edited in place is refused).
@@ -125,11 +150,18 @@
  *   test/workbench-edc-shipped-claim-census.test.ts reads for EDC claims), qa/ and test/ modules, root files, comments, YAML
  *   (.agents/skills/beads/agents/openai.yaml's default_prompt), an operator's own agent files and settings (workbench roles), model
  *   replies; R-COMPOSED (B1) a prompt composed at run time from a part that is no constant (a variable holding the family word, a
- *   += onto a variable, an array of parts joined by a call) and prompts composed per call (buildAgentPrompt); R-UNREAD-FORM (B1)
- *   the code forms the reader leaves unread, each read as its lexemes alone: a binding pattern with no receiver (an untyped
- *   parameter without a default value, such as a callback's ({ demand }) => ...), a require or a dynamic import bound to a name,
- *   an export alias with no module specifier, and a key passed to a call (context.get("demand")) - each twin, the same words
- *   through a read form, finds them; R-UNNAMED-INPUT (B3) an input that steers context with no family word - the
+ *   += onto a variable, an array of parts joined by a call, a .concat call, a comma or conditional expression) and prompts
+ *   composed per call (buildAgentPrompt); R-UNREAD-FORM (B1) the code forms the reader leaves unread, each read as its lexemes
+ *   alone (and its other readings), each a quiet row beside a twin that spells the same words through a read form and finds them:
+ *   a binding pattern with no receiver (an untyped parameter without a default value, such as a callback's ({ demand }) => ...;
+ *   a catch clause's binding; an ambient declaration's binding), a binding pattern naming a namespace member, a require or a
+ *   dynamic import bound to a name, an export alias with no module specifier, a key passed to a call (context.get("demand")) or
+ *   tested by in ("demand" in context), a for-of or for-in target that is no literal (holder.demand), an object literal under a
+ *   destructured binding's or a plain parameter's default value (neither joins a name: the cut #3 refusal's F2), a call or
+ *   construct signature's and an index signature's parameters, a mapped type's keys, an indexed access type whose key is no
+ *   literal type (a union), and a JSX attribute's name (it joins no member path; a namespaced one reads as two lexemes);
+ *   R-UNNAMED-INPUT (B3) an input that steers context
+ *   with no family word - the
  *   Agent tool's inherit_context, measured: a Pi-native fork switch the model sets ("If true, fork parent conversation into the
  *   agent. Default: false (fresh context).") - reads quiet; R-PARAPHRASE (B4) demand or precision in other words ("Ask for more
  *   context when you need it.") - measured: a paraphrase family (request, ask, need, more, narrow, ...) beside the subject flags
@@ -299,8 +331,9 @@ const ROWS: readonly Row[] = [
 const REQUIRED_DESCRIPTORS = ["forge.gate.status", "furnace.run.inspect", "hyperunix.find", "reactivefiber.render.preview"] as const;
 /** The Pi tools the hermetic boot with the Claude backend must register (a floor, never the exact set). */
 const REQUIRED_PI_TOOLS = ["Agent", "SubagentWorkflow", "get_subagent_result", "steer_subagent", "workbench_catalog", "workflow_execute"] as const;
-/** Floors below the counts measured at the cut (116 src modules, 6 example modules, 3 pages, 136731 code and page readings, 136007
- * consumer readings, 16 Pi tools, 3 default agents, 2 tools with guidelines, 65 prompt, 190 description and 805 input texts). */
+/** Floors below the live counts measured at cut #4 (117 src modules, 6 example modules, 3 pages, 137910 code and page readings,
+ * 137186 consumer readings, 16 Pi tools, 3 default agents, 2 tools with guidelines, 65 prompt, 190 description and 805 input
+ * texts); the frozen pass at CONSTANTS.frozenAt holds its own counts exactly (B1.frozen, A1.frozen). */
 const FLOORS = { srcModules: 110, exampleModules: 5, pages: 3, codeReadings: 120_000, consumerReadings: 120_000, piTools: 16, defaultAgents: 3, guidelines: 2, promptTexts: 50, descriptionTexts: 150, inputTexts: 600 } as const;
 
 // ---------------------------------------------------------------------------------------------------------------- the reader
@@ -403,6 +436,22 @@ function sentences(text: string): { readonly line: number; readonly text: string
   flush();
   return out;
 }
+/** The vocabulary words that make a reading, in order: each family word and each carrier pair a text spells. */
+function familyWords(text: string): string[] {
+  const tokens = words(text);
+  return tokens.flatMap((word, index) => {
+    if (DEMAND.has(word) || PRECISION.has(word)) return [word];
+    const pair = VOCABULARY.carrier.find(([first, second]) => word === first && tokens[index + 1] === second);
+    return pair === undefined ? [] : [pair.join(" ")];
+  });
+}
+/** LIVE QUIET: every quiet reading of one text, each occurrence, lines dropped: `<where> <kind>:<reason> <its family words>`. */
+function quietOf(where: string, text: string): string[] {
+  return sentences(text).flatMap(sentence => {
+    const reading = readSentence(sentence.text);
+    return reading.kind === "subjectless" || reading.kind === "marker" ? [`${where} ${reading.kind}:${reading.reason} ${familyWords(sentence.text).join(" ")}`] : [];
+  });
+}
 /** Every finding and every quieted reading of one text, each as `<where>:<sentence line> <reason>`. */
 function textReadings(where: string, text: string): { readonly findings: string[]; readonly quieted: string[] } {
   const findings: string[] = [];
@@ -421,33 +470,69 @@ interface Site {
   readonly via: Via;
   readonly text: string;
 }
+/** An expression without the wrappers that keep its value, at any depth: parentheses, as, satisfies, a non-null "!" and a "<T>"
+ * assertion (CONSTANT). */
+function unwrapped(node: ts.Node): ts.Node {
+  return ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isNonNullExpression(node) || ts.isTypeAssertionExpression(node) ? unwrapped(node.expression) : node;
+}
+/** CONSTANT: a string literal or no-substitution template, a + concatenation or template expression whose every part is a
+ * constant, each read through its value-keeping wrappers; undefined for anything else. */
 function constant(node: ts.Node): string | undefined {
-  if (ts.isStringLiteralLike(node)) return node.text;
-  if (ts.isParenthesizedExpression(node)) return constant(node.expression);
-  if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken) {
-    const left = constant(node.left);
-    const right = constant(node.right);
+  const value = unwrapped(node);
+  if (ts.isStringLiteralLike(value)) return value.text;
+  if (ts.isBinaryExpression(value) && value.operatorToken.kind === ts.SyntaxKind.PlusToken) {
+    const left = constant(value.left);
+    const right = constant(value.right);
     return left === undefined || right === undefined ? undefined : left + right;
   }
-  if (ts.isTemplateExpression(node)) {
-    let text = node.head.text;
-    for (const span of node.templateSpans) {
-      const value = constant(span.expression);
-      if (value === undefined) return undefined;
-      text += value + span.literal.text;
+  if (ts.isTemplateExpression(value)) {
+    let text = value.head.text;
+    for (const span of value.templateSpans) {
+      const part = constant(span.expression);
+      if (part === undefined) return undefined;
+      text += part + span.literal.text;
     }
     return text;
   }
   return undefined;
 }
-/** A template or concatenation as it is spelled: its literal parts in order, each non-constant part read as one space. */
+/** A template or concatenation as it is spelled: its literal parts in order, each non-constant part read as one space (each part
+ * read through its value-keeping wrappers). */
 function spelled(node: ts.Node): string {
   const value = constant(node);
   if (value !== undefined) return value;
-  if (ts.isParenthesizedExpression(node)) return spelled(node.expression);
-  if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken) return spelled(node.left) + spelled(node.right);
-  if (ts.isTemplateExpression(node)) return node.head.text + node.templateSpans.map(span => spelled(span.expression) + span.literal.text).join("");
+  const inner = unwrapped(node);
+  if (ts.isBinaryExpression(inner) && inner.operatorToken.kind === ts.SyntaxKind.PlusToken) return spelled(inner.left) + spelled(inner.right);
+  if (ts.isTemplateExpression(inner)) return inner.head.text + inner.templateSpans.map(span => spelled(span.expression) + span.literal.text).join("");
   return " ";
+}
+/** A node's tokens in order (a JSDoc comment is trivia, never a token). */
+function tokensOf(node: ts.Node, source: ts.SourceFile): ts.Node[] {
+  const children = node.getChildren(source).filter(child => !ts.isJSDoc(child));
+  return children.length === 0 ? [node] : children.flatMap(child => tokensOf(child, source));
+}
+/** A node as written with every comment inside it read as one space (COMMENTS: a comment is no prompt): its tokens' own text in
+ * order, the trivia between two tokens kept when it is white space alone and read as one space when it holds a comment. */
+function bare(node: ts.Node, source: ts.SourceFile): string {
+  const written = node.getText(source);
+  if (!written.includes("//") && !written.includes("/*")) return written;
+  let text = "";
+  let end: number | undefined;
+  for (const token of tokensOf(node, source)) {
+    const start = token.getStart(source);
+    if (end !== undefined) {
+      const trivia = source.text.slice(end, start);
+      text += /^\s*$/.test(trivia) ? trivia : " ";
+    }
+    text += source.text.slice(start, token.getEnd());
+    end = token.getEnd();
+  }
+  return text;
+}
+/** An indexed access type's index as its constant: a literal type, parenthesized or not; undefined for any other index type. */
+function literalIndex(type: ts.TypeNode): string | undefined {
+  if (ts.isParenthesizedTypeNode(type)) return literalIndex(type.type);
+  return ts.isLiteralTypeNode(type) ? constant(type.literal) : undefined;
 }
 /** The declarations whose own name a member path joins (with a constructor parameter property, see nameOf). */
 const NAMED_KINDS: ReadonlySet<ts.SyntaxKind> = new Set([
@@ -518,15 +603,19 @@ function nameOf(node: ts.Node): string | undefined {
 }
 /** The receiver a binding pattern destructures: its declaration's initializer, else the iterated expression of the for-of or
  * for-in that declares it; its parameter's type annotation, else its default value; in a nested pattern, the enclosing element's
- * path. undefined when there is none (an untyped parameter without a default value, a catch binding): R-UNREAD-FORM. */
+ * path, each as written (COMMENTS). undefined when there is none (an untyped parameter without a default value, a catch binding, an
+ * ambient declaration's binding): R-UNREAD-FORM. */
 function receiverOf(pattern: ts.BindingPattern, source: ts.SourceFile): string | undefined {
   const holder = pattern.parent;
   if (ts.isBindingElement(holder)) return elementPath(holder, source);
-  if (ts.isParameter(holder)) return (holder.type ?? holder.initializer)?.getText(source);
+  if (ts.isParameter(holder)) {
+    const receiver = holder.type ?? holder.initializer;
+    return receiver === undefined ? undefined : bare(receiver, source);
+  }
   if (!ts.isVariableDeclaration(holder)) return undefined;
-  if (holder.initializer !== undefined) return holder.initializer.getText(source);
+  if (holder.initializer !== undefined) return bare(holder.initializer, source);
   const statement = holder.parent.parent;
-  return ts.isForOfStatement(statement) || ts.isForInStatement(statement) ? statement.expression.getText(source) : undefined;
+  return ts.isForOfStatement(statement) || ts.isForInStatement(statement) ? bare(statement.expression, source) : undefined;
 }
 /** A binding element's path: its pattern's receiver joined with its key (an object pattern) or its index (an array pattern). */
 function elementPath(element: ts.BindingElement, source: ts.SourceFile): string | undefined {
@@ -537,13 +626,16 @@ function elementPath(element: ts.BindingElement, source: ts.SourceFile): string 
   return `${receiver}.${key ?? "?"}`;
 }
 /** The keys of a destructuring assignment target after its receiver: each object literal property or shorthand as receiver.key
- * (a nested target deeper, an array literal's elements by index, a target's default value skipped). */
+ * (a nested target deeper, an array literal's elements by index, a rest element's target at its place - an array literal's at its
+ * index, an object literal's at the receiver, its name as the key when it is a name - and a target's default value skipped). */
 function assignmentPaths(target: ts.Expression, receiver: string): { readonly node: ts.Node; readonly path: string }[] {
   if (ts.isParenthesizedExpression(target)) return assignmentPaths(target.expression, receiver);
   if (ts.isBinaryExpression(target) && target.operatorToken.kind === ts.SyntaxKind.EqualsToken) return assignmentPaths(target.left, receiver);
+  if (ts.isSpreadElement(target)) return assignmentPaths(target.expression, receiver);
   if (ts.isArrayLiteralExpression(target)) return target.elements.flatMap((element, index) => assignmentPaths(element, `${receiver}.${index}`));
   if (!ts.isObjectLiteralExpression(target)) return [];
   return target.properties.flatMap(property => {
+    if (ts.isSpreadAssignment(property)) return ts.isIdentifier(property.expression) ? [{ node: property, path: `${receiver}.${property.expression.text}` }] : assignmentPaths(property.expression, receiver);
     if (!ts.isPropertyAssignment(property) && !ts.isShorthandPropertyAssignment(property)) return [];
     const path = `${receiver}.${keyText(property.name) ?? "?"}`;
     return [{ node: property, path }, ...(ts.isPropertyAssignment(property) ? assignmentPaths(property.initializer, path) : [])];
@@ -556,8 +648,8 @@ function scriptKindOf(path: string): ts.ScriptKind {
   if (path.endsWith(".jsx")) return ts.ScriptKind.JSX;
   return /\.(?:ts|mts|cts)$/.test(path) ? ts.ScriptKind.TS : ts.ScriptKind.JS;
 }
-/** Every code reading of one module (never a comment): lexemes, accesses, member paths and imports, each with its line - exactly
- * the forms the header's B1 paragraph lists, each pinned by its FORMS plant. */
+/** Every code reading of one module (never a comment: every as-written text through bare): lexemes, accesses, member paths and
+ * imports, each with its line - exactly the forms the header's B1 paragraph claims, each pinned by its FORMS row. */
 function codeSites(path: string, text: string): Site[] {
   const source = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, scriptKindOf(path));
   const sites: Site[] = [];
@@ -572,12 +664,10 @@ function codeSites(path: string, text: string): Site[] {
     else if (ts.isTemplateExpression(node) || (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken)) {
       const value = spelled(node);
       if (value.trim() !== "") sites.push({ line: at(), via: "lexeme", text: value });
-    } else if (ts.isPropertyAccessExpression(node) || ts.isQualifiedName(node)) sites.push({ line: at(), via: "access", text: node.getText(source) });
-    else if (ts.isElementAccessExpression(node)) sites.push({ line: at(), via: "access", text: `${node.expression.getText(source)}.${constant(node.argumentExpression) ?? "?"}` });
-    else if (ts.isIndexedAccessTypeNode(node)) {
-      const index = ts.isLiteralTypeNode(node.indexType) ? constant(node.indexType.literal) : undefined;
-      sites.push({ line: at(), via: "access", text: `${node.objectType.getText(source)}.${index ?? "?"}` });
-    } else if (ts.isBindingElement(node) && ts.isObjectBindingPattern(node.parent)) {
+    } else if (ts.isPropertyAccessExpression(node) || ts.isQualifiedName(node)) sites.push({ line: at(), via: "access", text: bare(node, source) });
+    else if (ts.isElementAccessExpression(node)) sites.push({ line: at(), via: "access", text: `${bare(node.expression, source)}.${constant(node.argumentExpression) ?? "?"}` });
+    else if (ts.isIndexedAccessTypeNode(node)) sites.push({ line: at(), via: "access", text: `${bare(node.objectType, source)}.${literalIndex(node.indexType) ?? "?"}` });
+    else if (ts.isBindingElement(node) && ts.isObjectBindingPattern(node.parent)) {
       const elementAt = elementPath(node, source);
       if (elementAt !== undefined) sites.push({ line: at(), via: "access", text: elementAt });
     } else if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier !== undefined && ts.isStringLiteralLike(node.moduleSpecifier)) {
@@ -599,11 +689,11 @@ function codeSites(path: string, text: string): Site[] {
       for (const name of names) sites.push({ line: at(), via: "import", text: `${from}.${name}` });
     } else if (ts.isImportEqualsDeclaration(node)) {
       const reference = node.moduleReference;
-      const from = ts.isExternalModuleReference(reference) && ts.isStringLiteralLike(reference.expression) ? reference.expression.text : reference.getText(source);
+      const from = ts.isExternalModuleReference(reference) && ts.isStringLiteralLike(reference.expression) ? reference.expression.text : bare(reference, source);
       sites.push({ line: at(), via: "import", text: `${from}.${node.name.text}` });
     }
     const assigned = ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken && isLiteralTarget(node.left) ? { target: node.left, receiver: node.right } : (ts.isForOfStatement(node) || ts.isForInStatement(node)) && isLiteralTarget(node.initializer) ? { target: node.initializer, receiver: node.expression } : undefined;
-    if (assigned !== undefined) for (const key of assignmentPaths(assigned.target, assigned.receiver.getText(source))) sites.push({ line: lineOf(key.node.getStart(source)), via: "access", text: key.path });
+    if (assigned !== undefined) for (const key of assignmentPaths(assigned.target, bare(assigned.receiver, source))) sites.push({ line: lineOf(key.node.getStart(source)), via: "access", text: key.path });
     if (isMember(node)) {
       const own = nameOf(node);
       const path: string[] = [];
@@ -623,6 +713,8 @@ interface Survey {
   readonly pages: string[];
   readonly findings: string[];
   readonly quieted: string[];
+  /** Every quiet reading, each occurrence, lines dropped (quietOf), in name order. */
+  readonly quiet: string[];
   readonly readings: number;
 }
 const isModule = (path: string): boolean => /\.(?:ts|tsx|mts|cts|js|mjs|cjs|jsx)$/.test(path);
@@ -637,6 +729,7 @@ function survey(texts: readonly (readonly [string, string])[]): Survey {
   const pages: string[] = [];
   const findings: string[] = [];
   const quieted: string[] = [];
+  const quiet: string[] = [];
   let readings = 0;
   for (const [path, text] of texts) {
     if (isModule(path)) {
@@ -646,6 +739,7 @@ function survey(texts: readonly (readonly [string, string])[]): Survey {
         const one = textReadings(`${path}:${site.line} ${site.via}`, site.text);
         findings.push(...one.findings);
         quieted.push(...one.quieted);
+        quiet.push(...quietOf(`${path} ${site.via}`, site.text));
       }
     } else {
       pages.push(path);
@@ -653,9 +747,10 @@ function survey(texts: readonly (readonly [string, string])[]): Survey {
       readings += sentences(text).length;
       findings.push(...one.findings);
       quieted.push(...one.quieted);
+      quiet.push(...quietOf(path, text));
     }
   }
-  return { code, pages, findings: [...new Set(findings)], quieted: [...new Set(quieted)], readings };
+  return { code, pages, findings: [...new Set(findings)], quieted: [...new Set(quieted)], quiet: quiet.sort(byName), readings };
 }
 const byName = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
 /** What git would commit below the code and page roots: tracked or untracked, never ignored. */
@@ -1130,30 +1225,43 @@ const HOLE = "$" + "{";
 const RC_SPECIFIER = ["@reactive", "components/sdk"].join("-");
 const PLANT = "Set the context demand before the render.";
 const PLANT_TWIN = "Never set the context demand before the render.";
-/** A plant for each form the header's B1 paragraph names (its LEXEME, ACCESS, MEMBER - the member kinds and the enclosing
- * declarations - and IMPORT lists, in that order): each spells the subject and a family together through its form, so the form's
- * reading is a finding no other reading of the plant spells (a reading's line or via tells it apart). A template head starts its
- * template, so its finding is the template's own as spelled (findings are a set): the head is held by the readings counts and A2's
- * template route, and the middle and tail rows carry the template parts. Among them the cut #2 refusal's four forms (U1: a nested
- * binding key, a destructuring assignment key, a parameter property, an import-equals) and its riders (F3 a namespace's member,
- * F5 JSX text in a .tsx module). */
+/** FORMS: one row per form the header's B1 paragraph claims (its COMMENTS, CONSTANT, LEXEME, ACCESS, MEMBER - the member kinds and
+ * the enclosing declarations - and IMPORT clauses): each row's plant spells the subject and a family together through its form
+ * and reads exactly one finding, whose via names the row's reading (lexeme, access, member or import); B1 asserts both for every
+ * row. A template part's row quiets the template as spelled with a marker in another part, and the private name sits in an
+ * anonymous class (no member path), so the part's or the name's own lexeme is the one finding (the cut #3 refusal, F4). Among the
+ * rows: the cut #2 refusal's forms (a nested binding key, a destructuring assignment key, a parameter property, an import-equals;
+ * riders a namespace's member and JSX text in a .tsx module) and the cut #3 refusal's (U1: N1 a marker in an inner comment, N2 a
+ * rest element's nested target, N3 an as-const part - with a comment row for every as-written reading and a row for every
+ * wrapper; rider F3 a parenthesized literal index type). */
 const FORMS: Readonly<Record<string, readonly [path: string, code: string]>> = {
   "lexeme.identifier": ["src/plant.ts", "export const contextDemand = 1;\n"],
-  "lexeme.private-name": ["src/plant.ts", "export class Plant {\n  #contextDemand = 1;\n}\n"],
+  "lexeme.private-name": ["src/plant.ts", "export default class {\n  #contextDemand = 1;\n}\n"],
   "lexeme.string": ["src/plant.ts", 'export const prompt = "Set the context demand first.";\n'],
   "lexeme.no-substitution-template": ["src/plant.ts", "export const prompt = `Set the context demand first.`;\n"],
-  "lexeme.template-middle": ["src/plant.ts", `export const prompt = \`First line.\n${HOLE}name} set the context demand ${HOLE}place} last.\`;\n`],
-  "lexeme.template-tail": ["src/plant.ts", `export const prompt = \`First line.\n${HOLE}name} set the context demand.\`;\n`],
+  "lexeme.template-head": ["src/plant.ts", `export const prompt = \`Set the context demand ${HOLE}name} never.\`;\n`],
+  "lexeme.template-middle": ["src/plant.ts", `export const prompt = \`First line. ${HOLE}name} set the context demand ${HOLE}place} never.\`;\n`],
+  "lexeme.template-tail": ["src/plant.ts", `export const prompt = \`Never ${HOLE}name} set the context demand.\`;\n`],
   "lexeme.regular-expression": ["src/plant.ts", "export const pattern = /context demand/;\n"],
   "lexeme.jsx-text-tsx": ["src/plant.tsx", "export const View = () => <p>Set the context demand first.</p>;\n"],
   "lexeme.jsx-text-jsx": ["src/plant.jsx", "export const View = () => <p>Set the context demand first.</p>;\n"],
   "lexeme.template-literal-type": ["src/plant.ts", `export type Prompt = \`context ${HOLE}string} demand\`;\n`],
   "lexeme.template-as-spelled": ["src/plant.ts", `export const prompt = \`Set the context ${HOLE}name} demand.\`;\n`],
   "lexeme.concatenation": ["src/plant.ts", 'export const prompt = "Set the context " + "demand.";\n'],
+  "lexeme.concatenation-parenthesized": ["src/plant.ts", 'export const prompt = "Set the context " + ("demand") + " first.";\n'],
+  "lexeme.concatenation-as": ["src/plant.ts", 'export const prompt = "Set the context " + ("demand" as const) + " first.";\n'],
+  "lexeme.concatenation-satisfies": ["src/plant.ts", 'export const prompt = "Set the context " + ("demand" satisfies string) + " first.";\n'],
+  "lexeme.concatenation-non-null": ["src/plant.ts", 'export const prompt = "Set the context " + "demand"! + " first.";\n'],
+  "lexeme.concatenation-type-assertion": ["src/plant.ts", 'export const prompt = "Set the context " + <string>"demand" + " first.";\n'],
+  "lexeme.concatenation-nested-wrappers": ["src/plant.ts", 'export const prompt = "Set the context " + ((("demand" as const)! satisfies string)) + " first.";\n'],
+  "lexeme.concatenation-wrapped-spelled": ["src/plant.ts", 'export const prompt = "Set the context " + (("demand " + name) as string) + ".";\n'],
+  "lexeme.template-span-as": ["src/plant.ts", `export const prompt = \`Set the context ${HOLE}"demand" as const} first.\`;\n`],
   "access.property-access": ["src/plant.ts", "export const value = context.demand;\n"],
   "access.qualified-name": ["src/plant.ts", "export type Value = Context.Demand;\n"],
   "access.element-access": ["src/plant.ts", 'export const value = context["demand"];\n'],
+  "access.element-access-as": ["src/plant.ts", 'export const value = context["demand" as const];\n'],
   "access.indexed-access-type": ["src/plant.ts", 'export type Value = Context["demand"];\n'],
+  "access.indexed-access-parenthesized": ["src/plant.ts", 'export type Value = Context[("demand")];\n'],
   "access.binding-initializer": ["src/plant.ts", "export function read(context: Options): unknown {\n  const { demand } = context;\n  return demand;\n}\n"],
   "access.binding-for-of": ["src/plant.ts", "export function read(contexts: Options[]): unknown {\n  for (const { demand } of contexts) return demand;\n  return undefined;\n}\n"],
   "access.binding-for-in": ["src/plant.ts", "export function read(contexts: Options): unknown {\n  for (const { demand } in contexts) return demand;\n  return undefined;\n}\n"],
@@ -1161,18 +1269,42 @@ const FORMS: Readonly<Record<string, readonly [path: string, code: string]>> = {
   "access.binding-parameter-default": ["src/plant.ts", "export function read({ demand } = context): unknown {\n  return demand;\n}\n"],
   "access.binding-nested": ["src/plant.ts", "export function read(opts: Options): unknown {\n  const { context: { demand } } = opts;\n  return demand;\n}\n"],
   "access.binding-computed-key": ["src/plant.ts", 'export function read(context: Options): unknown {\n  const { ["demand"]: wanted } = context;\n  return wanted;\n}\n'],
+  "access.binding-computed-as": ["src/plant.ts", 'export function read(context: Options): unknown {\n  const { ["demand" as const]: wanted } = context;\n  return wanted;\n}\n'],
   "access.binding-array-element": ["src/plant.ts", "export function read(contexts: Options[]): unknown {\n  const [{ demand }] = contexts;\n  return demand;\n}\n"],
+  "access.binding-array-rest": ["src/plant.ts", "export function read(contexts: Options[]): unknown {\n  const [...{ demand }] = contexts;\n  return demand;\n}\n"],
+  "access.binding-object-rest": ["src/plant.ts", "export function read(context: Options): unknown {\n  const { ...demand } = context;\n  return demand;\n}\n"],
   "access.assignment": ["src/plant.ts", "export let demand: unknown;\n({ demand } = context);\n"],
   "access.assignment-nested": ["src/plant.ts", "export let demand: unknown;\n({ inner: { demand } } = context);\n"],
   "access.assignment-computed-key": ["src/plant.ts", 'export let wanted: unknown;\n({ ["demand"]: wanted } = context);\n'],
+  "access.assignment-computed-as": ["src/plant.ts", 'export let wanted: unknown;\n({ ["demand" as const]: wanted } = context);\n'],
   "access.assignment-array-element": ["src/plant.ts", "export let demand: unknown;\n[{ demand }] = contexts;\n"],
+  "access.assignment-array-rest": ["src/plant.ts", "export let demand: unknown;\n[...{ demand }] = contexts;\n"],
+  "access.assignment-object-rest": ["src/plant.ts", "export let demand: unknown;\n({ ...demand } = context);\n"],
+  "access.assignment-object-rest-target": ["src/plant.ts", "export let demand: unknown;\n({ ...{ demand } } = context);\n"],
   "access.assignment-for-of": ["src/plant.ts", "export let demand: unknown;\nfor ({ demand } of contexts) break;\n"],
+  "access.assignment-for-of-rest": ["src/plant.ts", "export let demand: unknown;\nfor ([...{ demand }] of contexts) break;\n"],
   "access.assignment-for-in": ["src/plant.ts", "export let demand: unknown;\nfor ({ demand } in contexts) break;\n"],
+  "access.comment-property-access-block": ["src/plant.ts", "export const value = context/* never */.demand;\n"],
+  "access.comment-property-access-line": ["src/plant.ts", "export const value = context // not\n  .demand;\n"],
+  "access.comment-qualified-name": ["src/plant.ts", "export type Value = Context/* no */.Demand;\n"],
+  "access.comment-element-receiver": ["src/plant.ts", 'export const value = (context /* none */)["demand"];\n'],
+  "access.comment-indexed-object": ["src/plant.ts", 'export type Value = Opts</* no */ Context>["demand"];\n'],
+  "access.comment-binding-initializer": ["src/plant.ts", "export function read(opts: Options): unknown {\n  const { demand } = (context /* not */);\n  return demand;\n}\n"],
+  "access.comment-binding-for-of": ["src/plant.ts", "export function read(opts: Options): unknown {\n  for (const { demand } of (contexts /* not */)) return demand;\n  return undefined;\n}\n"],
+  "access.comment-binding-for-in": ["src/plant.ts", "export function read(opts: Options): unknown {\n  for (const { demand } in (contexts /* not */)) return demand;\n  return undefined;\n}\n"],
+  "access.comment-binding-parameter-type": ["src/plant.ts", "export function read({ demand }: Opts</* not */ Context>): unknown {\n  return demand;\n}\n"],
+  "access.comment-binding-parameter-default": ["src/plant.ts", "export function read({ demand } = (context /* not */)): unknown {\n  return demand;\n}\n"],
+  "access.comment-assignment": ["src/plant.ts", "export let demand: unknown;\n({ demand } = (context /* never */));\n"],
+  "access.comment-assignment-for-of": ["src/plant.ts", "export let demand: unknown;\nfor ({ demand } of (contexts /* not */)) break;\n"],
+  "access.comment-assignment-for-in": ["src/plant.ts", "export let demand: unknown;\nfor ({ demand } in (contexts /* not */)) break;\n"],
+  "access.comment-jsdoc-cast": ["src/plant.js", "export const value = (/** @type {Never} */ (context)).demand;\n"],
+  "access.comment-between-words": ["src/plant.ts", 'export const value = (typeof/* not */context)["demand"];\n'],
   "member.property-assignment": ["src/plant.ts", "export const context = { demand: 1 };\n"],
   "member.shorthand": ["src/plant.ts", "const demand = 1;\nexport const context = { demand };\n"],
   "member.object-method": ["src/plant.ts", "export const context = {\n  demand(): number {\n    return 1;\n  },\n};\n"],
   "member.object-accessor": ["src/plant.ts", "export const context = {\n  get demand(): number {\n    return 1;\n  },\n};\n"],
   "member.computed-name": ["src/plant.ts", 'export const context = { ["demand"]: 1 };\n'],
+  "member.computed-name-as": ["src/plant.ts", 'export const context = { ["demand" as const]: 1 };\n'],
   "member.class-property": ["src/plant.ts", 'export class Context {\n  readonly demand: string = "";\n}\n'],
   "member.class-method": ["src/plant.ts", "export class Context {\n  demand(): void {}\n}\n"],
   "member.class-accessor": ["src/plant.ts", "export class Context {\n  get demand(): number {\n    return 1;\n  }\n}\n"],
@@ -1215,6 +1347,72 @@ const FORMS: Readonly<Record<string, readonly [path: string, code: string]>> = {
   "import.re-export-namespace": ["src/plant.ts", 'export * as demand from "./context.js";\n'],
   "import.equals-require": ["src/plant.cts", 'import demand = require("./context.cjs");\nexport = demand;\n'],
   "import.equals-entity": ["src/plant.ts", "import demand = Context.Inner;\nexport { demand };\n"],
+  "import.comment-equals-entity": ["src/plant.ts", "import demand = Context/* not */.Inner;\nexport { demand };\n"],
+};
+/** LIVE QUIET's rule on plants, pinned apart from the live tree: every quiet occurrence is held - two on one line too, a
+ * subjectless and a marker reading, each with its family words and carrier pairs, a page's as well as a module's - and an
+ * R-UNREAD-FORM member's lexemes, which find nothing, are held quiet (the fail-closed premise). */
+const QUIET_PLANTS: readonly (readonly [string, string])[] = [
+  ["src/plant.ts", 'export const a = "Be precise.";\nexport const b = ["Be precise.", "Be precise, precisely."];\n'],
+  ["src/plant-marker.ts", 'export const c = "The context demand is not set.";\nexport const d = "Never send a projection requirement.";\n'],
+  ["src/plant-unread.ts", "export const read = (contexts: Options[]) => contexts.map(({ demand }) => demand);\n"],
+  [".pi/agents/plant.md", "Be precise.\n"],
+];
+/** CONSTANT's matrix: every constant-reading site of the code reader (a concatenation part and a template span, each read as
+ * spelled and as a key's constant; an element access's key; a binding pattern's, an assignment target's and a member's computed
+ * name) with every wrapper CONSTANT reads through, each plant reading exactly one finding (B1 asserts it) - no wrapper is read at
+ * one site and skipped at another. */
+const CONSTANT_SITES: Readonly<Record<string, (wrapped: string) => string>> = {
+  concatenation: wrapped => `export const prompt = "Set the context " + ${wrapped} + " first.";\n`,
+  templateSpan: wrapped => `export const prompt = \`Set the context ${HOLE}${wrapped}} first.\`;\n`,
+  concatenationKey: wrapped => `export const value = context["" + ${wrapped}];\n`,
+  templateKey: wrapped => `export const value = context[\`${HOLE}${wrapped}}\`];\n`,
+  elementKey: wrapped => `export const value = context[${wrapped}];\n`,
+  bindingKey: wrapped => `export function read(context: Options): unknown {\n  const { [${wrapped}]: wanted } = context;\n  return wanted;\n}\n`,
+  assignmentKey: wrapped => `export let wanted: unknown;\n({ [${wrapped}]: wanted } = context);\n`,
+  memberName: wrapped => `export const context = { [${wrapped}]: 1 };\n`,
+};
+const CONSTANT_WRAPPERS: Readonly<Record<string, string>> = { parentheses: '("demand")', as: '("demand" as const)', satisfies: '("demand" satisfies string)', nonNull: '"demand"!', typeAssertion: '<string>"demand"' };
+/** COMMENTS' matrix: every as-written reading of the code reader with a block, a line and a JSDoc-style comment inside it, each
+ * holding a marker, each plant reading exactly one finding (B1 asserts it) - no comment kind is read at one site and removed at
+ * another. */
+const COMMENT_SITES: Readonly<Record<string, (comment: string) => string>> = {
+  propertyAccess: comment => `export const value = context${comment}.demand;\n`,
+  qualifiedName: comment => `export type Value = Context${comment}.Demand;\n`,
+  elementReceiver: comment => `export const value = (context ${comment})["demand"];\n`,
+  indexedObject: comment => `export type Value = Opts<${comment} Context>["demand"];\n`,
+  bindingInitializer: comment => `export function read(opts: Options): unknown {\n  const { demand } = (context ${comment});\n  return demand;\n}\n`,
+  bindingForOf: comment => `export function read(opts: Options): unknown {\n  for (const { demand } of (contexts ${comment})) return demand;\n  return undefined;\n}\n`,
+  bindingForIn: comment => `export function read(opts: Options): unknown {\n  for (const { demand } in (contexts ${comment})) return demand;\n  return undefined;\n}\n`,
+  parameterType: comment => `export function read({ demand }: Opts<${comment} Context>): unknown {\n  return demand;\n}\n`,
+  parameterDefault: comment => `export function read({ demand } = (context ${comment})): unknown {\n  return demand;\n}\n`,
+  assignment: comment => `export let demand: unknown;\n({ demand } = (context ${comment}));\n`,
+  assignmentForOf: comment => `export let demand: unknown;\nfor ({ demand } of (contexts ${comment})) break;\n`,
+  assignmentForIn: comment => `export let demand: unknown;\nfor ({ demand } in (contexts ${comment})) break;\n`,
+  importEntity: comment => `import demand = Context${comment}.Inner;\nexport { demand };\n`,
+};
+const COMMENT_KINDS: Readonly<Record<string, string>> = { block: "/* not */", line: "// not\n", jsdocStyle: "/** never */" };
+/** Every plant of a site table under every variant, as `<site>.<variant>` to its findings. */
+function matrix(sites: Readonly<Record<string, (part: string) => string>>, variants: Readonly<Record<string, string>>): Record<string, string[]> {
+  return Object.fromEntries(Object.entries(sites).flatMap(([site, plant]) => Object.entries(variants).map(([variant, part]) => [`${site}.${variant}`, codeOf(plant(part))])));
+}
+/** COMMENTS' other direction: one plant per as-written reading with a family word only in a comment inside the node (it finds
+ * nothing), each beside its twin with that word as code (it finds) - the cut #3 refusal's over-reads, where a property access's
+ * inner comment spelled the family word. */
+const COMMENT_PLANTS: Readonly<Record<string, readonly [plant: string, twin: string]>> = {
+  "property-access": ["export const value = context./* demand */size;\n", "export const value = context.demand.size;\n"],
+  "qualified-name": ["export type Value = Context./* demand */Size;\n", "export type Value = Context.Demand.Size;\n"],
+  "element-receiver": ['export const value = (context /* demand */)["size"];\n', 'export const value = (context.demand)["size"];\n'],
+  "indexed-object": ['export type Value = Opts</* demand */ Context>["size"];\n', 'export type Value = Opts<Demand, Context>["size"];\n'],
+  "binding-initializer": ["export function read(opts: Options): unknown {\n  const { size } = (context /* demand */);\n  return size;\n}\n", "export function read(opts: Options): unknown {\n  const { size } = (context.demand);\n  return size;\n}\n"],
+  "binding-for-of": ["export function read(opts: Options): unknown {\n  for (const { size } of (contexts /* demand */)) return size;\n  return undefined;\n}\n", "export function read(opts: Options): unknown {\n  for (const { size } of (contexts.demand)) return size;\n  return undefined;\n}\n"],
+  "binding-for-in": ["export function read(opts: Options): unknown {\n  for (const { size } in (contexts /* demand */)) return size;\n  return undefined;\n}\n", "export function read(opts: Options): unknown {\n  for (const { size } in (contexts.demand)) return size;\n  return undefined;\n}\n"],
+  "binding-parameter-type": ["export function read({ size }: Opts</* demand */ Context>): unknown {\n  return size;\n}\n", "export function read({ size }: Opts<Demand, Context>): unknown {\n  return size;\n}\n"],
+  "binding-parameter-default": ["export function read({ size } = (context /* demand */)): unknown {\n  return size;\n}\n", "export function read({ size } = (context.demand)): unknown {\n  return size;\n}\n"],
+  assignment: ["export let size: unknown;\n({ size } = (context /* demand */));\n", "export let size: unknown;\n({ size } = (context.demand));\n"],
+  "assignment-for-of": ["export let size: unknown;\nfor ({ size } of (contexts /* demand */)) break;\n", "export let size: unknown;\nfor ({ size } of (contexts.demand)) break;\n"],
+  "assignment-for-in": ["export let size: unknown;\nfor ({ size } in (contexts /* demand */)) break;\n", "export let size: unknown;\nfor ({ size } in (contexts.demand)) break;\n"],
+  "import-equals-entity": ["import size = Context/* demand */.Inner;\nexport { size };\n", "import size = Context.Demand.Inner;\nexport { size };\n"],
 };
 
 // ------------------------------------------------------------------------------------------------------------------- the pins
@@ -1283,6 +1481,8 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     };
     const nearMisses = {
       comment: consumerOfCode("// The EDC assembler is not adopted.\n/* evidence-directed */\nexport {};\n"),
+      // The cut #3 refusal's consumer over-read: a stem in a comment inside an as-written reading names nothing.
+      innerComment: consumerOfCode("export const value = host/* edc */.render;\n"),
       inner: consumerOfCode("export const redcap = 1;\nexport const medcost = 2;\n"),
       evidenceAlone: consumerOfCode('export const evidence = "directed by the host";\n'),
       testModule: liveConsumerOfReplica({ "test/plant.test.ts": "export const edc = 1;\n", "qa/plant.mjs": "export const edc = 1;\n", "docs/plant.md": "EDC is adopted.\n", "examples/plant.js": "export const edc = 1;\n" }),
@@ -1325,9 +1525,13 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
         codeOf('const noun = pick();\nexport const prompt = "Raise the context " + noun + ".";\n'),
         codeOf('let prompt = "Set the context ";\nprompt += "demand first.";\nexport { prompt };\n'),
         codeOf('const parts = ["Set the context", "demand first."];\nexport const prompt = parts.join(" ");\n'),
+        codeOf('export const prompt = "Set the context ".concat("demand first.");\n'),
+        codeOf('export const prompt = "Set the context " + (0, "demand") + " first.";\n'),
+        codeOf('export const prompt = "Set the context " + (on ? "demand" : "size") + " first.";\n'),
       ],
-      // The forms the code reader leaves unread (the cut #2 refusal, U1: the header names exactly what is read): each reads as its
-      // lexemes alone, so it finds nothing; each twin spells the same words through a read form and finds them.
+      // The forms the code reader leaves unread (the cut #2 refusal's U1 named the first five; the cut #3 refusal's F2 and the gate
+      // probe's quiet forms the rest - the enumerate-the-resolvable list, R-B97): each reads as its lexemes alone (and its other
+      // readings), so it finds nothing; each twin spells the same words through a read form and finds them.
       "R-UNREAD-FORM": {
         unread: {
           untypedParameter: codeOf("export const read = (contexts: Options[]) => contexts.map(({ demand }) => demand);\n"),
@@ -1335,6 +1539,19 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
           dynamicImport: codeOf('export const demand = await import("./context.js");\n'),
           localExportAlias: codeOf("const demand = 1;\nexport { demand as context };\n"),
           callKey: codeOf('export const value = context.get("demand");\n'),
+          inOperator: codeOf('export const has = "demand" in context;\n'),
+          catchBinding: codeOf("try {\n  run();\n} catch ({ demand }) {\n  use(demand);\n}\n"),
+          ambientBinding: codeOf("export declare const { demand }: Context;\n"),
+          namespaceBindingPattern: codeOf("export namespace Context {\n  export const { demand } = source;\n}\n"),
+          forInTarget: codeOf('export const holder = { demand: "" };\nfor (holder.demand in contexts) break;\n'),
+          bindingDefaultMember: codeOf("export function read(opts: Options): unknown {\n  const { context = { demand: 1 } } = opts;\n  return context;\n}\n"),
+          parameterDefaultMember: codeOf("export function read(context = { demand: 1 }): unknown {\n  return context;\n}\n"),
+          signatureParameter: codeOf("export interface Context {\n  (demand: string): void;\n}\n"),
+          indexSignature: codeOf("export interface Context {\n  [demand: string]: number;\n}\n"),
+          mappedTypeKey: codeOf('export type Context = { [K in "demand"]: string };\n'),
+          unionIndex: codeOf('export type Value = Context["demand" | "other"];\n'),
+          jsxAttribute: codeOf("export const View = () => <C context={{ demand: 1 }} />;\n", "src/plant.tsx"),
+          jsxNamespacedName: codeOf('export const View = () => <a context:demand="1" />;\n', "src/plant.tsx"),
         },
         readTwins: {
           untypedParameter: codeOf("export const read = (contexts: Options[]) => contexts.map(({ demand }: Context) => demand);\n"),
@@ -1342,12 +1559,47 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
           dynamicImport: codeOf('import * as demand from "./context.js";\nexport { demand };\n'),
           localExportAlias: codeOf('export { demand as context } from "./context.js";\n'),
           callKey: codeOf('export const value = context["demand"];\n'),
+          inOperator: codeOf("export const has = context.demand !== undefined;\n"),
+          catchBinding: codeOf("try {\n  run();\n} catch (context) {\n  const { demand } = context;\n  use(demand);\n}\n"),
+          ambientBinding: codeOf("export declare function read({ demand }: Context): void;\n"),
+          namespaceBindingPattern: codeOf("export namespace Context {\n  export const demand = source;\n}\n"),
+          forInTarget: codeOf("export let demand: unknown;\nfor ({ demand } in contexts) break;\n"),
+          bindingDefaultMember: codeOf("export let context: unknown;\n({ context = { demand: 1 } } = opts);\n"),
+          parameterDefaultMember: codeOf("export function read(): unknown {\n  const context = { demand: 1 };\n  return context;\n}\n"),
+          signatureParameter: codeOf("export interface Context {\n  demand(): void;\n}\n"),
+          indexSignature: codeOf("export interface Context {\n  demand: number;\n}\n"),
+          mappedTypeKey: codeOf("export type Context = { demand: string };\n"),
+          unionIndex: codeOf('export type Value = Context["demand"];\n'),
+          jsxAttribute: codeOf("export const View = () => <C {...{ context: { demand: 1 } }} />;\n", "src/plant.tsx"),
+          jsxNamespacedName: codeOf('export const View = () => <a contextDemand="1" />;\n', "src/plant.tsx"),
         },
       },
     };
     expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "B1").map(residual => residual.id));
+    // One plant per form the header claims: the reading each form composes (the cut #2 and cut #3 refusals, U1), one finding per
+    // row through the row's own reading (the cut #3 refusal, F4).
+    const forms = Object.fromEntries(Object.entries(FORMS).map(([id, [path, code]]) => [id, codeOf(code, path)]));
+    const offRow = Object.entries(forms).filter(([id, found]) => found.length !== 1 || !(found[0] ?? "").includes(` ${id.slice(0, id.indexOf("."))}:`));
+    expect(offRow.map(([id]) => id), "every FORMS row reads one finding, through its own reading").toEqual([]);
+    // COMMENTS' other direction (the cut #3 refusal, U1(a)): a family word in a comment inside an as-written reading finds nothing,
+    // and the same word as code finds.
+    const comments = {
+      plants: Object.fromEntries(Object.entries(COMMENT_PLANTS).map(([id, [plant]]) => [id, codeOf(plant)])),
+      twins: Object.fromEntries(Object.entries(COMMENT_PLANTS).map(([id, [, twin]]) => [id, codeOf(twin)])),
+    };
+    expect(Object.values(comments.plants).flat(), "a comment's words find nothing").toEqual([]);
+    // The cross products (the enumerate-the-resolvable form, R-B97): every constant-reading site with every wrapper, every
+    // as-written reading with every comment kind, one finding each.
+    const constants = matrix(CONSTANT_SITES, CONSTANT_WRAPPERS);
+    const commentMatrix = matrix(COMMENT_SITES, COMMENT_KINDS);
+    const offCell = Object.entries({ ...constants, ...commentMatrix }).filter(([, found]) => found.length !== 1);
+    expect(offCell.map(([cell]) => cell), "every matrix cell reads one finding").toEqual([]);
     return {
       findings: [...real.findings, ...siteFindings(surfaces.prompts)],
+      // LIVE QUIET (fail closed): every quiet reading of the live code and page pass, each occurrence, lines dropped, with its family
+      // words - a family word added to (or dropped from) any text the reader reads, in a form it joins no path for too, changes it.
+      liveQuiet: real.quiet,
+      quietRule: survey(QUIET_PLANTS).quiet,
       floors: {
         srcModules: real.code.filter(path => path.startsWith("src/")).length >= FLOORS.srcModules,
         exampleModules: real.code.filter(path => path.startsWith("examples/")).length >= FLOORS.exampleModules,
@@ -1362,8 +1614,10 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       walkAgreesWithGit: walk.agrees,
       links: walk.links,
       frozen: { revision: CONSTANTS.frozenAt, ancestor: frozenIsAncestor(), modules: frozen.code.length, pages: frozen.pages.length, readings: frozen.readings, findings: frozen.findings, quieted: frozen.quieted },
-      // One plant per form the header lists: the reading each form composes (the cut #2 refusal, U1).
-      forms: Object.fromEntries(Object.entries(FORMS).map(([id, [path, code]]) => [id, codeOf(code, path)])),
+      forms,
+      comments,
+      constants,
+      commentMatrix,
       quiet,
     };
   },
