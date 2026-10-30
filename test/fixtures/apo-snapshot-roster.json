@@ -1,5 +1,5 @@
 {
-  "comment": "wb-021.2 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R2): the OUT-OF-FILE anchor of test/workbench-apo-snapshot-census.test.ts (the hk9l/5jha roster pattern). rows: every judged row of test/helpers/apo-snapshot-census.ts in census order (L, V, N, P, Z, R, S, Q) - id, label and, per pin, its id and the SHA-256 of the pin as written (its JSON: a live pin's kind, what and expected values; a plant's planted files, copies, expected views and findings; a reading pin's texts and readings; a seam pin's source and members). tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its rows, its registered tests (vitest task tree, run modes) and its residual families against this file at test time, in order and both ways.",
+  "comment": "wb-021.2 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R2): the OUT-OF-FILE anchor of test/workbench-apo-snapshot-census.test.ts (the hk9l/5jha roster pattern). rows: every judged row of test/helpers/apo-snapshot-census.ts in census order (L, V, N, P, Z, R, U, S, Q) - id, label and, per pin, its id and the SHA-256 of the pin as written (its JSON: a live pin's kind, what and expected values; a plant's planted files, copies, expected views and findings; a reading pin's texts and readings; a seam pin's source and members). tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its rows, its registered tests (vitest task tree, run modes) and its residual families against this file at test time, in order and both ways.",
   "rows": [
     {
       "id": "L",
@@ -345,7 +345,7 @@
         },
         {
           "id": "R-non-value-alias",
-          "digest": "2532f4596186f10dccf7d240f54cc696dc5b7b7e36a5a41f04f282761e229f08"
+          "digest": "db924de8b69e90ab6aeea376f4f579ef695f60f018b5ca23c292c0aefcb10dcf"
         },
         {
           "id": "R-types-erased",
@@ -357,7 +357,7 @@
         },
         {
           "id": "R-bodiless",
-          "digest": "ec6319216f41b8008abc531d2066dd774ebb8f47fe271234d3b6a3b9d7fe7b10"
+          "digest": "efd8a1a04ed0c3d50e4c2989e129704f84a8e2e61422f7258337f57e49208673"
         },
         {
           "id": "R-const-enum",
@@ -365,11 +365,181 @@
         },
         {
           "id": "R-not-references",
-          "digest": "b79aa63eeb94576b411043f1b8cd5855e4d4931f76ca33ed3a4e5d15b2344a85"
+          "digest": "2b3990cf9d3c5e746c040e3704080177101d294689a123dea994ffeab98ac3d3"
         },
         {
           "id": "R-constructor-forms",
           "digest": "f5fb6a7b088287c5af5df4a61ac8e7c21c07491ca14e4c1bab4d06155b7e4169"
+        }
+      ]
+    },
+    {
+      "id": "U",
+      "label": "GLOBAL's binding family (class U1 of record), enumerated: a name binds only through a declaration of its own module that emits a run-time binding of its own, each form held by a pin of its own",
+      "pins": [
+        {
+          "id": "U-GP1",
+          "digest": "7c4f1eae5c6eedf69a4f85fc0f71f9a5e981ded40dc39d640229be3121f33b55"
+        },
+        {
+          "id": "U-GP1L",
+          "digest": "daf8f89db13c500c6b7cebc1999bbd72651cd29c5df51b7080036dd7539c1279"
+        },
+        {
+          "id": "U-GP2",
+          "digest": "7d5a6855c8a651ac22222e23c613277b89f3292ca560ec8ae39a21b7b84248cb"
+        },
+        {
+          "id": "U-GP3",
+          "digest": "0fa9b27f6cf4de5589c0dbdba718e28bb67af09898719d484f4550b8a6bdba4e"
+        },
+        {
+          "id": "U-GP3b",
+          "digest": "1f37906a7a3ccc2b6c358ff4a99a1a0ea961d25b4af7b25de36bce46623990cb"
+        },
+        {
+          "id": "U-GP4",
+          "digest": "b4beb3909a7d7eeaec9c195223a78ed686975e2ace12c81e96c1b27c504d8263"
+        },
+        {
+          "id": "U-GP4b",
+          "digest": "b95fba046c547ad717f63cce3f6ef265499d542cde06d0df4a78c79ec9e9f401"
+        },
+        {
+          "id": "U-GP5",
+          "digest": "a3b2743deb918b7408559c13371a10ec1e4385040eaddbff3491fd318edc95ee"
+        },
+        {
+          "id": "U-GP7",
+          "digest": "56847346701980f9056ac92ee62488e7a774d521ab0f94b2e3842122af0a84bd"
+        },
+        {
+          "id": "U-GP8",
+          "digest": "2e9304e0db4b0f8586267cda22e65bcb2b087c3e4669c0e5030a17d84dfad966"
+        },
+        {
+          "id": "U-GP8b",
+          "digest": "8f342245792f7d94ae54c189b09785e2469fb20037d45ae94a5a98141c7000ad"
+        },
+        {
+          "id": "U-GP9",
+          "digest": "a25224585d269581c86aa04e8fc08542c60f66f5e4baa75f8d4ad60378588840"
+        },
+        {
+          "id": "U-GP10",
+          "digest": "f9fbfa968f30d70db7f14bc976681de0c7f9cd6baedd1afaf30fb449617c72f3"
+        },
+        {
+          "id": "U-GP11",
+          "digest": "4e9ff8813759f182e80c709c2669eafd536b8ddf6b65664d4ae30a12477d9ad8"
+        },
+        {
+          "id": "U-GP12",
+          "digest": "9be65a2d545bc7416df71f295adb1814778b80b705d990e45e0a04d980600ac8"
+        },
+        {
+          "id": "U-GP13",
+          "digest": "2925403feb1c45c153e4de2ee4189a042ec5ff07f2c5178e87299c82cc243008"
+        },
+        {
+          "id": "U-GP14",
+          "digest": "8efa37577e9272174be9b0b4c11276532e3a609fb7a2d287dc6e026b75494dea"
+        },
+        {
+          "id": "U-GP17",
+          "digest": "4a2c406e09645177712442a9c3737107231788a2013e6a0bef0a38d6ec576dbf"
+        },
+        {
+          "id": "U-GP6",
+          "digest": "3e9a7cacd0ca94124f1583345a8523a5a4b6f09b58468f4a3aac89540d6be6f2"
+        },
+        {
+          "id": "U-GP15",
+          "digest": "049a1ac945bb1a69d53616d42f7c729d920a26fa70e8d53a5b92b0e79df7e32e"
+        },
+        {
+          "id": "U-GP16",
+          "digest": "d74197a60d2ef775fc327b80b38556d634d983a9eea8ab9b26fad3610934f109"
+        },
+        {
+          "id": "U-GC1",
+          "digest": "fed94f1004e862eb8c7726bc4a7dccc8e22ed303624ac01e8524cb57399339bb"
+        },
+        {
+          "id": "U-GC2",
+          "digest": "504c7c3ad63e150e6a891a0098f23a444acf92cdb8230c419ca4af44a64168aa"
+        },
+        {
+          "id": "U-GC3",
+          "digest": "76e0ab2b47822c6e7adb21bd373291831631b49df45c44948b3ea55d47553e17"
+        },
+        {
+          "id": "U-const-enum-companion",
+          "digest": "d7bd5e546f67e0ee60759a83cb7943abde39cbfc14bcd837aa600999501b2529"
+        },
+        {
+          "id": "U-default-interface",
+          "digest": "9c9a6aa4bcf86f4c55534053baa3defcf5e6471cfbf858f5f382708b470b7ffe"
+        },
+        {
+          "id": "U-ambient-let-type",
+          "digest": "2ee165ceaa1c0466edd7cc4f108f1b0afda2b111024580d7a3e9b136deb2845a"
+        },
+        {
+          "id": "U-depth-two",
+          "digest": "92fe153c4f262a44ce53d5e312f76b7c6f5503b752a8cc3436bdda5ec885e14a"
+        },
+        {
+          "id": "U-ambient-function-interface",
+          "digest": "6ba1e70e00a06be12ac9eddea994ee1592b18d8c24f456cbf49e32b4c2bb350e"
+        },
+        {
+          "id": "U-ambient-class-namespace",
+          "digest": "d66c5fab16be11ed9b5ee18056d5ce61e48dc433e9939c4d81c11101002f2ea9"
+        },
+        {
+          "id": "U-ambient-namespace-interface",
+          "digest": "2fbdcf6a057ddf88afc2ceaf92a7bbcd2f588c1494ff85c406c98eab0d749a9c"
+        },
+        {
+          "id": "U-string-module",
+          "digest": "7051ed6b7aa021a3f84e1582beadfce8f881bbdfbac963f71759c2d919f7bb03"
+        },
+        {
+          "id": "U-umd-export",
+          "digest": "e34e74942bf932fc624110705eca05c3fe96377d15e6007d468cb175c3a68ba4"
+        },
+        {
+          "id": "U-signature-parameters",
+          "digest": "88d786534798282be2f92918df2d1bee139570aae18135aac921bd4f39c01803"
+        },
+        {
+          "id": "U-wrapper-var",
+          "digest": "12fd91498f2738628f1c5decf481f1fd03d4ef7dd80132487c03a060c9bc1c15"
+        },
+        {
+          "id": "U-wrapper-forms",
+          "digest": "cd748ed04099781cbd31f227ac843a16dc42bbfbc114527dcf211f15537849b9"
+        },
+        {
+          "id": "U-namespace-unbound",
+          "digest": "b0e38aed8bc2ff415440c31dbbebbf880eed038c14bd818e9dd517eb9e765e77"
+        },
+        {
+          "id": "U-namespace-binds",
+          "digest": "933ac60f920bad73e559b37fe215ce7872c373cbcb19420586d1ea008d1461af"
+        },
+        {
+          "id": "U-binds-values",
+          "digest": "822d37584e731d339a4353dbb21df241db68b099f92d11e8bd3dc34a64955024"
+        },
+        {
+          "id": "U-binds-merged",
+          "digest": "babf891e039883998dbd65ac605f8324397ac18033c87e77b44f97690dbb7d4e"
+        },
+        {
+          "id": "U-binds-members",
+          "digest": "426164bd9f2ccf6a75668ed19ad45699afa58287e8e21b32887ebd257d0698af"
         }
       ]
     },
@@ -450,6 +620,10 @@
         {
           "id": "R-UNREAD-TEXT",
           "digest": "5a51f90ec5538c881386932b516bd3088944849bc4e6acd14217f5368a097f35"
+        },
+        {
+          "id": "R-UNLINKED-IMPORT",
+          "digest": "b2fc7215e7b93e94bebef46ed81c76bf6def2b418eab0618a6db718fbca79d7f"
         }
       ]
     }
@@ -539,6 +713,47 @@
     "R R-const-enum",
     "R R-not-references",
     "R R-constructor-forms",
+    "U U-GP1",
+    "U U-GP1L",
+    "U U-GP2",
+    "U U-GP3",
+    "U U-GP3b",
+    "U U-GP4",
+    "U U-GP4b",
+    "U U-GP5",
+    "U U-GP7",
+    "U U-GP8",
+    "U U-GP8b",
+    "U U-GP9",
+    "U U-GP10",
+    "U U-GP11",
+    "U U-GP12",
+    "U U-GP13",
+    "U U-GP14",
+    "U U-GP17",
+    "U U-GP6",
+    "U U-GP15",
+    "U U-GP16",
+    "U U-GC1",
+    "U U-GC2",
+    "U U-GC3",
+    "U U-const-enum-companion",
+    "U U-default-interface",
+    "U U-ambient-let-type",
+    "U U-depth-two",
+    "U U-ambient-function-interface",
+    "U U-ambient-class-namespace",
+    "U U-ambient-namespace-interface",
+    "U U-string-module",
+    "U U-umd-export",
+    "U U-signature-parameters",
+    "U U-wrapper-var",
+    "U U-wrapper-forms",
+    "U U-namespace-unbound",
+    "U U-namespace-binds",
+    "U U-binds-values",
+    "U U-binds-merged",
+    "U U-binds-members",
     "S S-projection",
     "S S-registry",
     "S S-provider",
@@ -556,6 +771,7 @@
     "Q R-COMPUTED-TEXT",
     "Q R-REFLECTIVE-REACH",
     "Q R-UNREAD-TEXT",
+    "Q R-UNLINKED-IMPORT",
     "outside anchors: the export row, its view classes and verbs, the seams it names, the shared edge kinds and the residual families",
     "rule 16: every judged row and the residual families are frozen at their measured shape",
     "roster: the judged rows, the registered tests and the residual families equal test/fixtures/apo-snapshot-roster.json, in order and both ways"
@@ -584,6 +800,9 @@
     ],
     "R-UNREAD-TEXT": [
       "Q R-UNREAD-TEXT"
+    ],
+    "R-UNLINKED-IMPORT": [
+      "Q R-UNLINKED-IMPORT"
     ]
   }
 }

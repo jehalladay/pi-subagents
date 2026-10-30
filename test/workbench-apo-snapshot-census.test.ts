@@ -9,11 +9,11 @@
  * Acceptance (the owner filing's, verbatim): "per-view interaction falsifier - every handler path is projection-read-only
  * with zero capability invokes and zero journal/native writes." (the filing's dash is U+2014).
  *
- * MEASURED (read-only, by the cutting seat, 2026-10-29, at trunk 57cb1c0, whose src is unchanged since 04123dc): git lists
- * 117 files under src/, all TypeScript and none a declaration file, and no src text names the program, so no src module
- * presents APO state and no APO view closure exists to judge. Pi's effect seams as src declares them: ObservationProjection's
- * 18 public members (12 read, 6 admission), CapabilityRegistry's 7, CapabilityProvider's 3 and src/workflow/journal.ts's 4
- * exported values (SEAMS classifies each).
+ * MEASURED (read-only, by the cutting seats, 2026-10-29 at trunk 57cb1c0 and 2026-10-30 at trunk c2695d7, whose src is
+ * unchanged since 04123dc): git lists 117 files under src/, all TypeScript and none a declaration file, and no src text
+ * names the program, so no src module presents APO state and no APO view closure exists to judge. Pi's effect seams as
+ * src declares them: ObservationProjection's 18 public members (12 read, 6 admission), CapabilityRegistry's 7,
+ * CapabilityProvider's 3 and src/workflow/journal.ts's 4 exported values (SEAMS classifies each).
  *
  * THE FALSIFIER (a fail-closed core; the judge, its readings and every finding are defined in
  * test/helpers/apo-snapshot-census.ts, whose header is the reading of record and names, per form, the pin that holds each
@@ -22,8 +22,12 @@
  * PACKAGE (no specifier that is not relative is admitted, so node:fs, node:child_process, every native client package, an
  * absolute path, a URL and a dot-led bare specifier refuse), EFFECT (a text holding a statement or acceptance verb, or a
  * whole text that is a seam effect name), GLOBAL (a name with no run-time binding of its own module, outside ADMITTED_FREE:
- * a script's or a declaration file's declarations, an ambient or type-only one, a bodiless function and a const enum bind
- * nothing, and a value use passes over an alias of no value) and CONSTRUCTOR.
+ * a name binds only through a declaration of its own ES module that emits a binding, by an allowlist - so a script's or a
+ * declaration file's declarations, an ambient (or string-named-module) or type-only one, a bodiless function or
+ * signature's parameter, a const enum, an interface, a type alias, an export as namespace and an uninstantiated namespace
+ * bind nothing, alone or merged with a value: refusal #2's GP1-GP17 merges red; a module-scope declaration of a CommonJS
+ * wrapper's parameter or arguments binds nothing, since under the wrapper it keeps the wrapper's value; and a value use
+ * passes over an alias of no value) and CONSTRUCTOR.
  *
  * ROWS (rows L, V and N tile the statement and rows P and Z tile the acceptance, each label a verbatim segment held to the
  * export row by the outside-anchor case). L: the src tree presents no APO state (L1 - ARMED: the first module that names
@@ -43,7 +47,14 @@
  * the view; every GLOBAL binding rule (a script shim, a declaration file, an ambient, type-only or bodiless
  * declaration, a const enum, the arguments object, an alias or a namespace of no value) and every name position, the
  * erased type declarations included; and CONSTRUCTOR in
- * every text form EFFECT reads. S: each seam's members read from src equal its classification (S-projection,
+ * every text form EFFECT reads. U: GLOBAL's binding family, enumerated (standing rule 19, ruling R-B106, class U1 of
+ * record): one pin per member of record - refusal #2's GP1, GP1L (the src-landable form), GP2-GP5, GP3b, GP4b, GP7-GP14
+ * with GP8b, GP17, the gate's killed GP6, GP15 and GP16 and its controls GC1-GC3, each red at the use, and the members
+ * the cut #3 seat found (a const enum or an ambient class with an empty namespace, an export default interface, an
+ * ambient let with a type, a merge two edges away, an ambient function or namespace with an interface, a string-named
+ * module, a bodiless signature's parameter, and a module-scope declaration of a wrapper name), an export as namespace
+ * (red under both judges, held as a guard), and one per binding form of the allowlist, the namespace rule and the
+ * member names (each quiet). S: each seam's members read from src equal its classification (S-projection,
  * S-registry, S-provider, S-journal; the projection's read members read no EFFECT text), and the seam reader's member
  * forms (S-reader-class, S-reader-interface, S-reader-exports, S-reader-exports-unnamed, S-reader-missing). Q: the
  * residuals.
@@ -54,9 +65,12 @@
  * requirement id carries the program's slug, the statement's parenthesis is VIEW_CLASSES and rows V and P each plant every
  * class, every EFFECT family holds a verb of the statement or the acceptance and is read by an N, P or Z plant, and the
  * acceptance's projection, capability and journal each name a seam; the src AST - the live judgment (L1) and each seam's
- * members (S); wb-021.4's EDGE_KINDS, each routed by a P plant; and this header's RESIDUALS line, held to the residual
- * families. The same case holds V-admitted-free's list to ADMITTED_FREE (an internal check, not an outside anchor). The
- * live redaction module the two V plants copy is plant content, held by their pins and the roster, not an outside anchor.
+ * members (S); wb-021.4's EDGE_KINDS, each routed by a P plant; this header's RESIDUALS line, held to the residual
+ * families; and class U1's members of record - refusal #2's CLASSES OF RECORD sentence in the export row's notes (which
+ * only append) names its members, each a row U pin U-<member> carrying a GLOBAL finding, and restates refusal #1's,
+ * each cured by the row R pin REFUSAL_1_CURES names (the map holding exactly the record's members). The same case holds
+ * V-admitted-free's list to ADMITTED_FREE (an internal check, not an outside anchor). The live redaction module the two V
+ * plants copy is plant content, held by their pins and the roster, not an outside anchor.
  * NOT CLAIMED: the internals of any package (none is admitted, so none is read); an effect performed by code handed in at
  * run time - a member called by a name outside the EFFECT families and the seam names (R-UNNAMED-EFFECT), or code reached
  * without a call site, through a coercion, a getter or a thenable (R-IMPLICIT-CALL); a write into a handed-in object's or
@@ -64,10 +78,11 @@
  * program in a name or a literal - a comment naming it is never read (R-UNNAMED-VIEW) - or naming it only in a spelling
  * the ROLE reading does not split into the abbreviation or the slug, a plural APOs or a dotted A.P.O. (R-LOOKALIKE-VIEW);
  * a text built at run time (R-COMPUTED-TEXT); a code constructor reached by reflection over an admitted built-in with a
- * computed key (R-REFLECTIVE-REACH); regular-expression literals and comments, never read (R-UNREAD-TEXT); any code
- * outside src/.
+ * computed key (R-REFLECTIVE-REACH); regular-expression literals and comments, never read (R-UNREAD-TEXT); whether an
+ * import's relative target exports the name it imports - the import's own declaration binds either way, and at run time a
+ * missing export reads undefined or fails to link, never a host global (R-UNLINKED-IMPORT); any code outside src/.
  * RESIDUALS (named, each with its pinned quiet row in row Q): R-UNNAMED-VIEW, R-LOOKALIKE-VIEW, R-UNNAMED-EFFECT,
- * R-IMPLICIT-CALL, R-FIELD-MUTATION, R-COMPUTED-TEXT, R-REFLECTIVE-REACH, R-UNREAD-TEXT.
+ * R-IMPLICIT-CALL, R-FIELD-MUTATION, R-COMPUTED-TEXT, R-REFLECTIVE-REACH, R-UNREAD-TEXT, R-UNLINKED-IMPORT.
  *
  * Display paths added: none. Test-only: no src change.
  */
@@ -88,6 +103,7 @@ import {
   liveSeamMembers,
   type PlantPin,
   pinDigest,
+  REFUSAL_1_CURES,
   REQUIREMENT,
   RESIDUAL_FAMILIES,
   type ReadingPin,
@@ -280,6 +296,21 @@ describe("APO snapshot census (wb-021.2, MW-ADAPTIVE-POLICY-ORGANIZATIONS-R2)", 
     const kinds = new Set(ROWS.flatMap(candidate => candidate.pins.flatMap(pin => (pin.kind === "plant" ? pin.findings.map(finding => finding.split(" ")[0]) : []))));
     expect([...kinds].sort(), "every finding kind is held by a plant").toEqual(["CONSTRUCTOR", "EFFECT", "GLOBAL", "PACKAGE", "UNREADABLE", "UNRESOLVED"]);
     expect(Object.keys(RESIDUAL_FAMILIES), "the residual families equal this header's RESIDUALS line").toEqual(headerResiduals());
+    // Row U enumerates class U1's members of record: refusal #2's record (its CLASSES OF RECORD sentence, read from the
+    // export row's notes, which only append) names each member, and each is a row U pin that reds through GLOBAL; refusal
+    // #1's members, restated in the same paragraph, are each cured by a row R pin.
+    const members = (key: string, end: string): string[] => {
+      const start = row.notes.indexOf(key);
+      const stop = start < 0 ? -1 : row.notes.indexOf(end, start);
+      return start < 0 || stop < 0 ? [] : [...row.notes.slice(start, stop).matchAll(/\bGP?\d+[A-Za-z]?\b/g)].map(match => match[0]);
+    };
+    const second = members("Refusal #2 members: ", " Claims the class contradicts");
+    expect(second.length, "refusal #2's record names its U1 members").toBeGreaterThan(0);
+    const unpinned = second.filter(member => !plants("U").some(pin => pin.id === `U-${member}` && pin.findings.some(finding => finding.startsWith("GLOBAL "))));
+    expect(unpinned, "every U1 member refusal #2's record names is a row U pin with a GLOBAL finding").toEqual([]);
+    const first = members("Refusal #1 members: ", ". Refusal #2 members");
+    expect(Object.keys(REFUSAL_1_CURES), "the refusal #1 cure map names exactly the record's members, in order").toEqual(first);
+    expect(first.filter(member => !rowOf("R").pins.some(pin => pin.id === REFUSAL_1_CURES[member])), "every U1 member refusal #1's record names is cured by a row R pin").toEqual([]);
     // Internal check: V-admitted-free references exactly ADMITTED_FREE, in order, so dropping an admitted name reds that plant.
     const admitted = plants("V").find(pin => pin.id === "V-admitted-free");
     const listed = /return \[([^\]]*)\]/.exec(Object.values(admitted?.files ?? {}).join("\n"))?.[1] ?? "";
@@ -293,7 +324,7 @@ describe("APO snapshot census (wb-021.2, MW-ADAPTIVE-POLICY-ORGANIZATIONS-R2)", 
   });
 
   it("rule 16: every judged row and the residual families are frozen at their measured shape", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["L:9", "V:8", "N:5", "P:6", "Z:14", "R:42", "S:9", "Q:8"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["L:9", "V:8", "N:5", "P:6", "Z:14", "R:42", "U:41", "S:9", "Q:9"]);
     expect(Object.entries(RESIDUAL_FAMILIES).map(([family, members]) => `${family}:${members.join(",")}`)).toEqual([
       "R-UNNAMED-VIEW:Q R-UNNAMED-VIEW",
       "R-LOOKALIKE-VIEW:Q R-LOOKALIKE-VIEW",
@@ -303,6 +334,7 @@ describe("APO snapshot census (wb-021.2, MW-ADAPTIVE-POLICY-ORGANIZATIONS-R2)", 
       "R-COMPUTED-TEXT:Q R-COMPUTED-TEXT",
       "R-REFLECTIVE-REACH:Q R-REFLECTIVE-REACH",
       "R-UNREAD-TEXT:Q R-UNREAD-TEXT",
+      "R-UNLINKED-IMPORT:Q R-UNLINKED-IMPORT",
     ]);
   });
 

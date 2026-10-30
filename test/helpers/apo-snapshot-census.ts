@@ -58,32 +58,75 @@
  *   (R-folded-forms) - in value and type positions alike (R-type-position). Regular-expression literals and comments are
  *   not read (R-UNREAD-TEXT).
  * - GLOBAL: a closure identifier - a reference or a declaration's own name - that names no RUN-TIME binding of its own
- *   module, outside ADMITTED_FREE. A name binds only where the TypeScript checker (noLib, noResolve, over the closure
- *   files) resolves it to a declaration that is (1) in the name's own module, the same source file (a name declared in
- *   another module binds only through an import of it, which is a declaration of the importing module: TypeScript reads a
- *   script's top-level declarations as global, so a view's name that resolves to one binds nothing - R-script-var,
- *   R-script-typed, R-script-function, R-script-require, each red at the view), of a module that is (2) an ES module (a
- *   file TypeScript reads as an external module, ts.isExternalModule: one with an import or an export; at run time a
- *   script's top-level declarations are module-scoped, so a script binds nothing, its own names included - the same four
- *   pins, each red in the script) and (3) not a declaration file (a .d.ts binds nothing: R-dts-module, red in the .d.ts;
- *   R-dts-script, red at the view and in the .d.ts), and that (4) emits a binding: not ambient (a declare modifier, its
- *   own or an enclosing one's: R-ambient), not type-only (a named, a namespace and a default import type, a type-only
- *   specifier and an import type x = require(...): R-type-only-value), not a function declaration without a body (an overload binds through its
- *   implementation: R-bodiless) and not a const enum (a plain enum binds: R-const-enum). The one binding without a
- *   declaration is the function's own arguments object, which the checker resolves only inside a non-arrow function, an
- *   arrow inheriting it from the function around it (R-arguments: elsewhere arguments is free; refusal #1's readback
- *   found jiti's module wrapper handing its own in, require among them). The checker resolves a value use only to a
- *   declaration with a value meaning, so an import or import-equals alias whose resolved target is no value (an
- *   interface) and an uninstantiated namespace (empty, or holding types only) are passed over and a value use of each
- *   reds, while an instantiated namespace binds (R-non-value-alias). The names read: every identifier outside type
- *   positions (an implements clause holds only type positions), interfaces and type aliases (R-types-erased) and
- *   type-only imports and exports (R-type-only-erased), each erased at run time; a property
+ *   module, outside ADMITTED_FREE. ENUMERATED (standing rule 19, ruling R-B106: the binding family, class U1 of refusals
+ *   #1 and #2, in the enumerate-the-resolvable form): the list below claims exactly the pinned forms, each naming its pin,
+ *   and row U holds one pin per member of record; a form outside the list is a residual-list addition. A name binds only
+ *   where the TypeScript checker (noLib, noResolve, over the closure files) resolves it to a symbol one of whose
+ *   declarations is (1) in the name's own module, the same source file (a name declared in another module binds only
+ *   through an import of it, which is a declaration of the importing module: TypeScript reads a script's top-level
+ *   declarations as global, so a view's name that resolves to one binds nothing - R-script-var, R-script-typed,
+ *   R-script-function, R-script-require, U-GP16, each red at the view), of a module that is (2) an ES module (a file
+ *   TypeScript reads as an external module, ts.isExternalModule: one with an import or an export; at run time a script's
+ *   top-level declarations are module-scoped, so a script binds nothing, its own names included - the same pins, each red
+ *   in the script), (3) not a declaration file (a .d.ts binds nothing: R-dts-module, red in the .d.ts; R-dts-script, red
+ *   at the view and in the .d.ts), and (4) that EMITS A BINDING, by an allowlist (a declaration of any other kind binds
+ *   nothing: fail-closed): a variable and a binding element of one, a parameter of a function-like with a body and a
+ *   binding element of one, a function declaration with a body, a function expression's and a class expression's own
+ *   name, a class, a non-const enum, a namespace that binds (below), and a value import - default, named, namespace and
+ *   import-equals - and a catch variable (each held quiet by U-binds-values, which also holds a module-scope var of a name
+ *   outside WRAPPER_NAMES: a fresh binding at run time), none of them ambient. Each non-binding form, with its pin: an
+ *   ambient declaration - under a declare modifier, its own or an enclosing one's (R-ambient, U-GC1, U-GP15, U-GC2), or
+ *   inside a module declaration named by a string literal, declare or not (U-string-module); a type-only import (a named,
+ *   a namespace and a default import type, a type-only specifier and an import type x = require(...): R-type-only-value);
+ *   a function declaration without a body (an overload binds through its implementation: R-bodiless); a parameter of a
+ *   function-like without a body - an abstract method's, a method overload's, a constructor overload's, an index
+ *   signature's (U-signature-parameters) and a bodiless function's (R-bodiless); a const enum (a plain enum binds:
+ *   R-const-enum); an interface, a type alias and an export as namespace declaration (U-umd-export). A symbol merges every
+ *   same-named declaration of one scope, so a companion that emits nothing never binds the name for another: an emitting
+ *   declaration merged with a companion binds through itself (a function and a class each with an interface, an
+ *   instantiated namespace with an interface, and a function, a class and a non-const enum each with an instantiated
+ *   namespace: U-binds-merged), while an ambient or bodiless value merged with an interface or a type alias binds nothing,
+ *   red at its declaration and at the use - refusal #2's members U-GP1, U-GP1L (the src-landable form: the handler's real
+ *   process.kill and fetch calls), U-GP2, U-GP5, U-GP7 (in a closure module), U-GP8 and U-GP8b, U-GP10, U-GP11, U-GP12,
+ *   U-GP13 (exported), U-GP14 (the companion declared first) and U-GP17, and the members the cut #3 seat found:
+ *   U-default-interface, U-ambient-let-type, U-depth-two (two edges from the view), U-ambient-function-interface and
+ *   U-ambient-namespace-interface. A NAMESPACE binds when it is not ambient and holds a statement that emits a binding - a
+ *   variable statement, a function declaration with a body, a class, a non-const enum or a namespace that binds - a dotted
+ *   one through its inner one (U-namespace-binds); every other namespace binds nothing, its own name red at the
+ *   declaration as well as at the use: an empty one, a types-only one, a const-enum-only one, an ambient-member-only one, a
+ *   bodiless-function-only one, one holding only a statement the reader does not list (void 0: fail-closed, though
+ *   TypeScript emits it), one holding only a namespace that binds nothing, and an ambient one (U-namespace-unbound,
+ *   R-non-value-alias), and so does every merge of one with a value that emits nothing: U-GP3, U-GP3b, U-GP4, U-GP4b,
+ *   U-GP9, U-const-enum-companion (a const enum and an empty namespace, both erased by tsc's default emit) and
+ *   U-ambient-class-namespace. (5) WRAPPER NAMES: a declaration at the module's top level (no function-like, class static
+ *   block or namespace body encloses it; fail-closed, a declaration in a top-level block counts) of a name in
+ *   WRAPPER_NAMES - a CommonJS module wrapper's parameters exports, require, module, __filename, __dirname, jitiImport and
+ *   jitiESMResolve (jiti 2.7.0's wrapper, Pi's extension loader; Node's own wrapper hands the first five) and the
+ *   wrapper's own arguments - binds nothing: under the wrapper a var, a non-const enum and an instantiated namespace of
+ *   such a name compile to a var of the wrapper's own parameter, which keeps the wrapper's value (the cut #3 seat's
+ *   readback: var jitiImport; and enum jitiImport loaded node:os through jiti 2.7.0's real jitiImport; var require;,
+ *   var require = require, enum require and namespace require loaded node:os through Node's require under tsc's CommonJS
+ *   emit) - U-wrapper-var, each name by a var without an initializer; U-wrapper-forms, a self-initialized var, a non-const
+ *   enum, an instantiated namespace, a function declaration, a let, a class and a var in a top-level block, each held the
+ *   same way (fail-closed), while a function's and a namespace body's own declaration of such a name is a fresh binding
+ *   and binds. Member and type-parameter names - a class or object-literal property, method or accessor, an enum member,
+ *   a type parameter - name no module binding and are never a value reference's target: each own name is read and quiet
+ *   (U-binds-members). The one binding without a declaration is the function's own arguments object, which the checker
+ *   resolves only inside a non-arrow function, an arrow inheriting it from the function around it (R-arguments: elsewhere
+ *   arguments is free; refusal #1's readback found jiti's module wrapper handing its own in, require among them). The
+ *   checker resolves a value use only to a declaration with a value meaning, so an import or import-equals alias whose
+ *   resolved target is no value (an interface) and an uninstantiated namespace are passed over and a value use of each
+ *   reds (R-non-value-alias), and a parameter initializer resolves outside the function body (U-GP6, U-GC3). The names
+ *   read: every identifier outside type positions (an implements clause holds only type positions), interfaces and type
+ *   aliases (R-types-erased) and type-only imports and exports (R-type-only-erased), each erased at run time; a property
  *   name, a qualified name's right side, a binding element's property name, an import specifier's imported name, an
  *   export-from specifier, a label, a meta-property name and an import attribute's name are not references
  *   (R-not-references); a shorthand property reads its value (R-shorthand) and a local export specifier its local name
  *   (R-export-local); a class's extends expression is a value, for a class declaration and a class expression alike
  *   (R-extends); an enum member's initializer is read (R-enum-initializer); and every name is read by nameOf
- *   (R-global-escaped).
+ *   (R-global-escaped). NOT CLAIMED: an import's own declaration binds whether or not its relative target exports the
+ *   name - the reader never checks a target's exports (R-UNLINKED-IMPORT: at run time such an import reads undefined
+ *   under jiti and tsc's CommonJS emit and fails to link under ESM, never a host global).
  * - CONSTRUCTOR: a closure text whose whole text is constructor (the route to a code constructor through any object),
  *   read from the texts EFFECT reads: a name (Z-constructor), and an escaped name, a string literal, a no-substitution
  *   template, a folded chain and a template head, middle and tail (R-constructor-forms).
@@ -101,7 +144,7 @@
  * it cannot name <export>; private members, constructors and static blocks are left out, and types are not values), so
  * a member of any form is classified or reds.
  * NOT CLAIMED (each a named residual with its pinned quiet row in row Q): R-UNNAMED-VIEW, R-LOOKALIKE-VIEW,
- * R-UNNAMED-EFFECT, R-IMPLICIT-CALL, R-FIELD-MUTATION, R-COMPUTED-TEXT, R-REFLECTIVE-REACH, R-UNREAD-TEXT.
+ * R-UNNAMED-EFFECT, R-IMPLICIT-CALL, R-FIELD-MUTATION, R-COMPUTED-TEXT, R-REFLECTIVE-REACH, R-UNREAD-TEXT, R-UNLINKED-IMPORT.
  *
  * Display paths added: none. This module is test-only.
  */
@@ -258,30 +301,120 @@ function isPropertyName(node: ts.Identifier): boolean {
   );
 }
 
-/** A declaration in an ambient context: under a declare modifier, its own or an enclosing node's. */
+/** A declaration in an ambient context: under a declare modifier, its own or an enclosing node's, or inside a module declaration named by a string literal (an ambient module, declare or not: TypeScript emits no binding of its own for one). */
 function isAmbient(declaration: ts.Node): boolean {
   for (let current: ts.Node | undefined = declaration; current !== undefined; current = current.parent) {
     if (ts.canHaveModifiers(current) && (ts.getModifiers(current) ?? []).some(modifier => modifier.kind === ts.SyntaxKind.DeclareKeyword)) return true;
+    if (ts.isModuleDeclaration(current) && ts.isStringLiteral(current.name)) return true;
   }
   return false;
 }
 
 const hasModifier = (node: ts.Node, kind: ts.SyntaxKind): boolean => ts.canHaveModifiers(node) && (ts.getModifiers(node) ?? []).some(modifier => modifier.kind === kind);
 
-/** A declaration that emits no run-time binding (see the module header: GLOBAL (4)): ambient, type-only, a function declaration without a body, or a const enum. */
-function bindsNothing(declaration: ts.Declaration): boolean {
-  if (isAmbient(declaration) || ts.isTypeOnlyImportOrExportDeclaration(declaration)) return true;
-  if (ts.isFunctionDeclaration(declaration)) return declaration.body === undefined;
-  return ts.isEnumDeclaration(declaration) && hasModifier(declaration, ts.SyntaxKind.ConstKeyword);
+/**
+ * The names a CommonJS module wrapper hands its module - jiti 2.7.0's wrapper parameters (exports, require, module,
+ * __filename, __dirname, jitiImport, jitiESMResolve; Node's own wrapper hands the first five) - and the wrapper's own
+ * arguments object. A module-scope declaration of one binds nothing (see the module header: GLOBAL (5)).
+ */
+export const WRAPPER_NAMES: readonly string[] = ["exports", "require", "module", "__filename", "__dirname", "jitiImport", "jitiESMResolve", "arguments"];
+
+/** The declaration kinds that emit a run-time binding of their name, when not ambient (see the module header: GLOBAL (4)); a function declaration, an enum, a namespace, a parameter and a binding element are judged by their own rules. */
+const VALUE_BINDINGS: ReadonlySet<ts.SyntaxKind> = new Set([
+  ts.SyntaxKind.VariableDeclaration,
+  ts.SyntaxKind.FunctionExpression,
+  ts.SyntaxKind.ClassDeclaration,
+  ts.SyntaxKind.ClassExpression,
+  ts.SyntaxKind.ImportClause,
+  ts.SyntaxKind.NamespaceImport,
+  ts.SyntaxKind.ImportSpecifier,
+  ts.SyntaxKind.ImportEqualsDeclaration,
+]);
+/** The declaration kinds whose own name is a member key or a type parameter: never a module binding and never a value reference's target, so the own name is read and quiet. */
+const MEMBER_NAMES: ReadonlySet<ts.SyntaxKind> = new Set([
+  ts.SyntaxKind.PropertyDeclaration,
+  ts.SyntaxKind.MethodDeclaration,
+  ts.SyntaxKind.GetAccessor,
+  ts.SyntaxKind.SetAccessor,
+  ts.SyntaxKind.PropertyAssignment,
+  ts.SyntaxKind.EnumMember,
+  ts.SyntaxKind.TypeParameter,
+]);
+
+/** Whether a declaration's scope is its module's top level: no function-like node, class static block or namespace body encloses it (fail-closed: a declaration in a top-level block counts). */
+function atModuleScope(declaration: ts.Node): boolean {
+  for (let current = declaration.parent; current !== undefined; current = current.parent) {
+    if (ts.isFunctionLike(current) || ts.isClassStaticBlockDeclaration(current) || ts.isModuleBlock(current)) return false;
+  }
+  return true;
 }
 
-/** Whether a name of module sf binds at run time (see the module header: GLOBAL (1)-(4) and the arguments object): the checker resolves it to a declaration of sf itself, sf is an ES module and not a declaration file, and the declaration emits a binding. */
+/** Whether a parameter emits a binding: the function-like it belongs to has a body (an overload, an abstract method, an index or call signature and every other signature without a body is erased; a getter takes no parameter). */
+function parameterEmits(parameter: ts.ParameterDeclaration): boolean {
+  const owner = parameter.parent;
+  if (ts.isArrowFunction(owner) || ts.isFunctionExpression(owner)) return true;
+  return (ts.isFunctionDeclaration(owner) || ts.isMethodDeclaration(owner) || ts.isConstructorDeclaration(owner) || ts.isSetAccessorDeclaration(owner)) && owner.body !== undefined;
+}
+
+/** The variable declaration or parameter a binding element destructures, through every enclosing binding pattern. */
+function bindingRoot(element: ts.BindingElement): ts.Node {
+  let current: ts.Node = element;
+  while (ts.isBindingElement(current) || ts.isObjectBindingPattern(current) || ts.isArrayBindingPattern(current)) current = current.parent;
+  return current;
+}
+
+/**
+ * Whether a namespace that is not ambient (its callers refuse an ambient one: emitsBinding and the statement check below)
+ * emits a run-time binding (see the module header: GLOBAL (4)): its body holds a statement that emits one - a variable
+ * statement, a function declaration with a body, a class, a non-const enum or a namespace that binds, none of them
+ * ambient; a dotted namespace binds through its inner one. Any other content - none, types, const enums, ambient
+ * members, imports, bodiless functions or any other statement - binds nothing (fail-closed).
+ */
+function namespaceBinds(declaration: ts.ModuleDeclaration): boolean {
+  const body = declaration.body;
+  if (body !== undefined && ts.isModuleDeclaration(body)) return namespaceBinds(body);
+  if (body === undefined || !ts.isModuleBlock(body)) return false;
+  return body.statements.some(statement => {
+    if (isAmbient(statement)) return false;
+    if (ts.isVariableStatement(statement) || ts.isClassDeclaration(statement)) return true;
+    if (ts.isFunctionDeclaration(statement)) return statement.body !== undefined;
+    if (ts.isEnumDeclaration(statement)) return !hasModifier(statement, ts.SyntaxKind.ConstKeyword);
+    return ts.isModuleDeclaration(statement) && namespaceBinds(statement);
+  });
+}
+
+/**
+ * Whether one declaration of a name emits a run-time binding of it (see the module header: GLOBAL (4)-(5)). An allowlist:
+ * a declaration of any kind not named here binds nothing - an interface, a type alias, an `export as namespace` and every
+ * kind TypeScript may add among them (fail-closed).
+ */
+function emitsBinding(declaration: ts.Declaration, name: string): boolean {
+  if (isAmbient(declaration) || ts.isTypeOnlyImportOrExportDeclaration(declaration)) return false;
+  if (MEMBER_NAMES.has(declaration.kind)) return true;
+  if (WRAPPER_NAMES.includes(name) && !ts.isFunctionExpression(declaration) && !ts.isClassExpression(declaration) && atModuleScope(declaration)) return false;
+  if (ts.isFunctionDeclaration(declaration)) return declaration.body !== undefined;
+  if (ts.isEnumDeclaration(declaration)) return !hasModifier(declaration, ts.SyntaxKind.ConstKeyword);
+  if (ts.isModuleDeclaration(declaration)) return namespaceBinds(declaration);
+  if (ts.isParameter(declaration)) return parameterEmits(declaration);
+  if (ts.isBindingElement(declaration)) {
+    const root = bindingRoot(declaration);
+    return ts.isParameter(root) ? parameterEmits(root) : ts.isVariableDeclaration(root);
+  }
+  return VALUE_BINDINGS.has(declaration.kind);
+}
+
+/**
+ * Whether a name of module sf binds at run time (see the module header: GLOBAL (1)-(5) and the arguments object): the checker
+ * resolves it to a symbol one of whose declarations lies in sf itself and emits a binding, and sf is an ES module and not a
+ * declaration file. A symbol merges every same-named declaration of one scope, so a companion that emits nothing (an
+ * interface, a type alias, an uninstantiated namespace, an ambient or bodiless declaration) never binds the name for it.
+ */
 function bindsHere(sf: ts.SourceFile, name: string, symbol: ts.Symbol | undefined): boolean {
   if (symbol === undefined) return false;
   const declarations = symbol.declarations ?? [];
   // The one binding without a declaration: the function's own arguments object, which the checker resolves only inside a non-arrow function.
   if (declarations.length === 0) return name === "arguments" && symbol.name === "arguments";
-  return ts.isExternalModule(sf) && !sf.isDeclarationFile && declarations.some(declaration => declaration.getSourceFile() === sf && !bindsNothing(declaration));
+  return ts.isExternalModule(sf) && !sf.isDeclarationFile && declarations.some(declaration => declaration.getSourceFile() === sf && emitsBinding(declaration, name));
 }
 
 /**
@@ -539,8 +672,12 @@ const view = (title: string, imports: readonly string[], body: readonly string[]
     "",
   ].join("\n");
 const V = "src/apo/view.ts";
+/** A planted interface companion: an interface, erased at run time, merged with any same-named declaration of its module. */
+const companion = (name: string): string[] => [`interface ${name} {`, "  readonly tag?: never;", "}"];
+/** A GLOBAL finding of the planted view, at one line of one module of its closure, reached by one route. */
+const globalAt = (line: number, name: string, file = V, route = V): string => `GLOBAL ${V} -> ${file}:${line} ${name} via ${route}`;
 
-/** The judged rows: L, V and N tile the export title's statement; P and Z tile the owner filing's acceptance; R holds the readings; S the seams; Q the residuals. */
+/** The judged rows: L, V and N tile the export title's statement; P and Z tile the owner filing's acceptance; R holds the readings; U GLOBAL's binding family, enumerated; S the seams; Q the residuals. */
 export const ROWS: readonly Row[] = [
   {
     id: "L",
@@ -1525,7 +1662,7 @@ export const ROWS: readonly Row[] = [
       {
         kind: "plant",
         id: "R-non-value-alias",
-        what: "a value use resolves only to a declaration with a value meaning: an import alias and an import-equals alias whose resolved target is an interface, an empty namespace and a namespace holding types only are each passed over, so a value use of each reds, while the aliases' and the namespaces' own declarations and an instantiated namespace bind (GLOBAL)",
+        what: "a value use resolves only to a declaration with a value meaning: an import alias and an import-equals alias whose resolved target is an interface, an empty namespace and a namespace holding types only are each passed over, so a value use of each reds; the aliases' own declarations and an instantiated namespace bind, while the empty and the types-only namespace bind nothing, so each also reds at its own declaration (GLOBAL)",
         files: {
           [V]: view(
             "APO resource pressure",
@@ -1537,6 +1674,8 @@ export const ROWS: readonly Row[] = [
         },
         views: [V],
         findings: [
+          `GLOBAL ${V} -> ${V}:6 signal via ${V}`,
+          `GLOBAL ${V} -> ${V}:7 typesOnly via ${V}`,
           `GLOBAL ${V} -> ${V}:17 process via ${V}`,
           `GLOBAL ${V} -> ${V}:18 fetch via ${V}`,
           `GLOBAL ${V} -> ${V}:19 signal via ${V}`,
@@ -1572,7 +1711,7 @@ export const ROWS: readonly Row[] = [
       {
         kind: "plant",
         id: "R-bodiless",
-        what: "a function declaration without a body (an overload with no implementation) binds nothing: process reds at its declaration and at the call, while an overloaded pad binds through its implementation (GLOBAL)",
+        what: "a function declaration without a body (an overload with no implementation) binds nothing: process reds at its declaration and at the call, while an overloaded pad binds through its implementation; the bodiless overload's own parameter value binds nothing either and reds at its declaration (GLOBAL)",
         files: {
           [V]: view(
             "APO resource pressure",
@@ -1582,7 +1721,7 @@ export const ROWS: readonly Row[] = [
           ),
         },
         views: [V],
-        findings: [`GLOBAL ${V} -> ${V}:3 process via ${V}`, `GLOBAL ${V} -> ${V}:13 process via ${V}`],
+        findings: [`GLOBAL ${V} -> ${V}:3 process via ${V}`, `GLOBAL ${V} -> ${V}:4 value via ${V}`, `GLOBAL ${V} -> ${V}:13 process via ${V}`],
       },
       {
         kind: "plant",
@@ -1603,7 +1742,9 @@ export const ROWS: readonly Row[] = [
             'import data from "./label-ops.js" with { type: "json" };',
             'export { absentToo as named } from "./label-ops.js";',
             'export const VIEW_TITLE = "APO resource pressure";',
-            "namespace Space {}",
+            "namespace Space {",
+            "  export const level = 0;",
+            "}",
             "import Kind = Space.Missing;",
             "export class View {",
             "  constructor(private readonly host: Host) {}",
@@ -1651,6 +1792,718 @@ export const ROWS: readonly Row[] = [
           `CONSTRUCTOR ${V} -> ${V}:12 literal via ${V}`,
           `CONSTRUCTOR ${V} -> ${V}:13 literal via ${V}`,
         ],
+      },
+    ],
+  },
+  {
+    id: "U",
+    label: "GLOBAL's binding family (class U1 of record), enumerated: a name binds only through a declaration of its own module that emits a run-time binding of its own, each form held by a pin of its own",
+    pins: [
+      {
+        kind: "plant",
+        id: "U-GP1",
+        what: "refusal #2 GP1: an ambient const merged with an interface companion binds nothing: process reds at the ambient declaration and at the use, the interface never read (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["process.kill(this.selected);"], ["declare const process: { kill(pid: number): void };", ...companion("process")]) },
+        views: [V],
+        findings: [globalAt(3, "process"), globalAt(11, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-GP1L",
+        what: "refusal #2 GP1L, the src-landable form as the gate wrote it (the gate measured tsc -p tsconfig.json rc 0 and biome rc 0 on it): ambient process and fetch, each merged with a type companion, red at their declarations and at the handler's real process.kill and fetch calls (GLOBAL)",
+        files: {
+          [V]: [
+            "declare const process: { kill(pid: number): void };",
+            "interface process {",
+            "  readonly tag?: never;",
+            "}",
+            "declare const fetch: (url: string) => Promise<unknown>;",
+            "type fetch = unknown;",
+            "export type Tagged = process | fetch;",
+            'export const VIEW_TITLE = "APO resource pressure";',
+            "export class View {",
+            "  private selected = 0;",
+            "  handleInput(data: string): void {",
+            "    process.kill(this.selected);",
+            `    void fetch(\`http://127.0.0.1:9/\${data}\`);`,
+            "  }",
+            "}",
+            "",
+          ].join("\n"),
+        },
+        views: [V],
+        findings: [globalAt(1, "process"), globalAt(5, "fetch"), globalAt(12, "process"), globalAt(13, "fetch")],
+      },
+      {
+        kind: "plant",
+        id: "U-GP2",
+        what: "refusal #2 GP2: an ambient const merged with a type-alias companion binds nothing: fetch reds at the declaration and at the use (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ['void fetch("http://127.0.0.1:9/fake");'], ["declare const fetch: (url: string) => Promise<unknown>;", "type fetch = unknown;"]) },
+        views: [V],
+        findings: [globalAt(3, "fetch"), globalAt(9, "fetch")],
+      },
+      {
+        kind: "plant",
+        id: "U-GP3",
+        what: "refusal #2 GP3 (a partial member): an ambient namespace merged with an empty namespace binds nothing: process reds at both declarations and at the use, beside the ambient inner names kill and pid (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["process.kill(this.selected);"], ["declare namespace process {", "  function kill(pid: number): void;", "}", "namespace process {}"]) },
+        views: [V],
+        findings: [globalAt(3, "process"), globalAt(4, "kill"), globalAt(4, "pid"), globalAt(6, "process"), globalAt(11, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-GP3b",
+        what: "refusal #2 GP3b: an ambient namespace whose only member is an admitted name, merged with an empty namespace, binds nothing: process reds at both declarations and at the use (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["process.Array.kill(this.selected);"], ["declare namespace process {", "  const Array: { kill(pid: number): void };", "}", "namespace process {}"]) },
+        views: [V],
+        findings: [globalAt(3, "process"), globalAt(6, "process"), globalAt(11, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-GP4",
+        what: "refusal #2 GP4 (a partial member): an ambient function merged with an empty namespace binds nothing: fetch reds at both declarations and at the use, beside the ambient parameter url (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ['void fetch("http://127.0.0.1:9/fake");'], ["declare function fetch(url: string): Promise<unknown>;", "namespace fetch {}"]) },
+        views: [V],
+        findings: [globalAt(3, "fetch"), globalAt(3, "url"), globalAt(4, "fetch"), globalAt(9, "fetch")],
+      },
+      {
+        kind: "plant",
+        id: "U-GP4b",
+        what: "refusal #2 GP4b: an ambient function without parameters merged with an empty namespace binds nothing: fetch reds at both declarations and at the use (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["void fetch();"], ["declare function fetch(): Promise<unknown>;", "namespace fetch {}"]) },
+        views: [V],
+        findings: [globalAt(3, "fetch"), globalAt(4, "fetch"), globalAt(9, "fetch")],
+      },
+      {
+        kind: "plant",
+        id: "U-GP5",
+        what: "refusal #2 GP5: a function declaration without a body merged with an interface companion binds nothing: process reds at the declaration and at the call (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["process();"], ["function process(): void;", ...companion("process")]) },
+        views: [V],
+        findings: [globalAt(3, "process"), globalAt(11, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-GP7",
+        what: "refusal #2 GP7: the GP1 merge inside a closure module one static edge from the view reds there, at the declaration and at the call (GLOBAL)",
+        files: {
+          [V]: view("APO resource pressure", [HOST, 'import { stop } from "./ops.js";'], ["stop(this.selected);"]),
+          "src/apo/ops.ts": ["declare const process: { kill(pid: number): void };", ...companion("process"), "export function stop(pid: number): void {", "  process.kill(pid);", "}", ""].join("\n"),
+        },
+        views: [V],
+        findings: [globalAt(1, "process", "src/apo/ops.ts", `${V} -static-> src/apo/ops.ts`), globalAt(6, "process", "src/apo/ops.ts", `${V} -static-> src/apo/ops.ts`)],
+      },
+      {
+        kind: "plant",
+        id: "U-GP8",
+        what: "refusal #2 GP8 (a partial member): an ambient class merged with an interface companion binds nothing: Worker reds at the declaration and at the construction, beside the ambient constructor parameter path (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ['void new Worker("./x.js");'], ["declare class Worker {", "  constructor(path: string);", "}", ...companion("Worker")]) },
+        views: [V],
+        findings: [globalAt(3, "Worker"), globalAt(4, "path"), globalAt(13, "Worker")],
+      },
+      {
+        kind: "plant",
+        id: "U-GP8b",
+        what: "refusal #2 GP8b: an empty ambient class merged with an interface companion binds nothing: Worker reds at the declaration and at the construction (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["void new Worker();"], ["declare class Worker {}", ...companion("Worker")]) },
+        views: [V],
+        findings: [globalAt(3, "Worker"), globalAt(11, "Worker")],
+      },
+      {
+        kind: "plant",
+        id: "U-GP9",
+        what: "refusal #2 GP9 (a partial member): an ambient namespace merged with a types-only namespace binds nothing: process reds at both declarations and at the use, beside the ambient inner names kill and pid (GLOBAL)",
+        files: {
+          [V]: view("APO resource pressure", [HOST], ["process.kill(this.selected);"], ["declare namespace process {", "  function kill(pid: number): void;", "}", "namespace process {", "  export type Signal = number;", "}"]),
+        },
+        views: [V],
+        findings: [globalAt(3, "process"), globalAt(4, "kill"), globalAt(4, "pid"), globalAt(6, "process"), globalAt(13, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-GP10",
+        what: "refusal #2 GP10: an ambient require merged with an interface companion binds nothing: require reds at the declaration and where the view reads it into a local (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["const load = require;", 'void load("node:child_process");'], ["declare const require: (id: string) => unknown;", ...companion("require")]) },
+        views: [V],
+        findings: [globalAt(3, "require"), globalAt(11, "require")],
+      },
+      {
+        kind: "plant",
+        id: "U-GP11",
+        what: "refusal #2 GP11: an ambient globalThis merged with an interface companion binds nothing: globalThis reds at the declaration and at the use (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["void globalThis.process;"], ["declare const globalThis: { readonly process: unknown };", ...companion("globalThis")]) },
+        views: [V],
+        findings: [globalAt(3, "globalThis"), globalAt(11, "globalThis")],
+      },
+      {
+        kind: "plant",
+        id: "U-GP12",
+        what: "refusal #2 GP12: an ambient Function merged with an interface companion binds nothing: Function reds at the declaration and at the construction (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ['void new Function("return 1")();'], ["declare const Function: new (body: string) => () => unknown;", ...companion("Function")]) },
+        views: [V],
+        findings: [globalAt(3, "Function"), globalAt(11, "Function")],
+      },
+      {
+        kind: "plant",
+        id: "U-GP13",
+        what: "refusal #2 GP13: an exported ambient const merged with an exported interface companion binds nothing: process reds at the declaration and at the use (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["process.kill(this.selected);"], ["export declare const process: { kill(pid: number): void };", "export interface process {", "  readonly tag?: never;", "}"]) },
+        views: [V],
+        findings: [globalAt(3, "process"), globalAt(11, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-GP14",
+        what: "refusal #2 GP14: the interface companion declared before the ambient const binds nothing either: process reds at the declaration and at the use (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["process.kill(this.selected);"], [...companion("process"), "declare const process: { kill(pid: number): void };"]) },
+        views: [V],
+        findings: [globalAt(6, "process"), globalAt(11, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-GP17",
+        what: "refusal #2 GP17: ambient module, exports, __filename and __dirname, each merged with an interface companion, bind nothing: each reds at its declaration and at the use (GLOBAL)",
+        files: {
+          [V]: view(
+            "APO resource pressure",
+            [HOST],
+            ["void [module, exports, __filename, __dirname];"],
+            [
+              "declare const module: unknown;",
+              ...companion("module"),
+              "declare const exports: unknown;",
+              ...companion("exports"),
+              "declare const __filename: string;",
+              ...companion("__filename"),
+              "declare const __dirname: string;",
+              ...companion("__dirname"),
+            ],
+          ),
+        },
+        views: [V],
+        findings: [
+          globalAt(3, "module"),
+          globalAt(7, "exports"),
+          globalAt(11, "__filename"),
+          globalAt(15, "__dirname"),
+          globalAt(23, "module"),
+          globalAt(23, "exports"),
+          globalAt(23, "__filename"),
+          globalAt(23, "__dirname"),
+        ],
+      },
+      {
+        kind: "plant",
+        id: "U-GP6",
+        what: "refusal #2 GP6 (killed at the gate, held here): a parameter initializer resolves outside the function body, so a same-named var in the body does not bind it: process reds in the initializer only (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["void this.selected;", "void stop();"], ["function stop(pid = process.kill(2)): unknown {", "  var process: unknown;", "  return [pid, process];", "}"]) },
+        views: [V],
+        findings: [globalAt(3, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-GP15",
+        what: "refusal #2 GP15 (killed at the gate, held here): a global augmentation's var merged with its interface binds nothing: global, the var's own name and the use red (GLOBAL)",
+        files: {
+          [V]: view("APO resource pressure", [HOST], ["process.kill(this.selected);"], ["declare global {", "  var process: { kill(pid: number): void };", "  interface process {", "    readonly tag?: never;", "  }", "}"]),
+        },
+        views: [V],
+        findings: [globalAt(3, "global"), globalAt(4, "process"), globalAt(13, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-GP16",
+        what: "refusal #2 GP16 (killed at the gate, held here): a script shim's var beside the view's own interface companion binds nothing: process reds in the script and at the view's use (GLOBAL)",
+        files: {
+          [V]: view("APO resource pressure", [HOST, 'import "./shim.js";'], ["process.kill(this.selected);"], companion("process")),
+          "src/apo/shim.ts": ["var process: { kill(pid: number): void };", ""].join("\n"),
+        },
+        views: [V],
+        findings: [globalAt(1, "process", "src/apo/shim.ts", `${V} -static-> src/apo/shim.ts`), globalAt(11, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-GC1",
+        what: "refusal #2 control GC1 (GP1 without its companion): the ambient const alone reds at the declaration and at the use (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["process.kill(this.selected);"], ["declare const process: { kill(pid: number): void };"]) },
+        views: [V],
+        findings: [globalAt(3, "process"), globalAt(8, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-GC2",
+        what: "refusal #2 control GC2: a global augmentation's var beside a module-level interface companion binds nothing: global, the var's own name and the use red (GLOBAL)",
+        files: {
+          [V]: view("APO resource pressure", [HOST], ["nativeHook.kill(this.selected);"], ["declare global {", "  var nativeHook: { kill(pid: number): void };", "}", ...companion("nativeHook")]),
+        },
+        views: [V],
+        findings: [globalAt(3, "global"), globalAt(4, "nativeHook"), globalAt(13, "nativeHook")],
+      },
+      {
+        kind: "plant",
+        id: "U-GC3",
+        what: "refusal #2 control GC3 (GP6 without the body var): a parameter initializer's free name reds (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["void this.selected;", "void stop();"], ["function stop(pid = process.kill(2)): unknown {", "  return pid;", "}"]) },
+        views: [V],
+        findings: [globalAt(3, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-const-enum-companion",
+        what: "found by the cut #3 seat: a const enum merged with an empty namespace binds nothing (tsc's default emit erases both, so the use reaches the host's process): process reds at both declarations and at the use (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["void process;"], ["const enum process {", "  kill,", "}", "namespace process {}"]) },
+        views: [V],
+        findings: [globalAt(3, "process"), globalAt(6, "process"), globalAt(11, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-default-interface",
+        what: "found by the cut #3 seat: an ambient const merged with an export default interface companion binds nothing: process reds at the declaration and at the use (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["process.kill(this.selected);"], ["declare const process: { kill(pid: number): void };", "export default interface process {", "  readonly tag?: never;", "}"]) },
+        views: [V],
+        findings: [globalAt(3, "process"), globalAt(11, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-ambient-let-type",
+        what: "found by the cut #3 seat: an ambient let merged with a type-alias companion binds nothing: process reds at the declaration and at the use (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["process.kill(this.selected);"], ["declare let process: { kill(pid: number): void };", "type process = never;"]) },
+        views: [V],
+        findings: [globalAt(3, "process"), globalAt(9, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-depth-two",
+        what: "found by the cut #3 seat: an ambient var merged with an interface companion two static edges from the view reds there, at the declaration and at the call (GLOBAL)",
+        files: {
+          [V]: view("APO resource pressure", [HOST, 'import { halt } from "./halt.js";'], ["halt();"]),
+          "src/apo/halt.ts": ['import { stop } from "./stop.js";', "export function halt(): void {", "  stop();", "}", ""].join("\n"),
+          "src/apo/stop.ts": ["declare var process: { kill(pid: number): void };", ...companion("process"), "export function stop(): void {", "  process.kill(1);", "}", ""].join("\n"),
+        },
+        views: [V],
+        findings: [
+          globalAt(1, "process", "src/apo/stop.ts", `${V} -static-> src/apo/halt.ts -static-> src/apo/stop.ts`),
+          globalAt(6, "process", "src/apo/stop.ts", `${V} -static-> src/apo/halt.ts -static-> src/apo/stop.ts`),
+        ],
+      },
+      {
+        kind: "plant",
+        id: "U-ambient-function-interface",
+        what: "found by the cut #3 seat: an ambient function merged with an interface companion binds nothing: fetch reds at the declaration and at the call (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["void fetch();"], ["declare function fetch(): Promise<unknown>;", ...companion("fetch")]) },
+        views: [V],
+        findings: [globalAt(3, "fetch"), globalAt(11, "fetch")],
+      },
+      {
+        kind: "plant",
+        id: "U-ambient-class-namespace",
+        what: "found by the cut #3 seat: an ambient class merged with an empty namespace binds nothing: Worker reds at both declarations and at the construction (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["void new Worker();"], ["declare class Worker {}", "namespace Worker {}"]) },
+        views: [V],
+        findings: [globalAt(3, "Worker"), globalAt(4, "Worker"), globalAt(9, "Worker")],
+      },
+      {
+        kind: "plant",
+        id: "U-ambient-namespace-interface",
+        what: "found by the cut #3 seat: an ambient namespace holding a value, merged with an interface companion, binds nothing: process reds at the declaration and at the use, beside the ambient inner kill (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["process.kill(1);"], ["declare namespace process {", "  const kill: (pid: number) => void;", "}", ...companion("process")]) },
+        views: [V],
+        findings: [globalAt(3, "process"), globalAt(4, "kill"), globalAt(13, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-string-module",
+        what: "found by the cut #3 seat: a module declaration named by a string literal is an ambient module even without declare (TypeScript emits no binding of its own for it): the var inside binds nothing and process reds at its declaration and at the use inside (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["void this.selected;"], ['module "shim" {', "  var process: { kill(pid: number): void };", "  process.kill(1);", "}"]) },
+        views: [V],
+        findings: [globalAt(4, "process"), globalAt(5, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-umd-export",
+        what: "an export as namespace declaration (a declaration-file construct TypeScript emits nothing for) binds nothing: process reds at it and at the use (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["process.kill(this.selected);"], ["export as namespace process;"]) },
+        views: [V],
+        findings: [globalAt(3, "process"), globalAt(8, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-signature-parameters",
+        what: "a parameter binds only when its function-like has a body: an abstract method's, a method overload's, a constructor overload's and an index signature's parameter and a binding element of an overload's parameter each red at the declaration, while the implementations' parameters bind (GLOBAL)",
+        files: {
+          [V]: view(
+            "APO resource pressure",
+            [HOST],
+            ["void this.selected;"],
+            [
+              "abstract class Base {",
+              "  constructor(level: number);",
+              "  constructor(level?: number) {",
+              "    void level;",
+              "  }",
+              "  abstract stop(signal: number): void;",
+              "  halt(code: number): void;",
+              "  halt(code?: number): void {",
+              "    void code;",
+              "  }",
+              "  rest({ depth }: { depth: number }): void;",
+              "  rest(options?: { depth: number }): void {",
+              "    void options;",
+              "  }",
+              "  [key: string]: unknown;",
+              "}",
+              "void Base;",
+            ],
+          ),
+        },
+        views: [V],
+        findings: [globalAt(4, "level"), globalAt(8, "signal"), globalAt(9, "code"), globalAt(13, "depth"), globalAt(17, "key")],
+      },
+      {
+        kind: "plant",
+        id: "U-wrapper-var",
+        what: "found by the cut #3 seat: a module-scope var without an initializer named after a CommonJS wrapper's parameter (exports, require, module, __filename, __dirname, jitiImport, jitiESMResolve) or its own arguments binds nothing - under the wrapper it re-declares the parameter and keeps the wrapper's value (readback: var jitiImport; loads node:os under jiti 2.7.0, var require; under tsc's CommonJS emit): each reds at its declaration and at its use, the seven parameters in the handler and arguments at the module's top level (inside a method arguments is the method's own object and binds) (GLOBAL)",
+        files: {
+          [V]: view(
+            "APO resource pressure",
+            [HOST],
+            ["void [exports, require, module, __filename, __dirname, jitiImport, jitiESMResolve];"],
+            [
+              "var exports: unknown;",
+              "var require: (id: string) => unknown;",
+              "var module: unknown;",
+              "var __filename: string;",
+              "var __dirname: string;",
+              "var jitiImport: (id: string) => Promise<unknown>;",
+              "var jitiESMResolve: (id: string) => string;",
+              "var arguments: unknown;",
+              "void arguments;",
+            ],
+          ),
+        },
+        views: [V],
+        findings: [
+          globalAt(3, "exports"),
+          globalAt(4, "require"),
+          globalAt(5, "module"),
+          globalAt(6, "__filename"),
+          globalAt(7, "__dirname"),
+          globalAt(8, "jitiImport"),
+          globalAt(9, "jitiESMResolve"),
+          globalAt(10, "arguments"),
+          globalAt(11, "arguments"),
+          globalAt(16, "exports"),
+          globalAt(16, "require"),
+          globalAt(16, "module"),
+          globalAt(16, "__filename"),
+          globalAt(16, "__dirname"),
+          globalAt(16, "jitiImport"),
+          globalAt(16, "jitiESMResolve"),
+        ],
+      },
+      {
+        kind: "plant",
+        id: "U-wrapper-forms",
+        what: "found by the cut #3 seat: every module-scope declaration of a wrapper name binds nothing (a var with a self initializer, a non-const enum and an instantiated namespace compile to a var of the wrapper's parameter; a function declaration, a let, a class and a var in a top-level block are held the same way, fail-closed): each reds; the same names declared inside a function, a namespace body or a class static block, and a function or a class expression's own name, are fresh bindings and stay quiet (GLOBAL)",
+        files: {
+          [V]: view(
+            "APO resource pressure",
+            [HOST],
+            ["void [require, jitiImport, module, exports, __filename, __dirname, jitiESMResolve, scoped, Inner, fresh, made, Holder];"],
+            [
+              "var require = require;",
+              "enum jitiImport {",
+              "  Early,",
+              "}",
+              "namespace module {",
+              "  export const level = 1;",
+              "}",
+              "function exports(): void {}",
+              'let __filename = "";',
+              "class __dirname {}",
+              "{",
+              "  var jitiESMResolve: unknown;",
+              "}",
+              "function scoped(): unknown {",
+              "  var require: unknown;",
+              "  return require;",
+              "}",
+              "namespace Inner {",
+              "  var jitiImport: unknown;",
+              "  void jitiImport;",
+              "}",
+              "const fresh = function exports(): unknown {",
+              "  return exports;",
+              "};",
+              "const made = class module {",
+              "  static self(): unknown {",
+              "    return module;",
+              "  }",
+              "};",
+              "class Holder {",
+              "  static {",
+              "    var require: unknown;",
+              "    void require;",
+              "  }",
+              "}",
+            ],
+          ),
+        },
+        views: [V],
+        findings: [
+          globalAt(3, "require"),
+          globalAt(4, "jitiImport"),
+          globalAt(7, "module"),
+          globalAt(10, "exports"),
+          globalAt(11, "__filename"),
+          globalAt(12, "__dirname"),
+          globalAt(14, "jitiESMResolve"),
+          globalAt(42, "require"),
+          globalAt(42, "jitiImport"),
+          globalAt(42, "module"),
+          globalAt(42, "exports"),
+          globalAt(42, "__filename"),
+          globalAt(42, "__dirname"),
+          globalAt(42, "jitiESMResolve"),
+        ],
+      },
+      {
+        kind: "plant",
+        id: "U-namespace-unbound",
+        what: "a namespace binds nothing unless it holds a statement that emits a binding: an empty one, a types-only one, a const-enum-only one, an ambient-member-only one, a bodiless-function-only one, one holding only a statement the reader does not list (void 0: fail-closed, though TypeScript emits it), one holding only a namespace that binds nothing, and an ambient one each red at the declaration and at the use, beside their non-binding inner names (GLOBAL)",
+        files: {
+          [V]: view(
+            "APO resource pressure",
+            [HOST],
+            ["void [empty, typed, constOnly, ambientOnly, bodiless, statementOnly, nestedUnbound, ambient];"],
+            [
+              "namespace empty {}",
+              "namespace typed {",
+              "  export interface Shape {}",
+              "  export type Alias = number;",
+              "}",
+              "namespace constOnly {",
+              "  export const enum Flag {",
+              "    On,",
+              "  }",
+              "}",
+              "namespace ambientOnly {",
+              "  export declare const level: number;",
+              "}",
+              "namespace bodiless {",
+              "  export function made(): void;",
+              "}",
+              "namespace statementOnly {",
+              "  void 0;",
+              "}",
+              "namespace nestedUnbound {",
+              "  export namespace inner {}",
+              "}",
+              "declare namespace ambient {",
+              "  export const level: number;",
+              "}",
+            ],
+          ),
+        },
+        views: [V],
+        findings: [
+          globalAt(3, "empty"),
+          globalAt(4, "typed"),
+          globalAt(8, "constOnly"),
+          globalAt(9, "Flag"),
+          globalAt(13, "ambientOnly"),
+          globalAt(14, "level"),
+          globalAt(16, "bodiless"),
+          globalAt(17, "made"),
+          globalAt(19, "statementOnly"),
+          globalAt(22, "nestedUnbound"),
+          globalAt(23, "inner"),
+          globalAt(25, "ambient"),
+          globalAt(26, "level"),
+          globalAt(32, "empty"),
+          globalAt(32, "typed"),
+          globalAt(32, "constOnly"),
+          globalAt(32, "ambientOnly"),
+          globalAt(32, "bodiless"),
+          globalAt(32, "statementOnly"),
+          globalAt(32, "nestedUnbound"),
+          globalAt(32, "ambient"),
+        ],
+      },
+      {
+        kind: "plant",
+        id: "U-namespace-binds",
+        what: "a namespace binds when it holds a statement that emits a binding - a variable statement, a function declaration with a body, a class, a non-const enum, a namespace that binds - and a dotted namespace binds through its innermost body: each use stays quiet",
+        files: {
+          [V]: view(
+            "APO resource pressure",
+            [HOST],
+            ["void [byVariable, byFunction, byClass, byEnum, byNamespace, by];"],
+            [
+              "namespace byVariable {",
+              "  export const level = 1;",
+              "}",
+              "namespace byFunction {",
+              "  export function made(): void {}",
+              "}",
+              "namespace byClass {",
+              "  export class Made {}",
+              "}",
+              "namespace byEnum {",
+              "  export enum Made {",
+              "    Early,",
+              "  }",
+              "}",
+              "namespace byNamespace {",
+              "  export namespace inner {",
+              "    export const level = 1;",
+              "  }",
+              "}",
+              "namespace by.dotted {",
+              "  export const level = 1;",
+              "}",
+            ],
+          ),
+        },
+        views: [V],
+        findings: [],
+      },
+      {
+        kind: "plant",
+        id: "U-binds-values",
+        what: "every value-binding form binds in its own ES module and stays quiet: var, let and const, object and array binding elements, a function declaration with a body, its parameter and its parameter's binding element, an arrow's and a function expression's parameter, a function expression's own name, a class declaration and a class expression's own name, a non-const enum and its member read in an initializer, an instantiated namespace, a catch variable, a default, a named and a namespace value import and an import-equals, and a module-scope var of a name outside the wrapper's (a fresh binding at run time: var process; reads undefined under jiti, tsc's CommonJS emit and ESM)",
+        files: {
+          [V]: view(
+            "APO resource pressure",
+            [HOST, 'import fallback, { level as imported } from "./values.js";', 'import * as values from "./values.js";', "import depthOf = values.level;"],
+            ["void [held, kept, fixed, left, renamed, first, made, named, Shape, Built, Level, Space, guarded, process, twice, half, fallback, imported, values, depthOf, data];"],
+            [
+              "var held = 1;",
+              "let kept = 2;",
+              "const fixed = 3;",
+              "const { left, right: renamed } = { left: 1, right: 2 };",
+              "const [first] = [1];",
+              "function made(value: number, { depth }: { depth: number } = { depth: 0 }): number {",
+              "  return value + depth;",
+              "}",
+              "const named = function inner(): unknown {",
+              "  return inner;",
+              "};",
+              "class Shape {}",
+              "const Built = class Local {",
+              "  static self(): unknown {",
+              "    return Local;",
+              "  }",
+              "};",
+              "enum Level {",
+              "  Low = 1,",
+              "  High = Low + 1,",
+              "}",
+              "namespace Space {",
+              "  export const depth = 1;",
+              "}",
+              "function guarded(): unknown {",
+              "  try {",
+              "    return held;",
+              "  } catch (failure) {",
+              "    return failure;",
+              "  }",
+              "}",
+              "var process: { kill(pid: number): void };",
+              "const twice = (count: number): number => count * 2;",
+              "const half = function (count: number): number {",
+              "  return count / 2;",
+              "};",
+            ],
+          ),
+          "src/apo/values.ts": ["export const level = 1;", "export default 2;", ""].join("\n"),
+        },
+        views: [V],
+        findings: [],
+      },
+      {
+        kind: "plant",
+        id: "U-binds-merged",
+        what: "an emitting declaration merged with a companion binds through the emitting one and stays quiet: a function and a class each with an interface, an instantiated namespace with an interface, and a function, a class and a non-const enum each with an instantiated namespace",
+        files: {
+          [V]: view(
+            "APO resource pressure",
+            [HOST],
+            ["process();", "void new Worker();", "void fetch.level;", "signal();", "void Code.level;", "void Phase.level;"],
+            [
+              "function process(): void {}",
+              ...companion("process"),
+              "class Worker {}",
+              ...companion("Worker"),
+              "namespace fetch {",
+              "  export const level = 1;",
+              "}",
+              ...companion("fetch"),
+              "function signal(): void {}",
+              "namespace signal {",
+              "  export const level = 2;",
+              "}",
+              "class Code {}",
+              "namespace Code {",
+              "  export const level = 3;",
+              "}",
+              "enum Phase {",
+              "  Early,",
+              "}",
+              "namespace Phase {",
+              "  export const level = 4;",
+              "}",
+            ],
+          ),
+        },
+        views: [V],
+        findings: [],
+      },
+      {
+        kind: "plant",
+        id: "U-binds-members",
+        what: "the own names of members and type parameters - a class property, accessor pair, setter-only accessor and method, an object literal property, method and accessor, an enum member and a type parameter (named process and fetch here; a property module and a member exports, named after wrapper names, stay member names) - name no module binding and are never a value reference's target: each is read and stays quiet",
+        files: {
+          [V]: view(
+            "APO resource pressure",
+            [HOST],
+            ["void [Holder, literal, Members, generic];"],
+            [
+              "class Holder<process> {",
+              "  count = 0;",
+              "  module = 1;",
+              "  get size(): number {",
+              "    return this.count;",
+              "  }",
+              "  set size(value: number) {",
+              "    this.count = value;",
+              "  }",
+              "  set only(value: number) {",
+              "    this.count = value;",
+              "  }",
+              "  method(): void {}",
+              "}",
+              "const literal = {",
+              "  key: 1,",
+              "  method(): number {",
+              "    return 1;",
+              "  },",
+              "  get computed(): number {",
+              "    return 2;",
+              "  },",
+              "};",
+              "enum Members {",
+              "  First,",
+              "  exports,",
+              "}",
+              "function generic<fetch>(input: fetch): fetch {",
+              "  return input;",
+              "}",
+            ],
+          ),
+        },
+        views: [V],
+        findings: [],
       },
     ],
   },
@@ -1838,9 +2691,23 @@ export const ROWS: readonly Row[] = [
         views: [V],
         findings: [],
       },
+      {
+        kind: "plant",
+        id: "R-UNLINKED-IMPORT",
+        what: "a value import of a name its relative target does not export binds in the importer by its own declaration (the reader never checks the target's exports): its use stays quiet - at run time it reads undefined under jiti and tsc's CommonJS emit and fails to link under ESM, never reaching a host global",
+        files: {
+          [V]: view("APO resource pressure", [HOST, 'import { process } from "./ops.js";'], ["process.kill(this.selected);"]),
+          "src/apo/ops.ts": ["export const level = 0;", ""].join("\n"),
+        },
+        views: [V],
+        findings: [],
+      },
     ],
   },
 ];
+
+/** Refusal #1's U1 members of record (its CLASSES OF RECORD, restated by refusal #2), each with the row R pin that cures it; refusal #2's members are row U pins named U-<member>. */
+export const REFUSAL_1_CURES: Readonly<Record<string, string>> = { G01: "R-script-var", G01b: "R-script-require", G01c: "R-script-function", G01d: "R-script-typed", G02: "R-dts-script" };
 
 /** The residual families: each Q pin, by its id, with its pinned quiet row. */
 export const RESIDUAL_FAMILIES: Readonly<Record<string, readonly string[]>> = Object.fromEntries((ROWS.find(row => row.id === "Q")?.pins ?? []).map(pin => [pin.id, [`Q ${pin.id}`]]));
