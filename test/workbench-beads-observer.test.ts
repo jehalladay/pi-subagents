@@ -684,11 +684,20 @@ describe('wb-4ap.14 (COLLECTIVE-ADAPTATION-R14): until a released bd ships B1/B2
  * literal of EDGED_BD_TYPES and OWNERSHIP_READINESS_CAUSE_TYPES is a WellKnownDependencyTypes() value, AffectsReadyWork()'s
  * operands are blocks, parent-child, conditional-blocks and waits-for, and the readiness gates in
  * OWNERSHIP_READINESS_CAUSE_TYPES are exactly those operands outside EDGED_BD_TYPES, in AffectsReadyWork()'s order.
+ * EACH-LIVENESS of the FC table (the wb-vked respin of refusal #1 U1): FC0 holds BD_READER_PROBES, row by row, to the frozen
+ * literal BD_READER_PROBE_SHAPE (each id with its form, in order); FC-LIVE runs after the rows and reads this file's own task
+ * tree: the it.each registers exactly one case per literal row, titled from its id and form, in the literal's order and in run
+ * mode, and every one of them reached its last assertion (COMPLETED_FC). An emptied table, a row dropped, added, reordered or
+ * relabelled, an it.each over part of the table, a skipped it.each and a row whose case returns before its last assertion each
+ * red FC0, FC-LIVE or both. FC-LIVE reads a whole-file run: a run filtered by test name that keeps it and leaves an FC row out
+ * reds it.
  * NOT CLAIMED: which of U3's other five types bd's comments call authorship, assignment, approval, delegation or a trigger (the
  * seat's reading of types.go:950-952, :960 and :964): one of them exchanged for another WellKnownDependencyTypes() value outside
  * the readiness pair stays green; and a snapshot forged together with this file's blob literal and its roster literal for the
  * same type stays green (the seat's battery measured both): a hermetic file has no upstream to compare with, so the blob id is
- * the anchor a reviewer checks (git rev-parse 26d1cc9dd:internal/types/types.go in the beads repository).
+ * the anchor a reviewer checks (git rev-parse 26d1cc9dd:internal/types/types.go in the beads repository); and an FC row deleted
+ * together with its BD_READER_PROBE_SHAPE entry stays green: both lists are this file's own, and the FC rows are its falsifiers
+ * of its own reader, with no outside list to hold them to.
  */
 const BD_SNAPSHOT_FILE = new URL('./fixtures/bd-dependency-types-snapshot.json', import.meta.url);
 /** `git rev-parse <commit>:internal/types/types.go` in the beads repository at 26d1cc9dd, ba381a58c and 088aff1ba, read by the cutting seat. */
@@ -846,6 +855,36 @@ const BD_READER_PROBES: {id: string; form: string; from: string; to: string; mes
   {id: 'FC23', form: 'a readiness operand written without spaces', from: 'd == DepBlocks || d == DepParentChild || d == DepConditionalBlocks', to: 'd == DepBlocks || d==DepParentChild || d == DepConditionalBlocks', message: /^types\.go: unread line 1002: /},
   {id: 'FC24', form: 'a tab between a const name and its type', from: 'DepRelated        DependencyType', to: 'DepRelated\tDependencyType', message: /^types\.go: unread line 940: /},
 ];
+/** wb-vked respin (refusal #1 U1, each-liveness): BD_READER_PROBES row by row, each id with its form, in table order, frozen
+ * at this cut. FC0 holds the table to it; FC-LIVE holds the it.each's registered cases and their completions to it. */
+const BD_READER_PROBE_SHAPE = [
+  'FC1: a second type line',
+  'FC2: the const block opened another way',
+  'FC3: a const declared in another form',
+  'FC4: a block comment in the const block',
+  'FC5: a const name declared twice',
+  'FC6: a const value declared twice',
+  'FC7: WellKnownDependencyTypes under another name',
+  'FC8: the list built another way',
+  'FC9: a list entry in another form',
+  'FC10: a list name the const block does not declare',
+  'FC11: a list naming one const twice',
+  'FC12: the list closed another way',
+  'FC13: AffectsReadyWork under another name',
+  'FC14: a readiness operand in another form',
+  'FC15: a readiness operand the const block does not declare',
+  'FC16: a readiness operand used twice',
+  'FC17: AffectsReadyWork closed another way',
+  'FC18: a const value outside the value form',
+  'FC19: a const name outside the name form',
+  'FC20: a declaration tail that is not a comment',
+  'FC21: list entries not separated by one space',
+  'FC22: a const block comment after two tabs',
+  'FC23: a readiness operand written without spaces',
+  'FC24: a tab between a const name and its type',
+];
+/** The FC ids whose case reached its last assertion this run, in run order (read by FC-LIVE). */
+const COMPLETED_FC: string[] = [];
 
 describe("wb-vked (R694 follow-up of wb-4ap.14, F1): BD_DEPENDENCY_TYPES, EDGED_BD_TYPES and OWNERSHIP_READINESS_CAUSE_TYPES are read against bd's own types.go", () => {
   it("wb-vked V1: the snapshot is bd's internal/types/types.go byte-exact: its inflated length and git blob id, and its repo, commit, path, blob, bytes and sameBlobAt fields, equal the pin", () => {
@@ -871,9 +910,27 @@ describe("wb-vked (R694 follow-up of wb-4ap.14, F1): BD_DEPENDENCY_TYPES, EDGED_
     expect(OWNERSHIP_READINESS_CAUSE_TYPES.filter((type) => ready.includes(type))).toStrictEqual(ready.filter((type) => !EDGED_BD_TYPES.includes(type)));
   });
 
-  it.each(BD_READER_PROBES.map((probe) => [probe.id, probe.form, probe] as const))('wb-vked %s: the reader throws on %s', (_id, _form, {from, to, message}) => {
+  it('wb-vked FC0: BD_READER_PROBES is the frozen rows FC1-FC24, each id with its form, in order', () => {
+    expect(BD_READER_PROBES.map((probe) => `${probe.id}: ${probe.form}`)).toStrictEqual(BD_READER_PROBE_SHAPE);
+  });
+
+  it.each(BD_READER_PROBES.map((probe) => [probe.id, probe.form, probe] as const))('wb-vked %s: the reader throws on %s', (id, _form, {from, to, message}) => {
     const text = bdSourceText();
     expect(text.split(from)).toHaveLength(2);
     expect(() => readBdDependencyTypes(text.replace(from, () => to))).toThrow(message);
+    COMPLETED_FC.push(id);
+  });
+
+  it('wb-vked FC-LIVE: the it.each registers one run-mode case per frozen FC row, in order, and every one reached its last assertion', ({task}) => {
+    const registered: string[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === 'test' && /^wb-vked FC\d+: the reader throws on /.test(child.name)) registered.push(`${child.name}|${child.mode}`);
+        else if (child.type === 'suite') walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    expect(registered).toStrictEqual(BD_READER_PROBE_SHAPE.map((row) => `wb-vked ${row.replace(': ', ': the reader throws on ')}|run`));
+    expect(COMPLETED_FC, 'the FC rows whose case reached its last assertion this run').toStrictEqual(BD_READER_PROBE_SHAPE.map((row) => row.slice(0, row.indexOf(':'))));
   });
 });
