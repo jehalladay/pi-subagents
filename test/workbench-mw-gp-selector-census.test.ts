@@ -71,15 +71,16 @@
  *   the actual eligible support at its softmax probabilities and records its candidate count; each decision records the
  *   support's pair count), K-VALIDATE (eleven malformed decisions, each on a resolver base and a sampler base, are the
  *   typed validation refusal naming what they lack; every reference decision is accepted), K-INDEPENDENT (both
- *   independent kinds, under their kind names, under two other names and under each of the host's own two selector
- *   names - each kind under each name -, refused typed on every multi-task case; each case's overloaded argmax set, and
- *   four capacity-infeasible decisions on the spare fixture - a task twice, an agent over its capacity, a pair naming
- *   no support agent, a pair naming no support task, each infeasible on one clause - carried under each of the two
- *   selector names, the resolver's as its deterministic proposal (no draw step, log probability 0) and the sampler's as
- *   a draw record (one step per pair, each drawn among two candidates at probability one half), refused typed as not
+ *   independent kinds, each under each of eight names - the four kind strings (the two independent kinds' and the two
+ *   admitted kinds'), the host's own two selector names and two other names (fast-argmax, fast-logit) -, refused typed
+ *   on every multi-task case; each case's overloaded argmax set, and four capacity-infeasible decisions on the spare
+ *   fixture - a task twice, an agent over its capacity, a pair naming no support agent, a pair naming no support task,
+ *   each infeasible on one clause - carried under each of the two selector names, the resolver's as its deterministic
+ *   proposal (no draw step, log probability 0) and the sampler's as a draw record (one step per pair, each drawn among
+ *   two candidates at probability one half; A5b and the frozen shape pin both forms), refused typed as not
  *   capacity-feasible), K-RECEIPT (every reference decision's receipt, read back from its JSON, carries its selector
  *   name and log probability unchanged) and K-SUPPORT (every emitted pair is a pair of the support read, and every
- *   decision carries its basis revision). MUTANTS: 54 hosts, each refused by exactly its declared checks, and every
+ *   decision carries its basis revision). MUTANTS: 56 hosts, each refused by exactly its declared checks, and every
  *   check refuses one alone.
  * - THE HAND-AUTHORED ANCHORS (computed outside this file by cut #1's exact-fraction model, archived with that cut's
  *   evidence): each case's per-pair argmax set and the agents it overloads, the resolver's assignment, the sampler's
@@ -96,7 +97,8 @@
  *   logProbability is log, probability), and with any run of format characters or marks (general categories Cf and M: a
  *   combining accent, a combining grapheme joiner, a variation selector, a spacing or an enclosing mark) between two
  *   letters of a part (auto, a soft hyphen, regressive reads autoregressive; sam, a combining grapheme joiner, pler
- *   reads sampler); a part's final y also reads ies (log probabilities) and its z also reads s (optimiser).
+ *   reads sampler); a part's final y also reads ies (log probabilities), with the same run between the three letters of
+ *   ies (probabiliti, a combining accent, es reads probabilities), and its z also reads s (optimiser).
  * - THE DOCS READING (row S): docs/workbench/03 through the landed docs binding (docsSection of
  *   test/helpers/census.ts): its "Reference architecture" section, bound once in the rendered view under the page's
  *   level-1 title and bounded at the next level-1 or level-2 heading, and read in its own body, before its first
@@ -121,40 +123,43 @@
  * RESIDUALS (named families, each member a pinned quiet row; a reading that starts reading a member, or a check that
  * starts refusing one, reds its row): R-COMPOSED (Q1: a one-part word split by an operator and quotes, by an
  * underscore, by a hyphen, by a space or by a blank character that is neither a format character nor a mark (U+2800
- * BRAILLE PATTERN BLANK, a symbol; U+3164 HANGUL FILLER, a letter), escaped, spelled with a homoglyph, or abbreviated;
- * a two-part word joined at run time from parts written out of order), R-SHARED-WORD (Q2: the filing's search words
- * "selector" and "matching" and the statement's "resolver" and "assignment", Pi words with other meanings),
- * R-UNNAMED-SELECTOR (Q3: scoring or picking code whose path and text name no vocabulary word: what a selector means
- * without the words is outside a text reading), R-SCORE-BLIND (Q4: a deterministic, capacity-aware resolver that
- * ignores the scores meets every check: the census does not judge how a resolver uses the scores), R-DECLARED-KIND (Q5:
- * the host refuses an independent per-pair selector by its declared kind and an infeasible decision by its value, so an
- * independent selector declared under an admitted name and kind whose decision is capacity-feasible is admitted at run
- * time; what a selector computes is judged only for a registered host), R-SINGLE-TASK (Q6: the statement refuses
- * independent per-pair selection for a multi-task assignment; on a single-task support the reference admits both
- * independent kinds and their decisions validate), R-STATEFUL (Q7: a resolver whose hidden state changes once, outside
- * the two runs K-DETERMINISTIC pairs - before a judge, or between two of its checks - meets every check:
- * K-DETERMINISTIC compares the runs it pairs, never a host's whole call history; the pinned member changes before the
- * judge) and R-LIVENESS (Q8: every check is a safety reading, so a host that selects less - a resolver assigning
- * nothing or one task per agent, a sampler that never draws or stops after one draw - meets every check).
+ * BRAILLE PATTERN BLANK, a symbol; U+3164 HANGUL FILLER, U+115F HANGUL CHOSEONG FILLER and U+FFA0 HALFWIDTH HANGUL
+ * FILLER, letters), escaped, spelled with a homoglyph, or abbreviated; a two-part word joined at run time from parts
+ * written out of order), R-SHARED-WORD (Q2: the filing's search words "selector" and "matching" and the statement's
+ * "resolver" and "assignment", Pi words with other meanings), R-UNNAMED-SELECTOR (Q3: scoring or picking code whose
+ * path and text name no vocabulary word: what a selector means without the words is outside a text reading),
+ * R-SCORE-BLIND (Q4: a deterministic, capacity-aware resolver that ignores the scores meets every check: the census
+ * does not judge how a resolver uses the scores), R-DECLARED-KIND (Q5: the host refuses an independent per-pair
+ * selector by its declared kind and an infeasible decision by its value, so an independent selector declared under an
+ * admitted name and kind whose decision is capacity-feasible is admitted at run time; what a selector computes is
+ * judged only for a registered host), R-SINGLE-TASK (Q6: the statement refuses independent per-pair selection for a
+ * multi-task assignment; on a single-task support the reference admits both independent kinds and their decisions
+ * validate), R-STATEFUL (Q7: a resolver whose hidden state changes once, outside the two runs K-DETERMINISTIC pairs -
+ * before a judge, or between two of its checks - meets every check: K-DETERMINISTIC compares the runs it pairs, never a
+ * host's whole call history; the pinned member changes before the judge) and R-LIVENESS (Q8: every check is a safety
+ * reading, so a host that selects less - a resolver assigning nothing or one task per agent, a sampler that never draws
+ * or stops after one draw - meets every check).
  * NOT CLAIMED: which selector form the host uses once the gate fires (the statement allows either); an optimal or
  * score-maximal resolver (R-SCORE-BLIND); the production chooser and its randomness (the census's chooser is its own
  * walk; a resolver drawing randomness from outside the chooser is judged only by its paired runs); that a registered
  * sampler draws until the eligible support is empty (R-LIVENESS; the reference does, and D2's hand-authored path counts
  * pin it for the reference only); GP's scoring, the GraphDataIR schema and the R2 enumeration itself (wb-e66.1's);
- * MechanicalWorkflows reconcile after selection; a validation that skips its capacity clauses only for a selector name
- * other than the host's two, or only for a decision shaped otherwise than the two forms K-INDEPENDENT carries (each
- * infeasible decision is carried under those two names, in those two forms, and no other); an unknown-kind admission
- * reading wider than exact kind equality in a way none of the seven named controls spells; a withdrawal stated in prose
- * elsewhere in the section (the docs reading binds the paragraph's rendered text and its place in the section's own
- * body, never what other prose says of it); that a producer line reads the same past the pin; and every coordinated
- * edit that OUTSIDE ANCHORS does not name, each made in every literal of this file and the roster together: (a) row Q -
- * its label, any of its eight pins with its family, any residual member outside Q2 - removed or edited; (b) a row's pin
- * partition, so the row's quotes still tile its label: the boundary between two neighbouring quotes moved, or a pin
- * merged into a neighbouring pin of its row (its quote re-homed into the neighbour's, its case dropped), and with a
- * merge whatever the dropped case alone reads (for instance A3b's hand-authored step-count sequences, or S2's stale and
- * duplicate registration findings); (c) a case, a mutant, a docs plant, a vocabulary control, an infeasible decision,
- * an admission or validation control, a hand-authored anchor or a registered test title removed from its table; a
- * producer line's blob, or its text outside its quote, edited.
+ * MechanicalWorkflows reconcile after selection; an independent-kind admission that exempts only a selector name
+ * outside the eight K-INDEPENDENT feeds (each independent kind is fed under the four kind strings, the host's two
+ * selector names, fast-argmax and fast-logit, and no other name); a validation that skips its capacity clauses only for
+ * a selector name other than the host's two, or only for a decision shaped otherwise than the two forms K-INDEPENDENT
+ * carries (each infeasible decision is carried under those two names, in those two forms, and no other); an
+ * unknown-kind admission reading wider than exact kind equality in a way none of the seven named controls spells; a
+ * withdrawal stated in prose elsewhere in the section (the docs reading binds the paragraph's rendered text and its
+ * place in the section's own body, never what other prose says of it); that a producer line reads the same past the
+ * pin; and every coordinated edit that OUTSIDE ANCHORS does not name, each made in every literal of this file and the
+ * roster together: (a) row Q - its label, any of its eight pins with its family, any residual member outside Q2 -
+ * removed or edited; (b) a row's pin partition, so the row's quotes still tile its label: the boundary between two
+ * neighbouring quotes moved, or a pin merged into a neighbouring pin of its row (its quote re-homed into the
+ * neighbour's, its case dropped), and with a merge whatever the dropped case alone reads (for instance A3b's
+ * hand-authored step-count sequences, or S2's stale and duplicate registration findings); (c) a case, a mutant, a docs
+ * plant, a vocabulary control, an infeasible decision, an admission or validation control, a hand-authored anchor or a
+ * registered test title removed from its table; a producer line's blob, or its text outside its quote, edited.
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and the shape of every
  * table as literals; the judged set (every row's id, label and pins, every pin's quote and witness, the residual
  * members, the mutants and their declared checks, every registered test title) is held to the out-of-file roster
@@ -185,6 +190,17 @@
  * blank characters it still does not skip; the docs reading reads the section's own body (F5: the gate's plant B16 now
  * reads no paragraph). Re-read at trunk 37adc54 (landing 681): git's src listing holds 117 files, all .ts, and the
  * widened reading finds no src module naming the vocabulary.
+ *
+ * RESPIN 1 (wb-hgsf refusal #1, gate-prep-11, run g10-gate-s148: its unmet U1 and the riders F1 and F2 of that verdict;
+ * trunk 09276d0, landing 700, merged in): the ies inflection reads the same run of format characters or marks between
+ * its three letters as every two letters of a part (U1: the gate's live plants L-R1, L-R2 and L-R4 and its camel plant
+ * R4 now read; six new vocabulary controls, a truncated inflection among them reading no word); K-INDEPENDENT feeds
+ * each independent kind under all eight names, the other kind strings and the other kind's other name among them, and
+ * A5a holds the fed set to that cross product (the verdict's F1: its G11-F1c is M55; M56 exempts the other independent
+ * kind's string), and NOT CLAIMED names the F1 analogue; A5b and the frozen shape pin both carried forms, each draw
+ * among two candidates at probability one half (the verdict's F2: its GH1, three candidates at one third, now reds);
+ * R-COMPOSED pins U+115F and U+FFA0 (the verdict's F4 INFO). Re-read at trunk 09276d0: git's src listing holds 117
+ * files, all .ts, and the widened reading finds no src module naming the vocabulary.
  *
  * Display paths added: none. Test-only: no src change, no GraphPolicyCLI adapter, selector, sampler, seam or fake
  * binary.
@@ -236,9 +252,12 @@ const PATH_SUM_TOLERANCE = 1e-9;
 /** A format character (Cf) and a Cyrillic letter, written by code point (this file is ASCII). */
 const FORMAT_CHARACTER = String.fromCodePoint(0x200b);
 const CYRILLIC_A = String.fromCodePoint(0x430);
-/** Two blank characters that are neither format characters nor marks, written by code point: a symbol (So) and a letter (Lo). */
+/** Four blank characters that are neither format characters nor marks, written by code point: a symbol (So) and three
+ * letters (Lo). */
 const BRAILLE_BLANK = String.fromCodePoint(0x2800);
 const HANGUL_FILLER = String.fromCodePoint(0x3164);
+const HANGUL_CHOSEONG_FILLER = String.fromCodePoint(0x115f);
+const HALFWIDTH_HANGUL_FILLER = String.fromCodePoint(0xffa0);
 /** A text's code points as U+XXXX, so a frozen literal of a name made of format characters stays ASCII. */
 const codePoints = (text: string): string => [...text].map(character => `U+${(character.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")}`).join(" ");
 
@@ -794,6 +813,23 @@ const OWN_NAMED: readonly Selector[] = [
   perPairArgmaxSelector(SAMPLER_NAME, "per-pair-argmax"),
   perPairLogitSelector(RESOLVER_NAME, "per-pair-logit"),
 ];
+/** The independent kinds under the rest of the eight names, so each kind is fed under every one of them (the four kind
+ * strings, the host's two selector names, fast-argmax and fast-logit): each kind under the other independent kind's
+ * string, under each admitted kind's string and under the other kind's other name. An admission that exempts a name it
+ * reads as a kind string (the wb-hgsf gate's G11-F1c exempts the admitted ones) refuses each of the eight above and
+ * admits one or more of these. */
+const CROSS_NAMED: readonly Selector[] = [
+  perPairArgmaxSelector("per-pair-logit", "per-pair-argmax"),
+  perPairArgmaxSelector("deterministic-resolver", "per-pair-argmax"),
+  perPairArgmaxSelector("joint-sampler", "per-pair-argmax"),
+  perPairArgmaxSelector("fast-logit", "per-pair-argmax"),
+  perPairLogitSelector("per-pair-argmax", "per-pair-logit"),
+  perPairLogitSelector("deterministic-resolver", "per-pair-logit"),
+  perPairLogitSelector("joint-sampler", "per-pair-logit"),
+  perPairLogitSelector("fast-argmax", "per-pair-logit"),
+];
+/** Every independent selector K-INDEPENDENT feeds the admission. */
+const FED_INDEPENDENT: readonly Selector[] = [...INDEPENDENT, ...RENAMED, ...OWN_NAMED, ...CROSS_NAMED];
 /** The admission controls, each with the typed refusal it must meet (data, so the check's expectation never shares the
  * reference's blank reading): four unnamed selectors of admitted kinds (empty, three spaces, one format character, two
  * format characters around a space) and seven named selectors of seven unknown kinds: two unrelated, two carrying an
@@ -839,7 +875,8 @@ const INFEASIBLE: readonly { readonly id: string; readonly assignment: readonly 
  * deterministic proposal (no draw step, log probability 0) and the sampler's as a draw record (one step per pair, in
  * assignment order, each drawn among two candidates at probability one half, the steps' sum its log probability), so a
  * validation that skips its capacity clauses for the sampler's name, for a decision recording draws or for one below
- * probability 1 still meets a capacity-infeasible decision. */
+ * probability 1 still meets a capacity-infeasible decision. A5b pins both forms by value and in its witness, and the
+ * frozen shape pins them as a literal. */
 function infeasibleDecisions(support: Support, assignment: readonly Pair[]): readonly Decision[] {
   const steps: Step[] = assignment.map(pair => ({ pair, candidates: 2, logProbability: Math.log(1 / 2) }));
   const base = { basisRevision: support.basisRevision, supportCount: support.pairs.length, assignment: [...assignment] };
@@ -1146,16 +1183,16 @@ function validateFindings(host: Host): string[] {
   }
   return findings;
 }
-/** K-INDEPENDENT: the host refuses both independent per-pair kinds, under their kind names, under two other names and
- * under the host's own two selector names, for every multi-task case as the typed not-capacity-feasible refusal, and
- * refuses each case's overloaded per-pair argmax set and each infeasible decision on SPARE, carried under each of the
- * two selector names (infeasibleDecisions), as the same refusal. */
+/** K-INDEPENDENT: the host refuses both independent per-pair kinds, each under each of eight names (FED_INDEPENDENT: the
+ * four kind strings, the host's own two selector names and two other names), for every multi-task case as the typed
+ * not-capacity-feasible refusal, and refuses each case's overloaded per-pair argmax set and each infeasible decision on
+ * SPARE, carried under each of the two selector names (infeasibleDecisions), as the same refusal. */
 function independentFindings(host: Host): string[] {
   const findings: string[] = [];
   for (const entry of CASES) {
     const support = supportOf(entry);
     if (support.tasks.length > 1) {
-      for (const selector of [...INDEPENDENT, ...RENAMED, ...OWN_NAMED]) {
+      for (const selector of FED_INDEPENDENT) {
         const admission = host.admit(selector, support);
         if (!isDeepStrictEqual(admission, { ok: false, code: "not-capacity-feasible", selector: selector.name })) findings.push(`${entry.id}: ${selector.name} is admitted as ${JSON.stringify(admission)}`);
       }
@@ -1404,6 +1441,20 @@ const MUTANTS: readonly Mutant[] = [
   { id: "M52", name: "kind-prefix-admitted", refusedBy: ["K-NAMED"], host: hostWith({ admit: unknownKindsAdmitted(kind => ADMITTED_KINDS.some(admitted => kind.startsWith(admitted))) }) },
   { id: "M53", name: "kind-case-folded", refusedBy: ["K-NAMED"], host: hostWith({ admit: unknownKindsAdmitted(kind => ADMITTED_KINDS.includes(kind.toLowerCase())) }) },
   { id: "M54", name: "kind-trimmed", refusedBy: ["K-NAMED"], host: hostWith({ admit: unknownKindsAdmitted(kind => ADMITTED_KINDS.includes(kind.trim())) }) },
+  {
+    id: "M55",
+    name: "independent-exempt-by-kind-name",
+    refusedBy: ["K-INDEPENDENT"],
+    host: hostWith({ admit: (descriptor, support) => (INDEPENDENT_KINDS.includes(descriptor.kind) && ADMITTED_KINDS.includes(descriptor.name) ? { ok: true } : REFERENCE.admit(descriptor, support)) }),
+  },
+  {
+    id: "M56",
+    name: "independent-exempt-by-other-kind-name",
+    refusedBy: ["K-INDEPENDENT"],
+    host: hostWith({
+      admit: (descriptor, support) => (INDEPENDENT_KINDS.includes(descriptor.kind) && INDEPENDENT_KINDS.includes(descriptor.name) && descriptor.name !== descriptor.kind ? { ok: true } : REFERENCE.admit(descriptor, support)),
+    }),
+  },
 ];
 const mutantOf = (id: string): Mutant => {
   const found = MUTANTS.find(mutant => mutant.id === id);
@@ -1457,17 +1508,20 @@ const SHARED_WORDS: readonly string[] = ["selector", "matching", "resolver", "as
 /** A spelling's parts: split at whitespace, dots, underscores and hyphens, then at camel humps. */
 const partsOf = (spelling: string): string[] => spelling.split(/[\s._-]+/).flatMap(word => word.match(/[A-Z]+(?![a-z])|[A-Z]?[a-z]+|\d+/g) ?? []);
 const escapeRegex = (text: string): string => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+/** What a part's reading reads between two of its letters: any run of format characters (Cf) or marks (M). */
+const INSIDE_A_PART = "[\\p{Cf}\\p{M}]*";
 /** A letter's reading: a z also read as s (a British spelling: optimiser), a part's final y also read as ies (an
- * inflected plural: probabilities). */
+ * inflected plural: probabilities), the three letters of ies joined by INSIDE_A_PART as every two letters of a part
+ * are (probabiliti, a combining accent, es is probabilities). */
 const letterReader = (letter: string, last: boolean): string => {
   if (/z/i.test(letter)) return "[sz]";
-  if (last && /y/i.test(letter)) return "(?:y|ies)";
+  if (last && /y/i.test(letter)) return `(?:y|${["i", "e", "s"].join(INSIDE_A_PART)})`;
   return escapeRegex(letter);
 };
-/** A part's reading: its letters in order, with any run of format characters (Cf) or marks (M) between two of them (an
- * invisible or a mark inside a word reads as the word: auto, a soft hyphen, regressive is autoregressive; sam, a
- * combining grapheme joiner, pler is sampler). */
-const partReader = (part: string): string => [...part].map((letter, index, letters) => letterReader(letter, index === letters.length - 1)).join("[\\p{Cf}\\p{M}]*");
+/** A part's reading: its letters in order, with INSIDE_A_PART between two of them (an invisible or a mark inside a word,
+ * its ies inflection included, reads as the word: auto, a soft hyphen, regressive is autoregressive; sam, a combining
+ * grapheme joiner, pler is sampler). */
+const partReader = (part: string): string => [...part].map((letter, index, letters) => letterReader(letter, index === letters.length - 1)).join(INSIDE_A_PART);
 /** A word's reading: its parts in order, any case, with any run of characters that are neither letters nor digits
  * between them (whitespace and a comment line wrap, dots, underscores, hyphens and every other dash, slashes,
  * parentheses, quotes, symbols, format characters). */
@@ -1577,6 +1631,12 @@ const VOCABULARY_CONTROLS: readonly (readonly [string, string, readonly string[]
   ["sampler variation selector inside", `a joint sam${VARIATION_SELECTOR}pler`, ["sampler"]],
   ["logit spacing mark inside", `lo${SPACING_MARK}git`, ["logit"]],
   ["optimizer enclosing mark inside", `opti${ENCLOSING_MARK}mizer`, ["optimizer"]],
+  ["log probability plural combining mark inside the inflection", `log probabiliti${COMBINING_ACUTE}es`, ["log probability"]],
+  ["log probability plural grapheme joiner inside the inflection", `log probabilitie${GRAPHEME_JOINER}s`, ["log probability"]],
+  ["log probability plural format character inside the inflection", `log probabiliti${FORMAT_CHARACTER}es`, ["log probability"]],
+  ["log probability plural camel variation selector inside the inflection", `logProbabiliti${VARIATION_SELECTOR}es`, ["log probability"]],
+  ["log probability plural a mark and a format character inside the inflection", `log probabiliti${COMBINING_ACUTE}e${FORMAT_CHARACTER}s`, ["log probability"]],
+  ["log probability truncated inflection", `log probabiliti${COMBINING_ACUTE}e`, []],
   ["every word", "argmax logits optimizer log probability sampler autoregressive", ["argmax", "logits", "optimizer", "log probability", "sampler", "autoregressive", "logit"]],
   ["shared words", "selector matching resolver assignment", []],
 ];
@@ -1775,6 +1835,8 @@ const RESIDUALS: readonly Residual[] = [
       { id: "joined", text: 'export const name = ["probability", "log"].reverse().join(" ");\n' },
       { id: "blank-symbol", text: `export const name = "arg${BRAILLE_BLANK}max";\n` },
       { id: "blank-letter", text: `export const name = "sam${HANGUL_FILLER}pler";\n` },
+      { id: "blank-choseong", text: `export const name = "lo${HANGUL_CHOSEONG_FILLER}git";\n` },
+      { id: "blank-halfwidth", text: `export const name = "arg${HALFWIDTH_HANGUL_FILLER}max";\n` },
     ],
   },
   {
@@ -2005,7 +2067,15 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
   },
   A5a: () => {
     const reading = checkReading("K-INDEPENDENT");
-    const independent = [...INDEPENDENT, ...RENAMED, ...OWN_NAMED];
+    const independent = FED_INDEPENDENT;
+    const names = [...new Set(independent.map(selector => selector.name))];
+    expect([...names].sort(), "the fed names are the four kind strings, the host's two selector names, fast-argmax and fast-logit").toEqual(
+      [...INDEPENDENT_KINDS, ...ADMITTED_KINDS, RESOLVER_NAME, SAMPLER_NAME, "fast-argmax", "fast-logit"].sort(),
+    );
+    expect(
+      independent.map(selector => `${selector.kind}:${selector.name}`).sort(),
+      "each independent kind is fed under each of the eight names, once",
+    ).toEqual(INDEPENDENT_KINDS.flatMap(kind => names.map(name => `${kind}:${name}`)).sort());
     const admissions = Object.fromEntries(CASES.map(entry => [entry.id, independent.map(selector => REFERENCE.admit(selector, supportOf(entry)))]));
     for (const entry of CASES) {
       expect(admissions[entry.id], `${entry.id}: both independent kinds, under each of their names, are refused for a multi-task assignment`).toEqual(independent.map(selector => ({ ok: false, code: "not-capacity-feasible", selector: selector.name })));
@@ -2041,7 +2111,25 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       expect(shape.findings.length, `${shape.id}: the check's own capacity reading finds it infeasible on one clause`).toBe(1);
       expect(shape.outcomes, `${shape.id}: the reference refuses it under either selector's name as not capacity-feasible`).toEqual([RESOLVER_NAME, SAMPLER_NAME].map(selector => ({ ok: false, code: "not-capacity-feasible", selector })));
     }
-    return { refusals, mass, infeasible };
+    const carried = INFEASIBLE.map(shape => {
+      const [proposal, draws] = infeasibleDecisions(spare, shape.assignment.map(pairOf));
+      expect([proposal?.selector, proposal?.steps.length, proposal?.logProbability], `${shape.id}: the resolver's form is a deterministic proposal (no draw step, log probability 0)`).toEqual([RESOLVER_NAME, 0, 0]);
+      expect(
+        draws?.steps.map(step => [keyOf(step.pair), step.candidates, close(Math.exp(step.logProbability), 1 / 2)]),
+        `${shape.id}: the sampler's form draws each pair in assignment order, each among two candidates at probability one half`,
+      ).toEqual(shape.assignment.map(pair => [pair, 2, true]));
+      const sum = (draws?.steps ?? []).reduce((total, step) => total + step.logProbability, 0);
+      expect([draws?.selector, close(draws?.logProbability ?? 1, sum)], `${shape.id}: the draw record is the sampler's, its log probability the steps' sum`).toEqual([SAMPLER_NAME, true]);
+      return {
+        id: shape.id,
+        forms: [proposal, draws].map(decision => ({
+          selector: decision?.selector ?? null,
+          steps: (decision?.steps ?? []).map(step => [keyOf(step.pair), step.candidates, round12(Math.exp(step.logProbability))]),
+          logProbability: round12(decision?.logProbability ?? 1),
+        })),
+      };
+    });
+    return { refusals, mass, infeasible, carried };
   },
   A6a: () => {
     const carried = Object.fromEntries(
@@ -2349,7 +2437,7 @@ describe(SUITE, () => {
       '"upper":Deterministic-Resolver:unknown-selector',
       '"padded": joint-sampler:unknown-selector',
     ]);
-    expect([REFERENCE.resolver, REFERENCE.sampler, ...INDEPENDENT, ...RENAMED, ...OWN_NAMED].map(selector => `${selector.name}:${selector.kind}`)).toEqual([
+    expect([REFERENCE.resolver, REFERENCE.sampler, ...FED_INDEPENDENT].map(selector => `${selector.name}:${selector.kind}`)).toEqual([
       "capacity-matching-resolver:deterministic-resolver",
       "joint-autoregressive-sampler:joint-sampler",
       "per-pair-argmax:per-pair-argmax",
@@ -2360,6 +2448,14 @@ describe(SUITE, () => {
       "joint-autoregressive-sampler:per-pair-logit",
       "joint-autoregressive-sampler:per-pair-argmax",
       "capacity-matching-resolver:per-pair-logit",
+      "per-pair-logit:per-pair-argmax",
+      "deterministic-resolver:per-pair-argmax",
+      "joint-sampler:per-pair-argmax",
+      "fast-logit:per-pair-argmax",
+      "per-pair-argmax:per-pair-logit",
+      "deterministic-resolver:per-pair-logit",
+      "joint-sampler:per-pair-logit",
+      "fast-argmax:per-pair-logit",
     ]);
     expect(`${SPARE.id}:${SPARE.capacities.map(([id, capacity]) => `${id}=${capacity}`).join(",")}:${SPARE.loads.map(([id, load]) => `${id}=${load}`).join(",")}:${SPARE.weights.length}`).toBe("spare:a-one=1,a-two=1:t-one=1,t-two=1,t-zero=0:0");
     expect(INFEASIBLE.map(shape => `${shape.id}:${shape.assignment.join("+")}`)).toEqual([
@@ -2367,6 +2463,13 @@ describe(SUITE, () => {
       "agent-over-capacity:a-one/t-one+a-one/t-two",
       "no-support-agent:a-ghost/t-zero",
       "no-support-task:a-one/t-ghost",
+    ]);
+    const carriedForm = (decision: Decision): string => `${decision.selector} [${decision.steps.map(step => `${keyOf(step.pair)}@${step.candidates}@${round12(Math.exp(step.logProbability))}`).join(",")}] ${round12(decision.logProbability)}`;
+    expect(INFEASIBLE.map(shape => `${shape.id}:${infeasibleDecisions(supportOf(SPARE), shape.assignment.map(pairOf)).map(carriedForm).join(" + ")}`)).toEqual([
+      "task-twice:capacity-matching-resolver [] 0 + joint-autoregressive-sampler [a-one/t-zero@2@0.5,a-two/t-zero@2@0.5] -1.38629436112",
+      "agent-over-capacity:capacity-matching-resolver [] 0 + joint-autoregressive-sampler [a-one/t-one@2@0.5,a-one/t-two@2@0.5] -1.38629436112",
+      "no-support-agent:capacity-matching-resolver [] 0 + joint-autoregressive-sampler [a-ghost/t-zero@2@0.5] -0.69314718056",
+      "no-support-task:capacity-matching-resolver [] 0 + joint-autoregressive-sampler [a-one/t-ghost@2@0.5] -0.69314718056",
     ]);
     expect(DOCS_PLANTS.map(plant => `${plant.id}:${plant.head}`)).toEqual([
       "as-is:true",
@@ -2444,8 +2547,10 @@ describe(SUITE, () => {
       "M52:kind-prefix-admitted:K-NAMED",
       "M53:kind-case-folded:K-NAMED",
       "M54:kind-trimmed:K-NAMED",
+      "M55:independent-exempt-by-kind-name:K-INDEPENDENT",
+      "M56:independent-exempt-by-other-kind-name:K-INDEPENDENT",
     ]);
-    expect(Object.entries(RESIDUAL_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:10", "Q2:4", "Q3:2", "Q4:1", "Q5:2", "Q6:2", "Q7:1", "Q8:4"]);
+    expect(Object.entries(RESIDUAL_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:12", "Q2:4", "Q3:2", "Q4:1", "Q5:2", "Q6:2", "Q7:1", "Q8:4"]);
     expect(LIVENESS.map(member => `${member.id}:${member.role}`)).toEqual(["empty-resolver:resolver", "one-task-per-agent-resolver:resolver", "silent-sampler:sampler", "one-draw-sampler:sampler"]);
     expect(VOCABULARY_CONTROLS.map(([label, , words]) => `${label}:${words.length}`)).toEqual([
       "argmax:1",
@@ -2485,6 +2590,12 @@ describe(SUITE, () => {
       "sampler variation selector inside:1",
       "logit spacing mark inside:1",
       "optimizer enclosing mark inside:1",
+      "log probability plural combining mark inside the inflection:1",
+      "log probability plural grapheme joiner inside the inflection:1",
+      "log probability plural format character inside the inflection:1",
+      "log probability plural camel variation selector inside the inflection:1",
+      "log probability plural a mark and a format character inside the inflection:1",
+      "log probability truncated inflection:0",
       "every word:7",
       "shared words:0",
     ]);
