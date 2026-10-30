@@ -70,23 +70,31 @@
  *
  * FOLLOW-UP wb-b4lg (R694, from the wb-r63c gate cmd_8fd73ae79032 at landing 617; F1 leads, F2 and F3 ride; cut #1 by seat ws-01
  * of g10-work-s141, 2026-10-29, on trunk 57cb1c0; cut #2, the respin of refusal #1 (gate-prep-12 of g10-gate-s144: UNMET U1-U3, the
- * claims wider than their pins), by seat ws-04 of g10-work-s145, 2026-10-30, on trunk c2695d7). This is hop 3 of the landing-550
- * chain (wb-e9dy, wb-r63c, wb-b4lg), so the cut takes the R739 TERMINAL enumerate-the-resolvable form: each class below is listed
- * by its resolvable surface, every member is pinned or is a named residual with its pinned quiet row, and the claims of this header
- * are re-pinned to exactly that set. The chain is terminal: a later survivor outside these classes is record-only unless it
- * contradicts a re-pinned claim.
+ * claims wider than their pins), by seat ws-04 of g10-work-s145, 2026-10-30, on trunk c2695d7; cut #3, the respin of refusal #2
+ * (gate-prep-3 of g10-gate-s154: the same three classes through new members, frozen by ruling R-B136), by seat ws-04 of
+ * g10-work-s153, 2026-10-30, on trunk 2459270, every named member pinned by a falsifier that reds under it). This is hop 3 of the
+ * landing-550 chain (wb-e9dy, wb-r63c, wb-b4lg), so the cut takes the R739 TERMINAL enumerate-the-resolvable form: each class below
+ * is listed by its resolvable surface, every member is pinned or is a named residual with its pinned quiet row, and the claims of
+ * this header are re-pinned to exactly that set. The chain is terminal: a later survivor outside these classes is record-only unless
+ * it contradicts a re-pinned claim.
  * - F1, THE RECORD ITEM FORMS (the wb-e9dy F5 class): the record judge reads two item forms - every key (the envelope's at any
  *   depth, its root's included, arrays by index, and the roster's four key lists) and every string value of the envelope (its
  *   root's, an object member's and an array element's) - and applies each reading to the forms it names: a MENTION to keys and
  *   values; the abbreviation gp as one of a term's words (wordsOf: split at non-letters and at camel-case humps, each word
  *   lowercased, so gp, GP and the gp of gpLayer read while gP is the words g and p) to keys and values; a field word to keys only.
  *   T3 pins each form by a plant found in the same call as the real record: MENTION keys at the result, in
- *   provenance (camel case), in a planted diagnostic's metadata, at the root and in the roster, and MENTION values on a block and as
- *   an array element; the abbreviation as a key (gp at the result; GP and gpLayer in the metadata) and as a value - the acceptance's
+ *   provenance (camel case), in a planted diagnostic's metadata, at the root, on a block (an array element's own key) and in the
+ *   roster, and MENTION values at the root (operation_id), on an object member (judge_context_layers), on a block and as an array
+ *   element; the abbreviation as a key (gp at the result; GP and gpLayer in the metadata; gp_trace at the root; gp_note on a block;
+ *   gp_rank and gpCheckpoint in the roster) and as a value - the acceptance's
  *   own ref form rf-gp:program:checkpoint:backend as a diagnostic message and as an array element, gp as a diagnostic source and as
  *   an array element, gp.scorer on a block, GP and gpLayer as values, gp-txn-1 at the root, rfo_01gp3x (gp between digits) as an
- *   array element - while gpu-runner and gpuCount (gp inside a longer word) stay quiet (cut #2 cures U1: the gate's DJ1
- *   array-element and DJ2 case- and camel-blind members each red T3). A value is never a field: a string value naming a field word,
+ *   array element - while gpu-runner and gpuCount (gp inside a longer word) stay quiet; T4 plants a field word as a key at the
+ *   root, at the result, on a block, in a planted diagnostic's metadata and in the roster; and each of the roster's four key lists
+ *   holds a plant (T3's in the result, provenance and work keys, T4's in the work-metrics keys) (cut #2 cures U1: the gate's DJ1
+ *   array-element and DJ2 case- and camel-blind members each red T3; cut #3 cures U1 again: the gate's L2-A1 roster-abbreviation
+ *   and L2-A3 root-MENTION members each red T3, every other key and value cell of these readings planted beside them). A value is
+ *   never a field: a string value naming a field word,
  *   and a number, boolean or null value (no words), is no GraphPolicy output field (R-FIELD-VALUE, Q13).
  * - F2, THE PLANTED POSITIONS (the wb-e9dy F6 class): Z2 plants the four fields on every object of the envelope - its root, its
  *   workspace object, the planted diagnostic's own keys and its metadata, and every result-tree object - that the reader under
@@ -95,7 +103,13 @@
  *   and per render variant, and pinned (plantedAt); outerPlanted (the clean render's positions outside the result tree) and
  *   deepPlanted (every reader's and variant's count at the floor) are counted from them, and Q10 counts the positions on the
  *   envelope the provider relays (plantedRelayed) (cut #2 cures U2: the gate's DP0, DP00, DP1, DP3 and DP4 members each change
- *   plantedAt). strictObjects is measured per reader on the clean render: the observer holds the root, the workspace object, the
+ *   plantedAt). The handoff is pinned by each reader's own reads: plantedRun hands the reader its planted envelope through a read
+ *   log (logged), so the planted positions the reader read while it ran are pinned per reader and per variant (plantedRead), and a
+ *   plant-presence control (presenceOn: the planted score and receipt id read off that same handed envelope) runs beside each
+ *   reader through the same plantedRun, the same compareReaders call and the same leak walk, so its planted run differs from its
+ *   plain one and leaks (readersUnchanged, readerLeaks) (cut #3 cures U2: the gate's L2-B1 unplanted-handoff member empties
+ *   plantedRead, and its L2-B2 self-compare member turns the control's compare unchanged). strictObjects is measured per reader on
+ *   the clean render: the observer holds the root, the workspace object, the
  *   diagnostic, result.work and result.engine_metrics exactly; nativeEvidence holds none, so its plants reach the root it reads
  *   loosely.
  * - F3, THE DOCS LOCATES (the same-view class): every docs element this file matches or locates on a page it reads is read by
@@ -105,7 +119,9 @@
  *   respelledOpening, through locateControls). The re-spellings that leave the binding's rendered text unchanged are pinned as
  *   MARKUPS enumerates them, by what the binding normalizes: one per inline token kind it renders as its content's text (emphasis
  *   and strong, each by asterisks and by underscores; a code span; a link; an image, read as its alt text; a strikethrough; inline
- *   HTML; a backslash escape; a hard line break), whitespace (indentation and doubled spaces), a soft line break, and the ATX
+ *   HTML, a tag and a comment; a backslash escape; a hard line break), the one character reference it decodes that spells these
+ *   elements (&nbsp; for a space), whitespace (indentation and doubled spaces, a tab, and a no-break space, each collapsed by its
+ *   clean()), a soft line break, and the ATX
  *   closing sequence and setext heading forms (the setext heading and title split over two lines), each on the posture heading,
  *   docs/03's title and the posture sentence where the form can spell it (the heading holds no punctuation to escape; an ATX heading
  *   or title holds no line break; inline HTML and the heading forms spell no sentence: HTML in the section reads it whole,
@@ -114,7 +130,9 @@
  *   back the same way (respelled) - and reads the home, the stated sentence and the decoy, changed-sentence and level-1-above locate
  *   controls on that copy through docs/03's own control path (postureControls.markup), beside the asterisk-only heading and title
  *   controls; nothing is located by docs/03's own source spelling, so a docs/03 already carrying one of these forms keeps every
- *   control (cut #2 cures U3: the gate's DF3a token-text and DF3b source-spelling members each red Q4 or Z3). A control's own
+ *   control (cut #2 cures U3: the gate's DF3a token-text and DF3b source-spelling members each red Q4 or Z3; cut #3 cures U3
+ *   again: the gate's L2-C1 markdown-stripping member reds Q4 and Z3 on the &nbsp; form, the character reference MARKUPS had
+ *   omitted, and members that keep comments, tabs or no-break spaces red on those forms). A control's own
  *   inserted text (the decoy comment, the appendix heading it splits on) is located by the spelling the control wrote. Rows match
  *   cells as sectionTables reads them (marked's cell source, inline markup kept), the one table reading the binding has, so a
  *   posture row with markup in its owner or Pi cell is read (OVER-READS, planted in Z3).
@@ -151,7 +169,8 @@
  * MENTION (file, script and byte floors, every file judged whole, a plant of each reading found), and each src reader ignores the
  * GraphPolicy plants - on every envelope object it does not hold exactly, root and diagnostic included, the strict objects measured
  * and pinned per reader, and the planted positions read off the envelope each reader is handed and pinned per reader and per
- * variant - on every render variant with nothing leaked; Z3 the rf reading tests, the data files they name and docs/workbench outside the rendered posture
+ * variant, beside the planted positions the reader itself read and the plant-presence control that must change and leak - on
+ * every render variant with nothing leaked by a src reader; Z3 the rf reading tests, the data files they name and docs/workbench outside the rendered posture
  * homes spell none, at file and byte floors, every file judged whole, docs/03's home bound and its posture sentence stated, the
  * rendered-view controls and plants found, and the locate controls read again on docs/03 re-spelled in each markup form; Z4 the vocabulary: the notes' pattern, its words, every spelling form read and the
  * near words quiet. Q, the residuals' pinned quiet rows.
@@ -224,7 +243,8 @@
  * reading surface and the data files it names for their content) (Z2, Z3), docs/03's posture section and Ownership boundaries
  * tables through the rendered binding (Z3, Q4, the outside anchors), git objects at the filing pin (Z1), the tracker export row of
  * wb-e9dy (its owner filing), test/fixtures/rf-result-keys.json, the fixture module's fullShapeRf and the provider's contract source
- * (T); the observer, nativeEvidence and the injected provider registration run in memory (Z2, Q10).
+ * (T); the observer, nativeEvidence and the injected provider registration run in memory (Z2, Q10), the two readers each handed
+ * its envelopes through a read log (Z2).
  *
  * Display paths added: none (test-only; src/ is read and run in memory, never edited). Scratch: none - every plant is an
  * in-memory entry judged by the same call as the real files, and the readers run on in-memory envelopes; nothing is written to
@@ -360,11 +380,15 @@ function wrapped(open: string, close: string): Markup {
   const wrap = (text: string, word: string): string => text.replace(word, `${open}${word}${close}`);
   return { heading: `## ${wrap(POSTURE_HEADING, POSTURE_OWNER)}`, title: `# ${wrap(DOCS03_TITLE, TITLE_WORD)}`, sentence: wrap(POSTURE_SENTENCE, POSTURE_OWNER) };
 }
+/** A no-break space (U+00A0): JavaScript's \s, so the binding's clean() collapses it like a space (wb-b4lg U3, cut #3). */
+const NO_BREAK_SPACE = String.fromCodePoint(0xa0);
 /**
  * The re-spellings that leave the binding's rendered text unchanged (wb-b4lg U3, the F3 enumeration), by what the binding normalizes:
  * one per inline token kind it renders as its content's text - emphasis and strong by both delimiters, a code span, a link, an image
- * (its alt text), a strikethrough, inline HTML, a backslash escape and a hard line break - plus whitespace (indentation and doubled
- * spaces, which its clean() collapses), a soft line break, and the ATX closing sequence and setext heading forms (the setext heading
+ * (its alt text), a strikethrough, inline HTML (a tag and a comment), a backslash escape and a hard line break - plus the one character
+ * reference its decode() reads that can spell these elements (&nbsp; for a space: the amp, lt, gt, quot, #39 and #x27 references spell
+ * characters none of them holds), whitespace (indentation and doubled spaces, a tab and a no-break space, each of which its clean()
+ * collapses), a soft line break, and the ATX closing sequence and setext heading forms (the setext heading
  * and title each split over two lines). A form spells no element it cannot: the heading holds no punctuation to escape, an ATX
  * heading or title holds no line break, inline HTML in the section reads it whole (OVER-READS), and the heading forms spell no
  * sentence. Held to the roster, so a plant or control stripped of its markup reds.
@@ -379,10 +403,22 @@ const MARKUPS: Readonly<Record<string, Markup>> = {
   image: wrapped("![", `](${LINK_TARGET})`),
   strikethrough: wrapped("~~", "~~"),
   "inline-html": { ...wrapped("<span>", "</span>"), sentence: null },
+  "inline-comment": { heading: `## ${POSTURE_HEADING.replace(" ", "<!-- c --> ")}`, title: `# ${DOCS03_TITLE.replace(TITLE_WORD, `${TITLE_WORD}<!-- c -->`)}`, sentence: null },
+  "character-reference": {
+    heading: `## ${POSTURE_HEADING.replace(" ", "&nbsp;")}`,
+    title: `# ${DOCS03_TITLE.replace(` ${TITLE_WORD}`, `&nbsp;${TITLE_WORD}`)}`,
+    sentence: POSTURE_SENTENCE.replace(" (gp)", "&nbsp;(gp)"),
+  },
   escape: { heading: null, title: `# ${DOCS03_TITLE.replace("-", "\\-")}`, sentence: POSTURE_SENTENCE.replace("(gp)", "\\(gp\\)") },
   "hard-break": { heading: null, title: null, sentence: POSTURE_SENTENCE.replace(" (gp)", "  \n(gp)") },
   "soft-break": { heading: null, title: null, sentence: POSTURE_SENTENCE.replace(" (gp)", "\n(gp)") },
   whitespace: { heading: ` ##  ${POSTURE_HEADING.replace(" ", "  ")}`, title: ` #  ${DOCS03_TITLE.replace(", ", ",  ")}`, sentence: ` ${POSTURE_SENTENCE.replace(" no ", "  no ")}` },
+  tab: { heading: `##\t${POSTURE_HEADING.replace(" ", "\t")}`, title: `#\t${DOCS03_TITLE.replace(", ", ",\t")}`, sentence: POSTURE_SENTENCE.replace(" no ", "\tno ") },
+  "no-break-space": {
+    heading: `## ${POSTURE_HEADING.replace(" ", NO_BREAK_SPACE)}`,
+    title: `# ${DOCS03_TITLE.replace(", ", `,${NO_BREAK_SPACE}`)}`,
+    sentence: POSTURE_SENTENCE.replace(" no ", `${NO_BREAK_SPACE}no `),
+  },
   "atx-closing": { heading: `${POSTURE_SECTION} ##`, title: `# ${DOCS03_TITLE} #`, sentence: null },
   setext: {
     heading: `${POSTURE_HEADING.replace(" ", "\n")}\n${"-".repeat(POSTURE_HEADING.length)}`,
@@ -442,7 +478,7 @@ const CLAIMS: Readonly<Record<string, Readonly<Record<string, readonly string[]>
   Z1: { "until then": ["filingPin", "filedAtPin", "absentBeforePin", "pinFiles", "pinBytes", "pinFindings", "pinPlant"] },
   Z2: {
     Pi: ["scope", "filesAtFloor", "scriptsAtFloor", "bytesRead", "bytesAtFloor"],
-    reads: ["piFindings", "piPlants", "readersUnchanged", "variantsLive", "readerControls", "readerLeaks", "strictObjects", "deepPlanted", "outerPlanted", "plantedAt"],
+    reads: ["piFindings", "piPlants", "readersUnchanged", "variantsLive", "readerControls", "readerLeaks", "strictObjects", "deepPlanted", "outerPlanted", "plantedAt", "plantedRead"],
   },
   Z3: {
     "and claims": ["claimScope", "surfaceAtFloor", "recordRead", "dataRead", "docsAtFloor", "bytesRead", "bytesAtFloor", "postureStated", "postureHome", "postureControls"],
@@ -1216,12 +1252,17 @@ const NO_KEYS: KeyLists = { resultKeys: [], provenanceKeys: [], workKeys: [], wo
  * the acceptance's own ref form and whose source is gp, and a block value gp.scorer; and the item forms the F1 claim names beside
  * them (wb-b4lg U1, the gate's DJ1 and DJ2 twins and their neighbours): string array elements carrying the abbreviation (gp, the ref
  * form, rfo_01gp3x with gp between digits) and a MENTION, the abbreviation as an uppercase and a camel-hump value and key (GP,
- * gpLayer), a root key and a root value. The planted diagnostics' other keys and values, the near forms and gp inside a longer word
- * (gpu-runner, gpuCount) are quiet. */
+ * gpLayer), a root key and a root value; and every other key and value cell of the two readings (wb-b4lg cut #3, the gate's L2-A1 and
+ * L2-A3 members and their neighbours): the abbreviation as a root key and as a roster key, a MENTION as a root string value (the
+ * operation_id) and as a plain object member's value, both readings on a key of an array element's own object, and a plant in the
+ * result, provenance and work key lists of the roster. The planted diagnostics' other keys and values, the near forms and gp inside a
+ * longer word (gpu-runner, gpuCount) are quiet. */
 function vocabularyPlantItems(): RecordItem[] {
   const envelope = plantedEnvelope((source, result) => {
     source.transaction_id = "gp-txn-1";
     source.graph_data_ir = null;
+    source.gp_trace = null;
+    source.operation_id = "rfo_graphpolicy0000000000000";
     result.graph_policy = { kind: "x" };
     result.gp = { rank: 1, vector: [0.5], program: "x", checkpoint: "x", backend: "x" };
     member(result, "provenance").graphPolicyReceipt = "x";
@@ -1232,6 +1273,7 @@ function vocabularyPlantItems(): RecordItem[] {
     const layers = member(result, "judge_context_layers");
     layers["task.tags"] = "gpLayer";
     layers["agent.role"] = "GP";
+    layers["task.goal"] = "GraphDataIR goal";
     result.superseded_transaction_ids = [GP_REF_FORM];
     result.fiber_transaction_refs = ["rfo_01gp3x"];
     source.diagnostics = [
@@ -1242,15 +1284,27 @@ function vocabularyPlantItems(): RecordItem[] {
     if (Array.isArray(blocks) && isObject(blocks[0])) {
       (blocks[0] as JsonObject).component_id = "GraphPolicy.scorer";
       (blocks[0] as JsonObject).candidate_key = `${ABBREVIATION}.scorer`;
+      (blocks[0] as JsonObject).graphPolicyRank = 1;
+      (blocks[0] as JsonObject).gp_note = null;
     }
   });
-  return plantedItems(envelope, { ...NO_KEYS, resultKeys: ["graphpolicy_rank"] });
+  return plantedItems(envelope, {
+    ...NO_KEYS,
+    resultKeys: ["graphpolicy_rank", "gp_rank"],
+    provenanceKeys: ["gpCheckpoint"],
+    workKeys: ["graph_data_ir_count"],
+  });
 }
 /** What T3's judge must find among the planted items, and nothing else. */
 const VOCABULARY_PLANTS: readonly string[] = [
   "plant:transaction_id",
+  "plant:gp_trace",
+  "plant:operation_id",
   "plant:result.blocks[0].candidate_key",
   "plant:result.blocks[0].component_id",
+  "plant:result.blocks[0].graphPolicyRank",
+  "plant:result.blocks[0].gp_note",
+  "plant:result.judge_context_layers.task.goal",
   "plant:result.provenance.graphPolicyReceipt",
   "plant:result.judge_context.task_tags[0]",
   "plant:result.judge_context.explicit_requests[0]",
@@ -1267,20 +1321,29 @@ const VOCABULARY_PLANTS: readonly string[] = [
   "plant:diagnostics[1].source",
   "plant:graph_data_ir",
   "plant-roster:result.graphpolicy_rank",
+  "plant-roster:result.gp_rank",
+  "plant-roster:result.provenance.gpCheckpoint",
+  "plant-roster:result.work.graph_data_ir_count",
 ];
-/** The record's field plants (T4): one key per field word, a plural, a camel-case key in a diagnostic's metadata and a roster key;
- * the planted diagnostic's own keys are quiet. */
+/** The record's field plants (T4): one key per field word, a plural, a camel-case key in a diagnostic's metadata and a roster key,
+ * and a root key and a key of an array element's own object (wb-b4lg cut #3: every key position of the field reading); the planted
+ * diagnostic's own keys are quiet. */
 function fieldPlantItems(): RecordItem[] {
   const envelope = plantedEnvelope((source, result) => {
+    source.receipt = null;
     result.score = 1;
     result.rankings = [];
     result.embedding = [];
     source.diagnostics = [infoDiagnostic({ gpReceipt: "x" })];
+    const blocks = result.blocks;
+    if (Array.isArray(blocks) && isObject(blocks[0])) (blocks[0] as JsonObject).embeddings = [];
   });
   return plantedItems(envelope, { ...NO_KEYS, workMetricsKeys: ["score_count"] });
 }
 /** What T4's judge must find among the planted items, and nothing else. */
 const FIELD_PLANTS: readonly string[] = [
+  "plant:receipt",
+  "plant:result.blocks[0].embeddings",
   "plant:result.score",
   "plant:result.rankings",
   "plant:result.embedding",
@@ -1383,14 +1446,19 @@ function contextFor(variant: Variant): ReactiveFiberTopologyContext {
     observedAt: "2026-10-26T00:00:01Z",
   };
 }
-/** One src reader on one envelope, as JSON: the observer's projection (topology) or nativeEvidence (evidence). */
-function readerOn(reader: ReaderKind, source: JsonObject, variant: Variant): JsonValue {
+/** One src reader on one envelope, as it returns: the observer's projection (topology) or nativeEvidence (evidence). */
+function rawReaderOn(reader: ReaderKind, source: JsonObject, variant: Variant): unknown {
   const reading = readingOf(source);
-  return reader === "topology" ? json(reactivefiberTopology(reading, contextFor(variant))) : json(nativeEvidence(PREVIEW_ID, reading));
+  return reader === "topology" ? reactivefiberTopology(reading, contextFor(variant)) : nativeEvidence(PREVIEW_ID, reading);
 }
-/** Both src readers on one envelope. */
+/** One src reader on one envelope, as JSON. */
+function readerOn(reader: ReaderKind, source: JsonObject, variant: Variant): JsonValue {
+  return json(rawReaderOn(reader, source, variant));
+}
+/** Both src readers on one envelope, each run through its read log as a planted run is (plantedRun), so a plain and a planted output
+ * come from the one path. */
 function readersOn(source: JsonObject, variant: Variant): ReaderOutputs {
-  return { topology: readerOn("topology", source, variant), evidence: readerOn("evidence", source, variant) };
+  return outputsOf({ topology: plantedRun("topology", source, variant), evidence: plantedRun("evidence", source, variant) });
 }
 /** Whether an envelope object carries the four GraphPolicy plants with their leak markers (plantFields' shape or gpPlanted's own). */
 function carriesPlants(object: JsonObject): boolean {
@@ -1410,19 +1478,100 @@ function plantedPositions(envelope: JsonObject): string[] {
     .filter(entry => carriesPlants(entry.object))
     .map(entry => entry.path);
 }
-/** One src reader on its planted envelope: the reader's output and the planted positions read off the very envelope the reader was
- * handed, never off a recomputed listing, so a plant that never reaches the reader changes the positions (wb-b4lg U2). */
-function plantedRun(reader: ReaderKind, source: JsonObject, variant: Variant): { readonly output: JsonValue; readonly planted: readonly string[] } {
-  const output = readerOn(reader, source, variant);
-  return { output, planted: plantedPositions(source) };
+/** One reader's read log (wb-b4lg U2, cut #3): the planted positions it read while `live` held, and each object wrapped once. */
+interface ReadLog {
+  live: boolean;
+  readonly read: Set<string>;
+  readonly wrapped: WeakMap<object, JsonValue>;
+}
+/** `value` as a reader is handed it through `log` (wb-b4lg U2, cut #3): every object and array wrapped once, a read of an object's
+ * member, key list or key presence adding the object's path to the log when the object carries the four plants (carriesPlants), so
+ * the positions a reader read are read off the very envelope it was handed; a member its target holds fixed is returned as it is
+ * (the proxy invariant). */
+function logged(value: JsonValue, path: string, log: ReadLog): JsonValue {
+  if (value === null || typeof value !== "object") return value;
+  const held = log.wrapped.get(value);
+  if (held !== undefined) return held;
+  const planted = isObject(value) && carriesPlants(value as JsonObject);
+  const note = (): void => {
+    if (log.live && planted) log.read.add(path);
+  };
+  const proxy: JsonValue = new Proxy(value, {
+    get(target, key, receiver) {
+      note();
+      const inner: unknown = Reflect.get(target, key, receiver);
+      const own = typeof key === "string" ? Object.getOwnPropertyDescriptor(target, key) : undefined;
+      if (typeof key !== "string" || own === undefined || (own.configurable === false && own.writable === false)) return inner;
+      return logged(inner as JsonValue, Array.isArray(target) ? `${path}[${key}]` : `${path}.${key}`, log);
+    },
+    has(target, key) {
+      note();
+      return Reflect.has(target, key);
+    },
+    ownKeys(target) {
+      note();
+      return Reflect.ownKeys(target);
+    },
+    getOwnPropertyDescriptor(target, key) {
+      note();
+      return Reflect.getOwnPropertyDescriptor(target, key);
+    },
+  });
+  log.wrapped.set(value, proxy);
+  return proxy;
+}
+/** The plant-presence control (wb-b4lg U2, cut #3): a reader of two planted fields - the score and the receipt id gpPlanted puts on
+ * the result - read off the envelope it is handed (null where it carries none), so beside each src reader its planted run differs
+ * from its plain one and leaks a number and a text marker. */
+function presenceOn(source: JsonObject): JsonValue {
+  const result = isObject(source.result) ? (source.result as JsonObject) : {};
+  const receipt = isObject(result.receipt) ? (result.receipt as JsonObject) : {};
+  return json({ score: result.score ?? null, receipt: receipt.id ?? null });
+}
+interface PlantedRun {
+  readonly output: JsonValue;
+  readonly planted: readonly string[];
+  readonly read: readonly string[];
+  readonly presence: JsonValue;
+}
+/** One src reader on its envelope, handed it through a read log (wb-b4lg U2): the reader's output, the planted positions read off the
+ * very envelope it was handed, never off a recomputed listing (planted), the planted positions the reader itself read while it ran
+ * (read), and the plant-presence control read off that same envelope (presence) - one handoff, so a plant that never reaches the
+ * reader empties its read and leaves its control unchanged. */
+function plantedRun(reader: ReaderKind, source: JsonObject, variant: Variant): PlantedRun {
+  const log: ReadLog = { live: true, read: new Set(), wrapped: new WeakMap() };
+  const handed = logged(source, ENVELOPE_ROOT, log) as JsonObject;
+  const raw = rawReaderOn(reader, handed, variant);
+  log.live = false;
+  return { output: json(raw), planted: plantedPositions(handed), read: sorted(log.read), presence: presenceOn(handed) };
 }
 interface ReaderOutputs {
   readonly topology: JsonValue;
   readonly evidence: JsonValue;
+  /** Each reader's plant-presence control, read off that reader's own envelope (wb-b4lg U2, cut #3). */
+  readonly presence: Readonly<Record<ReaderKind, JsonValue>>;
 }
-/** Whether a planted run of both readers left each output byte-identical to the plain run. */
-function compareReaders(plain: ReaderOutputs, planted: ReaderOutputs): { readonly topology: boolean; readonly evidence: boolean } {
-  return { topology: isDeepStrictEqual(planted.topology, plain.topology), evidence: isDeepStrictEqual(planted.evidence, plain.evidence) };
+/** Both readers' runs, as compareReaders and the leak walk read them. */
+function outputsOf(runs: Readonly<Record<ReaderKind, PlantedRun>>): ReaderOutputs {
+  return { topology: runs.topology.output, evidence: runs.evidence.output, presence: { topology: runs.topology.presence, evidence: runs.evidence.presence } };
+}
+/** Whether a planted run of both readers left each output byte-identical to the plain run, and each reader's plant-presence control
+ * likewise - the control must differ, so a compare of the planted outputs with themselves reds (wb-b4lg U2, cut #3). */
+function compareReaders(plain: ReaderOutputs, planted: ReaderOutputs): JsonValue {
+  return {
+    topology: isDeepStrictEqual(planted.topology, plain.topology),
+    evidence: isDeepStrictEqual(planted.evidence, plain.evidence),
+    presence: Object.fromEntries(READER_KINDS.map(reader => [reader, isDeepStrictEqual(planted.presence[reader], plain.presence[reader])])),
+  };
+}
+/** The named parts of a run's outputs the leak walk reads one by one: the two src readers and each reader's control, so the control's
+ * leaks never mask a src reader's (wb-b4lg U2, cut #3). */
+function outputParts(outputs: ReaderOutputs): [string, JsonValue][] {
+  return [
+    ["topology", outputs.topology],
+    ["evidence", outputs.evidence],
+    ...READER_KINDS.map((reader): [string, JsonValue] => [`${reader} presence`, outputs.presence[reader]]),
+  ];
 }
 function leaksIn(text: string): string[] {
   return [LEAK_TEXT, String(LEAK_SCORE), ...LEAK_EMBEDDING.map(String)].filter(marker => text.includes(marker));
@@ -1536,8 +1685,10 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     const leaked = new Set<string>();
     const clean = readersOn(variantEnvelope("clean"), "clean");
     const inert: string[] = [];
-    // Where the plants landed, per variant and reader, read off the very envelope each reader was handed (wb-b4lg U2).
+    // Where the plants landed, per variant and reader, read off the very envelope each reader was handed (wb-b4lg U2), and which of
+    // them the reader itself read while it ran (plantedRead, wb-b4lg cut #3: a reader handed no plants reads none).
     const plantedAt: Partial<Record<Variant, Record<ReaderKind, readonly string[]>>> = {};
+    const plantedRead: Partial<Record<Variant, Record<ReaderKind, readonly string[]>>> = {};
     for (const variant of VARIANTS) {
       const base = variantEnvelope(variant);
       const plain = readersOn(base, variant);
@@ -1547,15 +1698,18 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
         topology: plantedRun("topology", gpPlanted(base, strictObjects().topology), variant),
         evidence: plantedRun("evidence", gpPlanted(base, strictObjects().evidence), variant),
       };
-      const planted: ReaderOutputs = { topology: runs.topology.output, evidence: runs.evidence.output };
+      const planted = outputsOf(runs);
       plantedAt[variant] = { topology: runs.topology.planted, evidence: runs.evidence.planted };
+      plantedRead[variant] = { topology: runs.topology.read, evidence: runs.evidence.read };
+      // One compare and one leak walk for the src readers and their plant-presence controls (wb-b4lg cut #3): the controls must differ
+      // and leak, so a compare or a walk that cannot read a planted run reds here.
       readersUnchanged[variant] = json(compareReaders(plain, planted));
-      for (const marker of leaksIn(JSON.stringify(planted))) leaked.add(`${variant}: ${marker}`);
+      for (const [part, value] of outputParts(planted)) for (const marker of leaksIn(JSON.stringify(value))) leaked.add(`${variant} ${part}: ${marker}`);
     }
     // Controls: one output whose evidence and one whose projection carries a leaked value, so the comparison and the leak walk are
     // shown to read a difference here, not only under a src plant.
-    const leakyEvidence: ReaderOutputs = { topology: clean.topology, evidence: { ...objectOf(clean.evidence, "evidence"), leaked: `${LEAK_TEXT}CONTROL` } };
-    const leakyTopology: ReaderOutputs = { topology: { ...objectOf(clean.topology, "topology"), leaked: LEAK_SCORE }, evidence: clean.evidence };
+    const leakyEvidence: ReaderOutputs = { ...clean, evidence: { ...objectOf(clean.evidence, "evidence"), leaked: `${LEAK_TEXT}CONTROL` } };
+    const leakyTopology: ReaderOutputs = { ...clean, topology: { ...objectOf(clean.topology, "topology"), leaked: LEAK_SCORE } };
     const readerControls = {
       evidence: compareReaders(clean, leakyEvidence),
       topology: compareReaders(clean, leakyTopology),
@@ -1582,6 +1736,7 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       // diagnostic's own keys reach nativeEvidence (wb-b4lg F2, U2).
       outerPlanted: Object.fromEntries(READER_KINDS.map(reader => [reader, landed("clean", reader).filter(path => path !== resultTree && !path.startsWith(`${resultTree}.`))])),
       plantedAt,
+      plantedRead,
     });
   },
   Z3: () => {

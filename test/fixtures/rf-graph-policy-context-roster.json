@@ -165,6 +165,16 @@
         "title": "# 03 \u2014 <span>High-level</span> architecture, module ownership and dataflow",
         "sentence": null
       },
+      "inline-comment": {
+        "heading": "## GraphPolicyCLI<!-- c --> boundary",
+        "title": "# 03 \u2014 High-level<!-- c --> architecture, module ownership and dataflow",
+        "sentence": null
+      },
+      "character-reference": {
+        "heading": "## GraphPolicyCLI&nbsp;boundary",
+        "title": "# 03 \u2014&nbsp;High-level architecture, module ownership and dataflow",
+        "sentence": "Pi carries no GraphPolicyCLI&nbsp;(gp) integration today."
+      },
       "escape": {
         "heading": null,
         "title": "# 03 \u2014 High\\-level architecture, module ownership and dataflow",
@@ -184,6 +194,16 @@
         "heading": " ##  GraphPolicyCLI  boundary",
         "title": " #  03 \u2014 High-level architecture,  module ownership and dataflow",
         "sentence": " Pi carries  no GraphPolicyCLI (gp) integration today."
+      },
+      "tab": {
+        "heading": "##\tGraphPolicyCLI\tboundary",
+        "title": "#\t03 \u2014 High-level architecture,\tmodule ownership and dataflow",
+        "sentence": "Pi carries\tno GraphPolicyCLI (gp) integration today."
+      },
+      "no-break-space": {
+        "heading": "## GraphPolicyCLI\u00a0boundary",
+        "title": "# 03 \u2014 High-level architecture,\u00a0module ownership and dataflow",
+        "sentence": "Pi carries\u00a0no GraphPolicyCLI (gp) integration today."
       },
       "atx-closing": {
         "heading": "## GraphPolicyCLI boundary ##",
@@ -227,13 +247,18 @@
       "test/zz-plant-data.test.ts": "import { fullShapeRf } from \"./helpers/rf-render-fixture.js\";\nexport const data = \"zz-plant-data.json\";\nvoid fullShapeRf;\n",
       "test/fixtures/zz-plant-data.json": "{\"graph_policy\": {\"score\": 1}}\n",
       "docs/workbench/zz-plant-html-section.md": "## GraphPolicyCLI boundary\n\nPi reads <em>GraphPolicy</em> scores from the rf render envelope.\n",
-      "docs/workbench/zz-plant-marked-row.md": "| Subject | Owner | Pi |\n| --- | --- | --- |\n| Learned scores | **GraphPolicyCLI** | nothing today; Pi reads GraphPolicy scores |\n",
-      "docs/workbench/zz-plant-reflink.md": "## [GraphPolicyCLI][posture] boundary\n\nPi reads GraphPolicy scores from the rf render envelope.\n\n[posture]: https://example.invalid/wb-b4lg\n"
+      "docs/workbench/zz-plant-reflink.md": "## [GraphPolicyCLI][posture] boundary\n\nPi reads GraphPolicy scores from the rf render envelope.\n\n[posture]: https://example.invalid/wb-b4lg\n",
+      "docs/workbench/zz-plant-marked-row.md": "| Subject | Owner | Pi |\n| --- | --- | --- |\n| Learned scores | **GraphPolicyCLI** | nothing today; Pi reads GraphPolicy scores |\n"
     },
     "vocabularyPlants": [
       "plant:transaction_id",
+      "plant:gp_trace",
+      "plant:operation_id",
       "plant:result.blocks[0].candidate_key",
       "plant:result.blocks[0].component_id",
+      "plant:result.blocks[0].graphPolicyRank",
+      "plant:result.blocks[0].gp_note",
+      "plant:result.judge_context_layers.task.goal",
       "plant:result.provenance.graphPolicyReceipt",
       "plant:result.judge_context.task_tags[0]",
       "plant:result.judge_context.explicit_requests[0]",
@@ -249,9 +274,14 @@
       "plant:diagnostics[1].message",
       "plant:diagnostics[1].source",
       "plant:graph_data_ir",
-      "plant-roster:result.graphpolicy_rank"
+      "plant-roster:result.graphpolicy_rank",
+      "plant-roster:result.gp_rank",
+      "plant-roster:result.provenance.gpCheckpoint",
+      "plant-roster:result.work.graph_data_ir_count"
     ],
     "fieldPlants": [
+      "plant:receipt",
+      "plant:result.blocks[0].embeddings",
       "plant:result.score",
       "plant:result.rankings",
       "plant:result.embedding",
@@ -382,14 +412,18 @@
             "diagnosticsRead": true,
             "vocabularyFindings": [],
             "vocabularyPlants": [
+              "plant:operation_id",
               "plant:transaction_id",
               "plant:result.blocks[0].candidate_key",
               "plant:result.blocks[0].component_id",
+              "plant:result.blocks[0].graphPolicyRank",
+              "plant:result.blocks[0].gp_note",
               "plant:result.provenance.graphPolicyReceipt",
               "plant:result.judge_context.task_tags[0]",
               "plant:result.judge_context.explicit_requests[0]",
               "plant:result.judge_context_layers.task.tags",
               "plant:result.judge_context_layers.agent.role",
+              "plant:result.judge_context_layers.task.goal",
               "plant:result.superseded_transaction_ids[0]",
               "plant:result.fiber_transaction_refs[0]",
               "plant:result.graph_policy",
@@ -400,7 +434,11 @@
               "plant:diagnostics[1].message",
               "plant:diagnostics[1].source",
               "plant:graph_data_ir",
-              "plant-roster:result.graphpolicy_rank"
+              "plant:gp_trace",
+              "plant-roster:result.graphpolicy_rank",
+              "plant-roster:result.gp_rank",
+              "plant-roster:result.provenance.gpCheckpoint",
+              "plant-roster:result.work.graph_data_ir_count"
             ]
           }
         },
@@ -426,10 +464,12 @@
             ],
             "fieldFindings": [],
             "fieldPlants": [
+              "plant:result.blocks[0].embeddings",
               "plant:result.score",
               "plant:result.rankings",
               "plant:result.embedding",
               "plant:diagnostics[0].metadata.gpReceipt",
+              "plant:receipt",
               "plant-roster:result.work_metrics.score_count"
             ],
             "schemaPin": "82bd879eee52"
@@ -491,7 +531,8 @@
               "strictObjects",
               "deepPlanted",
               "outerPlanted",
-              "plantedAt"
+              "plantedAt",
+              "plantedRead"
             ]
           },
           "witness": {
@@ -539,41 +580,90 @@
             "readersUnchanged": {
               "clean": {
                 "topology": true,
-                "evidence": true
+                "evidence": true,
+                "presence": {
+                  "topology": false,
+                  "evidence": false
+                }
               },
               "flagged": {
                 "topology": true,
-                "evidence": true
+                "evidence": true,
+                "presence": {
+                  "topology": false,
+                  "evidence": false
+                }
               },
               "overBudget": {
                 "topology": true,
-                "evidence": true
+                "evidence": true,
+                "presence": {
+                  "topology": false,
+                  "evidence": false
+                }
               },
               "notObserved": {
                 "topology": true,
-                "evidence": true
+                "evidence": true,
+                "presence": {
+                  "topology": false,
+                  "evidence": false
+                }
               },
               "fixtureSeam": {
                 "topology": true,
-                "evidence": true
+                "evidence": true,
+                "presence": {
+                  "topology": false,
+                  "evidence": false
+                }
               }
             },
             "variantsLive": true,
             "readerControls": {
               "evidence": {
                 "topology": true,
-                "evidence": false
+                "evidence": false,
+                "presence": {
+                  "topology": true,
+                  "evidence": true
+                }
               },
               "topology": {
                 "topology": false,
-                "evidence": true
+                "evidence": true,
+                "presence": {
+                  "topology": true,
+                  "evidence": true
+                }
               },
               "leaks": [
                 "SECRET-GP-",
                 "0.918273645"
               ]
             },
-            "readerLeaks": [],
+            "readerLeaks": [
+              "clean evidence presence: 0.918273645",
+              "clean evidence presence: SECRET-GP-",
+              "clean topology presence: 0.918273645",
+              "clean topology presence: SECRET-GP-",
+              "fixtureSeam evidence presence: 0.918273645",
+              "fixtureSeam evidence presence: SECRET-GP-",
+              "fixtureSeam topology presence: 0.918273645",
+              "fixtureSeam topology presence: SECRET-GP-",
+              "flagged evidence presence: 0.918273645",
+              "flagged evidence presence: SECRET-GP-",
+              "flagged topology presence: 0.918273645",
+              "flagged topology presence: SECRET-GP-",
+              "notObserved evidence presence: 0.918273645",
+              "notObserved evidence presence: SECRET-GP-",
+              "notObserved topology presence: 0.918273645",
+              "notObserved topology presence: SECRET-GP-",
+              "overBudget evidence presence: 0.918273645",
+              "overBudget evidence presence: SECRET-GP-",
+              "overBudget topology presence: 0.918273645",
+              "overBudget topology presence: SECRET-GP-"
+            ],
             "strictObjects": {
               "topology": [
                 "envelope",
@@ -884,6 +974,94 @@
                   "envelope.diagnostics[0].metadata"
                 ]
               }
+            },
+            "plantedRead": {
+              "clean": {
+                "topology": [
+                  "envelope.result",
+                  "envelope.result.budget",
+                  "envelope.result.budget.formula_terms",
+                  "envelope.result.diagnostics_summary",
+                  "envelope.result.necessity[0]",
+                  "envelope.result.output",
+                  "envelope.result.provenance",
+                  "envelope.result.provenance.sdk_versions"
+                ],
+                "evidence": [
+                  "envelope",
+                  "envelope.result",
+                  "envelope.result.provenance"
+                ]
+              },
+              "flagged": {
+                "topology": [
+                  "envelope.result",
+                  "envelope.result.budget",
+                  "envelope.result.budget.formula_terms",
+                  "envelope.result.diagnostics_summary",
+                  "envelope.result.necessity[0]",
+                  "envelope.result.output",
+                  "envelope.result.provenance",
+                  "envelope.result.provenance.sdk_versions"
+                ],
+                "evidence": [
+                  "envelope",
+                  "envelope.result",
+                  "envelope.result.provenance"
+                ]
+              },
+              "overBudget": {
+                "topology": [
+                  "envelope.result",
+                  "envelope.result.budget",
+                  "envelope.result.budget.formula_terms",
+                  "envelope.result.diagnostics_summary",
+                  "envelope.result.necessity[0]",
+                  "envelope.result.output",
+                  "envelope.result.provenance",
+                  "envelope.result.provenance.sdk_versions"
+                ],
+                "evidence": [
+                  "envelope",
+                  "envelope.result",
+                  "envelope.result.provenance"
+                ]
+              },
+              "notObserved": {
+                "topology": [
+                  "envelope.result",
+                  "envelope.result.budget",
+                  "envelope.result.budget.formula_terms",
+                  "envelope.result.diagnostics_summary",
+                  "envelope.result.necessity[0]",
+                  "envelope.result.observations[0]",
+                  "envelope.result.output",
+                  "envelope.result.provenance",
+                  "envelope.result.provenance.sdk_versions"
+                ],
+                "evidence": [
+                  "envelope",
+                  "envelope.result",
+                  "envelope.result.provenance"
+                ]
+              },
+              "fixtureSeam": {
+                "topology": [
+                  "envelope.result",
+                  "envelope.result.budget",
+                  "envelope.result.budget.formula_terms",
+                  "envelope.result.diagnostics_summary",
+                  "envelope.result.necessity[0]",
+                  "envelope.result.output",
+                  "envelope.result.provenance",
+                  "envelope.result.provenance.sdk_versions"
+                ],
+                "evidence": [
+                  "envelope",
+                  "envelope.result",
+                  "envelope.result.provenance"
+                ]
+              }
             }
           }
         },
@@ -941,8 +1119,8 @@
             "postureControls": {
               "decoyCommentBeforeChanged": false,
               "changedSentence": false,
-              "headingTwice": false,
               "levelOneAbove": false,
+              "headingTwice": false,
               "appendixRead": true,
               "emphasisHeading": "bound",
               "emphasisTitle": "bound",
@@ -1019,6 +1197,22 @@
                   "changedSentence": false,
                   "levelOneAbove": false
                 },
+                "inline-comment": {
+                  "respelled": true,
+                  "home": "bound",
+                  "stated": true,
+                  "decoyCommentBeforeChanged": false,
+                  "changedSentence": false,
+                  "levelOneAbove": false
+                },
+                "character-reference": {
+                  "respelled": true,
+                  "home": "bound",
+                  "stated": true,
+                  "decoyCommentBeforeChanged": false,
+                  "changedSentence": false,
+                  "levelOneAbove": false
+                },
                 "escape": {
                   "respelled": true,
                   "home": "bound",
@@ -1044,6 +1238,22 @@
                   "levelOneAbove": false
                 },
                 "whitespace": {
+                  "respelled": true,
+                  "home": "bound",
+                  "stated": true,
+                  "decoyCommentBeforeChanged": false,
+                  "changedSentence": false,
+                  "levelOneAbove": false
+                },
+                "tab": {
+                  "respelled": true,
+                  "home": "bound",
+                  "stated": true,
+                  "decoyCommentBeforeChanged": false,
+                  "changedSentence": false,
+                  "levelOneAbove": false
+                },
+                "no-break-space": {
                   "respelled": true,
                   "home": "bound",
                   "stated": true,
@@ -1120,14 +1330,6 @@
                 "raw",
                 "decoded"
               ],
-              "docs/workbench/zz-plant-row.md": [
-                "raw",
-                "decoded"
-              ],
-              "docs/workbench/zz-plant-twice.md": [
-                "raw",
-                "decoded"
-              ],
               "docs/workbench/zz-plant-html-section.md": [
                 "raw",
                 "decoded"
@@ -1137,6 +1339,14 @@
                 "decoded"
               ],
               "docs/workbench/zz-plant-reflink.md": [
+                "raw",
+                "decoded"
+              ],
+              "docs/workbench/zz-plant-row.md": [
+                "raw",
+                "decoded"
+              ],
+              "docs/workbench/zz-plant-twice.md": [
                 "raw",
                 "decoded"
               ]
@@ -1260,8 +1470,12 @@
               "docs/workbench/zz-quiet-markup-image.md",
               "docs/workbench/zz-quiet-markup-strikethrough.md",
               "docs/workbench/zz-quiet-markup-inline-html.md",
+              "docs/workbench/zz-quiet-markup-inline-comment.md",
+              "docs/workbench/zz-quiet-markup-character-reference.md",
               "docs/workbench/zz-quiet-markup-escape.md",
               "docs/workbench/zz-quiet-markup-whitespace.md",
+              "docs/workbench/zz-quiet-markup-tab.md",
+              "docs/workbench/zz-quiet-markup-no-break-space.md",
               "docs/workbench/zz-quiet-markup-atx-closing.md",
               "docs/workbench/zz-quiet-markup-setext.md",
               "test/zz-quiet-echo.test.ts",
