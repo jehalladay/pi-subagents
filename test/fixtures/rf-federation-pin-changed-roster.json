@@ -446,6 +446,13 @@
         "composed": 0,
         "launches": 1
        },
+       "nestedPatternScoped": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
        "commaAlias": {
         "render": 0,
         "uncommitted": 0,

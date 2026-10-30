@@ -48,7 +48,8 @@
  *    default of a binding element in a declaration's or a parameter's destructuring pattern (function f(w, argv = [...]),
  *    const { argv = [...] } = opts, const [argv = [...]] = lists; a parameter's scope, its pattern's included, is its function;
  *    wb-shnw F1; an object and an array pattern each hold a quiet control of their own, patternScoped and arrayPatternScoped;
- *    wb-gdqz): a .push or ["push"] call, its callee and receiver read through the same wrappers, made on the literal's name
+ *    wb-gdqz; a pattern nested in a pattern holds one too, nestedPatternScoped, so the climb past one pattern level is pinned;
+ *    wb-ia9d): a .push or ["push"] call, its callee and receiver read through the same wrappers, made on the literal's name
  *    ((argv as string[]).push, argv!.push) or on a name declared to that name in its scope after it (const same = argv, let and
  *    var too, a wrapped initializer, an alias of an alias; wb-29wk F1; a parameter's or a binding element's default too:
  *    function f(argv = [...], same = argv), const { same = argv } = opts; wb-shnw F1), never a push made or an alias declared
@@ -143,7 +144,7 @@
  *   roster's rows directly or written out as a literal, keeps its reached count and passes the witness guard (quiet row HQ1).
  * NOT CLAIMED: a coordinated edit of this file and the roster that drops a residual the landed note did not name or re-maps a
  * residual to other quiet pins, that drops a control together with its entry in the pin's roster witness (A1's wb-29wk,
- * wb-shnw and wb-gdqz controls among them), or that rewrites a pin's assertion count: the tracker export anchors only the eight residuals
+ * wb-shnw, wb-gdqz and wb-ia9d controls among them), or that rewrites a pin's assertion count: the tracker export anchors only the eight residuals
  * the landed note named and the clause tags of rows B to D; nor an edit of the per-pin wrapper's own guard lines; nor an edit of
  * an A1 control's source text alone that keeps its counts (the roster holds each control's counts, never its source; wb-gdqz).
  * SCOPE: the code, metadata shape and record fields are producer facts at the pin; Pi vendors no rf schema, so a producer-side
@@ -1344,6 +1345,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       // wb-gdqz: patternScoped's array-pattern twin, so each pattern arm of declarationScope's loop holds a quiet row of its own
       // (deleting the ObjectBindingPattern arm reds patternScoped, deleting the ArrayBindingPattern arm reds arrayPatternScoped).
       arrayPatternScoped: control('function f([argv = ["context"]]: string[][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      // wb-ia9d: arrayPatternScoped's nested twin, an array pattern inside an array pattern, so declarationScope's loop is pinned
+      // past one pattern level (a climb of exactly one level, if (ts.isBindingElement(at)) at = at.parent.parent, reds it).
+      nestedPatternScoped: control('function f([[argv = ["context"]]]: string[][][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
       // R-INDIRECT-PUSH members named, each a pinned quiet row: wb-shnw F2's aliases declared to a comma, conditional or nullish
       // expression or destructured from a literal holding the argv, F3's member receiver and bound push, and beside them the
       // literal itself destructured from a literal holding it and a literal bound by an assignment or an assignment pattern.
@@ -1390,6 +1394,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       arrayDefault: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, paramAlias: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
       bindingAlias: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, paramScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
       patternScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, arrayPatternScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      nestedPatternScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
       commaAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
       conditionalAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, nullishAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
       arrayPatternAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, objectPatternLiteral: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
