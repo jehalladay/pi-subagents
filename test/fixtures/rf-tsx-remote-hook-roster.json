@@ -642,6 +642,14 @@
                 "rows": 1,
                 "unaccounted": 0
               },
+              "shadowLastSpecifier": {
+                "rows": 1,
+                "unaccounted": 1
+              },
+              "shadowLastDeclaration": {
+                "rows": 1,
+                "unaccounted": 1
+              },
               "suiteInLoop": {
                 "rows": 0,
                 "unaccounted": 1
@@ -676,6 +684,14 @@
               },
               "dynamicBinding": {
                 "rows": 0,
+                "unaccounted": 0
+              },
+              "helperOwnName": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "requireOwnName": {
+                "rows": 1,
                 "unaccounted": 0
               }
             },
@@ -890,6 +906,360 @@
                 "angle": "1|0"
               },
               "suite suite namespaceElement": {
+                "bare": "1|0",
+                "modifier": "1|0",
+                "elementModifier": "1|0",
+                "condition": "1|0",
+                "parenthesized": "1|0",
+                "nonNull": "1|0",
+                "as": "1|0",
+                "satisfies": "1|0",
+                "angle": "1|0"
+              }
+            },
+            "shadowShapes": {
+              "test as it": {
+                "bare": "1|1",
+                "modifier": "1|1",
+                "elementModifier": "1|1",
+                "condition": "1|1",
+                "parenthesized": "1|1",
+                "nonNull": "1|1",
+                "as": "1|1",
+                "satisfies": "1|1",
+                "angle": "1|1"
+              },
+              "describe as it": {
+                "bare": "1|0",
+                "modifier": "1|0",
+                "elementModifier": "1|0",
+                "condition": "1|0",
+                "parenthesized": "1|0",
+                "nonNull": "1|0",
+                "as": "1|0",
+                "satisfies": "1|0",
+                "angle": "1|0"
+              },
+              "suite as it": {
+                "bare": "1|0",
+                "modifier": "1|0",
+                "elementModifier": "1|0",
+                "condition": "1|0",
+                "parenthesized": "1|0",
+                "nonNull": "1|0",
+                "as": "1|0",
+                "satisfies": "1|0",
+                "angle": "1|0"
+              },
+              "expect as it": {
+                "bare": "0|1",
+                "modifier": "0|1",
+                "elementModifier": "0|1",
+                "condition": "0|1",
+                "parenthesized": "0|1",
+                "nonNull": "0|1",
+                "as": "0|1",
+                "satisfies": "0|1",
+                "angle": "0|1"
+              },
+              "namespace as it": {
+                "bare": "0|2",
+                "modifier": "0|1",
+                "elementModifier": "0|1",
+                "condition": "0|1",
+                "parenthesized": "0|2",
+                "nonNull": "0|2",
+                "as": "0|2",
+                "satisfies": "0|2",
+                "angle": "0|2"
+              },
+              "default as it": {
+                "bare": "0|1",
+                "modifier": "0|1",
+                "elementModifier": "0|1",
+                "condition": "0|1",
+                "parenthesized": "0|1",
+                "nonNull": "0|1",
+                "as": "0|1",
+                "satisfies": "0|1",
+                "angle": "0|1"
+              },
+              "typeOnlyClause as it": {
+                "bare": "1|1",
+                "modifier": "1|1",
+                "elementModifier": "1|1",
+                "condition": "1|1",
+                "parenthesized": "1|1",
+                "nonNull": "1|1",
+                "as": "1|1",
+                "satisfies": "1|1",
+                "angle": "1|1"
+              },
+              "typeOnlySpecifier as it": {
+                "bare": "1|1",
+                "modifier": "1|1",
+                "elementModifier": "1|1",
+                "condition": "1|1",
+                "parenthesized": "1|1",
+                "nonNull": "1|1",
+                "as": "1|1",
+                "satisfies": "1|1",
+                "angle": "1|1"
+              },
+              "it as test": {
+                "bare": "1|1",
+                "modifier": "1|1",
+                "elementModifier": "1|1",
+                "condition": "1|1",
+                "parenthesized": "1|1",
+                "nonNull": "1|1",
+                "as": "1|1",
+                "satisfies": "1|1",
+                "angle": "1|1"
+              },
+              "describe as test": {
+                "bare": "1|0",
+                "modifier": "1|0",
+                "elementModifier": "1|0",
+                "condition": "1|0",
+                "parenthesized": "1|0",
+                "nonNull": "1|0",
+                "as": "1|0",
+                "satisfies": "1|0",
+                "angle": "1|0"
+              },
+              "suite as test": {
+                "bare": "1|0",
+                "modifier": "1|0",
+                "elementModifier": "1|0",
+                "condition": "1|0",
+                "parenthesized": "1|0",
+                "nonNull": "1|0",
+                "as": "1|0",
+                "satisfies": "1|0",
+                "angle": "1|0"
+              },
+              "expect as test": {
+                "bare": "0|1",
+                "modifier": "0|1",
+                "elementModifier": "0|1",
+                "condition": "0|1",
+                "parenthesized": "0|1",
+                "nonNull": "0|1",
+                "as": "0|1",
+                "satisfies": "0|1",
+                "angle": "0|1"
+              },
+              "namespace as test": {
+                "bare": "0|2",
+                "modifier": "0|1",
+                "elementModifier": "0|1",
+                "condition": "0|1",
+                "parenthesized": "0|2",
+                "nonNull": "0|2",
+                "as": "0|2",
+                "satisfies": "0|2",
+                "angle": "0|2"
+              },
+              "default as test": {
+                "bare": "0|1",
+                "modifier": "0|1",
+                "elementModifier": "0|1",
+                "condition": "0|1",
+                "parenthesized": "0|1",
+                "nonNull": "0|1",
+                "as": "0|1",
+                "satisfies": "0|1",
+                "angle": "0|1"
+              },
+              "typeOnlyClause as test": {
+                "bare": "1|1",
+                "modifier": "1|1",
+                "elementModifier": "1|1",
+                "condition": "1|1",
+                "parenthesized": "1|1",
+                "nonNull": "1|1",
+                "as": "1|1",
+                "satisfies": "1|1",
+                "angle": "1|1"
+              },
+              "typeOnlySpecifier as test": {
+                "bare": "1|1",
+                "modifier": "1|1",
+                "elementModifier": "1|1",
+                "condition": "1|1",
+                "parenthesized": "1|1",
+                "nonNull": "1|1",
+                "as": "1|1",
+                "satisfies": "1|1",
+                "angle": "1|1"
+              },
+              "it as describe": {
+                "bare": "1|1",
+                "modifier": "1|1",
+                "elementModifier": "1|1",
+                "condition": "1|1",
+                "parenthesized": "1|1",
+                "nonNull": "1|1",
+                "as": "1|1",
+                "satisfies": "1|1",
+                "angle": "1|1"
+              },
+              "test as describe": {
+                "bare": "1|1",
+                "modifier": "1|1",
+                "elementModifier": "1|1",
+                "condition": "1|1",
+                "parenthesized": "1|1",
+                "nonNull": "1|1",
+                "as": "1|1",
+                "satisfies": "1|1",
+                "angle": "1|1"
+              },
+              "suite as describe": {
+                "bare": "1|0",
+                "modifier": "1|0",
+                "elementModifier": "1|0",
+                "condition": "1|0",
+                "parenthesized": "1|0",
+                "nonNull": "1|0",
+                "as": "1|0",
+                "satisfies": "1|0",
+                "angle": "1|0"
+              },
+              "expect as describe": {
+                "bare": "0|1",
+                "modifier": "0|1",
+                "elementModifier": "0|1",
+                "condition": "0|1",
+                "parenthesized": "0|1",
+                "nonNull": "0|1",
+                "as": "0|1",
+                "satisfies": "0|1",
+                "angle": "0|1"
+              },
+              "namespace as describe": {
+                "bare": "0|2",
+                "modifier": "0|1",
+                "elementModifier": "0|1",
+                "condition": "0|1",
+                "parenthesized": "0|2",
+                "nonNull": "0|2",
+                "as": "0|2",
+                "satisfies": "0|2",
+                "angle": "0|2"
+              },
+              "default as describe": {
+                "bare": "0|1",
+                "modifier": "0|1",
+                "elementModifier": "0|1",
+                "condition": "0|1",
+                "parenthesized": "0|1",
+                "nonNull": "0|1",
+                "as": "0|1",
+                "satisfies": "0|1",
+                "angle": "0|1"
+              },
+              "typeOnlyClause as describe": {
+                "bare": "1|0",
+                "modifier": "1|0",
+                "elementModifier": "1|0",
+                "condition": "1|0",
+                "parenthesized": "1|0",
+                "nonNull": "1|0",
+                "as": "1|0",
+                "satisfies": "1|0",
+                "angle": "1|0"
+              },
+              "typeOnlySpecifier as describe": {
+                "bare": "1|0",
+                "modifier": "1|0",
+                "elementModifier": "1|0",
+                "condition": "1|0",
+                "parenthesized": "1|0",
+                "nonNull": "1|0",
+                "as": "1|0",
+                "satisfies": "1|0",
+                "angle": "1|0"
+              },
+              "it as suite": {
+                "bare": "1|1",
+                "modifier": "1|1",
+                "elementModifier": "1|1",
+                "condition": "1|1",
+                "parenthesized": "1|1",
+                "nonNull": "1|1",
+                "as": "1|1",
+                "satisfies": "1|1",
+                "angle": "1|1"
+              },
+              "test as suite": {
+                "bare": "1|1",
+                "modifier": "1|1",
+                "elementModifier": "1|1",
+                "condition": "1|1",
+                "parenthesized": "1|1",
+                "nonNull": "1|1",
+                "as": "1|1",
+                "satisfies": "1|1",
+                "angle": "1|1"
+              },
+              "describe as suite": {
+                "bare": "1|0",
+                "modifier": "1|0",
+                "elementModifier": "1|0",
+                "condition": "1|0",
+                "parenthesized": "1|0",
+                "nonNull": "1|0",
+                "as": "1|0",
+                "satisfies": "1|0",
+                "angle": "1|0"
+              },
+              "expect as suite": {
+                "bare": "0|1",
+                "modifier": "0|1",
+                "elementModifier": "0|1",
+                "condition": "0|1",
+                "parenthesized": "0|1",
+                "nonNull": "0|1",
+                "as": "0|1",
+                "satisfies": "0|1",
+                "angle": "0|1"
+              },
+              "namespace as suite": {
+                "bare": "0|2",
+                "modifier": "0|1",
+                "elementModifier": "0|1",
+                "condition": "0|1",
+                "parenthesized": "0|2",
+                "nonNull": "0|2",
+                "as": "0|2",
+                "satisfies": "0|2",
+                "angle": "0|2"
+              },
+              "default as suite": {
+                "bare": "0|1",
+                "modifier": "0|1",
+                "elementModifier": "0|1",
+                "condition": "0|1",
+                "parenthesized": "0|1",
+                "nonNull": "0|1",
+                "as": "0|1",
+                "satisfies": "0|1",
+                "angle": "0|1"
+              },
+              "typeOnlyClause as suite": {
+                "bare": "1|0",
+                "modifier": "1|0",
+                "elementModifier": "1|0",
+                "condition": "1|0",
+                "parenthesized": "1|0",
+                "nonNull": "1|0",
+                "as": "1|0",
+                "satisfies": "1|0",
+                "angle": "1|0"
+              },
+              "typeOnlySpecifier as suite": {
                 "bare": "1|0",
                 "modifier": "1|0",
                 "elementModifier": "1|0",
