@@ -1,9 +1,12 @@
 /**
  * wb-tz2.3 (HX-ORIGINAL-GOALS-CLOSURE-R3): the HyperUnix result-representation successor gate, STANDING LEG AND RE-VENDOR
- * TRIPWIRE - the part of the bead that lands while no successor @hyperunix/sdk exists. Cut #3 takes the enumerate-the-resolvable
- * form (orchestrator ruling R-B81 under standing rule 19): the S row claims exactly the binding surfaces it pins, each one bound
- * to executable falsifiers and a control (S SURFACES), reads every form outside them as a break (fail closed), and names its one
- * residual family with pinned quiet rows anchored outside this file (RESIDUALS).
+ * TRIPWIRE - the part of the bead that lands while no successor @hyperunix/sdk exists. Cut #4 is the bead's final cut, bound by
+ * orchestrator ruling R-B99 (the standing rule 19 structural exit) to the FAIL-CLOSED CORE: every claim says exactly what its
+ * reader implements, and every form outside the pinned set reads as a break. It keeps cut #3's enumerate-the-resolvable form
+ * (ruling R-B81): the S row claims exactly the binding surfaces it pins, each one bound to executable falsifiers and a control
+ * (S SURFACES), reads every form outside them as a break (fail closed), and names its one residual family with pinned quiet
+ * rows anchored outside this file (RESIDUALS). Resolution-based vitest-module identity, registration-channel coverage and a
+ * wider C file set are child wb-tz2.17's scope.
  *
  * OWNER FILING (the outside anchor): the tracked bead export .beads/issues.jsonl, row wb-tz2.3, read through its description
  * only, so a note a lane appends later changes nothing read. The export holds exactly one row whose id decodes to wb-tz2.3
@@ -32,9 +35,19 @@
  *     scope, and claims exactly these surfaces, one section of its witness each; any form outside a surface reads as a break in
  *     its section (`<SURFACE> <why>`), and a section read after a broken CALL, ROWS or POSITION reads `<not read: <that section> broke>`:
  *       FILE: the one suite the Standing item cites, read by that path.
- *       IMPORT: describe and it are bound by the suite's one import declaration from vitest, as named, unaliased value imports;
- *         no other string token names a vitest module (vitest, vitest/<path>, @vitest/<package>), and the suite holds no
- *         import() expression, no require or createRequire identifier and no importActual or importMock member.
+ *       IMPORT, by spelling: a module specifier is read as written, never resolved, and no module it names is read. describe
+ *         and it are bound by the suite's one import declaration whose specifier is spelled exactly vitest, as named, unaliased
+ *         value imports. The sound section lists every module specifier the suite spells, in source order with its form - an
+ *         import declaration, an export declaration, an import-equals declaration (import <name> = require(<specifier>)) or an
+ *         import type (import(<specifier>) in a type) - so the S file pin's frozen line pins the cited suite's whole list. Each
+ *         specifier is spelled in one read class: node: then parts of lower-case letters, digits and _ each opening with a
+ *         letter; a bare package, <name> or @<scope>/<name> (lower-case letters, digits and . _ ~ -, opening with a lower-case
+ *         letter, a digit or ~) then any /<part>; or a relative path, . or .. then one or more /<part>; every <part> of ASCII
+ *         letters, digits and . _ ~ @ + -. And none holds node_modules in any letter case (such a path can name a vitest module
+ *         under another spelling). No other string literal or no-substitution template is spelled as a vitest module: exactly
+ *         vitest, vitest/ then any characters but a line break, or @vitest/ then one or more of them. And the suite holds no
+ *         import() expression, no require or createRequire identifier, no identifier beginning __vite (vite's injected
+ *         loaders), no importActual or importMock member, and no import.meta but import.meta.url.
  *       REFERENCES: every reference the checker binds to a value import of that declaration is a call (it(...)) or the object of
  *         a member call (it.each(...)), so a write, a read or an argument of a vitest binding or of its member breaks it
  *         (it.each = ..., const each = it.each, Object.assign(it, ...)).
@@ -75,9 +88,11 @@
  *     S SURFACES holds, per surface and for the run pin, falsifiers that each change that surface's section (or the run pin's
  *     reading) and a control that keeps the whole reading, all over planted suites and planted configs; the surface ids are
  *     anchored on the sections the reader itself produces for the cited suite.
- *   C acceptance.2.2, the carrier: one pin per src file of the filing's SURFACES plus one for the rest of src. Every string
- *     token naming a hyperunix.result/<n> tag (whole or embedded: the TypeScript parser's string text, never a comment or a
- *     regular expression) sits at the carrier (hyperunix-observer.ts, the adapter's REPRESENTATION) or at the asserted
+ *   C acceptance.2.2, the carrier: one pin per src file of the filing's SURFACES plus one for the rest of src. The C scan
+ *     reads exactly the files under src whose names end in .ts, each parsed as TypeScript; any other file under src breaks
+ *     the rest-of-src pin (fail closed: a tag in a .tsx, .mts, .js or other file never reads as no site). Every string token
+ *     of those files spelling a hyperunix.result/<n> tag (whole or embedded: the TypeScript parser's string text, never a
+ *     comment or a regular expression) sits at the carrier (hyperunix-observer.ts, the adapter's REPRESENTATION) or at the asserted
  *     exclusion (native-evidence.ts, its comparison), and each spells the vendored tag. The wb-cax.8 census cannot see this
  *     tag (its whole-id form ends in /v<digits>), so this row is its single-carrier check. A true single carrier is blocked by
  *     two landed guards this cut keeps: S4 of test/workbench-hx-evidence-standing.test.ts refuses an HX-module import into
@@ -88,14 +103,16 @@
  *     together) and acceptance.2.3 (the full observer suite re-runs green against the successor): the external remainder,
  *     owed once HX publishes a successor. T is their re-entry: it reds the moment the vendored tag moves.
  * RESIDUALS (named; each family's quiet rows are pinned in RESIDUALS and anchored outside this file): R-RUNTIME - code the suite
- *   runs at collection rewrites a standing row's reading in flight through a method the installed vitest runner's each calls
- *   on its table (read from @vitest/runner's dist: every, forEach), patched on Array.prototype, while every row still
- *   registers and passes for another cause: the FILE PIN binds the row's text and the RUN PIN the case's registration and
- *   result, neither the reading's value at run time. One quiet row per derived method: a planted suite patching it around the
- *   call reads exactly the sound reading, and the family's mode reading (the methods the suite assigns on Array.prototype)
- *   names that method there, reads nothing on the planted base (the neutral payload), and the same rewrite through the table
- *   binding (the loud payload) breaks TABLE.
- * GATE (re-measured read-only at the cut, no fetch): HyperUnix-CLI origin/main c275230d sdk/typescript/package.json version
+ *   runs at collection rewrites a standing row's reading in flight through a built-in the installed vitest runner's each
+ *   reaches with its table or a row, patched by the suite, while every row still registers and passes for another cause: the
+ *   FILE PIN binds the row's text and the RUN PIN the case's registration and result, neither the reading's value at run
+ *   time. One quiet row per built-in the installed each body names directly (read from @vitest/runner's dist: each method it
+ *   calls on its table, read as an Array.prototype method, and each Array static it reads - today Array.isArray,
+ *   Array.prototype.every and Array.prototype.forEach): a planted suite patching it around the call reads exactly the sound
+ *   reading, and the family's mode reading (the built-ins the suite assigns on Array or Array.prototype) names that built-in
+ *   there, reads nothing on the planted base (the neutral payload), and the same rewrite through the table binding (the loud
+ *   payload) breaks TABLE.
+ * GATE (re-measured read-only at cut #4, no fetch): HyperUnix-CLI origin/main aa450afe sdk/typescript/package.json version
  * 0.1.0, sdk/typescript/src/result.ts:157 SDK_REPRESENTATION "hyperunix.result/1"; no other hyperunix.result/<n> tag under
  * sdk/ or docs/programs; docs/programs/original-goals-closure-2026-10-16/requirements.jsonl:6 HXGC-EPI-002 status DESIGN,
  * graduated false. The successor is unpublished, so every row is green today and PARKED stays owed.
@@ -110,9 +127,14 @@
  * assembled at run time instead of spelled in one string token (concatenation, a template substitution), which C does not
  * read (C COLLECTOR pins that quiet reading); what the cited callback's free variables and the suite's other declarations do
  * (thrown, context and the rest: only the callback's text and the helper are pinned) and whether the helper's reading is
- * otherwise accepted (the cited suite's own acceptance cases judge that); a vitest module reached through a specifier
- * assembled at run time or a loader the IMPORT scan does not name (the RUN PIN reads the registration such a path changes,
- * and a rewrite in flight is R-RUNTIME's); an export row that repeats a JSON key (a JSON reader keeps the last one).
+ * otherwise accepted (the cited suite's own acceptance cases judge that); RESOLUTION - IMPORT reads specifiers by spelling,
+ * never resolves one and never reads the module it names, so a symlink, a resolver alias (vite's resolve.alias, tsconfig
+ * paths, a package's imports or exports map), a local module or another package that re-exports or wraps a vitest module,
+ * and whatever a module the suite imports does when it loads, are not identified (for the cited suite an added or respelled
+ * specifier changes the frozen S file line; resolution-based vitest-module identity is child wb-tz2.17's scope); a module
+ * reached through a specifier assembled at run time or through a loader the IMPORT scan does not name (the RUN PIN reads the
+ * registration such a path changes, and a rewrite in flight is R-RUNTIME's); an export row that repeats a JSON key (a JSON
+ * reader keeps the last one).
  *
  * Display paths added: none. Test-only: spawns nothing, writes nothing, allocates no scratch (WS is a string, never created);
  * reads the bead export, the src tree, the vendored SDK's dist/index.js and its declaring module, the cited suite, the run
@@ -378,17 +400,39 @@ function tagSites(files: ReadonlyMap<string, string>): Site[] {
 }
 const describeSite = (site: Site): string =>
   `${site.whole ? "whole" : "embedded"} ${site.tag}${site.tag === SDK_REPRESENTATION ? "" : " (not the vendored tag)"} @ ${site.context}`;
-function sourceFiles(dir: string): string[] {
-  return readdirSync(dir).sort().flatMap(name => {
+/** A directory reader: a directory's entry names, or undefined for any other entry (a file). */
+type Tree = (path: string) => readonly string[] | undefined;
+const diskTree: Tree = path => (statSync(path).isDirectory() ? readdirSync(path) : undefined);
+/** Every file under `dir`, in name order at each level: a directory is entered, every other entry is a file. */
+function sourceFiles(dir: string, tree: Tree = diskTree): string[] {
+  return [...(tree(dir) ?? [])].sort().flatMap(name => {
     const path = join(dir, name);
-    return statSync(path).isDirectory() ? sourceFiles(path) : path.endsWith(".ts") ? [path] : [];
+    return tree(path) === undefined ? [path] : sourceFiles(path, tree);
   });
 }
-let srcSites: Site[] | undefined;
-/** Every representation tag in src, read once. */
-function srcTagSites(): Site[] {
-  srcSites ??= tagSites(new Map(sourceFiles(join(ROOT, "src")).map(path => [relative(ROOT, path), readFileSync(path, "utf8")])));
-  return srcSites;
+/** The C scan's file rule: it reads exactly the files under src whose names end in .ts. */
+const isScanned = (file: string): boolean => file.endsWith(".ts");
+interface SrcScan {
+  /** Every file under src, relative to the root. */
+  readonly files: readonly string[];
+  /** Every representation tag in the .ts ones. */
+  readonly sites: readonly Site[];
+}
+let srcRead: SrcScan | undefined;
+/** Every file under src and every representation tag in its .ts files, read once. */
+function srcScan(): SrcScan {
+  if (srcRead === undefined) {
+    const files = sourceFiles(join(ROOT, "src")).map(path => relative(ROOT, path));
+    srcRead = { files, sites: tagSites(new Map(files.filter(isScanned).map(file => [file, readFileSync(join(ROOT, file), "utf8")]))) };
+  }
+  return srcRead;
+}
+/** The rest-of-src reading: each file under src that is not a .ts file (a break: the scan does not read it), then each tag outside the
+ * filing's surfaces, or no site. */
+function srcRest(scan: SrcScan, surfaces: readonly string[]): string {
+  const unread = scan.files.filter(file => !isScanned(file)).map(file => `${file} <not a .ts file, which the C scan does not read>`);
+  const outside = scan.sites.filter(site => !surfaces.includes(site.file)).map(site => `${site.file} ${describeSite(site)}`);
+  return [...unread, ...outside].join("; ") || "no site";
 }
 
 /** TypeScript diagnostics that mean a name is declared twice in one scope: a duplicate identifier, a redeclared block-scoped variable, an import
@@ -460,10 +504,21 @@ const kindName = (node: ts.Node): string => {
 };
 const isFunctionCallback = (node: ts.Node | undefined): node is ts.ArrowFunction | ts.FunctionExpression =>
   node !== undefined && (ts.isArrowFunction(node) || ts.isFunctionExpression(node));
-/** A module specifier of vitest or one of its packages. */
+/** A string spelled as a vitest module: exactly vitest, vitest/ then any characters but a line break, or @vitest/ then one or more of them. */
 const VITEST_MODULE = /^(?:vitest(?:\/.*)?|@vitest\/.+)$/;
-/** Identifiers that load a module by specifier at run time, and the vi members that do. */
+/** The read classes of a module specifier's spelling (IMPORT reads a specifier as written and never resolves it): node: then parts of
+ * lower-case letters, digits and _ each opening with a letter; a bare package, <name> or @<scope>/<name> (lower-case letters, digits and
+ * . _ ~ -, opening with a lower-case letter, a digit or ~) then any /<part>; a relative path, . or .. then one or more /<part>; every
+ * <part> of ASCII letters, digits and . _ ~ @ + -. */
+const SPECIFIER_CLASSES: readonly RegExp[] = [
+  /^node:[a-z][a-z0-9_]*(?:\/[a-z][a-z0-9_]*)*$/,
+  /^(?:@[a-z0-9~][a-z0-9._~-]*\/)?[a-z0-9~][a-z0-9._~-]*(?:\/[A-Za-z0-9._~@+-]+)*$/,
+  /^\.\.?(?:\/[A-Za-z0-9._~@+-]+)+$/,
+];
+/** Identifiers that load a module by specifier at run time, the prefix of vite's injected loaders (__vite_ssr_import__,
+ * __vite_ssr_dynamic_import__), and the vi members that load one. */
 const LOADER_NAMES: ReadonlySet<string> = new Set(["require", "createRequire"]);
+const LOADER_PREFIX = "__vite";
 const LOADER_MEMBERS: ReadonlySet<string> = new Set(["importActual", "importMock"]);
 /** The surfaces after CALL, read only from the one cited call. */
 const CALL_SURFACES = ["PATH", "CALLBACK", "TABLE", "ROWS", "POSITION", "HELPER"] as const;
@@ -494,25 +549,60 @@ function isVitest(suite: CheckedSuite, node: ts.Node, name: string): boolean {
   const [specifier] = declarations;
   return declarations.length === 1 && specifier !== undefined && ts.isImportSpecifier(specifier) && specifiers.includes(specifier) && specifier.propertyName === undefined;
 }
+/** A module specifier the suite spells: its form, its text (one that is not a string literal reads as its kind) and its line. */
+interface ModuleSpecifier {
+  readonly form: "import" | "export" | "import-equals" | "import-type";
+  readonly text: string;
+  readonly line: number;
+}
+/** Every module specifier of an import, export or import-equals declaration or an import type, in source order. */
+function moduleSpecifiers(source: ts.SourceFile): ModuleSpecifier[] {
+  const found: ModuleSpecifier[] = [];
+  const add = (form: ModuleSpecifier["form"], specifier: ts.Node): void => {
+    found.push({ form, text: ts.isStringLiteral(specifier) ? specifier.text : `<${kindName(specifier)}>`, line: lineOf(source, specifier) });
+  };
+  const visit = (node: ts.Node): void => {
+    if (ts.isImportDeclaration(node)) add("import", node.moduleSpecifier);
+    if (ts.isExportDeclaration(node) && node.moduleSpecifier !== undefined) add("export", node.moduleSpecifier);
+    if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference)) add("import-equals", node.moduleReference.expression);
+    if (ts.isImportTypeNode(node)) add("import-type", ts.isLiteralTypeNode(node.argument) ? node.argument.literal : node.argument);
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return found;
+}
+const specifierText = (entry: ModuleSpecifier): string => `${entry.form} '${entry.text}'`;
+const specifiersAt = (entries: readonly ModuleSpecifier[]): string => entries.map(entry => `${specifierText(entry)} at line ${entry.line}`).join(", ");
 function importSection(source: ts.SourceFile): string {
   const specifiers = vitestSpecifiers(source);
   if (typeof specifiers === "string") return broken("IMPORT", specifiers);
   for (const name of ["describe", "it"]) {
     if (!specifiers.some(specifier => specifier.propertyName === undefined && specifier.name.text === name)) return broken("IMPORT", `the vitest import binds no unaliased value ${name}`);
   }
+  const listed = moduleSpecifiers(source);
+  const unread = listed.filter(entry => !SPECIFIER_CLASSES.some(pattern => pattern.test(entry.text)));
+  if (unread.length > 0) return broken("IMPORT", `a module specifier spelled in no read class: ${specifiersAt(unread)}`);
+  const modules = listed.filter(entry => entry.text.toLowerCase().includes("node_modules"));
+  if (modules.length > 0) return broken("IMPORT", `a module specifier holding node_modules: ${specifiersAt(modules)}`);
   const own = vitestImports(source)[0]?.moduleSpecifier;
   const others: string[] = [];
   const visit = (node: ts.Node): void => {
     const at = (): string => `line ${lineOf(source, node)}`;
     if ((ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) && node !== own && VITEST_MODULE.test(node.text)) others.push(`'${node.text}' at ${at()}`);
     if (ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword) others.push(`import() at ${at()}`);
-    if (ts.isIdentifier(node) && LOADER_NAMES.has(node.text)) others.push(`${node.text} at ${at()}`);
+    if (ts.isIdentifier(node) && (LOADER_NAMES.has(node.text) || node.text.startsWith(LOADER_PREFIX))) others.push(`${node.text} at ${at()}`);
     if (ts.isPropertyAccessExpression(node) && LOADER_MEMBERS.has(node.name.text)) others.push(`.${node.name.text} at ${at()}`);
+    if (ts.isMetaProperty(node) && node.keywordToken === ts.SyntaxKind.ImportKeyword) {
+      const member = ts.isPropertyAccessExpression(node.parent) && node.parent.expression === node ? node.parent.name.text : undefined;
+      if (member !== "url") others.push(`import.meta${member === undefined ? "" : `.${member}`} at ${at()}`);
+    }
     ts.forEachChild(node, visit);
   };
   visit(source);
   if (others.length > 0) return broken("IMPORT", `a module reached another way: ${others.join(", ")}`);
-  return "IMPORT describe, it: unaliased value imports of the one vitest import; no other vitest module specifier, import(), require, createRequire, importActual or importMock";
+  return `IMPORT describe, it: unaliased value imports of the one import spelled vitest; module specifiers as spelled, never resolved: ${listed.map(specifierText).join(", ")}; ` +
+    "each in a read class, none holding node_modules; no other string spelled as a vitest module; no import(), require, createRequire, __vite identifier, importActual " +
+    "or importMock member, or import.meta but import.meta.url";
 }
 function referencesSection(suite: CheckedSuite): string {
   const { checker, source } = suite;
@@ -996,11 +1086,11 @@ const ROWS: readonly Row[] = [
   { id: "C", clause: "acceptance.2.2", pins: [
     ...FILING.srcSurfaces.map(file => ({
       id: `C ${file}`, requirement: "the file's representation-tag spellings and its role",
-      witness: () => Promise.resolve(`${CARRIER_ROLES[file] ?? "<no role>"}: ${srcTagSites().filter(site => site.file === file).map(describeSite).join("; ") || "no site"}`),
+      witness: () => Promise.resolve(`${CARRIER_ROLES[file] ?? "<no role>"}: ${srcScan().sites.filter(site => site.file === file).map(describeSite).join("; ") || "no site"}`),
     })),
     {
-      id: "C src", requirement: "no representation-tag spelling outside the filing's surfaces",
-      witness: () => Promise.resolve(srcTagSites().filter(site => !FILING.srcSurfaces.includes(site.file)).map(site => `${site.file} ${describeSite(site)}`).join("; ") || "no site"),
+      id: "C src", requirement: "every file under src is a .ts file the C scan reads, and none outside the filing's surfaces spells a representation tag",
+      witness: () => Promise.resolve(srcRest(srcScan(), FILING.srcSurfaces)),
     },
   ] },
 ];
@@ -1032,8 +1122,12 @@ const PIN_LINES: readonly string[] = [
     "representation: successor of hyperunix.result/1 true; hyperunix.result/2|validation|{}|decoder-refused",
   "S test/workbench-hyperunix-observer.test.ts | the cited suite's text holds the cited case in each binding surface the file pin claims, one " +
     "section each, every name bound by scope and position | FILE test/workbench-hyperunix-observer.test.ts: the one suite the Standing item " +
-    "cites, read by that path; IMPORT describe, it: unaliased value imports of the one vitest import; no other vitest module specifier, import(), " +
-    "require, createRequire, importActual or importMock; REFERENCES every reference to a vitest value import is a call or the object of a member " +
+    "cites, read by that path; IMPORT describe, it: unaliased value imports of the one import spelled vitest; module specifiers as spelled, never " +
+    "resolved: import 'node:crypto', import 'node:fs', import '@hyperunix/sdk', import 'vitest', import '../src/workbench/capability-registry.js', " +
+    "import '../src/workbench/hyperunix-observer.js', import '../src/workbench/observation.js', import '../src/workbench/providers/hyperunix.js', " +
+    "import './helpers/hx-live-receipt.js'; each in a read class, none holding node_modules; no other string spelled as a vitest module; no " +
+    "import(), require, createRequire, __vite identifier, importActual or importMock member, or import.meta but import.meta.url; REFERENCES every " +
+    "reference to a vitest value import is a call or the object of a member " +
     "call; ACCESS no eval: every read of a table is one the checker binds; CALL 'H5: refuses %s with a typed validation error and no snapshot': " +
     "it.each(refusals)(title, arrow function), the one .each call carrying a standing row, its path and title unique; PATH HyperUnix " +
     "hyperunix.find reader adapter: every enclosing block is a plain two-argument vitest describe callback holding no return of its own; CALLBACK " +
@@ -1051,7 +1145,7 @@ const PIN_LINES: readonly string[] = [
     "asserted exclusion (S4 refuses an HX import here; H7 pins the observer's four imports): whole hyperunix.result/1 @ !== source.representation",
   "C src/workbench/providers/hyperunix.ts | the file's representation-tag spellings and its role | " +
     "no tag (the source is resultToJson's output, stamped by the SDK): no site",
-  "C src | no representation-tag spelling outside the filing's surfaces | no site",
+  "C src | every file under src is a .ts file the C scan reads, and none outside the filing's surfaces spells a representation tag | no site",
 ];
 const FROZEN = new Map(PIN_LINES.map(line => [line.split(" | ")[0] ?? "", line]));
 
@@ -1124,12 +1218,51 @@ const SURFACES: readonly Surface[] = [
   ], control: planted("a comment added", "", () => `${PLANTED_BASE}// a comment\n`) },
   { id: "IMPORT", falsifiers: [
     planted("a namespace import of vitest beside it", "2 import declarations from vitest", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport * as vitest from 'vitest';`)),
-    planted("the runner module imported", "a module reached another way: '@vitest/runner'", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from '@vitest/runner';`)),
+    planted("the vitest import removed", "0 import declarations from vitest", () => edited(PLANTED_BASE, `${PLANTED_IMPORT}\n`, "")),
+    planted("describe and it imported from a vitest subpath", "0 import declarations from vitest", () => edited(PLANTED_BASE, PLANTED_IMPORT, "import {describe, it} from 'vitest/index.js';")),
+    planted("a default import beside the named ones", "the vitest import is not one named value import", () => edited(PLANTED_BASE, PLANTED_IMPORT, "import vitest, {describe, it} from 'vitest';")),
     planted("it imported under an alias", "binds no unaliased value it", () => edited(PLANTED_BASE, PLANTED_IMPORT, "import {describe, it as each} from 'vitest';\nconst it = each;")),
+    planted("it imported as a type", "binds no unaliased value it", () => edited(PLANTED_BASE, PLANTED_IMPORT, "import {describe, type it} from 'vitest';")),
+    planted("a relative import added", "", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {check} from './helpers/check.js';`)),
+    planted("a relative import placed before the vitest import", "", () => edited(PLANTED_BASE, PLANTED_IMPORT, `import {check} from './helpers/check.js';\n${PLANTED_IMPORT}`)),
+    planted("an export declaration added", "", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nexport {check} from './helpers/check.js';`)),
+    planted("an import-equals declaration added", "", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport check = require('./helpers/check.js');`)),
+    planted("an import type added", "", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\ntype Check = typeof import('./helpers/check.js');`)),
+    planted("an absolute path", "spelled in no read class: import '/opt/runner/index.js'", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from '/opt/runner/index.js';`)),
+    planted("a file URL", "spelled in no read class: import 'file:///opt/runner/index.js'", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from 'file:///opt/runner/index.js';`)),
+    planted("a subpath import", "spelled in no read class: import '#runner'", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from '#runner';`)),
+    planted("a backslash in a path", "spelled in no read class: import", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from '..\\\\vendor\\\\runner.js';`)),
+    planted("a percent escape in a path", "spelled in no read class: import '../node%5Fmodules/@vitest/runner/dist/index.js'", () =>
+      edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from '../node%5Fmodules/@vitest/runner/dist/index.js';`)),
+    planted("an upper-case package name", "spelled in no read class: import 'Vitest'", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from 'Vitest';`)),
+    planted("a node: spelling of no name", "spelled in no read class: import 'node:./runner.js'", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from 'node:./runner.js';`)),
+    planted("the runner by a node_modules path (LG1s)", "holding node_modules: import '../node_modules/@vitest/runner/dist/index.js'", () =>
+      edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test as registrar} from '../node_modules/@vitest/runner/dist/index.js';`)),
+    planted("vitest's dist by a node_modules path (LG1a)", "holding node_modules: import '../node_modules/vitest/dist/index.js'", () =>
+      edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {it as registrar} from '../node_modules/vitest/dist/index.js';`)),
+    planted("a node_modules path upper-cased", "holding node_modules: import '../NODE_MODULES/@vitest/runner/dist/index.js'", () =>
+      edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from '../NODE_MODULES/@vitest/runner/dist/index.js';`)),
+    planted("a bare package's path through node_modules", "holding node_modules: import 'some-package/node_modules/@vitest/runner/dist/index.js'", () =>
+      edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from 'some-package/node_modules/@vitest/runner/dist/index.js';`)),
+    planted("a node_modules path re-exported", "holding node_modules: export '../node_modules/@vitest/runner/dist/index.js'", () =>
+      edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nexport {test} from '../node_modules/@vitest/runner/dist/index.js';`)),
+    planted("a node_modules path through import-equals", "holding node_modules: import-equals '../node_modules/@vitest/runner/dist/index.js'", () =>
+      edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport runner = require('../node_modules/@vitest/runner/dist/index.js');`)),
+    planted("a node_modules path in an import type", "holding node_modules: import-type '../node_modules/@vitest/runner/dist/index.js'", () =>
+      edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\ntype Runner = typeof import('../node_modules/@vitest/runner/dist/index.js');`)),
+    planted("the runner module imported", "a module reached another way: '@vitest/runner'", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from '@vitest/runner';`)),
+    planted("vitest named in another string", "a module reached another way: 'vitest' at", () => onCall(`  const runner = 'vitest';\n${PLANTED_CALL}`)),
+    planted("a vitest path named in another string", "a module reached another way: 'vitest/runners' at", () => onCall(`  const runner = 'vitest/runners';\n${PLANTED_CALL}`)),
     planted("a dynamic import", "a module reached another way: import()", () => onCall(`  const loaded = import('node:path');\n${PLANTED_CALL}`)),
-    planted("a vi loader", "a module reached another way: .importActual", () => onCall(`  const loaded = vi.importActual(name);\n${PLANTED_CALL}`)),
     planted("require", "a module reached another way: require", () => onCall(`  const loaded = require(name);\n${PLANTED_CALL}`)),
-  ], control: planted("another vitest specifier imported", "", () => edited(PLANTED_BASE, PLANTED_IMPORT, "import {describe, expect, it} from 'vitest';")) },
+    planted("createRequire", "a module reached another way: createRequire", () => onCall(`  const load = createRequire(name);\n${PLANTED_CALL}`)),
+    planted("vite's injected loader", "a module reached another way: __vite_ssr_dynamic_import__", () => onCall(`  const loaded = __vite_ssr_dynamic_import__(name);\n${PLANTED_CALL}`)),
+    planted("a vi loader", "a module reached another way: .importActual", () => onCall(`  const loaded = vi.importActual(name);\n${PLANTED_CALL}`)),
+    planted("a vi mock loader", "a module reached another way: .importMock", () => onCall(`  const loaded = vi.importMock(name);\n${PLANTED_CALL}`)),
+    planted("an import.meta glob", "a module reached another way: import.meta.glob", () => onCall(`  const loaded = import.meta.glob('./*.ts');\n${PLANTED_CALL}`)),
+    planted("import.meta read whole", "a module reached another way: import.meta at", () => onCall(`  const meta = import.meta;\n${PLANTED_CALL}`)),
+  ], control: planted("another vitest specifier imported and import.meta.url read", "", () =>
+    edited(onCall(`  const here = import.meta.url;\n${PLANTED_CALL}`), PLANTED_IMPORT, "import {describe, expect, it} from 'vitest';")) },
   { id: "REFERENCES", falsifiers: [
     planted("it.each replaced around the call (GA5)", "it.each at line 12 in a BinaryExpression", () => onCall(`  const realEach = it.each;\n  it.each = (() => () => undefined) as unknown as typeof it.each;\n${PLANTED_CALL}\n  it.each = realEach;`)),
     planted("it passed as an argument", "it at line 11 in a CallExpression", () => onCall(`  Object.assign(it, {extra: 1});\n${PLANTED_CALL}`)),
@@ -1149,8 +1282,8 @@ const SURFACES: readonly Surface[] = [
       `${edited(edited(PLANTED_BASE, `${CONTRACT_ROW}\n`, ""), `${REPRESENTATION_ROW}\n`, "")}${decoyDescribe}`),
   ], control: planted("another .each call with no standing row", "", () => onCall(`${PLANTED_CALL}\n  it.each([['a', 1]])('other %s', () => { check(null); });`)) },
   { id: "PATH", falsifiers: [
-    planted("a skipped describe (G13)", "registered under describe.skip", () => edited(PLANTED_BASE, "describe('suite',", `${modified("skip")}('suite',`)),
-    planted("a conditionally skipped describe (G13b)", "registered under describe.skipIf(true)", () => edited(PLANTED_BASE, "describe('suite',", `${modified("skipIf")}(true)('suite',`)),
+    planted("a skipped describe (G13)", `registered under ${modified("skip")}`, () => edited(PLANTED_BASE, "describe('suite',", `${modified("skip")}('suite',`)),
+    planted("a conditionally skipped describe (G13b)", `registered under ${modified("skipIf")}(true)`, () => edited(PLANTED_BASE, "describe('suite',", `${modified("skipIf")}(true)('suite',`)),
     planted("a conditional registration (V7)", "registered inside a block that is not a describe callback", () => onCall(`  if (enabled) {\n  ${PLANTED_CALL}\n  }`)),
     planted("options as the describe's second argument", "registered under a describe call of 3 arguments", () => edited(PLANTED_BASE, "describe('suite', () => {", "describe('suite', {skip: true}, () => {")),
     planted("an early return of the describe callback", "a return of the describe callback 'suite' at line 6", () => edited(PLANTED_BASE, "  const rows = [", "  if (disabled) return;\n  const rows = [")),
@@ -1222,9 +1355,10 @@ interface Residual {
   readonly row: RowId;
   readonly quietRows: readonly string[];
 }
-const RESIDUALS: readonly Residual[] = [{ family: "R-RUNTIME", row: "S", quietRows: ["every", "forEach"] }];
-/** The methods the installed vitest runner's it.each calls on its table, in source order: createTaskCollector's each in @vitest/runner's dist. */
-function runnerTableMethods(): string[] {
+const RESIDUALS: readonly Residual[] = [{ family: "R-RUNTIME", row: "S", quietRows: ["Array.isArray", "Array.prototype.every", "Array.prototype.forEach"] }];
+/** The built-ins the installed vitest runner's it.each body names directly, in source order (createTaskCollector's each in @vitest/runner's
+ * dist): each method it calls on its table, read as an Array.prototype method, and each Array static it reads. */
+function runnerEachBuiltins(): string[] {
   const sites: string[][] = [];
   for (const name of readdirSync(RUNNER_DIST).filter(file => file.endsWith(".js")).sort()) {
     const visit = (node: ts.Node, inCollector: boolean): void => {
@@ -1232,16 +1366,18 @@ function runnerTableMethods(): string[] {
       if (collector && ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken && ts.isPropertyAccessExpression(node.left) &&
         node.left.name.text === "each" && ts.isFunctionExpression(node.right)) {
         const [table] = node.right.parameters;
-        const methods: string[] = [];
+        const builtins: string[] = [];
         const scan = (inner: ts.Node): void => {
-          if (table !== undefined && ts.isIdentifier(table.name) && ts.isPropertyAccessExpression(inner) && ts.isIdentifier(inner.expression) &&
-            inner.expression.text === table.name.text && ts.isCallExpression(inner.parent) && inner.parent.expression === inner && !methods.includes(inner.name.text)) {
-            methods.push(inner.name.text);
+          if (ts.isPropertyAccessExpression(inner) && ts.isIdentifier(inner.expression)) {
+            const onTable = table !== undefined && ts.isIdentifier(table.name) && inner.expression.text === table.name.text && ts.isCallExpression(inner.parent) &&
+              inner.parent.expression === inner;
+            const builtin = onTable ? `Array.prototype.${inner.name.text}` : inner.expression.text === "Array" ? `Array.${inner.name.text}` : undefined;
+            if (builtin !== undefined && !builtins.includes(builtin)) builtins.push(builtin);
           }
           ts.forEachChild(inner, scan);
         };
         scan(node.right.body);
-        sites.push(methods);
+        sites.push(builtins);
       }
       ts.forEachChild(node, child => visit(child, collector));
     };
@@ -1250,21 +1386,22 @@ function runnerTableMethods(): string[] {
   const [only] = sites;
   return sites.length === 1 && only !== undefined ? only : [`<${sites.length} it.each sites in ${relative(ROOT, RUNNER_DIST)}>`];
 }
-/** An R-RUNTIME quiet row: the planted suite patching one Array.prototype method around the call to rewrite a row in flight. */
-const runtimePayload = (method: string): string => onCall([
-  `  const real = Array.prototype.${method};`,
-  `  Array.prototype.${method} = function (this: unknown[], ...args: never[]) { rewrite(this); return real.apply(this, args); } as typeof real;`,
+/** An R-RUNTIME quiet row: the planted suite patching one built-in around the call to rewrite a row in flight. */
+const runtimePayload = (builtin: string): string => onCall([
+  `  const real = ${builtin};`,
+  `  ${builtin} = function (this: unknown, ...args: never[]) { rewrite(this, args); return real.apply(this, args); } as typeof real;`,
   PLANTED_CALL,
-  `  Array.prototype.${method} = real;`,
+  `  ${builtin} = real;`,
 ].join("\n"));
-/** R-RUNTIME's mode reading: the methods a suite assigns on Array.prototype, in source order. */
+/** R-RUNTIME's mode reading: the built-ins a suite assigns on Array or Array.prototype, in source order. */
 function runtimeMode(text: string): string[] {
   const source = ts.createSourceFile(PLANTED, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const methods: string[] = [];
   const visit = (node: ts.Node): void => {
-    if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken && ts.isPropertyAccessExpression(node.left) &&
-      ts.isPropertyAccessExpression(node.left.expression) && node.left.expression.getText(source) === "Array.prototype" && !methods.includes(node.left.name.text)) {
-      methods.push(node.left.name.text);
+    if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken && ts.isPropertyAccessExpression(node.left)) {
+      const owner = node.left.expression.getText(source);
+      const builtin = `${owner}.${node.left.name.text}`;
+      if ((owner === "Array" || owner === "Array.prototype") && !methods.includes(builtin)) methods.push(builtin);
     }
     ts.forEachChild(node, visit);
   };
@@ -1338,15 +1475,17 @@ describe("HyperUnix result-representation successor gate (wb-tz2.3 R3, standing 
     expect(`${pin.id} | ${pin.requirement} | ${await pin.witness()}`).toBe(FROZEN.get(pin.id));
   });
 
-  it("LIVENESS: the suite collected exactly one PIN case per pin, in pin order", ({ task }) => {
+  it("LIVENESS: the suite collected exactly one PIN case per pin and one S SURFACE case per surface, each in table order", ({ task }) => {
     const collected = (task.suite?.tasks ?? []).map(sibling => sibling.name);
     expect(collected).toContain(task.name);
     expect(collected.filter(name => name.startsWith("PIN "))).toEqual(PINS.map(pin => `PIN ${pin.id} holds its frozen line`));
+    expect(collected.filter(name => name.startsWith("S SURFACE "))).toEqual(SURFACES.map(surface =>
+      `S SURFACE ${surface.id}: each falsifier breaks the surface's section naming its reason (or reads it sound and changed), and the control keeps the whole reading`));
   });
 
   it("S SURFACES SHAPE: one surface per section the file pin reads of the cited suite, then the run pin, each with its frozen falsifier count", () => {
     expect(SURFACES.map(surface => `${surface.id}:${surface.falsifiers.length}`)).toEqual([
-      "FILE:2", "IMPORT:6", "REFERENCES:3", "ACCESS:1", "CALL:7", "PATH:6", "CALLBACK:2", "TABLE:6", "ROWS:4", "POSITION:10", "HELPER:7", "RUN:8",
+      "FILE:2", "IMPORT:36", "REFERENCES:3", "ACCESS:1", "CALL:7", "PATH:6", "CALLBACK:2", "TABLE:6", "ROWS:4", "POSITION:10", "HELPER:7", "RUN:8",
     ]);
     const [file = ""] = FILING.standingFixtures;
     const sections = citedFixture(file, readFileSync(join(ROOT, file), "utf8"), FILING.standingTags, FILING.standingFixtures).map(section => section.split(" ")[0]);
@@ -1365,16 +1504,43 @@ describe("HyperUnix result-representation successor gate (wb-tz2.3 R3, standing 
     expect(surface.control.reading(), `${id} ${surface.control.name}`).toEqual(base);
   });
 
-  it("RESIDUALS: R-RUNTIME holds one quiet row per method the installed runner's each calls on its table, each read quiet, its mode reading live and its loud payload loud", () => {
-    expect(RESIDUALS.map(residual => `${residual.family}:${residual.row}:${residual.quietRows.join(",")}`)).toEqual(["R-RUNTIME:S:every,forEach"]);
-    expect(RESIDUALS.find(residual => residual.family === "R-RUNTIME")?.quietRows).toEqual(runnerTableMethods());
+  it("RESIDUALS: R-RUNTIME holds one quiet row per built-in the installed runner's each body names, each read quiet, its mode reading live and its loud payload loud", () => {
+    expect(RESIDUALS.map(residual => `${residual.family}:${residual.row}:${residual.quietRows.join(",")}`)).toEqual(["R-RUNTIME:S:Array.isArray,Array.prototype.every,Array.prototype.forEach"]);
+    expect(RESIDUALS.find(residual => residual.family === "R-RUNTIME")?.quietRows).toEqual(runnerEachBuiltins());
     const base = plantedReading(PLANTED_BASE);
     expect(runtimeMode(PLANTED_BASE)).toEqual([]);
-    for (const method of RESIDUALS.flatMap(residual => residual.quietRows)) {
-      expect(plantedReading(runtimePayload(method)), method).toEqual(base);
-      expect(runtimeMode(runtimePayload(method)), method).toEqual([method]);
+    for (const builtin of RESIDUALS.flatMap(residual => residual.quietRows)) {
+      expect(plantedReading(runtimePayload(builtin)), builtin).toEqual(base);
+      expect(runtimeMode(runtimePayload(builtin)), builtin).toEqual([builtin]);
     }
     expect(sectionOf("TABLE", plantedReading(RUNTIME_LOUD))).toMatch(/^TABLE </);
+  });
+
+  it("C SCOPE: the rest-of-src pin reads only the .ts files under src and breaks on every other file there, so a tag outside them never reads as no site", () => {
+    const tag = 'export const LG5_TAG = "hyperunix.result/1";';
+    // A planted tree walked by the scan's own walk: every entry that is not a directory is a file, at any depth, whatever its name.
+    const planted: Readonly<Record<string, readonly string[]>> = {
+      src: ["workbench"],
+      "src/workbench": ["gate-probe-lg5.tsx", "gate-probe-lg5.ts", "gate-probe-lg5.mts", "gate-probe-lg5.js", "gate-probe-lg5.d.ts", "deep"],
+      "src/workbench/deep": ["tags.json"],
+    };
+    const files = sourceFiles("src", path => planted[path]);
+    expect(files).toEqual([
+      "src/workbench/deep/tags.json", "src/workbench/gate-probe-lg5.d.ts", "src/workbench/gate-probe-lg5.js", "src/workbench/gate-probe-lg5.mts",
+      "src/workbench/gate-probe-lg5.ts", "src/workbench/gate-probe-lg5.tsx",
+    ]);
+    const sites = tagSites(new Map(files.filter(isScanned).map(file => [file, tag])));
+    expect(srcRest({ files, sites }, FILING.srcSurfaces).split("; ")).toEqual([
+      "src/workbench/deep/tags.json <not a .ts file, which the C scan does not read>",
+      "src/workbench/gate-probe-lg5.js <not a .ts file, which the C scan does not read>",
+      "src/workbench/gate-probe-lg5.mts <not a .ts file, which the C scan does not read>",
+      "src/workbench/gate-probe-lg5.tsx <not a .ts file, which the C scan does not read>",
+      "src/workbench/gate-probe-lg5.d.ts whole hyperunix.result/1 @ const LG5_TAG",
+      "src/workbench/gate-probe-lg5.ts whole hyperunix.result/1 @ const LG5_TAG",
+    ]);
+    // The controls: the .ts files alone break nothing, and with no tag outside the surfaces the pin reads no site.
+    expect(srcRest({ files: files.filter(isScanned), sites }, FILING.srcSurfaces)).not.toContain("<not a .ts file");
+    expect(srcRest({ files: files.filter(isScanned), sites: [] }, FILING.srcSurfaces)).toBe("no site");
   });
 
   it("C COLLECTOR: the scan reads every string-text node kind, whole and embedded, and never a comment or a regular expression", () => {
