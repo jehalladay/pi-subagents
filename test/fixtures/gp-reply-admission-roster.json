@@ -107,13 +107,18 @@
       "G11",
       "G12",
       "G13",
-      "G14"
+      "G14",
+      "G15",
+      "G17",
+      "G23"
     ],
     "Q6": [
       "C6-mA",
       "C6-mT",
       "C6-mB",
-      "C6-mC"
+      "C6-mC",
+      "C6-sT",
+      "C6-sB"
     ],
     "Q7": [
       "C6-labelQ",
@@ -123,7 +128,11 @@
       "C6-member",
       "PL1",
       "PL2",
-      "PL4"
+      "PL4",
+      "PL5",
+      "PL-sha-suffix",
+      "G-frame-nested",
+      "G-fieldpin-T2"
     ]
   },
   "witnesses": {
@@ -993,6 +1002,30 @@
         "honest": "unavailable:timeout",
         "member": "unavailable:timeout",
         "departs": true
+      },
+      "G15": {
+        "input": "D15",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:checkpoint",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G17": {
+        "input": "D17",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:snapshotDigest",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G23": {
+        "input": "D23",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:schema",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
       }
     },
     "Q6": {
@@ -1000,7 +1033,9 @@
         "C6-mA": [],
         "C6-mT": [],
         "C6-mB": [],
-        "C6-mC": []
+        "C6-mC": [],
+        "C6-sT": [],
+        "C6-sB": []
       },
       "kept": {
         "C6-mA": [
@@ -1015,6 +1050,12 @@
         ],
         "C6-mC": [
           "tiling C"
+        ],
+        "C6-sT": [
+          "tiling T"
+        ],
+        "C6-sB": [
+          "tiling B"
         ]
       }
     },
@@ -1026,7 +1067,11 @@
       "C6-member": [],
       "PL1": [],
       "PL2": [],
-      "PL4": []
+      "PL4": [],
+      "PL5": [],
+      "PL-sha-suffix": [],
+      "G-frame-nested": [],
+      "G-fieldpin-T2": []
     }
   },
   "tests": [
