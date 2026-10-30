@@ -47,7 +47,8 @@
  *    landing-501 gate's F1, F3 and F4; the type-name root's qualified form (a type name that is a qualified name, rec.Owner) and
  *    the regex reading's separator family, every class escape (d D s S w W), assertion (b B) and control character escape
  *    (f n r t v) spelled between the term's two words, one literal per member: wb-jdz6, the landing-594 gate's F1 and F2; a
- *    qualified name two links deep, its left side itself a qualified name (Rec.Owner.Epoch): wb-jdz6 cut #2, refusal #1's F2) and
+ *    qualified name two links deep, its left side itself a qualified name (Rec.Owner.Epoch): wb-jdz6 cut #2, refusal #1's F2; a
+ *    qualified name three links deep (A.Rec.Owner.Epoch): wb-jdz6 cut #3, refusal #2's F4) and
  *    the TOKEN ANCHOR (wb-3wcm F4): the TypeScript compiler, outside this cut, is the anchor of
  *    the token readings - every node of a src module's syntax tree that carries its own text (an identifier, a private name, a
  *    string, a template part, a regex, a number) must be one a token reading read, so a token reading removed together with its
@@ -120,10 +121,22 @@
  * stands between two of its tokens; only the whitespace between two tokens is layout. So two tokens merged into one ('await
  * impl()' into 'awaitimpl()', 'const witness' into 'constwitness'), a token's own text changed or a comment added between two
  * tokens reds. The reader is held to its own controls before it reads any statement (SPELLING_CONTROLS, the list held to the
- * roster's): G-SQUEEZE's pair, the keyword merge, an operator's own text, the inner whitespace of a string, a template part and a
- * regex, a comment between two tokens, a JSDoc block's own text and the tokens' order each read as two spellings, and layout
- * between two tokens as one, so a reader that drops whitespace again, or drops a comment or a comment's own text, a literal's
- * inner whitespace, an operator's text or the order, reds, as does one that reads layout as spelling.
+ * roster's): each control is one MEMBER, named by its label, as two spellings that differ in that member alone, which tokensOf
+ * must read as two (as one for layout), so a reader narrowed for a member - one that reads every spelling of that member
+ * otherwise, in tokensOf, commentsIn, heldSpelling or sameSpelling - reds at that member's control (wb-jdz6 cut #2, refusal #1's
+ * U1; cut #3, refusal #2's U2: a reader narrowed to drop line comments, or a template middle's and tail's inner whitespace, kept
+ * every control of cut #2, whose comment controls were a block comment and a JSDoc block and whose template control a head).
+ * The members, one control each: two tokens merged into one (G-SQUEEZE's pair) and a keyword merged into a name; an equality and
+ * an inequality operator's own text (=== against ==, !== against !=); a space doubled between two words inside a double-quoted
+ * string, a single-quoted string, a no-substitution template, a template head, a template middle, a template tail and a regex; a
+ * block comment, a line comment and a JSDoc block standing between two tokens, each of those kinds' own words, and a space
+ * doubled between two words inside each of those kinds; a second block comment between the same two tokens, two block comments'
+ * order there and a block comment's place among the tokens; the tokens' order; and layout between two tokens (spaces, a tab and
+ * line breaks, LF and CRLF), the one member read as one spelling. So a reader that drops whitespace again (merging two tokens),
+ * reads == as === or != as !== (or every operator alike), reads a doubled space inside any of those seven literal kinds as one
+ * space or none, drops a comment of any of those three kinds, its words or a doubled space inside it, drops a second block
+ * comment, two block comments' order or a block comment's place, or drops the tokens' order, reds, as does one that reads layout
+ * as spelling.
  * Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the filing anchors rows and clauses, not pins); a
  * term removed from IDENTITY_TERMS or WORK_PACKAGE_TERMS together with its controls, the roster's scan and A2's witness (the
  * filing anchors rows and clauses, not words, and no source outside this cut lists the vocabulary); an assertion removed from this
@@ -141,8 +154,17 @@
  * holds the known spelling and finds nothing else; the token anchor holds tokens, not hits); a witness comparison, an operand
  * statement or the pin case's body edited in place together with its COMPARISONS, OPERANDS or PIN_CASE entry and the roster's;
  * the SELF-READ's reading narrowed in place at its calls - where selfStatements or pinCaseBodies reads a statement and where a
- * held literal is read for its comparison - instead of in tokensOf or heldSpelling, the readers its spelling controls read, or a
- * spelling control changed together with its roster entry; an operand written from outside the pin case's body (from a hook, from
+ * held literal is read for its comparison - instead of in tokensOf, commentsIn, heldSpelling or sameSpelling, the readers its
+ * spelling controls read, or a spelling control changed together with its roster entry; a reader narrowed for some spellings of
+ * a member and not others - by a spelling's place in its statement, its length, its line span, its count beyond the two comments
+ * the comment controls hold, its neighbours or its own text - since each control holds one spelling of its member; a reader that
+ * tells the controls, each parsed on its own, from a statement of this file (by the file it reads, the node it starts from, the
+ * statement's place or its text); a reader narrowed for what no member names: an operator other than == and != read as another,
+ * a name, a keyword, a number or a regex's flags read otherwise, the count, order or place of line comments and JSDoc blocks (the
+ * count, order and place controls are block comments), a literal read by its value (a string's quotes or escapes: the
+ * reader reads a literal byte for byte, but no control holds that), a space at a literal's or a comment's edge, a tab, a line
+ * break or a run of three or more spaces inside one, or whitespace other than spaces, a tab, LF and CR read as spelling between
+ * two tokens; an operand written from outside the pin case's body (from a hook, from
  * a helper either comparison calls, or from a case that keeps an alias of its witness); or a comparison hollowed through its
  * matcher, an expect.extend override (the SELF-READ holds each statement's tokens and place, not what its names are bound to, and
  * no source outside this cut lists the comparisons, the operands, the pin case's body or the spelling controls).
@@ -260,8 +282,9 @@ const COMPOSED_CONTROL = 'const word = ["owner", "epoch"].join(" ");';
  * character escapes - each source spelling the term across every member of its kind, one literal per member, so a member read
  * as an identity escape glues the two words and drops its literal's hit from the spelling (F2: the family's alternative removed
  * kept every control true). A qualified name two links deep has its own control too (wb-jdz6 cut #2, refusal #1's F2: a
- * qualified name read only when its left side is a name kept every control true, each of them one link deep), so a qualified
- * name read only one link deep loses the term. */
+ * qualified name read only when its left side is a name kept every control true, each of them one link deep), and so has one
+ * three links deep (wb-jdz6 cut #3, refusal #2's F4: a qualified name read only when its left side is a name, or a qualified
+ * name whose left side is a name, kept every control true), so a qualified name read only one or two links deep loses the term. */
 const READING_CONTROLS: readonly (readonly [string, string, string])[] = [
   ["identifier", "identifier", "let ownerEpoch = 0;"],
   ["private name", "identifier", "class Holder { #ownerEpoch = 0; }"],
@@ -272,6 +295,7 @@ const READING_CONTROLS: readonly (readonly [string, string, string])[] = [
   ["element access", "chain", 'const e = record["owner"]?.["epoch"];'],
   ["qualified name", "chain", "type E = Owner.Epoch;"],
   ["nested qualified name", "chain", "type E = Rec.Owner.Epoch;"],
+  ["twice-nested qualified name", "chain", "type E = A.Rec.Owner.Epoch;"],
   ["object keys", "key path", "const o = { owner: { epoch: 1 } };"],
   ["type members", "key path", "type T = { owner: { epoch: number } };"],
   ["binding pattern", "key path", "const { owner: { epoch } } = record;"],
@@ -353,21 +377,42 @@ const PIN_CASE: readonly string[] = [
 ];
 /** A spelling control of the SELF-READ's reader: [label, one spelling, another, whether tokensOf reads the two as one spelling]. */
 type SpellingControl = readonly [label: string, one: string, other: string, same: boolean];
-/** The SELF-READ reader's own controls (wb-jdz6 cut #2, refusal #1's U1), each spelling parsed on its own and read by tokensOf:
- * two tokens merged into one (G-SQUEEZE's pair), a keyword merged into a name, an operator's own text, a string's, a template
- * part's and a regex's inner whitespace, a comment between two tokens, a JSDoc block's own text and the tokens' order each read
- * as two spellings, and layout between two tokens as one. */
+/** The SELF-READ reader's own controls, one per MEMBER its kill sentence names (wb-jdz6 cut #2, refusal #1's U1; cut #3, refusal
+ * #2's U2: cut #2's comment controls were a block comment and a JSDoc block and its template control a head, so a reader narrowed
+ * to drop line comments, or a template middle's and tail's inner whitespace, kept every control), each spelling parsed on its own
+ * and read by tokensOf, its two spellings differing in that member alone: two tokens merged into one (G-SQUEEZE's pair) and a
+ * keyword merged into a name; an equality and an inequality operator's own text; a space doubled between two words inside each
+ * of seven literal kinds (a double- and a single-quoted string, a no-substitution template, a template head, middle and tail, and
+ * a regex); a block comment, a line comment and a JSDoc block between two tokens, each kind's own words and a space doubled
+ * inside each kind; a second block comment between the same two tokens, two block comments' order there and a block comment's
+ * place among the tokens; and the tokens' order, each read as two spellings; and layout between two tokens (spaces, a tab and
+ * line breaks, LF and CRLF), read as one. */
 const SPELLING_CONTROLS: readonly SpellingControl[] = [
   ["two tokens merged into one", "const witness = impl === undefined ? null : await impl();", "const witness = impl === undefined ? null : awaitimpl();", false],
   ["a keyword merged into a name", "const witness = impl === undefined ? null : await impl();", "constwitness = impl === undefined ? null : await impl();", false],
-  ["an operator's own text", "const witness = impl === undefined ? null : await impl();", "const witness = impl == undefined ? null : await impl();", false],
-  ["a string's inner whitespace", 'expect(impl, "no case").toBeTypeOf("function");', 'expect(impl, "no  case").toBeTypeOf("function");', false],
-  ["a template part's inner whitespace", `expect(impl, \`no case for \${pin}\`).toBeTypeOf("function");`, `expect(impl, \`no case  for \${pin}\`).toBeTypeOf("function");`, false],
+  ["an equality operator's own text", "const witness = impl === undefined ? null : await impl();", "const witness = impl == undefined ? null : await impl();", false],
+  ["an inequality operator's own text", "const known = impl !== undefined;", "const known = impl != undefined;", false],
+  ["a double-quoted string's inner whitespace", 'expect(impl, "no case").toBeTypeOf("function");', 'expect(impl, "no  case").toBeTypeOf("function");', false],
+  ["a single-quoted string's inner whitespace", "expect(impl, 'no case').toBeTypeOf('function');", "expect(impl, 'no  case').toBeTypeOf('function');", false],
+  ["a no-substitution template's inner whitespace", 'expect(impl, `no case`).toBeTypeOf("function");', 'expect(impl, `no  case`).toBeTypeOf("function");', false],
+  ["a template head's inner whitespace", `expect(impl, \`no case for \${pin}\`).toBeTypeOf("function");`, `expect(impl, \`no case  for \${pin}\`).toBeTypeOf("function");`, false],
+  ["a template middle's inner whitespace", `expect(impl, \`\${pin} no case \${pin}.\`).toBeTypeOf("function");`, `expect(impl, \`\${pin} no  case \${pin}.\`).toBeTypeOf("function");`, false],
+  ["a template tail's inner whitespace", `expect(impl, \`\${pin} no case\`).toBeTypeOf("function");`, `expect(impl, \`\${pin} no  case\`).toBeTypeOf("function");`, false],
   ["a regex's inner whitespace", "expect(text).toMatch(/owner epoch/);", "expect(text).toMatch(/owner  epoch/);", false],
-  ["a comment between two tokens", "MEASURED[pin] = witness;", "MEASURED[pin] = /* drift */ witness;", false],
-  ["a JSDoc block's own text", "const f = /** @param x the one */ (x: number) => x;", "const f = /** @param x the other */ (x: number) => x;", false],
+  ["a block comment between two tokens", "MEASURED[pin] = witness;", "MEASURED[pin] = /* drift */ witness;", false],
+  ["a line comment between two tokens", "MEASURED[pin] = witness;", "MEASURED[pin] = // drift\nwitness;", false],
+  ["a JSDoc block between two tokens", "const f = (x: number) => x;", "const f = /** drift */ (x: number) => x;", false],
+  ["a block comment's own words", "MEASURED[pin] = /* one */ witness;", "MEASURED[pin] = /* other */ witness;", false],
+  ["a line comment's own words", "MEASURED[pin] = // one\nwitness;", "MEASURED[pin] = // other\nwitness;", false],
+  ["a JSDoc block's own words", "const f = /** @param x the one */ (x: number) => x;", "const f = /** @param x the other */ (x: number) => x;", false],
+  ["a block comment's inner whitespace", "MEASURED[pin] = /* the one */ witness;", "MEASURED[pin] = /* the  one */ witness;", false],
+  ["a line comment's inner whitespace", "MEASURED[pin] = // the one\nwitness;", "MEASURED[pin] = // the  one\nwitness;", false],
+  ["a JSDoc block's inner whitespace", "const f = /** @param x the one */ (x: number) => x;", "const f = /** @param x the  one */ (x: number) => x;", false],
+  ["a second block comment between the same two tokens", "MEASURED[pin] = /* drift */ witness;", "MEASURED[pin] = /* drift */ /* drift */ witness;", false],
+  ["two block comments' order between the same two tokens", "MEASURED[pin] = /* one */ /* other */ witness;", "MEASURED[pin] = /* other */ /* one */ witness;", false],
+  ["a block comment's place among the tokens", "MEASURED[pin] = /* drift */ witness;", "MEASURED[pin] /* drift */ = witness;", false],
   ["the tokens' order", "MEASURED[pin] = witness;", "witness = MEASURED[pin];", false],
-  ["layout between two tokens", "REACHED.push(endOf(pin));", "REACHED.push(\n  endOf( pin )\n);", true],
+  ["layout between two tokens", "REACHED.push(endOf(pin));", "REACHED.push(\r\n\tendOf( pin )\n);", true],
 ];
 /** R-SPLIT-NAMES' quiet row: a term split across two names that form no chain and no key path. */
 const SPLIT_CONTROLS: readonly string[] = [
