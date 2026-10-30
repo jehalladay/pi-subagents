@@ -36,26 +36,35 @@
  *       before an underscore, and with the long s for its s.
  *   (2) the status line holds no SUBSTRING "none of the new exports claimed shipped", exactly as written (its case and its
  *       single spaces). Read (UNSHIPPED): whole, and inside longer words. Not read (SHIPPED): its first five words alone, the
- *       phrase without its first word, the phrase capitalized, the phrase with a doubled space.
+ *       phrase without its first word, the phrase without its last word, the phrase capitalized, the phrase with a doubled
+ *       space, the phrase with a tab for one of its spaces.
  *   (3) the tip's src names the subject: a subject src file count above 0 (0 reads UNSHIPPED, 1 SHIPPED).
  *   (4) the triage line holds no WORD PROPOSED in upper case (the same boundary; the case as written). Read (UNSHIPPED): in
  *       upper case, before a hyphen, after a non-ASCII capital. Not read (SHIPPED): capitalized, in mixed case, after a
  *       letter (UNPROPOSED), before a letter (PROPOSEDLY), after and before a digit, after and before an underscore.
  *   All of them flipped reads SHIPPED; each held back alone (the status word, the status phrase, the count, the triage word)
  *   reads UNSHIPPED.
- * ADOPTION (row A): Pi adopts the boundary when a file Pi ships names it. The adoption reads PRESENT once a read file (below)
- *   names the subject, ABSENT otherwise. Beside it, the root package.json's reactive-fiber packages are recorded, sorted (A1
- *   tsxDependencies, none today; the A1 replica's manifest holds every form below): a package is recorded when its NAME - a
- *   key of dependencies, devDependencies, optionalDependencies or peerDependencies - read by WORDS (below) holds the adjacent
- *   pair reactive fiber, in that order. Recorded: the @reactive-fiber/ scope (a package in each of the four fields), an
- *   unscoped kebab-case name, a camel-case name, another scope's name holding the pair, a snake-case name, a dotted upper-case
- *   name, a name whose pair spans the scope's slash (@reactive/fiber-...). Not recorded, each in a read field: a name holding
- *   one word of the pair (reactive alone, fiber alone), the two words reversed, the two words apart. Never read: a package in
- *   overrides, resolutions, peerDependenciesMeta or dependenciesMeta, and a manifest below the root (listed and read as text,
- *   never read as a manifest). A reactive-fiber package whose key does not hold the pair as two words is not recorded
+ * ADOPTION (row A): Pi adopts the boundary when a file Pi ships names it. The adoption reads PRESENT once a read file
+ *   (below) names the subject, ABSENT otherwise. Beside it, the root package.json's reactive-fiber packages are recorded,
+ *   sorted (A1 tsxDependencies, none today; the A1 replica's manifest holds every form below): a package is recorded when
+ *   its NAME - a key of dependencies, devDependencies, optionalDependencies or peerDependencies - read by WORDS (below)
+ *   holds the adjacent pair reactive fiber, in that order. That reading is claimed for exactly the names below; no other
+ *   name is claimed. Recorded: the @reactive-fiber/ scope (a package in each of the four fields), an unscoped kebab-case
+ *   name, another scope's name holding the pair, a snake-case name, a name whose pair spans the scope's slash
+ *   (@reactive/fiber-...), and a name for each WORDS step a name can need: a camel-case name (the break after a lower-case
+ *   letter), a name whose pair follows a digit (zz2ReactiveFiber: the break after a digit), three names whose pair follows
+ *   capitals - three, two and one (@zz/XMLReactiveFiber, RFReactiveFiberZz, IReactiveFiberZz: the break before the last
+ *   capital of a run), a dotted upper-case name (lower case), a name whose fi is the fi ligature and a name opening with a
+ *   fullwidth capital R (each holds the pair only through NFKC). A1 dependencySeparators reads the dependencies key
+ *   reactive<c>fiber for every BMP code point c (surrogates skipped) and lists, as code point ranges, each c that leaves the
+ *   key unrecorded; each other BMP code point there separates the two words (no code point above the BMP is claimed). Not
+ *   recorded, each in a read field: a name holding one word of the pair (reactive alone, fiber alone), the two words
+ *   reversed, the two words apart. Never read: a package in overrides, resolutions, peerDependenciesMeta or
+ *   dependenciesMeta, and a manifest below the root (listed and read as text, never read as a manifest); no other field is
+ *   claimed (R-DEPENDENCY-FIELD). A reactive-fiber package whose key does not hold the pair as two words is not recorded
  *   (R-DEPENDENCY-NAME). The falsifier never stands down: every file that names the subject is judged by rows A-C at every
- *   run, so the first adoption is judged the day it lands; today's live reading is the empty adoption (no file to judge), held
- *   beside a scratch-repository adoption whose violations it finds exactly.
+ *   run, so the first adoption is judged the day it lands; today's live reading is the empty adoption (no file to judge),
+ *   held beside a scratch-repository adoption whose violations it finds exactly.
  *
  * READINGS (the pin in brackets holds every form, condition and character class its reading names; a form a reading does not
  * name is not claimed, and the residuals below name the senses the readers do not judge)
@@ -84,11 +93,13 @@
  *   line end, before a bare list mark that a lone CR follows at a CRLF line end; nearMisses: a lone carriage return, a bare
  *   list mark and a bare list number before a CRLF line end, an LF then a CR before a heading indented by three spaces;
  *   classes: ends a line]. A text is cut after ".", "!", "?" or ";" when white space or the line end follows, and at a blank
- *   line (a line of white space only, or none). A .md page - a path ending in .md exactly, never another file (.MD, .mdx,
- *   .markdown, a .md.txt file, a name ending in md with no dot before it) [A2 pages] - is also cut around a table row (a line
- *   whose first character after any white space is |), around a heading line (up to three white-space characters, one to six
- *   #, then white space or the line end), and before a list item (a line opening, after any white space, with -, + or *, or
- *   with one or more ASCII digits and . or ), then white space). A sentence wrapped over lines stays one. White space is
+ *   line (a line of white space only, or none). A .md page - a path ending in .md exactly - is also cut around a table row (a
+ *   line whose first character after any white space is |), around a heading line (up to three white-space characters, one
+ *   to six #, then white space or the line end), and before a list item (a line opening, after any white space, with -, + or
+ *   *, or with one or more ASCII digits and . or ), then white space). A2 pages reads the table-row cut at a .md path (cut)
+ *   and at twelve paths it holds as other files (each one sentence): a .MD, .mdx, .markdown, .mkd, .mdown, .mdwn, .mkdn,
+ *   .mkdown, .livemd or .ronn file, a .md.txt file and a name ending in md with no dot before it; no other path is claimed
+ *   (R-PAGE-NAME). A sentence wrapped over lines stays one. White space is
  *   JavaScript's \s throughout. A2 cuts holds each cut (as a .md page and as another file): after each terminator before a
  *   space, and after . before a tab and at the line end; at an empty line and between CRLF line ends; around a table row
  *   flush and indented by two and by twenty spaces; around a heading of one and of six #, indented by three spaces, and a
@@ -121,9 +132,10 @@
  *   contraction]. None of should, must, shall, will, may, might, can, could, would, if, when or "only" alone is a marker of
  *   any row [A2 never, B1 never, C1 never]: "a WARM context only calls inference" is a finding.
  * - THE HOUSE ANALOG [C2]: Pi's DevTools-style surfaces are the src/ modules whose path (a directory or the file name) names a
- *   surface word; a module is a .ts (a .d.ts declaration file too), .tsx, .mts, .cts, .js, .mjs or .cjs file, and neither a
- *   file that is not one (a page, data, a .jsx file) nor a module outside src/ is a surface [C2 controls: a surface per
- *   extension, a .d.ts surface and one named by its directory; C2 notSurfaces]. Today the surfaces are exactly
+ *   surface word; a module is a path ending in .ts (a .d.ts declaration file too), .tsx, .mts, .cts, .js, .mjs or .cjs [C2
+ *   controls: a surface per extension, a .d.ts surface and one named by its directory]. C2 notSurfaces holds the files named
+ *   for a surface that are not surfaces: a module outside src/, and six files that are not modules - a page, data, a .jsx, a
+ *   .vue, a .svelte and an .astro file; no other file is claimed (R-MODULE-NAME). Today the surfaces are exactly
  *   src/ui/workflow-inspector.ts, whose header reads "Read-only terminal inspector over the bounded producer-qualified
  *   observation projection." Each surface's VALUE import closure must hold no node builtin (Node's isBuiltin: with or without
  *   node:, a subpath too, and a name only its node: form loads) and no unresolved local module [C2 controls: node:fs,
@@ -143,28 +155,32 @@
  *   unresolved; one opening with "." (./, ../ or any other) is joined to the importing module's directory and resolves to the
  *   first file of: the path with .js read as .ts (a .js specifier only), the path with .mjs read as .mts (an .mjs specifier
  *   only; the two readings never apply together), the path as written, the path plus .ts, the path's index.ts. A candidate
- *   that is not a file is skipped, one outside the repository is never read, and a specifier no candidate resolves is
- *   unresolved [C2 controls: each candidate alone; each adjacent pair present together - .js read as .ts and .mjs read as .mts
- *   each before the path as written, the path as written before the path plus .ts, the path plus .ts before index.ts - where
- *   the earlier wins; a directory candidate; a dot form; an absolute path; an escaping path; a missing module]. No other
- *   candidate is tried [C2 controls: the non-candidates - one surface whose ten specifiers each name a file that only an
- *   untried candidate reaches: .tsx, .js, .mts, .cts and .d.ts beside an extensionless specifier, index.js and index.tsx below
- *   it, .cts for a .cjs specifier, .tsx for a .js specifier and .ts for an .mjs specifier - each read unresolved]. Any other
- *   specifier is a package: recorded and not followed. A surface whose closure reaches a builtin can launch, write or open a
- *   socket of its own and is no longer only a consumer of what the host hands it; IO through an ambient global is not read
- *   (R-AMBIENT-IO), nor a module loaded by a property loader, a createRequire loader, a computed specifier or a global
- *   (R-COMPUTED-LOAD).
+ *   that is not a file is skipped and one outside the repository is never read [C2 controls: each candidate alone; each
+ *   adjacent pair present together - .js read as .ts and .mjs read as .mts each before the path as written, the path as
+ *   written before the path plus .ts, the path plus .ts before index.ts - where the earlier wins; a directory candidate; a
+ *   dot form; an absolute path; an escaping path]. A specifier none of the five candidates resolves is unresolved where a
+ *   control holds it: a missing module [C2 controls], and twenty specifiers each naming a file that only one candidate
+ *   outside the five reaches [C2 controls: the non-candidates - one surface: .tsx, .js, .mts, .cts, .d.ts, .json, .jsx, .mjs
+ *   and .cjs beside an extensionless specifier; index.js, index.tsx, index.d.ts and index.mts below it; .cts and .d.cts for a
+ *   .cjs specifier; .tsx and .d.ts for a .js specifier; .ts and .d.mts for an .mjs specifier; .tsx for a .jsx specifier -
+ *   each read unresolved]; no other specifier and no other candidate is claimed (R-UNTRIED-CANDIDATE). A bare package name,
+ *   a scoped one and a package's subpath are each recorded as a package and not followed [C2 controls: a surface importing
+ *   each]; no other specifier form is claimed (R-PACKAGE). A surface whose closure reaches a builtin can launch, write or
+ *   open a socket of its own and is no longer only a consumer of what the host hands it; IO through an ambient global is
+ *   not read (R-AMBIENT-IO), nor a module loaded by a property loader, a createRequire loader, a computed specifier or a
+ *   global (R-COMPUTED-LOAD).
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label; every witness is held to the roster):
- *  A "adoption-time falsifier that a WARM precompute attempting inference or an effect is refused": A1 the adoption gate - the
- *    producer facts read UNSHIPPED beside the producer controls; the live read set (floors per root) reads ABSENT with no
- *    finding, no unreadable file and no reactive-fiber dependency; ONE pass over the live set and in-memory positives finds
- *    exactly the positives; the same pass over a scratch git repository holding an adoption finds exactly its plants (a
- *    finding in every read root and for every row; tracked and untracked files read) and nothing from a file under each
+ *  A "adoption-time falsifier that a WARM precompute attempting inference or an effect is refused": A1 the adoption gate -
+ *    the producer facts read UNSHIPPED beside the producer controls; the live read set (floors per root) reads ABSENT with
+ *    no finding, no unreadable file and no reactive-fiber dependency; ONE pass over the live set and in-memory positives
+ *    finds exactly the positives; the same pass over a scratch git repository holding an adoption finds exactly its plants
+ *    (a finding in every read root and for every row; tracked and untracked files read) and nothing from a file under each
  *    outside root, a file each ignore source hides or a binary file, reads the four dependency fields of its root
- *    package.json and no other field or manifest, and records a listed directory unreadable; A2 the WARM-inference reader with
- *    the sentence cuts, their near misses and their character classes, the contraction and the words never a marker; A3 the
- *    WARM-effect reader; each over doc and code sentences with near misses.
+ *    package.json (a recorded name for each WORDS step, and the separator reading of every BMP code point) and neither the
+ *    four fields it never reads nor a manifest below the root, and records a listed directory unreadable; A2 the
+ *    WARM-inference reader with the sentence cuts, their near misses and their character classes, the contraction and the
+ *    words never a marker; A3 the WARM-effect reader; each over doc and code sentences with near misses.
  *  B "that boundary state never aliases QueryView identity or speculative execution ownership": B1 the QueryView reader with
  *    the word readings (the examples and every scalar value between two letters), the contraction and the words never a
  *    marker; B2 the speculative-execution-ownership reader and the outside load of every vocabulary member; each with its
@@ -175,7 +191,8 @@
  *    repository (a builtin three modules deep; each declaration form beside its type-only and mixed twins; import-equals;
  *    dynamic; require; the literal forms; re-exports; the builtin forms; each module extension and a surface named by its
  *    directory; each resolution candidate and each adjacent pair of them; a directory candidate, a dot form, an absolute
- *    path, an escaping path and a missing module; the files named for a surface that are not surfaces).
+ *    path, an escaping path and a missing module; the twenty non-candidates; the files named for a surface that are not
+ *    surfaces).
  * OUTSIDE ANCHORS (the judged-set case): the owner filing's row of wb-km7q.6 in the tracked bead export (.beads/issues.jsonl;
  *   the first notes line opening with its citation, so appended notes never move it): its acceptance clause is the three
  *   labels joined, each label tiled by its pins; label A reads quiet only by "refused" and, without it, as a finding of
@@ -212,16 +229,25 @@
  *   new-feedback/, test/ or vendor/, in a file git ignores (a row per ignore source) or in a binary file (a NUL byte), is
  *   never judged; R-DEPENDENCY-NAME (A1) a reactive-fiber package whose manifest key does not hold the pair as two words is
  *   not recorded - a folded name (reactivefiber-...) and an alias (a key whose spec, npm:@reactive-fiber/..., names the
- *   package); R-UNANCHORED (A2)
+ *   package); R-DEPENDENCY-FIELD (A1) a reactive-fiber package named in a field outside the four read ones (the four A1
+ *   never reads, and every other) is not recorded (a catalog entry quiet beside its dependencies twin); R-UNANCHORED (A2)
  *   a file that never names the subject is never judged (Pi's own senses of the words); R-SPLIT (A2) the WARM word and the
- *   family in different sentences (a pronoun: "It calls inference."); R-MARKER-ANYWHERE (A3) a marker anywhere in the
+ *   family in different sentences (a pronoun: "It calls inference."); R-PAGE-NAME (A2) a Markdown text at a path that is not
+ *   a .md page (the twelve A2 pages holds, and every other) is cut as another file, with no table-row, heading or list-item
+ *   cut (the table-row cut quiet at docs/cut.markdown beside its finding at docs/cut.md);
+ *   R-MARKER-ANYWHERE (A3) a marker anywhere in the
  *   sentence quiets it, whatever it qualifies, in prose and in a code comment read with the statement after it; R-PARAPHRASE
  *   (A3) inference or an effect named outside the families (the model, a completion, a side job); R-COMPOSED (B1) a word
  *   split into literal parts ("Que" + "ryView"); R-LOOKALIKE (B1) a look-alike letter or an inserted invisible inside a word
  *   (NFKC folds the fullwidth forms, which are read); R-SYNONYM (B2) a vocabulary member that carries no outside load is held
  *   by this file and the roster alone (B2 lists them); R-SURFACE-OTHER (C1) a surface under another name (a panel, a viewer,
  *   a dashboard); R-UNNAMED-SURFACE (C2) a module whose path names no surface word is not a surface, whatever it renders;
- *   R-PACKAGE (C2) IO reached through a package's own code (packages are recorded, never followed); R-INJECTED (C2) IO the
+ *   R-MODULE-NAME (C2) a file named for a surface that is not a module (the six C2 notSurfaces holds, and every other kind)
+ *   is not a surface, whatever it imports (a .vue file's builtin never read); R-PACKAGE (C2) IO reached through a package's
+ *   own code, or through any other specifier recorded as a package (packages are recorded, never followed);
+ *   R-UNTRIED-CANDIDATE (C2) a module that only a candidate outside the
+ *   five reaches (the twenty pinned, a directory's package.json main, every other) is never read: its specifier is listed
+ *   unresolved and its own imports never are (beside index.ts, whose builtin is read); R-INJECTED (C2) IO the
  *   host hands a surface (a callback, an object it calls); R-AMBIENT-IO (C2) IO through an ambient global with no import (a
  *   global fetch, a process stream); R-COMPUTED-LOAD (C2) a module loaded by a computed specifier, by a createRequire loader
  *   (only the loader's own node:module import is read), by a property loader (module.require) or by a global
@@ -669,8 +695,10 @@ const PRODUCER_FLIPS: Readonly<Record<string, ProducerFlip>> = {
   "status phrase inside longer words": { status: "shipped extensions; anone of the new exports claimed shippedly", subjectSrcFiles: 1, triage: "marked SHIPPED" },
   "status phrase by its first five words": { status: "shipped extensions; none of the new exports are pending", subjectSrcFiles: 1, triage: "marked SHIPPED" },
   "status phrase without its first word": { status: "shipped extensions; all of the new exports claimed shipped", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  "status phrase without its last word": { status: "shipped extensions; none of the new exports claimed", subjectSrcFiles: 1, triage: "marked SHIPPED" },
   "status phrase capitalized": { status: "shipped extensions; None of the new exports claimed shipped", subjectSrcFiles: 1, triage: "marked SHIPPED" },
   "status phrase with a doubled space": { status: "shipped extensions; none of the new  exports claimed shipped", subjectSrcFiles: 1, triage: "marked SHIPPED" },
+  "status phrase with a tab for one of its spaces": { status: "shipped extensions; none of the new\texports claimed shipped", subjectSrcFiles: 1, triage: "marked SHIPPED" },
   // The triage word: read in upper case only, and as a word beside a character that is no word character.
   "triage PROPOSED before a hyphen": { status: "shipped extensions", subjectSrcFiles: 1, triage: "marked PROPOSED-ONLY" },
   "triage PROPOSED after a non-ASCII capital": { status: "shipped extensions", subjectSrcFiles: 1, triage: `marked ${CAPITAL_E_ACUTE}PROPOSED` },
@@ -815,6 +843,9 @@ const LOOKALIKE_E = String.fromCodePoint(0x0435);
 const INVISIBLE = String.fromCodePoint(0x200b);
 const FULLWIDTH_Q = String.fromCodePoint(0xff31);
 const FULLWIDTH_V = String.fromCodePoint(0xff36);
+/** A package name's fi as the one-character fi ligature, and a fullwidth capital R: NFKC folds each into ASCII letters. */
+const FI_LIGATURE = String.fromCodePoint(0xfb01);
+const FULLWIDTH_R = String.fromCodePoint(0xff32);
 const ADAPTER = "// ActivityBoundary adapter.\n";
 /** The findings of one anchored code or doc plant (the adapter comment names the subject on line 1). */
 const codeFindings = (body: string, path = "src/plant.ts"): string[] => [...survey([[path, `${ADAPTER}${body}`]]).findings];
@@ -864,9 +895,24 @@ const NEAR_MISSES: Readonly<Record<string, string>> = {
   "a bare list number before a CRLF line end": "A WARM context calls inference\r\n10)\r\nthe host never waits",
   "an LF then a CR before a heading indented by three spaces": "A WARM context calls inference\n\r   # the host never waits",
 };
-/** The page reading: the table-row cut, read at a path that is a .md page and at paths that are not. */
+/** The page reading: the table-row cut, read at a path that is a .md page and at twelve paths that are not (ten of them
+ * other names a Markdown text goes by). */
 const PAGE_CUT = "| A WARM context calls inference |\n| the host never waits |";
-const PAGE_PATHS: readonly string[] = ["docs/cut.md", "docs/cut.MD", "docs/cut.mdx", "docs/cut.markdown", "docs/cut.md.txt", "docs/cutmd"];
+const PAGE_PATHS: readonly string[] = [
+  "docs/cut.md",
+  "docs/cut.MD",
+  "docs/cut.mdx",
+  "docs/cut.markdown",
+  "docs/cut.mkd",
+  "docs/cut.mdown",
+  "docs/cut.mdwn",
+  "docs/cut.mkdn",
+  "docs/cut.mkdown",
+  "docs/cut.livemd",
+  "docs/cut.ronn",
+  "docs/cut.md.txt",
+  "docs/cutmd",
+];
 /** The joined twins: one sentence (its marker quiets the WARM part), a sentence wrapped over two lines either way. */
 const JOINED: readonly string[] = ["A WARM context calls inference and the host never waits.", "A WARM context calls inference\nthe host never waits", "A WARM context\ncalls inference."];
 /** The WORDS statement's examples, each read by words(). */
@@ -908,8 +954,10 @@ const UNREAD_PLANTS: readonly string[] = [...CONSTANTS.outside.map(root => `${ro
 /** A manifest below the root, naming a reactive-fiber package: listed and read as text, never read as the manifest. */
 const NESTED_MANIFEST = "examples/pkg/package.json";
 /** The replica's manifest: a reactive-fiber package in each read field; in dependencies, the other spellings whose words hold
- * the pair (recorded) and the near misses whose words do not (one word of it, the two reversed, the two apart); and one in
- * each field that is never read. */
+ * the pair (recorded) - among them one name for each WORDS step a name can need: the break after a lower-case letter and
+ * after a digit, the break before the last capital of a run after three, two and one capitals, lower case, and NFKC (the fi
+ * ligature, a fullwidth capital) - and the near misses whose words do not (one word of it, the two reversed, the two
+ * apart); and one in each field that is never read. */
 const REPLICA_MANIFEST = `${JSON.stringify(
   {
     dependencies: {
@@ -920,6 +968,12 @@ const REPLICA_MANIFEST = `${JSON.stringify(
       reactive_fiber_zz_snake: "0.0.0",
       "REACTIVE.FIBER.ZZ-DOTTED": "0.0.0",
       "@reactive/fiber-zz-across": "0.0.0",
+      zz2ReactiveFiber: "0.0.0",
+      "@zz/XMLReactiveFiber": "0.0.0",
+      RFReactiveFiberZz: "0.0.0",
+      IReactiveFiberZz: "0.0.0",
+      [`@reactive-${FI_LIGATURE}ber/zz-ligature`]: "0.0.0",
+      [`${FULLWIDTH_R}eactive-fiber-zz-fullwidth`]: "0.0.0",
       "@reactive/zz-one-word": "0.0.0",
       "@zz-one-word/fiber": "0.0.0",
       "@zz-reversed/fiber-reactive": "0.0.0",
@@ -1018,6 +1072,9 @@ const SURFACE_PLANTS: Readonly<Record<string, string>> = {
   "src/ui/plant-prefix-only-inspector.ts": 'import { test } from "node:test";\nexport const t = test;\n',
   "src/ui/plant-inspector-data.json": '{ "fs": "node:fs" }\n',
   "src/ui/plant-inspector-view.jsx": 'import { EOL } from "node:os";\nexport const e = EOL;\n',
+  "src/ui/plant-inspector-view.vue": 'import { EOL } from "node:os";\nexport const e = EOL;\n',
+  "src/ui/plant-inspector-view.svelte": 'import { EOL } from "node:os";\nexport const e = EOL;\n',
+  "src/ui/plant-inspector-view.astro": 'import { EOL } from "node:os";\nexport const e = EOL;\n',
   // The resolution order: each adjacent pair of candidates present together, the earlier one pure and the later impure.
   "src/ui/plant-order-js-inspector.ts": 'import { o } from "./plant-o1.js";\nexport const x = o;\n',
   "src/ui/plant-o1.ts": "export const o = 1;\n",
@@ -1031,8 +1088,8 @@ const SURFACE_PLANTS: Readonly<Record<string, string>> = {
   "src/ui/plant-order-index-inspector.ts": 'import { o } from "./plant-o4";\nexport const x = o;\n',
   "src/ui/plant-o4.ts": "export const o = 4;\n",
   "src/ui/plant-o4/index.ts": 'import { arch } from "node:os";\nexport const o = arch;\n',
-  // The non-candidates: each specifier names a file that only a candidate this reader never tries would reach, so each
-  // stays unresolved.
+  // The non-candidates: each of the twenty specifiers names a file that only a candidate this reader never tries would
+  // reach, so each stays unresolved.
   "src/ui/plant-noncandidate-inspector.ts": [
     'import { a } from "./plant-nc/a";',
     'import { b } from "./plant-nc/b";',
@@ -1044,7 +1101,17 @@ const SURFACE_PLANTS: Readonly<Record<string, string>> = {
     'import { h } from "./plant-nc/h.js";',
     'import { i } from "./plant-nc/i.mjs";',
     'import { j } from "./plant-nc/j";',
-    "export const x = [a, b, c, d, e, f, g, h, i, j];",
+    'import { k } from "./plant-nc/k";',
+    'import { l } from "./plant-nc/l";',
+    'import { m } from "./plant-nc/m";',
+    'import { n } from "./plant-nc/n";',
+    'import { o } from "./plant-nc/o";',
+    'import { p } from "./plant-nc/p.js";',
+    'import { q } from "./plant-nc/q.mjs";',
+    'import { r } from "./plant-nc/r.jsx";',
+    'import { s } from "./plant-nc/s";',
+    'import { t } from "./plant-nc/t.cjs";',
+    "export const x = [a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t];",
     "",
   ].join("\n"),
   "src/ui/plant-nc/a.tsx": "export const a = 1;\n",
@@ -1057,6 +1124,20 @@ const SURFACE_PLANTS: Readonly<Record<string, string>> = {
   "src/ui/plant-nc/h.tsx": "export const h = 1;\n",
   "src/ui/plant-nc/i.ts": "export const i = 1;\n",
   "src/ui/plant-nc/j.d.ts": "export declare const j: number;\n",
+  "src/ui/plant-nc/k.json": '{ "k": 1 }\n',
+  "src/ui/plant-nc/l.jsx": "export const l = 1;\n",
+  "src/ui/plant-nc/m/index.d.ts": "export declare const m: number;\n",
+  "src/ui/plant-nc/n.mjs": "export const n = 1;\n",
+  "src/ui/plant-nc/o.cjs": "exports.o = 1;\n",
+  "src/ui/plant-nc/p.d.ts": "export declare const p: number;\n",
+  "src/ui/plant-nc/q.d.mts": "export declare const q: number;\n",
+  "src/ui/plant-nc/r.tsx": "export const r = 1;\n",
+  "src/ui/plant-nc/s/index.mts": "export const s = 1;\n",
+  "src/ui/plant-nc/t.d.cts": "export declare const t: number;\n",
+  // A module that only a candidate outside the five reaches (its directory's package.json main): never read.
+  "src/ui/plant-untried-inspector.ts": 'import { u } from "./plant-ut";\nexport const x = u;\n',
+  "src/ui/plant-ut/package.json": '{ "main": "lib.ts" }\n',
+  "src/ui/plant-ut/lib.ts": 'import { arch } from "node:os";\nexport const u = arch;\n',
   // The specifier shapes: a dot form other than ./ and ../, an absolute path, and a path that leaves the repository.
   "src/ui/plant-dot-inspector.ts": 'import { s } from ".plant-dot";\nexport const x = s;\n',
   "src/ui/.plant-dot.ts": 'import { arch } from "node:os";\nexport const s = arch;\n',
@@ -1076,6 +1157,8 @@ const SURFACE_PLANTS: Readonly<Record<string, string>> = {
   "qa/plant-inspector.mjs": 'import { spawn } from "node:child_process";\nexport const run = spawn;\n',
   "src/ui/plant-panel.ts": 'import { writeFileSync } from "node:fs";\nexport const w = writeFileSync;\n',
   "src/ui/plant-package-inspector.ts": 'import { io } from "fake-io-lib";\nexport const y = io;\n',
+  "src/ui/plant-scoped-package-inspector.ts": 'import { io } from "@zz-scope/fake-io";\nexport const y = io;\n',
+  "src/ui/plant-subpath-package-inspector.ts": 'import { io } from "fake-io-lib/sub";\nexport const y = io;\n',
   "src/ui/plant-injected-inspector.ts": 'export function render(write: (text: string) => void): void {\n  write("x");\n}\n',
   "src/ui/plant-handed-inspector.ts": 'export function render(store: { append(text: string): void }): void {\n  store.append("x");\n}\n',
   "src/ui/plant-fetch-inspector.ts": "export const send = (url: string): Promise<Response> => fetch(url);\n",
@@ -1087,8 +1170,17 @@ const SURFACE_PLANTS: Readonly<Record<string, string>> = {
 };
 /** The file beside the C2 replica, outside its repository, that the escaping specifier would reach if it were read. */
 const SURFACE_OUTSIDE: Readonly<Record<string, string>> = { "plant-outside.ts": 'import { arch } from "node:os";\nexport const s = arch;\n' };
-/** Files named for a surface that are not surfaces: three that are not modules (a page, data, a .jsx file) and a module outside src/. */
-const NOT_SURFACES: readonly string[] = ["src/ui/plant-inspector-notes.md", "src/ui/plant-inspector-data.json", "src/ui/plant-inspector-view.jsx", "qa/plant-inspector.mjs"];
+/** Files named for a surface that are not surfaces: six that are not modules (a page, data, a .jsx, a .vue, a .svelte and an
+ * .astro file) and a module outside src/. */
+const NOT_SURFACES: readonly string[] = [
+  "src/ui/plant-inspector-notes.md",
+  "src/ui/plant-inspector-data.json",
+  "src/ui/plant-inspector-view.jsx",
+  "src/ui/plant-inspector-view.vue",
+  "src/ui/plant-inspector-view.svelte",
+  "src/ui/plant-inspector-view.astro",
+  "qa/plant-inspector.mjs",
+];
 const summary = (closure: Closure): { [key: string]: Json } => ({ pure: pure(closure), builtins: closure.builtins, unresolved: closure.unresolved, packages: closure.packages });
 
 // ------------------------------------------------------------------------------------------------------------------- the pins
@@ -1119,6 +1211,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       findings: [...real.survey.findings],
       unreadable: [...real.unreadable],
       tsxDependencies: tsxDependencies(readFileSync(join(REPO, "package.json"), "utf8")),
+      // Each BMP code point that leaves the key reactive<c>fiber unrecorded: every other one separates the two words.
+      dependencySeparators: codePoints(char => tsxDependencies(manifestOf({ [`reactive${char}fiber`]: "0.0.0" })).length === 0, BMP_TOP),
       floors,
       positives: [...alone],
       replica: {
@@ -1141,6 +1235,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
           "a folded name": [tsxDependencies(manifestOf({ "reactivefiber-zz": "0.0.0" })), tsxDependencies(manifestOf({ "reactive-fiber-zz": "0.0.0" }))],
           "an alias": [tsxDependencies(manifestOf({ "zz-alias": "npm:@reactive-fiber/tsx@0.1.668" })), tsxDependencies(manifestOf({ "@reactive-fiber/tsx": "npm:@reactive-fiber/tsx@0.1.668" }))],
         },
+        "R-DEPENDENCY-FIELD": [tsxDependencies(JSON.stringify({ catalog: { "@reactive-fiber/tsx": "0.1.668" } })), tsxDependencies(manifestOf({ "@reactive-fiber/tsx": "0.1.668" }))],
       },
     };
   },
@@ -1180,6 +1275,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       quiet: {
         "R-UNANCHORED": [docFindings(unanchored), docFindings(`The ActivityBoundary holds the context.\n\n${unanchored}`)],
         "R-SPLIT": [docFindings("The ActivityBoundary context is WARM. It calls inference.\n"), docFindings("The ActivityBoundary context is WARM and calls inference.\n")],
+        "R-PAGE-NAME": [cutFindings(PAGE_CUT, "docs/cut.markdown"), cutFindings(PAGE_CUT, "docs/cut.md")],
       },
     };
   },
@@ -1300,7 +1396,9 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       notSurfaces: Object.fromEntries(NOT_SURFACES.map(path => [path, planted.includes(path)])),
       quiet: {
         "R-UNNAMED-SURFACE": [planted.includes("src/ui/plant-panel.ts"), closureOf(replica, "src/ui/plant-panel.ts").builtins],
+        "R-MODULE-NAME": [planted.includes("src/ui/plant-inspector-view.vue"), closureOf(replica, "src/ui/plant-inspector-view.vue").builtins],
         "R-PACKAGE": [isPure("src/ui/plant-package-inspector.ts"), isPure("src/ui/plant-inspector.ts")],
+        "R-UNTRIED-CANDIDATE": [summary(closureOf(replica, "src/ui/plant-untried-inspector.ts")), summary(closureOf(replica, "src/ui/plant-index-inspector.ts"))],
         "R-INJECTED": {
           "a callback": [isPure("src/ui/plant-injected-inspector.ts"), isPure("src/plant-b.ts")],
           "an object it calls": [isPure("src/ui/plant-handed-inspector.ts"), isPure("src/plant-b.ts")],
@@ -1632,7 +1730,7 @@ describe("wb-km7q.6 TSX ActivityBoundary adoption census (SDK-REACTIVE-FIBER-ADA
     expect(CONSTANTS.readRoots.filter(root => CONSTANTS.outside.includes(root))).toEqual([]);
     expect(trackedTop(REPO).filter(directory => CONSTANTS.readRoots.includes(directory) === CONSTANTS.outside.includes(directory))).toEqual([]);
     const pins = ROWS.flatMap(row => row.pins.map(pin => pin.id));
-    expect(ROSTER.residuals.map(residual => residual.id)).toEqual(["R-OUTSIDE-ROOTS", "R-DEPENDENCY-NAME", "R-UNANCHORED", "R-SPLIT", "R-MARKER-ANYWHERE", "R-PARAPHRASE", "R-COMPOSED", "R-LOOKALIKE", "R-SYNONYM", "R-SURFACE-OTHER", "R-UNNAMED-SURFACE", "R-PACKAGE", "R-INJECTED", "R-AMBIENT-IO", "R-COMPUTED-LOAD"]);
+    expect(ROSTER.residuals.map(residual => residual.id)).toEqual(["R-OUTSIDE-ROOTS", "R-DEPENDENCY-NAME", "R-DEPENDENCY-FIELD", "R-UNANCHORED", "R-SPLIT", "R-PAGE-NAME", "R-MARKER-ANYWHERE", "R-PARAPHRASE", "R-COMPOSED", "R-LOOKALIKE", "R-SYNONYM", "R-SURFACE-OTHER", "R-UNNAMED-SURFACE", "R-MODULE-NAME", "R-PACKAGE", "R-UNTRIED-CANDIDATE", "R-INJECTED", "R-AMBIENT-IO", "R-COMPUTED-LOAD"]);
     expect(ROSTER.residuals.every(residual => pins.includes(residual.quietPin))).toBe(true);
   });
   for (const row of ROWS) {

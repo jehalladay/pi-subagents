@@ -327,8 +327,10 @@
               "status phrase inside longer words": "UNSHIPPED",
               "status phrase by its first five words": "SHIPPED",
               "status phrase without its first word": "SHIPPED",
+              "status phrase without its last word": "SHIPPED",
               "status phrase capitalized": "SHIPPED",
               "status phrase with a doubled space": "SHIPPED",
+              "status phrase with a tab for one of its spaces": "SHIPPED",
               "triage PROPOSED before a hyphen": "UNSHIPPED",
               "triage PROPOSED after a non-ASCII capital": "UNSHIPPED",
               "triage reading Proposed, not upper case": "SHIPPED",
@@ -345,6 +347,89 @@
             "findings": [],
             "unreadable": [],
             "tsxDependencies": [],
+            "dependencySeparators": [
+              "0030-0039",
+              "0041-005A",
+              "0061-007A",
+              "00AA",
+              "00B2-00B3",
+              "00B9-00BA",
+              "00BC-00BE",
+              "0130",
+              "0132-0133",
+              "013F-0140",
+              "0149",
+              "017F",
+              "01C4-01CC",
+              "01F1-01F3",
+              "02B0",
+              "02B2-02B3",
+              "02B7-02B8",
+              "02E1-02E3",
+              "0300-0304",
+              "0306-0309",
+              "030C",
+              "030F",
+              "0311",
+              "0323",
+              "0327-0328",
+              "032D",
+              "0330",
+              "0340-0341",
+              "0344",
+              "1D2C",
+              "1D2E",
+              "1D30-1D31",
+              "1D33-1D3A",
+              "1D3C",
+              "1D3E-1D43",
+              "1D47-1D49",
+              "1D4D",
+              "1D4F-1D50",
+              "1D52",
+              "1D56-1D58",
+              "1D5B",
+              "1D62-1D65",
+              "1D9C",
+              "1DA0",
+              "1DBB",
+              "1E9A",
+              "2070-2071",
+              "2074-2079",
+              "207F-2089",
+              "2090-2093",
+              "2095-209C",
+              "20A8",
+              "2100-2103",
+              "2105-2106",
+              "2109-210E",
+              "2110-2113",
+              "2115-2116",
+              "2119-211D",
+              "2120-2122",
+              "2124",
+              "2128",
+              "212A",
+              "212C-212D",
+              "212F-2131",
+              "2133-2134",
+              "2139",
+              "213B",
+              "2145-2149",
+              "2150-217F",
+              "2189",
+              "2460-24EA",
+              "2C7C-2C7D",
+              "3250-325F",
+              "32B1-32CF",
+              "3358-337A",
+              "3380-33FF",
+              "A7F1-A7F4",
+              "FB00-FB06",
+              "FF10-FF19",
+              "FF21-FF3A",
+              "FF41-FF5A"
+            ],
             "floors": {
               "files": true,
               "root": true,
@@ -406,12 +491,18 @@
                 "@reactive-fiber/zz-dev",
                 "@reactive-fiber/zz-optional",
                 "@reactive-fiber/zz-peer",
+                "@reactive-\ufb01ber/zz-ligature",
                 "@reactive/fiber-zz-across",
                 "@zz-scope/reactive-fiber",
+                "@zz/XMLReactiveFiber",
+                "IReactiveFiberZz",
                 "REACTIVE.FIBER.ZZ-DOTTED",
+                "RFReactiveFiberZz",
                 "ReactiveFiberZzCamel",
                 "reactive-fiber-zz-unscoped",
-                "reactive_fiber_zz_snake"
+                "reactive_fiber_zz_snake",
+                "zz2ReactiveFiber",
+                "\uff32eactive-fiber-zz-fullwidth"
               ],
               "unreadable": [
                 "docs"
@@ -455,7 +546,13 @@
                     "@reactive-fiber/tsx"
                   ]
                 ]
-              }
+              },
+              "R-DEPENDENCY-FIELD": [
+                [],
+                [
+                  "@reactive-fiber/tsx"
+                ]
+              ]
             }
           }
         },
@@ -718,6 +815,13 @@
               "docs/cut.MD": [],
               "docs/cut.mdx": [],
               "docs/cut.markdown": [],
+              "docs/cut.mkd": [],
+              "docs/cut.mdown": [],
+              "docs/cut.mdwn": [],
+              "docs/cut.mkdn": [],
+              "docs/cut.mkdown": [],
+              "docs/cut.livemd": [],
+              "docs/cut.ronn": [],
               "docs/cut.md.txt": [],
               "docs/cutmd": []
             },
@@ -865,6 +969,12 @@
                 [],
                 [
                   "docs/plant.md:1 A:inference"
+                ]
+              ],
+              "R-PAGE-NAME": [
+                [],
+                [
+                  "docs/cut.md:3 A:inference"
                 ]
               ]
             }
@@ -1765,7 +1875,17 @@
                   "src/ui/plant-noncandidate-inspector.ts:./plant-nc/g.cjs",
                   "src/ui/plant-noncandidate-inspector.ts:./plant-nc/h.js",
                   "src/ui/plant-noncandidate-inspector.ts:./plant-nc/i.mjs",
-                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/j"
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/j",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/k",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/l",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/m",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/n",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/o",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/p.js",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/q.mjs",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/r.jsx",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/s",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/t.cjs"
                 ],
                 "packages": []
               },
@@ -1831,6 +1951,14 @@
                 "unresolved": [],
                 "packages": []
               },
+              "src/ui/plant-scoped-package-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": [
+                  "@zz-scope/fake-io"
+                ]
+              },
               "src/ui/plant-stream-inspector.ts": {
                 "pure": true,
                 "builtins": [],
@@ -1844,6 +1972,14 @@
                 ],
                 "unresolved": [],
                 "packages": []
+              },
+              "src/ui/plant-subpath-package-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": [
+                  "fake-io-lib/sub"
+                ]
               },
               "src/ui/plant-template-dynamic-devtools.ts": {
                 "pure": false,
@@ -1929,6 +2065,14 @@
                 ],
                 "packages": []
               },
+              "src/ui/plant-untried-inspector.ts": {
+                "pure": false,
+                "builtins": [],
+                "unresolved": [
+                  "src/ui/plant-untried-inspector.ts:./plant-ut"
+                ],
+                "packages": []
+              },
               "src/ui/plant-unused-inspector.ts": {
                 "pure": false,
                 "builtins": [
@@ -1950,6 +2094,9 @@
               "src/ui/plant-inspector-notes.md": false,
               "src/ui/plant-inspector-data.json": false,
               "src/ui/plant-inspector-view.jsx": false,
+              "src/ui/plant-inspector-view.vue": false,
+              "src/ui/plant-inspector-view.svelte": false,
+              "src/ui/plant-inspector-view.astro": false,
               "qa/plant-inspector.mjs": false
             },
             "quiet": {
@@ -1959,9 +2106,33 @@
                   "src/ui/plant-panel.ts:node:fs"
                 ]
               ],
+              "R-MODULE-NAME": [
+                false,
+                [
+                  "src/ui/plant-inspector-view.vue:node:os"
+                ]
+              ],
               "R-PACKAGE": [
                 true,
                 false
+              ],
+              "R-UNTRIED-CANDIDATE": [
+                {
+                  "pure": false,
+                  "builtins": [],
+                  "unresolved": [
+                    "src/ui/plant-untried-inspector.ts:./plant-ut"
+                  ],
+                  "packages": []
+                },
+                {
+                  "pure": false,
+                  "builtins": [
+                    "src/ui/plant-d/index.ts:node:os"
+                  ],
+                  "unresolved": [],
+                  "packages": []
+                }
               ],
               "R-INJECTED": {
                 "a callback": [
@@ -2031,11 +2202,19 @@
       "quietPin": "A1"
     },
     {
+      "id": "R-DEPENDENCY-FIELD",
+      "quietPin": "A1"
+    },
+    {
       "id": "R-UNANCHORED",
       "quietPin": "A2"
     },
     {
       "id": "R-SPLIT",
+      "quietPin": "A2"
+    },
+    {
+      "id": "R-PAGE-NAME",
       "quietPin": "A2"
     },
     {
@@ -2067,7 +2246,15 @@
       "quietPin": "C2"
     },
     {
+      "id": "R-MODULE-NAME",
+      "quietPin": "C2"
+    },
+    {
       "id": "R-PACKAGE",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-UNTRIED-CANDIDATE",
       "quietPin": "C2"
     },
     {
