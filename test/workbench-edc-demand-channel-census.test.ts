@@ -43,17 +43,25 @@
  * - THE SURFACES (row B, the clause's three nouns):
  *   PROMPTS (B1): every git-listed JS or TS module below src/ and examples/ (tracked or untracked, never ignored), parsed with the
  *   TypeScript compiler (.tsx as TSX, .jsx as JSX, the other TS extensions as TS, the other JS extensions as JS, which parses
- *   JSX). THE CODE READER, in the enumerate-the-resolvable form (ruling R-B97): it claims exactly the forms below and no other.
- *   Each claimed form is pinned by its row in B1's forms witness (FORMS: one plant per row, read to exactly one finding through the
- *   row's own reading, both asserted); each form known to be left unread is a member of R-UNREAD-FORM, a quiet row beside a read
- *   twin (R-COMPOSED holds the parts no constant reads); a form found later that the reader leaves unread is an addition to that
- *   list unless it contradicts a claim below; and on the live tree B1 fails closed (LIVE QUIET).
- *   COMMENTS: no comment is read. A reading that takes a node as written - a property access, a qualified name, an element
- *   access's receiver, an indexed access type's object type, a binding pattern's or an assignment target's receiver, an
- *   import-equals entity name - reads it with every comment inside it (a JSDoc comment too) read as one space: a marker in an inner
- *   comment keeps the reading's finding (FORMS access.comment-* and import.comment-equals-entity; B1's commentMatrix: every such
- *   reading with a block, a line and a JSDoc-style comment, one finding each), and a family word in one finds nothing (B1's
- *   comments witness: a plant per such reading, each beside its twin with the word as code, which finds).
+ *   JSX). THE CODE READER, in the enumerate-the-resolvable form (ruling R-B97) restated to its fail-closed core (ruling R-B122): it
+ *   claims exactly the forms and the comment positions below and no other. Each claimed form is pinned by its row in B1's forms
+ *   witness (FORMS: one plant per row, read to exactly one finding through the row's own reading, both asserted); each form known to
+ *   be left unread is a member of R-UNREAD-FORM, a quiet row beside a read twin (R-COMPOSED holds the parts no constant reads, R-CUT
+ *   the readings a sentence cut parts); a form found later that the reader leaves unread is an addition to that list unless it
+ *   contradicts a claim below; and on the live tree B1 fails closed (LIVE QUIET).
+ *   COMMENTS: no comment is read. A reading that takes a node as written - a property access, a qualified name, an element access's
+ *   receiver, an indexed access type's object type, a binding pattern's or an assignment target's receiver, an import-equals entity
+ *   name - reads it with every comment inside it (a JSDoc comment too) read as one space, a white space like any other, and
+ *   SENTENCES then cuts that text as it cuts every text (CUT). So a comment's position decides what it does. Where the comment
+ *   follows no token that ends in ".", "!", "?" or ";", the reading reads as its comment-free twin reads (a marker in an inner
+ *   comment keeps the reading's finding) - the claimed positions, each pinned: before the reading's "." (FORMS access.comment-* and
+ *   import.comment-equals-entity; B1's commentMatrix: every such reading with a block, a line and a JSDoc-style comment before its
+ *   "." or inside its brackets, one finding each), between two words (FORMS access.comment-between-words) and before a "?.", "!",
+ *   "?", "??", ";" or "..." token or a number written with a trailing "." (R-CUT's uncut twins). Right after such a token (a ".",
+ *   "?.", "!", "?", "??", ";" or "..." punctuator, or a number written with a trailing ".") the comment's space follows a sentence
+ *   terminator, so SENTENCES cuts the reading there and a subject and a family on two sides of the cut read no finding (R-CUT, a
+ *   member per token; that position is claimed nowhere - its coverage is child wb-pyel.8's). And a family word in a comment finds
+ *   nothing (B1's comments witness: a plant per such reading, each beside its twin with the word as code, which finds).
  *   CONSTANT: a string literal or no-substitution template, or a + concatenation or template expression whose every part is a
  *   constant, each read through parentheses, as, satisfies, a non-null "!" and a "<T>" assertion at any depth (FORMS
  *   lexeme.concatenation-*, lexeme.template-span-as, access.*-as, member.computed-name-as; B1's constants matrix: every
@@ -62,15 +70,17 @@
  *   regular expression literal and non-blank JSX text; each template literal type, its literal parts joined by spaces; and each
  *   template expression and + concatenation as spelled (a constant part as its constant, any other part read as one space, both
  *   through the CONSTANT wrappers).
- *   ACCESS as receiver.key (a computed key: its constant, else "?"; every receiver as written, COMMENTS applied): each property
- *   access (a.b) and qualified name (A.B); each element access (a[k]) after its receiver; each indexed access type (A["k"]) after
- *   its object type, its key a literal type, parenthesized or not (any other key type: "?"); each key of an object binding pattern
- *   (a rest element's name too), the receiver being the declaration's initializer, else the iterated expression of the for-of or
- *   for-in declaring it, or the parameter's type annotation, else its default value, and in a nested pattern the enclosing
- *   element's path (receiver.key; an array pattern's element or rest element, receiver.index); and each key of a destructuring
- *   assignment target (an object or array literal left of "=", or the target of a for-of or for-in) after the assigned or
- *   iterated expression, likewise at depth, a rest element's target too (an array literal's at its index, an object literal's at
- *   the receiver, a rest name as the key).
+ *   ACCESS as receiver.key (a computed key: its constant, else "?"; every receiver as written, COMMENTS applied, then CUT): each
+ *   property access (a.b, a?.b, a!.b) and qualified name (A.B) read whole as written: its own ".", "?." or "!" token cuts nothing
+ *   while nothing stands right after it, and white space or a comment there cuts the reading (CUT; FORMS access.property-access,
+ *   access.optional-chain, access.non-null, access.qualified-name); each element access (a[k]) after its receiver; each indexed
+ *   access type (A["k"]) after its object type, its key a literal type, parenthesized or not (any other key type: "?"); each key of
+ *   an object binding pattern (a rest element's name too), the receiver being the declaration's initializer, else the iterated
+ *   expression of the for-of or for-in declaring it, or the parameter's type annotation, else its default value, and in a nested
+ *   pattern the enclosing element's path (receiver.key; an array pattern's element or rest element, receiver.index); and each key of
+ *   a destructuring assignment target (an object or array literal left of "=", or the target of a for-of or for-in) after the
+ *   assigned or iterated expression, likewise at depth, a rest element's target too (an array literal's at its index, an object
+ *   literal's at the receiver, a rest name as the key).
  *   MEMBER each member name (a computed name: its constant) joined after the names of its enclosing declarations of exactly these
  *   kinds: a variable an identifier names, a property, method or accessor, a function or class (declared or an expression), an
  *   interface, a type alias, an enum and its members, a namespace or module, a parameter property (a destructured binding
@@ -82,15 +92,28 @@
  *   IMPORT each name joined after its module specifier or module reference: an import declaration's default, namespace and named
  *   bindings; an export declaration's named and namespace re-exports from a module specifier (an import or export specifier's
  *   module name and its alias, both); and an import-equals declaration's name, after a require's specifier or the entity name as
- *   written (COMMENTS applied).
+ *   written (COMMENTS applied, then CUT).
+ *   CUT (the demand reading; the consumer reads each reading whole): SENTENCES cuts every code reading's text as it cuts every text
+ *   (B4's cuts witness pins the rule; R-CUT pins it at every via - access, import, lexeme and member), so a code reading is judged
+ *   as its sentences, each alone, and a subject and a family on two sides of a cut read no finding (R-CUT, each member beside its
+ *   uncut twin, which finds once). In an as-written reading a cut falls wherever its text holds a boundary - white space or a
+ *   comment's space right after a token that ends in ".", "!", "?" or ";" ("context. demand", "context." at a line end,
+ *   "Context. Inner", "context?. demand", "context! .demand", "(context ? a : b)", "{ context: 1; other: 2 }"), a terminator before
+ *   white space inside a string the reading holds, a blank line, a line read as a table row or a list item; in a lexeme, wherever
+ *   its own text does (a sentence break, a heading line); in a member path, at a key's sentence break. A cut can part a marker from
+ *   the words it quiets too, which then find (the strict direction: R-CUT's overRead). B1 fails closed on every cut: each part is
+ *   judged by LIVE QUIET like every text (a quiet part is held), and a carrier pair whose two words a cut parts is held as parted
+ *   (R-CUT's held rows).
  *   Every git-listed .md page below .pi/, .agents/ and examples/. And at run time: every default agent's configuration
  *   (DEFAULT_AGENTS), the curated Claude MCP server's instructions, every registered Pi tool's promptSnippet and promptGuidelines.
- *   LIVE QUIET (fail closed): every quiet reading of the live code and page pass (a family word or the carrier with no subject
- *   word, or beside a marker), each occurrence, is held with its lines dropped as path, via, kind, reason and the family words and
- *   carrier pairs it spells (B1's liveQuiet; the live findings are held too). So a family word or carrier pair added to or dropped
- *   from any text the reader reads - a lexeme of a listed module in any form, every R-UNREAD-FORM member's included, or a
- *   sentence of a listed page - changes a held finding or quiet entry and reds B1, until the cut that adds it re-measures this
- *   file; a word the reader reads in no text (a comment, a part composed at run time) is outside it (R-SCOPE, R-COMPOSED).
+ *   LIVE QUIET (fail closed): every quiet reading of the live code and page pass (a family word or the carrier with no subject word,
+ *   or beside a marker), each occurrence, and every carrier pair whose two words a cut parts (CUT: held as parted, in a code reading
+ *   and across a page's sentences), is held with its lines dropped as path, via, kind, reason and the family words and carrier pairs
+ *   it spells (B1's liveQuiet; the live findings are held too). So a family word or carrier pair added to or dropped from any text
+ *   the reader reads - a lexeme of a listed module in any form, every R-UNREAD-FORM member's included, either part of a cut reading,
+ *   or a listed page - changes a held finding or quiet entry and reds B1, until the change that adds it re-measures this file; a
+ *   word the reader reads in no text (a comment, a part composed at run time, a letter spelled through syntax the parser leaves as
+ *   written: an escape, a regular expression class) is outside it (R-SCOPE, R-COMPOSED, R-ESCAPE).
  *   TOOL DESCRIPTIONS (B2), at run time: every Pi tool the real extension registers when booted hermetically with the workbench's
  *   Claude backend (its name, label and description), every curated Claude tool listed by an in-memory MCP client (every field but
  *   its input schema), and every capability descriptor of the native registration and of the four injected-client registrations
@@ -147,19 +170,35 @@
  *   word or splits after the acronym's last capital names no stem and reads ABSENT (EDCv2Assembler reads ed, cv2, assembler;
  *   EDC2Assembler and edc2_assembler read edc2), while each twin with the stem split off (EdcV2Assembler, EDC_2Assembler,
  *   edc_2_assembler) names it; R-SCOPE (B1) texts outside the surfaces: docs/ pages (claim pages, which
- *   test/workbench-edc-shipped-claim-census.test.ts reads for EDC claims), qa/ and test/ modules, root files, comments, YAML
- *   (.agents/skills/beads/agents/openai.yaml's default_prompt), an operator's own agent files and settings (workbench roles), model
- *   replies; R-COMPOSED (B1) a prompt composed at run time from a part that is no constant (a variable holding the family word, a
- *   += onto a variable, an array of parts joined by a call, a .concat call, a comma or conditional expression) and prompts
- *   composed per call (buildAgentPrompt); R-UNREAD-FORM (B1) the code forms the reader leaves unread, each read as its lexemes
- *   alone (and its other readings), each a quiet row beside a twin that spells the same words through a read form and finds them:
- *   a binding pattern with no receiver (an untyped parameter without a default value, such as a callback's ({ demand }) => ...;
- *   a catch clause's binding; an ambient declaration's binding), a binding pattern naming a namespace member, a require or a
- *   dynamic import bound to a name, an export alias with no module specifier, a key passed to a call (context.get("demand")) or
- *   tested by in ("demand" in context), a for-of or for-in target that is no literal (holder.demand), an object literal under a
- *   destructured binding's or a plain parameter's default value (neither joins a name: the cut #3 refusal's F2), a call or
- *   construct signature's and an index signature's parameters, a mapped type's keys, an indexed access type whose key is no
- *   literal type (a union), and a JSX attribute's name (it joins no member path; a namespaced one reads as two lexemes);
+ *   test/workbench-edc-shipped-claim-census.test.ts reads for EDC claims), qa/ and test/ modules, root files, comments (a module's
+ *   shebang line too), YAML (.agents/skills/beads/agents/openai.yaml's default_prompt), an operator's own agent files and settings
+ *   (workbench roles), model replies; R-COMPOSED (B1) a prompt composed at run time from a part that is no constant (a variable
+ *   holding the family word, a += onto a variable, an array of parts joined by a call, a .concat call, a comma or conditional
+ *   expression) and prompts composed per call (buildAgentPrompt); R-UNREAD-FORM (B1) the code forms the reader leaves unread, each
+ *   read as its lexemes alone (and its other readings), each a quiet row beside a twin that spells the same words through a read
+ *   form and finds them: a binding pattern with no receiver (an untyped parameter without a default value, such as a callback's
+ *   ({ demand }) => ...; a catch clause's binding; an ambient declaration's binding), a binding pattern naming a namespace member, a
+ *   require or a dynamic import bound to a name, an export alias with no module specifier, a key passed to a call
+ *   (context.get("demand")) or tested by in ("demand" in context), a for-of or for-in target that is no literal (holder.demand), an
+ *   object literal under a destructured binding's or a plain parameter's default value (neither joins a name: the cut #3 refusal's
+ *   F2), a call or construct signature's and an index signature's parameters, a mapped type's keys, an indexed access type whose key
+ *   is no literal type (a union), a JSX attribute's name (it joins no member path; a namespaced one reads as two lexemes), and
+ *   refusal #4's F5 forms: an object literal assigned by an assignment expression ("=" or "??=", to a name, an exports member or a
+ *   this member: its keys join no name but an enclosing declaration's) or passed to a call (Object.assign(context, { demand: 1 })),
+ *   a namespace's export import alias (it joins no member path), an import type's qualifier (it joins no module specifier), a
+ *   template literal type's literal-type span (its own lexeme, never joined into the template) and JSX text split by an inline
+ *   element (each piece read alone); R-CUT (B1) a code reading SENTENCES cuts (CUT) reads no finding where its subject and family
+ *   fall on two sides of the cut - a member per kind of cut: a comment, then white space, right after a ".", "?.", "!", "?", "??",
+ *   ";" or "..." token or a number with a trailing "." in an as-written reading (a property access, a qualified name, an
+ *   import-equals entity and a binding receiver among them), a terminator inside a string the reading holds, a blank line, a
+ *   table-row and a list-item line, a lexeme's sentence break and heading line, a member key's sentence break and a carrier pair
+ *   parted by a comment after the dot - each beside its uncut twin, which finds once, and each held by LIVE QUIET (fail closed); a
+ *   cut can part a marker away too, which then finds (overRead); the after-terminator comment positions' coverage is child
+ *   wb-pyel.8's (refusal #4's U1, F2 and F3); R-ESCAPE (B1) a letter spelled through syntax the parser leaves as written - a
+ *   character reference in JSX text (&#100;, &#x64; or a named one) or in a JSX attribute string, an escape or a class in a regular
+ *   expression literal (\x64, \u0064, \u{64}, [d]) - spells no family word, so it reads nothing and no text the reader reads holds
+ *   it (outside LIVE QUIET: its held rows are empty), each a quiet row beside its twin spelled plainly, which finds; a string
+ *   literal's and an identifier's escapes are decoded by the parser and read (its decoded rows; refusal #4's F4);
  *   R-UNNAMED-INPUT (B3) an input that steers context
  *   with no family word - the
  *   Agent tool's inherit_context, measured: a Pi-native fork switch the model sets ("If true, fork parent conversation into the
@@ -445,12 +484,31 @@ function familyWords(text: string): string[] {
     return pair === undefined ? [] : [pair.join(" ")];
   });
 }
-/** LIVE QUIET: every quiet reading of one text, each occurrence, lines dropped: `<where> <kind>:<reason> <its family words>`. */
+/** The carrier pairs a text's words spell, in order, each as its two words. */
+function carrierPairs(text: string): string[] {
+  const tokens = words(text);
+  return tokens.flatMap((word, index) => VOCABULARY.carrier.filter(([first, second]) => word === first && tokens[index + 1] === second).map(pair => pair.join(" ")));
+}
+/** CUT: the carrier pairs whose two words a sentence cut parts - each pair of the text that no one sentence of it spells. */
+function partedPairs(text: string): string[] {
+  const pairs = carrierPairs(text);
+  if (pairs.length === 0) return [];
+  const within = sentences(text).flatMap(sentence => carrierPairs(sentence.text));
+  return pairs.filter(pair => {
+    const at = within.indexOf(pair);
+    if (at === -1) return true;
+    within.splice(at, 1);
+    return false;
+  });
+}
+/** LIVE QUIET: every quiet reading of one text, each occurrence, lines dropped: `<where> <kind>:<reason> <its family words>`; and
+ * every carrier pair a cut parts: `<where> parted:carrier <pair>` (CUT). */
 function quietOf(where: string, text: string): string[] {
-  return sentences(text).flatMap(sentence => {
+  const quiet = sentences(text).flatMap(sentence => {
     const reading = readSentence(sentence.text);
     return reading.kind === "subjectless" || reading.kind === "marker" ? [`${where} ${reading.kind}:${reading.reason} ${familyWords(sentence.text).join(" ")}`] : [];
   });
+  return [...quiet, ...partedPairs(text).map(pair => `${where} parted:carrier ${pair}`)];
 }
 /** Every finding and every quieted reading of one text, each as `<where>:<sentence line> <reason>`. */
 function textReadings(where: string, text: string): { readonly findings: string[]; readonly quieted: string[] } {
@@ -1257,6 +1315,8 @@ const FORMS: Readonly<Record<string, readonly [path: string, code: string]>> = {
   "lexeme.concatenation-wrapped-spelled": ["src/plant.ts", 'export const prompt = "Set the context " + (("demand " + name) as string) + ".";\n'],
   "lexeme.template-span-as": ["src/plant.ts", `export const prompt = \`Set the context ${HOLE}"demand" as const} first.\`;\n`],
   "access.property-access": ["src/plant.ts", "export const value = context.demand;\n"],
+  "access.optional-chain": ["src/plant.ts", "export const value = context?.demand;\n"],
+  "access.non-null": ["src/plant.ts", "export const value = context!.demand;\n"],
   "access.qualified-name": ["src/plant.ts", "export type Value = Context.Demand;\n"],
   "access.element-access": ["src/plant.ts", 'export const value = context["demand"];\n'],
   "access.element-access-as": ["src/plant.ts", 'export const value = context["demand" as const];\n'],
@@ -1350,13 +1410,16 @@ const FORMS: Readonly<Record<string, readonly [path: string, code: string]>> = {
   "import.comment-equals-entity": ["src/plant.ts", "import demand = Context/* not */.Inner;\nexport { demand };\n"],
 };
 /** LIVE QUIET's rule on plants, pinned apart from the live tree: every quiet occurrence is held - two on one line too, a
- * subjectless and a marker reading, each with its family words and carrier pairs, a page's as well as a module's - and an
- * R-UNREAD-FORM member's lexemes, which find nothing, are held quiet (the fail-closed premise). */
+ * subjectless and a marker reading, each with its family words and carrier pairs, a page's as well as a module's - an
+ * R-UNREAD-FORM member's lexemes, which find nothing, are held quiet (the fail-closed premise), and a carrier pair whose two words
+ * a cut parts is held as parted - after a comment after the dot, inside a lexeme and across a page's sentences (CUT). */
 const QUIET_PLANTS: readonly (readonly [string, string])[] = [
   ["src/plant.ts", 'export const a = "Be precise.";\nexport const b = ["Be precise.", "Be precise, precisely."];\n'],
   ["src/plant-marker.ts", 'export const c = "The context demand is not set.";\nexport const d = "Never send a projection requirement.";\n'],
   ["src/plant-unread.ts", "export const read = (contexts: Options[]) => contexts.map(({ demand }) => demand);\n"],
+  ["src/plant-cut.ts", 'export const value = projection./* cut */requirement;\nexport const prompt = "Send the projection. Requirements follow.";\n'],
   [".pi/agents/plant.md", "Be precise.\n"],
+  [".pi/agents/plant-cut.md", "Send the projection.\nRequirement first.\n"],
 ];
 /** CONSTANT's matrix: every constant-reading site of the code reader (a concatenation part and a template span, each read as
  * spelled and as a key's constant; an element access's key; a binding pattern's, an assignment target's and a member's computed
@@ -1374,8 +1437,9 @@ const CONSTANT_SITES: Readonly<Record<string, (wrapped: string) => string>> = {
 };
 const CONSTANT_WRAPPERS: Readonly<Record<string, string>> = { parentheses: '("demand")', as: '("demand" as const)', satisfies: '("demand" satisfies string)', nonNull: '"demand"!', typeAssertion: '<string>"demand"' };
 /** COMMENTS' matrix: every as-written reading of the code reader with a block, a line and a JSDoc-style comment inside it, each
- * holding a marker, each plant reading exactly one finding (B1 asserts it) - no comment kind is read at one site and removed at
- * another. */
+ * holding a marker and standing at a claimed position - before the reading's "." or inside its brackets - each plant reading
+ * exactly one finding (B1 asserts it): no comment kind is read at one site and removed at another. A comment right after a "."
+ * cuts the reading (CUT): R-CUT, never this matrix. */
 const COMMENT_SITES: Readonly<Record<string, (comment: string) => string>> = {
   propertyAccess: comment => `export const value = context${comment}.demand;\n`,
   qualifiedName: comment => `export type Value = Context${comment}.Demand;\n`,
@@ -1413,6 +1477,60 @@ const COMMENT_PLANTS: Readonly<Record<string, readonly [plant: string, twin: str
   "assignment-for-of": ["export let size: unknown;\nfor ({ size } of (contexts /* demand */)) break;\n", "export let size: unknown;\nfor ({ size } of (contexts.demand)) break;\n"],
   "assignment-for-in": ["export let size: unknown;\nfor ({ size } in (contexts /* demand */)) break;\n", "export let size: unknown;\nfor ({ size } in (contexts.demand)) break;\n"],
   "import-equals-entity": ["import size = Context/* demand */.Inner;\nexport { size };\n", "import size = Context.Demand.Inner;\nexport { size };\n"],
+};
+/** R-CUT's members (CUT; refusal #4's U1, F2 and F3; ruling R-B122): one plant per kind of cut - a comment, then white space, right
+ * after a token that ends in ".", "!", "?" or ";" in an as-written reading, a blank line, a table-row and a list-item line, a
+ * lexeme's sentence break and heading line, a member key's sentence break and a carrier pair parted after the dot - each reading no
+ * finding (B1 asserts it) beside its uncut twin (the comment before the token, or no white space after it), which finds once
+ * (asserted); LIVE QUIET holds every member (asserted: fail closed). */
+const CUT_PLANTS: Readonly<Record<string, readonly [plant: string, twin: string]>> = {
+  "comment-after-dot": ["export const value = context./* not */demand;\n", "export const value = context/* not */.demand;\n"],
+  "comment-after-optional-dot": ["export const value = context?./* not */demand;\n", "export const value = context/* not */?.demand;\n"],
+  "comment-after-non-null": ["export const value = context!/* not */.demand;\n", "export const value = context/* not */!.demand;\n"],
+  "comment-after-not": ['export const value = (context && !/* no */on)["demand"];\n', 'export const value = (context && /* no */!on)["demand"];\n'],
+  "comment-after-question": ['export const value = (context ?/* no */a : b)["demand"];\n', 'export const value = (context /* no */?a : b)["demand"];\n'],
+  "comment-after-nullish": ['export const value = (context ??/* no */other)["demand"];\n', 'export const value = (context /* no */??other)["demand"];\n'],
+  "comment-after-semicolon": ['export type Value = { context: 1;/* no */other: 2 }["demand"];\n', 'export type Value = { context: 1/* no */;other: 2 }["demand"];\n'],
+  "comment-after-spread": ['export const value = [context, .../* no */rest]["demand"];\n', 'export const value = [context, /* no */...rest]["demand"];\n'],
+  "comment-qualified-name": ["export type Value = Context./* no */Demand;\n", "export type Value = Context/* no */.Demand;\n"],
+  "comment-import-entity": ["import demand = Context./* not */Inner;\nexport { demand };\n", "import demand = Context/* not */.Inner;\nexport { demand };\n"],
+  "comment-after-number": ['export const value = (context, 1./* no */)["demand"];\n', 'export const value = (context, /* no */1.)["demand"];\n'],
+  "comment-binding-receiver": ["export function read(opts: Options): unknown {\n  const { demand } = context./* not */inner;\n  return demand;\n}\n", "export function read(opts: Options): unknown {\n  const { demand } = context/* not */.inner;\n  return demand;\n}\n"],
+  "space-after-dot": ["export const value = context. demand;\n", "export const value = context.demand;\n"],
+  "line-after-dot": ["export const value = context.\n  demand;\n", "export const value = context\n  .demand;\n"],
+  "space-after-optional-dot": ["export const value = context?. demand;\n", "export const value = context ?.demand;\n"],
+  "space-after-non-null": ["export const value = context! .demand;\n", "export const value = context !.demand;\n"],
+  "space-after-question": ['export const value = (context ? a : b)["demand"];\n', 'export const value = (context ?a : b)["demand"];\n'],
+  "space-after-semicolon": ['export type Value = { context: 1; other: 2 }["demand"];\n', 'export type Value = { context: 1, other: 2 }["demand"];\n'],
+  "space-import-entity": ["import demand = Context. Inner;\nexport { demand };\n", "import demand = Context.Inner;\nexport { demand };\n"],
+  "terminator-in-string": ['export const value = (context + ". ")["demand"];\n', 'export const value = (context + ".")["demand"];\n'],
+  "blank-line": ['export const value = (context\n\n  && other)["demand"];\n', 'export const value = (context\n  && other)["demand"];\n'],
+  "table-row-line": ['export type Value = (\n  | Context\n  | Other\n)["demand"];\n', 'export type Value = (Context | Other)["demand"];\n'],
+  "list-item-line": ['export const value = (context\n  + other)["demand"];\n', 'export const value = (context +\n  other)["demand"];\n'],
+  "lexeme-sentence": ['export const prompt = "Render the context. Demand is set by the model.";\n', 'export const prompt = "Render the context demand set by the model.";\n'],
+  "lexeme-heading": ['export const prompt = "The context\\n# demand rides along";\n', 'export const prompt = "The context\\ndemand rides along";\n'],
+  "member-key": ['export const context = { "size. x": { demand: 1 } };\n', 'export const context = { "size x": { demand: 1 } };\n'],
+  "parted-carrier": ["export const value = projection./* cut */requirement;\n", "export const value = projection.requirement;\n"],
+};
+/** CUT's strict direction (refusal #4, F3): a cut parts a marker from the words it quiets, so the cut reading finds where its
+ * uncut twin is marker-quiet. */
+const CUT_OVER_READ: readonly [cut: string, twin: string] = ['export const value = (never./* cut */context)["demand"];\n', 'export const value = (never.context)["demand"];\n'];
+/** R-ESCAPE's members (refusal #4, F4): a letter spelled through syntax the parser leaves as written - each reads nothing and
+ * nothing holds it (both asserted) - beside its twin spelled plainly, which finds once (asserted). */
+const ESCAPE_PLANTS: Readonly<Record<string, readonly [path: string, plant: string, twin: string]>> = {
+  jsxDecimal: ["src/plant.tsx", "export const View = () => <p>Set the context &#100;emand first.</p>;\n", "export const View = () => <p>Set the context demand first.</p>;\n"],
+  jsxHex: ["src/plant.tsx", "export const View = () => <p>Set the context &#x64;emand first.</p>;\n", "export const View = () => <p>Set the context demand first.</p>;\n"],
+  jsxNamed: ["src/plant.tsx", "export const View = () => <p>Set the context &dscr;emand first.</p>;\n", "export const View = () => <p>Set the context demand first.</p>;\n"],
+  jsxAttribute: ["src/plant.tsx", 'export const View = () => <a title="Set the context &#100;emand first." />;\n', 'export const View = () => <a title="Set the context demand first." />;\n'],
+  regexHex: ["src/plant.ts", "export const pattern = /context \\x64emand/;\n", "export const pattern = /context demand/;\n"],
+  regexUnicode: ["src/plant.ts", "export const pattern = /context \\u0064emand/;\n", "export const pattern = /context demand/;\n"],
+  regexClass: ["src/plant.ts", "export const pattern = /context [d]emand/;\n", "export const pattern = /context demand/;\n"],
+  regexCodePoint: ["src/plant.ts", "export const pattern = /context \\u{64}emand/u;\n", "export const pattern = /context demand/u;\n"],
+};
+/** The escapes the parser decodes, which the reader reads (R-ESCAPE's boundary): a string literal's and an identifier's. */
+const DECODED_PLANTS: Readonly<Record<string, string>> = {
+  string: 'export const prompt = "Set the context \\x64emand first.";\n',
+  identifier: "export const context\\u0044emand = 1;\n",
 };
 
 // ------------------------------------------------------------------------------------------------------------------- the pins
@@ -1514,6 +1632,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       "vitest.plant.config.ts": `export const prompt = ${JSON.stringify(PLANT)};\n`,
       ".agents/skills/plant/agents/openai.yaml": `interface:\n  default_prompt: "${PLANT}"\n`,
       "src/plant-comment.ts": `// ${PLANT}\nexport {};\n`,
+      "src/plant-shebang.ts": `#!/usr/bin/env node ${PLANT}\nexport {};\n`,
     };
     const replica = gitReplica("pyel2-scope-", outside);
     const listed = gitList(replica);
@@ -1530,8 +1649,9 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
         codeOf('export const prompt = "Set the context " + (on ? "demand" : "size") + " first.";\n'),
       ],
       // The forms the code reader leaves unread (the cut #2 refusal's U1 named the first five; the cut #3 refusal's F2 and the gate
-      // probe's quiet forms the rest - the enumerate-the-resolvable list, R-B97): each reads as its lexemes alone (and its other
-      // readings), so it finds nothing; each twin spells the same words through a read form and finds them.
+      // probe's quiet forms the next thirteen - the enumerate-the-resolvable list, R-B97; refusal #4's F5 the last nine): each reads
+      // as its lexemes alone (and its other readings), so it finds nothing; each twin spells the same words through a read form and
+      // finds them.
       "R-UNREAD-FORM": {
         unread: {
           untypedParameter: codeOf("export const read = (contexts: Options[]) => contexts.map(({ demand }) => demand);\n"),
@@ -1552,6 +1672,15 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
           unionIndex: codeOf('export type Value = Context["demand" | "other"];\n'),
           jsxAttribute: codeOf("export const View = () => <C context={{ demand: 1 }} />;\n", "src/plant.tsx"),
           jsxNamespacedName: codeOf('export const View = () => <a context:demand="1" />;\n', "src/plant.tsx"),
+          assignedObject: codeOf("export let context: unknown;\ncontext = { demand: 1 };\n"),
+          assignedObjectExports: codeOf("exports.context = { demand: 1 };\n", "src/plant.cjs"),
+          assignedObjectThis: codeOf("export class Plant {\n  context: unknown;\n  constructor() {\n    this.context = { demand: 1 };\n  }\n}\n"),
+          compoundAssignedObject: codeOf("export let context: unknown;\ncontext ??= { demand: 1 };\n"),
+          callArgumentObject: codeOf("export const value = Object.assign(context, { demand: 1 });\n"),
+          namespaceImportAlias: codeOf("export namespace Context {\n  export import Demand = Other.Thing;\n}\n"),
+          importTypeQualifier: codeOf('export type Value = import("./context.js").Demand;\n'),
+          templateTypeSpan: codeOf(`export type Value = \`context ${HOLE}"demand"}\`;\n`),
+          jsxSplitText: codeOf("export const View = () => <p>Set the context <b>demand</b> first.</p>;\n", "src/plant.tsx"),
         },
         readTwins: {
           untypedParameter: codeOf("export const read = (contexts: Options[]) => contexts.map(({ demand }: Context) => demand);\n"),
@@ -1572,10 +1701,44 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
           unionIndex: codeOf('export type Value = Context["demand"];\n'),
           jsxAttribute: codeOf("export const View = () => <C {...{ context: { demand: 1 } }} />;\n", "src/plant.tsx"),
           jsxNamespacedName: codeOf('export const View = () => <a contextDemand="1" />;\n', "src/plant.tsx"),
+          assignedObject: codeOf("export const context = { demand: 1 };\n"),
+          assignedObjectExports: codeOf("module.exports = { context: { demand: 1 } };\n", "src/plant.cjs"),
+          assignedObjectThis: codeOf("export class Plant {\n  context = { demand: 1 };\n}\n"),
+          compoundAssignedObject: codeOf("export let context: unknown;\n({ context = { demand: 1 } } = source);\n"),
+          callArgumentObject: codeOf("export const value = Object.assign(target, { context: { demand: 1 } });\n"),
+          namespaceImportAlias: codeOf("export namespace Context {\n  export const Demand = Other.Thing;\n}\n"),
+          importTypeQualifier: codeOf('import type { Demand } from "./context.js";\nexport type Value = Demand;\n'),
+          templateTypeSpan: codeOf("export type Value = `context demand`;\n"),
+          jsxSplitText: codeOf("export const View = () => <p>Set the context demand <b>first</b>.</p>;\n", "src/plant.tsx"),
         },
+      },
+      // CUT (refusal #4's U1, F2 and F3; ruling R-B122): every member reads no finding beside its uncut twin, which finds once; LIVE
+      // QUIET holds every member (fail closed); and a cut can part a marker away, so the over-read finds where its twin is quiet.
+      "R-CUT": {
+        cut: Object.fromEntries(Object.entries(CUT_PLANTS).map(([id, [plant]]) => [id, codeOf(plant)])),
+        twins: Object.fromEntries(Object.entries(CUT_PLANTS).map(([id, [, twin]]) => [id, codeOf(twin)])),
+        held: Object.fromEntries(Object.entries(CUT_PLANTS).map(([id, [plant]]) => [id, survey([["src/plant.ts", plant]]).quiet])),
+        overRead: { cut: codeOf(CUT_OVER_READ[0]), twin: codeOf(CUT_OVER_READ[1]) },
+      },
+      // R-ESCAPE (refusal #4's F4): a letter spelled through syntax the parser leaves as written reads nothing and nothing holds
+      // it; each twin spelled plainly finds, and the escapes the parser decodes are read.
+      "R-ESCAPE": {
+        unread: Object.fromEntries(Object.entries(ESCAPE_PLANTS).map(([id, [path, plant]]) => [id, codeOf(plant, path)])),
+        held: Object.fromEntries(Object.entries(ESCAPE_PLANTS).map(([id, [path, plant]]) => [id, survey([[path, plant]]).quiet])),
+        readTwins: Object.fromEntries(Object.entries(ESCAPE_PLANTS).map(([id, [path, , twin]]) => [id, codeOf(twin, path)])),
+        decoded: Object.fromEntries(Object.entries(DECODED_PLANTS).map(([id, plant]) => [id, codeOf(plant)])),
       },
     };
     expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "B1").map(residual => residual.id));
+    const cut = quiet["R-CUT"];
+    expect(Object.values(cut.cut).flat(), "a cut reading finds nothing").toEqual([]);
+    expect(Object.entries(cut.twins).filter(([, found]) => found.length !== 1).map(([id]) => id), "every uncut twin finds once").toEqual([]);
+    expect(Object.entries(cut.held).filter(([, held]) => held.length === 0).map(([id]) => id), "LIVE QUIET holds every cut member").toEqual([]);
+    expect([cut.overRead.cut.length, cut.overRead.twin.length], "a cut parts a marker away").toEqual([1, 0]);
+    const escaped = quiet["R-ESCAPE"];
+    expect(Object.values(escaped.unread).flat(), "an escape the parser leaves as written spells nothing").toEqual([]);
+    expect(Object.values(escaped.held).flat(), "and nothing holds it").toEqual([]);
+    expect(Object.entries({ ...escaped.readTwins, ...escaped.decoded }).filter(([, found]) => found.length !== 1).map(([id]) => id), "every twin and decoded escape finds once").toEqual([]);
     // One plant per form the header claims: the reading each form composes (the cut #2 and cut #3 refusals, U1), one finding per
     // row through the row's own reading (the cut #3 refusal, F4).
     const forms = Object.fromEntries(Object.entries(FORMS).map(([id, [path, code]]) => [id, codeOf(code, path)]));
@@ -1596,8 +1759,9 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect(offCell.map(([cell]) => cell), "every matrix cell reads one finding").toEqual([]);
     return {
       findings: [...real.findings, ...siteFindings(surfaces.prompts)],
-      // LIVE QUIET (fail closed): every quiet reading of the live code and page pass, each occurrence, lines dropped, with its family
-      // words - a family word added to (or dropped from) any text the reader reads, in a form it joins no path for too, changes it.
+      // LIVE QUIET (fail closed): every quiet reading of the live code and page pass, each occurrence, and every carrier pair a cut
+      // parts, lines dropped, with its family words - a family word or carrier pair added to (or dropped from) any text the reader
+      // reads, in a form it joins no path for too, changes it.
       liveQuiet: real.quiet,
       quietRule: survey(QUIET_PLANTS).quiet,
       floors: {
@@ -1916,7 +2080,7 @@ describe("wb-pyel.2 EDC demand-channel census (SDK-EVIDENCE-DIRECTED-COMPUTATION
     expect(verdict(producerLine.replace(/,? not\b/, ""))).toBe("demand+precision+carrier");
     // The residuals: each named once, each quiet row on a judged pin.
     const pins = ROWS.flatMap(row => row.pins.map(pin => pin.id));
-    expect(ROSTER.residuals.map(residual => residual.id)).toEqual(["R-UNNAMED-ADOPTION", "R-GLUED-STEM", "R-SCOPE", "R-COMPOSED", "R-UNREAD-FORM", "R-UNNAMED-INPUT", "R-PARAPHRASE", "R-SUBJECTLESS", "R-SPLIT", "R-MARKER-ANYWHERE", "R-LOOKALIKE", "R-SYNONYM"]);
+    expect(ROSTER.residuals.map(residual => residual.id)).toEqual(["R-UNNAMED-ADOPTION", "R-GLUED-STEM", "R-SCOPE", "R-COMPOSED", "R-UNREAD-FORM", "R-CUT", "R-ESCAPE", "R-UNNAMED-INPUT", "R-PARAPHRASE", "R-SUBJECTLESS", "R-SPLIT", "R-MARKER-ANYWHERE", "R-LOOKALIKE", "R-SYNONYM"]);
     expect(ROSTER.residuals.every(residual => pins.includes(residual.quietPin))).toBe(true);
   });
   for (const row of ROWS) {

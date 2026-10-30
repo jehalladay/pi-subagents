@@ -227,7 +227,10 @@
               "src/workbench/claude-capability-tools.ts lexeme subjectless:demand demand"
             ],
             "quietRule": [
+              ".pi/agents/plant-cut.md parted:carrier projection requirement",
               ".pi/agents/plant.md subjectless:precision precise",
+              "src/plant-cut.ts access parted:carrier projection requirement",
+              "src/plant-cut.ts lexeme parted:carrier projection requirements",
               "src/plant-marker.ts lexeme marker:never projection requirement",
               "src/plant-marker.ts lexeme marker:not demand",
               "src/plant-unread.ts lexeme subjectless:demand demand",
@@ -330,6 +333,12 @@
                 "src/plant.ts:1 lexeme:1 demand"
               ],
               "access.property-access": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.optional-chain": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.non-null": [
                 "src/plant.ts:1 access:1 demand"
               ],
               "access.qualified-name": [
@@ -909,7 +918,8 @@
             "quiet": {
               "R-SCOPE": {
                 "listed": [
-                  "src/plant-comment.ts"
+                  "src/plant-comment.ts",
+                  "src/plant-shebang.ts"
                 ],
                 "findings": [],
                 "aloneWouldFind": [
@@ -949,7 +959,16 @@
                   "mappedTypeKey": [],
                   "unionIndex": [],
                   "jsxAttribute": [],
-                  "jsxNamespacedName": []
+                  "jsxNamespacedName": [],
+                  "assignedObject": [],
+                  "assignedObjectExports": [],
+                  "assignedObjectThis": [],
+                  "compoundAssignedObject": [],
+                  "callArgumentObject": [],
+                  "namespaceImportAlias": [],
+                  "importTypeQualifier": [],
+                  "templateTypeSpan": [],
+                  "jsxSplitText": []
                 },
                 "readTwins": {
                   "untypedParameter": [
@@ -1005,6 +1024,319 @@
                   ],
                   "jsxNamespacedName": [
                     "src/plant.tsx:1 lexeme:1 demand"
+                  ],
+                  "assignedObject": [
+                    "src/plant.ts:1 member:1 demand"
+                  ],
+                  "assignedObjectExports": [
+                    "src/plant.cjs:1 member:1 demand"
+                  ],
+                  "assignedObjectThis": [
+                    "src/plant.ts:2 member:1 demand"
+                  ],
+                  "compoundAssignedObject": [
+                    "src/plant.ts:2 member:1 demand"
+                  ],
+                  "callArgumentObject": [
+                    "src/plant.ts:1 member:1 demand"
+                  ],
+                  "namespaceImportAlias": [
+                    "src/plant.ts:2 member:1 demand"
+                  ],
+                  "importTypeQualifier": [
+                    "src/plant.ts:1 import:1 demand"
+                  ],
+                  "templateTypeSpan": [
+                    "src/plant.ts:1 lexeme:1 demand"
+                  ],
+                  "jsxSplitText": [
+                    "src/plant.tsx:1 lexeme:1 demand"
+                  ]
+                }
+              },
+              "R-CUT": {
+                "cut": {
+                  "comment-after-dot": [],
+                  "comment-after-optional-dot": [],
+                  "comment-after-non-null": [],
+                  "comment-after-not": [],
+                  "comment-after-question": [],
+                  "comment-after-nullish": [],
+                  "comment-after-semicolon": [],
+                  "comment-after-spread": [],
+                  "comment-qualified-name": [],
+                  "comment-import-entity": [],
+                  "comment-after-number": [],
+                  "comment-binding-receiver": [],
+                  "space-after-dot": [],
+                  "line-after-dot": [],
+                  "space-after-optional-dot": [],
+                  "space-after-non-null": [],
+                  "space-after-question": [],
+                  "space-after-semicolon": [],
+                  "space-import-entity": [],
+                  "terminator-in-string": [],
+                  "blank-line": [],
+                  "table-row-line": [],
+                  "list-item-line": [],
+                  "lexeme-sentence": [],
+                  "lexeme-heading": [],
+                  "member-key": [],
+                  "parted-carrier": []
+                },
+                "twins": {
+                  "comment-after-dot": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "comment-after-optional-dot": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "comment-after-non-null": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "comment-after-not": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "comment-after-question": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "comment-after-nullish": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "comment-after-semicolon": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "comment-after-spread": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "comment-qualified-name": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "comment-import-entity": [
+                    "src/plant.ts:1 import:1 demand"
+                  ],
+                  "comment-after-number": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "comment-binding-receiver": [
+                    "src/plant.ts:2 access:1 demand"
+                  ],
+                  "space-after-dot": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "line-after-dot": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "space-after-optional-dot": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "space-after-non-null": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "space-after-question": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "space-after-semicolon": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "space-import-entity": [
+                    "src/plant.ts:1 import:1 demand"
+                  ],
+                  "terminator-in-string": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "blank-line": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "table-row-line": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "list-item-line": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "lexeme-sentence": [
+                    "src/plant.ts:1 lexeme:1 demand"
+                  ],
+                  "lexeme-heading": [
+                    "src/plant.ts:1 lexeme:1 demand"
+                  ],
+                  "member-key": [
+                    "src/plant.ts:1 member:1 demand"
+                  ],
+                  "parted-carrier": [
+                    "src/plant.ts:1 access:1 carrier"
+                  ]
+                },
+                "held": {
+                  "comment-after-dot": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "comment-after-optional-dot": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "comment-after-non-null": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "comment-after-not": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "comment-after-question": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "comment-after-nullish": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "comment-after-semicolon": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "comment-after-spread": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "comment-qualified-name": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "comment-import-entity": [
+                    "src/plant.ts import subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "comment-after-number": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "comment-binding-receiver": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "space-after-dot": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "line-after-dot": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "space-after-optional-dot": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "space-after-non-null": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "space-after-question": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "space-after-semicolon": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "space-import-entity": [
+                    "src/plant.ts import subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "terminator-in-string": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "blank-line": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "table-row-line": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "list-item-line": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "lexeme-sentence": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "lexeme-heading": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "member-key": [
+                    "src/plant.ts lexeme subjectless:demand demand",
+                    "src/plant.ts member subjectless:demand demand"
+                  ],
+                  "parted-carrier": [
+                    "src/plant.ts access parted:carrier projection requirement"
+                  ]
+                },
+                "overRead": {
+                  "cut": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "twin": []
+                }
+              },
+              "R-ESCAPE": {
+                "unread": {
+                  "jsxDecimal": [],
+                  "jsxHex": [],
+                  "jsxNamed": [],
+                  "jsxAttribute": [],
+                  "regexHex": [],
+                  "regexUnicode": [],
+                  "regexClass": [],
+                  "regexCodePoint": []
+                },
+                "held": {
+                  "jsxDecimal": [],
+                  "jsxHex": [],
+                  "jsxNamed": [],
+                  "jsxAttribute": [],
+                  "regexHex": [],
+                  "regexUnicode": [],
+                  "regexClass": [],
+                  "regexCodePoint": []
+                },
+                "readTwins": {
+                  "jsxDecimal": [
+                    "src/plant.tsx:1 lexeme:1 demand"
+                  ],
+                  "jsxHex": [
+                    "src/plant.tsx:1 lexeme:1 demand"
+                  ],
+                  "jsxNamed": [
+                    "src/plant.tsx:1 lexeme:1 demand"
+                  ],
+                  "jsxAttribute": [
+                    "src/plant.tsx:1 lexeme:1 demand"
+                  ],
+                  "regexHex": [
+                    "src/plant.ts:1 lexeme:1 demand"
+                  ],
+                  "regexUnicode": [
+                    "src/plant.ts:1 lexeme:1 demand"
+                  ],
+                  "regexClass": [
+                    "src/plant.ts:1 lexeme:1 demand"
+                  ],
+                  "regexCodePoint": [
+                    "src/plant.ts:1 lexeme:1 demand"
+                  ]
+                },
+                "decoded": {
+                  "string": [
+                    "src/plant.ts:1 lexeme:1 demand"
+                  ],
+                  "identifier": [
+                    "src/plant.ts:1 lexeme:1 demand"
                   ]
                 }
               }
@@ -1437,6 +1769,14 @@
     },
     {
       "id": "R-UNREAD-FORM",
+      "quietPin": "B1"
+    },
+    {
+      "id": "R-CUT",
+      "quietPin": "B1"
+    },
+    {
+      "id": "R-ESCAPE",
       "quietPin": "B1"
     },
     {
