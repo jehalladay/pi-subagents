@@ -398,7 +398,9 @@
        "list"
       ],
       "items": 8,
+      "attributes": 0,
       "sha256": "afc98664a6f9bb2d",
+      "source": "481acac650cbfb49",
       "plants": [
        "D-CTRL",
        "D-NESTED",
@@ -406,11 +408,34 @@
        "D-BLOCKQUOTE",
        "D-HTML",
        "D-PARAPHRASE",
+       "L2-D1",
+       "L2-D1b",
+       "L2-D3",
+       "L2-D2",
+       "L2-D4",
        "IN-PLACE",
        "TABLE",
        "CODE",
        "SUBSECTION",
-       "COMMENT"
+       "COMMENT",
+       "HTML-TITLE",
+       "LINK-DESTINATION",
+       "IMAGE-SOURCE",
+       "DEFINITION-LABEL",
+       "DEFINITION-DESTINATION",
+       "CODE-INFO",
+       "HEADING-TITLE",
+       "NESTED-TITLE",
+       "QUOTE-TITLE",
+       "TABLE-TITLE",
+       "ENTITY",
+       "ESCAPED-DESTINATION",
+       "TITLE-PARAPHRASE",
+       "EMPHASIS",
+       "HARD-BREAK",
+       "TASK-BOX",
+       "HEADING-CLOSE",
+       "HEADING-ENTITY"
       ]
      }
     }
@@ -428,7 +453,7 @@
   },
   {
    "id": "R-DYNAMIC-KEY",
-   "family": "a field read through a key the source never spells whole, as a literal or as a word (a variable, a concatenation, a template with a substitution, a fragment matched by a string method or a pattern, a constant imported from outside src), escapes both the field reading and the word reading"
+   "family": "a field read through a key the source never spells whole, as a literal or as a word (a variable, a concatenation, a template with a substitution, its head spelling the name whole included, a fragment matched by a string method or a pattern, a constant imported from outside src), escapes both the field reading and the word reading"
   },
   {
    "id": "R-PROSE-RECORD",
@@ -448,7 +473,7 @@
   },
   {
    "id": "R-OTHER-SECTION",
-   "family": "D1 reads the one section clause (d) names, docs/workbench/12-security.md 'Authorization design': the sentence on another section of the page, or on another page, is not read"
+   "family": "D1 reads the one section clause (d) names, docs/workbench/12-security.md 'Authorization design' (a definition elsewhere only as a link of the section resolves to it): the sentence placed outside the section's source, on another section of the page (a level-1 or level-2 heading placed after the section's last block starts one; HTML wrapped around the section sits in its neighbours) or on another page, is not read"
   }
  ]
 }

@@ -22,8 +22,11 @@
  * source denial), 14-belief-transport-approximation-v6.md:29 (failed/expired source checks remain FAIL/UNKNOWN, not probabilistic
  * success) and :44 (the harnesses keep admission and denial).
  *
- * MEASURED AT 04123dc0d0f2 (trunk tip at the first cut's claim, landing 671) and re-measured for this cut at 57cb1c0ca9a4 (landing
- * 677) and aa95f436d802 (landing 678), each merged into the branch, no src or docs path changed among the three, not pinned:
+ * MEASURED AT 04123dc0d0f2 (trunk tip at the first cut's claim, landing 671), re-measured at 57cb1c0ca9a4 (landing 677) and
+ * aa95f436d802 (landing 678) for the second cut and at c2695d76773c (landing 686), a9bfea3f49c4 (landing 688) and cdf5484d8d1b
+ * (landing 689) for this one, each merged into the branch: no src path and no other path this census reads changed among the six
+ * but the bead export, of which it reads the wb-rdlh.1 row's first seven paragraphs, unchanged (the row gained notes after them);
+ * docs/workbench/18-decisions-and-risks.md, which it does not read, gained two lines at landing 673. Not pinned:
  * src/workbench/control.ts:255 declares the filing's cited predicate (export function isCoreMintedDecision); src holds 117 files,
  * every one a .ts module, no symlink; the core and the
  * six modules with a value import of it (claude-control, control-reply, control-tool, detached-control, forge-control and
@@ -69,12 +72,21 @@
  * - WORDS (row C): each src file's raw text, for every record-shaped name spelled as a word (not preceded or followed by an
  *   identifier character), in code, strings, comments and patterns alike; it complements FIELDS, which reads decoded names that the
  *   raw text does not spell.
- * - DOCS (row D): the page's 'Authorization design' section through the shared rendered view (test/helpers/census.ts docsSection):
- *   every block by what it states (a heading, a paragraph, a code block, a block quote or a table by its rendered text, each list
- *   item, its nested items included, by its rendered text, and an HTML block by its source) for either of the parked sentence's two
- *   terms ('authorization input', 'never softens', any case); and the section against its shape frozen at this cut's base: one list
- *   of the eight bullets and no other block, HTML-free (no HTML block, tag or comment in it), the bullets' rendered text held to a
- *   sha-256.
+ * - DOCS (row D): the page's 'Authorization design' section, bound twice over one page: the shared rendered view (test/helpers/census.ts
+ *   docsSection) gives its blocks, and marked's own tokens of the page (the lexer that view runs) give the heading token and the
+ *   section's tokens, those after the one top-level level-2 heading of that rendered text up to the next level-1 or level-2 heading; the
+ *   section is unbound, which reds D1, when the shared view refuses it (by its own binding rules) or the token view finds no such heading
+ *   or more than one. TERMS: either of the parked sentence's two terms ('authorization input', 'never softens', spelled out, any case) in
+ *   what a block states (a heading, a paragraph, a code block, a block quote or a table by its rendered text, each list item, its nested
+ *   items included, by its rendered text, and an HTML block by its source) or in an attribute the rendered text drops, read from the
+ *   tokens of the heading and of every block (nested blocks, list items and table cells included): a link's destination and title, a
+ *   reference link's as they resolve against the page's definitions wherever those sit, an image's source and title (its alt text is
+ *   rendered text), a link reference definition's label, destination and title, a fenced code block's info string, and an HTML tag's or
+ *   comment's source, each as the lexer carries it, so a term spelled otherwise (an entity, a percent-escape, a paraphrase) is no term
+ *   and only the shape reads its edit. SHAPE: the section against its shape frozen at this cut's base: one list of the eight bullets and
+ *   no other block, HTML-free (no HTML block, tag or comment in it), the bullets' rendered text held to a sha-256, and the section's
+ *   source, its heading line through the last line before the next level-1 or level-2 heading, byte for byte (markup and white space
+ *   included), held to a second sha-256.
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label):
  *  A. A1 the wb-pjj provenance test (its header names wb-pjj) reads this roster by path and registers one describe for clause (a)
@@ -101,15 +113,25 @@
  *    form other than a bare literal); the schema family of both line sets joins the field reading; and the word reading covers
  *    every record-shaped name (the 40 members and the 50 schema names), finds none spelled in src, and reads the name in each of
  *    refusal #1's plants.
- *  D. PARKED, never counted satisfied: clause (d) asks for a sentence on the W19 security-design page; standing rule 3 (the user's
- *    W19 INPUT HYGIENE order) keeps agents to product input-hygiene tests, so the sentence and its wb-gs2.3 census row are the
- *    owner's. D1 holds the parked state: the row carries that reason, no block of the section states either term, and the section
- *    is its frozen shape, so any cut that changes what the section renders (a block or a bullet added, removed or reworded, or HTML
- *    added) reds D1 and binds this row in the same commit, the clause (d) sentence in any form or wording included; an edit that
- *    leaves every rendered block as it was (markup only) is not a change D1 reads. Its controls, each the page with one edit made in memory, red D1 by their causes: refusal #1's
- *    docs plants (the sentence as a bullet, a nested item, a paragraph, a block quote and an HTML block, and the paraphrase as a
- *    bullet), the paraphrase inside the eighth bullet, the sentence as a table cell, a code block and a subsection heading, and an
- *    HTML comment in a bullet. D1 reads that one section (R-OTHER-SECTION).
+ *  D. PARKED, never counted satisfied: clause (d) asks for a sentence on the W19 security-design page; standing rule 3 (the user's W19
+ *    INPUT HYGIENE order) keeps agents to product input-hygiene tests, so the sentence and its wb-gs2.3 census row are the owner's. D1
+ *    holds the parked state: the row carries that reason, the section binds in both views, no attribute the TERMS reading reads exists
+ *    in the section or its heading, neither term sits in any block, and the section is its frozen shape. So a cut that edits the
+ *    section's source in any way (a block or a bullet added, removed, reworded or re-marked, a link, an image, a definition or HTML
+ *    added, white space changed, the heading line included) reds D1 by shape and binds this row in the same commit, the clause (d)
+ *    sentence in any form or wording included, and the sentence's terms spelled out in a block or an attribute red it by terms as well.
+ *    Its controls, each the page with one edit made in memory, red D1 by their causes: refusal #1's docs plants (the sentence as a
+ *    bullet, a nested item, a paragraph, a block quote and an HTML block, and the paraphrase as a bullet); refusal #2's (the sentence as
+ *    a link title in the first bullet, L2-D1; as a reference link's title with its definition after the page's last line, L2-D1b; as an
+ *    empty-alt image's title, L2-D3) with that gate's two controls (the sentence's first clause as an image's alt text, L2-D2; a
+ *    definition inside the section, L2-D4); the paraphrase inside the eighth bullet; the sentence, a clause or a term of it as a table
+ *    cell, a code block, a subsection heading, an HTML comment and an HTML tag's title in a bullet, a link's and an image's destination,
+ *    a definition's label and destination, a code block's info string, and a link title on the section's own heading, in a nested item,
+ *    in a block quote and in a table cell; and eight edits that red it by shape alone: a term spelled with an entity, a term
+ *    percent-escaped in a destination, a link title stating the paraphrase, an emphasis added, a hard line break, a task box, the
+ *    heading's closing hashes and the heading's space spelled as an entity, which the shared view reads as the heading and the token
+ *    view does not, so the section is unbound (all but the first leave every block's rendered text as it was). D1 reads that one section
+ *    (R-OTHER-SECTION).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` and `${id}:${status}` as literals and equals the roster's copy
  * (beside each pin's witness). OUTSIDE ANCHORS: the owner filing in the tracked export (its seven paragraphs, each trimmed, held to
  * the roster's sha-256): its acceptance clause is tiled by the labels, its clause (a) yields the fixture conditions, the cited
@@ -122,15 +144,18 @@
  * every quiet row to have run to its end; and the residual ids this header's RESIDUALS paragraph names, in order, must equal QUIET's
  * keys and the roster's.
  * RESIDUALS (named families, each with a pinned quiet row in QUIET): R-OTHER-PRODUCER row B reads rf's refusal only; R-SHARED-NAME
- * a one-word member (principal, status) is not judged by name; R-DYNAMIC-KEY a key the source never spells whole (a variable, a
- * concatenation, a template with a substitution, a fragment matched by a string method or a pattern, a constant imported from
- * outside src) escapes both the field and the word reading; R-PROSE-RECORD a member the program names only in prose is not read;
+ * a one-word member (principal, status) is not judged by name; R-DYNAMIC-KEY a key the source never spells whole, as a literal or
+ * as a word (a variable, a concatenation, a template with a substitution, its head spelling the name whole included, a fragment
+ * matched by a string method or a pattern, a constant imported from outside src), escapes both the field and the word reading;
+ * R-PROSE-RECORD a member the program names only in prose is not read;
  * R-UNVENDORED-MEMBERS the members of the 18 records whose vendored line is a heading are not read; R-HOLLOW-BINDING A1 binds the
  * provenance cases by presence and reads, so a case hollowed in place still reads bound; R-HOLLOW-IMPL SELF-READ judges an IMPL
  * entry by the identifiers it names, so an entry that names a reader beside a constant witness still reads bound; R-OTHER-SECTION
- * D1 reads the 'Authorization design' section only, so the sentence on another section of the page, or on another page, is not
- * read. The list's anchors are this paragraph, QUIET and the roster, which one coordinated edit changes together: the program
- * states no residual list to anchor it outside the cut.
+ * D1 reads the 'Authorization design' section only (a definition elsewhere only as a link of the section resolves to it), so the
+ * sentence placed outside its source, on another section of the page (a level-1 or level-2 heading placed after the section's last
+ * block starts one; HTML wrapped around the section sits in its neighbours) or on another page, is not read. The list's anchors
+ * are this paragraph, QUIET and the roster, which one coordinated edit changes together: the program states no residual list to
+ * anchor it outside the cut.
  * Display paths added: none. Test-only: no scratch (every synthetic module is parsed in memory); src, the docs, both rosters, the
  * two test sources it binds and the bead export are only read.
  */
@@ -138,6 +163,7 @@ import { createHash } from "node:crypto";
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { marked, type Token, type Tokens } from "marked";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
@@ -819,51 +845,184 @@ const PROBABILITY = /\d\s*%|\bprobab|\blikel(?:y|ihood)\b|\bchance\b|\bconfidenc
 const PROBABILITY_TEXTS: readonly string[] = ["success probability 0.97", "97% likely to succeed", "p=0.97", "confidence 0.9", "chance of success: high"];
 
 // --- the docs page --------------------------------------------------------------------------------------------------------------------
-/** The parked sentence's two terms: a block stating either is the sentence clause (d) asks for. */
+/** The parked sentence's two terms, spelled out in any case: a block or an attribute stating either is the sentence clause (d) asks for. */
 const PARKED_TERMS = /authorization input|never softens/i;
 /** What one block states: a heading, a paragraph, a code block, a block quote or a table by its rendered text, each list item (its
  * nested items included) by its rendered text, and an HTML block by its source. */
 const blockTexts = (block: RenderedBlock): string[] => (block.kind === "list" ? block.items.map(item => item.text) : block.kind === "html" ? [block.raw] : [block.text]);
-/** The section's shape frozen at this cut's base (57cb1c0, the page unchanged at aa95f43): one list of the eight bullets and no other
- * block, HTML-free, the bullets' rendered text (joined by newlines) held to this sha-256. */
-const FROZEN_SECTION = { kinds: ["list"], items: 8, sha256: "afc98664a6f9bb2d5ae8196d7745cbe41e90f7ea5de442c1515db6175b937ca5" } as const;
+/** The section's shape frozen on the page this cut reads (blob ff7a76a7, unchanged since b0a1892): one list of the eight
+ * bullets and no other block, HTML-free, the bullets' rendered text (joined by newlines) held to sha256, and the section's source,
+ * its heading line through the last line before the next level-1 or level-2 heading byte for byte (1121 bytes, the page's own slice
+ * between the two heading lines), held to source. */
+const FROZEN_SECTION = {
+  kinds: ["list"],
+  items: 8,
+  sha256: "afc98664a6f9bb2d5ae8196d7745cbe41e90f7ea5de442c1515db6175b937ca5",
+  source: "481acac650cbfb4957a6677ea590b04ca0a41562cebcbe5803bd2b40139756a7",
+} as const;
 interface DocsReading {
   readonly ok: boolean;
   readonly kinds: readonly string[];
   readonly items: readonly string[];
+  readonly attributes: readonly string[];
+  readonly source: string;
   readonly terms: readonly string[];
   readonly frozen: boolean;
 }
-/** D1's reading of a page: its 'Authorization design' section through the shared rendered view, every block read for the parked
- * sentence's terms, and the section held to its frozen shape. */
+const isHeadingToken = (token: Token): token is Tokens.Heading => token.type === "heading";
+const isListToken = (token: Token): token is Tokens.List => token.type === "list";
+const isTableToken = (token: Token): token is Tokens.Table => token.type === "table";
+const isLinkToken = (token: Token): token is Tokens.Link => token.type === "link";
+const isImageToken = (token: Token): token is Tokens.Image => token.type === "image";
+const isDefToken = (token: Token): token is Tokens.Def => token.type === "def";
+const isCodeToken = (token: Token): token is Tokens.Code => token.type === "code";
+const isHtmlToken = (token: Token): token is Tokens.HTML | Tokens.Tag => token.type === "html";
+/** A token's children: its own tokens, a list's items and a table's cells' tokens (header first). */
+function childTokens(token: Token): readonly Token[] {
+  if (isListToken(token)) return token.items;
+  if (isTableToken(token)) return [...token.header, ...token.rows.flat()].flatMap(cell => cell.tokens);
+  const value: unknown = (token as { tokens?: unknown }).tokens;
+  return Array.isArray(value) ? (value as Token[]) : [];
+}
+/** Inline tokens' text as the shared view renders it (markup renders its children's text, HTML none): only to find the section's
+ * heading among the page's tokens, white space collapsed. */
+function renderedInline(tokens: readonly Token[]): string {
+  return tokens
+    .map(token => {
+      if (isHtmlToken(token)) return "";
+      const children = childTokens(token);
+      if (children.length > 0) return renderedInline(children);
+      const value: unknown = (token as { text?: unknown }).text;
+      return typeof value === "string" ? value : "";
+    })
+    .join("");
+}
+/** The section in marked's tokens of the same page: the heading token (the one top-level level-2 heading whose rendered text is the
+ * section's) and the top-level tokens after it up to the next level-1 or level-2 heading; undefined unless exactly one such heading. */
+function sectionTokens(markdown: string): { readonly heading: Token; readonly blocks: readonly Token[] } | undefined {
+  const tokens: readonly Token[] = marked.lexer(markdown);
+  const starts = tokens.flatMap((token, index) =>
+    isHeadingToken(token) && token.depth === 2 && renderedInline(token.tokens).replace(/\s+/g, " ").trim() === DOCS_HEADING ? [index] : [],
+  );
+  const start = starts.length === 1 ? starts[0] : undefined;
+  const heading = start === undefined ? undefined : tokens[start];
+  if (start === undefined || heading === undefined) return undefined;
+  const blocks: Token[] = [];
+  for (const token of tokens.slice(start + 1)) {
+    if (isHeadingToken(token) && token.depth <= 2) break;
+    blocks.push(token);
+  }
+  return { heading, blocks };
+}
+/** What the rendered text drops, read from the tokens given and every token under them, in document order: a link's destination and
+ * title (a reference link's as the lexer resolved them), an image's source and title, a definition's label, destination and title,
+ * a fenced code block's info string, and an HTML tag's or comment's source (an HTML block's included). */
+function attributesOf(tokens: readonly Token[]): string[] {
+  return tokens.flatMap(token => {
+    const own: readonly unknown[] =
+      isLinkToken(token) || isImageToken(token)
+        ? [token.href, token.title]
+        : isDefToken(token)
+          ? [token.tag, token.href, token.title]
+          : isCodeToken(token)
+            ? [token.lang]
+            : isHtmlToken(token)
+              ? [token.text]
+              : [];
+    return [...own.filter((value): value is string => typeof value === "string" && value !== ""), ...attributesOf(childTokens(token))];
+  });
+}
+/** D1's reading of a page: its 'Authorization design' section bound in both views; every block and every attribute of the heading
+ * and the blocks read for the parked sentence's terms; and the section held to its frozen shape and source. */
 function docsBinding(markdown: string = readRepo(DOCS_FILE)): DocsReading {
   const section = docsSection(markdown, DOCS_HEADING, 2, [DOCS_PARENT]);
+  const bound = sectionTokens(markdown);
   const kinds = section.blocks.map(block => block.kind);
+  const ok = section.ok && bound !== undefined;
+  const tokens = bound === undefined ? [] : [bound.heading, ...bound.blocks];
   const items = section.blocks.flatMap(block => (block.kind === "list" ? block.items.map(item => item.text) : []));
+  const attributes = attributesOf(tokens);
+  const source = sha256(tokens.map(token => token.raw).join(""));
   const frozen =
-    section.ok && !section.hasHtml && JSON.stringify(kinds) === JSON.stringify(FROZEN_SECTION.kinds) && items.length === FROZEN_SECTION.items && sha256(items.join("\n")) === FROZEN_SECTION.sha256;
-  return { ok: section.ok, kinds, items, terms: section.blocks.flatMap(blockTexts).filter(text => PARKED_TERMS.test(text)), frozen };
+    ok &&
+    !section.hasHtml &&
+    JSON.stringify(kinds) === JSON.stringify(FROZEN_SECTION.kinds) &&
+    items.length === FROZEN_SECTION.items &&
+    sha256(items.join("\n")) === FROZEN_SECTION.sha256 &&
+    source === FROZEN_SECTION.source;
+  return { ok, kinds, items, attributes, source, terms: [...section.blocks.flatMap(blockTexts), ...attributes].filter(text => PARKED_TERMS.test(text)), frozen };
 }
-/** Why a reading reds D1: a block states a term, the section left its frozen shape, or both. */
+/** Why a reading reds D1: a block or an attribute states a term, the section left its frozen shape, or both. */
 const docsCauses = (reading: DocsReading): string[] => [...(reading.terms.length > 0 ? ["terms"] : []), ...(reading.frozen ? [] : ["shape"])];
-/** The section's eighth bullet: each docs plant is inserted after it, in memory, never on disk. */
+/** The section's heading line, its first bullet and its eighth (the anchor): each docs plant edits one of them, or the page's end, in
+ * memory, never on disk. */
+const HEADING_LINE = "## Authorization design\n";
+const FIRST_BULLET = "- Caller identity and scope bound at workbench entry point; impersonation from script payload prohibited.\n";
 const DOCS_ANCHOR = "- Source/deployment pin must be checked before loading; malformed schema/unsupported contract fails closed.\n";
+const ENTRY = "workbench entry point";
 const PARKED_SENTENCE = "A design-program record is never an authorization input; UNKNOWN never softens a native denial.";
 const PARAPHRASE = "A design-program certificate is metadata that never authorizes a control, and an UNKNOWN never weakens a native denial.";
-/** The refusal-#1 docs plants (gate s137 LEG 2: D-CTRL, D-NESTED, D-PARA, D-BLOCKQUOTE, D-HTML and the rider D-PARAPHRASE, each
- * the gate's edit verbatim) and the reader's further controls, each with the cause it reds D1 by. */
-const DOCS_PLANTS: readonly (readonly [string, string, readonly string[]])[] = [
-  ["D-CTRL", `${DOCS_ANCHOR}- ${PARKED_SENTENCE}\n`, ["terms", "shape"]],
-  ["D-NESTED", `${DOCS_ANCHOR}  - ${PARKED_SENTENCE}\n`, ["terms", "shape"]],
-  ["D-PARA", `${DOCS_ANCHOR}\n${PARKED_SENTENCE}\n`, ["terms", "shape"]],
-  ["D-BLOCKQUOTE", `${DOCS_ANCHOR}\n> ${PARKED_SENTENCE}\n`, ["terms", "shape"]],
-  ["D-HTML", `${DOCS_ANCHOR}\n<p>${PARKED_SENTENCE}</p>\n`, ["terms", "shape"]],
-  ["D-PARAPHRASE", `${DOCS_ANCHOR}- ${PARAPHRASE}\n`, ["shape"]],
-  ["IN-PLACE", DOCS_ANCHOR.replace("fails closed.", `fails closed; ${PARAPHRASE.charAt(0).toLowerCase()}${PARAPHRASE.slice(1)}`), ["shape"]],
-  ["TABLE", `${DOCS_ANCHOR}\n| Record rule |\n| --- |\n| ${PARKED_SENTENCE} |\n`, ["terms", "shape"]],
-  ["CODE", `${DOCS_ANCHOR}\n\`\`\`text\n${PARKED_SENTENCE}\n\`\`\`\n`, ["terms", "shape"]],
-  ["SUBSECTION", `${DOCS_ANCHOR}\n### A design-program record is never an authorization input\n`, ["terms", "shape"]],
-  ["COMMENT", DOCS_ANCHOR.replace("fails closed.", "fails closed. <!-- never softens a native denial -->"), ["shape"]],
+type PageEdit = (page: string) => string;
+/** The eighth bullet replaced by the edit given (which keeps it before what it adds, or rewrites it in place). */
+const atAnchor =
+  (edit: string): PageEdit =>
+  page =>
+    page.replace(DOCS_ANCHOR, () => edit);
+/** The first bullet's 'workbench entry point' replaced by the markdown given. */
+const atEntry =
+  (markdown: string): PageEdit =>
+  page =>
+    page.replace(FIRST_BULLET, () => FIRST_BULLET.replace(ENTRY, () => markdown));
+/** The first bullet with the markdown given appended before its line end. */
+const afterFirst =
+  (markdown: string): PageEdit =>
+  page =>
+    page.replace(FIRST_BULLET, () => `${FIRST_BULLET.slice(0, -1)}${markdown}\n`);
+/** The heading line replaced by the line given. */
+const atHeading =
+  (line: string): PageEdit =>
+  page =>
+    page.replace(HEADING_LINE, () => line);
+/** The docs plants, each with the causes it reds D1 by: refusal #1's (gate s137 LEG 2: D-CTRL, D-NESTED, D-PARA, D-BLOCKQUOTE, D-HTML
+ * and the rider D-PARAPHRASE, each the gate's edit verbatim); refusal #2's (gate s144 LEG 2: L2-D1, L2-D1b and L2-D3, the three
+ * placements of the parked sentence the cut #2 reader missed, and that gate's controls L2-D2 and L2-D4, each the gate's described
+ * edit); and the reader's further controls, one for each further channel the TERMS reading reads and one for each part of the
+ * frozen source that no rendered text shows. */
+const DOCS_PLANTS: readonly (readonly [string, PageEdit, readonly string[]])[] = [
+  ["D-CTRL", atAnchor(`${DOCS_ANCHOR}- ${PARKED_SENTENCE}\n`), ["terms", "shape"]],
+  ["D-NESTED", atAnchor(`${DOCS_ANCHOR}  - ${PARKED_SENTENCE}\n`), ["terms", "shape"]],
+  ["D-PARA", atAnchor(`${DOCS_ANCHOR}\n${PARKED_SENTENCE}\n`), ["terms", "shape"]],
+  ["D-BLOCKQUOTE", atAnchor(`${DOCS_ANCHOR}\n> ${PARKED_SENTENCE}\n`), ["terms", "shape"]],
+  ["D-HTML", atAnchor(`${DOCS_ANCHOR}\n<p>${PARKED_SENTENCE}</p>\n`), ["terms", "shape"]],
+  ["D-PARAPHRASE", atAnchor(`${DOCS_ANCHOR}- ${PARAPHRASE}\n`), ["shape"]],
+  ["L2-D1", atEntry(`[${ENTRY}](#authorization-design "${PARKED_SENTENCE}")`), ["terms", "shape"]],
+  ["L2-D1b", page => `${atEntry(`[${ENTRY}][gate-d1]`)(page)}\n[gate-d1]: #authorization-design "${PARKED_SENTENCE}"\n`, ["terms", "shape"]],
+  ["L2-D3", afterFirst(` ![](#authorization-design "${PARKED_SENTENCE}")`), ["terms", "shape"]],
+  ["L2-D2", afterFirst(` ![${PARKED_SENTENCE.slice(0, PARKED_SENTENCE.indexOf(";"))}](#authorization-design)`), ["terms", "shape"]],
+  ["L2-D4", atAnchor(`${DOCS_ANCHOR}\n[gate-d4]: #authorization-design "${PARKED_SENTENCE}"\n`), ["terms", "shape"]],
+  ["IN-PLACE", atAnchor(DOCS_ANCHOR.replace("fails closed.", `fails closed; ${PARAPHRASE.charAt(0).toLowerCase()}${PARAPHRASE.slice(1)}`)), ["shape"]],
+  ["TABLE", atAnchor(`${DOCS_ANCHOR}\n| Record rule |\n| --- |\n| ${PARKED_SENTENCE} |\n`), ["terms", "shape"]],
+  ["CODE", atAnchor(`${DOCS_ANCHOR}\n\`\`\`text\n${PARKED_SENTENCE}\n\`\`\`\n`), ["terms", "shape"]],
+  ["SUBSECTION", atAnchor(`${DOCS_ANCHOR}\n### A design-program record is never an authorization input\n`), ["terms", "shape"]],
+  ["COMMENT", atAnchor(DOCS_ANCHOR.replace("fails closed.", "fails closed. <!-- never softens a native denial -->")), ["terms", "shape"]],
+  ["HTML-TITLE", atEntry(`<abbr title="${PARKED_SENTENCE}">${ENTRY}</abbr>`), ["terms", "shape"]],
+  ["LINK-DESTINATION", atEntry(`[${ENTRY}](<#${PARKED_SENTENCE}>)`), ["terms", "shape"]],
+  ["IMAGE-SOURCE", afterFirst(` ![](<#${PARKED_SENTENCE}>)`), ["terms", "shape"]],
+  ["DEFINITION-LABEL", atAnchor(`${DOCS_ANCHOR}\n[authorization input]: #authorization-design\n`), ["terms", "shape"]],
+  ["DEFINITION-DESTINATION", atAnchor(`${DOCS_ANCHOR}\n[gate-dd]: <#${PARKED_SENTENCE}>\n`), ["terms", "shape"]],
+  ["CODE-INFO", atAnchor(`${DOCS_ANCHOR}\n\`\`\`${PARKED_SENTENCE}\nrecord\n\`\`\`\n`), ["terms", "shape"]],
+  ["HEADING-TITLE", atHeading(`## [Authorization design](#authorization-design "${PARKED_SENTENCE}")\n`), ["terms", "shape"]],
+  ["NESTED-TITLE", atAnchor(`${DOCS_ANCHOR}  - [nested entry](#authorization-design "${PARKED_SENTENCE}")\n`), ["terms", "shape"]],
+  ["QUOTE-TITLE", atAnchor(`${DOCS_ANCHOR}\n> [quoted entry](#authorization-design "${PARKED_SENTENCE}")\n`), ["terms", "shape"]],
+  ["TABLE-TITLE", atAnchor(`${DOCS_ANCHOR}\n| Record rule |\n| --- |\n| [cell entry](#authorization-design "${PARKED_SENTENCE}") |\n`), ["terms", "shape"]],
+  ["ENTITY", atAnchor(DOCS_ANCHOR.replace("fails closed.", "fails closed; a design-program record is never an authorization&#32;input.")), ["shape"]],
+  ["ESCAPED-DESTINATION", atEntry(`[${ENTRY}](#authorization%20input)`), ["shape"]],
+  ["TITLE-PARAPHRASE", atEntry(`[${ENTRY}](#authorization-design "${PARAPHRASE}")`), ["shape"]],
+  ["EMPHASIS", atEntry(`*${ENTRY}*`), ["shape"]],
+  ["HARD-BREAK", page => page.replace(FIRST_BULLET, () => FIRST_BULLET.replace("point; ", () => "point;  \n")), ["shape"]],
+  ["TASK-BOX", page => page.replace(FIRST_BULLET, () => `- [x] ${FIRST_BULLET.slice(2)}`), ["shape"]],
+  ["HEADING-CLOSE", atHeading("## Authorization design ##\n"), ["shape"]],
+  ["HEADING-ENTITY", atHeading("## Authorization&nbsp;design\n"), ["shape"]],
 ];
 
 
@@ -1045,15 +1204,30 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     const row = ROWS.find(entry => entry.id === "D");
     expect([row?.status, row?.reason?.startsWith("standing rule 3 ")], "clause (d) is parked under standing rule 3").toEqual(["parked", true]);
     const docs = docsBinding();
-    expect(docs.ok, "the page's section binds in the rendered view").toBe(true);
-    expect(docs.terms, "no block of the section states either term of the parked sentence (this cut adds none)").toEqual([]);
-    expect([docs.kinds, docs.items.length, docs.frozen], "the section is its frozen shape: one list of eight bullets, HTML-free, held to the sha-256").toEqual([[...FROZEN_SECTION.kinds], FROZEN_SECTION.items, true]);
+    expect(docs.ok, "the page's section binds in both views").toBe(true);
+    expect(docs.attributes, "no link, image, definition or HTML sits in the section or its heading").toEqual([]);
+    expect(docs.terms, "no block or attribute of the section states either term of the parked sentence (this cut adds none)").toEqual([]);
+    expect(docs.source, "the section's source is the frozen source, byte for byte").toBe(FROZEN_SECTION.source);
+    expect([docs.kinds, docs.items.length, docs.frozen], "the section is its frozen shape: one list of eight bullets, HTML-free, its rendered text and its source held to the sha-256s").toEqual([[...FROZEN_SECTION.kinds], FROZEN_SECTION.items, true]);
     const page = readRepo(DOCS_FILE);
-    expect(page.split(DOCS_ANCHOR).length, "the anchor bullet occurs once on the page").toBe(2);
-    const verdicts = DOCS_PLANTS.map(([id, edit]) => [id, docsCauses(docsBinding(page.replace(DOCS_ANCHOR, edit)))] as const);
+    expect([HEADING_LINE, FIRST_BULLET, DOCS_ANCHOR].map(line => page.split(line).length), "the heading line, the first bullet and the anchor bullet each occur once on the page").toEqual([2, 2, 2]);
+    expect(DOCS_PLANTS.filter(([, edit]) => edit(page) === page).map(([id]) => id), "every docs plant edits the page").toEqual([]);
+    const verdicts = DOCS_PLANTS.map(([id, edit]) => [id, docsCauses(docsBinding(edit(page)))] as const);
     expect(verdicts.filter(([, causes]) => causes.length === 0).map(([id]) => id), "every docs plant reds D1").toEqual([]);
     expect(verdicts, "each by its cause").toEqual(DOCS_PLANTS.map(([id, , causes]) => [id, [...causes]]));
-    return { claim: claim("D1"), status: "parked", page: DOCS_FILE, section: DOCS_HEADING, sentence: "absent", kinds: [...docs.kinds], items: docs.items.length, sha256: FROZEN_SECTION.sha256.slice(0, 16), plants: DOCS_PLANTS.map(([id]) => id) };
+    return {
+      claim: claim("D1"),
+      status: "parked",
+      page: DOCS_FILE,
+      section: DOCS_HEADING,
+      sentence: "absent",
+      kinds: [...docs.kinds],
+      items: docs.items.length,
+      attributes: docs.attributes.length,
+      sha256: FROZEN_SECTION.sha256.slice(0, 16),
+      source: FROZEN_SECTION.source.slice(0, 16),
+      plants: DOCS_PLANTS.map(([id]) => id),
+    };
   },
 };
 
@@ -1085,6 +1259,16 @@ const QUIET: Readonly<Record<string, () => void>> = {
     expect(wordsIn(quiet), "and the word reading").toEqual([]);
     const literal = "export const read = (value: Record<string, unknown>) => [value[\"guardOrRelyReceipt\"], value[`proofTier`]];\n";
     expect(shaped(fieldReads("plant.ts", literal)).map(read => read.name), "the same keys spelled as literals are read").toEqual(["guardOrRelyReceipt", "proofTier"]);
+    // Refusal #2's L2-C4 and L2-C10 (its F3): a template whose head spells the name whole before a substitution is neither a literal
+    // nor a word (the word reading's boundary counts the substitution's $ as an identifier character), in a fresh module and
+    // appended to the decision core's own text.
+    const headWhole = (name: string): string => `export const read = (value: Record<string, unknown>) => value[\`${name}${"$"}{""}\`];\n`;
+    expect(headWhole("guardOrRelyReceipt")).toContain("value[`guardOrRelyReceipt$" + '{""}`]');
+    expect(shaped(fieldReads("quiet.ts", headWhole("guardOrRelyReceipt"))), "a template head spelling a member whole escapes the field reading").toEqual([]);
+    expect(wordsIn(headWhole("guardOrRelyReceipt")), "and the word reading").toEqual([]);
+    const core = `${readRepo(CORE)}\n${headWhole("TemporalRelianceCertificateV1")}`;
+    expect(shaped(fieldReads(CORE, core)), "a template head spelling a schema name whole, appended to the core, escapes the field reading").toEqual([]);
+    expect(wordsIn(core), "and the word reading").toEqual([]);
   },
   "R-PROSE-RECORD": () => {
     expect(lineKinds().prose, "29 record lines define their records in prose").toBe(29);
@@ -1126,11 +1310,25 @@ const QUIET: Readonly<Record<string, () => void>> = {
     expect(selfReadDefects(reads), "and the self-read reads it bound").toEqual([]);
   },
   "R-OTHER-SECTION": () => {
-    // The sentence on another section of the page leaves the 'Authorization design' reading as it was: D1 reads that one section.
+    // The sentence placed outside the section's source leaves D1's reading as it was: under another section; as a level-2 heading
+    // placed after the section's last block (refusal #2's L2-D7, the setext form, and the ATX form) or a level-1 one, which starts
+    // another section; and as the summary of a details element wrapped around the section, which sits in the section before it.
     const page = readRepo(DOCS_FILE);
-    const elsewhere = page.replace("\n## Credential boundaries\n", `\n## Credential boundaries\n\n${PARKED_SENTENCE}\n`);
-    expect([elsewhere === page, elsewhere.includes(PARKED_SENTENCE)], "the plant is on the page, under Credential boundaries").toEqual([false, true]);
-    expect(docsBinding(elsewhere), "and D1's reading of its section is the reading without it").toEqual(docsBinding(page));
+    const next = "\n## Credential boundaries\n";
+    const elsewhere: readonly (readonly [string, string])[] = [
+      ["a paragraph under Credential boundaries", page.replace(next, () => `${next}\n${PARKED_SENTENCE}\n`)],
+      ["a setext level-2 heading after the list (L2-D7)", page.replace(next, () => `\n${PARKED_SENTENCE}\n---\n${next}`)],
+      ["an ATX level-2 heading after the list", page.replace(next, () => `\n## ${PARKED_SENTENCE}\n${next}`)],
+      ["an ATX level-1 heading after the list", page.replace(next, () => `\n# ${PARKED_SENTENCE}\n${next}`)],
+      [
+        "a details element's summary wrapped around the section",
+        page.replace(HEADING_LINE, () => `<details><summary>${PARKED_SENTENCE}</summary>\n\n${HEADING_LINE}`).replace("\n## Input and output hardening\n", () => "\n</details>\n\n## Input and output hardening\n"),
+      ],
+    ];
+    for (const [form, planted] of elsewhere) {
+      expect([planted === page, planted.includes(PARKED_SENTENCE)], `${form}: the plant is on the page`).toEqual([false, true]);
+      expect(docsBinding(planted), `${form}: D1's reading of its section is the reading without it`).toEqual(docsBinding(page));
+    }
   },
 };
 
