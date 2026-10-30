@@ -365,7 +365,7 @@
         },
         {
           "id": "R-not-references",
-          "digest": "2b3990cf9d3c5e746c040e3704080177101d294689a123dea994ffeab98ac3d3"
+          "digest": "6557d8f724972c9782f07cf5130290d5574753214c145477085314238ac27346"
         },
         {
           "id": "R-constructor-forms",
@@ -375,7 +375,7 @@
     },
     {
       "id": "U",
-      "label": "GLOBAL's binding family (class U1 of record), enumerated: a name binds only through a declaration of its own module that emits a run-time binding of its own, each form held by a pin of its own",
+      "label": "GLOBAL's binding family and the meta-property (classes U1, U2 and U3 of record), enumerated: a name binds only through a declaration of its own module that emits a run-time binding of its own and, for a namespace member, only inside the block that declares it and, for an enum member, only after it; import.meta binds nothing; each form held by a pin of its own",
       "pins": [
         {
           "id": "U-GP1",
@@ -540,6 +540,134 @@
         {
           "id": "U-binds-members",
           "digest": "426164bd9f2ccf6a75668ed19ad45699afa58287e8e21b32887ebd257d0698af"
+        },
+        {
+          "id": "U-NS1",
+          "digest": "2e46ea7ad497a0893816986d79713ab020365bca2e3c79dea6f650cf2031c2b8"
+        },
+        {
+          "id": "U-NS1L",
+          "digest": "0c227f87e04b996119874254e2ccb3ede01f96dc12905b1b6c129ba6d2538fb4"
+        },
+        {
+          "id": "U-NS2",
+          "digest": "a9f1fa95963f0ca0fd70261dbd56ed0f4f7c65765f203da8cb1970e41806bf94"
+        },
+        {
+          "id": "U-NS3",
+          "digest": "5496176c811c0213c47425cfe3a88e7e653b40af3e1f4964198df6d0a518f413"
+        },
+        {
+          "id": "U-NS3b",
+          "digest": "e8e8cb8b3f5eec3826731b38940aa22d879e0cab2e653d757477b12e8cb1dd08"
+        },
+        {
+          "id": "U-NS3bL",
+          "digest": "2bcdf91dcdb48c07798f1287eb06460e6c44990981f6bdc5f679ad7c17225d26"
+        },
+        {
+          "id": "U-NS4",
+          "digest": "d63140158afcd02cd04a350e7cd533311cefe576f8cb87e527a804b1ed982f49"
+        },
+        {
+          "id": "U-NS5",
+          "digest": "b03788320c8bbdf3d40faf5e14ee482d4addf1fdc02db842770f7359c470199d"
+        },
+        {
+          "id": "U-NS6",
+          "digest": "a18128cb712c94e3e4bb228d33c838d8df285808e167e7d8621fabe6df72e343"
+        },
+        {
+          "id": "U-NS7",
+          "digest": "42b41b83d56bed69c164588b552c3ee75034fbaa5862859a481b6b2b1e251972"
+        },
+        {
+          "id": "U-NS8",
+          "digest": "946a53dee83e3c72addd14401f88e41d12a97f35e734e66e19739cbb76683b89"
+        },
+        {
+          "id": "U-NS9",
+          "digest": "ea5cd2254daf24d67b044e2f6770acb553775fbb7cbd12a5529ecbdc9a7fe823"
+        },
+        {
+          "id": "U-NS10",
+          "digest": "fcdf1faae2ea61819852b10e532be478be3c8b95132a83fc1733bf4474519872"
+        },
+        {
+          "id": "U-NS11",
+          "digest": "074ef5b15de2db26412485b1cdd1b86f94534cbec2be10a7785e361c8fd51c86"
+        },
+        {
+          "id": "U-NS-C1",
+          "digest": "e594ae5296660b8fe8a2befd51b7ec9ce2c38753527cca775eb87b0511d4f513"
+        },
+        {
+          "id": "U-NS-C2",
+          "digest": "3bbb70f9708b8be2031032325111578095d2a935d442ecc6cac9eaa87c2231ea"
+        },
+        {
+          "id": "U-NS-C3",
+          "digest": "a66ef8e4ee92e2b64ee93651db75c344c2e33ee09b98e00ed71420f6475e1fc7"
+        },
+        {
+          "id": "U-NS-nested-cross",
+          "digest": "2ae5781c3fecdc3d4ce38d37af21dc1b3764ce2ed0fa08d9cbee2dfdfd34e034"
+        },
+        {
+          "id": "U-NS-cross-forms",
+          "digest": "071a76b1929742287c8c647d31197b049d818617aea43d7657042efad134a8de"
+        },
+        {
+          "id": "U-EN1",
+          "digest": "457dcd710be038439cf4cb89be07230eb134b35e4c5c1d4854f84a57cd1226e0"
+        },
+        {
+          "id": "U-EN2",
+          "digest": "43a77b9cf42280b7d7cda0672dddba40d5f5dd3b8085daad00069fc581d34370"
+        },
+        {
+          "id": "U-EN-forward",
+          "digest": "57d67210ff3192faf3628aba16225b932acd47a6b8868e68cce6cf9fbcde27a7"
+        },
+        {
+          "id": "U-EN-forward-merged",
+          "digest": "cd04a4a40fc664fb4938ff2a4a238ba44e25d80ff103de41797d4d2999ec4ee5"
+        },
+        {
+          "id": "U-EN-self",
+          "digest": "0422c1450a804ff4a0a25244e594432bbae18a30b52744a36da9054fd5dba872"
+        },
+        {
+          "id": "U-META1",
+          "digest": "227bc5f22459b9993d0737d2eb692c593881ecab2c4e54616a54b1ac9eb406e8"
+        },
+        {
+          "id": "U-META1L",
+          "digest": "bbef7981b2cc87f2a5d8175ff0775dc390d74a7f897083fc27924a5bb2a93d90"
+        },
+        {
+          "id": "U-meta-forms",
+          "digest": "07d16964fe2248b039be55a43a41da9ee58e0d8235d1b9f28c86b461cbecf8cf"
+        },
+        {
+          "id": "U-GJ1",
+          "digest": "bf2082c2befd6cefc4a6d0604d140f0a31c1933bea7babcabd417f277e35b1f9"
+        },
+        {
+          "id": "U-wrapper-scopes",
+          "digest": "e8d4eb1cbd3e5f6b908ad8b1fb111e6a61f8ee10ea384b3047fddcd96942dc88"
+        },
+        {
+          "id": "U-GJ4",
+          "digest": "4ccdc1663d0e53822e585e121864de0eb7de6c4cc4dfbe0b043a28cfd1b9ca29"
+        },
+        {
+          "id": "U-GJ15",
+          "digest": "9038c08efbeea9a79fd6a3f5b1ba0565dee8f583f44ddc65ce76b5fff14620c9"
+        },
+        {
+          "id": "U-GJ16",
+          "digest": "c7d62558d0f5202182b4b592e14e52d39901733f807d615664364f4d9efeb717"
         }
       ]
     },
@@ -754,6 +882,38 @@
     "U U-binds-values",
     "U U-binds-merged",
     "U U-binds-members",
+    "U U-NS1",
+    "U U-NS1L",
+    "U U-NS2",
+    "U U-NS3",
+    "U U-NS3b",
+    "U U-NS3bL",
+    "U U-NS4",
+    "U U-NS5",
+    "U U-NS6",
+    "U U-NS7",
+    "U U-NS8",
+    "U U-NS9",
+    "U U-NS10",
+    "U U-NS11",
+    "U U-NS-C1",
+    "U U-NS-C2",
+    "U U-NS-C3",
+    "U U-NS-nested-cross",
+    "U U-NS-cross-forms",
+    "U U-EN1",
+    "U U-EN2",
+    "U U-EN-forward",
+    "U U-EN-forward-merged",
+    "U U-EN-self",
+    "U U-META1",
+    "U U-META1L",
+    "U U-meta-forms",
+    "U U-GJ1",
+    "U U-wrapper-scopes",
+    "U U-GJ4",
+    "U U-GJ15",
+    "U U-GJ16",
     "S S-projection",
     "S S-registry",
     "S S-provider",

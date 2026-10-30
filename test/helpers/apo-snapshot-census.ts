@@ -4,8 +4,10 @@
  * census and its roster are written from the same rows.
  *
  * FAIL-CLOSED CORE. The census admits an APO view only in one proven form and refuses every other form with a typed
- * finding (a red): it never reads an unknown form as quiet. A quiet reading is the admitted form (row V, and the quiet
- * positions each reading below names) or a named residual (NOT CLAIMED, below), each held quiet by a row Q pin.
+ * finding (a red). Each reading below claims exactly the forms it lists, each naming its pin: a quiet reading is the
+ * admitted form (row V, and the quiet positions each reading names) or a named residual (NOT CLAIMED, below), each held
+ * quiet by a row Q pin, and every form a reading does not list as quiet reds (the GLOBAL binding allowlist, (4)-(7), and
+ * the meta rule are the fail-closed reading of refusal #3's ruling R-B134).
  * PER FORM: every reading below is held per form - by a pin of its own, or by a line or a file of its own inside a
  * multi-form pin, each with its own expected finding (a quiet form by a pin whose findings would change if the form
  * were read otherwise) - and each form names the pin that holds it, in parentheses.
@@ -58,9 +60,10 @@
  *   (R-folded-forms) - in value and type positions alike (R-type-position). Regular-expression literals and comments are
  *   not read (R-UNREAD-TEXT).
  * - GLOBAL: a closure identifier - a reference or a declaration's own name - that names no RUN-TIME binding of its own
- *   module, outside ADMITTED_FREE. ENUMERATED (standing rule 19, ruling R-B106: the binding family, class U1 of refusals
- *   #1 and #2, in the enumerate-the-resolvable form): the list below claims exactly the pinned forms, each naming its pin,
- *   and row U holds one pin per member of record; a form outside the list is a residual-list addition. A name binds only
+ *   module, outside ADMITTED_FREE. ENUMERATED (standing rule 19, rulings R-B106 and R-B134: the binding family, class U1
+ *   of refusals #1, #2 and #3, in the enumerate-the-resolvable form, fail-closed outside the pinned set): the list below
+ *   claims exactly the pinned forms, each naming its pin, and row U holds one pin per member of record; a declaration of a
+ *   form the list does not name as binding binds nothing, so a name it alone declares reds. A name binds only
  *   where the TypeScript checker (noLib, noResolve, over the closure files) resolves it to a symbol one of whose
  *   declarations is (1) in the name's own module, the same source file (a name declared in another module binds only
  *   through an import of it, which is a declaration of the importing module: TypeScript reads a script's top-level
@@ -76,7 +79,9 @@
  *   import-equals - and a catch variable (each held quiet by U-binds-values, which also holds a module-scope var of a name
  *   outside WRAPPER_NAMES: a fresh binding at run time), none of them ambient. Each non-binding form, with its pin: an
  *   ambient declaration - under a declare modifier, its own or an enclosing one's (R-ambient, U-GC1, U-GP15, U-GC2), or
- *   inside a module declaration named by a string literal, declare or not (U-string-module); a type-only import (a named,
+ *   inside a module declaration named by a string literal, declare or not (U-string-module), the enclosing one at any
+ *   depth (U-GJ15: a const three namespaces under a string-named module) and its members' own names included (U-GJ4: a
+ *   declare class's member reds at its own name - the ambient test is read before the member names below); a type-only import (a named,
  *   a namespace and a default import type, a type-only specifier and an import type x = require(...): R-type-only-value);
  *   a function declaration without a body (an overload binds through its implementation: R-bodiless); a parameter of a
  *   function-like without a body - an abstract method's, a method overload's, a constructor overload's, an index
@@ -92,7 +97,8 @@
  *   U-default-interface, U-ambient-let-type, U-depth-two (two edges from the view), U-ambient-function-interface and
  *   U-ambient-namespace-interface. A NAMESPACE binds when it is not ambient and holds a statement that emits a binding - a
  *   variable statement, a function declaration with a body, a class, a non-const enum or a namespace that binds - a dotted
- *   one through its inner one (U-namespace-binds); every other namespace binds nothing, its own name red at the
+ *   one only through its innermost body (U-namespace-binds; one whose innermost body is empty binds nothing, red at its
+ *   own name and at the use: U-GJ16); every other namespace binds nothing, its own name red at the
  *   declaration as well as at the use: an empty one, a types-only one, a const-enum-only one, an ambient-member-only one, a
  *   bodiless-function-only one, one holding only a statement the reader does not list (void 0: fail-closed, though
  *   TypeScript emits it), one holding only a namespace that binds nothing, and an ambient one (U-namespace-unbound,
@@ -108,8 +114,28 @@
  *   var require = require, enum require and namespace require loaded node:os through Node's require under tsc's CommonJS
  *   emit) - U-wrapper-var, each name by a var without an initializer; U-wrapper-forms, a self-initialized var, a non-const
  *   enum, an instantiated namespace, a function declaration, a let, a class and a var in a top-level block, each held the
- *   same way (fail-closed), while a function's and a namespace body's own declaration of such a name is a fresh binding
- *   and binds. Member and type-parameter names - a class or object-literal property, method or accessor, an enum member,
+ *   same way (fail-closed), while a declaration of such a name inside a function-like, a namespace body or a class static
+ *   block is a fresh binding and binds - a function declaration's, a namespace body's and a static block's (U-wrapper-forms),
+ *   an arrow's, an object method's and a function expression's (U-GJ1), and a constructor's, a class method's, a getter's
+ *   and a setter's (U-wrapper-scopes). (6) NAMESPACE BLOCKS: a declaration that a namespace body holds - the nearest body
+ *   around it - binds only a reference inside that body. The checker merges every block of a namespace, so a reference in
+ *   one block resolves to a member another block exports; jiti 2.7.0, Pi's extension loader, compiles each block to a
+ *   function of its own holding the member as its own const, and the reference, left unqualified, reads the host global
+ *   (the gate's readback at refusal #3; tsc's emit qualifies it, and the census reads Pi's loader). So a reference from
+ *   another block reds at the use - refusal #3's members U-NS1, U-NS1L (the src-landable form: the handler's call reaches
+ *   the second block's real process.kill), U-NS2, U-NS4, U-NS5 (in a closure module), U-NS6 (dotted), U-NS7 (a function
+ *   member), U-NS8, U-NS10 (a function merged with the namespace), U-NS11 (the handler inside a block) and U-NS3bL (the
+ *   src-landable form, through an alias), the gate's U-NS3 and U-NS3b, a shorthand property reading an exported class and
+ *   reads of an exported enum, namespace, function and import-equals alias (U-NS-cross-forms), and an inner namespace's
+ *   second block inside one outer block (U-NS-nested-cross: the nearest body counts) - while a reference inside the
+ *   declaring body (U-NS-C2) or inside a namespace nested in it (U-NS-C3) binds. An unexported member never reaches
+ *   another block (U-NS-C1) and a namespace merged with an enum never reaches the enum's member by its bare name (U-NS9),
+ *   each red as a free name. (7) ENUM MEMBERS: an enum member binds only its own name and a read after its declaration -
+ *   jiti's enum transform qualifies a bare member name only once it has read that member - so a read in an earlier
+ *   member's initializer (U-EN-forward), in an earlier declaration of the same enum (U-EN-forward-merged) or inside the
+ *   member's own initializer (U-EN-self) binds nothing and reds (the seat's readback: each reached the host's process),
+ *   while a read after it binds, in the same declaration (U-EN1) and in a later declaration at the same top level (U-EN2):
+ *   jiti's enum transform and tsc each qualify it (the gate's readback). Member and type-parameter names - a class or object-literal property, method or accessor, an enum member,
  *   a type parameter - name no module binding and are never a value reference's target: each own name is read and quiet
  *   (U-binds-members). The one binding without a declaration is the function's own arguments object, which the checker
  *   resolves only inside a non-arrow function, an arrow inheriting it from the function around it (R-arguments: elsewhere
@@ -120,11 +146,15 @@
  *   read: every identifier outside type positions (an implements clause holds only type positions), interfaces and type
  *   aliases (R-types-erased) and type-only imports and exports (R-type-only-erased), each erased at run time; a property
  *   name, a qualified name's right side, a binding element's property name, an import specifier's imported name, an
- *   export-from specifier, a label, a meta-property name and an import attribute's name are not references
+ *   export-from specifier, a label, new.target's name and an import attribute's name are not references
  *   (R-not-references); a shorthand property reads its value (R-shorthand) and a local export specifier its local name
  *   (R-export-local); a class's extends expression is a value, for a class declaration and a class expression alike
  *   (R-extends); an enum member's initializer is read (R-enum-initializer); and every name is read by nameOf
- *   (R-global-escaped). NOT CLAIMED: an import's own declaration binds whether or not its relative target exports the
+ *   (R-global-escaped). THE META RULE (class U2 of refusal #3): no meta-property key is parsed, so import.meta itself reds,
+ *   as the free name import.meta, wherever a value position reads it - a write (U-META1, and U-META1L, the src-landable
+ *   form through a cast), an alias of the meta object, a key read and a call (U-meta-forms), and a key read in
+ *   R-not-references: under Pi's jiti 2.7.0 loader import.meta.env is the host's process.env (the gate's readback at
+ *   refusal #3: a planted write reached the host environment). new.target is not read (R-not-references). NOT CLAIMED: an import's own declaration binds whether or not its relative target exports the
  *   name - the reader never checks a target's exports (R-UNLINKED-IMPORT: at run time such an import reads undefined
  *   under jiti and tsc's CommonJS emit and fails to link under ESM, never a host global).
  * - CONSTRUCTOR: a closure text whose whole text is constructor (the route to a code constructor through any object),
@@ -404,17 +434,36 @@ function emitsBinding(declaration: ts.Declaration, name: string): boolean {
 }
 
 /**
- * Whether a name of module sf binds at run time (see the module header: GLOBAL (1)-(5) and the arguments object): the checker
- * resolves it to a symbol one of whose declarations lies in sf itself and emits a binding, and sf is an ES module and not a
- * declaration file. A symbol merges every same-named declaration of one scope, so a companion that emits nothing (an
- * interface, a type alias, an uninstantiated namespace, an ambient or bodiless declaration) never binds the name for it.
+ * Whether a declaration's binding reaches a reference (see the module header: GLOBAL (6)-(7)). (6) A declaration that a
+ * namespace body holds - the nearest body around it - binds only for a reference inside that body. The checker merges every
+ * block of a namespace, so a reference in one block resolves to a member another block exports; under jiti 2.7.0, Pi's
+ * extension loader, each block compiles to a function of its own that holds the member as its own const, and the
+ * reference, left unqualified, reads the host global (the gate's readback at refusal #3). (7) An enum member binds only its
+ * own name and a reference after it: jiti's enum transform qualifies a bare member name only once it has read that member,
+ * so a read before the member's declaration or inside its own initializer reads the host global (the seat's readback).
  */
-function bindsHere(sf: ts.SourceFile, name: string, symbol: ts.Symbol | undefined): boolean {
+function reaches(declaration: ts.Node, reference: ts.Node): boolean {
+  if (ts.isEnumMember(declaration) && reference !== declaration.name && reference.pos < declaration.end) return false;
+  let block: ts.Node | undefined = declaration.parent;
+  while (block !== undefined && !ts.isModuleBlock(block)) block = block.parent;
+  if (block === undefined) return true;
+  for (let current: ts.Node | undefined = reference; current !== undefined; current = current.parent) if (current === block) return true;
+  return false;
+}
+
+/**
+ * Whether a name of module sf binds at run time where it is read (see the module header: GLOBAL (1)-(6) and the arguments
+ * object): the checker resolves it to a symbol one of whose declarations lies in sf itself, emits a binding and reaches the
+ * reference, and sf is an ES module and not a declaration file. A symbol merges every same-named declaration of one scope,
+ * so a companion that emits nothing (an interface, a type alias, an uninstantiated namespace, an ambient or bodiless
+ * declaration) never binds the name for it.
+ */
+function bindsHere(sf: ts.SourceFile, name: string, symbol: ts.Symbol | undefined, reference: ts.Node): boolean {
   if (symbol === undefined) return false;
   const declarations = symbol.declarations ?? [];
   // The one binding without a declaration: the function's own arguments object, which the checker resolves only inside a non-arrow function.
   if (declarations.length === 0) return name === "arguments" && symbol.name === "arguments";
-  return ts.isExternalModule(sf) && !sf.isDeclarationFile && declarations.some(declaration => declaration.getSourceFile() === sf && emitsBinding(declaration, name));
+  return ts.isExternalModule(sf) && !sf.isDeclarationFile && declarations.some(declaration => declaration.getSourceFile() === sf && emitsBinding(declaration, name) && reaches(declaration, reference));
 }
 
 /**
@@ -424,12 +473,13 @@ function bindsHere(sf: ts.SourceFile, name: string, symbol: ts.Symbol | undefine
  */
 const isErased = (node: ts.Node): boolean => ts.isTypeOnlyImportOrExportDeclaration(node);
 
-/** The free names of one module of a checked program (see the module header: GLOBAL), each with its line. */
+/** The free names of one module of a checked program (see the module header: GLOBAL), each with its line; import.meta is read as the free name import.meta (the meta rule). */
 function freeNamesOf(sf: ts.SourceFile, checker: ts.TypeChecker): { readonly line: number; readonly name: string }[] {
   const out: { readonly line: number; readonly name: string }[] = [];
+  const lineOf = (node: ts.Node): number => sf.getLineAndCharacterOfPosition(node.getStart(sf)).line + 1;
   const report = (node: ts.Identifier, symbol: ts.Symbol | undefined): void => {
     const name = nameOf(node);
-    if (!bindsHere(sf, name, symbol) && !ADMITTED_FREE.includes(name)) out.push({ line: sf.getLineAndCharacterOfPosition(node.getStart(sf)).line + 1, name });
+    if (!bindsHere(sf, name, symbol, node) && !ADMITTED_FREE.includes(name)) out.push({ line: lineOf(node), name });
   };
   const visit = (node: ts.Node): void => {
     if (ts.isExpressionWithTypeArguments(node) && ts.isHeritageClause(node.parent) && node.parent.token === ts.SyntaxKind.ExtendsKeyword && (ts.isClassDeclaration(node.parent.parent) || ts.isClassExpression(node.parent.parent))) {
@@ -437,6 +487,11 @@ function freeNamesOf(sf: ts.SourceFile, checker: ts.TypeChecker): { readonly lin
       return;
     }
     if (ts.isTypeNode(node) || ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node) || isErased(node)) return;
+    if (ts.isMetaProperty(node) && node.keywordToken === ts.SyntaxKind.ImportKeyword) {
+      // The meta rule: no meta-property key is parsed, so import.meta itself reds (fail-closed) wherever a value position reads it.
+      out.push({ line: lineOf(node), name: "import.meta" });
+      return;
+    }
     if (ts.isExportSpecifier(node)) {
       // A local export reads its local name (the property name when aliased); an export-from names no local binding.
       const local = node.propertyName ?? node.name;
@@ -656,6 +711,8 @@ const HOST = 'import type { Host } from "./host.js";';
 const PROJECTION = 'import type { ObservationProjection } from "../workbench/observation.js";';
 const REDACTION = 'import { sanitizeWorkbenchText } from "../workbench/redaction.js";';
 const REDACTION_FILE = "src/workbench/redaction.ts";
+/** The src-landable plants' host module, byte-for-byte as the gate wrote it (plants/landable/host.ts of its refusal #3 PREP archive). */
+const LANDABLE_HOST = ["export interface Host {", "  readonly id: string;", "}", ""].join("\n");
 /** A planted APO view: its title names the program and the view class, its handler body runs on input. */
 const view = (title: string, imports: readonly string[], body: readonly string[], extra: readonly string[] = []): string =>
   [
@@ -1734,7 +1791,7 @@ export const ROWS: readonly Row[] = [
       {
         kind: "plant",
         id: "R-not-references",
-        what: "names that are not binding references stay quiet: an import alias's imported name and an export-from specifier (each naming an export the module lacks, so neither resolves), an import attribute, a qualified name's right side, a binding element's property name, labels, and the meta-properties import.meta and new.target",
+        what: "names that are not binding references stay quiet: an import alias's imported name and an export-from specifier (each naming an export the module lacks, so neither resolves), an import attribute, a qualified name's right side, a binding element's property name, labels, and the meta-property new.target; the meta-property import.meta is the one exception and reds (GLOBAL, the meta rule)",
         files: {
           [V]: [
             HOST,
@@ -1765,7 +1822,7 @@ export const ROWS: readonly Row[] = [
           "src/apo/label-ops.ts": ['export const label = "x";', "export default 1;", ""].join("\n"),
         },
         views: [V],
-        findings: [],
+        findings: [globalAt(18, "import.meta")],
       },
       {
         kind: "plant",
@@ -1797,7 +1854,7 @@ export const ROWS: readonly Row[] = [
   },
   {
     id: "U",
-    label: "GLOBAL's binding family (class U1 of record), enumerated: a name binds only through a declaration of its own module that emits a run-time binding of its own, each form held by a pin of its own",
+    label: "GLOBAL's binding family and the meta-property (classes U1, U2 and U3 of record), enumerated: a name binds only through a declaration of its own module that emits a run-time binding of its own and, for a namespace member, only inside the block that declares it and, for an enum member, only after it; import.meta binds nothing; each form held by a pin of its own",
     pins: [
       {
         kind: "plant",
@@ -2504,6 +2561,450 @@ export const ROWS: readonly Row[] = [
         },
         views: [V],
         findings: [],
+      },
+      {
+        kind: "plant",
+        id: "U-NS1",
+        what: "refusal #3 NS1 (class U1's third failure, the gate's plant as written): a reference in one block of a merged namespace to a member another block exports binds nothing (GLOBAL (6)): process.kill in the second block of namespace Ops reds at the use, the first block's own name stays quiet (GLOBAL)",
+        files: {
+          [V]: [
+            HOST,
+            'export const VIEW_TITLE = "APO resource pressure";',
+            "namespace Ops {",
+            "  export const process = { kill(pid: number): void { void pid; } };",
+            "}",
+            "namespace Ops {",
+            "  export function stop(pid: number): void {",
+            "    process.kill(pid);",
+            "  }",
+            "}",
+            "export class View {",
+            "  private selected = 0;",
+            "  constructor(private readonly host: Host) {}",
+            "  handleInput(data: string): void {",
+            "    void this.host;",
+            "    void data;",
+            "    Ops.stop(this.selected);",
+            "  }",
+            "}",
+            "",
+          ].join("\n"),
+        },
+        views: [V],
+        findings: [globalAt(8, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-NS1L",
+        what: "refusal #3 NS1L, the src-landable form byte-for-byte as the gate wrote it (the gate measured tsc -p tsconfig.json rc 0 and biome rc 0 on it): the exported namespace Ops merged across two blocks, the handler's call reaching the second block's real process.kill - red at that use (GLOBAL)",
+        files: {
+          [V]: [
+            'import type { Host } from "./host.js";',
+            'export const VIEW_TITLE = "APO resource pressure";',
+            "export namespace Ops {",
+            "  export const process = { kill(pid: number): void { void pid; } };",
+            "}",
+            "export namespace Ops {",
+            "  export function stop(pid: number): void {",
+            "    process.kill(pid);",
+            "  }",
+            "}",
+            "export class View {",
+            "  private selected = 0;",
+            "  constructor(private readonly host: Host) {}",
+            "  handleInput(data: string): void {",
+            "    void this.host;",
+            "    void data;",
+            "    Ops.stop(this.selected);",
+            "  }",
+            "}",
+            "",
+          ].join("\n"),
+          "src/apo/host.ts": LANDABLE_HOST,
+        },
+        views: [V],
+        findings: [globalAt(8, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-NS2",
+        what: "refusal #3 NS2: a cross-block reference to an exported fetch member binds nothing: the second block's real fetch call reds at the use (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["N.go();"], ["namespace N {", "  export const fetch = (url: string): string => url;", "}", "namespace N {", "  export function go(): void {", '    void fetch("http://127.0.0.1:9/fake");', "  }", "}"]) },
+        views: [V],
+        findings: [globalAt(8, "fetch")],
+      },
+      {
+        kind: "plant",
+        id: "U-NS3",
+        what: "the gate's NS3 (red before this cut by PACKAGE alone): a cross-block reference to an exported require member binds nothing: the call reds as a free name at the use beside its PACKAGE edge (GLOBAL, PACKAGE)",
+        files: { [V]: view("APO resource pressure", [HOST], ["void N.load();"], ["namespace N {", "  export const require = (id: string): unknown => id;", "}", "namespace N {", "  export function load(): unknown {", '    return require("node:child_process");', "  }", "}"]) },
+        views: [V],
+        findings: [`PACKAGE ${V} -> ${V}:8 require node:child_process via ${V}`, globalAt(8, "require")],
+      },
+      {
+        kind: "plant",
+        id: "U-NS3b",
+        what: "the gate's NS3b: a cross-block reference to an exported require member read through an alias binds nothing: require reds at the read (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["void N.load();"], ["namespace N {", "  export const require = (id: string): unknown => id;", "}", "namespace N {", "  export function load(): unknown {", "    const take = require;", '    return take("node:child_process");', "  }", "}"]) },
+        views: [V],
+        findings: [globalAt(8, "require")],
+      },
+      {
+        kind: "plant",
+        id: "U-NS3bL",
+        what: "refusal #3 NS3bL, the src-landable form byte-for-byte as the gate wrote it: the exported namespace N merged across two blocks, the second block reading require through an alias - red at the read (GLOBAL)",
+        files: {
+          [V]: [
+            'import type { Host } from "./host.js";',
+            'export const VIEW_TITLE = "APO resource pressure";',
+            "export namespace N {",
+            "  export const require = (id: string): unknown => id;",
+            "}",
+            "export namespace N {",
+            "  export function load(): unknown {",
+            "    const take = require;",
+            '    return take("node:child_process");',
+            "  }",
+            "}",
+            "export class View {",
+            "  private selected = 0;",
+            "  constructor(private readonly host: Host) {}",
+            "  handleInput(data: string): void {",
+            "    void this.host;",
+            "    void data;",
+            "    void this.selected;",
+            "    void N.load();",
+            "  }",
+            "}",
+            "",
+          ].join("\n"),
+          "src/apo/host.ts": LANDABLE_HOST,
+        },
+        views: [V],
+        findings: [globalAt(8, "require")],
+      },
+      {
+        kind: "plant",
+        id: "U-NS4",
+        what: "refusal #3 NS4: a cross-block reference to an exported globalThis member binds nothing: globalThis reds at the use (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["void N.reach();"], ["namespace N {", "  export const globalThis = { process: 0 };", "}", "namespace N {", "  export function reach(): unknown {", "    return globalThis.process;", "  }", "}"]) },
+        views: [V],
+        findings: [globalAt(8, "globalThis")],
+      },
+      {
+        kind: "plant",
+        id: "U-NS5",
+        what: "refusal #3 NS5: an exported namespace merged across two blocks of a closure module: the second block's process.kill reds in that module (GLOBAL)",
+        files: {
+          [V]: view("APO resource pressure", [HOST, 'import { Ops } from "./ops.js";'], ["Ops.stop(this.selected);"]),
+          "src/apo/ops.ts": ["export namespace Ops {", "  export const process = { kill(pid: number): void { void pid; } };", "}", "export namespace Ops {", "  export function stop(pid: number): void {", "    process.kill(pid);", "  }", "}", ""].join("\n"),
+        },
+        views: [V],
+        findings: [globalAt(6, "process", "src/apo/ops.ts", `${V} -static-> src/apo/ops.ts`)],
+      },
+      {
+        kind: "plant",
+        id: "U-NS6",
+        what: "refusal #3 NS6: a dotted namespace merged across two blocks: the second block's process.kill reds at the use (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["A.B.stop(this.selected);"], ["namespace A.B {", "  export const process = { kill(pid: number): void { void pid; } };", "}", "namespace A.B {", "  export function stop(pid: number): void {", "    process.kill(pid);", "  }", "}"]) },
+        views: [V],
+        findings: [globalAt(8, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-NS7",
+        what: "refusal #3 NS7: a cross-block reference to an exported function member binds nothing: process reds at the use (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["void N.reach();"], ["namespace N {", "  export function process(): number {", "    return 0;", "  }", "}", "namespace N {", "  export function reach(): unknown {", "    return process;", "  }", "}"]) },
+        views: [V],
+        findings: [globalAt(10, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-NS8",
+        what: "refusal #3 NS8: a cross-block reference to an exported Function member binds nothing: the call reds at the use (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["void N.build();"], ["namespace N {", "  export const Function = (body: string): string => body;", "}", "namespace N {", "  export function build(): unknown {", '    return Function("return 1");', "  }", "}"]) },
+        views: [V],
+        findings: [globalAt(8, "Function")],
+      },
+      {
+        kind: "plant",
+        id: "U-NS9",
+        what: "refusal #3 control NS9 (red under both judges, held as a guard): a namespace merged with an enum never reaches the enum's member by its bare name: process reds at the use (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["E.stop(this.selected);"], ["enum E {", '  process = Number("7"),', "}", "namespace E {", "  export function stop(pid: number): void {", "    (process as unknown as { kill(pid: number): void }).kill(pid);", "  }", "}"]) },
+        views: [V],
+        findings: [globalAt(8, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-NS10",
+        what: "refusal #3 NS10: a function merged with a namespace of two blocks: the second block's process.kill reds at the use (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["Ops.stop(this.selected);"], ["function Ops(): void {}", "namespace Ops {", "  export const process = { kill(pid: number): void { void pid; } };", "}", "namespace Ops {", "  export function stop(pid: number): void {", "    process.kill(pid);", "  }", "}"]) },
+        views: [V],
+        findings: [globalAt(9, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-NS11",
+        what: "refusal #3 NS11: the view's handler itself inside the second block of an exported namespace: its process.kill reds at the use (GLOBAL)",
+        files: {
+          [V]: [
+            HOST,
+            'export const VIEW_TITLE = "APO resource pressure";',
+            "export namespace Panel {",
+            "  export const process = { kill(pid: number): void { void pid; } };",
+            "}",
+            "export namespace Panel {",
+            "  export class View {",
+            "    private selected = 0;",
+            "    constructor(private readonly host: Host) {}",
+            "    handleInput(data: string): void {",
+            "      void this.host;",
+            "      void data;",
+            "      process.kill(this.selected);",
+            "    }",
+            "  }",
+            "}",
+            "",
+          ].join("\n"),
+        },
+        views: [V],
+        findings: [globalAt(13, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-NS-C1",
+        what: "refusal #3 control NS-C1 (red under both judges, held as a guard): an unexported member is never in another block's scope: process reds at the use (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["N.stop(this.selected);"], ["namespace N {", "  const process = { kill(pid: number): void { void pid; } };", "  void process;", "}", "namespace N {", "  export function stop(pid: number): void {", "    process.kill(pid);", "  }", "}"]) },
+        views: [V],
+        findings: [globalAt(9, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-NS-C2",
+        what: "refusal #3 control NS-C2: a reference inside the block that declares the member binds (the member is a const of that block's own function under jiti and tsc qualifies it): quiet",
+        files: { [V]: view("APO resource pressure", [HOST], ["N.stop(this.selected);"], ["namespace N {", "  export const process = { kill(pid: number): void { void pid; } };", "  export function stop(pid: number): void {", "    process.kill(pid);", "  }", "}"]) },
+        views: [V],
+        findings: [],
+      },
+      {
+        kind: "plant",
+        id: "U-NS-C3",
+        what: "a reference inside a namespace nested in the block that declares the member binds (the nested block's function runs inside the declaring block's): quiet",
+        files: { [V]: view("APO resource pressure", [HOST], ["Outer.Inner.stop(this.selected);"], ["namespace Outer {", "  export const process = { kill(pid: number): void { void pid; } };", "  export namespace Inner {", "    export function stop(pid: number): void {", "      process.kill(pid);", "    }", "  }", "}"]) },
+        views: [V],
+        findings: [],
+      },
+      {
+        kind: "plant",
+        id: "U-NS-nested-cross",
+        what: "the block that counts is the nearest one: an inner namespace merged across two blocks inside one outer block - the second inner block's process.kill reds at the use although the outer block encloses both (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["Outer.Inner.stop(this.selected);"], ["namespace Outer {", "  export namespace Inner {", "    export const process = { kill(pid: number): void { void pid; } };", "  }", "  export namespace Inner {", "    export function stop(pid: number): void {", "      process.kill(pid);", "    }", "  }", "}"]) },
+        views: [V],
+        findings: [globalAt(9, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-NS-cross-forms",
+        what: "every declaration kind a block exports binds nothing in another block: a shorthand property reading an exported class, and reads of an exported enum, namespace, function and import-equals alias each red at the use, while every own name stays quiet in its own block (GLOBAL)",
+        files: {
+          [V]: view(
+            "APO resource pressure",
+            [HOST],
+            ["void Kit.use();"],
+            [
+              "namespace Other {",
+              "  export const level = 1;",
+              "}",
+              "namespace Kit {",
+              "  export class process {}",
+              "  export enum fetch {",
+              "    On,",
+              "  }",
+              "  export namespace Function {",
+              "    export const level = 2;",
+              "  }",
+              "  export function require(): void {}",
+              "  export import globalThis = Other.level;",
+              "}",
+              "namespace Kit {",
+              "  export function use(): unknown {",
+              "    void { process };",
+              "    return [fetch, Function, require, globalThis];",
+              "  }",
+              "}",
+            ],
+          ),
+        },
+        views: [V],
+        findings: [globalAt(19, "process"), globalAt(20, "fetch"), globalAt(20, "Function"), globalAt(20, "require"), globalAt(20, "globalThis")],
+      },
+      {
+        kind: "plant",
+        id: "U-EN1",
+        what: "the gate's EN1 (recorded for the claim scope): an enum member read by its bare name in a later member's initializer of the same declaration binds (jiti's enum transform and tsc each qualify it, the gate's readback: the shadow): quiet",
+        files: { [V]: view("APO resource pressure", [HOST], ["void E.copy;"], ["enum E {", '  process = Number("7"),', "  copy = process,", "}"]) },
+        views: [V],
+        findings: [],
+      },
+      {
+        kind: "plant",
+        id: "U-EN2",
+        what: "the gate's EN2: an enum member read by its bare name in a member's initializer of a second declaration of the same enum, at the same top level, binds (the gate's readback: the shadow on both emit paths): quiet",
+        files: { [V]: view("APO resource pressure", [HOST], ["void E.copy;"], ["enum E {", '  process = Number("7"),', "}", "enum E {", "  copy = process,", "}"]) },
+        views: [V],
+        findings: [],
+      },
+      {
+        kind: "plant",
+        id: "U-EN-forward",
+        what: "an enum member read by its bare name in an initializer BEFORE its own declaration binds nothing (GLOBAL (7)): jiti's enum transform qualifies only a member it has already read, so the forward read reads the host global (the seat's readback: process.pid a number) - red at the read (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["void E.a;"], ["enum E {", "  a = process as unknown as number,", "  process = 1,", "}"]) },
+        views: [V],
+        findings: [globalAt(4, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-EN-forward-merged",
+        what: "an enum member read by its bare name in an initializer of an earlier declaration of the same enum, before the declaration that holds it, binds nothing: red at the read (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["void E.a;"], ["enum E {", "  a = process as unknown as number,", "}", "enum E {", "  process = 1,", "}"]) },
+        views: [V],
+        findings: [globalAt(4, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-EN-self",
+        what: "an enum member read by its bare name inside its own initializer binds nothing (the transform has not yet read it there): red at the read, the member's own name quiet (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["void E.process;"], ["enum E {", "  process = (process as unknown as { pid: number }).pid,", "}"]) },
+        views: [V],
+        findings: [globalAt(4, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-META1",
+        what: "refusal #3 META1 (class U2): a write through import.meta reds at the meta-property (GLOBAL, the meta rule: the reader parses no meta-property key, and under Pi's jiti 2.7.0 loader import.meta.env is the host's process.env)",
+        files: { [V]: view("APO resource pressure", [HOST], ["import.meta.env.APO_SELECTED = String(this.selected);"]) },
+        views: [V],
+        findings: [globalAt(7, "import.meta")],
+      },
+      {
+        kind: "plant",
+        id: "U-META1L",
+        what: "refusal #3 META1L, the src-landable form byte-for-byte as the gate wrote it: the write through a cast of import.meta reds at the meta-property (GLOBAL)",
+        files: {
+          [V]: [
+            'import type { Host } from "./host.js";',
+            'export const VIEW_TITLE = "APO resource pressure";',
+            "export class View {",
+            "  private selected = 0;",
+            "  constructor(private readonly host: Host) {}",
+            "  handleInput(data: string): void {",
+            "    void this.host;",
+            "    void data;",
+            "    (import.meta as unknown as { env: Record<string, string> }).env.APO_SELECTED = String(this.selected);",
+            "  }",
+            "}",
+            "",
+          ].join("\n"),
+          "src/apo/host.ts": LANDABLE_HOST,
+        },
+        views: [V],
+        findings: [globalAt(9, "import.meta")],
+      },
+      {
+        kind: "plant",
+        id: "U-meta-forms",
+        what: "import.meta reds in every value position, whatever its key: an alias of the meta object, a key read and a call (GLOBAL), the alias's own name quiet",
+        files: { [V]: view("APO resource pressure", [HOST], ["const meta = import.meta;", "void meta;", "void import.meta.dirname;", 'void import.meta.resolve("./view.js");']) },
+        views: [V],
+        findings: [globalAt(7, "import.meta"), globalAt(9, "import.meta"), globalAt(10, "import.meta")],
+      },
+      {
+        kind: "plant",
+        id: "U-GJ1",
+        what: "refusal #3 U3 mutant GJ1's kill, its witness W-GJ1 as the gate wrote it: a wrapper name declared inside an arrow, an object method and a function expression is a fresh binding of that function, not a module-scope one: quiet",
+        files: {
+          [V]: view(
+            "APO resource pressure",
+            [HOST],
+            ["void [fresh, method, built];"],
+            [
+              "const fresh = (): unknown => {",
+              "  var require: unknown;",
+              "  return require;",
+              "};",
+              "const method = {",
+              "  run(): unknown {",
+              "    var module: unknown;",
+              "    return module;",
+              "  },",
+              "};",
+              "const built = function (): unknown {",
+              "  var exports: unknown;",
+              "  return exports;",
+              "};",
+            ],
+          ),
+        },
+        views: [V],
+        findings: [],
+      },
+      {
+        kind: "plant",
+        id: "U-wrapper-scopes",
+        what: "a wrapper name declared inside a constructor, a class method, a getter and a setter is a fresh binding of that function: quiet",
+        files: {
+          [V]: view(
+            "APO resource pressure",
+            [HOST],
+            ["void new Scopes();"],
+            [
+              "class Scopes {",
+              "  constructor() {",
+              "    var __filename: unknown;",
+              "    void __filename;",
+              "  }",
+              "  run(): unknown {",
+              "    var __dirname: unknown;",
+              "    return __dirname;",
+              "  }",
+              "  get value(): unknown {",
+              "    var jitiImport: unknown;",
+              "    return jitiImport;",
+              "  }",
+              "  set value(input: unknown) {",
+              "    var jitiESMResolve: unknown = input;",
+              "    void jitiESMResolve;",
+              "  }",
+              "}",
+            ],
+          ),
+        },
+        views: [V],
+        findings: [],
+      },
+      {
+        kind: "plant",
+        id: "U-GJ4",
+        what: "refusal #3 U3 mutant GJ4's kill, its witness W-GJ4 as the gate wrote it: an ambient declaration binds nothing, its members' own names included (the ambient rule is read before the member rule): the declare class's member process reds at its own name (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["void this.selected;"], ["declare class Array {", "  process: number;", "}"]) },
+        views: [V],
+        findings: [globalAt(4, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-GJ15",
+        what: "refusal #3 U3 mutant GJ15's kill, its witness W-GJ15 as the gate wrote it: an enclosing ambient context counts at any depth: a const three namespaces under a string-named module reds at its own name (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["void this.selected;"], ['declare module "shim" {', "  namespace Array {", "    namespace Math {", "      const process: number;", "    }", "  }", "}"]) },
+        views: [V],
+        findings: [globalAt(6, "process")],
+      },
+      {
+        kind: "plant",
+        id: "U-GJ16",
+        what: "refusal #3 U3 mutant GJ16's kill, its witness W-GJ16 as the gate wrote it: a dotted namespace binds only through its innermost body, so one whose innermost body is empty binds nothing: process reds at the declaration and at the use (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["process.kill(this.selected);"], ["namespace process.Array {}"]) },
+        views: [V],
+        findings: [globalAt(3, "process"), globalAt(8, "process")],
       },
     ],
   },

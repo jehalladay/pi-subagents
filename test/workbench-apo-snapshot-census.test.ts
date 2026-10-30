@@ -9,8 +9,8 @@
  * Acceptance (the owner filing's, verbatim): "per-view interaction falsifier - every handler path is projection-read-only
  * with zero capability invokes and zero journal/native writes." (the filing's dash is U+2014).
  *
- * MEASURED (read-only, by the cutting seats, 2026-10-29 at trunk 57cb1c0 and 2026-10-30 at trunk c2695d7, whose src is
- * unchanged since 04123dc): git lists 117 files under src/, all TypeScript and none a declaration file, and no src text
+ * MEASURED (read-only, by the cutting seats, 2026-10-29 at trunk 57cb1c0 and 2026-10-30 at trunks c2695d7 and 360919f, whose
+ * src is unchanged since 04123dc): git lists 117 files under src/, all TypeScript and none a declaration file, and no src text
  * names the program, so no src module presents APO state and no APO view closure exists to judge. Pi's effect seams as
  * src declares them: ObservationProjection's 18 public members (12 read, 6 admission), CapabilityRegistry's 7,
  * CapabilityProvider's 3 and src/workflow/journal.ts's 4 exported values (SEAMS classifies each).
@@ -26,8 +26,11 @@
  * declaration file's declarations, an ambient (or string-named-module) or type-only one, a bodiless function or
  * signature's parameter, a const enum, an interface, a type alias, an export as namespace and an uninstantiated namespace
  * bind nothing, alone or merged with a value: refusal #2's GP1-GP17 merges red; a module-scope declaration of a CommonJS
- * wrapper's parameter or arguments binds nothing, since under the wrapper it keeps the wrapper's value; and a value use
- * passes over an alias of no value) and CONSTRUCTOR.
+ * wrapper's parameter or arguments binds nothing, since under the wrapper it keeps the wrapper's value; a declaration a
+ * namespace body holds binds only a reference inside that body, so a reference from another block of a merged namespace
+ * reds: refusal #3's NS members; an enum member binds only its own name and a read after its declaration, so a forward or
+ * self read reds; and a value use passes over an alias of no value - and import.meta reds wherever a
+ * value position reads it, no meta-property key being parsed: refusal #3's META1) and CONSTRUCTOR.
  *
  * ROWS (rows L, V and N tile the statement and rows P and Z tile the acceptance, each label a verbatim segment held to the
  * export row by the outside-anchor case). L: the src tree presents no APO state (L1 - ARMED: the first module that names
@@ -54,7 +57,13 @@
  * ambient let with a type, a merge two edges away, an ambient function or namespace with an interface, a string-named
  * module, a bodiless signature's parameter, and a module-scope declaration of a wrapper name), an export as namespace
  * (red under both judges, held as a guard), and one per binding form of the allowlist, the namespace rule and the
- * member names (each quiet). S: each seam's members read from src equal its classification (S-projection,
+ * member names (each quiet); and refusal #3's members (ruling R-B134): class U1's NS1, NS1L and NS3bL (the src-landable
+ * forms), NS2, NS4-NS8, NS10 and NS11 and the gate's NS3 and NS3b, each red at the use, its controls NS-C1 and NS9 (red)
+ * and NS-C2 (quiet), the seat's NS-C3 (quiet), NS-nested-cross and NS-cross-forms (red), the gate's EN1 and EN2
+ * (quiet) and the seat's forward enum reads EN-forward, EN-forward-merged and EN-self (red, a U1 member family the cut #4
+ * seat found); class U2's META1 and META1L and the meta forms, each red; and class U3's judge mutants GJ1, GJ4, GJ15 and
+ * GJ16, each killed by the row U pin U-<mutant> holding its witness, and the wrapper scopes the GJ1 witness leaves out
+ * (quiet). S: each seam's members read from src equal its classification (S-projection,
  * S-registry, S-provider, S-journal; the projection's read members read no EFFECT text), and the seam reader's member
  * forms (S-reader-class, S-reader-interface, S-reader-exports, S-reader-exports-unnamed, S-reader-missing). Q: the
  * residuals.
@@ -68,7 +77,10 @@
  * members (S); wb-021.4's EDGE_KINDS, each routed by a P plant; this header's RESIDUALS line, held to the residual
  * families; and class U1's members of record - refusal #2's CLASSES OF RECORD sentence in the export row's notes (which
  * only append) names its members, each a row U pin U-<member> carrying a GLOBAL finding, and restates refusal #1's,
- * each cured by the row R pin REFUSAL_1_CURES names (the map holding exactly the record's members). The same case holds
+ * each cured by the row R pin REFUSAL_1_CURES names (the map holding exactly the record's members); and refusal #3's
+ * CLASSES OF RECORD in the same notes, which names class U1's third-failure members and controls, class U2's member and
+ * class U3's judge mutants, each a row U pin U-<member> - every member it names admitted, each control it names red and
+ * the U2 member carrying a GLOBAL finding, the control it names quiet carrying none. The same case holds
  * V-admitted-free's list to ADMITTED_FREE (an internal check, not an outside anchor). The live redaction module the two V
  * plants copy is plant content, held by their pins and the roster, not an outside anchor.
  * NOT CLAIMED: the internals of any package (none is admitted, so none is read); an effect performed by code handed in at
@@ -311,6 +323,43 @@ describe("APO snapshot census (wb-021.2, MW-ADAPTIVE-POLICY-ORGANIZATIONS-R2)", 
     const first = members("Refusal #1 members: ", ". Refusal #2 members");
     expect(Object.keys(REFUSAL_1_CURES), "the refusal #1 cure map names exactly the record's members, in order").toEqual(first);
     expect(first.filter(member => !rowOf("R").pins.some(pin => pin.id === REFUSAL_1_CURES[member])), "every U1 member refusal #1's record names is cured by a row R pin").toEqual([]);
+    // Refusal #3's record (its CLASSES OF RECORD, in the same notes) names class U1's third-failure members and controls,
+    // class U2's member and class U3's judge mutants: each is a row U pin U-<member>. Every member it names admitted, each
+    // control it names red and class U2's member red through GLOBAL; the control it names quiet stays quiet; each judge
+    // mutant has its row U pin (its kill is measured by the mutant battery, not here).
+    const recordLine = (key: string, end: string): string => {
+      const start = row.notes.indexOf(key);
+      const stop = start < 0 ? -1 : row.notes.indexOf(end, start);
+      return start < 0 || stop < 0 ? "" : row.notes.slice(start, stop);
+    };
+    const tokens = (text: string, pattern: RegExp): string[] => [...new Set([...text.matchAll(pattern)].map(match => match[0]))];
+    const NAMESPACE_MEMBER = /\bNS(?:-C)?\d+[A-Za-z]*/g;
+    const u1 = recordLine("third failure. New members: ", " Claims the class contradicts");
+    const controlsAt = u1.indexOf(" Controls: ");
+    const redEnd = u1.indexOf(" red, ", controlsAt);
+    const admitted3 = controlsAt < 0 ? [] : tokens(u1.slice(0, controlsAt), NAMESPACE_MEMBER);
+    const redControls = controlsAt < 0 || redEnd < 0 ? [] : tokens(u1.slice(controlsAt, redEnd), NAMESPACE_MEMBER);
+    const quietControls = redEnd < 0 ? [] : tokens(u1.slice(redEnd), NAMESPACE_MEMBER);
+    const metaMembers = tokens(recordLine("IMPORT-META-ALIAS: a NEW class, first failure", " Claim it contradicts"), /\bMETA\d+[A-Za-z]*/g);
+    const judgeMutants = tokens(recordLine("New members: GJ1", " This is that class"), /\bGJ\d+\b/g);
+    expect(
+      [admitted3, redControls, quietControls, metaMembers, judgeMutants].map(list => list.length > 0),
+      "refusal #3's record names its U1 members, its red and quiet controls, its U2 member and its U3 judge mutants",
+    ).toEqual([true, true, true, true, true]);
+    const pinOf = (member: string): PlantPin | undefined => plants("U").find(pin => pin.id === `U-${member}`);
+    const redsGlobal = (member: string): boolean => pinOf(member)?.findings.some(finding => finding.startsWith("GLOBAL ")) === true;
+    expect(
+      [...admitted3, ...redControls, ...metaMembers].filter(member => !redsGlobal(member)),
+      "every member refusal #3's record names admitted, each control it names red and its U2 member is a row U pin with a GLOBAL finding",
+    ).toEqual([]);
+    expect(
+      quietControls.filter(member => pinOf(member)?.findings.length !== 0),
+      "the control refusal #3's record names quiet is a row U pin with no finding",
+    ).toEqual([]);
+    expect(
+      judgeMutants.filter(member => pinOf(member) === undefined),
+      "each judge mutant refusal #3's record names has its row U pin",
+    ).toEqual([]);
     // Internal check: V-admitted-free references exactly ADMITTED_FREE, in order, so dropping an admitted name reds that plant.
     const admitted = plants("V").find(pin => pin.id === "V-admitted-free");
     const listed = /return \[([^\]]*)\]/.exec(Object.values(admitted?.files ?? {}).join("\n"))?.[1] ?? "";
@@ -324,7 +373,7 @@ describe("APO snapshot census (wb-021.2, MW-ADAPTIVE-POLICY-ORGANIZATIONS-R2)", 
   });
 
   it("rule 16: every judged row and the residual families are frozen at their measured shape", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["L:9", "V:8", "N:5", "P:6", "Z:14", "R:42", "U:41", "S:9", "Q:9"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["L:9", "V:8", "N:5", "P:6", "Z:14", "R:42", "U:73", "S:9", "Q:9"]);
     expect(Object.entries(RESIDUAL_FAMILIES).map(([family, members]) => `${family}:${members.join(",")}`)).toEqual([
       "R-UNNAMED-VIEW:Q R-UNNAMED-VIEW",
       "R-LOOKALIKE-VIEW:Q R-LOOKALIKE-VIEW",
