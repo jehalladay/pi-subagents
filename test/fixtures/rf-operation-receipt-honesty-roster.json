@@ -1,6 +1,6 @@
 {
  "bead": "wb-jwc.9",
- "provenance": "wb-jwc.9 falsifier roster for test/workbench-rf-operation-receipt-honesty-census.test.ts (readers and probe vocabulary: test/helpers/rf-operation-receipt-honesty.ts). rows restates every row, clause and pin requirement of the census byte for byte; falsifiers lists each src plant (edits: the 1-based occurrence of anchor in file replaced by plant) with the pins whose claim it contradicts; residuals maps each named residual to its quiet pin. The census reads rows, the falsified pin ids and the residual map; the edits are for replay on a throwaway copy, never applied by the census.",
+ "provenance": "wb-jwc.9 falsifier roster for test/workbench-rf-operation-receipt-honesty-census.test.ts (readers, probe vocabulary and planted inputs: test/helpers/rf-operation-receipt-honesty.ts). rows restates every row, clause and pin requirement of the census byte for byte; falsifiers lists each src plant (edits: the 1-based occurrence of anchor in file replaced by plant; an empty anchor at occurrence 0 writes plant as a new file) with the pins whose claim it contradicts; mutants lists each one-edit change of a helper reader (the same edit form, in the helper) with the pins it falsifies; residuals maps each named residual to its quiet pin. The census reads rows, the falsified pin ids and the residual map; the edits are for replay on a throwaway copy, never applied by the census.",
  "rows": [
   {
    "id": "G",
@@ -8,19 +8,19 @@
    "pins": [
     {
      "id": "G:literal:registerReactiveFiberRender",
-     "requirement": "the judged register call in registerReactiveFiberRender names an rf capability id, and its descriptor literal spells effectClass as the whole token read and permissions as an array literal of the one whole token reactivefiber:render, so in every run that reaches it the call hands the registry that id read under reactivefiber:render whatever the registrar's arguments, workspace root or environment; any other syntax there is written into the witness instead of a word, so it fails closed"
+     "requirement": "the read register call in registerReactiveFiberRender names an rf capability id, and its descriptor literal spells effectClass as the whole token read and permissions as an array literal of the one whole token reactivefiber:render, so in every run that reaches it the call hands the registry that id read under reactivefiber:render whatever the registrar's arguments, workspace root or environment; any other syntax there is written into the witness instead of a word, so it fails closed"
     },
     {
      "id": "G:literal:registerNativeReactiveFiberRender",
-     "requirement": "the judged register call in registerNativeReactiveFiberRender names an rf capability id, and its descriptor literal spells effectClass as the whole token read and permissions as an array literal of the one whole token reactivefiber:render, so in every run that reaches it the call hands the registry that id read under reactivefiber:render whatever the registrar's arguments, workspace root or environment; any other syntax there is written into the witness instead of a word, so it fails closed"
+     "requirement": "the read register call in registerNativeReactiveFiberRender names an rf capability id, and its descriptor literal spells effectClass as the whole token read and permissions as an array literal of the one whole token reactivefiber:render, so in every run that reaches it the call hands the registry that id read under reactivefiber:render whatever the registrar's arguments, workspace root or environment; any other syntax there is written into the witness instead of a word, so it fails closed"
     },
     {
      "id": "G:unjudged",
-     "requirement": "every other src spelling of a member named register is listed by file, owner and syntax, so a registration made through any other spelling moves the witness"
+     "requirement": "every other src spelling of register (each identifier and whole string token register in a .ts module under src/) is listed by file, owner and syntax (a judged call that is not read: why), a read call whose id is not an rf capability id is not listed, and every src file that is not a .ts module is listed unparsed, so a registration made through any other spelling of register, or in any other src file, moves the witness"
     },
     {
      "id": "G:runs",
-     "requirement": "each src rf registrar, run with a fresh registry in each stated run form (the census workspace root; process.cwd() as the workspace root; the census root with every environment name src reads set to each effect class word src's CapabilityDescriptor declares but read), leaves the registry holding its rf id read under reactivefiber:render: what the registry holds for rf ids when it returns is listed per run form"
+     "requirement": "each src rf registrar, run with a fresh registry in each stated run form (the census workspace root; process.cwd() as the workspace root; the census root with every environment name src reads as process.env.NAME or process.env[\"NAME\"] set to each effect class word src's CapabilityDescriptor declares but read), leaves the registry holding its rf id read under reactivefiber:render: what the registry holds for rf ids when it returns is listed per run form"
     }
    ]
   },
@@ -30,23 +30,23 @@
    "pins": [
     {
      "id": "F:injectable:bare",
-     "requirement": "a fresh read through the injectable registration: a reactive-fiber.cli/v1 context.render envelope carrying the fresh rfo_ around the bare result (output text alone): no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+     "requirement": "a fresh read through the injectable registration: a reactive-fiber.cli/v1 context.render envelope carrying the fresh rfo_ around the bare result (output text alone): no acknowledgement citing exactly its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
     },
     {
      "id": "F:injectable:minimal",
-     "requirement": "a fresh read through the injectable registration: a reactive-fiber.cli/v1 context.render envelope carrying the fresh rfo_ around the smallest result the native preview admits (exactly the keys isPreviewEnvelope requires): no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+     "requirement": "a fresh read through the injectable registration: a reactive-fiber.cli/v1 context.render envelope carrying the fresh rfo_ around the smallest result the native preview admits (exactly the keys isPreviewEnvelope requires): no acknowledgement citing exactly its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
     },
     {
      "id": "F:injectable:full",
-     "requirement": "a fresh read through the injectable registration: a reactive-fiber.cli/v1 context.render envelope carrying the fresh rfo_ around the full rf 0.1.845 result (every key of test/fixtures/rf-result-keys.json): no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+     "requirement": "a fresh read through the injectable registration: a reactive-fiber.cli/v1 context.render envelope carrying the fresh rfo_ around the full rf 0.1.845 result (every key of test/fixtures/rf-result-keys.json): no acknowledgement citing exactly its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
     },
     {
      "id": "F:native:minimal",
-     "requirement": "a fresh read through the native registration: a stand-in rf printing a reactive-fiber.cli/v1 context.render envelope carrying the fresh rfo_ around the smallest result the native preview admits (exactly the keys isPreviewEnvelope requires), exit 0: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+     "requirement": "a fresh read through the native registration: a stand-in rf printing a reactive-fiber.cli/v1 context.render envelope carrying the fresh rfo_ around the smallest result the native preview admits (exactly the keys isPreviewEnvelope requires), exit 0: no acknowledgement citing exactly its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
     },
     {
      "id": "F:native:full",
-     "requirement": "a fresh read through the native registration: a stand-in rf printing a reactive-fiber.cli/v1 context.render envelope carrying the fresh rfo_ around the full rf 0.1.845 result (every key of test/fixtures/rf-result-keys.json), exit 0: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+     "requirement": "a fresh read through the native registration: a stand-in rf printing a reactive-fiber.cli/v1 context.render envelope carrying the fresh rfo_ around the full rf 0.1.845 result (every key of test/fixtures/rf-result-keys.json), exit 0: no acknowledgement citing exactly its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
     }
    ]
   },
@@ -56,31 +56,31 @@
    "pins": [
     {
      "id": "C:injectable:validation",
-     "requirement": "a read failed with validation: the injectable seam throws a CapabilityError of category validation: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+     "requirement": "a read failed with validation: the injectable seam throws a CapabilityError of category validation: no acknowledgement citing exactly its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
     },
     {
      "id": "C:injectable:authorization",
-     "requirement": "a read failed with authorization: the injectable seam throws a CapabilityError of category authorization: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+     "requirement": "a read failed with authorization: the injectable seam throws a CapabilityError of category authorization: no acknowledgement citing exactly its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
     },
     {
      "id": "C:injectable:unavailable",
-     "requirement": "a read failed with unavailable: the injectable seam throws a CapabilityError of category unavailable: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+     "requirement": "a read failed with unavailable: the injectable seam throws a CapabilityError of category unavailable: no acknowledgement citing exactly its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
     },
     {
      "id": "C:injectable:transport",
-     "requirement": "a read failed with transport: the injectable seam throws a CapabilityError of category transport: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+     "requirement": "a read failed with transport: the injectable seam throws a CapabilityError of category transport: no acknowledgement citing exactly its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
     },
     {
      "id": "C:injectable:uncertain-effect",
-     "requirement": "a read failed with uncertain-effect: the injectable seam throws a CapabilityError of category uncertain-effect: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+     "requirement": "a read failed with uncertain-effect: the injectable seam throws a CapabilityError of category uncertain-effect: no acknowledgement citing exactly its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
     },
     {
      "id": "C:native:malformed",
-     "requirement": "a read failed through the native registration: a stand-in rf printing a line that is not JSON, exit 0: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+     "requirement": "a read failed through the native registration: a stand-in rf printing a line that is not JSON, exit 0: no acknowledgement citing exactly its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
     },
     {
      "id": "C:native:refused",
-     "requirement": "a read failed through the native registration: a stand-in rf printing an rf refusal (ok false, one RF_ error diagnostic, result null), exit 1: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+     "requirement": "a read failed through the native registration: a stand-in rf printing an rf refusal (ok false, one RF_ error diagnostic, result null), exit 1: no acknowledgement citing exactly its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
     }
    ]
   },
@@ -90,27 +90,101 @@
    "pins": [
     {
      "id": "U:injectable:show-bare",
-     "requirement": "an unprojected read through the injectable registration: a context.show envelope around the bare result: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+     "requirement": "an unprojected read through the injectable registration: a context.show envelope around the bare result: no acknowledgement citing exactly its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
     },
     {
      "id": "U:injectable:show-full",
-     "requirement": "an unprojected read through the injectable registration: a context.show envelope around the full rf 0.1.845 result: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+     "requirement": "an unprojected read through the injectable registration: a context.show envelope around the full rf 0.1.845 result: no acknowledgement citing exactly its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
     },
     {
      "id": "U:injectable:drift-bare",
-     "requirement": "an unprojected read through the injectable registration: a context.render envelope under schema reactive-fiber.cli/v2 around the bare result: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+     "requirement": "an unprojected read through the injectable registration: a context.render envelope under schema reactive-fiber.cli/v2 around the bare result: no acknowledgement citing exactly its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
     },
     {
      "id": "U:injectable:drift-full",
-     "requirement": "an unprojected read through the injectable registration: a context.render envelope under schema reactive-fiber.cli/v2 around the full rf 0.1.845 result: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+     "requirement": "an unprojected read through the injectable registration: a context.render envelope under schema reactive-fiber.cli/v2 around the full rf 0.1.845 result: no acknowledgement citing exactly its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
     },
     {
      "id": "U:injectable:no-source",
-     "requirement": "an unprojected read through the injectable registration: no envelope at all (the seam answers null): no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+     "requirement": "an unprojected read through the injectable registration: no envelope at all (the seam answers null): no acknowledgement citing exactly its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
     },
     {
      "id": "U:injectable:no-identity",
-     "requirement": "an unprojected read through the injectable registration: a reactive-fiber.cli/v1 context.render envelope around the full rf 0.1.845 result with no operation_id: no acknowledgement citing its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+     "requirement": "an unprojected read through the injectable registration: a reactive-fiber.cli/v1 context.render envelope around the full rf 0.1.845 result with no operation_id: no acknowledgement citing exactly its receipt is producer-confirmed for any member of src's EffectDetermination, and no override after its effect-absent acknowledgement carries duplicate risk none"
+    }
+   ]
+  },
+  {
+   "id": "P",
+   "clause": "refusal #1",
+   "pins": [
+    {
+     "id": "P:tree:split",
+     "requirement": "srcTree over a planted src tree (refusal #1 U1k): every file under src/ is listed, directories followed and each directory's names sorted by UTF-16 code unit (a name above U+FFFF before a name at U+FF5E, which byte order puts first); a file whose extension is .ts (a .d.ts file included) is a module, and every other file (.tsx, .mts, .cts, .js, .mjs, .json, .txt, no extension) is listed unparsed; the split is listed"
+    },
+    {
+     "id": "P:registrations:spellings",
+     "requirement": "rfRegistrationLiterals over a planted src module (refusal #1 U1j): each identifier register and each whole string token register (a string literal or a template with no substitution) is a spelling, and every spelling that is not the property-access callee of a call is listed unjudged by file, owner and the syntax holding it (a const initializer, an element-access call, a destructured member and its call, a member of the member, a parenthesized callee, a member passed as an argument, a parameter and its member, a function name, a property key); a template with a substitution spells no name and is not read; the reading is listed"
+    },
+    {
+     "id": "P:registrations:arguments",
+     "requirement": "rfRegistrationLiterals over a planted src module (refusal #1 U1i): a property-access register call that holds other than exactly one argument (none, two strings, a provider literal beside a second argument) is listed unjudged as register call, N arguments, and one whose one argument is not an object literal (a spread argument, a reference, a call) as register call, provider <syntax>; the reading is listed"
+    },
+    {
+     "id": "P:registrations:provider",
+     "requirement": "rfRegistrationLiterals over a planted src module: a register call whose provider literal holds a spread or a computed key, no descriptor, two descriptors, or a descriptor written as a shorthand or a method is listed unjudged as register call, provider: <why>, and one whose descriptor is not an object literal (a reference, a call) as register call, descriptor <syntax>; a provider whose keys are numbers or quoted strings, holding a descriptor whose keys are quoted strings, is read; the reading is listed"
+    },
+    {
+     "id": "P:registrations:descriptor",
+     "requirement": "rfRegistrationLiterals over a planted src module (refusal #1 U1a): a register call whose descriptor literal holds a spread (a conditional spread of effectClass write included) or a computed key, no id, two ids, or an id written as a shorthand is listed unjudged as register call, descriptor: <why>, and one whose id is not a whole string token (a reference, a template with a substitution) as register call, id <syntax>; an id written as a template with no substitution is read as its text; the reading is listed"
+    },
+    {
+     "id": "P:registrations:ids",
+     "requirement": "rfRegistrationLiterals over a planted src module (refusal #1 U1d): a read call is listed as an rf literal when its id is an rf capability id, src's producerOf naming reactivefiber and the real CapabilityRegistry accepting the id (reactivefiber.render.commit, and reactivefiber-plant.dashed, whose producer ends at the dash); a read call whose producer is another (reactivefibers.plant, forge.plant.read) or whose id the registry refuses (reactivefiber.Plant, reactivefiber) is not an rf registration and is not listed; the reading is listed"
+    },
+    {
+     "id": "P:registrations:effect-class",
+     "requirement": "rfRegistrationLiterals over a planted src module (refusal #1 U1b): an rf literal's effectClass is the whole string token written there (a template with no substitution included), else the syntax standing there in angle brackets (a conditional, a reference, a call, an as const assertion), else why there is no one plain effectClass assignment (a shorthand, none, two); the reading is listed"
+    },
+    {
+     "id": "P:registrations:permissions",
+     "requirement": "rfRegistrationLiterals over a planted src module (refusal #1 U1c): an rf literal's permissions are [token,...] for an array literal (an empty one included), each element its whole string token else its syntax in angle brackets (a conditional spread, a reference, a template with a substitution), else the syntax standing there (a reference), else why there is no one plain permissions assignment (a shorthand, none, two); the reading is listed"
+    },
+    {
+     "id": "P:registrations:owners",
+     "requirement": "rfRegistrationLiterals over a planted src module: a spelling's owner is the innermost function declaration it sits in, else Class.method for a named class's method other than the spelling itself, else its named class, else the outermost variable it initializes (through an arrow function, a function expression or an object-literal method), else <top> (an anonymous default class included); the reading is listed"
+    },
+    {
+     "id": "P:registrations:script-kind",
+     "requirement": "rfRegistrationLiterals over a planted src module: a .ts module is parsed with TypeScript's ScriptKind.TS, so a register call through an angle-bracket type assertion of its holder is read as an rf literal; the reading is listed"
+    },
+    {
+     "id": "P:environment:names",
+     "requirement": "srcEnvironmentReads over a planted src module (refusal #1 U1h): a property access of process.env (process?.env and process.env?. included) gives its NAME, an element access of process.env by a whole string token (a string literal or a template with no substitution) gives the token as its NAME, and the names are listed once each in first-seen order; the reading is listed"
+    },
+    {
+     "id": "P:environment:computed",
+     "requirement": "srcEnvironmentReads over a planted src module: an element access of process.env by anything but a whole string token (a reference, a template with a substitution, a concatenation, an element access) is listed as computed by file, owner and syntax and gives no NAME; the reading is listed"
+    },
+    {
+     "id": "P:environment:whole",
+     "requirement": "srcEnvironmentReads over a planted src module (refusal #1 U1g): every other use of process.env (aliased in a variable, destructured, passed to a call, spread, compared, returned, asserted non-null) is listed as a whole use by file, owner and the syntax holding it and gives no NAME; the reading is listed"
+    },
+    {
+     "id": "P:environment:other",
+     "requirement": "srcEnvironmentReads over a planted src module (refusal #1 U2): every spelling of env (an identifier or a whole string token) that is not the env of process.env on the identifier process is listed in other by file, owner and the syntax holding it and gives no NAME (an imported env and its use, globalThis.process.env, a renamed or a shorthand destructured env of process and its use, process['env'], an aliased process, a parenthesized process); the reading is listed"
+    },
+    {
+     "id": "P:runs:environment",
+     "requirement": "registeredUnder in the run forms over two planted environment names (refusal #1 U1e): each env form sets every name to its effect class word for the run and restores the environment after it, so a planted registrar reading the second name for its effect class and the first for a permission registers per form what the form set; what each run leaves the registry holding for rf ids, and both names after the run, are listed"
+    },
+    {
+     "id": "P:runs:workspace-root",
+     "requirement": "registeredUnder in the run forms (refusal #1 U1f): each run hands the registrar the form's workspace root, process.cwd() in the cwd form and the census root in every other, so a planted registrar keying its effect class and a permission on the root registers per form what the root was; what each run leaves the registry holding for rf ids is listed"
+    },
+    {
+     "id": "P:runs:registry",
+     "requirement": "registeredUnder in the run forms: each run registers into a fresh registry and lists every rf descriptor it then holds, in registration order and space-joined as id=effectClass/[permissions], leaving out a descriptor whose id is not an rf capability id, and <no rf descriptor> when it holds none (a planted registrar holding a forge id and two rf ids, and in the cwd form the forge id only); what each run leaves the registry holding is listed"
     }
    ]
   },
@@ -132,7 +206,7 @@
     },
     {
      "id": "R:run-form",
-     "requirement": "NAMED RESIDUAL R-RUN-FORM, not claimed: a registration is read through its descriptor literal (G:literal) and measured in the stated run forms (G:runs) only, so a rewrite of what the registry holds after a judged call (CapabilityRegistry.register's own body, or code reaching the descriptors the registry holds), a register member reached through a name src never spells, or an environment read src makes by a computed name or through a whole use of process.env, conditioned on another workspace root, environment value or argument, is not read; src's environment reads are listed by name, computed access and whole use, with the run forms"
+     "requirement": "NAMED RESIDUAL R-RUN-FORM, not claimed: a registration is read through its descriptor literal (G:literal) and measured in the stated run forms (G:runs) only, so a rewrite of what the registry holds after a read call (CapabilityRegistry.register's own body, or code reaching the descriptors the registry holds), a register member reached through a name src never spells, or an environment read src makes by a computed name (process.env[expression]), through a whole use of process.env, through any other spelling of env, or through an env member reached by a name src never spells, conditioned on another workspace root, environment value or argument, is not read; src's environment reads are listed by name, computed access and whole use, every other src spelling of env by file, owner and syntax, with the run forms"
     },
     {
      "id": "R:probe-context",
@@ -474,6 +548,1135 @@
     }
    ],
    "falsifies": [
+    "U:injectable:no-identity"
+   ]
+  },
+  {
+   "id": "PL2-SPREAD",
+   "origin": "refusal #1 PREP L2-SPREAD/plant-real (gate-prep-10, specs/leg2.json)",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "contractSource:REACTIVE_FIBER_CONTRACT_SOURCE}",
+     "occurrence": 2,
+     "plant": "contractSource:REACTIVE_FIBER_CONTRACT_SOURCE,...(workspaceRoot===\"/opt/rf-elsewhere\"?{effectClass:\"write\" as const}:{})}"
+    }
+   ],
+   "falsifies": [
+    "G:unjudged",
+    "G:runs"
+   ]
+  },
+  {
+   "id": "PL2-WORD",
+   "origin": "refusal #1 PREP L2-WORD/plant-real (gate-prep-10, specs/leg2.json)",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "effectClass:\"read\"",
+     "occurrence": 2,
+     "plant": "effectClass:workspaceRoot===\"/opt/rf-elsewhere\"?\"write\":\"read\""
+    }
+   ],
+   "falsifies": [
+    "G:literal:registerNativeReactiveFiberRender"
+   ]
+  },
+  {
+   "id": "PL2-WORDS",
+   "origin": "refusal #1 PREP L2-WORDS/plant-real (gate-prep-10, specs/leg2.json)",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "permissions:[\"reactivefiber:render\"]",
+     "occurrence": 2,
+     "plant": "permissions:[\"reactivefiber:render\",...(workspaceRoot===\"/opt/rf-elsewhere\"?[\"reactivefiber:commit\"]:[])]"
+    }
+   ],
+   "falsifies": [
+    "G:literal:registerNativeReactiveFiberRender"
+   ]
+  },
+  {
+   "id": "PL2-RFID",
+   "origin": "refusal #1 PREP L2-RFID/plant-real (gate-prep-10, specs/leg2.json)",
+   "file": "src/workbench/gate-plant-commit.ts",
+   "edits": [
+    {
+     "anchor": "",
+     "occurrence": 0,
+     "plant": "import type { CapabilityRegistry } from \"./capability-registry.js\";\n\n/** Gate plant (PREP gate-prep-10, never committed): a committing rf capability registered through the judged literal form. */\nexport function registerGatePlantCommit(registry: CapabilityRegistry): void {\n  registry.register({\n    descriptor: { id: \"reactivefiber.render.commit\", version: \"1.0.0\", description: \"gate plant\", inputSchema: { type: \"object\" }, effectClass: \"write\", permissions: [\"reactivefiber:commit\"], supportedModes: [\"invoke\"] },\n    invoke: async () => null,\n  });\n}\n"
+    }
+   ],
+   "falsifies": [
+    "G:runs"
+   ]
+  },
+  {
+   "id": "PL2-RUNENV",
+   "origin": "refusal #1 PREP L2-RUNENV/plant-real (gate-prep-10, specs/leg2.json)",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n",
+     "occurrence": 1,
+     "plant": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n  if(process.env.PI_CODING_AGENT_SESSION_DIR===\"write\") return;\n"
+    }
+   ],
+   "falsifies": [
+    "G:runs"
+   ]
+  },
+  {
+   "id": "PL2-RUNREG",
+   "origin": "refusal #1 PREP L2-RUNREG/plant-real (gate-prep-10, specs/leg2.json)",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n",
+     "occurrence": 1,
+     "plant": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n  if(workspaceRoot===process.cwd()) return;\n"
+    }
+   ],
+   "falsifies": [
+    "G:runs"
+   ]
+  },
+  {
+   "id": "PL2-ENV-ALIAS",
+   "origin": "refusal #1 PREP L2-ENV-ALIAS/plant-real (gate-prep-10, specs/leg2.json)",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n",
+     "occurrence": 1,
+     "plant": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n  const env=process.env;\n  if(env.PI_RF_GATE_PLANT===\"write\") return;\n"
+    }
+   ],
+   "falsifies": [
+    "R:run-form"
+   ]
+  },
+  {
+   "id": "PL2-ENV-TOKEN",
+   "origin": "refusal #1 PREP L2-ENV-TOKEN/plant-real (gate-prep-10, specs/leg2.json)",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n",
+     "occurrence": 1,
+     "plant": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n  if(process.env[\"PI-RF-GATE-PLANT\"]===\"write\") return;\n"
+    }
+   ],
+   "falsifies": [
+    "G:runs",
+    "R:run-form"
+   ]
+  },
+  {
+   "id": "PL2-ARGS",
+   "origin": "refusal #1 PREP L2-ARGS/plant-real (gate-prep-10, specs/leg2.json)",
+   "file": "src/workbench/gate-plant-hooks.ts",
+   "edits": [
+    {
+     "anchor": "",
+     "occurrence": 0,
+     "plant": "import * as nodeModule from \"node:module\";\n\n/** Gate plant (PREP gate-prep-10, never committed): a register member called with two arguments. */\nexport function gatePlantHooks(): void {\n  nodeModule.register(\"./gate-plant-hooks.mjs\", import.meta.url);\n}\n"
+    }
+   ],
+   "falsifies": [
+    "G:unjudged"
+   ]
+  },
+  {
+   "id": "PL2-TOKEN",
+   "origin": "refusal #1 PREP L2-TOKEN/plant-real (gate-prep-10, specs/leg2.json)",
+   "file": "src/workbench/gate-plant-token.ts",
+   "edits": [
+    {
+     "anchor": "",
+     "occurrence": 0,
+     "plant": "import type { CapabilityRegistry } from \"./capability-registry.js\";\n\nconst VERB = \"register\";\n\n/** Gate plant (PREP gate-prep-10, never committed): the register member reached through a whole string token src spells. */\nexport function gatePlantToken(registry: CapabilityRegistry): void {\n  registry[VERB]({\n    descriptor: { id: \"reactivefiber.render.commit\", version: \"1.0.0\", description: \"gate plant\", inputSchema: { type: \"object\" }, effectClass: \"write\", permissions: [\"reactivefiber:commit\"], supportedModes: [\"invoke\"] },\n    invoke: async () => null,\n  });\n}\n"
+    }
+   ],
+   "falsifies": [
+    "G:unjudged"
+   ]
+  },
+  {
+   "id": "PL2-UNPARSED",
+   "origin": "refusal #1 PREP L2-UNPARSED/plant-real (gate-prep-10, specs/leg2.json)",
+   "file": "src/workbench/gate-plant-data.json",
+   "edits": [
+    {
+     "anchor": "",
+     "occurrence": 0,
+     "plant": "{\"id\": \"reactivefiber.render.commit\"}\n"
+    }
+   ],
+   "falsifies": [
+    "G:unjudged"
+   ]
+  },
+  {
+   "id": "PL2-ENV-GT",
+   "origin": "refusal #1 PREP L2-ENV-GT/plant-real (delivered reader) (gate-prep-10, specs/leg2.json)",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n",
+     "occurrence": 1,
+     "plant": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n  if(globalThis.process.env.PI_RF_GATE_PLANT===\"write\") return;\n"
+    }
+   ],
+   "falsifies": [
+    "R:run-form"
+   ]
+  },
+  {
+   "id": "PL2-ENV-DESTR",
+   "origin": "refusal #1 PREP L2-ENV-DESTR/plant-real (delivered reader) (gate-prep-10, specs/leg2.json)",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n",
+     "occurrence": 1,
+     "plant": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n  const {env}=process;\n  if(env.PI_RF_GATE_PLANT===\"write\") return;\n"
+    }
+   ],
+   "falsifies": [
+    "R:run-form"
+   ]
+  },
+  {
+   "id": "PL2-ENV-PE",
+   "origin": "refusal #1 PREP L2-ENV-PE/paired-control-real (gate-prep-10, specs/leg2.json)",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n",
+     "occurrence": 1,
+     "plant": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n  if(process.env.PI_RF_GATE_PLANT===\"write\") return;\n"
+    }
+   ],
+   "falsifies": [
+    "G:runs",
+    "R:run-form"
+   ]
+  }
+ ],
+ "mutants": [
+  {
+   "id": "GL2-SPREAD",
+   "origin": "refusal #1 PREP L2-SPREAD (gate-prep-10, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  if (object.properties.some(property => propertyKey(property) === undefined)) return \"a spread or computed key\";\n",
+     "occurrence": 1,
+     "plant": ""
+    }
+   ],
+   "falsifies": [
+    "P:registrations:provider",
+    "P:registrations:descriptor"
+   ]
+  },
+  {
+   "id": "GL2-WORD",
+   "origin": "refusal #1 PREP L2-WORD (gate-prep-10, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return isWholeToken(value) ? value.text : `<${ts.SyntaxKind[value.kind]}>`;",
+     "occurrence": 1,
+     "plant": "  return isWholeToken(value) ? value.text : ts.isConditionalExpression(value) && isWholeToken(value.whenFalse) ? value.whenFalse.text : `<${ts.SyntaxKind[value.kind]}>`;"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:effect-class"
+   ]
+  },
+  {
+   "id": "GL2-WORDS",
+   "origin": "refusal #1 PREP L2-WORDS (gate-prep-10, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return `[${value.elements.map(element => (isWholeToken(element) ? element.text : `<${ts.SyntaxKind[element.kind]}>`)).join(\",\")}]`;",
+     "occurrence": 1,
+     "plant": "  return `[${value.elements.filter(isWholeToken).map(element => element.text).join(\",\")}]`;"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:permissions"
+   ]
+  },
+  {
+   "id": "GL2-RFID",
+   "origin": "refusal #1 PREP L2-RFID (gate-prep-10, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "export const isRfCapabilityId = (text: string): boolean => producerOf(text) === RF_PRODUCER && registryAcceptsId(text);",
+     "occurrence": 1,
+     "plant": "export const isRfCapabilityId = (text: string): boolean => text === PREVIEW_ID && registryAcceptsId(text);"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:provider",
+    "P:registrations:descriptor",
+    "P:registrations:ids",
+    "P:registrations:effect-class",
+    "P:registrations:permissions",
+    "P:registrations:script-kind",
+    "P:runs:registry"
+   ]
+  },
+  {
+   "id": "GL2-RUNENV",
+   "origin": "refusal #1 PREP L2-RUNENV (gate-prep-10, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "    for (const [name, value] of Object.entries(form.environment)) process.env[name] = value;\n",
+     "occurrence": 1,
+     "plant": ""
+    }
+   ],
+   "falsifies": [
+    "P:runs:environment"
+   ]
+  },
+  {
+   "id": "GL2-RUNREG",
+   "origin": "refusal #1 PREP L2-RUNREG (gate-prep-10, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "    register(registry, form.workspaceRoot);",
+     "occurrence": 1,
+     "plant": "    register(registry, HONESTY_WS);"
+    }
+   ],
+   "falsifies": [
+    "P:runs:workspace-root",
+    "P:runs:registry"
+   ]
+  },
+  {
+   "id": "GL2-ENV-ALIAS",
+   "origin": "refusal #1 PREP L2-ENV-ALIAS (gate-prep-10, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      } else whole.push(`${site}: ${ts.SyntaxKind[parent.kind]}`);",
+     "occurrence": 1,
+     "plant": "      } else if (!ts.isVariableDeclaration(parent)) whole.push(`${site}: ${ts.SyntaxKind[parent.kind]}`);"
+    }
+   ],
+   "falsifies": [
+    "P:environment:whole"
+   ]
+  },
+  {
+   "id": "GL2-ENV-TOKEN",
+   "origin": "refusal #1 PREP L2-ENV-TOKEN (gate-prep-10, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "        if (isWholeToken(parent.argumentExpression)) names.push(parent.argumentExpression.text);",
+     "occurrence": 1,
+     "plant": "        if (isWholeToken(parent.argumentExpression)) return;"
+    }
+   ],
+   "falsifies": [
+    "P:environment:names"
+   ]
+  },
+  {
+   "id": "GL2-ARGS",
+   "origin": "refusal #1 PREP L2-ARGS (gate-prep-10, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      if (provider === undefined || holder.arguments.length !== 1) why = `${holder.arguments.length} arguments`;",
+     "occurrence": 1,
+     "plant": "      if (provider === undefined || holder.arguments.length !== 1) return;"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:arguments"
+   ]
+  },
+  {
+   "id": "GL2-TOKEN",
+   "origin": "refusal #1 PREP L2-TOKEN (gate-prep-10, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      if (!(ts.isIdentifier(node) || isWholeToken(node)) || node.text !== \"register\") return;",
+     "occurrence": 1,
+     "plant": "      if (!ts.isIdentifier(node) || node.text !== \"register\") return;"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:spellings"
+   ]
+  },
+  {
+   "id": "GL2-UNPARSED",
+   "origin": "refusal #1 PREP L2-UNPARSED (gate-prep-10, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return { modules: files.filter(file => scriptKindOf(file) !== undefined), unparsed: files.filter(file => scriptKindOf(file) === undefined) };",
+     "occurrence": 1,
+     "plant": "  return { modules: files.filter(file => scriptKindOf(file) !== undefined), unparsed: [] };"
+    }
+   ],
+   "falsifies": [
+    "P:tree:split"
+   ]
+  },
+  {
+   "id": "M-NOSORT",
+   "origin": "seat: srcTree lists names in readdir order (no UTF-16 sort)",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return readdirSync(dir).sort().flatMap(name => {",
+     "occurrence": 1,
+     "plant": "  return readdirSync(dir).flatMap(name => {"
+    }
+   ],
+   "falsifies": [
+    "P:tree:split"
+   ]
+  },
+  {
+   "id": "M-NORECURSE",
+   "origin": "seat: srcTree does not follow directories",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "    return statSync(path).isDirectory() ? treeFiles(path) : [path];",
+     "occurrence": 1,
+     "plant": "    return [path];"
+    }
+   ],
+   "falsifies": [
+    "G:unjudged",
+    "P:tree:split"
+   ]
+  },
+  {
+   "id": "M-KIND-TSX",
+   "origin": "seat: .ts modules parsed with ScriptKind.TSX",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "const MODULE_KINDS: Readonly<Record<string, ts.ScriptKind>> = { \".ts\": ts.ScriptKind.TS };",
+     "occurrence": 1,
+     "plant": "const MODULE_KINDS: Readonly<Record<string, ts.ScriptKind>> = { \".ts\": ts.ScriptKind.TSX };"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:script-kind"
+   ]
+  },
+  {
+   "id": "M-KIND-WIDE",
+   "origin": "seat: .tsx files parsed as modules too",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "const MODULE_KINDS: Readonly<Record<string, ts.ScriptKind>> = { \".ts\": ts.ScriptKind.TS };",
+     "occurrence": 1,
+     "plant": "const MODULE_KINDS: Readonly<Record<string, ts.ScriptKind>> = { \".ts\": ts.ScriptKind.TS, \".tsx\": ts.ScriptKind.TSX };"
+    }
+   ],
+   "falsifies": [
+    "P:tree:split"
+   ]
+  },
+  {
+   "id": "M-OWNER-OUTER-FN",
+   "origin": "seat: owner is the outermost function declaration",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "    if (ts.isFunctionDeclaration(at) && at.name !== undefined) return at.name.text;",
+     "occurrence": 1,
+     "plant": "    if (ts.isFunctionDeclaration(at) && at.name !== undefined && ts.isSourceFile(at.parent)) return at.name.text;"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:owners"
+   ]
+  },
+  {
+   "id": "M-OWNER-METHOD-SELF",
+   "origin": "seat: a class method named register owns itself",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "    if (ts.isMethodDeclaration(at) && at.name !== node && ts.isClassDeclaration(at.parent)",
+     "occurrence": 1,
+     "plant": "    if (ts.isMethodDeclaration(at) && ts.isClassDeclaration(at.parent)"
+    }
+   ],
+   "falsifies": [
+    "G:unjudged",
+    "P:registrations:owners"
+   ]
+  },
+  {
+   "id": "M-OWNER-CLASS",
+   "origin": "seat: no class owner",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "    if (ts.isClassDeclaration(at) && at.name !== undefined) return at.name.text;",
+     "occurrence": 1,
+     "plant": ""
+    }
+   ],
+   "falsifies": [
+    "G:unjudged",
+    "P:registrations:owners"
+   ]
+  },
+  {
+   "id": "M-OWNER-INNER-VAR",
+   "origin": "seat: owner is the innermost variable",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "    if (ts.isVariableDeclaration(at) && ts.isIdentifier(at.name)) variable = at.name.text;",
+     "occurrence": 1,
+     "plant": "    if (ts.isVariableDeclaration(at) && ts.isIdentifier(at.name)) variable ??= at.name.text;"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:owners"
+   ]
+  },
+  {
+   "id": "M-OWNER-TOP",
+   "origin": "seat: the top-level owner word",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return variable ?? \"<top>\";",
+     "occurrence": 1,
+     "plant": "  return variable ?? \"\";"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:owners",
+    "P:environment:other",
+    "R:run-form"
+   ]
+  },
+  {
+   "id": "M-KEY-STRING",
+   "origin": "seat: a quoted key reads as computed",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "ts.isIdentifier(name) || ts.isStringLiteral(name) || ts.isNumericLiteral(name)",
+     "occurrence": 1,
+     "plant": "ts.isIdentifier(name) || ts.isNumericLiteral(name)"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:provider"
+   ]
+  },
+  {
+   "id": "M-KEY-NUMBER",
+   "origin": "seat: a numeric key reads as computed",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "ts.isIdentifier(name) || ts.isStringLiteral(name) || ts.isNumericLiteral(name)",
+     "occurrence": 1,
+     "plant": "ts.isIdentifier(name) || ts.isStringLiteral(name)"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:provider"
+   ]
+  },
+  {
+   "id": "M-SOLE-FIRST",
+   "origin": "seat: soleAssignment takes the first of several",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  if (only === undefined || named.length !== 1) return `${named.length} ${key} properties`;",
+     "occurrence": 1,
+     "plant": "  if (only === undefined) return `${named.length} ${key} properties`;"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:provider",
+    "P:registrations:descriptor",
+    "P:registrations:effect-class",
+    "P:registrations:permissions"
+   ]
+  },
+  {
+   "id": "M-SOLE-SHORTHAND",
+   "origin": "seat: a shorthand property reads as its name",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return ts.isPropertyAssignment(only) ? only.initializer : `${key} ${ts.SyntaxKind[only.kind]}`;",
+     "occurrence": 1,
+     "plant": "  return ts.isPropertyAssignment(only) ? only.initializer : ts.isShorthandPropertyAssignment(only) ? only.name : `${key} ${ts.SyntaxKind[only.kind]}`;"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:provider",
+    "P:registrations:descriptor",
+    "P:registrations:effect-class",
+    "P:registrations:permissions"
+   ]
+  },
+  {
+   "id": "M-ACCESS-ELEMENT",
+   "origin": "seat: an element-access spelling holds itself",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      const access = (ts.isPropertyAccessExpression(parent) && parent.name === node) || (ts.isElementAccessExpression(parent) && parent.argumentExpression === node) ? parent : node;",
+     "occurrence": 1,
+     "plant": "      const access = ts.isPropertyAccessExpression(parent) && parent.name === node ? parent : node;"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:spellings"
+   ]
+  },
+  {
+   "id": "M-ACCESS-NAME",
+   "origin": "seat: a spelling holding a member is read as that member",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      const access = (ts.isPropertyAccessExpression(parent) && parent.name === node) || (ts.isElementAccessExpression(parent) && parent.argumentExpression === node) ? parent : node;",
+     "occurrence": 1,
+     "plant": "      const access = ts.isPropertyAccessExpression(parent) || (ts.isElementAccessExpression(parent) && parent.argumentExpression === node) ? parent : node;"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:spellings"
+   ]
+  },
+  {
+   "id": "M-JUDGE-ELEMENT",
+   "origin": "seat: an element-access callee is judged",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      if (!(ts.isPropertyAccessExpression(access) && ts.isCallExpression(holder) && holder.expression === access)) {",
+     "occurrence": 1,
+     "plant": "      if (!((ts.isPropertyAccessExpression(access) || ts.isElementAccessExpression(access)) && ts.isCallExpression(holder) && holder.expression === access)) {"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:spellings"
+   ]
+  },
+  {
+   "id": "M-JUDGE-ARGUMENT",
+   "origin": "seat: a register member passed as an argument is judged",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      if (!(ts.isPropertyAccessExpression(access) && ts.isCallExpression(holder) && holder.expression === access)) {",
+     "occurrence": 1,
+     "plant": "      if (!(ts.isPropertyAccessExpression(access) && ts.isCallExpression(holder))) {"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:spellings"
+   ]
+  },
+  {
+   "id": "M-UNJUDGED-DROP",
+   "origin": "seat: a spelling that is not a callee is dropped",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "        unjudged.push(`${file}#${owner}: ${ts.SyntaxKind[holder.kind]}`);",
+     "occurrence": 1,
+     "plant": ""
+    }
+   ],
+   "falsifies": [
+    "G:unjudged",
+    "P:registrations:spellings",
+    "P:registrations:owners"
+   ]
+  },
+  {
+   "id": "M-ARGS-COUNT",
+   "origin": "seat: only a call with no argument is refused for its count",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      if (provider === undefined || holder.arguments.length !== 1) why = `${holder.arguments.length} arguments`;",
+     "occurrence": 1,
+     "plant": "      if (provider === undefined) why = `${holder.arguments.length} arguments`;"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:arguments"
+   ]
+  },
+  {
+   "id": "M-PROVIDER-WHY",
+   "origin": "seat: the provider reason loses its syntax",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      else if (!ts.isObjectLiteralExpression(provider)) why = `provider ${ts.SyntaxKind[provider.kind]}`;",
+     "occurrence": 1,
+     "plant": "      else if (!ts.isObjectLiteralExpression(provider)) why = \"provider\";"
+    }
+   ],
+   "falsifies": [
+    "G:unjudged",
+    "P:registrations:arguments",
+    "P:registrations:owners"
+   ]
+  },
+  {
+   "id": "M-ID-TOKEN",
+   "origin": "seat: a template-token id is refused",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "        else if (!isWholeToken(id)) why = `id ${ts.SyntaxKind[id.kind]}`;",
+     "occurrence": 1,
+     "plant": "        else if (!ts.isStringLiteral(id)) why = `id ${ts.SyntaxKind[id.kind]}`;"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:descriptor"
+   ]
+  },
+  {
+   "id": "M-READ-DROP",
+   "origin": "seat: a judged call not read is dropped",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      unjudged.push(`${file}#${owner}: register call, ${why}`);",
+     "occurrence": 1,
+     "plant": ""
+    }
+   ],
+   "falsifies": [
+    "G:unjudged",
+    "P:registrations:arguments",
+    "P:registrations:provider",
+    "P:registrations:descriptor",
+    "P:registrations:owners"
+   ]
+  },
+  {
+   "id": "M-RFID-PREFIX",
+   "origin": "seat: an rf id is one starting reactivefiber.",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "export const isRfCapabilityId = (text: string): boolean => producerOf(text) === RF_PRODUCER && registryAcceptsId(text);",
+     "occurrence": 1,
+     "plant": "export const isRfCapabilityId = (text: string): boolean => text.startsWith(`${RF_PRODUCER}.`) && registryAcceptsId(text);"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:ids"
+   ]
+  },
+  {
+   "id": "M-RFID-GRAMMAR",
+   "origin": "seat: the registry grammar is not asked",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "export const isRfCapabilityId = (text: string): boolean => producerOf(text) === RF_PRODUCER && registryAcceptsId(text);",
+     "occurrence": 1,
+     "plant": "export const isRfCapabilityId = (text: string): boolean => producerOf(text) === RF_PRODUCER;"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:ids"
+   ]
+  },
+  {
+   "id": "M-GRAMMAR-ACCEPT",
+   "origin": "seat: a refused id is taken as accepted",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      verdict = false;",
+     "occurrence": 1,
+     "plant": "      verdict = true;"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:ids"
+   ]
+  },
+  {
+   "id": "M-WORD-TOKEN",
+   "origin": "seat: a template-token effect class reads as its syntax",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return isWholeToken(value) ? value.text : `<${ts.SyntaxKind[value.kind]}>`;",
+     "occurrence": 1,
+     "plant": "  return ts.isStringLiteral(value) ? value.text : `<${ts.SyntaxKind[value.kind]}>`;"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:effect-class"
+   ]
+  },
+  {
+   "id": "M-WORD-WHY",
+   "origin": "seat: wordOf loses the reason",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  if (typeof value === \"string\") return `<${value}>`;",
+     "occurrence": 1,
+     "plant": "  if (typeof value === \"string\") return \"<unread>\";"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:effect-class"
+   ]
+  },
+  {
+   "id": "M-WORDS-WHY",
+   "origin": "seat: wordsOf loses the reason",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  if (typeof value === \"string\") return `<${value}>`;",
+     "occurrence": 2,
+     "plant": "  if (typeof value === \"string\") return \"<unread>\";"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:permissions"
+   ]
+  },
+  {
+   "id": "M-WORDS-NONARRAY",
+   "origin": "seat: a non-array permissions value reads empty",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  if (!ts.isArrayLiteralExpression(value)) return `<${ts.SyntaxKind[value.kind]}>`;",
+     "occurrence": 1,
+     "plant": "  if (!ts.isArrayLiteralExpression(value)) return \"[]\";"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:permissions"
+   ]
+  },
+  {
+   "id": "M-ENV-DEDUPE",
+   "origin": "seat: names are not deduplicated",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return { names: [...new Set(names)], computed, whole, other };",
+     "occurrence": 1,
+     "plant": "  return { names, computed, whole, other };"
+    }
+   ],
+   "falsifies": [
+    "P:environment:names"
+   ]
+  },
+  {
+   "id": "M-ENV-SORT",
+   "origin": "seat: names are sorted",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return { names: [...new Set(names)], computed, whole, other };",
+     "occurrence": 1,
+     "plant": "  return { names: [...new Set(names)].sort(), computed, whole, other };"
+    }
+   ],
+   "falsifies": [
+    "P:environment:names"
+   ]
+  },
+  {
+   "id": "M-ENV-COMPUTED",
+   "origin": "seat: a computed access gives its text as a name",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "        else computed.push(`${site}: ${ts.SyntaxKind[parent.argumentExpression.kind]}`);",
+     "occurrence": 1,
+     "plant": "        else names.push(parent.argumentExpression.getText());"
+    }
+   ],
+   "falsifies": [
+    "P:environment:computed",
+    "R:run-form"
+   ]
+  },
+  {
+   "id": "M-ENV-OTHER-TOKEN",
+   "origin": "seat: a whole-token env is not another spelling",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      if ((ts.isIdentifier(node) || isWholeToken(node)) && node.text === \"env\" && ",
+     "occurrence": 1,
+     "plant": "      if (ts.isIdentifier(node) && node.text === \"env\" && "
+    }
+   ],
+   "falsifies": [
+    "P:environment:other",
+    "R:run-form"
+   ]
+  },
+  {
+   "id": "M-ENV-OTHER-EXCLUDE",
+   "origin": "seat: the env of process.env is listed as another spelling",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": " && node.text === \"env\" && !(isProcessEnv(node.parent) && node.parent.name === node)) other.push(",
+     "occurrence": 1,
+     "plant": " && node.text === \"env\") other.push("
+    }
+   ],
+   "falsifies": [
+    "P:environment:names",
+    "P:environment:computed",
+    "P:environment:whole",
+    "R:run-form"
+   ]
+  },
+  {
+   "id": "M-ENV-OTHER-DROP",
+   "origin": "seat: other env spellings are not listed",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      if ((ts.isIdentifier(node) || isWholeToken(node)) && node.text === \"env\" && !(isProcessEnv(node.parent) && node.parent.name === node)) other.push(`${file}#${ownerOf(node)}: ${ts.SyntaxKind[node.parent.kind]}`);\n",
+     "occurrence": 1,
+     "plant": ""
+    }
+   ],
+   "falsifies": [
+    "P:environment:other",
+    "R:run-form"
+   ]
+  },
+  {
+   "id": "M-ENV-ANY-HOLDER",
+   "origin": "seat: env of any identifier is process.env",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === \"process\" && node.name.text === \"env\";",
+     "occurrence": 1,
+     "plant": "  ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.expression) && node.name.text === \"env\";"
+    }
+   ],
+   "falsifies": [
+    "P:environment:other",
+    "R:run-form"
+   ]
+  },
+  {
+   "id": "M-RUNFORM-FIRST",
+   "origin": "seat: an env form sets the first name only",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "environment: Object.fromEntries(environmentNames.map(name => [name, word]))",
+     "occurrence": 1,
+     "plant": "environment: Object.fromEntries(environmentNames.slice(0, 1).map(name => [name, word]))"
+    }
+   ],
+   "falsifies": [
+    "P:runs:environment"
+   ]
+  },
+  {
+   "id": "M-RUNFORM-CWD",
+   "origin": "seat: the cwd form runs at the census root",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "    { name: \"cwd-root\", workspaceRoot: process.cwd(), environment: {} },",
+     "occurrence": 1,
+     "plant": "    { name: \"cwd-root\", workspaceRoot: HONESTY_WS, environment: {} },"
+    }
+   ],
+   "falsifies": [
+    "P:runs:workspace-root",
+    "P:runs:registry",
+    "R:run-form"
+   ]
+  },
+  {
+   "id": "M-RUNFORM-WORDS",
+   "origin": "seat: the env forms skip unknown instead of read",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "...effectClasses.filter(word => word !== \"read\")",
+     "occurrence": 1,
+     "plant": "...effectClasses.filter(word => word !== \"unknown\")"
+    }
+   ],
+   "falsifies": [
+    "G:runs",
+    "P:runs:environment",
+    "P:runs:workspace-root",
+    "P:runs:registry",
+    "R:run-form"
+   ]
+  },
+  {
+   "id": "M-RESTORE",
+   "origin": "seat: an unset name is restored as empty",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      if (value === undefined) Reflect.deleteProperty(process.env, name);",
+     "occurrence": 1,
+     "plant": "      if (value === undefined) process.env[name] = \"\";"
+    }
+   ],
+   "falsifies": [
+    "P:runs:environment"
+   ]
+  },
+  {
+   "id": "M-HELD-FILTER",
+   "origin": "seat: every descriptor is listed",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "    const held = registry.catalogSnapshot().filter(entry => isRfCapabilityId(entry.descriptor.id));",
+     "occurrence": 1,
+     "plant": "    const held = registry.catalogSnapshot();"
+    }
+   ],
+   "falsifies": [
+    "P:runs:registry"
+   ]
+  },
+  {
+   "id": "M-HELD-NONE",
+   "origin": "seat: an empty registry lists nothing",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "\"<no rf descriptor>\"",
+     "occurrence": 1,
+     "plant": "\"\""
+    }
+   ],
+   "falsifies": [
+    "P:runs:registry"
+   ]
+  },
+  {
+   "id": "M-FAILURE-CATEGORY",
+   "origin": "seat: every failed read is transport",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "    failure = error instanceof CapabilityError ? error.category : \"transport\";",
+     "occurrence": 1,
+     "plant": "    failure = \"transport\";"
+    }
+   ],
+   "falsifies": [
+    "C:injectable:validation",
+    "C:injectable:authorization",
+    "C:injectable:unavailable",
+    "C:injectable:uncertain-effect",
+    "C:native:refused"
+   ]
+  },
+  {
+   "id": "M-ACK-RECEIPTS",
+   "origin": "seat: an acknowledgement cites no receipt",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "receiptIds: receipts.map(receipt => receipt.receiptId)",
+     "occurrence": 1,
+     "plant": "receiptIds: []"
+    }
+   ],
+   "falsifies": [
+    "F:injectable:bare",
+    "F:injectable:minimal",
+    "F:injectable:full",
+    "F:native:minimal",
+    "F:native:full",
+    "C:injectable:validation",
+    "C:injectable:authorization",
+    "C:injectable:unavailable",
+    "C:injectable:transport",
+    "C:injectable:uncertain-effect",
+    "C:native:malformed",
+    "C:native:refused",
+    "U:injectable:show-bare",
+    "U:injectable:show-full",
+    "U:injectable:drift-bare",
+    "U:injectable:drift-full",
+    "U:injectable:no-source",
+    "U:injectable:no-identity",
+    "R:echo"
+   ]
+  },
+  {
+   "id": "M-OVERRIDE-ACCEPT",
+   "origin": "seat: the accepted override does not accept the risk",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "{ ...params, acceptDuplicateRisk: true }",
+     "occurrence": 1,
+     "plant": "{ ...params, acceptDuplicateRisk: false }"
+    }
+   ],
+   "falsifies": [
+    "C:injectable:validation",
+    "C:injectable:authorization",
+    "C:injectable:unavailable",
+    "C:injectable:transport",
+    "C:injectable:uncertain-effect",
+    "C:native:malformed",
+    "C:native:refused",
+    "U:injectable:show-bare",
+    "U:injectable:show-full",
+    "U:injectable:drift-bare",
+    "U:injectable:drift-full",
+    "U:injectable:no-source",
     "U:injectable:no-identity"
    ]
   }
