@@ -562,6 +562,86 @@
                 "rows": 1,
                 "unaccounted": 1
               },
+              "modifierNestedRow": {
+                "rows": 1,
+                "unaccounted": 1
+              },
+              "conditionNestedRow": {
+                "rows": 1,
+                "unaccounted": 1
+              },
+              "namespaceElementNestedRow": {
+                "rows": 1,
+                "unaccounted": 1
+              },
+              "namespaceModifierNestedRow": {
+                "rows": 1,
+                "unaccounted": 1
+              },
+              "suiteInsideRow": {
+                "rows": 1,
+                "unaccounted": 1
+              },
+              "sameKindRenameRow": {
+                "rows": 1,
+                "unaccounted": 1
+              },
+              "crossRenameRow": {
+                "rows": 1,
+                "unaccounted": 1
+              },
+              "crossRenameSuite": {
+                "rows": 0,
+                "unaccounted": 0
+              },
+              "crossRenameSuiteRow": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "sameKindRenameSuite": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "otherExportUnderRowName": {
+                "rows": 0,
+                "unaccounted": 0
+              },
+              "otherExportUnderSuiteName": {
+                "rows": 0,
+                "unaccounted": 1
+              },
+              "namespaceUnderRowName": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "namespaceUnderSuiteName": {
+                "rows": 0,
+                "unaccounted": 2
+              },
+              "defaultImportUnderRowName": {
+                "rows": 0,
+                "unaccounted": 0
+              },
+              "defaultImportUnderSuiteName": {
+                "rows": 0,
+                "unaccounted": 1
+              },
+              "typeOnlyImportUnderRowName": {
+                "rows": 1,
+                "unaccounted": 1
+              },
+              "typeOnlyImportUnderSuiteName": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "typeOnlySpecifierUnderRowName": {
+                "rows": 1,
+                "unaccounted": 1
+              },
+              "typeOnlySpecifierUnderSuiteName": {
+                "rows": 1,
+                "unaccounted": 0
+              },
               "suiteInLoop": {
                 "rows": 0,
                 "unaccounted": 1
@@ -597,6 +677,228 @@
               "dynamicBinding": {
                 "rows": 0,
                 "unaccounted": 0
+              }
+            },
+            "headShapes": {
+              "row it global": {
+                "bare": "1|1",
+                "modifier": "1|1",
+                "elementModifier": "1|1",
+                "condition": "1|1",
+                "parenthesized": "1|1",
+                "nonNull": "1|1",
+                "as": "1|1",
+                "satisfies": "1|1",
+                "angle": "1|1"
+              },
+              "row it imported": {
+                "bare": "1|1",
+                "modifier": "1|1",
+                "elementModifier": "1|1",
+                "condition": "1|1",
+                "parenthesized": "1|1",
+                "nonNull": "1|1",
+                "as": "1|1",
+                "satisfies": "1|1",
+                "angle": "1|1"
+              },
+              "row it renamed": {
+                "bare": "1|1",
+                "modifier": "1|1",
+                "elementModifier": "1|1",
+                "condition": "1|1",
+                "parenthesized": "1|1",
+                "nonNull": "1|1",
+                "as": "1|1",
+                "satisfies": "1|1",
+                "angle": "1|1"
+              },
+              "row it namespace": {
+                "bare": "1|1",
+                "modifier": "1|1",
+                "elementModifier": "1|1",
+                "condition": "1|1",
+                "parenthesized": "1|1",
+                "nonNull": "1|1",
+                "as": "1|1",
+                "satisfies": "1|1",
+                "angle": "1|1"
+              },
+              "row it namespaceElement": {
+                "bare": "1|1",
+                "modifier": "1|1",
+                "elementModifier": "1|1",
+                "condition": "1|1",
+                "parenthesized": "1|1",
+                "nonNull": "1|1",
+                "as": "1|1",
+                "satisfies": "1|1",
+                "angle": "1|1"
+              },
+              "row test global": {
+                "bare": "1|1",
+                "modifier": "1|1",
+                "elementModifier": "1|1",
+                "condition": "1|1",
+                "parenthesized": "1|1",
+                "nonNull": "1|1",
+                "as": "1|1",
+                "satisfies": "1|1",
+                "angle": "1|1"
+              },
+              "row test imported": {
+                "bare": "1|1",
+                "modifier": "1|1",
+                "elementModifier": "1|1",
+                "condition": "1|1",
+                "parenthesized": "1|1",
+                "nonNull": "1|1",
+                "as": "1|1",
+                "satisfies": "1|1",
+                "angle": "1|1"
+              },
+              "row test renamed": {
+                "bare": "1|1",
+                "modifier": "1|1",
+                "elementModifier": "1|1",
+                "condition": "1|1",
+                "parenthesized": "1|1",
+                "nonNull": "1|1",
+                "as": "1|1",
+                "satisfies": "1|1",
+                "angle": "1|1"
+              },
+              "row test namespace": {
+                "bare": "1|1",
+                "modifier": "1|1",
+                "elementModifier": "1|1",
+                "condition": "1|1",
+                "parenthesized": "1|1",
+                "nonNull": "1|1",
+                "as": "1|1",
+                "satisfies": "1|1",
+                "angle": "1|1"
+              },
+              "row test namespaceElement": {
+                "bare": "1|1",
+                "modifier": "1|1",
+                "elementModifier": "1|1",
+                "condition": "1|1",
+                "parenthesized": "1|1",
+                "nonNull": "1|1",
+                "as": "1|1",
+                "satisfies": "1|1",
+                "angle": "1|1"
+              },
+              "suite describe global": {
+                "bare": "1|0",
+                "modifier": "1|0",
+                "elementModifier": "1|0",
+                "condition": "1|0",
+                "parenthesized": "1|0",
+                "nonNull": "1|0",
+                "as": "1|0",
+                "satisfies": "1|0",
+                "angle": "1|0"
+              },
+              "suite describe imported": {
+                "bare": "1|0",
+                "modifier": "1|0",
+                "elementModifier": "1|0",
+                "condition": "1|0",
+                "parenthesized": "1|0",
+                "nonNull": "1|0",
+                "as": "1|0",
+                "satisfies": "1|0",
+                "angle": "1|0"
+              },
+              "suite describe renamed": {
+                "bare": "1|0",
+                "modifier": "1|0",
+                "elementModifier": "1|0",
+                "condition": "1|0",
+                "parenthesized": "1|0",
+                "nonNull": "1|0",
+                "as": "1|0",
+                "satisfies": "1|0",
+                "angle": "1|0"
+              },
+              "suite describe namespace": {
+                "bare": "1|0",
+                "modifier": "1|0",
+                "elementModifier": "1|0",
+                "condition": "1|0",
+                "parenthesized": "1|0",
+                "nonNull": "1|0",
+                "as": "1|0",
+                "satisfies": "1|0",
+                "angle": "1|0"
+              },
+              "suite describe namespaceElement": {
+                "bare": "1|0",
+                "modifier": "1|0",
+                "elementModifier": "1|0",
+                "condition": "1|0",
+                "parenthesized": "1|0",
+                "nonNull": "1|0",
+                "as": "1|0",
+                "satisfies": "1|0",
+                "angle": "1|0"
+              },
+              "suite suite global": {
+                "bare": "1|0",
+                "modifier": "1|0",
+                "elementModifier": "1|0",
+                "condition": "1|0",
+                "parenthesized": "1|0",
+                "nonNull": "1|0",
+                "as": "1|0",
+                "satisfies": "1|0",
+                "angle": "1|0"
+              },
+              "suite suite imported": {
+                "bare": "1|0",
+                "modifier": "1|0",
+                "elementModifier": "1|0",
+                "condition": "1|0",
+                "parenthesized": "1|0",
+                "nonNull": "1|0",
+                "as": "1|0",
+                "satisfies": "1|0",
+                "angle": "1|0"
+              },
+              "suite suite renamed": {
+                "bare": "1|0",
+                "modifier": "1|0",
+                "elementModifier": "1|0",
+                "condition": "1|0",
+                "parenthesized": "1|0",
+                "nonNull": "1|0",
+                "as": "1|0",
+                "satisfies": "1|0",
+                "angle": "1|0"
+              },
+              "suite suite namespace": {
+                "bare": "1|0",
+                "modifier": "1|0",
+                "elementModifier": "1|0",
+                "condition": "1|0",
+                "parenthesized": "1|0",
+                "nonNull": "1|0",
+                "as": "1|0",
+                "satisfies": "1|0",
+                "angle": "1|0"
+              },
+              "suite suite namespaceElement": {
+                "bare": "1|0",
+                "modifier": "1|0",
+                "elementModifier": "1|0",
+                "condition": "1|0",
+                "parenthesized": "1|0",
+                "nonNull": "1|0",
+                "as": "1|0",
+                "satisfies": "1|0",
+                "angle": "1|0"
               }
             }
           }
