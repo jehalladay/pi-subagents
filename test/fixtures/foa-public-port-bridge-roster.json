@@ -138,7 +138,8 @@
    "digest-case-folded",
    "identity-case-folded",
    "version-numeric",
-   "basis-trim"
+   "basis-trim",
+   "visibility-case-folded"
   ],
   "Q9": [
    "effect-denylist",
@@ -149,7 +150,10 @@
    "absent-epoch-stale",
    "absent-identity-unseen",
    "executable-depth-five",
-   "no-base-later"
+   "no-base-later",
+   "absent-version-skipped",
+   "absent-schema-skipped",
+   "absent-source-skipped"
   ],
   "Q10": [
    "set",
@@ -796,6 +800,10 @@
      "M-SEAM-ALIAS",
      "M-READ-CROSS-ALIAS",
      "M-READ-KIND-ALIAS",
+     "M-SEAM-CROSS-ALIAS",
+     "M-SEAM-KIND-ALIAS",
+     "M-SEAM-ADMITTED-ALIAS",
+     "M-SEAM-LATER-ALIAS",
      "M-SHARED-REF"
     ],
     "merged": [
@@ -2526,6 +2534,62 @@
      "F-READ-KIND": [
       "aliased"
      ]
+    },
+    "M-SEAM-CROSS-ALIAS": {
+     "F-EPOCH": [
+      "aliased"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ],
+     "F-DISPOSITION": [
+      "aliased"
+     ],
+     "F-FEEDBACK": [
+      "aliased"
+     ],
+     "F-GAP-NO-BASE": [
+      "aliased"
+     ],
+     "F-GAP-IDENTITY": [
+      "aliased"
+     ],
+     "F-AUTHORITY": [
+      "aliased"
+     ],
+     "F-PRIVATE": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-KIND-ALIAS": {
+     "F-READ-KIND": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-ADMITTED-ALIAS": {
+     "F-GAP-ORDER": [
+      "aliased"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-LATER-ALIAS": {
+     "F-DUPLICATE": [
+      "aliased"
+     ],
+     "F-GAP-ORDER": [
+      "aliased"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "aliased"
+     ]
     }
    },
    "departures": {
@@ -3266,6 +3330,10 @@
     "M-SEAM-ALIAS": [],
     "M-READ-CROSS-ALIAS": [],
     "M-READ-KIND-ALIAS": [],
+    "M-SEAM-CROSS-ALIAS": [],
+    "M-SEAM-KIND-ALIAS": [],
+    "M-SEAM-ADMITTED-ALIAS": [],
+    "M-SEAM-LATER-ALIAS": [],
     "M-GAP-APPLY": [
      "F-GAP#1:g2",
      "F-GAP#2:g3",
@@ -5028,6 +5096,62 @@
      "aliased"
     ]
    },
+   "M-SEAM-CROSS-ALIAS": {
+    "F-EPOCH": [
+     "aliased"
+    ],
+    "F-DUPLICATE-SCOPE": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ],
+    "F-DISPOSITION": [
+     "aliased"
+    ],
+    "F-FEEDBACK": [
+     "aliased"
+    ],
+    "F-GAP-NO-BASE": [
+     "aliased"
+    ],
+    "F-GAP-IDENTITY": [
+     "aliased"
+    ],
+    "F-AUTHORITY": [
+     "aliased"
+    ],
+    "F-PRIVATE": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-KIND-ALIAS": {
+    "F-READ-KIND": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-ADMITTED-ALIAS": {
+    "F-GAP-ORDER": [
+     "aliased"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-LATER-ALIAS": {
+    "F-DUPLICATE": [
+     "aliased"
+    ],
+    "F-GAP-ORDER": [
+     "aliased"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "aliased"
+    ]
+   },
    "M-SHARED-LABEL": {
     "F-SESSION": [
      "claim-shared"
@@ -5674,6 +5798,21 @@
      "label",
      "seam"
     ]
+   },
+   "visibility-case-folded": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
    }
   },
   "Q9": {
@@ -5809,6 +5948,46 @@
      "values",
      "label",
      "seam"
+    ]
+   },
+   "absent-version-skipped": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "absent-schema-skipped": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "absent-source-skipped": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "diagnostic"
+    ],
+    "differs": [
+     "receipts"
     ]
    }
   },
