@@ -32,7 +32,8 @@
  * identifier spelled with an escape by its cooked name and each template part by its cooked text, a substitution ending
  * the part ("cooked"), and each chain of "+" whose operands are all string literals by its folded value ("folded"); a .json
  * file also by its parsed keys and string values ("cooked"); a markup file (.md .html .htm .xml .svg) also with its
- * numeric character references and the common named entities decoded ("decoded"); a YAML or TOML file (.yml .yaml .toml)
+ * numeric character references and the six named entities amp, lt, gt, quot, apos and nbsp decoded ("decoded"); a YAML
+ * or TOML file (.yml .yaml .toml)
  * also with its backslash escapes (U, u and x forms) decoded ("decoded"). A file's forms are the readings that found a
  * mention. judgeScope reads an entry list in one call, so every leg judges its planted
  * entries after the real ones: the findings must be exactly the plants', so a real mention, a hollowed judge or a result
@@ -45,12 +46,13 @@
  * runtime export, schema id, registry key, docs heading, escape-spelled string, escape-spelled JSON) each found; T3 the
  * release's identity (package.json spec, lock resolution, version and
  * integrity, the tarball's own name, version and sha256) and the owner's recorded status, so any re-vendor reds T3 and
- * re-reads T1. W, the baseline the armed half must never widen: W1 the declared read surface (every declaration of
- * FurnaceObserverClient in the observer module and in every module augmentation of it in a listed Pi script - its member
- * chains down to a leaf and each heritage type, read as the path `<extends T>` - and the type of the constructor's client
- * parameter) equals docs/09's three reads one to one, docs/09 read through the landed rendered binding over every rendered
- * block of its section (Docs09Reading), and a widened interface, a planted augmentation, the heritage plants and the docs
- * plants are read as widened or refused; W2 every client read carries a timeoutMs bound, the list reads a
+ * re-reads T1. W, the baseline the armed half must never widen: W1 the declared read surface (every declaration of the
+ * name FurnaceObserverClient in the observer module and in every module augmentation of it in a listed Pi script - an
+ * interface for its member chains down to a leaf and each heritage type, read as the path `<extends T>`, and any other
+ * declaration of the name, a class included, read whole as the path `<K FurnaceObserverClient>` - and the type of the
+ * constructor's client parameter) equals docs/09's three reads one to one, docs/09 read through the landed rendered
+ * binding over every rendered block of its section (Docs09Reading), and a widened interface, a planted augmentation, the
+ * heritage plants, the non-interface plants and the docs plants are read as widened or refused; W2 every client read carries a timeoutMs bound, the list reads a
  * limit, and the poll loop both budgets, an unbounded plant read as such; W3 every client use is one of the three read calls
  * (no alias, no other member), the SDK is imported for types only (no value import, value re-export, import-equals
  * require, dynamic import or require call; a planted re-export and import-equals read as runtime loads), close() reads nothing, no docs/09 excluded verb is called,
@@ -101,8 +103,12 @@
  *   each blockquote (the blocks nested in either, as the landed rendered view joins them: a nested table contributes no
  *   cell), a heading, a code block (fenced or indented) and a table (its cells joined) - is read for the two sentences'
  *   subject words (DOCS09_SUBJECTS: "Furnace read", "poll" and "attach", any case, as word parts, matched in
- *   subjectText: character references decoded, NFKC-folded, format characters removed) and for their frames; the reads
- *   and verbs are stated only when each subject word occurs exactly once in those units, in a paragraph, and each frame
+ *   subjectText: numeric character references and the six named references amp, lt, gt, quot, apos and nbsp decoded,
+ *   NFKC-folded, then format characters (\p{Cf}) and default-ignorable code points (\p{Default_Ignorable_Code_Point})
+ *   removed), for every other named character reference (any `&name;` whose name is not one of the six, as written:
+ *   undecoded), for every bidi control once the references are decoded (\p{Bidi_Control}: controls), and for their
+ *   frames (matched as written); the reads and verbs are stated only when the section holds no HTML, no such named
+ *   reference and no bidi control, each subject word occurs exactly once in those units, in a paragraph, and each frame
  *   matches once. Beside the reading, W1 pins docs/09's section whole: its rendered block list (each block's kind,
  *   rendered text and, for a paragraph or list item, its markdown) is part of W1's witness (docsBinding.blocks, the
  *   adoption form's slice equality held to the roster), so on docs/09 itself a block added, removed or re-ordered inside
@@ -110,28 +116,52 @@
  *   included - reds W1 (a whitespace-only change renders the same and does not; the section holds no blockquote or table
  *   today, so no nested cell sits outside the pin). The RESTATED docs plants (L2-D1, L2-D2, L2-D3, a heading, a fenced
  *   code block, a list nested in a quote, the reads subject without its frame, a "poll" restatement, a narrowed verbs
- *   quote, an "attach" restatement, the subject words spelled with character references, full-width letters or format
- *   characters, and the paragraph moved into a list item) each refuse the reading, asserted and pinned in W1. Outside
+ *   quote, an "attach" restatement, the subject words spelled with numeric character references, full-width letters or
+ *   format characters, the paragraph moved into a list item, and cut #2's members below) each refuse the reading,
+ *   asserted and pinned in W1. Outside
  *   the reading: R-DOCS-UNCOUNTED (Q10; covered on docs/09 itself by the block pin) and R-DOCS-ELSEWHERE (Q11, outside
  *   the section and the pin). F2, augmentation heritage: L2-W4b's augmentation that only extends another interface read
- *   as no augmentation. READ SET: each declaration of FurnaceObserverClient, in the observer module and in every module
- *   augmentation of it in a listed script, is read for its member chains and for each heritage type as the path
- *   `<extends T>`, which pairs with no docs/09 read, so W1's one-to-one check reds; the augmentation and own-declaration
- *   heritage plants are asserted and pinned in W1. Outside the read set: R-ALIASED-MODULE (Q12). F3, the in-filing
+ *   as no augmentation. READ SET: each declaration of the name FurnaceObserverClient (declarationsOf: every identifier
+ *   spelled with it, by its cooked text, that names its parent node), in the observer module and in every module
+ *   augmentation of it in a listed script - an interface declaration read for its member chains and for each heritage
+ *   type as the path `<extends T>`, and any other declaration (a class, an enum, a namespace, a type alias, a function, a
+ *   variable or any other node it names) read whole as the path `<K FurnaceObserverClient>` (K is class, enum,
+ *   namespace, type, function or variable, else declaration), never for its members or heritage (fail closed); each
+ *   such path pairs with no docs/09 read, so W1's one-to-one check reds; the heritage plants (an augmentation, the
+ *   observer's own declaration) and the non-interface plants (cut #2's members below) are asserted and pinned in W1.
+ *   Outside the read set: R-ALIASED-MODULE (Q12). F3, the in-filing
  *   duplicate: L2-F7a weakened the acceptance and restated it verbatim inside the filing's own block, and stayed green.
  *   READ SET: the whole owner filing, pinned byte for byte by FILING_SHA256, and each bound sentence's lead
  *   (OWNER_LEADS) exactly once in it, the L2-F7a duplicate asserted against both in the outside-anchor case; nothing
  *   inside the filing's two blocks is outside the read set, so F3 names no residual (a note appended after a blank line
- *   leaves the filing as it was, G22a). Measured at this cut's base 27c968d: docs/09's section renders three paragraphs
- *   and no other block, each subject word occurs once, in the third; no listed script augments the observer or declares
- *   FurnaceObserverClient under another specifier; the filing reads fb66562ab5acae93, each lead once.
+ *   leaves the filing as it was, G22a). Measured at cut #2's base ee48709: docs/09's section renders three paragraphs
+ *   and no other block, holds no character reference, no non-ASCII character and no bidi control, and each subject
+ *   word occurs once, in the third; the observer declares FurnaceObserverClient once, as its interface, and no listed
+ *   script augments the observer or declares the name under another specifier; the filing reads fb66562ab5acae93, each
+ *   lead once.
+ * CUT #2 (the wb-s876 respin: refusal #1, gate s142, outbox O:1367; U1 HIGH and U2 MEDIUM cured, F3 rides; the same
+ *   R739 TERMINAL form, hop 3). U1, the F2 class: a CLASS declaration of FurnaceObserverClient in an observer
+ *   augmentation (the gate's G-W1-CLASS-OPT2, and G-W1-CLASS-EXT-OPT2, extending a class that holds the member) read as
+ *   no augmentation, as only interface declarations were read; every other declaration of the name now reads whole (the
+ *   F2 READ SET above): the two gate forms, the other kinds (a namespace, an enum, a type alias, a function and a
+ *   variable) and a class declared beside the observer's own interface are asserted and pinned in W1. U2, the F1 class:
+ *   subject words spelled with named references outside the six (&shy;, &zwnj;, &zwj;, &NoBreak;, &ZeroWidthSpace;,
+ *   &afr;/&pfr;, &aopf;/&popf;; in a blockquote, a list item, a table cell, an h3 and the verbs sentence) read as stated,
+ *   against the old READ SET's "character references decoded"; the read set now names the six, and any other named
+ *   reference refuses the reading (fail closed: the full HTML entity table is not read), the soft hyphen's numeric and
+ *   raw spellings of the same rendered page pinned beside them. F3 (rides): default-ignorable code points that are not
+ *   format characters (U+034F, U+FE00, U+FE0F, U+3164, U+17B4) inside the subject words read as stated; they are now
+ *   removed. In the same F1 class, a right-to-left override (U+202E, raw or as &#x202E;) shows a reader reversed subject
+ *   words ("redaer ecanruF" as "Furnace reader") that subjectText holds in stored order; any bidi control now refuses
+ *   the reading. Each docs member is pinned in W1's RESTATED list.
  * RESIDUALS (named, each with its pinned quiet row): R-TRACKER the tracker export (.beads/) is not a Pi scope: the bead's
  * own row spells the record (Q1); R-HOLDER this file and its roster spell it and are excluded by name (Q2); R-BINARY a file
  * holding a NUL byte is not read (Q3); R-PARAPHRASE "observed boundary" and "observation boundary" are not the record's
  * words (Q4); R-WORD-ORDER the words in the other order are not read (Q5); R-INTERIOR a character inside a word (a format
- * character, a confusable letter, markup), an HTML entity outside a markup file, or a backslash escape in a file kind whose
- * escapes are not decoded (a shell script, plain text: only scripts, .json, markup entities and YAML/TOML are decoded)
- * hides it (Q6); R-COMPUTED a template substitution, a runtime join or a computed character between word parts is not read
+ * character, a confusable letter, markup), an HTML entity outside a markup file, a named character reference other than
+ * the six in a markup file (cut #2), a spelling a bidi override reverses (the words stored backwards; cut #2), or a
+ * backslash escape in a file kind whose escapes are not decoded (a shell script, plain text: only scripts, .json, markup
+ * entities and YAML/TOML are decoded) hides it (Q6); R-COMPUTED a template substitution, a runtime join or a computed character between word parts is not read
  * (Q7); R-OTHER-MODULE W reads only the observer module and its module augmentations in the listed scripts:
  * src/workbench/furnace-control.ts calls docs/09's excluded verbs and is out of W's scope (Q8); R-COMPUTED-ACCESS a client reached through a computed key is
  * not read as a client use (Q9); R-DOCS-UNCOUNTED the subject-word reading does not count a restatement inside docs/09's
@@ -161,7 +191,14 @@
  * specifier whose last segment is furnace-observer is read as the observer module (W1); a second subject word in any
  * unit of docs/09's section refuses the reading (a later sentence that names the Furnace reader, polling or an
  * attachment included), and a table's cells are read joined, so a sentence split across cells counts; any heritage type of
- * FurnaceObserverClient reads as a widening, an empty interface extended included. The augmentation read parses only
+ * FurnaceObserverClient reads as a widening, an empty interface extended included; any declaration of the name other than
+ * an interface reads as a widening too - a namespace, a value, a member, a parameter, a specifier or a property access
+ * named by it included, nested anywhere in the observer module or an augmentation (a namespace's own, a function's
+ * local), as an interface nested there reads too. In docs/09's section any named character reference other than the six
+ * refuses the reading wherever it sits - one that renders no subject word (&copy;), one that renders what a decoded
+ * spelling renders (&NonBreakingSpace; for &nbsp;), one in a code span or code block, where the page shows it as
+ * written, and one the rendered view exposes by decoding the &amp; before it (test/helpers/census.ts decodes &amp;
+ * first) included - and so does any bidi control, a mark between words included. The augmentation read parses only
  * a script whose text spells "module" (a module declaration's keyword cannot be escape-spelled). SCOPE: files git ignores (node_modules/, .forge/ and the rest of .gitignore) and files deleted from
  * the worktree are not listed; Furnace's own repository is never read (the gate is a release Pi vendors).
  * READS (contacts): every listed file (Z2), git objects at the filing pin (Z1), the tracker export rows of wb-dqf.1 and
@@ -270,8 +307,8 @@ const CLAIMS: Readonly<Record<string, Readonly<Record<string, readonly string[]>
     "not shipped": ["spec", "lockResolved", "lockVersion", "lockIntegrityMatches", "tarballName", "tarballVersion", "tarballSha256"],
   },
   W1: {
-    never: ["widenedPlant", "augmentationPlant", "heritagePlant", "docsPlants"],
-    widening: ["interfaceName", "interfaceDeclarations", "interfaceExtends", "clientParameterTypes", "augmentations", "readPaths", "docsBinding", "docsReads", "pairs"],
+    never: ["widenedPlant", "augmentationPlant", "heritagePlant", "nonInterfacePlant", "docsPlants"],
+    widening: ["interfaceName", "interfaceDeclarations", "interfaceExtends", "otherDeclarations", "clientParameterTypes", "augmentations", "readPaths", "docsBinding", "docsReads", "pairs"],
   },
   W2: { "today's": ["calls"], bounded: ["pollBounds", "unboundedPlant"] },
   W3: {
@@ -516,12 +553,17 @@ function jsonUnits(text: string): string[] {
   return units;
 }
 const NAMED_ENTITIES: Readonly<Record<string, string>> = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: String.fromCodePoint(0xa0) };
-/** A markup file's text with its numeric character references and the common named entities decoded. */
+/** The character a named reference decodes to, when its name (any case) is one of the six (own keys only, so &constructor; is none). */
+function namedEntity(name: string): string | undefined {
+  const key = name.toLowerCase();
+  return Object.hasOwn(NAMED_ENTITIES, key) ? NAMED_ENTITIES[key] : undefined;
+}
+/** A markup file's text with its numeric character references and the six named entities (amp, lt, gt, quot, apos, nbsp) decoded. */
 function decodedMarkup(text: string): string {
   return text.replace(/&(?:#(\d+)|#x([0-9a-f]+)|(\w+));/gi, (whole, decimal: string | undefined, hex: string | undefined, name: string | undefined) => {
     const code = decimal !== undefined ? Number.parseInt(decimal, 10) : hex !== undefined ? Number.parseInt(hex, 16) : undefined;
     if (code !== undefined) return code <= 0x10ffff ? String.fromCodePoint(code) : whole;
-    return NAMED_ENTITIES[(name ?? "").toLowerCase()] ?? whole;
+    return namedEntity(name ?? "") ?? whole;
   });
 }
 /**
@@ -717,6 +759,56 @@ function interfaceHeritage(source: ts.Node, name: string): string[] {
 function heritagePath(type: string): string {
   return `<extends ${type}>`;
 }
+const CLIENT = "FurnaceObserverClient";
+/**
+ * Every node that declares a name under a node (wb-s876 U1): each identifier spelled with the name - by its cooked text,
+ * so an escape-spelled name counts - that is its parent node's own name: an interface, a class, an enum, a namespace, a
+ * type alias, a function, a variable, a binding element, a member, a parameter, a specifier (an over-read: a member, a
+ * parameter or a property access named by it counts as well).
+ */
+function declarationsOf(source: ts.Node, name: string): ts.Node[] {
+  return nodes(source).flatMap(node => (ts.isIdentifier(node) && node.text === name && "name" in node.parent && node.parent.name === node ? [node.parent] : []));
+}
+/** The path a declaration of FurnaceObserverClient that is not an interface reads as: its kind, the declaration read whole (wb-s876 U1). */
+function otherDeclarationPath(node: ts.Node): string {
+  const kind =
+    ts.isClassDeclaration(node) || ts.isClassExpression(node)
+      ? "class"
+      : ts.isEnumDeclaration(node)
+        ? "enum"
+        : ts.isModuleDeclaration(node)
+          ? "namespace"
+          : ts.isTypeAliasDeclaration(node)
+            ? "type"
+            : ts.isFunctionDeclaration(node)
+              ? "function"
+              : ts.isVariableDeclaration(node) || ts.isBindingElement(node)
+                ? "variable"
+                : "declaration";
+  return `<${kind} ${CLIENT}>`;
+}
+/**
+ * Each declaration of FurnaceObserverClient under a node that is not an interface, as `<K FurnaceObserverClient>` (wb-s876
+ * U1, fail closed): TypeScript merges a class declaration's members and heritage into the interface, and none of them is
+ * read here, so the declaration reads whole as a path that pairs with no docs/09 read.
+ */
+function otherDeclarations(source: ts.Node): string[] {
+  return declarationsOf(source, CLIENT)
+    .filter(node => !ts.isInterfaceDeclaration(node))
+    .map(otherDeclarationPath)
+    .sort();
+}
+/**
+ * Every read path the declarations of FurnaceObserverClient under a node add (wb-s876 F2, U1): each interface declaration's
+ * member chains down to a leaf and each of its heritage types as `<extends T>`, and each other declaration of the name as
+ * `<K FurnaceObserverClient>`; null when the node declares the name nowhere.
+ */
+function clientReads(source: ts.Node): string[] | null {
+  const declared = declaredReads(source, CLIENT);
+  const others = otherDeclarations(source);
+  if (declared === null && others.length === 0) return null;
+  return [...(declared ?? []), ...interfaceHeritage(source, CLIENT).map(heritagePath), ...others].sort();
+}
 /** The type text of each constructor parameter named client, in every class of a module. */
 function clientParameterTypes(source: ts.SourceFile): string[] {
   return nodes(source)
@@ -900,6 +992,10 @@ interface Docs09Reading {
   readonly binds: boolean;
   readonly why: string;
   readonly html: boolean;
+  /** Each named character reference in the section's units that decodedMarkup does not decode, as written (wb-s876 U2). */
+  readonly undecoded: readonly string[];
+  /** Each bidi control in the section's units once their references are decoded, as U+XXXX (wb-s876 U2). */
+  readonly controls: readonly string[];
   /** For each subject word (DOCS09_SUBJECTS), the block kind of each of its occurrences in the section (wb-s876 F1). */
   readonly subjects: { readonly [word: string]: readonly string[] };
   readonly readsClauses: readonly string[];
@@ -913,7 +1009,9 @@ const VERBS_SENTENCE = /Pi attachment is read-only and does not (.+?) a Run\./g;
  * The words that name the subjects of docs/09's two Furnace sentences (wb-s876 F1): the reads sentence's "Furnace read"
  * (Furnace, an optional possessive, any run of non-alphanumeric characters, then read) and "poll", the verbs sentence's
  * "attach", each in any case and as a word part, so reader, reading, reads, polling, polls, attachment and attaches all
- * count (an over-read: reattachment and readiness count too). They are matched in subjectText, what a reader sees.
+ * count (an over-read: reattachment and readiness count too). They are matched in subjectText, what a reader sees of the
+ * characters (wb-s876 U2, F3); a unit subjectText cannot render as a reader sees it - one holding a named reference
+ * outside the six or a bidi control - refuses the reading.
  */
 const DOCS09_SUBJECTS: Readonly<Record<string, RegExp>> = {
   "Furnace read": /furnace(?:['\u2019]s)?[^\p{L}\p{N}]*read/giu,
@@ -921,12 +1019,31 @@ const DOCS09_SUBJECTS: Readonly<Record<string, RegExp>> = {
   attach: /attach/giu,
 };
 /**
- * A unit's text as the subject words are matched in it (wb-s876 F1): numeric character references and the common named
- * entities decoded (decodedMarkup; the rendered view keeps them as written), compatibility forms folded (NFKC: a
- * full-width letter reads as its letter) and format characters removed, as a reader sees none.
+ * A unit's text as the subject words are matched in it (wb-s876 F1, U2, F3): numeric character references and the six named
+ * references amp, lt, gt, quot, apos and nbsp decoded (decodedMarkup; the rendered view keeps references as written, and
+ * any other named reference refuses the reading: undecodedReferences), compatibility forms folded (NFKC: a full-width
+ * or mathematical letter reads as its letter), then format characters (\p{Cf}) and default-ignorable code points
+ * (\p{Default_Ignorable_Code_Point}) removed, as a reader sees none of them.
  */
 function subjectText(text: string): string {
-  return decodedMarkup(text).normalize("NFKC").replace(/\p{Cf}/gu, "");
+  return decodedMarkup(text)
+    .normalize("NFKC")
+    .replace(/[\p{Cf}\p{Default_Ignorable_Code_Point}]/gu, "");
+}
+/**
+ * The named character references a unit's text holds that decodedMarkup leaves as written - every `&name;` whose name is
+ * not one of the six (wb-s876 U2): a page renders &shy; or &afr; as the character it names, which subjectText would not
+ * hold, so any one of them refuses the reading (fail closed; the full HTML entity table is not read).
+ */
+function undecodedReferences(text: string): string[] {
+  return [...text.matchAll(/&(\w+);/g)].map(match => match[1] ?? "").filter(name => namedEntity(name) === undefined).map(name => `&${name};`);
+}
+/**
+ * The bidi controls (\p{Bidi_Control}) a unit's text holds once its references are decoded, each as U+XXXX (wb-s876 U2):
+ * an override shows a reader its text reversed - "redaer ecanruF" shows "Furnace reader" - so any one refuses the reading.
+ */
+function bidiControls(text: string): string[] {
+  return [...decodedMarkup(text).matchAll(/\p{Bidi_Control}/gu)].map(match => `U+${(match[0].codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")}`);
 }
 /** One rendered text unit of docs/09's bound section: its block kind and what a reader sees of it (wb-s876 F1). */
 interface Docs09Unit {
@@ -955,10 +1072,12 @@ function docs09Units(blocks: readonly RenderedBlock[]): Docs09Unit[] {
  * docs/09's Furnace sentences as a reader of the page reads them (wb-6c6i F1, wb-s876 F1): the section is the landed
  * docsSection binding's (test/helpers/census.ts: the heading exactly once in the rendered view, under the page title,
  * bounded at the next level-1 or level-2 heading or EOF, no comment or fence spanning a heading line). Every rendered
- * text unit of the section (docs09Units) is read twice: for each subject word (DOCS09_SUBJECTS, matched in subjectText)
- * the block kind of each occurrence, and for each sentence's frame (READS_SENTENCE, VERBS_SENTENCE, matched as written)
- * its clause. The reads and verbs are stated only when the section binds, carries no HTML (a comment can hide what its
- * source says), each subject word occurs exactly once among the section's units, in a paragraph, and each frame matches
+ * text unit of the section (docs09Units) is read for each subject word (DOCS09_SUBJECTS, matched in subjectText): the
+ * block kind of each occurrence; for every named character reference outside the six (undecodedReferences) and every
+ * bidi control (bidiControls; wb-s876 U2); and for each sentence's frame (READS_SENTENCE, VERBS_SENTENCE, matched as
+ * written): its clause. The reads and verbs are stated only when the section binds, carries no HTML (a comment can hide
+ * what its source says), holds no such reference and no bidi control (either can show a reader what subjectText does
+ * not hold), each subject word occurs exactly once among the section's units, in a paragraph, and each frame matches
  * exactly once; so a second unit of any kind - a paragraph, a list item, a blockquote, a table, a heading or a code block -
  * that spells a subject word refuses the reading, as does a subject word held only by a unit that is not a paragraph.
  * Otherwise the reads and verbs read as none, which reds every reader of them. What the units do not carry is not
@@ -972,12 +1091,16 @@ function docs09Reading(text: string): Docs09Reading {
   );
   const readsClauses = units.flatMap(unit => [...unit.text.matchAll(READS_SENTENCE)].map(match => match[1] ?? ""));
   const verbsClauses = units.flatMap(unit => [...unit.text.matchAll(VERBS_SENTENCE)].map(match => match[1] ?? ""));
+  const undecoded = sorted(units.flatMap(unit => undecodedReferences(unit.text)));
+  const controls = sorted(units.flatMap(unit => bidiControls(unit.text)));
   const once = Object.values(subjects).every(kinds => kinds.length === 1 && kinds[0] === "paragraph");
-  const stated = section.ok && !section.hasHtml && once && readsClauses.length === 1 && verbsClauses.length === 1;
+  const stated = section.ok && !section.hasHtml && undecoded.length === 0 && controls.length === 0 && once && readsClauses.length === 1 && verbsClauses.length === 1;
   return {
     binds: section.ok,
     why: section.why,
     html: section.hasHtml,
+    undecoded,
+    controls,
     subjects,
     readsClauses,
     verbsClauses,
@@ -1013,8 +1136,10 @@ function afterFurnace(text: string, block: string): string {
  * The restatement plants (wb-s876 F1): the wb-6c6i gate's L2-D1 blockquote, L2-D2 list item and L2-D3 table cell, and the
  * seat's members of the same class - a heading, a fenced code block, a list nested in a quote, the reads subject without
  * its frame, a "poll" restatement, a narrowed verbs quote, an "attach" restatement, the subject words spelled with
- * character references, full-width letters or format characters, and the paragraph moved into a list item - each must
- * refuse the reading (W1).
+ * character references, full-width letters or format characters, and the paragraph moved into a list item - and cut
+ * #2's members (wb-s876 U2, F3): the subject words spelled with named references outside the six (in a blockquote, a list
+ * item, a table cell, an h3 and the verbs sentence), the soft hyphen's numeric and raw spellings, five default-ignorable
+ * code points, and a right-to-left override, raw and as a reference - each must refuse the reading (W1).
  */
 const RESTATED: readonly string[] = [
   "blockquoteCopy",
@@ -1031,7 +1156,34 @@ const RESTATED: readonly string[] = [
   "fullWidthCopy",
   "formCharacterCopy",
   "listedOnly",
+  "shyCopy",
+  "zwnjCopy",
+  "zwjCopy",
+  "wordJoinerCopy",
+  "zeroWidthSpaceCopy",
+  "frakturCopy",
+  "doubleStruckCopy",
+  "shyListCopy",
+  "shyTableCopy",
+  "shyHeadingCopy",
+  "shyVerbsCopy",
+  "shyNumericCopy",
+  "shyRawCopy",
+  "graphemeJoinerCopy",
+  "variationSelectorCopy",
+  "emojiSelectorCopy",
+  "hangulFillerCopy",
+  "khmerVowelCopy",
+  "overrideCopy",
+  "overrideReferenceCopy",
 ];
+/** The widened reads sentence with one spelling written inside both subject words, after "Furn" and after "po" (wb-s876 U2, F3). */
+function spelledInside(inside: string): string {
+  return `The external Furn${inside}ace reader uses explicit bounded status/attempt/log-reference/event-stream po${inside}lling.`;
+}
+/** A right-to-left override (U+202E) and its pop (U+202C): the text between them shows reversed, so "redaer ecanruF" shows "Furnace reader". */
+const OVERRIDE = String.fromCodePoint(0x202e);
+const POP = String.fromCodePoint(0x202c);
 /** docs/09 plants (the wb-dqf.1 gate's G17-G21b shapes, wb-6c6i F1; the RESTATED shapes, wb-s876 F1): each a copy of the real page, read by the same docs reading. */
 function docs09Plants(text: string): { [plant: string]: Docs09Reading } {
   const paragraph = furnaceParagraph(text);
@@ -1057,6 +1209,26 @@ function docs09Plants(text: string): { [plant: string]: Docs09Reading } {
     fullWidthCopy: after(`> The external ${String.fromCodePoint(0xff26, 0xff55, 0xff52, 0xff4e, 0xff41, 0xff43, 0xff45)} reader uses explicit bounded status/attempt/log-reference/event-stream ${String.fromCodePoint(0xff50, 0xff4f, 0xff4c, 0xff4c)}ing.`),
     formCharacterCopy: after(`> The external Fur${String.fromCodePoint(0x200b)}nace reader uses explicit bounded status/attempt/log-reference/event-stream po${String.fromCodePoint(0x200b)}lling.`),
     listedOnly: text.replace(paragraph, () => `- ${paragraph}`),
+    shyCopy: after(`> ${spelledInside("&shy;")}`),
+    zwnjCopy: after(`> ${spelledInside("&zwnj;")}`),
+    zwjCopy: after(`> ${spelledInside("&zwj;")}`),
+    wordJoinerCopy: after(`> ${spelledInside("&NoBreak;")}`),
+    zeroWidthSpaceCopy: after(`> ${spelledInside("&ZeroWidthSpace;")}`),
+    frakturCopy: after("> The external Furn&afr;ce reader uses explicit bounded status/attempt/log-reference/event-stream &pfr;olling."),
+    doubleStruckCopy: after("> The external Furn&aopf;ce reader uses explicit bounded status/attempt/log-reference/event-stream &popf;olling."),
+    shyListCopy: after(`- ${spelledInside("&shy;")}`),
+    shyTableCopy: after(`| Reader |\n| --- |\n| ${spelledInside("&shy;")} |`),
+    shyHeadingCopy: after(`### ${spelledInside("&shy;")}`),
+    shyVerbsCopy: after("> Pi att&shy;achment is read-only and does not create or resume a Run."),
+    shyNumericCopy: after(`> ${spelledInside("&#173;")}`),
+    shyRawCopy: after(`> ${spelledInside(String.fromCodePoint(0xad))}`),
+    graphemeJoinerCopy: after(`> ${spelledInside(String.fromCodePoint(0x34f))}`),
+    variationSelectorCopy: after(`> ${spelledInside(String.fromCodePoint(0xfe00))}`),
+    emojiSelectorCopy: after(`> ${spelledInside(String.fromCodePoint(0xfe0f))}`),
+    hangulFillerCopy: after(`> ${spelledInside(String.fromCodePoint(0x3164))}`),
+    khmerVowelCopy: after(`> ${spelledInside(String.fromCodePoint(0x17b4))}`),
+    overrideCopy: after(`> The external ${OVERRIDE}redaer ecanruF${POP} uses explicit bounded status/attempt/log-reference/event-stream ${OVERRIDE}gnillop${POP}.`),
+    overrideReferenceCopy: after("> The external &#x202E;redaer ecanruF&#x202C; uses explicit bounded status/attempt/log-reference/event-stream &#x202E;gnillop&#x202C;."),
   };
   return Object.fromEntries(Object.entries(pages).map(([plant, page]) => [plant, docs09Reading(page)]));
 }
@@ -1079,6 +1251,21 @@ const HERITAGE_PLANT = entry(
   "src/workbench/zz-observer-heritage.ts",
   'interface ZzGateStream {\n  events: { stream(runId: string, call?: { timeoutMs?: number }): AsyncIterable<unknown> };\n}\ndeclare module "./furnace-observer.js" {\n  interface FurnaceObserverClient extends ZzGateStream {}\n}\nexport {};\n',
 );
+/** A CLASS declaration of FurnaceObserverClient in an augmentation: TypeScript merges it into the interface (the wb-s876 gate's G-W1-CLASS-OPT2; U1). */
+const CLASS_PLANT = entry(
+  "src/workbench/zz-observer-class.ts",
+  'declare module "./furnace-observer.js" {\n  class FurnaceObserverClient {\n    events?: { list(runId: string, request?: { limit?: number }, call?: { timeoutMs?: number }): Promise<unknown> };\n  }\n}\n\nexport {};\n',
+);
+/** A class declaration of FurnaceObserverClient in an augmentation that extends a class holding the member (the gate's G-W1-CLASS-EXT-OPT2; U1). */
+const CLASS_EXTENDS_PLANT = entry(
+  "src/workbench/zz-observer-class-extends.ts",
+  'declare class ZzGateEventsBase {\n  events?: { list(runId: string, request?: { limit?: number }, call?: { timeoutMs?: number }): Promise<unknown> };\n}\ndeclare module "./furnace-observer.js" {\n  class FurnaceObserverClient extends ZzGateEventsBase {}\n}\n\nexport {};\n',
+);
+/** Every other declaration kind of the name in an augmentation: a namespace, an enum, a type alias, a function and a variable (U1, fail closed). */
+const KINDS_PLANT = entry(
+  "src/workbench/zz-observer-kinds.ts",
+  'declare module "./furnace-observer.js" {\n  namespace FurnaceObserverClient {}\n  enum FurnaceObserverClient {}\n  type FurnaceObserverClient = unknown;\n  function FurnaceObserverClient(): void;\n  const FurnaceObserverClient: unknown;\n}\nexport {};\n',
+);
 /** A declaration of FurnaceObserverClient under a specifier only configuration could map to the observer (R-ALIASED-MODULE, Q12). */
 const ALIAS_PLANT = entry(
   "src/workbench/zz-observer-alias.ts",
@@ -1093,20 +1280,21 @@ function namesObserver(from: string, specifier: string): boolean {
 /**
  * The read paths a file's module augmentations of the observer module add to FurnaceObserverClient (wb-6c6i F6): each
  * declaration's member chains down to a leaf, and each of its heritage types as `<extends T>` (wb-s876 F2), so an
- * augmentation that only extends another interface reads as widened.
+ * augmentation that only extends another interface reads as widened; each other declaration of the name reads whole as
+ * `<K FurnaceObserverClient>` (clientReads; wb-s876 U1), so a class declaration in an augmentation reads as widened.
  */
 function augmentedReads(path: string, text: string): string[] {
   if (!text.includes("module")) return [];
   return nodes(parse(path, text))
     .filter((node): node is ts.ModuleDeclaration => ts.isModuleDeclaration(node) && ts.isStringLiteral(node.name) && namesObserver(path, node.name.text))
-    .flatMap(node => (node.body === undefined ? [] : [...(declaredReads(node.body, "FurnaceObserverClient") ?? []), ...interfaceHeritage(node.body, "FurnaceObserverClient").map(heritagePath)]))
+    .flatMap(node => (node.body === undefined ? [] : (clientReads(node.body) ?? [])))
     .sort();
 }
-/** Each module declaration in a file that declares FurnaceObserverClient under a specifier not naming the observer module, as "<path>: <specifier>" (R-ALIASED-MODULE, Q12). */
+/** Each module declaration in a file that declares the name FurnaceObserverClient (any declaration: declarationsOf) under a specifier not naming the observer module, as "<path>: <specifier>" (R-ALIASED-MODULE, Q12). */
 function otherModuleClients(path: string, text: string): string[] {
   if (!text.includes("module")) return [];
   return nodes(parse(path, text)).flatMap(node =>
-    ts.isModuleDeclaration(node) && ts.isStringLiteral(node.name) && !namesObserver(path, node.name.text) && node.body !== undefined && interfaceDeclarations(node.body, "FurnaceObserverClient").length > 0
+    ts.isModuleDeclaration(node) && ts.isStringLiteral(node.name) && !namesObserver(path, node.name.text) && node.body !== undefined && declarationsOf(node.body, CLIENT).length > 0
       ? [`${path}: ${node.name.text}`]
       : [],
   );
@@ -1208,9 +1396,9 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
   },
   W1: () => {
     const augmented = augmentations();
-    const own = declaredReads(observer(), "FurnaceObserverClient");
-    const ownHeritage = interfaceHeritage(observer(), "FurnaceObserverClient");
-    const readPaths = own === null ? null : [...own, ...ownHeritage.map(heritagePath), ...augmented.flatMap(found => found.reads)].sort();
+    const own = clientReads(observer());
+    const ownHeritage = interfaceHeritage(observer(), CLIENT);
+    const readPaths = own === null ? null : [...own, ...augmented.flatMap(found => found.reads)].sort();
     const docs = docs09Furnace();
     const { reads } = docs;
     const { blocks } = docsSection(textOf(DOCS09), DOCS09_SECTION.slice("## ".length), 2, [DOCS09_TITLE]);
@@ -1229,6 +1417,19 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       own: interfaceHeritage(parse(OBSERVER, planted(observerText(), "export interface FurnaceObserverClient {", "export interface FurnaceObserverClient extends ZzGateStream {")), "FurnaceObserverClient").map(heritagePath),
     };
     expect(heritagePlant, "a declaration that only extends another interface reads as widened, in an augmentation and in the observer (wb-s876 F2)").toStrictEqual({ augmentation: ["<extends ZzGateStream>"], own: ["<extends ZzGateStream>"] });
+    const ownClass = clientReads(parse(OBSERVER, planted(observerText(), "export interface FurnaceObserverClient {", "export declare class FurnaceObserverClient {events?:{list(id:string):Promise<unknown>}}\nexport interface FurnaceObserverClient {")));
+    const nonInterfacePlant = {
+      augmentation: augmentedReads(CLASS_PLANT.path, CLASS_PLANT.bytes.toString("utf8")),
+      heritage: augmentedReads(CLASS_EXTENDS_PLANT.path, CLASS_EXTENDS_PLANT.bytes.toString("utf8")),
+      kinds: augmentedReads(KINDS_PLANT.path, KINDS_PLANT.bytes.toString("utf8")),
+      own: (ownClass ?? []).filter(path => !(own ?? []).includes(path)),
+    };
+    expect(nonInterfacePlant, "a declaration of the name that is not an interface - a class, its heritage form, any other kind - reads as widened, in an augmentation and in the observer (wb-s876 U1, fail closed)").toStrictEqual({
+      augmentation: ["<class FurnaceObserverClient>"],
+      heritage: ["<class FurnaceObserverClient>"],
+      kinds: ["<enum FurnaceObserverClient>", "<function FurnaceObserverClient>", "<namespace FurnaceObserverClient>", "<type FurnaceObserverClient>", "<variable FurnaceObserverClient>"],
+      own: ["<class FurnaceObserverClient>"],
+    });
     const docsPlants = docs09Plants(textOf(DOCS09));
     expect(
       RESTATED.filter(plant => (docsPlants[plant]?.reads.length ?? 1) + (docsPlants[plant]?.verbs.length ?? 1) > 0),
@@ -1238,15 +1439,17 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       interfaceName: "FurnaceObserverClient",
       interfaceDeclarations: interfaceDeclarations(observer(), "FurnaceObserverClient").length,
       interfaceExtends: ownHeritage,
+      otherDeclarations: otherDeclarations(observer()),
       clientParameterTypes: clientParameterTypes(observer()),
       augmentations: augmented,
       readPaths,
-      docsBinding: { binds: docs.binds, why: docs.why, html: docs.html, subjects: docs.subjects, readsClauses: docs.readsClauses, verbsClauses: docs.verbsClauses, blocks },
+      docsBinding: { binds: docs.binds, why: docs.why, html: docs.html, undecoded: docs.undecoded, controls: docs.controls, subjects: docs.subjects, readsClauses: docs.readsClauses, verbsClauses: docs.verbsClauses, blocks },
       docsReads: reads,
       pairs,
       widenedPlant,
       augmentationPlant,
       heritagePlant,
+      nonInterfacePlant,
       docsPlants,
     });
   },
@@ -1392,6 +1595,8 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       entityOutsideMarkup: "// &#79;bserver Boundary",
       markup: "Obs*erver* Boundary",
       escapeOutsideDecodedKinds: 'echo "\\u004fbserver Boundary"',
+      namedReference: "Obs&shy;erver Boundary",
+      overrideReversed: `${OVERRIDE}yradnuob revresbo${POP}`,
     };
     const at: Readonly<Record<string, string>> = { entityOutsideMarkup: "src/zz.ts", escapeOutsideDecodedKinds: "scripts/zz.sh" };
     return json({ residual: "R-INTERIOR", quiet: Object.fromEntries(Object.entries(interior).map(([kind, text]) => [kind, verdictOf(at[kind] ?? "docs/zz.md", Buffer.from(text, "utf8")).forms.length === 0])) });
@@ -1499,6 +1704,9 @@ describe("wb-dqf.1 Furnace observer-boundary census (FURNACE-CAC-EXECUTION-ASSUR
         pinPlant: PIN_PLANT,
         augmentationPlant: { path: AUGMENTATION_PLANT.path, text: AUGMENTATION_PLANT.bytes.toString("utf8") },
         heritagePlant: { path: HERITAGE_PLANT.path, text: HERITAGE_PLANT.bytes.toString("utf8") },
+        classPlant: { path: CLASS_PLANT.path, text: CLASS_PLANT.bytes.toString("utf8") },
+        classExtendsPlant: { path: CLASS_EXTENDS_PLANT.path, text: CLASS_EXTENDS_PLANT.bytes.toString("utf8") },
+        kindsPlant: { path: KINDS_PLANT.path, text: KINDS_PLANT.bytes.toString("utf8") },
         aliasPlant: { path: ALIAS_PLANT.path, text: ALIAS_PLANT.bytes.toString("utf8") },
         anchors: [...ANCHORS],
         readers: [...READERS],
