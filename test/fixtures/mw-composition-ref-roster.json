@@ -196,12 +196,18 @@
    "id": "R-INDIRECT",
    "pin": "B1",
    "quiet": [
-    "indirect-binding"
+    "indirect-binding",
+    "task-destructured-id",
+    "task-destructured-id-alias"
    ],
    "twin": [
-    "task-template"
+    "task-template",
+    "task-member-id"
    ],
-   "open": []
+   "open": [
+    "task-destructured-id",
+    "task-destructured-id-alias"
+   ]
   },
   {
    "id": "R-CALL-FORM",
@@ -2083,6 +2089,8 @@
        "qa-module": [],
        "examples-src-module": [],
        "indirect-binding": [],
+       "task-destructured-id": [],
+       "task-destructured-id-alias": [],
        "concat-call": [],
        "join-call": [],
        "prefix-constant": [],
@@ -2738,6 +2746,8 @@
          "field 1 stepId",
          "field 2 stepId"
         ],
+        "task-destructured-id": [],
+        "task-destructured-id-alias": [],
         "concat-call": [
          "field 1 stepId",
          "field 1 stepId"
@@ -3991,6 +4001,12 @@
     ],
     "misplaced": []
    },
+   "lead-twice": {
+    "runs": [
+     "(y)"
+    ],
+    "misplaced": []
+   },
    "no-lead": {
     "runs": [],
     "misplaced": []
@@ -4124,6 +4140,15 @@
     "0078",
     "0079",
     "007a"
+   ],
+   "leadOpen": [
+    "0028"
+   ],
+   "leadClose": [
+    "0029"
+   ],
+   "leadGap": [
+    "0020"
    ]
   }
  }
