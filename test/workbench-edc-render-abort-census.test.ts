@@ -61,38 +61,68 @@
  * registry's post-race guard; without that guard the census reds). A3 drives every committed form through the
  * native-registry and native-direct passes and holds each to a refusal.
  *
- * A5, THE STATIC REACH, AS ITS READERS PARSE IT (a form outside these is R-STATIC-FORMS, Q6, and is not claimed): the render
- * module's closure through src's relative imports (every static import and export, import-equals, and every loader call -
- * import(), require(), getBuiltinModule() and a createRequire result, called directly or through the name a declaration or
- * an assignment binds it to; a specifier that does not resolve reads <expression>), held disjoint from the tool providers, model host and
- * tool SDKs native-modules.ts loads; its I/O builtins by specifier; every reference to an I/O global by name (fetch,
- * XMLHttpRequest, WebSocket, EventSource, BroadcastChannel, console, localStorage, sessionStorage, require, module, eval,
- * Function) and every reference to a global object (globalThis, global, self, window - so an I/O global reached through one,
- * aliased or computed, reads too); every reference to process other than its env read (getBuiltinModule, binding, dlopen,
- * kill, execve, a stdio write, the object aliased); and the child_process tracer, which is fail-closed - it never drops a
- * value it does not follow. Its entries are every import, import-equals and re-export whose specifier names child_process and
- * every loader call whose specifier does (any text containing "child_process"). It follows each value derived from an entry
- * through parentheses, type wrappers and await; member reads (by name, by a key that resolves; a computed key that does not
- * reads <computed>; a default read is the module itself); declarations and assignments (=, ||=, &&=, ??=) to a name or to a
- * destructuring pattern at any depth, rest elements included; aliases; and the result of ??, ||, && and a conditional's arms.
- * A call of a launch member reads its command; an export of a held value reads <re-export>; a value a statement discards
- * reads nothing; every other use - a call of the module or of another member, an argument, a return, a property store, a
- * class field, an object or array element, a member path deeper than PATH_DEPTH - reads <reference>; and a string that names
- * child_process outside a specifier slot (types excepted) reads <untraced>. REACH_FORMS is the roster of forms the tracer is
- * proven on, one probe each, every one held by A5 to what it must read (a launch form its rf or <expression> launch, a
- * fail-closed form its <reference>, <re-export> or <untraced> site, a computed load its unresolved loader call). Commands and
- * specifiers resolve through string literals, the module's const bindings, literal indexes into const array literals and
- * both arms of a conditional, and read <expression> otherwise. Read that way, the pass reaches no tool provider, model host
- * or tool SDK native-modules.ts loads, no I/O global, no global object, no process member but env, one I/O builtin
- * (node:child_process, in the render module) and one launch site, spawn("rf"). Src outside anchor: over every tracked src
- * module, every site the two launch readers read (the tracer, and every call spelled as a launch call - LAUNCH_CALLS,
- * process.execve included - whose command resolves) is pinned by module, callee and command (srcSites), and exactly one of
- * them launches rf: the render module's spawn. The sites whose command does not resolve are among them (any of them could
- * launch rf), and every loader call in src whose specifier does not resolve is pinned by name (any of them could load
+ * A5, THE STATIC REACH, ENUMERATED (cut #4: the enumerate-the-resolvable form R-B95 binds for the static-reach family). A5
+ * claims exactly what its readers read on the forms and positions its rosters pin - each roster entry is an executable
+ * falsifier A5 runs and holds to what it must read - and fails closed outside them: a position no roster lists still reads
+ * (the identifier readers skip only the name and type positions named below, the tracer also a write target and a
+ * discarded value), a command, specifier or key that does not resolve reads <expression>, <computed> or <load>, and a
+ * form the readers do not parse is R-STATIC-FORMS (Q6), never claimed. The readers:
+ *  - the specifier reader (the closure, its I/O builtins, T2's TSX SDK read): every static import and export-from,
+ *    import-equals, and every loader call; a specifier that does not resolve reads <expression>.
+ *  - the loader reader: import(); a call whose callee is spelled require or getBuiltinModule (a name, a property name or a
+ *    literal element name); a createRequire result called directly; and a call of a name that a variable declaration with a
+ *    plain name, or a binding assignment (=, ||=, &&=, ??=), binds to a createRequire result. REACH_FORMS' create-require and
+ *    <load> forms pin it; a loader reached through any other binding is R-STATIC-FORMS.
+ *  - the identifier readers - the I/O-global reader (every reference to an I/O global by name: fetch, XMLHttpRequest,
+ *    WebSocket, EventSource, BroadcastChannel, console, localStorage, sessionStorage, require, module, eval, Function; and to
+ *    a global object: globalThis, global, self, window, with the member read off it, so an I/O global reached through one,
+ *    aliased or computed, reads too), the process reader (every reference to process but an env member read:
+ *    getBuiltinModule, binding, dlopen, kill, execve, a stdio write, the object aliased) and the tracer's reference rounds -
+ *    read a name in every position but a name slot (a declaration's, a property's or key's, an import or export specifier's,
+ *    a label's) and a type (a type node: an annotation, a typeof query, a type alias, a type argument, an implements clause,
+ *    an interface's extends, a constraint, an as or satisfies type, an import type, a predicate). A class's extends
+ *    expression (a declaration's or an expression's) and an instantiation expression are values, their type arguments types
+ *    (TypeScript reads every ExpressionWithTypeArguments as a type node; inType carves those two out). REFERENCE_POSITIONS
+ *    pins 102 positions (60 value, 4 discarded, 5 written, 2 export, 16 name, 15 type), each probed with WebSocket,
+ *    globalThis, process and a held child_process namespace and held to its kind.
+ *  - the child_process tracer, fail-closed: it never drops a held value it does not follow. Its entries are every import,
+ *    import-equals and re-export whose specifier names child_process and every loader call whose specifier does (any text
+ *    containing "child_process"). It follows each value derived from an entry through parentheses, type wrappers (as,
+ *    satisfies, <T>, !, an instantiation expression) and await; member reads (by name, by a key that resolves; a computed key
+ *    that does not reads <computed>; a default read is the module itself); declarations and assignments (=, ||=, &&=, ??=) to
+ *    a name or to a destructuring pattern at any depth, rest elements included; aliases; and the result of ??, ||, && and a
+ *    conditional's arms. A call of a launch member reads its command; an export of a held value reads <re-export>; a value a
+ *    statement discards reads nothing and a write target's old value is replaced; every other use - a call of the module or
+ *    of another member, an argument, a return, a property store, a class field, a class's extends, an object or array
+ *    element, a member path deeper than PATH_DEPTH - reads <reference>; and a string that names child_process outside a
+ *    specifier slot (types excepted) reads <untraced>. REACH_FORMS (105 forms) holds every form named here to what it must
+ *    read (a launch form its rf or <expression> launch, a fail-closed form its <reference>, <re-export> or <untraced> site,
+ *    a computed load its <load>).
+ *  - the launch-call reader: every call spelled as a launch call (LAUNCH_CALLS, process.execve included; a name, a property
+ *    name or a literal element name, through parentheses and type wrappers, an instantiation expression's included) whose
+ *    command resolves.
+ *  - resolution (every reader): commands, specifiers and member keys resolve through string literals, the const binding a
+ *    name resolves to in its scope (the nearest scope enclosing the reference that binds the name decides; a let, var, using,
+ *    parameter, function, class, enum, namespace, import-equals, catch or destructured binding there does not resolve, and
+ *    neither does a name nothing in the module binds as a value - a global, or an ES import, which binds only at module
+ *    scope where valid code binds no other value of its name; a type-only import binds none), literal indexes into const
+ *    array literals and both arms of a conditional, and read <expression> otherwise. REACH_FORMS' scope forms pin every
+ *    branch: an outer const read in a function, a block's own const, a for-initializer's const inside its loop and a const
+ *    beside a same-named type-only import resolve; a let, var, await using, parameter, catch, function (a block's too),
+ *    function or class expression name, class, enum, namespace, import-equals, named, default or namespace import, and
+ *    object or array destructured shadow, a const of an unrelated inner scope, a bare block's, a for statement's, a case
+ *    block's or a namespace's const read outside it, and a destructured const do not.
+ * Read that way, the pass reaches no tool provider, model host or tool SDK native-modules.ts loads, no I/O global, no global
+ * object, no process member but env, one I/O builtin (node:child_process, in the render module) and one launch site,
+ * spawn("rf"). Src outside anchor: over every tracked src module, every site the two launch readers read (the tracer, and
+ * every call spelled as a launch call whose command resolves) is pinned by module, callee and command (srcSites), and exactly
+ * one of them launches rf: the render module's spawn. The sites whose command does not resolve are among them (any of them
+ * could launch rf), and every loader call in src whose specifier does not resolve is pinned by name (any of them could load
  * child_process).
  *
- * THE UNTIL-THEN TRIGGER (row T), in these homes and forms: T1 no tracked .tsx/.jsx module anywhere in git's index; T2 no
- * tracked script module outside test/ (src, qa, examples, the root configs; src read equal to the src walk both ways) names
+ * THE UNTIL-THEN TRIGGER (row T), in these homes and forms: T1 no tracked .tsx/.jsx module (either extension in any letter
+ * case) anywhere in git's index; T2 no tracked script module outside test/ (a .ts, .mts, .cts, .tsx, .js, .mjs, .cjs or .jsx
+ * extension in any letter case; src, qa, examples, the root configs; src read equal to the src walk both ways) names
  * a hook - an identifier of the use-prefixed form (the charter's useProvider, useQuery, useAbsent, useRequirement,
  * useEffect, useCommit fit it) or a use-prefixed word in any string or template part (a key, an argument, prose) - or the
  * charter's descriptor pureProjectRequirement (as an identifier or in any string), or names @reactive-fiber/tsx (as a
@@ -114,17 +144,30 @@
  * and the src anchor pins every src site and every unresolved loader call; U2 one committed-form control per form each clause
  * of the uncommitted reading names, the clauses stated exactly (MB2, PR-E2); riders: GA2 (in REACH_FORMS), GC2 (row T reads
  * hook names spelled as text), F15 (the stand-ins bound their own life and the teardown stops any left running).
+ * RESPIN (cut #4; refusal #3 on cut #3 a9cd4ceb, seat gate-prep-5, lane g10-gate-s142; rule 19(c) engaged and R-B95 froze
+ * the shape, so this cut takes the enumerate-the-resolvable form for the static-reach family): U1 inType() read every
+ * ExpressionWithTypeArguments as a type, so the tracer, the I/O-global reader and the process reader skipped a class's
+ * extends expression - HER1 (a ChildProcess subclass in a new src module whose inherited spawn launches rf), HER4 (the
+ * same through a namespace import), HER2 (extends WebSocket in the render module), HER3 (extends globalThis.EventTarget)
+ * and the process heritage PREP named PLAUSIBLE. inType now reads a class's extends expression and an instantiation
+ * expression as values, unwrap() and the tracer read an instantiation expression as a type wrapper, and A5's claims are
+ * restated to the enumerated readers above (REFERENCE_POSITIONS; REACH_FORMS' heritage, instantiation and scope forms; the
+ * heritage lines of the planted control). The class hardened at cut time: commands, specifiers and keys resolve through
+ * the binding a name resolves to in its scope (a name-keyed const lookup read a shadowed name's unrelated const, the
+ * wb-jwc.7 R-B92 class), and a createRequire result bound by ||=, &&= or ??= is a loader name. Rider F2: GC3 (a tracked
+ * examples/ module with an upper-case .JS extension) - script extensions are read in any letter case (T4's planted homes
+ * hold it), and R-UNREAD-HOMES names the extensionless path (Q7).
  *
- * MEASURED (by the respin seat ws-06, run g10-work-s138, 2026-10-29, on merge a4c58228: trunk bcc41fc into cut #2): all 21
+ * MEASURED (by the respin seat ws-04, run g10-work-s143, 2026-10-30, on merge eb0943cc: trunk 37adc54 into cut #3): all 21
  * driven pass/scenario observations read an empty verdict, the 5 settled native renders return the uncommitted form and the
  * 38 committed-form renders (19 forms, two native passes) are refused; each of the 39 controls trips exactly its expected
  * classes and the abandoned stand-in is stopped at teardown; the render closure is 4 src modules and 2 externals with one
  * launch site, no I/O global, no global object and no process member but env; over src the launch readers read 11 sites -
  * one rf site and one child_process site whose command does not resolve (the detached host's spawn of process.execPath) -
  * and one loader call whose specifier does not resolve (the detached host's createRequire result), and 4 stand-ins beside the
- * rf stand-in (cmd, forge, git, sh); each of the 57 REACH_FORMS forms reads what it must; 0 tracked .tsx/.jsx of 1091 tracked
- * paths; 0 hook names (identifiers or strings) over 198 read modules (117 in src); 0 interest phrases in 8 descriptors and
- * over the 198 read modules.
+ * rf stand-in (cmd, forge, git, sh); each of the 105 REACH_FORMS forms reads what it must and each of the 102
+ * REFERENCE_POSITIONS positions reads as its kind says; 0 tracked .tsx/.jsx of 1099 tracked paths; 0 hook names (identifiers
+ * or strings) over 198 read modules (117 in src); 0 interest phrases in 8 descriptors and over the 198 read modules.
  *
  * The census pins the rows and the residuals' quiet rows:
  *  A, the acceptance: A1 aborted passes, A2 suspended passes (both: no proposal reaches the caller), A3 a settled native
@@ -147,7 +190,8 @@
  * that reached their witness.
  * NOT CLAIMED (edits of this file and the roster together below row level): a pin removed from ROWS, the literal, IMPL and
  * the roster where no outside anchor names it (A4, T1-T4, Q1-Q7 with their RESIDUALS entry); a constant edited in this file
- * and the roster together (a REACH_FORMS form, a committed form with its control, or a Q6 probe removed from both included);
+ * and the roster together (a REACH_FORMS form, a REFERENCE_POSITIONS position, a committed form with its control, or a Q6
+ * probe removed from both included);
  * T1's listing narrowed while it still holds REQUIRED_TRACKED and its floor, and T2's read set narrowed while it still holds
  * REQUIRED_READ and its floor; a launch killed before the stand-in's first statement runs (the SIGTERM lands during the
  * interpreter's start) leaves no log line, so the launch ledger reads it as none - the outcome and the at-abort mark still
@@ -159,7 +203,8 @@
  * native pass whose envelope states an effect and would_commit true is returned (Q2); R-HOOK-VOCABULARY a hook spelled
  * outside the use-prefixed form (as an identifier or as a word in a string), named only in pieces composed at run time, only
  * in a comment or a regular-expression literal, or with a look-alike letter NFKC does not fold; a descriptor describing an
- * interest in other words, only in pieces composed at run time, or with a look-alike letter; or the TSX SDK named only in
+ * interest in other words, only in pieces composed at run time, only in a regular-expression literal or a comment, or with a
+ * look-alike letter; or the TSX SDK named only in
  * pieces joined at run time - is not read by T2/T3 (Q3); R-STAND-IN the falsifier drives stand-ins, never the installed rf (its TSX Suspense, abort handling and the
  * cache-plane writes the descriptor discloses are rf's and are not measured here; the rf-preview live tier holds the
  * installed rf to the envelope) - during a pass PATH holds the bench directory alone (Q4); R-HOST-ELSEWHERE the host-write
@@ -172,13 +217,16 @@
  * reached without its name (a constructor chain); a write through the allowed process.env read; a launch whose arguments
  * carry rf through a shell or launcher the readers read by its command alone (sh -c, npx); a launch through another
  * builtin's process or thread API (cluster.fork, a worker_threads Worker); a loader reached through a call the loader reader
- * does not parse (Reflect.apply over require, require.call, module.constructor._load) whose specifier does not resolve; code
+ * does not parse (Reflect.apply over require, require.call, module.constructor._load) or through a binding it does not read
+ * (an alias of require or getBuiltinModule, a renamed createRequire, a createRequire result held in a property) whose
+ * specifier does not resolve (a child_process specifier spelled as a literal still reads <untraced> by the string read); code
  * evaluated at run time from a text that names no child_process (Function, eval, vm, a Worker's eval source); and a
  * process-internal binding (process.binding, _linkedBinding, dlopen) - over src the launch readers and the loader reader read
  * no rf launch for any of them, and inside the render closure the I/O-global and process readers flag the ones that need a
  * global or process (the per-probe counts show which); R-UNREAD-HOMES row T's static readers read every tracked script
  * module outside test/ - test/ (this census's own plants and the vitest timer API's use-prefixed names live there) and
- * non-script files (JSON, YAML, Markdown) are not read (Q7 pins the read-home verdict of one probe path per unread home).
+ * paths without a script extension (JSON, YAML, Markdown, an extensionless executable) are not read (Q7 pins the read-home
+ * verdict of one probe path per unread home).
  * SCOPE: the falsifier judges the host boundary Pi owns; rf's own render semantics are rf's, and the closure's one package
  * (typebox/value) is read by its name, never inside.
  *
@@ -339,7 +387,7 @@ const HOOK_NAME = /^use[A-Z]/;
 /** A use-prefixed word inside a text: the charter's hook names spelled as a key, an argument or prose. */
 const HOOK_WORD = /(?:^|[^A-Za-z0-9_$])(use[A-Z][A-Za-z0-9_$]*)/;
 const DESCRIPTOR_NAME = "pureProjectRequirement";
-const SCRIPT_MODULE = /\.(?:ts|mts|cts|tsx|js|mjs|cjs|jsx)$/;
+const SCRIPT_MODULE = /\.(?:ts|mts|cts|tsx|js|mjs|cjs|jsx)$/i;
 const COMPONENT_MODULE = /\.(?:tsx|jsx)$/i;
 /** Paths git's index must hold for T1's listing to be the whole index (a floor, never the exact set). */
 const REQUIRED_TRACKED = ["package.json", "src/index.ts", RENDER_MODULE, "test/helpers/scratch.ts", "docs/workbench/07-native-integrations.md"];
@@ -404,6 +452,20 @@ const PLANTED_REACH = [
   "const env = process.env;",
   "settings.fetch = 1;",
   "const typed: typeof globalThis.fetch = reply;",
+  "class PlantedNamedChild extends run {}",
+  "class PlantedNamespaceChild extends cp.ChildProcess {}",
+  "class PlantedDefaultChild extends childProcess.ChildProcess {}",
+  "class PlantedEqualsChild extends cpEquals.ChildProcess {}",
+  "class PlantedLoadedChild extends loaded.ChildProcess {}",
+  "const PlantedExpressionChild = class extends cp.ChildProcess {};",
+  "class PlantedSocketChild extends WebSocket {}",
+  "class PlantedGlobalChild extends globalThis.EventTarget {}",
+  "class PlantedProcessChild extends process.constructor {}",
+  "const instantiated = run<never>;",
+  'instantiated("rf");',
+  "class PlantedTypedChild implements cp.ChildProcess {}",
+  "interface PlantedShape extends WebSocket, NodeJS.Process {}",
+  "class PlantedTypeArgument extends Base<typeof globalThis.fetch> {}",
   "",
 ].join("\n");
 /** Q6's probes, one per form A5's readers do not parse (R-STATIC-FORMS); each is read through every A5 reader. */
@@ -416,6 +478,9 @@ const STATIC_RESIDUE: Readonly<Record<string, string>> = {
   "argument-carried": 'import { spawn } from "node:child_process";\nexport const run = (): unknown => spawn("sh", ["-c", "rf context render --json"]);\n',
   "other-builtin-launch": 'import cluster from "node:cluster";\nexport const run = (): unknown => cluster.fork();\n',
   "unparsed-loader": "export const load = (name: string): unknown => Reflect.apply(require, undefined, [name]);\n",
+  "aliased-loader": "export function load(name: string): unknown {\n  const read = require;\n  return read(name);\n}\n",
+  "renamed-loader-factory": 'import { createRequire as make } from "node:module";\nexport const load = (name: string): unknown => make(import.meta.url)(name);\n',
+  "held-loader-factory": 'import { createRequire } from "node:module";\nconst loaders = { load: createRequire(import.meta.url) };\nexport const load = (name: string): unknown => loaders.load(name);\n',
   "composed-code": "export const run = (code: string): unknown => new Function(code)();\n",
   "process-binding": 'export const raw = (): unknown => process.binding("spawn_sync");\n',
 };
@@ -481,6 +546,169 @@ const REACH_FORMS: Readonly<Record<string, { readonly probe: string; readonly re
   "computed-require": { probe: "const cp = require(name);\n", reads: "<load>" },
   "computed-builtin": { probe: "const cp = process.getBuiltinModule(name);\n", reads: "<load>" },
   "computed-create-require": { probe: 'import { createRequire } from "node:module";\nconst cp = createRequire(import.meta.url)(name);\n', reads: "<load>" },
+  "create-require-logical": { probe: 'import { createRequire } from "node:module";\nlet load;\nload ??= createRequire(import.meta.url);\nload(name);\n', reads: "<load>" },
+  "create-require-logical-traced": { probe: 'import { createRequire } from "node:module";\nlet load;\nload ||= createRequire(import.meta.url);\nload("node:child_process").spawn(command, []);\n', reads: "<expression>" },
+  "heritage-named-import": { probe: 'import { ChildProcess } from "node:child_process";\nexport class Launcher extends ChildProcess {}\n', reads: "<reference>" },
+  "heritage-namespace-import": { probe: 'import * as cp from "node:child_process";\nexport class Launcher extends cp.ChildProcess {}\n', reads: "<reference>" },
+  "heritage-default-import": { probe: 'import cp from "node:child_process";\nexport class Launcher extends cp.ChildProcess {}\n', reads: "<reference>" },
+  "heritage-import-equals": { probe: 'import cp = require("node:child_process");\nexport class Launcher extends cp.ChildProcess {}\n', reads: "<reference>" },
+  "heritage-require-bound": { probe: 'const cp = require("node:child_process");\nexport class Launcher extends cp.ChildProcess {}\n', reads: "<reference>" },
+  "heritage-import-bound": { probe: 'const cp = await import("node:child_process");\nexport class Launcher extends cp.ChildProcess {}\n', reads: "<reference>" },
+  "heritage-builtin-bound": { probe: 'const cp = process.getBuiltinModule("node:child_process");\nexport class Launcher extends cp.ChildProcess {}\n', reads: "<reference>" },
+  "heritage-loader-direct": { probe: 'export class Launcher extends require("node:child_process").ChildProcess {}\n', reads: "<reference>" },
+  "heritage-class-expression": { probe: 'import { ChildProcess } from "node:child_process";\nexport const Launcher = class extends ChildProcess {};\n', reads: "<reference>" },
+  "heritage-mixin-argument": { probe: 'import { ChildProcess } from "node:child_process";\nexport class Launcher extends mix(ChildProcess) {}\n', reads: "<reference>" },
+  "heritage-alias": { probe: 'import * as cp from "node:child_process";\nconst Base = cp.ChildProcess;\nexport class Launcher extends Base {}\n', reads: "<reference>" },
+  "heritage-untraced-string": { probe: 'export class Launcher extends load("child_process") {}\n', reads: "<untraced>" },
+  "instantiation-alias": { probe: 'import { spawn } from "node:child_process";\nconst go = spawn<never>;\ngo("rf", []);\n', reads: "rf" },
+  "instantiation-call": { probe: 'import * as cp from "node:child_process";\n(cp.spawn<never>)("rf", []);\n', reads: "rf" },
+  "scoped-const-command": { probe: 'import { spawn as go } from "node:child_process";\nconst TOOL = "rf";\nexport function launch(): void {\n  go(TOOL, []);\n}\n', reads: "rf" },
+  "block-const-command": { probe: 'import { spawn as go } from "node:child_process";\nconst TOOL = "git";\n{\n  const TOOL = "rf";\n  go(TOOL, []);\n}\n', reads: "rf" },
+  "let-command": { probe: 'import { spawn as go } from "node:child_process";\nlet TOOL = "rf";\ngo(TOOL, []);\n', reads: "<expression>" },
+  "let-shadow-command": { probe: 'import { spawn as go } from "node:child_process";\nconst TOOL = "git";\nexport function launch(): void {\n  let TOOL = "rf";\n  go(TOOL, []);\n}\n', reads: "<expression>" },
+  "parameter-shadow-command": { probe: 'import { spawn as go } from "node:child_process";\nconst TOOL = "git";\nexport function launch(TOOL: string): void {\n  go(TOOL, []);\n}\n', reads: "<expression>" },
+  "catch-shadow-command": { probe: 'import { spawn as go } from "node:child_process";\nconst TOOL = "git";\ntry {\n  hand();\n} catch (TOOL) {\n  go(TOOL, []);\n}\n', reads: "<expression>" },
+  "var-shadow-command": { probe: 'import { spawn as go } from "node:child_process";\nconst TOOL = "git";\nexport function launch(): void {\n  go(TOOL, []);\n  if (flag) {\n    var TOOL = "rf";\n  }\n}\n', reads: "<expression>" },
+  "import-shadow-command": { probe: 'import { spawn as go } from "node:child_process";\nimport { TOOL } from "./tools.js";\nexport function decoy(): string {\n  const TOOL = "git";\n  return TOOL;\n}\ngo(TOOL, []);\n', reads: "<expression>" },
+  "inner-const-command": { probe: 'import { spawn as go } from "node:child_process";\nexport function decoy(): string {\n  const TOOL = "git";\n  return TOOL;\n}\ngo(TOOL, []);\n', reads: "<expression>" },
+  "await-using-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nexport async function launch(): Promise<void> {\n  await using TOOL = \"rf\";\n  go(TOOL, []);\n}\n", reads: "<expression>" },
+  "function-shadow-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nexport function launch(): void {\n  function TOOL(): string {\n    return \"rf\";\n  }\n  go(TOOL, []);\n}\n", reads: "<expression>" },
+  "block-function-shadow-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nexport function launch(): void {\n  go(TOOL, []);\n  {\n    function TOOL(): string {\n      return \"rf\";\n    }\n  }\n}\n", reads: "<expression>" },
+  "function-name-shadow-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nexport const launch = function TOOL(): void {\n  go(TOOL, []);\n};\n", reads: "<expression>" },
+  "class-name-shadow-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nexport const Launcher = class TOOL {\n  static run(): void {\n    go(TOOL, []);\n  }\n};\n", reads: "<expression>" },
+  "class-shadow-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nexport function launch(): void {\n  class TOOL {}\n  go(TOOL, []);\n}\n", reads: "<expression>" },
+  "enum-shadow-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nexport function launch(): void {\n  enum TOOL {\n    Rf,\n  }\n  go(TOOL, []);\n}\n", reads: "<expression>" },
+  "namespace-shadow-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nnamespace Outer {\n  namespace TOOL {\n    export const value = 1;\n  }\n  go(TOOL, []);\n}\n", reads: "<expression>" },
+  "import-equals-shadow-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nnamespace Outer {\n  import TOOL = Other.Tool;\n  go(TOOL, []);\n}\n", reads: "<expression>" },
+  "default-import-shadow-command": { probe: "import { spawn as go } from \"node:child_process\";\nimport TOOL from \"./tools.js\";\nexport function decoy(): string {\n  const TOOL = \"git\";\n  return TOOL;\n}\ngo(TOOL, []);\n", reads: "<expression>" },
+  "namespace-import-shadow-command": { probe: "import { spawn as go } from \"node:child_process\";\nimport * as TOOL from \"./tools.js\";\nexport function decoy(): string {\n  const TOOL = \"git\";\n  return TOOL;\n}\ngo(TOOL, []);\n", reads: "<expression>" },
+  "object-destructured-shadow-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nexport function launch(source: { TOOL: string }): void {\n  const { TOOL } = source;\n  go(TOOL, []);\n}\n", reads: "<expression>" },
+  "array-destructured-shadow-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nexport function launch(list: string[]): void {\n  const [TOOL] = list;\n  go(TOOL, []);\n}\n", reads: "<expression>" },
+  "for-const-scope-command": { probe: "import { spawn as go } from \"node:child_process\";\nfor (const TOOL = \"git\"; flag; ) hand(TOOL);\ngo(TOOL, []);\n", reads: "<expression>" },
+  "case-const-scope-command": { probe: "import { spawn as go } from \"node:child_process\";\nswitch (flag) {\n  case 1:\n    const TOOL = \"git\";\n    hand(TOOL);\n}\ngo(TOOL, []);\n", reads: "<expression>" },
+  "namespace-const-scope-command": { probe: "import { spawn as go } from \"node:child_process\";\nnamespace Holder {\n  const TOOL = \"git\";\n  hand(TOOL);\n}\ngo(TOOL, []);\n", reads: "<expression>" },
+  "instantiation-named-launch": { probe: "(pi.exec<never>)(\"rf\", []);\n", reads: "rf" },
+  "block-const-scope-command": { probe: "import { spawn as go } from \"node:child_process\";\n{\n  const TOOL = \"git\";\n  hand(TOOL);\n}\ngo(TOOL, []);\n", reads: "<expression>" },
+  "type-import-const-command": { probe: "import { spawn as go } from \"node:child_process\";\nimport type { TOOL } from \"./tools.js\";\nconst TOOL = \"rf\";\ngo(TOOL, []);\n", reads: "rf" },
+  "for-const-command": { probe: "import { spawn as go } from \"node:child_process\";\nfor (const TOOL = \"rf\"; flag; ) go(TOOL, []);\n", reads: "rf" },
+  "destructured-const-command": { probe: 'import { spawn as go } from "node:child_process";\nconst { TOOL } = { TOOL: "rf" };\ngo(TOOL, []);\n', reads: "<expression>" },
+  "inner-const-specifier": { probe: 'export function decoy(): string {\n  const CP = "node:fs";\n  return CP;\n}\nconst m = await import(CP);\nm.spawn(command, []);\n', reads: "<load>" },
+  "let-shadow-specifier": { probe: 'export function decoy(): string {\n  const CP = "node:fs";\n  return CP;\n}\nlet CP = ["node:child", "process"].join("_");\nconst m = await import(CP);\nm.spawn(command, []);\n', reads: "<load>" },
+};
+/** A5's position roster: every position a name can take in a module, one probe each with HELD for the name, and what kind
+ * of position it is. The identifier readers are probed with HELD as an I/O global (WebSocket) and as a global object
+ * (globalThis) through the I/O-global reader, as process through the process reader, and as a namespace binding of
+ * child_process (import * as cp) through the tracer. A value position evaluates the name at run time: every identifier
+ * reader reads it, the tracer as at least one site. A discarded value (a statement's, void's, a comma's left operand) and a
+ * written one (an assignment's, a destructuring's, a for-of's or an increment's target) are read by the I/O-global and
+ * process readers and not by the tracer (it reads nothing for a value a statement discards, and a target's old value is
+ * replaced). A local export reads only for the tracer (<re-export>; a module exports its own bindings, never a global). A
+ * name (a declaration's, a property's, a key's, an import or export specifier's, a label's) and a type (erased before run
+ * time: an annotation, a typeof query, an implements clause, an interface's extends, a heritage or call type argument, a
+ * constraint, an as or satisfies type, an import type, a predicate) are read by none. */
+const REFERENCE_POSITIONS: Readonly<Record<string, { readonly probe: string; readonly kind: "value" | "discarded" | "written" | "export" | "name" | "type" }>> = {
+  argument: { probe: "hand(HELD);\n", kind: "value" },
+  callee: { probe: "hand(HELD());\n", kind: "value" },
+  "optional-callee": { probe: "hand(HELD?.());\n", kind: "value" },
+  "new-callee": { probe: "hand(new HELD());\n", kind: "value" },
+  "member-base": { probe: "hand(HELD.member);\n", kind: "value" },
+  "optional-member-base": { probe: "hand(HELD?.member);\n", kind: "value" },
+  "element-base": { probe: 'hand(HELD["member"]);\n', kind: "value" },
+  "element-key": { probe: "hand(other[HELD]);\n", kind: "value" },
+  "tagged-template": { probe: "hand(HELD`text`);\n", kind: "value" },
+  "template-span": { probe: `hand(\`text \${HELD}\`);\n`, kind: "value" },
+  return: { probe: "export function read(): unknown {\n  return HELD;\n}\n", kind: "value" },
+  "arrow-body": { probe: "export const read = (): unknown => HELD;\n", kind: "value" },
+  "property-value": { probe: "hand({ key: HELD });\n", kind: "value" },
+  "shorthand-property": { probe: "hand({ HELD });\n", kind: "value" },
+  "computed-key": { probe: "hand({ [HELD]: 1 });\n", kind: "value" },
+  "spread-element": { probe: "hand([...HELD]);\n", kind: "value" },
+  "spread-property": { probe: "hand({ ...HELD });\n", kind: "value" },
+  "array-element": { probe: "hand([HELD]);\n", kind: "value" },
+  "default-parameter": { probe: "export function read(value = HELD): unknown {\n  return value;\n}\n", kind: "value" },
+  "binding-default": { probe: "const { value = HELD } = hand();\nhand(value);\n", kind: "value" },
+  "class-field": { probe: "export class Holder {\n  field = HELD;\n}\n", kind: "value" },
+  "static-field": { probe: "export class Holder {\n  static field = HELD;\n}\n", kind: "value" },
+  "computed-member": { probe: "export class Holder {\n  [HELD](): void {}\n}\n", kind: "value" },
+  decorator: { probe: "@HELD\nexport class Holder {}\n", kind: "value" },
+  "class-extends": { probe: "export class Holder extends HELD {}\n", kind: "value" },
+  "class-extends-member": { probe: "export class Holder extends HELD.Base {}\n", kind: "value" },
+  "class-extends-call": { probe: "export class Holder extends hand(HELD) {}\n", kind: "value" },
+  "class-expression-extends": { probe: "export const Holder = class extends HELD {};\n", kind: "value" },
+  instantiation: { probe: "hand(HELD<string>);\n", kind: "value" },
+  "alias-declaration": { probe: "const alias = HELD;\nhand(alias);\n", kind: "value" },
+  "alias-assignment": { probe: "let alias;\nalias = HELD;\nhand(alias);\n", kind: "value" },
+  "destructured-alias": { probe: "const { member: alias } = HELD;\nhand(alias);\n", kind: "value" },
+  "property-store": { probe: "holder.value = HELD;\n", kind: "value" },
+  "typeof-expression": { probe: "hand(typeof HELD);\n", kind: "value" },
+  unary: { probe: "hand(!HELD);\n", kind: "value" },
+  binary: { probe: "hand(HELD + 1);\n", kind: "value" },
+  equality: { probe: "hand(HELD === other);\n", kind: "value" },
+  "in-operand": { probe: 'hand("member" in HELD);\n', kind: "value" },
+  "instanceof-operand": { probe: "hand(other instanceof HELD);\n", kind: "value" },
+  nullish: { probe: "hand(HELD ?? other);\n", kind: "value" },
+  logical: { probe: "hand(HELD || other);\n", kind: "value" },
+  "conditional-arm": { probe: "hand(flag ? HELD : other);\n", kind: "value" },
+  condition: { probe: "if (HELD) hand();\n", kind: "value" },
+  parenthesized: { probe: "hand((HELD));\n", kind: "value" },
+  "as-expression": { probe: "hand(HELD as unknown);\n", kind: "value" },
+  "satisfies-expression": { probe: "hand(HELD satisfies unknown);\n", kind: "value" },
+  "non-null": { probe: "hand(HELD!);\n", kind: "value" },
+  "type-assertion": { probe: "hand(<unknown>HELD);\n", kind: "value" },
+  await: { probe: "hand(await HELD);\n", kind: "value" },
+  "comma-right": { probe: "hand((0, HELD));\n", kind: "value" },
+  throw: { probe: "throw HELD;\n", kind: "value" },
+  "for-of": { probe: "for (const item of HELD) hand(item);\n", kind: "value" },
+  "for-in": { probe: "for (const key in HELD) hand(key);\n", kind: "value" },
+  switch: { probe: "switch (HELD) {\n  default:\n    hand();\n}\n", kind: "value" },
+  case: { probe: "switch (other) {\n  case HELD:\n    hand();\n}\n", kind: "value" },
+  yield: { probe: "export function* read(): Generator<unknown> {\n  yield HELD;\n}\n", kind: "value" },
+  "export-default": { probe: "export default HELD;\n", kind: "value" },
+  "export-assignment": { probe: "export = HELD;\n", kind: "value" },
+  "enum-initializer": { probe: "enum Holder {\n  Member = HELD,\n}\nhand(Holder);\n", kind: "value" },
+  delete: { probe: "hand(delete HELD.member);\n", kind: "value" },
+  statement: { probe: "HELD;\n", kind: "discarded" },
+  "member-statement": { probe: "HELD.member;\n", kind: "discarded" },
+  void: { probe: "hand(void HELD);\n", kind: "discarded" },
+  "comma-left": { probe: "hand((HELD, 0));\n", kind: "discarded" },
+  "assignment-target": { probe: "HELD = other;\n", kind: "written" },
+  "compound-target": { probe: "HELD += 1;\n", kind: "written" },
+  increment: { probe: "HELD++;\n", kind: "written" },
+  "destructuring-target": { probe: "[HELD] = list;\n", kind: "written" },
+  "for-of-target": { probe: "for (HELD of list) hand();\n", kind: "written" },
+  "local-export": { probe: "export { HELD };\n", kind: "export" },
+  "local-export-alias": { probe: "export { HELD as alias };\n", kind: "export" },
+  "property-name": { probe: "hand(other.HELD);\n", kind: "name" },
+  key: { probe: "hand({ HELD: 1 });\n", kind: "name" },
+  "method-name": { probe: "export class Holder {\n  HELD(): void {}\n}\n", kind: "name" },
+  "field-name": { probe: "export class Holder {\n  HELD = 1;\n}\n", kind: "name" },
+  declaration: { probe: "const HELD = 1;\n", kind: "name" },
+  "function-name": { probe: "export function HELD(): void {}\n", kind: "name" },
+  "class-name": { probe: "export class HELD {}\n", kind: "name" },
+  parameter: { probe: "export function read(HELD: unknown): void {}\n", kind: "name" },
+  "binding-name": { probe: "const { HELD } = other;\n", kind: "name" },
+  "binding-key": { probe: "const { HELD: alias } = other;\n", kind: "name" },
+  "import-name": { probe: 'import { HELD } from "other";\n', kind: "name" },
+  label: { probe: "HELD: for (;;) break HELD;\n", kind: "name" },
+  "enum-member-name": { probe: "enum Holder {\n  HELD = 1,\n}\n", kind: "name" },
+  "qualified-right": { probe: "import alias = Outer.HELD;\n", kind: "name" },
+  "export-alias-name": { probe: "export { other as HELD };\n", kind: "name" },
+  "namespace-export": { probe: 'export * as HELD from "other";\n', kind: "name" },
+  annotation: { probe: "let value: HELD;\n", kind: "type" },
+  "typeof-query": { probe: "let value: typeof HELD;\n", kind: "type" },
+  "type-alias": { probe: "type Shape = HELD;\n", kind: "type" },
+  "type-argument": { probe: "hand<HELD>(other);\n", kind: "type" },
+  "instantiation-argument": { probe: "hand(other<HELD>);\n", kind: "type" },
+  implements: { probe: "export class Holder implements HELD {}\n", kind: "type" },
+  "interface-extends": { probe: "interface Shape extends HELD {}\n", kind: "type" },
+  "heritage-type-argument": { probe: "export class Holder extends Base<typeof HELD> {}\n", kind: "type" },
+  constraint: { probe: "export function read<T extends HELD>(): void {}\n", kind: "type" },
+  "as-type": { probe: "hand(other as HELD);\n", kind: "type" },
+  "satisfies-type": { probe: "hand(other satisfies HELD);\n", kind: "type" },
+  "type-literal-key": { probe: "type Shape = { [HELD]: number };\n", kind: "type" },
+  "import-type": { probe: 'let value: import("other").HELD;\n', kind: "type" },
+  predicate: { probe: "export function check(value: unknown): value is HELD {\n  return true;\n}\n", kind: "type" },
+  "type-only-import": { probe: 'import type { HELD } from "other";\n', kind: "type" },
 };
 /** Q3's probes: hooks and descriptors spelled outside the forms T2 and T3 read. */
 const OTHER_HOOKS =
@@ -493,8 +721,11 @@ const OTHER_PHRASES = "states an evidence need and a resource demand for the nex
 /** A descriptor text composed from pieces at run time, and the TSX SDK named only in pieces joined at run time. */
 const OTHER_COMPOSED = 'export const description = "Describes a logical evidence " + "requirement for the next render";\n';
 const OTHER_LOADER = 'import { createRequire } from "node:module";\nconst tsx = createRequire(import.meta.url)(["@reactive-fiber", "tsx"].join("/"));\n';
+/** A descriptor's interests spelled only in a regular-expression literal and a comment (neither a string, a template part, an
+ * identifier nor a key). */
+const OTHER_UNREAD_TEXT = "export const description = /Describes a logical evidence requirement/.source;\n// and a prospective resource interest for the next render\n";
 /** Q7's probes: one path per home row T's static readers do not read (test/, and non-script files anywhere). */
-const UNREAD_HOME_PROBES = ["test/helpers/edc-evidence-hooks.ts", "test/workbench-edc-descriptor.test.ts", "src/workbench/edc/descriptor.json", "examples/edc/hooks.md", "qa/workbench/edc-descriptor.yaml"];
+const UNREAD_HOME_PROBES = ["test/helpers/edc-evidence-hooks.ts", "test/workbench-edc-descriptor.test.ts", "src/workbench/edc/descriptor.json", "examples/edc/hooks.md", "qa/workbench/edc-descriptor.yaml", "bin/edc-evidence-hooks"];
 /** T4's planted samples, each of which its reader must find. */
 const PLANTED_PATHS = ["src/edc/EvidencePanel.tsx", "examples/Card.JSX", "src/edc/panel.ts", "docs/hooks.md"];
 const PLANTED_SOURCE = `import { useQuery } from "${TSX_SDK}";\nexport function useRequirement(view: unknown) { return pureProjectRequirement(view); }\nconst panel = () => useProvider("evidence-view", {});\n`;
@@ -512,7 +743,7 @@ const PLANTED_DESCRIPTION = "Describes a logical evidence requirement for the ne
 /** A planted descriptor key spelling the other interest in camel case (read in the joined fold, keys included). */
 const PLANTED_KEY = "prospectiveResourceInterest";
 /** One path per read home (src, qa, examples, a root config): the static readers' home predicate must read each. */
-const PLANTED_HOMES = ["src/workbench/edc/evidence-hooks.ts", "qa/workbench/edc-hooks.mjs", "examples/edc/evidence-hooks.ts", "vitest.edc.config.ts"];
+const PLANTED_HOMES = ["src/workbench/edc/evidence-hooks.ts", "qa/workbench/edc-hooks.mjs", "examples/edc/evidence-hooks.ts", "examples/edc/evidence-hooks.JS", "vitest.edc.config.ts"];
 /** A descriptor registered by a module neither read registration wires in: T3's static reader must read its text. */
 const PLANTED_DESCRIPTOR_SOURCE =
   'export function registerEvidence(registry: Registry): void {\n  registry.register({ descriptor: { id: "edc.evidence", description: "Describes a logical evidence requirement for the next render", inputSchema: { properties: { prospectiveResourceInterest: {} } } } });\n}\n';
@@ -1382,9 +1613,9 @@ function walkedScriptModules(): string[] {
   return found.sort();
 }
 function scriptKind(path: string): ts.ScriptKind {
-  if (/\.tsx$/.test(path)) return ts.ScriptKind.TSX;
-  if (/\.jsx$/.test(path)) return ts.ScriptKind.JSX;
-  if (/\.[cm]?js$/.test(path)) return ts.ScriptKind.JS;
+  if (/\.tsx$/i.test(path)) return ts.ScriptKind.TSX;
+  if (/\.jsx$/i.test(path)) return ts.ScriptKind.JSX;
+  if (/\.[cm]?js$/i.test(path)) return ts.ScriptKind.JS;
   return ts.ScriptKind.TS;
 }
 const parsed = new Map<string, ts.SourceFile>();
@@ -1400,30 +1631,92 @@ function visit(node: ts.Node, each: (node: ts.Node) => void): void {
   each(node);
   ts.forEachChild(node, child => visit(child, each));
 }
-/** An expression without its parentheses and type wrappers (as, satisfies, <T>, !). */
+/** An instantiation expression (`spawn<T>`): an ExpressionWithTypeArguments outside a heritage clause - its value is its
+ * expression's. */
+function isInstantiation(node: ts.Node): node is ts.ExpressionWithTypeArguments {
+  return ts.isExpressionWithTypeArguments(node) && !ts.isHeritageClause(node.parent);
+}
+/** An expression without its parentheses and type wrappers (as, satisfies, <T>, !, an instantiation expression's type
+ * arguments). */
 function unwrap(expression: ts.Expression): ts.Expression {
   let node = expression;
-  while (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isTypeAssertionExpression(node) || ts.isNonNullExpression(node)) {
+  while (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isTypeAssertionExpression(node) || ts.isNonNullExpression(node) || isInstantiation(node)) {
     node = node.expression;
   }
   return node;
 }
-/** The initializers of every const binding of `name` in the module, in any scope. */
-function constInitializers(source: ts.SourceFile, name: string): ts.Expression[] {
-  const found: ts.Expression[] = [];
+/** A value binding of a name and the scope it binds the name in; only a const binding carries its initializer (the only kind
+ * a command or specifier resolves through). Every other binding - let, var, using, a parameter, a function, a class, an
+ * enum, a namespace, an import-equals, a catch variable, a destructured element, an ambient const - carries none. An ES
+ * import is not recorded: it binds only at module scope, where valid code binds no other value of its name, so a name it
+ * binds reads as no binding (unresolved), and a type-only import binds no value at all. */
+interface Declared {
+  readonly scope: ts.Node;
+  readonly initializer: ts.Expression | undefined;
+}
+/** A block-scoped binding's scope: the nearest block, module, case block, for statement, static block or function. */
+function blockScope(node: ts.Node): ts.Node {
+  let at = node.parent;
+  while (
+    !(ts.isBlock(at) || ts.isSourceFile(at) || ts.isModuleBlock(at) || ts.isCaseBlock(at) || ts.isForStatement(at) || ts.isForInStatement(at) || ts.isForOfStatement(at) || ts.isClassStaticBlockDeclaration(at) || ts.isFunctionLike(at))
+  ) {
+    at = at.parent;
+  }
+  return at;
+}
+/** A var's (and a sloppy function declaration's) scope: the nearest function, static block, namespace body or module. */
+function functionScope(node: ts.Node): ts.Node {
+  let at = node.parent;
+  while (!(ts.isSourceFile(at) || ts.isModuleBlock(at) || ts.isFunctionLike(at) || ts.isClassStaticBlockDeclaration(at))) at = at.parent;
+  return at;
+}
+const declaredIn = new WeakMap<ts.SourceFile, ReadonlyMap<string, readonly Declared[]>>();
+/** Every value binding of one module, by name (computed once per source). */
+function declarations(source: ts.SourceFile): ReadonlyMap<string, readonly Declared[]> {
+  const cached = declaredIn.get(source);
+  if (cached !== undefined) return cached;
+  const found = new Map<string, Declared[]>();
+  const declare = (name: ts.Node | undefined, scope: ts.Node, initializer?: ts.Expression): void => {
+    if (name === undefined) return;
+    if (ts.isIdentifier(name)) {
+      found.set(name.text, [...(found.get(name.text) ?? []), { scope, initializer }]);
+    } else if (ts.isObjectBindingPattern(name) || ts.isArrayBindingPattern(name)) {
+      for (const element of name.elements) if (ts.isBindingElement(element)) declare(element.name, scope);
+    }
+  };
   visit(source, node => {
-    if (
-      ts.isVariableDeclaration(node) &&
-      ts.isIdentifier(node.name) &&
-      node.name.text === name &&
-      node.initializer !== undefined &&
-      ts.isVariableDeclarationList(node.parent) &&
-      (node.parent.flags & ts.NodeFlags.Const) !== 0
-    ) {
-      found.push(node.initializer);
+    if (ts.isVariableDeclaration(node)) {
+      if (ts.isCatchClause(node.parent)) {
+        declare(node.name, node.parent);
+      } else if (ts.isVariableDeclarationList(node.parent)) {
+        const blockScoped = node.parent.flags & ts.NodeFlags.BlockScoped;
+        const constant = blockScoped === ts.NodeFlags.Const && ts.isIdentifier(node.name) ? node.initializer : undefined;
+        declare(node.name, blockScoped === 0 ? functionScope(node.parent) : blockScope(node.parent), constant);
+      }
+    } else if (ts.isParameter(node)) {
+      declare(node.name, node.parent);
+    } else if (ts.isFunctionDeclaration(node)) {
+      declare(node.name, blockScope(node));
+      declare(node.name, functionScope(node));
+    } else if (ts.isFunctionExpression(node) || ts.isClassExpression(node)) {
+      declare(node.name, node);
+    } else if (ts.isClassDeclaration(node) || ts.isEnumDeclaration(node) || ts.isModuleDeclaration(node) || ts.isImportEqualsDeclaration(node)) {
+      declare(node.name, blockScope(node));
     }
   });
+  declaredIn.set(source, found);
   return found;
+}
+/** The const initializers a referenced name resolves to: the nearest scope enclosing the reference that binds the name
+ * decides; undefined when a binding there is not a const with an initializer, or when nothing in the module binds the name
+ * (a global). */
+function resolvedInitializers(source: ts.SourceFile, reference: ts.Identifier): ts.Expression[] | undefined {
+  const declared = declarations(source).get(reference.text) ?? [];
+  for (let at: ts.Node = reference.parent; ; at = at.parent) {
+    const here = declared.filter(entry => entry.scope === at);
+    if (here.length > 0) return here.every(entry => entry.initializer !== undefined) ? here.flatMap(entry => (entry.initializer === undefined ? [] : [entry.initializer])) : undefined;
+    if (ts.isSourceFile(at)) return undefined;
+  }
 }
 /** The union of candidate lists (sorted), or undefined when there is none or any list is undefined. */
 function union(lists: readonly (readonly string[] | undefined)[]): string[] | undefined {
@@ -1431,14 +1724,18 @@ function union(lists: readonly (readonly string[] | undefined)[]): string[] | un
   return [...new Set(lists.flatMap(list => list ?? []))].sort();
 }
 const RESOLVE_DEPTH = 8;
-/** The literal values an expression can take, read through string literals, the module's const bindings, literal indexes into
- * const array literals and both arms of a conditional; undefined when any part does not resolve. */
+/** The literal values an expression can take, read through string literals, the const binding a name resolves to in its
+ * scope (resolvedInitializers), literal indexes into const array literals and both arms of a conditional; undefined when any
+ * part does not resolve. */
 function resolveTexts(source: ts.SourceFile, expression: ts.Expression, depth = 0): string[] | undefined {
   if (depth > RESOLVE_DEPTH) return undefined;
   const node = unwrap(expression);
   if (ts.isStringLiteralLike(node)) return [node.text];
   if (ts.isConditionalExpression(node)) return union([resolveTexts(source, node.whenTrue, depth + 1), resolveTexts(source, node.whenFalse, depth + 1)]);
-  if (ts.isIdentifier(node)) return union(constInitializers(source, node.text).map(initializer => resolveTexts(source, initializer, depth + 1)));
+  if (ts.isIdentifier(node)) {
+    const initializers = resolvedInitializers(source, node);
+    return initializers === undefined ? undefined : union(initializers.map(initializer => resolveTexts(source, initializer, depth + 1)));
+  }
   if (ts.isElementAccessExpression(node)) {
     const index = unwrap(node.argumentExpression);
     if (!ts.isNumericLiteral(index)) return undefined;
@@ -1458,7 +1755,9 @@ function resolveArrays(source: ts.SourceFile, expression: ts.Expression, depth: 
   } else if (ts.isConditionalExpression(node)) {
     arms = [resolveArrays(source, node.whenTrue, depth + 1), resolveArrays(source, node.whenFalse, depth + 1)];
   } else if (ts.isIdentifier(node)) {
-    arms = constInitializers(source, node.text).map(initializer => resolveArrays(source, initializer, depth + 1));
+    const initializers = resolvedInitializers(source, node);
+    if (initializers === undefined) return undefined;
+    arms = initializers.map(initializer => resolveArrays(source, initializer, depth + 1));
   } else {
     return undefined;
   }
@@ -1478,8 +1777,8 @@ function calleeName(call: ts.CallExpression): string | undefined {
 const LOADER_CALLS = ["require", "getBuiltinModule"];
 const LOADER_FACTORIES = ["createRequire"];
 const loaderNamesOf = new WeakMap<ts.SourceFile, ReadonlySet<string>>();
-/** The names one module binds a loader factory's result to, by a declaration or an assignment (`const load =
- * createRequire(...)`, `load = createRequire(...)`). */
+/** The names one module binds a loader factory's result to, by a variable declaration with a plain name or a binding
+ * assignment (`const load = createRequire(...)`; `load = ...`, `load ||= ...`, `load &&= ...`, `load ??= ...`). */
 function loaderNames(source: ts.SourceFile): ReadonlySet<string> {
   const cached = loaderNamesOf.get(source);
   if (cached !== undefined) return cached;
@@ -1490,7 +1789,7 @@ function loaderNames(source: ts.SourceFile): ReadonlySet<string> {
   };
   visit(source, node => {
     if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined && factory(node.initializer)) names.add(node.name.text);
-    const assigned = ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken ? unwrap(node.left) : undefined;
+    const assigned = ts.isBinaryExpression(node) && BINDING_ASSIGNMENTS.includes(node.operatorToken.kind) ? unwrap(node.left) : undefined;
     if (ts.isBinaryExpression(node) && assigned !== undefined && ts.isIdentifier(assigned) && factory(node.right)) names.add(assigned.text);
   });
   loaderNamesOf.set(source, names);
@@ -1554,9 +1853,20 @@ function isNameSlot(node: ts.Identifier): boolean {
   }
   return false;
 }
-/** Whether a node sits inside a type (a type reference, a typeof query, a type argument): it reaches nothing at run time. */
+/** Whether an ExpressionWithTypeArguments evaluates its expression at run time: a class's extends clause (a declaration's
+ * or an expression's) and an instantiation expression do; an implements clause and an interface's extends clause are types
+ * (TypeScript reads every ExpressionWithTypeArguments as a type node). */
+function evaluatesExpression(node: ts.ExpressionWithTypeArguments): boolean {
+  const clause = node.parent;
+  if (!ts.isHeritageClause(clause)) return true;
+  return clause.token === ts.SyntaxKind.ExtendsKeyword && (ts.isClassDeclaration(clause.parent) || ts.isClassExpression(clause.parent));
+}
+/** Whether a node sits inside a type (a type reference, a typeof query, a type argument, an implements clause, an
+ * interface's extends): it reaches nothing at run time. A class's extends expression and an instantiation expression are
+ * values; their type arguments stay types (each is a type node of its own, met first on the way up). */
 function inType(node: ts.Node): boolean {
   for (let at: ts.Node | undefined = node.parent; at !== undefined && !ts.isSourceFile(at); at = at.parent) {
+    if (ts.isExpressionWithTypeArguments(at) && evaluatesExpression(at)) continue;
     if (ts.isTypeNode(at)) return true;
     if (ts.isStatement(at)) return false;
   }
@@ -1756,7 +2066,13 @@ function childProcessLaunchesAt(module: string, source: ts.SourceFile = parse(mo
     for (;;) {
       const wrapper = at.parent;
       const wraps =
-        (ts.isParenthesizedExpression(wrapper) || ts.isAsExpression(wrapper) || ts.isSatisfiesExpression(wrapper) || ts.isTypeAssertionExpression(wrapper) || ts.isNonNullExpression(wrapper) || ts.isAwaitExpression(wrapper)) &&
+        (ts.isParenthesizedExpression(wrapper) ||
+          ts.isAsExpression(wrapper) ||
+          ts.isSatisfiesExpression(wrapper) ||
+          ts.isTypeAssertionExpression(wrapper) ||
+          ts.isNonNullExpression(wrapper) ||
+          ts.isAwaitExpression(wrapper) ||
+          isInstantiation(wrapper)) &&
         wrapper.expression === at;
       if (!wraps) break;
       at = wrapper;
@@ -1908,6 +2224,32 @@ function processReferences(module: string, source: ts.SourceFile = parse(module)
     if (!PROCESS_READS.some(read => member === `.${read}` || member === `[${read}]`)) found.push(`${module}:process${member}`);
   });
   return found;
+}
+type PositionKind = (typeof REFERENCE_POSITIONS)[string]["kind"];
+interface PositionReading {
+  readonly io: string[];
+  readonly global: string[];
+  readonly process: string[];
+  readonly tracer: string[];
+}
+/** One position probe through the identifier readers: the I/O-global reader with HELD as WebSocket and as globalThis, the
+ * process reader with HELD as process, the tracer with HELD as a namespace binding of child_process. */
+function positionReading(position: string, probe: string): PositionReading {
+  const module = `positions/${position}.ts`;
+  const held = (name: string, prefix = ""): ts.SourceFile => parse(module, `${prefix}${probe.replaceAll("HELD", name)}`);
+  const named = (readings: readonly string[]): string[] => readings.map(reading => reading.slice(module.length + 1));
+  return {
+    io: named(ioGlobalReferences(module, held("WebSocket"))),
+    global: named(ioGlobalReferences(module, held("globalThis"))),
+    process: named(processReferences(module, held("process"))),
+    tracer: childProcessLaunches(module, held("cp", 'import * as cp from "node:child_process";\n')).map(site => `${site.callee} ${site.command}`),
+  };
+}
+/** Whether a position's readings are what its kind says (REFERENCE_POSITIONS). */
+function positionAsKind(entry: PositionReading & { readonly kind: PositionKind }): boolean {
+  const identifier = entry.kind === "value" || entry.kind === "discarded" || entry.kind === "written" ? 1 : 0;
+  const traced = entry.kind === "value" || entry.kind === "export";
+  return entry.io.length === identifier && entry.global.length === identifier && entry.process.length === identifier && entry.tracer.length > 0 === traced;
 }
 type SourceOf = (module: string) => ts.SourceFile;
 interface ReachReading {
@@ -2212,6 +2554,11 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         .map(({ form, reads }) => `${form} (reads ${reads})`),
       "A5's tracer reads every form of its roster (REACH_FORMS)",
     ).toEqual([]);
+    const positions = Object.entries(REFERENCE_POSITIONS).map(([position, { probe, kind }]) => ({ position, kind, ...positionReading(position, probe) }));
+    expect(
+      positions.filter(entry => !positionAsKind(entry)).map(({ position, kind }) => `${position} (${kind})`),
+      "A5's identifier readers read every position of their roster as its kind says (REFERENCE_POSITIONS)",
+    ).toEqual([]);
     return json({
       clause: SERVES.A5,
       judges: ["tool", "model", "host"],
@@ -2230,6 +2577,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       srcSites,
       forms: forms.map(({ form, sites, loads }) =>
         [`${form}:`, ...sites.map(site => `${site.callee} ${site.command}`), ...loads.map(load => `load ${load.slice(load.indexOf(":") + 1)}`)].join(" "),
+      ),
+      positions: positions.map(
+        ({ position, kind, io, global, process, tracer }) =>
+          `${position} (${kind}): io ${io.join("; ") || "none"}, global ${global.join("; ") || "none"}, process ${process.join("; ") || "none"}, tracer ${tracer.join("; ") || "none"}`,
       ),
       controls,
     });
@@ -2323,6 +2674,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       ["planted/panel.ts", "planted/hooks.cjs", "planted/string-hooks.ts", "planted/loader.ts"].filter(module => !planted.hooks.some(mention => mention.startsWith(`${module}:`))),
       "T2's hook reader reads every planted hook sample",
     ).toEqual([]);
+    expect(PLANTED_HOMES.filter(home => !isStaticHome(home)), "the static readers' home predicate reads every planted home, its extension in any case").toEqual([]);
     return json({
       components: componentModules(PLANTED_PATHS),
       read: planted.read,
@@ -2369,6 +2721,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       descriptor: phraseMentions({ id: "probe.render", description: OTHER_PHRASES }, "probe", phrases),
       composed: sourcePhraseMentions("probe/composed.ts", phrases, parse("probe/composed.ts", OTHER_COMPOSED)),
       loader: hookMentions("probe/loader.ts", parse("probe/loader.ts", OTHER_LOADER)),
+      unreadText: sourcePhraseMentions("probe/unread-text.ts", phrases, parse("probe/unread-text.ts", OTHER_UNREAD_TEXT)),
       lookalike: [
         ...hookMentions("probe/lookalike.ts", parse("probe/lookalike.ts", OTHER_LOOKALIKE)),
         ...sourcePhraseMentions("probe/lookalike.ts", phrases, parse("probe/lookalike.ts", OTHER_LOOKALIKE)),
@@ -2467,9 +2820,11 @@ describe("wb-pyel.5 render-abort falsifier (SDK-EVIDENCE-DIRECTED-COMPUTATION-R1
         otherPhrases: OTHER_PHRASES,
         otherComposed: OTHER_COMPOSED,
         otherLoader: OTHER_LOADER,
+        otherUnreadText: OTHER_UNREAD_TEXT,
         otherLookalike: OTHER_LOOKALIKE,
         staticResidue: STATIC_RESIDUE,
         reachForms: REACH_FORMS,
+        referencePositions: REFERENCE_POSITIONS,
         unreadHomeProbes: UNREAD_HOME_PROBES,
         plantedPaths: PLANTED_PATHS,
         plantedSource: PLANTED_SOURCE,

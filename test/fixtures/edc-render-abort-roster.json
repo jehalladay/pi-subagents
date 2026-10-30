@@ -307,7 +307,7 @@
     "hookName": "/^use[A-Z]/",
     "hookWord": "/(?:^|[^A-Za-z0-9_$])(use[A-Z][A-Za-z0-9_$]*)/",
     "descriptorName": "pureProjectRequirement",
-    "scriptModule": "/\\.(?:ts|mts|cts|tsx|js|mjs|cjs|jsx)$/",
+    "scriptModule": "/\\.(?:ts|mts|cts|tsx|js|mjs|cjs|jsx)$/i",
     "componentModule": "/\\.(?:tsx|jsx)$/i",
     "requiredTracked": [
       "package.json",
@@ -366,6 +366,7 @@
     "otherPhrases": "states an evidence need and a resource demand for the next render",
     "otherComposed": "export const description = \"Describes a logical evidence \" + \"requirement for the next render\";\n",
     "otherLoader": "import { createRequire } from \"node:module\";\nconst tsx = createRequire(import.meta.url)([\"@reactive-fiber\", \"tsx\"].join(\"/\"));\n",
+    "otherUnreadText": "export const description = /Describes a logical evidence requirement/.source;\n// and a prospective resource interest for the next render\n",
     "otherLookalike": "export function us\u0435Provider(): void {}\nexport const description = \"Describes a logical \u0435vidence requirement\";\n",
     "staticResidue": {
       "unbound-api-launch": "export function run(api: { exec(command: string): void }, command: string): void { api.exec(command); }\n",
@@ -376,6 +377,9 @@
       "argument-carried": "import { spawn } from \"node:child_process\";\nexport const run = (): unknown => spawn(\"sh\", [\"-c\", \"rf context render --json\"]);\n",
       "other-builtin-launch": "import cluster from \"node:cluster\";\nexport const run = (): unknown => cluster.fork();\n",
       "unparsed-loader": "export const load = (name: string): unknown => Reflect.apply(require, undefined, [name]);\n",
+      "aliased-loader": "export function load(name: string): unknown {\n  const read = require;\n  return read(name);\n}\n",
+      "renamed-loader-factory": "import { createRequire as make } from \"node:module\";\nexport const load = (name: string): unknown => make(import.meta.url)(name);\n",
+      "held-loader-factory": "import { createRequire } from \"node:module\";\nconst loaders = { load: createRequire(import.meta.url) };\nexport const load = (name: string): unknown => loaders.load(name);\n",
       "composed-code": "export const run = (code: string): unknown => new Function(code)();\n",
       "process-binding": "export const raw = (): unknown => process.binding(\"spawn_sync\");\n"
     },
@@ -607,6 +611,608 @@
       "computed-create-require": {
         "probe": "import { createRequire } from \"node:module\";\nconst cp = createRequire(import.meta.url)(name);\n",
         "reads": "<load>"
+      },
+      "create-require-logical": {
+        "probe": "import { createRequire } from \"node:module\";\nlet load;\nload ??= createRequire(import.meta.url);\nload(name);\n",
+        "reads": "<load>"
+      },
+      "create-require-logical-traced": {
+        "probe": "import { createRequire } from \"node:module\";\nlet load;\nload ||= createRequire(import.meta.url);\nload(\"node:child_process\").spawn(command, []);\n",
+        "reads": "<expression>"
+      },
+      "heritage-named-import": {
+        "probe": "import { ChildProcess } from \"node:child_process\";\nexport class Launcher extends ChildProcess {}\n",
+        "reads": "<reference>"
+      },
+      "heritage-namespace-import": {
+        "probe": "import * as cp from \"node:child_process\";\nexport class Launcher extends cp.ChildProcess {}\n",
+        "reads": "<reference>"
+      },
+      "heritage-default-import": {
+        "probe": "import cp from \"node:child_process\";\nexport class Launcher extends cp.ChildProcess {}\n",
+        "reads": "<reference>"
+      },
+      "heritage-import-equals": {
+        "probe": "import cp = require(\"node:child_process\");\nexport class Launcher extends cp.ChildProcess {}\n",
+        "reads": "<reference>"
+      },
+      "heritage-require-bound": {
+        "probe": "const cp = require(\"node:child_process\");\nexport class Launcher extends cp.ChildProcess {}\n",
+        "reads": "<reference>"
+      },
+      "heritage-import-bound": {
+        "probe": "const cp = await import(\"node:child_process\");\nexport class Launcher extends cp.ChildProcess {}\n",
+        "reads": "<reference>"
+      },
+      "heritage-builtin-bound": {
+        "probe": "const cp = process.getBuiltinModule(\"node:child_process\");\nexport class Launcher extends cp.ChildProcess {}\n",
+        "reads": "<reference>"
+      },
+      "heritage-loader-direct": {
+        "probe": "export class Launcher extends require(\"node:child_process\").ChildProcess {}\n",
+        "reads": "<reference>"
+      },
+      "heritage-class-expression": {
+        "probe": "import { ChildProcess } from \"node:child_process\";\nexport const Launcher = class extends ChildProcess {};\n",
+        "reads": "<reference>"
+      },
+      "heritage-mixin-argument": {
+        "probe": "import { ChildProcess } from \"node:child_process\";\nexport class Launcher extends mix(ChildProcess) {}\n",
+        "reads": "<reference>"
+      },
+      "heritage-alias": {
+        "probe": "import * as cp from \"node:child_process\";\nconst Base = cp.ChildProcess;\nexport class Launcher extends Base {}\n",
+        "reads": "<reference>"
+      },
+      "heritage-untraced-string": {
+        "probe": "export class Launcher extends load(\"child_process\") {}\n",
+        "reads": "<untraced>"
+      },
+      "instantiation-alias": {
+        "probe": "import { spawn } from \"node:child_process\";\nconst go = spawn<never>;\ngo(\"rf\", []);\n",
+        "reads": "rf"
+      },
+      "instantiation-call": {
+        "probe": "import * as cp from \"node:child_process\";\n(cp.spawn<never>)(\"rf\", []);\n",
+        "reads": "rf"
+      },
+      "scoped-const-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"rf\";\nexport function launch(): void {\n  go(TOOL, []);\n}\n",
+        "reads": "rf"
+      },
+      "block-const-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\n{\n  const TOOL = \"rf\";\n  go(TOOL, []);\n}\n",
+        "reads": "rf"
+      },
+      "let-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nlet TOOL = \"rf\";\ngo(TOOL, []);\n",
+        "reads": "<expression>"
+      },
+      "let-shadow-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nexport function launch(): void {\n  let TOOL = \"rf\";\n  go(TOOL, []);\n}\n",
+        "reads": "<expression>"
+      },
+      "parameter-shadow-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nexport function launch(TOOL: string): void {\n  go(TOOL, []);\n}\n",
+        "reads": "<expression>"
+      },
+      "catch-shadow-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\ntry {\n  hand();\n} catch (TOOL) {\n  go(TOOL, []);\n}\n",
+        "reads": "<expression>"
+      },
+      "var-shadow-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nexport function launch(): void {\n  go(TOOL, []);\n  if (flag) {\n    var TOOL = \"rf\";\n  }\n}\n",
+        "reads": "<expression>"
+      },
+      "import-shadow-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nimport { TOOL } from \"./tools.js\";\nexport function decoy(): string {\n  const TOOL = \"git\";\n  return TOOL;\n}\ngo(TOOL, []);\n",
+        "reads": "<expression>"
+      },
+      "inner-const-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nexport function decoy(): string {\n  const TOOL = \"git\";\n  return TOOL;\n}\ngo(TOOL, []);\n",
+        "reads": "<expression>"
+      },
+      "await-using-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nexport async function launch(): Promise<void> {\n  await using TOOL = \"rf\";\n  go(TOOL, []);\n}\n",
+        "reads": "<expression>"
+      },
+      "function-shadow-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nexport function launch(): void {\n  function TOOL(): string {\n    return \"rf\";\n  }\n  go(TOOL, []);\n}\n",
+        "reads": "<expression>"
+      },
+      "block-function-shadow-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nexport function launch(): void {\n  go(TOOL, []);\n  {\n    function TOOL(): string {\n      return \"rf\";\n    }\n  }\n}\n",
+        "reads": "<expression>"
+      },
+      "function-name-shadow-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nexport const launch = function TOOL(): void {\n  go(TOOL, []);\n};\n",
+        "reads": "<expression>"
+      },
+      "class-name-shadow-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nexport const Launcher = class TOOL {\n  static run(): void {\n    go(TOOL, []);\n  }\n};\n",
+        "reads": "<expression>"
+      },
+      "class-shadow-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nexport function launch(): void {\n  class TOOL {}\n  go(TOOL, []);\n}\n",
+        "reads": "<expression>"
+      },
+      "enum-shadow-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nexport function launch(): void {\n  enum TOOL {\n    Rf,\n  }\n  go(TOOL, []);\n}\n",
+        "reads": "<expression>"
+      },
+      "namespace-shadow-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nnamespace Outer {\n  namespace TOOL {\n    export const value = 1;\n  }\n  go(TOOL, []);\n}\n",
+        "reads": "<expression>"
+      },
+      "import-equals-shadow-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nnamespace Outer {\n  import TOOL = Other.Tool;\n  go(TOOL, []);\n}\n",
+        "reads": "<expression>"
+      },
+      "default-import-shadow-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nimport TOOL from \"./tools.js\";\nexport function decoy(): string {\n  const TOOL = \"git\";\n  return TOOL;\n}\ngo(TOOL, []);\n",
+        "reads": "<expression>"
+      },
+      "namespace-import-shadow-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nimport * as TOOL from \"./tools.js\";\nexport function decoy(): string {\n  const TOOL = \"git\";\n  return TOOL;\n}\ngo(TOOL, []);\n",
+        "reads": "<expression>"
+      },
+      "object-destructured-shadow-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nexport function launch(source: { TOOL: string }): void {\n  const { TOOL } = source;\n  go(TOOL, []);\n}\n",
+        "reads": "<expression>"
+      },
+      "array-destructured-shadow-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nexport function launch(list: string[]): void {\n  const [TOOL] = list;\n  go(TOOL, []);\n}\n",
+        "reads": "<expression>"
+      },
+      "for-const-scope-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nfor (const TOOL = \"git\"; flag; ) hand(TOOL);\ngo(TOOL, []);\n",
+        "reads": "<expression>"
+      },
+      "case-const-scope-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nswitch (flag) {\n  case 1:\n    const TOOL = \"git\";\n    hand(TOOL);\n}\ngo(TOOL, []);\n",
+        "reads": "<expression>"
+      },
+      "namespace-const-scope-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nnamespace Holder {\n  const TOOL = \"git\";\n  hand(TOOL);\n}\ngo(TOOL, []);\n",
+        "reads": "<expression>"
+      },
+      "instantiation-named-launch": {
+        "probe": "(pi.exec<never>)(\"rf\", []);\n",
+        "reads": "rf"
+      },
+      "block-const-scope-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\n{\n  const TOOL = \"git\";\n  hand(TOOL);\n}\ngo(TOOL, []);\n",
+        "reads": "<expression>"
+      },
+      "type-import-const-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nimport type { TOOL } from \"./tools.js\";\nconst TOOL = \"rf\";\ngo(TOOL, []);\n",
+        "reads": "rf"
+      },
+      "for-const-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nfor (const TOOL = \"rf\"; flag; ) go(TOOL, []);\n",
+        "reads": "rf"
+      },
+      "destructured-const-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst { TOOL } = { TOOL: \"rf\" };\ngo(TOOL, []);\n",
+        "reads": "<expression>"
+      },
+      "inner-const-specifier": {
+        "probe": "export function decoy(): string {\n  const CP = \"node:fs\";\n  return CP;\n}\nconst m = await import(CP);\nm.spawn(command, []);\n",
+        "reads": "<load>"
+      },
+      "let-shadow-specifier": {
+        "probe": "export function decoy(): string {\n  const CP = \"node:fs\";\n  return CP;\n}\nlet CP = [\"node:child\", \"process\"].join(\"_\");\nconst m = await import(CP);\nm.spawn(command, []);\n",
+        "reads": "<load>"
+      }
+    },
+    "referencePositions": {
+      "argument": {
+        "probe": "hand(HELD);\n",
+        "kind": "value"
+      },
+      "callee": {
+        "probe": "hand(HELD());\n",
+        "kind": "value"
+      },
+      "optional-callee": {
+        "probe": "hand(HELD?.());\n",
+        "kind": "value"
+      },
+      "new-callee": {
+        "probe": "hand(new HELD());\n",
+        "kind": "value"
+      },
+      "member-base": {
+        "probe": "hand(HELD.member);\n",
+        "kind": "value"
+      },
+      "optional-member-base": {
+        "probe": "hand(HELD?.member);\n",
+        "kind": "value"
+      },
+      "element-base": {
+        "probe": "hand(HELD[\"member\"]);\n",
+        "kind": "value"
+      },
+      "element-key": {
+        "probe": "hand(other[HELD]);\n",
+        "kind": "value"
+      },
+      "tagged-template": {
+        "probe": "hand(HELD`text`);\n",
+        "kind": "value"
+      },
+      "template-span": {
+        "probe": "hand(`text ${HELD}`);\n",
+        "kind": "value"
+      },
+      "return": {
+        "probe": "export function read(): unknown {\n  return HELD;\n}\n",
+        "kind": "value"
+      },
+      "arrow-body": {
+        "probe": "export const read = (): unknown => HELD;\n",
+        "kind": "value"
+      },
+      "property-value": {
+        "probe": "hand({ key: HELD });\n",
+        "kind": "value"
+      },
+      "shorthand-property": {
+        "probe": "hand({ HELD });\n",
+        "kind": "value"
+      },
+      "computed-key": {
+        "probe": "hand({ [HELD]: 1 });\n",
+        "kind": "value"
+      },
+      "spread-element": {
+        "probe": "hand([...HELD]);\n",
+        "kind": "value"
+      },
+      "spread-property": {
+        "probe": "hand({ ...HELD });\n",
+        "kind": "value"
+      },
+      "array-element": {
+        "probe": "hand([HELD]);\n",
+        "kind": "value"
+      },
+      "default-parameter": {
+        "probe": "export function read(value = HELD): unknown {\n  return value;\n}\n",
+        "kind": "value"
+      },
+      "binding-default": {
+        "probe": "const { value = HELD } = hand();\nhand(value);\n",
+        "kind": "value"
+      },
+      "class-field": {
+        "probe": "export class Holder {\n  field = HELD;\n}\n",
+        "kind": "value"
+      },
+      "static-field": {
+        "probe": "export class Holder {\n  static field = HELD;\n}\n",
+        "kind": "value"
+      },
+      "computed-member": {
+        "probe": "export class Holder {\n  [HELD](): void {}\n}\n",
+        "kind": "value"
+      },
+      "decorator": {
+        "probe": "@HELD\nexport class Holder {}\n",
+        "kind": "value"
+      },
+      "class-extends": {
+        "probe": "export class Holder extends HELD {}\n",
+        "kind": "value"
+      },
+      "class-extends-member": {
+        "probe": "export class Holder extends HELD.Base {}\n",
+        "kind": "value"
+      },
+      "class-extends-call": {
+        "probe": "export class Holder extends hand(HELD) {}\n",
+        "kind": "value"
+      },
+      "class-expression-extends": {
+        "probe": "export const Holder = class extends HELD {};\n",
+        "kind": "value"
+      },
+      "instantiation": {
+        "probe": "hand(HELD<string>);\n",
+        "kind": "value"
+      },
+      "alias-declaration": {
+        "probe": "const alias = HELD;\nhand(alias);\n",
+        "kind": "value"
+      },
+      "alias-assignment": {
+        "probe": "let alias;\nalias = HELD;\nhand(alias);\n",
+        "kind": "value"
+      },
+      "destructured-alias": {
+        "probe": "const { member: alias } = HELD;\nhand(alias);\n",
+        "kind": "value"
+      },
+      "property-store": {
+        "probe": "holder.value = HELD;\n",
+        "kind": "value"
+      },
+      "typeof-expression": {
+        "probe": "hand(typeof HELD);\n",
+        "kind": "value"
+      },
+      "unary": {
+        "probe": "hand(!HELD);\n",
+        "kind": "value"
+      },
+      "binary": {
+        "probe": "hand(HELD + 1);\n",
+        "kind": "value"
+      },
+      "equality": {
+        "probe": "hand(HELD === other);\n",
+        "kind": "value"
+      },
+      "in-operand": {
+        "probe": "hand(\"member\" in HELD);\n",
+        "kind": "value"
+      },
+      "instanceof-operand": {
+        "probe": "hand(other instanceof HELD);\n",
+        "kind": "value"
+      },
+      "nullish": {
+        "probe": "hand(HELD ?? other);\n",
+        "kind": "value"
+      },
+      "logical": {
+        "probe": "hand(HELD || other);\n",
+        "kind": "value"
+      },
+      "conditional-arm": {
+        "probe": "hand(flag ? HELD : other);\n",
+        "kind": "value"
+      },
+      "condition": {
+        "probe": "if (HELD) hand();\n",
+        "kind": "value"
+      },
+      "parenthesized": {
+        "probe": "hand((HELD));\n",
+        "kind": "value"
+      },
+      "as-expression": {
+        "probe": "hand(HELD as unknown);\n",
+        "kind": "value"
+      },
+      "satisfies-expression": {
+        "probe": "hand(HELD satisfies unknown);\n",
+        "kind": "value"
+      },
+      "non-null": {
+        "probe": "hand(HELD!);\n",
+        "kind": "value"
+      },
+      "type-assertion": {
+        "probe": "hand(<unknown>HELD);\n",
+        "kind": "value"
+      },
+      "await": {
+        "probe": "hand(await HELD);\n",
+        "kind": "value"
+      },
+      "comma-right": {
+        "probe": "hand((0, HELD));\n",
+        "kind": "value"
+      },
+      "throw": {
+        "probe": "throw HELD;\n",
+        "kind": "value"
+      },
+      "for-of": {
+        "probe": "for (const item of HELD) hand(item);\n",
+        "kind": "value"
+      },
+      "for-in": {
+        "probe": "for (const key in HELD) hand(key);\n",
+        "kind": "value"
+      },
+      "switch": {
+        "probe": "switch (HELD) {\n  default:\n    hand();\n}\n",
+        "kind": "value"
+      },
+      "case": {
+        "probe": "switch (other) {\n  case HELD:\n    hand();\n}\n",
+        "kind": "value"
+      },
+      "yield": {
+        "probe": "export function* read(): Generator<unknown> {\n  yield HELD;\n}\n",
+        "kind": "value"
+      },
+      "export-default": {
+        "probe": "export default HELD;\n",
+        "kind": "value"
+      },
+      "export-assignment": {
+        "probe": "export = HELD;\n",
+        "kind": "value"
+      },
+      "enum-initializer": {
+        "probe": "enum Holder {\n  Member = HELD,\n}\nhand(Holder);\n",
+        "kind": "value"
+      },
+      "delete": {
+        "probe": "hand(delete HELD.member);\n",
+        "kind": "value"
+      },
+      "statement": {
+        "probe": "HELD;\n",
+        "kind": "discarded"
+      },
+      "member-statement": {
+        "probe": "HELD.member;\n",
+        "kind": "discarded"
+      },
+      "void": {
+        "probe": "hand(void HELD);\n",
+        "kind": "discarded"
+      },
+      "comma-left": {
+        "probe": "hand((HELD, 0));\n",
+        "kind": "discarded"
+      },
+      "assignment-target": {
+        "probe": "HELD = other;\n",
+        "kind": "written"
+      },
+      "compound-target": {
+        "probe": "HELD += 1;\n",
+        "kind": "written"
+      },
+      "increment": {
+        "probe": "HELD++;\n",
+        "kind": "written"
+      },
+      "destructuring-target": {
+        "probe": "[HELD] = list;\n",
+        "kind": "written"
+      },
+      "for-of-target": {
+        "probe": "for (HELD of list) hand();\n",
+        "kind": "written"
+      },
+      "local-export": {
+        "probe": "export { HELD };\n",
+        "kind": "export"
+      },
+      "local-export-alias": {
+        "probe": "export { HELD as alias };\n",
+        "kind": "export"
+      },
+      "property-name": {
+        "probe": "hand(other.HELD);\n",
+        "kind": "name"
+      },
+      "key": {
+        "probe": "hand({ HELD: 1 });\n",
+        "kind": "name"
+      },
+      "method-name": {
+        "probe": "export class Holder {\n  HELD(): void {}\n}\n",
+        "kind": "name"
+      },
+      "field-name": {
+        "probe": "export class Holder {\n  HELD = 1;\n}\n",
+        "kind": "name"
+      },
+      "declaration": {
+        "probe": "const HELD = 1;\n",
+        "kind": "name"
+      },
+      "function-name": {
+        "probe": "export function HELD(): void {}\n",
+        "kind": "name"
+      },
+      "class-name": {
+        "probe": "export class HELD {}\n",
+        "kind": "name"
+      },
+      "parameter": {
+        "probe": "export function read(HELD: unknown): void {}\n",
+        "kind": "name"
+      },
+      "binding-name": {
+        "probe": "const { HELD } = other;\n",
+        "kind": "name"
+      },
+      "binding-key": {
+        "probe": "const { HELD: alias } = other;\n",
+        "kind": "name"
+      },
+      "import-name": {
+        "probe": "import { HELD } from \"other\";\n",
+        "kind": "name"
+      },
+      "label": {
+        "probe": "HELD: for (;;) break HELD;\n",
+        "kind": "name"
+      },
+      "enum-member-name": {
+        "probe": "enum Holder {\n  HELD = 1,\n}\n",
+        "kind": "name"
+      },
+      "qualified-right": {
+        "probe": "import alias = Outer.HELD;\n",
+        "kind": "name"
+      },
+      "export-alias-name": {
+        "probe": "export { other as HELD };\n",
+        "kind": "name"
+      },
+      "namespace-export": {
+        "probe": "export * as HELD from \"other\";\n",
+        "kind": "name"
+      },
+      "annotation": {
+        "probe": "let value: HELD;\n",
+        "kind": "type"
+      },
+      "typeof-query": {
+        "probe": "let value: typeof HELD;\n",
+        "kind": "type"
+      },
+      "type-alias": {
+        "probe": "type Shape = HELD;\n",
+        "kind": "type"
+      },
+      "type-argument": {
+        "probe": "hand<HELD>(other);\n",
+        "kind": "type"
+      },
+      "instantiation-argument": {
+        "probe": "hand(other<HELD>);\n",
+        "kind": "type"
+      },
+      "implements": {
+        "probe": "export class Holder implements HELD {}\n",
+        "kind": "type"
+      },
+      "interface-extends": {
+        "probe": "interface Shape extends HELD {}\n",
+        "kind": "type"
+      },
+      "heritage-type-argument": {
+        "probe": "export class Holder extends Base<typeof HELD> {}\n",
+        "kind": "type"
+      },
+      "constraint": {
+        "probe": "export function read<T extends HELD>(): void {}\n",
+        "kind": "type"
+      },
+      "as-type": {
+        "probe": "hand(other as HELD);\n",
+        "kind": "type"
+      },
+      "satisfies-type": {
+        "probe": "hand(other satisfies HELD);\n",
+        "kind": "type"
+      },
+      "type-literal-key": {
+        "probe": "type Shape = { [HELD]: number };\n",
+        "kind": "type"
+      },
+      "import-type": {
+        "probe": "let value: import(\"other\").HELD;\n",
+        "kind": "type"
+      },
+      "predicate": {
+        "probe": "export function check(value: unknown): value is HELD {\n  return true;\n}\n",
+        "kind": "type"
+      },
+      "type-only-import": {
+        "probe": "import type { HELD } from \"other\";\n",
+        "kind": "type"
       }
     },
     "unreadHomeProbes": [
@@ -614,7 +1220,8 @@
       "test/workbench-edc-descriptor.test.ts",
       "src/workbench/edc/descriptor.json",
       "examples/edc/hooks.md",
-      "qa/workbench/edc-descriptor.yaml"
+      "qa/workbench/edc-descriptor.yaml",
+      "bin/edc-evidence-hooks"
     ],
     "plantedPaths": [
       "src/edc/EvidencePanel.tsx",
@@ -663,10 +1270,11 @@
       "src/workbench/edc/evidence-hooks.ts",
       "qa/workbench/edc-hooks.mjs",
       "examples/edc/evidence-hooks.ts",
+      "examples/edc/evidence-hooks.JS",
       "vitest.edc.config.ts"
     ],
     "plantedDescriptorSource": "export function registerEvidence(registry: Registry): void {\n  registry.register({ descriptor: { id: \"edc.evidence\", description: \"Describes a logical evidence requirement for the next render\", inputSchema: { properties: { prospectiveResourceInterest: {} } } } });\n}\n",
-    "plantedReach": "import { spawn as run, execFileSync } from \"node:child_process\";\nimport * as cp from \"child_process\";\nimport childProcess from \"node:child_process\";\nimport cpEquals = require(\"child_process\");\nexport { exec as reexported } from \"node:child_process\";\nexport * from \"./planted-peer.js\";\nimport q = require(\"planted-required\");\nconst lazy = await import(\"planted-lazy\");\nconst LAZY_NAME = \"planted-const-lazy\";\nconst constLazy = await import(LAZY_NAME);\nconst computedLazy = await import(pickName());\nconst required = require(\"planted-require-call\");\nconst { spawnSync: launchSync } = require(\"node:child_process\");\nconst loaded = process.getBuiltinModule(\"node:child_process\");\nconst TOOL = \"hx\";\nconst SHELLS = flag ? [\"cmd\", \"/c\"] : [\"sh\", \"-c\"];\nconst PICKED = flag ? \"git\" : \"forge\";\nrun(\"hx\", []);\nrun(\"rf\", []);\nexecFileSync(command);\ncp.fork(\"worker.js\");\ncp.exec(PICKED);\nchildProcess.execFileSync(TOOL);\ncpEquals.exec(\"git\");\nlaunchSync(SHELLS[0]);\nloaded.spawn(\"rf\");\nconst alias = run;\nServerConnection.spawn(\"forge\");\npi.exec(\"git\", []);\npi.exec(SHELLS[0], []);\nmanager.spawn(pi);\nconst reply = await fetch(\"https://example.invalid/\");\nconst socket = new WebSocket(\"wss://example.invalid/\");\nconst viaGlobal = globalThis.fetch;\nconst viaIndex = self[\"XMLHttpRequest\"];\nconst holder = global;\nconst code = eval(source);\nconst fs = process.getBuiltinModule(\"node:fs\");\nconst env = process.env;\nsettings.fetch = 1;\nconst typed: typeof globalThis.fetch = reply;\n"
+    "plantedReach": "import { spawn as run, execFileSync } from \"node:child_process\";\nimport * as cp from \"child_process\";\nimport childProcess from \"node:child_process\";\nimport cpEquals = require(\"child_process\");\nexport { exec as reexported } from \"node:child_process\";\nexport * from \"./planted-peer.js\";\nimport q = require(\"planted-required\");\nconst lazy = await import(\"planted-lazy\");\nconst LAZY_NAME = \"planted-const-lazy\";\nconst constLazy = await import(LAZY_NAME);\nconst computedLazy = await import(pickName());\nconst required = require(\"planted-require-call\");\nconst { spawnSync: launchSync } = require(\"node:child_process\");\nconst loaded = process.getBuiltinModule(\"node:child_process\");\nconst TOOL = \"hx\";\nconst SHELLS = flag ? [\"cmd\", \"/c\"] : [\"sh\", \"-c\"];\nconst PICKED = flag ? \"git\" : \"forge\";\nrun(\"hx\", []);\nrun(\"rf\", []);\nexecFileSync(command);\ncp.fork(\"worker.js\");\ncp.exec(PICKED);\nchildProcess.execFileSync(TOOL);\ncpEquals.exec(\"git\");\nlaunchSync(SHELLS[0]);\nloaded.spawn(\"rf\");\nconst alias = run;\nServerConnection.spawn(\"forge\");\npi.exec(\"git\", []);\npi.exec(SHELLS[0], []);\nmanager.spawn(pi);\nconst reply = await fetch(\"https://example.invalid/\");\nconst socket = new WebSocket(\"wss://example.invalid/\");\nconst viaGlobal = globalThis.fetch;\nconst viaIndex = self[\"XMLHttpRequest\"];\nconst holder = global;\nconst code = eval(source);\nconst fs = process.getBuiltinModule(\"node:fs\");\nconst env = process.env;\nsettings.fetch = 1;\nconst typed: typeof globalThis.fetch = reply;\nclass PlantedNamedChild extends run {}\nclass PlantedNamespaceChild extends cp.ChildProcess {}\nclass PlantedDefaultChild extends childProcess.ChildProcess {}\nclass PlantedEqualsChild extends cpEquals.ChildProcess {}\nclass PlantedLoadedChild extends loaded.ChildProcess {}\nconst PlantedExpressionChild = class extends cp.ChildProcess {};\nclass PlantedSocketChild extends WebSocket {}\nclass PlantedGlobalChild extends globalThis.EventTarget {}\nclass PlantedProcessChild extends process.constructor {}\nconst instantiated = run<never>;\ninstantiated(\"rf\");\nclass PlantedTypedChild implements cp.ChildProcess {}\ninterface PlantedShape extends WebSocket, NodeJS.Process {}\nclass PlantedTypeArgument extends Base<typeof globalThis.fetch> {}\n"
   },
   "tests": [
     "the judged set: the frozen shape, the out-of-file roster, the bead's export row, src and the cases agree",
@@ -1018,7 +1626,159 @@
               "computed-import: load import()",
               "computed-require: load require()",
               "computed-builtin: load getBuiltinModule()",
-              "computed-create-require: load createRequire()()"
+              "computed-create-require: load createRequire()()",
+              "create-require-logical: load load()",
+              "create-require-logical-traced: spawn <expression>",
+              "heritage-named-import: ChildProcess <reference>",
+              "heritage-namespace-import: ChildProcess <reference>",
+              "heritage-default-import: ChildProcess <reference>",
+              "heritage-import-equals: ChildProcess <reference>",
+              "heritage-require-bound: ChildProcess <reference>",
+              "heritage-import-bound: ChildProcess <reference>",
+              "heritage-builtin-bound: ChildProcess <reference>",
+              "heritage-loader-direct: ChildProcess <reference>",
+              "heritage-class-expression: ChildProcess <reference>",
+              "heritage-mixin-argument: ChildProcess <reference>",
+              "heritage-alias: ChildProcess <reference>",
+              "heritage-untraced-string: <string> <untraced>",
+              "instantiation-alias: spawn rf",
+              "instantiation-call: spawn rf",
+              "scoped-const-command: spawn rf",
+              "block-const-command: spawn rf",
+              "let-command: spawn <expression>",
+              "let-shadow-command: spawn <expression>",
+              "parameter-shadow-command: spawn <expression>",
+              "catch-shadow-command: spawn <expression>",
+              "var-shadow-command: spawn <expression>",
+              "import-shadow-command: spawn <expression>",
+              "inner-const-command: spawn <expression>",
+              "await-using-command: spawn <expression>",
+              "function-shadow-command: spawn <expression>",
+              "block-function-shadow-command: spawn <expression>",
+              "function-name-shadow-command: spawn <expression>",
+              "class-name-shadow-command: spawn <expression>",
+              "class-shadow-command: spawn <expression>",
+              "enum-shadow-command: spawn <expression>",
+              "namespace-shadow-command: spawn <expression>",
+              "import-equals-shadow-command: spawn <expression>",
+              "default-import-shadow-command: spawn <expression>",
+              "namespace-import-shadow-command: spawn <expression>",
+              "object-destructured-shadow-command: spawn <expression>",
+              "array-destructured-shadow-command: spawn <expression>",
+              "for-const-scope-command: spawn <expression>",
+              "case-const-scope-command: spawn <expression>",
+              "namespace-const-scope-command: spawn <expression>",
+              "instantiation-named-launch: exec rf",
+              "block-const-scope-command: spawn <expression>",
+              "type-import-const-command: spawn rf",
+              "for-const-command: spawn rf",
+              "destructured-const-command: spawn <expression>",
+              "inner-const-specifier: load import()",
+              "let-shadow-specifier: load import()"
+            ],
+            "positions": [
+              "argument (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "callee (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "optional-callee (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "new-callee (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "member-base (value): io WebSocket, global globalThis.member, process process.member, tracer member <reference>",
+              "optional-member-base (value): io WebSocket, global globalThis.member, process process.member, tracer member <reference>",
+              "element-base (value): io WebSocket, global globalThis[member], process process[member], tracer member <reference>",
+              "element-key (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "tagged-template (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "template-span (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "return (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "arrow-body (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "property-value (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "shorthand-property (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "computed-key (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "spread-element (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "spread-property (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "array-element (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "default-parameter (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "binding-default (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "class-field (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "static-field (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "computed-member (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "decorator (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "class-extends (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "class-extends-member (value): io WebSocket, global globalThis.Base, process process.Base, tracer Base <reference>",
+              "class-extends-call (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "class-expression-extends (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "instantiation (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "alias-declaration (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "alias-assignment (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "destructured-alias (value): io WebSocket, global globalThis, process process, tracer member <reference>",
+              "property-store (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "typeof-expression (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "unary (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "binary (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "equality (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "in-operand (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "instanceof-operand (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "nullish (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "logical (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "conditional-arm (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "condition (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "parenthesized (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "as-expression (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "satisfies-expression (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "non-null (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "type-assertion (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "await (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "comma-right (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "throw (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "for-of (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "for-in (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "switch (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "case (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "yield (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "export-default (value): io WebSocket, global globalThis, process process, tracer <module> <re-export>",
+              "export-assignment (value): io WebSocket, global globalThis, process process, tracer <module> <re-export>",
+              "enum-initializer (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "delete (value): io WebSocket, global globalThis.member, process process.member, tracer member <reference>",
+              "statement (discarded): io WebSocket, global globalThis, process process, tracer none",
+              "member-statement (discarded): io WebSocket, global globalThis.member, process process.member, tracer none",
+              "void (discarded): io WebSocket, global globalThis, process process, tracer none",
+              "comma-left (discarded): io WebSocket, global globalThis, process process, tracer none",
+              "assignment-target (written): io WebSocket, global globalThis, process process, tracer none",
+              "compound-target (written): io WebSocket, global globalThis, process process, tracer none",
+              "increment (written): io WebSocket, global globalThis, process process, tracer none",
+              "destructuring-target (written): io WebSocket, global globalThis, process process, tracer none",
+              "for-of-target (written): io WebSocket, global globalThis, process process, tracer none",
+              "local-export (export): io none, global none, process none, tracer <module> <re-export>",
+              "local-export-alias (export): io none, global none, process none, tracer <module> <re-export>",
+              "property-name (name): io none, global none, process none, tracer none",
+              "key (name): io none, global none, process none, tracer none",
+              "method-name (name): io none, global none, process none, tracer none",
+              "field-name (name): io none, global none, process none, tracer none",
+              "declaration (name): io none, global none, process none, tracer none",
+              "function-name (name): io none, global none, process none, tracer none",
+              "class-name (name): io none, global none, process none, tracer none",
+              "parameter (name): io none, global none, process none, tracer none",
+              "binding-name (name): io none, global none, process none, tracer none",
+              "binding-key (name): io none, global none, process none, tracer none",
+              "import-name (name): io none, global none, process none, tracer none",
+              "label (name): io none, global none, process none, tracer none",
+              "enum-member-name (name): io none, global none, process none, tracer none",
+              "qualified-right (name): io none, global none, process none, tracer none",
+              "export-alias-name (name): io none, global none, process none, tracer none",
+              "namespace-export (name): io none, global none, process none, tracer none",
+              "annotation (type): io none, global none, process none, tracer none",
+              "typeof-query (type): io none, global none, process none, tracer none",
+              "type-alias (type): io none, global none, process none, tracer none",
+              "type-argument (type): io none, global none, process none, tracer none",
+              "instantiation-argument (type): io none, global none, process none, tracer none",
+              "implements (type): io none, global none, process none, tracer none",
+              "interface-extends (type): io none, global none, process none, tracer none",
+              "heritage-type-argument (type): io none, global none, process none, tracer none",
+              "constraint (type): io none, global none, process none, tracer none",
+              "as-type (type): io none, global none, process none, tracer none",
+              "satisfies-type (type): io none, global none, process none, tracer none",
+              "type-literal-key (type): io none, global none, process none, tracer none",
+              "import-type (type): io none, global none, process none, tracer none",
+              "predicate (type): io none, global none, process none, tracer none",
+              "type-only-import (type): io none, global none, process none, tracer none"
             ],
             "controls": {
               "launches": [
@@ -1066,6 +1826,41 @@
                   "module": "planted/reach.ts",
                   "callee": "spawnSync",
                   "command": "cmd|sh"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "rf"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "ChildProcess",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "ChildProcess",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "ChildProcess",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "ChildProcess",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "ChildProcess",
+                  "command": "<reference>"
                 },
                 {
                   "module": "planted/reach.ts",
@@ -1169,6 +1964,41 @@
                 {
                   "module": "planted/reach.ts",
                   "callee": "spawn",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "ChildProcess",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "ChildProcess",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "ChildProcess",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "ChildProcess",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "ChildProcess",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "rf"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
                   "command": "forge"
                 },
                 {
@@ -1216,11 +2046,14 @@
                 "planted/reach.ts:globalThis.fetch",
                 "planted/reach.ts:self[XMLHttpRequest]",
                 "planted/reach.ts:global",
-                "planted/reach.ts:eval"
+                "planted/reach.ts:eval",
+                "planted/reach.ts:WebSocket",
+                "planted/reach.ts:globalThis.EventTarget"
               ],
               "processReach": [
                 "planted/reach.ts:process.getBuiltinModule",
-                "planted/reach.ts:process.getBuiltinModule"
+                "planted/reach.ts:process.getBuiltinModule",
+                "planted/reach.ts:process.constructor"
               ]
             }
           }
@@ -1500,6 +2333,7 @@
               "src/workbench/edc/evidence-hooks.ts",
               "qa/workbench/edc-hooks.mjs",
               "examples/edc/evidence-hooks.ts",
+              "examples/edc/evidence-hooks.JS",
               "vitest.edc.config.ts"
             ]
           }
@@ -1541,6 +2375,7 @@
             "descriptor": [],
             "composed": [],
             "loader": [],
+            "unreadText": [],
             "lookalike": []
           }
         },
@@ -1573,6 +2408,9 @@
             "argument-carried: specifiers 1, childProcess 1, launchSites 1, loads 0, ioGlobals 0, processReach 0, rf 0",
             "other-builtin-launch: specifiers 1, childProcess 0, launchSites 0, loads 0, ioGlobals 0, processReach 0, rf 0",
             "unparsed-loader: specifiers 0, childProcess 0, launchSites 0, loads 0, ioGlobals 1, processReach 0, rf 0",
+            "aliased-loader: specifiers 0, childProcess 0, launchSites 0, loads 0, ioGlobals 1, processReach 0, rf 0",
+            "renamed-loader-factory: specifiers 1, childProcess 0, launchSites 0, loads 0, ioGlobals 0, processReach 0, rf 0",
+            "held-loader-factory: specifiers 1, childProcess 0, launchSites 0, loads 0, ioGlobals 0, processReach 0, rf 0",
             "composed-code: specifiers 0, childProcess 0, launchSites 0, loads 0, ioGlobals 1, processReach 0, rf 0",
             "process-binding: specifiers 0, childProcess 0, launchSites 0, loads 0, ioGlobals 0, processReach 1, rf 0"
           ]
@@ -1584,7 +2422,8 @@
             "test/workbench-edc-descriptor.test.ts: unread",
             "src/workbench/edc/descriptor.json: unread",
             "examples/edc/hooks.md: unread",
-            "qa/workbench/edc-descriptor.yaml: unread"
+            "qa/workbench/edc-descriptor.yaml: unread",
+            "bin/edc-evidence-hooks: unread"
           ]
         }
       ]
