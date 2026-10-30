@@ -60,12 +60,16 @@
  *    declaration's own return type (it continues as the declaration's returned value does: from the function that holds a
  *    nested one, while a module-level one's own name ends the path), a thrown value (it continues as a returned value does;
  *    whether it is caught is not read), a call's or a construction's callee (it passes as the arguments do, so an immediately
- *    invoked function's result and a called call's result run on) and a tagged template's tag; a class expression's members,
+ *    invoked function's result and a called call's result run on; a function invoked through a member, .call, .apply or .bind,
+ *    is that member access's object, which nothing passes: R-SPLIT-PATH) and a tagged template's tag; a class expression's members,
  *    its constructors' parameter properties included, name their keys as an object literal's do, and a constructor's parameter
  *    property (a parameter with an accessibility, readonly or override modifier) names its own key in any class; and a
  *    type-level indexed access chain is a unit as a value-level chain is (Rec["publication"]["state"]: its head when a type
  *    name or a typeof query's name, each part of a qualified one, through parenthesized types, then each string-literal index
- *    type), each with its control;
+ *    type, parenthesized or not), each with its control; and its second cut (the gate's U1-U4: readings stated in general words
+ *    but held only in the contexts their controls spelled) holds each of those readings past its first controls' contexts, one
+ *    control per reader mutant the gate wrote (BM14, BM20, BM21, BM22, BM31, BM34, BM35, BM36, BM37, BM38) and one per further
+ *    context of the same reading (KEY_PATH_ADDITIONS_CUT_5);
  *    A2 the rf roster, selected by id prefix, reactivefiber:
  *    permission or rf@ contractSource, stays the preview alone (native and injected registrations, RECONCILE_EVIDENCE_READS);
  *    A3 the native provider refuses a federation record printed by rf as an unrecognized envelope, in one spawn of the render argv;
@@ -174,10 +178,12 @@
  * form: a defaulted parameter, a constructor's plain parameter), a member target inside a destructuring assignment's pattern,
  * joined to its value only by position or key across the assignment (GA27), the own name of a module-level function
  * declaration carrying a return type, of an interface or a type alias carrying a call signature, of a class declaration or of a
- * variable holding a class expression, or a type-level index bound elsewhere, reads quiet to A1, which joins a path's links
+ * variable holding a class expression, or a type-level index bound elsewhere, or (wb-1709's second cut, the gate's B01, B02, B13
+ * and B03) through a member access's object (a function invoked through .call, .apply or .bind, a call whose result is read
+ * through a member), reads quiet to A1, which joins a path's links
  * only within one access chain (of values or of types), one member write or one nested pattern, literal, class expression or
  * type (A1's aliased, keyed, bound, interface-name, type-name and mapped-key controls, its declared-function, name-assignment
- * and keyed-assignment controls and its twelve cut-5 twins stay 0). OVER-READ (named and pinned, the false-red direction; wb-rgov, the wb-yg70 gate's
+ * and keyed-assignment controls and its sixteen cut-5 twins stay 0). OVER-READ (named and pinned, the false-red direction; wb-rgov, the wb-yg70 gate's
  * F3): the fused reading takes a single word that holds a matcher's fused words anywhere inside it, so an English compound
  * written as one word (publicstatement, MATCHEDCOUNTER, a confederation, where the fused federat loses its word start) reads as
  * a federation field: A1's over-read controls read 1, a src word spelling one reds A1 by design, and narrowing the reading would
@@ -1012,7 +1018,8 @@ function memberTarget(node: ts.BinaryExpression): ts.PropertyAccessExpression | 
  * (a member target names the keys itself, in enclosingKeys), an arrow's or a function expression's return type (o08), a
  * function or construct type's return type (o01), both branches of a conditional type (the o05 boundary), and a template
  * literal's or a tagged template's substitutions (o09, o10). wb-1709 (the wb-50dt gate's F1) adds a call's or a construction's
- * callee, which now passes as its arguments do (an immediately invoked function's result and a called call's result, GA24), a
+ * callee, which now passes as its arguments do (an immediately invoked function's result and a called call's result, GA24; a
+ * member access's object passes nothing, so a function invoked through .call reads quiet, R-SPLIT-PATH), a
  * tagged template's tag (GA23), a call or construct signature's return type, and a type literal's call and construct
  * signatures (GA17-GA19: a function or construct type spelled by signature, in any type literal). */
 function passesThrough(node: ts.Node, child: ts.Node): boolean {
@@ -1105,14 +1112,17 @@ function entityNames(name: ts.EntityName): string[] {
 }
 /** The names of a type-level access chain (wb-1709, the wb-50dt gate's F1, GA28): its head when a type name or a typeof query's
  * name (each part of a qualified one), through parenthesized types, then each string-literal index type along it, so
- * Rec["publication"]["state"] names Rec, publication and state in order, as chainNames reads a value-level chain. Any other head
- * names nothing, and an index that is no string literal adds no name (R-SPLIT-PATH). */
+ * Rec["publication"]["state"] names Rec, publication and state in order, as chainNames reads a value-level chain. wb-1709's
+ * second cut (the gate's B04): an index is read through parenthesized types too, as literalKey reads a value-level element key
+ * through parentheses, so Rec[("publication")]["state"] names the same three. Any other head names nothing, and an index that is
+ * no string literal adds no name (R-SPLIT-PATH). */
 function typeChainNames(node: ts.TypeNode): string[] {
   if (ts.isParenthesizedTypeNode(node)) return typeChainNames(node.type);
   if (ts.isTypeReferenceNode(node)) return entityNames(node.typeName);
   if (ts.isTypeQueryNode(node)) return entityNames(node.exprName);
   if (ts.isIndexedAccessTypeNode(node)) {
-    const index = node.indexType;
+    let index: ts.TypeNode = node.indexType;
+    while (ts.isParenthesizedTypeNode(index)) index = index.type;
     return [...typeChainNames(node.objectType), ...(ts.isLiteralTypeNode(index) && ts.isStringLiteralLike(index.literal) ? [index.literal.text] : [])];
   }
   return [];
@@ -1285,7 +1295,14 @@ const SPLIT_PATH_ADDITIONS: Readonly<Record<string, string>> = {
  * GA17-GA19: the claim's function or construct type spelled by signature), a function declaration's own return type (GA20), a
  * thrown value (GA25), an invoked function's or a called call's result (GA24), a tagged template's tag (GA23), a class
  * expression's members (GA22), a constructor's parameter property (GA21's member form) and a type-level indexed access chain
- * (GA28), with same-class siblings. */
+ * (GA28), with same-class siblings. wb-1709's second cut (the gate's refusal #1, U1-U4) adds, after typeofHead, one control per
+ * reader mutant the gate wrote and one per further context of the same reading: a call signature beside another member (BM31)
+ * and a construct one, a signature-holding type literal in a union, a function declaration's return type held by a function
+ * expression (BM38), two deep and by an accessor, a throw caught (BM36), guarded by an if (BM36), from a function expression and
+ * from a nested declaration, a non-null callee (BM35), a parenthesized conditional tag (BM34) and a non-null one, a class
+ * expression as an argument (BM37) and as an arrow's body, private and protected parameter properties (BM21) and an override
+ * one (BM22), a qualified head of two parts (BM14) and of three, a typeof query of a qualified name (BM20), a parenthesized
+ * chain part and a parenthesized string-literal index (the gate's B04, read now). */
 const KEY_PATH_ADDITIONS_CUT_5: Readonly<Record<string, string>> = {
   callSignature: "type Rec = { publication: { (): { state: string } } };",
   constructSignature: "type Rec = { publication: { new (): { state: string } } };",
@@ -1311,12 +1328,37 @@ const KEY_PATH_ADDITIONS_CUT_5: Readonly<Record<string, string>> = {
   typeHead: 'type State = publication["state"];',
   qualifiedTypeHead: 'type State = api.publication["state"];',
   typeofHead: 'type State = (typeof publication)["state"];',
+  signatureBesideMember: "type Rec = { publication: { (): { state: string }; extra: number } };",
+  constructSignatureBesideMember: "type Rec = { publication: { new (): { state: string }; extra: number } };",
+  signatureInUnion: "type Rec = { publication: { (): { state: string } } | undefined };",
+  functionDeclarationReturnType: "const record = { publication: function () {\n  function inner(): { state: string } {\n    return load();\n  }\n  return inner();\n} };",
+  nestedDeclarationReturnType: "const record = { publication: () => {\n  function outer() {\n    function inner(): { state: string } {\n      return load();\n    }\n    return inner();\n  }\n  return outer();\n} };",
+  accessorDeclarationReturnType: "const record = { get publication() {\n  function inner(): { state: string } {\n    return load();\n  }\n  return inner();\n} };",
+  caughtThrow: 'const record = { publication() {\n  try {\n    throw { state: "FAILED" };\n  } catch {\n    return null;\n  }\n} };',
+  guardedThrow: 'const record = { publication: (flag: boolean) => {\n  if (flag) throw { state: "FAILED" };\n  return null;\n} };',
+  thrownFromFunction: 'const record = { publication: function () {\n  throw { state: "FAILED" };\n} };',
+  thrownFromDeclaration: 'const record = { publication: () => {\n  function inner() {\n    throw { state: "FAILED" };\n  }\n  return inner();\n} };',
+  nonNullCallee: 'const record = { publication: make({ state: "FAILED" })!() };',
+  conditionalTag: 'const record = { publication: (flag ? tag({ state: "FAILED" }) : other)`text` };',
+  nonNullTag: 'const record = { publication: tag({ state: "FAILED" })!`text` };',
+  classArgument: 'const record = { publication: mixin(class {\n  state = "FAILED";\n}) };',
+  classReturned: 'const record = { publication: () => class {\n  state = "FAILED";\n} };',
+  privateParameterProperty: 'class Rec {\n  constructor(private publication = { state: "FAILED" }) {}\n}',
+  protectedParameterProperty: 'class Rec {\n  constructor(protected publication = { state: "FAILED" }) {}\n}',
+  overrideParameterProperty: 'class Rec extends Base {\n  constructor(override publication = { state: "FAILED" }) {\n    super();\n  }\n}',
+  qualifiedHeadEachPart: 'type Code = publication.state["code"];',
+  deepQualifiedHead: 'type Value = publication.state.code["value"];',
+  typeofQualifiedHead: 'type State = (typeof api.publication)["state"];',
+  parenthesizedChain: 'type State = (Rec["publication"])["state"];',
+  parenthesizedIndex: 'type State = Rec[("publication")]["state"];',
 };
 /** wb-1709: R-SPLIT-PATH's twins at the cut-5 readings' borders and the gate's local-binding members, each quiet: a function
  * expression or an arrow held in a local (GA26), a parameter's own name (GA21's binding form, defaulted, and a constructor's plain
  * parameter), a member target inside a destructuring assignment's pattern (GA27), a module-level function declaration's, an
  * interface's or a type alias's own name carrying a return type or a call signature, a class declaration's or a bound class
- * expression's own name, and a type-level index bound elsewhere. */
+ * expression's own name, and a type-level index bound elsewhere. wb-1709's second cut adds R-SPLIT-PATH's member-access twins
+ * (the gate's B01, B02, B13 and B03): a function expression invoked through .call and through .apply, an arrow invoked through
+ * .bind, and a call read through a member, each quiet. */
 const SPLIT_PATH_ADDITIONS_CUT_5: Readonly<Record<string, string>> = {
   localFunction: 'const record = { publication: () => {\n  const inner = function () {\n    return { state: "FAILED" };\n  };\n  return inner();\n} };',
   localArrow: 'const record = { publication: () => {\n  const inner = () => ({ state: "FAILED" });\n  return inner();\n} };',
@@ -1330,6 +1372,10 @@ const SPLIT_PATH_ADDITIONS_CUT_5: Readonly<Record<string, string>> = {
   className: 'class Publication {\n  state = "FAILED";\n}',
   boundClass: 'const Publication = class {\n  state = "FAILED";\n};',
   keyedIndexType: 'type Key = "publication";\ntype State = Rec[Key]["state"];',
+  memberInvokedFunction: 'const record = { publication: function () {\n  return { state: "FAILED" };\n}.call(this) };',
+  memberAppliedFunction: 'const record = { publication: function () {\n  return { state: "FAILED" };\n}.apply(null) };',
+  memberBoundArrow: 'const record = { publication: (() => ({ state: "FAILED" })).bind(this)() };',
+  memberCallArgument: 'const record = { publication: make({ state: "FAILED" }).run() };',
 };
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
@@ -1551,7 +1597,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     // wb-1709 (the wb-50dt gate's F1): the key path also runs through call and construct signatures, a function declaration's own
     // return type, a thrown value, a callee, a tag, a class expression's members and a parameter property, and a type-level indexed
     // access chain is a unit; each control is caught by exactly one matcher and R-SPLIT-PATH's cut-5 twins stay quiet. Both groups
-    // join the record after the cut-4 ones, held to the cut-5 additions table.
+    // join the record after the cut-4 ones, held to the cut-5 additions table; the second cut's controls join the same two groups.
     const keyPathsCut5 = group("widened.keyPaths.cut5", KEY_PATH_ADDITIONS_CUT_5);
     expect(
       Object.entries(keyPathsCut5)

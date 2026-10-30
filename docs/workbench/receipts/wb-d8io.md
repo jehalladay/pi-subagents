@@ -405,6 +405,13 @@
 - Mutants, measured on the cut at trunk aa95f43, each applied to a throwaway copy of the census (and of its roster where the mutant edits it) and run in one batch beside a control copy that reads 26 of 26: all 37 are red. They are 19 branch mutants, at least one per new branch, each failing A1 at its cut-5 key-path assertion; 6 wider mutants at the readings' borders (every parameter keyed; a function declaration's, an interface's, a type alias's, or a class declaration's and a variable's own name keyed; a function expression or arrow held in a local continuing as a nested declaration does), each failing A1 at a quiet assertion; 5 anchoring hollows (a cut-5 key-path control, or a quiet control, removed alone with its roster witness; this table dropped from the record's hold; the throw reading removed together with its two controls and their roster witnesses; a control's text rewritten), each failing A1 at its record hold; and the CT battery's seven members.
 - CT-BATTERY v2 (measured on the cut at aa95f43): CT1 red=2; CT1b red=2; CT2 red=1; CT3 red=2; CT4 red=2; CT5 red=2; CT6 red=1 (CT5 kills through the first entry's judged-pin table and the roster judge; CT6, which also removes the pin from the roster, kills through the judged-pin table alone, outside the census and its roster).
 - Non-claims: this cut changes no src file and no shared helper or fixture beyond this census's roster; TRACEABILITY.md is frozen and untouched; the producer vocabularies are the wb-o4h0.7 cut's reads of the installed rf, not re-read here; the residual families named here and in the earlier entries are named, not closed.
+- Second cut (wb-1709's respin after the gate's refusal #1, unmet U1-U4: readings stated in general words but held only in the contexts the first cut's controls spelled). The bullets above from "Disclosure" to "CT-BATTERY v2" are the first cut's (ea976437) measurements at trunk aa95f43. The table below gains 23 key-path controls after `typeofHead` and 4 quiet controls after `keyedIndexType`, joined to A1's roster witness in the same order. Each reader mutant the gate wrote has a control spelling its witness form in this census's control style. U1: `qualifiedHeadEachPart` (BM14, a qualified head read by its last part only; `type Code = publication.state["code"];`) and `typeofQualifiedHead` (BM20, a typeof query read only when its name is an identifier; `type State = (typeof api.publication)["state"];`). U2: `privateParameterProperty` and `protectedParameterProperty` (BM21, a parameter property keyed only with public or readonly) and `overrideParameterProperty` (BM22, override dropped). U3: `caughtThrow` (a throw in a try block in a method) and `guardedThrow` (an if-guarded throw in an arrow), both against BM36 (a throw read only as a direct statement of a function body). U4: `signatureBesideMember` (BM31, a type literal passing a signature only when it is its sole member), `conditionalTag` (BM34, a tag passing only when it is a call), `nonNullCallee` (BM35, a callee passing only when it is parenthesized or a call), `classArgument` (BM37, a class expression a container only as a direct member value or parenthesized) and `functionDeclarationReturnType` (BM38, a declaration's own return type continuing only from an arrow or method holder).
+- Second cut, a further context per general reading, each against a hardening mutant of this cut that narrows the reading to the contexts the controls above and the first cut's spell: `constructSignatureBesideMember` (a construct signature passing only as a sole member), `signatureInUnion` (a signature-holding type literal passing only as a member's own type), `nestedDeclarationReturnType` (a nested declaration handing on one level only), `accessorDeclarationReturnType` (a declaration's return type continuing only from an arrow, method or function expression holder), `thrownFromFunction` (a throw continuing only from an arrow or a method), `thrownFromDeclaration` (a throw handed on through no nested declaration), `nonNullTag` (a tag passing only when it is a call or parenthesized), `classReturned` (a class expression a container only as a member value, parenthesized or a call argument), `deepQualifiedHead` (a qualified head read by its last two parts only; `type Value = publication.state.code["value"];`) and `parenthesizedChain` (parenthesized types read only around a typeof query; `type State = (Rec["publication"])["state"];`).
+- Second cut, the gate's F6. A type-level indexed access chain now reads its index through parenthesized types too: B04, `type State = Rec[("publication")]["state"];`, read 0 before, while its value-level twin `record[("publication")].state` already read 1; the control `parenthesizedIndex` holds it. A function invoked through a member (`.call`, `.apply` or `.bind`: the gate's B01, B02 and B13), or a call whose result is read through a member (B03), sits in that member access's object, which no reading passes. It is named in R-SPLIT-PATH, the census header's immediately-invoked reading is narrowed to a function that is itself the callee, and each form has a quiet control (`memberInvokedFunction`, `memberAppliedFunction`, `memberBoundArrow`, `memberCallArgument`).
+- Red first (second cut), measured on the first cut merged with trunk cdf5484. With this cut's controls, roster witness keys and table rows in place and A1's reader at the first cut's bytes, the census reads 2 failed of 26: A1 at its cut-5 key-path assertion (`parenthesizedIndex` not caught) and the roster judge. Each of the gate's ten mutants, applied to a throwaway copy of the first cut's census (with copies of its roster and receipt), reads 0 failed of 26 beside a control copy that reads 26 of 26, as the gate measured.
+- Green (second cut), measured at trunk cdf5484: the census reads 26 of 26. A1 walks 117 src files, every one a module, and 0 entries that are neither a file nor a directory, reading 121080 code units with 0 hits, as the first cut's reader does: a differential read finds no unit added or missing. The landed reader reads 120930, 150 fewer, none of its own missing.
+- Mutants (second cut), each applied to a throwaway copy of the census (and of its roster where it edits it) and run in one batch beside a control copy that reads 26 of 26: all 26 are red, each 2 failed of 26. Twenty fail A1 at its cut-5 key-path assertion, naming the controls above: the gate's ten (BM14, BM20, BM21, BM22, BM31, BM34, BM35, BM36, BM37, BM38) and this cut's ten hardening mutants. One more fails at the same assertion: the parenthesized index read reverted (`parenthesizedIndex`). A member access's object made to pass fails A1 at its cut-5 quiet assertion. Three anchoring hollows each fail A1 at its record hold: a new key-path control removed with its roster witness, a new quiet control removed with its roster witness, and a new control's text rewritten to another text the reader catches. Last, a new control's roster reading flipped from 1 to 0 fails A1 at its witness comparison.
+- CT-BATTERY v2 (second cut, measured at cdf5484): CT1 red=2; CT1b red=2; CT2 red=1; CT3 red=2; CT4 red=2; CT5 red=2; CT6 red=1. CT5 kills through the first entry's judged-pin table and the roster judge; CT6, which also removes the pin from the roster, kills through the judged-pin table alone.
 
 ### A1 control additions, wb-d8io cut 5
 
@@ -434,6 +441,29 @@
 | widened.keyPaths.cut5 | typeHead | 1 | 58afca75505ab6a6 |
 | widened.keyPaths.cut5 | qualifiedTypeHead | 1 | 54d24b2f8c8ecb0d |
 | widened.keyPaths.cut5 | typeofHead | 1 | 964f5844057c70f9 |
+| widened.keyPaths.cut5 | signatureBesideMember | 1 | 3d02f6092c9000f8 |
+| widened.keyPaths.cut5 | constructSignatureBesideMember | 1 | e1341663cb820230 |
+| widened.keyPaths.cut5 | signatureInUnion | 1 | 01b2c4ec5816b241 |
+| widened.keyPaths.cut5 | functionDeclarationReturnType | 1 | b123c74cc147d5f2 |
+| widened.keyPaths.cut5 | nestedDeclarationReturnType | 1 | 5753b0d31e54803f |
+| widened.keyPaths.cut5 | accessorDeclarationReturnType | 1 | 2e4cd36e797e481d |
+| widened.keyPaths.cut5 | caughtThrow | 1 | d99b9ff3ed6197a0 |
+| widened.keyPaths.cut5 | guardedThrow | 1 | f9279143bae64043 |
+| widened.keyPaths.cut5 | thrownFromFunction | 1 | 5dd88b6157ef5e4e |
+| widened.keyPaths.cut5 | thrownFromDeclaration | 1 | 052ff8dc04a23dc7 |
+| widened.keyPaths.cut5 | nonNullCallee | 1 | 9f0a0709501fec10 |
+| widened.keyPaths.cut5 | conditionalTag | 1 | 0751e97b7583ddde |
+| widened.keyPaths.cut5 | nonNullTag | 1 | 8ad4f09c89815d27 |
+| widened.keyPaths.cut5 | classArgument | 1 | e2041e5045f08fa8 |
+| widened.keyPaths.cut5 | classReturned | 1 | 4bd50774543f3e98 |
+| widened.keyPaths.cut5 | privateParameterProperty | 1 | 37d9039f1c26259b |
+| widened.keyPaths.cut5 | protectedParameterProperty | 1 | f643310d7c590a63 |
+| widened.keyPaths.cut5 | overrideParameterProperty | 1 | 2849a48946027089 |
+| widened.keyPaths.cut5 | qualifiedHeadEachPart | 1 | 8446b263611eb846 |
+| widened.keyPaths.cut5 | deepQualifiedHead | 1 | 8ae991faa2692918 |
+| widened.keyPaths.cut5 | typeofQualifiedHead | 1 | 4968987b47df3bb0 |
+| widened.keyPaths.cut5 | parenthesizedChain | 1 | 07960bfc6df45f29 |
+| widened.keyPaths.cut5 | parenthesizedIndex | 1 | 9fc39d4236d4e512 |
 | quiet.splitPath.cut5 | localFunction | 0 | 883132605388fbb8 |
 | quiet.splitPath.cut5 | localArrow | 0 | c394dd48905f12db |
 | quiet.splitPath.cut5 | parameterDefault | 0 | 33cdf87891c98b48 |
@@ -446,3 +476,7 @@
 | quiet.splitPath.cut5 | className | 0 | 43bbe2f2b5440aba |
 | quiet.splitPath.cut5 | boundClass | 0 | 131c71ac806d958f |
 | quiet.splitPath.cut5 | keyedIndexType | 0 | dd51d47d181b1865 |
+| quiet.splitPath.cut5 | memberInvokedFunction | 0 | 919962dde12b2b9a |
+| quiet.splitPath.cut5 | memberAppliedFunction | 0 | 480d15b72035ea89 |
+| quiet.splitPath.cut5 | memberBoundArrow | 0 | 3ee31eb1b322d38b |
+| quiet.splitPath.cut5 | memberCallArgument | 0 | d5e853e27835d1d1 |
