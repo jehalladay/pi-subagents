@@ -3,6 +3,7 @@
  * truncation-honesty census, an until-then pin. Cut #4, the respin of refusal #3, authored in the enumerate-the-resolvable form its
  * CUT #4 FORM binds (standing rule 19(c), the rule 14 shape; the shape frozen at 3da116fd): its unmet U1-U3 are cured below, CUT #4,
  * and the pinned set is named in closed form, ENUMERATION; refusal #2's unmet U1 stays cured (CUT #3), and refusal #1's U1-U4 (CUT #2).
+ * Landed at 664 (gate cmd_e5957822ab13, PASS-WITH-FINDING); the R694 follow-up wb-o6jx cures that verdict's F1 and F2 (FOLLOW-UP).
  * Statement (the bead's STATEMENT, read from the tracked export .beads/issues.jsonl at run time and never retyped beyond the
  * fragments the rows quote): it is tiled, in order and exactly, by row G's label, ", ", row W's label, ". ", the PENDING clause,
  * "; ", row U's label and ".", so no row label can drift from the filing and no row can be dropped without leaving its fragment
@@ -74,8 +75,9 @@
  *    entry - a regular file of any other name (a .txt, an extensionless file, a .json, a .cjs, an upper-case .TS), a symlink
  *    whatever its name or target, which it never follows, or an entry of another type - which it lists unwalked and never reads.
  *    The unwalked-entry list is pinned (empty), so a file the readers would not read reds W1 for re-measure, as N1-N5 do; its
- *    entry controls (a scratch tree holding every such form, read by the same walk), kind controls (lstat's answers, none of
- *    them for a FIFO, a socket or a device) and reading controls read as pinned. Then the src modules importing node:child_process (this reader and the shared
+ *    entry controls (a scratch tree holding every such form, the entry of another type as a live Unix socket, read by the same
+ *    walk), kind controls (lstat's answers, none of them for a FIFO, a socket or a device) and reading controls read as pinned.
+ *    Then the src modules importing node:child_process (this reader and the shared
  *    sourceStructure read the same list, and the list is pinned) and every value reference there to a child-process binding: a
  *    named, default or namespace import, a bound require declaration (a variable whose whole initializer is require of the
  *    module, named by an identifier or an object pattern of plain elements), or a const alias of one (a non-exported const or
@@ -129,9 +131,10 @@
  *    or an export-from declaration at the module's top level, or a dynamic import or require call with a literal first argument:
  *    the four forms the shared sourceStructure reads); no src call takes a string literal naming one as its first argument (read through parentheses and
  *    type assertions), whatever the callee (require, import(), a call of a call such as createRequire(import.meta.url)(...),
- *    module.require, require.resolve, a loader under any name), other than a child-process call site's binary, which W1 reads, no
- *    tagged template's literal names one and no import-equals declaration does (so a literal rf binary passed to a launch W1 does
- *    not resolve reads as such a load); no src type position names one (an import type's argument, such as N11's typeof
+ *    module.require, require.resolve, a loader under any name), other than a child-process call site's binary, which W1 reads (a
+ *    call here is a call expression, and a construct, new X(...), is none: a construct's literal first argument is no U3 load
+ *    but R-UNREAD-SPECIFIER's, Q6), no tagged template's literal names one and no import-equals declaration does (so a literal
+ *    rf binary passed to a launch W1 does not resolve reads as such a load); no src type position names one (an import type's argument, such as N11's typeof
  *    import("@reactive-fiber/tsx"), a triple-slash types or path directive, an amd-dependency directive, an ambient module
  *    declaration's name, or an import or export declaration nested in a module block), each read as a type reference and never as
  *    a runtime load (no type plant reads a load); and package.json names or specifies none in any key or string value at any depth (the four dependency maps,
@@ -177,8 +180,8 @@
  *    text. U2's: every rf descriptor's id, effect class, description and contractSource.
  *  - U3's, for a bare specifier naming an rf package: sourceStructure's four (a top-level static import, type-only ones
  *    included; a top-level export-from; a dynamic import or a require call with a literal first argument); packageLoads' three
- *    (any call's literal first argument, read through parentheses and type assertions; a tagged template's literal; an
- *    import-equals reference); typeReferences', each a type reference (an import type's argument; a triple-slash types or path
+ *    (any call expression's literal first argument, read through parentheses and type assertions, never a construct's, new
+ *    X(...), which R-UNREAD-SPECIFIER names; a tagged template's literal; an import-equals reference); typeReferences', each a type reference (an import type's argument; a triple-slash types or path
  *    directive; an amd-dependency directive; an ambient module declaration's name; an import or export declaration nested in a
  *    module block); and package.json's every key (as a specifier) and string value (as a spec) at any depth.
  *  - G's: the capture's fields, which the capture script writes from the seven producer reads capture.remeasure names.
@@ -197,7 +200,9 @@
  *  evaluated source text and U3 no binary path or composed name (Q5); R-UNREAD-SPECIFIER an rf package
  *  specifier that reaches a loader other than as a call's first-argument literal, a tagged template's literal or an import-equals
  *  reference (any other expression: held in a variable, an array spread into the call or passed through Reflect.apply, a
- *  conditional, composed at run time, built into a URL) is no U3 load (Q6); R-PATH-SPECIFIER an rf package's files reached by a
+ *  conditional, composed at run time, built into a URL; and a construct's literal first argument, whatever the constructor,
+ *  such as new (createRequire(import.meta.url))("@reactive-fiber/sdk"), which Node runs as a load: packageLoads reads a call
+ *  expression's arguments, never a construct's) is no U3 load (Q6); R-PATH-SPECIFIER an rf package's files reached by a
  *  path rather than a bare specifier (a relative path into node_modules, an absolute path, a file: URL, a triple-slash path
  *  directive, an import type of a path) name no rf package to U3's predicate, which reads bare specifiers only so that Pi's own
  *  relative reactivefiber module stays quiet: no U3 reader reads one, in any position (Q7).
@@ -243,11 +248,41 @@
  *  JSON.parse alone reads (refusing any field of the wrong shape by name); the delivery note and the commit body say so.
  *  ENUMERATION names the pinned set in closed form, and U3's predicate reading bare specifiers only is the named residual
  *  R-PATH-SPECIFIER with its quiet row (Q7, new: the frozen shape moves from Q:6 to Q:7).
+ * FOLLOW-UP wb-o6jx (the R694 follow-up of landing 664's PASS-WITH-FINDING, gate cmd_e5957822ab13; additions only: no title, row,
+ *  pin, control, plant case or residual family is removed and no prior reading changes - against the landed roster (sha256_16
+ *  51a9d265b6b87f05) every prior constant, the filing and every prior witness entry read equal, two constants and two witnesses
+ *  gain members, and the frozen shape stays [G:3, W:3, U:3, Q:7]; src, package.json and the census's helpers are byte-identical
+ *  at the base e55254c and at MEASURED's b3d410f, so MEASURED stands: 117 walked modules in five subdirectories, every src
+ *  witness equal). F1 (MEDIUM, the construct carrier): before, U3's header said no src call takes an rf package literal as its
+ *  first argument "whatever the callee", while packageLoads reads a call expression's literal first argument, a tagged template's
+ *  literal and an import-equals reference only, so the gate's L2-C1 (appended to src/workbench/graph-view.ts: new
+ *  (gateMakeLoader(import.meta.url) as unknown as GateLoader)("@reactive-fiber/sdk"), which the gate measured landable through
+ *  biome and tsc) read 0 failed, though under Node v24.20.0 a construct of a createRequire-made loader returns the package's
+ *  exports (re-measured here against a fake @reactive-fiber/sdk), and R-UNREAD-SPECIFIER's headline covered the construct while
+ *  Q6 held no construct member. After (the cure's first arm: the carrier is named, not read; its second arm, reading a
+ *  construct's literal first argument, measured on a throwaway copy, reds U3 on today's src through src/settings.ts sanitize's
+ *  new Error("workbench.reactivefiberWorkspaceRoot must be an absolute path without control characters."), a message the
+ *  bare-specifier predicate takes for an rf package name): U3's header, the ENUMERATION and packageLoads' doc say a call is a
+ *  call expression and a construct is none, R-UNREAD-SPECIFIER names the construct carrier, and Q6 pins three construct members
+ *  as no load (construct, the finding's form; construct-asserted, L2-C1's text; construct-bound, a constructed loader held by
+ *  name), so L2-C1 stays green by design, as R-PATH-SPECIFIER's plants do. W1's escapeForm still files a construct's callee
+ *  reference under the escape form "call": that is W1's escape vocabulary (a construct of a child-process binding is an escape,
+ *  never a site), not U3's word. F2 (LOW, the walk's listing of an other-type entry): before, KIND_CONTROLS said a FIFO, a socket
+ *  or a device is a kind "which no call here can make", and the listing of such an entry was pinned only through the stubbed kind
+ *  and reading controls, so the gate's hollow L2-H1 (the listing drops every other-type entry) read 0 failed, with a live FIFO
+ *  under src too (L2-H1c). After: W1's entry controls bind a live Unix socket, socket.ts (a node:net server with no connection
+ *  handler, bound by path inside the 0700 scratch directory and closed in the case's finally), which lstat reads as no directory,
+ *  regular file or symlink: the walk lists it unwalked as socket.ts|other (its .ts name never makes it a module), L2-H1 and
+ *  L2-H1c red W1, and the sentence is restated. The census makes no FIFO or device; both take the same other reading the live
+ *  socket pins.
  *
  * Display paths added: none. Test-only: one scratch directory (makeScratch from test/helpers/scratch.ts, removed by W1's case,
- *  installScratchLeakGuard at module scope) holds W1's entry controls; src, package.json, .beads and the roster are only read.
+ *  installScratchLeakGuard at module scope) holds W1's entry controls, a Unix socket among them (bound by path inside that 0700
+ *  directory, with no connection handler and no TCP port, and closed in the case's finally before the directory is removed);
+ *  src, package.json, .beads and the roster are only read.
  */
 import { lstatSync, mkdirSync, readdirSync, readFileSync, type Stats, symlinkSync, writeFileSync } from "node:fs";
+import { createServer, type Server } from "node:net";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
@@ -276,12 +311,15 @@ const SRC_FLOOR = 100;
 const UNWALKED_MODULE = /\.(?:[cm]?jsx?|[cm]ts|tsx)$/;
 /** File-name controls for it: the seven skipped code extensions are caught; a .ts or .d.ts module and a .json file are not. */
 const UNWALKED_CONTROLS: readonly string[] = ["probe.js", "probe.mjs", "probe.cjs", "probe.jsx", "probe.mts", "probe.cts", "probe.tsx", "probe.ts", "probe.d.ts", "probe.json"];
-/** One entry W1's entry controls make: a regular file, a directory, or a symlink to its target (relative to the link). */
-type EntryPlant = { readonly path: string; readonly kind: "file" | "directory" } | { readonly path: string; readonly kind: "symlink"; readonly target: string };
+/** One entry W1's entry controls make: a regular file, a directory, a live Unix socket, or a symlink to its target (relative to
+ * the link). */
+type EntryPlant = { readonly path: string; readonly kind: "file" | "directory" | "socket" } | { readonly path: string; readonly kind: "symlink"; readonly target: string };
 /** W1's entry controls, made in one scratch directory and read by the same walk as src: regular .ts modules at the top and
  * nested (a .d.ts among them: walked), regular files of other names (.txt, none, .body, .json, an upper-case .TS, a dotfile),
- * symlinks to a .ts module, to a .body file (N5's shape), to a directory and to nothing, and an empty directory (descended,
- * holding nothing): every one but the regular .ts files is unwalked, and no symlink is followed. */
+ * symlinks to a .ts module, to a .body file (N5's shape), to a directory and to nothing, an empty directory (descended,
+ * holding nothing), and a live Unix socket named socket.ts (an entry of another type: lstat reads it as no directory, regular
+ * file or symlink, so its .ts name never makes it a module): every one but the regular .ts files is unwalked, and no symlink
+ * is followed. */
 const ENTRY_PLANTS: readonly EntryPlant[] = [
   { path: "module.ts", kind: "file" },
   { path: "nested/inner.ts", kind: "file" },
@@ -297,9 +335,11 @@ const ENTRY_PLANTS: readonly EntryPlant[] = [
   { path: "gate-launch.cjs", kind: "symlink", target: "gate-launch.body" },
   { path: "linked-dir", kind: "symlink", target: "nested" },
   { path: "dangling.ts", kind: "symlink", target: "missing.ts" },
+  { path: "socket.ts", kind: "socket" },
 ];
 /** entryKind's controls: lstat's three answers as [isDirectory, isFile, isSymbolicLink], and none of them (a FIFO, a socket or
- * a device, which no call here can make) read as other. */
+ * a device) read as other. These stub lstat; the live entry of that kind is ENTRY_PLANTS' socket (node:net binds one, while a
+ * FIFO or a device needs mkfifo or mknod, which no call here makes), which the walk lists through the same reading. */
 const KIND_CONTROLS: Readonly<Record<string, readonly [boolean, boolean, boolean]>> = {
   directory: [true, false, false],
   file: [false, true, false],
@@ -574,7 +614,8 @@ const UNSEEN_LAUNCHES: Readonly<Record<string, string>> = {
   package: `import { execa } from "execa"; await execa("rf", ["graph", "explain", target]);`,
 };
 /** Q6's specifiers no U3 reader reads (R-UNREAD-SPECIFIER): an rf package reaching a loader other than as a call's first-argument
- * literal or an import-equals reference. */
+ * literal, a tagged template's literal or an import-equals reference, a construct's literal first argument among them (the
+ * finding's form, the landing 664 gate's landable asserted form L2-C1, and a constructed loader held by name). */
 const UNREAD_SPECIFIERS: Readonly<Record<string, string>> = {
   variable: `import { createRequire } from "node:module"; const spec = "@reactive-fiber/sdk"; createRequire(import.meta.url)(spec);`,
   array: `import { createRequire } from "node:module"; Reflect.apply(createRequire(import.meta.url), undefined, ["@reactive-fiber/sdk"]);`,
@@ -582,6 +623,9 @@ const UNREAD_SPECIFIERS: Readonly<Record<string, string>> = {
   url: `await import(new URL("@reactive-fiber/sdk", import.meta.url).href);`,
   spread: `import { createRequire } from "node:module"; createRequire(import.meta.url)(...["@reactive-fiber/sdk"]);`,
   conditional: `import { createRequire } from "node:module"; createRequire(import.meta.url)(flag ? "@reactive-fiber/sdk" : "@furnace/sdk");`,
+  construct: `import { createRequire } from "node:module"; new (createRequire(import.meta.url))("@reactive-fiber/sdk");`,
+  "construct-asserted": `import { createRequire as gateMakeLoader } from "node:module"; type GateLoader = new (id: string) => unknown; export const gateConstructed = new (gateMakeLoader(import.meta.url) as unknown as GateLoader)("@reactive-fiber/sdk");`,
+  "construct-bound": `import { createRequire } from "node:module"; const Loader = createRequire(import.meta.url) as unknown as new (id: string) => unknown; new Loader("@reactive-fiber/sdk");`,
 };
 /** Q7's path specifiers (R-PATH-SPECIFIER): an rf package's files reached by a relative, absolute or file: URL path, which U3's
  * package predicate (packageOf reads bare specifiers only, so Pi's own relative reactivefiber module stays quiet) reads as
@@ -849,20 +893,44 @@ function entryListing(entries: readonly Entry[]): { readonly modules: string[]; 
 function srcEntries(): Entry[] {
   return walkEntries(REPO, join(REPO, "src"));
 }
-/** W1's entry controls: ENTRY_PLANTS made in one scratch directory and read by the same walk and listing as src. */
-function entryControls(): JsonValue {
+/** W1's entry controls: ENTRY_PLANTS made in one scratch directory and read by the same walk and listing as src. A socket plant
+ * is bound before the walk and closed in the finally, before the directory is removed. */
+async function entryControls(): Promise<JsonValue> {
   const root = makeScratch("wb-2j3.10-entries-");
+  const servers: Server[] = [];
   try {
+    const sockets: string[] = [];
     for (const plant of ENTRY_PLANTS) {
       const path = join(root, plant.path);
       mkdirSync(plant.kind === "directory" ? path : dirname(path), { recursive: true });
       if (plant.kind === "symlink") symlinkSync(plant.target, path);
       else if (plant.kind === "file") writeFileSync(path, "export const planted = 1;\n");
+      else if (plant.kind === "socket") sockets.push(path);
     }
+    await Promise.all(sockets.map(path => bound(servers, path)));
     return json(entryListing(walkEntries(root, root)));
   } finally {
+    await Promise.all(servers.map(closed));
     removeScratch(root);
   }
+}
+/** Binds a server with no connection handler at a socket path inside the scratch directory. The options form listens on a Unix
+ * socket and never on a TCP port (an options object naming no path and no port throws). The server joins servers before it
+ * binds, so the caller's finally closes it whatever the bind does. */
+function bound(servers: Server[], path: string): Promise<void> {
+  const server = createServer();
+  servers.push(server);
+  return new Promise((resolve, reject) => {
+    server.once("error", reject);
+    server.listen({ path }, () => resolve());
+  });
+}
+/** Resolves once a server is closed, at once when it never listened. */
+function closed(server: Server): Promise<void> {
+  return new Promise(resolve => {
+    if (server.listening) server.close(() => resolve());
+    else resolve();
+  });
 }
 interface Module {
   readonly name: string;
@@ -1066,7 +1134,8 @@ function isValueReference(id: ts.Identifier): boolean {
   const named = parent as { readonly name?: unknown; readonly propertyName?: unknown; readonly label?: unknown };
   return named.name !== id && named.propertyName !== id && named.label !== id;
 }
-/** The form of a reference that is no call site. */
+/** The form of a reference that is no call site; a construct's callee reads "call" here too (W1's escape vocabulary: a construct
+ * of a binding is an escape like an uncalled reference, never a site; U3's call is a call expression only). */
 function escapeForm(id: ts.Identifier): string {
   const parent = id.parent;
   if (ts.isVariableDeclaration(parent)) return !isConst(parent) ? "mutable-alias" : isExported(parent) ? "exported-alias" : "alias";
@@ -1283,11 +1352,12 @@ function unwrapped(expression: ts.Expression): ts.Expression {
   while (ts.isParenthesizedExpression(at) || ts.isAsExpression(at) || ts.isTypeAssertionExpression(at) || ts.isSatisfiesExpression(at) || ts.isNonNullExpression(at)) at = at.expression;
   return at;
 }
-/** U3's loader reading of one module: every string literal that is the first argument of a call (read through parentheses and type
- * assertions), whatever the callee (require, import(), a call of a call such as createRequire(import.meta.url)(...),
- * module.require, require.resolve, a loader under any name), a tagged template's literal, or an import-equals declaration's module
- * reference, and names an rf package, except a child-process call site's binary (W1 reads it), as `${scope}:${carrier}:${specifier}`
- * (carrier require, import, call, tagged or import-equals). */
+/** U3's loader reading of one module: every string literal that is the first argument of a call (a call expression, read through
+ * parentheses and type assertions; a construct's arguments, new X(...), are never read: R-UNREAD-SPECIFIER, Q6), whatever the
+ * callee (require, import(), a call of a call such as createRequire(import.meta.url)(...), module.require, require.resolve, a
+ * loader under any name), a tagged template's literal, or an import-equals declaration's module reference, and names an rf
+ * package, except a child-process call site's binary (W1 reads it), as `${scope}:${carrier}:${specifier}` (carrier require,
+ * import, call, tagged or import-equals). */
 function packageLoads(fileName: string, source: string): string[] {
   const file = parse(fileName, source);
   const binaries = new Set(scanSpawns(fileName, source).sites.map(site => site.call.arguments[0]?.getStart()));
@@ -1539,7 +1609,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         .map(entry => entry.path),
       unwalkedControls: Object.fromEntries(UNWALKED_CONTROLS.map(name => [name, UNWALKED_MODULE.test(name)])),
       entries: entryListing(srcEntries()).unwalked,
-      entryControls: entryControls(),
+      entryControls: await entryControls(),
       kindControls: Object.fromEntries(
         Object.entries(KIND_CONTROLS).map(([name, [directory, file, symlink]]) => [name, entryKind({ isDirectory: () => directory, isFile: () => file, isSymbolicLink: () => symlink })]),
       ),
