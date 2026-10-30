@@ -96,7 +96,8 @@
  *   fixture, in any case. So no corpus entry ships as a data file or under a corpus-word path.
  *   (drift) representation-entries: only the codec's two files spell the literal hyperunix.result/1 in their bytes;
  *   exported-representations: the only string the walk reaches from the three export subpaths' namespaces that spells it is
- *   SDK_REPRESENTATION itself. The walk reads a string (it carries the representation when it includes it); the own
+ *   SDK_REPRESENTATION itself. The walk reads a string, a primitive (it carries the representation when it includes it; a
+ *   String wrapper object is an object, read by its own enumerable properties, one index character each); the own
  *   enumerable string-keyed data properties of an object or an array; a Map's keys and values, read through
  *   Map.prototype.entries, and a Set's members, read through Set.prototype.values (both as the realm holds them when the walk
  *   runs, never through the value's own iterator or methods), plus the Map's or Set's own enumerable data properties. It calls
@@ -107,8 +108,8 @@
  *   refuses a Proxy before any trap could run (the readings then read unread).
  *   It reads the subpaths as this file imports them, which with no alias or override in place resolve to
  *   node_modules/@hyperunix/sdk, the installed copy T0 holds to the tarball. So no result document ships with
- *   hyperunix.result/1 spelled byte for byte in an entry, or as a value the walk reaches whose representation string spells
- *   it, however that string is written or built.
+ *   hyperunix.result/1 spelled byte for byte in an entry, or as a primitive string the walk reaches that spells it, however
+ *   that string is written or built (a value that is not a string but whose string value includes it is R-HIDDEN's).
  *   (second-entry) exports and files: the manifest's export subpath names and its files list (a member that is not a string
  *   read as its JSON) are today's, so no new subpath name or files member is declared. A corpus behind an existing subpath
  *   name is read by the walk, which imports every subpath, or is R-HIDDEN, as is a corpus in a form none of these reads.
@@ -119,8 +120,9 @@
  *   accessor, a Map key's toString and that Map's own entries method, each throwing when called (its own iterator yields
  *   nothing), so a walk that invokes one fails T2. Every pin sees its plant, so a reader hollowed to miss any planted signal
  *   reds.
- * A1 the outside anchors: the export holds exactly one row whose id is the bead's (each non-blank line parsed, the rows counted
- *   by id before any other field is read, as ROW_CONTROLS pin with second rows carrying no title or description, or fields that
+ * A1 the outside anchors: the export holds exactly one row whose id is the bead's (each non-blank line parsed as JSON.parse
+ *   decodes it, member names case-sensitive, so a member another decoder reads as id, title or description is R-DECODER's;
+ *   the rows counted by id before any other field is read, as ROW_CONTROLS pin with second rows carrying no title or description, or fields that
  *   are not strings; that row then carries a string title and a string description); the export title is the statement; A1
  *   description holds the description to the one measured, by the sha256 of its text as JSON decodes it, so any edit to it, in
  *   any line form, reds there whatever the field reader reads (its controls edit it after each boundary, with a second value,
@@ -143,34 +145,41 @@
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every reading is pinned exactly once; WATCHED's
  *   keys and facets are literals (held to package.json by T1 identity and RECORDS); LINE_BOUNDARIES' names and code points,
  *   REFUSALS, FORMS' ids and facets, SURFACE_CONTROLS' and ROW_CONTROLS' counts and FIELD_CONTROLS' fields and counts are
- *   literals; every REFUSALS rule has a FORMS row; the FORMS ROSTER above equals FORMS' ids; and the RESIDUALS lines below
- *   equal QUIET's keys.
+ *   literals; every REFUSALS rule has a FORMS row; the FORMS ROSTER above equals FORMS' ids; R-DECODER's PLACEMENTS ids and
+ *   members, the engine's fold classes and the spelling counts are literals; and the RESIDUALS lines below equal QUIET's
+ *   keys.
  * RECORDS (the last case): T1 identity judged every HX-scoped package package.json names (an anchor outside the census's
  *   literals), and every classification pin's case, every FORMS row's case and every residual's quiet row ran to its end.
- * RESIDUALS (named families, each with a pinned quiet row in QUIET; FROZEN SHAPE reads the four lines below):
+ * RESIDUALS (named families, each with a pinned quiet row in QUIET; FROZEN SHAPE reads the five lines below):
  * R-HIDDEN a corpus in any form the classification readings do not read. Known members: documents behind a function call, an
  *   accessor, a non-enumerable, symbol-keyed or inherited property or a function's own property; documents in a WeakMap or a
  *   WeakSet, a class instance's private field, a Promise's resolution, or bytes (a typed array holding a document's JSON);
- *   documents the walk would read through a built-in that the release's import-time code replaced (Map.prototype.entries);
+ *   documents whose representation is not a string but a value whose string value includes it: a String wrapper object (new
+ *   String(SDK_REPRESENTATION), the gate's G-STRING-OBJECT, whose index characters the walk reads one at a time), an object
+ *   whose toString or Symbol.toPrimitive returns it, a symbol whose description holds it, or a function whose source
+ *   spells it; documents the walk would read through a built-in that the release's import-time code replaced (Map.prototype.entries);
  *   documents in a neutral-named module that no export subpath re-exports and whose bytes never spell hyperunix.result/1 byte
  *   for byte (the representation imported from the codec, or escape-spelled); and documents declared only in types. Shipped
  *   in the vendored release, each still changes T1 identity's tarballs facet (the strict reader reads the new content or
  *   refuses the archive) and its installed facet. The quiet row plants every known member in today's release (it replaces
- *   Map.prototype.entries for one walk and restores it): every classification pin reads today's set, and the tarballs facet's
- *   reading of the planted entries is not the measured one.
+ *   Map.prototype.entries for one walk and restores it): every classification pin reads today's set, each wrapped value's
+ *   string value includes the representation, and the tarballs facet's reading of the planted entries is not the measured
+ *   one.
  * R-OTHER-PACKAGE a corpus in a package T1 identity does not watch: one outside the @hyperunix/ scope (another scope, that scope
  *   in another letter case, or none), or an HX-scoped one that package.json's four dependency fields do not name (named only
  *   in bundledDependencies, overrides or workspaces, or installed only as another package's dependency). The quiet row plants
  *   such packages in two dependency fields and in those three manifest fields: the HX-scoped set stays @hyperunix/sdk alone,
  *   and the unnamed one has no naming.
  * R-SELF-HOLLOW a census member removed from every literal that names it is unseen by the outside anchors, which bind ROWS'
- *   clauses (A1), the export description (A1 description), package.json's HX-scoped packages (T1 identity and RECORDS) and
- *   ECMAScript's four line terminators (the engine, in A1), and nothing else: a pin (from ROWS, ReadingId, READINGS,
+ *   clauses (A1), the export description (A1 description), package.json's HX-scoped packages (T1 identity and RECORDS),
+ *   ECMAScript's four line terminators (the engine, in A1) and Unicode simple case folding (the engine, in R-DECODER's fold
+ *   classes), and nothing else: a pin (from ROWS, ReadingId, READINGS,
  *   PLANTED_READINGS and the frozen literal), a residual (from QUIET, the frozen literal and its header line), a planted signal
  *   (from PLANTED_ENTRIES or PLANTED_MODULES and PLANTED_READINGS), a surface control (from SURFACE_CONTROLS and its frozen
  *   counts), a field or row control (from FIELD_CONTROLS or ROW_CONTROLS and its frozen literal), a re-vendor form (from FORMS,
- *   its frozen literal and CLAIMS), or a line boundary other than LF, CR, LS and PS (from LINE_BOUNDARIES, its frozen literals
- *   and CLAIMS). The quiet row pins that each pin's removal leaves A1's anchor reading unchanged while each row's removal
+ *   its frozen literal and CLAIMS), a residual's known member (from its quiet row's plant and the residual's header text; an
+ *   R-DECODER placement from PLACEMENTS and its frozen literal), or a line boundary other than LF, CR, LS and PS (from
+ *   LINE_BOUNDARIES, its frozen literals and CLAIMS). The quiet row pins that each pin's removal leaves A1's anchor reading unchanged while each row's removal
  *   changes it, and that a boundary's removal leaves the engine anchor's reading unchanged for exactly CR LF, VT, FF, FS, GS,
  *   RS and NEL.
  * R-UNLOADED a re-vendor whose module code fails when this file imports the SDK's three export subpaths (a throw at import, or
@@ -178,6 +187,19 @@
  *   before any case runs, so no case's message (the OWED text included) is read, though its package.json, tarball or
  *   installed copy would read changed if the cases ran. The quiet row reads this file's import declarations (TypeScript AST):
  *   its only imports from the @hyperunix/ scope are the three static subpath imports MODULES walks.
+ * R-DECODER a member another decoder reads as one A1 reads (id, title or description) while JSON.parse, by which A1 reads the
+ *   export, keeps it apart. bd is a Go program (go version -m reads go1.26.2), and Go's encoding/json matches each member name
+ *   to a field case-insensitively, so a later member spelled in another case sets the field over the exact one; go 1.26.2
+ *   matched, at every position of the three names, exactly the code points Unicode simple case folding takes to the name's
+ *   letter (MEASURED at cut time over every code point; the only one outside ASCII is U+017F for s), the folding the engine's
+ *   case-insensitive Unicode match reads (engineFolds, an anchor outside this file's literals). Which decoder bd's import
+ *   runs is unread (PLAUSIBLE). Known members: every spelling of id, title and description other than the exact one whose
+ *   code points each fold to the name's letter (3, 31 and 3071), in each PLACEMENTS placement: a later member of the bead's
+ *   row holding another id, an edited title or an edited description (the gate's G-DESC-CASEKEY, Description), a second row
+ *   whose only id member holds the bead's id (G-IDKEY-UPPER, ID), or another bead's row with a later id member holding the
+ *   bead's id. go 1.26.2 read every one of these texts as the exact name's edit (MEASURED at cut time). The quiet row plants
+ *   every spelling in every placement in memory: A1's reading (the rows counted by id, the title against the statement and the
+ *   description against its digest) reads today's for each, while each placement under the exact name reads the edit.
  * PARKED (the external remainder; standing rules 21(1) and 24): the acceptance's three clauses need a consumer-facing
  * hyperunix.result/1 corpus in a release Pi vendors, and the request for it travels the wb-kqx upstream-feedback channel, a
  * HyperUnix-CLI new-feedback write outside Pi-subagents that this cut does not make. A landing of this cut closes only the
@@ -703,16 +725,29 @@ const ROW_CONTROLS: readonly (readonly [string, number])[] = [
   [`{"id":"${BEAD}","title":"t","description":"d"}\n\n{"id":"wb-other","title":"t","description":"d"}\n`, 1],
   [`["${BEAD}"]\n{"id":"${BEAD}","title":"t","description":"d"}\n{"id":"${BEAD} "}`, 1],
 ];
+/** A1's reading of an export text: how many rows carry the bead's id (counted before any field is read) and, when exactly one
+ * does, that row's title and description, as JSON.parse decodes them (member names case-sensitive; R-DECODER). */
+function rowFields(text: string): { readonly rows: number; readonly title: unknown; readonly description: unknown } {
+  const mine = beadRows(text);
+  const row = mine.length === 1 ? mine[0] : undefined;
+  return { rows: mine.length, title: isRecord(row) ? row.title : undefined, description: isRecord(row) ? row.description : undefined };
+}
 /** The bead's own export row: the rows whose id is the bead's counted before any field is read (exactly one), then that row's
  * title and description, which must be strings (later store writes change neither). */
 function exportRow(): { title: string; description: string } {
-  const mine = beadRows(readFileSync(join(REPO, EXPORT), "utf8"));
-  expect(mine.length, "the export holds exactly one row whose id is the bead's (counted by id, before any field is read)").toBe(1);
-  const row = mine[0];
-  const title = isRecord(row) ? row.title : undefined;
-  const description = isRecord(row) ? row.description : undefined;
+  const { rows, title, description } = rowFields(readFileSync(join(REPO, EXPORT), "utf8"));
+  expect(rows, "the export holds exactly one row whose id is the bead's (counted by id, before any field is read)").toBe(1);
   if (typeof title !== "string" || typeof description !== "string") throw new Error(`the export row of ${BEAD} carries no string title and description`);
   return { title, description };
+}
+/** What A1 reads of an export text, in one line: how many rows carry the bead's id, then the one row's title against the
+ * statement and its description against the measured digest (the R-DECODER quiet row reads its plants through it). */
+function rowReading(text: string): string {
+  const { rows, title, description } = rowFields(text);
+  if (rows !== 1) return `${rows} rows`;
+  const titled = title === `${TITLE_ID} ${STATEMENT}` ? "the statement" : "another title";
+  const described = typeof description === "string" && sha256(description) === DESCRIPTION_SHA256 ? "the measured description" : "another description";
+  return `1 row: ${titled}, ${described}`;
 }
 /** A Python list item as the export's ACCEPTANCE list spells it: double quotes exactly when the text holds a single quote. */
 function listItem(text: string): string {
@@ -766,6 +801,28 @@ let engineLineTerminators: string[] | undefined;
 function engineTerminators(): string[] {
   engineLineTerminators ??= Array.from({ length: 0x10000 }, (_, code) => String.fromCharCode(code)).filter((char) => /^b/m.test(`a${char}b`));
   return engineLineTerminators;
+}
+/** The names of the members A1 reads from an export row: the id its rows are counted by, the title and the description. */
+const READ_MEMBERS = ["id", "title", "description"] as const;
+type ReadMember = (typeof READ_MEMBERS)[number];
+let engineFoldClasses: Readonly<Record<string, string>> | undefined;
+/** For each letter of READ_MEMBERS' names, every code point the engine's case-insensitive Unicode match reads as that letter,
+ * scanned over every code point: Unicode simple case folding (the engine: an anchor outside this file's literals; R-DECODER). */
+function engineFolds(): Readonly<Record<string, string>> {
+  if (engineFoldClasses !== undefined) return engineFoldClasses;
+  const letters = [...new Set(READ_MEMBERS.join(""))].sort();
+  const anyLetter = new RegExp(`^[${letters.join("")}]$`, "iu");
+  const classes: Record<string, string> = Object.fromEntries(letters.map((letter) => [letter, ""]));
+  for (let code = 0; code <= 0x10ffff; code++) {
+    const char = String.fromCodePoint(code);
+    if (anyLetter.test(char)) for (const letter of letters) if (new RegExp(`^${letter}$`, "iu").test(char)) classes[letter] += char;
+  }
+  engineFoldClasses = classes;
+  return classes;
+}
+/** Every spelling of a member name whose code points each fold to the name's letter (engineFolds), the name itself included. */
+function spellings(name: string): string[] {
+  return [...name].reduce<string[]>((prefixes, letter) => prefixes.flatMap((prefix) => [...engineFolds()[letter]].map((char) => `${prefix}${char}`)), [""]);
 }
 /** The engine's line terminators a boundary set does not hold as a boundary of its own. */
 const engineMisses = (boundaries: readonly (readonly [string, string])[]): string[] =>
@@ -1296,6 +1353,32 @@ const FORMS: readonly Form[] = [
   },
 ];
 
+/** A title or description no store write gave the bead's row: what a member spelled in another case holds (R-DECODER). */
+const EDIT = "a value no store write gave the bead's row";
+/** An export line for the bead's row as A1 reads it (its id, title and description), then any later members. */
+const beadLine = (row: { readonly title: string; readonly description: string }, later: Readonly<Record<string, string>> = {}): string =>
+  JSON.stringify({ id: BEAD, title: row.title, description: row.description, ...later });
+/** Where a member spelled other than exactly can sit in an export text (R-DECODER): the member it spells, the text it plants
+ * for a spelling given the bead's row, and A1's reading of that text when the spelling is the member's exact name. */
+interface Placement {
+  readonly id: string;
+  readonly member: ReadMember;
+  readonly plant: (row: { readonly title: string; readonly description: string }, name: string) => string;
+  readonly exact: string;
+}
+const PLACEMENTS: readonly Placement[] = [
+  { id: "later-id", member: "id", plant: (row, name) => beadLine(row, { [name]: "wb-other" }), exact: "0 rows" },
+  { id: "later-title", member: "title", plant: (row, name) => beadLine(row, { [name]: EDIT }), exact: "1 row: another title, the measured description" },
+  { id: "later-description", member: "description", plant: (row, name) => beadLine(row, { [name]: EDIT }), exact: "1 row: the statement, another description" },
+  { id: "second-row", member: "id", plant: (row, name) => `${beadLine(row)}\n${JSON.stringify({ [name]: BEAD, title: row.title, description: EDIT })}`, exact: "2 rows" },
+  {
+    id: "other-row",
+    member: "id",
+    plant: (row, name) => `${beadLine(row)}\n${JSON.stringify({ id: "wb-other", title: row.title, description: EDIT, [name]: BEAD })}`,
+    exact: "2 rows",
+  },
+];
+
 /** The residual families this file's header names, one per line (the RESIDUALS lines). */
 function headerResiduals(): string[] {
   const header = readFileSync(SELF, "utf8").split("*/")[0];
@@ -1332,6 +1415,19 @@ const QUIET: Readonly<Record<string, () => void>> = {
     entries.set("package/dist/cases.d.ts", Buffer.from("export declare function resultCases(): readonly object[];\n"));
     entries.set("package/dist/samples.js", Buffer.from('export const SAMPLES = [{ representation: "hyperunix\\u002eresult/1" }];\n'));
     entries.set("package/dist/shapes.d.ts", Buffer.from('export declare const SHAPES: readonly [{ readonly representation: "hyperunix\\u002eresult/1" }];\n'));
+    // Documents whose representation is not a string but a value whose string value includes it (the gate's G-STRING-OBJECT).
+    const wrapped: readonly unknown[] = [
+      new String(REPRESENTATION),
+      { toString: () => REPRESENTATION },
+      { [Symbol.toPrimitive]: () => REPRESENTATION },
+      Symbol(REPRESENTATION),
+      () => "hyperunix.result/1",
+    ];
+    entries.set(
+      "package/dist/wrapped.js",
+      Buffer.from('import { SDK_REPRESENTATION } from "./result.js";\nexport const WRAPPED_CASES = [{ id: "find-incomplete", document: { representation: new String(SDK_REPRESENTATION) } }];\n'),
+    );
+    entries.set("package/dist/wrapped.d.ts", Buffer.from("export declare const WRAPPED_CASES: readonly object[];\n"));
     const loadCases = Object.assign(() => documents, { cases: documents });
     const namespace: Record<string | symbol, unknown> = {
       ...sdkRoot,
@@ -1344,6 +1440,7 @@ const QUIET: Readonly<Record<string, () => void>> = {
       VAULT: new Vault(documents),
       PENDING_CASES: Promise.resolve(documents),
       CASE_BYTES: new Uint8Array(Buffer.from(JSON.stringify(documents))),
+      WRAPPED_CASES: wrapped.map((representation) => ({ id: "find-incomplete", sha256: "0".repeat(64), document: { representation, operation: "find" } })),
     };
     Object.defineProperty(namespace, "CASES", { enumerable: true, get: () => documents });
     Object.defineProperty(namespace, "HIDDEN_CASES", { enumerable: false, value: documents });
@@ -1352,6 +1449,10 @@ const QUIET: Readonly<Record<string, () => void>> = {
       PINS.filter((pin) => !same(READINGS[pin.reading](hidden), pin.today)).map(pinId),
       "R-HIDDEN: every classification pin reads today's set",
     ).toStrictEqual([]);
+    expect(
+      wrapped.map((value) => `${typeof value}:${String(value).includes(REPRESENTATION)}`),
+      "beside the quiet, each wrapped value's string value includes the representation",
+    ).toStrictEqual(["object:true", "object:true", "object:true", "symbol:true", "function:true"]);
     expect(readingOf(entries), "R-HIDDEN: T1 identity's tarballs facet reads the planted entries as another release").not.toStrictEqual(MEASURED);
     // A built-in the walk calls, replaced by import-time code: Map.prototype.entries, for one walk, then restored.
     const indexed: Release = { ...today, modules: { ".": { INDEX: new Map([["find-incomplete", PLANTED_DOCUMENT]]) } } };
@@ -1403,6 +1504,23 @@ const QUIET: Readonly<Record<string, () => void>> = {
     expect(scopedImports(), "R-UNLOADED: the file imports the SDK's export subpaths statically, so it loads only when they do").toStrictEqual(
       Object.keys(MODULES).map((subpath) => (subpath === "." ? SDK : `${SDK}${subpath.slice(1)}`)),
     );
+  },
+  "R-DECODER": () => {
+    const row = exportRow();
+    const today = rowReading(beadLine(row));
+    expect(today, "A1 reads the bead's row, re-encoded alone, as the statement and the measured description").toBe("1 row: the statement, the measured description");
+    const loud = PLACEMENTS.flatMap((placement) =>
+      spellings(placement.member)
+        .filter((name) => name !== placement.member && rowReading(placement.plant(row, name)) !== today)
+        .map((name) => `${placement.id} ${name}`),
+    );
+    expect(loud, "R-DECODER: every other spelling of a member A1 reads, in every placement, leaves A1's reading today's").toStrictEqual([]);
+    const exact = PLACEMENTS.map((placement) => rowReading(placement.plant(row, placement.member)));
+    expect(exact, "beside the quiet, each placement under the exact name reads the edit").toStrictEqual(PLACEMENTS.map((placement) => placement.exact));
+    expect(
+      exact.filter((reading) => reading === today),
+      "and no placement's exact reading is today's",
+    ).toStrictEqual([]);
   },
 };
 
@@ -1598,7 +1716,28 @@ describe("wb-tz2.7 HyperUnix result-corpus census (until a consumer-facing hyper
       "SURFACES:1",
       "SURFACES:1",
     ]);
-    expect(Object.keys(QUIET)).toStrictEqual(["R-HIDDEN", "R-OTHER-PACKAGE", "R-SELF-HOLLOW", "R-UNLOADED"]);
+    expect(PLACEMENTS.map((placement) => `${placement.id}:${placement.member}`)).toStrictEqual([
+      "later-id:id",
+      "later-title:title",
+      "later-description:description",
+      "second-row:id",
+      "other-row:id",
+    ]);
+    expect(Object.entries(engineFolds()).map(([letter, chars]) => `${letter}:${codePoints(chars).join(",")}`)).toStrictEqual([
+      "c:67,99",
+      "d:68,100",
+      "e:69,101",
+      "i:73,105",
+      "l:76,108",
+      "n:78,110",
+      "o:79,111",
+      "p:80,112",
+      "r:82,114",
+      "s:83,115,383",
+      "t:84,116",
+    ]);
+    expect(READ_MEMBERS.map((member) => `${member}:${spellings(member).length}`)).toStrictEqual(["id:4", "title:32", "description:3072"]);
+    expect(Object.keys(QUIET)).toStrictEqual(["R-HIDDEN", "R-OTHER-PACKAGE", "R-SELF-HOLLOW", "R-UNLOADED", "R-DECODER"]);
     expect(headerResiduals(), "the header's RESIDUALS lines name exactly QUIET's families, in order").toStrictEqual(Object.keys(QUIET));
   });
 
