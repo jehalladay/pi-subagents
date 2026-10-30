@@ -23,13 +23,20 @@
  * vitest. No src lexeme names THE VOCABULARY, so no src module declares a boundary or broker-limit configuration under the title's
  * spellings, rf's seat or rf's member names (one under names of its own is R-PARAPHRASE). Every launcher call LAUNCH reads in src
  * is the provider's spawn, handed scrubbedEnvironment(process.env, RF_CHILD_ENV_ALLOWLIST) with no options member after it that
- * can set env, and BINDINGS reads spawn as its import from node:child_process, scrubbedEnvironment and RF_CHILD_ENV_ALLOWLIST as
- * their imports, under their own names, from src/workbench/process-env.ts (the module C1 reads, whose allowlist names no
- * rf-family variable) and process as the global, so the provider's rf child never receives the RF_ADAPTIVE seat (an rf launch
- * LAUNCH does not read is R-INDIRECT-LAUNCH). The host hard caps a future declaration may never override are read off the
- * provider, as values. NOT DELIVERED: the adoption-time vitest itself (a Pi-declared value looser than a host cap is refused or
- * clamped): A1 reads no Pi declaration to feed it. A cut that adds one under THE VOCABULARY reds A1 (its planted legs show the
- * judge reports such a module) and owes that test, as the docs paragraph's last sentence says.
+ * can override env (a spread, a member named env, a computed name) and no accessor anywhere in its options, and BINDINGS reads
+ * spawn as its import from node:child_process, scrubbedEnvironment and RF_CHILD_ENV_ALLOWLIST as their imports, under their own
+ * names, from src/workbench/process-env.ts (the module C1 reads: its allowlist names no rf-family variable, and its scrub, from a
+ * fixture parent and from this process's own environment with the seat set in it, builds a null-prototype child holding only
+ * allowlisted names) and process as the global, so the provider's rf child never receives the RF_ADAPTIVE seat (an rf launch
+ * LAUNCH does not read is R-INDIRECT-LAUNCH). Why the accessors and the null prototype (a mechanism measured outside this census,
+ * by refusal #1's P1 and P2 through spawn and by the seat's local Node v24.20.0 runs through spawnSync at cut #2, never read by
+ * it): Node copies a launch's options with an object spread before it reads env, which calls every getter of the literal in key
+ * order, integer keys first, so a getter the copy reaches before env can rebind it and a getter anywhere can fill the object env
+ * holds; and Node's for-in over env reads inherited names, so a member value adding a name to Object.prototype would reach a child
+ * that has a prototype. The host hard caps a future declaration may never override are read off the provider, as values. NOT
+ * DELIVERED: the adoption-time vitest itself (a Pi-declared value looser than a host cap is refused or clamped): A1 reads no Pi
+ * declaration to feed it. A cut that adds one under THE VOCABULARY reds A1 (its planted legs show the judge reports such a module)
+ * and owes that test, as the docs paragraph's last sentence says.
  *
  * READINGS
  * - WORDS: NFKC, a break at each lower-to-upper case change and before the last capital of an acronym run, lower case, the runs
@@ -48,8 +55,11 @@
  * - LAUNCH (row C): every child-process launcher call (spawn, spawnSync, exec, execSync, execFile, execFileSync or fork, called by
  *   that name or as a property of that name) in a src module whose first argument is a string literal whose first word, any
  *   directory prefix dropped, is rf ("rf", "/usr/local/bin/rf" and the command string "rf --json --version" each name rf; "rfc"
- *   and "surf" do not), with its options object's env initializer as written (null when its options carry none), and the members
- *   of that object after the env property that can set env (a spread, a member named env, a computed name), as written. A
+ *   and "surf" do not), with, from its options object (the first object literal among its arguments; a launch without one reads an
+ *   env of null and no member), the env initializer as written (null when its options carry none), the members after the env
+ *   property that can override env (a spread, a member named env, a computed name), as written, and every accessor, before or
+ *   after env and under any name (a get or set member, as its kind and its name as written): LAUNCH fails closed on an accessor, a
+ *   setter (which Node's options copy never calls) and a getter whose body sets nothing read all the same (strict direction). A
  *   RegExp exec over such a literal reads as a launch too (strict direction).
  * - BINDINGS (row C): for each launch LAUNCH reads, the binding of every name its callee and its env initializer reference (a
  *   property name after a dot or before a colon, and a name in a type, excepted), each distinct reading once in source order,
@@ -74,16 +84,25 @@
  *    the docs paragraph names those caps, in seconds and KiB, equal to the provider's.
  *  C "rf's local default speculation policy stays passive/disabled": C1 the rf child allowlist names no rf-family variable (a name
  *    opening RF_ or SWARM_RF_, in any case), and from a parent fixture carrying RF_ADAPTIVE=speculation (the parent's seat and
- *    names are in the witness) scrubbedEnvironment builds a child holding only HOME and PATH; C2 every rf launch LAUNCH reads in
+ *    names are in the witness) scrubbedEnvironment builds a child holding only HOME and PATH, and from this process's own
+ *    environment, with RF_ADAPTIVE set to speculation in it for that one synchronous call and restored after, a child holding no
+ *    name outside the allowlist (the seat is one, so the reading is not vacuous) and carrying that environment's PATH with its
+ *    value, each child a null-prototype object, and the seat as before the readings once they end (planted legs: the same live
+ *    judge over a scrub planted to keep every parent name when its source is this process's own environment reports the seat, and
+ *    the prototype judge over a plain-object copy of the fixture child reads its prototype); C2 every rf launch LAUNCH reads in
  *    src is the provider's spawn, handed scrubbedEnvironment(process.env, RF_CHILD_ENV_ALLOWLIST) with no member after it that can
- *    set env, its four names bound as DELIVERED HERE says (BINDINGS); LAUNCH reads every rf form of its table (bare,
- *    path-qualified, command string, by name and as a property), none of its other programs, and the after-members of each form
- *    (a spread after env; a string-keyed env and a computed name after it, beside a cwd; a spread before env with members after
- *    it that cannot set env); and BINDINGS reads every form of its table (named and renamed imports, namespace and default
- *    imports, an import from another module, a module-scope const and function, an inner const over an import, a parameter, a
- *    hoisted var and a local process) (planted legs: an inherited-env rf launch module after the real ones; a module after them
- *    whose spawn carries the provider's env text through a local scrub with a spread after it; and the inherited-env launch
- *    appended to every real module).
+ *    override env and no accessor in its options, its four names bound as DELIVERED HERE says (BINDINGS); LAUNCH reads every rf
+ *    form of its table (bare, path-qualified, command string, by name and as a property), none of its other programs, and the
+ *    after-members and accessors of each form (a spread after env; a string-keyed env and a computed name after it, beside a cwd;
+ *    a spread before env with members after it that cannot override env; the provider's spawn text with refusal #1's P1, a getter
+ *    before env that rebinds it, and with its P2, a getter after env that fills the object it holds; a getter after env that
+ *    rebinds it, which Node's copy outruns, read all the same; a computed-name getter before env and, after it, a setter, an
+ *    integer-keyed getter, a string-keyed getter and a getter named env; an options object holding a getter named env and no env
+ *    property, through a property callee); and BINDINGS reads every form of its table (named and renamed imports, namespace and
+ *    default imports, an import from another module, a module-scope const and function, an inner const over an import, a
+ *    parameter, a hoisted var and a local process) (planted legs: an inherited-env rf launch module after the real ones; a module
+ *    after them whose spawn carries the provider's env text through a local scrub with a spread after it; and the inherited-env
+ *    launch appended to every real module).
  *  D "Pi documents no other default": D1 docs/18's section holds exactly one paragraph opening "RF speculation boundary:", and it
  *    renders as frozen; D2 every docs sentence naming the vocabulary is a sentence of that paragraph, the docs walk read exactly
  *    git's listing of its roots and top-level pages, every .md page git tracks outside test/ among them, and its docs/ pages meet
@@ -124,19 +143,32 @@
  *   a sentence naming the vocabulary only in the rendered view is not read: D2 cuts raw sentences, so a mark, code span or link
  *   inside a word ("spec*ul*ation", "spec**ul**ation", "spec`ul`ation", "[spec](./zz.md)ulation"), a named or numeric character
  *   reference ("RF&lowbar;ADAPTIVE", "specu&shy;lation", "RF&#95;ADAPTIVE") or inline HTML ("<em>spec</em>ulation") reads quiet,
- *   while the same sentences written plainly are read.
+ *   while the same sentences written plainly are read; R-VISUAL-ONLY (Q9) a code point that is still outside a-z and 0-9 after
+ *   NFKC and lower case is a break to WORDS, so a stem with one between two of its letters is split there and not read: a
+ *   zero-width space or a raw soft hyphen inside "speculation", or a Cyrillic e (U+0435) in place of its e, reads quiet in a docs
+ *   sentence, and the zero-width space in a src string, while the plain word is read (each code point built in this file with
+ *   String.fromCodePoint); a phrase is read when its words, so broken, still number at most three, the phrase reading joining up
+ *   to three adjacent words: a word joiner inside RF_ADAPTIVE (two words) is read, a zero-width space inside the class of "per
+ *   class slots" (three words, broken into four) is not.
  * NOT CLAIMED: an edit of this file and the docs paragraph together; the completeness of the residual list (its anchors are this
  *   file's literals); a pin's case replaced by one that returns its frozen witness without measuring it; a judge keyed on a
  *   plant's own text or on which run it is in (PLANTED LEGS); THE VOCABULARY's phrases beyond this file's copy of rf's names (the
  *   census never reads rf); the caps' enforcement (B1 reads their values); a name rebound or a module export replaced at run time
- *   (BINDINGS reads declarations, never run-time values).
+ *   (BINDINGS reads declarations, never run-time values); what an options member does when it runs (LAUNCH reads syntax: an
+ *   accessor by its kind and name, never its body; Node's options copy is the measured mechanism above, not a reading).
  * FOLLOW-UP wb-ottk (the R694 carry of landing 673: PREP F11 leads, F7 and F12 ride): the docs walk reads every tracked root's
  *   pages and every top-level page (F11: AGENTS.md, CONTRIBUTING.md, SECURITY.md and the examples/, .pi/, .agents/, .beads/ and
  *   vendor/ pages were unread); C2 reads BINDINGS and the after-members (F7: a local pass-through scrub and a later spread of
- *   env read clean); R-RENDERED names the rendered-only sentence, with its quiet row Q8 (F12).
+ *   env read clean); R-RENDERED names the rendered-only sentence, with its quiet row Q8 (F12). Cut #2 (refusal #1 of cut #1
+ *   8989d69a): LAUNCH reads every accessor of an rf launch's options and C2 pins none (U1: the gate's P1, a getter before env
+ *   rebinding it, and P2, a getter after env filling the object it holds, read clean under the after-members alone); C1 reads
+ *   the scrub over this process's own environment with the seat set, and each child's null prototype (refusal #1's F3: a scrub
+ *   returning every parent name for process.env read clean); R-VISUAL-ONLY names the visual-only spelling, with its quiet row Q9
+ *   (refusal #1's F2).
  *
  * Display paths added: none. Test-only: every plant is an in-memory text; src, docs, two test files and the bead export are only
- * read.
+ * read, and C1 sets RF_ADAPTIVE in this process's own environment around each of its two synchronous live scrub calls and
+ * restores it after each (its prior value, or its absence).
  */
 import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
@@ -203,7 +235,7 @@ const ROWS: readonly Row[] = [
   { id: "C", label: "rf's local default speculation policy stays passive/disabled", pins: ["C1", "C2"] },
   { id: "D", label: "Pi documents no other default", pins: ["D1", "D2"] },
   { id: "M", label: "the readers: M1 the code reader, M2 the docs reader", pins: ["M1", "M2"] },
-  { id: "Q", label: "the residuals' pinned quiet rows", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8"] },
+  { id: "Q", label: "the residuals' pinned quiet rows", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9"] },
 ];
 /** The title's two clauses after its trigger, each as the pair of rows whose labels it joins with " and " (outside anchor 1). */
 const CLAUSES: readonly (readonly [string, string])[] = [
@@ -220,6 +252,7 @@ const RESIDUALS: Readonly<Record<string, string>> = {
   "R-INDIRECT-LAUNCH": "Q6",
   "R-SELF-ANCHORED": "Q7",
   "R-RENDERED": "Q8",
+  "R-VISUAL-ONLY": "Q9",
 };
 
 const read = (rel: string): string => readFileSync(join(REPO, rel), "utf8");
@@ -407,9 +440,9 @@ function namesRf(argument: ts.Expression | undefined): boolean {
   const word = argument.text.trim().split(/\s+/)[0] ?? "";
   return word.slice(word.lastIndexOf("/") + 1) === "rf";
 }
-/** One rf launch (LAUNCH): its site, its env initializer as written, the members after env that can set it, and BINDINGS (a
- * type alias, so a launch is a Json value). */
-type Launch = { readonly site: string; readonly env: string | null; readonly after: string[]; readonly bindings: string[] };
+/** One rf launch (LAUNCH): its site, its env initializer as written, the members after env that can override it, every accessor
+ * of its options, and BINDINGS (a type alias, so a launch is a Json value). */
+type Launch = { readonly site: string; readonly env: string | null; readonly after: string[]; readonly accessors: string[]; readonly bindings: string[] };
 /** A module specifier as BINDINGS names it: a relative one resolved against the importing module's path, .js read as .ts. */
 function moduleOf(fileName: string, specifier: ts.Expression): string {
   const text = ts.isStringLiteralLike(specifier) ? specifier.text : specifier.getText();
@@ -450,13 +483,22 @@ function referencedNames(root: ts.Node): ts.Identifier[] {
   visit(root);
   return names;
 }
-/** The members of an options object after its env property that can set env (LAUNCH): a spread, a member named env, a computed
- * name, each as written. */
+/** The members of an options object after its env property that can override env (LAUNCH): a spread, a member named env, a
+ * computed name, each as written. */
 function afterEnv(options: ts.ObjectLiteralExpression, env: ts.ObjectLiteralElementLike, file: ts.SourceFile): string[] {
   return options.properties
     .slice(options.properties.indexOf(env) + 1)
     .filter(member => ts.isSpreadAssignment(member) || (member.name !== undefined && (ts.isComputedPropertyName(member.name) || member.name.text === "env")))
     .map(member => member.getText(file).replace(/\s+/g, ""));
+}
+/** Every accessor of an options object (LAUNCH), before or after env and under any name, as its kind and its name as written:
+ * Node's options copy calls each getter, so LAUNCH fails closed on every get and set member. */
+function accessorsOf(options: ts.ObjectLiteralExpression, file: ts.SourceFile): string[] {
+  return options.properties.flatMap(member => {
+    if (ts.isGetAccessorDeclaration(member)) return [`get ${member.name.getText(file).replace(/\s+/g, "")}`];
+    if (ts.isSetAccessorDeclaration(member)) return [`set ${member.name.getText(file).replace(/\s+/g, "")}`];
+    return [];
+  });
 }
 /** The rf launches a src module makes (LAUNCH), each with BINDINGS (the module's checker is built only when it launches rf). */
 function rfLaunches(fileName: string, source: string): Launch[] {
@@ -481,6 +523,7 @@ function rfLaunches(fileName: string, source: string): Launch[] {
           site: `${fileName} ${callee}`,
           env: initializer === undefined ? null : initializer.getText(file).replace(/\s+/g, ""),
           after: literal === undefined || env === undefined ? [] : afterEnv(literal, env, file),
+          accessors: literal === undefined ? [] : accessorsOf(literal, file),
           bindings: [...new Set(names.map(name => bindingOf(types, fileName, name)))],
         });
       }
@@ -588,38 +631,110 @@ const RENDERED_CONTROLS: readonly { readonly text: string; readonly hit: boolean
   { text: "rf's speculation policy is turned on by default for Pi renders.", hit: true },
   { text: "Pi sets RF_ADAPTIVE on every render.", hit: true },
 ];
+/** R-VISUAL-ONLY's controls (Q9), each code point built with String.fromCodePoint: a stem split between two of its letters by a
+ * code point WORDS reads as a break (a zero-width space, a raw soft hyphen, a Cyrillic e) reads quiet; a two-word phrase broken
+ * once that way (a word joiner inside RF_ADAPTIVE) is still read, a three-word phrase broken into four (a zero-width space inside
+ * the class of per class slots) is not; and the plain word is read. */
+const ZERO_WIDTH_SPACE = String.fromCodePoint(0x200b);
+const SOFT_HYPHEN = String.fromCodePoint(0x00ad);
+const CYRILLIC_E = String.fromCodePoint(0x0435);
+const WORD_JOINER = String.fromCodePoint(0x2060);
+const VISUAL_DOCS_CONTROLS: readonly { readonly text: string; readonly hit: boolean }[] = [
+  { text: `rf's spec${ZERO_WIDTH_SPACE}ulation policy is turned on by default for Pi renders.`, hit: false },
+  { text: `rf's specu${SOFT_HYPHEN}lation policy is turned on by default for Pi renders.`, hit: false },
+  { text: `rf's sp${CYRILLIC_E}culation policy is turned on by default for Pi renders.`, hit: false },
+  { text: `Pi sets RF_ADA${WORD_JOINER}PTIVE on every render.`, hit: true },
+  { text: `Pi keeps per-cla${ZERO_WIDTH_SPACE}ss slots for renders.`, hit: false },
+  { text: "rf's speculation policy is turned on by default for Pi renders.", hit: true },
+];
+const VISUAL_CODE_CONTROLS: readonly { readonly text: string; readonly hit: boolean }[] = [
+  { text: `const policy = "spec${ZERO_WIDTH_SPACE}ulation";`, hit: false },
+  { text: 'const policy = "speculation";', hit: true },
+];
 /** B1's synthetic provider: the reader must read its values, never the live provider's. */
 const CAPS_PLANT = 'const LIMIT=4*1024;\nconst timer=setTimeout(()=>stop("deadline"),1_500);\nif(outBytes>LIMIT) stop("stdout");\nif(errBytes>LIMIT) stop("stderr");\nif(errBytes>=LIMIT) stop("stderr");\n';
 /** LAUNCH's table: each launcher form, as one module's text, and the rf launches LAUNCH reads in it (BINDINGS included). */
 const LAUNCH_FORMS: readonly { readonly text: string; readonly launches: readonly Launch[] }[] = [
-  { text: 'execSync("rf --json --version");', launches: [{ site: "form.ts execSync", env: null, after: [], bindings: ["execSync <- global"] }] },
+  { text: 'execSync("rf --json --version");', launches: [{ site: "form.ts execSync", env: null, after: [], accessors: [], bindings: ["execSync <- global"] }] },
   {
     text: 'spawnSync("/usr/local/bin/rf", ["--json", "--version"], { env: process.env });',
-    launches: [{ site: "form.ts spawnSync", env: "process.env", after: [], bindings: ["spawnSync <- global", "process <- global"] }],
+    launches: [{ site: "form.ts spawnSync", env: "process.env", after: [], accessors: [], bindings: ["spawnSync <- global", "process <- global"] }],
   },
   {
     text: 'spawn("rf --json --version", { shell: true, env: process.env });',
-    launches: [{ site: "form.ts spawn", env: "process.env", after: [], bindings: ["spawn <- global", "process <- global"] }],
+    launches: [{ site: "form.ts spawn", env: "process.env", after: [], accessors: [], bindings: ["spawn <- global", "process <- global"] }],
   },
   {
     text: 'childProcess.execFile("rf", ["--json"], { env: { ...process.env } });',
-    launches: [{ site: "form.ts execFile", env: "{...process.env}", after: [], bindings: ["childProcess <- global", "process <- global"] }],
+    launches: [{ site: "form.ts execFile", env: "{...process.env}", after: [], accessors: [], bindings: ["childProcess <- global", "process <- global"] }],
   },
-  { text: '/^rf/.exec("rf --json");', launches: [{ site: "form.ts exec", env: null, after: [], bindings: [] }] },
+  { text: '/^rf/.exec("rf --json");', launches: [{ site: "form.ts exec", env: null, after: [], accessors: [], bindings: [] }] },
   { text: 'spawn("rfc", []); spawn("surf", []); execFileSync("git", ["rf"]);', launches: [] },
   {
     text: 'spawn("rf", [], { env: scrub(process.env, process.env.HOME), ...overrides });',
     launches: [
-      { site: "form.ts spawn", env: "scrub(process.env,process.env.HOME)", after: ["...overrides"], bindings: ["spawn <- global", "scrub <- global", "process <- global"] },
+      { site: "form.ts spawn", env: "scrub(process.env,process.env.HOME)", after: ["...overrides"], accessors: [], bindings: ["spawn <- global", "scrub <- global", "process <- global"] },
     ],
   },
   {
     text: 'spawn("rf", [], { env: first, "env": second, [key]: third, cwd: root });',
-    launches: [{ site: "form.ts spawn", env: "first", after: ['"env":second', "[key]:third"], bindings: ["spawn <- global", "first <- global"] }],
+    launches: [{ site: "form.ts spawn", env: "first", after: ['"env":second', "[key]:third"], accessors: [], bindings: ["spawn <- global", "first <- global"] }],
   },
   {
     text: 'spawn("rf", [], { ...base, env: only, cwd: root, stdio: "pipe" });',
-    launches: [{ site: "form.ts spawn", env: "only", after: [], bindings: ["spawn <- global", "only <- global"] }],
+    launches: [{ site: "form.ts spawn", env: "only", after: [], accessors: [], bindings: ["spawn <- global", "only <- global"] }],
+  },
+  {
+    text: 'spawn("rf",argv,{stdio:["ignore","pipe","pipe"],get cwd(){this.env=process.env;return undefined;},env:scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)});',
+    launches: [
+      {
+        site: "form.ts spawn",
+        env: "scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)",
+        after: [],
+        accessors: ["get cwd"],
+        bindings: ["spawn <- global", "scrubbedEnvironment <- global", "process <- global", "RF_CHILD_ENV_ALLOWLIST <- global"],
+      },
+    ],
+  },
+  {
+    text: 'spawn("rf",argv,{stdio:["ignore","pipe","pipe"],env:scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST),get cwd(){Object.assign(this.env??{},process.env);return undefined;}});',
+    launches: [
+      {
+        site: "form.ts spawn",
+        env: "scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)",
+        after: [],
+        accessors: ["get cwd"],
+        bindings: ["spawn <- global", "scrubbedEnvironment <- global", "process <- global", "RF_CHILD_ENV_ALLOWLIST <- global"],
+      },
+    ],
+  },
+  {
+    text: 'spawn("rf", [], { env: only, get cwd() { this.env = process.env; return undefined; } });',
+    launches: [{ site: "form.ts spawn", env: "only", after: [], accessors: ["get cwd"], bindings: ["spawn <- global", "only <- global"] }],
+  },
+  {
+    text: 'spawn("rf", [], { get [key]() { return undefined; }, env: only, set cwd(value) {}, get 0() { return undefined; }, get "stdio"() { return "pipe"; }, get env() { return process.env; } });',
+    launches: [
+      {
+        site: "form.ts spawn",
+        env: "only",
+        after: ["getenv(){returnprocess.env;}"],
+        accessors: ["get [key]", "set cwd", "get 0", 'get "stdio"', "get env"],
+        bindings: ["spawn <- global", "only <- global"],
+      },
+    ],
+  },
+  {
+    text: 'childProcess.spawnSync("rf", [], { stdio: "pipe", get env() { return process.env; } });',
+    launches: [
+      {
+        site: "form.ts spawnSync",
+        env: null,
+        after: [],
+        accessors: ["get env"],
+        bindings: ["childProcess <- global"],
+      },
+    ],
   },
 ];
 /** BINDINGS' table: each binding form, as one module's text beside the provider, and the bindings of each rf launch in it. */
@@ -683,6 +798,37 @@ const BINDING_PLANT: Unit = {
     'spawn("rf", ["context"], { env: scrubbedEnvironment(process.env, RF_CHILD_ENV_ALLOWLIST), ...launchOverrides });\n',
 };
 
+/** C1's live reading: scrubbedEnvironment over this process's own environment, with rf's seat set in it for that one synchronous
+ * call and restored after (its prior value, or its absence). */
+function liveScrub(scrub: (source: NodeJS.ProcessEnv, allowlist: readonly string[]) => Record<string, string>): {
+  readonly parentSeat: string | null;
+  readonly child: Record<string, string>;
+  readonly childOutside: string[];
+  readonly carriesPath: boolean;
+} {
+  const seat = "RF_ADAPTIVE";
+  const prior = process.env[seat];
+  process.env[seat] = "speculation";
+  try {
+    const child = scrub(process.env, RF_CHILD_ENV_ALLOWLIST);
+    return {
+      parentSeat: process.env[seat] ?? null,
+      child,
+      childOutside: Object.keys(child).filter(name => !RF_CHILD_ENV_ALLOWLIST.includes(name)).sort(),
+      carriesPath: typeof process.env.PATH === "string" && child.PATH === process.env.PATH,
+    };
+  } finally {
+    if (prior === undefined) Reflect.deleteProperty(process.env, seat);
+    else process.env[seat] = prior;
+  }
+}
+/** C1's prototype judge: whether an environment object has no prototype (Node's for-in over env reads inherited names). */
+const hasNullPrototype = (env: object): boolean => Object.getPrototypeOf(env) === null;
+/** C1's planted scrub (its planted leg, refusal #1's F3 shape): the real scrub, then every parent name, when its source is this
+ * process's own environment; over any other source, the real scrub. */
+const LEAKY_SCRUB = (source: NodeJS.ProcessEnv, allowlist: readonly string[]): Record<string, string> =>
+  source === process.env ? Object.assign(scrubbedEnvironment(source, allowlist), source) : scrubbedEnvironment(source, allowlist);
+
 const IMPL: Readonly<Record<string, () => Json>> = {
   A1: () => {
     const { modules, units } = codeWalk();
@@ -726,11 +872,34 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const rfFamily = RF_CHILD_ENV_ALLOWLIST.filter(name => /^(?:SWARM_)?RF_/i.test(name));
     const parent: Record<string, string> = { PATH: "/usr/bin", HOME: "/home/fixture", RF_ADAPTIVE: "speculation" };
     const child = scrubbedEnvironment(parent, RF_CHILD_ENV_ALLOWLIST);
+    const seatBefore = process.env.RF_ADAPTIVE;
+    const live = liveScrub(scrubbedEnvironment);
+    const leaky = liveScrub(LEAKY_SCRUB);
+    const restored = process.env.RF_ADAPTIVE === seatBefore;
+    const nullPrototype = [child, live.child].map(hasNullPrototype);
+    const planted = { leakyReportsSeat: leaky.childOutside.includes("RF_ADAPTIVE"), plainCopyNullPrototype: hasNullPrototype({ ...child }) };
     expect(rfFamily, "rf-family names on the rf child allowlist").toEqual([]);
     expect(parent.RF_ADAPTIVE, "the parent fixture carries rf's seat, set to its speculation feature").toBe("speculation");
     expect(Object.hasOwn(child, "RF_ADAPTIVE"), "a parent RF_ADAPTIVE=speculation reached the rf child environment").toBe(false);
     expect(Object.keys(child).sort(), "the names the rf child environment holds from that parent").toEqual(["HOME", "PATH"]);
-    return { allowlist: [...RF_CHILD_ENV_ALLOWLIST], rfFamily, parentSeat: parent.RF_ADAPTIVE ?? null, parentNames: Object.keys(parent).sort(), childNames: Object.keys(child).sort() };
+    expect(live.parentSeat, "this process's own environment carried rf's seat, set to its speculation feature, for the scrub").toBe("speculation");
+    expect(live.childOutside, "names outside the allowlist in the rf child environment scrubbed from this process's own environment").toEqual([]);
+    expect(live.carriesPath, "the rf child environment scrubbed from this process's own environment carries its PATH, with its value").toBe(true);
+    expect(nullPrototype, "each rf child environment is a null-prototype object (Node's for-in over env reads inherited names)").toEqual([true, true]);
+    expect(planted.leakyReportsSeat, "the same live judge over a scrub planted to keep every parent name for this process's own environment: the seat among its names").toBe(true);
+    expect(planted.plainCopyNullPrototype, "the same prototype judge over a plain-object copy of the fixture child: it reads a prototype").toBe(false);
+    expect(restored, "rf's seat in this process's own environment once the live readings end: as before them").toBe(true);
+    return {
+      allowlist: [...RF_CHILD_ENV_ALLOWLIST],
+      rfFamily,
+      parentSeat: parent.RF_ADAPTIVE ?? null,
+      parentNames: Object.keys(parent).sort(),
+      childNames: Object.keys(child).sort(),
+      live: { parentSeat: live.parentSeat, childOutside: live.childOutside, carriesPath: live.carriesPath },
+      nullPrototype,
+      planted,
+      restored,
+    };
   },
   C2: () => {
     const { modules, units } = codeWalk();
@@ -742,11 +911,12 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const bound = launchesOf(codeWalk([BINDING_PLANT]).units);
     const forms = LAUNCH_FORMS.map(form => ({ text: form.text, launches: rfLaunches("form.ts", form.text) }));
     const bindingForms = BINDING_FORMS.map(form => ({ text: form.text, bindings: rfLaunches(BINDING_FORM_PATH, form.text).map(launch => launch.bindings) }));
-    expect(launches, "every rf launch in src: the env its options hand the child, the members after it that can set env, and its names' bindings").toStrictEqual([
+    expect(launches, "every rf launch in src: the env its options hand the child, the members after it that can override env, its options' accessors, and its names' bindings").toStrictEqual([
       {
         site: `${PROVIDER} spawn`,
         env: "scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)",
         after: [],
+        accessors: [],
         bindings: [
           "spawn <- import spawn from node:child_process",
           `scrubbedEnvironment <- import scrubbedEnvironment from ${PROCESS_ENV}`,
@@ -757,7 +927,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     ]);
     expect(planted, "the same scan over the src modules and a planted inherited-env rf launch after them").toStrictEqual([
       ...launches,
-      { site: `${LAUNCH_PLANT.path} spawnSync`, env: "process.env", after: [], bindings: ["spawnSync <- import spawnSync from node:child_process", "process <- global"] },
+      { site: `${LAUNCH_PLANT.path} spawnSync`, env: "process.env", after: [], accessors: [], bindings: ["spawnSync <- import spawnSync from node:child_process", "process <- global"] },
     ]);
     expect(bound, "the same scan over the src modules and a planted spawn carrying the provider's env text through a local scrub, a spread after it").toStrictEqual([
       ...launches,
@@ -765,6 +935,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         site: `${BINDING_PLANT.path} spawn`,
         env: "scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)",
         after: ["...launchOverrides"],
+        accessors: [],
         bindings: [
           "spawn <- import spawn from node:child_process",
           "scrubbedEnvironment <- local VariableDeclaration",
@@ -947,6 +1118,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     return { quiet, anchored };
   },
   Q8: () => verdicts(docsHit, RENDERED_CONTROLS),
+  Q9: () => ({ docs: verdicts(docsHit, VISUAL_DOCS_CONTROLS), code: verdicts(codeHit, VISUAL_CODE_CONTROLS) }),
 };
 
 /** Each pin's witness, frozen at the cut (rule 16). */
@@ -961,6 +1133,10 @@ const WITNESS: Readonly<Record<string, Json>> = {
     parentSeat: "speculation",
     parentNames: ["HOME", "PATH", "RF_ADAPTIVE"],
     childNames: ["HOME", "PATH"],
+    live: { parentSeat: "speculation", childOutside: [], carriesPath: true },
+    nullPrototype: [true, true],
+    planted: { leakyReportsSeat: true, plainCopyNullPrototype: false },
+    restored: true,
   },
   C2: {
     launches: [
@@ -968,6 +1144,7 @@ const WITNESS: Readonly<Record<string, Json>> = {
         site: `${PROVIDER} spawn`,
         env: "scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)",
         after: [],
+        accessors: [],
         bindings: [
           "spawn <- import spawn from node:child_process",
           "scrubbedEnvironment <- import scrubbedEnvironment from src/workbench/process-env.ts",
@@ -981,6 +1158,7 @@ const WITNESS: Readonly<Record<string, Json>> = {
         site: `${PROVIDER} spawn`,
         env: "scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)",
         after: [],
+        accessors: [],
         bindings: [
           "spawn <- import spawn from node:child_process",
           "scrubbedEnvironment <- import scrubbedEnvironment from src/workbench/process-env.ts",
@@ -988,13 +1166,14 @@ const WITNESS: Readonly<Record<string, Json>> = {
           "RF_CHILD_ENV_ALLOWLIST <- import RF_CHILD_ENV_ALLOWLIST from src/workbench/process-env.ts",
         ],
       },
-      { site: "src/zz-plant-launch.ts spawnSync", env: "process.env", after: [], bindings: ["spawnSync <- import spawnSync from node:child_process", "process <- global"] },
+      { site: "src/zz-plant-launch.ts spawnSync", env: "process.env", after: [], accessors: [], bindings: ["spawnSync <- import spawnSync from node:child_process", "process <- global"] },
     ],
     bound: [
       {
         site: `${PROVIDER} spawn`,
         env: "scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)",
         after: [],
+        accessors: [],
         bindings: [
           "spawn <- import spawn from node:child_process",
           "scrubbedEnvironment <- import scrubbedEnvironment from src/workbench/process-env.ts",
@@ -1006,6 +1185,7 @@ const WITNESS: Readonly<Record<string, Json>> = {
         site: "src/workbench/providers/zz-plant-binding.ts spawn",
         env: "scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)",
         after: ["...launchOverrides"],
+        accessors: [],
         bindings: [
           "spawn <- import spawn from node:child_process",
           "scrubbedEnvironment <- local VariableDeclaration",
@@ -1016,34 +1196,86 @@ const WITNESS: Readonly<Record<string, Json>> = {
     ],
     appendedUnread: [],
     forms: [
-      { text: 'execSync("rf --json --version");', launches: [{ site: "form.ts execSync", env: null, after: [], bindings: ["execSync <- global"] }] },
+      { text: 'execSync("rf --json --version");', launches: [{ site: "form.ts execSync", env: null, after: [], accessors: [], bindings: ["execSync <- global"] }] },
       {
         text: 'spawnSync("/usr/local/bin/rf", ["--json", "--version"], { env: process.env });',
-        launches: [{ site: "form.ts spawnSync", env: "process.env", after: [], bindings: ["spawnSync <- global", "process <- global"] }],
+        launches: [{ site: "form.ts spawnSync", env: "process.env", after: [], accessors: [], bindings: ["spawnSync <- global", "process <- global"] }],
       },
       {
         text: 'spawn("rf --json --version", { shell: true, env: process.env });',
-        launches: [{ site: "form.ts spawn", env: "process.env", after: [], bindings: ["spawn <- global", "process <- global"] }],
+        launches: [{ site: "form.ts spawn", env: "process.env", after: [], accessors: [], bindings: ["spawn <- global", "process <- global"] }],
       },
       {
         text: 'childProcess.execFile("rf", ["--json"], { env: { ...process.env } });',
-        launches: [{ site: "form.ts execFile", env: "{...process.env}", after: [], bindings: ["childProcess <- global", "process <- global"] }],
+        launches: [{ site: "form.ts execFile", env: "{...process.env}", after: [], accessors: [], bindings: ["childProcess <- global", "process <- global"] }],
       },
-      { text: '/^rf/.exec("rf --json");', launches: [{ site: "form.ts exec", env: null, after: [], bindings: [] }] },
+      { text: '/^rf/.exec("rf --json");', launches: [{ site: "form.ts exec", env: null, after: [], accessors: [], bindings: [] }] },
       { text: 'spawn("rfc", []); spawn("surf", []); execFileSync("git", ["rf"]);', launches: [] },
       {
         text: 'spawn("rf", [], { env: scrub(process.env, process.env.HOME), ...overrides });',
         launches: [
-          { site: "form.ts spawn", env: "scrub(process.env,process.env.HOME)", after: ["...overrides"], bindings: ["spawn <- global", "scrub <- global", "process <- global"] },
+          { site: "form.ts spawn", env: "scrub(process.env,process.env.HOME)", after: ["...overrides"], accessors: [], bindings: ["spawn <- global", "scrub <- global", "process <- global"] },
         ],
       },
       {
         text: 'spawn("rf", [], { env: first, "env": second, [key]: third, cwd: root });',
-        launches: [{ site: "form.ts spawn", env: "first", after: ['"env":second', "[key]:third"], bindings: ["spawn <- global", "first <- global"] }],
+        launches: [{ site: "form.ts spawn", env: "first", after: ['"env":second', "[key]:third"], accessors: [], bindings: ["spawn <- global", "first <- global"] }],
       },
       {
         text: 'spawn("rf", [], { ...base, env: only, cwd: root, stdio: "pipe" });',
-        launches: [{ site: "form.ts spawn", env: "only", after: [], bindings: ["spawn <- global", "only <- global"] }],
+        launches: [{ site: "form.ts spawn", env: "only", after: [], accessors: [], bindings: ["spawn <- global", "only <- global"] }],
+      },
+      {
+        text: 'spawn("rf",argv,{stdio:["ignore","pipe","pipe"],get cwd(){this.env=process.env;return undefined;},env:scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)});',
+        launches: [
+          {
+            site: "form.ts spawn",
+            env: "scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)",
+            after: [],
+            accessors: ["get cwd"],
+            bindings: ["spawn <- global", "scrubbedEnvironment <- global", "process <- global", "RF_CHILD_ENV_ALLOWLIST <- global"],
+          },
+        ],
+      },
+      {
+        text: 'spawn("rf",argv,{stdio:["ignore","pipe","pipe"],env:scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST),get cwd(){Object.assign(this.env??{},process.env);return undefined;}});',
+        launches: [
+          {
+            site: "form.ts spawn",
+            env: "scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)",
+            after: [],
+            accessors: ["get cwd"],
+            bindings: ["spawn <- global", "scrubbedEnvironment <- global", "process <- global", "RF_CHILD_ENV_ALLOWLIST <- global"],
+          },
+        ],
+      },
+      {
+        text: 'spawn("rf", [], { env: only, get cwd() { this.env = process.env; return undefined; } });',
+        launches: [{ site: "form.ts spawn", env: "only", after: [], accessors: ["get cwd"], bindings: ["spawn <- global", "only <- global"] }],
+      },
+      {
+        text: 'spawn("rf", [], { get [key]() { return undefined; }, env: only, set cwd(value) {}, get 0() { return undefined; }, get "stdio"() { return "pipe"; }, get env() { return process.env; } });',
+        launches: [
+          {
+            site: "form.ts spawn",
+            env: "only",
+            after: ["getenv(){returnprocess.env;}"],
+            accessors: ["get [key]", "set cwd", "get 0", 'get "stdio"', "get env"],
+            bindings: ["spawn <- global", "only <- global"],
+          },
+        ],
+      },
+      {
+        text: 'childProcess.spawnSync("rf", [], { stdio: "pipe", get env() { return process.env; } });',
+        launches: [
+          {
+            site: "form.ts spawnSync",
+            env: null,
+            after: [],
+            accessors: ["get env"],
+            bindings: ["childProcess <- global"],
+          },
+        ],
       },
     ],
     bindingForms: [
@@ -1193,9 +1425,23 @@ const WITNESS: Readonly<Record<string, Json>> = {
     { text: "rf's speculation policy is turned on by default for Pi renders.", hit: true },
     { text: "Pi sets RF_ADAPTIVE on every render.", hit: true },
   ],
+  Q9: {
+    docs: [
+      { text: `rf's spec${ZERO_WIDTH_SPACE}ulation policy is turned on by default for Pi renders.`, hit: false },
+      { text: `rf's specu${SOFT_HYPHEN}lation policy is turned on by default for Pi renders.`, hit: false },
+      { text: `rf's sp${CYRILLIC_E}culation policy is turned on by default for Pi renders.`, hit: false },
+      { text: `Pi sets RF_ADA${WORD_JOINER}PTIVE on every render.`, hit: true },
+      { text: `Pi keeps per-cla${ZERO_WIDTH_SPACE}ss slots for renders.`, hit: false },
+      { text: "rf's speculation policy is turned on by default for Pi renders.", hit: true },
+    ],
+    code: [
+      { text: `const policy = "spec${ZERO_WIDTH_SPACE}ulation";`, hit: false },
+      { text: 'const policy = "speculation";', hit: true },
+    ],
+  },
 };
 /** Each pin's assertion count when its case reached its end (its witness comparison included), frozen at the cut. */
-const REACHED_AT: readonly string[] = ["A1:5", "A2:5", "B1:5", "B2:5", "C1:6", "C2:8", "D1:5", "D2:9", "M1:5", "M2:4", "Q1:5", "Q2:3", "Q3:8", "Q4:4", "Q5:3", "Q6:3", "Q7:4", "Q8:3"];
+const REACHED_AT: readonly string[] = ["A1:5", "A2:5", "B1:5", "B2:5", "C1:13", "C2:8", "D1:5", "D2:9", "M1:5", "M2:4", "Q1:5", "Q2:3", "Q3:8", "Q4:4", "Q5:3", "Q6:3", "Q7:4", "Q8:3", "Q9:4"];
 const JUDGED_SET_TITLE = "the judged set: the frozen shape, the cases, the witnesses, the residuals and the outside anchors agree";
 const REGISTRATION_TITLE = "registration: every test of this file is registered once, in row order, in run mode, and ran; every pin reached its end with its frozen witness and assertion count";
 
@@ -1208,7 +1454,7 @@ describe("wb-km7q.9 rf speculation boundary census (SDK-REACTIVE-FIBER-ADAPTIVE-
     // The outside anchors first: they read the labels of rows A to D only (Q7 pins the edits they do not read).
     expect(anchorFindings(ROWS, filingTitle(), boundParagraphs(boundSection())[0] ?? ""), "the outside anchors' readings the rows' labels fail").toEqual([]);
     const pins = ROWS.flatMap(row => row.pins);
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:2", "C:2", "D:2", "M:2", "Q:8"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:2", "C:2", "D:2", "M:2", "Q:9"]);
     expect(Object.keys(IMPL).sort(), "a case for every pin, and no other").toEqual([...pins].sort());
     expect(Object.keys(WITNESS).sort(), "a frozen witness for every pin, and no other").toEqual([...pins].sort());
     expect(REACHED_AT.map(entry => entry.split(":")[0]), "a frozen assertion count for every pin, in row order").toEqual(pins);
