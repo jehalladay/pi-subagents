@@ -420,7 +420,25 @@
               "deepQualifiedHead": 1,
               "typeofQualifiedHead": 1,
               "parenthesizedChain": 1,
-              "parenthesizedIndex": 1
+              "parenthesizedIndex": 1,
+              "signatureAfterMember": 1,
+              "signatureInArray": 1,
+              "signatureUnionReturn": 1,
+              "declarationUnionReturnType": 1,
+              "blockDeclarationReturnType": 1,
+              "blockInnerDeclaration": 1,
+              "thrownCallArgument": 1,
+              "constructedCallee": 1,
+              "constructedClassCallee": 1,
+              "taggedTag": 1,
+              "classConditional": 1,
+              "classInArray": 1,
+              "classExpressionAccessor": 1,
+              "classExpressionSetter": 1,
+              "qualifiedHeadThirdPart": 1,
+              "genericTypeHead": 1,
+              "bareTypeofHead": 1,
+              "doubleParenthesizedIndex": 1
             },
             "splitPathCut5": {
               "localFunction": 0,
@@ -438,7 +456,10 @@
               "memberInvokedFunction": 0,
               "memberAppliedFunction": 0,
               "memberBoundArrow": 0,
-              "memberCallArgument": 0
+              "memberCallArgument": 0,
+              "tagTypeArgument": 0,
+              "qualifiedTypeName": 0,
+              "typeofChain": 0
             }
           }
         },
