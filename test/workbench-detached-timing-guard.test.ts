@@ -71,6 +71,12 @@
  * wrappers a finding's condition unwraps, never by a wrapper anywhere in the control's text; the roster pins what each T1
  * and M1 kill control's finding unwraps, which leaves out a wrapper on an operand that is not the counter (ready! in
  * ready! && state.n), and the M1 row reads every wrapper kind among them. One loop is still one finding.
+ * wb-dr81 (the R694 follow-up of wb-69ur landing 698, gate cmd_2fc9ac8e06c0: F1 leads, F2 rides) pins two readings of
+ * that keying with planted controls, the reader unchanged. A literal element key behind a wrapper or parentheses reads
+ * as the member it names: counts[0 as const] and state[("n")] read as the counters counts[0] and state.n, two M1 kill
+ * controls (the first one's finding unwraps the `as`). And no two of a named member, a private name and a computed
+ * element meet: this!["#n"] read while this.#n steps, and counts[n!] read while counts["n"] steps, are two negative
+ * controls that stay quiet.
  * The judged set is read from the test directory and the config, never typed here. The members importing the marked
  * twins (the three suites that drive real hosts, and the helper's own unit rows) are pinned, so a derivation that reads
  * nothing, or a member that leaves the twins, reds. Every widened reading has planted kill controls beside negative
@@ -637,6 +643,8 @@ const CONTROLS: Readonly<Record<string, string>> = {
   "M1.numericKey": 'while (alive() && counts["0"] !== 0) { counts[0]--; await holdOpen(20); }',
   "M1.wrappedIndex": "while (alive() && counts[i!]) { counts[i]--; await holdOpen(20); }",
   "M1.wrappedKeyChain": "while (alive() && counts[cursor!.i]) { counts[cursor.i]--; await holdOpen(20); }",
+  "M1.wrappedLiteralKey": "while (alive() && counts[0 as const]) { counts[0]--; await holdOpen(20); }",
+  "M1.parenthesizedLiteralKey": 'while (alive() && state[("n")]) { state.n--; await holdOpen(20); }',
   "M1.spacedLink": "while (alive() && state /* left */ .n) { state.n--; await holdOpen(20); }",
   "M1.assignedReceiver": "while (alive() && state.n !== 0) { (state as Counter).n -= 1; await holdOpen(20); }",
   "M1.forIncrementor": "for (let k = 0; counts[k] !== 0 && alive(); counts![k]--) await holdOpen(20);",
@@ -663,6 +671,8 @@ const CONTROLS: Readonly<Record<string, string>> = {
   "N.otherMemberName": "while (alive() && (state as Counter).done) { state.n--; await holdOpen(20); }",
   "N.otherElement": "while (alive() && counts![1]) { counts[0]--; await holdOpen(20); }",
   "N.otherIndex": "while (alive() && counts[j!]) { counts[i]--; await holdOpen(20); }",
+  "N.quotedPrivate": 'while (alive() && this!["#n"]) { this.#n--; await holdOpen(20); }',
+  "N.computedLiteral": 'while (alive() && counts[n!]) { counts["n"]--; await holdOpen(20); }',
 };
 
 /** wb-nqbd F5: each named residual's planted members (`<residual>.<member>`), every one a quiet row the guard reads nothing in. */
@@ -958,8 +968,8 @@ describe("wb-maza: the detached-* family keeps its strict timing markers (owner 
       "V1:13",
       "V2:15",
       "T1:13",
-      "M1:21",
-      "N:18",
+      "M1:23",
+      "N:20",
       "R-WAIT-LOOP:3",
       "R-COUNTER-ROUTE:3",
       "R-HOST-ROUTE:4",
@@ -970,7 +980,7 @@ describe("wb-maza: the detached-* family keeps its strict timing markers (owner 
       "R-REGISTRAR-ROUTE:5",
       "R-RAISE-SITE:1",
       "R-CHAIN-KEY:2",
-      "unwraps:34",
+      "unwraps:36",
     ]);
     expect(ROSTER.bead).toBe("wb-nqbd");
     // As collected, before any case runs: the last case checks the same tree again, so deleting either one reds the other.
