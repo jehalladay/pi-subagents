@@ -22,12 +22,14 @@
  * recommended starting defaults", the paragraph opening "RF speculation boundary:"), and the until-then leg of the adoption-time
  * vitest. No src lexeme names THE VOCABULARY, so no src module declares a boundary or broker-limit configuration under the title's
  * spellings, rf's seat or rf's member names (one under names of its own is R-PARAPHRASE). Every launcher call LAUNCH reads in src
- * is the provider's spawn, handed scrubbedEnvironment(process.env, RF_CHILD_ENV_ALLOWLIST), whose allowlist names no rf-family
- * variable, so the provider's rf child never receives the RF_ADAPTIVE seat (an rf launch LAUNCH does not read is
- * R-INDIRECT-LAUNCH). The host hard caps a future declaration may never override are read off the provider, as values. NOT
- * DELIVERED: the adoption-time vitest itself (a Pi-declared value looser than a host cap is refused or clamped): A1 reads no Pi
- * declaration to feed it. A cut that adds one under THE VOCABULARY reds A1 (its planted legs show the judge reports such a module)
- * and owes that test, as the docs paragraph's last sentence says.
+ * is the provider's spawn, handed scrubbedEnvironment(process.env, RF_CHILD_ENV_ALLOWLIST) with no options member after it that
+ * can set env, and BINDINGS reads spawn as its import from node:child_process, scrubbedEnvironment and RF_CHILD_ENV_ALLOWLIST as
+ * their imports, under their own names, from src/workbench/process-env.ts (the module C1 reads, whose allowlist names no
+ * rf-family variable) and process as the global, so the provider's rf child never receives the RF_ADAPTIVE seat (an rf launch
+ * LAUNCH does not read is R-INDIRECT-LAUNCH). The host hard caps a future declaration may never override are read off the
+ * provider, as values. NOT DELIVERED: the adoption-time vitest itself (a Pi-declared value looser than a host cap is refused or
+ * clamped): A1 reads no Pi declaration to feed it. A cut that adds one under THE VOCABULARY reds A1 (its planted legs show the
+ * judge reports such a module) and owes that test, as the docs paragraph's last sentence says.
  *
  * READINGS
  * - WORDS: NFKC, a break at each lower-to-upper case change and before the last capital of an acronym run, lower case, the runs
@@ -46,12 +48,21 @@
  * - LAUNCH (row C): every child-process launcher call (spawn, spawnSync, exec, execSync, execFile, execFileSync or fork, called by
  *   that name or as a property of that name) in a src module whose first argument is a string literal whose first word, any
  *   directory prefix dropped, is rf ("rf", "/usr/local/bin/rf" and the command string "rf --json --version" each name rf; "rfc"
- *   and "surf" do not), with its options object's env initializer as written (null when its options carry none). A RegExp exec
- *   over such a literal reads as a launch too (strict direction).
- * - DOCS (row D): every .md page below docs/ (a filesystem walk, held to git's listing) and the root README.md and CHANGELOG.md,
- *   cut into raw sentences (after ".", "!" or "?" before white space, at a blank line, before a list item, heading, table row or
- *   quote); a sentence NAMES the vocabulary when its words carry a family. The bound paragraph is read in the rendered view
- *   (test/helpers/census.ts docsSection: the unique section under its level-1 title, HTML refused).
+ *   and "surf" do not), with its options object's env initializer as written (null when its options carry none), and the members
+ *   of that object after the env property that can set env (a spread, a member named env, a computed name), as written. A
+ *   RegExp exec over such a literal reads as a launch too (strict direction).
+ * - BINDINGS (row C): for each launch LAUNCH reads, the binding of every name its callee and its env initializer reference (a
+ *   property name after a dot or before a colon, and a name in a type, excepted), each distinct reading once in source order,
+ *   resolved by the TypeScript checker over the launch's module alone: an import (the imported
+ *   name and its module, a relative specifier resolved against the module's path with .js read as .ts), a local declaration
+ *   (its syntax kind), or global (no declaration in the module).
+ * - DOCS (row D): every .md page at the repository's top level and below each top-level directory holding a path git tracks,
+ *   test/ excepted (R-OUTSIDE-ROOTS): filesystem walks held to git's listing of the same roots and top-level pages, with every
+ *   .md page git tracks outside test/ among the pages read (a tracked page the walks miss reds D2);
+ *   each page is cut into raw sentences (after ".", "!" or "?" before white space, at a blank line, before a list item,
+ *   heading, table row or quote), and a sentence NAMES the vocabulary when its words carry a family (a sentence that names it
+ *   only once rendered is R-RENDERED). The bound paragraph is read in the rendered view (test/helpers/census.ts docsSection: the
+ *   unique section under its level-1 title, HTML refused).
  *
  * JUDGED ROWS (one test per pin, titled by the pin id under its row's label; the labels of A-D are the title's two clauses after
  * its trigger, each split at its " and "):
@@ -64,13 +75,20 @@
  *  C "rf's local default speculation policy stays passive/disabled": C1 the rf child allowlist names no rf-family variable (a name
  *    opening RF_ or SWARM_RF_, in any case), and from a parent fixture carrying RF_ADAPTIVE=speculation (the parent's seat and
  *    names are in the witness) scrubbedEnvironment builds a child holding only HOME and PATH; C2 every rf launch LAUNCH reads in
- *    src is the provider's spawn, handed scrubbedEnvironment(process.env, RF_CHILD_ENV_ALLOWLIST), and LAUNCH reads every rf form
- *    of its table (bare, path-qualified, command string, by name and as a property) and none of its other programs (planted legs:
- *    an inherited-env rf launch module after the real ones, and that launch appended to every real module).
+ *    src is the provider's spawn, handed scrubbedEnvironment(process.env, RF_CHILD_ENV_ALLOWLIST) with no member after it that can
+ *    set env, its four names bound as DELIVERED HERE says (BINDINGS); LAUNCH reads every rf form of its table (bare,
+ *    path-qualified, command string, by name and as a property), none of its other programs, and the after-members of each form
+ *    (a spread after env; a string-keyed env and a computed name after it, beside a cwd; a spread before env with members after
+ *    it that cannot set env); and BINDINGS reads every form of its table (named and renamed imports, namespace and default
+ *    imports, an import from another module, a module-scope const and function, an inner const over an import, a parameter, a
+ *    hoisted var and a local process) (planted legs: an inherited-env rf launch module after the real ones; a module after them
+ *    whose spawn carries the provider's env text through a local scrub with a spread after it; and the inherited-env launch
+ *    appended to every real module).
  *  D "Pi documents no other default": D1 docs/18's section holds exactly one paragraph opening "RF speculation boundary:", and it
- *    renders as frozen; D2 every docs sentence naming the vocabulary is a sentence of that paragraph, and the docs walk read
- *    exactly git's listing above its floor, docs/18 included (planted legs: a page stating another default and a copy of a bound
- *    sentence, both read outside; and the first of those sentences appended to every real page).
+ *    renders as frozen; D2 every docs sentence naming the vocabulary is a sentence of that paragraph, the docs walk read exactly
+ *    git's listing of its roots and top-level pages, every .md page git tracks outside test/ among them, and its docs/ pages meet
+ *    their floor, docs/18 included (planted legs: a page stating another default and a copy of a bound sentence, both read
+ *    outside; and the first of those sentences appended to every real page).
  *  M the readers: M1 the code reader's spellings, the spellings the owner's title gives the subject and rf's seven members (each
  *    in camelCase and snake_case) included; M2 the docs reader's spellings and its sentence cutter.
  *  Q the residuals' pinned quiet rows (RESIDUALS).
@@ -92,7 +110,9 @@
  * RESIDUALS (named; each has a pinned quiet row): R-COMMENT (Q1) a comment is not read - src/workbench/process-env.ts names the
  *   seat in a doc comment and reads quiet; R-COMPUTED (Q2) a name assembled at run time from parts no one lexeme spells;
  *   R-OUTSIDE-ROOTS (Q3) no module outside src/ is walked (test/, qa/, examples/ and the root config modules) - the env-scrub
- *   census and the process-env test spell the seat; R-PARAPHRASE (Q4) a default or a declaration stated without the vocabulary
+ *   census and the process-env test spell the seat - no page below test/ is read (git tracks fixture pages there), and a page of
+ *   another format is not read (a page is a name ending .md: an upper-case .MD, a .markdown page and the top-level LICENSE read
+ *   quiet); R-PARAPHRASE (Q4) a default or a declaration stated without the vocabulary
  *   ("rf prefetches every render by default.", the possessive "rf's adaptive seat", a limits object under names of its own such as
  *   inflight and cpu); R-OTHER-CAP (Q5) a cap outside the deadline timer and the two stream bounds (a capability registry
  *   deadline) is not read by B1; R-INDIRECT-LAUNCH (Q6) an rf launch LAUNCH does not read: a variable program name, a launcher
@@ -100,18 +120,27 @@
  *   word (src/workflow/host.ts executeGate runs a workflow's gate command that way, through GATE_SHELL with pi.exec's own
  *   environment; what that environment holds is not measured here); R-SELF-ANCHORED (Q7) no anchor outside this file names a pin
  *   or rows M and Q: the outside anchors read the labels of A to D alone, and Q7 shows every pin removed singly, rows M and Q
- *   removed and their labels changed reading no anchor finding, beside the A to D removals and relabels that do.
+ *   removed and their labels changed reading no anchor finding, beside the A to D removals and relabels that do; R-RENDERED (Q8)
+ *   a sentence naming the vocabulary only in the rendered view is not read: D2 cuts raw sentences, so a mark, code span or link
+ *   inside a word ("spec*ul*ation", "spec**ul**ation", "spec`ul`ation", "[spec](./zz.md)ulation"), a named or numeric character
+ *   reference ("RF&lowbar;ADAPTIVE", "specu&shy;lation", "RF&#95;ADAPTIVE") or inline HTML ("<em>spec</em>ulation") reads quiet,
+ *   while the same sentences written plainly are read.
  * NOT CLAIMED: an edit of this file and the docs paragraph together; the completeness of the residual list (its anchors are this
  *   file's literals); a pin's case replaced by one that returns its frozen witness without measuring it; a judge keyed on a
  *   plant's own text or on which run it is in (PLANTED LEGS); THE VOCABULARY's phrases beyond this file's copy of rf's names (the
- *   census never reads rf); the caps' enforcement (B1 reads their values).
+ *   census never reads rf); the caps' enforcement (B1 reads their values); a name rebound or a module export replaced at run time
+ *   (BINDINGS reads declarations, never run-time values).
+ * FOLLOW-UP wb-ottk (the R694 carry of landing 673: PREP F11 leads, F7 and F12 ride): the docs walk reads every tracked root's
+ *   pages and every top-level page (F11: AGENTS.md, CONTRIBUTING.md, SECURITY.md and the examples/, .pi/, .agents/, .beads/ and
+ *   vendor/ pages were unread); C2 reads BINDINGS and the after-members (F7: a local pass-through scrub and a later spread of
+ *   env read clean); R-RENDERED names the rendered-only sentence, with its quiet row Q8 (F12).
  *
  * Display paths added: none. Test-only: every plant is an in-memory text; src, docs, two test files and the bead export are only
  * read.
  */
 import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, posix } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
@@ -130,9 +159,15 @@ const DOCS_PAGE = "docs/workbench/18-decisions-and-risks.md";
 const DOCS_TITLE = "18 — Decisions, risks, deliberate defaults and re-evaluation triggers";
 const DOCS_SECTION = "Decisions deferred, with recommended starting defaults";
 const DOCS_LABEL = "RF speculation boundary:";
-/** The root pages the docs walk reads beside docs/. */
-const ROOT_PAGES = ["CHANGELOG.md", "README.md"] as const;
-/** The walks' floors, each below the count at base 62f9ede (116 src modules, 77 docs pages). */
+/** The one top-level directory whose pages the docs walk does not read (R-OUTSIDE-ROOTS): its .md files are test fixtures. */
+const UNREAD_PAGE_ROOT = "test";
+/** A page the docs walk reads (DOCS): a name ending .md. */
+const PAGE = /\.md$/;
+/** A tracked top-level page of another format, which the docs walk does not read (R-OUTSIDE-ROOTS). */
+const OTHER_FORMAT_PAGE = "LICENSE";
+/** Names the page predicate judges (Q3): only the .md one is a page; the others are R-OUTSIDE-ROOTS's other formats. */
+const PAGE_NAMES = ["notes.md", "NOTES.MD", "notes.markdown", OTHER_FORMAT_PAGE] as const;
+/** The walks' floors, each below the count at base 62f9ede (116 src modules, 77 docs pages; 117 and 79 at c2695d7). */
 const SRC_FLOOR = 100;
 const DOCS_FLOOR = 60;
 /** The two test files outside every walked root that spell the seat (R-OUTSIDE-ROOTS). */
@@ -168,7 +203,7 @@ const ROWS: readonly Row[] = [
   { id: "C", label: "rf's local default speculation policy stays passive/disabled", pins: ["C1", "C2"] },
   { id: "D", label: "Pi documents no other default", pins: ["D1", "D2"] },
   { id: "M", label: "the readers: M1 the code reader, M2 the docs reader", pins: ["M1", "M2"] },
-  { id: "Q", label: "the residuals' pinned quiet rows", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"] },
+  { id: "Q", label: "the residuals' pinned quiet rows", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8"] },
 ];
 /** The title's two clauses after its trigger, each as the pair of rows whose labels it joins with " and " (outside anchor 1). */
 const CLAUSES: readonly (readonly [string, string])[] = [
@@ -184,6 +219,7 @@ const RESIDUALS: Readonly<Record<string, string>> = {
   "R-OTHER-CAP": "Q5",
   "R-INDIRECT-LAUNCH": "Q6",
   "R-SELF-ANCHORED": "Q7",
+  "R-RENDERED": "Q8",
 };
 
 const read = (rel: string): string => readFileSync(join(REPO, rel), "utf8");
@@ -268,6 +304,27 @@ function gitListed(...roots: string[]): string[] {
   const listing = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--", ...roots], { cwd: REPO, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
   return [...new Set(listing.split("\0"))].filter(path => path !== "" && existsSync(join(REPO, path))).sort();
 }
+/** The docs walk's roots (DOCS): every top-level directory holding a path git tracks, test/ excepted, sorted. */
+function pageRoots(): string[] {
+  const tracked = execFileSync("git", ["ls-files", "-z", "--cached"], { cwd: REPO, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 }).split("\0");
+  const roots = new Set(tracked.filter(path => path.includes("/")).map(path => path.slice(0, path.indexOf("/"))));
+  return [...roots].filter(root => root !== UNREAD_PAGE_ROOT && existsSync(join(REPO, root))).sort();
+}
+/** The docs walk's top-level pages (DOCS): every regular .md file at the repository's top level, by a directory read. */
+function topPages(): string[] {
+  return readdirSync(REPO, { withFileTypes: true })
+    .filter(entry => entry.isFile() && PAGE.test(entry.name))
+    .map(entry => entry.name)
+    .sort();
+}
+/** Every .md page git tracks, at any depth, sorted: D2's fail-closed anchor, a listing of its own beside the walk's roots. */
+function trackedPages(): string[] {
+  const listing = execFileSync("git", ["ls-files", "-z", "--cached", "--", ":(glob)**/*.md"], { cwd: REPO, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  return listing
+    .split("\0")
+    .filter(path => path !== "")
+    .sort();
+}
 
 /** A unit a walk reads: a real file's text, or a planted one read from memory after the real ones. */
 interface Unit {
@@ -281,7 +338,7 @@ function codeWalk(plants: readonly Unit[] = [], appended = ""): { readonly modul
   return { modules, units: [...modules.map(path => ({ path, source: `${read(path)}${appended}` })), ...plants] };
 }
 const codeHits = (units: readonly Unit[]): string[] => units.flatMap(unit => codeFindings(unit.path, unit.source));
-const launchesOf = (units: readonly Unit[]): { readonly site: string; readonly env: string | null }[] => units.flatMap(unit => rfLaunches(unit.path, unit.source));
+const launchesOf = (units: readonly Unit[]): Launch[] => units.flatMap(unit => rfLaunches(unit.path, unit.source));
 /** The path a code or docs finding names (the text before its first ": " or ":<line>"). */
 const findingPath = (finding: string): string => finding.slice(0, finding.indexOf(":"));
 
@@ -350,20 +407,82 @@ function namesRf(argument: ts.Expression | undefined): boolean {
   const word = argument.text.trim().split(/\s+/)[0] ?? "";
   return word.slice(word.lastIndexOf("/") + 1) === "rf";
 }
-/** The rf launches a src module makes (LAUNCH). */
-function rfLaunches(fileName: string, source: string): { readonly site: string; readonly env: string | null }[] {
+/** One rf launch (LAUNCH): its site, its env initializer as written, the members after env that can set it, and BINDINGS (a
+ * type alias, so a launch is a Json value). */
+type Launch = { readonly site: string; readonly env: string | null; readonly after: string[]; readonly bindings: string[] };
+/** A module specifier as BINDINGS names it: a relative one resolved against the importing module's path, .js read as .ts. */
+function moduleOf(fileName: string, specifier: ts.Expression): string {
+  const text = ts.isStringLiteralLike(specifier) ? specifier.text : specifier.getText();
+  return text.startsWith(".") ? posix.join(posix.dirname(fileName), text).replace(/\.([cm]?)js$/, ".$1ts") : text;
+}
+/** The TypeScript checker over one parsed module alone (BINDINGS): no lib and no import resolution, so a name the module does
+ * not declare has no symbol. */
+function moduleChecker(file: ts.SourceFile): ts.TypeChecker {
+  const options: ts.CompilerOptions = { noLib: true, noResolve: true, allowJs: true, types: [] };
+  const host = ts.createCompilerHost(options, true);
+  host.getSourceFile = name => (name === file.fileName ? file : undefined);
+  host.fileExists = name => name === file.fileName;
+  host.readFile = name => (name === file.fileName ? file.text : undefined);
+  return ts.createProgram({ rootNames: [file.fileName], options, host }).getTypeChecker();
+}
+/** One name's binding (BINDINGS): `<name> <- import <imported> from <module>`, `<name> <- local <kind>` or `<name> <- global`. */
+function bindingOf(checker: ts.TypeChecker, fileName: string, name: ts.Identifier): string {
+  const declaration = checker.getSymbolAtLocation(name)?.declarations?.[0];
+  if (declaration === undefined) return `${name.text} <- global`;
+  if (ts.isImportSpecifier(declaration)) {
+    const imported = (declaration.propertyName ?? declaration.name).text;
+    return `${name.text} <- import ${imported} from ${moduleOf(fileName, declaration.parent.parent.parent.moduleSpecifier)}`;
+  }
+  if (ts.isNamespaceImport(declaration)) return `${name.text} <- import * from ${moduleOf(fileName, declaration.parent.parent.moduleSpecifier)}`;
+  if (ts.isImportClause(declaration)) return `${name.text} <- import default from ${moduleOf(fileName, declaration.parent.moduleSpecifier)}`;
+  return `${name.text} <- local ${ts.SyntaxKind[declaration.kind]}`;
+}
+/** The names an expression references (BINDINGS), in source order: every identifier but a property name after a dot or before
+ * a colon, and none inside a type. */
+function referencedNames(root: ts.Node): ts.Identifier[] {
+  const names: ts.Identifier[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isTypeNode(node)) return;
+    const member = ts.isIdentifier(node) && (ts.isPropertyAccessExpression(node.parent) || ts.isPropertyAssignment(node.parent)) && node.parent.name === node;
+    if (ts.isIdentifier(node) && !member) names.push(node);
+    ts.forEachChild(node, visit);
+  };
+  visit(root);
+  return names;
+}
+/** The members of an options object after its env property that can set env (LAUNCH): a spread, a member named env, a computed
+ * name, each as written. */
+function afterEnv(options: ts.ObjectLiteralExpression, env: ts.ObjectLiteralElementLike, file: ts.SourceFile): string[] {
+  return options.properties
+    .slice(options.properties.indexOf(env) + 1)
+    .filter(member => ts.isSpreadAssignment(member) || (member.name !== undefined && (ts.isComputedPropertyName(member.name) || member.name.text === "env")))
+    .map(member => member.getText(file).replace(/\s+/g, ""));
+}
+/** The rf launches a src module makes (LAUNCH), each with BINDINGS (the module's checker is built only when it launches rf). */
+function rfLaunches(fileName: string, source: string): Launch[] {
   const file = parsed(fileName, source);
-  const out: { site: string; env: string | null }[] = [];
+  let checker: ts.TypeChecker | undefined;
+  const checked = (): ts.TypeChecker => {
+    checker ??= moduleChecker(file);
+    return checker;
+  };
+  const out: Launch[] = [];
   const visit = (node: ts.Node): void => {
     if (ts.isCallExpression(node)) {
       const callee = ts.isIdentifier(node.expression) ? node.expression.text : ts.isPropertyAccessExpression(node.expression) ? node.expression.name.text : undefined;
       if (callee !== undefined && LAUNCHERS.has(callee) && namesRf(node.arguments[0])) {
         const options = node.arguments.find(argument => ts.isObjectLiteralExpression(argument));
-        const env =
-          options !== undefined && ts.isObjectLiteralExpression(options)
-            ? options.properties.find(property => ts.isPropertyAssignment(property) && property.name.getText(file) === "env")
-            : undefined;
-        out.push({ site: `${fileName} ${callee}`, env: env !== undefined && ts.isPropertyAssignment(env) ? env.initializer.getText(file).replace(/\s+/g, "") : null });
+        const literal = options !== undefined && ts.isObjectLiteralExpression(options) ? options : undefined;
+        const env = literal?.properties.find(property => ts.isPropertyAssignment(property) && property.name.getText(file) === "env");
+        const initializer = env !== undefined && ts.isPropertyAssignment(env) ? env.initializer : undefined;
+        const types = checked();
+        const names = [...referencedNames(node.expression), ...(initializer === undefined ? [] : referencedNames(initializer))];
+        out.push({
+          site: `${fileName} ${callee}`,
+          env: initializer === undefined ? null : initializer.getText(file).replace(/\s+/g, ""),
+          after: literal === undefined || env === undefined ? [] : afterEnv(literal, env, file),
+          bindings: [...new Set(names.map(name => bindingOf(types, fileName, name)))],
+        });
       }
     }
     ts.forEachChild(node, visit);
@@ -381,7 +500,7 @@ function sentencesOf(body: string): string[] {
 }
 /** The docs walk (row D): the pages read, and every sentence of each page (its text, then `appended`) and then of each plant. */
 function docsWalk(plants: readonly Unit[] = [], appended = ""): { readonly pages: string[]; readonly sentences: { readonly page: string; readonly sentence: string }[] } {
-  const pages = [...walked("docs").filter(path => path.endsWith(".md")), ...ROOT_PAGES.filter(page => existsSync(join(REPO, page)))].sort();
+  const pages = [...topPages(), ...pageRoots().flatMap(root => walked(root).filter(path => PAGE.test(path)))].sort();
   const units = [...pages.map(page => ({ path: page, source: `${read(page)}${appended}` })), ...plants];
   return { pages, sentences: units.flatMap(unit => sentencesOf(unit.source).map(sentence => ({ page: unit.path, sentence }))) };
 }
@@ -456,17 +575,113 @@ const DOCS_PLANT: Unit = {
   source: "# Plant\n\nrf's broker default is turned on for Pi renders.\n\n**RF speculation boundary:** rf's local default speculation policy stays passive/disabled and Pi documents no other default.\n",
 };
 const DOCS_APPENDED = "\n\nrf's broker default is turned on for Pi renders.\n";
+/** R-RENDERED's controls (Q8): a default named only once rendered reads quiet, and the same sentences written plainly are read. */
+const RENDERED_CONTROLS: readonly { readonly text: string; readonly hit: boolean }[] = [
+  { text: "rf's spec*ul*ation policy is turned on by default for Pi renders.", hit: false },
+  { text: "rf's spec**ul**ation policy is turned on by default for Pi renders.", hit: false },
+  { text: "rf's spec`ul`ation policy is turned on by default for Pi renders.", hit: false },
+  { text: "rf's [spec](./zz.md)ulation policy is turned on by default for Pi renders.", hit: false },
+  { text: "Pi sets RF&lowbar;ADAPTIVE on every render.", hit: false },
+  { text: "rf's specu&shy;lation policy is turned on by default for Pi renders.", hit: false },
+  { text: "Pi sets RF&#95;ADAPTIVE on every render.", hit: false },
+  { text: "rf's <em>spec</em>ulation policy is turned on by default for Pi renders.", hit: false },
+  { text: "rf's speculation policy is turned on by default for Pi renders.", hit: true },
+  { text: "Pi sets RF_ADAPTIVE on every render.", hit: true },
+];
 /** B1's synthetic provider: the reader must read its values, never the live provider's. */
 const CAPS_PLANT = 'const LIMIT=4*1024;\nconst timer=setTimeout(()=>stop("deadline"),1_500);\nif(outBytes>LIMIT) stop("stdout");\nif(errBytes>LIMIT) stop("stderr");\nif(errBytes>=LIMIT) stop("stderr");\n';
-/** LAUNCH's table: each launcher form, as one module's text, and the rf launches LAUNCH reads in it. */
-const LAUNCH_FORMS: readonly { readonly text: string; readonly launches: readonly { readonly site: string; readonly env: string | null }[] }[] = [
-  { text: 'execSync("rf --json --version");', launches: [{ site: "form.ts execSync", env: null }] },
-  { text: 'spawnSync("/usr/local/bin/rf", ["--json", "--version"], { env: process.env });', launches: [{ site: "form.ts spawnSync", env: "process.env" }] },
-  { text: 'spawn("rf --json --version", { shell: true, env: process.env });', launches: [{ site: "form.ts spawn", env: "process.env" }] },
-  { text: 'childProcess.execFile("rf", ["--json"], { env: { ...process.env } });', launches: [{ site: "form.ts execFile", env: "{...process.env}" }] },
-  { text: '/^rf/.exec("rf --json");', launches: [{ site: "form.ts exec", env: null }] },
+/** LAUNCH's table: each launcher form, as one module's text, and the rf launches LAUNCH reads in it (BINDINGS included). */
+const LAUNCH_FORMS: readonly { readonly text: string; readonly launches: readonly Launch[] }[] = [
+  { text: 'execSync("rf --json --version");', launches: [{ site: "form.ts execSync", env: null, after: [], bindings: ["execSync <- global"] }] },
+  {
+    text: 'spawnSync("/usr/local/bin/rf", ["--json", "--version"], { env: process.env });',
+    launches: [{ site: "form.ts spawnSync", env: "process.env", after: [], bindings: ["spawnSync <- global", "process <- global"] }],
+  },
+  {
+    text: 'spawn("rf --json --version", { shell: true, env: process.env });',
+    launches: [{ site: "form.ts spawn", env: "process.env", after: [], bindings: ["spawn <- global", "process <- global"] }],
+  },
+  {
+    text: 'childProcess.execFile("rf", ["--json"], { env: { ...process.env } });',
+    launches: [{ site: "form.ts execFile", env: "{...process.env}", after: [], bindings: ["childProcess <- global", "process <- global"] }],
+  },
+  { text: '/^rf/.exec("rf --json");', launches: [{ site: "form.ts exec", env: null, after: [], bindings: [] }] },
   { text: 'spawn("rfc", []); spawn("surf", []); execFileSync("git", ["rf"]);', launches: [] },
+  {
+    text: 'spawn("rf", [], { env: scrub(process.env, process.env.HOME), ...overrides });',
+    launches: [
+      { site: "form.ts spawn", env: "scrub(process.env,process.env.HOME)", after: ["...overrides"], bindings: ["spawn <- global", "scrub <- global", "process <- global"] },
+    ],
+  },
+  {
+    text: 'spawn("rf", [], { env: first, "env": second, [key]: third, cwd: root });',
+    launches: [{ site: "form.ts spawn", env: "first", after: ['"env":second', "[key]:third"], bindings: ["spawn <- global", "first <- global"] }],
+  },
+  {
+    text: 'spawn("rf", [], { ...base, env: only, cwd: root, stdio: "pipe" });',
+    launches: [{ site: "form.ts spawn", env: "only", after: [], bindings: ["spawn <- global", "only <- global"] }],
+  },
 ];
+/** BINDINGS' table: each binding form, as one module's text beside the provider, and the bindings of each rf launch in it. */
+const BINDING_FORM_PATH = "src/workbench/providers/zz-binding-form.ts";
+const BINDING_FORMS: readonly { readonly text: string; readonly bindings: readonly (readonly string[])[] }[] = [
+  {
+    text: 'import { spawn } from "node:child_process";\nimport { RF_CHILD_ENV_ALLOWLIST as allow, scrubbedEnvironment } from "../process-env.js";\nspawn("rf", [], { env: scrubbedEnvironment(process.env, allow) });',
+    bindings: [
+      [
+        "spawn <- import spawn from node:child_process",
+        `scrubbedEnvironment <- import scrubbedEnvironment from ${PROCESS_ENV}`,
+        "process <- global",
+        `allow <- import RF_CHILD_ENV_ALLOWLIST from ${PROCESS_ENV}`,
+      ],
+    ],
+  },
+  {
+    text: 'import * as childProcess from "node:child_process";\nchildProcess.spawn("rf", [], { env: process.env });',
+    bindings: [["childProcess <- import * from node:child_process", "process <- global"]],
+  },
+  {
+    text: 'import childProcess from "node:child_process";\nchildProcess.execFile("rf", [], { env: process.env });',
+    bindings: [["childProcess <- import default from node:child_process", "process <- global"]],
+  },
+  {
+    text: 'import { scrubbedEnvironment } from "./zz-env.js";\nspawn("rf", [], { env: scrubbedEnvironment(process.env) });',
+    bindings: [["spawn <- global", "scrubbedEnvironment <- import scrubbedEnvironment from src/workbench/providers/zz-env.ts", "process <- global"]],
+  },
+  {
+    text: 'const scrubbedEnvironment = (source: unknown): unknown => source;\nspawn("rf", [], { env: scrubbedEnvironment(process.env) });',
+    bindings: [["spawn <- global", "scrubbedEnvironment <- local VariableDeclaration", "process <- global"]],
+  },
+  {
+    text: 'function scrubbedEnvironment(source: unknown): unknown {\n  return source;\n}\nspawn("rf", [], { env: scrubbedEnvironment(process.env) });',
+    bindings: [["spawn <- global", "scrubbedEnvironment <- local FunctionDeclaration", "process <- global"]],
+  },
+  {
+    text: 'import { scrubbedEnvironment } from "../process-env.js";\nexport function launch(): void {\n  const scrubbedEnvironment = (source: unknown): unknown => source;\n  spawn("rf", [], { env: scrubbedEnvironment(process.env) });\n}',
+    bindings: [["spawn <- global", "scrubbedEnvironment <- local VariableDeclaration", "process <- global"]],
+  },
+  {
+    text: 'export function launch(scrubbedEnvironment: (source: unknown) => unknown): void {\n  spawn("rf", [], { env: scrubbedEnvironment(process.env) });\n}',
+    bindings: [["spawn <- global", "scrubbedEnvironment <- local Parameter", "process <- global"]],
+  },
+  {
+    text: 'export function launch(ready: boolean, run: () => void): void {\n  if (ready) {\n    var spawn = run;\n  }\n  spawn("rf", [], { env: process.env as Record<string, string> });\n}',
+    bindings: [["spawn <- local VariableDeclaration", "process <- global"]],
+  },
+  {
+    text: 'const process = { env: {} };\nspawn("rf", [], { env: process.env });',
+    bindings: [["spawn <- global", "process <- local VariableDeclaration"]],
+  },
+];
+/** C2's binding plant: a module whose spawn carries the provider's env text through a local pass-through scrub, a spread after. */
+const BINDING_PLANT: Unit = {
+  path: "src/workbench/providers/zz-plant-binding.ts",
+  source:
+    'import { spawn } from "node:child_process";\nimport { RF_CHILD_ENV_ALLOWLIST } from "../process-env.js";\n' +
+    "const scrubbedEnvironment = (source: NodeJS.ProcessEnv, _allowlist: readonly string[]): NodeJS.ProcessEnv => source;\n" +
+    "const launchOverrides = { env: process.env };\n" +
+    'spawn("rf", ["context"], { env: scrubbedEnvironment(process.env, RF_CHILD_ENV_ALLOWLIST), ...launchOverrides });\n',
+};
 
 const IMPL: Readonly<Record<string, () => Json>> = {
   A1: () => {
@@ -524,14 +739,44 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const appended = launchesOf(codeWalk([], LAUNCH_APPENDED).units)
       .filter(launch => launch.env === "process.env")
       .map(launch => launch.site);
+    const bound = launchesOf(codeWalk([BINDING_PLANT]).units);
     const forms = LAUNCH_FORMS.map(form => ({ text: form.text, launches: rfLaunches("form.ts", form.text) }));
-    expect(launches, "every rf launch in src, with the env its options hand the child").toStrictEqual([
-      { site: `${PROVIDER} spawn`, env: "scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)" },
+    const bindingForms = BINDING_FORMS.map(form => ({ text: form.text, bindings: rfLaunches(BINDING_FORM_PATH, form.text).map(launch => launch.bindings) }));
+    expect(launches, "every rf launch in src: the env its options hand the child, the members after it that can set env, and its names' bindings").toStrictEqual([
+      {
+        site: `${PROVIDER} spawn`,
+        env: "scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)",
+        after: [],
+        bindings: [
+          "spawn <- import spawn from node:child_process",
+          `scrubbedEnvironment <- import scrubbedEnvironment from ${PROCESS_ENV}`,
+          "process <- global",
+          `RF_CHILD_ENV_ALLOWLIST <- import RF_CHILD_ENV_ALLOWLIST from ${PROCESS_ENV}`,
+        ],
+      },
     ]);
-    expect(planted, "the same scan over the src modules and a planted inherited-env rf launch after them").toStrictEqual([...launches, { site: `${LAUNCH_PLANT.path} spawnSync`, env: "process.env" }]);
+    expect(planted, "the same scan over the src modules and a planted inherited-env rf launch after them").toStrictEqual([
+      ...launches,
+      { site: `${LAUNCH_PLANT.path} spawnSync`, env: "process.env", after: [], bindings: ["spawnSync <- import spawnSync from node:child_process", "process <- global"] },
+    ]);
+    expect(bound, "the same scan over the src modules and a planted spawn carrying the provider's env text through a local scrub, a spread after it").toStrictEqual([
+      ...launches,
+      {
+        site: `${BINDING_PLANT.path} spawn`,
+        env: "scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)",
+        after: ["...launchOverrides"],
+        bindings: [
+          "spawn <- import spawn from node:child_process",
+          "scrubbedEnvironment <- local VariableDeclaration",
+          "process <- global",
+          `RF_CHILD_ENV_ALLOWLIST <- import RF_CHILD_ENV_ALLOWLIST from ${PROCESS_ENV}`,
+        ],
+      },
+    ]);
     expect(appended, "the same scan over every src module with an inherited-env rf launch appended: the plant once at every module's path").toEqual(modules.map(path => `${path} spawnSync`));
     expect(forms, "LAUNCH over its table of launcher forms").toStrictEqual(LAUNCH_FORMS.map(form => ({ text: form.text, launches: form.launches })));
-    return { launches, planted, appendedUnread: modules.filter(path => !appended.includes(`${path} spawnSync`)), forms };
+    expect(bindingForms, "BINDINGS over its table of binding forms").toStrictEqual(BINDING_FORMS.map(form => ({ text: form.text, bindings: form.bindings })));
+    return { launches, planted, bound, appendedUnread: modules.filter(path => !appended.includes(`${path} spawnSync`)), forms, bindingForms };
   },
   D1: () => {
     const section = boundSection();
@@ -543,7 +788,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
   },
   D2: () => {
     const docs = docsWalk();
-    const listed = gitListed("docs", ...ROOT_PAGES).filter(path => path.endsWith(".md"));
+    const listed = gitListed(...pageRoots(), ":(glob)*.md").filter(path => PAGE.test(path));
+    const unreadTracked = trackedPages().filter(page => !page.startsWith(`${UNREAD_PAGE_ROOT}/`) && !docs.pages.includes(page));
     const floorMet = docs.pages.filter(page => page.startsWith("docs/")).length >= DOCS_FLOOR;
     const anchorRead = docs.pages.includes(DOCS_PAGE);
     const line = boundLine();
@@ -551,7 +797,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const outside = outsideOf(docs.sentences, line);
     const plantedOutside = outsideOf(docsWalk([DOCS_PLANT]).sentences, line);
     const appended = outsideOf(docsWalk([], DOCS_APPENDED).sentences, line).map(findingPath);
-    expect(docs.pages, "the docs walk read exactly git's own listing of docs/**/*.md, README.md and CHANGELOG.md").toStrictEqual(listed);
+    expect(docs.pages, "the docs walk read exactly git's own listing of its roots' .md pages and of the top-level pages").toStrictEqual(listed);
+    expect(unreadTracked, "the .md pages git tracks outside test/ that the docs walk did not read").toEqual([]);
     expect(floorMet && anchorRead, `docs pages read under docs/ meet the floor ${DOCS_FLOOR} and include ${DOCS_PAGE}`).toBe(true);
     expect(line, `docs/18 holds the bound paragraph's line opening **${DOCS_LABEL}**`).not.toBe("");
     expect(outside, "docs sentences naming the vocabulary outside the bound paragraph (another documented default)").toEqual([]);
@@ -560,7 +807,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       `${DOCS_PLANT.path}: **RF speculation boundary:** rf's local default speculation policy stays passive/disabled and Pi documents no other default.`,
     ]);
     expect(appended, "the same judge over every docs page with another default appended: the plant once at every page's path").toEqual(docs.pages);
-    return { walkAgreesWithGit: true, floorMet, anchorRead, named: named.length, outside, plantedOutside, appendedUnread: docs.pages.filter(page => !appended.includes(page)) };
+    return { walkAgreesWithGit: true, unreadTracked, floorMet, anchorRead, named: named.length, outside, plantedOutside, appendedUnread: docs.pages.filter(page => !appended.includes(page)) };
   },
   M1: () => {
     const spellings = titleSpellings();
@@ -631,11 +878,20 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     ]),
   Q3: () => {
     const { modules } = codeWalk();
+    const pages = docsWalk().pages;
     const walkedOutsideSrc = modules.filter(path => !path.startsWith("src/"));
     const spelledOutside = OUTSIDE_SPELLERS.filter(path => codeFindings(path, read(path)).length > 0);
+    const pagesReadBelowTest = pages.filter(page => page.startsWith(`${UNREAD_PAGE_ROOT}/`));
+    const pagesTrackedBelowTest = trackedPages().some(page => page.startsWith(`${UNREAD_PAGE_ROOT}/`));
+    const otherFormat = { listed: gitListed(OTHER_FORMAT_PAGE).includes(OTHER_FORMAT_PAGE), read: pages.includes(OTHER_FORMAT_PAGE) };
+    const pageNames = PAGE_NAMES.filter(name => PAGE.test(name));
     expect(walkedOutsideSrc, "modules the code walk read outside src/").toEqual([]);
     expect(spelledOutside, "test files outside the walked root that spell the vocabulary").toEqual([...OUTSIDE_SPELLERS]);
-    return { walkedOutsideSrc, spelledOutside };
+    expect(pagesReadBelowTest, "pages the docs walk read below test/").toEqual([]);
+    expect(pagesTrackedBelowTest, "git tracks .md pages below test/ (fixtures), which the docs walk does not read").toBe(true);
+    expect(otherFormat, `${OTHER_FORMAT_PAGE}, a tracked top-level page of another format: listed by git, not read`).toStrictEqual({ listed: true, read: false });
+    expect(pageNames, "the names the page predicate reads as pages: the .md one, never an upper-case .MD, a .markdown page or LICENSE").toEqual(["notes.md"]);
+    return { walkedOutsideSrc, spelledOutside, pagesReadBelowTest, pagesTrackedBelowTest, otherFormat, pageNames };
   },
   Q4: () => ({
     docs: verdicts(docsHit, [
@@ -690,6 +946,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     });
     return { quiet, anchored };
   },
+  Q8: () => verdicts(docsHit, RENDERED_CONTROLS),
 };
 
 /** Each pin's witness, frozen at the cut (rule 16). */
@@ -706,24 +963,143 @@ const WITNESS: Readonly<Record<string, Json>> = {
     childNames: ["HOME", "PATH"],
   },
   C2: {
-    launches: [{ site: `${PROVIDER} spawn`, env: "scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)" }],
+    launches: [
+      {
+        site: `${PROVIDER} spawn`,
+        env: "scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)",
+        after: [],
+        bindings: [
+          "spawn <- import spawn from node:child_process",
+          "scrubbedEnvironment <- import scrubbedEnvironment from src/workbench/process-env.ts",
+          "process <- global",
+          "RF_CHILD_ENV_ALLOWLIST <- import RF_CHILD_ENV_ALLOWLIST from src/workbench/process-env.ts",
+        ],
+      },
+    ],
     planted: [
-      { site: `${PROVIDER} spawn`, env: "scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)" },
-      { site: "src/zz-plant-launch.ts spawnSync", env: "process.env" },
+      {
+        site: `${PROVIDER} spawn`,
+        env: "scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)",
+        after: [],
+        bindings: [
+          "spawn <- import spawn from node:child_process",
+          "scrubbedEnvironment <- import scrubbedEnvironment from src/workbench/process-env.ts",
+          "process <- global",
+          "RF_CHILD_ENV_ALLOWLIST <- import RF_CHILD_ENV_ALLOWLIST from src/workbench/process-env.ts",
+        ],
+      },
+      { site: "src/zz-plant-launch.ts spawnSync", env: "process.env", after: [], bindings: ["spawnSync <- import spawnSync from node:child_process", "process <- global"] },
+    ],
+    bound: [
+      {
+        site: `${PROVIDER} spawn`,
+        env: "scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)",
+        after: [],
+        bindings: [
+          "spawn <- import spawn from node:child_process",
+          "scrubbedEnvironment <- import scrubbedEnvironment from src/workbench/process-env.ts",
+          "process <- global",
+          "RF_CHILD_ENV_ALLOWLIST <- import RF_CHILD_ENV_ALLOWLIST from src/workbench/process-env.ts",
+        ],
+      },
+      {
+        site: "src/workbench/providers/zz-plant-binding.ts spawn",
+        env: "scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)",
+        after: ["...launchOverrides"],
+        bindings: [
+          "spawn <- import spawn from node:child_process",
+          "scrubbedEnvironment <- local VariableDeclaration",
+          "process <- global",
+          "RF_CHILD_ENV_ALLOWLIST <- import RF_CHILD_ENV_ALLOWLIST from src/workbench/process-env.ts",
+        ],
+      },
     ],
     appendedUnread: [],
     forms: [
-      { text: 'execSync("rf --json --version");', launches: [{ site: "form.ts execSync", env: null }] },
-      { text: 'spawnSync("/usr/local/bin/rf", ["--json", "--version"], { env: process.env });', launches: [{ site: "form.ts spawnSync", env: "process.env" }] },
-      { text: 'spawn("rf --json --version", { shell: true, env: process.env });', launches: [{ site: "form.ts spawn", env: "process.env" }] },
-      { text: 'childProcess.execFile("rf", ["--json"], { env: { ...process.env } });', launches: [{ site: "form.ts execFile", env: "{...process.env}" }] },
-      { text: '/^rf/.exec("rf --json");', launches: [{ site: "form.ts exec", env: null }] },
+      { text: 'execSync("rf --json --version");', launches: [{ site: "form.ts execSync", env: null, after: [], bindings: ["execSync <- global"] }] },
+      {
+        text: 'spawnSync("/usr/local/bin/rf", ["--json", "--version"], { env: process.env });',
+        launches: [{ site: "form.ts spawnSync", env: "process.env", after: [], bindings: ["spawnSync <- global", "process <- global"] }],
+      },
+      {
+        text: 'spawn("rf --json --version", { shell: true, env: process.env });',
+        launches: [{ site: "form.ts spawn", env: "process.env", after: [], bindings: ["spawn <- global", "process <- global"] }],
+      },
+      {
+        text: 'childProcess.execFile("rf", ["--json"], { env: { ...process.env } });',
+        launches: [{ site: "form.ts execFile", env: "{...process.env}", after: [], bindings: ["childProcess <- global", "process <- global"] }],
+      },
+      { text: '/^rf/.exec("rf --json");', launches: [{ site: "form.ts exec", env: null, after: [], bindings: [] }] },
       { text: 'spawn("rfc", []); spawn("surf", []); execFileSync("git", ["rf"]);', launches: [] },
+      {
+        text: 'spawn("rf", [], { env: scrub(process.env, process.env.HOME), ...overrides });',
+        launches: [
+          { site: "form.ts spawn", env: "scrub(process.env,process.env.HOME)", after: ["...overrides"], bindings: ["spawn <- global", "scrub <- global", "process <- global"] },
+        ],
+      },
+      {
+        text: 'spawn("rf", [], { env: first, "env": second, [key]: third, cwd: root });',
+        launches: [{ site: "form.ts spawn", env: "first", after: ['"env":second', "[key]:third"], bindings: ["spawn <- global", "first <- global"] }],
+      },
+      {
+        text: 'spawn("rf", [], { ...base, env: only, cwd: root, stdio: "pipe" });',
+        launches: [{ site: "form.ts spawn", env: "only", after: [], bindings: ["spawn <- global", "only <- global"] }],
+      },
+    ],
+    bindingForms: [
+      {
+        text: 'import { spawn } from "node:child_process";\nimport { RF_CHILD_ENV_ALLOWLIST as allow, scrubbedEnvironment } from "../process-env.js";\nspawn("rf", [], { env: scrubbedEnvironment(process.env, allow) });',
+        bindings: [
+          [
+            "spawn <- import spawn from node:child_process",
+            "scrubbedEnvironment <- import scrubbedEnvironment from src/workbench/process-env.ts",
+            "process <- global",
+            "allow <- import RF_CHILD_ENV_ALLOWLIST from src/workbench/process-env.ts",
+          ],
+        ],
+      },
+      {
+        text: 'import * as childProcess from "node:child_process";\nchildProcess.spawn("rf", [], { env: process.env });',
+        bindings: [["childProcess <- import * from node:child_process", "process <- global"]],
+      },
+      {
+        text: 'import childProcess from "node:child_process";\nchildProcess.execFile("rf", [], { env: process.env });',
+        bindings: [["childProcess <- import default from node:child_process", "process <- global"]],
+      },
+      {
+        text: 'import { scrubbedEnvironment } from "./zz-env.js";\nspawn("rf", [], { env: scrubbedEnvironment(process.env) });',
+        bindings: [["spawn <- global", "scrubbedEnvironment <- import scrubbedEnvironment from src/workbench/providers/zz-env.ts", "process <- global"]],
+      },
+      {
+        text: 'const scrubbedEnvironment = (source: unknown): unknown => source;\nspawn("rf", [], { env: scrubbedEnvironment(process.env) });',
+        bindings: [["spawn <- global", "scrubbedEnvironment <- local VariableDeclaration", "process <- global"]],
+      },
+      {
+        text: 'function scrubbedEnvironment(source: unknown): unknown {\n  return source;\n}\nspawn("rf", [], { env: scrubbedEnvironment(process.env) });',
+        bindings: [["spawn <- global", "scrubbedEnvironment <- local FunctionDeclaration", "process <- global"]],
+      },
+      {
+        text: 'import { scrubbedEnvironment } from "../process-env.js";\nexport function launch(): void {\n  const scrubbedEnvironment = (source: unknown): unknown => source;\n  spawn("rf", [], { env: scrubbedEnvironment(process.env) });\n}',
+        bindings: [["spawn <- global", "scrubbedEnvironment <- local VariableDeclaration", "process <- global"]],
+      },
+      {
+        text: 'export function launch(scrubbedEnvironment: (source: unknown) => unknown): void {\n  spawn("rf", [], { env: scrubbedEnvironment(process.env) });\n}',
+        bindings: [["spawn <- global", "scrubbedEnvironment <- local Parameter", "process <- global"]],
+      },
+      {
+        text: 'export function launch(ready: boolean, run: () => void): void {\n  if (ready) {\n    var spawn = run;\n  }\n  spawn("rf", [], { env: process.env as Record<string, string> });\n}',
+        bindings: [["spawn <- local VariableDeclaration", "process <- global"]],
+      },
+      {
+        text: 'const process = { env: {} };\nspawn("rf", [], { env: process.env });',
+        bindings: [["spawn <- global", "process <- local VariableDeclaration"]],
+      },
     ],
   },
   D1: { section: true, paragraphs: 1 },
   D2: {
     walkAgreesWithGit: true,
+    unreadTracked: [],
     floorMet: true,
     anchorRead: true,
     named: 3,
@@ -780,7 +1156,14 @@ const WITNESS: Readonly<Record<string, Json>> = {
     { text: 'const seat = ["RF", "ADAPTIVE"].join("_");', hit: false },
     { text: 'const stem = "specu" + "lation";', hit: false },
   ],
-  Q3: { walkedOutsideSrc: [], spelledOutside: ["test/workbench-env-scrub-census.test.ts", "test/workbench-process-env.test.ts"] },
+  Q3: {
+    walkedOutsideSrc: [],
+    spelledOutside: ["test/workbench-env-scrub-census.test.ts", "test/workbench-process-env.test.ts"],
+    pagesReadBelowTest: [],
+    pagesTrackedBelowTest: true,
+    otherFormat: { listed: true, read: false },
+    pageNames: ["notes.md"],
+  },
   Q4: {
     docs: [
       { text: "rf prefetches every render by default.", hit: false },
@@ -798,9 +1181,21 @@ const WITNESS: Readonly<Record<string, Json>> = {
       labels: ["A: title clauses, paragraph A-B sentence", "B: title clauses, paragraph A-B sentence", "C: title clauses, paragraph opening", "D: title clauses, paragraph opening"],
     },
   },
+  Q8: [
+    { text: "rf's spec*ul*ation policy is turned on by default for Pi renders.", hit: false },
+    { text: "rf's spec**ul**ation policy is turned on by default for Pi renders.", hit: false },
+    { text: "rf's spec`ul`ation policy is turned on by default for Pi renders.", hit: false },
+    { text: "rf's [spec](./zz.md)ulation policy is turned on by default for Pi renders.", hit: false },
+    { text: "Pi sets RF&lowbar;ADAPTIVE on every render.", hit: false },
+    { text: "rf's specu&shy;lation policy is turned on by default for Pi renders.", hit: false },
+    { text: "Pi sets RF&#95;ADAPTIVE on every render.", hit: false },
+    { text: "rf's <em>spec</em>ulation policy is turned on by default for Pi renders.", hit: false },
+    { text: "rf's speculation policy is turned on by default for Pi renders.", hit: true },
+    { text: "Pi sets RF_ADAPTIVE on every render.", hit: true },
+  ],
 };
 /** Each pin's assertion count when its case reached its end (its witness comparison included), frozen at the cut. */
-const REACHED_AT: readonly string[] = ["A1:5", "A2:5", "B1:5", "B2:5", "C1:6", "C2:6", "D1:5", "D2:8", "M1:5", "M2:4", "Q1:5", "Q2:3", "Q3:4", "Q4:4", "Q5:3", "Q6:3", "Q7:4"];
+const REACHED_AT: readonly string[] = ["A1:5", "A2:5", "B1:5", "B2:5", "C1:6", "C2:8", "D1:5", "D2:9", "M1:5", "M2:4", "Q1:5", "Q2:3", "Q3:8", "Q4:4", "Q5:3", "Q6:3", "Q7:4", "Q8:3"];
 const JUDGED_SET_TITLE = "the judged set: the frozen shape, the cases, the witnesses, the residuals and the outside anchors agree";
 const REGISTRATION_TITLE = "registration: every test of this file is registered once, in row order, in run mode, and ran; every pin reached its end with its frozen witness and assertion count";
 
@@ -813,7 +1208,7 @@ describe("wb-km7q.9 rf speculation boundary census (SDK-REACTIVE-FIBER-ADAPTIVE-
     // The outside anchors first: they read the labels of rows A to D only (Q7 pins the edits they do not read).
     expect(anchorFindings(ROWS, filingTitle(), boundParagraphs(boundSection())[0] ?? ""), "the outside anchors' readings the rows' labels fail").toEqual([]);
     const pins = ROWS.flatMap(row => row.pins);
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:2", "C:2", "D:2", "M:2", "Q:7"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:2", "C:2", "D:2", "M:2", "Q:8"]);
     expect(Object.keys(IMPL).sort(), "a case for every pin, and no other").toEqual([...pins].sort());
     expect(Object.keys(WITNESS).sort(), "a frozen witness for every pin, and no other").toEqual([...pins].sort());
     expect(REACHED_AT.map(entry => entry.split(":")[0]), "a frozen assertion count for every pin, in row order").toEqual(pins);
