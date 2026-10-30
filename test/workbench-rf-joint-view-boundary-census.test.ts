@@ -29,10 +29,16 @@
  * which launches rf through the exported nativeReactiveFiberRender, the module's single rf spawn, that the exported
  * nativeReactiveFiberPreview wraps for the legacy arm), each effectClass read with permissions [reactivefiber:render] (C2 pins
  * the permissions) and one selector per call, the legacy {model, task} arm or the {view, taskId, model?} arm (C1 pins the arms);
- * reactivefiberTopology projects one reading into one snapshot (src/workbench/reactivefiber-observer.ts:482); and no tracked src
- * module names a VOCABULARY fold (A3 pins the scan; a separator-tolerant git grep of the eight needles over src reads 0 rows). So
- * the trigger has not fired: Pi states no joint conditions, and a caller composes views only as separate values and separate
- * snapshots.
+ * reactivefiberTopology projects one reading into one snapshot (src/workbench/reactivefiber-observer.ts:482); it admits a
+ * reading only at the root in force, host.authorizedRfRoot ?? host.scope.workspace (:436, any other root refused
+ * 'authorization'; the authorizedRfRoot docstring at :38-39: 'When present it, and only it, replaces scope.workspace as the root
+ * a reading may name'), and refuses 'validation' an envelope whose workspace root differs from the reading's (:452) (C3 pins
+ * the root rule); and no tracked src module names a VOCABULARY fold (A3 pins the scan; a separator-tolerant git grep of the
+ * eight needles over src reads 0 rows). So the trigger has not fired: Pi states no joint conditions, and a caller composes
+ * views only as separate values and separate snapshots. Re-read for wb-fxyx (seat ws-06, run g10-work-s145) at trunk
+ * ee48709, landing 685: git log b3d410f..ee48709 over the four src modules this census imports (capability-registry.ts,
+ * observation.ts, providers/reactivefiber.ts, reactivefiber-observer.ts) reads no commit, so every line named here stands;
+ * the root-rule lines :38-39, :436 and :452 were read at that trunk.
  *
  * READINGS. A VOCABULARY fold is NFKC, lower case, every character outside a-z and 0-9 removed. The needles: the two contract
  * names the vendored :4 and :6 lines spell (RFContext...V0, the rf prefix and the V0 suffix dropped), the title's three
@@ -96,9 +102,15 @@
  *    <key>:verified for each VERDICT key; discover:, inspect: and invoke:<the descriptor id>) is refused 'authorization' with
  *    one message and no launch or client call, so authorization precedes the schema refusal C1 reads (one VERDICT form with no
  *    grant reads 'authorization' too).
- *    C3 the observer: a reading whose root differs from the observer scope, or from the host's authorized rf root, is refused
- *    'authorization' with one message whatever VERDICT form it carries (at the reading or on its result), and an in-scope
- *    reading's topology is, whole, the same with and without any VERDICT form.
+ *    C3 the observer: a reading may name exactly one root, the root in force - the observer scope's or, when the host states
+ *    an authorized rf root, that root alone, which then replaces the observer scope (the rule as src states it, SRC READINGS
+ *    above). A reading whose root differs from the root in force is refused 'authorization' with one message whatever VERDICT
+ *    form it carries (at the reading or on its result), read in two configurations: a sibling root sharing the observer
+ *    scope's prefix (<root>-elsewhere) with no authorized root stated, and the observer scope's own root under an authorized
+ *    root (<root>-authorized) that differs from it. A reading at that authorized root (its envelope stating the same root)
+ *    projects whatever VERDICT form it carries, each topology, whole, the same as the verdict-free reading's there, though
+ *    that root differs from the observer scope. A reading at the observer scope's root with no authorized root stated projects
+ *    a topology that is, whole, the same with and without any VERDICT form.
  *
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the claims shape below. The judged set -
  * every row's id, label and pins, every pin's witness and claims, the vocabulary, the verdict words, the denial codes, the info
@@ -123,7 +135,9 @@
  * keys it returns), alone or together with its roster witness and claims; an edit of a judge (tiled, claimMisses, constant,
  * piece, scan, the derivations) together with the roster; a coordinated edit of the roster-held literals through the census and
  * the roster together - for example a DENIAL code taken out of DENIAL_CODES, the roster's denialCodes, its excerpt and every count
- * that encodes it, or the info code re-spelled in INFO_CODE, the roster and its excerpt with the hash recomputed.
+ * that encodes it, or the info code re-spelled in INFO_CODE, the roster and its excerpt with the hash recomputed; and a fact
+ * taken out of its term in the case, the roster witness and claims and the frozen claims shape together (C3's atAuthorizedRoot,
+ * for one): no outside anchor names a witness fact.
  * RESIDUALS (named, each with its pinned quiet fact): R-CALLER-COMPOSITION (A2 composedEqualsSolo) the composition happens at the
  * caller, which holds both values whole (the composed values equal the solo values); no surface A2 reads judges a joint reveal
  * there, and A3 finds no declared joint conditions for one to; R-COMPUTED (A3 quiet, five rows) a needle that only a run-time
@@ -263,9 +277,10 @@ const operationId = (fill: string): string => `rfo_${fill.repeat(22)}`;
 const fold = (text: string): string => text.normalize("NFKC").toLowerCase().replace(/[^a-z0-9]/g, "");
 const viewText = (index: number): string => `${VIEWS[index]} constructed half ${HALVES[index]}`;
 
-/** A clean --view render of VIEWS[index]: the full-shape fixture with its own operation id and text and a satisfied contract. */
-function cleanView(index: number): Obj {
-  const envelope: Obj = fullShapeRf(ROOT);
+/** A clean --view render of VIEWS[index]: the full-shape fixture with its own operation id and text and a satisfied contract,
+ * its workspace stating root (the observer scope's unless named). */
+function cleanView(index: number, root = ROOT): Obj {
+  const envelope: Obj = fullShapeRf(root);
   envelope.operation_id = operationId(FILLS[index] ?? "z");
   const result = object(envelope.result);
   object(result.output).text = viewText(index);
@@ -890,20 +905,32 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   C3: async () => {
     const verdicts = verdictForms();
     const elsewhere = `${ROOT}-elsewhere`;
-    const authorized: ReactiveFiberTopologyContext = { ...HOST, authorizedRfRoot: `${ROOT}-authorized` };
-    const atResult = (verdict: Obj): Obj => {
-      const envelope = cleanView(0);
+    const authorizedRfRoot = `${ROOT}-authorized`;
+    const authorized: ReactiveFiberTopologyContext = { ...HOST, authorizedRfRoot };
+    const atResult = (verdict: Obj, envelopeRoot: string): Obj => {
+      const envelope = cleanView(0, envelopeRoot);
       Object.assign(object(envelope.result), verdict);
       return envelope;
     };
-    const variants = (root: string): Obj[] => [reading(cleanView(0), {}, root), ...verdicts.flatMap(verdict => [reading(cleanView(0), verdict, root), reading(atResult(verdict), {}, root)])];
+    // Each reading names root; its envelope states envelopeRoot (the observer scope's unless named).
+    const variants = (root: string, envelopeRoot = ROOT): Obj[] => [reading(cleanView(0, envelopeRoot), {}, root),
+      ...verdicts.flatMap(verdict => [reading(cleanView(0, envelopeRoot), verdict, root), reading(atResult(verdict, envelopeRoot), {}, root)])];
     const refusals = (rows: readonly Obj[]): JsonValue => ({ readings: rows.length, kinds: unique(rows.map(row => row.kind ?? null)), categories: unique(rows.map(row => row.category ?? null)), messages: unique(rows.map(row => row.message ?? null)) });
     const baseline = JSON.stringify(observed(reading(cleanView(0))));
     const inScope = variants(ROOT).map(value => JSON.stringify(observed(value)));
+    // The third configuration: a reading at the authorized root, its envelope stating that root, under the host stating it.
+    const atAuthorized = variants(authorizedRfRoot, authorizedRfRoot).map(value => observed(value, authorized));
+    const authorizedBaseline = JSON.stringify(observed(reading(cleanView(0, authorizedRfRoot), {}, authorizedRfRoot), authorized));
     return {
       "or observer workspace-scope checks": {
         outOfScope: refusals(variants(elsewhere).map(value => observed(value))),
         authorizedRoot: refusals(variants(ROOT).map(value => observed(value, authorized))),
+        atAuthorizedRoot: {
+          readings: atAuthorized.length,
+          kinds: unique(atAuthorized.map(row => row.kind ?? null)),
+          equal: atAuthorized.filter(row => JSON.stringify(row) === authorizedBaseline).length,
+          differsFromScope: authorized.authorizedRfRoot !== authorized.scope.workspace,
+        },
       },
       "(read admission independent of scoring)": {
         positions: ["reading", "result"],
@@ -945,7 +972,7 @@ describe("wb-ae7u rf joint-view boundary census (RF-CAC-CONTEXT-REFINEMENT-R5, g
     expect(ROSTER.residuals.every(item => pins.includes(item.quietPin))).toBe(true);
     const held = ROSTER.rows.flatMap(row => row.pins);
     expect(ROSTER.residuals.every(item => held.find(pin => pin.id === item.quietPin)?.claims.some(claim => claim.facts.includes(item.fact)) === true)).toBe(true);
-    expect(held.map(pin => `${pin.id}:${pin.claims.map(claim => claim.facts.length).join("+")}`)).toEqual(["A1:3+3", "A2:3+3", "A3:3+6", "B1:2+2", "B2:2+2", "B3:4", "C1:4+5", "C2:3+2", "C3:2+4"]);
+    expect(held.map(pin => `${pin.id}:${pin.claims.map(claim => claim.facts.length).join("+")}`)).toEqual(["A1:3+3", "A2:3+3", "A3:3+6", "B1:2+2", "B2:2+2", "B3:4", "C1:4+5", "C2:3+2", "C3:3+4"]);
     expect(held.filter(pin => !tiled(pin.quote, pin.claims.map(claim => claim.term))).map(pin => pin.id)).toEqual([]);
   });
   for (const row of ROWS) {
