@@ -723,7 +723,7 @@
   {
    "id": "R-UNDRIVEN",
    "quiet": "Q6",
-   "family": "surfaces the census does not drive (the runtime resultPreview, the dialog and card renderers - the drawer's forward -, the inspector evidence-store view and pane tiers, the reconcile core) are not judged: what they draw from the provider output, which R10 judges whole, is outside the census"
+   "family": "surfaces the census does not drive (the runtime resultPreview, the dialog and card renderers - the drawer's forward -, the inspector evidence-store view (its pane tiers and other draws are R-UNDRAWN-TIER's), the reconcile core) are not judged: what they draw from the provider output, which R10 judges whole, is outside the census"
   },
   {
    "id": "R-OTHER-ROUTE",
@@ -814,6 +814,26 @@
    "id": "R-ZERO-BLOCK",
    "quiet": "Q24",
    "family": "the zero-block render (the defer policy) differs from the neutral render by design (no block, partial coverage), so the baseline legs beside the provider compare the one-block cases only: a reading a surface puts beside the provider on the zero-block render is judged only by F1 and F2, for its verdict readings"
+  },
+  {
+   "id": "R-UNDRAWN-TIER",
+   "quiet": "Q25",
+   "family": "the inspector's draws the census does not make are not read - its default tier (ascii absent or false), its pane tiers (panes), every other width or row count and every other state - so a line only they draw is read by no leg and no falsifier; the quiet row holds InspectorSize's members (width, rows, ascii, panes) to src, so a draw option src adds reds it until it is named"
+  },
+  {
+   "id": "R-ARRAY-PROTOTYPE",
+   "quiet": "Q26",
+   "family": "notPlain checks no array's prototype: an array that is a class instance (an Array subclass) passes, and what it inherits (an accessor, a method such as toJSON) is read by no leg"
+  },
+  {
+   "id": "R-NUMERIC-KEY",
+   "quiet": "Q27",
+   "family": "notPlain takes every canonical numeric key of an array for an index: one at or above 2^32-1 (4294967295) is no array index, so JSON and the string readings never read it, while a key that is no canonical numeric string (01) fails closed"
+  },
+  {
+   "id": "R-UNLISTED",
+   "quiet": "Q28",
+   "family": "notPlain and the readings read the keys a value lists: a name a value answers without listing it (a proxy's get trap) is read by no leg"
   }
  ],
  "reads": [
@@ -871,7 +891,12 @@
   },
   {
    "id": "R14",
-   "label": "plain data"
+   "label": "the plain-data check"
   }
- ]
+ ],
+ "draw": {
+  "width": 120,
+  "rows": 40,
+  "ascii": true
+ }
 }
