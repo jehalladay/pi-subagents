@@ -803,6 +803,142 @@
       "let-shadow-specifier": {
         "probe": "export function decoy(): string {\n  const CP = \"node:fs\";\n  return CP;\n}\nlet CP = [\"node:child\", \"process\"].join(\"_\");\nconst m = await import(CP);\nm.spawn(command, []);\n",
         "reads": "<load>"
+      },
+      "logical-or-kept": {
+        "probe": "import * as cp from \"node:child_process\";\nconst fallback = {} as typeof cp;\nlet held = cp;\nexport const pick = (): typeof cp => (held ||= fallback);\n",
+        "reads": "<reference>"
+      },
+      "logical-nullish-kept": {
+        "probe": "import * as cp from \"node:child_process\";\nconst fallback = {} as typeof cp;\nlet held: typeof cp | undefined = cp;\nexport const pick = (): typeof cp => (held ??= fallback);\n",
+        "reads": "<reference>"
+      },
+      "logical-and-kept": {
+        "probe": "import * as cp from \"node:child_process\";\nconst fallback = {} as typeof cp;\nlet held = cp;\nexport const pick = (): typeof cp => (held &&= fallback);\n",
+        "reads": "<reference>"
+      },
+      "logical-kept-member": {
+        "probe": "import * as cp from \"node:child_process\";\nlet held = cp;\nconst go = (held ??= fallback).spawn;\ngo(\"rf\", []);\n",
+        "reads": "rf"
+      },
+      "logical-kept-call": {
+        "probe": "import * as cp from \"node:child_process\";\nlet held = cp;\n(held ||= fallback).spawn(command, []);\n",
+        "reads": "<expression>"
+      },
+      "logical-member-store": {
+        "probe": "import * as cp from \"node:child_process\";\ncp.spawn ||= fallback;\n",
+        "reads": "<reference>"
+      },
+      "namespace-merged-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nnamespace Tools {\n  export const TOOL = \"rf\";\n}\nnamespace Tools {\n  go(TOOL, []);\n}\n",
+        "reads": "<expression>"
+      },
+      "namespace-merged-api-launch": {
+        "probe": "const TOOL = \"git\";\nnamespace Tools {\n  export const TOOL = \"rf\";\n}\nnamespace Tools {\n  export function run(api: Api): void {\n    api.exec(TOOL, []);\n  }\n}\n",
+        "reads": "<expression>"
+      },
+      "dotted-namespace-merged-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nnamespace Outer.Tools {\n  export const TOOL = \"rf\";\n}\nnamespace Outer {\n  export namespace Tools {\n    go(TOOL, []);\n  }\n}\n",
+        "reads": "<expression>"
+      },
+      "namespace-local-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nnamespace Tools {\n  const TOOL = \"rf\";\n  go(TOOL, []);\n}\n",
+        "reads": "<expression>"
+      },
+      "namespace-literal-command": {
+        "probe": "namespace Tools {\n  export function run(api: Api): void {\n    api.exec(\"rf\", []);\n  }\n}\n",
+        "reads": "rf"
+      },
+      "namespace-merged-specifier": {
+        "probe": "const SPECIFIER = \"node:fs\";\nnamespace Loader {\n  export const SPECIFIER = [\"node:child\", \"process\"].join(\"_\");\n}\nnamespace Loader {\n  export const m = require(SPECIFIER);\n}\n",
+        "reads": "<load>"
+      },
+      "namespace-merged-key": {
+        "probe": "import * as cp from \"node:child_process\";\nconst KEY = \"fork\";\nnamespace Tools {\n  export const KEY = \"spawn\";\n}\nnamespace Tools {\n  cp[KEY](\"rf\", []);\n}\n",
+        "reads": "<reference>"
+      },
+      "enum-merged-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nenum Tools {\n  TOOL = \"rf\",\n}\nenum Tools {\n  Pid = go(TOOL, []).pid ?? 0,\n}\n",
+        "reads": "<expression>"
+      },
+      "enum-merged-api-launch": {
+        "probe": "const TOOL = \"git\";\nenum Tools {\n  TOOL = \"rf\",\n}\nenum Tools {\n  Size = api.exec(TOOL, []).length,\n}\n",
+        "reads": "<expression>"
+      },
+      "type-namespace-const-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"rf\";\nnamespace TOOL {\n  export type Shape = string;\n}\ngo(TOOL, []);\n",
+        "reads": "rf"
+      },
+      "ambient-const-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\ndeclare const TOOL = \"git\";\ngo(TOOL, []);\n",
+        "reads": "<expression>"
+      },
+      "ambient-const-api-launch": {
+        "probe": "declare const TOOL = \"git\";\nexport function run(api: Api): void {\n  api.exec(TOOL, []);\n}\n",
+        "reads": "<expression>"
+      },
+      "written-array-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\"];\nTOOLS[0] = \"rf\";\ngo(TOOLS[0], []);\n",
+        "reads": "<expression>"
+      },
+      "compound-array-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"r\"];\nTOOLS[0] += \"f\";\ngo(TOOLS[0], []);\n",
+        "reads": "<expression>"
+      },
+      "logical-written-array-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"\"];\nTOOLS[0] ||= \"rf\";\ngo(TOOLS[0], []);\n",
+        "reads": "<expression>"
+      },
+      "destructured-array-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\"];\n[TOOLS[0]] = [\"rf\"];\ngo(TOOLS[0], []);\n",
+        "reads": "<expression>"
+      },
+      "for-of-array-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\"];\nfor (TOOLS[0] of [\"rf\"]) hand();\ngo(TOOLS[0], []);\n",
+        "reads": "<expression>"
+      },
+      "deleted-array-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\"];\ndelete TOOLS[0];\ngo(TOOLS[0], []);\n",
+        "reads": "<expression>"
+      },
+      "method-written-array-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\"];\nTOOLS.splice(0, 1, \"rf\");\ngo(TOOLS[0], []);\n",
+        "reads": "<expression>"
+      },
+      "aliased-array-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\"];\nconst list = TOOLS;\nlist[0] = \"rf\";\ngo(TOOLS[0], []);\n",
+        "reads": "<expression>"
+      },
+      "called-element-array-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\", function (this: string[]): void {\n  this[0] = \"rf\";\n}];\n(TOOLS[1] as () => void)();\ngo(TOOLS[0], []);\n",
+        "reads": "<expression>"
+      },
+      "tagged-element-array-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\", function (this: string[]): void {\n  this[0] = \"rf\";\n}];\n(TOOLS[1] as (parts: TemplateStringsArray) => void)`run`;\ngo(TOOLS[0], []);\n",
+        "reads": "<expression>"
+      },
+      "exported-array-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nexport const TOOLS = [\"git\"];\ngo(TOOLS[0], []);\n",
+        "reads": "<expression>"
+      },
+      "local-export-array-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\"];\nexport { TOOLS };\ngo(TOOLS[0], []);\n",
+        "reads": "<expression>"
+      },
+      "written-array-specifier": {
+        "probe": "const SPECIFIERS = [\"node:fs\"];\nSPECIFIERS[0] = [\"node:child\", \"process\"].join(\"_\");\nconst m = await import(SPECIFIERS[0]);\nm.spawn(command, []);\n",
+        "reads": "<load>"
+      },
+      "written-array-api-launch": {
+        "probe": "const TOOLS = [\"git\"];\nTOOLS[0] = \"rf\";\nexport function run(api: Api): void {\n  api.exec(TOOLS[0], []);\n}\n",
+        "reads": "<expression>"
+      },
+      "read-array-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\", \"rf\"];\nhand(TOOLS[0]);\ngo(TOOLS[1], []);\n",
+        "reads": "rf"
+      },
+      "computed-read-array-command": {
+        "probe": "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\", \"rf\"];\nhand(TOOLS[pick()]);\ngo(TOOLS[1], []);\n",
+        "reads": "rf"
       }
     },
     "referencePositions": {
@@ -1046,6 +1182,18 @@
         "probe": "hand(delete HELD.member);\n",
         "kind": "value"
       },
+      "logical-or-target": {
+        "probe": "hand(HELD ||= other);\n",
+        "kind": "value"
+      },
+      "logical-and-target": {
+        "probe": "hand(HELD &&= other);\n",
+        "kind": "value"
+      },
+      "logical-nullish-target": {
+        "probe": "hand(HELD ??= other);\n",
+        "kind": "value"
+      },
       "statement": {
         "probe": "HELD;\n",
         "kind": "discarded"
@@ -1060,6 +1208,10 @@
       },
       "comma-left": {
         "probe": "hand((HELD, 0));\n",
+        "kind": "discarded"
+      },
+      "logical-target-statement": {
+        "probe": "HELD ??= other;\n",
         "kind": "discarded"
       },
       "assignment-target": {
@@ -1674,7 +1826,41 @@
               "for-const-command: spawn rf",
               "destructured-const-command: spawn <expression>",
               "inner-const-specifier: load import()",
-              "let-shadow-specifier: load import()"
+              "let-shadow-specifier: load import()",
+              "logical-or-kept: <module> <reference>",
+              "logical-nullish-kept: <module> <reference>",
+              "logical-and-kept: <module> <reference>",
+              "logical-kept-member: spawn rf",
+              "logical-kept-call: spawn <expression>",
+              "logical-member-store: spawn <reference>",
+              "namespace-merged-command: spawn <expression>",
+              "namespace-merged-api-launch: exec <expression>",
+              "dotted-namespace-merged-command: spawn <expression>",
+              "namespace-local-command: spawn <expression>",
+              "namespace-literal-command: exec rf",
+              "namespace-merged-specifier: load require()",
+              "namespace-merged-key: <computed> <reference>",
+              "enum-merged-command: spawn <expression>",
+              "enum-merged-api-launch: exec <expression>",
+              "type-namespace-const-command: spawn rf",
+              "ambient-const-command: spawn <expression>",
+              "ambient-const-api-launch: exec <expression>",
+              "written-array-command: spawn <expression>",
+              "compound-array-command: spawn <expression>",
+              "logical-written-array-command: spawn <expression>",
+              "destructured-array-command: spawn <expression>",
+              "for-of-array-command: spawn <expression>",
+              "deleted-array-command: spawn <expression>",
+              "method-written-array-command: spawn <expression>",
+              "aliased-array-command: spawn <expression>",
+              "called-element-array-command: spawn <expression>",
+              "tagged-element-array-command: spawn <expression>",
+              "exported-array-command: spawn <expression>",
+              "local-export-array-command: spawn <expression>",
+              "written-array-specifier: load import()",
+              "written-array-api-launch: exec <expression>",
+              "read-array-command: spawn rf",
+              "computed-read-array-command: spawn rf"
             ],
             "positions": [
               "argument (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
@@ -1737,10 +1923,14 @@
               "export-assignment (value): io WebSocket, global globalThis, process process, tracer <module> <re-export>",
               "enum-initializer (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
               "delete (value): io WebSocket, global globalThis.member, process process.member, tracer member <reference>",
+              "logical-or-target (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "logical-and-target (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
+              "logical-nullish-target (value): io WebSocket, global globalThis, process process, tracer <module> <reference>",
               "statement (discarded): io WebSocket, global globalThis, process process, tracer none",
               "member-statement (discarded): io WebSocket, global globalThis.member, process process.member, tracer none",
               "void (discarded): io WebSocket, global globalThis, process process, tracer none",
               "comma-left (discarded): io WebSocket, global globalThis, process process, tracer none",
+              "logical-target-statement (discarded): io WebSocket, global globalThis, process process, tracer none",
               "assignment-target (written): io WebSocket, global globalThis, process process, tracer none",
               "compound-target (written): io WebSocket, global globalThis, process process, tracer none",
               "increment (written): io WebSocket, global globalThis, process process, tracer none",

@@ -61,12 +61,14 @@
  * registry's post-race guard; without that guard the census reds). A3 drives every committed form through the
  * native-registry and native-direct passes and holds each to a refusal.
  *
- * A5, THE STATIC REACH, ENUMERATED (cut #4: the enumerate-the-resolvable form R-B95 binds for the static-reach family). A5
- * claims exactly what its readers read on the forms and positions its rosters pin - each roster entry is an executable
- * falsifier A5 runs and holds to what it must read - and fails closed outside them: a position no roster lists still reads
- * (the identifier readers skip only the name and type positions named below, the tracer also a write target and a
- * discarded value), a command, specifier or key that does not resolve reads <expression>, <computed> or <load>, and a
- * form the readers do not parse is R-STATIC-FORMS (Q6), never claimed. The readers:
+ * A5, THE STATIC REACH, ENUMERATED (cut #4: the enumerate-the-resolvable form R-B95 binds for the static-reach family; cut
+ * #5: the fail-closed core R-B123 binds, each claim below restated to exactly the forms its reader parses). A5 claims exactly
+ * what its readers read on the forms and positions its rosters pin - each roster entry is an executable falsifier A5 runs
+ * and holds to what it must read - and fails closed outside them: a position no roster lists still reads (the identifier
+ * readers skip only the name and type positions named below, the tracer also a write target and a discarded value), a
+ * command, specifier or key that does not resolve reads <expression>, <computed> or <load>, no name resolves in a namespace
+ * body or an enum declaration (TypeScript merges their declarations, which the resolver does not model), and a form the
+ * readers do not parse is R-STATIC-FORMS (Q6), never claimed. The readers:
  *  - the specifier reader (the closure, its I/O builtins, T2's TSX SDK read): every static import and export-from,
  *    import-equals, and every loader call; a specifier that does not resolve reads <expression>.
  *  - the loader reader: import(); a call whose callee is spelled require or getBuiltinModule (a name, a property name or a
@@ -83,42 +85,65 @@
  *    an interface's extends, a constraint, an as or satisfies type, an import type, a predicate). A class's extends
  *    expression (a declaration's or an expression's) and an instantiation expression are values, their type arguments types
  *    (TypeScript reads every ExpressionWithTypeArguments as a type node; inType carves those two out). REFERENCE_POSITIONS
- *    pins 102 positions (60 value, 4 discarded, 5 written, 2 export, 16 name, 15 type), each probed with WebSocket,
- *    globalThis, process and a held child_process namespace and held to its kind.
+ *    pins 106 positions (63 value, 5 discarded, 5 written, 2 export, 16 name, 15 type; a logical assignment's target is a
+ *    value position, or a discarded one when a statement discards the assignment), each probed with WebSocket, globalThis,
+ *    process and a held child_process namespace and held to its kind.
  *  - the child_process tracer, fail-closed: it never drops a held value it does not follow. Its entries are every import,
  *    import-equals and re-export whose specifier names child_process and every loader call whose specifier does (any text
  *    containing "child_process"). It follows each value derived from an entry through parentheses, type wrappers (as,
- *    satisfies, <T>, !, an instantiation expression) and await; member reads (by name, by a key that resolves; a computed key
- *    that does not reads <computed>; a default read is the module itself); declarations and assignments (=, ||=, &&=, ??=) to
- *    a name or to a destructuring pattern at any depth, rest elements included; aliases; and the result of ??, ||, && and a
- *    conditional's arms. A call of a launch member reads its command; an export of a held value reads <re-export>; a value a
- *    statement discards reads nothing and a write target's old value is replaced; every other use - a call of the module or
- *    of another member, an argument, a return, a property store, a class field, a class's extends, an object or array
- *    element, a member path deeper than PATH_DEPTH - reads <reference>; and a string that names child_process outside a
- *    specifier slot (types excepted) reads <untraced>. REACH_FORMS (105 forms) holds every form named here to what it must
- *    read (a launch form its rf or <expression> launch, a fail-closed form its <reference>, <re-export> or <untraced> site,
- *    a computed load its <load>).
+ *    satisfies, <T>, !, an instantiation expression) and await; member reads (by name, by a key that resolves; a computed
+ *    key that does not reads <computed>; a default read is the module itself); declarations and assignments (=, ||=, &&=,
+ *    ??=) to a name or to a destructuring pattern at any depth, rest elements included; a logical assignment (||=, &&=,
+ *    ??=) whose target is a held name, through the assignment's value (the target's old value when it is kept: ||= a truthy
+ *    one, &&= a falsy one, ??= one neither null nor undefined); aliases; and the result of ??, ||, && and a conditional's
+ *    arms. A call of a launch member reads its command; an export of a held value reads <re-export>; a value a statement
+ *    discards reads nothing, and so does a name's old value at the target of an =, compound or destructuring assignment, a
+ *    for-in/for-of head or an increment (an = or destructuring target is replaced, a compound or increment target yields a
+ *    computed value, never the held one; a logical assignment's target is read, as above); every other use - a call of the
+ *    module or of another member, an argument, a return, a property store (a logical assignment's member target included),
+ *    a class field, a class's extends, an object or array element, a member path deeper than PATH_DEPTH - reads
+ *    <reference>; and a string that names child_process outside a specifier slot (types excepted) reads <untraced>.
+ *    REACH_FORMS (139 forms) holds every form named here, and every resolution and launch-call branch below, to what it
+ *    must read (a launch form its rf or <expression> launch, a fail-closed form its <reference>, <re-export> or <untraced>
+ *    site, a computed load its <load>).
  *  - the launch-call reader: every call spelled as a launch call (LAUNCH_CALLS, process.execve included; a name, a property
  *    name or a literal element name, through parentheses and type wrappers, an instantiation expression's included) whose
- *    command resolves.
+ *    command resolves; and, its command <expression>, every such call in a namespace body or an enum declaration whose
+ *    command does not resolve (no name resolves there, below; a string literal command still does) and every such call
+ *    whose command resolves only by trusting what the resolver refuses (an ambient const's initializer, an index into a
+ *    const array that is not only read), so a refusal never hides a launch the resolver would have read.
  *  - resolution (every reader): commands, specifiers and member keys resolve through string literals, the const binding a
- *    name resolves to in its scope (the nearest scope enclosing the reference that binds the name decides; a let, var, using,
- *    parameter, function, class, enum, namespace, import-equals, catch or destructured binding there does not resolve, and
- *    neither does a name nothing in the module binds as a value - a global, or an ES import, which binds only at module
- *    scope where valid code binds no other value of its name; a type-only import binds none), literal indexes into const
- *    array literals and both arms of a conditional, and read <expression> otherwise. REACH_FORMS' scope forms pin every
- *    branch: an outer const read in a function, a block's own const, a for-initializer's const inside its loop and a const
- *    beside a same-named type-only import resolve; a let, var, await using, parameter, catch, function (a block's too),
- *    function or class expression name, class, enum, namespace, import-equals, named, default or namespace import, and
- *    object or array destructured shadow, a const of an unrelated inner scope, a bare block's, a for statement's, a case
- *    block's or a namespace's const read outside it, and a destructured const do not.
- * Read that way, the pass reaches no tool provider, model host or tool SDK native-modules.ts loads, no I/O global, no global
- * object, no process member but env, one I/O builtin (node:child_process, in the render module) and one launch site,
+ *    name resolves to in its scope (the nearest scope enclosing the reference that binds the name decides; a let, var,
+ *    using, parameter, function, class, enum, import-equals, catch or destructured binding there does not resolve, nor does
+ *    an ambient const - one declared with declare: its initializer is not its run-time value - and neither does a name
+ *    nothing in the module binds as a value - a global, or an ES import, which binds only at module scope where valid code
+ *    binds no other value of its name; a type-only import binds none; a namespace declaration binds none the resolver reads
+ *    either: at module scope a namespace holding a value leaves its name no other value in valid code, and one holding only
+ *    types binds no value, so a const of its name resolves), a literal index into a const array literal whose name is only
+ *    read (no declaration of the name exported, and every reference to the name an element read - at a literal or a
+ *    computed index - that writes, deletes and calls nothing, a tagged template's tag included: an array literal is mutable
+ *    at run time) and both arms of a conditional, and read <expression> otherwise. No name resolves in a namespace body (a
+ *    namespace's or an ambient module's block) or an enum declaration: TypeScript merges a namespace's declarations (an
+ *    export of one is in scope in every body) and an enum's (a member of one is in scope in every declaration), and the
+ *    resolver models neither merge. REACH_FORMS' scope forms pin every branch: an outer const read in a function, a block's
+ *    own const, a for-initializer's const inside its loop, a const beside a same-named type-only import or beside a
+ *    same-named namespace holding only types, and a literal index into a const array that is only read (beside an element
+ *    read at a computed index too) resolve; a let, var, await using, parameter, catch, function (a block's too), function
+ *    or class expression name, class, enum, named, default or namespace import, ambient const, and object or array
+ *    destructured shadow, a const of an unrelated inner scope, a bare block's, a for statement's, a case block's or a
+ *    namespace's const read outside it, a destructured const, an index into a const array that is written (by =, a compound
+ *    or logical assignment, a destructuring or a for-of head), deleted, written through a method, aliased, called (as a
+ *    callee or a tagged template's tag) or exported (by its declaration or a local export), as a command or as a specifier,
+ *    every name in a namespace body - merged or not, a dotted namespace's included, the body's own const included, a
+ *    namespace or import-equals shadow there - as a command, a specifier or a member key, and every name in a merged enum
+ *    declaration as a command, do not.
+ * Read that way, the pass reaches no tool provider, model host or tool SDK native-modules.ts loads, no I/O global, no
+ * global object, no process member but env, one I/O builtin (node:child_process, in the render module) and one launch site,
  * spawn("rf"). Src outside anchor: over every tracked src module, every site the two launch readers read (the tracer, and
- * every call spelled as a launch call whose command resolves) is pinned by module, callee and command (srcSites), and exactly
- * one of them launches rf: the render module's spawn. The sites whose command does not resolve are among them (any of them
- * could launch rf), and every loader call in src whose specifier does not resolve is pinned by name (any of them could load
- * child_process).
+ * every call spelled as a launch call whose command resolves or that sits in a namespace body or an enum declaration) is
+ * pinned by module, callee and command (srcSites), and exactly one of them launches rf: the render module's spawn. The
+ * sites whose command does not resolve are among them (any of them could launch rf), and every loader call in src whose
+ * specifier does not resolve is pinned by name (any of them could load child_process).
  *
  * THE UNTIL-THEN TRIGGER (row T), in these homes and forms: T1 no tracked .tsx/.jsx module (either extension in any letter
  * case) anywhere in git's index; T2 no tracked script module outside test/ (a .ts, .mts, .cts, .tsx, .js, .mjs, .cjs or .jsx
@@ -157,16 +182,32 @@
  * wb-jwc.7 R-B92 class), and a createRequire result bound by ||=, &&= or ??= is a loader name. Rider F2: GC3 (a tracked
  * examples/ module with an upper-case .JS extension) - script extensions are read in any letter case (T4's planted homes
  * hold it), and R-UNREAD-HOMES names the extensionless path (Q7).
+ * RESPIN (cut #5, the FINAL cut; refusal #4 on cut #4 ccddf29d, seat gate-prep-16, lane g10-gate-s149; ORCHESTRATOR RULING
+ * R-B123: the rule-19 structural exit binds cut #5 to the FAIL-CLOSED CORE and moves the full-surface reader work to
+ * wb-pyel.9): U1 class-level guard (a) failed through two families. LA: the tracer skipped a logical assignment's left
+ * operand as a write target, while a kept ||= or ??= target is the assignment's value (gate plants LA4, LA5). NS: the
+ * resolver read a name in a namespace body through the per-block scope chain, while TypeScript merges a namespace's
+ * declarations (gate plants NS2, NS1). Both now fail closed: a logical assignment's target is read, a held name target
+ * followed through the assignment's value; no name resolves in a namespace body, and the launch-call reader reads every
+ * launch-named call there. The same class, named at cut time before a gate finds it: an enum declaration merges as a
+ * namespace does (a merged enum's computed member read the module's same-named const), an ambient const's initializer is not
+ * its run-time value, a namespace holding only types binds no value (a const of its name went unresolved), and a const
+ * array literal is mutable (an index into a written, aliased, called or exported array read the initializer's element, the
+ * specifier of a loader call included) - each now fails closed or resolves as TypeScript binds it, and each is a
+ * REACH_FORMS form (34 new: 6 logical-assignment, 9 merged-scope, 1 types-only namespace, 2 ambient const, 16 const array).
+ * A refusal never hides a launch: a launch-named call on a value the tracer does not hold whose command resolves only by
+ * trusting what the resolver refuses reads <expression> (the seat's own battery found that an ambient const or a written
+ * array, read unresolved, dropped such a call the cut #4 resolver had read as a site).
  *
- * MEASURED (by the respin seat ws-04, run g10-work-s143, 2026-10-30, on merge eb0943cc: trunk 37adc54 into cut #3): all 21
+ * MEASURED (by the respin seat ws-02, run g10-work-s151, 2026-10-30, on merge 1c221e41: trunk 51d130e into cut #4): all 21
  * driven pass/scenario observations read an empty verdict, the 5 settled native renders return the uncommitted form and the
  * 38 committed-form renders (19 forms, two native passes) are refused; each of the 39 controls trips exactly its expected
  * classes and the abandoned stand-in is stopped at teardown; the render closure is 4 src modules and 2 externals with one
  * launch site, no I/O global, no global object and no process member but env; over src the launch readers read 11 sites -
  * one rf site and one child_process site whose command does not resolve (the detached host's spawn of process.execPath) -
  * and one loader call whose specifier does not resolve (the detached host's createRequire result), and 4 stand-ins beside the
- * rf stand-in (cmd, forge, git, sh); each of the 105 REACH_FORMS forms reads what it must and each of the 102
- * REFERENCE_POSITIONS positions reads as its kind says; 0 tracked .tsx/.jsx of 1099 tracked paths; 0 hook names (identifiers
+ * rf stand-in (cmd, forge, git, sh); each of the 139 REACH_FORMS forms reads what it must and each of the 106
+ * REFERENCE_POSITIONS positions reads as its kind says; 0 tracked .tsx/.jsx of 1107 tracked paths; 0 hook names (identifiers
  * or strings) over 198 read modules (117 in src); 0 interest phrases in 8 descriptors and over the 198 read modules.
  *
  * The census pins the rows and the residuals' quiet rows:
@@ -212,7 +253,8 @@
  * directories) reads no violation (Q5); A5 bounds the render closure statically for the forms its readers parse, and
  * R-STATIC-FORMS names the rest; R-STATIC-FORMS the forms A5's readers do not parse (Q6: one probe per form, its reading by
  * every A5 reader pinned, the rf launches read included) - a launch-named call on a value the tracer does not hold whose
- * command does not resolve (pi.exec, a connection's spawn); a launch through a value the module does not bind from
+ * command does not resolve, outside a namespace body and an enum declaration (pi.exec, a connection's spawn); a launch
+ * through a value the module does not bind from
  * child_process (a parameter, a function a call returns); a package's own launcher (read by its specifier alone); a global
  * reached without its name (a constructor chain); a write through the allowed process.env read; a launch whose arguments
  * carry rf through a shell or launcher the readers read by its command alone (sh -c, npx); a launch through another
@@ -484,10 +526,11 @@ const STATIC_RESIDUE: Readonly<Record<string, string>> = {
   "composed-code": "export const run = (code: string): unknown => new Function(code)();\n",
   "process-binding": 'export const raw = (): unknown => process.binding("spawn_sync");\n',
 };
-/** A5's form roster: every form A5's child_process tracer is proven on, one probe each, with what it must read - a launch
- * form reads a launch site whose command is rf (or <expression>, a launch whose command does not resolve), a fail-closed form
- * the site it names (a value the tracer does not follow further reads <reference>, an export <re-export>, a child_process
- * name spelled outside a specifier slot <untraced>), a computed load one unresolved loader call (<load>). */
+/** A5's form roster: every form A5's child_process tracer, launch-call reader and resolver are proven on, one probe each,
+ * with what it must read - a launch form reads a launch site whose command is rf (or <expression>, a launch whose command
+ * does not resolve), a fail-closed form the site it names (a value the tracer does not follow further reads <reference>, an
+ * export <re-export>, a child_process name spelled outside a specifier slot <untraced>), a computed load one unresolved
+ * loader call (<load>). */
 const REACH_FORMS: Readonly<Record<string, { readonly probe: string; readonly reads: string }>> = {
   "named-import": { probe: 'import { spawn } from "node:child_process";\nspawn("rf", []);\n', reads: "rf" },
   "renamed-import": { probe: 'import { spawn as go } from "node:child_process";\ngo("rf", []);\n', reads: "rf" },
@@ -594,15 +637,50 @@ const REACH_FORMS: Readonly<Record<string, { readonly probe: string; readonly re
   "destructured-const-command": { probe: 'import { spawn as go } from "node:child_process";\nconst { TOOL } = { TOOL: "rf" };\ngo(TOOL, []);\n', reads: "<expression>" },
   "inner-const-specifier": { probe: 'export function decoy(): string {\n  const CP = "node:fs";\n  return CP;\n}\nconst m = await import(CP);\nm.spawn(command, []);\n', reads: "<load>" },
   "let-shadow-specifier": { probe: 'export function decoy(): string {\n  const CP = "node:fs";\n  return CP;\n}\nlet CP = ["node:child", "process"].join("_");\nconst m = await import(CP);\nm.spawn(command, []);\n', reads: "<load>" },
+  "logical-or-kept": { probe: "import * as cp from \"node:child_process\";\nconst fallback = {} as typeof cp;\nlet held = cp;\nexport const pick = (): typeof cp => (held ||= fallback);\n", reads: "<reference>" },
+  "logical-nullish-kept": { probe: "import * as cp from \"node:child_process\";\nconst fallback = {} as typeof cp;\nlet held: typeof cp | undefined = cp;\nexport const pick = (): typeof cp => (held ??= fallback);\n", reads: "<reference>" },
+  "logical-and-kept": { probe: "import * as cp from \"node:child_process\";\nconst fallback = {} as typeof cp;\nlet held = cp;\nexport const pick = (): typeof cp => (held &&= fallback);\n", reads: "<reference>" },
+  "logical-kept-member": { probe: "import * as cp from \"node:child_process\";\nlet held = cp;\nconst go = (held ??= fallback).spawn;\ngo(\"rf\", []);\n", reads: "rf" },
+  "logical-kept-call": { probe: "import * as cp from \"node:child_process\";\nlet held = cp;\n(held ||= fallback).spawn(command, []);\n", reads: "<expression>" },
+  "logical-member-store": { probe: "import * as cp from \"node:child_process\";\ncp.spawn ||= fallback;\n", reads: "<reference>" },
+  "namespace-merged-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nnamespace Tools {\n  export const TOOL = \"rf\";\n}\nnamespace Tools {\n  go(TOOL, []);\n}\n", reads: "<expression>" },
+  "namespace-merged-api-launch": { probe: "const TOOL = \"git\";\nnamespace Tools {\n  export const TOOL = \"rf\";\n}\nnamespace Tools {\n  export function run(api: Api): void {\n    api.exec(TOOL, []);\n  }\n}\n", reads: "<expression>" },
+  "dotted-namespace-merged-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nnamespace Outer.Tools {\n  export const TOOL = \"rf\";\n}\nnamespace Outer {\n  export namespace Tools {\n    go(TOOL, []);\n  }\n}\n", reads: "<expression>" },
+  "namespace-local-command": { probe: "import { spawn as go } from \"node:child_process\";\nnamespace Tools {\n  const TOOL = \"rf\";\n  go(TOOL, []);\n}\n", reads: "<expression>" },
+  "namespace-literal-command": { probe: "namespace Tools {\n  export function run(api: Api): void {\n    api.exec(\"rf\", []);\n  }\n}\n", reads: "rf" },
+  "namespace-merged-specifier": { probe: "const SPECIFIER = \"node:fs\";\nnamespace Loader {\n  export const SPECIFIER = [\"node:child\", \"process\"].join(\"_\");\n}\nnamespace Loader {\n  export const m = require(SPECIFIER);\n}\n", reads: "<load>" },
+  "namespace-merged-key": { probe: "import * as cp from \"node:child_process\";\nconst KEY = \"fork\";\nnamespace Tools {\n  export const KEY = \"spawn\";\n}\nnamespace Tools {\n  cp[KEY](\"rf\", []);\n}\n", reads: "<reference>" },
+  "enum-merged-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"git\";\nenum Tools {\n  TOOL = \"rf\",\n}\nenum Tools {\n  Pid = go(TOOL, []).pid ?? 0,\n}\n", reads: "<expression>" },
+  "enum-merged-api-launch": { probe: "const TOOL = \"git\";\nenum Tools {\n  TOOL = \"rf\",\n}\nenum Tools {\n  Size = api.exec(TOOL, []).length,\n}\n", reads: "<expression>" },
+  "type-namespace-const-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOL = \"rf\";\nnamespace TOOL {\n  export type Shape = string;\n}\ngo(TOOL, []);\n", reads: "rf" },
+  "ambient-const-command": { probe: "import { spawn as go } from \"node:child_process\";\ndeclare const TOOL = \"git\";\ngo(TOOL, []);\n", reads: "<expression>" },
+  "ambient-const-api-launch": { probe: "declare const TOOL = \"git\";\nexport function run(api: Api): void {\n  api.exec(TOOL, []);\n}\n", reads: "<expression>" },
+  "written-array-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\"];\nTOOLS[0] = \"rf\";\ngo(TOOLS[0], []);\n", reads: "<expression>" },
+  "compound-array-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"r\"];\nTOOLS[0] += \"f\";\ngo(TOOLS[0], []);\n", reads: "<expression>" },
+  "logical-written-array-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"\"];\nTOOLS[0] ||= \"rf\";\ngo(TOOLS[0], []);\n", reads: "<expression>" },
+  "destructured-array-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\"];\n[TOOLS[0]] = [\"rf\"];\ngo(TOOLS[0], []);\n", reads: "<expression>" },
+  "for-of-array-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\"];\nfor (TOOLS[0] of [\"rf\"]) hand();\ngo(TOOLS[0], []);\n", reads: "<expression>" },
+  "deleted-array-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\"];\ndelete TOOLS[0];\ngo(TOOLS[0], []);\n", reads: "<expression>" },
+  "method-written-array-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\"];\nTOOLS.splice(0, 1, \"rf\");\ngo(TOOLS[0], []);\n", reads: "<expression>" },
+  "aliased-array-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\"];\nconst list = TOOLS;\nlist[0] = \"rf\";\ngo(TOOLS[0], []);\n", reads: "<expression>" },
+  "called-element-array-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\", function (this: string[]): void {\n  this[0] = \"rf\";\n}];\n(TOOLS[1] as () => void)();\ngo(TOOLS[0], []);\n", reads: "<expression>" },
+  "tagged-element-array-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\", function (this: string[]): void {\n  this[0] = \"rf\";\n}];\n(TOOLS[1] as (parts: TemplateStringsArray) => void)`run`;\ngo(TOOLS[0], []);\n", reads: "<expression>" },
+  "exported-array-command": { probe: "import { spawn as go } from \"node:child_process\";\nexport const TOOLS = [\"git\"];\ngo(TOOLS[0], []);\n", reads: "<expression>" },
+  "local-export-array-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\"];\nexport { TOOLS };\ngo(TOOLS[0], []);\n", reads: "<expression>" },
+  "written-array-specifier": { probe: "const SPECIFIERS = [\"node:fs\"];\nSPECIFIERS[0] = [\"node:child\", \"process\"].join(\"_\");\nconst m = await import(SPECIFIERS[0]);\nm.spawn(command, []);\n", reads: "<load>" },
+  "written-array-api-launch": { probe: "const TOOLS = [\"git\"];\nTOOLS[0] = \"rf\";\nexport function run(api: Api): void {\n  api.exec(TOOLS[0], []);\n}\n", reads: "<expression>" },
+  "read-array-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\", \"rf\"];\nhand(TOOLS[0]);\ngo(TOOLS[1], []);\n", reads: "rf" },
+  "computed-read-array-command": { probe: "import { spawn as go } from \"node:child_process\";\nconst TOOLS = [\"git\", \"rf\"];\nhand(TOOLS[pick()]);\ngo(TOOLS[1], []);\n", reads: "rf" },
 };
 /** A5's position roster: every position a name can take in a module, one probe each with HELD for the name, and what kind
  * of position it is. The identifier readers are probed with HELD as an I/O global (WebSocket) and as a global object
  * (globalThis) through the I/O-global reader, as process through the process reader, and as a namespace binding of
  * child_process (import * as cp) through the tracer. A value position evaluates the name at run time: every identifier
- * reader reads it, the tracer as at least one site. A discarded value (a statement's, void's, a comma's left operand) and a
- * written one (an assignment's, a destructuring's, a for-of's or an increment's target) are read by the I/O-global and
- * process readers and not by the tracer (it reads nothing for a value a statement discards, and a target's old value is
- * replaced). A local export reads only for the tracer (<re-export>; a module exports its own bindings, never a global). A
+ * reader reads it, the tracer as at least one site (a logical assignment's target whose value is used included). A discarded
+ * value (a statement's - a logical assignment's target whose value a statement discards included -, void's, a comma's left
+ * operand) and a written one (an =, compound or destructuring assignment's, a for-of's or an increment's target) are read by
+ * the I/O-global and process readers and not by the tracer (it reads nothing for a value a statement discards, and a
+ * written target's old value is replaced). A local export reads only for the tracer (<re-export>; a module exports its own bindings, never a global). A
  * name (a declaration's, a property's, a key's, an import or export specifier's, a label's) and a type (erased before run
  * time: an annotation, a typeof query, an implements clause, an interface's extends, a heritage or call type argument, a
  * constraint, an as or satisfies type, an import type, a predicate) are read by none. */
@@ -667,10 +745,14 @@ const REFERENCE_POSITIONS: Readonly<Record<string, { readonly probe: string; rea
   "export-assignment": { probe: "export = HELD;\n", kind: "value" },
   "enum-initializer": { probe: "enum Holder {\n  Member = HELD,\n}\nhand(Holder);\n", kind: "value" },
   delete: { probe: "hand(delete HELD.member);\n", kind: "value" },
+  "logical-or-target": { probe: "hand(HELD ||= other);\n", kind: "value" },
+  "logical-and-target": { probe: "hand(HELD &&= other);\n", kind: "value" },
+  "logical-nullish-target": { probe: "hand(HELD ??= other);\n", kind: "value" },
   statement: { probe: "HELD;\n", kind: "discarded" },
   "member-statement": { probe: "HELD.member;\n", kind: "discarded" },
   void: { probe: "hand(void HELD);\n", kind: "discarded" },
   "comma-left": { probe: "hand((HELD, 0));\n", kind: "discarded" },
+  "logical-target-statement": { probe: "HELD ??= other;\n", kind: "discarded" },
   "assignment-target": { probe: "HELD = other;\n", kind: "written" },
   "compound-target": { probe: "HELD += 1;\n", kind: "written" },
   increment: { probe: "HELD++;\n", kind: "written" },
@@ -1647,12 +1729,18 @@ function unwrap(expression: ts.Expression): ts.Expression {
 }
 /** A value binding of a name and the scope it binds the name in; only a const binding carries its initializer (the only kind
  * a command or specifier resolves through). Every other binding - let, var, using, a parameter, a function, a class, an
- * enum, a namespace, an import-equals, a catch variable, a destructured element, an ambient const - carries none. An ES
- * import is not recorded: it binds only at module scope, where valid code binds no other value of its name, so a name it
- * binds reads as no binding (unresolved), and a type-only import binds no value at all. */
+ * enum, an import-equals, a catch variable, a destructured element, an ambient const (declared with declare: its initializer
+ * is not its run-time value, so it is kept as refused, which only trusting resolution reads; a declare namespace's or
+ * module's body is a merged scope, where nothing resolves) - carries none. An ES import is not recorded: it binds only at module scope,
+ * where valid code binds no other value of its name, so a name it binds reads as no binding (unresolved), and a type-only
+ * import binds no value at all. A namespace declaration is not recorded either: valid code declares one only at module
+ * scope, where a namespace holding a value leaves its name no other value and one holding only types binds no value (a
+ * const of its name resolves), or in a namespace body, where no name resolves (inMergedScope). */
 interface Declared {
   readonly scope: ts.Node;
   readonly initializer: ts.Expression | undefined;
+  /** An ambient const's initializer: the resolver refuses it, trusting resolution (resolveTexts) reads it. */
+  readonly refused: ts.Expression | undefined;
 }
 /** A block-scoped binding's scope: the nearest block, module, case block, for statement, static block or function. */
 function blockScope(node: ts.Node): ts.Node {
@@ -1676,10 +1764,10 @@ function declarations(source: ts.SourceFile): ReadonlyMap<string, readonly Decla
   const cached = declaredIn.get(source);
   if (cached !== undefined) return cached;
   const found = new Map<string, Declared[]>();
-  const declare = (name: ts.Node | undefined, scope: ts.Node, initializer?: ts.Expression): void => {
+  const declare = (name: ts.Node | undefined, scope: ts.Node, initializer?: ts.Expression, refused?: ts.Expression): void => {
     if (name === undefined) return;
     if (ts.isIdentifier(name)) {
-      found.set(name.text, [...(found.get(name.text) ?? []), { scope, initializer }]);
+      found.set(name.text, [...(found.get(name.text) ?? []), { scope, initializer, refused }]);
     } else if (ts.isObjectBindingPattern(name) || ts.isArrayBindingPattern(name)) {
       for (const element of name.elements) if (ts.isBindingElement(element)) declare(element.name, scope);
     }
@@ -1690,8 +1778,9 @@ function declarations(source: ts.SourceFile): ReadonlyMap<string, readonly Decla
         declare(node.name, node.parent);
       } else if (ts.isVariableDeclarationList(node.parent)) {
         const blockScoped = node.parent.flags & ts.NodeFlags.BlockScoped;
+        const ambient = (ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Ambient) !== 0;
         const constant = blockScoped === ts.NodeFlags.Const && ts.isIdentifier(node.name) ? node.initializer : undefined;
-        declare(node.name, blockScoped === 0 ? functionScope(node.parent) : blockScope(node.parent), constant);
+        declare(node.name, blockScoped === 0 ? functionScope(node.parent) : blockScope(node.parent), ambient ? undefined : constant, ambient ? constant : undefined);
       }
     } else if (ts.isParameter(node)) {
       declare(node.name, node.parent);
@@ -1700,21 +1789,31 @@ function declarations(source: ts.SourceFile): ReadonlyMap<string, readonly Decla
       declare(node.name, functionScope(node));
     } else if (ts.isFunctionExpression(node) || ts.isClassExpression(node)) {
       declare(node.name, node);
-    } else if (ts.isClassDeclaration(node) || ts.isEnumDeclaration(node) || ts.isModuleDeclaration(node) || ts.isImportEqualsDeclaration(node)) {
+    } else if (ts.isClassDeclaration(node) || ts.isEnumDeclaration(node) || ts.isImportEqualsDeclaration(node)) {
       declare(node.name, blockScope(node));
     }
   });
   declaredIn.set(source, found);
   return found;
 }
+/** Whether a node sits in a namespace body (a namespace's or an ambient module's block) or in an enum declaration. TypeScript
+ * merges the declarations of a namespace (an export of one is in scope in the body of every other) and of an enum (a member
+ * of one is in scope in every other), and the resolver models neither merge, so no name resolves there (fail-closed). */
+function inMergedScope(node: ts.Node): boolean {
+  for (let at: ts.Node | undefined = node.parent; at !== undefined; at = at.parent) if (ts.isModuleBlock(at) || ts.isEnumDeclaration(at)) return true;
+  return false;
+}
 /** The const initializers a referenced name resolves to: the nearest scope enclosing the reference that binds the name
- * decides; undefined when a binding there is not a const with an initializer, or when nothing in the module binds the name
- * (a global). */
-function resolvedInitializers(source: ts.SourceFile, reference: ts.Identifier): ts.Expression[] | undefined {
+ * decides; undefined when a binding there is not a const with an initializer, when nothing in the module binds the name (a
+ * global), or when the reference sits in a merged scope (inMergedScope). Trusting resolution also reads an ambient const's
+ * initializer (refused). */
+function resolvedInitializers(source: ts.SourceFile, reference: ts.Identifier, trusting = false): ts.Expression[] | undefined {
+  if (inMergedScope(reference)) return undefined;
   const declared = declarations(source).get(reference.text) ?? [];
+  const read = (entry: Declared): ts.Expression | undefined => entry.initializer ?? (trusting ? entry.refused : undefined);
   for (let at: ts.Node = reference.parent; ; at = at.parent) {
     const here = declared.filter(entry => entry.scope === at);
-    if (here.length > 0) return here.every(entry => entry.initializer !== undefined) ? here.flatMap(entry => (entry.initializer === undefined ? [] : [entry.initializer])) : undefined;
+    if (here.length > 0) return here.every(entry => read(entry) !== undefined) ? here.flatMap(entry => read(entry) ?? []) : undefined;
     if (ts.isSourceFile(at)) return undefined;
   }
 }
@@ -1725,39 +1824,81 @@ function union(lists: readonly (readonly string[] | undefined)[]): string[] | un
 }
 const RESOLVE_DEPTH = 8;
 /** The literal values an expression can take, read through string literals, the const binding a name resolves to in its
- * scope (resolvedInitializers), literal indexes into const array literals and both arms of a conditional; undefined when any
- * part does not resolve. */
-function resolveTexts(source: ts.SourceFile, expression: ts.Expression, depth = 0): string[] | undefined {
+ * scope (resolvedInitializers), literal indexes into const array literals whose name is only read (readOnlyArray) and both
+ * arms of a conditional; undefined when any part does not resolve. Trusting resolution also reads what the resolver refuses:
+ * an ambient const's initializer and an index into a const array that is not only read (the launch-call reader's refusal
+ * test, launchSitesAt; no reader resolves through it). */
+function resolveTexts(source: ts.SourceFile, expression: ts.Expression, depth = 0, trusting = false): string[] | undefined {
   if (depth > RESOLVE_DEPTH) return undefined;
   const node = unwrap(expression);
   if (ts.isStringLiteralLike(node)) return [node.text];
-  if (ts.isConditionalExpression(node)) return union([resolveTexts(source, node.whenTrue, depth + 1), resolveTexts(source, node.whenFalse, depth + 1)]);
+  if (ts.isConditionalExpression(node)) return union([resolveTexts(source, node.whenTrue, depth + 1, trusting), resolveTexts(source, node.whenFalse, depth + 1, trusting)]);
   if (ts.isIdentifier(node)) {
-    const initializers = resolvedInitializers(source, node);
-    return initializers === undefined ? undefined : union(initializers.map(initializer => resolveTexts(source, initializer, depth + 1)));
+    const initializers = resolvedInitializers(source, node, trusting);
+    return initializers === undefined ? undefined : union(initializers.map(initializer => resolveTexts(source, initializer, depth + 1, trusting)));
   }
   if (ts.isElementAccessExpression(node)) {
     const index = unwrap(node.argumentExpression);
     if (!ts.isNumericLiteral(index)) return undefined;
-    const arrays = resolveArrays(source, node.expression, depth + 1);
+    const arrays = resolveArrays(source, node.expression, depth + 1, trusting);
     return arrays === undefined ? undefined : union(arrays.map(items => items[Number(index.text)]));
   }
   return undefined;
 }
-/** The candidate element lists of an array-valued expression: array literals without spreads, const bindings, both arms of
- * a conditional; undefined otherwise. */
-function resolveArrays(source: ts.SourceFile, expression: ts.Expression, depth: number): (string[] | undefined)[][] | undefined {
+const readOnlyOf = new WeakMap<ts.SourceFile, Map<string, boolean>>();
+/** Whether a name's const arrays can only be read. An array literal is mutable at run time, so an index into one resolves only
+ * when no declaration of the name is exported (an importer may write it) and every reference to the name in the module is an
+ * element read (elementRead). Name-keyed: a same-named binding of another scope counts too. */
+function readOnlyArray(source: ts.SourceFile, name: string): boolean {
+  const known = readOnlyOf.get(source) ?? new Map<string, boolean>();
+  readOnlyOf.set(source, known);
+  const cached = known.get(name);
+  if (cached !== undefined) return cached;
+  let only = true;
+  visit(source, node => {
+    if (!only) return;
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === name && exportedNode(node.parent.parent)) only = false;
+    else if (ts.isExportSpecifier(node) && node.parent.parent.moduleSpecifier === undefined && (node.propertyName ?? node.name).text === name) only = false;
+    else if (ts.isIdentifier(node) && node.text === name && !isNameSlot(node) && !inType(node)) only = elementRead(node);
+  });
+  known.set(name, only);
+  return only;
+}
+/** Whether a reference reads one element (`TOOLS[0]`, through parentheses and type wrappers) and neither writes it (an
+ * assignment's target, a logical assignment's included, or a destructuring, for-in/for-of or increment target), deletes it
+ * nor calls it (a called element, a tagged template's tag included, runs with the array as its this). */
+function elementRead(node: ts.Identifier): boolean {
+  const access = node.parent;
+  if (!ts.isElementAccessExpression(access) || access.expression !== node) return false;
+  let value: ts.Expression = access;
+  for (;;) {
+    const wrapper = value.parent;
+    const wraps =
+      (ts.isParenthesizedExpression(wrapper) || ts.isAsExpression(wrapper) || ts.isSatisfiesExpression(wrapper) || ts.isTypeAssertionExpression(wrapper) || ts.isNonNullExpression(wrapper)) &&
+      wrapper.expression === value;
+    if (!wraps) break;
+    value = wrapper;
+  }
+  const parent = value.parent;
+  if (isWriteTarget(value) || ts.isDeleteExpression(parent)) return false;
+  if (ts.isBinaryExpression(parent) && parent.left === value && LOGICAL_ASSIGNMENTS.includes(parent.operatorToken.kind)) return false;
+  if (ts.isCallExpression(parent) && parent.expression === value) return false;
+  return !(ts.isTaggedTemplateExpression(parent) && parent.tag === value);
+}
+/** The candidate element lists of an array-valued expression: array literals without spreads, const bindings whose name is
+ * only read (readOnlyArray), both arms of a conditional; undefined otherwise. */
+function resolveArrays(source: ts.SourceFile, expression: ts.Expression, depth: number, trusting = false): (string[] | undefined)[][] | undefined {
   if (depth > RESOLVE_DEPTH) return undefined;
   const node = unwrap(expression);
   let arms: ((string[] | undefined)[][] | undefined)[];
   if (ts.isArrayLiteralExpression(node)) {
-    return node.elements.some(element => ts.isSpreadElement(element)) ? undefined : [node.elements.map(element => resolveTexts(source, element, depth + 1))];
+    return node.elements.some(element => ts.isSpreadElement(element)) ? undefined : [node.elements.map(element => resolveTexts(source, element, depth + 1, trusting))];
   } else if (ts.isConditionalExpression(node)) {
-    arms = [resolveArrays(source, node.whenTrue, depth + 1), resolveArrays(source, node.whenFalse, depth + 1)];
+    arms = [resolveArrays(source, node.whenTrue, depth + 1, trusting), resolveArrays(source, node.whenFalse, depth + 1, trusting)];
   } else if (ts.isIdentifier(node)) {
-    const initializers = resolvedInitializers(source, node);
-    if (initializers === undefined) return undefined;
-    arms = initializers.map(initializer => resolveArrays(source, initializer, depth + 1));
+    const initializers = resolvedInitializers(source, node, trusting);
+    if (initializers === undefined || (!trusting && !readOnlyArray(source, node.text))) return undefined;
+    arms = initializers.map(initializer => resolveArrays(source, initializer, depth + 1, trusting));
   } else {
     return undefined;
   }
@@ -1917,8 +2058,11 @@ interface Located {
   readonly site: LaunchSite;
 }
 /** Calls whose callee (an identifier, a property or a literal element name) is spelled as a launch call and whose command
- * resolves (resolveTexts; candidates joined by "|"). A call whose command does not resolve is not read here (R-STATIC-FORMS:
- * regex .exec calls share the name); the child_process reader reads those when they go through a binding. */
+ * resolves (resolveTexts; candidates joined by "|"), and, its command <expression>, every such call in a merged scope
+ * (inMergedScope) whose command does not resolve and every such call whose command resolves only by trusting what the
+ * resolver refuses (an ambient const's initializer, an index into a const array that is not only read). Elsewhere a call
+ * whose command does not resolve is not read here (R-STATIC-FORMS: regex .exec calls share the name); the child_process
+ * reader reads those when they go through a binding. */
 function launchSitesAt(module: string, source: ts.SourceFile = parse(module)): Located[] {
   const found: Located[] = [];
   visit(source, node => {
@@ -1928,6 +2072,7 @@ function launchSitesAt(module: string, source: ts.SourceFile = parse(module)): L
     const first = node.arguments[0];
     const commands = first === undefined ? undefined : resolveTexts(source, first);
     if (commands !== undefined) found.push({ at: node.getStart(source), site: { module, callee, command: commands.join("|") } });
+    else if (inMergedScope(node) || (first !== undefined && resolveTexts(source, first, 0, true) !== undefined)) found.push({ at: node.getStart(source), site: { module, callee, command: "<expression>" } });
   });
   return found;
 }
@@ -1962,8 +2107,12 @@ function propertyKey(source: ts.SourceFile, name: ts.PropertyName): string {
 /** The assignments that hand their right side to their target, and the operators whose result may be either operand. */
 const BINDING_ASSIGNMENTS: readonly ts.SyntaxKind[] = [ts.SyntaxKind.EqualsToken, ts.SyntaxKind.BarBarEqualsToken, ts.SyntaxKind.AmpersandAmpersandEqualsToken, ts.SyntaxKind.QuestionQuestionEqualsToken];
 const EITHER_OPERAND: readonly ts.SyntaxKind[] = [ts.SyntaxKind.QuestionQuestionToken, ts.SyntaxKind.BarBarToken, ts.SyntaxKind.AmpersandAmpersandToken];
-/** Whether an expression is written, not read: an assignment's target, an element of a destructuring assignment's target, a
- * for-in/for-of target or an increment's operand. */
+/** The logical assignments: each reads its target, and its value is the target's old value when that is kept (||= a truthy
+ * one, &&= a falsy one, ??= one that is neither null nor undefined). */
+const LOGICAL_ASSIGNMENTS: readonly ts.SyntaxKind[] = [ts.SyntaxKind.BarBarEqualsToken, ts.SyntaxKind.AmpersandAmpersandEqualsToken, ts.SyntaxKind.QuestionQuestionEqualsToken];
+/** Whether an expression is written, not read: the target of an =, compound or destructuring assignment, an element of a
+ * destructuring assignment's target, a for-in/for-of target or an increment's operand. A logical assignment's target is
+ * read (LOGICAL_ASSIGNMENTS), so it is not a write target. */
 function isWriteTarget(node: ts.Node): boolean {
   let at: ts.Node = node;
   let parent: ts.Node | undefined = node.parent;
@@ -1976,7 +2125,7 @@ function isWriteTarget(node: ts.Node): boolean {
       if (parent.name !== at) return false;
     } else if (ts.isBinaryExpression(parent)) {
       const kind = parent.operatorToken.kind;
-      return parent.left === at && kind >= ts.SyntaxKind.FirstAssignment && kind <= ts.SyntaxKind.LastAssignment;
+      return parent.left === at && kind >= ts.SyntaxKind.FirstAssignment && kind <= ts.SyntaxKind.LastAssignment && !LOGICAL_ASSIGNMENTS.includes(kind);
     } else if (ts.isForInStatement(parent) || ts.isForOfStatement(parent)) {
       return parent.initializer === at;
     } else if (ts.isPrefixUnaryExpression(parent) || ts.isPostfixUnaryExpression(parent)) {
@@ -1997,12 +2146,14 @@ function exportedNode(node: ts.Node): boolean {
  * (resolveTexts; any text containing CHILD_PROCESS). Each value derived from an entry is followed through parentheses, type
  * wrappers and await; member reads (by name, by a key that resolves, <computed> otherwise; a default read is the module
  * itself); declarations and assignments (=, ||=, &&=, ??=) to a name or to a destructuring pattern at any depth (rest
- * included); aliases (a held name assigned or declared again); and the result of ??, ||, && and a conditional's arms. A call
- * of a launch member (LAUNCH_CALLS) reads its command (resolveTexts; <expression> otherwise); a value a statement discards
- * reads nothing; an export of a held value reads <re-export>; every other use - a call of the module or of another member, an
- * argument, a return, a property store, a class field, an object or array element, a path deeper than PATH_DEPTH - reads
- * <reference>. A string that names child_process outside a specifier slot (types excepted) reads <untraced>. Name slots,
- * write targets and types are not references. */
+ * included); a logical assignment's name target, through the assignment's value (the target's old value when it is kept);
+ * aliases (a held name assigned or declared again); and the result of ??, ||, && and a conditional's arms. A call of a launch
+ * member (LAUNCH_CALLS) reads its command (resolveTexts; <expression> otherwise); a value a statement discards reads nothing;
+ * an export of a held value reads <re-export>; every other use - a call of the module or of another member, an argument, a
+ * return, a property store (a logical assignment's member target included), a class field, an object or array element, a
+ * path deeper than PATH_DEPTH - reads <reference>. A string that names child_process outside a specifier slot (types
+ * excepted) reads <untraced>. Name slots, write targets (isWriteTarget: a logical assignment's target is read) and types are
+ * not references. */
 function childProcessLaunchesAt(module: string, source: ts.SourceFile = parse(module)): Located[] {
   const found = new Map<string, Located>();
   const add = (node: ts.Node, callee: string, command: string): void => {
@@ -2092,6 +2243,9 @@ function childProcessLaunchesAt(module: string, source: ts.SourceFile = parse(mo
       if (exportedNode(parent.parent.parent)) add(parent, pathLabel(path), "<re-export>");
     } else if (ts.isBinaryExpression(parent) && parent.right === at && BINDING_ASSIGNMENTS.includes(parent.operatorToken.kind)) {
       bindTarget(parent.left, path);
+      consume(parent, path);
+    } else if (ts.isBinaryExpression(parent) && parent.left === at && LOGICAL_ASSIGNMENTS.includes(parent.operatorToken.kind) && ts.isIdentifier(unwrap(at))) {
+      // a kept name target: the assignment's value may be the name's old (held) value
       consume(parent, path);
     } else if (ts.isBinaryExpression(parent) && (EITHER_OPERAND.includes(parent.operatorToken.kind) || (parent.operatorToken.kind === ts.SyntaxKind.CommaToken && parent.right === at))) {
       consume(parent, path);
