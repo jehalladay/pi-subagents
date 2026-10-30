@@ -25,10 +25,22 @@
  *   C2 a reading that carries the word past the decoder never reads complete, success or known-empty and never licenses absence
  *      without the runtime licence (nor on a kind that is not complete), and a mutation outcome stays refused;
  *   C3 the pre-existing values (complete, incomplete, unknown, null) project byte-identically to the completeness-free reading
- *      for every kind and licence: the baseline the on-landing row must keep.
- * T1, T2 and C1 state the vendored SDK 0.1.0 and move with an amended SDK (each names this bead's on-landing leg); K1, K2, C2 and C3
- * hold before and after it. Pure: no HX binary, scratch directory, clock, network or file write; the one read is the installed
- * SDK declaration. */
+ *      for every kind and licence: the baseline the on-landing row must keep;
+ *   R0 the rosters those cases iterate (wb-cpqb, the landing-641 F1 follow-up): the six literal rosters hold a frozen shape,
+ *      and every roster (the two derived ones included) joins an anchor outside its own literal, so an edit to a roster's
+ *      members (or to a derived roster's derivation) reds R0 before any cell guard can move with it: PRE_EXISTING is the
+ *      shipped Completeness in declaration order then null (and exactly Completeness | null at type level), FRAME_VALUES its
+ *      non-null members, COMPLETE_KINDS the kinds on which hxLiveInvariant licenses absence under the licence, MUTATION_KINDS
+ *      the kinds its read-outcome clause refuses and READ_KINDS the rest, LICENCES exactly the licence's boolean at type level,
+ *      VERDICT_FRAMES distinct and exactly the fixture builder's frame union at type level (T2 also counts it absolutely), and
+ *      NOT_APPLICABLE the bead's own spelling followed by its forms under the three SDK styles the declaration witnesses.
+ *      Not claimed: a rewrite of the bead's own spelling itself (the roster's first member and the frozen literal together:
+ *      the bead text lives in the tracker, which this file does not read), a coordinated edit of LICENCES and the frozen
+ *      literal (held at type level only), and which HXS frame kinds carry a completeness verdict (T2 refuses the word on both
+ *      listed frames; the SDK's frame set is not read).
+ * T1, T2, C1 and R0's Completeness join state the vendored SDK 0.1.0 and move with an amended SDK (each names this bead's
+ * on-landing leg); K1, K2, C2, C3 and R0's other joins hold before and after it. Pure: no HX binary, scratch directory, clock,
+ * network or file write; the only file read is the installed SDK declaration (by T1 and R0). */
 import {readFileSync} from 'node:fs';
 import {
   type Completeness, type CoverageSummary, coverageSummaryOf, decodeResultStream, ProtocolError, resultFromJson, resultToJson,
@@ -47,11 +59,16 @@ const context: HyperUnixTopologyContext = {scope: {workspace: WS, principal: 'lo
  * established_empty, Truth known_absent), its camelCase field style, and the one-word form of the present Completeness values.
  * None is SDK 0.1.0 vocabulary. */
 const NOT_APPLICABLE = ['not-applicable', 'not_applicable', 'notApplicable', 'inapplicable'] as const;
-/** Every value CoverageSummary.completeness takes under the vendored SDK. */
-const PRE_EXISTING: readonly (Completeness | null)[] = ['complete', 'incomplete', 'unknown', null];
+/** Every value CoverageSummary.completeness takes under the vendored SDK: an as-const roster, so R0 holds it exactly to
+ * Completeness | null at type level and to the shipped declaration at run time. */
+const PRE_EXISTING = ['complete', 'incomplete', 'unknown', null] as const satisfies readonly (Completeness | null)[];
+/** The pre-existing values a coverage verdict frame can carry (T2's fixture-validity half): every PRE_EXISTING member but null. */
+const FRAME_VALUES = PRE_EXISTING.filter((value): value is Completeness => value !== null);
+/** The two HXS frames whose verdict carries completeness (T2), exactly the frame union verdictStream builds. */
+const VERDICT_FRAMES = ['result-coverage', 'answer-coverage'] as const;
 const MUTATION_KINDS: ReadonlySet<string> = new Set(['mutation-rejected', 'mutation-partial']);
 /** The adapter's read kinds (its closed tuple, pinned to the SDK ExecutionStatusKind by the observer suite) and the two whose
- * reading is complete (hyperunix-observer.ts READING). */
+ * reading is complete (hyperunix-observer.ts READING); R0 joins both, and MUTATION_KINDS, to hxLiveInvariant's own readings. */
 const READ_KINDS = HYPERUNIX_EXECUTION_KINDS.filter(kind => !MUTATION_KINDS.has(kind));
 const COMPLETE_KINDS: ReadonlySet<string> = new Set(['complete', 'complete-empty']);
 const LICENCES = [true, false] as const;
@@ -97,6 +114,44 @@ function thrown(fn: () => unknown): unknown {
 }
 
 describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as a known verdict', () => {
+  it('R0: every roster joins an anchor outside its own literal and the literal rosters hold a frozen shape, so no cell guard can move with an edited roster', () => {
+    // The frozen shapes of the six literal rosters (wb-cpqb): an edit reds here before a cell count derived from it can follow.
+    expect({NOT_APPLICABLE, PRE_EXISTING, VERDICT_FRAMES, MUTATION_KINDS: [...MUTATION_KINDS], COMPLETE_KINDS: [...COMPLETE_KINDS], LICENCES})
+      .toStrictEqual({NOT_APPLICABLE: ['not-applicable', 'not_applicable', 'notApplicable', 'inapplicable'],
+        PRE_EXISTING: ['complete', 'incomplete', 'unknown', null], VERDICT_FRAMES: ['result-coverage', 'answer-coverage'],
+        MUTATION_KINDS: ['mutation-rejected', 'mutation-partial'], COMPLETE_KINDS: ['complete', 'complete-empty'], LICENCES: [true, false]});
+    // Type level (typecheck:test): each closed roster is exactly its type, so a dropped member fails typing.
+    expectTypeOf<(typeof PRE_EXISTING)[number]>().toEqualTypeOf<Completeness | null>();
+    expectTypeOf<(typeof LICENCES)[number]>().toEqualTypeOf<CoverageSummary['licensesAbsence']>();
+    expectTypeOf<(typeof VERDICT_FRAMES)[number]>().toEqualTypeOf<Parameters<typeof verdictStream>[0]>();
+    expect(new Set(VERDICT_FRAMES).size).toBe(VERDICT_FRAMES.length);
+    // PRE_EXISTING is the shipped Completeness in declaration order and then null (CoverageSummary.completeness, T1).
+    const declaration = readFileSync(new URL('../node_modules/@hyperunix/sdk/dist/result.d.ts', import.meta.url), 'utf8');
+    const declared = (alias: string): string[] => {
+      const lines = declaration.split('\n').filter(text => text.startsWith(`export type ${alias} =`));
+      expect(lines, alias).toHaveLength(1);
+      return [...lines[0].matchAll(/"([^"]+)"/g)].map(match => match[1]);
+    };
+    const completeness = declared('Completeness');
+    expect(PRE_EXISTING, TRIGGER).toStrictEqual([...completeness, null]);
+    expect(FRAME_VALUES, TRIGGER).toStrictEqual(completeness);
+    // COMPLETE_KINDS is the adapter's own licensed reading; MUTATION_KINDS is its read-outcome clause and READ_KINDS the rest.
+    const readOutcome = HYPERUNIX_EXECUTION_KINDS.filter(kind => hxLiveInvariant(reading(kind, false)).violations.includes('read-outcome'));
+    expect([...COMPLETE_KINDS]).toStrictEqual(HYPERUNIX_EXECUTION_KINDS.filter(kind => hxLiveInvariant(reading(kind, true)).absenceLicensed));
+    expect([...MUTATION_KINDS]).toStrictEqual(readOutcome);
+    expect(READ_KINDS).toStrictEqual(HYPERUNIX_EXECUTION_KINDS.filter(kind => !readOutcome.includes(kind)));
+    // NOT_APPLICABLE is the bead's own spelling, then its forms under the SDK styles this declaration witnesses: snake_case
+    // values (TerminalStatus established_empty, Truth known_absent), camelCase fields (CoverageSummary licensesAbsence) and the
+    // one-word in- form of a present Completeness value (incomplete beside complete).
+    expect(declared('TerminalStatus')).toContain('established_empty');
+    expect(declared('Truth')).toContain('known_absent');
+    expect(declaration).toContain('readonly licensesAbsence: boolean;');
+    expect(completeness.filter(value => completeness.includes(`in${value}`))).toStrictEqual(['complete']);
+    const [own] = NOT_APPLICABLE;
+    const [head, stem] = own.split('-');
+    expect(NOT_APPLICABLE).toStrictEqual([own, `${head}_${stem}`, `${head}${stem.charAt(0).toUpperCase()}${stem.slice(1)}`, `in${stem}`]);
+  });
+
   it('T1: the vendored SDK Completeness is exactly complete|incomplete|unknown, at type level and in its shipped declaration', () => {
     expectTypeOf<Completeness>().toEqualTypeOf<'complete' | 'incomplete' | 'unknown'>();
     expectTypeOf<CoverageSummary['completeness']>().toEqualTypeOf<Completeness | null>();
@@ -114,7 +169,7 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
 
   it('T2: the live decoder fails a stream whose coverage verdict carries the word as SDK_PROTOCOL_INCOMPATIBLE, and passes every pre-existing value verbatim', () => {
     let refusals = 0;
-    for (const frame of ['result-coverage', 'answer-coverage'] as const) {
+    for (const frame of VERDICT_FRAMES) {
       for (const spelling of NOT_APPLICABLE) {
         const error = thrown(() => decodeResultStream(verdictStream(frame, spelling)));
         expect(error, TRIGGER).toBeInstanceOf(ProtocolError);
@@ -123,7 +178,7 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
       }
       // The same stream with each pre-existing value decodes and its verdict reaches the summary as sent: the refusal above is
       // the vocabulary, never a malformed fixture.
-      for (const value of ['complete', 'incomplete', 'unknown'] as const) {
+      for (const value of FRAME_VALUES) {
         const {checker} = decodeResultStream(verdictStream(frame, value));
         expect(coverageSummaryOf([], checker, 'complete', []).completeness).toBe(value);
       }
