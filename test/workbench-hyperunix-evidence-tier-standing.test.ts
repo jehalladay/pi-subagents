@@ -1,6 +1,8 @@
-/** wb-tz2.12 (HX-ORIGINAL-GOALS-CLOSURE-R12), STANDING leg only. Cut #3, in the enumerate-the-resolvable form orchestrator ruling
- * R-B78 binds on refusal #2: each case claims exactly the cells and pins it runs, each pin is a falsifier this file executes, and
- * each mode outside them that this cut knows of is a named residual whose quiet row case Q pins. The statement (STATEMENT below,
+/** wb-tz2.12 (HX-ORIGINAL-GOALS-CLOSURE-R12), STANDING leg only. Cut #4, the final cut, in the fail-closed core orchestrator ruling
+ * R-B100 binds on refusal #3, keeping the enumerate-the-resolvable form ruling R-B78 bound on refusal #2: each case claims exactly
+ * the cells and pins it runs, each pin is a falsifier this file executes, T2 claims declared text, the package's bytes and probes and
+ * never reads a key set as what the decoder accepts, and each mode outside them that this cut knows of is a named residual whose
+ * quiet row case Q pins. The statement (STATEMENT below,
  * verbatim, the bead's title): "When a GC-D13 ADR plus an SDK result field carry provider evidence tiers
  * (14-decisions-and-migration.md:19@6ed14cab8d; HXGC-PROV-001 DESIGN requirements.jsonl:22), Pi shall read the tier as a separate
  * axis beside the runtime licence; an empty lower-tier (Contextual/Parsed) answer is never promoted to absence; a result without the
@@ -31,16 +33,24 @@
  *      a name holding a tier, exactly those names: the provider-discovery declarations ("Declarations, never observations") with
  *      their doc comments, and schema.js's ProviderMatch record's optional tier text (a discovery record, never a result); and
  *      dist/result.d.ts holds no "tier" letters and its EvidenceSummary is exactly its five members.
- *   T2 the trigger, decoded. Read from the installed decoder module: its 11 closed core bodies with the key list each one's
- *      unknown-field check reads (OBSERVATION_FIELDS' seven lists, HEADER_KEYS, RESULT_COVERAGE_KEYS, ANSWER_KEYS and
- *      ANSWER_COVERAGE_KEYS), its ENVELOPE_KEYS and its 3 EMPTY_BODY_KINDS are pinned exactly, and no key they accept holds a tier.
- *      Each closed body refuses each of the 12 TIER_MEMBERS under each of the 11 TIER_VALUES (the ten words and their list) as
- *      SDK_PROTOCOL_MALFORMED at body.<member> (native code HX-PROTOCOL-FRAME-INVALID), the empty-body kinds refuse them at body
- *      and the frame envelope at the member, and a diagnostic frame, an open body, decodes each of them; each decoder evidence
- *      status (its EVIDENCE_STATUSES) decodes and becomes exactly that evidence class, and every tier word but parsed is refused as
- *      an evidence status (SDK_PROTOCOL_INCOMPATIBLE at body.status, HX-EVIDENCE-STATUS-UNKNOWN): parsed is the one evidence class
- *      that is also a tier word, the tag GC-D13 keeps separate from the tier (10-providers-sdks-and-lx.md:15@6ed14cab8d "Do **not**
- *      map this list directly onto the existing evidence-class ordering").
+ *   T2 the trigger, decoded, in the fail-closed core: declared text, the package's bytes and probes, never a key set read as what
+ *      the decoder accepts (that reading is R-ACCEPTANCE's). DECLARED TEXT, read from the installed decoder module and pinned
+ *      exactly: the seven key lists of its OBSERVATION_FIELDS table (the table's text, not a refusal site); the key set each of four
+ *      other bodies names in its own unknown-field refusal (`if (!<SET>.has(key)) this.fail("SDK_PROTOCOL_MALFORMED", `<kind>:
+ *      unknown field`), read from that set's declaration (HEADER_KEYS, RESULT_COVERAGE_KEYS, ANSWER_KEYS and ANSWER_COVERAGE_KEYS):
+ *      these 11 kinds are the bodies this file calls closed; its exported ENVELOPE_KEYS constant, which the 27 shipped modules spell
+ *      once in protocol/decoder.js, at its declaration, and once in index.js, in its re-export, and nowhere else; its 3
+ *      EMPTY_BODY_KINDS and its EVIDENCE_STATUSES. No declared name (a kind, a key or a status) holds a tier, and that reading fires
+ *      on a copy of the tables holding a tier name in each of those five places. THE BYTES: the installed package's package.json and
+ *      its 27 shipped modules equal SDK_BYTES, one sha256 each, so a change to any of them (a table, a refusal site or any other
+ *      line) reds T2. PROBED through decodeResultStream: each closed body refuses each of the 12
+ *      TIER_MEMBERS under each of the 11 TIER_VALUES (the ten words and their list) as SDK_PROTOCOL_MALFORMED at body.<member>
+ *      (native code HX-PROTOCOL-FRAME-INVALID), the empty-body kinds refuse them at body and the frame envelope at the member, and
+ *      a diagnostic frame, an open body, decodes each of them; each decoder evidence status decodes and becomes exactly that
+ *      evidence class, and every tier word but parsed is refused as an evidence status (SDK_PROTOCOL_INCOMPATIBLE at body.status,
+ *      HX-EVIDENCE-STATUS-UNKNOWN): parsed is the one evidence class that is also a tier word, the tag GC-D13 keeps separate from
+ *      the tier (10-providers-sdks-and-lx.md:15@6ed14cab8d "Do **not** map this list directly onto the existing evidence-class
+ *      ordering").
  *   T3 the representation round trip the provider applies (resultFromJson, then resultToJson): FULL is a fixed point of it, and
  *      over FULL's 25 object nodes (it holds a negotiated-extension sidecar frame) each of the 12 TIER_MEMBERS under each tier word
  *      is rebuilt away at the 9 fixed-key nodes and carried verbatim, nothing else changed, at the 16 CARRIED nodes.
@@ -80,7 +90,7 @@
  *      unlicensed reading judged as licensed flag each of the seven clauses.
  *   P1 the pre-landing snapshot: four tier-free results through the real hyperunix.find registration project exactly the frozen
  *      topology, live-invariant verdict and native evidence below, the baseline the on-landing toStrictEqual compares against.
- *   Q  the residuals' quiet rows (RESIDUALS below): the title names exactly the table's six families; the frozen shape pins each
+ *   Q  the residuals' quiet rows (RESIDUALS below): the title names exactly the table's seven families; the frozen shape pins each
  *      row's id, the names of its pins and the length of its family label; the table holds one family per measured gap
  *      (GAP_WITNESSES, which name no family); and each quiet row reads exactly its frozen reading.
  * T1-T4, R0 and R1 assert today's tier-blindness and are re-pinned by the on-landing leg (each failure message names it); A1, A2 and
@@ -88,16 +98,19 @@
  * RESIDUALS (named, each with its pinned quiet row in Q; a quiet row reds when its family stops reading quiet, and the family is
  * then promoted to a pinned case):
  *   R-SPELLING a tier member under a spelling the 12 TIER_MEMBERS do not probe (OFF_ROSTER: kebab, upper snake, a qualified plural
- *      and another qualifier). Closed outside the roster by T1's type walk and name scans, T2's allowlists and R0's traced reads and
- *      code scan; never placed by T3, T4, R1, A1 or A2. Quiet row (familyQuiet, each name at 'Parsed'): every closed body refuses
+ *      and another qualifier). Closed outside the roster by T1's type walk and name scans and R0's traced reads and code scan; in the
+ *      decoder T2's declared texts hold no tier name under any spelling and its byte pin reds a changed byte, while which keys the
+ *      decoder's refusal sites accept beyond its probes is R-ACCEPTANCE's; never placed by T3, T4, R1, A1 or A2. Quiet row
+ *      (familyQuiet, each name at 'Parsed'): every closed body refuses
  *      each name at body.<name>, the round trip carries each at exactly the 16 CARRIED nodes and does nothing else anywhere, every
  *      live cell reads its site's LIVE_OUTCOMES row with nothing else in the output changed and no reader output moved, and at no
  *      node of the certified unlicensed complete reading does a name move a reader output.
  *   R-SYNONYM a tier carried under a name that holds no tier word (SYNONYMS: level, grade, rank, evidence_level and a run-together
  *      evidencetier). Closed in the nine named result types by T1's member sets (a member typed inside an index-signature record,
- *      such as a diagnostic's details or a claim body, excepted), in the decoder's closed bodies by T2's allowlists and in the
- *      readings R0 traces by its reads; the type walk, the name and code scans, the roster and the placements do not see it. Quiet
- *      row: the same four surfaces as R-SPELLING's, with the same readings.
+ *      such as a diagnostic's details or a claim body, excepted) and in the readings R0 traces by its reads; in the decoder T2's
+ *      declared texts are pinned exactly and its byte pin reds a changed byte, while which keys the decoder's refusal sites accept
+ *      beyond its probes is R-ACCEPTANCE's; the type walk, the name and code scans, the roster and the placements do not see it.
+ *      Quiet row: the same four surfaces as R-SPELLING's, with the same readings.
  *   R-VALUE a tier word as the value of a field a reader reads (the view, a listed provider's version, a conflict code, an incomplete
  *      region's scope and target, the execution id). Quiet row: each is relayed by its own field's meaning (its facet, the native
  *      id) and the licence axis does not move.
@@ -106,12 +119,19 @@
  *      time), which neither R0's traced reads nor its code scan reaches. Quiet row: a held-out reading with two of each is read
  *      outside READS only at its second provider's version (a map member keyed by data), and evidence_tier at 'Parsed' at each of
  *      its 39 nodes moves no output.
- *   R-OPEN-BODY a tier member in an open core body (the decoder closes 11 of its 62 core kinds and empties 3). Quiet row: a diagnostic
- *      frame carrying each TIER_MEMBER decodes with the member in its body, and through the live path it reaches no provider-output
- *      node and moves no reader output (the transport, not the stream, supplies the result's diagnostics).
+ *   R-OPEN-BODY a tier member in an open core body (the decoder's tables declare 11 of its 62 core kinds closed and 3 empty). Quiet
+ *      row: a diagnostic frame carrying each TIER_MEMBER decodes with the member in its body, and through the live path it reaches
+ *      no provider-output node and moves no reader output (the transport, not the stream, supplies the result's diagnostics).
  *   R-LIVE-UNSEEN a tier member at a live input node the twin lacks (claim identities, kinds and locators, nested attributes, scope
  *      path elements, and the closed-body keys and kinds the twin does not send). Quiet row: at five such nodes evidence_tier at
  *      'Parsed' is carried verbatim to the node's pinned provider-output nodes with nothing else changed and no reader output moved.
+ *   R-ACCEPTANCE which keys the frame envelope and the seven OBSERVATION_FIELDS bodies accept, read where the decoder decides it
+ *      beyond the 12 probed TIER_MEMBERS: T2 reads the declared texts beside those sites (ENVELOPE_KEYS and the table) and pins the
+ *      bytes, never the sites themselves (that reading moved to child wb-tz2.18 under ruling R-B100). Quiet row: of ENVELOPE_KEYS'
+ *      members beyond the five every frame carries, a plain header frame decodes with batch_id or negotiated_extensions and is
+ *      refused at request_id and at reply_id, so the constant is not what the envelope accepts; and of the decoder module's
+ *      refusals of an unknown field or envelope key, exactly two are not of the named-check form T2 reads: the envelope's own and
+ *      the one whose message begins with an interpolated kind (<value>: unknown field).
  * SHAPES (what a reader could condition on; SHAPE_CONTENT pins each): 'weak' (an opportunistic certificate, no completeness, no
  * result_coverage), 'strong' (a complete-within-scope certificate, completeness complete, certificates licensing absence, a complete
  * result_coverage, answer_count 0, terminal established_empty), 'full' (FULL: a row, a view, a listed provider and its version, a
@@ -120,13 +140,15 @@
  * license absence, the sidecar frame and the transport diagnostic), each under every kind and licence.
  * ANCHORS: each loop's cell count is a number literal; PLACEMENTS, CARRIED, WALKED, LIVE_OUTCOMES, READS and SHAPE_CONTENT are each
  * compared with what the SDK, the registration and the readers measure; the decoder's tables and the SDK's shipped names are read
- * from the installed package; TIERS, TIER_WORDS, LOWER_WORDS, QUALIFIERS and TIER_MEMBERS are pinned literally, QUALIFIERS and
- * TIER_MEMBERS deriving from the quoted GC-D13 and statement texts. LIVENESS: each judgment is one function a control shows can
- * fire: moved() (a changed runtime digest moves every base reading's outputs and axis, and the twin's), departure() (an open body
- * departs from a refusal, a closed one from a decode), the placement control (every cell carries what it names), promotion() (the
- * licensed complete readings, and an unlicensed reading judged as licensed, flag each of its seven clauses) and the instrument's
- * four stand-ins. Pure: no HX binary, scratch directory, clock, network or file write; the files read are the installed SDK's shipped
- * declaration files and modules. Display paths added: none (test-only). */
+ * from the installed package, whose runtime bytes SDK_BYTES pins; TIERS, TIER_WORDS, LOWER_WORDS, QUALIFIERS and TIER_MEMBERS are
+ * pinned literally, QUALIFIERS and TIER_MEMBERS deriving from the quoted GC-D13 and statement texts. LIVENESS: each judgment is one
+ * function a control shows can fire: moved() (a changed runtime digest moves every base reading's outputs and axis, and the twin's),
+ * departure() (an open body departs from a refusal, a closed one from a decode), the placement control (every cell carries what it
+ * names), promotion() (the licensed complete readings, and an unlicensed reading judged as licensed, flag each of its seven clauses)
+ * and the instrument's four stand-ins. Pure: no HX binary, scratch directory, clock, network or file write; the files read are the
+ * installed SDK's package.json, shipped declaration files and modules, and the three READER_MODULES. Display paths added: none
+ * (test-only). */
+import {createHash} from 'node:crypto';
 import {readdirSync, readFileSync} from 'node:fs';
 import {isDeepStrictEqual} from 'node:util';
 import {
@@ -197,6 +219,9 @@ const TRIGGER = 'wb-tz2.12 trigger: the vendored @hyperunix/sdk result or the ad
 const AXIS = 'wb-tz2.12: a provider evidence tier moved the runtime-licence axis';
 const READS_MOVED = 'wb-tz2.12: a reader now reads a path outside its pinned READS; check it for a tier read before re-pinning';
 const QUIET = 'wb-tz2.12 residual: its family stopped reading quiet; promote it to a pinned case before re-pinning this row';
+const BYTES_MOVED = 'wb-tz2.12: the installed @hyperunix/sdk runtime bytes moved; if the SDK now carries a provider evidence tier, '
+  + 'build the on-landing leg first, else re-read the decoder (its tables, refusal sites and envelope keys: R-ACCEPTANCE, wb-tz2.18) '
+  + 'before re-pinning SDK_BYTES';
 
 /** The words of a name: split at each run of characters other than letters and digits, at each lower-to-upper camelCase step and
  * inside an upper run before its last capital (XTier), each word lowercased. */
@@ -558,10 +583,12 @@ const envelopeStream = (extra: Json): string =>
     frameLine(1, 'end', {})].join('\n');
 /** An open body: a diagnostic frame on the same observation stream. */
 const diagnosticStream = (extra: Json): string => streamText([header('observation'), ['diagnostic', {code: 'HX-NOTE', ...extra}], ['end', {}]]);
-/** The decoder's own tables, read from the installed decoder module's source text: the closed core bodies (the kinds of its
- * OBSERVATION_FIELDS table, then the bodies whose own unknown-field check names them), the key list each closed body's check reads,
- * the frame envelope's keys, the empty-body kinds and the evidence statuses. */
-function decoderTables(): {closed: string[]; allowlists: Record<string, string[]>; envelope: string[]; empty: string[]; statuses: string[]} {
+/** The decoder's own tables, read from the installed decoder module's source text as declarations, never as what a refusal site
+ * accepts (R-ACCEPTANCE): the closed core bodies (the kinds of its OBSERVATION_FIELDS table, then the named bodies, those whose own
+ * unknown-field refusal names a key set), the key list each declares (the table's list, or the set its refusal names), the exported
+ * ENVELOPE_KEYS constant, the empty-body kinds and the evidence statuses. */
+function decoderTables(): {closed: string[]; named: string[]; allowlists: Record<string, string[]>; envelope: string[]; empty: string[];
+  statuses: string[]} {
   const text = readFileSync(new URL('protocol/decoder.js', SDK_DIST), 'utf8');
   const quoted = (list: string): string[] => [...list.matchAll(/'([^']+)'|"([^"]+)"/g)].map(match => match[1] ?? match[2]);
   const start = text.indexOf('const OBSERVATION_FIELDS = Object.freeze({');
@@ -571,8 +598,9 @@ function decoderTables(): {closed: string[]; allowlists: Record<string, string[]
   // A body that names itself in its own unknown-field refusal reads the key set its check tests: `if (!<SET>.has(key))`.
   const named = [...text.matchAll(/if \(!([A-Z_]+)\.has\(key\)\)\s+this\.fail\("SDK_PROTOCOL_MALFORMED", `([a-z-]+): unknown field/g)]
     .map(match => [match[2], setOf(match[1])] as const);
-  return {closed: [...observation, ...named].map(([kind]) => kind), allowlists: Object.fromEntries([...observation, ...named]),
-    envelope: setOf('ENVELOPE_KEYS'), empty: setOf('EMPTY_BODY_KINDS'), statuses: setOf('EVIDENCE_STATUSES')};
+  return {closed: [...observation, ...named].map(([kind]) => kind), named: named.map(([kind]) => kind),
+    allowlists: Object.fromEntries([...observation, ...named]), envelope: setOf('ENVELOPE_KEYS'), empty: setOf('EMPTY_BODY_KINDS'),
+    statuses: setOf('EVIDENCE_STATUSES')};
 }
 /** A stream's decode outcome: 'decoded', or the refusal's code, path and native code. */
 function decodeOutcome(text: string): string {
@@ -587,6 +615,64 @@ function departure(text: string, expected: string): string | undefined {
   return outcome === expected ? undefined : `${outcome}, expected ${expected}`;
 }
 const FRAME_INVALID = 'HX-PROTOCOL-FRAME-INVALID';
+/** The names in the decoder's tables that hold a tier: every closed kind, declared key, ENVELOPE_KEYS member, empty-body kind and
+ * evidence status, in that order. */
+const declaredTierNames = (tables: ReturnType<typeof decoderTables>): string[] => [...tables.closed, ...Object.values(tables.allowlists).flat(),
+  ...tables.envelope, ...tables.empty, ...tables.statuses].filter(holdsTier);
+/** The decoder module's refusals of an unknown key: the message of each SDK_PROTOCOL_MALFORMED refusal that names an unknown field or
+ * an unknown envelope key, in module order, each interpolation written <value>. */
+function unknownKeyRefusals(): string[] {
+  const text = readFileSync(new URL('protocol/decoder.js', SDK_DIST), 'utf8');
+  return [...text.matchAll(/this\.fail\((["'])SDK_PROTOCOL_MALFORMED\1, `([^`]*unknown (?:field|envelope key)[^`]*)`/g)]
+    .map(match => match[2].replace(/\$\{[^}]*\}/g, '<value>'));
+}
+/** The unknown-key refusals T2 reads no key set from: every one not of the named-check form decoderTables reads ('<kind>: unknown
+ * field' for a named body). */
+const unreadRefusals = (): string[] => {
+  const {named} = decoderTables();
+  return unknownKeyRefusals().filter(message => !named.some(kind => message.startsWith(`${kind}: unknown field`)));
+};
+const sha256 = (bytes: Uint8Array): string => createHash('sha256').update(bytes).digest('hex');
+/** The modules the installed SDK ships: every .js file under dist/, named by its path from dist/. */
+const shippedModules = (): string[] => readdirSync(SDK_DIST, {recursive: true, encoding: 'utf8'}).filter(name => name.endsWith('.js')).sort();
+/** The installed package's runtime bytes: its package.json and each shipped module, one sha256 each. */
+const sdkBytes = (): Record<string, string> => ({'package.json': sha256(readFileSync(new URL('../package.json', SDK_DIST))),
+  ...Object.fromEntries(shippedModules().map(name => [`dist/${name}`, sha256(readFileSync(new URL(name, SDK_DIST)))] as const))});
+/** How many times each shipped module spells a text, the modules that never spell it left out. */
+const spelledIn = (text: string): Record<string, number> => Object.fromEntries(shippedModules()
+  .map(name => [name, readFileSync(new URL(name, SDK_DIST), 'utf8').split(text).length - 1] as const).filter(([, count]) => count > 0));
+/** The installed @hyperunix/sdk's runtime bytes, one sha256 each: its package.json and its 27 shipped modules. T2 fails closed over
+ * them: a changed byte reds T2. */
+const SDK_BYTES: Readonly<Record<string, string>> = {
+  'package.json': '87e9ffdad7dd31b6b8f311c64c47a104ee2e429f5433ca8e84d4adc8d745fe7f',
+  'dist/bounds.js': '35ebefcb288d264894b6934f6f2ad73d97616867011409c8fb949a3b215de2be',
+  'dist/client.js': '5fdf749906cc142f5a9f433fde1f6a1e49eb166cc68d71704fd186d6d389735a',
+  'dist/compatibility.js': '83aecc50279a7f79bb378048049374651d4caf12f7605f3b0791fdcd46b1eb26',
+  'dist/discovery.js': '7991fc11345a6f23c809ab2608605b95d8d968f835a13e50a90ea86db082f102',
+  'dist/errors.js': '3be2b35fa0db6997bdacb6b7fdef6d084f47387b0426151c20de26cd71b87961',
+  'dist/execution.js': 'f5cccf210a06c3b82a49928952d6c334203e15f25625bfa106ebcd0197087866',
+  'dist/ids.js': '3a257cb11f92a3836526f5401c44237ed19ada220c768e3fb57dc22f18c41714',
+  'dist/index.js': '14ea00c42a5145baa8abc5ddcc1b06f700308ac8ff93b1064f27aa89c7dc65c7',
+  'dist/mutation.js': 'ef75185fa9f1f221dbe159a51eff5323548fb0cd610d2fd9cbf8e520e27be281',
+  'dist/named_query.js': 'aa9382589e05d31538e8316b5064553489e42ebf0d573bd5fd2142b094e1f8aa',
+  'dist/plan-stream.js': '295f312d0b7c0961b85d3719bca3978c32f631ac02aa2e8e06c1c36bf1ac873e',
+  'dist/plan.js': '4044d0e2e2b0007e7c5547224685a76486f2235a0a16c5268cc0df8eb49f1f72',
+  'dist/predicate.js': 'a99562f10120cc6ea7c9635b01059445256081071ab6135e9c0bade9418462ab',
+  'dist/protocol.js': 'c90cf50543522b73b83b10bbd262ad70d3f99f452a2fb7682fb6827fec5220d3',
+  'dist/protocol/decoder.js': 'b6dacd7f97d27461c97dee041ce86e8084ba250894d144b6c4b3d2d0fa8861c6',
+  'dist/protocol/hxq.js': '77f84d8d9f68d6904f799758cf9fec66ae48510d5f0ea2ac8502fc7805e7969a',
+  'dist/protocol/mutation.js': '6944afeaeb2e675f5af42e50f41e387e802f6f59f2c90bd9f88dc300f896c6d4',
+  'dist/protocol/query.js': '9178b01aaced7ea41aaf58e80db1a8aaf076584c92fdc81d0a3b76283ee58809',
+  'dist/protocol/values.js': 'e6c443deac916094d7c32007409fd5df350dceb752baeb07e28ec086b121f13e',
+  'dist/provider.js': '827089fb9e254986526269049e78f54731cd353b1190ac617f9aa8d5e1ae88ba',
+  'dist/query.js': '9371dae1d62cb33ab32e39fda5ef0eab096f3a4e68c8006ffa8fa016a59ef667',
+  'dist/result.js': '0ff1edc8b7e69929736b171ee464a304220b6bf13e1c98335e8e7976a64428c3',
+  'dist/schema.js': '415f5050b7e07b1de033a7b194ac4e7e85b5fa463269900797dc578ac48fa14f',
+  'dist/structural-query.js': '1c405614e250b11fff16130fa6478f91d555684b4882c1d679b026a676f15f79',
+  'dist/transport/cli.js': '3828136894cdd38438f2583c76d0110bf72da69d1a73c5491d5ac3bea9a8b838',
+  'dist/view.js': '38ba35a3e278ae57adf1079a8e578dbaf53de435c1bbd9aa327db38ef47fefcb',
+  'dist/workspace.js': '9e81be3b3217d598eb8630c64f3fcb7416ff763dac8c55bd497142471626a641',
+};
 
 /** One object node of a live input: a node of one frame's body, or (no frame) a node of the transport diagnostic. */
 interface LiveSite {
@@ -865,7 +951,7 @@ const RESIDUALS: readonly Residual[] = [
         moved: objectPaths(reading).filter(path => moved(outputsOf, placed(reading, path, 'evidence_tier', 'Parsed'), bare)).map(label)};
     },
     reading: {outside: {adapter: ['source.evidence.provider_versions.hx.fs/second'], invariant: [], native: []}, nodes: 39, moved: []}},
-  {id: 'R-OPEN-BODY', family: 'a tier member in an open core body (the diagnostic frame, and any core kind whose body the decoder does not close)',
+  {id: 'R-OPEN-BODY', family: 'a tier member in an open core body (the diagnostic frame, and any core kind the decoder\'s tables declare neither closed nor empty)',
     quiet: async () => {
       const carried = TIER_MEMBERS.filter(member => decodeResultStream(diagnosticStream({[member]: 'Parsed'})).frames
         .some(frame => frame.kind === 'diagnostic' && frame.body[member] === 'Parsed'));
@@ -907,6 +993,17 @@ const RESIDUALS: readonly Residual[] = [
       ['node-claim.locators[0]', 'carried to source.rows[0].locators[0]', 'quiet'],
       ['coverage.scope.path[0]', 'carried to source.coverage[0].scope.path[0], source.coverage[0].body.scope.path[0]', 'quiet'],
     ]},
+  {id: 'R-ACCEPTANCE', family: 'which keys the frame envelope and the seven OBSERVATION_FIELDS bodies accept beyond the 12 probed TIER_MEMBERS, read where the decoder decides it: T2 reads the declared ENVELOPE_KEYS and table beside those sites and pins the bytes, never the sites (child wb-tz2.18)',
+    quiet: async () => {
+      // Each ENVELOPE_KEYS member beyond the members every frame carries (a plain frame's own), added to a plain header frame; then
+      // the decoder module's unknown-key refusals that T2 reads no key set from.
+      const carried = Object.keys(asRecord(JSON.parse(frameLine(0, 'header', {})) as JsonValue));
+      const envelope = Object.fromEntries(decoderTables().envelope.filter(key => !carried.includes(key))
+        .map(key => [key, decodeOutcome(envelopeStream({[key]: key === 'negotiated_extensions' ? [] : 'r1'}))] as const));
+      return {envelope, unread: unreadRefusals()};
+    },
+    reading: {envelope: {batch_id: 'decoded', negotiated_extensions: 'decoded', request_id: `SDK_PROTOCOL_MALFORMED request_id ${FRAME_INVALID}`,
+      reply_id: `SDK_PROTOCOL_MALFORMED reply_id ${FRAME_INVALID}`}, unread: ['unknown envelope key <value>', '<value>: unknown field <value> (closed core body)']}},
 ];
 /** The decoder's core kinds, read from its module (dist/protocol/decoder.js CORE_KINDS). */
 function coreKinds(): string[] {
@@ -918,7 +1015,8 @@ function coreKinds(): string[] {
 /** The gaps the enumeration leaves, each measured from what it reads and naming no family (Q holds RESIDUALS to one family per
  * gap, in this order): the names holding a tier that the roster does not probe; the names whose tier letters the word rule does not
  * read; the facets the adapter relays from string values a reader reads; the list reads, whose other lengths no base reading holds;
- * the decoder's open core kinds; and the closed-body keys the live twin's input lacks. */
+ * the core kinds the decoder's tables declare neither closed nor empty; the closed-body keys the live twin's input lacks; and the
+ * decoder's unknown-key refusals that T2 reads no key set from. */
 const GAP_WITNESSES: readonly (() => Promise<number>)[] = [
   async () => VOCABULARY_CONTROLS.filter(name => holdsTier(name) && !TIER_MEMBERS.includes(name)).length,
   async () => VOCABULARY_CONTROLS.filter(name => /tier/i.test(name) && !holdsTier(name)).length,
@@ -932,6 +1030,7 @@ const GAP_WITNESSES: readonly (() => Promise<number>)[] = [
     const live = new Map(LIVE_FRAMES.map(([kind, body]) => [kind, body]));
     return Object.entries(decoderTables().allowlists).flatMap(([kind, keys]) => keys.filter(key => !Object.hasOwn(live.get(kind) ?? {}, key))).length;
   },
+  async () => unreadRefusals().length,
 ];
 /** A read is inside the adapter's consumed-field manifest when it is a manifest field or a container on the way to one, a member
  * read below a '.*' map field included (test/workbench-hyperunix-consumed-fields.test.ts inside()). */
@@ -1086,7 +1185,9 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       .toStrictEqual(['supportIds', 'evidenceClasses', 'derivationHandles', 'providers', 'providerVersions']);
   });
 
-  it('T2: the decoder\'s 11 closed core bodies and its frame envelope accept exactly these keys, none named for a tier; each closed body refuses each of the 12 TIER_MEMBERS under each of the 11 probe values at body.<member>, its 3 empty-body kinds refuse them at body and the envelope at the member, an open diagnostic body decodes them, and no tier word but parsed is an evidence status', () => {
+  it('T2: read as declarations, never as what the decoder accepts, the installed decoder module\'s OBSERVATION_FIELDS table (seven key lists), the key sets four other bodies name in their own unknown-field refusals, its exported ENVELOPE_KEYS (spelled in the 27 shipped modules only at its declaration and its re-export) and its 3 empty-body kinds are exactly these and hold no tier, and the package.json and 27 shipped modules equal SDK_BYTES; through decodeResultStream each of those 11 closed bodies refuses each of the 12 TIER_MEMBERS under each of the 11 probe values at body.<member>, the empty-body kinds refuse them at body and the envelope at the member, an open diagnostic body decodes them, and no tier word but parsed is an evidence status', () => {
+    // THE BYTES: the package.json and each of the 27 shipped modules equal SDK_BYTES, so a change to any of them reds here.
+    expect(sdkBytes(), BYTES_MOVED).toStrictEqual(SDK_BYTES);
     const tables = decoderTables();
     expect(tables.closed, TRIGGER).toStrictEqual(['support', 'derivation', 'node-claim', 'edge-claim', 'kind-claim', 'attribute-claim', 'coverage',
       'header', 'result-coverage', 'answer', 'answer-coverage']);
@@ -1104,8 +1205,18 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       'answer-coverage': ['count', 'ordered', 'completeness', 'incomplete_regions', 'certificates', 'view'],
     });
     expect(tables.envelope, TRIGGER).toStrictEqual(['hxs', 'stream', 'seq', 'kind', 'body', 'batch_id', 'negotiated_extensions', 'request_id', 'reply_id']);
-    // No accepted key under any spelling names a tier, so every tier member is outside every closed body's check.
-    expect([...Object.values(tables.allowlists).flat(), ...tables.envelope].filter(holdsTier), TRIGGER).toStrictEqual([]);
+    // ENVELOPE_KEYS is a declared constant: the 27 modules spell it once at its declaration in protocol/decoder.js and once in
+    // index.js's re-export, and nowhere else. Read as a declaration, never as what the envelope accepts (R-ACCEPTANCE).
+    expect(spelledIn('ENVELOPE_KEYS'), BYTES_MOVED).toStrictEqual({'index.js': 1, 'protocol/decoder.js': 1});
+    expect(readFileSync(new URL('protocol/decoder.js', SDK_DIST), 'utf8')).toContain('\nexport const ENVELOPE_KEYS = new Set([');
+    expect(readFileSync(new URL('index.js', SDK_DIST), 'utf8')).toMatch(/\nexport \{[^}]*\bENVELOPE_KEYS\b[^}]*\} from "\.\/protocol\/decoder\.js";/);
+    // No declared name under any spelling holds a tier (declaration text: what the refusal sites accept is R-ACCEPTANCE's), and the
+    // reading fires on a copy of the tables that holds one in each of its five places.
+    expect(declaredTierNames(tables), TRIGGER).toStrictEqual([]);
+    expect(declaredTierNames({...tables, closed: [...tables.closed, 'tier-kind'],
+      allowlists: {...tables.allowlists, support: [...(tables.allowlists.support ?? []), 'evidence_tier']}, envelope: [...tables.envelope, 'trust_tier'],
+      empty: [...tables.empty, 'tiered-end'], statuses: [...tables.statuses, 'Source-Tier']}))
+      .toStrictEqual(['tier-kind', 'evidence_tier', 'trust_tier', 'tiered-end', 'Source-Tier']);
     expect(tables.empty, TRIGGER).toStrictEqual(['end', 'observation-begin', 'observation-end']);
     expect(Object.keys(BODY_STREAMS).sort()).toStrictEqual([...tables.closed, ...tables.empty].sort());
     // The judge can fire both ways: an open body departs from a refusal, and a closed one from a decode.
@@ -1372,9 +1483,9 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     }
   });
 
-  it('Q: the six named residual families, each with its pinned quiet row: R-SPELLING, R-SYNONYM, R-VALUE, R-UNSEEN-READING, R-OPEN-BODY and R-LIVE-UNSEEN read exactly their frozen readings', async () => {
+  it('Q: the seven named residual families, each with its pinned quiet row: R-SPELLING, R-SYNONYM, R-VALUE, R-UNSEEN-READING, R-OPEN-BODY, R-LIVE-UNSEEN and R-ACCEPTANCE read exactly their frozen readings', async () => {
     expect(RESIDUALS.map(residual => residual.id)).toStrictEqual(['R-SPELLING', 'R-SYNONYM', 'R-VALUE', 'R-UNSEEN-READING', 'R-OPEN-BODY',
-      'R-LIVE-UNSEEN']);
+      'R-LIVE-UNSEEN', 'R-ACCEPTANCE']);
     // The title claims exactly the table's families, each row's pins are pinned by count, and each family answers a measured gap.
     expect(expect.getState().currentTestName?.match(/R-[A-Z]+(?:-[A-Z]+)*/g)).toStrictEqual(RESIDUALS.map(residual => residual.id));
     // The frozen shape (AC1-style): each row's id, its pins (the reading's members, or a list reading's first cells) and the length
@@ -1383,11 +1494,12 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     expect(RESIDUALS.map(residual => `${residual.id}:${pins(residual.reading)}:${residual.family.length}`)).toStrictEqual([
       'R-SPELLING:refusedBy+roundTripCarried+roundTripOther+live+readers:174', 'R-SYNONYM:refusedBy+roundTripCarried+roundTripOther+live+readers:157',
       'R-VALUE:facets+axisMoved+native:207',
-      'R-UNSEEN-READING:outside+nodes+moved:132', 'R-OPEN-BODY:decodedAndCarried+liveOutcomes+moved:114',
-      'R-LIVE-UNSEEN:node-claim.attributes.nested+node-claim.identities[0]+node-claim.kinds[0]+node-claim.locators[0]+coverage.scope.path[0]:173']);
+      'R-UNSEEN-READING:outside+nodes+moved:132', 'R-OPEN-BODY:decodedAndCarried+liveOutcomes+moved:130',
+      'R-LIVE-UNSEEN:node-claim.attributes.nested+node-claim.identities[0]+node-claim.kinds[0]+node-claim.locators[0]+coverage.scope.path[0]:173',
+      'R-ACCEPTANCE:envelope+unread:265']);
     const gaps: number[] = [];
     for (const witness of GAP_WITNESSES) gaps.push(await witness());
-    expect(gaps).toStrictEqual([5, 4, 4, 6, 48, 44]);
+    expect(gaps).toStrictEqual([5, 4, 4, 6, 48, 44, 2]);
     expect(RESIDUALS.length).toBe(GAP_WITNESSES.length);
     const readings: Record<string, JsonValue> = {};
     for (const residual of RESIDUALS) readings[residual.id] = await residual.quiet();
