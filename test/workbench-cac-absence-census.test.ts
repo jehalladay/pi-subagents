@@ -93,10 +93,17 @@
  * each schema member's other version; R-TITLE a live export title that spells a needle, on a receipt's line 1; R-REQUIREMENT-ID a live
  * requirement id that spells one, in a test/ source outside the holders. Every write a quiet row makes is recorded (PLANTED) and the
  * residual-anchor case requires each subject planted (320 unbuilt, 322 built), so a family's row deleted with its roster entry reds.
- * MEASURED FOR wb-iug2 AT 9ad61f3 (trunk tip at claim time, landing 680): the two-word member written with U+200B (zero-width space),
- * with U+3164 (Hangul filler) and with nothing in place of its space, planted in one src file of the live tree, reads quiet (25 of 25,
- * the gate's landing-635 F1 escape), while the member with its space reds 6 (A2, C2, E1, E2, F2 and records), so the site is read. Any
- * code point can stand in for the space, so R-SPELLING now bounds that member's joiner at the class instead of listing members.
+ * MEASURED FOR wb-iug2 AT 9ad61f3 (trunk tip at claim time, landing 680) and again at 242b275 (landing 691, wb-ycue, merged into the
+ * branch for the respin): the two-word member written with U+200B (zero-width space), with U+3164 (Hangul filler) and with nothing in
+ * place of its space, planted in one src file of the live tree, reads quiet (25 of 25 at 9ad61f3, 28 of 28 at 242b275: the gate's
+ * landing-635 F1 escape), while the member with its space reds 6 (A2, C2, E1, E2, F2 and records), so the site is read. Any code
+ * point can stand in for the space, so R-SPELLING now bounds that member's joiner at the class instead of listing members. RESPIN
+ * (wb-iug2 cut #2; the gate's refusal #1, U1 KNOWN-DIRTY, cured by that merge): with wb-ycue's PLANTED record the class plant's 17
+ * plane files enter PLANTED, and two readings followed. The residual anchor read 1895 ms against 482 ms without them (load1 ~240):
+ * each subject's scan read the 1,112,064 spellings before the plants that hold it, so the anchor now reads the smaller plants first
+ * (some() is order-free, so every subject reads as before; 530 ms at load1 ~340). And the class plant deleted from R-SPELLING's row,
+ * the rest kept, read 28 of 28: nothing outside the row required it. The anchor now owes each plane's file as written (classTexts,
+ * built once from the needle set and the engine: 17 subjects, 337 unbuilt and 339 built), so a deleted plant reds the anchor.
  *
  * READINGS. A tree is walked from the repository root by directory entries: a regular file is read, a directory recursed (hidden
  * entries included), anything else (a symlink, a socket) is UNREAD and recorded. Every file is read as latin1 bytes, so the ASCII
@@ -187,13 +194,16 @@
  * member: encoded, it is still read (as the member it spells), so it is no escape. With wb-ycue, R-TITLE a needle on a receipt's R539
  * title line, the bead's own export title, is title data, and R-REQUIREMENT-ID a needle inside an export requirement id in a test's
  * comment or suite title is title data (THE TITLE READINGS); every family is held to its outside subjects (F5 above).
- * Since wb-iug2, R-SPELLING bounds the two-word member's joiner at the class: the reading admits one joiner between its words, its
+ * Since wb-iug2, R-SPELLING bounds the two-word member's joiner at the class: the matcher admits one joiner between its words, its
  * one space (the words carry no white space, and the matcher's one alternative holding both is the member's own text), and the quiet
  * row plants every other joiner of at most one code point - the joined spelling and each of the 1,112,063 other Unicode scalar
  * values, derived plane by plane from the engine (U+200B and U+3164 among them, named in JOINER_POINTS; the count pinned at the
  * standard's SCALAR_VALUES, read off the files as written), one src file per plane that the member with its space opens and closes,
- * so each file is read to its end. No joiner of one scalar value escapes unplanted, and a longer joiner is read as the member only
- * where its line still holds the member's own text.
+ * so each file is read to its end; the residual anchor owes each plane's file as written. No joiner of one scalar value escapes
+ * unplanted. A longer joiner (two or more code points, of which only the landed two spaces are planted) stays an open R-SPELLING
+ * member: the matcher reads one as the member only where the line it is handed holds the member's own text, so a line reading that
+ * rewrote a line before the matcher would read one without a row reddening (a doubled U+200B mapped to the space reads 28 of 28,
+ * measured).
  * Gate behaviour: the day a source owner publishes an exported package or an adapter with a recorded adoption gate, the artifact is
  * triaged as its own program-triage epic and the cut that lands its adoption owes this census's update; until then it stays empty by
  * design. Display paths added: none. Test-only: synthetic trees live in makeScratch scratch with the leak guard installed; src, the
@@ -1171,6 +1181,21 @@ function joinerPlanes(): string[][] {
   }
   return planes;
 }
+/** The two-word member's words, read from the needle set: the one member a space joins (the extension's two-word status). */
+const [MEMBER_HEAD = "", MEMBER_TAIL = ""] = NEEDLES.find(needle => needle.text.includes(" "))?.text.split(" ") ?? [];
+/** The member spelled with a joiner in place of its space; the controls spell it with the space itself, through the same template. */
+const spellMember = (joiner: string): string => `${MEMBER_HEAD}${joiner}${MEMBER_TAIL}`;
+/** A plane's spellings, 256 to a line and a space apart (a line read per spelling costs seconds); a space between two spellings
+ * follows the member's last word, never its first, so it joins no member. */
+const packed = (lines: readonly string[]): string[] => Array.from({ length: Math.ceil(lines.length / 256) }, (_, row) => lines.slice(row * 256, (row + 1) * 256).join(" "));
+let CLASS_TEXTS: readonly string[] | undefined;
+/** The class plant's files as written, one per plane, built once from the needle set and the engine (wb-iug2 respin): the member with
+ * its space opens and closes each file, the plane's spellings between. R-SPELLING's quiet row writes them and the residual anchor
+ * requires each one written as built (residualSubjects), so the plant cannot leave the row unseen. */
+function classTexts(): readonly string[] {
+  CLASS_TEXTS ??= joinerPlanes().map(plane => `${[spellMember(" "), ...packed(plane.map(spellMember)), spellMember(" ")].join("\n")}\n`);
+  return CLASS_TEXTS;
+}
 const swaps = (text: string): string[] =>
   [
     text.toLowerCase(),
@@ -1246,20 +1271,15 @@ const QUIET: Readonly<Record<string, () => void>> = {
     });
     // wb-iug2: the class-level bound, read over every joiner this row plants between the member's words: the class, plane by plane.
     const member = joined[0]?.text ?? "";
-    /** The member spelled with a joiner in place of its space; the controls spell it with the space itself, through the same template. */
-    const spell = (joiner: string): string => `${head}${joiner}${tail}`;
-    /** A plane's spellings, 256 to a line and a space apart (a line read per spelling costs seconds); a space between two spellings
-     * follows the member's last word, never its first, so it joins no member. */
-    const packed = (lines: readonly string[]): string[] => Array.from({ length: Math.ceil(lines.length / 256) }, (_, row) => lines.slice(row * 256, (row + 1) * 256).join(" "));
-    /** Each plane's file as written: the member with its space opens and closes it, the plane's spellings between. */
-    const texts = joinerPlanes().map(plane => `${[spell(" "), ...packed(plane.map(spell)), spell(" ")].join("\n")}\n`);
+    /** Each plane's file as written (classTexts): the member with its space opens and closes it, the plane's spellings between. */
+    const texts = classTexts();
     /** The joiners the written files hold: each spelling ends in the member's last word once, so a file holds its count less the two
      * controls, and a joiner is held when its spelling is in its plane's file. */
     const planted = {
       count: texts.reduce((sum, text) => sum + text.split(tail).length - 3, 0),
       has: (name: string): boolean => {
         const joiner = joinerOf(name);
-        return [...joiner].length <= 1 && (texts[Math.floor((joiner.codePointAt(0) ?? 0) / 0x10000)] ?? "").includes(spell(joiner));
+        return [...joiner].length <= 1 && (texts[Math.floor((joiner.codePointAt(0) ?? 0) / 0x10000)] ?? "").includes(spellMember(joiner));
       },
     };
     expect(
@@ -1269,7 +1289,7 @@ const QUIET: Readonly<Record<string, () => void>> = {
     expect(separators.filter(name => !name.includes("+") && !planted.has(name)), "every landed one-code-point separator is a member of the class").toEqual([]);
     expect(
       [member.split(" ").length, [...head, ...tail].filter(char => /\s/.test(char)).length, MATCHER.source.split("|").filter(part => part.includes(head) && part.includes(tail))],
-      "the reading admits one joiner between the member's words, its one space: the words carry no white space and the matcher's one alternative holding both is the member's own text",
+      "the matcher admits one joiner between the member's words, its one space: the words carry no white space and its one alternative holding both is the member's own text",
     ).toEqual([2, 0, [escapeRe(member)]]);
     withTree(root => {
       const sites = texts.map((text, index) => {
@@ -1478,7 +1498,9 @@ const QUIET: Readonly<Record<string, () => void>> = {
  * the live repository's root, the live census's holder hits and the live export's titles - each paired with whether a quiet row
  * planted it (PLANTED). A family removed from QUIET and the roster together leaves its subjects unplanted, and the anchor case reds. */
 function residualSubjects(): { readonly subject: string; readonly planted: boolean }[] {
-  const has = (test: (plant: Plant) => boolean): boolean => PLANTED.some(test);
+  // the class plant's 17 plane files hold 1,112,064 spellings, so the smaller plants are read first (some() is order-free: the same reading)
+  const bySize = [...PLANTED].sort((a, b) => a.text.length - b.text.length);
+  const has = (test: (plant: Plant) => boolean): boolean => bySize.some(test);
   const spelt = (text: string): boolean => has(plant => plant.text.includes(text));
   const inProduct = (file: string): boolean => PRODUCT.some(dir => file.startsWith(`${dir}/`));
   const firstLine = (plant: Plant): string => (plant.file.startsWith(RECEIPTS_DIR) && RECEIPT_FILE.test(plant.file.slice(RECEIPTS_DIR.length)) ? (plant.text.split("\n", 1)[0] ?? "") : "");
@@ -1494,6 +1516,7 @@ function residualSubjects(): { readonly subject: string; readonly planted: boole
     ...NEEDLES.filter(needle => needle.text.includes(" "))
       .flatMap(needle => ["_", "-", "  ", ...WHITE_SPACE].map(separator => needle.text.replaceAll(" ", separator)))
       .map(text => ({ subject: `other separator ${points(text)}`, planted: spelt(text) })),
+    ...classTexts().map((text, plane) => ({ subject: `joiner class plane ${plane.toString(16)}`, planted: has(plant => plant.text === text) })),
     ...NEEDLES.filter(needle => spells(needle).length === 0).map(needle => ({ subject: `encoded ${needle.text}`, planted: spelt(Buffer.from(needle.text, "utf8").toString("base64")) })),
     ...outsideSites().map(site => ({ subject: `outside site ${site}`, planted: has(plant => plant.file === site) })),
     ...PROGRAM_STEMS.map(stem => ({ subject: `alias ${stem}`, planted: spelt(stem) })),
