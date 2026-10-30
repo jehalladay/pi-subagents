@@ -1,0 +1,4493 @@
+{
+ "bead": "wb-2wiv.1",
+ "constants": {
+  "stem": "fiberoptics",
+  "distributions": [
+   "FiberOpticsSDK",
+   "fiber_optics",
+   "fiber_optics_research",
+   "fiber-optics-replay-observer"
+  ],
+  "crates": [
+   "fiber-model",
+   "fiber-core",
+   "fiber-runtime"
+  ],
+  "abiNames": [
+   "applyBatch",
+   "typedCommands",
+   "expectedEpoch",
+   "publicRefs",
+   "viewSpec"
+  ],
+  "genericAbi": [
+   "initialize",
+   "inspect",
+   "subscribe",
+   "snapshot",
+   "close"
+  ],
+  "wasmGlobal": "WebAssembly",
+  "wasmToken": "wasm",
+  "capabilitySet": "HostCapabilitySet",
+  "capabilityMembers": [
+   "Clock",
+   "Timer",
+   "Randomness",
+   "Spawner"
+  ],
+  "coreNames": [
+   "Fiber core",
+   "HostCapabilitySet",
+   "WebAssembly",
+   "FOA SDK"
+  ],
+  "embed": "embed",
+  "spellings": [
+   "@reactive-fiber",
+   "Host.resources",
+   "createReactiveFiberRuntime"
+  ],
+  "rfWord": "rf",
+  "launchers": [
+   "spawn",
+   "spawnSync",
+   "execFile",
+   "execFileSync",
+   "exec",
+   "execSync",
+   "fork"
+  ],
+  "loaderModules": [
+   "node:module",
+   "module"
+  ],
+  "scanRoots": [
+   "docs",
+   "src",
+   "qa",
+   "examples",
+   "vendor",
+   ".agents",
+   ".pi",
+   ".github",
+   ".codex"
+  ],
+  "textExtensions": [
+   "",
+   ".md",
+   ".ts",
+   ".js",
+   ".mjs",
+   ".json",
+   ".yml",
+   ".yaml",
+   ".toml",
+   ".sh"
+  ],
+  "lineExtensions": [
+   ".yml",
+   ".yaml",
+   ".toml"
+  ],
+  "namedReferences": {
+   "amp": [
+    38
+   ],
+   "lt": [
+    60
+   ],
+   "gt": [
+    62
+   ],
+   "quot": [
+    34
+   ],
+   "apos": [
+    39
+   ],
+   "nbsp": [
+    160
+   ],
+   "ensp": [
+    8194
+   ],
+   "emsp": [
+    8195
+   ],
+   "thinsp": [
+    8201
+   ],
+   "hairsp": [
+    8202
+   ],
+   "shy": [
+    173
+   ],
+   "ZeroWidthSpace": [
+    8203
+   ],
+   "zwnj": [
+    8204
+   ],
+   "zwj": [
+    8205
+   ],
+   "NoBreak": [
+    8288
+   ],
+   "hyphen": [
+    8208
+   ],
+   "dash": [
+    8208
+   ],
+   "ndash": [
+    8211
+   ],
+   "mdash": [
+    8212
+   ],
+   "minus": [
+    8722
+   ],
+   "period": [
+    46
+   ],
+   "excl": [
+    33
+   ],
+   "quest": [
+    63
+   ],
+   "comma": [
+    44
+   ],
+   "colon": [
+    58
+   ],
+   "semi": [
+    59
+   ]
+  },
+  "statedSections": {
+   "page": {
+    "heading": "Key risks and mitigations",
+    "depth": 2,
+    "parents": [
+     "18 \u2014 Decisions, risks, deliberate defaults and re-evaluation triggers"
+    ]
+   },
+   "readme": {
+    "heading": "Native SDK artifacts",
+    "depth": 1,
+    "parents": []
+   }
+  },
+  "readmeSubject": "ReactiveFiberCLI",
+  "statedControls": [
+   "live",
+   "rowInComment",
+   "headingRetired",
+   "commentInSection",
+   "headingTwice",
+   "readmeHeadingAbove",
+   "readmeInComment",
+   "readmeCommentInSection",
+   "pageParagraphLead",
+   "readmeParagraphLead",
+   "readmeSentenceAppended",
+   "providerRetracted",
+   "headingStruck",
+   "headingTagged",
+   "pageTitleStruck",
+   "headerRowStruck",
+   "cellsResplit",
+   "linkDefinition",
+   "readmeTitleStruck",
+   "readmeTitleTagged",
+   "readmeRowStruck"
+  ],
+  "floors": {
+   "modules": 100,
+   "texts": 60000,
+   "shapes": 1000,
+   "specifiers": 300,
+   "manifestTexts": 80,
+   "lockPackages": 300,
+   "trackedFiles": 900,
+   "productFiles": 280,
+   "sentences": 20000,
+   "renderedUnits": 5000,
+   "pageSentences": 50,
+   "pageUnits": 40,
+   "exportText": 1000
+  },
+  "scriptKinds": [
+   ".ts",
+   ".mts",
+   ".cts",
+   ".tsx",
+   ".js",
+   ".mjs",
+   ".cjs",
+   ".jsx"
+  ],
+  "requiredDescriptors": [
+   "forge.gate.status",
+   "furnace.run.inspect",
+   "hyperunix.find",
+   "reactivefiber.render.preview"
+  ],
+  "sourceAnchors": [
+   {
+    "module": "src/workbench/providers/reactivefiber.ts",
+    "reader": "texts",
+    "text": "rf"
+   },
+   {
+    "module": "src/workbench/providers/reactivefiber.ts",
+    "reader": "texts",
+    "text": "reactive-fiber.cli/v1"
+   },
+   {
+    "module": "src/workbench/providers/reactivefiber.ts",
+    "reader": "accesses",
+    "text": "child.stdout.on"
+   },
+   {
+    "module": "src/workbench/providers/reactivefiber.ts",
+    "reader": "specifiers",
+    "text": "node:child_process"
+   },
+   {
+    "module": "src/workbench/native-modules.ts",
+    "reader": "specifiers",
+    "text": "@furnace/sdk"
+   },
+   {
+    "module": "src/workbench/native-modules.ts",
+    "reader": "shapes",
+    "text": "registernativeproviders"
+   },
+   {
+    "module": "src/workbench/providers/reactivefiber.ts",
+    "reader": "launches",
+    "text": "spawn"
+   },
+   {
+    "module": "src/workbench/providers/reactivefiber.ts",
+    "reader": "rf census",
+    "text": "rf"
+   },
+   {
+    "module": "src/workbench/providers/reactivefiber.ts",
+    "reader": "sdk census",
+    "text": "reactive-fiber.cli/v1"
+   }
+  ],
+  "decisionAnchors": {
+   "title": "W10",
+   "description": "honest blocker",
+   "notes": "noncommitted preview"
+  },
+  "manifestControls": {
+   "dependencies": {
+    "dependencies": {
+     "@fiber-optics/sdk": "^0.1.0"
+    }
+   },
+   "devDependencies": {
+    "devDependencies": {
+     "fiber-core": "0.1.0"
+    }
+   },
+   "peerDependencies": {
+    "peerDependencies": {
+     "fiber-runtime-wasm": "*"
+    }
+   },
+   "optionalDependencies": {
+    "optionalDependencies": {
+     "fiber_model": "*"
+    }
+   },
+   "bundleDependencies": {
+    "bundleDependencies": [
+     "@acme/core-wasm"
+    ]
+   },
+   "nestedValue": {
+    "overrides": {
+     "reactive-fiber-cli": {
+      "engine": "npm:fiber-optics@0.1.0"
+     }
+    }
+   },
+   "nearMissFiber": {
+    "dependencies": {
+     "reactive-fiber-cli": "1.0.0"
+    }
+   },
+   "nearMissSplit": {
+    "keywords": [
+     "fiber",
+     "optics",
+     "wasMeasured"
+    ]
+   }
+  },
+  "shadowedManifest": "{ \"dependencies\": { \"fiber-core\": \"1.0.0\" }, \"dependencies\": {} }",
+  "lockControls": {
+   "lockPath": {
+    "packages": {
+     "node_modules/@fiber-optics/sdk": {
+      "version": "0.1.0"
+     }
+    }
+   },
+   "lockName": {
+    "packages": {
+     "node_modules/alias": {
+      "name": "fiber-core",
+      "version": "0.1.0"
+     }
+    }
+   },
+   "lockWasm": {
+    "packages": {
+     "node_modules/@acme/core-wasm": {
+      "version": "0.1.0"
+     }
+    }
+   },
+   "lockQuiet": {
+    "packages": {
+     "node_modules/reactive-fiber": {
+      "version": "1.0.0"
+     }
+    }
+   }
+  },
+  "pathControls": [
+   "pkg/fiber_core_bg.wasm",
+   "assets/CORE.WASM",
+   "vendor/fiber-optics-sdk-0.1.0.tgz",
+   "vendor/acme-wasm-0.1.0.tgz",
+   "vendor/furnace-sdk-0.1.0.tgz",
+   "docs/was-measured.md"
+  ],
+  "abiControls": {
+   "importFrom": {
+    "module": "import-from.ts",
+    "source": "import { init } from \"@fiber-optics/core\";\ninit();\n"
+   },
+   "crateExport": {
+    "module": "crate-export.ts",
+    "source": "export * from \"fiber-core-wasm\";\n"
+   },
+   "dynamicWasm": {
+    "module": "dynamic-wasm.ts",
+    "source": "export const core = await import(\"./pkg/fiber_runtime_bg.wasm\");\n"
+   },
+   "requireCrate": {
+    "module": "require-crate.cjs",
+    "source": "const model = require(\"fiber_model\");\nmodule.exports = model;\n"
+   },
+   "wasmGlobal": {
+    "module": "wasm-global.ts",
+    "source": "declare const bytes: Uint8Array;\nexport const module = await WebAssembly.compile(bytes);\n"
+   },
+   "abiEntry": {
+    "module": "abi-entry.ts",
+    "source": "declare const runtime: { applyBatch(commands: unknown[], epoch: number): void };\nruntime.applyBatch([], 0);\n"
+   },
+   "abiParameters": {
+    "module": "abi-parameters.ts",
+    "source": "export function apply(typedCommands: unknown[], expectedEpoch: number): number {\n  return typedCommands.length + expectedEpoch;\n}\n"
+   },
+   "abiArrow": {
+    "module": "abi-arrow.ts",
+    "source": "export const read = (publicRefs: string[], viewSpec: object): unknown[] => [publicRefs, viewSpec];\n"
+   },
+   "templatePath": {
+    "module": "template-path.ts",
+    "source": "declare const base: string;\nexport const url = `${base}/core.wasm`;\n"
+   },
+   "regexPattern": {
+    "module": "regex-pattern.ts",
+    "source": "export const pattern = /fiber[-_]?core/;\n"
+   },
+   "jsxText": {
+    "module": "jsx-text.tsx",
+    "source": "export const view = <p>WebAssembly</p>;\n"
+   },
+   "nearMiss": {
+    "module": "abi-near-miss.ts",
+    "source": "export const codeGeneration = { strings: false, wasm: false };\nexport const wasMeasured = true;\nexport const fiber = \"core\";\n"
+   }
+  },
+  "setControls": {
+   "named": {
+    "module": "set-named.ts",
+    "source": "declare const host: HostCapabilitySet;\nexport const capabilities = host;\n"
+   },
+   "interfaceShape": {
+    "module": "set-interface.ts",
+    "source": "export interface Host {\n  clock(): number;\n  timer(ms: number): void;\n  randomness(): number;\n  spawner(task: () => void): void;\n}\n"
+   },
+   "typeShape": {
+    "module": "set-type.ts",
+    "source": "export type Capabilities = { Clock: unknown; Timer: unknown; Randomness: unknown; Spawner: unknown };\n"
+   },
+   "classShape": {
+    "module": "set-class.ts",
+    "source": "export class Capabilities {\n  clock = 0;\n  timer = 0;\n  get randomness(): number {\n    return 0;\n  }\n  spawner(): void {}\n}\n"
+   },
+   "objectShape": {
+    "module": "set-object.ts",
+    "source": "declare const clock: number;\nexport const capabilities = { clock, timer: 1, \"randomness\": 2, spawner(): void {} };\n"
+   },
+   "enumShape": {
+    "module": "set-enum.ts",
+    "source": "export enum HostCap {\n  Clock,\n  Timer,\n  Randomness,\n  Spawner,\n}\n"
+   },
+   "bindingShape": {
+    "module": "set-binding.ts",
+    "source": "export function host({ clock, timer, randomness, spawner }: Record<string, number>): number {\n  return clock + timer + randomness + spawner;\n}\n"
+   },
+   "parameterShape": {
+    "module": "set-parameters.ts",
+    "source": "export function init(clock: number, timer: number, randomness: number, spawner: number): number {\n  return clock + timer + randomness + spawner;\n}\n"
+   },
+   "threeMembers": {
+    "module": "set-three.ts",
+    "source": "export interface Partial {\n  clock: number;\n  timer: number;\n  randomness: number;\n}\n"
+   },
+   "comment": {
+    "module": "set-comment.ts",
+    "source": "// a HostCapabilitySet with Clock, Timer, Randomness and Spawner\nexport {};\n"
+   }
+  },
+  "sdkControls": {
+   "importScope": {
+    "module": "import-scope.ts",
+    "source": "import { Host } from \"@reactive-fiber/sdk\";\nexport const host = Host;\n"
+   },
+   "hostResources": {
+    "module": "host-resources.ts",
+    "source": "declare const Host: { resources: unknown };\nexport const resources = Host.resources;\n"
+   },
+   "createRuntime": {
+    "module": "create-runtime.ts",
+    "source": "declare function createReactiveFiberRuntime(): unknown;\nexport const runtime = createReactiveFiberRuntime();\n"
+   },
+   "requirePackage": {
+    "module": "require-package.cjs",
+    "source": "const rf = require(\"reactive-fiber\");\nmodule.exports = rf;\n"
+   },
+   "importEquals": {
+    "module": "import-equals.ts",
+    "source": "import rf = require(\"@fiber-optics/rf\");\nexport const sdk = rf;\n"
+   },
+   "importType": {
+    "module": "import-type.ts",
+    "source": "export type Core = import(\"fiber-core\").Core;\n"
+   },
+   "exportFrom": {
+    "module": "export-from.ts",
+    "source": "export { render } from \"reactivefiber-sdk\";\n"
+   },
+   "createRequireLoad": {
+    "module": "create-require.ts",
+    "source": "import { createRequire } from \"node:module\";\nconst load = createRequire(import.meta.url);\nexport const sdk = load(\"reactivefiber-sdk\");\n"
+   },
+   "createRequireAlias": {
+    "module": "create-require-alias.ts",
+    "source": "import { createRequire as make } from \"module\";\nconst need = make(import.meta.url);\nexport const core = need(\"@fiber-optics/core\");\n"
+   },
+   "createRequireDirect": {
+    "module": "create-require-direct.ts",
+    "source": "import * as nodeModule from \"node:module\";\nexport const runtime = nodeModule.createRequire(import.meta.url)(\"fiber-runtime\");\n"
+   },
+   "resolveCall": {
+    "module": "near-miss-resolve.ts",
+    "source": "import { createRequire } from \"node:module\";\nconst load = createRequire(import.meta.url);\nexport const where = load.resolve(\"reactivefiber-sdk\");\n"
+   },
+   "relativeImport": {
+    "module": "near-miss-relative.ts",
+    "source": "import { registerNativeReactiveFiberRender } from \"./providers/reactivefiber.js\";\nexport const register = registerNativeReactiveFiberRender;\n"
+   },
+   "hostObject": {
+    "module": "host-object.ts",
+    "source": "export const host = { resources: 1 };\nexport const reactivefiber = \"rf\";\n"
+   },
+   "destructuredLoader": {
+    "module": "destructured-loader.ts",
+    "source": "const { createRequire: cr } = await import(\"node:module\");\nconst load = cr(import.meta.url);\nexport const sdk = load(\"reactivefiber-sdk\");\n"
+   },
+   "reboundLoader": {
+    "module": "rebound-loader.ts",
+    "source": "import { createRequire } from \"node:module\";\nconst load = createRequire(import.meta.url);\nconst again = load;\nagain(\"reactivefiber-sdk\");\n"
+   },
+   "moduleRequire": {
+    "module": "module-require.cjs",
+    "source": "module.require(\"@fiber-optics/sdk\");\nrequire.call(null, \"fiber-core\");\n"
+   },
+   "boundSpecifier": {
+    "module": "bound-specifier.ts",
+    "source": "const spec = \"reactivefiber-sdk\";\nexport const sdk = await import(spec);\n"
+   }
+  },
+  "launchControls": {
+   "spawnRf": {
+    "module": "spawn-rf.ts",
+    "source": "import { spawn } from \"node:child_process\";\nspawn(\"rf\", [\"graph\", \"show\"]);\n"
+   },
+   "execFileSyncRf": {
+    "module": "exec-rf.ts",
+    "source": "import { execFileSync } from \"node:child_process\";\nexecFileSync(\"rf\", [\"--version\"]);\n"
+   },
+   "memberSpawnRf": {
+    "module": "member-spawn-rf.ts",
+    "source": "import * as cp from \"node:child_process\";\ncp.spawn(\"rf\", [\"context\", \"show\"]);\n"
+   },
+   "aliasedImport": {
+    "module": "aliased-import.ts",
+    "source": "import { spawn as run } from \"node:child_process\";\nrun(\"rf\", [\"context\", \"show\"]);\n"
+   },
+   "shellCommand": {
+    "module": "shell-command.ts",
+    "source": "import { execSync } from \"node:child_process\";\nexecSync(\"rf context render --json\");\n"
+   },
+   "qualifiedBinary": {
+    "module": "qualified-binary.ts",
+    "source": "import { spawn } from \"node:child_process\";\nspawn(\"/usr/local/bin/rf\", [\"context\", \"show\"]);\n"
+   },
+   "wrapperBinary": {
+    "module": "wrapper-binary.ts",
+    "source": "import { spawn } from \"node:child_process\";\nspawn(\"npx\", [\"rf\", \"context\", \"show\"]);\n"
+   },
+   "envAssignments": {
+    "module": "env-assignments.ts",
+    "source": "import { exec } from \"node:child_process\";\nexec(\"RF_HOME=/tmp/rf-home env -i PATH=/usr/bin rf context show\");\n"
+   },
+   "shellScript": {
+    "module": "shell-script.ts",
+    "source": "import { spawnSync } from \"node:child_process\";\nspawnSync(\"bash\", [\"-lc\", \"rf context show\"]);\n"
+   },
+   "compoundCommand": {
+    "module": "compound-command.ts",
+    "source": "import { execSync } from \"node:child_process\";\nexecSync(\"cd /tmp && 'rf' context show\");\n"
+   },
+   "backslashBinary": {
+    "module": "backslash-binary.ts",
+    "source": "import { execSync } from \"node:child_process\";\nexecSync(\"\\\\rf context show\");\n"
+   },
+   "elementAccess": {
+    "module": "element-access.ts",
+    "source": "import * as cp from \"node:child_process\";\ncp[\"spawn\"](\"rf\", [\"context\", \"show\"]);\n"
+   },
+   "ifThen": {
+    "module": "if-then.ts",
+    "source": "import { execSync } from \"node:child_process\";\nexecSync(\"if true; then rf context show; fi\");\n"
+   },
+   "braceGroup": {
+    "module": "brace-group.ts",
+    "source": "import { execSync } from \"node:child_process\";\nexecSync(\"{ rf context show; }\");\n"
+   },
+   "negatedPipeline": {
+    "module": "negated-pipeline.ts",
+    "source": "import { execSync } from \"node:child_process\";\nexecSync(\"! rf context show\");\n"
+   },
+   "commaCall": {
+    "module": "comma-call.ts",
+    "source": "import { spawn } from \"node:child_process\";\n(0, spawn)(\"rf\", [\"context\", \"show\"]);\n"
+   },
+   "dotCall": {
+    "module": "dot-call.ts",
+    "source": "import { spawn } from \"node:child_process\";\nspawn.call(undefined, \"rf\", [\"context\", \"show\"]);\n"
+   },
+   "asConst": {
+    "module": "as-const.ts",
+    "source": "import { spawn } from \"node:child_process\";\nspawn(\"rf\" as const, [\"context\", \"show\"]);\n"
+   },
+   "reboundLauncher": {
+    "module": "rebound-launcher.ts",
+    "source": "import { spawn } from \"node:child_process\";\nconst run = spawn;\nrun(\"rf\", [\"context\", \"show\"]);\n"
+   },
+   "destructuredRequire": {
+    "module": "destructured-require.cjs",
+    "source": "const { spawnSync: go } = require(\"node:child_process\");\ngo(\"rf\", [\"--version\"]);\n"
+   },
+   "boundBinary": {
+    "module": "bound-binary.ts",
+    "source": "import { spawn } from \"node:child_process\";\nconst RF = \"rf\";\nspawn(RF, [\"graph\", \"show\"]);\n"
+   },
+   "substitution": {
+    "module": "substitution.ts",
+    "source": "import { execSync } from \"node:child_process\";\nexecSync(\"echo $(rf --version)\");\nexecSync(\"(rf context show)\");\n"
+   },
+   "otherWrappers": {
+    "module": "other-wrappers.ts",
+    "source": "import { spawn } from \"node:child_process\";\nspawn(\"npx\", [\"-p\", \"@acme/rf-cli\", \"rf\"]);\nspawn(\"xargs\", [\"rf\", \"context\", \"show\"]);\nspawn(\"npm\", [\"exec\", \"rf\"]);\n"
+   },
+   "otherLaunchers": {
+    "module": "other-launchers.ts",
+    "source": "import { execa } from \"execa\";\nimport { $ } from \"zx\";\nawait execa(\"rf\", [\"context\", \"show\"]);\nawait $`rf context show`;\n"
+   },
+   "templateHead": {
+    "module": "template-head.ts",
+    "source": "import { execSync } from \"node:child_process\";\ndeclare const view: string;\nexecSync(`rf context render --view ${view}`);\n"
+   },
+   "templateWord": {
+    "module": "template-word.ts",
+    "source": "import { execSync } from \"node:child_process\";\ndeclare const suffix: string;\nexecSync(`rf${suffix} context show`);\n"
+   },
+   "otherModuleAlias": {
+    "module": "other-alias.ts",
+    "source": "import { spawn as run } from \"./runner.js\";\nrun(\"rf\", [\"context\", \"show\"]);\n"
+   },
+   "otherBinaryArgument": {
+    "module": "spawn-rg.ts",
+    "source": "import { spawn } from \"node:child_process\";\nspawn(\"rg\", [\"-n\", \"rf\"]);\n"
+   },
+   "regexSource": {
+    "module": "regex-source.ts",
+    "source": "import { spawn } from \"node:child_process\";\nspawn(/rf/.source, []);\n"
+   },
+   "nearMissName": {
+    "module": "near-miss-name.ts",
+    "source": "export const rf = 1;\nexport function rfx(rf: number): number {\n  return rf;\n}\n"
+   },
+   "nearMissComment": {
+    "module": "near-miss-comment.ts",
+    "source": "// run rf context show by hand\nexport {};\n"
+   },
+   "nearMissTokens": {
+    "module": "near-miss-tokens.ts",
+    "source": "export const words = [\"perf\", \"interface surface\", \"rfc3339\", \"rf2\", \"xrf\"];\n"
+   }
+  },
+  "nonScriptControl": [
+   "src/plant.ts",
+   "src/plant.mjs",
+   "src/plant.d.ts",
+   "src/plant.json",
+   "src/README.md"
+  ],
+  "decisionControls": {
+   "decision": "OWNER DECISION: Pi will embed the portable Fiber core behind the W10 provider.",
+   "wasmDecision": "Ruling: embed the WASM build in the workbench host.",
+   "stemDecision": "Decided to embed FiberOpticsSDK in-process.",
+   "wrappedDecision": "OWNER RULING (2026-10-28): the W10 provider shall embed\nthe portable Fiber core.",
+   "nearMissEmbed": "The fixture is embedded in the test.",
+   "nearMissCore": "The rf binary reports fiber_optics in sdk_versions.",
+   "splitSentences": "We will embed nothing. The Fiber core stays outside.",
+   "entityDecision": "OWNER RULING: the W10 provider shall embed the Fiber&nbsp;core.",
+   "unknownReference": "OWNER RULING: the W10 provider shall embed the Fiber&bogus;core."
+  },
+  "memberControls": {
+   "comment": "{\"id\":\"<bead>\",\"comments\":[{\"id\":\"c-1\",\"issue_id\":\"<bead>\",\"author\":\"owner\",\"text\":\"OWNER DECISION (2026-10-28): Pi will embed the portable Fiber core behind the W10 provider.\",\"created_at\":\"2026-10-28T22:40:00Z\"}],\"comment_count\":1}",
+   "label": "{\"id\":\"<bead>\",\"labels\":[\"decision:embed-fiber-core\"]}",
+   "nested": "{\"id\":\"<bead>\",\"metadata\":{\"ruling\":{\"text\":\"Embed the Fiber core in-process.\"}}}",
+   "key": "{\"id\":\"<bead>\",\"metadata\":{\"embed-the-fiber-core\":true}}",
+   "shadowedMember": "{\"id\":\"<bead>\",\"notes\":\"OWNER DECISION: Pi will embed the portable Fiber core.\",\"notes\":\"A neutral note.\"}",
+   "shadowedId": "{\"id\":\"<bead>\",\"notes\":\"OWNER DECISION: Pi will embed the portable Fiber core.\",\"id\":\"wb-other\"}",
+   "entityKey": "{\"id\":\"<bead>\",\"metadata\":{\"embed the Fiber&nbsp;core\":true}}",
+   "nearMissOtherBead": "{\"id\":\"wb-other\",\"notes\":\"OWNER DECISION: Pi will embed the portable Fiber core.\"}",
+   "nearMissNeutral": "{\"id\":\"<bead>\",\"comments\":[{\"text\":\"The fixture is embedded in the test.\"}],\"labels\":[\"wasm-free\"]}",
+   "imageAlt": "{\"id\":\"<bead>\",\"comments\":[{\"text\":\"<div>OWNER DECISION: Pi will embed the portable Fib<img src=\\\"x.png\\\" alt=\\\"e\\\">r core.</div>\"}]}"
+  },
+  "pageControls": {
+   "tableRow": "| Embed the portable Fiber core | decided | wb-x32 |",
+   "listItem": "- **Embedding:** embed the portable Fiber core behind W10.",
+   "entityDecision": "OWNER DECISION: Pi will embed the Fiber&nbsp;core behind W10.",
+   "inlineTagDecision": "OWNER DECISION: Pi will embed the Fi<b></b>ber core behind W10.",
+   "numericDecision": "Ruling: embed the Web&#65;ssembly build in the workbench host.",
+   "unknownReference": "OWNER DECISION: Pi will embed the Fiber&bogus;core behind W10.",
+   "pipeParagraph": "| embed | first |\n| Fiber core | second |",
+   "splitRows": "| step | owner |\n| --- | --- |\n| embed | first |\n| Fiber core | second |",
+   "splitItems": "- embed the receipt\n- the Fiber core stays outside",
+   "codeSpanQuiet": "The page writes `embed the Fiber&nbsp;core` as an example.",
+   "imageAltDecision": "<div>OWNER DECISION: Pi will embed the portable Fib<img src=\"x.png\" alt=\"e\">r core behind W10.</div>",
+   "blockTitleDecision": "<div title=\"OWNER DECISION: Pi will embed the Fi&#98;er core behind W10.\">x</div>"
+  },
+  "claimControls": {
+   "coreName": {
+    "path": "docs/core.md",
+    "text": "Pi now runs the portable Fiber core in-process.\n"
+   },
+   "capabilitySet": {
+    "path": "docs/set.md",
+    "text": "The host passes a HostCapabilitySet to the core.\n"
+   },
+   "webAssembly": {
+    "path": "docs/wasm.md",
+    "text": "The workbench instantiates WebAssembly modules.\n"
+   },
+   "foaSdk": {
+    "path": "docs/foa.md",
+    "text": "Pi ships the FOA SDK.\n"
+   },
+   "embedsStem": {
+    "path": "docs/stem.md",
+    "text": "Pi embeds fiber_optics directly.\n"
+   },
+   "embedsWasm": {
+    "path": "docs/token.md",
+    "text": "The workbench embeds a WASM runtime.\n"
+   },
+   "wrapped": {
+    "path": "docs/wrapped.md",
+    "text": "Pi hosts the portable Fiber\ncore beside the rf preview.\n"
+   },
+   "fullwidth": {
+    "path": "docs/fullwidth.md",
+    "text": "The host loads \uff37ebAssembly modules.\n"
+   },
+   "srcComment": {
+    "path": "src/comment.ts",
+    "text": "/**\n * Pi embeds the\n * Fiber core here.\n */\nexport {};\n"
+   },
+   "setComment": {
+    "path": "src/set-comment.ts",
+    "text": "// a HostCapabilitySet with Clock, Timer, Randomness and Spawner\nexport {};\n"
+   },
+   "entityClaim": {
+    "path": "docs/entity.md",
+    "text": "Pi will embed the Fiber&nbsp;core behind W10.\n"
+   },
+   "inlineTagClaim": {
+    "path": "docs/tag.md",
+    "text": "Pi hosts the Fi<b></b>ber core.\n"
+   },
+   "numericClaim": {
+    "path": "README.md",
+    "text": "The workbench instantiates Web&#65;ssembly modules.\n"
+   },
+   "hexClaim": {
+    "path": "docs/hex.md",
+    "text": "The host passes a HostCapability&#x53;et.\n"
+   },
+   "htmlBlockClaim": {
+    "path": "docs/block.md",
+    "text": "<div>\nPi hosts the Fiber&#32;core.\n</div>\n"
+   },
+   "unknownReference": {
+    "path": "docs/unknown.md",
+    "text": "Pi hosts the Fiber&bogus;core.\n"
+   },
+   "pipeParagraph": {
+    "path": "docs/pipes.md",
+    "text": "| embed | x |\n| fiber_optics | y |\n"
+   },
+   "tableCellEntity": {
+    "path": "docs/cell.md",
+    "text": "| a | b |\n| --- | --- |\n| x | y |\n| Fiber&nbsp;core | z |\n"
+   },
+   "listItemEntity": {
+    "path": "docs/item.md",
+    "text": "Intro.\n\n- first\n- Pi hosts the Fiber&nbsp;core\n"
+   },
+   "quoteEntity": {
+    "path": "docs/quote.md",
+    "text": "Intro.\n\n> Pi hosts the\n> Fiber&nbsp;core.\n"
+   },
+   "headingEntity": {
+    "path": "docs/heading.md",
+    "text": "Intro.\n\n## Fiber&nbsp;core host\n"
+   },
+   "jsonClaim": {
+    "path": "docs/claim.json",
+    "text": "{ \"description\": \"Pi embeds the portable Fiber core.\" }\n"
+   },
+   "jsonPairClaim": {
+    "path": "docs/pair.json",
+    "text": "{ \"embedded\": \"fiber_optics\" }\n"
+   },
+   "yamlClaim": {
+    "path": ".github/claim.yml",
+    "text": "# Pi ships the FOA SDK\n"
+   },
+   "nearMissEmbed": {
+    "path": "AGENTS.md",
+    "text": "Don't embed multi-line scripts in bash.\n"
+   },
+   "nearMissStem": {
+    "path": "docs/receipt.md",
+    "text": "`RF_PREVIEW_RECEIPT {\"rf_identity\":{\"sdk_versions\":{\"fiber_optics\":\"0.1.0\"}}}`\n"
+   },
+   "nearMissWasm": {
+    "path": "src/vm.ts",
+    "text": "codeGeneration: { strings: false, wasm: false },\n"
+   },
+   "nearMissSentences": {
+    "path": "docs/split.md",
+    "text": "Pi embeds rf. The fiber_optics version is read from its envelope.\n"
+   },
+   "nearMissRows": {
+    "path": "docs/rows.md",
+    "text": "| word | note |\n| --- | --- |\n| embed | x |\n| fiber_optics | y |\n"
+   },
+   "nearMissItems": {
+    "path": "docs/items.md",
+    "text": "- embed the receipt\n- fiber_optics stays rf's\n"
+   },
+   "nearMissCodeSpan": {
+    "path": "docs/code.md",
+    "text": "Write `Fiber&nbsp;core` to keep the words apart.\n"
+   },
+   "nearMissLock": {
+    "path": "vendor/lock.json",
+    "text": "{\n  \"packages\": {\n    \"node_modules/sass-embedded\": { \"version\": \"1.0.0\" },\n    \"node_modules/x-tool\": { \"version\": \"1.0.0\", \"bin\": { \"wasm-opt\": \"bin/wasm-opt\" } }\n  }\n}\n"
+   },
+   "yamlCommentRun": {
+    "path": ".github/run.yml",
+    "text": "steps:\n  # embedded runner\n  # fiber_optics wheel\n"
+   },
+   "jsonShadowed": {
+    "path": "docs/shadow.json",
+    "text": "{ \"note\": \"Pi embeds the portable Fiber core in-process.\", \"note\": \"A neutral note.\" }\n"
+   },
+   "jsonNestedShadowed": {
+    "path": "docs/nested-shadow.json",
+    "text": "{ \"a\": { \"note\": \"Pi embeds the portable Fiber core.\", \"note\": \"A neutral note.\" } }\n"
+   },
+   "scriptString": {
+    "path": "qa/claim.mjs",
+    "text": "export const note = \"Pi embeds the portable Fiber core.\";\n"
+   },
+   "scriptName": {
+    "path": "qa/name.mjs",
+    "text": "export function embedFiberCore() {}\n"
+   },
+   "scriptTemplate": {
+    "path": "qa/template.mjs",
+    "text": "const x = 1;\nexport const m = `Pi embeds the ${x} Fiber core`;\n"
+   },
+   "scriptCommentRun": {
+    "path": "qa/run.mjs",
+    "text": "// Pi embeds the\n// fiber-optics runtime\nexport {};\n"
+   },
+   "scriptPair": {
+    "path": "qa/pair.mjs",
+    "text": "export const map = { embedded: \"fiber_optics\" };\n"
+   },
+   "jsxText": {
+    "path": "examples/view.tsx",
+    "text": "export const view = <p>Pi hosts the Fiber core</p>;\n"
+   },
+   "fenceJsonShadowed": {
+    "path": "docs/fence-json.md",
+    "text": "```json\n{ \"note\": \"Pi embeds the portable Fiber core.\", \"note\": \"A neutral note.\" }\n```\n"
+   },
+   "fenceProseWrapped": {
+    "path": "docs/fence-prose.md",
+    "text": "```\nPi embeds the portable\nfiber_optics runtime.\n```\n"
+   },
+   "fenceObjectProse": {
+    "path": "docs/fence-object.md",
+    "text": "```\nexport const LABELS = {\n  embed: \"Embed the preview pane\",\n  engine: \"wasm\",\n};\n```\n"
+   },
+   "indentedObjectProse": {
+    "path": "docs/indented-object.md",
+    "text": "Labels:\n\n    export const LABELS = {\n      embed: \"Embed the preview pane\",\n      engine: \"wasm\",\n    };\n"
+   },
+   "preObjectProse": {
+    "path": "docs/pre-object.md",
+    "text": "<pre>\nexport const LABELS = {\n  embed: \"Embed the preview pane\",\n  engine: \"wasm\",\n};\n</pre>\n"
+   },
+   "shellCommentRun": {
+    "path": "qa/run.sh",
+    "text": "# Pi embeds the\n# fiber-optics runtime\necho ok\n"
+   },
+   "shellEcho": {
+    "path": "qa/echo.sh",
+    "text": "echo \"Pi embeds the portable fiber-optics runtime\"\n"
+   },
+   "shellQuotedPipe": {
+    "path": "qa/quoted.sh",
+    "text": "echo \"Pi embeds the portable | fiber-optics runtime\"\n"
+   },
+   "yamlFlowQuoted": {
+    "path": ".github/flow-quoted.yml",
+    "text": "labels: {note: \"embed the core, wasm build\"}\n"
+   },
+   "fenceUnclosed": {
+    "path": "docs/fence-open.md",
+    "text": "```ts\nexport const LABELS = { embed: \"Embed the preview pane\", engine: \"wasm\" };\n"
+   },
+   "yamlFlowLine": {
+    "path": ".github/flow-line.yml",
+    "text": "note: embed the wasm build\n"
+   },
+   "imgAltEntity": {
+    "path": "docs/attr.md",
+    "text": "# Plant\n\n<img src=\"missing.png\" alt=\"Pi embeds the Fi&#98;er core\">\n"
+   },
+   "inlineTitle": {
+    "path": "docs/title.md",
+    "text": "Text <span title=\"Pi hosts the Fi&#98;er core\">x</span>.\n"
+   },
+   "linkDestination": {
+    "path": "docs/link.md",
+    "text": "[x](https://example.invalid/Pi%20hosts%20the%20Fiber%20core)\n"
+   },
+   "htmlHref": {
+    "path": "docs/href.md",
+    "text": "<a href=\"https://example.invalid/Pi%20hosts%20the%20Fiber%20core\">x</a>\n"
+   },
+   "linkTitle": {
+    "path": "docs/link-title.md",
+    "text": "[x](https://example.invalid \"Pi hosts the Fi&#98;er core\")\n"
+   },
+   "imageTitle": {
+    "path": "docs/image-title.md",
+    "text": "![a](x.png \"Pi hosts the Fi&#98;er core\")\n"
+   },
+   "nearMissLabels": {
+    "path": "src/labels.ts",
+    "text": "export const LABELS = {\n  embed: \"Embed the preview pane\",\n  engine: \"wasm\",\n};\n"
+   },
+   "nearMissLabelsOneLine": {
+    "path": "src/labels-line.ts",
+    "text": "export const LABELS = { embed: \"Embed the preview pane\", engine: \"wasm\" };\n"
+   },
+   "nearMissFenceObject": {
+    "path": "docs/fence-ts.md",
+    "text": "```ts\nexport const LABELS = { embed: \"Embed the preview pane\", engine: \"wasm\" };\n```\n"
+   },
+   "nearMissShellCommands": {
+    "path": "qa/split.sh",
+    "text": "echo embed && echo wasm\n"
+   },
+   "nearMissShellAssignments": {
+    "path": "qa/assign.sh",
+    "text": "EMBED=pane ENGINE=wasm make\n"
+   },
+   "nearMissYamlLines": {
+    "path": ".github/lines.yml",
+    "text": "embedded: true\nruntime: fiber_optics\n"
+   },
+   "nearMissDotfile": {
+    "path": ".gitignore",
+    "text": "embedded/\n*.wasm\n"
+   },
+   "nearMissYamlFlow": {
+    "path": ".github/flow.yml",
+    "text": "labels: {embed: pane, engine: wasm}\n"
+   },
+   "nearMissTomlInline": {
+    "path": "docs/inline.toml",
+    "text": "x = { embed = \"pane\", engine = \"wasm\" }\n"
+   },
+   "nearMissTrailingComments": {
+    "path": "qa/trailing.mjs",
+    "text": "foo(); // embed the preview\nbar(); // engine: wasm\n"
+   },
+   "shellTrailingComment": {
+    "path": "qa/trailing-comment.sh",
+    "text": "echo embed # wasm\n"
+   },
+   "htmlImageAlt": {
+    "path": "docs/image-alt.md",
+    "text": "<div>Pi embeds the Fib<img src=\"x.png\" alt=\"e\">r core.</div>\n"
+   },
+   "inlineImageAlt": {
+    "path": "docs/inline-image-alt.md",
+    "text": "Pi embeds the Fib<img src=\"x.png\" alt=\"e\">r core.\n"
+   },
+   "markdownImageShown": {
+    "path": "docs/image-shown.md",
+    "text": "Pi embeds the Fib![x](tiny.png)er core.\n"
+   },
+   "imagePair": {
+    "path": "docs/image-pair.md",
+    "text": "<div>Pi embeds the Fi<img alt=\"b\">e<img alt=\"r\"> core.</div>\n"
+   },
+   "imagesOverLimit": {
+    "path": "docs/images.md",
+    "text": "<div><img alt=\"x\"><img alt=\"x\"><img alt=\"x\"><img alt=\"x\"><img alt=\"x\"><img alt=\"x\"><img alt=\"x\"><img alt=\"x\"><img alt=\"x\"></div>\n"
+   },
+   "bidiControl": {
+    "path": "docs/bidi.md",
+    "text": "Pi embeds the \u202eeroc rebiF.\n"
+   },
+   "bidiReference": {
+    "path": "docs/bidi-reference.md",
+    "text": "Pi embeds the &#x202E;eroc rebiF.\n"
+   },
+   "imageTwinDeduped": {
+    "path": "docs/image-twin.md",
+    "text": "Pi embeds the Fiber core with ![x](a.png).\n"
+   },
+   "blockTitle": {
+    "path": "docs/block-title.md",
+    "text": "<div title=\"Pi hosts the Fi&#98;er core\">x</div>\n"
+   },
+   "nestedInline": {
+    "path": "docs/nested-inline.md",
+    "text": "Pi embeds the [*Fi&#98;*](x)[**&#101;r**](y) [~~co&#114;e~~](z).\n"
+   }
+  },
+  "descriptorControls": {
+   "coreHost": {
+    "version": "1.0.0",
+    "description": "Hosts the portable Fiber core.",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "read",
+    "permissions": [
+     "planted:read"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "fiber.core.host"
+   },
+   "capabilitySchema": {
+    "version": "1.0.0",
+    "description": "planted",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "capabilities": {
+       "type": "object",
+       "description": "a HostCapabilitySet"
+      }
+     }
+    },
+    "effectClass": "read",
+    "permissions": [
+     "planted:read"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "workbench.core.init"
+   },
+   "embedsDescription": {
+    "version": "1.0.0",
+    "description": "Embeds fiber_optics in-process.",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "read",
+    "permissions": [
+     "planted:read"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "workbench.render.embedded"
+   },
+   "wasmContract": {
+    "version": "1.0.0",
+    "description": "planted",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "read",
+    "permissions": [
+     "planted:read"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "workbench.wasm.render",
+    "contractSource": "WebAssembly core ABI"
+   },
+   "neutral": {
+    "version": "1.0.0",
+    "description": "Embedded gate status.",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "read",
+    "permissions": [
+     "planted:read"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "forge.gate.status"
+   }
+  },
+  "abiReceipt": {
+   "source_runtime": "runtime-fixture",
+   "epoch": 1,
+   "transaction_ref": "txn-fixture",
+   "changed_materializations": [],
+   "diagnostics": [],
+   "dependency_frontier": [],
+   "trace_ref": "trace-fixture"
+  },
+  "refusedForms": [
+   "abiReceipt",
+   "otherSchema",
+   "extraKey"
+  ],
+  "composed": {
+   "module": "composed.ts",
+   "source": "import { spawn } from \"node:child_process\";\nexport const set = \"Host\" + \"CapabilitySet\";\nexport const sdk = [\"fiber\", \"optics\"].join(\"_\");\nexport const file = `core${\".was\"}m`;\nexport const api = \"Web\" + \"Assembly\";\nexport const scope = \"@reactive\" + \"-fiber/sdk\";\nspawn(\"r\" + \"f\", []);\nspawn(String.fromCharCode(114, 102), []);\nexport const loaded = await import([\"reactive\", \"fiber\", \"sdk\"].join(\"-\"));\n"
+  },
+  "generic": {
+   "module": "generic-abi.ts",
+   "source": "declare const runtime: {\n  initialize(snapshot: unknown, capabilities: unknown): void;\n  inspect(refs: unknown): unknown;\n  subscribe(view: unknown): void;\n  snapshot(): unknown;\n  close(): void;\n};\nruntime.initialize({}, {});\nruntime.inspect([]);\nruntime.subscribe({});\nruntime.snapshot();\nruntime.close();\n"
+  },
+  "outsideTree": {
+   "docs/clean.md": "Pi reads rf through its CLI envelope.\n",
+   "test/claim.test.ts": "// Pi embeds the portable Fiber core\nexport {};\n",
+   "new-feedback/claim.md": "Pi embeds the portable Fiber core.\n",
+   ".beads/claim.md": "Pi embeds the portable Fiber core.\n",
+   "media/claim.md": "Pi embeds the portable Fiber core.\n"
+  },
+  "elsewhereRows": [
+   {
+    "id": "wb-x32",
+    "title": "W10: ReactiveFiber provider/interop",
+    "description": "RF render/context capability; honest blocker.",
+    "notes": "noncommitted preview passed."
+   },
+   {
+    "id": "wb-zz9",
+    "title": "Embedding ruling",
+    "notes": "OWNER DECISION: Pi will embed the portable Fiber core."
+   }
+  ],
+  "otherVocabulary": {
+   "module": {
+    "module": "other-vocabulary.ts",
+    "source": "import { Core } from \"@acme/reactive-core-runtime\";\nconst core = new Core({ now: () => 0, sleep: async () => {}, random: () => 0, spawn: () => {} });\ncore.applyCommands([]);\nexport { core };\n"
+   },
+   "manifest": {
+    "dependencies": {
+     "@acme/reactive-core-runtime": "1.0.0"
+    }
+   },
+   "text": {
+    "path": "docs/other.md",
+    "text": "Pi hosts the reactive core runtime in-process.\n"
+   },
+   "descriptor": {
+    "version": "1.0.0",
+    "description": "Hosts the reactive core runtime in-process.",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "read",
+    "permissions": [
+     "planted:read"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "workbench.core.host"
+   },
+   "confusable": {
+    "path": "docs/confusable.md",
+    "text": "Pi embeds the F\u0456ber core.\n"
+   },
+   "invisible": {
+    "path": "src/invisible.ts",
+    "text": "// Pi embeds a WA\u200bSM runtime.\nexport {};\n"
+   },
+   "invisibleDescriptor": {
+    "version": "1.0.0",
+    "description": "Embeds a WA\u200bSM runtime in-process.",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "read",
+    "permissions": [
+     "planted:read"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "workbench.invisible.host"
+   }
+  },
+  "outsideText": {
+   "module": "outside-text.ts",
+   "source": "import { spawn } from \"node:child_process\";\nimport { readFileSync } from \"node:fs\";\nspawn(process.env.PI_PLANT_BIN ?? \"\", []);\nspawn(readFileSync(\"bin.txt\", \"utf8\").trim(), []);\nspawn(Object.keys({ rf: 0 })[0] ?? \"\", []);\nexport const sdk = await import(process.argv[2] ?? \"\");\n"
+  },
+  "pinnedReuse": {
+   "importer": {
+    "module": "pinned-reuse.ts",
+    "source": "import { execSync } from \"node:child_process\";\nimport { REACTIVE_FIBER_CONTRACT_SOURCE as command } from \"../index.js\";\nexecSync(command);\n"
+   },
+   "appended": "\nexport const reuse = (run: (command: string) => unknown): unknown => run(REACTIVE_FIBER_CONTRACT_SOURCE);\n"
+  },
+  "splitCode": {
+   "path": "qa/split-code.mjs",
+   "text": "embed(\"fiber-optics\");\nexport const pair = [\"embed\", \"wasm\"];\n"
+  },
+  "otherShape": {
+   "module": "other-shape.ts",
+   "source": "export type Member = \"clock\" | \"timer\" | \"randomness\" | \"spawner\";\nexport const members = [\"clock\", \"timer\", \"randomness\", \"spawner\"];\nexport const table = new Map([[\"clock\", 0], [\"timer\", 0], [\"randomness\", 0], [\"spawner\", 0]]);\nexport type Tuple = [clock: number, timer: number, randomness: number, spawner: number];\nexport namespace Host {\n  export const clock = 0;\n  export const timer = 0;\n  export const randomness = 0;\n  export const spawner = 0;\n}\ndeclare const caps: number[];\nexport const [clock, timer, randomness, spawner] = caps;\nexport type Parts = { clock: number } & { timer: number } & { randomness: number } & { spawner: number };\n"
+  },
+  "retractions": {
+   "page": {
+    "after": "## Decisions deferred, with recommended starting defaults\n",
+    "text": "\n**RF risk:** the RF render SDK row of the key risks no longer holds.\n"
+   },
+   "readme": {
+    "after": "",
+    "text": "\n## Superseded\n\nThe ReactiveFiberCLI sentence above no longer holds.\n"
+   },
+   "provider": {
+    "after": "import { spawn } from \"node:child_process\";\n",
+    "text": "// The leading comment above no longer holds.\n"
+   }
+  },
+  "encodedTexts": {
+   "sourceComment": {
+    "path": "src/encoded.ts",
+    "text": "/** Pi embeds the Fiber&nbsp;core here. */\nexport {};\n"
+   },
+   "yamlComment": {
+    "path": ".github/encoded.yml",
+    "text": "# Pi hosts the Fi<b></b>ber core\n"
+   },
+   "jsonValue": {
+    "path": "docs/encoded.json",
+    "text": "{ \"note\": \"The host instantiates Web&#65;ssembly modules.\" }\n"
+   }
+  },
+  "wrappedStructured": {
+   "yamlWrapped": {
+    "path": ".github/wrapped.yml",
+    "text": "description: >\n  Pi embeds the portable\n  fiber_optics runtime in-process.\n"
+   },
+   "jsonNested": {
+    "path": "docs/nested.json",
+    "text": "{ \"embedded\": { \"runtime\": \"fiber_optics\" } }\n"
+   },
+   "shellContinued": {
+    "path": "qa/continued.sh",
+    "text": "echo \"Pi embeds the portable \\\n  fiber-optics runtime\"\n"
+   }
+  },
+  "splitMembers": {
+   "line": "{\"id\":\"<bead>\",\"title\":\"Embed it in-process\",\"notes\":\"the portable Fiber core\"}",
+   "joined": "Embed it in-process\nthe portable Fiber core"
+  },
+  "splitKeyValue": {
+   "line": "{\"id\":\"<bead>\",\"metadata\":{\"OWNER DECISION (2026-10-29): Pi will embed\":\"the portable Fiber core behind the W10 provider.\"}}",
+   "joined": "OWNER DECISION (2026-10-29): Pi will embed: the portable Fiber core behind the W10 provider."
+  },
+  "quotedWord": {
+   "module": "quoted-word.ts",
+   "words": [
+    "r''f context show",
+    "r\\f context show",
+    "\"r\"f context show",
+    "'r'f context show"
+   ]
+  },
+  "htmlReferences": {
+   "texts": {
+    "attr": {
+     "path": "docs/reference-attr.md",
+     "text": "<img src=\"missing.png\" alt=\"Pi embeds the Fi&#98er core\">\n"
+    },
+    "block": {
+     "path": "docs/reference-block.md",
+     "text": "<div>Pi embeds the Fi&#98er core.</div>\n"
+    },
+    "padded": {
+     "path": "docs/reference-padded.md",
+     "text": "<img src=\"missing.png\" alt=\"Pi embeds the Fi&#00000098;er core\">\n"
+    },
+    "legacy": {
+     "path": "docs/reference-legacy.md",
+     "text": "<div>Pi embeds the Fiber&nbspcore.</div>\n"
+    }
+   },
+   "page": "\n<div>OWNER DECISION (2026-10-29): Pi will embed the portable Fi&#98er core behind the W10 provider.</div>\n",
+   "member": "{\"id\":\"<bead>\",\"comments\":[{\"id\":\"c-g3\",\"issue_id\":\"<bead>\",\"author\":\"owner\",\"text\":\"<div>OWNER DECISION (2026-10-29): Pi will embed the portable Fi&#98er core behind the W10 provider.</div>\",\"created_at\":\"2026-10-29T06:00:00Z\"}],\"comment_count\":1}",
+   "terminated": {
+    "&#98er": "&#98;er",
+    "&#00000098;": "&#98;",
+    "&nbspcore": "&nbsp;core"
+   }
+  },
+  "lexedGrain": {
+   "afterCited": [
+    1,
+    2
+   ],
+   "insertion": "\r"
+  },
+  "htmlGrammar": {
+   "space": "[\\t\\n\\f\\r ]",
+   "name": "[A-Za-z][A-Za-z0-9-]*",
+   "attributeName": "[A-Za-z_:][A-Za-z0-9_.:-]*",
+   "value": "[^\\t\\n\\f\\r \"'=<>`]+|'[^']*'|\"[^\"]*\""
+  },
+  "refusedElements": [
+   "applet",
+   "audio",
+   "bdo",
+   "body",
+   "canvas",
+   "datalist",
+   "details",
+   "dialog",
+   "fencedframe",
+   "frameset",
+   "iframe",
+   "input",
+   "link",
+   "math",
+   "meter",
+   "noembed",
+   "noframes",
+   "noscript",
+   "object",
+   "optgroup",
+   "option",
+   "plaintext",
+   "progress",
+   "rp",
+   "rt",
+   "rtc",
+   "script",
+   "select",
+   "style",
+   "svg",
+   "table",
+   "template",
+   "textarea",
+   "title",
+   "video",
+   "xmp"
+  ],
+  "refusedAttributes": [
+   "color",
+   "dir",
+   "hidden",
+   "popover",
+   "style"
+  ],
+  "altAttribute": "alt",
+  "imageLimit": 8,
+  "rawState": "raw-state text",
+  "invisibleSplit": "(?<=[A-Za-z])\\p{Default_Ignorable_Code_Point}+(?=[A-Za-z])",
+  "htmlForms": {
+   "tag": "<span></span>",
+   "tagAttributes": "<span title=\"a\" lang=en translate></span>",
+   "quotedGreater": "<span title=\"a>b\"></span>",
+   "singleQuotedGreater": "<span title='a>b'></span>",
+   "tagWhitespace": "<span\ttitle=a\nlang=en\f></span\t>",
+   "selfClosing": "<br/>",
+   "comment": "<!-- x -->",
+   "emptyComment": "<!---->",
+   "namespacedName": "<o:p></o:p>",
+   "underscoreName": "<x_y></x_y>",
+   "dotName": "<x.y></x.y>",
+   "solidusAttribute": "<x/y>",
+   "unseparatedAttributes": "<span title=\"a\"lang=\"b\"></span>",
+   "noBreakSpace": "<span\u00a0title=\"a>b\"></span>",
+   "verticalTab": "<span\u000btitle=\"a>b\"></span>",
+   "processingInstruction": "<?x?>",
+   "markupDeclaration": "<!x>",
+   "doctype": "<!DOCTYPE x>",
+   "cdata": "<![CDATA[x]]>",
+   "bogusEndTag": "</ x>",
+   "emptyEndTag": "</>",
+   "endTagAttribute": "</span title=\"a>b\">",
+   "openedEmptyComment": "<!-->",
+   "openedDashComment": "<!--->",
+   "bangComment": "<!-- x --!>y-->",
+   "unterminatedComment": "<!-- x",
+   "unterminatedTag": "<span title=\"a",
+   "refusedElement": "<template>x</template>",
+   "refusedAttribute": "<span hidden>x</span>",
+   "upperElement": "<TEMPLATE>x</TEMPLATE>",
+   "upperAttribute": "<span HIDDEN>x</span>"
+  },
+  "htmlFormPath": "docs/html-form.md",
+  "rawStateForms": {
+   "codeNamespaced": {
+    "shape": "paragraph",
+    "words": "<code>Fib<o:p>er core</code>"
+   },
+   "kbdDeclaration": {
+    "shape": "paragraph",
+    "words": "<kbd>Fib<!x>er core</kbd>"
+   },
+   "preEndSpace": {
+    "shape": "paragraph",
+    "words": "<pre>Fib</ x>er core</pre>"
+   },
+   "headingDotName": {
+    "shape": "heading",
+    "words": "<code>Fib<x.y>er core</code>"
+   },
+   "carriedState": {
+    "shape": "carried",
+    "words": "Fib<o:p>er core"
+   },
+   "cellDeclaration": {
+    "shape": "cell",
+    "words": "<kbd>Fib<!x>er core</kbd>"
+   },
+   "itemEndSpace": {
+    "shape": "item",
+    "words": "<code>Fib</ x>er core</code>"
+   },
+   "codeReference": {
+    "shape": "paragraph",
+    "words": "<code>Fi&#98er core</code>"
+   },
+   "scriptState": {
+    "shape": "paragraph",
+    "words": "<script>Fib<o:p>er core</script>"
+   },
+   "upperAttributes": {
+    "shape": "paragraph",
+    "words": "<CODE class=\"x\">Fib<o:p>er core</CODE>"
+   },
+   "markupFree": {
+    "shape": "paragraph",
+    "words": "<code>Fiber core</code>"
+   },
+   "closedState": {
+    "shape": "paragraph",
+    "words": "<code>x</code> Fib<o:p>er core"
+   }
+  },
+  "rawStatePath": "docs/raw-state.md",
+  "inputForms": {
+   "buttonValue": {
+    "block": true,
+    "words": "<input type=\"button\" value=\"Fiber\" title=\"x\"> core"
+   },
+   "textValue": {
+    "block": false,
+    "words": "<input value=\"Fiber\" size=\"6\"> core"
+   },
+   "placeholder": {
+    "block": true,
+    "words": "<input placeholder=\"Fiber\" size=\"6\"> core"
+   },
+   "upperInput": {
+    "block": true,
+    "words": "<INPUT VALUE=\"Fiber\" SIZE=\"6\"> core"
+   },
+   "optionLabel": {
+    "block": true,
+    "words": "<option label=\"Fiber\" title=\"x\"></option> core"
+   },
+   "groupLabel": {
+    "block": true,
+    "words": "<optgroup label=\"Fiber\" title=\"x\"></optgroup> core"
+   }
+  },
+  "inputFormPath": "docs/input-form.md",
+  "invisibleForms": {
+   "zeroWidthSpace": "WA\u200bSM",
+   "softHyphen": "wa\u00adsm",
+   "variationSelector": "WA\ufe0fSM",
+   "zeroWidthReference": "WA&ZeroWidthSpace;SM",
+   "wordJoinerReference": "WA&NoBreak;SM",
+   "doubleSplit": "WA\u200b\u2060SM",
+   "fullwidthNeighbor": "W\uff21\u200bSM",
+   "bidiSplit": "WA\u202eSM",
+   "imageAltSplit": "<img src=\"x.png\" alt=\"WA\u200bSM\">"
+  },
+  "invisibleFormPath": "docs/invisible.md",
+  "expandedWord": {
+   "module": "expanded-word.ts",
+   "words": [
+    "$'\\x72'f context show",
+    "R=r; ${R}f context show"
+   ],
+   "expanded": [
+    "rf context show",
+    "R=r; rf context show"
+   ]
+  },
+  "readerRendering": {
+   "styledClass": {
+    "read": {
+     "path": "docs/styled-class.md",
+     "text": "<div>Pi embeds the Fib<span class=\"hidden\">x</span>er core.</div>\n"
+    },
+    "shown": "<div>Pi embeds the Fiber core.</div>\n"
+   },
+   "styledId": {
+    "read": {
+     "path": "docs/styled-id.md",
+     "text": "<div>Pi embeds the Fib<span id=\"hidden\">x</span>er core.</div>\n"
+    },
+    "shown": "<div>Pi embeds the Fiber core.</div>\n"
+   },
+   "styledElement": {
+    "read": {
+     "path": "docs/styled-element.md",
+     "text": "<div>Pi embeds the Fib<abbr>x</abbr>er core.</div>\n"
+    },
+    "shown": "<div>Pi embeds the Fiber core.</div>\n"
+   },
+   "picture": {
+    "read": {
+     "path": "docs/picture.md",
+     "text": "<img src=\"figure-1.png\">\n"
+    },
+    "shown": "<img src=\"figure-1.png\" alt=\"Pi embeds the Fiber core.\">\n"
+   }
+  },
+  "residuals": {
+   "R-COMPOSED": [
+    "Q1"
+   ],
+   "R-GENERIC-ABI": [
+    "Q2"
+   ],
+   "R-OUTSIDE-SCOPE": [
+    "Q3"
+   ],
+   "R-INJECTED-RELAY": [
+    "Q4"
+   ],
+   "R-DECISION-ELSEWHERE": [
+    "Q5"
+   ],
+   "R-OTHER-VOCABULARY": [
+    "Q6"
+   ],
+   "R-OUTSIDE-TEXT": [
+    "Q7"
+   ],
+   "R-PINNED-REUSE": [
+    "Q8"
+   ],
+   "R-SPLIT-CODE": [
+    "Q9"
+   ],
+   "R-OTHER-SHAPE": [
+    "Q10"
+   ],
+   "R-RETRACTED-ELSEWHERE": [
+    "Q11"
+   ],
+   "R-ENCODED-SOURCE": [
+    "Q12"
+   ],
+   "R-WRAPPED-STRUCTURED": [
+    "Q13"
+   ],
+   "R-QUOTED-WORD": [
+    "Q14"
+   ],
+   "R-HTML-REFERENCE": [
+    "Q15"
+   ],
+   "R-LEXED-GRAIN": [
+    "Q16"
+   ],
+   "R-EXPANDED-WORD": [
+    "Q17"
+   ],
+   "R-READER-RENDERING": [
+    "Q18"
+   ]
+  }
+ },
+ "producer": {
+  "repository": "FiberOpticsSDK",
+  "path": "docs/programs/universal-reactive-rendering-2026-10-18.md",
+  "pin": "dcc5b57c4aed",
+  "lines": [
+   {
+    "line": 3,
+    "text": "**Status:** design charter only (2026-10-18), no code or backend switch. **Owner:** FiberOpticsSDK. **Authority:** existing Rust-runtime normative requirements/ADRs outrank this additive charter; cross-program decisions: https://github.com/jehalladay/FiberOpticsResearch/tree/main/docs/research/foa/programs/universal-reactive-rendering-2026-10-18.",
+    "sha256": "7f4935317d25786b8df7d0f48889a06a58f9bed84ca4f32ca4931f1aa78d729f"
+   },
+   {
+    "line": 11,
+    "text": "The historical Rust migration revision was inspected at a516eba8ba1e4f71382a33f1dadc25322a0e4bee; the connected repository did not expose a live ref called rust-runtime on 2026-10-18. It showed portable workspace members fiber-model/fiber-core/fiber-runtime, native-only fiber-python and replay observers, tests/audits protecting no-ambient-API and no-third-party dependencies, and an incomplete PyO3 graph surface. Before implementation, locate/reconcile actual Rust branch/history, fresh heads and main, and rerun existing gates. This charter neither copies code from that revision nor declares it current.",
+    "sha256": "0e7deec88bb296f360cbdb2c7d7506230e6e0d735eead7d8245af282d1939953"
+   },
+   {
+    "line": 15,
+    "text": "Retain Cargo wasm_subset classification and policy audit in existing normative files. Portable core owns graph validation, refs, dependency capture, scheduling, propagation, transaction/event records, bridge admission, snapshot semantics and replay after implementation. Host capabilities supply clocks/timers/randomness/spawn; the core never imports DOM, JS or networking. Implement browser-capable artifact/bindings outside portable crates (new nonportable adapter target is allowed with documented manifest classification). Preserve canonical value semantic equality versus content-version relation and their independent oracles.",
+    "sha256": "88879f43ca4962315bac27860744ca56f82d9ca3f8a9b46d8793df17e5911782"
+   },
+   {
+    "line": 19,
+    "text": "## Proposed interfaces (unshipped)",
+    "sha256": "55fdf72356fdb6135b61b1777ea30c3d258e3715cbd0f8faac0eb7d17cb296e8"
+   },
+   {
+    "line": 21,
+    "text": "- Versioned WASM ABI: initialize(snapshot, capabilities), applyBatch(typedCommands, expectedEpoch), inspect(publicRefs), subscribe(viewSpec), snapshot() and close(); browser-side opaque handles are runtime-scoped.",
+    "sha256": "780f68f310bce8ba538cdc3f2ea1b51d530afe592d9d1015966261891635019e"
+   },
+   {
+    "line": 22,
+    "text": "- HostCapabilitySet supplies Clock, Timer, Randomness, Spawner explicitly; real and deterministic fake implementations.",
+    "sha256": "7f4c91b202172c46da6aa4311c0af8a6f6505b6e7f352c6a93a2db384c4fb72f"
+   },
+   {
+    "line": 24,
+    "text": "- ChangedViewReceipt carries source runtime/epoch, transaction ref, changed materializations, diagnostics, dependency frontier and trace ref. The portable core does not construct DOM patches.",
+    "sha256": "03168d2b953bef2fb0cbdca0f1bd24dda62e16964826807816041bba3f4f8405"
+   }
+  ]
+ },
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the bead's title and notes, the vendored charter lines and the cases agree",
+  "A1",
+  "A2",
+  "A3",
+  "A4",
+  "B1",
+  "B2",
+  "C1",
+  "C2",
+  "C3",
+  "D1",
+  "D2",
+  "Q1",
+  "Q2",
+  "Q3",
+  "Q4",
+  "Q5",
+  "Q6",
+  "Q7",
+  "Q8",
+  "Q9",
+  "Q10",
+  "Q11",
+  "Q12",
+  "Q13",
+  "Q14",
+  "Q15",
+  "Q16",
+  "Q17",
+  "Q18",
+  "the registered tests and the reached pins equal the roster, in order and both ways"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "released FiberOpticsSDK WASM ABI + HostCapabilitySet (unshipped)",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "surface": "manifests",
+      "artifact": "FiberOpticsSDK WASM ABI",
+      "manifestTextsAboveFloor": true,
+      "packageJson": [],
+      "lockPackagesAboveFloor": true,
+      "lock": [],
+      "vendorLock": [],
+      "manifestControls": {
+       "dependencies": [
+        "dependencies.dependencies{@fiber-optics/sdk}: fiberoptics"
+       ],
+       "devDependencies": [
+        "devDependencies.devDependencies{fiber-core}: fibercore"
+       ],
+       "peerDependencies": [
+        "peerDependencies.peerDependencies{fiber-runtime-wasm}: fiberruntime",
+        "peerDependencies.peerDependencies{fiber-runtime-wasm}: wasm"
+       ],
+       "optionalDependencies": [
+        "optionalDependencies.optionalDependencies{fiber_model}: fibermodel"
+       ],
+       "bundleDependencies": [
+        "bundleDependencies.bundleDependencies[0]: wasm"
+       ],
+       "nestedValue": [
+        "nestedValue.overrides.reactive-fiber-cli.engine: fiberoptics"
+       ],
+       "nearMissFiber": [],
+       "nearMissSplit": []
+      },
+      "shadowedKey": {
+       "parsed": 0,
+       "raw": 1
+      },
+      "lockControls": {
+       "lockPath": [
+        "node_modules/@fiber-optics/sdk: fiberoptics"
+       ],
+       "lockName": [
+        "node_modules/alias name: fibercore"
+       ],
+       "lockWasm": [
+        "node_modules/@acme/core-wasm: wasm"
+       ],
+       "lockQuiet": []
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "surface": "tracked artifacts",
+      "artifact": "FiberOpticsSDK WASM ABI",
+      "trackedAboveFloor": true,
+      "vendorRead": true,
+      "wasmFiles": [],
+      "named": [],
+      "controls": {
+       "wasmFiles": [
+        "pkg/fiber_core_bg.wasm",
+        "assets/CORE.WASM"
+       ],
+       "named": [
+        "pkg/fiber_core_bg.wasm: fibercore",
+        "pkg/fiber_core_bg.wasm: wasm",
+        "assets/CORE.WASM: wasm",
+        "vendor/fiber-optics-sdk-0.1.0.tgz: fiberoptics",
+        "vendor/acme-wasm-0.1.0.tgz: wasm"
+       ]
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "surface": "src imports and names",
+      "artifact": "FiberOpticsSDK WASM ABI",
+      "walkHeldToGit": true,
+      "textsAboveFloor": true,
+      "specifiersAboveFloor": true,
+      "anchors": {
+       "src/workbench/providers/reactivefiber.ts texts rf": true,
+       "src/workbench/providers/reactivefiber.ts texts reactive-fiber.cli/v1": true,
+       "src/workbench/providers/reactivefiber.ts accesses child.stdout.on": true,
+       "src/workbench/providers/reactivefiber.ts specifiers node:child_process": true,
+       "src/workbench/native-modules.ts specifiers @furnace/sdk": true,
+       "src/workbench/native-modules.ts shapes registernativeproviders": true,
+       "src/workbench/providers/reactivefiber.ts launches spawn": true,
+       "src/workbench/providers/reactivefiber.ts rf census rf": true,
+       "src/workbench/providers/reactivefiber.ts sdk census reactive-fiber.cli/v1": true
+      },
+      "abi": [],
+      "controls": {
+       "importFrom": [
+        "import-from.ts:1: fiberoptics"
+       ],
+       "crateExport": [
+        "crate-export.ts:1: fibercore",
+        "crate-export.ts:1: wasm specifier"
+       ],
+       "dynamicWasm": [
+        "dynamic-wasm.ts:1: fiberruntime",
+        "dynamic-wasm.ts:1: .wasm",
+        "dynamic-wasm.ts:1: wasm specifier"
+       ],
+       "requireCrate": [
+        "require-crate.cjs:1: fibermodel"
+       ],
+       "wasmGlobal": [
+        "wasm-global.ts:2: webassembly"
+       ],
+       "abiEntry": [
+        "abi-entry.ts:1: applybatch",
+        "abi-entry.ts:2: applybatch"
+       ],
+       "abiParameters": [
+        "abi-parameters.ts:1: typedcommands",
+        "abi-parameters.ts:1: expectedepoch",
+        "abi-parameters.ts:2: typedcommands",
+        "abi-parameters.ts:2: expectedepoch"
+       ],
+       "abiArrow": [
+        "abi-arrow.ts:1: publicrefs",
+        "abi-arrow.ts:1: viewspec",
+        "abi-arrow.ts:1: publicrefs",
+        "abi-arrow.ts:1: viewspec"
+       ],
+       "templatePath": [
+        "template-path.ts:2: .wasm"
+       ],
+       "regexPattern": [
+        "regex-pattern.ts:1: fibercore"
+       ],
+       "jsxText": [
+        "jsx-text.tsx:1: webassembly"
+       ],
+       "nearMiss": []
+      }
+     }
+    },
+    {
+     "id": "A4",
+     "witness": {
+      "surface": "src",
+      "artifact": "HostCapabilitySet",
+      "members": [
+       "Clock",
+       "Timer",
+       "Randomness",
+       "Spawner"
+      ],
+      "walkHeldToGit": true,
+      "shapesAboveFloor": true,
+      "named": [],
+      "shaped": [],
+      "controls": {
+       "named": {
+        "named": [
+         "set-named.ts:1: hostcapabilityset"
+        ],
+        "shaped": []
+       },
+       "interfaceShape": {
+        "named": [],
+        "shaped": [
+         "set-interface.ts:1: interface"
+        ]
+       },
+       "typeShape": {
+        "named": [],
+        "shaped": [
+         "set-type.ts:1: type literal"
+        ]
+       },
+       "classShape": {
+        "named": [],
+        "shaped": [
+         "set-class.ts:1: class"
+        ]
+       },
+       "objectShape": {
+        "named": [],
+        "shaped": [
+         "set-object.ts:2: object literal"
+        ]
+       },
+       "enumShape": {
+        "named": [],
+        "shaped": [
+         "set-enum.ts:1: enum"
+        ]
+       },
+       "bindingShape": {
+        "named": [],
+        "shaped": [
+         "set-binding.ts:1: binding pattern"
+        ]
+       },
+       "parameterShape": {
+        "named": [],
+        "shaped": [
+         "set-parameters.ts:1: parameter list"
+        ]
+       },
+       "threeMembers": {
+        "named": [],
+        "shaped": []
+       },
+       "comment": {
+        "named": [],
+        "shaped": []
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "a wb-x32 committing decision to embed the portable Fiber core",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "surface": "bead export",
+      "bead": "wb-x32",
+      "found": true,
+      "textAboveFloor": true,
+      "anchors": {
+       "title": true,
+       "description": true,
+       "notes": true
+      },
+      "decisions": [],
+      "controls": {
+       "decision": [
+        "decision:1: embed+fibercore",
+        "decision:1: rendered embed+fibercore"
+       ],
+       "wasmDecision": [
+        "wasmDecision:1: embed+wasm",
+        "wasmDecision:1: rendered embed+wasm"
+       ],
+       "stemDecision": [
+        "stemDecision:1: embed+fiberoptics",
+        "stemDecision:1: rendered embed+fiberoptics"
+       ],
+       "wrappedDecision": [
+        "wrappedDecision:1: embed+fibercore",
+        "wrappedDecision:1: rendered embed+fibercore"
+       ],
+       "nearMissEmbed": [],
+       "nearMissCore": [],
+       "splitSentences": [],
+       "entityDecision": [
+        "entityDecision:1: rendered embed+fibercore"
+       ],
+       "unknownReference": [
+        "unknownReference:1: rendered unknown &bogus;"
+       ]
+      },
+      "rowControls": [
+       "wb-x32.decision:1: embed+fibercore",
+       "wb-x32.decision:1: rendered embed+fibercore",
+       "wb-x32.wasmDecision:1: embed+wasm",
+       "wb-x32.wasmDecision:1: rendered embed+wasm",
+       "wb-x32.stemDecision:1: embed+fiberoptics",
+       "wb-x32.stemDecision:1: rendered embed+fiberoptics",
+       "wb-x32.wrappedDecision:1: embed+fibercore",
+       "wb-x32.wrappedDecision:1: rendered embed+fibercore",
+       "wb-x32.entityDecision:1: rendered embed+fibercore",
+       "wb-x32.unknownReference:1: rendered unknown &bogus;"
+      ],
+      "memberControls": {
+       "comment": [
+        "wb-x32.comments[0].text:1: embed+fibercore",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "label": [
+        "wb-x32.labels[0]:1: embed+fibercore",
+        "wb-x32.labels[0]:1: rendered embed+fibercore"
+       ],
+       "nested": [
+        "wb-x32.metadata.ruling.text:1: embed+fibercore",
+        "wb-x32.metadata.ruling.text:1: rendered embed+fibercore"
+       ],
+       "key": [
+        "wb-x32.metadata{embed-the-fiber-core} key:1: embed+fibercore",
+        "wb-x32.metadata{embed-the-fiber-core} key:1: rendered embed+fibercore"
+       ],
+       "shadowedMember": [
+        "wb-x32.notes:1: embed+fibercore",
+        "wb-x32.notes:1: rendered embed+fibercore"
+       ],
+       "shadowedId": [
+        "wb-x32.notes:1: embed+fibercore",
+        "wb-x32.notes:1: rendered embed+fibercore"
+       ],
+       "entityKey": [
+        "wb-x32.metadata{embed the Fiber&nbsp;core} key:1: rendered embed+fibercore"
+       ],
+       "nearMissOtherBead": [],
+       "nearMissNeutral": [],
+       "imageAlt": [
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ]
+      },
+      "htmlForms": {
+       "tag": [
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "tagAttributes": [
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "quotedGreater": [
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "singleQuotedGreater": [
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "tagWhitespace": [
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "selfClosing": [
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "comment": [
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "emptyComment": [
+        "wb-x32.comments[0].text:1: embed+fibercore",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "namespacedName": [
+        "wb-x32.comments[0].text:1: rendered unknown <o:p>",
+        "wb-x32.comments[0].text:1: rendered unknown </o:p>"
+       ],
+       "underscoreName": [
+        "wb-x32.comments[0].text:1: rendered unknown <x_y>",
+        "wb-x32.comments[0].text:1: rendered unknown </x_y>"
+       ],
+       "dotName": [
+        "wb-x32.comments[0].text:1: rendered unknown <x.y>",
+        "wb-x32.comments[0].text:1: rendered unknown </x.y>"
+       ],
+       "solidusAttribute": [
+        "wb-x32.comments[0].text:1: rendered unknown <x/y>"
+       ],
+       "unseparatedAttributes": [
+        "wb-x32.comments[0].text:1: rendered unknown <span title=\"a\"lang=\"b\">"
+       ],
+       "noBreakSpace": [
+        "wb-x32.comments[0].text:1: rendered unknown <span title=\"a>"
+       ],
+       "verticalTab": [
+        "wb-x32.comments[0].text:1: rendered unknown <span title=\"a>"
+       ],
+       "processingInstruction": [
+        "wb-x32.comments[0].text:1: rendered unknown <?x?>"
+       ],
+       "markupDeclaration": [
+        "wb-x32.comments[0].text:1: rendered unknown <!x>"
+       ],
+       "doctype": [
+        "wb-x32.comments[0].text:1: rendered unknown <!DOCTYPE x>"
+       ],
+       "cdata": [
+        "wb-x32.comments[0].text:1: rendered unknown <![CDATA[x]]>"
+       ],
+       "bogusEndTag": [
+        "wb-x32.comments[0].text:1: rendered unknown </ x>"
+       ],
+       "emptyEndTag": [
+        "wb-x32.comments[0].text:1: embed+fibercore",
+        "wb-x32.comments[0].text:1: rendered unknown </>",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "endTagAttribute": [
+        "wb-x32.comments[0].text:1: rendered unknown </span title=\"a>"
+       ],
+       "openedEmptyComment": [
+        "wb-x32.comments[0].text:1: embed+fibercore",
+        "wb-x32.comments[0].text:1: rendered unknown <!-->",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "openedDashComment": [
+        "wb-x32.comments[0].text:1: embed+fibercore",
+        "wb-x32.comments[0].text:1: rendered unknown <!--->",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "bangComment": [
+        "wb-x32.comments[0].text:1: rendered unknown <!-- x --!>",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "unterminatedComment": [
+        "wb-x32.comments[0].text:1: rendered unknown <!-- xer core behind the W10 provider.</..."
+       ],
+       "unterminatedTag": [
+        "wb-x32.comments[0].text:1: rendered unknown <span title=\"aer core behind the W10 pro..."
+       ],
+       "refusedElement": [
+        "wb-x32.comments[0].text:1: rendered unknown <template>"
+       ],
+       "refusedAttribute": [
+        "wb-x32.comments[0].text:1: rendered unknown <span hidden>"
+       ],
+       "upperElement": [
+        "wb-x32.comments[0].text:1: rendered unknown <TEMPLATE>"
+       ],
+       "upperAttribute": [
+        "wb-x32.comments[0].text:1: rendered unknown <span HIDDEN>"
+       ]
+      },
+      "rawStateForms": {
+       "codeNamespaced": [
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+       ],
+       "kbdDeclaration": [
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib<!x>er core\""
+       ],
+       "preEndSpace": [
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib</ x>er core\""
+       ],
+       "headingDotName": [
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib<x.y>er core\""
+       ],
+       "carriedState": [
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"x\"",
+        "wb-x32.comments[0].text:3: rendered unknown raw-state text \"OWNER DECISION (2026-10-29): Pi will emb...\""
+       ],
+       "cellDeclaration": [
+        "wb-x32.comments[0].text:3: rendered unknown raw-state text \"Fib<!x>er core\""
+       ],
+       "itemEndSpace": [
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib</ x>er core\""
+       ],
+       "codeReference": [
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fi&#98er core\""
+       ],
+       "scriptState": [
+        "wb-x32.comments[0].text:1: rendered unknown <script>",
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+       ],
+       "upperAttributes": [
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+       ],
+       "markupFree": [
+        "wb-x32.comments[0].text:1: embed+fibercore",
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fiber core\"",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
+       ],
+       "closedState": [
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"x\""
+       ]
+      },
+      "inputForms": {
+       "buttonValue": [
+        "wb-x32.comments[0].text:1: rendered unknown <input type=\"button\" value=\"Fiber\" title..."
+       ],
+       "textValue": [
+        "wb-x32.comments[0].text:1: rendered unknown <input value=\"Fiber\" size=\"6\">"
+       ],
+       "placeholder": [
+        "wb-x32.comments[0].text:1: rendered unknown <input placeholder=\"Fiber\" size=\"6\">"
+       ],
+       "upperInput": [
+        "wb-x32.comments[0].text:1: rendered unknown <INPUT VALUE=\"Fiber\" SIZE=\"6\">"
+       ],
+       "optionLabel": [
+        "wb-x32.comments[0].text:1: rendered unknown <option label=\"Fiber\" title=\"x\">"
+       ],
+       "groupLabel": [
+        "wb-x32.comments[0].text:1: rendered unknown <optgroup label=\"Fiber\" title=\"x\">"
+       ]
+      },
+      "invisibleForms": {
+       "zeroWidthSpace": [
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+200B"
+       ],
+       "softHyphen": [
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+00AD"
+       ],
+       "variationSelector": [
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+FE0F"
+       ],
+       "zeroWidthReference": [
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+200B"
+       ],
+       "wordJoinerReference": [
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+2060"
+       ],
+       "doubleSplit": [
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+200B",
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+2060"
+       ],
+       "fullwidthNeighbor": [
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+200B"
+       ],
+       "bidiSplit": [
+        "wb-x32.comments[0].text:1: rendered unknown U+202E",
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+202E"
+       ],
+       "imageAltSplit": [
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+200B",
+        "wb-x32.comments[0].text:1: rendered unknown invisible U+200B"
+       ]
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "surface": "decisions page",
+      "page": "docs/workbench/18-decisions-and-risks.md",
+      "sentencesAboveFloor": true,
+      "renderedUnitsAboveFloor": true,
+      "decisions": [],
+      "controls": {
+       "tableRow": [
+        "tableRow:1: embed+fibercore",
+        "tableRow:1: rendered embed+fibercore"
+       ],
+       "listItem": [
+        "listItem:1: embed+fibercore",
+        "listItem:1: rendered embed+fibercore"
+       ],
+       "entityDecision": [
+        "entityDecision:1: rendered embed+fibercore"
+       ],
+       "inlineTagDecision": [
+        "inlineTagDecision:1: rendered embed+fibercore"
+       ],
+       "numericDecision": [
+        "numericDecision:1: rendered embed+webassembly"
+       ],
+       "unknownReference": [
+        "unknownReference:1: rendered unknown &bogus;"
+       ],
+       "pipeParagraph": [
+        "pipeParagraph:1: rendered embed+fibercore"
+       ],
+       "splitRows": [],
+       "splitItems": [],
+       "codeSpanQuiet": [],
+       "imageAltDecision": [
+        "imageAltDecision:1: rendered embed+fibercore"
+       ],
+       "blockTitleDecision": [
+        "blockTitleDecision:1: rendered embed+fibercore"
+       ]
+      },
+      "htmlForms": {
+       "tag": [
+        "tag:1: rendered embed+fibercore"
+       ],
+       "tagAttributes": [
+        "tagAttributes:1: rendered embed+fibercore"
+       ],
+       "quotedGreater": [
+        "quotedGreater:1: rendered embed+fibercore"
+       ],
+       "singleQuotedGreater": [
+        "singleQuotedGreater:1: rendered embed+fibercore"
+       ],
+       "tagWhitespace": [
+        "tagWhitespace:1: rendered embed+fibercore"
+       ],
+       "selfClosing": [
+        "selfClosing:1: rendered embed+fibercore"
+       ],
+       "comment": [
+        "comment:1: rendered embed+fibercore"
+       ],
+       "emptyComment": [
+        "emptyComment:1: embed+fibercore",
+        "emptyComment:1: rendered embed+fibercore"
+       ],
+       "namespacedName": [
+        "namespacedName:1: rendered unknown <o:p>",
+        "namespacedName:1: rendered unknown </o:p>"
+       ],
+       "underscoreName": [
+        "underscoreName:1: rendered unknown <x_y>",
+        "underscoreName:1: rendered unknown </x_y>"
+       ],
+       "dotName": [
+        "dotName:1: rendered unknown <x.y>",
+        "dotName:1: rendered unknown </x.y>"
+       ],
+       "solidusAttribute": [
+        "solidusAttribute:1: rendered unknown <x/y>"
+       ],
+       "unseparatedAttributes": [
+        "unseparatedAttributes:1: rendered unknown <span title=\"a\"lang=\"b\">"
+       ],
+       "noBreakSpace": [
+        "noBreakSpace:1: rendered unknown <span title=\"a>"
+       ],
+       "verticalTab": [
+        "verticalTab:1: rendered unknown <span title=\"a>"
+       ],
+       "processingInstruction": [
+        "processingInstruction:1: rendered unknown <?x?>"
+       ],
+       "markupDeclaration": [
+        "markupDeclaration:1: rendered unknown <!x>"
+       ],
+       "doctype": [
+        "doctype:1: rendered unknown <!DOCTYPE x>"
+       ],
+       "cdata": [
+        "cdata:1: rendered unknown <![CDATA[x]]>"
+       ],
+       "bogusEndTag": [
+        "bogusEndTag:1: rendered unknown </ x>"
+       ],
+       "emptyEndTag": [
+        "emptyEndTag:1: embed+fibercore",
+        "emptyEndTag:1: rendered unknown </>",
+        "emptyEndTag:1: rendered embed+fibercore"
+       ],
+       "endTagAttribute": [
+        "endTagAttribute:1: rendered unknown </span title=\"a>"
+       ],
+       "openedEmptyComment": [
+        "openedEmptyComment:1: embed+fibercore",
+        "openedEmptyComment:1: rendered unknown <!-->",
+        "openedEmptyComment:1: rendered embed+fibercore"
+       ],
+       "openedDashComment": [
+        "openedDashComment:1: embed+fibercore",
+        "openedDashComment:1: rendered unknown <!--->",
+        "openedDashComment:1: rendered embed+fibercore"
+       ],
+       "bangComment": [
+        "bangComment:1: rendered unknown <!-- x --!>",
+        "bangComment:1: rendered embed+fibercore"
+       ],
+       "unterminatedComment": [
+        "unterminatedComment:1: rendered unknown <!-- xer core behind the W10 provider.</..."
+       ],
+       "unterminatedTag": [
+        "unterminatedTag:1: rendered unknown <span title=\"aer core behind the W10 pro..."
+       ],
+       "refusedElement": [
+        "refusedElement:1: rendered unknown <template>"
+       ],
+       "refusedAttribute": [
+        "refusedAttribute:1: rendered unknown <span hidden>"
+       ],
+       "upperElement": [
+        "upperElement:1: rendered unknown <TEMPLATE>"
+       ],
+       "upperAttribute": [
+        "upperAttribute:1: rendered unknown <span HIDDEN>"
+       ]
+      },
+      "rawStateForms": {
+       "codeNamespaced": [
+        "codeNamespaced:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+       ],
+       "kbdDeclaration": [
+        "kbdDeclaration:1: rendered unknown raw-state text \"Fib<!x>er core\""
+       ],
+       "preEndSpace": [
+        "preEndSpace:1: rendered unknown raw-state text \"Fib</ x>er core\""
+       ],
+       "headingDotName": [
+        "headingDotName:1: rendered unknown raw-state text \"Fib<x.y>er core\""
+       ],
+       "carriedState": [
+        "carriedState:1: rendered unknown raw-state text \"x\"",
+        "carriedState:3: rendered unknown raw-state text \"OWNER DECISION (2026-10-29): Pi will emb...\""
+       ],
+       "cellDeclaration": [
+        "cellDeclaration:3: rendered unknown raw-state text \"Fib<!x>er core\""
+       ],
+       "itemEndSpace": [
+        "itemEndSpace:1: rendered unknown raw-state text \"Fib</ x>er core\""
+       ],
+       "codeReference": [
+        "codeReference:1: rendered unknown raw-state text \"Fi&#98er core\""
+       ],
+       "scriptState": [
+        "scriptState:1: rendered unknown <script>",
+        "scriptState:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+       ],
+       "upperAttributes": [
+        "upperAttributes:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+       ],
+       "markupFree": [
+        "markupFree:1: embed+fibercore",
+        "markupFree:1: rendered unknown raw-state text \"Fiber core\"",
+        "markupFree:1: rendered embed+fibercore"
+       ],
+       "closedState": [
+        "closedState:1: rendered unknown raw-state text \"x\""
+       ]
+      },
+      "inputForms": {
+       "buttonValue": [
+        "buttonValue:1: rendered unknown <input type=\"button\" value=\"Fiber\" title..."
+       ],
+       "textValue": [
+        "textValue:1: rendered unknown <input value=\"Fiber\" size=\"6\">"
+       ],
+       "placeholder": [
+        "placeholder:1: rendered unknown <input placeholder=\"Fiber\" size=\"6\">"
+       ],
+       "upperInput": [
+        "upperInput:1: rendered unknown <INPUT VALUE=\"Fiber\" SIZE=\"6\">"
+       ],
+       "optionLabel": [
+        "optionLabel:1: rendered unknown <option label=\"Fiber\" title=\"x\">"
+       ],
+       "groupLabel": [
+        "groupLabel:1: rendered unknown <optgroup label=\"Fiber\" title=\"x\">"
+       ]
+      },
+      "invisibleForms": {
+       "zeroWidthSpace": [
+        "zeroWidthSpace:1: rendered unknown invisible U+200B"
+       ],
+       "softHyphen": [
+        "softHyphen:1: rendered unknown invisible U+00AD"
+       ],
+       "variationSelector": [
+        "variationSelector:1: rendered unknown invisible U+FE0F"
+       ],
+       "zeroWidthReference": [
+        "zeroWidthReference:1: rendered unknown invisible U+200B"
+       ],
+       "wordJoinerReference": [
+        "wordJoinerReference:1: rendered unknown invisible U+2060"
+       ],
+       "doubleSplit": [
+        "doubleSplit:1: rendered unknown invisible U+200B",
+        "doubleSplit:1: rendered unknown invisible U+2060"
+       ],
+       "fullwidthNeighbor": [
+        "fullwidthNeighbor:1: rendered unknown invisible U+200B"
+       ],
+       "bidiSplit": [
+        "bidiSplit:1: rendered unknown U+202E",
+        "bidiSplit:1: rendered unknown invisible U+202E"
+       ],
+       "imageAltSplit": [
+        "imageAltSplit:1: rendered unknown invisible U+200B",
+        "imageAltSplit:1: rendered unknown invisible U+200B"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "until then Pi's RF surface stays the rf CLI envelope only",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "surface": "src",
+      "spellings": [
+       "@reactive-fiber",
+       "Host.resources",
+       "createReactiveFiberRuntime"
+      ],
+      "walkHeldToGit": true,
+      "loads": [],
+      "spelled": [],
+      "srcNonScripts": [],
+      "nonScriptControl": [
+       "src/plant.json",
+       "src/README.md"
+      ],
+      "rfCensus": [
+       "src/workbench/process-env.ts | StringLiteral < ArrayLiteralExpression < CallExpression Object.freeze #0 | \"RF_WORKSPACE\"",
+       "src/workbench/process-env.ts | StringLiteral < ArrayLiteralExpression < CallExpression Object.freeze #0 | \"SWARM_RF_WORKSPACE\"",
+       "src/workbench/providers/reactivefiber.ts | RegularExpressionLiteral < PropertyAccessExpression < CallExpression /^RF_[A-Z0-9_]+$/.test callee | \"^RF_[A-Z0-9_]+$\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < CallExpression spawn #0 | \"rf\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < NewExpression CapabilityError #1 | \"RF preview cancelled before invocation.\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < NewExpression CapabilityError #1 | \"RF preview cancelled before launch.\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < NewExpression CapabilityError #1 | \"RF preview cancelled.\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < NewExpression CapabilityError #1 | \"RF preview cancelled.\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < NewExpression CapabilityError #1 | \"RF preview cancelled.\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < NewExpression CapabilityError #1 | \"RF preview could not launch the installed binary.\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < NewExpression CapabilityError #1 | \"RF preview exceeded the execution deadline.\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < NewExpression CapabilityError #1 | \"RF preview returned an unrecognized native envelope.\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < NewExpression CapabilityError #1 | \"RF preview returned an unrecognized or contradictory envelope.\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < NewExpression CapabilityError #1 | \"RF preview returned an unrecognized or contradictory failure envelope.\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < NewExpression CapabilityError #1 | \"RF preview returned malformed JSON.\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < PropertyAssignment description | \"Preview native RF context with provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < PropertyAssignment description | \"RF noncommitted context with native provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < VariableDeclaration REACTIVE_FIBER_CONTRACT_SOURCE | \"rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit\"",
+       "src/workbench/providers/reactivefiber.ts | TemplateHead < TemplateExpression < NewExpression CapabilityError #1 | \"RF preview exceeded the bounded \"",
+       "src/workbench/providers/reactivefiber.ts | TemplateHead < TemplateExpression < NewExpression CapabilityError #1 | \"RF render refused: \"",
+       "src/workbench/reactivefiber-observer.ts | RegularExpressionLiteral < VariableDeclaration FAILURE_CODE | \"^RF_[A-Z0-9_]{1,60}$\"",
+       "src/workbench/reactivefiber-observer.ts | StringLiteral < BinaryExpression < BinaryExpression < IfStatement | \"rf-cli\"",
+       "src/workbench/reactivefiber-observer.ts | StringLiteral < BinaryExpression < VariableDeclaration live | \"rf-cli\"",
+       "src/workbench/reactivefiber-observer.ts | StringLiteral < CallExpression refused #0 | \"a failed envelope needs a primary RF_ error diagnostic\"",
+       "src/workbench/reactivefiber-observer.ts | StringLiteral < CallExpression refused #0 | \"source must be the strict eight-key rf envelope\"",
+       "src/workbench/reactivefiber-observer.ts | StringLiteral < CallExpression refused #0 | \"source.diagnostics holds a malformed rf diagnostic\"",
+       "src/workbench/reactivefiber-observer.ts | StringLiteral < CallExpression refused #0 | \"the authorized RF root must be a bounded, displayable identity\"",
+       "src/workbench/reactivefiber-observer.ts | StringLiteral < CallExpression refused #0 | \"the host seam must be rf-cli or injected-fixture\"",
+       "src/workbench/reactivefiber-observer.ts | StringLiteral < LiteralType < UnionType < TypeAliasDeclaration | \"rf-cli\"",
+       "src/workbench/reactivefiber-observer.ts | StringLiteral < NewExpression CapabilityError #1 | \"RF reading workspace differs from observer scope.\"",
+       "src/workbench/reactivefiber-observer.ts | StringLiteral < PropertyAssignment 'rf-cli' | \"noncommitted preview (rf-cli)\"",
+       "src/workbench/reactivefiber-observer.ts | StringLiteral < PropertyAssignment 'rf-cli' | \"rf-cli\"",
+       "src/workbench/reactivefiber-observer.ts | TemplateHead < TemplateExpression < ArrayLiteralExpression < ConditionalExpression < ParenthesizedExpression < SpreadElement < ArrayLiteralExpression < PropertyAssignment evidenceRefs | \"rf-bundle:\"",
+       "src/workbench/reactivefiber-observer.ts | TemplateHead < TemplateExpression < ArrayLiteralExpression < ConditionalExpression < ParenthesizedExpression < SpreadElement < ArrayLiteralExpression < PropertyAssignment evidenceRefs | \"rf-cli:\"",
+       "src/workbench/reactivefiber-observer.ts | TemplateHead < TemplateExpression < ArrayLiteralExpression < ConditionalExpression < ParenthesizedExpression < SpreadElement < ArrayLiteralExpression < PropertyAssignment evidenceRefs | \"rf-engine-spawns:\"",
+       "src/workbench/reactivefiber-observer.ts | TemplateHead < TemplateExpression < ArrayLiteralExpression < ConditionalExpression < PropertyAssignment evidenceRefs | \"rf-workspace:\"",
+       "src/workbench/reactivefiber-observer.ts | TemplateHead < TemplateExpression < ArrayLiteralExpression < PropertyAssignment evidenceRefs | \"rf-graph:\"",
+       "src/workbench/reactivefiber-observer.ts | TemplateHead < TemplateExpression < ArrayLiteralExpression < PropertyAssignment evidenceRefs | \"rf-workspace:\"",
+       "src/workbench/reactivefiber-observer.ts | TemplateHead < TemplateExpression < CallExpression notes.push #0 | \"producer release from result.provenance.cli_version: rf@\"",
+       "src/workbench/reactivefiber-observer.ts | TemplateHead < TemplateExpression < CallExpression refs.push #0 | \"rf-engine:\"",
+       "src/workbench/reactivefiber-observer.ts | TemplateHead < TemplateExpression < CallExpression shown #0 | \"RF context preview \"",
+       "src/workbench/reactivefiber-observer.ts | TemplateHead < TemplateExpression < PropertyAssignment nativePayloadRef | \"rf-output:sha256:\""
+      ],
+      "sdkCensus": [
+       "src/index.ts | StringLiteral < ArrayLiteralExpression < PropertyAssignment grants | \"discover:reactivefiber.render.preview\"",
+       "src/settings.ts | StringLiteral < ArrayLiteralExpression < NewExpression Set #0 | \"reactivefiberWorkspaceRoot\"",
+       "src/settings.ts | StringLiteral < NewExpression Error #0 | \"workbench.reactivefiberWorkspaceRoot must be an absolute path without control characters.\"",
+       "src/workbench/hosts/local-detached.ts | StringLiteral < CaseClause | \"reactivefiber\"",
+       "src/workbench/hosts/local-detached.ts | StringLiteral < ImportDeclaration | \"../providers/reactivefiber.js\"",
+       "src/workbench/hosts/local-detached.ts | StringLiteral < LiteralType < UnionType < ParenthesizedType < ArrayType < TypeOperator < PropertySignature providers | \"reactivefiber\"",
+       "src/workbench/hosts/local-detached.ts | StringLiteral < PropertyAssignment reactivefiber | \"reactivefiber.render.preview\"",
+       "src/workbench/hosts/local-detached.ts | StringLiteral < PropertyAssignment reactivefiber | \"reactivefiber:render\"",
+       "src/workbench/native-evidence.ts | StringLiteral < BinaryExpression < ExpressionStatement | \"reactivefiber\"",
+       "src/workbench/native-evidence.ts | StringLiteral < CaseClause | \"reactivefiber.render.preview\"",
+       "src/workbench/native-evidence.ts | StringLiteral < ImportDeclaration | \"./providers/reactivefiber.js\"",
+       "src/workbench/native-evidence.ts | StringLiteral < LiteralType < UnionType < PropertySignature provider | \"reactivefiber\"",
+       "src/workbench/native-modules.ts | StringLiteral < CallExpression import #0 | \"./providers/reactivefiber.js\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < ArrayLiteralExpression < PropertyAssignment permissions | \"reactivefiber:render\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < ArrayLiteralExpression < PropertyAssignment permissions | \"reactivefiber:render\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < PropertyAssignment id | \"reactivefiber.render.preview\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < PropertyAssignment id | \"reactivefiber.render.preview\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < VariableDeclaration REACTIVEFIBER_RENDER_PREVIEW_CONTRACT | \"reactivefiber.render.preview/v1\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < VariableDeclaration REACTIVE_FIBER_CLI_SCHEMA | \"reactive-fiber.cli/v1\"",
+       "src/workbench/providers/reactivefiber.ts | StringLiteral < VariableDeclaration REACTIVE_FIBER_CONTRACT_SOURCE | \"rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit\"",
+       "src/workbench/reactivefiber-observer.ts | StringLiteral < ImportDeclaration | \"./providers/reactivefiber.js\"",
+       "src/workbench/reactivefiber-observer.ts | StringLiteral < PropertyAssignment kind | \"reactivefiber.render.preview.snapshot\"",
+       "src/workbench/reactivefiber-observer.ts | StringLiteral < PropertyAssignment provider | \"reactivefiber\"",
+       "src/workbench/reactivefiber-observer.ts | StringLiteral < PropertyAssignment source | \"reactivefiber\"",
+       "src/workbench/reactivefiber-observer.ts | StringLiteral < VariableDeclaration REACTIVEFIBER_OBSERVATION_CONTRACT | \"workbench.reactivefiber-observation/v1\"",
+       "src/workbench/reactivefiber-observer.ts | TemplateHead < TemplateExpression < NewExpression CapabilityError #1 | \"ReactiveFiber topology refused: \"",
+       "src/workflow/reconcile.ts | StringLiteral < ArrayLiteralExpression < CallExpression Object.freeze #0 | \"reactivefiber.render.preview\""
+      ],
+      "launchRoster": [
+       "src/workbench/providers/reactivefiber.ts: spawn"
+      ],
+      "controls": {
+       "importScope": {
+        "loads": [
+         "import-scope.ts:1: @reactive-fiber/sdk: reactivefiber"
+        ],
+        "spelled": [
+         "import-scope.ts:1: @reactive-fiber"
+        ],
+        "census": {
+         "rfTexts": [],
+         "sdkTexts": [
+          "import-scope.ts | StringLiteral < ImportDeclaration | \"@reactive-fiber/sdk\""
+         ],
+         "launches": []
+        }
+       },
+       "hostResources": {
+        "loads": [],
+        "spelled": [
+         "host-resources.ts:2: Host.resources"
+        ],
+        "census": {
+         "rfTexts": [],
+         "sdkTexts": [],
+         "launches": []
+        }
+       },
+       "createRuntime": {
+        "loads": [],
+        "spelled": [
+         "create-runtime.ts:1: createReactiveFiberRuntime",
+         "create-runtime.ts:2: createReactiveFiberRuntime"
+        ],
+        "census": {
+         "rfTexts": [],
+         "sdkTexts": [],
+         "launches": []
+        }
+       },
+       "requirePackage": {
+        "loads": [
+         "require-package.cjs:1: reactive-fiber: reactivefiber"
+        ],
+        "spelled": [],
+        "census": {
+         "rfTexts": [],
+         "sdkTexts": [
+          "require-package.cjs | StringLiteral < CallExpression require #0 | \"reactive-fiber\""
+         ],
+         "launches": []
+        }
+       },
+       "importEquals": {
+        "loads": [
+         "import-equals.ts:1: @fiber-optics/rf: fiberoptics"
+        ],
+        "spelled": [],
+        "census": {
+         "rfTexts": [
+          "import-equals.ts | StringLiteral < ExternalModuleReference < ImportEqualsDeclaration | \"@fiber-optics/rf\""
+         ],
+         "sdkTexts": [
+          "import-equals.ts | StringLiteral < ExternalModuleReference < ImportEqualsDeclaration | \"@fiber-optics/rf\""
+         ],
+         "launches": []
+        }
+       },
+       "importType": {
+        "loads": [
+         "import-type.ts:1: fiber-core: fibercore"
+        ],
+        "spelled": [],
+        "census": {
+         "rfTexts": [],
+         "sdkTexts": [
+          "import-type.ts | StringLiteral < LiteralType < ImportType < TypeAliasDeclaration | \"fiber-core\""
+         ],
+         "launches": []
+        }
+       },
+       "exportFrom": {
+        "loads": [
+         "export-from.ts:1: reactivefiber-sdk: reactivefiber"
+        ],
+        "spelled": [],
+        "census": {
+         "rfTexts": [],
+         "sdkTexts": [
+          "export-from.ts | StringLiteral < ExportDeclaration | \"reactivefiber-sdk\""
+         ],
+         "launches": []
+        }
+       },
+       "createRequireLoad": {
+        "loads": [
+         "create-require.ts:3: reactivefiber-sdk: reactivefiber"
+        ],
+        "spelled": [],
+        "census": {
+         "rfTexts": [],
+         "sdkTexts": [
+          "create-require.ts | StringLiteral < CallExpression load #0 | \"reactivefiber-sdk\""
+         ],
+         "launches": []
+        }
+       },
+       "createRequireAlias": {
+        "loads": [
+         "create-require-alias.ts:3: @fiber-optics/core: fiberoptics"
+        ],
+        "spelled": [],
+        "census": {
+         "rfTexts": [],
+         "sdkTexts": [
+          "create-require-alias.ts | StringLiteral < CallExpression need #0 | \"@fiber-optics/core\""
+         ],
+         "launches": []
+        }
+       },
+       "createRequireDirect": {
+        "loads": [
+         "create-require-direct.ts:2: fiber-runtime: fiberruntime"
+        ],
+        "spelled": [],
+        "census": {
+         "rfTexts": [],
+         "sdkTexts": [
+          "create-require-direct.ts | StringLiteral < CallExpression nodeModule.createRequire(import.meta.url) #0 | \"fiber-runtime\""
+         ],
+         "launches": []
+        }
+       },
+       "resolveCall": {
+        "loads": [],
+        "spelled": [],
+        "census": {
+         "rfTexts": [],
+         "sdkTexts": [
+          "near-miss-resolve.ts | StringLiteral < CallExpression load.resolve #0 | \"reactivefiber-sdk\""
+         ],
+         "launches": []
+        }
+       },
+       "relativeImport": {
+        "loads": [],
+        "spelled": [],
+        "census": {
+         "rfTexts": [],
+         "sdkTexts": [
+          "near-miss-relative.ts | StringLiteral < ImportDeclaration | \"./providers/reactivefiber.js\""
+         ],
+         "launches": []
+        }
+       },
+       "hostObject": {
+        "loads": [],
+        "spelled": [],
+        "census": {
+         "rfTexts": [
+          "host-object.ts | StringLiteral < VariableDeclaration reactivefiber | \"rf\""
+         ],
+         "sdkTexts": [],
+         "launches": []
+        }
+       },
+       "destructuredLoader": {
+        "loads": [],
+        "spelled": [],
+        "census": {
+         "rfTexts": [],
+         "sdkTexts": [
+          "destructured-loader.ts | StringLiteral < CallExpression load #0 | \"reactivefiber-sdk\""
+         ],
+         "launches": []
+        }
+       },
+       "reboundLoader": {
+        "loads": [],
+        "spelled": [],
+        "census": {
+         "rfTexts": [],
+         "sdkTexts": [
+          "rebound-loader.ts | StringLiteral < CallExpression again #0 | \"reactivefiber-sdk\""
+         ],
+         "launches": []
+        }
+       },
+       "moduleRequire": {
+        "loads": [],
+        "spelled": [],
+        "census": {
+         "rfTexts": [],
+         "sdkTexts": [
+          "module-require.cjs | StringLiteral < CallExpression module.require #0 | \"@fiber-optics/sdk\"",
+          "module-require.cjs | StringLiteral < CallExpression require.call #1 | \"fiber-core\""
+         ],
+         "launches": []
+        }
+       },
+       "boundSpecifier": {
+        "loads": [],
+        "spelled": [],
+        "census": {
+         "rfTexts": [],
+         "sdkTexts": [
+          "bound-specifier.ts | StringLiteral < VariableDeclaration spec | \"reactivefiber-sdk\""
+         ],
+         "launches": []
+        }
+       }
+      },
+      "launchControls": {
+       "spawnRf": {
+        "rfTexts": [
+         "spawn-rf.ts | StringLiteral < CallExpression spawn #0 | \"rf\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "spawn-rf.ts: spawn"
+        ]
+       },
+       "execFileSyncRf": {
+        "rfTexts": [
+         "exec-rf.ts | StringLiteral < CallExpression execFileSync #0 | \"rf\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "exec-rf.ts: execFileSync"
+        ]
+       },
+       "memberSpawnRf": {
+        "rfTexts": [
+         "member-spawn-rf.ts | StringLiteral < CallExpression cp.spawn #0 | \"rf\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "member-spawn-rf.ts: spawn"
+        ]
+       },
+       "aliasedImport": {
+        "rfTexts": [
+         "aliased-import.ts | StringLiteral < CallExpression run #0 | \"rf\""
+        ],
+        "sdkTexts": [],
+        "launches": []
+       },
+       "shellCommand": {
+        "rfTexts": [
+         "shell-command.ts | StringLiteral < CallExpression execSync #0 | \"rf context render --json\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "shell-command.ts: execSync"
+        ]
+       },
+       "qualifiedBinary": {
+        "rfTexts": [
+         "qualified-binary.ts | StringLiteral < CallExpression spawn #0 | \"/usr/local/bin/rf\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "qualified-binary.ts: spawn"
+        ]
+       },
+       "wrapperBinary": {
+        "rfTexts": [
+         "wrapper-binary.ts | StringLiteral < ArrayLiteralExpression < CallExpression spawn #1 | \"rf\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "wrapper-binary.ts: spawn"
+        ]
+       },
+       "envAssignments": {
+        "rfTexts": [
+         "env-assignments.ts | StringLiteral < CallExpression exec #0 | \"RF_HOME=/tmp/rf-home env -i PATH=/usr/bin rf context show\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "env-assignments.ts: exec"
+        ]
+       },
+       "shellScript": {
+        "rfTexts": [
+         "shell-script.ts | StringLiteral < ArrayLiteralExpression < CallExpression spawnSync #1 | \"rf context show\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "shell-script.ts: spawnSync"
+        ]
+       },
+       "compoundCommand": {
+        "rfTexts": [
+         "compound-command.ts | StringLiteral < CallExpression execSync #0 | \"cd /tmp && 'rf' context show\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "compound-command.ts: execSync"
+        ]
+       },
+       "backslashBinary": {
+        "rfTexts": [
+         "backslash-binary.ts | StringLiteral < CallExpression execSync #0 | \"\\\\rf context show\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "backslash-binary.ts: execSync"
+        ]
+       },
+       "elementAccess": {
+        "rfTexts": [
+         "element-access.ts | StringLiteral < CallExpression cp[\"spawn\"] #0 | \"rf\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "element-access.ts: spawn"
+        ]
+       },
+       "ifThen": {
+        "rfTexts": [
+         "if-then.ts | StringLiteral < CallExpression execSync #0 | \"if true; then rf context show; fi\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "if-then.ts: execSync"
+        ]
+       },
+       "braceGroup": {
+        "rfTexts": [
+         "brace-group.ts | StringLiteral < CallExpression execSync #0 | \"{ rf context show; }\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "brace-group.ts: execSync"
+        ]
+       },
+       "negatedPipeline": {
+        "rfTexts": [
+         "negated-pipeline.ts | StringLiteral < CallExpression execSync #0 | \"! rf context show\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "negated-pipeline.ts: execSync"
+        ]
+       },
+       "commaCall": {
+        "rfTexts": [
+         "comma-call.ts | StringLiteral < CallExpression (0,spawn) #0 | \"rf\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "comma-call.ts: spawn"
+        ]
+       },
+       "dotCall": {
+        "rfTexts": [
+         "dot-call.ts | StringLiteral < CallExpression spawn.call #1 | \"rf\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "dot-call.ts: spawn"
+        ]
+       },
+       "asConst": {
+        "rfTexts": [
+         "as-const.ts | StringLiteral < AsExpression < CallExpression spawn #0 | \"rf\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "as-const.ts: spawn"
+        ]
+       },
+       "reboundLauncher": {
+        "rfTexts": [
+         "rebound-launcher.ts | StringLiteral < CallExpression run #0 | \"rf\""
+        ],
+        "sdkTexts": [],
+        "launches": []
+       },
+       "destructuredRequire": {
+        "rfTexts": [
+         "destructured-require.cjs | StringLiteral < CallExpression go #0 | \"rf\""
+        ],
+        "sdkTexts": [],
+        "launches": []
+       },
+       "boundBinary": {
+        "rfTexts": [
+         "bound-binary.ts | StringLiteral < VariableDeclaration RF | \"rf\""
+        ],
+        "sdkTexts": [],
+        "launches": []
+       },
+       "substitution": {
+        "rfTexts": [
+         "substitution.ts | StringLiteral < CallExpression execSync #0 | \"echo $(rf --version)\"",
+         "substitution.ts | StringLiteral < CallExpression execSync #0 | \"(rf context show)\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "substitution.ts: execSync",
+         "substitution.ts: execSync"
+        ]
+       },
+       "otherWrappers": {
+        "rfTexts": [
+         "other-wrappers.ts | StringLiteral < ArrayLiteralExpression < CallExpression spawn #1 | \"@acme/rf-cli\"",
+         "other-wrappers.ts | StringLiteral < ArrayLiteralExpression < CallExpression spawn #1 | \"rf\"",
+         "other-wrappers.ts | StringLiteral < ArrayLiteralExpression < CallExpression spawn #1 | \"rf\"",
+         "other-wrappers.ts | StringLiteral < ArrayLiteralExpression < CallExpression spawn #1 | \"rf\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "other-wrappers.ts: spawn",
+         "other-wrappers.ts: spawn",
+         "other-wrappers.ts: spawn",
+         "other-wrappers.ts: spawn"
+        ]
+       },
+       "otherLaunchers": {
+        "rfTexts": [
+         "other-launchers.ts | StringLiteral < CallExpression execa #0 | \"rf\"",
+         "other-launchers.ts | NoSubstitutionTemplateLiteral < TaggedTemplateExpression $ | \"rf context show\""
+        ],
+        "sdkTexts": [],
+        "launches": []
+       },
+       "templateHead": {
+        "rfTexts": [
+         "template-head.ts | TemplateHead < TemplateExpression < CallExpression execSync #0 | \"rf context render --view \""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "template-head.ts: execSync"
+        ]
+       },
+       "templateWord": {
+        "rfTexts": [
+         "template-word.ts | TemplateHead < TemplateExpression < CallExpression execSync #0 | \"rf\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "template-word.ts: execSync"
+        ]
+       },
+       "otherModuleAlias": {
+        "rfTexts": [
+         "other-alias.ts | StringLiteral < CallExpression run #0 | \"rf\""
+        ],
+        "sdkTexts": [],
+        "launches": []
+       },
+       "otherBinaryArgument": {
+        "rfTexts": [
+         "spawn-rg.ts | StringLiteral < ArrayLiteralExpression < CallExpression spawn #1 | \"rf\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "spawn-rg.ts: spawn"
+        ]
+       },
+       "regexSource": {
+        "rfTexts": [
+         "regex-source.ts | RegularExpressionLiteral < PropertyAccessExpression < CallExpression spawn #0 | \"rf\""
+        ],
+        "sdkTexts": [],
+        "launches": [
+         "regex-source.ts: spawn"
+        ]
+       },
+       "nearMissName": {
+        "rfTexts": [],
+        "sdkTexts": [],
+        "launches": []
+       },
+       "nearMissComment": {
+        "rfTexts": [],
+        "sdkTexts": [],
+        "launches": []
+       },
+       "nearMissTokens": {
+        "rfTexts": [],
+        "sdkTexts": [],
+        "launches": []
+       }
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "surface": "rf launch",
+      "schema": "reactive-fiber.cli/v1",
+      "contract": "rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit",
+      "admitted": {
+       "legacy": {
+        "schema": "reactive-fiber.cli/v1",
+        "command": "context.render",
+        "keys": [
+         "command",
+         "diagnostics",
+         "ok",
+         "operation_id",
+         "result",
+         "schema",
+         "transaction_id",
+         "workspace"
+        ]
+       },
+       "view": {
+        "schema": "reactive-fiber.cli/v1",
+        "command": "context.render",
+        "keys": [
+         "command",
+         "diagnostics",
+         "ok",
+         "operation_id",
+         "result",
+         "schema",
+         "transaction_id",
+         "workspace"
+        ]
+       }
+      },
+      "spawns": [
+       [
+        "--workspace",
+        "<root>",
+        "context",
+        "render",
+        "--model",
+        "model-fixture",
+        "--task",
+        "task-fixture",
+        "--no-commit",
+        "--no-input",
+        "--json"
+       ],
+       [
+        "--workspace",
+        "<root>",
+        "context",
+        "render",
+        "--view",
+        "swarm.worker",
+        "--task-id",
+        "bead-fixture-000",
+        "--no-commit",
+        "--no-input",
+        "--json"
+       ]
+      ],
+      "refused": {
+       "abiReceipt": {
+        "legacy": "transport: RF preview returned an unrecognized native envelope.",
+        "view": "transport: RF preview returned an unrecognized native envelope."
+       },
+       "otherSchema": {
+        "legacy": "transport: RF preview returned an unrecognized native envelope.",
+        "view": "transport: RF preview returned an unrecognized native envelope."
+       },
+       "extraKey": {
+        "legacy": "transport: RF preview returned an unrecognized native envelope.",
+        "view": "transport: RF preview returned an unrecognized native envelope."
+       }
+      },
+      "refusedSpawns": 6
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "surface": "stated surface",
+      "cited": {
+       "page": "docs/workbench/18-decisions-and-risks.md",
+       "line": 33,
+       "row": "| No RF typed render SDK in pinned revision | weak integration | explicit unavailable block, provider-owned SDK improvement |",
+       "section": {
+        "heading": "Key risks and mitigations",
+        "bound": true,
+        "why": "",
+        "hasHtml": false,
+        "blocks": [
+         {
+          "kind": "other",
+          "type": "table",
+          "text": "Risk Impact Mitigation and test Claude Agent SDK versions/messages evolve lost session/tool/usage semantics pin SDK; explicit message discriminant conformance; diagnostic on unknown Pi extension API diverges from upstream runtime/UI breakage snapshot versions, overlay/command tests, upstream sync gate Claude script language and fork drift existing workflows break unchanged real golden fixtures and documented parity deviations VM escape into host credential/data exposure separate process isolation for untrusted source; host-side authorization and no secret injection Effectful node replay duplicates work duplicate Furnace Run/edit native reconciliation, uncertain effect, no blanket retries Source graph conflated with trace misleading causality provenance labels and unknown edges, distinguish declared/observed/inferred UI recomputes full logs at scale terminal lag and CPU incremental indexes, viewport, coalesced render and benchmark Interpreting provider statuses uniformly false verified candidate source-specific types and evidence, negative test Furnace nested work capacity deadlock stalled swarms native scheduling/await policy; admission test No RF typed render SDK in pinned revision weak integration explicit unavailable block, provider-owned SDK improvement Detached mode confused with durability silent loss after crash explicit host guarantees and tests Cross-scope observation leak secret/unowned operation data scope-aware provider read ACL and payload redaction Upstream fork history accidentally rewritten licensing/maintenance loss preserve fork history/MIT, deliberate small commits"
+         }
+        ]
+       },
+       "raw": {
+        "headingLine": "## Key risks and mitigations",
+        "found": 1,
+        "parents": [
+         "# 18 \u2014 Decisions, risks, deliberate defaults and re-evaluation triggers"
+        ],
+        "from": 20,
+        "to": 36,
+        "lines": [
+         "## Key risks and mitigations",
+         "",
+         "| Risk | Impact | Mitigation and test |",
+         "| --- | --- | --- |",
+         "| Claude Agent SDK versions/messages evolve | lost session/tool/usage semantics | pin SDK; explicit message discriminant conformance; diagnostic on unknown |",
+         "| Pi extension API diverges from upstream | runtime/UI breakage | snapshot versions, overlay/command tests, upstream sync gate |",
+         "| Claude script language and fork drift | existing workflows break | unchanged real golden fixtures and documented parity deviations |",
+         "| VM escape into host | credential/data exposure | separate process isolation for untrusted source; host-side authorization and no secret injection |",
+         "| Effectful node replay duplicates work | duplicate Furnace Run/edit | native reconciliation, uncertain effect, no blanket retries |",
+         "| Source graph conflated with trace | misleading causality | provenance labels and unknown edges, distinguish declared/observed/inferred |",
+         "| UI recomputes full logs at scale | terminal lag and CPU | incremental indexes, viewport, coalesced render and benchmark |",
+         "| Interpreting provider statuses uniformly | false verified candidate | source-specific types and evidence, negative test |",
+         "| Furnace nested work capacity deadlock | stalled swarms | native scheduling/await policy; admission test |",
+         "| No RF typed render SDK in pinned revision | weak integration | explicit unavailable block, provider-owned SDK improvement |",
+         "| Detached mode confused with durability | silent loss after crash | explicit host guarantees and tests |",
+         "| Cross-scope observation leak | secret/unowned operation data | scope-aware provider read ACL and payload redaction |",
+         "| Upstream fork history accidentally rewritten | licensing/maintenance loss | preserve fork history/MIT, deliberate small commits |"
+        ],
+        "links": []
+       },
+       "sectionRows": [
+        [
+         "No RF typed render SDK in pinned revision",
+         "weak integration",
+         "explicit unavailable block, provider-owned SDK improvement"
+        ]
+       ]
+      },
+      "readme": {
+       "page": "vendor/README.md",
+       "section": {
+        "heading": "Native SDK artifacts",
+        "bound": true,
+        "why": "",
+        "hasHtml": false,
+        "blocks": [
+         {
+          "kind": "paragraph",
+          "text": "The Workbench imports the local npm artifacts below. Their exact bytes are part of the package lockfile and execution deployment basis. These artifacts contain SDK clients, not the native Forge, Furnace, or HyperUnix executables. Install those executables independently. Do not infer runtime compatibility from the shared SDK version alone.",
+          "markdown": "The Workbench imports the local npm artifacts below. Their exact bytes are part of the package lockfile and execution deployment basis. These artifacts contain SDK clients, not the native Forge, Furnace, or HyperUnix executables. Install those executables independently. Do not infer runtime compatibility from the shared SDK version alone."
+         },
+         {
+          "kind": "other",
+          "type": "table",
+          "text": "Artifact SHA-256 forge-sdk-0.1.0.tgz c108a25c0f7ae4cac9b882c1ab16469c4918752ea4a0dceb2d71dd107ce0d8d6 furnace-sdk-0.1.0.tgz aaa57dcfb1c205ec1f23f07cdffd6af32901bc4b972d81301758a7467ea865a9 hyperunix-sdk-0.1.0.tgz 655e08b09febcad67732d6e25d6de4bd8e4a683f594c1d5d3d6ff24ff70b107b"
+         },
+         {
+          "kind": "paragraph",
+          "text": "Artifacts were packaged from the corresponding in-house TypeScript SDK distributions during development on 2026-10-15. furnace-sdk-0.1.0.tgz was re-packaged on 2026-10-17 (wb-zby) from Furnace revision 9970621d8 (sdk/typescript: npm run build && npm pack, 0 tsc diagnostics), whose contract manifest smithy_model_digest and generated provenance digest agree (sha256:2cf7c539f9f3...); the 2026-10-15 artifact carried a manifest digest (b044cbe9...) beside validators generated from another model (e5995480...), so its loadContract() refused every context decode and the Furnace-hosted adapter failed closed on it. The checksums identify what this consumer installs. They do not establish that the producing checkouts were clean or that every native runtime supports every SDK method. The adapters use independently exercised methods and preserve native errors, coverage, and evidence.",
+          "markdown": "Artifacts were packaged from the corresponding in-house TypeScript SDK distributions during development on 2026-10-15. furnace-sdk-0.1.0.tgz was re-packaged on 2026-10-17 (wb-zby) from Furnace revision 9970621d8 (`sdk/typescript`: `npm run build && npm pack`, 0 tsc diagnostics), whose contract manifest `smithy_model_digest` and generated provenance digest agree (sha256:2cf7c539f9f3...); the 2026-10-15 artifact carried a manifest digest (b044cbe9...) beside validators generated from another model (e5995480...), so its `loadContract()` refused every context decode and the Furnace-hosted adapter failed closed on it. The checksums identify what this consumer installs. They do not establish that the producing checkouts were clean or that every native runtime supports every SDK method. The adapters use independently exercised methods and preserve native errors, coverage, and evidence."
+         },
+         {
+          "kind": "paragraph",
+          "text": "ReactiveFiberCLI currently uses its installed CLI JSON envelope. No unverified TypeScript client or invented SDK method is substituted. Its preview is explicitly noncommitted and carries no durable render identifier.",
+          "markdown": "ReactiveFiberCLI currently uses its installed CLI JSON envelope. No unverified TypeScript client or invented SDK method is substituted. Its preview is explicitly noncommitted and carries no durable render identifier."
+         },
+         {
+          "kind": "paragraph",
+          "text": "Run the portable package gate with forge build --require-complete. Use forge run native-read for installed runtime probes. The initialized RF fixture tier is WORKBENCH_RF_FIXTURE=/absolute/test/workspace forge run rf-preview. Neither tier initializes a native store in this package merely to obtain an empty result.",
+          "markdown": "Run the portable package gate with `forge build --require-complete`. Use `forge run native-read` for installed runtime probes. The initialized RF fixture tier is `WORKBENCH_RF_FIXTURE=/absolute/test/workspace forge run rf-preview`. Neither tier initializes a native store in this package merely to obtain an empty result."
+         },
+         {
+          "kind": "paragraph",
+          "text": "The native SDK dependencies are explicitly bundled in the npm artifact. A file:vendor/... declaration alone is insufficient for installing a packed parent: npm resolves those dependencies before the parent extraction makes its vendor directory available. forge run install-smoke creates a separate consumer and proves the packed SDK dependencies can actually be imported. It does not prove each native executable is installed in that consumer.",
+          "markdown": "The native SDK dependencies are explicitly bundled in the npm artifact. A `file:vendor/...` declaration alone is insufficient for installing a packed parent: npm resolves those dependencies before the parent extraction makes its vendor directory available. `forge run install-smoke` creates a separate consumer and proves the packed SDK dependencies can actually be imported. It does not prove each native executable is installed in that consumer."
+         },
+         {
+          "kind": "paragraph",
+          "text": "dependency-lock.json preserves the exact npm lockfile inside the distributed artifact because npm excludes the root package-lock.json when packing. The package smoke requires byte-identical lock copies. Installed invocation identity validates the shipped lock against the package manifest and vendor artifact integrities.",
+          "markdown": "`dependency-lock.json` preserves the exact npm lockfile inside the distributed artifact because npm excludes the root `package-lock.json` when packing. The package smoke requires byte-identical lock copies. Installed invocation identity validates the shipped lock against the package manifest and vendor artifact integrities."
+         }
+        ]
+       },
+       "raw": {
+        "headingLine": "# Native SDK artifacts",
+        "found": 1,
+        "parents": [],
+        "from": 1,
+        "to": 19,
+        "lines": [
+         "# Native SDK artifacts",
+         "",
+         "The Workbench imports the local npm artifacts below. Their exact bytes are part of the package lockfile and execution deployment basis. These artifacts contain SDK clients, not the native Forge, Furnace, or HyperUnix executables. Install those executables independently. Do not infer runtime compatibility from the shared SDK version alone.",
+         "",
+         "| Artifact | SHA-256 |",
+         "| --- | --- |",
+         "| forge-sdk-0.1.0.tgz | c108a25c0f7ae4cac9b882c1ab16469c4918752ea4a0dceb2d71dd107ce0d8d6 |",
+         "| furnace-sdk-0.1.0.tgz | aaa57dcfb1c205ec1f23f07cdffd6af32901bc4b972d81301758a7467ea865a9 |",
+         "| hyperunix-sdk-0.1.0.tgz | 655e08b09febcad67732d6e25d6de4bd8e4a683f594c1d5d3d6ff24ff70b107b |",
+         "",
+         "Artifacts were packaged from the corresponding in-house TypeScript SDK distributions during development on 2026-10-15. furnace-sdk-0.1.0.tgz was re-packaged on 2026-10-17 (wb-zby) from Furnace revision 9970621d8 (`sdk/typescript`: `npm run build && npm pack`, 0 tsc diagnostics), whose contract manifest `smithy_model_digest` and generated provenance digest agree (sha256:2cf7c539f9f3...); the 2026-10-15 artifact carried a manifest digest (b044cbe9...) beside validators generated from another model (e5995480...), so its `loadContract()` refused every context decode and the Furnace-hosted adapter failed closed on it. The checksums identify what this consumer installs. They do not establish that the producing checkouts were clean or that every native runtime supports every SDK method. The adapters use independently exercised methods and preserve native errors, coverage, and evidence.",
+         "",
+         "ReactiveFiberCLI currently uses its installed CLI JSON envelope. No unverified TypeScript client or invented SDK method is substituted. Its preview is explicitly noncommitted and carries no durable render identifier.",
+         "",
+         "Run the portable package gate with `forge build --require-complete`. Use `forge run native-read` for installed runtime probes. The initialized RF fixture tier is `WORKBENCH_RF_FIXTURE=/absolute/test/workspace forge run rf-preview`. Neither tier initializes a native store in this package merely to obtain an empty result.",
+         "",
+         "The native SDK dependencies are explicitly bundled in the npm artifact. A `file:vendor/...` declaration alone is insufficient for installing a packed parent: npm resolves those dependencies before the parent extraction makes its vendor directory available. `forge run install-smoke` creates a separate consumer and proves the packed SDK dependencies can actually be imported. It does not prove each native executable is installed in that consumer.",
+         "",
+         "`dependency-lock.json` preserves the exact npm lockfile inside the distributed artifact because npm excludes the root `package-lock.json` when packing. The package smoke requires byte-identical lock copies. Installed invocation identity validates the shipped lock against the package manifest and vendor artifact integrities."
+        ],
+        "links": []
+       },
+       "sentences": [
+        "ReactiveFiberCLI currently uses its installed CLI JSON envelope."
+       ]
+      },
+      "provider": {
+       "module": "src/workbench/providers/reactivefiber.ts",
+       "leading": [
+        "/** ReactiveFiberCLI context render via installed CLI JSON contract (no TS SDK published). */"
+       ]
+      },
+      "controls": {
+       "live": "page bound html-free blocks=1#0028ca491f29 raw found=1 20-36#acebd8a2ab37 links=0 rows=1; readme bound html-free blocks=7#660c39fed930 raw found=1 1-19#5007d12c8406 links=0 sentences=1; leading=1#0ea338df7db5",
+       "rowInComment": "page bound html blocks=3#8bf7f6be325f raw found=1 20-36#40851bde4011 links=0 rows=0; readme bound html-free blocks=7#660c39fed930 raw found=1 1-19#5007d12c8406 links=0 sentences=1; leading=1#0ea338df7db5",
+       "headingRetired": "page unbound html-free blocks=0#4f53cda18c2b raw found=0 0-0#643d54371042 links=0 rows=0; readme bound html-free blocks=7#660c39fed930 raw found=1 1-19#5007d12c8406 links=0 sentences=1; leading=1#0ea338df7db5",
+       "commentInSection": "page bound html blocks=2#6df87b77c093 raw found=1 20-38#3448c446f1ce links=0 rows=1; readme bound html-free blocks=7#660c39fed930 raw found=1 1-19#5007d12c8406 links=0 sentences=1; leading=1#0ea338df7db5",
+       "headingTwice": "page unbound html-free blocks=0#4f53cda18c2b raw found=2 0-0#643d54371042 links=0 rows=0; readme bound html-free blocks=7#660c39fed930 raw found=1 1-19#5007d12c8406 links=0 sentences=1; leading=1#0ea338df7db5",
+       "readmeHeadingAbove": "page bound html-free blocks=1#0028ca491f29 raw found=1 20-36#acebd8a2ab37 links=0 rows=1; readme bound html-free blocks=3#828390a6cd21 raw found=1 1-11#b141766b0ddb links=0 sentences=0; leading=1#0ea338df7db5",
+       "readmeInComment": "page bound html-free blocks=1#0028ca491f29 raw found=1 20-36#acebd8a2ab37 links=0 rows=1; readme bound html blocks=7#663eae6ce844 raw found=1 1-21#720061cd18cc links=0 sentences=0; leading=1#0ea338df7db5",
+       "readmeCommentInSection": "page bound html-free blocks=1#0028ca491f29 raw found=1 20-36#acebd8a2ab37 links=0 rows=1; readme bound html blocks=8#40a8d5fed781 raw found=1 1-21#aa933b854da3 links=0 sentences=1; leading=1#0ea338df7db5",
+       "pageParagraphLead": "page bound html-free blocks=2#ba17fc71c9b9 raw found=1 20-38#4082b08f98bc links=0 rows=1; readme bound html-free blocks=7#660c39fed930 raw found=1 1-19#5007d12c8406 links=0 sentences=1; leading=1#0ea338df7db5",
+       "readmeParagraphLead": "page bound html-free blocks=1#0028ca491f29 raw found=1 20-36#acebd8a2ab37 links=0 rows=1; readme bound html-free blocks=8#9af20e37310d raw found=1 1-21#da4259300af9 links=0 sentences=1; leading=1#0ea338df7db5",
+       "readmeSentenceAppended": "page bound html-free blocks=1#0028ca491f29 raw found=1 20-36#acebd8a2ab37 links=0 rows=1; readme bound html-free blocks=7#037af6ffabba raw found=1 1-20#00ac89c34bb3 links=0 sentences=2; leading=1#0ea338df7db5",
+       "providerRetracted": "page bound html-free blocks=1#0028ca491f29 raw found=1 20-36#acebd8a2ab37 links=0 rows=1; readme bound html-free blocks=7#660c39fed930 raw found=1 1-19#5007d12c8406 links=0 sentences=1; leading=2#513e8d1791e2",
+       "headingStruck": "page bound html-free blocks=1#0028ca491f29 raw found=0 0-0#643d54371042 links=0 rows=1; readme bound html-free blocks=7#660c39fed930 raw found=1 1-19#5007d12c8406 links=0 sentences=1; leading=1#0ea338df7db5",
+       "headingTagged": "page bound html-free blocks=1#0028ca491f29 raw found=0 0-0#643d54371042 links=0 rows=1; readme bound html-free blocks=7#660c39fed930 raw found=1 1-19#5007d12c8406 links=0 sentences=1; leading=1#0ea338df7db5",
+       "pageTitleStruck": "page bound html-free blocks=1#0028ca491f29 raw found=1 20-36#dfb59a76172d links=0 rows=1; readme bound html-free blocks=7#660c39fed930 raw found=1 1-19#5007d12c8406 links=0 sentences=1; leading=1#0ea338df7db5",
+       "headerRowStruck": "page bound html-free blocks=1#0028ca491f29 raw found=1 20-36#dab18d7344ca links=0 rows=1; readme bound html-free blocks=7#660c39fed930 raw found=1 1-19#5007d12c8406 links=0 sentences=1; leading=1#0ea338df7db5",
+       "cellsResplit": "page bound html-free blocks=1#0028ca491f29 raw found=1 20-36#4a1e4bff2cd0 links=0 rows=1; readme bound html-free blocks=7#660c39fed930 raw found=1 1-19#5007d12c8406 links=0 sentences=1; leading=1#0ea338df7db5",
+       "linkDefinition": "page bound html-free blocks=1#0028ca491f29 raw found=1 20-36#acebd8a2ab37 links=1 rows=1; readme bound html-free blocks=7#660c39fed930 raw found=1 1-19#5007d12c8406 links=0 sentences=1; leading=1#0ea338df7db5",
+       "readmeTitleStruck": "page bound html-free blocks=1#0028ca491f29 raw found=1 20-36#acebd8a2ab37 links=0 rows=1; readme bound html-free blocks=7#660c39fed930 raw found=0 0-0#643d54371042 links=0 sentences=1; leading=1#0ea338df7db5",
+       "readmeTitleTagged": "page bound html-free blocks=1#0028ca491f29 raw found=1 20-36#acebd8a2ab37 links=0 rows=1; readme bound html-free blocks=7#660c39fed930 raw found=0 0-0#643d54371042 links=0 sentences=1; leading=1#0ea338df7db5",
+       "readmeRowStruck": "page bound html-free blocks=1#0028ca491f29 raw found=1 20-36#acebd8a2ab37 links=0 rows=1; readme bound html-free blocks=7#660c39fed930 raw found=1 1-19#1f57b799758e links=0 sentences=1; leading=1#0ea338df7db5"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "label": "no Pi claim of an embedded Fiber core",
+   "pins": [
+    {
+     "id": "D1",
+     "witness": {
+      "surface": "product texts",
+      "roots": [
+       "docs",
+       "src",
+       "qa",
+       "examples",
+       "vendor",
+       ".agents",
+       ".pi",
+       ".github",
+       ".codex",
+       "(root files)"
+      ],
+      "filesAboveFloor": true,
+      "sentencesAboveFloor": true,
+      "renderedUnitsAboveFloor": true,
+      "rootsRead": {
+       "docs": true,
+       "src": true,
+       "qa": true,
+       "examples": true,
+       "vendor": true,
+       ".agents": true,
+       ".pi": true,
+       ".github": true,
+       ".codex": true,
+       "(root files)": true
+      },
+      "symlinks": [],
+      "walkedNotTracked": [],
+      "trackedNotWalked": [],
+      "unreadable": [],
+      "otherExtensions": [
+       ".tgz"
+      ],
+      "claims": [],
+      "controls": {
+       "coreName": [
+        "docs/core.md:1: fibercore",
+        "docs/core.md:1: rendered fibercore"
+       ],
+       "capabilitySet": [
+        "docs/set.md:1: hostcapabilityset",
+        "docs/set.md:1: rendered hostcapabilityset"
+       ],
+       "webAssembly": [
+        "docs/wasm.md:1: webassembly",
+        "docs/wasm.md:1: rendered webassembly"
+       ],
+       "foaSdk": [
+        "docs/foa.md:1: foasdk",
+        "docs/foa.md:1: rendered foasdk"
+       ],
+       "embedsStem": [
+        "docs/stem.md:1: embed+core",
+        "docs/stem.md:1: rendered embed+core"
+       ],
+       "embedsWasm": [
+        "docs/token.md:1: embed+core",
+        "docs/token.md:1: rendered embed+core"
+       ],
+       "wrapped": [
+        "docs/wrapped.md:1: fibercore",
+        "docs/wrapped.md:1: rendered fibercore"
+       ],
+       "fullwidth": [
+        "docs/fullwidth.md:1: webassembly",
+        "docs/fullwidth.md:1: rendered webassembly"
+       ],
+       "srcComment": [
+        "src/comment.ts:1: fibercore,embed+core"
+       ],
+       "setComment": [
+        "src/set-comment.ts:1: hostcapabilityset"
+       ],
+       "entityClaim": [
+        "docs/entity.md:1: rendered fibercore,embed+core"
+       ],
+       "inlineTagClaim": [
+        "docs/tag.md:1: rendered fibercore"
+       ],
+       "numericClaim": [
+        "README.md:1: rendered webassembly"
+       ],
+       "hexClaim": [
+        "docs/hex.md:1: rendered hostcapabilityset"
+       ],
+       "htmlBlockClaim": [
+        "docs/block.md:1: rendered fibercore"
+       ],
+       "unknownReference": [
+        "docs/unknown.md:1: rendered unknown &bogus;"
+       ],
+       "pipeParagraph": [
+        "docs/pipes.md:1: rendered embed+core"
+       ],
+       "tableCellEntity": [
+        "docs/cell.md:4: rendered fibercore"
+       ],
+       "listItemEntity": [
+        "docs/item.md:4: rendered fibercore"
+       ],
+       "quoteEntity": [
+        "docs/quote.md:3: rendered fibercore"
+       ],
+       "headingEntity": [
+        "docs/heading.md:3: rendered fibercore"
+       ],
+       "jsonClaim": [
+        "docs/claim.json:.description: fibercore,embed+core"
+       ],
+       "jsonPairClaim": [
+        "docs/pair.json:.embedded: embed+core"
+       ],
+       "yamlClaim": [
+        ".github/claim.yml:1: foasdk"
+       ],
+       "nearMissEmbed": [],
+       "nearMissStem": [],
+       "nearMissWasm": [],
+       "nearMissSentences": [],
+       "nearMissRows": [],
+       "nearMissItems": [],
+       "nearMissCodeSpan": [],
+       "nearMissLock": [],
+       "yamlCommentRun": [
+        ".github/run.yml:2: embed+core"
+       ],
+       "jsonShadowed": [
+        "docs/shadow.json:.note: fibercore,embed+core"
+       ],
+       "jsonNestedShadowed": [
+        "docs/nested-shadow.json:.a.note: fibercore,embed+core"
+       ],
+       "scriptString": [
+        "qa/claim.mjs:1: fibercore,embed+core"
+       ],
+       "scriptName": [
+        "qa/name.mjs:1: fibercore,embed+core"
+       ],
+       "scriptTemplate": [
+        "qa/template.mjs:2: fibercore,embed+core"
+       ],
+       "scriptCommentRun": [
+        "qa/run.mjs:1: embed+core"
+       ],
+       "scriptPair": [
+        "qa/pair.mjs:1: embed+core"
+       ],
+       "jsxText": [
+        "examples/view.tsx:1: fibercore"
+       ],
+       "fenceJsonShadowed": [
+        "docs/fence-json.md:2: fibercore,embed+core"
+       ],
+       "fenceProseWrapped": [
+        "docs/fence-prose.md:1: embed+core"
+       ],
+       "fenceObjectProse": [
+        "docs/fence-object.md:1: embed+core"
+       ],
+       "indentedObjectProse": [
+        "docs/indented-object.md:3: embed+core"
+       ],
+       "preObjectProse": [
+        "docs/pre-object.md:1: embed+core",
+        "docs/pre-object.md:1: rendered embed+core"
+       ],
+       "shellCommentRun": [
+        "qa/run.sh:1: embed+core"
+       ],
+       "shellEcho": [
+        "qa/echo.sh:1: embed+core"
+       ],
+       "shellQuotedPipe": [
+        "qa/quoted.sh:1: embed+core"
+       ],
+       "yamlFlowQuoted": [
+        ".github/flow-quoted.yml:1: embed+core"
+       ],
+       "fenceUnclosed": [
+        "docs/fence-open.md:1: embed+core"
+       ],
+       "yamlFlowLine": [
+        ".github/flow-line.yml:1: embed+core"
+       ],
+       "imgAltEntity": [
+        "docs/attr.md:3: rendered fibercore,embed+core"
+       ],
+       "inlineTitle": [
+        "docs/title.md:1: rendered fibercore"
+       ],
+       "linkDestination": [
+        "docs/link.md:1: rendered fibercore"
+       ],
+       "htmlHref": [
+        "docs/href.md:1: rendered fibercore"
+       ],
+       "linkTitle": [
+        "docs/link-title.md:1: rendered fibercore"
+       ],
+       "imageTitle": [
+        "docs/image-title.md:1: rendered fibercore"
+       ],
+       "nearMissLabels": [],
+       "nearMissLabelsOneLine": [],
+       "nearMissFenceObject": [],
+       "nearMissShellCommands": [],
+       "nearMissShellAssignments": [],
+       "nearMissYamlLines": [],
+       "nearMissDotfile": [],
+       "nearMissYamlFlow": [],
+       "nearMissTomlInline": [],
+       "nearMissTrailingComments": [],
+       "shellTrailingComment": [
+        "qa/trailing-comment.sh:1: embed+core"
+       ],
+       "htmlImageAlt": [
+        "docs/image-alt.md:1: rendered fibercore,embed+core"
+       ],
+       "inlineImageAlt": [
+        "docs/inline-image-alt.md:1: rendered fibercore,embed+core"
+       ],
+       "markdownImageShown": [
+        "docs/image-shown.md:1: rendered fibercore,embed+core"
+       ],
+       "imagePair": [
+        "docs/image-pair.md:1: rendered fibercore,embed+core"
+       ],
+       "imagesOverLimit": [
+        "docs/images.md:1: rendered unknown images 9"
+       ],
+       "bidiControl": [
+        "docs/bidi.md:1: rendered unknown U+202E"
+       ],
+       "bidiReference": [
+        "docs/bidi-reference.md:1: rendered unknown U+202E"
+       ],
+       "imageTwinDeduped": [
+        "docs/image-twin.md:1: fibercore,embed+core",
+        "docs/image-twin.md:1: rendered fibercore,embed+core"
+       ],
+       "blockTitle": [
+        "docs/block-title.md:1: rendered fibercore"
+       ],
+       "nestedInline": [
+        "docs/nested-inline.md:1: rendered fibercore,embed+core"
+       ]
+      },
+      "htmlForms": {
+       "tag": {
+        "block": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "tagAttributes": {
+        "block": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "quotedGreater": {
+        "block": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "singleQuotedGreater": {
+        "block": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "tagWhitespace": {
+        "block": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "selfClosing": {
+        "block": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "comment": {
+        "block": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "emptyComment": {
+        "block": [
+         "docs/html-form.md:1: fibercore,embed+core",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: fibercore,embed+core",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "namespacedName": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <o:p>",
+         "docs/html-form.md:1: rendered unknown </o:p>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown </o:p>"
+        ]
+       },
+       "underscoreName": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <x_y>",
+         "docs/html-form.md:1: rendered unknown </x_y>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <x_y>",
+         "docs/html-form.md:1: rendered unknown </x_y>",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "dotName": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <x.y>",
+         "docs/html-form.md:1: rendered unknown </x.y>"
+        ],
+        "inline": []
+       },
+       "solidusAttribute": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <x/y>"
+        ],
+        "inline": []
+       },
+       "unseparatedAttributes": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <span title=\"a\"lang=\"b\">"
+        ],
+        "inline": []
+       },
+       "noBreakSpace": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <span title=\"a>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <span title=\"a>",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "verticalTab": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <span title=\"a>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <span title=\"a>",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "processingInstruction": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <?x?>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <?x?>",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "markupDeclaration": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <!x>"
+        ],
+        "inline": []
+       },
+       "doctype": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <!DOCTYPE x>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <!DOCTYPE x>",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "cdata": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <![CDATA[x]]>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <![CDATA[x]]>",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "bogusEndTag": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown </ x>"
+        ],
+        "inline": []
+       },
+       "emptyEndTag": {
+        "block": [
+         "docs/html-form.md:1: fibercore,embed+core",
+         "docs/html-form.md:1: rendered unknown </>",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: fibercore,embed+core",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "endTagAttribute": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown </span title=\"a>"
+        ],
+        "inline": []
+       },
+       "openedEmptyComment": {
+        "block": [
+         "docs/html-form.md:1: fibercore,embed+core",
+         "docs/html-form.md:1: rendered unknown <!-->",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: fibercore,embed+core",
+         "docs/html-form.md:1: rendered unknown <!-->",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "openedDashComment": {
+        "block": [
+         "docs/html-form.md:1: fibercore,embed+core",
+         "docs/html-form.md:1: rendered unknown <!--->",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: fibercore,embed+core",
+         "docs/html-form.md:1: rendered unknown <!--->",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "bangComment": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <!-- x --!>",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <!-- x --!>",
+         "docs/html-form.md:1: rendered fibercore,embed+core"
+        ]
+       },
+       "unterminatedComment": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <!-- xer core.</div>"
+        ],
+        "inline": []
+       },
+       "unterminatedTag": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <span title=\"aer core.</div>"
+        ],
+        "inline": []
+       },
+       "refusedElement": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <template>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <template>"
+        ]
+       },
+       "refusedAttribute": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <span hidden>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <span hidden>"
+        ]
+       },
+       "upperElement": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <TEMPLATE>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <TEMPLATE>"
+        ]
+       },
+       "upperAttribute": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <span HIDDEN>"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <span HIDDEN>"
+        ]
+       }
+      },
+      "refusedElements": {
+       "applet": [
+        "docs/html-form.md:1: rendered unknown <applet>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "audio": [
+        "docs/html-form.md:1: rendered unknown <audio>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "bdo": [
+        "docs/html-form.md:1: rendered unknown <bdo>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "body": [
+        "docs/html-form.md:1: rendered unknown <body>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "canvas": [
+        "docs/html-form.md:1: rendered unknown <canvas>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "datalist": [
+        "docs/html-form.md:1: rendered unknown <datalist>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "details": [
+        "docs/html-form.md:1: rendered unknown <details>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "dialog": [
+        "docs/html-form.md:1: rendered unknown <dialog>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "fencedframe": [
+        "docs/html-form.md:1: rendered unknown <fencedframe>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "frameset": [
+        "docs/html-form.md:1: rendered unknown <frameset>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "iframe": [
+        "docs/html-form.md:1: rendered unknown <iframe>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "input": [
+        "docs/html-form.md:1: rendered unknown <input>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "link": [
+        "docs/html-form.md:1: rendered unknown <link>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "math": [
+        "docs/html-form.md:1: rendered unknown <math>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "meter": [
+        "docs/html-form.md:1: rendered unknown <meter>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "noembed": [
+        "docs/html-form.md:1: rendered unknown <noembed>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "noframes": [
+        "docs/html-form.md:1: rendered unknown <noframes>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "noscript": [
+        "docs/html-form.md:1: rendered unknown <noscript>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "object": [
+        "docs/html-form.md:1: rendered unknown <object>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "optgroup": [
+        "docs/html-form.md:1: rendered unknown <optgroup>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "option": [
+        "docs/html-form.md:1: rendered unknown <option>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "plaintext": [
+        "docs/html-form.md:1: rendered unknown <plaintext>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "progress": [
+        "docs/html-form.md:1: rendered unknown <progress>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "rp": [
+        "docs/html-form.md:1: rendered unknown <rp>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "rt": [
+        "docs/html-form.md:1: rendered unknown <rt>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "rtc": [
+        "docs/html-form.md:1: rendered unknown <rtc>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "script": [
+        "docs/html-form.md:1: rendered unknown <script>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "select": [
+        "docs/html-form.md:1: rendered unknown <select>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "style": [
+        "docs/html-form.md:1: rendered unknown <style>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "svg": [
+        "docs/html-form.md:1: rendered unknown <svg>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "table": [
+        "docs/html-form.md:1: rendered unknown <table>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "template": [
+        "docs/html-form.md:1: rendered unknown <template>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "textarea": [
+        "docs/html-form.md:1: rendered unknown <textarea>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "title": [
+        "docs/html-form.md:1: rendered unknown <title>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "video": [
+        "docs/html-form.md:1: rendered unknown <video>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "xmp": [
+        "docs/html-form.md:1: rendered unknown <xmp>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ]
+      },
+      "refusedAttributes": {
+       "color": [
+        "docs/html-form.md:1: rendered unknown <span color=\"x\">",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "dir": [
+        "docs/html-form.md:1: rendered unknown <span dir=\"x\">",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "hidden": [
+        "docs/html-form.md:1: rendered unknown <span hidden=\"x\">",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "popover": [
+        "docs/html-form.md:1: rendered unknown <span popover=\"x\">",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "style": [
+        "docs/html-form.md:1: rendered unknown <span style=\"x\">",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ]
+      },
+      "rawStateForms": {
+       "codeNamespaced": [
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+       ],
+       "kbdDeclaration": [
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib<!x>er core\""
+       ],
+       "preEndSpace": [
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib</ x>er core\""
+       ],
+       "headingDotName": [
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib<x.y>er core\""
+       ],
+       "carriedState": [
+        "docs/raw-state.md:1: rendered unknown raw-state text \"x\"",
+        "docs/raw-state.md:3: rendered unknown raw-state text \"Pi embeds the Fib<o:p>er core.\""
+       ],
+       "cellDeclaration": [
+        "docs/raw-state.md:3: rendered unknown raw-state text \"Fib<!x>er core\""
+       ],
+       "itemEndSpace": [
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib</ x>er core\""
+       ],
+       "codeReference": [
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fi&#98er core\""
+       ],
+       "scriptState": [
+        "docs/raw-state.md:1: rendered unknown <script>",
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+       ],
+       "upperAttributes": [
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+       ],
+       "markupFree": [
+        "docs/raw-state.md:1: fibercore,embed+core",
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fiber core\"",
+        "docs/raw-state.md:1: rendered fibercore,embed+core"
+       ],
+       "closedState": [
+        "docs/raw-state.md:1: rendered unknown raw-state text \"x\""
+       ]
+      },
+      "inputForms": {
+       "buttonValue": [
+        "docs/input-form.md:1: rendered unknown <input type=\"button\" value=\"Fiber\" title..."
+       ],
+       "textValue": [
+        "docs/input-form.md:1: rendered unknown <input value=\"Fiber\" size=\"6\">"
+       ],
+       "placeholder": [
+        "docs/input-form.md:1: rendered unknown <input placeholder=\"Fiber\" size=\"6\">"
+       ],
+       "upperInput": [
+        "docs/input-form.md:1: rendered unknown <INPUT VALUE=\"Fiber\" SIZE=\"6\">"
+       ],
+       "optionLabel": [
+        "docs/input-form.md:1: rendered unknown <option label=\"Fiber\" title=\"x\">"
+       ],
+       "groupLabel": [
+        "docs/input-form.md:1: rendered unknown <optgroup label=\"Fiber\" title=\"x\">"
+       ]
+      },
+      "invisibleForms": {
+       "zeroWidthSpace": [
+        "docs/invisible.md:1: rendered unknown invisible U+200B"
+       ],
+       "softHyphen": [
+        "docs/invisible.md:1: rendered unknown invisible U+00AD"
+       ],
+       "variationSelector": [
+        "docs/invisible.md:1: rendered unknown invisible U+FE0F"
+       ],
+       "zeroWidthReference": [
+        "docs/invisible.md:1: rendered unknown invisible U+200B"
+       ],
+       "wordJoinerReference": [
+        "docs/invisible.md:1: rendered unknown invisible U+2060"
+       ],
+       "doubleSplit": [
+        "docs/invisible.md:1: rendered unknown invisible U+200B",
+        "docs/invisible.md:1: rendered unknown invisible U+2060"
+       ],
+       "fullwidthNeighbor": [
+        "docs/invisible.md:1: rendered unknown invisible U+200B"
+       ],
+       "bidiSplit": [
+        "docs/invisible.md:1: rendered unknown U+202E",
+        "docs/invisible.md:1: rendered unknown invisible U+202E"
+       ],
+       "imageAltSplit": [
+        "docs/invisible.md:1: rendered unknown invisible U+200B",
+        "docs/invisible.md:1: rendered unknown invisible U+200B"
+       ]
+      },
+      "plantedTree": {
+       "roots": {
+        "docs": true,
+        "src": true,
+        "qa": true,
+        "examples": true,
+        "vendor": true,
+        ".agents": true,
+        ".pi": true,
+        ".github": true,
+        ".codex": true,
+        "(root files)": true
+       },
+       "claims": [
+        "docs/nested/claim.md:1: hostcapabilityset",
+        "docs/nested/claim.md:1: rendered hostcapabilityset",
+        "src/nested/claim.md:1: hostcapabilityset",
+        "src/nested/claim.md:1: rendered hostcapabilityset",
+        "qa/nested/claim.md:1: hostcapabilityset",
+        "qa/nested/claim.md:1: rendered hostcapabilityset",
+        "examples/nested/claim.md:1: hostcapabilityset",
+        "examples/nested/claim.md:1: rendered hostcapabilityset",
+        "vendor/nested/claim.md:1: hostcapabilityset",
+        "vendor/nested/claim.md:1: rendered hostcapabilityset",
+        ".agents/nested/claim.md:1: hostcapabilityset",
+        ".agents/nested/claim.md:1: rendered hostcapabilityset",
+        ".pi/nested/claim.md:1: hostcapabilityset",
+        ".pi/nested/claim.md:1: rendered hostcapabilityset",
+        ".github/nested/claim.md:1: hostcapabilityset",
+        ".github/nested/claim.md:1: rendered hostcapabilityset",
+        ".codex/nested/claim.md:1: hostcapabilityset",
+        ".codex/nested/claim.md:1: rendered hostcapabilityset",
+        "README.md:1: fibercore,embed+core",
+        "README.md:1: rendered fibercore,embed+core"
+       ]
+      }
+     }
+    },
+    {
+     "id": "D2",
+     "witness": {
+      "surface": "registered capabilities",
+      "native": {
+       "missing": [],
+       "claims": []
+      },
+      "injected": {
+       "missing": [],
+       "claims": []
+      },
+      "controls": {
+       "coreHost": [
+        "fiber.core.host.description: fibercore",
+        "fiber.core.host.id: fibercore"
+       ],
+       "capabilitySchema": [
+        "workbench.core.init.inputSchema.properties.capabilities.description: hostcapabilityset"
+       ],
+       "embedsDescription": [
+        "workbench.render.embedded.description: embed+core"
+       ],
+       "wasmContract": [
+        "workbench.wasm.render.contractSource: webassembly"
+       ],
+       "neutral": []
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the residuals: each named family pinned by its quiet row",
+   "pins": [
+    {
+     "id": "Q1",
+     "witness": {
+      "residual": "R-COMPOSED",
+      "abi": [],
+      "set": {
+       "named": [],
+       "shaped": []
+      },
+      "sdk": {
+       "loads": [],
+       "spelled": []
+      },
+      "census": {
+       "rfTexts": [],
+       "sdkTexts": [],
+       "launches": []
+      }
+     }
+    },
+    {
+     "id": "Q2",
+     "witness": {
+      "residual": "R-GENERIC-ABI",
+      "entries": [
+       "initialize",
+       "inspect",
+       "subscribe",
+       "snapshot",
+       "close"
+      ],
+      "abi": []
+     }
+    },
+    {
+     "id": "Q3",
+     "witness": {
+      "residual": "R-OUTSIDE-SCOPE",
+      "walked": [
+       "docs/clean.md"
+      ],
+      "claims": [],
+      "outside": [
+       {
+        "path": "test/claim.test.ts",
+        "claims": 1
+       },
+       {
+        "path": "new-feedback/claim.md",
+        "claims": 2
+       },
+       {
+        "path": ".beads/claim.md",
+        "claims": 2
+       },
+       {
+        "path": "media/claim.md",
+        "claims": 2
+       }
+      ]
+     }
+    },
+    {
+     "id": "Q4",
+     "witness": {
+      "residual": "R-INJECTED-RELAY",
+      "returned": {
+       "schema": "absent",
+       "command": "absent",
+       "keys": [
+        "changed_materializations",
+        "dependency_frontier",
+        "diagnostics",
+        "epoch",
+        "source_runtime",
+        "trace_ref",
+        "transaction_ref"
+       ]
+      }
+     }
+    },
+    {
+     "id": "Q5",
+     "witness": {
+      "residual": "R-DECISION-ELSEWHERE",
+      "read": [],
+      "elsewhere": [
+       {
+        "id": "wb-zz9",
+        "decisions": 2
+       }
+      ]
+     }
+    },
+    {
+     "id": "Q6",
+     "witness": {
+      "residual": "R-OTHER-VOCABULARY",
+      "abi": [],
+      "set": {
+       "named": [],
+       "shaped": []
+      },
+      "sdk": {
+       "loads": [],
+       "spelled": []
+      },
+      "manifest": [],
+      "claims": [],
+      "confusable": [],
+      "confusableLatin": 2,
+      "descriptor": [],
+      "invisible": [],
+      "invisibleShown": 1,
+      "invisibleDescriptor": [],
+      "invisibleDescriptorShown": 1
+     }
+    },
+    {
+     "id": "Q7",
+     "witness": {
+      "residual": "R-OUTSIDE-TEXT",
+      "census": {
+       "rfTexts": [],
+       "sdkTexts": [],
+       "launches": []
+      },
+      "loads": []
+     }
+    },
+    {
+     "id": "Q8",
+     "witness": {
+      "residual": "R-PINNED-REUSE",
+      "importer": {
+       "rfTexts": [],
+       "sdkTexts": [],
+       "launches": []
+      },
+      "reusesAdded": 1,
+      "quiet": true
+     }
+    },
+    {
+     "id": "Q9",
+     "witness": {
+      "residual": "R-SPLIT-CODE",
+      "read": [],
+      "asProse": 2
+     }
+    },
+    {
+     "id": "Q10",
+     "witness": {
+      "residual": "R-OTHER-SHAPE",
+      "shaped": [],
+      "membersSpelled": [
+       "clock",
+       "timer",
+       "randomness",
+       "spawner"
+      ]
+     }
+    },
+    {
+     "id": "Q11",
+     "witness": {
+      "residual": "R-RETRACTED-ELSEWHERE",
+      "planted": {
+       "page": true,
+       "readme": true,
+       "provider": true
+      },
+      "quiet": true
+     }
+    },
+    {
+     "id": "Q12",
+     "witness": {
+      "residual": "R-ENCODED-SOURCE",
+      "read": {
+       "sourceComment": [],
+       "yamlComment": [],
+       "jsonValue": []
+      },
+      "asMarkdown": {
+       "sourceComment": 1,
+       "yamlComment": 1,
+       "jsonValue": 1
+      }
+     }
+    },
+    {
+     "id": "Q13",
+     "witness": {
+      "residual": "R-WRAPPED-STRUCTURED",
+      "read": {
+       "yamlWrapped": [],
+       "jsonNested": [],
+       "shellContinued": []
+      },
+      "asProse": {
+       "yamlWrapped": 1,
+       "jsonNested": 1,
+       "shellContinued": 1
+      },
+      "splitMembers": [],
+      "splitMembersJoined": 1,
+      "splitKeyValue": [],
+      "splitKeyValueJoined": 1
+     }
+    },
+    {
+     "id": "Q14",
+     "witness": {
+      "residual": "R-QUOTED-WORD",
+      "tokens": [
+       [
+        "r",
+        "f",
+        "context",
+        "show"
+       ],
+       [
+        "r",
+        "f",
+        "context",
+        "show"
+       ],
+       [
+        "r",
+        "f",
+        "context",
+        "show"
+       ],
+       [
+        "r",
+        "f",
+        "context",
+        "show"
+       ]
+      ],
+      "census": {
+       "rfTexts": [],
+       "sdkTexts": [],
+       "launches": []
+      },
+      "unquoted": {
+       "rfTexts": [
+        "quoted-word.ts | StringLiteral < CallExpression execSync #0 | \"rf context show\"",
+        "quoted-word.ts | StringLiteral < CallExpression execSync #0 | \"rf context show\"",
+        "quoted-word.ts | StringLiteral < CallExpression execSync #0 | \"rf context show\"",
+        "quoted-word.ts | StringLiteral < ArrayLiteralExpression < CallExpression spawn #1 | \"rf context show\""
+       ],
+       "sdkTexts": [],
+       "launches": [
+        "quoted-word.ts: execSync",
+        "quoted-word.ts: execSync",
+        "quoted-word.ts: execSync",
+        "quoted-word.ts: spawn"
+       ]
+      }
+     }
+    },
+    {
+     "id": "Q15",
+     "witness": {
+      "residual": "R-HTML-REFERENCE",
+      "read": {
+       "attr": [],
+       "block": [],
+       "padded": [],
+       "legacy": []
+      },
+      "page": {
+       "decisions": [],
+       "claims": []
+      },
+      "member": [],
+      "terminated": {
+       "attr": 1,
+       "block": 1,
+       "padded": 1,
+       "legacy": 1,
+       "pageDecisions": 1,
+       "pageClaims": 1,
+       "member": 1
+      }
+     }
+    },
+    {
+     "id": "Q16",
+     "witness": {
+      "residual": "R-LEXED-GRAIN",
+      "planted": [
+       {
+        "line": 34,
+        "planted": true,
+        "quiet": true
+       },
+       {
+        "line": 35,
+        "planted": true,
+        "quiet": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "Q17",
+     "witness": {
+      "residual": "R-EXPANDED-WORD",
+      "tokens": [
+       [
+        "x72",
+        "f",
+        "context",
+        "show"
+       ],
+       [
+        "r",
+        "r",
+        "r",
+        "f",
+        "context",
+        "show"
+       ]
+      ],
+      "census": {
+       "rfTexts": [],
+       "sdkTexts": [],
+       "launches": []
+      },
+      "expanded": {
+       "rfTexts": [
+        "expanded-word.ts | StringLiteral < CallExpression execSync #0 | \"rf context show\"",
+        "expanded-word.ts | StringLiteral < CallExpression execSync #0 | \"R=r; rf context show\""
+       ],
+       "sdkTexts": [],
+       "launches": [
+        "expanded-word.ts: execSync",
+        "expanded-word.ts: execSync"
+       ]
+      }
+     }
+    },
+    {
+     "id": "Q18",
+     "witness": {
+      "residual": "R-READER-RENDERING",
+      "read": {
+       "styledClass": [],
+       "styledId": [],
+       "styledElement": [],
+       "picture": []
+      },
+      "shown": {
+       "styledClass": 2,
+       "styledId": 2,
+       "styledElement": 2,
+       "picture": 2
+      }
+     }
+    }
+   ]
+  }
+ ]
+}
