@@ -1,5 +1,5 @@
 {
-  "comment": "wb-021.5 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R7; the hk9l/5jha/1xvp.4/o4h0.3 roster pattern): the OUT-OF-FILE anchor of test/workbench-apo-rerender-census.test.ts (cut #8). rows: every judged row of test/helpers/apo-rerender-census.ts in census order (SURFACES, ADMISSION, INVOCATION, EFFECT, IDENTITY, QUIET, READERS, ABSENCE, REACH, NAMES) - table, id, label, the SHA-256 of each case as written (JSON of the case: its input and its expected reading) and the registered test. nonRender: the named non-render readers, each with its measured member references (value, type), its reason and, where the forms judge refuses a use in it, those refused uses site by site, and where a typed reader in it keeps an admission member, those writers. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its non-render readers, its registered tests (vitest task tree, run modes and timeouts) and its residual families against this file at test time, in order and both ways. It is a literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. The outside anchors are src (the modules that reach the projection, the non-render readers' member references, refused uses, typed writers and runtime closure, the render modules' references and forms, the forms src's nodes stand in, the class's own declaration's element kinds, the projection's public members, the registry's effect classes and the dialog's actions), the pinned typescript's declaration file (the ClassElement kinds and their SyntaxKinds) and the bead's own export row (.beads/issues.jsonl, wb-021.5: the title and the owner filing, each pinned byte for byte, and the judged statement the table quotes and their pinned junctions compose), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class plant, a dialog-action plant or a class-element kind removed from the census and this file together still reds.",
+  "comment": "wb-021.5 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R7; the hk9l/5jha/1xvp.4/o4h0.3 roster pattern): the OUT-OF-FILE anchor of test/workbench-apo-rerender-census.test.ts (cut #8; wb-vgri). rows: every judged row of test/helpers/apo-rerender-census.ts in census order (SURFACES, ADMISSION, INVOCATION, EFFECT, IDENTITY, QUIET, READERS, ABSENCE, REACH, NAMES) - table, id, label, the SHA-256 of each case as written (JSON of the case: its input and its expected reading) and the registered test. nonRender: the named non-render readers, each with its measured member references (value, type), its reason and, where the forms judge refuses a use in it, those refused uses site by site, and where a typed reader in it keeps an admission member, those writers. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its non-render readers, its registered tests (vitest task tree, run modes and timeouts) and its residual families against this file at test time, in order and both ways. It is a literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. The outside anchors are src (the modules that reach the projection, the non-render readers' member references, refused uses, typed writers and runtime closure, the render modules' references and forms, the forms src's nodes stand in, the class's own declaration's element kinds, the projection's public members, the registry's effect classes and the dialog's actions), the pinned typescript's declaration file (the ClassElement kinds and their SyntaxKinds) and the bead's own export row (.beads/issues.jsonl, wb-021.5: the title and the owner filing, each pinned byte for byte, and the judged statement the table quotes and their pinned junctions compose; and, in its notes, the cut #8 delivery record's one enumeration of FAIL_CLOSED, each kind with the row that plants it: wb-vgri), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class plant, a dialog-action plant, a class-element kind or a fail-closed kind removed from the census and this file together still reds.",
   "rows": [
     {
       "table": "SURFACES",
@@ -628,7 +628,7 @@
     {
       "table": "REACH",
       "id": "DISPATCH",
-      "label": "a call through a src signature with no body of its own - an interface method or a function type (a value and a holder) - is refused, and a member declared to stand in for a base or interface member is read in exactly the roster the stand-in readings implement (cut #8, ruling R-B67): a class element the class declares itself, by its kind's STAND_IN reading against its own class's heritage clauses (an override, an implementation), and an object literal's own method or setter under the contextual type of the flow it is written at - one whose own parameter hides a path that member hands it is refused at its declaration, while an override and a literal method that keep the projection read quiet; a call through a class's own method is judged by that method's declaration alone; a stand-in outside that roster which the readings meet at a flow, a class or a literal is no dispatch reading and fails closed with the typed row the FAIL_CLOSED roster names - a constructor parameter property (parameter-property), a field, a getter or a callback typed by an overload set's visible signatures (overload), a class instance or a class's static side flowing into a type its own class does not declare (structural-stand-in), a member the implementing class inherits (inherited-implementation), an object literal not written where it flows (context-less-literal), a spread (spread), what a callback or a stand-in hands back (callback-return, stand-in-return), an async function's or a generator's written-type return (async-return, generator-yield) and a value of any other type (unlisted-stand-in) - except the named residuals' quiet pages (a class instance held inside another value, R-STRUCTURAL-STAND-IN; a branch a conditional or a ?? narrows, R-NARROWED-BRANCH), and any other stand-in shape is outside this claim",
+      "label": "a call through a src signature with no body of its own - an interface method or a function type (a value and a holder) - is refused, and a member declared to stand in for a base or interface member is read in exactly the roster the stand-in readings implement (cut #8, ruling R-B67): a class element the class declares itself, by its kind's STAND_IN reading against its own class's heritage clauses (an override, an implementation), and an object literal's own method or setter under the contextual type of the flow it is written at - one whose own parameter hides a path that member hands it is refused at its declaration, while an override and a literal method that keep the projection read quiet; a call through a class's own method is judged by that method's declaration alone; a stand-in outside that roster which the readings meet at a flow, a class or a literal is no dispatch reading and fails closed with the typed row the FAIL_CLOSED roster names - a constructor parameter property (parameter-property), a field, a getter or a callback typed by an overload set's visible signatures (overload), a class instance or a class's static side flowing into a type its own class does not declare (structural-stand-in), a member the implementing class inherits (inherited-implementation), an object literal not written where it flows (context-less-literal), a spread (spread), what a callback or a stand-in hands back (callback-return, stand-in-return), an async function's or a generator's written-type return (async-return, generator-yield) and a value of any other type (unlisted-stand-in) - except the named residuals' quiet pages (a class instance held inside another value, R-STRUCTURAL-STAND-IN; an object literal or a callback held as an array's or a tuple's element or as a library generic's type argument, R-HELD-VALUE; a class instance bound as this by Function.prototype.call or apply, R-THIS-BINDING; a branch a conditional, a ?? or a || narrows, R-NARROWED-BRANCH; wb-vgri, landing 672 F5-F7), and any other stand-in shape is outside this claim",
       "pins": [
         "e6e228e2172b47ae074f1753129e664d10fbba6cfc4cd7d4175e566c20b8ebc0",
         "dc4dcaa78955b75d923a9b63ba6cf987aedc9671782f8ca10c952418fabcb688",
@@ -736,13 +736,23 @@
     {
       "table": "REACH",
       "id": "R-NARROWED-BRANCH",
-      "label": "residual: a callback or a holder that does not itself expose the projection, chosen by a conditional or a ?? operand, is judged by that expression's type, which subtype reduction narrows to the branch that keeps the projection - a conditional or a ?? choosing a callback that hides it reads quiet to the forms judge (the hiding callback's own flow is refused: CALLBACK-RECEIVERS); so does a field or a getter stand-in whose function is so chosen (cut #7): a field initialized by a conditional or a ?? and a getter whose inferred return is a conditional, choosing a function that hides the projection, read quiet",
+      "label": "residual: a callback or a holder that does not itself expose the projection, chosen by a conditional or a ?? operand, is judged by that expression's type, which subtype reduction narrows to the branch that keeps the projection - a conditional or a ?? choosing a callback that hides it reads quiet to the forms judge (the hiding callback's own flow is refused: CALLBACK-RECEIVERS); so does a field or a getter stand-in whose function is so chosen (cut #7): a field initialized by a conditional or a ?? and a getter whose inferred return is a conditional, choosing a function that hides the projection, read quiet; and so does a class instance whose class does not declare the type it flows into, chosen against a value of that type (wb-vgri, landing 672 F6): a ?? at a return, at an annotated initializer and at an argument, a conditional at a return, and a || at an assignment and at a return each read quiet where the instance's member hides the projection, a keeping instance chosen by a ?? at a return reads quiet too, and so does an object literal not written where it flows chosen by a ?? at a return; a choice with no branch of the target type makes no such narrowing - a conditional between two such instances, and a && whose right operand is the instance (its type keeps the instance's own beside the left operand's falsy part) - so the instance is read there and refused (structural-stand-in)",
       "pins": [
         "470582956f35e3d88c978c869b9a92c9e00f640a6e15a36328fff7201ba8942e",
         "24b21c0158572fd119c143e482b6913ec3491f88d08badf483b18538f3f1cc4d",
         "67815ad2221b22aedebfd9a5f1815cdf3e1651441b1ae15451f36094e4d43ccc",
         "96ae1449bbf1e288e26a61fbd0add55c24543c0b25bd04e01292ac76a620f328",
-        "ffa9228ab8b014b80f799136a3d816ae9a78d32512eb203e20f2eb666baecf79"
+        "ffa9228ab8b014b80f799136a3d816ae9a78d32512eb203e20f2eb666baecf79",
+        "5f6dadab34a3d021f8c5d35d5b4d3d5b551e4ea3ac52dc8783e57d4084481333",
+        "a4badbee5ed32ea96d9e91ad0d669442debb2c3cf60a027d1647929e5626b5d6",
+        "52d279353b67a3ede3f902532e20d7f390529086fadc8875f093d3fba152b90b",
+        "81c8bd2b6cd6d1d19fc16bd4e591cb0223bbbda9a4979d2848a05c10aacf2031",
+        "3fec3bb85cb327d8290bf6317e911c2730a1f5348ff83e8195ee15fd702b869c",
+        "19ddbe1234fa236e7c898ffb8b289dfbfea5483173e0e0bf1ad10c6c904d111c",
+        "7baef05dbd27a87acccc3405fbbb6f1dcda36971863296f5f859ae3fb826cd29",
+        "95cc28150094c6038640ba2aeb46d7fd15e4123b469a635853df27dcf660663c",
+        "8cfcaa6c5c896c3012de39d630345dd65c1f7b2aa14e194ec534d6e2c7dd46fb",
+        "c079dc8da7d23830b0471c16917cb45b176802441f904f5c0c6ba977dffecb91"
       ],
       "test": "REACH R-NARROWED-BRANCH"
     },
@@ -814,6 +824,49 @@
         "0a03e454502c6532b1e5cfef8ba118a47597d5b383a318ae519e32d51c5f7b60"
       ],
       "test": "REACH R-STRUCTURAL-STAND-IN"
+    },
+    {
+      "table": "REACH",
+      "id": "R-HELD-VALUE",
+      "label": "residual: a stand-in held inside another value is never judged at the element (wb-vgri, landing 672 F5) - the flow reading judges the flows the closed claim lists (an argument, an annotated initializer, a return under a written type, and the rest) by the holder's type there, an array's, a tuple's or a library generic's whose type argument the checker infers from the held value, never by the held element - so an object literal not written where it flows (refused where it flows itself: CONTEXT-LESS-LITERALS) and a callback that hides the projection (refused where it flows itself: CALLBACK-RECEIVERS, and the annotated initializer's twin below) read quiet held as an array's element at an annotated initializer, an argument and a return, as a tuple's element (a callback also in a tuple argument), as the argument of Array.of or Promise.resolve, as a Map's entry and as a Set's element, while an object literal's property is a flow the reading reads (the same literal held there is refused, context-less-literal) and a library generic given its type argument explicitly judges the argument against it (Promise.resolve<Sink> of the literal is refused, context-less-literal, and of the callback, argument); a class instance so held is R-STRUCTURAL-STAND-IN's held value",
+      "pins": [
+        "e71a83464b349c319b98dae5136be3560a2d7eb6e415863c0405c805f1ecbb59",
+        "f3333be87ed5a989b5a71aea72dfbb8c77838860e4197df9dade32306bd049d4",
+        "8dfa3d96ac7d107d627e4fe78bd7fad13a5a4290ba041ac4197ce35b2d8bf974",
+        "a5498c2e8e1c4b373e13bf2538c175fa0b9291139e4d27efcc0537e4c15bf0fa",
+        "07a6d6ddfee90051f7db9c30154a6503f186737b9b1b1202642cd21e3061e240",
+        "09e05b19be430adb513265a4260ac2987bc522aa41ba283786b30c4874557c10",
+        "efca9e17125573a29b3c59b7edef8fd95e116b74d2061e4a24827fbf4da50210",
+        "203333bdcf3ab4a57add0407cb17d4011cd7da8b476472f2aab92910b40b25b5",
+        "f11793686977977ca8c63309ce4cd7acdd8da2e5799c52c26fdd06e863cfaedc",
+        "c0c9bec8091e86c0b2683ea189d3b2d15a90ecd313e5b04e008bdb41e43e0b81",
+        "ef68ce7eb6b73db5404783fef321ddeb731aa81d856b92d51ead69740fdbb653",
+        "8f18fadd182625114bfef92c9853b4fc1fdcf11719aef46d837440718c4558bd",
+        "e41a123bc4249bfb65f4652074c20d091155143d20af77562fdb9ac69092b942",
+        "cc80c511dceccbf10a637d62abeb310768ea0dfd3dd3ea9debe43b97ab62c221",
+        "4b6bb2dcfad41ccae3b7e72197143791140da0096b17fe488a2cd2a88e42f437",
+        "2387a89e1f85b8566bc62a0c209a11f4db8141e7f6400056428361e806403e47",
+        "b7e6ed9cc4b4692488f7a8eae117ddc50c161b40a7a285feef700db3b1916e74",
+        "65217e78c6841d7cee9018042825f60fe8161766fa606e0f1fc558111ecc2267",
+        "25e2838e95c4709a1653d3d1a3a84439faf41678b6453325d146c953259332c1",
+        "240845907cb887a726d3dd0f7e5d5e6ac51c7aad9930f60c87d8d53d2aa255f2",
+        "12d3e76f7585e1d45d1ec8d35fce50c2ace8230c187d55af5d007873a3b6eb02"
+      ],
+      "test": "REACH R-HELD-VALUE"
+    },
+    {
+      "table": "REACH",
+      "id": "R-THIS-BINDING",
+      "label": "residual: a class instance bound as a function's this by Function.prototype.call or apply (a function's or a method's this parameter typed by a type a member of which hands the projection) is the library call's argument, whose type parameter the checker infers from the instance itself, so it flows into a type it is and is never judged against the this parameter (wb-vgri, landing 672 F7): call, apply and a method's call each read quiet where the instance's member hides the projection, and a keeping instance bound by call reads quiet too, while bind, whose this argument the checker types as the function's this parameter, and a call given its type arguments explicitly read the instance there and refuse it (structural-stand-in)",
+      "pins": [
+        "fcb8e18f3d0aa82839983da7de7836ebe445f31cbbb8574378d0deaf2548be56",
+        "08e101bd552b423b7f07d5bf82455c940a1a9d6b286e199af20c0932747f80f8",
+        "e1c342447aa2596a4eca82a0cec388ddc4628cb4fee5739658929ca9d3339010",
+        "130845a36e62e215f21cebd7c199803783bde11972b89f22282c56ce929a6a65",
+        "803bc91af1faaede679e55e2d3e3edc3777411d6290eaa90d9451df64ad205c3",
+        "6973e3c3f1d6b2bed2b9755997245a74eb152e85333f836c4e5bf1730709f0c4"
+      ],
+      "test": "REACH R-THIS-BINDING"
     },
     {
       "table": "REACH",
@@ -1238,6 +1291,8 @@
     "REACH R-OVERLOADS",
     "REACH R-PARAMETER-PROPERTIES",
     "REACH R-STRUCTURAL-STAND-IN",
+    "REACH R-HELD-VALUE",
+    "REACH R-THIS-BINDING",
     "REACH ASYNC-RETURNS",
     "REACH GENERATOR-YIELDS",
     "REACH INHERITED-IMPLEMENTATIONS",
@@ -1263,6 +1318,7 @@
     "live: the effect plants perform every WorkflowDialogActions member, as the checker reads the interface (the name forms, heritage and signature shapes NAMES plants; signatures fail closed)",
     "live: no src module spells the program, by path or text; the walk is every src module",
     "anchor: every table quote stands once in its section of the bead's export row (the title or the owner filing, each pinned byte for byte), the quotes with every junction between them pinned compose the judged statement contiguously after the requirement id, the quotes tile the acceptance, and the row holds no other requirement field (description, design, acceptance criteria) (.beads/issues.jsonl, wb-021.5)",
+    "anchor: the fail-closed shapes, each with the REACH row that plants it, are exactly the kind:row pairs the cut #8 delivery record in the bead's export row enumerates, in its order (.beads/issues.jsonl, wb-021.5; wb-vgri)",
     "rule 16: every judged row, the non-render readers and their refused uses, the residual families, the member sets, the reach scan's depth bound and marker, the resolvable forms, the class-element kinds with their syntax and stand-in readings, the fail-closed shapes with the rows that plant them, the requirement fields and src's forms are frozen at their measured shape",
     "roster: the judged rows, the non-render readers, the registered tests and the residual families equal test/fixtures/apo-rerender-roster.json, in order and both ways"
   ],
@@ -1308,6 +1364,12 @@
     ],
     "R-STRUCTURAL-STAND-IN": [
       "REACH R-STRUCTURAL-STAND-IN"
+    ],
+    "R-HELD-VALUE": [
+      "REACH R-HELD-VALUE"
+    ],
+    "R-THIS-BINDING": [
+      "REACH R-THIS-BINDING"
     ]
   }
 }

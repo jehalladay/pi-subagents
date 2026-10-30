@@ -157,7 +157,8 @@
  * an assignment, an object literal's property, a return under the written type of a function that is neither async nor a
  * generator, a cast). Every other stand-in the readings meet, outside the named residuals' quiet pages (R-NARROWED-BRANCH's
  * narrowed branch, R-STRUCTURAL-STAND-IN's held value, R-ERASED-ACCESS's erased module and arguments object, R-DEEP-CARRIER's
- * deep carrier), fails closed with the typed row FAIL_CLOSED names beside the row that plants it: unresolved-stand-in (STAND-IN-RECEIVERS), overload (R-OVERLOADS), parameter-property
+ * deep carrier; WB-VGRI below adds R-HELD-VALUE's held literal and callback, R-THIS-BINDING's bound instance and
+ * R-NARROWED-BRANCH's class instance and literal so chosen), fails closed with the typed row FAIL_CLOSED names beside the row that plants it: unresolved-stand-in (STAND-IN-RECEIVERS), overload (R-OVERLOADS), parameter-property
  * (R-PARAMETER-PROPERTIES), structural-stand-in (R-STRUCTURAL-STAND-IN: a class instance or a class's static side flowing
  * into a type its class does not declare), async-return (ASYNC-RETURNS: an async function's return under a written type
  * that holds a type handing the projection), generator-yield (GENERATOR-YIELDS: a generator's yield or return so written),
@@ -177,6 +178,28 @@
  * pinned. Measured on src: the live reach map and src's forms and refused uses read byte for byte the same under this cut's
  * scans as under cut #7's (25 modules each, at trunk 93133f0 and again at trunks e3022a1, 9fdd6d9 and 1ad30c3, each merged, whose src equals 4350926's), so src holds none of the shapes
  * this cut fails closed.
+ *
+ * WB-VGRI (the R694 follow-up of landing 672, gate cmd_6219d6dbd6a8: PREP F5 leads, F6-F8 ride; residual-list additions under
+ * ruling R-B67 (4), none contradicting a pinned label). Cut #8's shape stands: 0 pins removed or changed; two NAMED RESIDUAL
+ * rows and families are added (R-HELD-VALUE, R-THIS-BINDING), R-NARROWED-BRANCH gains ten pages, the DISPATCH and
+ * R-NARROWED-BRANCH labels are restated to what is read, and one anchor row is added. F5: an object literal not written where
+ * it flows and a callback that hides the projection, held inside another value, read quiet - the flow reading judges the
+ * holder's type at the flow, never the held element (flowOf names no array or tuple element, and a library generic's type
+ * argument is inferred from the held value) - so R-HELD-VALUE pins each held form beside its read twins (the literal as an
+ * object literal's property, refused context-less-literal; the callback at an annotated initializer, refused initializer;
+ * Promise.resolve given its type argument explicitly, refused for both). F6: a class instance chosen against a value of the
+ * target type by a ??, a conditional or a || reads quiet, subtype reduction narrowing the expression's type to the target,
+ * and so does a literal chosen by a ??; R-NARROWED-BRANCH pins each beside two twins that make no such choice and are
+ * refused (structural-stand-in): a conditional between two undeclared instances, and a && whose right operand is the
+ * instance. F7: a class instance bound as this by call or apply reads quiet - the call's type parameter is inferred from
+ * the instance - so R-THIS-BINDING pins call, apply, a method's call and a keeping instance beside two read twins: bind,
+ * whose this argument is typed by the function's this parameter, and a call given its type arguments explicitly (each
+ * refused, structural-stand-in). F8: FAIL_CLOSED is anchored outside the census - the record anchor row holds
+ * it, each kind with the row that plants it and in order, equal to the one enumeration the cut #8 delivery record carries in
+ * the bead's export notes, so the gate's coordinated hollow of a kind (the row, FAIL_CLOSED's entry, the refusal, both
+ * literal elements and the roster together) reds there; the anchor F8 suggests, wb-021.7's export row, lists the forms it
+ * resolves in prose and names no generator yield or stand-in hand-back among them, so it could anchor only part of the
+ * twelve kinds. No reading of the helper is edited, so src's live reach map, forms and refused uses read as at cut #8.
  *
  * MEASURED (read-only, by the cutting seats, 2026-10-27: cut #3 at trunk 79dadb2 and before it at db2d796; cut #4 re-measured at
  * trunk b92d7a1, and it merged b92d7a1, bda6c2a and 88086c9, none of which changes a src file after e61eaec and so none after
@@ -260,7 +283,8 @@
  * INHERITED-IMPLEMENTATIONS, CONTEXT-LESS-LITERALS, SPREADS, CALLBACK-RETURNS and STAND-IN-RETURNS plant each further shape
  * the readings never read, refused with its typed row beside its read twins and quiet pages, and UNLISTED-STAND-INS pins
  * that a stand-in whose type the readings do not list refuses (cut #8, the fail-closed core). What neither scan reads is named:
- * R-ERASED-ACCESS, R-DEEP-CARRIER and R-NARROWED-BRANCH, and the three fail-closed families.
+ * R-ERASED-ACCESS, R-DEEP-CARRIER and R-NARROWED-BRANCH, and the three fail-closed families; R-HELD-VALUE and R-THIS-BINDING
+ * (wb-vgri) plant the held and the bound stand-ins the flow reading never judges, each quiet page beside its read twin.
  * NAMES, "issues no event admission and no invocation": planted classes and interfaces measure the member readers on the
  * name forms CLASS-NAME-FORMS plants, the member kinds CLASS-MEMBER-KINDS plants, the declaration shapes CLASS-MEMBER-SHAPES
  * plants, the interface forms INTERFACE-FORMS plants and the heritage and signature shapes INTERFACE-HERITAGE plants, and
@@ -296,9 +320,10 @@
  * FORMS, CLASS ELEMENTS, MEMBERS, EFFECT CLASSES, DIALOG ACTIONS), the pinned typescript's declaration file (CLASS ELEMENTS:
  * the class-element kinds and their SyntaxKinds) and the bead's export row (every table quote, the filing's bytes, the
  * title's bytes, the judged statement the quotes and their pinned junctions compose right after the requirement id, the
- * two tilings, the program's two spellings in the title, the absence of bd's other requirement fields), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class
- * plant, a dialog-action plant or a class-element kind removed from the helper, the frozen literal and the roster together
- * still reds.
+ * two tilings, the program's two spellings in the title, the absence of bd's other requirement fields; and, in its notes, the
+ * cut #8 delivery record's one enumeration of FAIL_CLOSED, each kind with the row that plants it, in order: wb-vgri), so a
+ * SURFACES row, a NON_RENDER entry, an admission plant, an effect-class plant, a dialog-action plant, a class-element kind or a
+ * fail-closed kind removed from the helper, the frozen literal and the roster together still reds.
  * RESIDUALS (named, each with its pinned quiet row): R-DEFERRED-EFFECT an invocation, an admission or a host effect a
  * render schedules past the settle window - three rounds of immediates, so a timer of any delay, 0 ms included, can land
  * past it while an immediate does not - each pinned with its own timer (INVOCATION); R-SIDE-CHANNEL an effect through a channel the world does not hold - a module global, a file,
@@ -330,19 +355,32 @@
  * (NAMES); R-NARROWED-BRANCH a callback or a holder that does not itself expose the projection, chosen by a conditional or a
  * ?? operand, is judged by that expression's type, which subtype reduction narrows to the branch that keeps the projection, so
  * a conditional or a ?? choosing a callback that hides it reads quiet to the forms judge, while the hiding callback's own
- * flow is refused, and so does a field or a getter stand-in whose function is so chosen (cut #7) (REACH); R-OVERLOADS the
+ * flow is refused, and so does a field or a getter stand-in whose function is so chosen (cut #7), and a class instance whose
+ * class does not declare the type it flows into, chosen against a value of that type by a ??, a conditional or a ||, and an
+ * object literal not written where it flows chosen by a ?? (wb-vgri, landing 672 F6; a choice with no branch of the target
+ * type - a conditional between two such instances, a && whose right operand is the instance - is refused) (REACH); R-OVERLOADS the
  * implementation behind a src overload set's visible signatures is never read through them: a field, a getter or a static
  * override typed by them, and such a set flowing as a callback, fail closed where the projection is handed, whether the
  * implementation keeps it or hides it (REACH); R-PARAMETER-PROPERTIES a constructor parameter property is never read as a
  * stand-in: it fails closed where a base member of its name hands the projection, whatever its declared type (REACH);
  * R-STRUCTURAL-STAND-IN a class instance, or a class's static side, flowing into an object type its class does not declare is never read as a stand-in:
  * it fails closed where a member of that type it also has hands the projection, whatever its own member does, and an
- * instance held inside another value (an array's element, a library generic's type argument such as a promise's: cut #8) entering such a type reads quiet (REACH).
+ * instance held inside another value (an array's element, a library generic's type argument such as a promise's: cut #8) entering such a type reads quiet (REACH);
+ * R-HELD-VALUE (wb-vgri, landing 672 F5) a stand-in held inside another value is never judged at the element - the flow
+ * reading judges the holder's type at the flow - so an object literal not written where it flows and a callback that hides
+ * the projection, held as an array's or a tuple's element or as a library generic's type argument (Array.of, Promise.resolve,
+ * a Map's entries, a Set's elements), read quiet, while an object literal's property is a flow the reading reads and a
+ * library generic given its type argument explicitly judges the argument against it (REACH);
+ * R-THIS-BINDING (wb-vgri, landing 672 F7) a class instance bound as a function's this by Function.prototype.call or apply
+ * flows into the type the call infers from it, never the this parameter's, so call, apply and a method's call read quiet
+ * with a member that hides the projection, and call with a keeping one, while bind's this argument, and a call given its
+ * type arguments explicitly, are read (REACH).
  * NOT CLAIMED. In src: an instance member's own code - its body, initializer, parameters and types - is not read statically
  * (REPROJECTION's runtime reading and MEMBERS judge it), nor is a parameter decorator (the compiler refuses one under the
  * repo's standard decorators, TS1206). As edits of this file, its helper and the roster together: a plant row of IDENTITY, QUIET,
  * WRITE-ANY-ROUTE, OTHER-ROUTES, EVIDENCE-ABORTS, a READERS, REACH or NAMES row or a residual row removed with its
- * frozen-literal element and roster entry (no outside anchor names those plants); a case and its expected reading
+ * frozen-literal element and roster entry (no outside anchor names those plants, R-HELD-VALUE's and R-THIS-BINDING's
+ * included); a case and its expected reading
  * re-authored together; the reach scan's key reading or its marker removed from the helper together with the REACH rows
  * that plant them, and a resolvable form or a refusal of the forms judge removed from the helper together with its REACH
  * cases, RESOLVABLE_FORMS's element and the frozen literal (the src plants recorded with the cut are their falsifiers;
@@ -350,7 +388,8 @@
  * reading (classInternal, STAND_IN) changed in the helper together with its REACH cases and the frozen literal (the src plants
  * recorded with the cut are its falsifiers; the kinds themselves, each with its SyntaxKind, are anchored by typescript's
  * declaration file); a fail-closed check (FAIL_CLOSED) changed in the helper together with its row's pages and the
- * roster (the src plants recorded with cuts #7 and #8 are its falsifiers); an assertion narrowed in this file (the SURFACES rows' QUIET comparison cut to fewer fields
+ * roster, its kind and row kept (the src plants recorded with cuts #7 and #8 are its falsifiers; a kind or its row removed
+ * reds the cut #8 record anchor, wb-vgri); an assertion narrowed in this file (the SURFACES rows' QUIET comparison cut to fewer fields
  * stays green, since every real surface reads QUIET on every field, and the anchor's section reading widened back to
  * the whole row stays green on the clean export: the src and export plants recorded with the cut are those readings'
  * falsifiers); a NON_RENDER reason's prose (its member references and the closure are measured, its words are not); the
@@ -469,6 +508,8 @@ const CLASSES = "live: the invocation plants invoke every effect class the regis
 const ACTIONS =
   "live: the effect plants perform every WorkflowDialogActions member, as the checker reads the interface (the name forms, heritage and signature shapes NAMES plants; signatures fail closed)";
 const ABSENCE_WALK = "live: no src module spells the program, by path or text; the walk is every src module";
+const FAIL_CLOSED_ANCHOR =
+  "anchor: the fail-closed shapes, each with the REACH row that plants it, are exactly the kind:row pairs the cut #8 delivery record in the bead's export row enumerates, in its order (.beads/issues.jsonl, wb-021.5; wb-vgri)";
 const ANCHOR =
   "anchor: every table quote stands once in its section of the bead's export row (the title or the owner filing, each pinned byte for byte), the quotes with every junction between them pinned compose the judged statement contiguously after the requirement id, the quotes tile the acceptance, and the row holds no other requirement field (description, design, acceptance criteria) (.beads/issues.jsonl, wb-021.5)";
 const SLOW = new Set(["SURFACES INSPECTOR", "SURFACES DIALOG", "SURFACES REPROJECTION", READER_WALK, COVERAGE, NON_RENDER_ROW, RENDER_TOUCHES, FORMS, CLASS_ELEMENTS, MEMBERS, ACTIONS, ABSENCE_WALK]);
@@ -596,6 +637,22 @@ function filingOf(notes: string): string {
   return `${header}\n\n${acceptance}`;
 }
 const occurrences = (text: string, quote: string): number => text.split(quote).length - 1;
+/** The cut #8 delivery record in the export notes (wb-vgri, landing 672 F8): the one notes line opening with the delivered claim's closed form. */
+const CUT8_RECORD = "THE CLAIM (census header CUT #8, closed form): ";
+/** In that line, the fail-closed roster as delivered: its count, then each kind:row, comma-separated. */
+const FAIL_CLOSED_RECORD = /rule-16 pinned, (\d+) entries: ([^)]*)\)/g;
+/** The fail-closed kinds with their rows as the cut #8 delivery record enumerates them: one record line, one enumeration in it, its count equal to its entries. */
+function failClosedRecord(notes: string): string[] {
+  const lines = notes.split("\n").filter(line => line.startsWith(CUT8_RECORD));
+  const [line] = lines;
+  if (lines.length !== 1 || !line) throw new Error(`the export notes hold ${lines.length} cut #8 claim records; the anchor reads exactly one`);
+  const found = [...line.matchAll(FAIL_CLOSED_RECORD)];
+  const [only] = found;
+  if (found.length !== 1 || !only) throw new Error(`the cut #8 claim record holds ${found.length} fail-closed enumerations; the anchor reads exactly one`);
+  const entries = (only[2] ?? "").split(", ");
+  if (String(entries.length) !== only[1]) throw new Error(`the record counts ${only[1]} entries and lists ${entries.length}`);
+  return entries;
+}
 
 const plantMembers = (): AdmissionMember[] =>
   (ADMISSION.rows.find(row => row.id === "EVERY-ADMISSION-MEMBER")?.cases ?? []).flatMap(item => (item.subject.plant === "admit" ? [item.subject.member] : []));
@@ -809,6 +866,20 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
     }
   });
 
+  it(FAIL_CLOSED_ANCHOR, () => {
+    expect(
+      Object.entries(FAIL_CLOSED).map(([kind, id]) => `${kind}:${id}`),
+      "the fail-closed shapes and their rows, as the cut #8 delivery record in the export notes enumerates them",
+    ).toEqual(failClosedRecord(exportRow().notes));
+    // Non-vacuity: the reading takes the one record line's one enumeration, held to its own count, wherever the line sits in the notes, and refuses any other shape.
+    const planted = `${CUT8_RECORD}READ - a plant; FAIL CLOSED (rule-16 pinned, 2 entries: spread:SPREADS, overload:R-OVERLOADS), each row a plant.`;
+    expect(failClosedRecord(`Owner filing\n\n${planted}\nLATER NOTE`), "a planted record").toEqual(["spread:SPREADS", "overload:R-OVERLOADS"]);
+    expect(() => failClosedRecord(`${planted}\n${planted}`), "two record lines").toThrow();
+    expect(() => failClosedRecord(`LATER NOTE quoting ${planted}`), "the record quoted inside another line").toThrow();
+    expect(() => failClosedRecord(planted.replace("2 entries", "3 entries")), "a count its list does not meet").toThrow();
+    expect(() => failClosedRecord(`${planted} (rule-16 pinned, 1 entries: spread:SPREADS)`), "two enumerations in the record line").toThrow();
+  });
+
   it("rule 16: every judged row, the non-render readers and their refused uses, the residual families, the member sets, the reach scan's depth bound and marker, the resolvable forms, the class-element kinds with their syntax and stand-in readings, the fail-closed shapes with the rows that plant them, the requirement fields and src's forms are frozen at their measured shape", () => {
     expect(ROWS.map(entry => `${entry.table}/${entry.id}:${entry.pins.length}`)).toEqual([
       "SURFACES/GRAPH-VIEW:3",
@@ -865,10 +936,12 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "REACH/STAND-IN-KINDS:8",
       "REACH/STAND-IN-RECEIVERS:23",
       "REACH/CALLBACK-RECEIVERS:6",
-      "REACH/R-NARROWED-BRANCH:5",
+      "REACH/R-NARROWED-BRANCH:15",
       "REACH/R-OVERLOADS:15",
       "REACH/R-PARAMETER-PROPERTIES:8",
       "REACH/R-STRUCTURAL-STAND-IN:22",
+      "REACH/R-HELD-VALUE:21",
+      "REACH/R-THIS-BINDING:6",
       "REACH/ASYNC-RETURNS:14",
       "REACH/GENERATOR-YIELDS:6",
       "REACH/INHERITED-IMPLEMENTATIONS:14",
@@ -918,6 +991,8 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "R-OVERLOADS:REACH R-OVERLOADS",
       "R-PARAMETER-PROPERTIES:REACH R-PARAMETER-PROPERTIES",
       "R-STRUCTURAL-STAND-IN:REACH R-STRUCTURAL-STAND-IN",
+      "R-HELD-VALUE:REACH R-HELD-VALUE",
+      "R-THIS-BINDING:REACH R-THIS-BINDING",
     ]);
     // The fail-closed shapes (cut #7, ruling R-B60; cut #8, ruling R-B67), each with the REACH row that plants it: the row reads it refused under its typed row and holds a quiet page beside it.
     expect(Object.entries(FAIL_CLOSED).map(([kind, id]) => `${kind}:${id}`)).toEqual([
