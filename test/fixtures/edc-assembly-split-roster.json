@@ -223,7 +223,24 @@
   "M57:hand-bare-accessor:K-WIRING",
   "M58:unmet-holey:K-DEMAND+K-SPLIT",
   "M59:text-drift:K-SPLIT",
-  "M60:order-drift:K-DEMAND"
+  "M60:order-drift:K-DEMAND",
+  "M61:unmet-index-like:K-SPLIT",
+  "M62:blocks-index-like:K-SPLIT",
+  "M63:evidence-index-like:K-SPLIT",
+  "M64:unmet-holey-index-like:K-DEMAND+K-SPLIT",
+  "M65:blocks-holey-index-like:K-DEMAND+K-SPLIT",
+  "M66:evidence-holey-index-like:K-SPLIT",
+  "M67:blocks-holey:K-DEMAND+K-SPLIT",
+  "M68:block-key-order:K-SPLIT",
+  "M69:document-key-order:K-SPLIT",
+  "M70:evidence-key-order:K-SPLIT",
+  "M71:erase-record:K-EFFECT",
+  "M72:blocks-throwing-accessor:K-DEMAND+K-PURE+K-SPLIT",
+  "M73:input-unserializable:K-PURE",
+  "M74:hand-revoked-proxy:K-WIRING",
+  "M75:demand-throwing-owner:K-WIRING+K-DEMAND+K-PURE",
+  "M76:unmet-own-iterator:K-SPLIT",
+  "M77:blocks-own-filter:K-SPLIT"
  ],
  "residuals": {
   "Q1": [
@@ -261,7 +278,8 @@
    "docs-other-words-row"
   ],
   "Q5": [
-   "outside-provider-call"
+   "outside-provider-call",
+   "deferred-query"
   ],
   "Q6": [
    "test/workbench-edc-assembly-split-census.test.ts",
@@ -279,7 +297,12 @@
    "attribute-flags",
    "frozen-document",
    "side-table-coverage",
-   "side-table-handle"
+   "side-table-handle",
+   "private-element-coverage",
+   "private-element-handle",
+   "internal-slot-coverage",
+   "internal-slot-handle",
+   "deferred-coverage"
   ]
  },
  "witnesses": {
@@ -554,6 +577,9 @@
       "proxy": [
        "K-WIRING"
       ],
+      "index-like": [
+       "K-WIRING"
+      ],
       "collection": [
        "K-WIRING"
       ],
@@ -578,6 +604,9 @@
        "K-WIRING"
       ],
       "proxy": [
+       "K-WIRING"
+      ],
+      "index-like": [
        "K-WIRING"
       ],
       "collection": [
@@ -606,6 +635,9 @@
       "proxy": [
        "K-WIRING"
       ],
+      "index-like": [
+       "K-WIRING"
+      ],
       "collection": [
        "K-WIRING"
       ],
@@ -630,6 +662,9 @@
        "K-WIRING"
       ],
       "proxy": [
+       "K-WIRING"
+      ],
+      "index-like": [
        "K-WIRING"
       ],
       "collection": [
@@ -664,6 +699,10 @@
        "K-WIRING",
        "K-SPLIT"
       ],
+      "index-like": [
+       "K-WIRING",
+       "K-SPLIT"
+      ],
       "collection": [
        "K-WIRING",
        "K-SPLIT"
@@ -689,6 +728,9 @@
        "K-WIRING"
       ],
       "proxy": [
+       "K-WIRING"
+      ],
+      "index-like": [
        "K-WIRING"
       ],
       "collection": [
@@ -717,6 +759,9 @@
       "proxy": [
        "K-WIRING"
       ],
+      "index-like": [
+       "K-WIRING"
+      ],
       "collection": [
        "K-WIRING"
       ],
@@ -741,6 +786,9 @@
        "K-WIRING"
       ],
       "proxy": [
+       "K-WIRING"
+      ],
+      "index-like": [
        "K-WIRING"
       ],
       "collection": [
@@ -794,6 +842,9 @@
      "K-WIRING",
      "K-EFFECT",
      "K-SPLIT"
+    ],
+    "M71": [
+     "K-EFFECT"
     ]
    },
    "coverage-mint": {
@@ -853,6 +904,19 @@
     ],
     "M56": [
      "K-SPLIT"
+    ],
+    "M62": [
+     "K-SPLIT"
+    ],
+    "M63": [
+     "K-SPLIT"
+    ],
+    "M65": [
+     "K-DEMAND",
+     "K-SPLIT"
+    ],
+    "M66": [
+     "K-SPLIT"
     ]
    },
    "work-admission": {
@@ -863,6 +927,13 @@
      "K-EFFECT"
     ],
     "M36": [
+     "K-SPLIT"
+    ],
+    "M61": [
+     "K-SPLIT"
+    ],
+    "M64": [
+     "K-DEMAND",
      "K-SPLIT"
     ]
    },
@@ -884,7 +955,130 @@
     "M47": "split:type:document.blocks.0.text+source:s1",
     "M48": "split:key:document.coverage",
     "M56": "split:key:document.coverage",
-    "M58": "split:holes:document.unmet"
+    "M61": "split:key:document.unmet.4294967295",
+    "M62": "split:key:document.blocks.4294967295",
+    "M63": "split:key:document.blocks.0.evidence.4294967295+evidence:s1",
+    "M64": "split:key:document.unmet.4294967295+holes:document.unmet",
+    "M65": "split:key:document.blocks.4294967295+holes:document.blocks+placement:s1",
+    "M66": "split:key:document.blocks.0.evidence.4294967295+holes:document.blocks.0.evidence+evidence:s1",
+    "M58": "split:holes:document.unmet",
+    "M67": "split:holes:document.blocks+placement:s1",
+    "M68": "split:order:document.blocks.0",
+    "M69": "split:order:document",
+    "M70": "split:order:document.blocks.0.evidence.0",
+    "M72": "split:accessor:document.blocks+unreadable:content",
+    "M73": "ok",
+    "M74": "ok",
+    "M75": "ok",
+    "M76": "split:key:document.unmet.Symbol(Symbol.iterator)",
+    "M77": "split:key:document.blocks.filter"
+   },
+   "steered": {
+    "M76": {
+     "K-WIRING": "ok",
+     "K-EFFECT": "ok",
+     "K-DEMAND": "ok",
+     "K-PURE": "ok",
+     "K-SPLIT": "split:key:document.unmet.Symbol(Symbol.iterator)"
+    },
+    "M77": {
+     "K-WIRING": "ok",
+     "K-EFFECT": "ok",
+     "K-DEMAND": "ok",
+     "K-PURE": "ok",
+     "K-SPLIT": "split:key:document.blocks.filter"
+    }
+   },
+   "holes": {
+    "M58": [
+     "K-DEMAND",
+     "K-SPLIT"
+    ],
+    "M64": [
+     "K-DEMAND",
+     "K-SPLIT"
+    ],
+    "M65": [
+     "K-DEMAND",
+     "K-SPLIT"
+    ],
+    "M66": [
+     "K-SPLIT"
+    ],
+    "M67": [
+     "K-DEMAND",
+     "K-SPLIT"
+    ]
+   },
+   "ordered": {
+    "M68": [
+     "K-SPLIT"
+    ],
+    "M69": [
+     "K-SPLIT"
+    ],
+    "M70": [
+     "K-SPLIT"
+    ]
+   },
+   "failClosed": {
+    "M65": {
+     "K-WIRING": "ok",
+     "K-EFFECT": "ok",
+     "K-DEMAND": "demand:placed",
+     "K-PURE": "ok",
+     "K-SPLIT": "split:key:document.blocks.4294967295+holes:document.blocks+placement:s1"
+    },
+    "M67": {
+     "K-WIRING": "ok",
+     "K-EFFECT": "ok",
+     "K-DEMAND": "demand:placed",
+     "K-PURE": "ok",
+     "K-SPLIT": "split:holes:document.blocks+placement:s1"
+    },
+    "M72": {
+     "K-WIRING": "ok",
+     "K-EFFECT": "ok",
+     "K-DEMAND": "demand:unreadable:placement",
+     "K-PURE": "impure:unreadable:repeat",
+     "K-SPLIT": "split:accessor:document.blocks+unreadable:content"
+    },
+    "M73": {
+     "K-WIRING": "ok",
+     "K-EFFECT": "ok",
+     "K-DEMAND": "ok",
+     "K-PURE": "impure:unreadable:input",
+     "K-SPLIT": "ok"
+    },
+    "M74": {
+     "K-WIRING": "wired:unreadable:wiring",
+     "K-EFFECT": "ok",
+     "K-DEMAND": "ok",
+     "K-PURE": "ok",
+     "K-SPLIT": "ok"
+    },
+    "M75": {
+     "K-WIRING": "wired:accessor:wiring.demand.owner",
+     "K-EFFECT": "ok",
+     "K-DEMAND": "demand:unreadable:demand",
+     "K-PURE": "impure:unreadable:input",
+     "K-SPLIT": "ok"
+    }
+   },
+   "erased": "effect:provider-query:s3",
+   "indexBoundary": {
+    "4294967294": [
+     "holes:document.unmet"
+    ],
+    "4294967295": [
+     "key:document.unmet.4294967295"
+    ],
+    "99999999999999999999": [
+     "key:document.unmet.99999999999999999999"
+    ],
+    "01": [
+     "key:document.unmet.01"
+    ]
    },
    "carried": {
     "table": {
@@ -906,6 +1100,9 @@
       ],
       "proxy": [
        "K-SPLIT"
+      ],
+      "index-like": [
+       "K-SPLIT"
       ]
      },
      "blocks": {
@@ -925,6 +1122,9 @@
        "K-SPLIT"
       ],
       "proxy": [
+       "K-SPLIT"
+      ],
+      "index-like": [
        "K-SPLIT"
       ]
      },
@@ -946,6 +1146,9 @@
       ],
       "proxy": [
        "K-SPLIT"
+      ],
+      "index-like": [
+       "K-SPLIT"
       ]
      },
      "block": {
@@ -965,6 +1168,9 @@
        "K-SPLIT"
       ],
       "proxy": [
+       "K-SPLIT"
+      ],
+      "index-like": [
        "K-SPLIT"
       ]
      },
@@ -986,6 +1192,9 @@
       ],
       "proxy": [
        "K-SPLIT"
+      ],
+      "index-like": [
+       "K-SPLIT"
       ]
      },
      "item": {
@@ -1005,6 +1214,9 @@
        "K-SPLIT"
       ],
       "proxy": [
+       "K-SPLIT"
+      ],
+      "index-like": [
        "K-SPLIT"
       ]
      }
@@ -1297,6 +1509,12 @@
     "publication:probe",
     "verification:probe"
    ],
+   "handed": {
+    "keys": [
+     "effect"
+    ],
+    "frozen": true
+   },
    "caught": [
     "M06",
     "M07",
@@ -1304,7 +1522,8 @@
     "M09",
     "M10",
     "M11",
-    "M51"
+    "M51",
+    "M71"
    ]
   },
   "A2b": {
@@ -1562,7 +1781,14 @@
   },
   "Q5": {
    "refused": [],
-   "outsideCalls": true
+   "outsideCalls": true,
+   "deferred": {
+    "refused": [],
+    "atReading": [],
+    "afterTurn": [
+     "provider-query:s3"
+    ]
+   }
   },
   "Q6": {
    "outside": [],
@@ -1620,25 +1846,79 @@
      "id": "attribute-flags",
      "refused": [],
      "answers": true,
-     "carried": true
+     "atReading": true,
+     "carried": true,
+     "live": null
     },
     {
      "id": "frozen-document",
      "refused": [],
      "answers": true,
-     "carried": true
+     "atReading": true,
+     "carried": true,
+     "live": null
     },
     {
      "id": "side-table-coverage",
      "refused": [],
      "answers": true,
-     "carried": true
+     "atReading": true,
+     "carried": true,
+     "live": null
     },
     {
      "id": "side-table-handle",
      "refused": [],
      "answers": true,
-     "carried": true
+     "atReading": true,
+     "carried": true,
+     "live": [
+      "K-EFFECT"
+     ]
+    },
+    {
+     "id": "private-element-coverage",
+     "refused": [],
+     "answers": true,
+     "atReading": true,
+     "carried": true,
+     "live": null
+    },
+    {
+     "id": "private-element-handle",
+     "refused": [],
+     "answers": true,
+     "atReading": true,
+     "carried": true,
+     "live": [
+      "K-EFFECT"
+     ]
+    },
+    {
+     "id": "internal-slot-coverage",
+     "refused": [],
+     "answers": true,
+     "atReading": true,
+     "carried": true,
+     "live": null
+    },
+    {
+     "id": "internal-slot-handle",
+     "refused": [],
+     "answers": true,
+     "atReading": true,
+     "carried": true,
+     "live": [
+      "K-EFFECT"
+     ]
+    },
+    {
+     "id": "deferred-coverage",
+     "refused": [],
+     "answers": true,
+     "atReading": false,
+     "carried": true,
+     "live": null
     }
    ]
   }
