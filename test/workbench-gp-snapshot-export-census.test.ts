@@ -270,16 +270,26 @@
  * (siteFindings, executorRequestNamers) reads too, so an edit of either reader alone that stops reading a form leaves the
  * other refusing it. G3's docs rules
  * refuse a boundary section led by any block but a paragraph (boundary-first) and any block outside the Ownership section's
- * tables holding GraphPolicyCLI (ownership-other). A residual source member holding a comment opener is refused
- * (R-COMMENTED). FAIL_CLOSED, the one pinned row, holds fourteen forms outside the pinned sets: refusal #5's twelve U1-U5
- * plants (G1's lower-first camelCase, sentence case, run of four joiners, run of three underscores and uneven GraphDataIR
- * gaps; D3's camelCase and sentence case; G3's lower-heading and thematic-break leads and a paragraph before the Ownership
- * table; S2's q1-shape and q2-joined commented out) and two of this cut's own (FC-G1-EVERY-MATCH, FC-D3-EVERY-MATCH: an
- * unpinned spelling after a pinned one in one module, so each fail-closed reader is proven on every match and, for G1, on
- * each word), each refused with exactly its typed refusals in one call after the tracked files; a match in another
- * unpinned spelling is refused by the same tests but pinned on no form. The census claims those fourteen refusals and no
- * more: the full-surface pinning of the families they come from (U1-U5: every further spelling, lead, position and
- * liveness form) is the child bead wb-0lf.8's, blocked by this bead.
+ * tables holding GraphPolicyCLI (ownership-other). A residual source member holding a comment opener, // or /*, is refused
+ * (R-COMMENTED). An entry git would commit under src or qa (LISTED_SCOPES, the two scopes the census's readers list) that is
+ * no regular file is refused (S-NONREGULAR, wb-0x41: the landed listers, gitList's regular-file filter and walkList's lstat
+ * walk, drop it, so no reader reads a module through it), and the census claims none in either listing today (nonRegularOf:
+ * git's own listing of each scope, read with lstat). FAIL_CLOSED, the one pinned row, holds sixteen forms outside the pinned
+ * sets: refusal #5's twelve U1-U5 plants (G1's lower-first camelCase, sentence case, run of four joiners, run of three
+ * underscores and uneven GraphDataIR gaps; D3's camelCase and sentence case; G3's lower-heading and thematic-break leads and
+ * a paragraph before the Ownership table; S2's q1-shape and q2-joined commented out), two of cut #6's own
+ * (FC-G1-EVERY-MATCH, FC-D3-EVERY-MATCH: an unpinned spelling after a pinned one in one module, so each fail-closed reader is
+ * proven on every match and, for G1, on each word) and wb-0x41's two (the R694 follow-up landing 677 filed, each the gate
+ * plant its carried finding names): FC-S2-Q1-BLOCK-COMMENT (F2, G15-P-S2-Q1-BLOCKCOMMENT: q1-shape with a block comment
+ * before its text, so R-COMMENTED's block half is pinned beside its line half while the member's static proxy alone still
+ * reads it live) and FC-LISTING-SYMLINK (F1, G15-P-G1-SYMLINK: a scratch repository whose src holds a symbolic link to a qa
+ * module naming graphPolicy, a link to a directory and a dangling link beside a regular module, and whose qa holds a link to
+ * that module; the landed listers list the regular files only, G1's reader names the module read through the src link, and
+ * S-NONREGULAR names each of the four links). Each is refused with exactly its typed refusals in one call after the tracked
+ * files (the listing form in its own scratch repository); a match in another unpinned spelling is refused by the same tests
+ * but pinned on no form. Each form answers its outside anchor (wb-0x41's F4, OUTSIDE ANCHORS). The census claims those
+ * sixteen refusals and the listing's silence today and no more: the full-surface pinning of the families they come from
+ * (U1-U5: every further spelling, lead, position and liveness form) is the child bead wb-0lf.8's, blocked by this bead.
  * NOT CLAIMED: what docs/03 says outside its Ownership boundaries and GraphPolicyCLI boundary sections (G3 is section-bound:
  * a GraphPolicyCLI row in another section's table, such as D-ROW-DUP's earlier table, is unread); the grants half of the statement ("within the caller's grants": the filing places the GP call's grant and
  * registry bounds on the standing host rules, docs/workbench/12-security.md:19 and 06-capability-registry.md:81, and names the
@@ -309,14 +319,18 @@
  * word reader and its fail-closed reader (siteFindings with unpinnedSiteFindings, executorRequestNamers with
  * unpinnedExecutorRequestFindings) in these files; a site-word part spelled with a confusable or other non-ASCII letter
  * (refusal #5's F6: the live patterns match ASCII letters only, so neither G1 reader reads it; wb-0lf.8); a residual member
- * silenced while its static reading still holds (FAIL CLOSED; wb-0lf.8).
+ * silenced while its static reading still holds (FAIL CLOSED; wb-0lf.8); an entry git would commit that is no regular file
+ * in a kind other than a symbolic link (a gitlink's or a nested repository's directory: refused S-NONREGULAR by the same
+ * reader, pinned on no form), a listing outside LISTED_SCOPES (the census reads none), and the landed wb-e66.5, wb-1xvp.2 and
+ * wb-gxd7.4 guards' own listings, which landing 677's F1 names as sharing the landed listers' regular-file reading (wb-0x41
+ * leaves those censuses as landed).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS, every residual family's member
  * count, the mutant and case ids per pin, the rule list, the registry, the docs plants with their rules, the docs rules,
  * READ_METHODS, the walk's probes with their facets, its facets and walked kinds, the equivalence controls, the read proof's
  * places and controls, the site words and their planted modules, the joiners, the case forms, the word places, the spelled words' parts, every
  * spelling of SITE_WORD_SPELLINGS, EXECUTOR_REQUEST_SPELLINGS and EXECUTOR_REQUEST_OUTSIDE, each residual member's liveness
- * (a source member's kind, a drive member's effect) and FAIL_CLOSED's forms (each one's id, claim and word with its match,
- * docs rules or member) as literals; the judged set (every row's id, label
+ * (a source member's kind, a drive member's effect), FAIL_CLOSED's forms (each one's id, claim and word with its match,
+ * docs rules, member or scratch tree, and each one's outside anchor) and LISTED_SCOPES as literals; the judged set (every row's id, label
  * and pins, every pin's quote and witness, each residual source member's comment-opener count among them, the residual
  * members, FAIL_CLOSED's refusals, one reading per form, every registered test title) is held to the out-of-file
  * roster test/fixtures/gp-snapshot-export-roster.json.
@@ -327,16 +341,22 @@
  * unavailable category; NATIVE_CONTROL_ACTIONS is the live src import; READ_METHODS and the writes the A1 members call are the
  * live class's methods, the writes outside READ_METHODS; git's blob ids anchor every text the readers read; the landed
  * vocabulary's live patterns (VOCABULARY) and D3's pattern hold the joiners and the case folding every spelling table pins
- * (readPattern reads them back in G1 and D3); the vendored fixture's keys hold what Q1's members name. So a pin or a row
- * removed from every literal of this file, the helper and the roster together still reds. The last case reads the vitest task
+ * (readPattern reads them back in G1 and D3); the vendored fixture's keys hold what Q1's members name; the rows that filed
+ * FAIL_CLOSED's forms (wb-0x41's F4, read in the fail-closed row): wb-0lf.8's description, whose five "- U<n> " lines name
+ * refusal #5's ten hollowings (U1-U4) and its residual families Q1 and Q2 (U5), each line with its claim (refusalItemsOf),
+ * this bead's notes, whose landed cut #6 note names its two own forms (ownFormsOf), and wb-0x41's filing note, whose carried
+ * lines name its two gate plants (carriedPlantsOf) - every form answers exactly one of those sixteen names and every name is
+ * answered, a form answering a refusal #5 item holds its line's claim, and an S2 form edits a member of the family its
+ * anchor names. So a pin, a row or a FAIL_CLOSED form removed from every literal of this file, the helper and the roster
+ * together still reds. The last case reads the vitest task
  * tree (every registered test, in roster order, in run mode, ran before it) and REACHED (every pin reached its witness
  * compare, and each compare's result).
  *
  * Display paths added: none. Test-only: no src change, no GraphPolicyCLI exporter, seam, package or fake binary.
  */
 import { execFileSync } from "node:child_process";
-import { readFileSync } from "node:fs";
-import { dirname, join, relative } from "node:path";
+import { lstatSync, mkdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
+import { dirname, join, posix, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 import { describe, expect, it, type TestContext } from "vitest";
@@ -349,10 +369,12 @@ import {
   admissibleActions,
   BOUNDARY_SENTENCE,
   buildProjection,
+  CARRIED_BEAD,
   CASES,
   type CaseRow,
   COMPLETE_FEATURE,
   COVERAGE_FEATURE,
+  carriedPlantsOf,
   caseRow,
   commentFindings,
   commentOpeners,
@@ -378,6 +400,7 @@ import {
   exportFindings,
   FACETS,
   FAIL_CLOSED,
+  type FailClosedListing,
   FULL_READ,
   facetDrift,
   findingPaths,
@@ -387,13 +410,17 @@ import {
   judgeCaseOf,
   KNOWN_STATUS,
   keyParts,
+  LISTED_SCOPES,
+  type ListedEntry,
   MUTANTS,
   NO_EFFECTS,
   namesGraphPolicy,
   namespaceNamers,
+  nonRegularFindings,
   OVER_BUDGET_CODE,
   OWNER_SPELLINGS,
   ownerCells,
+  ownFormsOf,
   PADDED_REVISION,
   PLACES,
   PLANTED_EXECUTOR_REQUEST,
@@ -407,6 +434,7 @@ import {
   QUOTES,
   READ_CALLS,
   READ_METHODS,
+  REFUSAL_ITEMS_BEAD,
   RESIDUALS,
   ROWS,
   type Row,
@@ -416,7 +444,9 @@ import {
   recipeDrive,
   referenceExport,
   refOfKey,
+  refusalItemsOf,
   residualId,
+  rowDescription,
   ruleOf,
   rulesOf,
   SCOPES,
@@ -449,6 +479,9 @@ import {
   WORD_PARTS,
   WORD_PLACES,
 } from "./helpers/gp-snapshot-export-census.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BEAD = "wb-0lf.2";
@@ -523,6 +556,48 @@ function gitIds(paths: readonly string[]): Map<string, string> {
 }
 /** The read proof of one reader over the listing its claim covers, the read map its case read, and git's ids of the listing. */
 const proofOver = (listing: readonly string[], texts: ReadonlyMap<string, string>, word: string, reader: (texts: ReadonlyMap<string, string>) => readonly string[]): Json => json(readProof(listing, texts, gitIds(listing), word, reader));
+
+/**
+ * wb-0x41 (landing 677's carried F1): every entry git would commit under a scope (gitList's own listing: tracked or untracked,
+ * never ignored) that is on disk but no regular file, in path order, with its kind as lstat reads it - an entry the landed
+ * listers drop. An entry listed but missing on disk holds no text, and is skipped as gitList skips it.
+ */
+function nonRegularOf(root: string, scope: string, env?: NodeJS.ProcessEnv): ListedEntry[] {
+  const out = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", scope], { cwd: root, encoding: "utf8", maxBuffer: 1 << 26, ...(env === undefined ? {} : { env }) });
+  const entries: ListedEntry[] = [];
+  for (const path of [...new Set(out.split("\0").filter(entry => entry !== ""))].sort()) {
+    const info = lstatSync(join(root, path), { throwIfNoEntry: false });
+    if (info === undefined || info.isFile()) continue;
+    entries.push({ path, kind: info.isSymbolicLink() ? "symbolic link" : info.isDirectory() ? "directory" : "other" });
+  }
+  return entries;
+}
+/** The listing's fail-closed refusals over a root: S-NONREGULAR for every such entry of each listed scope, in scope order (the one reader the live tree and FC-LISTING-SYMLINK's scratch repository both read through). */
+const listingRefusals = (root: string, env?: NodeJS.ProcessEnv): string[] => LISTED_SCOPES.flatMap(scope => nonRegularFindings(nonRegularOf(root, scope, env)));
+/**
+ * Repository locators a hook may export: the listing form's scratch repository runs without them and without global or system
+ * configuration (the landed rf-render-id-authority census's form), so its git commands never reach this repository.
+ */
+const GIT_LOCATORS = ["GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_OBJECT_DIRECTORY", "GIT_ALTERNATE_OBJECT_DIRECTORIES", "GIT_COMMON_DIR", "GIT_NAMESPACE"];
+const scratchGitEnv = (): NodeJS.ProcessEnv => ({ ...Object.fromEntries(Object.entries(process.env).filter(([key]) => !GIT_LOCATORS.includes(key))), GIT_CONFIG_GLOBAL: "/dev/null", GIT_CONFIG_SYSTEM: "/dev/null" });
+/** A listing form's tree in a scratch repository (git init, its regular files, then its symbolic links), handed to work and removed afterwards (rule 11: makeScratch under the leak guard). */
+function listingTree<T>(form: FailClosedListing, work: (root: string) => T): T {
+  const root = makeScratch("wb-0x41-listing-");
+  try {
+    execFileSync("git", ["init", "-q"], { cwd: root, env: scratchGitEnv(), stdio: "pipe" });
+    for (const [path, text] of Object.entries(form.files)) {
+      mkdirSync(dirname(join(root, path)), { recursive: true });
+      writeFileSync(join(root, path), text);
+    }
+    for (const [path, target] of Object.entries(form.links)) {
+      mkdirSync(dirname(join(root, path)), { recursive: true });
+      symlinkSync(target, join(root, path));
+    }
+    return work(root);
+  } finally {
+    removeScratch(root);
+  }
+}
 
 /** The reference's outcome on a case, over a fresh projection. */
 const referenceOn = (row: CaseRow): ReturnType<typeof referenceExport> => referenceExport({ projection: buildProjection(), scope: scopeSpec(row.scope).scope, budget: row.budget });
@@ -1142,7 +1217,7 @@ describe(SUITE, () => {
     expect(Object.entries(WORD_PARTS).map(([word, parts]) => `${word}:${parts.join("|")}`)).toEqual(["GraphPolicy:Graph|Policy", "GraphDataIR:Graph|Data|IR", "ExecutorRequest:Executor|Request"]);
     expect(SITE_WORD_SPELLINGS.map(entry => entry.spelling)).toEqual(["graphpolicy", "GRAPHPOLICY", "GraphPolicy", "graph policy", "GRAPH POLICY", "Graph Policy", "graph\tpolicy", "GRAPH\tPOLICY", "Graph\tPolicy", "graph.policy", "GRAPH.POLICY", "Graph.Policy", "graph_policy", "GRAPH_POLICY", "Graph_Policy", "graph-policy", "GRAPH-POLICY", "Graph-Policy", "graph..policy", "GRAPH..POLICY", "Graph..Policy", "graph - policy", "GRAPH - POLICY", "Graph - Policy", "graphdatair", "GRAPHDATAIR", "GraphDataIR", "graph data ir", "GRAPH DATA IR", "Graph Data IR", "graph\tdata\tir", "GRAPH\tDATA\tIR", "Graph\tData\tIR", "graph.data.ir", "GRAPH.DATA.IR", "Graph.Data.IR", "graph_data_ir", "GRAPH_DATA_IR", "Graph_Data_IR", "graph-data-ir", "GRAPH-DATA-IR", "Graph-Data-IR", "graph..data..ir", "GRAPH..DATA..IR", "Graph..Data..IR", "graph - data - ir", "GRAPH - DATA - IR", "Graph - Data - IR"]);
     expect(EXECUTOR_JOINERS.map(joiner => joiner.id)).toEqual(["none", "space", "underscore", "hyphen"]);
-    expect(FAIL_CLOSED.map(form => `${form.id}:${form.claim}:${form.kind === "source" ? `${form.words.join("+")}:${form.unpinned.map(entry => `${entry.word}=${JSON.stringify(entry.match)}`).join(",")}` : form.kind === "docs" ? form.expect.join(",") : form.member}`)).toEqual([
+    expect(FAIL_CLOSED.map(form => `${form.id}:${form.claim}:${form.kind === "source" ? `${form.words.join("+")}:${form.unpinned.map(entry => `${entry.word}=${JSON.stringify(entry.match)}`).join(",")}` : form.kind === "docs" ? form.expect.join(",") : form.kind === "member" ? form.member : `${Object.keys(form.files).join(",")}:${Object.entries(form.links).map(([path, target]) => `${path}->${target}`).join(",")}:${form.word}`}`)).toEqual([
       'FC-G1-CAMEL:G1:GraphPolicy:GraphPolicy="graphPolicy"',
       'FC-G1-SENTENCE:G1:GraphPolicy:GraphPolicy="Graph policy"',
       'FC-G1-RUN-LONG:G1:GraphPolicy:GraphPolicy="graph -- policy"',
@@ -1157,7 +1232,30 @@ describe(SUITE, () => {
       "FC-G3-OTHER-LEAD:G3:ownership-other",
       "FC-S2-Q1-COMMENTED:S2:src/workbench/q1-shape.ts",
       "FC-S2-Q2-COMMENTED:S2:src/workbench/q2-joined.ts",
+      "FC-S2-Q1-BLOCK-COMMENT:S2:src/workbench/q1-shape.ts",
+      "FC-LISTING-SYMLINK:LISTING:qa/zz-g15-target.ts,src/workbench/zz-g15-module.ts:src/workbench/zz-g15-link.ts->../../qa/zz-g15-target.ts,src/workbench/zz-g15-dir->../../qa,src/workbench/zz-g15-dangling.ts->../../qa/zz-g15-missing.ts,qa/zz-g15-link.ts->zz-g15-target.ts:GraphPolicy",
     ]);
+    // wb-0x41 (landing 677's carried F4): each form's outside anchor (the fail-closed row holds them to the tracker export), and
+    // the scopes whose git listing the census reads (F1: S-NONREGULAR).
+    expect(FAIL_CLOSED.map(form => `${form.id}@${form.anchor.bead}:${form.anchor.name}`)).toEqual([
+      "FC-G1-CAMEL@wb-0lf.8:RH-CAMEL",
+      "FC-G1-SENTENCE@wb-0lf.8:RH-SENTENCE",
+      "FC-G1-RUN-LONG@wb-0lf.8:RH-RUN-LONG",
+      "FC-G1-RUN3-SAME@wb-0lf.8:RH-RUN3-SAME",
+      "FC-G1-UNEVEN@wb-0lf.8:RH-UNEVEN",
+      "FC-G1-EVERY-MATCH@wb-0lf.2:FC-G1-EVERY-MATCH",
+      "FC-D3-CAMEL@wb-0lf.8:RH-D3-CAMEL",
+      "FC-D3-SENTENCE@wb-0lf.8:RH-D3-SENTENCE",
+      "FC-D3-EVERY-MATCH@wb-0lf.2:FC-D3-EVERY-MATCH",
+      "FC-G3-LEAD-HEADING@wb-0lf.8:RH-FIRST-HEADING",
+      "FC-G3-LEAD-BREAK@wb-0lf.8:RH-FIRST-HR",
+      "FC-G3-OTHER-LEAD@wb-0lf.8:RH-OTHER-LEAD",
+      "FC-S2-Q1-COMMENTED@wb-0lf.8:Q1",
+      "FC-S2-Q2-COMMENTED@wb-0lf.8:Q2",
+      "FC-S2-Q1-BLOCK-COMMENT@wb-0x41:G15-P-S2-Q1-BLOCKCOMMENT",
+      "FC-LISTING-SYMLINK@wb-0x41:G15-P-G1-SYMLINK",
+    ]);
+    expect([...LISTED_SCOPES]).toEqual(["src", "qa"]);
     expect(EXECUTOR_REQUEST_SPELLINGS.map(entry => entry.spelling)).toEqual(["executorrequest", "EXECUTORREQUEST", "ExecutorRequest", "executor request", "EXECUTOR REQUEST", "Executor Request", "executor_request", "EXECUTOR_REQUEST", "Executor_Request", "executor-request", "EXECUTOR-REQUEST", "Executor-Request"]);
     expect(EXECUTOR_REQUEST_OUTSIDE.map(entry => entry.spelling)).toEqual(["executor\trequest", "EXECUTOR\tREQUEST", "Executor\tRequest", "executor.request", "EXECUTOR.REQUEST", "Executor.Request", "executor..request", "EXECUTOR..REQUEST", "Executor..Request", "executor - request", "EXECUTOR - REQUEST", "Executor - Request"]);
     expect(Object.values(RESIDUALS).flatMap(members => members.flatMap(member => (member.kind === "drive" ? [`${member.id}:${JSON.stringify(member.effect)}`] : member.kind === "source" ? [`${member.path}:${member.live}`] : [])))).toEqual([
@@ -1208,6 +1306,9 @@ describe(SUITE, () => {
     expect(texts.size >= SRC_FLOOR && texts.has(CONTROL), "the src listing read the tree").toBe(true);
     const tree = { site: unpinnedSiteFindings(texts), request: unpinnedExecutorRequestFindings(texts) };
     expect(tree, "G1's and D3's fail-closed readers refuse nothing in git's src listing today").toEqual({ site: [], request: [] });
+    // wb-0x41 (landing 677's carried F1): every entry git would commit under a listed scope is a regular file today, so the
+    // landed listers hand every listed module to the readers (a symbolic link is FC-LISTING-SYMLINK's, refused below).
+    expect(listingRefusals(ROOT), "git's src and qa listings hold no entry that is not a regular file today (S-NONREGULAR)").toEqual([]);
     const listing = gitList(ROOT, "src");
     const proofs = {
       site: proofOver(listing, texts, "graphPolicy", map => findingPaths(unpinnedSiteFindings(map))),
@@ -1240,6 +1341,24 @@ describe(SUITE, () => {
       } else if (form.kind === "docs") {
         refused[form.id] = docs03Findings(docs03Reading(form.edit(page))).map(ruleOf);
         expected[form.id] = [...form.expect];
+      } else if (form.kind === "listing") {
+        // The landed listers list the tree's regular files only; the module behind a src link is one G1's reader names when it
+        // is read through the link; the listing's fail-closed refusal names every link git would commit, in each scope.
+        const under = (paths: readonly string[], scope: string): string[] => paths.filter(path => path.startsWith(`${scope}/`)).sort();
+        const reaching = under(Object.keys(form.links), "src").filter(path => form.files[posix.normalize(posix.join(posix.dirname(path), form.links[path] ?? ""))] !== undefined);
+        refused[form.id] = listingTree(form, root => ({
+          listed: Object.fromEntries(LISTED_SCOPES.map(scope => [scope, gitList(root, scope)])),
+          walked: Object.fromEntries(LISTED_SCOPES.map(scope => [scope, walkList(root, scope)])),
+          behind: siteFindings(EXPORT_SITES, new Map(reaching.map(path => [path, readFileSync(join(root, path), "utf8")] as const))),
+          refusal: listingRefusals(root, scratchGitEnv()),
+        }));
+        const regular = Object.fromEntries(LISTED_SCOPES.map(scope => [scope, under(Object.keys(form.files), scope)]));
+        expected[form.id] = {
+          listed: regular,
+          walked: regular,
+          behind: reaching.map(path => `S-UNREGISTERED ${path} names ${form.word} with no EXPORT_SITES registration`),
+          refusal: LISTED_SCOPES.flatMap(scope => nonRegularFindings(under(Object.keys(form.links), scope).map(path => ({ path, kind: "symbolic link" as const })))),
+        };
       } else {
         const member = sources.find(entry => entry.path === form.member);
         const text = member === undefined ? "" : form.edit(member.text);
@@ -1252,6 +1371,29 @@ describe(SUITE, () => {
     }
     expect(refused, "each form refuses with exactly its typed refusals in the same call after the tracked files: G1's by siteFindings and its fail-closed reader, D3's by its reader and its fail-closed reader, G3's by its docs rules, S2's by R-COMMENTED while the member's static proxy alone still reads it live").toEqual(expected);
     expect(refused, "and each form's refusals equal the roster's (failClosed), so a form deleted from the table and its frozen literal still reds").toStrictEqual(ROSTER.failClosed);
+    // wb-0x41 (landing 677's carried F4): every form answers exactly one name the row that filed it gives in the tracker export,
+    // and every such name is answered, so a form removed from every literal of these files and the roster still reds here.
+    const exported = textOf(EXPORT);
+    const items = refusalItemsOf(rowDescription(exported, REFUSAL_ITEMS_BEAD) ?? "");
+    expect(items.map(item => `${item.item}:${item.claim}:${item.names.join("+")}`), `${REFUSAL_ITEMS_BEAD}'s description (its "- U<n> " lines) enumerates refusal #5's five items, each naming its claim and its hollowings or residual families`).toEqual(["U1:G1:RH-CAMEL+RH-SENTENCE+RH-RUN-LONG+RH-RUN3-SAME+RH-UNEVEN", "U2:D3:RH-D3-CAMEL+RH-D3-SENTENCE", "U3:G3:RH-FIRST-HEADING+RH-FIRST-HR", "U4:G3:RH-OTHER-LEAD", "U5:S2:Q1+Q2"]);
+    const named = [
+      ...items.flatMap(item => item.names.map(name => `${REFUSAL_ITEMS_BEAD}:${name}`)),
+      ...ownFormsOf(beadRow(exported, BEAD)?.notes ?? "").map(name => `${BEAD}:${name}`),
+      ...carriedPlantsOf(beadRow(exported, CARRIED_BEAD)?.notes ?? "").map(name => `${CARRIED_BEAD}:${name}`),
+    ];
+    const answered = FAIL_CLOSED.map(form => `${form.anchor.bead}:${form.anchor.name}`);
+    expect([...answered].sort(), "each FAIL_CLOSED form answers a name the row that filed it gives in the tracker export (wb-0lf.8's U1-U5 hollowings and families, cut #6's own forms in this bead's notes, the gate plants wb-0x41's carried lines name), and every such name is answered").toEqual([...named].sort());
+    expect([new Set(named).size, new Set(answered).size], "no name is given or answered twice").toEqual([named.length, FAIL_CLOSED.length]);
+    const claimOf = new Map(items.flatMap(item => item.names.map(name => [name, item.claim] as const)));
+    expect(FAIL_CLOSED.filter(form => form.anchor.bead === REFUSAL_ITEMS_BEAD && claimOf.get(form.anchor.name) !== form.claim).map(form => form.id), "each form answering a refusal #5 item holds the claim its line names").toEqual([]);
+    expect(FAIL_CLOSED.filter(form => form.anchor.bead === BEAD && form.anchor.name !== form.id).map(form => form.id), "each of cut #6's own forms is the form its note names").toEqual([]);
+    const familyOf = (name: string): string => /(?:^|-)(Q\d+)(?:-|$)/.exec(name)?.[1] ?? "";
+    const strays = FAIL_CLOSED.flatMap(form => {
+      if (form.kind !== "member") return [];
+      const path = form.member;
+      return (RESIDUALS[familyOf(form.anchor.name)] ?? []).some(member => member.kind === "source" && member.path === path) ? [] : [form.id];
+    });
+    expect(strays, "each S2 form edits a source member of the residual family its anchor names (Q1 or Q2)").toEqual([]);
   });
 
   it("roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/gp-snapshot-export-roster.json, in order and both ways; every pin reached its witness compare", ({ task }) => {

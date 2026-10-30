@@ -2425,6 +2425,41 @@
         "R-COMMENTED"
       ],
       "proxy": true
+    },
+    "FC-S2-Q1-BLOCK-COMMENT": {
+      "member": "shape",
+      "quiet": [],
+      "refusal": [
+        "R-COMMENTED"
+      ],
+      "proxy": true
+    },
+    "FC-LISTING-SYMLINK": {
+      "listed": {
+        "src": [
+          "src/workbench/zz-g15-module.ts"
+        ],
+        "qa": [
+          "qa/zz-g15-target.ts"
+        ]
+      },
+      "walked": {
+        "src": [
+          "src/workbench/zz-g15-module.ts"
+        ],
+        "qa": [
+          "qa/zz-g15-target.ts"
+        ]
+      },
+      "behind": [
+        "S-UNREGISTERED src/workbench/zz-g15-link.ts names GraphPolicy with no EXPORT_SITES registration"
+      ],
+      "refusal": [
+        "S-NONREGULAR src/workbench/zz-g15-dangling.ts is a symbolic link git would commit, which the landed listers drop, so no reader of this census reads it",
+        "S-NONREGULAR src/workbench/zz-g15-dir is a symbolic link git would commit, which the landed listers drop, so no reader of this census reads it",
+        "S-NONREGULAR src/workbench/zz-g15-link.ts is a symbolic link git would commit, which the landed listers drop, so no reader of this census reads it",
+        "S-NONREGULAR qa/zz-g15-link.ts is a symbolic link git would commit, which the landed listers drop, so no reader of this census reads it"
+      ]
     }
   },
   "tests": [

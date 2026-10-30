@@ -2248,6 +2248,86 @@ export const commentFindings = (path: string, text: string): string[] => {
 };
 /** The paths a fail-closed reader's findings name (each finding's second word), each once in order: the reader its read proof drives. */
 export const findingPaths = (findings: readonly string[]): string[] => [...new Set(findings.map(finding => finding.split(" ", 2)[1] ?? ""))];
+/** The scopes whose git listing this census reads: src (G1, D3, G2 and the fail-closed readers) and qa (G2). */
+export const LISTED_SCOPES = ["src", "qa"] as const;
+/** An entry git would commit under a listed scope that is no regular file on disk, with its kind as lstat reads it. */
+export interface ListedEntry {
+  readonly path: string;
+  readonly kind: "symbolic link" | "directory" | "other";
+}
+/**
+ * The listing's fail-closed refusal (wb-0x41, landing 677's carried F1): an entry git would commit under a listed scope that is
+ * no regular file is refused, S-NONREGULAR, since the landed listers (gitList's regular-file filter, walkList's lstat walk)
+ * drop it, so no reader of this census reads a module through it.
+ */
+export const nonRegularFindings = (entries: readonly ListedEntry[]): string[] => entries.map(entry => `S-NONREGULAR ${entry.path} is a ${entry.kind} git would commit, which the landed listers drop, so no reader of this census reads it`);
+/**
+ * The outside anchor a FAIL_CLOSED form answers (wb-0x41, landing 677's carried F4): the bead whose row in the tracker export
+ * filed the form, and the name that row gives it - a refusal #5 hollowing (RH-...) or residual family (Q<n>) of an item
+ * wb-0lf.8's description enumerates (refusalItemsOf), one of cut #6's own forms in wb-0lf.2's notes (ownFormsOf), or a gate
+ * plant wb-0x41's carried finding lines name (carriedPlantsOf). The fail-closed row holds the forms' anchors to the names those
+ * rows give, both ways, so a form removed from every literal of the census, this helper and the roster together still reds.
+ */
+export interface FailClosedAnchor {
+  readonly bead: string;
+  readonly name: string;
+}
+/** The bead whose description enumerates refusal #5's items, one per "- U<n> " line (R-B73's rule-19 structural-exit child). */
+export const REFUSAL_ITEMS_BEAD = "wb-0lf.8";
+/** The R694 follow-up landing 677 filed for its carried F1, F2 and F4: its filing note's carried lines name the gate plants. */
+export const CARRIED_BEAD = "wb-0x41";
+/** A bead's description in the tracker export text (one JSON row per line), or undefined when no row of that id carries one. */
+export function rowDescription(exportText: string, bead: string): string | undefined {
+  for (const line of exportText.split("\n")) {
+    if (!line.includes(`"id":"${bead}"`)) continue;
+    const row: unknown = JSON.parse(line);
+    if (typeof row !== "object" || row === null) continue;
+    const { id, description } = row as { readonly id?: unknown; readonly description?: unknown };
+    if (id === bead && typeof description === "string") return description;
+  }
+  return undefined;
+}
+/** One refusal #5 item of a description: its id (U<n>), the claim its line names and the names it gives the forms. */
+export interface RefusalItem {
+  readonly item: string;
+  readonly claim: string;
+  readonly names: readonly string[];
+}
+/**
+ * Refusal #5's items as a description enumerates them: each "- U<n> " line in order, with the claim it names (the first of G1,
+ * D3, G3 or S2 on the line) and its names - the hollowings it names (RH-...), or, on a line naming none, its residual families
+ * (Q<n>).
+ */
+export function refusalItemsOf(description: string): RefusalItem[] {
+  const items: RefusalItem[] = [];
+  for (const line of description.split("\n")) {
+    const item = /^- (U\d+) /.exec(line)?.[1];
+    if (item === undefined) continue;
+    const hollowings = [...line.matchAll(/\bRH-[A-Z0-9]+(?:-[A-Z0-9]+)*/g)].map(match => match[0]);
+    const families = [...line.matchAll(/\bQ\d+\b/g)].map(match => match[0]);
+    items.push({ item, claim: /\b(G1|D3|G3|S2)\b/.exec(line)?.[1] ?? "", names: hollowings.length > 0 ? hollowings : families });
+  }
+  return items;
+}
+/** The forms cut #6 named as its own in the landed delivery note a bead's notes hold ("two of this cut's own (A, B: ..."), each once, in order. */
+export function ownFormsOf(notes: string): string[] {
+  const names: string[] = [];
+  for (const match of notes.matchAll(/two of this cut's own \(([A-Z0-9, -]+):/g)) for (const name of (match[1] ?? "").split(", ")) if (/^FC-[A-Z0-9-]+$/.test(name) && !names.includes(name)) names.push(name);
+  return names;
+}
+/**
+ * The gate plants (G<n>-P-...) an R694 filing note's carried finding lines name: its "[leads] - " and "[rides] - " lines, read up
+ * to the note's first "Context: " line (so its not-carried lines and every later note are never read), each once, in order.
+ */
+export function carriedPlantsOf(notes: string): string[] {
+  const names: string[] = [];
+  for (const line of notes.split("\n")) {
+    if (line.startsWith("Context: ")) break;
+    if (!line.startsWith("[leads] - ") && !line.startsWith("[rides] - ")) continue;
+    for (const match of line.matchAll(/\bG\d+-P-[A-Z0-9]+(?:-[A-Z0-9]+)*/g)) if (!names.includes(match[0])) names.push(match[0]);
+  }
+  return names;
+}
 /** A form outside G1's or D3's pinned spellings: a src module read after the tracked modules. */
 export interface FailClosedSource {
   readonly kind: "source";
@@ -2259,6 +2339,7 @@ export interface FailClosedSource {
   readonly words: readonly string[];
   /** Each match the claim's fail-closed reader refuses, in order: its word and its text. */
   readonly unpinned: readonly { readonly word: string; readonly match: string }[];
+  readonly anchor: FailClosedAnchor;
 }
 /** A form outside G3's pinned plants: an in-memory edit of the live docs/03, read by docs03Reading and judged by docs03Findings. */
 export interface FailClosedDocs {
@@ -2268,6 +2349,7 @@ export interface FailClosedDocs {
   readonly edit: (page: string) => string;
   /** The docs rules it is refused with, in order. */
   readonly expect: readonly string[];
+  readonly anchor: FailClosedAnchor;
 }
 /** A form outside S2's liveness reading: a residual source member's text edited. */
 export interface FailClosedMember {
@@ -2277,14 +2359,35 @@ export interface FailClosedMember {
   /** The residual source member's path (RESIDUALS). */
   readonly member: string;
   readonly edit: (text: string) => string;
+  readonly anchor: FailClosedAnchor;
 }
-export type FailClosedForm = FailClosedSource | FailClosedDocs | FailClosedMember;
+/**
+ * A form outside every listing this census reads (wb-0x41, landing 677's carried F1, the gate's G15-P-G1-SYMLINK plant): a
+ * scratch repository whose src holds a symbolic link to a qa module naming a site word, a link to a directory and a dangling
+ * link beside a regular module, and whose qa holds a link to that module too. git would commit each link, the landed listers
+ * drop it, and the listing's fail-closed refusal names each one (S-NONREGULAR).
+ */
+export interface FailClosedListing {
+  readonly kind: "listing";
+  readonly id: string;
+  readonly claim: "LISTING";
+  /** The scratch tree's regular files, path to text. */
+  readonly files: Readonly<Record<string, string>>;
+  /** The scratch tree's symbolic links, path to target (relative to the link's directory, as written into the link). */
+  readonly links: Readonly<Record<string, string>>;
+  /** The site word the module behind each src link that reaches one of the files names, as siteFindings reads it through the link. */
+  readonly word: string;
+  readonly anchor: FailClosedAnchor;
+}
+export type FailClosedForm = FailClosedSource | FailClosedDocs | FailClosedMember | FailClosedListing;
 /** Every non-empty line behind a line comment: the member defines nothing (refusal #5's S2-Q1-COMMENTED and S2-Q2-COMMENTED). */
 const commentedOut = (text: string): string =>
   text
     .split("\n")
     .map(line => (line === "" ? line : `// ${line}`))
     .join("\n");
+/** A block comment before the member's text (the gate's G15-P-S2-Q1-BLOCKCOMMENT plant): the member still defines its value, and its one comment opener is R-COMMENTED's block half. */
+const blockCommented = (text: string): string => `/* a note */ ${text}`;
 /**
  * The fail-closed row (R-B73, R-B67's one pinned row proving that a form outside the pinned set refuses): refusal #5's twelve
  * plants, one per member of its U1-U5, each outside its claim's pinned set and each refused with exactly its typed refusals.
@@ -2293,14 +2396,17 @@ const commentedOut = (text: string): string =>
  * and a thematic break leading the boundary section, and a paragraph holding GraphPolicyCLI between the Ownership boundaries
  * heading and its table; S2's two (U5): q1-shape and q2-joined commented out. And two of this cut's own, FC-G1-EVERY-MATCH and
  * FC-D3-EVERY-MATCH: an unpinned spelling after a pinned one in one module (G1's for each of its two words), so each
- * fail-closed reader is proven on every match and every word, never only the first.
+ * fail-closed reader is proven on every match and every word, never only the first. And wb-0x41's two (landing 677's carried
+ * F1 and F2, each the gate plant its finding names): FC-S2-Q1-BLOCK-COMMENT (G15-P-S2-Q1-BLOCKCOMMENT: q1-shape with a block
+ * comment before its text, R-COMMENTED's block half) and FC-LISTING-SYMLINK (G15-P-G1-SYMLINK: symbolic links git would
+ * commit under src and qa, the listing's S-NONREGULAR). Each form names its outside anchor (FailClosedAnchor).
  */
 export const FAIL_CLOSED: readonly FailClosedForm[] = [
-  { kind: "source", id: "FC-G1-CAMEL", claim: "G1", path: "src/workbench/zz-fc-g1-camel.ts", text: 'export const graphPolicyLabel = "seam";\n', words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "graphPolicy" }] },
-  { kind: "source", id: "FC-G1-SENTENCE", claim: "G1", path: "src/workbench/zz-fc-g1-sentence.ts", text: "// Graph policy decision seam\nexport const placed = 1;\n", words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "Graph policy" }] },
-  { kind: "source", id: "FC-G1-RUN-LONG", claim: "G1", path: "src/workbench/zz-fc-g1-run-long.ts", text: 'export const LABEL = "graph -- policy";\n', words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "graph -- policy" }] },
-  { kind: "source", id: "FC-G1-RUN3-SAME", claim: "G1", path: "src/workbench/zz-fc-g1-run3-same.ts", text: 'export const LABEL = "graph___policy";\n', words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "graph___policy" }] },
-  { kind: "source", id: "FC-G1-UNEVEN", claim: "G1", path: "src/workbench/zz-fc-g1-uneven.ts", text: 'export const GRAPH_DATAIR = "v1";\n', words: ["GraphDataIR"], unpinned: [{ word: "GraphDataIR", match: "GRAPH_DATAIR" }] },
+  { kind: "source", id: "FC-G1-CAMEL", claim: "G1", path: "src/workbench/zz-fc-g1-camel.ts", text: 'export const graphPolicyLabel = "seam";\n', words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "graphPolicy" }], anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-CAMEL" } },
+  { kind: "source", id: "FC-G1-SENTENCE", claim: "G1", path: "src/workbench/zz-fc-g1-sentence.ts", text: "// Graph policy decision seam\nexport const placed = 1;\n", words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "Graph policy" }], anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-SENTENCE" } },
+  { kind: "source", id: "FC-G1-RUN-LONG", claim: "G1", path: "src/workbench/zz-fc-g1-run-long.ts", text: 'export const LABEL = "graph -- policy";\n', words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "graph -- policy" }], anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-RUN-LONG" } },
+  { kind: "source", id: "FC-G1-RUN3-SAME", claim: "G1", path: "src/workbench/zz-fc-g1-run3-same.ts", text: 'export const LABEL = "graph___policy";\n', words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "graph___policy" }], anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-RUN3-SAME" } },
+  { kind: "source", id: "FC-G1-UNEVEN", claim: "G1", path: "src/workbench/zz-fc-g1-uneven.ts", text: 'export const GRAPH_DATAIR = "v1";\n', words: ["GraphDataIR"], unpinned: [{ word: "GraphDataIR", match: "GRAPH_DATAIR" }], anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-UNEVEN" } },
   {
     kind: "source",
     id: "FC-G1-EVERY-MATCH",
@@ -2312,19 +2418,31 @@ export const FAIL_CLOSED: readonly FailClosedForm[] = [
       { word: "GraphPolicy", match: "graphPolicy" },
       { word: "GraphDataIR", match: "GRAPH_DATAIR" },
     ],
+    anchor: { bead: "wb-0lf.2", name: "FC-G1-EVERY-MATCH" },
   },
-  { kind: "source", id: "FC-D3-CAMEL", claim: "D3", path: "src/workbench/zz-fc-d3-camel.ts", text: 'export const executorRequest = { executor: "furnace" };\n', words: ["ExecutorRequest"], unpinned: [{ word: "ExecutorRequest", match: "executorRequest" }] },
-  { kind: "source", id: "FC-D3-SENTENCE", claim: "D3", path: "src/workbench/zz-fc-d3-sentence.ts", text: "// Executor request shape\nexport const placed = 1;\n", words: ["ExecutorRequest"], unpinned: [{ word: "ExecutorRequest", match: "Executor request" }] },
-  { kind: "source", id: "FC-D3-EVERY-MATCH", claim: "D3", path: "src/workbench/zz-fc-d3-every-match.ts", text: 'export const KINDS = ["ExecutorRequest", "executorRequest"];\n', words: ["ExecutorRequest"], unpinned: [{ word: "ExecutorRequest", match: "executorRequest" }] },
-  { kind: "docs", id: "FC-G3-LEAD-HEADING", claim: "G3", edit: page => onceIn(page, `## ${BOUNDARY_HEADING}\n\n`, `## ${BOUNDARY_HEADING}\n\n### Status\n\n`), expect: ["boundary-first"] },
-  { kind: "docs", id: "FC-G3-LEAD-BREAK", claim: "G3", edit: page => onceIn(page, `## ${BOUNDARY_HEADING}\n\n`, `## ${BOUNDARY_HEADING}\n\n---\n\n`), expect: ["boundary-first"] },
+  { kind: "source", id: "FC-D3-CAMEL", claim: "D3", path: "src/workbench/zz-fc-d3-camel.ts", text: 'export const executorRequest = { executor: "furnace" };\n', words: ["ExecutorRequest"], unpinned: [{ word: "ExecutorRequest", match: "executorRequest" }], anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-D3-CAMEL" } },
+  { kind: "source", id: "FC-D3-SENTENCE", claim: "D3", path: "src/workbench/zz-fc-d3-sentence.ts", text: "// Executor request shape\nexport const placed = 1;\n", words: ["ExecutorRequest"], unpinned: [{ word: "ExecutorRequest", match: "Executor request" }], anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-D3-SENTENCE" } },
+  { kind: "source", id: "FC-D3-EVERY-MATCH", claim: "D3", path: "src/workbench/zz-fc-d3-every-match.ts", text: 'export const KINDS = ["ExecutorRequest", "executorRequest"];\n', words: ["ExecutorRequest"], unpinned: [{ word: "ExecutorRequest", match: "executorRequest" }], anchor: { bead: "wb-0lf.2", name: "FC-D3-EVERY-MATCH" } },
+  { kind: "docs", id: "FC-G3-LEAD-HEADING", claim: "G3", edit: page => onceIn(page, `## ${BOUNDARY_HEADING}\n\n`, `## ${BOUNDARY_HEADING}\n\n### Status\n\n`), expect: ["boundary-first"], anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-FIRST-HEADING" } },
+  { kind: "docs", id: "FC-G3-LEAD-BREAK", claim: "G3", edit: page => onceIn(page, `## ${BOUNDARY_HEADING}\n\n`, `## ${BOUNDARY_HEADING}\n\n---\n\n`), expect: ["boundary-first"], anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-FIRST-HR" } },
   {
     kind: "docs",
     id: "FC-G3-OTHER-LEAD",
     claim: "G3",
     edit: page => onceIn(page, `## ${OWNERSHIP_HEADING}\n\n`, `## ${OWNERSHIP_HEADING}\n\n${GP_OWNER} decides policy scores through the gp seam at src/workbench/gp-seam.ts.\n\n`),
     expect: ["ownership-other"],
+    anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-OTHER-LEAD" },
   },
-  { kind: "member", id: "FC-S2-Q1-COMMENTED", claim: "S2", member: "src/workbench/q1-shape.ts", edit: commentedOut },
-  { kind: "member", id: "FC-S2-Q2-COMMENTED", claim: "S2", member: "src/workbench/q2-joined.ts", edit: commentedOut },
+  { kind: "member", id: "FC-S2-Q1-COMMENTED", claim: "S2", member: "src/workbench/q1-shape.ts", edit: commentedOut, anchor: { bead: REFUSAL_ITEMS_BEAD, name: "Q1" } },
+  { kind: "member", id: "FC-S2-Q2-COMMENTED", claim: "S2", member: "src/workbench/q2-joined.ts", edit: commentedOut, anchor: { bead: REFUSAL_ITEMS_BEAD, name: "Q2" } },
+  { kind: "member", id: "FC-S2-Q1-BLOCK-COMMENT", claim: "S2", member: "src/workbench/q1-shape.ts", edit: blockCommented, anchor: { bead: CARRIED_BEAD, name: "G15-P-S2-Q1-BLOCKCOMMENT" } },
+  {
+    kind: "listing",
+    id: "FC-LISTING-SYMLINK",
+    claim: "LISTING",
+    files: { "qa/zz-g15-target.ts": 'export const graphPolicyLabel = "seam";\n', "src/workbench/zz-g15-module.ts": "export const placed = 1;\n" },
+    links: { "src/workbench/zz-g15-link.ts": "../../qa/zz-g15-target.ts", "src/workbench/zz-g15-dir": "../../qa", "src/workbench/zz-g15-dangling.ts": "../../qa/zz-g15-missing.ts", "qa/zz-g15-link.ts": "zz-g15-target.ts" },
+    word: "GraphPolicy",
+    anchor: { bead: CARRIED_BEAD, name: "G15-P-G1-SYMLINK" },
+  },
 ];
