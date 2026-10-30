@@ -3,7 +3,9 @@
  * truncation-honesty census, an until-then pin. Cut #4, the respin of refusal #3, authored in the enumerate-the-resolvable form its
  * CUT #4 FORM binds (standing rule 19(c), the rule 14 shape; the shape frozen at 3da116fd): its unmet U1-U3 are cured below, CUT #4,
  * and the pinned set is named in closed form, ENUMERATION; refusal #2's unmet U1 stays cured (CUT #3), and refusal #1's U1-U4 (CUT #2).
- * Landed at 664 (gate cmd_e5957822ab13, PASS-WITH-FINDING); the R694 follow-up wb-o6jx cures that verdict's F1 and F2 (FOLLOW-UP).
+ * Landed at 664 (gate cmd_e5957822ab13, PASS-WITH-FINDING); the R694 follow-up wb-o6jx cures that verdict's F1 and F2 (FOLLOW-UP),
+ * and landed at 710 (gate cmd_fb5701ecc454, PASS-WITH-FINDING); its R694 follow-up wb-y3hc cures that verdict's F1 (FOLLOW-UP
+ * wb-y3hc).
  * Statement (the bead's STATEMENT, read from the tracked export .beads/issues.jsonl at run time and never retyped beyond the
  * fragments the rows quote): it is tiled, in order and exactly, by row G's label, ", ", row W's label, ". ", the PENDING clause,
  * "; ", row U's label and ".", so no row label can drift from the filing and no row can be dropped without leaving its fragment
@@ -133,7 +135,9 @@
  *    type assertions), whatever the callee (require, import(), a call of a call such as createRequire(import.meta.url)(...),
  *    module.require, require.resolve, a loader under any name), other than a child-process call site's binary, which W1 reads (a
  *    call here is a call expression, and a construct, new X(...), is none: a construct's literal first argument is no U3 load
- *    but R-UNREAD-SPECIFIER's, Q6), no tagged template's literal names one and no import-equals declaration does (so a literal
+ *    but R-UNREAD-SPECIFIER's, Q6; and a call's first argument is the one position read: a literal it passes at a later
+ *    argument, the call-through carrier, such as loader.call(undefined, spec) or loader.bind(undefined, spec)(), is no U3
+ *    load but R-UNREAD-SPECIFIER's too, Q6), no tagged template's literal names one and no import-equals declaration does (so a literal
  *    rf binary passed to a launch W1 does not resolve reads as such a load); no src type position names one (an import type's argument, such as N11's typeof
  *    import("@reactive-fiber/tsx"), a triple-slash types or path directive, an amd-dependency directive, an ambient module
  *    declaration's name, or an import or export declaration nested in a module block), each read as a type reference and never as
@@ -180,8 +184,10 @@
  *    text. U2's: every rf descriptor's id, effect class, description and contractSource.
  *  - U3's, for a bare specifier naming an rf package: sourceStructure's four (a top-level static import, type-only ones
  *    included; a top-level export-from; a dynamic import or a require call with a literal first argument); packageLoads' three
- *    (any call expression's literal first argument, read through parentheses and type assertions, never a construct's, new
- *    X(...), which R-UNREAD-SPECIFIER names; a tagged template's literal; an import-equals reference); typeReferences', each a type reference (an import type's argument; a triple-slash types or path
+ *    (any call expression's first argument, arguments[0] only, when it is a string or no-substitution template literal, read
+ *    through parentheses and the as, angle-bracket, satisfies and non-null assertions; never a later argument, the call-through
+ *    carrier, and never a construct's, new X(...), both of which R-UNREAD-SPECIFIER names; a tagged template's literal without
+ *    substitutions; an import-equals reference); typeReferences', each a type reference (an import type's argument; a triple-slash types or path
  *    directive; an amd-dependency directive; an ambient module declaration's name; an import or export declaration nested in a
  *    module block); and package.json's every key (as a specifier) and string value (as a spec) at any depth.
  *  - G's: the capture's fields, which the capture script writes from the seven producer reads capture.remeasure names.
@@ -200,9 +206,13 @@
  *  evaluated source text and U3 no binary path or composed name (Q5); R-UNREAD-SPECIFIER an rf package
  *  specifier that reaches a loader other than as a call's first-argument literal, a tagged template's literal or an import-equals
  *  reference (any other expression: held in a variable, an array spread into the call or passed through Reflect.apply, a
- *  conditional, composed at run time, built into a URL; and a construct's literal first argument, whatever the constructor,
- *  such as new (createRequire(import.meta.url))("@reactive-fiber/sdk"), which Node runs as a load: packageLoads reads a call
- *  expression's arguments, never a construct's) is no U3 load (Q6); R-PATH-SPECIFIER an rf package's files reached by a
+ *  conditional, composed at run time, built into a URL; a construct's literal first argument, whatever the constructor,
+ *  such as new (createRequire(import.meta.url))("@reactive-fiber/sdk"), which Node runs as a load; and the call-through
+ *  carrier, an rf package literal a call passes after its first argument, directly or inside an array literal, whatever the
+ *  callee: a loader reached through Function.prototype's call, bind or apply, loader.call(undefined, spec),
+ *  loader.bind(undefined, spec)() and loader.apply(undefined, [spec]), or a wrapper that hands a later parameter to a loader,
+ *  each of which Node runs as a load: packageLoads reads a call expression's first argument, arguments[0], never a later
+ *  argument and never a construct's) is no U3 load (Q6); R-PATH-SPECIFIER an rf package's files reached by a
  *  path rather than a bare specifier (a relative path into node_modules, an absolute path, a file: URL, a triple-slash path
  *  directive, an import type of a path) name no rf package to U3's predicate, which reads bare specifiers only so that Pi's own
  *  relative reactivefiber module stays quiet: no U3 reader reads one, in any position (Q7).
@@ -275,6 +285,30 @@
  *  regular file or symlink: the walk lists it unwalked as socket.ts|other (its .ts name never makes it a module), L2-H1 and
  *  L2-H1c red W1, and the sentence is restated. The census makes no FIFO or device; both take the same other reading the live
  *  socket pins.
+ * FOLLOW-UP wb-y3hc (the R694 follow-up of landing 710's PASS-WITH-FINDING, gate cmd_fb5701ecc454, F1 MEDIUM; chain hop 3,
+ *  wb-2j3.10 -> wb-o6jx -> wb-y3hc, filed in the TERMINAL enumerate-the-resolvable form R739 binds at hop 3, BIND F16: the
+ *  header restates R-UNREAD-SPECIFIER to exactly the argument position packageLoads reads, names the call-through carrier
+ *  with pinned Q6 quiet members, and says first argument where it said arguments; additions only: no title, row, pin,
+ *  control, plant case or residual family is removed and no prior reading changes - against the landed roster (sha256_16
+ *  1d1d79cc53432740) every prior constant, the filing and every prior witness entry read equal, one constant and one
+ *  witness gain four members each, and the frozen shape stays [G:3, W:3, U:3, Q:7]; src, package.json and the census's
+ *  helpers are byte-identical at the base 42ab54d and at MEASURED's b3d410f, so MEASURED stands). F1 (MEDIUM, the
+ *  call-through carrier and the arguments wording): before, R-UNREAD-SPECIFIER named no call-through carrier and its
+ *  parenthetical said packageLoads reads a call expression's arguments, while packageLoads reads node.arguments[0] of a
+ *  call expression only, so the gate's g23 (appended to src/workbench/graph-view.ts:
+ *  gateMakeLoader(import.meta.url).call(undefined, "@reactive-fiber/sdk"), which the gate measured landable through biome
+ *  and tsc) and g24 (the same through bind(undefined, ...)()) read 0 failed, though under Node v24.20.0 each loads the
+ *  package (re-measured here against a fake @reactive-fiber/sdk, with apply and a wrapper's later parameter beside them),
+ *  g21 (a literal second argument of an ordinary call, ["x"].concat("x", ...)) read 0 failed against the plural, and a
+ *  reader widened to every argument read 0 failed too: no row pinned the position packageLoads reads. After (the cure's one
+ *  arm, as F16 records: the carrier is named, not read): U3's header, the ENUMERATION, R-UNREAD-SPECIFIER and packageLoads'
+ *  doc say a call's first argument, arguments[0], is the one position read, R-UNREAD-SPECIFIER names the call-through
+ *  carrier, and Q6 pins four call-through members as no load (call-through, the gate's g23 text; bind-through, g24's form;
+ *  apply-through, an array handed to apply; later-argument, a wrapper that hands its second parameter to a loader), so a
+ *  reader widened to a later argument reds Q6, while g23, g24 and the family's other plants stay green by design, as L2-C1
+ *  and R-PATH-SPECIFIER's plants do. Reading the carrier instead (packageLoads widened to every argument), measured on a
+ *  throwaway copy, reads no false load on today's src; it is not taken, because F1's cure and F16's form bind the naming
+ *  arm.
  *
  * Display paths added: none. Test-only: one scratch directory (makeScratch from test/helpers/scratch.ts, removed by W1's case,
  *  installScratchLeakGuard at module scope) holds W1's entry controls, a Unix socket among them (bound by path inside that 0700
@@ -615,7 +649,9 @@ const UNSEEN_LAUNCHES: Readonly<Record<string, string>> = {
 };
 /** Q6's specifiers no U3 reader reads (R-UNREAD-SPECIFIER): an rf package reaching a loader other than as a call's first-argument
  * literal, a tagged template's literal or an import-equals reference, a construct's literal first argument among them (the
- * finding's form, the landing 664 gate's landable asserted form L2-C1, and a constructed loader held by name). */
+ * finding's form, the landing 664 gate's landable asserted form L2-C1, and a constructed loader held by name), and the
+ * call-through carrier, a literal a call passes after its first argument (the landing 710 gate's landable g23 text through
+ * call, g24's form through bind, an array handed to apply, and a wrapper that hands its second parameter to a loader). */
 const UNREAD_SPECIFIERS: Readonly<Record<string, string>> = {
   variable: `import { createRequire } from "node:module"; const spec = "@reactive-fiber/sdk"; createRequire(import.meta.url)(spec);`,
   array: `import { createRequire } from "node:module"; Reflect.apply(createRequire(import.meta.url), undefined, ["@reactive-fiber/sdk"]);`,
@@ -626,6 +662,10 @@ const UNREAD_SPECIFIERS: Readonly<Record<string, string>> = {
   construct: `import { createRequire } from "node:module"; new (createRequire(import.meta.url))("@reactive-fiber/sdk");`,
   "construct-asserted": `import { createRequire as gateMakeLoader } from "node:module"; type GateLoader = new (id: string) => unknown; export const gateConstructed = new (gateMakeLoader(import.meta.url) as unknown as GateLoader)("@reactive-fiber/sdk");`,
   "construct-bound": `import { createRequire } from "node:module"; const Loader = createRequire(import.meta.url) as unknown as new (id: string) => unknown; new Loader("@reactive-fiber/sdk");`,
+  "call-through": `import { createRequire as gateMakeLoader } from "node:module"; export const gateCalledThrough: unknown = gateMakeLoader(import.meta.url).call(undefined, "@reactive-fiber/sdk");`,
+  "bind-through": `import { createRequire as gateMakeLoader } from "node:module"; export const gateBoundThrough: unknown = gateMakeLoader(import.meta.url).bind(undefined, "@reactive-fiber/sdk")();`,
+  "apply-through": `import { createRequire } from "node:module"; createRequire(import.meta.url).apply(undefined, ["@reactive-fiber/sdk"]);`,
+  "later-argument": `import { createRequire } from "node:module"; const load = (from: string, id: string): unknown => createRequire(from)(id); load(import.meta.url, "@reactive-fiber/sdk");`,
 };
 /** Q7's path specifiers (R-PATH-SPECIFIER): an rf package's files reached by a relative, absolute or file: URL path, which U3's
  * package predicate (packageOf reads bare specifiers only, so Pi's own relative reactivefiber module stays quiet) reads as
@@ -1353,7 +1393,8 @@ function unwrapped(expression: ts.Expression): ts.Expression {
   return at;
 }
 /** U3's loader reading of one module: every string literal that is the first argument of a call (a call expression, read through
- * parentheses and type assertions; a construct's arguments, new X(...), are never read: R-UNREAD-SPECIFIER, Q6), whatever the
+ * parentheses and type assertions; a construct's arguments, new X(...), are never read, and neither is a call's later
+ * argument, the call-through carrier: R-UNREAD-SPECIFIER, Q6), whatever the
  * callee (require, import(), a call of a call such as createRequire(import.meta.url)(...), module.require, require.resolve, a
  * loader under any name), a tagged template's literal, or an import-equals declaration's module reference, and names an rf
  * package, except a child-process call site's binary (W1 reads it), as `${scope}:${carrier}:${specifier}` (carrier require,
