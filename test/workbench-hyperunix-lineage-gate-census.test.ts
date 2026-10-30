@@ -21,24 +21,30 @@
  * (vendor/hyperunix-sdk-0.1.0.tgz). Its 27 shipped declaration files spell none of the six kinds as a string literal (only
  * namesakes: the "verified" mutation outcome, the dependents/dependencies reads, ConsumerActiveError, a provider.d.ts comment),
  * and its QueryResult declares the lossless extension sidecar ("Lossless sidecar of negotiated extension frames"). On the
- * provider's own path (resultFromJson, resultToJson, the JSON round trip) an unknown member survives at 12 of the 22 object nodes
- * of a full SDK document - the row claim bodies, each certificate's cause, scope, target and body, the incomplete regions and
- * the sidecar - and is dropped from every record the serializer rebuilds field by field. So a typed-ref payload that reached
- * Pi's find path before a released SDK declares it would arrive inside one of those open containers. Pi reads no unknown member
- * of any of them: the registered provider registerHyperUnixFind (providers/hyperunix.ts, the injected-reader registration)
- * delivers a planted member where the serializer left it, and its output otherwise equals, byte for byte, its output for the same
- * document without one (B2's whole-output leg; wb-57n1, measured on trunk 9ad61f3), the reader adapter reads rows for their count
- * and certificates for their batch ids only, and the native-evidence projection reads the execution id, kind and evidence ids
- * only. A read of a named producer member of an incomplete region (a relayed display facet) stays outside A3's boundary and
- * inside the B rows' byte-identity, which plant this census's own member.
+ * provider's own path (resultFromJson, resultToJson, the JSON round trip) an unknown member with an object value survives verbatim
+ * at 12 of the 22 object nodes of a full SDK document - the row claim bodies, each certificate's cause, scope, target and body,
+ * the incomplete regions and the sidecar -; at evidence.provider_versions only its name survives, its value coerced to a string by
+ * String() (a string value survives there verbatim, so a string member is kept at 13 nodes); and it is dropped from the other 9,
+ * the records the serializer rebuilds field by field (A2 measures every node for an object and for a string member). So a
+ * typed-ref payload, an object, that reached Pi's find path before a released SDK declares it would arrive verbatim inside one
+ * of those open containers. Pi reads no constructed lineage record planted in any of them: for every plant of PLANTS at every
+ * object node of every reading, the registered provider registerHyperUnixFind (providers/hyperunix.ts, the injected-reader
+ * registration) returns, as JSON text, exactly the census's model of its output for that document (providerShaped: the contract,
+ * the SDK codec's own source, workspaceRoot and runtime), and where the codec keeps the record verbatim its output equals, as JSON
+ * text, its output for the same document without one plus exactly that record at that node (B2; wb-57n1, re-measured on trunk
+ * c85be84); the reader adapter reads rows for their count and certificates for their batch ids only, and the native-evidence
+ * projection reads the execution id, kind and evidence ids only. A read of a named producer member of an incomplete region (a
+ * relayed display facet) stays outside A3's boundary and inside the B rows' byte-identity, which plant this census's own member.
  *
  * Pi consumes no H0/H1 result today. This census pins that standing leg, and the on-landing leg stays owed (NOT CLAIMED below):
  *  A, the gate. A1 the vendored SDK's shipped declarations (every dist .d.ts of the installed package, the version Pi's
  *    package.json pins through the committed tarball) spell none of the six kinds as a whole string literal - a hit is the
  *    gating artifact arriving: re-measure, the on-landing leg is owed; A1c the kind judge flags each kind in every quote, case and
  *    separator spelling and stays quiet on the SDK's own namesakes, each read from its file; A2 the serializer emits exactly its
- *    23 representation members, a member planted at every object node of a full SDK document survives exactly at the 12 open
- *    containers (measured, pinned), and nowhere else; A3 no consumed field (HYPERUNIX_CONSUMED_FIELDS, at least its count at
+ *    23 representation members, and of a member planted at every object node of a full SDK document, one node at a time, an object
+ *    member survives verbatim exactly at the 12 open containers, by name only at evidence.provider_versions (its value coerced by
+ *    String()) and nowhere else (dropped at the other 9, never moved), while a string member survives verbatim at the 12 and at
+ *    evidence.provider_versions (measured, pinned); A3 no consumed field (HYPERUNIX_CONSUMED_FIELDS, at least its count at
  *    this cut's base) reads the sidecar, a row body or a certificate's cause, scope, target or body, rows are read for their
  *    count, the two HX modules never spell the sidecar member, and Pi registers hyperunix.find as its only HX read on both
  *    registrations (each named by its own descriptor text), equal to the src reconcile table.
@@ -47,12 +53,23 @@
  *    same reading without it, under both host contexts, for the reader adapter and the native-evidence projection alike, and no
  *    output string carries a planted sentinel (a sentinel planted in the operation is the control that the detector sees one);
  *    B2 through the registered provider registerHyperUnixFind (a stub reader returning the document), for every reading of
- *    READINGS, the full record (P9) planted at each node of the reading's document where the SDK's own codec keeps it, one node
- *    at a time (the 12 open containers of A2 on R05; 161 over READINGS), arrives verbatim in the provider output, the whole
- *    provider output is its output for the plain document with exactly that record added at that node (nothing else added, no
- *    other byte moved; a delivered output given a member beside source or a changed runtime value is the control that the judge
- *    sees one), and the projection and native evidence stay strictEqual; B3 the full record planted at every object node of
- *    a provider reading (positions derived from the reading, their count re-derived from its JSON text) moves no output byte.
+ *    READINGS: the plain document's whole output equals, as JSON text, the census's model of it (providerShaped, the shape B1 and
+ *    B3 read), and so does the output for every plant of PLANTS planted at each object node of the reading's document, one plant
+ *    and one node at a time (all 9 plants at all 301 object nodes of READINGS, R05's 22 included), so the provider adds, drops,
+ *    reorders and retypes nothing the codec did not; where the codec keeps the record verbatim (the 12 open containers of A2 on
+ *    R05; 161 nodes over READINGS, the same nodes for every plant) the record arrives verbatim, the whole output equals, as JSON
+ *    text, the plain output with exactly that record added at that node, and the projection and native evidence stay strictEqual;
+ *    and with a plant at every such node of a reading at once, the whole output is the model and the plain output with the record
+ *    at each of them. One judge decides every whole-output comparison (judgeWhole: JSON text, its model leg everywhere and its
+ *    plain leg where the codec keeps the record), and its controls hold it to every single-edit move of the seven kinds of EDITS:
+ *    on the delivered output for R05 with P9 at rows.0, a member added at each object node (their count re-derived from the
+ *    output's JSON text), each member and each array element removed, each scalar changed, each non-string scalar retyped to its
+ *    own text, each string's first cased letter recased, each string given a trailing space, and each object's members and each
+ *    array's elements rotated - every such candidate that moves the output's JSON text, inside source (coverage_summary, the
+ *    delivered rows, the record) and beside it alike - is judged moved on both legs, and the delivered output itself on neither
+ *    (the plain leg cannot pass by re-planting: a plant never overwrites a member); B3 the full record planted at
+ *    every object node of a provider reading (positions derived from the reading, their count re-derived from its JSON text)
+ *    moves no output byte.
  *  N, the statement's negative clause. N1 no projection states any relation but the one display-grouping edge from the invoking
  *    operation to the query node (none without one), so no planted kind is lifted to a RelationKind or merged into grouping; N2 a
  *    sidecar walk record claiming complete coverage leaves every reading at its own coverage: complete only when runtime-licensed
@@ -63,8 +80,10 @@
  * clause 3) verbatim, and ON_LANDING as acceptance clauses 1 and 2; F2 READINGS covers exactly the execution kinds the src
  * adapter projects (HYPERUNIX_EXECUTION_KINDS, mutation outcomes refused). A2's member list is held to the SDK's own serializer.
  * FROZEN SHAPE (standing rule 16): S pins the rows and their pins, KINDS, READINGS (id, kind, licence, expected coverage), PLANTS
- * (id and record members), the representation members, the judge controls, the residuals and the on-landing labels as literals;
- * every pin compares a measured witness to WITNESSES (payload identity); Z requires every pin to run once, in row order.
+ * (id and record members), the representation members, the judge controls - the kind judge's (FLAGGED, NAMESAKES) and B2's
+ * whole-output control kinds (EDITS) -, the residuals and the on-landing labels as literals; every pin compares a measured witness
+ * to WITNESSES (payload identity: B2's carries the plants it swept, its control output and each control kind's count); Z requires
+ * every pin to run once, in row order.
  * CASE NAMES: no case name here evidences docs/workbench/09's "optional graph traversal of linked native refs" (the RA5/b half of
  * test/workbench-docs09-readers-relationships.census.ts, routed to this bead's on-landing leg), so every case name stays outside
  * that half's title probe; the kind spellings live in data, never in a case name.
@@ -73,6 +92,11 @@
  * results in a released @hyperunix/sdk (HyperUnix-CLI H0/H1, an external target) and a re-vendor; no Pi reader of them exists.
  * The native registration's invoke (nativeHyperUnixFind, which launches the SDK's client and so needs the hx binary) is not
  * driven: B2 reaches the provider through registerHyperUnixFind only, and A3 reads both registrations' catalogs, not outputs.
+ * B2 drives the census's own documents only (READINGS' execution kinds, so no mutation outcome; two rows at most) with the records
+ * of PLANTS, one node at a time and every codec-kept node at once: a provider keyed on another document, on another payload (A2
+ * measures where a string member survives, but no B row plants one) or on another combination of nodes is not driven; and B2's
+ * controls are single edits of the seven EDITS kinds, so a judge blind only to an edit of another kind or to a combination of
+ * edits is not excluded by them.
  * Every lineage record, kind spelling and carrier key below is CONSTRUCTED by this census; the producer mints none of them.
  */
 import {readdirSync, readFileSync} from 'node:fs';
@@ -139,21 +163,32 @@ const RESIDUALS: readonly Residual[] = Object.freeze([
   {id: 'RS3', family: 'a lineage payload inside a container the SDK copies whole adds no serializer member, so A2 never sees it', quiet: 'Q3'},
 ]);
 
-/** The 12 object nodes of a full SDK document at which an unknown member survives the provider's codec path (measured, A2/B2). */
+/** The 12 object nodes of a full SDK document at which an object member survives the provider's codec path verbatim (measured, A2/B2). */
 const OPEN_POSITIONS: readonly string[] = Object.freeze([
   'rows.0', 'rows.1', 'coverage.0.cause', 'coverage.0.scope', 'coverage.0.target', 'coverage.0.body', 'coverage.1.cause', 'coverage.1.scope',
   'coverage.1.target', 'coverage.1.body', 'coverage_summary.incomplete_regions.0', 'extensions',
 ]);
-/** The measured witness each pin must reproduce (payload identity), measured on trunk f5589e0 with @hyperunix/sdk 0.1.0 (B2's re-measured on trunk 9ad61f3 when wb-57n1 added the whole-output leg). */
+/** The one object node at which only a planted member's name survives, an object value coerced by String(); a string survives there verbatim (A2). */
+const COERCING_POSITION = 'evidence.provider_versions';
+/** The 9 object nodes the serializer rebuilds field by field, where a planted member is dropped (A2). */
+const DROPPED_POSITIONS: readonly string[] = Object.freeze([
+  '(root)', 'coverage.0', 'coverage.1', 'status', 'status.streams.0', 'execution_status', 'transport', 'coverage_summary', 'evidence',
+]);
+/** The measured witness each pin must reproduce (payload identity), measured on trunk f5589e0 with @hyperunix/sdk 0.1.0 (A2's and B2's re-measured on trunk c85be84 by the wb-57n1 respin). */
 const WITNESSES: Readonly<Record<string, JsonValue>> = Object.freeze({
   A1: {declarationFiles: 27, kindLiteralFiles: 0, version: '0.1.0', sidecarDeclared: true},
   A1c: {flagged: 9, kinds: 6, namesakes: 4, flaggedHits: 9, namesakeHits: 0},
-  A2: {members: 23, objectNodes: 22, kept: [...OPEN_POSITIONS]},
+  A2: {members: 23, objectNodes: 22, kept: [...OPEN_POSITIONS], coerced: [COERCING_POSITION], dropped: [...DROPPED_POSITIONS],
+    textKept: [...OPEN_POSITIONS.slice(0, -1), COERCING_POSITION, 'extensions']},
   A3: {sidecarReads: 0, bodyReads: 0, rowsUse: 'rows', sidecarTokens: 0, reads: [['hyperunix.find'], ['hyperunix.find']],
     registrations: [['Read typed HX results with native coverage and query basis'], ['Native bounded HX query with coverage']]},
   B1: {readings: 14, plants: 9, contexts: 2, adapter: 252, evidence: 126, delivered: 126, sentinelHits: 0},
-  B2: {positions: [...OPEN_POSITIONS], compared: 161, whole: 161, controls: 2,
-    kept: {R01: 11, R02: 12, R03: 9, R04: 10, R05: 12, R06: 11, R07: 12, R08: 12, R09: 12, R10: 12, R11: 12, R12: 12, R13: 12, R14: 12}},
+  B2: {plants: ['P1:edges', 'P2:edges', 'P3:edges', 'P4:edges', 'P5:edges', 'P6:edges', 'P7:walk', 'P8:missing_edges', 'P9:edges+walk+missing_edges'],
+    positions: [...OPEN_POSITIONS],
+    nodes: {R01: 21, R02: 22, R03: 19, R04: 20, R05: 22, R06: 21, R07: 22, R08: 22, R09: 22, R10: 22, R11: 22, R12: 22, R13: 22, R14: 22},
+    kept: {R01: 11, R02: 12, R03: 9, R04: 10, R05: 12, R06: 11, R07: 12, R08: 12, R09: 12, R10: 12, R11: 12, R12: 12, R13: 12, R14: 12},
+    unmoved: {model: 2723, plain: 1449}, compared: 1449, together: 126,
+    controls: {at: 'R05/P9 at rows.0', added: 63, removed: 257, changed: 181, retyped: 30, recased: 150, spaced: 151, rotated: 60}},
   B3: {readings: ['R01', 'R05'], positions: [23, 24]},
   N1: {topologies: 280, relations: 140, kinds: ['grouping']},
   N2: {complete: 2, partial: 7, unknown: 5},
@@ -275,27 +310,110 @@ function nodeAt(value: unknown, path: Path): unknown {
   for (const step of path) node = Array.isArray(node) ? node[Number(step)] : isRecord(node) ? node[String(step)] : undefined;
   return node;
 }
-/** A deep copy of `value` with `member` set to `payload` on the object node at `path`. */
+/**
+ * A deep copy of `value` with `member` added, set to `payload`, on the object node at `path`. A node that already carries `member`
+ * is refused, so a plant never overwrites (B2's plain leg cannot pass by re-planting a record its plain output already holds).
+ */
 function plantedAt<T extends JsonValue>(value: T, path: Path, member: string, payload: JsonValue): T {
   const copy = JSON.parse(JSON.stringify(value)) as T;
   const node = nodeAt(copy, path);
   if (!isRecord(node)) throw new Error(`no object node at ${path.join('.')}`);
+  if (Object.hasOwn(node, member)) throw new Error(`the node at ${path.join('.') || '(root)'} already carries ${member}`);
   node[member] = payload;
   return copy;
 }
 const dotted = (path: Path): string => path.join('.');
+/** The object nodes of a JSON tree that carry the census's member, by dotted path. */
+const carriers = (value: unknown): string[] =>
+  objectPaths(value).filter(path => {
+    const node = nodeAt(value, path);
+    return isRecord(node) && Object.hasOwn(node, CENSUS_KEY);
+  }).map(dotted);
 const braces = (value: unknown): number => JSON.stringify(value).split('{').length - 1;
 
 const topologyOf = (value: JsonValue, context: HyperUnixTopologyContext): HyperUnixProjectionTopology => hyperunixTopology(value, context);
 /** Whether any output string carries a planted sentinel: B1's loop and its leak control share this one judge. */
 const leaks = (value: unknown): boolean => JSON.stringify(value).includes(SENTINEL);
 const evidenceOf = (value: JsonValue) => nativeEvidence('hyperunix.find', value);
+/** `value` with `record` planted under CENSUS_KEY at each node of `paths`, each path read below `under`. */
+const plantedEach = <T extends JsonValue>(value: T, paths: readonly Path[], record: Json, under: Path = []): T =>
+  paths.reduce((planted, path) => plantedAt(planted, [...under, ...path], CENSUS_KEY, record), value);
+interface Judgment { readonly judged: readonly string[]; readonly moved: readonly string[]; }
 /**
- * B2's whole-output judge (wb-57n1): whether the provider's entire output for a document planted at `path` differs, as JSON text,
- * from its output for the plain document with exactly that record added at that node. B2's loop and its controls share it.
+ * B2's whole-output judge (wb-57n1), the one function its sweep and every one of its controls call. `output` is the provider's
+ * output for `base` with `record` planted at each node of `paths`. The model leg compares it, as JSON text, with providerShaped of
+ * that planted document; when at least one node is planted and the codec keeps the record verbatim at every one of them, the plain
+ * leg compares it, as JSON text, with `plain` (the provider's output for `base`) with exactly that record added at each of them.
  */
-const wholeMoved = (output: JsonValue, plain: JsonValue, path: Path, record: Json): boolean =>
-  JSON.stringify(output) !== JSON.stringify(plantedAt(plain, ['source', ...path], CENSUS_KEY, record));
+function judgeWhole(output: JsonValue, base: Json, plain: JsonValue, paths: readonly Path[], record: Json): Judgment {
+  const model = providerShaped(plantedEach(base, paths, record));
+  const legs: (readonly [string, JsonValue])[] = [['model', model]];
+  const verbatim = paths.every(path => JSON.stringify(nodeAt(model, ['source', ...path, CENSUS_KEY])) === JSON.stringify(record));
+  if (paths.length > 0 && verbatim) legs.push(['plain', plantedEach(plain, paths, record, ['source'])]);
+  const text = JSON.stringify(output);
+  return {judged: legs.map(([leg]) => leg), moved: legs.filter(([, expected]) => JSON.stringify(expected) !== text).map(([leg]) => leg)};
+}
+/** The kinds of single-edit move B2's judge must see (its controls), in this order; S pins the list. */
+const EDITS = Object.freeze(['added', 'removed', 'changed', 'retyped', 'recased', 'spaced', 'rotated'] as const);
+type Edit = (typeof EDITS)[number];
+/** Every node of a JSON tree by its path - objects, arrays and scalars alike - in document order. */
+function nodePaths(value: unknown, path: Path = []): Path[] {
+  if (Array.isArray(value)) return [path, ...value.flatMap((child: unknown, index) => nodePaths(child, [...path, index]))];
+  if (isRecord(value)) return [path, ...Object.entries(value).flatMap(([key, child]) => nodePaths(child, [...path, key]))];
+  return [path];
+}
+/** A deep copy of `value` whose node at `path` is replaced by `edit` of it. */
+function editedAt(value: JsonValue, path: Path, edit: (node: JsonValue) => JsonValue): JsonValue {
+  const copy = JSON.parse(JSON.stringify(value)) as JsonValue;
+  if (path.length === 0) return edit(copy);
+  const parent = nodeAt(copy, path.slice(0, -1));
+  const step = path[path.length - 1];
+  if (Array.isArray(parent)) parent[Number(step)] = edit(parent[Number(step)] as JsonValue);
+  else if (isRecord(parent)) parent[String(step)] = edit(parent[String(step)] as JsonValue);
+  else throw new Error(`no container above ${dotted(path)}`);
+  return copy;
+}
+const membersOf = (node: JsonValue): [string, JsonValue][] => (isRecord(node) ? (Object.entries(node) as [string, JsonValue][]) : []);
+const elementsOf = (node: JsonValue): JsonValue[] => (Array.isArray(node) ? node : []);
+const rotatedOnce = <T>(items: readonly T[]): T[] => [...items.slice(1), ...items.slice(0, 1)];
+/** A scalar changed: a string suffixed, a number incremented, a boolean negated, null replaced by 0. */
+const changedScalar = (scalar: JsonValue): JsonValue =>
+  typeof scalar === 'string' ? `${scalar}-moved` : typeof scalar === 'number' ? scalar + 1 : typeof scalar === 'boolean' ? !scalar : 0;
+/** A string whose first cased letter has its case flipped (the same text otherwise). */
+const recased = (text: string): string => text.replace(/\p{L}/u, letter => (letter === letter.toUpperCase() ? letter.toLowerCase() : letter.toUpperCase()));
+/**
+ * B2's judge controls: every single-edit move of `output`, by kind (EDITS), each derived from the output itself. A candidate that
+ * leaves the output's JSON text unchanged (a rotation of equal elements, a letter without case) moves nothing, so it is no control.
+ */
+function editsOf(output: JsonValue): Record<Edit, JsonValue[]> {
+  const edits: Record<Edit, JsonValue[]> = {added: [], removed: [], changed: [], retyped: [], recased: [], spaced: [], rotated: []};
+  for (const path of nodePaths(output)) {
+    const node = nodeAt(output, path) as JsonValue;
+    if (isRecord(node)) {
+      edits.added.push(editedAt(output, path, copy => Object.fromEntries([...membersOf(copy), [`${CENSUS_KEY}:moved`, true]])));
+      for (const member of Object.keys(node)) {
+        edits.removed.push(editedAt(output, path, copy => Object.fromEntries(membersOf(copy).filter(([name]) => name !== member))));
+      }
+      edits.rotated.push(editedAt(output, path, copy => Object.fromEntries(rotatedOnce(membersOf(copy)))));
+    } else if (Array.isArray(node)) {
+      for (let index = 0; index < node.length; index++) {
+        edits.removed.push(editedAt(output, path, copy => [...elementsOf(copy).slice(0, index), ...elementsOf(copy).slice(index + 1)]));
+      }
+      edits.rotated.push(editedAt(output, path, copy => rotatedOnce(elementsOf(copy))));
+    } else {
+      edits.changed.push(editedAt(output, path, changedScalar));
+      if (typeof node === 'string') {
+        edits.recased.push(editedAt(output, path, () => recased(node)));
+        edits.spaced.push(editedAt(output, path, () => `${node} `));
+      } else {
+        edits.retyped.push(editedAt(output, path, scalar => String(scalar)));
+      }
+    }
+  }
+  const text = JSON.stringify(output);
+  for (const edit of EDITS) edits[edit] = edits[edit].filter(control => JSON.stringify(control) !== text);
+  return edits;
+}
 const CTX = {grants: ['hyperunix:read'], signal: new AbortController().signal};
 /** The registered provider's output for a document, through a stub reader and the capability registry. */
 async function provided(document: Json): Promise<JsonValue> {
@@ -369,23 +487,43 @@ describe('wb-4ap.13 HyperUnix lineage gate census (standing leg)', () => {
     settle('A1c', {flagged: FLAGGED.length, kinds: KINDS.length, namesakes: NAMESAKES.length, flaggedHits: FLAGGED.length, namesakeHits: 0});
   });
 
-  it('A2: the SDK serializer emits exactly its 23 members, and an unknown member survives only at the open containers it copies whole', () => {
+  it('A2: the SDK serializer emits exactly its 23 members; a planted object member survives verbatim only at the open containers it copies whole, coerced to a string at provider_versions, dropped elsewhere', () => {
     const base = documentOf('incomplete', false);
     const members = Object.keys(resultToJson(resultFromJson(base)));
     expect(members).toStrictEqual([...REPRESENTATION_KEYS]);
     const positions = objectPaths(base);
     expect(positions.length).toBe(braces(base));
     const marker = {[SENTINEL]: CENSUS_KEY};
+    const text = `${SENTINEL} ${CENSUS_KEY}`;
     const kept: string[] = [];
+    const coerced: string[] = [];
+    const dropped: string[] = [];
+    const textKept: string[] = [];
     for (const path of positions) {
+      const where = dotted(path) || '(root)';
       const output = resultToJson(resultFromJson(plantedAt(base, path, CENSUS_KEY, marker)));
-      expect(Object.keys(output), `members after a plant at ${dotted(path) || '(root)'}`).toStrictEqual([...REPRESENTATION_KEYS]);
-      if (JSON.stringify(output).includes(SENTINEL)) {
-        expect(JSON.stringify(nodeAt(output, [...path, CENSUS_KEY])), `the plant at ${dotted(path)} arrives verbatim`).toBe(JSON.stringify(marker));
-        kept.push(dotted(path));
+      expect(Object.keys(output), `members after a plant at ${where}`).toStrictEqual([...REPRESENTATION_KEYS]);
+      const node = nodeAt(output, path);
+      const value = isRecord(node) ? node[CENSUS_KEY] : undefined;
+      if (value === undefined) {
+        expect(JSON.stringify(output).includes(CENSUS_KEY), `the plant at ${where} is dropped, never moved`).toBe(false);
+        dropped.push(where);
+        continue;
+      }
+      expect(carriers(output), `the plant at ${where} survives at its own node only`).toStrictEqual([dotted(path)]);
+      if (JSON.stringify(value) === JSON.stringify(marker)) {
+        kept.push(where);
+      } else {
+        expect(value, `the plant at ${where} keeps only its name, its value coerced by String()`).toBe(String(marker));
+        coerced.push(where);
       }
     }
-    settle('A2', {members: members.length, objectNodes: positions.length, kept});
+    for (const path of positions) {
+      const textOutput = resultToJson(resultFromJson(plantedAt(base, path, CENSUS_KEY, text)));
+      const textNode = nodeAt(textOutput, path);
+      if (isRecord(textNode) && textNode[CENSUS_KEY] === text && carriers(textOutput).length === 1) textKept.push(dotted(path) || '(root)');
+    }
+    settle('A2', {members: members.length, objectNodes: positions.length, kept, coerced, dropped, textKept});
   });
 
   it('A3: Pi reads neither the sidecar nor a copied-whole body and registers hyperunix.find as its only HX read, on both registrations', () => {
@@ -443,43 +581,79 @@ describe('wb-4ap.13 HyperUnix lineage gate census (standing leg)', () => {
     settle('B1', {readings: READINGS.length, plants: PLANTS.length, contexts: CONTEXTS.length, adapter, evidence, delivered, sentinelHits});
   });
 
-  it('B2: through registerHyperUnixFind the full record arrives verbatim at each open container of every reading and is the only change to the whole output', async () => {
-    const full = plantOf('P9');
+  it('B2: through registerHyperUnixFind every plant at every node of every reading leaves the modelled whole output, the plain output plus the record wherever the codec keeps it', async () => {
+    const plants = new Set<string>();
+    const nodes: Record<string, number> = {};
     const kept: Record<string, number> = {};
+    // Every count below grows only on a comparison that holds, so a deleted expect still reds the witness under a moving provider.
+    const unmoved: Record<string, number> = {model: 0, plain: 0};
+    const tally = (judgment: Judgment): void => {
+      for (const leg of judgment.judged) if (!judgment.moved.includes(leg)) unmoved[leg] = (unmoved[leg] ?? 0) + 1;
+    };
+    const same = (left: unknown, right: unknown): boolean => JSON.stringify(left) === JSON.stringify(right);
     let positions: string[] = [];
     let compared = 0;
-    let whole = 0;
+    let together = 0;
     for (const row of READINGS) {
       const base = documentOf(row.kind, row.licensed);
       const plain = await provided(base);
-      const open = objectPaths(base).filter(path => JSON.stringify(resultToJson(resultFromJson(plantedAt(base, path, CENSUS_KEY, full.record)))).includes(SENTINEL));
-      for (const path of open) {
-        const output = await provided(plantedAt(base, path, CENSUS_KEY, full.record));
-        const at = `${row.id} at ${dotted(path)}`;
-        expect(JSON.stringify(nodeAt(output, ['source', ...path, CENSUS_KEY])), `${at}: the record arrives verbatim`).toBe(JSON.stringify(full.record));
-        // The whole-output leg (wb-57n1): the provider's output is its plain output with exactly this record added at its own node.
-        const moved = wholeMoved(output, plain, path, full.record);
-        expect(moved, `${at}: the whole provider output moved beside the delivered record`).toBe(false);
-        if (!moved) whole++;
-        for (const context of CONTEXTS) expect(topologyOf(output, context), at).toStrictEqual(topologyOf(plain, context));
-        expect(evidenceOf(output), at).toStrictEqual(evidenceOf(plain));
-        compared++;
+      const bare = judgeWhole(plain, base, plain, [], {});
+      expect(bare, `${row.id}: the plain output is the model`).toStrictEqual({judged: ['model'], moved: []});
+      tally(bare);
+      const all = objectPaths(base);
+      const plainTopologies = CONTEXTS.map(context => topologyOf(plain, context));
+      const plainEvidence = evidenceOf(plain);
+      let keptAt: string[] | undefined;
+      for (const item of PLANTS) {
+        const keptHere: Path[] = [];
+        for (const path of all) {
+          const output = await provided(plantedAt(base, path, CENSUS_KEY, item.record));
+          const at = `${row.id}/${item.id} at ${dotted(path) || '(root)'}`;
+          const judgment = judgeWhole(output, base, plain, [path], item.record);
+          expect(judgment.moved, `${at}: the whole provider output moved`).toStrictEqual([]);
+          tally(judgment);
+          if (!judgment.judged.includes('plain')) continue;
+          const arrived = nodeAt(output, ['source', ...path, CENSUS_KEY]);
+          expect(JSON.stringify(arrived), `${at}: the record arrives verbatim`).toBe(JSON.stringify(item.record));
+          const topologies = CONTEXTS.map(context => topologyOf(output, context));
+          expect(topologies, `${at}: the projection under both host contexts`).toStrictEqual(plainTopologies);
+          const evidence = evidenceOf(output);
+          expect(evidence, `${at}: native evidence`).toStrictEqual(plainEvidence);
+          if (same(arrived, item.record) && same(topologies, plainTopologies) && same(evidence, plainEvidence)) compared++;
+          keptHere.push(path);
+        }
+        const names = keptHere.map(dotted);
+        keptAt ??= names;
+        expect(names, `${row.id}/${item.id}: the codec keeps every plant at the same nodes`).toStrictEqual(keptAt);
+        const joint = judgeWhole(await provided(plantedEach(base, keptHere, item.record)), base, plain, keptHere, item.record);
+        expect(joint, `${row.id}/${item.id} at every kept node at once`).toStrictEqual({judged: ['model', 'plain'], moved: []});
+        if (same(joint, {judged: ['model', 'plain'], moved: []})) together++;
+        plants.add(`${item.id}:${Object.keys(item.record).join('+')}`);
       }
-      kept[row.id] = open.length;
-      if (row.id === 'R05') positions = open.map(dotted);
+      nodes[row.id] = all.length;
+      kept[row.id] = keptAt?.length ?? 0;
+      if (row.id === 'R05') positions = keptAt ?? [];
     }
-    // The judge's controls, on R05's record at rows.0: the delivered output with a member added beside source (where the landing-647
-    // gate's GP1 plant put lineage:'seen') or with a changed runtime value is judged moved, so a judge narrowed to source reds here.
+    // The judge's controls (wb-57n1 respin), on the delivered output for R05 with the full record P9 at rows.0: every single-edit move
+    // of that output (EDITS), inside source (coverage_summary, the delivered rows, the record) and beside it alike, is judged moved on
+    // both legs and the delivered output itself on neither, so a judge blind to a region, to key or element order, to a value's type,
+    // to a letter's case or to a trailing space reds here. The added count is re-derived from the output's own JSON text.
+    const full = plantOf('P9');
     const base = documentOf('incomplete', false);
     const first: Path = ['rows', 0];
     const plain = await provided(base);
     const output = await provided(plantedAt(base, first, CENSUS_KEY, full.record));
-    const controls = [plantedAt(output, [], 'lineage', 'seen'), plantedAt(output, ['runtime'], 'version', `${SDK_VERSION}-other`)];
-    const seen = controls.filter(changed => wholeMoved(changed, plain, first, full.record)).length;
-    expect(wholeMoved(output, plain, first, full.record), 'the control output itself is unmoved').toBe(false);
-    expect(seen, 'the judge sees a member beside source and a changed runtime value').toBe(controls.length);
-    settle('B2', {positions, kept, compared, whole, controls: seen});
-  });
+    expect(judgeWhole(output, base, plain, [first], full.record), 'the control output itself is unmoved').toStrictEqual({judged: ['model', 'plain'], moved: []});
+    const edits = editsOf(output);
+    expect(edits.added.length, 'one added member per object node of the output, counted from its JSON text').toBe(braces(output));
+    const controls: Record<string, JsonValue> = {at: `R05/${full.id} at ${dotted(first)}`};
+    for (const edit of EDITS) {
+      const seen = edits[edit].filter(control => JSON.stringify(judgeWhole(control, base, plain, [first], full.record).moved) === JSON.stringify(['model', 'plain'])).length;
+      expect(seen, `the judge sees every ${edit} move on both legs`).toBe(edits[edit].length);
+      controls[edit] = seen;
+    }
+    settle('B2', {plants: [...plants], positions, nodes, kept, unmoved, compared, together, controls});
+  }, 120_000);
 
   it('B3: the full record planted at every object node of a provider reading moves no output byte', () => {
     const full = plantOf('P9');
@@ -600,6 +774,7 @@ describe('wb-4ap.13 HyperUnix lineage gate census (standing leg)', () => {
       members: REPRESENTATION_KEYS.length,
       flagged: FLAGGED.map(([kind]) => kind),
       namesakes: NAMESAKES.map(item => item.file),
+      edits: [...EDITS],
       derived: DERIVED.length,
       identifiers: IDENTIFIERS.length,
       residuals: RESIDUALS.map(item => `${item.id}:${item.quiet}`),
@@ -619,6 +794,7 @@ describe('wb-4ap.13 HyperUnix lineage gate census (standing leg)', () => {
       members: 23,
       flagged: ['produces', 'consumes', 'depends', 'blocks', 'verifies', 'related-to', 'related-to', 'related-to', 'related-to'],
       namesakes: ['protocol/mutation.d.ts', 'client.d.ts', 'execution.d.ts', 'provider.d.ts'],
+      edits: ['added', 'removed', 'changed', 'retyped', 'recased', 'spaced', 'rotated'],
       derived: 6,
       identifiers: 3,
       residuals: ['RS1:Q1', 'RS2:Q2', 'RS3:Q3'],
