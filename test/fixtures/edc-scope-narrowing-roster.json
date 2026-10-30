@@ -1,6 +1,6 @@
 {
  "bead": "wb-pyel.6",
- "comment": "wb-pyel.6 EDC scope-narrowing census roster: the judged set (rows, quotes, constants, every pin's witness) and the registered tests, first measured by seat ws-04 (run g10-work-s125) on trunk 7a0ab7f plus the cut, re-measured for respin 1 by seat ws-05 (run g10-work-s136) on trunk 04123dc plus the cut and for respin 2 by seat ws-03 (run g10-work-s138) on trunk a4cf24c plus the cut; the census holds its own literals to this file and its rows, quotes, partitions, axes, codes and stems to the bead's row in .beads/issues.jsonl",
+ "comment": "wb-pyel.6 EDC scope-narrowing census roster: the judged set (rows, quotes, constants, every pin's witness) and the registered tests, first measured by seat ws-04 (run g10-work-s125) on trunk 7a0ab7f plus the cut, re-measured for respin 1 by seat ws-05 (run g10-work-s136) on trunk 04123dc plus the cut and for respin 2 by seat ws-03 (run g10-work-s138) on trunk a4cf24c plus the cut; the census holds its own literals to this file and its rows, quotes, partitions, axes, codes and stems to the bead's row in .beads/issues.jsonl; extended by seat ws-04 (run g10-work-s147) on trunk 2211bdf plus the cut for wb-a6m9 (the R694 follow-up of landing 682): the combining-mark and escape controls and the R-ESCAPED quiet row Q15",
  "constants": {
   "stems": {
    "edc": "word",
@@ -514,7 +514,16 @@
    "comment": "// EDC assembly\n/* evidence-directed */\nconst value = 1;",
    "inside-word": "const credcheck = 1; const reedcraft = 2;",
    "zero-width": "const label = \"E\u200bDC scope\";",
-   "full-width": "const label = \"\uff25\uff24\uff23 scope\";"
+   "full-width": "const label = \"\uff25\uff24\uff23 scope\";",
+   "combining-mark": "const label = \"E\u0301DC scope\";",
+   "precomposed": "const label = \"\u00c9DC scope\";",
+   "noncomposing-mark": "const label = \"E\u0332DC scope\";",
+   "spacing-mark": "const label = \"E\u0903DC scope\";",
+   "enclosing-mark": "const label = \"E\u20ddDC scope\";",
+   "joined-mark": "const label = \"evide\u0301nce-directed context\";",
+   "string-escape": "const label = \"\\x45DC scope\";",
+   "template-escape": "const label = `\\x45DC ${name} scope`;",
+   "identifier-escape": "const \\u0045dcAssembler = 1;"
   },
   "manifestControls": {
    "dependency": "{ \"name\": \"x\", \"dependencies\": { \"@example/edc\": \"1.0.0\" } }",
@@ -542,6 +551,8 @@
    "plurals": "interface Scope { freshnesses: number[]; precisions: number[]; ceilings: number[] }",
    "zero-width": "interface Scope { \"fresh\u200bness\": number; precision: number; ceiling: number }",
    "full-width": "interface Scope { \uff46\uff52\uff45\uff53\uff48\uff4e\uff45\uff53\uff53: number; precision: number; ceiling: number }",
+   "combining-mark": "interface Scope { \"fre\u0301shness\": number; \"pre\u0301cision\": number; \"ceili\u0308ng\": number }",
+   "precomposed": "interface Scope { \"fr\u00e9shness\": number; \"pr\u00e9cision\": number; \"ceil\u00efng\": number }",
    "string-names": "interface Scope { \"freshness\": number; 'precision': number; ceiling: number }",
    "accessors": "interface Scope { get freshness(): number; set precision(value: number); readonly ceiling: number }",
    "class-accessors": "class Scope { get freshness() { return 1; } set precision(value: number) {} static ceiling = 3; }",
@@ -598,6 +609,8 @@
      "plurals",
      "zero-width",
      "full-width",
+     "combining-mark",
+     "precomposed",
      "string-names",
      "accessors",
      "class-accessors",
@@ -882,6 +895,19 @@
    "export const label = \"E-D-C assembly\"; export const EdC = 1;",
    "export const label = \"EDC assembly\";"
   ],
+  "escaped": {
+   "regex-hex": "export const pattern = /\\x45DC/;",
+   "regex-unicode": "export const pattern = /\\u0045DC/;",
+   "regex-code-point": "export const pattern = /\\u{45}DC/u;",
+   "jsx-decimal.tsx": "export const view = <span>&#69;DC scope</span>;",
+   "jsx-hex.tsx": "export const view = <span>&#x45;DC scope</span>;",
+   "jsx-attribute.tsx": "export const view = <span title=\"&#69;DC scope\">view</span>;"
+  },
+  "escapedTwins": {
+   "regex": "export const pattern = /EDC/;",
+   "jsx.tsx": "export const view = <span>EDC scope</span>;",
+   "jsx-attribute.tsx": "export const view = <span title=\"EDC scope\">view</span>;"
+  },
   "residuals": {
    "R-LOOKALIKE": [
     "Q1"
@@ -924,6 +950,9 @@
    ],
    "R-SPLIT": [
     "Q14"
+   ],
+   "R-ESCAPED": [
+    "Q15"
    ]
   }
  },
@@ -952,6 +981,7 @@
   "Q12",
   "Q13",
   "Q14",
+  "Q15",
   "the registered tests and the reached pins equal the roster, in order and both ways"
  ],
  "rows": [
@@ -1011,6 +1041,33 @@
         ],
         "full-width": [
          "full-width:1|string|edc"
+        ],
+        "combining-mark": [
+         "combining-mark:1|string|edc"
+        ],
+        "precomposed": [
+         "precomposed:1|string|edc"
+        ],
+        "noncomposing-mark": [
+         "noncomposing-mark:1|string|edc"
+        ],
+        "spacing-mark": [
+         "spacing-mark:1|string|edc"
+        ],
+        "enclosing-mark": [
+         "enclosing-mark:1|string|edc"
+        ],
+        "joined-mark": [
+         "joined-mark:1|string|evidencedirected"
+        ],
+        "string-escape": [
+         "string-escape:1|string|edc"
+        ],
+        "template-escape": [
+         "template-escape:1|template|edc"
+        ],
+        "identifier-escape": [
+         "identifier-escape:1|identifier|edc"
         ]
        },
        "manifests": {
@@ -1591,6 +1648,12 @@
         "full-width": [
          "full-width:1|interface|\uff46\uff52\uff45\uff53\uff48\uff4e\uff45\uff53\uff53+precision+ceiling"
         ],
+        "combining-mark": [
+         "combining-mark:1|interface|fre\u0301shness+pre\u0301cision+ceili\u0308ng"
+        ],
+        "precomposed": [
+         "precomposed:1|interface|fr\u00e9shness+pr\u00e9cision+ceil\u00efng"
+        ],
         "string-names": [
          "string-names:1|interface|freshness+precision+ceiling"
         ],
@@ -1998,6 +2061,31 @@
       "sourceTwin": [
        "split-source-twin:1|string|edc"
       ]
+     }
+    },
+    {
+     "id": "Q15",
+     "quote": "R-ESCAPED",
+     "witness": {
+      "escaped": {
+       "regex-hex": [],
+       "regex-unicode": [],
+       "regex-code-point": [],
+       "jsx-decimal.tsx": [],
+       "jsx-hex.tsx": [],
+       "jsx-attribute.tsx": []
+      },
+      "twins": {
+       "regex": [
+        "regex:1|regex|edc"
+       ],
+       "jsx.tsx": [
+        "jsx.tsx:1|jsx|edc"
+       ],
+       "jsx-attribute.tsx": [
+        "jsx-attribute.tsx:1|string|edc"
+       ]
+      }
      }
     }
    ]

@@ -21,8 +21,11 @@
  * THE VOCABULARY: both stems are derived from the title's charter path (docs/programs/<slug>-<date>.md, slug
  * evidence-directed-computation): its INITIALS, the acronym the title spells (edc, read as a whole word or its plural "edcs"),
  * and its MODIFIER, the slug's words before the head noun joined (evidencedirected, read anywhere in the joined fold). Both folds
- * start from NFKC with format controls and combining marks removed (a zero-width space never splits a stem; full-width letters
- * fold). The WORD fold splits camel boundaries (EdcAssembler, parseEDC, EDCs) and every run outside a-z and 0-9; the JOINED fold
+ * start from NFKD (the compatibility mapping of NFKC, left decomposed; the normal form cured in both EDC censuses by wb-a6m9) with
+ * format controls (Cf) and every combining mark (\p{M}: nonspacing, spacing and enclosing) removed (a zero-width space never
+ * splits a stem; a combining mark never splits a stem whether it is written after its letter or precomposed with it, so
+ * E + U+0301 + DC and U+00C9 + DC both read EDC; full-width letters fold). The WORD fold splits camel boundaries (EdcAssembler,
+ * parseEDC, EDCs) and every run outside a-z and 0-9; the JOINED fold
  * removes every character outside a-z and 0-9 (evidence-directed, evidence_directed, "evidence directed", EvidenceDirected,
  * a soft break between the words). OVER-READ (disclosed, the strict direction): every mention is read as a claim - a page that
  * says EDC is NOT shipped reds this census too, by design (the freeze-and-flip tripwire: re-measure, then judge the sentence);
@@ -45,7 +48,9 @@
  *    and package-lock.json's installed package paths and names (never its integrity hashes); every script module below src
  *    (.ts .mts .cts .tsx .js .mjs .cjs .jsx; 116 .ts modules at the cut) through its TypeScript AST: identifiers, private
  *    names, string, template and regular-expression literal texts (so every import, export and dynamic-import specifier) and
- *    JSX text, never a comment.
+ *    JSX text, never a comment. A text is read as the compiler reads it: an identifier's escapes and a string's or a template's
+ *    escapes are decoded (\x45DC reads EDC), while a regular-expression literal, JSX text and a JSX attribute's string are read
+ *    as written, so an escape or a character reference in them is not decoded (R-ESCAPED).
  *  - THE TRACKED LISTING (wb-0st4): git's index (git ls-files -z) is the walks' independent anchor. The claim-page walk, the pages
  *    B2 reads and the src modules A2 reads each equal git's tracked paths of the same scope, both ways, so a walk or a reader that
  *    skips part of its scope reds without waiting for a floor, and so does an untracked page or module the walk would read.
@@ -70,7 +75,7 @@
  * bead do not move it). The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran
  * before it) and the pins that reached their witness.
  * NOT CLAIMED (edits of this file and the roster together below row level): a pin removed from ROWS, the literal, IMPL and the
- * roster where no surface of the acceptance anchors it (A1-A3, B1, B5, Q1-Q6, the last with its RESIDUALS entry); a control
+ * roster where no surface of the acceptance anchors it (A1-A3, B1, B5, Q1-Q7, the last with its RESIDUALS entry); a control
  * removed from its list and the roster; a pin's case replaced by one that echoes its roster witness; git's listing replaced by the
  * walk it anchors, in this file, together with a narrowing of that walk (trackedPaths is the only reader of git's index).
  * RESIDUALS (named, each with its pinned quiet row): R-VOCABULARY EDC described in other words (context assembly charter,
@@ -83,7 +88,11 @@
  * .agents/, vendor/), files under docs/ whose name is no MARKDOWN_PAGE (OUT_OF_SCOPE_DOCS), and modules outside src (an
  * operator's local provider module, the vendored SDK dists) are not read (Q5); R-UNNAMED-ADOPTION an adoption spelled without
  * either stem (a context-block import, a QueryView input) is not read here (Q6) - whether Pi loads the ReactiveComponents
- * distribution at all is pinned by test/workbench-rc-remote-component-stream-census.test.ts.
+ * distribution at all is pinned by test/workbench-rc-remote-component-stream-census.test.ts; R-ESCAPED (wb-a6m9) a stem spelled
+ * through an escape the readers read as written - a hex, a unicode or a code-point escape in a src regular-expression literal
+ * (/\x45DC/, /\u0045DC/, /\u{45}DC/u), a decimal or hex character reference in JSX text or in a JSX attribute's string
+ * (&#69;DC, &#x45;DC), and a named character reference outside REFERENCES in a claim page (&Eacute;DC, whose decoded letter the
+ * fold would read as E) - names no stem, while the plain twin at each site does (Q7).
  * SCOPE: a mention is judged, not the sentence's truth; the charter's own status is read by the cutting seat, never by this file
  * (it lives in another repository).
  *
@@ -160,6 +169,15 @@ const ZWSP = String.fromCodePoint(0x200b);
 const FULL_WIDTH_EDC = String.fromCodePoint(0xff25, 0xff24, 0xff23);
 const CYRILLIC_IE = String.fromCodePoint(0x0435);
 const CYRILLIC_ES = String.fromCodePoint(0x0421);
+/** The combining-mark controls' marks and letter (wb-a6m9): a nonspacing mark NFKC composes with the letter before it (the acute
+ * U+0301), a nonspacing mark it composes with none (the combining low line U+0332), a spacing mark (the Devanagari sign visarga
+ * U+0903), an enclosing mark (the combining enclosing circle U+20DD), and a precomposed letter NFKD decomposes into a Latin
+ * letter and a mark (U+00C9). */
+const ACUTE = String.fromCodePoint(0x0301);
+const LOW_LINE = String.fromCodePoint(0x0332);
+const VISARGA = String.fromCodePoint(0x0903);
+const ENCLOSING_CIRCLE = String.fromCodePoint(0x20dd);
+const CAPITAL_E_ACUTE = String.fromCodePoint(0x00c9);
 
 /** Synthetic pages the page reader must read exactly as pinned: every claim block kind, each carrying a stem once. */
 const PAGE_CONTROLS: Readonly<Record<string, string>> = {
@@ -180,6 +198,12 @@ const PAGE_CONTROLS: Readonly<Record<string, string>> = {
   "soft-break": "The evidence-\ndirected assembly ships.\n",
   "zero-width": `E${ZWSP}DC integration ships.\n`,
   "full-width": `${FULL_WIDTH_EDC} integration ships.\n`,
+  "combining-mark": `E${ACUTE}DC integration ships.\n`,
+  precomposed: `${CAPITAL_E_ACUTE}DC integration ships.\n`,
+  "noncomposing-mark": `E${LOW_LINE}DC integration ships.\n`,
+  "spacing-mark": `E${VISARGA}DC integration ships.\n`,
+  "enclosing-mark": `E${ENCLOSING_CIRCLE}DC integration ships.\n`,
+  "joined-mark": `Evide${ACUTE}nce-directed assembly ships.\n`,
   camel: "The EdcAssembler ships.\n",
   "html-block": "<details>\n<summary>EDC integration</summary>\n</details>\n",
   "cross-word": "The named capability is used carefully.\n",
@@ -231,6 +255,10 @@ const SOURCE_CONTROLS: Readonly<Record<string, string>> = {
   "private-name": "class Host { #edcBlock = 1; }",
   "cross-word": "const namedCount = 1; usedCarefully(namedCount);",
   "jsx.tsx": "export const view = <span>EDC integration</span>;",
+  "combining-mark": `const label = "E${ACUTE}DC ships";`,
+  "string-escape": 'const label = "\\x45DC ships";',
+  "template-escape": `const label = \`\\x45DC \${name} ships\`;`,
+  "identifier-escape": "const \\u0045dcAssembler = 1;",
 };
 /** R-VOCABULARY's members: EDC in other words. */
 const VOCABULARY_CONTROLS: readonly string[] = [
@@ -275,6 +303,24 @@ const OUT_OF_SCOPE_DOCS: readonly string[] = ["docs/workbench/plant.txt", "docs/
 /** R-UNNAMED-ADOPTION's probe: a context-assembly adoption that names neither stem. */
 const UNNAMED_ADOPTION = `import { renderBlock } from "@example/context-blocks";
 export const block = renderBlock({ queryView: { failures: 0, seal: null }, coverageProofRef: "ref" });`;
+/** R-ESCAPED's probes (wb-a6m9): a stem spelled through an escape the readers read as written - a hex, a unicode and a
+ * code-point escape in a src module's regular-expression literal, a decimal and a hex character reference in JSX text and one in
+ * a JSX attribute's string, and a named character reference outside REFERENCES in a claim page; and the plain twin at each site. */
+const ESCAPED_SOURCES: Readonly<Record<string, string>> = {
+  "regex-hex": "export const pattern = /\\x45DC/;",
+  "regex-unicode": "export const pattern = /\\u0045DC/;",
+  "regex-code-point": "export const pattern = /\\u{45}DC/u;",
+  "jsx-decimal.tsx": "export const view = <span>&#69;DC integration</span>;",
+  "jsx-hex.tsx": "export const view = <span>&#x45;DC integration</span>;",
+  "jsx-attribute.tsx": 'export const view = <span title="&#69;DC integration">view</span>;',
+};
+const ESCAPED_SOURCE_TWINS: Readonly<Record<string, string>> = {
+  regex: "export const pattern = /EDC/;",
+  "jsx.tsx": "export const view = <span>EDC integration</span>;",
+  "jsx-attribute.tsx": 'export const view = <span title="EDC integration">view</span>;',
+};
+const ESCAPED_PAGE = "&Eacute;DC integration ships.\n";
+const ESCAPED_PAGE_TWIN = `${CAPITAL_E_ACUTE}DC integration ships.\n`;
 /** Each residual family and the quiet row that pins it. */
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-VOCABULARY": ["Q1"],
@@ -283,6 +329,7 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-COMPOSED": ["Q4"],
   "R-SCOPE": ["Q5"],
   "R-UNNAMED-ADOPTION": ["Q6"],
+  "R-ESCAPED": ["Q7"],
 };
 
 interface Row {
@@ -298,7 +345,7 @@ const ROWS: readonly Row[] = [
     pins: ["A1", "A2", "A3"],
   },
   { id: "B", label: "no Pi claim surface shall describe EDC integration as shipped meanwhile", pins: ["B1", "B2", "B3", "B4", "B5"] },
-  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6"] },
+  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"] },
 ];
 
 interface RosterPin {
@@ -357,9 +404,10 @@ function rosterWitness(pin: string): JsonValue {
 
 // ---- the vocabulary ----
 
-/** NFKC with format controls and combining marks removed. */
+/** NFKD (the compatibility mapping of NFKC, left decomposed, so a combining mark on a letter drops instead of composing into
+ * another letter) with format controls and every combining mark removed (wb-a6m9). */
 function normal(text: string): string {
-  return text.normalize("NFKC").replace(/[\p{Cf}\p{Mn}\p{Me}]/gu, "");
+  return text.normalize("NFKD").replace(/[\p{Cf}\p{M}]/gu, "");
 }
 /** The word fold: an acronym's plural s and camel boundaries split, lower-cased, split at every run outside a-z and 0-9. */
 function wordsOf(text: string): string[] {
@@ -856,11 +904,18 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     });
   },
   Q6: async () => json({ source: sourceMentions(UNNAMED_ADOPTION, "unnamed"), page: pageMentions(`\`\`\`ts\n${UNNAMED_ADOPTION}\n\`\`\`\n`, "unnamed") }),
+  Q7: async () =>
+    json({
+      sources: Object.fromEntries(Object.entries(ESCAPED_SOURCES).map(([name, text]) => [name, sourceMentions(text, name)])),
+      twins: Object.fromEntries(Object.entries(ESCAPED_SOURCE_TWINS).map(([name, text]) => [name, sourceMentions(text, name)])),
+      page: pageMentions(ESCAPED_PAGE, "escaped-page"),
+      pageTwin: pageMentions(ESCAPED_PAGE_TWIN, "escaped-page-twin"),
+    }),
 };
 
 describe("wb-pyel.4 EDC shipped-claim census (SDK-EVIDENCE-DIRECTED-COMPUTATION-R7, until-then leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster, the bead's title and acceptance and the cases agree", { timeout: 60_000 }, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:5", "Q:6"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:5", "Q:7"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
@@ -890,6 +945,9 @@ describe("wb-pyel.4 EDC shipped-claim census (SDK-EVIDENCE-DIRECTED-COMPUTATION-
         outOfScope: OUT_OF_SCOPE_PAGES,
         outOfScopeDocs: OUT_OF_SCOPE_DOCS,
         unnamedAdoption: UNNAMED_ADOPTION,
+        escapedSources: ESCAPED_SOURCES,
+        escapedSourceTwins: ESCAPED_SOURCE_TWINS,
+        escapedPage: [ESCAPED_PAGE, ESCAPED_PAGE_TWIN],
         residuals: RESIDUALS,
       }),
     ).toStrictEqual(ROSTER.constants);

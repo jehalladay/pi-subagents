@@ -1,6 +1,6 @@
 {
   "bead": "wb-pyel.4",
-  "comment": "wb-pyel.4 (SDK-EVIDENCE-DIRECTED-COMPUTATION-R7): the OUT-OF-FILE anchor of test/workbench-edc-shipped-claim-census.test.ts. It holds the judged set the census must match exactly, in both directions: every row's id, label and pins, every pin's witness (the reading the census measured at the cut), the constants (stems, floors, script kinds, required pages and descriptors, surfaces, every control and residual probe) and every registered test title in order. A pin, row, control or test dropped or renamed in every literal of the census still reds here. Regenerate only by re-measuring: an adoption cut that makes Pi name EDC re-judges every row. wb-0st4 (R694 follow-up of landing 546) adds git's tracked listing (git ls-files) as the independent anchor of both walks and of each reading's read set, each registry leg's descriptions as its fingerprint, the MARKDOWN_PAGE page form with every symlink below docs/ recorded and never followed, and the page walk's own synthetic-tree control.",
+  "comment": "wb-pyel.4 (SDK-EVIDENCE-DIRECTED-COMPUTATION-R7): the OUT-OF-FILE anchor of test/workbench-edc-shipped-claim-census.test.ts. It holds the judged set the census must match exactly, in both directions: every row's id, label and pins, every pin's witness (the reading the census measured at the cut), the constants (stems, floors, script kinds, required pages and descriptors, surfaces, every control and residual probe) and every registered test title in order. A pin, row, control or test dropped or renamed in every literal of the census still reds here. Regenerate only by re-measuring: an adoption cut that makes Pi name EDC re-judges every row. wb-0st4 (R694 follow-up of landing 546) adds git's tracked listing (git ls-files) as the independent anchor of both walks and of each reading's read set, each registry leg's descriptions as its fingerprint, the MARKDOWN_PAGE page form with every symlink below docs/ recorded and never followed, and the page walk's own synthetic-tree control.; extended by seat ws-04 (run g10-work-s147) on trunk 2211bdf plus the cut for wb-a6m9 (the R694 follow-up of landing 682): the combining-mark and escape controls and the R-ESCAPED quiet row Q7",
   "constants": {
     "stems": {
       "edc": "word",
@@ -91,6 +91,12 @@
       "soft-break": "The evidence-\ndirected assembly ships.\n",
       "zero-width": "E\u200bDC integration ships.\n",
       "full-width": "\uff25\uff24\uff23 integration ships.\n",
+      "combining-mark": "E\u0301DC integration ships.\n",
+      "precomposed": "\u00c9DC integration ships.\n",
+      "noncomposing-mark": "E\u0332DC integration ships.\n",
+      "spacing-mark": "E\u0903DC integration ships.\n",
+      "enclosing-mark": "E\u20ddDC integration ships.\n",
+      "joined-mark": "Evide\u0301nce-directed assembly ships.\n",
       "camel": "The EdcAssembler ships.\n",
       "html-block": "<details>\n<summary>EDC integration</summary>\n</details>\n",
       "cross-word": "The named capability is used carefully.\n",
@@ -211,7 +217,11 @@
       "regex": "const pattern = /EDC/;",
       "private-name": "class Host { #edcBlock = 1; }",
       "cross-word": "const namedCount = 1; usedCarefully(namedCount);",
-      "jsx.tsx": "export const view = <span>EDC integration</span>;"
+      "jsx.tsx": "export const view = <span>EDC integration</span>;",
+      "combining-mark": "const label = \"E\u0301DC ships\";",
+      "string-escape": "const label = \"\\x45DC ships\";",
+      "template-escape": "const label = `\\x45DC ${name} ships`;",
+      "identifier-escape": "const \\u0045dcAssembler = 1;"
     },
     "vocabulary": [
       "context assembly charter",
@@ -263,6 +273,23 @@
       "docs/plant.html"
     ],
     "unnamedAdoption": "import { renderBlock } from \"@example/context-blocks\";\nexport const block = renderBlock({ queryView: { failures: 0, seal: null }, coverageProofRef: \"ref\" });",
+    "escapedSources": {
+      "regex-hex": "export const pattern = /\\x45DC/;",
+      "regex-unicode": "export const pattern = /\\u0045DC/;",
+      "regex-code-point": "export const pattern = /\\u{45}DC/u;",
+      "jsx-decimal.tsx": "export const view = <span>&#69;DC integration</span>;",
+      "jsx-hex.tsx": "export const view = <span>&#x45;DC integration</span>;",
+      "jsx-attribute.tsx": "export const view = <span title=\"&#69;DC integration\">view</span>;"
+    },
+    "escapedSourceTwins": {
+      "regex": "export const pattern = /EDC/;",
+      "jsx.tsx": "export const view = <span>EDC integration</span>;",
+      "jsx-attribute.tsx": "export const view = <span title=\"EDC integration\">view</span>;"
+    },
+    "escapedPage": [
+      "&Eacute;DC integration ships.\n",
+      "\u00c9DC integration ships.\n"
+    ],
     "residuals": {
       "R-VOCABULARY": [
         "Q1"
@@ -281,6 +308,9 @@
       ],
       "R-UNNAMED-ADOPTION": [
         "Q6"
+      ],
+      "R-ESCAPED": [
+        "Q7"
       ]
     }
   },
@@ -300,6 +330,7 @@
     "Q4",
     "Q5",
     "Q6",
+    "Q7",
     "the registered tests and the reached pins equal the roster, in order and both ways"
   ],
   "rows": [
@@ -377,6 +408,18 @@
               "cross-word": [],
               "jsx.tsx": [
                 "jsx.tsx:1|jsx|edc"
+              ],
+              "combining-mark": [
+                "combining-mark:1|string|edc"
+              ],
+              "string-escape": [
+                "string-escape:1|string|edc"
+              ],
+              "template-escape": [
+                "template-escape:1|template|edc"
+              ],
+              "identifier-escape": [
+                "identifier-escape:1|identifier|edc"
               ]
             }
           }
@@ -517,6 +560,24 @@
               "full-width": [
                 "full-width|paragraph#0|edc"
               ],
+              "combining-mark": [
+                "combining-mark|paragraph#0|edc"
+              ],
+              "precomposed": [
+                "precomposed|paragraph#0|edc"
+              ],
+              "noncomposing-mark": [
+                "noncomposing-mark|paragraph#0|edc"
+              ],
+              "spacing-mark": [
+                "spacing-mark|paragraph#0|edc"
+              ],
+              "enclosing-mark": [
+                "enclosing-mark|paragraph#0|edc"
+              ],
+              "joined-mark": [
+                "joined-mark|paragraph#0|evidencedirected"
+              ],
               "camel": [
                 "camel|paragraph#0|edc"
               ],
@@ -625,6 +686,34 @@
           "witness": {
             "source": [],
             "page": []
+          }
+        },
+        {
+          "id": "Q7",
+          "witness": {
+            "sources": {
+              "regex-hex": [],
+              "regex-unicode": [],
+              "regex-code-point": [],
+              "jsx-decimal.tsx": [],
+              "jsx-hex.tsx": [],
+              "jsx-attribute.tsx": []
+            },
+            "twins": {
+              "regex": [
+                "regex:1|regex|edc"
+              ],
+              "jsx.tsx": [
+                "jsx.tsx:1|jsx|edc"
+              ],
+              "jsx-attribute.tsx": [
+                "jsx-attribute.tsx:1|string|edc"
+              ]
+            },
+            "page": [],
+            "pageTwin": [
+              "escaped-page-twin|paragraph#0|edc"
+            ]
           }
         }
       ]

@@ -55,9 +55,15 @@
  *  - A, the adoption: each module's identifiers, private names, string, template and regular-expression literal texts and JSX
  *    text, and package.json read whole (every key and string, and its raw text), read for the two EDC stems (the notes' charter
  *    path: its slug's initials "edc" as a word or plural in the word fold, its modifier "evidencedirected" anywhere in the joined
- *    fold - the landed wb-pyel.4 vocabulary: both folds start from NFKC with format controls and combining marks removed, so a
- *    zero-width space never splits a stem and full-width letters fold; the word fold splits an acronym's plural s, camel
- *    boundaries and every run outside a-z and 0-9). Any mention reads the adoption PRESENT.
+ *    fold - the landed wb-pyel.4 vocabulary, its normal form cured in both EDC censuses by wb-a6m9: both folds start from NFKD
+ *    (the compatibility mapping of NFKC, left decomposed) with format controls (Cf) and every combining mark (\p{M}: nonspacing,
+ *    spacing and enclosing) removed, so a zero-width space never splits a stem, a combining mark never splits a stem or an axis
+ *    word whether it is written after its letter or precomposed with it (E + U+0301 + DC and U+00C9 + DC both read EDC, and
+ *    pre + U+0301 + cision reads precision), and full-width letters fold; the word fold splits an acronym's plural s, camel
+ *    boundaries and every run outside a-z and 0-9). A text is read as the compiler reads it: an identifier's escapes and a
+ *    string's or a template's escapes are decoded (\x45DC reads EDC), while a regular-expression literal, JSX text and a JSX
+ *    attribute's string are read as written, so an escape or a character reference in them is not decoded (R-ESCAPED). Any
+ *    mention reads the adoption PRESENT.
  *  - D, the artifact. THE FORMS (DECLARATION_FORMS; the claim is exactly these seven forms, each pinned by its TRIPLE_CONTROLS
  *    rows): a name-carrying declaration is a node of one of the forms, read by its names -
  *     (1) members: an interface, a type literal or a class (declaration or expression) - its members' written names (properties,
@@ -153,7 +159,10 @@
  *   stem or an axis word run into digits (EDC2, freshness2), one word of the fold, reads no stem and no axis (Q12); R-DOC a
  *   comment, a doc comment included, is never read (Q13); R-SPLIT a stem or an axis word written across a word boundary of the
  *   fold - split by a separator or an inner capital (fresh-ness, preCision, ceil_ing, E-D-C, EdC) - reads no stem and no axis
- *   (Q14).
+ *   (Q14); R-ESCAPED (wb-a6m9) a stem spelled through an escape the A reader reads as written - a hex, a unicode or a
+ *   code-point escape in a regular-expression literal (/\x45DC/, /\u0045DC/, /\u{45}DC/u) and a decimal or hex character
+ *   reference in JSX text or in a JSX attribute's string (&#69;DC, &#x45;DC) - reads no stem, while the plain twin at each site
+ *   does (Q15).
  *
  * Display paths added: none. Test-only: no scratch is allocated; src, package.json, .beads and git's index are only read, and the
  * mirror rows build in-memory registries and curated tool servers only.
@@ -590,9 +599,10 @@ function curatedOutcome(bound: CuratedBound, value: number): string {
 
 // ---- the gate's readings (rows A and D) ----
 
-/** NFKC with format controls and combining marks removed. */
+/** NFKD (the compatibility mapping of NFKC, left decomposed, so a combining mark on a letter drops instead of composing into
+ * another letter) with format controls and every combining mark removed (wb-a6m9). */
 function normal(text: string): string {
-  return text.normalize("NFKC").replace(/[\p{Cf}\p{Mn}\p{Me}]/gu, "");
+  return text.normalize("NFKD").replace(/[\p{Cf}\p{M}]/gu, "");
 }
 /** The word fold: an acronym's plural s and camel boundaries split, lower-cased, split at every run outside a-z and 0-9. */
 function wordsOf(text: string): string[] {
@@ -928,8 +938,20 @@ async function artifactReading(): Promise<{ native: RegistryReading; injected: R
  * descriptor objects 24 in each. */
 const FLOORS = { modules: 100, texts: 60000, declarations: 2500, members: 7000, manifestTexts: 80, descriptorObjects: 16 } as const;
 const ZWSP = String.fromCodePoint(0x200b);
-/** A Latin word written in full-width letters (NFKC folds each back to its Latin letter). */
+/** A Latin word written in full-width letters (the compatibility mapping folds each back to its Latin letter). */
 const fullWidth = (word: string): string => [...word].map(letter => String.fromCodePoint((letter.codePointAt(0) ?? 0) + 0xfee0)).join("");
+/** The combining-mark controls' marks and letters (wb-a6m9): two nonspacing marks NFKC composes with the letter before them (the
+ * acute U+0301, the diaeresis U+0308), a nonspacing mark it composes with none (the combining low line U+0332), a spacing mark
+ * (the Devanagari sign visarga U+0903), an enclosing mark (the combining enclosing circle U+20DD), and three precomposed letters
+ * NFKD decomposes into a Latin letter and a mark (U+00C9, U+00E9, U+00EF). */
+const ACUTE = String.fromCodePoint(0x0301);
+const DIAERESIS = String.fromCodePoint(0x0308);
+const LOW_LINE = String.fromCodePoint(0x0332);
+const VISARGA = String.fromCodePoint(0x0903);
+const ENCLOSING_CIRCLE = String.fromCodePoint(0x20dd);
+const CAPITAL_E_ACUTE = String.fromCodePoint(0x00c9);
+const SMALL_E_ACUTE = String.fromCodePoint(0x00e9);
+const SMALL_I_DIAERESIS = String.fromCodePoint(0x00ef);
 /** Synthetic modules the adoption reader must read exactly as pinned (each a module body; none is compiled or run). */
 const SOURCE_CONTROLS: Readonly<Record<string, string>> = {
   identifier: "const EdcAssembler = 1;",
@@ -943,6 +965,15 @@ const SOURCE_CONTROLS: Readonly<Record<string, string>> = {
   "inside-word": "const credcheck = 1; const reedcraft = 2;",
   "zero-width": `const label = "E${ZWSP}DC scope";`,
   "full-width": `const label = "${fullWidth("EDC")} scope";`,
+  "combining-mark": `const label = "E${ACUTE}DC scope";`,
+  precomposed: `const label = "${CAPITAL_E_ACUTE}DC scope";`,
+  "noncomposing-mark": `const label = "E${LOW_LINE}DC scope";`,
+  "spacing-mark": `const label = "E${VISARGA}DC scope";`,
+  "enclosing-mark": `const label = "E${ENCLOSING_CIRCLE}DC scope";`,
+  "joined-mark": `const label = "evide${ACUTE}nce-directed context";`,
+  "string-escape": 'const label = "\\x45DC scope";',
+  "template-escape": `const label = \`\\x45DC \${name} scope\`;`,
+  "identifier-escape": "const \\u0045dcAssembler = 1;",
 };
 /** Synthetic manifests the adoption reader must read exactly as pinned. */
 const MANIFEST_CONTROLS: Readonly<Record<string, string>> = {
@@ -973,6 +1004,8 @@ const TRIPLE_CONTROLS: Readonly<Record<string, string>> = {
   plurals: "interface Scope { freshnesses: number[]; precisions: number[]; ceilings: number[] }",
   "zero-width": `interface Scope { "fresh${ZWSP}ness": number; precision: number; ceiling: number }`,
   "full-width": `interface Scope { ${fullWidth("freshness")}: number; precision: number; ceiling: number }`,
+  "combining-mark": `interface Scope { "fre${ACUTE}shness": number; "pre${ACUTE}cision": number; "ceili${DIAERESIS}ng": number }`,
+  precomposed: `interface Scope { "fr${SMALL_E_ACUTE}shness": number; "pr${SMALL_E_ACUTE}cision": number; "ceil${SMALL_I_DIAERESIS}ng": number }`,
   "string-names": `interface Scope { "freshness": number; 'precision': number; ceiling: number }`,
   accessors: "interface Scope { get freshness(): number; set precision(value: number); readonly ceiling: number }",
   "class-accessors": "class Scope { get freshness() { return 1; } set precision(value: number) {} static ceiling = 3; }",
@@ -1027,6 +1060,8 @@ const DECLARATION_FORMS: Readonly<Record<string, { readonly kinds: readonly stri
       "plurals",
       "zero-width",
       "full-width",
+      "combining-mark",
+      "precomposed",
       "string-names",
       "accessors",
       "class-accessors",
@@ -1230,6 +1265,22 @@ const SPLIT_TRIPLE = 'interface Scope { "fresh-ness": number; preCision: number;
 const SPLIT_TRIPLE_TWIN = 'interface Scope { "freshness": number; precision: number; ceiling: number }';
 const SPLIT_SOURCE = 'export const label = "E-D-C assembly"; export const EdC = 1;';
 const SPLIT_SOURCE_TWIN = 'export const label = "EDC assembly";';
+/** R-ESCAPED's probes (wb-a6m9): a stem spelled through an escape the A reader reads as written - a hex, a unicode and a
+ * code-point escape in a regular-expression literal, and a decimal and a hex character reference in JSX text and one in a JSX
+ * attribute's string; and the plain twin at each site. */
+const ESCAPED_CONTROLS: Readonly<Record<string, string>> = {
+  "regex-hex": "export const pattern = /\\x45DC/;",
+  "regex-unicode": "export const pattern = /\\u0045DC/;",
+  "regex-code-point": "export const pattern = /\\u{45}DC/u;",
+  "jsx-decimal.tsx": "export const view = <span>&#69;DC scope</span>;",
+  "jsx-hex.tsx": "export const view = <span>&#x45;DC scope</span>;",
+  "jsx-attribute.tsx": 'export const view = <span title="&#69;DC scope">view</span>;',
+};
+const ESCAPED_TWINS: Readonly<Record<string, string>> = {
+  regex: "export const pattern = /EDC/;",
+  "jsx.tsx": "export const view = <span>EDC scope</span>;",
+  "jsx-attribute.tsx": 'export const view = <span title="EDC scope">view</span>;',
+};
 /** Each residual family and the quiet row that pins it. */
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-LOOKALIKE": ["Q1"],
@@ -1246,6 +1297,7 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-DIGIT": ["Q12"],
   "R-DOC": ["Q13"],
   "R-SPLIT": ["Q14"],
+  "R-ESCAPED": ["Q15"],
 };
 
 // ---- the rows and the roster ----
@@ -1384,6 +1436,8 @@ function constants(): JsonValue {
     digit: [DIGIT_TRIPLE, DIGIT_TRIPLE_TWIN, DIGIT_SOURCE, DIGIT_SOURCE_TWIN],
     doc: [DOC_SOURCE, DOC_TWIN],
     split: [...SPLIT_NAMES, SPLIT_TRIPLE, SPLIT_TRIPLE_TWIN, SPLIT_SOURCE, SPLIT_SOURCE_TWIN],
+    escaped: ESCAPED_CONTROLS,
+    escapedTwins: ESCAPED_TWINS,
     residuals: RESIDUALS,
   });
 }
@@ -1751,11 +1805,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       source: readModule(SPLIT_SOURCE, "split-source").mentions,
       sourceTwin: readModule(SPLIT_SOURCE_TWIN, "split-source-twin").mentions,
     }),
+  Q15: async () =>
+    json({
+      escaped: Object.fromEntries(Object.entries(ESCAPED_CONTROLS).map(([name, text]) => [name, readModule(text, name).mentions])),
+      twins: Object.fromEntries(Object.entries(ESCAPED_TWINS).map(([name, text]) => [name, readModule(text, name).mentions])),
+    }),
 };
 
 describe("wb-pyel.6 EDC scope-narrowing census (SDK-EVIDENCE-DIRECTED-COMPUTATION-R14, until-then leg, falsifier armed)", () => {
   it("the judged set: the frozen shape, the out-of-file roster, the bead's title, acceptance and notes, and the cases agree", { timeout: 60_000 }, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:1", "B:4", "C:2", "D:2", "Q:14"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:1", "B:4", "C:2", "D:2", "Q:15"]);
     const shape = (rows: readonly { id: string; label: string; pins: readonly { id: string; quote: string }[] }[]) =>
       rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => ({ id: pin.id, quote: pin.quote })) }));
     expect(shape(ROWS)).toStrictEqual(shape(ROSTER.rows));
