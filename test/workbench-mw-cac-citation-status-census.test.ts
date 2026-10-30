@@ -82,8 +82,9 @@
  * src type declaration flags as code); B3 the mutant committed into a scratch git repository (test/helpers/scratch.ts, leak
  * guard installed) at a path of each clause (a) scope, read through readScope's own git listing: each scope flags it, and the
  * qualified twin is quiet. C, clause (c): C1 the condition (docs/07's one level-2 heading naming MechanicalWorkflows, its
- * section read; wb-klr7's clause (c) text read from the tracker export; a planted sentence in the live section is the only
- * citing unit); C2 the status duty over the live section and its plants; C3 the binding duty: every citing unit of the section
+ * section read; wb-klr7's clause (c) text read from the tracker export; the condition is MET since wb-klr7's cut: the live
+ * section's one citing unit is wb-klr7's clause (c) sentence, held verbatim by the docs07 census, and a planted sentence cites
+ * beside it and nothing else in the section does); C2 the status duty over the live section and its plants; C3 the binding duty: every citing unit of the section
  * is held verbatim in test/workbench-docs07-provider-rules.census.ts (read live; a planted bound twin is quiet). E, the
  * statement's second duty, one pin per subject: E1 CACWorkflowCompositionV0, E2 a bridge checker, E3 a Pi MW adapter - each
  * the existence judge on its controls (the filing's quoted MW facts quiet) and a docs walk judging its planted claim. Q, the
@@ -1004,11 +1005,16 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     const plant = "Composition metadata of cac-workflow-composition-2026-10-18 (design-only) is never a source of identity.";
     const planted = `${section.body}\n${plant}\n`;
     const citing = markdownUnits(planted).filter(unit => judgeUnit(unit).cites);
+    // The condition is met (wb-klr7's cut): the live section cites in exactly one unit, wb-klr7's clause (c) sentence, which the
+    // docs07 census holds verbatim; the plant cites beside it, and no other unit of the section does.
+    const live = markdownUnits(section.body).filter(unit => judgeUnit(unit).cites).map(unit => squeezed(unit.text));
+    expect(live, "the live section cites in exactly one unit, wb-klr7's clause (c) sentence").toHaveLength(1);
+    expect(squeezed(textOf(DOCS07_CENSUS)).includes(live[0] ?? "\u0000"), "the docs07 census holds that unit verbatim").toBe(true);
     expect(
-      citing.map(unit => unit.text),
-      "the planted sentence is the section's only citing unit",
-    ).toEqual(citing.filter(unit => unit.text.includes(plant)).map(unit => unit.text));
-    expect(citing.length, "the plant cites").toBeGreaterThanOrEqual(1);
+      citing.map(unit => squeezed(unit.text)),
+      "beside the live sentence, the planted sentence is the section's only citing unit",
+    ).toEqual([...live, ...citing.filter(unit => unit.text.includes(plant)).map(unit => squeezed(unit.text))]);
+    expect(citing.filter(unit => unit.text.includes(plant)).length, "the plant cites").toBe(1);
     return json({ klr7: sentence, heading: section.heading, headings: section.headings, plantCites: citing.some(unit => unit.text.includes(plant)) });
   },
   C2: () => {
