@@ -42,7 +42,10 @@
  *     segmentation (its leading article dropped, split at each ', ' and ' or '), in order, so a phrase row deleted together with
  *     its frozen-literal element still reds, the zero-path 'consistency mode' row included; and RELAYED_LIST is held to an anchor
  *     outside this file, wb-gwr.2's row in the tracked bead export (.beads/issues.jsonl, its title only, never its notes: the text
- *     after its first 'carries ' up to the first ' (' after that), so a phrase removed from every literal here still reds.
+ *     after its first 'carries ' up to the first ' (' after that), so a phrase removed from every literal here still reds. Each
+ *     phrase is read onto its fields through the adapter (wb-noq8 cut #2, the refusal's F1): each field of a phrase, moved alone to
+ *     its ALTERNATE value, moves facets of exactly one kind, the kind that opens that phrase and no other (each hyphen read as a
+ *     space; the kinds are the adapter's own), every relayed manifest field judged once, so two rows' field lists swapped red.
  *
  * Display paths added: none. Test-only: the files read are the adapter module's own source (refusalSites, read-only, for M3) and
  * the tracked bead export (read-only, for M1b: the one wb-gwr.2 row's title); no write, process, clock or network access; the
@@ -58,7 +61,7 @@ import {describe, expect, it} from 'vitest';
 import {CapabilityError, CapabilityRegistry, type JsonValue} from '../src/workbench/capability-registry.js';
 import {
   HYPERUNIX_CONSUMED_FIELDS, HYPERUNIX_EXECUTION_KINDS, type HyperUnixConsumedField, type HyperUnixProjectionTopology,
-  type HyperUnixTopologyContext, hxLiveInvariant, hyperunixTopology,
+  type HyperUnixResultFacet, type HyperUnixTopologyContext, hxLiveInvariant, hyperunixTopology,
 } from '../src/workbench/hyperunix-observer.js';
 import {registerHyperUnixFind} from '../src/workbench/providers/hyperunix.js';
 
@@ -138,6 +141,15 @@ function quotedFacetList(title: string): string {
   if (start < 0 || end < 0) throw new Error(`the title carries no "carries ... (" span: ${title}`);
   return title.slice(start + 'carries '.length, end);
 }
+/** The kinds of the facets one list carries and the other lacks, either way, each kind once and sorted (M1b). */
+function movedKinds(before: readonly HyperUnixResultFacet[], after: readonly HyperUnixResultFacet[]): string[] {
+  const had = new Set(before.map(facet => JSON.stringify(facet)));
+  const has = new Set(after.map(facet => JSON.stringify(facet)));
+  const moved = [...before.filter(facet => !has.has(JSON.stringify(facet))), ...after.filter(facet => !had.has(JSON.stringify(facet)))];
+  return [...new Set(moved.map(facet => facet.kind))].sort();
+}
+/** Whether a facet kind opens a phrase, each hyphen in either read as a space (M1b: 'provider-version' opens 'provider versions'). */
+const opens = (kind: string, phrase: string): boolean => phrase.replaceAll('-', ' ').startsWith(kind.replaceAll('-', ' '));
 
 /** Wraps a JSON value so each field read through it lands in reads (see THE INSTRUMENT above). */
 function traced(value: JsonValue, reads: Set<string>, path = ''): JsonValue {
@@ -390,6 +402,21 @@ describe('wb-3ht.1 HyperUnix consumed-field manifest (evidence-projection R5, st
     expect(quotedFacetList(exportTitle(RELAYED_BEAD))).toBe(RELAYED_LIST);
     expect([...pathsOf('relayed')].sort()).toStrictEqual(RELAYED_FIELDS.flatMap(([, paths]) => paths).sort());
     expect(new Set(HYPERUNIX_CONSUMED_FIELDS.map(field => field.use))).toStrictEqual(new Set(['envelope', 'observed', 'rows', 'relayed']));
+    // Each phrase read onto the fields it names, held through the adapter (wb-noq8 refusal #1 F1, the gate's TRANSPOSE members):
+    // each of a phrase's fields, moved alone to its ALTERNATE value, moves facets of exactly one kind, and that kind opens that
+    // phrase and no other, so two rows' field lists swapped, whole or one field each, red.
+    const before = hyperunixTopology(output(), context).facets ?? [];
+    let judged = 0;
+    for (const [phrase, paths] of RELAYED_FIELDS) for (const path of paths) {
+      const next = ALTERNATE[path];
+      if (next === undefined) throw new Error(`no alternate for ${path}`);
+      const kinds = movedKinds(before, hyperunixTopology(setAt(output(), path, next), context).facets ?? []);
+      expect(kinds, `${phrase}: ${path} moves facets of one kind`).toHaveLength(1);
+      expect(RELAYED_FIELDS.filter(([other]) => opens(kinds[0] ?? '', other)).map(([other]) => other), `${phrase}: ${path} moves ${kinds[0]}`)
+        .toStrictEqual([phrase]);
+      judged++;
+    }
+    expect(judged).toBe(pathsOf('relayed').length);
   });
 
   it('M2: every projectable kind under both licences reads exactly the manifest, and the traced projection equals the untraced one', () => {
