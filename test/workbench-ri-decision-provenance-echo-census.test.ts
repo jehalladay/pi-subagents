@@ -60,7 +60,8 @@
  *    and the residuals' quiet rows.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (each pin with its quote),
  * every pin's witness, the constants, the harness, the record, the hooks, the carrier, the native result, the placements, the
- * probes, the registered test titles and each pin's assertion count are held to the out-of-file roster (test/fixtures/ri-decision-provenance-echo-roster.json). OUTSIDE
+ * probes, the registered test titles and each pin's assertion count are held to the out-of-file roster (test/fixtures/ri-decision-provenance-echo-roster.json),
+ * which readRoster freezes through every member (THE FREEZE), so no in-place write this file makes changes what they are held to. OUTSIDE
  * ANCHOR: the owner filing's row in the tracked bead export (.beads/issues.jsonl, row wb-tz4r.3): each acceptance clause is
  * exactly one row label, the trigger sits in row A's, and the quote pin, the quote and the gating artifacts are in its notes.
  * PIN ANCHOR (wb-3xmr F1): each row's pin quotes, in pin order, tile its owner text with separator-only gaps (the wb-if7q.2 and
@@ -109,9 +110,27 @@
  * HOOKS are the roster's (guardMisses alone reads those roster members outside the describe block). A file it refuses fails at
  * collection; the judged set compares the same readings again and pins THE GUARD itself - each comparison reports a perturbed input,
  * and its throwing statement stands at the top level (read by the AST).
+ * THE FREEZE (wb-b93c F1: the wb-yi2o gate's F1 - the judged set, which may name ROSTER, wrote the in-memory roster's D3 witness
+ * through Object.assign, Object.defineProperty or Reflect.set, or wrote back a filtered copy of it beside a D3 measuring one mutant
+ * fewer, so the pin case's comparison and the record's second comparison both read what it wrote and a broken D3 stayed 18/18; the
+ * SELF-READ reads names, so it never tells a read from a write): readRoster returns the roster frozen through every member, each
+ * object and list reached from it, so an in-place write to any of them (a pin's id, quote or witness, a row, the titles, the reached
+ * list, the subject members, the harness, the record or the hooks), from the judged set or anywhere else in this file, throws a
+ * TypeError or is refused (Reflect.set, Reflect.defineProperty and Reflect.deleteProperty answer false), and the roster stays the
+ * file's. The judged set pins it: no unfrozen object or list is reachable from ROSTER through its members; Object.assign,
+ * Object.defineProperty, Reflect.set, Reflect.defineProperty, Reflect.deleteProperty and Object.setPrototypeOf are each refused on
+ * every member of the D3 pin and on the reached list's first entry; the roster's text is the same after them; and the reading names
+ * each unfrozen object or list of a perturbed input. Measured at 499fb36 (the landed census), each beside a broken D3 or D3's own
+ * assertion dropped and each 0 failed there, and red now: the four writes of that finding; a computed member key;
+ * Reflect.defineProperty; a write through a top-level helper; an accessor defined over the witness; the witness deleted and a
+ * prototype carrying it set; a member deleted inside the witness beside a D3 measuring one mutant fewer; and the reached list
+ * rewritten to the dropped assertion's count. THE FREEZE holds the roster: every pin case's comparison target, and the target of
+ * the record's and the judged set's roster comparisons. Values this file computes from the roster, such as CARRIER (a copy of its
+ * envelope) and BASE (today's projections of CARRIER), are its own and are not frozen.
  * RECORDS: the last case walks this file's registered tests: each roster title once, in order, in run mode, not inverted, ran;
  * every pin's witness again, no two pins sharing one (so a case moved under another pin's id, its roster witness rewritten to
- * match, reds); every pin reached its end with its pinned assertion count. It is RECORD (THE RUNNER), so it compares and never writes.
+ * match, reds); every pin reached its end with its pinned assertion count. It is RECORD (THE RUNNER), so it compares and never writes,
+ * and the roster it compares against is frozen (THE FREEZE).
  * NOT CLAIMED: the three placements, the probe lists and the reference adoption's kinds and member names are this fixture's
  * choices (no producer placement, default or slot exists), so a placement or probe removed from the roster and from every
  * witness together is anchored by nothing outside these two files; the four fields are anchored (the quote's words, clause (a)).
@@ -123,7 +142,10 @@
  * claimed against an edit of itself: a SELF-READ rule removed together with the planted pins that show it, or THE GUARD's statement
  * removed, beside what they refuse, is a change of the reader (measured: afterEach dropped from HOOK_NAMES with its three pins, or
  * THE GUARD removed, each beside a flipping hook, kept a broken D3 at 18/18; without the hook each reds, and afterEach dropped while
- * its pins stay reds at THE GUARD).
+ * its pins stay reds at THE GUARD). Likewise THE FREEZE: the freeze dropped from readRoster together with the judged set's freeze
+ * pins, beside a write of the D3 witness, is a change of the reader (measured: it kept a broken D3 at 18/18; the freeze dropped alone
+ * reds the judged set, as it does beside that write, and with either of the judged set's two roster pins dropped the other reds it -
+ * the write probes, writing through, red D3 and the record as well).
  * RESIDUALS (named families, each with a pinned quiet row: D4's for the first five and R-RUNTIME, A1's for R-READ-SITE): R-COINCIDENT a
  * "default" that restates the value today's projection already holds at that path is no change and reads quiet; R-KIND the
  * judge binds a field to its value, never to a ref kind or member name (those are the adopter's to choose), so two fields filed
@@ -143,6 +165,11 @@
  * SELF-READ and THE GUARD, which read this file's names, never the runtime's behaviour (D4: a chai plugin answering toStrictEqual
  * with the value compared against itself and an aliased expect extending toStrictEqual read clean; measured on the cut, each kept a
  * broken D3 at 18/18).
+ * THE FREEZE trusts the runtime too (wb-b93c): Object.freeze, Object.isFrozen and the write forms it probes are builtins, so their
+ * replacement is R-RUNTIME (D4: Object.freeze and Object.isFrozen replaced read clean; measured on the wb-b93c cut, each beside a
+ * write of the D3 witness: Object.freeze replaced reds the judged set (its walker reads the roster unfrozen), as it does with
+ * Object.isFrozen replaced too (the walker's perturbed-input pin) and with the six write forms replaced as well (the walker reads the
+ * written witness unfrozen), and only with that witness passed through the replaced Object.freeze did a broken D3 stay at 18/18).
  * SCOPE: the RI facts are read at their pins and Pi vendors no RI source, so a producer change is seen only when a re-probe re-reads
  * them; when RI ships the envelope (RI-DEC-06/08) and rf surfaces it, the adopter's projection replaces the reference adoption and
  * B4 reds by its findings alone, the cue to re-cut this census to the shipped shape. No reader is added or faked here.
@@ -380,7 +407,18 @@ function envelopeOf(value: unknown, name: string): Envelope {
   };
 }
 
-/** Parses the roster, refusing any field of the wrong shape by name, so no case can read a malformed roster. */
+/** THE FREEZE (wb-b93c F1): `value` returned as given, with it and every object and list reached from it through its members frozen. */
+function deepFrozen<T>(value: T): T {
+  const members: readonly unknown[] = Array.isArray(value) ? value : isObject(value) ? Object.values(value) : [];
+  for (const member of members) deepFrozen(member);
+  if (typeof value === "object" && value !== null) Object.freeze(value);
+  return value;
+}
+/**
+ * Parses the roster, refusing any field of the wrong shape by name, so no case can read a malformed roster, and returns it frozen
+ * through every member (THE FREEZE), so no in-place write anywhere in this file can change the roster the cases and the record compare
+ * against.
+ */
 function readRoster(): Roster {
   const raw: unknown = JSON.parse(readFileSync(ROSTER_PATH, "utf8"));
   if (!isObject(raw) || !Array.isArray(raw.rows) || !Array.isArray(raw.placements)) throw new Error("roster must be an object with rows and placements");
@@ -410,7 +448,7 @@ function readRoster(): Roster {
   if (!Array.isArray(revisionProbes) || !Array.isArray(policyProbes)) throw new Error("roster needs revisionProbes and policyProbes lists");
   const record = raw.record;
   if (!isObject(record) || typeof record.context !== "string") throw new Error("roster needs a record with a context and statements");
-  return {
+  return deepFrozen({
     bead, quotePin, quote, rfVersion,
     gatingArtifacts: strings(raw.gatingArtifacts, "gatingArtifacts"),
     producer: objectOf(json(producer), "producer"),
@@ -430,7 +468,7 @@ function readRoster(): Roster {
     hooks: strings(raw.hooks, "hooks"),
     tests: strings(raw.tests, "tests"),
     reached: strings(raw.reached, "reached"),
-  };
+  });
 }
 
 const ROSTER = readRoster();
@@ -442,6 +480,35 @@ function rosterWitness(pin: string): JsonValue {
   const found = ROSTER.rows.flatMap(row => row.pins).find(entry => entry.id === pin);
   if (found === undefined) throw new Error(`the roster holds no pin ${pin}`);
   return found.witness;
+}
+/** Every path from `value` (`$`) through its members to an object or list that is not frozen: the judged set's reading of THE FREEZE (wb-b93c F1). */
+function unfrozen(value: unknown, at = "$"): string[] {
+  if (typeof value !== "object" || value === null) return [];
+  const children: [string, unknown][] = Array.isArray(value) ? value.map((item: unknown, index) => [`${at}[${index}]`, item]) : isObject(value) ? Object.entries(value).map(([key, item]) => [`${at}.${key}`, item]) : [];
+  return [...(Object.isFrozen(value) ? [] : [at]), ...children.flatMap(([path, item]) => unfrozen(item, path))];
+}
+/**
+ * What six in-place write forms do to `member` of `target` (wb-b93c F1: the wb-yi2o gate's F1 wrote the D3 pin's witness through
+ * Object.assign, Object.defineProperty and Reflect.set): TypeError or false when it is refused, `wrote` or true when it went through,
+ * `threw` on any other error.
+ */
+function writesTo(target: object, member: string): Record<string, string> {
+  const outcome = (write: () => unknown): string => {
+    try {
+      const result = write();
+      return typeof result === "boolean" ? String(result) : "wrote";
+    } catch (error) {
+      return error instanceof TypeError ? "TypeError" : "threw";
+    }
+  };
+  return {
+    "Object.assign": outcome(() => Object.assign(target, { [member]: {} })),
+    "Object.defineProperty": outcome(() => Object.defineProperty(target, member, { value: {} })),
+    "Reflect.set": outcome(() => Reflect.set(target, member, {})),
+    "Reflect.defineProperty": outcome(() => Reflect.defineProperty(target, member, { value: {} })),
+    "Reflect.deleteProperty": outcome(() => Reflect.deleteProperty(target, member)),
+    "Object.setPrototypeOf": outcome(() => Object.setPrototypeOf(target, null)),
+  };
 }
 
 /** The wb-tz4r.3 row of the tracked bead export: its title and notes. */
@@ -990,7 +1057,8 @@ const CALLEE_ONLY: readonly string[] = ["it", "describe", "expect"];
 const SCAFFOLD_BINDINGS: readonly string[] = ["row", "pin"];
 /**
  * R-RUNTIME's quiet row (wb-yi2o): a chai plugin answering every toStrictEqual with the value compared against itself, and an
- * aliased import of expect extending its matchers - each changes what a comparison means through a name the SELF-READ does not read.
+ * aliased import of expect extending its matchers - each changes what a comparison means through a name the SELF-READ does not read;
+ * and (wb-b93c) Object.freeze and Object.isFrozen replaced, the builtins THE FREEZE trusts.
  */
 const RUNTIME_CASE = [
   'import { chai, expect as check } from "vitest";',
@@ -1000,6 +1068,8 @@ const RUNTIME_CASE = [
   "  });",
   "});",
   'check.extend({ toStrictEqual: () => ({ pass: true, message: () => "" }) });',
+  "Object.freeze = <T>(value: T): T => value;",
+  "Object.isFrozen = (): boolean => true;",
   "",
 ].join("\n");
 /**
@@ -1746,6 +1816,20 @@ describe("wb-tz4r.3 RI native result provenance echo census (RI-UNIFIED-DECISION
       refKinds: ROSTER.refKinds, members: ROSTER.members, invocation: ROSTER.invocation, harness: [...ROSTER.harness],
       record: { context: ROSTER.record.context, statements: [...ROSTER.record.statements] }, hooks: [...ROSTER.hooks],
     });
+    // THE FREEZE (wb-b93c F1): the roster is frozen through every member, so no in-place write this file makes - the judged set's,
+    // which may name ROSTER, included - reaches the roster the pin cases and the record compare against. Each of six write forms is
+    // refused on every member of the D3 pin (whose witness the wb-yi2o gate's F1 rewrote) and on the reached list's first entry, the roster reads the
+    // same after them, and the reading names each unfrozen object or list of a perturbed input.
+    expect(unfrozen(ROSTER), "every object and list reached from the roster is frozen").toEqual([]);
+    expect(unfrozen({ kept: Object.freeze([Object.freeze({})]), open: [{}] }), "the reading names each unfrozen object and list").toEqual(["$", "$.open", "$.open[0]"]);
+    const rosterText = JSON.stringify(ROSTER);
+    const refused = { "Object.assign": "TypeError", "Object.defineProperty": "TypeError", "Reflect.set": "false", "Reflect.defineProperty": "false", "Reflect.deleteProperty": "false", "Object.setPrototypeOf": "TypeError" };
+    const pinD3 = ROSTER.rows.flatMap(row => row.pins).find(entry => entry.id === "D3") ?? {};
+    const members = Object.keys(pinD3);
+    expect(members, "the D3 pin's members").toHaveLength(3);
+    expect(Object.fromEntries(members.map(member => [member, writesTo(pinD3, member)])), "each write to a D3 pin member is refused").toStrictEqual(Object.fromEntries(members.map(member => [member, refused])));
+    expect(writesTo(ROSTER.reached, "0"), "each write to the reached list's first entry is refused").toStrictEqual(refused);
+    expect(JSON.stringify(ROSTER), "the roster after the refused writes").toBe(rosterText);
     // The anchor outside this file and its roster: the owner filing in the tracked bead export.
     const { title, notes } = exportRow();
     const clauses = acceptanceClauses(notes);

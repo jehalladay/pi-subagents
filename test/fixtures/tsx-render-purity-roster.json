@@ -1,0 +1,631 @@
+{
+ "bead": "wb-km7q.5",
+ "requirement": "SDK-REACTIVE-FIBER-ADAPTIVE-COMPUTATION-AND-CONTROL-R14",
+ "measured": "read-only git show, git grep -n -w, git ls-tree and git rev-parse on the local ReactiveFiberTSXSDK clone (origin/main at its last fetch) and the installed rf, by seat ws-03 of run g10-work-s125, 2026-10-28",
+ "producer": {
+  "repo": "ReactiveFiberTSXSDK",
+  "doc": "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md",
+  "lines": {
+   "3": {
+    "text": "**Date:** 2026-10-17. **Status:** proposed extensions; none of the new exports claimed shipped. **Branch:** main. **Canonical program:** [Adaptive Computation and Control](https://github.com/jehalladay/FiberOpticsResearch/tree/main/docs/research/foa/programs/adaptive-computation-and-control-2026-10-17). **Work packages:** AC-01, AC-04, AC-10, AC-15.",
+    "sha256": "ec7457829e2137aefb8e88f4451d1155db1d93bf002cd58d6de8b2c1cefef58b"
+   },
+   "11": {
+    "text": "**Hooks:** `useSignal`, `useDerivedSignal`, `useWindow`, `useEWMA`, `useHysteresis`, `useDerivative`, `useFreshness`, `useDemand`, `useSpeculation`, `useResourcePressure`, `useController`, `useEvidence`, `useContextUtility` and `useTrace`. Prefer hook wrappers over Fiber-optic operators; do not implement competing temporal operator engines per TSX component.",
+    "sha256": "6a2321db8f02a0919398d6d140d6c7e7c9234736bbf4fd9e35b8f966d2ae00fb"
+   },
+   "13": {
+    "text": "**Boundaries:** `ResourceBoundary` (freshness/stale-while-refresh), `SpeculationBoundary` (scoped budget and admission), `ControlBoundary` (temporal controller/actuator scope), `SnapshotBoundary` (coherent or explicitly bounded-stale dependency), `EffectBoundary` (extension of existing effect/commit scope). An 'InferenceBoundary' and 'CacheBoundary' are convenience compositions unless the owner demonstrates an irreducible new semantic need.",
+    "sha256": "b0c78979414ca9af741d06b2eccba6e69aed3956d4513a30637af41e5085b9c4"
+   },
+   "17": {
+    "text": "Every new hook consumes one stable dispatcher slot each render and returns a read-only view plus optional callback handle. It may read the frozen snapshot and append a **declaration** to the render attempt. It must never directly poll, launch a model call, revise global admission, mutate controller state or perform I/O while rendering. On suspension, error, aborted attempt or replaced render, interest/controller/effect declarations are discarded just as existing effects are. After host commit, the broker can admit work and publish a new resource version, waking dependent components.",
+    "sha256": "6f00524d63b0e8db4413d6393acbae9cec3dbb6578589230abcf1ae875fbe644"
+   },
+   "19": {
+    "text": "`useSpeculation` must be dynamically adjustable via component props/hooks and via event/host callback methods `revise`, `withdraw`, `promote`. These callback methods are invalid in render; promotion declares actual demand but does not guarantee scheduling or reuse. Component unmount withdraws only its interest, not another consumer's shared execution.",
+    "sha256": "086da26348a10d28f41714e9b83fd0fa62c2eeef2f50f7e8b1338de39f2baf01"
+   },
+   "48": {
+    "text": "T0 API/ADR conflict inventory and current golden export capability audit.",
+    "sha256": "fa976ecf85c74629d931e41bdd05c5fd0934778cd7e3ef5b9250e48cabef14b1"
+   },
+   "49": {
+    "text": "T1 pure hook slots/conditional hook failure and suspension/effect rollback.",
+    "sha256": "54b2e7cce4ff5d3562024dc5cf1f4606afb3e7fda8c1a0d21878900274fb3db1"
+   },
+   "50": {
+    "text": "T2 resource boundary with stale+pending, null-ready and failed data.",
+    "sha256": "48e28f309a8b1b63725f0cd754671b2e366a5ca4f31e094d0bd8e7694625da17"
+   },
+   "51": {
+    "text": "T3 speculative intent creation/revision/withdrawal and shared execution (fake host).",
+    "sha256": "b84fac3a93b4c061e049f52ddeb61a06ccb9d07431ff6454c0258089c48db24d"
+   },
+   "52": {
+    "text": "T4 real Fiber/Lens/inference host promotion, generation check and no duplicate effect dispatch.",
+    "sha256": "1914f8d23539d362fa6b611e85ce7e951ebcf9201bccd7a5ac40133443ea7393"
+   },
+   "53": {
+    "text": "T5 controller temporal state and single applied actuator integration.",
+    "sha256": "c2fc8ea7a209a6dcbc2d405a721d290ce08d3ebc9596f89c302a686b47996dd4"
+   },
+   "54": {
+    "text": "T6 Forge local gates, installed npm/bridge consumer and current performance benchmark parity. No 'green' claim from old pinned plans or tests alone.",
+    "sha256": "68c2cdb84946a11cf0c889286b3c67a69353c0639592c81b4c3bb8ff55c0c71a"
+   },
+   "58": {
+    "text": "No second Fiber scheduler, no TSX runtime authority over host clocks, no unconditional model speculation, no giant new UX DSL, no dependency on DevTools or Mechanical/MicroPolicyCLI packages. Publish new exports only when implementation and installed tests exist.",
+    "sha256": "2e4ae1c349d1ea95e464c778d6789d72eeb58f484a295e695764ec41eeb7098a"
+   }
+  },
+  "revisions": [
+   {
+    "role": "program-pin",
+    "sha": "e7e6616d3d0842af51ca6fa31164f33ac2d85bf3",
+    "version": "0.1.649",
+    "exports": [
+     ".",
+     "./embedding",
+     "./jsx-dev-runtime",
+     "./jsx-runtime",
+     "./package.json",
+     "./testing"
+    ],
+    "files": [
+     "dist",
+     "docs/security/redaction-defaults.json",
+     "LICENSE",
+     "README.md"
+    ],
+    "srcPythonFiles": 211,
+    "docBlob": "0197095027b82e38d062d334c6858b4c0a2971ff",
+    "sites": [
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:11",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:13",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:19",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:25",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:26",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:27",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:33",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:34",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:36",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:37",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:66",
+     "tests/e2e/fiber/driver.mjs:139",
+     "tests/e2e/fiber/driver.mjs:183"
+    ]
+   },
+   {
+    "role": "mapped",
+    "sha": "5da03a7d49f42a9be7612d34f73d7d9ef950c52c",
+    "version": "0.1.649",
+    "exports": [
+     ".",
+     "./embedding",
+     "./jsx-dev-runtime",
+     "./jsx-runtime",
+     "./package.json",
+     "./testing"
+    ],
+    "files": [
+     "dist",
+     "docs/security/redaction-defaults.json",
+     "LICENSE",
+     "README.md"
+    ],
+    "srcPythonFiles": 211,
+    "docBlob": "0197095027b82e38d062d334c6858b4c0a2971ff",
+    "sites": [
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:11",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:13",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:19",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:25",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:26",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:27",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:33",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:34",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:36",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:37",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:66",
+     "tests/e2e/fiber/driver.mjs:139",
+     "tests/e2e/fiber/driver.mjs:183"
+    ]
+   },
+   {
+    "role": "origin-main",
+    "sha": "94ae52c14aef957a76d05834b1e823cfc67e6996",
+    "version": "0.1.668",
+    "exports": [
+     ".",
+     "./embedding",
+     "./jsx-dev-runtime",
+     "./jsx-runtime",
+     "./package.json",
+     "./testing"
+    ],
+    "files": [
+     "dist",
+     "docs/security/redaction-defaults.json",
+     "LICENSE",
+     "README.md"
+    ],
+    "srcPythonFiles": 213,
+    "docBlob": "0197095027b82e38d062d334c6858b4c0a2971ff",
+    "sites": [
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17-BEADS-2026-10-21.md:58",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17-BEADS-2026-10-21.md:59",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17-BEADS-2026-10-21.md:60",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17-BEADS-2026-10-21.md:62",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:11",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:13",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:19",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:25",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:26",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:27",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:33",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:34",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:36",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:37",
+     "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:66",
+     "docs/triage/programs-2026-10-21/EPISTEMIC-AUDIT.md:226",
+     "docs/triage/programs-2026-10-21/README.md:71",
+     "docs/triage/programs-2026-10-21/dp005-evidence-directed-computation-2026-10-18/CLAIMS.jsonl:21",
+     "docs/triage/programs-2026-10-21/dp011-reactive-fiber-adaptive-computation-and-control-2026-10-17/CLAIMS.jsonl:2",
+     "docs/triage/programs-2026-10-21/dp011-reactive-fiber-adaptive-computation-and-control-2026-10-17/CLAIMS.jsonl:14",
+     "docs/triage/programs-2026-10-21/dp011-reactive-fiber-adaptive-computation-and-control-2026-10-17/CLAIMS.jsonl:16",
+     "docs/triage/programs-2026-10-21/dp011-reactive-fiber-adaptive-computation-and-control-2026-10-17/CLAIMS.jsonl:27",
+     "docs/triage/programs-2026-10-21/dp011-reactive-fiber-adaptive-computation-and-control-2026-10-17/CLAIMS.jsonl:28",
+     "docs/triage/programs-2026-10-21/dp011-reactive-fiber-adaptive-computation-and-control-2026-10-17/CLAIMS.jsonl:29",
+     "docs/triage/programs-2026-10-21/dp011-reactive-fiber-adaptive-computation-and-control-2026-10-17/CLAIMS.jsonl:30",
+     "docs/triage/programs-2026-10-21/dp011-reactive-fiber-adaptive-computation-and-control-2026-10-17/CLAIMS.jsonl:32",
+     "docs/triage/programs-2026-10-21/dp011-reactive-fiber-adaptive-computation-and-control-2026-10-17/CLAIMS.jsonl:39",
+     "docs/triage/programs-2026-10-21/dp011-reactive-fiber-adaptive-computation-and-control-2026-10-17/CLAIMS.jsonl:58",
+     "docs/triage/programs-2026-10-21/dp011-reactive-fiber-adaptive-computation-and-control-2026-10-17/RELATIONS.jsonl:5",
+     "docs/triage/programs-2026-10-21/dp011-reactive-fiber-adaptive-computation-and-control-2026-10-17/wave1/a1.md:24",
+     "docs/triage/programs-2026-10-21/dp011-reactive-fiber-adaptive-computation-and-control-2026-10-17/wave2/a1.md:9",
+     "docs/triage/programs-2026-10-21/dp011-reactive-fiber-adaptive-computation-and-control-2026-10-17/wave3/a1.md:47",
+     "docs/triage/programs-2026-10-21/dp011-reactive-fiber-adaptive-computation-and-control-2026-10-17/wave3/a1.md:60",
+     "docs/triage/programs-2026-10-21/dp011-reactive-fiber-adaptive-computation-and-control-2026-10-17/wave3/a1.md:72",
+     "docs/triage/programs-2026-10-21/dp011-reactive-fiber-adaptive-computation-and-control-2026-10-17/wave3/a1.md:81",
+     "docs/triage/programs-2026-10-21/dp012-resource-efficiency-frontier-2026-10-17/wave1/a6.md:46",
+     "docs/triage/programs-2026-10-21/propagation.md:96",
+     "docs/triage/programs-2026-10-21/requirements/ATOMIC-REQUIREMENTS.md:47",
+     "docs/triage/programs-2026-10-21/requirements/ATOMIC-REQUIREMENTS.md:50",
+     "docs/triage/programs-2026-10-21/requirements/ATOMIC-REQUIREMENTS.md:60",
+     "docs/triage/programs-2026-10-21/requirements/ATOMIC-REQUIREMENTS.md:87",
+     "docs/triage/programs-2026-10-21/requirements/ATOMIC-REQUIREMENTS.md:101",
+     "docs/triage/programs-2026-10-21/requirements/ATOMIC-REQUIREMENTS.md:217",
+     "docs/triage/programs-2026-10-21/requirements/ATOMIC-REQUIREMENTS.md:220",
+     "docs/triage/programs-2026-10-21/requirements/parts/dp011-adaptive-computation-and-control-2026-10-17.map.jsonl:3",
+     "docs/triage/programs-2026-10-21/requirements/parts/dp011-adaptive-computation-and-control-2026-10-17.map.jsonl:5",
+     "docs/triage/programs-2026-10-21/requirements/parts/dp011-adaptive-computation-and-control-2026-10-17.map.jsonl:12",
+     "tests/e2e/fiber/driver.mjs:139",
+     "tests/e2e/fiber/driver.mjs:183"
+    ]
+   }
+  ],
+  "rf": {
+   "version": "0.1.845",
+   "mappedVersion": "0.1.649",
+   "lockSource": "ReactiveFiberTSXSDK 5da03a7d49f42a9be7612d34f73d7d9ef950c52c",
+   "hostBroker": [
+    "reactive_fiber_cli/domain/broker_limits.py:429 class SpeculationBoundary (the host-side limits value wb-km7q.9 binds; no component API)",
+    "reactive_fiber_cli/runtime/resource_broker.py:1588 withdraw_interest: the execution stays for its other owners; the last owner's withdrawal releases it"
+   ]
+  }
+ },
+ "rows": [
+  {
+   "id": "A",
+   "label": "If Pi ever authors components on the proposed rf TSX hooks/SpeculationBoundary (unshipped; gated T0-T6)",
+   "pins": [
+    "A1",
+    "A2",
+    "A3"
+   ]
+  },
+  {
+   "id": "B",
+   "label": "adoption-time render-purity falsifiers (each forbidden act in render goes red)",
+   "pins": [
+    "B1",
+    "B2"
+   ]
+  },
+  {
+   "id": "C",
+   "label": "an unmount case proving only the component's own interest is withdrawn, never another consumer's shared execution",
+   "pins": [
+    "C1"
+   ]
+  }
+ ],
+ "rowStates": {
+  "A": "absent today, the trigger",
+  "B": "armed at adoption, owed by the adopting cut and not delivered here",
+  "C": "armed at adoption, owed by the adopting cut and not delivered here"
+ },
+ "residuals": {
+  "R-NEEDLE": [
+   "Q-NEEDLE-ARG",
+   "Q-NEEDLE-REFLECT",
+   "Q-NEEDLE-VALUE",
+   "Q-NEEDLE-TEMPLATE",
+   "Q-NEEDLE-REGEX",
+   "Q-NEEDLE-COMMENT",
+   "Q-NEEDLE-JSDOC",
+   "Q-NEEDLE-JSX-TEXT",
+   "Q-NEEDLE-JSX-STRING",
+   "Q-NEEDLE-CASE",
+   "Q-NEEDLE-TYPEOF",
+   "Q-NEEDLE-ATTRIBUTE-KEY",
+   "Q-NEEDLE-SHEBANG"
+  ],
+  "R-CASED": [
+   "Q-CASED"
+  ],
+  "R-AFFIXED": [
+   "Q-AFFIXED"
+  ],
+  "R-COMPOSED": [
+   "Q-COMPOSED",
+   "Q-COMPOSED-TYPE",
+   "Q-COMPOSED-HEAD"
+  ],
+  "R-TYPE-FLOW": [
+   "Q-FLOW-BINDING",
+   "Q-FLOW-ALIAS",
+   "Q-FLOW-EXPRESSION",
+   "Q-FLOW-TYPE",
+   "Q-FLOW-AWAIT",
+   "Q-FLOW-RAW"
+  ],
+  "R-UNDECODED": [
+   "Q-UNDECODED-UTF16LE",
+   "Q-UNDECODED-UTF16BE",
+   "Q-UNDECODED-UTF32LE-BOM",
+   "Q-UNDECODED-UTF8-BEHIND-UTF16LE-BOM"
+  ],
+  "R-EMBEDDED": [
+   "Q-EMBEDDED"
+  ],
+  "R-SDK-LOAD": [
+   "Q-REEXPORT"
+  ],
+  "R-COMPOSITION": [
+   "Q-COMPOSITION"
+  ],
+  "R-OTHER-FAMILY": [
+   "Q-SHIPPED-HOOKS",
+   "Q-AMENDMENT"
+  ],
+  "R-OWN-RENDER": [
+   "Q-OWN-RENDER"
+  ],
+  "R-OUTSIDE": [
+   "Q-OUTSIDE"
+  ],
+  "R-NONMODULE": [
+   "Q-NONMODULE"
+  ]
+ },
+ "witness": {
+  "A1": {
+   "findings": [],
+   "planted": [
+    "planted/adoption:1 identifier: useSpeculation",
+    "planted/adoption:3 identifier: useSpeculation",
+    "planted/adoption:4 identifier: SpeculationBoundary",
+    "planted/adoption:4 identifier: SpeculationBoundary"
+   ],
+   "positions": [
+    "computed name",
+    "element access",
+    "identifier",
+    "in key",
+    "indexed access type",
+    "mapped key",
+    "private name",
+    "quoted binding",
+    "quoted member",
+    "quoted namespace export",
+    "quoted specifier",
+    "type argument"
+   ],
+   "controls": {
+    "P-IMPORT": true,
+    "P-IMPORT-ALIAS": true,
+    "P-EXPORT": true,
+    "P-DECLARATION": true,
+    "P-REFERENCE": true,
+    "P-PROPERTY": true,
+    "P-JSX-TAG": true,
+    "P-JSX-MEMBER": true,
+    "P-JSX-ATTRIBUTE": true,
+    "P-JSX-NAMESPACED": true,
+    "P-BINDING": true,
+    "P-TYPE-REFERENCE": true,
+    "P-QUALIFIED": true,
+    "P-LABEL": true,
+    "P-PRIVATE": true,
+    "P-ESCAPED": true,
+    "P-QUOTED-MEMBER": true,
+    "P-QUOTED-FIELD": true,
+    "P-QUOTED-METHOD": true,
+    "P-QUOTED-ACCESSOR": true,
+    "P-QUOTED-SETTER": true,
+    "P-QUOTED-SIGNATURE": true,
+    "P-QUOTED-METHOD-SIGNATURE": true,
+    "P-QUOTED-ENUM": true,
+    "P-QUOTED-BINDING": true,
+    "P-QUOTED-BINDING-BOUNDARY": true,
+    "P-QUOTED-PARAMETER": true,
+    "P-QUOTED-CATCH": true,
+    "P-QUOTED-SPECIFIER": true,
+    "P-QUOTED-EXPORT-SPECIFIER": true,
+    "P-QUOTED-REEXPORT": true,
+    "P-QUOTED-NAMESPACE-EXPORT": true,
+    "P-ELEMENT": true,
+    "P-ELEMENT-TEMPLATE": true,
+    "P-ELEMENT-OPTIONAL": true,
+    "P-ELEMENT-ESCAPED": true,
+    "P-ELEMENT-PAREN": true,
+    "P-ELEMENT-AS": true,
+    "P-ELEMENT-SATISFIES": true,
+    "P-ELEMENT-NON-NULL": true,
+    "P-ELEMENT-ASSERTION": true,
+    "P-ELEMENT-NESTED": true,
+    "P-COMPUTED": true,
+    "P-COMPUTED-WRAPPED": true,
+    "P-COMPUTED-BINDING": true,
+    "P-IN-KEY": true,
+    "P-IN-KEY-WRAPPED": true,
+    "P-INDEXED-TYPE": true,
+    "P-INDEXED-UNION": true,
+    "P-INDEXED-INTERSECTION": true,
+    "P-INDEXED-PAREN": true,
+    "P-INDEXED-TEMPLATE": true,
+    "P-INDEXED-NESTED": true,
+    "P-MAPPED-KEY": true,
+    "P-MAPPED-AS": true,
+    "P-TYPE-ARGUMENT": true,
+    "P-TYPE-ARGUMENT-UNION": true,
+    "P-TYPE-ARGUMENT-PAREN": true,
+    "P-TYPE-ARGUMENT-TEMPLATE": true,
+    "P-TYPE-ARGUMENT-HERITAGE": true,
+    "P-TYPE-ARGUMENT-INSTANTIATION": true,
+    "P-TYPE-ARGUMENT-CALL": true,
+    "P-TYPE-ARGUMENT-NEW": true,
+    "P-TYPE-ARGUMENT-TAGGED": true,
+    "P-TYPE-ARGUMENT-JSX": true,
+    "P-TYPE-ARGUMENT-JSX-OPENING": true,
+    "P-TYPE-ARGUMENT-IMPORT": true,
+    "P-TYPE-ARGUMENT-QUERY": true,
+    "P-NAME-useSignal": true,
+    "P-NAME-useDerivedSignal": true,
+    "P-NAME-useWindow": true,
+    "P-NAME-useEWMA": true,
+    "P-NAME-useHysteresis": true,
+    "P-NAME-useDerivative": true,
+    "P-NAME-useFreshness": true,
+    "P-NAME-useDemand": true,
+    "P-NAME-useSpeculation": true,
+    "P-NAME-useResourcePressure": true,
+    "P-NAME-useController": true,
+    "P-NAME-useEvidence": true,
+    "P-NAME-useContextUtility": true,
+    "P-NAME-useTrace": true,
+    "P-NAME-ResourceBoundary": true,
+    "P-NAME-SpeculationBoundary": true,
+    "P-NAME-ControlBoundary": true,
+    "P-NAME-SnapshotBoundary": true,
+    "P-NAME-EffectBoundary": true,
+    "Q-NEEDLE-ARG": false,
+    "Q-NEEDLE-REFLECT": false,
+    "Q-NEEDLE-VALUE": false,
+    "Q-NEEDLE-TEMPLATE": false,
+    "Q-NEEDLE-REGEX": false,
+    "Q-NEEDLE-COMMENT": false,
+    "Q-NEEDLE-JSDOC": false,
+    "Q-NEEDLE-JSX-TEXT": false,
+    "Q-NEEDLE-JSX-STRING": false,
+    "Q-NEEDLE-CASE": false,
+    "Q-NEEDLE-TYPEOF": false,
+    "Q-NEEDLE-ATTRIBUTE-KEY": false,
+    "Q-NEEDLE-SHEBANG": false,
+    "Q-CASED": false,
+    "Q-AFFIXED": false,
+    "Q-COMPOSED": false,
+    "Q-COMPOSED-TYPE": false,
+    "Q-COMPOSED-HEAD": false,
+    "Q-FLOW-BINDING": false,
+    "Q-FLOW-ALIAS": false,
+    "Q-FLOW-EXPRESSION": false,
+    "Q-FLOW-TYPE": false,
+    "Q-FLOW-AWAIT": false,
+    "Q-FLOW-RAW": false,
+    "Q-EMBEDDED": false,
+    "Q-REEXPORT": false,
+    "Q-COMPOSITION": false,
+    "Q-SHIPPED-HOOKS": false,
+    "Q-AMENDMENT": false,
+    "Q-OWN-RENDER": false,
+    "P-DECODE-UTF8": true,
+    "P-DECODE-UTF8-BOM": true,
+    "P-DECODE-UTF16LE-BOM": true,
+    "P-DECODE-UTF16BE-BOM": true,
+    "Q-UNDECODED-UTF16LE": false,
+    "Q-UNDECODED-UTF16BE": false,
+    "Q-UNDECODED-UTF32LE-BOM": false,
+    "Q-UNDECODED-UTF8-BEHIND-UTF16LE-BOM": false,
+    "P-DECODE-AS-HOST": true
+   }
+  },
+  "A2": {
+   "missing": [],
+   "symlinks": [],
+   "failures": [],
+   "floorMet": true,
+   "anchors": {
+    "provider": true,
+    "self": true
+   },
+   "controls": {
+    "P-MODULE-KINDS": true,
+    "P-NESTED-SKIPPED-NAME": true,
+    "P-ROOT-MODULE": true,
+    "P-NAME-NOT-UTF8": true,
+    "Q-OUTSIDE": false,
+    "Q-NONMODULE": false
+   }
+  },
+  "A3": {
+   "gate": {
+    "open": false,
+    "codeSites": [],
+    "publishedSites": [],
+    "newExports": []
+   },
+   "readings": [
+    {
+     "role": "program-pin",
+     "sha": "e7e6616d3d0842af51ca6fa31164f33ac2d85bf3",
+     "version": "0.1.649",
+     "srcPythonFloorMet": true,
+     "exportsMeasured": true,
+     "sitesOutsideDocs": [
+      "tests/e2e/fiber/driver.mjs:139",
+      "tests/e2e/fiber/driver.mjs:183"
+     ]
+    },
+    {
+     "role": "mapped",
+     "sha": "5da03a7d49f42a9be7612d34f73d7d9ef950c52c",
+     "version": "0.1.649",
+     "srcPythonFloorMet": true,
+     "exportsMeasured": true,
+     "sitesOutsideDocs": [
+      "tests/e2e/fiber/driver.mjs:139",
+      "tests/e2e/fiber/driver.mjs:183"
+     ]
+    },
+    {
+     "role": "origin-main",
+     "sha": "94ae52c14aef957a76d05834b1e823cfc67e6996",
+     "version": "0.1.668",
+     "srcPythonFloorMet": true,
+     "exportsMeasured": true,
+     "sitesOutsideDocs": [
+      "tests/e2e/fiber/driver.mjs:139",
+      "tests/e2e/fiber/driver.mjs:183"
+     ]
+    }
+   ],
+   "controls": {
+    "N-MEASURED": false,
+    "P-SRC-SITE-PIN": true,
+    "P-PYTHON-SITE-MAPPED": true,
+    "P-SRC-SITE-MAIN": true,
+    "P-PUBLISHED-FILE-SITE": true,
+    "P-PUBLISHED-DIR-SITE": true,
+    "P-EXPORT-PIN": true,
+    "P-EXPORT-MAIN": true,
+    "N-DOCS-SITE": false,
+    "N-TESTS-SITE": false,
+    "N-SRC-LIKE-SITE": false
+   }
+  },
+  "B1": {
+   "acts": [
+    "poll",
+    "call a model",
+    "revise global admission",
+    "mutate controller state",
+    "run I/O"
+   ],
+   "producer": [
+    "poll",
+    "launch a model call",
+    "revise global admission",
+    "mutate controller state",
+    "perform I/O"
+   ],
+   "armed": false,
+   "owed": [],
+   "owedOnAdoption": [
+    "poll in render goes red",
+    "call a model in render goes red",
+    "revise global admission in render goes red",
+    "mutate controller state in render goes red",
+    "run I/O in render goes red"
+   ],
+   "controls": {
+    "N-LIVE": false,
+    "P-ADOPTION": true,
+    "N-NO-ADOPTION": false,
+    "P-ARMS-ON-EVERY-READ": true,
+    "N-ARMS-ON-A-RESIDUAL": false,
+    "P-ARMS-ON-EVERY-DECODING": true,
+    "N-ARMS-ON-AN-UNDECODED": false
+   }
+  },
+  "B2": {
+   "hook": "useSpeculation",
+   "callbacks": [
+    "revise",
+    "withdraw",
+    "promote"
+   ],
+   "producer": [
+    "revise",
+    "withdraw",
+    "promote"
+   ],
+   "armed": false,
+   "owed": [],
+   "owedOnAdoption": [
+    "useSpeculation revise in render goes red",
+    "useSpeculation withdraw in render goes red",
+    "useSpeculation promote in render goes red"
+   ],
+   "controls": {
+    "N-LIVE": false,
+    "P-ADOPTION": true,
+    "N-NO-ADOPTION": false,
+    "P-ARMS-ON-EVERY-READ": true,
+    "N-ARMS-ON-A-RESIDUAL": false,
+    "P-ARMS-ON-EVERY-DECODING": true,
+    "N-ARMS-ON-AN-UNDECODED": false
+   }
+  },
+  "C1": {
+   "duty": "unmount withdraws only its own interest",
+   "producer": "Component unmount withdraws only its interest, not another consumer's shared execution.",
+   "armed": false,
+   "owed": [],
+   "owedOnAdoption": [
+    "an unmount case proving only the component's own interest is withdrawn, never another consumer's shared execution"
+   ],
+   "controls": {
+    "N-LIVE": false,
+    "P-ADOPTION": true,
+    "N-NO-ADOPTION": false,
+    "P-ARMS-ON-EVERY-READ": true,
+    "N-ARMS-ON-A-RESIDUAL": false,
+    "P-ARMS-ON-EVERY-DECODING": true,
+    "N-ARMS-ON-AN-UNDECODED": false
+   }
+  }
+ },
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the bead row and the vendored producer lines agree",
+  "A1",
+  "A2",
+  "A3",
+  "B1",
+  "B2",
+  "C1",
+  "records: every registered test ran once in run mode in roster order and every pin reached its end"
+ ]
+}

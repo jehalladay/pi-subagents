@@ -66,6 +66,19 @@
    "twin": [
     "named"
    ]
+  },
+  {
+   "id": "R-PIN-EDIT",
+   "quietPin": "MEMBERSHIP",
+   "quiet": [
+    "widenA",
+    "mergeA",
+    "mergeC"
+   ],
+   "twin": [
+    "removeA",
+    "removeC"
+   ]
   }
  ],
  "notDue": {
@@ -76,6 +89,102 @@
   "C": [
    "or receipt"
   ]
+ },
+ "edits": {
+  "widenA": {
+   "pins": [
+    "A:A1,A3",
+    "B:B1",
+    "C:C1,C2,C3,C4"
+   ],
+   "holds": true,
+   "misplaced": [],
+   "unquoted": {},
+   "idle": []
+  },
+  "mergeA": {
+   "pins": [
+    "A:A1,A3",
+    "B:B1",
+    "C:C1,C2,C3,C4"
+   ],
+   "holds": true,
+   "misplaced": [],
+   "unquoted": {},
+   "idle": []
+  },
+  "mergeC": {
+   "pins": [
+    "A:A1,A2,A3",
+    "B:B1",
+    "C:C1,C2,C4"
+   ],
+   "holds": true,
+   "misplaced": [],
+   "unquoted": {},
+   "idle": []
+  },
+  "removeA": {
+   "pins": [
+    "A:A1,A3",
+    "B:B1",
+    "C:C1,C2,C3,C4"
+   ],
+   "holds": false,
+   "misplaced": [],
+   "unquoted": {
+    "A": [
+     "no Pi caption/status path"
+    ]
+   },
+   "idle": []
+  },
+  "removeC": {
+   "pins": [
+    "A:A1,A2,A3",
+    "B:B1",
+    "C:C1,C2,C4"
+   ],
+   "holds": false,
+   "misplaced": [],
+   "unquoted": {
+    "C": [
+     "or receipt",
+     "renders it as"
+    ]
+   },
+   "idle": []
+  },
+  "redundantA": {
+   "pins": [
+    "A:A1,A2,A3,A4",
+    "B:B1",
+    "C:C1,C2,C3,C4"
+   ],
+   "holds": false,
+   "misplaced": [],
+   "unquoted": {},
+   "idle": [
+    "A4"
+   ]
+  },
+  "misplacedA": {
+   "pins": [
+    "A:A1,A2,A3",
+    "B:B1",
+    "C:C1,C2,C3,C4"
+   ],
+   "holds": false,
+   "misplaced": [
+    "A:a"
+   ],
+   "unquoted": {
+    "A": [
+     "a hermetic guard proving"
+    ]
+   },
+   "idle": []
+  }
  },
  "rows": [
   {
@@ -105,6 +214,9 @@
        "verifiedBy": "label=0 word=1 verified by CAC",
        "cyrillic": "label=0 word=0 \\u{421}\\u{410}\\u{421} verified",
        "embedded": "label=0 word=0 isCACVerified",
+       "controlGap": "label=1 word=1 x\\u{7}C\\u{200b}AC verified",
+       "escapeGap": "label=1 word=1 x\\u{1b}[0mCAC verified",
+       "quietGap": "label=0 word=0 C\\u{feff}AC verified",
        "zeroWidth": "label=1 word=1 C\\u{200b}AC verified",
        "softHyphen": "label=1 word=1 CA\\u{ad}C verified",
        "wordJoiner": "label=1 word=1 CAC\\u{2060}verified"
