@@ -1,5 +1,5 @@
 {
-  "comment": "wb-021.5 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R7; the hk9l/5jha/1xvp.4/o4h0.3 roster pattern): the OUT-OF-FILE anchor of test/workbench-apo-rerender-census.test.ts (cut #8). rows: every judged row of test/helpers/apo-rerender-census.ts in census order (SURFACES, ADMISSION, INVOCATION, EFFECT, IDENTITY, QUIET, READERS, ABSENCE, REACH, NAMES) - table, id, label, the SHA-256 of each case as written (JSON of the case: its input and its expected reading) and the registered test. nonRender: the named non-render readers, each with its measured member references (value, type), its reason and, where the forms judge refuses a use in it, those refused uses site by site, and where a typed reader in it keeps an admission member, those writers. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its non-render readers, its registered tests (vitest task tree, run modes and timeouts) and its residual families against this file at test time, in order and both ways. It is a literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. The outside anchors are src (the modules that reach the projection, the non-render readers' member references, refused uses, typed writers and runtime closure, the render modules' references and forms, the forms src's nodes stand in, the class's own declaration's element kinds, the projection's public members, the registry's effect classes and the dialog's actions), the pinned typescript's declaration file (the ClassElement kinds and their SyntaxKinds) and the bead's own export row (.beads/issues.jsonl, wb-021.5: the title and the owner filing, each pinned byte for byte, and the judged statement the table quotes and their pinned junctions compose), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class plant, a dialog-action plant or a class-element kind removed from the census and this file together still reds.",
+  "comment": "wb-021.5 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R7; the hk9l/5jha/1xvp.4/o4h0.3 roster pattern): the OUT-OF-FILE anchor of test/workbench-apo-rerender-census.test.ts (cut #8; wb-021.7). rows: every judged row of test/helpers/apo-rerender-census.ts in census order (SURFACES, ADMISSION, INVOCATION, EFFECT, IDENTITY, QUIET, READERS, ABSENCE, REACH, NAMES) - table, id, label, the SHA-256 of each case as written (JSON of the case: its input and its expected reading) and the registered test. nonRender: the named non-render readers, each with its measured member references (value, type), its reason and, where the forms judge refuses a use in it, those refused uses site by site, and where a typed reader in it keeps an admission member, those writers. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its non-render readers, its registered tests (vitest task tree, run modes and timeouts) and its residual families against this file at test time, in order and both ways. It is a literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. The outside anchors are src (the modules that reach the projection, the non-render readers' member references, refused uses, typed writers and runtime closure, the render modules' references and forms, the forms src's nodes stand in, the class's own declaration's element kinds, the projection's public members, the registry's effect classes and the dialog's actions), the pinned typescript's declaration file (the ClassElement kinds and their SyntaxKinds) and the bead's own export row (.beads/issues.jsonl, wb-021.5: the title and the owner filing, each pinned byte for byte, and the judged statement the table quotes and their pinned junctions compose), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class plant, a dialog-action plant or a class-element kind removed from the census and this file together still reds.",
   "rows": [
     {
       "table": "SURFACES",
@@ -487,7 +487,7 @@
     {
       "table": "REACH",
       "id": "R-ERASED-ACCESS",
-      "label": "residual: a module that reaches the projection only through an erased or structural type - a cast from unknown, a structural interface of its own, Reflect, an any - reads as reaching nothing (no node of it exposes the projection, so readForms reads nothing there either; the erasure is refused in the module that erased it: ERASING-FLOWS, LIBRARY-FLOWS), and a typed holder's member reached through Reflect, a cast through unknown, a cast to any, a prototype lookup or an Object property call reads as the holder alone to projectionReach, while readForms refuses the erasing step itself (ERASING-FLOWS, LIBRARY-FLOWS); and an arguments object read by a function whose own parameters hold no projection while its base member hands one (a method stand-in that declares no parameter, reading arguments[0]) reads quiet: the element is an any, and readForms refuses the arguments object only in a function whose own parameters hold the projection (cut #7, refusal #6 F8)",
+      "label": "residual: a module that reaches the projection only through an erased or structural type - a cast from unknown, a structural interface of its own, Reflect, an any - reads as reaching nothing (no node of it exposes the projection, so readForms reads nothing there either; the erasure is refused in the module that erased it: ERASING-FLOWS, LIBRARY-FLOWS), and a typed holder's member reached through Reflect, a cast through unknown, a cast to any, a prototype lookup or an Object property call reads as the holder alone to projectionReach, while readForms refuses the erasing step itself (ERASING-FLOWS, LIBRARY-FLOWS); and an arguments object read by a function whose own parameters hold no projection while its base member hands one (a method stand-in that declares no parameter, reading arguments[0]) reads quiet: the element is an any, and readForms refuses the arguments object only in a function whose own parameters hold the projection - an overload set's implementation through every declaration of its set (wb-021.7, R-OVERLOADS) - (cut #7, refusal #6 F8)",
       "pins": [
         "7c8f4b98f150562aa4a21652bd1a328d547fa9d96a8eec2093b36645725f2552",
         "38ee071f31135fb6b5f4b0e1e8c63eb039a84fcdb709ca6bb49e1a77a86bbd77",
@@ -628,7 +628,7 @@
     {
       "table": "REACH",
       "id": "DISPATCH",
-      "label": "a call through a src signature with no body of its own - an interface method or a function type (a value and a holder) - is refused, and a member declared to stand in for a base or interface member is read in exactly the roster the stand-in readings implement (cut #8, ruling R-B67): a class element the class declares itself, by its kind's STAND_IN reading against its own class's heritage clauses (an override, an implementation), and an object literal's own method or setter under the contextual type of the flow it is written at - one whose own parameter hides a path that member hands it is refused at its declaration, while an override and a literal method that keep the projection read quiet; a call through a class's own method is judged by that method's declaration alone; a stand-in outside that roster which the readings meet at a flow, a class or a literal is no dispatch reading and fails closed with the typed row the FAIL_CLOSED roster names - a constructor parameter property (parameter-property), a field, a getter or a callback typed by an overload set's visible signatures (overload), a class instance or a class's static side flowing into a type its own class does not declare (structural-stand-in), a member the implementing class inherits (inherited-implementation), an object literal not written where it flows (context-less-literal), a spread (spread), what a callback or a stand-in hands back (callback-return, stand-in-return), an async function's or a generator's written-type return (async-return, generator-yield) and a value of any other type (unlisted-stand-in) - except the named residuals' quiet pages (a class instance held inside another value, R-STRUCTURAL-STAND-IN; a branch a conditional or a ?? narrows, R-NARROWED-BRANCH), and any other stand-in shape is outside this claim",
+      "label": "a call through a src signature with no body of its own - an interface method or a function type (a value and a holder) - is refused, and a member declared to stand in for a base or interface member is read in exactly the roster the stand-in readings implement (cut #8, ruling R-B67): a class element the class declares itself, by its kind's STAND_IN reading against its own class's heritage clauses (an override, an implementation), a constructor parameter property as a field is (wb-021.7, R-PARAMETER-PROPERTIES), and an object literal's own method or setter under the contextual type of the flow it is written at, a field, a getter or a callback typed by a src overload set read through the set's implementation (wb-021.7, R-OVERLOADS) - one whose own parameter hides a path that member hands it is refused at its declaration, while an override and a literal method that keep the projection read quiet; a call through a class's own method is judged by that method's declaration alone; a stand-in outside that roster which the readings meet at a flow, a class or a literal is no dispatch reading and fails closed with the typed row the FAIL_CLOSED roster names - a field, a getter or a callback typed by an overload set with no single implementation (overload), a class instance or a class's static side flowing into a type its own class does not declare (structural-stand-in), a member the implementing class inherits (inherited-implementation), an object literal not written where it flows (context-less-literal), a spread (spread), what a callback or a stand-in hands back (callback-return, stand-in-return), a generator's written-type return (generator-yield; an async function's is read against the awaited type, wb-021.7, ASYNC-RETURNS) and a value of any other type (unlisted-stand-in) - except the named residuals' quiet pages (a class instance held inside another value, R-STRUCTURAL-STAND-IN; a branch a conditional or a ?? narrows, R-NARROWED-BRANCH; a member a base names only through an index signature, R-INDEX-STAND-IN), and any other stand-in shape is outside this claim",
       "pins": [
         "e6e228e2172b47ae074f1753129e664d10fbba6cfc4cd7d4175e566c20b8ebc0",
         "dc4dcaa78955b75d923a9b63ba6cf987aedc9671782f8ca10c952418fabcb688",
@@ -675,7 +675,7 @@
     {
       "table": "REACH",
       "id": "STAND-IN-KINDS",
-      "label": "a class element the class declares itself stands in for a base member of its own class's heritage clauses by its kind (STAND_IN; a member the class inherits fails closed instead, INHERITED-IMPLEMENTATIONS, and what it hands back, where its base member's type holds a type handing the projection, fails closed unless it is that type, STAND-IN-RETURNS, cut #8): a getter returning a function whose parameter hides the projection, a static member overriding the extended class's static member with such a parameter, a member named by a computed key (a constant one, and one the checker resolves to no name, judged against every base member) and an object literal's getter doing so are refused, while a getter and a static override that keep the projection, and a class whose index signature, static block, constructor (its parameter property naming no base member) and semicolon stand in for no named member, read quiet; a constructor's parameter property that names a base member which hands the projection fails closed instead (R-PARAMETER-PROPERTIES, cut #7)",
+      "label": "a class element the class declares itself stands in for a base member of its own class's heritage clauses by its kind (STAND_IN; a member the class inherits fails closed instead, INHERITED-IMPLEMENTATIONS, and what it hands back, where its base member's type holds a type handing the projection, fails closed unless it is that type, STAND-IN-RETURNS, cut #8): a getter returning a function whose parameter hides the projection, a static member overriding the extended class's static member with such a parameter, a member named by a computed key (a constant one, and one the checker resolves to no name, judged against every base member) and an object literal's getter doing so are refused, while a getter and a static override that keep the projection, and a class whose index signature, static block, constructor (its parameter property naming no base member) and semicolon stand in for no named member, read quiet; a constructor's parameter property that names a base member is read as a field is (R-PARAMETER-PROPERTIES, wb-021.7; cut #7 failed it closed)",
       "pins": [
         "3fe0dfd6b9ec97dae3a0894fc735dff4fe1ddbc52e2beef283051020dd013f82",
         "acdcd5bf56f023a29b74d80a418489919f929880d5e5bd98160ae63cf3f4d5fa",
@@ -691,7 +691,7 @@
     {
       "table": "REACH",
       "id": "STAND-IN-RECEIVERS",
-      "label": "a stand-in receives what its base member hands it position by position, read through the checker (cut #6): a field through its own type, declared or inferred, and a getter through the type it returns - every call signature of each union part, each parameter as instantiated - and a method by its own declared parameters, a this parameter skipped; a rest parameter, the stand-in's or the base's, is read as its element at and past its own position: a field initialized by a bare, a parenthesized or a cast arrow, by a function's name or by a call's result, an ambient annotated field, a static field override by name (a function declared with one signature: a field, a getter or a static override typed by a src overload set's visible signatures fails closed instead, R-OVERLOADS, cut #7), a field typed by an overload set or a union and a getter returning a union one of whose signatures hides the projection, a field's and a method's rest parameter that hides it past its position, a method's and a field's parameter that hides it where the base's rest parameter hands it, and a method with a this parameter that hides it are refused; a field and a getter typed any (no call signature) while the base hands the projection fail closed (unresolved-stand-in); a field that keeps the projection (a library generic's instantiation included), a method with a this parameter that keeps it, rests of holders that keep it (a method's, a field's and a base's), a method and a field that never receive it, and an any-typed field the base hands no projection read quiet",
+      "label": "a stand-in receives what its base member hands it position by position, read through the checker (cut #6): a field through its own type, declared or inferred, and a getter through the type it returns - every call signature of each union part, each parameter as instantiated - and a method by its own declared parameters, a this parameter skipped; a rest parameter, the stand-in's or the base's, is read as its element at and past its own position: a field initialized by a bare, a parenthesized or a cast arrow, by a function's name or by a call's result, an ambient annotated field, a static field override by name (a function declared with one signature; a field, a getter or a static override typed by a src overload set's visible signatures is read through the set's implementation, R-OVERLOADS, wb-021.7), a field typed by an overload set or a union and a getter returning a union one of whose signatures hides the projection, a field's and a method's rest parameter that hides it past its position, a method's and a field's parameter that hides it where the base's rest parameter hands it, and a method with a this parameter that hides it are refused; a field and a getter typed any (no call signature) while the base hands the projection fail closed (unresolved-stand-in); a field that keeps the projection (a library generic's instantiation included), a method with a this parameter that keeps it, rests of holders that keep it (a method's, a field's and a base's), a method and a field that never receive it, and an any-typed field the base hands no projection read quiet",
       "pins": [
         "ef8338075621b4957da460e726e3cf51f64f07c77e27e61bbd02a50033dc4f53",
         "d3ef0a266bb33ebd944d222224c651b43fe8c5b52fb4be6c2a4b3550b4ee76b3",
@@ -722,7 +722,7 @@
     {
       "table": "REACH",
       "id": "CALLBACK-RECEIVERS",
-      "label": "a callback flowing into a type that hands it the projection, at a flow the flow reading reads (an argument, an annotated initializer or default, an assignment, an object literal's property, a return under the written type of a function that is neither async nor a generator, a cast; an async function's and a generator's written-type return fail closed instead, ASYNC-RETURNS and GENERATOR-YIELDS, cut #8), receives it as a stand-in does (cut #6): every call signature of each union part, by position, a this parameter receiving nothing - a callback typed by a union or an overload set one of whose signatures hides the projection, and one whose rest parameter hides it past its position (a map's key), are refused, as a plain hiding callback is; a callback typed by a union whose parts keep it, and one with a this parameter that keeps it, read quiet; what a callback hands back, where its target's return holds a type handing the projection, fails closed unless it is that type (CALLBACK-RETURNS, cut #8)",
+      "label": "a callback flowing into a type that hands it the projection, at a flow the flow reading reads (an argument, an annotated initializer or default, an assignment, an object literal's property, a return under the written type of a function that is no generator - an async function's against the written promise's awaited type, ASYNC-RETURNS, wb-021.7 - a cast; a generator's written-type return fails closed instead, GENERATOR-YIELDS, cut #8), receives it as a stand-in does (cut #6): every call signature of each union part, by position, a this parameter receiving nothing - a callback typed by a union or an overload set one of whose signatures hides the projection, and one whose rest parameter hides it past its position (a map's key), are refused, as a plain hiding callback is; a callback typed by a union whose parts keep it, and one with a this parameter that keeps it, read quiet; what a callback hands back, where its target's return holds a type handing the projection, fails closed unless it is that type (CALLBACK-RETURNS, cut #8)",
       "pins": [
         "a4c11df24ae2de37a1d0668e3cbac08e3db3c18d835cd0699fd69d3b58118741",
         "6c029e25ce2aa01935fed323c0bb20c39d280a673b4e0a00e8a6a9ad231a0e44",
@@ -749,46 +749,71 @@
     {
       "table": "REACH",
       "id": "R-OVERLOADS",
-      "label": "residual: the body that runs behind a src overload set's visible signatures (a function or a method declared with more than one signature) is never read through them (cut #7, ruling R-B60) - a field or a getter stand-in whose type's call signatures are such a set's (a field by an overloaded function's name, a static override by it, a getter whose inferred return is it, a field by another instance's overloaded method) and such a set flowing as a callback into a type that hands it the projection (an argument, an object literal's property, an annotated field's initializer, a getter's or a function's return under its written type; returned by an async function it fails closed as async-return instead, ASYNC-RETURNS, cut #8) fail closed with an overload row whether its implementation hides the projection or keeps it, while a call is read through the implementation (argument), a method stand-in declared with overloads by each of its declarations' own parameters (heritage) and a plain function's name through its one signature; such a set standing in, or flowing as a callback, where nothing hands it the projection reads quiet",
+      "label": "read (wb-021.7; cut #7 named this a residual, and the row keeps its id): the body behind a src overload set's visible signatures (a function or a method declared with more than one signature) is read through the set's implementation - the one declaration of the set with a body, by its own declared parameters and its declared return, as declared (a type parameter through its constraint) - wherever a stand-in or a callback is typed by such a set: a field or a getter stand-in whose type's call signatures are the set's (a field by an overloaded function's name, a bound, an imported or a destructured one, a static or another instance's overloaded method, a static override by one, a getter whose inferred return is one; a constructor parameter property typed by one, R-PARAMETER-PROPERTIES) and such a set flowing as a callback into a type that hands it the projection (an argument, a library container's callback included, an object literal's property, an annotated initializer, a getter's or a function's return under its written type, an async function's return: ASYNC-RETURNS; a value typed by the set's own type is read through the same implementation where it flows, and the set flowing into its own type is judged against the visible signatures that hand it) are refused under the reading's own form (heritage, argument, property, initializer, return) where the implementation hides a path the target hands it (an unknown parameter, a rest of unknowns, an unconstrained type parameter) and fail closed with a stand-in-return row where it hands back a type that proves nothing the target's return declares (an unknown, an object), while one that keeps the projection (its own parameter, a union with it, a type parameter constrained to it) reads quiet; the arguments object of an implementation is read through every declaration of its set, so one that declares fewer parameters than the visible signature that hands it the projection and reads its arguments object is refused (arguments), a function or a method alike; a set with no single implementation (an ambient or an abstract set) is never read and fails closed with an overload row where the projection is handed; a call is read through the implementation (argument), a method stand-in declared with overloads by each of its declarations' own parameters (heritage) and a plain function's name through its one signature; such a set standing in, or flowing as a callback, where nothing hands it the projection reads quiet",
       "pins": [
-        "b2bd3c32646c3d7688f897c224055ddb9bd2636ef3fb7f5a5a8189a991baaa88",
-        "6bc0dccc7b71b0b52ee4c9b8a85c426fdd7acb2f9535c6686062372f80af20dd",
-        "1811cfae9e26b00fdfade0399b768e9c29957482edae6a890d4555a7dc93bb94",
-        "d23f4fac54e0b5b0cb5f049eda3a90a9d0b6e2a51cf5afb1b95869877a9fddf1",
-        "88d162904bccebef7705eb97c2dd33067c6d5ea717cfb9b822283c5f6c0fd4bd",
-        "72f2d465c09b43b126a8927dfc2e947accea9cd3dd45fe6e4f7ace948d8cb90e",
-        "273a6fa006e09975efbc88662481f145d67cb4a873e5ac2534c999c8bab4fe3f",
-        "82dd445adc11fa0d7f28774367c46114ff501afaa5d84ad3832c40d76f54ad0c",
-        "8df193059d198c43852af899329994c7fbee1cef37c0971d89aba7c609348892",
+        "aaa5235cb7fcc3d7448f000b69cbfb7031a75f1f583da95282eb2690084a0538",
+        "a847b57e10cc25c3e6b195ac7b287ff84b68f77de56b4a37b2cec33a0aa54472",
+        "d7b3cc694a485e15f3bc7cee6e836208433aa26d604d2e44a2038389e55dbf62",
+        "697f35738c6a7c4f2887aa12b25d8d550ed445519f6d28fc8b6014da0b81b3c2",
+        "b6f7c300372647ecbc09f2cbd8371eb7a631dcdce0aade875018226ef6991d80",
+        "4b1d9c823e25bcb2b612890d4a631b1ac1caffedd759e54b925a9c948d2c19c2",
+        "1d9517e73fa8dfab148aeafa42a95424f6e5c6c8e71f2bbb671274f6b2f5e7b0",
+        "0acc506401e7f9bff0fea36a2a169f8c0b6a9a229d37619fcd113b05ee972b3c",
+        "eb111ca601cfd21c9739a1a1316b6c4d6911de86d9a254f7c8952770ce0ce6d1",
         "ef21ec88430e3d5cf41571a4553bccf485164844923c4364cb9ff03c2cafa4f4",
         "97105bb13fe532cac0959da182f037138f0935e49d72ef431fe4506965cc90ec",
         "f235bb03fac1d7f8b2a3b8f9425038eefff06376c5afcebea3b4ed706abb2c17",
         "8ff763ba4a116307d87c5cc2e58bc888e1ba478412dfb724b02c65f5edd53e20",
         "cee4ddded7e19533f54f9a060febdb46cdd80090a00b099480b71c6d1e5c6ab6",
-        "65867f0341b193b375e3bd3f235ad8167659fd0217fdee13661737a02cc90f19"
+        "d9630cee3df7166322eefd09e055bebc3932f4e144b75984c553d059a846e85c",
+        "73d6ca5d20f8cfa99bc0e24237f06e786d58e2fd1925d2a6b89c482ed444a8b8",
+        "c2897f82b2bb92863a42e544957523618f5756457b738d18172e1450b186cbd9",
+        "89bac7735758f912307ab934f1785413908168cc17a64134882c31162eaba5ff",
+        "cd3ebf2a4c9b5ddabe886bdc44997bce537b2ef1773b27fd4c96a64e13d8e813",
+        "a3b1f92ada845a729b09e8328f3a3597e61ad852860fe37ae3a10664578c78c1",
+        "a2cfb58bd6ee527970e16c7f8085847d7456fdd5ab53f613139233152c2afff0",
+        "a839fad0899a736eed1bb9906df22a319de043c14483b99de1a327bdc0d0e24d",
+        "1032f143aaa5a5dda0e62d4ad43da7bd24867c9fd173346ee57066d6c41279bf",
+        "356f636f22ff49c7db1543c8f708e56bf2de6deee9908aa377742ef503028e30",
+        "750daedfc384eb99e5c58463c3bce9381e59e6e5e0f202aacd86b80399f07a0f",
+        "83962a69ff71aa6e6e5fd7be7dc4212df598d6d16582d88eb9fce4cad5a1fe44",
+        "107299a262e359d25c6f80c003e8472e635e003b96668d14ef8c3ca4a6d748d6",
+        "39632ff5c9e2fe267c93ac5c739bc1610d12272ab2df9191fb5564aa993c724d",
+        "f3b5a364125691688a43218abce810f7b678be5d01183757e3aec76ef20cc545",
+        "1e02fcfeb3def0676c34e307725919980d94aaadcc3e3fbcfce2cbb3b7b4fcba",
+        "5ad5bd5ab93394f1491bd8de12cd2d19c57f5221f26bdf72b09e62bb9d944bbc",
+        "3ce1100f7ee812d18d3e580a2754a656dae0393247d068989217ffb30f6d4037"
       ],
       "test": "REACH R-OVERLOADS"
     },
     {
       "table": "REACH",
       "id": "R-PARAMETER-PROPERTIES",
-      "label": "residual: a constructor parameter property declares the member that stands in for a member of its name on the class's heritage (the extended class's instance side, an implemented interface), and it is never read as a stand-in (cut #7, ruling R-B60): where that member hands the projection it fails closed with a parameter-property row in each modifier form planted here (public, readonly, protected, override) whether its declared type hides the projection or keeps it, while the same member declared as a field is read through its type (heritage); a parameter property standing in for no member of its name, or for one that hands no projection, reads quiet",
+      "label": "read (wb-021.7; cut #7 named this a residual, and the row keeps its id): a constructor parameter property declares the member that stands in for a member of its name on the class's heritage (the extended class's instance side, an implemented interface), and it is read as a field is (STAND_IN's field reading) - through its own type, declared or inferred from its default: the parameters every call signature of that type takes, through the signatures that run (an overload set's implementation, R-OVERLOADS) - so in each form planted here (public, readonly, protected, override, optional, a class expression's) one whose type hides a path the base member hands it (an unknown parameter, a held path, a function its default infers, an overload set whose implementation hides it) is refused at the parameter under heritage, as the same member declared as a field is (heritage), one typed any fails closed (unresolved-stand-in) and one that hands back a type the base's does not declare fails closed (stand-in-return), while one that keeps the projection reads quiet; a parameter property standing in for no member of its name, or for one that hands no projection, reads quiet (one a base names only through an index signature: R-INDEX-STAND-IN)",
       "pins": [
-        "b64dceff90e72ad1d7051f9d3866cc1d0f7b0077e9c7a7f6f34b06081f924370",
-        "bcc7759d277d37ddacf397486112f37526bef21afdbf82050614419185e70795",
-        "83c5660b0bfed154b77c45e1c11235bd318b0e1aba0f16f80e945951955cfe49",
-        "2003ca17789e47abdec866cb3e4c462cf200253da81933a0e31bda19c59a5c76",
-        "77581f5c20c9459cc31a5661e8aafa393c02dc0b1c418dc78c503d3ef411e776",
+        "9df96a269b0673cf688d054fce785743866e4b59a6628bf3ca7211b762497229",
+        "d189afff54e8b73e5b27e2fdc755afe97e2c0b3b34ad55b820ae1518ace91ccb",
+        "830b006ccc79fcde7cbcba82ef561d62c0ec2c4b768dda0e9f93817aabe6c50e",
+        "f2fcb2e0a578e7fec1911ce75fe211e2ba9f25899403c95e6e7cfee6eba8cfae",
+        "7b16aee8143fd79320dbfcb77d0297d5c9438fd20ff0d0a66916fca7db5c22f5",
         "e20d32e60d98c698244396f2058b45c7db78c135a1ca0b0631efc0f535f9b269",
         "90380dc6082ad4e380e390eaad30ae864fe4a85c97ac103ceff0b69c5cfb15ba",
-        "757617bcb9d77ab7590aac6e6499a08fa6586bd3dbc1f9a52ff605c6e43c1114"
+        "757617bcb9d77ab7590aac6e6499a08fa6586bd3dbc1f9a52ff605c6e43c1114",
+        "f4b97a46ba56e3dda4779cf934e61303e20cb5329594edbd377d8c144d6d6333",
+        "b49c9e9e55bde2ac41035866fb59d7779831655ef7154dd6fade2b189130397a",
+        "2f204b3bddd6840d16951173a8f8df3a037d82fff079ba334dc02e2f9446801a",
+        "03e84e40efc46d793cf1902116c66fc36a0992eb2f1f61cd50719189b8d709c5",
+        "06f1c23126ae72b57a46b94f06989439566b2d71c117c491d22150a05e5154eb",
+        "20a5d4aa2d36b2c69de7463bf45e913e02e95428dbb4760baa52cb5bd989e0fd",
+        "335b86733e6cd4d4eb4fdf538c949e0f96b06b1694ed080744e43a99fabfb89e",
+        "9f6a54b29a33b9fbd39dd8f52ac9e277c99f026109b1e5bd15faae4d574dac55"
       ],
       "test": "REACH R-PARAMETER-PROPERTIES"
     },
     {
       "table": "REACH",
       "id": "R-STRUCTURAL-STAND-IN",
-      "label": "residual: a class instance, or a class's static side, flowing directly (an argument, an annotated initializer, an object literal's property, a return under the written type of a function that is neither async nor a generator, a cast; an async function's and a generator's written-type return fail closed instead, ASYNC-RETURNS and GENERATOR-YIELDS, cut #8) into an object type (each part of a union or an intersection) - a class, an interface or a type literal - that its class does not declare (itself, or through its extends and implements clauses, transitively; a generic's instantiation only as that same instantiation, and a class's static side only as its own or its extends chain's static side, cut #8) stands in for that type's members structurally, and it is never read as a stand-in (cut #7, ruling R-B60): where a member of that type which the instance also has hands the projection it fails closed with a structural-stand-in row whether the instance's member hides the projection or keeps it, while a class that declares the type is read through its heritage and an object literal through its contextual type; such a flow into a type whose members hand no projection, and a class instance held inside another value (an array's element, a library generic's type argument: the array Array.of builds, the promise Promise.resolve settles; cut #8, refusal #7 F10) entering such a type, read quiet",
+      "label": "residual: a class instance, or a class's static side, flowing directly (an argument, an annotated initializer, an object literal's property, a return under the written type of a function that is no generator - an async function's against the written promise's awaited type, ASYNC-RETURNS, wb-021.7 - a cast; a generator's written-type return fails closed instead, GENERATOR-YIELDS, cut #8) into an object type (each part of a union or an intersection) - a class, an interface or a type literal - that its class does not declare (itself, or through its extends and implements clauses, transitively; a generic's instantiation only as that same instantiation, and a class's static side only as its own or its extends chain's static side, cut #8) stands in for that type's members structurally, and it is never read as a stand-in (cut #7, ruling R-B60): where a member of that type which the instance also has hands the projection it fails closed with a structural-stand-in row whether the instance's member hides the projection or keeps it, while a class that declares the type is read through its heritage and an object literal through its contextual type; such a flow into a type whose members hand no projection, and a class instance held inside another value (an array's element, a library generic's type argument: the array Array.of builds, the promise Promise.resolve settles; cut #8, refusal #7 F10) entering such a type, read quiet",
       "pins": [
         "d6790b1b6937593dbd36b2eb55ca1fefa81f924c99570cf324a6493fff701f6e",
         "8477c72c0385ceda0e7c40e521afe961ab488b7ab585e5271b8e39680a0bad27",
@@ -818,22 +843,37 @@
     {
       "table": "REACH",
       "id": "ASYNC-RETURNS",
-      "label": "a value an async function returns (an arrow's body, a return statement of a function declaration, a function expression or a method) under a written type that holds a type handing the projection (a promise of an interface whose member hands it, or of a function type that hands it, to CARRIER_DEPTH) is never read: it converts into the awaited type while the flow reading reads the written promise, so it fails closed with an async-return row whatever the value - a class instance, a hiding callback, an overload set, an object literal (whose own member is still judged: property), a keeping instance, undefined (cut #8, ruling R-B67; refusal #7 U1 and F11) - while the same returns from functions that are not async are read by their flow (structural-stand-in, return, overload), an async return under a type that hands nothing reads quiet, and an exposing value returned into a promise of unknown is refused by the written type (return)",
+      "label": "read (wb-021.7): a value an async function that is no generator returns (an arrow's body, a return statement of a function declaration, a function expression, a method or an object literal's method) under a written type (an alias of one included) is judged against that promise's awaited type, as its awaited value (a promise's, a then chain's or a thenable's settled value, each part of a union awaited), exactly as the same return of a function that is not async is judged against its written type: a class instance whose class does not declare the type fails closed (structural-stand-in), a hiding callback or an overload set whose implementation hides the projection, awaited or not, and an exposing value returned into a promise of unknown are refused (return), an object literal written there is read by its own members under the awaited contextual type (property), and a value of an unconstrained type parameter is refused as its sync twin is (return), while a keeping instance, awaited or not, a value of a type parameter constrained to the type, an exposing value it keeps, an undefined and a return under a type that hands nothing read quiet; a generator's return or yield, an async generator's included, is no async function's return here: GENERATOR-YIELDS reads it, never awaited (failing closed under a written type that holds a handing type), so a thenable an async generator returns under a written type that hands nothing is read as it is (its resolver's call refused as a call through a signature with no body: argument)",
       "pins": [
-        "0bdfb65f58ff61e7619288c3ed280f45abbeaf8795401307acf8bf696983392f",
-        "c2c32a44d3fd7f5e79ea773324a8c4b3ef9a6a91858d4e5c1e6e23212cfc923c",
-        "d688d8ba3ac963305fd1b7bfa4f960c5b099020a91548e9b1689d7881debc82c",
-        "3123125a01750e6fbdefce087c161a5c44a05db670a32a5f973ec2be4bcc98bc",
-        "0321bafc14bdf4ebc17a15d5e7629a343baf652080474b0183076871cc7a2546",
-        "21eceb976894ee35d785f0097e2b279e8c29dcaea71d68dddc0c394b2fbee466",
-        "bd319b4891937163b28b594c10517be92ab70a8418f814a800b5c09aef4b3915",
-        "b3cfd0563c3509324b4205af7b318f6b8eaa0c01ca6a68d193f432a203b1c571",
-        "79510c7c8343e96b2a5eb7c7ac5a105416026a7ee3ed8d887131abd9f14a5c5c",
+        "45de2de7441817f05d33fa7303c964c64b4e1bab39a3d42728731375a35e0137",
+        "ab339adb35910c28100dc6b402c949abb9a5fd19793113b5d375a9e805897c1e",
+        "802d543daaef331d1d79e8f31460060ff32f4a4af8d89a112bee480c9ee31ede",
+        "04fb58ac376238775a49b7ccddf19c70e7320b8b9312a297a1c6f204d59df958",
+        "54b46fbe040cd55c35607f57ee9b85dd9b80dfa23e34987dc7723dc2444939f4",
+        "c7e03fff295afb1514f5f3aa1a9b4078aef2c3ee10be6256a4ad2716559579f5",
+        "211746acf58543ba137e30a71035865a01c94ccd94d3f0436227317937fe9587",
+        "ebf5b1d13e1d0da861f8f655525eb113c0c7bbde78df81020798670ff9aade8b",
+        "818cbeae4b4ab4fdfa3562834e48a68dfe8eddcebeaef5edc8a7d9f2f8e662d8",
         "8e84a6c5333fd9e18fb844e8f048757696129e1a635a76f2e2e55e6450edcdcc",
         "629870e25fa93c449c419bdc1ca60d0742f5073a8b9c091e2150efa69f2e3dfb",
-        "032be377bf86ad6b653d76a1c504c767fbf47ca25031b7837963ba5b38ee1185",
+        "42ec16fef53eb8fa7440d27a55c96d6bdc2a1885508241108c539e2100aa3195",
         "fbfc721d3d82782c0b4796b96a27781105493cce62c8b9d5a9b4c48708ce36b3",
-        "29ddb812dd63b420fbe1e1da308c63465dec7f809bcc62687732ce2182b4ee97"
+        "29ddb812dd63b420fbe1e1da308c63465dec7f809bcc62687732ce2182b4ee97",
+        "d5e601db561e3b6bfd71c6f53e16c0d124ad24bbfd58e29aaf0b08769a2329cb",
+        "b6fe0c32f0007e82fd2922486dd8b78c881c6134a4ddb58d6823a3b9c3a3fde9",
+        "fbbfff0e17bfc49a32deeee9cef71fcb4d96dfc038df933d7ccda7cf04c31150",
+        "da723bf83c82d3778ec5d9e90a8eaba6cd91c912c1728e0e09979fc02381d394",
+        "2e3fe5ed7d6e62c33e2acaf7d23bd5f141e7c10af961e38d81d14ea45f807749",
+        "cc0da6e7fb51009106d501a383d13814bd0cdf6976444a6e8a51489fe82d93de",
+        "0216a46c012cf499578661f5f4aed7330ecd7adbb2ab56e409927f03f0324829",
+        "01e81a643343817343e45ad82818a89ab91f9ce8c60f1ecf9228a67c4494818e",
+        "99b1cd46b13d2a020237eaef1d5d5856fbc734ddfa19ed795089db77d29c9966",
+        "1d59542b3ea7e35d69b432ef79987690a1af9021fd0a7253fe75eacaa53a9518",
+        "8e7eb1f2941b2de1926028e5ed2ad72c506cbc4753593233b817e190d4bbcd23",
+        "80a286b540a34411983fd70a90c7cd495992d0365c6446dedb4807dd330ec176",
+        "f90fed47b355f824e361cef5586aeb6c48c3d111db6f9f681bc9275fa81358b2",
+        "08b52b3e2ced743ffc9b1fc02ebe96ea1c24c1d08af19e4f42d2b9d54120a997",
+        "8133baeaf5e9e7b2a0ebb422d5eecd6512e345a4f08ee413ffacd6369be8d828"
       ],
       "test": "REACH ASYNC-RETURNS"
     },
@@ -911,7 +951,7 @@
     {
       "table": "REACH",
       "id": "CALLBACK-RETURNS",
-      "label": "a callback flowing into a type whose call signature returns a type that holds a type handing the projection, where the callback's own return is not that type or a type declaring it (an instance of a class that does not declare it, an object literal's type, a hiding function, an async function's inferred promise; with no written return type, at an annotated initializer or an argument), hands back a value no reading reads: it fails closed with a callback-return row whether that value hides the projection or keeps it (cut #8, ruling R-B67; refusal #7 F8), while a return written under the target's type is read by its flow (structural-stand-in), and a callback returning an instance of a class that declares the type, or a type that hands nothing, reads quiet",
+      "label": "a callback flowing into a type whose call signature returns a type that holds a type handing the projection, where the callback's own return is not that type or a type declaring it (an instance of a class that does not declare it, an object literal's type, a hiding function, an async function's inferred promise; with no written return type, at an annotated initializer or an argument; a written return of a type that proves nothing - an any (wb-021.7), or a generic's unconstrained type parameter: a part of what is handed back - a union part by part, a type parameter through its constraint - proves the target's type only as a value that holds no object, null, undefined or a primitive, or as an object or an intersection whose object parts are each that type or declare it (wb-021.7)), hands back a value no reading reads: it fails closed with a callback-return row whether that value hides the projection or keeps it (cut #8, ruling R-B67; refusal #7 F8), while a return written under the target's type is read by its flow (structural-stand-in), and a callback returning an instance of a class that declares the type (an undefined part beside it included, a type parameter constrained to the type, an intersection with it), or a type that hands nothing, reads quiet",
       "pins": [
         "90d556113f235f357fb3cecf2bc35795f548c9ff5eab40e7b7f3c8b3ba1ad6f5",
         "5a1dc51f177896923630cc8ef31a3be16d6fc99b3c3a3b7e84a8feadc83fcfdf",
@@ -920,14 +960,20 @@
         "e49d33d2448d0d6831bcf05e4ffe03a0bb3e13d0525992e6b3694f73847e45a5",
         "0cbde2a69b0526d3e551a0b37066c14cb432a214a2f23fffffda8c4419b458a3",
         "6583e50ee923aa59d8fc2167c1b43a7f53a9b093c18cff4515b24e6fb1e8c217",
-        "28963f0a1be3ccb10c07d03251683bf839820eb074a21184daeb72c1d5ad1e6c"
+        "28963f0a1be3ccb10c07d03251683bf839820eb074a21184daeb72c1d5ad1e6c",
+        "34ae481702507e0244bf815c1d6b1a8f65ce03f77325bab0ac95aa446231007f",
+        "118ee92ef6abd91db389a7d2e3949e6e8e5d7d5b27c10c695fc0e243a7a5087c",
+        "9a86fb655000565c740390731688643be94e7306ec0fc50153cc2fc51851733f",
+        "e2878fc3dbd57cf9e7a5fd67b505989b7221cfe669c893fd43375f36b89475c6",
+        "a66ef2d303880c4d26b9bade12fa352bf4240be29b64984b30d1f096a19ec0ad",
+        "c80a8dbe988b7e4870b870c597c6e4945cc713b0f2742fd37eb75c7830ca0ad4"
       ],
       "test": "REACH CALLBACK-RETURNS"
     },
     {
       "table": "REACH",
       "id": "STAND-IN-RETURNS",
-      "label": "a stand-in that hands back what its base member's type returns - a method's return (an async method's and an override's included), the result of a field's or a getter's call signature, or, for a property that is no callback, the field's value or the getter's result - in a type that holds a type handing the projection, where what it hands back is not that type or a type declaring it (an inferred return or value), is never read: it fails closed with a stand-in-return row, a class's and an object literal's member alike, whether that value hides the projection or keeps it (cut #8, ruling R-B67), while a return written under the base's type is read by its flow (structural-stand-in), and a written return or an annotated field of the base's type holding an instance of a class that declares it reads quiet",
+      "label": "a stand-in that hands back what its base member's type returns - a method's return (an async method's and an override's included), the result of a field's or a getter's call signature, or, for a property that is no callback, the field's value or the getter's result - in a type that holds a type handing the projection, where what it hands back is not that type or a type declaring it (an inferred return or value; wb-021.7: a written return or an annotated field of a type that proves nothing, an any, as CALLBACK-RETURNS reads it; a constructor parameter property's value and an overload set's implementation's return alike, R-PARAMETER-PROPERTIES and R-OVERLOADS), is never read: it fails closed with a stand-in-return row, a class's and an object literal's member alike, whether that value hides the projection or keeps it (cut #8, ruling R-B67), while a return written under the base's type is read by its flow (structural-stand-in), and a written return or an annotated field of the base's type holding an instance of a class that declares it reads quiet",
       "pins": [
         "5b2495a9d48d374e6eba09536fc9667cfddbe3b4e949f3ac3a84f5acdcf9bd1e",
         "fc7078f9ecf4da855726243fe590d15172dd482d3515da860d38846abfd87663",
@@ -937,7 +983,9 @@
         "86c2258c697ae484c3ba1fa8fe252891e0e6528a77502ab12e311d338fe70e29",
         "377b48f715c7bbf28b2202db083058329fe51743ba57e5934430cd71690a71b8",
         "5b06a288afb173675ab844dd54c58a33c2f0978c195175a34ec907301895dfa5",
-        "2f15738732ddb621047a595a756b07e304c278d0a03337464667d6bcf22035a1"
+        "2f15738732ddb621047a595a756b07e304c278d0a03337464667d6bcf22035a1",
+        "bc837ea7c42f528fa6a47702754d339bb2561ee7d24d8ef4c9cfef17175b8ec6",
+        "648430751d52d6ad779edd9ddd80c5b97bab7c4d1dad93815be56278a66c6cbb"
       ],
       "test": "REACH STAND-IN-RETURNS"
     },
@@ -958,6 +1006,17 @@
         "83e62560a56248b75558ba37ce42ea161b1078402f17a5967f9e7cbdc8fc6a31"
       ],
       "test": "REACH UNLISTED-STAND-INS"
+    },
+    {
+      "table": "REACH",
+      "id": "R-INDEX-STAND-IN",
+      "label": "residual (wb-021.7, found at this cut; a residual-list addition under ruling R-B67 (4)): the stand-in readings match a base member by its name (STAND-IN-KINDS), so a member whose name a base types only through an index signature - an implemented interface's string index signature, which the class's own index signature repeats - is matched to no base member: a field, a method and a constructor parameter property standing in for it read quiet whether they hide the projection or keep it (each page plants one that hides it)",
+      "pins": [
+        "8e6716d7055aacb9f77ad63533cd3521d87c9374745de87d4795c8f6ad0a8153",
+        "776332ace7438bfa339fda994039c7c8c0b2cd802ae3bb68f9fd8e0c3b987863",
+        "5f85d8f6eecb3b0ba5a02b029e460dfd14769c55a9c4cc849da99891c1354f5b"
+      ],
+      "test": "REACH R-INDEX-STAND-IN"
     },
     {
       "table": "NAMES",
@@ -1246,6 +1305,7 @@
     "REACH CALLBACK-RETURNS",
     "REACH STAND-IN-RETURNS",
     "REACH UNLISTED-STAND-INS",
+    "REACH R-INDEX-STAND-IN",
     "NAMES CLASS-NAME-FORMS",
     "NAMES CLASS-MEMBER-KINDS",
     "NAMES CLASS-MEMBER-SHAPES",
@@ -1300,14 +1360,11 @@
     "R-NARROWED-BRANCH": [
       "REACH R-NARROWED-BRANCH"
     ],
-    "R-OVERLOADS": [
-      "REACH R-OVERLOADS"
-    ],
-    "R-PARAMETER-PROPERTIES": [
-      "REACH R-PARAMETER-PROPERTIES"
-    ],
     "R-STRUCTURAL-STAND-IN": [
       "REACH R-STRUCTURAL-STAND-IN"
+    ],
+    "R-INDEX-STAND-IN": [
+      "REACH R-INDEX-STAND-IN"
     ]
   }
 }

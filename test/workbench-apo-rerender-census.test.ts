@@ -102,7 +102,8 @@
  * initialized by a parenthesized or a cast arrow, by a function's name or by a call's result, or an ambient annotated field,
  * stood in unjudged): a stand-in receives what its base member hands it position by position, read through the checker - a
  * field through its own type, declared or inferred, and a getter through the type it returns (cut #7: a type whose call
- * signatures are a src overload set's fails closed instead, R-OVERLOADS), as every call signature of
+ * signatures are a src overload set's fails closed instead, R-OVERLOADS; wb-021.7 reads it through the set's implementation:
+ * WB-021.7 below), as every call signature of
  * each union part takes it (never a union's combined signature, whose parameters intersect its parts'), each parameter as
  * the checker instantiates it; a method by its own declared parameters, a this parameter skipped; a rest parameter, the
  * stand-in's or the base's, at and past its own position. A field or a getter whose type has no call signature while its
@@ -126,7 +127,9 @@
  * STAND-IN-RECEIVERS, R-NARROWED-BRANCH and R-ERASED-ACCESS labels and the rule-16 title are restated to what is read. U1(a)-(c)
  * (a stand-in or a callback was judged by its visible signature or its declared heritage while the body that runs is another):
  * the readings are not widened; the three shapes U1(a)-(c) name fail closed where the projection is handed, each by a typed
- * row the FAIL_CLOSED roster names with the row that plants it (cut #8 closes that roster: CUT #8 below) - overload (a field, a getter or a static override
+ * row the FAIL_CLOSED roster names with the row that plants it (cut #8 closes that roster: CUT #8 below; wb-021.7 reads the
+ * first two, an overload set through its implementation and a parameter property as a field: WB-021.7 below) - overload
+ * (a field, a getter or a static override
  * typed, and a callback flowing, with a src overload set's visible signatures: the implementation that runs is never read
  * through them, whether it hides the projection or keeps it), parameter-property (a constructor parameter property standing
  * in for a base member of its name, whatever its declared type) and structural-stand-in (a class instance, or a class's
@@ -147,7 +150,8 @@
  * CORE). Cut #7's shape stands: 0 pins removed or changed; eight rows are added (ASYNC-RETURNS, GENERATOR-YIELDS,
  * INHERITED-IMPLEMENTATIONS, CONTEXT-LESS-LITERALS, SPREADS, CALLBACK-RETURNS, STAND-IN-RETURNS, UNLISTED-STAND-INS),
  * R-STRUCTURAL-STAND-IN gains five pages and R-OVERLOADS one, and the DISPATCH, STAND-IN-KINDS, CALLBACK-RECEIVERS,
- * R-OVERLOADS and R-STRUCTURAL-STAND-IN labels are restated to what is read. THE CLAIM, in closed form: a value or a member
+ * R-OVERLOADS and R-STRUCTURAL-STAND-IN labels are restated to what is read. THE CLAIM, in closed form (WB-021.7 below
+ * restates it for overload sets, parameter properties, async returns and hand-backs): a value or a member
  * that may stand in for a type handing the projection is read in exactly the roster the readings implement - a class
  * element the class declares itself, by its kind's STAND_IN reading against its own class's heritage clauses; an object
  * literal's own method, getter, setter and property under the contextual type of the flow it is written at; a callback by
@@ -178,13 +182,54 @@
  * scans as under cut #7's (25 modules each, at trunk 93133f0 and again at trunks e3022a1, 9fdd6d9 and 1ad30c3, each merged, whose src equals 4350926's), so src holds none of the shapes
  * this cut fails closed.
  *
+ * WB-021.7 (bead wb-021.7, the home ruling R-B67 (1) names for the forms the fail-closed core refuses; the census keeps its
+ * rows, pins and ids: 0 rows removed, 0 old cases removed, and an old case re-read only where this cut's readings read it).
+ * Three of the escape families are read now, each beside pinned falsifiers. OVERLOADS: a src overload set's visible signatures
+ * are read through the set's implementation - the one declaration of the set with a body, by its own declared parameters and
+ * its declared return, as declared - wherever a field, a getter or a constructor parameter property stands in through them or
+ * the set flows as a callback (an argument, a library container's callback, a property, an annotated initializer, a return): an
+ * implementation that hides a path the target hands it is refused under the reading's own form, one that hands back a type
+ * that proves nothing fails closed (stand-in-return), one that keeps the projection reads quiet, and the arguments object of an
+ * implementation is read through every declaration of its set (arguments); a set with no single implementation (an ambient or
+ * an abstract set) still fails closed (overload, the kind kept for that shape alone) (R-OVERLOADS). PARAMETER PROPERTIES: a
+ * constructor parameter property is read as a field is, through its own type by STAND_IN's field reading (parameter-property
+ * is retired) (R-PARAMETER-PROPERTIES). ASYNC RETURNS: the return of an async function that is no generator is judged against
+ * its written promise's awaited type, the value as awaited - a promise's, a then chain's or a thenable's settled value -
+ * exactly as a sync function's return is judged against its written type (async-return is retired) (ASYNC-RETURNS); a
+ * generator's, an async generator's included, is still read as GENERATOR-YIELDS reads it, never awaited (failing closed
+ * under a written type that holds a handing type). HAND-BACKS: what a callback or a stand-in hands back proves the target's
+ * type only part by part - a union part by part, a type parameter through its constraint - as a value that holds no object
+ * (null, undefined, never, a primitive) or as an object or an intersection whose object parts are each the type or declare it;
+ * a part with no object part that holds an object proves nothing (an any, an unknown, an object type: each pinned), so what is
+ * handed back through one fails closed (callback-return, stand-in-return). The landed core read a callback written to return
+ * any, a field typed any and a method written to return any as vacuously proven, against the CALLBACK-RETURNS and
+ * STAND-IN-RETURNS labels (an unconstrained type parameter it already refused: made non-nullable, it reads as T & {}, whose {}
+ * part declares nothing), and this cut's overload reading reads an implementation's return, which may be wider than its
+ * visible signatures', through that proof, so the proof is narrowed here (CALLBACK-RETURNS and STAND-IN-RETURNS gain those
+ * pages, and CALLBACK-RETURNS pins a constrained type parameter and an intersection with the type proven and a union with
+ * one unproven part refused, as cut #8 read them). R-OVERLOADS and R-PARAMETER-PROPERTIES are no residual families any more (their ids are kept); one residual family
+ * is added, R-INDEX-STAND-IN, found at this cut: the stand-in readings match a base member by its name, so a field, a method
+ * or a constructor parameter property standing in for a member a base names only through an index signature reads quiet,
+ * pinned (a residual-list addition under ruling R-B67 (4)). THE CLAIM, restated: CUT #8's closed roster stands with these
+ * readings added - a constructor parameter property as a field; a field, a getter or a callback typed by a src overload set
+ * through the set's implementation; a return under the written type of a function that is no generator, an async function's
+ * against the awaited type - and with the two FAIL_CLOSED kinds this cut retires removed (parameter-property, async-return);
+ * every other stand-in the readings meet, outside the named residuals' quiet pages (R-INDEX-STAND-IN added), fails closed with
+ * its typed row, and any other stand-in shape is outside the claim. The other escape families R-B67 (1) names - structural
+ * stand-ins, inherited implementations, context-less literals, spreads, hiding callbacks returned under a written type - and
+ * cut #8's generator-yield and unlisted-stand-in still fail closed here, unread: this cut is partial for bead wb-021.7 and
+ * names them as its remainder. Measured on src: the live reach map and src's forms and refused uses read byte for byte the
+ * same under this cut's scans as under cut #8's (25 modules each, of 117 src files, at trunk 577493f, whose src equals
+ * 4350926's; the four refused uses are detached-control's), so src holds none of the shapes this cut reads anew or narrows.
+ *
  * MEASURED (read-only, by the cutting seats, 2026-10-27: cut #3 at trunk 79dadb2 and before it at db2d796; cut #4 re-measured at
  * trunk b92d7a1, and it merged b92d7a1, bda6c2a and 88086c9, none of which changes a src file after e61eaec and so none after
  * 79dadb2; cut #5 re-measured 2026-10-28 at trunk cf56481, and it merged cf56481 and df37dac, neither of which changes a src file after
  * 88086c9; cut #6 re-measured 2026-10-28 at trunk e81d2b0, merged, where src differs from df37dac by the wb-4ap.15 landing
  * (src/workbench/collective-event.ts, added) and the wb-gwr.2 landing (src/workbench/hyperunix-observer.ts, its reach
  * unchanged); cut #7 re-measured 2026-10-29 at trunk 4350926, merged, whose src equals e81d2b0's; cut #8 re-measured
- * 2026-10-29 at trunk 93133f0 and at trunks e3022a1, 9fdd6d9 and 1ad30c3, each merged, whose src equals 4350926's; src there differs from 3223843, cut #2's measured trunk, by those, the wb-4ap.17 landing (src/index.ts,
+ * 2026-10-29 at trunk 93133f0 and at trunks e3022a1, 9fdd6d9 and 1ad30c3, each merged, whose src equals 4350926's; wb-021.7
+ * re-measured 2026-10-30 at trunk 577493f, whose src equals 4350926's; src there differs from 3223843, cut #2's measured trunk, by those, the wb-4ap.17 landing (src/index.ts,
  * src/workbench/forge-operation-observer.ts), the wb-jwc.4 landing (src/workbench/providers/reactivefiber.ts) and the wb-3ht.1
  * landing (src/workbench/hyperunix-observer.ts: a consumed-fields table that references no projection member), and the live
  * reach map over every src module reads byte for byte the same under cut #2's reach scan and cut #5's, at both of cut #5's trunks): src holds 117 TypeScript modules and none spells the program (the mention judge below:
@@ -254,13 +299,16 @@
  * class-element kind, instance and static, and a narrowed roster's refusal; STAND-IN-KINDS plants each kind's stand-in
  * reading, refused and quiet; STAND-IN-RECEIVERS plants how a field, a getter and a method receive what the base hands them,
  * position by position through the checker, refused, failing closed and quiet, and CALLBACK-RECEIVERS how a callback flowing
- * into a type that hands it the projection receives it, refused and quiet (cut #6); R-OVERLOADS, R-PARAMETER-PROPERTIES
- * and R-STRUCTURAL-STAND-IN plant the shapes whose running body the stand-in and flow readings never read, each refused with
- * its typed row (FAIL_CLOSED) beside its read twins and quiet pages (cut #7); ASYNC-RETURNS, GENERATOR-YIELDS,
- * INHERITED-IMPLEMENTATIONS, CONTEXT-LESS-LITERALS, SPREADS, CALLBACK-RETURNS and STAND-IN-RETURNS plant each further shape
- * the readings never read, refused with its typed row beside its read twins and quiet pages, and UNLISTED-STAND-INS pins
- * that a stand-in whose type the readings do not list refuses (cut #8, the fail-closed core). What neither scan reads is named:
- * R-ERASED-ACCESS, R-DEEP-CARRIER and R-NARROWED-BRANCH, and the three fail-closed families.
+ * into a type that hands it the projection receives it, refused and quiet (cut #6); R-STRUCTURAL-STAND-IN plants the shape
+ * whose running body the stand-in and flow readings never read, refused with its typed row (FAIL_CLOSED) beside its read twins
+ * and quiet pages (cut #7), and R-OVERLOADS and R-PARAMETER-PROPERTIES, cut #7's two other such rows, plant the readings
+ * wb-021.7 gives them (an overload set through its implementation, a set with no single implementation still refused; a
+ * parameter property as a field) beside their falsifiers; GENERATOR-YIELDS, INHERITED-IMPLEMENTATIONS, CONTEXT-LESS-LITERALS,
+ * SPREADS, CALLBACK-RETURNS and STAND-IN-RETURNS plant each further shape the readings never read, refused with its typed row
+ * beside its read twins and quiet pages, UNLISTED-STAND-INS pins that a stand-in whose type the readings do not list refuses
+ * (cut #8, the fail-closed core), and ASYNC-RETURNS plants the reading wb-021.7 gives an async function's return. What neither
+ * scan reads is named: R-ERASED-ACCESS, R-DEEP-CARRIER and R-NARROWED-BRANCH, the fail-closed family R-STRUCTURAL-STAND-IN, and
+ * R-INDEX-STAND-IN (wb-021.7).
  * NAMES, "issues no event admission and no invocation": planted classes and interfaces measure the member readers on the
  * name forms CLASS-NAME-FORMS plants, the member kinds CLASS-MEMBER-KINDS plants, the declaration shapes CLASS-MEMBER-SHAPES
  * plants, the interface forms INTERFACE-FORMS plants and the heritage and signature shapes INTERFACE-HERITAGE plants, and
@@ -330,14 +378,14 @@
  * (NAMES); R-NARROWED-BRANCH a callback or a holder that does not itself expose the projection, chosen by a conditional or a
  * ?? operand, is judged by that expression's type, which subtype reduction narrows to the branch that keeps the projection, so
  * a conditional or a ?? choosing a callback that hides it reads quiet to the forms judge, while the hiding callback's own
- * flow is refused, and so does a field or a getter stand-in whose function is so chosen (cut #7) (REACH); R-OVERLOADS the
- * implementation behind a src overload set's visible signatures is never read through them: a field, a getter or a static
- * override typed by them, and such a set flowing as a callback, fail closed where the projection is handed, whether the
- * implementation keeps it or hides it (REACH); R-PARAMETER-PROPERTIES a constructor parameter property is never read as a
- * stand-in: it fails closed where a base member of its name hands the projection, whatever its declared type (REACH);
- * R-STRUCTURAL-STAND-IN a class instance, or a class's static side, flowing into an object type its class does not declare is never read as a stand-in:
+ * flow is refused, and so does a field or a getter stand-in whose function is so chosen (cut #7) (REACH); cut #7's R-OVERLOADS
+ * and R-PARAMETER-PROPERTIES are read since wb-021.7 and are no residuals; R-STRUCTURAL-STAND-IN a class instance, or a class's static side, flowing into an object type its class does not declare is never read as a stand-in:
  * it fails closed where a member of that type it also has hands the projection, whatever its own member does, and an
- * instance held inside another value (an array's element, a library generic's type argument such as a promise's: cut #8) entering such a type reads quiet (REACH).
+ * instance held inside another value (an array's element, a library generic's type argument such as a promise's: cut #8) entering such a type reads quiet (REACH);
+ * R-INDEX-STAND-IN a member a base names only through an index signature (an implemented interface's string index signature) is
+ * matched to no base member by the stand-in readings, which match a base member by its name, so a field, a method or a
+ * constructor parameter property standing in for it reads quiet whether it hides the projection or keeps it (REACH; wb-021.7,
+ * found at its cut).
  * NOT CLAIMED. In src: an instance member's own code - its body, initializer, parameters and types - is not read statically
  * (REPROJECTION's runtime reading and MEMBERS judge it), nor is a parameter decorator (the compiler refuses one under the
  * repo's standard decorators, TS1206). As edits of this file, its helper and the roster together: a plant row of IDENTITY, QUIET,
@@ -350,7 +398,9 @@
  * reading (classInternal, STAND_IN) changed in the helper together with its REACH cases and the frozen literal (the src plants
  * recorded with the cut are its falsifiers; the kinds themselves, each with its SyntaxKind, are anchored by typescript's
  * declaration file); a fail-closed check (FAIL_CLOSED) changed in the helper together with its row's pages and the
- * roster (the src plants recorded with cuts #7 and #8 are its falsifiers); an assertion narrowed in this file (the SURFACES rows' QUIET comparison cut to fewer fields
+ * roster (the src plants recorded with cuts #7 and #8 and with wb-021.7 are its falsifiers), and so is a reading wb-021.7
+ * adds (runningSignature, judgeParameterProperties, the awaited flow, provenReturn's narrowed proof) changed in the helper
+ * together with its row's pages and the roster; an assertion narrowed in this file (the SURFACES rows' QUIET comparison cut to fewer fields
  * stays green, since every real surface reads QUIET on every field, and the anchor's section reading widened back to
  * the whole row stays green on the clean export: the src and export plants recorded with the cut are those readings'
  * falsifiers); a NON_RENDER reason's prose (its member references and the closure are measured, its words are not); the
@@ -866,17 +916,18 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "REACH/STAND-IN-RECEIVERS:23",
       "REACH/CALLBACK-RECEIVERS:6",
       "REACH/R-NARROWED-BRANCH:5",
-      "REACH/R-OVERLOADS:15",
-      "REACH/R-PARAMETER-PROPERTIES:8",
+      "REACH/R-OVERLOADS:32",
+      "REACH/R-PARAMETER-PROPERTIES:16",
       "REACH/R-STRUCTURAL-STAND-IN:22",
-      "REACH/ASYNC-RETURNS:14",
+      "REACH/ASYNC-RETURNS:29",
       "REACH/GENERATOR-YIELDS:6",
       "REACH/INHERITED-IMPLEMENTATIONS:14",
       "REACH/CONTEXT-LESS-LITERALS:12",
       "REACH/SPREADS:7",
-      "REACH/CALLBACK-RETURNS:8",
-      "REACH/STAND-IN-RETURNS:9",
+      "REACH/CALLBACK-RETURNS:14",
+      "REACH/STAND-IN-RETURNS:11",
       "REACH/UNLISTED-STAND-INS:10",
+      "REACH/R-INDEX-STAND-IN:3",
       "NAMES/CLASS-NAME-FORMS:6",
       "NAMES/CLASS-MEMBER-KINDS:9",
       "NAMES/CLASS-MEMBER-SHAPES:10",
@@ -915,17 +966,14 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "R-DEEP-CARRIER:REACH R-DEEP-CARRIER",
       "R-RUNTIME-MEMBER:NAMES R-RUNTIME-MEMBER",
       "R-NARROWED-BRANCH:REACH R-NARROWED-BRANCH",
-      "R-OVERLOADS:REACH R-OVERLOADS",
-      "R-PARAMETER-PROPERTIES:REACH R-PARAMETER-PROPERTIES",
       "R-STRUCTURAL-STAND-IN:REACH R-STRUCTURAL-STAND-IN",
+      "R-INDEX-STAND-IN:REACH R-INDEX-STAND-IN",
     ]);
     // The fail-closed shapes (cut #7, ruling R-B60; cut #8, ruling R-B67), each with the REACH row that plants it: the row reads it refused under its typed row and holds a quiet page beside it.
     expect(Object.entries(FAIL_CLOSED).map(([kind, id]) => `${kind}:${id}`)).toEqual([
       "unresolved-stand-in:STAND-IN-RECEIVERS",
       "overload:R-OVERLOADS",
-      "parameter-property:R-PARAMETER-PROPERTIES",
       "structural-stand-in:R-STRUCTURAL-STAND-IN",
-      "async-return:ASYNC-RETURNS",
       "generator-yield:GENERATOR-YIELDS",
       "inherited-implementation:INHERITED-IMPLEMENTATIONS",
       "context-less-literal:CONTEXT-LESS-LITERALS",

@@ -1032,11 +1032,12 @@ export const CLASS_ELEMENT_SYNTAX: Readonly<Record<ClassElementKind, ts.SyntaxKi
  * parameters, a setter by its parameter (handed the property's type), and through the checker (cut #6) a field by its own
  * type, declared or inferred, and a getter by the type it returns - the parameters every call signature of that type takes
  * (each union part read on its own, each parameter as instantiated), a type with no call signature failing closed
- * (unresolved-stand-in), and (cut #7, ruling R-B60) a type whose call signatures are a src overload set's failing closed too
- * (overload: the implementation that runs is never read through them); a constructor, a static block, an index signature and
- * a semicolon stand in for no named member (a constructor's parameters are judged where it is called), but a constructor's
- * parameter property declares one: it is never read as a stand-in, and it fails closed where a base member of its name hands
- * the projection (parameter-property).
+ * (unresolved-stand-in), and a type whose call signatures are a src overload set's read through the signatures that run (the
+ * set's implementation, wb-021.7; cut #7, ruling R-B60, failed it closed, and a set with no single implementation still fails
+ * closed: overload); a constructor, a static block, an index signature and a semicolon stand in for no named member (a
+ * constructor's parameters are judged where it is called), but a constructor's parameter property declares one, and it is read
+ * as a field is (wb-021.7; cut #7 failed it closed). A member is matched to the base member of its name: one a base names only
+ * through an index signature is matched to none (R-INDEX-STAND-IN, a named residual).
  */
 export const STAND_IN: Readonly<Record<ClassElementKind, "parameters" | "field" | "getter" | "setter" | "none">> = {
   PropertyDeclaration: "field",
@@ -1061,14 +1062,16 @@ export const STAND_IN: Readonly<Record<ClassElementKind, "parameters" | "field" 
  * (context-less-literal), a spread supplying a handing member (spread), what a callback or a stand-in hands back where it is not
  * the target's own type (callback-return, stand-in-return) and a value of any type the readings do not list (unlisted-stand-in),
  * each with the row that plants it; these rows are no residual families: each shape refuses, and bead wb-021.7 is the home of
- * their readings.
+ * their readings. wb-021.7 reads three of the shapes and retires two kinds: a constructor parameter property is read as a field
+ * is (parameter-property retired; R-PARAMETER-PROPERTIES pins the reading), a src overload set through its implementation
+ * (overload kept for a set with no single implementation; R-OVERLOADS pins both), and an async function's return that is no
+ * generator's against its written promise's awaited type (async-return retired; ASYNC-RETURNS pins the reading). R-OVERLOADS
+ * and R-PARAMETER-PROPERTIES are no residual families any more; their rows keep their ids.
  */
 export const FAIL_CLOSED: Readonly<Record<string, string>> = {
   "unresolved-stand-in": "STAND-IN-RECEIVERS",
   overload: "R-OVERLOADS",
-  "parameter-property": "R-PARAMETER-PROPERTIES",
   "structural-stand-in": "R-STRUCTURAL-STAND-IN",
-  "async-return": "ASYNC-RETURNS",
   "generator-yield": "GENERATOR-YIELDS",
   "inherited-implementation": "INHERITED-IMPLEMENTATIONS",
   "context-less-literal": "CONTEXT-LESS-LITERALS",
@@ -1079,6 +1082,15 @@ export const FAIL_CLOSED: Readonly<Record<string, string>> = {
 };
 /** A stand-in reading that judges something (every reading but "none"). */
 type StandInReading = Exclude<(typeof STAND_IN)[ClassElementKind], "none">;
+/** A declaration a stand-in reading judges: a class element, an object literal's element, or a constructor's parameter property (read as a field, wb-021.7). */
+type StandInMember = ts.ClassElement | ts.ObjectLiteralElementLike | ts.ParameterPropertyDeclaration;
+/** An async function-like: the async modifier (wb-021.7; cut #8's async test). */
+const isAsyncFunction = (fn: ts.SignatureDeclaration): boolean => ts.canHaveModifiers(fn) && (ts.getModifiers(fn) ?? []).some(modifier => modifier.kind === ts.SyntaxKind.AsyncKeyword);
+/** A generator function-like: the asterisk token (cut #8's generator test). */
+const isGeneratorFunction = (fn: ts.SignatureDeclaration): boolean => "asteriskToken" in fn && fn.asteriskToken !== undefined;
+/** The type flags of a part that holds no object a stand-in could be (wb-021.7, provenReturn): null, undefined, never and the primitive types with their literals. */
+const HOLDS_NO_OBJECT =
+  ts.TypeFlags.Null | ts.TypeFlags.Undefined | ts.TypeFlags.Never | ts.TypeFlags.StringLike | ts.TypeFlags.NumberLike | ts.TypeFlags.BooleanLike | ts.TypeFlags.BigIntLike | ts.TypeFlags.ESSymbolLike | ts.TypeFlags.EnumLike;
 /** A class element's kind among the kinds a scan is given (CLASS_ELEMENT_KINDS unless a case narrows them), or undefined: an unlisted kind. */
 const listedKind = (element: ts.Node, kinds: readonly ClassElementKind[]): ClassElementKind | undefined => kinds.find(kind => CLASS_ELEMENT_SYNTAX[kind] === element.kind);
 /** Static by syntax (a static block, by its kind) or by the static modifier. */
@@ -1305,6 +1317,14 @@ function isValueName(node: ts.Identifier): boolean {
  * yield under a written type holding a type that hands the projection), inherited-implementation (at the class),
  * context-less-literal, spread, callback-return and stand-in-return (what a callback or a stand-in hands back where it is not
  * the target's own type), and unlisted-stand-in (an erased value, or any other value type the readings do not list).
+ * wb-021.7 (the home of the forms the core refuses) reads three of them: a src overload set's visible signatures through the
+ * set's implementation (runningSignature, runningReceivers: a set with no single implementation still fails closed, overload,
+ * and an implementation's arguments object is read through every declaration of its set), a constructor parameter property as
+ * a field is (judgeParameterProperties), and the return of an async function that is no generator against its written
+ * promise's awaited type, the value as awaited (flowOf, judgeFlow; async-return is retired). What a callback or a stand-in
+ * hands back proves the target's type only part by part, as an object that is it or declares it or as a value that holds no
+ * object or an intersection of objects that are it or declare it (provenReturn: a part with no object part that holds an object -
+ * an any, an unknown, an object type - proves nothing).
  * Type side, a type argument of a
  * generic declared in src (a module's own or another module's alias, interface or class) or in a package is refused: a
  * generic indexed-access alias and an infer-conditional alias included.
@@ -1415,6 +1435,39 @@ export function readForms(
     if (!declaration || !isSrc(declaration) || !(ts.isFunctionDeclaration(declaration) || ts.isMethodDeclaration(declaration)) || declaration.name === undefined) return false;
     const declarations = checker.getSymbolAtLocation(declaration.name)?.declarations ?? [];
     return declarations.filter(item => ts.isFunctionDeclaration(item) || ts.isMethodDeclaration(item)).length > 1;
+  };
+  /**
+   * The signature whose body runs for a call through the signature (wb-021.7, resolving cut #7's overload shape): a src overload
+   * set's visible signature (isOverloadSignature) is read through the set's implementation - the one declaration of the set
+   * that has a body, by its own declared parameters and its declared return, as declared (a type parameter through its
+   * constraint) - and any other signature is itself. undefined for a set with no single implementation (an ambient or an
+   * abstract set): the body that runs is never read, so the reading fails closed (overload).
+   */
+  const runningSignature = (signature: ts.Signature): ts.Signature | undefined => {
+    if (!isOverloadSignature(signature)) return signature;
+    const declaration = signature.getDeclaration();
+    const named = (ts.isFunctionDeclaration(declaration) || ts.isMethodDeclaration(declaration)) && declaration.name ? checker.getSymbolAtLocation(declaration.name) : undefined;
+    const bodies = (named?.declarations ?? []).filter((item): item is ts.FunctionDeclaration | ts.MethodDeclaration => (ts.isFunctionDeclaration(item) || ts.isMethodDeclaration(item)) && item.body !== undefined);
+    return bodies.length === 1 ? checker.getSignatureFromDeclaration(bodies[0]) : undefined;
+  };
+  /**
+   * The signatures that run when a value of the type is called (wb-021.7): typeReceivers, each through runningSignature, an
+   * overload set's implementation once however many of its visible signatures the type carries. A visible signature of a set
+   * with no single implementation is kept as it is and marks the reading unread (it fails closed: overload, cut #7).
+   * signatures is undefined where typeReceivers is.
+   */
+  const runningReceivers = (type: ts.Type | undefined): { readonly signatures: readonly ts.Signature[] | undefined; readonly unread: boolean } => {
+    const visible = typeReceivers(type);
+    if (visible === undefined) return { signatures: undefined, unread: false };
+    const signatures: ts.Signature[] = [];
+    let unread = false;
+    for (const signature of visible) {
+      const running = runningSignature(signature);
+      if (running === undefined) unread = true;
+      const read = running ?? signature;
+      if (!signatures.includes(read)) signatures.push(read);
+    }
+    return { signatures, unread };
   };
   /** True when a call signature of the type hands the projection, or a value holding it, at a position its parameters declare (handedAt): what a base member hands its stand-in and a flow target its callback (cut #7). */
   const handsProjection = (type: ts.Type): boolean =>
@@ -1598,10 +1651,26 @@ export function readForms(
     }
     return undefined;
   };
-  /** True when every object part of a returned type is a part of the goal type or declares one (declaresGoal): the value a callback or a stand-in hands back is then the goal's own (cut #8). */
+  /**
+   * True when what a callback or a stand-in hands back is the goal's own (cut #8): every part of the returned type - a union part
+   * by part, a type parameter through its constraint - is a value that holds no object (null, undefined, never, or a primitive:
+   * a string, number, boolean, bigint, symbol or enum type or a literal of one), or an object or an intersection whose object
+   * parts are each a part of the goal type or declare one (declaresGoal). A part with no object part that holds an object proves
+   * nothing (wb-021.7: cut #8 read it as vacuously proven), so what is handed back through it fails closed: an any, an unknown
+   * and an object type are pinned (CALLBACK-RETURNS, STAND-IN-RETURNS, R-OVERLOADS), as an unconstrained type parameter was
+   * already (its non-nullable form, T & {}, holds an object part that declares nothing).
+   */
   const provenReturn = (returned: ts.Type, goal: ts.Type): boolean => {
     const goals = objectParts(goal);
-    return objectParts(returned).every(part => goals.some(item => declaresGoal(part, item)));
+    const proven = (type: ts.Type, depth: number): boolean => {
+      const part = constrained(type);
+      if (part.isUnion()) return depth < CARRIER_DEPTH && part.types.every(item => proven(item, depth + 1));
+      if ((part.flags & HOLDS_NO_OBJECT) !== 0) return true;
+      if ((part.flags & (ts.TypeFlags.Object | ts.TypeFlags.Intersection)) === 0) return false;
+      const objects = objectParts(part);
+      return objects.length > 0 && objects.every(object => goals.some(item => declaresGoal(object, item)));
+    };
+    return proven(returned, 0);
   };
   const result = new Map<string, FormsReading>();
   for (const rel of modules) {
@@ -1622,17 +1691,25 @@ export function readForms(
       else refuse(verdict.refused, verdict.site);
     };
     /** A flow of the value at node into target: the projection must stay visible there, a callback's parameters (every call signature of each union part, by position: cut #6) must keep every path the target hands them, and a value's held paths must stay held. A quiet flow (the value itself hides the projection) records no form. */
-    const judgeFlow = (form: ResolvableForm, node: ts.Node, target: ts.Type, site: ts.Node, quiet: boolean): void => {
-      const sourceType = checker.getTypeAtLocation(node);
+    const judgeFlow = (form: ResolvableForm, node: ts.Node, target: ts.Type, site: ts.Node, quiet: boolean, awaited = false): void => {
+      // An async function's return flows as awaited (wb-021.7): the value the promise settles to, never the promise; a value with no awaited type fails closed.
+      const written = checker.getTypeAtLocation(node);
+      const sourceType = awaited ? checker.getAwaitedType(written) : written;
+      if (sourceType === undefined) {
+        refuse(form, site);
+        return;
+      }
       let hidden = exposes(sourceType) && !exposes(target);
-      // Fail closed (cut #7, ruling R-B60): a callback whose call signatures are a src overload set's (the body that runs is its implementation, never read through them), and a class instance flowing into an object type its class does not declare, where that type hands the projection.
-      if ((typeReceivers(sourceType) ?? []).some(isOverloadSignature) && handsProjection(target)) refuse("overload", site);
+      // A callback whose call signatures are a src overload set's is read through the set's implementation (wb-021.7: runningReceivers); a set with no single implementation fails closed where the target hands the projection (overload, cut #7).
+      const running = runningReceivers(sourceType);
+      if (running.unread && handsProjection(target)) refuse("overload", site);
+      // Fail closed (cut #7, ruling R-B60): a class instance flowing into an object type its class does not declare, where that type hands the projection.
       if (structuralStandIn(sourceType, target)) refuse("structural-stand-in", site);
       // Fail closed (cut #8, ruling R-B67): a stand-in no reading reads - an object literal not written where it flows, a value of any other unlisted type - and a callback that hands back a value its target's return does not declare, where that return holds a handing type.
       const unread = unreadStandIn(node, sourceType, target);
       if (unread) refuse(unread, site);
       // A callback receives what the target's signatures hand it as a field stand-in does (cut #6): every call signature of each union part, by position.
-      const receivers = typeReceivers(sourceType) ?? [];
+      const receivers = running.signatures ?? [];
       const returning = objectParts(constrained(target)).flatMap(part => part.getCallSignatures());
       if (receivers.length > 0 && returning.some(signature => holdsHanding(signature.getReturnType(), 0) && receivers.some(own => !provenReturn(own.getReturnType(), signature.getReturnType())))) {
         refuse("callback-return", site);
@@ -1680,7 +1757,7 @@ export function readForms(
       return instantiated ? element(checker.getTypeOfSymbol(instantiated)) : undefined;
     };
     /** The flow a node in a flow position takes: its form, the type it flows into and the site the row names. */
-    const flowOf = (node: ts.Expression, exposing: boolean): { readonly form: ResolvableForm; readonly target: ts.Type | undefined; readonly site: ts.Node } | undefined => {
+    const flowOf = (node: ts.Expression, exposing: boolean): { readonly form: ResolvableForm; readonly target: ts.Type | undefined; readonly site: ts.Node; readonly awaited?: true } | undefined => {
       const parent = node.parent;
       const passed: readonly ts.Expression[] = (ts.isCallExpression(parent) || ts.isNewExpression(parent)) && parent.arguments ? parent.arguments : [];
       if ((ts.isCallExpression(parent) || ts.isNewExpression(parent)) && passed.includes(node)) return { form: "argument", target: argumentTarget(parent, node, exposing), site: parent };
@@ -1695,7 +1772,12 @@ export function readForms(
       }
       if (ts.isReturnStatement(parent) || (ts.isArrowFunction(parent) && parent.body === node)) {
         const written = returnTypeOf(parent);
-        return written ? { form: "return", target: checker.getTypeFromTypeNode(written), site: parent } : undefined;
+        if (!written) return undefined;
+        const type = checker.getTypeFromTypeNode(written);
+        // An async function that is no generator (wb-021.7, resolving cut #8's async-return shape): its return converts into the written promise's awaited type, the value as awaited (judgeFlow).
+        const fn = ts.isArrowFunction(parent) ? parent : ts.findAncestor(parent.parent, ts.isFunctionLike);
+        if (fn !== undefined && isAsyncFunction(fn) && !isGeneratorFunction(fn)) return { form: "return", target: checker.getAwaitedType(type), site: parent, awaited: true };
+        return { form: "return", target: type, site: parent };
       }
       if (ts.isAsExpression(parent) || ts.isTypeAssertionExpression(parent)) return { form: "cast", target: checker.getTypeFromTypeNode(parent.type), site: parent };
       return undefined;
@@ -1706,7 +1788,7 @@ export function readForms(
       const flow = flowOf(node, true);
       if (flow) {
         if (!flow.target) return { refused: flow.form, site: flow.site };
-        judgeFlow(flow.form, node, flow.target, flow.site, false);
+        judgeFlow(flow.form, node, flow.target, flow.site, false, flow.awaited === true);
         return undefined;
       }
       const own = checker.getNonNullableType(checker.getTypeAtLocation(node));
@@ -1766,7 +1848,7 @@ export function readForms(
       return { refused: `unlisted-type ${ts.SyntaxKind[parent.kind]}`, site: parent };
     };
     /** The parameters through which a method or a setter stand-in receives what its base member hands it, by its kind's STAND_IN reading: its own declared parameters, read by position (ownAt; a field and a getter receive through their types: standInType). */
-    const standInParameters = (member: ts.ClassElement | ts.ObjectLiteralElementLike, reading: StandInReading): readonly ts.ParameterDeclaration[] => {
+    const standInParameters = (member: StandInMember, reading: StandInReading): readonly ts.ParameterDeclaration[] => {
       if (reading === "field" || reading === "getter") return [];
       return parametersOf(member);
     };
@@ -1779,9 +1861,9 @@ export function readForms(
       const declared = checker.getTypeAtLocation(parameter);
       return parameter.dotDotDotToken ? (checker.getIndexTypeOfType(declared, ts.IndexKind.Number) ?? declared) : declared;
     };
-    /** The type through which a field and a getter stand in, read through the checker (cut #6): a field's own, declared or inferred (whatever its initializer, or none), and the type a getter returns; undefined for a method and a setter. */
-    const standInType = (member: ts.ClassElement | ts.ObjectLiteralElementLike, reading: StandInReading): ts.Type | undefined => {
-      if (reading === "field") return ts.isPropertyDeclaration(member) ? checker.getTypeAtLocation(member) : undefined;
+    /** The type through which a field and a getter stand in, read through the checker (cut #6): a field's own, declared or inferred (whatever its initializer, or none), a constructor parameter property's own the same way (wb-021.7), and the type a getter returns; undefined for a method and a setter. */
+    const standInType = (member: StandInMember, reading: StandInReading): ts.Type | undefined => {
+      if (reading === "field") return ts.isPropertyDeclaration(member) || ts.isParameter(member) ? checker.getTypeAtLocation(member) : undefined;
       if (reading === "getter") return ts.isGetAccessorDeclaration(member) ? checker.getSignatureFromDeclaration(member)?.getReturnType() : undefined;
       return undefined;
     };
@@ -1794,12 +1876,14 @@ export function readForms(
      * in for any member of the base, so it is judged against every one of them. A field or a getter whose type has no call
      * signature while its base member hands it the projection is refused (unresolved-stand-in: fail closed).
      */
-    const judgeStandIn = (member: ts.ClassElement | ts.ObjectLiteralElementLike, reading: StandInReading, bases: readonly ts.Type[], form: ResolvableForm): void => {
+    const judgeStandIn = (member: StandInMember, reading: StandInReading, bases: readonly ts.Type[], form: ResolvableForm): void => {
       const symbol = member.name ? checker.getSymbolAtLocation(member.name) : undefined;
       if (symbol === undefined) return;
       const own = standInParameters(member, reading);
       const typed = reading === "field" || reading === "getter";
-      const receivers = typed ? typeReceivers(standInType(member, reading)) : undefined;
+      // A field's or a getter's type is read through the signatures that run (wb-021.7): an overload set's through its implementation, a set with no single implementation failing closed (overload).
+      const running = typed ? runningReceivers(standInType(member, reading)) : undefined;
+      const receivers = running?.signatures;
       // How many positions the stand-in receives: a base's rest parameter is handed that far.
       const span = Math.max(own.length, ...(receivers ?? []).map(signature => signature.getParameters().length));
       let lost = false;
@@ -1846,23 +1930,22 @@ export function readForms(
           }
         }
       }
-      if (handedProjection && (receivers ?? []).some(isOverloadSignature)) refuse("overload", member);
+      if (handedProjection && running?.unread === true) refuse("overload", member);
       if (unresolved) refuse("unresolved-stand-in", member);
       if (handsBack) refuse("stand-in-return", member);
       if (lost) refuse(form, member);
     };
     /**
-     * A value an async function returns, or a generator yields or returns, under a written type that holds a handing type
-     * (cut #8, ruling R-B67): the value converts into the awaited or the yielded type, while the flow reading reads the
-     * written promise or generator, so it is never read and it fails closed at the return or the yield, whatever the value
-     * (async-return; generator-yield, a generator's return included).
+     * A value a generator yields or returns (an async generator's included) under a written type that holds a handing type
+     * (cut #8, ruling R-B67): the value converts into the yielded or the returned type, while the flow reading reads the written
+     * generator, so it is never read and it fails closed at the return or the yield, whatever the value (generator-yield, a
+     * generator's return included). An async function that is no generator is read by its flow instead (wb-021.7: flowOf
+     * judges its return against the written promise's awaited type).
      */
     const judgeWrapped = (site: ts.Node): void => {
       const fn = ts.isArrowFunction(site) ? site : ts.findAncestor(site.parent, ts.isFunctionLike);
       if (fn === undefined || !("type" in fn) || fn.type === undefined) return;
-      const generator = "asteriskToken" in fn && fn.asteriskToken !== undefined;
-      const async = ts.canHaveModifiers(fn) && (ts.getModifiers(fn) ?? []).some(modifier => modifier.kind === ts.SyntaxKind.AsyncKeyword);
-      if ((generator || async) && holdsHanding(checker.getTypeFromTypeNode(fn.type as ts.TypeNode), 0)) refuse(generator ? "generator-yield" : "async-return", site);
+      if (isGeneratorFunction(fn) && holdsHanding(checker.getTypeFromTypeNode(fn.type as ts.TypeNode), 0)) refuse("generator-yield", site);
     };
     /** The instance type a class-like declaration declares. */
     const instanceOf = (owner: ts.ClassLikeDeclaration): ts.Type | undefined => {
@@ -1907,18 +1990,28 @@ export function readForms(
         if (!isStaticElement(element)) return clause.types.map(item => checker.getTypeAtLocation(item));
         return clause.token === ts.SyntaxKind.ExtendsKeyword ? clause.types.map(item => checker.getTypeAtLocation(item.expression)) : [];
       });
-    /** A constructor's parameter properties (cut #7, ruling R-B60): each declares the member that stands in for a base member of its name, and none is read as a stand-in - where that base member hands the projection it fails closed (parameter-property). */
+    /**
+     * A constructor's parameter properties (wb-021.7, resolving cut #7's parameter-property shape): each declares the member that
+     * stands in for a base member of its name on the constructor's class's heritage (the instance side: the extended class's
+     * instance side and the implemented interfaces), and it is read as a field is - through its own type, declared or inferred,
+     * by STAND_IN's field reading (judgeStandIn: the parameters every call signature of that type takes, the signatures that
+     * run, unresolved-stand-in, stand-in-return), refused at the parameter under the heritage form.
+     */
     const judgeParameterProperties = (declaration: ts.ConstructorDeclaration, owner: ts.ClassLikeDeclaration): void => {
       const bases = standInBases(declaration, owner);
-      for (const parameter of declaration.parameters) {
-        if (!ts.isParameterPropertyDeclaration(parameter, declaration)) continue;
-        const name = parameter.name.text;
-        const matched = bases.some(base => {
-          const property = checker.getPropertyOfType(base, name);
-          return property !== undefined && handsProjection(checker.getTypeOfSymbol(property));
-        });
-        if (matched) refuse("parameter-property", parameter);
-      }
+      if (bases.length === 0) return;
+      for (const parameter of declaration.parameters) if (ts.isParameterPropertyDeclaration(parameter, declaration)) judgeStandIn(parameter, "field", bases, "heritage");
+    };
+    /**
+     * The parameter lists through which a function-like's arguments object receives values: its own, and for a src overload
+     * set's implementation every declaration of the set (wb-021.7: the implementation now stands in through the set, and its
+     * arguments object receives what the visible signatures take, so an implementation that declares fewer parameters than
+     * they do and reads its arguments object is refused, as a function whose own parameters hold the projection is).
+     */
+    const declaredParameterLists = (owner: ts.SignatureDeclaration): readonly (readonly ts.ParameterDeclaration[])[] => {
+      if (!(ts.isFunctionDeclaration(owner) || ts.isMethodDeclaration(owner)) || owner.body === undefined || owner.name === undefined || !isSrc(owner)) return [parametersOf(owner)];
+      const declarations = (checker.getSymbolAtLocation(owner.name)?.declarations ?? []).filter(item => ts.isFunctionDeclaration(item) || ts.isMethodDeclaration(item));
+      return declarations.length > 1 ? declarations.map(item => parametersOf(item)) : [parametersOf(owner)];
     };
     const visit = (node: ts.Node, inType: boolean): void => {
       const internal = inClassModule ? classInternal(model, node, kinds) : undefined;
@@ -1955,7 +2048,7 @@ export function readForms(
         if (exposes(checker.getTypeFromTypeNode(node))) record(judgeType(node));
       } else if (!typed && ts.isIdentifier(node) && node.text === "arguments" && isValueName(node) && checker.getSymbolAtLocation(node)?.declarations === undefined) {
         const owner = ts.findAncestor(node.parent, item => ts.isFunctionLike(item) && !ts.isArrowFunction(item));
-        if (owner && parametersOf(owner as ts.SignatureDeclaration).some(parameter => heldPaths(checker.getTypeAtLocation(parameter), 0).length > 0)) refuse("arguments", node.parent);
+        if (owner && declaredParameterLists(owner as ts.SignatureDeclaration).some(list => list.some(parameter => heldPaths(checker.getTypeAtLocation(parameter), 0).length > 0))) refuse("arguments", node.parent);
       } else if (!typed && ts.isShorthandPropertyAssignment(node)) {
         const contextual = checker.getContextualType(node.parent);
         const property = contextual ? checker.getPropertyOfType(contextual, node.name.text) : undefined;
@@ -1966,7 +2059,7 @@ export function readForms(
         if (exposes(checker.getTypeAtLocation(node))) record(judgeValue(node));
         else {
           const flow = flowOf(node, false);
-          if (flow?.target) judgeFlow(flow.form, node, flow.target, flow.site, true);
+          if (flow?.target) judgeFlow(flow.form, node, flow.target, flow.site, true, flow.awaited === true);
           else if (flow && heldPaths(checker.getTypeAtLocation(node), 0).length > 0) refuse(flow.form, flow.site);
         }
       }
@@ -2783,7 +2876,7 @@ export const REACH: Table<ReachItem> = {
     {
       id: "R-ERASED-ACCESS",
       label:
-        "residual: a module that reaches the projection only through an erased or structural type - a cast from unknown, a structural interface of its own, Reflect, an any - reads as reaching nothing (no node of it exposes the projection, so readForms reads nothing there either; the erasure is refused in the module that erased it: ERASING-FLOWS, LIBRARY-FLOWS), and a typed holder's member reached through Reflect, a cast through unknown, a cast to any, a prototype lookup or an Object property call reads as the holder alone to projectionReach, while readForms refuses the erasing step itself (ERASING-FLOWS, LIBRARY-FLOWS); and an arguments object read by a function whose own parameters hold no projection while its base member hands one (a method stand-in that declares no parameter, reading arguments[0]) reads quiet: the element is an any, and readForms refuses the arguments object only in a function whose own parameters hold the projection (cut #7, refusal #6 F8)",
+        "residual: a module that reaches the projection only through an erased or structural type - a cast from unknown, a structural interface of its own, Reflect, an any - reads as reaching nothing (no node of it exposes the projection, so readForms reads nothing there either; the erasure is refused in the module that erased it: ERASING-FLOWS, LIBRARY-FLOWS), and a typed holder's member reached through Reflect, a cast through unknown, a cast to any, a prototype lookup or an Object property call reads as the holder alone to projectionReach, while readForms refuses the erasing step itself (ERASING-FLOWS, LIBRARY-FLOWS); and an arguments object read by a function whose own parameters hold no projection while its base member hands one (a method stand-in that declares no parameter, reading arguments[0]) reads quiet: the element is an any, and readForms refuses the arguments object only in a function whose own parameters hold the projection - an overload set's implementation through every declaration of its set (wb-021.7, R-OVERLOADS) - (cut #7, refusal #6 F8)",
       cases: [
         reach("src/ui/census-reach-cast.ts", "export const forget = (value: unknown): void => (value as { markStale(input: unknown): void }).markStale({});\n", null),
         reach("src/ui/census-reach-structural.ts", "interface Counts {\n  stats(): { nodes: number };\n}\nexport const nodes = (source: Counts): number => source.stats().nodes;\n", null),
@@ -3031,7 +3124,7 @@ export const REACH: Table<ReachItem> = {
     {
       id: "DISPATCH",
       label:
-        "a call through a src signature with no body of its own - an interface method or a function type (a value and a holder) - is refused, and a member declared to stand in for a base or interface member is read in exactly the roster the stand-in readings implement (cut #8, ruling R-B67): a class element the class declares itself, by its kind's STAND_IN reading against its own class's heritage clauses (an override, an implementation), and an object literal's own method or setter under the contextual type of the flow it is written at - one whose own parameter hides a path that member hands it is refused at its declaration, while an override and a literal method that keep the projection read quiet; a call through a class's own method is judged by that method's declaration alone; a stand-in outside that roster which the readings meet at a flow, a class or a literal is no dispatch reading and fails closed with the typed row the FAIL_CLOSED roster names - a constructor parameter property (parameter-property), a field, a getter or a callback typed by an overload set's visible signatures (overload), a class instance or a class's static side flowing into a type its own class does not declare (structural-stand-in), a member the implementing class inherits (inherited-implementation), an object literal not written where it flows (context-less-literal), a spread (spread), what a callback or a stand-in hands back (callback-return, stand-in-return), an async function's or a generator's written-type return (async-return, generator-yield) and a value of any other type (unlisted-stand-in) - except the named residuals' quiet pages (a class instance held inside another value, R-STRUCTURAL-STAND-IN; a branch a conditional or a ?? narrows, R-NARROWED-BRANCH), and any other stand-in shape is outside this claim",
+        "a call through a src signature with no body of its own - an interface method or a function type (a value and a holder) - is refused, and a member declared to stand in for a base or interface member is read in exactly the roster the stand-in readings implement (cut #8, ruling R-B67): a class element the class declares itself, by its kind's STAND_IN reading against its own class's heritage clauses (an override, an implementation), a constructor parameter property as a field is (wb-021.7, R-PARAMETER-PROPERTIES), and an object literal's own method or setter under the contextual type of the flow it is written at, a field, a getter or a callback typed by a src overload set read through the set's implementation (wb-021.7, R-OVERLOADS) - one whose own parameter hides a path that member hands it is refused at its declaration, while an override and a literal method that keep the projection read quiet; a call through a class's own method is judged by that method's declaration alone; a stand-in outside that roster which the readings meet at a flow, a class or a literal is no dispatch reading and fails closed with the typed row the FAIL_CLOSED roster names - a field, a getter or a callback typed by an overload set with no single implementation (overload), a class instance or a class's static side flowing into a type its own class does not declare (structural-stand-in), a member the implementing class inherits (inherited-implementation), an object literal not written where it flows (context-less-literal), a spread (spread), what a callback or a stand-in hands back (callback-return, stand-in-return), a generator's written-type return (generator-yield; an async function's is read against the awaited type, wb-021.7, ASYNC-RETURNS) and a value of any other type (unlisted-stand-in) - except the named residuals' quiet pages (a class instance held inside another value, R-STRUCTURAL-STAND-IN; a branch a conditional or a ?? narrows, R-NARROWED-BRANCH; a member a base names only through an index signature, R-INDEX-STAND-IN), and any other stand-in shape is outside this claim",
       cases: [
         reachForms("src/ui/census-forms-dispatch-interface.ts", `${OBS_UI}interface Api {\n  forget(projection: ObservationProjection): void;\n}\nexport const run = (api: Api, projection: ObservationProjection): void => api.forget(projection);\n`, reached(true, [], [], ["projection"]), formsRead(["annotation"], ["argument: api.forget(projection)"])),
         reachForms("src/ui/census-forms-dispatch-function-type.ts", `${OBS_UI}export const run = (sink: (projection: ObservationProjection) => void, projection: ObservationProjection): void => sink(projection);\n`, reached(true, [], [], ["projection"]), formsRead(["annotation"], ["argument: sink(projection)"])),
@@ -3098,7 +3191,7 @@ export const REACH: Table<ReachItem> = {
     {
       id: "STAND-IN-KINDS",
       label:
-        "a class element the class declares itself stands in for a base member of its own class's heritage clauses by its kind (STAND_IN; a member the class inherits fails closed instead, INHERITED-IMPLEMENTATIONS, and what it hands back, where its base member's type holds a type handing the projection, fails closed unless it is that type, STAND-IN-RETURNS, cut #8): a getter returning a function whose parameter hides the projection, a static member overriding the extended class's static member with such a parameter, a member named by a computed key (a constant one, and one the checker resolves to no name, judged against every base member) and an object literal's getter doing so are refused, while a getter and a static override that keep the projection, and a class whose index signature, static block, constructor (its parameter property naming no base member) and semicolon stand in for no named member, read quiet; a constructor's parameter property that names a base member which hands the projection fails closed instead (R-PARAMETER-PROPERTIES, cut #7)",
+        "a class element the class declares itself stands in for a base member of its own class's heritage clauses by its kind (STAND_IN; a member the class inherits fails closed instead, INHERITED-IMPLEMENTATIONS, and what it hands back, where its base member's type holds a type handing the projection, fails closed unless it is that type, STAND-IN-RETURNS, cut #8): a getter returning a function whose parameter hides the projection, a static member overriding the extended class's static member with such a parameter, a member named by a computed key (a constant one, and one the checker resolves to no name, judged against every base member) and an object literal's getter doing so are refused, while a getter and a static override that keep the projection, and a class whose index signature, static block, constructor (its parameter property naming no base member) and semicolon stand in for no named member, read quiet; a constructor's parameter property that names a base member is read as a field is (R-PARAMETER-PROPERTIES, wb-021.7; cut #7 failed it closed)",
       cases: [
         reachForms(
           "src/ui/census-forms-stand-in-getter.ts",
@@ -3153,7 +3246,7 @@ export const REACH: Table<ReachItem> = {
     {
       id: "STAND-IN-RECEIVERS",
       label:
-        "a stand-in receives what its base member hands it position by position, read through the checker (cut #6): a field through its own type, declared or inferred, and a getter through the type it returns - every call signature of each union part, each parameter as instantiated - and a method by its own declared parameters, a this parameter skipped; a rest parameter, the stand-in's or the base's, is read as its element at and past its own position: a field initialized by a bare, a parenthesized or a cast arrow, by a function's name or by a call's result, an ambient annotated field, a static field override by name (a function declared with one signature: a field, a getter or a static override typed by a src overload set's visible signatures fails closed instead, R-OVERLOADS, cut #7), a field typed by an overload set or a union and a getter returning a union one of whose signatures hides the projection, a field's and a method's rest parameter that hides it past its position, a method's and a field's parameter that hides it where the base's rest parameter hands it, and a method with a this parameter that hides it are refused; a field and a getter typed any (no call signature) while the base hands the projection fail closed (unresolved-stand-in); a field that keeps the projection (a library generic's instantiation included), a method with a this parameter that keeps it, rests of holders that keep it (a method's, a field's and a base's), a method and a field that never receive it, and an any-typed field the base hands no projection read quiet",
+        "a stand-in receives what its base member hands it position by position, read through the checker (cut #6): a field through its own type, declared or inferred, and a getter through the type it returns - every call signature of each union part, each parameter as instantiated - and a method by its own declared parameters, a this parameter skipped; a rest parameter, the stand-in's or the base's, is read as its element at and past its own position: a field initialized by a bare, a parenthesized or a cast arrow, by a function's name or by a call's result, an ambient annotated field, a static field override by name (a function declared with one signature; a field, a getter or a static override typed by a src overload set's visible signatures is read through the set's implementation, R-OVERLOADS, wb-021.7), a field typed by an overload set or a union and a getter returning a union one of whose signatures hides the projection, a field's and a method's rest parameter that hides it past its position, a method's and a field's parameter that hides it where the base's rest parameter hands it, and a method with a this parameter that hides it are refused; a field and a getter typed any (no call signature) while the base hands the projection fail closed (unresolved-stand-in); a field that keeps the projection (a library generic's instantiation included), a method with a this parameter that keeps it, rests of holders that keep it (a method's, a field's and a base's), a method and a field that never receive it, and an any-typed field the base hands no projection read quiet",
       cases: [
         reachForms(
           "src/ui/census-forms-stand-in-type-arrow.ts",
@@ -3298,7 +3391,7 @@ export const REACH: Table<ReachItem> = {
     {
       id: "CALLBACK-RECEIVERS",
       label:
-        "a callback flowing into a type that hands it the projection, at a flow the flow reading reads (an argument, an annotated initializer or default, an assignment, an object literal's property, a return under the written type of a function that is neither async nor a generator, a cast; an async function's and a generator's written-type return fail closed instead, ASYNC-RETURNS and GENERATOR-YIELDS, cut #8), receives it as a stand-in does (cut #6): every call signature of each union part, by position, a this parameter receiving nothing - a callback typed by a union or an overload set one of whose signatures hides the projection, and one whose rest parameter hides it past its position (a map's key), are refused, as a plain hiding callback is; a callback typed by a union whose parts keep it, and one with a this parameter that keeps it, read quiet; what a callback hands back, where its target's return holds a type handing the projection, fails closed unless it is that type (CALLBACK-RETURNS, cut #8)",
+        "a callback flowing into a type that hands it the projection, at a flow the flow reading reads (an argument, an annotated initializer or default, an assignment, an object literal's property, a return under the written type of a function that is no generator - an async function's against the written promise's awaited type, ASYNC-RETURNS, wb-021.7 - a cast; a generator's written-type return fails closed instead, GENERATOR-YIELDS, cut #8), receives it as a stand-in does (cut #6): every call signature of each union part, by position, a this parameter receiving nothing - a callback typed by a union or an overload set one of whose signatures hides the projection, and one whose rest parameter hides it past its position (a map's key), are refused, as a plain hiding callback is; a callback typed by a union whose parts keep it, and one with a this parameter that keeps it, read quiet; what a callback hands back, where its target's return holds a type handing the projection, fails closed unless it is that type (CALLBACK-RETURNS, cut #8)",
       cases: [
         reachForms(
           "src/ui/census-forms-callback-union.ts",
@@ -3378,61 +3471,61 @@ export const REACH: Table<ReachItem> = {
     {
       id: "R-OVERLOADS",
       label:
-        "residual: the body that runs behind a src overload set's visible signatures (a function or a method declared with more than one signature) is never read through them (cut #7, ruling R-B60) - a field or a getter stand-in whose type's call signatures are such a set's (a field by an overloaded function's name, a static override by it, a getter whose inferred return is it, a field by another instance's overloaded method) and such a set flowing as a callback into a type that hands it the projection (an argument, an object literal's property, an annotated field's initializer, a getter's or a function's return under its written type; returned by an async function it fails closed as async-return instead, ASYNC-RETURNS, cut #8) fail closed with an overload row whether its implementation hides the projection or keeps it, while a call is read through the implementation (argument), a method stand-in declared with overloads by each of its declarations' own parameters (heritage) and a plain function's name through its one signature; such a set standing in, or flowing as a callback, where nothing hands it the projection reads quiet",
+        "read (wb-021.7; cut #7 named this a residual, and the row keeps its id): the body behind a src overload set's visible signatures (a function or a method declared with more than one signature) is read through the set's implementation - the one declaration of the set with a body, by its own declared parameters and its declared return, as declared (a type parameter through its constraint) - wherever a stand-in or a callback is typed by such a set: a field or a getter stand-in whose type's call signatures are the set's (a field by an overloaded function's name, a bound, an imported or a destructured one, a static or another instance's overloaded method, a static override by one, a getter whose inferred return is one; a constructor parameter property typed by one, R-PARAMETER-PROPERTIES) and such a set flowing as a callback into a type that hands it the projection (an argument, a library container's callback included, an object literal's property, an annotated initializer, a getter's or a function's return under its written type, an async function's return: ASYNC-RETURNS; a value typed by the set's own type is read through the same implementation where it flows, and the set flowing into its own type is judged against the visible signatures that hand it) are refused under the reading's own form (heritage, argument, property, initializer, return) where the implementation hides a path the target hands it (an unknown parameter, a rest of unknowns, an unconstrained type parameter) and fail closed with a stand-in-return row where it hands back a type that proves nothing the target's return declares (an unknown, an object), while one that keeps the projection (its own parameter, a union with it, a type parameter constrained to it) reads quiet; the arguments object of an implementation is read through every declaration of its set, so one that declares fewer parameters than the visible signature that hands it the projection and reads its arguments object is refused (arguments), a function or a method alike; a set with no single implementation (an ambient or an abstract set) is never read and fails closed with an overload row where the projection is handed; a call is read through the implementation (argument), a method stand-in declared with overloads by each of its declarations' own parameters (heritage) and a plain function's name through its one signature; such a set standing in, or flowing as a callback, where nothing hands it the projection reads quiet",
       cases: [
         reachForms(
           "src/ui/census-forms-overload-field.ts",
           `${OBS_UI}${SINK_UI}${OVERLOADED_HIDE}export class Impl implements Sink {\n  forget = hideOverloaded;\n}\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], ["overload: forget = hideOverloaded;"]),
+          formsRead(["annotation"], ["heritage: forget = hideOverloaded;"]),
         ),
         reachForms(
           "src/ui/census-forms-overload-field-keeps.ts",
           `${OBS_UI}${SINK_UI}${OVERLOADED_KEEP}export class Impl implements Sink {\n  forget = keepOverloaded;\n}\n`,
           reached(true, ["stats"], [], ["projection"]),
-          formsRead(["annotation", "member"], ["overload: forget = keepOverloaded;"]),
+          formsRead(["annotation", "member"], []),
         ),
         reachForms(
           "src/ui/census-forms-overload-getter.ts",
           `${OBS_UI}${SINK_UI}${OVERLOADED_HIDE}export class Impl implements Sink {\n  get forget(): (projection: ObservationProjection) => void {\n    return hideOverloaded;\n  }\n}\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], ["overload: return hideOverloaded;"]),
+          formsRead(["annotation"], ["return: return hideOverloaded;"]),
         ),
         reachForms(
           "src/ui/census-forms-overload-getter-inferred.ts",
           `${OBS_UI}${SINK_UI}${OVERLOADED_HIDE}export class Impl implements Sink {\n  get forget() {\n    return hideOverloaded;\n  }\n}\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], ["overload: get forget() { return hideOverloaded; }"]),
+          formsRead(["annotation"], ["heritage: get forget() { return hideOverloaded; }"]),
         ),
         reachForms(
           "src/ui/census-forms-overload-static.ts",
           `${OBS_UI}export class Base {\n  static take = (projection: ObservationProjection): void => void projection;\n}\n${OVERLOADED_HIDE}export class Sub extends Base {\n  static override take = hideOverloaded;\n}\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation", "test"], ["overload: static override take = hideOverloaded;"]),
+          formsRead(["annotation", "test"], ["heritage: static override take = hideOverloaded;"]),
         ),
         reachForms(
           "src/ui/census-forms-overload-method-value.ts",
           `${OBS_UI}${SINK_UI}class Helper {\n  hide(projection: ObservationProjection): void;\n  hide(projection: unknown): void {\n    void projection;\n  }\n}\nconst helper = new Helper();\nexport class Impl implements Sink {\n  forget = helper.hide;\n}\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], ["overload: forget = helper.hide;"]),
+          formsRead(["annotation"], ["heritage: forget = helper.hide;"]),
         ),
         reachForms(
           "src/ui/census-forms-overload-literal.ts",
           `${OBS_UI}${SINK_UI}${OVERLOADED_HIDE}export const sink: Sink = { forget: hideOverloaded };\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], ["overload: forget: hideOverloaded"]),
+          formsRead(["annotation"], ["property: forget: hideOverloaded"]),
         ),
         reachForms(
           "src/ui/census-forms-overload-callback.ts",
           `${OBS_UI}${OVERLOADED_HIDE}const register = (callback: (projection: ObservationProjection) => void): void => void callback;\nexport const wire = (): void => register(hideOverloaded);\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], ["overload: register(hideOverloaded)"]),
+          formsRead(["annotation"], ["argument: register(hideOverloaded)"]),
         ),
         reachForms(
           "src/ui/census-forms-overload-annotated.ts",
           `${OBS_UI}${SINK_UI}${OVERLOADED_HIDE}export class Impl implements Sink {\n  forget: (projection: ObservationProjection) => void = hideOverloaded;\n}\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], ["overload: forget: (projection: ObservationProjection) => void = hideOverloaded;"]),
+          formsRead(["annotation"], ["initializer: forget: (projection: ObservationProjection) => void = hideOverloaded;"]),
         ),
         reachForms(
           "src/ui/census-forms-overload-call.ts",
@@ -3468,44 +3561,147 @@ export const REACH: Table<ReachItem> = {
           "src/ui/census-forms-overload-function-return.ts",
           `${OBS_UI}${OVERLOADED_HIDE}export const make = (): ((projection: ObservationProjection) => void) => hideOverloaded;\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], ["overload: (): ((projection: ObservationProjection) => void) => hideOverloaded"]),
+          formsRead(["annotation"], ["return: (): ((projection: ObservationProjection) => void) => hideOverloaded"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-overload-ambient.ts",
+          `${OBS_UI}const register = (callback: (projection: ObservationProjection) => void): void => void callback;\ndeclare function keepAmbient(projection: ObservationProjection): void;\ndeclare function keepAmbient(projection: ObservationProjection, label: string): void;\nexport const wire = (): void => register(keepAmbient);\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["overload: register(keepAmbient)"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-overload-abstract.ts",
+          `${OBS_UI}${SINK_UI}abstract class Hider {\n  abstract hide(projection: ObservationProjection): void;\n  abstract hide(projection: ObservationProjection, label: string): void;\n}\ndeclare const hider: Hider;\nexport class Impl implements Sink {\n  forget = hider.hide;\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["overload: forget = hider.hide;"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-overload-rest.ts",
+          `${OBS_UI}${SINK_UI}function hideRest(projection: ObservationProjection): void;\nfunction hideRest(...values: unknown[]): void {\n  void values;\n}\nexport class Impl implements Sink {\n  forget = hideRest;\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["heritage: forget = hideRest;"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-overload-union-keeps.ts",
+          `${OBS_UI}${SINK_UI}function keepUnion(projection: ObservationProjection): void;\nfunction keepUnion(projection: ObservationProjection | string): void {\n  void projection;\n}\nexport class Impl implements Sink {\n  forget = keepUnion;\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation", "test", "type-part"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-overload-generic-hides.ts",
+          `${OBS_UI}${SINK_UI}function hideGeneric(projection: ObservationProjection): void;\nfunction hideGeneric<T>(projection: T): void {\n  void projection;\n}\nexport class Impl implements Sink {\n  forget = hideGeneric;\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["heritage: forget = hideGeneric;"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-overload-constrained-keeps.ts",
+          `${OBS_UI}${SINK_UI}function keepConstrained(projection: ObservationProjection): void;\nfunction keepConstrained<T extends ObservationProjection>(projection: T): void {\n  void projection.stats();\n}\nexport class Impl implements Sink {\n  forget = keepConstrained;\n}\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "constraint", "member"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-overload-alias.ts",
+          `${OBS_UI}${OVERLOADED_HIDE}const register = (callback: (projection: ObservationProjection) => void): void => void callback;\nconst alias: typeof hideOverloaded = hideOverloaded;\nexport const wire = (): void => register(alias);\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["argument: register(alias)", "initializer: alias: typeof hideOverloaded = hideOverloaded"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-overload-implementation-return.ts",
+          `${OBS_UI}${SINK_UI}interface Factory {\n  make(): Sink;\n}\nfunction makeLoose(): Sink;\nfunction makeLoose(): unknown {\n  return undefined;\n}\nexport class Impl implements Factory {\n  make = makeLoose;\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["stand-in-return: make = makeLoose;"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-overload-object-return.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}interface Factory {\n  make(): Sink;\n}\nfunction makeObject(): Sink;\nfunction makeObject(): object {\n  return new Holder();\n}\nexport class Impl implements Factory {\n  make = makeObject;\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["stand-in-return: make = makeObject;"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-overload-bound.ts",
+          `${OBS_UI}${SINK_UI}${OVERLOADED_HIDE}export class Impl implements Sink {\n  forget = hideOverloaded.bind(undefined);\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["heritage: forget = hideOverloaded.bind(undefined);"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-overload-imported.ts",
+          `${OBS_UI}${SINK_UI}import { hideElsewhere } from "./census-forms-overload-imported-set.js";\nexport class Impl implements Sink {\n  forget = hideElsewhere;\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["heritage: forget = hideElsewhere;"]),
+          { "src/ui/census-forms-overload-imported-set.ts": `${OBS_UI}export function hideElsewhere(projection: ObservationProjection): void;\nexport function hideElsewhere(projection: unknown): void {\n  void projection;\n}\n` },
+        ),
+        reachForms(
+          "src/ui/census-forms-overload-static-method.ts",
+          `${OBS_UI}${SINK_UI}class Helper {\n  static hide(projection: ObservationProjection): void;\n  static hide(projection: unknown): void {\n    void projection;\n  }\n}\nexport class Impl implements Sink {\n  forget = Helper.hide;\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["heritage: forget = Helper.hide;"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-overload-destructured.ts",
+          `${OBS_UI}${SINK_UI}class Helper {\n  hide(projection: ObservationProjection): void;\n  hide(projection: unknown): void {\n    void projection;\n  }\n}\nconst { hide } = new Helper();\nexport class Impl implements Sink {\n  forget = hide;\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["heritage: forget = hide;"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-overload-library-callback.ts",
+          `${OBS_UI}${OVERLOADED_HIDE}export const each = (projection: ObservationProjection): void => [projection].forEach(hideOverloaded);\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation", "array-element", "member"], ["argument: [projection].forEach(hideOverloaded)"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-overload-arguments.ts",
+          `${OBS_UI}${SINK_UI}function hideArgs(projection: ObservationProjection): void;\nfunction hideArgs(): void {\n  void arguments[0];\n}\nexport class Impl implements Sink {\n  forget = hideArgs;\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["arguments: arguments[0]"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-overload-method-arguments.ts",
+          `${OBS_UI}${SINK_UI}class Helper {\n  hide(projection: ObservationProjection): void;\n  hide(): void {\n    void arguments[0];\n  }\n}\nexport class Impl implements Sink {\n  forget = new Helper().hide;\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["arguments: arguments[0]"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-overload-arguments-quiet.ts",
+          `${OBS_UI}function countArgs(label: string): number;\nfunction countArgs(): number {\n  return arguments.length;\n}\nexport const counted = (projection: ObservationProjection): number => countArgs("label") + projection.stats().nodes;\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], []),
         ),
       ],
     },
     {
       id: "R-PARAMETER-PROPERTIES",
       label:
-        "residual: a constructor parameter property declares the member that stands in for a member of its name on the class's heritage (the extended class's instance side, an implemented interface), and it is never read as a stand-in (cut #7, ruling R-B60): where that member hands the projection it fails closed with a parameter-property row in each modifier form planted here (public, readonly, protected, override) whether its declared type hides the projection or keeps it, while the same member declared as a field is read through its type (heritage); a parameter property standing in for no member of its name, or for one that hands no projection, reads quiet",
+        "read (wb-021.7; cut #7 named this a residual, and the row keeps its id): a constructor parameter property declares the member that stands in for a member of its name on the class's heritage (the extended class's instance side, an implemented interface), and it is read as a field is (STAND_IN's field reading) - through its own type, declared or inferred from its default: the parameters every call signature of that type takes, through the signatures that run (an overload set's implementation, R-OVERLOADS) - so in each form planted here (public, readonly, protected, override, optional, a class expression's) one whose type hides a path the base member hands it (an unknown parameter, a held path, a function its default infers, an overload set whose implementation hides it) is refused at the parameter under heritage, as the same member declared as a field is (heritage), one typed any fails closed (unresolved-stand-in) and one that hands back a type the base's does not declare fails closed (stand-in-return), while one that keeps the projection reads quiet; a parameter property standing in for no member of its name, or for one that hands no projection, reads quiet (one a base names only through an index signature: R-INDEX-STAND-IN)",
       cases: [
         reachForms(
           "src/ui/census-forms-param-prop-public.ts",
           `${OBS_UI}${SINK_UI}export class Impl implements Sink {\n  constructor(public forget: (projection: unknown) => void) {}\n}\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], ["parameter-property: public forget: (projection: unknown) => void"]),
+          formsRead(["annotation"], ["heritage: public forget: (projection: unknown) => void"]),
         ),
         reachForms(
           "src/ui/census-forms-param-prop-readonly.ts",
           `${OBS_UI}${SINK_UI}export class Impl implements Sink {\n  constructor(readonly forget: (projection: unknown) => void) {}\n}\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], ["parameter-property: readonly forget: (projection: unknown) => void"]),
+          formsRead(["annotation"], ["heritage: readonly forget: (projection: unknown) => void"]),
         ),
         reachForms(
           "src/ui/census-forms-param-prop-override.ts",
           `${OBS_UI}export class Base {\n  take = (projection: ObservationProjection): number => projection.stats().nodes;\n}\nexport class Sub extends Base {\n  constructor(public override take: (projection: unknown) => number) {\n    super();\n  }\n}\n`,
           reached(true, ["stats"], [], ["projection"]),
-          formsRead(["annotation", "member"], ["parameter-property: public override take: (projection: unknown) => number"]),
+          formsRead(["annotation", "member"], ["heritage: public override take: (projection: unknown) => number"]),
         ),
         reachForms(
           "src/ui/census-forms-param-prop-protected.ts",
           `${OBS_UI}export class Base {\n  protected take = (projection: ObservationProjection): number => projection.stats().nodes;\n}\nexport class Sub extends Base {\n  constructor(protected override take: (projection: unknown) => number) {\n    super();\n  }\n}\n`,
           reached(true, ["stats"], [], ["projection"]),
-          formsRead(["annotation", "member"], ["parameter-property: protected override take: (projection: unknown) => number"]),
+          formsRead(["annotation", "member"], ["heritage: protected override take: (projection: unknown) => number"]),
         ),
         reachForms(
           "src/ui/census-forms-param-prop-keeps.ts",
           `${OBS_UI}${SINK_UI}export class Impl implements Sink {\n  constructor(public forget: (projection: ObservationProjection) => void) {}\n}\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], ["parameter-property: public forget: (projection: ObservationProjection) => void"]),
+          formsRead(["annotation"], []),
         ),
         reachForms(
           "src/ui/census-forms-param-prop-field-twin.ts",
@@ -3525,12 +3721,60 @@ export const REACH: Table<ReachItem> = {
           reached(true, ["stats"], [], ["projection"]),
           formsRead(["annotation", "member"], []),
         ),
+        reachForms(
+          "src/ui/census-forms-param-prop-optional.ts",
+          `${OBS_UI}interface MaybeSink {\n  forget?: (projection: ObservationProjection) => void;\n}\nexport class Impl implements MaybeSink {\n  constructor(public forget?: (projection: unknown) => void) {}\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["heritage: public forget?: (projection: unknown) => void"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-param-prop-default.ts",
+          `${OBS_UI}${SINK_UI}${HIDE_UI}export class Impl implements Sink {\n  constructor(public forget = hide) {}\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["heritage: public forget = hide"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-param-prop-any.ts",
+          `${OBS_UI}${SINK_UI}export class Impl implements Sink {\n  constructor(public forget: any) {}\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["unresolved-stand-in: public forget: any"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-param-prop-overload.ts",
+          `${OBS_UI}${SINK_UI}${OVERLOADED_HIDE}export class Impl implements Sink {\n  constructor(public forget: typeof hideOverloaded) {}\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["heritage: public forget: typeof hideOverloaded"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-param-prop-hand-back.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}interface HasSink {\n  readonly sink: Sink;\n}\nexport class Impl implements HasSink {\n  constructor(readonly sink: Holder) {}\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["stand-in-return: readonly sink: Holder"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-param-prop-class-expression.ts",
+          `${OBS_UI}${SINK_UI}export const Impl = class implements Sink {\n  constructor(public forget: (projection: unknown) => void) {}\n};\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["heritage: public forget: (projection: unknown) => void"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-param-prop-override-keeps.ts",
+          `${OBS_UI}export class Base {\n  take = (projection: ObservationProjection): number => projection.stats().nodes;\n}\nexport class Sub extends Base {\n  constructor(public override take: (projection: ObservationProjection) => number) {\n    super();\n  }\n}\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-param-prop-held-path.ts",
+          `${OBS_UI}interface Taker {\n  take: (holder: { readonly projection: ObservationProjection }) => void;\n}\nexport class Impl implements Taker {\n  constructor(public take: (holder: { readonly projection: unknown }) => void) {}\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["heritage: public take: (holder: { readonly projection: unknown }) => void"]),
+        ),
       ],
     },
     {
       id: "R-STRUCTURAL-STAND-IN",
       label:
-        "residual: a class instance, or a class's static side, flowing directly (an argument, an annotated initializer, an object literal's property, a return under the written type of a function that is neither async nor a generator, a cast; an async function's and a generator's written-type return fail closed instead, ASYNC-RETURNS and GENERATOR-YIELDS, cut #8) into an object type (each part of a union or an intersection) - a class, an interface or a type literal - that its class does not declare (itself, or through its extends and implements clauses, transitively; a generic's instantiation only as that same instantiation, and a class's static side only as its own or its extends chain's static side, cut #8) stands in for that type's members structurally, and it is never read as a stand-in (cut #7, ruling R-B60): where a member of that type which the instance also has hands the projection it fails closed with a structural-stand-in row whether the instance's member hides the projection or keeps it, while a class that declares the type is read through its heritage and an object literal through its contextual type; such a flow into a type whose members hand no projection, and a class instance held inside another value (an array's element, a library generic's type argument: the array Array.of builds, the promise Promise.resolve settles; cut #8, refusal #7 F10) entering such a type, read quiet",
+        "residual: a class instance, or a class's static side, flowing directly (an argument, an annotated initializer, an object literal's property, a return under the written type of a function that is no generator - an async function's against the written promise's awaited type, ASYNC-RETURNS, wb-021.7 - a cast; a generator's written-type return fails closed instead, GENERATOR-YIELDS, cut #8) into an object type (each part of a union or an intersection) - a class, an interface or a type literal - that its class does not declare (itself, or through its extends and implements clauses, transitively; a generic's instantiation only as that same instantiation, and a class's static side only as its own or its extends chain's static side, cut #8) stands in for that type's members structurally, and it is never read as a stand-in (cut #7, ruling R-B60): where a member of that type which the instance also has hands the projection it fails closed with a structural-stand-in row whether the instance's member hides the projection or keeps it, while a class that declares the type is read through its heritage and an object literal through its contextual type; such a flow into a type whose members hand no projection, and a class instance held inside another value (an array's element, a library generic's type argument: the array Array.of builds, the promise Promise.resolve settles; cut #8, refusal #7 F10) entering such a type, read quiet",
       cases: [
         reachForms(
           "src/ui/census-forms-structural-base.ts",
@@ -3669,61 +3913,61 @@ export const REACH: Table<ReachItem> = {
     {
       id: "ASYNC-RETURNS",
       label:
-        "a value an async function returns (an arrow's body, a return statement of a function declaration, a function expression or a method) under a written type that holds a type handing the projection (a promise of an interface whose member hands it, or of a function type that hands it, to CARRIER_DEPTH) is never read: it converts into the awaited type while the flow reading reads the written promise, so it fails closed with an async-return row whatever the value - a class instance, a hiding callback, an overload set, an object literal (whose own member is still judged: property), a keeping instance, undefined (cut #8, ruling R-B67; refusal #7 U1 and F11) - while the same returns from functions that are not async are read by their flow (structural-stand-in, return, overload), an async return under a type that hands nothing reads quiet, and an exposing value returned into a promise of unknown is refused by the written type (return)",
+        "read (wb-021.7): a value an async function that is no generator returns (an arrow's body, a return statement of a function declaration, a function expression, a method or an object literal's method) under a written type (an alias of one included) is judged against that promise's awaited type, as its awaited value (a promise's, a then chain's or a thenable's settled value, each part of a union awaited), exactly as the same return of a function that is not async is judged against its written type: a class instance whose class does not declare the type fails closed (structural-stand-in), a hiding callback or an overload set whose implementation hides the projection, awaited or not, and an exposing value returned into a promise of unknown are refused (return), an object literal written there is read by its own members under the awaited contextual type (property), and a value of an unconstrained type parameter is refused as its sync twin is (return), while a keeping instance, awaited or not, a value of a type parameter constrained to the type, an exposing value it keeps, an undefined and a return under a type that hands nothing read quiet; a generator's return or yield, an async generator's included, is no async function's return here: GENERATOR-YIELDS reads it, never awaited (failing closed under a written type that holds a handing type), so a thenable an async generator returns under a written type that hands nothing is read as it is (its resolver's call refused as a call through a signature with no body: argument)",
       cases: [
         reachForms(
           "src/ui/census-forms-async-arrow.ts",
           `${OBS_UI}${SINK_UI}${HOLDER_UI}export const make = async (): Promise<Sink> => new Holder();\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], ["async-return: async (): Promise<Sink> => new Holder()"]),
+          formsRead(["annotation"], ["structural-stand-in: async (): Promise<Sink> => new Holder()"]),
         ),
         reachForms(
           "src/ui/census-forms-async-function.ts",
           `${OBS_UI}${SINK_UI}${HOLDER_UI}export async function make(): Promise<Sink> {\n  return new Holder();\n}\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], ["async-return: return new Holder();"]),
+          formsRead(["annotation"], ["structural-stand-in: return new Holder();"]),
         ),
         reachForms(
           "src/ui/census-forms-async-method.ts",
           `${OBS_UI}${SINK_UI}${HOLDER_UI}export class Factory {\n  async make(): Promise<Sink> {\n    return new Holder();\n  }\n}\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], ["async-return: return new Holder();"]),
+          formsRead(["annotation"], ["structural-stand-in: return new Holder();"]),
         ),
         reachForms(
           "src/ui/census-forms-async-function-expression.ts",
           `${OBS_UI}${SINK_UI}${HOLDER_UI}export const make = async function (): Promise<Sink> {\n  return new Holder();\n};\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], ["async-return: return new Holder();"]),
+          formsRead(["annotation"], ["structural-stand-in: return new Holder();"]),
         ),
         reachForms(
           "src/ui/census-forms-async-callback.ts",
           `${OBS_UI}${HIDE_UI}export const make = async (): Promise<(projection: ObservationProjection) => void> => hide;\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], ["async-return: async (): Promise<(projection: ObservationProjection) => void> => hide"]),
+          formsRead(["annotation"], ["return: async (): Promise<(projection: ObservationProjection) => void> => hide"]),
         ),
         reachForms(
           "src/ui/census-forms-async-overload.ts",
           `${OBS_UI}${OVERLOADED_HIDE}export const make = async (): Promise<(projection: ObservationProjection) => void> => hideOverloaded;\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], ["async-return: async (): Promise<(projection: ObservationProjection) => void> => hideOverloaded"]),
+          formsRead(["annotation"], ["return: async (): Promise<(projection: ObservationProjection) => void> => hideOverloaded"]),
         ),
         reachForms(
           "src/ui/census-forms-async-literal.ts",
           `${OBS_UI}${SINK_UI}export const make = async (): Promise<Sink> => ({ forget: (projection: unknown): void => void projection });\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], ["async-return: async (): Promise<Sink> => ({ forget: (projection: unknown): void => void projection })", "property: forget: (projection: unknown): void => void projection"]),
+          formsRead(["annotation"], ["property: forget: (projection: unknown): void => void projection"]),
         ),
         reachForms(
           "src/ui/census-forms-async-awaited-block.ts",
           `${OBS_UI}${SINK_UI}${HOLDER_UI}export const make = async (ready: boolean): Promise<Sink | undefined> => {\n  if (!ready) return undefined;\n  return await Promise.resolve(new Holder());\n};\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], ["async-return: return await Promise.resolve(new Holder());", "async-return: return undefined;"]),
+          formsRead(["annotation"], ["structural-stand-in: return await Promise.resolve(new Holder());"]),
         ),
         reachForms(
           "src/ui/census-forms-async-keeper.ts",
           `${OBS_UI}${SINK_UI}class Keeper implements Sink {\n  forget(projection: ObservationProjection): void {\n    void projection.stats();\n  }\n}\nexport const make = async (): Promise<Sink> => new Keeper();\n`,
           reached(true, ["stats"], [], ["projection"]),
-          formsRead(["annotation", "member"], ["async-return: async (): Promise<Sink> => new Keeper()"]),
+          formsRead(["annotation", "member"], []),
         ),
         reachForms(
           "src/ui/census-forms-async-sync-twin-instance.ts",
@@ -3741,7 +3985,7 @@ export const REACH: Table<ReachItem> = {
           "src/ui/census-forms-async-sync-twin-overload.ts",
           `${OBS_UI}${OVERLOADED_HIDE}export const make = (): ((projection: ObservationProjection) => void) => hideOverloaded;\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], ["overload: (): ((projection: ObservationProjection) => void) => hideOverloaded"]),
+          formsRead(["annotation"], ["return: (): ((projection: ObservationProjection) => void) => hideOverloaded"]),
         ),
         reachForms(
           "src/ui/census-forms-async-quiet.ts",
@@ -3754,6 +3998,96 @@ export const REACH: Table<ReachItem> = {
           `${OBS_UI}export const make = async (projection: ObservationProjection): Promise<unknown> => projection;\n`,
           reached(true, [], [], ["projection"]),
           formsRead(["annotation"], ["return: async (projection: ObservationProjection): Promise<unknown> => projection"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-async-promise-value.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}export const make = async (): Promise<Sink> => Promise.resolve(new Holder());\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: async (): Promise<Sink> => Promise.resolve(new Holder())"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-async-promise-keeper.ts",
+          `${OBS_UI}${SINK_UI}class Keeper implements Sink {\n  forget(projection: ObservationProjection): void {\n    void projection.stats();\n  }\n}\nexport const make = async (): Promise<Sink> => Promise.resolve(new Keeper());\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-async-awaited-callback.ts",
+          `${OBS_UI}${HIDE_UI}export const make = async (): Promise<(projection: ObservationProjection) => void> => {\n  return await Promise.resolve(hide);\n};\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["return: return await Promise.resolve(hide);"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-async-promise-exposing-unknown.ts",
+          `${OBS_UI}export const make = async (projection: ObservationProjection): Promise<unknown> => Promise.resolve(projection);\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["argument: Promise.resolve(projection)", "return: async (projection: ObservationProjection): Promise<unknown> => Promise.resolve(projection)"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-async-keeps-exposing.ts",
+          `${OBS_UI}export const make = async (projection: ObservationProjection): Promise<ObservationProjection> => projection;\n`,
+          reached(true, [], [], ["make", "projection"]),
+          formsRead(["annotation", "initializer", "lib-generic", "return"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-async-literal-method.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}interface Factory {\n  make(): Promise<Sink>;\n}\nexport const factory: Factory = {\n  async make(): Promise<Sink> {\n    return new Holder();\n  },\n};\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: return new Holder();"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-async-generic-keeps.ts",
+          `${OBS_UI}${SINK_UI}export async function make<T extends Sink>(build: () => T): Promise<T> {\n  return build();\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-async-generic-hides.ts",
+          `${OBS_UI}export async function hold<T>(projection: ObservationProjection & T): Promise<T> {\n  return projection;\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation", "type-part"], ["return: return projection;"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-async-sync-twin-generic.ts",
+          `${OBS_UI}export function hold<T>(projection: ObservationProjection & T): T {\n  return projection;\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation", "type-part"], ["return: return projection;"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-async-union-promise.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}class Keeper implements Sink {\n  forget(projection: ObservationProjection): void {\n    void projection.stats();\n  }\n}\nexport const make = async (ok: boolean): Promise<Sink> => (ok ? new Keeper() : Promise.resolve(new Holder()));\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], ["structural-stand-in: async (ok: boolean): Promise<Sink> => (ok ? new Keeper() : Promise.resolve(new Holder()))"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-async-thenable.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}export const make = async (): Promise<Sink> => ({ then: (resolve: (value: Holder) => void): void => resolve(new Holder()) });\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: async (): Promise<Sink> => ({ then: (resolve: (value: Holder) => void): void => resolve(new Holder()) })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-async-literal-callback.ts",
+          `${OBS_UI}${HIDE_UI}export const make = async (): Promise<{ take: (projection: ObservationProjection) => void }> => ({ take: hide });\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: take: hide"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-async-alias.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}type Later = Promise<Sink>;\nexport const make = async (): Later => new Holder();\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: async (): Later => new Holder()"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-async-then-chain.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}export const make = async (): Promise<Sink> => Promise.resolve(1).then(() => new Holder());\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: async (): Promise<Sink> => Promise.resolve(1).then(() => new Holder())"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-async-generator-boundary.ts",
+          `${OBS_UI}export async function* hold(projection: ObservationProjection): AsyncGenerator<number, unknown> {\n  yield 1;\n  return { then: (resolve: (value: ObservationProjection) => void): void => resolve(projection) };\n}\n`,
+          reached(true, [], [], ["projection", "value"]),
+          formsRead(["annotation"], ["argument: resolve(projection)"]),
         ),
       ],
     },
@@ -4022,7 +4356,7 @@ export const REACH: Table<ReachItem> = {
     {
       id: "CALLBACK-RETURNS",
       label:
-        "a callback flowing into a type whose call signature returns a type that holds a type handing the projection, where the callback's own return is not that type or a type declaring it (an instance of a class that does not declare it, an object literal's type, a hiding function, an async function's inferred promise; with no written return type, at an annotated initializer or an argument), hands back a value no reading reads: it fails closed with a callback-return row whether that value hides the projection or keeps it (cut #8, ruling R-B67; refusal #7 F8), while a return written under the target's type is read by its flow (structural-stand-in), and a callback returning an instance of a class that declares the type, or a type that hands nothing, reads quiet",
+        "a callback flowing into a type whose call signature returns a type that holds a type handing the projection, where the callback's own return is not that type or a type declaring it (an instance of a class that does not declare it, an object literal's type, a hiding function, an async function's inferred promise; with no written return type, at an annotated initializer or an argument; a written return of a type that proves nothing - an any (wb-021.7), or a generic's unconstrained type parameter: a part of what is handed back - a union part by part, a type parameter through its constraint - proves the target's type only as a value that holds no object, null, undefined or a primitive, or as an object or an intersection whose object parts are each that type or declare it (wb-021.7)), hands back a value no reading reads: it fails closed with a callback-return row whether that value hides the projection or keeps it (cut #8, ruling R-B67; refusal #7 F8), while a return written under the target's type is read by its flow (structural-stand-in), and a callback returning an instance of a class that declares the type (an undefined part beside it included, a type parameter constrained to the type, an intersection with it), or a type that hands nothing, reads quiet",
       cases: [
         reachForms(
           "src/ui/census-forms-callback-return-instance.ts",
@@ -4072,12 +4406,48 @@ export const REACH: Table<ReachItem> = {
           reached(true, ["stats"], [], ["projection"]),
           formsRead(["annotation", "member"], []),
         ),
+        reachForms(
+          "src/ui/census-forms-callback-return-any.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}export const make: () => Sink = (): any => new Holder();\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["callback-return: make: () => Sink = (): any => new Holder()"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-callback-return-type-parameter.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}const same = <T>(value: T): T => value;\nexport const make: (holder: Holder) => Sink = same;\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["callback-return: make: (holder: Holder) => Sink = same"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-callback-return-undefined-part.ts",
+          `${OBS_UI}${SINK_UI}class Keeper implements Sink {\n  forget(projection: ObservationProjection): void {\n    void projection.stats();\n  }\n}\nexport const make: () => Sink | undefined = (): Keeper | undefined => undefined;\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-callback-return-constrained.ts",
+          `${OBS_UI}${SINK_UI}export const wrap = <T extends Sink>(make: () => T): (() => Sink) => make;\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-callback-return-intersection.ts",
+          `${OBS_UI}${SINK_UI}export const wrap = <T,>(make: () => T & Sink): (() => Sink) => make;\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-callback-return-union-part.ts",
+          `${OBS_UI}${SINK_UI}class Keeper implements Sink {\n  forget(projection: ObservationProjection): void {\n    void projection.stats();\n  }\n}\nexport const make: () => Sink = (): Keeper | { forget(projection: unknown): void } => new Keeper();\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], ["callback-return: make: () => Sink = (): Keeper | { forget(projection: unknown): void } => new Keeper()"]),
+        ),
       ],
     },
     {
       id: "STAND-IN-RETURNS",
       label:
-        "a stand-in that hands back what its base member's type returns - a method's return (an async method's and an override's included), the result of a field's or a getter's call signature, or, for a property that is no callback, the field's value or the getter's result - in a type that holds a type handing the projection, where what it hands back is not that type or a type declaring it (an inferred return or value), is never read: it fails closed with a stand-in-return row, a class's and an object literal's member alike, whether that value hides the projection or keeps it (cut #8, ruling R-B67), while a return written under the base's type is read by its flow (structural-stand-in), and a written return or an annotated field of the base's type holding an instance of a class that declares it reads quiet",
+        "a stand-in that hands back what its base member's type returns - a method's return (an async method's and an override's included), the result of a field's or a getter's call signature, or, for a property that is no callback, the field's value or the getter's result - in a type that holds a type handing the projection, where what it hands back is not that type or a type declaring it (an inferred return or value; wb-021.7: a written return or an annotated field of a type that proves nothing, an any, as CALLBACK-RETURNS reads it; a constructor parameter property's value and an overload set's implementation's return alike, R-PARAMETER-PROPERTIES and R-OVERLOADS), is never read: it fails closed with a stand-in-return row, a class's and an object literal's member alike, whether that value hides the projection or keeps it (cut #8, ruling R-B67), while a return written under the base's type is read by its flow (structural-stand-in), and a written return or an annotated field of the base's type holding an instance of a class that declares it reads quiet",
       cases: [
         reachForms(
           "src/ui/census-forms-stand-in-return-method.ts",
@@ -4132,6 +4502,18 @@ export const REACH: Table<ReachItem> = {
           `${OBS_UI}${SINK_UI}class Keeper implements Sink {\n  forget(projection: ObservationProjection): void {\n    void projection.stats();\n  }\n}\ninterface HasSink {\n  readonly sink: Sink;\n}\nexport class Impl implements HasSink {\n  readonly sink: Sink = new Keeper();\n}\n`,
           reached(true, ["stats"], [], ["projection"]),
           formsRead(["annotation", "member"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-stand-in-return-any-field.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}interface HasSink {\n  readonly sink: Sink;\n}\nexport class Impl implements HasSink {\n  readonly sink: any = new Holder();\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["stand-in-return: readonly sink: any = new Holder();"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-stand-in-return-any-method.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}interface Factory {\n  make(): Sink;\n}\nexport class Impl implements Factory {\n  make(): any {\n    return new Holder();\n  }\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["stand-in-return: make(): any { return new Holder(); }"]),
         ),
       ],
     },
@@ -4197,6 +4579,31 @@ export const REACH: Table<ReachItem> = {
         reachForms(
           "src/ui/census-forms-unlisted-stand-in-same.ts",
           `${OBS_UI}${SINK_UI}export const wire = (sink: Sink): Sink => sink;\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+      ],
+    },
+    {
+      id: "R-INDEX-STAND-IN",
+      label:
+        "residual (wb-021.7, found at this cut; a residual-list addition under ruling R-B67 (4)): the stand-in readings match a base member by its name (STAND-IN-KINDS), so a member whose name a base types only through an index signature - an implemented interface's string index signature, which the class's own index signature repeats - is matched to no base member: a field, a method and a constructor parameter property standing in for it read quiet whether they hide the projection or keep it (each page plants one that hides it)",
+      cases: [
+        reachForms(
+          "src/ui/census-forms-index-stand-in-field.ts",
+          `${OBS_UI}interface Bag {\n  [key: string]: (projection: ObservationProjection) => void;\n}\nexport class Impl implements Bag {\n  [key: string]: (projection: ObservationProjection) => void;\n  forget = (projection: unknown): void => void projection;\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-index-stand-in-method.ts",
+          `${OBS_UI}interface Bag {\n  [key: string]: (projection: ObservationProjection) => void;\n}\nexport class Impl implements Bag {\n  [key: string]: (projection: ObservationProjection) => void;\n  forget(projection: unknown): void {\n    void projection;\n  }\n}\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-index-stand-in-param-prop.ts",
+          `${OBS_UI}interface Bag {\n  [key: string]: (projection: ObservationProjection) => void;\n}\nexport class Impl implements Bag {\n  [key: string]: (projection: ObservationProjection) => void;\n  constructor(public forget: (projection: unknown) => void) {}\n}\n`,
           reached(true, [], [], ["projection"]),
           formsRead(["annotation"], []),
         ),
@@ -4408,9 +4815,8 @@ export const RESIDUAL_FAMILIES: Readonly<Record<string, readonly string[]>> = {
   "R-DEEP-CARRIER": ["REACH R-DEEP-CARRIER"],
   "R-RUNTIME-MEMBER": ["NAMES R-RUNTIME-MEMBER"],
   "R-NARROWED-BRANCH": ["REACH R-NARROWED-BRANCH"],
-  "R-OVERLOADS": ["REACH R-OVERLOADS"],
-  "R-PARAMETER-PROPERTIES": ["REACH R-PARAMETER-PROPERTIES"],
   "R-STRUCTURAL-STAND-IN": ["REACH R-STRUCTURAL-STAND-IN"],
+  "R-INDEX-STAND-IN": ["REACH R-INDEX-STAND-IN"],
 };
 
 /** Every table's name, quote and its source in the export row, in census order: the anchor row holds each quote to exactly one occurrence in its source. */
