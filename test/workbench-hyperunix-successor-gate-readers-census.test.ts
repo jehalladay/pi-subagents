@@ -29,7 +29,18 @@
  *  MEMBERS: one row per piece of a claim (TILE). Its pins plant what the piece names - every name a list piece lists, every
  *   place a position piece names, every exclusion a "not", "but" or "only" piece states, a quiet twin beside a loud plant where
  *   the piece draws a line - and pin the literal reading. The CHANNEL tier-config pieces read a guard refusal that names its
- *   config through setupFiles and channelReading (an injected guard: refusal #1 U2).
+ *   config through setupFiles and channelReading (an injected guard: refusal #1 U2). Cut #3 (refusal #2 on this bead, gate-prep-17
+ *   O:1576, R-B203 enumerate-the-resolvable) pins the crossings each line names: every ROUTES line's scope rows read each plant
+ *   its other rows pin in a local module again in each scope the line names (dynamic code: the suite and local modules, nothing
+ *   in a package module); the ROUTES heading's carrier and CHANNEL rows and IDENTITY's carrier rows read one plant per route form
+ *   in a local module, a package module and the cited suite, and every sensitive builtin name, prefix and load form in each
+ *   scope; WRITES pins all sixteen assignment operators (anchored to TypeScript's own FirstAssignment..LastAssignment), each
+ *   wrapper under each write form over both targets, element and pattern targets of for-in, for-of and destructuring, each
+ *   destructured-key form and binding context and each template place; the CHANNEL setup-file rows read a planted config through
+ *   setupFiles' injected reader (nothing is written); the RUN include rows read each regex metacharacter as itself. The gate's 27
+ *   refusal #2 witnesses are pins of these rows in the gate's own shapes: U1 G01-G16, G18, G19, G21 (the ROUTES heading rows);
+ *   U2 G22, G22b (any operator), G23 (parentheses), G24 (for-in), G25, G26 (destructured key); U3 G27 (a string setupFiles), G28
+ *   (a literal dot).
  *  RESIDUALS: R-PACKAGE-CODE and R-HELPER-PATCH, each a pinned quiet row beside its loud control (FORMS and MEMBERS).
  *  CLAIM: the helper header's "- <word>: <claim>" lines equal the rosters byte for byte, section by section, in order; every
  *   roster word has exactly one FORMS row.
@@ -520,13 +531,229 @@ const asKey = (form: NamedWrite, name: string): Pin =>
 const asDestructured = (form: NamedWrite, name: string): Pin =>
   pin(() => writes(`${WRITE_BASE[form].prelude}const { ${name}: lgW } = ${onBase(form)};\nvoid lgW;\n`), [`${form} {${name}} destructured :${WRITE_BASE[form].line}`]);
 const asString = (form: NamedWrite, name: string): Pin => pin(() => writes(`const lgKey = "${name}";\nvoid lgKey;\n`), [`${form} '${name}' :1`]);
+// ---- refusal #2 on this bead (gate-prep-17, O:1576): every crossing a line names is a pin -----------------------------------
+
+/** A route plant: a text a local module holds and the routes it reads there, recorded for its line's scope rows (refusal #2 U1). */
+type Plant = readonly [text: string, expected: readonly string[]];
+const PLANTS = new WeakMap<Pin, Plant>();
+/** A pin reading a plant's routes in a local module; its line's scope rows read the same plant again in their scopes. */
+const localRoute = (text: string, expected: readonly string[]): Pin => {
+  const made = pin(() => routes("local", text), expected);
+  PLANTS.set(made, [text, expected]);
+  return made;
+};
+/** A scope row of a ROUTES line: the piece it quotes, the scopes it reads every recorded plant of the line in, and its own pins. */
+interface ScopeRow {
+  readonly quote: string;
+  readonly scopes: readonly ModuleScope[];
+  readonly pins: readonly Pin[];
+}
+/** A ROUTES line's rows, its scope rows first: each reads every plant the line's other rows record, in each of its scopes, to the
+ * same reading (dynamic code alone reads nothing in a package module: its line's "never in a package module" piece). */
+function routeLine(word: RouteForm, scopeRows: readonly ScopeRow[], rows: readonly MemberRow[]): MemberRow[] {
+  const plants = rows.flatMap(row => row.pins.flatMap((made): Plant[] => {
+    const plant = PLANTS.get(made);
+    return plant === undefined ? [] : [plant];
+  }));
+  const reading = (scope: ModuleScope, expected: readonly string[]): readonly string[] =>
+    word === "dynamic code" && scope === "package" ? expected.filter(finding => !finding.startsWith("dynamic code ")) : expected;
+  return [
+    ...scopeRows.map(row => member(`ROUTES:${word}`, row.quote, ...row.pins, ...plants.flatMap(([text, expected]) => row.scopes.map(scope => pin(() => routes(scope, text), reading(scope, expected)))))),
+    ...rows,
+  ];
+}
+/** One plant per route form: [form, text, the route's reading in a carrier, its reading as a CHANNEL finding of the suite]. */
+type FormPlant = readonly [form: RouteForm, text: string, carried: string, found: string];
+const FORM_PLANTS: readonly FormPlant[] = [
+  ["dynamic load", "export const lgW = (name) => import(name);\n", "import() of a Identifier", "dynamic load import() of a Identifier"],
+  ["loader name", 'export const lgW = (m) => m["dlopen"];\n', "'dlopen'", "loader name 'dlopen'"],
+  ["loader member", 'export const lgW = "importMock";\n', "'importMock'", "loader member 'importMock'"],
+  ["vite name", "export const lgW = `__vite_ssr_exports__`;\n", "'__vite_ssr_exports__'", "vite name '__vite_ssr_exports__'"],
+  ["import meta", 'export const lgW = import.meta["url"];\n', "import.meta", "import meta import.meta"],
+  ["sensitive builtin", 'import * as lgB from "node:inspector";\nexport const lgW = lgB;\n', "loads 'node:inspector'", "sensitive builtin 'node:inspector'"],
+  ["global object", "export const lgW = self;\n", "self as a VariableDeclaration", "global object self as a VariableDeclaration"],
+  ["dynamic code", "export const lgW = (o) => o.constructor;\n", ".constructor", "dynamic code .constructor"],
+];
+const slugOf = (form: RouteForm): string => form.replace(/ /g, "-");
+/** A form plant held by a local module or a package module: its identity is the carrier the route makes (dynamic code: a package
+ * module reads none, so it stays a module - R-PACKAGE-CODE). */
+function formCarrier(scope: "local" | "package", [form, text, carried]: FormPlant): Pin {
+  const name = `lg-form-${slugOf(form)}`;
+  const file = scope === "local" ? `test/helpers/${name}.ts` : `node_modules/${name}/index.js`;
+  const planted = scope === "local" ? files([file, text]) : files(...pkg(name, `{"name": "${name}", "main": "./index.js"}`, ["index.js", text]));
+  const route = form === "sensitive builtin" ? `holds a sensitive builtin route (${carried})` : `holds a ${form} route (${carried})`;
+  return pin(() => moduleIdentity(planted, file), scope === "package" && form === "dynamic code" ? "module" : `carrier (${file}:1 ${route})`);
+}
+/** A form plant held by the cited suite: its CHANNEL finding at the planted line. */
+const formChannel = ([, text, , found]: FormPlant): Pin => pin(() => suiteChannel(text.trimEnd()), [`cited suite: ${found} at line ${PLANT_LINE}`]);
+/** Refusal #2 U1's suite twins (gate-prep-17 LEG 2 witnesses, verbatim): each CHANNEL finding of the planted suite. */
+const SUITE_TWINS: readonly (readonly [id: string, extra: string, found: string])[] = [
+  ["G01", "const lgD = (m: Record<string, unknown>): unknown => m.dlopen;", "loader name .dlopen"],
+  ["G03", "const lgK = 'createRequire';", "loader name 'createRequire'"],
+  ["G05", "const lgReq = [require];", "loader name require, not called"],
+  ["G09", "const lgMeta = import.meta;", "import meta import.meta"],
+  ["G11", "const lgLoad = (name: string): unknown => require(name);", "dynamic load require() of a Identifier"],
+  ["G13", 'import { runInThisContext as lgRun } from "vm";', "sensitive builtin 'vm'"],
+  ["G15", "const lgProc = globalThis.process;", "global object globalThis.process"],
+  ["G18", "const lgCtor = (() => 1).constructor;", "dynamic code .constructor"],
+  ["G19", "const lgEval = (code: string): unknown => globalThis.eval(code);", "dynamic code globalThis.eval"],
+];
+/** Refusal #2 U1's package twins (verbatim): each package module's identity is the carrier its one route makes. */
+const PACKAGE_TWINS: readonly (readonly [id: string, text: string, route: string])[] = [
+  ["G02", "export const lgW = (m) => m.dlopen;\n", "loader name route (.dlopen)"],
+  ["G04", 'export const lgW = (m) => m["getBuiltinModule"];\n', "loader name route ('getBuiltinModule')"],
+  ["G06", "export const lgW = [require];\n", "loader name route (require, not called)"],
+  ["G07", "export const lgW = (vi) => vi.importActual;\n", "loader member route (.importActual)"],
+  ["G08", 'export const lgW = (g) => g["__vitest_index__"];\n', "vite name route ('__vitest_index__')"],
+  ["G10", "export const lgW = import.meta;\n", "import meta route (import.meta)"],
+  ["G12", "export const lgW = (n) => require(n);\n", "dynamic load route (require() of a Identifier)"],
+  ["G14", 'import * as lgB from "vm";\nexport const lgW = lgB;\n', "sensitive builtin route (loads 'vm')"],
+  ["G16", "export const lgW = globalThis.process;\n", "global object route (globalThis.process)"],
+];
+const packageTwin = ([id, text, route]: readonly [string, string, string]): Pin => {
+  const name = `lg-twin-${id.toLowerCase()}`;
+  return pin(() => moduleIdentity(files(...pkg(name, `{"name": "${name}", "main": "./index.js"}`, ["index.js", text])), `node_modules/${name}/index.js`), `carrier (node_modules/${name}/index.js:1 holds a ${route})`);
+};
+/** Refusal #2 U1 G21: the cited suite importing a package module whose one route is a global object reads two loads reaching vitest. */
+const G21_PACKAGE = files(...pkg("lg-twin-g21", '{"name": "lg-twin-g21", "main": "./index.js"}', ["index.js", "export const lgG = globalThis;\n"]));
+/** Each load form spelling a sensitive builtin load as one statement. */
+const SENSITIVE_SPELLING: Readonly<Record<LoadForm, (specifier: string) => string>> = {
+  "import declaration": specifier => `import * as lgB from "${specifier}";`,
+  "export declaration": specifier => `export * from "${specifier}";`,
+  "import-equals": specifier => `import lgB = require("${specifier}");`,
+  "import type": specifier => `type LgB = typeof import("${specifier}");`,
+  "dynamic import": specifier => `const lgB = import("${specifier}");`,
+  "require call": specifier => `const lgB = require("${specifier}");`,
+};
+/** A sensitive builtin load in `scope`, spelled by `form`: the suite's CHANNEL finding, a local or a package module's carrier. */
+function sensitiveIn(scope: ModuleScope, specifier: string, form: LoadForm = "import declaration"): Pin {
+  const statement = SENSITIVE_SPELLING[form](specifier);
+  if (scope === "suite") return pin(() => suiteChannel(statement), [`cited suite: sensitive builtin '${specifier}' at line ${PLANT_LINE}`]);
+  const slug = `${specifier.replace(/\W/g, "-")}-${form.replace(/\W/g, "-")}`;
+  const file = scope === "local" ? `test/helpers/lg-sbs-${slug}.ts` : `node_modules/lg-sbs-${slug}/index.ts`;
+  return pin(() => moduleIdentity(files([file, `${statement}\nexport const lgW = 1;\n`]), file), `carrier (${file}:1 holds a sensitive builtin route (loads '${specifier}'))`);
+}
+/** The sixteen assignment operators, FirstAssignment through LastAssignment, as TypeScript spells them (refusal #2 U2: G22, G22b). */
+const ASSIGNMENT_OPERATORS: readonly string[] = ["=", "+=", "-=", "*=", "**=", "/=", "%=", "<<=", ">>=", ">>>=", "&=", "|=", "||=", "&&=", "??=", "^="];
+const TARGET_PRELUDE = "const lgT: Record<string, number> = { each: 1 };\n";
+/** A member target, the label a finding names it by, and what it reads under each write form (refusal #2 U2: G23, G24). */
+const TARGETS: readonly (readonly [target: string, label: string])[] = [["lgT.each", ".each"], ['lgT["each"]', "['each']"]];
+const WRITE_SPELLINGS: readonly (readonly [spell: (target: string) => string, by: string])[] = [
+  [target => `${target} = 2;`, "="],
+  [target => `${target} += 1;`, "+="],
+  [target => `${target}++;`, "++"],
+  [target => `--${target};`, "--"],
+  [target => `delete ${target};`, "delete"],
+  [target => `for (${target} in { x: 1 }) void 0;`, "for-in"],
+  [target => `for (${target} of [1]) void 0;`, "for-of"],
+  [target => `[${target}] = [2];`, "="],
+  [target => `({ each: ${target} } = { each: 2 });`, "="],
+];
+/** The wrappers a member target is read through, each the quote of its member write piece. */
+const WRAPPERS: readonly (readonly [quote: string, wrap: (target: string) => string])[] = [
+  ["such a target read through parentheses", target => `(${target})`],
+  ["as", target => `(${target} as number)`],
+  ["satisfies", target => `(${target} satisfies number)`],
+  ["non-null", target => `${target}!`],
+  ["<T> assertions", target => `(<number>${target})`],
+];
+/** Every write form over both targets through one wrapper: each reads its one member write on line 2. */
+const wrapped = (wrap: (target: string) => string): Pin[] =>
+  TARGETS.flatMap(([target, label]) => WRITE_SPELLINGS.map(([spell, by]) => pin(() => writes(`${TARGET_PRELUDE}${spell(wrap(target))}\n`), [`member write ${label} by ${by} :2`])));
+/** The other destructured-key forms (refusal #2 U2: G25 shorthand, G26 string key) and the other name places (F2: templates). */
+const asShorthand = (form: NamedWrite, name: string): Pin =>
+  pin(() => writes(`${WRITE_BASE[form].prelude}const { ${name} } = ${onBase(form)};\nvoid ${name};\n`), [`${form} {${name}} destructured :${WRITE_BASE[form].line}`]);
+const asStringKey = (form: NamedWrite, name: string): Pin =>
+  pin(() => writes(`${WRITE_BASE[form].prelude}const { "${name}": lgW } = ${onBase(form)};\nvoid lgW;\n`), [`${form} {${name}} destructured :${WRITE_BASE[form].line}`, `${form} '${name}' :${WRITE_BASE[form].line}`]);
+const asTemplateKey = (form: NamedWrite, name: string): Pin =>
+  pin(() => writes(`${WRITE_BASE[form].prelude}export const lgW = ${onBase(form)}[\`${name}\`];\n`), [`${form} ['${name}'] :${WRITE_BASE[form].line}`]);
+const asTemplate = (form: NamedWrite, name: string): Pin => pin(() => writes(`const lgKey = \`${name}\`;\nvoid lgKey;\n`), [`${form} '${name}' :1`]);
+/** Every place a name is read as a mutator member is: a member name, a string or template element key, three destructured keys,
+ * a whole string literal or template. */
+const everyPlace = (form: NamedWrite, name: string): Pin[] => [
+  asMember(form, name), asKey(form, name), asTemplateKey(form, name), asDestructured(form, name), asShorthand(form, name), asStringKey(form, name), asString(form, name), asTemplate(form, name),
+];
+/** The binding contexts a destructured key is read in: a declaration, a parameter, a catch clause, a nested pattern, a for-of head. */
+const DESTRUCTURED_CONTEXTS: readonly (readonly [text: string, expected: readonly string[]])[] = [
+  ["export const lgW = ({ defineProperty: lgD }: Record<string, unknown>): unknown => lgD;\n", ["mutator member {defineProperty} destructured :1"]],
+  ["export const lgW = ({ defineProperty }: Record<string, unknown>): unknown => defineProperty;\n", ["mutator member {defineProperty} destructured :1"]],
+  ["try {\n  void 0;\n} catch ({ defineProperty: lgD }) {\n  void lgD;\n}\n", ["mutator member {defineProperty} destructured :3"]],
+  ["const { lgO: { defineProperty: lgD } } = { lgO: Object };\nvoid lgD;\n", ["mutator member {defineProperty} destructured :1"]],
+  ["for (const { defineProperty: lgD } of [Object]) void lgD;\n", ["mutator member {defineProperty} destructured :1"]],
+];
+/** One plant per write form in the cited suite: its CHANNEL finding at the line it lands on. */
+const WRITE_CHANNEL: readonly (readonly [extra: string, found: string, offset: number])[] = [
+  ["const lgD = Object.defineProperty;", "mutator member .defineProperty", 0],
+  ["const lgR = Reflect;", "reflection Reflect", 0],
+  ["const lgS = vi.hoisted;", "spy or mock member .hoisted", 0],
+  ['const lgO: Record<string, number> = {};\nconst lgK = "x";\nvoid lgO[lgK];', "computed member lgO[lgK]", 2],
+];
+/** A tier config planted through setupFiles' injected reader (refusal #2 U3, G27): nothing is written. */
+const PLANTED_CONFIG = join(ROOT, "test/lg-setup.config.ts");
+const plantedSetup = (text: string): ReturnType<typeof setupFiles> =>
+  setupFiles(ROOT, () => ({ ok: true, config: PLANTED_CONFIG, why: "" }), file => (file === PLANTED_CONFIG ? text : readFileSync(file, "utf8")));
+/** Every node kind C reads and the two it never reads, in one module of each code extension (the C:code line names the crossing). */
+const kindsSite = (extension: string): Pin => {
+  const file = `src/workbench/lg-kinds${extension}`;
+  const jsx = extension === ".tsx" || extension === ".jsx";
+  const text = `export const LG_A = "hyperunix.result/1";\nexport const LG_B = \`hyperunix.result/2\`;\nexport const lgC = (n) => \`hyperunix.result/3 \${n} hyperunix.result/4 \${n} hyperunix.result/5\`;\n// hyperunix.result/7\nexport const LG_R = /hyperunix\\.result\\/8/;\n${jsx ? "export const lgD = <p>hyperunix.result/6</p>;\n" : ""}`;
+  return pin(() => tagIn(file, text), [
+    `${file}:1 code whole hyperunix.result/1`, `${file}:2 code whole hyperunix.result/2`,
+    `${file}:3 code embedded hyperunix.result/3`, `${file}:3 code embedded hyperunix.result/4`, `${file}:3 code embedded hyperunix.result/5`,
+    ...(jsx ? [`${file}:6 code whole hyperunix.result/6`] : []),
+  ]);
+};
+/** A local module loading `target` by each load form: [form, statement]. */
+const LOAD_SPELLING = (target: string): readonly (readonly [LoadForm, string])[] => [
+  ["import declaration", `import { lgV } from "${target}";`],
+  ["export declaration", `export { lgV } from "${target}";`],
+  ["import-equals", `import lgV = require("${target}");`],
+  ["import type", `type LgV = typeof import("${target}");`],
+  ["dynamic import", `const lgV = import("${target}");`],
+  ["require call", `const lgV = require("${target}");`],
+];
+/** IDENTITY carrier by a load of each form: one reaching vitest, one reaching a carrier. */
+const loadCarriers = (target: string, reached: string, planted: readonly (readonly [string, string])[]): Pin[] =>
+  LOAD_SPELLING(target).map(([form, statement]) => {
+    const file = `test/helpers/lg-cl-${form.replace(/\W/g, "-")}.ts`;
+    return pin(() => moduleIdentity(files([file, `${statement}\nexport const lgW = 1;\n`], ...planted), file), `carrier (${file}:1 loads '${target}' (${reached}))`);
+  });
+/** Each declaration kind that makes a name declared in a package module (declaredNames), each declaring self. */
+const DECLARATION_KINDS: readonly string[] = [
+  "const { self } = { self: 1 };",
+  "const [self] = [1];",
+  "function self(): void {}",
+  "export const lgF = function self(): void {};",
+  "class self {}",
+  "export const lgC = class self {};",
+  "enum self { A }",
+  'import self from "./lg-x.js";',
+  'import { self } from "./lg-x.js";',
+  'import * as self from "./lg-x.js";',
+  'import self = require("./lg-x.js");',
+  "namespace self { export const a = 1; }",
+  "try { void 0; } catch (self) { void self; }",
+];
+/** Globs whose one regular-expression metacharacter must read as itself (refusal #2 U3: G28 the dot, then + ^ $ ( ) | and \): each
+ * would match the run pin were that character read as regex syntax. */
+const LITERAL_GLOBS: readonly string[] = [
+  "test/workbench-hyperunix-successor-gate-run.pin.census.ts",
+  "test/workbench-hyperunix-successor-gate-run-pin+.census.ts",
+  "^test/workbench-hyperunix-successor-gate-run-pin.census.ts",
+  "test/workbench-hyperunix-successor-gate-run-pin.census.ts$",
+  "test/workbench-hyperunix-successor-gate-run-pin.census.(ts)",
+  "test/workbench-hyperunix-successor-gate-run-pin.census.ts|x",
+  "test\\/workbench-hyperunix-successor-gate-run-pin.census.ts",
+];
 /** A local module reading `name` as an identifier, as a member name, as a whole string literal or as a string element key. */
-const asIdentifierRoute = (name: string, finding: string): Pin => pin(() => routes("local", `export const lgW = ${name};\n`), [finding]);
-const asMemberRoute = (name: string, finding: string): Pin => pin(() => routes("local", `export const lgW = (m: Record<string, unknown>): unknown => m.${name};\n`), [finding]);
-const asStringRoute = (name: string, finding: string): Pin => pin(() => routes("local", `export const lgW = "${name}";\n`), [finding]);
-const asKeyRoute = (name: string, finding: string): Pin => pin(() => routes("local", `export const lgW = (m: Record<string, unknown>): unknown => m["${name}"];\n`), [finding]);
+const asIdentifierRoute = (name: string, finding: string): Pin => localRoute(`export const lgW = ${name};\n`, [finding]);
+const asMemberRoute = (name: string, finding: string): Pin => localRoute(`export const lgW = (m: Record<string, unknown>): unknown => m.${name};\n`, [finding]);
+const asStringRoute = (name: string, finding: string): Pin => localRoute(`export const lgW = "${name}";\n`, [finding]);
+const asKeyRoute = (name: string, finding: string): Pin => localRoute(`export const lgW = (m: Record<string, unknown>): unknown => m["${name}"];\n`, [finding]);
+const asTemplateRoute = (name: string, finding: string): Pin => localRoute(`export const lgW = \`${name}\`;\n`, [finding]);
+const asTemplateKeyRoute = (name: string, finding: string): Pin => localRoute(`export const lgW = (m: Record<string, unknown>): unknown => m[\`${name}\`];\n`, [finding]);
 const globalMember = (member: string, keyed: boolean, ...also: string[]): Pin =>
-  pin(() => routes("local", keyed ? `export const lgW = globalThis["${member}"];\n` : `export const lgW = globalThis.${member};\n`), [`global object globalThis.${member} :1`, ...also]);
+  localRoute(keyed ? `export const lgW = globalThis["${member}"];\n` : `export const lgW = globalThis.${member};\n`, [`global object globalThis.${member} :1`, ...also]);
 const SENSITIVE_NAMES: readonly string[] = ["inspector", "module", "process", "repl", "vm"];
 const sensitiveLoad = (specifier: string): Pin => {
   const file = `test/helpers/lg-sb-${specifier.replace(/\W/g, "-")}.ts`;
@@ -773,13 +1000,24 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     pin(() => loadIdentity("lg-vitest-named", PACKAGES), "vitest (@vitest/lg-named)"),
     pin(() => loadIdentity("lg-vx", files(...pkg("lg-vx", '{"name": "@vitestx/lg", "main": "./index.js"}', ["index.js", EMPTY]))), "module")),
   member("IDENTITY:carrier", "a module that is no vitest module but has a load that resolves to a vitest module",
-    pin(() => moduleIdentity(files(["test/helpers/lg-c1.ts", 'import { it } from "vitest";\nexport const lgIt = it;\n']), "test/helpers/lg-c1.ts"), "carrier (test/helpers/lg-c1.ts:1 loads 'vitest' (vitest vitest))")),
+    pin(() => moduleIdentity(files(["test/helpers/lg-c1.ts", 'import { it } from "vitest";\nexport const lgIt = it;\n']), "test/helpers/lg-c1.ts"), "carrier (test/helpers/lg-c1.ts:1 loads 'vitest' (vitest vitest))"),
+    pin(() => moduleIdentity(files(...pkg("lg-c1p", '{"name": "lg-c1p", "main": "./index.js"}', ["index.js", 'import { it } from "vitest";\nexport const lgIt = it;\n'])), "node_modules/lg-c1p/index.js"),
+      "carrier (node_modules/lg-c1p/index.js:1 loads 'vitest' (vitest vitest))"),
+    pin(() => moduleIdentity(new Map(), SUITE), `carrier (${SUITE}:${VITEST_LINE} loads 'vitest' (vitest vitest))`),
+    ...loadCarriers("vitest", "vitest vitest", [])),
   member("IDENTITY:carrier", "one with a load that resolves to a carrier",
     pin(() => moduleIdentity(files(["test/helpers/lg-c2a.ts", 'export { lgB } from "./lg-c2b.js";\n'], ["test/helpers/lg-c2b.ts", 'import { it } from "vitest";\nexport const lgB = it;\n']), "test/helpers/lg-c2a.ts"),
-      "carrier (test/helpers/lg-c2a.ts:1 loads './lg-c2b.js' (carrier test/helpers/lg-c2b.ts:1 loads 'vitest' (vitest vitest)))")),
-  member("IDENTITY:carrier", "one that holds a route ROUTE_FORMS reads in its scope",
+      "carrier (test/helpers/lg-c2a.ts:1 loads './lg-c2b.js' (carrier test/helpers/lg-c2b.ts:1 loads 'vitest' (vitest vitest)))"),
+    pin(() => moduleIdentity(files(...pkg("lg-c2p", '{"name": "lg-c2p", "main": "./index.js"}', ["index.js", 'export { lgB } from "./lg-c2q.js";\n'], ["lg-c2q.js", 'import { it } from "vitest";\nexport const lgB = it;\n'])), "node_modules/lg-c2p/index.js"),
+      "carrier (node_modules/lg-c2p/index.js:1 loads './lg-c2q.js' (carrier node_modules/lg-c2p/lg-c2q.js:1 loads 'vitest' (vitest vitest)))"),
+    pin(() => moduleIdentity(files([SUITE, edit(read(SUITE), VITEST_IMPORT, 'import { lgB } from "./helpers/lg-c2s.js";')], ["test/helpers/lg-c2s.ts", 'import { it } from "vitest";\nexport const lgB = it;\n']), SUITE),
+      `carrier (${SUITE}:${VITEST_LINE} loads './helpers/lg-c2s.js' (carrier test/helpers/lg-c2s.ts:1 loads 'vitest' (vitest vitest)))`),
+    ...loadCarriers("./lg-c2b.js", "carrier test/helpers/lg-c2b.ts:1 loads 'vitest' (vitest vitest)", [["test/helpers/lg-c2b.ts", 'import { it } from "vitest";\nexport const lgB = it;\n']])),
+  member("IDENTITY:carrier", "one outside the cited suite that holds a route ROUTE_FORMS reads in its scope",
     pin(() => moduleIdentity(files(["test/helpers/lg-c3.ts", "export const lgG = globalThis;\n"]), "test/helpers/lg-c3.ts"), "carrier (test/helpers/lg-c3.ts:1 holds a global object route (globalThis as a VariableDeclaration))"),
-    pin(() => moduleIdentity(files(...pkg("lg-c4", '{"name": "lg-c4", "main": "./index.js"}', ["index.js", 'export const lgCode = new Function("return 1");\n'])), "node_modules/lg-c4/index.js"), "module")),
+    pin(() => moduleIdentity(files(...pkg("lg-c4", '{"name": "lg-c4", "main": "./index.js"}', ["index.js", 'export const lgCode = new Function("return 1");\n'])), "node_modules/lg-c4/index.js"), "module"),
+    ...FORM_PLANTS.flatMap(plant => [formCarrier("local", plant), formCarrier("package", plant)]),
+    pin(() => moduleIdentity(files([SUITE, edit(edit(read(SUITE), VITEST_IMPORT, ""), RECEIPT_IMPORT, `${RECEIPT_IMPORT}\nconst lgG = globalThis;`)]), SUITE), "module")),
   member("IDENTITY:builtin", "a builtin module",
     pin(() => loadIdentity("node:fs"), "builtin")),
   member("IDENTITY:module", "any other resolved module",
@@ -827,97 +1065,119 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     pin(() => loadsIn('const lgG = require("./lg-g.js");\nconst lgI = module.require("./lg-i.js");\n'), ["require call ./lg-g.js :1"])),
   member("LOADS:require call", "when it is a no-substitution template",
     pin(() => loadsIn("const lgH = require(`./lg-h.js`);\n"), ["require call ./lg-h.js :1"])),
-  member("ROUTES", "a module holding one is a carrier",
-    pin(() => moduleIdentity(files(["test/helpers/lg-r.ts", "export const lgMeta = import.meta.dirname;\n"]), "test/helpers/lg-r.ts"), "carrier (test/helpers/lg-r.ts:1 holds a import meta route (import.meta.dirname))")),
+  member("ROUTES", "a local module holding one is a carrier",
+    pin(() => moduleIdentity(files(["test/helpers/lg-r.ts", "export const lgMeta = import.meta.dirname;\n"]), "test/helpers/lg-r.ts"), "carrier (test/helpers/lg-r.ts:1 holds a import meta route (import.meta.dirname))"),
+    ...FORM_PLANTS.map(plant => formCarrier("local", plant))),
+  member("ROUTES", "a package module holding one is a carrier",
+    ...FORM_PLANTS.map(plant => formCarrier("package", plant)),
+    ...PACKAGE_TWINS.map(packageTwin),
+    pin(() => suiteImport(files(...G21_PACKAGE, [SUITE, edit(read(SUITE), RECEIPT_IMPORT, `${RECEIPT_IMPORT}\nimport * as lgPkg from "lg-twin-g21";`)])),
+      `IMPORT <2 loads resolve to a vitest module or a carrier: import declaration 'vitest' at line ${VITEST_LINE} (vitest (vitest)), import declaration 'lg-twin-g21' at line ${PLANT_LINE} (carrier (node_modules/lg-twin-g21/index.js:1 holds a global object route (globalThis as a VariableDeclaration)))>`)),
   member("ROUTES", "each route of the cited suite is a CHANNEL finding",
-    pin(() => suiteChannel("const lgMeta = import.meta.dirname;"), [`cited suite: import meta import.meta.dirname at line ${PLANT_LINE}`])),
-  member("ROUTES:dynamic load", "in every scope",
-    ...inEveryScope("export const lgLoad = (name: string): Promise<unknown> => import(name);\n", ["dynamic load import() of a Identifier :1"])),
-  member("ROUTES:dynamic load", "an import() call whose first argument is no string literal (a no-substitution template counts as one)",
-    pin(() => routes("local", "export const lgA = (name: string): Promise<unknown> => import(name);\n"), ["dynamic load import() of a Identifier :1"]),
-    pin(() => routes("local", `export const lgB = (n: number): Promise<unknown> => import(\`./lg-\${n}.js\`);\n`), ["dynamic load import() of a TemplateExpression :1"]),
-    pin(() => routes("local", 'export const lgC = import("./lg-c.js");\nexport const lgD = import(`./lg-d.js`);\n'), [])),
-  member("ROUTES:dynamic load", "a call of an identifier require whose first argument is no string literal (a no-substitution template counts as one)",
-    pin(() => routes("local", "export const lgA = (name: string): unknown => require(name);\n"), ["dynamic load require() of a Identifier :1"]),
-    pin(() => routes("local", 'export const lgC = require("./lg-c.js");\nexport const lgD = require(`./lg-d.js`);\n'), [])),
-  member("ROUTES:dynamic load", "either call with no argument",
-    pin(() => routes("local", "export const lgA = (): unknown => require();\n"), ["dynamic load require() of nothing :1"]),
-    pin(() => routes("local", "export const lgB = (): Promise<unknown> => import();\n"), ["dynamic load import() of nothing :1"])),
-  member("ROUTES:loader name", "in every scope",
-    ...inEveryScope('import { createRequire } from "node:module";\nexport const lgLoad = createRequire;\n', ["loader name createRequire :1", "loader name createRequire :2"])),
-  member("ROUTES:loader name", "the loader names createRequire", asIdentifierRoute("createRequire", "loader name createRequire :1")),
-  member("ROUTES:loader name", "getBuiltinModule", asIdentifierRoute("getBuiltinModule", "loader name getBuiltinModule :1")),
-  member("ROUTES:loader name", "each read as an identifier",
-    asIdentifierRoute("createRequire", "loader name createRequire :1"),
-    asIdentifierRoute("getBuiltinModule", "loader name getBuiltinModule :1")),
-  member("ROUTES:loader name", "as a member name",
-    asMemberRoute("createRequire", "loader name createRequire :1"),
-    asMemberRoute("getBuiltinModule", "loader name getBuiltinModule :1")),
-  member("ROUTES:loader name", "as a whole string literal",
-    asStringRoute("createRequire", "loader name 'createRequire' :1"),
-    asStringRoute("getBuiltinModule", "loader name 'getBuiltinModule' :1")),
-  member("ROUTES:loader name", "the loader member names binding", asMemberRoute("binding", "loader name .binding :1")),
-  member("ROUTES:loader name", "dlopen", asMemberRoute("dlopen", "loader name .dlopen :1")),
-  member("ROUTES:loader name", "_linkedBinding", asMemberRoute("_linkedBinding", "loader name ._linkedBinding :1")),
-  member("ROUTES:loader name", "each read as a member name",
-    asMemberRoute("binding", "loader name .binding :1"),
-    asMemberRoute("dlopen", "loader name .dlopen :1"),
-    asMemberRoute("_linkedBinding", "loader name ._linkedBinding :1"),
-    pin(() => routes("local", 'export const lgW = "dlopen";\nexport const lgV = (binding: number): number => binding;\n'), [])),
-  member("ROUTES:loader name", "as a string element key",
-    asKeyRoute("binding", "loader name 'binding' :1"),
-    asKeyRoute("dlopen", "loader name 'dlopen' :1"),
-    asKeyRoute("_linkedBinding", "loader name '_linkedBinding' :1")),
-  member("ROUTES:loader name", "an identifier require anywhere but as the callee of a call",
-    pin(() => routes("local", "export const lgW = require;\n"), ["loader name require, not called :1"]),
-    pin(() => routes("local", "export const lgW = [require];\n"), ["loader name require, not called :1"]),
-    pin(() => routes("local", 'export const lgW = require("./lg-x.js");\nexport const lgV = (m: { require: unknown }): unknown => m.require;\n'), [])),
-  member("ROUTES:loader member", "in every scope",
-    ...inEveryScope('export const lgW = (vi: Record<string, unknown>): unknown => vi["importActual"];\n', ["loader member ['importActual'] :1"])),
-  member("ROUTES:loader member", "the loader members importActual", pin(() => routes("local", "export const lgW = (vi: Record<string, unknown>): unknown => vi.importActual;\n"), ["loader member .importActual :1"])),
-  member("ROUTES:loader member", "importMock", pin(() => routes("local", "export const lgW = (vi: Record<string, unknown>): unknown => vi.importMock;\n"), ["loader member .importMock :1"])),
-  member("ROUTES:loader member", "each read as an identifier",
-    pin(() => routes("local", "export const lgW = (importActual: unknown): unknown => importActual;\n"), ["loader member importActual :1", "loader member importActual :1"]),
-    pin(() => routes("local", "export const lgW = (importMock: unknown): unknown => importMock;\n"), ["loader member importMock :1", "loader member importMock :1"])),
-  member("ROUTES:loader member", "as a member name",
-    pin(() => routes("local", "export const lgW = (vi: Record<string, unknown>): unknown => vi.importActual;\n"), ["loader member .importActual :1"]),
-    pin(() => routes("local", "export const lgW = (vi: Record<string, unknown>): unknown => vi.importMock;\n"), ["loader member .importMock :1"])),
-  member("ROUTES:loader member", "as a whole string literal",
-    pin(() => routes("local", 'export const lgW = "importActual";\n'), ["loader member 'importActual' :1"]),
-    pin(() => routes("local", 'export const lgW = "importMock";\n'), ["loader member 'importMock' :1"]),
-    pin(() => routes("local", 'export const lgW = (vi: Record<string, unknown>): unknown => vi["importMock"];\n'), ["loader member ['importMock'] :1"])),
-  member("ROUTES:loader member", "on any base",
-    pin(() => routes("local", "export const lgW = (f: () => Record<string, unknown>): unknown => f().importActual;\n"), ["loader member .importActual :1"]),
-    pin(() => routes("local", "export const lgW = (o: { inner: Record<string, unknown> }): unknown => o.inner.importMock;\n"), ["loader member .importMock :1"])),
-  member("ROUTES:vite name", "in every scope",
-    ...inEveryScope("export const lgW = (globalThis as Record<string, unknown>).__vitest_worker__;\n", ["vite name __vitest_worker__ :1"])),
-  member("ROUTES:vite name", "a name beginning __vite read as an identifier",
-    pin(() => routes("local", "export const lgW = __vite_ssr_import__;\n"), ["vite name __vite_ssr_import__ :1"])),
-  member("ROUTES:vite name", "as a member name",
-    pin(() => routes("local", "export const lgW = (g: Record<string, unknown>): unknown => g.__vitest_worker__;\n"), ["vite name __vitest_worker__ :1"])),
-  member("ROUTES:vite name", "as a string literal",
-    pin(() => routes("local", 'export const lgW = "__vite_ssr_dynamic_import__";\n'), ["vite name '__vite_ssr_dynamic_import__' :1"])),
-  member("ROUTES:vite name", "as a no-substitution template",
-    pin(() => routes("local", "export const lgW = `__vite_ssr_exports__`;\n"), ["vite name '__vite_ssr_exports__' :1"])),
-  member("ROUTES:vite name", "as a template part",
-    pin(() => routes("local", `export const lgW = (k: string): string => \`__vite\${k}\`;\n`), ["vite name '__vite' :1"]),
-    pin(() => routes("local", `export const lgW = (a: string, b: string): string => \`\${a}__vite_m\${b}\`;\n`), ["vite name '__vite_m' :1"]),
-    pin(() => routes("local", `export const lgW = (a: string): string => \`\${a}__vite_t\`;\n`), ["vite name '__vite_t' :1"])),
-  member("ROUTES:vite name", "vite's injected loaders are such names",
-    pin(() => routes("local", "export const lgW = [__vite_ssr_import__, __vite_ssr_dynamic_import__];\n"), ["vite name __vite_ssr_import__ :1", "vite name __vite_ssr_dynamic_import__ :1"])),
-  member("ROUTES:vite name", "vitest's __vitest_index__ handle is one",
-    pin(() => routes("local", "export const lgW = (g: Record<string, unknown>): unknown => g.__vitest_index__;\n"), ["vite name __vitest_index__ :1"])),
-  member("ROUTES:import meta", "in every scope",
-    ...inEveryScope("export const lgW = import.meta.dirname;\n", ["import meta import.meta.dirname :1"])),
-  member("ROUTES:import meta", "import.meta read other than as the base of import.meta.url",
-    pin(() => routes("local", "export const lgW = import.meta;\n"), ["import meta import.meta :1"]),
-    pin(() => routes("local", "export const lgW = import.meta.url;\n"), []),
-    pin(() => routes("local", 'export const lgW = import.meta["url"];\n'), ["import meta import.meta :1"])),
+    pin(() => suiteChannel("const lgMeta = import.meta.dirname;"), [`cited suite: import meta import.meta.dirname at line ${PLANT_LINE}`]),
+    ...FORM_PLANTS.map(formChannel),
+    ...SUITE_TWINS.map(([, extra, found]) => pin(() => suiteChannel(extra), [`cited suite: ${found} at line ${PLANT_LINE}`])),
+    pin(() => suiteChannel('import { runInThisContext as lgRun } from "vm";\nvoid lgRun;'), [`cited suite: sensitive builtin 'vm' at line ${PLANT_LINE}`])),
+  ...routeLine("dynamic load", [{ quote: "in every scope", scopes: SCOPE_LIST, pins: inEveryScope("export const lgLoad = (name: string): Promise<unknown> => import(name);\n", ["dynamic load import() of a Identifier :1"]) }], [
+    member("ROUTES:dynamic load", "an import() call whose first argument is no string literal (a no-substitution template counts as one)",
+      localRoute("export const lgA = (name: string): Promise<unknown> => import(name);\n", ["dynamic load import() of a Identifier :1"]),
+      localRoute(`export const lgB = (n: number): Promise<unknown> => import(\`./lg-\${n}.js\`);\n`, ["dynamic load import() of a TemplateExpression :1"]),
+      localRoute('export const lgC = import("./lg-c.js");\nexport const lgD = import(`./lg-d.js`);\n', [])),
+    member("ROUTES:dynamic load", "a call of an identifier require whose first argument is no string literal (a no-substitution template counts as one)",
+      localRoute("export const lgA = (name: string): unknown => require(name);\n", ["dynamic load require() of a Identifier :1"]),
+      localRoute('export const lgC = require("./lg-c.js");\nexport const lgD = require(`./lg-d.js`);\n', [])),
+    member("ROUTES:dynamic load", "either call with no argument",
+      localRoute("export const lgA = (): unknown => require();\n", ["dynamic load require() of nothing :1"]),
+      localRoute("export const lgB = (): Promise<unknown> => import();\n", ["dynamic load import() of nothing :1"])),
+  ]),
+  ...routeLine("loader name", [{ quote: "in every scope", scopes: SCOPE_LIST, pins: inEveryScope('import { createRequire } from "node:module";\nexport const lgLoad = createRequire;\n', ["loader name createRequire :1", "loader name createRequire :2"]) }], [
+    member("ROUTES:loader name", "the loader names createRequire", asIdentifierRoute("createRequire", "loader name createRequire :1")),
+    member("ROUTES:loader name", "getBuiltinModule", asIdentifierRoute("getBuiltinModule", "loader name getBuiltinModule :1")),
+    member("ROUTES:loader name", "each read as an identifier",
+      asIdentifierRoute("createRequire", "loader name createRequire :1"),
+      asIdentifierRoute("getBuiltinModule", "loader name getBuiltinModule :1")),
+    member("ROUTES:loader name", "as a member name",
+      asMemberRoute("createRequire", "loader name createRequire :1"),
+      asMemberRoute("getBuiltinModule", "loader name getBuiltinModule :1")),
+    member("ROUTES:loader name", "as a whole string literal",
+      asStringRoute("createRequire", "loader name 'createRequire' :1"),
+      asStringRoute("getBuiltinModule", "loader name 'getBuiltinModule' :1"),
+      asTemplateRoute("createRequire", "loader name 'createRequire' :1"),
+      asTemplateRoute("getBuiltinModule", "loader name 'getBuiltinModule' :1")),
+    member("ROUTES:loader name", "the loader member names binding", asMemberRoute("binding", "loader name .binding :1")),
+    member("ROUTES:loader name", "dlopen", asMemberRoute("dlopen", "loader name .dlopen :1")),
+    member("ROUTES:loader name", "_linkedBinding", asMemberRoute("_linkedBinding", "loader name ._linkedBinding :1")),
+    member("ROUTES:loader name", "each read as a member name",
+      asMemberRoute("binding", "loader name .binding :1"),
+      asMemberRoute("dlopen", "loader name .dlopen :1"),
+      asMemberRoute("_linkedBinding", "loader name ._linkedBinding :1"),
+      localRoute('export const lgW = "dlopen";\nexport const lgV = (binding: number): number => binding;\n', [])),
+    member("ROUTES:loader name", "as a string element key",
+      asKeyRoute("binding", "loader name 'binding' :1"),
+      asKeyRoute("dlopen", "loader name 'dlopen' :1"),
+      asKeyRoute("_linkedBinding", "loader name '_linkedBinding' :1"),
+      asTemplateKeyRoute("binding", "loader name 'binding' :1"),
+      asTemplateKeyRoute("dlopen", "loader name 'dlopen' :1"),
+      asTemplateKeyRoute("_linkedBinding", "loader name '_linkedBinding' :1"),
+      localRoute('export const lgW = (m: Record<string, unknown>): unknown => m[("dlopen")];\n', ["loader name 'dlopen' :1"]),
+      localRoute('export const lgW = (m: Record<string, unknown>): unknown => m["binding" as string];\n', ["loader name 'binding' :1"])),
+    member("ROUTES:loader name", "an identifier require anywhere but as the callee of a call",
+      localRoute("export const lgW = require;\n", ["loader name require, not called :1"]),
+      localRoute("export const lgW = [require];\n", ["loader name require, not called :1"]),
+      localRoute('export const lgW = require("./lg-x.js");\nexport const lgV = (m: { require: unknown }): unknown => m.require;\n', [])),
+  ]),
+  ...routeLine("loader member", [{ quote: "in every scope", scopes: SCOPE_LIST, pins: inEveryScope('export const lgW = (vi: Record<string, unknown>): unknown => vi["importActual"];\n', ["loader member ['importActual'] :1"]) }], [
+    member("ROUTES:loader member", "the loader members importActual", localRoute("export const lgW = (vi: Record<string, unknown>): unknown => vi.importActual;\n", ["loader member .importActual :1"])),
+    member("ROUTES:loader member", "importMock", localRoute("export const lgW = (vi: Record<string, unknown>): unknown => vi.importMock;\n", ["loader member .importMock :1"])),
+    member("ROUTES:loader member", "each read as an identifier",
+      localRoute("export const lgW = (importActual: unknown): unknown => importActual;\n", ["loader member importActual :1", "loader member importActual :1"]),
+      localRoute("export const lgW = (importMock: unknown): unknown => importMock;\n", ["loader member importMock :1", "loader member importMock :1"])),
+    member("ROUTES:loader member", "as a member name",
+      localRoute("export const lgW = (vi: Record<string, unknown>): unknown => vi.importActual;\n", ["loader member .importActual :1"]),
+      localRoute("export const lgW = (vi: Record<string, unknown>): unknown => vi.importMock;\n", ["loader member .importMock :1"])),
+    member("ROUTES:loader member", "as a whole string literal",
+      localRoute('export const lgW = "importActual";\n', ["loader member 'importActual' :1"]),
+      localRoute('export const lgW = "importMock";\n', ["loader member 'importMock' :1"]),
+      localRoute('export const lgW = (vi: Record<string, unknown>): unknown => vi["importMock"];\n', ["loader member ['importMock'] :1"]),
+      localRoute("export const lgW = `importActual`;\n", ["loader member 'importActual' :1"]),
+      localRoute("export const lgW = `importMock`;\n", ["loader member 'importMock' :1"]),
+      localRoute("export const lgW = (vi: Record<string, unknown>): unknown => vi[`importActual`];\n", ["loader member ['importActual'] :1"]),
+      localRoute('export const lgW = (vi: Record<string, unknown>): unknown => vi[("importMock")];\n', ["loader member ['importMock'] :1"])),
+    member("ROUTES:loader member", "on any base",
+      localRoute("export const lgW = (f: () => Record<string, unknown>): unknown => f().importActual;\n", ["loader member .importActual :1"]),
+      localRoute("export const lgW = (o: { inner: Record<string, unknown> }): unknown => o.inner.importMock;\n", ["loader member .importMock :1"])),
+  ]),
+  ...routeLine("vite name", [{ quote: "in every scope", scopes: SCOPE_LIST, pins: inEveryScope("export const lgW = (globalThis as Record<string, unknown>).__vitest_worker__;\n", ["vite name __vitest_worker__ :1"]) }], [
+    member("ROUTES:vite name", "a name beginning __vite read as an identifier",
+      localRoute("export const lgW = __vite_ssr_import__;\n", ["vite name __vite_ssr_import__ :1"])),
+    member("ROUTES:vite name", "as a member name",
+      localRoute("export const lgW = (g: Record<string, unknown>): unknown => g.__vitest_worker__;\n", ["vite name __vitest_worker__ :1"])),
+    member("ROUTES:vite name", "as a string literal",
+      localRoute('export const lgW = "__vite_ssr_dynamic_import__";\n', ["vite name '__vite_ssr_dynamic_import__' :1"])),
+    member("ROUTES:vite name", "as a no-substitution template",
+      localRoute("export const lgW = `__vite_ssr_exports__`;\n", ["vite name '__vite_ssr_exports__' :1"])),
+    member("ROUTES:vite name", "as a template part",
+      localRoute(`export const lgW = (k: string): string => \`__vite\${k}\`;\n`, ["vite name '__vite' :1"]),
+      localRoute(`export const lgW = (a: string, b: string): string => \`\${a}__vite_m\${b}\`;\n`, ["vite name '__vite_m' :1"]),
+      localRoute(`export const lgW = (a: string): string => \`\${a}__vite_t\`;\n`, ["vite name '__vite_t' :1"])),
+    member("ROUTES:vite name", "vite's injected loaders are such names",
+      localRoute("export const lgW = [__vite_ssr_import__, __vite_ssr_dynamic_import__];\n", ["vite name __vite_ssr_import__ :1", "vite name __vite_ssr_dynamic_import__ :1"])),
+    member("ROUTES:vite name", "vitest's __vitest_index__ handle is one",
+      localRoute("export const lgW = (g: Record<string, unknown>): unknown => g.__vitest_index__;\n", ["vite name __vitest_index__ :1"])),
+  ]),
+  ...routeLine("import meta", [{ quote: "in every scope", scopes: SCOPE_LIST, pins: inEveryScope("export const lgW = import.meta.dirname;\n", ["import meta import.meta.dirname :1"]) }], [
+    member("ROUTES:import meta", "import.meta read other than as the base of import.meta.url",
+      localRoute("export const lgW = import.meta;\n", ["import meta import.meta :1"]),
+      localRoute("export const lgW = import.meta.url;\n", []),
+      localRoute('export const lgW = import.meta["url"];\n', ["import meta import.meta :1"])),
+  ]),
   member("ROUTES:sensitive builtin", "in every scope",
     pin(() => suiteChannel('import { runInThisContext } from "node:vm";'), [`cited suite: sensitive builtin 'node:vm' at line ${PLANT_LINE}`]),
     sensitiveLoad("node:vm"),
     pin(() => moduleIdentity(files(...pkg("lg-vm", '{"name": "lg-vm", "exports": "./index.js"}', ["index.js", 'import { runInThisContext } from "node:vm";\nexport const lgW = runInThisContext;\n'])), "node_modules/lg-vm/index.js"),
-      "carrier (node_modules/lg-vm/index.js:1 holds a sensitive builtin route (loads 'node:vm'))")),
+      "carrier (node_modules/lg-vm/index.js:1 holds a sensitive builtin route (loads 'node:vm'))"),
+    ...SCOPE_LIST.flatMap(scope => SENSITIVE_NAMES.flatMap(name => [sensitiveIn(scope, `node:${name}`), sensitiveIn(scope, name)])),
+    ...SCOPE_LIST.flatMap(scope => LOAD_FORMS.map(entry => sensitiveIn(scope, "vm", entry.word)))),
   member("ROUTES:sensitive builtin", "a load that resolves to one of the builtins inspector",
     sensitiveLoad("node:inspector"),
     pin(() => moduleIdentity(files(["test/helpers/lg-sb-path.ts", 'import * as lgB from "node:path";\nexport const lgW = lgB;\n']), "test/helpers/lg-sb-path.ts"), "module")),
@@ -927,106 +1187,157 @@ const MEMBER_ROWS: readonly MemberRow[] = [
   member("ROUTES:sensitive builtin", "vm", sensitiveLoad("node:vm")),
   member("ROUTES:sensitive builtin", "each named with node:", ...SENSITIVE_NAMES.map(name => sensitiveLoad(`node:${name}`))),
   member("ROUTES:sensitive builtin", "each named without node:", ...SENSITIVE_NAMES.map(name => sensitiveLoad(name))),
-  member("ROUTES:global object", "in every scope",
-    ...inEveryScope("const lgG = globalThis;\nexport const lgH = lgG;\n", ["global object globalThis as a VariableDeclaration :1"])),
-  member("ROUTES:global object", "a free globalThis",
-    pin(() => routes("local", "export const lgW = globalThis;\n"), ["global object globalThis as a VariableDeclaration :1"]),
-    pin(() => routes("local", "const self = 1;\nexport const lgW = self;\n"), [])),
-  member("ROUTES:global object", "global", pin(() => routes("local", "export const lgW = global;\n"), ["global object global as a VariableDeclaration :1"])),
-  member("ROUTES:global object", "self", pin(() => routes("local", "export const lgW = self;\n"), ["global object self as a VariableDeclaration :1"])),
-  member("ROUTES:global object", "window", pin(() => routes("local", "export const lgW = window;\n"), ["global object window as a VariableDeclaration :1"])),
-  member("ROUTES:global object", "process", pin(() => routes("local", "export const lgW = process;\n"), ["global object process as a VariableDeclaration :1"])),
-  member("ROUTES:global object", "in a package module free means declared nowhere in the module",
-    pin(() => routes("package", "export const lgW = self;\n"), ["global object self as a VariableDeclaration :1"]),
-    pin(() => routes("package", "const self = 1;\nexport const lgW = self;\n"), []),
-    pin(() => routes("package", "export const lgA = (self: number): number => self;\nexport const lgB = self;\n"), []),
-    pin(() => routes("local", "export const lgA = (self: number): number => self;\nexport const lgB = self;\n"), ["global object self as a VariableDeclaration :2"])),
-  member("ROUTES:global object", "not when it is the base of a property access",
-    pin(() => routes("local", "export const lgW = globalThis.lgName;\n"), [])),
-  member("ROUTES:global object", "not when it is the base of an element access keyed by a string literal",
-    pin(() => routes("local", 'export const lgW = [globalThis["lgName"], globalThis[`lgName`]];\n'), [])),
-  member("ROUTES:global object", "not when it is the base of an element access keyed by a numeric literal",
-    pin(() => routes("local", "export const lgW = globalThis[0];\n"), []),
-    pin(() => routes("local", "export const lgW = (k: string): unknown => (globalThis as Record<string, unknown>)[k];\n"), ["global object globalThis as a ElementAccessExpression :1"])),
-  member("ROUTES:global object", "read when that member names one of those five",
-    globalMember("globalThis", false),
-    globalMember("global", false),
-    globalMember("self", true),
-    globalMember("window", false),
-    globalMember("process", false)),
-  member("ROUTES:global object", "read when that member names createRequire", globalMember("createRequire", false, "loader name createRequire :1")),
-  member("ROUTES:global object", "getBuiltinModule", globalMember("getBuiltinModule", false, "loader name getBuiltinModule :1")),
-  member("ROUTES:global object", "binding", globalMember("binding", false, "loader name .binding :1")),
-  member("ROUTES:global object", "dlopen", globalMember("dlopen", true, "loader name 'dlopen' :1")),
-  member("ROUTES:global object", "_linkedBinding", globalMember("_linkedBinding", false, "loader name ._linkedBinding :1")),
-  member("ROUTES:global object", "not as the operand of typeof",
-    pin(() => routes("local", "export const lgW = typeof window;\n"), []),
-    pin(() => routes("local", 'export const lgW = typeof process === "undefined";\n'), [])),
-  member("ROUTES:global object", "not as the first argument of an admitted spy in the suite",
-    pin(() => routes("suite", 'import { vi } from "vitest";\nexport const lgW = vi.spyOn(globalThis, "fetch");\n'), []),
-    pin(() => routes("local", 'import { vi } from "vitest";\nexport const lgW = vi.spyOn(globalThis, "fetch");\n'), ["global object globalThis as a CallExpression :2"]),
-    pin(() => routes("suite", 'import { vi } from "vitest";\nexport const lgW = vi["spyOn"](globalThis, "fetch");\n'), ["global object globalThis as a CallExpression :2"]),
-    pin(() => routes("suite", 'import { vi } from "vitest";\nexport const lgW = vi.spyOn(globalThis, "__vite_lg");\n'), ["global object globalThis as a CallExpression :2", "vite name '__vite_lg' :2"])),
-  member("ROUTES:dynamic code", "read in the suite",
-    pin(() => routes("suite", 'export const lgW = new Function("return 1");\n'), ["dynamic code Function :1"])),
-  member("ROUTES:dynamic code", "read in local modules",
-    pin(() => routes("local", 'export const lgW = new Function("return 1");\n'), ["dynamic code Function :1"])),
-  member("ROUTES:dynamic code", "never in a package module",
-    pin(() => routes("package", 'export const lgW = new Function("return 1");\n'), []),
-    pin(() => routes("package", "export const lgW = (code: string): unknown => eval(code);\n"), []),
-    pin(() => routes("package", "export const lgW = (() => 1).constructor;\n"), []),
-    pin(() => routes("package", 'export const lgW = new globalThis.Function("return 1");\n'), [])),
-  member("ROUTES:dynamic code", "a free eval",
-    pin(() => routes("local", "export const lgW = (code: string): unknown => eval(code);\n"), ["dynamic code eval :1"])),
-  member("ROUTES:dynamic code", "a free Function",
-    pin(() => routes("local", 'export const lgW = Function("return 1");\n'), ["dynamic code Function :1"]),
-    pin(() => routes("local", "const Function = (): number => 1;\nexport const lgW = Function();\n"), [])),
-  member("ROUTES:dynamic code", "an eval member of a free global object",
-    pin(() => routes("local", "export const lgW = (code: string): unknown => globalThis.eval(code);\n"), ["dynamic code globalThis.eval :1"]),
-    pin(() => routes("local", 'export const lgW = (code: string): unknown => self["eval"](code);\n'), ["dynamic code self.eval :1"])),
-  member("ROUTES:dynamic code", "a Function member of a free global object",
-    pin(() => routes("local", 'export const lgW = new globalThis.Function("return 1");\n'), ["dynamic code globalThis.Function :1"]),
-    pin(() => routes("local", 'export const lgW = new window.Function("return 1");\n'), ["dynamic code window.Function :1"])),
-  member("ROUTES:dynamic code", "a member constructor read on any base",
-    pin(() => routes("local", "export const lgW = (() => 1).constructor;\n"), ["dynamic code .constructor :1"]),
-    pin(() => routes("local", 'export const lgW = (o: object): unknown => (o as Record<string, unknown>)["constructor"];\n'), ["dynamic code .constructor :1"])),
+  ...routeLine("global object", [{ quote: "in every scope", scopes: SCOPE_LIST, pins: inEveryScope("const lgG = globalThis;\nexport const lgH = lgG;\n", ["global object globalThis as a VariableDeclaration :1"]) }], [
+    member("ROUTES:global object", "a free globalThis",
+      localRoute("export const lgW = globalThis;\n", ["global object globalThis as a VariableDeclaration :1"]),
+      localRoute("const self = 1;\nexport const lgW = self;\n", [])),
+    member("ROUTES:global object", "global", localRoute("export const lgW = global;\n", ["global object global as a VariableDeclaration :1"])),
+    member("ROUTES:global object", "self", localRoute("export const lgW = self;\n", ["global object self as a VariableDeclaration :1"])),
+    member("ROUTES:global object", "window", localRoute("export const lgW = window;\n", ["global object window as a VariableDeclaration :1"])),
+    member("ROUTES:global object", "process", localRoute("export const lgW = process;\n", ["global object process as a VariableDeclaration :1"])),
+    member("ROUTES:global object", "in a package module free means declared nowhere in the module",
+      pin(() => routes("package", "export const lgW = self;\n"), ["global object self as a VariableDeclaration :1"]),
+      pin(() => routes("package", "const self = 1;\nexport const lgW = self;\n"), []),
+      pin(() => routes("package", "export const lgA = (self: number): number => self;\nexport const lgB = self;\n"), []),
+      ...DECLARATION_KINDS.map(declaration => pin(() => routes("package", `${declaration}\nexport const lgW = self;\n`), [])),
+      pin(() => routes("local", "export const lgA = (self: number): number => self;\nexport const lgB = self;\n"), ["global object self as a VariableDeclaration :2"])),
+    member("ROUTES:global object", "not when it is the base of a property access",
+      localRoute("export const lgW = globalThis.lgName;\n", []),
+      localRoute("export const lgW = (globalThis).lgName;\n", []),
+      localRoute("export const lgW = (globalThis as Record<string, unknown>).lgName;\n", []),
+      localRoute("export const lgW = (globalThis satisfies object as Record<string, unknown>).lgName;\n", []),
+      localRoute("export const lgW = globalThis!.lgName;\n", []),
+      localRoute("export const lgW = (<Record<string, unknown>>globalThis).lgName;\n", []),
+      localRoute("export const lgW = ((globalThis as Record<string, unknown>)).lgName;\n", [])),
+    member("ROUTES:global object", "not when it is the base of an element access keyed by a string literal",
+      localRoute('export const lgW = [globalThis["lgName"], globalThis[`lgName`]];\n', []),
+      localRoute('export const lgW = globalThis[("lgName")];\n', [])),
+    member("ROUTES:global object", "not when it is the base of an element access keyed by a numeric literal",
+      localRoute("export const lgW = globalThis[0];\n", []),
+      localRoute("export const lgW = (k: string): unknown => (globalThis as Record<string, unknown>)[k];\n", ["global object globalThis as a ElementAccessExpression :1"])),
+    member("ROUTES:global object", "read when that member names one of those five",
+      globalMember("globalThis", false),
+      globalMember("global", false),
+      globalMember("self", true),
+      globalMember("window", false),
+      globalMember("process", false),
+      localRoute('export const lgW = globalThis[("process")];\n', ["global object globalThis.process :1"]),
+      localRoute("export const lgW = (globalThis).process;\n", ["global object globalThis.process :1"])),
+    member("ROUTES:global object", "read when that member names createRequire", globalMember("createRequire", false, "loader name createRequire :1")),
+    member("ROUTES:global object", "getBuiltinModule", globalMember("getBuiltinModule", false, "loader name getBuiltinModule :1")),
+    member("ROUTES:global object", "binding", globalMember("binding", false, "loader name .binding :1")),
+    member("ROUTES:global object", "dlopen", globalMember("dlopen", true, "loader name 'dlopen' :1")),
+    member("ROUTES:global object", "_linkedBinding", globalMember("_linkedBinding", false, "loader name ._linkedBinding :1")),
+    member("ROUTES:global object", "not as the operand of typeof",
+      localRoute("export const lgW = typeof window;\n", []),
+      localRoute("export const lgW = typeof (window);\n", []),
+      localRoute('export const lgW = typeof process === "undefined";\n', [])),
+    member("ROUTES:global object", "not as the first argument of an admitted spy in the suite",
+      pin(() => routes("suite", 'import { vi } from "vitest";\nexport const lgW = vi.spyOn(globalThis, "fetch");\n'), []),
+      pin(() => routes("local", 'import { vi } from "vitest";\nexport const lgW = vi.spyOn(globalThis, "fetch");\n'), ["global object globalThis as a CallExpression :2"]),
+      pin(() => routes("suite", 'import { vi } from "vitest";\nexport const lgW = vi["spyOn"](globalThis, "fetch");\n'), ["global object globalThis as a CallExpression :2"]),
+      pin(() => routes("suite", 'import { vi } from "vitest";\nexport const lgW = vi.spyOn(globalThis, "__vite_lg");\n'), ["global object globalThis as a CallExpression :2", "vite name '__vite_lg' :2"])),
+  ]),
+  ...routeLine("dynamic code", [
+    { quote: "read in the suite", scopes: ["suite"], pins: [pin(() => routes("suite", 'export const lgW = new Function("return 1");\n'), ["dynamic code Function :1"])] },
+    { quote: "read in local modules", scopes: ["local"], pins: [pin(() => routes("local", 'export const lgW = new Function("return 1");\n'), ["dynamic code Function :1"])] },
+    { quote: "never in a package module", scopes: ["package"], pins: [
+      pin(() => routes("package", 'export const lgW = new Function("return 1");\n'), []),
+      pin(() => routes("package", "export const lgW = (code: string): unknown => eval(code);\n"), []),
+      pin(() => routes("package", "export const lgW = (() => 1).constructor;\n"), []),
+      pin(() => routes("package", 'export const lgW = new globalThis.Function("return 1");\n'), []),
+    ] },
+  ], [
+    member("ROUTES:dynamic code", "a free eval",
+      localRoute("export const lgW = (code: string): unknown => eval(code);\n", ["dynamic code eval :1"])),
+    member("ROUTES:dynamic code", "a free Function",
+      localRoute('export const lgW = Function("return 1");\n', ["dynamic code Function :1"]),
+      localRoute("const Function = (): number => 1;\nexport const lgW = Function();\n", [])),
+    member("ROUTES:dynamic code", "an eval member of a free global object",
+      localRoute("export const lgW = (code: string): unknown => globalThis.eval(code);\n", ["dynamic code globalThis.eval :1"]),
+      localRoute('export const lgW = (code: string): unknown => self["eval"](code);\n', ["dynamic code self.eval :1"])),
+    member("ROUTES:dynamic code", "a Function member of a free global object",
+      localRoute('export const lgW = new globalThis.Function("return 1");\n', ["dynamic code globalThis.Function :1"]),
+      localRoute('export const lgW = new window.Function("return 1");\n', ["dynamic code window.Function :1"])),
+    member("ROUTES:dynamic code", "a member constructor read on any base",
+      localRoute("export const lgW = (() => 1).constructor;\n", ["dynamic code .constructor :1"]),
+      localRoute('export const lgW = (o: object): unknown => (o as Record<string, unknown>)["constructor"];\n', ["dynamic code .constructor :1"]),
+      localRoute('export const lgW = (o: Record<string, unknown>): unknown => o[("constructor")];\n', ["dynamic code .constructor :1"])),
+  ]),
   member("WRITES", "the cited suite only",
     pin(() => moduleIdentity(files(["test/helpers/lg-wr.ts", "const lgT = { each: 1 };\nlgT.each = 2;\nexport const lgW = lgT;\n"]), "test/helpers/lg-wr.ts"), "module")),
   member("WRITES", "each is a CHANNEL finding",
-    pin(() => suiteChannel("const lgT = { each: 1 };\nlgT.each = 2;"), [`cited suite: member write .each by = at line ${PLANT_LINE + 1}`])),
+    pin(() => suiteChannel("const lgT = { each: 1 };\nlgT.each = 2;"), [`cited suite: member write .each by = at line ${PLANT_LINE + 1}`]),
+    ...WRITE_CHANNEL.map(([extra, found, offset]) => pin(() => suiteChannel(extra), [`cited suite: ${found} at line ${PLANT_LINE + offset}`]))),
   member("WRITES:member write", "an assignment of any operator to a property access",
     pin(() => writes("const lgT = { each: 1 };\nlgT.each = 2;\n"), ["member write .each by = :2"]),
     pin(() => writes("const lgT = { each: 1 };\nlgT.each += 1;\n"), ["member write .each by += :2"]),
     pin(() => writes("const lgT: { each?: number } = {};\nlgT.each ??= 3;\n"), ["member write .each by ??= :2"]),
-    pin(() => writes("let lgX = 1;\nlgX = 2;\nlgX += 1;\nlgX++;\n"), [])),
+    pin(() => writes("let lgX = 1;\nlgX = 2;\nlgX += 1;\nlgX++;\n"), []),
+    pin(() => Array.from({ length: ts.SyntaxKind.LastAssignment - ts.SyntaxKind.FirstAssignment + 1 }, (_, index) => ts.tokenToString(ts.SyntaxKind.FirstAssignment + index)), ASSIGNMENT_OPERATORS),
+    ...ASSIGNMENT_OPERATORS.map(operator => pin(() => writes(`${TARGET_PRELUDE}lgT.each ${operator} 1;\n`), [`member write .each by ${operator} :2`])),
+    pin(() => writes("const lgT = { each: 1 };\nlgT.each ^= 1;\n"), ["member write .each by ^= :2"]),
+    pin(() => writes("const lgT: { each?: () => number } = {};\nlgT.each ||= (): number => 1;\n"), ["member write .each by ||= :2"])),
   member("WRITES:member write", "to an element access",
     pin(() => writes('const lgT: Record<string, number> = {};\nlgT["each"] = 4;\n'), ["member write ['each'] by = :2"]),
-    pin(() => writes("const lgT: number[] = [];\nlgT[0] = 5;\n"), ["member write [0] by = :2"])),
+    pin(() => writes("const lgT: number[] = [];\nlgT[0] = 5;\n"), ["member write [0] by = :2"]),
+    ...ASSIGNMENT_OPERATORS.map(operator => pin(() => writes(`${TARGET_PRELUDE}lgT["each"] ${operator} 1;\n`), [`member write ['each'] by ${operator} :2`]))),
   member("WRITES:member write", "++ on such a target",
     pin(() => writes("const lgT = { each: 1 };\nlgT.each++;\n"), ["member write .each by ++ :2"]),
-    pin(() => writes('const lgT: Record<string, number> = {};\n++lgT["each"];\n'), ["member write ['each'] by ++ :2"])),
+    pin(() => writes('const lgT: Record<string, number> = {};\n++lgT["each"];\n'), ["member write ['each'] by ++ :2"]),
+    pin(() => writes(`${TARGET_PRELUDE}++lgT.each;\n`), ["member write .each by ++ :2"]),
+    pin(() => writes(`${TARGET_PRELUDE}lgT["each"]++;\n`), ["member write ['each'] by ++ :2"])),
   member("WRITES:member write", "-- on such a target",
     pin(() => writes("const lgT = { each: 1 };\n--lgT.each;\n"), ["member write .each by -- :2"]),
-    pin(() => writes("const lgT: number[] = [1];\nlgT[0]--;\n"), ["member write [0] by -- :2"])),
+    pin(() => writes("const lgT: number[] = [1];\nlgT[0]--;\n"), ["member write [0] by -- :2"]),
+    pin(() => writes(`${TARGET_PRELUDE}lgT.each--;\n`), ["member write .each by -- :2"]),
+    pin(() => writes(`${TARGET_PRELUDE}--lgT["each"];\n`), ["member write ['each'] by -- :2"])),
   member("WRITES:member write", "delete of such a target",
     pin(() => writes("const lgT: { each?: number } = { each: 1 };\ndelete lgT.each;\n"), ["member write .each by delete :2"]),
-    pin(() => writes('const lgT: Record<string, number> = {};\ndelete lgT["each"];\n'), ["member write ['each'] by delete :2"])),
+    pin(() => writes('const lgT: Record<string, number> = {};\ndelete lgT["each"];\n'), ["member write ['each'] by delete :2"]),
+    pin(() => writes("const lgT: number[] = [1];\ndelete lgT[0];\n"), ["member write [0] by delete :2"])),
   member("WRITES:member write", "such a target of a for-in",
     pin(() => writes("const lgT = { each: '' };\nfor (lgT.each in { x: 1 }) void 0;\n"), ["member write .each by for-in :2"]),
-    pin(() => writes("for (const lgK in { x: 1 }) void lgK;\n"), [])),
+    pin(() => writes("for (const lgK in { x: 1 }) void lgK;\n"), []),
+    pin(() => writes(`${TARGET_PRELUDE}for (lgT["each"] in { x: 1 }) void 0;\n`), ["member write ['each'] by for-in :2"]),
+    pin(() => writes(`${TARGET_PRELUDE}for ([lgT.each] in { ab: 1 }) void 0;\n`), ["member write .each by for-in :2"]),
+    pin(() => writes('const lgT: Record<string, string> = {};\nfor (lgT["each"] in { x: 1 }) void 0;\nfor (lgT["each"] of ["x"]) void 0;\n[lgT["each"]] = ["y"];\n'),
+      ["member write ['each'] by for-in :2", "member write ['each'] by for-of :3", "member write ['each'] by = :4"])),
   member("WRITES:member write", "such a target of a for-of",
     pin(() => writes("const lgT = { each: '' };\nfor (lgT.each of ['x']) void 0;\n"), ["member write .each by for-of :2"]),
-    pin(() => writes("for (const lgK of ['x']) void lgK;\n"), [])),
+    pin(() => writes("for (const lgK of ['x']) void lgK;\n"), []),
+    pin(() => writes(`${TARGET_PRELUDE}for (lgT["each"] of [1]) void 0;\n`), ["member write ['each'] by for-of :2"]),
+    pin(() => writes(`${TARGET_PRELUDE}for ([lgT.each] of [[1]]) void 0;\n`), ["member write .each by for-of :2"]),
+    pin(() => writes(`${TARGET_PRELUDE}for ({ each: lgT["each"] } of [{ each: 1 }]) void 0;\n`), ["member write ['each'] by for-of :2"])),
   member("WRITES:member write", "such a target inside a destructuring assignment",
     pin(() => writes("const lgT = { each: 1 };\n({ each: lgT.each } = { each: 2 });\n"), ["member write .each by = :2"]),
     pin(() => writes("const lgT = { each: 1 };\n[lgT.each] = [2];\n"), ["member write .each by = :2"]),
     pin(() => writes("const lgT = { each: 1, rest: {} };\n({ ...lgT.rest } = { each: 2 });\n"), ["member write .rest by = :2"]),
-    pin(() => writes("const lgT = { rest: [0] };\n[...lgT.rest] = [1, 2];\n"), ["member write .rest by = :2"])),
+    pin(() => writes("const lgT = { rest: [0] };\n[...lgT.rest] = [1, 2];\n"), ["member write .rest by = :2"]),
+    pin(() => writes(`${TARGET_PRELUDE}({ each: lgT["each"] } = { each: 2 });\n`), ["member write ['each'] by = :2"]),
+    pin(() => writes(`${TARGET_PRELUDE}[lgT["each"]] = [2];\n`), ["member write ['each'] by = :2"]),
+    pin(() => writes(`${TARGET_PRELUDE}({ ...lgT["rest"] } = { each: 2 });\n`), ["member write ['rest'] by = :2"]),
+    pin(() => writes(`${TARGET_PRELUDE}[...lgT["rest"]] = [1, 2];\n`), ["member write ['rest'] by = :2"]),
+    pin(() => writes(`${TARGET_PRELUDE}[lgT.each = 1] = [];\n`), ["member write .each by = :2", "member write .each by = :2"]),
+    pin(() => writes(`${TARGET_PRELUDE}({ each: lgT["each"] = 1 } = {});\n`), ["member write ['each'] by = :2", "member write ['each'] by = :2"]),
+    pin(() => writes(`${TARGET_PRELUDE}[[lgT.each]] = [[1]];\n`), ["member write .each by = :2"]),
+    pin(() => writes(`${TARGET_PRELUDE}({ lgA: { each: lgT["each"] } } = { lgA: { each: 1 } });\n`), ["member write ['each'] by = :2"])),
+  ...WRAPPERS.map(([quote, wrap], index) => member("WRITES:member write", quote, ...wrapped(wrap),
+    ...(index === 0 ? [
+      pin(() => writes("const lgT = { each: 1 };\n(lgT.each) = 2;\nlgT.each! = 3;\n(lgT.each)++;\n"), ["member write .each by = :2", "member write .each by = :3", "member write .each by ++ :4"]),
+      pin(() => suiteChannel("const lgT = { each: 1 };\n(lgT.each) = 2;"), [`cited suite: member write .each by = at line ${PLANT_LINE + 1}`]),
+      pin(() => writes(`${TARGET_PRELUDE}((lgT.each as number)) = 2;\n((lgT["each"]))!++;\n`), ["member write .each by = :2", "member write ['each'] by ++ :3"]),
+    ] : []))),
   ...MUTATOR_NAMES.map(name => member("WRITES:mutator member", name, asMember("mutator member", name))),
   member("WRITES:mutator member", "each read as a member name", ...MUTATOR_NAMES.map(name => asMember("mutator member", name))),
-  member("WRITES:mutator member", "as a string element key", ...MUTATOR_NAMES.map(name => asKey("mutator member", name))),
-  member("WRITES:mutator member", "as a destructured key", ...MUTATOR_NAMES.map(name => asDestructured("mutator member", name))),
-  member("WRITES:mutator member", "as a whole string literal", ...MUTATOR_NAMES.map(name => asString("mutator member", name))),
+  member("WRITES:mutator member", "as a string element key", ...MUTATOR_NAMES.flatMap(name => [asKey("mutator member", name), asTemplateKey("mutator member", name)])),
+  member("WRITES:mutator member", "as a destructured key",
+    ...MUTATOR_NAMES.flatMap(name => [asDestructured("mutator member", name), asShorthand("mutator member", name), asStringKey("mutator member", name)]),
+    ...DESTRUCTURED_CONTEXTS.map(([text, expected]) => pin(() => writes(text), expected)),
+    pin(() => writes("const { defineProperty } = Object;\nvoid defineProperty;\nconst { getPrototypeOf } = Object;\nvoid getPrototypeOf;\n"), ["mutator member {defineProperty} destructured :1", "reflection {getPrototypeOf} destructured :3"]),
+    pin(() => writes('const { "defineProperty": lgW } = Object;\nvoid lgW;\n'), ["mutator member {defineProperty} destructured :1", "mutator member 'defineProperty' :1"]),
+    pin(() => suiteChannel("const { defineProperty } = Object;\nvoid defineProperty;"), [`cited suite: mutator member {defineProperty} destructured at line ${PLANT_LINE}`])),
+  member("WRITES:mutator member", "as a whole string literal", ...MUTATOR_NAMES.flatMap(name => [asString("mutator member", name), asTemplate("mutator member", name)])),
   member("WRITES:reflection", "a free Reflect",
     pin(() => writes('const lgT = {};\nexport const lgEach = Reflect.get(lgT, "each");\n'), ["reflection Reflect :2"]),
     pin(() => writes("const Reflect = { get: (): number => 1 };\nexport const lgW = Reflect.get();\n"), [])),
@@ -1034,8 +1345,7 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     pin(() => writes("const lgT = new Proxy({}, {});\nvoid lgT;\n"), ["reflection Proxy :1"]),
     pin(() => writes("const Proxy = class {};\nexport const lgW = new Proxy();\n"), [])),
   ...REFLECTION_NAMES.map(name => member("WRITES:reflection", name, asMember("reflection", name))),
-  member("WRITES:reflection", "each read as a mutator member is",
-    ...REFLECTION_NAMES.flatMap(name => [asMember("reflection", name), asKey("reflection", name), asDestructured("reflection", name), asString("reflection", name)])),
+  member("WRITES:reflection", "each read as a mutator member is", ...REFLECTION_NAMES.flatMap(name => everyPlace("reflection", name))),
   member("WRITES:spy or mock member", "spyOn read any way but as the callee of an admitted spy",
     pin(() => writes('import { vi } from "vitest";\nvi.spyOn(console, "log");\n'), []),
     pin(() => writes('import { vi } from "vitest";\nexport const lgSpy = vi.spyOn;\n'), ["spy or mock member .spyOn :2"]),
@@ -1048,18 +1358,26 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     pin(() => writes('import { vi } from "vitest";\nconst lgT = { inner: { each: (): number => 1 } };\nvi.spyOn(lgT.inner, "each");\n'), ["spy or mock member .spyOn :3"]),
     pin(() => writes('import { vi } from "vitest";\nconst console = { log: (): void => undefined };\nvi.spyOn(console, "log");\n'), ["spy or mock member .spyOn :3"]),
     pin(() => writes('import { vi } from "vitest";\nconst lgKey = "log";\nvi.spyOn(console, lgKey);\n'), ["spy or mock member .spyOn :3"]),
-    pin(() => writes('import { vi } from "vitest";\nvi.spyOn(console, "__vite_lg");\n'), ["spy or mock member .spyOn :2"])),
+    pin(() => writes('import { vi } from "vitest";\nvi.spyOn(console, "__vite_lg");\n'), ["spy or mock member .spyOn :2"]),
+    pin(() => writes('import { vi } from "vitest";\nvi.spyOn((console), ("log"));\n'), []),
+    pin(() => routes("suite", 'import { vi } from "vitest";\nexport const lgW = vi.spyOn((globalThis), ("fetch"));\n'), [])),
+  member("WRITES:spy or mock member", "a no-substitution template key is admitted as a string literal is",
+    pin(() => writes('import { vi } from "vitest";\nvi.spyOn(console, `log`);\n'), []),
+    pin(() => writes('import { vi } from "vitest";\nvi.spyOn(console, `__vite_lg`);\n'), ["spy or mock member .spyOn :2"]),
+    pin(() => routes("suite", 'import { vi } from "vitest";\nexport const lgW = vi.spyOn(globalThis, `fetch`);\n'), []),
+    pin(() => routes("suite", 'import { vi } from "vitest";\nexport const lgW = vi.spyOn(globalThis, `__vite_lg`);\n'), ["global object globalThis as a CallExpression :2", "vite name '__vite_lg' :2"])),
   ...SPY_NAMES.map(name => member("WRITES:spy or mock member", name, asMember("spy or mock member", name))),
-  member("WRITES:spy or mock member", "each read as a mutator member is",
-    ...SPY_NAMES.flatMap(name => [asMember("spy or mock member", name), asKey("spy or mock member", name), asDestructured("spy or mock member", name), asString("spy or mock member", name)])),
+  member("WRITES:spy or mock member", "each read as a mutator member is", ...SPY_NAMES.flatMap(name => everyPlace("spy or mock member", name))),
   member("WRITES:computed member", "an element access with a computed key",
     pin(() => writes('const lgKey = "each";\nconst lgT: Record<string, number> = { each: 1 };\nexport const lgEach = lgT[lgKey];\n'), ["computed member lgT[lgKey] :3"])),
   member("WRITES:computed member", "a string literal key is no computed key",
-    pin(() => writes('const lgT: Record<string, number> = { each: 1 };\nexport const lgA = lgT["each"];\n'), [])),
+    pin(() => writes('const lgT: Record<string, number> = { each: 1 };\nexport const lgA = lgT["each"];\n'), []),
+    pin(() => writes('const lgT: Record<string, number> = { each: 1 };\nexport const lgA = lgT[("each")];\n'), [])),
   member("WRITES:computed member", "a no-substitution template key is none",
     pin(() => writes("const lgT: Record<string, number> = { each: 1 };\nexport const lgB = lgT[`each`];\n"), [])),
   member("WRITES:computed member", "a numeric literal key is none",
-    pin(() => writes("const lgT: number[] = [1];\nexport const lgC = lgT[0];\n"), [])),
+    pin(() => writes("const lgT: number[] = [1];\nexport const lgC = lgT[0];\n"), []),
+    pin(() => writes("const lgT: number[] = [1];\nexport const lgC = lgT[(0)];\n"), [])),
   member("WRITES:computed member", "a computed key of an object binding pattern",
     pin(() => writes('const lgKey = "each";\nconst { [lgKey]: lgEach } = { each: 1 };\nvoid lgEach;\n'), ["computed member [lgKey] destructured :2"])),
   member("CHANNEL:tier config", "the default test tier's one vitest config passes the landed census guard (censusGuard on the test tier) whose closed key lists refuse every key outside them",
@@ -1083,15 +1401,26 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     pin(() => channelReading(BASE, SUITE, { roots: ["setup file"], guard: refusing }), [])),
   member("CHANNEL:setup file", "every setup file that config's test.setupFiles names is a closure root",
     pin(() => setupFiles(ROOT), { files: ["test/helpers/census-guard.ts"] }),
-    pin(() => setupChannel(["test/helpers/census-guard.ts"]), [])),
+    pin(() => setupChannel(["test/helpers/census-guard.ts"]), []),
+    pin(() => plantedSetup('export default { test: { "setupFiles": ["./helpers/lg-a.ts"] } };\n'), { files: ["test/helpers/lg-a.ts"] }),
+    pin(() => plantedSetup('export default { test: { setupFiles: ["./helpers/lg-a.ts"] as string[] } };\n'), { files: ["test/helpers/lg-a.ts"] })),
+  member("CHANNEL:setup file", "it names one file as a string literal",
+    pin(() => plantedSetup('export default { test: { setupFiles: "./helpers/census-guard.ts" } };\n'), { files: ["test/helpers/census-guard.ts"] }),
+    pin(() => plantedSetup("export default { test: { setupFiles: `./helpers/lg-b.ts` } };\n"), { files: ["test/helpers/lg-b.ts"] })),
+  member("CHANNEL:setup file", "it names one file per string literal of an array",
+    pin(() => plantedSetup('export default { test: { setupFiles: ["./helpers/lg-a.ts", `./helpers/lg-b.ts`, lgSetup] } };\n'), { files: ["test/helpers/lg-a.ts", "test/helpers/lg-b.ts"] })),
   member("CHANNEL:setup file", "a setup file that is a carrier is a finding",
     pin(() => setupChannel(["test/helpers/census-guard.ts", "test/helpers/lg-setup.ts"], files(["test/helpers/lg-setup.ts", 'import { it } from "vitest";\nexport const lgIt = it;\n'])),
       ["setup file test/helpers/lg-setup.ts: carrier (test/helpers/lg-setup.ts:1 loads 'vitest' (vitest vitest))"]),
     pin(() => setupChannel(["test/helpers/lg-setup-g.ts"], files(["test/helpers/lg-setup-g.ts", "export const lgG = globalThis;\n"])),
-      ["setup file test/helpers/lg-setup-g.ts: carrier (test/helpers/lg-setup-g.ts:1 holds a global object route (globalThis as a VariableDeclaration))"])),
+      ["setup file test/helpers/lg-setup-g.ts: carrier (test/helpers/lg-setup-g.ts:1 holds a global object route (globalThis as a VariableDeclaration))"]),
+    pin(() => setupChannel(["node_modules/lg-setup-p/index.js"], files(...pkg("lg-setup-p", '{"name": "lg-setup-p", "main": "./index.js"}', ["index.js", 'import { it } from "vitest";\nexport const lgIt = it;\n']))),
+      ["setup file node_modules/lg-setup-p/index.js: carrier (node_modules/lg-setup-p/index.js:1 loads 'vitest' (vitest vitest))"])),
   member("CHANNEL:setup file", "a setup file reaching a carrier is a finding",
     pin(() => setupChannel(["test/helpers/lg-setup2.ts"], files(["test/helpers/lg-setup2.ts", 'import "./lg-car.js";\n'], ["test/helpers/lg-car.ts", "export const lgG = globalThis;\n"])),
-      ["setup file test/helpers/lg-setup2.ts: carrier (test/helpers/lg-setup2.ts:1 loads './lg-car.js' (carrier test/helpers/lg-car.ts:1 holds a global object route (globalThis as a VariableDeclaration)))"])),
+      ["setup file test/helpers/lg-setup2.ts: carrier (test/helpers/lg-setup2.ts:1 loads './lg-car.js' (carrier test/helpers/lg-car.ts:1 holds a global object route (globalThis as a VariableDeclaration)))"]),
+    pin(() => setupChannel(["node_modules/lg-setup-q/index.js"], files(...pkg("lg-setup-q", '{"name": "lg-setup-q", "main": "./index.js"}', ["index.js", 'import "./car.js";\n'], ["car.js", "export const lgG = globalThis;\n"]))),
+      ["setup file node_modules/lg-setup-q/index.js: carrier (node_modules/lg-setup-q/index.js:1 loads './car.js' (carrier node_modules/lg-setup-q/car.js:1 holds a global object route (globalThis as a VariableDeclaration)))"])),
   member("CHANNEL:setup file", "a setup file that is a vitest module is a finding",
     pin(() => setupChannel(["node_modules/vitest/dist/index.js"]), ["setup file node_modules/vitest/dist/index.js: vitest (vitest)"])),
   member("CHANNEL:setup file", "a setup file that names no file is a finding",
@@ -1100,12 +1429,16 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     pin(() => setupChannel(["test/helpers/lg-setup3.ts"], files(["test/helpers/lg-setup3.ts", `${MISSING_LOAD}\n`])),
       ["setup file test/helpers/lg-setup3.ts: a load does not resolve: test/helpers/lg-setup3.ts:1 loads './lg-missing.js': test/helpers/lg-missing.js names no file"])),
   member("CHANNEL:cited suite", "the suite's ROUTE_FORMS findings",
-    pin(() => suiteChannel("const lgG = globalThis;"), [`cited suite: global object globalThis as a VariableDeclaration at line ${PLANT_LINE}`])),
+    pin(() => suiteChannel("const lgG = globalThis;"), [`cited suite: global object globalThis as a VariableDeclaration at line ${PLANT_LINE}`]),
+    ...FORM_PLANTS.map(formChannel)),
   member("CHANNEL:cited suite", "its WRITE_FORMS findings",
-    pin(() => suiteChannel("const lgT = { each: 1 };\nlgT.each = 2;"), [`cited suite: member write .each by = at line ${PLANT_LINE + 1}`])),
+    pin(() => suiteChannel("const lgT = { each: 1 };\nlgT.each = 2;"), [`cited suite: member write .each by = at line ${PLANT_LINE + 1}`]),
+    ...WRITE_CHANNEL.map(([extra, found, offset]) => pin(() => suiteChannel(extra), [`cited suite: ${found} at line ${PLANT_LINE + offset}`]))),
   member("CHANNEL:cited suite", "a sensitive builtin among its loads",
     pin(() => suiteChannel('import { runInThisContext } from "node:vm";'), [`cited suite: sensitive builtin 'node:vm' at line ${PLANT_LINE}`]),
-    pin(() => suiteChannel('import { join as lgJoin } from "node:path";'), [])),
+    pin(() => suiteChannel('import { join as lgJoin } from "node:path";'), []),
+    ...SENSITIVE_NAMES.flatMap(name => [sensitiveIn("suite", `node:${name}`), sensitiveIn("suite", name)]),
+    ...LOAD_FORMS.map(entry => sensitiveIn("suite", "vm", entry.word))),
   member("CHANNEL:cited suite", "the modules its loads reach are read by IMPORT",
     pin(() => {
       const at = host(files([HX, `${read(HX)}\nimport { it as lgIt } from "vitest";\nexport const lgRegistrar = lgIt;\n`]));
@@ -1206,17 +1539,26 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     pin(() => run(config('include: ["test/**/*.census.ts"], allowOnly: !1')), brokenRun(": allowOnly is not the literal false"))),
   member("RUN:include", "include is an array literal of string literals",
     pin(() => run(config('include: "test/**/*.census.ts", allowOnly: false')), brokenRun(": include is not an array literal of string literals")),
-    pin(() => run(config('include: ["test/**/*.census.ts", lgGlob], allowOnly: false')), brokenRun(": include is not an array literal of string literals"))),
-  member("RUN:include", "one of whose globs matches the run pin: ** across directories",
+    pin(() => run(config('include: ["test/**/*.census.ts", lgGlob], allowOnly: false')), brokenRun(": include is not an array literal of string literals")),
+    pin(() => run(config("include: [`test/**/*.census.ts`], allowOnly: false")), SOUND_RUN(["test/**/*.census.ts"]))),
+  member("RUN:include", "one of whose globs matches the run pin: ** as a whole segment before the file segment matches any run of directories",
     pin(() => run(read(CENSUS_CONFIG)), SOUND_RUN(["test/**/*.census.ts"])),
     pin(() => run(config('include: ["**/*.census.ts"], allowOnly: false')), SOUND_RUN(["**/*.census.ts"])),
-    pin(() => run(config('include: ["qa/**/*.census.ts"], allowOnly: false')), brokenRun(`: no glob of include ["qa/**/*.census.ts"] matches ${RUN_PIN}`))),
-  member("RUN:include", "* within one",
+    pin(() => run(config('include: ["qa/**/*.census.ts"], allowOnly: false')), brokenRun(`: no glob of include ["qa/**/*.census.ts"] matches ${RUN_PIN}`)),
+    pin(() => run(config(`include: ["test/**/${RUN_PIN.slice("test/".length)}"], allowOnly: false`)), SOUND_RUN([`test/**/${RUN_PIN.slice("test/".length)}`])),
+    pin(() => run(config('include: ["qa/**/*.census.ts", "test/**/*.census.ts"], allowOnly: false')), SOUND_RUN(["qa/**/*.census.ts", "test/**/*.census.ts"])),
+    pin(() => run(config('include: ["test/**"], allowOnly: false')), brokenRun(`: no glob of include ["test/**"] matches ${RUN_PIN}`))),
+  member("RUN:include", "* within one segment",
     pin(() => run(config('include: ["test/*.census.ts"], allowOnly: false')), SOUND_RUN(["test/*.census.ts"])),
     pin(() => run(config('include: ["*.census.ts"], allowOnly: false')), brokenRun(`: no glob of include ["*.census.ts"] matches ${RUN_PIN}`))),
+  member("RUN:include", "every other character only itself",
+    pin(() => run(config(`include: ["${RUN_PIN}"], allowOnly: false`)), SOUND_RUN([RUN_PIN])),
+    ...LITERAL_GLOBS.map(glob => pin(() => run(config(`include: [${JSON.stringify(glob)}], allowOnly: false`)), brokenRun(`: no glob of include ${JSON.stringify([glob])} matches ${RUN_PIN}`)))),
   member("RUN:include", "any other glob syntax unmatched",
     pin(() => run(config('include: ["test/**/*.census.t[s]"], allowOnly: false')), brokenRun(`: no glob of include ["test/**/*.census.t[s]"] matches ${RUN_PIN}`)),
     pin(() => run(config('include: ["test/**/*.census.t?"], allowOnly: false')), brokenRun(`: no glob of include ["test/**/*.census.t?"] matches ${RUN_PIN}`)),
+    pin(() => run(config('include: ["test/**/*.census.ts?"], allowOnly: false')), brokenRun(`: no glob of include ["test/**/*.census.ts?"] matches ${RUN_PIN}`)),
+    pin(() => run(config('include: ["test/**/*.census.ts["], allowOnly: false')), brokenRun(`: no glob of include ["test/**/*.census.ts["] matches ${RUN_PIN}`)),
     pin(() => run(config('include: ["{test}/**/*.census.ts"], allowOnly: false')), brokenRun(`: no glob of include ["{test}/**/*.census.ts"] matches ${RUN_PIN}`))),
   member("C", "a tag is hyperunix.result/ then decimal digits",
     pin(() => tagIn("src/workbench/lg-tag.md", "hyperunix.result/12 hyperunix.result/x hyperunix.result/\n"), ["src/workbench/lg-tag.md:1 text embedded hyperunix.result/12"])),
@@ -1230,14 +1572,15 @@ const MEMBER_ROWS: readonly MemberRow[] = [
       ["src/workbench/lg-file-link:1 text embedded hyperunix.result/1", "src/workbench/lg-target.md:1 text embedded hyperunix.result/1"])),
   member("C:walk", "a directory reached a second time by its real path reads as a break",
     pin(() => sites(new Map(), files(["src/workbench/lg-loop", "src"])), ["src/workbench/lg-loop reaches src, a directory already read"])),
-  member("C:code", "a file whose name ends .ts", codeSite(".ts")),
-  member("C:code", ".tsx", codeSite(".tsx")),
-  member("C:code", ".mts", codeSite(".mts")),
-  member("C:code", ".cts", codeSite(".cts")),
-  member("C:code", ".js", codeSite(".js")),
-  member("C:code", ".jsx", codeSite(".jsx")),
-  member("C:code", ".mjs", codeSite(".mjs")),
+  member("C:code", "a file whose name ends .ts", codeSite(".ts"), kindsSite(".ts")),
+  member("C:code", ".tsx", codeSite(".tsx"), kindsSite(".tsx")),
+  member("C:code", ".mts", codeSite(".mts"), kindsSite(".mts")),
+  member("C:code", ".cts", codeSite(".cts"), kindsSite(".cts")),
+  member("C:code", ".js", codeSite(".js"), kindsSite(".js")),
+  member("C:code", ".jsx", codeSite(".jsx"), kindsSite(".jsx")),
+  member("C:code", ".mjs", codeSite(".mjs"), kindsSite(".mjs")),
   member("C:code", ".cjs is parsed as TypeScript by its extension",
+    kindsSite(".cjs"),
     codeSite(".cjs"),
     pin(() => tagIn("src/workbench/lg-jsx.tsx", "export const lgW = <p>hyperunix.result/1</p>;\n"), ["src/workbench/lg-jsx.tsx:1 code whole hyperunix.result/1"]),
     pin(() => tagIn("src/workbench/lg-jsx.ts", "export const lgW = <p>hyperunix.result/1</p>;\n"), [])),
@@ -1313,7 +1656,7 @@ const FROZEN_SHAPE: readonly string[] = [
   "MEMBERS:EXPORT_TARGETS:string:1:2", "MEMBERS:EXPORT_TARGETS:string:2:1", "MEMBERS:EXPORT_TARGETS:string:3:2",
   "MEMBERS:IDENTITY:1:1", "MEMBERS:IDENTITY:2:1",
   "MEMBERS:IDENTITY:vitest:1:2", "MEMBERS:IDENTITY:vitest:2:2", "MEMBERS:IDENTITY:vitest:3:2", "MEMBERS:IDENTITY:vitest:4:1", "MEMBERS:IDENTITY:vitest:5:2",
-  "MEMBERS:IDENTITY:carrier:1:1", "MEMBERS:IDENTITY:carrier:2:1", "MEMBERS:IDENTITY:carrier:3:2",
+  "MEMBERS:IDENTITY:carrier:1:9", "MEMBERS:IDENTITY:carrier:2:9", "MEMBERS:IDENTITY:carrier:3:19",
   "MEMBERS:IDENTITY:builtin:1:1",
   "MEMBERS:IDENTITY:module:1:2",
   "MEMBERS:SCOPES:suite:1:2",
@@ -1326,24 +1669,24 @@ const FROZEN_SHAPE: readonly string[] = [
   "MEMBERS:LOADS:import type:1:1",
   "MEMBERS:LOADS:dynamic import:1:1", "MEMBERS:LOADS:dynamic import:2:1",
   "MEMBERS:LOADS:require call:1:1", "MEMBERS:LOADS:require call:2:1",
-  "MEMBERS:ROUTES:1:1", "MEMBERS:ROUTES:2:1",
-  "MEMBERS:ROUTES:dynamic load:1:3", "MEMBERS:ROUTES:dynamic load:2:3", "MEMBERS:ROUTES:dynamic load:3:2", "MEMBERS:ROUTES:dynamic load:4:2",
-  "MEMBERS:ROUTES:loader name:1:3", "MEMBERS:ROUTES:loader name:2:1", "MEMBERS:ROUTES:loader name:3:1", "MEMBERS:ROUTES:loader name:4:2", "MEMBERS:ROUTES:loader name:5:2", "MEMBERS:ROUTES:loader name:6:2", "MEMBERS:ROUTES:loader name:7:1", "MEMBERS:ROUTES:loader name:8:1", "MEMBERS:ROUTES:loader name:9:1", "MEMBERS:ROUTES:loader name:10:4", "MEMBERS:ROUTES:loader name:11:3", "MEMBERS:ROUTES:loader name:12:3",
-  "MEMBERS:ROUTES:loader member:1:3", "MEMBERS:ROUTES:loader member:2:1", "MEMBERS:ROUTES:loader member:3:1", "MEMBERS:ROUTES:loader member:4:2", "MEMBERS:ROUTES:loader member:5:2", "MEMBERS:ROUTES:loader member:6:3", "MEMBERS:ROUTES:loader member:7:2",
-  "MEMBERS:ROUTES:vite name:1:3", "MEMBERS:ROUTES:vite name:2:1", "MEMBERS:ROUTES:vite name:3:1", "MEMBERS:ROUTES:vite name:4:1", "MEMBERS:ROUTES:vite name:5:1", "MEMBERS:ROUTES:vite name:6:3", "MEMBERS:ROUTES:vite name:7:1", "MEMBERS:ROUTES:vite name:8:1",
-  "MEMBERS:ROUTES:import meta:1:3", "MEMBERS:ROUTES:import meta:2:3",
-  "MEMBERS:ROUTES:sensitive builtin:1:3", "MEMBERS:ROUTES:sensitive builtin:2:2", "MEMBERS:ROUTES:sensitive builtin:3:1", "MEMBERS:ROUTES:sensitive builtin:4:1", "MEMBERS:ROUTES:sensitive builtin:5:1", "MEMBERS:ROUTES:sensitive builtin:6:1", "MEMBERS:ROUTES:sensitive builtin:7:5", "MEMBERS:ROUTES:sensitive builtin:8:5",
-  "MEMBERS:ROUTES:global object:1:3", "MEMBERS:ROUTES:global object:2:2", "MEMBERS:ROUTES:global object:3:1", "MEMBERS:ROUTES:global object:4:1", "MEMBERS:ROUTES:global object:5:1", "MEMBERS:ROUTES:global object:6:1", "MEMBERS:ROUTES:global object:7:4", "MEMBERS:ROUTES:global object:8:1", "MEMBERS:ROUTES:global object:9:1", "MEMBERS:ROUTES:global object:10:2", "MEMBERS:ROUTES:global object:11:5", "MEMBERS:ROUTES:global object:12:1", "MEMBERS:ROUTES:global object:13:1", "MEMBERS:ROUTES:global object:14:1", "MEMBERS:ROUTES:global object:15:1", "MEMBERS:ROUTES:global object:16:1", "MEMBERS:ROUTES:global object:17:2", "MEMBERS:ROUTES:global object:18:4",
-  "MEMBERS:ROUTES:dynamic code:1:1", "MEMBERS:ROUTES:dynamic code:2:1", "MEMBERS:ROUTES:dynamic code:3:4", "MEMBERS:ROUTES:dynamic code:4:1", "MEMBERS:ROUTES:dynamic code:5:2", "MEMBERS:ROUTES:dynamic code:6:2", "MEMBERS:ROUTES:dynamic code:7:2", "MEMBERS:ROUTES:dynamic code:8:2",
-  "MEMBERS:WRITES:1:1", "MEMBERS:WRITES:2:1",
-  "MEMBERS:WRITES:member write:1:4", "MEMBERS:WRITES:member write:2:2", "MEMBERS:WRITES:member write:3:2", "MEMBERS:WRITES:member write:4:2", "MEMBERS:WRITES:member write:5:2", "MEMBERS:WRITES:member write:6:2", "MEMBERS:WRITES:member write:7:2", "MEMBERS:WRITES:member write:8:4",
-  "MEMBERS:WRITES:mutator member:1:1", "MEMBERS:WRITES:mutator member:2:1", "MEMBERS:WRITES:mutator member:3:1", "MEMBERS:WRITES:mutator member:4:1", "MEMBERS:WRITES:mutator member:5:1", "MEMBERS:WRITES:mutator member:6:1", "MEMBERS:WRITES:mutator member:7:1", "MEMBERS:WRITES:mutator member:8:1", "MEMBERS:WRITES:mutator member:9:1", "MEMBERS:WRITES:mutator member:10:9", "MEMBERS:WRITES:mutator member:11:9", "MEMBERS:WRITES:mutator member:12:9", "MEMBERS:WRITES:mutator member:13:9",
-  "MEMBERS:WRITES:reflection:1:2", "MEMBERS:WRITES:reflection:2:2", "MEMBERS:WRITES:reflection:3:1", "MEMBERS:WRITES:reflection:4:1", "MEMBERS:WRITES:reflection:5:1", "MEMBERS:WRITES:reflection:6:1", "MEMBERS:WRITES:reflection:7:1", "MEMBERS:WRITES:reflection:8:20",
-  "MEMBERS:WRITES:spy or mock member:1:5", "MEMBERS:WRITES:spy or mock member:2:6", "MEMBERS:WRITES:spy or mock member:3:1", "MEMBERS:WRITES:spy or mock member:4:1", "MEMBERS:WRITES:spy or mock member:5:1", "MEMBERS:WRITES:spy or mock member:6:1", "MEMBERS:WRITES:spy or mock member:7:1", "MEMBERS:WRITES:spy or mock member:8:1", "MEMBERS:WRITES:spy or mock member:9:1", "MEMBERS:WRITES:spy or mock member:10:1", "MEMBERS:WRITES:spy or mock member:11:1", "MEMBERS:WRITES:spy or mock member:12:1", "MEMBERS:WRITES:spy or mock member:13:1", "MEMBERS:WRITES:spy or mock member:14:1", "MEMBERS:WRITES:spy or mock member:15:1", "MEMBERS:WRITES:spy or mock member:16:1", "MEMBERS:WRITES:spy or mock member:17:1", "MEMBERS:WRITES:spy or mock member:18:1", "MEMBERS:WRITES:spy or mock member:19:64",
-  "MEMBERS:WRITES:computed member:1:1", "MEMBERS:WRITES:computed member:2:1", "MEMBERS:WRITES:computed member:3:1", "MEMBERS:WRITES:computed member:4:1", "MEMBERS:WRITES:computed member:5:1",
+  "MEMBERS:ROUTES:1:9", "MEMBERS:ROUTES:2:18", "MEMBERS:ROUTES:3:19",
+  "MEMBERS:ROUTES:dynamic load:1:24", "MEMBERS:ROUTES:dynamic load:2:3", "MEMBERS:ROUTES:dynamic load:3:2", "MEMBERS:ROUTES:dynamic load:4:2",
+  "MEMBERS:ROUTES:loader name:1:87", "MEMBERS:ROUTES:loader name:2:1", "MEMBERS:ROUTES:loader name:3:1", "MEMBERS:ROUTES:loader name:4:2", "MEMBERS:ROUTES:loader name:5:2", "MEMBERS:ROUTES:loader name:6:4", "MEMBERS:ROUTES:loader name:7:1", "MEMBERS:ROUTES:loader name:8:1", "MEMBERS:ROUTES:loader name:9:1", "MEMBERS:ROUTES:loader name:10:4", "MEMBERS:ROUTES:loader name:11:8", "MEMBERS:ROUTES:loader name:12:3",
+  "MEMBERS:ROUTES:loader member:1:48", "MEMBERS:ROUTES:loader member:2:1", "MEMBERS:ROUTES:loader member:3:1", "MEMBERS:ROUTES:loader member:4:2", "MEMBERS:ROUTES:loader member:5:2", "MEMBERS:ROUTES:loader member:6:7", "MEMBERS:ROUTES:loader member:7:2",
+  "MEMBERS:ROUTES:vite name:1:30", "MEMBERS:ROUTES:vite name:2:1", "MEMBERS:ROUTES:vite name:3:1", "MEMBERS:ROUTES:vite name:4:1", "MEMBERS:ROUTES:vite name:5:1", "MEMBERS:ROUTES:vite name:6:3", "MEMBERS:ROUTES:vite name:7:1", "MEMBERS:ROUTES:vite name:8:1",
+  "MEMBERS:ROUTES:import meta:1:12", "MEMBERS:ROUTES:import meta:2:3",
+  "MEMBERS:ROUTES:sensitive builtin:1:51", "MEMBERS:ROUTES:sensitive builtin:2:2", "MEMBERS:ROUTES:sensitive builtin:3:1", "MEMBERS:ROUTES:sensitive builtin:4:1", "MEMBERS:ROUTES:sensitive builtin:5:1", "MEMBERS:ROUTES:sensitive builtin:6:1", "MEMBERS:ROUTES:sensitive builtin:7:5", "MEMBERS:ROUTES:sensitive builtin:8:5",
+  "MEMBERS:ROUTES:global object:1:99", "MEMBERS:ROUTES:global object:2:2", "MEMBERS:ROUTES:global object:3:1", "MEMBERS:ROUTES:global object:4:1", "MEMBERS:ROUTES:global object:5:1", "MEMBERS:ROUTES:global object:6:1", "MEMBERS:ROUTES:global object:7:17", "MEMBERS:ROUTES:global object:8:7", "MEMBERS:ROUTES:global object:9:2", "MEMBERS:ROUTES:global object:10:2", "MEMBERS:ROUTES:global object:11:7", "MEMBERS:ROUTES:global object:12:1", "MEMBERS:ROUTES:global object:13:1", "MEMBERS:ROUTES:global object:14:1", "MEMBERS:ROUTES:global object:15:1", "MEMBERS:ROUTES:global object:16:1", "MEMBERS:ROUTES:global object:17:3", "MEMBERS:ROUTES:global object:18:4",
+  "MEMBERS:ROUTES:dynamic code:1:11", "MEMBERS:ROUTES:dynamic code:2:11", "MEMBERS:ROUTES:dynamic code:3:14", "MEMBERS:ROUTES:dynamic code:4:1", "MEMBERS:ROUTES:dynamic code:5:2", "MEMBERS:ROUTES:dynamic code:6:2", "MEMBERS:ROUTES:dynamic code:7:2", "MEMBERS:ROUTES:dynamic code:8:3",
+  "MEMBERS:WRITES:1:1", "MEMBERS:WRITES:2:5",
+  "MEMBERS:WRITES:member write:1:23", "MEMBERS:WRITES:member write:2:18", "MEMBERS:WRITES:member write:3:4", "MEMBERS:WRITES:member write:4:4", "MEMBERS:WRITES:member write:5:3", "MEMBERS:WRITES:member write:6:5", "MEMBERS:WRITES:member write:7:5", "MEMBERS:WRITES:member write:8:12", "MEMBERS:WRITES:member write:9:21", "MEMBERS:WRITES:member write:10:18", "MEMBERS:WRITES:member write:11:18", "MEMBERS:WRITES:member write:12:18", "MEMBERS:WRITES:member write:13:18",
+  "MEMBERS:WRITES:mutator member:1:1", "MEMBERS:WRITES:mutator member:2:1", "MEMBERS:WRITES:mutator member:3:1", "MEMBERS:WRITES:mutator member:4:1", "MEMBERS:WRITES:mutator member:5:1", "MEMBERS:WRITES:mutator member:6:1", "MEMBERS:WRITES:mutator member:7:1", "MEMBERS:WRITES:mutator member:8:1", "MEMBERS:WRITES:mutator member:9:1", "MEMBERS:WRITES:mutator member:10:9", "MEMBERS:WRITES:mutator member:11:18", "MEMBERS:WRITES:mutator member:12:35", "MEMBERS:WRITES:mutator member:13:18",
+  "MEMBERS:WRITES:reflection:1:2", "MEMBERS:WRITES:reflection:2:2", "MEMBERS:WRITES:reflection:3:1", "MEMBERS:WRITES:reflection:4:1", "MEMBERS:WRITES:reflection:5:1", "MEMBERS:WRITES:reflection:6:1", "MEMBERS:WRITES:reflection:7:1", "MEMBERS:WRITES:reflection:8:40",
+  "MEMBERS:WRITES:spy or mock member:1:5", "MEMBERS:WRITES:spy or mock member:2:8", "MEMBERS:WRITES:spy or mock member:3:4", "MEMBERS:WRITES:spy or mock member:4:1", "MEMBERS:WRITES:spy or mock member:5:1", "MEMBERS:WRITES:spy or mock member:6:1", "MEMBERS:WRITES:spy or mock member:7:1", "MEMBERS:WRITES:spy or mock member:8:1", "MEMBERS:WRITES:spy or mock member:9:1", "MEMBERS:WRITES:spy or mock member:10:1", "MEMBERS:WRITES:spy or mock member:11:1", "MEMBERS:WRITES:spy or mock member:12:1", "MEMBERS:WRITES:spy or mock member:13:1", "MEMBERS:WRITES:spy or mock member:14:1", "MEMBERS:WRITES:spy or mock member:15:1", "MEMBERS:WRITES:spy or mock member:16:1", "MEMBERS:WRITES:spy or mock member:17:1", "MEMBERS:WRITES:spy or mock member:18:1", "MEMBERS:WRITES:spy or mock member:19:1", "MEMBERS:WRITES:spy or mock member:20:128",
+  "MEMBERS:WRITES:computed member:1:1", "MEMBERS:WRITES:computed member:2:2", "MEMBERS:WRITES:computed member:3:1", "MEMBERS:WRITES:computed member:4:2", "MEMBERS:WRITES:computed member:5:1",
   "MEMBERS:CHANNEL:tier config:1:3", "MEMBERS:CHANNEL:tier config:2:1", "MEMBERS:CHANNEL:tier config:3:1", "MEMBERS:CHANNEL:tier config:4:3",
-  "MEMBERS:CHANNEL:setup file:1:2", "MEMBERS:CHANNEL:setup file:2:2", "MEMBERS:CHANNEL:setup file:3:1", "MEMBERS:CHANNEL:setup file:4:1", "MEMBERS:CHANNEL:setup file:5:1", "MEMBERS:CHANNEL:setup file:6:1",
-  "MEMBERS:CHANNEL:cited suite:1:1", "MEMBERS:CHANNEL:cited suite:2:1", "MEMBERS:CHANNEL:cited suite:3:2", "MEMBERS:CHANNEL:cited suite:4:1",
+  "MEMBERS:CHANNEL:setup file:1:4", "MEMBERS:CHANNEL:setup file:2:2", "MEMBERS:CHANNEL:setup file:3:1", "MEMBERS:CHANNEL:setup file:4:3", "MEMBERS:CHANNEL:setup file:5:2", "MEMBERS:CHANNEL:setup file:6:1", "MEMBERS:CHANNEL:setup file:7:1", "MEMBERS:CHANNEL:setup file:8:1",
+  "MEMBERS:CHANNEL:cited suite:1:9", "MEMBERS:CHANNEL:cited suite:2:5", "MEMBERS:CHANNEL:cited suite:3:18", "MEMBERS:CHANNEL:cited suite:4:1",
   "MEMBERS:IMPORT:1:3", "MEMBERS:IMPORT:2:1", "MEMBERS:IMPORT:3:1", "MEMBERS:IMPORT:4:1", "MEMBERS:IMPORT:5:1", "MEMBERS:IMPORT:6:2", "MEMBERS:IMPORT:7:1", "MEMBERS:IMPORT:8:1", "MEMBERS:IMPORT:9:1", "MEMBERS:IMPORT:10:2",
   "MEMBERS:RUN:argv:1:4",
   "MEMBERS:RUN:statements:1:5", "MEMBERS:RUN:statements:2:2", "MEMBERS:RUN:statements:3:1", "MEMBERS:RUN:statements:4:2",
@@ -1352,10 +1695,10 @@ const FROZEN_SHAPE: readonly string[] = [
   "MEMBERS:RUN:top-level keys:1:1", "MEMBERS:RUN:top-level keys:2:2",
   "MEMBERS:RUN:test keys:1:1", "MEMBERS:RUN:test keys:2:1", "MEMBERS:RUN:test keys:3:1", "MEMBERS:RUN:test keys:4:1", "MEMBERS:RUN:test keys:5:1", "MEMBERS:RUN:test keys:6:1", "MEMBERS:RUN:test keys:7:1", "MEMBERS:RUN:test keys:8:2",
   "MEMBERS:RUN:allowOnly:1:2",
-  "MEMBERS:RUN:include:1:2", "MEMBERS:RUN:include:2:3", "MEMBERS:RUN:include:3:2", "MEMBERS:RUN:include:4:3",
+  "MEMBERS:RUN:include:1:3", "MEMBERS:RUN:include:2:6", "MEMBERS:RUN:include:3:2", "MEMBERS:RUN:include:4:8", "MEMBERS:RUN:include:5:5",
   "MEMBERS:C:1:1",
   "MEMBERS:C:walk:1:1", "MEMBERS:C:walk:2:1", "MEMBERS:C:walk:3:1", "MEMBERS:C:walk:4:1",
-  "MEMBERS:C:code:1:1", "MEMBERS:C:code:2:1", "MEMBERS:C:code:3:1", "MEMBERS:C:code:4:1", "MEMBERS:C:code:5:1", "MEMBERS:C:code:6:1", "MEMBERS:C:code:7:1", "MEMBERS:C:code:8:3", "MEMBERS:C:code:9:1", "MEMBERS:C:code:10:1", "MEMBERS:C:code:11:1", "MEMBERS:C:code:12:1", "MEMBERS:C:code:13:1", "MEMBERS:C:code:14:1", "MEMBERS:C:code:15:1", "MEMBERS:C:code:16:1",
+  "MEMBERS:C:code:1:2", "MEMBERS:C:code:2:2", "MEMBERS:C:code:3:2", "MEMBERS:C:code:4:2", "MEMBERS:C:code:5:2", "MEMBERS:C:code:6:2", "MEMBERS:C:code:7:2", "MEMBERS:C:code:8:4", "MEMBERS:C:code:9:1", "MEMBERS:C:code:10:1", "MEMBERS:C:code:11:1", "MEMBERS:C:code:12:1", "MEMBERS:C:code:13:1", "MEMBERS:C:code:14:1", "MEMBERS:C:code:15:1", "MEMBERS:C:code:16:1",
   "MEMBERS:C:text:1:3",
   "MEMBERS:RESIDUALS:R-PACKAGE-CODE:1:2", "MEMBERS:RESIDUALS:R-PACKAGE-CODE:2:2",
   "MEMBERS:RESIDUALS:R-HELPER-PATCH:1:2", "MEMBERS:RESIDUALS:R-HELPER-PATCH:2:2", "MEMBERS:RESIDUALS:R-HELPER-PATCH:3:1", "MEMBERS:RESIDUALS:R-HELPER-PATCH:4:1",

@@ -9,7 +9,11 @@
  * header equal, in order and byte for byte, to the roster exported for its section, and gives every word a calibration plant.
  * Its TILE reads every claim here - each "- <word>: <claim>" line, and the text after the reader's name in a section heading -
  * split at ", ", ", or ", ", and ", ", nor ", "; ", " or ", " and " and " nor ", and holds each piece the quote of exactly one falsifier row (MEMBERS)
- * whose pins read what that piece says.
+ * whose pins read what that piece says. Refusal #2 on this bead (gate-prep-17, O:1576) found pieces crossed with each other
+ * unpinned; cut #3 pins the crossings the lines name: each ROUTES line's scope pieces read every plant its other pieces pin in a
+ * local module again in each scope the line names, and the ROUTES, IDENTITY, WRITES, CHANNEL and RUN pieces pin each form and
+ * each scope their words cross. Vocabulary (refusal #2 F2): where a claim names a string literal in a place a no-substitution
+ * template can also stand, the readers read the template the same way, and the census pins both forms.
  *
  * RESOLUTION (resolveSpecifier; paths are root-relative with / separators; a path through a link reads as written rather than as its target):
  * - builtin: node: then any name, or a bare name node's module.isBuiltin accepts: a builtin module; a builtin is never read from a file
@@ -38,7 +42,7 @@
  *
  * IDENTITY (ClosureReader.identity; a module is read once per reader; its identity is cached):
  * - vitest: a resolved file under a vitest home; a vitest home is a node_modules/vitest directory by its real path; a node_modules/@vitest/<name> directory by its real path; a package directory whose package.json name is vitest; a package directory whose package.json name opens with @vitest/
- * - carrier: a module that is no vitest module but has a load that resolves to a vitest module; one with a load that resolves to a carrier; one that holds a route ROUTE_FORMS reads in its scope
+ * - carrier: a module that is no vitest module but has a load that resolves to a vitest module; one with a load that resolves to a carrier; one outside the cited suite that holds a route ROUTE_FORMS reads in its scope
  * - builtin: a builtin module
  * - module: any other resolved module
  * SCOPES (scopeOf):
@@ -52,7 +56,7 @@
  * - import type: the specifier of an import type: import(<specifier>) in a type position
  * - dynamic import: the first argument of an import() call when it is a string literal; when it is a no-substitution template
  * - require call: the first argument of a call of an identifier require when it is a string literal; when it is a no-substitution template
- * ROUTES (routesOf; a module holding one is a carrier; each route of the cited suite is a CHANNEL finding):
+ * ROUTES (routesOf; a local module holding one is a carrier; a package module holding one is a carrier; each route of the cited suite is a CHANNEL finding):
  * - dynamic load: in every scope; an import() call whose first argument is no string literal (a no-substitution template counts as one); a call of an identifier require whose first argument is no string literal (a no-substitution template counts as one); either call with no argument
  * - loader name: in every scope; the loader names createRequire, getBuiltinModule; each read as an identifier, as a member name, as a whole string literal; the loader member names binding, dlopen, _linkedBinding; each read as a member name, as a string element key; an identifier require anywhere but as the callee of a call
  * - loader member: in every scope; the loader members importActual, importMock; each read as an identifier, as a member name, as a whole string literal; on any base
@@ -62,14 +66,14 @@
  * - global object: in every scope; a free globalThis, global, self, window, process; in a package module free means declared nowhere in the module; not when it is the base of a property access; not when it is the base of an element access keyed by a string literal; not when it is the base of an element access keyed by a numeric literal; read when that member names one of those five; read when that member names createRequire, getBuiltinModule, binding, dlopen, _linkedBinding; not as the operand of typeof; not as the first argument of an admitted spy in the suite
  * - dynamic code: read in the suite; read in local modules; never in a package module; a free eval; a free Function; an eval member of a free global object; a Function member of a free global object; a member constructor read on any base
  * WRITES (writesOf; the cited suite only; each is a CHANNEL finding):
- * - member write: an assignment of any operator to a property access; to an element access; ++ on such a target; -- on such a target; delete of such a target; such a target of a for-in; such a target of a for-of; such a target inside a destructuring assignment
+ * - member write: an assignment of any operator to a property access; to an element access; ++ on such a target; -- on such a target; delete of such a target; such a target of a for-in; such a target of a for-of; such a target inside a destructuring assignment; such a target read through parentheses, as, satisfies, non-null or <T> assertions
  * - mutator member: __defineGetter__, __defineSetter__, __proto__, assign, defineProperties, defineProperty, deleteProperty, set, setPrototypeOf; each read as a member name, as a string element key, as a destructured key, as a whole string literal
  * - reflection: a free Reflect; a free Proxy; getOwnPropertyDescriptor, getOwnPropertyDescriptors, getOwnPropertyNames, getOwnPropertySymbols, getPrototypeOf; each read as a mutator member is
- * - spy or mock member: spyOn read any way but as the callee of an admitted spy; an admitted spy is a call of a property access .spyOn with two arguments: a free identifier then a string literal not beginning __vite; doMock, doUnmock, hoisted, mock, mockImplementation, mockImplementationOnce, mockRejectedValue, mockRejectedValueOnce, mockResolvedValue, mockResolvedValueOnce, mockReturnValue, mockReturnValueOnce, stubEnv, stubGlobal, unmock, withImplementation; each read as a mutator member is
+ * - spy or mock member: spyOn read any way but as the callee of an admitted spy; an admitted spy is a call of a property access .spyOn with two arguments: a free identifier then a string literal not beginning __vite; a no-substitution template key is admitted as a string literal is; doMock, doUnmock, hoisted, mock, mockImplementation, mockImplementationOnce, mockRejectedValue, mockRejectedValueOnce, mockResolvedValue, mockResolvedValueOnce, mockReturnValue, mockReturnValueOnce, stubEnv, stubGlobal, unmock, withImplementation; each read as a mutator member is
  * - computed member: an element access with a computed key; a string literal key is no computed key; a no-substitution template key is none; a numeric literal key is none; a computed key of an object binding pattern
  * CHANNEL (channelReading):
  * - tier config: the default test tier's one vitest config passes the landed census guard (censusGuard on the test tier) whose closed key lists refuse every key outside them; a resolver alias is refused (its landed row g-u62r5-alias); plugins are refused (its landed row g-u62r5-plugins); a refusal is a finding even when the guard names the config
- * - setup file: every setup file that config's test.setupFiles names is a closure root; a setup file that is a carrier is a finding; a setup file reaching a carrier is a finding; a setup file that is a vitest module is a finding; a setup file that names no file is a finding; a setup file whose closure holds a load that does not resolve is a finding
+ * - setup file: every setup file that config's test.setupFiles names is a closure root; it names one file as a string literal; it names one file per string literal of an array; a setup file that is a carrier is a finding; a setup file reaching a carrier is a finding; a setup file that is a vitest module is a finding; a setup file that names no file is a finding; a setup file whose closure holds a load that does not resolve is a finding
  * - cited suite: the suite's ROUTE_FORMS findings; its WRITE_FORMS findings; a sensitive builtin among its loads; the modules its loads reach are read by IMPORT
  * IMPORT (importReading; exactly one load of the suite resolves to a vitest module or to a carrier; it is an import declaration; every other load resolves to no vitest module and to no carrier; a load anywhere in the closure that does not resolve breaks; the listing names each load of the suite as written in source order; each listed load shows its form, its resolution and its identity):
  *
@@ -81,7 +85,7 @@
  * - top-level keys: the object holds test and no other key
  * - test keys: the test object holds allowOnly and include and no other key: dir, root, testNamePattern, passWithNoTests, exclude and every other key read as a break
  * - allowOnly: allowOnly is the literal false
- * - include: include is an array literal of string literals, one of whose globs matches the run pin: ** across directories, * within one, any other glob syntax unmatched
+ * - include: include is an array literal of string literals, one of whose globs matches the run pin: ** as a whole segment before the file segment matches any run of directories, * within one segment, every other character only itself, any other glob syntax unmatched
  *
  * C (srcSites; a tag is hyperunix.result/ then decimal digits):
  * - walk: every entry under src, in name order at each level: a directory is entered and every other entry is a file; a directory reached a second time by its real path reads as a break
@@ -94,8 +98,9 @@
  *
  * Not claimed: what a module does at run time beyond the forms above (a value assembled at run time and handed to a form these
  * readers do not name); a resolution vite performs that the default tier's vouched config cannot express (the census guard
- * refuses every key that may redirect a module); a package installed outside the lock. Display paths added: none. Test-only:
- * spawns nothing, writes nothing; reads files under the root through a host that may lay planted texts over the disk.
+ * refuses every key that may redirect a module); a package installed outside the lock; a crossing of a piece with a form or a
+ * scope its line does not name. Display paths added: none. Test-only: spawns nothing, writes nothing; reads files under the root
+ * through a host that may lay planted texts over the disk, and a tier config through an injected reader when one is given.
  */
 import { readdirSync, readFileSync, realpathSync, statSync } from "node:fs";
 import { isBuiltin } from "node:module";
@@ -146,7 +151,7 @@ export type ExportTarget = (typeof EXPORT_TARGETS)[number]["word"];
 
 export const IDENTITY_KINDS = roster([
   ["vitest", "a resolved file under a vitest home; a vitest home is a node_modules/vitest directory by its real path; a node_modules/@vitest/<name> directory by its real path; a package directory whose package.json name is vitest; a package directory whose package.json name opens with @vitest/"],
-  ["carrier", "a module that is no vitest module but has a load that resolves to a vitest module; one with a load that resolves to a carrier; one that holds a route ROUTE_FORMS reads in its scope"],
+  ["carrier", "a module that is no vitest module but has a load that resolves to a vitest module; one with a load that resolves to a carrier; one outside the cited suite that holds a route ROUTE_FORMS reads in its scope"],
   ["builtin", "a builtin module"],
   ["module", "any other resolved module"],
 ] as const);
@@ -182,17 +187,17 @@ export const ROUTE_FORMS = roster([
 export type RouteForm = (typeof ROUTE_FORMS)[number]["word"];
 
 export const WRITE_FORMS = roster([
-  ["member write", "an assignment of any operator to a property access; to an element access; ++ on such a target; -- on such a target; delete of such a target; such a target of a for-in; such a target of a for-of; such a target inside a destructuring assignment"],
+  ["member write", "an assignment of any operator to a property access; to an element access; ++ on such a target; -- on such a target; delete of such a target; such a target of a for-in; such a target of a for-of; such a target inside a destructuring assignment; such a target read through parentheses, as, satisfies, non-null or <T> assertions"],
   ["mutator member", "__defineGetter__, __defineSetter__, __proto__, assign, defineProperties, defineProperty, deleteProperty, set, setPrototypeOf; each read as a member name, as a string element key, as a destructured key, as a whole string literal"],
   ["reflection", "a free Reflect; a free Proxy; getOwnPropertyDescriptor, getOwnPropertyDescriptors, getOwnPropertyNames, getOwnPropertySymbols, getPrototypeOf; each read as a mutator member is"],
-  ["spy or mock member", "spyOn read any way but as the callee of an admitted spy; an admitted spy is a call of a property access .spyOn with two arguments: a free identifier then a string literal not beginning __vite; doMock, doUnmock, hoisted, mock, mockImplementation, mockImplementationOnce, mockRejectedValue, mockRejectedValueOnce, mockResolvedValue, mockResolvedValueOnce, mockReturnValue, mockReturnValueOnce, stubEnv, stubGlobal, unmock, withImplementation; each read as a mutator member is"],
+  ["spy or mock member", "spyOn read any way but as the callee of an admitted spy; an admitted spy is a call of a property access .spyOn with two arguments: a free identifier then a string literal not beginning __vite; a no-substitution template key is admitted as a string literal is; doMock, doUnmock, hoisted, mock, mockImplementation, mockImplementationOnce, mockRejectedValue, mockRejectedValueOnce, mockResolvedValue, mockResolvedValueOnce, mockReturnValue, mockReturnValueOnce, stubEnv, stubGlobal, unmock, withImplementation; each read as a mutator member is"],
   ["computed member", "an element access with a computed key; a string literal key is no computed key; a no-substitution template key is none; a numeric literal key is none; a computed key of an object binding pattern"],
 ] as const);
 export type WriteForm = (typeof WRITE_FORMS)[number]["word"];
 
 export const CHANNEL_ROOTS = roster([
   ["tier config", "the default test tier's one vitest config passes the landed census guard (censusGuard on the test tier) whose closed key lists refuse every key outside them; a resolver alias is refused (its landed row g-u62r5-alias); plugins are refused (its landed row g-u62r5-plugins); a refusal is a finding even when the guard names the config"],
-  ["setup file", "every setup file that config's test.setupFiles names is a closure root; a setup file that is a carrier is a finding; a setup file reaching a carrier is a finding; a setup file that is a vitest module is a finding; a setup file that names no file is a finding; a setup file whose closure holds a load that does not resolve is a finding"],
+  ["setup file", "every setup file that config's test.setupFiles names is a closure root; it names one file as a string literal; it names one file per string literal of an array; a setup file that is a carrier is a finding; a setup file reaching a carrier is a finding; a setup file that is a vitest module is a finding; a setup file that names no file is a finding; a setup file whose closure holds a load that does not resolve is a finding"],
   ["cited suite", "the suite's ROUTE_FORMS findings; its WRITE_FORMS findings; a sensitive builtin among its loads; the modules its loads reach are read by IMPORT"],
 ] as const);
 export type ChannelRoot = (typeof CHANNEL_ROOTS)[number]["word"];
@@ -205,7 +210,7 @@ export const RUN_FORMS = roster([
   ["top-level keys", "the object holds test and no other key"],
   ["test keys", "the test object holds allowOnly and include and no other key: dir, root, testNamePattern, passWithNoTests, exclude and every other key read as a break"],
   ["allowOnly", "allowOnly is the literal false"],
-  ["include", "include is an array literal of string literals, one of whose globs matches the run pin: ** across directories, * within one, any other glob syntax unmatched"],
+  ["include", "include is an array literal of string literals, one of whose globs matches the run pin: ** as a whole segment before the file segment matches any run of directories, * within one segment, every other character only itself, any other glob syntax unmatched"],
 ] as const);
 export type RunForm = (typeof RUN_FORMS)[number]["word"];
 
@@ -783,7 +788,8 @@ function readRoutes(path: string, text: string, scope: ModuleScope, forms: reado
       if (name.startsWith(VITE_PREFIX)) add("vite name", name, node);
     }
     if (isStringKey(node)) {
-      const keyed = ts.isElementAccessExpression(node.parent) && node.parent.argumentExpression === node;
+      const outer = climb(node);
+      const keyed = ts.isElementAccessExpression(outer.parent) && outer.parent.argumentExpression === outer;
       if (LOADER_NAMES.has(node.text) || (keyed && LOADER_MEMBER_NAMES.has(node.text))) add("loader name", `'${node.text}'`, node);
       if (LOADER_MEMBERS.has(node.text)) add("loader member", keyed ? `['${node.text}']` : `'${node.text}'`, node);
     }
@@ -1021,14 +1027,16 @@ export function importReading(host: ModuleHost, suite: string, options: ReadOpti
   return { listing, vitest, section };
 }
 
-/** The setup files the default tier's vouched config names (censusGuard by default), or why they cannot be read. */
 /** The guard setupFiles consults for the default test tier (censusGuard unless one is injected). */
 export type GuardOf = (root: string, tier: string) => { readonly ok: boolean; readonly config?: string; readonly why: string };
-export function setupFiles(root: string, guardOf: GuardOf = censusGuard): { readonly files: readonly string[] } | { readonly why: string } {
+/** How setupFiles reads the config the guard names: from the disk unless a reader is injected (a planted config, refusal #2 U3). */
+export type ConfigText = (file: string) => string;
+/** The setup files the default tier's vouched config names (censusGuard by default), or why they cannot be read. */
+export function setupFiles(root: string, guardOf: GuardOf = censusGuard, readText: ConfigText = file => readFileSync(file, "utf8")): { readonly files: readonly string[] } | { readonly why: string } {
   const guard = guardOf(root, "test");
   if (!guard.ok || guard.config === undefined) return { why: guard.why };
   const config = guard.config;
-  const text = readFileSync(config, "utf8");
+  const text = readText(config);
   const source = ts.createSourceFile(config, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const files: string[] = [];
   const visit = (node: ts.Node): void => {
