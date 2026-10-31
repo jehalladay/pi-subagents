@@ -1,39 +1,45 @@
 /**
  * wb-jwc.9 (RFCLI-FEEDBACK-OPERATIONAL-CONVERGENCE-R6; the rule-19 structural-exit child of wb-jwc.6, orchestrator rulings R-B88
- * and R-B109): the readers and the probe vocabulary of the rf operation-receipt reconcile honesty core, landed so wb-jwc.6's final
- * core re-cut can restate its G registrar and N/H honesty claims over them (R-B109: a mechanical restatement over this bead's
- * landed work). Census of record: test/workbench-rf-operation-receipt-honesty-census.test.ts; falsifier roster:
- * test/fixtures/rf-operation-receipt-honesty-roster.json.
+ * and R-B109; cut #3 in the enumerate-the-resolvable form the second-stage cap R-B177 binds): the readers and the probe vocabulary
+ * of the rf operation-receipt reconcile honesty core, landed so wb-jwc.6's final core re-cut can restate its G registrar and N/H
+ * honesty claims over them (R-B109: a mechanical restatement over this bead's landed work). Census of record:
+ * test/workbench-rf-operation-receipt-honesty-census.test.ts; falsifier roster: test/fixtures/rf-operation-receipt-honesty-roster.json.
  *
- * Each reader claims exactly what it reads, and READER_PLANTS feeds each one planted inputs so the census pins every sub-form:
- *  - srcTree lists every file under src/ (directories followed, each directory's names sorted). A file whose extension is .ts (a
- *    .d.ts file included) is a module, parsed with TypeScript's ScriptKind.TS; every other file is listed unparsed, never parsed.
- *  - rfRegistrationLiterals reads every spelling of register in the src modules: each identifier register and each whole string
- *    token register (a string literal or a template with no substitution); a template with a substitution spells no name and is
- *    not read. A spelling is JUDGED only as the property-access callee of a call. A judged call is READ only when it holds exactly
- *    one argument, an object literal with no spread or computed key holding exactly one `descriptor` property assignment, whose
- *    value is an object literal with no spread or computed key holding exactly one `id` property assignment written as a whole
- *    string token. A read call whose id is an rf capability id (src's producerOf names reactivefiber and the real
- *    CapabilityRegistry accepts the id) is listed in `rf` with its descriptor's `effectClass` (the whole string token written
- *    there, else the syntax standing there, else why there is no one plain effectClass assignment) and `permissions` (an array
- *    literal's elements, each its whole string token else its syntax, else the syntax, else why), so an effect class or a
- *    permission set computed from a registrar's arguments, the workspace root or the environment is written into the reading
- *    instead of a word: it fails closed. A read call whose id is not an rf capability id is not an rf registration and is not
- *    listed. Every other spelling is listed in `unjudged` by file, owner and syntax (a judged call not read: why).
- *  - srcEnvironmentReads reads the src modules' process.env, the property access env of the identifier process: a property access
- *    of it (process.env.NAME) or an element access of it by a whole string token (process.env["NAME"]) gives a NAME; an element
- *    access by anything else is listed as computed; any other use of it (aliased, destructured, passed, spread) is listed as a
- *    whole use. Every other spelling of env (an identifier or a whole string token: globalThis.process.env, a destructured or
- *    aliased process, process["env"], an imported env) gives no NAME and is listed in `other` by file, owner and syntax.
- *  - runForms and registeredUnder run a registrar with a fresh registry in each stated run form and list what it leaves the
- *    registry holding for rf ids.
+ * CLAIMS ARE THE PINS. What a reader is claimed to read is what the census pins of it: its reading of src (rows G and R) and its
+ * reading of each planted input that READER_PLANTS (row P, refusal #1) and REFUSAL_TWO_PLANTS (row Q, refusal #2) feed it, whose
+ * label names the planted forms. The reader descriptions below say how each reader reads; they are claimed only over those planted
+ * forms, and a form no plant feeds is not claimed (the census's named residual R-READER-FORM lists every plant's planted forms).
+ *  - srcTree walks src/ with readdirSync: each directory's names sorted by UTF-16 code unit, a directory followed where its name
+ *    sorts. A file whose extension is exactly .ts (a .d.ts file included) is a module, parsed with TypeScript's ScriptKind.TS; a
+ *    file with another extension is listed unparsed, never parsed.
+ *  - rfRegistrationLiterals reads the spellings of register in the modules: an identifier register or a whole string token
+ *    register (a string literal or a template with no substitution); a template with a substitution spells no name and is not
+ *    read. A spelling is JUDGED only as the property-access callee of a call, in an optional chain too. A judged call is READ only
+ *    when it holds exactly one argument, an object literal with no spread or computed key holding exactly one `descriptor` property
+ *    assignment, whose value is an object literal with no spread or computed key holding exactly one `id` property assignment
+ *    written as a whole string token. A read call whose id is an rf capability id (src's producerOf names reactivefiber and the
+ *    real CapabilityRegistry accepts the id) is listed in `rf` with its descriptor's `effectClass` (the whole string token written
+ *    there, else the syntax standing there in angle brackets, else why there is no one plain effectClass assignment) and
+ *    `permissions` (an array literal's elements, each its whole string token else its syntax in angle brackets; else the syntax
+ *    standing there; else why), so an effect class or a permission written in one of the planted syntaxes (a conditional, a
+ *    reference, a call, an assertion, a ?? or || default) is written into the reading instead of a word: it fails closed. A read
+ *    call whose id is not an rf capability id is not listed. A spelling that is not a read call is listed in `unjudged` by file,
+ *    owner and syntax (a judged call not read: why).
+ *  - srcEnvironmentReads reads process.env, the property access env of the identifier process: a property access of it
+ *    (process.env.NAME) or an element access of it by a whole string token (process.env["NAME"]), in an optional chain too, gives
+ *    a NAME; an element access of it by another expression is listed as computed; otherwise the syntax holding it is listed as a
+ *    whole use. A spelling of env (an identifier or a whole string token) that is not the env of process.env on the identifier process
+ *    gives no NAME and is listed in `other` by file, owner and syntax.
+ *  - runForms and registeredUnder run a registrar with a fresh registry in each stated run form, setting the form's environment for
+ *    the run and giving each name back the value it held before the run, and list what it leaves the registry holding for rf ids.
  *  - HONESTY_READS is the vocabulary of preview reads a reconcile is fed, by kind (fresh, failed, unprojected) and route
  *    (injectable: src's registerReactiveFiberRender over a seam that returns the envelope or throws the category; native: src's
  *    registerNativeReactiveFiberRender over a stand-in rf, the only PATH entry, a POSIX shell script of shell builtins only that
  *    prints one fixed line and exits with one fixed code, inside one tracked scratch directory removed after the read).
- *  - READER_PLANTS is the vocabulary of planted inputs: each a planted src tree written into one tracked scratch directory (removed
- *    after the read) and read by srcTree, rfRegistrationLiterals or srcEnvironmentReads, or a planted registrar run through
- *    runForms and registeredUnder; each names the refusal #1 unmet members it pins.
+ *  - READER_PLANTS and REFUSAL_TWO_PLANTS are the vocabulary of planted inputs: each a planted src tree written into one tracked
+ *    scratch directory (removed after the read) and read by srcTree, rfRegistrationLiterals or srcEnvironmentReads, or a planted
+ *    registrar run through runForms and registeredUnder; each names the unmet members of its refusal it pins and the planted forms
+ *    it feeds.
  *
  * Display paths added: none. Test-only; reads src and the planted trees, and spawns nothing but the stand-in rf.
  */
@@ -72,14 +78,14 @@ const REASON = "census probe: a reconcile fed only rf preview reads";
 const GRANTS = ["workbench:observe", PREVIEW_PERMISSION, "reconcile:reactivefiber.acknowledge", "reconcile:reactivefiber.override"];
 const RF_PRODUCER = "reactivefiber";
 
-/** Every file under a directory, whatever its name, in sorted path order. */
+/** The files under a directory, by walking it: its names sorted by UTF-16 code unit, a directory followed where its name sorts. */
 function treeFiles(dir: string): string[] {
   return readdirSync(dir).sort().flatMap(name => {
     const path = join(dir, name);
     return statSync(path).isDirectory() ? treeFiles(path) : [path];
   });
 }
-/** The one module extension the readers parse and its script kind: src holds .ts modules only, so a src file with any other extension is listed, never parsed. */
+/** The one module extension the readers parse and its script kind: a file whose extension is exactly .ts is a module, and a file with another extension is listed, never parsed (src holds .ts modules only today; G:unjudged lists its unparsed files). */
 const MODULE_KINDS: Readonly<Record<string, ts.ScriptKind>> = { ".ts": ts.ScriptKind.TS };
 const scriptKindOf = (file: string): ts.ScriptKind | undefined => (Object.hasOwn(MODULE_KINDS, extname(file)) ? MODULE_KINDS[extname(file)] : undefined);
 const parsedFiles = new Map<string, ts.SourceFile>();
@@ -92,7 +98,7 @@ function parsed(root: string, file: string): ts.SourceFile {
   }
   return source;
 }
-/** The src tree, by repo-relative path: the .ts modules every reader parses, and every other file (listed, never parsed). */
+/** The src tree srcTree walks, by repo-relative path: the .ts modules the readers parse, and the files listed unparsed. */
 export function srcTree(root: string): { readonly modules: readonly string[]; readonly unparsed: readonly string[] } {
   const files = treeFiles(join(root, "src")).map(path => relative(root, path));
   return { modules: files.filter(file => scriptKindOf(file) !== undefined), unparsed: files.filter(file => scriptKindOf(file) === undefined) };
@@ -173,12 +179,12 @@ export interface RegistrationLiteral {
   readonly permissions: string;
 }
 export interface RegistrationReading {
-  /** Every read register call whose id is an rf capability id, in file then source order. */
+  /** Each read register call whose id is an rf capability id, in file then source order. */
   readonly rf: readonly RegistrationLiteral[];
-  /** Every spelling that is not a read register call, as `file#owner: syntax` or `file#owner: register call, why`, in file then source order. */
+  /** Each spelling the reader reads that is not a read register call, as `file#owner: syntax` or `file#owner: register call, why`, in file then source order. */
   readonly unjudged: readonly string[];
 }
-/** Every src spelling of `register`: the read rf calls listed with their descriptor literal, every spelling that is not a read call listed unjudged. */
+/** The spellings of `register` in the modules srcTree lists: the read rf calls listed with their descriptor literal, each other spelling listed unjudged. */
 export function rfRegistrationLiterals(root: string): RegistrationReading {
   const rf: RegistrationLiteral[] = [];
   const unjudged: string[] = [];
@@ -221,18 +227,18 @@ export function rfRegistrationLiterals(root: string): RegistrationReading {
 
 /** What src reads of the process environment through process.env, the property access env of the identifier process. */
 export interface EnvironmentReads {
-  /** Every name src reads as process.env.NAME or process.env["NAME"], listed once in first-seen order. */
+  /** Each name the reader reads as process.env.NAME or process.env["NAME"] (in an optional chain too), listed once in first-seen order. */
   readonly names: readonly string[];
-  /** Every element access of process.env by anything but a whole string token, as `file#owner: syntax`. */
+  /** Each element access of process.env by an expression that is not a whole string token, as `file#owner: syntax`. */
   readonly computed: readonly string[];
-  /** Every other use of process.env (aliased, destructured, passed, spread), as `file#owner: syntax`. */
+  /** Each use of process.env that is neither a property access nor an element access of it, as `file#owner: syntax` (the syntax holding it). */
   readonly whole: readonly string[];
-  /** Every other src spelling of env (an identifier or a whole string token), as `file#owner: syntax`: none gives a name. */
+  /** Each spelling of env (an identifier or a whole string token) that is not the env of process.env, as `file#owner: syntax`: none gives a name. */
   readonly other: readonly string[];
 }
 const isProcessEnv = (node: ts.Node): node is ts.PropertyAccessExpression =>
   ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "process" && node.name.text === "env";
-/** Every src read of process.env, and every other src spelling of env listed. */
+/** The reads of process.env in the modules srcTree lists, and the other spellings of env there. */
 export function srcEnvironmentReads(root: string): EnvironmentReads {
   const names: string[] = [];
   const computed: string[] = [];
@@ -284,7 +290,7 @@ export interface RunForm {
 }
 /**
  * The stated run forms: the census workspace root, process.cwd() as the workspace root (the R1 form), and, for each effect class
- * word but read, the census root with every environment name src reads set to that word (the R2 form).
+ * word but read, the census root with each environment name srcEnvironmentReads lists set to that word (the R2 form).
  */
 export function runForms(environmentNames: readonly string[], effectClasses: readonly string[]): RunForm[] {
   return [
@@ -293,7 +299,7 @@ export function runForms(environmentNames: readonly string[], effectClasses: rea
     ...effectClasses.filter(word => word !== "read").map(word => ({ name: `env-${word}`, workspaceRoot: HONESTY_WS, environment: Object.fromEntries(environmentNames.map(name => [name, word])) })),
   ];
 }
-/** What a fresh registry holds for rf ids once `register` returns in run form `form`: `id=effectClass/[permissions]` per rf descriptor. */
+/** What a fresh registry holds for rf ids once `register` returns in run form `form` (each name the form sets given back its value from before the run): `id=effectClass/[permissions]` per rf descriptor. */
 export function registeredUnder(form: RunForm, register: (registry: CapabilityRegistry, workspaceRoot: string) => void): string {
   const saved = Object.keys(form.environment).map(name => [name, process.env[name]] as const);
   try {
@@ -533,10 +539,14 @@ type Registrar = (registry: CapabilityRegistry, workspaceRoot: string) => void;
 export interface ReaderPlant {
   /** `${reader}:${name}`, the pin key. */
   readonly key: string;
-  /** The claim the pin states: the reader, the planted input and what the reader reads of it. */
+  /** The claim the pin states: the reader, the planted input and what the reader reads of it, naming the planted forms. */
   readonly label: string;
-  /** The refusal #1 unmet members (the UNMET block of wb-jwc.9's notes in the bead export) this plant pins. */
+  /** The unmet members of its refusal this plant pins: refusal #1's for READER_PLANTS (row P), refusal #2's for REFUSAL_TWO_PLANTS (row Q), each from that refusal note's UNMET block in the bead export. */
   readonly cures: readonly string[];
+  /** The reader or readers the plant feeds, by name. */
+  readonly reader: string;
+  /** The planted forms it feeds: a planted tree's paths, a planted module's top-level declarations, or a planted registrar and its environment names. */
+  readonly forms: readonly string[];
   /** The reading, measured: what the reader reads of the planted tree, or what each run form leaves the registry holding. */
   readonly read: () => string;
 }
@@ -909,40 +919,183 @@ function runsReading(names: readonly string[], effectClasses: readonly string[],
   }).join("; ");
 }
 
-/** The planted inputs, in pin order: the tree split, the registration reader's sub-forms, the environment reader's, and the run forms'. */
-export function readerPlants(effectClasses: readonly string[]): ReaderPlant[] {
-  const source = (key: string, cures: readonly string[], label: string, text: string, reading: (root: string) => string): ReaderPlant => ({
-    key, cures, label, read: () => withPlantedTree({ [PLANTED_MODULE]: text }, reading),
+/** The reader each planted reading measures, by name. */
+const READER_NAMES: ReadonlyMap<(root: string) => string, string> = new Map([
+  [treeReading, "srcTree"],
+  [registrationReading, "rfRegistrationLiterals"],
+  [environmentReading, "srcEnvironmentReads"],
+]);
+/** The top-level forms a planted module declares: each function, class (an anonymous one as default) and variable by name, any other statement by its syntax. */
+function formsOf(text: string): string[] {
+  const planted = ts.createSourceFile(PLANTED_MODULE, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  return planted.statements.flatMap(statement => {
+    if (ts.isFunctionDeclaration(statement) || ts.isClassDeclaration(statement)) return [statement.name?.text ?? "default"];
+    if (ts.isVariableStatement(statement)) return statement.declarationList.declarations.map(declaration => declaration.name.getText(planted));
+    return [ts.SyntaxKind[statement.kind]];
   });
+}
+/** A plant writing one planted module, read by `reading`. */
+function sourcePlant(key: string, cures: readonly string[], label: string, text: string, reading: (root: string) => string): ReaderPlant {
+  return { key, cures, label, reader: READER_NAMES.get(reading) ?? "<unnamed reader>", forms: formsOf(text), read: () => withPlantedTree({ [PLANTED_MODULE]: text }, reading) };
+}
+/** A plant writing a planted src tree, read by each of `readings` in turn. */
+function treePlant(key: string, cures: readonly string[], label: string, files: Readonly<Record<string, string>>, readings: readonly ((root: string) => string)[]): ReaderPlant {
+  return {
+    key, cures, label, reader: readings.map(reading => READER_NAMES.get(reading) ?? "<unnamed reader>").join("+"), forms: Object.keys(files),
+    read: () => withPlantedTree(files, root => readings.map(reading => reading(root)).join("; ")),
+  };
+}
+/** A run plant's forms: the planted registrar and, for each planted name, the value it holds before the runs. */
+const runFormsOf = (registrar: string, names: readonly string[]): string[] => [registrar, ...names.map(name => `${name}=${process.env[name] ?? "unset"}`)];
+
+/** The planted inputs of refusal #1, in pin order: the tree split, the registration reader's sub-forms, the environment reader's, and the run forms'. */
+export function readerPlants(effectClasses: readonly string[]): ReaderPlant[] {
   return [
+    treePlant("tree:split", ["U1k"], "srcTree over a planted src tree (refusal #1 U1k): each planted file is listed, the planted directory nested two levels deep followed and each planted directory's names sorted by UTF-16 code unit (a name above U+FFFF before a name at U+FF5E, which byte order puts first); each planted file whose extension is .ts (a .d.ts file included) is a module, and each planted file with another extension (.tsx, .mts, .cts, .js, .mjs, .json, .txt, no extension) is listed unparsed; the split is listed", PLANTED_TREE, [treeReading]),
+    sourcePlant("registrations:spellings", ["U1j"], "rfRegistrationLiterals over a planted src module (refusal #1 U1j): each planted identifier register and whole string token register (a string literal or a template with no substitution) is a spelling, and each planted spelling that is not the property-access callee of a call is listed unjudged by file, owner and the syntax holding it (a const initializer, an element-access call, a destructured member and its call, a member of the member, a parenthesized callee, a member passed as an argument, a parameter and its member, a function name, a property key); the planted template with a substitution spells no name and is not read; the reading is listed", SPELLINGS_MODULE, registrationReading),
+    sourcePlant("registrations:arguments", ["U1i"], "rfRegistrationLiterals over a planted src module (refusal #1 U1i): each planted property-access register call that holds other than exactly one argument (none, two strings, a provider literal beside a second argument) is listed unjudged as register call, N arguments, and each planted one whose one argument is not an object literal (a spread argument, a reference, a call) as register call, provider <syntax>; the reading is listed", ARGUMENTS_MODULE, registrationReading),
+    sourcePlant("registrations:provider", [], "rfRegistrationLiterals over a planted src module: each planted register call whose provider literal holds a spread or a computed key, no descriptor, two descriptors, or a descriptor written as a shorthand or a method is listed unjudged as register call, provider: <why>, and each planted one whose descriptor is not an object literal (a reference, a call) as register call, descriptor <syntax>; the planted provider whose keys are a number and a quoted string, holding a descriptor whose keys are quoted strings, is read; the reading is listed", PROVIDER_MODULE, registrationReading),
+    sourcePlant("registrations:descriptor", ["U1a"], "rfRegistrationLiterals over a planted src module (refusal #1 U1a): each planted register call whose descriptor literal holds a spread (a conditional spread of effectClass write) or a computed key, no id, two ids, or an id written as a shorthand is listed unjudged as register call, descriptor: <why>, and each planted one whose id is not a whole string token (a reference, a template with a substitution) as register call, id <syntax>; the planted id written as a template with no substitution is read as its text; the reading is listed", DESCRIPTOR_MODULE, registrationReading),
+    sourcePlant("registrations:ids", ["U1d"], "rfRegistrationLiterals over a planted src module (refusal #1 U1d): each planted read call whose id is an rf capability id, src's producerOf naming reactivefiber and the real CapabilityRegistry accepting the id (reactivefiber.render.commit, and reactivefiber-plant.dashed, whose producer ends at the dash), is listed as an rf literal; each planted read call whose producer is another (reactivefibers.plant, forge.plant.read) or whose id the registry refuses (reactivefiber.Plant, reactivefiber) is not an rf registration and is not listed; the reading is listed", IDS_MODULE, registrationReading),
+    sourcePlant("registrations:effect-class", ["U1b"], "rfRegistrationLiterals over a planted src module (refusal #1 U1b): each planted rf literal's effectClass is the whole string token written there (the planted template with no substitution included), else the syntax standing there in angle brackets (the planted conditional, reference, call and as const assertion), else why there is no one plain effectClass assignment (the planted shorthand, none and two); the reading is listed", EFFECT_CLASS_MODULE, registrationReading),
+    sourcePlant("registrations:permissions", ["U1c"], "rfRegistrationLiterals over a planted src module (refusal #1 U1c): each planted rf literal's permissions are [token,...] for an array literal (the planted empty one included), each element its whole string token else its syntax in angle brackets (the planted conditional spread, reference and template with a substitution), else the syntax standing there (the planted reference), else why there is no one plain permissions assignment (the planted shorthand, none and two); the reading is listed", PERMISSIONS_MODULE, registrationReading),
+    sourcePlant("registrations:owners", [], "rfRegistrationLiterals over a planted src module: each planted spelling's owner is the innermost function declaration it sits in, else Class.method for a named class's method other than the spelling itself, else its named class, else the outermost variable it initializes (the planted arrow function, function expression and object-literal method), else <top> (the planted anonymous default class and top-level call included); the reading is listed", OWNERS_MODULE, registrationReading),
+    sourcePlant("registrations:script-kind", [], "rfRegistrationLiterals over a planted src module: the planted .ts module is parsed with TypeScript's ScriptKind.TS, so its register call through an angle-bracket type assertion of its holder is read as an rf literal; the reading is listed", SCRIPT_KIND_MODULE, registrationReading),
+    sourcePlant("environment:names", ["U1h"], "srcEnvironmentReads over a planted src module (refusal #1 U1h): each planted property access of process.env (process?.env and process.env?. included) gives its NAME, each planted element access of process.env by a whole string token (a string literal and a template with no substitution) gives the token as its NAME, and the names are listed once each in first-seen order; the reading is listed", NAMES_MODULE, environmentReading),
+    sourcePlant("environment:computed", [], "srcEnvironmentReads over a planted src module: each planted element access of process.env by an expression that is not a whole string token (a reference, a template with a substitution, a concatenation, an element access) is listed as computed by file, owner and syntax and gives no NAME; the reading is listed", COMPUTED_MODULE, environmentReading),
+    sourcePlant("environment:whole", ["U1g"], "srcEnvironmentReads over a planted src module (refusal #1 U1g): each planted use of process.env that is neither a property access nor an element access of it (aliased in a variable, destructured, passed to a call, spread, compared, returned, asserted non-null) is listed as a whole use by file, owner and the syntax holding it and gives no NAME; the reading is listed", WHOLE_MODULE, environmentReading),
+    sourcePlant("environment:other", ["U2"], "srcEnvironmentReads over a planted src module (refusal #1 U2): each planted spelling of env (an identifier or a whole string token) that is not the env of process.env on the identifier process is listed in other by file, owner and the syntax holding it and gives no NAME (an imported env and its use, globalThis.process.env, a renamed or a shorthand destructured env of process and its use, process['env'], an aliased process, a parenthesized process); the reading is listed", OTHER_MODULE, environmentReading),
     {
-      key: "tree:split", cures: ["U1k"], read: () => withPlantedTree(PLANTED_TREE, treeReading),
-      label: "srcTree over a planted src tree (refusal #1 U1k): every file under src/ is listed, directories followed and each directory's names sorted by UTF-16 code unit (a name above U+FFFF before a name at U+FF5E, which byte order puts first); a file whose extension is .ts (a .d.ts file included) is a module, and every other file (.tsx, .mts, .cts, .js, .mjs, .json, .txt, no extension) is listed unparsed; the split is listed",
-    },
-    source("registrations:spellings", ["U1j"], "rfRegistrationLiterals over a planted src module (refusal #1 U1j): each identifier register and each whole string token register (a string literal or a template with no substitution) is a spelling, and every spelling that is not the property-access callee of a call is listed unjudged by file, owner and the syntax holding it (a const initializer, an element-access call, a destructured member and its call, a member of the member, a parenthesized callee, a member passed as an argument, a parameter and its member, a function name, a property key); a template with a substitution spells no name and is not read; the reading is listed", SPELLINGS_MODULE, registrationReading),
-    source("registrations:arguments", ["U1i"], "rfRegistrationLiterals over a planted src module (refusal #1 U1i): a property-access register call that holds other than exactly one argument (none, two strings, a provider literal beside a second argument) is listed unjudged as register call, N arguments, and one whose one argument is not an object literal (a spread argument, a reference, a call) as register call, provider <syntax>; the reading is listed", ARGUMENTS_MODULE, registrationReading),
-    source("registrations:provider", [], "rfRegistrationLiterals over a planted src module: a register call whose provider literal holds a spread or a computed key, no descriptor, two descriptors, or a descriptor written as a shorthand or a method is listed unjudged as register call, provider: <why>, and one whose descriptor is not an object literal (a reference, a call) as register call, descriptor <syntax>; a provider whose keys are numbers or quoted strings, holding a descriptor whose keys are quoted strings, is read; the reading is listed", PROVIDER_MODULE, registrationReading),
-    source("registrations:descriptor", ["U1a"], "rfRegistrationLiterals over a planted src module (refusal #1 U1a): a register call whose descriptor literal holds a spread (a conditional spread of effectClass write included) or a computed key, no id, two ids, or an id written as a shorthand is listed unjudged as register call, descriptor: <why>, and one whose id is not a whole string token (a reference, a template with a substitution) as register call, id <syntax>; an id written as a template with no substitution is read as its text; the reading is listed", DESCRIPTOR_MODULE, registrationReading),
-    source("registrations:ids", ["U1d"], "rfRegistrationLiterals over a planted src module (refusal #1 U1d): a read call is listed as an rf literal when its id is an rf capability id, src's producerOf naming reactivefiber and the real CapabilityRegistry accepting the id (reactivefiber.render.commit, and reactivefiber-plant.dashed, whose producer ends at the dash); a read call whose producer is another (reactivefibers.plant, forge.plant.read) or whose id the registry refuses (reactivefiber.Plant, reactivefiber) is not an rf registration and is not listed; the reading is listed", IDS_MODULE, registrationReading),
-    source("registrations:effect-class", ["U1b"], "rfRegistrationLiterals over a planted src module (refusal #1 U1b): an rf literal's effectClass is the whole string token written there (a template with no substitution included), else the syntax standing there in angle brackets (a conditional, a reference, a call, an as const assertion), else why there is no one plain effectClass assignment (a shorthand, none, two); the reading is listed", EFFECT_CLASS_MODULE, registrationReading),
-    source("registrations:permissions", ["U1c"], "rfRegistrationLiterals over a planted src module (refusal #1 U1c): an rf literal's permissions are [token,...] for an array literal (an empty one included), each element its whole string token else its syntax in angle brackets (a conditional spread, a reference, a template with a substitution), else the syntax standing there (a reference), else why there is no one plain permissions assignment (a shorthand, none, two); the reading is listed", PERMISSIONS_MODULE, registrationReading),
-    source("registrations:owners", [], "rfRegistrationLiterals over a planted src module: a spelling's owner is the innermost function declaration it sits in, else Class.method for a named class's method other than the spelling itself, else its named class, else the outermost variable it initializes (through an arrow function, a function expression or an object-literal method), else <top> (an anonymous default class included); the reading is listed", OWNERS_MODULE, registrationReading),
-    source("registrations:script-kind", [], "rfRegistrationLiterals over a planted src module: a .ts module is parsed with TypeScript's ScriptKind.TS, so a register call through an angle-bracket type assertion of its holder is read as an rf literal; the reading is listed", SCRIPT_KIND_MODULE, registrationReading),
-    source("environment:names", ["U1h"], "srcEnvironmentReads over a planted src module (refusal #1 U1h): a property access of process.env (process?.env and process.env?. included) gives its NAME, an element access of process.env by a whole string token (a string literal or a template with no substitution) gives the token as its NAME, and the names are listed once each in first-seen order; the reading is listed", NAMES_MODULE, environmentReading),
-    source("environment:computed", [], "srcEnvironmentReads over a planted src module: an element access of process.env by anything but a whole string token (a reference, a template with a substitution, a concatenation, an element access) is listed as computed by file, owner and syntax and gives no NAME; the reading is listed", COMPUTED_MODULE, environmentReading),
-    source("environment:whole", ["U1g"], "srcEnvironmentReads over a planted src module (refusal #1 U1g): every other use of process.env (aliased in a variable, destructured, passed to a call, spread, compared, returned, asserted non-null) is listed as a whole use by file, owner and the syntax holding it and gives no NAME; the reading is listed", WHOLE_MODULE, environmentReading),
-    source("environment:other", ["U2"], "srcEnvironmentReads over a planted src module (refusal #1 U2): every spelling of env (an identifier or a whole string token) that is not the env of process.env on the identifier process is listed in other by file, owner and the syntax holding it and gives no NAME (an imported env and its use, globalThis.process.env, a renamed or a shorthand destructured env of process and its use, process['env'], an aliased process, a parenthesized process); the reading is listed", OTHER_MODULE, environmentReading),
-    {
-      key: "runs:environment", cures: ["U1e"], read: () => runsReading(PLANTED_NAMES, effectClasses, environmentRegistrar),
-      label: "registeredUnder in the run forms over two planted environment names (refusal #1 U1e): each env form sets every name to its effect class word for the run and restores the environment after it, so a planted registrar reading the second name for its effect class and the first for a permission registers per form what the form set; what each run leaves the registry holding for rf ids, and both names after the run, are listed",
+      key: "runs:environment", cures: ["U1e"], reader: "registeredUnder", forms: runFormsOf("environmentRegistrar", PLANTED_NAMES), read: () => runsReading(PLANTED_NAMES, effectClasses, environmentRegistrar),
+      label: "registeredUnder in the run forms over two planted environment names, each unset before the runs (refusal #1 U1e): each env form sets both names to its effect class word for the run and gives each back its value from before the run, unset, after it, so a planted registrar reading the second name for its effect class and the first for a permission registers per form what the form set; what each run leaves the registry holding for rf ids, and both names after the run, are listed",
     },
     {
-      key: "runs:workspace-root", cures: ["U1f"], read: () => runsReading([], effectClasses, workspaceRootRegistrar),
-      label: "registeredUnder in the run forms (refusal #1 U1f): each run hands the registrar the form's workspace root, process.cwd() in the cwd form and the census root in every other, so a planted registrar keying its effect class and a permission on the root registers per form what the root was; what each run leaves the registry holding for rf ids is listed",
+      key: "runs:workspace-root", cures: ["U1f"], reader: "registeredUnder", forms: runFormsOf("workspaceRootRegistrar", []), read: () => runsReading([], effectClasses, workspaceRootRegistrar),
+      label: "registeredUnder in the run forms (refusal #1 U1f): each run hands the registrar the form's workspace root, process.cwd() in the cwd form and the census root in each other form, so a planted registrar keying its effect class and a permission on the root registers per form what the root was; what each run leaves the registry holding for rf ids is listed",
     },
     {
-      key: "runs:registry", cures: [], read: () => runsReading([], effectClasses, heldRegistrar),
-      label: "registeredUnder in the run forms: each run registers into a fresh registry and lists every rf descriptor it then holds, in registration order and space-joined as id=effectClass/[permissions], leaving out a descriptor whose id is not an rf capability id, and <no rf descriptor> when it holds none (a planted registrar holding a forge id and two rf ids, and in the cwd form the forge id only); what each run leaves the registry holding is listed",
+      key: "runs:registry", cures: [], reader: "registeredUnder", forms: runFormsOf("heldRegistrar", []), read: () => runsReading([], effectClasses, heldRegistrar),
+      label: "registeredUnder in the run forms: each run registers into a fresh registry and lists each rf descriptor it then holds, in registration order and space-joined as id=effectClass/[permissions], leaving out the planted descriptor whose id is not an rf capability id, and <no rf descriptor> when it holds none (the planted registrar holding a forge id and two rf ids, and in the cwd form the forge id only); what each run leaves the registry holding is listed",
+    },
+  ];
+}
+
+/** A planted module registering one committing rf id from the function `owner`. */
+const committingModule = (owner: string, id: string): string => `export function ${owner}(registry: Registry): void {
+  registry.register({ descriptor: { id: "${id}", effectClass: "write", permissions: ["reactivefiber:commit"] } });
+}
+`;
+/** Refusal #2 U1a: a dotfile module and a module in a dot directory beside a plain module, each registering a committing rf id. */
+const DOT_TREE: Readonly<Record<string, string>> = {
+  "src/plain.ts": committingModule("plantPlain", "reactivefiber.plant-plain"),
+  "src/.plant-dot.ts": committingModule("plantDot", "reactivefiber.plant-dot"),
+  "src/.plant-dir/inner.ts": committingModule("plantDotDirectory", "reactivefiber.plant-dot-directory"),
+};
+/** Refusal #2 U1i: a file beside a directory of its name, with a sibling between them, so a per-directory sort and a whole-path sort disagree. */
+const SORT_TREE: Readonly<Record<string, string>> = {
+  "src/x.ts": "export const plantFile = 1;\n",
+  "src/x-y.ts": "export const plantSibling = 1;\n",
+  "src/x/y.ts": "export const plantInner = 1;\n",
+};
+/** Refusal #2 U1j: the module extension in two other letter cases beside a module. */
+const CASE_TREE: Readonly<Record<string, string>> = {
+  "src/upper.TS": "export const plantUpper = 1;\n",
+  "src/lower.ts": "export const plantLower = 1;\n",
+  "src/mixed.Ts": "export const plantMixed = 1;\n",
+};
+const DEFAULT_CLASS_MODULE = `export function plantNullishClass(registry: Registry, effectClass?: EffectClass): void {
+  registry.register({ descriptor: { id: "reactivefiber.plant-nullish", effectClass: effectClass ?? "read", permissions: ["reactivefiber:render"] } });
+}
+export function plantOrClass(registry: Registry, effectClass?: EffectClass): void {
+  registry.register({ descriptor: { id: "reactivefiber.plant-or", effectClass: effectClass || "read", permissions: ["reactivefiber:render"] } });
+}
+`;
+const CONDITIONAL_ELEMENT_MODULE = `export function plantConditionalElement(registry: Registry, workspaceRoot: string): void {
+  registry.register({ descriptor: { id: "reactivefiber.plant-conditional-element", effectClass: "read", permissions: [workspaceRoot === "/opt/plant-elsewhere" ? "reactivefiber:commit" : "reactivefiber:render"] } });
+}
+`;
+const DEFAULT_ELEMENT_MODULE = `export function plantNullishElement(registry: Registry, permission?: string): void {
+  registry.register({ descriptor: { id: "reactivefiber.plant-nullish-element", effectClass: "read", permissions: [permission ?? "reactivefiber:render"] } });
+}
+export function plantOrElement(registry: Registry, permission?: string): void {
+  registry.register({ descriptor: { id: "reactivefiber.plant-or-element", effectClass: "read", permissions: [permission || "reactivefiber:render"] } });
+}
+`;
+const WHOLE_ASSERTION_MODULE = `export function plantAsEnv(): string | undefined {
+  return (process.env as Record<string, string | undefined>).PI_JWC9_AS;
+}
+export function plantAngleEnv(): string | undefined {
+  return (<Record<string, string | undefined>>process.env).PI_JWC9_ANGLE;
+}
+export function plantSatisfiesEnv(): string | undefined {
+  return (process.env satisfies Record<string, string | undefined>).PI_JWC9_SATISFIES;
+}
+`;
+const WHOLE_PARENTHESIZED_MODULE = `export function plantParenthesizedEnv(): string | undefined {
+  return (process.env).PI_JWC9_PARENTHESIZED_ENV;
+}
+`;
+const WHOLE_PROPERTY_MODULE = `export function plantPropertyEnv(): string | undefined {
+  const holder = { vars: process.env };
+  return holder.vars.PI_JWC9_PROPERTY;
+}
+export function plantArrayEnv(): string | undefined {
+  const [vars] = [process.env];
+  return vars?.PI_JWC9_ARRAY;
+}
+`;
+const OTHER_TEMPLATE_MODULE = `export function plantTemplateEnv(): string | undefined {
+  return (Reflect.get(process, \`env\`) as Record<string, string | undefined>).PI_JWC9_TEMPLATE_ENV;
+}
+export function plantStringEnv(): string | undefined {
+  return (Reflect.get(process, "env") as Record<string, string | undefined>).PI_JWC9_STRING_ENV;
+}
+`;
+const OPTIONAL_CHAIN_MODULE = `export function plantOptionalHolder(registry: Registry | undefined): void {
+  registry?.register({ descriptor: { id: "reactivefiber.plant-optional-holder", effectClass: "write", permissions: ["reactivefiber:commit"] } });
+}
+export function plantOptionalCall(registry: Registry): void {
+  registry.register?.({ descriptor: { id: "reactivefiber.plant-optional-call", effectClass: "write", permissions: ["reactivefiber:commit"] } });
+}
+`;
+const OPTIONAL_ELEMENT_MODULE = `export function plantOptionalElement(): (string | undefined)[] {
+  return [process.env?.["PI_JWC9_OPTIONAL_ELEMENT"], process.env?.[\`PI_JWC9_OPTIONAL_TEMPLATE\`]];
+}
+`;
+/** The value refusal #2 U1m's run plant sets the first planted name to before the runs. */
+const PRESET = "preset";
+/** Runs `read` with `name` set to `value`, then gives the name back the value it held before. */
+function withPreset<T>(name: string, value: string, read: () => T): T {
+  const before = process.env[name];
+  process.env[name] = value;
+  try {
+    return read();
+  } finally {
+    if (before === undefined) Reflect.deleteProperty(process.env, name);
+    else process.env[name] = before;
+  }
+}
+
+/** The planted inputs of refusal #2, in pin order: one per member of refusal #2's UNMET block, each the form that member's gate mutant departs on. */
+export function refusalTwoPlants(effectClasses: readonly string[]): ReaderPlant[] {
+  const first = PLANTED_NAMES[0] ?? "";
+  return [
+    treePlant("tree:dotfile", ["U1a"], "srcTree and rfRegistrationLiterals over a planted src tree (refusal #2 U1a): the planted dotfile module (src/.plant-dot.ts) and the planted module in a dot directory (src/.plant-dir/inner.ts) are listed as modules and read like the planted plain module (src/plain.ts), each registering a committing rf id, so all three registrations are read as rf literals; the split and the reading are listed", DOT_TREE, [treeReading, registrationReading]),
+    sourcePlant("registrations:effect-class-default", ["U1b"], "rfRegistrationLiterals over a planted src module (refusal #2 U1b): each planted rf literal whose effectClass is written as a default of an argument (effectClass ?? 'read' and effectClass || 'read') has it read as the syntax standing there in angle brackets, not as the word on its right; the reading is listed", DEFAULT_CLASS_MODULE, registrationReading),
+    sourcePlant("registrations:permissions-conditional", ["U1c"], "rfRegistrationLiterals over a planted src module (refusal #2 U1c): the planted rf literal whose permissions element is written as a conditional of the workspace root ([workspaceRoot === '/opt/plant-elsewhere' ? 'reactivefiber:commit' : 'reactivefiber:render']) has it read as its syntax in angle brackets, not as either branch's word; the reading is listed", CONDITIONAL_ELEMENT_MODULE, registrationReading),
+    sourcePlant("registrations:permissions-default", ["U1d"], "rfRegistrationLiterals over a planted src module (refusal #2 U1d): each planted rf literal whose permissions element is written as a default of an argument ([permission ?? 'reactivefiber:render'] and [permission || 'reactivefiber:render']) has it read as its syntax in angle brackets, not as the word on its right; the reading is listed", DEFAULT_ELEMENT_MODULE, registrationReading),
+    sourcePlant("environment:whole-assertion", ["U1e"], "srcEnvironmentReads over a planted src module (refusal #2 U1e): each planted process.env held by a type assertion to a record type (an as assertion, an angle-bracket assertion and a satisfies expression, each read for a name through its holder) is listed as a whole use by file, owner and the syntax holding it and gives no NAME; the reading is listed", WHOLE_ASSERTION_MODULE, environmentReading),
+    sourcePlant("environment:whole-parenthesized", ["U1f"], "srcEnvironmentReads over a planted src module (refusal #2 U1f): the planted process.env held by parentheses ((process.env).NAME) is listed as a whole use by file, owner and the syntax holding it and gives no NAME; the reading is listed", WHOLE_PARENTHESIZED_MODULE, environmentReading),
+    sourcePlant("environment:whole-property", ["U1g"], "srcEnvironmentReads over a planted src module (refusal #2 U1g): the planted process.env held as a property value ({ vars: process.env }) and as an array element ([process.env]), each read for a name through its holder, is listed as a whole use by file, owner and the syntax holding it and gives no NAME; the reading is listed", WHOLE_PROPERTY_MODULE, environmentReading),
+    sourcePlant("environment:other-template", ["U1h"], "srcEnvironmentReads over a planted src module (refusal #2 U1h): the planted env spelled as a template with no substitution (Reflect.get(process, `env`)) is listed in other beside its planted string twin (Reflect.get(process, 'env')), each by file, owner and the syntax holding it, and gives no NAME; the reading is listed", OTHER_TEMPLATE_MODULE, environmentReading),
+    treePlant("tree:sort", ["U1i"], "srcTree over a planted src tree (refusal #2 U1i): in the planted tree each directory's names are sorted by UTF-16 code unit and the planted directory is followed where its name sorts, so its file (src/x/y.ts) is listed before the planted files beside it (src/x-y.ts, then src/x.ts), which a sort of whole paths would put first ('-' and '.' sort before '/'); the split is listed", SORT_TREE, [treeReading]),
+    treePlant("tree:extension-case", ["U1j"], "srcTree over a planted src tree (refusal #2 U1j): the planted files whose extension is .ts in another letter case (src/mixed.Ts, src/upper.TS) are listed unparsed beside the planted module src/lower.ts; the split is listed", CASE_TREE, [treeReading]),
+    sourcePlant("registrations:optional-chain", ["U1k"], "rfRegistrationLiterals over a planted src module (refusal #2 U1k): each planted register spelling that is the property-access callee of a call in an optional chain (registry?.register(...) and registry.register?.(...), each holding a descriptor literal whose id is an rf capability id) is judged, so both calls are read as rf literals; the reading is listed", OPTIONAL_CHAIN_MODULE, registrationReading),
+    sourcePlant("environment:names-optional-element", ["U1l"], "srcEnvironmentReads over a planted src module (refusal #2 U1l): each planted element access of process.env in an optional chain by a whole string token (process.env?.['NAME'] and process.env?.[`NAME`]) gives the token as its NAME; the reading is listed", OPTIONAL_ELEMENT_MODULE, environmentReading),
+    {
+      key: "runs:restore-preset", cures: ["U1m"], reader: "registeredUnder", forms: withPreset(first, PRESET, () => runFormsOf("environmentRegistrar", PLANTED_NAMES)),
+      read: () => withPreset(first, PRESET, () => runsReading(PLANTED_NAMES, effectClasses, environmentRegistrar)),
+      label: "registeredUnder in the run forms over two planted environment names (refusal #2 U1m): the first is set to preset before the runs and the second is unset; each env form sets both to its effect class word for the run and gives each back its value from before the run after it, so after each run the first reads preset and the second unset, and a planted registrar reading the first for a permission registers preset in the forms that set no environment; what each run leaves the registry holding for rf ids, and both names after the run, are listed",
     },
   ];
 }

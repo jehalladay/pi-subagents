@@ -1,6 +1,6 @@
 {
  "bead": "wb-jwc.9",
- "provenance": "wb-jwc.9 falsifier roster for test/workbench-rf-operation-receipt-honesty-census.test.ts (readers, probe vocabulary and planted inputs: test/helpers/rf-operation-receipt-honesty.ts). rows restates every row, clause and pin requirement of the census byte for byte; falsifiers lists each src plant (edits: the 1-based occurrence of anchor in file replaced by plant; an empty anchor at occurrence 0 writes plant as a new file) with the pins whose claim it contradicts; mutants lists each one-edit change of a helper reader (the same edit form, in the helper) with the pins it falsifies; residuals maps each named residual to its quiet pin. The census reads rows, the falsified pin ids and the residual map; the edits are for replay on a throwaway copy, never applied by the census.",
+ "provenance": "wb-jwc.9 falsifier roster for test/workbench-rf-operation-receipt-honesty-census.test.ts (readers, probe vocabulary and planted inputs: test/helpers/rf-operation-receipt-honesty.ts). rows restates every row, clause and pin requirement of the census byte for byte; falsifiers lists each src plant (edits: the 1-based occurrence of anchor in file replaced by plant; an empty anchor at occurrence 0 writes plant as a new file) with the pins whose claim it contradicts; mutants lists each one-edit change of a helper reader (the same edit form, in the helper) with the pins it falsifies; residuals maps each named residual to its quiet pin; cut #3 adds refusal #2's fail-open plants (PL3-*), its 13 gate mutants verbatim (GL3-*) and the seat's class guard (M3-*). The census reads rows, the falsified pin ids and the residual map; the edits are for replay on a throwaway copy, never applied by the census.",
  "rows": [
   {
    "id": "G",
@@ -8,19 +8,19 @@
    "pins": [
     {
      "id": "G:literal:registerReactiveFiberRender",
-     "requirement": "the read register call in registerReactiveFiberRender names an rf capability id, and its descriptor literal spells effectClass as the whole token read and permissions as an array literal of the one whole token reactivefiber:render, so in every run that reaches it the call hands the registry that id read under reactivefiber:render whatever the registrar's arguments, workspace root or environment; any other syntax there is written into the witness instead of a word, so it fails closed"
+     "requirement": "the read register call in registerReactiveFiberRender names an rf capability id, and its descriptor literal spells effectClass as the whole token read and permissions as an array literal of the one whole token reactivefiber:render, so in every run that reaches it the call hands the registry that id read under reactivefiber:render whatever the registrar's arguments, workspace root or environment; a reading other than those words fails this pin, and each syntax rows P and Q plant there is read as syntax, not as a word, so a literal written in one of them fails closed"
     },
     {
      "id": "G:literal:registerNativeReactiveFiberRender",
-     "requirement": "the read register call in registerNativeReactiveFiberRender names an rf capability id, and its descriptor literal spells effectClass as the whole token read and permissions as an array literal of the one whole token reactivefiber:render, so in every run that reaches it the call hands the registry that id read under reactivefiber:render whatever the registrar's arguments, workspace root or environment; any other syntax there is written into the witness instead of a word, so it fails closed"
+     "requirement": "the read register call in registerNativeReactiveFiberRender names an rf capability id, and its descriptor literal spells effectClass as the whole token read and permissions as an array literal of the one whole token reactivefiber:render, so in every run that reaches it the call hands the registry that id read under reactivefiber:render whatever the registrar's arguments, workspace root or environment; a reading other than those words fails this pin, and each syntax rows P and Q plant there is read as syntax, not as a word, so a literal written in one of them fails closed"
     },
     {
      "id": "G:unjudged",
-     "requirement": "every other src spelling of register (each identifier and whole string token register in a .ts module under src/) is listed by file, owner and syntax (a judged call that is not read: why), a read call whose id is not an rf capability id is not listed, and every src file that is not a .ts module is listed unparsed, so a registration made through any other spelling of register, or in any other src file, moves the witness"
+     "requirement": "each other spelling of register the reader reads in src (an identifier register or a whole string token register in a .ts module srcTree lists under src/) is listed by file, owner and syntax (a judged call that is not read: why), a read call whose id is not an rf capability id is not listed, and each src file srcTree lists that is not a .ts module is listed unparsed, so a registration made in src through a spelling, or in a file, of a form rows P and Q plant moves the witness"
     },
     {
      "id": "G:runs",
-     "requirement": "each src rf registrar, run with a fresh registry in each stated run form (the census workspace root; process.cwd() as the workspace root; the census root with every environment name src reads as process.env.NAME or process.env[\"NAME\"] set to each effect class word src's CapabilityDescriptor declares but read), leaves the registry holding its rf id read under reactivefiber:render: what the registry holds for rf ids when it returns is listed per run form"
+     "requirement": "each src rf registrar, run with a fresh registry in each stated run form (the census workspace root; process.cwd() as the workspace root; the census root with each environment name srcEnvironmentReads lists for src set to each effect class word src's CapabilityDescriptor declares but read), leaves the registry holding its rf id read under reactivefiber:render: what the registry holds for rf ids when it returns is listed per run form"
     }
    ]
   },
@@ -120,71 +120,129 @@
    "pins": [
     {
      "id": "P:tree:split",
-     "requirement": "srcTree over a planted src tree (refusal #1 U1k): every file under src/ is listed, directories followed and each directory's names sorted by UTF-16 code unit (a name above U+FFFF before a name at U+FF5E, which byte order puts first); a file whose extension is .ts (a .d.ts file included) is a module, and every other file (.tsx, .mts, .cts, .js, .mjs, .json, .txt, no extension) is listed unparsed; the split is listed"
+     "requirement": "srcTree over a planted src tree (refusal #1 U1k): each planted file is listed, the planted directory nested two levels deep followed and each planted directory's names sorted by UTF-16 code unit (a name above U+FFFF before a name at U+FF5E, which byte order puts first); each planted file whose extension is .ts (a .d.ts file included) is a module, and each planted file with another extension (.tsx, .mts, .cts, .js, .mjs, .json, .txt, no extension) is listed unparsed; the split is listed"
     },
     {
      "id": "P:registrations:spellings",
-     "requirement": "rfRegistrationLiterals over a planted src module (refusal #1 U1j): each identifier register and each whole string token register (a string literal or a template with no substitution) is a spelling, and every spelling that is not the property-access callee of a call is listed unjudged by file, owner and the syntax holding it (a const initializer, an element-access call, a destructured member and its call, a member of the member, a parenthesized callee, a member passed as an argument, a parameter and its member, a function name, a property key); a template with a substitution spells no name and is not read; the reading is listed"
+     "requirement": "rfRegistrationLiterals over a planted src module (refusal #1 U1j): each planted identifier register and whole string token register (a string literal or a template with no substitution) is a spelling, and each planted spelling that is not the property-access callee of a call is listed unjudged by file, owner and the syntax holding it (a const initializer, an element-access call, a destructured member and its call, a member of the member, a parenthesized callee, a member passed as an argument, a parameter and its member, a function name, a property key); the planted template with a substitution spells no name and is not read; the reading is listed"
     },
     {
      "id": "P:registrations:arguments",
-     "requirement": "rfRegistrationLiterals over a planted src module (refusal #1 U1i): a property-access register call that holds other than exactly one argument (none, two strings, a provider literal beside a second argument) is listed unjudged as register call, N arguments, and one whose one argument is not an object literal (a spread argument, a reference, a call) as register call, provider <syntax>; the reading is listed"
+     "requirement": "rfRegistrationLiterals over a planted src module (refusal #1 U1i): each planted property-access register call that holds other than exactly one argument (none, two strings, a provider literal beside a second argument) is listed unjudged as register call, N arguments, and each planted one whose one argument is not an object literal (a spread argument, a reference, a call) as register call, provider <syntax>; the reading is listed"
     },
     {
      "id": "P:registrations:provider",
-     "requirement": "rfRegistrationLiterals over a planted src module: a register call whose provider literal holds a spread or a computed key, no descriptor, two descriptors, or a descriptor written as a shorthand or a method is listed unjudged as register call, provider: <why>, and one whose descriptor is not an object literal (a reference, a call) as register call, descriptor <syntax>; a provider whose keys are numbers or quoted strings, holding a descriptor whose keys are quoted strings, is read; the reading is listed"
+     "requirement": "rfRegistrationLiterals over a planted src module: each planted register call whose provider literal holds a spread or a computed key, no descriptor, two descriptors, or a descriptor written as a shorthand or a method is listed unjudged as register call, provider: <why>, and each planted one whose descriptor is not an object literal (a reference, a call) as register call, descriptor <syntax>; the planted provider whose keys are a number and a quoted string, holding a descriptor whose keys are quoted strings, is read; the reading is listed"
     },
     {
      "id": "P:registrations:descriptor",
-     "requirement": "rfRegistrationLiterals over a planted src module (refusal #1 U1a): a register call whose descriptor literal holds a spread (a conditional spread of effectClass write included) or a computed key, no id, two ids, or an id written as a shorthand is listed unjudged as register call, descriptor: <why>, and one whose id is not a whole string token (a reference, a template with a substitution) as register call, id <syntax>; an id written as a template with no substitution is read as its text; the reading is listed"
+     "requirement": "rfRegistrationLiterals over a planted src module (refusal #1 U1a): each planted register call whose descriptor literal holds a spread (a conditional spread of effectClass write) or a computed key, no id, two ids, or an id written as a shorthand is listed unjudged as register call, descriptor: <why>, and each planted one whose id is not a whole string token (a reference, a template with a substitution) as register call, id <syntax>; the planted id written as a template with no substitution is read as its text; the reading is listed"
     },
     {
      "id": "P:registrations:ids",
-     "requirement": "rfRegistrationLiterals over a planted src module (refusal #1 U1d): a read call is listed as an rf literal when its id is an rf capability id, src's producerOf naming reactivefiber and the real CapabilityRegistry accepting the id (reactivefiber.render.commit, and reactivefiber-plant.dashed, whose producer ends at the dash); a read call whose producer is another (reactivefibers.plant, forge.plant.read) or whose id the registry refuses (reactivefiber.Plant, reactivefiber) is not an rf registration and is not listed; the reading is listed"
+     "requirement": "rfRegistrationLiterals over a planted src module (refusal #1 U1d): each planted read call whose id is an rf capability id, src's producerOf naming reactivefiber and the real CapabilityRegistry accepting the id (reactivefiber.render.commit, and reactivefiber-plant.dashed, whose producer ends at the dash), is listed as an rf literal; each planted read call whose producer is another (reactivefibers.plant, forge.plant.read) or whose id the registry refuses (reactivefiber.Plant, reactivefiber) is not an rf registration and is not listed; the reading is listed"
     },
     {
      "id": "P:registrations:effect-class",
-     "requirement": "rfRegistrationLiterals over a planted src module (refusal #1 U1b): an rf literal's effectClass is the whole string token written there (a template with no substitution included), else the syntax standing there in angle brackets (a conditional, a reference, a call, an as const assertion), else why there is no one plain effectClass assignment (a shorthand, none, two); the reading is listed"
+     "requirement": "rfRegistrationLiterals over a planted src module (refusal #1 U1b): each planted rf literal's effectClass is the whole string token written there (the planted template with no substitution included), else the syntax standing there in angle brackets (the planted conditional, reference, call and as const assertion), else why there is no one plain effectClass assignment (the planted shorthand, none and two); the reading is listed"
     },
     {
      "id": "P:registrations:permissions",
-     "requirement": "rfRegistrationLiterals over a planted src module (refusal #1 U1c): an rf literal's permissions are [token,...] for an array literal (an empty one included), each element its whole string token else its syntax in angle brackets (a conditional spread, a reference, a template with a substitution), else the syntax standing there (a reference), else why there is no one plain permissions assignment (a shorthand, none, two); the reading is listed"
+     "requirement": "rfRegistrationLiterals over a planted src module (refusal #1 U1c): each planted rf literal's permissions are [token,...] for an array literal (the planted empty one included), each element its whole string token else its syntax in angle brackets (the planted conditional spread, reference and template with a substitution), else the syntax standing there (the planted reference), else why there is no one plain permissions assignment (the planted shorthand, none and two); the reading is listed"
     },
     {
      "id": "P:registrations:owners",
-     "requirement": "rfRegistrationLiterals over a planted src module: a spelling's owner is the innermost function declaration it sits in, else Class.method for a named class's method other than the spelling itself, else its named class, else the outermost variable it initializes (through an arrow function, a function expression or an object-literal method), else <top> (an anonymous default class included); the reading is listed"
+     "requirement": "rfRegistrationLiterals over a planted src module: each planted spelling's owner is the innermost function declaration it sits in, else Class.method for a named class's method other than the spelling itself, else its named class, else the outermost variable it initializes (the planted arrow function, function expression and object-literal method), else <top> (the planted anonymous default class and top-level call included); the reading is listed"
     },
     {
      "id": "P:registrations:script-kind",
-     "requirement": "rfRegistrationLiterals over a planted src module: a .ts module is parsed with TypeScript's ScriptKind.TS, so a register call through an angle-bracket type assertion of its holder is read as an rf literal; the reading is listed"
+     "requirement": "rfRegistrationLiterals over a planted src module: the planted .ts module is parsed with TypeScript's ScriptKind.TS, so its register call through an angle-bracket type assertion of its holder is read as an rf literal; the reading is listed"
     },
     {
      "id": "P:environment:names",
-     "requirement": "srcEnvironmentReads over a planted src module (refusal #1 U1h): a property access of process.env (process?.env and process.env?. included) gives its NAME, an element access of process.env by a whole string token (a string literal or a template with no substitution) gives the token as its NAME, and the names are listed once each in first-seen order; the reading is listed"
+     "requirement": "srcEnvironmentReads over a planted src module (refusal #1 U1h): each planted property access of process.env (process?.env and process.env?. included) gives its NAME, each planted element access of process.env by a whole string token (a string literal and a template with no substitution) gives the token as its NAME, and the names are listed once each in first-seen order; the reading is listed"
     },
     {
      "id": "P:environment:computed",
-     "requirement": "srcEnvironmentReads over a planted src module: an element access of process.env by anything but a whole string token (a reference, a template with a substitution, a concatenation, an element access) is listed as computed by file, owner and syntax and gives no NAME; the reading is listed"
+     "requirement": "srcEnvironmentReads over a planted src module: each planted element access of process.env by an expression that is not a whole string token (a reference, a template with a substitution, a concatenation, an element access) is listed as computed by file, owner and syntax and gives no NAME; the reading is listed"
     },
     {
      "id": "P:environment:whole",
-     "requirement": "srcEnvironmentReads over a planted src module (refusal #1 U1g): every other use of process.env (aliased in a variable, destructured, passed to a call, spread, compared, returned, asserted non-null) is listed as a whole use by file, owner and the syntax holding it and gives no NAME; the reading is listed"
+     "requirement": "srcEnvironmentReads over a planted src module (refusal #1 U1g): each planted use of process.env that is neither a property access nor an element access of it (aliased in a variable, destructured, passed to a call, spread, compared, returned, asserted non-null) is listed as a whole use by file, owner and the syntax holding it and gives no NAME; the reading is listed"
     },
     {
      "id": "P:environment:other",
-     "requirement": "srcEnvironmentReads over a planted src module (refusal #1 U2): every spelling of env (an identifier or a whole string token) that is not the env of process.env on the identifier process is listed in other by file, owner and the syntax holding it and gives no NAME (an imported env and its use, globalThis.process.env, a renamed or a shorthand destructured env of process and its use, process['env'], an aliased process, a parenthesized process); the reading is listed"
+     "requirement": "srcEnvironmentReads over a planted src module (refusal #1 U2): each planted spelling of env (an identifier or a whole string token) that is not the env of process.env on the identifier process is listed in other by file, owner and the syntax holding it and gives no NAME (an imported env and its use, globalThis.process.env, a renamed or a shorthand destructured env of process and its use, process['env'], an aliased process, a parenthesized process); the reading is listed"
     },
     {
      "id": "P:runs:environment",
-     "requirement": "registeredUnder in the run forms over two planted environment names (refusal #1 U1e): each env form sets every name to its effect class word for the run and restores the environment after it, so a planted registrar reading the second name for its effect class and the first for a permission registers per form what the form set; what each run leaves the registry holding for rf ids, and both names after the run, are listed"
+     "requirement": "registeredUnder in the run forms over two planted environment names, each unset before the runs (refusal #1 U1e): each env form sets both names to its effect class word for the run and gives each back its value from before the run, unset, after it, so a planted registrar reading the second name for its effect class and the first for a permission registers per form what the form set; what each run leaves the registry holding for rf ids, and both names after the run, are listed"
     },
     {
      "id": "P:runs:workspace-root",
-     "requirement": "registeredUnder in the run forms (refusal #1 U1f): each run hands the registrar the form's workspace root, process.cwd() in the cwd form and the census root in every other, so a planted registrar keying its effect class and a permission on the root registers per form what the root was; what each run leaves the registry holding for rf ids is listed"
+     "requirement": "registeredUnder in the run forms (refusal #1 U1f): each run hands the registrar the form's workspace root, process.cwd() in the cwd form and the census root in each other form, so a planted registrar keying its effect class and a permission on the root registers per form what the root was; what each run leaves the registry holding for rf ids is listed"
     },
     {
      "id": "P:runs:registry",
-     "requirement": "registeredUnder in the run forms: each run registers into a fresh registry and lists every rf descriptor it then holds, in registration order and space-joined as id=effectClass/[permissions], leaving out a descriptor whose id is not an rf capability id, and <no rf descriptor> when it holds none (a planted registrar holding a forge id and two rf ids, and in the cwd form the forge id only); what each run leaves the registry holding is listed"
+     "requirement": "registeredUnder in the run forms: each run registers into a fresh registry and lists each rf descriptor it then holds, in registration order and space-joined as id=effectClass/[permissions], leaving out the planted descriptor whose id is not an rf capability id, and <no rf descriptor> when it holds none (the planted registrar holding a forge id and two rf ids, and in the cwd form the forge id only); what each run leaves the registry holding is listed"
+    }
+   ]
+  },
+  {
+   "id": "Q",
+   "clause": "refusal #2",
+   "pins": [
+    {
+     "id": "Q:tree:dotfile",
+     "requirement": "srcTree and rfRegistrationLiterals over a planted src tree (refusal #2 U1a): the planted dotfile module (src/.plant-dot.ts) and the planted module in a dot directory (src/.plant-dir/inner.ts) are listed as modules and read like the planted plain module (src/plain.ts), each registering a committing rf id, so all three registrations are read as rf literals; the split and the reading are listed"
+    },
+    {
+     "id": "Q:registrations:effect-class-default",
+     "requirement": "rfRegistrationLiterals over a planted src module (refusal #2 U1b): each planted rf literal whose effectClass is written as a default of an argument (effectClass ?? 'read' and effectClass || 'read') has it read as the syntax standing there in angle brackets, not as the word on its right; the reading is listed"
+    },
+    {
+     "id": "Q:registrations:permissions-conditional",
+     "requirement": "rfRegistrationLiterals over a planted src module (refusal #2 U1c): the planted rf literal whose permissions element is written as a conditional of the workspace root ([workspaceRoot === '/opt/plant-elsewhere' ? 'reactivefiber:commit' : 'reactivefiber:render']) has it read as its syntax in angle brackets, not as either branch's word; the reading is listed"
+    },
+    {
+     "id": "Q:registrations:permissions-default",
+     "requirement": "rfRegistrationLiterals over a planted src module (refusal #2 U1d): each planted rf literal whose permissions element is written as a default of an argument ([permission ?? 'reactivefiber:render'] and [permission || 'reactivefiber:render']) has it read as its syntax in angle brackets, not as the word on its right; the reading is listed"
+    },
+    {
+     "id": "Q:environment:whole-assertion",
+     "requirement": "srcEnvironmentReads over a planted src module (refusal #2 U1e): each planted process.env held by a type assertion to a record type (an as assertion, an angle-bracket assertion and a satisfies expression, each read for a name through its holder) is listed as a whole use by file, owner and the syntax holding it and gives no NAME; the reading is listed"
+    },
+    {
+     "id": "Q:environment:whole-parenthesized",
+     "requirement": "srcEnvironmentReads over a planted src module (refusal #2 U1f): the planted process.env held by parentheses ((process.env).NAME) is listed as a whole use by file, owner and the syntax holding it and gives no NAME; the reading is listed"
+    },
+    {
+     "id": "Q:environment:whole-property",
+     "requirement": "srcEnvironmentReads over a planted src module (refusal #2 U1g): the planted process.env held as a property value ({ vars: process.env }) and as an array element ([process.env]), each read for a name through its holder, is listed as a whole use by file, owner and the syntax holding it and gives no NAME; the reading is listed"
+    },
+    {
+     "id": "Q:environment:other-template",
+     "requirement": "srcEnvironmentReads over a planted src module (refusal #2 U1h): the planted env spelled as a template with no substitution (Reflect.get(process, `env`)) is listed in other beside its planted string twin (Reflect.get(process, 'env')), each by file, owner and the syntax holding it, and gives no NAME; the reading is listed"
+    },
+    {
+     "id": "Q:tree:sort",
+     "requirement": "srcTree over a planted src tree (refusal #2 U1i): in the planted tree each directory's names are sorted by UTF-16 code unit and the planted directory is followed where its name sorts, so its file (src/x/y.ts) is listed before the planted files beside it (src/x-y.ts, then src/x.ts), which a sort of whole paths would put first ('-' and '.' sort before '/'); the split is listed"
+    },
+    {
+     "id": "Q:tree:extension-case",
+     "requirement": "srcTree over a planted src tree (refusal #2 U1j): the planted files whose extension is .ts in another letter case (src/mixed.Ts, src/upper.TS) are listed unparsed beside the planted module src/lower.ts; the split is listed"
+    },
+    {
+     "id": "Q:registrations:optional-chain",
+     "requirement": "rfRegistrationLiterals over a planted src module (refusal #2 U1k): each planted register spelling that is the property-access callee of a call in an optional chain (registry?.register(...) and registry.register?.(...), each holding a descriptor literal whose id is an rf capability id) is judged, so both calls are read as rf literals; the reading is listed"
+    },
+    {
+     "id": "Q:environment:names-optional-element",
+     "requirement": "srcEnvironmentReads over a planted src module (refusal #2 U1l): each planted element access of process.env in an optional chain by a whole string token (process.env?.['NAME'] and process.env?.[`NAME`]) gives the token as its NAME; the reading is listed"
+    },
+    {
+     "id": "Q:runs:restore-preset",
+     "requirement": "registeredUnder in the run forms over two planted environment names (refusal #2 U1m): the first is set to preset before the runs and the second is unset; each env form sets both to its effect class word for the run and gives each back its value from before the run after it, so after each run the first reads preset and the second unset, and a planted registrar reading the first for a permission registers preset in the forms that set no environment; what each run leaves the registry holding for rf ids, and both names after the run, are listed"
     }
    ]
   },
@@ -206,11 +264,15 @@
     },
     {
      "id": "R:run-form",
-     "requirement": "NAMED RESIDUAL R-RUN-FORM, not claimed: a registration is read through its descriptor literal (G:literal) and measured in the stated run forms (G:runs) only, so a rewrite of what the registry holds after a read call (CapabilityRegistry.register's own body, or code reaching the descriptors the registry holds), a register member reached through a name src never spells, or an environment read src makes by a computed name (process.env[expression]), through a whole use of process.env, through any other spelling of env, or through an env member reached by a name src never spells, conditioned on another workspace root, environment value or argument, is not read; src's environment reads are listed by name, computed access and whole use, every other src spelling of env by file, owner and syntax, with the run forms"
+     "requirement": "NAMED RESIDUAL R-RUN-FORM, not claimed: a registration is read through its descriptor literal (G:literal) and measured in the stated run forms (G:runs) only, so a rewrite of what the registry holds after a read call (CapabilityRegistry.register's own body, or code reaching the descriptors the registry holds), a register member reached through a name src never spells, or an environment read src makes by a computed name (process.env[expression]), through a whole use of process.env, through any other spelling of env, or through an env member reached by a name src never spells, conditioned on another workspace root, environment value or argument, is not read; src's environment reads are listed by name, computed access and whole use, and each other spelling of env the reader lists for src by file, owner and syntax, with the run forms"
     },
     {
      "id": "R:probe-context",
      "requirement": "NAMED RESIDUAL R-PROBE-CONTEXT, not claimed: every read of rows F, C and U is fed in one request context against one journaled row, so a binding conditioned on any other task, position, principal, session, workspace, grant set, clock or journaled row is not probed; the context and the row are listed"
+    },
+    {
+     "id": "R:reader-form",
+     "requirement": "NAMED RESIDUAL R-READER-FORM, not claimed: each reader is pinned on src as measured and on exactly the planted forms rows P and Q feed it, so a reader that reads a form no plant feeds otherwise (another file name, extension or directory order for srcTree; another register spelling, callee, argument count, provider, descriptor, id, effectClass or permissions syntax, or owner for rfRegistrationLiterals; another holder, access or spelling of process.env or env for srcEnvironmentReads; another run form, registrar or environment state for runForms and registeredUnder) is not detected; each plant's reader and planted forms are listed"
     }
    ]
   }
@@ -761,6 +823,136 @@
    ],
    "falsifies": [
     "G:runs",
+    "R:run-form"
+   ]
+  },
+  {
+   "id": "PL3-DOTFILE",
+   "origin": "refusal #2 PREP G-DOTFILE/plant-delivered (gate-prep-24, specs/leg2-plants.json), its new-file edit alone (its second edit, a re-export from providers/reactivefiber.ts, only makes the plant reachable for the gate's behaviour probe)",
+   "file": "src/workbench/.gate-plant-dot.ts",
+   "edits": [
+    {
+     "anchor": "",
+     "occurrence": 0,
+     "plant": "import type { CapabilityRegistry } from \"./capability-registry.js\";\n\n/** gate-prep-24 plant: a committing rf registration the census must see. */\nexport function registerGatePlantDot(registry: CapabilityRegistry): void {\n  registry.register({\n    descriptor: { id: \"reactivefiber.render.commit\", version: \"1.0.0\", description: \"gate plant\", inputSchema: { type: \"object\", properties: {}, additionalProperties: false }, effectClass: \"write\", permissions: [\"reactivefiber:commit\"], supportedModes: [\"invoke\"] },\n    invoke: async () => null,\n  });\n}\n"
+    }
+   ],
+   "falsifies": [
+    "G:runs"
+   ]
+  },
+  {
+   "id": "PL3-WORD-DEFAULT",
+   "origin": "refusal #2 PREP G-WORD-DEFAULT/plant-delivered (gate-prep-24, specs/leg2-plants.json)",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "export function registerNativeReactiveFiberRender(registry:CapabilityRegistry,workspaceRoot:string):void {",
+     "occurrence": 1,
+     "plant": "export function registerNativeReactiveFiberRender(registry:CapabilityRegistry,workspaceRoot:string,effectClass?:\"read\"|\"write\"):void {"
+    },
+    {
+     "anchor": "effectClass:\"read\"",
+     "occurrence": 2,
+     "plant": "effectClass:effectClass??\"read\""
+    }
+   ],
+   "falsifies": [
+    "G:literal:registerNativeReactiveFiberRender"
+   ]
+  },
+  {
+   "id": "PL3-WORDS-COND",
+   "origin": "refusal #2 PREP G-WORDS-COND/plant-delivered (gate-prep-24, specs/leg2-plants.json)",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "permissions:[\"reactivefiber:render\"]",
+     "occurrence": 2,
+     "plant": "permissions:[workspaceRoot===\"/opt/rf-elsewhere\"?\"reactivefiber:commit\":\"reactivefiber:render\"]"
+    }
+   ],
+   "falsifies": [
+    "G:literal:registerNativeReactiveFiberRender"
+   ]
+  },
+  {
+   "id": "PL3-WORDS-DEFAULT",
+   "origin": "refusal #2 PREP G-WORDS-DEFAULT/plant-delivered (gate-prep-24, specs/leg2-plants.json)",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "export function registerNativeReactiveFiberRender(registry:CapabilityRegistry,workspaceRoot:string):void {",
+     "occurrence": 1,
+     "plant": "export function registerNativeReactiveFiberRender(registry:CapabilityRegistry,workspaceRoot:string,permission?:string):void {"
+    },
+    {
+     "anchor": "permissions:[\"reactivefiber:render\"]",
+     "occurrence": 2,
+     "plant": "permissions:[permission??\"reactivefiber:render\"]"
+    }
+   ],
+   "falsifies": [
+    "G:literal:registerNativeReactiveFiberRender"
+   ]
+  },
+  {
+   "id": "PL3-ENV-WHOLE-AS",
+   "origin": "refusal #2 PREP G-ENV-WHOLE-AS/plant-delivered (gate-prep-24, specs/leg2-plants.json)",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n",
+     "occurrence": 1,
+     "plant": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n  if((process.env as Record<string,string|undefined>).PI_RF_GATE_PLANT===\"write\") return;\n"
+    }
+   ],
+   "falsifies": [
+    "R:run-form"
+   ]
+  },
+  {
+   "id": "PL3-ENV-WHOLE-PAREN",
+   "origin": "refusal #2 PREP G-ENV-WHOLE-PAREN/plant-delivered (gate-prep-24, specs/leg2-plants.json)",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n",
+     "occurrence": 1,
+     "plant": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n  if((process.env).PI_RF_GATE_PLANT===\"write\") return;\n"
+    }
+   ],
+   "falsifies": [
+    "R:run-form"
+   ]
+  },
+  {
+   "id": "PL3-ENV-WHOLE-PROPERTY",
+   "origin": "refusal #2 PREP G-ENV-WHOLE-PROPERTY/plant-delivered (gate-prep-24, specs/leg2-plants.json)",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n",
+     "occurrence": 1,
+     "plant": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n  const plantHolder={vars:process.env};\n  if(plantHolder.vars.PI_RF_GATE_PLANT===\"write\") return;\n"
+    }
+   ],
+   "falsifies": [
+    "R:run-form"
+   ]
+  },
+  {
+   "id": "PL3-ENV-OTHER-TEMPLATE",
+   "origin": "refusal #2 PREP G-ENV-OTHER-TEMPLATE/plant-delivered (gate-prep-24, specs/leg2-plants.json)",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n",
+     "occurrence": 1,
+     "plant": "export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {\n  if((Reflect.get(process,`env`) as Record<string,string|undefined>).PI_RF_GATE_PLANT===\"write\") return;\n"
+    }
+   ],
+   "falsifies": [
     "R:run-form"
    ]
   }
@@ -1679,6 +1871,474 @@
     "U:injectable:no-source",
     "U:injectable:no-identity"
    ]
+  },
+  {
+   "id": "GL3-DOTFILE",
+   "origin": "refusal #2 PREP G-DOTFILE (gate-prep-24, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return readdirSync(dir).sort().flatMap(name => {",
+     "occurrence": 1,
+     "plant": "  return readdirSync(dir).filter(name => !name.startsWith(\".\")).sort().flatMap(name => {"
+    }
+   ],
+   "falsifies": [
+    "Q:tree:dotfile"
+   ]
+  },
+  {
+   "id": "GL3-GLOBALSORT",
+   "origin": "refusal #2 PREP G-GLOBALSORT (gate-prep-24, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  const files = treeFiles(join(root, \"src\")).map(path => relative(root, path));",
+     "occurrence": 1,
+     "plant": "  const files = treeFiles(join(root, \"src\")).map(path => relative(root, path)).sort();"
+    }
+   ],
+   "falsifies": [
+    "Q:tree:sort"
+   ]
+  },
+  {
+   "id": "GL3-EXT-CASE",
+   "origin": "refusal #2 PREP G-EXT-CASE (gate-prep-24, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "(Object.hasOwn(MODULE_KINDS, extname(file)) ? MODULE_KINDS[extname(file)] : undefined)",
+     "occurrence": 1,
+     "plant": "(Object.hasOwn(MODULE_KINDS, extname(file).toLowerCase()) ? MODULE_KINDS[extname(file).toLowerCase()] : undefined)"
+    }
+   ],
+   "falsifies": [
+    "Q:tree:extension-case"
+   ]
+  },
+  {
+   "id": "GL3-OPTCHAIN",
+   "origin": "refusal #2 PREP G-OPTCHAIN (gate-prep-24, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      if (!(ts.isPropertyAccessExpression(access) && ts.isCallExpression(holder) && holder.expression === access)) {",
+     "occurrence": 1,
+     "plant": "      if (!(ts.isPropertyAccessExpression(access) && access.questionDotToken === undefined && ts.isCallExpression(holder) && holder.expression === access)) {"
+    }
+   ],
+   "falsifies": [
+    "Q:registrations:optional-chain"
+   ]
+  },
+  {
+   "id": "GL3-WORD-DEFAULT",
+   "origin": "refusal #2 PREP G-WORD-DEFAULT (gate-prep-24, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return isWholeToken(value) ? value.text : `<${ts.SyntaxKind[value.kind]}>`;",
+     "occurrence": 1,
+     "plant": "  return isWholeToken(value) ? value.text : ts.isBinaryExpression(value) && isWholeToken(value.right) ? value.right.text : `<${ts.SyntaxKind[value.kind]}>`;"
+    }
+   ],
+   "falsifies": [
+    "Q:registrations:effect-class-default"
+   ]
+  },
+  {
+   "id": "GL3-WORDS-COND",
+   "origin": "refusal #2 PREP G-WORDS-COND (gate-prep-24, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return `[${value.elements.map(element => (isWholeToken(element) ? element.text : `<${ts.SyntaxKind[element.kind]}>`)).join(\",\")}]`;",
+     "occurrence": 1,
+     "plant": "  return `[${value.elements.map(element => (isWholeToken(element) ? element.text : ts.isConditionalExpression(element) && isWholeToken(element.whenFalse) ? element.whenFalse.text : `<${ts.SyntaxKind[element.kind]}>`)).join(\",\")}]`;"
+    }
+   ],
+   "falsifies": [
+    "Q:registrations:permissions-conditional"
+   ]
+  },
+  {
+   "id": "GL3-WORDS-DEFAULT",
+   "origin": "refusal #2 PREP G-WORDS-DEFAULT (gate-prep-24, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return `[${value.elements.map(element => (isWholeToken(element) ? element.text : `<${ts.SyntaxKind[element.kind]}>`)).join(\",\")}]`;",
+     "occurrence": 1,
+     "plant": "  return `[${value.elements.map(element => (isWholeToken(element) ? element.text : ts.isBinaryExpression(element) && isWholeToken(element.right) ? element.right.text : `<${ts.SyntaxKind[element.kind]}>`)).join(\",\")}]`;"
+    }
+   ],
+   "falsifies": [
+    "Q:registrations:permissions-default"
+   ]
+  },
+  {
+   "id": "GL3-ENV-WHOLE-AS",
+   "origin": "refusal #2 PREP G-ENV-WHOLE-AS (gate-prep-24, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      } else whole.push(`${site}: ${ts.SyntaxKind[parent.kind]}`);",
+     "occurrence": 1,
+     "plant": "      } else if (!ts.isAsExpression(parent)) whole.push(`${site}: ${ts.SyntaxKind[parent.kind]}`);"
+    }
+   ],
+   "falsifies": [
+    "Q:environment:whole-assertion"
+   ]
+  },
+  {
+   "id": "GL3-ENV-WHOLE-PAREN",
+   "origin": "refusal #2 PREP G-ENV-WHOLE-PAREN (gate-prep-24, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      } else whole.push(`${site}: ${ts.SyntaxKind[parent.kind]}`);",
+     "occurrence": 1,
+     "plant": "      } else if (!ts.isParenthesizedExpression(parent)) whole.push(`${site}: ${ts.SyntaxKind[parent.kind]}`);"
+    }
+   ],
+   "falsifies": [
+    "Q:environment:whole-parenthesized"
+   ]
+  },
+  {
+   "id": "GL3-ENV-WHOLE-PROPERTY",
+   "origin": "refusal #2 PREP G-ENV-WHOLE-PROPERTY (gate-prep-24, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      } else whole.push(`${site}: ${ts.SyntaxKind[parent.kind]}`);",
+     "occurrence": 1,
+     "plant": "      } else if (!ts.isPropertyAssignment(parent)) whole.push(`${site}: ${ts.SyntaxKind[parent.kind]}`);"
+    }
+   ],
+   "falsifies": [
+    "Q:environment:whole-property"
+   ]
+  },
+  {
+   "id": "GL3-ENV-OTHER-TEMPLATE",
+   "origin": "refusal #2 PREP G-ENV-OTHER-TEMPLATE (gate-prep-24, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      if ((ts.isIdentifier(node) || isWholeToken(node)) && node.text === \"env\" && ",
+     "occurrence": 1,
+     "plant": "      if ((ts.isIdentifier(node) || ts.isStringLiteral(node)) && node.text === \"env\" && "
+    }
+   ],
+   "falsifies": [
+    "Q:environment:other-template"
+   ]
+  },
+  {
+   "id": "GL3-ENV-ELEMENT-OPT",
+   "origin": "refusal #2 PREP G-ENV-ELEMENT-OPT (gate-prep-24, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      else if (ts.isElementAccessExpression(parent) && parent.expression === node) {",
+     "occurrence": 1,
+     "plant": "      else if (ts.isElementAccessExpression(parent) && parent.expression === node && parent.questionDotToken === undefined) {"
+    }
+   ],
+   "falsifies": [
+    "Q:environment:names-optional-element"
+   ]
+  },
+  {
+   "id": "GL3-RESTORE-SET",
+   "origin": "refusal #2 PREP G-RESTORE-SET (gate-prep-24, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      else process.env[name] = value;",
+     "occurrence": 1,
+     "plant": "      else Reflect.deleteProperty(process.env, name);"
+    }
+   ],
+   "falsifies": [
+    "Q:runs:restore-preset"
+   ]
+  },
+  {
+   "id": "M3-DOTDIR",
+   "origin": "seat (cut #3 class guard): a dot directory is not followed",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "    return statSync(path).isDirectory() ? treeFiles(path) : [path];",
+     "occurrence": 1,
+     "plant": "    return statSync(path).isDirectory() ? (name.startsWith(\".\") ? [] : treeFiles(path)) : [path];"
+    }
+   ],
+   "falsifies": [
+    "Q:tree:dotfile"
+   ]
+  },
+  {
+   "id": "M3-DOTFILE-ONLY",
+   "origin": "seat (cut #3 class guard): a dotfile is not listed",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "    return statSync(path).isDirectory() ? treeFiles(path) : [path];",
+     "occurrence": 1,
+     "plant": "    return statSync(path).isDirectory() ? treeFiles(path) : name.startsWith(\".\") ? [] : [path];"
+    }
+   ],
+   "falsifies": [
+    "Q:tree:dotfile"
+   ]
+  },
+  {
+   "id": "M3-OPTCALL",
+   "origin": "seat (cut #3 class guard): a call made through an optional call is not judged",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      if (!(ts.isPropertyAccessExpression(access) && ts.isCallExpression(holder) && holder.expression === access)) {",
+     "occurrence": 1,
+     "plant": "      if (!(ts.isPropertyAccessExpression(access) && ts.isCallExpression(holder) && holder.questionDotToken === undefined && holder.expression === access)) {"
+    }
+   ],
+   "falsifies": [
+    "Q:registrations:optional-chain"
+   ]
+  },
+  {
+   "id": "M3-WORD-OR",
+   "origin": "seat (cut #3 class guard): an effectClass written as an || default reads as its right token",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return isWholeToken(value) ? value.text : `<${ts.SyntaxKind[value.kind]}>`;",
+     "occurrence": 1,
+     "plant": "  return isWholeToken(value) ? value.text : ts.isBinaryExpression(value) && value.operatorToken.kind === ts.SyntaxKind.BarBarToken && isWholeToken(value.right) ? value.right.text : `<${ts.SyntaxKind[value.kind]}>`;"
+    }
+   ],
+   "falsifies": [
+    "Q:registrations:effect-class-default"
+   ]
+  },
+  {
+   "id": "M3-WORD-NULLISH",
+   "origin": "seat (cut #3 class guard): an effectClass written as a ?? default reads as its right token",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return isWholeToken(value) ? value.text : `<${ts.SyntaxKind[value.kind]}>`;",
+     "occurrence": 1,
+     "plant": "  return isWholeToken(value) ? value.text : ts.isBinaryExpression(value) && value.operatorToken.kind === ts.SyntaxKind.QuestionQuestionToken && isWholeToken(value.right) ? value.right.text : `<${ts.SyntaxKind[value.kind]}>`;"
+    }
+   ],
+   "falsifies": [
+    "Q:registrations:effect-class-default"
+   ]
+  },
+  {
+   "id": "M3-WORD-COND-TRUE",
+   "origin": "seat (cut #3 class guard): an effectClass written as a conditional reads as its whenTrue token",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return isWholeToken(value) ? value.text : `<${ts.SyntaxKind[value.kind]}>`;",
+     "occurrence": 1,
+     "plant": "  return isWholeToken(value) ? value.text : ts.isConditionalExpression(value) && isWholeToken(value.whenTrue) ? value.whenTrue.text : `<${ts.SyntaxKind[value.kind]}>`;"
+    }
+   ],
+   "falsifies": [
+    "P:registrations:effect-class"
+   ]
+  },
+  {
+   "id": "M3-WORDS-COND-TRUE",
+   "origin": "seat (cut #3 class guard): a permissions element written as a conditional reads as its whenTrue token",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return `[${value.elements.map(element => (isWholeToken(element) ? element.text : `<${ts.SyntaxKind[element.kind]}>`)).join(\",\")}]`;",
+     "occurrence": 1,
+     "plant": "  return `[${value.elements.map(element => (isWholeToken(element) ? element.text : ts.isConditionalExpression(element) && isWholeToken(element.whenTrue) ? element.whenTrue.text : `<${ts.SyntaxKind[element.kind]}>`)).join(\",\")}]`;"
+    }
+   ],
+   "falsifies": [
+    "Q:registrations:permissions-conditional"
+   ]
+  },
+  {
+   "id": "M3-WORDS-OR",
+   "origin": "seat (cut #3 class guard): a permissions element written as an || default reads as its right token",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return `[${value.elements.map(element => (isWholeToken(element) ? element.text : `<${ts.SyntaxKind[element.kind]}>`)).join(\",\")}]`;",
+     "occurrence": 1,
+     "plant": "  return `[${value.elements.map(element => (isWholeToken(element) ? element.text : ts.isBinaryExpression(element) && element.operatorToken.kind === ts.SyntaxKind.BarBarToken && isWholeToken(element.right) ? element.right.text : `<${ts.SyntaxKind[element.kind]}>`)).join(\",\")}]`;"
+    }
+   ],
+   "falsifies": [
+    "Q:registrations:permissions-default"
+   ]
+  },
+  {
+   "id": "M3-ENV-WHOLE-SATISFIES",
+   "origin": "seat (cut #3 class guard): process.env held by a satisfies expression is not a whole use",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      } else whole.push(`${site}: ${ts.SyntaxKind[parent.kind]}`);",
+     "occurrence": 1,
+     "plant": "      } else if (!ts.isSatisfiesExpression(parent)) whole.push(`${site}: ${ts.SyntaxKind[parent.kind]}`);"
+    }
+   ],
+   "falsifies": [
+    "Q:environment:whole-assertion"
+   ]
+  },
+  {
+   "id": "M3-ENV-WHOLE-ANGLE",
+   "origin": "seat (cut #3 class guard): process.env held by an angle-bracket assertion is not a whole use",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      } else whole.push(`${site}: ${ts.SyntaxKind[parent.kind]}`);",
+     "occurrence": 1,
+     "plant": "      } else if (!ts.isTypeAssertionExpression(parent)) whole.push(`${site}: ${ts.SyntaxKind[parent.kind]}`);"
+    }
+   ],
+   "falsifies": [
+    "Q:environment:whole-assertion"
+   ]
+  },
+  {
+   "id": "M3-ENV-WHOLE-ARRAY",
+   "origin": "seat (cut #3 class guard): process.env held as an array element is not a whole use",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      } else whole.push(`${site}: ${ts.SyntaxKind[parent.kind]}`);",
+     "occurrence": 1,
+     "plant": "      } else if (!ts.isArrayLiteralExpression(parent)) whole.push(`${site}: ${ts.SyntaxKind[parent.kind]}`);"
+    }
+   ],
+   "falsifies": [
+    "Q:environment:whole-property"
+   ]
+  },
+  {
+   "id": "M3-ENV-OTHER-STRING",
+   "origin": "seat (cut #3 class guard): env spelled as a string literal is not listed in other",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      if ((ts.isIdentifier(node) || isWholeToken(node)) && node.text === \"env\" && ",
+     "occurrence": 1,
+     "plant": "      if ((ts.isIdentifier(node) || ts.isNoSubstitutionTemplateLiteral(node)) && node.text === \"env\" && "
+    }
+   ],
+   "falsifies": [
+    "P:environment:other",
+    "Q:environment:other-template",
+    "R:run-form"
+   ]
+  },
+  {
+   "id": "M3-ENV-NAME-OPT-PROPERTY",
+   "origin": "seat (cut #3 class guard): a property access of process.env in an optional chain gives no NAME",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      if (ts.isPropertyAccessExpression(parent) && parent.expression === node) names.push(parent.name.text);",
+     "occurrence": 1,
+     "plant": "      if (ts.isPropertyAccessExpression(parent) && parent.expression === node && parent.questionDotToken === undefined) names.push(parent.name.text);"
+    }
+   ],
+   "falsifies": [
+    "P:environment:names"
+   ]
+  },
+  {
+   "id": "M3-RESTORE-VALUE",
+   "origin": "seat (cut #3 class guard): a name set before the run is given back another value",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "      else process.env[name] = value;",
+     "occurrence": 1,
+     "plant": "      else process.env[name] = `${value}-restored`;"
+    }
+   ],
+   "falsifies": [
+    "Q:runs:restore-preset"
+   ]
+  },
+  {
+   "id": "M3-FORMS-VARIABLES",
+   "origin": "seat (cut #3 class guard): a planted module's variables are not listed among its forms",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "    if (ts.isVariableStatement(statement)) return statement.declarationList.declarations.map(declaration => declaration.name.getText(planted));",
+     "occurrence": 1,
+     "plant": "    if (ts.isVariableStatement(statement)) return [];"
+    }
+   ],
+   "falsifies": [
+    "R:reader-form"
+   ]
+  },
+  {
+   "id": "M3-TREE-FIRST-READING",
+   "origin": "seat (cut #3 class guard): a tree plant is read by its first reader only",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "    read: () => withPlantedTree(files, root => readings.map(reading => reading(root)).join(\"; \")),",
+     "occurrence": 1,
+     "plant": "    read: () => withPlantedTree(files, root => readings.slice(0, 1).map(reading => reading(root)).join(\"; \")),"
+    }
+   ],
+   "falsifies": [
+    "Q:tree:dotfile"
+   ]
+  },
+  {
+   "id": "M3-PRESET-IGNORED",
+   "origin": "seat (cut #3 class guard): the preset name is never set before the runs",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  process.env[name] = value;\n  try {\n    return read();",
+     "occurrence": 1,
+     "plant": "  try {\n    return read();"
+    }
+   ],
+   "falsifies": [
+    "Q:runs:restore-preset",
+    "R:reader-form"
+   ]
+  },
+  {
+   "id": "M3-RUNFORMS-STATE",
+   "origin": "seat (cut #3 class guard): a run plant's forms leave out each name's value before the runs",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "[registrar, ...names.map(name => `${name}=${process.env[name] ?? \"unset\"}`)]",
+     "occurrence": 1,
+     "plant": "[registrar, ...names]"
+    }
+   ],
+   "falsifies": [
+    "R:reader-form"
+   ]
   }
  ],
  "residuals": [
@@ -1701,6 +2361,10 @@
   {
    "id": "R-PROBE-CONTEXT",
    "quietPin": "R:probe-context"
+  },
+  {
+   "id": "R-READER-FORM",
+   "quietPin": "R:reader-form"
   }
  ]
 }
