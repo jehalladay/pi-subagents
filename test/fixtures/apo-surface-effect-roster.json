@@ -1,0 +1,1003 @@
+{
+ "bead": "wb-021.1",
+ "constants": {
+  "requirementId": "MW-ADAPTIVE-POLICY-ORGANIZATIONS-R1",
+  "programSlug": "adaptive-policy-organizations",
+  "abbreviation": "APO",
+  "readClass": "read",
+  "surfaceKinds": [
+   "views",
+   "node() providers",
+   "UI handlers"
+  ],
+  "acceptance": "a guard pins today's absence; once any APO surface registers, a registry/census falsifier proves every APO-role capability is effectClass read and no APO view handler reaches a non-read registry.invoke.",
+  "export": ".beads/issues.jsonl",
+  "tracker": ".beads/",
+  "scope": "src/",
+  "holders": [
+   "test/workbench-apo-surface-effect-census.test.ts",
+   "test/fixtures/apo-surface-effect-roster.json"
+  ],
+  "registrySource": "src/workbench/capability-registry.ts",
+  "providers": "src/workbench/providers/",
+  "nativeModules": "src/workbench/native-modules.ts",
+  "nativeSurface": "registerNativeProviders",
+  "liveness": {
+   "file": "src/workbench/providers/hyperunix.ts",
+   "id": "hyperunix.find"
+  },
+  "filingPin": "4ae04701b750f86bd07faaad19158a58f0922e1f",
+  "script": "\\.(?:[cm]?[jt]sx?)$",
+  "floors": {
+   "srcFiles": 100,
+   "srcScripts": 100,
+   "pinFiles": 100,
+   "realReaches": 8
+  },
+  "stems": [
+   "^adaptives?$",
+   "^polic(?:y|ies)$",
+   "^organi[sz]ations?$"
+  ],
+  "surfaces": [
+   "registerForgeGateStatus",
+   "registerFurnaceRunInspect",
+   "registerHyperUnixFind",
+   "registerNativeForgeGateStatus",
+   "registerNativeFurnaceRunInspect",
+   "registerNativeHyperUnixFind",
+   "registerNativeReactiveFiberRender",
+   "registerReactiveFiberRender"
+  ],
+  "spellingPlants": {
+   "slug": {
+    "path": "src/workbench/zz-spelling-slug.ts",
+    "text": "export const PROGRAM = \"adaptive-policy-organizations\";\n"
+   },
+   "words": {
+    "path": "src/workbench/zz-spelling-words.ts",
+    "text": "// Shows Adaptive Policy Organisations state.\nexport {};\n"
+   },
+   "constant": {
+    "path": "src/workbench/zz-spelling-constant.ts",
+    "text": "export const ADAPTIVE_POLICIES_ORGANIZATION = 1;\n"
+   },
+   "identifier": {
+    "path": "src/workbench/zz-spelling-identifier.ts",
+    "text": "export function adaptivePolicyOrganizationView(): void {}\n"
+   },
+   "requirement": {
+    "path": "src/workbench/zz-spelling-requirement.ts",
+    "text": "export const REQUIREMENT = \"APO-020\";\n"
+   },
+   "capability": {
+    "path": "src/workbench/zz-spelling-capability.ts",
+    "text": "export const CAPABILITY = \"mw.apo.view\";\n"
+   },
+   "pascal": {
+    "path": "src/workbench/zz-spelling-pascal.ts",
+    "text": "export class ApoGraphView {}\n"
+   },
+   "acronym": {
+    "path": "src/workbench/zz-spelling-acronym.ts",
+    "text": "export const APOView = 1;\n"
+   },
+   "plural": {
+    "path": "src/workbench/zz-spelling-plural.ts",
+    "text": "// Lists the APOs.\nexport {};\n"
+   },
+   "digits": {
+    "path": "src/workbench/zz-spelling-digits.ts",
+    "text": "export const APO020 = 1;\n"
+   },
+   "digitLetter": {
+    "path": "src/workbench/zz-spelling-digit-letter.ts",
+    "text": "export const LABEL = \"020APO\";\n"
+   },
+   "escaped": {
+    "path": "src/workbench/zz-spelling-escaped.ts",
+    "text": "export const LABEL = \"\\u0041PO graph\";\n"
+   },
+   "escapedTemplate": {
+    "path": "src/workbench/zz-spelling-escaped-template.ts",
+    "text": "export const LABEL = `\\u0041PO graph`;\n"
+   },
+   "folded": {
+    "path": "src/workbench/zz-spelling-folded.ts",
+    "text": "export const LABEL = \"A\" + \"PO graph\";\n"
+   },
+   "foldedParenthesized": {
+    "path": "src/workbench/zz-spelling-folded-parenthesized.ts",
+    "text": "export const LABEL = \"A\" + (\"P\" + \"O graph\");\n"
+   },
+   "template": {
+    "path": "src/workbench/zz-spelling-template.ts",
+    "text": "export const LABEL = `apo ${1} view`;\n"
+   },
+   "templateSpan": {
+    "path": "src/workbench/zz-spelling-template-span.ts",
+    "text": "export const LABEL = `view ${1} \\u0041PO`;\n"
+   },
+   "path": {
+    "path": "src/workbench/apo-graph-view.ts",
+    "text": "export {};\n"
+   }
+  },
+  "surfacePlants": {
+   "views": {
+    "path": "src/workbench/zz-surface-view.ts",
+    "text": "export function renderView(): string {\n  return \"APO decision graph\";\n}\n"
+   },
+   "node() providers": {
+    "id": "apo.graph.read",
+    "effectClass": "read",
+    "description": "Census plant.",
+    "permissions": [
+     "census:plant"
+    ]
+   },
+   "UI handlers": {
+    "path": "src/workbench/zz-surface-tool.ts",
+    "text": "export function register(pi: { registerTool(tool: object): void }): void {\n  pi.registerTool({ name: \"apo_graph_view\", label: \"Decision graph\" });\n}\n"
+   }
+  },
+  "quietPlants": {
+   "paraphrase": {
+    "unordered": "// policy adaptive organizations\nexport {};\n",
+    "incomplete": "// adaptive organizations and policy organizations\nexport {};\n",
+    "separated": "// the A.P.O. view and the a p o list\nexport {};\n",
+    "shortened": "// adaptive-policy-organs\nexport {};\n"
+   },
+   "computed": {
+    "substitution": "export const LABEL = `${\"A\"}PO view`;\n",
+    "join": "export const LABEL = [\"A\", \"P\", \"O\"].join(\"\");\n",
+    "codes": "export const LABEL = String.fromCodePoint(65, 80, 79);\n",
+    "mixed": "export const LABEL = String(1) + \"A\" + \"PO view\";\n"
+   },
+   "interior": {
+    "formatCharacter": "// the AP<U+200B>O view\nexport {};\n",
+    "softHyphen": "// Adaptive Pol<U+00AD>icy Organizations\nexport {};\n",
+    "confusable": "export const LABEL = \"<U+0410>PO view\";\n",
+    "fullwidth": "export const LABEL = \"<U+FF21><U+FF30><U+FF2F> view\";\n"
+   },
+   "joined": {
+    "joined": "// the apoview list\nexport {};\n",
+    "suffixed": "export const APOv1 = 1;\n",
+    "inflected": "// two Apos and three APOS\nexport {};\n",
+    "slugJoined": "// adaptivepolicyorganizations\nexport {};\n"
+   },
+   "escaped": {
+    "identifier": "export const \\u0041POView = 1;\n",
+    "regex": "export const PATTERN = /\\u0041PO/;\n",
+    "comment": "// \\u0041PO view\nexport {};\n"
+   }
+  },
+  "binaryPlant": {
+   "path": "src/workbench/zz-binary-plant.bin",
+   "text": "APO view<U+0000>\n"
+  },
+  "pinPlant": {
+   "path": "src/workbench/zz-pin-plant.ts",
+   "text": "// Presents MW adaptive-policy-organizations state.\nexport {};\n"
+  },
+  "descriptorPlants": [
+   {
+    "id": "apo.policy.apply",
+    "effectClass": "write",
+    "description": "Census plant: applies a policy.",
+    "permissions": [
+     "census:plant"
+    ]
+   },
+   {
+    "id": "mw.apo.admit",
+    "effectClass": "external",
+    "description": "Census plant: admits an event.",
+    "permissions": [
+     "census:plant"
+    ]
+   },
+   {
+    "id": "workbench.decision.authorize",
+    "effectClass": "unknown",
+    "description": "Census plant: authorizes an adaptive policy organization decision.",
+    "permissions": [
+     "census:plant"
+    ]
+   },
+   {
+    "id": "apo.graph.view",
+    "effectClass": "read",
+    "description": "Census plant: a read-only view.",
+    "permissions": [
+     "census:plant"
+    ]
+   },
+   {
+    "id": "census.plant.write",
+    "effectClass": "write",
+    "description": "Census plant: a role-less write.",
+    "permissions": [
+     "census:plant"
+    ]
+   }
+  ],
+  "fieldPlants": [
+   {
+    "id": "apo.field.view",
+    "effectClass": "read",
+    "description": "Census plant.",
+    "permissions": [
+     "census:plant"
+    ]
+   },
+   {
+    "id": "census.field.description",
+    "effectClass": "read",
+    "description": "Shows Adaptive Policy Organization state.",
+    "permissions": [
+     "census:plant"
+    ]
+   },
+   {
+    "id": "census.field.contract",
+    "effectClass": "read",
+    "description": "Census plant.",
+    "contractSource": "mw@0.0.0:APO-020",
+    "permissions": [
+     "census:plant"
+    ]
+   },
+   {
+    "id": "census.field.permissions",
+    "effectClass": "read",
+    "description": "Census plant.",
+    "permissions": [
+     "apo:read"
+    ]
+   },
+   {
+    "id": "census.field.none",
+    "effectClass": "read",
+    "description": "Census plant.",
+    "permissions": [
+     "census:plant"
+    ]
+   }
+  ],
+  "providerPlant": {
+   "id": "apo.graph.read",
+   "effectClass": "read",
+   "description": "Census plant.",
+   "permissions": [
+    "census:plant"
+   ]
+  },
+  "unnamedDescriptor": {
+   "id": "workbench.policy.gradient",
+   "effectClass": "write",
+   "description": "Policy gradient and credit view.",
+   "permissions": [
+    "census:plant"
+   ]
+  },
+  "handlerPlants": {
+   "src/workbench/zz-handler-read.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO decision-graph view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  await registry.invoke(`hyperunix.find`, { kind: \"y\" });\n  return await registry.invoke(\"hyperunix.find\", { kind: \"x\" });\n}\n",
+   "src/workbench/zz-handler-write.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO policy view handler.\nexport async function apply(registry: Registry): Promise<unknown> {\n  return await registry.invoke(\"apo.policy.apply\", {});\n}\n",
+   "src/workbench/zz-handler-unknown.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO ancestry view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  return await registry.invoke(\"census.missing.view\", {});\n}\n",
+   "src/workbench/zz-handler-computed.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO resource view handler.\nconst FIND = \"hyperunix.find\";\nexport async function view(registry: Registry, args: { capabilityId: string }): Promise<unknown> {\n  await registry.invoke((\"hyperunix.find\"), {});\n  await registry.invoke(FIND, {});\n  return await registry.invoke(args.capabilityId, {});\n}\n",
+   "src/workbench/zz-handler-inspect.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO certificate view handler.\nexport async function view(registry: Registry, ref: { capabilityId: string }): Promise<unknown> {\n  await registry.inspect();\n  return await registry.inspect(ref.capabilityId, ref);\n}\n",
+   "src/workbench/zz-handler-element.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO gradient view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  return await registry[\"invoke\"](\"apo.policy.apply\", {});\n}\n",
+   "src/workbench/zz-handler-wrapped.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO resource-pressure view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  await (registry.invoke)(\"apo.policy.apply\", {});\n  await registry.invoke!(\"apo.policy.apply\", {});\n  await (registry.invoke as Registry[\"invoke\"])(\"apo.policy.apply\", {});\n  await (registry.invoke satisfies Registry[\"invoke\"])(\"apo.policy.apply\", {});\n  return await (<Registry[\"invoke\"]>registry.invoke)(\"apo.policy.apply\", {});\n}\n",
+   "src/workbench/zz-handler-unnamed.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// Decision-graph view handler.\nexport async function view(registry: Registry, args: { capabilityId: string }): Promise<unknown> {\n  return await registry.invoke(args.capabilityId, {});\n}\n"
+  },
+  "residualModules": {
+   "unnamed": {
+    "path": "src/workbench/zz-residual-unnamed.ts",
+    "text": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// Policy gradient, operational decision graph and developmental ancestry views.\nexport async function view(registry: Registry, args: { capabilityId: string }): Promise<unknown> {\n  return await registry.invoke(args.capabilityId, {});\n}\n"
+   },
+   "aliased": {
+    "path": "src/workbench/zz-residual-aliased.ts",
+    "text": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\nimport { callCapability } from \"./zz-residual-helper.js\";\n// APO view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  const { invoke } = registry;\n  await invoke(\"apo.policy.apply\", {});\n  await registry.invoke.call(registry, \"apo.policy.apply\", {});\n  await callCapability(registry, \"apo.policy.apply\");\n  await (0, registry.invoke)(\"apo.policy.apply\", {});\n  await (registry.invoke<unknown>)(\"apo.policy.apply\", {});\n  return await Reflect.apply(registry.invoke, registry, [\"apo.policy.apply\", {}]);\n}\n"
+   },
+   "helper": {
+    "path": "src/workbench/zz-residual-helper.ts",
+    "text": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\nexport async function callCapability(registry: Registry, id: string): Promise<unknown> {\n  return await registry.invoke(id, {});\n}\n"
+   },
+   "direct": {
+    "path": "src/workbench/zz-residual-direct.ts",
+    "text": "// APO policy view handler.\nimport { executeDetachedControl } from \"./detached-control.js\";\nexport async function act(input: Parameters<typeof executeDetachedControl>[0]): Promise<unknown> {\n  return await executeDetachedControl(input);\n}\n"
+   },
+   "registerAlias": {
+    "path": "src/workbench/zz-residual-register-alias.ts",
+    "text": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantAlias(registry: Registry): void {\n  const register = registry.register.bind(registry);\n  register({ descriptor: { id: \"census.plant.alias\" } });\n}\n"
+   }
+  },
+  "registrationPlants": {
+   "src/workbench/zz-register-function.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantFunction(registry: Registry): void {\n  registry.register({ descriptor: { id: \"census.plant.function\" } });\n}\n",
+   "src/workbench/zz-register-element.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantElement(registry: Registry): void {\n  registry[\"register\"]({ descriptor: { id: \"census.plant.element\" } });\n}\n",
+   "src/workbench/zz-register-wrapped.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantWrapped(registry: Registry): void {\n  registry.register!({ descriptor: { id: \"census.plant.wrapped\" } });\n}\n",
+   "src/workbench/zz-register-arrow.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport const registerPlantArrow = (registry: Registry): void => {\n  registry.register({ descriptor: { id: \"census.plant.arrow\" } });\n};\n",
+   "src/workbench/zz-register-expression.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport const registerPlantExpression = function (registry: Registry): void {\n  registry.register({ descriptor: { id: \"census.plant.expression\" } });\n};\n",
+   "src/workbench/zz-register-method.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport class PlantHost {\n  registerPlantMethod(registry: Registry): void {\n    registry.register({ descriptor: { id: \"census.plant.method\" } });\n  }\n}\n",
+   "src/workbench/zz-register-callback.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantCallback(registries: Registry[]): void {\n  registries.forEach(registry => registry.register({ descriptor: { id: \"census.plant.callback\" } }));\n}\n",
+   "src/workbench/zz-register-toplevel.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\ndeclare const registry: Registry;\nregistry.register({ descriptor: { id: \"census.plant.toplevel\" } });\n",
+   "src/workbench/zz-register-shorthand.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantShorthand(registry: Registry): void {\n  registry.register({ descriptor });\n  registry.register({ entry: descriptor });\n}\n"
+  },
+  "residuals": {
+   "R-TRACKER": "Q1",
+   "R-OUTSIDE-SRC": "Q2",
+   "R-PARAPHRASE": "Q3",
+   "R-COMPUTED": "Q4",
+   "R-INTERIOR": "Q5",
+   "R-UNNAMED-ROLE": "Q6",
+   "R-ALIASED-CALL": "Q7",
+   "R-DIRECT-EFFECT": "Q8",
+   "R-LOCAL-PROVIDER": "Q9",
+   "R-JOINED": "Q10",
+   "R-BINARY": "Q11",
+   "R-ESCAPED-NAME": "Q12"
+  }
+ },
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+  "the outside anchors: the bead's export row binds the requirement id, the program and its abbreviation, the surface kinds, the read class, the acceptance rows and the filing pin",
+  "A1",
+  "A2",
+  "A3",
+  "O1",
+  "O2",
+  "C1",
+  "C2",
+  "C3",
+  "V1",
+  "V2",
+  "Q1",
+  "Q2",
+  "Q3",
+  "Q4",
+  "Q5",
+  "Q6",
+  "Q7",
+  "Q8",
+  "Q9",
+  "Q10",
+  "Q11",
+  "Q12",
+  "the registered tests, the reached pins and the claims equal the roster, in order and both ways"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "a guard pins today's absence",
+   "pins": [
+    {
+     "id": "A1",
+     "quote": "a guard",
+     "claims": {
+      "a guard": [
+       "spellingForms"
+      ]
+     },
+     "witness": {
+      "spellingForms": {
+       "slug": [
+        "cooked",
+        "raw"
+       ],
+       "words": [
+        "raw"
+       ],
+       "constant": [
+        "raw"
+       ],
+       "identifier": [
+        "raw"
+       ],
+       "requirement": [
+        "cooked",
+        "raw"
+       ],
+       "capability": [
+        "cooked",
+        "raw"
+       ],
+       "pascal": [
+        "raw"
+       ],
+       "acronym": [
+        "raw"
+       ],
+       "plural": [
+        "raw"
+       ],
+       "digits": [
+        "raw"
+       ],
+       "digitLetter": [
+        "cooked",
+        "raw"
+       ],
+       "escaped": [
+        "cooked"
+       ],
+       "escapedTemplate": [
+        "cooked"
+       ],
+       "folded": [
+        "folded"
+       ],
+       "foldedParenthesized": [
+        "folded"
+       ],
+       "template": [
+        "cooked",
+        "raw"
+       ],
+       "templateSpan": [
+        "cooked"
+       ],
+       "path": [
+        "path"
+       ]
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "quote": "pins today's",
+     "claims": {
+      "pins": [
+       "scope",
+       "listedEqualsWalked",
+       "judgedEqualsListed",
+       "filesAtFloor",
+       "scriptsAtFloor",
+       "binaries"
+      ],
+      "today's": [
+       "liveness"
+      ]
+     },
+     "witness": {
+      "scope": "src/",
+      "listedEqualsWalked": true,
+      "judgedEqualsListed": true,
+      "filesAtFloor": true,
+      "scriptsAtFloor": true,
+      "binaries": [],
+      "liveness": {
+       "src/workbench/providers/hyperunix.ts": [
+        "cooked",
+        "raw"
+       ]
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "quote": "absence",
+     "claims": {
+      "absence": [
+       "srcMentions",
+       "filingPin",
+       "pinFilesAtFloor",
+       "pinMentions",
+       "pinPlant",
+       "pinLiveness"
+      ]
+     },
+     "witness": {
+      "srcMentions": {},
+      "filingPin": "4ae04701b750f86bd07faaad19158a58f0922e1f",
+      "pinFilesAtFloor": true,
+      "pinMentions": {},
+      "pinPlant": [
+       "raw"
+      ],
+      "pinLiveness": {
+       "src/workbench/providers/hyperunix.ts": [
+        "cooked",
+        "raw"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "O",
+   "label": "once any APO surface registers",
+   "pins": [
+    {
+     "id": "O1",
+     "quote": "once any APO surface",
+     "claims": {
+      "once": [
+       "fired"
+      ],
+      "any APO surface": [
+       "surfaceKinds",
+       "descriptorFields"
+      ]
+     },
+     "witness": {
+      "fired": false,
+      "surfaceKinds": {
+       "views": [
+        "cooked",
+        "raw"
+       ],
+       "node() providers": [
+        "id"
+       ],
+       "UI handlers": [
+        "cooked",
+        "raw"
+       ]
+      },
+      "descriptorFields": {
+       "apo.field.view": [
+        "id"
+       ],
+       "census.field.description": [
+        "description"
+       ],
+       "census.field.contract": [
+        "contractSource"
+       ],
+       "census.field.permissions": [
+        "permissions"
+       ],
+       "census.field.none": []
+      }
+     }
+    },
+    {
+     "id": "O2",
+     "quote": "registers",
+     "claims": {
+      "registers": [
+       "registrationSites",
+       "enclosing",
+       "exportedRegistrars",
+       "nativeComposition",
+       "plantSites",
+       "plantNonLiteral"
+      ]
+     },
+     "witness": {
+      "registrationSites": 8,
+      "enclosing": [
+       "registerForgeGateStatus",
+       "registerFurnaceRunInspect",
+       "registerHyperUnixFind",
+       "registerNativeForgeGateStatus",
+       "registerNativeFurnaceRunInspect",
+       "registerNativeHyperUnixFind",
+       "registerNativeReactiveFiberRender",
+       "registerReactiveFiberRender"
+      ],
+      "exportedRegistrars": [
+       "registerForgeGateStatus",
+       "registerFurnaceRunInspect",
+       "registerHyperUnixFind",
+       "registerNativeForgeGateStatus",
+       "registerNativeFurnaceRunInspect",
+       "registerNativeHyperUnixFind",
+       "registerNativeReactiveFiberRender",
+       "registerReactiveFiberRender"
+      ],
+      "nativeComposition": [
+       "registerNativeForgeGateStatus",
+       "registerNativeHyperUnixFind",
+       "registerNativeFurnaceRunInspect",
+       "registerNativeReactiveFiberRender"
+      ],
+      "plantSites": [
+       "src/workbench/zz-register-function.ts:registerPlantFunction",
+       "src/workbench/zz-register-element.ts:registerPlantElement",
+       "src/workbench/zz-register-wrapped.ts:registerPlantWrapped",
+       "src/workbench/zz-register-arrow.ts:registerPlantArrow",
+       "src/workbench/zz-register-expression.ts:registerPlantExpression",
+       "src/workbench/zz-register-method.ts:registerPlantMethod",
+       "src/workbench/zz-register-callback.ts:registerPlantCallback",
+       "src/workbench/zz-register-toplevel.ts:<none>"
+      ],
+      "plantNonLiteral": {
+       "src/workbench/zz-register-shorthand.ts": 2
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "a registry/census falsifier proves every APO-role capability is effectClass read",
+   "pins": [
+    {
+     "id": "C1",
+     "quote": "a registry/census falsifier",
+     "claims": {
+      "a registry/census falsifier": [
+       "plantViolations",
+       "plantQuiet"
+      ]
+     },
+     "witness": {
+      "plantViolations": [
+       "apo.policy.apply declares effectClass write",
+       "mw.apo.admit declares effectClass external",
+       "workbench.decision.authorize declares effectClass unknown"
+      ],
+      "plantQuiet": [
+       "apo.graph.view",
+       "census.plant.write"
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "quote": "proves every APO-role capability",
+     "claims": {
+      "proves": [
+       "violations"
+      ],
+      "every APO-role capability": [
+       "surfaces",
+       "apoRole"
+      ]
+     },
+     "witness": {
+      "violations": [],
+      "surfaces": {
+       "registerNativeProviders": [
+        "forge.gate.status:read",
+        "hyperunix.find:read",
+        "furnace.run.inspect:read",
+        "reactivefiber.render.preview:read"
+       ],
+       "registerForgeGateStatus": [
+        "forge.gate.status:read"
+       ],
+       "registerFurnaceRunInspect": [
+        "furnace.run.inspect:read"
+       ],
+       "registerHyperUnixFind": [
+        "hyperunix.find:read"
+       ],
+       "registerNativeForgeGateStatus": [
+        "forge.gate.status:read"
+       ],
+       "registerNativeFurnaceRunInspect": [
+        "furnace.run.inspect:read"
+       ],
+       "registerNativeHyperUnixFind": [
+        "hyperunix.find:read"
+       ],
+       "registerNativeReactiveFiberRender": [
+        "reactivefiber.render.preview:read"
+       ],
+       "registerReactiveFiberRender": [
+        "reactivefiber.render.preview:read"
+       ]
+      },
+      "apoRole": []
+     }
+    },
+    {
+     "id": "C3",
+     "quote": "is effectClass read",
+     "claims": {
+      "is effectClass read": [
+       "vocabulary",
+       "unionMembers",
+       "classVerdicts"
+      ]
+     },
+     "witness": {
+      "vocabulary": [
+       "read",
+       "write",
+       "external",
+       "unknown"
+      ],
+      "unionMembers": [
+       "read",
+       "write",
+       "external",
+       "unknown"
+      ],
+      "classVerdicts": {
+       "read": false,
+       "write": true,
+       "external": true,
+       "unknown": true
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "V",
+   "label": "and no APO view handler reaches a non-read registry.invoke",
+   "pins": [
+    {
+     "id": "V1",
+     "quote": "and no APO view handler",
+     "claims": {
+      "and no APO view handler": [
+       "apoModules",
+       "reachesAtFloor",
+       "readSeen",
+       "computedSeen"
+      ]
+     },
+     "witness": {
+      "apoModules": [],
+      "reachesAtFloor": true,
+      "readSeen": true,
+      "computedSeen": true
+     }
+    },
+    {
+     "id": "V2",
+     "quote": "reaches a non-read registry.invoke",
+     "claims": {
+      "reaches": [
+       "reachVerdicts"
+      ],
+      "a non-read registry.invoke": [
+       "handlerViolations",
+       "handlerQuiet"
+      ]
+     },
+     "witness": {
+      "reachVerdicts": {
+       "src/workbench/zz-handler-read.ts": [
+        "read",
+        "read"
+       ],
+       "src/workbench/zz-handler-write.ts": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-unknown.ts": [
+        "unknown"
+       ],
+       "src/workbench/zz-handler-computed.ts": [
+        "computed",
+        "computed",
+        "computed"
+       ],
+       "src/workbench/zz-handler-inspect.ts": [
+        "computed",
+        "computed"
+       ],
+       "src/workbench/zz-handler-element.ts": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-wrapped.ts": [
+        "non-read",
+        "non-read",
+        "non-read",
+        "non-read",
+        "non-read"
+       ],
+       "src/workbench/zz-handler-unnamed.ts": [
+        "computed"
+       ]
+      },
+      "handlerViolations": {
+       "src/workbench/zz-handler-write.ts": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-unknown.ts": [
+        "unknown"
+       ],
+       "src/workbench/zz-handler-computed.ts": [
+        "computed",
+        "computed",
+        "computed"
+       ],
+       "src/workbench/zz-handler-inspect.ts": [
+        "computed",
+        "computed"
+       ],
+       "src/workbench/zz-handler-element.ts": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-wrapped.ts": [
+        "non-read",
+        "non-read",
+        "non-read",
+        "non-read",
+        "non-read"
+       ]
+      },
+      "handlerQuiet": [
+       "src/workbench/zz-handler-read.ts",
+       "src/workbench/zz-handler-unnamed.ts"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the residuals: each named family pinned by its quiet row",
+   "pins": [
+    {
+     "id": "Q1",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-TRACKER",
+      "ownRowSpells": true,
+      "trackerInScope": false
+     }
+    },
+    {
+     "id": "Q2",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-OUTSIDE-SRC",
+      "scope": "src/",
+      "outsideInScope": [
+       false,
+       false,
+       false,
+       false
+      ],
+      "holdersInScope": [
+       false,
+       false
+      ],
+      "holdersSpell": [
+       true,
+       true
+      ]
+     }
+    },
+    {
+     "id": "Q3",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-PARAPHRASE",
+      "read": {
+       "unordered": false,
+       "incomplete": false,
+       "separated": false,
+       "shortened": false
+      }
+     }
+    },
+    {
+     "id": "Q4",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-COMPUTED",
+      "read": {
+       "substitution": false,
+       "join": false,
+       "codes": false,
+       "mixed": false
+      }
+     }
+    },
+    {
+     "id": "Q5",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-INTERIOR",
+      "read": {
+       "formatCharacter": false,
+       "softHyphen": false,
+       "confusable": false,
+       "fullwidth": false
+      }
+     }
+    },
+    {
+     "id": "Q6",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-UNNAMED-ROLE",
+      "apoModule": false,
+      "reaches": [
+       "computed"
+      ],
+      "descriptorRole": [],
+      "descriptorViolations": []
+     }
+    },
+    {
+     "id": "Q7",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-ALIASED-CALL",
+      "apoModule": true,
+      "reaches": [],
+      "helper": {
+       "apoModule": false,
+       "reaches": [
+        "computed"
+       ]
+      },
+      "violations": []
+     }
+    },
+    {
+     "id": "Q8",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-DIRECT-EFFECT",
+      "apoModule": true,
+      "reaches": [],
+      "imports": [
+       "./detached-control.js"
+      ]
+     }
+    },
+    {
+     "id": "Q9",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-LOCAL-PROVIDER",
+      "nonLiteralRegisterCalls": {
+       "src/workbench/hosts/local-detached.ts": 1
+      },
+      "aliasPlant": {
+       "sites": 0,
+       "nonLiteral": {}
+      }
+     }
+    },
+    {
+     "id": "Q10",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-JOINED",
+      "read": {
+       "joined": false,
+       "suffixed": false,
+       "inflected": false,
+       "slugJoined": false
+      }
+     }
+    },
+    {
+     "id": "Q11",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-BINARY",
+      "binary": true,
+      "forms": []
+     }
+    },
+    {
+     "id": "Q12",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-ESCAPED-NAME",
+      "read": {
+       "identifier": false,
+       "regex": false,
+       "comment": false
+      }
+     }
+    }
+   ]
+  }
+ ]
+}
