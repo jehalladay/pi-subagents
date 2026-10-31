@@ -4076,9 +4076,178 @@
         "src/workbench/q2-request.ts"
       ]
     },
-    "template": {
-      "composed": "Policy",
-      "words": []
+    "compose": {
+      "template": {
+        "tokens": [
+          "NoSubstitutionTemplateLiteral",
+          "StringLiteral\""
+        ],
+        "composed": "Policy",
+        "words": []
+      },
+      "single-quoted": {
+        "tokens": [
+          "StringLiteral'",
+          "StringLiteral\""
+        ],
+        "composed": "Policy",
+        "words": []
+      },
+      "regex": {
+        "tokens": [
+          "RegularExpressionLiteral"
+        ],
+        "composed": "",
+        "words": []
+      },
+      "template-parts": {
+        "tokens": [
+          "TemplateHead",
+          "NumericLiteral",
+          "TemplateMiddle",
+          "BigIntLiteral",
+          "TemplateTail"
+        ],
+        "composed": "",
+        "words": []
+      }
+    },
+    "jsx": {
+      "ts": [
+        "RegularExpressionLiteral"
+      ],
+      "tsx": [
+        "JsxText"
+      ]
+    },
+    "coreOverlap": {
+      "surface": {
+        "SURFACE_SITE_SPELLINGS": 528,
+        "SURFACE_REQUEST_SPELLINGS": 24,
+        "NON_ASCII_PARTS": 4,
+        "SURFACE_LEADS": 23,
+        "SURFACE_OTHERS": 32,
+        "SURFACE_OWNERS": 16,
+        "SILENCINGS": 35,
+        "unreachable": 5,
+        "COMPOSE_PLANTS": 4
+      },
+      "core": {
+        "SITE_WORD_SPELLINGS": 48,
+        "SITE_WORD_HITS": 7,
+        "SITE_WORD_QUIET": 11,
+        "EXECUTOR_REQUEST_SPELLINGS": 12,
+        "EXECUTOR_REQUEST_HITS": 6,
+        "EXECUTOR_REQUEST_QUIET": 4,
+        "EXECUTOR_REQUEST_OUTSIDE": 12,
+        "FAIL_CLOSED source": 10,
+        "DOCS_PLANTS": 73,
+        "FAIL_CLOSED docs": 3,
+        "RESIDUALS docs": 10,
+        "RESIDUALS source": 5,
+        "FAIL_CLOSED member": 2
+      },
+      "pairs": [
+        {
+          "form": "GraphPolicy/none/camel",
+          "core": [
+            "FC-G1-CAMEL",
+            "FC-G1-EVERY-MATCH"
+          ]
+        },
+        {
+          "form": "GraphPolicy/space/sentence",
+          "core": [
+            "FC-G1-SENTENCE"
+          ]
+        },
+        {
+          "form": "GraphPolicy/underscorex3/lower",
+          "core": [
+            "FC-G1-RUN3-SAME"
+          ]
+        },
+        {
+          "form": "GraphPolicy/mixed4/lower",
+          "core": [
+            "FC-G1-RUN-LONG"
+          ]
+        },
+        {
+          "form": "GraphDataIR/underscore+none/upper",
+          "core": [
+            "FC-G1-UNEVEN",
+            "FC-G1-EVERY-MATCH"
+          ]
+        },
+        {
+          "form": "ExecutorRequest/none/camel",
+          "core": [
+            "FC-D3-CAMEL",
+            "FC-D3-EVERY-MATCH"
+          ]
+        },
+        {
+          "form": "ExecutorRequest/space/sentence",
+          "core": [
+            "FC-D3-SENTENCE"
+          ]
+        },
+        {
+          "form": "L-HEADING-3",
+          "core": [
+            "FC-G3-LEAD-HEADING"
+          ]
+        },
+        {
+          "form": "L-BREAK-DASHES",
+          "core": [
+            "FC-G3-LEAD-BREAK"
+          ]
+        },
+        {
+          "form": "O-BEFORE-PARAGRAPH",
+          "core": [
+            "FC-G3-OTHER-LEAD"
+          ]
+        },
+        {
+          "form": "O-AFTER-DEF",
+          "core": [
+            "D-OTHER-DEF"
+          ]
+        },
+        {
+          "form": "O-AFTER-FENCES",
+          "core": [
+            "D-OTHER-CODE"
+          ]
+        },
+        {
+          "form": "O-AFTER-HEADING",
+          "core": [
+            "D-OTHER-HEADING"
+          ]
+        },
+        {
+          "form": "O-AFTER-PARAGRAPH",
+          "core": [
+            "D-OTHER-PARAGRAPH"
+          ]
+        },
+        {
+          "form": "src/workbench/q1-shape.ts line-comment",
+          "core": [
+            "FC-S2-Q1-COMMENTED"
+          ]
+        },
+        {
+          "form": "src/workbench/q2-joined.ts line-comment",
+          "core": [
+            "FC-S2-Q2-COMMENTED"
+          ]
+        }
+      ]
     }
   },
   "tests": [

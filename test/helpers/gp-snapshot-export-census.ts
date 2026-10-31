@@ -13,10 +13,12 @@
  * (docsSection/sectionTables of test/helpers/census.ts); a table cell's shown text follows the landed binding's own rendering
  * rule (inlineText, copied verbatim as the landed control-loop audit's test/helpers/gp-control-loop-audit.ts copies it).
  * The last section (wb-0lf.8, the rule-19 structural-exit child ruling R-B73 filed) holds the full surface: the forms its
- * tables list, each outside the R-B73 fail-closed core's G1, D3, G3 and S2 pinned sets and each a pinned falsifier through the
- * claim's own reader (a form outside these tables is outside every claim, where the fail-closed readers refuse it), and the
- * code reader (codeShapeKeysOf, codeComposedOf: the TypeScript parse of a residual source member) that reads S2's
- * liveness from code, never from a comment or a string's content.
+ * tables list, each a pinned falsifier through the claim's own reader, and none of them a form of the R-B73 fail-closed core
+ * but the sixteen CORE_OVERLAP names (nine forms the core holds byte for byte and seven spellings its source forms refuse; a
+ * form outside these tables is outside every claim, where the fail-closed readers refuse it), and the code reader
+ * (codeShapeKeysOf, codeComposedOf: the TypeScript parse of a residual source member) that reads S2's liveness from the
+ * member's parse, where a comment is trivia and a string's content is no code, and of whose literal tokens only the
+ * double-quoted strings compose (COMPOSE_PLANTS).
  */
 import { createHash } from "node:crypto";
 import { isDeepStrictEqual, types } from "node:util";
@@ -2335,8 +2337,9 @@ export const FAIL_CLOSED: readonly FailClosedForm[] = [
   { kind: "member", id: "FC-S2-Q2-COMMENTED", claim: "S2", member: "src/workbench/q2-joined.ts", edit: commentedOut },
 ];
 
-// ---- the full surface (wb-0lf.8, the rule-19 structural-exit child R-B73 filed): the forms these tables list, each outside
-// R-B73's pinned sets and pinned through the claim's own reader in the full-surface row; no form outside them is claimed ----
+// ---- the full surface (wb-0lf.8, the rule-19 structural-exit child R-B73 filed): the forms these tables list, each pinned
+// through the claim's own reader in the full-surface row, none of them R-B73's own forms but CORE_OVERLAP's sixteen; no form
+// outside them is claimed ----
 
 /** The bead whose row in the tracker export enumerates the full surface: its description's U1-U5 lines. */
 export const SURFACE_BEAD = "wb-0lf.8";
@@ -2354,7 +2357,7 @@ export function descriptionOf(exportText: string, bead: string): string | undefi
 /** Each "- U<n> " line of a description, in order, with the hollowings (RH-...) and the residual families (Q<n>) it names. */
 export const surfaceItems = (description: string): Record<string, readonly string[]> =>
   Object.fromEntries([...description.matchAll(/^- (U\d+) (.*)$/gm)].map(match => [match[1] ?? "", [...(match[2] ?? "").matchAll(/\b(?:RH-[A-Z0-9-]+|Q\d)\b/g)].map(found => found[0])]));
-/** A full-surface spelling: outside its claim's R-B73 pinned set, the wb-0lf.8 item it belongs to and the hollowing it kills. */
+/** A full-surface spelling: none of its claim's pinned spellings (G1's 48, D3's 12; CORE_OVERLAP names the seven that FAIL_CLOSED's source forms refuse), the wb-0lf.8 item it belongs to and the hollowing it kills. */
 export interface SurfaceSpelling extends Spelling {
   readonly item: "U1" | "U2";
   /** Refusal #5's reader hollowing (wb-0lf.8's member name) that this spelling is a pinned falsifier of, or the item itself (U1, U2) where wb-0lf.8's row names no hollowing for its family (the per-part case mixes). */
@@ -2567,8 +2570,8 @@ export const SURFACE_OTHERS: readonly SurfaceDocs[] = SURFACE_POSITIONS.flatMap(
 export const otherBlocks = (form: SurfaceDocs): string[] =>
   form.position === "before" ? [form.reads, "table"] : form.position === "after" ? ["table", form.reads] : form.position === "between" ? ["table", form.reads, "table"] : ["table", "table", form.reads];
 
-/** A residual source member's code as TypeScript parses it (wb-0lf.8 U5): a comment is trivia and a string's content is no code. */
-const memberCode = (text: string): ts.SourceFile => ts.createSourceFile("member.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+/** A residual source member's code as TypeScript parses it (wb-0lf.8 U5): a comment is trivia and a string's content is no code. The code reader parses TypeScript (ScriptKind.TS); literalTokensOf's TSX control alone parses another kind. */
+const memberCode = (text: string, kind: ts.ScriptKind = ts.ScriptKind.TS): ts.SourceFile => ts.createSourceFile(kind === ts.ScriptKind.TSX ? "member.tsx" : "member.ts", text, ts.ScriptTarget.Latest, true, kind);
 const eachNode = (node: ts.Node, visit: (node: ts.Node) => void): void => {
   visit(node);
   ts.forEachChild(node, child => eachNode(child, visit));
@@ -2581,7 +2584,7 @@ export const codeShapeKeysOf = (text: string, keys: ReadonlySet<string>): string
   });
   return [...new Set(named.filter(key => keys.has(key)))];
 };
-/** R-COMPOSED's liveness read from code (wb-0lf.8 U5): the member's double-quoted string literals, each as TypeScript decodes it, joined in order. */
+/** R-COMPOSED's liveness read from code (wb-0lf.8 U5): the member's double-quoted string literals, each as TypeScript decodes it, joined in order; no other literal token composes (COMPOSE_PLANTS). */
 export const codeComposedOf = (text: string): string => {
   const source = memberCode(text);
   const parts: string[] = [];
@@ -2609,3 +2612,138 @@ export const SILENCINGS: readonly { readonly id: string; readonly silence: (text
 ];
 /** R-UNREACHABLE (S2's named residual, pinned quiet in the full-surface row): the member placed after a top-level throw never runs, yet its code reads as before - the code reader reads syntax, not reachability. */
 export const unreachable = (text: string): string => `throw 0;\n${text}`;
+
+// ---- refusal #1's F5 and refusal #2's F1 (R660, cured in the enumerate-the-resolvable cut): the code reader composes no
+// literal token but a double-quoted string ----
+
+/**
+ * Every literal token of TypeScript's grammar by its SyntaxKind name, in the live enum's order (FirstLiteralToken to
+ * LastTemplateToken; the full-surface row holds the names to that range): the code reader composes the double-quoted string
+ * literals among them and no other.
+ */
+export const LITERAL_KINDS: readonly (keyof typeof ts.SyntaxKind)[] = [
+  "NumericLiteral",
+  "BigIntLiteral",
+  "StringLiteral",
+  "JsxText",
+  "JsxTextAllWhiteSpaces",
+  "RegularExpressionLiteral",
+  "NoSubstitutionTemplateLiteral",
+  "TemplateHead",
+  "TemplateMiddle",
+  "TemplateTail",
+];
+/**
+ * The literal tokens of JSX text, which the code reader's parse holds no node of: it parses TypeScript (ScriptKind.TS), not
+ * TSX, so JSX_SHAPED holds no JSX text node there, while its TSX parse holds a JsxText node (the control).
+ */
+export const LITERAL_KINDS_OUTSIDE: readonly (keyof typeof ts.SyntaxKind)[] = ["JsxText", "JsxTextAllWhiteSpaces"];
+/** A module shaped as JSX: the code reader's .ts parse holds no JSX text node in it, and a regular expression token where its closing tag stands (the full-surface row holds both parses' tokens to the roster). */
+export const JSX_SHAPED = "export const view = <b>GraphPolicy</b>;\n";
+/** The literal tokens of a member's parse (the code reader's, ScriptKind.TS, unless the TSX control asks for another), in source order, each by its LITERAL_KINDS name, a string literal's followed by its opening quote. */
+export const literalTokensOf = (text: string, kind: ts.ScriptKind = ts.ScriptKind.TS): string[] => {
+  const source = memberCode(text, kind);
+  const named = new Map(LITERAL_KINDS.map(name => [ts.SyntaxKind[name], name] as const));
+  const tokens: string[] = [];
+  eachNode(source, node => {
+    const name = named.get(node.kind);
+    if (name !== undefined) tokens.push(name === "StringLiteral" ? `${name}${source.text.charAt(node.getStart(source))}` : name);
+  });
+  return tokens;
+};
+/**
+ * COMPOSE_PLANTS (refusal #1's F5 and refusal #2's F1): one module per literal token kind the code reader does not compose,
+ * each beside or holding a site word's parts - a no-substitution template beside a double-quoted part (refusal #1's F5 plant),
+ * a single-quoted string beside one and a regular expression holding the whole word (refusal #2's F1 plants), and a template
+ * whose head, middle and tail hold GraphDataIR's parts around a numeric and a bigint substitution. Their literal tokens,
+ * their double-quoted strings aside, are of every LITERAL_KINDS kind but LITERAL_KINDS_OUTSIDE's, and each composes exactly
+ * its double-quoted literals, so the word another literal completes or holds composes no site word.
+ */
+export const COMPOSE_PLANTS: readonly { readonly id: string; readonly text: string }[] = [
+  { id: "template", text: 'export const head = `Graph`;\nexport const tail = "Policy";\n' },
+  { id: "single-quoted", text: "export const head = 'Graph';\nexport const tail = \"Policy\";\n" },
+  { id: "regex", text: "export const pattern = /GraphPolicy/;\n" },
+  { id: "template-parts", text: `export const label = \`Graph\${0}Data\${1n}IR\`;\n` },
+];
+
+// ---- CORE OVERLAP (refusal #2's U1 under R-B164, the enumerate-the-resolvable cut): the full-surface forms that are the core's ----
+
+/** A form the overlap reading compares: its table, its id, and the text compared (a spelling, an edit of the live page or a member text). */
+export interface Keyed {
+  readonly table: string;
+  readonly id: string;
+  readonly key: string;
+}
+/**
+ * Every full-surface form as the overlap reading compares it, in table order: U1's and U2's spellings and R-NON-ASCII-PART's
+ * members by their spelling; U3's leads, U4's ownership blocks and the owner cells by their edit of the live page; U5's
+ * silencings of each residual source member, R-UNREACHABLE's placement of each and COMPOSE_PLANTS by their member text.
+ */
+export const surfaceForms = (page: string, members: readonly SourceResidual[]): Keyed[] => [
+  ...SURFACE_SITE_SPELLINGS.map(entry => ({ table: "SURFACE_SITE_SPELLINGS", id: entry.id, key: entry.spelling })),
+  ...SURFACE_REQUEST_SPELLINGS.map(entry => ({ table: "SURFACE_REQUEST_SPELLINGS", id: entry.id, key: entry.spelling })),
+  ...NON_ASCII_PARTS.map(entry => ({ table: "NON_ASCII_PARTS", id: entry.id, key: entry.spelling })),
+  ...SURFACE_LEADS.map(form => ({ table: "SURFACE_LEADS", id: form.id, key: form.edit(page) })),
+  ...SURFACE_OTHERS.map(form => ({ table: "SURFACE_OTHERS", id: form.id, key: form.edit(page) })),
+  ...SURFACE_OWNERS.map(form => ({ table: "SURFACE_OWNERS", id: form.id, key: form.edit(page) })),
+  ...members.flatMap(member => SILENCINGS.map(form => ({ table: "SILENCINGS", id: `${member.path} ${form.id}`, key: form.silence(member.text) }))),
+  ...members.map(member => ({ table: "unreachable", id: `${member.path} unreachable`, key: unreachable(member.text) })),
+  ...COMPOSE_PLANTS.map(plant => ({ table: "COMPOSE_PLANTS", id: `compose ${plant.id}`, key: plant.text })),
+];
+/** The core's spelling tables (G1's and D3's), by name: the spellings each word reader reads, holds quiet or holds outside its pattern. */
+const CORE_SPELLING_TABLES: readonly (readonly [string, readonly string[]])[] = [
+  ["SITE_WORD_SPELLINGS", SITE_WORD_SPELLINGS.map(entry => entry.spelling)],
+  ["SITE_WORD_HITS", SITE_WORD_HITS],
+  ["SITE_WORD_QUIET", SITE_WORD_QUIET],
+  ["EXECUTOR_REQUEST_SPELLINGS", EXECUTOR_REQUEST_SPELLINGS.map(entry => entry.spelling)],
+  ["EXECUTOR_REQUEST_HITS", EXECUTOR_REQUEST_HITS],
+  ["EXECUTOR_REQUEST_QUIET", EXECUTOR_REQUEST_QUIET],
+  ["EXECUTOR_REQUEST_OUTSIDE", EXECUTOR_REQUEST_OUTSIDE.map(entry => entry.spelling)],
+];
+/**
+ * Every form of the fail-closed core (wb-0lf.2's census as R-B73 narrowed it) the overlap reading compares against, in table
+ * order: the spellings G1's and D3's tables write and each match FAIL_CLOSED's source forms refuse; the edits of the live page
+ * DOCS_PLANTS, FAIL_CLOSED's docs forms and the residual docs members (Q9's) make; and the residual source members' own texts
+ * and FAIL_CLOSED's member edits of them.
+ */
+export const coreForms = (page: string, members: readonly SourceResidual[]): Keyed[] => [
+  ...CORE_SPELLING_TABLES.flatMap(([table, spellings]) => spellings.map((key, index) => ({ table, id: `${table}#${index}`, key }))),
+  ...FAIL_CLOSED.flatMap(form => (form.kind === "source" ? form.unpinned.map(entry => ({ table: "FAIL_CLOSED source", id: form.id, key: entry.match })) : [])),
+  ...DOCS_PLANTS.map(plant => ({ table: "DOCS_PLANTS", id: plant.id, key: plant.edit(page) })),
+  ...FAIL_CLOSED.flatMap(form => (form.kind === "docs" ? [{ table: "FAIL_CLOSED docs", id: form.id, key: form.edit(page) }] : [])),
+  ...Object.values(RESIDUALS).flatMap(family => family.flatMap(member => (member.kind === "docs" ? [{ table: "RESIDUALS docs", id: member.id, key: member.edit(page) }] : []))),
+  ...members.map(member => ({ table: "RESIDUALS source", id: member.path, key: member.text })),
+  ...FAIL_CLOSED.flatMap(form => (form.kind === "member" ? [{ table: "FAIL_CLOSED member", id: form.id, key: form.edit(members.find(member => member.path === form.member)?.text ?? "") }] : [])),
+];
+/** CORE OVERLAP's reader: each full-surface form whose compared text is some core form's, with the id of every such core form in core order; a form with none is dropped. */
+export const coreOverlapOf = (surface: readonly Keyed[], core: readonly Keyed[]): { readonly form: string; readonly core: readonly string[] }[] =>
+  surface.flatMap(entry => {
+    const same = core.filter(other => other.key === entry.key).map(other => other.id);
+    return same.length === 0 ? [] : [{ form: entry.id, core: same }];
+  });
+/**
+ * CORE OVERLAP (refusal #2's U1, R-B164): the sixteen full-surface forms that are forms of the fail-closed core, each with the
+ * core forms it is, as the full-surface row computes them (coreOverlapOf over surfaceForms and coreForms) and the census header
+ * names them: seven spellings FAIL_CLOSED's source forms refuse (five of U1's, two of U2's), two boundary leads and the
+ * paragraph before the Ownership table that are FAIL_CLOSED's G3 forms, four ownership blocks after the table that are
+ * DOCS_PLANTS' D-OTHER plants, and the line-comment silencings of q1-shape.ts and q2-joined.ts that are FAIL_CLOSED's S2 forms.
+ * The full-surface row reads each again; no other full-surface form is a core form.
+ */
+export const CORE_OVERLAP: readonly { readonly form: string; readonly core: readonly string[] }[] = [
+  { form: "GraphPolicy/none/camel", core: ["FC-G1-CAMEL", "FC-G1-EVERY-MATCH"] },
+  { form: "GraphPolicy/space/sentence", core: ["FC-G1-SENTENCE"] },
+  { form: "GraphPolicy/underscorex3/lower", core: ["FC-G1-RUN3-SAME"] },
+  { form: "GraphPolicy/mixed4/lower", core: ["FC-G1-RUN-LONG"] },
+  { form: "GraphDataIR/underscore+none/upper", core: ["FC-G1-UNEVEN", "FC-G1-EVERY-MATCH"] },
+  { form: "ExecutorRequest/none/camel", core: ["FC-D3-CAMEL", "FC-D3-EVERY-MATCH"] },
+  { form: "ExecutorRequest/space/sentence", core: ["FC-D3-SENTENCE"] },
+  { form: "L-HEADING-3", core: ["FC-G3-LEAD-HEADING"] },
+  { form: "L-BREAK-DASHES", core: ["FC-G3-LEAD-BREAK"] },
+  { form: "O-BEFORE-PARAGRAPH", core: ["FC-G3-OTHER-LEAD"] },
+  { form: "O-AFTER-DEF", core: ["D-OTHER-DEF"] },
+  { form: "O-AFTER-FENCES", core: ["D-OTHER-CODE"] },
+  { form: "O-AFTER-HEADING", core: ["D-OTHER-HEADING"] },
+  { form: "O-AFTER-PARAGRAPH", core: ["D-OTHER-PARAGRAPH"] },
+  { form: "src/workbench/q1-shape.ts line-comment", core: ["FC-S2-Q1-COMMENTED"] },
+  { form: "src/workbench/q2-joined.ts line-comment", core: ["FC-S2-Q2-COMMENTED"] },
+];
