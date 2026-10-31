@@ -1042,6 +1042,18 @@
     "path": "docs/alt-strong-break.md",
     "text": "Pi embeds a ![**wa  \nsm**](x.png) runtime.\n"
    },
+   "altCoreReference": {
+    "path": "docs/alt-core.md",
+    "text": "Pi embeds the ![`Fiber &Copf;ore`](x.png).\n"
+   },
+   "altTextReference": {
+    "path": "docs/alt-text-reference.md",
+    "text": "Pi embeds a ![wa&sopf;m](x.png) runtime.\n"
+   },
+   "altMixedReference": {
+    "path": "docs/alt-mixed-reference.md",
+    "text": "Pi embeds a ![wa&sopf;m `wa&sopf;m`](x.png) runtime.\n"
+   },
    "paragraphBreak": {
     "path": "docs/break.md",
     "text": "Pi will embed wa  \nsm.\n"
@@ -1539,7 +1551,9 @@
    "emDestination": "![*[x](wa&#115;m)*](x.png)",
    "strongDestination": "![**[x](wa&#115;m)**](x.png)",
    "delDestination": "![~~[x](wa&#115;m)~~](x.png)",
-   "linkCodeSpan": "![[`wa&#115;m`](u)](x.png)"
+   "linkCodeSpan": "![[`wa&#115;m`](u)](x.png)",
+   "codeSpanUnknownReference": "![`wa&sopf;m`](x.png)",
+   "escapeUnknownReference": "![wa\\&sopf;m](x.png)"
   },
   "altFormPath": "docs/alt-form.md",
   "imageAlt": "image alt",
@@ -2258,6 +2272,12 @@
        ],
        "linkCodeSpan": [
         "wb-x32.comments[0].text:1: rendered unknown image alt \"`wasm`\""
+       ],
+       "codeSpanUnknownReference": [
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;"
+       ],
+       "escapeUnknownReference": [
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;"
        ]
       }
      }
@@ -2531,6 +2551,12 @@
        ],
        "linkCodeSpan": [
         "linkCodeSpan:1: rendered unknown image alt \"`wasm`\""
+       ],
+       "codeSpanUnknownReference": [
+        "codeSpanUnknownReference:1: rendered unknown &sopf;"
+       ],
+       "escapeUnknownReference": [
+        "escapeUnknownReference:1: rendered unknown &sopf;"
        ]
       }
      }
@@ -3634,6 +3660,16 @@
         "docs/alt-emphasis.md:1: rendered embed+core"
        ],
        "altStrongBreak": [],
+       "altCoreReference": [
+        "docs/alt-core.md:1: rendered unknown &Copf;"
+       ],
+       "altTextReference": [
+        "docs/alt-text-reference.md:1: rendered unknown &sopf;"
+       ],
+       "altMixedReference": [
+        "docs/alt-mixed-reference.md:1: rendered unknown &sopf;",
+        "docs/alt-mixed-reference.md:1: rendered unknown &sopf;"
+       ],
        "paragraphBreak": [],
        "paragraphBackslashBreak": [],
        "rawStateReference": [],
@@ -4199,6 +4235,12 @@
        ],
        "linkCodeSpan": [
         "docs/alt-form.md:1: rendered unknown image alt \"`wasm`\""
+       ],
+       "codeSpanUnknownReference": [
+        "docs/alt-form.md:1: rendered unknown &sopf;"
+       ],
+       "escapeUnknownReference": [
+        "docs/alt-form.md:1: rendered unknown &sopf;"
        ]
       },
       "plantedTree": {
