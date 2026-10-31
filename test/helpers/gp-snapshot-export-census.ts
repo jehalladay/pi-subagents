@@ -2008,7 +2008,7 @@ export async function driveEffects(make: () => Drive, after: () => void = () => 
     thirdDiffers: calls.length === 3 && !isDeepStrictEqual(calls[2]?.outcome, calls[0]?.outcome),
   };
 }
-/** A source member's double-quoted string literals, each decoded as JSON decodes it, joined in order: the word R-COMPOSED's member builds at run time, read over its raw text, comments included (so R-COMMENTED refuses a comment opener). */
+/** A source member's double-quoted string literals, each decoded as JSON decodes it, joined in order: the word R-COMPOSED's member builds at run time, read over its raw text, comments included (so R-COMMENTED refuses a comment opener at a position FAIL_CLOSED's S2 forms pin). */
 export const composedOf = (text: string): string =>
   [...text.matchAll(/"((?:[^"\\\n]|\\.)*)"/g)]
     .map(match => {
@@ -2020,7 +2020,7 @@ export const composedOf = (text: string): string =>
       }
     })
     .join("");
-/** The object keys a source member's text names (an identifier before a colon) that are keys of the given document: R-UNNAMED's static reading of a GraphDataIR-shaped value, over its raw text, comments included (so R-COMMENTED refuses a comment opener). */
+/** The object keys a source member's text names (an identifier before a colon) that are keys of the given document: R-UNNAMED's static reading of a GraphDataIR-shaped value, over its raw text, comments included (so R-COMMENTED refuses a comment opener at a position FAIL_CLOSED's S2 forms pin). */
 export const shapeKeysOf = (text: string, keys: ReadonlySet<string>): string[] => [...new Set([...text.matchAll(/\b([A-Za-z_][A-Za-z0-9_]*)\s*:/g)].map(match => match[1] ?? "").filter(key => keys.has(key)))];
 const withGraph = (outcome: Exported, change: (graph: Record<string, unknown>) => Record<string, unknown>): Exported => ({ ...outcome, graph: change(structuredClone(outcome.graph) as Record<string, unknown>) });
 export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
@@ -2237,11 +2237,15 @@ export function unpinnedExecutorRequestFindings(texts: ReadonlyMap<string, strin
   return findings;
 }
 /**
- * The comment openers (// and /*) a residual source member's raw text holds, inside its string literals too: the static
- * liveness proxies (shapeKeysOf, composedOf) read raw text and cannot tell a comment from code.
+ * The comment openers (// and /*) a residual source member's raw text holds, read over the raw text, a double-quoted string
+ * literal's included: the static liveness proxies (shapeKeysOf, composedOf) read raw text and cannot tell a comment from code.
+ * What the census claims of it is R-COMMENTED's pinned positions, each held by an S2 form of FAIL_CLOSED with its opener count
+ * (wb-0x41 cut #2, refusal #1's U2): // opening every non-empty line, after a line's indentation, after code at a line's end and
+ * inside a double-quoted string literal; /* opening the text with a space after it and with none, between code on a line, and
+ * opening a later line with its block closing on another. An opener at another position is outside the claim.
  */
 export const commentOpeners = (text: string): number => [...text.matchAll(/\/[/*]/g)].length;
-/** S2's fail-closed refusal (R-B73): a residual source member whose text holds a comment opener is refused, R-COMMENTED. */
+/** S2's fail-closed refusal (R-B73): a residual source member whose text holds a comment opener at a pinned position (commentOpeners) is refused, R-COMMENTED. */
 export const commentFindings = (path: string, text: string): string[] => {
   const openers = commentOpeners(text);
   return openers === 0 ? [] : [`R-COMMENTED ${path} holds ${openers} comment opener${openers === 1 ? "" : "s"} (// or /*), so its static liveness proxy could read a comment as code`];
@@ -2258,15 +2262,17 @@ export interface ListedEntry {
 /**
  * The listing's fail-closed refusal (wb-0x41, landing 677's carried F1): an entry git would commit under a listed scope that is
  * no regular file is refused, S-NONREGULAR, since the landed listers (gitList's regular-file filter, walkList's lstat walk)
- * drop it, so no reader of this census reads a module through it.
+ * drop it, so no reader of this census reads a module through it. Claimed on the listing forms pinned (FC-LISTING-SYMLINK's
+ * untracked links, FC-LISTING-TRACKED's links in git's index; wb-0x41 cut #2, refusal #1's U1).
  */
 export const nonRegularFindings = (entries: readonly ListedEntry[]): string[] => entries.map(entry => `S-NONREGULAR ${entry.path} is a ${entry.kind} git would commit, which the landed listers drop, so no reader of this census reads it`);
 /**
  * The outside anchor a FAIL_CLOSED form answers (wb-0x41, landing 677's carried F4): the bead whose row in the tracker export
  * filed the form, and the name that row gives it - a refusal #5 hollowing (RH-...) or residual family (Q<n>) of an item
- * wb-0lf.8's description enumerates (refusalItemsOf), one of cut #6's own forms in wb-0lf.2's notes (ownFormsOf), or a gate
- * plant wb-0x41's carried finding lines name (carriedPlantsOf). The fail-closed row holds the forms' anchors to the names those
- * rows give, both ways, so a form removed from every literal of the census, this helper and the roster together still reds.
+ * wb-0lf.8's description enumerates (refusalItemsOf), one of cut #6's own forms in wb-0lf.2's notes (ownFormsOf), a gate
+ * plant wb-0x41's carried finding lines name (carriedPlantsOf), or a gate hollowing wb-0x41's refusal #1 names in its UNMET
+ * lines (unmetHollowingsOf, wb-0x41 cut #2). The fail-closed row holds the forms' anchors to the names those rows give, both
+ * ways, so a form removed from every literal of the census, this helper and the roster together still reds.
  */
 export interface FailClosedAnchor {
   readonly bead: string;
@@ -2328,6 +2334,47 @@ export function carriedPlantsOf(notes: string): string[] {
   }
   return names;
 }
+/** A gate hollowing an unmet line names, with the regular expression literal the line writes right after its name, when it writes one. */
+export interface UnmetHollowing {
+  readonly name: string;
+  readonly pattern?: { readonly source: string; readonly flags: string };
+}
+/** One unmet item of a refusal note: its id (U<n>), the typed refusal its line names first and the gate hollowings it names. */
+export interface UnmetItem {
+  readonly item: string;
+  readonly refusal: string;
+  readonly hollowings: readonly UnmetHollowing[];
+}
+/** The typed refusals an unmet line of wb-0x41's refusal #1 names: the listing's and S2's. */
+const UNMET_REFUSAL = /\b(S-NONREGULAR|R-COMMENTED)\b/;
+/** A regular expression literal opening a text: its source (an escape or a character class read whole, so a slash inside either never ends it) and its flags. */
+const REGEX_LITERAL = /^\/((?:\\.|\[(?:\\.|[^\]\\\n])*\]|[^/\\[\n])+)\/([dgimsuvy]*)/;
+/**
+ * The unmet items of a bead's first refusal (wb-0x41 cut #2: refusal #1's UNMET lines name the gate's hollowings, so a form that
+ * answers one is bound to the row that named it): each "- U<n> (" line that follows the notes' first "UNMET (" line, up to the
+ * first line that is no such line, in order, with the typed refusal it names first (S-NONREGULAR or R-COMMENTED) and the gate
+ * hollowings it names (L<n>-... names, never a gate plant, L<n>-P-...), each once, each with the regular expression literal its
+ * line writes after the name's first mention, when one follows. Every other line and every later note is never read.
+ */
+export function unmetHollowingsOf(notes: string): UnmetItem[] {
+  const lines = notes.split("\n");
+  const start = lines.findIndex(line => line.startsWith("UNMET ("));
+  if (start === -1) return [];
+  const items: UnmetItem[] = [];
+  for (const line of lines.slice(start + 1)) {
+    const item = /^- (U\d+) \(/.exec(line)?.[1];
+    if (item === undefined) break;
+    const hollowings: UnmetHollowing[] = [];
+    for (const match of line.matchAll(/\bL\d+-(?!P-)[A-Z0-9]+(?:-[A-Z0-9]+)*/g)) {
+      if (hollowings.some(entry => entry.name === match[0])) continue;
+      const after = line.slice(match.index + match[0].length);
+      const literal = after.startsWith(" /") ? REGEX_LITERAL.exec(after.slice(1)) : null;
+      hollowings.push(literal === null ? { name: match[0] } : { name: match[0], pattern: { source: literal[1] ?? "", flags: literal[2] ?? "" } });
+    }
+    items.push({ item, refusal: UNMET_REFUSAL.exec(line)?.[1] ?? "", hollowings });
+  }
+  return items;
+}
 /** A form outside G1's or D3's pinned spellings: a src module read after the tracked modules. */
 export interface FailClosedSource {
   readonly kind: "source";
@@ -2359,13 +2406,17 @@ export interface FailClosedMember {
   /** The residual source member's path (RESIDUALS). */
   readonly member: string;
   readonly edit: (text: string) => string;
+  /** The comment openers the edited member's text holds (commentOpeners; the member itself holds none), held to the roster too, so each opener a multi-opener form pins is read. */
+  readonly openers: number;
   readonly anchor: FailClosedAnchor;
 }
 /**
- * A form outside every listing this census reads (wb-0x41, landing 677's carried F1, the gate's G15-P-G1-SYMLINK plant): a
- * scratch repository whose src holds a symbolic link to a qa module naming a site word, a link to a directory and a dangling
- * link beside a regular module, and whose qa holds a link to that module too. git would commit each link, the landed listers
- * drop it, and the listing's fail-closed refusal names each one (S-NONREGULAR).
+ * A form outside every listing this census reads (wb-0x41): a scratch repository whose src and qa hold symbolic links beside
+ * regular modules. git would commit each link it neither ignores nor misses on disk, the landed listers drop it, and the
+ * listing's fail-closed refusal names each one (S-NONREGULAR). FC-LISTING-SYMLINK (landing 677's carried F1, the gate's
+ * G15-P-G1-SYMLINK plant) holds its links untracked, beside a link git ignores; FC-LISTING-TRACKED (refusal #1's U1, the gate's
+ * L2-NR-NO-CACHED) holds its links in git's index, beside an untracked link git lists before them and a tracked module missing
+ * on disk.
  */
 export interface FailClosedListing {
   readonly kind: "listing";
@@ -2375,7 +2426,13 @@ export interface FailClosedListing {
   readonly files: Readonly<Record<string, string>>;
   /** The scratch tree's symbolic links, path to target (relative to the link's directory, as written into the link). */
   readonly links: Readonly<Record<string, string>>;
-  /** The site word the module behind each src link that reaches one of the files names, as siteFindings reads it through the link. */
+  /** The files and links git add puts in the scratch repository's index (tracked), in path order. */
+  readonly tracked: readonly string[];
+  /** The links the scratch repository's own exclude file names (.git/info/exclude: git's ignored set, no .gitignore in the tree). */
+  readonly ignored: readonly string[];
+  /** The tracked files removed from disk after git add (git's index lists them, the disk holds none). */
+  readonly removed: readonly string[];
+  /** The site word the module behind each src link git would commit that reaches one of the files names, as siteFindings reads it through the link. */
   readonly word: string;
   readonly anchor: FailClosedAnchor;
 }
@@ -2388,6 +2445,20 @@ const commentedOut = (text: string): string =>
     .join("\n");
 /** A block comment before the member's text (the gate's G15-P-S2-Q1-BLOCKCOMMENT plant): the member still defines its value, and its one comment opener is R-COMMENTED's block half. */
 const blockCommented = (text: string): string => `/* a note */ ${text}`;
+/** A block comment between code on the member's first line, after its first word (refusal #1's U2: the opener L2-CO-BLOCK-TEXT-START, reading /* at the text's start only, misses). */
+const blockMidLine = (text: string): string => text.replace(" ", " /* a note */ ");
+/** A line comment after a line's indentation, on a line before the member's text (refusal #1's U2: the opener L2-CO-LINE-LINE-START, reading // at a line's start only, misses). */
+const lineIndented = (text: string): string => `  // a note\n${text}`;
+/**
+ * A line comment after code at the end of the member's first line, and a line after the text whose double-quoted string literal
+ * holds // (refusal #1's U2: both openers stand after code on their lines, where L2-CO-BOTH-LINE-START, reading either opener at
+ * a line's start only, reads none; the second is commentOpeners' string-literal reading).
+ */
+const lineTrailing = (text: string): string => `${text.replace("\n", " // a note\n")}export const NOTE = "a // b";\n`;
+/** A block comment opening the text with no space after its opener (refusal #1's U2: the opener L2-CO-BLOCK-SPACE, reading /* only before a space, misses). */
+const blockUnspaced = (text: string): string => `/*a note*/ ${text}`;
+/** A block comment opening the member's second line and closing two lines on (refusal #1's U2: the opener L2-CO-BLOCK-SAME-LINE, reading /* only when its block closes on its line, misses). */
+const blockMultiLine = (text: string): string => text.replace("\n", "\n/*\n * a note\n */\n");
 /**
  * The fail-closed row (R-B73, R-B67's one pinned row proving that a form outside the pinned set refuses): refusal #5's twelve
  * plants, one per member of its U1-U5, each outside its claim's pinned set and each refused with exactly its typed refusals.
@@ -2399,7 +2470,11 @@ const blockCommented = (text: string): string => `/* a note */ ${text}`;
  * fail-closed reader is proven on every match and every word, never only the first. And wb-0x41's two (landing 677's carried
  * F1 and F2, each the gate plant its finding names): FC-S2-Q1-BLOCK-COMMENT (G15-P-S2-Q1-BLOCKCOMMENT: q1-shape with a block
  * comment before its text, R-COMMENTED's block half) and FC-LISTING-SYMLINK (G15-P-G1-SYMLINK: symbolic links git would
- * commit under src and qa, the listing's S-NONREGULAR). Each form names its outside anchor (FailClosedAnchor).
+ * commit under src and qa, untracked, beside a link git ignores, the listing's S-NONREGULAR). And wb-0x41 cut #2's six (its
+ * refusal #1, each form answering the gate hollowing its UNMET line names, and each that hollowing's falsifier): five S2
+ * positions of q1-shape's openers (U2: FC-S2-Q1-BLOCK-MID-LINE, FC-S2-Q1-LINE-INDENTED, FC-S2-Q1-LINE-TRAILING,
+ * FC-S2-Q1-BLOCK-UNSPACED, FC-S2-Q1-BLOCK-MULTI-LINE) and FC-LISTING-TRACKED (U1: links in git's index, the listing's tracked
+ * half). Each form names its outside anchor (FailClosedAnchor).
  */
 export const FAIL_CLOSED: readonly FailClosedForm[] = [
   { kind: "source", id: "FC-G1-CAMEL", claim: "G1", path: "src/workbench/zz-fc-g1-camel.ts", text: 'export const graphPolicyLabel = "seam";\n', words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "graphPolicy" }], anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-CAMEL" } },
@@ -2433,16 +2508,48 @@ export const FAIL_CLOSED: readonly FailClosedForm[] = [
     expect: ["ownership-other"],
     anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-OTHER-LEAD" },
   },
-  { kind: "member", id: "FC-S2-Q1-COMMENTED", claim: "S2", member: "src/workbench/q1-shape.ts", edit: commentedOut, anchor: { bead: REFUSAL_ITEMS_BEAD, name: "Q1" } },
-  { kind: "member", id: "FC-S2-Q2-COMMENTED", claim: "S2", member: "src/workbench/q2-joined.ts", edit: commentedOut, anchor: { bead: REFUSAL_ITEMS_BEAD, name: "Q2" } },
-  { kind: "member", id: "FC-S2-Q1-BLOCK-COMMENT", claim: "S2", member: "src/workbench/q1-shape.ts", edit: blockCommented, anchor: { bead: CARRIED_BEAD, name: "G15-P-S2-Q1-BLOCKCOMMENT" } },
+  { kind: "member", id: "FC-S2-Q1-COMMENTED", claim: "S2", member: "src/workbench/q1-shape.ts", edit: commentedOut, openers: 2, anchor: { bead: REFUSAL_ITEMS_BEAD, name: "Q1" } },
+  { kind: "member", id: "FC-S2-Q2-COMMENTED", claim: "S2", member: "src/workbench/q2-joined.ts", edit: commentedOut, openers: 1, anchor: { bead: REFUSAL_ITEMS_BEAD, name: "Q2" } },
+  { kind: "member", id: "FC-S2-Q1-BLOCK-COMMENT", claim: "S2", member: "src/workbench/q1-shape.ts", edit: blockCommented, openers: 1, anchor: { bead: CARRIED_BEAD, name: "G15-P-S2-Q1-BLOCKCOMMENT" } },
+  { kind: "member", id: "FC-S2-Q1-BLOCK-MID-LINE", claim: "S2", member: "src/workbench/q1-shape.ts", edit: blockMidLine, openers: 1, anchor: { bead: CARRIED_BEAD, name: "L2-CO-BLOCK-TEXT-START" } },
+  { kind: "member", id: "FC-S2-Q1-LINE-INDENTED", claim: "S2", member: "src/workbench/q1-shape.ts", edit: lineIndented, openers: 1, anchor: { bead: CARRIED_BEAD, name: "L2-CO-LINE-LINE-START" } },
+  { kind: "member", id: "FC-S2-Q1-LINE-TRAILING", claim: "S2", member: "src/workbench/q1-shape.ts", edit: lineTrailing, openers: 2, anchor: { bead: CARRIED_BEAD, name: "L2-CO-BOTH-LINE-START" } },
+  { kind: "member", id: "FC-S2-Q1-BLOCK-UNSPACED", claim: "S2", member: "src/workbench/q1-shape.ts", edit: blockUnspaced, openers: 1, anchor: { bead: CARRIED_BEAD, name: "L2-CO-BLOCK-SPACE" } },
+  { kind: "member", id: "FC-S2-Q1-BLOCK-MULTI-LINE", claim: "S2", member: "src/workbench/q1-shape.ts", edit: blockMultiLine, openers: 1, anchor: { bead: CARRIED_BEAD, name: "L2-CO-BLOCK-SAME-LINE" } },
   {
     kind: "listing",
     id: "FC-LISTING-SYMLINK",
     claim: "LISTING",
     files: { "qa/zz-g15-target.ts": 'export const graphPolicyLabel = "seam";\n', "src/workbench/zz-g15-module.ts": "export const placed = 1;\n" },
-    links: { "src/workbench/zz-g15-link.ts": "../../qa/zz-g15-target.ts", "src/workbench/zz-g15-dir": "../../qa", "src/workbench/zz-g15-dangling.ts": "../../qa/zz-g15-missing.ts", "qa/zz-g15-link.ts": "zz-g15-target.ts" },
+    links: {
+      "src/workbench/zz-g15-link.ts": "../../qa/zz-g15-target.ts",
+      "src/workbench/zz-g15-dir": "../../qa",
+      "src/workbench/zz-g15-dangling.ts": "../../qa/zz-g15-missing.ts",
+      "qa/zz-g15-link.ts": "zz-g15-target.ts",
+      "src/workbench/zz-g15-ignored.ts": "../../qa/zz-g15-target.ts",
+    },
+    tracked: [],
+    ignored: ["src/workbench/zz-g15-ignored.ts"],
+    removed: [],
     word: "GraphPolicy",
     anchor: { bead: CARRIED_BEAD, name: "G15-P-G1-SYMLINK" },
+  },
+  {
+    kind: "listing",
+    id: "FC-LISTING-TRACKED",
+    claim: "LISTING",
+    files: { "qa/zz-l2-target.ts": 'export const graphPolicyLabel = "seam";\n', "src/workbench/zz-l2-module.ts": "export const placed = 1;\n", "src/workbench/zz-l2-removed.ts": "export const removed = 1;\n" },
+    links: {
+      "src/workbench/zz-l2-link.ts": "../../qa/zz-l2-target.ts",
+      "src/workbench/zz-l2-dir": "../../qa",
+      "src/workbench/zz-l2-dangling.ts": "../../qa/zz-l2-missing.ts",
+      "src/workbench/zz-l2-untracked.ts": "../../qa/zz-l2-missing.ts",
+      "qa/zz-l2-link.ts": "zz-l2-target.ts",
+    },
+    tracked: ["qa/zz-l2-link.ts", "src/workbench/zz-l2-dangling.ts", "src/workbench/zz-l2-dir", "src/workbench/zz-l2-link.ts", "src/workbench/zz-l2-removed.ts"],
+    ignored: [],
+    removed: ["src/workbench/zz-l2-removed.ts"],
+    word: "GraphPolicy",
+    anchor: { bead: CARRIED_BEAD, name: "L2-NR-NO-CACHED" },
   },
 ];

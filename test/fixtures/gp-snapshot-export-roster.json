@@ -2416,6 +2416,7 @@
       "refusal": [
         "R-COMMENTED"
       ],
+      "openers": 2,
       "proxy": true
     },
     "FC-S2-Q2-COMMENTED": {
@@ -2424,6 +2425,7 @@
       "refusal": [
         "R-COMMENTED"
       ],
+      "openers": 1,
       "proxy": true
     },
     "FC-S2-Q1-BLOCK-COMMENT": {
@@ -2432,6 +2434,52 @@
       "refusal": [
         "R-COMMENTED"
       ],
+      "openers": 1,
+      "proxy": true
+    },
+    "FC-S2-Q1-BLOCK-MID-LINE": {
+      "member": "shape",
+      "quiet": [],
+      "refusal": [
+        "R-COMMENTED"
+      ],
+      "openers": 1,
+      "proxy": true
+    },
+    "FC-S2-Q1-LINE-INDENTED": {
+      "member": "shape",
+      "quiet": [],
+      "refusal": [
+        "R-COMMENTED"
+      ],
+      "openers": 1,
+      "proxy": true
+    },
+    "FC-S2-Q1-LINE-TRAILING": {
+      "member": "shape",
+      "quiet": [],
+      "refusal": [
+        "R-COMMENTED"
+      ],
+      "openers": 2,
+      "proxy": true
+    },
+    "FC-S2-Q1-BLOCK-UNSPACED": {
+      "member": "shape",
+      "quiet": [],
+      "refusal": [
+        "R-COMMENTED"
+      ],
+      "openers": 1,
+      "proxy": true
+    },
+    "FC-S2-Q1-BLOCK-MULTI-LINE": {
+      "member": "shape",
+      "quiet": [],
+      "refusal": [
+        "R-COMMENTED"
+      ],
+      "openers": 1,
       "proxy": true
     },
     "FC-LISTING-SYMLINK": {
@@ -2451,6 +2499,28 @@
           "qa/zz-g15-target.ts"
         ]
       },
+      "index": {
+        "src": [],
+        "qa": []
+      },
+      "untracked": {
+        "src": [
+          "src/workbench/zz-g15-dangling.ts",
+          "src/workbench/zz-g15-dir",
+          "src/workbench/zz-g15-link.ts",
+          "src/workbench/zz-g15-module.ts"
+        ],
+        "qa": [
+          "qa/zz-g15-link.ts",
+          "qa/zz-g15-target.ts"
+        ]
+      },
+      "ignored": {
+        "src": [
+          "src/workbench/zz-g15-ignored.ts"
+        ],
+        "qa": []
+      },
       "behind": [
         "S-UNREGISTERED src/workbench/zz-g15-link.ts names GraphPolicy with no EXPORT_SITES registration"
       ],
@@ -2459,6 +2529,58 @@
         "S-NONREGULAR src/workbench/zz-g15-dir is a symbolic link git would commit, which the landed listers drop, so no reader of this census reads it",
         "S-NONREGULAR src/workbench/zz-g15-link.ts is a symbolic link git would commit, which the landed listers drop, so no reader of this census reads it",
         "S-NONREGULAR qa/zz-g15-link.ts is a symbolic link git would commit, which the landed listers drop, so no reader of this census reads it"
+      ]
+    },
+    "FC-LISTING-TRACKED": {
+      "listed": {
+        "src": [
+          "src/workbench/zz-l2-module.ts"
+        ],
+        "qa": [
+          "qa/zz-l2-target.ts"
+        ]
+      },
+      "walked": {
+        "src": [
+          "src/workbench/zz-l2-module.ts"
+        ],
+        "qa": [
+          "qa/zz-l2-target.ts"
+        ]
+      },
+      "index": {
+        "src": [
+          "src/workbench/zz-l2-dangling.ts",
+          "src/workbench/zz-l2-dir",
+          "src/workbench/zz-l2-link.ts",
+          "src/workbench/zz-l2-removed.ts"
+        ],
+        "qa": [
+          "qa/zz-l2-link.ts"
+        ]
+      },
+      "untracked": {
+        "src": [
+          "src/workbench/zz-l2-module.ts",
+          "src/workbench/zz-l2-untracked.ts"
+        ],
+        "qa": [
+          "qa/zz-l2-target.ts"
+        ]
+      },
+      "ignored": {
+        "src": [],
+        "qa": []
+      },
+      "behind": [
+        "S-UNREGISTERED src/workbench/zz-l2-link.ts names GraphPolicy with no EXPORT_SITES registration"
+      ],
+      "refusal": [
+        "S-NONREGULAR src/workbench/zz-l2-dangling.ts is a symbolic link git would commit, which the landed listers drop, so no reader of this census reads it",
+        "S-NONREGULAR src/workbench/zz-l2-dir is a symbolic link git would commit, which the landed listers drop, so no reader of this census reads it",
+        "S-NONREGULAR src/workbench/zz-l2-link.ts is a symbolic link git would commit, which the landed listers drop, so no reader of this census reads it",
+        "S-NONREGULAR src/workbench/zz-l2-untracked.ts is a symbolic link git would commit, which the landed listers drop, so no reader of this census reads it",
+        "S-NONREGULAR qa/zz-l2-link.ts is a symbolic link git would commit, which the landed listers drop, so no reader of this census reads it"
       ]
     }
   },
